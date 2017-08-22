@@ -3,6 +3,8 @@ package com.darkxell.client.ui;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import com.darkxell.client.launchable.Launcher;
+
 public class Keys implements KeyListener
 {
 	/** Default keys. */
@@ -74,14 +76,22 @@ public class Keys implements KeyListener
 	public void keyPressed(KeyEvent e)
 	{
 		short key = getKeyFromID(e.getKeyCode());
-		if (key != -1) isPressed[key] = true;
+		if (key != -1 && !isPressed(key))
+		{
+			isPressed[key] = true;
+			Launcher.stateManager.onKeyPressed(key);
+		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e)
 	{
 		short key = getKeyFromID(e.getKeyCode());
-		if (key != -1) isPressed[key] = false;
+		if (key != -1)
+		{
+			isPressed[key] = false;
+			Launcher.stateManager.onKeyReleased(key);
+		}
 	}
 
 	@Override

@@ -15,6 +15,18 @@ public class TestState extends AbstractState
 	public int tick = 0;
 
 	@Override
+	public void onKeyPressed(short key)
+	{
+		System.out.println("Started pressing " + Keys.getKeyName(key));
+	}
+
+	@Override
+	public void onKeyReleased(short key)
+	{
+		System.out.println("Stopped pressing " + Keys.getKeyName(key));
+	}
+
+	@Override
 	public void render(Graphics2D g, int width, int height)
 	{
 		g.setColor(this.bg);
