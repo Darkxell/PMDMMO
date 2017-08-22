@@ -27,7 +27,7 @@ public class TestState extends AbstractState
 	public void update()
 	{
 		++this.tick;
-		if (this.tick == 400) Launcher.instance.stateManager.setState(new TestState());
+		if (this.tick == 400) Launcher.stateManager.setState(new TestState());
 	}
 
 }
