@@ -26,6 +26,9 @@ public class Frame extends JFrame
 		this.canvas.createBufferStrategy(2);
 
 		this.canvas.addKeyListener(new Keys());
+		Mouse m = new Mouse();
+		this.canvas.addMouseListener(m);
+		this.canvas.addMouseMotionListener(m);
 	}
 
 }

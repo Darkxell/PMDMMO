@@ -27,6 +27,24 @@ public class TestState extends AbstractState
 	}
 
 	@Override
+	public void onMouseClick(int x, int y)
+	{
+		System.out.println("CLICK");
+	}
+
+	@Override
+	public void onMouseMove(int x, int y)
+	{
+		System.out.println(x + ", " + y);
+	}
+
+	@Override
+	public void onMouseRightClick(int x, int y)
+	{
+		System.out.println("RIGHT CLICK");
+	}
+
+	@Override
 	public void render(Graphics2D g, int width, int height)
 	{
 		g.setColor(this.bg);

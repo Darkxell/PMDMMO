@@ -29,6 +29,21 @@ public class StateManager
 		this.currentState.onKeyReleased(key);
 	}
 
+	public void onMouseClick(int x, int y)
+	{
+		this.currentState.onMouseClick(x, y);
+	}
+
+	public void onMouseMove(int x, int y)
+	{
+		this.currentState.onMouseMove(x, y);
+	}
+
+	public void onMouseRightClick(int x, int y)
+	{
+		this.currentState.onMouseRightClick(x, y);
+	}
+
 	public void render(Graphics2D g, int width, int height)
 	{
 		if (this.transition == 0) this.currentState.render(g, width, height);

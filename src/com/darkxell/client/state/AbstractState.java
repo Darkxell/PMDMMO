@@ -17,6 +17,24 @@ public abstract class AbstractState
 	 * @see Keys#KEY_UP */
 	public abstract void onKeyReleased(short key);
 
+	/** Called when the user clicks.
+	 * 
+	 * @param x, y - The mouse position. */
+	public void onMouseClick(int x, int y)
+	{}
+
+	/** Called when the user moves their mouse.
+	 * 
+	 * @param x, y - The mouse position. */
+	public void onMouseMove(int x, int y)
+	{}
+
+	/** Called when the user right clicks.
+	 * 
+	 * @param x, y - The mouse position. */
+	public void onMouseRightClick(int x, int y)
+	{}
+
 	/** Renders the state.
 	 * 
 	 * @param width, height - Dimensions of the canvas.
