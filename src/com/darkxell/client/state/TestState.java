@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import com.darkxell.client.launchable.Launcher;
+import com.darkxell.client.ui.Keys;
 
 /** State with a text and a tick counter for testing. */
 public class TestState extends AbstractState
@@ -22,6 +23,15 @@ public class TestState extends AbstractState
 		g.setColor(this.fg);
 		g.drawString(this.text + "   |   " + this.tick, 1, g.getFont().getSize());
 		g.drawString("UPS: " + Launcher.updater.currentUPS() + ", FPS: " + Launcher.renderer.currentFPS(), 1, g.getFont().getSize() * 2);
+
+		String keys = "";
+		for (short key = 0; key < Keys.KEY_COUNT; ++key)
+			if (Keys.isPressed(key))
+			{
+				if (!keys.equals("")) keys += ", ";
+				keys += Keys.getKeyName(key);
+			}
+		if (!keys.equals("")) g.drawString("Pressed keys: " + keys, 1, g.getFont().getSize() * 3);
 	}
 
 	@Override
