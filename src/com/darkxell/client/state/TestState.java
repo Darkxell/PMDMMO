@@ -21,6 +21,7 @@ public class TestState extends AbstractState
 
 		g.setColor(this.fg);
 		g.drawString(this.text + "   |   " + this.tick, 1, g.getFont().getSize());
+		g.drawString("UPS: " + Launcher.updater.currentUPS() + ", FPS: " + Launcher.renderer.currentFPS(), 1, g.getFont().getSize() * 2);
 	}
 
 	@Override

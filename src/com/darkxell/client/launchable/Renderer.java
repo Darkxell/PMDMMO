@@ -8,8 +8,17 @@ public class Renderer implements Runnable
 
 	public static final int UPS = 60;
 
+	private int fps;
+	private int framesCurrentSecond;
+	private long startTime, currentTime, timer;
+
 	public Renderer()
 	{}
+
+	public int currentFPS()
+	{
+		return this.fps;
+	}
 
 	private void render()
 	{
@@ -27,16 +36,34 @@ public class Renderer implements Runnable
 	@Override
 	public void run()
 	{
+		this.startTime = System.nanoTime();
+		this.currentTime = this.startTime;
+		this.timer = 0;
+		this.framesCurrentSecond = 0;
+		this.fps = 0;
 
 		while (Launcher.isRunning)
 		{
 			this.render();
+			++this.framesCurrentSecond;
+
 			try
 			{
 				Thread.sleep(5);
 			} catch (InterruptedException e)
 			{
 				e.printStackTrace();
+			}
+
+			long elapsedTime = System.nanoTime() - this.currentTime;
+			this.timer += elapsedTime;
+			this.currentTime += elapsedTime;
+
+			if (this.timer >= 1000000000)
+			{
+				this.fps = this.framesCurrentSecond;
+				this.timer = 0;
+				this.framesCurrentSecond = 0;
 			}
 		}
 	}
