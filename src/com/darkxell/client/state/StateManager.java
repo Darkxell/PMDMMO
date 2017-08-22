@@ -19,6 +19,16 @@ public class StateManager
 	public StateManager()
 	{}
 
+	public void onKeyPressed(short key)
+	{
+		this.currentState.onKeyPressed(key);
+	}
+
+	public void onKeyReleased(short key)
+	{
+		this.currentState.onKeyReleased(key);
+	}
+
 	public void render(Graphics2D g, int width, int height)
 	{
 		if (this.transition == 0) this.currentState.render(g, width, height);
