@@ -11,7 +11,7 @@ public class TestState extends AbstractState
 {
 
 	public Color bg = Color.WHITE, fg = Color.BLACK;
-	public String text = "Test state - switches at 400";
+	public String text = "Test state - switches at 100";
 	public int tick = 0;
 
 	@Override
@@ -35,7 +35,6 @@ public class TestState extends AbstractState
 	@Override
 	public void onMouseMove(int x, int y)
 	{
-		System.out.println(x + ", " + y);
 	}
 
 	@Override
@@ -68,7 +67,7 @@ public class TestState extends AbstractState
 	public void update()
 	{
 		++this.tick;
-		if (this.tick == 400) Launcher.stateManager.setState(new TestState());
+		if (this.tick == 100) Launcher.stateManager.setState(new FreezoneExploreState());
 	}
 
 }

@@ -25,23 +25,21 @@ public class FreezoneMap {
 		org.jdom2.Element rootelement;
 		try {
 			rootelement = builder.build(file).getRootElement();
-			this.mapWidth = Integer.parseInt(rootelement.getChild("width").getText());
-			this.mapHeight = Integer.parseInt(rootelement.getChild("height").getText());
+			this.mapWidth = Integer.parseInt(rootelement.getChild("width").getText()) / 8;
+			this.mapHeight = Integer.parseInt(rootelement.getChild("height").getText()) / 8;
 			List<org.jdom2.Element> tiles = rootelement.getChild("tiles").getChildren();
 			this.tiles = new FreezoneTile[mapWidth * mapHeight];
 			for (int i = 0; i < this.tiles.length; i++)
 				this.tiles[i] = new FreezoneTile(FreezoneTile.TYPE_WALKABLE, null);
 			for (org.jdom2.Element element : tiles) {
-				int refferingTileID = ((Integer.parseInt(element.getAttributeValue("x")) / 8)
-						* (Integer.parseInt(element.getAttributeValue("y")) / 8))
+				int refferingTileID = (mapWidth * (Integer.parseInt(element.getAttributeValue("y")) / 8))
 						+ (Integer.parseInt(element.getAttributeValue("x")) / 8);
 				if (element.getAttributeValue("bgName").equals("terrain")) {
 					this.tiles[refferingTileID].type = element.getAttributeValue("xo").equals("0")
 							? FreezoneTile.TYPE_SOLID : FreezoneTile.TYPE_WALKABLE;
 				} else {
 					AbstractTileset t = AbstractTileset.getTileset(element.getAttributeValue("bgName"));
-					this.tiles[refferingTileID].sprite = t.SPRITES[((Integer.parseInt(element.getAttributeValue("xo"))
-							/ 8) * (Integer.parseInt(element.getAttributeValue("yo")) / 8))
+					this.tiles[refferingTileID].sprite = t.SPRITES[(mapWidth * (Integer.parseInt(element.getAttributeValue("yo")) / 8))
 							+ (Integer.parseInt(element.getAttributeValue("xo")) / 8)];
 				}
 			}
