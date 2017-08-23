@@ -8,7 +8,7 @@ import javax.swing.JFrame;
 public class Frame extends JFrame
 {
 	private static final long serialVersionUID = -6197661374941529294L;
-	
+
 	public Canvas canvas;
 
 	public Frame()
@@ -20,10 +20,15 @@ public class Frame extends JFrame
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setVisible(true);
-		
+
 		this.canvas = new Canvas();
 		this.add(this.canvas);
 		this.canvas.createBufferStrategy(2);
+
+		this.canvas.addKeyListener(new Keys());
+		Mouse m = new Mouse();
+		this.canvas.addMouseListener(m);
+		this.canvas.addMouseMotionListener(m);
 	}
 
 }
