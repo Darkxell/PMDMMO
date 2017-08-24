@@ -11,8 +11,7 @@ public class Res {
 	public static BufferedImage getBase(String path) {
 		BufferedImage img = null;
 		try {
-			ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-			InputStream is = classloader.getResourceAsStream(path);
+			InputStream is = Res.class.getResourceAsStream(path);
 			img = ImageIO.read(is);
 		} catch (Exception e) {
 			e.printStackTrace();

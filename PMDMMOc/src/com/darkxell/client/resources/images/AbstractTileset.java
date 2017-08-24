@@ -38,7 +38,7 @@ public abstract class AbstractTileset {
 		case "square":
 			return SquareTileset.instance;
 		default:
-			System.err.println("COuld not find the desired tileset: " + code);
+			System.err.println("Could not find the desired tileset: " + code);
 			return null;
 		}
 	}

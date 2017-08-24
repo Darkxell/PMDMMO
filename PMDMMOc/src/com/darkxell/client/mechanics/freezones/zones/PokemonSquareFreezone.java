@@ -5,7 +5,7 @@ import com.darkxell.client.mechanics.freezones.FreezoneMap;
 public class PokemonSquareFreezone extends FreezoneMap {
 
 	public PokemonSquareFreezone() {
-		super("resources\\square.xml");
+		super("resources\\freezones\\square.xml");
 	}
 
 }

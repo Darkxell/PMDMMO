@@ -7,7 +7,7 @@ public class SquareTileset extends AbstractTileset {
 	public static SquareTileset instance = new SquareTileset();
 
 	public SquareTileset() {
-		super("square.png", 8, 8);
+		super("/tilesets/square.png", 8, 8);
 	}
 
 }
