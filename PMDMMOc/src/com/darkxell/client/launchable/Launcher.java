@@ -5,6 +5,7 @@ import com.darkxell.client.state.TestState;
 import com.darkxell.client.ui.Frame;
 import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.PokemonRegistry;
+import com.darkxell.common.util.Lang;
 
 /** Launching class of the client */
 public class Launcher
@@ -19,9 +20,10 @@ public class Launcher
 
 	public static void main(String[] args)
 	{
+		Lang.loadClient();
 		PokemonRegistry.loadClient();
 		MoveRegistry.loadClient();
-		System.out.println("Data loaded.");
+		System.out.println("Lang & Data loaded.");
 
 		frame = new Frame();
 		stateManager = new StateManager();

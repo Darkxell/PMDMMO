@@ -3,6 +3,7 @@ package com.darkxell.common.move;
 import org.jdom2.Element;
 
 import com.darkxell.common.pokemon.PokemonType;
+import com.darkxell.common.util.Message;
 
 public class Move
 {
@@ -80,6 +81,11 @@ public class Move
 		this.priority = priority;
 		this.additionalEffectChance = additionalEffectChance;
 		this.makesContact = makesContact;
+	}
+
+	public Message name()
+	{
+		return new Message("move." + this.id);
 	}
 
 	public Element toXML()

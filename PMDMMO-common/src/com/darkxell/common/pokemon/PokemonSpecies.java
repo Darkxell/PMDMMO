@@ -5,6 +5,8 @@ import java.util.HashMap;
 
 import org.jdom2.Element;
 
+import com.darkxell.common.util.Message;
+
 public class PokemonSpecies
 {
 
@@ -16,6 +18,7 @@ public class PokemonSpecies
 	public final int id, formID;
 	/** List of moves learned by leveling up. Key is level, value is the list of move IDs. */
 	private final HashMap<Integer, ArrayList<Integer>> learnset;
+	/** Untranslated name. */
 	public final String name, formName;
 	/** Recruitment rate. */
 	public final int recruitRate;
@@ -75,6 +78,12 @@ public class PokemonSpecies
 		this.learnset = learnset;
 		this.tms = tms;
 		this.evolutions = evolutions;
+	}
+
+	/** @return This Pokémon's name. */
+	public Message name()
+	{
+		return new Message("pokemon." + this.id);
 	}
 
 	public Element toXML()

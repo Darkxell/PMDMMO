@@ -1,5 +1,6 @@
 package com.darkxell.common.pokemon;
 
+
 public class Pokemon
 {
 	/** Pokémon gender.

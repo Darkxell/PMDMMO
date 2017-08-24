@@ -16,6 +16,11 @@ public class Message
 	/** Translated value of this Message. Used to avoid translating every time this Message is used. */
 	private String value = "";
 
+	public Message(String id)
+	{
+		this(id, true);
+	}
+
 	public Message(String id, boolean shouldTranslate)
 	{
 		this.id = id;
@@ -41,18 +46,19 @@ public class Message
 		return this.addReplacement(pattern, new Message(message, false));
 	}
 
+	/** @return The translated value of this Message. */
+	@Override
+	public String toString()
+	{
+		if (!Lang.getLanguage().id.equals(this.lastLang)) this.update();
+		return this.value;
+	}
+
 	private void update()
 	{
 		this.value = this.shouldTranslate ? Lang.translate(this.id) : this.id;
 		for (String pattern : this.replacements.keySet())
-			this.value.replaceAll(pattern, this.replacements.get(pattern).value());
-	}
-
-	/** @return The translated value of this Message. */
-	public String value()
-	{
-		if (!Lang.getLanguage().id.equals(this.lastLang)) this.update();
-		return this.value;
+			this.value.replaceAll(pattern, this.replacements.get(pattern).toString());
 	}
 
 }

@@ -25,11 +25,16 @@ public class Lang
 	}
 
 	private static HashMap<String, String> dictionnary = new HashMap<String, String>();
-	private static Language selected = Language.ENGLISH;
+	private static Language selected;
 
 	public static Language getLanguage()
 	{
 		return selected;
+	}
+
+	public static void loadClient()
+	{
+		setLanguage(Language.ENGLISH);
 	}
 
 	public static void setLanguage(Language language)
