@@ -3,6 +3,8 @@ package com.darkxell.client.launchable;
 import com.darkxell.client.state.StateManager;
 import com.darkxell.client.state.TestState;
 import com.darkxell.client.ui.Frame;
+import com.darkxell.common.move.MoveRegistry;
+import com.darkxell.common.pokemon.PokemonRegistry;
 
 /** Launching class of the client */
 public class Launcher
@@ -17,6 +19,9 @@ public class Launcher
 
 	public static void main(String[] args)
 	{
+		PokemonRegistry.loadClient();
+		MoveRegistry.loadClient();
+		System.out.println("Data loaded.");
 
 		frame = new Frame();
 		stateManager = new StateManager();
