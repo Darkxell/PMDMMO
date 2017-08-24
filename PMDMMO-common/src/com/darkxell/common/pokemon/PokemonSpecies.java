@@ -5,6 +5,8 @@ import java.util.HashMap;
 
 import org.jdom2.Element;
 
+import com.darkxell.common.util.Message;
+
 public class PokemonSpecies
 {
 
@@ -16,7 +18,6 @@ public class PokemonSpecies
 	public final int id, formID;
 	/** List of moves learned by leveling up. Key is level, value is the list of move IDs. */
 	private final HashMap<Integer, ArrayList<Integer>> learnset;
-	public final String name, formName;
 	/** Recruitment rate. */
 	public final int recruitRate;
 	public final PokemonStats stats;
@@ -29,9 +30,7 @@ public class PokemonSpecies
 	public PokemonSpecies(Element xml)
 	{
 		this.id = Integer.parseInt(xml.getAttributeValue("id"));
-		this.name = xml.getAttributeValue("name");
 		this.formID = xml.getAttribute("form-id") == null ? 0 : Integer.parseInt(xml.getAttributeValue("id"));
-		this.formName = xml.getAttributeValue("form-name");
 		this.type1 = PokemonType.find(Integer.parseInt(xml.getAttributeValue("type1")));
 		this.type2 = xml.getAttribute("type2") == null ? null : PokemonType.find(Integer.parseInt(xml.getAttributeValue("type2")));
 		this.stats = new PokemonStats(xml.getChild("stats"));
@@ -58,13 +57,11 @@ public class PokemonSpecies
 		}
 	}
 
-	public PokemonSpecies(int id, String name, int formID, String formName, PokemonType type1, PokemonType type2, int baseXP, PokemonStats stats, float height,
-			float weight, int recruitRate, HashMap<Integer, ArrayList<Integer>> learnset, ArrayList<Integer> tms, ArrayList<Evolution> evolutions)
+	public PokemonSpecies(int id, int formID, PokemonType type1, PokemonType type2, int baseXP, PokemonStats stats, float height, float weight,
+			int recruitRate, HashMap<Integer, ArrayList<Integer>> learnset, ArrayList<Integer> tms, ArrayList<Evolution> evolutions)
 	{
 		this.id = id;
-		this.name = name;
 		this.formID = formID;
-		this.formName = formName;
 		this.type1 = type1;
 		this.type2 = type2;
 		this.baseXP = baseXP;
@@ -77,13 +74,17 @@ public class PokemonSpecies
 		this.evolutions = evolutions;
 	}
 
+	/** @return This Pokémon's name. */
+	public Message name()
+	{
+		return new Message("pokemon." + this.id);
+	}
+
 	public Element toXML()
 	{
 		Element root = new Element("pokemon");
 		root.setAttribute("id", Integer.toString(this.id));
-		root.setAttribute("name", this.name);
 		if (this.formID != 0) root.setAttribute("form-id", Integer.toString(this.formID));
-		if (this.formName != null) root.setAttribute("form-name", this.formName);
 		root.setAttribute("type1", Integer.toString(this.type1.id));
 		if (this.type2 != null) root.setAttribute("type2", Integer.toString(this.type2.id));
 		root.setAttribute("base-xp", Integer.toString(this.baseXP));
