@@ -1,5 +1,7 @@
 package com.darkxell.common.pokemon;
 
+import org.jdom2.Element;
+
 public class PokemonStats
 {
 
@@ -24,6 +26,18 @@ public class PokemonStats
 		this.specialAttack = specialAttack;
 		this.specialDefense = specialDefense;
 		this.speed = speed;
+	}
+
+	public Element toXML()
+	{
+		Element root = new Element("stats");
+		root.setAttribute("atk", Integer.toString(this.attack));
+		root.setAttribute("def", Integer.toString(this.defense));
+		root.setAttribute("hea", Integer.toString(this.health));
+		root.setAttribute("spa", Integer.toString(this.specialAttack));
+		root.setAttribute("spd", Integer.toString(this.specialDefense));
+		root.setAttribute("spe", Integer.toString(this.speed));
+		return root;
 	}
 
 }

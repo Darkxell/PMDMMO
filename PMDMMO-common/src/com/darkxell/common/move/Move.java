@@ -1,5 +1,7 @@
 package com.darkxell.common.move;
 
+import org.jdom2.Element;
+
 import com.darkxell.common.pokemon.PokemonType;
 
 public abstract class Move
@@ -38,8 +40,6 @@ public abstract class Move
 	public final int power;
 	/** This move's default Power Points. */
 	public final int pp;
-	/** This move's maximum Power Points. */
-	public final int ppMax;
 	/** This move's priority. */
 	public final int priority;
 	/** This move's targets. See {@link Move#SINGLE}. */
@@ -47,21 +47,37 @@ public abstract class Move
 	/** This move's type. */
 	public final PokemonType type;
 
-	public Move(int id, String name, PokemonType type, byte category, int pp, int ppMax, int power, int accuracy, byte targets, int priority,
-			int additionalEffectChance, boolean makesContact)
+	public Move(int id, String name, PokemonType type, byte category, int pp, int power, int accuracy, byte targets, int priority, int additionalEffectChance,
+			boolean makesContact)
 	{
 		this.id = id;
 		this.name = name;
 		this.type = type;
 		this.category = category;
 		this.pp = pp;
-		this.ppMax = ppMax;
 		this.power = power;
 		this.accuracy = accuracy;
 		this.targets = targets;
 		this.priority = priority;
 		this.additionalEffectChance = additionalEffectChance;
 		this.makesContact = makesContact;
+	}
+
+	public Element toXML()
+	{
+		Element root = new Element("move");
+		root.setAttribute("id", Integer.toString(this.id));
+		root.setAttribute("name", this.name);
+		root.setAttribute("type", Integer.toString(this.type.id));
+		root.setAttribute("category", Byte.toString(this.category));
+		root.setAttribute("pp", Integer.toString(this.pp));
+		root.setAttribute("power", Integer.toString(this.power));
+		if (this.accuracy != 100) root.setAttribute("accuracy", Integer.toString(this.accuracy));
+		root.setAttribute("targets", Byte.toString(this.targets));
+		if (this.priority != 0) root.setAttribute("priority", Integer.toString(this.priority));
+		root.setAttribute("random", Integer.toString(this.additionalEffectChance));
+		if (this.makesContact) root.setAttribute("contact", Boolean.toString(this.makesContact));
+		return root;
 	}
 
 }

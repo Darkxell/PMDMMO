@@ -1,6 +1,8 @@
 package com.darkxell.common.pokemon;
 
-public abstract class Evolution
+import org.jdom2.Element;
+
+public class Evolution
 {
 	/** Evolution methods.<br />
 	 * <ul>
@@ -27,6 +29,12 @@ public abstract class Evolution
 		this.speciesForm = speciesForm;
 		this.method = method;
 		this.value = value;
+	}
+
+	public Element toXML()
+	{
+		return new Element("e").setAttribute("pokemon", Integer.toString(this.species)).setAttribute("form", Integer.toString(this.speciesForm))
+				.setAttribute("method", Integer.toString(this.method)).setAttribute("value", Integer.toString(this.value));
 	}
 
 }
