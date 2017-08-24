@@ -12,6 +12,13 @@ public class Evolution
 	 * </ul> */
 	public static final byte LEVEL = 0, ITEM = 1, IQ = 2;
 
+	/** @return An Evolution created from the input XML data. */
+	public static Evolution fromXML(Element root)
+	{
+		return new Evolution(Integer.parseInt(root.getAttributeValue("pokemon")), Integer.parseInt(root.getAttributeValue("form")), Byte.parseByte(root
+				.getAttributeValue("method")), Integer.parseInt(root.getAttributeValue("value")));
+	}
+
 	/** How this Evolution occurs. See {@link Evolution#LEVEL}. */
 	public final byte method;
 	/** The ID of the species this Evolution leads to. */
@@ -22,6 +29,14 @@ public class Evolution
 	 * If method is ITEM, this is the ID of the Item to be used on.<br />
 	 * If method is IQ, this is the minimum IQ of the Pokémon. */
 	public final int value;
+
+	public Evolution(Element xml)
+	{
+		this.species = Integer.parseInt(xml.getAttributeValue("pokemon"));
+		this.speciesForm = Integer.parseInt(xml.getAttributeValue("form"));
+		this.method = Byte.parseByte(xml.getAttributeValue("method"));
+		this.value = Integer.parseInt(xml.getAttributeValue("value"));
+	}
 
 	public Evolution(int species, int speciesForm, byte method, int value)
 	{

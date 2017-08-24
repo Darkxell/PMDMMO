@@ -18,6 +18,16 @@ public class PokemonStats
 	/** Speed. */
 	public final int speed;
 
+	public PokemonStats(Element xml)
+	{
+		this.attack = Integer.parseInt(xml.getAttributeValue("atk"));
+		this.defense = Integer.parseInt(xml.getAttributeValue("def"));
+		this.health = Integer.parseInt(xml.getAttributeValue("hea"));
+		this.specialAttack = Integer.parseInt(xml.getAttributeValue("spa"));
+		this.specialDefense = Integer.parseInt(xml.getAttributeValue("spd"));
+		this.speed = Integer.parseInt(xml.getAttributeValue("spe"));
+	}
+
 	public PokemonStats(int attack, int defense, int health, int specialAttack, int specialDefense, int speed)
 	{
 		this.attack = attack;

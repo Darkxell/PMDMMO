@@ -25,6 +25,39 @@ public class PokemonSpecies
 	/** This Pokémon's types. type2 can be null. */
 	public final PokemonType type1, type2;
 
+	/** Constructor for XML */
+	public PokemonSpecies(Element xml)
+	{
+		this.id = Integer.parseInt(xml.getAttributeValue("id"));
+		this.name = xml.getAttributeValue("name");
+		this.formID = xml.getAttribute("form-id") == null ? 0 : Integer.parseInt(xml.getAttributeValue("id"));
+		this.formName = xml.getAttributeValue("form-name");
+		this.type1 = PokemonType.find(Integer.parseInt(xml.getAttributeValue("type1")));
+		this.type2 = xml.getAttribute("type2") == null ? null : PokemonType.find(Integer.parseInt(xml.getAttributeValue("type2")));
+		this.stats = new PokemonStats(xml.getChild("stats"));
+		this.baseXP = Integer.parseInt(xml.getAttributeValue("base-xp"));
+		this.height = Float.parseFloat(xml.getAttributeValue("height"));
+		this.weight = Float.parseFloat(xml.getAttributeValue("weight"));
+		this.recruitRate = Integer.parseInt(xml.getAttributeValue("recruit-rate"));
+		this.learnset = new HashMap<Integer, ArrayList<Integer>>();
+		this.tms = new ArrayList<Integer>();
+		this.evolutions = new ArrayList<Evolution>();
+
+		if (xml.getChild("evolves") != null) for (Element e : xml.getChild("evolves").getChildren())
+			this.evolutions.add(new Evolution(e));
+
+		if (xml.getChild("tms") != null) for (Element tm : xml.getChild("tms").getChildren())
+			this.tms.add(Integer.parseInt(tm.getAttributeValue("id")));
+
+		if (xml.getChild("learnset") != null) for (Element level : xml.getChild("learnset").getChildren())
+		{
+			ArrayList<Integer> moves = new ArrayList<Integer>();
+			for (Element move : level.getChildren())
+				moves.add(Integer.parseInt(move.getAttributeValue("id")));
+			this.learnset.put(Integer.parseInt(level.getAttributeValue("l")), moves);
+		}
+	}
+
 	public PokemonSpecies(int id, String name, int formID, String formName, PokemonType type1, PokemonType type2, int baseXP, PokemonStats stats, float height,
 			float weight, int recruitRate, HashMap<Integer, ArrayList<Integer>> learnset, ArrayList<Integer> tms, ArrayList<Evolution> evolutions)
 	{

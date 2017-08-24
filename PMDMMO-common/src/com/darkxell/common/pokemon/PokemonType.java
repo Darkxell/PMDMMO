@@ -168,6 +168,14 @@ public enum PokemonType
 		FAIRY.setEffectivenessOn(DARK, SUPER_EFFECTIVE);
 	}
 
+	/** @return The Pokémon type with the input ID. null if ID doesn't match a type. */
+	public static PokemonType find(int typeID)
+	{
+		for (PokemonType type : values())
+			if (type.id == typeID) return type;
+		return null;
+	}
+
 	public final Color color;
 	private final float[] effectiveness;
 	public final int id;

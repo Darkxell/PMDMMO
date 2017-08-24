@@ -4,7 +4,7 @@ import org.jdom2.Element;
 
 import com.darkxell.common.pokemon.PokemonType;
 
-public abstract class Move
+public class Move
 {
 	/** Move targets.<br />
 	 * <ul>
@@ -48,6 +48,22 @@ public abstract class Move
 	public final byte targets;
 	/** This move's type. */
 	public final PokemonType type;
+
+	public Move(Element xml)
+	{
+		this.id = Integer.parseInt(xml.getAttributeValue("id"));
+		this.name = xml.getAttributeValue("name");
+		this.type = PokemonType.find(Integer.parseInt(xml.getAttributeValue("type")));
+		this.behaviorID = Integer.parseInt(xml.getAttributeValue("behavior"));
+		this.category = Byte.parseByte(xml.getAttributeValue("category"));
+		this.pp = Integer.parseInt(xml.getAttributeValue("pp"));
+		this.power = Integer.parseInt(xml.getAttributeValue("power"));
+		this.accuracy = xml.getAttribute("accuracy") == null ? 100 : Integer.parseInt(xml.getAttributeValue("accuracy"));
+		this.targets = Byte.parseByte(xml.getAttributeValue("targets"));
+		this.priority = xml.getAttribute("priority") == null ? 0 : Integer.parseInt(xml.getAttributeValue("priority"));
+		this.additionalEffectChance = xml.getAttribute("random") == null ? 0 : Integer.parseInt(xml.getAttributeValue("random"));
+		this.makesContact = xml.getAttribute("contact") != null;
+	}
 
 	public Move(int id, String name, PokemonType type, int behaviorID, byte category, int pp, int power, int accuracy, byte targets, int priority,
 			int additionalEffectChance, boolean makesContact)
