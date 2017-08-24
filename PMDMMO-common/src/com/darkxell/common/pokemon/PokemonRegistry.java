@@ -7,19 +7,19 @@ import java.util.HashMap;
 import org.jdom2.Element;
 import org.jdom2.input.SAXBuilder;
 
-/** Holds all Pokï¿½mon species. */
+/** Holds all Pokémon species. */
 public final class PokemonRegistry
 {
 
 	private static HashMap<Integer, PokemonSpecies> pokemon = new HashMap<Integer, PokemonSpecies>();
 
-	/** @return The Pokï¿½mon species with the input ID. */
+	/** @return The Pokémon species with the input ID. */
 	public static PokemonSpecies find(int id)
 	{
 		return pokemon.get(id);
 	}
 
-	/** @return All Pokï¿½mon species. */
+	/** @return All Pokémon species. */
 	public static Collection<PokemonSpecies> list()
 	{
 		return pokemon.values();
@@ -28,7 +28,7 @@ public final class PokemonRegistry
 	/** Loads this Registry for the Client. */
 	public static void loadClient()
 	{
-		System.out.println("Loading Pokï¿½mon...");
+		System.out.println("Loading Pokémon...");
 		
 		File file = new File("resources/data/pokemon.xml");
 		SAXBuilder builder = new SAXBuilder();
