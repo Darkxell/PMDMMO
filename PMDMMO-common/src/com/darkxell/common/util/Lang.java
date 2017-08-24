@@ -1,4 +1,4 @@
-package com.darkxell.client.util;
+package com.darkxell.common.util;
 
 import java.io.File;
 import java.io.FileInputStream;
