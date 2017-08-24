@@ -1,0 +1,624 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<moves>
+  <move id="1" name="megahorn" type="6" behavior="10" category="2" pp="10" power="120" accuracy="85" targets="0" />
+  <move id="2" name="attackorder" type="6" behavior="15" category="2" pp="15" power="90" targets="0" />
+  <move id="3" name="bugbuzz" type="6" behavior="10" category="2" pp="10" power="90" targets="0" random="10" />
+  <move id="4" name="xscissor" type="6" behavior="15" category="2" pp="15" power="80" targets="0" />
+  <move id="5" name="signalbeam" type="6" behavior="15" category="2" pp="15" power="75" targets="0" random="10" />
+  <move id="6" name="uturn" type="6" behavior="20" category="2" pp="20" power="70" targets="0" />
+  <move id="7" name="steamroller" type="6" behavior="20" category="2" pp="20" power="65" targets="0" random="30" />
+  <move id="8" name="bugbite" type="6" behavior="20" category="2" pp="20" power="60" targets="0" />
+  <move id="9" name="silverwind" type="6" behavior="5" category="2" pp="5" power="60" targets="0" random="10" />
+  <move id="10" name="strugglebug" type="6" behavior="20" category="2" pp="20" power="50" targets="3" random="100" />
+  <move id="11" name="twineedle" type="6" behavior="20" category="2" pp="20" power="25" targets="0" random="20" />
+  <move id="12" name="furycutter" type="6" behavior="20" category="2" pp="20" power="40" accuracy="95" targets="0" />
+  <move id="13" name="leechlife" type="6" behavior="15" category="2" pp="15" power="20" targets="0" />
+  <move id="14" name="pinmissile" type="6" behavior="20" category="2" pp="20" power="25" accuracy="90" targets="0" />
+  <move id="15" name="defendorder" type="6" behavior="10" category="2" pp="10" power="0" accuracy="0" targets="2" />
+  <move id="16" name="healorder" type="6" behavior="10" category="2" pp="10" power="0" accuracy="0" targets="2" />
+  <move id="17" name="quiverdance" type="6" behavior="20" category="2" pp="20" power="0" accuracy="0" targets="2" />
+  <move id="18" name="ragepowder" type="6" behavior="20" category="2" pp="20" power="0" accuracy="0" targets="2" priority="2" />
+  <move id="19" name="spiderweb" type="6" behavior="10" category="2" pp="10" power="0" accuracy="0" targets="0" />
+  <move id="20" name="stringshot" type="6" behavior="40" category="2" pp="40" power="0" accuracy="95" targets="3" />
+  <move id="21" name="tailglow" type="6" behavior="20" category="2" pp="20" power="0" accuracy="0" targets="2" />
+  <move id="22" name="foulplay" type="16" behavior="15" category="2" pp="15" power="95" targets="0" />
+  <move id="23" name="nightdaze" type="16" behavior="10" category="2" pp="10" power="85" accuracy="95" targets="0" random="40" />
+  <move id="24" name="crunch" type="16" behavior="15" category="2" pp="15" power="80" targets="0" random="20" />
+  <move id="25" name="darkpulse" type="16" behavior="15" category="2" pp="15" power="80" targets="0" random="20" />
+  <move id="26" name="suckerpunch" type="16" behavior="5" category="2" pp="5" power="80" targets="0" priority="1" />
+  <move id="27" name="nightslash" type="16" behavior="15" category="2" pp="15" power="70" targets="0" />
+  <move id="28" name="bite" type="16" behavior="25" category="2" pp="25" power="60" targets="0" random="30" />
+  <move id="29" name="feintattack" type="16" behavior="20" category="2" pp="20" power="60" accuracy="0" targets="0" />
+  <move id="30" name="snarl" type="16" behavior="15" category="2" pp="15" power="55" accuracy="95" targets="3" random="100" />
+  <move id="31" name="assurance" type="16" behavior="10" category="2" pp="10" power="60" targets="0" />
+  <move id="32" name="payback" type="16" behavior="10" category="2" pp="10" power="50" targets="0" />
+  <move id="33" name="pursuit" type="16" behavior="20" category="2" pp="20" power="40" targets="0" />
+  <move id="34" name="thief" type="16" behavior="25" category="2" pp="25" power="60" targets="0" />
+  <move id="35" name="knockoff" type="16" behavior="20" category="2" pp="20" power="60" targets="0" />
+  <move id="36" name="beatup" type="16" behavior="10" category="2" pp="10" power="1" targets="0" />
+  <move id="37" name="fling" type="16" behavior="10" category="2" pp="10" power="1" targets="0" />
+  <move id="38" name="punishment" type="16" behavior="5" category="2" pp="5" power="1" targets="0" />
+  <move id="39" name="darkvoid" type="16" behavior="10" category="2" pp="10" power="0" accuracy="80" targets="3" />
+  <move id="40" name="embargo" type="16" behavior="15" category="2" pp="15" power="0" targets="0" />
+  <move id="41" name="faketears" type="16" behavior="20" category="2" pp="20" power="0" targets="0" />
+  <move id="42" name="flatter" type="16" behavior="15" category="2" pp="15" power="0" targets="0" />
+  <move id="43" name="honeclaws" type="16" behavior="15" category="2" pp="15" power="0" accuracy="0" targets="2" />
+  <move id="44" name="memento" type="16" behavior="10" category="2" pp="10" power="0" targets="0" />
+  <move id="45" name="nastyplot" type="16" behavior="20" category="2" pp="20" power="0" accuracy="0" targets="2" />
+  <move id="46" name="quash" type="16" behavior="15" category="2" pp="15" power="0" targets="0" />
+  <move id="47" name="snatch" type="16" behavior="10" category="2" pp="10" power="0" accuracy="0" targets="2" priority="4" />
+  <move id="48" name="switcheroo" type="16" behavior="10" category="2" pp="10" power="0" targets="0" />
+  <move id="49" name="taunt" type="16" behavior="20" category="2" pp="20" power="0" targets="0" />
+  <move id="50" name="torment" type="16" behavior="15" category="2" pp="15" power="0" targets="0" />
+  <move id="51" name="roaroftime" type="15" behavior="5" category="2" pp="5" power="150" accuracy="90" targets="0" />
+  <move id="52" name="dracometeor" type="15" behavior="5" category="2" pp="5" power="130" accuracy="90" targets="0" />
+  <move id="53" name="outrage" type="15" behavior="10" category="2" pp="10" power="120" targets="1" />
+  <move id="54" name="dragonrush" type="15" behavior="10" category="2" pp="10" power="100" accuracy="75" targets="0" random="20" />
+  <move id="55" name="spacialrend" type="15" behavior="5" category="2" pp="5" power="100" accuracy="95" targets="0" />
+  <move id="56" name="dragonpulse" type="15" behavior="10" category="2" pp="10" power="85" targets="0" />
+  <move id="57" name="dragonclaw" type="15" behavior="15" category="2" pp="15" power="80" targets="0" />
+  <move id="58" name="dragontail" type="15" behavior="10" category="2" pp="10" power="60" accuracy="90" targets="0" priority="-6" />
+  <move id="59" name="dragonbreath" type="15" behavior="20" category="2" pp="20" power="60" targets="0" random="30" />
+  <move id="60" name="dualchop" type="15" behavior="15" category="2" pp="15" power="40" accuracy="90" targets="0" />
+  <move id="61" name="twister" type="15" behavior="20" category="2" pp="20" power="40" targets="3" random="20" />
+  <move id="62" name="dragonrage" type="15" behavior="10" category="2" pp="10" power="1" targets="0" />
+  <move id="63" name="dragondance" type="15" behavior="20" category="2" pp="20" power="0" accuracy="0" targets="2" />
+  <move id="64" name="boltstrike" type="12" behavior="5" category="2" pp="5" power="130" accuracy="85" targets="0" random="20" />
+  <move id="65" name="thunder" type="12" behavior="10" category="2" pp="10" power="110" accuracy="70" targets="0" random="30" />
+  <move id="66" name="volttackle" type="12" behavior="15" category="2" pp="15" power="120" targets="0" random="10" />
+  <move id="67" name="zapcannon" type="12" behavior="5" category="2" pp="5" power="120" accuracy="50" targets="0" random="100" />
+  <move id="68" name="fusionbolt" type="12" behavior="5" category="2" pp="5" power="100" targets="0" />
+  <move id="69" name="thunderbolt" type="12" behavior="15" category="2" pp="15" power="90" targets="0" random="10" />
+  <move id="70" name="wildcharge" type="12" behavior="15" category="2" pp="15" power="90" targets="0" />
+  <move id="71" name="discharge" type="12" behavior="15" category="2" pp="15" power="80" targets="5" random="30" />
+  <move id="72" name="thunderpunch" type="12" behavior="15" category="2" pp="15" power="75" targets="0" random="10" />
+  <move id="73" name="voltswitch" type="12" behavior="20" category="2" pp="20" power="70" targets="0" />
+  <move id="74" name="spark" type="12" behavior="20" category="2" pp="20" power="65" targets="0" random="30" />
+  <move id="75" name="thunderfang" type="12" behavior="15" category="2" pp="15" power="65" accuracy="95" targets="0" random="100" />
+  <move id="76" name="shockwave" type="12" behavior="20" category="2" pp="20" power="60" accuracy="0" targets="0" />
+  <move id="77" name="electroweb" type="12" behavior="15" category="2" pp="15" power="55" accuracy="95" targets="3" random="100" />
+  <move id="78" name="chargebeam" type="12" behavior="10" category="2" pp="10" power="50" accuracy="90" targets="0" random="70" />
+  <move id="79" name="thundershock" type="12" behavior="30" category="2" pp="30" power="40" targets="0" random="10" />
+  <move id="80" name="electroball" type="12" behavior="10" category="2" pp="10" power="1" targets="0" />
+  <move id="81" name="charge" type="12" behavior="20" category="2" pp="20" power="0" accuracy="0" targets="2" />
+  <move id="82" name="magnetrise" type="12" behavior="10" category="2" pp="10" power="0" accuracy="0" targets="2" />
+  <move id="83" name="thunderwave" type="12" behavior="20" category="2" pp="20" power="0" targets="0" />
+  <move id="84" name="focuspunch" type="1" behavior="20" category="2" pp="20" power="150" targets="0" priority="-3" />
+  <move id="85" name="highjumpkick" type="1" behavior="10" category="2" pp="10" power="130" accuracy="90" targets="0" />
+  <move id="86" name="closecombat" type="1" behavior="5" category="2" pp="5" power="120" targets="0" />
+  <move id="87" name="focusblast" type="1" behavior="5" category="2" pp="5" power="120" accuracy="70" targets="0" random="10" />
+  <move id="88" name="superpower" type="1" behavior="5" category="2" pp="5" power="120" targets="0" />
+  <move id="89" name="crosschop" type="1" behavior="5" category="2" pp="5" power="100" accuracy="80" targets="0" />
+  <move id="90" name="dynamicpunch" type="1" behavior="5" category="2" pp="5" power="100" accuracy="50" targets="0" random="100" />
+  <move id="91" name="hammerarm" type="1" behavior="10" category="2" pp="10" power="100" accuracy="90" targets="0" />
+  <move id="92" name="jumpkick" type="1" behavior="10" category="2" pp="10" power="100" accuracy="95" targets="0" />
+  <move id="93" name="aurasphere" type="1" behavior="20" category="2" pp="20" power="80" accuracy="0" targets="0" />
+  <move id="94" name="sacredsword" type="1" behavior="15" category="2" pp="15" power="90" targets="0" />
+  <move id="95" name="secretsword" type="1" behavior="10" category="2" pp="10" power="85" targets="0" />
+  <move id="96" name="skyuppercut" type="1" behavior="15" category="2" pp="15" power="85" accuracy="90" targets="0" />
+  <move id="97" name="submission" type="1" behavior="25" category="2" pp="25" power="80" accuracy="80" targets="0" />
+  <move id="98" name="brickbreak" type="1" behavior="15" category="2" pp="15" power="75" targets="0" />
+  <move id="99" name="drainpunch" type="1" behavior="10" category="2" pp="10" power="75" targets="0" />
+  <move id="100" name="vitalthrow" type="1" behavior="10" category="2" pp="10" power="70" accuracy="0" targets="0" priority="-1" />
+  <move id="101" name="circlethrow" type="1" behavior="10" category="2" pp="10" power="60" accuracy="90" targets="0" priority="-6" />
+  <move id="102" name="forcepalm" type="1" behavior="10" category="2" pp="10" power="60" targets="0" random="30" />
+  <move id="103" name="lowsweep" type="1" behavior="20" category="2" pp="20" power="65" targets="0" random="100" />
+  <move id="104" name="revenge" type="1" behavior="10" category="2" pp="10" power="60" targets="0" priority="-4" />
+  <move id="105" name="rollingkick" type="1" behavior="15" category="2" pp="15" power="60" accuracy="85" targets="0" random="30" />
+  <move id="106" name="wakeupslap" type="1" behavior="10" category="2" pp="10" power="70" targets="0" />
+  <move id="107" name="karatechop" type="1" behavior="25" category="2" pp="25" power="50" targets="0" />
+  <move id="108" name="machpunch" type="1" behavior="30" category="2" pp="30" power="40" targets="0" priority="1" />
+  <move id="109" name="rocksmash" type="1" behavior="15" category="2" pp="15" power="40" targets="0" random="50" />
+  <move id="110" name="stormthrow" type="1" behavior="10" category="2" pp="10" power="60" targets="0" />
+  <move id="111" name="vacuumwave" type="1" behavior="30" category="2" pp="30" power="40" targets="0" priority="1" />
+  <move id="112" name="doublekick" type="1" behavior="30" category="2" pp="30" power="30" targets="0" />
+  <move id="113" name="armthrust" type="1" behavior="20" category="2" pp="20" power="15" targets="0" />
+  <move id="114" name="triplekick" type="1" behavior="10" category="2" pp="10" power="10" accuracy="90" targets="0" />
+  <move id="115" name="counter" type="1" behavior="20" category="2" pp="20" power="1" targets="4" priority="-5" />
+  <move id="116" name="finalgambit" type="1" behavior="5" category="2" pp="5" power="1" targets="0" />
+  <move id="117" name="lowkick" type="1" behavior="20" category="2" pp="20" power="1" targets="0" />
+  <move id="118" name="reversal" type="1" behavior="15" category="2" pp="15" power="1" targets="0" />
+  <move id="119" name="seismictoss" type="1" behavior="20" category="2" pp="20" power="1" targets="0" />
+  <move id="120" name="bulkup" type="1" behavior="20" category="2" pp="20" power="0" accuracy="0" targets="2" />
+  <move id="121" name="detect" type="1" behavior="5" category="2" pp="5" power="0" accuracy="0" targets="2" priority="4" />
+  <move id="122" name="quickguard" type="1" behavior="15" category="2" pp="15" power="0" accuracy="0" targets="4" priority="3" />
+  <move id="123" name="vcreate" type="9" behavior="5" category="2" pp="5" power="180" accuracy="95" targets="0" />
+  <move id="124" name="blastburn" type="9" behavior="5" category="2" pp="5" power="150" accuracy="90" targets="0" />
+  <move id="125" name="eruption" type="9" behavior="5" category="2" pp="5" power="150" targets="3" />
+  <move id="126" name="overheat" type="9" behavior="5" category="2" pp="5" power="130" accuracy="90" targets="0" />
+  <move id="127" name="blueflare" type="9" behavior="5" category="2" pp="5" power="130" accuracy="85" targets="0" random="20" />
+  <move id="128" name="fireblast" type="9" behavior="5" category="2" pp="5" power="110" accuracy="85" targets="0" random="10" />
+  <move id="129" name="flareblitz" type="9" behavior="15" category="2" pp="15" power="120" targets="0" random="10" />
+  <move id="130" name="magmastorm" type="9" behavior="5" category="2" pp="5" power="100" accuracy="75" targets="0" />
+  <move id="131" name="fusionflare" type="9" behavior="5" category="2" pp="5" power="100" targets="0" />
+  <move id="132" name="heatwave" type="9" behavior="10" category="2" pp="10" power="95" accuracy="90" targets="3" random="10" />
+  <move id="133" name="inferno" type="9" behavior="5" category="2" pp="5" power="100" accuracy="50" targets="0" random="100" />
+  <move id="134" name="sacredfire" type="9" behavior="5" category="2" pp="5" power="100" accuracy="95" targets="0" random="50" />
+  <move id="135" name="searingshot" type="9" behavior="5" category="2" pp="5" power="100" targets="5" random="30" />
+  <move id="136" name="flamethrower" type="9" behavior="15" category="2" pp="15" power="90" targets="0" random="10" />
+  <move id="137" name="blazekick" type="9" behavior="10" category="2" pp="10" power="85" accuracy="90" targets="0" random="10" />
+  <move id="138" name="fierydance" type="9" behavior="10" category="2" pp="10" power="80" targets="0" random="50" />
+  <move id="139" name="lavaplume" type="9" behavior="15" category="2" pp="15" power="80" targets="5" random="30" />
+  <move id="140" name="firepunch" type="9" behavior="15" category="2" pp="15" power="75" targets="0" random="10" />
+  <move id="141" name="flameburst" type="9" behavior="15" category="2" pp="15" power="70" targets="0" />
+  <move id="142" name="firefang" type="9" behavior="15" category="2" pp="15" power="65" accuracy="95" targets="0" random="10" />
+  <move id="143" name="flamewheel" type="9" behavior="25" category="2" pp="25" power="60" targets="0" random="10" />
+  <move id="144" name="firepledge" type="9" behavior="10" category="2" pp="10" power="80" targets="0" />
+  <move id="145" name="flamecharge" type="9" behavior="20" category="2" pp="20" power="50" targets="0" random="100" />
+  <move id="146" name="ember" type="9" behavior="25" category="2" pp="25" power="40" targets="0" random="10" />
+  <move id="147" name="firespin" type="9" behavior="15" category="2" pp="15" power="35" accuracy="85" targets="0" />
+  <move id="148" name="incinerate" type="9" behavior="15" category="2" pp="15" power="60" targets="3" />
+  <move id="149" name="heatcrash" type="9" behavior="10" category="2" pp="10" power="1" targets="0" />
+  <move id="150" name="sunnyday" type="9" behavior="5" category="2" pp="5" power="0" accuracy="0" targets="4" />
+  <move id="151" name="willowisp" type="9" behavior="15" category="2" pp="15" power="0" accuracy="85" targets="0" />
+  <move id="152" name="skyattack" type="2" behavior="5" category="2" pp="5" power="140" accuracy="90" targets="0" random="30" />
+  <move id="153" name="bravebird" type="2" behavior="15" category="2" pp="15" power="120" targets="0" />
+  <move id="154" name="hurricane" type="2" behavior="10" category="2" pp="10" power="110" accuracy="70" targets="0" random="30" />
+  <move id="155" name="aeroblast" type="2" behavior="5" category="2" pp="5" power="100" accuracy="95" targets="0" />
+  <move id="156" name="fly" type="2" behavior="15" category="2" pp="15" power="90" accuracy="95" targets="0" />
+  <move id="157" name="bounce" type="2" behavior="5" category="2" pp="5" power="85" accuracy="85" targets="0" random="30" />
+  <move id="158" name="drillpeck" type="2" behavior="20" category="2" pp="20" power="80" targets="0" />
+  <move id="159" name="airslash" type="2" behavior="15" category="2" pp="15" power="75" accuracy="95" targets="0" random="30" />
+  <move id="160" name="aerialace" type="2" behavior="20" category="2" pp="20" power="60" accuracy="0" targets="0" />
+  <move id="161" name="chatter" type="2" behavior="20" category="2" pp="20" power="65" targets="0" />
+  <move id="162" name="pluck" type="2" behavior="20" category="2" pp="20" power="60" targets="0" />
+  <move id="163" name="skydrop" type="2" behavior="10" category="2" pp="10" power="60" targets="0" />
+  <move id="164" name="wingattack" type="2" behavior="35" category="2" pp="35" power="60" targets="0" />
+  <move id="165" name="acrobatics" type="2" behavior="15" category="2" pp="15" power="55" targets="0" />
+  <move id="166" name="aircutter" type="2" behavior="25" category="2" pp="25" power="60" accuracy="95" targets="3" />
+  <move id="167" name="gust" type="2" behavior="35" category="2" pp="35" power="40" targets="0" />
+  <move id="168" name="peck" type="2" behavior="35" category="2" pp="35" power="35" targets="0" />
+  <move id="169" name="defog" type="2" behavior="15" category="2" pp="15" power="0" accuracy="0" targets="0" />
+  <move id="170" name="featherdance" type="2" behavior="15" category="2" pp="15" power="0" targets="0" />
+  <move id="171" name="mirrormove" type="2" behavior="20" category="2" pp="20" power="0" accuracy="0" targets="0" />
+  <move id="172" name="roost" type="2" behavior="10" category="2" pp="10" power="0" accuracy="0" targets="2" />
+  <move id="173" name="tailwind" type="2" behavior="15" category="2" pp="15" power="0" accuracy="0" targets="4" />
+  <move id="174" name="shadowforce" type="7" behavior="5" category="2" pp="5" power="120" targets="0" />
+  <move id="175" name="shadowball" type="7" behavior="15" category="2" pp="15" power="80" targets="0" random="20" />
+  <move id="176" name="shadowclaw" type="7" behavior="15" category="2" pp="15" power="70" targets="0" />
+  <move id="177" name="ominouswind" type="7" behavior="5" category="2" pp="5" power="60" targets="0" random="10" />
+  <move id="178" name="shadowpunch" type="7" behavior="20" category="2" pp="20" power="60" accuracy="0" targets="0" />
+  <move id="179" name="hex" type="7" behavior="10" category="2" pp="10" power="65" targets="0" />
+  <move id="180" name="shadowsneak" type="7" behavior="30" category="2" pp="30" power="40" targets="0" priority="1" />
+  <move id="181" name="astonish" type="7" behavior="15" category="2" pp="15" power="30" targets="0" random="30" />
+  <move id="182" name="lick" type="7" behavior="30" category="2" pp="30" power="30" targets="0" random="30" />
+  <move id="183" name="nightshade" type="7" behavior="15" category="2" pp="15" power="1" targets="0" />
+  <move id="184" name="confuseray" type="7" behavior="10" category="2" pp="10" power="0" targets="0" />
+  <move id="185" name="curse" type="7" behavior="10" category="2" pp="10" power="0" accuracy="0" targets="4" />
+  <move id="186" name="destinybond" type="7" behavior="5" category="2" pp="5" power="0" accuracy="0" targets="2" />
+  <move id="187" name="grudge" type="7" behavior="5" category="2" pp="5" power="0" accuracy="0" targets="2" />
+  <move id="188" name="nightmare" type="7" behavior="15" category="2" pp="15" power="0" targets="0" />
+  <move id="189" name="spite" type="7" behavior="10" category="2" pp="10" power="0" targets="0" />
+  <move id="190" name="frenzyplant" type="11" behavior="5" category="2" pp="5" power="150" accuracy="90" targets="0" />
+  <move id="191" name="leafstorm" type="11" behavior="5" category="2" pp="5" power="130" accuracy="90" targets="0" />
+  <move id="192" name="petaldance" type="11" behavior="10" category="2" pp="10" power="120" targets="1" />
+  <move id="193" name="powerwhip" type="11" behavior="10" category="2" pp="10" power="120" accuracy="85" targets="0" />
+  <move id="194" name="seedflare" type="11" behavior="5" category="2" pp="5" power="120" accuracy="85" targets="0" random="40" />
+  <move id="195" name="solarbeam" type="11" behavior="10" category="2" pp="10" power="120" targets="0" />
+  <move id="196" name="woodhammer" type="11" behavior="15" category="2" pp="15" power="120" targets="0" />
+  <move id="197" name="leafblade" type="11" behavior="15" category="2" pp="15" power="90" targets="0" />
+  <move id="198" name="energyball" type="11" behavior="10" category="2" pp="10" power="90" targets="0" random="10" />
+  <move id="199" name="seedbomb" type="11" behavior="15" category="2" pp="15" power="80" targets="0" />
+  <move id="200" name="gigadrain" type="11" behavior="10" category="2" pp="10" power="75" targets="0" />
+  <move id="201" name="hornleech" type="11" behavior="10" category="2" pp="10" power="75" targets="0" />
+  <move id="202" name="leaftornado" type="11" behavior="10" category="2" pp="10" power="65" accuracy="90" targets="0" random="30" />
+  <move id="203" name="magicalleaf" type="11" behavior="20" category="2" pp="20" power="60" accuracy="0" targets="0" />
+  <move id="204" name="needlearm" type="11" behavior="15" category="2" pp="15" power="60" targets="0" random="30" />
+  <move id="205" name="razorleaf" type="11" behavior="25" category="2" pp="25" power="55" accuracy="95" targets="3" />
+  <move id="206" name="grasspledge" type="11" behavior="10" category="2" pp="10" power="80" targets="0" />
+  <move id="207" name="megadrain" type="11" behavior="15" category="2" pp="15" power="40" targets="0" />
+  <move id="208" name="vinewhip" type="11" behavior="25" category="2" pp="25" power="45" targets="0" />
+  <move id="209" name="bulletseed" type="11" behavior="30" category="2" pp="30" power="25" targets="0" />
+  <move id="210" name="absorb" type="11" behavior="25" category="2" pp="25" power="20" targets="0" />
+  <move id="211" name="grassknot" type="11" behavior="20" category="2" pp="20" power="1" targets="0" />
+  <move id="212" name="aromatherapy" type="11" behavior="5" category="2" pp="5" power="0" accuracy="0" targets="4" />
+  <move id="213" name="cottonguard" type="11" behavior="10" category="2" pp="10" power="0" accuracy="0" targets="2" />
+  <move id="214" name="cottonspore" type="11" behavior="40" category="2" pp="40" power="0" targets="0" />
+  <move id="215" name="grasswhistle" type="11" behavior="15" category="2" pp="15" power="0" accuracy="55" targets="0" />
+  <move id="216" name="ingrain" type="11" behavior="20" category="2" pp="20" power="0" accuracy="0" targets="2" />
+  <move id="217" name="leechseed" type="11" behavior="10" category="2" pp="10" power="0" accuracy="90" targets="0" />
+  <move id="218" name="sleeppowder" type="11" behavior="15" category="2" pp="15" power="0" accuracy="75" targets="0" />
+  <move id="219" name="spore" type="11" behavior="15" category="2" pp="15" power="0" targets="0" />
+  <move id="220" name="stunspore" type="11" behavior="30" category="2" pp="30" power="0" accuracy="75" targets="0" />
+  <move id="221" name="synthesis" type="11" behavior="5" category="2" pp="5" power="0" accuracy="0" targets="2" />
+  <move id="222" name="worryseed" type="11" behavior="10" category="2" pp="10" power="0" targets="0" />
+  <move id="223" name="earthquake" type="4" behavior="10" category="2" pp="10" power="100" targets="5" />
+  <move id="224" name="earthpower" type="4" behavior="10" category="2" pp="10" power="90" targets="0" random="10" />
+  <move id="225" name="dig" type="4" behavior="10" category="2" pp="10" power="80" targets="0" />
+  <move id="226" name="drillrun" type="4" behavior="10" category="2" pp="10" power="80" accuracy="95" targets="0" />
+  <move id="227" name="boneclub" type="4" behavior="20" category="2" pp="20" power="65" accuracy="85" targets="0" random="10" />
+  <move id="228" name="mudbomb" type="4" behavior="10" category="2" pp="10" power="65" accuracy="85" targets="0" random="30" />
+  <move id="229" name="bulldoze" type="4" behavior="20" category="2" pp="20" power="60" targets="5" random="100" />
+  <move id="230" name="mudshot" type="4" behavior="15" category="2" pp="15" power="55" accuracy="95" targets="0" random="100" />
+  <move id="231" name="bonemerang" type="4" behavior="10" category="2" pp="10" power="50" accuracy="90" targets="0" />
+  <move id="232" name="sandtomb" type="4" behavior="15" category="2" pp="15" power="35" accuracy="85" targets="0" />
+  <move id="233" name="bonerush" type="4" behavior="10" category="2" pp="10" power="25" accuracy="90" targets="0" />
+  <move id="234" name="mudslap" type="4" behavior="10" category="2" pp="10" power="20" targets="0" random="100" />
+  <move id="235" name="fissure" type="4" behavior="5" category="2" pp="5" power="1" accuracy="30" targets="0" />
+  <move id="236" name="magnitude" type="4" behavior="30" category="2" pp="30" power="1" targets="5" />
+  <move id="237" name="mudsport" type="4" behavior="15" category="2" pp="15" power="0" accuracy="0" targets="4" />
+  <move id="238" name="sandattack" type="4" behavior="15" category="2" pp="15" power="0" targets="0" />
+  <move id="239" name="spikes" type="4" behavior="20" category="2" pp="20" power="0" accuracy="0" targets="4" />
+  <move id="240" name="freezeshock" type="14" behavior="5" category="2" pp="5" power="140" accuracy="90" targets="0" random="30" />
+  <move id="241" name="iceburn" type="14" behavior="5" category="2" pp="5" power="140" accuracy="90" targets="0" random="30" />
+  <move id="242" name="blizzard" type="14" behavior="5" category="2" pp="5" power="110" accuracy="70" targets="3" random="10" />
+  <move id="243" name="icebeam" type="14" behavior="10" category="2" pp="10" power="90" targets="0" random="10" />
+  <move id="244" name="iciclecrash" type="14" behavior="10" category="2" pp="10" power="85" accuracy="90" targets="0" random="30" />
+  <move id="245" name="icepunch" type="14" behavior="15" category="2" pp="15" power="75" targets="0" random="10" />
+  <move id="246" name="aurorabeam" type="14" behavior="20" category="2" pp="20" power="65" targets="0" random="10" />
+  <move id="247" name="glaciate" type="14" behavior="10" category="2" pp="10" power="65" accuracy="95" targets="3" random="100" />
+  <move id="248" name="icefang" type="14" behavior="15" category="2" pp="15" power="65" accuracy="95" targets="0" random="10" />
+  <move id="249" name="avalanche" type="14" behavior="10" category="2" pp="10" power="60" targets="0" priority="-4" />
+  <move id="250" name="icywind" type="14" behavior="15" category="2" pp="15" power="55" accuracy="95" targets="3" random="100" />
+  <move id="251" name="frostbreath" type="14" behavior="10" category="2" pp="10" power="60" accuracy="90" targets="0" />
+  <move id="252" name="iceshard" type="14" behavior="30" category="2" pp="30" power="40" targets="0" priority="1" />
+  <move id="253" name="powdersnow" type="14" behavior="25" category="2" pp="25" power="40" targets="3" random="10" />
+  <move id="254" name="iceball" type="14" behavior="20" category="2" pp="20" power="30" accuracy="90" targets="0" />
+  <move id="255" name="iciclespear" type="14" behavior="30" category="2" pp="30" power="25" targets="0" />
+  <move id="256" name="sheercold" type="14" behavior="5" category="2" pp="5" power="1" accuracy="30" targets="0" />
+  <move id="257" name="hail" type="14" behavior="10" category="2" pp="10" power="0" accuracy="0" targets="4" />
+  <move id="258" name="haze" type="14" behavior="30" category="2" pp="30" power="0" accuracy="0" targets="4" />
+  <move id="259" name="mist" type="14" behavior="30" category="2" pp="30" power="0" accuracy="0" targets="4" />
+  <move id="260" name="explosion" type="0" behavior="5" category="2" pp="5" power="250" targets="5" />
+  <move id="261" name="selfdestruct" type="0" behavior="5" category="2" pp="5" power="200" targets="5" />
+  <move id="262" name="gigaimpact" type="0" behavior="5" category="2" pp="5" power="150" accuracy="90" targets="0" />
+  <move id="263" name="hyperbeam" type="0" behavior="5" category="2" pp="5" power="150" accuracy="90" targets="0" />
+  <move id="264" name="lastresort" type="0" behavior="5" category="2" pp="5" power="140" targets="0" />
+  <move id="265" name="doubleedge" type="0" behavior="15" category="2" pp="15" power="120" targets="0" />
+  <move id="266" name="headcharge" type="0" behavior="15" category="2" pp="15" power="120" targets="0" />
+  <move id="267" name="megakick" type="0" behavior="5" category="2" pp="5" power="120" accuracy="75" targets="0" />
+  <move id="268" name="thrash" type="0" behavior="10" category="2" pp="10" power="120" targets="1" />
+  <move id="269" name="eggbomb" type="0" behavior="10" category="2" pp="10" power="100" accuracy="75" targets="0" />
+  <move id="270" name="judgment" type="0" behavior="10" category="2" pp="10" power="100" targets="0" />
+  <move id="271" name="skullbash" type="0" behavior="10" category="2" pp="10" power="130" targets="0" />
+  <move id="272" name="hypervoice" type="0" behavior="10" category="2" pp="10" power="90" targets="3" />
+  <move id="273" name="rockclimb" type="0" behavior="20" category="2" pp="20" power="90" accuracy="85" targets="0" random="20" />
+  <move id="274" name="takedown" type="0" behavior="20" category="2" pp="20" power="90" accuracy="85" targets="0" />
+  <move id="275" name="uproar" type="0" behavior="10" category="2" pp="10" power="90" targets="1" />
+  <move id="276" name="bodyslam" type="0" behavior="15" category="2" pp="15" power="85" targets="0" random="30" />
+  <move id="277" name="technoblast" type="0" behavior="5" category="2" pp="5" power="120" targets="0" />
+  <move id="278" name="extremespeed" type="0" behavior="5" category="2" pp="5" power="80" targets="0" priority="2" />
+  <move id="279" name="hyperfang" type="0" behavior="15" category="2" pp="15" power="80" accuracy="90" targets="0" random="10" />
+  <move id="280" name="megapunch" type="0" behavior="20" category="2" pp="20" power="80" accuracy="85" targets="0" />
+  <move id="281" name="razorwind" type="0" behavior="10" category="2" pp="10" power="80" targets="3" />
+  <move id="282" name="slam" type="0" behavior="20" category="2" pp="20" power="80" accuracy="75" targets="0" />
+  <move id="283" name="strength" type="0" behavior="15" category="2" pp="15" power="80" targets="0" />
+  <move id="284" name="triattack" type="0" behavior="10" category="2" pp="10" power="80" targets="0" random="20" />
+  <move id="285" name="crushclaw" type="0" behavior="10" category="2" pp="10" power="75" accuracy="95" targets="0" random="50" />
+  <move id="286" name="relicsong" type="0" behavior="10" category="2" pp="10" power="75" targets="3" random="100" />
+  <move id="287" name="chipaway" type="0" behavior="20" category="2" pp="20" power="70" targets="0" />
+  <move id="288" name="dizzypunch" type="0" behavior="10" category="2" pp="10" power="70" targets="0" random="20" />
+  <move id="289" name="facade" type="0" behavior="20" category="2" pp="20" power="70" targets="0" />
+  <move id="290" name="headbutt" type="0" behavior="15" category="2" pp="15" power="70" targets="0" random="30" />
+  <move id="291" name="retaliate" type="0" behavior="5" category="2" pp="5" power="70" targets="0" />
+  <move id="292" name="secretpower" type="0" behavior="20" category="2" pp="20" power="70" targets="0" random="30" />
+  <move id="293" name="slash" type="0" behavior="20" category="2" pp="20" power="70" targets="0" />
+  <move id="294" name="hornattack" type="0" behavior="25" category="2" pp="25" power="65" targets="0" />
+  <move id="295" name="stomp" type="0" behavior="20" category="2" pp="20" power="65" targets="0" random="30" />
+  <move id="296" name="covet" type="0" behavior="25" category="2" pp="25" power="60" targets="0" />
+  <move id="297" name="round" type="0" behavior="15" category="2" pp="15" power="60" targets="0" />
+  <move id="298" name="smellingsalt" type="0" behavior="10" category="2" pp="10" power="70" targets="0" />
+  <move id="299" name="swift" type="0" behavior="20" category="2" pp="20" power="60" accuracy="0" targets="3" />
+  <move id="300" name="vicegrip" type="0" behavior="30" category="2" pp="30" power="55" targets="0" />
+  <move id="301" name="cut" type="0" behavior="30" category="2" pp="30" power="50" accuracy="95" targets="0" />
+  <move id="302" name="struggle" type="0" behavior="1" category="2" pp="1" power="50" accuracy="0" targets="0" />
+  <move id="303" name="tackle" type="0" behavior="35" category="2" pp="35" power="50" targets="0" />
+  <move id="304" name="weatherball" type="0" behavior="10" category="2" pp="10" power="50" targets="0" />
+  <move id="305" name="echoedvoice" type="0" behavior="15" category="2" pp="15" power="40" targets="0" />
+  <move id="306" name="fakeout" type="0" behavior="10" category="2" pp="10" power="40" targets="0" priority="3" random="100" />
+  <move id="307" name="falseswipe" type="0" behavior="40" category="2" pp="40" power="40" targets="0" />
+  <move id="308" name="payday" type="0" behavior="20" category="2" pp="20" power="40" targets="0" />
+  <move id="309" name="pound" type="0" behavior="35" category="2" pp="35" power="40" targets="0" />
+  <move id="310" name="quickattack" type="0" behavior="30" category="2" pp="30" power="40" targets="0" priority="1" />
+  <move id="311" name="scratch" type="0" behavior="35" category="2" pp="35" power="40" targets="0" />
+  <move id="312" name="snore" type="0" behavior="15" category="2" pp="15" power="50" targets="0" random="30" />
+  <move id="313" name="doublehit" type="0" behavior="10" category="2" pp="10" power="35" accuracy="90" targets="0" />
+  <move id="314" name="feint" type="0" behavior="10" category="2" pp="10" power="30" targets="0" priority="2" />
+  <move id="315" name="tailslap" type="0" behavior="10" category="2" pp="10" power="25" accuracy="85" targets="0" />
+  <move id="316" name="rage" type="0" behavior="20" category="2" pp="20" power="20" targets="0" />
+  <move id="317" name="rapidspin" type="0" behavior="40" category="2" pp="40" power="20" targets="0" />
+  <move id="318" name="spikecannon" type="0" behavior="15" category="2" pp="15" power="20" targets="0" />
+  <move id="319" name="cometpunch" type="0" behavior="15" category="2" pp="15" power="18" accuracy="85" targets="0" />
+  <move id="320" name="furyswipes" type="0" behavior="15" category="2" pp="15" power="18" accuracy="80" targets="0" />
+  <move id="321" name="barrage" type="0" behavior="20" category="2" pp="20" power="15" accuracy="85" targets="0" />
+  <move id="322" name="bind" type="0" behavior="20" category="2" pp="20" power="15" accuracy="85" targets="0" />
+  <move id="323" name="doubleslap" type="0" behavior="10" category="2" pp="10" power="15" accuracy="85" targets="0" />
+  <move id="324" name="furyattack" type="0" behavior="20" category="2" pp="20" power="15" accuracy="85" targets="0" />
+  <move id="325" name="wrap" type="0" behavior="20" category="2" pp="20" power="15" accuracy="90" targets="0" />
+  <move id="326" name="constrict" type="0" behavior="35" category="2" pp="35" power="10" targets="0" random="10" />
+  <move id="327" name="bide" type="0" behavior="10" category="2" pp="10" power="1" accuracy="0" targets="2" priority="1" />
+  <move id="328" name="crushgrip" type="0" behavior="5" category="2" pp="5" power="1" targets="0" />
+  <move id="329" name="endeavor" type="0" behavior="5" category="2" pp="5" power="1" targets="0" />
+  <move id="330" name="flail" type="0" behavior="15" category="2" pp="15" power="1" targets="0" />
+  <move id="331" name="frustration" type="0" behavior="20" category="2" pp="20" power="1" targets="0" />
+  <move id="332" name="guillotine" type="0" behavior="5" category="2" pp="5" power="1" accuracy="30" targets="0" />
+  <move id="333" name="hiddenpower" type="0" behavior="15" category="2" pp="15" power="1" targets="0" />
+  <move id="334" name="horndrill" type="0" behavior="5" category="2" pp="5" power="1" accuracy="30" targets="0" />
+  <move id="335" name="naturalgift" type="0" behavior="15" category="2" pp="15" power="1" targets="0" />
+  <move id="336" name="present" type="0" behavior="15" category="2" pp="15" power="1" accuracy="90" targets="0" />
+  <move id="337" name="return" type="0" behavior="20" category="2" pp="20" power="1" targets="0" />
+  <move id="338" name="sonicboom" type="0" behavior="20" category="2" pp="20" power="1" accuracy="90" targets="0" />
+  <move id="339" name="spitup" type="0" behavior="10" category="2" pp="10" power="1" targets="0" />
+  <move id="340" name="superfang" type="0" behavior="10" category="2" pp="10" power="1" accuracy="90" targets="0" />
+  <move id="341" name="trumpcard" type="0" behavior="5" category="2" pp="5" power="1" accuracy="0" targets="0" />
+  <move id="342" name="wringout" type="0" behavior="5" category="2" pp="5" power="1" targets="0" />
+  <move id="343" name="acupressure" type="0" behavior="30" category="2" pp="30" power="0" accuracy="0" targets="4" />
+  <move id="344" name="afteryou" type="0" behavior="15" category="2" pp="15" power="0" accuracy="0" targets="0" />
+  <move id="345" name="assist" type="0" behavior="20" category="2" pp="20" power="0" accuracy="0" targets="2" />
+  <move id="346" name="attract" type="0" behavior="15" category="2" pp="15" power="0" targets="0" />
+  <move id="347" name="batonpass" type="0" behavior="40" category="2" pp="40" power="0" accuracy="0" targets="2" />
+  <move id="348" name="bellydrum" type="0" behavior="10" category="2" pp="10" power="0" accuracy="0" targets="2" />
+  <move id="349" name="bestow" type="0" behavior="15" category="2" pp="15" power="0" accuracy="0" targets="0" />
+  <move id="350" name="block" type="0" behavior="5" category="2" pp="5" power="0" accuracy="0" targets="0" />
+  <move id="351" name="camouflage" type="0" behavior="20" category="2" pp="20" power="0" accuracy="0" targets="2" />
+  <move id="352" name="captivate" type="0" behavior="20" category="2" pp="20" power="0" targets="3" />
+  <move id="353" name="charm" type="17" behavior="20" category="2" pp="20" power="0" targets="0" />
+  <move id="354" name="conversion" type="0" behavior="30" category="2" pp="30" power="0" accuracy="0" targets="2" />
+  <move id="355" name="conversion2" type="0" behavior="30" category="2" pp="30" power="0" accuracy="0" targets="0" />
+  <move id="356" name="copycat" type="0" behavior="20" category="2" pp="20" power="0" accuracy="0" targets="2" />
+  <move id="357" name="defensecurl" type="0" behavior="40" category="2" pp="40" power="0" accuracy="0" targets="2" />
+  <move id="358" name="disable" type="0" behavior="20" category="2" pp="20" power="0" targets="0" />
+  <move id="359" name="doubleteam" type="0" behavior="15" category="2" pp="15" power="0" accuracy="0" targets="2" />
+  <move id="360" name="encore" type="0" behavior="5" category="2" pp="5" power="0" targets="0" />
+  <move id="361" name="endure" type="0" behavior="10" category="2" pp="10" power="0" accuracy="0" targets="2" priority="3" />
+  <move id="362" name="entrainment" type="0" behavior="15" category="2" pp="15" power="0" targets="0" />
+  <move id="363" name="flash" type="0" behavior="20" category="2" pp="20" power="0" targets="0" />
+  <move id="364" name="focusenergy" type="0" behavior="30" category="2" pp="30" power="0" accuracy="0" targets="2" />
+  <move id="365" name="followme" type="0" behavior="20" category="2" pp="20" power="0" accuracy="0" targets="2" priority="2" />
+  <move id="366" name="foresight" type="0" behavior="40" category="2" pp="40" power="0" accuracy="0" targets="0" />
+  <move id="367" name="glare" type="0" behavior="30" category="2" pp="30" power="0" targets="0" />
+  <move id="368" name="growl" type="0" behavior="40" category="2" pp="40" power="0" targets="3" />
+  <move id="369" name="growth" type="0" behavior="20" category="2" pp="20" power="0" accuracy="0" targets="2" />
+  <move id="370" name="harden" type="0" behavior="30" category="2" pp="30" power="0" accuracy="0" targets="2" />
+  <move id="371" name="healbell" type="0" behavior="5" category="2" pp="5" power="0" accuracy="0" targets="4" />
+  <move id="372" name="helpinghand" type="0" behavior="20" category="2" pp="20" power="0" accuracy="0" targets="4" priority="5" />
+  <move id="373" name="howl" type="0" behavior="40" category="2" pp="40" power="0" accuracy="0" targets="2" />
+  <move id="374" name="leer" type="0" behavior="30" category="2" pp="30" power="0" targets="3" />
+  <move id="375" name="lockon" type="0" behavior="5" category="2" pp="5" power="0" accuracy="0" targets="0" />
+  <move id="376" name="lovelykiss" type="0" behavior="10" category="2" pp="10" power="0" accuracy="75" targets="0" />
+  <move id="377" name="luckychant" type="0" behavior="30" category="2" pp="30" power="0" accuracy="0" targets="4" />
+  <move id="378" name="mefirst" type="0" behavior="20" category="2" pp="20" power="0" accuracy="0" targets="4" />
+  <move id="379" name="meanlook" type="0" behavior="5" category="2" pp="5" power="0" accuracy="0" targets="0" />
+  <move id="380" name="metronome" type="0" behavior="10" category="2" pp="10" power="0" accuracy="0" targets="2" />
+  <move id="381" name="milkdrink" type="0" behavior="10" category="2" pp="10" power="0" accuracy="0" targets="2" />
+  <move id="382" name="mimic" type="0" behavior="10" category="2" pp="10" power="0" accuracy="0" targets="0" />
+  <move id="383" name="mindreader" type="0" behavior="5" category="2" pp="5" power="0" accuracy="0" targets="0" />
+  <move id="384" name="minimize" type="0" behavior="10" category="2" pp="10" power="0" accuracy="0" targets="2" />
+  <move id="385" name="moonlight" type="17" behavior="5" category="2" pp="5" power="0" accuracy="0" targets="2" />
+  <move id="386" name="morningsun" type="0" behavior="5" category="2" pp="5" power="0" accuracy="0" targets="2" />
+  <move id="387" name="naturepower" type="0" behavior="20" category="2" pp="20" power="0" accuracy="0" targets="4" />
+  <move id="388" name="odorsleuth" type="0" behavior="40" category="2" pp="40" power="0" accuracy="0" targets="0" />
+  <move id="389" name="painsplit" type="0" behavior="20" category="2" pp="20" power="0" accuracy="0" targets="0" />
+  <move id="390" name="perishsong" type="0" behavior="5" category="2" pp="5" power="0" accuracy="0" targets="4" />
+  <move id="391" name="protect" type="0" behavior="10" category="2" pp="10" power="0" accuracy="0" targets="2" priority="4" />
+  <move id="392" name="psychup" type="0" behavior="10" category="2" pp="10" power="0" accuracy="0" targets="0" />
+  <move id="393" name="recover" type="0" behavior="10" category="2" pp="10" power="0" accuracy="0" targets="2" />
+  <move id="394" name="recycle" type="0" behavior="10" category="2" pp="10" power="0" accuracy="0" targets="2" />
+  <move id="395" name="reflecttype" type="0" behavior="15" category="2" pp="15" power="0" accuracy="0" targets="0" />
+  <move id="396" name="refresh" type="0" behavior="20" category="2" pp="20" power="0" accuracy="0" targets="2" />
+  <move id="397" name="roar" type="0" behavior="20" category="2" pp="20" power="0" accuracy="0" targets="0" priority="-6" />
+  <move id="398" name="safeguard" type="0" behavior="25" category="2" pp="25" power="0" accuracy="0" targets="4" />
+  <move id="399" name="scaryface" type="0" behavior="10" category="2" pp="10" power="0" targets="0" />
+  <move id="400" name="screech" type="0" behavior="40" category="2" pp="40" power="0" accuracy="85" targets="0" />
+  <move id="401" name="sharpen" type="0" behavior="30" category="2" pp="30" power="0" accuracy="0" targets="2" />
+  <move id="402" name="shellsmash" type="0" behavior="15" category="2" pp="15" power="0" accuracy="0" targets="2" />
+  <move id="403" name="simplebeam" type="0" behavior="15" category="2" pp="15" power="0" targets="0" />
+  <move id="404" name="sing" type="0" behavior="15" category="2" pp="15" power="0" accuracy="55" targets="0" />
+  <move id="405" name="sketch" type="0" behavior="1" category="2" pp="1" power="0" accuracy="0" targets="0" />
+  <move id="406" name="slackoff" type="0" behavior="10" category="2" pp="10" power="0" accuracy="0" targets="2" />
+  <move id="407" name="sleeptalk" type="0" behavior="10" category="2" pp="10" power="0" accuracy="0" targets="2" />
+  <move id="408" name="smokescreen" type="0" behavior="20" category="2" pp="20" power="0" targets="0" />
+  <move id="409" name="softboiled" type="0" behavior="10" category="2" pp="10" power="0" accuracy="0" targets="2" />
+  <move id="410" name="splash" type="0" behavior="40" category="2" pp="40" power="0" accuracy="0" targets="2" />
+  <move id="411" name="stockpile" type="0" behavior="20" category="2" pp="20" power="0" accuracy="0" targets="2" />
+  <move id="412" name="substitute" type="0" behavior="10" category="2" pp="10" power="0" accuracy="0" targets="2" />
+  <move id="413" name="supersonic" type="0" behavior="20" category="2" pp="20" power="0" accuracy="55" targets="0" />
+  <move id="414" name="swagger" type="0" behavior="15" category="2" pp="15" power="0" accuracy="90" targets="0" />
+  <move id="415" name="swallow" type="0" behavior="10" category="2" pp="10" power="0" accuracy="0" targets="2" />
+  <move id="416" name="sweetkiss" type="17" behavior="10" category="2" pp="10" power="0" accuracy="75" targets="0" />
+  <move id="417" name="sweetscent" type="0" behavior="20" category="2" pp="20" power="0" targets="3" />
+  <move id="418" name="swordsdance" type="0" behavior="20" category="2" pp="20" power="0" accuracy="0" targets="2" />
+  <move id="419" name="tailwhip" type="0" behavior="30" category="2" pp="30" power="0" targets="3" />
+  <move id="420" name="teeterdance" type="0" behavior="20" category="2" pp="20" power="0" targets="5" />
+  <move id="421" name="tickle" type="0" behavior="20" category="2" pp="20" power="0" targets="0" />
+  <move id="422" name="transform" type="0" behavior="10" category="2" pp="10" power="0" accuracy="0" targets="0" />
+  <move id="423" name="whirlwind" type="0" behavior="20" category="2" pp="20" power="0" accuracy="0" targets="0" priority="-6" />
+  <move id="424" name="wish" type="0" behavior="10" category="2" pp="10" power="0" accuracy="0" targets="2" />
+  <move id="425" name="workup" type="0" behavior="30" category="2" pp="30" power="0" accuracy="0" targets="2" />
+  <move id="426" name="yawn" type="0" behavior="10" category="2" pp="10" power="0" accuracy="0" targets="0" />
+  <move id="427" name="gunkshot" type="3" behavior="5" category="2" pp="5" power="120" accuracy="80" targets="0" random="30" />
+  <move id="428" name="sludgewave" type="3" behavior="10" category="2" pp="10" power="95" targets="5" random="10" />
+  <move id="429" name="sludgebomb" type="3" behavior="10" category="2" pp="10" power="90" targets="0" random="30" />
+  <move id="430" name="poisonjab" type="3" behavior="20" category="2" pp="20" power="80" targets="0" random="30" />
+  <move id="431" name="crosspoison" type="3" behavior="20" category="2" pp="20" power="70" targets="0" random="10" />
+  <move id="432" name="sludge" type="3" behavior="20" category="2" pp="20" power="65" targets="0" random="30" />
+  <move id="433" name="venoshock" type="3" behavior="10" category="2" pp="10" power="65" targets="0" />
+  <move id="434" name="clearsmog" type="3" behavior="15" category="2" pp="15" power="50" accuracy="0" targets="0" />
+  <move id="435" name="poisonfang" type="3" behavior="15" category="2" pp="15" power="50" targets="0" random="30" />
+  <move id="436" name="poisontail" type="3" behavior="25" category="2" pp="25" power="50" targets="0" random="10" />
+  <move id="437" name="acid" type="3" behavior="30" category="2" pp="30" power="40" targets="3" random="10" />
+  <move id="438" name="acidspray" type="3" behavior="20" category="2" pp="20" power="40" targets="0" random="100" />
+  <move id="439" name="smog" type="3" behavior="20" category="2" pp="20" power="30" accuracy="70" targets="0" random="40" />
+  <move id="440" name="poisonsting" type="3" behavior="35" category="2" pp="35" power="15" targets="0" random="30" />
+  <move id="441" name="acidarmor" type="3" behavior="20" category="2" pp="20" power="0" accuracy="0" targets="2" />
+  <move id="442" name="coil" type="3" behavior="20" category="2" pp="20" power="0" accuracy="0" targets="2" />
+  <move id="443" name="gastroacid" type="3" behavior="10" category="2" pp="10" power="0" targets="0" />
+  <move id="444" name="poisongas" type="3" behavior="40" category="2" pp="40" power="0" accuracy="90" targets="3" />
+  <move id="445" name="poisonpowder" type="3" behavior="35" category="2" pp="35" power="0" accuracy="75" targets="0" />
+  <move id="446" name="toxic" type="3" behavior="10" category="2" pp="10" power="0" accuracy="90" targets="0" />
+  <move id="447" name="toxicspikes" type="3" behavior="20" category="2" pp="20" power="0" accuracy="0" targets="4" />
+  <move id="448" name="psychoboost" type="13" behavior="5" category="2" pp="5" power="140" accuracy="90" targets="0" />
+  <move id="449" name="dreameater" type="13" behavior="15" category="2" pp="15" power="100" targets="0" />
+  <move id="450" name="futuresight" type="13" behavior="10" category="2" pp="10" power="120" targets="0" />
+  <move id="451" name="psystrike" type="13" behavior="10" category="2" pp="10" power="100" targets="0" />
+  <move id="452" name="psychic" type="13" behavior="10" category="2" pp="10" power="90" targets="0" random="10" />
+  <move id="453" name="extrasensory" type="13" behavior="20" category="2" pp="20" power="80" targets="0" random="10" />
+  <move id="454" name="psyshock" type="13" behavior="10" category="2" pp="10" power="80" targets="0" />
+  <move id="455" name="zenheadbutt" type="13" behavior="15" category="2" pp="15" power="80" accuracy="90" targets="0" random="20" />
+  <move id="456" name="lusterpurge" type="13" behavior="5" category="2" pp="5" power="70" targets="0" random="50" />
+  <move id="457" name="mistball" type="13" behavior="5" category="2" pp="5" power="70" targets="0" random="50" />
+  <move id="458" name="psychocut" type="13" behavior="20" category="2" pp="20" power="70" targets="0" />
+  <move id="459" name="synchronoise" type="13" behavior="15" category="2" pp="15" power="120" targets="5" />
+  <move id="460" name="psybeam" type="13" behavior="20" category="2" pp="20" power="65" targets="0" random="10" />
+  <move id="461" name="heartstamp" type="13" behavior="25" category="2" pp="25" power="60" targets="0" random="30" />
+  <move id="462" name="confusion" type="13" behavior="25" category="2" pp="25" power="50" targets="0" random="10" />
+  <move id="463" name="mirrorcoat" type="13" behavior="20" category="2" pp="20" power="1" targets="4" priority="-5" />
+  <move id="464" name="psywave" type="13" behavior="15" category="2" pp="15" power="1" targets="0" />
+  <move id="465" name="storedpower" type="13" behavior="10" category="2" pp="10" power="1" targets="0" />
+  <move id="466" name="agility" type="13" behavior="30" category="2" pp="30" power="0" accuracy="0" targets="2" />
+  <move id="467" name="allyswitch" type="13" behavior="15" category="2" pp="15" power="0" accuracy="0" targets="2" priority="1" />
+  <move id="468" name="amnesia" type="13" behavior="20" category="2" pp="20" power="0" accuracy="0" targets="2" />
+  <move id="469" name="barrier" type="13" behavior="20" category="2" pp="20" power="0" accuracy="0" targets="2" />
+  <move id="470" name="calmmind" type="13" behavior="20" category="2" pp="20" power="0" accuracy="0" targets="2" />
+  <move id="471" name="cosmicpower" type="13" behavior="20" category="2" pp="20" power="0" accuracy="0" targets="2" />
+  <move id="472" name="gravity" type="13" behavior="5" category="2" pp="5" power="0" accuracy="0" targets="4" />
+  <move id="473" name="guardsplit" type="13" behavior="10" category="2" pp="10" power="0" accuracy="0" targets="0" />
+  <move id="474" name="guardswap" type="13" behavior="10" category="2" pp="10" power="0" accuracy="0" targets="0" />
+  <move id="475" name="healblock" type="13" behavior="15" category="2" pp="15" power="0" targets="3" />
+  <move id="476" name="healpulse" type="13" behavior="10" category="2" pp="10" power="0" accuracy="0" targets="0" />
+  <move id="477" name="healingwish" type="13" behavior="10" category="2" pp="10" power="0" accuracy="0" targets="2" />
+  <move id="478" name="heartswap" type="13" behavior="10" category="2" pp="10" power="0" accuracy="0" targets="0" />
+  <move id="479" name="hypnosis" type="13" behavior="20" category="2" pp="20" power="0" accuracy="60" targets="0" />
+  <move id="480" name="imprison" type="13" behavior="10" category="2" pp="10" power="0" accuracy="0" targets="4" />
+  <move id="481" name="kinesis" type="13" behavior="15" category="2" pp="15" power="0" accuracy="80" targets="0" />
+  <move id="482" name="lightscreen" type="13" behavior="30" category="2" pp="30" power="0" accuracy="0" targets="4" />
+  <move id="483" name="lunardance" type="13" behavior="10" category="2" pp="10" power="0" accuracy="0" targets="2" />
+  <move id="484" name="magiccoat" type="13" behavior="15" category="2" pp="15" power="0" accuracy="0" targets="2" priority="4" />
+  <move id="485" name="magicroom" type="13" behavior="10" category="2" pp="10" power="0" accuracy="0" targets="4" />
+  <move id="486" name="meditate" type="13" behavior="40" category="2" pp="40" power="0" accuracy="0" targets="2" />
+  <move id="487" name="miracleeye" type="13" behavior="40" category="2" pp="40" power="0" accuracy="0" targets="0" />
+  <move id="488" name="powersplit" type="13" behavior="10" category="2" pp="10" power="0" accuracy="0" targets="0" />
+  <move id="489" name="powerswap" type="13" behavior="10" category="2" pp="10" power="0" accuracy="0" targets="0" />
+  <move id="490" name="powertrick" type="13" behavior="10" category="2" pp="10" power="0" accuracy="0" targets="2" />
+  <move id="491" name="psychoshift" type="13" behavior="10" category="2" pp="10" power="0" targets="0" />
+  <move id="492" name="reflect" type="13" behavior="20" category="2" pp="20" power="0" accuracy="0" targets="4" />
+  <move id="493" name="rest" type="13" behavior="10" category="2" pp="10" power="0" accuracy="0" targets="2" />
+  <move id="494" name="roleplay" type="13" behavior="10" category="2" pp="10" power="0" accuracy="0" targets="0" />
+  <move id="495" name="skillswap" type="13" behavior="10" category="2" pp="10" power="0" accuracy="0" targets="0" />
+  <move id="496" name="telekinesis" type="13" behavior="15" category="2" pp="15" power="0" accuracy="0" targets="0" />
+  <move id="497" name="teleport" type="13" behavior="20" category="2" pp="20" power="0" accuracy="0" targets="2" />
+  <move id="498" name="trick" type="13" behavior="10" category="2" pp="10" power="0" targets="0" />
+  <move id="499" name="trickroom" type="13" behavior="5" category="2" pp="5" power="0" accuracy="0" targets="4" priority="-7" />
+  <move id="500" name="wonderroom" type="13" behavior="10" category="2" pp="10" power="0" accuracy="0" targets="4" />
+  <move id="501" name="headsmash" type="5" behavior="5" category="2" pp="5" power="150" accuracy="80" targets="0" />
+  <move id="502" name="rockwrecker" type="5" behavior="5" category="2" pp="5" power="150" accuracy="90" targets="0" />
+  <move id="503" name="stoneedge" type="5" behavior="5" category="2" pp="5" power="100" accuracy="80" targets="0" />
+  <move id="504" name="rockslide" type="5" behavior="10" category="2" pp="10" power="75" accuracy="90" targets="3" random="30" />
+  <move id="505" name="powergem" type="5" behavior="20" category="2" pp="20" power="80" targets="0" />
+  <move id="506" name="ancientpower" type="5" behavior="5" category="2" pp="5" power="60" targets="0" random="10" />
+  <move id="507" name="rockthrow" type="5" behavior="15" category="2" pp="15" power="50" accuracy="90" targets="0" />
+  <move id="508" name="rocktomb" type="5" behavior="15" category="2" pp="15" power="60" accuracy="95" targets="0" random="100" />
+  <move id="509" name="smackdown" type="5" behavior="15" category="2" pp="15" power="50" targets="0" />
+  <move id="510" name="rollout" type="5" behavior="20" category="2" pp="20" power="30" accuracy="90" targets="0" />
+  <move id="511" name="rockblast" type="5" behavior="10" category="2" pp="10" power="25" accuracy="90" targets="0" />
+  <move id="512" name="rockpolish" type="5" behavior="20" category="2" pp="20" power="0" accuracy="0" targets="2" />
+  <move id="513" name="sandstorm" type="5" behavior="10" category="2" pp="10" power="0" accuracy="0" targets="4" />
+  <move id="514" name="stealthrock" type="5" behavior="20" category="2" pp="20" power="0" accuracy="0" targets="4" />
+  <move id="515" name="wideguard" type="5" behavior="10" category="2" pp="10" power="0" accuracy="0" targets="4" priority="3" />
+  <move id="516" name="doomdesire" type="8" behavior="5" category="2" pp="5" power="140" targets="0" />
+  <move id="517" name="irontail" type="8" behavior="15" category="2" pp="15" power="100" accuracy="75" targets="0" random="30" />
+  <move id="518" name="meteormash" type="8" behavior="10" category="2" pp="10" power="90" accuracy="90" targets="0" random="20" />
+  <move id="519" name="flashcannon" type="8" behavior="10" category="2" pp="10" power="80" targets="0" random="10" />
+  <move id="520" name="ironhead" type="8" behavior="15" category="2" pp="15" power="80" targets="0" random="30" />
+  <move id="521" name="steelwing" type="8" behavior="25" category="2" pp="25" power="70" accuracy="90" targets="0" random="10" />
+  <move id="522" name="mirrorshot" type="8" behavior="10" category="2" pp="10" power="65" accuracy="85" targets="0" random="30" />
+  <move id="523" name="magnetbomb" type="8" behavior="20" category="2" pp="20" power="60" accuracy="0" targets="0" />
+  <move id="524" name="geargrind" type="8" behavior="15" category="2" pp="15" power="50" accuracy="85" targets="0" />
+  <move id="525" name="metalclaw" type="8" behavior="35" category="2" pp="35" power="50" accuracy="95" targets="0" random="10" />
+  <move id="526" name="bulletpunch" type="8" behavior="30" category="2" pp="30" power="40" targets="0" priority="1" />
+  <move id="527" name="gyroball" type="8" behavior="5" category="2" pp="5" power="1" targets="0" />
+  <move id="528" name="heavyslam" type="8" behavior="10" category="2" pp="10" power="1" targets="0" />
+  <move id="529" name="metalburst" type="8" behavior="10" category="2" pp="10" power="1" targets="4" />
+  <move id="530" name="autotomize" type="8" behavior="15" category="2" pp="15" power="0" accuracy="0" targets="2" />
+  <move id="531" name="irondefense" type="8" behavior="15" category="2" pp="15" power="0" accuracy="0" targets="2" />
+  <move id="532" name="metalsound" type="8" behavior="40" category="2" pp="40" power="0" accuracy="85" targets="0" />
+  <move id="533" name="shiftgear" type="8" behavior="10" category="2" pp="10" power="0" accuracy="0" targets="2" />
+  <move id="534" name="hydrocannon" type="10" behavior="5" category="2" pp="5" power="150" accuracy="90" targets="0" />
+  <move id="535" name="waterspout" type="10" behavior="5" category="2" pp="5" power="150" targets="3" />
+  <move id="536" name="hydropump" type="10" behavior="5" category="2" pp="5" power="110" accuracy="80" targets="0" />
+  <move id="537" name="muddywater" type="10" behavior="10" category="2" pp="10" power="95" accuracy="85" targets="3" random="30" />
+  <move id="538" name="surf" type="10" behavior="15" category="2" pp="15" power="90" targets="5" />
+  <move id="539" name="aquatail" type="10" behavior="10" category="2" pp="10" power="90" accuracy="90" targets="0" />
+  <move id="540" name="crabhammer" type="10" behavior="10" category="2" pp="10" power="100" accuracy="90" targets="0" />
+  <move id="541" name="dive" type="10" behavior="10" category="2" pp="10" power="80" targets="0" />
+  <move id="542" name="scald" type="10" behavior="15" category="2" pp="15" power="80" targets="0" random="30" />
+  <move id="543" name="waterfall" type="10" behavior="15" category="2" pp="15" power="80" targets="0" random="20" />
+  <move id="544" name="razorshell" type="10" behavior="10" category="2" pp="10" power="75" accuracy="95" targets="0" random="50" />
+  <move id="545" name="brine" type="10" behavior="10" category="2" pp="10" power="65" targets="0" />
+  <move id="546" name="bubblebeam" type="10" behavior="20" category="2" pp="20" power="65" targets="0" random="10" />
+  <move id="547" name="octazooka" type="10" behavior="10" category="2" pp="10" power="65" accuracy="85" targets="0" random="50" />
+  <move id="548" name="waterpulse" type="10" behavior="20" category="2" pp="20" power="60" targets="0" random="20" />
+  <move id="549" name="waterpledge" type="10" behavior="10" category="2" pp="10" power="80" targets="0" />
+  <move id="550" name="aquajet" type="10" behavior="20" category="2" pp="20" power="40" targets="0" priority="1" />
+  <move id="551" name="watergun" type="10" behavior="25" category="2" pp="25" power="40" targets="0" />
+  <move id="552" name="clamp" type="10" behavior="15" category="2" pp="15" power="35" accuracy="85" targets="0" />
+  <move id="553" name="whirlpool" type="10" behavior="15" category="2" pp="15" power="35" accuracy="85" targets="0" />
+  <move id="554" name="bubble" type="10" behavior="30" category="2" pp="30" power="40" targets="3" random="10" />
+  <move id="555" name="aquaring" type="10" behavior="20" category="2" pp="20" power="0" accuracy="0" targets="2" />
+  <move id="556" name="raindance" type="10" behavior="5" category="2" pp="5" power="0" accuracy="0" targets="4" />
+  <move id="557" name="soak" type="10" behavior="20" category="2" pp="20" power="0" targets="0" />
+  <move id="558" name="watersport" type="10" behavior="15" category="2" pp="15" power="0" accuracy="0" targets="4" />
+  <move id="559" name="withdraw" type="10" behavior="40" category="2" pp="40" power="0" accuracy="0" targets="2" />
+  <move id="560" name="aromaticmist" type="17" behavior="20" category="2" pp="20" power="0" accuracy="0" targets="4" />
+  <move id="561" name="babydolleyes" type="17" behavior="30" category="2" pp="30" power="0" targets="0" priority="1" />
+  <move id="562" name="belch" type="3" behavior="10" category="2" pp="10" power="120" accuracy="90" targets="0" />
+  <move id="563" name="boomburst" type="0" behavior="10" category="2" pp="10" power="140" targets="5" />
+  <move id="564" name="celebrate" type="0" behavior="40" category="2" pp="40" power="0" targets="0" />
+  <move id="565" name="confide" type="0" behavior="20" category="2" pp="20" power="0" accuracy="0" targets="0" />
+  <move id="566" name="craftyshield" type="17" behavior="10" category="2" pp="10" power="0" accuracy="0" targets="2" priority="3" />
+  <move id="567" name="dazzlinggleam" type="17" behavior="10" category="2" pp="10" power="80" targets="0" />
+  <move id="568" name="disarmingvoice" type="17" behavior="15" category="2" pp="15" power="40" accuracy="0" targets="3" />
+  <move id="569" name="drainingkiss" type="17" behavior="10" category="2" pp="10" power="50" targets="0" />
+  <move id="570" name="eerieimpulse" type="12" behavior="15" category="2" pp="15" power="0" targets="2" />
+  <move id="571" name="electricterrain" type="12" behavior="10" category="2" pp="10" power="0" accuracy="0" targets="4" />
+  <move id="572" name="electrify" type="12" behavior="20" category="2" pp="20" power="0" accuracy="0" targets="0" />
+  <move id="573" name="fairylock" type="17" behavior="10" category="2" pp="10" power="0" accuracy="0" targets="5" />
+  <move id="574" name="fairywind" type="17" behavior="30" category="2" pp="30" power="40" targets="0" />
+  <move id="575" name="fellstinger" type="6" behavior="25" category="2" pp="25" power="35" targets="0" random="100" />
+  <move id="576" name="flowershield" type="17" behavior="10" category="2" pp="10" power="0" accuracy="0" targets="4" />
+  <move id="577" name="flyingpress" type="1" behavior="10" category="2" pp="10" power="80" accuracy="95" targets="0" />
+  <move id="578" name="forestscurse" type="11" behavior="20" category="2" pp="20" power="0" accuracy="0" targets="0" />
+  <move id="579" name="freezedry" type="14" behavior="20" category="2" pp="20" power="70" targets="0" />
+  <move id="580" name="geomancy" type="17" behavior="10" category="2" pp="10" power="0" accuracy="0" targets="2" />
+  <move id="581" name="grassyterrain" type="11" behavior="10" category="2" pp="10" power="0" accuracy="0" targets="4" />
+  <move id="582" name="happyhour" type="0" behavior="30" category="2" pp="30" power="0" accuracy="0" targets="2" />
+  <move id="583" name="infestation" type="6" behavior="20" category="2" pp="20" power="20" targets="4" />
+  <move id="584" name="iondeluge" type="12" behavior="25" category="2" pp="25" power="0" accuracy="0" targets="4" priority="1" />
+  <move id="585" name="kingsshield" type="8" behavior="10" category="2" pp="10" power="0" accuracy="0" targets="2" priority="4" />
+  <move id="586" name="landswrath" type="4" behavior="10" category="2" pp="10" power="90" targets="3" />
+  <move id="587" name="magneticflux" type="12" behavior="20" category="2" pp="20" power="0" accuracy="0" targets="4" />
+  <move id="588" name="matblock" type="1" behavior="10" category="2" pp="10" power="0" accuracy="0" targets="2" priority="4" />
+  <move id="589" name="mistyterrain" type="17" behavior="10" category="2" pp="10" power="0" accuracy="0" targets="4" />
+  <move id="590" name="moonblast" type="17" behavior="15" category="2" pp="15" power="95" targets="0" random="10" />
+  <move id="591" name="mysticalfire" type="9" behavior="10" category="2" pp="10" power="65" targets="0" />
+  <move id="592" name="nobleroar" type="0" behavior="30" category="2" pp="30" power="0" targets="0" />
+  <move id="593" name="nuzzle" type="12" behavior="20" category="2" pp="20" power="20" targets="0" random="100" />
+  <move id="594" name="oblivionwing" type="2" behavior="10" category="2" pp="10" power="80" targets="0" />
+  <move id="595" name="paraboliccharge" type="12" behavior="20" category="2" pp="20" power="50" targets="5" />
+  <move id="596" name="partingshot" type="16" behavior="20" category="2" pp="20" power="0" targets="0" />
+  <move id="597" name="petalblizzard" type="11" behavior="15" category="2" pp="15" power="90" targets="5" />
+  <move id="598" name="phantomforce" type="7" behavior="10" category="2" pp="10" power="90" targets="0" />
+  <move id="599" name="playnice" type="0" behavior="20" category="2" pp="20" power="0" accuracy="0" targets="0" />
+  <move id="600" name="playrough" type="17" behavior="10" category="2" pp="10" power="90" accuracy="90" targets="0" random="10" />
+  <move id="601" name="powder" type="6" behavior="10" category="2" pp="10" power="0" targets="0" priority="1" />
+  <move id="602" name="poweruppunch" type="1" behavior="20" category="2" pp="20" power="40" targets="0" random="100" />
+  <move id="603" name="rototiller" type="4" behavior="10" category="2" pp="10" power="0" accuracy="0" targets="4" />
+  <move id="604" name="spikyshield" type="11" behavior="10" category="2" pp="10" power="0" accuracy="0" targets="2" priority="4" />
+  <move id="605" name="stickyweb" type="6" behavior="20" category="2" pp="20" power="0" accuracy="0" targets="4" />
+  <move id="606" name="topsyturvy" type="16" behavior="20" category="2" pp="20" power="0" targets="0" />
+  <move id="607" name="trickortreat" type="7" behavior="20" category="2" pp="20" power="0" targets="0" />
+  <move id="608" name="venomdrench" type="3" behavior="20" category="2" pp="20" power="0" targets="0" />
+  <move id="609" name="watershuriken" type="10" behavior="20" category="2" pp="20" power="15" targets="0" priority="1" />
+  <move id="610" name="diamondstorm" type="5" behavior="5" category="2" pp="5" power="100" accuracy="95" targets="0" random="50" />
+  <move id="611" name="hyperspacehole" type="13" behavior="5" category="2" pp="5" power="80" accuracy="0" targets="0" />
+  <move id="612" name="steameruption" type="10" behavior="5" category="2" pp="5" power="110" accuracy="95" targets="0" random="30" />
+  <move id="613" name="thousandarrows" type="4" behavior="10" category="2" pp="10" power="90" targets="0" random="100" />
+  <move id="614" name="thousandwaves" type="4" behavior="10" category="2" pp="10" power="90" targets="0" />
+  <move id="615" name="lightofruin" type="17" behavior="5" category="2" pp="5" power="140" accuracy="90" targets="0" />
+  <move id="616" name="dragonascent" type="2" behavior="5" category="2" pp="5" power="120" targets="0" />
+  <move id="617" name="originpulse" type="10" behavior="10" category="2" pp="10" power="120" accuracy="85" targets="3" />
+  <move id="618" name="precipiceblades" type="4" behavior="10" category="2" pp="10" power="120" accuracy="85" targets="3" />
+  <move id="619" name="hyperspacefury" type="16" behavior="5" category="2" pp="5" power="100" accuracy="0" targets="0" />
+  <move id="620" name="holdback" type="0" behavior="40" category="2" pp="40" power="40" targets="0" />
+  <move id="621" name="holdhands" type="0" behavior="40" category="2" pp="40" power="0" accuracy="0" targets="0" />
+</moves>
