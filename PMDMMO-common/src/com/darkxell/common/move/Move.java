@@ -37,8 +37,6 @@ public class Move
 	public final int id;
 	/** True if this move makes contact. */
 	public final boolean makesContact;
-	/** This move's name. */
-	public final String name;
 	/** This move's power. */
 	public final int power;
 	/** This move's default Power Points. */
@@ -53,7 +51,6 @@ public class Move
 	public Move(Element xml)
 	{
 		this.id = Integer.parseInt(xml.getAttributeValue("id"));
-		this.name = xml.getAttributeValue("name");
 		this.type = PokemonType.find(Integer.parseInt(xml.getAttributeValue("type")));
 		this.behaviorID = Integer.parseInt(xml.getAttributeValue("behavior"));
 		this.category = Byte.parseByte(xml.getAttributeValue("category"));
@@ -66,11 +63,10 @@ public class Move
 		this.makesContact = xml.getAttribute("contact") != null;
 	}
 
-	public Move(int id, String name, PokemonType type, int behaviorID, byte category, int pp, int power, int accuracy, byte targets, int priority,
+	public Move(int id, PokemonType type, int behaviorID, byte category, int pp, int power, int accuracy, byte targets, int priority,
 			int additionalEffectChance, boolean makesContact)
 	{
 		this.id = id;
-		this.name = name;
 		this.type = type;
 		this.behaviorID = behaviorID;
 		this.category = category;
@@ -92,7 +88,6 @@ public class Move
 	{
 		Element root = new Element("move");
 		root.setAttribute("id", Integer.toString(this.id));
-		root.setAttribute("name", this.name);
 		root.setAttribute("type", Integer.toString(this.type.id));
 		root.setAttribute("behavior", Integer.toString(this.behaviorID));
 		root.setAttribute("category", Byte.toString(this.category));

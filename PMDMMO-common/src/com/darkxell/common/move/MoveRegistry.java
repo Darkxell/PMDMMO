@@ -35,7 +35,7 @@ public final class MoveRegistry
 		try
 		{
 			Element root = builder.build(file).getRootElement();
-			for (Element e : root.getChildren("moves"))
+			for (Element e : root.getChildren("move"))
 			{
 				Move move = new Move(e);
 				moves.put(move.id, move);
