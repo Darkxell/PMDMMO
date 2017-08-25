@@ -148,7 +148,7 @@ public abstract class AbstractPokemonSpriteset {
 	}
 
 	public BufferedImage getIddleSprite(byte facing, int variant) {
-		return this.sprites.getSubimage(variant * spriteWidth, spriteHeight * 2, spriteWidth, spriteHeight);
+		return this.sprites.getSubimage(variant * spriteWidth, spriteHeight * (2+facing), spriteWidth, spriteHeight);
 	}
 
 	public BufferedImage getMoveSprite(byte facing, int variant) {

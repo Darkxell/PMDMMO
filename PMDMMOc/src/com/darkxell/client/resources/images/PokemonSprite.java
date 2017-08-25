@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 
 public class PokemonSprite {
 
-	private AbstractPokemonSpriteset pointer;
+	public final AbstractPokemonSpriteset pointer;
 
 	public PokemonSprite(AbstractPokemonSpriteset pointer) {
 		this.pointer = pointer;
@@ -15,17 +15,15 @@ public class PokemonSprite {
 		++counter;
 		switch (state) {
 		case STATE_IDDLE:
-			int j = 0;
-			for (int i = 0; i < pointer.iddleAnimation.length; i++) {
-				j += pointer.iddleAnimation[i];
-				if (counter >= j)
-					if (i + 1 < pointer.iddleAnimation.length)
-						++statecounter;
-					else {
-						counter = 0;
-						statecounter = 0;
-					}
-			}
+			if (counter > pointer.iddleAnimation[statecounter])
+				if (statecounter + 1 < pointer.iddleAnimation.length) {
+					++statecounter;
+					counter = 0;
+				} else {
+					counter = 0;
+					statecounter = 0;
+				}
+
 			break;
 		case STATE_MOVE:
 			if (counter >= FRAMELENGTH) {
@@ -67,15 +65,15 @@ public class PokemonSprite {
 		case STATE_REST:
 			if (counter >= FRAMELENGTH) {
 				counter = 0;
-				if (statecounter ==  1)
+				if (statecounter == 1)
 					statecounter = 0;
 				else
 					++statecounter;
 			}
 			break;
 		case STATE_HURT:
-			if (counter >= FRAMELENGTH) 
-					setState(STATE_IDDLE);
+			if (counter >= FRAMELENGTH)
+				setState(STATE_IDDLE);
 			break;
 		case STATE_WAKING:
 			if (counter >= FRAMELENGTH) {
@@ -135,17 +133,18 @@ public class PokemonSprite {
 		case STATE_EATING:
 			return this.pointer.getJewelsSprite(this.facing, this.statecounter);
 		default:
-			System.err.println("Pokemon " + this.toString() + "in not in a valid state and cannot return a sprite! id: " + state);
+			System.err.println(
+					"Pokemon " + this.toString() + "in not in a valid state and cannot return a sprite! id: " + state);
 			return null;
 		}
 	}
 
-	public void setState(byte state){
+	public void setState(byte state) {
 		this.state = state;
 		this.counter = 0;
 		this.statecounter = 0;
 	}
-	
+
 	private byte facing = 4;
 	public static final byte FACING_N = 0;
 	public static final byte FACING_NE = 1;
@@ -173,5 +172,13 @@ public class PokemonSprite {
 
 	private int counter = 0;
 	private int statecounter = 0;
+
+	public int getFacingDirection() {
+		return this.facing;
+	}
+
+	public void setFacingDirection(byte dir) {
+		this.facing = dir;
+	}
 
 }

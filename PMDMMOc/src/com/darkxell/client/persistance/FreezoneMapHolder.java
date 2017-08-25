@@ -8,5 +8,4 @@ import com.darkxell.client.mechanics.freezones.FreezoneMap;
 public class FreezoneMapHolder {
 
 	public static FreezoneMap currentmap;
-	
 }
