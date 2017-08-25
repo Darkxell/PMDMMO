@@ -64,4 +64,12 @@ public class FloorSet
 		return array;
 	}
 
+	public Element toXML()
+	{
+		Element root = new Element("floors");
+		for (Pair<Integer, Integer> part : this.set)
+			root.addContent(new Element("part").setAttribute("start", Integer.toString(part.getKey())).setAttribute("end", Integer.toString(part.getValue())));
+		return root;
+	}
+
 }
