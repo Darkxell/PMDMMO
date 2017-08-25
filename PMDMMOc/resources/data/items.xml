@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<items>
+  <item id="0" type="" price="0" sell="1" />
+  <item id="1" type="Food" price="25" sell="1" food="50" full="5" />
+  <item id="2" type="Food" price="50" sell="1" food="100" full="10" />
+  <item id="3" type="Food" price="100" sell="50" food="1000" belly="10" />
+  <item id="4" type="Food" price="3" sell="1" food="50" full="5" />
+  <item id="5" type="FoodGrimy" price="5" sell="1" food="30" />
+  <item id="6" type="Heal" price="50" sell="25" hp="100" food="5" />
+  <item id="7" type="Heal" price="4000" sell="100" hp="1000" hp-full="2" food="5" />
+  <item id="8" type="Berry" price="120" sell="20" food="5" />
+  <item id="9" type="Berry" price="12" sell="15" food="5" />
+  <item id="10" type="Berry" price="80" sell="5" food="5" />
+  <item id="11" type="Berry" price="150" sell="20" food="5" />
+</items>

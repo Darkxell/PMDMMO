@@ -39,7 +39,7 @@ public final class ItemRegistry
 			{
 				String className = e.getAttributeValue("type");
 				Class<?> c = Class.forName("com.darkxell.common.item.Item" + className);
-				Item item = (Item) c.getConstructor(new Class[0]).newInstance(e);
+				Item item = (Item) c.getConstructor(Element.class).newInstance(e);
 				items.put(item.id, item);
 			}
 		} catch (Exception e)

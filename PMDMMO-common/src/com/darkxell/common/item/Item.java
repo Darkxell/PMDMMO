@@ -2,8 +2,10 @@ package com.darkxell.common.item;
 
 import org.jdom2.Element;
 
+import com.darkxell.common.util.Message;
+
 /** Represents an Item type. */
-public abstract class Item
+public class Item
 {
 	public static final String XML_ROOT = "item";
 
@@ -26,6 +28,11 @@ public abstract class Item
 		this.id = id;
 		this.price = price;
 		this.sell = sell;
+	}
+
+	public Message name()
+	{
+		return new Message("item." + this.id);
 	}
 
 	public Element toXML()
