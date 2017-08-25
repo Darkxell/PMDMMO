@@ -3,7 +3,7 @@ package com.darkxell.client.mechanics.freezones;
 import com.darkxell.client.resources.images.AbstractPokemonSpriteset;
 import com.darkxell.client.resources.images.PokemonSprite;
 import com.darkxell.client.ui.Keys;
-import com.darkxell.common.utility.DoubleRectangle;
+import com.darkxell.common.util.DoubleRectangle;
 
 public class FreezonePlayer {
 

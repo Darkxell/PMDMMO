@@ -6,6 +6,7 @@ import java.util.HashMap;
 import org.jdom2.Element;
 
 import com.darkxell.common.util.Message;
+import com.darkxell.common.util.XMLUtils;
 
 public class PokemonSpecies
 {
@@ -36,7 +37,7 @@ public class PokemonSpecies
 		this.height = Float.parseFloat(xml.getAttributeValue("height"));
 		this.weight = Float.parseFloat(xml.getAttributeValue("weight"));
 		this.learnset = new HashMap<Integer, ArrayList<Integer>>();
-		this.tms = new ArrayList<Integer>();
+		this.tms = XMLUtils.readIntArray(xml.getChild("tms"));
 		this.evolutions = new ArrayList<Evolution>();
 
 		if (xml.getChild("evolves") != null) for (Element e : xml.getChild("evolves").getChildren())
@@ -46,12 +47,7 @@ public class PokemonSpecies
 			this.tms.add(Integer.parseInt(tm.getAttributeValue("id")));
 
 		if (xml.getChild("learnset") != null) for (Element level : xml.getChild("learnset").getChildren())
-		{
-			ArrayList<Integer> moves = new ArrayList<Integer>();
-			for (Element move : level.getChildren())
-				moves.add(Integer.parseInt(move.getAttributeValue("id")));
-			this.learnset.put(Integer.parseInt(level.getAttributeValue("l")), moves);
-		}
+			this.learnset.put(Integer.parseInt(level.getAttributeValue("l")), XMLUtils.readIntArray(level));
 	}
 
 	public PokemonSpecies(int id, int formID, PokemonType type1, PokemonType type2, int baseXP, PokemonStats stats, float height, float weight,
@@ -97,22 +93,15 @@ public class PokemonSpecies
 			root.addContent(evolutions);
 		}
 
-		if (this.tms.size() != 0)
-		{
-			Element tms = new Element("tms");
-			for (Integer tm : this.tms)
-				tms.addContent(new Element("tm").setAttribute("id", Integer.toString(tm)));
-			root.addContent(tms);
-		}
+		if (this.tms.size() != 0) root.addContent(XMLUtils.toXML("tms", this.tms));
 
 		if (this.learnset.size() != 0)
 		{
 			Element learnset = new Element("learnset");
 			for (Integer level : this.learnset.keySet())
 			{
-				Element lv = new Element("level").setAttribute("l", Integer.toString(level));
-				for (Integer move : this.learnset.get(level))
-					lv.addContent(new Element("move").setAttribute("id", Integer.toString(move)));
+				Element lv = XMLUtils.toXML("level", this.learnset.get(level));
+				lv.setAttribute("l", Integer.toString(level));
 				learnset.addContent(lv);
 			}
 			root.addContent(learnset);

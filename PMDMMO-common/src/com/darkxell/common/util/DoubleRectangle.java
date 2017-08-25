@@ -1,4 +1,4 @@
-package com.darkxell.common.utility;
+package com.darkxell.common.util;
 
 /**
  * Similar properties as <code>Rectangtle</code>, but accepts decimal

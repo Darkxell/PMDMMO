@@ -1,4 +1,4 @@
-package com.darkxell.common.utility;
+package com.darkxell.common.util;
 
 /** Class usually used to mark a position. Holds two integer values. */
 public class Position {

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.jdom2.Element;
 
 import com.darkxell.common.util.Message;
+import com.darkxell.common.util.XMLUtils;
 
 /** Describes a Dungeon: floors, Pokémon, items... */
 public class Dungeon
@@ -54,11 +55,7 @@ public class Dungeon
 		this.teamLevel = xml.getAttribute("t-level") == null ? -1 : Integer.parseInt(xml.getAttributeValue("t-level"));
 		this.teamMembers = xml.getAttribute("t-members") == null ? 4 : Integer.parseInt(xml.getAttributeValue("t-members"));
 		this.teamMoney = xml.getAttribute("t-money") == null ? -1 : Integer.parseInt(xml.getAttributeValue("t-money"));
-
-		this.cutsceneFloors = new ArrayList<Integer>();
-		String value = xml.getChildText("cutscene-floors");
-		if (value != null) for (String floor : value.split(","))
-			this.cutsceneFloors.add(Integer.parseInt(floor));
+		this.cutsceneFloors = XMLUtils.readIntArray(xml.getChild("cutscene-floors"));
 
 		this.pokemon = new ArrayList<DungeonPokemon>();
 		for (Element pokemon : xml.getChild("encounters").getChildren(DungeonPokemon.XML_ROOT))
@@ -120,15 +117,7 @@ public class Dungeon
 		if (this.teamLevel != -1) root.setAttribute("t-level", Integer.toString(this.teamLevel));
 		if (this.teamMembers != 4) root.setAttribute("t-members", Integer.toString(this.teamMembers));
 		if (this.teamMoney != -1) root.setAttribute("t-money", Integer.toString(this.teamMoney));
-
-		if (this.cutsceneFloors.size() != 0)
-		{
-			String floors = "";
-			for (Integer floor : this.cutsceneFloors)
-				if (floors.equals("")) floors += floor;
-				else floors += "," + floor;
-			root.addContent(new Element("cutscene-floors").setText(floors));
-		}
+		if (this.cutsceneFloors.size() != 0) root.addContent(XMLUtils.toXML("cutscene-floors", this.cutsceneFloors));
 
 		Element pokemon = new Element("encounters");
 		for (DungeonPokemon poke : this.pokemon)
