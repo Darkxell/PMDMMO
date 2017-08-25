@@ -11,20 +11,22 @@ public class DungeonItem
 	public final FloorSet floors;
 	/** The Item ID. */
 	public final int id;
-	/** The Level of the Item. */
-	public final int quantity;
+	/** The Quantity of the Item. Always 1 except for Poké, Gravelerock and similar Items. */
+	public final int quantityMin, quantityMax;
 
 	public DungeonItem(Element xml)
 	{
 		this.id = Integer.parseInt(xml.getAttributeValue("id"));
-		this.quantity = Integer.parseInt(xml.getAttributeValue("quantity"));
+		this.quantityMin = xml.getAttributeValue("min") == null ? 1 : Integer.parseInt(xml.getAttributeValue("min"));
+		this.quantityMax = xml.getAttributeValue("max") == null ? 1 : Integer.parseInt(xml.getAttributeValue("max"));
 		this.floors = new FloorSet(xml.getChild(FloorSet.XML_ROOT));
 	}
 
-	public DungeonItem(int id, int quantity, FloorSet floors)
+	public DungeonItem(int id, int quantityMin, int quantityMax, FloorSet floors)
 	{
 		this.id = id;
-		this.quantity = quantity;
+		this.quantityMin = quantityMin;
+		this.quantityMax = quantityMax;
 		this.floors = floors;
 	}
 
@@ -34,7 +36,8 @@ public class DungeonItem
 	{
 		Element root = new Element(XML_ROOT);
 		root.setAttribute("id", Integer.toString(this.id));
-		root.setAttribute("quantity", Integer.toString(this.quantity));
+		if (this.quantityMin != 1) root.setAttribute("min", Integer.toString(this.quantityMin));
+		if (this.quantityMax != 1) root.setAttribute("max", Integer.toString(this.quantityMax));
 		root.addContent(this.floors.toXML());
 		return root;
 	}

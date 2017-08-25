@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import org.jdom2.Element;
 
+import com.darkxell.common.util.Message;
+
 /** Describes a Dungeon: floors, Pokémon, items... */
 public class Dungeon
 {
@@ -14,7 +16,7 @@ public class Dungeon
 	private ArrayList<DungeonItem> buriedItems;
 	/** Lists this Dungeon's floors that are not random. */
 	private ArrayList<Integer> cutsceneFloors;
-	/** Wether this Dungeon goes up or down. See {@link Dungeon#UP} */
+	/** Whether this Dungeon goes up or down. See {@link Dungeon#UP} */
 	public final boolean direction;
 	/** The number of Floors in this Dungeon. */
 	public final int floorCount;
@@ -98,6 +100,12 @@ public class Dungeon
 		this.monsterHouseItems = monsterHouseItems;
 		this.buriedItems = buriedItems;
 		this.traps = traps;
+	}
+
+	/** @return This Dungeon's name. */
+	public Message name()
+	{
+		return new Message("dungeon." + this.id);
 	}
 
 	public Element toXML()
