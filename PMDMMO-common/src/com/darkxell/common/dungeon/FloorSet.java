@@ -10,6 +10,7 @@ import org.jdom2.Element;
 /** Holds a set of Floors. */
 public class FloorSet
 {
+	public static final String XML_ROOT = "floors";
 
 	/** List of parts, with start and end. */
 	private ArrayList<Pair<Integer, Integer>> set;
@@ -66,7 +67,7 @@ public class FloorSet
 
 	public Element toXML()
 	{
-		Element root = new Element("floors");
+		Element root = new Element(XML_ROOT);
 		for (Pair<Integer, Integer> part : this.set)
 			root.addContent(new Element("part").setAttribute("start", Integer.toString(part.getKey())).setAttribute("end", Integer.toString(part.getValue())));
 		return root;
