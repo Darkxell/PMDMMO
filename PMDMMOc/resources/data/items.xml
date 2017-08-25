@@ -12,4 +12,12 @@
   <item id="9" type="Berry" price="12" sell="15" food="5" />
   <item id="10" type="Berry" price="80" sell="5" food="5" />
   <item id="11" type="Berry" price="150" sell="20" food="5" />
+  <item id="12" type="Throwable" price="25" sell="5" trajectory="1" damage="15" />
+  <item id="13" type="Throwable" price="50" sell="5" trajectory="1" damage="20" />
+  <item id="14" type="Throwable" price="6" sell="3" trajectory="0" damage="6" />
+  <item id="15" type="Throwable" price="4" sell="2" trajectory="0" damage="4" />
+  <item id="16" type="Throwable" price="2" sell="1" trajectory="0" damage="1" />
+  <item id="17" type="Throwable" price="0" sell="5" trajectory="0" damage="2" />
+  <item id="18" type="Throwable" price="0" sell="6" trajectory="0" damage="2" />
+  <item id="19" type="Throwable" price="0" sell="4" trajectory="0" damage="2" />
 </items>
