@@ -1,10 +1,11 @@
 package com.darkxell.common.dungeon.floor.layout;
 
-import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
+import java.util.function.Predicate;
 
+import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Room;
 
 /** A Layout with random rooms in a grid-like pattern. */
@@ -13,10 +14,8 @@ public class GridRoomsLayout extends Layout
 
 	public static final int MIN_SPACE = 4, MAX_SPACE = 8;
 
-	/** Temporary variables to store grid dimensions. */
-	private Dimension dimensions;
-	/** Temporary variable to store the space between slots. */
-	private int horizSpace, vertiSpace;
+	/** Temporary variable to store the row heights. */
+	private int[] heights;
 	/** Maximum dimensions of rooms. Width and Height can be switched. */
 	public final int maxRoomWidth, maxRoomHeight;
 	/** Maximum number of rooms. Width and Height can be switched. */
@@ -25,8 +24,10 @@ public class GridRoomsLayout extends Layout
 	public final int minRoomWidth, minRoomHeight;
 	/** Minimum number of rooms. Width and Height can be switched. */
 	public final int minWidth, minHeight;
-	/** Temporary variable to store the Room dimensions. */
-	private Dimension[][] sizes;
+	/** Temporary variable to store the Rooms. */
+	private Rectangle[][] rects;
+	/** Temporary variable to store the column widths. */
+	private int[] widths;
 
 	public GridRoomsLayout(int id, int minWidth, int minHeight, int maxWidth, int maxHeight, int minRoomWidth, int minRoomHeight, int maxRoomWidth,
 			int maxRoomHeight)
@@ -58,7 +59,7 @@ public class GridRoomsLayout extends Layout
 			h = 3;
 		}
 
-		this.sizes = new Dimension[w][h];
+		this.rects = new Rectangle[w][h];
 	}
 
 	@Override
@@ -71,68 +72,172 @@ public class GridRoomsLayout extends Layout
 	@Override
 	protected void generateRooms()
 	{
+		System.out.println(this.rooms.length);
 		this.createGrid();
 
-		this.dimensions = new Dimension(0, 0);
+		// Create random sizes
 		for (int i = 0; i < this.rooms.length; ++i)
 		{
 			Point p = this.newGridPosition();
-			this.sizes[p.x][p.y] = this.randomSize();
-			this.dimensions = new Dimension(Math.max(this.dimensions.width, this.sizes[p.x][p.y].width), Math.max(this.dimensions.height,
-					this.sizes[p.x][p.y].height));
+			this.rects[p.x][p.y] = this.randomRectangle();
 		}
-		this.dimensions = new Dimension(this.dimensions.width + 2, this.dimensions.height + 2);
 
-		this.horizSpace = this.random.nextInt(MAX_SPACE - MIN_SPACE + 1) + MIN_SPACE;
-		this.vertiSpace = this.random.nextInt(MAX_SPACE - MIN_SPACE + 1) + MIN_SPACE;
-		int totalWidth = this.sizes.length * this.dimensions.width + (this.sizes.length - 1) * this.horizSpace;
-		int totalHeight = this.sizes[0].length * this.dimensions.height + (this.sizes[0].length - 1) * this.vertiSpace;
+		this.widths = new int[this.rects.length];
+		this.heights = new int[this.rects[0].length];
+		for (int x = 0; x < this.rects.length; ++x)
+			for (int y = 0; y < this.rects[x].length; ++y)
+				if (this.rects[x][y] != null)
+				{
+					this.widths[x] = Math.max(this.widths[x], this.rects[x][y].width);
+					this.heights[y] = Math.max(this.heights[y], this.rects[x][y].height);
+				}
 
-		int startX = this.tiles.length / 2 - totalWidth / 2;
-		int y = this.tiles[0].length / 2 - totalHeight / 2;
+		// Align rooms topleft with minimal space
+		for (int x = 0; x < this.rects.length; ++x)
+			for (int y = 0; y < this.rects[x].length; ++y)
+				if (this.rects[x][y] != null)
+				{
+					for (int col = 0; col < x; ++col)
+						this.rects[x][y].x += this.widths[col] + MIN_SPACE;
+
+					for (int row = 0; row < y; ++row)
+						this.rects[x][y].y += this.heights[row] + MIN_SPACE;
+					System.out.println(this.rects[x][y]);
+				}
+
+		// TODO Erode rooms
+
+		// Add potential additional space
+
+		// Center rooms
+		int xCenter = Floor.ALL_WIDTH / 2 - this.totalWidth() / 2;
+		int yCenter = Floor.ALL_HEIGHT / 2 - this.totalHeight() / 2;
+
+		for (int x = 0; x < this.rects.length; ++x)
+			for (int y = 0; y < this.rects[x].length; ++y)
+				if (this.rects[x][y] != null)
+				{
+					this.rects[x][y].x += xCenter;
+					this.rects[x][y].y += yCenter;
+				}
+
+		/* this.horizSpace = this.random.nextInt(MAX_SPACE - MIN_SPACE + 1) + MIN_SPACE; this.vertiSpace = this.random.nextInt(MAX_SPACE - MIN_SPACE + 1) + MIN_SPACE; int totalWidth = this.sizes.length * this.dimensions.width + (this.sizes.length - 1) * this.horizSpace; int totalHeight =
+		 * this.sizes[0].length * this.dimensions.height + (this.sizes[0].length - 1) * this.vertiSpace;
+		 * 
+		 * while (totalWidth >= Floor.MAX_WIDTH - 2) { Dimension d = this.randomXReduceable(); if (d == null) { --this.horizSpace; totalWidth -= this.sizes.length; } else { --d.width; --totalWidth; } } while (totalHeight >= Floor.MAX_HEIGHT - 2) { Dimension d = this.randomYReduceable(); if (d ==
+		 * null) { --this.vertiSpace; totalHeight -= this.sizes[0].length; } else { --d.height; --totalHeight; } }
+		 * 
+		 * int x = Floor.MAX_WIDTH / 2 - totalWidth / 2 + Floor.UNBREAKABLE + 1; int startY = Floor.MAX_HEIGHT / 2 - totalHeight / 2 + Floor.UNBREAKABLE + 1; */
 		int roomID = 0;
 
-		for (int i = 0; i < this.sizes.length; ++i)
+		for (int i = 0; i < this.rects.length; ++i)
 		{
-			int x = startX;
-			for (int j = 0; j < this.sizes[0].length; ++j)
+			for (int j = 0; j < this.rects[0].length; ++j)
 			{
-				if (this.sizes[i][j] != null)
+				Rectangle r = this.rects[i][j];
+				if (r != null)
 				{
-					int xPos = this.random.nextInt(this.dimensions.width - this.sizes[i][j].width + 1) + x;
-					int yPos = this.random.nextInt(this.dimensions.height - this.sizes[i][j].height + 1) + y;
-					this.rooms[roomID] = new Room(this.floor, xPos, yPos, this.sizes[i][j].width, this.sizes[i][j].height, false);
+					this.rooms[roomID] = new Room(this.floor, r.x, r.y, r.width, r.height, false);
 					++roomID;
 				}
 			}
 		}
 
-		this.sizes = null;
-		this.dimensions = null;
+		this.rects = null;
+		this.widths = null;
+		this.heights = null;
 	}
 
 	/** @return A Random location for a Room. */
 	private Point newGridPosition()
 	{
 		ArrayList<Point> candidates = new ArrayList<Point>();
-		for (int x = 0; x < this.sizes.length; ++x)
-			for (int y = 0; y < this.sizes[x].length; ++y)
-				if (this.sizes[x][y] == null) candidates.add(new Point(x, y));
+		for (int x = 0; x < this.rects.length; ++x)
+			for (int y = 0; y < this.rects[x].length; ++y)
+				if (this.rects[x][y] == null) candidates.add(new Point(x, y));
 		return candidates.get(this.random.nextInt(candidates.size()));
 	}
 
-	/** @return A random size for a Room. */
-	private Dimension randomSize()
+	/** @return A random Room. */
+	private Rectangle randomRectangle()
 	{
-		int width = this.random.nextInt(this.maxWidth - this.minWidth + 1) + this.minWidth;
-		int height = this.random.nextInt(this.maxHeight - this.minHeight + 1) + this.minHeight;
+		int width = this.random.nextInt(this.maxRoomWidth - this.minRoomWidth + 1) + this.minRoomWidth;
+		int height = this.random.nextInt(this.maxRoomHeight - this.minRoomHeight + 1) + this.minRoomHeight;
 		if (this.random.nextInt(2) >= 1)
 		{
 			int temp = width;
 			width = height;
 			height = temp;
 		}
-		return new Dimension(width, height);
+		return new Rectangle(0, 0, width, height);
+	}
+
+	/** @return A Random room which width can be reduced. */
+	private Rectangle randomXReduceable()
+	{
+		ArrayList<Rectangle> candidates = new ArrayList<Rectangle>();
+		for (int x = 0; x < this.rects.length; ++x)
+			for (int y = 0; y < this.rects[x].length; ++y)
+				candidates.add(this.rects[x][y]);
+		candidates.removeIf(new Predicate<Rectangle>()
+		{
+
+			@Override
+			public boolean test(Rectangle d)
+			{
+				return d == null || d.width < minRoomWidth;
+			}
+		});
+		if (candidates.size() == 0) return null;
+		return candidates.get(this.random.nextInt(candidates.size()));
+	}
+
+	/** @return A Random room which height can be reduced. */
+	private Rectangle randomYReduceable()
+	{
+		ArrayList<Rectangle> candidates = new ArrayList<Rectangle>();
+		for (int x = 0; x < this.rects.length; ++x)
+			for (int y = 0; y < this.rects[x].length; ++y)
+				candidates.add(this.rects[x][y]);
+		candidates.removeIf(new Predicate<Rectangle>()
+		{
+
+			@Override
+			public boolean test(Rectangle d)
+			{
+				return d == null || d.height < minRoomHeight;
+			}
+		});
+		if (candidates.size() == 0) return null;
+		return candidates.get(this.random.nextInt(candidates.size()));
+	}
+
+	private int totalHeight()
+	{
+		int minY = Integer.MAX_VALUE, maxY = 0;
+		for (int y = 0; y < this.rects[0].length && minY == Integer.MAX_VALUE; ++y)
+			for (int x = 0; x < this.rects.length; ++x)
+				if (this.rects[x][y] != null) minY = Math.min(minY, this.rects[x][y].y);
+
+		for (int y = this.rects[0].length - 1; y >= 0 && maxY == 0; --y)
+			for (int x = 0; x < this.rects.length; ++x)
+				if (this.rects[x][y] != null) maxY = Math.max(maxY, this.rects[x][y].y + this.rects[x][y].height);
+
+		return maxY - minY + 1;
+	}
+
+	private int totalWidth()
+	{
+		int minX = Integer.MAX_VALUE, maxX = 0;
+		for (int x = 0; x < this.rects.length && minX == Integer.MAX_VALUE; ++x)
+			for (int y = 0; y < this.rects[0].length; ++y)
+				if (this.rects[0][y] != null) minX = Math.min(minX, this.rects[0][y].x);
+
+		for (int x = this.rects.length - 1; x >= 0 && maxX == 0; --x)
+			for (int y = 0; y < this.rects[0].length; ++y)
+				if (this.rects[x][y] != null) maxX = Math.max(maxX, this.rects[x][y].x + this.rects[x][y].width);
+
+		return maxX - minX + 1;
 	}
 
 }

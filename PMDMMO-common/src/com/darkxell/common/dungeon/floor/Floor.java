@@ -10,12 +10,15 @@ import com.darkxell.common.dungeon.floor.layout.Layout;
 public class Floor
 {
 
-	/** Number of tiles, including unaccessible walls. */
-	public static final int ALL_WIDTH = 70, ALL_HEIGHT = 48;
 	/** Number of walkable tiles in a Floor. */
 	public static final int MAX_WIDTH = 50, MAX_HEIGHT = 28;
+	/** Number of unbreakable walls on each side of the map. */
+	public static final int UNBREAKABLE = 10;
+	/** Number of tiles, including unaccessible walls. */
+	public static final int ALL_WIDTH = MAX_WIDTH + UNBREAKABLE * 2, ALL_HEIGHT = MAX_HEIGHT + UNBREAKABLE * 2;
+	
 	/** Maximum walkable coordinates in a Floor. */
-	public static final Rectangle WALKABLE = new Rectangle(10, 10, MAX_WIDTH, MAX_HEIGHT);
+	public static final Rectangle WALKABLE = new Rectangle(UNBREAKABLE, UNBREAKABLE, MAX_WIDTH, MAX_HEIGHT);
 
 	/** This Floor's Dungeon. */
 	public final Dungeon dungeon;
