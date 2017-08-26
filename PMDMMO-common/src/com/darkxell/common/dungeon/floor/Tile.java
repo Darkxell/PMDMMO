@@ -1,7 +1,10 @@
 package com.darkxell.common.dungeon.floor;
 
+import java.awt.Point;
+
 import com.darkxell.common.item.Item;
 import com.darkxell.common.pokemon.Pokemon;
+import com.darkxell.common.util.GameUtil;
 
 /** Represents a single tile in a Floor. */
 public class Tile
@@ -23,6 +26,13 @@ public class Tile
 		this.x = x;
 		this.y = y;
 		this.type = type;
+	}
+
+	/** @return The Tile adjacent to this Tile in the input direction. See {@link GameUtil#NORTH}. */
+	public Tile adjacentTile(byte direction)
+	{
+		Point p = GameUtil.moveTo(this.x, this.y, direction);
+		return this.floor.tileAt(p.x, p.y);
 	}
 
 	/** @return The Item on this Tile. null if no Item. */
