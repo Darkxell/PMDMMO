@@ -2,6 +2,9 @@ package com.darkxell.common.dungeon;
 
 import org.jdom2.Element;
 
+import com.darkxell.common.item.Item;
+import com.darkxell.common.item.ItemRegistry;
+
 /** Describes how an Item appears in a Dungeon. */
 public class DungeonItem
 {
@@ -30,7 +33,10 @@ public class DungeonItem
 		this.floors = floors;
 	}
 
-	/* public Item item() { return ItemRegistry.find(this.id); } */// TODO: uncomment when ItemRegistry done.
+	public Item item()
+	{
+		return ItemRegistry.find(this.id);
+	}
 
 	public Element toXML()
 	{

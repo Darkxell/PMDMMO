@@ -4,6 +4,7 @@ import com.darkxell.client.state.StateManager;
 import com.darkxell.client.state.TestState;
 import com.darkxell.client.ui.Frame;
 import com.darkxell.common.dungeon.DungeonRegistry;
+import com.darkxell.common.item.ItemRegistry;
 import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.util.Lang;
@@ -24,6 +25,7 @@ public class Launcher
 		Lang.loadClient();
 		PokemonRegistry.loadClient();
 		MoveRegistry.loadClient();
+		ItemRegistry.loadClient();
 		DungeonRegistry.loadClient();
 		System.out.println("Lang & Data loaded.");
 
