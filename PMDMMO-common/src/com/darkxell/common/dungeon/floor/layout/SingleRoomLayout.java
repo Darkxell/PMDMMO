@@ -17,10 +17,6 @@ public class SingleRoomLayout extends Layout
 	{}
 
 	@Override
-	protected void generatePaths()
-	{}
-
-	@Override
 	protected void generateRooms()
 	{
 		this.rooms[0] = new Room(this.floor, (int) Floor.WALKABLE.x + 1, (int) Floor.WALKABLE.y + 1, (int) Floor.WALKABLE.getWidth() - 2,

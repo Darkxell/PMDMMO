@@ -17,6 +17,7 @@ public abstract class Layout
 	private static final HashMap<Integer, Layout> layouts = new HashMap<Integer, Layout>();
 
 	public static final Layout SINGLE_ROOM = new SingleRoomLayout();
+	public static final Layout SMALL = new GridRoomsLayout(1, 1, 2, 2, 3, 5, 5, 9, 12);
 
 	/** @return The Layout with the input ID. */
 	public static Layout find(int id)
@@ -28,19 +29,25 @@ public abstract class Layout
 	protected Floor floor;
 	/** This Layout's id. */
 	public final int id;
+	/** The number of Rooms in this Layout. */
+	public final int minRooms, maxRooms;
 	/** RNG */
 	protected Random random;
-	/** The number of Rooms in this Layout. */
-	public final int roomCount;
 	/** Temporary storage for the floor's rooms. */
 	protected Room[] rooms;
 	/** Temporary storage for the floor's tiles. */
 	protected Tile[][] tiles;
 
-	public Layout(int id, int roomCount)
+	public Layout(int id, int rooms)
+	{
+		this(id, rooms, rooms);
+	}
+
+	public Layout(int id, int minRooms, int maxRooms)
 	{
 		this.id = id;
-		this.roomCount = roomCount;
+		this.minRooms = minRooms;
+		this.maxRooms = maxRooms;
 		layouts.put(this.id, this);
 	}
 
@@ -85,7 +92,10 @@ public abstract class Layout
 	protected abstract void generateLiquids();
 
 	/** Creates paths between the rooms. */
-	protected abstract void generatePaths();
+	protected void generatePaths()
+	{
+		// TODO Layout.generatePaths()
+	}
 
 	/** Creates the rooms. */
 	protected abstract void generateRooms();
@@ -130,6 +140,12 @@ public abstract class Layout
 	private Room randomRoom()
 	{
 		return this.rooms[random.nextInt(this.rooms.length)];
+	}
+
+	/** @return A random number of Rooms for this Layout. */
+	public int randomRoomCount(Random random)
+	{
+		return random.nextInt(this.maxRooms - this.minRooms + 1) + this.minRooms;
 	}
 
 	/** Summons Pokémon. */

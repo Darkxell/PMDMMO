@@ -36,13 +36,13 @@ public class Floor
 		this.dungeon = dungeon;
 		this.layout = layout;
 		this.random = new Random();
-		this.tiles = new Tile[ALL_WIDTH][ALL_HEIGHT];
-		this.rooms = new Room[this.layout.roomCount];
 	}
 
 	/** Generates this Floor. */
 	public void generate()
 	{
+		this.tiles = new Tile[ALL_WIDTH][ALL_HEIGHT];
+		this.rooms = new Room[this.layout.randomRoomCount(this.random)];
 		this.layout.generate(this, this.tiles, this.rooms);
 	}
 
