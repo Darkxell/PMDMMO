@@ -8,6 +8,7 @@ import javafx.util.Pair;
 import org.jdom2.Element;
 
 /** Holds a set of Floors. */
+@SuppressWarnings("restriction")
 public class FloorSet
 {
 	public static final String XML_ROOT = "floors";

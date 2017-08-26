@@ -35,8 +35,8 @@ public class FreezoneExploreState extends AbstractState {
 
 			g.translate(translateX, translateY);
 			// Draws the map
-			for (int i = 0; i < map.mapHeight; i++) {
-				for (int j = 0; j < map.mapWidth; j++) {
+			for (int i = 0; i < map.mapHeight/2; i++) {
+				for (int j = 0; j < map.mapWidth/2; j++) {
 					int tileid = (i * map.mapWidth) + j;
 					g.drawImage(map.tiles[tileid].sprite, translateX + (8 * j), translateY + (8 * i), null);
 					if (map.tiles[tileid].type == FreezoneTile.TYPE_WALKABLE)
