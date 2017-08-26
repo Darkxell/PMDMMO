@@ -1,6 +1,9 @@
 package com.darkxell.common.dungeon.floor.layout;
 
 import static com.darkxell.common.dungeon.floor.Floor.*;
+
+import java.util.Random;
+
 import javafx.util.Pair;
 
 import com.darkxell.common.dungeon.floor.Floor;
@@ -18,6 +21,8 @@ public abstract class Layout
 	protected Floor floor;
 	/** This Layout's id. */
 	public final int id;
+	/** RNG */
+	protected Random random;
 	/** Temporary storage for the floor's rooms. */
 	protected Room[] rooms;
 	/** Temporary storage for the floor's tiles. */
@@ -29,14 +34,13 @@ public abstract class Layout
 	}
 
 	/** Generates the default layout: Unbreakable walls surrounding breakable walls. */
-	public Tile[][] defaultTiles(Floor floor)
+	public void defaultTiles()
 	{
-		Tile[][] tiles = new Tile[ALL_WIDTH][ALL_HEIGHT];
-		for (int x = 0; x < tiles.length; ++x)
-			for (int y = 0; y < tiles.length; ++y)
-				if (x < MIN_X || x > MAX_X || y < MIN_Y || y > MAX_Y) tiles[x][y] = new Tile(floor, x, y, TileType.WALL_END);
-				else tiles[x][y] = new Tile(floor, x, y, TileType.WALL);
-		return tiles;
+		this.tiles = new Tile[ALL_WIDTH][ALL_HEIGHT];
+		for (int x = 0; x < this.tiles.length; ++x)
+			for (int y = 0; y < this.tiles.length; ++y)
+				if (x < MIN_X || x > MAX_X || y < MIN_Y || y > MAX_Y) this.tiles[x][y] = new Tile(this.floor, x, y, TileType.WALL_END);
+				else this.tiles[x][y] = new Tile(this.floor, x, y, TileType.WALL);
 	}
 
 	/** Generates a Floor.
@@ -45,11 +49,12 @@ public abstract class Layout
 	public Pair<Tile[][], Room[]> generate(Floor floor)
 	{
 		this.floor = floor;
+		this.random = this.floor.random;
 		this.rooms = this.generateRooms();
-		this.tiles = this.generateTiles();
-		this.placeStairs();
+		this.generateTiles();
 		this.generatePaths();
 		this.generateLiquids();
+		this.placeStairs();
 		this.placeWonderTiles();
 		if (this.floor.dungeon.hasTraps) this.placeTraps();
 		this.placeItems();
@@ -60,6 +65,7 @@ public abstract class Layout
 		this.tiles = null;
 		this.rooms = null;
 		this.floor = null;
+		this.random = null;
 		return layout;
 	}
 
@@ -73,10 +79,12 @@ public abstract class Layout
 	protected abstract Room[] generateRooms();
 
 	/** Creates default tiles from the Rooms. */
-	private Tile[][] generateTiles()
+	private void generateTiles()
 	{
-		// TODO Layout.generateTiles()
-		return null;
+		this.defaultTiles();
+		for (Room room : this.rooms)
+			for (Tile tile : room.listTiles())
+				tile.setType(TileType.GROUND);
 	}
 
 	/** Places Items. */
@@ -85,10 +93,11 @@ public abstract class Layout
 		// TODO Layout.placeItems()
 	}
 
-	/** Places the Stairs tile. */
+	/** Randomly places the Stairs tile in a random room. */
 	private void placeStairs()
 	{
-		// TODO Layout.placeStairs()
+		Room exitRoom = this.floor.randomRoom(this.random);
+		exitRoom.randomTile(this.random).setType(TileType.STAIR);
 	}
 
 	/** Places traps. */
@@ -100,7 +109,10 @@ public abstract class Layout
 	/** Places Wonder Tiles. */
 	private void placeWonderTiles()
 	{
-		// TODO Layout.placeWonderTiles()
+		int wonder = 2; // Number of wonder tiles to place
+		wonder += this.random.nextInt(3) - 2; // wonder = random[wonder-1;wonder+1]
+		for (int i = 0; i <= wonder; ++i)
+			this.floor.randomRoom(this.random).randomTile(this.random, TileType.GROUND).setType(TileType.WONDER_TILE);
 	}
 
 	/** Summons Pokémon. */
