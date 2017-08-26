@@ -12,8 +12,9 @@ public class PokemonStats
 	 * <li>SPECIAL_ATTACK = 3</li>
 	 * <li>SPECIAL_DEFENSE = 4</li>
 	 * <li>SPEED = 5</li>
+	 * <li>EVASION = 6</li>
 	 * </ul> */
-	public static final byte ATTACK = 0, DEFENSE = 1, HEALTH = 2, SPECIAL_ATTACK = 3, SPECIAL_DEFENSE = 4, SPEED = 5;
+	public static final byte ATTACK = 0, DEFENSE = 1, HEALTH = 2, SPECIAL_ATTACK = 3, SPECIAL_DEFENSE = 4, SPEED = 5, EVASION = 6;
 
 	/** Attack. */
 	public final int attack;
