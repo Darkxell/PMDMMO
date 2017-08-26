@@ -9,7 +9,7 @@ public class SingleRoomLayout extends Layout
 
 	public SingleRoomLayout()
 	{
-		super(2);
+		super(2, 1);
 	}
 
 	@Override
@@ -21,10 +21,10 @@ public class SingleRoomLayout extends Layout
 	{}
 
 	@Override
-	protected Room[] generateRooms()
+	protected void generateRooms()
 	{
-		return new Room[]
-		{ new Room(this.floor, Floor.MIN_X + 1, Floor.MIN_Y + 1, Floor.MAX_X - 1, Floor.MAX_Y - 1, true) };
+		this.rooms[0] = new Room(this.floor, (int) Floor.WALKABLE.x + 1, (int) Floor.WALKABLE.y + 1, (int) Floor.WALKABLE.getWidth() - 2,
+				(int) Floor.WALKABLE.getHeight() - 2, true);
 	}
 
 }

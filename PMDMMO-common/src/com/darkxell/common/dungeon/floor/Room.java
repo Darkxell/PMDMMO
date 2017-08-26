@@ -11,7 +11,7 @@ public class Room
 	public final Floor floor;
 	/** True if this Room is a Monster House. */
 	public final boolean isMonsterHouse;
-	/** This this's dimensions. */
+	/** This Room's dimensions. */
 	public final int width, height;
 	/** This Room's location. */
 	public final int x, y;
@@ -36,10 +36,22 @@ public class Room
 	public ArrayList<Tile> listTiles()
 	{
 		ArrayList<Tile> tiles = new ArrayList<Tile>();
-		for (int y = this.y; y <= this.y + this.height; ++y)
-			for (int x = this.x; x <= this.x + this.width; ++x)
+		for (int y = this.y; y <= this.y + this.height - 1; ++y)
+			for (int x = this.x; x <= this.x + this.width - 1; ++x)
 				tiles.add(this.floor.tileAt(x, y));
 		return tiles;
+	}
+
+	/** @return The X coordinate of the farthest tiles to the east. */
+	public int maxX()
+	{
+		return this.x + this.width - 1;
+	}
+
+	/** @return The Y coordinate of the farthest tiles to the south. */
+	public int maxY()
+	{
+		return this.y + this.height - 1;
 	}
 
 	/** @return A random tile in this Room. */
