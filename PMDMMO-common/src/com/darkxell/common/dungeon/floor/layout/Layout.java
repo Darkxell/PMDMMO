@@ -2,6 +2,7 @@ package com.darkxell.common.dungeon.floor.layout;
 
 import static com.darkxell.common.dungeon.floor.Floor.*;
 
+import java.util.HashMap;
 import java.util.Random;
 
 import com.darkxell.common.dungeon.floor.Floor;
@@ -13,7 +14,15 @@ import com.darkxell.common.dungeon.floor.TileType;
 public abstract class Layout
 {
 
+	private static final HashMap<Integer, Layout> layouts = new HashMap<Integer, Layout>();
+
 	public static final Layout SINGLE_ROOM = new SingleRoomLayout();
+
+	/** @return The Layout with the input ID. */
+	public static Layout find(int id)
+	{
+		return layouts.get(id);
+	}
 
 	/** Temporary storage for the generating Floor. */
 	protected Floor floor;
@@ -32,6 +41,7 @@ public abstract class Layout
 	{
 		this.id = id;
 		this.roomCount = roomCount;
+		layouts.put(this.id, this);
 	}
 
 	/** Generates the default layout: Unbreakable walls surrounding breakable walls. */

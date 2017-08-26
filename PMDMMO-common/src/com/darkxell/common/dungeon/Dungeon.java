@@ -1,11 +1,12 @@
 package com.darkxell.common.dungeon;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.jdom2.Element;
 
+import com.darkxell.common.dungeon.floor.layout.Layout;
 import com.darkxell.common.util.Message;
-import com.darkxell.common.util.XMLUtils;
 
 /** Describes a Dungeon: floors, Pokémon, items... */
 public class Dungeon
@@ -15,8 +16,6 @@ public class Dungeon
 
 	/** Lists the Items found in this Dungeon. */
 	private ArrayList<DungeonItem> buriedItems;
-	/** Lists this Dungeon's floors that are not random. */
-	private ArrayList<Integer> cutsceneFloors;
 	/** Whether this Dungeon goes up or down. See {@link Dungeon#UP} */
 	public final boolean direction;
 	/** The number of Floors in this Dungeon. */
@@ -29,6 +28,8 @@ public class Dungeon
 	public final int id;
 	/** Lists the Items found in this Dungeon. */
 	private ArrayList<DungeonItem> items;
+	/** Lists this Dungeon's Floors' layouts. */
+	private HashMap<Integer, FloorSet> layouts;
 	/** Lists the Items found in this Dungeon. */
 	private ArrayList<DungeonItem> monsterHouseItems;
 	/** Lists the Pokémon found in this Dungeon. */
@@ -55,7 +56,6 @@ public class Dungeon
 		this.teamLevel = xml.getAttribute("t-level") == null ? -1 : Integer.parseInt(xml.getAttributeValue("t-level"));
 		this.teamMembers = xml.getAttribute("t-members") == null ? 4 : Integer.parseInt(xml.getAttributeValue("t-members"));
 		this.teamMoney = xml.getAttribute("t-money") == null ? -1 : Integer.parseInt(xml.getAttributeValue("t-money"));
-		this.cutsceneFloors = XMLUtils.readIntArray(xml.getChild("cutscene-floors"));
 
 		this.pokemon = new ArrayList<DungeonPokemon>();
 		for (Element pokemon : xml.getChild("encounters").getChildren(DungeonPokemon.XML_ROOT))
@@ -76,11 +76,15 @@ public class Dungeon
 		this.traps = new ArrayList<DungeonTrap>();
 		for (Element trap : xml.getChild("traps").getChildren(DungeonTrap.XML_ROOT))
 			this.traps.add(new DungeonTrap(trap));
+
+		this.layouts = new HashMap<Integer, FloorSet>();
+		for (Element layout : xml.getChild("layouts").getChildren("layout"))
+			this.layouts.put(Integer.parseInt(layout.getAttributeValue("id")), new FloorSet(layout.getChild(FloorSet.XML_ROOT)));
 	}
 
 	public Dungeon(int id, int floorCount, boolean direction, boolean hasMonsterHouses, boolean hasTraps, int teamItems, int teamLevel, int teamMoney,
-			int teamMembers, ArrayList<Integer> cutsceneFloors, ArrayList<DungeonPokemon> pokemon, ArrayList<DungeonItem> items,
-			ArrayList<DungeonItem> monsterHouseItems, ArrayList<DungeonItem> buriedItems, ArrayList<DungeonTrap> traps)
+			int teamMembers, ArrayList<DungeonPokemon> pokemon, ArrayList<DungeonItem> items, ArrayList<DungeonItem> monsterHouseItems,
+			ArrayList<DungeonItem> buriedItems, ArrayList<DungeonTrap> traps, HashMap<Integer, FloorSet> layouts)
 	{
 		this.id = id;
 		this.floorCount = floorCount;
@@ -91,12 +95,20 @@ public class Dungeon
 		this.teamLevel = teamLevel;
 		this.teamMembers = teamMembers;
 		this.teamMoney = teamMoney;
-		this.cutsceneFloors = cutsceneFloors;
 		this.pokemon = pokemon;
 		this.items = items;
 		this.monsterHouseItems = monsterHouseItems;
 		this.buriedItems = buriedItems;
 		this.traps = traps;
+		this.layouts = layouts;
+	}
+
+	/** @return The Layout to use for the input floor. */
+	public Layout getLayout(int floor)
+	{
+		for (Integer layout : this.layouts.keySet())
+			if (this.layouts.get(layout).contains(floor)) return Layout.find(layout);
+		return null;
 	}
 
 	/** @return This Dungeon's name. */
@@ -117,7 +129,6 @@ public class Dungeon
 		if (this.teamLevel != -1) root.setAttribute("t-level", Integer.toString(this.teamLevel));
 		if (this.teamMembers != 4) root.setAttribute("t-members", Integer.toString(this.teamMembers));
 		if (this.teamMoney != -1) root.setAttribute("t-money", Integer.toString(this.teamMoney));
-		if (this.cutsceneFloors.size() != 0) root.addContent(XMLUtils.toXML("cutscene-floors", this.cutsceneFloors));
 
 		Element pokemon = new Element("encounters");
 		for (DungeonPokemon poke : this.pokemon)
@@ -143,6 +154,11 @@ public class Dungeon
 		for (DungeonTrap trap : this.traps)
 			traps.addContent(trap.toXML());
 		root.addContent(traps);
+
+		Element layouts = new Element("layouts");
+		for (Integer layout : this.layouts.keySet())
+			layouts.addContent(new Element("layout").setAttribute("id", Integer.toString(layout)).addContent(this.layouts.get(layout).toXML()));
+		root.addContent(layouts);
 
 		return root;
 	}
