@@ -4,6 +4,16 @@ import org.jdom2.Element;
 
 public class PokemonStats
 {
+	/** Stat IDs.<br />
+	 * <ul>
+	 * <li>ATTACK = 0</li>
+	 * <li>DEFENSE = 1</li>
+	 * <li>HEALTH = 2</li>
+	 * <li>SPECIAL_ATTACK = 3</li>
+	 * <li>SPECIAL_DEFENSE = 4</li>
+	 * <li>SPEED = 5</li>
+	 * </ul> */
+	public static final byte ATTACK = 0, DEFENSE = 1, HEALTH = 2, SPECIAL_ATTACK = 3, SPECIAL_DEFENSE = 4, SPEED = 5;
 
 	/** Attack. */
 	public final int attack;

@@ -54,4 +54,64 @@
   <item id="51" type="Gummi" price="800" sell="50" g-type="15" />
   <item id="52" type="Gummi" price="800" sell="50" g-type="16" />
   <item id="53" type="Gummi" price="800" sell="50" g-type="17" />
+  <item id="54" type="Orb" price="0" sell="50" />
+  <item id="55" type="Orb" price="300" sell="150" />
+  <item id="56" type="Orb" price="300" sell="150" />
+  <item id="57" type="Orb" price="300" sell="150" />
+  <item id="58" type="Orb" price="300" sell="150" />
+  <item id="59" type="Orb" price="300" sell="150" />
+  <item id="60" type="Orb" price="300" sell="150" />
+  <item id="61" type="Orb" price="300" sell="150" />
+  <item id="62" type="Orb" price="300" sell="150" />
+  <item id="63" type="Orb" price="300" sell="150" />
+  <item id="64" type="Orb" price="300" sell="150" />
+  <item id="65" type="Orb" price="300" sell="150" />
+  <item id="66" type="Orb" price="300" sell="150" />
+  <item id="67" type="Orb" price="300" sell="150" />
+  <item id="68" type="Orb" price="300" sell="150" />
+  <item id="69" type="Orb" price="300" sell="150" />
+  <item id="70" type="Orb" price="300" sell="150" />
+  <item id="71" type="Orb" price="300" sell="150" />
+  <item id="72" type="Orb" price="0" sell="150" />
+  <item id="73" type="Orb" price="300" sell="150" />
+  <item id="74" type="Orb" price="300" sell="150" />
+  <item id="75" type="Orb" price="300" sell="150" />
+  <item id="76" type="Orb" price="300" sell="150" />
+  <item id="77" type="Orb" price="0" sell="150" />
+  <item id="78" type="Orb" price="300" sell="150" />
+  <item id="79" type="Orb" price="300" sell="150" />
+  <item id="80" type="Orb" price="300" sell="150" />
+  <item id="81" type="Orb" price="300" sell="150" />
+  <item id="82" type="Orb" price="300" sell="150" />
+  <item id="83" type="Orb" price="0" sell="150" />
+  <item id="84" type="Orb" price="500" sell="250" />
+  <item id="85" type="Orb" price="300" sell="150" />
+  <item id="86" type="Orb" price="300" sell="250" />
+  <item id="87" type="Orb" price="300" sell="150" />
+  <item id="88" type="Orb" price="300" sell="150" />
+  <item id="89" type="Orb" price="300" sell="150" />
+  <item id="90" type="Orb" price="300" sell="150" />
+  <item id="91" type="Orb" price="300" sell="150" />
+  <item id="92" type="Orb" price="300" sell="150" />
+  <item id="93" type="Orb" price="300" sell="150" />
+  <item id="94" type="Orb" price="300" sell="150" />
+  <item id="95" type="Orb" price="300" sell="150" />
+  <item id="96" type="Orb" price="300" sell="150" />
+  <item id="97" type="Orb" price="300" sell="150" />
+  <item id="98" type="Orb" price="300" sell="150" />
+  <item id="99" type="Orb" price="0" sell="150" />
+  <item id="100" type="Orb" price="300" sell="150" />
+  <item id="101" type="Orb" price="300" sell="150" />
+  <item id="102" type="Orb" price="300" sell="150" />
+  <item id="103" type="Orb" price="300" sell="150" />
+  <item id="104" type="Orb" price="300" sell="150" />
+  <item id="105" type="Orb" price="300" sell="150" />
+  <item id="106" type="Orb" price="300" sell="150" />
+  <item id="107" type="Elixir" price="25" sell="5" food="5" pp="10" />
+  <item id="108" type="Elixir" price="250" sell="100" food="5" pp="100" />
+  <item id="109" type="Drink" price="5000" sell="5" food="5" stat="0" />
+  <item id="110" type="Drink" price="7000" sell="5" food="5" stat="1" />
+  <item id="111" type="Drink" price="6000" sell="5" food="5" stat="3" />
+  <item id="112" type="Drink" price="8000" sell="5" food="5" stat="4" />
+  <item id="113" type="Ginseng" price="5000" sell="1000" food="5" />
 </items>
