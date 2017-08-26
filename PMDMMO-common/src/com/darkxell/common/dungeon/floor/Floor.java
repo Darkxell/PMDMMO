@@ -44,6 +44,12 @@ public class Floor
 		this.random = new Random();
 	}
 
+	/** @return A random Room in this Floor. */
+	public Room randomRoom(Random random)
+	{
+		return this.rooms[random.nextInt(this.rooms.length)];
+	}
+
 	/** @return The room at the input X, Y coordinates. null if not in a Room. */
 	public Room roomAt(int x, int y)
 	{
