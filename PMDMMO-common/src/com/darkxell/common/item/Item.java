@@ -39,6 +39,7 @@ public class Item
 	{
 		Element root = new Element(XML_ROOT);
 		root.setAttribute("id", Integer.toString(this.id));
+		root.setAttribute("type", this.getClass().getName().substring(Item.class.getName().length()));
 		root.setAttribute("price", Integer.toString(this.price));
 		root.setAttribute("sell", Integer.toString(this.sell));
 		return root;

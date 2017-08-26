@@ -3,19 +3,19 @@ package com.darkxell.common.item;
 import org.jdom2.Element;
 
 /** An Item that boosts a stat when hold. */
-public class ItemStatScarf extends Item
+public class ItemStatEquipable extends Item
 {
 
 	/** The boosted stat. */
 	public final byte stat;
 
-	public ItemStatScarf(Element xml)
+	public ItemStatEquipable(Element xml)
 	{
 		super(xml);
 		this.stat = Byte.parseByte(xml.getAttributeValue("stat"));
 	}
 
-	public ItemStatScarf(int id, int price, int sell, byte stat)
+	public ItemStatEquipable(int id, int price, int sell, byte stat)
 	{
 		super(id, price, sell);
 		this.stat = stat;

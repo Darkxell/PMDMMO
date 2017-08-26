@@ -31,7 +31,7 @@ public class Launcher
 		System.out.println("Lang & Data loaded.");
 
 		for (Item item : ItemRegistry.list())
-			System.out.println(item.name());
+			System.out.println(item.name() + ": " + item.getClass().getName().substring(Item.class.getName().length()));
 
 		frame = new Frame();
 		stateManager = new StateManager();

@@ -115,33 +115,41 @@
   <item id="112" type="Drink" price="8000" sell="5" food="5" stat="4" />
   <item id="113" type="Ginseng" price="5000" sell="1000" food="5" />
   <item id="114" type="LinkBox" price="9000" sell="500" />
-  <item id="115" type="StatScarf" price="1000" sell="1350" stat="1" />
-  <item id="116" type="StatScarf" price="0" sell="1500" stat="6" />
-  <item id="117" type="StatScarf" price="0" sell="250" stat="0" />
-  <item id="118" type="StatScarf" price="5000" sell="1500" stat="3" />
-  <item id="119" type="StatScarf" price="1000" sell="1500" stat="4" />
-  <item id="120" type="Scarf" price="0" sell="550" />
-  <item id="121" type="Scarf" price="1200" sell="500" />
-  <item id="122" type="Scarf" price="0" sell="750" />
-  <item id="123" type="Scarf" price="0" sell="1500" />
-  <item id="124" type="Scarf" price="0" sell="1500" />
-  <item id="125" type="Scarf" price="0" sell="25" />
-  <item id="126" type="Scarf" price="0" sell="25" />
-  <item id="127" type="Scarf" price="0" sell="2500" />
-  <item id="128" type="Scarf" price="4000" sell="2000" />
-  <item id="129" type="Scarf" price="1100" sell="350" />
-  <item id="130" type="Scarf" price="0" sell="2000" />
-  <item id="131" type="Scarf" price="0" sell="300" />
-  <item id="132" type="Scarf" price="0" sell="1500" />
-  <item id="133" type="Scarf" price="0" sell="1500" />
-  <item id="134" type="Scarf" price="0" sell="25" />
-  <item id="135" type="Scarf" price="0" sell="600" />
-  <item id="136" type="Scarf" price="0" sell="25" />
-  <item id="137" type="Scarf" price="0" sell="1300" />
-  <item id="138" type="Scarf" price="0" sell="1000" />
-  <item id="139" type="Scarf" price="0" sell="1400" />
-  <item id="140" type="Scarf" price="0" sell="1000" />
-  <item id="141" type="Scarf" price="0" sell="1500" />
-  <item id="142" type="Scarf" price="0" sell="400" />
-  <item id="143" type="Scarf" price="50" sell="25" />
+  <item id="115" type="StatEquipable" price="1000" sell="1350" stat="1" />
+  <item id="116" type="StatEquipable" price="0" sell="1500" stat="6" />
+  <item id="117" type="StatEquipable" price="0" sell="250" stat="0" />
+  <item id="118" type="StatEquipable" price="5000" sell="1500" stat="3" />
+  <item id="119" type="StatEquipable" price="1000" sell="1500" stat="4" />
+  <item id="120" type="Equipable" price="0" sell="550" />
+  <item id="121" type="Equipable" price="1200" sell="500" />
+  <item id="122" type="Equipable" price="0" sell="750" />
+  <item id="123" type="Equipable" price="0" sell="1500" />
+  <item id="124" type="Equipable" price="0" sell="1500" />
+  <item id="125" type="Equipable" price="0" sell="25" />
+  <item id="126" type="Equipable" price="0" sell="25" />
+  <item id="127" type="Equipable" price="0" sell="2500" />
+  <item id="128" type="Equipable" price="4000" sell="2000" />
+  <item id="129" type="Equipable" price="1100" sell="350" />
+  <item id="130" type="Equipable" price="0" sell="2000" />
+  <item id="131" type="Equipable" price="0" sell="300" />
+  <item id="132" type="Equipable" price="0" sell="1500" />
+  <item id="133" type="Equipable" price="0" sell="1500" />
+  <item id="134" type="Equipable" price="0" sell="25" />
+  <item id="135" type="Equipable" price="0" sell="600" />
+  <item id="136" type="Equipable" price="0" sell="25" />
+  <item id="137" type="Equipable" price="0" sell="1300" />
+  <item id="138" type="Equipable" price="0" sell="1000" />
+  <item id="139" type="Equipable" price="0" sell="1400" />
+  <item id="140" type="Equipable" price="0" sell="1000" />
+  <item id="141" type="Equipable" price="0" sell="1500" />
+  <item id="142" type="Equipable" price="0" sell="400" />
+  <item id="143" type="Equipable" price="50" sell="25" />
+  <item id="144" type="Equipable" price="0" sell="2000" />
+  <item id="145" type="Equipable" price="3500" sell="500" />
+  <item id="146" type="Equipable" price="1200" sell="500" />
+  <item id="147" type="Equipable" price="4000" sell="1500" />
+  <item id="148" type="Equipable" price="2000" sell="50" />
+  <item id="149" type="Equipable" price="7500" sell="450" />
+  <item id="150" type="Equipable" price="2500" sell="50" />
+  <item id="151" type="Equipable" price="9000" sell="2000" />
 </items>
