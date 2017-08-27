@@ -19,7 +19,7 @@ public abstract class Layout
 	private static final HashMap<Integer, Layout> layouts = new HashMap<Integer, Layout>();
 
 	public static final Layout SINGLE_ROOM = new SingleRoomLayout();
-	public static final Layout SMALL = new GridRoomsLayout(1, 1, 2, 2, 3, 5, 5, 9, 12);
+	public static final Layout SMALL = new GridRoomsLayout(1, 1, 2, 2, 2, 5, 5, 9, 12);
 
 	/** @return The Layout with the input ID. */
 	public static Layout find(int id)
