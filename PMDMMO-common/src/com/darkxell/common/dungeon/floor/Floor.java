@@ -10,12 +10,15 @@ import com.darkxell.common.dungeon.floor.layout.Layout;
 public class Floor
 {
 
-	/** Number of tiles, including unaccessible walls. */
-	public static final int ALL_WIDTH = 70, ALL_HEIGHT = 48;
 	/** Number of walkable tiles in a Floor. */
 	public static final int MAX_WIDTH = 50, MAX_HEIGHT = 28;
+	/** Number of unbreakable walls on each side of the map. */
+	public static final int UNBREAKABLE = 10;
+	/** Number of tiles, including unaccessible walls. */
+	public static final int ALL_WIDTH = MAX_WIDTH + UNBREAKABLE * 2, ALL_HEIGHT = MAX_HEIGHT + UNBREAKABLE * 2;
+
 	/** Maximum walkable coordinates in a Floor. */
-	public static final Rectangle WALKABLE = new Rectangle(10, 10, MAX_WIDTH, MAX_HEIGHT);
+	public static final Rectangle WALKABLE = new Rectangle(UNBREAKABLE, UNBREAKABLE, MAX_WIDTH, MAX_HEIGHT);
 
 	/** This Floor's Dungeon. */
 	public final Dungeon dungeon;
@@ -25,9 +28,9 @@ public class Floor
 	public final Layout layout;
 	/** RNG */
 	public final Random random;
-	/** This Floor's rooms. */
+	/** This Floor's rooms. null before generating. */
 	private Room[] rooms;
-	/** This Floor's tiles. */
+	/** This Floor's tiles. null before generating. */
 	private Tile[][] tiles;
 
 	public Floor(int id, Layout layout, Dungeon dungeon)
@@ -36,14 +39,13 @@ public class Floor
 		this.dungeon = dungeon;
 		this.layout = layout;
 		this.random = new Random();
-		this.tiles = new Tile[ALL_WIDTH][ALL_HEIGHT];
-		this.rooms = new Room[this.layout.roomCount];
 	}
 
 	/** Generates this Floor. */
 	public void generate()
 	{
-		this.layout.generate(this, this.tiles, this.rooms);
+		this.tiles = new Tile[ALL_WIDTH][ALL_HEIGHT];
+		this.rooms = this.layout.generate(this, this.tiles);
 	}
 
 	/** @return A random Room in this Floor. */

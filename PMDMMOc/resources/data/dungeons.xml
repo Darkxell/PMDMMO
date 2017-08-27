@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dungeons>
   <dungeon id="1" floors="4" t-members="3">
-    <cutscene-floors>4</cutscene-floors>
     <encounters>
       <pokemon id="16" level="1">
         <floors>
@@ -48,5 +47,12 @@
     <items-mhouse />
     <items-buried />
     <traps />
+    <layouts>
+      <layout id="1">
+        <floors>
+          <part start="1" end="3" />
+        </floors>
+      </layout>
+    </layouts>
   </dungeon>
 </dungeons>
