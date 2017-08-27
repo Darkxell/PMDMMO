@@ -16,7 +16,7 @@ public class Frame extends JFrame
 		super();
 		this.setTitle("Pokémon Mystery Dungeon: Online Rescue Team");
 		this.setSize(1000, 800);
-		this.setResizable(false);
+		//this.setResizable(false);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setVisible(true);
