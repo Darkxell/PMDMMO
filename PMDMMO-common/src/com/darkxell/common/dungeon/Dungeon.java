@@ -2,10 +2,13 @@ package com.darkxell.common.dungeon;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
+import java.util.function.Predicate;
 
 import org.jdom2.Element;
 
 import com.darkxell.common.dungeon.floor.layout.Layout;
+import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.util.Message;
 
 /** Describes a Dungeon: floors, Pokémon, items... */
@@ -115,6 +118,22 @@ public class Dungeon
 	public Message name()
 	{
 		return new Message("dungeon." + this.id);
+	}
+
+	/** @return A random Item for the input floor. */
+	public ItemStack randomItem(Random random, int floor)
+	{
+		ArrayList<DungeonItem> candidates = new ArrayList<DungeonItem>();
+		candidates.addAll(this.items);
+		candidates.removeIf(new Predicate<DungeonItem>()
+		{
+			@Override
+			public boolean test(DungeonItem i)
+			{
+				return !i.floors.contains(floor);
+			}
+		});
+		return candidates.get(random.nextInt(candidates.size())).generate(random);
 	}
 
 	public Element toXML()
