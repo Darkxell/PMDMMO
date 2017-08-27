@@ -96,7 +96,6 @@ public class GridRoomsLayout extends Layout
 
 	private void createGrid()
 	{
-		// TODO better grid creation
 		int count = this.rooms.length;
 		int w, h;
 		if (count <= 4) w = h = 2;

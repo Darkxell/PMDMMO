@@ -19,8 +19,9 @@ public class SingleRoomLayout extends Layout
 	@Override
 	protected void generateRooms()
 	{
-		this.rooms[0] = new Room(this.floor, (int) Floor.WALKABLE.x + 1, (int) Floor.WALKABLE.y + 1, (int) Floor.WALKABLE.getWidth() - 2,
-				(int) Floor.WALKABLE.getHeight() - 2, true);
+		this.rooms = new Room[]
+		{ new Room(this.floor, (int) Floor.WALKABLE.x + 1, (int) Floor.WALKABLE.y + 1, (int) Floor.WALKABLE.getWidth() - 2,
+				(int) Floor.WALKABLE.getHeight() - 2, true) };
 	}
 
 }

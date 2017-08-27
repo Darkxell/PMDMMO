@@ -5,6 +5,8 @@ import static com.darkxell.common.dungeon.floor.Floor.*;
 import java.util.HashMap;
 import java.util.Random;
 
+import javafx.util.Pair;
+
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Room;
 import com.darkxell.common.dungeon.floor.Tile;
@@ -54,23 +56,21 @@ public abstract class Layout
 	/** Generates the default layout: Unbreakable walls surrounding breakable walls. */
 	public void defaultTiles()
 	{
+		this.tiles = new Tile[ALL_WIDTH][ALL_HEIGHT];
 		for (int x = 0; x < ALL_WIDTH; ++x)
 			for (int y = 0; y < ALL_HEIGHT; ++y)
 				if (WALKABLE.contains(x, y)) this.tiles[x][y] = new Tile(this.floor, x, y, TileType.WALL);
 				else this.tiles[x][y] = new Tile(this.floor, x, y, TileType.WALL_END);
 	}
 
-	/** Generates a Floor. The tiles and rooms arrays contain null value that should be replaced.
+	/** Generates a Floor.
 	 * 
 	 * @param floor - The Floor to build.
-	 * @param tiles - The Tiles of the Floor.
-	 * @param rooms - The Rooms of the Floor. */
-	public void generate(Floor floor, Tile[][] tiles, Room[] rooms)
+	 * @return The generated Tiles and Rooms. */
+	public Pair<Tile[][], Room[]> generate(Floor floor)
 	{
 		this.floor = floor;
 		this.random = this.floor.random;
-		this.tiles = tiles;
-		this.rooms = rooms;
 		this.generateRooms();
 		this.generateTiles();
 		this.generatePaths();
@@ -82,10 +82,12 @@ public abstract class Layout
 		this.summonPokemon();
 
 		// Clear temp variables
+		Pair<Tile[][], Room[]> toReturn = new Pair<Tile[][], Room[]>(this.tiles, this.rooms);
 		this.tiles = null;
 		this.rooms = null;
 		this.floor = null;
 		this.random = null;
+		return toReturn;
 	}
 
 	/** Creates Water, Lava or Air. */

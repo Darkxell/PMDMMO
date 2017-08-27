@@ -3,6 +3,8 @@ package com.darkxell.common.dungeon.floor;
 import java.awt.Rectangle;
 import java.util.Random;
 
+import javafx.util.Pair;
+
 import com.darkxell.common.dungeon.Dungeon;
 import com.darkxell.common.dungeon.floor.layout.Layout;
 
@@ -16,7 +18,7 @@ public class Floor
 	public static final int UNBREAKABLE = 10;
 	/** Number of tiles, including unaccessible walls. */
 	public static final int ALL_WIDTH = MAX_WIDTH + UNBREAKABLE * 2, ALL_HEIGHT = MAX_HEIGHT + UNBREAKABLE * 2;
-	
+
 	/** Maximum walkable coordinates in a Floor. */
 	public static final Rectangle WALKABLE = new Rectangle(UNBREAKABLE, UNBREAKABLE, MAX_WIDTH, MAX_HEIGHT);
 
@@ -28,9 +30,9 @@ public class Floor
 	public final Layout layout;
 	/** RNG */
 	public final Random random;
-	/** This Floor's rooms. */
+	/** This Floor's rooms. null before generating. */
 	private Room[] rooms;
-	/** This Floor's tiles. */
+	/** This Floor's tiles. null before generating. */
 	private Tile[][] tiles;
 
 	public Floor(int id, Layout layout, Dungeon dungeon)
@@ -44,9 +46,9 @@ public class Floor
 	/** Generates this Floor. */
 	public void generate()
 	{
-		this.tiles = new Tile[ALL_WIDTH][ALL_HEIGHT];
-		this.rooms = new Room[this.layout.randomRoomCount(this.random)];
-		this.layout.generate(this, this.tiles, this.rooms);
+		Pair<Tile[][], Room[]> floor = this.layout.generate(this);
+		this.tiles = floor.getKey();
+		this.rooms = floor.getValue();
 	}
 
 	/** @return A random Room in this Floor. */
