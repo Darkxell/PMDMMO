@@ -12,7 +12,7 @@ import com.darkxell.common.dungeon.floor.Room;
 public class GridRoomsLayout extends Layout
 {
 
-	public static final int MIN_SPACE = 4, MAX_SPACE = 8;
+	public static final int MIN_SPACE = 3, MAX_SPACE = 8;
 
 	/** Temporary variable to store the row heights. */
 	private int[] heights;
@@ -105,20 +105,47 @@ public class GridRoomsLayout extends Layout
 					System.out.println(this.rects[x][y]);
 				}
 
-		// TODO Erode rooms
+		// Erode rooms
+		while (this.totalWidth() > Floor.MAX_WIDTH - 2)
+		{
+			boolean flag = this.random.nextInt(4) < 1;
+			Rectangle r = this.randomXReduceable();
+			if (r == null) flag = true;
+			if (flag)
+			{
+				int startX = this.random.nextInt(this.rects.length - 1) + 1;
+				for (int x = startX; x < this.rects.length; ++x)
+					for (int y = 0; y < this.rects[x].length; ++y)
+						if (this.rects[x][y] != null) --this.rects[x][y].x;
+			} else --r.width;
+		}
+		while (this.totalHeight() > Floor.MAX_HEIGHT - 2)
+		{
+			boolean flag = this.random.nextInt(4) < 1;
+			Rectangle r = this.randomYReduceable();
+			if (r == null) flag = true;
+			if (flag)
+			{
+				int startY = this.random.nextInt(this.rects[0].length - 1) + 1;
+				for (int y = startY; y < this.rects[0].length; ++y)
+					for (int x = 0; x < this.rects.length; ++x)
+						if (this.rects[x][y] != null) --this.rects[x][y].y;
+			} else --r.height;
+		}
 
 		// Add potential additional space
 
 		// Center rooms
-		int xCenter = Floor.ALL_WIDTH / 2 - this.totalWidth() / 2;
-		int yCenter = Floor.ALL_HEIGHT / 2 - this.totalHeight() / 2;
+		int xStart = Floor.ALL_WIDTH / 2 - this.totalWidth() / 2;
+		int yStart = Floor.ALL_HEIGHT / 2 - this.totalHeight() / 2;
+		System.out.println(xStart + "," + yStart);
 
 		for (int x = 0; x < this.rects.length; ++x)
 			for (int y = 0; y < this.rects[x].length; ++y)
 				if (this.rects[x][y] != null)
 				{
-					this.rects[x][y].x += xCenter;
-					this.rects[x][y].y += yCenter;
+					this.rects[x][y].x += xStart;
+					this.rects[x][y].y += yStart;
 				}
 
 		/* this.horizSpace = this.random.nextInt(MAX_SPACE - MIN_SPACE + 1) + MIN_SPACE; this.vertiSpace = this.random.nextInt(MAX_SPACE - MIN_SPACE + 1) + MIN_SPACE; int totalWidth = this.sizes.length * this.dimensions.width + (this.sizes.length - 1) * this.horizSpace; int totalHeight =
@@ -179,13 +206,13 @@ public class GridRoomsLayout extends Layout
 		for (int x = 0; x < this.rects.length; ++x)
 			for (int y = 0; y < this.rects[x].length; ++y)
 				candidates.add(this.rects[x][y]);
+
 		candidates.removeIf(new Predicate<Rectangle>()
 		{
-
 			@Override
 			public boolean test(Rectangle d)
 			{
-				return d == null || d.width < minRoomWidth;
+				return d == null || d.width <= Math.min(minRoomWidth, minRoomHeight);
 			}
 		});
 		if (candidates.size() == 0) return null;
@@ -199,13 +226,13 @@ public class GridRoomsLayout extends Layout
 		for (int x = 0; x < this.rects.length; ++x)
 			for (int y = 0; y < this.rects[x].length; ++y)
 				candidates.add(this.rects[x][y]);
+
 		candidates.removeIf(new Predicate<Rectangle>()
 		{
-
 			@Override
 			public boolean test(Rectangle d)
 			{
-				return d == null || d.height < minRoomHeight;
+				return d == null || d.height <= Math.min(minRoomWidth, minRoomHeight);
 			}
 		});
 		if (candidates.size() == 0) return null;
