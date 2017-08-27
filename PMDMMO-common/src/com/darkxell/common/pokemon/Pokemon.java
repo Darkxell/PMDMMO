@@ -1,5 +1,6 @@
 package com.darkxell.common.pokemon;
 
+import com.darkxell.common.item.ItemStack;
 
 public class Pokemon
 {
@@ -19,7 +20,7 @@ public class Pokemon
 	/** This Pokémon's IVs. */
 	public final PokemonStats individualValues;
 	/** This Pokémon's held Item's ID. -1 for no Item. */
-	private int item;
+	private ItemStack item;
 	/** This Pokémon's level. */
 	private int level;
 	/** ID of this Pokémon's moves. -1 for no move. */
@@ -29,8 +30,8 @@ public class Pokemon
 	/** This Pokémon's species. */
 	public final PokemonSpecies species;
 
-	public Pokemon(int id, PokemonSpecies species, String nickname, int item, PokemonStats individualValues, int experience, int level, int move1, int move2,
-			int move3, int move4, boolean gender)
+	public Pokemon(int id, PokemonSpecies species, String nickname, ItemStack item, PokemonStats individualValues, int experience, int level, int move1,
+			int move2, int move3, int move4, boolean gender)
 	{
 		this.id = id;
 		this.species = species;
@@ -51,7 +52,7 @@ public class Pokemon
 		return this.experience;
 	}
 
-	public int getItem()
+	public ItemStack getItem()
 	{
 		return this.item;
 	}
@@ -86,7 +87,7 @@ public class Pokemon
 		return this.nickname;
 	}
 
-	public void setItem(int item)
+	public void setItem(ItemStack item)
 	{
 		this.item = item;
 	}
