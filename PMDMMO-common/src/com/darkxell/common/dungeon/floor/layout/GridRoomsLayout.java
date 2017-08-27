@@ -131,17 +131,27 @@ public class GridRoomsLayout extends Layout
 		this.grid = new Rectangle[w][h];
 
 		// Slot size
-		// TODO Maybe use max here and randomize later for bigger rooms potential?
-		// TODO Randomly switch width and height here
 		this.widths = new int[w * 2];
-		for (int i = 0; i < this.widths.length; ++i)
-			if (i % 2 == 0) this.widths[i] = this.random.nextInt(this.maxRoomWidth - this.minRoomWidth + 1) + this.minRoomWidth;
-			else this.widths[i] = this.random.nextInt(MAX_SPACE - MIN_SPACE + 1) + MIN_SPACE;
-
 		this.heights = new int[h * 2];
-		for (int i = 0; i < this.heights.length; ++i)
-			if (i % 2 == 0) this.heights[i] = this.random.nextInt(this.maxRoomHeight - this.minRoomHeight + 1) + this.minRoomHeight;
-			else this.heights[i] = this.random.nextInt(MAX_SPACE - MIN_SPACE + 1) + MIN_SPACE;
+		for (int i = 0; i < this.widths.length || i < this.heights.length; ++i)
+		{
+			int wi, he;
+			if (i % 2 == 0)
+			{
+				wi = this.maxRoomWidth;
+				he = this.maxRoomHeight;
+			} else wi = he = this.random.nextInt(MAX_SPACE - MIN_SPACE + 1) + MIN_SPACE;
+
+			if (this.random.nextInt(2) < 1)
+			{
+				int temp = wi;
+				wi = he;
+				he = temp;
+			}
+
+			if (i < this.widths.length) this.widths[i] = wi;
+			if (i < this.heights.length) this.heights[i] = he;
+		}
 
 		// Erode slots
 		while (this.totalWidth() > Floor.MAX_WIDTH - 2)
