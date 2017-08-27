@@ -44,57 +44,6 @@ public class GridRoomsLayout extends Layout
 		this.maxRoomHeight = maxRoomHeight;
 	}
 
-	/** @return The possible coordinates for the topleft corner of the input room. */
-	private Rectangle availableSpace(Rectangle r, Rectangle room)
-	{
-		boolean improved = true;
-		Rectangle test = null;
-		while (improved)
-		{
-			improved = false;
-
-			// Move left
-			test = (Rectangle) r.clone();
-			--test.x;
-			if (this.isValid(test))
-			{
-				improved = true;
-				r = (Rectangle) test.clone();
-			}
-
-			// Move up
-			test = (Rectangle) r.clone();
-			--test.y;
-			if (this.isValid(test))
-			{
-				improved = true;
-				r = (Rectangle) test.clone();
-			}
-
-			// Increase width
-			test = (Rectangle) r.clone();
-			++test.width;
-			if (this.isValid(test))
-			{
-				improved = true;
-				r = (Rectangle) test.clone();
-			}
-
-			// Increase height
-			test = (Rectangle) r.clone();
-			++test.height;
-			if (this.isValid(test))
-			{
-				improved = true;
-				r = (Rectangle) test.clone();
-			}
-
-		}
-		r.width -= room.width;
-		r.height -= room.height;
-		return r;
-	}
-
 	@Override
 	protected void generateLiquids()
 	{
@@ -242,21 +191,6 @@ public class GridRoomsLayout extends Layout
 		this.heights = null;
 	}
 
-	/** @param except - These rooms will be excluded in the test.
-	 * @return true if the input test room doesn't collide with any other room. */
-	private boolean isValid(Rectangle test, Rectangle... except)
-	{
-		if (Floor.WALKABLE.x >= test.x || Floor.WALKABLE.y >= test.y || Floor.WALKABLE.getMaxX() <= test.getMaxX()
-				|| Floor.WALKABLE.getMaxY() <= test.getMaxY()) return false;
-
-		ArrayList<Rectangle> r = this.rooms();
-		for (Rectangle rectangle : except)
-			r.remove(rectangle);
-		for (Rectangle rectangle : r)
-			if (rectangle.intersects(test)) return false;
-		return true;
-	}
-
 	/** @return A Random location for a Room to delete. */
 	private Point newGridPosition()
 	{
@@ -265,72 +199,6 @@ public class GridRoomsLayout extends Layout
 			for (int y = 0; y < this.grid[x].length; ++y)
 				if (this.grid[x][y] != null) candidates.add(new Point(x, y));
 		return candidates.get(this.random.nextInt(candidates.size()));
-	}
-
-	/** @return A random Room. */
-	private Rectangle randomRectangle()
-	{
-		int width = this.random.nextInt(this.maxRoomWidth - this.minRoomWidth + 1) + this.minRoomWidth;
-		int height = this.random.nextInt(this.maxRoomHeight - this.minRoomHeight + 1) + this.minRoomHeight;
-		if (this.random.nextInt(2) >= 1)
-		{
-			int temp = width;
-			width = height;
-			height = temp;
-		}
-		return new Rectangle(0, 0, width, height);
-	}
-
-	/** @return A Random room which width can be reduced. */
-	private Rectangle randomXReduceable()
-	{
-		ArrayList<Rectangle> candidates = this.rooms();
-
-		candidates.removeIf(new Predicate<Rectangle>()
-		{
-			@Override
-			public boolean test(Rectangle d)
-			{
-				return d.width <= Math.min(minRoomWidth, minRoomHeight);
-			}
-		});
-		if (candidates.size() == 0) return null;
-		return candidates.get(this.random.nextInt(candidates.size()));
-	}
-
-	/** @return A Random room which height can be reduced. */
-	private Rectangle randomYReduceable()
-	{
-		ArrayList<Rectangle> candidates = this.rooms();
-
-		candidates.removeIf(new Predicate<Rectangle>()
-		{
-			@Override
-			public boolean test(Rectangle d)
-			{
-				return d.height <= Math.min(minRoomWidth, minRoomHeight);
-			}
-		});
-		if (candidates.size() == 0) return null;
-		return candidates.get(this.random.nextInt(candidates.size()));
-	}
-
-	private ArrayList<Rectangle> rooms()
-	{
-		ArrayList<Rectangle> rooms = new ArrayList<Rectangle>();
-		for (int x = 0; x < this.grid.length; ++x)
-			for (int y = 0; y < this.grid[x].length; ++y)
-				rooms.add(this.grid[x][y]);
-		rooms.removeIf(new Predicate<Rectangle>()
-		{
-
-			@Override
-			public boolean test(Rectangle t)
-			{
-				return t == null;
-			}
-		});
-		return rooms;
 	}
 
 	private int totalHeight()

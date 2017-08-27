@@ -5,10 +5,8 @@ import java.awt.Graphics2D;
 
 import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
-import com.darkxell.client.mechanics.freezones.FreezoneTile;
 import com.darkxell.client.mechanics.freezones.zones.PokemonSquareFreezone;
 import com.darkxell.client.persistance.FreezoneMapHolder;
-import com.darkxell.client.resources.images.AbstractTileset;
 
 public class FreezoneExploreState extends AbstractState {
 
