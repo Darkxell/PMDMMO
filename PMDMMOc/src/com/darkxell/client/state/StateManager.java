@@ -46,8 +46,8 @@ public class StateManager {
 	}
 
 	private BufferedImage internalBuffer;
-	private int displayWidth = 256*2;
-	private int displayHeight = 192*2;
+	private int displayWidth = (int) (256*1.6);
+	private int displayHeight = (int) (192*1.6);
 
 	/**
 	 * Sets the resolution of the internal display. Bigger means a zoomed out
