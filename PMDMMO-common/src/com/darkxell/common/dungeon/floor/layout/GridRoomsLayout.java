@@ -1,5 +1,6 @@
 package com.darkxell.common.dungeon.floor.layout;
 
+import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
@@ -185,7 +186,12 @@ public class GridRoomsLayout extends Layout
 			yPos = 0;
 			for (int y = 0; y < this.grid[x].length; ++y)
 			{
-				this.grid[x][y] = new Rectangle(xPos, yPos, this.widths[x * 2], this.heights[y * 2]);
+				Dimension d = new Dimension(this.random.nextInt(this.widths[x * 2] - this.minRoomWidth + 1) + this.minRoomWidth,
+						this.random.nextInt(this.heights[y * 2] - this.minRoomHeight + 1) + this.minRoomHeight);
+				Rectangle startCandidates = new Rectangle(xPos, yPos, this.widths[x * 2] - d.width, this.heights[y * 2] - d.height);
+				Point p = new Point(this.random.nextInt((int) startCandidates.getMaxX() - startCandidates.x + 1) + startCandidates.x,
+						this.random.nextInt((int) startCandidates.getMaxY() - startCandidates.y + 1) + startCandidates.y);
+				this.grid[x][y] = new Rectangle(p.x, p.y, d.width, d.height);
 				System.out.println(this.grid[x][y]);
 				yPos += this.heights[y * 2] + this.heights[y * 2 + 1];
 			}
