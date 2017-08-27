@@ -8,6 +8,7 @@ import com.darkxell.client.mechanics.freezones.FreezoneMap;
 import com.darkxell.client.mechanics.freezones.FreezoneTile;
 import com.darkxell.client.mechanics.freezones.zones.PokemonSquareFreezone;
 import com.darkxell.client.persistance.FreezoneMapHolder;
+import com.darkxell.client.resources.images.AbstractTileset;
 
 public class FreezoneExploreState extends AbstractState {
 
@@ -28,24 +29,23 @@ public class FreezoneExploreState extends AbstractState {
 	public void render(Graphics2D g, int width, int height) {
 		FreezoneMap map = FreezoneMapHolder.currentmap;
 		if (map != null) {
-			int translateX = 0;// (int) (-ViewCamera.cameraX *16 +
-								// GameCanvas.ScreenWidth / 2);
-			int translateY = 0;// (int) (-ViewCamera.cameraY *16 +
-								// GameCanvas.ScreenHeight / 2);
+			int translateX = (int) (-map.player.x * 8 + (width / 2));
+			int translateY = (int) (-map.player.y * 8 + (height / 2));
 
 			g.translate(translateX, translateY);
 			// Draws the map
 			for (int i = 0; i < map.mapHeight; i++) {
 				for (int j = 0; j < map.mapWidth; j++) {
 					int tileid = (i * map.mapWidth) + j;
-					g.drawImage(map.tiles[tileid].sprite, translateX + (8 * j), translateY + (8 * i), null);
-					if (map.tiles[tileid].type == FreezoneTile.TYPE_WALKABLE)
+					g.drawImage(map.tiles[tileid].sprite, 8 * j, 8 * i, null);
+					/*if (map.tiles[tileid].type == FreezoneTile.TYPE_WALKABLE)
 						g.setColor(new Color(0, 200, 0, 20));
 					else
 						g.setColor(new Color(200, 0, 0, 25));
-					g.fillRect(translateX + (8 * j), translateY + (8 * i), 8, 8);
+					g.fillRect(8 * j, 8 * i, 8, 8);*/
 				}
 			}
+			 //g.drawImage(AbstractTileset.getTileset("square").getSource(),0,0, null);
 			// Draws the player
 			g.drawImage(map.player.playersprite.getCurrentSprite(),
 					(int) (map.player.x * 8 - map.player.playersprite.pointer.gravityX),

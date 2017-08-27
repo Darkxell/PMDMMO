@@ -19,7 +19,8 @@ public abstract class AbstractTileset {
 		this.SPRITES = new BufferedImage[cols * rows];
 		for (int i = 0; i < rows; i++)
 			for (int j = 0; j < cols; j++)
-				SPRITES[(cols * i) + j] = Res.createimage(this.source, tilewidth * j, tileheight * i, tilewidth, tileheight);
+				SPRITES[(cols * i) + j] = Res.createimage(this.source, tilewidth * j, tileheight * i, tilewidth,
+						tileheight);
 	}
 
 	/** The source image */
@@ -41,6 +42,11 @@ public abstract class AbstractTileset {
 			System.err.println("Could not find the desired tileset: " + code);
 			return null;
 		}
+	}
+
+	/** Returns the source bufferedImage of this tileset. */
+	public BufferedImage getSource() {
+		return this.source;
 	}
 
 }

@@ -52,7 +52,7 @@ public class FreezoneMap {
 			e.printStackTrace();
 		}
 		// TODO: change this
-		this.player = new FreezonePlayer(this,new PokemonSprite(PokemonSpriteset1.instance), 50, 50);
+		this.player = new FreezonePlayer(this, new PokemonSprite(PokemonSpriteset1.instance), 50, 50);
 	}
 
 	public void update() {
@@ -60,7 +60,10 @@ public class FreezoneMap {
 	}
 
 	public byte getTileTypeAt(double x, double y) {
-		return this.tiles[mapWidth * (int) y + (int) x].type;
+		int calc = mapWidth * (int) y + (int) x;
+		if (calc >= this.tiles.length || calc < 0)
+			return FreezoneTile.TYPE_WALKABLE;
+		return this.tiles[calc].type;
 	}
 
 }
