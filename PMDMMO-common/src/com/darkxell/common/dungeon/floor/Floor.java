@@ -3,8 +3,6 @@ package com.darkxell.common.dungeon.floor;
 import java.awt.Rectangle;
 import java.util.Random;
 
-import javafx.util.Pair;
-
 import com.darkxell.common.dungeon.Dungeon;
 import com.darkxell.common.dungeon.floor.layout.Layout;
 
@@ -46,9 +44,8 @@ public class Floor
 	/** Generates this Floor. */
 	public void generate()
 	{
-		Pair<Tile[][], Room[]> floor = this.layout.generate(this);
-		this.tiles = floor.getKey();
-		this.rooms = floor.getValue();
+		this.tiles = new Tile[ALL_WIDTH][ALL_HEIGHT];
+		this.rooms = this.layout.generate(this, this.tiles);
 	}
 
 	/** @return A random Room in this Floor. */
