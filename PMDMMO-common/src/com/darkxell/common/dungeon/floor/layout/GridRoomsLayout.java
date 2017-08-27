@@ -107,6 +107,12 @@ public class GridRoomsLayout extends Layout
 		// Grid size
 		int w = this.random.nextInt(this.maxWidth - this.minWidth + 1) + this.minWidth;
 		int h = this.random.nextInt(this.maxHeight - this.minHeight + 1) + this.minHeight;
+		while (Math.abs(w - h) > 1)
+		{
+			++w;
+			--h;
+		}
+
 		if (this.random.nextInt(2) < 1)
 		{
 			int temp = w;
@@ -115,13 +121,17 @@ public class GridRoomsLayout extends Layout
 		}
 
 		int min = Math.min(h * (w - 1), w * (h - 1)) + 1;
+		min = Math.max(this.minWidth * this.minHeight, min);
 		int max = w * h;
 		int count = this.random.nextInt(max - min + 1) + min;
+		System.out.println(count + " rooms, " + w + "x" + h);
 
 		this.rooms = new Room[count];
 		this.grid = new Rectangle[w][h];
 
-		// Slot size //TODO Maybe use max here and randomize later for bigger rooms potential?
+		// Slot size
+		// TODO Maybe use max here and randomize later for bigger rooms potential?
+		// TODO Randomly switch width and height here
 		this.widths = new int[w * 2];
 		for (int i = 0; i < this.widths.length; ++i)
 			if (i % 2 == 0) this.widths[i] = this.random.nextInt(this.maxRoomWidth - this.minRoomWidth + 1) + this.minRoomWidth;
@@ -166,16 +176,22 @@ public class GridRoomsLayout extends Layout
 			--this.heights[candidates.get(this.random.nextInt(candidates.size()))];
 		}
 
+		System.out.println("Grid:");
 		// Make grid
 		int xPos = 0;
 		int yPos = 0;
 		for (int x = 0; x < this.grid.length; ++x)
-			for (int y = 0; y < this.grid.length; ++y)
+		{
+			yPos = 0;
+			for (int y = 0; y < this.grid[x].length; ++y)
 			{
 				this.grid[x][y] = new Rectangle(xPos, yPos, this.widths[x * 2], this.heights[y * 2]);
-				xPos += this.widths[x * 2] + this.widths[x * 2 + 1];
+				System.out.println(this.grid[x][y]);
 				yPos += this.heights[y * 2] + this.heights[y * 2 + 1];
 			}
+			xPos += this.widths[x * 2] + this.widths[x * 2 + 1];
+		}
+		System.out.println("Size: " + this.totalWidth() + "x" + this.totalHeight());
 
 		// Center grid
 		int xStart = Floor.ALL_WIDTH / 2 - this.totalWidth() / 2;
@@ -196,6 +212,7 @@ public class GridRoomsLayout extends Layout
 			this.grid[p.x][p.y] = null;
 		}
 
+		System.out.println("After export:");
 		// Export to Rooms
 		int roomID = 0;
 		for (int x = 0; x < this.grid.length; ++x)
@@ -230,13 +247,13 @@ public class GridRoomsLayout extends Layout
 		return true;
 	}
 
-	/** @return A Random location for a Room. */
+	/** @return A Random location for a Room to delete. */
 	private Point newGridPosition()
 	{
 		ArrayList<Point> candidates = new ArrayList<Point>();
 		for (int x = 0; x < this.grid.length; ++x)
 			for (int y = 0; y < this.grid[x].length; ++y)
-				if (this.grid[x][y] == null) candidates.add(new Point(x, y));
+				if (this.grid[x][y] != null) candidates.add(new Point(x, y));
 		return candidates.get(this.random.nextInt(candidates.size()));
 	}
 
