@@ -125,7 +125,6 @@ public class GridRoomsLayout extends Layout
 		min = Math.max(this.minWidth * this.minHeight, min);
 		int max = w * h;
 		int count = this.random.nextInt(max - min + 1) + min;
-		System.out.println(count + " rooms, " + w + "x" + h);
 
 		this.rooms = new Room[count];
 		this.grid = new Rectangle[w][h];
@@ -187,7 +186,6 @@ public class GridRoomsLayout extends Layout
 			--this.heights[candidates.get(this.random.nextInt(candidates.size()))];
 		}
 
-		System.out.println("Grid:");
 		// Make grid
 		int xPos = 0;
 		int yPos = 0;
@@ -202,16 +200,14 @@ public class GridRoomsLayout extends Layout
 				Point p = new Point(this.random.nextInt((int) startCandidates.getMaxX() - startCandidates.x + 1) + startCandidates.x,
 						this.random.nextInt((int) startCandidates.getMaxY() - startCandidates.y + 1) + startCandidates.y);
 				this.grid[x][y] = new Rectangle(p.x, p.y, d.width, d.height);
-				System.out.println(this.grid[x][y]);
 				yPos += this.heights[y * 2] + this.heights[y * 2 + 1];
 			}
 			xPos += this.widths[x * 2] + this.widths[x * 2 + 1];
 		}
-		System.out.println("Size: " + this.totalWidth() + "x" + this.totalHeight());
 
-		// Center grid
-		int xStart = Floor.ALL_WIDTH / 2 - this.totalWidth() / 2;
-		int yStart = Floor.ALL_HEIGHT / 2 - this.totalHeight() / 2;
+		// Randomize grid location
+		int xStart = this.random.nextInt(Floor.MAX_WIDTH - 2 - this.totalWidth() + 1) + Floor.UNBREAKABLE + 1;
+		int yStart = this.random.nextInt(Floor.MAX_HEIGHT - 2 - this.totalHeight() + 1) + Floor.UNBREAKABLE + 1;
 
 		for (int x = 0; x < this.grid.length; ++x)
 			for (int y = 0; y < this.grid[x].length; ++y)
@@ -228,14 +224,12 @@ public class GridRoomsLayout extends Layout
 			this.grid[p.x][p.y] = null;
 		}
 
-		System.out.println("After export:");
 		// Export to Rooms
 		int roomID = 0;
 		for (int x = 0; x < this.grid.length; ++x)
 			for (int y = 0; y < this.grid[x].length; ++y)
 			{
 				Rectangle r = this.grid[x][y];
-				System.out.println(r);
 				if (r != null)
 				{
 					this.rooms[roomID] = new Room(this.floor, r.x, r.y, r.width, r.height, false);
