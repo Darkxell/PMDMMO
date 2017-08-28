@@ -11,6 +11,8 @@ import com.darkxell.common.util.XMLUtils;
 public class PokemonSpecies
 {
 
+	/** List of possible Abilities for this Pokémon. */
+	private ArrayList<Integer> abilities;
 	/** Base experience. */
 	public final int baseXP;
 	/** List of species this Pokémon can evolve into. */
@@ -36,6 +38,7 @@ public class PokemonSpecies
 		this.baseXP = Integer.parseInt(xml.getAttributeValue("base-xp"));
 		this.height = Float.parseFloat(xml.getAttributeValue("height"));
 		this.weight = Float.parseFloat(xml.getAttributeValue("weight"));
+		this.abilities = XMLUtils.readIntArray(xml.getChild("abilities"));
 		this.learnset = new HashMap<Integer, ArrayList<Integer>>();
 		this.tms = XMLUtils.readIntArray(xml.getChild("tms"));
 		this.evolutions = new ArrayList<Evolution>();
@@ -51,7 +54,7 @@ public class PokemonSpecies
 	}
 
 	public PokemonSpecies(int id, int formID, PokemonType type1, PokemonType type2, int baseXP, PokemonStats stats, float height, float weight,
-			HashMap<Integer, ArrayList<Integer>> learnset, ArrayList<Integer> tms, ArrayList<Evolution> evolutions)
+			ArrayList<Integer> abilities, HashMap<Integer, ArrayList<Integer>> learnset, ArrayList<Integer> tms, ArrayList<Evolution> evolutions)
 	{
 		this.id = id;
 		this.formID = formID;
@@ -61,6 +64,7 @@ public class PokemonSpecies
 		this.stats = stats;
 		this.height = height;
 		this.weight = weight;
+		this.abilities = abilities;
 		this.learnset = learnset;
 		this.tms = tms;
 		this.evolutions = evolutions;
@@ -84,6 +88,7 @@ public class PokemonSpecies
 		root.setAttribute("weight", Float.toString(this.weight));
 
 		root.addContent(this.stats.toXML());
+		root.addContent(XMLUtils.toXML("abilities", this.abilities));
 
 		if (this.evolutions.size() != 0)
 		{

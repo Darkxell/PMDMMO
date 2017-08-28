@@ -1,6 +1,7 @@
 package com.darkxell.common.pokemon;
 
 import com.darkxell.common.item.ItemStack;
+import com.darkxell.common.pokemon.ability.Ability;
 
 public class Pokemon
 {
@@ -11,6 +12,8 @@ public class Pokemon
 	 * </ul> */
 	public static final boolean MALE = false, FEMALE = true;
 
+	/** This Pokémon's ability's ID. */
+	public final int abilityID;
 	/** The total amount of experience of this Pokémon. */
 	private int experience;
 	/** This Pokémon's gender. See {@link Pokemon#MALE}. */
@@ -30,14 +33,15 @@ public class Pokemon
 	/** This Pokémon's species. */
 	public final PokemonSpecies species;
 
-	public Pokemon(int id, PokemonSpecies species, String nickname, ItemStack item, PokemonStats individualValues, int experience, int level, int move1,
-			int move2, int move3, int move4, boolean gender)
+	public Pokemon(int id, PokemonSpecies species, String nickname, ItemStack item, PokemonStats individualValues, int ability, int experience, int level,
+			int move1, int move2, int move3, int move4, boolean gender)
 	{
 		this.id = id;
 		this.species = species;
 		this.nickname = nickname;
 		this.item = item;
 		this.individualValues = individualValues;
+		this.abilityID = ability;
 		this.experience = experience;
 		this.level = level;
 		this.move1 = move1;
@@ -45,6 +49,11 @@ public class Pokemon
 		this.move3 = move3;
 		this.move4 = move4;
 		this.gender = gender;
+	}
+
+	public Ability getAbility()
+	{
+		return Ability.find(this.abilityID);
 	}
 
 	public int getExperience()
