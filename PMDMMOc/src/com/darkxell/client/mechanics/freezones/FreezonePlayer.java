@@ -37,6 +37,12 @@ public class FreezonePlayer {
 	 */
 	public boolean canBeAt(double x, double y) {
 		DoubleRectangle hbx = getHitboxAt(x, y);
+		for (int i = 0; i < this.map.entities.size(); i++) {
+			FreezoneEntity ety = this.map.entities.get(i);
+			if (ety.isSolid && ety.getHitbox(ety.posX, ety.posY).intersects(this.getHitboxAt(x, y)))
+				return false;
+		}
+
 		if (this.map.getTileTypeAt(hbx.x, hbx.y) == FreezoneTile.TYPE_SOLID)
 			return false;
 		if (this.map.getTileTypeAt(hbx.x, hbx.y + hbx.height) == FreezoneTile.TYPE_SOLID)

@@ -1,6 +1,7 @@
 package com.darkxell.client.mechanics.freezones;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.jdom2.input.SAXBuilder;
@@ -10,7 +11,7 @@ import com.darkxell.client.resources.images.PokemonSprite;
 import com.darkxell.client.resources.images.pokemons.PokemonSpriteset1;
 
 /**
- * a tiled map of a freezone. Freezones are the areas where you can move freely
+ * A tiled map of a freezone. Freezones are the areas where you can move freely
  * and don't have to fight.
  */
 public class FreezoneMap {
@@ -19,9 +20,14 @@ public class FreezoneMap {
 	public int mapWidth;
 	public int mapHeight;
 
+	/** The player. */
 	public FreezonePlayer player;
 
-	// TODO : entities and tileentities.
+	/**
+	 * List the entities in this map. Note that the player isn't actually an
+	 * entity.
+	 */
+	public ArrayList<FreezoneEntity> entities = new ArrayList<>();
 
 	public FreezoneMap(String xmlfilepath) {
 		File file = new File(xmlfilepath);
@@ -57,6 +63,8 @@ public class FreezoneMap {
 
 	public void update() {
 		this.player.update();
+		for (int i = 0; i < entities.size(); i++)
+			entities.get(i).update();
 	}
 
 	public byte getTileTypeAt(double x, double y) {

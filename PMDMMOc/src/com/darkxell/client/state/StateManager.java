@@ -94,7 +94,7 @@ public class StateManager {
 		}
 	}
 
-	public void update() {
+	public synchronized void update() {
 		if (this.transition == 0)
 			this.currentState.update();
 		else {
