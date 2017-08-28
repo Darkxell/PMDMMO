@@ -20,8 +20,6 @@ public class Pokemon
 	public final boolean gender;
 	/** This Pokémon's ID. */
 	public final int id;
-	/** This Pokémon's IVs. */
-	public final PokemonStats individualValues;
 	/** This Pokémon's held Item's ID. -1 for no Item. */
 	private ItemStack item;
 	/** This Pokémon's level. */
@@ -32,15 +30,17 @@ public class Pokemon
 	private String nickname;
 	/** This Pokémon's species. */
 	public final PokemonSpecies species;
+	/** This Pokémon's stats. */
+	public final PokemonStats stats;
 
-	public Pokemon(int id, PokemonSpecies species, String nickname, ItemStack item, PokemonStats individualValues, int ability, int experience, int level,
+	public Pokemon(int id, PokemonSpecies species, String nickname, ItemStack item, PokemonStats stats, int ability, int experience, int level,
 			int move1, int move2, int move3, int move4, boolean gender)
 	{
 		this.id = id;
 		this.species = species;
 		this.nickname = nickname;
 		this.item = item;
-		this.individualValues = individualValues;
+		this.stats = stats;
 		this.abilityID = ability;
 		this.experience = experience;
 		this.level = level;
