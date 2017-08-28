@@ -9,7 +9,7 @@ public class SingleRoomLayout extends Layout
 
 	public SingleRoomLayout()
 	{
-		super(2, 1);
+		super(2);
 	}
 
 	@Override
