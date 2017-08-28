@@ -4,8 +4,11 @@ import static com.darkxell.common.dungeon.floor.Floor.ALL_HEIGHT;
 import static com.darkxell.common.dungeon.floor.Floor.ALL_WIDTH;
 import static com.darkxell.common.dungeon.floor.Floor.WALKABLE;
 
+import java.awt.Point;
 import java.util.HashMap;
 import java.util.Random;
+
+import javafx.util.Pair;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Room;
@@ -58,7 +61,7 @@ public abstract class Layout
 	 * 
 	 * @param floor - The Floor to build.
 	 * @return The generated Tiles and Rooms. */
-	public Room[] generate(Floor floor, Tile[][] tiles)
+	public Pair<Room[], Point> generate(Floor floor, Tile[][] tiles)
 	{
 		this.floor = floor;
 		this.random = this.floor.random;
@@ -74,7 +77,7 @@ public abstract class Layout
 		this.summonPokemon();
 
 		// Clear temp variables
-		Room[] toReturn = this.rooms;
+		Pair<Room[], Point> toReturn = new Pair<Room[], Point>(this.rooms, this.placeTeam());
 		this.tiles = null;
 		this.rooms = null;
 		this.floor = null;
@@ -114,6 +117,11 @@ public abstract class Layout
 	{
 		Room exitRoom = this.randomRoom();
 		exitRoom.randomTile(this.random).setType(TileType.STAIR);
+	}
+
+	protected Point placeTeam()
+	{
+		return Floor.WALKABLE.getLocation();
 	}
 
 	/** Places traps. */

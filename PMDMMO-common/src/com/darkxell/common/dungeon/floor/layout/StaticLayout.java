@@ -1,7 +1,10 @@
 package com.darkxell.common.dungeon.floor.layout;
 
+import java.awt.Point;
 import java.io.File;
 import java.util.List;
+
+import javafx.util.Pair;
 
 import org.jdom2.Element;
 
@@ -23,12 +26,12 @@ public class StaticLayout extends Layout
 	}
 
 	@Override
-	public Room[] generate(Floor floor, Tile[][] tiles)
+	public Pair<Room[], Point> generate(Floor floor, Tile[][] tiles)
 	{
 		this.xml = XMLUtils.readFile(new File("resources/data/floors/" + floor.dungeon.id + "-" + floor.id + ".xml"));
-		Room[] rooms = super.generate(floor, tiles);
+		Pair<Room[], Point> toreturn = super.generate(floor, tiles);
 		this.xml = null;
-		return rooms;
+		return toreturn;
 	}
 
 	@Override
@@ -66,6 +69,13 @@ public class StaticLayout extends Layout
 	@Override
 	protected void placeStairs()
 	{}
+
+	@Override
+	protected Point placeTeam()
+	{
+		Element spawn = this.xml.getChild("spawn");
+		return new Point(Integer.parseInt(spawn.getAttributeValue("x")), Integer.parseInt(spawn.getAttributeValue("y")));
+	}
 
 	@Override
 	protected void placeTraps()
