@@ -74,7 +74,7 @@ public class StaticLayout extends Layout
 	protected Point placeTeam()
 	{
 		Element spawn = this.xml.getChild("spawn");
-		return new Point(Integer.parseInt(spawn.getAttributeValue("x")), Integer.parseInt(spawn.getAttributeValue("y")));
+		return new Point(Integer.parseInt(spawn.getAttributeValue("x")) + Floor.WALKABLE.x, Integer.parseInt(spawn.getAttributeValue("y")) + Floor.WALKABLE.y);
 	}
 
 	@Override

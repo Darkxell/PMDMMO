@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<floor>
+  <rooms />
+  <tiles>MMMMMMMMMMM;M         M;M         M;M         M;M         M;M         M;MMM     MMM;MMM     MMM;MMM     MMM;MMM     MMM;MMM     MMM;MMMMMMMMMMM</tiles>
+  <spawn x="10" y="5" />
+</floor>
