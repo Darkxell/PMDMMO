@@ -88,7 +88,6 @@ public class PokemonSpecies
 		root.setAttribute("weight", Float.toString(this.weight));
 
 		root.addContent(this.stats.toXML());
-		root.addContent(XMLUtils.toXML("abilities", this.abilities));
 
 		if (this.evolutions.size() != 0)
 		{
@@ -97,6 +96,8 @@ public class PokemonSpecies
 				evolutions.addContent(evolution.toXML());
 			root.addContent(evolutions);
 		}
+
+		if (this.abilities.size() != 0) root.addContent(XMLUtils.toXML("abilities", this.abilities));
 
 		if (this.tms.size() != 0) root.addContent(XMLUtils.toXML("tms", this.tms));
 

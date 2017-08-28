@@ -30,4 +30,13 @@ public class ItemThrowable extends Item
 		this.trajectory = trajectory;
 	}
 
+	@Override
+	public Element toXML()
+	{
+		Element root = super.toXML();
+		root.setAttribute("trajectory", Integer.toString(this.trajectory));
+		root.setAttribute("damage", Integer.toString(this.damage));
+		return root;
+	}
+
 }

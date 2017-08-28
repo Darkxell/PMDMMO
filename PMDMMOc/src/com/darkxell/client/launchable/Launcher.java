@@ -12,7 +12,11 @@ import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.util.Lang;
 
 /** Launching class of the client */
-public class Launcher {
+public class Launcher
+{
+
+	/** If true, data is saved on exit. */
+	public static boolean SAVE_ON_EXIT = false;
 
 	public static Frame frame;
 	/** Set to false to stop the game. */
@@ -23,7 +27,8 @@ public class Launcher {
 
 	public static StateManager stateManager;
 
-	public static void main(String[] args) {
+	public static void main(String[] args)
+	{
 		Lang.loadClient();
 		PokemonRegistry.loadClient();
 		MoveRegistry.loadClient();
@@ -44,36 +49,48 @@ public class Launcher {
 
 	}
 
-	public static int getFps() {
+	public static int getFps()
+	{
 		return (processingprofile == PROFILE_SYNCHRONIZED) ? updaterandrenderer.currentUPS() : renderer.currentFPS();
 	}
 
-	public static int getUps() {
+	public static int getUps()
+	{
 		return (processingprofile == PROFILE_SYNCHRONIZED) ? updaterandrenderer.currentUPS() : updater.currentUPS();
 	}
 
-	public static void stopGame() {
+	public static void stopGame()
+	{
 		isRunning = false;
-	}
-
-	public static void setProcessingProfile(byte profile) {
-		if (processingprofile == profile)
-			return;
-		processingprofile = profile;
-		switch (profile) {
-		case PROFILE_SYNCHRONIZED:
-			new Thread(updaterandrenderer = new UpdaterAndRenderer()).start();
-			System.out.println("Processing profile switched: PROFILE_SYNCHRONIZED");
-			break;
-		case PROFILE_UNCAPPED:
-			new Thread(updater = new Updater()).start();
-			new Thread(renderer = new Renderer()).start();
-			System.out.println("Processing profile switched: PROFILE_UNCAPPED");
-			break;
+		if (SAVE_ON_EXIT)
+		{
+			PokemonRegistry.saveClient();
+			MoveRegistry.saveClient();
+			ItemRegistry.saveClient();
+			DungeonRegistry.saveClient();
 		}
 	}
 
-	public static byte getProcessingProfile() {
+	public static void setProcessingProfile(byte profile)
+	{
+		if (processingprofile == profile) return;
+		processingprofile = profile;
+		switch (profile)
+		{
+			case PROFILE_SYNCHRONIZED:
+				new Thread(updaterandrenderer = new UpdaterAndRenderer()).start();
+				System.out.println("Processing profile switched: PROFILE_SYNCHRONIZED");
+				break;
+			case PROFILE_UNCAPPED:
+				new Thread(updater = new Updater()).start();
+				new Thread(renderer = new Renderer()).start();
+				System.out.println("Processing profile switched: PROFILE_UNCAPPED");
+				break;
+		}
+	}
+
+	public static byte getProcessingProfile()
+	{
 		return processingprofile;
 	}
 

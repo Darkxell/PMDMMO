@@ -1,11 +1,17 @@
 package com.darkxell.common.move;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
 
+import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.input.SAXBuilder;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
 
 /** Holds all Moves. */
 public final class MoveRegistry
@@ -41,6 +47,24 @@ public final class MoveRegistry
 				moves.put(move.id, move);
 			}
 		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+
+	/** Saves this Registry for the Client. */
+	public static void saveClient()
+	{
+		Element xml = new Element("moves");
+		for (Move move : moves.values())
+			xml.addContent(move.toXML());
+		try
+		{
+			new XMLOutputter(Format.getPrettyFormat()).output(new Document(xml), new FileOutputStream("resources/data/moves.xml"));
+		} catch (FileNotFoundException e)
+		{
+			e.printStackTrace();
+		} catch (IOException e)
 		{
 			e.printStackTrace();
 		}
