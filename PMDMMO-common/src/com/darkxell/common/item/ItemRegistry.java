@@ -44,7 +44,7 @@ public final class ItemRegistry
 			for (Element e : root.getChildren("item"))
 			{
 				String className = e.getAttributeValue("type");
-				Class<?> c = Class.forName("com.darkxell.common.item.Item" + className);
+				Class<?> c = Class.forName(Item.class.getName() + className);
 				Item item = (Item) c.getConstructor(Element.class).newInstance(e);
 				items.put(item.id, item);
 			}

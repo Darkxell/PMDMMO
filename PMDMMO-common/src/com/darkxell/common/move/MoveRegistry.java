@@ -35,7 +35,7 @@ public final class MoveRegistry
 	public static void loadClient()
 	{
 		System.out.println("Loading Moves...");
-		
+
 		File file = new File("resources/data/moves.xml");
 		SAXBuilder builder = new SAXBuilder();
 		try
@@ -43,7 +43,10 @@ public final class MoveRegistry
 			Element root = builder.build(file).getRootElement();
 			for (Element e : root.getChildren("move"))
 			{
-				Move move = new Move(e);
+				String className = e.getAttributeValue("movetype");
+				if (className == null) className = "";
+				Class<?> c = Class.forName(Move.class.getName() + className);
+				Move move = (Move) c.getConstructor(Element.class).newInstance(e);
 				moves.put(move.id, move);
 			}
 		} catch (Exception e)
