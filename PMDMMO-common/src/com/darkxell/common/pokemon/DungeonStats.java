@@ -28,7 +28,8 @@ public class DungeonStats
 	public DungeonStats(PokemonStats baseStats)
 	{
 		this.baseStats = baseStats;
-		this.resetStats();
+		this.health = this.baseStats.health;
+		this.onFloorChange();
 	}
 
 	public float getAccuracy()
@@ -77,7 +78,7 @@ public class DungeonStats
 	}
 
 	/** Resets these Stats to their default input values. */
-	public void resetStats()
+	public void onFloorChange()
 	{
 		this.attack = this.baseStats.attack;
 		this.defense = this.baseStats.defense;
@@ -90,49 +91,18 @@ public class DungeonStats
 		this.accuracy = DEFAULT_ACCURACY;
 	}
 
-	public void setAccuracy(float accuracy)
+	/** Called when the Pokémon steps on a Wonder Tile. */
+	public void onStatHeal()
 	{
-		this.accuracy = accuracy;
-	}
-
-	public void setAttack(int attack)
-	{
-		this.attack = attack;
-	}
-
-	public void setDefense(int defense)
-	{
-		this.defense = defense;
-	}
-
-	public void setEvasiveness(float evasiveness)
-	{
-		this.evasiveness = evasiveness;
-	}
-
-	public void setHealth(int health)
-	{
-		this.health = health;
-	}
-
-	public void setMoveSpeed(float moveSpeed)
-	{
-		this.moveSpeed = moveSpeed;
-	}
-
-	public void setSpecialAttack(int specialAttack)
-	{
-		this.specialAttack = specialAttack;
-	}
-
-	public void setSpecialDefense(int specialDefense)
-	{
-		this.specialDefense = specialDefense;
-	}
-
-	public void setSpeed(int speed)
-	{
-		this.speed = speed;
+		this.attack = Math.max(this.attack, this.baseStats.attack);
+		this.defense = Math.max(this.defense, this.baseStats.defense);
+		this.health = Math.max(this.health, this.baseStats.health);
+		this.specialAttack = Math.max(this.specialAttack, this.baseStats.specialAttack);
+		this.specialDefense = Math.max(this.specialDefense, this.baseStats.specialDefense);
+		this.speed = Math.max(this.speed, this.baseStats.speed);
+		this.moveSpeed = Math.max(this.moveSpeed, this.baseStats.moveSpeed);
+		this.evasiveness = Math.max(this.evasiveness, DEFAULT_EVASIVENESS);
+		this.accuracy = Math.max(this.accuracy, DEFAULT_ACCURACY);
 	}
 
 }
