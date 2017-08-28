@@ -36,7 +36,7 @@ public class Launcher
 		DungeonRegistry.loadClient();
 		System.out.println("Lang & Data loaded.");
 
-		Floor f = new Floor(0, Layout.SMALL, DungeonRegistry.find(1));
+		Floor f = new Floor(4, Layout.STATIC, DungeonRegistry.find(1));
 		f.generate();
 		System.out.println(f);
 
