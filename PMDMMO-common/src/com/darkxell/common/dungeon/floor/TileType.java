@@ -14,6 +14,22 @@ public enum TileType
 	TRAP(8, 'X'),
 	WARP_ZONE(9, 'X');
 
+	/** @return The Tile type with the input character. */
+	public static TileType find(char c)
+	{
+		for (TileType type : values())
+			if (type.c == c) return type;
+		return null;
+	}
+
+	/** @return The Tile type with the input id. */
+	public static TileType find(int id)
+	{
+		for (TileType type : values())
+			if (type.id == id) return type;
+		return null;
+	}
+
 	/** Character for debug purpuses. */
 	public final char c;
 	public final int id;

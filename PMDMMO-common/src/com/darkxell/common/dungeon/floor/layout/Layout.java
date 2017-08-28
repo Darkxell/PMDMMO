@@ -19,7 +19,8 @@ public abstract class Layout
 	private static final HashMap<Integer, Layout> layouts = new HashMap<Integer, Layout>();
 
 	public static final Layout SINGLE_ROOM = new SingleRoomLayout();
-	public static final Layout SMALL = new GridRoomsLayout(1, 1, 2, 2, 2, 5, 5, 9, 12);
+	public static final Layout SMALL = new GridRoomsLayout(2, 1, 2, 2, 2, 5, 5, 9, 12);
+	public static final Layout STATIC = new StaticLayout();
 
 	/** @return The Layout with the input ID. */
 	public static Layout find(int id)
@@ -94,7 +95,7 @@ public abstract class Layout
 	protected abstract void generateRooms();
 
 	/** Creates default tiles from the Rooms. */
-	private void generateTiles()
+	protected void generateTiles()
 	{
 		this.defaultTiles();
 		for (Room room : this.rooms)
@@ -103,26 +104,26 @@ public abstract class Layout
 	}
 
 	/** Places Items. */
-	private void placeItems()
+	protected void placeItems()
 	{
 		// TODO Layout.placeItems()
 	}
 
 	/** Randomly places the Stairs tile in a random room. */
-	private void placeStairs()
+	protected void placeStairs()
 	{
 		Room exitRoom = this.randomRoom();
 		exitRoom.randomTile(this.random).setType(TileType.STAIR);
 	}
 
 	/** Places traps. */
-	private void placeTraps()
+	protected void placeTraps()
 	{
 		// TODO Layout.placeTraps()
 	}
 
 	/** Places Wonder Tiles. */
-	private void placeWonderTiles()
+	protected void placeWonderTiles()
 	{
 		int wonder = 2; // Number of wonder tiles to place
 		wonder += this.random.nextInt(3) - 2; // wonder = random[wonder-1;wonder+1]
@@ -136,7 +137,7 @@ public abstract class Layout
 	}
 
 	/** Summons Pokémon. */
-	private void summonPokemon()
+	protected void summonPokemon()
 	{
 		// TODO Layout.summonPokemon()
 	}
