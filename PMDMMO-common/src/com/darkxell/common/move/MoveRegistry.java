@@ -5,7 +5,8 @@ import java.util.Collection;
 import java.util.HashMap;
 
 import org.jdom2.Element;
-import org.jdom2.input.SAXBuilder;
+
+import com.darkxell.common.util.XMLUtils;
 
 /** Holds all Moves. */
 public final class MoveRegistry
@@ -29,21 +30,29 @@ public final class MoveRegistry
 	public static void loadClient()
 	{
 		System.out.println("Loading Moves...");
-		
-		File file = new File("resources/data/moves.xml");
-		SAXBuilder builder = new SAXBuilder();
-		try
-		{
-			Element root = builder.build(file).getRootElement();
-			for (Element e : root.getChildren("move"))
+
+		Element root = XMLUtils.readFile(new File("resources/data/moves.xml"));
+		for (Element e : root.getChildren("move"))
+			try
 			{
-				Move move = new Move(e);
+				String className = e.getAttributeValue("movetype");
+				if (className == null) className = "";
+				Class<?> c = Class.forName(Move.class.getName() + className);
+				Move move = (Move) c.getConstructor(Element.class).newInstance(e);
 				moves.put(move.id, move);
+			} catch (Exception e1)
+			{
+				e1.printStackTrace();
 			}
-		} catch (Exception e)
-		{
-			e.printStackTrace();
-		}
+	}
+
+	/** Saves this Registry for the Client. */
+	public static void saveClient()
+	{
+		Element xml = new Element("moves");
+		for (Move move : moves.values())
+			xml.addContent(move.toXML());
+		XMLUtils.saveFile(new File("resources/data/moves.xml"), xml);
 	}
 
 }

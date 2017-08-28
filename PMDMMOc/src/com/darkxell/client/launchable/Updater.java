@@ -30,7 +30,7 @@ public class Updater implements Runnable
 		this.updatesCurrentSecond = 0;
 		this.ups = 0;
 
-		while (Launcher.isRunning)
+		while (Launcher.isRunning && Launcher.getProcessingProfile() == Launcher.PROFILE_UNCAPPED)
 		{
 			this.update();
 

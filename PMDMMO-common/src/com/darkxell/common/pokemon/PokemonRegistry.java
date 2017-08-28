@@ -5,7 +5,8 @@ import java.util.Collection;
 import java.util.HashMap;
 
 import org.jdom2.Element;
-import org.jdom2.input.SAXBuilder;
+
+import com.darkxell.common.util.XMLUtils;
 
 /** Holds all Pokémon species. */
 public final class PokemonRegistry
@@ -29,21 +30,26 @@ public final class PokemonRegistry
 	public static void loadClient()
 	{
 		System.out.println("Loading Pokémon...");
-		
-		File file = new File("resources/data/pokemon.xml");
-		SAXBuilder builder = new SAXBuilder();
-		try
-		{
-			Element root = builder.build(file).getRootElement();
-			for (Element e : root.getChildren("pokemon"))
+
+		Element root = XMLUtils.readFile(new File("resources/data/pokemon.xml"));
+		for (Element e : root.getChildren("pokemon"))
+			try
 			{
 				PokemonSpecies species = new PokemonSpecies(e);
 				pokemon.put(species.id, species);
+			} catch (Exception e1)
+			{
+				e1.printStackTrace();
 			}
-		} catch (Exception e)
-		{
-			e.printStackTrace();
-		}
+	}
+
+	/** Saves this Registry for the Client. */
+	public static void saveClient()
+	{
+		Element species = new Element("species");
+		for (PokemonSpecies pk : pokemon.values())
+			species.addContent(pk.toXML());
+		XMLUtils.saveFile(new File("resources/data/pokemon.xml"), species);
 	}
 
 }

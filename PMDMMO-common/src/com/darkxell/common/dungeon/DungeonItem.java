@@ -1,6 +1,12 @@
 package com.darkxell.common.dungeon;
 
+import java.util.Random;
+
 import org.jdom2.Element;
+
+import com.darkxell.common.item.Item;
+import com.darkxell.common.item.ItemRegistry;
+import com.darkxell.common.item.ItemStack;
 
 /** Describes how an Item appears in a Dungeon. */
 public class DungeonItem
@@ -30,7 +36,15 @@ public class DungeonItem
 		this.floors = floors;
 	}
 
-	/* public Item item() { return ItemRegistry.find(this.id); } */// TODO: uncomment when ItemRegistry done.
+	public ItemStack generate(Random random)
+	{
+		return new ItemStack(this.id).setQuantity(random.nextInt(this.quantityMax - this.quantityMin + 1) + this.quantityMin);
+	}
+
+	public Item item()
+	{
+		return ItemRegistry.find(this.id);
+	}
 
 	public Element toXML()
 	{

@@ -1,6 +1,7 @@
 package com.darkxell.client.mechanics.freezones;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.jdom2.input.SAXBuilder;
@@ -10,7 +11,7 @@ import com.darkxell.client.resources.images.PokemonSprite;
 import com.darkxell.client.resources.images.pokemons.PokemonSpriteset1;
 
 /**
- * a tiled map of a freezone. Freezones are the areas where you can move freely
+ * A tiled map of a freezone. Freezones are the areas where you can move freely
  * and don't have to fight.
  */
 public class FreezoneMap {
@@ -19,9 +20,14 @@ public class FreezoneMap {
 	public int mapWidth;
 	public int mapHeight;
 
+	/** The player. */
 	public FreezonePlayer player;
 
-	// TODO : entities and tileentities.
+	/**
+	 * List the entities in this map. Note that the player isn't actually an
+	 * entity.
+	 */
+	public ArrayList<FreezoneEntity> entities = new ArrayList<>();
 
 	public FreezoneMap(String xmlfilepath) {
 		File file = new File(xmlfilepath);
@@ -52,15 +58,20 @@ public class FreezoneMap {
 			e.printStackTrace();
 		}
 		// TODO: change this
-		this.player = new FreezonePlayer(this,new PokemonSprite(PokemonSpriteset1.instance), 50, 50);
+		this.player = new FreezonePlayer(this, new PokemonSprite(PokemonSpriteset1.instance), 50, 50);
 	}
 
 	public void update() {
 		this.player.update();
+		for (int i = 0; i < entities.size(); i++)
+			entities.get(i).update();
 	}
 
 	public byte getTileTypeAt(double x, double y) {
-		return this.tiles[mapWidth * (int) y + (int) x].type;
+		int calc = mapWidth * (int) y + (int) x;
+		if (calc >= this.tiles.length || calc < 0)
+			return FreezoneTile.TYPE_WALKABLE;
+		return this.tiles[calc].type;
 	}
 
 }

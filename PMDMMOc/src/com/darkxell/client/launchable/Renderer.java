@@ -42,14 +42,14 @@ public class Renderer implements Runnable
 		this.framesCurrentSecond = 0;
 		this.fps = 0;
 
-		while (Launcher.isRunning)
+		while (Launcher.isRunning && Launcher.getProcessingProfile() == Launcher.PROFILE_UNCAPPED)
 		{
 			this.render();
 			++this.framesCurrentSecond;
 
 			try
 			{
-				Thread.sleep(5);
+				Thread.sleep(1);
 			} catch (InterruptedException e)
 			{
 				e.printStackTrace();

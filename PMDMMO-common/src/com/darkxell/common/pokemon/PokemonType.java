@@ -25,7 +25,7 @@ public enum PokemonType
 	DARK(16, "dark", new Color(112, 88, 72)),
 	FAIRY(17, "fairy", new Color(238, 153, 172));
 
-	public static final float SUPER_EFFECTIVE = 2, NORMALLY_EFFECTIVE = 1, NOT_VERY_EFFECTIVE = 0.5f, NO_EFFECT = 0;
+	public static final float SUPER_EFFECTIVE = 1.4f, NORMALLY_EFFECTIVE = 1, NOT_VERY_EFFECTIVE = 0.7f, NO_EFFECT = 0;
 
 	static
 	{

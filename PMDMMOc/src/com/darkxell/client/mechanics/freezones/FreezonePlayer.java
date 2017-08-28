@@ -3,7 +3,7 @@ package com.darkxell.client.mechanics.freezones;
 import com.darkxell.client.resources.images.AbstractPokemonSpriteset;
 import com.darkxell.client.resources.images.PokemonSprite;
 import com.darkxell.client.ui.Keys;
-import com.darkxell.common.utility.DoubleRectangle;
+import com.darkxell.common.util.DoubleRectangle;
 
 public class FreezonePlayer {
 
@@ -37,6 +37,12 @@ public class FreezonePlayer {
 	 */
 	public boolean canBeAt(double x, double y) {
 		DoubleRectangle hbx = getHitboxAt(x, y);
+		for (int i = 0; i < this.map.entities.size(); i++) {
+			FreezoneEntity ety = this.map.entities.get(i);
+			if (ety.isSolid && ety.getHitbox(ety.posX, ety.posY).intersects(this.getHitboxAt(x, y)))
+				return false;
+		}
+
 		if (this.map.getTileTypeAt(hbx.x, hbx.y) == FreezoneTile.TYPE_SOLID)
 			return false;
 		if (this.map.getTileTypeAt(hbx.x, hbx.y + hbx.height) == FreezoneTile.TYPE_SOLID)
@@ -123,7 +129,7 @@ public class FreezonePlayer {
 		}
 	}
 
-	public static final double MOVESPEED = 0.13;
+	public static final double MOVESPEED = 0.17;
 	private boolean ismovingUP = false;
 	private boolean ismovingRIGHT = false;
 	private boolean ismovingDOWN = false;

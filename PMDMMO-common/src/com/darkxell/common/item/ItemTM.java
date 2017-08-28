@@ -1,18 +1,19 @@
 package com.darkxell.common.item;
 
-public class ItemTM extends Item
+import org.jdom2.Element;
+
+/** An Item that teaches a move to a Pokémon when used, then turns into a Used TM. */
+public class ItemTM extends ItemHM
 {
 
-	/** The move this TM teaches. */
-	public final int moveID;
-	/** The TM ID. */
-	public final int tmID;
-
-	public ItemTM(int id, String name, int moveID, int tmID)
+	public ItemTM(Element xml)
 	{
-		super(id, name);
-		this.moveID = moveID;
-		this.tmID = tmID;
+		super(xml);
+	}
+
+	public ItemTM(int id, int price, int sell, int moveID)
+	{
+		super(id, price, sell, moveID);
 	}
 
 }
