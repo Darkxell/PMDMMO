@@ -1,17 +1,12 @@
 package com.darkxell.common.dungeon;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
 
-import org.jdom2.Document;
 import org.jdom2.Element;
-import org.jdom2.input.SAXBuilder;
-import org.jdom2.output.Format;
-import org.jdom2.output.XMLOutputter;
+
+import com.darkxell.common.util.XMLUtils;
 
 /** Holds all Dungeons. */
 public final class DungeonRegistry
@@ -36,19 +31,11 @@ public final class DungeonRegistry
 	{
 		System.out.println("Loading Dungeons...");
 
-		File file = new File("resources/data/dungeons.xml");
-		SAXBuilder builder = new SAXBuilder();
-		try
+		Element root = XMLUtils.readFile(new File("resources/data/dungeons.xml"));
+		for (Element e : root.getChildren("dungeon"))
 		{
-			Element root = builder.build(file).getRootElement();
-			for (Element e : root.getChildren("dungeon"))
-			{
-				Dungeon dungeon = new Dungeon(e);
-				dungeons.put(dungeon.id, dungeon);
-			}
-		} catch (Exception e)
-		{
-			e.printStackTrace();
+			Dungeon dungeon = new Dungeon(e);
+			dungeons.put(dungeon.id, dungeon);
 		}
 	}
 
@@ -58,16 +45,7 @@ public final class DungeonRegistry
 		Element xml = new Element("dungeons");
 		for (Dungeon dungeon : dungeons.values())
 			xml.addContent(dungeon.toXML());
-		try
-		{
-			new XMLOutputter(Format.getPrettyFormat()).output(new Document(xml), new FileOutputStream("resources/data/dungeons.xml"));
-		} catch (FileNotFoundException e)
-		{
-			e.printStackTrace();
-		} catch (IOException e)
-		{
-			e.printStackTrace();
-		}
+		XMLUtils.saveFile(new File("resources/data/dungeons.xml"), xml);
 	}
 
 }
