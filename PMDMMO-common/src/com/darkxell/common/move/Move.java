@@ -29,7 +29,7 @@ public class Move
 	public final int accuracy;
 	/** If this move has an additional effect, its chance to happen. */
 	public final int additionalEffectChance;
-	/** This move's behavior type. */
+	/** This move's behavior type. -1 if already replaced with a proper class. */
 	public final int behaviorID;
 	/** This move's category. See {@link Move#PHYSICAL}. */
 	public final byte category;
@@ -52,7 +52,7 @@ public class Move
 	{
 		this.id = Integer.parseInt(xml.getAttributeValue("id"));
 		this.type = PokemonType.find(Integer.parseInt(xml.getAttributeValue("type")));
-		this.behaviorID = Integer.parseInt(xml.getAttributeValue("behavior"));
+		this.behaviorID = xml.getAttribute("behavior") == null ? -1 : Integer.parseInt(xml.getAttributeValue("behavior"));
 		this.category = Byte.parseByte(xml.getAttributeValue("category"));
 		this.pp = Integer.parseInt(xml.getAttributeValue("pp"));
 		this.power = Integer.parseInt(xml.getAttributeValue("power"));
@@ -86,10 +86,13 @@ public class Move
 
 	public Element toXML()
 	{
+		String className = this.getClass().getName().substring(Move.class.getName().length());
+
 		Element root = new Element("move");
 		root.setAttribute("id", Integer.toString(this.id));
 		root.setAttribute("type", Integer.toString(this.type.id));
-		root.setAttribute("behavior", Integer.toString(this.behaviorID));
+		if (this.behaviorID > 0) root.setAttribute("behavior", Integer.toString(this.behaviorID));
+		else root.setAttribute("movetype", className);
 		root.setAttribute("category", Byte.toString(this.category));
 		root.setAttribute("pp", Integer.toString(this.pp));
 		root.setAttribute("power", Integer.toString(this.power));

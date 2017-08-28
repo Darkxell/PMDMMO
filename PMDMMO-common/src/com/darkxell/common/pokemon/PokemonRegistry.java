@@ -1,11 +1,17 @@
 package com.darkxell.common.pokemon;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
 
+import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.input.SAXBuilder;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
 
 /** Holds all Pokémon species. */
 public final class PokemonRegistry
@@ -29,7 +35,7 @@ public final class PokemonRegistry
 	public static void loadClient()
 	{
 		System.out.println("Loading Pokémon...");
-		
+
 		File file = new File("resources/data/pokemon.xml");
 		SAXBuilder builder = new SAXBuilder();
 		try
@@ -41,6 +47,24 @@ public final class PokemonRegistry
 				pokemon.put(species.id, species);
 			}
 		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+
+	/** Saves this Registry for the Client. */
+	public static void saveClient()
+	{
+		Element species = new Element("species");
+		for (PokemonSpecies pk : pokemon.values())
+			species.addContent(pk.toXML());
+		try
+		{
+			new XMLOutputter(Format.getPrettyFormat()).output(new Document(species), new FileOutputStream("resources/data/pokemon.xml"));
+		} catch (FileNotFoundException e)
+		{
+			e.printStackTrace();
+		} catch (IOException e)
 		{
 			e.printStackTrace();
 		}

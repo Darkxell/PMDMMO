@@ -29,15 +29,11 @@
           <part start="1" end="2" />
         </floors>
       </item>
-    </items>
-    <items>
       <item id="1">
         <floors>
           <part start="3" end="3" />
         </floors>
       </item>
-    </items>
-    <items>
       <item id="2">
         <floors>
           <part start="3" end="3" />

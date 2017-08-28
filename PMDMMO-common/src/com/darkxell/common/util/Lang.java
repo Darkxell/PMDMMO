@@ -1,10 +1,6 @@
 package com.darkxell.common.util;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.HashMap;
+import java.io.*;
 import java.util.Properties;
 
 public class Lang
@@ -24,7 +20,7 @@ public class Lang
 		}
 	}
 
-	private static HashMap<String, String> dictionnary = new HashMap<String, String>();
+	private static Properties dictionnary = new Properties();
 	private static Language selected;
 
 	public static Language getLanguage()
@@ -46,7 +42,7 @@ public class Lang
 
 	public static String translate(String id)
 	{
-		if (dictionnary.containsKey(id)) return dictionnary.get(id);
+		if (dictionnary.containsKey(id)) return dictionnary.getProperty(id);
 		return id;
 	}
 
@@ -54,10 +50,9 @@ public class Lang
 	private static void updateTranslations()
 	{
 		dictionnary.clear();
-		Properties lang = new Properties();
 		try
 		{
-			lang.load(new FileInputStream(new File("resources/lang/" + selected.id + ".properties")));
+			dictionnary.load(new FileInputStream(new File("resources/lang/" + selected.id + ".properties")));
 		} catch (FileNotFoundException e)
 		{
 			e.printStackTrace();
@@ -65,9 +60,6 @@ public class Lang
 		{
 			e.printStackTrace();
 		}
-
-		for (String id : lang.stringPropertyNames())
-			dictionnary.put(id, lang.getProperty(id));
 	}
 
 }
