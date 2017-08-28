@@ -33,7 +33,7 @@ public class GridRoomsLayout extends Layout
 	public GridRoomsLayout(int id, int minWidth, int minHeight, int maxWidth, int maxHeight, int minRoomWidth, int minRoomHeight, int maxRoomWidth,
 			int maxRoomHeight)
 	{
-		super(id, minWidth * minHeight, maxWidth * maxHeight);
+		super(id);
 		this.minWidth = minWidth;
 		this.minHeight = minHeight;
 		this.maxWidth = maxWidth;

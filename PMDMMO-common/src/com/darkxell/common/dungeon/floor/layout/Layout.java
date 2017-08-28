@@ -31,8 +31,6 @@ public abstract class Layout
 	protected Floor floor;
 	/** This Layout's id. */
 	public final int id;
-	/** The number of Rooms in this Layout. */
-	public final int minRooms, maxRooms;
 	/** RNG */
 	protected Random random;
 	/** Temporary storage for the floor's rooms. */
@@ -40,16 +38,9 @@ public abstract class Layout
 	/** Temporary storage for the floor's tiles. */
 	protected Tile[][] tiles;
 
-	public Layout(int id, int rooms)
-	{
-		this(id, rooms, rooms);
-	}
-
-	public Layout(int id, int minRooms, int maxRooms)
+	public Layout(int id)
 	{
 		this.id = id;
-		this.minRooms = minRooms;
-		this.maxRooms = maxRooms;
 		layouts.put(this.id, this);
 	}
 
@@ -142,12 +133,6 @@ public abstract class Layout
 	private Room randomRoom()
 	{
 		return this.rooms[random.nextInt(this.rooms.length)];
-	}
-
-	/** @return A random number of Rooms for this Layout. */
-	public int randomRoomCount(Random random)
-	{
-		return random.nextInt(this.maxRooms - this.minRooms + 1) + this.minRooms;
 	}
 
 	/** Summons Pokémon. */
