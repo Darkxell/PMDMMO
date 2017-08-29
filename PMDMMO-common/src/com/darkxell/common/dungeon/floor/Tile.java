@@ -14,7 +14,7 @@ public class Tile
 	/** The Item on this Tile. null if no Item. */
 	private ItemStack item;
 	/** This Tile's neighbors connections. */
-	private int neighbors = 0;
+	private short neighbors = 0;
 	/** The Pokémon standing on this Tile. null if no Pokémon. */
 	private Pokemon pokemon;
 	/** This Tile's type. */
@@ -43,6 +43,11 @@ public class Tile
 		return this.item;
 	}
 
+	public short getNeighbors()
+	{
+		return this.neighbors;
+	}
+
 	/** @return The Pokémon standing on this Tile. null if no Pokémon. */
 	public Pokemon getPokemon()
 	{
@@ -56,6 +61,7 @@ public class Tile
 	{
 		if (GameUtil.containsDirection(this.neighbors, direction)) this.neighbors -= direction;
 		if (this.adjacentTile(direction).type.connectsTo(this.type)) this.neighbors += direction;
+		this.neighbors = GameUtil.clean(this.neighbors);
 	}
 
 	/** Called when this Tile's type is changed. Reloads the connections of itself and its neighbors. */
@@ -69,6 +75,7 @@ public class Tile
 			if (t.type.connectsTo(this.type)) this.neighbors += direction;
 			t.onNeighborTypeChange(GameUtil.oppositeOf(direction));
 		}
+		this.neighbors = GameUtil.clean(this.neighbors);
 	}
 
 	public void setItem(ItemStack item)

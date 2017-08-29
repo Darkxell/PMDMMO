@@ -23,6 +23,20 @@ public class GameUtil
 	private static short[] directions = new short[]
 	{ NORTH, NORTHEAST, EAST, SOUTHEAST, SOUTH, SOUTHWEST, WEST, NORTHWEST };
 
+	/** Removes corner directions that are not connected to adjacent directions. */
+	public static short clean(short neighbors)
+	{
+		if (GameUtil.containsDirection(neighbors, GameUtil.NORTHEAST) && !GameUtil.containsDirection(neighbors, GameUtil.NORTH)
+				&& !GameUtil.containsDirection(neighbors, GameUtil.EAST)) neighbors -= GameUtil.NORTHEAST;
+		if (GameUtil.containsDirection(neighbors, GameUtil.NORTHWEST) && !GameUtil.containsDirection(neighbors, GameUtil.NORTH)
+				&& !GameUtil.containsDirection(neighbors, GameUtil.WEST)) neighbors -= GameUtil.NORTHEAST;
+		if (GameUtil.containsDirection(neighbors, GameUtil.SOUTHEAST) && !GameUtil.containsDirection(neighbors, GameUtil.SOUTH)
+				&& !GameUtil.containsDirection(neighbors, GameUtil.EAST)) neighbors -= GameUtil.SOUTHEAST;
+		if (GameUtil.containsDirection(neighbors, GameUtil.SOUTHWEST) && !GameUtil.containsDirection(neighbors, GameUtil.SOUTH)
+				&& !GameUtil.containsDirection(neighbors, GameUtil.WEST)) neighbors -= GameUtil.SOUTHEAST;
+		return neighbors;
+	}
+
 	/** @return True if the input direction sum contains the input direction. */
 	public static boolean containsDirection(int directionSum, short direction)
 	{
