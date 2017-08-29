@@ -23,6 +23,20 @@ public class GameUtil
 	private static short[] directions = new short[]
 	{ NORTH, NORTHEAST, EAST, SOUTHEAST, SOUTH, SOUTHWEST, WEST, NORTHWEST };
 
+	/** @return True if the input direction sum contains the input direction. */
+	public static boolean containsDirection(int directionSum, short direction)
+	{
+		for (int i = directions.length - 1; i >= 0; --i)
+			if (directions[i] != direction && directionSum >= directions[i]) directionSum -= directions[i];
+		return directionSum == direction;
+	}
+
+	/** @return The list of directions, starting north and going clockwise. */
+	public static short[] directions()
+	{
+		return directions.clone();
+	}
+
 	private static int indexOf(short direction)
 	{
 		for (int i = 0; i < directions.length; ++i)

@@ -13,6 +13,8 @@ public class Tile
 	public final Floor floor;
 	/** The Item on this Tile. null if no Item. */
 	private ItemStack item;
+	/** This Tile's neighbors connections. */
+	private int neighbors = 0;
 	/** The Pokémon standing on this Tile. null if no Pokémon. */
 	private Pokemon pokemon;
 	/** This Tile's type. */
@@ -29,7 +31,7 @@ public class Tile
 	}
 
 	/** @return The Tile adjacent to this Tile in the input direction. See {@link GameUtil#NORTH}. */
-	public Tile adjacentTile(byte direction)
+	public Tile adjacentTile(short direction)
 	{
 		Point p = GameUtil.moveTo(this.x, this.y, direction);
 		return this.floor.tileAt(p.x, p.y);
@@ -47,6 +49,28 @@ public class Tile
 		return this.pokemon;
 	}
 
+	/** Called when an adjacent tile has its type changed.
+	 * 
+	 * @param direction - The direction of the Tile. See {@link GameUtil#NORTH}. */
+	private void onNeighborTypeChange(short direction)
+	{
+		if (GameUtil.containsDirection(this.neighbors, direction)) this.neighbors -= direction;
+		if (this.adjacentTile(direction).type.connectsTo(this.type)) this.neighbors += direction;
+	}
+
+	/** Called when this Tile's type is changed. Reloads the connections of itself and its neighbors. */
+	private void onTypeChanged()
+	{
+		this.neighbors = 0;
+		for (short direction : GameUtil.directions())
+		{
+			Tile t = this.adjacentTile(direction);
+			if (t == null) continue;
+			if (t.type.connectsTo(this.type)) this.neighbors += direction;
+			t.onNeighborTypeChange(GameUtil.oppositeOf(direction));
+		}
+	}
+
 	public void setItem(ItemStack item)
 	{
 		this.item = item;
@@ -61,6 +85,7 @@ public class Tile
 	public Tile setType(TileType type)
 	{
 		this.type = type;
+		this.onTypeChanged();
 		return this;
 	}
 

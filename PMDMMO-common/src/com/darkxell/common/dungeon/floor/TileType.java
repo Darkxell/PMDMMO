@@ -1,5 +1,7 @@
 package com.darkxell.common.dungeon.floor;
 
+import java.util.ArrayList;
+
 public enum TileType
 {
 
@@ -13,6 +15,21 @@ public enum TileType
 	WONDER_TILE(7, 'W'),
 	TRAP(8, 'X'),
 	WARP_ZONE(9, 'X');
+
+	@SuppressWarnings("unchecked")
+	private static ArrayList<TileType>[] tileGroups = new ArrayList[]
+	{ new ArrayList<TileType>(), new ArrayList<TileType>() };
+	static
+	{
+		tileGroups[0].add(WALL);
+		tileGroups[0].add(WALL_END);
+
+		tileGroups[1].add(GROUND);
+		tileGroups[1].add(STAIR);
+		tileGroups[1].add(WONDER_TILE);
+		tileGroups[1].add(TRAP);
+		tileGroups[1].add(WARP_ZONE);
+	}
 
 	/** @return The Tile type with the input character. */
 	public static TileType find(char c)
@@ -38,6 +55,14 @@ public enum TileType
 	{
 		this.id = id;
 		this.c = c;
+	}
+
+	/** @return True if this Tile connects to the input Tile. */
+	public boolean connectsTo(TileType type)
+	{
+		for (ArrayList<TileType> group : tileGroups)
+			if (group.contains(this) && group.contains(type)) return true;
+		return false;
 	}
 
 }
