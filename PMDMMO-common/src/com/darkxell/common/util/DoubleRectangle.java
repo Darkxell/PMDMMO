@@ -21,6 +21,25 @@ public class DoubleRectangle {
 	}
 
 	/**
+	 * Constructs a new DoubleRectangle. The rectangle can be constructed from
+	 * it's center point.
+	 */
+	public DoubleRectangle(double x, double y, double width, double height, boolean fromcenter) {
+		if (fromcenter) {
+			this.x = x - (width / 2);
+			this.y = y - (height / 2);
+			this.width = width;
+			this.height = height;
+		} else {
+			this.x = x;
+			this.y = y;
+			this.width = width;
+			this.height = height;
+		}
+
+	}
+
+	/**
 	 * Predicate that returns true if the two rectangles have at least one
 	 * intersection point.
 	 */
