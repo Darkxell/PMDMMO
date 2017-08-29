@@ -17,10 +17,21 @@ public class GameUtil
 	 * <li>WEST = 6</li>
 	 * <li>NORTHWEST = 7</li>
 	 * </ul> */
-	public static final byte NORTH = 0, NORTHEAST = 1, EAST = 2, SOUTHEAST = 3, SOUTH = 4, SOUTHWEST = 5, WEST = 6, NORTHWEST = 7;
+	public static final short NORTH = 1, NORTHEAST = 2, EAST = 4, SOUTHEAST = 8, SOUTH = 16, SOUTHWEST = 32, WEST = 64, NORTHWEST = 128;
+
+	/** Lists directions. */
+	private static short[] directions = new short[]
+	{ NORTH, NORTHEAST, EAST, SOUTHEAST, SOUTH, SOUTHWEST, WEST, NORTHWEST };
+
+	private static int indexOf(short direction)
+	{
+		for (int i = 0; i < directions.length; ++i)
+			if (directions[i] == direction) return i;
+		return 0;
+	}
 
 	/** @return The coordinates given when moving from the input X,Y coordinates along the input direction. */
-	public static Point moveTo(int x, int y, byte direction)
+	public static Point moveTo(int x, int y, short direction)
 	{
 		// Move X
 		switch (direction)
@@ -64,17 +75,27 @@ public class GameUtil
 	}
 
 	/** @return The opposite of the input direction. */
-	public static byte oppositeOf(byte direction)
+	public static short oppositeOf(short direction)
 	{
-		direction += 4;
-		if (direction > 7) direction -= 8;
-		return direction;
+		int d = indexOf(direction);
+		d += 4;
+		if (d > 7) d -= 8;
+		return directions[d];
 	}
 
 	/** @return A random direction. */
-	public static byte randomDirection()
+	public static short randomDirection()
 	{
-		return (byte) (Math.random() * 8);
+		return directions[(int) (Math.random() * 8)];
+	}
+
+	/** @return The next direction after rotating clockwise from the input direction. */
+	public static short rotateClockwise(short direction)
+	{
+		int d = indexOf(direction);
+		d += 1;
+		if (d > 7) d = 0;
+		return directions[d];
 	}
 
 }
