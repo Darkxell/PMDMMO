@@ -10,6 +10,8 @@ import com.darkxell.common.util.GameUtil;
 public class Tile
 {
 
+	/** Alternative tiles. */
+	public byte alternate = 0;
 	public final Floor floor;
 	/** The Item on this Tile. null if no Item. */
 	private ItemStack item;
@@ -27,7 +29,7 @@ public class Tile
 		this.floor = floor;
 		this.x = x;
 		this.y = y;
-		this.type = type;
+		this.setType(type);
 	}
 
 	/** @return The Tile adjacent to this Tile in the input direction. See {@link GameUtil#NORTH}. */
@@ -93,6 +95,16 @@ public class Tile
 	public Tile setType(TileType type)
 	{
 		this.type = type;
+		if (this.type == TileType.WALL || this.type == TileType.WALL_END)
+		{
+			this.alternate = (byte) (Math.random() * 10);
+			if (this.alternate > 2) this.alternate = 0;
+		}
+		if (this.type == TileType.GROUND || this.type == TileType.TRAP)
+		{
+			this.alternate = (byte) (Math.random() * 10);
+			if (this.alternate > 1) this.alternate = 0;
+		}
 		this.onTypeChanged();
 		return this;
 	}

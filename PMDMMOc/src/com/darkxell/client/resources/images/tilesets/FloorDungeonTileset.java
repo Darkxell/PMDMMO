@@ -107,6 +107,8 @@ public class FloorDungeonTileset extends AbstractDungeonTileset
 			y += p.y;
 		}
 
+		x += tile.alternate * 3;
+
 		return this.tileAt(x, y);
 	}
 }
