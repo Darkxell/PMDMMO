@@ -19,9 +19,9 @@ public class AbstractDungeonTileset
 		cols = source.getWidth() / TILE_SIZE;
 		rows = source.getHeight() / TILE_SIZE;
 		this.tiles = new BufferedImage[cols][rows];
-		for (int x = 0; x < rows; ++x)
-			for (int y = 0; y < cols; ++y)
-				this.tiles[x][y] = Res.createimage(source, TILE_SIZE * y, TILE_SIZE * x, TILE_SIZE, TILE_SIZE);
+		for (int x = 0; x < cols; ++x)
+			for (int y = 0; y < rows; ++y)
+				this.tiles[x][y] = Res.createimage(source, TILE_SIZE * x, TILE_SIZE * y, TILE_SIZE, TILE_SIZE);
 	}
 
 	/** @return The tile at the given x, y coordinates. */

@@ -2,6 +2,7 @@ package com.darkxell.client.launchable;
 
 import com.darkxell.client.state.FreezoneExploreState;
 import com.darkxell.client.state.StateManager;
+import com.darkxell.client.state.dungeon.DungeonState;
 import com.darkxell.client.ui.Frame;
 import com.darkxell.common.dungeon.DungeonRegistry;
 import com.darkxell.common.dungeon.floor.Floor;
@@ -36,13 +37,12 @@ public class Launcher
 		DungeonRegistry.loadClient();
 		System.out.println("Lang & Data loaded.");
 
-		Floor f = new Floor(4, Layout.STATIC, DungeonRegistry.find(1));
-		f.generate();
-		System.out.println(f);
-
 		frame = new Frame();
 		stateManager = new StateManager();
-		stateManager.setState(new FreezoneExploreState(), 0);
+		//stateManager.setState(new FreezoneExploreState(), 0);
+		Floor f = new Floor(4, Layout.STATIC, DungeonRegistry.find(1));
+		f.generate();
+		stateManager.setState(new DungeonState(f), 0);
 
 		isRunning = true;
 		setProcessingProfile(PROFILE_SYNCHRONIZED);

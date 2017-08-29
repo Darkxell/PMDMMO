@@ -70,7 +70,7 @@ public class FloorDungeonTileset extends AbstractDungeonTileset
 		tileLocations.put(NORTH + EAST + SOUTH + WEST + NORTHEAST + SOUTHEAST, new Point(1, 13));
 		tileLocations.put(NORTH + EAST + SOUTH + WEST + SOUTHWEST + NORTHEAST, new Point(0, 24));
 		tileLocations.put(NORTH + EAST + SOUTH + WEST + SOUTHEAST + NORTHWEST, new Point(1, 24));
-		
+
 		// Cross, three corners
 		tileLocations.put(NORTH + EAST + SOUTH + WEST + NORTHWEST + NORTHEAST + SOUTHWEST, new Point(0, 15));
 		tileLocations.put(NORTH + EAST + SOUTH + WEST + SOUTHEAST + NORTHWEST + NORTHEAST, new Point(1, 15));
@@ -100,6 +100,6 @@ public class FloorDungeonTileset extends AbstractDungeonTileset
 			y += p.y;
 		}
 
-		return this.tileAt(x * TILE_SIZE, y * TILE_SIZE);
+		return this.tileAt(x, y);
 	}
 }
