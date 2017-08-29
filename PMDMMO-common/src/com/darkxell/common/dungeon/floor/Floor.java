@@ -53,11 +53,20 @@ public class Floor
 		Pair<Room[], Point> floor = this.layout.generate(this, this.tiles);
 		this.rooms = floor.getKey();
 		this.teamSpawn = floor.getValue();
+		for (Tile[] row : this.tiles)
+			for (Tile t : row)
+				t.updateNeighbors();
 	}
 
 	public Point getTeamSpawn()
 	{
 		return (Point) this.teamSpawn.clone();
+	}
+
+	/** @return True if this Floor is done generating. */
+	public boolean isGenerated()
+	{
+		return this.rooms != null;
 	}
 
 	/** @return A random Room in this Floor. */

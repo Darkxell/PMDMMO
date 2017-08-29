@@ -53,6 +53,12 @@ public class FloorDungeonTileset extends AbstractDungeonTileset
 		tileLocations.put(NORTH + EAST + WEST + NORTHWEST, new Point(0, 20));
 		tileLocations.put(NORTH + EAST + WEST + NORTHEAST, new Point(1, 20));
 
+		// T with two corners
+		tileLocations.put(NORTH + EAST + SOUTH + NORTHEAST + SOUTHEAST, new Point(0, 1));
+		tileLocations.put(NORTH + WEST + SOUTH + NORTHWEST + SOUTHWEST, new Point(2, 1));
+		tileLocations.put(SOUTH + EAST + WEST + SOUTHWEST + SOUTHEAST, new Point(1, 0));
+		tileLocations.put(NORTH + EAST + WEST + NORTHWEST + NORTHEAST, new Point(1, 2));
+
 		// Cross
 		tileLocations.put(NORTH + NORTHEAST + EAST + SOUTHEAST + SOUTH + SOUTHWEST + WEST + NORTHWEST, new Point(1, 1));
 		tileLocations.put(NORTH + EAST + SOUTH + WEST, new Point(1, 7));
@@ -89,9 +95,10 @@ public class FloorDungeonTileset extends AbstractDungeonTileset
 		if (tile.type() == TileType.GROUND) x = 3 * 3;
 		else if (tile.type() == TileType.WATER || tile.type() == TileType.LAVA || tile.type() == TileType.AIR) x = 5 * 3;
 
-		Point p = tileLocations.get(tile.getNeighbors());
+		Point p = tileLocations.get((int) tile.getNeighbors());
 		if (p == null)
 		{
+			System.out.println(tile.getNeighbors());
 			x += 1;
 			y += 4;
 		} else

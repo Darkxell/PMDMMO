@@ -39,7 +39,7 @@ public class FloorRenderer
 	/** Renders a Tile. */
 	public void drawTile(Graphics2D g, Tile tile)
 	{
-		g.drawImage(this.tileset.tile(tile), tile.x * TILE_SIZE, tile.y * TILE_SIZE, null);
+		if (tile != null) g.drawImage(this.tileset.tile(tile), tile.x * TILE_SIZE, tile.y * TILE_SIZE, null);
 	}
 
 }

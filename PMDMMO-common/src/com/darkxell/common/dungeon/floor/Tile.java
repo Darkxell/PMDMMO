@@ -60,22 +60,23 @@ public class Tile
 	private void onNeighborTypeChange(short direction)
 	{
 		if (GameUtil.containsDirection(this.neighbors, direction)) this.neighbors -= direction;
-		if (this.adjacentTile(direction).type.connectsTo(this.type)) this.neighbors += direction;
+		if (this.type.connectsTo(this.adjacentTile(direction).type)) this.neighbors += direction;
 		this.neighbors = GameUtil.clean(this.neighbors);
 	}
 
 	/** Called when this Tile's type is changed. Reloads the connections of itself and its neighbors. */
 	private void onTypeChanged()
 	{
-		this.neighbors = 0;
-		for (short direction : GameUtil.directions())
+		if (this.floor.isGenerated())
 		{
-			Tile t = this.adjacentTile(direction);
-			if (t == null) continue;
-			if (t.type.connectsTo(this.type)) this.neighbors += direction;
-			t.onNeighborTypeChange(GameUtil.oppositeOf(direction));
+			this.updateNeighbors();
+			for (short direction : GameUtil.directions())
+			{
+				Tile t = this.adjacentTile(direction);
+				if (t != null) t.onNeighborTypeChange(GameUtil.oppositeOf(direction));
+			}
+			this.neighbors = GameUtil.clean(this.neighbors);
 		}
-		this.neighbors = GameUtil.clean(this.neighbors);
 	}
 
 	public void setItem(ItemStack item)
@@ -100,6 +101,18 @@ public class Tile
 	public TileType type()
 	{
 		return this.type;
+	}
+
+	/** Checks each neighbor. */
+	public void updateNeighbors()
+	{
+		this.neighbors = 0;
+		for (short direction : GameUtil.directions())
+		{
+			Tile t = this.adjacentTile(direction);
+			if (t == null || t.type.connectsTo(this.type)) this.neighbors += direction;
+		}
+		this.neighbors = GameUtil.clean(this.neighbors);
 	}
 
 }

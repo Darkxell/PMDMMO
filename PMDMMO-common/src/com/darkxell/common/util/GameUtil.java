@@ -23,25 +23,24 @@ public class GameUtil
 	private static short[] directions = new short[]
 	{ NORTH, NORTHEAST, EAST, SOUTHEAST, SOUTH, SOUTHWEST, WEST, NORTHWEST };
 
-	/** Removes corner directions that are not connected to adjacent directions. */
+	/** Removes corner directions that are not connected to both adjacent directions. */
 	public static short clean(short neighbors)
 	{
-		if (GameUtil.containsDirection(neighbors, GameUtil.NORTHEAST) && !GameUtil.containsDirection(neighbors, GameUtil.NORTH)
-				&& !GameUtil.containsDirection(neighbors, GameUtil.EAST)) neighbors -= GameUtil.NORTHEAST;
-		if (GameUtil.containsDirection(neighbors, GameUtil.NORTHWEST) && !GameUtil.containsDirection(neighbors, GameUtil.NORTH)
-				&& !GameUtil.containsDirection(neighbors, GameUtil.WEST)) neighbors -= GameUtil.NORTHEAST;
-		if (GameUtil.containsDirection(neighbors, GameUtil.SOUTHEAST) && !GameUtil.containsDirection(neighbors, GameUtil.SOUTH)
-				&& !GameUtil.containsDirection(neighbors, GameUtil.EAST)) neighbors -= GameUtil.SOUTHEAST;
-		if (GameUtil.containsDirection(neighbors, GameUtil.SOUTHWEST) && !GameUtil.containsDirection(neighbors, GameUtil.SOUTH)
-				&& !GameUtil.containsDirection(neighbors, GameUtil.WEST)) neighbors -= GameUtil.SOUTHEAST;
+		if (containsDirection(neighbors, NORTHEAST) && !(containsDirection(neighbors, NORTH) && containsDirection(neighbors, EAST))) neighbors -= NORTHEAST;
+		if (containsDirection(neighbors, NORTHWEST) && !(containsDirection(neighbors, NORTH) && containsDirection(neighbors, WEST))) neighbors -= NORTHWEST;
+		if (containsDirection(neighbors, SOUTHEAST) && !(containsDirection(neighbors, SOUTH) && containsDirection(neighbors, EAST))) neighbors -= SOUTHEAST;
+		if (containsDirection(neighbors, SOUTHWEST) && !(containsDirection(neighbors, SOUTH) && containsDirection(neighbors, WEST))) neighbors -= SOUTHWEST;
 		return neighbors;
 	}
 
 	/** @return True if the input direction sum contains the input direction. */
-	public static boolean containsDirection(int directionSum, short direction)
+	public static boolean containsDirection(short directionSum, short direction)
 	{
 		for (int i = directions.length - 1; i >= 0; --i)
-			if (directions[i] != direction && directionSum >= directions[i]) directionSum -= directions[i];
+		{
+			if (directions[i] == direction) return directionSum >= directions[i];
+			if (directionSum >= directions[i]) directionSum -= directions[i];
+		}
 		return directionSum == direction;
 	}
 
