@@ -56,6 +56,19 @@ public class PokemonStats
 		this.moveSpeed = moveSpeed;
 	}
 
+	/** @return The real stats for the input level (considering these are Base Stats.) */
+	public PokemonStats forLevel(int level)
+	{
+		// Include stat modifications
+		int h = 2 * this.health * level / 100 + level + 10;
+		int a = 2 * this.attack * level / 100 + 5;
+		int d = 2 * this.defense * level / 100 + 5;
+		int sa = 2 * this.specialAttack * level / 100 + 5;
+		int sd = 2 * this.specialDefense * level / 100 + 5;
+		int s = 2 * this.speed * level / 100 + 5;
+		return new PokemonStats(a, d, h, sa, sd, s, this.moveSpeed);
+	}
+
 	public Element toXML()
 	{
 		Element root = new Element("stats");
