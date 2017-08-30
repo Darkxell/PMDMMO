@@ -31,11 +31,11 @@ public class CommonDungeonTileset extends AbstractDungeonTileset
 		return this.tileAt(3, 0);
 	}
 
-	/** @param up - true if the stairs are going up, false if they're going down.
+	/** @param down - true if the stairs are going down, false if they're going up.
 	 * @return The stairs tile. */
-	public BufferedImage stairs(boolean up)
+	public BufferedImage stairs(boolean down)
 	{
-		return this.tileAt(up ? 1 : 0, 1);
+		return this.tileAt(down ? 0 : 1, 0);
 	}
 
 	/** @param id - The Trap's ID.

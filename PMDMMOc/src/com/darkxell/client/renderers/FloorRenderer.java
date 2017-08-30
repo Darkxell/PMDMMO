@@ -3,8 +3,10 @@ package com.darkxell.client.renderers;
 import static com.darkxell.client.resources.images.AbstractDungeonTileset.TILE_SIZE;
 
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 
 import com.darkxell.client.resources.images.AbstractDungeonTileset;
+import com.darkxell.client.resources.images.tilesets.CommonDungeonTileset;
 import com.darkxell.client.resources.images.tilesets.FloorDungeonTileset;
 import com.darkxell.client.resources.images.tilesets.ItemsSpriteset;
 import com.darkxell.common.dungeon.floor.Floor;
@@ -44,7 +46,14 @@ public class FloorRenderer
 	public void drawTile(Graphics2D g, Tile tile)
 	{
 		if (tile == null) return;
-		g.drawImage(this.tileset.tile(tile), tile.x * TILE_SIZE, tile.y * TILE_SIZE, null);
+
+		BufferedImage sprite = null;
+		if (tile.type() == TileType.STAIR) sprite = CommonDungeonTileset.INSTANCE.stairs(this.floor.dungeon.direction);
+		else if (tile.type() == TileType.WONDER_TILE) sprite = CommonDungeonTileset.INSTANCE.wonderTile();
+		else if (tile.type() == TileType.WARP_ZONE) sprite = CommonDungeonTileset.INSTANCE.warp();
+		else sprite = this.tileset.tile(tile);
+
+		g.drawImage(sprite, tile.x * TILE_SIZE, tile.y * TILE_SIZE, null);
 		if (tile.getItem() != null && tile.type() == TileType.GROUND) g.drawImage(ItemsSpriteset.instance.SPRITES[tile.getItem().item().spriteID], tile.x
 				* TILE_SIZE + ITEM_POS, tile.y * TILE_SIZE + ITEM_POS, null);
 	}

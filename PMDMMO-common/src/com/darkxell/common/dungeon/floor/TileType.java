@@ -8,13 +8,13 @@ public enum TileType
 	GROUND(0, ' '),
 	WALL(1, 'M'),
 	WALL_END(2, 'm'),
-	WATER(3, 'L'),
-	LAVA(4, 'L'),
-	AIR(5, 'L'),
+	WATER(3, 'w'),
+	LAVA(4, 'l'),
+	AIR(5, 'a'),
 	STAIR(6, 'S'),
 	WONDER_TILE(7, 'W'),
 	TRAP(8, 'X'),
-	WARP_ZONE(9, 'X');
+	WARP_ZONE(9, 'x');
 
 	@SuppressWarnings("unchecked")
 	private static ArrayList<TileType>[] tileGroups = new ArrayList[]
