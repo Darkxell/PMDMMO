@@ -2,6 +2,7 @@ package com.darkxell.common.pokemon;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 import org.jdom2.Element;
 
@@ -78,6 +79,30 @@ public class PokemonSpecies
 		int xp = (int) (5 * Math.pow(level, 3) / 4);
 		if (xp > 30000) xp = 30000;
 		return xp;
+	}
+
+	/** Generates a Pokémon of this species.
+	 * 
+	 * @param level - The level of the Pokémon to generate. */
+	public Pokemon generate(Random random, int level)
+	{
+		int ability = this.abilities.size() == 0 ? 1 : this.abilities.get(random.nextInt(this.abilities.size()));
+		ArrayList<Integer> moves = new ArrayList<Integer>();
+		int l = level;
+		while (moves.size() < 4 && l > 0)
+		{
+			if (this.learnset.containsKey(l)) moves.addAll(this.learnset.get(l));
+			--l;
+		}
+
+		PokemonMove move1 = moves.size() < 1 ? null : new PokemonMove(moves.get(0));
+		PokemonMove move2 = moves.size() < 2 ? null : new PokemonMove(moves.get(1));
+		PokemonMove move3 = moves.size() < 3 ? null : new PokemonMove(moves.get(2));
+		PokemonMove move4 = moves.size() < 4 ? null : new PokemonMove(moves.get(3));
+
+		// todo: Generate random ID.
+		// todo: include gender probability.
+		return new Pokemon(0, this, null, null, this.stats.forLevel(level), ability, 0, level, move1, move2, move3, move4, (byte) (int) random.nextInt(3));
 	}
 
 	/** @return The list of learned moves at the input level. */

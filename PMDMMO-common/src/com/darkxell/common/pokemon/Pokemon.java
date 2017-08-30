@@ -7,24 +7,25 @@ public class Pokemon
 {
 	/** Pokémon gender.
 	 * <ul>
-	 * <li>MALE = false</li>
-	 * <li>FEMALE = true</li>
+	 * <li>MALE = 0</li>
+	 * <li>FEMALE = 1</li>
+	 * <li>GENDERLESS = 2</li>
 	 * </ul> */
-	public static final boolean MALE = false, FEMALE = true;
+	public static final byte MALE = 0, FEMALE = 1, GENDERLESS = 2;
 
 	/** This Pokémon's ability's ID. */
 	public final int abilityID;
 	/** The current amount of experience of this Pokémon (for this level). */
 	private int experience;
 	/** This Pokémon's gender. See {@link Pokemon#MALE}. */
-	public final boolean gender;
+	public final byte gender;
 	/** This Pokémon's ID. */
 	public final int id;
 	/** This Pokémon's held Item's ID. -1 for no Item. */
 	private ItemStack item;
 	/** This Pokémon's level. */
 	private int level;
-	/** ID of this Pokémon's moves. -1 for no move. */
+	/** This Pokémon's moves. */
 	private PokemonMove[] moves;
 	/** This Pokémon's nickname. If null, use the species' name. */
 	private String nickname;
@@ -34,7 +35,7 @@ public class Pokemon
 	private PokemonStats stats;
 
 	public Pokemon(int id, PokemonSpecies species, String nickname, ItemStack item, PokemonStats stats, int ability, int experience, int level,
-			PokemonMove move1, PokemonMove move2, PokemonMove move3, PokemonMove move4, boolean gender)
+			PokemonMove move1, PokemonMove move2, PokemonMove move3, PokemonMove move4, byte gender)
 	{
 		this.id = id;
 		this.species = species;
