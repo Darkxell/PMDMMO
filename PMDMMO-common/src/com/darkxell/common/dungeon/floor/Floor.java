@@ -53,11 +53,20 @@ public class Floor
 		Pair<Room[], Point> floor = this.layout.generate(this, this.tiles);
 		this.rooms = floor.getKey();
 		this.teamSpawn = floor.getValue();
+		for (Tile[] row : this.tiles)
+			for (Tile t : row)
+				t.updateNeighbors();
 	}
 
 	public Point getTeamSpawn()
 	{
 		return (Point) this.teamSpawn.clone();
+	}
+
+	/** @return True if this Floor is done generating. */
+	public boolean isGenerated()
+	{
+		return this.rooms != null;
 	}
 
 	/** @return A random Room in this Floor. */
@@ -77,6 +86,7 @@ public class Floor
 	/** @return The tile at the input X, Y coordinates. */
 	public Tile tileAt(int x, int y)
 	{
+		if (x < 0 || x >= this.tiles.length || y < 0 || y >= this.tiles[x].length) return null;
 		return this.tiles[x][y];
 	}
 

@@ -1,6 +1,7 @@
 package com.darkxell.client.resources;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.InputStream;
 
 import javax.imageio.ImageIO;
@@ -10,12 +11,18 @@ public class Res {
 	/** Gets an image from the res folder as a BufferedImage. */
 	public static BufferedImage getBase(String path) {
 		BufferedImage img = null;
+		
 		try {
 			InputStream is = Res.class.getResourceAsStream(path);
 			img = ImageIO.read(is);
 		} catch (Exception e) {
-			e.printStackTrace();
+			try {
+				img=ImageIO.read(new File(path));
+			} catch (Exception e1){
+				e.printStackTrace();
+			}
 		}
+		
 		return img;
 	}
 

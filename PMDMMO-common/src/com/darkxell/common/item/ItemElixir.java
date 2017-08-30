@@ -14,9 +14,9 @@ public class ItemElixir extends ItemFood
 		this.pp = Integer.parseInt(xml.getAttributeValue("pp"));
 	}
 
-	public ItemElixir(int id, int price, int sell, int food, int bellyIfFull, int belly, int pp)
+	public ItemElixir(int id, int price, int sell, int sprite, int food, int bellyIfFull, int belly, int pp)
 	{
-		super(id, price, sell, food, bellyIfFull, belly);
+		super(id, price, sell, sprite, food, bellyIfFull, belly);
 		this.pp = pp;
 	}
 

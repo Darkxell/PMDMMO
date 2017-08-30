@@ -17,9 +17,9 @@ public class ItemGummi extends Item
 		this.type = Short.parseShort(xml.getAttributeValue("g-type"));
 	}
 
-	public ItemGummi(int id, int price, int sell, short type)
+	public ItemGummi(int id, int price, int sell, int sprite, short type)
 	{
-		super(id, price, sell);
+		super(id, price, sell, sprite);
 		this.type = type;
 	}
 
