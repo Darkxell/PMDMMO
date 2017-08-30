@@ -5,6 +5,8 @@ import java.util.HashMap;
 
 import org.jdom2.Element;
 
+import com.darkxell.common.move.Move;
+import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.util.Message;
 import com.darkxell.common.util.XMLUtils;
 
@@ -13,7 +15,7 @@ public class PokemonSpecies
 
 	/** List of possible Abilities for this Pokémon. */
 	private ArrayList<Integer> abilities;
-	/** Base experience. */
+	/** Base experience gained when this Pokémon is defeated. */
 	public final int baseXP;
 	/** List of species this Pokémon can evolve into. */
 	private final ArrayList<Evolution> evolutions;
@@ -68,6 +70,23 @@ public class PokemonSpecies
 		this.learnset = learnset;
 		this.tms = tms;
 		this.evolutions = evolutions;
+	}
+
+	/** @return The amount of experience needed to level up from the input level. */
+	public int experienceToNextLevel(int level)
+	{
+		int xp = (int) (5 * Math.pow(level, 3) / 4);
+		if (xp > 30000) xp = 30000;
+		return xp;
+	}
+
+	/** @return The list of learned moves at the input level. */
+	public ArrayList<Move> learnedMoves(int level)
+	{
+		ArrayList<Move> moves = new ArrayList<Move>();
+		if (this.learnset.containsKey(level)) for (Integer id : this.learnset.get(level))
+			moves.add(MoveRegistry.find(id));
+		return moves;
 	}
 
 	/** @return This Pokémon's name. */
