@@ -15,9 +15,9 @@ public class ItemHM extends Item
 		this.moveID = Integer.parseInt(xml.getAttributeValue("move"));
 	}
 
-	public ItemHM(int id, int price, int sell, int moveID)
+	public ItemHM(int id, int price, int sell, int sprite, int moveID)
 	{
-		super(id, price, sell);
+		super(id, price, sell, sprite);
 		this.moveID = moveID;
 	}
 

@@ -15,19 +15,23 @@ public class Item
 	public final int price;
 	/** This Item's price to sell. */
 	public final int sell;
+	/** The ID of the Item's sprite. */
+	public final int spriteID;
 
 	public Item(Element xml)
 	{
 		this.id = Integer.parseInt(xml.getAttributeValue("id"));
 		this.price = Integer.parseInt(xml.getAttributeValue("price"));
 		this.sell = Integer.parseInt(xml.getAttributeValue("sell"));
+		this.spriteID = Integer.parseInt(xml.getAttributeValue("sprite"));
 	}
 
-	public Item(int id, int price, int sell)
+	public Item(int id, int price, int sell, int spriteID)
 	{
 		this.id = id;
 		this.price = price;
 		this.sell = sell;
+		this.spriteID = spriteID;
 	}
 
 	public Message name()
@@ -42,6 +46,7 @@ public class Item
 		root.setAttribute("type", this.getClass().getName().substring(Item.class.getName().length()));
 		root.setAttribute("price", Integer.toString(this.price));
 		root.setAttribute("sell", Integer.toString(this.sell));
+		root.setAttribute("sprite", Integer.toString(this.spriteID));
 		return root;
 	}
 

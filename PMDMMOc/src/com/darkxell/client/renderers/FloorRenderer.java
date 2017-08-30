@@ -4,12 +4,16 @@ import static com.darkxell.client.resources.images.AbstractDungeonTileset.TILE_S
 
 import java.awt.Graphics2D;
 
+import com.darkxell.client.resources.images.AbstractDungeonTileset;
 import com.darkxell.client.resources.images.tilesets.FloorDungeonTileset;
+import com.darkxell.client.resources.images.tilesets.ItemsSpriteset;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
+import com.darkxell.common.dungeon.floor.TileType;
 
 public class FloorRenderer
 {
+	private static final int ITEM_POS = (AbstractDungeonTileset.TILE_SIZE - ItemsSpriteset.ITEM_SIZE) / 2;
 
 	public final Floor floor;
 	public final FloorDungeonTileset tileset;
@@ -39,7 +43,9 @@ public class FloorRenderer
 	/** Renders a Tile. */
 	public void drawTile(Graphics2D g, Tile tile)
 	{
-		if (tile != null) g.drawImage(this.tileset.tile(tile), tile.x * TILE_SIZE, tile.y * TILE_SIZE, null);
+		if (tile == null) return;
+		g.drawImage(this.tileset.tile(tile), tile.x * TILE_SIZE, tile.y * TILE_SIZE, null);
+		if (tile.getItem() != null && tile.type() == TileType.GROUND) g.drawImage(ItemsSpriteset.instance.SPRITES[tile.getItem().item().spriteID], tile.x
+				* TILE_SIZE + ITEM_POS, tile.y * TILE_SIZE + ITEM_POS, null);
 	}
-
 }

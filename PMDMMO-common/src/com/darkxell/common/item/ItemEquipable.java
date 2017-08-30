@@ -11,9 +11,9 @@ public class ItemEquipable extends Item
 		super(xml);
 	}
 
-	public ItemEquipable(int id, int price, int sell)
+	public ItemEquipable(int id, int price, int sell, int sprite)
 	{
-		super(id, price, sell);
+		super(id, price, sell, sprite);
 	}
 
 }

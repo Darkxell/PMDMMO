@@ -3,11 +3,9 @@ package com.darkxell.client.state.dungeon;
 import java.awt.Graphics2D;
 
 import com.darkxell.client.renderers.FloorRenderer;
-import com.darkxell.client.resources.images.AbstractDungeonTileset;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.dungeon.floor.Tile;
 
 public class DungeonState extends AbstractState
 {
