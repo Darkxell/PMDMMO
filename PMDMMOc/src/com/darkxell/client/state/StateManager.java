@@ -26,23 +26,23 @@ public class StateManager {
 	}
 
 	public void onKeyPressed(short key) {
-		this.currentState.onKeyPressed(key);
+		if (this.currentState != null) this.currentState.onKeyPressed(key);
 	}
 
 	public void onKeyReleased(short key) {
-		this.currentState.onKeyReleased(key);
+		if (this.currentState != null) this.currentState.onKeyReleased(key);
 	}
 
 	public void onMouseClick(int x, int y) {
-		this.currentState.onMouseClick(x, y);
+		if (this.currentState != null) this.currentState.onMouseClick(x, y);
 	}
 
 	public void onMouseMove(int x, int y) {
-		this.currentState.onMouseMove(x, y);
+		if (this.currentState != null) this.currentState.onMouseMove(x, y);
 	}
 
 	public void onMouseRightClick(int x, int y) {
-		this.currentState.onMouseRightClick(x, y);
+		if (this.currentState != null) this.currentState.onMouseRightClick(x, y);
 	}
 
 	private BufferedImage internalBuffer;
@@ -67,7 +67,7 @@ public class StateManager {
 		Graphics2D g2 = internalBuffer.createGraphics();
 		g2.clearRect(0, 0, displayWidth, displayHeight);
 		if (this.transition >= 0)
-			this.currentState.render(g2, displayWidth, displayHeight);
+			if (this.currentState != null) this.currentState.render(g2, displayWidth, displayHeight);
 		else if (this.transition < 0)
 			this.nextState.render(g2, displayWidth, displayHeight);
 		double alpha = 1d * Math.abs(this.transition) / this.transitionTime * 255;
@@ -96,7 +96,7 @@ public class StateManager {
 
 	public synchronized void update() {
 		if (this.transition == 0)
-			this.currentState.update();
+			if (this.currentState != null) this.currentState.update();
 		else {
 			++this.transition;
 			if (this.transition == this.transitionTime)

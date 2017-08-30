@@ -173,7 +173,7 @@ public class PokemonSprite {
 	private int counter = 0;
 	private int statecounter = 0;
 
-	public int getFacingDirection() {
+	public byte getFacingDirection() {
 		return this.facing;
 	}
 

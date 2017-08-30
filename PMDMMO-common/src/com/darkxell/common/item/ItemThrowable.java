@@ -23,9 +23,9 @@ public class ItemThrowable extends Item
 		this.trajectory = Byte.parseByte(xml.getAttributeValue("trajectory"));
 	}
 
-	public ItemThrowable(int id, int price, int sell, int damage, byte trajectory)
+	public ItemThrowable(int id, int price, int sell, int sprite, int damage, byte trajectory)
 	{
-		super(id, price, sell);
+		super(id, price, sell, sprite);
 		this.damage = damage;
 		this.trajectory = trajectory;
 	}

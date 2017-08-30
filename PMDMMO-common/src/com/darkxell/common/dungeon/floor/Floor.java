@@ -1,7 +1,10 @@
 package com.darkxell.common.dungeon.floor;
 
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.Random;
+
+import javafx.util.Pair;
 
 import com.darkxell.common.dungeon.Dungeon;
 import com.darkxell.common.dungeon.floor.layout.Layout;
@@ -30,6 +33,8 @@ public class Floor
 	public final Random random;
 	/** This Floor's rooms. null before generating. */
 	private Room[] rooms;
+	/** The position at which the team will spawn. */
+	private Point teamSpawn;
 	/** This Floor's tiles. null before generating. */
 	private Tile[][] tiles;
 
@@ -45,7 +50,23 @@ public class Floor
 	public void generate()
 	{
 		this.tiles = new Tile[ALL_WIDTH][ALL_HEIGHT];
-		this.rooms = this.layout.generate(this, this.tiles);
+		Pair<Room[], Point> floor = this.layout.generate(this, this.tiles);
+		this.rooms = floor.getKey();
+		this.teamSpawn = floor.getValue();
+		for (Tile[] row : this.tiles)
+			for (Tile t : row)
+				t.updateNeighbors();
+	}
+
+	public Point getTeamSpawn()
+	{
+		return (Point) this.teamSpawn.clone();
+	}
+
+	/** @return True if this Floor is done generating. */
+	public boolean isGenerated()
+	{
+		return this.rooms != null;
 	}
 
 	/** @return A random Room in this Floor. */
@@ -65,6 +86,7 @@ public class Floor
 	/** @return The tile at the input X, Y coordinates. */
 	public Tile tileAt(int x, int y)
 	{
+		if (x < 0 || x >= this.tiles.length || y < 0 || y >= this.tiles[x].length) return null;
 		return this.tiles[x][y];
 	}
 

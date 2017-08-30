@@ -174,4 +174,24 @@ public class FreezonePlayer {
 		return ismovingUP || ismovingRIGHT || ismovingDOWN || ismovingLEFT;
 	}
 
+	/** Returns the hitbox of the interaction window in front of the player. */
+	public DoubleRectangle getInteractionBox() {
+		byte facing = playersprite.getFacingDirection();
+		double tpx = this.x;
+		if (facing == AbstractPokemonSpriteset.FACING_E || facing == AbstractPokemonSpriteset.FACING_NE
+				|| facing == AbstractPokemonSpriteset.FACING_SE)
+			tpx += 2.5;
+		if (facing == AbstractPokemonSpriteset.FACING_W || facing == AbstractPokemonSpriteset.FACING_NW
+				|| facing == AbstractPokemonSpriteset.FACING_SW)
+			tpx -= 2.5;
+		double tpy = this.y;
+		if (facing == AbstractPokemonSpriteset.FACING_S || facing == AbstractPokemonSpriteset.FACING_SE
+				|| facing == AbstractPokemonSpriteset.FACING_SW)
+			tpy += 2.5;
+		if (facing == AbstractPokemonSpriteset.FACING_N || facing == AbstractPokemonSpriteset.FACING_NE
+				|| facing == AbstractPokemonSpriteset.FACING_NW)
+			tpy -= 2.5;
+		return new DoubleRectangle(tpx, tpy, 1.3, 1.3, true);
+	}
+
 }

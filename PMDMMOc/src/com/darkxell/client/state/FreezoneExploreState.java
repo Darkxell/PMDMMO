@@ -5,10 +5,15 @@ import java.awt.Graphics2D;
 
 import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
+import com.darkxell.client.mechanics.freezones.FreezoneTile;
 import com.darkxell.client.mechanics.freezones.zones.PokemonSquareFreezone;
 import com.darkxell.client.persistance.FreezoneMapHolder;
+import com.darkxell.common.util.DoubleRectangle;
 
 public class FreezoneExploreState extends AbstractState {
+
+	/**Displays the debug information. Careful, this is not optimized and will have a hight CPU drain. It also makes the game really ugly, it's a debug mode...*/
+	private static boolean debugdisplaymode = true;
 
 	@Override
 	public void onKeyPressed(short key) {
@@ -35,6 +40,14 @@ public class FreezoneExploreState extends AbstractState {
 				for (int j = 0; j < map.mapWidth; j++) {
 					int tileid = (i * map.mapWidth) + j;
 					g.drawImage(map.tiles[tileid].sprite, 8 * j, 8 * i, null);
+					if (debugdisplaymode)
+						if (map.tiles[tileid].type == FreezoneTile.TYPE_SOLID) {
+							g.setColor(new Color(150, 20, 20, 100));
+							g.fillRect(8 * j, 8 * i, 8, 8);
+						} else if (map.tiles[tileid].type == FreezoneTile.TYPE_SOLID) {
+							g.setColor(new Color(20, 150, 20, 100));
+							g.fillRect(8 * j, 8 * i, 8, 8);
+						}
 				}
 			}
 			// TODO : draw the entities/player in Y position order.
@@ -42,9 +55,25 @@ public class FreezoneExploreState extends AbstractState {
 			g.drawImage(map.player.playersprite.getCurrentSprite(),
 					(int) (map.player.x * 8 - map.player.playersprite.pointer.gravityX),
 					(int) (map.player.y * 8 - map.player.playersprite.pointer.gravityY), null);
+			if (debugdisplaymode) {
+				g.setColor(new Color(20, 20, 200, 160));
+				DoubleRectangle dbrct = map.player.getHitboxAt(map.player.x, map.player.y);
+				g.fillRect((int) (dbrct.x * 8), (int) (dbrct.y * 8), (int) (dbrct.width * 8), (int) (dbrct.height * 8));
+				
+				g.setColor(new Color(150, 20, 130, 120));
+				dbrct = map.player.getInteractionBox();
+				g.fillRect((int) (dbrct.x * 8), (int) (dbrct.y * 8), (int) (dbrct.width * 8), (int) (dbrct.height * 8));
+			}
 			// draws the entities
-			for (int i = 0; i < map.entities.size(); i++)
+			for (int i = 0; i < map.entities.size(); i++) {
 				map.entities.get(i).print(g);
+				if (debugdisplaymode) {
+					g.setColor(new Color(20, 20, 200, 160));
+					DoubleRectangle dbrct = map.entities.get(i).getHitbox(map.entities.get(i).posX,
+							map.entities.get(i).posY);
+					g.fillRect((int) (dbrct.x * 8), (int) (dbrct.y * 8), (int) (dbrct.width * 8), (int) (dbrct.height * 8));
+				}
+			}
 
 			g.translate(-translateX, -translateY);
 			g.setColor(Color.BLACK);

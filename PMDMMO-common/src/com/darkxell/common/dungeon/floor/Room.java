@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.function.Predicate;
 
+import org.jdom2.Element;
+
 /** Represents a Room in a Floor. */
 public class Room
 {
@@ -15,6 +17,16 @@ public class Room
 	public final int width, height;
 	/** This Room's location. */
 	public final int x, y;
+
+	public Room(Floor floor, Element xml)
+	{
+		this.floor = floor;
+		this.x = Integer.parseInt(xml.getAttributeValue("x"));
+		this.y = Integer.parseInt(xml.getAttributeValue("y"));
+		this.width = Integer.parseInt(xml.getAttributeValue("width"));
+		this.height = Integer.parseInt(xml.getAttributeValue("height"));
+		this.isMonsterHouse = xml.getAttribute("mhouse") == null && xml.getAttributeValue("mhouse").equals("true");
+	}
 
 	public Room(Floor floor, int x, int y, int width, int height, boolean isMonsterHouse)
 	{
