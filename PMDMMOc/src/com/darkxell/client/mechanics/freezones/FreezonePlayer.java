@@ -194,4 +194,17 @@ public class FreezonePlayer {
 		return new DoubleRectangle(tpx, tpy, 1.3, 1.3, true);
 	}
 
+	/**
+	 * Returns true if the player can interact with something in it's current
+	 * position.
+	 */
+	public boolean canInteract() {
+		for (int i = 0; i < this.map.entities.size(); i++) {
+			FreezoneEntity et = this.map.entities.get(i);
+			if (et.canInteract && et.getHitbox(et.posX, et.posY).intersects(this.getHitboxAt(this.x, this.y)))
+				return true;
+		}
+		return false;
+	}
+
 }
