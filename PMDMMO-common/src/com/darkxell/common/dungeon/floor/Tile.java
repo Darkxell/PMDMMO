@@ -3,7 +3,7 @@ package com.darkxell.common.dungeon.floor;
 import java.awt.Point;
 
 import com.darkxell.common.item.ItemStack;
-import com.darkxell.common.pokemon.Pokemon;
+import com.darkxell.common.pokemon.PokemonD;
 import com.darkxell.common.util.GameUtil;
 
 /** Represents a single tile in a Floor. */
@@ -18,7 +18,7 @@ public class Tile
 	/** This Tile's neighbors connections. */
 	private short neighbors = 0;
 	/** The Pokémon standing on this Tile. null if no Pokémon. */
-	private Pokemon pokemon;
+	private PokemonD pokemon;
 	/** This Tile's type. */
 	private TileType type;
 	/** This Tile's coordinates. */
@@ -51,7 +51,7 @@ public class Tile
 	}
 
 	/** @return The Pokémon standing on this Tile. null if no Pokémon. */
-	public Pokemon getPokemon()
+	public PokemonD getPokemon()
 	{
 		return this.pokemon;
 	}
@@ -86,7 +86,7 @@ public class Tile
 		this.item = item;
 	}
 
-	public void setPokemon(Pokemon pokemon)
+	public void setPokemon(PokemonD pokemon)
 	{
 		this.pokemon = pokemon;
 	}

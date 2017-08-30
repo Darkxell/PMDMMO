@@ -86,23 +86,43 @@ public class PokemonSpecies
 	 * @param level - The level of the Pokémon to generate. */
 	public Pokemon generate(Random random, int level)
 	{
-		int ability = this.abilities.size() == 0 ? 1 : this.abilities.get(random.nextInt(this.abilities.size()));
 		ArrayList<Integer> moves = new ArrayList<Integer>();
-		int l = level;
-		while (moves.size() < 4 && l > 0)
-		{
-			if (this.learnset.containsKey(l)) moves.addAll(this.learnset.get(l));
-			--l;
-		}
 
-		PokemonMove move1 = moves.size() < 1 ? null : new PokemonMove(moves.get(0));
-		PokemonMove move2 = moves.size() < 2 ? null : new PokemonMove(moves.get(1));
-		PokemonMove move3 = moves.size() < 3 ? null : new PokemonMove(moves.get(2));
-		PokemonMove move4 = moves.size() < 4 ? null : new PokemonMove(moves.get(3));
+		int m1 = this.latestMove(level, moves);
+		moves.add(m1);
+		int m2 = this.latestMove(level, moves);
+		moves.add(m2);
+		int m3 = this.latestMove(level, moves);
+		moves.add(m3);
+		int m4 = this.latestMove(level, moves);
+
+		PokemonMove move1 = m1 == -1 ? null : new PokemonMove(m1);
+		PokemonMove move2 = m2 == -1 ? null : new PokemonMove(m2);
+		PokemonMove move3 = m3 == -1 ? null : new PokemonMove(m3);
+		PokemonMove move4 = m4 == -1 ? null : new PokemonMove(m4);
 
 		// todo: Generate random ID.
-		// todo: include gender probability.
-		return new Pokemon(0, this, null, null, this.stats.forLevel(level), ability, 0, level, move1, move2, move3, move4, (byte) (int) random.nextInt(3));
+		return new Pokemon(0, this, null, null, this.stats.forLevel(level), this.randomAbility(random), 0, level, move1, move2, move3, move4,
+				this.randomGender(random));
+	}
+
+	/** @param level - The level of the Pokémon.
+	 * @param learnedMoves - Moves to exclude because they're already learned.
+	 * @return The latest learned move's ID. */
+	public int latestMove(int level, ArrayList<Integer> learnedMoves)
+	{
+		while (level > 0)
+		{
+			if (this.learnset.containsKey(level))
+			{
+				@SuppressWarnings("unchecked")
+				ArrayList<Integer> moves = (ArrayList<Integer>) this.learnset.get(level).clone();
+				moves.removeAll(learnedMoves);
+				if (moves.size() != 0) return moves.get(0);
+			}
+			--level;
+		}
+		return -1;
 	}
 
 	/** @return The list of learned moves at the input level. */
@@ -118,6 +138,20 @@ public class PokemonSpecies
 	public Message name()
 	{
 		return new Message("pokemon." + this.id);
+	}
+
+	/** @return A random ability for this Pokémon. */
+	public int randomAbility(Random random)
+	{
+		if (this.abilities.size() == 0) return 0;
+		return this.abilities.get(random.nextInt(this.abilities.size()));
+	}
+
+	/** @return A random gender for this Pokémon. */
+	public byte randomGender(Random random)
+	{
+		// todo: include gender probability.
+		return (byte) random.nextInt(3);
 	}
 
 	public Element toXML()

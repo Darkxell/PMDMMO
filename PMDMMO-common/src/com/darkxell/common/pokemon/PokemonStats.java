@@ -18,6 +18,7 @@ public class PokemonStats
 	 * </ul> */
 	public static final byte ATTACK = 0, DEFENSE = 1, HEALTH = 2, SPECIAL_ATTACK = 3, SPECIAL_DEFENSE = 4, SPEED = 5, EVASIVENESS = 6, ACCURACY = 7,
 			MOVEMENT_SPEED = 8;
+	public static final String XML_ROOT = "stats";
 
 	/** Attack. */
 	public final int attack;

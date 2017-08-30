@@ -16,5 +16,8 @@
     <item id="135" x="5" y="3" />
     <item id="210" x="6" y="3" />
   </items>
+  <pokemons>
+    <pokemon id="265" x="5" y="4" level="1" />
+  </pokemons>
   <spawn x="10" y="5" />
 </floor>
