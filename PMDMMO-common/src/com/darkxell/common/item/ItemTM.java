@@ -11,9 +11,9 @@ public class ItemTM extends ItemHM
 		super(xml);
 	}
 
-	public ItemTM(int id, int price, int sell, int sprite, int moveID)
+	public ItemTM(int id, int price, int sell, int sprite, boolean isStackable, int moveID)
 	{
-		super(id, price, sell, sprite, moveID);
+		super(id, price, sell, sprite, isStackable, moveID);
 	}
 
 }

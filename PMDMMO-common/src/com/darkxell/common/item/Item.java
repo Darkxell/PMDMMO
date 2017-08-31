@@ -17,6 +17,8 @@ public class Item
 	public final int sell;
 	/** The ID of the Item's sprite. */
 	public final int spriteID;
+	/** True if this Item can be stacked. */
+	public final boolean isStackable;
 
 	public Item(Element xml)
 	{
@@ -24,14 +26,16 @@ public class Item
 		this.price = Integer.parseInt(xml.getAttributeValue("price"));
 		this.sell = Integer.parseInt(xml.getAttributeValue("sell"));
 		this.spriteID = Integer.parseInt(xml.getAttributeValue("sprite"));
+		this.isStackable = "true".equals(xml.getAttributeValue("stackable"));
 	}
 
-	public Item(int id, int price, int sell, int spriteID)
+	public Item(int id, int price, int sell, int spriteID, boolean stackable)
 	{
 		this.id = id;
 		this.price = price;
 		this.sell = sell;
 		this.spriteID = spriteID;
+		this.isStackable = stackable;
 	}
 
 	public Message name()
@@ -47,6 +51,7 @@ public class Item
 		root.setAttribute("price", Integer.toString(this.price));
 		root.setAttribute("sell", Integer.toString(this.sell));
 		root.setAttribute("sprite", Integer.toString(this.spriteID));
+		if (this.isStackable) root.setAttribute("stackable", "true");
 		return root;
 	}
 

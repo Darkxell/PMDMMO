@@ -18,9 +18,9 @@ public class ItemHeal extends ItemFood
 		this.hpFull = xml.getAttribute("hp-full") == null ? 0 : Integer.parseInt(xml.getAttributeValue("hp-full"));
 	}
 
-	public ItemHeal(int id, int price, int sell, int sprite, int food, int bellyIfFull, int belly, int hp, int hpFull)
+	public ItemHeal(int id, int price, int sell, int sprite, boolean isStackable, int food, int bellyIfFull, int belly, int hp, int hpFull)
 	{
-		super(id, price, sell, sprite, food, bellyIfFull, belly);
+		super(id, price, sell, sprite, isStackable, food, bellyIfFull, belly);
 		this.hp = hp;
 		this.hpFull = hpFull;
 	}

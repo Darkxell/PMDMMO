@@ -14,9 +14,9 @@ public class ItemDrink extends ItemFood
 		this.stat = Byte.parseByte(xml.getAttributeValue("stat"));
 	}
 
-	public ItemDrink(int id, int price, int sell, int sprite, int food, int bellyIfFull, int belly, byte stat)
+	public ItemDrink(int id, int price, int sell, int sprite, boolean isStackable, int food, int bellyIfFull, int belly, byte stat)
 	{
-		super(id, price, sell, sprite, food, bellyIfFull, belly);
+		super(id, price, sell, sprite, isStackable, food, bellyIfFull, belly);
 		this.stat = stat;
 	}
 

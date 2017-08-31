@@ -11,9 +11,9 @@ public class ItemOrb extends Item
 		super(xml);
 	}
 
-	public ItemOrb(int id, int price, int sell, int sprite)
+	public ItemOrb(int id, int price, int sell, int sprite, boolean isStackable)
 	{
-		super(id, price, sell, sprite);
+		super(id, price, sell, sprite, isStackable);
 	}
 
 }
