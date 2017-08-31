@@ -2,6 +2,7 @@ package com.darkxell.client.state;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 
 import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
@@ -15,16 +16,21 @@ import com.darkxell.common.util.DoubleRectangle;
 
 public class FreezoneDialogState extends AbstractState {
 
-	public FreezoneDialogState() {
+	private String dialog;
+	private int dialogposition = 0;
+	private ArrayList<String> showableDialog = null;
+
+	public FreezoneDialogState(String dialog) {
 		FreezoneMapHolder.currentmap.player.forceStop();
-		FreezoneMapHolder.currentmap.player.setState(PokemonSprite.STATE_IDDLE);;
+		FreezoneMapHolder.currentmap.player.setState(PokemonSprite.STATE_IDDLE);
+		this.dialog = dialog;
 	}
-	
+
 	@Override
 	public void onKeyPressed(short key) {
 		switch (key) {
 		case Keys.KEY_ATTACK:
-			Launcher.stateManager.setState(new FreezoneExploreState(), 0);
+			++dialogposition;
 			break;
 		}
 	}
@@ -81,8 +87,8 @@ public class FreezoneDialogState extends AbstractState {
 							(int) (dbrct.height * 8));
 				}
 			}
-			
-			//Translates back
+
+			// Translates back
 			g.translate(-translateX, -translateY);
 
 			g.drawImage(Hud.button, width - 70, 5, null);
@@ -95,6 +101,10 @@ public class FreezoneDialogState extends AbstractState {
 			int temp_tw_width = width - 40;
 			int temp_tw_height = temp_tw_width * Hud.textwindow.getHeight() / Hud.textwindow.getWidth();
 			g.drawImage(Hud.textwindow, 20, height - temp_tw_height - 20, temp_tw_width, temp_tw_height, null);
+
+			if (this.showableDialog == null)
+				this.showableDialog = getDialogLines(g, width - 60);
+			g.drawString(showableDialog.get(dialogposition), 30, height - temp_tw_height + 10 + g.getFont().getSize());
 
 			if (FreezoneExploreState.debugdisplaymode) {
 				g.setColor(Color.BLACK);
@@ -109,5 +119,31 @@ public class FreezoneDialogState extends AbstractState {
 			FreezoneMapHolder.currentmap = new PokemonSquareFreezone();
 		else
 			FreezoneMapHolder.currentmap.update();
+	}
+
+	private ArrayList<String> getDialogLines(Graphics2D g, int boxwidth) {
+		ArrayList<String> textlines = new ArrayList<>();
+		int currentlength = 0, iterator = 0;
+		String[] parts = this.dialog.split("\n");
+		for (int i = 0; i < parts.length; i++) {
+			textlines.add("    ");
+			currentlength = getStringLength(g, "    ");
+			String[] words = parts[i].split(" ");
+			for (int j = 0; j < words.length; j++)
+				if (currentlength == 0 || currentlength + getStringLength(g, words[j]) < boxwidth) {
+					textlines.set(iterator, textlines.get(iterator) + words[j] + " ");
+					currentlength += getStringLength(g, words[j] + " ");
+				} else {
+					textlines.add(words[j]);
+					++iterator;
+					currentlength = getStringLength(g, words[j]);
+				}
+			++iterator;
+		}
+		return textlines;
+	}
+
+	private int getStringLength(Graphics2D g, String s) {
+		return g.getFontMetrics(g.getFont()).stringWidth(s);
 	}
 }

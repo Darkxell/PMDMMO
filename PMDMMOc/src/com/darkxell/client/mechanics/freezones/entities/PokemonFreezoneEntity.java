@@ -19,7 +19,7 @@ public class PokemonFreezoneEntity extends FreezoneEntity {
 
 	@Override
 	public void onInteract() {
-		Launcher.stateManager.setState(new FreezoneDialogState(),0);
+		Launcher.stateManager.setState(new FreezoneDialogState("Hey there!\n This is a debug string to try to know if the dialog boxes are working!"),0);
 	}
 
 	@Override

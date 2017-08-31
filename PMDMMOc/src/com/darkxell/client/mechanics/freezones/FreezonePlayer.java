@@ -145,7 +145,7 @@ public class FreezonePlayer {
 		ismovingLEFT = false;
 	}
 
-	public static final double MOVESPEED = 0.17;
+	public static final double MOVESPEED = 0.19;
 	private boolean ismovingUP = false;
 	private boolean ismovingRIGHT = false;
 	private boolean ismovingDOWN = false;
