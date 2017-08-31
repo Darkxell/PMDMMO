@@ -85,6 +85,12 @@ public class Tile
 		return this.pokemon;
 	}
 
+	/** @return The coordinates of this Tile. */
+	public Point location()
+	{
+		return new Point(this.x, this.y);
+	}
+
 	/** Called when an adjacent tile has its type changed.
 	 * 
 	 * @param direction - The direction of the Tile. See {@link GameUtil#NORTH}. */

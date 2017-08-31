@@ -29,8 +29,9 @@ public class DungeonState extends AbstractState
 	}
 
 	ActionSelectionState actionSelectionState;
+	Point camera;
 	/** The current substate. */
-	DungeonSubState currentSubstate;
+	private DungeonSubState currentSubstate;
 	boolean diagonal;
 	public final Floor floor;
 	final FloorRenderer floorRenderer;
@@ -44,6 +45,7 @@ public class DungeonState extends AbstractState
 		Point p = this.floor.getTeamSpawn();
 		this.floor.tileAt(p.x, p.y).setPokemon(this.player);
 
+		this.camera = new Point(this.player.tile.x * AbstractDungeonTileset.TILE_SIZE, this.player.tile.y * AbstractDungeonTileset.TILE_SIZE);
 		this.currentSubstate = this.actionSelectionState = new ActionSelectionState(this);
 	}
 
@@ -67,7 +69,7 @@ public class DungeonState extends AbstractState
 	@Override
 	public void render(Graphics2D g, int width, int height)
 	{
-		int x = this.player.tile.x * AbstractDungeonTileset.TILE_SIZE - width / 2, y = this.player.tile.y * AbstractDungeonTileset.TILE_SIZE - height / 2;
+		int x = this.camera.x - width / 2, y = this.camera.y - height / 2;
 
 		g.translate(-x, -y);
 
@@ -76,6 +78,13 @@ public class DungeonState extends AbstractState
 		this.currentSubstate.render(g, width, height);
 
 		g.translate(x, y);
+	}
+
+	void setSubstate(DungeonSubState substate)
+	{
+		this.currentSubstate.onEnd();
+		this.currentSubstate = substate;
+		this.currentSubstate.onStart();
 	}
 
 	@Override

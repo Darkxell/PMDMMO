@@ -7,6 +7,10 @@ import com.darkxell.client.ui.Keys;
 public abstract class AbstractState
 {
 
+	/** Called when this State is ended. */
+	public void onEnd()
+	{}
+
 	/** Called when the user presses a key.
 	 * 
 	 * @see Keys#KEY_UP */
@@ -33,6 +37,10 @@ public abstract class AbstractState
 	 * 
 	 * @param x, y - The mouse position. */
 	public void onMouseRightClick(int x, int y)
+	{}
+
+	/** Called when this State is started. */
+	public void onStart()
 	{}
 
 	/** Renders the state.

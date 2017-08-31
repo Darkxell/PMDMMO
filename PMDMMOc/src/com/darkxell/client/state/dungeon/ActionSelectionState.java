@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import com.darkxell.client.resources.Res;
 import com.darkxell.client.resources.images.AbstractDungeonTileset;
 import com.darkxell.client.state.dungeon.DungeonState.DungeonSubState;
+import com.darkxell.client.state.dungeon.PokemonTravelState.Travel;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.common.util.GameUtil;
 
@@ -21,29 +22,7 @@ public class ActionSelectionState extends DungeonSubState
 
 	@Override
 	public void onKeyPressed(short key)
-	{
-		// TODO move this to update() when MovementState is done
-		if (this.parent.diagonal)
-		{
-			if (key == Keys.KEY_UP && Keys.isPressed(Keys.KEY_RIGHT)) this.parent.player.tryMoveTo(GameUtil.NORTHEAST);
-			if (Keys.isPressed(Keys.KEY_UP) && key == Keys.KEY_RIGHT) this.parent.player.tryMoveTo(GameUtil.NORTHEAST);
-
-			if (key == Keys.KEY_DOWN && Keys.isPressed(Keys.KEY_RIGHT)) this.parent.player.tryMoveTo(GameUtil.SOUTHEAST);
-			if (Keys.isPressed(Keys.KEY_DOWN) && key == Keys.KEY_RIGHT) this.parent.player.tryMoveTo(GameUtil.SOUTHEAST);
-
-			if (key == Keys.KEY_DOWN && Keys.isPressed(Keys.KEY_LEFT)) this.parent.player.tryMoveTo(GameUtil.SOUTHWEST);
-			if (Keys.isPressed(Keys.KEY_DOWN) && key == Keys.KEY_LEFT) this.parent.player.tryMoveTo(GameUtil.SOUTHWEST);
-
-			if (key == Keys.KEY_UP && Keys.isPressed(Keys.KEY_LEFT)) this.parent.player.tryMoveTo(GameUtil.NORTHWEST);
-			if (Keys.isPressed(Keys.KEY_UP) && key == Keys.KEY_LEFT) this.parent.player.tryMoveTo(GameUtil.NORTHWEST);
-		} else
-		{
-			if (key == Keys.KEY_UP) this.parent.player.tryMoveTo(GameUtil.NORTH);
-			if (key == Keys.KEY_DOWN) this.parent.player.tryMoveTo(GameUtil.SOUTH);
-			if (key == Keys.KEY_LEFT) this.parent.player.tryMoveTo(GameUtil.WEST);
-			if (key == Keys.KEY_RIGHT) this.parent.player.tryMoveTo(GameUtil.EAST);
-		}
-	}
+	{}
 
 	@Override
 	public void onKeyReleased(short key)
@@ -52,7 +31,6 @@ public class ActionSelectionState extends DungeonSubState
 	@Override
 	public void render(Graphics2D g, int width, int height)
 	{
-
 		if (this.parent.diagonal) g.drawImage(arrows, this.parent.player.tile.x * AbstractDungeonTileset.TILE_SIZE - arrows.getWidth() / 2
 				+ AbstractDungeonTileset.TILE_SIZE / 2, this.parent.player.tile.y * AbstractDungeonTileset.TILE_SIZE - arrows.getHeight() / 2
 				+ AbstractDungeonTileset.TILE_SIZE / 2, null);
@@ -60,6 +38,24 @@ public class ActionSelectionState extends DungeonSubState
 
 	@Override
 	public void update()
-	{}
+	{
+		short direction = -1;
+
+		if (Keys.isPressed(Keys.KEY_UP) && Keys.isPressed(Keys.KEY_RIGHT) && !Keys.isPressed(Keys.KEY_DOWN) && !Keys.isPressed(Keys.KEY_LEFT)) direction = GameUtil.NORTHEAST;
+		else if (Keys.isPressed(Keys.KEY_DOWN) && Keys.isPressed(Keys.KEY_RIGHT) && !Keys.isPressed(Keys.KEY_UP) && !Keys.isPressed(Keys.KEY_LEFT)) direction = GameUtil.SOUTHEAST;
+		else if (Keys.isPressed(Keys.KEY_DOWN) && Keys.isPressed(Keys.KEY_LEFT) && !Keys.isPressed(Keys.KEY_UP) && !Keys.isPressed(Keys.KEY_RIGHT)) direction = GameUtil.SOUTHWEST;
+		else if (Keys.isPressed(Keys.KEY_UP) && Keys.isPressed(Keys.KEY_LEFT) && !Keys.isPressed(Keys.KEY_DOWN) && !Keys.isPressed(Keys.KEY_RIGHT)) direction = GameUtil.NORTHWEST;
+
+		else if (!this.parent.diagonal)
+		{
+			if (Keys.isPressed(Keys.KEY_UP) && !Keys.isPressed(Keys.KEY_LEFT) && !Keys.isPressed(Keys.KEY_DOWN) && !Keys.isPressed(Keys.KEY_RIGHT)) direction = GameUtil.NORTH;
+			else if (Keys.isPressed(Keys.KEY_DOWN) && !Keys.isPressed(Keys.KEY_LEFT) && !Keys.isPressed(Keys.KEY_UP) && !Keys.isPressed(Keys.KEY_RIGHT)) direction = GameUtil.SOUTH;
+			else if (Keys.isPressed(Keys.KEY_LEFT) && !Keys.isPressed(Keys.KEY_UP) && !Keys.isPressed(Keys.KEY_DOWN) && !Keys.isPressed(Keys.KEY_RIGHT)) direction = GameUtil.WEST;
+			else if (Keys.isPressed(Keys.KEY_RIGHT) && !Keys.isPressed(Keys.KEY_LEFT) && !Keys.isPressed(Keys.KEY_DOWN) && !Keys.isPressed(Keys.KEY_UP)) direction = GameUtil.EAST;
+		}
+
+		if (direction == -1) return;
+		if (this.parent.player.tryMoveTo(direction)) this.parent.setSubstate(new PokemonTravelState(this.parent, new Travel(this.parent.player, direction)));
+	}
 
 }

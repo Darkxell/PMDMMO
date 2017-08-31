@@ -82,15 +82,17 @@ public class PokemonD
 	}
 
 	/** Called when this Pokémon tries to move in the input direction. */
-	public void tryMoveTo(short direction)
+	public boolean tryMoveTo(short direction)
 	{
+		boolean success = false;
 		if (this.tile != null)
 		{
 			Tile t = this.tile.adjacentTile(direction);
-			if (t.canMoveTo(this, direction)) t.setPokemon(this);
+			if (t.canMoveTo(this, direction)) success = true;
 		}
 		this.facing = direction;
 		this.stateChanged = true;
+		return success;
 	}
 
 }
