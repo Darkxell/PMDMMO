@@ -2,8 +2,10 @@ package com.darkxell.client.mechanics.freezones.entities;
 
 import java.awt.Graphics2D;
 
+import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.mechanics.freezones.FreezoneEntity;
 import com.darkxell.client.resources.images.PokemonSprite;
+import com.darkxell.client.state.FreezoneDialogState;
 
 public class PokemonFreezoneEntity extends FreezoneEntity {
 
@@ -17,7 +19,7 @@ public class PokemonFreezoneEntity extends FreezoneEntity {
 
 	@Override
 	public void onInteract() {
-		// TODO : Generate text!
+		Launcher.stateManager.setState(new FreezoneDialogState(),0);
 	}
 
 	@Override

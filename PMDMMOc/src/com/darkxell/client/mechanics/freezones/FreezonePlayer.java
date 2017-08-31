@@ -93,6 +93,10 @@ public class FreezonePlayer {
 			playersprite.setFacingDirection(getFacingFromMoveDirections());
 			playersprite.setState(PokemonSprite.STATE_MOVE);
 			break;
+		case Keys.KEY_ATTACK:
+			if(canInteract())
+				getInteractionTarget().onInteract();
+			break;
 		}
 	}
 
@@ -127,6 +131,18 @@ public class FreezonePlayer {
 				playersprite.setFacingDirection(getFacingFromMoveDirections());
 			break;
 		}
+	}
+	
+	public void setState(byte state){
+		playersprite.setState(state);
+	}
+	
+	/**Force the player from stopping it's movement.*/
+	public void forceStop(){
+		ismovingUP = false;
+		ismovingRIGHT = false;
+		ismovingDOWN = false;
+		ismovingLEFT = false;
 	}
 
 	public static final double MOVESPEED = 0.17;
@@ -199,12 +215,22 @@ public class FreezonePlayer {
 	 * position.
 	 */
 	public boolean canInteract() {
-		for (int i = 0; i < this.map.entities.size(); i++) {
+		for (int i = 0; i < this.map.entities.size(); ++i) {
 			FreezoneEntity et = this.map.entities.get(i);
-			if (et.canInteract && et.getHitbox(et.posX, et.posY).intersects(this.getHitboxAt(this.x, this.y)))
+			if (et.canInteract && et.getHitbox(et.posX, et.posY).intersects(this.getInteractionBox()))
 				return true;
 		}
 		return false;
+	}
+
+	/** Returns the first entity found the player can interact with. */
+	public FreezoneEntity getInteractionTarget() {
+		for (int i = 0; i < this.map.entities.size(); i++) {
+			FreezoneEntity et = this.map.entities.get(i);
+			if (et.canInteract && et.getHitbox(et.posX, et.posY).intersects(this.getInteractionBox()))
+				return et;
+		}
+		return null;
 	}
 
 }

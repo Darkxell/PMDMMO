@@ -16,6 +16,7 @@ public class Res {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		System.out.println("Loaded resource from hard memory : "+ path);
 		return img;
 	}
 
