@@ -2,9 +2,11 @@ package com.darkxell.client.state.dungeon;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.geom.Point2D;
 
+import com.darkxell.client.renderers.PokemonRenderer;
 import com.darkxell.client.resources.images.AbstractDungeonTileset;
-import com.darkxell.client.resources.images.tilesets.CommonDungeonTileset;
+import com.darkxell.client.resources.images.PokemonSprite;
 import com.darkxell.client.state.dungeon.DungeonState.DungeonSubState;
 import com.darkxell.common.pokemon.PokemonD;
 
@@ -16,7 +18,7 @@ public class PokemonTravelState extends DungeonSubState
 	public static class Travel
 	{
 
-		Point current;
+		Point2D current;
 		public final short direction;
 		public final Point origin, arrival, distance;
 		public final PokemonD pokemon;
@@ -28,7 +30,7 @@ public class PokemonTravelState extends DungeonSubState
 			this.origin = this.pokemon.tile.location();
 			this.arrival = this.pokemon.tile.adjacentTile(direction).location();
 			this.distance = new Point(this.arrival.x - this.origin.x, this.arrival.y - this.origin.y);
-			this.current = new Point(this.origin.x * AbstractDungeonTileset.TILE_SIZE, this.origin.y * AbstractDungeonTileset.TILE_SIZE);
+			this.current = new Point2D.Float(this.origin.x, this.origin.y);
 		}
 	}
 
@@ -46,10 +48,7 @@ public class PokemonTravelState extends DungeonSubState
 
 	@Override
 	public void onEnd()
-	{
-		for (Travel travel : this.travels)
-			travel.pokemon.tile.adjacentTile(travel.direction).setPokemon(travel.pokemon);
-	}
+	{}
 
 	@Override
 	public void onKeyPressed(short key)
@@ -63,14 +62,18 @@ public class PokemonTravelState extends DungeonSubState
 	public void onStart()
 	{
 		for (Travel travel : this.travels)
+		{
+			PokemonSprite sprite = PokemonRenderer.instance.register(travel.pokemon);
+			if (sprite.getState() != PokemonSprite.STATE_MOVE) sprite.setState(PokemonSprite.STATE_MOVE);
 			travel.pokemon.tile.setPokemon(null);
+		}
 	}
 
 	@Override
 	public void render(Graphics2D g, int width, int height)
 	{
 		for (Travel travel : this.travels)
-			g.drawImage(CommonDungeonTileset.INSTANCE.shop(), travel.current.x, travel.current.y, null);
+			PokemonRenderer.instance.draw(g, travel.pokemon, travel.current.getX(), travel.current.getY());
 	}
 
 	@Override
@@ -80,15 +83,25 @@ public class PokemonTravelState extends DungeonSubState
 		float completion = this.tick * 1f / DURATION;
 		for (Travel travel : this.travels)
 		{
-			travel.current = new Point((int) ((travel.origin.x + travel.distance.x * completion) * AbstractDungeonTileset.TILE_SIZE),
-					(int) ((travel.origin.y + travel.distance.y * completion) * AbstractDungeonTileset.TILE_SIZE));
+			travel.current = new Point2D.Float(travel.origin.x + travel.distance.x * completion, travel.origin.y + travel.distance.y * completion);
 			if (travel.pokemon == this.parent.player)
 			{
-				this.parent.camera.x = travel.current.x;
-				this.parent.camera.y = travel.current.y;
+				this.parent.camera.x = (int) (travel.current.getX() * AbstractDungeonTileset.TILE_SIZE);
+				this.parent.camera.y = (int) (travel.current.getY() * AbstractDungeonTileset.TILE_SIZE);
 			}
 		}
 
-		if (this.tick >= DURATION) this.parent.setSubstate(this.parent.actionSelectionState);
+		if (this.tick >= DURATION)
+		{
+			for (Travel travel : this.travels)
+				travel.pokemon.tile.adjacentTile(travel.direction).setPokemon(travel.pokemon);
+
+			if (!this.parent.actionSelectionState.checkMovement())
+			{
+				for (Travel travel : this.travels)
+					PokemonRenderer.instance.getSprite(travel.pokemon).setState(PokemonSprite.STATE_IDDLE);
+				this.parent.setSubstate(this.parent.actionSelectionState);
+			}
+		}
 	}
 }

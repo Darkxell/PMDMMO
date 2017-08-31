@@ -5,6 +5,7 @@ import java.awt.Point;
 import java.util.Random;
 
 import com.darkxell.client.renderers.FloorRenderer;
+import com.darkxell.client.renderers.PokemonRenderer;
 import com.darkxell.client.resources.images.AbstractDungeonTileset;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.ui.Keys;
@@ -90,7 +91,7 @@ public class DungeonState extends AbstractState
 	@Override
 	public void update()
 	{
-		this.floorRenderer.update();
+		PokemonRenderer.instance.update();
 		this.currentSubstate.update();
 	}
 
