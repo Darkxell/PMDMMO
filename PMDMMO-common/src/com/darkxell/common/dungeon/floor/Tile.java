@@ -1,6 +1,10 @@
 package com.darkxell.common.dungeon.floor;
 
+import static com.darkxell.common.dungeon.floor.TileType.*;
+
 import java.awt.Point;
+
+import javafx.util.Pair;
 
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.pokemon.PokemonD;
@@ -40,17 +44,28 @@ public class Tile
 		return this.floor.tileAt(p.x, p.y);
 	}
 
+	/** @param direction - The direction of the movement.
+	 * @return True if the input Pokémon can walk on this Tile. */
+	public boolean canMoveTo(PokemonD pokemon, short direction)
+	{
+		if (!this.canWalkOn(pokemon)) return false;
+		if (!GameUtil.isDiagonal(direction)) return true;
+		Pair<Short, Short> corners = GameUtil.splitDiagonal(direction);
+		TileType t1 = pokemon.tile.adjacentTile(corners.getKey()).type();
+		TileType t2 = pokemon.tile.adjacentTile(corners.getValue()).type();
+		return t1 != WALL && t1 != WALL_END && t2 != WALL && t2 != WALL_END;
+	}
+
 	/** @return True if the input Pokémon can walk on this Tile. */
 	public boolean canWalkOn(PokemonD pokemon)
 	{
 		// todo: test if ally
 		if (this.getPokemon() != null) return false;
-		if (pokemon.pokemon.species.isType(PokemonType.GHOST)) return this.type != TileType.WALL_END;
-		if (pokemon.pokemon.species.isType(PokemonType.WATER) && this.type == TileType.WATER) return true;
-		if (pokemon.pokemon.species.isType(PokemonType.FIRE) && this.type == TileType.LAVA) return true;
-		if (pokemon.pokemon.species.isType(PokemonType.FLYING) && this.type == TileType.AIR) return true;
-		return this.type == TileType.GROUND || this.type == TileType.STAIR || this.type == TileType.WONDER_TILE || this.type == TileType.TRAP
-				|| this.type == TileType.WARP_ZONE;
+		if (pokemon.pokemon.species.isType(PokemonType.GHOST)) return this.type != WALL_END;
+		if (pokemon.pokemon.species.isType(PokemonType.WATER) && this.type == WATER) return true;
+		if (pokemon.pokemon.species.isType(PokemonType.FIRE) && this.type == LAVA) return true;
+		if (pokemon.pokemon.species.isType(PokemonType.FLYING) && this.type == AIR) return true;
+		return this.type == TileType.GROUND || this.type == STAIR || this.type == WONDER_TILE || this.type == TRAP || this.type == WARP_ZONE;
 	}
 
 	/** @return The Item on this Tile. null if no Item. */

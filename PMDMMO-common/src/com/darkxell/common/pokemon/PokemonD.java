@@ -87,7 +87,7 @@ public class PokemonD
 		if (this.tile != null)
 		{
 			Tile t = this.tile.adjacentTile(direction);
-			if (t.canWalkOn(this)) t.setPokemon(this);
+			if (t.canMoveTo(this, direction)) t.setPokemon(this);
 		}
 		this.facing = direction;
 		this.stateChanged = true;

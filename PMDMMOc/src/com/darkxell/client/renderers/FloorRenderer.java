@@ -47,7 +47,6 @@ public class FloorRenderer
 	public void drawFloor(Graphics2D g, int xPos, int yPos, int width, int height)
 	{
 		int xStart = xPos / TILE_SIZE, yStart = yPos / TILE_SIZE;
-		g.translate(-xPos, -yPos);
 
 		for (int x = xStart; x < Floor.ALL_WIDTH && x <= xStart + width / TILE_SIZE + 1; ++x)
 			for (int y = yStart; y < Floor.ALL_HEIGHT && y <= yStart + height / TILE_SIZE + 1; ++y)
@@ -59,8 +58,6 @@ public class FloorRenderer
 				Tile t = this.floor.tileAt(x, y);
 				if (t.getPokemon() != null) this.drawPokemon(g, t.getPokemon(), x, y);
 			}
-
-		g.translate(xPos, yPos);
 	}
 
 	/** Renders a Pokémon. */
