@@ -1,6 +1,5 @@
 package com.darkxell.client.launchable;
 
-import com.darkxell.client.state.FreezoneExploreState;
 import com.darkxell.client.state.StateManager;
 import com.darkxell.client.state.dungeon.DungeonState;
 import com.darkxell.client.ui.Frame;
