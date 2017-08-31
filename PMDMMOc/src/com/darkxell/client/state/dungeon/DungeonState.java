@@ -5,12 +5,12 @@ import java.awt.Point;
 import java.util.Random;
 
 import com.darkxell.client.renderers.FloorRenderer;
-import com.darkxell.client.renderers.PokemonRenderer;
+import com.darkxell.client.renderers.DungeonPokemonRenderer;
 import com.darkxell.client.resources.images.AbstractDungeonTileset;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.pokemon.PokemonD;
+import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.PokemonRegistry;
 
 /** The main state for Dungeon exploration. */
@@ -33,16 +33,18 @@ public class DungeonState extends AbstractState
 	Point camera;
 	/** The current substate. */
 	private DungeonSubState currentSubstate;
+	/** The delay before using the new substate. */
+	private int delay = 0;
 	boolean diagonal;
 	public final Floor floor;
 	final FloorRenderer floorRenderer;
-	public final PokemonD player;
+	public final DungeonPokemon player;
 
 	public DungeonState(Floor floor)
 	{
 		this.floor = floor;
 		this.floorRenderer = new FloorRenderer(this.floor);
-		this.player = new PokemonD(PokemonRegistry.find(1).generate(new Random(), 10));
+		this.player = new DungeonPokemon(PokemonRegistry.find(1).generate(new Random(), 10));
 		Point p = this.floor.getTeamSpawn();
 		this.floor.tileAt(p.x, p.y).setPokemon(this.player);
 
@@ -76,23 +78,36 @@ public class DungeonState extends AbstractState
 
 		this.floorRenderer.drawFloor(g, x, y, width, height);
 
-		this.currentSubstate.render(g, width, height);
+		if (this.delay == 0) this.currentSubstate.render(g, width, height);
 
 		g.translate(x, y);
 	}
 
 	void setSubstate(DungeonSubState substate)
 	{
+		this.setSubstate(substate, 0);
+	}
+
+	/** @param substate - The new substate to use.
+	 * @param delay - The delay before using that substate. */
+	void setSubstate(DungeonSubState substate, int delay)
+	{
 		this.currentSubstate.onEnd();
 		this.currentSubstate = substate;
 		this.currentSubstate.onStart();
+		this.delay = delay;
 	}
 
 	@Override
 	public void update()
 	{
-		PokemonRenderer.instance.update();
-		this.currentSubstate.update();
+		DungeonPokemonRenderer.instance.update();
+		if (this.delay > 1) --this.delay;
+		else if (this.delay == 1)
+		{
+			this.currentSubstate.onStart();
+			--this.delay;
+		} else this.currentSubstate.update();
 	}
 
 }

@@ -4,11 +4,11 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.geom.Point2D;
 
-import com.darkxell.client.renderers.PokemonRenderer;
+import com.darkxell.client.renderers.DungeonPokemonRenderer;
 import com.darkxell.client.resources.images.AbstractDungeonTileset;
 import com.darkxell.client.resources.images.PokemonSprite;
 import com.darkxell.client.state.dungeon.DungeonState.DungeonSubState;
-import com.darkxell.common.pokemon.PokemonD;
+import com.darkxell.common.pokemon.DungeonPokemon;
 
 /** Used for Pokémon travel animations. */
 public class PokemonTravelState extends DungeonSubState
@@ -21,9 +21,9 @@ public class PokemonTravelState extends DungeonSubState
 		Point2D current;
 		public final short direction;
 		public final Point origin, arrival, distance;
-		public final PokemonD pokemon;
+		public final DungeonPokemon pokemon;
 
-		public Travel(PokemonD pokemon, short direction)
+		public Travel(DungeonPokemon pokemon, short direction)
 		{
 			this.pokemon = pokemon;
 			this.direction = direction;
@@ -63,7 +63,7 @@ public class PokemonTravelState extends DungeonSubState
 	{
 		for (Travel travel : this.travels)
 		{
-			PokemonSprite sprite = PokemonRenderer.instance.register(travel.pokemon);
+			PokemonSprite sprite = DungeonPokemonRenderer.instance.register(travel.pokemon);
 			if (sprite.getState() != PokemonSprite.STATE_MOVE) sprite.setState(PokemonSprite.STATE_MOVE);
 			travel.pokemon.tile.setPokemon(null);
 		}
@@ -73,7 +73,7 @@ public class PokemonTravelState extends DungeonSubState
 	public void render(Graphics2D g, int width, int height)
 	{
 		for (Travel travel : this.travels)
-			PokemonRenderer.instance.draw(g, travel.pokemon, travel.current.getX(), travel.current.getY());
+			DungeonPokemonRenderer.instance.draw(g, travel.pokemon, travel.current.getX(), travel.current.getY());
 	}
 
 	@Override
@@ -99,7 +99,7 @@ public class PokemonTravelState extends DungeonSubState
 			if (!this.parent.actionSelectionState.checkMovement())
 			{
 				for (Travel travel : this.travels)
-					PokemonRenderer.instance.getSprite(travel.pokemon).setState(PokemonSprite.STATE_IDDLE);
+					DungeonPokemonRenderer.instance.getSprite(travel.pokemon).setState(PokemonSprite.STATE_IDDLE);
 				this.parent.setSubstate(this.parent.actionSelectionState);
 			}
 		}

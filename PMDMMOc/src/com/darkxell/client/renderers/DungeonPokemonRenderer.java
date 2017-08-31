@@ -7,14 +7,14 @@ import java.util.HashMap;
 
 import com.darkxell.client.resources.images.PokemonSprite;
 import com.darkxell.client.resources.images.PokemonSpritesets;
-import com.darkxell.common.pokemon.PokemonD;
+import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.GameUtil;
 
 /** Renders Dungeon Pokémon. */
-public class PokemonRenderer
+public class DungeonPokemonRenderer
 {
 
-	public static final PokemonRenderer instance = new PokemonRenderer();
+	public static final DungeonPokemonRenderer instance = new DungeonPokemonRenderer();
 
 	private static byte spriteDirection(short facing)
 	{
@@ -23,14 +23,14 @@ public class PokemonRenderer
 		return 0;
 	}
 
-	private HashMap<PokemonD, PokemonSprite> sprites;
+	private HashMap<DungeonPokemon, PokemonSprite> sprites;
 
-	public PokemonRenderer()
+	public DungeonPokemonRenderer()
 	{
-		this.sprites = new HashMap<PokemonD, PokemonSprite>();
+		this.sprites = new HashMap<DungeonPokemon, PokemonSprite>();
 	}
 
-	public void draw(Graphics2D g, PokemonD pokemon, double x, double y)
+	public void draw(Graphics2D g, DungeonPokemon pokemon, double x, double y)
 	{
 		if (!this.sprites.containsKey(pokemon)) this.register(pokemon);
 
@@ -46,20 +46,20 @@ public class PokemonRenderer
 	}
 
 	/** @return The Sprite of the input Pokémon. */
-	public PokemonSprite getSprite(PokemonD pokemon)
+	public PokemonSprite getSprite(DungeonPokemon pokemon)
 	{
 		return this.sprites.get(pokemon);
 	}
 
 	/** Creates a Sprite for the input Pokémon. */
-	public PokemonSprite register(PokemonD pokemon)
+	public PokemonSprite register(DungeonPokemon pokemon)
 	{
 		if (!this.sprites.containsKey(pokemon)) this.sprites.put(pokemon, new PokemonSprite(PokemonSpritesets.getSpriteset(pokemon.pokemon.species.id)));
 		return this.getSprite(pokemon);
 	}
 
 	/** Creates the Sprite of the input Pokémon. */
-	public void unregister(PokemonD pokemon)
+	public void unregister(DungeonPokemon pokemon)
 	{
 		this.sprites.remove(pokemon);
 	}

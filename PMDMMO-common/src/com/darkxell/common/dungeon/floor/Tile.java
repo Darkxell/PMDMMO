@@ -7,7 +7,7 @@ import java.awt.Point;
 import javafx.util.Pair;
 
 import com.darkxell.common.item.ItemStack;
-import com.darkxell.common.pokemon.PokemonD;
+import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.util.GameUtil;
 
@@ -23,7 +23,7 @@ public class Tile
 	/** This Tile's neighbors connections. */
 	private short neighbors = 0;
 	/** The Pokémon standing on this Tile. null if no Pokémon. */
-	private PokemonD pokemon;
+	private DungeonPokemon pokemon;
 	/** This Tile's type. */
 	private TileType type;
 	/** This Tile's coordinates. */
@@ -46,7 +46,7 @@ public class Tile
 
 	/** @param direction - The direction of the movement.
 	 * @return True if the input Pokémon can walk on this Tile. */
-	public boolean canMoveTo(PokemonD pokemon, short direction)
+	public boolean canMoveTo(DungeonPokemon pokemon, short direction)
 	{
 		if (!this.canWalkOn(pokemon)) return false;
 		if (!GameUtil.isDiagonal(direction)) return true;
@@ -57,7 +57,7 @@ public class Tile
 	}
 
 	/** @return True if the input Pokémon can walk on this Tile. */
-	public boolean canWalkOn(PokemonD pokemon)
+	public boolean canWalkOn(DungeonPokemon pokemon)
 	{
 		// todo: test if ally
 		if (this.getPokemon() != null) return false;
@@ -80,7 +80,7 @@ public class Tile
 	}
 
 	/** @return The Pokémon standing on this Tile. null if no Pokémon. */
-	public PokemonD getPokemon()
+	public DungeonPokemon getPokemon()
 	{
 		return this.pokemon;
 	}
@@ -122,7 +122,7 @@ public class Tile
 	}
 
 	/** Sets the Pokémon on this tile. Also changes this Pokémon's previous tile's Pokémon to null. */
-	public void setPokemon(PokemonD pokemon)
+	public void setPokemon(DungeonPokemon pokemon)
 	{
 		if (pokemon == null) this.pokemon = null;
 		else

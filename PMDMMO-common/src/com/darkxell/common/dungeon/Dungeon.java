@@ -36,7 +36,7 @@ public class Dungeon
 	/** Lists the Items found in this Dungeon. */
 	private ArrayList<DungeonItem> monsterHouseItems;
 	/** Lists the Pokémon found in this Dungeon. */
-	private ArrayList<DungeonPokemon> pokemon;
+	private ArrayList<DungeonEncounter> pokemon;
 	/** Number of Items the entering team is allowed to carry. -1 for no limit. */
 	public final int teamItems;
 	/** Level the entering team is set to. -1 for no change. */
@@ -60,9 +60,9 @@ public class Dungeon
 		this.teamMembers = xml.getAttribute("t-members") == null ? 4 : Integer.parseInt(xml.getAttributeValue("t-members"));
 		this.teamMoney = xml.getAttribute("t-money") == null ? -1 : Integer.parseInt(xml.getAttributeValue("t-money"));
 
-		this.pokemon = new ArrayList<DungeonPokemon>();
-		for (Element pokemon : xml.getChild("encounters").getChildren(DungeonPokemon.XML_ROOT))
-			this.pokemon.add(new DungeonPokemon(pokemon));
+		this.pokemon = new ArrayList<DungeonEncounter>();
+		for (Element pokemon : xml.getChild("encounters").getChildren(DungeonEncounter.XML_ROOT))
+			this.pokemon.add(new DungeonEncounter(pokemon));
 
 		this.items = new ArrayList<DungeonItem>();
 		for (Element item : xml.getChild("items").getChildren(DungeonItem.XML_ROOT))
@@ -86,7 +86,7 @@ public class Dungeon
 	}
 
 	public Dungeon(int id, int floorCount, boolean direction, boolean hasMonsterHouses, boolean hasTraps, int teamItems, int teamLevel, int teamMoney,
-			int teamMembers, ArrayList<DungeonPokemon> pokemon, ArrayList<DungeonItem> items, ArrayList<DungeonItem> monsterHouseItems,
+			int teamMembers, ArrayList<DungeonEncounter> pokemon, ArrayList<DungeonItem> items, ArrayList<DungeonItem> monsterHouseItems,
 			ArrayList<DungeonItem> buriedItems, ArrayList<DungeonTrap> traps, HashMap<Integer, FloorSet> layouts)
 	{
 		this.id = id;
@@ -150,7 +150,7 @@ public class Dungeon
 		if (this.teamMoney != -1) root.setAttribute("t-money", Integer.toString(this.teamMoney));
 
 		Element pokemon = new Element("encounters");
-		for (DungeonPokemon poke : this.pokemon)
+		for (DungeonEncounter poke : this.pokemon)
 			pokemon.addContent(poke.toXML());
 		root.addContent(pokemon);
 

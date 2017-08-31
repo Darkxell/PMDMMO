@@ -42,7 +42,7 @@ public class FloorRenderer
 			for (int y = yStart; y < Floor.ALL_HEIGHT && y <= yStart + height / TILE_SIZE + 1; ++y)
 			{
 				Tile t = this.floor.tileAt(x, y);
-				if (t.getPokemon() != null) PokemonRenderer.instance.draw(g, t.getPokemon(), x, y);
+				if (t.getPokemon() != null) DungeonPokemonRenderer.instance.draw(g, t.getPokemon(), x, y);
 			}
 	}
 

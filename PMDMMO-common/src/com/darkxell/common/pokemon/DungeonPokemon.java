@@ -7,7 +7,7 @@ import com.darkxell.common.status.StatusCondition;
 import com.darkxell.common.status.StatusConditionInstance;
 
 /** Represents a Pokémon in a Dungeon. */
-public class PokemonD
+public class DungeonPokemon
 {
 	public static final int DEFAULT_BELLY_SIZE = 100;
 	public static final byte REGULAR_ATTACKS = 0, MOVES = 1, LINKED_MOVE = 2;
@@ -33,7 +33,7 @@ public class PokemonD
 	/** The tile this Pokémon is standing on. */
 	public Tile tile;
 
-	public PokemonD(Pokemon pokemon)
+	public DungeonPokemon(Pokemon pokemon)
 	{
 		this.pokemon = pokemon;
 		this.stats = new DungeonStats(this.pokemon.getStats());
