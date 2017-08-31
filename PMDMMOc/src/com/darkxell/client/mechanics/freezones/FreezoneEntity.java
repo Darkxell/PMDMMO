@@ -29,7 +29,7 @@ public abstract class FreezoneEntity {
 	/**
 	 * Called when the pplayers interact with this entity. Note that this might
 	 * be called even if this entity has the <code>canInteract</code> tag set to
-	 * false.
+	 * false. Note that this method will be called from the KeyEvent thread.
 	 */
 	public abstract void onInteract();
 
