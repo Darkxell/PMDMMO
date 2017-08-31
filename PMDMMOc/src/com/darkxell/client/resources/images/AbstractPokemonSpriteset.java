@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 
 import com.darkxell.client.resources.Res;
 
-public abstract class AbstractPokemonSpriteset {
+public class AbstractPokemonSpriteset {
 
 	private BufferedImage sprites;
 	public final int spriteWidth;

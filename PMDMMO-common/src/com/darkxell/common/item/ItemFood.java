@@ -21,9 +21,9 @@ public class ItemFood extends Item
 		this.belly = xml.getAttribute("belly") == null ? 0 : Integer.parseInt(xml.getAttributeValue("belly"));
 	}
 
-	public ItemFood(int id, int price, int sell, int sprite, int food, int bellyIfFull, int belly)
+	public ItemFood(int id, int price, int sell, int sprite, boolean isStackable, int food, int bellyIfFull, int belly)
 	{
-		super(id, price, sell, sprite);
+		super(id, price, sell, sprite, isStackable);
 		this.food = food;
 		this.bellyIfFull = bellyIfFull;
 		this.belly = belly;

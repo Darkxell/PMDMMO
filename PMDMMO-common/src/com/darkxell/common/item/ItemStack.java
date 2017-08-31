@@ -37,6 +37,7 @@ public class ItemStack
 	public ItemStack setQuantity(int quantity)
 	{
 		this.quantity = quantity;
+		if (this.quantity > 999) this.quantity = 999;
 		return this;
 	}
 

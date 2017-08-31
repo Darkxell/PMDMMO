@@ -2,36 +2,55 @@ package com.darkxell.client.state.dungeon;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.image.BufferedImage;
 import java.util.Random;
 
+import com.darkxell.client.renderers.DungeonPokemonRenderer;
 import com.darkxell.client.renderers.FloorRenderer;
-import com.darkxell.client.resources.Res;
 import com.darkxell.client.resources.images.AbstractDungeonTileset;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.pokemon.PokemonD;
+import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.PokemonRegistry;
-import com.darkxell.common.util.GameUtil;
 
+/** The main state for Dungeon exploration. */
 public class DungeonState extends AbstractState
 {
-	private static final BufferedImage arrows = Res.getBase("resources/tilesets/diagonal-arrow.png");
 
-	private boolean diagonal;
+	/** A substate for Dungeon exploration. */
+	static abstract class DungeonSubState extends AbstractState
+	{
+		public final DungeonState parent;
+
+		public DungeonSubState(DungeonState parent)
+		{
+			this.parent = parent;
+		}
+
+	}
+
+	ActionSelectionState actionSelectionState;
+	Point camera;
+	/** The current substate. */
+	private DungeonSubState currentSubstate;
+	/** The delay before using the new substate. */
+	private int delay = 0;
+	boolean diagonal;
 	public final Floor floor;
-	private final FloorRenderer floorRenderer;
-	private PokemonD player;
-	private int xPos = 185, yPos = 225;
+	final FloorRenderer floorRenderer;
+	public final Player player;
 
 	public DungeonState(Floor floor)
 	{
 		this.floor = floor;
 		this.floorRenderer = new FloorRenderer(this.floor);
-		this.player = new PokemonD(PokemonRegistry.find(1).generate(new Random(), 10));
+		this.player = new Player(0, PokemonRegistry.find(1).generate(new Random(), 10));
 		Point p = this.floor.getTeamSpawn();
-		this.floor.tileAt(p.x, p.y).setPokemon(this.player);
+		this.floor.tileAt(p.x, p.y).setPokemon(this.player.getDungeonPokemon());
+
+		this.camera = new Point(this.player.getDungeonPokemon().tile.x * AbstractDungeonTileset.TILE_SIZE, this.player.getDungeonPokemon().tile.y
+				* AbstractDungeonTileset.TILE_SIZE);
+		this.currentSubstate = this.actionSelectionState = new ActionSelectionState(this);
 	}
 
 	@Override
@@ -39,52 +58,57 @@ public class DungeonState extends AbstractState
 	{
 		if (key == Keys.KEY_DIAGONAL) this.diagonal = true;
 
-		if (this.diagonal)
-		{
-			if (key == Keys.KEY_UP && Keys.isPressed(Keys.KEY_RIGHT)) this.player.tryMoveTo(GameUtil.NORTHEAST);
-			if (Keys.isPressed(Keys.KEY_UP) && key == Keys.KEY_RIGHT) this.player.tryMoveTo(GameUtil.NORTHEAST);
-			
-			if (key == Keys.KEY_DOWN && Keys.isPressed(Keys.KEY_RIGHT)) this.player.tryMoveTo(GameUtil.SOUTHEAST);
-			if (Keys.isPressed(Keys.KEY_DOWN) && key == Keys.KEY_RIGHT) this.player.tryMoveTo(GameUtil.SOUTHEAST);
-			
-			if (key == Keys.KEY_DOWN && Keys.isPressed(Keys.KEY_LEFT)) this.player.tryMoveTo(GameUtil.SOUTHWEST);
-			if (Keys.isPressed(Keys.KEY_DOWN) && key == Keys.KEY_LEFT) this.player.tryMoveTo(GameUtil.SOUTHWEST);
-			
-			if (key == Keys.KEY_UP && Keys.isPressed(Keys.KEY_LEFT)) this.player.tryMoveTo(GameUtil.NORTHWEST);
-			if (Keys.isPressed(Keys.KEY_UP) && key == Keys.KEY_LEFT) this.player.tryMoveTo(GameUtil.NORTHWEST);
-		} else
-		{
-			if (key == Keys.KEY_UP) this.player.tryMoveTo(GameUtil.NORTH);
-			if (key == Keys.KEY_DOWN) this.player.tryMoveTo(GameUtil.SOUTH);
-			if (key == Keys.KEY_LEFT) this.player.tryMoveTo(GameUtil.WEST);
-			if (key == Keys.KEY_RIGHT) this.player.tryMoveTo(GameUtil.EAST);
-		}
+		this.currentSubstate.onKeyPressed(key);
+
 	}
 
 	@Override
 	public void onKeyReleased(short key)
 	{
 		if (key == Keys.KEY_DIAGONAL) this.diagonal = false;
+
+		this.currentSubstate.onKeyReleased(key);
 	}
 
 	@Override
 	public void render(Graphics2D g, int width, int height)
 	{
-		g.translate(-this.xPos, -this.yPos);
+		int x = this.camera.x - width / 2, y = this.camera.y - height / 2;
 
-		this.floorRenderer.drawFloor(g, this.xPos, this.yPos, width, height);
+		g.translate(-x, -y);
 
-		if (this.diagonal) g.drawImage(arrows, this.player.tile.x * AbstractDungeonTileset.TILE_SIZE - arrows.getWidth() / 2 + AbstractDungeonTileset.TILE_SIZE
-				/ 2, this.player.tile.y * AbstractDungeonTileset.TILE_SIZE - arrows.getHeight() / 2 + AbstractDungeonTileset.TILE_SIZE / 2, null);
+		this.floorRenderer.drawFloor(g, x, y, width, height);
 
-		g.translate(this.xPos, this.yPos);
+		if (this.delay == 0) this.currentSubstate.render(g, width, height);
+
+		g.translate(x, y);
+	}
+
+	void setSubstate(DungeonSubState substate)
+	{
+		this.setSubstate(substate, 0);
+	}
+
+	/** @param substate - The new substate to use.
+	 * @param delay - The delay before using that substate. */
+	void setSubstate(DungeonSubState substate, int delay)
+	{
+		this.currentSubstate.onEnd();
+		this.currentSubstate = substate;
+		this.currentSubstate.onStart();
+		this.delay = delay;
 	}
 
 	@Override
 	public void update()
 	{
-		this.floorRenderer.update();
-		/* if (Keys.isPressed(Keys.KEY_UP)) yPos -= 5; if (Keys.isPressed(Keys.KEY_DOWN)) yPos += 5; if (Keys.isPressed(Keys.KEY_LEFT)) xPos -= 5; if (Keys.isPressed(Keys.KEY_RIGHT)) xPos += 5; */
+		DungeonPokemonRenderer.instance.update();
+		if (this.delay > 1) --this.delay;
+		else if (this.delay == 1)
+		{
+			this.currentSubstate.onStart();
+			--this.delay;
+		} else this.currentSubstate.update();
 	}
 
 }

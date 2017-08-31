@@ -11,9 +11,9 @@ public class ItemLinkBox extends Item
 		super(xml);
 	}
 
-	public ItemLinkBox(int id, int price, int sell, int sprite)
+	public ItemLinkBox(int id, int price, int sell, int sprite, boolean isStackable)
 	{
-		super(id, price, sell, sprite);
+		super(id, price, sell, sprite, isStackable);
 	}
 
 }

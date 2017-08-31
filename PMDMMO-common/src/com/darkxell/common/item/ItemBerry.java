@@ -12,9 +12,9 @@ public class ItemBerry extends ItemFood
 		super(xml);
 	}
 
-	public ItemBerry(int id, int price, int sell, int sprite, int food, int bellyIfFull, int belly)
+	public ItemBerry(int id, int price, int sell, int sprite, boolean isStackable, int food, int bellyIfFull, int belly)
 	{
-		super(id, price, sell, sprite, food, bellyIfFull, belly);
+		super(id, price, sell, sprite, isStackable, food, bellyIfFull, belly);
 	}
 
 }
