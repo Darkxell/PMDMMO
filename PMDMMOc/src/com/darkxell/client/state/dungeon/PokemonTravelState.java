@@ -84,7 +84,7 @@ public class PokemonTravelState extends DungeonSubState
 		for (Travel travel : this.travels)
 		{
 			travel.current = new Point2D.Float(travel.origin.x + travel.distance.x * completion, travel.origin.y + travel.distance.y * completion);
-			if (travel.pokemon == this.parent.player)
+			if (travel.pokemon.player == this.parent.player)
 			{
 				this.parent.camera.x = (int) (travel.current.getX() * AbstractDungeonTileset.TILE_SIZE);
 				this.parent.camera.y = (int) (travel.current.getY() * AbstractDungeonTileset.TILE_SIZE);

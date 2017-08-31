@@ -37,9 +37,9 @@ public class ActionSelectionState extends DungeonSubState
 			else if (Keys.isPressed(Keys.KEY_RIGHT) && !Keys.isPressed(Keys.KEY_LEFT) && !Keys.isPressed(Keys.KEY_DOWN) && !Keys.isPressed(Keys.KEY_UP)) direction = GameUtil.EAST;
 		}
 
-		if (direction != -1 && this.parent.player.tryMoveTo(direction))
+		if (direction != -1 && this.parent.player.getDungeonPokemon().tryMoveTo(direction))
 		{
-			this.parent.setSubstate(new PokemonTravelState(this.parent, new Travel(this.parent.player, direction)));
+			this.parent.setSubstate(new PokemonTravelState(this.parent, new Travel(this.parent.player.getDungeonPokemon(), direction)));
 			return true;
 		}
 		return false;
@@ -56,9 +56,9 @@ public class ActionSelectionState extends DungeonSubState
 	@Override
 	public void render(Graphics2D g, int width, int height)
 	{
-		if (this.parent.diagonal) g.drawImage(arrows, this.parent.player.tile.x * AbstractDungeonTileset.TILE_SIZE - arrows.getWidth() / 2
-				+ AbstractDungeonTileset.TILE_SIZE / 2, this.parent.player.tile.y * AbstractDungeonTileset.TILE_SIZE - arrows.getHeight() / 2
-				+ AbstractDungeonTileset.TILE_SIZE / 2, null);
+		if (this.parent.diagonal) g.drawImage(arrows, this.parent.player.getDungeonPokemon().tile.x * AbstractDungeonTileset.TILE_SIZE - arrows.getWidth() / 2
+				+ AbstractDungeonTileset.TILE_SIZE / 2, this.parent.player.getDungeonPokemon().tile.y * AbstractDungeonTileset.TILE_SIZE - arrows.getHeight()
+				/ 2 + AbstractDungeonTileset.TILE_SIZE / 2, null);
 	}
 
 	@Override
