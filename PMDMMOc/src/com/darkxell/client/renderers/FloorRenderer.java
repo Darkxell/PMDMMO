@@ -4,11 +4,11 @@ import static com.darkxell.client.resources.images.AbstractDungeonTileset.TILE_S
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.util.HashMap;
 
 import com.darkxell.client.resources.images.AbstractDungeonTileset;
 import com.darkxell.client.resources.images.PokemonSprite;
-import com.darkxell.client.resources.images.pokemons.PokemonSpriteset1;
-import com.darkxell.client.resources.images.pokemons.PokemonSpriteset265;
+import com.darkxell.client.resources.images.PokemonSpritesets;
 import com.darkxell.client.resources.images.tilesets.CommonDungeonTileset;
 import com.darkxell.client.resources.images.tilesets.FloorDungeonTileset;
 import com.darkxell.client.resources.images.tilesets.ItemsSpriteset;
@@ -21,8 +21,6 @@ import com.darkxell.common.util.GameUtil;
 public class FloorRenderer
 {
 	private static final int ITEM_POS = (AbstractDungeonTileset.TILE_SIZE - ItemsSpriteset.ITEM_SIZE) / 2;
-	private static final PokemonSprite P = new PokemonSprite(PokemonSpriteset265.instance);
-	private static final PokemonSprite PS = new PokemonSprite(PokemonSpriteset1.instance);
 
 	private static byte spriteDirection(short facing)
 	{
@@ -32,6 +30,8 @@ public class FloorRenderer
 	}
 
 	public final Floor floor;
+	/** Holds sprites for each Pokémon. */
+	private final HashMap<PokemonD, PokemonSprite> sprites = new HashMap<PokemonD, PokemonSprite>();
 	public final FloorDungeonTileset tileset;
 
 	public FloorRenderer(Floor floor)
@@ -63,13 +63,16 @@ public class FloorRenderer
 	/** Renders a Pokémon. */
 	private void drawPokemon(Graphics2D g, PokemonD pokemon, int x, int y)
 	{
-		PokemonSprite s = pokemon.pokemon.species.id == 1 ? PS : P;
+		if (!this.sprites.containsKey(pokemon)) this.sprites.put(pokemon, new PokemonSprite(PokemonSpritesets.getSpriteset(pokemon.pokemon.species.id)));
+
+		PokemonSprite sprite = this.sprites.get(pokemon);
 		if (pokemon.stateChanged)
 		{
-			s.setFacingDirection(spriteDirection(pokemon.facing()));
+			sprite.setFacingDirection(spriteDirection(pokemon.facing()));
 			pokemon.stateChanged = false;
 		}
-		g.drawImage(s.getCurrentSprite(), x * TILE_SIZE + TILE_SIZE / 2 - s.pointer.gravityX, y * TILE_SIZE + TILE_SIZE / 2 - s.pointer.gravityY, null);
+		g.drawImage(sprite.getCurrentSprite(), x * TILE_SIZE + TILE_SIZE / 2 - sprite.pointer.gravityX,
+				y * TILE_SIZE + TILE_SIZE / 2 - sprite.pointer.gravityY, null);
 	}
 
 	/** Renders a Tile. */
@@ -92,8 +95,8 @@ public class FloorRenderer
 
 	public void update()
 	{
-		P.update();
-		PS.update();
+		for (PokemonSprite sprite : this.sprites.values())
+			sprite.update();
 	}
 
 }
