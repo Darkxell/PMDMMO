@@ -4,6 +4,7 @@ import java.awt.Point;
 
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.pokemon.PokemonD;
+import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.util.GameUtil;
 
 /** Represents a single tile in a Floor. */
@@ -37,6 +38,19 @@ public class Tile
 	{
 		Point p = GameUtil.moveTo(this.x, this.y, direction);
 		return this.floor.tileAt(p.x, p.y);
+	}
+
+	/** @return True if the input Pokémon can walk on this Tile. */
+	public boolean canWalkOn(PokemonD pokemon)
+	{
+		// todo: test if ally
+		if (this.getPokemon() != null) return false;
+		if (pokemon.pokemon.species.isType(PokemonType.GHOST)) return this.type != TileType.WALL_END;
+		if (pokemon.pokemon.species.isType(PokemonType.WATER) && this.type == TileType.WATER) return true;
+		if (pokemon.pokemon.species.isType(PokemonType.FIRE) && this.type == TileType.LAVA) return true;
+		if (pokemon.pokemon.species.isType(PokemonType.FLYING) && this.type == TileType.AIR) return true;
+		return this.type == TileType.GROUND || this.type == TileType.STAIR || this.type == TileType.WONDER_TILE || this.type == TileType.TRAP
+				|| this.type == TileType.WARP_ZONE;
 	}
 
 	/** @return The Item on this Tile. null if no Item. */
@@ -86,9 +100,16 @@ public class Tile
 		this.item = item;
 	}
 
+	/** Sets the Pokémon on this tile. Also changes this Pokémon's previous tile's Pokémon to null. */
 	public void setPokemon(PokemonD pokemon)
 	{
-		this.pokemon = pokemon;
+		if (pokemon == null) this.pokemon = null;
+		else
+		{
+			if (pokemon.tile != null) pokemon.tile.setPokemon(null);
+			this.pokemon = pokemon;
+			this.pokemon.tile = this;
+		}
 	}
 
 	/** Sets this Tile's type. */

@@ -2,6 +2,7 @@ package com.darkxell.common.pokemon;
 
 import java.util.ArrayList;
 
+import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.status.StatusCondition;
 import com.darkxell.common.status.StatusConditionInstance;
 
@@ -25,6 +26,8 @@ public class PokemonD
 	public final DungeonStats stats;
 	/** This Pokémon's active Status Conditions. */
 	private final ArrayList<StatusConditionInstance> statusConditions;
+	/** The tile this Pokémon is standing on. */
+	public Tile tile;
 
 	public PokemonD(Pokemon pokemon)
 	{
@@ -66,6 +69,16 @@ public class PokemonD
 		for (StatusConditionInstance c : this.statusConditions)
 			if (c.condition == condition) return true;
 		return false;
+	}
+
+	/** Called when this Pokémon tries to move in the input direction. */
+	public void tryMoveTo(short direction)
+	{
+		if (this.tile != null)
+		{
+			Tile t = this.tile.adjacentTile(direction);
+			if (t.canWalkOn(this)) t.setPokemon(this);
+		}
 	}
 
 }

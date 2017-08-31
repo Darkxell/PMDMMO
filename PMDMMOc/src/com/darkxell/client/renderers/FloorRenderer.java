@@ -30,6 +30,8 @@ public class FloorRenderer
 	{
 		this.floor = floor;
 		this.tileset = new FloorDungeonTileset("resources/tilesets/dungeon-" + floor.dungeon.id + ".png");
+		PS.setState(PokemonSprite.STATE_HURT);
+		PS.setFacingDirection(PokemonSprite.FACING_S);
 	}
 
 	/** Renders the Floor.

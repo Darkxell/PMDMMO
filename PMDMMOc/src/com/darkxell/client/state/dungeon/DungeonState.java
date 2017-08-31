@@ -6,9 +6,11 @@ import java.util.Random;
 
 import com.darkxell.client.renderers.FloorRenderer;
 import com.darkxell.client.state.AbstractState;
+import com.darkxell.client.ui.Keys;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.pokemon.PokemonD;
 import com.darkxell.common.pokemon.PokemonRegistry;
+import com.darkxell.common.util.GameUtil;
 
 public class DungeonState extends AbstractState
 {
@@ -29,7 +31,12 @@ public class DungeonState extends AbstractState
 
 	@Override
 	public void onKeyPressed(short key)
-	{}
+	{
+		if (key == Keys.KEY_UP) this.player.tryMoveTo(GameUtil.NORTH);
+		if (key == Keys.KEY_DOWN) this.player.tryMoveTo(GameUtil.SOUTH);
+		if (key == Keys.KEY_LEFT) this.player.tryMoveTo(GameUtil.WEST);
+		if (key == Keys.KEY_RIGHT) this.player.tryMoveTo(GameUtil.EAST);
+	}
 
 	@Override
 	public void onKeyReleased(short key)

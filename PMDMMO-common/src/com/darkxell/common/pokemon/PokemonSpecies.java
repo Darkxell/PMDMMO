@@ -106,6 +106,12 @@ public class PokemonSpecies
 				this.randomGender(random));
 	}
 
+	/** @return True if one of this Pokémon's type equals the input type. */
+	public boolean isType(PokemonType type)
+	{
+		return this.type1 == type || this.type2 == type;
+	}
+
 	/** @param level - The level of the Pokémon.
 	 * @param learnedMoves - Moves to exclude because they're already learned.
 	 * @return The latest learned move's ID. */
