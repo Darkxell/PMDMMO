@@ -19,6 +19,7 @@ public class FreezoneDialogState extends AbstractState {
 	private String dialog;
 	private int dialogposition = 0;
 	private ArrayList<String> showableDialog = null;
+	private int appearance = 0;
 
 	public FreezoneDialogState(String dialog) {
 		FreezoneMapHolder.currentmap.player.forceStop();
@@ -30,7 +31,10 @@ public class FreezoneDialogState extends AbstractState {
 	public void onKeyPressed(short key) {
 		switch (key) {
 		case Keys.KEY_ATTACK:
-			++dialogposition;
+			dialogposition += 2;
+			appearance = 0;
+			if (showableDialog != null && dialogposition >= showableDialog.size())
+				Launcher.stateManager.setState(new FreezoneExploreState(), 0);
 			break;
 		}
 	}
@@ -103,9 +107,20 @@ public class FreezoneDialogState extends AbstractState {
 			g.drawImage(Hud.textwindow, 20, height - temp_tw_height - 20, temp_tw_width, temp_tw_height, null);
 
 			if (this.showableDialog == null)
-				this.showableDialog = getDialogLines(g, width - 60);
-			g.drawString(showableDialog.get(dialogposition), 30, height - temp_tw_height + 10 + g.getFont().getSize());
-
+				this.showableDialog = getDialogLines(g, width - 80);
+			if (showableDialog.size() > dialogposition) {
+				String sss = showableDialog.get(dialogposition);
+				g.drawString(sss.substring(0, appearance >= sss.length() ? sss.length() - 1 : appearance), 40,
+						height - temp_tw_height - 20 + (temp_tw_height / 3) + (g.getFont().getSize() / 2));
+			}
+			if (showableDialog.size() > dialogposition + 1) {
+				String sss = showableDialog.get(dialogposition);
+				String sst = showableDialog.get(dialogposition + 1);
+				g.drawString(
+						sst.substring(0, appearance - sss.length() < 0 ? 0
+										: appearance - sss.length() >= sst.length() ? sst.length() - 1 : appearance - sss.length()),
+						40, height - temp_tw_height - 20 + (temp_tw_height / 3 * 2) + (g.getFont().getSize() / 2));
+			}
 			if (FreezoneExploreState.debugdisplaymode) {
 				g.setColor(Color.BLACK);
 				g.drawString("UPS: " + Launcher.getUps() + ", FPS: " + Launcher.getFps(), 1, g.getFont().getSize() * 2);
@@ -115,12 +130,17 @@ public class FreezoneDialogState extends AbstractState {
 
 	@Override
 	public void update() {
+		++appearance;
 		if (FreezoneMapHolder.currentmap == null)
 			FreezoneMapHolder.currentmap = new PokemonSquareFreezone();
 		else
 			FreezoneMapHolder.currentmap.update();
 	}
 
+	/**
+	 * Transforms a String into a printable array of strings printable to the
+	 * screen.
+	 */
 	private ArrayList<String> getDialogLines(Graphics2D g, int boxwidth) {
 		ArrayList<String> textlines = new ArrayList<>();
 		int currentlength = 0, iterator = 0;
@@ -134,15 +154,19 @@ public class FreezoneDialogState extends AbstractState {
 					textlines.set(iterator, textlines.get(iterator) + words[j] + " ");
 					currentlength += getStringLength(g, words[j] + " ");
 				} else {
-					textlines.add(words[j]);
+					textlines.add(words[j] + " ");
 					++iterator;
-					currentlength = getStringLength(g, words[j]);
+					currentlength = getStringLength(g, words[j] + " ");
 				}
 			++iterator;
 		}
 		return textlines;
 	}
 
+	/**
+	 * Gets the length of a string in pixels if drawn with the specified
+	 * graphics object.
+	 */
 	private int getStringLength(Graphics2D g, String s) {
 		return g.getFontMetrics(g.getFont()).stringWidth(s);
 	}
