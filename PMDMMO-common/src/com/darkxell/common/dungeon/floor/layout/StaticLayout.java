@@ -99,6 +99,7 @@ public class StaticLayout extends Layout
 	@Override
 	protected void summonPokemon()
 	{
+		if (this.xml.getChild("pokemons") != null) for (Element pokemon : this.xml.getChild("pokemons").getChildren(Pokemon.XML_ROOT))
 			this.tiles[Integer.parseInt(pokemon.getAttributeValue("x")) + this.xStart][Integer.parseInt(pokemon.getAttributeValue("y")) + this.yStart]
 					.setPokemon(new PokemonD(new Pokemon(pokemon)));
 	}

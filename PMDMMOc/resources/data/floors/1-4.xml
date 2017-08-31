@@ -19,5 +19,5 @@
   <pokemons>
     <pokemon id="265" x="5" y="4" level="1" />
   </pokemons>
-  <spawn x="10" y="5" />
+  <spawn x="5" y="10" />
 </floor>

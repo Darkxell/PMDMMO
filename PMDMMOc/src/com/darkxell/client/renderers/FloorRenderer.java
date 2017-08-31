@@ -6,16 +6,22 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import com.darkxell.client.resources.images.AbstractDungeonTileset;
+import com.darkxell.client.resources.images.PokemonSprite;
+import com.darkxell.client.resources.images.pokemons.PokemonSpriteset1;
+import com.darkxell.client.resources.images.pokemons.PokemonSpriteset265;
 import com.darkxell.client.resources.images.tilesets.CommonDungeonTileset;
 import com.darkxell.client.resources.images.tilesets.FloorDungeonTileset;
 import com.darkxell.client.resources.images.tilesets.ItemsSpriteset;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
+import com.darkxell.common.pokemon.PokemonD;
 
 public class FloorRenderer
 {
 	private static final int ITEM_POS = (AbstractDungeonTileset.TILE_SIZE - ItemsSpriteset.ITEM_SIZE) / 2;
+	private static final PokemonSprite P = new PokemonSprite(PokemonSpriteset265.instance);
+	private static final PokemonSprite PS = new PokemonSprite(PokemonSpriteset1.instance);
 
 	public final Floor floor;
 	public final FloorDungeonTileset tileset;
@@ -39,7 +45,21 @@ public class FloorRenderer
 			for (int y = yStart; y < Floor.ALL_HEIGHT && y <= yStart + height / TILE_SIZE + 1; ++y)
 				this.drawTile(g, this.floor.tileAt(x, y));
 
+		for (int x = xStart; x < Floor.ALL_WIDTH && x <= xStart + width / TILE_SIZE + 1; ++x)
+			for (int y = yStart; y < Floor.ALL_HEIGHT && y <= yStart + height / TILE_SIZE + 1; ++y)
+			{
+				Tile t = this.floor.tileAt(x, y);
+				if (t.getPokemon() != null) this.drawPokemon(g, t.getPokemon(), x, y);
+			}
+
 		g.translate(xPos, yPos);
+	}
+
+	/** Renders a Pokémon. */
+	private void drawPokemon(Graphics2D g, PokemonD pokemon, int x, int y)
+	{
+		PokemonSprite s = pokemon.pokemon.species.id == 1 ? PS : P;
+		g.drawImage(s.getCurrentSprite(), x * TILE_SIZE + TILE_SIZE / 2 - s.pointer.gravityX, y * TILE_SIZE + TILE_SIZE / 2 - s.pointer.gravityY, null);
 	}
 
 	/** Renders a Tile. */
@@ -56,5 +76,8 @@ public class FloorRenderer
 		g.drawImage(sprite, tile.x * TILE_SIZE, tile.y * TILE_SIZE, null);
 		if (tile.getItem() != null && tile.type() == TileType.GROUND) g.drawImage(ItemsSpriteset.instance.SPRITES[tile.getItem().item().spriteID], tile.x
 				* TILE_SIZE + ITEM_POS, tile.y * TILE_SIZE + ITEM_POS, null);
+
+		g.drawRect(tile.x * TILE_SIZE, tile.y * TILE_SIZE, (tile.x + 1) * TILE_SIZE, (tile.y + 1) * TILE_SIZE);
 	}
+
 }
