@@ -22,7 +22,7 @@ public class Res {
 				e.printStackTrace();
 			}
 		}
-		
+		System.out.println("Loaded resource from hard memory : "+ path);
 		return img;
 	}
 

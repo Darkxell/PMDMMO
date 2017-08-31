@@ -8,7 +8,7 @@ import org.jdom2.input.SAXBuilder;
 
 import com.darkxell.client.resources.images.AbstractTileset;
 import com.darkxell.client.resources.images.PokemonSprite;
-import com.darkxell.client.resources.images.pokemons.PokemonSpriteset1;
+import com.darkxell.client.resources.images.PokemonSpritesets;
 
 /**
  * A tiled map of a freezone. Freezones are the areas where you can move freely
@@ -58,7 +58,7 @@ public class FreezoneMap {
 			e.printStackTrace();
 		}
 		// TODO: change this
-		this.player = new FreezonePlayer(this, new PokemonSprite(PokemonSpriteset1.instance), 50, 50);
+		this.player = new FreezonePlayer(this, new PokemonSprite(PokemonSpritesets.getSpriteset(1)), 50, 50);
 	}
 
 	public void update() {

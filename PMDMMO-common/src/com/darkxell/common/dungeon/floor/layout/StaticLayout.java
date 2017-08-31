@@ -14,6 +14,8 @@ import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.ItemStack;
+import com.darkxell.common.pokemon.Pokemon;
+import com.darkxell.common.pokemon.PokemonD;
 import com.darkxell.common.util.XMLUtils;
 
 public class StaticLayout extends Layout
@@ -96,6 +98,10 @@ public class StaticLayout extends Layout
 
 	@Override
 	protected void summonPokemon()
-	{}
+	{
+		if (this.xml.getChild("pokemons") != null) for (Element pokemon : this.xml.getChild("pokemons").getChildren(Pokemon.XML_ROOT))
+			this.tiles[Integer.parseInt(pokemon.getAttributeValue("x")) + this.xStart][Integer.parseInt(pokemon.getAttributeValue("y")) + this.yStart]
+					.setPokemon(new PokemonD(new Pokemon(pokemon)));
+	}
 
 }

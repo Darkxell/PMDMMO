@@ -1,5 +1,6 @@
 package com.darkxell.client.launchable;
 
+import com.darkxell.client.resources.images.PokemonSpritesets;
 import com.darkxell.client.state.FreezoneExploreState;
 import com.darkxell.client.state.StateManager;
 import com.darkxell.client.state.dungeon.DungeonState;
@@ -35,6 +36,7 @@ public class Launcher
 		MoveRegistry.loadClient();
 		ItemRegistry.loadClient();
 		DungeonRegistry.loadClient();
+		PokemonSpritesets.loadData();
 		System.out.println("Lang & Data loaded.");
 
 		frame = new Frame();
