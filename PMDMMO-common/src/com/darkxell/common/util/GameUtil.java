@@ -2,6 +2,8 @@ package com.darkxell.common.util;
 
 import java.awt.Point;
 
+import javafx.util.Pair;
+
 /** Contains various constants and methods for the Game. */
 public class GameUtil
 {
@@ -55,6 +57,12 @@ public class GameUtil
 		for (int i = 0; i < directions.length; ++i)
 			if (directions[i] == direction) return i;
 		return 0;
+	}
+
+	/** @return True if the input direction is diagonal. */
+	public static boolean isDiagonal(short direction)
+	{
+		return direction == NORTHEAST || direction == SOUTHEAST || direction == SOUTHWEST || direction == NORTHWEST;
 	}
 
 	/** @return The coordinates given when moving from the input X,Y coordinates along the input direction. */
@@ -123,6 +131,22 @@ public class GameUtil
 		d += 1;
 		if (d > 7) d = 0;
 		return directions[d];
+	}
+
+	/** @return The orthogonal directions forming the input diagonal. */
+	public static Pair<Short, Short> splitDiagonal(short direction)
+	{
+		switch (direction)
+		{
+			case SOUTHEAST:
+				return new Pair<Short, Short>(SOUTH, EAST);
+			case SOUTHWEST:
+				return new Pair<Short, Short>(SOUTH, WEST);
+			case NORTHWEST:
+				return new Pair<Short, Short>(NORTH, WEST);
+			default:
+				return new Pair<Short, Short>(NORTH, EAST);
+		}
 	}
 
 }

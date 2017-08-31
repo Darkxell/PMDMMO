@@ -5,6 +5,8 @@ import org.jdom2.Element;
 public class ItemStack
 {
 
+	public static final String XML_ROOT = "item";
+
 	/** The ID of the Item. */
 	public final int id;
 	/** The number of Items in this Stack. Almost always 1 except for Poké, Gravelerock and similar items. */

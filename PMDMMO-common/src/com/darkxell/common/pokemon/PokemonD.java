@@ -2,6 +2,7 @@ package com.darkxell.common.pokemon;
 
 import java.util.ArrayList;
 
+import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.status.StatusCondition;
 import com.darkxell.common.status.StatusConditionInstance;
 
@@ -17,14 +18,20 @@ public class PokemonD
 	private int belly;
 	/** This Pokémon's belly size. */
 	private int bellySize;
+	/** The direction this Pokémon is facing. */
+	private short facing;
 	/** This Pokémon's current Hit Points. */
 	private int hp;
 	/** This Pokémon's data. */
 	public final Pokemon pokemon;
+	/** True if this Pokémon's state changed (direction, state...). Used for rendering. */
+	public boolean stateChanged;
 	/** This Pokémon's stats for the current dungeon. */
 	public final DungeonStats stats;
 	/** This Pokémon's active Status Conditions. */
 	private final ArrayList<StatusConditionInstance> statusConditions;
+	/** The tile this Pokémon is standing on. */
+	public Tile tile;
 
 	public PokemonD(Pokemon pokemon)
 	{
@@ -43,6 +50,12 @@ public class PokemonD
 		if (this.attacksReceived == REGULAR_ATTACKS) base = (int) (base * 0.5);
 		else if (this.attacksReceived == LINKED_MOVE) base = (int) (base * 1.5);
 		return base;
+	}
+
+	/** @return The direction this Pokémon is facing. */
+	public short facing()
+	{
+		return this.facing;
 	}
 
 	public int getBelly()
@@ -66,6 +79,18 @@ public class PokemonD
 		for (StatusConditionInstance c : this.statusConditions)
 			if (c.condition == condition) return true;
 		return false;
+	}
+
+	/** Called when this Pokémon tries to move in the input direction. */
+	public void tryMoveTo(short direction)
+	{
+		if (this.tile != null)
+		{
+			Tile t = this.tile.adjacentTile(direction);
+			if (t.canMoveTo(this, direction)) t.setPokemon(this);
+		}
+		this.facing = direction;
+		this.stateChanged = true;
 	}
 
 }
