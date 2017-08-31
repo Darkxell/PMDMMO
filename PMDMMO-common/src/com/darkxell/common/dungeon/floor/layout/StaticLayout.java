@@ -18,7 +18,6 @@ import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.PokemonD;
 import com.darkxell.common.util.XMLUtils;
 
-@SuppressWarnings("restriction")
 public class StaticLayout extends Layout
 {
 

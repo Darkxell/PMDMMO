@@ -16,7 +16,6 @@ import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
 
 /** Represents a Floor's layout. */
-@SuppressWarnings("restriction")
 public abstract class Layout
 {
 
