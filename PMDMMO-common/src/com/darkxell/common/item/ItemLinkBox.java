@@ -11,9 +11,9 @@ public class ItemLinkBox extends Item
 		super(xml);
 	}
 
-	public ItemLinkBox(int id, int price, int sell)
+	public ItemLinkBox(int id, int price, int sell, int sprite)
 	{
-		super(id, price, sell);
+		super(id, price, sell, sprite);
 	}
 
 }

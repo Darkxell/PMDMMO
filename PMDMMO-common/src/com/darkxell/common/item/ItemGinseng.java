@@ -11,9 +11,9 @@ public class ItemGinseng extends ItemFood
 		super(xml);
 	}
 
-	public ItemGinseng(int id, int price, int sell, int food, int bellyIfFull, int belly)
+	public ItemGinseng(int id, int price, int sell, int sprite, int food, int bellyIfFull, int belly)
 	{
-		super(id, price, sell, food, bellyIfFull, belly);
+		super(id, price, sell, sprite, food, bellyIfFull, belly);
 	}
 
 }

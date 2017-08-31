@@ -15,9 +15,9 @@ public class ItemStatEquipable extends Item
 		this.stat = Byte.parseByte(xml.getAttributeValue("stat"));
 	}
 
-	public ItemStatEquipable(int id, int price, int sell, byte stat)
+	public ItemStatEquipable(int id, int price, int sell, int sprite, byte stat)
 	{
-		super(id, price, sell);
+		super(id, price, sell, sprite);
 		this.stat = stat;
 	}
 

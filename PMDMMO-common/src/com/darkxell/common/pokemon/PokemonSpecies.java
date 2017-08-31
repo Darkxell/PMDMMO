@@ -2,9 +2,12 @@ package com.darkxell.common.pokemon;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 import org.jdom2.Element;
 
+import com.darkxell.common.move.Move;
+import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.util.Message;
 import com.darkxell.common.util.XMLUtils;
 
@@ -13,7 +16,7 @@ public class PokemonSpecies
 
 	/** List of possible Abilities for this Pokémon. */
 	private ArrayList<Integer> abilities;
-	/** Base experience. */
+	/** Base experience gained when this Pokémon is defeated. */
 	public final int baseXP;
 	/** List of species this Pokémon can evolve into. */
 	private final ArrayList<Evolution> evolutions;
@@ -70,10 +73,91 @@ public class PokemonSpecies
 		this.evolutions = evolutions;
 	}
 
+	/** @return The amount of experience needed to level up from the input level. */
+	public int experienceToNextLevel(int level)
+	{
+		int xp = (int) (5 * Math.pow(level, 3) / 4);
+		if (xp > 30000) xp = 30000;
+		return xp;
+	}
+
+	/** Generates a Pokémon of this species.
+	 * 
+	 * @param level - The level of the Pokémon to generate. */
+	public Pokemon generate(Random random, int level)
+	{
+		ArrayList<Integer> moves = new ArrayList<Integer>();
+
+		int m1 = this.latestMove(level, moves);
+		moves.add(m1);
+		int m2 = this.latestMove(level, moves);
+		moves.add(m2);
+		int m3 = this.latestMove(level, moves);
+		moves.add(m3);
+		int m4 = this.latestMove(level, moves);
+
+		PokemonMove move1 = m1 == -1 ? null : new PokemonMove(m1);
+		PokemonMove move2 = m2 == -1 ? null : new PokemonMove(m2);
+		PokemonMove move3 = m3 == -1 ? null : new PokemonMove(m3);
+		PokemonMove move4 = m4 == -1 ? null : new PokemonMove(m4);
+
+		// todo: Generate random ID.
+		return new Pokemon(0, this, null, null, this.stats.forLevel(level), this.randomAbility(random), 0, level, move1, move2, move3, move4,
+				this.randomGender(random));
+	}
+
+	/** @return True if one of this Pokémon's type equals the input type. */
+	public boolean isType(PokemonType type)
+	{
+		return this.type1 == type || this.type2 == type;
+	}
+
+	/** @param level - The level of the Pokémon.
+	 * @param learnedMoves - Moves to exclude because they're already learned.
+	 * @return The latest learned move's ID. */
+	public int latestMove(int level, ArrayList<Integer> learnedMoves)
+	{
+		while (level > 0)
+		{
+			if (this.learnset.containsKey(level))
+			{
+				@SuppressWarnings("unchecked")
+				ArrayList<Integer> moves = (ArrayList<Integer>) this.learnset.get(level).clone();
+				moves.removeAll(learnedMoves);
+				if (moves.size() != 0) return moves.get(0);
+			}
+			--level;
+		}
+		return -1;
+	}
+
+	/** @return The list of learned moves at the input level. */
+	public ArrayList<Move> learnedMoves(int level)
+	{
+		ArrayList<Move> moves = new ArrayList<Move>();
+		if (this.learnset.containsKey(level)) for (Integer id : this.learnset.get(level))
+			moves.add(MoveRegistry.find(id));
+		return moves;
+	}
+
 	/** @return This Pokémon's name. */
 	public Message name()
 	{
 		return new Message("pokemon." + this.id);
+	}
+
+	/** @return A random ability for this Pokémon. */
+	public int randomAbility(Random random)
+	{
+		if (this.abilities.size() == 0) return 0;
+		return this.abilities.get(random.nextInt(this.abilities.size()));
+	}
+
+	/** @return A random gender for this Pokémon. */
+	public byte randomGender(Random random)
+	{
+		// todo: include gender probability.
+		return (byte) random.nextInt(3);
 	}
 
 	public Element toXML()
