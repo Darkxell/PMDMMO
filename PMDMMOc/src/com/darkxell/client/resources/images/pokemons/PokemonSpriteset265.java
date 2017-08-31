@@ -11,7 +11,7 @@ public class PokemonSpriteset265 extends AbstractPokemonSpriteset
 	private PokemonSpriteset265()
 	{
 		super("/pokemons/pkmn265.png", 16, 18, 32, new int[]
-		{ 7, 7 }, 3, 3, 2, 2);
+		{ 70, 50 }, 3, 3, 2, 2);
 	}
 
 }

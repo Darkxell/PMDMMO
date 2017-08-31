@@ -51,6 +51,7 @@ public class DungeonState extends AbstractState
 	@Override
 	public void update()
 	{
+		this.floorRenderer.update();
 		/* if (Keys.isPressed(Keys.KEY_UP)) yPos -= 5; if (Keys.isPressed(Keys.KEY_DOWN)) yPos += 5; if (Keys.isPressed(Keys.KEY_LEFT)) xPos -= 5; if (Keys.isPressed(Keys.KEY_RIGHT)) xPos += 5; */
 	}
 

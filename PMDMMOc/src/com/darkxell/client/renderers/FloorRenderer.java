@@ -16,12 +16,20 @@ import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.pokemon.PokemonD;
+import com.darkxell.common.util.GameUtil;
 
 public class FloorRenderer
 {
 	private static final int ITEM_POS = (AbstractDungeonTileset.TILE_SIZE - ItemsSpriteset.ITEM_SIZE) / 2;
 	private static final PokemonSprite P = new PokemonSprite(PokemonSpriteset265.instance);
 	private static final PokemonSprite PS = new PokemonSprite(PokemonSpriteset1.instance);
+
+	private static byte spriteDirection(short facing)
+	{
+		for (byte i = 0; i < GameUtil.directions().length; ++i)
+			if (facing == GameUtil.directions()[i]) return i;
+		return 0;
+	}
 
 	public final Floor floor;
 	public final FloorDungeonTileset tileset;
@@ -30,8 +38,6 @@ public class FloorRenderer
 	{
 		this.floor = floor;
 		this.tileset = new FloorDungeonTileset("resources/tilesets/dungeon-" + floor.dungeon.id + ".png");
-		PS.setState(PokemonSprite.STATE_HURT);
-		PS.setFacingDirection(PokemonSprite.FACING_S);
 	}
 
 	/** Renders the Floor.
@@ -61,6 +67,11 @@ public class FloorRenderer
 	private void drawPokemon(Graphics2D g, PokemonD pokemon, int x, int y)
 	{
 		PokemonSprite s = pokemon.pokemon.species.id == 1 ? PS : P;
+		if (pokemon.stateChanged)
+		{
+			s.setFacingDirection(spriteDirection(pokemon.facing()));
+			pokemon.stateChanged = false;
+		}
 		g.drawImage(s.getCurrentSprite(), x * TILE_SIZE + TILE_SIZE / 2 - s.pointer.gravityX, y * TILE_SIZE + TILE_SIZE / 2 - s.pointer.gravityY, null);
 	}
 
@@ -80,6 +91,12 @@ public class FloorRenderer
 				* TILE_SIZE + ITEM_POS, tile.y * TILE_SIZE + ITEM_POS, null);
 
 		g.drawRect(tile.x * TILE_SIZE, tile.y * TILE_SIZE, (tile.x + 1) * TILE_SIZE, (tile.y + 1) * TILE_SIZE);
+	}
+
+	public void update()
+	{
+		P.update();
+		PS.update();
 	}
 
 }
