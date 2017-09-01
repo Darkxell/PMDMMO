@@ -30,12 +30,13 @@ public class DungeonState extends AbstractState
 	}
 
 	ActionSelectionState actionSelectionState;
+	/** The current location of the Player on the screen (centered). */
 	Point camera;
 	/** The current substate. */
 	private DungeonSubState currentSubstate;
 	/** The delay before using the new substate. */
 	private int delay = 0;
-	boolean diagonal;
+	boolean diagonal = false, rotating = false;
 	public final Floor floor;
 	final FloorRenderer floorRenderer;
 	public final Player player;
@@ -57,6 +58,7 @@ public class DungeonState extends AbstractState
 	public void onKeyPressed(short key)
 	{
 		if (key == Keys.KEY_DIAGONAL) this.diagonal = true;
+		if (key == Keys.KEY_ROTATE) this.rotating = true;
 
 		this.currentSubstate.onKeyPressed(key);
 
@@ -66,6 +68,7 @@ public class DungeonState extends AbstractState
 	public void onKeyReleased(short key)
 	{
 		if (key == Keys.KEY_DIAGONAL) this.diagonal = false;
+		if (key == Keys.KEY_ROTATE) this.rotating = false;
 
 		this.currentSubstate.onKeyReleased(key);
 	}
@@ -78,6 +81,9 @@ public class DungeonState extends AbstractState
 		g.translate(-x, -y);
 
 		this.floorRenderer.drawFloor(g, x, y, width, height);
+		if (this.delay == 0 && this.rotating && this.currentSubstate == this.actionSelectionState) this.floorRenderer.drawGrid(g,
+				this.player.getDungeonPokemon(), x, y, width, height);
+		this.floorRenderer.drawEntities(g, x, y, width, height);
 
 		if (this.delay == 0) this.currentSubstate.render(g, width, height);
 

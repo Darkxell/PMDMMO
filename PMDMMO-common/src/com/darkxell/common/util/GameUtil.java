@@ -52,7 +52,7 @@ public class GameUtil
 		return directions.clone();
 	}
 
-	private static int indexOf(short direction)
+	public static int indexOf(short direction)
 	{
 		for (int i = 0; i < directions.length; ++i)
 			if (directions[i] == direction) return i;
