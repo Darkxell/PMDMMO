@@ -1,6 +1,8 @@
 package com.darkxell.client.launchable;
 
 import com.darkxell.client.resources.images.PokemonSpritesets;
+import com.darkxell.client.resources.music.SoundManager;
+import com.darkxell.client.resources.music.SoundsHolder;
 import com.darkxell.client.state.FreezoneExploreState;
 import com.darkxell.client.state.StateManager;
 import com.darkxell.client.state.dungeon.DungeonState;
@@ -20,6 +22,8 @@ public class Launcher
 	/** If true, data is saved on exit. */
 	public static boolean SAVE_ON_EXIT = false;
 
+	/**The sound manager of the client.*/
+	public static SoundManager soundmanager;
 	public static Frame frame;
 	/** Set to false to stop the game. */
 	static boolean isRunning;
@@ -37,14 +41,15 @@ public class Launcher
 		ItemRegistry.loadClient();
 		DungeonRegistry.loadClient();
 		PokemonSpritesets.loadData();
+		soundmanager = new SoundManager();
 		System.out.println("Lang & Data loaded.");
 
 		frame = new Frame();
 		stateManager = new StateManager();
-		//stateManager.setState(new FreezoneExploreState(), 0);
-		Floor f = new Floor(4, Layout.STATIC, DungeonRegistry.find(1));
-		f.generate();
-		stateManager.setState(new DungeonState(f), 0);
+		stateManager.setState(new FreezoneExploreState(), 0);
+		//Floor f = new Floor(4, Layout.STATIC, DungeonRegistry.find(1));
+		//f.generate();
+		//stateManager.setState(new DungeonState(f), 0);
 
 		isRunning = true;
 		setProcessingProfile(PROFILE_SYNCHRONIZED);

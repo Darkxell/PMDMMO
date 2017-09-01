@@ -9,6 +9,7 @@ import com.darkxell.client.mechanics.freezones.FreezoneTile;
 import com.darkxell.client.mechanics.freezones.zones.PokemonSquareFreezone;
 import com.darkxell.client.persistance.FreezoneMapHolder;
 import com.darkxell.client.resources.images.Hud;
+import com.darkxell.client.resources.music.SoundsHolder;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.common.util.DoubleRectangle;
 
@@ -113,12 +114,18 @@ public class FreezoneExploreState extends AbstractState {
 		}
 	}
 
+	private boolean musicset = false;
+
 	@Override
 	public void update() {
 		if (FreezoneMapHolder.currentmap == null)
 			FreezoneMapHolder.currentmap = new PokemonSquareFreezone();
 		else
 			FreezoneMapHolder.currentmap.update();
+		if (!musicset) {
+			musicset = true;
+			Launcher.soundmanager.setBackgroundMusic(SoundsHolder.getSong(FreezoneMapHolder.currentmap.freezonebgm));
+		}
 	}
 
 }

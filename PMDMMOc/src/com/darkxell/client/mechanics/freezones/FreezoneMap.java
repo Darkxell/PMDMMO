@@ -20,6 +20,8 @@ public class FreezoneMap {
 	public int mapWidth;
 	public int mapHeight;
 
+	public String freezonebgm = "";
+	
 	/** The player. */
 	public FreezonePlayer player;
 

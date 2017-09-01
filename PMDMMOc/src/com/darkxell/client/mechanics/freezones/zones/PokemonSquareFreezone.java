@@ -9,6 +9,7 @@ public class PokemonSquareFreezone extends FreezoneMap {
 
 	public PokemonSquareFreezone() {
 		super("resources\\freezones\\square.xml");
+		this.freezonebgm = "14 Pokemon Square.mp3";
 		this.entities.add(new PokemonFreezoneEntity(71, 34, new PokemonSprite(PokemonSpritesets.getSpriteset(1))));
 	}
 
