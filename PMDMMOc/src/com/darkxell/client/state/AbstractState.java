@@ -7,9 +7,19 @@ import com.darkxell.client.ui.Keys;
 public abstract class AbstractState
 {
 
+	private boolean isMain = false;
+
+	/** @return True if this State is currently the Main State (i.e. {@link StateManager#getCurrentState()} returns this State). */
+	public boolean isMain()
+	{
+		return this.isMain;
+	}
+
 	/** Called when this State is ended. */
 	public void onEnd()
-	{}
+	{
+		this.isMain = false;
+	}
 
 	/** Called when the user presses a key.
 	 * 
@@ -41,7 +51,9 @@ public abstract class AbstractState
 
 	/** Called when this State is started. */
 	public void onStart()
-	{}
+	{
+		this.isMain = true;
+	}
 
 	/** Renders the state.
 	 * 
