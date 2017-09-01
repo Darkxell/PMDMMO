@@ -1,7 +1,7 @@
 package com.darkxell.client.state.menu;
 
-import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -10,7 +10,7 @@ import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.common.util.Message;
 
-public abstract class AbstractMenuDungeonState extends AbstractState
+public abstract class AbstractMenuState extends AbstractState
 {
 
 	public static class MenuOption
@@ -41,7 +41,7 @@ public abstract class AbstractMenuDungeonState extends AbstractState
 		public MenuTab(Message name)
 		{
 			this.name = name;
-			this.options = new ArrayList<AbstractMenuDungeonState.MenuOption>();
+			this.options = new ArrayList<AbstractMenuState.MenuOption>();
 		}
 
 		public int height(Graphics2D g)
@@ -70,25 +70,11 @@ public abstract class AbstractMenuDungeonState extends AbstractState
 	/** The tabs of this Menu. */
 	protected ArrayList<MenuTab> tabs;
 
-	public AbstractMenuDungeonState(AbstractState backgroundState)
+	public AbstractMenuState(AbstractState backgroundState)
 	{
 		this.backgroundState = backgroundState;
 		this.tabs = new ArrayList<MenuTab>();
 		this.createOptions();
-	}
-
-	protected Dimension autoDimensions(Graphics2D g)
-	{
-		int width = 0, height = 0;
-		for (MenuTab tab : this.tabs)
-		{
-			width = Math.max(width, tab.width(g));
-			height = Math.max(height, tab.height(g));
-		}
-		width += 15; // marges
-		height += 15;
-
-		return new Dimension(width, height);
 	}
 
 	/** Creates this Menu's options. */
@@ -104,8 +90,20 @@ public abstract class AbstractMenuDungeonState extends AbstractState
 		return this.tabs.get(this.tab);
 	}
 
-	/** @return This Window's dimensions. Use {@link AbstractMenuDungeonState#autoDimensions} for automatic dimensions from the options. */
-	protected abstract Dimension mainWindowDimensions(Graphics2D g);
+	/** @return This Window's dimensions. */
+	protected Rectangle mainWindowDimensions(Graphics2D g)
+	{
+		int width = 0, height = 0;
+		for (MenuTab tab : this.tabs)
+		{
+			width = Math.max(width, tab.width(g));
+			height = Math.max(height, tab.height(g));
+		}
+		width += 15; // marges
+		height += 15;
+
+		return new Rectangle(16, 32, width, height);
+	}
 
 	/** Called when the player presses the "back" button. */
 	protected abstract void onExit();
@@ -118,7 +116,7 @@ public abstract class AbstractMenuDungeonState extends AbstractState
 		else if (key == Keys.KEY_UP) --this.selection;
 		else if (key == Keys.KEY_DOWN) ++this.selection;
 		else if (key == Keys.KEY_ATTACK) this.onOptionSelected(this.currentOption());
-		else if (key == Keys.KEY_RUN) this.onExit();
+		else if (key == Keys.KEY_MENU) this.onExit();
 
 		if (key == Keys.KEY_LEFT || key == Keys.KEY_RIGHT)
 		{
@@ -132,6 +130,10 @@ public abstract class AbstractMenuDungeonState extends AbstractState
 		}
 	}
 
+	@Override
+	public void onKeyReleased(short key)
+	{}
+
 	/** Called when the player chooses the input Option. */
 	protected abstract void onOptionSelected(MenuOption option);
 
@@ -141,7 +143,7 @@ public abstract class AbstractMenuDungeonState extends AbstractState
 		if (this.mainWindow == null) this.mainWindow = new MenuWindow(this.mainWindowDimensions(g));
 
 		if (this.backgroundState != null) this.backgroundState.render(g, width, height);
-		this.mainWindow.render(g, width, height);
+		this.mainWindow.render(g, this.currentTab(), width, height);
 	}
 
 	@Override
