@@ -5,6 +5,7 @@ import com.darkxell.client.mechanics.freezones.WarpZone;
 import com.darkxell.client.mechanics.freezones.entities.PokemonFreezoneEntity;
 import com.darkxell.client.resources.images.PokemonSprite;
 import com.darkxell.client.resources.images.PokemonSpritesets;
+import com.darkxell.client.resources.images.tilesets.DojoFreezone;
 import com.darkxell.common.util.DoubleRectangle;
 
 public class PokemonSquareFreezone extends FreezoneMap {
@@ -17,6 +18,12 @@ public class PokemonSquareFreezone extends FreezoneMap {
 			@Override
 			public FreezoneMap getDestination() {
 				return new BaseFreezone();
+			}
+		});
+		this.warpzones.add(new WarpZone(42, 4, new DoubleRectangle(63, 87, 9, 2)) {
+			@Override
+			public FreezoneMap getDestination() {
+				return new DojoFreezone();
 			}
 		});
 	}
