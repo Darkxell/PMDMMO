@@ -4,8 +4,8 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
-import com.darkxell.client.resources.images.MenuHudSpriteset;
 import com.darkxell.client.state.AbstractState;
+import com.darkxell.client.state.menu.components.OptionSelectionWindow;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.common.util.Message;
 
@@ -33,7 +33,7 @@ public abstract class AbstractMenuState extends AbstractState
 
 	public static class MenuTab
 	{
-		public static final int OPTION_SPACE = 5;
+		public static final int OPTION_SPACE = 8;
 
 		public final Message name;
 		ArrayList<MenuOption> options;
@@ -49,6 +49,11 @@ public abstract class AbstractMenuState extends AbstractState
 			return this.options.size() * (g.getFont().getSize() + OPTION_SPACE);
 		}
 
+		public MenuOption[] options()
+		{
+			return this.options.toArray(new MenuOption[this.options.size()]);
+		}
+
 		public int width(Graphics2D g)
 		{
 			int width = 0;
@@ -62,7 +67,7 @@ public abstract class AbstractMenuState extends AbstractState
 	/** The state to draw behind this menu State. */
 	public final AbstractState backgroundState;
 	/** The main window to display the options in. */
-	private MenuWindow mainWindow;
+	private OptionSelectionWindow mainWindow;
 	/** The currently selected option. */
 	private int tab = 0, selection = 0;
 	/** The tabs of this Menu. */
@@ -78,12 +83,12 @@ public abstract class AbstractMenuState extends AbstractState
 	/** Creates this Menu's options. */
 	protected abstract void createOptions();
 
-	protected MenuOption currentOption()
+	public MenuOption currentOption()
 	{
 		return this.currentTab().options.get(this.selection);
 	}
 
-	protected MenuTab currentTab()
+	public MenuTab currentTab()
 	{
 		return this.tabs.get(this.tab);
 	}
@@ -97,8 +102,8 @@ public abstract class AbstractMenuState extends AbstractState
 			width = Math.max(width, tab.width(g));
 			height = Math.max(height, tab.height(g));
 		}
-		width += MenuWindow.MARGIN * 2 + MenuWindow.SELECTION_ARROW_SPACE;
-		height += MenuWindow.MARGIN * 2;
+		width += OptionSelectionWindow.MARGIN_X * 2;
+		height += OptionSelectionWindow.MARGIN_Y * 2;
 
 		return new Rectangle(16, 32, width, height);
 	}
@@ -114,7 +119,7 @@ public abstract class AbstractMenuState extends AbstractState
 		else if (key == Keys.KEY_UP) --this.selection;
 		else if (key == Keys.KEY_DOWN) ++this.selection;
 		else if (key == Keys.KEY_ATTACK) this.onOptionSelected(this.currentOption());
-		else if (key == Keys.KEY_MENU) this.onExit();
+		else if (key == Keys.KEY_MENU || key == Keys.KEY_RUN) this.onExit();
 
 		if (key == Keys.KEY_LEFT || key == Keys.KEY_RIGHT)
 		{
@@ -138,7 +143,7 @@ public abstract class AbstractMenuState extends AbstractState
 	@Override
 	public void render(Graphics2D g, int width, int height)
 	{
-		if (this.mainWindow == null) this.mainWindow = new MenuWindow(this, this.mainWindowDimensions(g));
+		if (this.mainWindow == null) this.mainWindow = new OptionSelectionWindow(this, this.mainWindowDimensions(g));
 
 		if (this.backgroundState != null) this.backgroundState.render(g, width, height);
 		this.mainWindow.render(g, width, height);
