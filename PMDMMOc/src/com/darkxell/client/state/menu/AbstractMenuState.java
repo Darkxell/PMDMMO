@@ -2,7 +2,6 @@ package com.darkxell.client.state.menu;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import com.darkxell.client.resources.images.MenuHudSpriteset;
@@ -34,6 +33,7 @@ public abstract class AbstractMenuState extends AbstractState
 
 	public static class MenuTab
 	{
+		public static final int OPTION_SPACE = 5;
 
 		public final Message name;
 		ArrayList<MenuOption> options;
@@ -46,7 +46,7 @@ public abstract class AbstractMenuState extends AbstractState
 
 		public int height(Graphics2D g)
 		{
-			return this.options.size() * (g.getFont().getSize() + 5);
+			return this.options.size() * (g.getFont().getSize() + OPTION_SPACE);
 		}
 
 		public int width(Graphics2D g)
@@ -58,8 +58,6 @@ public abstract class AbstractMenuState extends AbstractState
 		}
 
 	}
-
-	private static final BufferedImage selectionArrow = MenuHudSpriteset.instance.selectionArrow();
 
 	/** The state to draw behind this menu State. */
 	public final AbstractState backgroundState;
@@ -99,8 +97,8 @@ public abstract class AbstractMenuState extends AbstractState
 			width = Math.max(width, tab.width(g));
 			height = Math.max(height, tab.height(g));
 		}
-		width += 15; // marges
-		height += 15;
+		width += MenuWindow.MARGIN * 2 + MenuWindow.SELECTION_ARROW_SPACE;
+		height += MenuWindow.MARGIN * 2;
 
 		return new Rectangle(16, 32, width, height);
 	}
@@ -140,16 +138,17 @@ public abstract class AbstractMenuState extends AbstractState
 	@Override
 	public void render(Graphics2D g, int width, int height)
 	{
-		if (this.mainWindow == null) this.mainWindow = new MenuWindow(this.mainWindowDimensions(g));
+		if (this.mainWindow == null) this.mainWindow = new MenuWindow(this, this.mainWindowDimensions(g));
 
 		if (this.backgroundState != null) this.backgroundState.render(g, width, height);
-		this.mainWindow.render(g, this.currentTab(), width, height);
+		this.mainWindow.render(g, width, height);
 	}
 
 	@Override
 	public void update()
 	{
 		if (this.backgroundState != null) this.backgroundState.update();
+		if (this.mainWindow != null) this.mainWindow.update();
 	}
 
 }
