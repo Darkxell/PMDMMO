@@ -6,9 +6,8 @@ import java.util.List;
 
 import org.jdom2.input.SAXBuilder;
 
+import com.darkxell.client.persistance.FreezoneMapHolder;
 import com.darkxell.client.resources.images.AbstractTileset;
-import com.darkxell.client.resources.images.PokemonSprite;
-import com.darkxell.client.resources.images.PokemonSpritesets;
 
 /**
  * A tiled map of a freezone. Freezones are the areas where you can move freely
@@ -21,9 +20,6 @@ public class FreezoneMap {
 	public int mapHeight;
 
 	public String freezonebgm = "";
-	
-	/** The player. */
-	public FreezonePlayer player;
 
 	/**
 	 * List the entities in this map. Note that the player isn't actually an
@@ -31,6 +27,8 @@ public class FreezoneMap {
 	 */
 	public ArrayList<FreezoneEntity> entities = new ArrayList<>();
 
+	public ArrayList<WarpZone> warpzones = new ArrayList<>();
+	
 	public FreezoneMap(String xmlfilepath) {
 		File file = new File(xmlfilepath);
 		SAXBuilder builder = new SAXBuilder();
@@ -59,12 +57,10 @@ public class FreezoneMap {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		// TODO: change this
-		this.player = new FreezonePlayer(this, new PokemonSprite(PokemonSpritesets.getSpriteset(1)), 50, 50);
 	}
 
 	public void update() {
-		this.player.update();
+		FreezoneMapHolder.currentplayer.update();
 		for (int i = 0; i < entities.size(); i++)
 			entities.get(i).update();
 	}
