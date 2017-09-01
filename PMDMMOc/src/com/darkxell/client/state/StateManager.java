@@ -79,6 +79,10 @@ public class StateManager {
 		int tempheight = displayHeight * tempwidth / displayWidth;
 		g.drawImage(internalBuffer, (width - tempwidth) / 2, (height - tempheight) / 2, tempwidth, tempheight, null);
 	}
+	
+	public AbstractState getCurrentState() {
+		return this.currentState;
+	}
 
 	public void setState(AbstractState state) {
 		this.setState(state, defaultTransitionTime);
@@ -102,8 +106,10 @@ public class StateManager {
 			if (this.transition == this.transitionTime)
 				this.transition = -this.transitionTime;
 			else if (this.transition == 0) {
+				this.currentState.onEnd();
 				this.currentState = this.nextState;
 				this.nextState = null;
+				this.currentState.onStart();
 			}
 		}
 	}
