@@ -1,5 +1,6 @@
 package com.darkxell.client.mechanics.freezones;
 
+import com.darkxell.client.persistance.FreezoneMapHolder;
 import com.darkxell.client.resources.images.AbstractPokemonSpriteset;
 import com.darkxell.client.resources.images.PokemonSprite;
 import com.darkxell.client.ui.Keys;
@@ -7,7 +8,6 @@ import com.darkxell.common.util.DoubleRectangle;
 
 public class FreezonePlayer {
 
-	public FreezoneMap map;
 	/**
 	 * The x position of the middle of the player hitbox. also corresponds to
 	 * the gravity center of the sprite.
@@ -20,11 +20,10 @@ public class FreezonePlayer {
 	public double y;
 	public PokemonSprite playersprite;
 
-	public FreezonePlayer(FreezoneMap map, PokemonSprite sprite, int x, int y) {
+	public FreezonePlayer(PokemonSprite sprite, int x, int y) {
 		this.playersprite = sprite;
 		this.x = x;
 		this.y = y;
-		this.map = map;
 	}
 
 	public DoubleRectangle getHitboxAt(double x, double y) {
@@ -36,20 +35,23 @@ public class FreezonePlayer {
 	 * it were at the wanted location, true otherwise.
 	 */
 	public boolean canBeAt(double x, double y) {
+		if (FreezoneMapHolder.currentmap == null)
+			return true;
 		DoubleRectangle hbx = getHitboxAt(x, y);
-		for (int i = 0; i < this.map.entities.size(); i++) {
-			FreezoneEntity ety = this.map.entities.get(i);
+		for (int i = 0; i < FreezoneMapHolder.currentmap.entities.size(); i++) {
+			FreezoneEntity ety = FreezoneMapHolder.currentmap.entities.get(i);
 			if (ety.isSolid && ety.getHitbox(ety.posX, ety.posY).intersects(this.getHitboxAt(x, y)))
 				return false;
 		}
 
-		if (this.map.getTileTypeAt(hbx.x, hbx.y) == FreezoneTile.TYPE_SOLID)
+		if (FreezoneMapHolder.currentmap.getTileTypeAt(hbx.x, hbx.y) == FreezoneTile.TYPE_SOLID)
 			return false;
-		if (this.map.getTileTypeAt(hbx.x, hbx.y + hbx.height) == FreezoneTile.TYPE_SOLID)
+		if (FreezoneMapHolder.currentmap.getTileTypeAt(hbx.x, hbx.y + hbx.height) == FreezoneTile.TYPE_SOLID)
 			return false;
-		if (this.map.getTileTypeAt(hbx.x + hbx.width, hbx.y) == FreezoneTile.TYPE_SOLID)
+		if (FreezoneMapHolder.currentmap.getTileTypeAt(hbx.x + hbx.width, hbx.y) == FreezoneTile.TYPE_SOLID)
 			return false;
-		if (this.map.getTileTypeAt(hbx.x + hbx.width, hbx.y + hbx.height) == FreezoneTile.TYPE_SOLID)
+		if (FreezoneMapHolder.currentmap.getTileTypeAt(hbx.x + hbx.width,
+				hbx.y + hbx.height) == FreezoneTile.TYPE_SOLID)
 			return false;
 		return true;
 	}
@@ -94,7 +96,7 @@ public class FreezonePlayer {
 			playersprite.setState(PokemonSprite.STATE_MOVE);
 			break;
 		case Keys.KEY_ATTACK:
-			if(canInteract())
+			if (canInteract())
 				getInteractionTarget().onInteract();
 			break;
 		}
@@ -132,13 +134,13 @@ public class FreezonePlayer {
 			break;
 		}
 	}
-	
-	public void setState(byte state){
+
+	public void setState(byte state) {
 		playersprite.setState(state);
 	}
-	
-	/**Force the player from stopping it's movement.*/
-	public void forceStop(){
+
+	/** Force the player from stopping it's movement. */
+	public void forceStop() {
 		ismovingUP = false;
 		ismovingRIGHT = false;
 		ismovingDOWN = false;
@@ -215,8 +217,10 @@ public class FreezonePlayer {
 	 * position.
 	 */
 	public boolean canInteract() {
-		for (int i = 0; i < this.map.entities.size(); ++i) {
-			FreezoneEntity et = this.map.entities.get(i);
+		if (FreezoneMapHolder.currentmap == null)
+			return false;
+		for (int i = 0; i < FreezoneMapHolder.currentmap.entities.size(); ++i) {
+			FreezoneEntity et = FreezoneMapHolder.currentmap.entities.get(i);
 			if (et.canInteract && et.getHitbox(et.posX, et.posY).intersects(this.getInteractionBox()))
 				return true;
 		}
@@ -225,8 +229,10 @@ public class FreezonePlayer {
 
 	/** Returns the first entity found the player can interact with. */
 	public FreezoneEntity getInteractionTarget() {
-		for (int i = 0; i < this.map.entities.size(); i++) {
-			FreezoneEntity et = this.map.entities.get(i);
+		if (FreezoneMapHolder.currentmap == null)
+			return null;
+		for (int i = 0; i < FreezoneMapHolder.currentmap.entities.size(); i++) {
+			FreezoneEntity et = FreezoneMapHolder.currentmap.entities.get(i);
 			if (et.canInteract && et.getHitbox(et.posX, et.posY).intersects(this.getInteractionBox()))
 				return et;
 		}

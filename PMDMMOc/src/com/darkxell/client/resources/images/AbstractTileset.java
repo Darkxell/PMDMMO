@@ -3,6 +3,7 @@ package com.darkxell.client.resources.images;
 import java.awt.image.BufferedImage;
 
 import com.darkxell.client.resources.Res;
+import com.darkxell.client.resources.images.tilesets.BaseTileset;
 import com.darkxell.client.resources.images.tilesets.SquareTileset;
 
 /**
@@ -38,6 +39,8 @@ public abstract class AbstractTileset {
 		switch (code) {
 		case "square":
 			return SquareTileset.instance;
+		case "base":
+			return BaseTileset.instance;
 		default:
 			System.err.println("Could not find the desired tileset: " + code);
 			return null;

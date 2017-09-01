@@ -22,8 +22,8 @@ public class FreezoneDialogState extends AbstractState {
 	private int appearance = 0;
 
 	public FreezoneDialogState(String dialog) {
-		FreezoneMapHolder.currentmap.player.forceStop();
-		FreezoneMapHolder.currentmap.player.setState(PokemonSprite.STATE_IDDLE);
+		FreezoneMapHolder.currentplayer.forceStop();
+		FreezoneMapHolder.currentplayer.setState(PokemonSprite.STATE_IDDLE);
 		this.dialog = dialog;
 	}
 
@@ -47,8 +47,8 @@ public class FreezoneDialogState extends AbstractState {
 	public void render(Graphics2D g, int width, int height) {
 		FreezoneMap map = FreezoneMapHolder.currentmap;
 		if (map != null) {
-			int translateX = (int) (-map.player.x * 8 + (width / 2));
-			int translateY = (int) (-map.player.y * 8 + (height / 2));
+			int translateX = (int) (-FreezoneMapHolder.currentplayer.x * 8 + (width / 2));
+			int translateY = (int) (-FreezoneMapHolder.currentplayer.y * 8 + (height / 2));
 
 			g.translate(translateX, translateY);
 			// Draws the map
@@ -68,16 +68,20 @@ public class FreezoneDialogState extends AbstractState {
 			}
 			// TODO : draw the entities/player in Y position order.
 			// Draws the player
-			g.drawImage(map.player.playersprite.getCurrentSprite(),
-					(int) (map.player.x * 8 - map.player.playersprite.pointer.gravityX),
-					(int) (map.player.y * 8 - map.player.playersprite.pointer.gravityY), null);
+			g.drawImage(FreezoneMapHolder.currentplayer.playersprite.getCurrentSprite(),
+					(int) (FreezoneMapHolder.currentplayer.x * 8
+							- FreezoneMapHolder.currentplayer.playersprite.pointer.gravityX),
+					(int) (FreezoneMapHolder.currentplayer.y * 8
+							- FreezoneMapHolder.currentplayer.playersprite.pointer.gravityY),
+					null);
 			if (FreezoneExploreState.debugdisplaymode) {
 				g.setColor(new Color(20, 20, 200, 160));
-				DoubleRectangle dbrct = map.player.getHitboxAt(map.player.x, map.player.y);
+				DoubleRectangle dbrct = FreezoneMapHolder.currentplayer.getHitboxAt(FreezoneMapHolder.currentplayer.x,
+						FreezoneMapHolder.currentplayer.y);
 				g.fillRect((int) (dbrct.x * 8), (int) (dbrct.y * 8), (int) (dbrct.width * 8), (int) (dbrct.height * 8));
 
 				g.setColor(new Color(150, 20, 130, 120));
-				dbrct = map.player.getInteractionBox();
+				dbrct = FreezoneMapHolder.currentplayer.getInteractionBox();
 				g.fillRect((int) (dbrct.x * 8), (int) (dbrct.y * 8), (int) (dbrct.width * 8), (int) (dbrct.height * 8));
 			}
 			// draws the entities
@@ -117,8 +121,10 @@ public class FreezoneDialogState extends AbstractState {
 				String sss = showableDialog.get(dialogposition);
 				String sst = showableDialog.get(dialogposition + 1);
 				g.drawString(
-						sst.substring(0, appearance - sss.length() < 0 ? 0
-										: appearance - sss.length() >= sst.length() ? sst.length() - 1 : appearance - sss.length()),
+						sst.substring(0,
+								appearance - sss.length() < 0 ? 0
+										: appearance - sss.length() >= sst.length() ? sst.length() - 1
+												: appearance - sss.length()),
 						40, height - temp_tw_height - 20 + (temp_tw_height / 3 * 2) + (g.getFont().getSize() / 2));
 			}
 			if (FreezoneExploreState.debugdisplaymode) {

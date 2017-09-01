@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" tiledversion="1.0.2" orientation="orthogonal" renderorder="left-up" width="119" height="89" tilewidth="8" tileheight="8" nextobjectid="1">
- <tileset firstgid="1" source="sans-titre.tsx"/>
+ <tileset firstgid="1" source="square.tsx"/>
  <tileset firstgid="10592" source="terrain.tsx"/>
  <tileset firstgid="10594" source="terrain.tsx"/>
  <layer name="Calque de Tile 1" width="119" height="89">
