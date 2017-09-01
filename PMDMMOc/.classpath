@@ -9,5 +9,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="jar/jdom-2.0.6.jar"/>
+	<classpathentry kind="lib" path="jar/JZedited.jar"/>
+	<classpathentry kind="lib" path="jar/tritonus_share.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
