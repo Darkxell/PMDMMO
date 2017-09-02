@@ -13,120 +13,120 @@ public class TextRenderer
 
 	public static enum PMDChar
 	{
-		a("a", 1, 5),
-		A("A", 26, 6),
-		apostrophe("'", 72, 3),
-		apostrophe_("`", 71, 3),
-		b("b", 2, 5),
-		B("B", 27, 6),
-		buy_0("<0>", 112, 6),
-		buy_1("<1>", 103, 6),
-		buy_2("<2>", 104, 6),
-		buy_3("<3>", 105, 6),
-		buy_4("<4>", 106, 6),
-		buy_5("<5>", 107, 6),
-		buy_6("<6>", 108, 6),
-		buy_7("<7>", 109, 6),
-		buy_8("<8>", 110, 6),
-		buy_9("<9>", 111, 6),
-		c("c", 3, 5),
-		C("C", 28, 6),
-		column(":", 62, 2),
-		coma(",", 65, 3),
-		d("d", 4, 5),
-		D("D", 29, 6),
-		dot(".", 66, 3),
-		e("e", 5, 5),
-		E("E", 30, 5),
-		e_accent("é", 84, 7),
-		exclamation("!", 68, 4),
-		exclamation_("<!>", 67, 4),
-		f("f", 6, 5),
-		F("F", 31, 5),
-		female("<female>", 76, 6),
-		g("g", 7, 5),
-		G("G", 32, 6),
-		h("h", 8, 5),
-		H("H", 33, 6),
-		i("i", 9, 3),
-		I("I", 34, 4),
-		interrogation("?", 70, 6),
-		interrogation_("<?>", 69, 6),
-		j("j", 10, 3),
-		J("J", 35, 6),
-		k("k", 11, 5),
-		K("K", 36, 6),
-		key_A("<key-a>", 94, 9),
-		key_B("<key-b>", 95, 10),
-		key_L("<key-l>", 96, 10),
-		key_PLUS("<key-+>", 98, 10),
-		key_R("<key-r>", 97, 10),
-		key_SELECT1("<select1>", 99, 10),
-		key_SELECT2("<select2>", 100, 10),
-		l("l", 12, 3),
-		L("L", 37, 5),
-		m("m", 13, 8),
-		M("M", 38, 8),
-		male("<male>", 75, 8),
-		minus("-", 64, 5),
-		mission("<mission>", 90, 8),
-		mission_accepted("<mission-a>", 91, 10),
-		music("<music>", 87, 8),
-		n("n", 14, 5),
-		N("N", 39, 6),
-		news("<news>", 92, 10),
-		num0("0", 61, 6),
-		num1("1", 52, 6),
-		num2("2", 53, 6),
-		num3("3", 54, 6),
-		num4("4", 55, 6),
-		num5("5", 56, 6),
-		num6("6", 57, 6),
-		num7("7", 58, 6),
-		num8("8", 59, 6),
-		num9("9", 60, 6),
-		o("o", 15, 5),
-		O("O", 40, 6),
-		orb("<orb>", 102, 10),
-		p("p", 16, 5),
-		P("P", 41, 6),
-		parenthesis_c(")", 79, 5),
-		parenthesis_o("(", 80, 5),
-		plus("+", 63, 6),
-		poke1("<poke1>", 82, 8),
-		poke2("<poke2>", 83, 7),
-		q("q", 17, 5),
-		Q("Q", 42, 6),
-		quote("\"", 74, 6),
-		quote_("<\">", 73, 6),
-		r("r", 18, 5),
-		R("R", 43, 6),
-		s("s", 19, 5),
-		S("S", 44, 6),
-		sharp("#", 86, 9),
-		slash("/", 81, 5),
 		space(" ", 0, 4),
-		space_visible("_", 77, 10),
-		star("<star>", 89, 7),
-		story("<story>", 93, 9),
+		a("a", 1, 5),
+		b("b", 2, 5),
+		c("c", 3, 5),
+		d("d", 4, 5),
+		e("e", 5, 5),
+		f("f", 6, 5),
+		g("g", 7, 5),
+		h("h", 8, 5),
+		i("i", 9, 3),
+		j("j", 10, 3),
+		k("k", 11, 5),
+		l("l", 12, 3),
+		m("m", 13, 8),
+		n("n", 14, 5),
+		o("o", 15, 5),
+		p("p", 16, 5),
+		q("q", 17, 5),
+		r("r", 18, 5),
+		s("s", 19, 5),
 		t("t", 20, 4),
-		T("T", 45, 6),
-		three_dots("<dots>", 78, 9),
-		tick("<tick>", 88, 9),
-		tilde("~", 85, 6),
-		tm("<tm>", 101, 10),
 		u("u", 21, 5),
-		U("U", 46, 6),
 		v("v", 22, 6),
-		V("V", 47, 6),
-		w("w", 22, 8),
-		W("W", 48, 10),
-		x("x", 23, 6),
-		X("X", 49, 6),
-		y("y", 24, 5),
-		Y("Y", 50, 6),
-		z("z", 25, 5),
-		Z("Z", 51, 6);
+		w("w", 23, 8),
+		x("x", 24, 6),
+		y("y", 25, 5),
+		z("z", 26, 5),
+		A("A", 27, 6),
+		B("B", 28, 6),
+		C("C", 29, 6),
+		D("D", 30, 6),
+		E("E", 31, 5),
+		F("F", 32, 5),
+		G("G", 33, 6),
+		H("H", 34, 6),
+		I("I", 35, 4),
+		J("J", 36, 6),
+		K("K", 37, 6),
+		L("L", 38, 5),
+		M("M", 39, 8),
+		N("N", 40, 6),
+		O("O", 41, 6),
+		P("P", 42, 6),
+		Q("Q", 43, 6),
+		R("R", 44, 6),
+		S("S", 45, 6),
+		T("T", 46, 6),
+		U("U", 47, 6),
+		V("V", 48, 6),
+		W("W", 49, 10),
+		X("X", 50, 6),
+		Y("Y", 51, 6),
+		Z("Z", 52, 6),
+		num1("1", 53, 6),
+		num2("2", 54, 6),
+		num3("3", 55, 6),
+		num4("4", 56, 6),
+		num5("5", 57, 6),
+		num6("6", 58, 6),
+		num7("7", 59, 6),
+		num8("8", 60, 6),
+		num9("9", 61, 6),
+		num0("0", 62, 6),
+		column(":", 63, 2),
+		plus("+", 64, 6),
+		minus("-", 65, 5),
+		coma(",", 66, 3),
+		dot(".", 67, 3),
+		exclamation_("<!>", 68, 4),
+		exclamation("!", 69, 4),
+		interrogation_("<?>", 70, 6),
+		interrogation("?", 71, 6),
+		apostrophe_("`", 72, 3),
+		apostrophe("'", 73, 3),
+		quote_("<\">", 74, 6),
+		quote("\"", 75, 6),
+		male("<male>", 76, 8),
+		female("<female>", 77, 6),
+		space_visible("_", 78, 10),
+		three_dots("<dots>", 79, 9),
+		parenthesis_c(")", 80, 5),
+		parenthesis_o("(", 81, 5),
+		slash("/", 82, 5),
+		poke1("<poke1>", 83, 8),
+		poke2("<poke2>", 84, 7),
+		e_accent("é", 85, 7),
+		tilde("~", 86, 6),
+		sharp("#", 87, 9),
+		music("<music>", 88, 8),
+		tick("<tick>", 89, 9),
+		star("<star>", 90, 7),
+		mission("<mission>", 91, 8),
+		mission_accepted("<mission-a>", 92, 10),
+		news("<news>", 93, 10),
+		story("<story>", 94, 9),
+		key_A("<key-a>", 95, 9),
+		key_B("<key-b>", 96, 10),
+		key_L("<key-l>", 97, 10),
+		key_R("<key-r>", 98, 10),
+		key_PLUS("<key-+>", 99, 10),
+		key_SELECT1("<select1>", 100, 10),
+		key_SELECT2("<select2>", 101, 10),
+		tm("<tm>", 102, 10),
+		orb("<orb>", 103, 10),
+		buy_1("<1>", 104, 6),
+		buy_2("<2>", 105, 6),
+		buy_3("<3>", 106, 6),
+		buy_4("<4>", 107, 6),
+		buy_5("<5>", 108, 6),
+		buy_6("<6>", 109, 6),
+		buy_7("<7>", 110, 6),
+		buy_8("<8>", 111, 6),
+		buy_9("<9>", 112, 6),
+		buy_0("<0>", 113, 6);
 
 		public static PMDChar find(String value)
 		{
@@ -152,10 +152,13 @@ public class TextRenderer
 	}
 
 	public static final int CHAR_HEIGHT = 10;
-
 	private static final int GRID_COLS = 20;
 	private static final int GRID_WIDTH = CHAR_HEIGHT, GRID_HEIGHT = CHAR_HEIGHT;
 	public static final TextRenderer instance = new TextRenderer();
+
+	/** Called on startup to load the font. */
+	public static void load()
+	{}
 
 	private HashMap<PMDChar, BufferedImage> sprites;
 
@@ -164,7 +167,8 @@ public class TextRenderer
 		this.sprites = new HashMap<TextRenderer.PMDChar, BufferedImage>();
 		BufferedImage source = Res.getBase("resources/hud/font.png");
 		for (PMDChar c : PMDChar.values())
-			this.sprites.put(c, Res.createimage(source, c.id % GRID_COLS, c.id / GRID_COLS, GRID_WIDTH, GRID_HEIGHT));
+			this.sprites.put(c,
+					Res.createimage(source, c.id % GRID_COLS * GRID_WIDTH, (c.id - c.id % GRID_COLS) / GRID_COLS * GRID_HEIGHT, GRID_WIDTH, GRID_HEIGHT));
 	}
 
 	private ArrayList<PMDChar> decode(String text)
@@ -183,7 +187,7 @@ public class TextRenderer
 					value += text.charAt(c);
 					++c;
 				}
-				chars.add(PMDChar.find(value));
+				chars.add(PMDChar.find("<" + value + ">"));
 			} else chars.add(PMDChar.find(text.substring(c, c + 1)));
 			++c;
 		}
@@ -193,11 +197,13 @@ public class TextRenderer
 		return chars;
 	}
 
+	/** Renders the input message at the topright x, y coordinates. */
 	public void render(Graphics2D g, Message message, int x, int y)
 	{
 		this.render(g, message.toString(), x, y);
 	}
 
+	/** Renders the input text at the topright x, y coordinates. */
 	public void render(Graphics2D g, String text, int x, int y)
 	{
 		ArrayList<PMDChar> chars = this.decode(text);
@@ -206,6 +212,22 @@ public class TextRenderer
 			g.drawImage(this.sprites.get(c), x, y, null);
 			x += c.width;
 		}
+	}
+
+	/** @return The width of the input message. */
+	public int width(Message message)
+	{
+		return this.width(message.toString());
+	}
+
+	/** @return The width of the input text. */
+	public int width(String text)
+	{
+		ArrayList<PMDChar> chars = this.decode(text);
+		int w = 0;
+		for (PMDChar c : chars)
+			w += c.width;
+		return w;
 	}
 
 }

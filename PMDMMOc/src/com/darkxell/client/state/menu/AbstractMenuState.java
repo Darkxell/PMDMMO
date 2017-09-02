@@ -1,10 +1,10 @@
 package com.darkxell.client.state.menu;
 
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
+import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.menu.components.OptionSelectionWindow;
 import com.darkxell.client.ui.Keys;
@@ -62,7 +62,7 @@ public abstract class AbstractMenuState extends AbstractState
 
 		public int height(Graphics2D g)
 		{
-			return this.options.size() * (g.getFont().getSize() + OPTION_SPACE);
+			return this.options.size() * (TextRenderer.CHAR_HEIGHT + OPTION_SPACE);
 		}
 
 		public MenuOption[] options()
@@ -74,7 +74,7 @@ public abstract class AbstractMenuState extends AbstractState
 		{
 			int width = 0;
 			for (MenuOption option : this.options)
-				width = Math.max(width, g.getFontMetrics().stringWidth(option.name.toString()));
+				width = Math.max(width, TextRenderer.instance.width(option.name.toString()));
 			return width;
 		}
 
@@ -157,7 +157,6 @@ public abstract class AbstractMenuState extends AbstractState
 	@Override
 	public void render(Graphics2D g, int width, int height)
 	{
-		g.setFont(g.getFont().deriveFont(Font.PLAIN, 10));
 		if (this.mainWindow == null) this.mainWindow = new OptionSelectionWindow(this, this.mainWindowDimensions(g));
 
 		if (this.backgroundState != null) this.backgroundState.render(g, width, height);

@@ -3,6 +3,7 @@ package com.darkxell.client.state.menu.components;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.MenuHudSpriteset;
 import com.darkxell.common.util.GameUtil;
 import com.darkxell.common.util.Message;
@@ -39,7 +40,7 @@ public class MenuWindow
 	public void render(Graphics2D g, Message name, int width, int height)
 	{
 		boolean hasName = name != null;
-		int font = g.getFontMetrics().getHeight();
+		int font = TextRenderer.CHAR_HEIGHT;
 		Dimension corner = MenuHudSpriteset.instance.cornerSize;
 		Dimension cornerName = MenuHudSpriteset.instance.cornerNameSize;
 		this.inside = new Rectangle(this.dimensions.x + corner.width, this.dimensions.y + corner.height, this.dimensions.width - corner.width * 2,
@@ -108,8 +109,7 @@ public class MenuWindow
 			g.fillRect(nameInside.x - cornerName.width + 10, nameInside.y, 2, nameInside.height);
 			g.fillRect((int) nameInside.getMaxX() + cornerName.width - 12, nameInside.y, 2, nameInside.height);
 
-			g.setColor(Color.BLACK);
-			g.drawString(name.toString(), nameInside.x + 2, nameInside.y + font * 4 / 5);
+			TextRenderer.instance.render(g, name, nameInside.x + 2, nameInside.y + font * 1 / 5);
 		}
 
 	}

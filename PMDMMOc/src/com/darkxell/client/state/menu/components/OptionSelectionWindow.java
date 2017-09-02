@@ -1,10 +1,10 @@
 package com.darkxell.client.state.menu.components;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
+import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.MenuHudSpriteset;
 import com.darkxell.client.state.menu.AbstractMenuState;
 import com.darkxell.client.state.menu.AbstractMenuState.MenuOption;
@@ -44,16 +44,15 @@ public class OptionSelectionWindow extends MenuWindow
 		}
 
 		// Text
-		g.setColor(Color.BLACK);
 		int x = MARGIN_X + this.dimensions.x;
 		int y = MARGIN_Y + this.dimensions.y + MenuTab.OPTION_SPACE / 2;
 		for (MenuOption option : this.menu.currentTab().options())
 		{
-			g.drawString(option.name.toString(), x, y + g.getFont().getSize());
+			TextRenderer.instance.render(g, option.name, x, y);
 			if (this.cursor > 9 && this.menu.currentOption() == option) g.drawImage(
 					this.menu.isMain() ? selectionArrow : MenuHudSpriteset.instance.selectedArrow(), x - selectionArrow.getWidth() - 4, y
-							+ g.getFont().getSize() / 2 - selectionArrow.getHeight() / 2, null);
-			y += g.getFont().getSize() + MenuTab.OPTION_SPACE;
+							+ TextRenderer.CHAR_HEIGHT / 2 - selectionArrow.getHeight() / 2, null);
+			y += TextRenderer.CHAR_HEIGHT + MenuTab.OPTION_SPACE;
 		}
 	}
 
