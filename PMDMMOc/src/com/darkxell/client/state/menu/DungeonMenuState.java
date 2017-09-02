@@ -2,7 +2,6 @@ package com.darkxell.client.state.menu;
 
 import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.state.AbstractState;
-import com.darkxell.common.util.Message;
 
 public class DungeonMenuState extends AbstractMenuState
 {
@@ -15,12 +14,12 @@ public class DungeonMenuState extends AbstractMenuState
 	@Override
 	protected void createOptions()
 	{
-		MenuTab tab = new MenuTab(null);
-		tab.options.add(new MenuOption(new Message("menu.moves")));
-		tab.options.add(new MenuOption(new Message("menu.items")));
-		tab.options.add(new MenuOption(new Message("menu.team")));
-		tab.options.add(new MenuOption(new Message("menu.others")));
-		tab.options.add(new MenuOption(new Message("menu.ground")));
+		MenuTab tab = new MenuTab();
+		tab.options.add(new MenuOption("menu.moves"));
+		tab.options.add(new MenuOption("menu.items"));
+		tab.options.add(new MenuOption("menu.team"));
+		tab.options.add(new MenuOption("menu.others"));
+		tab.options.add(new MenuOption("menu.ground"));
 		this.tabs.add(tab);
 	}
 
@@ -34,7 +33,7 @@ public class DungeonMenuState extends AbstractMenuState
 	protected void onOptionSelected(MenuOption option)
 	{
 		// TODO Auto-generated method stub
-		System.out.println(option.message);
+		System.out.println(option.name);
 	}
 
 }
