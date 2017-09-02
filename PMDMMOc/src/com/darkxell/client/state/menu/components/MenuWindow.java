@@ -32,6 +32,7 @@ public class MenuWindow
 
 	public void render(Graphics2D g, int width, int height)
 	{
+		// If changing inside, check OptionSelectionWindow#render()
 		Rectangle inside = new Rectangle(this.dimensions.x + MenuHudSpriteset.instance.cornerSize.width, this.dimensions.y
 				+ MenuHudSpriteset.instance.cornerSize.height, this.dimensions.width - MenuHudSpriteset.instance.cornerSize.width * 2, this.dimensions.height
 				- MenuHudSpriteset.instance.cornerSize.height * 2);

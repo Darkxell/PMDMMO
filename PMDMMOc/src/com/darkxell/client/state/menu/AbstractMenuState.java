@@ -114,8 +114,8 @@ public abstract class AbstractMenuState extends AbstractState
 	@Override
 	public void onKeyPressed(short key)
 	{
-		if (key == Keys.KEY_LEFT) --this.tab;
-		else if (key == Keys.KEY_RIGHT) ++this.tab;
+		if (key == Keys.KEY_LEFT && this.tab > 0) --this.tab;
+		else if (key == Keys.KEY_RIGHT && this.tab < this.tabs.size() - 1) ++this.tab;
 		else if (key == Keys.KEY_UP) --this.selection;
 		else if (key == Keys.KEY_DOWN) ++this.selection;
 		else if (key == Keys.KEY_ATTACK) this.onOptionSelected(this.currentOption());
@@ -123,9 +123,7 @@ public abstract class AbstractMenuState extends AbstractState
 
 		if (key == Keys.KEY_LEFT || key == Keys.KEY_RIGHT)
 		{
-			if (this.tab == -1) this.tab = this.tabs.size() - 1;
-			else if (this.tab == this.tabs.size()) this.tab = 0;
-			else if (this.selection >= this.currentTab().options.size()) this.selection = this.currentTab().options.size() - 1;
+			if (this.selection >= this.currentTab().options.size()) this.selection = this.currentTab().options.size() - 1;
 		} else if (key == Keys.KEY_UP || key == Keys.KEY_DOWN)
 		{
 			if (this.selection == -1) this.selection = this.currentTab().options.size() - 1;
@@ -147,6 +145,11 @@ public abstract class AbstractMenuState extends AbstractState
 
 		if (this.backgroundState != null) this.backgroundState.render(g, width, height);
 		this.mainWindow.render(g, width, height);
+	}
+
+	public MenuTab[] tabs()
+	{
+		return this.tabs.toArray(new MenuTab[this.tabs.size()]);
 	}
 
 	@Override
