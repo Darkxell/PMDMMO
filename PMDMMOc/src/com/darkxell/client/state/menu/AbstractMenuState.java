@@ -1,5 +1,6 @@
 package com.darkxell.client.state.menu;
 
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.ArrayList;
@@ -17,17 +18,22 @@ public abstract class AbstractMenuState extends AbstractState
 		/** True if this Option can be selected. */
 		public boolean isEnabled;
 		/** The name of this Option. */
-		public final Message message;
+		public final Message name;
 
-		public MenuOption(Message message)
+		public MenuOption(Message name)
 		{
-			this(message, true);
+			this(name, true);
 		}
 
-		public MenuOption(Message message, boolean isEnabled)
+		public MenuOption(Message name, boolean isEnabled)
 		{
-			this.message = message;
+			this.name = name;
 			this.isEnabled = isEnabled;
+		}
+
+		public MenuOption(String nameID)
+		{
+			this(new Message(nameID));
 		}
 	}
 
@@ -38,10 +44,20 @@ public abstract class AbstractMenuState extends AbstractState
 		public final Message name;
 		ArrayList<MenuOption> options;
 
+		public MenuTab()
+		{
+			this((Message) null);
+		}
+
 		public MenuTab(Message name)
 		{
 			this.name = name;
 			this.options = new ArrayList<AbstractMenuState.MenuOption>();
+		}
+
+		public MenuTab(String nameID)
+		{
+			this(new Message(nameID));
 		}
 
 		public int height(Graphics2D g)
@@ -58,7 +74,7 @@ public abstract class AbstractMenuState extends AbstractState
 		{
 			int width = 0;
 			for (MenuOption option : this.options)
-				width = Math.max(width, g.getFontMetrics().stringWidth(option.message.toString()));
+				width = Math.max(width, g.getFontMetrics().stringWidth(option.name.toString()));
 			return width;
 		}
 
@@ -141,10 +157,11 @@ public abstract class AbstractMenuState extends AbstractState
 	@Override
 	public void render(Graphics2D g, int width, int height)
 	{
+		g.setFont(g.getFont().deriveFont(Font.PLAIN, 10));
 		if (this.mainWindow == null) this.mainWindow = new OptionSelectionWindow(this, this.mainWindowDimensions(g));
 
 		if (this.backgroundState != null) this.backgroundState.render(g, width, height);
-		this.mainWindow.render(g, width, height);
+		this.mainWindow.render(g, this.currentTab().name, width, height);
 	}
 
 	public MenuTab[] tabs()

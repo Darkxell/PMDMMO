@@ -11,22 +11,27 @@ public class MenuHudSpriteset
 
 	public static final MenuHudSpriteset instance = new MenuHudSpriteset();
 
-	public final Dimension cornerSize;
+	public final Dimension cornerSize, cornerNameSize;
 	private BufferedImage[] sprites;
 
 	public MenuHudSpriteset()
 	{
 		BufferedImage source = Res.getBase("resources/hud/menu_hud.png");
-		this.sprites = new BufferedImage[8];
+		this.sprites = new BufferedImage[12];
 		this.sprites[0] = Res.createimage(source, 0, 0, 10, 16);
 		this.sprites[1] = Res.createimage(source, 12, 0, 10, 16);
 		this.sprites[2] = Res.createimage(source, 24, 0, 8, 8);
 		this.sprites[3] = Res.createimage(source, 24, 8, 8, 8);
-		this.sprites[4] = Res.createimage(source, 0, 16, 16, 8);
-		this.sprites[5] = Res.createimage(source, 16, 16, 16, 8);
-		this.sprites[6] = Res.createimage(source, 0, 24, 16, 8);
-		this.sprites[7] = Res.createimage(source, 16, 24, 16, 8);
+		this.sprites[4] = Res.createimage(source, 0, 16, 16, 10);
+		this.sprites[5] = Res.createimage(source, 16, 16, 16, 10);
+		this.sprites[6] = Res.createimage(source, 0, 26, 16, 10);
+		this.sprites[7] = Res.createimage(source, 16, 26, 16, 10);
+		this.sprites[8] = Res.createimage(source, 0, 36, 14, 10);
+		this.sprites[9] = Res.createimage(source, 18, 36, 14, 10);
+		this.sprites[10] = Res.createimage(source, 0, 46, 14, 10);
+		this.sprites[11] = Res.createimage(source, 18, 46, 14, 10);
 		this.cornerSize = new Dimension(this.sprites[4].getWidth(), this.sprites[4].getHeight());
+		this.cornerNameSize = new Dimension(this.sprites[8].getWidth(), this.sprites[8].getHeight());
 	}
 
 	public BufferedImage selectedArrow()
@@ -57,13 +62,31 @@ public class MenuHudSpriteset
 				return this.sprites[5];
 
 			case GameUtil.SOUTHEAST:
-				return this.sprites[6];
+				return this.sprites[7];
 
 			case GameUtil.SOUTHWEST:
-				return this.sprites[7];
+				return this.sprites[6];
 
 			default:
 				return this.sprites[4];
+		}
+	}
+
+	public BufferedImage windowNameCorner(short direction)
+	{
+		switch (direction)
+		{
+			case GameUtil.NORTHEAST:
+				return this.sprites[9];
+
+			case GameUtil.SOUTHEAST:
+				return this.sprites[11];
+
+			case GameUtil.SOUTHWEST:
+				return this.sprites[10];
+
+			default:
+				return this.sprites[8];
 		}
 	}
 
