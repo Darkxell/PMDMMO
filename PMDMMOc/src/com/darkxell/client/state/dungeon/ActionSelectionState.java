@@ -6,9 +6,11 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 
+import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.resources.images.DungeonHudSpriteset;
 import com.darkxell.client.state.dungeon.DungeonState.DungeonSubState;
 import com.darkxell.client.state.dungeon.PokemonTravelState.Travel;
+import com.darkxell.client.state.menu.DungeonMenuState;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.common.util.GameUtil;
 
@@ -69,7 +71,9 @@ public class ActionSelectionState extends DungeonSubState
 
 	@Override
 	public void onKeyPressed(short key)
-	{}
+	{
+		if (key == Keys.KEY_MENU) Launcher.stateManager.setState(new DungeonMenuState(this.parent), 0);
+	}
 
 	@Override
 	public void onKeyReleased(short key)
@@ -78,20 +82,23 @@ public class ActionSelectionState extends DungeonSubState
 	@Override
 	public void render(Graphics2D g, int width, int height)
 	{
-		if (this.parent.diagonal)
+		if (this.isMain())
 		{
-			this.drawArrow(g, GameUtil.NORTHEAST);
-			this.drawArrow(g, GameUtil.SOUTHEAST);
-			this.drawArrow(g, GameUtil.SOUTHWEST);
-			this.drawArrow(g, GameUtil.NORTHWEST);
+			if (this.parent.diagonal)
+			{
+				this.drawArrow(g, GameUtil.NORTHEAST);
+				this.drawArrow(g, GameUtil.SOUTHEAST);
+				this.drawArrow(g, GameUtil.SOUTHWEST);
+				this.drawArrow(g, GameUtil.NORTHWEST);
+			}
+			if (this.parent.rotating) if (!this.parent.diagonal) this.drawArrow(g, this.parent.player.getDungeonPokemon().facing());
 		}
-		if (this.parent.rotating) if (!this.parent.diagonal) this.drawArrow(g, this.parent.player.getDungeonPokemon().facing());
 	}
 
 	@Override
 	public void update()
 	{
-		this.checkMovement();
+		if (this.isMain()) this.checkMovement();
 
 		++this.rotationCounter;
 		if (this.rotationCounter > TILE_SIZE * 2 / 3) this.rotationCounter = 0;

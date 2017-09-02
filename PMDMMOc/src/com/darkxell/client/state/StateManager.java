@@ -89,8 +89,11 @@ public class StateManager {
 	}
 
 	public void setState(AbstractState state, int transitionTime) {
-		if (transitionTime == 0)
+		if (transitionTime == 0){
+			if (this.currentState != null) this.currentState.onEnd();
 			this.currentState = state;
+			this.currentState.onStart();
+		}
 		else {
 			this.nextState = state;
 			this.transitionTime = transitionTime;

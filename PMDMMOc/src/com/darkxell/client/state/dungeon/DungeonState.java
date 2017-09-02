@@ -27,6 +27,12 @@ public class DungeonState extends AbstractState
 			this.parent = parent;
 		}
 
+		@Override
+		public boolean isMain()
+		{
+			return this.parent.isMain();
+		}
+
 	}
 
 	ActionSelectionState actionSelectionState;
@@ -52,6 +58,7 @@ public class DungeonState extends AbstractState
 		this.camera = new Point(this.player.getDungeonPokemon().tile.x * AbstractDungeonTileset.TILE_SIZE, this.player.getDungeonPokemon().tile.y
 				* AbstractDungeonTileset.TILE_SIZE);
 		this.currentSubstate = this.actionSelectionState = new ActionSelectionState(this);
+		this.currentSubstate.onStart();
 	}
 
 	@Override
@@ -81,7 +88,7 @@ public class DungeonState extends AbstractState
 		g.translate(-x, -y);
 
 		this.floorRenderer.drawFloor(g, x, y, width, height);
-		if (this.delay == 0 && this.rotating && this.currentSubstate == this.actionSelectionState) this.floorRenderer.drawGrid(g,
+		if (this.isMain()) if (this.delay == 0 && this.rotating && this.currentSubstate == this.actionSelectionState) this.floorRenderer.drawGrid(g,
 				this.player.getDungeonPokemon(), x, y, width, height);
 		this.floorRenderer.drawEntities(g, x, y, width, height);
 
@@ -101,7 +108,7 @@ public class DungeonState extends AbstractState
 	{
 		this.currentSubstate.onEnd();
 		this.currentSubstate = substate;
-		this.currentSubstate.onStart();
+		if (delay == 0) this.currentSubstate.onStart();
 		this.delay = delay;
 	}
 

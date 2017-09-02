@@ -47,10 +47,6 @@ public class PokemonTravelState extends DungeonSubState
 	}
 
 	@Override
-	public void onEnd()
-	{}
-
-	@Override
 	public void onKeyPressed(short key)
 	{}
 
@@ -61,6 +57,7 @@ public class PokemonTravelState extends DungeonSubState
 	@Override
 	public void onStart()
 	{
+		super.onStart();
 		for (Travel travel : this.travels)
 		{
 			PokemonSprite sprite = DungeonPokemonRenderer.instance.register(travel.pokemon);
