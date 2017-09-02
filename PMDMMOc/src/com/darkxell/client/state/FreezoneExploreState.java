@@ -9,6 +9,7 @@ import com.darkxell.client.mechanics.freezones.FreezoneTile;
 import com.darkxell.client.mechanics.freezones.WarpZone;
 import com.darkxell.client.mechanics.freezones.zones.BaseFreezone;
 import com.darkxell.client.persistance.FreezoneMapHolder;
+import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.Hud;
 import com.darkxell.client.resources.music.SoundsHolder;
 import com.darkxell.client.ui.Keys;
@@ -112,20 +113,16 @@ public class FreezoneExploreState extends AbstractState {
 
 			if (FreezoneMapHolder.currentplayer.canInteract()) {
 				g.drawImage(Hud.button, width - 70, 5, null);
-				g.setColor(Color.BLACK);
-				g.drawString("Interact", width - 50, 20);
-				g.setColor(Color.WHITE);
-				g.drawString("Interact", width - 50, 18);
+				TextRenderer.instance.render(g, "Interact", width - 50, 10);
 				// TODO : change the "INTERACT" here to a language dependent
 				// string, and change it to match the action.
 			}
 
 			if (debugdisplaymode) {
 				g.setColor(Color.BLACK);
-				g.drawString("UPS: " + Launcher.getUps() + ", FPS: " + Launcher.getFps(), 1, g.getFont().getSize() * 2);
-				g.drawString(
-						"Position: " + FreezoneMapHolder.currentplayer.x + " / " + FreezoneMapHolder.currentplayer.y, 1,
-						g.getFont().getSize() * 4);
+				TextRenderer.instance.render(g, "UPS: " + Launcher.getUps() + ", FPS: " + Launcher.getFps(), 1, TextRenderer.CHAR_HEIGHT);
+				TextRenderer.instance.render(g, "Position: " + FreezoneMapHolder.currentplayer.x + " / " + FreezoneMapHolder.currentplayer.y, 1,
+						TextRenderer.CHAR_HEIGHT * 3);
 			}
 		}
 	}

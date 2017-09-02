@@ -9,6 +9,7 @@ import com.darkxell.client.mechanics.freezones.FreezoneMap;
 import com.darkxell.client.mechanics.freezones.FreezoneTile;
 import com.darkxell.client.mechanics.freezones.zones.PokemonSquareFreezone;
 import com.darkxell.client.persistance.FreezoneMapHolder;
+import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.Hud;
 import com.darkxell.client.resources.images.PokemonSprite;
 import com.darkxell.client.ui.Keys;
@@ -100,10 +101,7 @@ public class FreezoneDialogState extends AbstractState {
 			g.translate(-translateX, -translateY);
 
 			g.drawImage(Hud.button, width - 70, 5, null);
-			g.setColor(Color.BLACK);
-			g.drawString("Next", width - 50, 20);
-			g.setColor(Color.WHITE);
-			g.drawString("Next", width - 50, 18);
+			TextRenderer.instance.render(g, "Next", width - 50, 10);
 			// TODO : change the "NEXT" here to a language dependent
 			// string..
 			int temp_tw_width = width - 40;
@@ -114,22 +112,21 @@ public class FreezoneDialogState extends AbstractState {
 				this.showableDialog = getDialogLines(g, width - 80);
 			if (showableDialog.size() > dialogposition) {
 				String sss = showableDialog.get(dialogposition);
-				g.drawString(sss.substring(0, appearance >= sss.length() ? sss.length() - 1 : appearance), 40,
-						height - temp_tw_height - 20 + (temp_tw_height / 3) + (g.getFont().getSize() / 2));
+				TextRenderer.instance.render(g, sss.substring(0, appearance >= sss.length() ? sss.length() - 1 : appearance), 40, height - temp_tw_height - 20
+						+ (temp_tw_height / 3));
 			}
 			if (showableDialog.size() > dialogposition + 1) {
 				String sss = showableDialog.get(dialogposition);
 				String sst = showableDialog.get(dialogposition + 1);
-				g.drawString(
+				TextRenderer.instance.render(
+						g,
 						sst.substring(0,
-								appearance - sss.length() < 0 ? 0
-										: appearance - sss.length() >= sst.length() ? sst.length() - 1
-												: appearance - sss.length()),
-						40, height - temp_tw_height - 20 + (temp_tw_height / 3 * 2) + (g.getFont().getSize() / 2));
+								appearance - sss.length() < 0 ? 0 : appearance - sss.length() >= sst.length() ? sst.length() - 1 : appearance - sss.length()),
+						40, height - temp_tw_height - 20 + (temp_tw_height / 3 * 2));
 			}
 			if (FreezoneExploreState.debugdisplaymode) {
 				g.setColor(Color.BLACK);
-				g.drawString("UPS: " + Launcher.getUps() + ", FPS: " + Launcher.getFps(), 1, g.getFont().getSize() * 2);
+				TextRenderer.instance.render(g, "UPS: " + Launcher.getUps() + ", FPS: " + Launcher.getFps(), 1, 1);
 			}
 		}
 	}
@@ -174,6 +171,6 @@ public class FreezoneDialogState extends AbstractState {
 	 * graphics object.
 	 */
 	private int getStringLength(Graphics2D g, String s) {
-		return g.getFontMetrics(g.getFont()).stringWidth(s);
+		return TextRenderer.instance.width(s);
 	}
 }

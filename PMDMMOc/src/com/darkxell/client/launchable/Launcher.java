@@ -1,5 +1,6 @@
 package com.darkxell.client.launchable;
 
+import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.PokemonSpritesets;
 import com.darkxell.client.resources.music.SoundManager;
 import com.darkxell.client.state.FreezoneExploreState;
@@ -37,6 +38,7 @@ public class Launcher
 		ItemRegistry.loadClient();
 		DungeonRegistry.loadClient();
 		PokemonSpritesets.loadData();
+		TextRenderer.load();
 		soundmanager = new SoundManager();
 		System.out.println("Lang & Data loaded.");
 
