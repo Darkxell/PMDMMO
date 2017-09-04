@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 import org.jdom2.Element;
 
+import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.XMLUtils;
 
 /** Holds all Pokémon species. */
@@ -29,7 +30,7 @@ public final class PokemonRegistry
 	/** Loads this Registry for the Client. */
 	public static void loadClient()
 	{
-		System.out.println("Loading Pokémon...");
+		Logger.instance().debug("Loading Pokémon...");
 
 		Element root = XMLUtils.readFile(new File("resources/data/pokemon.xml"));
 		for (Element e : root.getChildren("pokemon"))

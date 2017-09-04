@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 import org.jdom2.Element;
 
+import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.XMLUtils;
 
 /** Holds all Items. */
@@ -29,7 +30,7 @@ public final class ItemRegistry
 	/** Loads this Registry for the Client. */
 	public static void loadClient()
 	{
-		System.out.println("Loading Items...");
+		Logger.instance().debug("Loading Items...");
 
 		Element root = XMLUtils.readFile(new File("resources/data/items.xml"));
 		for (Element e : root.getChildren("item"))

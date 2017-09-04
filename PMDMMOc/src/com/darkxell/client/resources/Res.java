@@ -6,6 +6,8 @@ import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
+import com.darkxell.common.util.Logger;
+
 public class Res {
 
 	/** Gets an image from the res folder as a BufferedImage. */
@@ -22,7 +24,7 @@ public class Res {
 				e.printStackTrace();
 			}
 		}
-		System.out.println("Loaded resource from hard memory : "+ path);
+		Logger.instance().debug("Loaded resource from hard memory : "+ path);
 		return img;
 	}
 

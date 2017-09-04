@@ -2,6 +2,7 @@ package com.darkxell.client.state.menu;
 
 import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.state.AbstractState;
+import com.darkxell.common.util.Logger;
 
 public class DungeonMenuState extends AbstractMenuState
 {
@@ -33,7 +34,7 @@ public class DungeonMenuState extends AbstractMenuState
 	protected void onOptionSelected(MenuOption option)
 	{
 		// TODO Auto-generated method stub
-		System.out.println(option.name);
+		Logger.instance().info(option.name);
 	}
 
 }

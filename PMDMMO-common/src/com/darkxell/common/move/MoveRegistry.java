@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 import org.jdom2.Element;
 
+import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.XMLUtils;
 
 /** Holds all Moves. */
@@ -29,7 +30,7 @@ public final class MoveRegistry
 	/** Loads this Registry for the Client. */
 	public static void loadClient()
 	{
-		System.out.println("Loading Moves...");
+		Logger.instance().debug("Loading Moves...");
 
 		Element root = XMLUtils.readFile(new File("resources/data/moves.xml"));
 		for (Element e : root.getChildren("move"))

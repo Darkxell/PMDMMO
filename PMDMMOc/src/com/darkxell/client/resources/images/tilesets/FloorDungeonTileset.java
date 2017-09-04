@@ -98,7 +98,6 @@ public class FloorDungeonTileset extends AbstractDungeonTileset
 		Point p = tileLocations.get((int) tile.getNeighbors());
 		if (p == null)
 		{
-			System.out.println(tile.getNeighbors());
 			x += 1;
 			y += 4;
 		} else

@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 import org.jdom2.Element;
 
+import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.XMLUtils;
 
 /** Holds all Dungeons. */
@@ -29,7 +30,7 @@ public final class DungeonRegistry
 	/** Loads this Registry for the Client. */
 	public static void loadClient()
 	{
-		System.out.println("Loading Dungeons...");
+		Logger.instance().debug("Loading Dungeons...");
 
 		Element root = XMLUtils.readFile(new File("resources/data/dungeons.xml"));
 		for (Element e : root.getChildren("dungeon"))

@@ -11,6 +11,7 @@ import com.darkxell.common.item.ItemRegistry;
 import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.util.Lang;
+import com.darkxell.common.util.Logger;
 
 /** Launching class of the client */
 public class Launcher
@@ -19,7 +20,7 @@ public class Launcher
 	/** If true, data is saved on exit. */
 	public static boolean SAVE_ON_EXIT = false;
 
-	/**The sound manager of the client.*/
+	/** The sound manager of the client. */
 	public static SoundManager soundmanager;
 	public static Frame frame;
 	/** Set to false to stop the game. */
@@ -32,6 +33,7 @@ public class Launcher
 
 	public static void main(String[] args)
 	{
+		Logger.loadClient();
 		Lang.loadClient();
 		PokemonRegistry.loadClient();
 		MoveRegistry.loadClient();
@@ -40,14 +42,14 @@ public class Launcher
 		PokemonSpritesets.loadData();
 		TextRenderer.load();
 		soundmanager = new SoundManager();
-		System.out.println("Lang & Data loaded.");
+		Logger.instance().info("Lang & Data loaded.");
 
 		frame = new Frame();
 		stateManager = new StateManager();
 		stateManager.setState(new FreezoneExploreState(), 0);
-		//Floor f = new Floor(4, Layout.STATIC, DungeonRegistry.find(1));
-		//f.generate();
-		//stateManager.setState(new DungeonState(f), 0);
+		// Floor f = new Floor(4, Layout.STATIC, DungeonRegistry.find(1));
+		// f.generate();
+		// stateManager.setState(new DungeonState(f), 0);
 
 		isRunning = true;
 		setProcessingProfile(PROFILE_SYNCHRONIZED);
@@ -74,6 +76,7 @@ public class Launcher
 			ItemRegistry.saveClient();
 			DungeonRegistry.saveClient();
 		}
+		Logger.instance().saveClient();
 	}
 
 	public static void setProcessingProfile(byte profile)
@@ -84,12 +87,12 @@ public class Launcher
 		{
 			case PROFILE_SYNCHRONIZED:
 				new Thread(updaterandrenderer = new UpdaterAndRenderer()).start();
-				System.out.println("Processing profile switched: PROFILE_SYNCHRONIZED");
+				Logger.instance().debug("Processing profile switched: PROFILE_SYNCHRONIZED");
 				break;
 			case PROFILE_UNCAPPED:
 				new Thread(updater = new Updater()).start();
 				new Thread(renderer = new Renderer()).start();
-				System.out.println("Processing profile switched: PROFILE_UNCAPPED");
+				Logger.instance().debug("Processing profile switched: PROFILE_UNCAPPED");
 				break;
 		}
 	}

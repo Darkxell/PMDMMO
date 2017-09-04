@@ -36,6 +36,7 @@ public class Lang
 	public static void setLanguage(Language language)
 	{
 		if (language == selected) return;
+		Logger.instance().info("Language set to " + language.name + ".");
 		selected = language;
 		updateTranslations();
 	}
