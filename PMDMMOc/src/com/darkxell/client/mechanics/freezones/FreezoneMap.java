@@ -28,7 +28,7 @@ public class FreezoneMap {
 	public ArrayList<FreezoneEntity> entities = new ArrayList<>();
 
 	public ArrayList<WarpZone> warpzones = new ArrayList<>();
-	
+
 	public FreezoneMap(String xmlfilepath) {
 		File file = new File(xmlfilepath);
 		SAXBuilder builder = new SAXBuilder();
@@ -49,7 +49,7 @@ public class FreezoneMap {
 							? FreezoneTile.TYPE_SOLID : FreezoneTile.TYPE_WALKABLE;
 				} else {
 					AbstractTileset t = AbstractTileset.getTileset(element.getAttributeValue("bgName"));
-					this.tiles[refferingTileID].sprite = t.SPRITES[(mapWidth
+					this.tiles[refferingTileID].sprite = t.SPRITES[((t.getSource().getWidth() / 8)
 							* (Integer.parseInt(element.getAttributeValue("yo")) / 8))
 							+ (Integer.parseInt(element.getAttributeValue("xo")) / 8)];
 				}
