@@ -2,6 +2,7 @@ package com.darkxell.client.state.dungeon;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.util.LinkedList;
 import java.util.Random;
 
 import com.darkxell.client.renderers.DungeonPokemonRenderer;
@@ -12,6 +13,7 @@ import com.darkxell.client.ui.Keys;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.PokemonRegistry;
+import com.darkxell.common.util.Message;
 
 /** The main state for Dungeon exploration. */
 public class DungeonState extends AbstractState
@@ -35,7 +37,7 @@ public class DungeonState extends AbstractState
 
 	}
 
-	ActionSelectionState actionSelectionState;
+	public final ActionSelectionState actionSelectionState;
 	/** The current location of the Player on the screen (centered). */
 	Point camera;
 	/** The current substate. */
@@ -45,6 +47,7 @@ public class DungeonState extends AbstractState
 	boolean diagonal = false, rotating = false;
 	public final Floor floor;
 	final FloorRenderer floorRenderer;
+	private LinkedList<Message> log;
 	public final Player player;
 
 	public DungeonState(Floor floor)
@@ -55,10 +58,18 @@ public class DungeonState extends AbstractState
 		Point p = this.floor.getTeamSpawn();
 		this.floor.tileAt(p.x, p.y).setPokemon(this.player.getDungeonPokemon());
 
+		this.log = new LinkedList<Message>();
+
 		this.camera = new Point(this.player.getDungeonPokemon().tile.x * AbstractDungeonTileset.TILE_SIZE, this.player.getDungeonPokemon().tile.y
 				* AbstractDungeonTileset.TILE_SIZE);
 		this.currentSubstate = this.actionSelectionState = new ActionSelectionState(this);
 		this.currentSubstate.onStart();
+	}
+
+	/** @return The last 40 messages that were displayed to the Player. */
+	public Message[] log()
+	{
+		return this.log.toArray(new Message[this.log.size()]);
 	}
 
 	@Override
@@ -97,7 +108,7 @@ public class DungeonState extends AbstractState
 		g.translate(x, y);
 	}
 
-	void setSubstate(DungeonSubState substate)
+	public void setSubstate(DungeonSubState substate)
 	{
 		this.setSubstate(substate, 0);
 	}
@@ -110,6 +121,15 @@ public class DungeonState extends AbstractState
 		this.currentSubstate = substate;
 		if (delay == 0) this.currentSubstate.onStart();
 		this.delay = delay;
+	}
+
+	/** Shows a message to the player. */
+	public void showMessage(Message message)
+	{
+		message.addReplacement("<player>", this.player.getPokemon().getNickname());
+		System.out.println(message);
+		this.log.add(message);
+		if (this.log.size() > 40) this.log.poll();
 	}
 
 	@Override
