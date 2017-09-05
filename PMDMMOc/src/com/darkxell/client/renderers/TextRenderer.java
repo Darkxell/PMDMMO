@@ -222,8 +222,8 @@ public class TextRenderer
 		String[] parts = text.split("\n");
 		for (int i = 0; i < parts.length; i++)
 		{
-			textlines.add("    ");
-			currentlength = this.width("    ");
+			textlines.add("");
+			currentlength = 0;
 			String[] words = parts[i].split(" ");
 			for (int j = 0; j < words.length; j++)
 				if (currentlength == 0 || currentlength + this.width(words[j]) < boxwidth)

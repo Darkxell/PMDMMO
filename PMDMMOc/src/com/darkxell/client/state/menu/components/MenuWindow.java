@@ -15,7 +15,7 @@ public class MenuWindow
 	static Color in, middle, out;
 	public static final int MARGIN_X = 30, MARGIN_Y = 10;
 
-	final Rectangle dimensions;
+	public final Rectangle dimensions;
 	protected Rectangle inside;
 	public boolean isOpaque = false;
 

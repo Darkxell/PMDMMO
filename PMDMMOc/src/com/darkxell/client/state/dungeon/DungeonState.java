@@ -2,13 +2,17 @@ package com.darkxell.client.state.dungeon;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Rectangle;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
 
 import com.darkxell.client.renderers.DungeonPokemonRenderer;
 import com.darkxell.client.renderers.FloorRenderer;
+import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.AbstractDungeonTileset;
 import com.darkxell.client.state.AbstractState;
+import com.darkxell.client.state.menu.components.MenuWindow;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.player.Player;
@@ -18,7 +22,6 @@ import com.darkxell.common.util.Message;
 /** The main state for Dungeon exploration. */
 public class DungeonState extends AbstractState
 {
-
 	/** A substate for Dungeon exploration. */
 	static abstract class DungeonSubState extends AbstractState
 	{
@@ -37,6 +40,8 @@ public class DungeonState extends AbstractState
 
 	}
 
+	public static final int MESSAGE_TIME = 60 * 6;
+
 	public final ActionSelectionState actionSelectionState;
 	/** The current location of the Player on the screen (centered). */
 	Point camera;
@@ -47,7 +52,15 @@ public class DungeonState extends AbstractState
 	boolean diagonal = false, rotating = false;
 	public final Floor floor;
 	final FloorRenderer floorRenderer;
+	/** The last width the messages window were calculated for. Set to -1 to force reloading. */
+	private int lastWidth = -1;
+	/** Lists the last 40 messages. */
 	private LinkedList<Message> log;
+	/** The currently displayed messages. */
+	private LinkedList<Message> messages;
+	/** The window to draw messages in. */
+	private MenuWindow messagesWindow;
+	private int messageTime = 0;
 	public final Player player;
 
 	public DungeonState(Floor floor)
@@ -59,11 +72,27 @@ public class DungeonState extends AbstractState
 		this.floor.tileAt(p.x, p.y).setPokemon(this.player.getDungeonPokemon());
 
 		this.log = new LinkedList<Message>();
+		this.messages = new LinkedList<Message>();
 
 		this.camera = new Point(this.player.getDungeonPokemon().tile.x * AbstractDungeonTileset.TILE_SIZE, this.player.getDungeonPokemon().tile.y
 				* AbstractDungeonTileset.TILE_SIZE);
 		this.currentSubstate = this.actionSelectionState = new ActionSelectionState(this);
 		this.currentSubstate.onStart();
+	}
+
+	private void drawMessages(Graphics2D g, int width, int height)
+	{
+		if (this.lastWidth != width) this.reloadMessages(width, height);
+
+		this.messagesWindow.render(g, null, width, height);
+		for (int i = 0; i < this.messages.size() && i < 3; ++i)
+			TextRenderer.instance.render(g, this.messages.get(this.messages.size() - i - 1), this.messagesWindow.dimensions.x + 20,
+					this.messagesWindow.dimensions.y + (5 + TextRenderer.CHAR_HEIGHT) * i + MenuWindow.MARGIN_Y + 3);
+	}
+
+	public void hideMessages()
+	{
+		this.messageTime = 0;
 	}
 
 	/** @return The last 40 messages that were displayed to the Player. */
@@ -91,6 +120,23 @@ public class DungeonState extends AbstractState
 		this.currentSubstate.onKeyReleased(key);
 	}
 
+	private void reloadMessages(int width, int height)
+	{
+		int w = width - 40;
+		int h = w * 5 / 28;
+		this.messagesWindow = new MenuWindow(new Rectangle((width - w) / 2, height - h - 20, w, h));
+
+		ArrayList<String> toReturn = new ArrayList<String>();
+		for (Message m : this.messages)
+			toReturn.addAll(TextRenderer.instance.splitLines(m.toString(), w - 40));
+
+		this.messages.clear();
+		for (int i = 0; i < 6 && i < toReturn.size(); ++i)
+			this.messages.add(new Message(toReturn.get(i), false));
+
+		this.lastWidth = width;
+	}
+
 	@Override
 	public void render(Graphics2D g, int width, int height)
 	{
@@ -106,6 +152,7 @@ public class DungeonState extends AbstractState
 		if (this.delay == 0) this.currentSubstate.render(g, width, height);
 
 		g.translate(x, y);
+		if (this.messageTime > 0) this.drawMessages(g, width, height);
 	}
 
 	public void setSubstate(DungeonSubState substate)
@@ -127,15 +174,25 @@ public class DungeonState extends AbstractState
 	public void showMessage(Message message)
 	{
 		message.addReplacement("<player>", this.player.getPokemon().getNickname());
-		System.out.println(message);
 		this.log.add(message);
+		this.messages.add(message);
 		if (this.log.size() > 40) this.log.poll();
+		if (this.messages.size() > 3) this.messages.poll();
+		this.messageTime = MESSAGE_TIME;
+		this.lastWidth = -1;
 	}
 
 	@Override
 	public void update()
 	{
 		DungeonPokemonRenderer.instance.update();
+
+		if (this.messageTime > 0)
+		{
+			if (this.messageTime == 1) this.messages.clear();
+			--this.messageTime;
+		}
+
 		if (this.delay > 1) --this.delay;
 		else if (this.delay == 1)
 		{
