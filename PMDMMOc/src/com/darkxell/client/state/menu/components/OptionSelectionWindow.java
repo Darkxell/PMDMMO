@@ -56,11 +56,8 @@ public class OptionSelectionWindow extends MenuWindow
 		}
 	}
 
-	@Override
 	public void update()
 	{
-		super.update();
-
 		++this.cursor;
 		if (this.cursor > 20) this.cursor = 0;
 	}

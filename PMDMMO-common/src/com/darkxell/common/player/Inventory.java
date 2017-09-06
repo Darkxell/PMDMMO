@@ -23,6 +23,7 @@ public class Inventory
 	/** @return True if the input Item was successfully added. */
 	public boolean add(ItemStack item)
 	{
+		if (!canAccept(item)) return false;
 		if (item.item().isStackable) for (ItemStack stack : this.items)
 			if (stack.id == item.id)
 			{
@@ -30,9 +31,17 @@ public class Inventory
 				return true;
 			}
 
-		if (this.isFull()) return false;
 		this.items.add(item);
 		return true;
+	}
+
+	/** @return True if the input Item can be added. */
+	public boolean canAccept(ItemStack item)
+	{
+		if (item.item().isStackable) for (ItemStack stack : this.items)
+			if (stack.id == item.id) return true;
+
+		return !this.isFull();
 	}
 
 	/** Removes all Items with quantity equal to zero. */

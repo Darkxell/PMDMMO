@@ -44,6 +44,7 @@ public class MenuWindow
 
 	public void render(Graphics2D g, Message name, int width, int height)
 	{
+		if (in == null) this.initColors();
 		boolean hasName = name != null;
 		int font = TextRenderer.CHAR_HEIGHT;
 		Dimension corner = MenuHudSpriteset.instance.cornerSize;
@@ -117,11 +118,6 @@ public class MenuWindow
 			TextRenderer.instance.render(g, name, nameInside.x + 2, nameInside.y + font * 1 / 5);
 		}
 
-	}
-
-	public void update()
-	{
-		if (in == null) this.initColors();
 	}
 
 }

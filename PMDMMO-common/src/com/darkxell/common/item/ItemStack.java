@@ -2,6 +2,9 @@ package com.darkxell.common.item;
 
 import org.jdom2.Element;
 
+import com.darkxell.common.util.Lang;
+import com.darkxell.common.util.Message;
+
 public class ItemStack
 {
 
@@ -32,6 +35,13 @@ public class ItemStack
 	public Item item()
 	{
 		return ItemRegistry.find(this.id);
+	}
+
+	public Message name()
+	{
+		if (Lang.containsKey("item." + this.id + ".stack")) return new Message("item." + this.id + ".stack").addReplacement("<quantity>",
+				Integer.toString(this.quantity));
+		return this.item().name();
 	}
 
 	public ItemStack setQuantity(int quantity)

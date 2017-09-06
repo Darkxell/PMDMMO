@@ -8,7 +8,11 @@ import com.darkxell.client.renderers.DungeonPokemonRenderer;
 import com.darkxell.client.resources.images.AbstractDungeonTileset;
 import com.darkxell.client.resources.images.PokemonSprite;
 import com.darkxell.client.state.dungeon.DungeonState.DungeonSubState;
+import com.darkxell.common.dungeon.floor.Tile;
+import com.darkxell.common.item.Item;
+import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.util.Message;
 
 /** Used for Pokémon travel animations. */
 public class PokemonTravelState extends DungeonSubState
@@ -31,6 +35,32 @@ public class PokemonTravelState extends DungeonSubState
 			this.arrival = this.pokemon.tile.adjacentTile(direction).location();
 			this.distance = new Point(this.arrival.x - this.origin.x, this.arrival.y - this.origin.y);
 			this.current = new Point2D.Float(this.origin.x, this.origin.y);
+		}
+
+		public void onEnd(DungeonState state)
+		{
+			Tile t = this.pokemon.tile.adjacentTile(this.direction);
+			t.setPokemon(this.pokemon);
+
+			if (t.getItem() != null)
+			{
+				String messageID = "ground.step";
+				ItemStack i = t.getItem();
+
+				if (this.pokemon.pokemon == state.player.getPokemon() && state.player.inventory.canAccept(i))
+				{
+					state.player.inventory.add(i);
+					messageID = "ground.inventory";
+					t.setItem(null);
+				} else if (this.pokemon.pokemon.getItem() == null)
+				{
+					this.pokemon.pokemon.setItem(i);
+					messageID = "ground.pickup";
+					t.setItem(null);
+				}
+				state.logger.showMessage(new Message(messageID).addReplacement("<pokemon>", this.pokemon.pokemon.getNickname()).addReplacement("<item>",
+						i.name()));
+			}
 		}
 	}
 
@@ -91,7 +121,7 @@ public class PokemonTravelState extends DungeonSubState
 		if (this.tick >= DURATION)
 		{
 			for (Travel travel : this.travels)
-				travel.pokemon.tile.adjacentTile(travel.direction).setPokemon(travel.pokemon);
+				travel.onEnd(this.parent);
 
 			if (!this.parent.actionSelectionState.checkMovement())
 			{
