@@ -50,9 +50,9 @@ public class Launcher
 		frame = new Frame();
 		stateManager = new StateManager();
 		stateManager.setState(new FreezoneExploreState(), 0);
-		Floor f = new Floor(4, Layout.STATIC, DungeonRegistry.find(1));
-		f.generate();
-		stateManager.setState(new DungeonState(f), 0);
+		// Floor f = new Floor(4, Layout.STATIC, DungeonRegistry.find(1));
+		// f.generate();
+		// stateManager.setState(new DungeonState(f), 0);
 
 		isRunning = true;
 		setProcessingProfile(PROFILE_SYNCHRONIZED);

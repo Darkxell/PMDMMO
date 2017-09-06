@@ -43,8 +43,8 @@ public class DungeonMenuState extends AbstractMenuState
 		{
 			DungeonState s = (DungeonState) this.backgroundState;
 			this.onExit();
-			if (s.player.getDungeonPokemon().tile.getItem() == null) s.showMessage(new Message("ground.empty"));
-			else s.showMessage(new Message("ground.found").addReplacement("<item>", s.player.getDungeonPokemon().tile.getItem().item().name()));
+			if (s.player.getDungeonPokemon().tile.getItem() == null) s.logger.showMessage(new Message("ground.empty"));
+			else s.logger.showMessage(new Message("ground.found").addReplacement("<item>", s.player.getDungeonPokemon().tile.getItem().item().name()));
 		}
 		Logger.instance().info(option.name);
 	}

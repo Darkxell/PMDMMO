@@ -37,6 +37,11 @@ public class MenuWindow
 		in = new Color(corner.getRGB(corner.getWidth() - 1, corner.getHeight() - 1), true);
 	}
 
+	public Rectangle inside()
+	{
+		return this.inside;
+	}
+
 	public void render(Graphics2D g, Message name, int width, int height)
 	{
 		boolean hasName = name != null;
