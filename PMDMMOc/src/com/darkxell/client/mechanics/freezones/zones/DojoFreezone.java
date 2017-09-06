@@ -1,8 +1,7 @@
-package com.darkxell.client.resources.images.tilesets;
+package com.darkxell.client.mechanics.freezones.zones;
 
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
 import com.darkxell.client.mechanics.freezones.WarpZone;
-import com.darkxell.client.mechanics.freezones.zones.PokemonSquareFreezone;
 import com.darkxell.common.util.DoubleRectangle;
 
 public class DojoFreezone extends FreezoneMap {
