@@ -13,7 +13,7 @@ public class MenuWindow
 	/** Window colors. Fill = inside the window. out, middle, int describe the outline, from inside to outside. */
 	static final Color fillT = new Color(31, 72, 104, 147), fillO = new Color(31, 72, 104, 255);
 	static Color in, middle, out;
-	public static final int MARGIN_X = 30, MARGIN_Y = 10;
+	public static final int MARGIN_X = 30, MARGIN_Y = 12;
 
 	public final Rectangle dimensions;
 	protected Rectangle inside;

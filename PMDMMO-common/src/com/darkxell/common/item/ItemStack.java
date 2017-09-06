@@ -27,6 +27,12 @@ public class ItemStack
 		this.quantity = 1;
 	}
 
+	/** @return A copy of this Item Stack. */
+	public ItemStack copy()
+	{
+		return new ItemStack(this.id).setQuantity(this.quantity);
+	}
+
 	public int getQuantity()
 	{
 		return this.quantity;

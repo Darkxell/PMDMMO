@@ -9,7 +9,7 @@ import com.darkxell.common.item.ItemStack;
 public class Inventory
 {
 
-	public static final int MAX_SIZE = 40;
+	public static final int MAX_SIZE = 20;
 
 	private ArrayList<ItemStack> items;
 	private int maxSize;
@@ -72,6 +72,11 @@ public class Inventory
 	public boolean isFull()
 	{
 		return this.items.size() == this.maxSize;
+	}
+
+	public int itemCount()
+	{
+		return this.items.size();
 	}
 
 	/** @return The list of Items in this Inventory. */
