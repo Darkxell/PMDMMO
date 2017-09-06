@@ -15,7 +15,7 @@ public class MenuWindow
 	static Color in, middle, out;
 	public static final int MARGIN_X = 30, MARGIN_Y = 10;
 
-	final Rectangle dimensions;
+	public final Rectangle dimensions;
 	protected Rectangle inside;
 	public boolean isOpaque = false;
 
@@ -35,6 +35,11 @@ public class MenuWindow
 		out = new Color(corner.getRGB(corner.getWidth() - 1, 0), true);
 		middle = new Color(corner.getRGB(corner.getWidth() - 1, 2), true);
 		in = new Color(corner.getRGB(corner.getWidth() - 1, corner.getHeight() - 1), true);
+	}
+
+	public Rectangle inside()
+	{
+		return this.inside;
 	}
 
 	public void render(Graphics2D g, Message name, int width, int height)

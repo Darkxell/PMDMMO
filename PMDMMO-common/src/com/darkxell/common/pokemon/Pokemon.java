@@ -140,6 +140,7 @@ public class Pokemon
 
 	public String getNickname()
 	{
+		if (this.nickname == null) return this.species.name().toString();
 		return this.nickname;
 	}
 

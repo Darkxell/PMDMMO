@@ -50,6 +50,7 @@ public class Message
 	@Override
 	public String toString()
 	{
+		if (!this.shouldTranslate) return this.id;
 		if (!Lang.getLanguage().id.equals(this.lastLang)) this.update();
 		return this.value;
 	}
@@ -58,7 +59,9 @@ public class Message
 	{
 		this.value = this.shouldTranslate ? Lang.translate(this.id) : this.id;
 		for (String pattern : this.replacements.keySet())
-			this.value.replaceAll(pattern, this.replacements.get(pattern).toString());
+			this.value = this.value.replaceAll(pattern, this.replacements.get(pattern).toString());
+
+		this.lastLang = Lang.getLanguage().id;
 	}
 
 }

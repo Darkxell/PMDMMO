@@ -214,6 +214,33 @@ public class TextRenderer
 		}
 	}
 
+	/** Transforms a String into a printable array of strings printable to the screen. */
+	public ArrayList<String> splitLines(String text, int boxwidth)
+	{
+		ArrayList<String> textlines = new ArrayList<>();
+		int currentlength = 0, iterator = 0;
+		String[] parts = text.split("\n");
+		for (int i = 0; i < parts.length; i++)
+		{
+			textlines.add("");
+			currentlength = 0;
+			String[] words = parts[i].split(" ");
+			for (int j = 0; j < words.length; j++)
+				if (currentlength == 0 || currentlength + this.width(words[j]) < boxwidth)
+				{
+					textlines.set(iterator, textlines.get(iterator) + words[j] + " ");
+					currentlength += this.width(words[j] + " ");
+				} else
+				{
+					textlines.add(words[j] + " ");
+					++iterator;
+					currentlength = this.width(words[j] + " ");
+				}
+			++iterator;
+		}
+		return textlines;
+	}
+
 	/** @return The width of the input message. */
 	public int width(Message message)
 	{

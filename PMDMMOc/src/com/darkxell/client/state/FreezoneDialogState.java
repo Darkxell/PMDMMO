@@ -109,7 +109,7 @@ public class FreezoneDialogState extends AbstractState {
 			g.drawImage(Hud.textwindow, 20, height - temp_tw_height - 20, temp_tw_width, temp_tw_height, null);
 
 			if (this.showableDialog == null)
-				this.showableDialog = getDialogLines(g, width - 80);
+				this.showableDialog = TextRenderer.instance.splitLines(this.dialog, width - 80);
 			if (showableDialog.size() > dialogposition) {
 				String sss = showableDialog.get(dialogposition);
 				TextRenderer.instance.render(g, sss.substring(0, appearance >= sss.length() ? sss.length() - 1 : appearance), 40, height - temp_tw_height - 20
@@ -140,37 +140,4 @@ public class FreezoneDialogState extends AbstractState {
 			FreezoneMapHolder.currentmap.update();
 	}
 
-	/**
-	 * Transforms a String into a printable array of strings printable to the
-	 * screen.
-	 */
-	private ArrayList<String> getDialogLines(Graphics2D g, int boxwidth) {
-		ArrayList<String> textlines = new ArrayList<>();
-		int currentlength = 0, iterator = 0;
-		String[] parts = this.dialog.split("\n");
-		for (int i = 0; i < parts.length; i++) {
-			textlines.add("    ");
-			currentlength = getStringLength(g, "    ");
-			String[] words = parts[i].split(" ");
-			for (int j = 0; j < words.length; j++)
-				if (currentlength == 0 || currentlength + getStringLength(g, words[j]) < boxwidth) {
-					textlines.set(iterator, textlines.get(iterator) + words[j] + " ");
-					currentlength += getStringLength(g, words[j] + " ");
-				} else {
-					textlines.add(words[j] + " ");
-					++iterator;
-					currentlength = getStringLength(g, words[j] + " ");
-				}
-			++iterator;
-		}
-		return textlines;
-	}
-
-	/**
-	 * Gets the length of a string in pixels if drawn with the specified
-	 * graphics object.
-	 */
-	private int getStringLength(Graphics2D g, String s) {
-		return TextRenderer.instance.width(s);
-	}
 }
