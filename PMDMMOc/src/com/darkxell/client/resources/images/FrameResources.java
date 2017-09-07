@@ -23,5 +23,7 @@ public class FrameResources {
 	public static final BufferedImage BG5 = Res.getBase("resources/hud/framebackgrounds/5.jpg");
 	public static final BufferedImage BG6 = Res.getBase("resources/hud/framebackgrounds/6.png");
 	public static final BufferedImage BG7 = Res.getBase("resources/hud/framebackgrounds/7.jpg");
+	
+	public static final BufferedImage ICON = Res.getBase("resources/hud/framebackgrounds/icon.png");
 
 }

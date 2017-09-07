@@ -8,6 +8,7 @@ import java.awt.event.WindowListener;
 import javax.swing.JFrame;
 
 import com.darkxell.client.launchable.Launcher;
+import com.darkxell.client.resources.images.FrameResources;
 
 /** Main frame for the client. */
 public class Frame extends JFrame implements WindowListener
@@ -25,8 +26,10 @@ public class Frame extends JFrame implements WindowListener
 		// this.setResizable(false);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.setIconImage(FrameResources.ICON);
 		this.setVisible(true);
 		this.addWindowListener(this);
+		
 
 		this.canvas = new Canvas();
 		this.add(this.canvas);
