@@ -1,6 +1,7 @@
 package com.darkxell.common.player;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.function.Predicate;
 
 import com.darkxell.common.item.Item;
@@ -9,7 +10,7 @@ import com.darkxell.common.item.ItemStack;
 public class Inventory
 {
 
-	public static final int MAX_SIZE = 40;
+	public static final int MAX_SIZE = 20;
 
 	private ArrayList<ItemStack> items;
 	private int maxSize;
@@ -23,6 +24,7 @@ public class Inventory
 	/** @return True if the input Item was successfully added. */
 	public boolean add(ItemStack item)
 	{
+		if (!canAccept(item)) return false;
 		if (item.item().isStackable) for (ItemStack stack : this.items)
 			if (stack.id == item.id)
 			{
@@ -30,9 +32,17 @@ public class Inventory
 				return true;
 			}
 
-		if (this.isFull()) return false;
 		this.items.add(item);
 		return true;
+	}
+
+	/** @return True if the input Item can be added. */
+	public boolean canAccept(ItemStack item)
+	{
+		if (item.item().isStackable) for (ItemStack stack : this.items)
+			if (stack.id == item.id) return true;
+
+		return !this.isFull();
 	}
 
 	/** Removes all Items with quantity equal to zero. */
@@ -63,6 +73,11 @@ public class Inventory
 	public boolean isFull()
 	{
 		return this.items.size() == this.maxSize;
+	}
+
+	public int itemCount()
+	{
+		return this.items.size();
 	}
 
 	/** @return The list of Items in this Inventory. */
@@ -97,6 +112,11 @@ public class Inventory
 
 		if (toreturn.getQuantity() == 0) return null;
 		return toreturn;
+	}
+
+	public void sort()
+	{
+		this.items.sort(Comparator.naturalOrder());
 	}
 
 }

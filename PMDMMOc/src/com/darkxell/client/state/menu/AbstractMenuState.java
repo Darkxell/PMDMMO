@@ -5,7 +5,9 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 
 import com.darkxell.client.renderers.TextRenderer;
+import com.darkxell.client.resources.images.MenuHudSpriteset;
 import com.darkxell.client.state.AbstractState;
+import com.darkxell.client.state.menu.components.MenuWindow;
 import com.darkxell.client.state.menu.components.OptionSelectionWindow;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.common.util.Message;
@@ -39,10 +41,10 @@ public abstract class AbstractMenuState extends AbstractState
 
 	public static class MenuTab
 	{
-		public static final int OPTION_SPACE = 8;
+		public static final int OPTION_SPACE = 4;
 
 		public final Message name;
-		ArrayList<MenuOption> options;
+		private ArrayList<MenuOption> options;
 
 		public MenuTab()
 		{
@@ -60,6 +62,12 @@ public abstract class AbstractMenuState extends AbstractState
 			this(new Message(nameID));
 		}
 
+		public MenuTab addOption(MenuOption option)
+		{
+			this.options.add(option);
+			return this;
+		}
+
 		public int height(Graphics2D g)
 		{
 			return this.options.size() * (TextRenderer.CHAR_HEIGHT + OPTION_SPACE);
@@ -75,6 +83,7 @@ public abstract class AbstractMenuState extends AbstractState
 			int width = 0;
 			for (MenuOption option : this.options)
 				width = Math.max(width, TextRenderer.instance.width(option.name.toString()));
+			width = Math.max(width, TextRenderer.instance.width(this.name) + MenuHudSpriteset.instance.cornerSize.width * 2);
 			return width;
 		}
 
@@ -107,6 +116,11 @@ public abstract class AbstractMenuState extends AbstractState
 	public MenuTab currentTab()
 	{
 		return this.tabs.get(this.tab);
+	}
+
+	public MenuWindow getMainWindow()
+	{
+		return this.mainWindow;
 	}
 
 	/** @return This Window's dimensions. */

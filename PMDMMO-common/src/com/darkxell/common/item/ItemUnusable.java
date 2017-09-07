@@ -4,23 +4,17 @@ import java.util.ArrayList;
 
 import org.jdom2.Element;
 
-/** An Item that has an effect when hold. */
-public class ItemEquipable extends Item
+public class ItemUnusable extends Item
 {
 
-	public ItemEquipable(Element xml)
+	public ItemUnusable(Element xml)
 	{
 		super(xml);
 	}
 
-	public ItemEquipable(int id, int price, int sell, int sprite, boolean isStackable)
+	public ItemUnusable(int id, int price, int sell, int spriteID, boolean stackable)
 	{
-		super(id, price, sell, sprite, isStackable);
-	}
-
-	public ItemCategory category()
-	{
-		return ItemCategory.EQUIPABLE;
+		super(id, price, sell, spriteID, stackable);
 	}
 
 	@Override

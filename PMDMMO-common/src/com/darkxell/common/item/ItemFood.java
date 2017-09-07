@@ -2,6 +2,8 @@ package com.darkxell.common.item;
 
 import org.jdom2.Element;
 
+import com.darkxell.common.util.Message;
+
 /** An Item that restores belly when eaten. */
 public class ItemFood extends Item
 {
@@ -27,6 +29,17 @@ public class ItemFood extends Item
 		this.food = food;
 		this.bellyIfFull = bellyIfFull;
 		this.belly = belly;
+	}
+
+	public ItemCategory category()
+	{
+		return ItemCategory.FOOD;
+	}
+
+	@Override
+	public Message getUseName()
+	{
+		return new Message("item.eat");
 	}
 
 	public Element toXML()

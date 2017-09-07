@@ -23,6 +23,11 @@ public class Lang
 	private static Properties dictionnary = new Properties();
 	private static Language selected;
 
+	public static boolean containsKey(String id)
+	{
+		return dictionnary.containsKey(id);
+	}
+
 	public static Language getLanguage()
 	{
 		return selected;

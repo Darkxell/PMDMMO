@@ -21,6 +21,11 @@ public class ItemHM extends Item
 		this.moveID = moveID;
 	}
 
+	public ItemCategory category()
+	{
+		return ItemCategory.HMS;
+	}
+
 	@Override
 	public Element toXML()
 	{

@@ -174,6 +174,7 @@ public class TextRenderer
 	private ArrayList<PMDChar> decode(String text)
 	{
 		ArrayList<PMDChar> chars = new ArrayList<TextRenderer.PMDChar>();
+		if (text == null) return chars;
 		int c = 0;
 		String value;
 		while (c < text.length())
@@ -218,6 +219,7 @@ public class TextRenderer
 	public ArrayList<String> splitLines(String text, int boxwidth)
 	{
 		ArrayList<String> textlines = new ArrayList<>();
+		if (text == null) return textlines;
 		int currentlength = 0, iterator = 0;
 		String[] parts = text.split("\n");
 		for (int i = 0; i < parts.length; i++)
@@ -244,12 +246,14 @@ public class TextRenderer
 	/** @return The width of the input message. */
 	public int width(Message message)
 	{
+		if (message == null) return 0;
 		return this.width(message.toString());
 	}
 
 	/** @return The width of the input text. */
 	public int width(String text)
 	{
+		if (text == null) return 0;
 		ArrayList<PMDChar> chars = this.decode(text);
 		int w = 0;
 		for (PMDChar c : chars)

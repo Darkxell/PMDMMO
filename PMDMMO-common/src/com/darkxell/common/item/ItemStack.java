@@ -2,7 +2,10 @@ package com.darkxell.common.item;
 
 import org.jdom2.Element;
 
-public class ItemStack
+import com.darkxell.common.util.Lang;
+import com.darkxell.common.util.Message;
+
+public class ItemStack implements Comparable<ItemStack>
 {
 
 	public static final String XML_ROOT = "item";
@@ -24,6 +27,19 @@ public class ItemStack
 		this.quantity = 1;
 	}
 
+	@Override
+	public int compareTo(ItemStack o)
+	{
+		int category = Integer.compare(this.item().category().order, o.item().category().order);
+		return category == 0 ? this.name().toString().compareTo(o.name().toString()) : category;
+	}
+
+	/** @return A copy of this Item Stack. */
+	public ItemStack copy()
+	{
+		return new ItemStack(this.id).setQuantity(this.quantity);
+	}
+
 	public int getQuantity()
 	{
 		return this.quantity;
@@ -32,6 +48,13 @@ public class ItemStack
 	public Item item()
 	{
 		return ItemRegistry.find(this.id);
+	}
+
+	public Message name()
+	{
+		if (Lang.containsKey("item." + this.id + ".stack")) return new Message("item." + this.id + ".stack").addReplacement("<quantity>",
+				Integer.toString(this.quantity));
+		return this.item().name();
 	}
 
 	public ItemStack setQuantity(int quantity)

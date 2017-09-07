@@ -49,18 +49,15 @@ public class OptionSelectionWindow extends MenuWindow
 		for (MenuOption option : this.menu.currentTab().options())
 		{
 			TextRenderer.instance.render(g, option.name, x, y);
-			if (this.cursor > 9 && this.menu.currentOption() == option) g.drawImage(
-					this.menu.isMain() ? selectionArrow : MenuHudSpriteset.instance.selectedArrow(), x - selectionArrow.getWidth() - 4, y
-							+ TextRenderer.CHAR_HEIGHT / 2 - selectionArrow.getHeight() / 2, null);
+			if ((this.cursor > 9 || !this.menu.isMain()) && this.menu.currentOption() == option) g.drawImage(this.menu.isMain() ? selectionArrow
+					: MenuHudSpriteset.instance.selectedArrow(), x - selectionArrow.getWidth() - 4,
+					y + TextRenderer.CHAR_HEIGHT / 2 - selectionArrow.getHeight() / 2, null);
 			y += TextRenderer.CHAR_HEIGHT + MenuTab.OPTION_SPACE;
 		}
 	}
 
-	@Override
 	public void update()
 	{
-		super.update();
-
 		++this.cursor;
 		if (this.cursor > 20) this.cursor = 0;
 	}

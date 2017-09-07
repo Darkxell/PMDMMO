@@ -2,6 +2,8 @@ package com.darkxell.common.item;
 
 import org.jdom2.Element;
 
+import com.darkxell.common.util.Message;
+
 /** An Item that restores PP when eaten. */
 public class ItemElixir extends ItemFood
 {
@@ -18,6 +20,17 @@ public class ItemElixir extends ItemFood
 	{
 		super(id, price, sell, sprite, isStackable, food, bellyIfFull, belly);
 		this.pp = pp;
+	}
+
+	public ItemCategory category()
+	{
+		return ItemCategory.DRINKS;
+	}
+
+	@Override
+	public Message getUseName()
+	{
+		return new Message("item.ingest");
 	}
 
 	@Override

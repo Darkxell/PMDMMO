@@ -84,7 +84,7 @@ public class DungeonLogger
 		Shape clip = g.getClip();
 		g.setClip(this.messagesWindow.inside());
 
-		int y = this.messagesWindow.dimensions.y + MenuWindow.MARGIN_Y + this.messageOffset + 2;
+		int y = this.messagesWindow.dimensions.y + MenuWindow.MARGIN_Y + this.messageOffset;
 		for (int i = 0; i < this.messages.size(); ++i)
 		{
 			Message s = this.messages.get(i);

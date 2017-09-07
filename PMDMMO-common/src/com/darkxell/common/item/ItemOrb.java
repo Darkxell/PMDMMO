@@ -16,4 +16,9 @@ public class ItemOrb extends Item
 		super(id, price, sell, sprite, isStackable);
 	}
 
+	public ItemCategory category()
+	{
+		return ItemCategory.ORBS;
+	}
+
 }
