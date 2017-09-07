@@ -34,6 +34,11 @@ public class ItemThrowable extends Item
 		this.trajectory = trajectory;
 	}
 
+	public ItemCategory category()
+	{
+		return ItemCategory.THROWABLE;
+	}
+
 	@Override
 	public ArrayList<ItemAction> getLegalActions(boolean inDungeon)
 	{

@@ -24,6 +24,11 @@ public class ItemGummi extends Item
 		this.type = type;
 	}
 
+	public ItemCategory category()
+	{
+		return ItemCategory.GUMMIS;
+	}
+
 	@Override
 	public Message getUseName()
 	{

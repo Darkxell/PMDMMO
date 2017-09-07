@@ -6,6 +6,7 @@ import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.state.dungeon.DungeonState;
 import com.darkxell.client.state.menu.AbstractMenuState;
 import com.darkxell.client.state.menu.DungeonMenuState;
+import com.darkxell.client.ui.Keys;
 import com.darkxell.common.item.Item.ItemAction;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.player.Inventory;
@@ -56,6 +57,17 @@ public class InventoryMenuState extends AbstractMenuState implements ItemActionS
 	protected void onExit()
 	{
 		Launcher.stateManager.setState(new DungeonMenuState(this.backgroundState), 0);
+	}
+
+	@Override
+	public void onKeyPressed(short key)
+	{
+		super.onKeyPressed(key);
+		if (key == Keys.KEY_MAP)
+		{
+			this.inventory.sort();
+			Launcher.stateManager.setState(new InventoryMenuState((DungeonState) this.backgroundState), 0);
+		}
 	}
 
 	@Override

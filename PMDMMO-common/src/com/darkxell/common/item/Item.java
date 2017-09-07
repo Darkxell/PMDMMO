@@ -67,6 +67,29 @@ public class Item
 
 	}
 
+	public static enum ItemCategory
+	{
+		BERRIES(4),
+		DRINKS(5),
+		EQUIPABLE(0),
+		EVOLUTIONARY(12),
+		FOOD(3),
+		GUMMIS(6),
+		HMS(11),
+		ORBS(9),
+		OTHERS(8),
+		SEEDS(7),
+		THROWABLE(2),
+		TMS(10);
+
+		public final int order;
+
+		private ItemCategory(int order)
+		{
+			this.order = order;
+		}
+	}
+
 	public static final int POKE = 0, USED_TM = 205;
 	public static final String XML_ROOT = "item";
 
@@ -97,6 +120,11 @@ public class Item
 		this.sell = sell;
 		this.spriteID = spriteID;
 		this.isStackable = stackable;
+	}
+
+	public ItemCategory category()
+	{
+		return ItemCategory.OTHERS;
 	}
 
 	public ArrayList<ItemAction> getLegalActions(boolean inDungeon)

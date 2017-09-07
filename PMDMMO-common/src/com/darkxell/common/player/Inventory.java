@@ -1,6 +1,7 @@
 package com.darkxell.common.player;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.function.Predicate;
 
 import com.darkxell.common.item.Item;
@@ -111,6 +112,11 @@ public class Inventory
 
 		if (toreturn.getQuantity() == 0) return null;
 		return toreturn;
+	}
+
+	public void sort()
+	{
+		this.items.sort(Comparator.naturalOrder());
 	}
 
 }

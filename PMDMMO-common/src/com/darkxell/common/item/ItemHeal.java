@@ -25,6 +25,11 @@ public class ItemHeal extends ItemFood
 		this.hpFull = hpFull;
 	}
 
+	public ItemCategory category()
+	{
+		return ItemCategory.BERRIES;
+	}
+
 	@Override
 	public Element toXML()
 	{

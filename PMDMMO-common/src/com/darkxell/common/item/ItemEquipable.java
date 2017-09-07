@@ -18,6 +18,11 @@ public class ItemEquipable extends Item
 		super(id, price, sell, sprite, isStackable);
 	}
 
+	public ItemCategory category()
+	{
+		return ItemCategory.EQUIPABLE;
+	}
+
 	@Override
 	public ArrayList<ItemAction> getLegalActions(boolean inDungeon)
 	{

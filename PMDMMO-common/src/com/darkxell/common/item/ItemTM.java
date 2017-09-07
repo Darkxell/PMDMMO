@@ -21,6 +21,11 @@ public class ItemTM extends ItemHM
 		super(id, price, sell, sprite, isStackable, moveID);
 	}
 
+	public ItemCategory category()
+	{
+		return ItemCategory.TMS;
+	}
+
 	@Override
 	public ArrayList<ItemAction> getLegalActions(boolean inDungeon)
 	{

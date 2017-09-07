@@ -18,6 +18,11 @@ public class ItemGinseng extends ItemFood
 		super(id, price, sell, sprite, isStackable, food, bellyIfFull, belly);
 	}
 
+	public ItemCategory category()
+	{
+		return ItemCategory.DRINKS;
+	}
+
 	@Override
 	public Message getUseName()
 	{

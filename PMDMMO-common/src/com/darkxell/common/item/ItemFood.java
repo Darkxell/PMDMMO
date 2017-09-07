@@ -31,6 +31,11 @@ public class ItemFood extends Item
 		this.belly = belly;
 	}
 
+	public ItemCategory category()
+	{
+		return ItemCategory.FOOD;
+	}
+
 	@Override
 	public Message getUseName()
 	{

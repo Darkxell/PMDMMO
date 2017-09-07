@@ -5,7 +5,7 @@ import org.jdom2.Element;
 import com.darkxell.common.util.Lang;
 import com.darkxell.common.util.Message;
 
-public class ItemStack
+public class ItemStack implements Comparable<ItemStack>
 {
 
 	public static final String XML_ROOT = "item";
@@ -25,6 +25,13 @@ public class ItemStack
 	{
 		this.id = id;
 		this.quantity = 1;
+	}
+
+	@Override
+	public int compareTo(ItemStack o)
+	{
+		int category = Integer.compare(this.item().category().order, o.item().category().order);
+		return category == 0 ? this.name().toString().compareTo(o.name().toString()) : category;
 	}
 
 	/** @return A copy of this Item Stack. */

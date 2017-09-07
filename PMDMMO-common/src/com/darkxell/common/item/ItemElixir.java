@@ -22,6 +22,11 @@ public class ItemElixir extends ItemFood
 		this.pp = pp;
 	}
 
+	public ItemCategory category()
+	{
+		return ItemCategory.DRINKS;
+	}
+
 	@Override
 	public Message getUseName()
 	{

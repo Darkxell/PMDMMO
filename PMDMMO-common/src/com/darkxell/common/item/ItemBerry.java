@@ -17,4 +17,9 @@ public class ItemBerry extends ItemFood
 		super(id, price, sell, sprite, isStackable, food, bellyIfFull, belly);
 	}
 
+	public ItemCategory category()
+	{
+		return ItemCategory.BERRIES;
+	}
+
 }

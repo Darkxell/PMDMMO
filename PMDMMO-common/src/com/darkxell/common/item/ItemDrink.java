@@ -22,6 +22,11 @@ public class ItemDrink extends ItemFood
 		this.stat = stat;
 	}
 
+	public ItemCategory category()
+	{
+		return ItemCategory.DRINKS;
+	}
+
 	@Override
 	public Message getUseName()
 	{
