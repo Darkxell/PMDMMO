@@ -2,6 +2,8 @@ package com.darkxell.common.item;
 
 import org.jdom2.Element;
 
+import com.darkxell.common.util.Message;
+
 /** An Item that increases a stat when drunk. */
 public class ItemDrink extends ItemFood
 {
@@ -18,6 +20,12 @@ public class ItemDrink extends ItemFood
 	{
 		super(id, price, sell, sprite, isStackable, food, bellyIfFull, belly);
 		this.stat = stat;
+	}
+
+	@Override
+	public Message getUseName()
+	{
+		return new Message("item.ingest");
 	}
 
 	@Override

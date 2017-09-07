@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.MenuHudSpriteset;
 import com.darkxell.client.state.AbstractState;
+import com.darkxell.client.state.menu.components.MenuWindow;
 import com.darkxell.client.state.menu.components.OptionSelectionWindow;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.common.util.Message;
@@ -115,6 +116,11 @@ public abstract class AbstractMenuState extends AbstractState
 	public MenuTab currentTab()
 	{
 		return this.tabs.get(this.tab);
+	}
+
+	public MenuWindow getMainWindow()
+	{
+		return this.mainWindow;
 	}
 
 	/** @return This Window's dimensions. */

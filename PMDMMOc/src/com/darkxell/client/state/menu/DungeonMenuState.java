@@ -3,7 +3,7 @@ package com.darkxell.client.state.menu;
 import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.dungeon.DungeonState;
-import com.darkxell.client.state.menu.dungeon.InventoryMenuState;
+import com.darkxell.client.state.menu.dungeon.item.InventoryMenuState;
 import com.darkxell.common.util.Message;
 
 public class DungeonMenuState extends AbstractMenuState

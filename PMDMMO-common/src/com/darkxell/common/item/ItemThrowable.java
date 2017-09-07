@@ -1,6 +1,10 @@
 package com.darkxell.common.item;
 
+import java.util.ArrayList;
+
 import org.jdom2.Element;
+
+import com.darkxell.common.util.Message;
 
 public class ItemThrowable extends Item
 {
@@ -28,6 +32,20 @@ public class ItemThrowable extends Item
 		super(id, price, sell, sprite, isStackable);
 		this.damage = damage;
 		this.trajectory = trajectory;
+	}
+
+	@Override
+	public ArrayList<ItemAction> getLegalActions(boolean inDungeon)
+	{
+		ArrayList<ItemAction> actions = super.getLegalActions(inDungeon);
+		actions.remove(ItemAction.THROW);
+		return actions;
+	}
+
+	@Override
+	public Message getUseName()
+	{
+		return new Message("item.throw");
 	}
 
 	@Override

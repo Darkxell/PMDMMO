@@ -1,4 +1,4 @@
-package com.darkxell.client.state.menu.dungeon;
+package com.darkxell.client.state.menu.dungeon.item;
 
 import java.util.ArrayList;
 
@@ -6,14 +6,13 @@ import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.state.dungeon.DungeonState;
 import com.darkxell.client.state.menu.AbstractMenuState;
 import com.darkxell.client.state.menu.DungeonMenuState;
-import com.darkxell.common.item.Item;
+import com.darkxell.common.item.Item.ItemAction;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.player.Inventory;
 import com.darkxell.common.player.Player;
-import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.Message;
 
-public class InventoryMenuState extends AbstractMenuState
+public class InventoryMenuState extends AbstractMenuState implements ItemActionSource
 {
 
 	private MenuOption held;
@@ -63,25 +62,32 @@ public class InventoryMenuState extends AbstractMenuState
 	{
 		DungeonState s = (DungeonState) this.backgroundState;
 
-		int index = this.inventoryOptions.indexOf(option);
-		ItemStack i = null;
-		if (index != -1)
-		{
-			i = this.inventory.get(index).copy();
-			this.inventory.remove(i.item(), i.getQuantity());
-		} else if (option == this.held)
-		{
-			i = this.player.getPokemon().getItem();
-			this.player.getPokemon().setItem(null);
-		}
+		ItemStack i = this.selectedItem();
+		ArrayList<ItemAction> actions = i.item().getLegalActions(true);
+		actions.add(ItemAction.SET);
+		if (s.player.getDungeonPokemon().tile.getItem() == null) actions.add(ItemAction.PLACE);
+		else actions.add(ItemAction.SWAP);
+		Launcher.stateManager.setState(new ItemActionSelectionState(this, this, actions), 0);
 
-		if (i != null)
-		{
-			this.player.getDungeonPokemon().tile.setItem(i);
-			s.logger.showMessage(new Message("ground.place").addReplacement("<pokemon>", this.player.getPokemon().getNickname()).addReplacement("<item>",
-					i.name()));
-		} else Logger.instance().error("Item could not be found in the inventories.");
-
-		Launcher.stateManager.setState(s, 0);
+		/* int index = this.inventoryOptions.indexOf(option); if (index != -1) { i = this.inventory.get(index).copy(); this.inventory.remove(i.item(), i.getQuantity()); } else if (option == this.held) { i = this.player.getPokemon().getItem(); this.player.getPokemon().setItem(null); }
+		 * 
+		 * if (i != null) { this.player.getDungeonPokemon().tile.setItem(i); s.logger.showMessage(new Message("ground.place").addReplacement("<pokemon>", this.player.getPokemon().getNickname()).addReplacement("<item>", i.name())); } else
+		 * Logger.instance().error("Item could not be found in the inventories."); */
 	}
+
+	@Override
+	public void performAction(ItemAction action)
+	{
+		System.out.println(action.getName(this.selectedItem()));
+	}
+
+	public ItemStack selectedItem()
+	{
+		MenuOption option = this.currentOption();
+		int index = this.inventoryOptions.indexOf(option);
+		if (index != -1) return this.inventory.get(index).copy();
+		else if (option == this.held) return this.player.getPokemon().getItem();
+		return null;
+	}
+
 }
