@@ -5,11 +5,8 @@ import com.darkxell.client.resources.images.PokemonSpritesets;
 import com.darkxell.client.resources.music.SoundManager;
 import com.darkxell.client.state.FreezoneExploreState;
 import com.darkxell.client.state.StateManager;
-import com.darkxell.client.state.dungeon.DungeonState;
 import com.darkxell.client.ui.Frame;
 import com.darkxell.common.dungeon.DungeonRegistry;
-import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.dungeon.floor.layout.Layout;
 import com.darkxell.common.item.ItemRegistry;
 import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.PokemonRegistry;
@@ -50,7 +47,8 @@ public class Launcher
 		frame = new Frame();
 		stateManager = new StateManager();
 		stateManager.setState(new FreezoneExploreState(), 0);
-
+		stateManager.randomizeBackground();
+		
 		isRunning = true;
 		setProcessingProfile(PROFILE_SYNCHRONIZED);
 

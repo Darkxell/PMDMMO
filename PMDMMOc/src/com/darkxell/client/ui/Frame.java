@@ -1,6 +1,7 @@
 package com.darkxell.client.ui;
 
 import java.awt.Canvas;
+import java.awt.Dimension;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
@@ -20,6 +21,7 @@ public class Frame extends JFrame implements WindowListener
 		super();
 		this.setTitle("Pokémon Mystery Dungeon: Online Rescue Team");
 		this.setSize(1000, 800);
+		this.setMinimumSize(new Dimension(650, 400));
 		// this.setResizable(false);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);

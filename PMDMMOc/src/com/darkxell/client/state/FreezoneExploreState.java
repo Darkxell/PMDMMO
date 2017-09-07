@@ -33,7 +33,7 @@ public class FreezoneExploreState extends AbstractState {
 	 * have a hight CPU drain. It also makes the game really ugly, it's a debug
 	 * mode...
 	 */
-	static boolean debugdisplaymode = true;
+	static boolean debugdisplaymode = false;
 
 	@Override
 	public void onKeyPressed(short key) {
