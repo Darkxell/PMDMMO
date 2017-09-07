@@ -67,6 +67,7 @@ public class Item
 
 	}
 
+	public static final int POKE = 0, USED_TM = 205;
 	public static final String XML_ROOT = "item";
 
 	/** This Item's ID. */

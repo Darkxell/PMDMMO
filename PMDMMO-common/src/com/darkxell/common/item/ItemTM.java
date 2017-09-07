@@ -34,8 +34,8 @@ public class ItemTM extends ItemHM
 	{
 		if (pokemon.player != null)
 		{
-			if (pokemon.player.inventory.isFull()) pokemon.tile.setItem(new ItemStack(205));
-			else pokemon.player.inventory.add(new ItemStack(205));
+			if (pokemon.player.inventory.isFull()) pokemon.tile.setItem(new ItemStack(Item.USED_TM));
+			else pokemon.player.inventory.add(new ItemStack(Item.USED_TM));
 		}
 		return super.use(pokemon);
 	}

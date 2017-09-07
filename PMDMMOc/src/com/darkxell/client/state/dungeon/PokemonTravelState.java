@@ -9,6 +9,7 @@ import com.darkxell.client.resources.images.AbstractDungeonTileset;
 import com.darkxell.client.resources.images.PokemonSprite;
 import com.darkxell.client.state.dungeon.DungeonState.DungeonSubState;
 import com.darkxell.common.dungeon.floor.Tile;
+import com.darkxell.common.item.Item;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Message;
@@ -46,9 +47,14 @@ public class PokemonTravelState extends DungeonSubState
 				String messageID = "ground.step";
 				ItemStack i = t.getItem();
 
-				if (this.pokemon.pokemon == state.player.getPokemon() && state.player.inventory.canAccept(i))
+				if (i.id == Item.POKE && this.pokemon.player != null)
 				{
-					state.player.inventory.add(i);
+					this.pokemon.player.money += i.getQuantity();
+					messageID = "ground.poke";
+					t.setItem(null);
+				} else if (this.pokemon.player != null && this.pokemon.player.inventory.canAccept(i))
+				{
+					this.pokemon.player.inventory.add(i);
 					messageID = "ground.inventory";
 					t.setItem(null);
 				} else if (this.pokemon.pokemon.getItem() == null)
