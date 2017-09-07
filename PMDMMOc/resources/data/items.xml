@@ -205,9 +205,9 @@
   <item id="202" type="HM" price="0" sell="0" move="109" sprite="43" />
   <item id="203" type="HM" price="0" sell="0" move="543" sprite="43" />
   <item id="204" type="HM" price="0" sell="0" move="541" sprite="43" />
-  <item id="205" type="" price="0" sell="1" sprite="42" />
+  <item id="205" type="Unusable" price="0" sell="1" sprite="42" />
   <item id="206" type="" price="0" sell="1" sprite="44" />
-  <item id="207" type="" price="0" sell="1" sprite="45" />
+  <item id="207" type="Unusable" price="0" sell="1" sprite="45" />
   <item id="208" type="" price="0" sell="1" sprite="45" />
   <item id="209" type="" price="0" sell="1" sprite="47" />
   <item id="210" type="" price="0" sell="1" sprite="48" />

@@ -5,6 +5,7 @@ import java.util.Comparator;
 
 import org.jdom2.Element;
 
+import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Message;
 
 /** Represents an Item type. */
@@ -107,6 +108,14 @@ public class Item
 		return actions;
 	}
 
+	/** @param pokemon - The Pokémon using the Item.
+	 * @return The message to display when using this Item. */
+	private Message getUseMessage(DungeonPokemon pokemon)
+	{
+		return new Message("item.used").addReplacement("<pokemon>", pokemon.pokemon.getNickname()).addReplacement("<item>", this.name());
+	}
+
+	/** @return The name of the "Use" option for this Item. */
 	public Message getUseName()
 	{
 		return new Message("item.use");
@@ -127,6 +136,17 @@ public class Item
 		root.setAttribute("sprite", Integer.toString(this.spriteID));
 		if (this.isStackable) root.setAttribute("stackable", "true");
 		return root;
+	}
+
+	/** Called when this Item is used.
+	 * 
+	 * @param pokemon - The Pokémon using the Item.
+	 * @return The messages that were created while using the Item. */
+	public ArrayList<Message> use(DungeonPokemon pokemon)
+	{
+		ArrayList<Message> messages = new ArrayList<Message>();
+		messages.add(this.getUseMessage(pokemon));
+		return messages;
 	}
 
 }

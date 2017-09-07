@@ -10,6 +10,7 @@ import com.darkxell.common.item.Item.ItemAction;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.player.Inventory;
 import com.darkxell.common.player.Player;
+import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Message;
 
 public class InventoryMenuState extends AbstractMenuState implements ItemActionSource
@@ -61,24 +62,62 @@ public class InventoryMenuState extends AbstractMenuState implements ItemActionS
 	protected void onOptionSelected(MenuOption option)
 	{
 		DungeonState s = (DungeonState) this.backgroundState;
-
 		ItemStack i = this.selectedItem();
+
 		ArrayList<ItemAction> actions = i.item().getLegalActions(true);
 		actions.add(ItemAction.SET);
 		if (s.player.getDungeonPokemon().tile.getItem() == null) actions.add(ItemAction.PLACE);
 		else actions.add(ItemAction.SWAP);
-		Launcher.stateManager.setState(new ItemActionSelectionState(this, this, actions), 0);
 
-		/* int index = this.inventoryOptions.indexOf(option); if (index != -1) { i = this.inventory.get(index).copy(); this.inventory.remove(i.item(), i.getQuantity()); } else if (option == this.held) { i = this.player.getPokemon().getItem(); this.player.getPokemon().setItem(null); }
-		 * 
-		 * if (i != null) { this.player.getDungeonPokemon().tile.setItem(i); s.logger.showMessage(new Message("ground.place").addReplacement("<pokemon>", this.player.getPokemon().getNickname()).addReplacement("<item>", i.name())); } else
-		 * Logger.instance().error("Item could not be found in the inventories."); */
+		Launcher.stateManager.setState(new ItemActionSelectionState(this, this, actions), 0);
 	}
 
 	@Override
 	public void performAction(ItemAction action)
 	{
-		System.out.println(action.getName(this.selectedItem()));
+		DungeonState s = (DungeonState) this.backgroundState;
+		ItemStack i = this.selectedItem();
+		ArrayList<Message> messages = new ArrayList<Message>();
+		DungeonPokemon user = this.player.getDungeonPokemon();
+
+		if (action != ItemAction.SET && action != ItemAction.DESELECT)
+		{
+			if (action == ItemAction.USE) this.inventory.remove(i.item(), 1);
+			else this.inventory.remove(i.item(), i.getQuantity());
+		}
+		switch (action)
+		{
+			case USE:
+				messages.addAll(i.item().use(user));
+				break;
+
+			case THROW:
+				System.out.println("Thrown !");
+				break;
+
+			case SET:
+				System.out.println("Set.");
+				break;
+
+			case PLACE:
+				this.player.getDungeonPokemon().tile.setItem(i);
+				messages.add(new Message("ground.place").addReplacement("<pokemon>", user.pokemon.getNickname()).addReplacement("<item>", i.name()));
+				break;
+
+			case SWAP:
+				ItemStack item = this.player.getDungeonPokemon().tile.getItem();
+				this.inventory.add(item);
+				this.player.getDungeonPokemon().tile.setItem(i);
+				messages.add(new Message("ground.swap").addReplacement("<item-placed>", i.name()).addReplacement("<item-gotten>", item.name()));
+				break;
+
+			default:
+				break;
+		}
+
+		Launcher.stateManager.setState(s, 0);
+		for (Message m : messages)
+			s.logger.showMessage(m);
 	}
 
 	public ItemStack selectedItem()

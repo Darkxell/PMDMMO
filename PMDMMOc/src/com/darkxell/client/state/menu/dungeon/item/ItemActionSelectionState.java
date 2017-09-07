@@ -3,31 +3,27 @@ package com.darkxell.client.state.menu.dungeon.item;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.menu.AbstractMenuState;
 import com.darkxell.common.item.Item.ItemAction;
-import com.darkxell.common.item.ItemStack;
 
 public class ItemActionSelectionState extends AbstractMenuState
 {
 
-	private HashMap<MenuOption, ItemAction> actions;
+	private ArrayList<ItemAction> actions;
 	public final ItemActionSource actionSource;
+	private ArrayList<MenuOption> options;
 
 	public ItemActionSelectionState(AbstractState backgroundState, ItemActionSource actionSource, ArrayList<ItemAction> actions)
 	{
 		super(backgroundState);
 		this.actionSource = actionSource;
-		this.actions = new HashMap<MenuOption, ItemAction>();
-		ItemAction.sort(actions);
+		this.actions = actions;
+		this.options = new ArrayList<MenuOption>();
 
-		ItemStack i = this.actionSource.selectedItem();
-		for (ItemAction action : actions)
-			this.actions.put(new MenuOption(action.getName(i)), action);
-
+		ItemAction.sort(this.actions);
 		this.createOptions();
 	}
 
@@ -37,8 +33,11 @@ public class ItemActionSelectionState extends AbstractMenuState
 		if (this.actions == null) return;
 
 		MenuTab tab = new MenuTab();
-		for (MenuOption option : this.actions.keySet())
-			tab.addOption(option);
+		for (ItemAction action : this.actions)
+		{
+			this.options.add(new MenuOption(action.getName(this.actionSource.selectedItem())));
+			tab.addOption(this.options.get(this.actions.indexOf(action)));
+		}
 		this.tabs.add(tab);
 	}
 
@@ -59,7 +58,7 @@ public class ItemActionSelectionState extends AbstractMenuState
 	@Override
 	protected void onOptionSelected(MenuOption option)
 	{
-		this.actionSource.performAction(this.actions.get(option));
+		this.actionSource.performAction(this.actions.get(this.options.indexOf(option)));
 	}
 
 }
