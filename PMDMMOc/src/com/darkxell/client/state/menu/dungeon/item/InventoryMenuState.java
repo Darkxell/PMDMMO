@@ -8,6 +8,7 @@ import com.darkxell.client.state.dungeon.ItemUseState;
 import com.darkxell.client.state.menu.AbstractMenuState;
 import com.darkxell.client.state.menu.DungeonMenuState;
 import com.darkxell.client.ui.Keys;
+import com.darkxell.common.event.ItemUseEvent;
 import com.darkxell.common.item.Item.ItemAction;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.player.Inventory;
@@ -88,7 +89,7 @@ public class InventoryMenuState extends AbstractMenuState implements ItemActionS
 	@Override
 	public void performAction(ItemAction action)
 	{
-		DungeonState s = (DungeonState) this.backgroundState;
+		DungeonState parent = (DungeonState) this.backgroundState;
 		ItemStack i = this.selectedItem();
 		ArrayList<Message> messages = new ArrayList<Message>();
 		DungeonPokemon user = this.player.getDungeonPokemon();
@@ -102,7 +103,8 @@ public class InventoryMenuState extends AbstractMenuState implements ItemActionS
 		{
 			case USE:
 				messages.add(i.item().getUseMessage(user));
-				s.setSubstate(new ItemUseState(s, user, i.item()));
+				ItemUseEvent event = i.item().use(parent.floor, user);
+				parent.setSubstate(new ItemUseState(parent, event));
 				break;
 
 			case THROW:
@@ -129,9 +131,9 @@ public class InventoryMenuState extends AbstractMenuState implements ItemActionS
 				break;
 		}
 
-		Launcher.stateManager.setState(s, 0);
+		Launcher.stateManager.setState(parent, 0);
 		for (Message m : messages)
-			s.logger.showMessage(m);
+			parent.logger.showMessage(m);
 	}
 
 	public ItemStack selectedItem()
