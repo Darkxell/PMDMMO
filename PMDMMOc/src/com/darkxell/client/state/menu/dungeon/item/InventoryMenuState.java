@@ -7,6 +7,8 @@ import com.darkxell.client.state.dungeon.DungeonState;
 import com.darkxell.client.state.menu.AbstractMenuState;
 import com.darkxell.client.state.menu.DungeonMenuState;
 import com.darkxell.client.ui.Keys;
+import com.darkxell.common.animation.AbstractAnimation;
+import com.darkxell.common.animation.AnimationEndListener;
 import com.darkxell.common.item.Item.ItemAction;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.player.Inventory;
@@ -101,6 +103,15 @@ public class InventoryMenuState extends AbstractMenuState implements ItemActionS
 		{
 			case USE:
 				messages.addAll(i.item().use(user));
+				AbstractAnimation a = new AbstractAnimation(60, new AnimationEndListener()
+				{
+					@Override
+					public void onAnimationEnd(AbstractAnimation animation)
+					{
+						s.logger.showMessage(new Message("item.no_effect"));
+					}
+				});
+				a.start();
 				break;
 
 			case THROW:

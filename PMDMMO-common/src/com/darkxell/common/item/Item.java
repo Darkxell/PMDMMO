@@ -139,7 +139,7 @@ public class Item
 
 	/** @param pokemon - The Pokémon using the Item.
 	 * @return The message to display when using this Item. */
-	private Message getUseMessage(DungeonPokemon pokemon)
+	public Message getUseMessage(DungeonPokemon pokemon)
 	{
 		return new Message("item.used").addReplacement("<pokemon>", pokemon.pokemon.getNickname()).addReplacement("<item>", this.name());
 	}
