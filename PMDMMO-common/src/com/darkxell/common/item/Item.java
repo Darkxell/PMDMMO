@@ -174,7 +174,7 @@ public class Item
 	public ArrayList<Message> use(DungeonPokemon pokemon)
 	{
 		ArrayList<Message> messages = new ArrayList<Message>();
-		messages.add(this.getUseMessage(pokemon));
+		messages.add(new Message("item.no_effect"));
 		return messages;
 	}
 

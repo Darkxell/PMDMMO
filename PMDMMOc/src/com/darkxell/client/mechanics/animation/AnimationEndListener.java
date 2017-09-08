@@ -1,4 +1,4 @@
-package com.darkxell.common.animation;
+package com.darkxell.client.mechanics.animation;
 
 public interface AnimationEndListener
 {

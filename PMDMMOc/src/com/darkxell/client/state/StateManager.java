@@ -5,8 +5,8 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
+import com.darkxell.client.mechanics.animation.AnimationTicker;
 import com.darkxell.client.resources.images.FrameResources;
-import com.darkxell.common.animation.AnimationTicker;
 
 public class StateManager {
 

@@ -1,4 +1,4 @@
-package com.darkxell.common.animation;
+package com.darkxell.client.mechanics.animation;
 
 import java.awt.Graphics2D;
 
@@ -26,7 +26,7 @@ public class AbstractAnimation
 	public void onFinish()
 	{
 		AnimationTicker.instance.unregister(this);
-		this.listener.onAnimationEnd(this);
+		if (this.listener != null) this.listener.onAnimationEnd(this);
 	}
 
 	public void render(Graphics2D g, int width, int height)

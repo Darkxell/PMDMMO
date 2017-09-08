@@ -4,11 +4,10 @@ import java.util.ArrayList;
 
 import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.state.dungeon.DungeonState;
+import com.darkxell.client.state.dungeon.ItemUseState;
 import com.darkxell.client.state.menu.AbstractMenuState;
 import com.darkxell.client.state.menu.DungeonMenuState;
 import com.darkxell.client.ui.Keys;
-import com.darkxell.common.animation.AbstractAnimation;
-import com.darkxell.common.animation.AnimationEndListener;
 import com.darkxell.common.item.Item.ItemAction;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.player.Inventory;
@@ -102,16 +101,8 @@ public class InventoryMenuState extends AbstractMenuState implements ItemActionS
 		switch (action)
 		{
 			case USE:
-				messages.addAll(i.item().use(user));
-				AbstractAnimation a = new AbstractAnimation(60, new AnimationEndListener()
-				{
-					@Override
-					public void onAnimationEnd(AbstractAnimation animation)
-					{
-						s.logger.showMessage(new Message("item.no_effect"));
-					}
-				});
-				a.start();
+				messages.add(i.item().getUseMessage(user));
+				s.setSubstate(new ItemUseState(s, user, i.item()));
 				break;
 
 			case THROW:
