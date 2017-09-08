@@ -9,7 +9,7 @@ import com.darkxell.client.renderers.ItemRenderer;
 import com.darkxell.client.state.FreezoneExploreState;
 import com.darkxell.client.state.dungeon.DungeonState.DungeonSubState;
 import com.darkxell.common.event.ItemUseEvent;
-import com.darkxell.common.item.ItemOrb;
+import com.darkxell.common.item.ItemEscapeOrb;
 import com.darkxell.common.util.Message;
 
 public class ItemUseState extends DungeonSubState implements AnimationEndListener
@@ -52,7 +52,7 @@ public class ItemUseState extends DungeonSubState implements AnimationEndListene
 
 	private void processItemEffect()
 	{
-		if (this.event.item.id == ItemOrb.ESCAPE_ORB) Launcher.stateManager.setState(new FreezoneExploreState(), 0);
+		if (this.event.item instanceof ItemEscapeOrb) Launcher.stateManager.setState(new FreezoneExploreState(), 0);
 	}
 
 	@Override
