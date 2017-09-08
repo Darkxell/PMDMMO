@@ -2,11 +2,14 @@ package com.darkxell.client.state.dungeon;
 
 import java.awt.Graphics2D;
 
+import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.mechanics.animation.AbstractAnimation;
 import com.darkxell.client.mechanics.animation.AnimationEndListener;
 import com.darkxell.client.renderers.ItemRenderer;
+import com.darkxell.client.state.FreezoneExploreState;
 import com.darkxell.client.state.dungeon.DungeonState.DungeonSubState;
 import com.darkxell.common.event.ItemUseEvent;
+import com.darkxell.common.item.ItemOrb;
 import com.darkxell.common.util.Message;
 
 public class ItemUseState extends DungeonSubState implements AnimationEndListener
@@ -28,6 +31,8 @@ public class ItemUseState extends DungeonSubState implements AnimationEndListene
 		for (Message m : this.event.getMessages())
 			this.parent.logger.showMessage(m);
 		this.parent.setSubstate(this.parent.actionSelectionState);
+
+		this.processItemEffect();
 	}
 
 	@Override
@@ -43,6 +48,11 @@ public class ItemUseState extends DungeonSubState implements AnimationEndListene
 	{
 		super.onStart();
 		this.animation.start();
+	}
+
+	private void processItemEffect()
+	{
+		if (this.event.item.id == ItemOrb.ESCAPE_ORB) Launcher.stateManager.setState(new FreezoneExploreState(), 0);
 	}
 
 	@Override
