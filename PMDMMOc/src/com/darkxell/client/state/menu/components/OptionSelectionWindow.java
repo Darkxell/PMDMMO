@@ -41,18 +41,18 @@ public class OptionSelectionWindow extends MenuWindow
 			if (left) g.drawImage(MenuHudSpriteset.instance.tabArrowLeft(), (int) this.inside.getMaxX() - MenuHudSpriteset.instance.tabArrowLeft().getWidth()
 					- MenuHudSpriteset.instance.tabArrowRight().getWidth() - 5, this.dimensions.y - MenuHudSpriteset.instance.tabArrowLeft().getHeight() / 3,
 					null);
-		}
 
-		// Text
-		int x = MARGIN_X + this.dimensions.x;
-		int y = MARGIN_Y + this.dimensions.y + MenuTab.OPTION_SPACE / 2;
-		for (MenuOption option : this.menu.currentTab().options())
-		{
-			TextRenderer.instance.render(g, option.name, x, y);
-			if ((this.cursor > 9 || !this.menu.isMain()) && this.menu.currentOption() == option) g.drawImage(this.menu.isMain() ? selectionArrow
-					: MenuHudSpriteset.instance.selectedArrow(), x - selectionArrow.getWidth() - 4,
-					y + TextRenderer.CHAR_HEIGHT / 2 - selectionArrow.getHeight() / 2, null);
-			y += TextRenderer.CHAR_HEIGHT + MenuTab.OPTION_SPACE;
+			// Text
+			int x = MARGIN_X + this.dimensions.x;
+			int y = MARGIN_Y + this.dimensions.y + TextRenderer.LINE_SPACING / 2;
+			for (MenuOption option : this.menu.currentTab().options())
+			{
+				TextRenderer.instance.render(g, option.name, x, y);
+				if ((this.cursor > 9 || !this.menu.isMain()) && this.menu.currentOption() == option) g.drawImage(this.menu.isMain() ? selectionArrow
+						: MenuHudSpriteset.instance.selectedArrow(), x - selectionArrow.getWidth() - 4,
+						y + TextRenderer.CHAR_HEIGHT / 2 - selectionArrow.getHeight() / 2, null);
+				y += TextRenderer.CHAR_HEIGHT + TextRenderer.LINE_SPACING;
+			}
 		}
 	}
 

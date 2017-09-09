@@ -6,6 +6,7 @@ import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.state.dungeon.DungeonState;
 import com.darkxell.client.state.dungeon.ItemUseState;
 import com.darkxell.client.state.menu.AbstractMenuState;
+import com.darkxell.client.state.menu.InfoState;
 import com.darkxell.client.state.menu.dungeon.DungeonMenuState;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.common.event.ItemUseEvent;
@@ -101,6 +102,7 @@ public class InventoryMenuState extends AbstractMenuState implements ItemActionS
 	public void performAction(ItemAction action)
 	{
 		DungeonState parent = (DungeonState) this.backgroundState;
+		Launcher.stateManager.setState(parent, 0);
 		ItemStack i = this.selectedItem();
 		ArrayList<Message> messages = new ArrayList<Message>();
 		DungeonPokemon user = this.player.getDungeonPokemon();
@@ -138,11 +140,14 @@ public class InventoryMenuState extends AbstractMenuState implements ItemActionS
 				messages.add(new Message("ground.swap").addReplacement("<item-placed>", i.name()).addReplacement("<item-gotten>", item.name()));
 				break;
 
+			case INFO:
 			default:
+				Launcher.stateManager.setState(new InfoState(parent, this, new Message[]
+				{ i.item().name(), i.info() }, new Message[]
+				{ i.info(), i.item().name() }), 0);
 				break;
 		}
 
-		Launcher.stateManager.setState(parent, 0);
 		for (Message m : messages)
 			parent.logger.showMessage(m);
 	}

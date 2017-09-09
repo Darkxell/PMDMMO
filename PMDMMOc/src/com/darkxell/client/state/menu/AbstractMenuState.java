@@ -41,8 +41,6 @@ public abstract class AbstractMenuState extends AbstractState
 
 	public static class MenuTab
 	{
-		public static final int OPTION_SPACE = 4;
-
 		public final Message name;
 		private ArrayList<MenuOption> options;
 
@@ -70,7 +68,7 @@ public abstract class AbstractMenuState extends AbstractState
 
 		public int height(Graphics2D g)
 		{
-			return this.options.size() * (TextRenderer.CHAR_HEIGHT + OPTION_SPACE);
+			return this.options.size() * (TextRenderer.CHAR_HEIGHT + TextRenderer.LINE_SPACING);
 		}
 
 		public MenuOption[] options()
@@ -143,21 +141,24 @@ public abstract class AbstractMenuState extends AbstractState
 	@Override
 	public void onKeyPressed(short key)
 	{
-		if (key == Keys.KEY_LEFT && this.tab > 0) --this.tab;
-		else if (key == Keys.KEY_RIGHT && this.tab < this.tabs.size() - 1) ++this.tab;
-		else if (key == Keys.KEY_UP) --this.selection;
-		else if (key == Keys.KEY_DOWN) ++this.selection;
-		else if (key == Keys.KEY_ATTACK) this.onOptionSelected(this.currentOption());
-		else if (key == Keys.KEY_MENU || key == Keys.KEY_RUN) this.onExit();
+		if (this.tabs.size() != 0)
+		{
+			if (key == Keys.KEY_LEFT && this.tab > 0) --this.tab;
+			else if (key == Keys.KEY_RIGHT && this.tab < this.tabs.size() - 1) ++this.tab;
+			else if (key == Keys.KEY_UP) --this.selection;
+			else if (key == Keys.KEY_DOWN) ++this.selection;
+			else if (key == Keys.KEY_ATTACK) this.onOptionSelected(this.currentOption());
 
-		if (key == Keys.KEY_LEFT || key == Keys.KEY_RIGHT)
-		{
-			if (this.selection >= this.currentTab().options.size()) this.selection = this.currentTab().options.size() - 1;
-		} else if (key == Keys.KEY_UP || key == Keys.KEY_DOWN)
-		{
-			if (this.selection == -1) this.selection = this.currentTab().options.size() - 1;
-			else if (this.selection == this.currentTab().options.size()) this.selection = 0;
+			if (key == Keys.KEY_LEFT || key == Keys.KEY_RIGHT)
+			{
+				if (this.selection >= this.currentTab().options.size()) this.selection = this.currentTab().options.size() - 1;
+			} else if (key == Keys.KEY_UP || key == Keys.KEY_DOWN)
+			{
+				if (this.selection == -1) this.selection = this.currentTab().options.size() - 1;
+				else if (this.selection == this.currentTab().options.size()) this.selection = 0;
+			}
 		}
+		if (key == Keys.KEY_MENU || key == Keys.KEY_RUN) this.onExit();
 	}
 
 	@Override
@@ -178,7 +179,7 @@ public abstract class AbstractMenuState extends AbstractState
 		if (this.mainWindow == null) this.mainWindow = new OptionSelectionWindow(this, this.mainWindowDimensions(g));
 
 		if (this.backgroundState != null) this.backgroundState.render(g, width, height);
-		this.mainWindow.render(g, this.currentTab().name, width, height);
+		if (this.tabs.size() != 0) this.mainWindow.render(g, this.currentTab().name, width, height);
 	}
 
 	public int tabIndex()
