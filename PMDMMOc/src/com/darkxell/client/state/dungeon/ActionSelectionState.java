@@ -10,7 +10,7 @@ import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.resources.images.DungeonHudSpriteset;
 import com.darkxell.client.state.dungeon.DungeonState.DungeonSubState;
 import com.darkxell.client.state.dungeon.PokemonTravelState.Travel;
-import com.darkxell.client.state.menu.DungeonMenuState;
+import com.darkxell.client.state.menu.dungeon.DungeonMenuState;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.common.util.GameUtil;
 

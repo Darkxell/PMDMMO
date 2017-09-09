@@ -102,7 +102,6 @@ public abstract class AbstractMenuState extends AbstractState
 	{
 		this.backgroundState = backgroundState;
 		this.tabs = new ArrayList<MenuTab>();
-		this.createOptions();
 	}
 
 	/** Creates this Menu's options. */
