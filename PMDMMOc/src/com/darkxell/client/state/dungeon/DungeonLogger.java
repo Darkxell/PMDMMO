@@ -47,6 +47,7 @@ public class DungeonLogger
 	public void hideMessages()
 	{
 		this.messageTime = 0;
+		this.messages.clear();
 	}
 
 	/** @return The last 40 messages that were displayed to the Player. */

@@ -6,7 +6,8 @@ import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.state.dungeon.DungeonState;
 import com.darkxell.client.state.dungeon.ItemUseState;
 import com.darkxell.client.state.menu.AbstractMenuState;
-import com.darkxell.client.state.menu.DungeonMenuState;
+import com.darkxell.client.state.menu.InfoState;
+import com.darkxell.client.state.menu.dungeon.DungeonMenuState;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.common.event.ItemUseEvent;
 import com.darkxell.common.item.Item.ItemAction;
@@ -21,24 +22,28 @@ public class InventoryMenuState extends AbstractMenuState implements ItemActionS
 
 	private MenuOption held;
 	public final Inventory inventory;
-	private ArrayList<MenuOption> inventoryOptions;
+	public final ItemSelectionListener listener;
 	public final Player player;
 
 	public InventoryMenuState(DungeonState state)
 	{
+		this(state, null);
+	}
+
+	public InventoryMenuState(DungeonState state, ItemSelectionListener listener)
+	{
 		super(state);
 		this.player = state.player;
 		this.inventory = this.player.inventory;
+		this.listener = listener;
 		this.createOptions();
 	}
 
 	@Override
 	protected void createOptions()
 	{
-		if (this.inventory == null) return;
 		MenuTab tab = null;
 		MenuOption o;
-		this.inventoryOptions = new ArrayList<AbstractMenuState.MenuOption>();
 		for (int i = 0; i < this.inventory.itemCount(); ++i)
 		{
 			if (i % 10 == 0)
@@ -48,11 +53,15 @@ public class InventoryMenuState extends AbstractMenuState implements ItemActionS
 			}
 			o = new MenuOption(this.inventory.get(i).name());
 			tab.addOption(o);
-			this.inventoryOptions.add(o);
 		}
 
 		if (this.player.getPokemon().getItem() != null) this.tabs.add(new MenuTab(new Message("inventory.held").addReplacement("<pokemon>", this.player
 				.getPokemon().getNickname())).addOption(this.held = new MenuOption(this.player.getPokemon().getItem().name())));
+	}
+
+	private int itemSlot()
+	{
+		return this.tabIndex() * 10 + this.optionIndex();
 	}
 
 	@Override
@@ -78,26 +87,30 @@ public class InventoryMenuState extends AbstractMenuState implements ItemActionS
 		DungeonState s = (DungeonState) this.backgroundState;
 		ItemStack i = this.selectedItem();
 
-		ArrayList<ItemAction> actions = i.item().getLegalActions(true);
-		actions.add(ItemAction.SET);
-		if (s.player.getDungeonPokemon().tile.getItem() == null) actions.add(ItemAction.PLACE);
-		else actions.add(ItemAction.SWAP);
+		if (this.listener == null)
+		{
+			ArrayList<ItemAction> actions = i.item().getLegalActions(true);
+			actions.add(ItemAction.SET);
+			if (s.player.getDungeonPokemon().tile.getItem() == null) actions.add(ItemAction.PLACE);
+			else actions.add(ItemAction.SWAP);
 
-		Launcher.stateManager.setState(new ItemActionSelectionState(this, this, actions), 0);
+			Launcher.stateManager.setState(new ItemActionSelectionState(this, this, actions), 0);
+		} else this.listener.itemSelected(i, this.itemSlot());
 	}
 
 	@Override
 	public void performAction(ItemAction action)
 	{
 		DungeonState parent = (DungeonState) this.backgroundState;
+		Launcher.stateManager.setState(parent, 0);
 		ItemStack i = this.selectedItem();
 		ArrayList<Message> messages = new ArrayList<Message>();
 		DungeonPokemon user = this.player.getDungeonPokemon();
 
-		if (action != ItemAction.SET && action != ItemAction.DESELECT)
+		if (action != ItemAction.SET && action != ItemAction.DESELECT && action != ItemAction.INFO)
 		{
-			if (action == ItemAction.USE) this.inventory.remove(i.item(), 1);
-			else this.inventory.remove(i.item(), i.getQuantity());
+			if (action == ItemAction.USE && i.getQuantity() > 1) i.setQuantity(i.getQuantity() - 1);
+			else this.inventory.remove(this.itemSlot());
 		}
 		switch (action)
 		{
@@ -127,11 +140,14 @@ public class InventoryMenuState extends AbstractMenuState implements ItemActionS
 				messages.add(new Message("ground.swap").addReplacement("<item-placed>", i.name()).addReplacement("<item-gotten>", item.name()));
 				break;
 
+			case INFO:
 			default:
+				Launcher.stateManager.setState(new InfoState(parent, this, new Message[]
+				{ i.item().name(), i.info() }, new Message[]
+				{ i.info(), i.item().name() }), 0);
 				break;
 		}
 
-		Launcher.stateManager.setState(parent, 0);
 		for (Message m : messages)
 			parent.logger.showMessage(m);
 	}
@@ -139,7 +155,7 @@ public class InventoryMenuState extends AbstractMenuState implements ItemActionS
 	public ItemStack selectedItem()
 	{
 		MenuOption option = this.currentOption();
-		int index = this.inventoryOptions.indexOf(option);
+		int index = this.itemSlot();
 		if (index != -1) return this.inventory.get(index).copy();
 		else if (option == this.held) return this.player.getPokemon().getItem();
 		return null;

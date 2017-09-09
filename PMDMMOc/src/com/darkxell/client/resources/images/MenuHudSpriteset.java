@@ -17,7 +17,7 @@ public class MenuHudSpriteset
 	public MenuHudSpriteset()
 	{
 		BufferedImage source = Res.getBase("resources/hud/menu_hud.png");
-		this.sprites = new BufferedImage[12];
+		this.sprites = new BufferedImage[13];
 		this.sprites[0] = Res.createimage(source, 0, 0, 10, 16);
 		this.sprites[1] = Res.createimage(source, 12, 0, 10, 16);
 		this.sprites[2] = Res.createimage(source, 24, 0, 8, 8);
@@ -30,8 +30,14 @@ public class MenuHudSpriteset
 		this.sprites[9] = Res.createimage(source, 18, 36, 14, 10);
 		this.sprites[10] = Res.createimage(source, 0, 46, 14, 10);
 		this.sprites[11] = Res.createimage(source, 18, 46, 14, 10);
+		this.sprites[12] = Res.createimage(source, 0, 56, 11, 7);
 		this.cornerSize = new Dimension(this.sprites[4].getWidth(), this.sprites[4].getHeight());
 		this.cornerNameSize = new Dimension(this.sprites[8].getWidth(), this.sprites[8].getHeight());
+	}
+
+	public BufferedImage nextWindowArrow()
+	{
+		return this.sprites[12];
 	}
 
 	public BufferedImage selectedArrow()

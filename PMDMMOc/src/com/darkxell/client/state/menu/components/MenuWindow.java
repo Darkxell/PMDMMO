@@ -10,8 +10,8 @@ import com.darkxell.common.util.Message;
 
 public class MenuWindow
 {
-	/** Window colors. Fill = inside the window. out, middle, int describe the outline, from inside to outside. */
-	static final Color fillT = new Color(31, 72, 104, 147), fillO = new Color(31, 72, 104, 255);
+	/** Window colors. Fill = inside the window. out, middle, in describe the outline, from inside to outside. */
+	static final Color fillT = new Color(31, 72, 104, 160), fillO = new Color(31, 72, 104, 255);
 	static Color in, middle, out;
 	public static final int MARGIN_X = 30, MARGIN_Y = 12;
 
@@ -51,8 +51,8 @@ public class MenuWindow
 		Dimension cornerName = MenuHudSpriteset.instance.cornerNameSize;
 		this.inside = new Rectangle(this.dimensions.x + corner.width, this.dimensions.y + corner.height, this.dimensions.width - corner.width * 2,
 				this.dimensions.height - corner.height * 2);
-		Rectangle nameInside = new Rectangle(inside.x + cornerName.width, this.dimensions.y - font, Math.max(inside.width - corner.width * 2, hasName ? g
-				.getFontMetrics().stringWidth(name.toString()) : 10), font);
+		Rectangle nameInside = new Rectangle(inside.x + cornerName.width, this.dimensions.y - font, hasName ? g.getFontMetrics().stringWidth(name.toString())
+				: 10, font);
 
 		// Inside
 		g.setColor(fill());

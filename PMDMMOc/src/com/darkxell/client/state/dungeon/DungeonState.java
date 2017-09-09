@@ -65,6 +65,13 @@ public class DungeonState extends AbstractState
 	}
 
 	@Override
+	public void onEnd()
+	{
+		super.onEnd();
+		this.logger.hideMessages();
+	}
+
+	@Override
 	public void onKeyPressed(short key)
 	{
 		if (key == Keys.KEY_DIAGONAL) this.diagonal = true;
@@ -82,7 +89,7 @@ public class DungeonState extends AbstractState
 
 		this.currentSubstate.onKeyReleased(key);
 	}
-	
+
 	@Override
 	public void onStart()
 	{

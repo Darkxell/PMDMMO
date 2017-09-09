@@ -45,6 +45,12 @@ public class ItemStack implements Comparable<ItemStack>
 		return this.quantity;
 	}
 
+	/** @return The message describing this Item. */
+	public Message info()
+	{
+		return new Message("item.info." + this.id);
+	}
+
 	public Item item()
 	{
 		return ItemRegistry.find(this.id);
