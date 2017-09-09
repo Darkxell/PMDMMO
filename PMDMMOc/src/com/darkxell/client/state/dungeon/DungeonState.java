@@ -4,9 +4,11 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.Random;
 
+import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.renderers.DungeonPokemonRenderer;
 import com.darkxell.client.renderers.FloorRenderer;
 import com.darkxell.client.resources.images.AbstractDungeonTileset;
+import com.darkxell.client.resources.music.SoundsHolder;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.common.dungeon.floor.Floor;
@@ -63,6 +65,13 @@ public class DungeonState extends AbstractState
 	}
 
 	@Override
+	public void onEnd()
+	{
+		super.onEnd();
+		this.logger.hideMessages();
+	}
+
+	@Override
 	public void onKeyPressed(short key)
 	{
 		if (key == Keys.KEY_DIAGONAL) this.diagonal = true;
@@ -79,6 +88,13 @@ public class DungeonState extends AbstractState
 		if (key == Keys.KEY_ROTATE) this.rotating = false;
 
 		this.currentSubstate.onKeyReleased(key);
+	}
+
+	@Override
+	public void onStart()
+	{
+		super.onStart();
+		Launcher.soundmanager.setBackgroundMusic(SoundsHolder.getSong("07 Tiny Woods.mp3"));
 	}
 
 	@Override

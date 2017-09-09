@@ -91,6 +91,15 @@ public class Inventory
 		return this.maxSize;
 	}
 
+	/** Removes the Item in the input slot and returns it. Returns null if index is out of bounds. */
+	public ItemStack remove(int slot)
+	{
+		if (slot < 0 || slot >= this.maxSize) return null;
+		ItemStack i = this.items.get(slot);
+		this.items.remove(slot);
+		return i;
+	}
+
 	public ItemStack remove(Item item, int quantity)
 	{
 		ItemStack toreturn = new ItemStack(item.id);

@@ -154,6 +154,7 @@ public class TextRenderer
 	public static final int CHAR_HEIGHT = 10;
 	private static final int GRID_COLS = 20;
 	private static final int GRID_WIDTH = CHAR_HEIGHT, GRID_HEIGHT = CHAR_HEIGHT;
+	public static final int LINE_SPACING = 3;
 	public static final TextRenderer instance = new TextRenderer();
 
 	/** Called on startup to load the font. */

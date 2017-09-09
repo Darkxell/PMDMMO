@@ -5,6 +5,8 @@ import java.util.Comparator;
 
 import org.jdom2.Element;
 
+import com.darkxell.common.dungeon.floor.Floor;
+import com.darkxell.common.event.ItemUseEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Message;
 
@@ -139,7 +141,7 @@ public class Item
 
 	/** @param pokemon - The Pokémon using the Item.
 	 * @return The message to display when using this Item. */
-	private Message getUseMessage(DungeonPokemon pokemon)
+	public Message getUseMessage(DungeonPokemon pokemon)
 	{
 		return new Message("item.used").addReplacement("<pokemon>", pokemon.pokemon.getNickname()).addReplacement("<item>", this.name());
 	}
@@ -169,13 +171,12 @@ public class Item
 
 	/** Called when this Item is used.
 	 * 
+	 * @param floor - The current Floor.
 	 * @param pokemon - The Pokémon using the Item.
 	 * @return The messages that were created while using the Item. */
-	public ArrayList<Message> use(DungeonPokemon pokemon)
+	public ItemUseEvent use(Floor floor, DungeonPokemon pokemon)
 	{
-		ArrayList<Message> messages = new ArrayList<Message>();
-		messages.add(this.getUseMessage(pokemon));
-		return messages;
+		return new ItemUseEvent(this, pokemon, null, floor, new Message("item.no_effect"));
 	}
 
 }

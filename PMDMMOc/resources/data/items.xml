@@ -59,7 +59,7 @@
   <item id="56" type="Orb" price="300" sell="150" sprite="37" />
   <item id="57" type="Orb" price="300" sell="150" sprite="37" />
   <item id="58" type="Orb" price="300" sell="150" sprite="37" />
-  <item id="59" type="Orb" price="300" sell="150" sprite="37" />
+  <item id="59" type="EscapeOrb" price="300" sell="150" sprite="37" />
   <item id="60" type="Orb" price="300" sell="150" sprite="37" />
   <item id="61" type="Orb" price="300" sell="150" sprite="37" />
   <item id="62" type="Orb" price="300" sell="150" sprite="37" />

@@ -4,8 +4,9 @@ import java.util.ArrayList;
 
 import org.jdom2.Element;
 
+import com.darkxell.common.dungeon.floor.Floor;
+import com.darkxell.common.event.ItemUseEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
-import com.darkxell.common.util.Message;
 
 /** An Item that teaches a move to a Pokémon when used, then turns into a Used TM. */
 public class ItemTM extends ItemHM
@@ -35,13 +36,13 @@ public class ItemTM extends ItemHM
 	}
 
 	@Override
-	public ArrayList<Message> use(DungeonPokemon pokemon)
+	public ItemUseEvent use(Floor floor, DungeonPokemon pokemon)
 	{
 		if (pokemon.player != null)
 		{
 			if (pokemon.player.inventory.isFull()) pokemon.tile.setItem(new ItemStack(Item.USED_TM));
 			else pokemon.player.inventory.add(new ItemStack(Item.USED_TM));
 		}
-		return super.use(pokemon);
+		return super.use(floor, pokemon);
 	}
 }

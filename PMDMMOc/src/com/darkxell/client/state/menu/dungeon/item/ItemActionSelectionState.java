@@ -2,6 +2,7 @@ package com.darkxell.client.state.menu.dungeon.item;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.Shape;
 import java.util.ArrayList;
 
 import com.darkxell.client.launchable.Launcher;
@@ -30,8 +31,6 @@ public class ItemActionSelectionState extends AbstractMenuState
 	@Override
 	protected void createOptions()
 	{
-		if (this.actions == null) return;
-
 		MenuTab tab = new MenuTab();
 		for (ItemAction action : this.actions)
 		{
@@ -59,6 +58,22 @@ public class ItemActionSelectionState extends AbstractMenuState
 	protected void onOptionSelected(MenuOption option)
 	{
 		this.actionSource.performAction(this.actions.get(this.options.indexOf(option)));
+	}
+
+	@Override
+	public void render(Graphics2D g, int width, int height)
+	{
+		// If background state hasn't been drawn yet.
+		if (this.getMainWindow() == null && this.backgroundState instanceof AbstractMenuState
+				&& ((AbstractMenuState) this.backgroundState).getMainWindow() == null)
+		{
+			Shape c = g.getClip();
+			g.setClip(0, 0, 0, 0);
+			this.backgroundState.render(g, width, height);
+			g.setClip(c);
+		}
+
+		super.render(g, width, height);
 	}
 
 }
