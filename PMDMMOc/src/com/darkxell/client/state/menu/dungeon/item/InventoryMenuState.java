@@ -22,13 +22,20 @@ public class InventoryMenuState extends AbstractMenuState implements ItemActionS
 	private MenuOption held;
 	public final Inventory inventory;
 	private ArrayList<MenuOption> inventoryOptions;
+	public final ItemSelectionListener listener;
 	public final Player player;
 
 	public InventoryMenuState(DungeonState state)
 	{
+		this(state, null);
+	}
+
+	public InventoryMenuState(DungeonState state, ItemSelectionListener listener)
+	{
 		super(state);
 		this.player = state.player;
 		this.inventory = this.player.inventory;
+		this.listener = listener;
 		this.createOptions();
 	}
 
@@ -77,12 +84,15 @@ public class InventoryMenuState extends AbstractMenuState implements ItemActionS
 		DungeonState s = (DungeonState) this.backgroundState;
 		ItemStack i = this.selectedItem();
 
-		ArrayList<ItemAction> actions = i.item().getLegalActions(true);
-		actions.add(ItemAction.SET);
-		if (s.player.getDungeonPokemon().tile.getItem() == null) actions.add(ItemAction.PLACE);
-		else actions.add(ItemAction.SWAP);
+		if (this.listener == null)
+		{
+			ArrayList<ItemAction> actions = i.item().getLegalActions(true);
+			actions.add(ItemAction.SET);
+			if (s.player.getDungeonPokemon().tile.getItem() == null) actions.add(ItemAction.PLACE);
+			else actions.add(ItemAction.SWAP);
 
-		Launcher.stateManager.setState(new ItemActionSelectionState(this, this, actions), 0);
+			Launcher.stateManager.setState(new ItemActionSelectionState(this, this, actions), 0);
+		} else this.listener.itemSelected(i, this.tabIndex() * 10 + this.optionIndex());
 	}
 
 	@Override

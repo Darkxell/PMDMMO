@@ -167,6 +167,11 @@ public abstract class AbstractMenuState extends AbstractState
 	/** Called when the player chooses the input Option. */
 	protected abstract void onOptionSelected(MenuOption option);
 
+	public int optionIndex()
+	{
+		return this.selection;
+	}
+
 	@Override
 	public void render(Graphics2D g, int width, int height)
 	{
@@ -174,6 +179,11 @@ public abstract class AbstractMenuState extends AbstractState
 
 		if (this.backgroundState != null) this.backgroundState.render(g, width, height);
 		this.mainWindow.render(g, this.currentTab().name, width, height);
+	}
+
+	public int tabIndex()
+	{
+		return this.tab;
 	}
 
 	public MenuTab[] tabs()

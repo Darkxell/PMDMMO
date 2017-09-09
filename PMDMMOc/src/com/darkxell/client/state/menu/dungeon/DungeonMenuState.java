@@ -6,6 +6,7 @@ import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.dungeon.DungeonState;
 import com.darkxell.client.state.menu.AbstractMenuState;
+import com.darkxell.client.state.menu.dungeon.item.GroundItemMenuState;
 import com.darkxell.client.state.menu.dungeon.item.InventoryMenuState;
 import com.darkxell.client.state.menu.dungeon.item.ItemActionSelectionState;
 import com.darkxell.common.item.Item.ItemAction;
@@ -48,7 +49,7 @@ public class DungeonMenuState extends AbstractMenuState
 		DungeonState s = (DungeonState) this.backgroundState;
 		if (option == this.items)
 		{
-			if (s.player.inventory.isEmpty() && s.player.getDungeonPokemon().tile.getItem() == null && s.player.getPokemon().getItem() == null)
+			if (s.player.inventory.isEmpty())
 			{
 				this.onExit();
 				s.logger.showMessage(new Message("inventory.empty"));

@@ -51,8 +51,8 @@ public class MenuWindow
 		Dimension cornerName = MenuHudSpriteset.instance.cornerNameSize;
 		this.inside = new Rectangle(this.dimensions.x + corner.width, this.dimensions.y + corner.height, this.dimensions.width - corner.width * 2,
 				this.dimensions.height - corner.height * 2);
-		Rectangle nameInside = new Rectangle(inside.x + cornerName.width, this.dimensions.y - font, Math.max(inside.width - corner.width * 2, hasName ? g
-				.getFontMetrics().stringWidth(name.toString()) : 10), font);
+		Rectangle nameInside = new Rectangle(inside.x + cornerName.width, this.dimensions.y - font, hasName ? g.getFontMetrics().stringWidth(name.toString())
+				: 10, font);
 
 		// Inside
 		g.setColor(fill());
