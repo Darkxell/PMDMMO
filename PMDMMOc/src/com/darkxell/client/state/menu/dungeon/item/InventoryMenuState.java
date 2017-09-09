@@ -21,7 +21,6 @@ public class InventoryMenuState extends AbstractMenuState implements ItemActionS
 
 	private MenuOption held;
 	public final Inventory inventory;
-	private ArrayList<MenuOption> inventoryOptions;
 	public final ItemSelectionListener listener;
 	public final Player player;
 
@@ -44,7 +43,6 @@ public class InventoryMenuState extends AbstractMenuState implements ItemActionS
 	{
 		MenuTab tab = null;
 		MenuOption o;
-		this.inventoryOptions = new ArrayList<AbstractMenuState.MenuOption>();
 		for (int i = 0; i < this.inventory.itemCount(); ++i)
 		{
 			if (i % 10 == 0)
@@ -54,11 +52,15 @@ public class InventoryMenuState extends AbstractMenuState implements ItemActionS
 			}
 			o = new MenuOption(this.inventory.get(i).name());
 			tab.addOption(o);
-			this.inventoryOptions.add(o);
 		}
 
 		if (this.player.getPokemon().getItem() != null) this.tabs.add(new MenuTab(new Message("inventory.held").addReplacement("<pokemon>", this.player
 				.getPokemon().getNickname())).addOption(this.held = new MenuOption(this.player.getPokemon().getItem().name())));
+	}
+
+	private int itemSlot()
+	{
+		return this.tabIndex() * 10 + this.optionIndex();
 	}
 
 	@Override
@@ -92,7 +94,7 @@ public class InventoryMenuState extends AbstractMenuState implements ItemActionS
 			else actions.add(ItemAction.SWAP);
 
 			Launcher.stateManager.setState(new ItemActionSelectionState(this, this, actions), 0);
-		} else this.listener.itemSelected(i, this.tabIndex() * 10 + this.optionIndex());
+		} else this.listener.itemSelected(i, this.itemSlot());
 	}
 
 	@Override
@@ -105,8 +107,8 @@ public class InventoryMenuState extends AbstractMenuState implements ItemActionS
 
 		if (action != ItemAction.SET && action != ItemAction.DESELECT && action != ItemAction.INFO)
 		{
-			if (action == ItemAction.USE) this.inventory.remove(i.item(), 1);
-			else this.inventory.remove(i.item(), i.getQuantity());
+			if (action == ItemAction.USE && i.getQuantity() > 1) i.setQuantity(i.getQuantity() - 1);
+			else this.inventory.remove(this.itemSlot());
 		}
 		switch (action)
 		{
@@ -148,7 +150,7 @@ public class InventoryMenuState extends AbstractMenuState implements ItemActionS
 	public ItemStack selectedItem()
 	{
 		MenuOption option = this.currentOption();
-		int index = this.inventoryOptions.indexOf(option);
+		int index = this.itemSlot();
 		if (index != -1) return this.inventory.get(index).copy();
 		else if (option == this.held) return this.player.getPokemon().getItem();
 		return null;
