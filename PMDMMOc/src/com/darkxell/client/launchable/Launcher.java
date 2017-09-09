@@ -1,5 +1,6 @@
 package com.darkxell.client.launchable;
 
+import com.darkxell.client.mechanics.chat.ChatBox;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.PokemonSpritesets;
 import com.darkxell.client.resources.music.SoundManager;
@@ -24,11 +25,12 @@ public class Launcher
 	public static SoundManager soundmanager;
 	public static Frame frame;
 	/** Set to false to stop the game. */
-	static boolean isRunning;
+	public static boolean isRunning;
 	private static Renderer renderer;
 	private static UpdaterAndRenderer updaterandrenderer;
 	private static Updater updater;
-
+	public static ChatBox chatbox;
+	
 	public static StateManager stateManager;
 
 	public static void main(String[] args)
@@ -48,6 +50,8 @@ public class Launcher
 		stateManager = new StateManager();
 		stateManager.setState(new FreezoneExploreState(), 0);
 		stateManager.randomizeBackground();
+		
+		chatbox = new ChatBox();
 		
 		isRunning = true;
 		setProcessingProfile(PROFILE_SYNCHRONIZED);

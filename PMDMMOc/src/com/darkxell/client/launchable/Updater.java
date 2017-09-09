@@ -36,7 +36,7 @@ public class Updater implements Runnable
 
 			try
 			{
-				Thread.sleep(5);
+				Thread.sleep(2);
 			} catch (InterruptedException e)
 			{
 				e.printStackTrace();

@@ -101,7 +101,7 @@ public class FreezoneDialogState extends AbstractState {
 			g.translate(-translateX, -translateY);
 
 			g.drawImage(Hud.button, width - 70, 5, null);
-			TextRenderer.instance.render(g, "Next", width - 50, 10);
+			TextRenderer.instance.render(g, "Next", 10, 10);
 			// TODO : change the "NEXT" here to a language dependent
 			// string..
 			int temp_tw_width = width - 40;

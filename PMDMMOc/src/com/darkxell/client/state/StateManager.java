@@ -2,9 +2,12 @@ package com.darkxell.client.state;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.Shape;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
+import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.resources.images.FrameResources;
 
 public class StateManager {
@@ -106,8 +109,13 @@ public class StateManager {
 		drawBoxOutline(g, chatx, chaty, chatwidth, chatheight);
 		// draws the components insides
 		g.drawImage(internalBuffer, gamex, gamey, gamewidth, gameheight, null);
+		g.translate(chatx, chaty);
+		Shape clp = g.getClip();
+		g.setClip(new Rectangle(0, 0, chatwidth, chatheight));
+		Launcher.chatbox.render(g, chatwidth, chatheight);
+		g.setClip(clp);
+		g.translate(-chatx, -chaty);
 		g.setColor(Color.BLACK);
-		g.fillRect(chatx, chaty, chatwidth, chatheight);
 		g.fillRect(mapx, mapy, mapsize, mapsize);
 
 	}
