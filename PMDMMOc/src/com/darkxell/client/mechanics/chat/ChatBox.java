@@ -56,7 +56,7 @@ public class ChatBox {
 		int headerheight = ChatResources.HEADER.getHeight() * width / ChatResources.HEADER.getWidth();
 		g.drawImage(ChatResources.HEADER, 0, 0, width, headerheight, null);
 		int footerheight = ChatResources.FOOTER.getHeight() * width / ChatResources.FOOTER.getWidth();
-		g.drawImage(ChatResources.getFooter(ChatResources.ICON_CHANNEL_GLOBAL, "I'm a string", true), 0, height - footerheight, width, footerheight, null);
+		g.drawImage(ChatResources.getFooter(ChatResources.ICON_CHANNEL_GLOBAL), 0, height - footerheight, width, footerheight, null);
 	}
 
 	private void update() {
