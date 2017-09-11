@@ -9,6 +9,7 @@ import com.darkxell.client.resources.images.ChatResources;
 public class ChatBox {
 
 	private Thread thread;
+	public CustomTextfield textfield;
 
 	/**
 	 * Creates a new chatBox instance. Note that this instance will create it's
@@ -47,6 +48,7 @@ public class ChatBox {
 			}
 		});
 		this.thread.start();
+		this.textfield = new CustomTextfield();
 	}
 
 	public void render(Graphics2D g, int width, int height) {
@@ -56,11 +58,20 @@ public class ChatBox {
 		int headerheight = ChatResources.HEADER.getHeight() * width / ChatResources.HEADER.getWidth();
 		g.drawImage(ChatResources.HEADER, 0, 0, width, headerheight, null);
 		int footerheight = ChatResources.FOOTER.getHeight() * width / ChatResources.FOOTER.getWidth();
-		g.drawImage(ChatResources.getFooter(ChatResources.ICON_CHANNEL_GLOBAL), 0, height - footerheight, width, footerheight, null);
+		g.drawImage(ChatResources.getFooter(ChatResources.ICON_CHANNEL_GLOBAL), 0, height - footerheight, width,
+				footerheight, null);
+		g.setColor(Color.WHITE);
+		g.translate(width / 6, (height - footerheight) + (footerheight / 4));
+		this.textfield.render(g, width / 3 * 2, footerheight / 2);
+		g.translate(-width / 6,  -(height - footerheight) - (footerheight / 4));
 	}
 
 	private void update() {
 
+	}
+	
+	public void send(){
+		this.textfield.clear();
 	}
 
 }

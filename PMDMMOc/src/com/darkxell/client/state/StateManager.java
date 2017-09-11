@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.Shape;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
@@ -31,14 +32,20 @@ public class StateManager {
 	public StateManager() {
 	}
 
-	public void onKeyPressed(short key) {
+	public void onKeyPressed(KeyEvent e, short key) {
 		if (this.currentState != null)
 			this.currentState.onKeyPressed(key);
+		if (e.getKeyCode() == KeyEvent.VK_ENTER)
+			Launcher.chatbox.send();
 	}
 
-	public void onKeyReleased(short key) {
+	public void onKeyReleased(KeyEvent e, short key) {
 		if (this.currentState != null)
 			this.currentState.onKeyReleased(key);
+	}
+
+	public void onKeyTyped(KeyEvent e) {
+		Launcher.chatbox.textfield.insertString(e.getKeyChar() + "");
 	}
 
 	public void onMouseClick(int x, int y) {
