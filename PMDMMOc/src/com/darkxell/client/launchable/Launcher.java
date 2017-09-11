@@ -35,6 +35,7 @@ public class Launcher
 
 	public static void main(String[] args)
 	{
+		ClientSettings.load();
 		Logger.loadClient();
 		Lang.loadClient();
 		PokemonRegistry.loadClient();
@@ -79,6 +80,7 @@ public class Launcher
 			DungeonRegistry.saveClient();
 		}
 		Logger.instance().saveClient();
+		ClientSettings.save();
 	}
 
 	public static void setProcessingProfile(byte profile)

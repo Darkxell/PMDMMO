@@ -3,19 +3,14 @@ package com.darkxell.client.ui;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import com.darkxell.client.launchable.ClientSettings;
 import com.darkxell.client.launchable.Launcher;
 
 public class Keys implements KeyListener
 {
-	/** Default keys. */
-	private static final int[] DEFAULT_KEYS = new int[]
-	{ KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_D, KeyEvent.VK_S, KeyEvent.VK_SHIFT, KeyEvent.VK_R,
-			KeyEvent.VK_ESCAPE, KeyEvent.VK_1, KeyEvent.VK_2, KeyEvent.VK_3, KeyEvent.VK_4, KeyEvent.VK_5, KeyEvent.VK_6, KeyEvent.VK_I, KeyEvent.VK_M,
-			KeyEvent.VK_P };
-
-	private static boolean[] isPressed = new boolean[18];
 
 	public static final short KEY_COUNT = 18;
+	private static boolean[] isPressed = new boolean[KEY_COUNT];
 
 	/** Keys.<br />
 	 * <ul>
@@ -43,9 +38,9 @@ public class Keys implements KeyListener
 			KEY_MAP = 16, KEY_PARTY = 17;
 
 	/** User-defined keys. */
-	private static int[] keys = DEFAULT_KEYS;
+	private static int[] keys;
 	/** Key names. */
-	private static String[] NAMES = new String[]
+	private static final String[] NAMES = new String[]
 	{ "up", "down", "left", "right", "attack", "rotate", "run", "diagonal", "menu", "move1", "move2", "move3", "move4", "item1", "item2", "inventory", "map",
 			"party" };
 
@@ -70,6 +65,23 @@ public class Keys implements KeyListener
 	public static boolean isPressed(short key)
 	{
 		return isPressed[key];
+	}
+
+	public Keys()
+	{
+		keys = new int[KEY_COUNT];
+		for (int i = 0; i < KEY_COUNT; ++i)
+		{
+			String s = "key." + NAMES[i];
+			try
+			{
+				keys[i] = Integer.parseInt(ClientSettings.getSetting(s));
+			} catch (Exception e)
+			{
+				ClientSettings.resetSetting(s);
+				keys[i] = Integer.parseInt(ClientSettings.getSetting(s));
+			}
+		}
 	}
 
 	@Override
