@@ -8,7 +8,7 @@ import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Message;
 
 /** An Item that has different effects when used. */
-public class ItemEscapeOrb extends Item
+public class ItemEscapeOrb extends ItemOrb
 {
 
 	public ItemEscapeOrb(Element xml)

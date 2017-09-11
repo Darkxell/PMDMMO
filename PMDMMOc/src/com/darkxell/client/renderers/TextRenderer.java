@@ -13,6 +13,7 @@ public class TextRenderer
 
 	public static enum PMDChar
 	{
+		new_line("<br>", 0, 0),
 		space(" ", 0, 4),
 		a("a", 1, 5),
 		b("b", 2, 5),
@@ -104,19 +105,19 @@ public class TextRenderer
 		music("<music>", 88, 8),
 		tick("<tick>", 89, 9),
 		star("<star>", 90, 7),
-		mission("<mission>", 91, 8),
-		mission_accepted("<mission-a>", 92, 10),
-		news("<news>", 93, 10),
-		story("<story>", 94, 9),
-		key_A("<key-a>", 95, 9),
-		key_B("<key-b>", 96, 10),
-		key_L("<key-l>", 97, 10),
-		key_R("<key-r>", 98, 10),
-		key_PLUS("<key-+>", 99, 10),
-		key_SELECT1("<select1>", 100, 10),
-		key_SELECT2("<select2>", 101, 10),
-		tm("<tm>", 102, 10),
-		orb("<orb>", 103, 10),
+		glued("<glued>", 91, 8),
+		mission("<mission>", 92, 8),
+		mission_accepted("<mission-a>", 93, 10),
+		news("<news>", 94, 10),
+		story("<story>", 95, 9),
+		speech_bubble("<speech>", 96, 9),
+		key_A("<key-a>", 97, 9),
+		key_B("<key-b>", 98, 10),
+		key_L("<key-l>", 99, 10),
+		key_R("<key-r>", 100, 10),
+		key_PLUS("<key-+>", 101, 10),
+		key_SELECT1("<select1>", 102, 10),
+		key_SELECT2("<select2>", 103, 10),
 		buy_1("<1>", 104, 6),
 		buy_2("<2>", 105, 6),
 		buy_3("<3>", 106, 6),
@@ -126,7 +127,28 @@ public class TextRenderer
 		buy_7("<7>", 110, 6),
 		buy_8("<8>", 111, 6),
 		buy_9("<9>", 112, 6),
-		buy_0("<0>", 113, 6);
+		buy_0("<0>", 113, 6),
+		orb("<orb>", 114, 10),
+		tm_used("<tmu>", 120, 10),
+		hm("<hm>", 121, 10),
+		tm_0("<tm0>", 122, 10),
+		tm_1("<tm1>", 123, 10),
+		tm_2("<tm2>", 124, 10),
+		tm_3("<tm3>", 125, 10),
+		tm_4("<tm4>", 126, 10),
+		tm_5("<tm5>", 127, 10),
+		tm_6("<tm6>", 128, 10),
+		tm_7("<tm7>", 129, 10),
+		tm_8("<tm8>", 130, 10),
+		tm_9("<tm9>", 131, 10),
+		tm_10("<tm10>", 132, 10),
+		tm_11("<tm11>", 133, 10),
+		tm_12("<tm12>", 134, 10),
+		tm_13("<tm13>", 135, 10),
+		tm_14("<tm14>", 136, 10),
+		tm_15("<tm15>", 137, 10),
+		tm_16("<tm16>", 138, 10),
+		tm_17("<tm17>", 139, 10);
 
 		public static PMDChar find(String value)
 		{
@@ -229,7 +251,7 @@ public class TextRenderer
 			currentlength = 0;
 			String[] words = parts[i].split(" ");
 			for (int j = 0; j < words.length; j++)
-				if (currentlength == 0 || currentlength + this.width(words[j]) < boxwidth)
+				if (!words[j].startsWith(PMDChar.new_line.value) && (currentlength == 0 || currentlength + this.width(words[j]) < boxwidth))
 				{
 					textlines.set(iterator, textlines.get(iterator) + words[j] + " ");
 					currentlength += this.width(words[j] + " ");

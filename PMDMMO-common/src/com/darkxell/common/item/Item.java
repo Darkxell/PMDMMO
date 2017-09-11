@@ -104,7 +104,7 @@ public class Item
 	/** This Item's price to sell. */
 	public final int sell;
 	/** The ID of the Item's sprite. */
-	public final int spriteID;
+	private final int spriteID;
 
 	public Item(Element xml)
 	{
@@ -137,6 +137,11 @@ public class Item
 		if (inDungeon) actions.add(ItemAction.THROW);
 		actions.add(ItemAction.INFO);
 		return actions;
+	}
+
+	public int getSpriteID()
+	{
+		return this.spriteID;
 	}
 
 	/** @param pokemon - The Pokémon using the Item.
