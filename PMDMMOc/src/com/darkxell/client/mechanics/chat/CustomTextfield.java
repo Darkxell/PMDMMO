@@ -89,4 +89,9 @@ public class CustomTextfield {
 		}
 	}
 
+	public void pressDelete() {
+		if (!charsbefore.equals(""))
+			charsbefore = charsbefore.substring(0, charsbefore.length() - 1);
+	}
+
 }

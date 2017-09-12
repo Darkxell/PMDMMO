@@ -2,6 +2,7 @@ package com.darkxell.client.mechanics.chat;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 
 import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.resources.images.ChatResources;
@@ -11,7 +12,8 @@ public class ChatBox {
 
 	private Thread thread;
 	public CustomTextfield textfield;
-
+	public ArrayList<String> Messages;
+	
 	/**
 	 * Creates a new chatBox instance. Note that this instance will create it's
 	 * own thread and connection to the server when created.

@@ -10,6 +10,7 @@ import java.util.Random;
 
 import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.resources.images.FrameResources;
+import com.darkxell.common.util.Logger;
 
 public class StateManager {
 
@@ -41,7 +42,8 @@ public class StateManager {
 			Launcher.chatbox.textfield.pressLeft();
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT)
 			Launcher.chatbox.textfield.pressRight();
-		;
+		if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE)
+			Launcher.chatbox.textfield.pressDelete();
 	}
 
 	public void onKeyReleased(KeyEvent e, short key) {
@@ -50,7 +52,8 @@ public class StateManager {
 	}
 
 	public void onKeyTyped(KeyEvent e) {
-		Launcher.chatbox.textfield.insertString(e.getKeyChar() + "");
+		if (e.getKeyChar() != '\b')
+			Launcher.chatbox.textfield.insertString(e.getKeyChar() + "");
 	}
 
 	public void onMouseClick(int x, int y) {
