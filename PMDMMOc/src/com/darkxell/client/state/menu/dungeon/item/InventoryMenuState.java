@@ -143,8 +143,8 @@ public class InventoryMenuState extends AbstractMenuState implements ItemActionS
 			case INFO:
 			default:
 				Launcher.stateManager.setState(new InfoState(parent, this, new Message[]
-				{ i.item().name(), i.info() }, new Message[]
-				{ i.info(), i.item().name() }), 0);
+				{ i.item().name() }, new Message[]
+				{ i.info() }), 0);
 				break;
 		}
 

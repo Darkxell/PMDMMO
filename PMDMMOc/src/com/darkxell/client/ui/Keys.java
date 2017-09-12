@@ -3,6 +3,7 @@ package com.darkxell.client.ui;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import com.darkxell.client.launchable.ClientSettings;
 import com.darkxell.client.launchable.Launcher;
 
 public class Keys implements KeyListener {
@@ -14,7 +15,9 @@ public class Keys implements KeyListener {
 
 	private static boolean[] isPressed = new boolean[18];
 
+
 	public static final short KEY_COUNT = 18;
+	private static boolean[] isPressed = new boolean[KEY_COUNT];
 
 	/**
 	 * Keys.<br />
@@ -44,10 +47,11 @@ public class Keys implements KeyListener {
 			KEY_MOVE_4 = 12, KEY_ITEM_1 = 13, KEY_ITEM_2 = 14, KEY_INVENTORY = 15, KEY_MAP = 16, KEY_PARTY = 17;
 
 	/** User-defined keys. */
-	private static int[] keys = DEFAULT_KEYS;
+	private static int[] keys;
 	/** Key names. */
 	private static String[] NAMES = new String[] { "up", "down", "left", "right", "attack", "rotate", "run", "diagonal",
 			"menu", "move1", "move2", "move3", "move4", "item1", "item2", "inventory", "map", "party" };
+
 
 	/**
 	 * @param keyID
@@ -76,6 +80,23 @@ public class Keys implements KeyListener {
 	 */
 	public static boolean isPressed(short key) {
 		return isPressed[key];
+	}
+
+	public Keys()
+	{
+		keys = new int[KEY_COUNT];
+		for (int i = 0; i < KEY_COUNT; ++i)
+		{
+			String s = "key." + NAMES[i];
+			try
+			{
+				keys[i] = Integer.parseInt(ClientSettings.getSetting(s));
+			} catch (Exception e)
+			{
+				ClientSettings.resetSetting(s);
+				keys[i] = Integer.parseInt(ClientSettings.getSetting(s));
+			}
+		}
 	}
 
 	@Override

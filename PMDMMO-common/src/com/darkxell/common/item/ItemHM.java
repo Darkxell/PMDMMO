@@ -2,6 +2,9 @@ package com.darkxell.common.item;
 
 import org.jdom2.Element;
 
+import com.darkxell.common.move.Move;
+import com.darkxell.common.move.MoveRegistry;
+
 /** An Item that teaches a move to a Pokémon when used. */
 public class ItemHM extends Item
 {
@@ -24,6 +27,12 @@ public class ItemHM extends Item
 	public ItemCategory category()
 	{
 		return ItemCategory.HMS;
+	}
+
+	/** @return The Move this TM teaches. */
+	public Move move()
+	{
+		return MoveRegistry.find(this.moveID);
 	}
 
 	@Override

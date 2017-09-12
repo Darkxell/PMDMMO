@@ -37,7 +37,7 @@ public class FloorRenderer
 			for (int y = yStart; y < Floor.ALL_HEIGHT && y <= yStart + height / TILE_SIZE + 1; ++y)
 			{
 				Tile tile = this.floor.tileAt(x, y);
-				if (tile.getItem() != null && tile.type() == TileType.GROUND) g.drawImage(ItemsSpriteset.instance.SPRITES[tile.getItem().item().spriteID],
+				if (tile.getItem() != null && tile.type() == TileType.GROUND) g.drawImage(ItemsSpriteset.instance.SPRITES[tile.getItem().item().getSpriteID()],
 						tile.x * TILE_SIZE + ITEM_POS, tile.y * TILE_SIZE + ITEM_POS, null);
 				if (tile.getPokemon() != null) DungeonPokemonRenderer.instance.draw(g, tile.getPokemon(), x, y);
 			}
