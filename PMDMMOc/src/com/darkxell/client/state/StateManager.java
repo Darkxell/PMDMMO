@@ -10,7 +10,6 @@ import java.util.Random;
 
 import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.resources.images.FrameResources;
-import com.darkxell.common.util.Logger;
 
 public class StateManager {
 
