@@ -177,9 +177,9 @@ public class DialogState extends AbstractState
 		if (this.currentMessage < this.elements.size() && this.elements.get(this.currentMessage).pokemon != null)
 		{
 			int x = (int) (box.getMaxX() - Hud.portrait.getWidth());
-			int y = (int) (box.y - Hud.portrait.getHeight() - 10);
+			int y = (int) (box.y - Hud.portrait.getHeight() - 5);
+			g.drawImage(PokemonPortrait.portrait(this.elements.get(this.currentMessage).pokemon), x + 4, y + 4, null);
 			g.drawImage(Hud.portrait, x, y, null);
-			g.drawImage(PokemonPortrait.portrait(this.elements.get(this.currentMessage).pokemon), x + 3, y + 3, null);
 		}
 	}
 
