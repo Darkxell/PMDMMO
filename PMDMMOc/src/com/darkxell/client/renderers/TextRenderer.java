@@ -194,7 +194,7 @@ public class TextRenderer
 					Res.createimage(source, c.id % GRID_COLS * GRID_WIDTH, (c.id - c.id % GRID_COLS) / GRID_COLS * GRID_HEIGHT, GRID_WIDTH, GRID_HEIGHT));
 	}
 
-	private ArrayList<PMDChar> decode(String text)
+	public ArrayList<PMDChar> decode(String text)
 	{
 		ArrayList<PMDChar> chars = new ArrayList<TextRenderer.PMDChar>();
 		if (text == null) return chars;
@@ -206,7 +206,7 @@ public class TextRenderer
 			{
 				value = "";
 				++c;
-				while (text.charAt(c) != '>')
+				while (c < text.length() && text.charAt(c) != '>')
 				{
 					value += text.charAt(c);
 					++c;
@@ -217,7 +217,7 @@ public class TextRenderer
 		}
 
 		for (c = 0; c < chars.size(); ++c)
-			if (chars.get(c) == null) chars.set(c, PMDChar.interrogation_);
+			if (chars.get(c) == null) chars.remove(c);
 		return chars;
 	}
 
