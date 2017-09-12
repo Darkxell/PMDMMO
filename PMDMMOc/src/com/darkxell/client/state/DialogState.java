@@ -10,11 +10,36 @@ import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.Hud;
 import com.darkxell.client.resources.images.MenuHudSpriteset;
+import com.darkxell.client.resources.images.PokemonPortrait;
 import com.darkxell.client.ui.Keys;
+import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.Message;
 
 public class DialogState extends AbstractState
 {
+
+	public static class DialogElement
+	{
+		@SuppressWarnings("unused")
+		private short emotion;
+		private Message[] messages;
+		private Pokemon pokemon;
+
+		public DialogElement(Pokemon pokemon, Message... messages)
+		{
+			this((short) 0, pokemon, messages);
+		}
+
+		public DialogElement(short emotion, Pokemon pokemon, Message... messages)
+		{
+			this.emotion = emotion;
+			this.pokemon = pokemon;
+			this.messages = messages;
+
+			if (this.pokemon != null) for (Message m : this.messages)
+				m.addPrefix(new Message(": ", false)).addPrefix(this.pokemon.getNickname());
+		}
+	}
 
 	public static interface DialogEndListener
 	{
@@ -31,6 +56,8 @@ public class DialogState extends AbstractState
 	/** The split lines of the current messages. */
 	private ArrayList<String> currentLines;
 	private int currentMessage;
+	/** Matches each message to the element describing it. */
+	private final ArrayList<DialogElement> elements;
 	/** True if the end of the current message has been reached. */
 	private boolean endReached;
 	public boolean isOpaque;
@@ -43,19 +70,23 @@ public class DialogState extends AbstractState
 	/** Positive if the current message is switching. -1 else. */
 	private int switching;
 
-	public DialogState(ArrayList<Message> messages, AbstractState backgroundState)
+	public DialogState(AbstractState backgroundState, DialogElement... elements)
 	{
-		this(messages, backgroundState, null);
+		this(backgroundState, null, elements);
 	}
 
-	public DialogState(ArrayList<Message> messages, AbstractState backgroundState, DialogEndListener listener)
+	public DialogState(AbstractState backgroundState, DialogEndListener listener, boolean isOpaque, DialogElement... elements)
 	{
-		this(messages, backgroundState, listener, true);
-	}
+		this.elements = new ArrayList<DialogState.DialogElement>();
+		this.messages = new ArrayList<Message>();
 
-	public DialogState(ArrayList<Message> messages, AbstractState backgroundState, DialogEndListener listener, boolean isOpaque)
-	{
-		this.messages = messages;
+		for (DialogElement element : elements)
+			for (Message message : element.messages)
+			{
+				this.messages.add(message);
+				this.elements.add(element);
+			}
+
 		this.backgroundState = backgroundState;
 		this.listener = listener;
 		this.isOpaque = isOpaque;
@@ -63,6 +94,11 @@ public class DialogState extends AbstractState
 		this.currentMessage = this.arrowtick = this.position = 0;
 		this.switching = -1;
 		this.endReached = false;
+	}
+
+	public DialogState(AbstractState backgroundState, DialogEndListener listener, DialogElement... elements)
+	{
+		this(backgroundState, listener, true, elements);
 	}
 
 	/** @return Length of the current Message. */
@@ -137,6 +173,14 @@ public class DialogState extends AbstractState
 
 		if (this.endReached && this.switching == -1 && this.arrowtick > 9) g.drawImage(arrow, box.x + box.width / 2 - arrow.getWidth() / 2,
 				(int) (box.getMaxY() - arrow.getHeight() * 3 / 4), null);
+
+		if (this.currentMessage < this.elements.size() && this.elements.get(this.currentMessage).pokemon != null)
+		{
+			int x = (int) (box.getMaxX() - Hud.portrait.getWidth());
+			int y = (int) (box.y - Hud.portrait.getHeight() - 10);
+			g.drawImage(Hud.portrait, x, y, null);
+			g.drawImage(PokemonPortrait.portrait(this.elements.get(this.currentMessage).pokemon), x + 3, y + 3, null);
+		}
 	}
 
 	private void requestNextMessage()
@@ -148,7 +192,9 @@ public class DialogState extends AbstractState
 	/** @return True if the current message should be followed with a switching animation. */
 	private boolean switchAnimation()
 	{
-		return this.currentMessage < this.messages.size() - 1;
+		if (this.currentMessage == this.messages.size() - 1) return false;
+		return this.elements.get(this.currentMessage).pokemon != null
+				&& this.elements.get(this.currentMessage).pokemon.equals(this.elements.get(this.currentMessage + 1).pokemon);
 	}
 
 	@Override
