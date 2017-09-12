@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 
 import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.resources.images.ChatResources;
+import com.darkxell.common.util.Logger;
 
 public class ChatBox {
 
@@ -20,31 +21,16 @@ public class ChatBox {
 
 			@Override
 			public void run() {
-				// Preparing FPS handling
-				long startTime = System.nanoTime();
-				long currentTime = startTime;
-				long updateTime = 0;
-				long timePerUpdate = 1000000000 / 60;
-
+				long timePerUpdate = 1000 / 60;
+				Logger.instance().debug("Started chat updater thread!");
 				while (Launcher.isRunning) {
-					// Calculate elapsed time
-					long elapsedTime = System.nanoTime() - currentTime;
-					currentTime += elapsedTime;
-					updateTime += elapsedTime / timePerUpdate;
-
-					// If a tick has passed, update until there is no delayed
-					// update
-					while (updateTime >= 1) {
-						update();
-						--updateTime;
-					}
+					update();
 					try {
-						Thread.sleep(2);
+						Thread.sleep(timePerUpdate);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
 				}
-
 			}
 		});
 		this.thread.start();
@@ -63,14 +49,15 @@ public class ChatBox {
 		g.setColor(Color.WHITE);
 		g.translate(width / 6, (height - footerheight) + (footerheight / 4));
 		this.textfield.render(g, width / 3 * 2, footerheight / 2);
-		g.translate(-width / 6,  -(height - footerheight) - (footerheight / 4));
+		g.translate(-width / 6, -(height - footerheight) - (footerheight / 4));
 	}
 
 	private void update() {
-
+		if (this.textfield != null)
+			this.textfield.update();
 	}
-	
-	public void send(){
+
+	public void send() {
 		this.textfield.clear();
 	}
 
