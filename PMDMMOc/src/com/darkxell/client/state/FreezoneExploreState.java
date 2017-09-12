@@ -46,6 +46,12 @@ public class FreezoneExploreState extends AbstractState {
 		if (FreezoneMapHolder.currentmap != null)
 			FreezoneMapHolder.currentplayer.releaseKey(key);
 	}
+	
+	@Override
+	public void onEnd()	{
+		super.onEnd();
+		FreezoneMapHolder.currentplayer.forceStop();
+	}
 
 	@Override
 	public void render(Graphics2D g, int width, int height) {
