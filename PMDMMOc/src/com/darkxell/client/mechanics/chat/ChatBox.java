@@ -40,11 +40,11 @@ public class ChatBox {
 	}
 
 	public void render(Graphics2D g, int width, int height) {
-		// TextRenderer.instance.render(g, "Chat", width - 50, 10);
 		g.setColor(new Color(32, 72, 104));
 		g.fillRect(0, 0, width, height);
 		int headerheight = ChatResources.HEADER.getHeight() * width / ChatResources.HEADER.getWidth();
 		g.drawImage(ChatResources.HEADER, 0, 0, width, headerheight, null);
+		//Draw the footer
 		int footerheight = ChatResources.FOOTER.getHeight() * width / ChatResources.FOOTER.getWidth();
 		g.drawImage(ChatResources.getFooter(ChatResources.ICON_CHANNEL_GLOBAL), 0, height - footerheight, width,
 				footerheight, null);
