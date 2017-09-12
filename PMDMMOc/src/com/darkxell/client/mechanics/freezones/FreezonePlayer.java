@@ -145,6 +145,7 @@ public class FreezonePlayer {
 		ismovingRIGHT = false;
 		ismovingDOWN = false;
 		ismovingLEFT = false;
+		playersprite.setState(PokemonSprite.STATE_IDDLE);
 	}
 
 	public static final double MOVESPEED = 0.19;
