@@ -47,7 +47,7 @@ public class ChatResources {
 	private static BufferedImage buffer;
 	private static Graphics2D buffergraphics;
 
-	public static BufferedImage getFooter(BufferedImage dest,String text,boolean cursor) {
+	public static BufferedImage getFooter(BufferedImage dest) {
 		if (buffer == null) {
 			buffer = new BufferedImage(FOOTER.getWidth(), FOOTER.getHeight(), BufferedImage.TYPE_INT_RGB);
 			buffergraphics = buffer.createGraphics();	
