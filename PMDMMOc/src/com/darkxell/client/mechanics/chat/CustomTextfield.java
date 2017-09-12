@@ -6,6 +6,8 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.Shape;
 
+import com.darkxell.common.util.Logger;
+
 public class CustomTextfield {
 
 	private int width = 0;
@@ -72,7 +74,7 @@ public class CustomTextfield {
 	}
 
 	public void pressLeft() {
-		if (charsbefore != "") {
+		if (!charsbefore.equals("")) {
 			char swich = charsbefore.charAt(charsbefore.length() - 1);
 			charsbefore = charsbefore.substring(0, charsbefore.length() - 1);
 			charsafter = swich + charsafter;
@@ -80,8 +82,10 @@ public class CustomTextfield {
 	}
 
 	public void pressRight() {
-		if (charsafter != "") {
-
+		if (!charsafter.equals("")) {
+			char swich = charsafter.charAt(0);
+			charsbefore = charsbefore + swich;
+			charsafter = charsafter.substring(1, charsafter.length());
 		}
 	}
 

@@ -37,6 +37,11 @@ public class StateManager {
 			this.currentState.onKeyPressed(key);
 		if (e.getKeyCode() == KeyEvent.VK_ENTER)
 			Launcher.chatbox.send();
+		if (e.getKeyCode() == KeyEvent.VK_LEFT)
+			Launcher.chatbox.textfield.pressLeft();
+		if (e.getKeyCode() == KeyEvent.VK_RIGHT)
+			Launcher.chatbox.textfield.pressRight();
+		;
 	}
 
 	public void onKeyReleased(KeyEvent e, short key) {
