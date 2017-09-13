@@ -10,6 +10,9 @@ import com.darkxell.common.util.Logger;
 
 public class ChatBox {
 
+	private static final int INTERLINE_SMALL = 15;
+	private static final int INTERLINE_BIG = 20;
+
 	private Thread thread;
 	public CustomTextfield textfield;
 	public ArrayList<ChatMessage> messages = new ArrayList<>();
@@ -59,13 +62,38 @@ public class ChatBox {
 		// Displays the messages
 		int iterator = 0;
 		g.setColor(Color.WHITE);
-		for (int i = height - footerheight - 20; i > headerheight + 20 && iterator < messages.size(); i -= 20) {
+		for (int i = height - footerheight - 20; i > headerheight + 20
+				&& iterator < messages.size(); i -= INTERLINE_BIG) {
 			ChatMessage m = messages.get(messages.size() - 1 - iterator);
-			g.setColor(m.tagColor);
-			g.drawString("[" + m.tag + "]", 10, i);
-			g.setColor(m.lineColor);
-			g.drawString(m.sender + " : " + m.message, 13 + g.getFontMetrics().stringWidth("[" + m.tag + "]"), i);
 			++iterator;
+			int taglength = g.getFontMetrics().stringWidth("[" + m.tag + "]"),
+					messagelength = g.getFontMetrics().stringWidth(m.sender + " : " + m.message);
+			if (taglength + messagelength + 3 < width - 10) {
+				if (!m.tag.equals("")) {
+					g.setColor(m.tagColor);
+					g.drawString("[" + m.tag + "]", 10, i);
+				}
+				g.setColor(m.lineColor);
+				g.drawString(m.sender + " : " + m.message, 13 + taglength, i);
+			} else {
+				int letterx = taglength + 13, linesammount = (taglength + messagelength + 3) / (width - 10);
+				char[] completemessage = (m.sender + " : " + m.message).toCharArray();
+				i -= INTERLINE_SMALL * linesammount;
+				if (!m.tag.equals("")) {
+					g.setColor(m.tagColor);
+					g.drawString("[" + m.tag + "]", 10, i);
+				}
+				g.setColor(m.lineColor);
+				for (int j = 0; j < completemessage.length; j++) {
+					g.drawString(completemessage[j] + "", letterx, i);
+					letterx += g.getFontMetrics().stringWidth(completemessage[j] + "");
+					if (letterx > width - 10) {
+						letterx = 10;
+						i += INTERLINE_SMALL;
+					}
+				}
+				i -= INTERLINE_SMALL * linesammount;
+			}
 		}
 	}
 
@@ -76,6 +104,7 @@ public class ChatBox {
 
 	public void send() {
 		this.messages.add(new ChatMessage("User", textfield.getContent(), Color.WHITE, "DEV", Color.RED));
+		this.messages.add(new ChatMessage("WARNING", "Chat server is not yet implemented!", Color.RED));
 		this.textfield.clear();
 	}
 
