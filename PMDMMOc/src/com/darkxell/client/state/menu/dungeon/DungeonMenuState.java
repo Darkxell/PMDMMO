@@ -13,21 +13,18 @@ import com.darkxell.common.item.Item.ItemAction;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.util.Message;
 
-public class DungeonMenuState extends AbstractMenuState
-{
+public class DungeonMenuState extends AbstractMenuState {
 
 	@SuppressWarnings("unused")
 	private MenuOption moves, items, team, others, ground;
 
-	public DungeonMenuState(AbstractState background)
-	{
+	public DungeonMenuState(AbstractState background) {
 		super(background);
 		this.createOptions();
 	}
 
 	@Override
-	protected void createOptions()
-	{
+	protected void createOptions() {
 		MenuTab tab = new MenuTab();
 		tab.addOption((this.moves = new MenuOption("menu.moves")));
 		tab.addOption((this.items = new MenuOption("menu.items")));
@@ -38,37 +35,34 @@ public class DungeonMenuState extends AbstractMenuState
 	}
 
 	@Override
-	protected void onExit()
-	{
-		Launcher.stateManager.setState(this.backgroundState, 0);
+	protected void onExit() {
+		Launcher.stateManager.setState(this.backgroundState);
 	}
 
 	@Override
-	protected void onOptionSelected(MenuOption option)
-	{
+	protected void onOptionSelected(MenuOption option) {
 		DungeonState s = (DungeonState) this.backgroundState;
-		if (option == this.items)
-		{
-			if (s.player.inventory.isEmpty())
-			{
+		if (option == this.items) {
+			if (s.player.inventory.isEmpty()) {
 				this.onExit();
 				s.logger.showMessage(new Message("inventory.empty"));
-			} else Launcher.stateManager.setState(new InventoryMenuState(s), 0);
-		} else if (option == this.ground)
-		{
+			} else
+				Launcher.stateManager.setState(new InventoryMenuState(s));
+		} else if (option == this.ground) {
 			this.onExit();
 			ItemStack i = s.player.getDungeonPokemon().tile.getItem();
-			if (i == null) s.logger.showMessage(new Message("ground.empty"));
-			else
-			{
+			if (i == null)
+				s.logger.showMessage(new Message("ground.empty"));
+			else {
 				GroundItemMenuState ground = new GroundItemMenuState(s);
 
 				ArrayList<ItemAction> actions = i.item().getLegalActions(true);
-				if (!s.player.inventory.isFull()) actions.add(ItemAction.GET);
+				if (!s.player.inventory.isFull())
+					actions.add(ItemAction.GET);
 				actions.add(ItemAction.SWITCH);
 				actions.remove(ItemAction.GIVE);
 
-				Launcher.stateManager.setState(new ItemActionSelectionState(ground, ground, actions), 0);
+				Launcher.stateManager.setState(new ItemActionSelectionState(ground, ground, actions));
 			}
 		}
 	}

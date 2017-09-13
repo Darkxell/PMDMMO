@@ -7,11 +7,6 @@ import com.darkxell.client.launchable.ClientSettings;
 import com.darkxell.client.launchable.Launcher;
 
 public class Keys implements KeyListener {
-	/** Default keys. */
-	private static final int[] DEFAULT_KEYS = new int[] { KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT,
-			KeyEvent.VK_RIGHT, KeyEvent.VK_D, KeyEvent.VK_S, KeyEvent.VK_SHIFT, KeyEvent.VK_R, KeyEvent.VK_ESCAPE,
-			KeyEvent.VK_1, KeyEvent.VK_2, KeyEvent.VK_3, KeyEvent.VK_4, KeyEvent.VK_5, KeyEvent.VK_6, KeyEvent.VK_I,
-			KeyEvent.VK_M, KeyEvent.VK_P };
 
 	public static final short KEY_COUNT = 18;
 	private static boolean[] isPressed = new boolean[KEY_COUNT];

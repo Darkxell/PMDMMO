@@ -12,22 +12,19 @@ import com.darkxell.common.event.ItemUseEvent;
 import com.darkxell.common.item.ItemEscapeOrb;
 import com.darkxell.common.util.Message;
 
-public class ItemUseState extends DungeonSubState implements AnimationEndListener
-{
+public class ItemUseState extends DungeonSubState implements AnimationEndListener {
 
 	public final AbstractAnimation animation;
 	public final ItemUseEvent event;
 
-	public ItemUseState(DungeonState parent, ItemUseEvent event)
-	{
+	public ItemUseState(DungeonState parent, ItemUseEvent event) {
 		super(parent);
 		this.event = event;
 		this.animation = ItemRenderer.createItemAnimation(this.event, this);
 	}
 
 	@Override
-	public void onAnimationEnd(AbstractAnimation animation)
-	{
+	public void onAnimationEnd(AbstractAnimation animation) {
 		for (Message m : this.event.getMessages())
 			this.parent.logger.showMessage(m);
 		this.parent.setSubstate(this.parent.actionSelectionState);
@@ -36,33 +33,31 @@ public class ItemUseState extends DungeonSubState implements AnimationEndListene
 	}
 
 	@Override
-	public void onKeyPressed(short key)
-	{}
+	public void onKeyPressed(short key) {
+	}
 
 	@Override
-	public void onKeyReleased(short key)
-	{}
+	public void onKeyReleased(short key) {
+	}
 
 	@Override
-	public void onStart()
-	{
+	public void onStart() {
 		super.onStart();
 		this.animation.start();
 	}
 
-	private void processItemEffect()
-	{
-		if (this.event.item instanceof ItemEscapeOrb) Launcher.stateManager.setState(new FreezoneExploreState(), 0);
+	private void processItemEffect() {
+		if (this.event.item instanceof ItemEscapeOrb)
+			Launcher.stateManager.setState(new FreezoneExploreState());
 	}
 
 	@Override
-	public void render(Graphics2D g, int width, int height)
-	{
+	public void render(Graphics2D g, int width, int height) {
 		this.animation.render(g, width, height);
 	}
 
 	@Override
-	public void update()
-	{}
+	public void update() {
+	}
 
 }

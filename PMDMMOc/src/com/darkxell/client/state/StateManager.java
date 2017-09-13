@@ -13,24 +13,7 @@ import com.darkxell.client.resources.images.FrameResources;
 
 public class StateManager {
 
-	public static final int defaultTransitionTime = 40;
-
 	private AbstractState currentState;
-	/** The state we are currently transitioning to. */
-	private AbstractState nextState;
-	/**
-	 * Current transition state. 0 for no transition, negative for fading in,
-	 * positive for fading out.
-	 */
-	private int transition;
-	/**
-	 * The time in ticks to fade states in and out (which makes it HALF the
-	 * transition time).
-	 */
-	private int transitionTime;
-
-	public StateManager() {
-	}
 
 	public void onKeyPressed(KeyEvent e, short key) {
 		if (this.currentState != null)
@@ -92,14 +75,8 @@ public class StateManager {
 		// Displays the game on the buffer
 		Graphics2D g2 = internalBuffer.createGraphics();
 		g2.clearRect(0, 0, displayWidth, displayHeight);
-		if (this.transition >= 0)
-			if (this.currentState != null)
-				this.currentState.render(g2, displayWidth, displayHeight);
-			else if (this.transition < 0)
-				this.nextState.render(g2, displayWidth, displayHeight);
-		double alpha = 1d * Math.abs(this.transition) / this.transitionTime * 255;
-		g2.setColor(new Color(0, 0, 0, (int) alpha));
-		g2.fillRect(0, 0, width, height);
+		if (this.currentState != null)
+			this.currentState.render(g2, displayWidth, displayHeight);
 		g2.dispose();
 		// Calculates various values to draw the components to the window
 		int gamewidth = (int) (0.6 * height * displayWidth / displayHeight <= 0.6 * width
@@ -131,7 +108,6 @@ public class StateManager {
 		g.translate(-chatx, -chaty);
 		g.setColor(Color.BLACK);
 		g.fillRect(mapx, mapy, mapsize, mapsize);
-
 	}
 
 	private void drawBoxOutline(Graphics2D g, int x, int y, int width, int height) {
@@ -190,36 +166,14 @@ public class StateManager {
 	}
 
 	public void setState(AbstractState state) {
-		this.setState(state, defaultTransitionTime);
-	}
-
-	public void setState(AbstractState state, int transitionTime) {
-		if (transitionTime == 0) {
-			if (this.currentState != null)
-				this.currentState.onEnd();
-			this.currentState = state;
-			this.currentState.onStart();
-		} else {
-			this.nextState = state;
-			this.transitionTime = transitionTime;
-			this.transition = 1;
-		}
+		if (this.currentState != null)
+			this.currentState.onEnd();
+		this.currentState = state;
+		this.currentState.onStart();
 	}
 
 	public synchronized void update() {
-		if (this.transition == 0)
-			if (this.currentState != null)
-				this.currentState.update();
-			else {
-				++this.transition;
-				if (this.transition == this.transitionTime)
-					this.transition = -this.transitionTime;
-				else if (this.transition == 0) {
-					this.currentState.onEnd();
-					this.currentState = this.nextState;
-					this.nextState = null;
-					this.currentState.onStart();
-				}
-			}
+		if (this.currentState != null)
+			this.currentState.update();
 	}
 }

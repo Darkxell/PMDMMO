@@ -33,7 +33,7 @@ public class InfoState extends AbstractMenuState
 	@Override
 	protected void onExit()
 	{
-		Launcher.stateManager.setState(this.parent, 0);
+		Launcher.stateManager.setState(this.parent);
 	}
 
 	@Override

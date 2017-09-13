@@ -28,7 +28,7 @@ public class PokemonFreezoneEntity extends FreezoneEntity {
 		DialogElement e1 = new DialogElement(p, new Message("Hey there!\n This is a debug string to try to know if the dialog boxes are working! Item descriptions are coming next.\n", false));
 		DialogElement e2 = new DialogElement(p, new Message("item.info.53"));
 		DialogElement e3 = new DialogElement(PokemonRegistry.find(168).generate(new Random(), 0), new Message("item.info.69"));
-		Launcher.stateManager.setState(new DialogState(Launcher.stateManager.getCurrentState(), e1, e2, e3),0);
+		Launcher.stateManager.setState(new DialogState(Launcher.stateManager.getCurrentState(), e1, e2, e3));
 	}
 
 	@Override

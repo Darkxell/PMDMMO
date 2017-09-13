@@ -49,7 +49,7 @@ public class Launcher {
 
 		frame = new Frame();
 		stateManager = new StateManager();
-		stateManager.setState(new FreezoneExploreState(), 0);
+		stateManager.setState(new FreezoneExploreState());
 		stateManager.randomizeBackground();
 
 		chatbox = new ChatBox();
