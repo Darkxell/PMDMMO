@@ -39,7 +39,7 @@ public class ChatBox {
 		this.textfield = new CustomTextfield();
 	}
 
-	public void render(Graphics2D g, int width, int height) {
+	public void render(Graphics2D g, int width, int height, boolean chatFocus) {
 		g.setColor(new Color(32, 72, 104));
 		g.fillRect(0, 0, width, height);
 		int headerheight = ChatResources.HEADER.getHeight() * width / ChatResources.HEADER.getWidth();
@@ -52,6 +52,10 @@ public class ChatBox {
 		g.translate(width / 6, (height - footerheight) + (footerheight / 4));
 		this.textfield.render(g, width / 3 * 2, footerheight / 2);
 		g.translate(-width / 6, -(height - footerheight) - (footerheight / 4));
+		if (!chatFocus) {
+			g.setColor(new Color(0, 0, 0, 150));
+			g.fillRect(0, height - footerheight, width, footerheight);
+		}
 		// Displays the messages
 		int iterator = 0;
 		g.setColor(Color.WHITE);
@@ -74,9 +78,9 @@ public class ChatBox {
 		this.messages.add(new ChatMessage("User", textfield.getContent(), Color.WHITE, "DEV", Color.RED));
 		this.textfield.clear();
 	}
-	
-	public void onClick(int x,int y){
-		
+
+	public void onClick(int x, int y) {
+
 	}
 
 }

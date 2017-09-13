@@ -38,43 +38,50 @@ public class StateManager {
 	private boolean isChatFocused = false;
 	private boolean isGameFocused = true;
 
+	// KEY AND MOUSE EVENTS
+
 	public void onKeyPressed(KeyEvent e, short key) {
-		if (this.currentState != null)
+		if (this.currentState != null && isGameFocused)
 			this.currentState.onKeyPressed(key);
-		if (e.getKeyCode() == KeyEvent.VK_ENTER)
+		if (e.getKeyCode() == KeyEvent.VK_ENTER && isChatFocused)
 			Launcher.chatbox.send();
-		if (e.getKeyCode() == KeyEvent.VK_LEFT)
+		if (e.getKeyCode() == KeyEvent.VK_LEFT && isChatFocused)
 			Launcher.chatbox.textfield.pressLeft();
-		if (e.getKeyCode() == KeyEvent.VK_RIGHT)
+		if (e.getKeyCode() == KeyEvent.VK_RIGHT && isChatFocused)
 			Launcher.chatbox.textfield.pressRight();
-		if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE)
+		if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE && isChatFocused)
 			Launcher.chatbox.textfield.pressDelete();
 	}
 
-	// KEY AND MOUSE EVENTS
-
 	public void onKeyReleased(KeyEvent e, short key) {
-		if (this.currentState != null)
+		if (this.currentState != null && isGameFocused)
 			this.currentState.onKeyReleased(key);
 	}
 
 	public void onKeyTyped(KeyEvent e) {
-		if (e.getKeyChar() != '\b')
+		if (e.getKeyChar() != '\b' && isChatFocused)
 			Launcher.chatbox.textfield.insertString(e.getKeyChar() + "");
 	}
 
 	public void onMouseClick(int x, int y) {
-		if (this.currentState != null)
+		if (this.currentState != null && isGameFocused)
 			this.currentState.onMouseClick(x, y);
+		if (x > gamex && x < gamex + gamewidth && y > gamey && y < gamey + gameheight) {
+			isGameFocused = true;
+			isChatFocused = false;
+		} else if (x > chatx && x < chatx + chatwidth && y > chaty && y < chaty + chatheight) {
+			isChatFocused = true;
+			isGameFocused = false;
+		}
 	}
 
 	public void onMouseMove(int x, int y) {
-		if (this.currentState != null)
+		if (this.currentState != null && isGameFocused)
 			this.currentState.onMouseMove(x, y);
 	}
 
 	public void onMouseRightClick(int x, int y) {
-		if (this.currentState != null)
+		if (this.currentState != null && isGameFocused)
 			this.currentState.onMouseRightClick(x, y);
 	}
 
@@ -90,6 +97,10 @@ public class StateManager {
 		g2.clearRect(0, 0, displayWidth, displayHeight);
 		if (this.currentState != null)
 			this.currentState.render(g2, displayWidth, displayHeight);
+		if (!isGameFocused) {
+			g2.setColor(new Color(0, 0, 0, 150));
+			g2.fillRect(0, 0, displayWidth, displayHeight);
+		}
 		g2.dispose();
 		// Calculates various values to draw the components to the window
 		gamewidth = (int) (0.6 * height * displayWidth / displayHeight <= 0.6 * width
@@ -116,7 +127,7 @@ public class StateManager {
 		g.translate(chatx, chaty);
 		Shape clp = g.getClip();
 		g.setClip(new Rectangle(0, 0, chatwidth, chatheight));
-		Launcher.chatbox.render(g, chatwidth, chatheight);
+		Launcher.chatbox.render(g, chatwidth, chatheight,isChatFocused);
 		g.setClip(clp);
 		g.translate(-chatx, -chaty);
 		g.setColor(Color.BLACK);
