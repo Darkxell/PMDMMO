@@ -1,14 +1,11 @@
 package com.darkxell.client.state.menu;
 
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.util.ArrayList;
 
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.MenuHudSpriteset;
 import com.darkxell.client.state.AbstractState;
-import com.darkxell.client.state.menu.components.MenuWindow;
-import com.darkxell.client.state.menu.components.OptionSelectionWindow;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.common.util.Message;
 
@@ -89,8 +86,6 @@ public abstract class AbstractMenuState extends AbstractState
 
 	/** The state to draw behind this menu State. */
 	public final AbstractState backgroundState;
-	/** The main window to display the options in. */
-	private OptionSelectionWindow mainWindow;
 	/** The currently selected option. */
 	private int tab = 0, selection = 0;
 	/** The tabs of this Menu. */
@@ -113,26 +108,6 @@ public abstract class AbstractMenuState extends AbstractState
 	public MenuTab currentTab()
 	{
 		return this.tabs.get(this.tab);
-	}
-
-	public MenuWindow getMainWindow()
-	{
-		return this.mainWindow;
-	}
-
-	/** @return This Window's dimensions. */
-	protected Rectangle mainWindowDimensions(Graphics2D g)
-	{
-		int width = 0, height = 0;
-		for (MenuTab tab : this.tabs)
-		{
-			width = Math.max(width, tab.width(g));
-			height = Math.max(height, tab.height(g));
-		}
-		width += OptionSelectionWindow.MARGIN_X * 2;
-		height += OptionSelectionWindow.MARGIN_Y * 2;
-
-		return new Rectangle(16, 32, width, height);
 	}
 
 	/** Called when the player presses the "back" button. */
@@ -176,10 +151,7 @@ public abstract class AbstractMenuState extends AbstractState
 	@Override
 	public void render(Graphics2D g, int width, int height)
 	{
-		if (this.mainWindow == null) this.mainWindow = new OptionSelectionWindow(this, this.mainWindowDimensions(g));
-
 		if (this.backgroundState != null) this.backgroundState.render(g, width, height);
-		if (this.tabs.size() != 0) this.mainWindow.render(g, this.currentTab().name, width, height);
 	}
 
 	public int tabIndex()
@@ -196,7 +168,6 @@ public abstract class AbstractMenuState extends AbstractState
 	public void update()
 	{
 		if (this.backgroundState != null) this.backgroundState.update();
-		if (this.mainWindow != null) this.mainWindow.update();
 	}
 
 }

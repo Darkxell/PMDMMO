@@ -3,7 +3,7 @@ package com.darkxell.client.state.menu.dungeon.item;
 import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.state.dungeon.DungeonState;
 import com.darkxell.client.state.dungeon.ItemUseState;
-import com.darkxell.client.state.menu.AbstractMenuState;
+import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.client.state.menu.dungeon.DungeonMenuState;
 import com.darkxell.common.event.ItemUseEvent;
 import com.darkxell.common.item.Item.ItemAction;
@@ -12,7 +12,7 @@ import com.darkxell.common.player.Player;
 import com.darkxell.common.util.Message;
 
 /** This state is never truly active. It serves as a parent to ItemActionSelectionState for an Item on the ground. */
-public class GroundItemMenuState extends AbstractMenuState implements ItemActionSource, ItemSelectionListener
+public class GroundItemMenuState extends OptionSelectionMenuState implements ItemActionSource, ItemSelectionListener
 {
 
 	public final ItemStack item;

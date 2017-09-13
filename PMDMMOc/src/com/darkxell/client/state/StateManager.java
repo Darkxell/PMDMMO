@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 import java.util.Random;
 
 import com.darkxell.client.launchable.Launcher;
+import com.darkxell.client.mechanics.animation.AnimationTicker;
 import com.darkxell.client.resources.images.FrameResources;
 
 public class StateManager {
@@ -207,6 +208,7 @@ public class StateManager {
 	}
 
 	public synchronized void update() {
+		AnimationTicker.instance.update();
 		if (this.transition == 0)
 			if (this.currentState != null)
 				this.currentState.update();

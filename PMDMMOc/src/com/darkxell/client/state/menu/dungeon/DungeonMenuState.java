@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.dungeon.DungeonState;
-import com.darkxell.client.state.menu.AbstractMenuState;
+import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.client.state.menu.dungeon.item.GroundItemMenuState;
 import com.darkxell.client.state.menu.dungeon.item.InventoryMenuState;
 import com.darkxell.client.state.menu.dungeon.item.ItemActionSelectionState;
@@ -13,7 +13,7 @@ import com.darkxell.common.item.Item.ItemAction;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.util.Message;
 
-public class DungeonMenuState extends AbstractMenuState
+public class DungeonMenuState extends OptionSelectionMenuState
 {
 
 	@SuppressWarnings("unused")
@@ -47,7 +47,8 @@ public class DungeonMenuState extends AbstractMenuState
 	protected void onOptionSelected(MenuOption option)
 	{
 		DungeonState s = (DungeonState) this.backgroundState;
-		if (option == this.items)
+		if (option == this.moves) Launcher.stateManager.setState(new MovesMenuState(s), 0);
+		else if (option == this.items)
 		{
 			if (s.player.inventory.isEmpty())
 			{
