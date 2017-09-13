@@ -36,7 +36,7 @@ public class GroundItemMenuState extends OptionSelectionMenuState implements Ite
 	@Override
 	public void itemSelected(ItemStack item, int index)
 	{
-		if (item == null) Launcher.stateManager.setState(this, 0);
+		if (item == null) Launcher.stateManager.setState(this);
 		else
 		{
 			ItemStack i = this.player.inventory.remove(index);
@@ -45,14 +45,14 @@ public class GroundItemMenuState extends OptionSelectionMenuState implements Ite
 
 			DungeonState s = (DungeonState) this.backgroundState;
 			s.logger.showMessage(new Message("ground.swap").addReplacement("<item-gotten>", this.item.name()).addReplacement("<item-placed>", i.name()));
-			Launcher.stateManager.setState(s, 0);
+			Launcher.stateManager.setState(s);
 		}
 	}
 
 	@Override
 	protected void onExit()
 	{
-		Launcher.stateManager.setState(new DungeonMenuState(this.backgroundState), 0);
+		Launcher.stateManager.setState(new DungeonMenuState(this.backgroundState));
 	}
 
 	@Override
@@ -63,12 +63,12 @@ public class GroundItemMenuState extends OptionSelectionMenuState implements Ite
 	public void performAction(ItemAction action)
 	{
 		DungeonState s = (DungeonState) this.backgroundState;
-		Launcher.stateManager.setState(s, 0);
+		Launcher.stateManager.setState(s);
 
 		if (action != ItemAction.INFO) this.player.getDungeonPokemon().tile.setItem(null);
 
 		if (action == ItemAction.GET) s.logger.showMessage(new Message("ground.inventory").addReplacement("<item>", this.item.name()));
-		else if (action == ItemAction.SWITCH) Launcher.stateManager.setState(new InventoryMenuState(s, this), 0);
+		else if (action == ItemAction.SWITCH) Launcher.stateManager.setState(new InventoryMenuState(s, this));
 		else if (action == ItemAction.USE)
 		{
 			s.logger.showMessage(this.item.item().getUseMessage(this.player.getDungeonPokemon()));

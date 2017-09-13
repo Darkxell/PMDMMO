@@ -121,7 +121,7 @@ public class DialogState extends AbstractState
 	{
 		if (this.currentMessage == this.messages.size() - 1)
 		{
-			if (this.listener == null) Launcher.stateManager.setState(this.backgroundState, 0);
+			if (this.listener == null) Launcher.stateManager.setState(this.backgroundState);
 			else this.listener.onDialogEnd(this);
 		} else
 		{

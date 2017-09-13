@@ -18,8 +18,8 @@ public class ItemActionSelectionState extends OptionSelectionMenuState
 	public final ItemActionSource actionSource;
 	private ArrayList<MenuOption> options;
 
-	public ItemActionSelectionState(AbstractState backgroundState, ItemActionSource actionSource, ArrayList<ItemAction> actions)
-	{
+	public ItemActionSelectionState(AbstractState backgroundState, ItemActionSource actionSource,
+			ArrayList<ItemAction> actions) {
 		super(backgroundState);
 		this.actionSource = actionSource;
 		this.actions = actions;
@@ -30,11 +30,9 @@ public class ItemActionSelectionState extends OptionSelectionMenuState
 	}
 
 	@Override
-	protected void createOptions()
-	{
+	protected void createOptions() {
 		MenuTab tab = new MenuTab();
-		for (ItemAction action : this.actions)
-		{
+		for (ItemAction action : this.actions) {
 			this.options.add(new MenuOption(action.getName(this.actionSource.selectedItem())));
 			tab.addOption(this.options.get(this.actions.indexOf(action)));
 		}
@@ -42,8 +40,7 @@ public class ItemActionSelectionState extends OptionSelectionMenuState
 	}
 
 	@Override
-	protected Rectangle mainWindowDimensions(Graphics2D g)
-	{
+	protected Rectangle mainWindowDimensions(Graphics2D g) {
 		Rectangle r = super.mainWindowDimensions(g);
 		if (this.backgroundState instanceof AbstractMenuState) r.x = (int) (((OptionSelectionMenuState) this.backgroundState).getMainWindow().dimensions
 				.getMaxX() + 5);
@@ -51,20 +48,17 @@ public class ItemActionSelectionState extends OptionSelectionMenuState
 	}
 
 	@Override
-	protected void onExit()
-	{
-		Launcher.stateManager.setState(this.backgroundState, 0);
+	protected void onExit() {
+		Launcher.stateManager.setState(this.backgroundState);
 	}
 
 	@Override
-	protected void onOptionSelected(MenuOption option)
-	{
+	protected void onOptionSelected(MenuOption option) {
 		this.actionSource.performAction(this.actions.get(this.options.indexOf(option)));
 	}
 
 	@Override
-	public void render(Graphics2D g, int width, int height)
-	{
+	public void render(Graphics2D g, int width, int height) {
 		// If background state hasn't been drawn yet.
 		if (this.getMainWindow() == null && this.backgroundState instanceof AbstractMenuState
 				&& ((OptionSelectionMenuState) this.backgroundState).getMainWindow() == null)

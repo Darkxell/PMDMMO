@@ -74,5 +74,9 @@ public class ChatBox {
 		this.messages.add(new ChatMessage("User", textfield.getContent(), Color.WHITE, "DEV", Color.RED));
 		this.textfield.clear();
 	}
+	
+	public void onClick(int x,int y){
+		
+	}
 
 }

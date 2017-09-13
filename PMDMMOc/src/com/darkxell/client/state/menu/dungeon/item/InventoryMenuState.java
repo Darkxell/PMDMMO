@@ -25,13 +25,11 @@ public class InventoryMenuState extends OptionSelectionMenuState implements Item
 	public final ItemSelectionListener listener;
 	public final Player player;
 
-	public InventoryMenuState(DungeonState state)
-	{
+	public InventoryMenuState(DungeonState state) {
 		this(state, null);
 	}
 
-	public InventoryMenuState(DungeonState state, ItemSelectionListener listener)
-	{
+	public InventoryMenuState(DungeonState state, ItemSelectionListener listener) {
 		super(state);
 		this.player = state.player;
 		this.inventory = this.player.inventory;
@@ -40,124 +38,122 @@ public class InventoryMenuState extends OptionSelectionMenuState implements Item
 	}
 
 	@Override
-	protected void createOptions()
-	{
+	protected void createOptions() {
 		MenuTab tab = null;
 		MenuOption o;
-		for (int i = 0; i < this.inventory.itemCount(); ++i)
-		{
-			if (i % 10 == 0)
-			{
-				tab = new MenuTab(new Message("inventory.toolbox").addReplacement("<index>", Integer.toString(i / 10 + 1)));
+		for (int i = 0; i < this.inventory.itemCount(); ++i) {
+			if (i % 10 == 0) {
+				tab = new MenuTab(
+						new Message("inventory.toolbox").addReplacement("<index>", Integer.toString(i / 10 + 1)));
 				this.tabs.add(tab);
 			}
 			o = new MenuOption(this.inventory.get(i).name());
 			tab.addOption(o);
 		}
 
-		if (this.player.getPokemon().getItem() != null) this.tabs.add(new MenuTab(new Message("inventory.held").addReplacement("<pokemon>", this.player
-				.getPokemon().getNickname())).addOption(this.held = new MenuOption(this.player.getPokemon().getItem().name())));
+		if (this.player.getPokemon().getItem() != null)
+			this.tabs.add(new MenuTab(
+					new Message("inventory.held").addReplacement("<pokemon>", this.player.getPokemon().getNickname()))
+							.addOption(this.held = new MenuOption(this.player.getPokemon().getItem().name())));
 	}
 
-	private int itemSlot()
-	{
+	private int itemSlot() {
 		return this.tabIndex() * 10 + this.optionIndex();
 	}
 
 	@Override
-	protected void onExit()
-	{
-		Launcher.stateManager.setState(new DungeonMenuState(this.backgroundState), 0);
+	protected void onExit() {
+		Launcher.stateManager.setState(new DungeonMenuState(this.backgroundState));
 	}
 
 	@Override
-	public void onKeyPressed(short key)
-	{
+	public void onKeyPressed(short key) {
 		super.onKeyPressed(key);
-		if (key == Keys.KEY_MAP)
-		{
+		if (key == Keys.KEY_MAP) {
 			this.inventory.sort();
-			Launcher.stateManager.setState(new InventoryMenuState((DungeonState) this.backgroundState), 0);
+			Launcher.stateManager.setState(new InventoryMenuState((DungeonState) this.backgroundState));
 		}
 	}
 
 	@Override
-	protected void onOptionSelected(MenuOption option)
-	{
+	protected void onOptionSelected(MenuOption option) {
 		DungeonState s = (DungeonState) this.backgroundState;
 		ItemStack i = this.selectedItem();
 
-		if (this.listener == null)
-		{
+		if (this.listener == null) {
 			ArrayList<ItemAction> actions = i.item().getLegalActions(true);
 			actions.add(ItemAction.SET);
-			if (s.player.getDungeonPokemon().tile.getItem() == null) actions.add(ItemAction.PLACE);
-			else actions.add(ItemAction.SWAP);
+			if (s.player.getDungeonPokemon().tile.getItem() == null)
+				actions.add(ItemAction.PLACE);
+			else
+				actions.add(ItemAction.SWAP);
 
-			Launcher.stateManager.setState(new ItemActionSelectionState(this, this, actions), 0);
-		} else this.listener.itemSelected(i, this.itemSlot());
+			Launcher.stateManager.setState(new ItemActionSelectionState(this, this, actions));
+		} else
+			this.listener.itemSelected(i, this.itemSlot());
 	}
 
 	@Override
-	public void performAction(ItemAction action)
-	{
+	public void performAction(ItemAction action) {
 		DungeonState parent = (DungeonState) this.backgroundState;
-		Launcher.stateManager.setState(parent, 0);
+		Launcher.stateManager.setState(parent);
 		ItemStack i = this.selectedItem();
 		ArrayList<Message> messages = new ArrayList<Message>();
 		DungeonPokemon user = this.player.getDungeonPokemon();
 
-		if (action != ItemAction.SET && action != ItemAction.DESELECT && action != ItemAction.INFO)
-		{
-			if (action == ItemAction.USE && i.getQuantity() > 1) i.setQuantity(i.getQuantity() - 1);
-			else this.inventory.remove(this.itemSlot());
+		if (action != ItemAction.SET && action != ItemAction.DESELECT && action != ItemAction.INFO) {
+			if (action == ItemAction.USE && i.getQuantity() > 1)
+				i.setQuantity(i.getQuantity() - 1);
+			else
+				this.inventory.remove(this.itemSlot());
 		}
-		switch (action)
-		{
-			case USE:
-				messages.add(i.item().getUseMessage(user));
-				ItemUseEvent event = i.item().use(parent.floor, user);
-				parent.setSubstate(new ItemUseState(parent, event));
-				break;
+		switch (action) {
+		case USE:
+			messages.add(i.item().getUseMessage(user));
+			ItemUseEvent event = i.item().use(parent.floor, user);
+			parent.setSubstate(new ItemUseState(parent, event));
+			break;
 
-			case THROW:
-				System.out.println("Thrown !");
-				break;
+		case THROW:
+			System.out.println("Thrown !");
+			break;
 
-			case SET:
-				System.out.println("Set.");
-				break;
+		case SET:
+			System.out.println("Set.");
+			break;
 
-			case PLACE:
-				this.player.getDungeonPokemon().tile.setItem(i);
-				messages.add(new Message("ground.place").addReplacement("<pokemon>", user.pokemon.getNickname()).addReplacement("<item>", i.name()));
-				break;
+		case PLACE:
+			this.player.getDungeonPokemon().tile.setItem(i);
+			messages.add(new Message("ground.place").addReplacement("<pokemon>", user.pokemon.getNickname())
+					.addReplacement("<item>", i.name()));
+			break;
 
-			case SWAP:
-				ItemStack item = this.player.getDungeonPokemon().tile.getItem();
-				this.inventory.add(item);
-				this.player.getDungeonPokemon().tile.setItem(i);
-				messages.add(new Message("ground.swap").addReplacement("<item-placed>", i.name()).addReplacement("<item-gotten>", item.name()));
-				break;
+		case SWAP:
+			ItemStack item = this.player.getDungeonPokemon().tile.getItem();
+			this.inventory.add(item);
+			this.player.getDungeonPokemon().tile.setItem(i);
+			messages.add(new Message("ground.swap").addReplacement("<item-placed>", i.name())
+					.addReplacement("<item-gotten>", item.name()));
+			break;
 
-			case INFO:
-			default:
-				Launcher.stateManager.setState(new InfoState(parent, this, new Message[]
-				{ i.item().name() }, new Message[]
-				{ i.info() }), 0);
-				break;
+		case INFO:
+		default:
+			Launcher.stateManager.setState(
+					new InfoState(parent, this, new Message[] { i.item().name() }, new Message[] { i.info() }));
+			break;
 		}
 
 		for (Message m : messages)
 			parent.logger.showMessage(m);
 	}
 
-	public ItemStack selectedItem()
-	{
+	public ItemStack selectedItem() {
 		MenuOption option = this.currentOption();
 		int index = this.itemSlot();
-		if (index != -1) return this.inventory.get(index).copy();
-		else if (option == this.held) return this.player.getPokemon().getItem();
+		if (index != -1)
+			return this.inventory.get(index).copy();
+		else if (option == this.held)
+			return this.player.getPokemon().getItem();
 		return null;
 	}
 

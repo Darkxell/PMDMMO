@@ -35,7 +35,7 @@ public class FreezoneDialogState extends AbstractState {
 			dialogposition += 2;
 			appearance = 0;
 			if (showableDialog != null && dialogposition >= showableDialog.size())
-				Launcher.stateManager.setState(new FreezoneExploreState(), 0);
+				Launcher.stateManager.setState(new FreezoneExploreState());
 			break;
 		}
 	}
