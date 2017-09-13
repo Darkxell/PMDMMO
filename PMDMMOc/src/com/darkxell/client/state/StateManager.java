@@ -9,11 +9,19 @@ import java.awt.image.BufferedImage;
 import java.util.Random;
 
 import com.darkxell.client.launchable.Launcher;
-import com.darkxell.client.resources.images.FrameResources;
+import com.darkxell.client.ui.MainUiUtility;
 
 public class StateManager {
 
+	// ATTRIBUTES
+
 	private AbstractState currentState;
+
+	private BufferedImage internalBuffer;
+	private int displayWidth = (int) (256 * 1.6);
+	private int displayHeight = (int) (192 * 1.6);
+
+	public byte backgroundID = 1;
 
 	public void onKeyPressed(KeyEvent e, short key) {
 		if (this.currentState != null)
@@ -27,6 +35,8 @@ public class StateManager {
 		if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE)
 			Launcher.chatbox.textfield.pressDelete();
 	}
+
+	// KEY AND MOUSE EVENTS
 
 	public void onKeyReleased(KeyEvent e, short key) {
 		if (this.currentState != null)
@@ -53,19 +63,7 @@ public class StateManager {
 			this.currentState.onMouseRightClick(x, y);
 	}
 
-	private BufferedImage internalBuffer;
-	private int displayWidth = (int) (256 * 1.6);
-	private int displayHeight = (int) (192 * 1.6);
-
-	/**
-	 * Sets the resolution of the internal display. Bigger means a zoomed out
-	 * game. Defaults at [256*192]*2 (Official DS resolution * 2).
-	 */
-	public void setInternalDisplaySize(int w, int h) {
-		displayHeight = h;
-		displayWidth = w;
-		internalBuffer = null;
-	}
+	// RENDER AND UPDATE
 
 	public void render(Graphics2D g, int width, int height) {
 		if (width == 0)
@@ -93,11 +91,11 @@ public class StateManager {
 		int chatx = (int) (width * 0.05);
 		int chaty = (int) (height * 0.05);
 		// Draws the background
-		drawBackground(g, width, height);
+		MainUiUtility.drawBackground(g, width, height, backgroundID);
 		// Draw the outlines
-		drawBoxOutline(g, gamex, gamey, gamewidth, gameheight);
-		drawBoxOutline(g, mapx, mapy, mapsize, mapsize);
-		drawBoxOutline(g, chatx, chaty, chatwidth, chatheight);
+		MainUiUtility.drawBoxOutline(g, gamex, gamey, gamewidth, gameheight);
+		MainUiUtility.drawBoxOutline(g, mapx, mapy, mapsize, mapsize);
+		MainUiUtility.drawBoxOutline(g, chatx, chaty, chatwidth, chatheight);
 		// draws the components insides
 		g.drawImage(internalBuffer, gamex, gamey, gamewidth, gameheight, null);
 		g.translate(chatx, chaty);
@@ -110,51 +108,21 @@ public class StateManager {
 		g.fillRect(mapx, mapy, mapsize, mapsize);
 	}
 
-	private void drawBoxOutline(Graphics2D g, int x, int y, int width, int height) {
-		g.drawImage(FrameResources.box_NW, x - 16, y - 10, 16, 10, null);
-		g.drawImage(FrameResources.box_NE, x + width, y - 10, 16, 10, null);
-		g.drawImage(FrameResources.box_SW, x - 16, y + height, 16, 10, null);
-		g.drawImage(FrameResources.box_SE, x + width, y + height, 16, 10, null);
-		g.drawImage(FrameResources.box_N, x, y - 10, width, 10, null);
-		g.drawImage(FrameResources.box_S, x, y + height, width, 10, null);
-		g.drawImage(FrameResources.box_W, x - 16, y, 16, height, null);
-		g.drawImage(FrameResources.box_E, x + width, y, 16, height, null);
+	public synchronized void update() {
+		if (this.currentState != null)
+			this.currentState.update();
 	}
 
-	public byte backgroundID = 1;
+	// GETTERS,SETTERS AND UTILITY
 
-	private void drawBackground(Graphics2D g, int fwidth, int fheight) {
-		BufferedImage img;
-		switch (backgroundID) {
-		case 2:
-			img = FrameResources.BG2;
-			break;
-		case 3:
-			img = FrameResources.BG3;
-			break;
-		case 4:
-			img = FrameResources.BG4;
-			break;
-		case 5:
-			img = FrameResources.BG5;
-			break;
-		case 6:
-			img = FrameResources.BG6;
-			break;
-		case 7:
-			img = FrameResources.BG7;
-			break;
-		default:
-			img = FrameResources.BG1;
-			break;
-		}
-		if ((float) (fwidth) / (float) (fheight) < (float) (img.getWidth()) / (float) (img.getHeight())) {
-			int drawwidth = fheight * img.getWidth() / img.getHeight();
-			g.drawImage(img, 0, 0, drawwidth, fheight, null);
-		} else {
-			int drawheight = fwidth * img.getHeight() / img.getWidth();
-			g.drawImage(img, 0, 0, fwidth, drawheight, null);
-		}
+	/**
+	 * Sets the resolution of the internal display. Bigger means a zoomed out
+	 * game. Defaults at [256*192]*2 (Official DS resolution * 2).
+	 */
+	public void setInternalDisplaySize(int w, int h) {
+		displayHeight = h;
+		displayWidth = w;
+		internalBuffer = null;
 	}
 
 	public void randomizeBackground() {
@@ -172,8 +140,4 @@ public class StateManager {
 		this.currentState.onStart();
 	}
 
-	public synchronized void update() {
-		if (this.currentState != null)
-			this.currentState.update();
-	}
 }
