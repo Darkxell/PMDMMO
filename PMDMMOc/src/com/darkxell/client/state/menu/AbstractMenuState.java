@@ -1,11 +1,13 @@
 package com.darkxell.client.state.menu;
 
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.util.ArrayList;
 
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.MenuHudSpriteset;
 import com.darkxell.client.state.AbstractState;
+import com.darkxell.client.state.menu.components.OptionSelectionWindow;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.common.util.Message;
 
@@ -108,6 +110,21 @@ public abstract class AbstractMenuState extends AbstractState
 	public MenuTab currentTab()
 	{
 		return this.tabs.get(this.tab);
+	}
+
+	/** @return This Window's dimensions. */
+	protected Rectangle mainWindowDimensions(Graphics2D g)
+	{
+		int width = 0, height = 0;
+		for (MenuTab tab : this.tabs)
+		{
+			width = Math.max(width, tab.width(g));
+			height = Math.max(height, tab.height(g));
+		}
+		width += OptionSelectionWindow.MARGIN_X * 2;
+		height += OptionSelectionWindow.MARGIN_Y * 2;
+
+		return new Rectangle(16, 32, width, height);
 	}
 
 	/** Called when the player presses the "back" button. */

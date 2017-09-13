@@ -11,14 +11,14 @@ import com.darkxell.client.state.menu.AbstractMenuState.MenuOption;
 import com.darkxell.client.state.menu.AbstractMenuState.MenuTab;
 import com.darkxell.common.util.Message;
 
-public class OptionSelectionWindow extends MenuWindow
+public class MoveSelectionWindow extends MenuWindow
 {
 	private static final BufferedImage selectionArrow = MenuHudSpriteset.instance.selectionArrow();
 
 	private int cursor = 0;
 	private final AbstractMenuState menu;
 
-	public OptionSelectionWindow(AbstractMenuState menu, Rectangle dimensions)
+	public MoveSelectionWindow(AbstractMenuState menu, Rectangle dimensions)
 	{
 		super(dimensions);
 		this.menu = menu;
@@ -27,7 +27,7 @@ public class OptionSelectionWindow extends MenuWindow
 	@Override
 	public void render(Graphics2D g, Message name, int width, int height)
 	{
-		super.render(g, name, width, height); // If changing here, check MoveSelectionWindow
+		super.render(g, name, width, height);
 
 		// Tabs
 		MenuTab[] tabs = this.menu.tabs();

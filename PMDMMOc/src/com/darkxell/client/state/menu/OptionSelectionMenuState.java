@@ -1,7 +1,6 @@
 package com.darkxell.client.state.menu;
 
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.menu.components.MenuWindow;
@@ -21,21 +20,6 @@ public abstract class OptionSelectionMenuState extends AbstractMenuState
 	public MenuWindow getMainWindow()
 	{
 		return this.mainWindow;
-	}
-
-	/** @return This Window's dimensions. */
-	protected Rectangle mainWindowDimensions(Graphics2D g)
-	{
-		int width = 0, height = 0;
-		for (MenuTab tab : this.tabs)
-		{
-			width = Math.max(width, tab.width(g));
-			height = Math.max(height, tab.height(g));
-		}
-		width += OptionSelectionWindow.MARGIN_X * 2;
-		height += OptionSelectionWindow.MARGIN_Y * 2;
-
-		return new Rectangle(16, 32, width, height);
 	}
 
 	@Override

@@ -43,7 +43,8 @@ public class DungeonMenuState extends OptionSelectionMenuState
 	@Override
 	protected void onOptionSelected(MenuOption option) {
 		DungeonState s = (DungeonState) this.backgroundState;
-		if (option == this.items)
+		if (option == this.moves) Launcher.stateManager.setState(new MovesMenuState(s));
+		else if (option == this.items)
 		{
 			if (s.player.inventory.isEmpty())
 			{
@@ -60,8 +61,7 @@ public class DungeonMenuState extends OptionSelectionMenuState
 				GroundItemMenuState ground = new GroundItemMenuState(s);
 
 				ArrayList<ItemAction> actions = i.item().getLegalActions(true);
-				if (!s.player.inventory.isFull())
-					actions.add(ItemAction.GET);
+				if (!s.player.inventory.isFull()) actions.add(ItemAction.GET);
 				actions.add(ItemAction.SWITCH);
 				actions.remove(ItemAction.GIVE);
 
