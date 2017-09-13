@@ -12,7 +12,7 @@ public class ChatBox {
 
 	private Thread thread;
 	public CustomTextfield textfield;
-	public ArrayList<String> messages = new ArrayList<>();
+	public ArrayList<ChatMessage> messages = new ArrayList<>();
 
 	/**
 	 * Creates a new chatBox instance. Note that this instance will create it's
@@ -56,7 +56,11 @@ public class ChatBox {
 		int iterator = 0;
 		g.setColor(Color.WHITE);
 		for (int i = height - footerheight - 20; i > headerheight + 20 && iterator < messages.size(); i -= 20) {
-			g.drawString("User : " + messages.get(messages.size() - 1 - iterator), 10, i);
+			ChatMessage m = messages.get(messages.size() - 1 - iterator);
+			g.setColor(m.tagColor);
+			g.drawString("[" + m.tag + "]", 10, i);
+			g.setColor(m.lineColor);
+			g.drawString(m.sender + " : " + m.message, 13 + g.getFontMetrics().stringWidth("[" + m.tag + "]"), i);
 			++iterator;
 		}
 	}
@@ -67,7 +71,7 @@ public class ChatBox {
 	}
 
 	public void send() {
-		this.messages.add(this.textfield.getContent());
+		this.messages.add(new ChatMessage("User", textfield.getContent(), Color.WHITE, "DEV", Color.RED));
 		this.textfield.clear();
 	}
 
