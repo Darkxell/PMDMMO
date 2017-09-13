@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.state.dungeon.DungeonState;
 import com.darkxell.client.state.dungeon.ItemUseState;
-import com.darkxell.client.state.menu.AbstractMenuState;
 import com.darkxell.client.state.menu.InfoState;
+import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.client.state.menu.dungeon.DungeonMenuState;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.common.event.ItemUseEvent;
@@ -17,7 +17,8 @@ import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Message;
 
-public class InventoryMenuState extends AbstractMenuState implements ItemActionSource {
+public class InventoryMenuState extends OptionSelectionMenuState implements ItemActionSource
+{
 
 	private MenuOption held;
 	public final Inventory inventory;

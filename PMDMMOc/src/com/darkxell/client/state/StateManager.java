@@ -10,6 +10,8 @@ import java.util.Random;
 
 import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.ui.MainUiUtility;
+import com.darkxell.client.mechanics.animation.AnimationTicker;
+import com.darkxell.client.resources.images.FrameResources;
 
 public class StateManager {
 
@@ -137,7 +139,8 @@ public class StateManager {
 	public synchronized void update() {
 		if (this.currentState != null)
 			this.currentState.update();
-	}
+	  AnimationTicker.instance.update();
+  }
 
 	// GETTERS,SETTERS AND UTILITY
 
@@ -165,5 +168,5 @@ public class StateManager {
 		this.currentState = state;
 		this.currentState.onStart();
 	}
-
+  
 }
