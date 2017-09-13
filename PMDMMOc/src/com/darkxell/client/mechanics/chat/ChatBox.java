@@ -12,8 +12,8 @@ public class ChatBox {
 
 	private Thread thread;
 	public CustomTextfield textfield;
-	public ArrayList<String> Messages;
-	
+	public ArrayList<ChatMessage> messages = new ArrayList<>();
+
 	/**
 	 * Creates a new chatBox instance. Note that this instance will create it's
 	 * own thread and connection to the server when created.
@@ -44,7 +44,7 @@ public class ChatBox {
 		g.fillRect(0, 0, width, height);
 		int headerheight = ChatResources.HEADER.getHeight() * width / ChatResources.HEADER.getWidth();
 		g.drawImage(ChatResources.HEADER, 0, 0, width, headerheight, null);
-		//Draw the footer
+		// Draw the footer
 		int footerheight = ChatResources.FOOTER.getHeight() * width / ChatResources.FOOTER.getWidth();
 		g.drawImage(ChatResources.getFooter(ChatResources.ICON_CHANNEL_GLOBAL), 0, height - footerheight, width,
 				footerheight, null);
@@ -52,6 +52,17 @@ public class ChatBox {
 		g.translate(width / 6, (height - footerheight) + (footerheight / 4));
 		this.textfield.render(g, width / 3 * 2, footerheight / 2);
 		g.translate(-width / 6, -(height - footerheight) - (footerheight / 4));
+		// Displays the messages
+		int iterator = 0;
+		g.setColor(Color.WHITE);
+		for (int i = height - footerheight - 20; i > headerheight + 20 && iterator < messages.size(); i -= 20) {
+			ChatMessage m = messages.get(messages.size() - 1 - iterator);
+			g.setColor(m.tagColor);
+			g.drawString("[" + m.tag + "]", 10, i);
+			g.setColor(m.lineColor);
+			g.drawString(m.sender + " : " + m.message, 13 + g.getFontMetrics().stringWidth("[" + m.tag + "]"), i);
+			++iterator;
+		}
 	}
 
 	private void update() {
@@ -60,6 +71,7 @@ public class ChatBox {
 	}
 
 	public void send() {
+		this.messages.add(new ChatMessage("User", textfield.getContent(), Color.WHITE, "DEV", Color.RED));
 		this.textfield.clear();
 	}
 
