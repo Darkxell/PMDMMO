@@ -23,6 +23,21 @@ public class StateManager {
 
 	public byte backgroundID = 1;
 
+	private int gamewidth;
+	private int gameheight;
+	private int gamex;
+	private int gamey;
+	private int mapsize;
+	private int mapx;
+	private int mapy;
+	private int chatwidth;
+	private int chatheight;
+	private int chatx;
+	private int chaty;
+
+	private boolean isChatFocused = false;
+	private boolean isGameFocused = true;
+
 	public void onKeyPressed(KeyEvent e, short key) {
 		if (this.currentState != null)
 			this.currentState.onKeyPressed(key);
@@ -77,19 +92,19 @@ public class StateManager {
 			this.currentState.render(g2, displayWidth, displayHeight);
 		g2.dispose();
 		// Calculates various values to draw the components to the window
-		int gamewidth = (int) (0.6 * height * displayWidth / displayHeight <= 0.6 * width
+		gamewidth = (int) (0.6 * height * displayWidth / displayHeight <= 0.6 * width
 				? 0.6 * height * displayWidth / displayHeight : 0.6 * width);
-		int gameheight = gamewidth * displayHeight / displayWidth;
-		int gamex = (int) (width * 0.35);
-		int gamey = (int) (height * 0.35);
-		int mapsize = (int) (gamewidth / 2 >= height * 0.25 ? height * 0.25 : gamewidth / 2);
-		int mapx = (int) (width * 0.95) - mapsize < gamex + gamewidth - mapsize ? (int) (width * 0.95) - mapsize
+		gameheight = gamewidth * displayHeight / displayWidth;
+		gamex = (int) (width * 0.35);
+		gamey = (int) (height * 0.35);
+		mapsize = (int) (gamewidth / 2 >= height * 0.25 ? height * 0.25 : gamewidth / 2);
+		mapx = (int) (width * 0.95) - mapsize < gamex + gamewidth - mapsize ? (int) (width * 0.95) - mapsize
 				: gamex + gamewidth - mapsize;
-		int mapy = (int) (height * 0.05);
-		int chatwidth = (int) (width * 0.25);
-		int chatheight = (int) (height * 0.9);
-		int chatx = (int) (width * 0.05);
-		int chaty = (int) (height * 0.05);
+		mapy = (int) (height * 0.05);
+		chatwidth = (int) (width * 0.25);
+		chatheight = (int) (height * 0.9);
+		chatx = (int) (width * 0.05);
+		chaty = (int) (height * 0.05);
 		// Draws the background
 		MainUiUtility.drawBackground(g, width, height, backgroundID);
 		// Draw the outlines
