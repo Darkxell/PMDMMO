@@ -9,8 +9,8 @@ import java.awt.image.BufferedImage;
 import java.util.Random;
 
 import com.darkxell.client.launchable.Launcher;
-import com.darkxell.client.ui.MainUiUtility;
 import com.darkxell.client.mechanics.animation.AnimationTicker;
+import com.darkxell.client.ui.MainUiUtility;
 
 public class StateManager {
 

@@ -2,6 +2,7 @@ package com.darkxell.client.persistance;
 
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
 import com.darkxell.client.mechanics.freezones.FreezonePlayer;
+import com.darkxell.client.mechanics.freezones.entities.FreezoneCamera;
 import com.darkxell.client.resources.images.PokemonSprite;
 import com.darkxell.client.resources.images.PokemonSpritesets;
 
@@ -14,4 +15,5 @@ public class FreezoneMapHolder {
 	public static FreezonePlayer currentplayer = new FreezonePlayer(
 			new PokemonSprite(PokemonSpritesets.getSpriteset(1)), 35, 28);
 	// TODO : change the player's skin to fit the playing pokemon.
+	public static FreezoneCamera playerCamera = new FreezoneCamera(currentplayer);
 }

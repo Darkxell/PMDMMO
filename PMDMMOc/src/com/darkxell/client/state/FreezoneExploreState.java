@@ -46,9 +46,9 @@ public class FreezoneExploreState extends AbstractState {
 		if (FreezoneMapHolder.currentmap != null)
 			FreezoneMapHolder.currentplayer.releaseKey(key);
 	}
-	
+
 	@Override
-	public void onEnd()	{
+	public void onEnd() {
 		super.onEnd();
 		FreezoneMapHolder.currentplayer.forceStop();
 	}
@@ -56,9 +56,11 @@ public class FreezoneExploreState extends AbstractState {
 	@Override
 	public void render(Graphics2D g, int width, int height) {
 		FreezoneMap map = FreezoneMapHolder.currentmap;
+		FreezoneMapHolder.playerCamera.renderheight = height;
+		FreezoneMapHolder.playerCamera.renderwidth = width;
 		if (map != null) {
-			int translateX = (int) (-FreezoneMapHolder.currentplayer.x * 8 + (width / 2));
-			int translateY = (int) (-FreezoneMapHolder.currentplayer.y * 8 + (height / 2));
+			int translateX = (int) (-FreezoneMapHolder.playerCamera.x * 8 + (width / 2));
+			int translateY = (int) (-FreezoneMapHolder.playerCamera.y * 8 + (height / 2));
 
 			g.translate(translateX, translateY);
 			// Draws the map
@@ -126,8 +128,10 @@ public class FreezoneExploreState extends AbstractState {
 
 			if (debugdisplaymode) {
 				g.setColor(Color.BLACK);
-				TextRenderer.instance.render(g, "UPS: " + Launcher.getUps() + ", FPS: " + Launcher.getFps(), 1, TextRenderer.CHAR_HEIGHT);
-				TextRenderer.instance.render(g, "Position: " + FreezoneMapHolder.currentplayer.x + " / " + FreezoneMapHolder.currentplayer.y, 1,
+				TextRenderer.instance.render(g, "UPS: " + Launcher.getUps() + ", FPS: " + Launcher.getFps(), 1,
+						TextRenderer.CHAR_HEIGHT);
+				TextRenderer.instance.render(g,
+						"Position: " + FreezoneMapHolder.currentplayer.x + " / " + FreezoneMapHolder.currentplayer.y, 1,
 						TextRenderer.CHAR_HEIGHT * 3);
 			}
 		}
@@ -137,10 +141,14 @@ public class FreezoneExploreState extends AbstractState {
 
 	@Override
 	public void update() {
+		// CREATES AND UPDATES THE MAP
 		if (FreezoneMapHolder.currentmap == null)
 			FreezoneMapHolder.currentmap = new BaseFreezone();
 		else
 			FreezoneMapHolder.currentmap.update();
+		// UPDATES THE CAMERA
+		if (FreezoneMapHolder.playerCamera != null)
+			FreezoneMapHolder.playerCamera.update();
 		if (!musicset) {
 			musicset = true;
 			Launcher.soundmanager.setBackgroundMusic(SoundsHolder.getSong(FreezoneMapHolder.currentmap.freezonebgm));

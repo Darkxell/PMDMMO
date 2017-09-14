@@ -16,7 +16,9 @@ import com.darkxell.client.resources.images.AbstractTileset;
 public class FreezoneMap {
 
 	public FreezoneTile[] tiles;
+	/** The width of the map, in tiles. */
 	public int mapWidth;
+	/** The height of the map, in tiles.s*/
 	public int mapHeight;
 
 	public String freezonebgm = "";
