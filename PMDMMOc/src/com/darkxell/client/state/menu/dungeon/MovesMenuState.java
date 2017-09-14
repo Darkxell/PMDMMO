@@ -7,11 +7,13 @@ import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.MenuHudSpriteset;
 import com.darkxell.client.state.dungeon.DungeonState;
+import com.darkxell.client.state.dungeon.ItemUseState;
 import com.darkxell.client.state.menu.AbstractMenuState;
 import com.darkxell.client.state.menu.InfoState;
 import com.darkxell.client.state.menu.components.MoveSelectionWindow;
 import com.darkxell.client.state.menu.components.TextWindow;
 import com.darkxell.client.ui.Keys;
+import com.darkxell.common.event.ItemUseEvent;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.PokemonMove;
 import com.darkxell.common.util.Message;
@@ -118,7 +120,12 @@ public class MovesMenuState extends AbstractMenuState
 	@Override
 	protected void onOptionSelected(MenuOption option)
 	{
-		System.out.println(option.name);
+		DungeonState s = (DungeonState) this.backgroundState;
+		PokemonMove move = ((MoveMenuOption) option).move;
+		Launcher.stateManager.setState(s);
+		s.logger.showMessage(new Message("move.used").addReplacement("<pokemon>", this.pokemon.getNickname()).addReplacement("<move>", move.move().name()));
+		s.setSubstate(new ItemUseState(s, new ItemUseEvent(null, s.player.getDungeonPokemon(), null, s.floor, new Message("item.no_effect"))));
+		move.setPP(move.getPP() - 1);
 	}
 
 	@Override

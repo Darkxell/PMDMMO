@@ -71,7 +71,7 @@ public class PokemonMove
 		this.maxPP = maxPP;
 	}
 
-	public void setPp(int pp)
+	public void setPP(int pp)
 	{
 		this.pp = pp;
 	}
