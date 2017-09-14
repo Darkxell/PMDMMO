@@ -11,7 +11,6 @@ import java.util.Random;
 import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.ui.MainUiUtility;
 import com.darkxell.client.mechanics.animation.AnimationTicker;
-import com.darkxell.client.resources.images.FrameResources;
 
 public class StateManager {
 
@@ -74,6 +73,7 @@ public class StateManager {
 		} else if (x > chatx && x < chatx + chatwidth && y > chaty && y < chaty + chatheight) {
 			isChatFocused = true;
 			isGameFocused = false;
+			Launcher.chatbox.onClick(x - chatx, y - chaty);
 		}
 	}
 
@@ -129,7 +129,7 @@ public class StateManager {
 		g.translate(chatx, chaty);
 		Shape clp = g.getClip();
 		g.setClip(new Rectangle(0, 0, chatwidth, chatheight));
-		Launcher.chatbox.render(g, chatwidth, chatheight,isChatFocused);
+		Launcher.chatbox.render(g, chatwidth, chatheight, isChatFocused);
 		g.setClip(clp);
 		g.translate(-chatx, -chaty);
 		g.setColor(Color.BLACK);
@@ -139,8 +139,8 @@ public class StateManager {
 	public synchronized void update() {
 		if (this.currentState != null)
 			this.currentState.update();
-	  AnimationTicker.instance.update();
-  }
+		AnimationTicker.instance.update();
+	}
 
 	// GETTERS,SETTERS AND UTILITY
 
@@ -168,5 +168,5 @@ public class StateManager {
 		this.currentState = state;
 		this.currentState.onStart();
 	}
-  
+
 }

@@ -109,7 +109,7 @@ public class ChatBox {
 	}
 
 	public void onClick(int x, int y) {
-
+		
 	}
 
 }
