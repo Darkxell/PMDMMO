@@ -111,7 +111,7 @@ public class TextRenderer
 		news("<news>", 94, 10),
 		story("<story>", 95, 9),
 		speech_bubble("<speech>", 96, 9),
-		key_A("<key-a>", 97, 9),
+		key_A("<key-a>", 97, 10),
 		key_B("<key-b>", 98, 10),
 		key_L("<key-l>", 99, 10),
 		key_R("<key-r>", 100, 10),

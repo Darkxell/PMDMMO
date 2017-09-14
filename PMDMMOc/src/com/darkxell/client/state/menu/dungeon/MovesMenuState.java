@@ -122,7 +122,7 @@ public class MovesMenuState extends AbstractMenuState
 		if (this.windowInfo == null)
 		{
 			Rectangle r = new Rectangle(this.window.dimensions.x, (int) (this.window.dimensions.getMaxY() + 20), width - 40,
-					MenuHudSpriteset.instance.cornerSize.height * 2 + TextRenderer.CHAR_HEIGHT * 2);
+					MenuHudSpriteset.instance.cornerSize.height * 2 + TextRenderer.CHAR_HEIGHT * 4 + TextRenderer.LINE_SPACING * 2);
 			this.windowInfo = new TextWindow(r, new Message("moves.info"), false);
 		}
 		this.windowInfo.render(g, null, width, height);

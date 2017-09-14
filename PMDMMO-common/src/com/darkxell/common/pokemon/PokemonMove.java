@@ -41,7 +41,7 @@ public class PokemonMove
 		return this.maxPP;
 	}
 
-	public int getPp()
+	public int getPP()
 	{
 		return this.pp;
 	}
