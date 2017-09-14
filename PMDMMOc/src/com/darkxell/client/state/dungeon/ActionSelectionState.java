@@ -7,6 +7,7 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 
 import com.darkxell.client.launchable.Launcher;
+import com.darkxell.client.persistance.DungeonPersistance;
 import com.darkxell.client.resources.images.DungeonHudSpriteset;
 import com.darkxell.client.state.dungeon.DungeonState.DungeonSubState;
 import com.darkxell.client.state.dungeon.PokemonTravelState.Travel;
@@ -54,10 +55,10 @@ public class ActionSelectionState extends DungeonSubState {
 		}
 
 		if (direction != -1) {
-			this.parent.player.getDungeonPokemon().setFacing(direction);
-			if (!this.parent.rotating && this.parent.player.getDungeonPokemon().tryMoveTo(direction)) {
+			DungeonPersistance.player.getDungeonPokemon().setFacing(direction);
+			if (!this.parent.rotating && DungeonPersistance.player.getDungeonPokemon().tryMoveTo(direction)) {
 				this.parent.setSubstate(new PokemonTravelState(this.parent,
-						new Travel(this.parent.player.getDungeonPokemon(), direction)));
+						new Travel(DungeonPersistance.player.getDungeonPokemon(), direction)));
 				return true;
 			}
 		}
@@ -99,7 +100,7 @@ public class ActionSelectionState extends DungeonSubState {
 			}
 			if (this.parent.rotating)
 				if (!this.parent.diagonal)
-					this.drawArrow(g, this.parent.player.getDungeonPokemon().facing());
+					this.drawArrow(g, DungeonPersistance.player.getDungeonPokemon().facing());
 		}
 	}
 

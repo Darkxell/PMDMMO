@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.geom.Point2D;
 
+import com.darkxell.client.persistance.DungeonPersistance;
 import com.darkxell.client.renderers.DungeonPokemonRenderer;
 import com.darkxell.client.resources.images.AbstractDungeonTileset;
 import com.darkxell.client.resources.images.PokemonSprite;
@@ -116,7 +117,7 @@ public class PokemonTravelState extends DungeonSubState
 		for (Travel travel : this.travels)
 		{
 			travel.current = new Point2D.Float(travel.origin.x + travel.distance.x * completion, travel.origin.y + travel.distance.y * completion);
-			if (travel.pokemon.player == this.parent.player)
+			if (travel.pokemon.player == DungeonPersistance.player)
 			{
 				this.parent.camera.x = (int) (travel.current.getX() * AbstractDungeonTileset.TILE_SIZE);
 				this.parent.camera.y = (int) (travel.current.getY() * AbstractDungeonTileset.TILE_SIZE);

@@ -7,6 +7,7 @@ import java.awt.Shape;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+import com.darkxell.client.persistance.DungeonPersistance;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.state.menu.components.MenuWindow;
 import com.darkxell.common.util.Message;
@@ -107,7 +108,7 @@ public class DungeonLogger
 	/** Shows a message to the player. */
 	public void showMessage(Message message)
 	{
-		message.addReplacement("<player>", this.parent.player.getPokemon().getNickname());
+		message.addReplacement("<player>", DungeonPersistance.player.getPokemon().getNickname());
 		this.log.add(message);
 		this.messages.add(message);
 		if (this.log.size() > 40) this.log.poll();

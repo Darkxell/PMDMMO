@@ -3,6 +3,7 @@ package com.darkxell.client.state.menu.dungeon;
 import java.util.ArrayList;
 
 import com.darkxell.client.launchable.Launcher;
+import com.darkxell.client.persistance.DungeonPersistance;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.dungeon.DungeonState;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
@@ -42,11 +43,11 @@ public class DungeonMenuState extends OptionSelectionMenuState
 
 	@Override
 	protected void onOptionSelected(MenuOption option) {
-		DungeonState s = (DungeonState) this.backgroundState;
+		DungeonState s = DungeonPersistance.dungeonState;
 		if (option == this.moves) Launcher.stateManager.setState(new MovesMenuState(s));
 		else if (option == this.items)
 		{
-			if (s.player.inventory.isEmpty())
+			if (DungeonPersistance.player.inventory.isEmpty())
 			{
 				this.onExit();
 				s.logger.showMessage(new Message("inventory.empty"));
@@ -54,14 +55,14 @@ public class DungeonMenuState extends OptionSelectionMenuState
 				Launcher.stateManager.setState(new InventoryMenuState(s));
 		} else if (option == this.ground) {
 			this.onExit();
-			ItemStack i = s.player.getDungeonPokemon().tile.getItem();
+			ItemStack i = DungeonPersistance.player.getDungeonPokemon().tile.getItem();
 			if (i == null)
 				s.logger.showMessage(new Message("ground.empty"));
 			else {
 				GroundItemMenuState ground = new GroundItemMenuState(s);
 
 				ArrayList<ItemAction> actions = i.item().getLegalActions(true);
-				if (!s.player.inventory.isFull()) actions.add(ItemAction.GET);
+				if (!DungeonPersistance.player.inventory.isFull()) actions.add(ItemAction.GET);
 				actions.add(ItemAction.SWITCH);
 				actions.remove(ItemAction.GIVE);
 
