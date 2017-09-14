@@ -89,7 +89,8 @@ public abstract class AbstractMenuState extends AbstractState
 	/** The state to draw behind this menu State. */
 	public final AbstractState backgroundState;
 	/** The currently selected option. */
-	private int tab = 0, selection = 0;
+	protected int tab = 0;
+	protected int selection = 0;
 	/** The tabs of this Menu. */
 	protected ArrayList<MenuTab> tabs;
 

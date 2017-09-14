@@ -46,7 +46,7 @@ public class ItemTM extends ItemHM
 	@Override
 	public Message name()
 	{
-		return super.name().addPrefix("<tm" + this.move().type.id + ">");
+		return new Message("move." + this.moveID).addPrefix("<tm" + this.move().type.id + ">");
 	}
 
 	@Override

@@ -34,6 +34,8 @@ public final class PokemonSpritesets
 		Element xml = XMLUtils.readFile(new File("resources/data/spritesets.xml"));
 		for (Element pokemon : xml.getChildren("pokemon"))
 			spritedata.put(Integer.parseInt(pokemon.getAttributeValue("id")), pokemon);
+		spritesets.put(0, new AbstractPokemonSpriteset("/pokemons/pkmn0.png", 16, 16, 32, new int[]
+		{ 32 }, 1, 1, 1, 1));
 	}
 
 	/** Loads the Spritesheet for the Pokémon with the input ID. */
@@ -41,6 +43,12 @@ public final class PokemonSpritesets
 	{
 		if (spritesets.containsKey(id)) return;
 		Element xml = spritedata.get(id);
+		if (xml == null)
+		{
+			spritesets.put(id, spritesets.get(0));
+			return;
+		}
+
 		int width = 0, height = 0;
 		if (xml.getAttribute("size") != null) width = height = Integer.parseInt(xml.getAttributeValue("size"));
 		else

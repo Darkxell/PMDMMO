@@ -53,7 +53,7 @@ public class DungeonState extends AbstractState
 	{
 		this.floor = floor;
 		this.floorRenderer = new FloorRenderer(this.floor);
-		this.player = new Player(0, PokemonRegistry.find(1).generate(new Random(), 10));
+		this.player = new Player(0, PokemonRegistry.find((int) (Math.random() * 386)).generate(new Random(), 10));
 		Point p = this.floor.getTeamSpawn();
 		this.floor.tileAt(p.x, p.y).setPokemon(this.player.getDungeonPokemon());
 

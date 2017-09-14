@@ -111,7 +111,7 @@ public class TextRenderer
 		news("<news>", 94, 10),
 		story("<story>", 95, 9),
 		speech_bubble("<speech>", 96, 9),
-		key_A("<key-a>", 97, 9),
+		key_A("<key-a>", 97, 10),
 		key_B("<key-b>", 98, 10),
 		key_L("<key-l>", 99, 10),
 		key_R("<key-r>", 100, 10),
@@ -148,7 +148,25 @@ public class TextRenderer
 		tm_14("<tm14>", 136, 10),
 		tm_15("<tm15>", 137, 10),
 		tm_16("<tm16>", 138, 10),
-		tm_17("<tm17>", 139, 10);
+		tm_17("<tm17>", 139, 10),
+		type_0("<type-0>", 140, 11),
+		type_1("<type-1>", 141, 11),
+		type_2("<type-2>", 142, 11),
+		type_3("<type-3>", 143, 11),
+		type_4("<type-4>", 144, 11),
+		type_5("<type-5>", 145, 11),
+		type_6("<type-6>", 146, 11),
+		type_7("<type-7>", 147, 11),
+		type_8("<type-8>", 148, 11),
+		type_9("<type-9>", 149, 11),
+		type_10("<type-10>", 150, 11),
+		type_11("<type-11>", 151, 11),
+		type_12("<type-12>", 152, 11),
+		type_13("<type-13>", 153, 11),
+		type_14("<type-14>", 154, 11),
+		type_15("<type-15>", 155, 11),
+		type_16("<type-16>", 156, 11),
+		type_17("<type-17>", 157, 11);
 
 		public static PMDChar find(String value)
 		{
@@ -173,7 +191,7 @@ public class TextRenderer
 
 	}
 
-	public static final int CHAR_HEIGHT = 10;
+	public static final int CHAR_HEIGHT = 11;
 	private static final int GRID_COLS = 20;
 	private static final int GRID_WIDTH = CHAR_HEIGHT, GRID_HEIGHT = CHAR_HEIGHT;
 	public static final int LINE_SPACING = 3;
