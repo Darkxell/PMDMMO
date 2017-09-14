@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+import com.darkxell.client.mechanics.chat.ChatBox;
 import com.darkxell.client.resources.Res;
 
 public class ChatResources {
@@ -50,13 +51,19 @@ public class ChatResources {
 	public static BufferedImage getFooter(BufferedImage dest) {
 		if (buffer == null) {
 			buffer = new BufferedImage(FOOTER.getWidth(), FOOTER.getHeight(), BufferedImage.TYPE_INT_RGB);
-			buffergraphics = buffer.createGraphics();	
+			buffergraphics = buffer.createGraphics();
 		}
 		buffergraphics.clearRect(0, 0, buffer.getWidth(), buffer.getHeight());
 		buffergraphics.drawImage(FOOTER, 0, 0, null);
 		buffergraphics.drawImage(dest, 0, 3, null);
 		buffergraphics.drawImage(ICON_SEND, 177, 3, null);
 		return buffer;
+	}
+
+	public static Color getColorFromChat(byte selectedcategory) {
+		return selectedcategory == ChatBox.CHAT_GENERAL ? new Color(97, 255, 58)
+				: selectedcategory == ChatBox.CHAT_GUILD ? new Color(255, 170, 0)
+						: selectedcategory == ChatBox.CHAT_WHISPER ? new Color(197, 73, 255) : new Color(255, 255, 255);
 	}
 
 }
