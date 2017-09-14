@@ -8,6 +8,7 @@ import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.MenuHudSpriteset;
 import com.darkxell.client.state.dungeon.DungeonState;
 import com.darkxell.client.state.menu.AbstractMenuState;
+import com.darkxell.client.state.menu.InfoState;
 import com.darkxell.client.state.menu.components.MoveSelectionWindow;
 import com.darkxell.client.state.menu.components.TextWindow;
 import com.darkxell.client.ui.Keys;
@@ -47,7 +48,7 @@ public class MovesMenuState extends AbstractMenuState
 	{
 		MenuTab player = new MenuTab(new Message("moves.title").addReplacement("<pokemon>", this.pokemon.getNickname()));
 		for (int i = 0; i < 4; ++i)
-			player.addOption(new MoveMenuOption(this.pokemon.move(i)));
+			if (this.pokemon.move(i) != null) player.addOption(new MoveMenuOption(this.pokemon.move(i)));
 		this.tabs.add(player);
 	}
 
@@ -69,6 +70,7 @@ public class MovesMenuState extends AbstractMenuState
 				else if (key == Keys.KEY_UP) --this.selection;
 				else if (key == Keys.KEY_DOWN) ++this.selection;
 				else if (key == Keys.KEY_ATTACK) this.onOptionSelected(this.currentOption());
+				else if (key == Keys.KEY_ROTATE) this.onOptionInfo(this.currentOption());
 
 				if (key == Keys.KEY_LEFT || key == Keys.KEY_RIGHT)
 				{
@@ -103,6 +105,14 @@ public class MovesMenuState extends AbstractMenuState
 				Launcher.stateManager.setState(s);
 			}
 		}
+	}
+
+	private void onOptionInfo(MenuOption option)
+	{
+		DungeonState s = (DungeonState) this.backgroundState;
+		Launcher.stateManager.setState(new InfoState(s, this, new Message[]
+		{ ((MoveMenuOption) option).name }, new Message[]
+		{ ((MoveMenuOption) option).name }));
 	}
 
 	@Override

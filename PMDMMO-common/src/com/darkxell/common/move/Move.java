@@ -81,7 +81,7 @@ public class Move
 
 	public Message name()
 	{
-		return new Message("move." + this.id);
+		return new Message("move." + this.id).addPrefix("<type-" + this.type.id + "> ");
 	}
 
 	public Element toXML()
