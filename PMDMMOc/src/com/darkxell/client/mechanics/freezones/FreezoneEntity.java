@@ -15,11 +15,11 @@ public abstract class FreezoneEntity {
 	/** Is true if you can interact with this entity */
 	public boolean canInteract;
 	/** The X position of the entity. */
-	public int posX;
+	public double posX;
 	/** the Y position of the entity. */
-	public int posY;
+	public double posY;
 
-	public FreezoneEntity(boolean isSolid, boolean canInteract, int x, int y) {
+	public FreezoneEntity(boolean isSolid, boolean canInteract, double x, double y) {
 		this.isSolid = isSolid;
 		this.canInteract = canInteract;
 		this.posX = x;
