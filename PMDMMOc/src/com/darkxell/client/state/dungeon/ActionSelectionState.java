@@ -7,14 +7,17 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 
 import com.darkxell.client.launchable.Launcher;
+import com.darkxell.client.mechanics.DungeonEventProcessor;
 import com.darkxell.client.mechanics.animation.TravelAnimation;
 import com.darkxell.client.persistance.DungeonPersistance;
 import com.darkxell.client.resources.images.DungeonHudSpriteset;
 import com.darkxell.client.state.dungeon.DungeonState.DungeonSubState;
 import com.darkxell.client.state.menu.dungeon.DungeonMenuState;
 import com.darkxell.client.ui.Keys;
+import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.pokemon.LearnedMove;
 import com.darkxell.common.util.GameUtil;
 
 public class ActionSelectionState extends DungeonSubState
@@ -77,8 +80,8 @@ public class ActionSelectionState extends DungeonSubState
 	public void onKeyPressed(short key)
 	{
 		if (key == Keys.KEY_MENU) Launcher.stateManager.setState(new DungeonMenuState(this.parent));
-		if (key == Keys.KEY_ATTACK) this.parent.setSubstate(new MoveAnimationState(this.parent, DungeonPersistance.player.getDungeonPokemon(),
-				MoveRegistry.ATTACK));
+		if (key == Keys.KEY_ATTACK) DungeonEventProcessor.processEvent(new MoveSelectionEvent(new LearnedMove(MoveRegistry.ATTACK.id),
+				DungeonPersistance.player.getDungeonPokemon()));
 	}
 
 	@Override

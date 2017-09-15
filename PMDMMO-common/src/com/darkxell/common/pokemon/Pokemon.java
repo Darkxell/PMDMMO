@@ -32,7 +32,7 @@ public class Pokemon
 	/** This Pokémon's level. */
 	private int level;
 	/** This Pokémon's moves. */
-	private PokemonMove[] moves;
+	private LearnedMove[] moves;
 	/** This Pokémon's nickname. If null, use the species' name. */
 	private String nickname;
 	/** This Pokémon's species. */
@@ -54,13 +54,13 @@ public class Pokemon
 		this.abilityID = xml.getAttribute("ability") == null ? this.species.randomAbility(r) : Integer.parseInt(xml.getAttributeValue("ability"));
 		this.experience = xml.getAttribute("xp") == null ? 0 : Integer.parseInt(xml.getAttributeValue("xp"));
 		this.gender = xml.getAttribute("gender") == null ? this.species.randomGender(r) : Byte.parseByte(xml.getAttributeValue("gender"));
-		this.moves = new PokemonMove[4];
+		this.moves = new LearnedMove[4];
 		ArrayList<Integer> moves = new ArrayList<Integer>();
 		for (Element move : xml.getChildren("move"))
 		{
 			int slot = Integer.parseInt(move.getAttributeValue("slot"));
 			if (slot < 0 || slot >= this.moves.length) continue;
-			this.moves[slot] = new PokemonMove(move);
+			this.moves[slot] = new LearnedMove(move);
 			this.moves[slot].setSlot(slot);
 			moves.add(this.moves[slot].id);
 		}
@@ -70,7 +70,7 @@ public class Pokemon
 			{
 				int id = this.species.latestMove(this.level, moves);
 				if (id == -1) break;
-				this.moves[i] = new PokemonMove(id);
+				this.moves[i] = new LearnedMove(id);
 				moves.add(this.moves[i].id);
 				this.moves[i].setSlot(i);
 			}
@@ -78,7 +78,7 @@ public class Pokemon
 	}
 
 	public Pokemon(int id, PokemonSpecies species, String nickname, ItemStack item, PokemonStats stats, int ability, int experience, int level,
-			PokemonMove move1, PokemonMove move2, PokemonMove move3, PokemonMove move4, byte gender)
+			LearnedMove move1, LearnedMove move2, LearnedMove move3, LearnedMove move4, byte gender)
 	{
 		this.id = id;
 		this.species = species;
@@ -88,7 +88,7 @@ public class Pokemon
 		this.abilityID = ability;
 		this.experience = experience;
 		this.level = level;
-		this.moves = new PokemonMove[]
+		this.moves = new LearnedMove[]
 		{ move1, move2, move3, move4 };
 		this.gender = gender;
 	}
@@ -155,7 +155,7 @@ public class Pokemon
 		this.stats = this.species.stats.forLevel(this.level);
 	}
 
-	public PokemonMove move(int slot)
+	public LearnedMove move(int slot)
 	{
 		if (slot < 0 || slot >= this.moves.length) return null;
 		return this.moves[slot];
@@ -166,7 +166,7 @@ public class Pokemon
 		this.item = item;
 	}
 
-	public void setMove(int slot, PokemonMove move)
+	public void setMove(int slot, LearnedMove move)
 	{
 		if (slot >= 0 && slot < this.moves.length)
 		{
@@ -183,7 +183,7 @@ public class Pokemon
 	public void switchMoves(int slot1, int slot2)
 	{
 		if (slot1 < 0 || slot1 >= this.moves.length || slot2 < 0 || slot2 >= this.moves.length) return;
-		PokemonMove temp = this.move(slot1);
+		LearnedMove temp = this.move(slot1);
 		this.setMove(slot1, this.move(slot2));
 		this.setMove(slot2, temp);
 	}
@@ -208,7 +208,7 @@ public class Pokemon
 		root.setAttribute("ability", Integer.toString(this.abilityID));
 		if (this.experience != 0) root.setAttribute("xp", Integer.toString(this.experience));
 		root.setAttribute("gender", Byte.toString(this.gender));
-		this.moves = new PokemonMove[4];
+		this.moves = new LearnedMove[4];
 		for (int i = 0; i < this.moves.length; ++i)
 			if (this.moves[i] != null) root.addContent(this.moves[i].toXML());
 

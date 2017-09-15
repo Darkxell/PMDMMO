@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import org.jdom2.Element;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.MoveTarget;
-import com.darkxell.common.event.MoveUseEvent;
-import com.darkxell.common.event.MoveTarget.MoveResult;
+import com.darkxell.common.event.DamageDealtEvent;
+import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.DungeonEvent.MessageEvent;
+import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.pokemon.LearnedMove;
 import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.util.Message;
 
@@ -86,6 +88,9 @@ public class Move
 		this.makesContact = makesContact;
 	}
 
+	/** @param user - The Pokémon using this Move.
+	 * @param floor - The Floor context.
+	 * @return The Pokémon affected by this Move. */
 	public DungeonPokemon[] getTargets(DungeonPokemon user, Floor floor)
 	{
 		ArrayList<DungeonPokemon> targets = new ArrayList<DungeonPokemon>();
@@ -99,9 +104,34 @@ public class Move
 		return targets.toArray(new DungeonPokemon[targets.size()]);
 	}
 
+	/** @param user - The Pokémon using this Move.
+	 * @return The messages to display when using this Move. There is generally only one message. The array is mainly to allow the basic attack to have no message. */
+	public Message[] getUseMessages(DungeonPokemon user)
+	{
+		return new Message[]
+		{ new Message("move.used").addReplacement("<pokemon>", user.pokemon.getNickname()).addReplacement("<move>", this.name()) };
+	}
+
+	/** @return This Move's name. */
 	public Message name()
 	{
 		return new Message("move." + this.id).addPrefix("<type-" + this.type.id + "> ");
+	}
+
+	/** @param user - The Pokémon using the Move.
+	 * @param move - The Learned move.
+	 * @param floor - The Floor context.
+	 * @return The Events created by this selection. Creates MoveUseEvents, distributing this Move on targets. */
+	public final DungeonEvent[] prepareUse(DungeonPokemon user, LearnedMove move, Floor floor)
+	{
+		DungeonPokemon[] pokemon = this.getTargets(user, floor);
+		MoveUseEvent[] events = new MoveUseEvent[pokemon.length];
+		for (int i = 0; i < pokemon.length; ++i)
+			events[i] = new MoveUseEvent(move, user, pokemon[i], floor);
+
+		if (events.length == 0 && this != MoveRegistry.ATTACK) return new DungeonEvent[]
+		{ new MessageEvent(new Message("move.no_target")) };
+		return events;
 	}
 
 	public Element toXML()
@@ -124,19 +154,16 @@ public class Move
 		return root;
 	}
 
-	public MoveUseEvent use(DungeonPokemon user, Floor floor)
+	/** Applies this Move's effects to a Pokémon.
+	 * 
+	 * @param user - The Pokémon using the Move.
+	 * @param target - The Pokémon the Move is being used on.
+	 * @param floor - The Floor context.
+	 * @return The events resulting from this Move. They typically include damage, healing, stat changes... */
+	public DungeonEvent[] useOn(DungeonPokemon user, DungeonPokemon target, Floor floor)
 	{
-		DungeonPokemon[] pokemon = this.getTargets(user, floor);
-		MoveTarget[] targets = new MoveTarget[pokemon.length];
-		for (int i = 0; i < targets.length; ++i)
-			targets[i] = this.useOn(user, pokemon[i], floor);
-
-		return new MoveUseEvent(this, user, targets);
-	}
-
-	private MoveTarget useOn(DungeonPokemon user, DungeonPokemon target, Floor floor)
-	{
-		return new MoveTarget(target, MoveResult.DAMAGE_DEALT, 5);
+		return new DungeonEvent[]
+		{ new DamageDealtEvent(target, 5) };
 	}
 
 }

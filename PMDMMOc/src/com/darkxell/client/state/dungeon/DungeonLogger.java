@@ -48,6 +48,7 @@ public class DungeonLogger
 	public void hideMessages()
 	{
 		this.messageTime = 0;
+		this.messageOffset = 0;
 		this.messages.clear();
 	}
 
@@ -114,6 +115,12 @@ public class DungeonLogger
 		if (this.log.size() > 40) this.log.poll();
 		this.messageTime = MESSAGE_TIME;
 		this.lastWidth = -1;
+	}
+
+	public void showMessages(Message... messages)
+	{
+		for (Message message : messages)
+			this.showMessage(message);
 	}
 
 	public void update()

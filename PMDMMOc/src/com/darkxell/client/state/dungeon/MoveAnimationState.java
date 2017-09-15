@@ -8,31 +8,30 @@ import com.darkxell.client.mechanics.animation.AnimationEndListener;
 import com.darkxell.client.mechanics.animation.MoveAnimations;
 import com.darkxell.client.persistance.DungeonPersistance;
 import com.darkxell.client.state.dungeon.DungeonState.DungeonSubState;
-import com.darkxell.common.move.Move;
-import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.DungeonPokemon;
-import com.darkxell.common.util.Message;
+import com.darkxell.common.pokemon.LearnedMove;
 
 public class MoveAnimationState extends DungeonSubState implements AnimationEndListener
 {
 
 	public final AbstractAnimation animation;
-	public final Move move;
+	public final LearnedMove move;
 	public final DungeonPokemon user;
 
-	public MoveAnimationState(DungeonState parent, DungeonPokemon user, Move move)
+	public MoveAnimationState(DungeonState parent, DungeonPokemon user, LearnedMove move)
 	{
 		super(parent);
 		this.move = move;
 		this.user = user;
-		this.animation = MoveAnimations.createAnimation(this, user, move);
+		this.animation = MoveAnimations.createAnimation(this, user, move.move());
 	}
 
 	@Override
 	public void onAnimationEnd(AbstractAnimation animation)
 	{
 		this.parent.setSubstate(this.parent.actionSelectionState);
-		DungeonEventProcessor.processEvent(this.move.use(this.user, DungeonPersistance.floor));
+		DungeonEventProcessor.addToPending(this.move.move().prepareUse(this.user, this.move, DungeonPersistance.floor));
+		DungeonEventProcessor.processPending();
 	}
 
 	@Override
@@ -47,8 +46,6 @@ public class MoveAnimationState extends DungeonSubState implements AnimationEndL
 	public void onStart()
 	{
 		super.onStart();
-		if (this.move != MoveRegistry.ATTACK) this.parent.logger.showMessage(new Message("move.used").addReplacement("<pokemon>",
-				this.user.pokemon.getNickname()).addReplacement("<move>", this.move.name()));
 		this.animation.start();
 	}
 

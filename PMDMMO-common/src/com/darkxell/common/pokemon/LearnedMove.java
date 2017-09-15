@@ -5,7 +5,7 @@ import org.jdom2.Element;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.move.MoveRegistry;
 
-public class PokemonMove
+public class LearnedMove
 {
 
 	/** This move's ID. */
@@ -19,7 +19,7 @@ public class PokemonMove
 	/** The position of this move in the Pokémon's move set. */
 	private int slot;
 
-	public PokemonMove(Element xml)
+	public LearnedMove(Element xml)
 	{
 		this.id = Integer.parseInt(xml.getAttributeValue("id"));
 		this.maxPP = xml.getAttribute("pp-max") == null ? this.move().pp : Integer.parseInt(xml.getAttributeValue("pp-max"));
@@ -28,7 +28,7 @@ public class PokemonMove
 		this.slot = Integer.parseInt(xml.getAttributeValue("slot"));
 	}
 
-	public PokemonMove(int id)
+	public LearnedMove(int id)
 	{
 		this.id = id;
 		this.pp = this.maxPP = this.move().pp;
@@ -74,6 +74,8 @@ public class PokemonMove
 	public void setPP(int pp)
 	{
 		this.pp = pp;
+		if (this.pp < 0) this.pp = 0;
+		if (this.pp > this.getMaxPP()) this.pp = this.getMaxPP();
 	}
 
 	public void setSlot(int slot)
