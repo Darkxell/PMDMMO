@@ -2,9 +2,9 @@ package com.darkxell.client.mechanics;
 
 import java.util.Stack;
 
-import com.darkxell.client.mechanics.animation.MoveAnimations;
 import com.darkxell.client.persistance.DungeonPersistance;
 import com.darkxell.client.renderers.DungeonPokemonRenderer;
+import com.darkxell.client.renderers.MoveRenderer;
 import com.darkxell.client.resources.images.PokemonSprite;
 import com.darkxell.client.state.dungeon.AnimationState;
 import com.darkxell.client.state.dungeon.DelayState;
@@ -61,7 +61,7 @@ public class DungeonEventProcessor
 	private static void processMoveEvent(MoveSelectionEvent event)
 	{
 		AnimationState s = new AnimationState(DungeonPersistance.dungeonState);
-		s.animation = MoveAnimations.createAnimation(s, event.user, event.move.move());
+		s.animation = MoveRenderer.createAnimation(s, event.user, event.move.move());
 		DungeonPersistance.dungeonState.setSubstate(s);
 		processPending = false;
 	}
@@ -69,7 +69,7 @@ public class DungeonEventProcessor
 	private static void processMoveUseEvent(MoveUseEvent event)
 	{
 		AnimationState s = new AnimationState(DungeonPersistance.dungeonState);
-		s.animation = MoveAnimations.createTargetAnimation(s, event.user, event.move.move());
+		s.animation = MoveRenderer.createTargetAnimation(s, event.user, event.move.move());
 		if (s.animation != null)
 		{
 			DungeonPersistance.dungeonState.setSubstate(s);

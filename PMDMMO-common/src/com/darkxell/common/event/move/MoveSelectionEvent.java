@@ -27,6 +27,7 @@ public class MoveSelectionEvent extends DungeonEvent
 	@Override
 	public DungeonEvent[] processServer()
 	{
+		this.move.setPP(this.move.getPP() - 1);
 		return this.move.move().prepareUse(this.user, this.move, this.floor);
 	}
 

@@ -3,9 +3,11 @@ package com.darkxell.client.state.menu.dungeon.item;
 import java.util.ArrayList;
 
 import com.darkxell.client.launchable.Launcher;
+import com.darkxell.client.mechanics.DungeonEventProcessor;
 import com.darkxell.client.persistance.DungeonPersistance;
+import com.darkxell.client.renderers.ItemRenderer;
+import com.darkxell.client.state.dungeon.AnimationState;
 import com.darkxell.client.state.dungeon.DungeonState;
-import com.darkxell.client.state.dungeon.ItemUseState;
 import com.darkxell.client.state.menu.InfoState;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.client.state.menu.dungeon.DungeonMenuState;
@@ -114,8 +116,12 @@ public class InventoryMenuState extends OptionSelectionMenuState implements Item
 		{
 			case USE:
 				messages.add(i.item().getUseMessage(user));
-				ItemUseEvent event = i.item().use(DungeonPersistance.floor, user);
-				parent.setSubstate(new ItemUseState(parent, event));
+				ItemUseEvent event = new ItemUseEvent(i.item(), user, null, DungeonPersistance.floor);
+				DungeonEventProcessor.addToPending(event);
+
+				AnimationState a = new AnimationState(parent);
+				a.animation = ItemRenderer.createItemAnimation(event, a);
+				parent.setSubstate(a);
 				break;
 
 			case THROW:

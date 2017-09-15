@@ -6,7 +6,8 @@ import java.util.Comparator;
 import org.jdom2.Element;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.ItemUseEvent;
+import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.DungeonEvent.MessageEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Message;
 
@@ -178,10 +179,12 @@ public class Item
 	 * 
 	 * @param floor - The current Floor.
 	 * @param pokemon - The Pokémon using the Item.
+	 * @param target - The Pokémon the Item is being used on. May be null if there is no target.
 	 * @return The messages that were created while using the Item. */
-	public ItemUseEvent use(Floor floor, DungeonPokemon pokemon)
+	public DungeonEvent[] use(Floor floor, DungeonPokemon pokemon, DungeonPokemon target)
 	{
-		return new ItemUseEvent(this, pokemon, null, floor, new Message("item.no_effect"));
+		return new DungeonEvent[]
+		{ new MessageEvent(new Message("item.no_effect")) };
 	}
 
 }

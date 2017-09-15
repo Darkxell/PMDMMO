@@ -1,14 +1,17 @@
 package com.darkxell.client.state.menu.dungeon.item;
 
 import com.darkxell.client.launchable.Launcher;
+import com.darkxell.client.mechanics.DungeonEventProcessor;
 import com.darkxell.client.persistance.DungeonPersistance;
+import com.darkxell.client.renderers.ItemRenderer;
+import com.darkxell.client.state.dungeon.AnimationState;
 import com.darkxell.client.state.dungeon.DungeonState;
-import com.darkxell.client.state.dungeon.ItemUseState;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.client.state.menu.dungeon.DungeonMenuState;
 import com.darkxell.common.event.ItemUseEvent;
 import com.darkxell.common.item.Item.ItemAction;
 import com.darkxell.common.item.ItemStack;
+import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Message;
 
 /** This state is never truly active. It serves as a parent to ItemActionSelectionState for an Item on the ground. */
@@ -69,9 +72,14 @@ public class GroundItemMenuState extends OptionSelectionMenuState implements Ite
 		else if (action == ItemAction.SWITCH) Launcher.stateManager.setState(new InventoryMenuState(s, this));
 		else if (action == ItemAction.USE)
 		{
-			s.logger.showMessage(this.item.item().getUseMessage(DungeonPersistance.player.getDungeonPokemon()));
-			ItemUseEvent event = this.item.item().use(DungeonPersistance.floor, DungeonPersistance.player.getDungeonPokemon());
-			s.setSubstate(new ItemUseState(s, event));
+			DungeonPokemon p = DungeonPersistance.player.getDungeonPokemon();
+			s.logger.showMessage(this.item.item().getUseMessage(p));
+			ItemUseEvent event = new ItemUseEvent(this.item.item(), p, null, DungeonPersistance.floor);
+			DungeonEventProcessor.addToPending(event);
+
+			AnimationState a = new AnimationState(s);
+			a.animation = ItemRenderer.createItemAnimation(event, a);
+			s.setSubstate(a);
 		}
 	}
 

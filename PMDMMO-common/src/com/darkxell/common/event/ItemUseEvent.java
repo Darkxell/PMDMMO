@@ -29,4 +29,10 @@ public class ItemUseEvent extends DungeonEvent
 			this.messages.add(message);
 	}
 
+	@Override
+	public DungeonEvent[] processServer()
+	{
+		return this.item.use(this.floor, this.user, this.target);
+	}
+
 }

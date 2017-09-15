@@ -3,9 +3,9 @@ package com.darkxell.common.item;
 import org.jdom2.Element;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.ItemUseEvent;
+import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.DungeonExitEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
-import com.darkxell.common.util.Message;
 
 /** An Item that has different effects when used. */
 public class ItemEscapeOrb extends ItemOrb
@@ -22,9 +22,9 @@ public class ItemEscapeOrb extends ItemOrb
 	}
 
 	@Override
-	public ItemUseEvent use(Floor floor, DungeonPokemon pokemon)
+	public DungeonEvent[] use(Floor floor, DungeonPokemon pokemon, DungeonPokemon target)
 	{
-		return new ItemUseEvent(this, pokemon, null, floor, new Message("item.orb.escape").addReplacement("<pokemon>", pokemon.pokemon.getNickname()));
+		return new DungeonEvent[]
+		{ new DungeonExitEvent(pokemon) };
 	}
-
 }
