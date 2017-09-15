@@ -133,7 +133,7 @@ public class MovesMenuState extends AbstractMenuState
 	{
 		super.render(g, width, height);
 
-		if (this.window == null) this.window = new MoveSelectionWindow(this, this.mainWindowDimensions(g));
+		if (this.window == null) this.window = new MoveSelectionWindow(this, this.mainWindowDimensions());
 		this.window.render(g, this.currentTab().name, width, height);
 
 		if (this.windowInfo == null)

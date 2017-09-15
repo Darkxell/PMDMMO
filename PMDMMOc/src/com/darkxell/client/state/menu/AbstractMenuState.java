@@ -65,7 +65,7 @@ public abstract class AbstractMenuState extends AbstractState
 			return this;
 		}
 
-		public int height(Graphics2D g)
+		public int height()
 		{
 			return this.options.size() * (TextRenderer.CHAR_HEIGHT + TextRenderer.LINE_SPACING);
 		}
@@ -75,7 +75,7 @@ public abstract class AbstractMenuState extends AbstractState
 			return this.options.toArray(new MenuOption[this.options.size()]);
 		}
 
-		public int width(Graphics2D g)
+		public int width()
 		{
 			int width = 0;
 			for (MenuOption option : this.options)
@@ -88,9 +88,9 @@ public abstract class AbstractMenuState extends AbstractState
 
 	/** The state to draw behind this menu State. */
 	public final AbstractState backgroundState;
+	protected int selection = 0;
 	/** The currently selected option. */
 	protected int tab = 0;
-	protected int selection = 0;
 	/** The tabs of this Menu. */
 	protected ArrayList<MenuTab> tabs;
 
@@ -114,13 +114,13 @@ public abstract class AbstractMenuState extends AbstractState
 	}
 
 	/** @return This Window's dimensions. */
-	protected Rectangle mainWindowDimensions(Graphics2D g)
+	protected Rectangle mainWindowDimensions()
 	{
 		int width = 0, height = 0;
 		for (MenuTab tab : this.tabs)
 		{
-			width = Math.max(width, tab.width(g));
-			height = Math.max(height, tab.height(g));
+			width = Math.max(width, tab.width());
+			height = Math.max(height, tab.height());
 		}
 		width += OptionSelectionWindow.MARGIN_X * 2;
 		height += OptionSelectionWindow.MARGIN_Y * 2;

@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.mechanics.DungeonEventProcessor;
 import com.darkxell.client.persistance.DungeonPersistance;
-import com.darkxell.client.renderers.ItemRenderer;
-import com.darkxell.client.state.dungeon.AnimationState;
 import com.darkxell.client.state.dungeon.DungeonState;
 import com.darkxell.client.state.menu.InfoState;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
@@ -14,7 +12,7 @@ import com.darkxell.client.state.menu.dungeon.DungeonMenuState;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.common.event.item.ItemMovedEvent;
 import com.darkxell.common.event.item.ItemSwappedEvent;
-import com.darkxell.common.event.item.ItemUseEvent;
+import com.darkxell.common.event.item.ItemUseSelectionEvent;
 import com.darkxell.common.item.Item.ItemAction;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.player.ItemContainer;
@@ -116,7 +114,11 @@ public class ItemContainersMenuState extends OptionSelectionMenuState implements
 		if (key == Keys.KEY_MAP && this.container() == DungeonPersistance.player.inventory)
 		{
 			DungeonPersistance.player.inventory.sort();
-			Launcher.stateManager.setState(new ItemContainersMenuState(DungeonPersistance.dungeonState, this.containers));
+			ArrayList<ItemContainer> containers = new ArrayList<ItemContainer>();
+			for (ItemContainer c : this.containers)
+				if (!containers.contains(c)) containers.add(c);
+			Launcher.stateManager.setState(new ItemContainersMenuState(DungeonPersistance.dungeonState,
+					containers.toArray(new ItemContainer[containers.size()])));
 		}
 	}
 
@@ -152,16 +154,9 @@ public class ItemContainersMenuState extends OptionSelectionMenuState implements
 		ItemStack i = container.getItem(index);
 		DungeonPokemon user = DungeonPersistance.player.getDungeonPokemon();
 
-		if (action == ItemAction.USE)
-		{
-			s.logger.showMessage(i.item().getUseMessage(user)); // Show it now before the animation. TODO: ItemUseSelectionEvent
-			ItemUseEvent event = new ItemUseEvent(i.item(), user, null, container, index, DungeonPersistance.floor);
-			DungeonEventProcessor.addToPending(event);
-
-			AnimationState a = new AnimationState(s);
-			a.animation = ItemRenderer.createItemAnimation(event, a);
-			s.setSubstate(a);
-		} else if (action == ItemAction.GET || action == ItemAction.TAKE) DungeonEventProcessor.processEvent(new ItemMovedEvent(action, user, container, 0,
+		if (action == ItemAction.USE) DungeonEventProcessor.processEvent(new ItemUseSelectionEvent(i.item(), user, null, container, index,
+				DungeonPersistance.floor));
+		else if (action == ItemAction.GET || action == ItemAction.TAKE) DungeonEventProcessor.processEvent(new ItemMovedEvent(action, user, container, 0,
 				user.player.inventory, user.player.inventory.canAccept(i)));
 		else if (action == ItemAction.PLACE) DungeonEventProcessor.processEvent(new ItemMovedEvent(action, user, container, index, user.tile, 0));
 		else if (action == ItemAction.SWITCH) DungeonEventProcessor.processEvent(new ItemSwappedEvent(action, user, container, index, user.tile, 0));
