@@ -5,13 +5,13 @@ import java.awt.Point;
 import java.util.Random;
 
 import com.darkxell.client.launchable.Launcher;
+import com.darkxell.client.persistance.DungeonPersistance;
 import com.darkxell.client.renderers.DungeonPokemonRenderer;
 import com.darkxell.client.renderers.FloorRenderer;
 import com.darkxell.client.resources.images.AbstractDungeonTileset;
 import com.darkxell.client.resources.music.SoundsHolder;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.ui.Keys;
-import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.PokemonRegistry;
 
@@ -44,22 +44,19 @@ public class DungeonState extends AbstractState
 	/** The delay before using the new substate. */
 	private int delay = 0;
 	boolean diagonal = false, rotating = false;
-	public final Floor floor;
 	final FloorRenderer floorRenderer;
 	public final DungeonLogger logger;
-	public final Player player;
 
-	public DungeonState(Floor floor)
+	public DungeonState()
 	{
-		this.floor = floor;
-		this.floorRenderer = new FloorRenderer(this.floor);
-		this.player = new Player(0, PokemonRegistry.find((int) (Math.random() * 386)).generate(new Random(), 10));
-		Point p = this.floor.getTeamSpawn();
-		this.floor.tileAt(p.x, p.y).setPokemon(this.player.getDungeonPokemon());
+		this.floorRenderer = new FloorRenderer(DungeonPersistance.floor);
+		DungeonPersistance.player = new Player(0, PokemonRegistry.find((int) (Math.random() * 386)).generate(new Random(), 10));
+		Point p = DungeonPersistance.floor.getTeamSpawn();
+		DungeonPersistance.floor.tileAt(p.x, p.y).setPokemon(DungeonPersistance.player.getDungeonPokemon());
 
 		this.logger = new DungeonLogger(this);
-		this.camera = new Point(this.player.getDungeonPokemon().tile.x * AbstractDungeonTileset.TILE_SIZE, this.player.getDungeonPokemon().tile.y
-				* AbstractDungeonTileset.TILE_SIZE);
+		this.camera = new Point(DungeonPersistance.player.getDungeonPokemon().tile.x * AbstractDungeonTileset.TILE_SIZE,
+				DungeonPersistance.player.getDungeonPokemon().tile.y * AbstractDungeonTileset.TILE_SIZE);
 		this.currentSubstate = this.actionSelectionState = new ActionSelectionState(this);
 		this.currentSubstate.onStart();
 	}
@@ -106,7 +103,7 @@ public class DungeonState extends AbstractState
 
 		this.floorRenderer.drawFloor(g, x, y, width, height);
 		if (this.isMain()) if (this.delay == 0 && this.rotating && this.currentSubstate == this.actionSelectionState) this.floorRenderer.drawGrid(g,
-				this.player.getDungeonPokemon(), x, y, width, height);
+				DungeonPersistance.player.getDungeonPokemon(), x, y, width, height);
 		this.floorRenderer.drawEntities(g, x, y, width, height);
 
 		if (this.delay == 0) this.currentSubstate.render(g, width, height);

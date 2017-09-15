@@ -9,16 +9,18 @@ public class ChatMessage {
 	public String sender;
 	public String message;
 	public Color tagColor = Color.WHITE;
-	public Color lineColor;
+	public Color messageColor;
+	public Color senderColor;
 
-	public ChatMessage(String sender, String message, Color color) {
+	public ChatMessage(String sender, String message, Color color, Color sendercolor) {
 		this.sender = sender;
 		this.message = message;
-		this.lineColor = color;
+		this.messageColor = color;
+		this.senderColor = sendercolor;
 	}
 
-	public ChatMessage(String sender, String message, Color color, String tag, Color tagcolor) {
-		this(sender, message, color);
+	public ChatMessage(String sender, String message, Color color, Color sendercolor, String tag, Color tagcolor) {
+		this(sender, message, color, sendercolor);
 		this.tag = tag;
 		this.tagColor = tagcolor;
 	}

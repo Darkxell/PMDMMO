@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
 import com.darkxell.client.launchable.Launcher;
+import com.darkxell.client.persistance.DungeonPersistance;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.MenuHudSpriteset;
 import com.darkxell.client.state.dungeon.DungeonState;
@@ -41,7 +42,7 @@ public class MovesMenuState extends AbstractMenuState
 	public MovesMenuState(DungeonState parent)
 	{
 		super(parent);
-		this.pokemon = parent.player.getPokemon();
+		this.pokemon = DungeonPersistance.player.getPokemon();
 		this.createOptions();
 	}
 
@@ -101,7 +102,7 @@ public class MovesMenuState extends AbstractMenuState
 
 			if (success)
 			{
-				MovesMenuState s = new MovesMenuState((DungeonState) this.backgroundState);
+				MovesMenuState s = new MovesMenuState(DungeonPersistance.dungeonState);
 				s.selection = this.selection;
 				s.tab = this.tab;
 				Launcher.stateManager.setState(s);
@@ -111,7 +112,7 @@ public class MovesMenuState extends AbstractMenuState
 
 	private void onOptionInfo(MenuOption option)
 	{
-		DungeonState s = (DungeonState) this.backgroundState;
+		DungeonState s = DungeonPersistance.dungeonState;
 		Launcher.stateManager.setState(new InfoState(s, this, new Message[]
 		{ ((MoveMenuOption) option).name }, new Message[]
 		{ ((MoveMenuOption) option).name }));
@@ -120,11 +121,12 @@ public class MovesMenuState extends AbstractMenuState
 	@Override
 	protected void onOptionSelected(MenuOption option)
 	{
-		DungeonState s = (DungeonState) this.backgroundState;
+		DungeonState s = DungeonPersistance.dungeonState;
 		PokemonMove move = ((MoveMenuOption) option).move;
 		Launcher.stateManager.setState(s);
 		s.logger.showMessage(new Message("move.used").addReplacement("<pokemon>", this.pokemon.getNickname()).addReplacement("<move>", move.move().name()));
-		s.setSubstate(new ItemUseState(s, new ItemUseEvent(null, s.player.getDungeonPokemon(), null, s.floor, new Message("item.no_effect"))));
+		s.setSubstate(new ItemUseState(s, new ItemUseEvent(null, DungeonPersistance.player.getDungeonPokemon(), null, DungeonPersistance.floor, new Message(
+				"item.no_effect"))));
 		move.setPP(move.getPP() - 1);
 	}
 
