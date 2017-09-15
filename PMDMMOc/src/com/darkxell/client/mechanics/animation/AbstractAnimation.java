@@ -16,6 +16,12 @@ public class AbstractAnimation
 		this.listener = listener;
 	}
 
+	/** @return From 0 to 1, how far this Animation is. */
+	public float completion()
+	{
+		return this.tick * 1f / this.duration;
+	}
+
 	/** @return True if this Animation has ended. */
 	public boolean isOver()
 	{

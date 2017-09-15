@@ -109,6 +109,11 @@ public class GameUtil
 		return new Point(x, y);
 	}
 
+	public static Point moveTo(Point origin, short direction)
+	{
+		return moveTo(origin.x, origin.y, direction);
+	}
+
 	/** @return The opposite of the input direction. */
 	public static short oppositeOf(short direction)
 	{

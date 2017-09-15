@@ -4,19 +4,19 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
 import com.darkxell.client.launchable.Launcher;
+import com.darkxell.client.mechanics.DungeonEventProcessor;
 import com.darkxell.client.persistance.DungeonPersistance;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.MenuHudSpriteset;
 import com.darkxell.client.state.dungeon.DungeonState;
-import com.darkxell.client.state.dungeon.ItemUseState;
 import com.darkxell.client.state.menu.AbstractMenuState;
 import com.darkxell.client.state.menu.InfoState;
 import com.darkxell.client.state.menu.components.MoveSelectionWindow;
 import com.darkxell.client.state.menu.components.TextWindow;
 import com.darkxell.client.ui.Keys;
-import com.darkxell.common.event.ItemUseEvent;
+import com.darkxell.common.event.move.MoveSelectionEvent;
+import com.darkxell.common.pokemon.LearnedMove;
 import com.darkxell.common.pokemon.Pokemon;
-import com.darkxell.common.pokemon.PokemonMove;
 import com.darkxell.common.util.Message;
 
 public class MovesMenuState extends AbstractMenuState
@@ -25,9 +25,9 @@ public class MovesMenuState extends AbstractMenuState
 	public static class MoveMenuOption extends MenuOption
 	{
 
-		public final PokemonMove move;
+		public final LearnedMove move;
 
-		public MoveMenuOption(PokemonMove move)
+		public MoveMenuOption(LearnedMove move)
 		{
 			super(move == null ? new Message("", false) : move.move().name());
 			this.move = move;
@@ -122,12 +122,10 @@ public class MovesMenuState extends AbstractMenuState
 	protected void onOptionSelected(MenuOption option)
 	{
 		DungeonState s = DungeonPersistance.dungeonState;
-		PokemonMove move = ((MoveMenuOption) option).move;
+		LearnedMove move = ((MoveMenuOption) option).move;
 		Launcher.stateManager.setState(s);
-		s.logger.showMessage(new Message("move.used").addReplacement("<pokemon>", this.pokemon.getNickname()).addReplacement("<move>", move.move().name()));
-		s.setSubstate(new ItemUseState(s, new ItemUseEvent(null, DungeonPersistance.player.getDungeonPokemon(), null, DungeonPersistance.floor, new Message(
-				"item.no_effect"))));
-		move.setPP(move.getPP() - 1);
+
+		DungeonEventProcessor.processEvent(new MoveSelectionEvent(move, DungeonPersistance.player.getDungeonPokemon(), DungeonPersistance.floor));
 	}
 
 	@Override
@@ -135,7 +133,7 @@ public class MovesMenuState extends AbstractMenuState
 	{
 		super.render(g, width, height);
 
-		if (this.window == null) this.window = new MoveSelectionWindow(this, this.mainWindowDimensions(g));
+		if (this.window == null) this.window = new MoveSelectionWindow(this, this.mainWindowDimensions());
 		this.window.render(g, this.currentTab().name, width, height);
 
 		if (this.windowInfo == null)

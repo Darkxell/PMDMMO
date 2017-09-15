@@ -7,7 +7,7 @@ import com.darkxell.client.mechanics.animation.AnimationEndListener;
 import com.darkxell.client.mechanics.animation.StaticAnimation;
 import com.darkxell.client.resources.images.AnimationSpriteset;
 import com.darkxell.client.resources.images.tilesets.FloorDungeonTileset;
-import com.darkxell.common.event.ItemUseEvent;
+import com.darkxell.common.event.item.ItemUseSelectionEvent;
 import com.darkxell.common.item.ItemEscapeOrb;
 
 public class ItemRenderer
@@ -16,7 +16,7 @@ public class ItemRenderer
 	/** Creates an Animation for using an Item and returns it.
 	 * 
 	 * @param listener - The listener to call at the end of the Animation. */
-	public static AbstractAnimation createItemAnimation(ItemUseEvent event, AnimationEndListener listener)
+	public static AbstractAnimation createItemAnimation(ItemUseSelectionEvent event, AnimationEndListener listener)
 	{
 		if (event.item instanceof ItemEscapeOrb) return new StaticAnimation(listener,
 				AnimationSpriteset.getSpriteset("resources/items/escape_orb.png", 64, 120), new Point(event.user.tile.x * FloorDungeonTileset.TILE_SIZE - 64

@@ -6,7 +6,8 @@ import java.util.Comparator;
 import org.jdom2.Element;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.ItemUseEvent;
+import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.DungeonEvent.MessageEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Message;
 
@@ -19,9 +20,9 @@ public class Item
 		/** Removing the Item as shortcut. */
 		DESELECT(7, "item.deselect"),
 		/** Moving the Item in the inventory. */
-		GET(4, "item.get"),
+		GET(0, "item.get"),
 		/** Giving the Item to an ally. */
-		GIVE(1, "item.give"),
+		GIVE(2, "item.give"),
 		/** Viewing the Item description. */
 		INFO(10, "item.info"),
 		/** Placing the Item on the ground. */
@@ -29,15 +30,15 @@ public class Item
 		/** Setting the Item as shortcut. */
 		SET(8, "item.set"),
 		/** Swapping the Item for another Item in the Inventory. */
-		SWAP(3, "item.swap"),
+		SWAP(4, "item.swap"),
 		/** Swapping the Item for the Item on the ground. */
 		SWITCH(5, "item.switch"),
 		/** Taking the Item from an ally. */
-		TAKE(2, "item.take"),
+		TAKE(3, "item.take"),
 		/** Throwing the Item. */
 		THROW(9, "item.throw"),
 		/** Using the Item. */
-		USE(0, "item.use");
+		USE(1, "item.use");
 
 		public static void sort(ArrayList<ItemAction> actions)
 		{
@@ -133,7 +134,6 @@ public class Item
 	{
 		ArrayList<ItemAction> actions = new ArrayList<Item.ItemAction>();
 		if (inDungeon) actions.add(ItemAction.USE);
-		if (inDungeon) actions.add(ItemAction.GIVE);
 		if (inDungeon) actions.add(ItemAction.THROW);
 		actions.add(ItemAction.INFO);
 		return actions;
@@ -178,10 +178,12 @@ public class Item
 	 * 
 	 * @param floor - The current Floor.
 	 * @param pokemon - The Pokémon using the Item.
+	 * @param target - The Pokémon the Item is being used on. May be null if there is no target.
 	 * @return The messages that were created while using the Item. */
-	public ItemUseEvent use(Floor floor, DungeonPokemon pokemon)
+	public DungeonEvent[] use(Floor floor, DungeonPokemon pokemon, DungeonPokemon target)
 	{
-		return new ItemUseEvent(this, pokemon, null, floor, new Message("item.no_effect"));
+		return new DungeonEvent[]
+		{ new MessageEvent(new Message("item.no_effect")) };
 	}
 
 }

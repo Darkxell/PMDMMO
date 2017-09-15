@@ -168,7 +168,7 @@ public class PokemonSprite {
 	public static final byte STATE_VICTORYPOSE = 9;
 	public static final byte STATE_EATING = 10;
 
-	private static final int FRAMELENGTH = 10;
+	public static final int FRAMELENGTH = 10;
 
 	private int counter = 0;
 	private int statecounter = 0;

@@ -41,8 +41,6 @@ public class DungeonState extends AbstractState
 	Point camera;
 	/** The current substate. */
 	private DungeonSubState currentSubstate;
-	/** The delay before using the new substate. */
-	private int delay = 0;
 	boolean diagonal = false, rotating = false;
 	final FloorRenderer floorRenderer;
 	public final DungeonLogger logger;
@@ -50,7 +48,7 @@ public class DungeonState extends AbstractState
 	public DungeonState()
 	{
 		this.floorRenderer = new FloorRenderer(DungeonPersistance.floor);
-		DungeonPersistance.player = new Player(0, PokemonRegistry.find((int) (Math.random() * 386)).generate(new Random(), 10));
+		DungeonPersistance.player = new Player(0, PokemonRegistry.find(1).generate(new Random(), 10));
 		Point p = DungeonPersistance.floor.getTeamSpawn();
 		DungeonPersistance.floor.tileAt(p.x, p.y).setPokemon(DungeonPersistance.player.getDungeonPokemon());
 
@@ -102,29 +100,22 @@ public class DungeonState extends AbstractState
 		g.translate(-x, -y);
 
 		this.floorRenderer.drawFloor(g, x, y, width, height);
-		if (this.isMain()) if (this.delay == 0 && this.rotating && this.currentSubstate == this.actionSelectionState) this.floorRenderer.drawGrid(g,
+		if (this.isMain()) if (this.rotating && this.currentSubstate == this.actionSelectionState) this.floorRenderer.drawGrid(g,
 				DungeonPersistance.player.getDungeonPokemon(), x, y, width, height);
 		this.floorRenderer.drawEntities(g, x, y, width, height);
 
-		if (this.delay == 0) this.currentSubstate.render(g, width, height);
+		this.currentSubstate.render(g, width, height);
 
 		g.translate(x, y);
 		this.logger.render(g, width, height);
 	}
 
+	/** @param substate - The new substate to use. */
 	public void setSubstate(DungeonSubState substate)
-	{
-		this.setSubstate(substate, 0);
-	}
-
-	/** @param substate - The new substate to use.
-	 * @param delay - The delay before using that substate. */
-	void setSubstate(DungeonSubState substate, int delay)
 	{
 		this.currentSubstate.onEnd();
 		this.currentSubstate = substate;
-		if (delay == 0) this.currentSubstate.onStart();
-		this.delay = delay;
+		this.currentSubstate.onStart();
 	}
 
 	@Override
@@ -132,13 +123,7 @@ public class DungeonState extends AbstractState
 	{
 		DungeonPokemonRenderer.instance.update();
 		this.logger.update();
-
-		if (this.delay > 1) --this.delay;
-		else if (this.delay == 1)
-		{
-			this.currentSubstate.onStart();
-			--this.delay;
-		} else this.currentSubstate.update();
+		this.currentSubstate.update();
 	}
 
 }

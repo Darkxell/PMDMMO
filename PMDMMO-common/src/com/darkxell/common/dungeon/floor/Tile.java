@@ -3,16 +3,20 @@ package com.darkxell.common.dungeon.floor;
 import static com.darkxell.common.dungeon.floor.TileType.*;
 
 import java.awt.Point;
+import java.util.ArrayList;
 
 import javafx.util.Pair;
 
+import com.darkxell.common.item.Item.ItemAction;
 import com.darkxell.common.item.ItemStack;
+import com.darkxell.common.player.ItemContainer;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.util.GameUtil;
+import com.darkxell.common.util.Message;
 
 /** Represents a single tile in a Floor. */
-public class Tile
+public class Tile implements ItemContainer
 {
 
 	/** Alternative tiles. */
@@ -37,11 +41,23 @@ public class Tile
 		this.setType(type);
 	}
 
+	@Override
+	public void addItem(ItemStack item)
+	{
+		this.setItem(item);
+	}
+
 	/** @return The Tile adjacent to this Tile in the input direction. See {@link GameUtil#NORTH}. */
 	public Tile adjacentTile(short direction)
 	{
 		Point p = GameUtil.moveTo(this.x, this.y, direction);
 		return this.floor.tileAt(p.x, p.y);
+	}
+
+	@Override
+	public int canAccept(ItemStack item)
+	{
+		return (this.getItem() == null || (item.item().isStackable && this.getItem().id == item.id)) ? 0 : -1;
 	}
 
 	/** @param direction - The direction of the movement.
@@ -68,10 +84,28 @@ public class Tile
 		return this.type == TileType.GROUND || this.type == STAIR || this.type == WONDER_TILE || this.type == TRAP || this.type == WARP_ZONE;
 	}
 
+	@Override
+	public Message containerName()
+	{
+		return new Message("menu.ground");
+	}
+
+	@Override
+	public void deleteItem(int index)
+	{
+		this.setItem(null);
+	}
+
 	/** @return The Item on this Tile. null if no Item. */
 	public ItemStack getItem()
 	{
 		return this.item;
+	}
+
+	@Override
+	public ItemStack getItem(int index)
+	{
+		return this.getItem();
 	}
 
 	public short getNeighbors()
@@ -83,6 +117,15 @@ public class Tile
 	public DungeonPokemon getPokemon()
 	{
 		return this.pokemon;
+	}
+
+	@Override
+	public ArrayList<ItemAction> legalItemActions()
+	{
+		ArrayList<ItemAction> actions = new ArrayList<ItemAction>();
+		actions.add(ItemAction.GET);
+		actions.add(ItemAction.SWAP);
+		return actions;
 	}
 
 	/** @return The coordinates of this Tile. */
@@ -114,6 +157,12 @@ public class Tile
 			}
 			this.neighbors = GameUtil.clean(this.neighbors);
 		}
+	}
+
+	@Override
+	public void setItem(int index, ItemStack item)
+	{
+		this.setItem(item);
 	}
 
 	public void setItem(ItemStack item)
@@ -149,6 +198,12 @@ public class Tile
 		}
 		this.onTypeChanged();
 		return this;
+	}
+
+	@Override
+	public int size()
+	{
+		return this.getItem() == null ? 0 : 1;
 	}
 
 	/** @return This Tile's type. */

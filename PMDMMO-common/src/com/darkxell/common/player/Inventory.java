@@ -5,9 +5,11 @@ import java.util.Comparator;
 import java.util.function.Predicate;
 
 import com.darkxell.common.item.Item;
+import com.darkxell.common.item.Item.ItemAction;
 import com.darkxell.common.item.ItemStack;
+import com.darkxell.common.util.Message;
 
-public class Inventory
+public class Inventory implements ItemContainer
 {
 
 	public static final int MAX_SIZE = 20;
@@ -21,28 +23,28 @@ public class Inventory
 		this.items = new ArrayList<ItemStack>();
 	}
 
-	/** @return True if the input Item was successfully added. */
-	public boolean add(ItemStack item)
+	@Override
+	public void addItem(ItemStack item)
 	{
-		if (!canAccept(item)) return false;
 		if (item.item().isStackable) for (ItemStack stack : this.items)
 			if (stack.id == item.id)
 			{
 				stack.setQuantity(stack.getQuantity() + item.getQuantity());
-				return true;
+				return;
 			}
 
 		this.items.add(item);
-		return true;
 	}
 
-	/** @return True if the input Item can be added. */
-	public boolean canAccept(ItemStack item)
+	@Override
+	public int canAccept(ItemStack item)
 	{
-		if (item.item().isStackable) for (ItemStack stack : this.items)
-			if (stack.id == item.id) return true;
+		if (this.isFull()) return -1;
 
-		return !this.isFull();
+		if (item.item().isStackable) for (ItemStack stack : this.items)
+			if (stack.id == item.id) return this.items.indexOf(stack);
+
+		return this.size();
 	}
 
 	/** Removes all Items with quantity equal to zero. */
@@ -58,11 +60,23 @@ public class Inventory
 		});
 	}
 
-	/** @return The Item at the input slot. */
-	public ItemStack get(int slot)
+	@Override
+	public Message containerName()
 	{
-		if (slot < 0 || slot >= this.maxSize) return null;
-		return this.items.get(slot);
+		return new Message("inventory.toolbox");
+	}
+
+	@Override
+	public void deleteItem(int index)
+	{
+		this.remove(index);
+	}
+
+	@Override
+	public ItemStack getItem(int index)
+	{
+		if (index < 0 || index >= this.maxSize) return null;
+		return this.items.get(index);
 	}
 
 	public boolean isEmpty()
@@ -75,9 +89,14 @@ public class Inventory
 		return this.items.size() == this.maxSize;
 	}
 
-	public int itemCount()
+	@Override
+	public ArrayList<ItemAction> legalItemActions()
 	{
-		return this.items.size();
+		ArrayList<ItemAction> actions = new ArrayList<ItemAction>();
+		actions.add(ItemAction.GIVE);
+		actions.add(ItemAction.SWITCH);
+		actions.add(ItemAction.PLACE);
+		return actions;
 	}
 
 	/** @return The list of Items in this Inventory. */
@@ -121,6 +140,18 @@ public class Inventory
 
 		if (toreturn.getQuantity() == 0) return null;
 		return toreturn;
+	}
+
+	@Override
+	public void setItem(int index, ItemStack item)
+	{
+		this.items.set(index, item);
+	}
+
+	@Override
+	public int size()
+	{
+		return this.items.size();
 	}
 
 	public void sort()

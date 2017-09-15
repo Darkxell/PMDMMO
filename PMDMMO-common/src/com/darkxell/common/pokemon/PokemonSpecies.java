@@ -96,10 +96,10 @@ public class PokemonSpecies
 		moves.add(m3);
 		int m4 = this.latestMove(level, moves);
 
-		PokemonMove move1 = m1 == -1 ? null : new PokemonMove(m1);
-		PokemonMove move2 = m2 == -1 ? null : new PokemonMove(m2);
-		PokemonMove move3 = m3 == -1 ? null : new PokemonMove(m3);
-		PokemonMove move4 = m4 == -1 ? null : new PokemonMove(m4);
+		LearnedMove move1 = m1 == -1 ? null : new LearnedMove(m1);
+		LearnedMove move2 = m2 == -1 ? null : new LearnedMove(m2);
+		LearnedMove move3 = m3 == -1 ? null : new LearnedMove(m3);
+		LearnedMove move4 = m4 == -1 ? null : new LearnedMove(m4);
 
 		// todo: Generate random ID.
 		return new Pokemon(0, this, null, null, this.stats.forLevel(level), this.randomAbility(random), 0, level, move1, move2, move3, move4,
