@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sprites>
-  <pokemon id="1" x="12" y="15" size="25" idle="6,6,70" move="3" attack="3" spe1="2" spe2="2" ambient="true" wake="6" victory="2" />
+  <pokemon id="1" x="12" y="15" size="25" idle="70,6,6" move="3" attack="3" spe1="2" spe2="2" ambient="true" wake="6" victory="2" />
   <pokemon id="16" x="16" y="18" size="32" idle="70,50" move="3" attack="3" spe1="2" spe2="2"  />
   <pokemon id="19" x="15" y="24" size="32" idle="60,10" move="3" attack="4" spe1="4" spe2="4"  />
   <pokemon id="69" x="13" y="16" size="25" idle="40,40" move="3" attack="3" spe1="3" spe2="3"  />
