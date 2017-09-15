@@ -7,6 +7,7 @@ import com.darkxell.client.mechanics.animation.AnimationEndListener;
 import com.darkxell.client.mechanics.animation.MoveAnimations;
 import com.darkxell.client.persistance.DungeonPersistance;
 import com.darkxell.client.state.dungeon.DungeonState.DungeonSubState;
+import com.darkxell.common.event.MoveTarget;
 import com.darkxell.common.event.MoveUseEvent;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.move.MoveRegistry;
@@ -32,9 +33,10 @@ public class MoveAnimationState extends DungeonSubState implements AnimationEndL
 	public void onAnimationEnd(AbstractAnimation animation)
 	{
 		MoveUseEvent e = this.move.use(this.user, DungeonPersistance.floor);
-		if (this.move != MoveRegistry.ATTACK) this.parent.logger.showMessage(new Message("move.used").addReplacement("<pokemon>",
-				this.user.pokemon.getNickname()).addReplacement("<move>", this.move.name()));
 		this.parent.setSubstate(this.parent.actionSelectionState);
+		for (MoveTarget target : e.targets())
+			this.parent.logger.showMessage(target.resultMessage());
+		if (e.targets().length == 0 && this.move != MoveRegistry.ATTACK) this.parent.logger.showMessage(new Message("move.no_target"));
 	}
 
 	@Override
@@ -49,6 +51,8 @@ public class MoveAnimationState extends DungeonSubState implements AnimationEndL
 	public void onStart()
 	{
 		super.onStart();
+		if (this.move != MoveRegistry.ATTACK) this.parent.logger.showMessage(new Message("move.used").addReplacement("<pokemon>",
+				this.user.pokemon.getNickname()).addReplacement("<move>", this.move.name()));
 		this.animation.start();
 	}
 

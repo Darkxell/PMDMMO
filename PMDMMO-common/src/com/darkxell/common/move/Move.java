@@ -1,7 +1,14 @@
 package com.darkxell.common.move;
 
+import java.util.ArrayList;
+
 import org.jdom2.Element;
 
+import com.darkxell.common.dungeon.floor.Floor;
+import com.darkxell.common.event.MoveTarget;
+import com.darkxell.common.event.MoveUseEvent;
+import com.darkxell.common.event.MoveTarget.MoveResult;
+import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.util.Message;
 
@@ -9,14 +16,14 @@ public class Move
 {
 	/** Move targets.<br />
 	 * <ul>
-	 * <li>ONE = 0</li>
+	 * <li>FRONT = 0</li>
 	 * <li>ONE_AUTO = 1</li>
 	 * <li>SELF = 2</li>
 	 * <li>ALL_ENEMIES = 3</li>
 	 * <li>ALL_ALLIES = 4</li>
-	 * <li>ALL_ADJACENT = 5</li>
+	 * <li>ALL_ROOM = 5</li>
 	 * </ul> */
-	public static final byte ONE = 0, ONE_AUTO = 1, SELF = 2, ALL_ENEMIES = 3, ALL_ALLIES = 4, ALL_ADJACENT = 5;
+	public static final byte FRONT = 0, ONE_AUTO = 1, SELF = 2, ALL_ENEMIES = 3, ALL_ALLIES = 4, ALL_ROOM = 5;
 	/** Move categories.<br />
 	 * <ul>
 	 * <li>PHYSICAL = 0</li>
@@ -79,6 +86,19 @@ public class Move
 		this.makesContact = makesContact;
 	}
 
+	public DungeonPokemon[] getTargets(DungeonPokemon user, Floor floor)
+	{
+		ArrayList<DungeonPokemon> targets = new ArrayList<DungeonPokemon>();
+		switch (this.targets)
+		{
+			default:
+				DungeonPokemon front = user.tile.adjacentTile(user.facing()).getPokemon();
+				if (front != null) targets.add(front);
+		}
+
+		return targets.toArray(new DungeonPokemon[targets.size()]);
+	}
+
 	public Message name()
 	{
 		return new Message("move." + this.id).addPrefix("<type-" + this.type.id + "> ");
@@ -102,6 +122,21 @@ public class Move
 		if (this.additionalEffectChance != 0) root.setAttribute("random", Integer.toString(this.additionalEffectChance));
 		if (this.makesContact) root.setAttribute("contact", Boolean.toString(this.makesContact));
 		return root;
+	}
+
+	public MoveUseEvent use(DungeonPokemon user, Floor floor)
+	{
+		DungeonPokemon[] pokemon = this.getTargets(user, floor);
+		MoveTarget[] targets = new MoveTarget[pokemon.length];
+		for (int i = 0; i < targets.length; ++i)
+			targets[i] = this.useOn(user, pokemon[i], floor);
+
+		return new MoveUseEvent(this, user, targets);
+	}
+
+	private MoveTarget useOn(DungeonPokemon user, DungeonPokemon target, Floor floor)
+	{
+		return new MoveTarget(target, MoveResult.DAMAGE_DEALT, 5);
 	}
 
 }
