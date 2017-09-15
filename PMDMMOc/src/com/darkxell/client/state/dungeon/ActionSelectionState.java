@@ -81,7 +81,7 @@ public class ActionSelectionState extends DungeonSubState
 	{
 		if (key == Keys.KEY_MENU) Launcher.stateManager.setState(new DungeonMenuState(this.parent));
 		if (key == Keys.KEY_ATTACK) DungeonEventProcessor.processEvent(new MoveSelectionEvent(new LearnedMove(MoveRegistry.ATTACK.id),
-				DungeonPersistance.player.getDungeonPokemon()));
+				DungeonPersistance.player.getDungeonPokemon(), DungeonPersistance.floor));
 	}
 
 	@Override

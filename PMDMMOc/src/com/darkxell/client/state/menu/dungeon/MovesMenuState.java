@@ -125,7 +125,7 @@ public class MovesMenuState extends AbstractMenuState
 		LearnedMove move = ((MoveMenuOption) option).move;
 		Launcher.stateManager.setState(s);
 
-		DungeonEventProcessor.processEvent(new MoveSelectionEvent(move, DungeonPersistance.player.getDungeonPokemon()));
+		DungeonEventProcessor.processEvent(new MoveSelectionEvent(move, DungeonPersistance.player.getDungeonPokemon(), DungeonPersistance.floor));
 	}
 
 	@Override

@@ -14,4 +14,10 @@ public class MoveAnimations
 
 		return new BasicAttackAnimation(user, listener);
 	}
+
+	/** May return null if the Move doesn't have a Target animation. */
+	public static AbstractAnimation createTargetAnimation(AnimationEndListener listener, DungeonPokemon user, Move move)
+	{
+		return null;
+	}
 }

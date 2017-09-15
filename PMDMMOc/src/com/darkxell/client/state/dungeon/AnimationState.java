@@ -5,32 +5,24 @@ import java.awt.Graphics2D;
 import com.darkxell.client.mechanics.DungeonEventProcessor;
 import com.darkxell.client.mechanics.animation.AbstractAnimation;
 import com.darkxell.client.mechanics.animation.AnimationEndListener;
-import com.darkxell.client.mechanics.animation.MoveAnimations;
-import com.darkxell.client.persistance.DungeonPersistance;
 import com.darkxell.client.state.dungeon.DungeonState.DungeonSubState;
-import com.darkxell.common.pokemon.DungeonPokemon;
-import com.darkxell.common.pokemon.LearnedMove;
 
-public class MoveAnimationState extends DungeonSubState implements AnimationEndListener
+/** A State that displays an Animation, then refers to the DungeonEventProcessor for pending events.<br />
+ * The Animation should not be null of this State will never end ! It should be set after creation, to allow the Animation to have this State as listener. */
+public class AnimationState extends DungeonSubState implements AnimationEndListener
 {
 
-	public final AbstractAnimation animation;
-	public final LearnedMove move;
-	public final DungeonPokemon user;
+	public AbstractAnimation animation;
 
-	public MoveAnimationState(DungeonState parent, DungeonPokemon user, LearnedMove move)
+	public AnimationState(DungeonState parent)
 	{
 		super(parent);
-		this.move = move;
-		this.user = user;
-		this.animation = MoveAnimations.createAnimation(this, user, move.move());
 	}
 
 	@Override
 	public void onAnimationEnd(AbstractAnimation animation)
 	{
 		this.parent.setSubstate(this.parent.actionSelectionState);
-		DungeonEventProcessor.addToPending(this.move.move().prepareUse(this.user, this.move, DungeonPersistance.floor));
 		DungeonEventProcessor.processPending();
 	}
 

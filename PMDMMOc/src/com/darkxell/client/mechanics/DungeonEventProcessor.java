@@ -2,14 +2,16 @@ package com.darkxell.client.mechanics;
 
 import java.util.Stack;
 
+import com.darkxell.client.mechanics.animation.MoveAnimations;
 import com.darkxell.client.persistance.DungeonPersistance;
 import com.darkxell.client.renderers.DungeonPokemonRenderer;
 import com.darkxell.client.resources.images.PokemonSprite;
+import com.darkxell.client.state.dungeon.AnimationState;
 import com.darkxell.client.state.dungeon.DelayState;
-import com.darkxell.client.state.dungeon.MoveAnimationState;
 import com.darkxell.common.event.DamageDealtEvent;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent;
+import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.util.Message;
 
 /** Translates game logic event into displayable content to the client.<br />
@@ -47,6 +49,7 @@ public class DungeonEventProcessor
 		DungeonPersistance.dungeonState.logger.showMessages(event.getMessages());
 
 		if (event instanceof MoveSelectionEvent) processMoveEvent((MoveSelectionEvent) event);
+		if (event instanceof MoveUseEvent) processMoveUseEvent((MoveUseEvent) event);
 		if (event instanceof DamageDealtEvent) processDamageEvent((DamageDealtEvent) event);
 
 		if (processPending) processPending();
@@ -54,8 +57,21 @@ public class DungeonEventProcessor
 
 	private static void processMoveEvent(MoveSelectionEvent event)
 	{
-		DungeonPersistance.dungeonState.setSubstate(new MoveAnimationState(DungeonPersistance.dungeonState, event.user, event.move));
+		AnimationState s = new AnimationState(DungeonPersistance.dungeonState);
+		s.animation = MoveAnimations.createAnimation(s, event.user, event.move.move());
+		DungeonPersistance.dungeonState.setSubstate(s);
 		processPending = false;
+	}
+
+	private static void processMoveUseEvent(MoveUseEvent event)
+	{
+		AnimationState s = new AnimationState(DungeonPersistance.dungeonState);
+		s.animation = MoveAnimations.createTargetAnimation(s, event.user, event.move.move());
+		if (s.animation != null)
+		{
+			DungeonPersistance.dungeonState.setSubstate(s);
+			processPending = false;
+		}
 	}
 
 	/** Processes the next pending event. */
