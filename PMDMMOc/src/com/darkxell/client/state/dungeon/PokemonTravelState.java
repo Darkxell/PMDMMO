@@ -69,9 +69,9 @@ public class PokemonTravelState extends DungeonSubState
 				pokemon.player.money += i.getQuantity();
 				messageID = "ground.poke";
 				t.setItem(null);
-			} else if (pokemon.player != null && pokemon.player.inventory.canAccept(i))
+			} else if (pokemon.player != null && pokemon.player.inventory.canAccept(i) != -1)
 			{
-				pokemon.player.inventory.add(i);
+				pokemon.player.inventory.addItem(i);
 				messageID = "ground.inventory";
 				t.setItem(null);
 			} else if (pokemon.pokemon.getItem() == null)

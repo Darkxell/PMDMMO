@@ -5,10 +5,13 @@ import java.util.Random;
 
 import org.jdom2.Element;
 
+import com.darkxell.common.item.Item.ItemAction;
 import com.darkxell.common.item.ItemStack;
+import com.darkxell.common.player.ItemContainer;
 import com.darkxell.common.pokemon.ability.Ability;
+import com.darkxell.common.util.Message;
 
-public class Pokemon
+public class Pokemon implements ItemContainer
 {
 	/** Pokémon gender.
 	 * <ul>
@@ -93,6 +96,30 @@ public class Pokemon
 		this.gender = gender;
 	}
 
+	@Override
+	public void addItem(ItemStack item)
+	{
+		this.setItem(item);
+	}
+
+	@Override
+	public int canAccept(ItemStack item)
+	{
+		return (this.getItem() == null || (item.item().isStackable && this.getItem().id == item.id)) ? 0 : -1;
+	}
+
+	@Override
+	public Message containerName()
+	{
+		return new Message("inventory.held").addReplacement("<pokemon>", this.getNickname());
+	}
+
+	@Override
+	public void deleteItem(int index)
+	{
+		this.setItem(null);
+	}
+
 	/** @param amount - The amount of experience gained.
 	 * @return The number of levels this experience granted. */
 	public int gainExperience(int amount)
@@ -133,6 +160,12 @@ public class Pokemon
 		return this.item;
 	}
 
+	@Override
+	public ItemStack getItem(int index)
+	{
+		return this.getItem();
+	}
+
 	public int getLevel()
 	{
 		return this.level;
@@ -149,6 +182,14 @@ public class Pokemon
 		return this.stats;
 	}
 
+	@Override
+	public ArrayList<ItemAction> legalItemActions()
+	{
+		ArrayList<ItemAction> actions = new ArrayList<ItemAction>();
+		actions.add(ItemAction.TAKE);
+		return actions;
+	}
+
 	private void levelUp()
 	{
 		++this.level;
@@ -159,6 +200,12 @@ public class Pokemon
 	{
 		if (slot < 0 || slot >= this.moves.length) return null;
 		return this.moves[slot];
+	}
+
+	@Override
+	public void setItem(int index, ItemStack item)
+	{
+		this.setItem(item);
 	}
 
 	public void setItem(ItemStack item)
@@ -178,6 +225,12 @@ public class Pokemon
 	public void setNickname(String nickname)
 	{
 		this.nickname = nickname;
+	}
+
+	@Override
+	public int size()
+	{
+		return this.getItem() == null ? 0 : 1;
 	}
 
 	public void switchMoves(int slot1, int slot2)

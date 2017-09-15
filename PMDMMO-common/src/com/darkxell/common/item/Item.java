@@ -20,9 +20,9 @@ public class Item
 		/** Removing the Item as shortcut. */
 		DESELECT(7, "item.deselect"),
 		/** Moving the Item in the inventory. */
-		GET(4, "item.get"),
+		GET(0, "item.get"),
 		/** Giving the Item to an ally. */
-		GIVE(1, "item.give"),
+		GIVE(2, "item.give"),
 		/** Viewing the Item description. */
 		INFO(10, "item.info"),
 		/** Placing the Item on the ground. */
@@ -30,15 +30,15 @@ public class Item
 		/** Setting the Item as shortcut. */
 		SET(8, "item.set"),
 		/** Swapping the Item for another Item in the Inventory. */
-		SWAP(3, "item.swap"),
+		SWAP(4, "item.swap"),
 		/** Swapping the Item for the Item on the ground. */
 		SWITCH(5, "item.switch"),
 		/** Taking the Item from an ally. */
-		TAKE(2, "item.take"),
+		TAKE(3, "item.take"),
 		/** Throwing the Item. */
 		THROW(9, "item.throw"),
 		/** Using the Item. */
-		USE(0, "item.use");
+		USE(1, "item.use");
 
 		public static void sort(ArrayList<ItemAction> actions)
 		{
@@ -134,7 +134,6 @@ public class Item
 	{
 		ArrayList<ItemAction> actions = new ArrayList<Item.ItemAction>();
 		if (inDungeon) actions.add(ItemAction.USE);
-		if (inDungeon) actions.add(ItemAction.GIVE);
 		if (inDungeon) actions.add(ItemAction.THROW);
 		actions.add(ItemAction.INFO);
 		return actions;

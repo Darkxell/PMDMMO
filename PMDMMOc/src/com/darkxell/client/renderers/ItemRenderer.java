@@ -7,7 +7,7 @@ import com.darkxell.client.mechanics.animation.AnimationEndListener;
 import com.darkxell.client.mechanics.animation.StaticAnimation;
 import com.darkxell.client.resources.images.AnimationSpriteset;
 import com.darkxell.client.resources.images.tilesets.FloorDungeonTileset;
-import com.darkxell.common.event.ItemUseEvent;
+import com.darkxell.common.event.item.ItemUseEvent;
 import com.darkxell.common.item.ItemEscapeOrb;
 
 public class ItemRenderer
