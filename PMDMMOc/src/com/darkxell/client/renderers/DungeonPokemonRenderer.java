@@ -41,8 +41,8 @@ public class DungeonPokemonRenderer
 			pokemon.stateChanged = false;
 		}
 
-		g.drawImage(sprite.getCurrentSprite(), (int) (x * TILE_SIZE + TILE_SIZE / 2 - sprite.pointer.gravityX),
-				(int) (y * TILE_SIZE + TILE_SIZE / 2 - sprite.pointer.gravityY), null);
+		if (sprite.getCurrentSprite() != null) g.drawImage(sprite.getCurrentSprite(), (int) (x * TILE_SIZE + TILE_SIZE / 2 - sprite.pointer.gravityX), (int) (y
+				* TILE_SIZE + TILE_SIZE / 2 - sprite.pointer.gravityY), null);
 	}
 
 	/** @return The Sprite of the input Pokémon. */

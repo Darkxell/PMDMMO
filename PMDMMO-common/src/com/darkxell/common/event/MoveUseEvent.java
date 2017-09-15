@@ -3,7 +3,7 @@ package com.darkxell.common.event;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
-public class MoveUseEvent
+public class MoveUseEvent extends Event
 {
 
 	/** The move that was used. */

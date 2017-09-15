@@ -2,13 +2,12 @@ package com.darkxell.client.state.dungeon;
 
 import java.awt.Graphics2D;
 
+import com.darkxell.client.mechanics.DungeonEventProcessor;
 import com.darkxell.client.mechanics.animation.AbstractAnimation;
 import com.darkxell.client.mechanics.animation.AnimationEndListener;
 import com.darkxell.client.mechanics.animation.MoveAnimations;
 import com.darkxell.client.persistance.DungeonPersistance;
 import com.darkxell.client.state.dungeon.DungeonState.DungeonSubState;
-import com.darkxell.common.event.MoveTarget;
-import com.darkxell.common.event.MoveUseEvent;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.DungeonPokemon;
@@ -32,11 +31,8 @@ public class MoveAnimationState extends DungeonSubState implements AnimationEndL
 	@Override
 	public void onAnimationEnd(AbstractAnimation animation)
 	{
-		MoveUseEvent e = this.move.use(this.user, DungeonPersistance.floor);
 		this.parent.setSubstate(this.parent.actionSelectionState);
-		for (MoveTarget target : e.targets())
-			this.parent.logger.showMessage(target.resultMessage());
-		if (e.targets().length == 0 && this.move != MoveRegistry.ATTACK) this.parent.logger.showMessage(new Message("move.no_target"));
+		DungeonEventProcessor.processEvent(this.move.use(this.user, DungeonPersistance.floor));
 	}
 
 	@Override
