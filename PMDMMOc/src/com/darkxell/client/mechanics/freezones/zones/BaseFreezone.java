@@ -4,6 +4,7 @@ import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
 import com.darkxell.client.mechanics.freezones.WarpZone;
 import com.darkxell.client.mechanics.freezones.entities.AnimatedFlowerEntity;
+import com.darkxell.client.mechanics.freezones.entities.FlagEntity;
 import com.darkxell.client.persistance.DungeonPersistance;
 import com.darkxell.client.state.dungeon.DungeonState;
 import com.darkxell.common.dungeon.DungeonRegistry;
@@ -44,6 +45,7 @@ public class BaseFreezone extends FreezoneMap {
 		this.entities.add(new AnimatedFlowerEntity(56.5, 32, false));
 		this.entities.add(new AnimatedFlowerEntity(42.5, 59, false));
 
+		this.entities.add(new FlagEntity(24.4, 10));
 	}
 
 }
