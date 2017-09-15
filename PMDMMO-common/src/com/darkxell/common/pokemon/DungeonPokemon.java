@@ -98,6 +98,13 @@ public class DungeonPokemon
 		this.stateChanged = true;
 	}
 
+	public void setHP(int hp)
+	{
+		this.hp = hp;
+		if (this.hp < 0) this.hp = 0;
+		if (this.hp > this.pokemon.getStats().health) this.hp = this.pokemon.getStats().health;
+	}
+
 	/** Called when this Pokémon tries to move in the input direction. */
 	public boolean tryMoveTo(short direction)
 	{

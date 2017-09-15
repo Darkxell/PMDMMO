@@ -104,14 +104,6 @@ public class Move
 		return targets.toArray(new DungeonPokemon[targets.size()]);
 	}
 
-	/** @param user - The Pokémon using this Move.
-	 * @return The messages to display when using this Move. There is generally only one message. The array is mainly to allow the basic attack to have no message. */
-	public Message[] getUseMessages(DungeonPokemon user)
-	{
-		return new Message[]
-		{ new Message("move.used").addReplacement("<pokemon>", user.pokemon.getNickname()).addReplacement("<move>", this.name()) };
-	}
-
 	/** @return This Move's name. */
 	public Message name()
 	{

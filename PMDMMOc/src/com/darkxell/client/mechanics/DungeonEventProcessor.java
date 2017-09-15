@@ -10,12 +10,12 @@ import com.darkxell.client.state.dungeon.AnimationState;
 import com.darkxell.client.state.dungeon.DelayState;
 import com.darkxell.common.event.DamageDealtEvent;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.FaintedPokemonEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.move.MoveUseEvent;
-import com.darkxell.common.util.Message;
 
-/** Translates game logic event into displayable content to the client.<br />
- * Takes in Events to display messages or change game states. */
+/** Translates game logic events into displayable content to the client.<br />
+ * Takes in Events to display messages, manage resources or change game states. */
 public class DungeonEventProcessor
 {
 
@@ -33,10 +33,7 @@ public class DungeonEventProcessor
 
 	private static void processDamageEvent(DamageDealtEvent event)
 	{
-		DungeonPersistance.dungeonState.logger.showMessage(new Message("move.damage_dealt").addReplacement("<pokemon>", event.target.pokemon.getNickname())
-				.addReplacement("<amount>", Integer.toString(event.damage)));
 		DungeonPokemonRenderer.instance.getSprite(event.target).setState(PokemonSprite.STATE_HURT);
-
 		DungeonPersistance.dungeonState.setSubstate(new DelayState(DungeonPersistance.dungeonState, PokemonSprite.FRAMELENGTH));
 		processPending = false;
 	}
@@ -51,8 +48,14 @@ public class DungeonEventProcessor
 		if (event instanceof MoveSelectionEvent) processMoveEvent((MoveSelectionEvent) event);
 		if (event instanceof MoveUseEvent) processMoveUseEvent((MoveUseEvent) event);
 		if (event instanceof DamageDealtEvent) processDamageEvent((DamageDealtEvent) event);
+		if (event instanceof FaintedPokemonEvent) processFaintedEvent((FaintedPokemonEvent) event);
 
 		if (processPending) processPending();
+	}
+
+	private static void processFaintedEvent(FaintedPokemonEvent event)
+	{
+		DungeonPokemonRenderer.instance.unregister(event.pokemon);
 	}
 
 	private static void processMoveEvent(MoveSelectionEvent event)

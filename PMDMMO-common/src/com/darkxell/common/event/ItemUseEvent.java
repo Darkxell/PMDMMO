@@ -20,11 +20,13 @@ public class ItemUseEvent extends DungeonEvent
 
 	public ItemUseEvent(Item item, DungeonPokemon user, DungeonPokemon target, Floor floor, Message... messages)
 	{
-		super(messages);
 		this.item = item;
 		this.user = user;
 		this.target = target;
 		this.floor = floor;
+
+		for (Message message : messages)
+			this.messages.add(message);
 	}
 
 }

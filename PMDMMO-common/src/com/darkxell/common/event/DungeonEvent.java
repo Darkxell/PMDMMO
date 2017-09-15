@@ -1,31 +1,34 @@
 package com.darkxell.common.event;
 
+import java.util.ArrayList;
+
 import com.darkxell.common.util.Message;
 
 public abstract class DungeonEvent
 {
 
-	/** Event that only displays messages. */
+	/** Event that only displays a message. */
 	public static class MessageEvent extends DungeonEvent
 	{
-		public MessageEvent(Message... messages)
+
+		public MessageEvent(Message message)
 		{
-			super(messages);
+			this.messages.add(message);
 		}
 	}
 
 	/** The messages that were generated. */
-	private final Message[] messages;
+	protected ArrayList<Message> messages;
 
-	public DungeonEvent(Message... messages)
+	public DungeonEvent()
 	{
-		this.messages = messages;
+		this.messages = new ArrayList<Message>();
 	}
 
 	/** @return The messages that were generated. */
 	public Message[] getMessages()
 	{
-		return messages.clone();
+		return this.messages.toArray(new Message[this.messages.size()]);
 	}
 
 	/** Processes this Event server-side.
