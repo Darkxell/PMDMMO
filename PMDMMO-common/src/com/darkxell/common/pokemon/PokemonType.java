@@ -8,24 +8,24 @@ import com.darkxell.common.util.Message;
 public enum PokemonType
 {
 
-	NORMAL(0, new Color(168, 168, 120)),
-	FIGHT(1, new Color(192, 48, 40)),
-	FLYING(2, new Color(168, 144, 240)),
-	POISON(3, new Color(160, 64, 160)),
-	GROUND(4, new Color(224, 192, 104)),
-	ROCK(5, new Color(184, 160, 56)),
 	BUG(6, new Color(168, 184, 32)),
-	GHOST(7, new Color(112, 88, 152)),
-	STEEL(8, new Color(184, 184, 208)),
-	FIRE(9, new Color(240, 128, 48)),
-	WATER(10, new Color(104, 144, 240)),
-	GRASS(11, new Color(120, 200, 80)),
-	ELECTR(12, new Color(248, 208, 48)),
-	PSYCHC(13, new Color(248, 88, 136)),
-	ICE(14, new Color(152, 216, 216)),
-	DRAGON(15, new Color(112, 56, 248)),
 	DARK(16, new Color(112, 88, 72)),
-	FAIRY(17, new Color(238, 153, 172));
+	DRAGON(15, new Color(112, 56, 248)),
+	ELECTR(12, new Color(248, 208, 48)),
+	FAIRY(17, new Color(238, 153, 172)),
+	FIGHT(1, new Color(192, 48, 40)),
+	FIRE(9, new Color(240, 128, 48)),
+	FLYING(2, new Color(168, 144, 240)),
+	GHOST(7, new Color(112, 88, 152)),
+	GRASS(11, new Color(120, 200, 80)),
+	GROUND(4, new Color(224, 192, 104)),
+	ICE(14, new Color(152, 216, 216)),
+	NORMAL(0, new Color(168, 168, 120)),
+	POISON(3, new Color(160, 64, 160)),
+	PSYCHC(13, new Color(248, 88, 136)),
+	ROCK(5, new Color(184, 160, 56)),
+	STEEL(8, new Color(184, 184, 208)),
+	WATER(10, new Color(104, 144, 240));
 
 	public static final float SUPER_EFFECTIVE = 1.4f, NORMALLY_EFFECTIVE = 1, NOT_VERY_EFFECTIVE = 0.7f, NO_EFFECT = 0;
 
@@ -204,7 +204,7 @@ public enum PokemonType
 
 	public Message getName()
 	{
-		return new Message("type." + this.id).addPrefix("<type" + this.id + ">");
+		return new Message("type." + this.id).addPrefix("<type-" + this.id + "> ");
 	}
 
 	/** Sets the effectiveness of this type on the input type. */

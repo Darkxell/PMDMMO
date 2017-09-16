@@ -48,7 +48,7 @@ public class DungeonState extends AbstractState
 	public DungeonState()
 	{
 		this.floorRenderer = new FloorRenderer(DungeonPersistance.floor);
-		DungeonPersistance.player = new Player(0, PokemonRegistry.find(1).generate(new Random(), 10));
+		DungeonPersistance.player = new Player(0, PokemonRegistry.find((int) (Math.random() * 386)).generate(new Random(), 10));
 		Point p = DungeonPersistance.floor.getTeamSpawn();
 		DungeonPersistance.floor.tileAt(p.x, p.y).setPokemon(DungeonPersistance.player.getDungeonPokemon());
 

@@ -9,14 +9,15 @@ public abstract class Ability
 {
 	private static final HashMap<Integer, Ability> abilities = new HashMap<Integer, Ability>();
 
-	public static final AbilityTypeBoost OVERGROW = new AbilityTypeBoost(1, PokemonType.GRASS);
 	public static final AbilityTypeBoost BLAZE = new AbilityTypeBoost(2, PokemonType.FIRE);
-	public static final AbilityTypeBoost TORRENT = new AbilityTypeBoost(3, PokemonType.WATER);
+	public static final AbilityTypeBoost OVERGROW = new AbilityTypeBoost(1, PokemonType.GRASS);
 	public static final AbilityTypeBoost SWARM = new AbilityTypeBoost(4, PokemonType.BUG);
+	public static final AbilityTypeBoost TORRENT = new AbilityTypeBoost(3, PokemonType.WATER);
 
 	/** @return The Ability with the input ID. */
 	public static Ability find(int id)
 	{
+		if (!abilities.containsKey(id)) return OVERGROW;
 		return abilities.get(id);
 	}
 
@@ -27,6 +28,14 @@ public abstract class Ability
 	{
 		this.id = id;
 		abilities.put(this.id, this);
+	}
+
+	public Message description()
+	{
+		Message d = this.name();
+		d.addSuffix(": ");
+		d.addSuffix(new Message("ability.info." + this.id));
+		return d;
 	}
 
 	public Message name()

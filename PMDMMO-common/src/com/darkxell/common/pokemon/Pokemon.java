@@ -120,6 +120,24 @@ public class Pokemon implements ItemContainer
 		this.setItem(null);
 	}
 
+	public Message evolutionStatus()
+	{
+		Evolution[] evolutions = this.species.evolutions();
+		if (evolutions.length == 0) return new Message("evolve.none");
+		for (Evolution evolution : evolutions)
+		{
+			if (evolution.method == Evolution.LEVEL && this.getLevel() >= evolution.value) return new Message("evolve.possible");
+			if (evolution.method == Evolution.ITEM) return new Message("evolve.item");
+		}
+		return new Message("evolve.not_now");
+	}
+
+	/** @return The amount of experience to gain in order to level up. */
+	public int experienceToNextLevel()
+	{
+		return this.species.experienceToNextLevel(this.level) - this.experience;
+	}
+
 	/** @param amount - The amount of experience gained.
 	 * @return The number of levels this experience granted. */
 	public int gainExperience(int amount)
@@ -128,7 +146,7 @@ public class Pokemon implements ItemContainer
 
 		while (amount != 0)
 		{
-			int next = this.species.experienceToNextLevel(this.level) - this.experience;
+			int next = this.experienceToNextLevel();
 			if (next <= amount)
 			{
 				amount -= next;
@@ -171,10 +189,10 @@ public class Pokemon implements ItemContainer
 		return this.level;
 	}
 
-	public String getNickname()
+	public Message getNickname()
 	{
-		if (this.nickname == null) return this.species.name().toString();
-		return this.nickname;
+		if (this.nickname == null) return this.species.name();
+		return new Message(this.nickname, false);
 	}
 
 	public PokemonStats getStats()

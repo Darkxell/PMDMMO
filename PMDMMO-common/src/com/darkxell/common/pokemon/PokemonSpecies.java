@@ -74,6 +74,11 @@ public class PokemonSpecies
 		this.evolutions = evolutions;
 	}
 
+	public Evolution[] evolutions()
+	{
+		return this.evolutions.toArray(new Evolution[this.evolutions.size()]);
+	}
+
 	/** @return The amount of experience needed to level up from the input level. */
 	public int experienceToNextLevel(int level)
 	{

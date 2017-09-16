@@ -57,7 +57,8 @@ public class DungeonMenuState extends OptionSelectionMenuState
 				this.onExit();
 				s.logger.showMessage(new Message("inventory.empty"));
 			} else Launcher.stateManager.setState(new ItemContainersMenuState(s, containers.toArray(new ItemContainer[containers.size()])));
-		} else if (option == this.ground)
+		} else if (option == this.team) Launcher.stateManager.setState(new TeamMenuState(s));
+		else if (option == this.ground)
 		{
 			this.onExit();
 			if (DungeonPersistance.player.getDungeonPokemon().tile.getItem() == null) s.logger.showMessage(new Message("ground.empty"));
