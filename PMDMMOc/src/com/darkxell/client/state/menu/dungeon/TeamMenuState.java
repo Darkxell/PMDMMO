@@ -2,6 +2,7 @@ package com.darkxell.client.state.menu.dungeon;
 
 import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.persistance.DungeonPersistance;
+import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.menu.InfoState;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
@@ -42,15 +43,15 @@ public class TeamMenuState extends OptionSelectionMenuState
 	{
 		Pokemon p = this.pokemon[this.optionIndex()];
 		Message stats = new Message("summary.stats.content");
-		stats.addReplacement("<level>", Integer.toString(p.getLevel()));
-		stats.addReplacement("<exp>", Integer.toString(p.totalExperience()));
-		stats.addReplacement("<exp-next>", Integer.toString(p.experienceToNextLevel()));
-		stats.addReplacement("<hp>", Integer.toString(p.getStats().health));
-		stats.addReplacement("<hp-max>", Integer.toString(p.getStats().health));
-		stats.addReplacement("<atk>", Integer.toString(p.getStats().attack));
-		stats.addReplacement("<def>", Integer.toString(p.getStats().defense));
-		stats.addReplacement("<spa>", Integer.toString(p.getStats().specialAttack));
-		stats.addReplacement("<spd>", Integer.toString(p.getStats().specialDefense));
+		stats.addReplacement("<level>", TextRenderer.instance.alignNumber(p.getLevel(), 7));
+		stats.addReplacement("<exp>", TextRenderer.instance.alignNumber(p.totalExperience(), 7));
+		stats.addReplacement("<exp-next>", TextRenderer.instance.alignNumber(p.experienceToNextLevel(), 7));
+		stats.addReplacement("<hp>", TextRenderer.instance.alignNumber(p.getStats().health, 3));
+		stats.addReplacement("<hp-max>", TextRenderer.instance.alignNumber(p.getStats().health, 3));
+		stats.addReplacement("<atk>", TextRenderer.instance.alignNumber(p.getStats().attack, 7));
+		stats.addReplacement("<def>", TextRenderer.instance.alignNumber(p.getStats().defense, 7));
+		stats.addReplacement("<spa>", TextRenderer.instance.alignNumber(p.getStats().specialAttack, 7));
+		stats.addReplacement("<spd>", TextRenderer.instance.alignNumber(p.getStats().specialDefense, 7));
 		stats.addReplacement("<item>", p.getItem() == null ? new Message("item.none") : p.getItem().name());
 		stats.addReplacement("<iq>", "<star>");
 

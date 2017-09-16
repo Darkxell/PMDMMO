@@ -14,7 +14,9 @@ public class TextRenderer
 	public static enum PMDChar
 	{
 		new_line("<br>", 0, 0),
+		tabulation("<tab>", 0, 0),
 		space(" ", 0, 4),
+		space_number("<spn>", 0, 6),
 		a("a", 1, 5),
 		b("b", 2, 5),
 		c("c", 3, 5),
@@ -194,8 +196,9 @@ public class TextRenderer
 	public static final int CHAR_HEIGHT = 11;
 	private static final int GRID_COLS = 20;
 	private static final int GRID_WIDTH = CHAR_HEIGHT, GRID_HEIGHT = CHAR_HEIGHT;
-	public static final int LINE_SPACING = 3;
 	public static final TextRenderer instance = new TextRenderer();
+	public static final int LINE_SPACING = 3;
+	public static final int TAB_ALIGN = 25;
 
 	/** Called on startup to load the font. */
 	public static void load()
@@ -210,6 +213,16 @@ public class TextRenderer
 		for (PMDChar c : PMDChar.values())
 			this.sprites.put(c,
 					Res.createimage(source, c.id % GRID_COLS * GRID_WIDTH, (c.id - c.id % GRID_COLS) / GRID_COLS * GRID_HEIGHT, GRID_WIDTH, GRID_HEIGHT));
+	}
+
+	/** Adds spaces in front of the input number to match the input number of digits. */
+	public Message alignNumber(int n, int digits)
+	{
+		String s = Integer.toString(n);
+		int diff = s.length() - digits;
+		for (int i = diff; i < 0; ++i)
+			s = PMDChar.space_number.value + s;
+		return new Message(s, false);
 	}
 
 	public ArrayList<PMDChar> decode(String text)
@@ -249,10 +262,12 @@ public class TextRenderer
 	public void render(Graphics2D g, String text, int x, int y)
 	{
 		ArrayList<PMDChar> chars = this.decode(text);
+		int w = 0;
 		for (PMDChar c : chars)
 		{
-			g.drawImage(this.sprites.get(c), x, y, null);
-			x += c.width;
+			g.drawImage(this.sprites.get(c), x + w, y, null);
+			if (c == PMDChar.tabulation) w += this.tabWidth(w);
+			else w += c.width;
 		}
 	}
 
@@ -284,6 +299,12 @@ public class TextRenderer
 		return textlines;
 	}
 
+	/** @return The width of a Tabulation character, depending on the current width of the text. */
+	public int tabWidth(int currentWidth)
+	{
+		return TAB_ALIGN - currentWidth % TAB_ALIGN;
+	}
+
 	/** @return The width of the input message. */
 	public int width(Message message)
 	{
@@ -298,7 +319,8 @@ public class TextRenderer
 		ArrayList<PMDChar> chars = this.decode(text);
 		int w = 0;
 		for (PMDChar c : chars)
-			w += c.width;
+			if (c == PMDChar.tabulation) w += this.tabWidth(w);
+			else w += c.width;
 		return w;
 	}
 
