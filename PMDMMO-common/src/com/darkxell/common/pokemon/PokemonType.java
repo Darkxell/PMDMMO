@@ -2,28 +2,30 @@ package com.darkxell.common.pokemon;
 
 import java.awt.Color;
 
+import com.darkxell.common.util.Message;
+
 /** Pokémon types. */
 public enum PokemonType
 {
 
-	NORMAL(0, "normal", new Color(168, 168, 120)),
-	FIGHT(1, "fighting", new Color(192, 48, 40)),
-	FLYING(2, "flying", new Color(168, 144, 240)),
-	POISON(3, "poison", new Color(160, 64, 160)),
-	GROUND(4, "ground", new Color(224, 192, 104)),
-	ROCK(5, "rock", new Color(184, 160, 56)),
-	BUG(6, "bug", new Color(168, 184, 32)),
-	GHOST(7, "ghost", new Color(112, 88, 152)),
-	STEEL(8, "steel", new Color(184, 184, 208)),
-	FIRE(9, "fire", new Color(240, 128, 48)),
-	WATER(10, "water", new Color(104, 144, 240)),
-	GRASS(11, "grass", new Color(120, 200, 80)),
-	ELECTR(12, "electric", new Color(248, 208, 48)),
-	PSYCHC(13, "psychic", new Color(248, 88, 136)),
-	ICE(14, "ice", new Color(152, 216, 216)),
-	DRAGON(15, "dragon", new Color(112, 56, 248)),
-	DARK(16, "dark", new Color(112, 88, 72)),
-	FAIRY(17, "fairy", new Color(238, 153, 172));
+	NORMAL(0, new Color(168, 168, 120)),
+	FIGHT(1, new Color(192, 48, 40)),
+	FLYING(2, new Color(168, 144, 240)),
+	POISON(3, new Color(160, 64, 160)),
+	GROUND(4, new Color(224, 192, 104)),
+	ROCK(5, new Color(184, 160, 56)),
+	BUG(6, new Color(168, 184, 32)),
+	GHOST(7, new Color(112, 88, 152)),
+	STEEL(8, new Color(184, 184, 208)),
+	FIRE(9, new Color(240, 128, 48)),
+	WATER(10, new Color(104, 144, 240)),
+	GRASS(11, new Color(120, 200, 80)),
+	ELECTR(12, new Color(248, 208, 48)),
+	PSYCHC(13, new Color(248, 88, 136)),
+	ICE(14, new Color(152, 216, 216)),
+	DRAGON(15, new Color(112, 56, 248)),
+	DARK(16, new Color(112, 88, 72)),
+	FAIRY(17, new Color(238, 153, 172));
 
 	public static final float SUPER_EFFECTIVE = 1.4f, NORMALLY_EFFECTIVE = 1, NOT_VERY_EFFECTIVE = 0.7f, NO_EFFECT = 0;
 
@@ -179,12 +181,10 @@ public enum PokemonType
 	public final Color color;
 	private final float[] effectiveness;
 	public final int id;
-	public final String name;
 
-	private PokemonType(int id, String name, Color color)
+	private PokemonType(int id, Color color)
 	{
 		this.id = id;
-		this.name = name;
 		this.color = color;
 		this.effectiveness = new float[]
 		{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
@@ -200,6 +200,11 @@ public enum PokemonType
 	public float effectivenessOn(PokemonType type1, PokemonType type2)
 	{
 		return this.effectiveness[type1.id] * this.effectiveness[type2.id];
+	}
+
+	public Message getName()
+	{
+		return new Message("type." + this.id).addPrefix("<type" + this.id + ">");
 	}
 
 	/** Sets the effectiveness of this type on the input type. */

@@ -32,8 +32,6 @@ public class PokemonStats
 	public final int specialAttack;
 	/** Special Defense. */
 	public final int specialDefense;
-	/** Speed. */
-	public final int speed;
 
 	public PokemonStats(Element xml)
 	{
@@ -42,18 +40,16 @@ public class PokemonStats
 		this.health = Integer.parseInt(xml.getAttributeValue("hea"));
 		this.specialAttack = Integer.parseInt(xml.getAttributeValue("spa"));
 		this.specialDefense = Integer.parseInt(xml.getAttributeValue("spd"));
-		this.speed = Integer.parseInt(xml.getAttributeValue("spe"));
-		this.moveSpeed = xml.getAttribute("msp") == null ? 1 : Float.parseFloat(xml.getAttributeValue("spe"));
+		this.moveSpeed = xml.getAttribute("msp") == null ? 1 : Float.parseFloat(xml.getAttributeValue("msp"));
 	}
 
-	public PokemonStats(int attack, int defense, int health, int specialAttack, int specialDefense, int speed, float moveSpeed)
+	public PokemonStats(int attack, int defense, int health, int specialAttack, int specialDefense, float moveSpeed)
 	{
 		this.attack = attack;
 		this.defense = defense;
 		this.health = health;
 		this.specialAttack = specialAttack;
 		this.specialDefense = specialDefense;
-		this.speed = speed;
 		this.moveSpeed = moveSpeed;
 	}
 
@@ -66,8 +62,7 @@ public class PokemonStats
 		int d = 2 * this.defense * level / 100 + 5;
 		int sa = 2 * this.specialAttack * level / 100 + 5;
 		int sd = 2 * this.specialDefense * level / 100 + 5;
-		int s = 2 * this.speed * level / 100 + 5;
-		return new PokemonStats(a, d, h, sa, sd, s, this.moveSpeed);
+		return new PokemonStats(a, d, h, sa, sd, this.moveSpeed);
 	}
 
 	public Element toXML()
@@ -78,7 +73,6 @@ public class PokemonStats
 		root.setAttribute("hea", Integer.toString(this.health));
 		root.setAttribute("spa", Integer.toString(this.specialAttack));
 		root.setAttribute("spd", Integer.toString(this.specialDefense));
-		root.setAttribute("spe", Integer.toString(this.speed));
 		if (this.moveSpeed != 1) root.setAttribute("msp", Float.toString(this.moveSpeed));
 		return root;
 	}
