@@ -29,7 +29,7 @@ public class MoveResultEvent
 
 	public Message resultMessage()
 	{
-		String target = this.pokemon.pokemon.getNickname();
+		Message target = this.pokemon.pokemon.getNickname();
 		if (this.result == MoveResult.MISS) return new Message("move.miss").addReplacement("<pokemon>", target);
 		if (this.result == MoveResult.HEAL) return new Message("move.heal").addReplacement("<pokemon>", target).addReplacement("<amount>",
 				Integer.toString(this.health));

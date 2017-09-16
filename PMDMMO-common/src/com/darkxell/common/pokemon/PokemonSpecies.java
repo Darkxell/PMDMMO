@@ -16,6 +16,8 @@ public class PokemonSpecies
 
 	/** List of possible Abilities for this Pokémon. */
 	private ArrayList<Integer> abilities;
+	/** This species' base stats. */
+	public final PokemonStats baseStats;
 	/** Base experience gained when this Pokémon is defeated. */
 	public final int baseXP;
 	/** List of species this Pokémon can evolve into. */
@@ -24,7 +26,6 @@ public class PokemonSpecies
 	public final int id, formID;
 	/** List of moves learned by leveling up. Key is level, value is the list of move IDs. */
 	private final HashMap<Integer, ArrayList<Integer>> learnset;
-	public final PokemonStats stats;
 	/** List of TMs that can be taught. */
 	private final ArrayList<Integer> tms;
 	/** This Pokémon's types. type2 can be null. */
@@ -37,7 +38,7 @@ public class PokemonSpecies
 		this.formID = xml.getAttribute("form-id") == null ? 0 : Integer.parseInt(xml.getAttributeValue("id"));
 		this.type1 = PokemonType.find(Integer.parseInt(xml.getAttributeValue("type1")));
 		this.type2 = xml.getAttribute("type2") == null ? null : PokemonType.find(Integer.parseInt(xml.getAttributeValue("type2")));
-		this.stats = new PokemonStats(xml.getChild("stats"));
+		this.baseStats = new PokemonStats(xml.getChild("stats"));
 		this.baseXP = Integer.parseInt(xml.getAttributeValue("base-xp"));
 		this.height = Float.parseFloat(xml.getAttributeValue("height"));
 		this.weight = Float.parseFloat(xml.getAttributeValue("weight"));
@@ -56,7 +57,7 @@ public class PokemonSpecies
 			this.learnset.put(Integer.parseInt(level.getAttributeValue("l")), XMLUtils.readIntArray(level));
 	}
 
-	public PokemonSpecies(int id, int formID, PokemonType type1, PokemonType type2, int baseXP, PokemonStats stats, float height, float weight,
+	public PokemonSpecies(int id, int formID, PokemonType type1, PokemonType type2, int baseXP, PokemonStats baseStats, float height, float weight,
 			ArrayList<Integer> abilities, HashMap<Integer, ArrayList<Integer>> learnset, ArrayList<Integer> tms, ArrayList<Evolution> evolutions)
 	{
 		this.id = id;
@@ -64,13 +65,18 @@ public class PokemonSpecies
 		this.type1 = type1;
 		this.type2 = type2;
 		this.baseXP = baseXP;
-		this.stats = stats;
+		this.baseStats = baseStats;
 		this.height = height;
 		this.weight = weight;
 		this.abilities = abilities;
 		this.learnset = learnset;
 		this.tms = tms;
 		this.evolutions = evolutions;
+	}
+
+	public Evolution[] evolutions()
+	{
+		return this.evolutions.toArray(new Evolution[this.evolutions.size()]);
 	}
 
 	/** @return The amount of experience needed to level up from the input level. */
@@ -102,7 +108,7 @@ public class PokemonSpecies
 		LearnedMove move4 = m4 == -1 ? null : new LearnedMove(m4);
 
 		// todo: Generate random ID.
-		return new Pokemon(0, this, null, null, this.stats.forLevel(level), this.randomAbility(random), 0, level, move1, move2, move3, move4,
+		return new Pokemon(0, this, null, null, this.baseStats.forLevel(level), this.randomAbility(random), 0, level, move1, move2, move3, move4,
 				this.randomGender(random));
 	}
 
@@ -171,7 +177,7 @@ public class PokemonSpecies
 		root.setAttribute("height", Float.toString(this.height));
 		root.setAttribute("weight", Float.toString(this.weight));
 
-		root.addContent(this.stats.toXML());
+		root.addContent(this.baseStats.toXML());
 
 		if (this.evolutions.size() != 0)
 		{

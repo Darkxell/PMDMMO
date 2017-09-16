@@ -22,8 +22,6 @@ public class DungeonStats
 	private int specialAttack;
 	/** Special Defense. */
 	private int specialDefense;
-	/** Speed. */
-	private int speed;
 
 	public DungeonStats(PokemonStats baseStats)
 	{
@@ -72,11 +70,6 @@ public class DungeonStats
 		return this.specialDefense;
 	}
 
-	public int getSpeed()
-	{
-		return this.speed;
-	}
-
 	/** Resets these Stats to their default input values. */
 	public void onFloorChange()
 	{
@@ -85,7 +78,6 @@ public class DungeonStats
 		this.health = this.baseStats.health;
 		this.specialAttack = this.baseStats.specialAttack;
 		this.specialDefense = this.baseStats.specialDefense;
-		this.speed = this.baseStats.speed;
 		this.moveSpeed = this.baseStats.moveSpeed;
 		this.evasiveness = DEFAULT_EVASIVENESS;
 		this.accuracy = DEFAULT_ACCURACY;
@@ -99,7 +91,6 @@ public class DungeonStats
 		this.health = Math.max(this.health, this.baseStats.health);
 		this.specialAttack = Math.max(this.specialAttack, this.baseStats.specialAttack);
 		this.specialDefense = Math.max(this.specialDefense, this.baseStats.specialDefense);
-		this.speed = Math.max(this.speed, this.baseStats.speed);
 		this.moveSpeed = Math.max(this.moveSpeed, this.baseStats.moveSpeed);
 		this.evasiveness = Math.max(this.evasiveness, DEFAULT_EVASIVENESS);
 		this.accuracy = Math.max(this.accuracy, DEFAULT_ACCURACY);

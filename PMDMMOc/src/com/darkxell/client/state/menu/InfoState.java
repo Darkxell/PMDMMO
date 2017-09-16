@@ -5,7 +5,6 @@ import java.awt.Rectangle;
 
 import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.state.AbstractState;
-import com.darkxell.client.state.dungeon.DungeonState;
 import com.darkxell.client.state.menu.components.TextWindow;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.common.util.Message;
@@ -18,7 +17,7 @@ public class InfoState extends AbstractMenuState
 	private int tab;
 	private TextWindow window;
 
-	public InfoState(DungeonState background, AbstractState parent, Message[] titles, Message[] infos)
+	public InfoState(AbstractState background, AbstractState parent, Message[] titles, Message[] infos)
 	{
 		super(background);
 		this.parent = parent;
@@ -40,8 +39,6 @@ public class InfoState extends AbstractMenuState
 	public void onKeyPressed(short key)
 	{
 		super.onKeyPressed(key);
-		if (key == Keys.KEY_ATTACK)
-		; // Go to next tab
 
 		if (key == Keys.KEY_LEFT)
 		{

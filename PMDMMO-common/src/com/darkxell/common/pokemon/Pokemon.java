@@ -52,7 +52,7 @@ public class Pokemon implements ItemContainer
 		this.nickname = xml.getAttributeValue("nickname");
 		this.item = xml.getChild(ItemStack.XML_ROOT) == null ? null : new ItemStack(xml.getChild(ItemStack.XML_ROOT));
 		this.level = Integer.parseInt(xml.getAttributeValue("level"));
-		this.stats = xml.getChild(PokemonStats.XML_ROOT) == null ? this.species.stats.forLevel(this.level) : new PokemonStats(
+		this.stats = xml.getChild(PokemonStats.XML_ROOT) == null ? this.species.baseStats.forLevel(this.level) : new PokemonStats(
 				xml.getChild(PokemonStats.XML_ROOT));
 		this.abilityID = xml.getAttribute("ability") == null ? this.species.randomAbility(r) : Integer.parseInt(xml.getAttributeValue("ability"));
 		this.experience = xml.getAttribute("xp") == null ? 0 : Integer.parseInt(xml.getAttributeValue("xp"));
@@ -120,6 +120,24 @@ public class Pokemon implements ItemContainer
 		this.setItem(null);
 	}
 
+	public Message evolutionStatus()
+	{
+		Evolution[] evolutions = this.species.evolutions();
+		if (evolutions.length == 0) return new Message("evolve.none");
+		for (Evolution evolution : evolutions)
+		{
+			if (evolution.method == Evolution.LEVEL && this.getLevel() >= evolution.value) return new Message("evolve.possible");
+			if (evolution.method == Evolution.ITEM) return new Message("evolve.item");
+		}
+		return new Message("evolve.not_now");
+	}
+
+	/** @return The amount of experience to gain in order to level up. */
+	public int experienceToNextLevel()
+	{
+		return this.species.experienceToNextLevel(this.level) - this.experience;
+	}
+
 	/** @param amount - The amount of experience gained.
 	 * @return The number of levels this experience granted. */
 	public int gainExperience(int amount)
@@ -128,7 +146,7 @@ public class Pokemon implements ItemContainer
 
 		while (amount != 0)
 		{
-			int next = this.species.experienceToNextLevel(this.level) - this.experience;
+			int next = this.experienceToNextLevel();
 			if (next <= amount)
 			{
 				amount -= next;
@@ -171,10 +189,10 @@ public class Pokemon implements ItemContainer
 		return this.level;
 	}
 
-	public String getNickname()
+	public Message getNickname()
 	{
-		if (this.nickname == null) return this.species.name().toString();
-		return this.nickname;
+		if (this.nickname == null) return this.species.name();
+		return new Message(this.nickname, false);
 	}
 
 	public PokemonStats getStats()
@@ -193,7 +211,7 @@ public class Pokemon implements ItemContainer
 	private void levelUp()
 	{
 		++this.level;
-		this.stats = this.species.stats.forLevel(this.level);
+		this.stats = this.species.baseStats.forLevel(this.level);
 	}
 
 	public LearnedMove move(int slot)
