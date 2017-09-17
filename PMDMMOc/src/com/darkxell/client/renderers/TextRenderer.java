@@ -8,11 +8,9 @@ import java.util.HashMap;
 import com.darkxell.client.resources.Res;
 import com.darkxell.common.util.Message;
 
-public class TextRenderer
-{
+public class TextRenderer {
 
-	public static enum PMDChar
-	{
+	public static enum PMDChar {
 		new_line("<br>", 0, 0),
 		tabulation("<tab>", 0, 0),
 		space(" ", 0, 4),
@@ -96,8 +94,8 @@ public class TextRenderer
 		female("<female>", 77, 6),
 		space_visible("_", 78, 10),
 		three_dots("<dots>", 79, 9),
-		parenthesis_c(")", 80, 5),
-		parenthesis_o("(", 81, 5),
+		parenthesis_o("(", 80, 5),
+		parenthesis_c(")", 81, 5),
 		slash("/", 82, 5),
 		poke1("<poke1>", 83, 8),
 		poke2("<poke2>", 84, 7),
@@ -170,10 +168,10 @@ public class TextRenderer
 		type_16("<type-16>", 156, 11),
 		type_17("<type-17>", 157, 11);
 
-		public static PMDChar find(String value)
-		{
+		public static PMDChar find(String value) {
 			for (PMDChar c : values())
-				if (c.value.equals(value)) return c;
+				if (c.value.equals(value))
+					return c;
 			return null;
 		}
 
@@ -184,8 +182,7 @@ public class TextRenderer
 		/** Width of the sprite. */
 		public final int width;
 
-		private PMDChar(String value, int id, int width)
-		{
+		private PMDChar(String value, int id, int width) {
 			this.value = value;
 			this.id = id;
 			this.width = width;
@@ -201,23 +198,24 @@ public class TextRenderer
 	public static final int TAB_ALIGN = 25;
 
 	/** Called on startup to load the font. */
-	public static void load()
-	{}
+	public static void load() {
+	}
 
 	private HashMap<PMDChar, BufferedImage> sprites;
 
-	private TextRenderer()
-	{
+	private TextRenderer() {
 		this.sprites = new HashMap<TextRenderer.PMDChar, BufferedImage>();
 		BufferedImage source = Res.getBase("resources/hud/font.png");
 		for (PMDChar c : PMDChar.values())
-			this.sprites.put(c,
-					Res.createimage(source, c.id % GRID_COLS * GRID_WIDTH, (c.id - c.id % GRID_COLS) / GRID_COLS * GRID_HEIGHT, GRID_WIDTH, GRID_HEIGHT));
+			this.sprites.put(c, Res.createimage(source, c.id % GRID_COLS * GRID_WIDTH,
+					(c.id - c.id % GRID_COLS) / GRID_COLS * GRID_HEIGHT, GRID_WIDTH, GRID_HEIGHT));
 	}
 
-	/** Adds spaces in front of the input number to match the input number of digits. */
-	public Message alignNumber(int n, int digits)
-	{
+	/**
+	 * Adds spaces in front of the input number to match the input number of
+	 * digits.
+	 */
+	public Message alignNumber(int n, int digits) {
 		String s = Integer.toString(n);
 		int diff = s.length() - digits;
 		for (int i = diff; i < 0; ++i)
@@ -225,71 +223,70 @@ public class TextRenderer
 		return new Message(s, false);
 	}
 
-	public ArrayList<PMDChar> decode(String text)
-	{
+	public ArrayList<PMDChar> decode(String text) {
 		ArrayList<PMDChar> chars = new ArrayList<TextRenderer.PMDChar>();
-		if (text == null) return chars;
+		if (text == null)
+			return chars;
 		int c = 0;
 		String value;
-		while (c < text.length())
-		{
-			if (text.charAt(c) == '<')
-			{
+		while (c < text.length()) {
+			if (text.charAt(c) == '<') {
 				value = "";
 				++c;
-				while (c < text.length() && text.charAt(c) != '>')
-				{
+				while (c < text.length() && text.charAt(c) != '>') {
 					value += text.charAt(c);
 					++c;
 				}
 				chars.add(PMDChar.find("<" + value + ">"));
-			} else chars.add(PMDChar.find(text.substring(c, c + 1)));
+			} else
+				chars.add(PMDChar.find(text.substring(c, c + 1)));
 			++c;
 		}
 
 		for (c = 0; c < chars.size(); ++c)
-			if (chars.get(c) == null) chars.remove(c);
+			if (chars.get(c) == null)
+				chars.remove(c);
 		return chars;
 	}
 
 	/** Renders the input message at the topright x, y coordinates. */
-	public void render(Graphics2D g, Message message, int x, int y)
-	{
+	public void render(Graphics2D g, Message message, int x, int y) {
 		this.render(g, message.toString(), x, y);
 	}
 
 	/** Renders the input text at the topright x, y coordinates. */
-	public void render(Graphics2D g, String text, int x, int y)
-	{
+	public void render(Graphics2D g, String text, int x, int y) {
 		ArrayList<PMDChar> chars = this.decode(text);
 		int w = 0;
-		for (PMDChar c : chars)
-		{
+		for (PMDChar c : chars) {
 			g.drawImage(this.sprites.get(c), x + w, y, null);
-			if (c == PMDChar.tabulation) w += this.tabWidth(w);
-			else w += c.width;
+			if (c == PMDChar.tabulation)
+				w += this.tabWidth(w);
+			else
+				w += c.width;
 		}
 	}
 
-	/** Transforms a String into a printable array of strings printable to the screen. */
-	public ArrayList<String> splitLines(String text, int boxwidth)
-	{
+	/**
+	 * Transforms a String into a printable array of strings printable to the
+	 * screen.
+	 */
+	public ArrayList<String> splitLines(String text, int boxwidth) {
 		ArrayList<String> textlines = new ArrayList<>();
-		if (text == null) return textlines;
+		if (text == null)
+			return textlines;
 		int currentlength = 0, iterator = 0;
 		String[] parts = text.split("\n");
-		for (int i = 0; i < parts.length; i++)
-		{
+		for (int i = 0; i < parts.length; i++) {
 			textlines.add("");
 			currentlength = 0;
 			String[] words = parts[i].split(" ");
 			for (int j = 0; j < words.length; j++)
-				if (!words[j].startsWith(PMDChar.new_line.value) && (currentlength == 0 || currentlength + this.width(words[j]) < boxwidth))
-				{
+				if (!words[j].startsWith(PMDChar.new_line.value)
+						&& (currentlength == 0 || currentlength + this.width(words[j]) < boxwidth)) {
 					textlines.set(iterator, textlines.get(iterator) + words[j] + " ");
 					currentlength += this.width(words[j] + " ");
-				} else
-				{
+				} else {
 					textlines.add(words[j] + " ");
 					++iterator;
 					currentlength = this.width(words[j] + " ");
@@ -299,28 +296,32 @@ public class TextRenderer
 		return textlines;
 	}
 
-	/** @return The width of a Tabulation character, depending on the current width of the text. */
-	public int tabWidth(int currentWidth)
-	{
+	/**
+	 * @return The width of a Tabulation character, depending on the current
+	 *         width of the text.
+	 */
+	public int tabWidth(int currentWidth) {
 		return TAB_ALIGN - currentWidth % TAB_ALIGN;
 	}
 
 	/** @return The width of the input message. */
-	public int width(Message message)
-	{
-		if (message == null) return 0;
+	public int width(Message message) {
+		if (message == null)
+			return 0;
 		return this.width(message.toString());
 	}
 
 	/** @return The width of the input text. */
-	public int width(String text)
-	{
-		if (text == null) return 0;
+	public int width(String text) {
+		if (text == null)
+			return 0;
 		ArrayList<PMDChar> chars = this.decode(text);
 		int w = 0;
 		for (PMDChar c : chars)
-			if (c == PMDChar.tabulation) w += this.tabWidth(w);
-			else w += c.width;
+			if (c == PMDChar.tabulation)
+				w += this.tabWidth(w);
+			else
+				w += c.width;
 		return w;
 	}
 
