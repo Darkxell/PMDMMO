@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <species>
-  <pokemon id="1" type1="11" type2="3" base-xp="64" height="0.7" weight="6.9">
+  <pokemon id="1" type1="11" type2="3" base-xp="18" height="0.7" weight="6.9">
     <statline>
       <stats atk="2" def="1" hea="20" spa="2" level="1" />
       <stats atk="2" def="2" hea="3" spa="2" spd="2" level="2" />
@@ -125,7 +125,7 @@
       <level l="31">222</level>
     </learnset>
   </pokemon>
-  <pokemon id="2" type1="11" type2="3" base-xp="142" height="1.0" weight="13.0">
+  <pokemon id="2" type1="11" type2="3" base-xp="40" height="1.0" weight="13.0">
     <statline>
       <stats atk="14" def="9" hea="46" spa="12" spd="10" level="1" />
       <stats atk="2" def="2" hea="3" spa="2" spd="2" level="2" />
@@ -250,7 +250,7 @@
       <level l="31">265</level>
     </learnset>
   </pokemon>
-  <pokemon id="3" type1="11" type2="3" base-xp="236" height="2.0" weight="100.0">
+  <pokemon id="3" type1="11" type2="3" base-xp="180" height="2.0" weight="100.0">
     <statline>
       <stats atk="20" def="10" hea="51" spa="15" spd="10" level="1" />
       <stats atk="2" def="2" hea="3" spa="2" spd="2" level="2" />
@@ -374,7 +374,7 @@
       <level l="31">265</level>
     </learnset>
   </pokemon>
-  <pokemon id="4" type1="9" base-xp="62" height="0.6" weight="8.5">
+  <pokemon id="4" type1="9" base-xp="24" height="0.6" weight="8.5">
     <statline>
       <stats atk="3" hea="18" spa="3" level="1" />
       <stats atk="2" def="2" hea="3" spa="2" spd="2" level="2" />
@@ -497,7 +497,7 @@
       <level l="46">133</level>
     </learnset>
   </pokemon>
-  <pokemon id="5" type1="9" base-xp="142" height="1.1" weight="19.0">
+  <pokemon id="5" type1="9" base-xp="57" height="1.1" weight="19.0">
     <statline>
       <stats atk="21" def="9" hea="58" spa="19" spd="8" level="1" />
       <stats atk="2" def="2" hea="3" spa="2" spd="2" level="2" />
@@ -620,7 +620,7 @@
       <level l="28">142</level>
     </learnset>
   </pokemon>
-  <pokemon id="6" type1="9" type2="2" base-xp="240" height="1.7" weight="90.5">
+  <pokemon id="6" type1="9" type2="2" base-xp="200" height="1.7" weight="90.5">
     <statline>
       <stats atk="12" def="9" hea="58" spa="8" spd="10" level="1" />
       <stats atk="2" def="2" hea="3" spa="2" spd="2" level="2" />
@@ -743,7 +743,7 @@
       <level l="62">133</level>
     </learnset>
   </pokemon>
-  <pokemon id="7" type1="10" base-xp="63" height="0.5" weight="9.0">
+  <pokemon id="7" type1="10" base-xp="27" height="0.5" weight="9.0">
     <statline>
       <stats atk="3" def="3" hea="20" spa="2" spd="3" level="1" />
       <stats atk="2" def="2" hea="3" spa="2" spd="2" level="2" />
@@ -869,7 +869,7 @@
       <level l="31">271</level>
     </learnset>
   </pokemon>
-  <pokemon id="8" type1="10" base-xp="142" height="1.0" weight="22.5">
+  <pokemon id="8" type1="10" base-xp="66" height="1.0" weight="22.5">
     <statline>
       <stats atk="15" def="17" hea="46" spa="17" spd="14" level="1" />
       <stats atk="2" def="2" hea="3" spa="2" spd="2" level="2" />
@@ -995,7 +995,7 @@
       <level l="28">548</level>
     </learnset>
   </pokemon>
-  <pokemon id="9" type1="10" base-xp="239" height="1.6" weight="85.5">
+  <pokemon id="9" type1="10" base-xp="250" height="1.6" weight="85.5">
     <statline>
       <stats atk="16" def="19" hea="53" spa="18" spd="18" level="1" />
       <stats atk="2" def="2" hea="3" spa="2" spd="2" level="2" />
@@ -1118,7 +1118,7 @@
       <level l="60">536</level>
     </learnset>
   </pokemon>
-  <pokemon id="10" type1="6" base-xp="39" height="0.3" weight="2.9">
+  <pokemon id="10" type1="6" base-xp="9" height="0.3" weight="2.9">
     <statline>
       <stats atk="6" def="7" hea="12" spa="6" spd="7" level="1" />
       <stats def="1" hea="1" level="2" />
@@ -1231,7 +1231,7 @@
       <level l="15">8</level>
     </learnset>
   </pokemon>
-  <pokemon id="11" type1="6" base-xp="72" height="0.7" weight="9.9">
+  <pokemon id="11" type1="6" base-xp="27" height="0.7" weight="9.9">
     <statline>
       <stats atk="15" def="15" hea="15" spa="15" spd="15" level="1" />
       <stats def="1" hea="1" level="2" />
@@ -1344,7 +1344,7 @@
       <level l="7">370</level>
     </learnset>
   </pokemon>
-  <pokemon id="12" type1="6" type2="2" base-xp="173" height="1.1" weight="32.0">
+  <pokemon id="12" type1="6" type2="2" base-xp="96" height="1.1" weight="32.0">
     <statline>
       <stats atk="22" def="13" hea="47" spa="23" spd="14" level="1" />
       <stats atk="1" def="1" hea="2" level="2" />
@@ -1467,7 +1467,7 @@
       <level l="30">173</level>
     </learnset>
   </pokemon>
-  <pokemon id="13" type1="6" type2="3" base-xp="39" height="0.3" weight="3.2">
+  <pokemon id="13" type1="6" type2="3" base-xp="18" height="0.3" weight="3.2">
     <statline>
       <stats atk="9" def="4" hea="27" spa="11" spd="6" level="1" />
       <stats def="1" hea="1" level="2" />
@@ -1580,7 +1580,7 @@
       <level l="15">8</level>
     </learnset>
   </pokemon>
-  <pokemon id="14" type1="6" type2="3" base-xp="72" height="0.6" weight="10.0">
+  <pokemon id="14" type1="6" type2="3" base-xp="50" height="0.6" weight="10.0">
     <statline>
       <stats atk="11" def="12" hea="36" spa="13" spd="12" level="1" />
       <stats def="1" hea="1" level="2" />
@@ -1693,7 +1693,7 @@
       <level l="7">370</level>
     </learnset>
   </pokemon>
-  <pokemon id="15" type1="6" type2="3" base-xp="173" height="1.0" weight="29.5">
+  <pokemon id="15" type1="6" type2="3" base-xp="40" height="1.0" weight="29.5">
     <statline>
       <stats atk="21" def="14" hea="50" spa="22" spd="14" level="1" />
       <stats def="1" hea="1" level="2" />
@@ -1815,7 +1815,7 @@
       <level l="31">466</level>
     </learnset>
   </pokemon>
-  <pokemon id="16" type1="0" type2="2" base-xp="50" height="0.3" weight="1.8">
+  <pokemon id="16" type1="0" type2="2" base-xp="12" height="0.3" weight="1.8">
     <statline>
       <stats atk="4" def="4" hea="10" spa="5" spd="5" level="1" />
       <stats atk="2" def="1" hea="2" spa="2" spd="1" level="2" />
@@ -1941,7 +1941,7 @@
       <level l="29">466</level>
     </learnset>
   </pokemon>
-  <pokemon id="17" type1="0" type2="2" base-xp="122" height="1.1" weight="30.0">
+  <pokemon id="17" type1="0" type2="2" base-xp="45" height="1.1" weight="30.0">
     <statline>
       <stats atk="17" def="9" hea="40" spa="20" spd="11" level="1" />
       <stats def="1" hea="1" level="2" />
@@ -2067,7 +2067,7 @@
       <level l="62">154</level>
     </learnset>
   </pokemon>
-  <pokemon id="18" type1="0" type2="2" base-xp="211" height="1.5" weight="39.5">
+  <pokemon id="18" type1="0" type2="2" base-xp="50" height="1.5" weight="39.5">
     <statline>
       <stats atk="28" def="16" hea="52" spa="30" spd="16" level="1" />
       <stats def="1" hea="1" level="2" />
@@ -2190,7 +2190,7 @@
       <level l="62">159</level>
     </learnset>
   </pokemon>
-  <pokemon id="19" type1="0" base-xp="51" height="0.3" weight="3.5">
+  <pokemon id="19" type1="0" base-xp="20" height="0.3" weight="3.5">
     <statline>
       <stats atk="10" def="5" hea="14" spa="10" spd="5" level="1" />
       <stats def="1" hea="1" level="2" />
@@ -2314,7 +2314,7 @@
       <level l="31">265</level>
     </learnset>
   </pokemon>
-  <pokemon id="20" type1="0" base-xp="145" height="0.7" weight="18.5">
+  <pokemon id="20" type1="0" base-xp="45" height="0.7" weight="18.5">
     <statline>
       <stats atk="15" def="10" hea="20" spa="15" spd="10" level="1" />
       <stats def="1" hea="1" level="2" />
@@ -2436,7 +2436,7 @@
       <level l="29">31</level>
     </learnset>
   </pokemon>
-  <pokemon id="21" type1="0" type2="2" base-xp="52" height="0.3" weight="2.0">
+  <pokemon id="21" type1="0" type2="2" base-xp="25" height="0.3" weight="2.0">
     <statline>
       <stats atk="15" def="7" hea="23" spa="17" spd="7" level="1" />
       <stats def="1" hea="1" level="2" />
@@ -2558,7 +2558,7 @@
       <level l="29">31</level>
     </learnset>
   </pokemon>
-  <pokemon id="22" type1="0" type2="2" base-xp="155" height="1.2" weight="38.0">
+  <pokemon id="22" type1="0" type2="2" base-xp="50" height="1.2" weight="38.0">
     <statline>
       <stats atk="28" def="17" hea="52" spa="31" spd="18" level="1" />
       <stats def="1" hea="1" level="2" />
@@ -2678,7 +2678,7 @@
       <level l="47">158</level>
     </learnset>
   </pokemon>
-  <pokemon id="23" type1="3" base-xp="58" height="2.0" weight="6.9">
+  <pokemon id="23" type1="3" base-xp="50" height="2.0" weight="6.9">
     <statline>
       <stats atk="8" def="7" hea="30" spa="7" spd="8" level="1" />
       <stats atk="2" def="1" hea="2" spa="2" spd="1" level="2" />
@@ -2804,7 +2804,7 @@
       <level l="28">438</level>
     </learnset>
   </pokemon>
-  <pokemon id="24" type1="3" base-xp="153" height="3.5" weight="65.0">
+  <pokemon id="24" type1="3" base-xp="70" height="3.5" weight="65.0">
     <statline>
       <stats atk="9" def="6" hea="45" spa="10" spd="5" level="1" />
       <stats atk="2" def="1" hea="2" spa="2" spd="1" level="2" />
@@ -2928,7 +2928,7 @@
       <level l="63">427</level>
     </learnset>
   </pokemon>
-  <pokemon id="25" type1="12" base-xp="105" height="0.4" weight="6.0">
+  <pokemon id="25" type1="12" base-xp="18" height="0.4" weight="6.0">
     <statline>
       <stats atk="1" def="1" hea="13" spa="1" spd="1" level="1" />
       <stats atk="2" def="2" hea="3" spa="2" spd="2" level="2" />
@@ -3057,7 +3057,7 @@
       <level l="29">593</level>
     </learnset>
   </pokemon>
-  <pokemon id="26" type1="12" base-xp="214" height="0.8" weight="30.0">
+  <pokemon id="26" type1="12" base-xp="90" height="0.8" weight="30.0">
     <statline>
       <stats atk="15" def="15" hea="35" spa="15" spd="15" level="1" />
       <stats atk="2" def="2" hea="4" spa="2" spd="2" level="2" />
@@ -3167,7 +3167,7 @@
       <level l="1">79,419,310,69</level>
     </learnset>
   </pokemon>
-  <pokemon id="27" type1="4" base-xp="60" height="0.6" weight="12.0">
+  <pokemon id="27" type1="4" base-xp="50" height="0.6" weight="12.0">
     <statline>
       <stats atk="22" def="5" hea="31" spa="18" spd="4" level="1" />
       <stats atk="1" def="1" hea="2" spa="1" spd="1" level="2" />
@@ -3295,7 +3295,7 @@
       <level l="30">225</level>
     </learnset>
   </pokemon>
-  <pokemon id="28" type1="4" base-xp="158" height="1.0" weight="29.5">
+  <pokemon id="28" type1="4" base-xp="60" height="1.0" weight="29.5">
     <statline>
       <stats atk="22" def="5" hea="56" spa="18" spd="4" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -3421,7 +3421,7 @@
       <level l="28">293</level>
     </learnset>
   </pokemon>
-  <pokemon id="29" type1="3" base-xp="55" height="0.4" weight="7.0">
+  <pokemon id="29" type1="3" base-xp="20" height="0.4" weight="7.0">
     <statline>
       <stats atk="11" def="5" hea="12" spa="10" spd="5" level="1" />
       <stats def="1" hea="1" level="2" />
@@ -3545,7 +3545,7 @@
       <level l="31">447</level>
     </learnset>
   </pokemon>
-  <pokemon id="30" type1="3" base-xp="128" height="0.8" weight="20.0">
+  <pokemon id="30" type1="3" base-xp="35" height="0.8" weight="20.0">
     <statline>
       <stats atk="19" def="5" hea="40" spa="15" spd="5" level="1" />
       <stats def="1" hea="1" level="2" />
@@ -3669,7 +3669,7 @@
       <level l="13">440</level>
     </learnset>
   </pokemon>
-  <pokemon id="31" type1="3" type2="4" base-xp="223" height="1.3" weight="60.0">
+  <pokemon id="31" type1="3" type2="4" base-xp="45" height="1.3" weight="60.0">
     <statline>
       <stats atk="19" def="5" hea="60" spa="15" spd="5" level="1" />
       <stats def="1" hea="1" level="2" />
@@ -3783,7 +3783,7 @@
       <level l="43">224</level>
     </learnset>
   </pokemon>
-  <pokemon id="32" type1="3" base-xp="55" height="0.5" weight="9.0">
+  <pokemon id="32" type1="3" base-xp="24" height="0.5" weight="9.0">
     <statline>
       <stats atk="15" def="11" hea="41" spa="16" spd="11" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -3907,7 +3907,7 @@
       <level l="31">447</level>
     </learnset>
   </pokemon>
-  <pokemon id="33" type1="3" base-xp="128" height="0.9" weight="19.5">
+  <pokemon id="33" type1="3" base-xp="40" height="0.9" weight="19.5">
     <statline>
       <stats atk="15" def="15" hea="46" spa="16" spd="15" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -4031,7 +4031,7 @@
       <level l="13">440</level>
     </learnset>
   </pokemon>
-  <pokemon id="34" type1="3" type2="4" base-xp="223" height="1.4" weight="62.0">
+  <pokemon id="34" type1="3" type2="4" base-xp="60" height="1.4" weight="62.0">
     <statline>
       <stats atk="22" def="17" hea="65" spa="22" spd="17" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -4145,7 +4145,7 @@
       <level l="43">224</level>
     </learnset>
   </pokemon>
-  <pokemon id="35" type1="17" base-xp="113" height="0.6" weight="7.5">
+  <pokemon id="35" type1="17" base-xp="21" height="0.6" weight="7.5">
     <statline>
       <stats atk="7" def="5" hea="15" spa="7" spd="5" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -4276,7 +4276,7 @@
       <level l="31">380</level>
     </learnset>
   </pokemon>
-  <pokemon id="36" type1="17" base-xp="213" height="1.3" weight="40.0">
+  <pokemon id="36" type1="17" base-xp="40" height="1.3" weight="40.0">
     <statline>
       <stats atk="8" def="6" hea="24" spa="8" spd="6" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -4386,7 +4386,7 @@
       <level l="1">568,404,323,384,380</level>
     </learnset>
   </pokemon>
-  <pokemon id="37" type1="9" base-xp="60" height="0.6" weight="9.9">
+  <pokemon id="37" type1="9" base-xp="27" height="0.6" weight="9.9">
     <statline>
       <stats atk="8" def="8" hea="30" spa="8" spd="8" level="1" />
       <stats atk="2" def="2" hea="4" spa="2" spd="2" level="2" />
@@ -4518,7 +4518,7 @@
       <level l="31">453</level>
     </learnset>
   </pokemon>
-  <pokemon id="38" type1="9" base-xp="177" height="1.1" weight="19.9">
+  <pokemon id="38" type1="9" base-xp="57" height="1.1" weight="19.9">
     <statline>
       <stats atk="16" def="10" hea="42" spa="17" spd="13" level="1" />
       <stats atk="1" def="1" hea="3" spa="2" spd="1" level="2" />
@@ -4628,7 +4628,7 @@
       <level l="1">480,45,136,310,184,398</level>
     </learnset>
   </pokemon>
-  <pokemon id="39" type1="0" type2="17" base-xp="95" height="0.5" weight="5.5">
+  <pokemon id="39" type1="0" type2="17" base-xp="15" height="0.5" weight="5.5">
     <statline>
       <stats atk="3" def="4" hea="10" spa="3" spd="3" level="1" />
       <stats def="1" hea="1" level="2" />
@@ -4756,7 +4756,7 @@
       <level l="28">106</level>
     </learnset>
   </pokemon>
-  <pokemon id="40" type1="0" type2="17" base-xp="191" height="1.0" weight="12.0">
+  <pokemon id="40" type1="0" type2="17" base-xp="36" height="1.0" weight="12.0">
     <statline>
       <stats atk="17" def="6" hea="22" spa="18" spd="6" level="1" />
       <stats def="1" hea="2" level="2" />
@@ -4866,7 +4866,7 @@
       <level l="1">265,600,404,357,358,323</level>
     </learnset>
   </pokemon>
-  <pokemon id="41" type1="3" type2="2" base-xp="49" height="0.8" weight="7.5">
+  <pokemon id="41" type1="3" type2="2" base-xp="35" height="0.8" weight="7.5">
     <statline>
       <stats atk="25" def="15" hea="34" spa="24" spd="15" level="1" />
       <stats atk="1" hea="1" spa="1" level="2" />
@@ -4993,7 +4993,7 @@
       <level l="31">165</level>
     </learnset>
   </pokemon>
-  <pokemon id="42" type1="3" type2="2" base-xp="159" height="1.6" weight="55.0">
+  <pokemon id="42" type1="3" type2="2" base-xp="60" height="1.6" weight="55.0">
     <statline>
       <stats atk="25" def="16" hea="45" spa="25" spd="16" level="1" />
       <stats atk="1" hea="2" spa="1" level="2" />
@@ -5120,7 +5120,7 @@
       <level l="27">435</level>
     </learnset>
   </pokemon>
-  <pokemon id="43" type1="11" type2="3" base-xp="64" height="0.5" weight="5.4">
+  <pokemon id="43" type1="11" type2="3" base-xp="35" height="0.5" weight="5.4">
     <statline>
       <stats atk="19" def="10" hea="29" spa="19" spd="10" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -5247,7 +5247,7 @@
       <level l="31">200</level>
     </learnset>
   </pokemon>
-  <pokemon id="44" type1="11" type2="3" base-xp="138" height="0.8" weight="8.6">
+  <pokemon id="44" type1="11" type2="3" base-xp="36" height="0.8" weight="8.6">
     <statline>
       <stats atk="20" def="13" hea="32" spa="19" spd="12" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -5375,7 +5375,7 @@
       <level l="29">385</level>
     </learnset>
   </pokemon>
-  <pokemon id="45" type1="11" type2="3" base-xp="216" height="1.2" weight="18.6">
+  <pokemon id="45" type1="11" type2="3" base-xp="40" height="1.2" weight="18.6">
     <statline>
       <stats atk="21" def="13" hea="37" spa="19" spd="12" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -5488,7 +5488,7 @@
       <level l="59">192</level>
     </learnset>
   </pokemon>
-  <pokemon id="46" type1="6" type2="11" base-xp="57" height="0.3" weight="5.4">
+  <pokemon id="46" type1="6" type2="11" base-xp="30" height="0.3" weight="5.4">
     <statline>
       <stats atk="14" def="11" hea="28" spa="14" spd="13" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -5611,7 +5611,7 @@
       <level l="43">212</level>
     </learnset>
   </pokemon>
-  <pokemon id="47" type1="6" type2="11" base-xp="142" height="1.0" weight="29.5">
+  <pokemon id="47" type1="6" type2="11" base-xp="40" height="1.0" weight="29.5">
     <statline>
       <stats atk="29" def="18" hea="54" spa="30" spd="18" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -5731,7 +5731,7 @@
       <level l="29">293</level>
     </learnset>
   </pokemon>
-  <pokemon id="48" type1="6" type2="3" base-xp="61" height="1.0" weight="30.0">
+  <pokemon id="48" type1="6" type2="3" base-xp="20" height="1.0" weight="30.0">
     <statline>
       <stats atk="15" def="12" hea="35" spa="15" spd="12" level="1" />
       <stats atk="1" hea="2" spa="1" spd="1" level="2" />
@@ -5855,7 +5855,7 @@
       <level l="47">452</level>
     </learnset>
   </pokemon>
-  <pokemon id="49" type1="6" type2="3" base-xp="158" height="1.5" weight="12.5">
+  <pokemon id="49" type1="6" type2="3" base-xp="60" height="1.5" weight="12.5">
     <statline>
       <stats atk="20" def="16" hea="47" spa="20" spd="16" level="1" />
       <stats atk="2" def="2" hea="4" spa="2" spd="2" level="2" />
@@ -5979,7 +5979,7 @@
       <level l="63">17</level>
     </learnset>
   </pokemon>
-  <pokemon id="50" type1="4" base-xp="53" height="0.2" weight="0.8">
+  <pokemon id="50" type1="4" base-xp="15" height="0.2" weight="0.8">
     <statline>
       <stats atk="7" def="7" hea="10" spa="7" spd="8" level="1" />
       <stats def="1" hea="1" level="2" />
@@ -6104,7 +6104,7 @@
       <level l="29">224</level>
     </learnset>
   </pokemon>
-  <pokemon id="51" type1="4" base-xp="142" height="0.7" weight="33.3">
+  <pokemon id="51" type1="4" base-xp="45" height="0.7" weight="33.3">
     <statline>
       <stats atk="12" def="12" hea="20" spa="12" spd="12" level="1" />
       <stats atk="2" def="1" hea="4" spa="2" spd="1" level="2" />
@@ -6227,7 +6227,7 @@
       <level l="28">228</level>
     </learnset>
   </pokemon>
-  <pokemon id="52" type1="0" base-xp="58" height="0.4" weight="4.2">
+  <pokemon id="52" type1="0" base-xp="50" height="0.4" weight="4.2">
     <statline>
       <stats atk="2" def="4" hea="18" spa="4" spd="4" level="1" />
       <stats atk="2" def="2" hea="3" spa="2" spd="1" level="2" />
@@ -6353,7 +6353,7 @@
       <level l="30">308</level>
     </learnset>
   </pokemon>
-  <pokemon id="53" type1="0" base-xp="154" height="1.0" weight="32.0">
+  <pokemon id="53" type1="0" base-xp="70" height="1.0" weight="32.0">
     <statline>
       <stats atk="15" def="15" hea="50" spa="15" spd="15" level="1" />
       <stats atk="2" def="2" hea="4" spa="2" spd="1" level="2" />
@@ -6477,7 +6477,7 @@
       <level l="61">27</level>
     </learnset>
   </pokemon>
-  <pokemon id="54" type1="10" base-xp="64" height="0.8" weight="19.6">
+  <pokemon id="54" type1="10" base-xp="57" height="0.8" weight="19.6">
     <statline>
       <stats atk="4" def="3" hea="12" spa="4" spd="3" level="1" />
       <stats atk="1" def="2" hea="4" spa="2" spd="2" level="2" />
@@ -6604,7 +6604,7 @@
       <level l="29">539</level>
     </learnset>
   </pokemon>
-  <pokemon id="55" type1="10" base-xp="175" height="1.7" weight="76.6">
+  <pokemon id="55" type1="10" base-xp="80" height="1.7" weight="76.6">
     <statline>
       <stats atk="20" def="20" hea="50" spa="20" spd="20" level="1" />
       <stats atk="1" def="2" hea="4" spa="2" spd="2" level="2" />
@@ -6728,7 +6728,7 @@
       <level l="29">400</level>
     </learnset>
   </pokemon>
-  <pokemon id="56" type1="1" base-xp="61" height="0.5" weight="28.0">
+  <pokemon id="56" type1="1" base-xp="30" height="0.5" weight="28.0">
     <statline>
       <stats atk="11" def="13" hea="48" spa="10" spd="13" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -6852,7 +6852,7 @@
       <level l="45">38</level>
     </learnset>
   </pokemon>
-  <pokemon id="57" type1="1" base-xp="159" height="1.0" weight="32.0">
+  <pokemon id="57" type1="1" base-xp="90" height="1.0" weight="32.0">
     <statline>
       <stats atk="25" def="20" hea="50" spa="25" spd="20" level="1" />
       <stats atk="2" def="1" hea="3" spa="2" spd="1" level="2" />
@@ -6974,7 +6974,7 @@
       <level l="63">116</level>
     </learnset>
   </pokemon>
-  <pokemon id="58" type1="9" base-xp="70" height="0.7" weight="19.0">
+  <pokemon id="58" type1="9" base-xp="45" height="0.7" weight="19.0">
     <statline>
       <stats atk="20" def="12" hea="42" spa="20" spd="12" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -7103,7 +7103,7 @@
       <level l="30">466</level>
     </learnset>
   </pokemon>
-  <pokemon id="59" type1="9" base-xp="194" height="1.9" weight="155.0">
+  <pokemon id="59" type1="9" base-xp="60" height="1.9" weight="155.0">
     <statline>
       <stats atk="21" def="13" hea="45" spa="21" spd="13" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -7214,7 +7214,7 @@
       <level l="34">278</level>
     </learnset>
   </pokemon>
-  <pokemon id="60" type1="10" base-xp="60" height="0.6" weight="12.4">
+  <pokemon id="60" type1="10" base-xp="40" height="0.6" weight="12.4">
     <statline>
       <stats atk="20" def="11" hea="31" spa="20" spd="11" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -7339,7 +7339,7 @@
       <level l="31">348</level>
     </learnset>
   </pokemon>
-  <pokemon id="61" type1="10" base-xp="135" height="1.0" weight="20.0">
+  <pokemon id="61" type1="10" base-xp="60" height="1.0" weight="20.0">
     <statline>
       <stats atk="29" def="25" hea="50" spa="29" spd="25" level="1" />
       <stats atk="1" def="1" hea="4" spa="1" spd="1" level="2" />
@@ -7465,7 +7465,7 @@
       <level l="27">546</level>
     </learnset>
   </pokemon>
-  <pokemon id="62" type1="10" type2="1" base-xp="225" height="1.3" weight="54.0">
+  <pokemon id="62" type1="10" type2="1" base-xp="80" height="1.3" weight="54.0">
     <statline>
       <stats atk="30" def="27" hea="60" spa="30" spd="27" level="1" />
       <stats atk="1" def="1" hea="3" spa="1" spd="1" level="2" />
@@ -7578,7 +7578,7 @@
       <level l="43">383</level>
     </learnset>
   </pokemon>
-  <pokemon id="63" type1="13" base-xp="62" height="0.9" weight="19.5">
+  <pokemon id="63" type1="13" base-xp="57" height="0.9" weight="19.5">
     <statline>
       <stats atk="15" def="15" hea="30" spa="15" spd="15" level="1" />
       <stats atk="3" def="2" hea="4" spa="3" spd="2" level="2" />
@@ -7691,7 +7691,7 @@
       <level l="1">497</level>
     </learnset>
   </pokemon>
-  <pokemon id="64" type1="13" base-xp="140" height="1.3" weight="56.5">
+  <pokemon id="64" type1="13" base-xp="100" height="1.3" weight="56.5">
     <statline>
       <stats atk="25" def="25" hea="60" spa="25" spd="25" level="1" />
       <stats atk="1" def="1" hea="2" spa="1" spd="1" level="2" />
@@ -7817,7 +7817,7 @@
       <level l="31">393</level>
     </learnset>
   </pokemon>
-  <pokemon id="65" type1="13" base-xp="221" height="1.5" weight="48.0">
+  <pokemon id="65" type1="13" base-xp="225" height="1.5" weight="48.0">
     <statline>
       <stats atk="35" def="40" hea="80" spa="35" spd="40" level="1" />
       <stats hea="2" spa="1" level="2" />
@@ -7940,7 +7940,7 @@
       <level l="31">393</level>
     </learnset>
   </pokemon>
-  <pokemon id="66" type1="1" base-xp="61" height="0.8" weight="19.5">
+  <pokemon id="66" type1="1" base-xp="57" height="0.8" weight="19.5">
     <statline>
       <stats atk="2" def="4" hea="18" spa="2" spd="4" level="1" />
       <stats atk="3" def="1" hea="4" spa="1" spd="1" level="2" />
@@ -8068,7 +8068,7 @@
       <level l="31">60</level>
     </learnset>
   </pokemon>
-  <pokemon id="67" type1="1" base-xp="142" height="1.5" weight="70.5">
+  <pokemon id="67" type1="1" base-xp="85" height="1.5" weight="70.5">
     <statline>
       <stats atk="15" def="15" hea="40" spa="15" spd="20" level="1" />
       <stats atk="3" def="1" hea="4" spa="1" spd="1" level="2" />
@@ -8196,7 +8196,7 @@
       <level l="27">106</level>
     </learnset>
   </pokemon>
-  <pokemon id="68" type1="1" base-xp="227" height="1.6" weight="130.0">
+  <pokemon id="68" type1="1" base-xp="104" height="1.6" weight="130.0">
     <statline>
       <stats atk="25" def="20" hea="50" spa="20" spd="20" level="1" />
       <stats atk="3" def="1" hea="2" spa="1" spd="1" level="2" />
@@ -8321,7 +8321,7 @@
       <level l="27">106</level>
     </learnset>
   </pokemon>
-  <pokemon id="69" type1="11" type2="3" base-xp="60" height="0.7" weight="4.0">
+  <pokemon id="69" type1="11" type2="3" base-xp="11" height="0.7" weight="4.0">
     <statline>
       <stats atk="5" def="6" hea="11" spa="6" spd="7" level="1" />
       <stats def="1" hea="1" level="2" />
@@ -8445,7 +8445,7 @@
       <level l="47">342</level>
     </learnset>
   </pokemon>
-  <pokemon id="70" type1="11" type2="3" base-xp="137" height="1.0" weight="6.4">
+  <pokemon id="70" type1="11" type2="3" base-xp="24" height="1.0" weight="6.4">
     <statline>
       <stats atk="12" def="9" hea="33" spa="12" spd="9" level="1" />
       <stats hea="1" level="2" />
@@ -8570,7 +8570,7 @@
       <level l="29">417</level>
     </learnset>
   </pokemon>
-  <pokemon id="71" type1="11" type2="3" base-xp="216" height="1.7" weight="15.5">
+  <pokemon id="71" type1="11" type2="3" base-xp="45" height="1.7" weight="15.5">
     <statline>
       <stats atk="15" def="10" hea="35" spa="15" spd="10" level="1" />
       <stats hea="2" level="2" />
@@ -8682,7 +8682,7 @@
       <level l="47">191,197</level>
     </learnset>
   </pokemon>
-  <pokemon id="72" type1="10" type2="3" base-xp="67" height="0.9" weight="45.5">
+  <pokemon id="72" type1="10" type2="3" base-xp="55" height="0.9" weight="45.5">
     <statline>
       <stats atk="8" def="8" hea="33" spa="8" spd="8" level="1" />
       <stats atk="2" def="2" hea="3" spa="2" spd="2" level="2" />
@@ -8811,7 +8811,7 @@
       <level l="31">430</level>
     </learnset>
   </pokemon>
-  <pokemon id="73" type1="10" type2="3" base-xp="180" height="1.6" weight="55.0">
+  <pokemon id="73" type1="10" type2="3" base-xp="75" height="1.6" weight="55.0">
     <statline>
       <stats atk="17" def="14" hea="45" spa="15" spd="15" level="1" />
       <stats atk="3" def="1" hea="4" spa="2" spd="1" level="2" />
@@ -8937,7 +8937,7 @@
       <level l="28">469</level>
     </learnset>
   </pokemon>
-  <pokemon id="74" type1="5" type2="4" base-xp="60" height="0.4" weight="20.0">
+  <pokemon id="74" type1="5" type2="4" base-xp="25" height="0.4" weight="20.0">
     <statline>
       <stats atk="15" def="8" hea="26" spa="15" spd="8" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -9064,7 +9064,7 @@
       <level l="30">511</level>
     </learnset>
   </pokemon>
-  <pokemon id="75" type1="5" type2="4" base-xp="137" height="1.0" weight="105.0">
+  <pokemon id="75" type1="5" type2="4" base-xp="70" height="1.0" weight="105.0">
     <statline>
       <stats atk="19" def="15" hea="56" spa="19" spd="16" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -9191,7 +9191,7 @@
       <level l="30">514</level>
     </learnset>
   </pokemon>
-  <pokemon id="76" type1="5" type2="4" base-xp="218" height="1.4" weight="300.0">
+  <pokemon id="76" type1="5" type2="4" base-xp="100" height="1.4" weight="300.0">
     <statline>
       <stats atk="22" def="17" hea="60" spa="22" spd="18" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -9316,7 +9316,7 @@
       <level l="30">514</level>
     </learnset>
   </pokemon>
-  <pokemon id="77" type1="9" base-xp="82" height="1.0" weight="30.0">
+  <pokemon id="77" type1="9" base-xp="50" height="1.0" weight="30.0">
     <statline>
       <stats atk="15" def="15" hea="35" spa="15" spd="15" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -9441,7 +9441,7 @@
       <level l="29">274</level>
     </learnset>
   </pokemon>
-  <pokemon id="78" type1="9" base-xp="175" height="1.7" weight="95.0">
+  <pokemon id="78" type1="9" base-xp="70" height="1.7" weight="95.0">
     <statline>
       <stats atk="23" def="16" hea="60" spa="23" spd="16" level="1" />
       <stats atk="2" def="1" hea="4" spa="2" spd="1" level="2" />
@@ -9564,7 +9564,7 @@
       <level l="29">274</level>
     </learnset>
   </pokemon>
-  <pokemon id="79" type1="10" type2="13" base-xp="63" height="1.2" weight="36.0">
+  <pokemon id="79" type1="10" type2="13" base-xp="50" height="1.2" weight="36.0">
     <statline>
       <stats atk="10" def="11" hea="35" spa="10" spd="12" level="1" />
       <stats atk="2" def="1" hea="4" spa="3" spd="3" level="2" />
@@ -9691,7 +9691,7 @@
       <level l="28">548</level>
     </learnset>
   </pokemon>
-  <pokemon id="80" type1="10" type2="13" base-xp="172" height="1.6" weight="78.5">
+  <pokemon id="80" type1="10" type2="13" base-xp="90" height="1.6" weight="78.5">
     <statline>
       <stats atk="18" def="15" hea="45" spa="16" spd="17" level="1" />
       <stats atk="2" def="1" hea="5" spa="1" spd="1" level="2" />
@@ -9815,7 +9815,7 @@
       <level l="62">392</level>
     </learnset>
   </pokemon>
-  <pokemon id="81" type1="12" type2="8" base-xp="89" height="0.3" weight="6.0">
+  <pokemon id="81" type1="12" type2="8" base-xp="20" height="0.3" weight="6.0">
     <statline>
       <stats atk="5" def="5" hea="13" spa="4" spd="4" level="1" />
       <stats atk="3" def="3" hea="5" spa="3" spd="3" level="2" />
@@ -9944,7 +9944,7 @@
       <level l="31">519</level>
     </learnset>
   </pokemon>
-  <pokemon id="82" type1="12" type2="8" base-xp="163" height="1.0" weight="60.0">
+  <pokemon id="82" type1="12" type2="8" base-xp="45" height="1.0" weight="60.0">
     <statline>
       <stats atk="16" def="16" hea="50" spa="16" spd="16" level="1" />
       <stats atk="2" def="2" hea="4" spa="3" spd="2" level="2" />
@@ -10076,7 +10076,7 @@
       <level l="63">67</level>
     </learnset>
   </pokemon>
-  <pokemon id="83" type1="0" type2="2" base-xp="123" height="0.8" weight="15.0">
+  <pokemon id="83" type1="0" type2="2" base-xp="40" height="0.8" weight="15.0">
     <statline>
       <stats atk="16" def="12" hea="31" spa="19" spd="14" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -10199,7 +10199,7 @@
       <level l="31">466</level>
     </learnset>
   </pokemon>
-  <pokemon id="84" type1="0" type2="2" base-xp="62" height="1.4" weight="39.2">
+  <pokemon id="84" type1="0" type2="2" base-xp="70" height="1.4" weight="39.2">
     <statline>
       <stats atk="19" def="11" hea="37" spa="19" spd="11" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -10324,7 +10324,7 @@
       <level l="29">343</level>
     </learnset>
   </pokemon>
-  <pokemon id="85" type1="0" type2="2" base-xp="161" height="1.8" weight="85.2">
+  <pokemon id="85" type1="0" type2="2" base-xp="77" height="1.8" weight="85.2">
     <statline>
       <stats atk="25" def="18" hea="56" spa="25" spd="16" level="1" />
       <stats atk="1" hea="1" spa="2" spd="1" level="2" />
@@ -10446,7 +10446,7 @@
       <level l="29">343</level>
     </learnset>
   </pokemon>
-  <pokemon id="86" type1="10" base-xp="65" height="1.1" weight="90.0">
+  <pokemon id="86" type1="10" base-xp="60" height="1.1" weight="90.0">
     <statline>
       <stats atk="14" def="9" hea="53" spa="14" spd="7" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -10575,7 +10575,7 @@
       <level l="31">550</level>
     </learnset>
   </pokemon>
-  <pokemon id="87" type1="10" type2="14" base-xp="166" height="1.7" weight="120.0">
+  <pokemon id="87" type1="10" type2="14" base-xp="85" height="1.7" weight="120.0">
     <statline>
       <stats atk="16" def="15" hea="55" spa="16" spd="13" level="1" />
       <stats atk="1" def="1" hea="3" spa="1" spd="1" level="2" />
@@ -10702,7 +10702,7 @@
       <level l="31">550</level>
     </learnset>
   </pokemon>
-  <pokemon id="88" type1="3" base-xp="65" height="0.9" weight="30.0">
+  <pokemon id="88" type1="3" base-xp="55" height="0.9" weight="30.0">
     <statline>
       <stats atk="19" def="11" hea="58" spa="19" spd="11" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -10829,7 +10829,7 @@
       <level l="29">429</level>
     </learnset>
   </pokemon>
-  <pokemon id="89" type1="3" base-xp="175" height="1.2" weight="30.0">
+  <pokemon id="89" type1="3" base-xp="55" height="1.2" weight="30.0">
     <statline>
       <stats atk="21" def="15" hea="58" spa="23" spd="17" level="1" />
       <stats atk="1" def="2" hea="3" spa="1" spd="1" level="2" />
@@ -10954,7 +10954,7 @@
       <level l="29">429</level>
     </learnset>
   </pokemon>
-  <pokemon id="90" type1="10" base-xp="61" height="0.3" weight="4.0">
+  <pokemon id="90" type1="10" base-xp="66" height="0.3" weight="4.0">
     <statline>
       <stats atk="8" def="8" hea="25" spa="8" spd="8" level="1" />
       <stats atk="3" def="2" hea="4" spa="3" spd="1" level="2" />
@@ -11082,7 +11082,7 @@
       <level l="61">536</level>
     </learnset>
   </pokemon>
-  <pokemon id="91" type1="10" type2="14" base-xp="184" height="1.5" weight="132.5">
+  <pokemon id="91" type1="10" type2="14" base-xp="82" height="1.5" weight="132.5">
     <statline>
       <stats atk="10" def="8" hea="30" spa="10" spd="9" level="1" />
       <stats atk="2" def="2" hea="4" spa="2" spd="2" level="2" />
@@ -11195,7 +11195,7 @@
       <level l="13">318</level>
     </learnset>
   </pokemon>
-  <pokemon id="92" type1="7" type2="3" base-xp="62" height="1.3" weight="0.1">
+  <pokemon id="92" type1="7" type2="3" base-xp="80" height="1.3" weight="0.1">
     <statline>
       <stats atk="8" def="7" hea="25" spa="8" spd="7" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -11321,7 +11321,7 @@
       <level l="29">175</level>
     </learnset>
   </pokemon>
-  <pokemon id="93" type1="7" type2="3" base-xp="142" height="1.6" weight="0.1">
+  <pokemon id="93" type1="7" type2="3" base-xp="90" height="1.6" weight="0.1">
     <statline>
       <stats atk="11" def="8" hea="30" spa="11" spd="8" level="1" />
       <stats atk="3" def="2" hea="4" spa="2" spd="2" level="2" />
@@ -11448,7 +11448,7 @@
       <level l="61">188</level>
     </learnset>
   </pokemon>
-  <pokemon id="94" type1="7" type2="3" base-xp="225" height="1.5" weight="40.5">
+  <pokemon id="94" type1="7" type2="3" base-xp="200" height="1.5" weight="40.5">
     <statline>
       <stats atk="13" def="8" hea="53" spa="13" spd="8" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -11572,7 +11572,7 @@
       <level l="61">188</level>
     </learnset>
   </pokemon>
-  <pokemon id="95" type1="5" type2="4" base-xp="77" height="8.8" weight="210.0">
+  <pokemon id="95" type1="5" type2="4" base-xp="100" height="8.8" weight="210.0">
     <statline>
       <stats atk="9" def="17" hea="52" spa="10" spd="17" level="1" />
       <stats atk="2" hea="2" spa="2" level="2" />
@@ -11703,7 +11703,7 @@
       <level l="31">400</level>
     </learnset>
   </pokemon>
-  <pokemon id="96" type1="13" base-xp="66" height="1.0" weight="32.4">
+  <pokemon id="96" type1="13" base-xp="100" height="1.0" weight="32.4">
     <statline>
       <stats atk="11" def="15" hea="30" spa="12" spd="16" level="1" />
       <stats atk="1" hea="1" spa="1" level="2" />
@@ -11831,7 +11831,7 @@
       <level l="61">450</level>
     </learnset>
   </pokemon>
-  <pokemon id="97" type1="13" base-xp="169" height="1.6" weight="75.6">
+  <pokemon id="97" type1="13" base-xp="190" height="1.6" weight="75.6">
     <statline>
       <stats atk="15" def="18" hea="40" spa="17" spd="16" level="1" />
       <stats atk="1" hea="1" spa="1" level="2" />
@@ -11956,7 +11956,7 @@
       <level l="61">450</level>
     </learnset>
   </pokemon>
-  <pokemon id="98" type1="10" base-xp="65" height="0.4" weight="6.5">
+  <pokemon id="98" type1="10" base-xp="25" height="0.4" weight="6.5">
     <statline>
       <stats atk="9" def="6" hea="25" spa="9" spd="7" level="1" />
       <stats atk="2" def="1" hea="4" spa="2" spd="2" level="2" />
@@ -12082,7 +12082,7 @@
       <level l="31">332</level>
     </learnset>
   </pokemon>
-  <pokemon id="99" type1="10" base-xp="166" height="1.3" weight="60.0">
+  <pokemon id="99" type1="10" base-xp="90" height="1.3" weight="60.0">
     <statline>
       <stats atk="9" def="8" hea="30" spa="10" spd="8" level="1" />
       <stats atk="2" def="1" hea="5" spa="2" spd="2" level="2" />
@@ -12205,7 +12205,7 @@
       <level l="63">330</level>
     </learnset>
   </pokemon>
-  <pokemon id="100" type1="12" base-xp="66" height="0.5" weight="10.4">
+  <pokemon id="100" type1="12" base-xp="35" height="0.5" weight="10.4">
     <statline>
       <stats atk="11" def="5" hea="18" spa="11" spd="5" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -12333,7 +12333,7 @@
       <level l="29">482</level>
     </learnset>
   </pokemon>
-  <pokemon id="101" type1="12" base-xp="168" height="1.2" weight="66.6">
+  <pokemon id="101" type1="12" base-xp="160" height="1.2" weight="66.6">
     <statline>
       <stats atk="20" def="10" hea="30" spa="20" spd="12" level="1" />
       <stats def="1" hea="4" level="2" />
@@ -12458,7 +12458,7 @@
       <level l="29">482</level>
     </learnset>
   </pokemon>
-  <pokemon id="102" type1="11" type2="13" base-xp="65" height="0.4" weight="2.5">
+  <pokemon id="102" type1="11" type2="13" base-xp="45" height="0.4" weight="2.5">
     <statline>
       <stats atk="6" def="5" hea="12" spa="6" spd="5" level="1" />
       <stats atk="2" def="2" hea="3" spa="2" spd="2" level="2" />
@@ -12583,7 +12583,7 @@
       <level l="27">462</level>
     </learnset>
   </pokemon>
-  <pokemon id="103" type1="11" type2="13" base-xp="182" height="2.0" weight="120.0">
+  <pokemon id="103" type1="11" type2="13" base-xp="50" height="2.0" weight="120.0">
     <statline>
       <stats atk="13" def="6" hea="33" spa="13" spd="6" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -12697,7 +12697,7 @@
       <level l="47">191</level>
     </learnset>
   </pokemon>
-  <pokemon id="104" type1="4" base-xp="64" height="0.4" weight="6.5">
+  <pokemon id="104" type1="4" base-xp="18" height="0.4" weight="6.5">
     <statline>
       <stats atk="4" def="6" hea="13" spa="2" spd="2" level="1" />
       <stats atk="1" def="1" hea="3" spa="2" spd="2" level="2" />
@@ -12824,7 +12824,7 @@
       <level l="31">268</level>
     </learnset>
   </pokemon>
-  <pokemon id="105" type1="4" base-xp="149" height="1.0" weight="45.0">
+  <pokemon id="105" type1="4" base-xp="50" height="1.0" weight="45.0">
     <statline>
       <stats atk="15" def="15" hea="40" spa="15" spd="15" level="1" />
       <stats atk="1" def="1" hea="2" spa="2" spd="2" level="2" />
@@ -12948,7 +12948,7 @@
       <level l="59">291</level>
     </learnset>
   </pokemon>
-  <pokemon id="106" type1="1" base-xp="159" height="1.5" weight="49.8">
+  <pokemon id="106" type1="1" base-xp="80" height="1.5" weight="49.8">
     <statline>
       <stats atk="25" def="13" hea="48" spa="22" spd="13" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -13073,7 +13073,7 @@
       <level l="61">118</level>
     </learnset>
   </pokemon>
-  <pokemon id="107" type1="1" base-xp="159" height="1.4" weight="50.2">
+  <pokemon id="107" type1="1" base-xp="90" height="1.4" weight="50.2">
     <statline>
       <stats atk="28" def="15" hea="52" spa="25" spd="15" level="1" />
       <stats def="1" hea="1" spa="1" spd="1" level="2" />
@@ -13195,7 +13195,7 @@
       <level l="31">122</level>
     </learnset>
   </pokemon>
-  <pokemon id="108" type1="0" base-xp="77" height="1.2" weight="65.5">
+  <pokemon id="108" type1="0" base-xp="95" height="1.2" weight="65.5">
     <statline>
       <stats atk="20" def="18" hea="35" spa="18" spd="16" level="1" />
       <stats atk="1" def="1" hea="4" spa="1" spd="1" level="2" />
@@ -13322,7 +13322,7 @@
       <level l="29">282</level>
     </learnset>
   </pokemon>
-  <pokemon id="109" type1="3" base-xp="68" height="0.6" weight="1.0">
+  <pokemon id="109" type1="3" base-xp="70" height="0.6" weight="1.0">
     <statline>
       <stats atk="21" def="5" hea="42" spa="21" spd="5" level="1" />
       <stats atk="1" def="1" hea="2" spa="1" spd="1" level="2" />
@@ -13448,7 +13448,7 @@
       <level l="29">527</level>
     </learnset>
   </pokemon>
-  <pokemon id="110" type1="3" base-xp="172" height="1.2" weight="9.5">
+  <pokemon id="110" type1="3" base-xp="80" height="1.2" weight="9.5">
     <statline>
       <stats atk="22" def="10" hea="52" spa="23" spd="10" level="1" />
       <stats atk="1" def="1" hea="2" spa="1" spd="1" level="2" />
@@ -13571,7 +13571,7 @@
       <level l="29">313</level>
     </learnset>
   </pokemon>
-  <pokemon id="111" type1="4" type2="5" base-xp="69" height="1.0" weight="115.0">
+  <pokemon id="111" type1="4" type2="5" base-xp="100" height="1.0" weight="115.0">
     <statline>
       <stats atk="25" def="10" hea="53" spa="25" spd="14" level="1" />
       <stats atk="1" def="1" hea="2" spa="1" spd="1" level="2" />
@@ -13697,7 +13697,7 @@
       <level l="29">511</level>
     </learnset>
   </pokemon>
-  <pokemon id="112" type1="4" type2="5" base-xp="170" height="1.9" weight="120.0">
+  <pokemon id="112" type1="4" type2="5" base-xp="110" height="1.9" weight="120.0">
     <statline>
       <stats atk="25" def="10" hea="58" spa="27" spd="14" level="1" />
       <stats atk="1" def="1" hea="2" spa="1" spd="1" level="2" />
@@ -13824,7 +13824,7 @@
       <level l="62">334</level>
     </learnset>
   </pokemon>
-  <pokemon id="113" type1="0" base-xp="395" height="1.1" weight="34.6">
+  <pokemon id="113" type1="0" base-xp="7" height="1.1" weight="34.6">
     <statline>
       <stats atk="7" def="7" hea="33" spa="7" spd="7" level="1" />
       <stats def="1" hea="1" level="2" />
@@ -13951,7 +13951,7 @@
       <level l="31">404</level>
     </learnset>
   </pokemon>
-  <pokemon id="114" type1="11" base-xp="87" height="1.0" weight="35.0">
+  <pokemon id="114" type1="11" base-xp="60" height="1.0" weight="35.0">
     <statline>
       <stats atk="18" def="20" hea="35" spa="15" spd="15" level="1" />
       <stats hea="3" spa="2" level="2" />
@@ -14081,7 +14081,7 @@
       <level l="30">220</level>
     </learnset>
   </pokemon>
-  <pokemon id="115" type1="0" base-xp="172" height="2.2" weight="80.0">
+  <pokemon id="115" type1="0" base-xp="125" height="2.2" weight="80.0">
     <statline>
       <stats atk="20" def="15" hea="40" spa="15" spd="15" level="1" />
       <stats def="1" hea="3" spa="2" level="2" />
@@ -14204,7 +14204,7 @@
       <level l="31">287</level>
     </learnset>
   </pokemon>
-  <pokemon id="116" type1="10" base-xp="59" height="0.4" weight="8.0">
+  <pokemon id="116" type1="10" base-xp="65" height="0.4" weight="8.0">
     <statline>
       <stats atk="7" def="7" hea="30" spa="8" spd="8" level="1" />
       <stats atk="3" def="2" hea="4" spa="3" spd="3" level="2" />
@@ -14328,7 +14328,7 @@
       <level l="31">545</level>
     </learnset>
   </pokemon>
-  <pokemon id="117" type1="10" base-xp="154" height="1.2" weight="25.0">
+  <pokemon id="117" type1="10" base-xp="95" height="1.2" weight="25.0">
     <statline>
       <stats atk="9" def="10" hea="35" spa="8" spd="8" level="1" />
       <stats atk="4" def="3" hea="5" spa="5" spd="2" level="2" />
@@ -14452,7 +14452,7 @@
       <level l="31">545</level>
     </learnset>
   </pokemon>
-  <pokemon id="118" type1="10" base-xp="64" height="0.6" weight="15.0">
+  <pokemon id="118" type1="10" base-xp="50" height="0.6" weight="15.0">
     <statline>
       <stats atk="5" def="5" hea="25" spa="5" spd="5" level="1" />
       <stats atk="2" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -14576,7 +14576,7 @@
       <level l="45">1</level>
     </learnset>
   </pokemon>
-  <pokemon id="119" type1="10" base-xp="158" height="1.3" weight="39.0">
+  <pokemon id="119" type1="10" base-xp="65" height="1.3" weight="39.0">
     <statline>
       <stats atk="10" def="10" hea="50" spa="10" spd="10" level="1" />
       <stats atk="2" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -14697,7 +14697,7 @@
       <level l="46">557</level>
     </learnset>
   </pokemon>
-  <pokemon id="120" type1="10" base-xp="68" height="0.8" weight="34.5">
+  <pokemon id="120" type1="10" base-xp="85" height="0.8" weight="34.5">
     <statline>
       <stats atk="10" def="8" hea="30" spa="9" spd="8" level="1" />
       <stats atk="2" def="2" hea="5" spa="2" spd="2" level="2" />
@@ -14827,7 +14827,7 @@
       <level l="31">384</level>
     </learnset>
   </pokemon>
-  <pokemon id="121" type1="10" type2="13" base-xp="182" height="1.1" weight="80.0">
+  <pokemon id="121" type1="10" type2="13" base-xp="115" height="1.1" weight="80.0">
     <statline>
       <stats atk="25" def="19" hea="55" spa="25" spd="18" level="1" />
       <stats atk="2" def="2" hea="5" spa="1" spd="2" level="2" />
@@ -14938,7 +14938,7 @@
       <level l="40">184</level>
     </learnset>
   </pokemon>
-  <pokemon id="122" type1="13" type2="17" base-xp="161" height="1.3" weight="54.5">
+  <pokemon id="122" type1="13" type2="17" base-xp="160" height="1.3" weight="54.5">
     <statline>
       <stats atk="9" def="10" hea="30" spa="9" spd="10" level="1" />
       <stats atk="1" def="1" hea="3" spa="2" spd="1" level="2" />
@@ -15062,7 +15062,7 @@
       <level l="29">412</level>
     </learnset>
   </pokemon>
-  <pokemon id="123" type1="6" type2="2" base-xp="100" height="1.5" weight="56.0">
+  <pokemon id="123" type1="6" type2="2" base-xp="50" height="1.5" weight="56.0">
     <statline>
       <stats atk="14" def="9" hea="30" spa="14" spd="8" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -15190,7 +15190,7 @@
       <level l="61">314</level>
     </learnset>
   </pokemon>
-  <pokemon id="124" type1="14" type2="13" base-xp="159" height="1.4" weight="40.6">
+  <pokemon id="124" type1="14" type2="13" base-xp="100" height="1.4" weight="40.6">
     <statline>
       <stats atk="12" def="18" hea="35" spa="12" spd="18" level="1" />
       <stats atk="2" def="1" hea="4" spa="2" level="2" />
@@ -15314,7 +15314,7 @@
       <level l="60">242</level>
     </learnset>
   </pokemon>
-  <pokemon id="125" type1="12" base-xp="172" height="1.1" weight="30.0">
+  <pokemon id="125" type1="12" base-xp="50" height="1.1" weight="30.0">
     <statline>
       <stats atk="19" def="7" hea="35" spa="20" spd="8" level="1" />
       <stats atk="1" def="1" hea="2" spa="1" spd="1" level="2" />
@@ -15439,7 +15439,7 @@
       <level l="29">72</level>
     </learnset>
   </pokemon>
-  <pokemon id="126" type1="9" base-xp="173" height="1.3" weight="44.5">
+  <pokemon id="126" type1="9" base-xp="45" height="1.3" weight="44.5">
     <statline>
       <stats atk="23" def="7" hea="53" spa="19" spd="10" level="1" />
       <stats atk="1" def="1" hea="2" spa="1" spd="1" level="2" />
@@ -15564,7 +15564,7 @@
       <level l="29">140</level>
     </learnset>
   </pokemon>
-  <pokemon id="127" type1="6" base-xp="175" height="1.5" weight="55.0">
+  <pokemon id="127" type1="6" base-xp="40" height="1.5" weight="55.0">
     <statline>
       <stats atk="17" def="6" hea="25" spa="15" spd="8" level="1" />
       <stats def="2" hea="1" spa="2" level="2" />
@@ -15688,7 +15688,7 @@
       <level l="29">97</level>
     </learnset>
   </pokemon>
-  <pokemon id="128" type1="0" base-xp="172" height="1.4" weight="88.4">
+  <pokemon id="128" type1="0" base-xp="41" height="1.4" weight="88.4">
     <statline>
       <stats atk="19" def="11" hea="27" spa="19" spd="11" level="1" />
       <stats def="1" hea="2" spa="2" level="2" />
@@ -15811,7 +15811,7 @@
       <level l="63">262</level>
     </learnset>
   </pokemon>
-  <pokemon id="129" type1="10" base-xp="40" height="0.9" weight="10.0">
+  <pokemon id="129" type1="10" base-xp="10" height="0.9" weight="10.0">
     <statline>
       <stats atk="8" def="8" hea="20" spa="8" spd="8" level="1" />
       <stats def="1" hea="1" level="2" />
@@ -15925,7 +15925,7 @@
       <level l="15">303</level>
     </learnset>
   </pokemon>
-  <pokemon id="130" type1="10" type2="2" base-xp="189" height="6.5" weight="235.0">
+  <pokemon id="130" type1="10" type2="2" base-xp="225" height="6.5" weight="235.0">
     <statline>
       <stats atk="30" def="15" hea="50" spa="30" spd="15" level="1" />
       <stats atk="2" hea="6" spa="2" level="2" />
@@ -16046,7 +16046,7 @@
       <level l="47">63</level>
     </learnset>
   </pokemon>
-  <pokemon id="131" type1="10" type2="14" base-xp="187" height="2.5" weight="220.0">
+  <pokemon id="131" type1="10" type2="14" base-xp="185" height="2.5" weight="220.0">
     <statline>
       <stats atk="15" def="10" hea="25" spa="15" spd="10" level="1" />
       <stats atk="1" def="1" hea="3" spa="1" level="2" />
@@ -16168,7 +16168,7 @@
       <level l="27">390</level>
     </learnset>
   </pokemon>
-  <pokemon id="132" type1="0" base-xp="101" height="0.3" weight="4.0">
+  <pokemon id="132" type1="0" base-xp="5" height="0.3" weight="4.0">
     <statline>
       <stats atk="5" def="5" hea="41" spa="5" spd="5" level="1" />
       <stats atk="1" def="1" hea="1" level="2" />
@@ -16277,7 +16277,7 @@
       <level l="1">422</level>
     </learnset>
   </pokemon>
-  <pokemon id="133" type1="0" base-xp="65" height="0.3" weight="6.5">
+  <pokemon id="133" type1="0" base-xp="18" height="0.3" weight="6.5">
     <statline>
       <stats atk="1" def="3" hea="18" spa="1" spd="3" level="1" />
       <stats atk="2" def="2" hea="3" spa="2" spd="2" level="2" />
@@ -16410,7 +16410,7 @@
       <level l="29">353</level>
     </learnset>
   </pokemon>
-  <pokemon id="134" type1="10" base-xp="184" height="1.0" weight="29.0">
+  <pokemon id="134" type1="10" base-xp="60" height="1.0" weight="29.0">
     <statline>
       <stats atk="20" def="12" hea="40" spa="20" spd="13" level="1" />
       <stats atk="2" def="2" hea="3" spa="2" spd="2" level="2" />
@@ -16531,7 +16531,7 @@
       <level l="45">536</level>
     </learnset>
   </pokemon>
-  <pokemon id="135" type1="12" base-xp="184" height="0.8" weight="24.5">
+  <pokemon id="135" type1="12" base-xp="70" height="0.8" weight="24.5">
     <statline>
       <stats atk="20" def="13" hea="40" spa="20" spd="12" level="1" />
       <stats atk="2" def="2" hea="3" spa="2" spd="2" level="2" />
@@ -16652,7 +16652,7 @@
       <level l="45">65</level>
     </learnset>
   </pokemon>
-  <pokemon id="136" type1="9" base-xp="184" height="0.9" weight="25.0">
+  <pokemon id="136" type1="9" base-xp="75" height="0.9" weight="25.0">
     <statline>
       <stats atk="23" def="15" hea="40" spa="23" spd="15" level="1" />
       <stats atk="2" def="2" hea="3" spa="2" spd="2" level="2" />
@@ -16773,7 +16773,7 @@
       <level l="45">129</level>
     </learnset>
   </pokemon>
-  <pokemon id="137" type1="0" base-xp="79" height="0.8" weight="36.5">
+  <pokemon id="137" type1="0" base-xp="88" height="0.8" weight="36.5">
     <statline>
       <stats atk="10" def="7" hea="30" spa="9" spd="9" level="1" />
       <stats atk="3" def="1" hea="3" spa="3" level="2" />
@@ -16897,7 +16897,7 @@
       <level l="62">67</level>
     </learnset>
   </pokemon>
-  <pokemon id="138" type1="5" type2="10" base-xp="71" height="0.4" weight="7.5">
+  <pokemon id="138" type1="5" type2="10" base-xp="50" height="0.4" weight="7.5">
     <statline>
       <stats atk="9" def="8" hea="30" spa="10" spd="10" level="1" />
       <stats atk="2" def="3" hea="4" spa="2" spd="2" level="2" />
@@ -17022,7 +17022,7 @@
       <level l="28">545</level>
     </learnset>
   </pokemon>
-  <pokemon id="139" type1="5" type2="10" base-xp="173" height="1.0" weight="35.0">
+  <pokemon id="139" type1="5" type2="10" base-xp="85" height="1.0" weight="35.0">
     <statline>
       <stats atk="11" def="10" hea="30" spa="15" spd="10" level="1" />
       <stats atk="2" def="2" hea="4" spa="3" spd="2" level="2" />
@@ -17145,7 +17145,7 @@
       <level l="28">545</level>
     </learnset>
   </pokemon>
-  <pokemon id="140" type1="5" type2="10" base-xp="71" height="0.5" weight="11.5">
+  <pokemon id="140" type1="5" type2="10" base-xp="45" height="0.5" weight="11.5">
     <statline>
       <stats atk="11" def="8" hea="30" spa="10" spd="9" level="1" />
       <stats atk="2" def="1" hea="3" spa="2" spd="2" level="2" />
@@ -17268,7 +17268,7 @@
       <level l="31">550</level>
     </learnset>
   </pokemon>
-  <pokemon id="141" type1="5" type2="10" base-xp="173" height="1.3" weight="40.5">
+  <pokemon id="141" type1="5" type2="10" base-xp="85" height="1.3" weight="40.5">
     <statline>
       <stats atk="13" def="11" hea="35" spa="12" spd="11" level="1" />
       <stats atk="2" def="1" hea="4" spa="2" spd="2" level="2" />
@@ -17390,7 +17390,7 @@
       <level l="63">342</level>
     </learnset>
   </pokemon>
-  <pokemon id="142" type1="5" type2="2" base-xp="180" height="1.8" weight="59.0">
+  <pokemon id="142" type1="5" type2="2" base-xp="70" height="1.8" weight="59.0">
     <statline>
       <stats atk="21" def="12" hea="52" spa="21" spd="14" level="1" />
       <stats atk="3" def="2" hea="5" spa="2" spd="2" level="2" />
@@ -17510,7 +17510,7 @@
       <level l="73">504</level>
     </learnset>
   </pokemon>
-  <pokemon id="143" type1="0" base-xp="189" height="2.1" weight="460.0">
+  <pokemon id="143" type1="0" base-xp="89" height="2.1" weight="460.0">
     <statline>
       <stats atk="7" def="8" hea="33" spa="8" spd="7" level="1" />
       <stats atk="2" def="2" hea="2" spa="2" spd="2" level="2" />
@@ -17634,7 +17634,7 @@
       <level l="28">493,312</level>
     </learnset>
   </pokemon>
-  <pokemon id="144" type1="14" type2="2" base-xp="261" height="1.7" weight="55.4">
+  <pokemon id="144" type1="14" type2="2" base-xp="150" height="1.7" weight="55.4">
     <statline>
       <stats atk="20" def="11" hea="64" spa="20" spd="11" level="1" />
       <stats atk="1" def="1" hea="2" spa="1" spd="1" level="2" />
@@ -17757,7 +17757,7 @@
       <level l="29">506</level>
     </learnset>
   </pokemon>
-  <pokemon id="145" type1="12" type2="2" base-xp="261" height="1.6" weight="52.6">
+  <pokemon id="145" type1="12" type2="2" base-xp="160" height="1.6" weight="52.6">
     <statline>
       <stats atk="20" def="11" hea="57" spa="20" spd="11" level="1" />
       <stats atk="1" hea="2" spa="1" level="2" />
@@ -17880,7 +17880,7 @@
       <level l="29">506</level>
     </learnset>
   </pokemon>
-  <pokemon id="146" type1="9" type2="2" base-xp="261" height="2.0" weight="60.0">
+  <pokemon id="146" type1="9" type2="2" base-xp="170" height="2.0" weight="60.0">
     <statline>
       <stats atk="20" def="11" hea="58" spa="20" spd="11" level="1" />
       <stats atk="1" hea="2" spa="1" level="2" />
@@ -18003,7 +18003,7 @@
       <level l="29">506</level>
     </learnset>
   </pokemon>
-  <pokemon id="147" type1="15" base-xp="60" height="1.8" weight="3.3">
+  <pokemon id="147" type1="15" base-xp="50" height="1.8" weight="3.3">
     <statline>
       <stats atk="8" def="8" hea="35" spa="8" spd="8" level="1" />
       <stats atk="5" def="1" hea="6" spa="1" spd="2" level="2" />
@@ -18128,7 +18128,7 @@
       <level l="31">58</level>
     </learnset>
   </pokemon>
-  <pokemon id="148" type1="15" base-xp="147" height="4.0" weight="16.5">
+  <pokemon id="148" type1="15" base-xp="60" height="4.0" weight="16.5">
     <statline>
       <stats atk="9" def="9" hea="40" spa="9" spd="9" level="1" />
       <stats atk="2" def="3" hea="4" spa="2" spd="2" level="2" />
@@ -18253,7 +18253,7 @@
       <level l="61">63</level>
     </learnset>
   </pokemon>
-  <pokemon id="149" type1="15" type2="2" base-xp="270" height="2.2" weight="210.0">
+  <pokemon id="149" type1="15" type2="2" base-xp="215" height="2.2" weight="210.0">
     <statline>
       <stats atk="11" def="11" hea="45" spa="11" spd="11" level="1" />
       <stats atk="3" def="3" hea="6" spa="2" spd="3" level="2" />
@@ -18377,7 +18377,7 @@
       <level l="61">63</level>
     </learnset>
   </pokemon>
-  <pokemon id="150" type1="13" base-xp="306" height="2.0" weight="122.0">
+  <pokemon id="150" type1="13" base-xp="250" height="2.0" weight="122.0">
     <statline>
       <stats atk="25" def="15" hea="50" spa="25" spd="15" level="1" />
       <stats hea="4" level="2" />
@@ -18501,7 +18501,7 @@
       <level l="93">378</level>
     </learnset>
   </pokemon>
-  <pokemon id="151" type1="13" base-xp="270" height="0.4" weight="4.0">
+  <pokemon id="151" type1="13" base-xp="250" height="0.4" weight="4.0">
     <statline>
       <stats atk="20" def="15" hea="35" spa="20" spd="15" level="1" />
       <stats atk="1" def="1" hea="5" spd="1" level="2" />
@@ -18621,7 +18621,7 @@
       <level l="30">452</level>
     </learnset>
   </pokemon>
-  <pokemon id="152" type1="11" base-xp="64" height="0.9" weight="6.4">
+  <pokemon id="152" type1="11" base-xp="18" height="0.9" weight="6.4">
     <statline>
       <stats atk="3" def="1" hea="23" spa="4" level="1" />
       <stats atk="2" def="2" hea="1" spa="2" spd="2" level="2" />
@@ -18746,7 +18746,7 @@
       <level l="31">482</level>
     </learnset>
   </pokemon>
-  <pokemon id="153" type1="11" base-xp="142" height="1.2" weight="15.8">
+  <pokemon id="153" type1="11" base-xp="45" height="1.2" weight="15.8">
     <statline>
       <stats atk="10" def="8" hea="40" spa="8" spd="8" level="1" />
       <stats atk="2" def="2" hea="1" spa="2" spd="2" level="2" />
@@ -18871,7 +18871,7 @@
       <level l="26">335</level>
     </learnset>
   </pokemon>
-  <pokemon id="154" type1="11" base-xp="236" height="1.8" weight="100.5">
+  <pokemon id="154" type1="11" base-xp="135" height="1.8" weight="100.5">
     <statline>
       <stats atk="30" def="25" hea="50" spa="30" spd="25" level="1" />
       <stats atk="2" def="2" hea="4" spa="2" spd="2" level="2" />
@@ -18995,7 +18995,7 @@
       <level l="60">212</level>
     </learnset>
   </pokemon>
-  <pokemon id="155" type1="9" base-xp="62" height="0.5" weight="7.9">
+  <pokemon id="155" type1="9" base-xp="21" height="0.5" weight="7.9">
     <statline>
       <stats atk="2" def="1" hea="22" spa="2" spd="1" level="1" />
       <stats atk="2" def="2" hea="3" spa="2" spd="2" level="2" />
@@ -19121,7 +19121,7 @@
       <level l="31">299</level>
     </learnset>
   </pokemon>
-  <pokemon id="156" type1="9" base-xp="142" height="0.9" weight="19.0">
+  <pokemon id="156" type1="9" base-xp="57" height="0.9" weight="19.0">
     <statline>
       <stats atk="11" def="10" hea="40" spa="10" spd="10" level="1" />
       <stats atk="2" def="2" hea="5" spa="2" spd="2" level="2" />
@@ -19247,7 +19247,7 @@
       <level l="31">299</level>
     </learnset>
   </pokemon>
-  <pokemon id="157" type1="9" base-xp="240" height="1.7" weight="79.5">
+  <pokemon id="157" type1="9" base-xp="180" height="1.7" weight="79.5">
     <statline>
       <stats atk="12" def="11" hea="45" spa="11" spd="11" level="1" />
       <stats atk="2" def="2" hea="3" spa="2" spd="2" level="2" />
@@ -19370,7 +19370,7 @@
       <level l="31">299</level>
     </learnset>
   </pokemon>
-  <pokemon id="158" type1="10" base-xp="63" height="0.6" weight="9.5">
+  <pokemon id="158" type1="10" base-xp="27" height="0.6" weight="9.5">
     <statline>
       <stats atk="2" def="5" hea="18" spa="2" spd="5" level="1" />
       <stats atk="3" def="1" hea="4" spa="1" spd="1" level="2" />
@@ -19497,7 +19497,7 @@
       <level l="29">287</level>
     </learnset>
   </pokemon>
-  <pokemon id="159" type1="10" base-xp="142" height="1.1" weight="25.0">
+  <pokemon id="159" type1="10" base-xp="75" height="1.1" weight="25.0">
     <statline>
       <stats atk="12" def="12" hea="35" spa="12" spd="12" level="1" />
       <stats atk="3" def="1" hea="4" spa="1" spd="1" level="2" />
@@ -19624,7 +19624,7 @@
       <level l="30">24</level>
     </learnset>
   </pokemon>
-  <pokemon id="160" type1="10" base-xp="239" height="2.3" weight="88.8">
+  <pokemon id="160" type1="10" base-xp="180" height="2.3" weight="88.8">
     <statline>
       <stats atk="13" def="12" hea="40" spa="13" spd="12" level="1" />
       <stats atk="3" def="1" spa="1" spd="1" level="2" />
@@ -19749,7 +19749,7 @@
       <level l="63">539</level>
     </learnset>
   </pokemon>
-  <pokemon id="161" type1="0" base-xp="43" height="0.8" weight="6.0">
+  <pokemon id="161" type1="0" base-xp="50" height="0.8" weight="6.0">
     <statline>
       <stats atk="15" def="5" hea="30" spa="17" spd="6" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -19874,7 +19874,7 @@
       <level l="31">26</level>
     </learnset>
   </pokemon>
-  <pokemon id="162" type1="0" base-xp="145" height="1.8" weight="32.5">
+  <pokemon id="162" type1="0" base-xp="35" height="1.8" weight="32.5">
     <statline>
       <stats atk="20" def="7" hea="54" spa="20" spd="12" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -19996,7 +19996,7 @@
       <level l="28">282</level>
     </learnset>
   </pokemon>
-  <pokemon id="163" type1="0" type2="2" base-xp="52" height="0.7" weight="21.2">
+  <pokemon id="163" type1="0" type2="2" base-xp="40" height="0.7" weight="21.2">
     <statline>
       <stats atk="13" def="5" hea="25" spa="14" spd="5" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -20123,7 +20123,7 @@
       <level l="29">274</level>
     </learnset>
   </pokemon>
-  <pokemon id="164" type1="0" type2="2" base-xp="155" height="1.6" weight="40.8">
+  <pokemon id="164" type1="0" type2="2" base-xp="50" height="1.6" weight="40.8">
     <statline>
       <stats atk="18" def="5" hea="45" spa="20" spd="6" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -20247,7 +20247,7 @@
       <level l="62">172</level>
     </learnset>
   </pokemon>
-  <pokemon id="165" type1="6" type2="2" base-xp="53" height="1.0" weight="10.8">
+  <pokemon id="165" type1="6" type2="2" base-xp="55" height="1.0" weight="10.8">
     <statline>
       <stats atk="16" def="9" hea="29" spa="16" spd="9" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -20370,7 +20370,7 @@
       <level l="30">466</level>
     </learnset>
   </pokemon>
-  <pokemon id="166" type1="6" type2="2" base-xp="137" height="1.4" weight="35.6">
+  <pokemon id="166" type1="6" type2="2" base-xp="75" height="1.4" weight="35.6">
     <statline>
       <stats atk="22" def="14" hea="57" spa="21" spd="16" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -20617,7 +20617,7 @@
       <level l="29">19</level>
     </learnset>
   </pokemon>
-  <pokemon id="168" type1="6" type2="3" base-xp="137" height="1.1" weight="33.5">
+  <pokemon id="168" type1="6" type2="3" base-xp="80" height="1.1" weight="33.5">
     <statline>
       <stats atk="20" def="12" hea="43" spa="20" spd="12" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -20741,7 +20741,7 @@
       <level l="28">26</level>
     </learnset>
   </pokemon>
-  <pokemon id="169" type1="3" type2="2" base-xp="241" height="1.8" weight="75.0">
+  <pokemon id="169" type1="3" type2="2" base-xp="80" height="1.8" weight="75.0">
     <statline>
       <stats atk="25" def="19" hea="55" spa="25" spd="19" level="1" />
       <stats atk="2" def="2" hea="4" spa="3" spd="2" level="2" />
@@ -20865,7 +20865,7 @@
       <level l="27">435</level>
     </learnset>
   </pokemon>
-  <pokemon id="170" type1="10" type2="12" base-xp="66" height="0.5" weight="12.0">
+  <pokemon id="170" type1="10" type2="12" base-xp="50" height="0.5" weight="12.0">
     <statline>
       <stats atk="10" def="8" hea="30" spa="10" spd="8" level="1" />
       <stats atk="1" def="1" hea="5" spa="1" spd="1" level="2" />
@@ -20992,7 +20992,7 @@
       <level l="31">330</level>
     </learnset>
   </pokemon>
-  <pokemon id="171" type1="10" type2="12" base-xp="161" height="1.2" weight="22.5">
+  <pokemon id="171" type1="10" type2="12" base-xp="80" height="1.2" weight="22.5">
     <statline>
       <stats atk="11" def="9" hea="40" spa="12" spd="9" level="1" />
       <stats atk="1" def="1" hea="5" spa="1" spd="1" level="2" />
@@ -21117,7 +21117,7 @@
       <level l="29">5</level>
     </learnset>
   </pokemon>
-  <pokemon id="172" type1="12" base-xp="41" height="0.3" weight="2.0">
+  <pokemon id="172" type1="12" base-xp="6" height="0.3" weight="2.0">
     <statline>
       <stats atk="8" def="8" hea="25" spa="8" spd="8" level="1" />
       <stats atk="2" def="2" hea="1" spa="2" spd="2" level="2" />
@@ -21234,7 +21234,7 @@
       <level l="13">45</level>
     </learnset>
   </pokemon>
-  <pokemon id="173" type1="17" base-xp="44" height="0.3" weight="3.0">
+  <pokemon id="173" type1="17" base-xp="12" height="0.3" weight="3.0">
     <statline>
       <stats atk="3" def="2" hea="11" spa="2" spd="2" level="1" />
       <stats def="1" hea="1" level="2" />
@@ -21352,7 +21352,7 @@
       <level l="13">356</level>
     </learnset>
   </pokemon>
-  <pokemon id="174" type1="0" type2="17" base-xp="42" height="0.3" weight="1.0">
+  <pokemon id="174" type1="0" type2="17" base-xp="15" height="0.3" weight="1.0">
     <statline>
       <stats atk="10" def="9" hea="25" spa="8" spd="8" level="1" />
       <stats def="1" hea="1" level="2" />
@@ -21469,7 +21469,7 @@
       <level l="11">356</level>
     </learnset>
   </pokemon>
-  <pokemon id="175" type1="17" base-xp="49" height="0.3" weight="1.5">
+  <pokemon id="175" type1="17" base-xp="20" height="0.3" weight="1.5">
     <statline>
       <stats atk="10" def="7" hea="18" spa="9" spd="7" level="1" />
       <stats def="1" hea="1" level="2" />
@@ -21595,7 +21595,7 @@
       <level l="29">424</level>
     </learnset>
   </pokemon>
-  <pokemon id="176" type1="17" type2="2" base-xp="142" height="0.6" weight="3.2">
+  <pokemon id="176" type1="17" type2="2" base-xp="18" height="0.6" weight="3.2">
     <statline>
       <stats atk="11" def="8" hea="35" spa="12" spd="8" level="1" />
       <stats atk="3" def="2" hea="4" spa="3" spd="2" level="2" />
@@ -21722,7 +21722,7 @@
       <level l="29">424</level>
     </learnset>
   </pokemon>
-  <pokemon id="177" type1="13" type2="2" base-xp="64" height="0.2" weight="2.0">
+  <pokemon id="177" type1="13" type2="2" base-xp="6" height="0.2" weight="2.0">
     <statline>
       <stats atk="9" def="9" hea="30" spa="9" spd="9" level="1" />
       <stats def="1" hea="1" level="2" />
@@ -21848,7 +21848,7 @@
       <level l="28">424</level>
     </learnset>
   </pokemon>
-  <pokemon id="178" type1="13" type2="2" base-xp="165" height="1.5" weight="15.0">
+  <pokemon id="178" type1="13" type2="2" base-xp="45" height="1.5" weight="15.0">
     <statline>
       <stats atk="11" def="11" hea="35" spa="11" spd="11" level="1" />
       <stats atk="3" def="2" hea="3" spa="2" spd="2" level="2" />
@@ -21972,7 +21972,7 @@
       <level l="29">424</level>
     </learnset>
   </pokemon>
-  <pokemon id="179" type1="12" base-xp="56" height="0.6" weight="7.8">
+  <pokemon id="179" type1="12" base-xp="50" height="0.6" weight="7.8">
     <statline>
       <stats atk="15" def="13" hea="33" spa="20" spd="15" level="1" />
       <stats atk="3" def="2" hea="4" spa="2" spd="2" level="2" />
@@ -22098,7 +22098,7 @@
       <level l="29">505</level>
     </learnset>
   </pokemon>
-  <pokemon id="180" type1="12" base-xp="128" height="0.8" weight="13.3">
+  <pokemon id="180" type1="12" base-xp="55" height="0.8" weight="13.3">
     <statline>
       <stats atk="15" def="15" hea="35" spa="22" spd="18" level="1" />
       <stats atk="3" def="1" hea="5" spa="2" spd="1" level="2" />
@@ -22224,7 +22224,7 @@
       <level l="29">184</level>
     </learnset>
   </pokemon>
-  <pokemon id="181" type1="12" base-xp="225" height="1.4" weight="61.5">
+  <pokemon id="181" type1="12" base-xp="40" height="1.4" weight="61.5">
     <statline>
       <stats atk="17" def="11" hea="45" spa="15" spd="11" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -22349,7 +22349,7 @@
       <level l="62">65</level>
     </learnset>
   </pokemon>
-  <pokemon id="182" type1="11" base-xp="216" height="0.4" weight="5.8">
+  <pokemon id="182" type1="11" base-xp="15" height="0.4" weight="5.8">
     <statline>
       <stats atk="8" def="6" hea="30" spa="7" spd="9" level="1" />
       <stats atk="1" def="1" hea="2" spa="2" spd="1" level="2" />
@@ -22462,7 +22462,7 @@
       <level l="24">203</level>
     </learnset>
   </pokemon>
-  <pokemon id="183" type1="10" type2="17" base-xp="88" height="0.4" weight="8.5">
+  <pokemon id="183" type1="10" type2="17" base-xp="30" height="0.4" weight="8.5">
     <statline>
       <stats atk="7" def="7" hea="25" spa="7" spd="7" level="1" />
       <stats def="1" hea="1" level="2" />
@@ -22588,7 +22588,7 @@
       <level l="31">556</level>
     </learnset>
   </pokemon>
-  <pokemon id="184" type1="10" type2="17" base-xp="185" height="0.8" weight="28.5">
+  <pokemon id="184" type1="10" type2="17" base-xp="60" height="0.8" weight="28.5">
     <statline>
       <stats atk="8" def="8" hea="35" spa="8" spd="8" level="1" />
       <stats atk="1" def="2" hea="4" spa="1" spd="2" level="2" />
@@ -22711,7 +22711,7 @@
       <level l="31">555</level>
     </learnset>
   </pokemon>
-  <pokemon id="185" type1="5" base-xp="144" height="1.2" weight="38.0">
+  <pokemon id="185" type1="5" base-xp="48" height="1.2" weight="38.0">
     <statline>
       <stats atk="14" def="7" hea="23" spa="14" spd="7" level="1" />
       <stats def="2" hea="2" spa="2" level="2" />
@@ -22833,7 +22833,7 @@
       <level l="29">504</level>
     </learnset>
   </pokemon>
-  <pokemon id="186" type1="10" base-xp="225" height="1.1" weight="33.9">
+  <pokemon id="186" type1="10" base-xp="99" height="1.1" weight="33.9">
     <statline>
       <stats atk="9" def="8" hea="45" spa="10" spd="11" level="1" />
       <stats atk="3" def="2" hea="4" spa="2" spd="2" level="2" />
@@ -22946,7 +22946,7 @@
       <level l="27">414</level>
     </learnset>
   </pokemon>
-  <pokemon id="187" type1="11" type2="2" base-xp="50" height="0.4" weight="0.5">
+  <pokemon id="187" type1="11" type2="2" base-xp="15" height="0.4" weight="0.5">
     <statline>
       <stats atk="8" def="3" hea="24" spa="8" spd="3" level="1" />
       <stats atk="2" def="2" hea="2" spa="2" spd="2" level="2" />
@@ -23077,7 +23077,7 @@
       <level l="31">18</level>
     </learnset>
   </pokemon>
-  <pokemon id="188" type1="11" type2="2" base-xp="119" height="0.6" weight="1.0">
+  <pokemon id="188" type1="11" type2="2" base-xp="25" height="0.6" weight="1.0">
     <statline>
       <stats atk="8" def="3" hea="26" spa="8" spd="3" level="1" />
       <stats atk="2" def="2" hea="2" spa="2" spd="2" level="2" />
@@ -23208,7 +23208,7 @@
       <level l="60">44</level>
     </learnset>
   </pokemon>
-  <pokemon id="189" type1="11" type2="2" base-xp="203" height="0.8" weight="3.0">
+  <pokemon id="189" type1="11" type2="2" base-xp="33" height="0.8" weight="3.0">
     <statline>
       <stats atk="8" def="3" hea="28" spa="8" spd="3" level="1" />
       <stats atk="2" def="2" hea="2" spa="2" spd="2" level="2" />
@@ -23336,7 +23336,7 @@
       <level l="29">207</level>
     </learnset>
   </pokemon>
-  <pokemon id="190" type1="0" base-xp="72" height="0.8" weight="11.5">
+  <pokemon id="190" type1="0" base-xp="40" height="0.8" weight="11.5">
     <statline>
       <stats atk="16" def="15" hea="41" spa="16" spd="15" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -23461,7 +23461,7 @@
       <level l="29">466</level>
     </learnset>
   </pokemon>
-  <pokemon id="191" type1="11" base-xp="36" height="0.3" weight="1.8">
+  <pokemon id="191" type1="11" base-xp="16" height="0.3" weight="1.8">
     <statline>
       <stats atk="5" def="4" hea="12" spa="5" spd="4" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -23588,7 +23588,7 @@
       <level l="31">335</level>
     </learnset>
   </pokemon>
-  <pokemon id="192" type1="11" base-xp="149" height="0.8" weight="8.5">
+  <pokemon id="192" type1="11" base-xp="70" height="0.8" weight="8.5">
     <statline>
       <stats atk="16" def="8" hea="28" spa="16" spd="8" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -23713,7 +23713,7 @@
       <level l="31">335</level>
     </learnset>
   </pokemon>
-  <pokemon id="193" type1="6" type2="2" base-xp="78" height="1.2" weight="38.0">
+  <pokemon id="193" type1="6" type2="2" base-xp="55" height="1.2" weight="38.0">
     <statline>
       <stats atk="19" def="5" hea="22" spa="17" spd="7" level="1" />
       <stats def="2" hea="2" spa="2" level="2" />
@@ -23840,7 +23840,7 @@
       <level l="30">33</level>
     </learnset>
   </pokemon>
-  <pokemon id="194" type1="10" type2="4" base-xp="42" height="0.4" weight="8.5">
+  <pokemon id="194" type1="10" type2="4" base-xp="24" height="0.4" weight="8.5">
     <statline>
       <stats atk="9" def="8" hea="34" spa="9" spd="8" level="1" />
       <stats def="1" hea="1" level="2" />
@@ -23963,7 +23963,7 @@
       <level l="47">537</level>
     </learnset>
   </pokemon>
-  <pokemon id="195" type1="10" type2="4" base-xp="151" height="1.4" weight="75.0">
+  <pokemon id="195" type1="10" type2="4" base-xp="105" height="1.4" weight="75.0">
     <statline>
       <stats atk="12" def="10" hea="44" spa="12" spd="10" level="1" />
       <stats atk="3" def="2" hea="5" spa="3" spd="2" level="2" />
@@ -24083,7 +24083,7 @@
       <level l="31">426</level>
     </learnset>
   </pokemon>
-  <pokemon id="196" type1="13" base-xp="184" height="0.9" weight="26.5">
+  <pokemon id="196" type1="13" base-xp="78" height="0.9" weight="26.5">
     <statline>
       <stats atk="10" def="10" hea="35" spa="10" spd="10" level="1" />
       <stats atk="2" def="2" hea="3" spa="2" spd="2" level="2" />
@@ -24204,7 +24204,7 @@
       <level l="45">489</level>
     </learnset>
   </pokemon>
-  <pokemon id="197" type1="16" base-xp="184" height="1.0" weight="27.0">
+  <pokemon id="197" type1="16" base-xp="81" height="1.0" weight="27.0">
     <statline>
       <stats atk="10" def="10" hea="35" spa="10" spd="10" level="1" />
       <stats atk="2" def="2" hea="3" spa="2" spd="2" level="2" />
@@ -24325,7 +24325,7 @@
       <level l="45">474</level>
     </learnset>
   </pokemon>
-  <pokemon id="198" type1="16" type2="2" base-xp="81" height="0.5" weight="2.1">
+  <pokemon id="198" type1="16" type2="2" base-xp="40" height="0.5" weight="2.1">
     <statline>
       <stats atk="23" def="10" hea="35" spa="23" spd="10" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -24451,7 +24451,7 @@
       <level l="31">49</level>
     </learnset>
   </pokemon>
-  <pokemon id="199" type1="10" type2="13" base-xp="172" height="2.0" weight="79.5">
+  <pokemon id="199" type1="10" type2="13" base-xp="50" height="2.0" weight="79.5">
     <statline>
       <stats atk="10" def="7" hea="40" spa="10" spd="7" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -24574,7 +24574,7 @@
       <level l="28">548</level>
     </learnset>
   </pokemon>
-  <pokemon id="200" type1="7" base-xp="87" height="0.7" weight="1.0">
+  <pokemon id="200" type1="7" base-xp="60" height="0.7" weight="1.0">
     <statline>
       <stats atk="7" def="8" hea="35" spa="7" spd="8" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -24699,7 +24699,7 @@
       <level l="28">460</level>
     </learnset>
   </pokemon>
-  <pokemon id="201" type1="13" base-xp="118" height="0.5" weight="5.0">
+  <pokemon id="201" type1="13" base-xp="40" height="0.5" weight="5.0">
     <statline>
       <stats atk="8" def="8" hea="30" spa="8" spd="8" level="1" />
       <stats def="1" hea="3" spa="2" spd="2" level="2" />
@@ -24809,7 +24809,7 @@
       <level l="1">333</level>
     </learnset>
   </pokemon>
-  <pokemon id="202" type1="13" base-xp="142" height="1.3" weight="28.5">
+  <pokemon id="202" type1="13" base-xp="50" height="1.3" weight="28.5">
     <statline>
       <stats atk="6" def="6" hea="35" spa="6" spd="6" level="1" />
       <stats atk="2" def="1" hea="1" spa="2" spd="1" level="2" />
@@ -24919,7 +24919,7 @@
       <level l="1">115,463,398,186</level>
     </learnset>
   </pokemon>
-  <pokemon id="203" type1="0" type2="13" base-xp="159" height="1.5" weight="41.5">
+  <pokemon id="203" type1="0" type2="13" base-xp="70" height="1.5" weight="41.5">
     <statline>
       <stats atk="15" def="15" hea="46" spa="20" spd="15" level="1" />
       <stats atk="2" def="1" hea="3" spa="2" level="2" />
@@ -25040,7 +25040,7 @@
       <level l="46">45</level>
     </learnset>
   </pokemon>
-  <pokemon id="204" type1="6" base-xp="58" height="0.6" weight="7.2">
+  <pokemon id="204" type1="6" base-xp="42" height="0.6" weight="7.2">
     <statline>
       <stats atk="22" def="15" hea="51" spa="22" spd="15" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -25165,7 +25165,7 @@
       <level l="31">32</level>
     </learnset>
   </pokemon>
-  <pokemon id="205" type1="6" type2="8" base-xp="163" height="1.2" weight="125.8">
+  <pokemon id="205" type1="6" type2="8" base-xp="75" height="1.2" weight="125.8">
     <statline>
       <stats atk="22" def="17" hea="60" spa="22" spd="17" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -25290,7 +25290,7 @@
       <level l="31">522</level>
     </learnset>
   </pokemon>
-  <pokemon id="206" type1="0" base-xp="145" height="1.5" weight="14.0">
+  <pokemon id="206" type1="0" base-xp="22" height="1.5" weight="14.0">
     <statline>
       <stats atk="19" def="10" hea="43" spa="19" spd="10" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -25416,7 +25416,7 @@
       <level l="31">225</level>
     </learnset>
   </pokemon>
-  <pokemon id="207" type1="4" type2="2" base-xp="86" height="1.1" weight="64.8">
+  <pokemon id="207" type1="4" type2="2" base-xp="41" height="1.1" weight="64.8">
     <statline>
       <stats atk="21" def="11" hea="38" spa="17" spd="13" level="1" />
       <stats hea="2" spa="2" level="2" />
@@ -25543,7 +25543,7 @@
       <level l="30">6</level>
     </learnset>
   </pokemon>
-  <pokemon id="208" type1="8" type2="4" base-xp="179" height="9.2" weight="400.0">
+  <pokemon id="208" type1="8" type2="4" base-xp="125" height="9.2" weight="400.0">
     <statline>
       <stats atk="23" def="12" hea="50" spa="23" spd="12" level="1" />
       <stats atk="2" def="3" hea="3" spa="3" spd="2" level="2" />
@@ -25670,7 +25670,7 @@
       <level l="31">400</level>
     </learnset>
   </pokemon>
-  <pokemon id="209" type1="17" base-xp="60" height="0.6" weight="7.8">
+  <pokemon id="209" type1="17" base-xp="21" height="0.6" weight="7.8">
     <statline>
       <stats atk="10" def="8" hea="40" spa="10" spd="8" level="1" />
       <stats atk="2" def="3" hea="3" spa="2" spd="2" level="2" />
@@ -25791,7 +25791,7 @@
       <level l="31">316</level>
     </learnset>
   </pokemon>
-  <pokemon id="210" type1="17" base-xp="158" height="1.4" weight="48.7">
+  <pokemon id="210" type1="17" base-xp="80" height="1.4" weight="48.7">
     <statline>
       <stats atk="12" def="8" hea="45" spa="12" spd="8" level="1" />
       <stats atk="2" def="3" hea="4" spa="3" spd="2" level="2" />
@@ -25910,7 +25910,7 @@
       <level l="13">182</level>
     </learnset>
   </pokemon>
-  <pokemon id="211" type1="10" type2="3" base-xp="86" height="0.5" weight="3.9">
+  <pokemon id="211" type1="10" type2="3" base-xp="9" height="0.5" weight="3.9">
     <statline>
       <stats atk="9" def="9" hea="35" spa="9" spd="9" level="1" />
       <stats atk="1" def="1" hea="3" spa="2" spd="1" level="2" />
@@ -26034,7 +26034,7 @@
       <level l="29">104</level>
     </learnset>
   </pokemon>
-  <pokemon id="212" type1="6" type2="8" base-xp="175" height="1.8" weight="118.0">
+  <pokemon id="212" type1="6" type2="8" base-xp="108" height="1.8" weight="118.0">
     <statline>
       <stats atk="23" def="13" hea="56" spa="19" spd="14" level="1" />
       <stats atk="1" def="1" hea="2" spa="1" spd="1" level="2" />
@@ -26159,7 +26159,7 @@
       <level l="61">314</level>
     </learnset>
   </pokemon>
-  <pokemon id="213" type1="6" type2="5" base-xp="177" height="0.6" weight="20.5">
+  <pokemon id="213" type1="6" type2="5" base-xp="50" height="0.6" weight="20.5">
     <statline>
       <stats atk="21" def="15" hea="37" spa="21" spd="15" level="1" />
       <stats def="1" hea="2" spa="2" level="2" />
@@ -26283,7 +26283,7 @@
       <level l="31">490</level>
     </learnset>
   </pokemon>
-  <pokemon id="214" type1="6" type2="1" base-xp="175" height="1.5" weight="54.0">
+  <pokemon id="214" type1="6" type2="1" base-xp="55" height="1.5" weight="54.0">
     <statline>
       <stats atk="22" def="9" hea="52" spa="22" spd="9" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -26403,7 +26403,7 @@
       <level l="31">14</level>
     </learnset>
   </pokemon>
-  <pokemon id="215" type1="16" type2="14" base-xp="86" height="0.9" weight="28.0">
+  <pokemon id="215" type1="16" type2="14" base-xp="84" height="0.9" weight="28.0">
     <statline>
       <stats atk="8" def="7" hea="35" spa="8" spd="10" level="1" />
       <stats atk="2" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -26529,7 +26529,7 @@
       <level l="28">36</level>
     </learnset>
   </pokemon>
-  <pokemon id="216" type1="0" base-xp="66" height="0.6" weight="8.8">
+  <pokemon id="216" type1="0" base-xp="40" height="0.6" weight="8.8">
     <statline>
       <stats atk="16" def="11" hea="27" spa="16" spd="11" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -26651,7 +26651,7 @@
       <level l="15">29</level>
     </learnset>
   </pokemon>
-  <pokemon id="217" type1="0" base-xp="175" height="1.8" weight="125.8">
+  <pokemon id="217" type1="0" base-xp="100" height="1.8" weight="125.8">
     <statline>
       <stats atk="20" def="12" hea="37" spa="20" spd="12" level="1" />
       <stats atk="3" def="3" hea="5" spa="3" spd="2" level="2" />
@@ -26771,7 +26771,7 @@
       <level l="47">493</level>
     </learnset>
   </pokemon>
-  <pokemon id="218" type1="9" base-xp="50" height="0.7" weight="35.0">
+  <pokemon id="218" type1="9" base-xp="55" height="0.7" weight="35.0">
     <statline>
       <stats atk="21" def="13" hea="51" spa="21" spd="13" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -26898,7 +26898,7 @@
       <level l="29">504</level>
     </learnset>
   </pokemon>
-  <pokemon id="219" type1="9" type2="5" base-xp="144" height="0.8" weight="55.0">
+  <pokemon id="219" type1="9" type2="5" base-xp="56" height="0.8" weight="55.0">
     <statline>
       <stats atk="21" def="16" hea="55" spa="21" spd="16" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -27023,7 +27023,7 @@
       <level l="29">504</level>
     </learnset>
   </pokemon>
-  <pokemon id="220" type1="14" type2="4" base-xp="50" height="0.4" weight="6.5">
+  <pokemon id="220" type1="14" type2="4" base-xp="37" height="0.4" weight="6.5">
     <statline>
       <stats atk="17" def="8" hea="28" spa="17" spd="8" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -27149,7 +27149,7 @@
       <level l="28">274</level>
     </learnset>
   </pokemon>
-  <pokemon id="221" type1="14" type2="4" base-xp="158" height="1.1" weight="55.8">
+  <pokemon id="221" type1="14" type2="4" base-xp="70" height="1.1" weight="55.8">
     <statline>
       <stats atk="23" def="13" hea="56" spa="23" spd="13" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -27276,7 +27276,7 @@
       <level l="28">274</level>
     </learnset>
   </pokemon>
-  <pokemon id="222" type1="10" type2="5" base-xp="133" height="0.6" weight="5.0">
+  <pokemon id="222" type1="10" type2="5" base-xp="18" height="0.6" weight="5.0">
     <statline>
       <stats atk="10" def="11" hea="45" spa="12" spd="10" level="1" />
       <stats atk="3" def="1" hea="4" spa="1" spd="1" level="2" />
@@ -27402,7 +27402,7 @@
       <level l="31">511</level>
     </learnset>
   </pokemon>
-  <pokemon id="223" type1="10" base-xp="60" height="0.6" weight="12.0">
+  <pokemon id="223" type1="10" base-xp="36" height="0.6" weight="12.0">
     <statline>
       <stats atk="15" def="5" hea="35" spa="12" spd="5" level="1" />
       <stats atk="2" def="2" hea="5" spa="2" spd="2" level="2" />
@@ -27527,7 +27527,7 @@
       <level l="30">5</level>
     </learnset>
   </pokemon>
-  <pokemon id="224" type1="10" base-xp="168" height="0.9" weight="28.5">
+  <pokemon id="224" type1="10" base-xp="235" height="0.9" weight="28.5">
     <statline>
       <stats atk="15" def="15" hea="50" spa="15" spd="15" level="1" />
       <stats atk="3" def="1" hea="2" spa="1" spd="1" level="2" />
@@ -27650,7 +27650,7 @@
       <level l="28">342</level>
     </learnset>
   </pokemon>
-  <pokemon id="225" type1="14" type2="2" base-xp="116" height="0.9" weight="16.0">
+  <pokemon id="225" type1="14" type2="2" base-xp="48" height="0.9" weight="16.0">
     <statline>
       <stats atk="12" def="12" hea="40" spa="12" spd="8" level="1" />
       <stats atk="2" def="2" hea="4" spa="2" spd="2" level="2" />
@@ -27760,7 +27760,7 @@
       <level l="1">336</level>
     </learnset>
   </pokemon>
-  <pokemon id="226" type1="10" type2="2" base-xp="163" height="2.1" weight="220.0">
+  <pokemon id="226" type1="10" type2="2" base-xp="250" height="2.1" weight="220.0">
     <statline>
       <stats atk="13" def="11" hea="55" spa="12" spd="12" level="1" />
       <stats atk="6" def="4" hea="8" spa="4" spd="3" level="2" />
@@ -27883,7 +27883,7 @@
       <level l="27">274</level>
     </learnset>
   </pokemon>
-  <pokemon id="227" type1="8" type2="2" base-xp="163" height="1.7" weight="50.5">
+  <pokemon id="227" type1="8" type2="2" base-xp="175" height="1.7" weight="50.5">
     <statline>
       <stats atk="15" def="5" hea="47" spa="13" spd="7" level="1" />
       <stats def="2" hea="2" spa="2" level="2" />
@@ -28007,7 +28007,7 @@
       <level l="31">466</level>
     </learnset>
   </pokemon>
-  <pokemon id="228" type1="16" type2="9" base-xp="66" height="0.6" weight="10.8">
+  <pokemon id="228" type1="16" type2="9" base-xp="45" height="0.6" weight="10.8">
     <statline>
       <stats atk="19" def="12" hea="31" spa="18" spd="12" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -28134,7 +28134,7 @@
       <level l="28">142</level>
     </learnset>
   </pokemon>
-  <pokemon id="229" type1="16" type2="9" base-xp="175" height="1.4" weight="35.0">
+  <pokemon id="229" type1="16" type2="9" base-xp="55" height="1.4" weight="35.0">
     <statline>
       <stats atk="19" def="12" hea="45" spa="19" spd="12" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -28258,7 +28258,7 @@
       <level l="30">142</level>
     </learnset>
   </pokemon>
-  <pokemon id="230" type1="10" type2="15" base-xp="243" height="1.8" weight="152.0">
+  <pokemon id="230" type1="10" type2="15" base-xp="124" height="1.8" weight="152.0">
     <statline>
       <stats atk="8" def="8" hea="20" spa="8" spd="8" level="1" />
       <stats atk="1" def="1" hea="2" spa="1" spd="2" level="2" />
@@ -28379,7 +28379,7 @@
       <level l="31">545</level>
     </learnset>
   </pokemon>
-  <pokemon id="231" type1="4" base-xp="66" height="0.5" weight="33.5">
+  <pokemon id="231" type1="4" base-xp="33" height="0.5" weight="33.5">
     <statline>
       <stats atk="21" def="10" hea="42" spa="21" spd="10" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -28501,7 +28501,7 @@
       <level l="15">335</level>
     </learnset>
   </pokemon>
-  <pokemon id="232" type1="4" base-xp="175" height="1.1" weight="120.0">
+  <pokemon id="232" type1="4" base-xp="107" height="1.1" weight="120.0">
     <statline>
       <stats atk="22" def="20" hea="43" spa="22" spd="20" level="1" />
       <stats atk="2" def="1" hea="3" spa="1" level="2" />
@@ -28621,7 +28621,7 @@
       <level l="15">31</level>
     </learnset>
   </pokemon>
-  <pokemon id="233" type1="0" base-xp="180" height="0.6" weight="32.5">
+  <pokemon id="233" type1="0" base-xp="110" height="0.6" weight="32.5">
     <statline>
       <stats atk="15" def="15" hea="35" spa="15" spd="15" level="1" />
       <stats atk="2" hea="3" spa="2" level="2" />
@@ -28746,7 +28746,7 @@
       <level l="62">67</level>
     </learnset>
   </pokemon>
-  <pokemon id="234" type1="0" base-xp="163" height="1.4" weight="71.2">
+  <pokemon id="234" type1="0" base-xp="60" height="1.4" weight="71.2">
     <statline>
       <stats atk="18" def="13" hea="43" spa="19" spd="13" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -28870,7 +28870,7 @@
       <level l="27">470</level>
     </learnset>
   </pokemon>
-  <pokemon id="235" type1="0" base-xp="88" height="1.2" weight="58.0">
+  <pokemon id="235" type1="0" base-xp="50" height="1.2" weight="58.0">
     <statline>
       <stats atk="8" def="8" hea="35" spa="8" spd="8" level="1" />
       <stats atk="2" def="3" hea="3" spa="3" spd="2" level="2" />
@@ -28988,7 +28988,7 @@
       <level l="31">405</level>
     </learnset>
   </pokemon>
-  <pokemon id="236" type1="1" base-xp="42" height="0.7" weight="21.0">
+  <pokemon id="236" type1="1" base-xp="30" height="0.7" weight="21.0">
     <statline>
       <stats atk="17" def="7" hea="25" spa="17" spd="6" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -29103,7 +29103,7 @@
       <level l="1">303,372,306,366</level>
     </learnset>
   </pokemon>
-  <pokemon id="237" type1="1" base-xp="159" height="1.4" weight="48.0">
+  <pokemon id="237" type1="1" base-xp="102" height="1.4" weight="48.0">
     <statline>
       <stats atk="9" def="7" hea="33" spa="8" spd="8" level="1" />
       <stats atk="2" def="2" hea="3" spa="2" spd="2" level="2" />
@@ -29225,7 +29225,7 @@
       <level l="60">329</level>
     </learnset>
   </pokemon>
-  <pokemon id="238" type1="14" type2="13" base-xp="61" height="0.4" weight="6.0">
+  <pokemon id="238" type1="14" type2="13" base-xp="18" height="0.4" weight="6.0">
     <statline>
       <stats atk="12" def="12" hea="30" spa="10" spd="10" level="1" />
       <stats atk="3" hea="4" spa="2" spd="2" level="2" />
@@ -29352,7 +29352,7 @@
       <level l="31">377</level>
     </learnset>
   </pokemon>
-  <pokemon id="239" type1="12" base-xp="72" height="0.6" weight="23.5">
+  <pokemon id="239" type1="12" base-xp="43" height="0.6" weight="23.5">
     <statline>
       <stats atk="12" def="6" hea="21" spa="10" spd="6" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -29477,7 +29477,7 @@
       <level l="29">72</level>
     </learnset>
   </pokemon>
-  <pokemon id="240" type1="9" base-xp="73" height="0.7" weight="21.4">
+  <pokemon id="240" type1="9" base-xp="55" height="0.7" weight="21.4">
     <statline>
       <stats atk="21" def="15" hea="48" spa="21" spd="15" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -29602,7 +29602,7 @@
       <level l="29">140</level>
     </learnset>
   </pokemon>
-  <pokemon id="241" type1="0" base-xp="172" height="1.2" weight="75.5">
+  <pokemon id="241" type1="0" base-xp="106" height="1.2" weight="75.5">
     <statline>
       <stats atk="11" def="13" hea="40" spa="12" spd="12" level="1" />
       <stats atk="2" def="2" hea="4" spa="2" spd="2" level="2" />
@@ -29724,7 +29724,7 @@
       <level l="29">455</level>
     </learnset>
   </pokemon>
-  <pokemon id="242" type1="0" base-xp="608" height="1.5" weight="46.8">
+  <pokemon id="242" type1="0" base-xp="77" height="1.5" weight="46.8">
     <statline>
       <stats atk="7" def="7" hea="33" spa="7" spd="7" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -29848,7 +29848,7 @@
       <level l="31">404</level>
     </learnset>
   </pokemon>
-  <pokemon id="243" type1="12" base-xp="261" height="1.9" weight="178.0">
+  <pokemon id="243" type1="12" base-xp="170" height="1.9" weight="178.0">
     <statline>
       <stats atk="21" def="20" hea="77" spa="21" spd="20" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" level="2" />
@@ -29970,7 +29970,7 @@
       <level l="29">74</level>
     </learnset>
   </pokemon>
-  <pokemon id="244" type1="9" base-xp="261" height="2.1" weight="198.0">
+  <pokemon id="244" type1="9" base-xp="180" height="2.1" weight="198.0">
     <statline>
       <stats atk="21" def="20" hea="78" spa="20" spd="22" level="1" />
       <stats atk="1" hea="1" level="2" />
@@ -30092,7 +30092,7 @@
       <level l="29">295</level>
     </learnset>
   </pokemon>
-  <pokemon id="245" type1="10" base-xp="261" height="2.0" weight="187.0">
+  <pokemon id="245" type1="10" base-xp="190" height="2.0" weight="187.0">
     <statline>
       <stats atk="22" def="19" hea="76" spa="22" spd="19" level="1" />
       <stats atk="1" def="1" hea="2" spa="1" level="2" />
@@ -30214,7 +30214,7 @@
       <level l="29">246</level>
     </learnset>
   </pokemon>
-  <pokemon id="246" type1="5" type2="4" base-xp="60" height="0.6" weight="72.0">
+  <pokemon id="246" type1="5" type2="4" base-xp="40" height="0.6" weight="72.0">
     <statline>
       <stats atk="15" def="10" hea="30" spa="15" spd="10" level="1" />
       <stats atk="1" def="1" hea="2" spa="1" spd="1" level="2" />
@@ -30339,7 +30339,7 @@
       <level l="28">268</level>
     </learnset>
   </pokemon>
-  <pokemon id="247" type1="5" type2="4" base-xp="144" height="1.2" weight="152.0">
+  <pokemon id="247" type1="5" type2="4" base-xp="50" height="1.2" weight="152.0">
     <statline>
       <stats atk="20" def="16" hea="42" spa="20" spd="16" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -30464,7 +30464,7 @@
       <level l="60">503</level>
     </learnset>
   </pokemon>
-  <pokemon id="248" type1="5" type2="16" base-xp="270" height="2.0" weight="202.0">
+  <pokemon id="248" type1="5" type2="16" base-xp="205" height="2.0" weight="202.0">
     <statline>
       <stats atk="40" def="26" hea="80" spa="40" spd="26" level="1" />
       <stats atk="1" hea="2" level="2" />
@@ -30587,7 +30587,7 @@
       <level l="63">503</level>
     </learnset>
   </pokemon>
-  <pokemon id="249" type1="13" type2="2" base-xp="306" height="5.2" weight="216.0">
+  <pokemon id="249" type1="13" type2="2" base-xp="144" height="5.2" weight="216.0">
     <statline>
       <stats atk="23" def="18" hea="70" spa="24" spd="18" level="1" />
       <stats atk="2" def="1" hea="4" spa="1" level="2" />
@@ -30711,7 +30711,7 @@
       <level l="93">470</level>
     </learnset>
   </pokemon>
-  <pokemon id="250" type1="9" type2="2" base-xp="306" height="3.8" weight="199.0">
+  <pokemon id="250" type1="9" type2="2" base-xp="44" height="3.8" weight="199.0">
     <statline>
       <stats atk="20" def="16" hea="75" spa="20" spd="16" level="1" />
       <stats atk="1" def="1" hea="3" spa="1" spd="1" level="2" />
@@ -30835,7 +30835,7 @@
       <level l="93">470</level>
     </learnset>
   </pokemon>
-  <pokemon id="251" type1="13" type2="11" base-xp="270" height="0.6" weight="5.0">
+  <pokemon id="251" type1="13" type2="11" base-xp="200" height="0.6" weight="5.0">
     <statline>
       <stats atk="15" def="15" hea="55" spa="15" spd="15" level="1" />
       <stats atk="1" hea="3" level="2" />
@@ -30955,7 +30955,7 @@
       <level l="46">335</level>
     </learnset>
   </pokemon>
-  <pokemon id="252" type1="11" base-xp="62" height="0.5" weight="5.0">
+  <pokemon id="252" type1="11" base-xp="15" height="0.5" weight="5.0">
     <statline>
       <stats atk="1" def="3" hea="18" spa="1" spd="3" level="1" />
       <stats atk="2" def="2" hea="3" spa="2" spd="2" level="2" />
@@ -31080,7 +31080,7 @@
       <level l="29">282</level>
     </learnset>
   </pokemon>
-  <pokemon id="253" type1="11" base-xp="142" height="0.9" weight="21.6">
+  <pokemon id="253" type1="11" base-xp="63" height="0.9" weight="21.6">
     <statline>
       <stats atk="20" def="20" hea="50" spa="20" spd="20" level="1" />
       <stats atk="2" def="2" hea="3" spa="2" spd="2" level="2" />
@@ -31207,7 +31207,7 @@
       <level l="63">400</level>
     </learnset>
   </pokemon>
-  <pokemon id="254" type1="11" base-xp="239" height="1.7" weight="52.2">
+  <pokemon id="254" type1="11" base-xp="156" height="1.7" weight="52.2">
     <statline>
       <stats atk="22" def="22" hea="55" spa="22" spd="22" level="1" />
       <stats atk="2" def="2" hea="3" spa="2" spd="2" level="2" />
@@ -31332,7 +31332,7 @@
       <level l="63">191</level>
     </learnset>
   </pokemon>
-  <pokemon id="255" type1="9" base-xp="62" height="0.4" weight="2.5">
+  <pokemon id="255" type1="9" base-xp="6" height="0.4" weight="2.5">
     <statline>
       <stats atk="1" def="3" hea="18" spa="1" spd="3" level="1" />
       <stats atk="2" def="2" hea="3" spa="2" spd="2" level="2" />
@@ -31455,7 +31455,7 @@
       <level l="46">136</level>
     </learnset>
   </pokemon>
-  <pokemon id="256" type1="9" type2="1" base-xp="142" height="0.9" weight="19.5">
+  <pokemon id="256" type1="9" type2="1" base-xp="57" height="0.9" weight="19.5">
     <statline>
       <stats atk="20" def="20" hea="50" spa="20" spd="20" level="1" />
       <stats atk="3" def="2" hea="4" spa="2" spd="3" level="2" />
@@ -31580,7 +31580,7 @@
       <level l="31">120</level>
     </learnset>
   </pokemon>
-  <pokemon id="257" type1="9" type2="1" base-xp="239" height="1.9" weight="52.0">
+  <pokemon id="257" type1="9" type2="1" base-xp="156" height="1.9" weight="52.0">
     <statline>
       <stats atk="23" def="23" hea="55" spa="20" spd="20" level="1" />
       <stats atk="3" def="2" hea="3" spa="2" spd="3" level="2" />
@@ -31703,7 +31703,7 @@
       <level l="63">129</level>
     </learnset>
   </pokemon>
-  <pokemon id="258" type1="10" base-xp="62" height="0.4" weight="7.6">
+  <pokemon id="258" type1="10" base-xp="21" height="0.4" weight="7.6">
     <statline>
       <stats atk="4" def="4" hea="18" spa="4" spd="4" level="1" />
       <stats atk="2" def="2" hea="3" spa="2" spd="2" level="2" />
@@ -31827,7 +31827,7 @@
       <level l="44">329</level>
     </learnset>
   </pokemon>
-  <pokemon id="259" type1="10" type2="4" base-xp="142" height="0.7" weight="28.0">
+  <pokemon id="259" type1="10" type2="4" base-xp="84" height="0.7" weight="28.0">
     <statline>
       <stats atk="20" def="20" hea="50" spa="25" spd="25" level="1" />
       <stats atk="2" def="1" hea="2" spa="2" spd="1" level="2" />
@@ -31952,7 +31952,7 @@
       <level l="28">504</level>
     </learnset>
   </pokemon>
-  <pokemon id="260" type1="10" type2="4" base-xp="241" height="1.5" weight="81.9">
+  <pokemon id="260" type1="10" type2="4" base-xp="200" height="1.5" weight="81.9">
     <statline>
       <stats atk="22" def="20" hea="55" spa="30" spd="30" level="1" />
       <stats hea="5" level="2" />
@@ -32075,7 +32075,7 @@
       <level l="63">91</level>
     </learnset>
   </pokemon>
-  <pokemon id="261" type1="16" base-xp="44" height="0.5" weight="13.6">
+  <pokemon id="261" type1="16" base-xp="25" height="0.5" weight="13.6">
     <statline>
       <stats atk="9" def="5" hea="26" spa="9" spd="5" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -32201,7 +32201,7 @@
       <level l="30">49</level>
     </learnset>
   </pokemon>
-  <pokemon id="262" type1="16" base-xp="147" height="1.0" weight="37.0">
+  <pokemon id="262" type1="16" base-xp="40" height="1.0" weight="37.0">
     <statline>
       <stats atk="23" def="17" hea="51" spa="23" spd="17" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -32325,7 +32325,7 @@
       <level l="28">399</level>
     </learnset>
   </pokemon>
-  <pokemon id="263" type1="0" base-xp="48" height="0.4" weight="17.5">
+  <pokemon id="263" type1="0" base-xp="25" height="0.4" weight="17.5">
     <statline>
       <stats atk="15" def="7" hea="21" spa="16" spd="7" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -32452,7 +32452,7 @@
       <level l="31">274</level>
     </learnset>
   </pokemon>
-  <pokemon id="264" type1="0" base-xp="147" height="0.5" weight="32.5">
+  <pokemon id="264" type1="0" base-xp="50" height="0.5" weight="32.5">
     <statline>
       <stats atk="18" def="9" hea="31" spa="18" spd="8" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -32575,7 +32575,7 @@
       <level l="27">349</level>
     </learnset>
   </pokemon>
-  <pokemon id="265" type1="6" base-xp="39" height="0.3" weight="3.6">
+  <pokemon id="265" type1="6" base-xp="15" height="0.3" weight="3.6">
     <statline>
       <stats atk="4" def="5" hea="10" spa="6" spd="5" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -32690,7 +32690,7 @@
       <level l="15">8</level>
     </learnset>
   </pokemon>
-  <pokemon id="266" type1="6" base-xp="72" height="0.6" weight="10.0">
+  <pokemon id="266" type1="6" base-xp="35" height="0.6" weight="10.0">
     <statline>
       <stats atk="16" def="6" hea="28" spa="17" spd="6" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -32803,7 +32803,7 @@
       <level l="7">370</level>
     </learnset>
   </pokemon>
-  <pokemon id="267" type1="6" type2="2" base-xp="173" height="1.0" weight="28.4">
+  <pokemon id="267" type1="6" type2="2" base-xp="84" height="1.0" weight="28.4">
     <statline>
       <stats atk="20" def="10" hea="40" spa="20" spd="11" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -32926,7 +32926,7 @@
       <level l="30">423</level>
     </learnset>
   </pokemon>
-  <pokemon id="268" type1="6" base-xp="41" height="0.7" weight="11.5">
+  <pokemon id="268" type1="6" base-xp="36" height="0.7" weight="11.5">
     <statline>
       <stats atk="17" def="6" hea="28" spa="16" spd="6" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -33039,7 +33039,7 @@
       <level l="7">370</level>
     </learnset>
   </pokemon>
-  <pokemon id="269" type1="6" type2="3" base-xp="135" height="1.2" weight="31.6">
+  <pokemon id="269" type1="6" type2="3" base-xp="37" height="1.2" weight="31.6">
     <statline>
       <stats atk="17" def="10" hea="34" spa="20" spd="10" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -33162,7 +33162,7 @@
       <level l="30">423</level>
     </learnset>
   </pokemon>
-  <pokemon id="270" type1="10" type2="11" base-xp="44" height="0.5" weight="2.6">
+  <pokemon id="270" type1="10" type2="11" base-xp="6" height="0.5" weight="2.6">
     <statline>
       <stats atk="13" def="11" hea="33" spa="13" spd="11" level="1" />
       <stats atk="1" def="2" hea="3" spa="2" spd="2" level="2" />
@@ -33287,7 +33287,7 @@
       <level l="30">200</level>
     </learnset>
   </pokemon>
-  <pokemon id="271" type1="10" type2="11" base-xp="119" height="1.2" weight="32.5">
+  <pokemon id="271" type1="10" type2="11" base-xp="96" height="1.2" weight="32.5">
     <statline>
       <stats atk="14" def="12" hea="43" spa="14" spd="12" level="1" />
       <stats atk="2" def="1" hea="3" spa="2" spd="1" level="2" />
@@ -33412,7 +33412,7 @@
       <level l="28">387</level>
     </learnset>
   </pokemon>
-  <pokemon id="272" type1="10" type2="11" base-xp="216" height="1.5" weight="55.0">
+  <pokemon id="272" type1="10" type2="11" base-xp="140" height="1.5" weight="55.0">
     <statline>
       <stats atk="15" def="13" hea="53" spa="15" spd="13" level="1" />
       <stats atk="3" def="1" hea="4" spa="3" spd="1" level="2" />
@@ -33522,7 +33522,7 @@
       <level l="1">181,368,207,387</level>
     </learnset>
   </pokemon>
-  <pokemon id="273" type1="11" base-xp="44" height="0.5" weight="4.0">
+  <pokemon id="273" type1="11" base-xp="39" height="0.5" weight="4.0">
     <statline>
       <stats atk="17" def="15" hea="43" spa="17" spd="15" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -33641,7 +33641,7 @@
       <level l="15">387</level>
     </learnset>
   </pokemon>
-  <pokemon id="274" type1="11" type2="16" base-xp="119" height="1.0" weight="28.0">
+  <pokemon id="274" type1="11" type2="16" base-xp="50" height="1.0" weight="28.0">
     <statline>
       <stats atk="20" def="15" hea="55" spa="20" spd="15" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -33765,7 +33765,7 @@
       <level l="14">205</level>
     </learnset>
   </pokemon>
-  <pokemon id="275" type1="11" type2="16" base-xp="216" height="1.3" weight="59.6">
+  <pokemon id="275" type1="11" type2="16" base-xp="190" height="1.3" weight="59.6">
     <statline>
       <stats atk="18" def="16" hea="40" spa="17" spd="16" level="1" />
       <stats atk="2" hea="1" spa="2" level="2" />
@@ -33878,7 +33878,7 @@
       <level l="44">191</level>
     </learnset>
   </pokemon>
-  <pokemon id="276" type1="0" type2="2" base-xp="54" height="0.3" weight="2.3">
+  <pokemon id="276" type1="0" type2="2" base-xp="6" height="0.3" weight="2.3">
     <statline>
       <stats atk="8" def="8" hea="35" spa="8" spd="8" level="1" />
       <stats atk="2" def="2" hea="2" spa="2" spd="2" level="2" />
@@ -34001,7 +34001,7 @@
       <level l="29">466</level>
     </learnset>
   </pokemon>
-  <pokemon id="277" type1="0" type2="2" base-xp="151" height="0.7" weight="19.8">
+  <pokemon id="277" type1="0" type2="2" base-xp="57" height="0.7" weight="19.8">
     <statline>
       <stats atk="11" def="11" hea="45" spa="10" spd="10" level="1" />
       <stats atk="2" def="2" hea="1" spa="2" spd="1" level="2" />
@@ -34121,7 +34121,7 @@
       <level l="45">159</level>
     </learnset>
   </pokemon>
-  <pokemon id="278" type1="10" type2="2" base-xp="54" height="0.6" weight="9.5">
+  <pokemon id="278" type1="10" type2="2" base-xp="27" height="0.6" weight="9.5">
     <statline>
       <stats atk="9" def="9" hea="33" spa="9" spd="9" level="1" />
       <stats atk="2" def="2" hea="4" spa="2" spd="2" level="2" />
@@ -34246,7 +34246,7 @@
       <level l="29">160</level>
     </learnset>
   </pokemon>
-  <pokemon id="279" type1="10" type2="2" base-xp="151" height="1.2" weight="28.0">
+  <pokemon id="279" type1="10" type2="2" base-xp="84" height="1.2" weight="28.0">
     <statline>
       <stats atk="12" def="12" hea="43" spa="10" spd="10" level="1" />
       <stats atk="2" def="2" hea="4" spa="2" spd="2" level="2" />
@@ -34369,7 +34369,7 @@
       <level l="28">545</level>
     </learnset>
   </pokemon>
-  <pokemon id="280" type1="13" type2="17" base-xp="40" height="0.4" weight="6.6">
+  <pokemon id="280" type1="13" type2="17" base-xp="18" height="0.4" weight="6.6">
     <statline>
       <stats atk="11" def="6" hea="32" spa="8" spd="6" level="1" />
       <stats def="1" hea="1" level="2" />
@@ -34498,7 +34498,7 @@
       <level l="29">480</level>
     </learnset>
   </pokemon>
-  <pokemon id="281" type1="13" type2="17" base-xp="97" height="0.8" weight="20.2">
+  <pokemon id="281" type1="13" type2="17" base-xp="60" height="0.8" weight="20.2">
     <statline>
       <stats atk="13" def="6" hea="42" spa="11" spd="6" level="1" />
       <stats atk="3" def="3" hea="3" spa="3" spd="2" level="2" />
@@ -34628,7 +34628,7 @@
       <level l="30">452</level>
     </learnset>
   </pokemon>
-  <pokemon id="282" type1="13" type2="17" base-xp="233" height="1.6" weight="48.4">
+  <pokemon id="282" type1="13" type2="17" base-xp="120" height="1.6" weight="48.4">
     <statline>
       <stats atk="15" def="7" hea="52" spa="15" spd="6" level="1" />
       <stats def="1" spd="1" level="2" />
@@ -34755,7 +34755,7 @@
       <level l="31">452</level>
     </learnset>
   </pokemon>
-  <pokemon id="283" type1="6" type2="10" base-xp="54" height="0.5" weight="1.7">
+  <pokemon id="283" type1="6" type2="10" base-xp="10" height="0.5" weight="1.7">
     <statline>
       <stats atk="8" def="7" hea="20" spa="8" spd="7" level="1" />
       <stats atk="2" def="2" hea="3" spa="2" spd="2" level="2" />
@@ -34877,7 +34877,7 @@
       <level l="30">550</level>
     </learnset>
   </pokemon>
-  <pokemon id="284" type1="6" type2="2" base-xp="145" height="0.8" weight="3.6">
+  <pokemon id="284" type1="6" type2="2" base-xp="40" height="0.8" weight="3.6">
     <statline>
       <stats atk="9" def="8" hea="51" spa="9" spd="8" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -34998,7 +34998,7 @@
       <level l="14">558</level>
     </learnset>
   </pokemon>
-  <pokemon id="285" type1="11" base-xp="59" height="0.4" weight="4.5">
+  <pokemon id="285" type1="11" base-xp="50" height="0.4" weight="4.5">
     <statline>
       <stats atk="16" def="8" hea="27" spa="16" spd="8" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -35122,7 +35122,7 @@
       <level l="15">290</level>
     </learnset>
   </pokemon>
-  <pokemon id="286" type1="11" type2="1" base-xp="161" height="1.2" weight="39.2">
+  <pokemon id="286" type1="11" type2="1" base-xp="55" height="1.2" weight="39.2">
     <statline>
       <stats atk="22" def="10" hea="44" spa="21" spd="10" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -35243,7 +35243,7 @@
       <level l="15">290</level>
     </learnset>
   </pokemon>
-  <pokemon id="287" type1="0" base-xp="56" height="0.8" weight="24.0">
+  <pokemon id="287" type1="0" base-xp="50" height="0.8" weight="24.0">
     <statline>
       <stats atk="24" def="15" hea="40" spa="24" spd="15" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -35365,7 +35365,7 @@
       <level l="30">115</level>
     </learnset>
   </pokemon>
-  <pokemon id="288" type1="0" base-xp="154" height="1.4" weight="46.5">
+  <pokemon id="288" type1="0" base-xp="51" height="1.4" weight="46.5">
     <statline>
       <stats atk="25" def="15" hea="43" spa="25" spd="17" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -35486,7 +35486,7 @@
       <level l="14">320</level>
     </learnset>
   </pokemon>
-  <pokemon id="289" type1="0" base-xp="252" height="2.0" weight="130.5">
+  <pokemon id="289" type1="0" base-xp="72" height="2.0" weight="130.5">
     <statline>
       <stats atk="26" def="15" hea="46" spa="26" spd="17" level="1" />
       <stats atk="1" def="1" hea="3" spa="1" spd="1" level="2" />
@@ -35607,7 +35607,7 @@
       <level l="47">37</level>
     </learnset>
   </pokemon>
-  <pokemon id="290" type1="6" type2="4" base-xp="53" height="0.5" weight="5.5">
+  <pokemon id="290" type1="6" type2="4" base-xp="30" height="0.5" weight="5.5">
     <statline>
       <stats atk="14" def="9" hea="38" spa="14" spd="9" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -35730,7 +35730,7 @@
       <level l="29">327</level>
     </learnset>
   </pokemon>
-  <pokemon id="291" type1="6" type2="2" base-xp="160" height="0.8" weight="12.0">
+  <pokemon id="291" type1="6" type2="2" base-xp="70" height="0.8" weight="12.0">
     <statline>
       <stats atk="12" def="16" hea="35" spa="13" spd="16" level="1" />
       <stats atk="2" def="2" hea="4" spa="2" spd="1" level="2" />
@@ -35850,7 +35850,7 @@
       <level l="47">4</level>
     </learnset>
   </pokemon>
-  <pokemon id="292" type1="6" type2="7" base-xp="83" height="0.8" weight="1.2">
+  <pokemon id="292" type1="6" type2="7" base-xp="3" height="0.8" weight="1.2">
     <statline>
       <stats atk="28" def="8" hea="3" spa="28" spd="8" level="1" />
       <stats atk="1" def="1" hea="1" spd="1" level="2" />
@@ -36096,7 +36096,7 @@
       <level l="29">397</level>
     </learnset>
   </pokemon>
-  <pokemon id="294" type1="0" base-xp="126" height="1.0" weight="40.5">
+  <pokemon id="294" type1="0" base-xp="70" height="1.0" weight="40.5">
     <statline>
       <stats atk="16" def="13" hea="45" spa="16" spd="13" level="1" />
       <stats atk="3" def="3" hea="4" spa="3" spd="2" level="2" />
@@ -36222,7 +36222,7 @@
       <level l="27">275</level>
     </learnset>
   </pokemon>
-  <pokemon id="295" type1="0" base-xp="216" height="1.5" weight="84.0">
+  <pokemon id="295" type1="0" base-xp="89" height="1.5" weight="84.0">
     <statline>
       <stats atk="17" def="14" hea="55" spa="17" spd="14" level="1" />
       <stats atk="2" def="2" hea="4" spa="2" spd="2" level="2" />
@@ -36348,7 +36348,7 @@
       <level l="27">275</level>
     </learnset>
   </pokemon>
-  <pokemon id="296" type1="1" base-xp="47" height="1.0" weight="86.4">
+  <pokemon id="296" type1="1" base-xp="60" height="1.0" weight="86.4">
     <statline>
       <stats atk="15" def="10" hea="45" spa="16" spd="10" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="2" level="2" />
@@ -36476,7 +36476,7 @@
       <level l="31">119</level>
     </learnset>
   </pokemon>
-  <pokemon id="297" type1="1" base-xp="166" height="2.3" weight="253.8">
+  <pokemon id="297" type1="1" base-xp="155" height="2.3" weight="253.8">
     <statline>
       <stats atk="20" def="15" hea="50" spa="20" spd="15" level="1" />
       <stats atk="2" def="2" hea="2" spa="2" spd="2" level="2" />
@@ -36601,7 +36601,7 @@
       <level l="30">298</level>
     </learnset>
   </pokemon>
-  <pokemon id="298" type1="0" type2="17" base-xp="38" height="0.2" weight="2.0">
+  <pokemon id="298" type1="0" type2="17" base-xp="30" height="0.2" weight="2.0">
     <statline>
       <stats atk="6" def="7" hea="26" spa="6" spd="7" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -36722,7 +36722,7 @@
       <level l="13">546</level>
     </learnset>
   </pokemon>
-  <pokemon id="299" type1="5" base-xp="75" height="1.0" weight="97.0">
+  <pokemon id="299" type1="5" base-xp="45" height="1.0" weight="97.0">
     <statline>
       <stats atk="21" def="10" hea="49" spa="20" spd="10" level="1" />
       <stats atk="1" def="2" hea="3" spa="2" spd="1" level="2" />
@@ -36851,7 +36851,7 @@
       <level l="31">71</level>
     </learnset>
   </pokemon>
-  <pokemon id="300" type1="0" base-xp="52" height="0.6" weight="11.0">
+  <pokemon id="300" type1="0" base-xp="33" height="0.6" weight="11.0">
     <statline>
       <stats atk="2" def="2" hea="19" spa="2" spd="2" level="1" />
       <stats atk="2" def="2" hea="3" spa="2" spd="2" level="2" />
@@ -36979,7 +36979,7 @@
       <level l="31">345</level>
     </learnset>
   </pokemon>
-  <pokemon id="301" type1="0" base-xp="133" height="1.1" weight="32.6">
+  <pokemon id="301" type1="0" base-xp="96" height="1.1" weight="32.6">
     <statline>
       <stats atk="15" def="15" hea="50" spa="15" spd="15" level="1" />
       <stats atk="2" def="2" hea="4" spa="2" spd="2" level="2" />
@@ -37089,7 +37089,7 @@
       <level l="1">306,404,346,323</level>
     </learnset>
   </pokemon>
-  <pokemon id="302" type1="16" type2="7" base-xp="133" height="0.5" weight="11.0">
+  <pokemon id="302" type1="16" type2="7" base-xp="33" height="0.5" weight="11.0">
     <statline>
       <stats atk="8" def="8" hea="20" spa="8" spd="8" level="1" />
       <stats atk="1" def="1" hea="3" spa="1" spd="1" level="2" />
@@ -37217,7 +37217,7 @@
       <level l="31">184</level>
     </learnset>
   </pokemon>
-  <pokemon id="303" type1="8" type2="17" base-xp="133" height="0.6" weight="11.5">
+  <pokemon id="303" type1="8" type2="17" base-xp="33" height="0.6" weight="11.5">
     <statline>
       <stats atk="22" def="5" hea="47" spa="20" spd="7" level="1" />
       <stats def="2" hea="2" spa="2" level="2" />
@@ -37339,7 +37339,7 @@
       <level l="29">24</level>
     </learnset>
   </pokemon>
-  <pokemon id="304" type1="8" type2="5" base-xp="66" height="0.4" weight="60.0">
+  <pokemon id="304" type1="8" type2="5" base-xp="35" height="0.4" weight="60.0">
     <statline>
       <stats atk="15" def="7" hea="21" spa="16" spd="6" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -37468,7 +37468,7 @@
       <level l="31">532</level>
     </learnset>
   </pokemon>
-  <pokemon id="305" type1="8" type2="5" base-xp="151" height="0.9" weight="120.0">
+  <pokemon id="305" type1="8" type2="5" base-xp="80" height="0.9" weight="120.0">
     <statline>
       <stats atk="20" def="13" hea="49" spa="20" spd="13" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -37597,7 +37597,7 @@
       <level l="31">532</level>
     </learnset>
   </pokemon>
-  <pokemon id="306" type1="8" type2="5" base-xp="239" height="2.1" weight="360.0">
+  <pokemon id="306" type1="8" type2="5" base-xp="165" height="2.1" weight="360.0">
     <statline>
       <stats atk="25" def="20" hea="50" spa="25" spd="20" level="1" />
       <stats def="1" hea="3" level="2" />
@@ -37723,7 +37723,7 @@
       <level l="63">529</level>
     </learnset>
   </pokemon>
-  <pokemon id="307" type1="1" type2="13" base-xp="56" height="0.6" weight="11.2">
+  <pokemon id="307" type1="1" type2="13" base-xp="32" height="0.6" weight="11.2">
     <statline>
       <stats atk="13" def="8" hea="25" spa="13" spd="8" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -37852,7 +37852,7 @@
       <level l="31">392</level>
     </learnset>
   </pokemon>
-  <pokemon id="308" type1="1" type2="13" base-xp="144" height="1.3" weight="31.5">
+  <pokemon id="308" type1="1" type2="13" base-xp="60" height="1.3" weight="31.5">
     <statline>
       <stats atk="13" def="8" hea="38" spa="13" spd="8" level="1" />
       <stats atk="1" def="1" hea="2" spa="1" spd="1" level="2" />
@@ -37978,7 +37978,7 @@
       <level l="31">392</level>
     </learnset>
   </pokemon>
-  <pokemon id="309" type1="12" base-xp="59" height="0.6" weight="15.2">
+  <pokemon id="309" type1="12" base-xp="25" height="0.6" weight="15.2">
     <statline>
       <stats atk="17" def="10" hea="42" spa="18" spd="10" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -38103,7 +38103,7 @@
       <level l="29">71</level>
     </learnset>
   </pokemon>
-  <pokemon id="310" type1="12" base-xp="166" height="1.5" weight="40.2">
+  <pokemon id="310" type1="12" base-xp="65" height="1.5" weight="40.2">
     <statline>
       <stats atk="25" def="13" hea="56" spa="25" spd="13" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -38226,7 +38226,7 @@
       <level l="30">71</level>
     </learnset>
   </pokemon>
-  <pokemon id="311" type1="12" base-xp="142" height="0.4" weight="4.2">
+  <pokemon id="311" type1="12" base-xp="40" height="0.4" weight="4.2">
     <statline>
       <stats atk="10" def="7" hea="20" spa="10" spd="7" level="1" />
       <stats def="2" hea="2" spa="2" level="2" />
@@ -38352,7 +38352,7 @@
       <level l="31">71</level>
     </learnset>
   </pokemon>
-  <pokemon id="312" type1="12" base-xp="142" height="0.4" weight="4.2">
+  <pokemon id="312" type1="12" base-xp="40" height="0.4" weight="4.2">
     <statline>
       <stats atk="10" def="7" hea="20" spa="10" spd="7" level="1" />
       <stats def="2" hea="2" spa="2" level="2" />
@@ -38478,7 +38478,7 @@
       <level l="31">71</level>
     </learnset>
   </pokemon>
-  <pokemon id="313" type1="6" base-xp="140" height="0.7" weight="17.7">
+  <pokemon id="313" type1="6" base-xp="51" height="0.7" weight="17.7">
     <statline>
       <stats atk="19" def="10" hea="40" spa="19" spd="10" level="1" />
       <stats atk="1" def="1" hea="4" spa="1" spd="1" level="2" />
@@ -38601,7 +38601,7 @@
       <level l="29">391</level>
     </learnset>
   </pokemon>
-  <pokemon id="314" type1="6" base-xp="140" height="0.6" weight="17.7">
+  <pokemon id="314" type1="6" base-xp="35" height="0.6" weight="17.7">
     <statline>
       <stats atk="19" def="12" hea="50" spa="19" spd="12" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -38724,7 +38724,7 @@
       <level l="29">42</level>
     </learnset>
   </pokemon>
-  <pokemon id="315" type1="11" type2="3" base-xp="140" height="0.3" weight="2.0">
+  <pokemon id="315" type1="11" type2="3" base-xp="36" height="0.3" weight="2.0">
     <statline>
       <stats atk="12" def="16" hea="45" spa="12" spd="16" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -38853,7 +38853,7 @@
       <level l="31">417</level>
     </learnset>
   </pokemon>
-  <pokemon id="316" type1="3" base-xp="60" height="0.4" weight="10.3">
+  <pokemon id="316" type1="3" base-xp="30" height="0.4" weight="10.3">
     <statline>
       <stats atk="9" def="9" hea="40" spa="9" spd="9" level="1" />
       <stats def="2" hea="2" spa="2" level="2" />
@@ -38979,7 +38979,7 @@
       <level l="28">411,339,415</level>
     </learnset>
   </pokemon>
-  <pokemon id="317" type1="3" base-xp="163" height="1.7" weight="80.0">
+  <pokemon id="317" type1="3" base-xp="90" height="1.7" weight="80.0">
     <statline>
       <stats atk="11" def="11" hea="45" spa="11" spd="11" level="1" />
       <stats atk="2" hea="3" spa="2" spd="2" level="2" />
@@ -39103,7 +39103,7 @@
       <level l="30">411,339,415</level>
     </learnset>
   </pokemon>
-  <pokemon id="318" type1="10" type2="16" base-xp="61" height="0.8" weight="20.8">
+  <pokemon id="318" type1="10" type2="16" base-xp="80" height="0.8" weight="20.8">
     <statline>
       <stats atk="15" def="13" hea="40" spa="15" spd="13" level="1" />
       <stats atk="3" def="2" hea="4" spa="2" spd="2" level="2" />
@@ -39228,7 +39228,7 @@
       <level l="29">399</level>
     </learnset>
   </pokemon>
-  <pokemon id="319" type1="10" type2="16" base-xp="161" height="1.8" weight="88.8">
+  <pokemon id="319" type1="10" type2="16" base-xp="190" height="1.8" weight="88.8">
     <statline>
       <stats atk="18" def="15" hea="50" spa="18" spd="15" level="1" />
       <stats atk="2" def="2" hea="4" spa="2" spd="1" level="2" />
@@ -39353,7 +39353,7 @@
       <level l="62">27</level>
     </learnset>
   </pokemon>
-  <pokemon id="320" type1="10" base-xp="80" height="2.0" weight="130.0">
+  <pokemon id="320" type1="10" base-xp="100" height="2.0" weight="130.0">
     <statline>
       <stats atk="10" def="10" hea="40" spa="10" spd="10" level="1" />
       <stats def="1" hea="3" level="2" />
@@ -39481,7 +39481,7 @@
       <level l="29">493</level>
     </learnset>
   </pokemon>
-  <pokemon id="321" type1="10" base-xp="175" height="14.5" weight="398.0">
+  <pokemon id="321" type1="10" base-xp="250" height="14.5" weight="398.0">
     <statline>
       <stats atk="15" def="13" hea="60" spa="15" spd="13" level="1" />
       <stats atk="2" def="2" hea="4" spa="2" spd="2" level="2" />
@@ -39606,7 +39606,7 @@
       <level l="29">545</level>
     </learnset>
   </pokemon>
-  <pokemon id="322" type1="9" type2="4" base-xp="61" height="0.7" weight="24.0">
+  <pokemon id="322" type1="9" type2="4" base-xp="50" height="0.7" weight="24.0">
     <statline>
       <stats atk="13" def="10" hea="39" spa="14" spd="10" level="1" />
       <stats atk="2" def="2" hea="2" spa="2" spd="2" level="2" />
@@ -39732,7 +39732,7 @@
       <level l="31">274</level>
     </learnset>
   </pokemon>
-  <pokemon id="323" type1="9" type2="4" base-xp="161" height="1.9" weight="220.0">
+  <pokemon id="323" type1="9" type2="4" base-xp="115" height="1.9" weight="220.0">
     <statline>
       <stats atk="16" def="13" hea="55" spa="16" spd="13" level="1" />
       <stats atk="2" def="2" hea="2" spa="2" spd="2" level="2" />
@@ -39856,7 +39856,7 @@
       <level l="31">274</level>
     </learnset>
   </pokemon>
-  <pokemon id="324" type1="9" base-xp="165" height="0.5" weight="80.4">
+  <pokemon id="324" type1="9" base-xp="50" height="0.5" weight="80.4">
     <statline>
       <stats atk="10" def="8" hea="37" spa="10" spd="8" level="1" />
       <stats def="2" hea="2" spa="2" level="2" />
@@ -39983,7 +39983,7 @@
       <level l="30">391</level>
     </learnset>
   </pokemon>
-  <pokemon id="325" type1="13" base-xp="66" height="0.7" weight="30.6">
+  <pokemon id="325" type1="13" base-xp="90" height="0.7" weight="30.6">
     <statline>
       <stats atk="6" def="6" hea="28" spa="6" spd="6" level="1" />
       <stats atk="2" def="2" hea="3" spa="2" spd="2" level="2" />
@@ -40109,7 +40109,7 @@
       <level l="29">505,493</level>
     </learnset>
   </pokemon>
-  <pokemon id="326" type1="13" base-xp="165" height="0.9" weight="71.5">
+  <pokemon id="326" type1="13" base-xp="124" height="0.9" weight="71.5">
     <statline>
       <stats atk="15" def="12" hea="35" spa="15" spd="12" level="1" />
       <stats atk="3" def="2" hea="4" spa="2" spd="2" level="2" />
@@ -40233,7 +40233,7 @@
       <level l="29">505</level>
     </learnset>
   </pokemon>
-  <pokemon id="327" type1="0" base-xp="126" height="1.1" weight="5.0">
+  <pokemon id="327" type1="0" base-xp="15" height="1.1" weight="5.0">
     <statline>
       <stats atk="9" def="9" hea="35" spa="9" spd="10" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -40355,7 +40355,7 @@
       <level l="28">26</level>
     </learnset>
   </pokemon>
-  <pokemon id="328" type1="4" base-xp="58" height="0.7" weight="15.0">
+  <pokemon id="328" type1="4" base-xp="60" height="0.7" weight="15.0">
     <statline>
       <stats atk="22" def="12" hea="35" spa="21" spd="12" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -40481,7 +40481,7 @@
       <level l="29">314</level>
     </learnset>
   </pokemon>
-  <pokemon id="329" type1="4" type2="15" base-xp="119" height="1.1" weight="15.3">
+  <pokemon id="329" type1="4" type2="15" base-xp="70" height="1.1" weight="15.3">
     <statline>
       <stats atk="22" def="15" hea="45" spa="21" spd="13" level="1" />
       <stats atk="2" def="1" hea="3" spa="2" spd="1" level="2" />
@@ -40608,7 +40608,7 @@
       <level l="29">3</level>
     </learnset>
   </pokemon>
-  <pokemon id="330" type1="4" type2="15" base-xp="234" height="2.0" weight="82.0">
+  <pokemon id="330" type1="4" type2="15" base-xp="90" height="2.0" weight="82.0">
     <statline>
       <stats atk="22" def="17" hea="51" spa="21" spd="16" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -40733,7 +40733,7 @@
       <level l="29">58</level>
     </learnset>
   </pokemon>
-  <pokemon id="331" type1="11" base-xp="67" height="0.4" weight="51.3">
+  <pokemon id="331" type1="11" base-xp="35" height="0.4" weight="51.3">
     <statline>
       <stats atk="19" def="13" hea="40" spa="21" spd="13" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -40861,7 +40861,7 @@
       <level l="30">239</level>
     </learnset>
   </pokemon>
-  <pokemon id="332" type1="11" type2="16" base-xp="166" height="1.3" weight="77.4">
+  <pokemon id="332" type1="11" type2="16" base-xp="80" height="1.3" weight="77.4">
     <statline>
       <stats atk="22" def="14" hea="55" spa="22" spd="14" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -40987,7 +40987,7 @@
       <level l="30">239</level>
     </learnset>
   </pokemon>
-  <pokemon id="333" type1="0" type2="2" base-xp="62" height="0.4" weight="1.2">
+  <pokemon id="333" type1="0" type2="2" base-xp="59" height="0.4" weight="1.2">
     <statline>
       <stats atk="13" def="11" hea="44" spa="15" spd="12" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -41115,7 +41115,7 @@
       <level l="30">171</level>
     </learnset>
   </pokemon>
-  <pokemon id="334" type1="15" type2="2" base-xp="172" height="1.1" weight="20.6">
+  <pokemon id="334" type1="15" type2="2" base-xp="80" height="1.1" weight="20.6">
     <statline>
       <stats atk="13" def="11" hea="46" spa="15" spd="12" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -41242,7 +41242,7 @@
       <level l="30">63</level>
     </learnset>
   </pokemon>
-  <pokemon id="335" type1="0" base-xp="160" height="1.3" weight="40.3">
+  <pokemon id="335" type1="0" base-xp="40" height="1.3" weight="40.3">
     <statline>
       <stats atk="12" def="8" hea="46" spa="12" spd="10" level="1" />
       <stats atk="1" def="2" hea="2" spa="2" level="2" />
@@ -41366,7 +41366,7 @@
       <level l="29">307</level>
     </learnset>
   </pokemon>
-  <pokemon id="336" type1="3" base-xp="160" height="2.7" weight="52.5">
+  <pokemon id="336" type1="3" base-xp="54" height="2.7" weight="52.5">
     <statline>
       <stats atk="13" def="8" hea="46" spa="14" spd="8" level="1" />
       <stats atk="1" def="2" hea="2" spa="2" level="2" />
@@ -41492,7 +41492,7 @@
       <level l="31">443</level>
     </learnset>
   </pokemon>
-  <pokemon id="337" type1="5" type2="13" base-xp="154" height="1.0" weight="168.0">
+  <pokemon id="337" type1="5" type2="13" base-xp="115" height="1.0" weight="168.0">
     <statline>
       <stats atk="22" def="18" hea="44" spa="22" spd="18" level="1" />
       <stats atk="1" def="1" hea="2" spa="1" spd="1" level="2" />
@@ -41614,7 +41614,7 @@
       <level l="29">452</level>
     </learnset>
   </pokemon>
-  <pokemon id="338" type1="5" type2="13" base-xp="154" height="1.2" weight="154.0">
+  <pokemon id="338" type1="5" type2="13" base-xp="120" height="1.2" weight="154.0">
     <statline>
       <stats atk="24" def="18" hea="46" spa="24" spd="18" level="1" />
       <stats atk="1" def="1" hea="2" spa="1" spd="1" level="2" />
@@ -41736,7 +41736,7 @@
       <level l="29">452</level>
     </learnset>
   </pokemon>
-  <pokemon id="339" type1="10" type2="4" base-xp="58" height="0.4" weight="1.9">
+  <pokemon id="339" type1="10" type2="4" base-xp="3" height="0.4" weight="1.9">
     <statline>
       <stats atk="8" def="8" hea="35" spa="8" spd="8" level="1" />
       <stats atk="2" def="3" hea="3" spa="2" spd="2" level="2" />
@@ -41861,7 +41861,7 @@
       <level l="28">539</level>
     </learnset>
   </pokemon>
-  <pokemon id="340" type1="10" type2="4" base-xp="164" height="0.9" weight="23.6">
+  <pokemon id="340" type1="10" type2="4" base-xp="69" height="0.9" weight="23.6">
     <statline>
       <stats atk="12" def="13" hea="45" spa="12" spd="13" level="1" />
       <stats atk="2" def="1" hea="3" spa="2" spd="1" level="2" />
@@ -41984,7 +41984,7 @@
       <level l="30">455</level>
     </learnset>
   </pokemon>
-  <pokemon id="341" type1="10" base-xp="62" height="0.6" weight="11.5">
+  <pokemon id="341" type1="10" base-xp="33" height="0.6" weight="11.5">
     <statline>
       <stats atk="20" def="15" hea="35" spa="20" spd="15" level="1" />
       <stats atk="1" hea="3" spa="2" spd="1" level="2" />
@@ -42111,7 +42111,7 @@
       <level l="31">544</level>
     </learnset>
   </pokemon>
-  <pokemon id="342" type1="10" type2="16" base-xp="164" height="1.1" weight="32.8">
+  <pokemon id="342" type1="10" type2="16" base-xp="96" height="1.1" weight="32.8">
     <statline>
       <stats atk="22" def="18" hea="40" spa="22" spd="18" level="1" />
       <stats atk="2" def="2" hea="4" spa="2" spd="2" level="2" />
@@ -42236,7 +42236,7 @@
       <level l="30">299</level>
     </learnset>
   </pokemon>
-  <pokemon id="343" type1="4" type2="13" base-xp="60" height="0.5" weight="21.5">
+  <pokemon id="343" type1="4" type2="13" base-xp="21" height="0.5" weight="21.5">
     <statline>
       <stats atk="13" def="7" hea="26" spa="13" spd="7" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -42364,7 +42364,7 @@
       <level l="31">453</level>
     </learnset>
   </pokemon>
-  <pokemon id="344" type1="4" type2="13" base-xp="175" height="1.5" weight="108.0">
+  <pokemon id="344" type1="4" type2="13" base-xp="90" height="1.5" weight="108.0">
     <statline>
       <stats atk="21" def="15" hea="59" spa="21" spd="16" level="1" />
       <stats atk="1" def="1" hea="2" spa="1" spd="1" level="2" />
@@ -42490,7 +42490,7 @@
       <level l="31">453</level>
     </learnset>
   </pokemon>
-  <pokemon id="345" type1="5" type2="11" base-xp="71" height="1.0" weight="23.8">
+  <pokemon id="345" type1="5" type2="11" base-xp="70" height="1.0" weight="23.8">
     <statline>
       <stats atk="20" def="16" hea="55" spa="20" spd="16" level="1" />
       <stats atk="2" def="2" hea="2" spa="2" spd="2" level="2" />
@@ -42614,7 +42614,7 @@
       <level l="31">443</level>
     </learnset>
   </pokemon>
-  <pokemon id="346" type1="5" type2="11" base-xp="173" height="1.5" weight="60.4">
+  <pokemon id="346" type1="5" type2="11" base-xp="110" height="1.5" weight="60.4">
     <statline>
       <stats atk="21" def="18" hea="55" spa="21" spd="18" level="1" />
       <stats atk="2" def="2" hea="2" spa="2" spd="2" level="2" />
@@ -42735,7 +42735,7 @@
       <level l="31">443</level>
     </learnset>
   </pokemon>
-  <pokemon id="347" type1="5" type2="6" base-xp="71" height="0.7" weight="12.5">
+  <pokemon id="347" type1="5" type2="6" base-xp="80" height="0.7" weight="12.5">
     <statline>
       <stats atk="12" def="12" hea="40" spa="12" spd="12" level="1" />
       <stats atk="3" def="3" hea="4" spa="2" spd="2" level="2" />
@@ -42861,7 +42861,7 @@
       <level l="29">545</level>
     </learnset>
   </pokemon>
-  <pokemon id="348" type1="5" type2="6" base-xp="173" height="1.5" weight="68.2">
+  <pokemon id="348" type1="5" type2="6" base-xp="120" height="1.5" weight="68.2">
     <statline>
       <stats atk="15" def="15" hea="50" spa="15" spd="15" level="1" />
       <stats atk="2" def="2" hea="2" spa="2" spd="2" level="2" />
@@ -42984,7 +42984,7 @@
       <level l="61">511</level>
     </learnset>
   </pokemon>
-  <pokemon id="349" type1="10" base-xp="40" height="0.6" weight="7.4">
+  <pokemon id="349" type1="10" base-xp="21" height="0.6" weight="7.4">
     <statline>
       <stats atk="8" def="8" hea="20" spa="8" spd="8" level="1" />
       <stats def="1" hea="1" level="2" />
@@ -43100,7 +43100,7 @@
       <level l="15">303</level>
     </learnset>
   </pokemon>
-  <pokemon id="350" type1="10" base-xp="189" height="6.2" weight="162.0">
+  <pokemon id="350" type1="10" base-xp="222" height="6.2" weight="162.0">
     <statline>
       <stats atk="25" def="20" hea="60" spa="25" spd="20" level="1" />
       <stats atk="4" def="1" hea="5" spa="1" spd="1" level="2" />
@@ -43225,7 +43225,7 @@
       <level l="31">393</level>
     </learnset>
   </pokemon>
-  <pokemon id="351" type1="0" base-xp="147" height="0.3" weight="0.8">
+  <pokemon id="351" type1="0" base-xp="200" height="0.3" weight="0.8">
     <statline>
       <stats atk="8" def="8" hea="35" spa="8" spd="8" level="1" />
       <stats atk="2" def="2" hea="3" spa="2" spd="2" level="2" />
@@ -43341,7 +43341,7 @@
       <level l="15">290</level>
     </learnset>
   </pokemon>
-  <pokemon id="352" type1="0" base-xp="154" height="1.0" weight="22.0">
+  <pokemon id="352" type1="0" base-xp="1" height="1.0" weight="22.0">
     <statline>
       <stats atk="15" def="15" hea="50" spa="15" spd="15" level="1" />
       <stats atk="2" def="2" hea="3" spa="2" spd="2" level="2" />
@@ -43465,7 +43465,7 @@
       <level l="30">351</level>
     </learnset>
   </pokemon>
-  <pokemon id="353" type1="7" base-xp="59" height="0.6" weight="2.3">
+  <pokemon id="353" type1="7" base-xp="60" height="0.6" weight="2.3">
     <statline>
       <stats atk="15" def="15" hea="46" spa="15" spd="15" level="1" />
       <stats atk="1" def="1" hea="2" spa="1" spd="1" level="2" />
@@ -43593,7 +43593,7 @@
       <level l="30">175</level>
     </learnset>
   </pokemon>
-  <pokemon id="354" type1="7" base-xp="159" height="1.1" weight="12.5">
+  <pokemon id="354" type1="7" base-xp="105" height="1.1" weight="12.5">
     <statline>
       <stats atk="15" def="15" hea="50" spa="15" spd="15" level="1" />
       <stats atk="1" def="1" hea="2" spa="1" spd="1" level="2" />
@@ -43718,7 +43718,7 @@
       <level l="30">175</level>
     </learnset>
   </pokemon>
-  <pokemon id="355" type1="7" base-xp="59" height="0.8" weight="15.0">
+  <pokemon id="355" type1="7" base-xp="55" height="0.8" weight="15.0">
     <statline>
       <stats atk="19" def="17" hea="31" spa="21" spd="17" level="1" />
       <stats atk="1" def="1" hea="2" spa="1" spd="1" level="2" />
@@ -43844,7 +43844,7 @@
       <level l="30">184</level>
     </learnset>
   </pokemon>
-  <pokemon id="356" type1="7" base-xp="159" height="1.6" weight="30.6">
+  <pokemon id="356" type1="7" base-xp="75" height="1.6" weight="30.6">
     <statline>
       <stats atk="20" def="18" hea="40" spa="22" spd="18" level="1" />
       <stats atk="1" def="1" hea="2" spa="1" spd="1" level="2" />
@@ -43971,7 +43971,7 @@
       <level l="30">184</level>
     </learnset>
   </pokemon>
-  <pokemon id="357" type1="11" type2="2" base-xp="161" height="2.0" weight="100.0">
+  <pokemon id="357" type1="11" type2="2" base-xp="100" height="2.0" weight="100.0">
     <statline>
       <stats atk="22" def="20" hea="42" spa="23" spd="20" level="1" />
       <stats atk="1" def="1" hea="2" spa="1" spd="1" level="2" />
@@ -44086,7 +44086,7 @@
       <level l="26">167</level>
     </learnset>
   </pokemon>
-  <pokemon id="358" type1="13" base-xp="149" height="0.6" weight="1.0">
+  <pokemon id="358" type1="13" base-xp="20" height="0.6" weight="1.0">
     <statline>
       <stats atk="16" def="4" hea="58" spa="16" spd="4" level="1" />
       <stats atk="1" def="1" hea="2" spa="1" spd="1" level="2" />
@@ -44204,7 +44204,7 @@
       <level l="13">426</level>
     </learnset>
   </pokemon>
-  <pokemon id="359" type1="16" base-xp="163" height="1.2" weight="47.0">
+  <pokemon id="359" type1="16" base-xp="200" height="1.2" weight="47.0">
     <statline>
       <stats atk="16" def="21" hea="61" spa="15" spd="22" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -44321,7 +44321,7 @@
       <level l="13">49</level>
     </learnset>
   </pokemon>
-  <pokemon id="360" type1="13" base-xp="52" height="0.6" weight="14.0">
+  <pokemon id="360" type1="13" base-xp="25" height="0.6" weight="14.0">
     <statline>
       <stats atk="4" def="4" hea="11" spa="4" spd="4" level="1" />
       <stats def="1" hea="4" level="2" />
@@ -44435,7 +44435,7 @@
       <level l="15">115,463,398,186</level>
     </learnset>
   </pokemon>
-  <pokemon id="361" type1="14" base-xp="60" height="0.7" weight="16.8">
+  <pokemon id="361" type1="14" base-xp="50" height="0.7" weight="16.8">
     <statline>
       <stats atk="4" def="13" hea="32" spa="4" spd="13" level="1" />
       <stats atk="2" def="1" hea="2" spa="2" spd="1" level="2" />
@@ -44560,7 +44560,7 @@
       <level l="46">242</level>
     </learnset>
   </pokemon>
-  <pokemon id="362" type1="14" base-xp="168" height="1.5" weight="256.5">
+  <pokemon id="362" type1="14" base-xp="80" height="1.5" weight="256.5">
     <statline>
       <stats atk="14" def="16" hea="37" spa="14" spd="16" level="1" />
       <stats atk="2" def="1" hea="2" spa="2" spd="1" level="2" />
@@ -44683,7 +44683,7 @@
       <level l="61">256</level>
     </learnset>
   </pokemon>
-  <pokemon id="363" type1="14" type2="10" base-xp="58" height="0.8" weight="39.5">
+  <pokemon id="363" type1="14" type2="10" base-xp="78" height="0.8" weight="39.5">
     <statline>
       <stats atk="15" def="13" hea="40" spa="15" spd="13" level="1" />
       <stats atk="3" def="2" hea="4" spa="3" spd="2" level="2" />
@@ -44806,7 +44806,7 @@
       <level l="31">493,312</level>
     </learnset>
   </pokemon>
-  <pokemon id="364" type1="14" type2="10" base-xp="144" height="1.1" weight="87.6">
+  <pokemon id="364" type1="14" type2="10" base-xp="103" height="1.1" weight="87.6">
     <statline>
       <stats atk="16" def="14" hea="45" spa="16" spd="14" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -44930,7 +44930,7 @@
       <level l="31">493,312</level>
     </learnset>
   </pokemon>
-  <pokemon id="365" type1="14" type2="10" base-xp="239" height="1.4" weight="150.6">
+  <pokemon id="365" type1="14" type2="10" base-xp="130" height="1.4" weight="150.6">
     <statline>
       <stats atk="17" def="15" hea="50" spa="17" spd="15" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -45050,7 +45050,7 @@
       <level l="31">493,312</level>
     </learnset>
   </pokemon>
-  <pokemon id="366" type1="10" base-xp="69" height="0.4" weight="52.5">
+  <pokemon id="366" type1="10" base-xp="70" height="0.4" weight="52.5">
     <statline>
       <stats atk="10" def="13" hea="35" spa="12" spd="13" level="1" />
       <stats def="1" hea="1" level="2" />
@@ -45165,7 +45165,7 @@
       <level l="50">402</level>
     </learnset>
   </pokemon>
-  <pokemon id="367" type1="10" base-xp="170" height="1.7" weight="27.0">
+  <pokemon id="367" type1="10" base-xp="105" height="1.7" weight="27.0">
     <statline>
       <stats atk="12" def="14" hea="40" spa="13" spd="14" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -45288,7 +45288,7 @@
       <level l="29">347</level>
     </learnset>
   </pokemon>
-  <pokemon id="368" type1="10" base-xp="170" height="1.8" weight="22.6">
+  <pokemon id="368" type1="10" base-xp="120" height="1.8" weight="22.6">
     <statline>
       <stats atk="13" def="14" hea="40" spa="15" spd="14" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -45411,7 +45411,7 @@
       <level l="29">347</level>
     </learnset>
   </pokemon>
-  <pokemon id="369" type1="10" type2="5" base-xp="170" height="1.0" weight="23.4">
+  <pokemon id="369" type1="10" type2="5" base-xp="69" height="1.0" weight="23.4">
     <statline>
       <stats atk="9" def="9" hea="30" spa="9" spd="9" level="1" />
       <stats def="2" hea="2" spa="2" level="2" />
@@ -45532,7 +45532,7 @@
       <level l="31">274</level>
     </learnset>
   </pokemon>
-  <pokemon id="370" type1="10" base-xp="116" height="0.6" weight="8.7">
+  <pokemon id="370" type1="10" base-xp="80" height="0.6" weight="8.7">
     <statline>
       <stats atk="8" def="8" hea="40" spa="9" spd="9" level="1" />
       <stats def="1" hea="1" level="2" />
@@ -45780,7 +45780,7 @@
       <level l="29">57</level>
     </learnset>
   </pokemon>
-  <pokemon id="372" type1="15" base-xp="147" height="1.1" weight="110.5">
+  <pokemon id="372" type1="15" base-xp="65" height="1.1" weight="110.5">
     <statline>
       <stats atk="22" def="16" hea="39" spa="22" spd="16" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -45906,7 +45906,7 @@
       <level l="30">391</level>
     </learnset>
   </pokemon>
-  <pokemon id="373" type1="15" type2="2" base-xp="270" height="1.5" weight="102.6">
+  <pokemon id="373" type1="15" type2="2" base-xp="85" height="1.5" weight="102.6">
     <statline>
       <stats atk="25" def="18" hea="40" spa="25" spd="18" level="1" />
       <stats atk="1" hea="2" spa="1" spd="1" level="2" />
@@ -46030,7 +46030,7 @@
       <level l="63">265</level>
     </learnset>
   </pokemon>
-  <pokemon id="374" type1="8" type2="13" base-xp="60" height="0.6" weight="95.2">
+  <pokemon id="374" type1="8" type2="13" base-xp="32" height="0.6" weight="95.2">
     <statline>
       <stats atk="15" def="7" hea="20" spa="17" spd="8" level="1" />
       <stats atk="2" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -46142,7 +46142,7 @@
       <level l="1">274</level>
     </learnset>
   </pokemon>
-  <pokemon id="375" type1="8" type2="13" base-xp="147" height="1.2" weight="202.5">
+  <pokemon id="375" type1="8" type2="13" base-xp="65" height="1.2" weight="202.5">
     <statline>
       <stats atk="16" def="10" hea="41" spa="19" spd="10" level="1" />
       <stats atk="2" def="1" hea="2" spa="1" spd="1" level="2" />
@@ -46266,7 +46266,7 @@
       <level l="47">531</level>
     </learnset>
   </pokemon>
-  <pokemon id="376" type1="8" type2="13" base-xp="270" height="1.6" weight="550.0">
+  <pokemon id="376" type1="8" type2="13" base-xp="95" height="1.6" weight="550.0">
     <statline>
       <stats atk="17" def="12" hea="44" spa="20" spd="12" level="1" />
       <stats atk="2" def="1" hea="2" spa="1" spd="1" level="2" />
@@ -46388,7 +46388,7 @@
       <level l="29">487</level>
     </learnset>
   </pokemon>
-  <pokemon id="377" type1="5" base-xp="261" height="1.7" weight="230.0">
+  <pokemon id="377" type1="5" base-xp="200" height="1.7" weight="230.0">
     <statline>
       <stats atk="20" def="15" hea="35" spa="20" spd="15" level="1" />
       <stats atk="1" def="1" spa="1" spd="1" level="2" />
@@ -46509,7 +46509,7 @@
       <level l="31">506</level>
     </learnset>
   </pokemon>
-  <pokemon id="378" type1="14" base-xp="261" height="1.8" weight="175.0">
+  <pokemon id="378" type1="14" base-xp="200" height="1.8" weight="175.0">
     <statline>
       <stats atk="20" def="15" hea="35" spa="20" spd="15" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -46630,7 +46630,7 @@
       <level l="31">506</level>
     </learnset>
   </pokemon>
-  <pokemon id="379" type1="8" base-xp="261" height="1.9" weight="205.0">
+  <pokemon id="379" type1="8" base-xp="200" height="1.9" weight="205.0">
     <statline>
       <stats atk="20" def="15" hea="35" spa="20" spd="15" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -46751,7 +46751,7 @@
       <level l="31">506</level>
     </learnset>
   </pokemon>
-  <pokemon id="380" type1="15" type2="13" base-xp="270" height="1.4" weight="40.0">
+  <pokemon id="380" type1="15" type2="13" base-xp="200" height="1.4" weight="40.0">
     <statline>
       <stats atk="20" def="15" hea="50" spa="20" spd="15" level="1" />
       <stats atk="1" def="1" hea="3" spa="1" spd="1" level="2" />
@@ -46876,7 +46876,7 @@
       <level l="61">477</level>
     </learnset>
   </pokemon>
-  <pokemon id="381" type1="15" type2="13" base-xp="270" height="2.0" weight="60.0">
+  <pokemon id="381" type1="15" type2="13" base-xp="200" height="2.0" weight="60.0">
     <statline>
       <stats atk="20" def="15" hea="50" spa="20" spd="15" level="1" />
       <stats atk="1" hea="1" spd="1" level="2" />
@@ -47001,7 +47001,7 @@
       <level l="61">44</level>
     </learnset>
   </pokemon>
-  <pokemon id="382" type1="10" base-xp="302" height="4.5" weight="352.0">
+  <pokemon id="382" type1="10" base-xp="210" height="4.5" weight="352.0">
     <statline>
       <stats atk="20" def="15" hea="75" spa="20" spd="15" level="1" />
       <stats atk="1" def="1" hea="2" spa="1" spd="1" level="2" />
@@ -47123,7 +47123,7 @@
       <level l="30">555</level>
     </learnset>
   </pokemon>
-  <pokemon id="383" type1="4" base-xp="302" height="3.5" weight="950.0">
+  <pokemon id="383" type1="4" base-xp="220" height="3.5" weight="950.0">
     <statline>
       <stats atk="20" def="15" hea="78" spa="20" spd="15" level="1" />
       <stats atk="2" def="1" hea="4" spa="1" spd="1" level="2" />
@@ -47245,7 +47245,7 @@
       <level l="30">493</level>
     </learnset>
   </pokemon>
-  <pokemon id="384" type1="15" type2="2" base-xp="306" height="7.0" weight="206.5">
+  <pokemon id="384" type1="15" type2="2" base-xp="230" height="7.0" weight="206.5">
     <statline>
       <stats atk="20" def="17" hea="80" spa="20" spd="17" level="1" />
       <stats atk="1" def="1" hea="2" spa="1" spd="1" level="2" />
@@ -47367,7 +47367,7 @@
       <level l="30">159</level>
     </learnset>
   </pokemon>
-  <pokemon id="385" type1="8" type2="13" base-xp="270" height="0.3" weight="1.1">
+  <pokemon id="385" type1="8" type2="13" base-xp="44" height="0.3" weight="1.1">
     <statline>
       <stats atk="15" def="15" hea="65" spa="15" spd="15" level="1" />
       <stats atk="1" def="1" hea="1" spa="1" spd="1" level="2" />
@@ -47491,7 +47491,7 @@
       <level l="30">493</level>
     </learnset>
   </pokemon>
-  <pokemon id="386" type1="13" base-xp="270" height="1.7" weight="60.8">
+  <pokemon id="386" type1="13" base-xp="44" height="1.7" weight="60.8">
     <statline>
       <stats atk="21" def="22" hea="85" spa="22" spd="21" level="1" />
       <stats atk="1" hea="1" spd="1" level="2" />
