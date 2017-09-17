@@ -13,6 +13,8 @@ public class BackgroundSeaLayer extends AbstractGraphiclayer {
 	private int horizonstate = 0;
 	private int counter_waves = 0;
 	private int wavesstate = 0;
+	private int counter_upcamera = 0;
+	private int upcamera = 0;
 
 	@Override
 	public void update() {
@@ -42,17 +44,29 @@ public class BackgroundSeaLayer extends AbstractGraphiclayer {
 				++wavesstate;
 			counter_waves = 0;
 		}
+		// UPCAMERA
+		if (upcamera < 2000) {
+			++counter_upcamera;
+			if (counter_upcamera >= 3) {
+				counter_upcamera = 0;
+				++upcamera;
+			}
+		}
 	}
 
 	@Override
 	public void render(Graphics2D g, int width, int height) {
 		g.setColor(new Color(32, 184, 248));
 		g.fillRect(0, 0, width, height);
-		int cumulatedheight = 0;
-		g.drawImage(GraphicalLayersAssets.WATER_clouds, -cloudsposition, 0, null);
+		int cumulatedheight = -(GraphicalLayersAssets.WATER_clouds.getHeight()
+				+ GraphicalLayersAssets.WATER_horizon[horizonstate].getHeight()
+				+ GraphicalLayersAssets.WATER_waves[wavesstate].getHeight()) + height + upcamera;
+		if (cumulatedheight > 0)
+			cumulatedheight = 0;
+		g.drawImage(GraphicalLayersAssets.WATER_clouds, -cloudsposition, cumulatedheight, null);
 		if (GraphicalLayersAssets.WATER_clouds.getWidth() - cloudsposition < width)
 			g.drawImage(GraphicalLayersAssets.WATER_clouds,
-					-cloudsposition + GraphicalLayersAssets.WATER_clouds.getWidth(), 0, null);
+					-cloudsposition + GraphicalLayersAssets.WATER_clouds.getWidth(), cumulatedheight, null);
 		cumulatedheight += GraphicalLayersAssets.WATER_clouds.getHeight();
 		for (int i = 0; i < width; i += 48)
 			g.drawImage(GraphicalLayersAssets.WATER_horizon[horizonstate], i, cumulatedheight, null);

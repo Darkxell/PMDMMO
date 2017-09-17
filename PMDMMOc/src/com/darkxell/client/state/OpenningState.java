@@ -6,12 +6,14 @@ import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.renderers.layers.BackgroundSeaLayer;
 import com.darkxell.client.resources.images.Hud;
+import com.darkxell.client.resources.music.SoundsHolder;
 import com.darkxell.client.ui.Keys;
 
 public class OpenningState extends AbstractState {
 
 	private BackgroundSeaLayer background = new BackgroundSeaLayer();
 	private int textblink = 0;
+	private boolean ismusicset = false;
 
 	@Override
 	public void onKeyPressed(short key) {
@@ -36,6 +38,11 @@ public class OpenningState extends AbstractState {
 
 	@Override
 	public void update() {
+		if (!ismusicset) {
+			ismusicset = true;
+			Launcher.soundmanager.setBackgroundMusic(SoundsHolder.getSong("01 Intro.mp3"));
+		}
+
 		background.update();
 		++textblink;
 		if (textblink >= 100)
