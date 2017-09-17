@@ -4,7 +4,7 @@ import com.darkxell.client.mechanics.chat.ChatBox;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.PokemonSpritesets;
 import com.darkxell.client.resources.music.SoundManager;
-import com.darkxell.client.state.FreezoneExploreState;
+import com.darkxell.client.state.OpenningState;
 import com.darkxell.client.state.StateManager;
 import com.darkxell.client.ui.Frame;
 import com.darkxell.common.dungeon.DungeonRegistry;
@@ -49,7 +49,7 @@ public class Launcher {
 
 		frame = new Frame();
 		stateManager = new StateManager();
-		stateManager.setState(new FreezoneExploreState());
+		stateManager.setState(new OpenningState());
 		stateManager.randomizeBackground();
 
 		chatbox = new ChatBox();
