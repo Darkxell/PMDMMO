@@ -1,8 +1,6 @@
 package com.darkxell.common.pokemon;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
+import java.util.*;
 
 import org.jdom2.Element;
 
@@ -16,12 +14,14 @@ public class PokemonSpecies
 
 	/** List of possible Abilities for this Pokémon. */
 	private ArrayList<Integer> abilities;
-	/** This species' base stats. */
-	public final PokemonStats baseStats;
+	/** This species' stat gains at each level. First in this Array is the stats at level 1. */
+	final ArrayList<PokemonStats> baseStats;
 	/** Base experience gained when this Pokémon is defeated. */
 	public final int baseXP;
 	/** List of species this Pokémon can evolve into. */
 	private final ArrayList<Evolution> evolutions;
+	/** Lists the required experience to level up for each level. */
+	final int[] experiencePerLevel;
 	public final float height, weight;
 	public final int id, formID;
 	/** List of moves learned by leveling up. Key is level, value is the list of move IDs. */
@@ -38,14 +38,37 @@ public class PokemonSpecies
 		this.formID = xml.getAttribute("form-id") == null ? 0 : Integer.parseInt(xml.getAttributeValue("id"));
 		this.type1 = PokemonType.find(Integer.parseInt(xml.getAttributeValue("type1")));
 		this.type2 = xml.getAttribute("type2") == null ? null : PokemonType.find(Integer.parseInt(xml.getAttributeValue("type2")));
-		this.baseStats = new PokemonStats(xml.getChild("stats"));
 		this.baseXP = Integer.parseInt(xml.getAttributeValue("base-xp"));
 		this.height = Float.parseFloat(xml.getAttributeValue("height"));
 		this.weight = Float.parseFloat(xml.getAttributeValue("weight"));
 		this.abilities = XMLUtils.readIntArray(xml.getChild("abilities"));
+		this.baseStats = new ArrayList<PokemonStats>();
 		this.learnset = new HashMap<Integer, ArrayList<Integer>>();
 		this.tms = XMLUtils.readIntArray(xml.getChild("tms"));
 		this.evolutions = new ArrayList<Evolution>();
+
+		if (xml.getChild("statline") != null)
+		{
+			List<Element> statline = xml.getChild("statline").getChildren();
+			statline.sort(new Comparator<Element>()
+			{
+				@Override
+				public int compare(Element o1, Element o2)
+				{
+					return Integer.compare(Integer.parseInt(o1.getAttributeValue("level")), Integer.parseInt(o2.getAttributeValue("level")));
+				}
+			});
+			for (Element stat : statline)
+				this.baseStats.add(new PokemonStats(stat));
+		}
+
+		if (xml.getChild("experience") != null)
+		{
+			String[] lvls = xml.getChildText("experience").split(",");
+			this.experiencePerLevel = new int[lvls.length];
+			for (int lvl = 0; lvl < lvls.length; lvl++)
+				this.experiencePerLevel[lvl] = Integer.parseInt(lvls[lvl]);
+		} else this.experiencePerLevel = new int[0];
 
 		if (xml.getChild("evolves") != null) for (Element e : xml.getChild("evolves").getChildren())
 			this.evolutions.add(new Evolution(e));
@@ -57,8 +80,9 @@ public class PokemonSpecies
 			this.learnset.put(Integer.parseInt(level.getAttributeValue("l")), XMLUtils.readIntArray(level));
 	}
 
-	public PokemonSpecies(int id, int formID, PokemonType type1, PokemonType type2, int baseXP, PokemonStats baseStats, float height, float weight,
-			ArrayList<Integer> abilities, HashMap<Integer, ArrayList<Integer>> learnset, ArrayList<Integer> tms, ArrayList<Evolution> evolutions)
+	public PokemonSpecies(int id, int formID, PokemonType type1, PokemonType type2, int baseXP, ArrayList<PokemonStats> baseStats, float height, float weight,
+			ArrayList<Integer> abilities, int[] experiencePerLevel, HashMap<Integer, ArrayList<Integer>> learnset, ArrayList<Integer> tms,
+			ArrayList<Evolution> evolutions)
 	{
 		this.id = id;
 		this.formID = formID;
@@ -69,6 +93,7 @@ public class PokemonSpecies
 		this.height = height;
 		this.weight = weight;
 		this.abilities = abilities;
+		this.experiencePerLevel = experiencePerLevel;
 		this.learnset = learnset;
 		this.tms = tms;
 		this.evolutions = evolutions;
@@ -108,7 +133,7 @@ public class PokemonSpecies
 		LearnedMove move4 = m4 == -1 ? null : new LearnedMove(m4);
 
 		// todo: Generate random ID.
-		return new Pokemon(0, this, null, null, this.baseStats.forLevel(level), this.randomAbility(random), 0, level, move1, move2, move3, move4,
+		return new Pokemon(0, this, null, null, this.statsForLevel(level), this.randomAbility(random), 0, level, move1, move2, move3, move4,
 				this.randomGender(random));
 	}
 
@@ -166,6 +191,15 @@ public class PokemonSpecies
 		return (byte) random.nextInt(3);
 	}
 
+	/** @return Regular stats for a Pokémon at the input level. */
+	public PokemonStats statsForLevel(int level)
+	{
+		PokemonStats stats = this.baseStats.get(0);
+		for (int lvl = 1; lvl < level; ++lvl)
+			stats.add(this.baseStats.get(lvl));
+		return stats;
+	}
+
 	public Element toXML()
 	{
 		Element root = new Element("pokemon");
@@ -177,7 +211,18 @@ public class PokemonSpecies
 		root.setAttribute("height", Float.toString(this.height));
 		root.setAttribute("weight", Float.toString(this.weight));
 
-		root.addContent(this.baseStats.toXML());
+		Element statline = new Element("statline");
+		for (int lvl = 0; lvl < this.baseStats.size(); lvl++)
+			statline.addContent(this.baseStats.get(lvl).toXML().setAttribute("level", Integer.toString(lvl + 1)));
+		root.addContent(statline);
+
+		String s = "";
+		for (int lvl = 0; lvl < this.experiencePerLevel.length; lvl++)
+		{
+			if (lvl != 0) s += ",";
+			s += this.experiencePerLevel[lvl];
+		}
+		root.addContent(new Element("experience").setText(s));
 
 		if (this.evolutions.size() != 0)
 		{
