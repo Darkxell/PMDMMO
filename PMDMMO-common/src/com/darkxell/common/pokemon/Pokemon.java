@@ -52,7 +52,7 @@ public class Pokemon implements ItemContainer
 		this.nickname = xml.getAttributeValue("nickname");
 		this.item = xml.getChild(ItemStack.XML_ROOT) == null ? null : new ItemStack(xml.getChild(ItemStack.XML_ROOT));
 		this.level = Integer.parseInt(xml.getAttributeValue("level"));
-		this.stats = xml.getChild(PokemonStats.XML_ROOT) == null ? this.species.baseStats.forLevel(this.level) : new PokemonStats(
+		this.stats = xml.getChild(PokemonStats.XML_ROOT) == null ? this.species.statsForLevel(this.level) : new PokemonStats(
 				xml.getChild(PokemonStats.XML_ROOT));
 		this.abilityID = xml.getAttribute("ability") == null ? this.species.randomAbility(r) : Integer.parseInt(xml.getAttributeValue("ability"));
 		this.experience = xml.getAttribute("xp") == null ? 0 : Integer.parseInt(xml.getAttributeValue("xp"));
@@ -211,7 +211,7 @@ public class Pokemon implements ItemContainer
 	private void levelUp()
 	{
 		++this.level;
-		this.stats = this.species.baseStats.forLevel(this.level);
+		this.stats.add(this.species.baseStats.get(this.level - 1));
 	}
 
 	public LearnedMove move(int slot)

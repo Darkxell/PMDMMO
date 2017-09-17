@@ -46,12 +46,12 @@ public class TeamMenuState extends OptionSelectionMenuState
 		stats.addReplacement("<level>", TextRenderer.instance.alignNumber(p.getLevel(), 7));
 		stats.addReplacement("<exp>", TextRenderer.instance.alignNumber(p.totalExperience(), 7));
 		stats.addReplacement("<exp-next>", TextRenderer.instance.alignNumber(p.experienceToNextLevel(), 7));
-		stats.addReplacement("<hp>", TextRenderer.instance.alignNumber(p.getStats().health, 3));
-		stats.addReplacement("<hp-max>", TextRenderer.instance.alignNumber(p.getStats().health, 3));
-		stats.addReplacement("<atk>", TextRenderer.instance.alignNumber(p.getStats().attack, 7));
-		stats.addReplacement("<def>", TextRenderer.instance.alignNumber(p.getStats().defense, 7));
-		stats.addReplacement("<spa>", TextRenderer.instance.alignNumber(p.getStats().specialAttack, 7));
-		stats.addReplacement("<spd>", TextRenderer.instance.alignNumber(p.getStats().specialDefense, 7));
+		stats.addReplacement("<hp>", TextRenderer.instance.alignNumber(p.getStats().getHealth(), 3));
+		stats.addReplacement("<hp-max>", TextRenderer.instance.alignNumber(p.getStats().getHealth(), 3));
+		stats.addReplacement("<atk>", TextRenderer.instance.alignNumber(p.getStats().getAttack(), 7));
+		stats.addReplacement("<def>", TextRenderer.instance.alignNumber(p.getStats().getDefense(), 7));
+		stats.addReplacement("<spa>", TextRenderer.instance.alignNumber(p.getStats().getSpecialAttack(), 7));
+		stats.addReplacement("<spd>", TextRenderer.instance.alignNumber(p.getStats().getSpecialDefense(), 7));
 		stats.addReplacement("<item>", p.getItem() == null ? new Message("item.none") : p.getItem().name());
 		stats.addReplacement("<iq>", "<star>");
 
