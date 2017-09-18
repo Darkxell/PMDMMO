@@ -190,6 +190,12 @@ public enum PokemonType
 		{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
 	}
 
+	public float effectivenessOn(PokemonSpecies species)
+	{
+		if (species.type2 == null) return this.effectivenessOn(species.type1);
+		return this.effectivenessOn(species.type1, species.type2);
+	}
+
 	/** @return The effectiveness of this type on a single-type. */
 	public float effectivenessOn(PokemonType type)
 	{

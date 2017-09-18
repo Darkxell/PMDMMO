@@ -67,9 +67,7 @@ public class Tile implements ItemContainer
 		if (!this.canWalkOn(pokemon)) return false;
 		if (!GameUtil.isDiagonal(direction)) return true;
 		Pair<Short, Short> corners = GameUtil.splitDiagonal(direction);
-		TileType t1 = pokemon.tile.adjacentTile(corners.getKey()).type();
-		TileType t2 = pokemon.tile.adjacentTile(corners.getValue()).type();
-		return t1 != WALL && t1 != WALL_END && t2 != WALL && t2 != WALL_END;
+		return pokemon.tile.adjacentTile(corners.getKey()).canWalkOn(pokemon) && pokemon.tile.adjacentTile(corners.getValue()).canWalkOn(pokemon);
 	}
 
 	/** @return True if the input Pokémon can walk on this Tile. */

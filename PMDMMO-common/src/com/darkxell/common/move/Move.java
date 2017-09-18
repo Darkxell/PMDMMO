@@ -88,6 +88,44 @@ public class Move
 		this.makesContact = makesContact;
 	}
 
+	/** @param user - The Pokémon using the move.
+	 * @param target - The Pokémon receiving the move.
+	 * @param floor - The floor context.
+	 * @return The damage dealt by this move. */
+	public int damageDealt(DungeonPokemon user, DungeonPokemon target, Floor floor)
+	{
+		int atk = this.category == PHYSICAL ? user.stats.getAttack() : user.stats.getSpecialAttack() + this.power;
+		int level = user.pokemon.getLevel();
+		int def = this.category == PHYSICAL ? target.stats.getDefense() : target.stats.getSpecialDefense();
+		float constant = ((atk - def) * 1f / 8) + (level * 2 / 3);
+
+		// Damage modification
+		float d = (((constant * 2) - def) + 10) + ((constant * constant) / 20);
+		if (d < 1) d = 1;
+		else if (d > 999) d = 999;
+
+		// Critical hit ?
+		boolean crit = false;
+		{
+			double c = 0.12;
+			if (Math.random() < c) crit = true;
+		}
+		if (crit) d *= 1.5;
+
+		// Damage multiplier
+		{
+			float multiplier = this.type == null ? 1 : this.type.effectivenessOn(target.pokemon.species);
+			if (user.pokemon.species.type1 == this.type || user.pokemon.species.type2 == this.type) multiplier *= 1.5;
+
+			d *= multiplier;
+		}
+
+		// Damage randomness
+		d *= (57344 + Math.floor(Math.random() * 16384)) / 65536;
+
+		return (int) d;
+	}
+
 	/** @param user - The Pokémon using this Move.
 	 * @param floor - The Floor context.
 	 * @return The Pokémon affected by this Move. */
@@ -102,6 +140,15 @@ public class Move
 		}
 
 		return targets.toArray(new DungeonPokemon[targets.size()]);
+	}
+
+	/** @param user - The Pokémon using the Move.
+	 * @param target - The Pokémon receiving the Move.
+	 * @param floor - The Floor context.
+	 * @return True if this Move misses. */
+	public boolean misses(DungeonPokemon user, DungeonPokemon target, Floor floor)
+	{
+		return false;
 	}
 
 	/** @return This Move's name. */
@@ -154,8 +201,8 @@ public class Move
 	 * @return The events resulting from this Move. They typically include damage, healing, stat changes... */
 	public DungeonEvent[] useOn(DungeonPokemon user, DungeonPokemon target, Floor floor)
 	{
+		boolean missed = this.misses(user, target, floor);
 		return new DungeonEvent[]
-		{ new DamageDealtEvent(target, 5) };
+		{ new DamageDealtEvent(target, missed ? 0 : this.damageDealt(user, target, floor)) };
 	}
-
 }
