@@ -60,6 +60,13 @@ public class Tile implements ItemContainer
 		return (this.getItem() == null || (item.item().isStackable && this.getItem().id == item.id)) ? 0 : -1;
 	}
 
+	/** @return True if the input Pokémon can walk diagonally with this Tile as a corner. */
+	public boolean canCross(DungeonPokemon pokemon)
+	{
+		return this.type == TileType.GROUND || this.type == WATER || this.type == LAVA || this.type == AIR || this.type == STAIR || this.type == WONDER_TILE
+				|| this.type == TRAP || this.type == WARP_ZONE;
+	}
+
 	/** @param direction - The direction of the movement.
 	 * @return True if the input Pokémon can walk on this Tile. */
 	public boolean canMoveTo(DungeonPokemon pokemon, short direction)
@@ -67,19 +74,18 @@ public class Tile implements ItemContainer
 		if (!this.canWalkOn(pokemon)) return false;
 		if (!GameUtil.isDiagonal(direction)) return true;
 		Pair<Short, Short> corners = GameUtil.splitDiagonal(direction);
-		return pokemon.tile.adjacentTile(corners.getKey()).canWalkOn(pokemon) && pokemon.tile.adjacentTile(corners.getValue()).canWalkOn(pokemon);
+		return pokemon.tile.adjacentTile(corners.getKey()).canCross(pokemon) && pokemon.tile.adjacentTile(corners.getValue()).canCross(pokemon);
 	}
 
 	/** @return True if the input Pokémon can walk on this Tile. */
 	public boolean canWalkOn(DungeonPokemon pokemon)
 	{
-		// todo: test if ally
 		if (this.getPokemon() != null) return false;
 		if (pokemon.pokemon.species.isType(PokemonType.GHOST)) return this.type != WALL_END;
 		if (pokemon.pokemon.species.isType(PokemonType.WATER) && this.type == WATER) return true;
 		if (pokemon.pokemon.species.isType(PokemonType.FIRE) && this.type == LAVA) return true;
 		if (pokemon.pokemon.species.isType(PokemonType.FLYING) && this.type == AIR) return true;
-		return this.type == TileType.GROUND || this.type == STAIR || this.type == WONDER_TILE || this.type == TRAP || this.type == WARP_ZONE;
+		return this.canCross(pokemon);
 	}
 
 	@Override
