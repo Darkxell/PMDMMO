@@ -8,6 +8,7 @@ import com.darkxell.client.mechanics.freezones.FreezoneMap;
 import com.darkxell.client.mechanics.freezones.FreezoneTile;
 import com.darkxell.client.mechanics.freezones.WarpZone;
 import com.darkxell.client.mechanics.freezones.zones.BaseFreezone;
+import com.darkxell.client.mechanics.freezones.zones.OfficeFreezone;
 import com.darkxell.client.persistance.FreezoneMapHolder;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.Hud;
@@ -58,6 +59,10 @@ public class FreezoneExploreState extends AbstractState {
 		FreezoneMap map = FreezoneMapHolder.currentmap;
 		FreezoneMapHolder.playerCamera.renderheight = height;
 		FreezoneMapHolder.playerCamera.renderwidth = width;
+		// Draws the sea background if needed.
+		if (map instanceof OfficeFreezone)
+			((OfficeFreezone) map).background.render(g, width, height);
+		// Draws the surroundings.
 		if (map != null) {
 			int translateX = (int) (-FreezoneMapHolder.playerCamera.x * 8 + (width / 2));
 			int translateY = (int) (-FreezoneMapHolder.playerCamera.y * 8 + (height / 2));
@@ -141,6 +146,10 @@ public class FreezoneExploreState extends AbstractState {
 
 	@Override
 	public void update() {
+		// Updates the freezoneBackground if needeed
+		if (FreezoneMapHolder.currentmap instanceof OfficeFreezone)
+			((OfficeFreezone) FreezoneMapHolder.currentmap).background.update();
+		;
 		// CREATES AND UPDATES THE MAP
 		if (FreezoneMapHolder.currentmap == null)
 			FreezoneMapHolder.currentmap = new BaseFreezone();

@@ -2,9 +2,12 @@ package com.darkxell.client.mechanics.freezones.zones;
 
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
 import com.darkxell.client.mechanics.freezones.WarpZone;
+import com.darkxell.client.renderers.layers.BackgroundSeaLayer;
 import com.darkxell.common.util.DoubleRectangle;
 
 public class OfficeFreezone extends FreezoneMap {
+
+	public BackgroundSeaLayer background = new BackgroundSeaLayer();
 
 	public OfficeFreezone() {
 		super("resources\\freezones\\office.xml");
