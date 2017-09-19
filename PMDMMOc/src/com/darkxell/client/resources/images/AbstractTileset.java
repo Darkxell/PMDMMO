@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import com.darkxell.client.resources.Res;
 import com.darkxell.client.resources.images.tilesets.BaseTileset;
 import com.darkxell.client.resources.images.tilesets.DojoTileset;
+import com.darkxell.client.resources.images.tilesets.OfficeTileset;
 import com.darkxell.client.resources.images.tilesets.PondTileset;
 import com.darkxell.client.resources.images.tilesets.SquareTileset;
 
@@ -47,6 +48,9 @@ public abstract class AbstractTileset {
 			return DojoTileset.instance;
 		case "pond":
 			return PondTileset.instance;
+		case "pelipper office":
+		case "office":
+			return OfficeTileset.instance;
 		default:
 			System.err.println("Could not find the desired tileset: " + code);
 			return null;

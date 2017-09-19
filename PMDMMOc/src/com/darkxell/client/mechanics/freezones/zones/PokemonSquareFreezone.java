@@ -31,6 +31,12 @@ public class PokemonSquareFreezone extends FreezoneMap {
 				return new PondFreezone();
 			}
 		});
+		this.warpzones.add(new WarpZone(4, 30, new DoubleRectangle(118, 38, 2, 5)) {
+			@Override
+			public FreezoneMap getDestination() {
+				return new OfficeFreezone();
+			}
+		});
 	}
 
 }
