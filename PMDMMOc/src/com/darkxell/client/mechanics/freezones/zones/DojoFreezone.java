@@ -2,6 +2,7 @@ package com.darkxell.client.mechanics.freezones.zones;
 
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
 import com.darkxell.client.mechanics.freezones.WarpZone;
+import com.darkxell.client.mechanics.freezones.entities.AnimatedFlowerEntity;
 import com.darkxell.common.util.DoubleRectangle;
 
 public class DojoFreezone extends FreezoneMap {
@@ -15,6 +16,20 @@ public class DojoFreezone extends FreezoneMap {
 				return new PokemonSquareFreezone();
 			}
 		});
+		
+		this.entities.add(new AnimatedFlowerEntity(5, 6, false));
+		this.entities.add(new AnimatedFlowerEntity(5, 22, false));
+		this.entities.add(new AnimatedFlowerEntity(5, 38, false));
+		this.entities.add(new AnimatedFlowerEntity(31, 45, false));
+		this.entities.add(new AnimatedFlowerEntity(36, 21, false));
+		this.entities.add(new AnimatedFlowerEntity(34, 15, false));
+		this.entities.add(new AnimatedFlowerEntity(47, 23, false));
+		this.entities.add(new AnimatedFlowerEntity(56, 29, false));
+		this.entities.add(new AnimatedFlowerEntity(63, 29, false));
+		
+		
+		
+		
 	}
 
 }

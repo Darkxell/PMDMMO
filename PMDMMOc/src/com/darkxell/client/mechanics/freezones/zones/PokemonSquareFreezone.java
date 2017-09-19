@@ -2,6 +2,7 @@ package com.darkxell.client.mechanics.freezones.zones;
 
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
 import com.darkxell.client.mechanics.freezones.WarpZone;
+import com.darkxell.client.mechanics.freezones.entities.AnimatedFlowerEntity;
 import com.darkxell.client.mechanics.freezones.entities.PokemonFreezoneEntity;
 import com.darkxell.client.resources.images.PokemonSprite;
 import com.darkxell.client.resources.images.PokemonSpritesets;
@@ -37,6 +38,39 @@ public class PokemonSquareFreezone extends FreezoneMap {
 				return new OfficeFreezone();
 			}
 		});
+
+		this.entities.add(new AnimatedFlowerEntity(10, 30, false));
+		this.entities.add(new AnimatedFlowerEntity(10, 37, false));
+		this.entities.add(new AnimatedFlowerEntity(33, 45, false));
+		this.entities.add(new AnimatedFlowerEntity(41, 74, false));
+		this.entities.add(new AnimatedFlowerEntity(55, 73, false));
+		this.entities.add(new AnimatedFlowerEntity(89, 61, false));
+		this.entities.add(new AnimatedFlowerEntity(107, 55, false));
+		this.entities.add(new AnimatedFlowerEntity(107, 48, false));
+		this.entities.add(new AnimatedFlowerEntity(57, 31, false));
+		this.entities.add(new AnimatedFlowerEntity(70, 23, false));
+		this.entities.add(new AnimatedFlowerEntity(76, 22, false));
+		this.entities.add(new AnimatedFlowerEntity(60, 14, false));
+		this.entities.add(new AnimatedFlowerEntity(60, 10, false));
+		
+		this.entities.add(new AnimatedFlowerEntity(6, 31, true));
+		this.entities.add(new AnimatedFlowerEntity(14, 31, true));
+		this.entities.add(new AnimatedFlowerEntity(11, 34, true));
+		this.entities.add(new AnimatedFlowerEntity(29, 45, true));
+		this.entities.add(new AnimatedFlowerEntity(45, 73, true));
+		this.entities.add(new AnimatedFlowerEntity(43, 77, true));
+		this.entities.add(new AnimatedFlowerEntity(56, 70, true));
+		this.entities.add(new AnimatedFlowerEntity(60, 72, true));
+		this.entities.add(new AnimatedFlowerEntity(93, 66, true));
+		this.entities.add(new AnimatedFlowerEntity(108, 58, true));
+		this.entities.add(new AnimatedFlowerEntity(93, 30, true));
+		this.entities.add(new AnimatedFlowerEntity(70, 26, true));
+		this.entities.add(new AnimatedFlowerEntity(70, 18, true));
+		this.entities.add(new AnimatedFlowerEntity(69, 13, true));
+		this.entities.add(new AnimatedFlowerEntity(60, 18, true));
+		this.entities.add(new AnimatedFlowerEntity(57, 21, true));
+		this.entities.add(new AnimatedFlowerEntity(49, 37, true));
+	
 	}
 
 }
