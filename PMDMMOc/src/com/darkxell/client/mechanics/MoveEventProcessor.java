@@ -17,6 +17,7 @@ public final class MoveEventProcessor
 	static void processDamageEvent(DamageDealtEvent event)
 	{
 		DungeonPokemonRenderer.instance.getSprite(event.target).setState(PokemonSprite.STATE_HURT);
+		DungeonPokemonRenderer.instance.getSprite(event.target).setHealthChange(-event.damage);
 		DungeonPersistance.dungeonState.setSubstate(new DelayState(DungeonPersistance.dungeonState, PokemonSprite.FRAMELENGTH));
 		DungeonEventProcessor.processPending = false;
 	}

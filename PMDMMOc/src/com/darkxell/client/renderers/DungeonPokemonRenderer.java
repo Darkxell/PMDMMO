@@ -41,8 +41,21 @@ public class DungeonPokemonRenderer
 			pokemon.stateChanged = false;
 		}
 
-		if (sprite.getCurrentSprite() != null) g.drawImage(sprite.getCurrentSprite(), (int) (x * TILE_SIZE + TILE_SIZE / 2 - sprite.pointer.gravityX), (int) (y
-				* TILE_SIZE + TILE_SIZE / 2 - sprite.pointer.gravityY), null);
+		if (sprite.getCurrentSprite() != null)
+		{
+			int xPos = (int) (x * TILE_SIZE + TILE_SIZE / 2 - sprite.pointer.gravityX);
+			int yPos = (int) (y * TILE_SIZE + TILE_SIZE / 2 - sprite.pointer.gravityY);
+			g.drawImage(sprite.getCurrentSprite(), xPos, yPos, null);
+
+			int h = sprite.getHealthChange();
+			if (h != 0)
+			{
+				String text = (h < 0 ? "" : "+") + Integer.toString(h);
+				xPos = (int) (x * TILE_SIZE + TILE_SIZE / 2 - TextRenderer.instance.width(text) / 2);
+				yPos = (int) (y * TILE_SIZE - sprite.getHealthPos() - TextRenderer.CHAR_HEIGHT / 2);
+				TextRenderer.instance.render(g, text, xPos, yPos, true);
+			}
+		}
 	}
 
 	/** @return The Sprite of the input Pokémon. */

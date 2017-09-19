@@ -166,7 +166,18 @@ public class TextRenderer {
 		type_14("<type-14>", 154, 11),
 		type_15("<type-15>", 155, 11),
 		type_16("<type-16>", 156, 11),
-		type_17("<type-17>", 157, 11);
+		type_17("<type-17>", 157, 11),
+		minusd(null, 160, 7),
+		num1d(null, 161, 7),
+		num2d(null, 162, 7),
+		num3d(null, 163, 7),
+		num4d(null, 164, 7),
+		num5d(null, 165, 7),
+		num6d(null, 166, 7),
+		num7d(null, 167, 7),
+		num8d(null, 168, 7),
+		num9d(null, 169, 7),
+		num0d(null, 170, 7);
 
 		public static PMDChar find(String value) {
 			for (PMDChar c : values())
@@ -201,14 +212,28 @@ public class TextRenderer {
 	public static void load() {
 	}
 
+	private HashMap<PMDChar, PMDChar> dungeonChars;
 	private HashMap<PMDChar, BufferedImage> sprites;
 
 	private TextRenderer() {
-		this.sprites = new HashMap<TextRenderer.PMDChar, BufferedImage>();
+		this.sprites = new HashMap<PMDChar, BufferedImage>();
+		this.dungeonChars = new HashMap<PMDChar, PMDChar>();
 		BufferedImage source = Res.getBase("resources/hud/font.png");
 		for (PMDChar c : PMDChar.values())
 			this.sprites.put(c, Res.createimage(source, c.id % GRID_COLS * GRID_WIDTH,
 					(c.id - c.id % GRID_COLS) / GRID_COLS * GRID_HEIGHT, GRID_WIDTH, GRID_HEIGHT));
+
+		this.dungeonChars.put(PMDChar.minus, PMDChar.minusd);
+		this.dungeonChars.put(PMDChar.num1, PMDChar.num1d);
+		this.dungeonChars.put(PMDChar.num2, PMDChar.num2d);
+		this.dungeonChars.put(PMDChar.num3, PMDChar.num3d);
+		this.dungeonChars.put(PMDChar.num4, PMDChar.num4d);
+		this.dungeonChars.put(PMDChar.num5, PMDChar.num5d);
+		this.dungeonChars.put(PMDChar.num6, PMDChar.num6d);
+		this.dungeonChars.put(PMDChar.num7, PMDChar.num7d);
+		this.dungeonChars.put(PMDChar.num8, PMDChar.num8d);
+		this.dungeonChars.put(PMDChar.num9, PMDChar.num9d);
+		this.dungeonChars.put(PMDChar.num0, PMDChar.num0d);
 	}
 
 	/**
@@ -254,11 +279,21 @@ public class TextRenderer {
 		this.render(g, message.toString(), x, y);
 	}
 
+	public void render(Graphics2D g, String text, int x, int y)
+	{
+		this.render(g, text, x, y, false);
+	}
+
 	/** Renders the input text at the topright x, y coordinates. */
-	public void render(Graphics2D g, String text, int x, int y) {
+	public void render(Graphics2D g, String text, int x, int y, boolean dungeonHUD) {
 		ArrayList<PMDChar> chars = this.decode(text);
+		ArrayList<PMDChar> toprint = new ArrayList<TextRenderer.PMDChar>();
+		if (dungeonHUD) for (PMDChar c : chars)
+			if (this.dungeonChars.containsKey(c)) toprint.add(this.dungeonChars.get(c));
+			else toprint.add(c);
+		else toprint.addAll(chars);
 		int w = 0;
-		for (PMDChar c : chars) {
+		for (PMDChar c : toprint) {
 			g.drawImage(this.sprites.get(c), x + w, y, null);
 			if (c == PMDChar.tabulation)
 				w += this.tabWidth(w);

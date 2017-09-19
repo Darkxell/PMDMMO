@@ -106,6 +106,12 @@ public class PokemonSprite {
 			System.err.println("Pokemon " + this.toString() + "in not in a valid state! id: " + state);
 			break;
 		}
+		
+		if (this.healthCounter > 0)
+			--this.healthCounter;
+		if (this.healthCounter == 0) {
+			this.healthChange = 0;
+		}
 	}
 
 	public BufferedImage getCurrentSprite() {
@@ -169,8 +175,11 @@ public class PokemonSprite {
 	public static final byte STATE_EATING = 10;
 
 	public static final int FRAMELENGTH = 10;
+	public static final int HEALTHLENGTH = 60;
 
 	private int counter = 0;
+	private int healthChange = 0;
+	private int healthCounter = 0;
 	private int statecounter = 0;
 
 	public byte getState() {
@@ -181,8 +190,21 @@ public class PokemonSprite {
 		return this.facing;
 	}
 
+	public int getHealthChange() {
+		return this.healthChange;
+	}
+
+	public int getHealthPos() {
+		return (HEALTHLENGTH - this.healthCounter) / 4;
+	}
+
 	public void setFacingDirection(byte dir) {
 		this.facing = dir;
+	}
+	
+	public void setHealthChange(int healthChange) {
+		this.healthChange = healthChange;
+		this.healthCounter = HEALTHLENGTH;
 	}
 
 }
