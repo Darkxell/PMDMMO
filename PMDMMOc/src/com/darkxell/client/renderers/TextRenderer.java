@@ -181,7 +181,7 @@ public class TextRenderer {
 
 		public static PMDChar find(String value) {
 			for (PMDChar c : values())
-				if (c.value.equals(value))
+				if (c.value != null && c.value.equals(value))
 					return c;
 			return null;
 		}
