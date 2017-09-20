@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import org.jdom2.Element;
 
 import com.darkxell.common.dungeon.floor.Floor;
+import com.darkxell.common.dungeon.floor.Room;
+import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.event.DamageDealtEvent;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.DungeonEvent.MessageEvent;
@@ -12,6 +14,7 @@ import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.LearnedMove;
 import com.darkxell.common.pokemon.PokemonType;
+import com.darkxell.common.util.GameUtil;
 import com.darkxell.common.util.Message;
 
 public class Move
@@ -68,7 +71,7 @@ public class Move
 		this.accuracy = xml.getAttribute("accuracy") == null ? 100 : Integer.parseInt(xml.getAttributeValue("accuracy"));
 		this.targets = Byte.parseByte(xml.getAttributeValue("targets"));
 		this.priority = xml.getAttribute("priority") == null ? 0 : Integer.parseInt(xml.getAttributeValue("priority"));
-		this.additionalEffectChance = xml.getAttribute("random") == null ? 0 : Integer.parseInt(xml.getAttributeValue("random"));
+		this.additionalEffectChance = xml.getAttribute("random") == null ? 100 : Integer.parseInt(xml.getAttributeValue("random"));
 		this.makesContact = xml.getAttribute("contact") != null;
 	}
 
@@ -86,6 +89,17 @@ public class Move
 		this.priority = priority;
 		this.additionalEffectChance = additionalEffectChance;
 		this.makesContact = makesContact;
+	}
+
+	/** @return True if this Move's additional effects land. */
+	public boolean additionalEffectLands(DungeonPokemon user, DungeonPokemon target, Floor floor)
+	{
+		return floor.random.nextInt(100) < this.additionalEffectChance;
+	}
+
+	public ArrayList<DungeonEvent> additionalEffects(DungeonPokemon user, DungeonPokemon target, Floor floor)
+	{
+		return new ArrayList<DungeonEvent>();
 	}
 
 	/** @param user - The Pokémon using the move.
@@ -134,6 +148,23 @@ public class Move
 		ArrayList<DungeonPokemon> targets = new ArrayList<DungeonPokemon>();
 		switch (this.targets)
 		{
+			case SELF:
+			case ALL_ALLIES:
+				targets.add(user);
+				break;
+
+			case ALL_ENEMIES:
+			case ALL_ROOM:
+				Room r = floor.roomAt(user.tile.x, user.tile.y);
+				if (r == null) for (short d : GameUtil.directions())
+				{
+					Tile t = user.tile.adjacentTile(d);
+					if (t.getPokemon() != null) targets.add(t.getPokemon());
+				}
+				else for (Tile t : r.listTiles())
+					if (t.getPokemon() != null && t.getPokemon() != user) targets.add(t.getPokemon());
+				break;
+
 			default:
 				DungeonPokemon front = user.tile.adjacentTile(user.facing()).getPokemon();
 				if (front != null) targets.add(front);
@@ -188,7 +219,7 @@ public class Move
 		if (this.accuracy != 100) root.setAttribute("accuracy", Integer.toString(this.accuracy));
 		root.setAttribute("targets", Byte.toString(this.targets));
 		if (this.priority != 0) root.setAttribute("priority", Integer.toString(this.priority));
-		if (this.additionalEffectChance != 0) root.setAttribute("random", Integer.toString(this.additionalEffectChance));
+		if (this.additionalEffectChance != 100) root.setAttribute("random", Integer.toString(this.additionalEffectChance));
 		if (this.makesContact) root.setAttribute("contact", Boolean.toString(this.makesContact));
 		return root;
 	}
@@ -202,7 +233,11 @@ public class Move
 	public DungeonEvent[] useOn(DungeonPokemon user, DungeonPokemon target, Floor floor)
 	{
 		boolean missed = this.misses(user, target, floor);
-		return new DungeonEvent[]
-		{ new DamageDealtEvent(target, missed ? 0 : this.damageDealt(user, target, floor)) };
+
+		ArrayList<DungeonEvent> events = new ArrayList<DungeonEvent>();
+		if (this.power != -1) events.add(new DamageDealtEvent(target, missed ? 0 : this.damageDealt(user, target, floor)));
+		if (!missed && this.additionalEffectLands(user, target, floor)) events.addAll(this.additionalEffects(user, target, floor));
+
+		return events.toArray(new DungeonEvent[events.size()]);
 	}
 }

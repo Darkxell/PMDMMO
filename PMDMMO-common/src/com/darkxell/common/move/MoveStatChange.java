@@ -1,9 +1,14 @@
 package com.darkxell.common.move;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.jdom2.Element;
 
+import com.darkxell.common.dungeon.floor.Floor;
+import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.StatChangedEvent;
+import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.PokemonType;
 
 public class MoveStatChange extends Move
@@ -24,6 +29,7 @@ public class MoveStatChange extends Move
 			{
 				this.statChanges[i][0] = Integer.parseInt(s.get(i).getAttributeValue("stat"));
 				this.statChanges[i][1] = Integer.parseInt(s.get(i).getAttributeValue("stage"));
+				this.statChanges[i][2] = s.get(i).getAttribute("self") == null ? 0 : 1; // Force self if 1
 			}
 		}
 	}
@@ -36,13 +42,26 @@ public class MoveStatChange extends Move
 	}
 
 	@Override
+	public ArrayList<DungeonEvent> additionalEffects(DungeonPokemon user, DungeonPokemon target, Floor floor)
+	{
+		ArrayList<DungeonEvent> e = super.additionalEffects(user, target, floor);
+		for (int[] statChange : this.statChanges)
+			e.add(new StatChangedEvent(statChange[2] == 1 ? user : target, statChange[0], statChange[1]));
+		return e;
+	}
+
+	@Override
 	public Element toXML()
 	{
 		if (this.statChanges.length == 0) return super.toXML();
 		Element root = super.toXML();
 		Element stages = new Element("statchanges");
 		for (int[] s : this.statChanges)
-			stages.addContent(new Element("statchange").setAttribute("stat", Integer.toString(s[0])).setAttribute("stage", Integer.toString(s[1])));
+		{
+			Element e = new Element("statchange").setAttribute("stat", Integer.toString(s[0])).setAttribute("stage", Integer.toString(s[1]));
+			if (s[2] == 1) e.setAttribute("self", "1");
+			stages.addContent(e);
+		}
 		root.addContent(stages);
 		return root;
 	}
