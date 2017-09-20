@@ -84,6 +84,17 @@ public class FreezoneExploreState extends AbstractState {
 				}
 			}
 			// TODO : draw the entities/player in Y position order.
+			// draws the entities
+			for (int i = 0; i < map.entities.size(); i++) {
+				map.entities.get(i).print(g);
+				if (debugdisplaymode) {
+					g.setColor(new Color(20, 20, 200, 160));
+					DoubleRectangle dbrct = map.entities.get(i).getHitbox(map.entities.get(i).posX,
+							map.entities.get(i).posY);
+					g.fillRect((int) (dbrct.x * 8), (int) (dbrct.y * 8), (int) (dbrct.width * 8),
+							(int) (dbrct.height * 8));
+				}
+			}
 			// Draws the player
 			g.drawImage(FreezoneMapHolder.currentplayer.playersprite.getCurrentSprite(),
 					(int) (FreezoneMapHolder.currentplayer.x * 8
@@ -100,17 +111,6 @@ public class FreezoneExploreState extends AbstractState {
 				g.setColor(new Color(150, 20, 130, 120));
 				dbrct = FreezoneMapHolder.currentplayer.getInteractionBox();
 				g.fillRect((int) (dbrct.x * 8), (int) (dbrct.y * 8), (int) (dbrct.width * 8), (int) (dbrct.height * 8));
-			}
-			// draws the entities
-			for (int i = 0; i < map.entities.size(); i++) {
-				map.entities.get(i).print(g);
-				if (debugdisplaymode) {
-					g.setColor(new Color(20, 20, 200, 160));
-					DoubleRectangle dbrct = map.entities.get(i).getHitbox(map.entities.get(i).posX,
-							map.entities.get(i).posY);
-					g.fillRect((int) (dbrct.x * 8), (int) (dbrct.y * 8), (int) (dbrct.width * 8),
-							(int) (dbrct.height * 8));
-				}
 			}
 
 			// draws the warpzones if debugmode
