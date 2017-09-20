@@ -3,6 +3,7 @@ package com.darkxell.client.renderers;
 import static com.darkxell.client.resources.images.AbstractDungeonTileset.TILE_SIZE;
 
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.util.HashMap;
 
 import com.darkxell.client.resources.images.PokemonSprite;
@@ -30,6 +31,11 @@ public class DungeonPokemonRenderer
 		this.sprites = new HashMap<DungeonPokemon, PokemonSprite>();
 	}
 
+	public void draw(Graphics2D g, DungeonPokemon pokemon)
+	{
+		this.draw(g, pokemon, pokemon.tile.x, pokemon.tile.y);
+	}
+
 	public void draw(Graphics2D g, DungeonPokemon pokemon, double x, double y)
 	{
 		if (!this.sprites.containsKey(pokemon)) this.register(pokemon);
@@ -43,8 +49,8 @@ public class DungeonPokemonRenderer
 
 		if (sprite.getCurrentSprite() != null)
 		{
-			int xPos = (int) (x * TILE_SIZE + TILE_SIZE / 2 - sprite.pointer.gravityX);
-			int yPos = (int) (y * TILE_SIZE + TILE_SIZE / 2 - sprite.pointer.gravityY);
+			Point p = this.drawLocation(pokemon);
+			int xPos = (int) (x * TILE_SIZE + p.x), yPos = (int) (y * TILE_SIZE + p.y);
 			g.drawImage(sprite.getCurrentSprite(), xPos, yPos, null);
 
 			int h = sprite.getHealthChange();
@@ -56,6 +62,12 @@ public class DungeonPokemonRenderer
 				TextRenderer.instance.render(g, text, xPos, yPos, true);
 			}
 		}
+	}
+
+	public Point drawLocation(DungeonPokemon pokemon)
+	{
+		PokemonSprite sprite = this.sprites.get(pokemon);
+		return new Point(TILE_SIZE / 2 - sprite.pointer.gravityX, TILE_SIZE / 2 - sprite.pointer.gravityY);
 	}
 
 	/** @return The Sprite of the input Pokémon. */
