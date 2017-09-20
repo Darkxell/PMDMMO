@@ -7,10 +7,7 @@ import com.darkxell.client.persistance.DungeonPersistance;
 import com.darkxell.client.renderers.ItemRenderer;
 import com.darkxell.client.state.FreezoneExploreState;
 import com.darkxell.client.state.dungeon.AnimationState;
-import com.darkxell.common.event.DamageDealtEvent;
-import com.darkxell.common.event.DungeonEvent;
-import com.darkxell.common.event.DungeonExitEvent;
-import com.darkxell.common.event.FaintedPokemonEvent;
+import com.darkxell.common.event.*;
 import com.darkxell.common.event.item.ItemUseSelectionEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.move.MoveUseEvent;
@@ -46,6 +43,7 @@ public final class DungeonEventProcessor
 		if (event instanceof MoveSelectionEvent) MoveEventProcessor.processMoveEvent((MoveSelectionEvent) event);
 		if (event instanceof MoveUseEvent) MoveEventProcessor.processMoveUseEvent((MoveUseEvent) event);
 		if (event instanceof DamageDealtEvent) MoveEventProcessor.processDamageEvent((DamageDealtEvent) event);
+		if (event instanceof StatChangedEvent) MoveEventProcessor.processStatEvent((StatChangedEvent) event);
 		if (event instanceof FaintedPokemonEvent) MoveEventProcessor.processFaintedEvent((FaintedPokemonEvent) event);
 
 		if (event instanceof ItemUseSelectionEvent) processItemEvent((ItemUseSelectionEvent) event);

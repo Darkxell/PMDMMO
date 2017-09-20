@@ -36,6 +36,11 @@ public class DungeonStats
 		this.onStatChange();
 	}
 
+	public void addStage(int stat, int stage)
+	{
+		this.setStage(stat, this.getStage(stat) + stage);
+	}
+
 	public float getAccuracy()
 	{
 		return this.accuracy;
@@ -74,6 +79,11 @@ public class DungeonStats
 	public int getSpecialDefense()
 	{
 		return this.specialDefense * defenseTable[this.stages[PokemonStats.SPECIAL_DEFENSE]] / 256;
+	}
+
+	public int getStage(int stat)
+	{
+		return this.stages[stat];
 	}
 
 	/** Called when the base stats change. */

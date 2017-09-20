@@ -4,6 +4,7 @@ import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.LearnedMove;
+import com.darkxell.common.util.Message;
 
 public class MoveUseEvent extends DungeonEvent
 {
@@ -27,7 +28,9 @@ public class MoveUseEvent extends DungeonEvent
 	@Override
 	public DungeonEvent[] processServer()
 	{
-		return this.move.move().useOn(this.user, this.target, this.floor);
+		DungeonEvent[] events = this.move.move().useOn(this.user, this.target, this.floor);
+		if (events.length == 0) return new DungeonEvent[]
+		{ new MessageEvent(new Message("move.no_effect")) };
+		return events;
 	}
-
 }
