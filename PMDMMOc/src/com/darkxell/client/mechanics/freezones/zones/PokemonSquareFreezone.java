@@ -75,6 +75,8 @@ public class PokemonSquareFreezone extends FreezoneMap {
 		this.entities.add(new PokemonFreezoneEntity(71, 34, new PokemonSprite(PokemonSpritesets.getSpriteset(1))));
 
 		this.entities.add(new SignSoulEntity(13.5, 37, new Message("sign.pokemonsquare.west")));
+		this.entities.add(new SignSoulEntity(68.5, 10, new Message("sign.pokemonsquare.north")));
+		this.entities.add(new SignSoulEntity(114.5, 36, new Message("sign.pokemonsquare.east")));
 
 	}
 
