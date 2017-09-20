@@ -4,16 +4,17 @@ import com.darkxell.client.mechanics.freezones.FreezoneMap;
 import com.darkxell.client.mechanics.freezones.WarpZone;
 import com.darkxell.client.mechanics.freezones.entities.AnimatedFlowerEntity;
 import com.darkxell.client.mechanics.freezones.entities.PokemonFreezoneEntity;
+import com.darkxell.client.mechanics.freezones.entities.SignSoulEntity;
 import com.darkxell.client.resources.images.PokemonSprite;
 import com.darkxell.client.resources.images.PokemonSpritesets;
 import com.darkxell.common.util.DoubleRectangle;
+import com.darkxell.common.util.Message;
 
 public class PokemonSquareFreezone extends FreezoneMap {
 
 	public PokemonSquareFreezone() {
 		super("resources\\freezones\\square.xml");
 		this.freezonebgm = "14 Pokemon Square.mp3";
-		this.entities.add(new PokemonFreezoneEntity(71, 34, new PokemonSprite(PokemonSpritesets.getSpriteset(1))));
 		this.warpzones.add(new WarpZone(63, 40, new DoubleRectangle(0, 38, 2, 5)) {
 			@Override
 			public FreezoneMap getDestination() {
@@ -52,7 +53,7 @@ public class PokemonSquareFreezone extends FreezoneMap {
 		this.entities.add(new AnimatedFlowerEntity(76, 22, false));
 		this.entities.add(new AnimatedFlowerEntity(60, 14, false));
 		this.entities.add(new AnimatedFlowerEntity(60, 10, false));
-		
+
 		this.entities.add(new AnimatedFlowerEntity(6, 31, true));
 		this.entities.add(new AnimatedFlowerEntity(14, 31, true));
 		this.entities.add(new AnimatedFlowerEntity(11, 34, true));
@@ -70,7 +71,11 @@ public class PokemonSquareFreezone extends FreezoneMap {
 		this.entities.add(new AnimatedFlowerEntity(60, 18, true));
 		this.entities.add(new AnimatedFlowerEntity(57, 21, true));
 		this.entities.add(new AnimatedFlowerEntity(49, 37, true));
-	
+
+		this.entities.add(new PokemonFreezoneEntity(71, 34, new PokemonSprite(PokemonSpritesets.getSpriteset(1))));
+
+		this.entities.add(new SignSoulEntity(13.5, 37, new Message("sign.pokemonsquare.west")));
+
 	}
 
 }
