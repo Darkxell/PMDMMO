@@ -24,7 +24,7 @@ public class MoveStatChange extends Move
 		else
 		{
 			List<Element> s = xml.getChild("statchanges").getChildren("statchange");
-			this.statChanges = new int[s.size()][2];
+			this.statChanges = new int[s.size()][3];
 			for (int i = 0; i < s.size(); ++i)
 			{
 				this.statChanges[i][0] = Integer.parseInt(s.get(i).getAttributeValue("stat"));

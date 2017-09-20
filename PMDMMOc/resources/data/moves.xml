@@ -21,7 +21,7 @@
       <statchange stat="5" stage="1" self="1" />
     </statchanges>
   </move>
-  <move id="10" type="6" movetype="StatChange" category="1" pp="20" power="50" targets="3" random="100">
+  <move id="10" type="6" movetype="StatChange" category="1" pp="20" power="50" targets="0" random="100">
     <statchanges>
       <statchange stat="3" stage="-1" />
     </statchanges>
@@ -36,7 +36,7 @@
       <statchange stat="4" stage="1" />
     </statchanges>
   </move>
-  <move id="16" type="6" behavior="213" category="2" pp="10" power="-1" accuracy="0" targets="2"
+  <move id="16" type="6" behavior="213" category="2" pp="10" power="-1" accuracy="0" targets="2" />
   <move id="17" type="6" movetype="StatChange" category="2" pp="20" power="-1" accuracy="0" targets="2">
     <statchanges>
       <statchange stat="3" stage="1" />
@@ -46,7 +46,7 @@
   </move>
   <move id="18" type="6" behavior="279" category="2" pp="20" power="-1" accuracy="0" targets="2" priority="2" />
   <move id="19" type="6" behavior="239" category="2" pp="10" power="-1" accuracy="0" targets="0" />
-  <move id="20" type="6" movetype="StatChange" category="2" pp="40" power="-1" accuracy="95" targets="3">
+  <move id="20" type="6" movetype="StatChange" category="2" pp="40" power="-1" accuracy="95" targets="0">
     <statchanges>
       <statchange stat="5" stage="-2" />
     </statchanges>
@@ -72,7 +72,7 @@
   <move id="27" type="16" movetype="" category="0" pp="15" power="70" targets="0" />
   <move id="28" type="16" behavior="15" category="0" pp="25" power="60" targets="0" random="30" />
   <move id="29" type="16" behavior="165" category="0" pp="20" power="60" accuracy="0" targets="0" />
-  <move id="30" type="16" movetype="StatChange" category="1" pp="15" power="55" accuracy="95" targets="3" random="100">
+  <move id="30" type="16" movetype="StatChange" category="1" pp="15" power="55" accuracy="95" targets="0" random="100">
     <statchanges>
       <statchange stat="3" stage="-1" />
     </statchanges>
@@ -124,7 +124,7 @@
   <move id="58" type="15" behavior="236" category="0" pp="10" power="60" accuracy="90" targets="0" priority="-6" />
   <move id="59" type="15" behavior="7" category="1" pp="20" power="60" targets="0" random="30" />
   <move id="60" type="15" behavior="189" category="0" pp="15" power="40" accuracy="90" targets="0" />
-  <move id="61" type="15" behavior="120" category="1" pp="20" power="40" targets="3" random="20" />
+  <move id="61" type="15" behavior="120" category="1" pp="20" power="40" targets="0" random="20" />
   <move id="62" type="15" behavior="107" category="1" pp="10" power="1" targets="0" />
   <move id="63" type="15" movetype="StatChange" category="2" pp="20" power="-1" accuracy="0" targets="2">
     <statchanges>
@@ -145,7 +145,7 @@
   <move id="74" type="12" behavior="7" category="0" pp="20" power="65" targets="0" random="30" />
   <move id="75" type="12" behavior="9" category="0" pp="15" power="65" accuracy="95" targets="0" random="100" />
   <move id="76" type="12" behavior="165" category="1" pp="20" power="60" accuracy="0" targets="0" />
-  <move id="77" type="12" movetype="StatChange" category="1" pp="15" power="55" accuracy="95" targets="3" random="100">
+  <move id="77" type="12" movetype="StatChange" category="1" pp="15" power="55" accuracy="95" targets="0" random="100">
     <statchanges>
       <statchange stat="5" stage="-1" />
     </statchanges>
@@ -273,7 +273,7 @@
   </move>
   <move id="146" type="9" behavior="10" category="1" pp="25" power="40" targets="0" random="10" />
   <move id="147" type="9" behavior="207" category="1" pp="15" power="35" accuracy="85" targets="0" />
-  <move id="148" type="9" behavior="245" category="1" pp="15" power="60" targets="3" />
+  <move id="148" type="9" behavior="245" category="1" pp="15" power="60" targets="0" />
   <move id="149" type="9" behavior="155" category="0" pp="10" power="1" targets="0" />
   <move id="150" type="9" behavior="255" category="2" pp="5" power="-1" accuracy="0" targets="4" />
   <move id="151" type="9" behavior="10" category="2" pp="15" power="-1" accuracy="85" targets="0" />
@@ -362,7 +362,7 @@
   </move>
   <move id="203" type="11" behavior="165" category="1" pp="20" power="60" accuracy="0" targets="0" />
   <move id="204" type="11" behavior="15" category="0" pp="15" power="60" targets="0" random="30" />
-  <move id="205" type="11" movetype="" category="0" pp="25" power="55" accuracy="95" targets="3" />
+  <move id="205" type="11" movetype="" category="0" pp="25" power="55" accuracy="95" targets="0" />
   <move id="206" type="11" behavior="262" category="1" pp="10" power="80" targets="0" />
   <move id="207" type="11" behavior="221" category="1" pp="15" power="40" targets="0" />
   <move id="208" type="11" movetype="" category="0" pp="25" power="45" targets="0" />
@@ -440,14 +440,14 @@
       <statchange stat="0" stage="-1" />
     </statchanges>
   </move>
-  <move id="247" type="14" movetype="StatChange" category="1" pp="10" power="65" accuracy="95" targets="3" random="100">
+  <move id="247" type="14" movetype="StatChange" category="1" pp="10" power="65" accuracy="95" targets="0" random="100">
     <statchanges>
       <statchange stat="5" stage="-1" />
     </statchanges>
   </move>
   <move id="248" type="14" behavior="14" category="0" pp="15" power="65" accuracy="95" targets="0" random="10" />
   <move id="249" type="14" behavior="129" category="0" pp="10" power="60" targets="0" priority="-4" />
-  <move id="250" type="14" movetype="StatChange" category="1" pp="15" power="55" accuracy="95" targets="3" random="100">
+  <move id="250" type="14" movetype="StatChange" category="1" pp="15" power="55" accuracy="95" targets="0" random="100">
     <statchanges>
       <statchange stat="5" stage="-1" />
     </statchanges>
@@ -482,7 +482,7 @@
   <move id="278" type="0" movetype="" category="0" pp="5" power="80" targets="0" priority="2" />
   <move id="279" type="0" behavior="15" category="0" pp="15" power="80" accuracy="90" targets="0" random="10" />
   <move id="280" type="0" movetype="" category="0" pp="20" power="80" accuracy="85" targets="0" />
-  <move id="281" type="0" behavior="195" category="1" pp="10" power="80" targets="3" />
+  <move id="281" type="0" behavior="195" category="1" pp="10" power="80" targets="0" />
   <move id="282" type="0" movetype="" category="0" pp="20" power="80" accuracy="75" targets="0" />
   <move id="283" type="0" movetype="" category="0" pp="15" power="80" targets="0" />
   <move id="284" type="0" behavior="23" category="1" pp="10" power="80" targets="0" random="20" />
@@ -504,7 +504,7 @@
   <move id="296" type="0" behavior="241" category="0" pp="25" power="60" targets="0" />
   <move id="297" type="0" behavior="131" category="1" pp="15" power="60" targets="0" />
   <move id="298" type="0" behavior="124" category="0" pp="10" power="70" targets="0" />
-  <move id="299" type="0" behavior="165" category="1" pp="20" power="60" accuracy="0" targets="3" />
+  <move id="299" type="0" behavior="165" category="1" pp="20" power="60" accuracy="0" targets="0" />
   <move id="300" type="0" movetype="" category="0" pp="30" power="55" targets="0" />
   <move id="301" type="0" movetype="" category="0" pp="30" power="50" accuracy="95" targets="0" />
   <move id="302" type="0" behavior="2" category="0" pp="1" power="50" accuracy="0" targets="0" />
@@ -561,7 +561,7 @@
   <move id="349" type="0" behavior="243" category="2" pp="15" power="-1" accuracy="0" targets="0" />
   <move id="350" type="0" behavior="239" category="2" pp="5" power="-1" accuracy="0" targets="0" />
   <move id="351" type="0" behavior="96" category="2" pp="20" power="-1" accuracy="0" targets="2" />
-  <move id="352" type="0" movetype="StatChange" category="2" pp="20" power="-1" targets="3">
+  <move id="352" type="0" movetype="StatChange" category="2" pp="20" power="-1" targets="0">
     <statchanges>
       <statchange stat="3" stage="-2" />
     </statchanges>
@@ -620,7 +620,7 @@
       <statchange stat="0" stage="1" />
     </statchanges>
   </move>
-  <move id="374" type="0" movetype="StatChange" category="2" pp="30" power="-1" targets="3">
+  <move id="374" type="0" movetype="StatChange" category="2" pp="30" power="-1" targets="0">
     <statchanges>
       <statchange stat="1" stage="-1" />
     </statchanges>
@@ -705,7 +705,7 @@
       <statchange stat="0" stage="2" />
     </statchanges>
   </move>
-  <move id="419" type="0" movetype="StatChange" category="2" pp="30" power="-1" targets="3">
+  <move id="419" type="0" movetype="StatChange" category="2" pp="30" power="-1" targets="0">
     <statchanges>
       <statchange stat="1" stage="-1" />
     </statchanges>
@@ -737,7 +737,7 @@
   <move id="434" type="3" behavior="80" category="1" pp="15" power="50" accuracy="0" targets="0" />
   <move id="435" type="3" behavior="6" category="0" pp="15" power="50" targets="0" random="30" />
   <move id="436" type="3" behavior="5" category="0" pp="25" power="50" targets="0" random="10" />
-  <move id="437" type="3" movetype="StatChange" category="1" pp="30" power="40" targets="3" random="10">
+  <move id="437" type="3" movetype="StatChange" category="1" pp="30" power="40" targets="0" random="10">
     <statchanges>
       <statchange stat="4" stage="-1" />
     </statchanges>
@@ -831,7 +831,7 @@
   <move id="472" type="13" behavior="280" category="2" pp="5" power="-1" accuracy="0" targets="4" />
   <move id="473" type="13" behavior="89" category="2" pp="10" power="-1" accuracy="0" targets="0" />
   <move id="474" type="13" behavior="83" category="2" pp="10" power="-1" accuracy="0" targets="0" />
-  <move id="475" type="13" behavior="187" category="2" pp="15" power="-1" targets="3" />
+  <move id="475" type="13" behavior="187" category="2" pp="15" power="-1" targets="0" />
   <move id="476" type="13" behavior="223" category="2" pp="10" power="-1" accuracy="0" targets="0" />
   <move id="477" type="13" behavior="227" category="2" pp="10" power="-1" accuracy="0" targets="2" />
   <move id="478" type="13" behavior="84" category="2" pp="10" power="-1" accuracy="0" targets="0" />
@@ -868,7 +868,7 @@
   <move id="501" type="5" behavior="252" category="0" pp="5" power="150" accuracy="80" targets="0" />
   <move id="502" type="5" behavior="194" category="0" pp="5" power="150" accuracy="90" targets="0" />
   <move id="503" type="5" movetype="" category="0" pp="5" power="100" accuracy="80" targets="0" />
-  <move id="504" type="5" behavior="15" category="0" pp="10" power="75" accuracy="90" targets="3" random="30" />
+  <move id="504" type="5" behavior="15" category="0" pp="10" power="75" accuracy="90" targets="0" random="30" />
   <move id="505" type="5" movetype="" category="1" pp="20" power="80" targets="0" />
   <move id="506" type="5" movetype="StatChange" category="1" pp="5" power="60" targets="0" random="10">
     <statchanges>
@@ -956,9 +956,9 @@
     </statchanges>
   </move>
   <move id="534" type="10" behavior="194" category="1" pp="5" power="150" accuracy="90" targets="0" />
-  <move id="535" type="10" behavior="139" category="1" pp="5" power="150" targets="3" />
+  <move id="535" type="10" behavior="139" category="1" pp="5" power="150" targets="0" />
   <move id="536" type="10" movetype="" category="1" pp="5" power="110" accuracy="80" targets="0" />
-  <move id="537" type="10" movetype="StatChange" category="1" pp="10" power="95" accuracy="85" targets="3" random="30">
+  <move id="537" type="10" movetype="StatChange" category="1" pp="10" power="95" accuracy="85" targets="0" random="30">
     <statchanges>
       <statchange stat="7" stage="-1" />
     </statchanges>
@@ -991,7 +991,7 @@
   <move id="551" type="10" movetype="" category="1" pp="25" power="40" targets="0" />
   <move id="552" type="10" behavior="207" category="0" pp="15" power="35" accuracy="85" targets="0" />
   <move id="553" type="10" behavior="208" category="1" pp="15" power="35" accuracy="85" targets="0" />
-  <move id="554" type="10" movetype="StatChange" category="1" pp="30" power="40" targets="3" random="10">
+  <move id="554" type="10" movetype="StatChange" category="1" pp="30" power="40" targets="0" random="10">
     <statchanges>
       <statchange stat="5" stage="-1" />
     </statchanges>
