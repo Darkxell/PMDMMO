@@ -27,6 +27,8 @@ public class PokemonFreezoneEntity extends FreezoneEntity {
 	public void onInteract() {
 		Pokemon p = PokemonRegistry.find(1).generate(new Random(), 0);
 		ArrayList<DialogScreen> screens = new ArrayList<DialogState.DialogScreen>();
+		screens.add(new DialogScreen(p, new Message("Hey there! <br>This is a debug string to try to know if the dialog boxes are working! Item descriptions are coming next.", false)));
+		screens.add(new DialogScreen(p, new Message("item.info.53")));
 		screens.add(new DialogScreen(PokemonRegistry.find(168).generate(new Random(), 0), new Message("item.info.69")));
 		Launcher.stateManager.setState(new DialogState(Launcher.stateManager.getCurrentState(), screens));
 	}
