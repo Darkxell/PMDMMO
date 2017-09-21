@@ -192,15 +192,14 @@ public class Move
 	 * @param move - The Learned move.
 	 * @param floor - The Floor context.
 	 * @return The Events created by this selection. Creates MoveUseEvents, distributing this Move on targets. */
-	public final DungeonEvent[] prepareUse(DungeonPokemon user, LearnedMove move, Floor floor)
+	public final ArrayList<DungeonEvent> prepareUse(DungeonPokemon user, LearnedMove move, Floor floor)
 	{
 		DungeonPokemon[] pokemon = this.getTargets(user, floor);
-		MoveUseEvent[] events = new MoveUseEvent[pokemon.length];
+		ArrayList<DungeonEvent> events = new ArrayList<DungeonEvent>();
 		for (int i = 0; i < pokemon.length; ++i)
-			events[i] = new MoveUseEvent(move, user, pokemon[i], floor);
+			events.add(new MoveUseEvent(move, user, pokemon[i], floor));
 
-		if (events.length == 0 && this != MoveRegistry.ATTACK) return new DungeonEvent[]
-		{ new MessageEvent(new Message("move.no_target")) };
+		if (events.size() == 0 && this != MoveRegistry.ATTACK) events.add(new MessageEvent(new Message("move.no_target")));
 		return events;
 	}
 
@@ -230,7 +229,7 @@ public class Move
 	 * @param target - The Pokémon the Move is being used on.
 	 * @param floor - The Floor context.
 	 * @return The events resulting from this Move. They typically include damage, healing, stat changes... */
-	public DungeonEvent[] useOn(DungeonPokemon user, DungeonPokemon target, Floor floor)
+	public ArrayList<DungeonEvent> useOn(DungeonPokemon user, DungeonPokemon target, Floor floor)
 	{
 		ArrayList<DungeonEvent> events = new ArrayList<DungeonEvent>();
 		boolean missed = this.misses(user, target, floor);
@@ -251,6 +250,6 @@ public class Move
 			if (!missed && this.additionalEffectLands(user, target, floor)) events.addAll(this.additionalEffects(user, target, floor));
 		}
 
-		return events.toArray(new DungeonEvent[events.size()]);
+		return events;
 	}
 }

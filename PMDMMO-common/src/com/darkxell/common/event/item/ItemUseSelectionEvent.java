@@ -1,5 +1,7 @@
 package com.darkxell.common.event.item;
 
+import java.util.ArrayList;
+
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.item.Item;
@@ -37,13 +39,15 @@ public class ItemUseSelectionEvent extends DungeonEvent
 	}
 
 	@Override
-	public DungeonEvent[] processServer()
+	public ArrayList<DungeonEvent> processServer()
 	{
 		ItemStack stack = this.source.getItem(this.sourceIndex);
 		stack.setQuantity(stack.getQuantity() - 1);
 		if (stack.getQuantity() <= 0) this.source.deleteItem(this.sourceIndex);
-		return new DungeonEvent[]
-		{ new ItemUseEvent(this.item, user, this.target, this.floor) };
+
+		ArrayList<DungeonEvent> events = super.processServer();
+		events.add(new ItemUseEvent(this.item, user, this.target, this.floor));
+		return events;
 	}
 
 }

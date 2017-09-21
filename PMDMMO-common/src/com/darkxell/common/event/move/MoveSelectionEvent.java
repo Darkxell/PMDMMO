@@ -1,5 +1,7 @@
 package com.darkxell.common.event.move;
 
+import java.util.ArrayList;
+
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.move.MoveRegistry;
@@ -25,7 +27,7 @@ public class MoveSelectionEvent extends DungeonEvent
 	}
 
 	@Override
-	public DungeonEvent[] processServer()
+	public ArrayList<DungeonEvent> processServer()
 	{
 		this.move.setPP(this.move.getPP() - 1);
 		return this.move.move().prepareUse(this.user, this.move, this.floor);

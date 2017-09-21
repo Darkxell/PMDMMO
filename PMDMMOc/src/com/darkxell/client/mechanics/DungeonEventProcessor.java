@@ -1,5 +1,6 @@
 package com.darkxell.client.mechanics;
 
+import java.util.ArrayList;
 import java.util.Stack;
 
 import com.darkxell.client.launchable.Launcher;
@@ -22,10 +23,10 @@ public final class DungeonEventProcessor
 	static boolean processPending = true;
 
 	/** Adds the input event(s) to the pending stack, without processing them. */
-	public static void addToPending(DungeonEvent... events)
+	public static void addToPending(ArrayList<DungeonEvent> arrayList)
 	{
-		for (int i = events.length - 1; i >= 0; --i)
-			pending.add(events[i]);
+		for (int i = arrayList.size() - 1; i >= 0; --i)
+			pending.add(arrayList.get(i));
 	}
 
 	private static void processDungeonExitEvent(DungeonExitEvent event)

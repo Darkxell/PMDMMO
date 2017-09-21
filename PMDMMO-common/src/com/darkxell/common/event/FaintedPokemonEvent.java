@@ -1,5 +1,7 @@
 package com.darkxell.common.event;
 
+import java.util.ArrayList;
+
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Message;
 
@@ -16,7 +18,7 @@ public class FaintedPokemonEvent extends DungeonEvent
 	}
 
 	@Override
-	public DungeonEvent[] processServer()
+	public ArrayList<DungeonEvent> processServer()
 	{
 		if (this.pokemon.pokemon.getItem() != null) this.pokemon.tile.setItem(this.pokemon.pokemon.getItem());
 		this.pokemon.tile.setPokemon(null);

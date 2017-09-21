@@ -1,5 +1,7 @@
 package com.darkxell.common.event;
 
+import java.util.ArrayList;
+
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Message;
 
@@ -19,12 +21,12 @@ public class DamageDealtEvent extends DungeonEvent
 	}
 
 	@Override
-	public DungeonEvent[] processServer()
+	public ArrayList<DungeonEvent> processServer()
 	{
 		this.target.setHP(this.target.getHp() - this.damage);
-		if (this.target.getHp() == 0) return new DungeonEvent[]
-		{ new FaintedPokemonEvent(this.target) };
-		return super.processServer();
+		ArrayList<DungeonEvent> events = super.processServer();
+		if (this.target.getHp() == 0) events.add(new FaintedPokemonEvent(this.target));
+		return events;
 	}
 
 }

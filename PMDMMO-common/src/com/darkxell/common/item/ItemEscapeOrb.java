@@ -1,5 +1,7 @@
 package com.darkxell.common.item;
 
+import java.util.ArrayList;
+
 import org.jdom2.Element;
 
 import com.darkxell.common.dungeon.floor.Floor;
@@ -22,9 +24,10 @@ public class ItemEscapeOrb extends ItemOrb
 	}
 
 	@Override
-	public DungeonEvent[] use(Floor floor, DungeonPokemon pokemon, DungeonPokemon target)
+	public ArrayList<DungeonEvent> use(Floor floor, DungeonPokemon pokemon, DungeonPokemon target)
 	{
-		return new DungeonEvent[]
-		{ new DungeonExitEvent(pokemon) };
+		ArrayList<DungeonEvent> events = super.use(floor, pokemon, target);
+		events.add(new DungeonExitEvent(pokemon));
+		return events;
 	}
 }
