@@ -49,6 +49,11 @@
           <part start="1" end="3" />
         </floors>
       </layout>
+      <layout id="0">
+        <floors>
+          <part start="4" end="4" />
+        </floors>
+      </layout>
     </layouts>
   </dungeon>
 </dungeons>

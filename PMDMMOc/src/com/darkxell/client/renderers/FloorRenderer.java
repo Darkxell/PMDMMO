@@ -84,7 +84,7 @@ public class FloorRenderer
 		if (tile == null) return;
 
 		BufferedImage sprite = null;
-		if (tile.type() == TileType.STAIR) sprite = CommonDungeonTileset.INSTANCE.stairs(this.floor.dungeon.direction);
+		if (tile.type() == TileType.STAIR) sprite = CommonDungeonTileset.INSTANCE.stairs(this.floor.dungeon.dungeon().direction);
 		else if (tile.type() == TileType.WONDER_TILE) sprite = CommonDungeonTileset.INSTANCE.wonderTile();
 		else if (tile.type() == TileType.WARP_ZONE) sprite = CommonDungeonTileset.INSTANCE.warp();
 		else sprite = this.tileset.tile(tile);

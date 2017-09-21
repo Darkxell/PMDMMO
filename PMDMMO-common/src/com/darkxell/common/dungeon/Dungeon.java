@@ -120,6 +120,12 @@ public class Dungeon
 		return new Message("dungeon." + this.id);
 	}
 
+	/** @return A new instance of this Dungeon. */
+	public DungeonInstance newInstance()
+	{
+		return new DungeonInstance(this.id, new Random());
+	}
+
 	/** @return A random Item for the input floor. */
 	public ItemStack randomItem(Random random, int floor)
 	{

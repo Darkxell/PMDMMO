@@ -6,7 +6,7 @@ import java.util.Random;
 
 import javafx.util.Pair;
 
-import com.darkxell.common.dungeon.Dungeon;
+import com.darkxell.common.dungeon.DungeonInstance;
 import com.darkxell.common.dungeon.floor.layout.Layout;
 
 /** Represents a generated Floor in a Dungeon. */
@@ -24,12 +24,12 @@ public class Floor
 	public static final Rectangle WALKABLE = new Rectangle(UNBREAKABLE, UNBREAKABLE, MAX_WIDTH, MAX_HEIGHT);
 
 	/** This Floor's Dungeon. */
-	public final Dungeon dungeon;
+	public final DungeonInstance dungeon;
 	/** This Floor's ID. */
 	public final int id;
 	/** This Floor's layout. */
 	public final Layout layout;
-	/** RNG */
+	/** RNG for game logic: moves, mob spawning, etc. */
 	public final Random random;
 	/** This Floor's rooms. null before generating. */
 	private Room[] rooms;
@@ -38,12 +38,12 @@ public class Floor
 	/** This Floor's tiles. null before generating. */
 	private Tile[][] tiles;
 
-	public Floor(int id, Layout layout, Dungeon dungeon)
+	public Floor(int id, Layout layout, DungeonInstance dungeon, Random random)
 	{
 		this.id = id;
 		this.dungeon = dungeon;
 		this.layout = layout;
-		this.random = new Random();
+		this.random = random;
 	}
 
 	/** Generates this Floor. */

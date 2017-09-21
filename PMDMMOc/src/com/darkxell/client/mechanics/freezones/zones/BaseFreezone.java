@@ -8,8 +8,6 @@ import com.darkxell.client.mechanics.freezones.entities.FlagEntity;
 import com.darkxell.client.persistance.DungeonPersistance;
 import com.darkxell.client.state.dungeon.DungeonState;
 import com.darkxell.common.dungeon.DungeonRegistry;
-import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.dungeon.floor.layout.Layout;
 import com.darkxell.common.util.DoubleRectangle;
 
 public class BaseFreezone extends FreezoneMap {
@@ -26,7 +24,8 @@ public class BaseFreezone extends FreezoneMap {
 		this.warpzones.add(new WarpZone(35, 29, new DoubleRectangle(29, 63, 9, 2)) {
 			@Override
 			public FreezoneMap getDestination() {
-				DungeonPersistance.floor = new Floor(4, Layout.STATIC, DungeonRegistry.find(1));
+				DungeonPersistance.dungeon = DungeonRegistry.find(1).newInstance();
+				DungeonPersistance.floor = DungeonPersistance.dungeon.createFloor(4);
 				DungeonPersistance.floor.generate();
 				Launcher.stateManager.setState(DungeonPersistance.dungeonState = new DungeonState());
 				return new BaseFreezone();

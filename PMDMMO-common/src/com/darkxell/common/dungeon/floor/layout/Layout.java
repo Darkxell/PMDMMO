@@ -64,7 +64,7 @@ public abstract class Layout
 	public Pair<Room[], Point> generate(Floor floor, Tile[][] tiles)
 	{
 		this.floor = floor;
-		this.random = this.floor.random;
+		this.random = this.floor.dungeon.random;
 		this.tiles = tiles;
 		this.generateRooms();
 		this.generateTiles();
@@ -72,7 +72,7 @@ public abstract class Layout
 		this.generateLiquids();
 		this.placeStairs();
 		this.placeWonderTiles();
-		if (this.floor.dungeon.hasTraps) this.placeTraps();
+		if (this.floor.dungeon.dungeon().hasTraps) this.placeTraps();
 		this.placeItems();
 		this.summonPokemon();
 
