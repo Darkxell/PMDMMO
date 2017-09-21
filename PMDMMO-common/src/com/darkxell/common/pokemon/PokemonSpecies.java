@@ -15,7 +15,7 @@ public class PokemonSpecies
 	/** List of possible Abilities for this Pokémon. */
 	private ArrayList<Integer> abilities;
 	/** This species' stat gains at each level. First in this Array is the stats at level 1. */
-	final ArrayList<PokemonStats> baseStats;
+	private final ArrayList<PokemonStats> baseStats;
 	/** Base experience gained when this Pokémon is defeated. */
 	public final int baseXP;
 	/** List of species this Pokémon can evolve into. */
@@ -97,6 +97,11 @@ public class PokemonSpecies
 		this.learnset = learnset;
 		this.tms = tms;
 		this.evolutions = evolutions;
+	}
+
+	public PokemonStats baseStatsIncrease(int level)
+	{
+		return this.baseStats.get(level);
 	}
 
 	public Evolution[] evolutions()
