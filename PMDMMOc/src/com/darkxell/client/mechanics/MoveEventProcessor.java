@@ -10,7 +10,7 @@ import com.darkxell.client.renderers.MoveRenderer;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.PokemonSprite;
 import com.darkxell.client.state.DialogState;
-import com.darkxell.client.state.DialogState.DialogElement;
+import com.darkxell.client.state.DialogState.DialogScreen;
 import com.darkxell.client.state.dungeon.AnimationState;
 import com.darkxell.client.state.dungeon.DelayState;
 import com.darkxell.common.event.move.MoveSelectionEvent;
@@ -40,21 +40,20 @@ public final class MoveEventProcessor
 		{
 			DungeonEventProcessor.processPending = false;
 
-			ArrayList<Message> messages = new ArrayList<Message>();
+			ArrayList<DialogScreen> screens = new ArrayList<DialogScreen>();
 			for (int level = event.pokemon.pokemon.getLevel() - levels + 1; level <= event.pokemon.pokemon.getLevel(); ++level)
 			{
-				messages.add(new Message("xp.levelup").addReplacement("<pokemon>", event.pokemon.pokemon.getNickname()).addReplacement("<level>",
-						Integer.toString(level)));
+				screens.add(new DialogScreen(new Message("xp.levelup").addReplacement("<pokemon>", event.pokemon.pokemon.getNickname()).addReplacement(
+						"<level>", Integer.toString(level))));
 				PokemonStats stats = event.pokemon.pokemon.species.baseStatsIncrease(level - 1);
-				messages.add(new Message("xp.stats").addReplacement("<atk>", TextRenderer.instance.alignNumber(stats.getAttack(), 2))
+				screens.add(new DialogScreen(new Message("xp.stats").addReplacement("<atk>", TextRenderer.instance.alignNumber(stats.getAttack(), 2))
 						.addReplacement("<def>", TextRenderer.instance.alignNumber(stats.getDefense(), 2))
 						.addReplacement("<hea>", TextRenderer.instance.alignNumber(stats.getHealth(), 2))
 						.addReplacement("<spa>", TextRenderer.instance.alignNumber(stats.getSpecialAttack(), 2))
-						.addReplacement("<spd>", TextRenderer.instance.alignNumber(stats.getSpecialDefense(), 2)));
+						.addReplacement("<spd>", TextRenderer.instance.alignNumber(stats.getSpecialDefense(), 2))));
 			}
 
-			Launcher.stateManager.setState(new DialogState(DungeonPersistance.dungeonState, null, false, new DialogElement[]
-			{ new DialogElement(null, messages.toArray(new Message[messages.size()])) }));
+			Launcher.stateManager.setState(new DialogState(DungeonPersistance.dungeonState, null, false, screens));
 		}
 	}
 

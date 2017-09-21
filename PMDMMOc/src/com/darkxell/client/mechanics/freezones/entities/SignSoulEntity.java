@@ -1,11 +1,12 @@
 package com.darkxell.client.mechanics.freezones.entities;
 
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 
 import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.mechanics.freezones.FreezoneEntity;
 import com.darkxell.client.state.DialogState;
-import com.darkxell.client.state.DialogState.DialogElement;
+import com.darkxell.client.state.DialogState.DialogScreen;
 import com.darkxell.common.util.Message;
 
 /**
@@ -23,8 +24,9 @@ public class SignSoulEntity extends FreezoneEntity {
 
 	@Override
 	public void onInteract() {
-		Launcher.stateManager
-				.setState(new DialogState(Launcher.stateManager.getCurrentState(), new DialogElement(null, mess)));
+		ArrayList<DialogScreen> screens = new ArrayList<DialogState.DialogScreen>();
+		screens.add(new DialogScreen(null, this.mess));
+		Launcher.stateManager.setState(new DialogState(Launcher.stateManager.getCurrentState(), screens));
 	}
 
 	@Override

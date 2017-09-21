@@ -48,6 +48,7 @@ public class Launcher {
 		Logger.instance().info("Lang & Data loaded.");
 
 		frame = new Frame();
+		frame.canvas.requestFocus();
 		stateManager = new StateManager();
 		stateManager.setState(new OpenningState());
 		stateManager.randomizeBackground();
