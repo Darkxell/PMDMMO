@@ -40,9 +40,9 @@ public abstract class DungeonEvent
 	/** Processes this Event server-side.
 	 * 
 	 * @return The list of resulting Events. */
-	public DungeonEvent[] processServer()
+	public ArrayList<DungeonEvent> processServer()
 	{
-		return new DungeonEvent[0];
+		return new ArrayList<DungeonEvent>();
 	}
 
 }

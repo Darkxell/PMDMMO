@@ -211,7 +211,7 @@ public class Pokemon implements ItemContainer
 	private void levelUp()
 	{
 		++this.level;
-		this.stats.add(this.species.baseStats.get(this.level - 1));
+		this.stats.add(this.species.baseStatsIncrease(this.level - 1));
 	}
 
 	public LearnedMove move(int slot)

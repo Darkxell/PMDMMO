@@ -50,7 +50,7 @@ public class ItemTM extends ItemHM
 	}
 
 	@Override
-	public DungeonEvent[] use(Floor floor, DungeonPokemon pokemon, DungeonPokemon target)
+	public ArrayList<DungeonEvent> use(Floor floor, DungeonPokemon pokemon, DungeonPokemon target)
 	{
 		if (pokemon.player != null)
 		{

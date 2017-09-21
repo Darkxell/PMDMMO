@@ -1,5 +1,6 @@
 package com.darkxell.client.mechanics;
 
+import java.util.ArrayList;
 import java.util.Stack;
 
 import com.darkxell.client.launchable.Launcher;
@@ -7,10 +8,15 @@ import com.darkxell.client.persistance.DungeonPersistance;
 import com.darkxell.client.renderers.ItemRenderer;
 import com.darkxell.client.state.FreezoneExploreState;
 import com.darkxell.client.state.dungeon.AnimationState;
-import com.darkxell.common.event.*;
+import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.dungeon.DungeonExitEvent;
 import com.darkxell.common.event.item.ItemUseSelectionEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.move.MoveUseEvent;
+import com.darkxell.common.event.pokemon.DamageDealtEvent;
+import com.darkxell.common.event.pokemon.FaintedPokemonEvent;
+import com.darkxell.common.event.stats.ExperienceGainedEvent;
+import com.darkxell.common.event.stats.StatChangedEvent;
 
 /** Translates game logic events into displayable content to the client.<br />
  * Takes in Events to display messages, manage resources or change game states. */
@@ -22,10 +28,10 @@ public final class DungeonEventProcessor
 	static boolean processPending = true;
 
 	/** Adds the input event(s) to the pending stack, without processing them. */
-	public static void addToPending(DungeonEvent... events)
+	public static void addToPending(ArrayList<DungeonEvent> arrayList)
 	{
-		for (int i = events.length - 1; i >= 0; --i)
-			pending.add(events[i]);
+		for (int i = arrayList.size() - 1; i >= 0; --i)
+			pending.add(arrayList.get(i));
 	}
 
 	private static void processDungeonExitEvent(DungeonExitEvent event)
@@ -41,18 +47,20 @@ public final class DungeonEventProcessor
 		if (event.isValid())
 		{
 			addToPending(event.processServer());
+			DungeonPersistance.dungeonState.logger.showMessages(event.getMessages());
 
 			if (event instanceof MoveSelectionEvent) MoveEventProcessor.processMoveEvent((MoveSelectionEvent) event);
 			if (event instanceof MoveUseEvent) MoveEventProcessor.processMoveUseEvent((MoveUseEvent) event);
 			if (event instanceof DamageDealtEvent) MoveEventProcessor.processDamageEvent((DamageDealtEvent) event);
-			if (event instanceof StatChangedEvent) MoveEventProcessor.processStatEvent((StatChangedEvent) event);
+
 			if (event instanceof FaintedPokemonEvent) MoveEventProcessor.processFaintedEvent((FaintedPokemonEvent) event);
+
+			if (event instanceof StatChangedEvent) MoveEventProcessor.processStatEvent((StatChangedEvent) event);
+			if (event instanceof ExperienceGainedEvent) MoveEventProcessor.processExperienceEvent((ExperienceGainedEvent) event);
 
 			if (event instanceof ItemUseSelectionEvent) processItemEvent((ItemUseSelectionEvent) event);
 
 			if (event instanceof DungeonExitEvent) processDungeonExitEvent((DungeonExitEvent) event);
-
-			DungeonPersistance.dungeonState.logger.showMessages(event.getMessages());
 		}
 
 		if (processPending) processPending();

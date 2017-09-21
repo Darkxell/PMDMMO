@@ -1,9 +1,12 @@
 package com.darkxell.common.event.item;
 
+import java.util.ArrayList;
+
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.util.Message;
 
 /** Describes the events occurring while using an Item. */
 public class ItemUseEvent extends DungeonEvent
@@ -27,9 +30,11 @@ public class ItemUseEvent extends DungeonEvent
 	}
 
 	@Override
-	public DungeonEvent[] processServer()
+	public ArrayList<DungeonEvent> processServer()
 	{
-		return this.item.use(this.floor, this.user, this.target);
+		ArrayList<DungeonEvent> events = this.item.use(this.floor, this.user, this.target);
+		if (events.size() == 0) events.add(new MessageEvent(new Message("item.no_effect")));
+		return events;
 	}
 
 }

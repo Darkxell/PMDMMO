@@ -1,5 +1,7 @@
 package com.darkxell.common.event.item;
 
+import java.util.ArrayList;
+
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.item.Item.ItemAction;
 import com.darkxell.common.item.ItemStack;
@@ -28,7 +30,7 @@ public class ItemSwappedEvent extends DungeonEvent
 	}
 
 	@Override
-	public DungeonEvent[] processServer()
+	public ArrayList<DungeonEvent> processServer()
 	{
 		ItemStack i = this.source.getItem(this.sourceIndex);
 		this.source.setItem(this.sourceIndex, this.destination.getItem(this.destinationIndex));

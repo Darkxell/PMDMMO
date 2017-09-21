@@ -1,5 +1,7 @@
 package com.darkxell.common.event.move;
 
+import java.util.ArrayList;
+
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
@@ -26,11 +28,11 @@ public class MoveUseEvent extends DungeonEvent
 	}
 
 	@Override
-	public DungeonEvent[] processServer()
+	public ArrayList<DungeonEvent> processServer()
 	{
-		DungeonEvent[] events = this.move.move().useOn(this.user, this.target, this.floor);
-		if (events.length == 0) return new DungeonEvent[]
-		{ new MessageEvent(new Message("move.no_effect")) };
+		ArrayList<DungeonEvent> events = super.processServer();
+		events.addAll(this.move.move().useOn(this.user, this.target, this.floor));
+		if (events.size() == 0) events.add(new MessageEvent(new Message("move.no_effect")));
 		return events;
 	}
 }
