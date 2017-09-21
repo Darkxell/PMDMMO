@@ -1,27 +1,13 @@
 package com.darkxell.common.dungeon.floor;
 
 import java.awt.Point;
-import java.awt.Rectangle;
 import java.util.Random;
-
-import javafx.util.Pair;
 
 import com.darkxell.common.dungeon.DungeonInstance;
 import com.darkxell.common.dungeon.floor.layout.Layout;
 
 /** Represents a generated Floor in a Dungeon. */
-public class Floor
-{
-
-	/** Number of walkable tiles in a Floor. */
-	public static final int MAX_WIDTH = 50, MAX_HEIGHT = 28;
-	/** Number of unbreakable walls on each side of the map. */
-	public static final int UNBREAKABLE = 10;
-	/** Number of tiles, including unaccessible walls. */
-	public static final int ALL_WIDTH = MAX_WIDTH + UNBREAKABLE * 2, ALL_HEIGHT = MAX_HEIGHT + UNBREAKABLE * 2;
-
-	/** Maximum walkable coordinates in a Floor. */
-	public static final Rectangle WALKABLE = new Rectangle(UNBREAKABLE, UNBREAKABLE, MAX_WIDTH, MAX_HEIGHT);
+public class Floor {
 
 	/** This Floor's Dungeon. */
 	public final DungeonInstance dungeon;
@@ -32,14 +18,13 @@ public class Floor
 	/** RNG for game logic: moves, mob spawning, etc. */
 	public final Random random;
 	/** This Floor's rooms. null before generating. */
-	private Room[] rooms;
+	public Room[] rooms;
 	/** The position at which the team will spawn. */
-	private Point teamSpawn;
+	public Point teamSpawn;
 	/** This Floor's tiles. null before generating. */
 	private Tile[][] tiles;
 
-	public Floor(int id, Layout layout, DungeonInstance dungeon, Random random)
-	{
+	public Floor(int id, Layout layout, DungeonInstance dungeon, Random random) {
 		this.id = id;
 		this.dungeon = dungeon;
 		this.layout = layout;
@@ -47,59 +32,63 @@ public class Floor
 	}
 
 	/** Generates this Floor. */
-	public void generate()
-	{
-		this.tiles = new Tile[ALL_WIDTH][ALL_HEIGHT];
-		Pair<Room[], Point> floor = this.layout.generate(this, this.tiles);
-		this.rooms = floor.getKey();
-		this.teamSpawn = floor.getValue();
+	public void generate() {
+		this.layout.generate(this);
 		for (Tile[] row : this.tiles)
 			for (Tile t : row)
 				t.updateNeighbors();
 	}
 
-	public Point getTeamSpawn()
-	{
-		return (Point) this.teamSpawn.clone();
-	}
-
 	/** @return True if this Floor is done generating. */
-	public boolean isGenerated()
-	{
+	public boolean isGenerated() {
 		return this.rooms != null;
 	}
 
 	/** @return A random Room in this Floor. */
-	public Room randomRoom(Random random)
-	{
+	public Room randomRoom(Random random) {
 		return this.rooms[random.nextInt(this.rooms.length)];
 	}
 
-	/** @return The room at the input X, Y coordinates. null if not in a Room. */
-	public Room roomAt(int x, int y)
-	{
+	/**
+	 * @return The room at the input X, Y coordinates. null if not in a Room.
+	 */
+	public Room roomAt(int x, int y) {
 		for (Room room : this.rooms)
-			if (room.contains(x, y)) return room;
+			if (room.contains(x, y))
+				return room;
 		return null;
 	}
 
+	public int getWidth() {
+		return this.tiles.length;
+	}
+
+	public int getHeight() {
+		return this.tiles[0].length;
+	}
+
 	/** @return The tile at the input X, Y coordinates. */
-	public Tile tileAt(int x, int y)
-	{
-		if (x < 0 || x >= this.tiles.length || y < 0 || y >= this.tiles[x].length) return null;
+	public Tile tileAt(int x, int y) {
+		if (this.tiles == null || x < 0 || x >= this.tiles.length || y < 0 || y >= this.tiles[x].length)
+			return null;
 		return this.tiles[x][y];
 	}
 
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		String s = "";
-		for (int y = 0; y < ALL_HEIGHT; ++y)
-		{
-			for (int x = 0; x < ALL_WIDTH; ++x)
-				s += this.tileAt(x, y).type().c;
+		for (int y = 0; y < this.getHeight(); ++y) {
+			for (int x = 0; x < this.getWidth(); ++x) {
+				Tile t = this.tileAt(x, y);
+				s += t != null ? t.type().c : "?";
+			}
 			s += "\n";
 		}
 		return s;
+	}
+
+	/** Overrides all of the floor's tiles. */
+	public void setTiles(Tile[][] tiles) {
+		this.tiles = tiles;
 	}
 }

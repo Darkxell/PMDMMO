@@ -13,21 +13,17 @@ import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.ui.Keys;
 
 /** The main state for Dungeon exploration. */
-public class DungeonState extends AbstractState
-{
+public class DungeonState extends AbstractState {
 	/** A substate for Dungeon exploration. */
-	static abstract class DungeonSubState extends AbstractState
-	{
+	static abstract class DungeonSubState extends AbstractState {
 		public final DungeonState parent;
 
-		public DungeonSubState(DungeonState parent)
-		{
+		public DungeonSubState(DungeonState parent) {
 			this.parent = parent;
 		}
 
 		@Override
-		public boolean isMain()
-		{
+		public boolean isMain() {
 			return this.parent.isMain();
 		}
 
@@ -42,10 +38,9 @@ public class DungeonState extends AbstractState
 	final FloorRenderer floorRenderer;
 	public final DungeonLogger logger;
 
-	public DungeonState()
-	{
+	public DungeonState() {
 		this.floorRenderer = new FloorRenderer(DungeonPersistance.floor);
-		Point p = DungeonPersistance.floor.getTeamSpawn();
+		Point p = DungeonPersistance.floor.teamSpawn;
 		DungeonPersistance.floor.tileAt(p.x, p.y).setPokemon(DungeonPersistance.player.getDungeonPokemon());
 
 		this.logger = new DungeonLogger(this);
@@ -56,48 +51,48 @@ public class DungeonState extends AbstractState
 	}
 
 	@Override
-	public void onEnd()
-	{
+	public void onEnd() {
 		super.onEnd();
 		this.logger.hideMessages();
 	}
 
 	@Override
-	public void onKeyPressed(short key)
-	{
-		if (key == Keys.KEY_DIAGONAL) this.diagonal = true;
-		if (key == Keys.KEY_ROTATE) this.rotating = true;
+	public void onKeyPressed(short key) {
+		if (key == Keys.KEY_DIAGONAL)
+			this.diagonal = true;
+		if (key == Keys.KEY_ROTATE)
+			this.rotating = true;
 
 		this.currentSubstate.onKeyPressed(key);
 
 	}
 
 	@Override
-	public void onKeyReleased(short key)
-	{
-		if (key == Keys.KEY_DIAGONAL) this.diagonal = false;
-		if (key == Keys.KEY_ROTATE) this.rotating = false;
+	public void onKeyReleased(short key) {
+		if (key == Keys.KEY_DIAGONAL)
+			this.diagonal = false;
+		if (key == Keys.KEY_ROTATE)
+			this.rotating = false;
 
 		this.currentSubstate.onKeyReleased(key);
 	}
 
 	@Override
-	public void onStart()
-	{
+	public void onStart() {
 		super.onStart();
 		Launcher.soundmanager.setBackgroundMusic(SoundsHolder.getSong("07 Tiny Woods.mp3"));
 	}
 
 	@Override
-	public void render(Graphics2D g, int width, int height)
-	{
+	public void render(Graphics2D g, int width, int height) {
 		int x = this.camera.x - width / 2, y = this.camera.y - height / 2;
 
 		g.translate(-x, -y);
 
 		this.floorRenderer.drawFloor(g, x, y, width, height);
-		if (this.isMain()) if (this.rotating && this.currentSubstate == this.actionSelectionState) this.floorRenderer.drawGrid(g,
-				DungeonPersistance.player.getDungeonPokemon(), x, y, width, height);
+		if (this.isMain())
+			if (this.rotating && this.currentSubstate == this.actionSelectionState)
+				this.floorRenderer.drawGrid(g, DungeonPersistance.player.getDungeonPokemon(), x, y, width, height);
 		this.floorRenderer.drawEntities(g, x, y, width, height);
 
 		this.currentSubstate.render(g, width, height);
@@ -106,17 +101,18 @@ public class DungeonState extends AbstractState
 		this.logger.render(g, width, height);
 	}
 
-	/** @param substate - The new substate to use. */
-	public void setSubstate(DungeonSubState substate)
-	{
+	/**
+	 * @param substate
+	 *            - The new substate to use.
+	 */
+	public void setSubstate(DungeonSubState substate) {
 		this.currentSubstate.onEnd();
 		this.currentSubstate = substate;
 		this.currentSubstate.onStart();
 	}
 
 	@Override
-	public void update()
-	{
+	public void update() {
 		DungeonPokemonRenderer.instance.update();
 		this.logger.update();
 		this.currentSubstate.update();

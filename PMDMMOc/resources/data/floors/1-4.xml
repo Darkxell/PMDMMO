@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <floor>
   <rooms />
-  <tiles>MMMMMMMMMMM;M  W S W  M;M         M;M         M;M         M;M         M;MMM     MMM;MMM     MMM;MMM     MMM;MMM     MMM;MMM     MMM;MMMMMMMMMMM</tiles>
+  <tiles>MMMMMMMMMMM;M  W S W  M;M         M;M         M;M         M;M         M;MMM     MMM;MMM     MMM;MMM     MMM;MMM     MMM;MMM     MMM;MMMMMMMMMMM;MMM     MMM;MMM     MMM</tiles>
   <items>
     <item id="0" x="1" y="2" quantity="5" />
     <item id="2" x="2" y="2" />

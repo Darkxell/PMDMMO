@@ -1,11 +1,16 @@
 package com.darkxell.common.dungeon.floor;
 
-import static com.darkxell.common.dungeon.floor.TileType.*;
+import static com.darkxell.common.dungeon.floor.TileType.AIR;
+import static com.darkxell.common.dungeon.floor.TileType.LAVA;
+import static com.darkxell.common.dungeon.floor.TileType.STAIR;
+import static com.darkxell.common.dungeon.floor.TileType.TRAP;
+import static com.darkxell.common.dungeon.floor.TileType.WALL_END;
+import static com.darkxell.common.dungeon.floor.TileType.WARP_ZONE;
+import static com.darkxell.common.dungeon.floor.TileType.WATER;
+import static com.darkxell.common.dungeon.floor.TileType.WONDER_TILE;
 
 import java.awt.Point;
 import java.util.ArrayList;
-
-import javafx.util.Pair;
 
 import com.darkxell.common.item.Item.ItemAction;
 import com.darkxell.common.item.ItemStack;
@@ -14,6 +19,8 @@ import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.util.GameUtil;
 import com.darkxell.common.util.Message;
+
+import javafx.util.Pair;
 
 /** Represents a single tile in a Floor. */
 public class Tile implements ItemContainer
