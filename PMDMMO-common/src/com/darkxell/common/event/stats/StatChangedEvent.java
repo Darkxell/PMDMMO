@@ -1,7 +1,8 @@
-package com.darkxell.common.event;
+package com.darkxell.common.event.stats;
 
 import java.util.ArrayList;
 
+import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Message;
 

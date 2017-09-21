@@ -7,11 +7,11 @@ import com.darkxell.client.renderers.MoveRenderer;
 import com.darkxell.client.resources.images.PokemonSprite;
 import com.darkxell.client.state.dungeon.AnimationState;
 import com.darkxell.client.state.dungeon.DelayState;
-import com.darkxell.common.event.DamageDealtEvent;
-import com.darkxell.common.event.FaintedPokemonEvent;
-import com.darkxell.common.event.StatChangedEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.move.MoveUseEvent;
+import com.darkxell.common.event.pokemon.DamageDealtEvent;
+import com.darkxell.common.event.pokemon.FaintedPokemonEvent;
+import com.darkxell.common.event.stats.StatChangedEvent;
 
 public final class MoveEventProcessor
 {

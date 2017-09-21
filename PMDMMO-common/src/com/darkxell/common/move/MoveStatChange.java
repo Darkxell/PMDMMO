@@ -7,7 +7,7 @@ import org.jdom2.Element;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
-import com.darkxell.common.event.StatChangedEvent;
+import com.darkxell.common.event.stats.StatChangedEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.PokemonType;
 

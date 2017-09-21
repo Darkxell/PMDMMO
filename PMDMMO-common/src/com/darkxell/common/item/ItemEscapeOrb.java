@@ -6,7 +6,7 @@ import org.jdom2.Element;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
-import com.darkxell.common.event.DungeonExitEvent;
+import com.darkxell.common.event.dungeon.DungeonExitEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
 /** An Item that has different effects when used. */

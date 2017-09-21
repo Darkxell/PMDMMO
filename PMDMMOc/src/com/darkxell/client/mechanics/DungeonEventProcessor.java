@@ -9,9 +9,13 @@ import com.darkxell.client.renderers.ItemRenderer;
 import com.darkxell.client.state.FreezoneExploreState;
 import com.darkxell.client.state.dungeon.AnimationState;
 import com.darkxell.common.event.*;
+import com.darkxell.common.event.dungeon.DungeonExitEvent;
 import com.darkxell.common.event.item.ItemUseSelectionEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.move.MoveUseEvent;
+import com.darkxell.common.event.pokemon.DamageDealtEvent;
+import com.darkxell.common.event.pokemon.FaintedPokemonEvent;
+import com.darkxell.common.event.stats.StatChangedEvent;
 
 /** Translates game logic events into displayable content to the client.<br />
  * Takes in Events to display messages, manage resources or change game states. */

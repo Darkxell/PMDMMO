@@ -7,10 +7,10 @@ import org.jdom2.Element;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Room;
 import com.darkxell.common.dungeon.floor.Tile;
-import com.darkxell.common.event.DamageDealtEvent;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.DungeonEvent.MessageEvent;
 import com.darkxell.common.event.move.MoveUseEvent;
+import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.LearnedMove;
 import com.darkxell.common.pokemon.PokemonType;
@@ -245,7 +245,7 @@ public class Move
 						"<pokemon>", target.pokemon.getNickname())));
 				else if (effectiveness == PokemonType.NOT_VERY_EFFECTIVE) events.add(new MessageEvent(new Message("move.effectiveness.not_very")
 						.addReplacement("<pokemon>", target.pokemon.getNickname())));
-				events.add(new DamageDealtEvent(target, missed ? 0 : this.damageDealt(user, target, floor)));
+				events.add(new DamageDealtEvent(target, user, missed ? 0 : this.damageDealt(user, target, floor)));
 			}
 			if (!missed && this.additionalEffectLands(user, target, floor)) events.addAll(this.additionalEffects(user, target, floor));
 		}
