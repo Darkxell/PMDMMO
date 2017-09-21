@@ -31,6 +31,12 @@ public abstract class DungeonEvent
 		return this.messages.toArray(new Message[this.messages.size()]);
 	}
 
+	/** @return True if this Event should occur. This needs to be checked when called in case other Events on the stack triggered actions that cancel this Event, such as fainting a Pokémon which is this Event's target. */
+	public boolean isValid()
+	{
+		return true;
+	}
+
 	/** Processes this Event server-side.
 	 * 
 	 * @return The list of resulting Events. */

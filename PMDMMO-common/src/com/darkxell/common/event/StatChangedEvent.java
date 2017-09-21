@@ -23,6 +23,12 @@ public class StatChangedEvent extends DungeonEvent
 	}
 
 	@Override
+	public boolean isValid()
+	{
+		return this.target.getHp() > 0;
+	}
+
+	@Override
 	public DungeonEvent[] processServer()
 	{
 		this.target.stats.addStage(this.stat, this.stage);

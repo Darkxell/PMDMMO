@@ -232,11 +232,24 @@ public class Move
 	 * @return The events resulting from this Move. They typically include damage, healing, stat changes... */
 	public DungeonEvent[] useOn(DungeonPokemon user, DungeonPokemon target, Floor floor)
 	{
+		ArrayList<DungeonEvent> events = new ArrayList<DungeonEvent>();
 		boolean missed = this.misses(user, target, floor);
 
-		ArrayList<DungeonEvent> events = new ArrayList<DungeonEvent>();
-		if (this.power != -1) events.add(new DamageDealtEvent(target, missed ? 0 : this.damageDealt(user, target, floor)));
-		if (!missed && this.additionalEffectLands(user, target, floor)) events.addAll(this.additionalEffects(user, target, floor));
+		float effectiveness = this.type == null ? PokemonType.NORMALLY_EFFECTIVE : this.type.effectivenessOn(target.pokemon.species);
+		if (effectiveness == PokemonType.NO_EFFECT) events.add(new MessageEvent(new Message("move.effectiveness.none").addReplacement("<pokemon>",
+				target.pokemon.getNickname())));
+		else
+		{
+			if (this.power != -1)
+			{
+				if (effectiveness == PokemonType.SUPER_EFFECTIVE) events.add(new MessageEvent(new Message("move.effectiveness.super").addReplacement(
+						"<pokemon>", target.pokemon.getNickname())));
+				else if (effectiveness == PokemonType.NOT_VERY_EFFECTIVE) events.add(new MessageEvent(new Message("move.effectiveness.not_very")
+						.addReplacement("<pokemon>", target.pokemon.getNickname())));
+				events.add(new DamageDealtEvent(target, missed ? 0 : this.damageDealt(user, target, floor)));
+			}
+			if (!missed && this.additionalEffectLands(user, target, floor)) events.addAll(this.additionalEffects(user, target, floor));
+		}
 
 		return events.toArray(new DungeonEvent[events.size()]);
 	}

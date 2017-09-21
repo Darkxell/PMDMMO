@@ -25,8 +25,9 @@ public class StatusSpritesets extends AbstractTileset
 
 		BufferedImage[] sprites = new BufferedImage[SPRITE_COUNT];
 		for (int x = 0; x < SPRITE_COUNT; ++x)
-			sprites[x] = this.SPRITES[y * SPRITE_COUNT + (rising ? x : SPRITE_COUNT - x)];
+			sprites[x] = this.SPRITES[y * SPRITE_COUNT + (rising ? x : SPRITE_COUNT - 1 - x)];
 
 		return sprites;
 	}
+
 }

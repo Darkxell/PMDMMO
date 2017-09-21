@@ -2,7 +2,6 @@ package com.darkxell.client.state.dungeon;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.util.Random;
 
 import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.persistance.DungeonPersistance;
@@ -12,8 +11,6 @@ import com.darkxell.client.resources.images.AbstractDungeonTileset;
 import com.darkxell.client.resources.music.SoundsHolder;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.ui.Keys;
-import com.darkxell.common.player.Player;
-import com.darkxell.common.pokemon.PokemonRegistry;
 
 /** The main state for Dungeon exploration. */
 public class DungeonState extends AbstractState
@@ -48,7 +45,6 @@ public class DungeonState extends AbstractState
 	public DungeonState()
 	{
 		this.floorRenderer = new FloorRenderer(DungeonPersistance.floor);
-		DungeonPersistance.player = new Player(0, PokemonRegistry.find((int) (Math.random() * 386)).generate(new Random(), 1));
 		Point p = DungeonPersistance.floor.getTeamSpawn();
 		DungeonPersistance.floor.tileAt(p.x, p.y).setPokemon(DungeonPersistance.player.getDungeonPokemon());
 

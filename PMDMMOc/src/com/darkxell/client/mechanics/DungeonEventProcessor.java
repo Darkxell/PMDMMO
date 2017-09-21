@@ -24,8 +24,8 @@ public final class DungeonEventProcessor
 	/** Adds the input event(s) to the pending stack, without processing them. */
 	public static void addToPending(DungeonEvent... events)
 	{
-		for (DungeonEvent e : events)
-			pending.add(e);
+		for (int i = events.length - 1; i >= 0; --i)
+			pending.add(events[i]);
 	}
 
 	private static void processDungeonExitEvent(DungeonExitEvent event)
@@ -37,18 +37,23 @@ public final class DungeonEventProcessor
 	public static void processEvent(DungeonEvent event)
 	{
 		processPending = true;
-		addToPending(event.processServer());
-		DungeonPersistance.dungeonState.logger.showMessages(event.getMessages());
 
-		if (event instanceof MoveSelectionEvent) MoveEventProcessor.processMoveEvent((MoveSelectionEvent) event);
-		if (event instanceof MoveUseEvent) MoveEventProcessor.processMoveUseEvent((MoveUseEvent) event);
-		if (event instanceof DamageDealtEvent) MoveEventProcessor.processDamageEvent((DamageDealtEvent) event);
-		if (event instanceof StatChangedEvent) MoveEventProcessor.processStatEvent((StatChangedEvent) event);
-		if (event instanceof FaintedPokemonEvent) MoveEventProcessor.processFaintedEvent((FaintedPokemonEvent) event);
+		if (event.isValid())
+		{
+			addToPending(event.processServer());
 
-		if (event instanceof ItemUseSelectionEvent) processItemEvent((ItemUseSelectionEvent) event);
+			if (event instanceof MoveSelectionEvent) MoveEventProcessor.processMoveEvent((MoveSelectionEvent) event);
+			if (event instanceof MoveUseEvent) MoveEventProcessor.processMoveUseEvent((MoveUseEvent) event);
+			if (event instanceof DamageDealtEvent) MoveEventProcessor.processDamageEvent((DamageDealtEvent) event);
+			if (event instanceof StatChangedEvent) MoveEventProcessor.processStatEvent((StatChangedEvent) event);
+			if (event instanceof FaintedPokemonEvent) MoveEventProcessor.processFaintedEvent((FaintedPokemonEvent) event);
 
-		if (event instanceof DungeonExitEvent) processDungeonExitEvent((DungeonExitEvent) event);
+			if (event instanceof ItemUseSelectionEvent) processItemEvent((ItemUseSelectionEvent) event);
+
+			if (event instanceof DungeonExitEvent) processDungeonExitEvent((DungeonExitEvent) event);
+
+			DungeonPersistance.dungeonState.logger.showMessages(event.getMessages());
+		}
 
 		if (processPending) processPending();
 	}
