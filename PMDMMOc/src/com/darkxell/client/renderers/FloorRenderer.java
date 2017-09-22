@@ -14,7 +14,6 @@ import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.pokemon.DungeonPokemon;
-import com.darkxell.common.util.Logger;
 
 public class FloorRenderer {
 	private static final int ITEM_POS = (AbstractDungeonTileset.TILE_SIZE - ItemsSpriteset.ITEM_SIZE) / 2;
@@ -31,8 +30,8 @@ public class FloorRenderer {
 	public void drawEntities(Graphics2D g, int xPos, int yPos, int width, int height) {
 		int xStart = xPos / TILE_SIZE, yStart = yPos / TILE_SIZE;
 
-		for (int x = xStart; x < this.floor.getWidth() && x <= xStart + width / TILE_SIZE + 1; ++x)
-			for (int y = yStart; y < this.floor.getHeight() && y <= yStart + height / TILE_SIZE + 1; ++y) {
+		for (int x = xStart; x <= xStart + width / TILE_SIZE + 1; ++x)
+			for (int y = yStart; y <= yStart + height / TILE_SIZE + 1; ++y) {
 				Tile tile = this.floor.tileAt(x, y);
 				if (tile != null) {
 					if (tile.getItem() != null && tile.type() == TileType.GROUND)
@@ -55,8 +54,8 @@ public class FloorRenderer {
 	public void drawFloor(Graphics2D g, int xPos, int yPos, int width, int height) {
 		int xStart = xPos / TILE_SIZE, yStart = yPos / TILE_SIZE;
 
-		for (int x = xStart; x < this.floor.getWidth() && x <= xStart + width / TILE_SIZE + 1; ++x)
-			for (int y = yStart; y < this.floor.getHeight() && y <= yStart + height / TILE_SIZE + 1; ++y)
+		for (int x = xStart; x <= xStart + width / TILE_SIZE + 1; ++x)
+			for (int y = yStart; y <= yStart + height / TILE_SIZE + 1; ++y)
 				this.drawTile(g, this.floor.tileAt(x, y));
 	}
 

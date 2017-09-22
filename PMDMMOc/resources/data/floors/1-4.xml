@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <floor>
   <rooms />
-  <tiles>MMMMMMMMMMM;M  W S W  M;M         M;M         M;M         M;M         M;MMM     MMM;MMM     MMM;MMM     MMM;MMM     MMM;MMM     MMM;MMMMMMMMMMM;MMM     MMM;MMM     MMM</tiles>
+  <tiles>MMMMMMMMMMMMMMMMMMM;MMMMMMMMMMMMMMMMMMM;MMMMMMMMMMMMMMMMMMM;MMMMMMMMMMMMMMMMMMM;MMMMMMMMMMMMMMMMMMM;MMMMM  W S W  MMMMM;MMMMM         MMMMM;MMMMM         MMMMM;MMMMM         MMMMM;MMMMM         MMMMM;MMMMMMM     MMMMMMM;MMMMMMM     MMMMMMM;MMMMMMM     MMMMMMM;MMMMMMM     MMMMMMM;MMMMMMM     MMMMMMM;MMMMMMMMMMMMMMMMMMM;MMMMMMMMMMMMMMMMMMM;MMMMMMMMMMMMMMMMMMM;MMMMMMMMMMMMMMMMMMM;MMMMMMMMMMMMMMMMMMM</tiles>
   <items>
-    <item id="0" x="1" y="2" quantity="5" />
-    <item id="2" x="2" y="2" />
-    <item id="7" x="3" y="2" />
-    <item id="13" x="4" y="2" />
-    <item id="24" x="5" y="2" />
-    <item id="45" x="6" y="2" />
-    <item id="59" x="7" y="2" />
-    <item id="114" x="8" y="2" />
-    <item id="152" x="9" y="2" />
-    <item id="150" x="4" y="3" />
-    <item id="135" x="5" y="3" />
-    <item id="210" x="6" y="3" />
+    <item id="0" x="5" y="6" quantity="5" />
+    <item id="2" x="6" y="6" />
+    <item id="7" x="7" y="6" />
+    <item id="13" x="8" y="6" />
+    <item id="24" x="9" y="6" />
+    <item id="45" x="10" y="6" />
+    <item id="59" x="11" y="6" />
+    <item id="114" x="12" y="6" />
+    <item id="152" x="13" y="6" />
+    <item id="150" x="8" y="7" />
+    <item id="135" x="9" y="7" />
+    <item id="210" x="10" y="7" />
   </items>
   <pokemons>
-    <pokemon id="16" x="3" y="4" level="1" />
-    <pokemon id="69" x="4" y="4" level="1" />
-    <pokemon id="102" x="5" y="4" level="5" />
-    <pokemon id="191" x="6" y="4" level="1" />
-    <pokemon id="265" x="7" y="4" level="1" />
+    <pokemon id="16" x="7" y="8" level="1" />
+    <pokemon id="69" x="8" y="8" level="1" />
+    <pokemon id="102" x="9" y="8" level="5" />
+    <pokemon id="191" x="10" y="8" level="1" />
+    <pokemon id="265" x="11" y="8" level="1" />
   </pokemons>
-  <spawn x="5" y="10" />
+  <spawn x="9" y="10" />
 </floor>
