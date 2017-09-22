@@ -58,15 +58,15 @@ public class FreezonePlayer {
 
 	public void update() {
 		this.playersprite.update();
-
-		if (ismovingUP && canBeAt(this.x, this.y - MOVESPEED))
-			this.y -= MOVESPEED;
-		if (ismovingRIGHT && canBeAt(this.x + MOVESPEED, this.y))
-			this.x += MOVESPEED;
-		if (ismovingDOWN && canBeAt(this.x, this.y + MOVESPEED))
-			this.y += MOVESPEED;
-		if (ismovingLEFT && canBeAt(this.x - MOVESPEED, this.y))
-			this.x -= MOVESPEED;
+		double truemovespeed = isSprinting ? MOVESPEED * 2 : MOVESPEED;
+		if (ismovingUP && canBeAt(this.x, this.y - truemovespeed))
+			this.y -= truemovespeed;
+		if (ismovingRIGHT && canBeAt(this.x + truemovespeed, this.y))
+			this.x += truemovespeed;
+		if (ismovingDOWN && canBeAt(this.x, this.y + truemovespeed))
+			this.y += truemovespeed;
+		if (ismovingLEFT && canBeAt(this.x - truemovespeed, this.y))
+			this.x -= truemovespeed;
 	}
 
 	public void pressKey(short key) {
@@ -98,6 +98,9 @@ public class FreezonePlayer {
 		case Keys.KEY_ATTACK:
 			if (canInteract())
 				getInteractionTarget().onInteract();
+			break;
+		case Keys.KEY_RUN:
+			this.isSprinting = true;
 			break;
 		}
 	}
@@ -132,6 +135,9 @@ public class FreezonePlayer {
 			else
 				playersprite.setFacingDirection(getFacingFromMoveDirections());
 			break;
+		case Keys.KEY_RUN:
+			this.isSprinting = false;
+			break;
 		}
 	}
 
@@ -139,20 +145,25 @@ public class FreezonePlayer {
 		playersprite.setState(state);
 	}
 
-	/** Force the player from stopping it's movement. */
+	/**
+	 * Force the player from stopping it's movement. This will also prevent the
+	 * polayer from sprinting util he presses the sprint key again.
+	 */
 	public void forceStop() {
 		ismovingUP = false;
 		ismovingRIGHT = false;
 		ismovingDOWN = false;
 		ismovingLEFT = false;
+		isSprinting = false;
 		playersprite.setState(PokemonSprite.STATE_IDDLE);
 	}
 
-	public static final double MOVESPEED = 0.19;
+	public static final double MOVESPEED = 0.2;
 	private boolean ismovingUP = false;
 	private boolean ismovingRIGHT = false;
 	private boolean ismovingDOWN = false;
 	private boolean ismovingLEFT = false;
+	private boolean isSprinting = false;
 
 	private byte getFacingFromMoveDirections() {
 		if (ismovingUP)
