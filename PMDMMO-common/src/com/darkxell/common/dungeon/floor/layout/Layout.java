@@ -19,7 +19,7 @@ public abstract class Layout {
 		case 1:
 			return new SingleRoomLayout();
 		case 2:
-			return new GridRoomsLayout(id, 3, 2, 5, 5, 20, 20);
+			return new GridRoomsLayout(id, 5, 4, 5, 5, 10, 10);
 		default:
 			return null;
 		}

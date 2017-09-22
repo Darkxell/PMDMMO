@@ -5,7 +5,6 @@ import java.awt.Point;
 import com.darkxell.common.dungeon.floor.Room;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
-import com.darkxell.common.util.Logger;
 
 /** A Layout with random rooms in a grid-like pattern. */
 public class GridRoomsLayout extends Layout {
@@ -74,6 +73,42 @@ public class GridRoomsLayout extends Layout {
 
 	@Override
 	protected void generatePaths() {
+		for (int x = 0; x < roomcenters.length; ++x)
+			for (int y = 0; y < roomcenters[0].length; ++y) {
+				Room r1 = this.floor.roomAt(roomcenters[x][y].x, roomcenters[x][y].y);
+				if (x != roomcenters.length - 1) {
+					int startx1 = r1.x + r1.width;
+					int starty1 = this.random.nextInt(r1.height) + r1.y;
+					Room r2 = this.floor.roomAt(roomcenters[x + 1][y].x, roomcenters[x + 1][y].y);
+					int endx1 = r2.x;
+					int endy1 = this.random.nextInt(r2.height) + r2.y;
+					for (int i = startx1; i < endx1; ++i)
+						this.floor.tiles[i][i - startx1 > (endx1 - startx1) / 2 ? endy1 : starty1]
+								.setType(TileType.GROUND);
+					if (starty1 > endy1)
+						for (int i = endy1; i <= starty1; ++i)
+							this.floor.tiles[startx1 + (endx1 - startx1) / 2][i].setType(TileType.GROUND);
+					else if (starty1 < endy1)
+						for (int i = starty1; i <= endy1; ++i)
+							this.floor.tiles[startx1 + (endx1 - startx1) / 2][i].setType(TileType.GROUND);
+				}
+				if (y != roomcenters[0].length - 1) {
+					int startx1 = this.random.nextInt(r1.width) + r1.x;
+					int starty1 = r1.y + r1.height;
+					Room r2 = this.floor.roomAt(roomcenters[x][y + 1].x, roomcenters[x][y + 1].y);
+					int endx1 = this.random.nextInt(r2.width) + r2.x;
+					int endy1 = r2.y;
+					for (int i = starty1; i < endy1; ++i)
+						this.floor.tiles[i - starty1 > (endy1 - starty1) / 2 ? endx1 : startx1][i]
+								.setType(TileType.GROUND);
+					if (startx1 > endx1)
+						for (int i = endx1; i <= startx1; ++i)
+							this.floor.tiles[i][starty1 + (endy1 - starty1) / 2].setType(TileType.GROUND);
+					else if (startx1 < endx1)
+						for (int i = startx1; i <= endx1; ++i)
+							this.floor.tiles[i][starty1 + (endy1 - starty1) / 2].setType(TileType.GROUND);
+				}
+			}
 	}
 
 	@Override
