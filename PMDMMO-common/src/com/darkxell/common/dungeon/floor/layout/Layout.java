@@ -4,7 +4,6 @@ import java.util.Random;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Room;
-import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.util.Logger;
 
@@ -19,7 +18,7 @@ public abstract class Layout {
 		case 1:
 			return new SingleRoomLayout();
 		case 2:
-			return new GridRoomsLayout(id, 5, 4, 5, 5, 10, 10);
+			return new GridRoomsLayout(id, 2, 2, 5, 5, 14, 14);
 		default:
 			return null;
 		}
@@ -51,7 +50,6 @@ public abstract class Layout {
 		this.summonPokemon();
 
 		this.placeTeam();
-		Logger.i("New Layout generated for floor :" + this.floor.toString());
 	}
 
 	/** Creates the rooms. */
