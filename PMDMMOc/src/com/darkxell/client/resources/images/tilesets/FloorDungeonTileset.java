@@ -73,7 +73,7 @@ public class FloorDungeonTileset extends AbstractDungeonTileset
 		tileLocations.put(NORTH + EAST + SOUTH + WEST + NORTHWEST + NORTHEAST, new Point(1, 12));
 		tileLocations.put(NORTH + EAST + SOUTH + WEST + SOUTHWEST + SOUTHEAST, new Point(1, 14));
 		tileLocations.put(NORTH + EAST + SOUTH + WEST + NORTHWEST + SOUTHWEST, new Point(0, 13));
-		tileLocations.put(NORTH + EAST + SOUTH + WEST + NORTHEAST + SOUTHEAST, new Point(1, 13));
+		tileLocations.put(NORTH + EAST + SOUTH + WEST + NORTHEAST + SOUTHEAST, new Point(2, 13));
 		tileLocations.put(NORTH + EAST + SOUTH + WEST + SOUTHWEST + NORTHEAST, new Point(0, 24));
 		tileLocations.put(NORTH + EAST + SOUTH + WEST + SOUTHEAST + NORTHWEST, new Point(1, 24));
 
