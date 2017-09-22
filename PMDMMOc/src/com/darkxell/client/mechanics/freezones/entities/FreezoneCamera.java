@@ -27,6 +27,10 @@ public class FreezoneCamera {
 	 */
 	public FreezoneCamera(FreezonePlayer tofollow) {
 		this.target = tofollow;
+		if (tofollow != null) {
+			this.x = tofollow.x;
+			this.y = tofollow.y;
+		}
 	}
 
 	public void update() {

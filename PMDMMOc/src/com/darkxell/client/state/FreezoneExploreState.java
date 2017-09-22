@@ -149,7 +149,6 @@ public class FreezoneExploreState extends AbstractState {
 		// Updates the freezoneBackground if needeed
 		if (FreezoneMapHolder.currentmap instanceof OfficeFreezone)
 			((OfficeFreezone) FreezoneMapHolder.currentmap).background.update();
-		;
 		// CREATES AND UPDATES THE MAP
 		if (FreezoneMapHolder.currentmap == null)
 			FreezoneMapHolder.currentmap = new BaseFreezone();
@@ -167,8 +166,8 @@ public class FreezoneExploreState extends AbstractState {
 					.getHitboxAt(FreezoneMapHolder.currentplayer.x, FreezoneMapHolder.currentplayer.y))) {
 				WarpZone wz = FreezoneMapHolder.currentmap.warpzones.get(i);
 				FreezoneMapHolder.currentmap = wz.getDestination();
-				FreezoneMapHolder.currentplayer.x = wz.toX;
-				FreezoneMapHolder.currentplayer.y = wz.toY;
+				FreezoneMapHolder.playerCamera.x = FreezoneMapHolder.currentplayer.x = wz.toX;
+				FreezoneMapHolder.playerCamera.y = FreezoneMapHolder.currentplayer.y = wz.toY;
 				musicset = false;
 				break;
 			}
