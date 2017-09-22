@@ -25,7 +25,7 @@ public class SignSoulEntity extends FreezoneEntity {
 	@Override
 	public void onInteract() {
 		ArrayList<DialogScreen> screens = new ArrayList<DialogState.DialogScreen>();
-		screens.add(new DialogScreen(null, this.mess));
+		screens.add(new DialogScreen(null, this.mess).setInstant().setCentered());
 		Launcher.stateManager.setState(new DialogState(Launcher.stateManager.getCurrentState(), screens));
 	}
 

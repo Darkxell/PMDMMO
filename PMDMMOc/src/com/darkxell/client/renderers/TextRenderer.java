@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import com.darkxell.client.resources.Res;
 import com.darkxell.common.util.Message;
@@ -103,32 +104,36 @@ public class TextRenderer {
 		tilde("~", 86, 6),
 		sharp("#", 87, 9),
 		music("<music>", 88, 8),
-		tick("<tick>", 89, 9),
-		star("<star>", 90, 7),
-		glued("<glued>", 91, 8),
-		mission("<mission>", 92, 8),
-		mission_accepted("<mission-a>", 93, 10),
-		news("<news>", 94, 10),
-		story("<story>", 95, 9),
-		speech_bubble("<speech>", 96, 9),
-		key_A("<key-a>", 97, 10),
-		key_B("<key-b>", 98, 10),
-		key_L("<key-l>", 99, 10),
-		key_R("<key-r>", 100, 10),
-		key_PLUS("<key-+>", 101, 10),
-		key_SELECT1("<select1>", 102, 10),
-		key_SELECT2("<select2>", 103, 10),
-		buy_1("<1>", 104, 6),
-		buy_2("<2>", 105, 6),
-		buy_3("<3>", 106, 6),
-		buy_4("<4>", 107, 6),
-		buy_5("<5>", 108, 6),
-		buy_6("<6>", 109, 6),
-		buy_7("<7>", 110, 6),
-		buy_8("<8>", 111, 6),
-		buy_9("<9>", 112, 6),
-		buy_0("<0>", 113, 6),
-		orb("<orb>", 114, 10),
+		arrow_up("<arrow-up>", 89, 8),
+		arrow_right("<arrow-right>", 90, 8),
+		arrow_down("<arrow-down>", 91, 8),
+		arrow_left("<arrow-left>", 92, 8),
+		tick("<tick>", 94, 9),
+		star("<star>", 95, 7),
+		glued("<glued>", 96, 8),
+		mission("<mission>", 97, 8),
+		mission_accepted("<mission-a>", 98, 10),
+		news("<news>", 99, 10),
+		story("<story>", 100, 9),
+		speech_bubble("<speech>", 101, 9),
+		key_A("<key-a>", 102, 10),
+		key_B("<key-b>", 103, 10),
+		key_L("<key-l>", 104, 10),
+		key_R("<key-r>", 105, 10),
+		key_PLUS("<key-+>", 106, 10),
+		key_SELECT1("<select1>", 107, 10),
+		key_SELECT2("<select2>", 108, 10),
+		buy_1("<1>", 109, 6),
+		buy_2("<2>", 110, 6),
+		buy_3("<3>", 111, 6),
+		buy_4("<4>", 112, 6),
+		buy_5("<5>", 113, 6),
+		buy_6("<6>", 114, 6),
+		buy_7("<7>", 115, 6),
+		buy_8("<8>", 116, 6),
+		buy_9("<9>", 117, 6),
+		buy_0("<0>", 118, 6),
+		orb("<orb>", 119, 10),
 		tm_used("<tmu>", 120, 10),
 		hm("<hm>", 121, 10),
 		tm_0("<tm0>", 122, 10),
@@ -292,8 +297,13 @@ public class TextRenderer {
 			if (this.dungeonChars.containsKey(c)) toprint.add(this.dungeonChars.get(c));
 			else toprint.add(c);
 		else toprint.addAll(chars);
+		this.render(g, toprint, x, y, dungeonHUD);
+	}
+
+	/** Renders the input text at the topright x, y coordinates. */
+	public void render(Graphics2D g, List<PMDChar> text, int x, int y, boolean dungeonHUD) {
 		int w = 0;
-		for (PMDChar c : toprint) {
+		for (PMDChar c : text) {
 			g.drawImage(this.sprites.get(c), x + w, y, null);
 			if (c == PMDChar.tabulation)
 				w += this.tabWidth(w);
@@ -302,10 +312,7 @@ public class TextRenderer {
 		}
 	}
 
-	/**
-	 * Transforms a String into a printable array of strings printable to the
-	 * screen.
-	 */
+	/** Transforms a String into an array of strings printable to the screen. */
 	public ArrayList<String> splitLines(String text, int boxwidth) {
 		ArrayList<String> textlines = new ArrayList<>();
 		if (text == null)
@@ -350,13 +357,14 @@ public class TextRenderer {
 	public int width(String text) {
 		if (text == null)
 			return 0;
-		ArrayList<PMDChar> chars = this.decode(text);
+		return this.width(this.decode(text));
+	}
+
+	public int width(List<PMDChar> chars) {
 		int w = 0;
 		for (PMDChar c : chars)
-			if (c == PMDChar.tabulation)
-				w += this.tabWidth(w);
-			else
-				w += c.width;
+			if (c == PMDChar.tabulation) w += this.tabWidth(w);
+			else w += c.width;
 		return w;
 	}
 

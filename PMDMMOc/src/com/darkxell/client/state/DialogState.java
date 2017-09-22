@@ -9,6 +9,7 @@ import java.util.List;
 
 import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.renderers.TextRenderer;
+import com.darkxell.client.renderers.TextRenderer.PMDChar;
 import com.darkxell.client.resources.images.Hud;
 import com.darkxell.client.resources.images.MenuHudSpriteset;
 import com.darkxell.client.resources.images.PokemonPortrait;
@@ -29,6 +30,10 @@ public class DialogState extends AbstractState
 	{
 		/** The emotion of the Pokémon. Unused for now. */
 		public final short emotion;
+		/** True if this DialogScreen prints text centered horizontally. */
+		public boolean isCentered;
+		/** True if this DialogScreen prints instantaneously. */
+		public boolean isInstant;
 		/** The Message to show in this Screen. */
 		public final Message message;
 		/** The Pokémon talking. null if not a Pokémon. */
@@ -49,8 +54,21 @@ public class DialogState extends AbstractState
 			this.emotion = emotion;
 			this.pokemon = pokemon;
 			this.message = message;
+			this.isInstant = false;
 
 			if (this.pokemon != null) this.message.addPrefix(new Message(": ", false)).addPrefix(this.pokemon.getNickname());
+		}
+
+		public DialogScreen setCentered()
+		{
+			this.isCentered = true;
+			return this;
+		}
+
+		public DialogScreen setInstant()
+		{
+			this.isInstant = true;
+			return this;
 		}
 	}
 
@@ -69,7 +87,7 @@ public class DialogState extends AbstractState
 	/** True if this Dialog's window is opaque. */
 	public boolean isOpaque;
 	/** The split lines of the current messages. */
-	private ArrayList<String> lines;
+	private ArrayList<ArrayList<PMDChar>> lines;
 	/** The listener called when this Dialog ends. If null, the Background State is used instead. */
 	private final DialogEndListener listener;
 	/** Text offset. */
@@ -88,7 +106,7 @@ public class DialogState extends AbstractState
 		this.backgroundState = backgroundState;
 		this.listener = listener;
 		this.isOpaque = isOpaque;
-		this.lines = new ArrayList<String>();
+		this.lines = new ArrayList<ArrayList<PMDChar>>();
 		this.currentScreen = this.arrowtick = this.cursor = this.offset = this.targetOffset = 0;
 		this.currentLine = 2;
 		this.state = PRINTING;
@@ -110,13 +128,18 @@ public class DialogState extends AbstractState
 		if (this.lines.isEmpty()) return 0;
 		int length = 0;
 		for (int line = 0; line <= this.currentLine && line < this.lines.size(); ++line)
-			length += this.lines.get(line).length();
+			length += this.lines.get(line).size();
 		return length;
 	}
 
 	public Message currentMessage()
 	{
-		return this.screens.get(this.currentScreen).message;
+		return this.currentScreen().message;
+	}
+
+	private DialogScreen currentScreen()
+	{
+		return this.screens.get(this.currentScreen);
 	}
 
 	private void nextLine()
@@ -165,7 +188,12 @@ public class DialogState extends AbstractState
 		int marginx = box.width / 20, marginy = box.height / 5;
 		Rectangle inside = new Rectangle(box.x + marginx, box.y + marginy, box.width - marginx * 2, box.height - marginy * 2);
 
-		if (this.lines.isEmpty()) this.lines.addAll(TextRenderer.instance.splitLines(this.currentMessage().toString(), inside.width));
+		if (this.lines.isEmpty())
+		{
+			ArrayList<String> l = TextRenderer.instance.splitLines(this.currentMessage().toString(), inside.width);
+			for (String line : l)
+				this.lines.add(TextRenderer.instance.decode(line));
+		}
 
 		g.drawImage(this.isOpaque ? Hud.textwindow : Hud.textwindow_transparent, box.x, box.y, box.width, box.height, null);
 		Shape c = g.getClip();
@@ -173,9 +201,12 @@ public class DialogState extends AbstractState
 		int length = 0;
 		for (int i = 0; i < this.lines.size() && length < this.cursor; ++i)
 		{
-			int count = Math.min(this.cursor - length, this.lines.get(i).length());
-			TextRenderer.instance.render(g, this.lines.get(i).substring(0, count), inside.x, inside.y - this.offset + i
-					* (TextRenderer.CHAR_HEIGHT + TextRenderer.LINE_SPACING));
+			int count = Math.min(this.cursor - length, this.lines.get(i).size());
+			List<PMDChar> line = this.lines.get(i).subList(0, count);
+			int x = inside.x;
+			if (this.currentScreen().isCentered) x += inside.getWidth() / 2 - TextRenderer.instance.width(line) / 2;
+
+			TextRenderer.instance.render(g, line, x, inside.y - this.offset + i * (TextRenderer.CHAR_HEIGHT + TextRenderer.LINE_SPACING), false);
 			length += count;
 		}
 		g.setClip(c);
@@ -183,11 +214,12 @@ public class DialogState extends AbstractState
 		if (this.state == PAUSED && this.arrowtick > 9) g.drawImage(arrow, box.x + box.width / 2 - arrow.getWidth() / 2,
 				(int) (box.getMaxY() - arrow.getHeight() * 3 / 4), null);
 
-		if (this.currentScreen < this.screens.size() && this.screens.get(this.currentScreen).pokemon != null)
+		if (this.currentScreen < this.screens.size() && this.currentScreen().pokemon != null)
 		{
 			int x = (int) (box.getMaxX() - Hud.portrait.getWidth());
 			int y = (int) (box.y - Hud.portrait.getHeight() - 5);
-			g.drawImage(PokemonPortrait.portrait(this.screens.get(this.currentScreen).pokemon), x + 4, y + 4, null);
+
+			g.drawImage(PokemonPortrait.portrait(this.currentScreen().pokemon), x + 4, y + 4, null);
 			g.drawImage(Hud.portrait, x, y, null);
 		}
 	}
@@ -206,9 +238,8 @@ public class DialogState extends AbstractState
 	private boolean switchAnimation()
 	{
 		if (this.currentScreen >= this.screens.size() - 1) return false;
-		return this.screens.get(this.currentScreen).emotion != this.screens.get(this.currentScreen + 1).emotion
-				|| (this.screens.get(this.currentScreen).pokemon != null && this.screens.get(this.currentScreen).pokemon.equals(this.screens
-						.get(this.currentScreen + 1).pokemon));
+		return this.currentScreen().emotion != this.screens.get(this.currentScreen + 1).emotion
+				|| (this.currentScreen().pokemon != null && this.currentScreen().pokemon.equals(this.screens.get(this.currentScreen + 1).pokemon));
 	}
 
 	@Override
@@ -216,7 +247,8 @@ public class DialogState extends AbstractState
 	{
 		if (this.state == PRINTING && !this.lines.isEmpty())
 		{
-			++this.cursor;
+			if (this.currentScreen().isInstant) this.cursor = this.currentLength();
+			else ++this.cursor;
 			if (this.cursor >= this.currentLength()) this.state = PAUSED;
 			if (this.state == PAUSED && Keys.isPressed(Keys.KEY_RUN)) this.requestNextLine();
 		} else if (this.state == SWITCHING)
