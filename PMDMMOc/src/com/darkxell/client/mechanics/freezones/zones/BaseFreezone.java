@@ -25,7 +25,7 @@ public class BaseFreezone extends FreezoneMap {
 			@Override
 			public FreezoneMap getDestination() {
 				DungeonPersistance.dungeon = DungeonRegistry.find(1).newInstance();
-				DungeonPersistance.floor = DungeonPersistance.dungeon.createFloor(4);
+				DungeonPersistance.floor = DungeonPersistance.dungeon.createFloor(1);
 				DungeonPersistance.floor.generate();
 				Launcher.stateManager.setState(DungeonPersistance.dungeonState = new DungeonState());
 				return new BaseFreezone();

@@ -44,7 +44,7 @@
     <items-buried />
     <traps />
     <layouts>
-      <layout id="1">
+      <layout id="2">
         <floors>
           <part start="1" end="3" />
         </floors>
