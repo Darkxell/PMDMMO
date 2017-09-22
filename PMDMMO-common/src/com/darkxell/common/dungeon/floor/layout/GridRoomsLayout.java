@@ -40,10 +40,10 @@ public class GridRoomsLayout extends Layout {
 	protected void generateRooms() {
 		int gridCellWidth = this.maxRoomWidth + OFFSET;
 		int gridCellHeight = this.maxRoomHeight + OFFSET;
-		this.tiles = new Tile[gridCellWidth * this.gridwidth][gridCellHeight * this.gridheight];
-		for (int x = 0; x < this.gridwidth; x++)
-			for (int y = 0; y < this.gridheight; y++)
-				this.tiles[x][y] = new Tile(this.floor, x, y, TileType.WALL);
+		this.floor.tiles = new Tile[gridCellWidth * this.gridwidth][gridCellHeight * this.gridheight];
+		for (int x = 0; x < this.floor.tiles.length; x++)
+			for (int y = 0; y < this.floor.tiles[0].length; y++)
+				this.floor.tiles[x][y] = new Tile(this.floor, x, y, TileType.WALL);
 		// Sets the centers.
 		for (int x = 0; x < this.gridwidth; x++)
 			for (int y = 0; y < this.gridheight; y++)
@@ -64,6 +64,11 @@ public class GridRoomsLayout extends Layout {
 				this.floor.rooms[x + (y * this.gridwidth)] = new Room(this.floor, roomX, roomY, roomWidth, roomHeight,
 						false);
 			}
+
+		for (int i = 0; i < this.floor.rooms.length; ++i)
+			for (int x = this.floor.rooms[i].x; x < this.floor.rooms[i].width + this.floor.rooms[i].x; ++x)
+				for (int y = this.floor.rooms[i].y; y < this.floor.rooms[i].height + this.floor.rooms[i].y; ++y)
+					this.floor.tiles[x][y].setType(TileType.GROUND);
 		// TODO : remove rooms randomely
 	}
 

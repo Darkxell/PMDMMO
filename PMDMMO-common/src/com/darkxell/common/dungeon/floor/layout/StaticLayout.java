@@ -37,26 +37,24 @@ public class StaticLayout extends Layout {
 
 	@Override
 	protected void generateRooms() {
+		//ROOMS
 		List<Element> rooms = this.xml.getChild("rooms").getChildren("room");
 		this.floor.rooms = new Room[rooms.size()];
 		for (int i = 0; i < this.floor.rooms.length; ++i)
 			this.floor.rooms[i] = new Room(this.floor, rooms.get(i));
-	}
-
-	@Override
-	protected void generateRoomTiles() {
+		//TILES
 		String[] data = xml.getChildText("tiles").split(";");
-		this.tiles = new Tile[data[0].length()][data.length];
+		this.floor.tiles = new Tile[data[0].length()][data.length];
 		for (int y = 0; y < data.length; y++)
 			for (int x = 0; x < data[y].length(); x++)
-				this.tiles[x][y] = new Tile(this.floor, x, y, TileType.find(data[y].charAt(x)));
+				this.floor.tiles[x][y] = new Tile(this.floor, x, y, TileType.find(data[y].charAt(x)));
 	}
 
 	@Override
 	protected void placeItems() {
 		for (Element item : this.xml.getChild("items").getChildren(Item.XML_ROOT))
-			this.tiles[Integer.parseInt(item.getAttributeValue("x"))][Integer.parseInt(item.getAttributeValue("y"))]
-					.setItem(new ItemStack(item));
+			this.floor.tiles[Integer.parseInt(item.getAttributeValue("x"))][Integer
+					.parseInt(item.getAttributeValue("y"))].setItem(new ItemStack(item));
 	}
 
 	@Override
@@ -82,7 +80,7 @@ public class StaticLayout extends Layout {
 	protected void summonPokemon() {
 		if (this.xml.getChild("pokemons") != null)
 			for (Element pokemon : this.xml.getChild("pokemons").getChildren(Pokemon.XML_ROOT))
-				this.tiles[Integer.parseInt(pokemon.getAttributeValue("x"))][Integer
+				this.floor.tiles[Integer.parseInt(pokemon.getAttributeValue("x"))][Integer
 						.parseInt(pokemon.getAttributeValue("y"))].setPokemon(new DungeonPokemon(new Pokemon(pokemon)));
 	}
 

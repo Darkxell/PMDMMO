@@ -48,8 +48,8 @@ public class Room
 	public ArrayList<Tile> listTiles()
 	{
 		ArrayList<Tile> tiles = new ArrayList<Tile>();
-		for (int y = this.y; y <= this.y + this.height - 1; ++y)
-			for (int x = this.x; x <= this.x + this.width - 1; ++x)
+		for (int y = this.y; y < this.y + this.height; ++y)
+			for (int x = this.x; x < this.x + this.width; ++x)
 				tiles.add(this.floor.tileAt(x, y));
 		return tiles;
 	}

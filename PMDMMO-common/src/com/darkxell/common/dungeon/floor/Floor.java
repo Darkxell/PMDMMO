@@ -21,8 +21,13 @@ public class Floor {
 	public Room[] rooms;
 	/** The position at which the team will spawn. */
 	public Point teamSpawn;
-	/** This Floor's tiles. null before generating. */
-	private Tile[][] tiles;
+	/**
+	 * This Floor's tiles. null before generating. Note that this array must NOT
+	 * be modified. It is only public because the generation algorithm uses this
+	 * array to generate the floor.
+	 */
+	public Tile[][] tiles;
+	private boolean isGenerating = true;;
 
 	public Floor(int id, Layout layout, DungeonInstance dungeon, Random random) {
 		this.id = id;
@@ -34,6 +39,7 @@ public class Floor {
 	/** Generates this Floor. */
 	public void generate() {
 		this.layout.generate(this);
+		isGenerating = false;
 		for (Tile[] row : this.tiles)
 			for (Tile t : row)
 				t.updateNeighbors();
@@ -41,7 +47,7 @@ public class Floor {
 
 	/** @return True if this Floor is done generating. */
 	public boolean isGenerated() {
-		return this.rooms != null;
+		return !isGenerating ;
 	}
 
 	/** @return A random Room in this Floor. */

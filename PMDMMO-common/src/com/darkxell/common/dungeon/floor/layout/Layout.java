@@ -29,8 +29,6 @@ public abstract class Layout {
 	protected Floor floor;
 	/** RNG */
 	protected Random random;
-	/** Temporary storage for the floor's tiles. */
-	protected Tile[][] tiles;
 
 	/**
 	 * Generates a Floor.
@@ -43,7 +41,6 @@ public abstract class Layout {
 		this.floor = floor;
 		this.random = this.floor.dungeon.random;
 		this.generateRooms();
-		this.generateRoomTiles();
 		this.generatePaths();
 		this.generateLiquids();
 		this.placeStairs();
@@ -54,19 +51,11 @@ public abstract class Layout {
 		this.summonPokemon();
 
 		this.placeTeam();
-		this.floor.setTiles(this.tiles);
 		Logger.i("New Layout generated for floor :" + this.floor.toString());
 	}
 
 	/** Creates the rooms. */
 	protected abstract void generateRooms();
-
-	/** Creates default tiles from the Rooms. */
-	protected void generateRoomTiles() {
-		for (Room room : this.floor.rooms)
-			for (Tile tile : room.listTiles())
-				tile.setType(TileType.GROUND);
-	}
 
 	/** Creates paths between the rooms. */
 	protected abstract void generatePaths();
