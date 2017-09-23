@@ -6,6 +6,8 @@ import java.util.Stack;
 import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.persistance.DungeonPersistance;
 import com.darkxell.client.renderers.ItemRenderer;
+import com.darkxell.client.state.DialogState.DialogEndListener;
+import com.darkxell.client.state.DialogState;
 import com.darkxell.client.state.FreezoneExploreState;
 import com.darkxell.client.state.dungeon.AnimationState;
 import com.darkxell.common.event.DungeonEvent;
@@ -24,6 +26,15 @@ public final class DungeonEventProcessor
 {
 	/** Pending events to process. */
 	private static final Stack<DungeonEvent> pending = new Stack<DungeonEvent>();
+	public static final DialogEndListener processEventsOnDialogEnd = new DialogEndListener()
+	{
+		@Override
+		public void onDialogEnd(DialogState dialog)
+		{
+			if (pending.size() == 0) Launcher.stateManager.setState(DungeonPersistance.dungeonState);
+			else processPending();
+		}
+	};
 	/** While processing an event, setting this false will stop processing the pending events. */
 	static boolean processPending = true;
 

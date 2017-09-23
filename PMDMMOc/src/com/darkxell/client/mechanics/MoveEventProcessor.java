@@ -36,16 +36,16 @@ public final class MoveEventProcessor
 	public static void processExperienceEvent(ExperienceGainedEvent event)
 	{
 		int levels = event.levelsup();
-		if (levels != 0 && event.pokemon == DungeonPersistance.player.getDungeonPokemon())
+		if (levels != 0 && DungeonPersistance.player.isAlly(event.pokemon))
 		{
 			DungeonEventProcessor.processPending = false;
 
 			ArrayList<DialogScreen> screens = new ArrayList<DialogScreen>();
-			for (int level = event.pokemon.pokemon.getLevel() - levels + 1; level <= event.pokemon.pokemon.getLevel(); ++level)
+			for (int level = event.pokemon.getLevel() - levels + 1; level <= event.pokemon.getLevel(); ++level)
 			{
-				screens.add(new DialogScreen(new Message("xp.levelup").addReplacement("<pokemon>", event.pokemon.pokemon.getNickname()).addReplacement(
-						"<level>", Integer.toString(level))));
-				PokemonStats stats = event.pokemon.pokemon.species.baseStatsIncrease(level - 1);
+				screens.add(new DialogScreen(new Message("xp.levelup").addReplacement("<pokemon>", event.pokemon.getNickname()).addReplacement("<level>",
+						Integer.toString(level))));
+				PokemonStats stats = event.pokemon.species.baseStatsIncrease(level - 1);
 				screens.add(new DialogScreen(new Message("xp.stats").addReplacement("<atk>", TextRenderer.instance.alignNumber(stats.getAttack(), 2))
 						.addReplacement("<def>", TextRenderer.instance.alignNumber(stats.getDefense(), 2))
 						.addReplacement("<hea>", TextRenderer.instance.alignNumber(stats.getHealth(), 2))
@@ -53,7 +53,7 @@ public final class MoveEventProcessor
 						.addReplacement("<spd>", TextRenderer.instance.alignNumber(stats.getSpecialDefense(), 2))));
 			}
 
-			Launcher.stateManager.setState(new DialogState(DungeonPersistance.dungeonState, null, false, screens));
+			Launcher.stateManager.setState(new DialogState(DungeonPersistance.dungeonState, DungeonEventProcessor.processEventsOnDialogEnd, false, screens));
 		}
 	}
 

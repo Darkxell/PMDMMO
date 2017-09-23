@@ -9,6 +9,7 @@ import com.darkxell.client.state.dungeon.DungeonState;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.client.state.menu.dungeon.item.ItemContainersMenuState;
 import com.darkxell.common.player.ItemContainer;
+import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.Message;
 
 public class DungeonMenuState extends OptionSelectionMenuState
@@ -51,7 +52,8 @@ public class DungeonMenuState extends OptionSelectionMenuState
 			ArrayList<ItemContainer> containers = new ArrayList<ItemContainer>();
 			if (!DungeonPersistance.player.inventory.isEmpty()) containers.add(DungeonPersistance.player.inventory);
 			if (DungeonPersistance.player.getDungeonPokemon().tile.getItem() != null) containers.add(DungeonPersistance.player.getDungeonPokemon().tile);
-			if (DungeonPersistance.player.getPokemon().getItem() != null) containers.add(DungeonPersistance.player.getPokemon());
+			for (Pokemon pokemon : DungeonPersistance.player.getTeam())
+				if (pokemon.getItem() != null) containers.add(pokemon);
 			if (containers.isEmpty())
 			{
 				this.onExit();

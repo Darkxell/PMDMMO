@@ -148,21 +148,32 @@ public class Move
 		ArrayList<DungeonPokemon> targets = new ArrayList<DungeonPokemon>();
 		switch (this.targets)
 		{
-			case SELF:
 			case ALL_ALLIES:
+				Room r = floor.roomAt(user.tile.x, user.tile.y);
+				if (r == null) for (short d : GameUtil.directions())
+				{
+					Tile t = user.tile.adjacentTile(d);
+					if (t.getPokemon() != null && user.pokemon.isAlliedWith(t.getPokemon().pokemon)) targets.add(t.getPokemon());
+				}
+				else for (Tile t : r.listTiles())
+					if (t.getPokemon() != null && t.getPokemon() != user && user.pokemon.isAlliedWith(t.getPokemon().pokemon)) targets.add(t.getPokemon());
+			case SELF:
 				targets.add(user);
 				break;
 
 			case ALL_ENEMIES:
 			case ALL_ROOM:
-				Room r = floor.roomAt(user.tile.x, user.tile.y);
+				r = floor.roomAt(user.tile.x, user.tile.y);
 				if (r == null) for (short d : GameUtil.directions())
 				{
 					Tile t = user.tile.adjacentTile(d);
-					if (t.getPokemon() != null) targets.add(t.getPokemon());
+					if (t.getPokemon() != null && (this.targets == ALL_ROOM || !user.pokemon.isAlliedWith(t.getPokemon().pokemon))) targets.add(t.getPokemon());
 				}
 				else for (Tile t : r.listTiles())
-					if (t.getPokemon() != null && t.getPokemon() != user) targets.add(t.getPokemon());
+					if (t.getPokemon() != null && t.getPokemon() != user)
+					{
+						if (this.targets == ALL_ROOM || !user.pokemon.isAlliedWith(t.getPokemon().pokemon)) targets.add(t.getPokemon());
+					}
 				break;
 
 			default:

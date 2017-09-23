@@ -27,32 +27,40 @@ public class MovesMenuState extends AbstractMenuState
 
 		public final LearnedMove move;
 
-		public MoveMenuOption(LearnedMove move)
+		public MoveMenuOption(LearnedMove move, boolean isMain)
 		{
-			super(move == null ? new Message("", false) : move.move().name());
+			super(move == null ? new Message("", false) : move.move().name().addPrefix(isMain || !move.isEnabled ? "  " : "<star> "));
 			this.move = move;
 		}
 
 	}
 
-	private Pokemon pokemon;
+	private Pokemon[] pokemon;
 	private MoveSelectionWindow window;
 	private TextWindow windowInfo;
 
 	public MovesMenuState(DungeonState parent)
 	{
 		super(parent);
-		this.pokemon = DungeonPersistance.player.getPokemon();
+		this.pokemon = DungeonPersistance.player.getTeam();
 		this.createOptions();
 	}
 
 	@Override
 	protected void createOptions()
 	{
-		MenuTab player = new MenuTab(new Message("moves.title").addReplacement("<pokemon>", this.pokemon.getNickname()));
-		for (int i = 0; i < 4; ++i)
-			if (this.pokemon.move(i) != null) player.addOption(new MoveMenuOption(this.pokemon.move(i)));
-		this.tabs.add(player);
+		for (Pokemon pokemon : this.pokemon)
+		{
+			MenuTab moves = new MenuTab(new Message("moves.title").addReplacement("<pokemon>", pokemon.getNickname()));
+			for (int i = 0; i < 4; ++i)
+				if (pokemon.move(i) != null) moves.addOption(new MoveMenuOption(pokemon.move(i), pokemon == DungeonPersistance.player.getPokemon()));
+			this.tabs.add(moves);
+		}
+	}
+
+	private boolean isMainSelected()
+	{
+		return this.selectedPokemon() == DungeonPersistance.player.getPokemon();
 	}
 
 	@Override
@@ -78,10 +86,12 @@ public class MovesMenuState extends AbstractMenuState
 				if (key == Keys.KEY_LEFT || key == Keys.KEY_RIGHT)
 				{
 					if (this.selection >= this.currentTab().options().length) this.selection = this.currentTab().options().length - 1;
+					this.onTabChanged(this.currentTab());
 				} else if (key == Keys.KEY_UP || key == Keys.KEY_DOWN)
 				{
 					if (this.selection == -1) this.selection = this.currentTab().options().length - 1;
 					else if (this.selection == this.currentTab().options().length) this.selection = 0;
+					this.onOptionChanged(this.currentOption());
 				}
 			}
 			if (key == Keys.KEY_MENU || key == Keys.KEY_RUN) this.onExit();
@@ -90,12 +100,12 @@ public class MovesMenuState extends AbstractMenuState
 			boolean success = false;
 			if (key == Keys.KEY_UP && this.selection > 0)
 			{
-				this.pokemon.switchMoves(this.selection, this.selection - 1);
+				this.selectedPokemon().switchMoves(this.selection, this.selection - 1);
 				--this.selection;
 				success = true;
 			} else if (key == Keys.KEY_DOWN && this.selection < this.currentTab().options().length - 1)
 			{
-				this.pokemon.switchMoves(this.selection, this.selection + 1);
+				this.selectedPokemon().switchMoves(this.selection, this.selection + 1);
 				++this.selection;
 				success = true;
 			}
@@ -114,8 +124,8 @@ public class MovesMenuState extends AbstractMenuState
 	{
 		DungeonState s = DungeonPersistance.dungeonState;
 		Launcher.stateManager.setState(new InfoState(s, this, new Message[]
-		{ ((MoveMenuOption) option).name }, new Message[]
-		{ ((MoveMenuOption) option).name }));
+		{ ((MoveMenuOption) option).move.move().name() }, new Message[]
+		{ ((MoveMenuOption) option).move.move().name() }));
 	}
 
 	@Override
@@ -123,9 +133,26 @@ public class MovesMenuState extends AbstractMenuState
 	{
 		DungeonState s = DungeonPersistance.dungeonState;
 		LearnedMove move = ((MoveMenuOption) option).move;
-		Launcher.stateManager.setState(s);
 
-		DungeonEventProcessor.processEvent(new MoveSelectionEvent(move, DungeonPersistance.player.getDungeonPokemon(), DungeonPersistance.floor));
+		if (this.isMainSelected())
+		{
+			Launcher.stateManager.setState(s);
+			DungeonEventProcessor.processEvent(new MoveSelectionEvent(move, DungeonPersistance.player.getDungeonPokemon(), DungeonPersistance.floor));
+		} else
+		{
+			move.isEnabled = !move.isEnabled;
+			MovesMenuState state = new MovesMenuState(s);
+			state.tab = this.tab;
+			state.selection = this.selection;
+			Launcher.stateManager.setState(state);
+		}
+	}
+
+	@Override
+	protected void onTabChanged(MenuTab tab)
+	{
+		super.onTabChanged(tab);
+		this.windowInfo = null;
 	}
 
 	@Override
@@ -140,9 +167,14 @@ public class MovesMenuState extends AbstractMenuState
 		{
 			Rectangle r = new Rectangle(this.window.dimensions.x, (int) (this.window.dimensions.getMaxY() + 20), width - 40,
 					MenuHudSpriteset.instance.cornerSize.height * 2 + TextRenderer.CHAR_HEIGHT * 4 + TextRenderer.LINE_SPACING * 2);
-			this.windowInfo = new TextWindow(r, new Message("moves.info"), false);
+			this.windowInfo = new TextWindow(r, new Message(this.isMainSelected() ? "moves.info.main" : "moves.info.ally"), false);
 		}
 		this.windowInfo.render(g, null, width, height);
+	}
+
+	private Pokemon selectedPokemon()
+	{
+		return this.pokemon[this.tabIndex()];
 	}
 
 	@Override

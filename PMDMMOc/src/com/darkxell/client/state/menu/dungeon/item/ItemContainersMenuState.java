@@ -9,6 +9,8 @@ import com.darkxell.client.state.dungeon.DungeonState;
 import com.darkxell.client.state.menu.InfoState;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.client.state.menu.dungeon.DungeonMenuState;
+import com.darkxell.client.state.menu.dungeon.TeamMenuState;
+import com.darkxell.client.state.menu.dungeon.TeamMenuState.TeamMemberSelectionListener;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.common.event.item.ItemMovedEvent;
 import com.darkxell.common.event.item.ItemSwappedEvent;
@@ -17,9 +19,10 @@ import com.darkxell.common.item.Item.ItemAction;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.player.ItemContainer;
 import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.Message;
 
-public class ItemContainersMenuState extends OptionSelectionMenuState implements ItemActionSource, ItemSelectionListener
+public class ItemContainersMenuState extends OptionSelectionMenuState implements ItemActionSource, ItemSelectionListener, TeamMemberSelectionListener
 {
 	private static final int MAX_HEIGHT = 10;
 
@@ -84,7 +87,7 @@ public class ItemContainersMenuState extends OptionSelectionMenuState implements
 		}
 	}
 
-	private int index()
+	private int itemIndex()
 	{
 		return this.optionIndex() + this.indexOffset[this.tabIndex()];
 	}
@@ -126,7 +129,7 @@ public class ItemContainersMenuState extends OptionSelectionMenuState implements
 	protected void onOptionSelected(MenuOption option)
 	{
 		ItemContainer container = this.container();
-		ItemStack i = container.getItem(this.index());
+		ItemStack i = container.getItem(this.itemIndex());
 
 		if (this.listener == null)
 		{
@@ -141,7 +144,7 @@ public class ItemContainersMenuState extends OptionSelectionMenuState implements
 			ItemAction.sort(actions);
 
 			Launcher.stateManager.setState(new ItemActionSelectionState(this, this, actions));
-		} else this.listener.itemSelected(i, this.index());
+		} else this.listener.itemSelected(i, this.itemIndex());
 	}
 
 	@Override
@@ -150,14 +153,15 @@ public class ItemContainersMenuState extends OptionSelectionMenuState implements
 		DungeonState s = DungeonPersistance.dungeonState;
 		Launcher.stateManager.setState(s);
 		ItemContainer container = this.container();
-		int index = this.index();
+		int index = this.itemIndex();
 		ItemStack i = container.getItem(index);
 		DungeonPokemon user = DungeonPersistance.player.getDungeonPokemon();
 
 		if (action == ItemAction.USE) DungeonEventProcessor.processEvent(new ItemUseSelectionEvent(i.item(), user, null, container, index,
 				DungeonPersistance.floor));
 		else if (action == ItemAction.GET || action == ItemAction.TAKE) DungeonEventProcessor.processEvent(new ItemMovedEvent(action, user, container, 0,
-				user.player.inventory, user.player.inventory.canAccept(i)));
+				user.pokemon.player.inventory, user.pokemon.player.inventory.canAccept(i)));
+		else if (action == ItemAction.GIVE) Launcher.stateManager.setState(new TeamMenuState(s, this));
 		else if (action == ItemAction.PLACE) DungeonEventProcessor.processEvent(new ItemMovedEvent(action, user, container, index, user.tile, 0));
 		else if (action == ItemAction.SWITCH) DungeonEventProcessor.processEvent(new ItemSwappedEvent(action, user, container, index, user.tile, 0));
 		else if (action == ItemAction.SWAP) Launcher.stateManager.setState(new ItemContainersMenuState(s, this, DungeonPersistance.player.inventory));
@@ -170,6 +174,17 @@ public class ItemContainersMenuState extends OptionSelectionMenuState implements
 	public ItemStack selectedItem()
 	{
 		return this.container().getItem(this.optionIndex());
+	}
+
+	@Override
+	public void teamMemberSelected(Pokemon pokemon)
+	{
+		Launcher.stateManager.setState(DungeonPersistance.dungeonState);
+		if (pokemon.getItem() != null) DungeonEventProcessor.processEvent(new ItemSwappedEvent(ItemAction.GIVE, DungeonPersistance.player.getDungeonPokemon(),
+				DungeonPersistance.player.inventory, this.itemIndex(), pokemon, 0));
+		else DungeonEventProcessor.processEvent(new ItemMovedEvent(ItemAction.GIVE, DungeonPersistance.player.getDungeonPokemon(),
+				DungeonPersistance.player.inventory, this.itemIndex(), pokemon, 0));
+
 	}
 
 }

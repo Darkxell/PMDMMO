@@ -8,6 +8,7 @@ import org.jdom2.Element;
 import com.darkxell.common.item.Item.ItemAction;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.player.ItemContainer;
+import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.ability.Ability;
 import com.darkxell.common.util.Message;
 
@@ -38,6 +39,8 @@ public class Pokemon implements ItemContainer
 	private LearnedMove[] moves;
 	/** This Pokémon's nickname. If null, use the species' name. */
 	private String nickname;
+	/** The Player controlling this Pokémon. null if it's an NPC. */
+	public Player player;
 	/** This Pokémon's species. */
 	public final PokemonSpecies species;
 	/** This Pokémon's stats. */
@@ -198,6 +201,12 @@ public class Pokemon implements ItemContainer
 	public PokemonStats getStats()
 	{
 		return this.stats;
+	}
+
+	public boolean isAlliedWith(Pokemon pokemon)
+	{
+		if (this.player == null && pokemon.player == null) return true;
+		return this.player != null && this.player.isAlly(pokemon);
 	}
 
 	@Override

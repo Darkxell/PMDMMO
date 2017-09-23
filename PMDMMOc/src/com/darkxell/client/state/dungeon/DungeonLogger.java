@@ -115,6 +115,7 @@ public class DungeonLogger
 		if (this.log.size() > 40) this.log.poll();
 		this.messageTime = MESSAGE_TIME;
 		this.lastWidth = -1;
+		if (!this.parent.isMain()) this.hideMessages();
 	}
 
 	public void showMessages(Message... messages)
