@@ -105,28 +105,29 @@ public abstract class AbstractMenuState extends AbstractState
 
 	public MenuOption currentOption()
 	{
+		if (this.tabs.size() == 0) return null;
 		return this.currentTab().options.get(this.selection);
 	}
 
 	public MenuTab currentTab()
 	{
+		if (this.tabs.size() == 0) return null;
 		return this.tabs.get(this.tab);
 	}
 
 	/** @return This Window's dimensions. */
 	protected Rectangle mainWindowDimensions()
 	{
-		int width = 0, height = 0;
-		for (MenuTab tab : this.tabs)
-		{
-			width = Math.max(width, tab.width());
-			height = Math.max(height, tab.height());
-		}
+		int width = this.currentTab().width(), height = this.currentTab().height();
 		width += OptionSelectionWindow.MARGIN_X * 2;
 		height += OptionSelectionWindow.MARGIN_Y * 2;
 
 		return new Rectangle(16, 32, width, height);
 	}
+
+	/* protected Rectangle mainWindowDimensions() { int width = 0, height = 0; for (MenuTab tab : this.tabs) { width = Math.max(width, tab.width()); height = Math.max(height, tab.height()); } width += OptionSelectionWindow.MARGIN_X * 2; height += OptionSelectionWindow.MARGIN_Y * 2;
+	 * 
+	 * return new Rectangle(16, 32, width, height); } */
 
 	/** Called when the player presses the "back" button. */
 	protected abstract void onExit();

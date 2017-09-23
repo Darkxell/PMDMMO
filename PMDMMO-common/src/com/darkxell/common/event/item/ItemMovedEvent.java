@@ -24,12 +24,13 @@ public class ItemMovedEvent extends DungeonEvent
 		this.destination = destination;
 		this.destinationIndex = destinationIndex;
 
-		if (action == ItemAction.GET) this.messages.add(new Message("ground.inventory").addReplacement("<pokemon>", mover.pokemon.getNickname())
-				.addReplacement("<item>", this.source.getItem(this.sourceIndex).name()));
-		if (action == ItemAction.PLACE) this.messages.add(new Message("ground.place").addReplacement("<pokemon>", mover.pokemon.getNickname()).addReplacement(
-				"<item>", this.source.getItem(this.sourceIndex).name()));
-		if (action == ItemAction.TAKE) this.messages.add(new Message("inventory.taken").addReplacement("<pokemon>", mover.pokemon.getNickname())
-				.addReplacement("<item>", this.source.getItem(this.sourceIndex).name()));
+		String message = null;
+		if (action == ItemAction.GIVE) message = "inventory.give";
+		else if (action == ItemAction.GET) message = "ground.inventory";
+		else if (action == ItemAction.PLACE) message = "ground.place";
+		else if (action == ItemAction.TAKE) message = "inventory.taken";
+		this.messages.add(new Message(message).addReplacement("<pokemon>", mover.pokemon.getNickname()).addReplacement("<item>",
+				this.source.getItem(this.sourceIndex).name()));
 	}
 
 	@Override

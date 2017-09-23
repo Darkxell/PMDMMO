@@ -42,7 +42,7 @@ public class ItemActionSelectionState extends OptionSelectionMenuState
 	@Override
 	protected Rectangle mainWindowDimensions() {
 		Rectangle r = super.mainWindowDimensions();
-		if (this.backgroundState instanceof AbstractMenuState) r.x = (int) (((OptionSelectionMenuState) this.backgroundState).getMainWindow().dimensions
+		if (this.backgroundState instanceof OptionSelectionMenuState) r.x = (int) (((OptionSelectionMenuState) this.backgroundState).getMainWindow().dimensions
 				.getMaxX() + 5);
 		return r;
 	}

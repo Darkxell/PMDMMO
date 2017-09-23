@@ -23,6 +23,13 @@ public abstract class OptionSelectionMenuState extends AbstractMenuState
 	}
 
 	@Override
+	protected void onTabChanged(MenuTab tab)
+	{
+		super.onTabChanged(tab);
+		this.mainWindow = new OptionSelectionWindow(this, this.mainWindowDimensions());
+	}
+
+	@Override
 	public void render(Graphics2D g, int width, int height)
 	{
 		super.render(g, width, height);
