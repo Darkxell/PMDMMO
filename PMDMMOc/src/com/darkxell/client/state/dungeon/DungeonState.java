@@ -17,6 +17,7 @@ import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.GameUtil;
+import com.darkxell.common.util.Logger;
 
 /** The main state for Dungeon exploration. */
 public class DungeonState extends AbstractState
@@ -120,7 +121,11 @@ public class DungeonState extends AbstractState
 		for (DungeonPokemon p : DungeonPersistance.player.getDungeonTeam())
 		{
 			if (p == DungeonPersistance.player.getDungeonPokemon()) continue;
-			if (candidates.size() == 0) break;
+			if (candidates.size() == 0)
+			{
+				Logger.e("DungeonState.placeAllies() @124 : Could not find a spawn location for ally " + p.pokemon.getNickname() + "!");
+				continue;
+			}
 			candidates.get(0).setPokemon(p);
 			candidates.remove(0);
 		}
