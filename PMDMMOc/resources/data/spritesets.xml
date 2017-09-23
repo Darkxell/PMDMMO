@@ -6,5 +6,9 @@
   <pokemon id="69" x="13" y="16" size="25" idle="40,40" move="3" attack="3" spe1="3" spe2="3"  />
   <pokemon id="102" x="16" y="18" size="32" idle="40,40" move="3" attack="3" spe1="3" spe2="3"  />
   <pokemon id="191" x="15" y="20" size="32" idle="40,40" move="2" attack="2" spe1="1" spe2="1"  />
+  <pokemon id="261" x="16" y="18" size="32" idle="70,20,20" move="3" attack="3" spe1="2" spe2="2"  />
   <pokemon id="265" x="16" y="18" size="32" idle="70,50" move="3" attack="3" spe1="2" spe2="2"  />
+  <pokemon id="311" x="16" y="18" size="32" idle="70,50" move="3" attack="3" spe1="2" spe2="2"  />
+  <pokemon id="312" x="16" y="18" size="32" idle="70,50" move="3" attack="3" spe1="2" spe2="2"  />
+  <pokemon id="343" x="16" y="18" size="32" idle="70" move="1" attack="1" spe1="1" spe2="1"  />
 </sprites>
