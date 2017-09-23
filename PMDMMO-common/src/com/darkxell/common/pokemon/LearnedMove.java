@@ -10,6 +10,8 @@ public class LearnedMove
 
 	/** This move's ID. */
 	public final int id;
+	/** True if this Move is enabled (for allies). */
+	public boolean isEnabled = true;
 	/** True if this move is Linked. */
 	private boolean isLinked;
 	/** This move's maximum Power Points. */
@@ -26,6 +28,7 @@ public class LearnedMove
 		this.pp = xml.getAttribute("pp") == null ? this.maxPP : Integer.parseInt(xml.getAttributeValue("pp"));
 		this.isLinked = xml.getAttribute("linked") != null;
 		this.slot = Integer.parseInt(xml.getAttributeValue("slot"));
+		this.isEnabled = xml.getAttribute("enabled") == null;
 	}
 
 	public LearnedMove(int id)
@@ -91,6 +94,7 @@ public class LearnedMove
 		if (this.pp != this.maxPP) root.setAttribute("pp", Integer.toString(this.pp));
 		if (this.isLinked) root.setAttribute("linked", "true");
 		root.setAttribute("slot", Integer.toString(this.slot));
+		if (!this.isEnabled) root.setAttribute("enabled", "false");
 		return root;
 	}
 

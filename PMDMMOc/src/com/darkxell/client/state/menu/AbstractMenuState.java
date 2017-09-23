@@ -145,10 +145,12 @@ public abstract class AbstractMenuState extends AbstractState
 			if (key == Keys.KEY_LEFT || key == Keys.KEY_RIGHT)
 			{
 				if (this.selection >= this.currentTab().options.size()) this.selection = this.currentTab().options.size() - 1;
+				this.onTabChanged(this.currentTab());
 			} else if (key == Keys.KEY_UP || key == Keys.KEY_DOWN)
 			{
 				if (this.selection == -1) this.selection = this.currentTab().options.size() - 1;
 				else if (this.selection == this.currentTab().options.size()) this.selection = 0;
+				this.onOptionChanged(this.currentOption());
 			}
 		}
 		if (key == Keys.KEY_MENU || key == Keys.KEY_RUN) this.onExit();
@@ -158,8 +160,14 @@ public abstract class AbstractMenuState extends AbstractState
 	public void onKeyReleased(short key)
 	{}
 
+	protected void onOptionChanged(MenuOption option)
+	{}
+
 	/** Called when the player chooses the input Option. */
 	protected abstract void onOptionSelected(MenuOption option);
+
+	protected void onTabChanged(MenuTab tab)
+	{}
 
 	public int optionIndex()
 	{
