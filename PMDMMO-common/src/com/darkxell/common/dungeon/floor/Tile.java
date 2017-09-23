@@ -1,17 +1,17 @@
 package com.darkxell.common.dungeon.floor;
 
-import static com.darkxell.common.dungeon.floor.TileType.AIR;
-import static com.darkxell.common.dungeon.floor.TileType.LAVA;
-import static com.darkxell.common.dungeon.floor.TileType.STAIR;
-import static com.darkxell.common.dungeon.floor.TileType.TRAP;
-import static com.darkxell.common.dungeon.floor.TileType.WALL_END;
-import static com.darkxell.common.dungeon.floor.TileType.WARP_ZONE;
-import static com.darkxell.common.dungeon.floor.TileType.WATER;
-import static com.darkxell.common.dungeon.floor.TileType.WONDER_TILE;
+import static com.darkxell.common.dungeon.floor.TileType.*;
 
 import java.awt.Point;
 import java.util.ArrayList;
 
+import javafx.util.Pair;
+
+import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.DungeonEvent.MessageEvent;
+import com.darkxell.common.event.item.ItemMovedEvent;
+import com.darkxell.common.event.item.MoneyCollectedEvent;
+import com.darkxell.common.item.Item;
 import com.darkxell.common.item.Item.ItemAction;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.player.ItemContainer;
@@ -19,8 +19,6 @@ import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.util.GameUtil;
 import com.darkxell.common.util.Message;
-
-import javafx.util.Pair;
 
 /** Represents a single tile in a Floor. */
 public class Tile implements ItemContainer
@@ -155,6 +153,27 @@ public class Tile implements ItemContainer
 		this.neighbors = GameUtil.clean(this.neighbors);
 	}
 
+	/** Called when a Pokémon steps on this Tile.
+	 * 
+	 * @param pokemon - The Pokémon stepping.
+	 * @return The Events triggered by this Tile. */
+	public ArrayList<DungeonEvent> onPokemonStep(DungeonPokemon pokemon)
+	{
+		ArrayList<DungeonEvent> events = new ArrayList<DungeonEvent>();
+		if (this.getItem() != null)
+		{
+			ItemStack i = this.getItem();
+			int index = pokemon.pokemon.player == null ? -1 : pokemon.pokemon.player.inventory.canAccept(i);
+			if (i.id == Item.POKE && pokemon.pokemon.player != null) events.add(new MoneyCollectedEvent(pokemon, this, i));
+			else if (pokemon.pokemon.player != null && index != -1) events.add(new ItemMovedEvent(ItemAction.GET, pokemon, this, 0,
+					pokemon.pokemon.player.inventory, index));
+			else if (pokemon.pokemon.getItem() == null) events.add(new ItemMovedEvent(ItemAction.GET, pokemon, this, 0, pokemon.pokemon, 0));
+			else events.add(new MessageEvent(new Message("ground.step").addReplacement("<pokemon>", pokemon.pokemon.getNickname()).addReplacement("<item>",
+					this.getItem().name())));
+		}
+		return events;
+	}
+
 	/** Called when this Tile's type is changed. Reloads the connections of itself and its neighbors. */
 	private void onTypeChanged()
 	{
@@ -168,6 +187,12 @@ public class Tile implements ItemContainer
 			}
 			this.neighbors = GameUtil.clean(this.neighbors);
 		}
+	}
+
+	/** Sets this Tile's Pokémon to null, only if it is the input Pokémon. */
+	public void removePokemon(DungeonPokemon pokemon)
+	{
+		if (this.getPokemon() == pokemon) this.setPokemon(null);
 	}
 
 	@Override

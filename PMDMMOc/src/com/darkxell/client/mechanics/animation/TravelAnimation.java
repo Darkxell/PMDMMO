@@ -3,22 +3,18 @@ package com.darkxell.client.mechanics.animation;
 import java.awt.Point;
 import java.awt.geom.Point2D;
 
-import com.darkxell.common.pokemon.DungeonPokemon;
-
 /** Represents the travel of from a Point to another. */
 public class TravelAnimation
 {
 
 	private Point2D current;
-	public final short direction;
-	public final Point origin, arrival, distance;
+	public final Point origin, destination, distance;
 
-	public TravelAnimation(DungeonPokemon pokemon, short direction)
+	public TravelAnimation(Point origin, Point destination)
 	{
-		this.direction = direction;
-		this.origin = pokemon.tile.location();
-		this.arrival = pokemon.tile.adjacentTile(direction).location();
-		this.distance = new Point(this.arrival.x - this.origin.x, this.arrival.y - this.origin.y);
+		this.origin = origin;
+		this.destination = destination;
+		this.distance = new Point(this.destination.x - this.origin.x, this.destination.y - this.origin.y);
 		this.current = new Point2D.Float(this.origin.x, this.origin.y);
 	}
 

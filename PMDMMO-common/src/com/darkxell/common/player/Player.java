@@ -56,16 +56,15 @@ public class Player
 	public DungeonPokemon[] getDungeonTeam()
 	{
 		DungeonPokemon[] team = new DungeonPokemon[this.allies.size() + 1];
-		team[0] = this.getDungeonPokemon();
-		for (int i = 1; i < team.length; ++i)
-			team[i] = this.dungeonAllies.get(i - 1);
+		for (int i = 0; i < team.length; ++i)
+			team[i] = this.getMember(i);
 		return team;
 	}
 
 	public DungeonPokemon getMember(int index)
 	{
 		if (index == 0) return this.getDungeonPokemon();
-		else if (index < this.dungeonAllies.size() - 1) return this.dungeonAllies.get(index - 1);
+		else if (index < this.dungeonAllies.size() + 1) return this.dungeonAllies.get(index - 1);
 		return null;
 	}
 

@@ -25,7 +25,7 @@ public class BasicAttackAnimation extends AbstractAnimation
 		this.user = user;
 		this.location = this.user.tile;
 		this.sprite = DungeonPokemonRenderer.instance.getSprite(this.user);
-		this.travel = new TravelAnimation(this.user, this.user.facing());
+		this.travel = new TravelAnimation(this.user.tile.location(), this.user.tile.adjacentTile(this.user.facing()).location());
 	}
 
 	@Override

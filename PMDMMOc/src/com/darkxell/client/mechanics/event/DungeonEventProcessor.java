@@ -1,4 +1,4 @@
-package com.darkxell.client.mechanics;
+package com.darkxell.client.mechanics.event;
 
 import java.util.ArrayList;
 import java.util.Stack;
@@ -6,10 +6,11 @@ import java.util.Stack;
 import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.persistance.DungeonPersistance;
 import com.darkxell.client.renderers.ItemRenderer;
-import com.darkxell.client.state.DialogState.DialogEndListener;
 import com.darkxell.client.state.DialogState;
+import com.darkxell.client.state.DialogState.DialogEndListener;
 import com.darkxell.client.state.FreezoneExploreState;
 import com.darkxell.client.state.dungeon.AnimationState;
+import com.darkxell.client.state.dungeon.PokemonTravelState;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.dungeon.DungeonExitEvent;
 import com.darkxell.common.event.item.ItemUseSelectionEvent;
@@ -17,6 +18,7 @@ import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.FaintedPokemonEvent;
+import com.darkxell.common.event.pokemon.PokemonTravelEvent;
 import com.darkxell.common.event.stats.ExperienceGainedEvent;
 import com.darkxell.common.event.stats.StatChangedEvent;
 
@@ -31,11 +33,11 @@ public final class DungeonEventProcessor
 		@Override
 		public void onDialogEnd(DialogState dialog)
 		{
-			if (pending.size() == 0) Launcher.stateManager.setState(DungeonPersistance.dungeonState);
+			if (!hasPendingEvents()) Launcher.stateManager.setState(DungeonPersistance.dungeonState);
 			else processPending();
 		}
 	};
-	/** While processing an event, setting this false will stop processing the pending events. */
+	/** While processing an event, setting this to false will stop processing the pending events. */
 	static boolean processPending = true;
 
 	/** Adds the input event(s) to the pending stack, without processing them. */
@@ -43,6 +45,11 @@ public final class DungeonEventProcessor
 	{
 		for (int i = arrayList.size() - 1; i >= 0; --i)
 			pending.add(arrayList.get(i));
+	}
+
+	public static boolean hasPendingEvents()
+	{
+		return pending.size() != 0;
 	}
 
 	private static void processDungeonExitEvent(DungeonExitEvent event)
@@ -64,6 +71,7 @@ public final class DungeonEventProcessor
 			if (event instanceof MoveUseEvent) MoveEventProcessor.processMoveUseEvent((MoveUseEvent) event);
 			if (event instanceof DamageDealtEvent) MoveEventProcessor.processDamageEvent((DamageDealtEvent) event);
 
+			if (event instanceof PokemonTravelEvent) processTravelEvent((PokemonTravelEvent) event);
 			if (event instanceof FaintedPokemonEvent) MoveEventProcessor.processFaintedEvent((FaintedPokemonEvent) event);
 
 			if (event instanceof StatChangedEvent) MoveEventProcessor.processStatEvent((StatChangedEvent) event);
@@ -89,6 +97,12 @@ public final class DungeonEventProcessor
 	public static void processPending()
 	{
 		if (!pending.empty()) processEvent(pending.pop());
+	}
+
+	private static void processTravelEvent(PokemonTravelEvent event)
+	{
+		processPending = false;
+		DungeonPersistance.dungeonState.setSubstate(new PokemonTravelState(DungeonPersistance.dungeonState, event.travels()));
 	}
 
 	private DungeonEventProcessor()

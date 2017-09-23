@@ -1,4 +1,4 @@
-package com.darkxell.client.mechanics;
+package com.darkxell.client.mechanics.event;
 
 import java.util.ArrayList;
 

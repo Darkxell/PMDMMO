@@ -2,7 +2,7 @@ package com.darkxell.client.state.dungeon;
 
 import java.awt.Graphics2D;
 
-import com.darkxell.client.mechanics.DungeonEventProcessor;
+import com.darkxell.client.mechanics.event.DungeonEventProcessor;
 import com.darkxell.client.state.dungeon.DungeonState.DungeonSubState;
 
 /** A State that delays a certain number of ticks, then refers to the {@link DungeonEventProcessor} for pending events. */

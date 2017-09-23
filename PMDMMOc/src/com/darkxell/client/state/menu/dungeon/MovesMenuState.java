@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
 import com.darkxell.client.launchable.Launcher;
-import com.darkxell.client.mechanics.DungeonEventProcessor;
+import com.darkxell.client.mechanics.event.DungeonEventProcessor;
 import com.darkxell.client.persistance.DungeonPersistance;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.MenuHudSpriteset;

@@ -7,16 +7,15 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 
 import com.darkxell.client.launchable.Launcher;
-import com.darkxell.client.mechanics.DungeonEventProcessor;
-import com.darkxell.client.mechanics.animation.TravelAnimation;
+import com.darkxell.client.mechanics.event.DungeonEventProcessor;
 import com.darkxell.client.persistance.DungeonPersistance;
 import com.darkxell.client.resources.images.DungeonHudSpriteset;
 import com.darkxell.client.state.dungeon.DungeonState.DungeonSubState;
 import com.darkxell.client.state.menu.dungeon.DungeonMenuState;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.common.event.move.MoveSelectionEvent;
+import com.darkxell.common.event.pokemon.PokemonTravelEvent;
 import com.darkxell.common.move.MoveRegistry;
-import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.LearnedMove;
 import com.darkxell.common.util.GameUtil;
 
@@ -52,8 +51,7 @@ public class ActionSelectionState extends DungeonSubState
 			DungeonPersistance.player.getDungeonPokemon().setFacing(direction);
 			if (!this.parent.rotating && DungeonPersistance.player.getDungeonPokemon().tryMoveTo(direction))
 			{
-				this.parent.setSubstate(new PokemonTravelState(this.parent, new DungeonPokemon[]
-				{ DungeonPersistance.player.getDungeonPokemon() }, new TravelAnimation(DungeonPersistance.player.getDungeonPokemon(), direction)));
+				DungeonEventProcessor.processEvent(new PokemonTravelEvent(DungeonPersistance.player.getDungeonPokemon(), direction));
 				return true;
 			}
 		}

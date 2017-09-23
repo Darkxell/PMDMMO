@@ -3,7 +3,7 @@ package com.darkxell.client.state.menu.dungeon.item;
 import java.util.ArrayList;
 
 import com.darkxell.client.launchable.Launcher;
-import com.darkxell.client.mechanics.DungeonEventProcessor;
+import com.darkxell.client.mechanics.event.DungeonEventProcessor;
 import com.darkxell.client.persistance.DungeonPersistance;
 import com.darkxell.client.state.dungeon.DungeonState;
 import com.darkxell.client.state.menu.InfoState;
