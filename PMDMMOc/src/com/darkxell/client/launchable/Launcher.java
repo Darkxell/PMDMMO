@@ -6,6 +6,8 @@ import com.darkxell.client.resources.images.PokemonSpritesets;
 import com.darkxell.client.resources.music.SoundManager;
 import com.darkxell.client.state.OpenningState;
 import com.darkxell.client.state.StateManager;
+import com.darkxell.client.state.map.AbstractDisplayMap;
+import com.darkxell.client.state.map.LocalMap;
 import com.darkxell.client.ui.Frame;
 import com.darkxell.common.dungeon.DungeonRegistry;
 import com.darkxell.common.item.ItemRegistry;
@@ -30,6 +32,7 @@ public class Launcher {
 	private static UpdaterAndRenderer updaterandrenderer;
 	private static Updater updater;
 	public static ChatBox chatbox;
+	public static AbstractDisplayMap displaymap;
 
 	public static StateManager stateManager;
 
@@ -56,6 +59,7 @@ public class Launcher {
 		stateManager.randomizeBackground();
 
 		chatbox = new ChatBox();
+		displaymap = new LocalMap();
 
 		setProcessingProfile(PROFILE_SYNCHRONIZED);
 

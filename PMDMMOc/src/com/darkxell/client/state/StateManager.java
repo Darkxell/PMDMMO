@@ -124,16 +124,22 @@ public class StateManager {
 		MainUiUtility.drawBoxOutline(g, gamex, gamey, gamewidth, gameheight);
 		MainUiUtility.drawBoxOutline(g, mapx, mapy, mapsize, mapsize);
 		MainUiUtility.drawBoxOutline(g, chatx, chaty, chatwidth, chatheight);
-		// draws the components insides
+		// draws the game inside
 		g.drawImage(internalBuffer, gamex, gamey, gamewidth, gameheight, null);
+		// draws the chat inside
 		g.translate(chatx, chaty);
 		Shape clp = g.getClip();
 		g.setClip(new Rectangle(0, 0, chatwidth, chatheight));
 		Launcher.chatbox.render(g, chatwidth, chatheight, isChatFocused);
 		g.setClip(clp);
 		g.translate(-chatx, -chaty);
-		g.setColor(Color.BLACK);
-		g.fillRect(mapx, mapy, mapsize, mapsize);
+		// draws the map inside
+		g.translate(mapx, mapy);
+		clp = g.getClip();
+		g.setClip(new Rectangle(0, 0, mapsize, mapsize));
+		Launcher.displaymap.render(g, mapsize, mapsize);
+		g.setClip(clp);
+		g.translate(-mapx, -mapy);
 	}
 
 	public synchronized void update() {
