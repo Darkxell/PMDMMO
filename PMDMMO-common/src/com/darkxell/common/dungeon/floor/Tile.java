@@ -9,6 +9,7 @@ import javafx.util.Pair;
 
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.DungeonEvent.MessageEvent;
+import com.darkxell.common.event.dungeon.TrapSteppedOnEvent;
 import com.darkxell.common.event.item.ItemMovedEvent;
 import com.darkxell.common.event.item.MoneyCollectedEvent;
 import com.darkxell.common.item.Item;
@@ -17,6 +18,7 @@ import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.player.ItemContainer;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.PokemonType;
+import com.darkxell.common.trap.Trap;
 import com.darkxell.common.util.GameUtil;
 import com.darkxell.common.util.Message;
 
@@ -33,6 +35,10 @@ public class Tile implements ItemContainer
 	private short neighbors = 0;
 	/** The Pokémon standing on this Tile. null if no Pokémon. */
 	private DungeonPokemon pokemon;
+	/** This Tile's Trap. null if no trap. */
+	public Trap trap;
+	/** True if this Tile's trap is revealed. Always false if no trap. */
+	public boolean trapRevealed;
 	/** This Tile's type. */
 	private TileType type;
 	/** This Tile's coordinates. */
@@ -128,6 +134,11 @@ public class Tile implements ItemContainer
 		return this.pokemon;
 	}
 
+	public boolean hasTrap()
+	{
+		return this.trap != null;
+	}
+
 	@Override
 	public ArrayList<ItemAction> legalItemActions()
 	{
@@ -171,6 +182,9 @@ public class Tile implements ItemContainer
 			else events.add(new MessageEvent(new Message("ground.step").addReplacement("<pokemon>", pokemon.pokemon.getNickname()).addReplacement("<item>",
 					this.getItem().name())));
 		}
+
+		if (this.hasTrap()) events.add(new TrapSteppedOnEvent(pokemon, this, this.trap));
+
 		return events;
 	}
 

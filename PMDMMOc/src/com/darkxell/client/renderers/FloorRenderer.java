@@ -85,7 +85,9 @@ public class FloorRenderer {
 			return;
 
 		BufferedImage sprite = null;
-		if (tile.type() == TileType.STAIR)
+		if (tile.hasTrap() && tile.trapRevealed)
+			sprite = CommonDungeonTileset.INSTANCE.trap(tile.trap.id);
+		else if (tile.type() == TileType.STAIR)
 			sprite = CommonDungeonTileset.INSTANCE.stairs(this.floor.dungeon.dungeon().direction);
 		else if (tile.type() == TileType.WONDER_TILE)
 			sprite = CommonDungeonTileset.INSTANCE.wonderTile();

@@ -11,6 +11,7 @@ import com.darkxell.common.dungeon.DungeonRegistry;
 import com.darkxell.common.item.ItemRegistry;
 import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.PokemonRegistry;
+import com.darkxell.common.trap.TrapRegistry;
 import com.darkxell.common.util.Lang;
 import com.darkxell.common.util.Logger;
 
@@ -41,6 +42,7 @@ public class Launcher {
 		PokemonRegistry.loadClient();
 		MoveRegistry.loadClient();
 		ItemRegistry.loadClient();
+		TrapRegistry.load();
 		DungeonRegistry.loadClient();
 		PokemonSpritesets.loadData();
 		TextRenderer.load();

@@ -2,6 +2,9 @@ package com.darkxell.common.dungeon;
 
 import org.jdom2.Element;
 
+import com.darkxell.common.trap.Trap;
+import com.darkxell.common.trap.TrapRegistry;
+
 /** Describes how an Trap appears in a Dungeon. */
 public class DungeonTrap
 {
@@ -28,8 +31,6 @@ public class DungeonTrap
 		this.floors = floors;
 	}
 
-	/* public Trap trap() { return TrapRegistry.find(this.id); } */// TODO: uncomment when TrapRegistry done.
-
 	public Element toXML()
 	{
 		Element root = new Element(XML_ROOT);
@@ -37,6 +38,11 @@ public class DungeonTrap
 		root.setAttribute("weight", Integer.toString(this.weight));
 		root.addContent(this.floors.toXML());
 		return root;
+	}
+
+	public Trap trap()
+	{
+		return TrapRegistry.find(this.id);
 	}
 
 }

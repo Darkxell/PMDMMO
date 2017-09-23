@@ -14,6 +14,7 @@ import com.darkxell.common.item.Item;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.Pokemon;
+import com.darkxell.common.trap.TrapRegistry;
 import com.darkxell.common.util.XMLUtils;
 
 public class StaticLayout extends Layout {
@@ -25,6 +26,7 @@ public class StaticLayout extends Layout {
 	public void generate(Floor floor) {
 		this.xml = XMLUtils.readFile(new File("resources/data/floors/" + floor.dungeon.id + "-" + floor.id + ".xml"));
 		super.generate(floor);
+		this.placeTraps();
 	}
 
 	@Override
@@ -52,9 +54,9 @@ public class StaticLayout extends Layout {
 
 	@Override
 	protected void placeItems() {
-		for (Element item : this.xml.getChild("items").getChildren(Item.XML_ROOT))
-			this.floor.tiles[Integer.parseInt(item.getAttributeValue("x"))][Integer
-					.parseInt(item.getAttributeValue("y"))].setItem(new ItemStack(item));
+		if (this.xml.getChild("items") != null)
+			for (Element item : this.xml.getChild("items").getChildren(Item.XML_ROOT))
+			this.floor.tiles[Integer.parseInt(item.getAttributeValue("x"))][Integer.parseInt(item.getAttributeValue("y"))].setItem(new ItemStack(item));
 	}
 
 	@Override
@@ -70,6 +72,9 @@ public class StaticLayout extends Layout {
 
 	@Override
 	protected void placeTraps() {
+		if (this.xml.getChild("traps") != null) for (Element trap : this.xml.getChild("traps").getChildren("trap"))
+			this.floor.tiles[Integer.parseInt(trap.getAttributeValue("x"))][Integer.parseInt(trap.getAttributeValue("y"))].trap = TrapRegistry.find(Integer
+					.parseInt(trap.getAttributeValue("id")));
 	}
 
 	@Override

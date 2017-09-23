@@ -5,7 +5,6 @@ import java.util.Random;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Room;
 import com.darkxell.common.dungeon.floor.TileType;
-import com.darkxell.common.util.Logger;
 
 /** Represents a Floor's layout. */
 public abstract class Layout {
