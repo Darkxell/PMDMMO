@@ -17,8 +17,7 @@ public class TeamMenuState extends OptionSelectionMenuState
 	public TeamMenuState(AbstractState background)
 	{
 		super(background);
-		this.pokemon = new Pokemon[]
-		{ DungeonPersistance.player.getPokemon() };
+		this.pokemon = DungeonPersistance.player.getTeam();
 
 		this.createOptions();
 	}

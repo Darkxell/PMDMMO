@@ -157,7 +157,7 @@ public class ItemContainersMenuState extends OptionSelectionMenuState implements
 		if (action == ItemAction.USE) DungeonEventProcessor.processEvent(new ItemUseSelectionEvent(i.item(), user, null, container, index,
 				DungeonPersistance.floor));
 		else if (action == ItemAction.GET || action == ItemAction.TAKE) DungeonEventProcessor.processEvent(new ItemMovedEvent(action, user, container, 0,
-				user.player.inventory, user.player.inventory.canAccept(i)));
+				user.pokemon.player.inventory, user.pokemon.player.inventory.canAccept(i)));
 		else if (action == ItemAction.PLACE) DungeonEventProcessor.processEvent(new ItemMovedEvent(action, user, container, index, user.tile, 0));
 		else if (action == ItemAction.SWITCH) DungeonEventProcessor.processEvent(new ItemSwappedEvent(action, user, container, index, user.tile, 0));
 		else if (action == ItemAction.SWAP) Launcher.stateManager.setState(new ItemContainersMenuState(s, this, DungeonPersistance.player.inventory));

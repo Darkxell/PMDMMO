@@ -64,14 +64,14 @@ public class PokemonTravelState extends DungeonSubState
 			String messageID = "ground.step";
 			ItemStack i = t.getItem();
 
-			if (i.id == Item.POKE && pokemon.player != null)
+			if (i.id == Item.POKE && pokemon.pokemon.player != null)
 			{
-				pokemon.player.money += i.getQuantity();
+				pokemon.pokemon.player.money += i.getQuantity();
 				messageID = "ground.poke";
 				t.setItem(null);
-			} else if (pokemon.player != null && pokemon.player.inventory.canAccept(i) != -1)
+			} else if (pokemon.pokemon.player != null && pokemon.pokemon.player.inventory.canAccept(i) != -1)
 			{
-				pokemon.player.inventory.addItem(i);
+				pokemon.pokemon.player.inventory.addItem(i);
 				messageID = "ground.inventory";
 				t.setItem(null);
 			} else if (pokemon.pokemon.getItem() == null)
@@ -107,7 +107,7 @@ public class PokemonTravelState extends DungeonSubState
 		for (TravelAnimation travel : this.travels)
 		{
 			travel.update(completion);
-			if (this.pokemonFor(travel).player == DungeonPersistance.player)
+			if (this.pokemonFor(travel).pokemon.player == DungeonPersistance.player)
 			{
 				this.parent.camera.x = (int) (travel.current().getX() * AbstractDungeonTileset.TILE_SIZE);
 				this.parent.camera.y = (int) (travel.current().getY() * AbstractDungeonTileset.TILE_SIZE);

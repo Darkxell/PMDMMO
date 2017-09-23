@@ -16,4 +16,9 @@ public class DungeonPersistance
 	public static Floor floor;
 	public static Player player = new Player(0, PokemonRegistry.find(260).generate(new Random(), 1));
 
+	static
+	{
+		player.addAlly(PokemonRegistry.find(1).generate(new Random(), 1));
+	}
+
 }
