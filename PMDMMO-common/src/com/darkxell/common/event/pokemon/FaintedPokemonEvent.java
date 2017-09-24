@@ -28,9 +28,8 @@ public class FaintedPokemonEvent extends DungeonEvent
 	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{
+		this.floor.unsummonPokemon(this.pokemon);
 		if (this.pokemon.pokemon.getItem() != null) this.pokemon.tile.setItem(this.pokemon.pokemon.getItem());
-		this.pokemon.tile.setPokemon(null);
-		this.floor.dungeon.unregisterActor(this.pokemon);
 
 		if (this.damager != null && this.damager.pokemon.player != null) for (Pokemon pokemon : this.damager.pokemon.player.getTeam())
 			this.resultingEvents.add(new ExperienceGainedEvent(this.floor, pokemon, this.pokemon.experienceGained()));

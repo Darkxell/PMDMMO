@@ -58,7 +58,9 @@ public class DungeonInstance
 	/** Ends the current Floor, creates the next and returns it. */
 	public Floor endFloor()
 	{
-		return this.currentFloor = this.createFloor(this.currentFloor.id + 1);
+		this.currentFloor = this.createFloor(this.currentFloor.id + 1);
+		this.currentFloor.generate();
+		return this.currentFloor;
 	}
 
 	/** Ends the current Turn.

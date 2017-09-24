@@ -82,6 +82,11 @@ public class Floor {
 		this.dungeon.registerActor(pokemon);
 	}
 
+	public void unsummonPokemon(DungeonPokemon pokemon)	{
+		pokemon.tile.setPokemon(null);
+		this.dungeon.unregisterActor(pokemon);
+	}
+
 	/** @return The tile at the input X, Y coordinates. */
 	public Tile tileAt(int x, int y) {
 		if (this.tiles == null || x < 0 || x >= this.tiles.length || y < 0 || y >= this.tiles[x].length)
@@ -107,9 +112,11 @@ public class Floor {
 		this.tiles = tiles;
 	}
 
+	/** Called when a new turn starts. */
 	public ArrayList<DungeonEvent> onTurnStart()
 	{
 		ArrayList<DungeonEvent> e = new ArrayList<DungeonEvent>();
+		// e.add(new MessageEvent(this, new Message("New turn!", false)));
 		return e;
 	}
 }

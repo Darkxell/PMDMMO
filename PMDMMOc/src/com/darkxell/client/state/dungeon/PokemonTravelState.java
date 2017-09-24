@@ -4,18 +4,20 @@ import java.awt.Graphics2D;
 
 import com.darkxell.client.mechanics.animation.TravelAnimation;
 import com.darkxell.client.mechanics.event.ClientEventProcessor;
+import com.darkxell.client.mechanics.event.StairLandingEvent;
 import com.darkxell.client.persistance.DungeonPersistance;
 import com.darkxell.client.renderers.DungeonPokemonRenderer;
 import com.darkxell.client.resources.images.AbstractDungeonTileset;
 import com.darkxell.client.resources.images.PokemonSprite;
 import com.darkxell.client.state.dungeon.DungeonState.DungeonSubState;
+import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.event.pokemon.PokemonTravelEvent.PokemonTravel;
 
 /** Used for Pokémon travel animations. */
 public class PokemonTravelState extends DungeonSubState
 {
 
-	public static final int DURATION = 20;
+	public static final int DURATION = 5;
 
 	private TravelAnimation[] animations;
 	private int tick;
@@ -83,11 +85,19 @@ public class PokemonTravelState extends DungeonSubState
 
 		if (this.tick >= DURATION)
 		{
-			for (int i = 0; i < this.animations.length; ++i)
-				this.travels[i].destination.setPokemon(this.travels[i].pokemon);
+			boolean stairLand = false;
+			for (PokemonTravel travel : this.travels)
+			{
+				travel.destination.setPokemon(travel.pokemon);
+				if (travel.destination.type() == TileType.STAIR) stairLand = travel.pokemon == DungeonPersistance.player.getDungeonPokemon();
+			}
 			this.parent.setSubstate(this.parent.actionSelectionState);
+
 			short direction = this.parent.actionSelectionState.checkMovement();
-			if (direction == -1 || ClientEventProcessor.hasPendingEvents() || DungeonPersistance.dungeon.getNextActor() != null) this.stopTravel();
+			boolean shouldStop = direction == -1 || ClientEventProcessor.hasPendingEvents() || DungeonPersistance.dungeon.getNextActor() != null;
+
+			if (stairLand) ClientEventProcessor.addToPending(new StairLandingEvent());
+			if (shouldStop) this.stopTravel();
 			else
 			{
 				ClientEventProcessor.addToPending(DungeonPersistance.dungeon.endTurn());

@@ -10,11 +10,15 @@ import com.darkxell.client.state.DialogState;
 import com.darkxell.client.state.DialogState.DialogEndListener;
 import com.darkxell.client.state.FreezoneExploreState;
 import com.darkxell.client.state.dungeon.AnimationState;
+import com.darkxell.client.state.dungeon.NextFloorState;
 import com.darkxell.client.state.dungeon.PokemonTravelState;
+import com.darkxell.client.state.menu.dungeon.StairMenuState;
 import com.darkxell.common.ai.AI;
 import com.darkxell.common.dungeon.DungeonInstance;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.TurnSkippedEvent;
 import com.darkxell.common.event.dungeon.DungeonExitEvent;
+import com.darkxell.common.event.dungeon.NextFloorEvent;
 import com.darkxell.common.event.item.ItemUseSelectionEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.move.MoveUseEvent;
@@ -61,7 +65,7 @@ public final class ClientEventProcessor
 				// Simulating travel
 				event.origin.removePokemon(event.pokemon);
 				event.destination.setPokemon(event.pokemon);
-			} else flag = false;
+			} else if (!(e instanceof TurnSkippedEvent)) flag = false;
 		}
 
 		// Resetting simulations
@@ -122,10 +126,17 @@ public final class ClientEventProcessor
 
 			if (event instanceof ItemUseSelectionEvent) processItemEvent((ItemUseSelectionEvent) event);
 
+			if (event instanceof StairLandingEvent) processStairEvent((StairLandingEvent) event);
+			if (event instanceof NextFloorEvent) processFloorEvent((NextFloorEvent) event);
 			if (event instanceof DungeonExitEvent) processDungeonExitEvent((DungeonExitEvent) event);
 		}
 
 		if (processPending) processPending();
+	}
+
+	private static void processFloorEvent(NextFloorEvent event)
+	{
+		Launcher.stateManager.setState(new NextFloorState(event.floor.id + 1));
 	}
 
 	private static void processItemEvent(ItemUseSelectionEvent event)
@@ -156,6 +167,12 @@ public final class ClientEventProcessor
 				processPending();
 			}
 		}
+	}
+
+	private static void processStairEvent(StairLandingEvent event)
+	{
+		processPending = false;
+		Launcher.stateManager.setState(new StairMenuState());
 	}
 
 	private static void processTravelEvent(PokemonTravelEvent event)
