@@ -32,9 +32,9 @@ public class ItemUseEvent extends DungeonEvent
 	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{
-		ArrayList<DungeonEvent> events = this.item.use(this.floor, this.user, this.target);
-		if (events.size() == 0) events.add(new MessageEvent(new Message("item.no_effect")));
-		return events;
+		this.resultingEvents.addAll(this.item.use(this.floor, this.user, this.target));
+		if (this.resultingEvents.size() == 0) this.resultingEvents.add(new MessageEvent(new Message("item.no_effect")));
+		return super.processServer();
 	}
 
 }

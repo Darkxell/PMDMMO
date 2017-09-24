@@ -40,14 +40,13 @@ public class PokemonTravelEvent extends DungeonEvent
 	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{
-		ArrayList<DungeonEvent> events = new ArrayList<DungeonEvent>();
 		for (PokemonTravel travel : this.travels)
 		{
 			travel.origin.removePokemon(travel.pokemon);
 			travel.destination.setPokemon(travel.pokemon);
-			events.addAll(travel.destination.onPokemonStep(travel.pokemon));
+			this.resultingEvents.addAll(travel.destination.onPokemonStep(travel.pokemon));
 		}
-		return events;
+		return super.processServer();
 	}
 
 	public PokemonTravel[] travels()

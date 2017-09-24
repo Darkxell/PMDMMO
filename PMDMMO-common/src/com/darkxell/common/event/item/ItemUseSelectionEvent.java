@@ -45,9 +45,8 @@ public class ItemUseSelectionEvent extends DungeonEvent
 		stack.setQuantity(stack.getQuantity() - 1);
 		if (stack.getQuantity() <= 0) this.source.deleteItem(this.sourceIndex);
 
-		ArrayList<DungeonEvent> events = super.processServer();
-		events.add(new ItemUseEvent(this.item, user, this.target, this.floor));
-		return events;
+		this.resultingEvents.add(new ItemUseEvent(this.item, user, this.target, this.floor));
+		return super.processServer();
 	}
 
 }

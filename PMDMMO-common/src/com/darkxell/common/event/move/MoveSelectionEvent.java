@@ -30,7 +30,8 @@ public class MoveSelectionEvent extends DungeonEvent
 	public ArrayList<DungeonEvent> processServer()
 	{
 		this.move.setPP(this.move.getPP() - 1);
-		return this.move.move().prepareUse(this.user, this.move, this.floor);
+		this.resultingEvents.addAll(this.move.move().prepareUse(this.user, this.move, this.floor));
+		return super.processServer();
 	}
 
 }

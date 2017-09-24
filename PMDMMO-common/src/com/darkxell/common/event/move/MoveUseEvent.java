@@ -30,9 +30,8 @@ public class MoveUseEvent extends DungeonEvent
 	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{
-		ArrayList<DungeonEvent> events = super.processServer();
-		events.addAll(this.move.move().useOn(this.user, this.target, this.floor));
-		if (events.size() == 0) events.add(new MessageEvent(new Message("move.no_effect")));
-		return events;
+		this.resultingEvents.addAll(this.move.move().useOn(this.user, this.target, this.floor));
+		if (this.resultingEvents.size() == 0) this.resultingEvents.add(new MessageEvent(new Message("move.no_effect")));
+		return super.processServer();
 	}
 }
