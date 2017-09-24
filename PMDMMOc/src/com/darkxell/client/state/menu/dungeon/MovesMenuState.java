@@ -137,7 +137,7 @@ public class MovesMenuState extends AbstractMenuState
 		if (this.isMainSelected())
 		{
 			Launcher.stateManager.setState(s);
-			DungeonEventProcessor.processEvent(new MoveSelectionEvent(move, DungeonPersistance.player.getDungeonPokemon(), DungeonPersistance.floor));
+			DungeonEventProcessor.processEvent(new MoveSelectionEvent(DungeonPersistance.floor, move, DungeonPersistance.player.getDungeonPokemon()));
 		} else
 		{
 			move.isEnabled = !move.isEnabled;

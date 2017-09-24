@@ -12,15 +12,14 @@ import com.darkxell.common.util.Message;
 public class MoveSelectionEvent extends DungeonEvent
 {
 
-	public final Floor floor;
 	public final LearnedMove move;
 	public final DungeonPokemon user;
 
-	public MoveSelectionEvent(LearnedMove move, DungeonPokemon user, Floor floor)
+	public MoveSelectionEvent(Floor floor, LearnedMove move, DungeonPokemon user)
 	{
+		super(floor);
 		this.move = move;
 		this.user = user;
-		this.floor = floor;
 
 		if (this.move.move() != MoveRegistry.ATTACK) this.messages.add(new Message("move.used").addReplacement("<pokemon>", user.pokemon.getNickname())
 				.addReplacement("<move>", this.move.move().name()));

@@ -2,6 +2,7 @@ package com.darkxell.common.event;
 
 import java.util.ArrayList;
 
+import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.util.Message;
 
 public abstract class DungeonEvent
@@ -11,19 +12,23 @@ public abstract class DungeonEvent
 	public static class MessageEvent extends DungeonEvent
 	{
 
-		public MessageEvent(Message message)
+		public MessageEvent(Floor floor, Message message)
 		{
+			super(floor);
 			this.messages.add(message);
 		}
 	}
 
+	/** The Floor this Event occurs on. */
+	public final Floor floor;
 	/** The messages that were generated. */
 	protected ArrayList<Message> messages;
 	/** The events that resulted from this Event. */
 	protected ArrayList<DungeonEvent> resultingEvents;
 
-	public DungeonEvent()
+	public DungeonEvent(Floor floor)
 	{
+		this.floor = floor;
 		this.messages = new ArrayList<Message>();
 		this.resultingEvents = new ArrayList<DungeonEvent>();
 	}

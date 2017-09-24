@@ -2,6 +2,7 @@ package com.darkxell.common.event.item;
 
 import java.util.ArrayList;
 
+import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.item.Item.ItemAction;
 import com.darkxell.common.item.ItemStack;
@@ -16,8 +17,10 @@ public class ItemSwappedEvent extends DungeonEvent
 	public final ItemContainer source, destination;
 	public final int sourceIndex, destinationIndex;
 
-	public ItemSwappedEvent(ItemAction action, DungeonPokemon mover, ItemContainer source, int sourceIndex, ItemContainer destination, int destinationIndex)
+	public ItemSwappedEvent(Floor floor, ItemAction action, DungeonPokemon mover, ItemContainer source, int sourceIndex, ItemContainer destination,
+			int destinationIndex)
 	{
+		super(floor);
 		this.mover = mover;
 		this.source = source;
 		this.sourceIndex = sourceIndex;

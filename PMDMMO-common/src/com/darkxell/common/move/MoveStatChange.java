@@ -46,7 +46,7 @@ public class MoveStatChange extends Move
 	{
 		ArrayList<DungeonEvent> e = super.additionalEffects(user, target, floor);
 		for (int[] statChange : this.statChanges)
-			e.add(new StatChangedEvent(statChange[2] == 1 ? user : target, statChange[0], statChange[1]));
+			e.add(new StatChangedEvent(floor, statChange[2] == 1 ? user : target, statChange[0], statChange[1]));
 		return e;
 	}
 

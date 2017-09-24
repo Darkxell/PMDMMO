@@ -2,6 +2,7 @@ package com.darkxell.common.trap;
 
 import java.util.ArrayList;
 
+import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.DungeonEvent.MessageEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
@@ -24,11 +25,11 @@ public abstract class Trap
 	}
 
 	/** Called when a Pokémon steps on this Trap. */
-	public ArrayList<DungeonEvent> onPokemonStep(DungeonPokemon pokemon)
+	public ArrayList<DungeonEvent> onPokemonStep(Floor floor, DungeonPokemon pokemon)
 	{
 		ArrayList<DungeonEvent> events = new ArrayList<DungeonEvent>();
-		events.add(new MessageEvent(new Message("trap.stepped").addReplacement("<pokemon>", pokemon.pokemon.getNickname())
-				.addReplacement("<trap>", this.name())));
+		events.add(new MessageEvent(floor, new Message("trap.stepped").addReplacement("<pokemon>", pokemon.pokemon.getNickname()).addReplacement("<trap>",
+				this.name())));
 		return events;
 	}
 

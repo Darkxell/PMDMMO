@@ -12,8 +12,6 @@ import com.darkxell.common.util.Message;
 public class ItemUseEvent extends DungeonEvent
 {
 
-	/** The Floor the user is on. */
-	public final Floor floor;
 	/** The Item that was used. */
 	public final Item item;
 	/** The Pokémon that the Item was used on. null if there was no target. */
@@ -21,19 +19,19 @@ public class ItemUseEvent extends DungeonEvent
 	/** The Pokémon that used the Item. */
 	public final DungeonPokemon user;
 
-	public ItemUseEvent(Item item, DungeonPokemon user, DungeonPokemon target, Floor floor)
+	public ItemUseEvent(Floor floor, Item item, DungeonPokemon user, DungeonPokemon target)
 	{
+		super(floor);
 		this.item = item;
 		this.user = user;
 		this.target = target;
-		this.floor = floor;
 	}
 
 	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{
 		this.resultingEvents.addAll(this.item.use(this.floor, this.user, this.target));
-		if (this.resultingEvents.size() == 0) this.resultingEvents.add(new MessageEvent(new Message("item.no_effect")));
+		if (this.resultingEvents.size() == 0) this.resultingEvents.add(new MessageEvent(this.floor, new Message("item.no_effect")));
 		return super.processServer();
 	}
 

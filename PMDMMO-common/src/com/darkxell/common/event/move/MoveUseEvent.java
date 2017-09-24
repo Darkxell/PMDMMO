@@ -11,7 +11,6 @@ import com.darkxell.common.util.Message;
 public class MoveUseEvent extends DungeonEvent
 {
 
-	public final Floor floor;
 	/** The move that was used. */
 	public final LearnedMove move;
 	/** The Targets of this Move. */
@@ -19,19 +18,19 @@ public class MoveUseEvent extends DungeonEvent
 	/** The Pokémon that used the move. */
 	public final DungeonPokemon user;
 
-	public MoveUseEvent(LearnedMove move, DungeonPokemon user, DungeonPokemon target, Floor floor)
+	public MoveUseEvent(Floor floor, LearnedMove move, DungeonPokemon user, DungeonPokemon target)
 	{
+		super(floor);
 		this.move = move;
 		this.user = user;
 		this.target = target;
-		this.floor = floor;
 	}
 
 	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{
 		this.resultingEvents.addAll(this.move.move().useOn(this.user, this.target, this.floor));
-		if (this.resultingEvents.size() == 0) this.resultingEvents.add(new MessageEvent(new Message("move.no_effect")));
+		if (this.resultingEvents.size() == 0) this.resultingEvents.add(new MessageEvent(this.floor, new Message("move.no_effect")));
 		return super.processServer();
 	}
 }
