@@ -5,6 +5,7 @@ import java.util.Random;
 
 import com.darkxell.common.dungeon.DungeonInstance;
 import com.darkxell.common.dungeon.floor.layout.Layout;
+import com.darkxell.common.pokemon.DungeonPokemon;
 
 /** Represents a generated Floor in a Dungeon. */
 public class Floor {
@@ -71,6 +72,12 @@ public class Floor {
 
 	public int getHeight() {
 		return this.tiles[0].length;
+	}
+	
+	public void summonPokemon(DungeonPokemon pokemon, int x, int y) {
+		if (!(this.tiles == null || x < 0 || x >= this.tiles.length || y < 0 || y >= this.tiles[x].length))
+			this.tileAt(x, y).setPokemon(pokemon);
+		this.dungeon.registerActor(pokemon);
 	}
 
 	/** @return The tile at the input X, Y coordinates. */

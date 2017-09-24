@@ -53,7 +53,7 @@ public class DungeonState extends AbstractState
 	{
 		this.floorRenderer = new FloorRenderer(DungeonPersistance.floor);
 		Point p = DungeonPersistance.floor.teamSpawn;
-		DungeonPersistance.floor.tileAt(p.x, p.y).setPokemon(DungeonPersistance.player.getDungeonPokemon());
+		DungeonPersistance.floor.summonPokemon(DungeonPersistance.player.getDungeonPokemon(), p.x, p.y);
 		this.placeAllies();
 
 		this.logger = new DungeonLogger(this);
@@ -126,7 +126,7 @@ public class DungeonState extends AbstractState
 				Logger.e("DungeonState.placeAllies() @124 : Could not find a spawn location for ally " + p.pokemon.getNickname() + "!");
 				continue;
 			}
-			candidates.get(0).setPokemon(p);
+			DungeonPersistance.floor.summonPokemon(p, candidates.get(0).x, candidates.get(0).y);
 			candidates.remove(0);
 		}
 	}
