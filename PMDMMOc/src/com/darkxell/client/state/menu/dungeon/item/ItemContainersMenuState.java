@@ -3,7 +3,7 @@ package com.darkxell.client.state.menu.dungeon.item;
 import java.util.ArrayList;
 
 import com.darkxell.client.launchable.Launcher;
-import com.darkxell.client.mechanics.event.DungeonEventProcessor;
+import com.darkxell.client.mechanics.event.ClientEventProcessor;
 import com.darkxell.client.persistance.DungeonPersistance;
 import com.darkxell.client.state.dungeon.DungeonState;
 import com.darkxell.client.state.menu.InfoState;
@@ -99,7 +99,7 @@ public class ItemContainersMenuState extends OptionSelectionMenuState implements
 		else
 		{
 			Launcher.stateManager.setState(DungeonPersistance.dungeonState);
-			DungeonEventProcessor.processEvent(new ItemSwappedEvent(ItemAction.SWAP, DungeonPersistance.player.getDungeonPokemon(),
+			ClientEventProcessor.processEvent(new ItemSwappedEvent(DungeonPersistance.floor, ItemAction.SWAP, DungeonPersistance.player.getDungeonPokemon(),
 					DungeonPersistance.player.inventory, index, DungeonPersistance.player.getDungeonPokemon().tile, 0));
 		}
 	}
@@ -157,13 +157,15 @@ public class ItemContainersMenuState extends OptionSelectionMenuState implements
 		ItemStack i = container.getItem(index);
 		DungeonPokemon user = DungeonPersistance.player.getDungeonPokemon();
 
-		if (action == ItemAction.USE) DungeonEventProcessor.processEvent(new ItemUseSelectionEvent(i.item(), user, null, container, index,
-				DungeonPersistance.floor));
-		else if (action == ItemAction.GET || action == ItemAction.TAKE) DungeonEventProcessor.processEvent(new ItemMovedEvent(action, user, container, 0,
-				user.pokemon.player.inventory, user.pokemon.player.inventory.canAccept(i)));
+		if (action == ItemAction.USE) ClientEventProcessor.processEvent(new ItemUseSelectionEvent(DungeonPersistance.floor, i.item(), user, null, container,
+				index));
+		else if (action == ItemAction.GET || action == ItemAction.TAKE) ClientEventProcessor.processEvent(new ItemMovedEvent(DungeonPersistance.floor, action,
+				user, container, 0, user.pokemon.player.inventory, user.pokemon.player.inventory.canAccept(i)));
 		else if (action == ItemAction.GIVE) Launcher.stateManager.setState(new TeamMenuState(s, this));
-		else if (action == ItemAction.PLACE) DungeonEventProcessor.processEvent(new ItemMovedEvent(action, user, container, index, user.tile, 0));
-		else if (action == ItemAction.SWITCH) DungeonEventProcessor.processEvent(new ItemSwappedEvent(action, user, container, index, user.tile, 0));
+		else if (action == ItemAction.PLACE) ClientEventProcessor.processEvent(new ItemMovedEvent(DungeonPersistance.floor, action, user, container, index,
+				user.tile, 0));
+		else if (action == ItemAction.SWITCH) ClientEventProcessor.processEvent(new ItemSwappedEvent(DungeonPersistance.floor, action, user, container, index,
+				user.tile, 0));
 		else if (action == ItemAction.SWAP) Launcher.stateManager.setState(new ItemContainersMenuState(s, this, DungeonPersistance.player.inventory));
 		else if (action == ItemAction.INFO) Launcher.stateManager.setState(new InfoState(s, this, new Message[]
 		{ i.item().name() }, new Message[]
@@ -180,9 +182,9 @@ public class ItemContainersMenuState extends OptionSelectionMenuState implements
 	public void teamMemberSelected(Pokemon pokemon)
 	{
 		Launcher.stateManager.setState(DungeonPersistance.dungeonState);
-		if (pokemon.getItem() != null) DungeonEventProcessor.processEvent(new ItemSwappedEvent(ItemAction.GIVE, DungeonPersistance.player.getDungeonPokemon(),
-				DungeonPersistance.player.inventory, this.itemIndex(), pokemon, 0));
-		else DungeonEventProcessor.processEvent(new ItemMovedEvent(ItemAction.GIVE, DungeonPersistance.player.getDungeonPokemon(),
+		if (pokemon.getItem() != null) ClientEventProcessor.processEvent(new ItemSwappedEvent(DungeonPersistance.floor, ItemAction.GIVE,
+				DungeonPersistance.player.getDungeonPokemon(), DungeonPersistance.player.inventory, this.itemIndex(), pokemon, 0));
+		else ClientEventProcessor.processEvent(new ItemMovedEvent(DungeonPersistance.floor, ItemAction.GIVE, DungeonPersistance.player.getDungeonPokemon(),
 				DungeonPersistance.player.inventory, this.itemIndex(), pokemon, 0));
 
 	}

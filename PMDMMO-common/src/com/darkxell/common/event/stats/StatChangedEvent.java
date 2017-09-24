@@ -2,6 +2,7 @@ package com.darkxell.common.event.stats;
 
 import java.util.ArrayList;
 
+import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Message;
@@ -15,8 +16,9 @@ public class StatChangedEvent extends DungeonEvent
 	public final int stat;
 	public final DungeonPokemon target;
 
-	public StatChangedEvent(DungeonPokemon target, int stat, int stage)
+	public StatChangedEvent(Floor floor, DungeonPokemon target, int stat, int stage)
 	{
+		super(floor);
 		this.target = target;
 		this.stat = stat;
 		this.stage = stage;

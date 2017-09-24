@@ -122,7 +122,7 @@ public class Move
 		boolean crit = false;
 		{
 			double c = 0.12;
-			if (Math.random() < c) crit = true;
+			if (floor.random.nextDouble() < c) crit = true;
 		}
 		if (crit) d *= 1.5;
 
@@ -135,7 +135,7 @@ public class Move
 		}
 
 		// Damage randomness
-		d *= (57344 + Math.floor(Math.random() * 16384)) / 65536;
+		d *= (57344 + Math.floor(floor.random.nextDouble() * 16384)) / 65536;
 
 		return (int) d;
 	}
@@ -208,9 +208,9 @@ public class Move
 		DungeonPokemon[] pokemon = this.getTargets(user, floor);
 		ArrayList<DungeonEvent> events = new ArrayList<DungeonEvent>();
 		for (int i = 0; i < pokemon.length; ++i)
-			events.add(new MoveUseEvent(move, user, pokemon[i], floor));
+			events.add(new MoveUseEvent(floor, move, user, pokemon[i]));
 
-		if (events.size() == 0 && this != MoveRegistry.ATTACK) events.add(new MessageEvent(new Message("move.no_target")));
+		if (events.size() == 0 && this != MoveRegistry.ATTACK) events.add(new MessageEvent(floor, new Message("move.no_target")));
 		return events;
 	}
 
@@ -246,17 +246,17 @@ public class Move
 		boolean missed = this.misses(user, target, floor);
 
 		float effectiveness = this.type == null ? PokemonType.NORMALLY_EFFECTIVE : this.type.effectivenessOn(target.pokemon.species);
-		if (effectiveness == PokemonType.NO_EFFECT) events.add(new MessageEvent(new Message("move.effectiveness.none").addReplacement("<pokemon>",
+		if (effectiveness == PokemonType.NO_EFFECT) events.add(new MessageEvent(floor, new Message("move.effectiveness.none").addReplacement("<pokemon>",
 				target.pokemon.getNickname())));
 		else
 		{
 			if (this.power != -1)
 			{
-				if (effectiveness == PokemonType.SUPER_EFFECTIVE) events.add(new MessageEvent(new Message("move.effectiveness.super").addReplacement(
+				if (effectiveness == PokemonType.SUPER_EFFECTIVE) events.add(new MessageEvent(floor, new Message("move.effectiveness.super").addReplacement(
 						"<pokemon>", target.pokemon.getNickname())));
-				else if (effectiveness == PokemonType.NOT_VERY_EFFECTIVE) events.add(new MessageEvent(new Message("move.effectiveness.not_very")
+				else if (effectiveness == PokemonType.NOT_VERY_EFFECTIVE) events.add(new MessageEvent(floor, new Message("move.effectiveness.not_very")
 						.addReplacement("<pokemon>", target.pokemon.getNickname())));
-				events.add(new DamageDealtEvent(target, user, missed ? 0 : this.damageDealt(user, target, floor)));
+				events.add(new DamageDealtEvent(floor, target, user, missed ? 0 : this.damageDealt(user, target, floor)));
 			}
 			if (!missed && this.additionalEffectLands(user, target, floor)) events.addAll(this.additionalEffects(user, target, floor));
 		}

@@ -168,22 +168,22 @@ public class Tile implements ItemContainer
 	 * 
 	 * @param pokemon - The Pokémon stepping.
 	 * @return The Events triggered by this Tile. */
-	public ArrayList<DungeonEvent> onPokemonStep(DungeonPokemon pokemon)
+	public ArrayList<DungeonEvent> onPokemonStep(Floor floor, DungeonPokemon pokemon)
 	{
 		ArrayList<DungeonEvent> events = new ArrayList<DungeonEvent>();
 		if (this.getItem() != null)
 		{
 			ItemStack i = this.getItem();
 			int index = pokemon.pokemon.player == null ? -1 : pokemon.pokemon.player.inventory.canAccept(i);
-			if (i.id == Item.POKE && pokemon.pokemon.player != null) events.add(new MoneyCollectedEvent(pokemon, this, i));
-			else if (pokemon.pokemon.player != null && index != -1) events.add(new ItemMovedEvent(ItemAction.GET, pokemon, this, 0,
+			if (i.id == Item.POKE && pokemon.pokemon.player != null) events.add(new MoneyCollectedEvent(floor, pokemon, this, i));
+			else if (pokemon.pokemon.player != null && index != -1) events.add(new ItemMovedEvent(floor, ItemAction.GET, pokemon, this, 0,
 					pokemon.pokemon.player.inventory, index));
-			else if (pokemon.pokemon.getItem() == null) events.add(new ItemMovedEvent(ItemAction.GET, pokemon, this, 0, pokemon.pokemon, 0));
-			else events.add(new MessageEvent(new Message("ground.step").addReplacement("<pokemon>", pokemon.pokemon.getNickname()).addReplacement("<item>",
-					this.getItem().name())));
+			else if (pokemon.pokemon.getItem() == null) events.add(new ItemMovedEvent(floor, ItemAction.GET, pokemon, this, 0, pokemon.pokemon, 0));
+			else events.add(new MessageEvent(floor, new Message("ground.step").addReplacement("<pokemon>", pokemon.pokemon.getNickname()).addReplacement(
+					"<item>", this.getItem().name())));
 		}
 
-		if (this.hasTrap()) events.add(new TrapSteppedOnEvent(pokemon, this, this.trap));
+		if (this.hasTrap()) events.add(new TrapSteppedOnEvent(floor, pokemon, this, this.trap));
 
 		return events;
 	}
@@ -223,6 +223,7 @@ public class Tile implements ItemContainer
 	/** Sets the Pokémon on this tile. Also changes this Pokémon's previous tile's Pokémon to null. */
 	public void setPokemon(DungeonPokemon pokemon)
 	{
+		if (this.pokemon != null) this.pokemon.tile = null;
 		if (pokemon == null) this.pokemon = null;
 		else
 		{

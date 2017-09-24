@@ -13,8 +13,6 @@ import com.darkxell.common.pokemon.DungeonPokemon;
 public class ItemUseSelectionEvent extends DungeonEvent
 {
 
-	/** The Floor the user is on. */
-	public final Floor floor;
 	/** The Item that was used. */
 	public final Item item;
 	/** The Container the Item was from. */
@@ -26,12 +24,12 @@ public class ItemUseSelectionEvent extends DungeonEvent
 	/** The Pokémon that used the Item. */
 	public final DungeonPokemon user;
 
-	public ItemUseSelectionEvent(Item item, DungeonPokemon user, DungeonPokemon target, ItemContainer source, int sourceIndex, Floor floor)
+	public ItemUseSelectionEvent(Floor floor, Item item, DungeonPokemon user, DungeonPokemon target, ItemContainer source, int sourceIndex)
 	{
+		super(floor);
 		this.item = item;
 		this.user = user;
 		this.target = target;
-		this.floor = floor;
 		this.source = source;
 		this.sourceIndex = sourceIndex;
 
@@ -45,9 +43,8 @@ public class ItemUseSelectionEvent extends DungeonEvent
 		stack.setQuantity(stack.getQuantity() - 1);
 		if (stack.getQuantity() <= 0) this.source.deleteItem(this.sourceIndex);
 
-		ArrayList<DungeonEvent> events = super.processServer();
-		events.add(new ItemUseEvent(this.item, user, this.target, this.floor));
-		return events;
+		this.resultingEvents.add(new ItemUseEvent(this.floor, this.item, user, this.target));
+		return super.processServer();
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.darkxell.common.util;
 
 import java.awt.Point;
+import java.util.Random;
 
 import javafx.util.Pair;
 
@@ -124,9 +125,9 @@ public class GameUtil
 	}
 
 	/** @return A random direction. */
-	public static short randomDirection()
+	public static short randomDirection(Random random)
 	{
-		return directions[(int) (Math.random() * 8)];
+		return directions[random.nextInt(8)];
 	}
 
 	/** @return The next direction after rotating clockwise from the input direction. */

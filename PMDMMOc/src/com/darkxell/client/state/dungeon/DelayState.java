@@ -2,10 +2,10 @@ package com.darkxell.client.state.dungeon;
 
 import java.awt.Graphics2D;
 
-import com.darkxell.client.mechanics.event.DungeonEventProcessor;
+import com.darkxell.client.mechanics.event.ClientEventProcessor;
 import com.darkxell.client.state.dungeon.DungeonState.DungeonSubState;
 
-/** A State that delays a certain number of ticks, then refers to the {@link DungeonEventProcessor} for pending events. */
+/** A State that delays a certain number of ticks, then refers to the {@link ClientEventProcessor} for pending events. */
 public class DelayState extends DungeonSubState
 {
 
@@ -37,7 +37,7 @@ public class DelayState extends DungeonSubState
 		if (this.tick >= this.duration)
 		{
 			this.parent.setSubstate(this.parent.actionSelectionState);
-			DungeonEventProcessor.processPending();
+			ClientEventProcessor.processPending();
 		}
 	}
 

@@ -2,6 +2,7 @@ package com.darkxell.common.event.pokemon;
 
 import java.util.ArrayList;
 
+import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
@@ -27,27 +28,33 @@ public class PokemonTravelEvent extends DungeonEvent
 
 	private PokemonTravel[] travels;
 
-	public PokemonTravelEvent(DungeonPokemon pokemon, short direction)
+	public PokemonTravelEvent(Floor floor, DungeonPokemon pokemon, short direction)
 	{
-		this(new PokemonTravel(pokemon, direction));
+		this(floor, new PokemonTravel(pokemon, direction));
 	}
 
-	public PokemonTravelEvent(PokemonTravel... travels)
+	public PokemonTravelEvent(Floor floor, PokemonTravel... travels)
 	{
+		super(floor);
 		this.travels = travels;
+	}
+
+	/** @return The first of these Event's travels. */
+	public PokemonTravel getTravel()
+	{
+		return this.travels[0];
 	}
 
 	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{
-		ArrayList<DungeonEvent> events = new ArrayList<DungeonEvent>();
 		for (PokemonTravel travel : this.travels)
 		{
 			travel.origin.removePokemon(travel.pokemon);
 			travel.destination.setPokemon(travel.pokemon);
-			events.addAll(travel.destination.onPokemonStep(travel.pokemon));
+			this.resultingEvents.addAll(travel.destination.onPokemonStep(this.floor, travel.pokemon));
 		}
-		return events;
+		return super.processServer();
 	}
 
 	public PokemonTravel[] travels()

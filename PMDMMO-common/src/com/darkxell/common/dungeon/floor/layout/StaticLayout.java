@@ -85,8 +85,8 @@ public class StaticLayout extends Layout {
 	protected void summonPokemon() {
 		if (this.xml.getChild("pokemons") != null)
 			for (Element pokemon : this.xml.getChild("pokemons").getChildren(Pokemon.XML_ROOT))
-				this.floor.tiles[Integer.parseInt(pokemon.getAttributeValue("x"))][Integer
-						.parseInt(pokemon.getAttributeValue("y"))].setPokemon(new DungeonPokemon(new Pokemon(pokemon)));
+				this.floor.summonPokemon(new DungeonPokemon(new Pokemon(pokemon)), Integer.parseInt(pokemon.getAttributeValue("x")), Integer
+						.parseInt(pokemon.getAttributeValue("y")));
 	}
 
 }

@@ -96,6 +96,12 @@ public class DungeonPokemon
 		if (this.hp > this.pokemon.getStats().health) this.hp = this.pokemon.getStats().health;
 	}
 
+	@Override
+	public String toString()
+	{
+		return this.pokemon.getNickname().toString();
+	}
+
 	/** Called when this Pokémon tries to move in the input direction. */
 	public boolean tryMoveTo(short direction)
 	{
