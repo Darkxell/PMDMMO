@@ -11,7 +11,9 @@ import com.darkxell.client.state.DialogState.DialogEndListener;
 import com.darkxell.client.state.FreezoneExploreState;
 import com.darkxell.client.state.dungeon.AnimationState;
 import com.darkxell.client.state.dungeon.PokemonTravelState;
+import com.darkxell.common.dungeon.DungeonInstance;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.DungeonEvent.MessageEvent;
 import com.darkxell.common.event.dungeon.DungeonExitEvent;
 import com.darkxell.common.event.item.ItemUseSelectionEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent;
@@ -21,6 +23,8 @@ import com.darkxell.common.event.pokemon.FaintedPokemonEvent;
 import com.darkxell.common.event.pokemon.PokemonTravelEvent;
 import com.darkxell.common.event.stats.ExperienceGainedEvent;
 import com.darkxell.common.event.stats.StatChangedEvent;
+import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.util.Message;
 
 /** Translates game logic events into displayable content to the client.<br />
  * Takes in Events to display messages, manage resources or change game states. */
@@ -40,11 +44,17 @@ public final class DungeonEventProcessor
 	/** While processing an event, setting this to false will stop processing the pending events. */
 	static boolean processPending = true;
 
-	/** Adds the input event(s) to the pending stack, without processing them. */
+	/** Adds the input events to the pending stack, without processing them. */
 	public static void addToPending(ArrayList<DungeonEvent> arrayList)
 	{
 		for (int i = arrayList.size() - 1; i >= 0; --i)
-			pending.add(arrayList.get(i));
+			addToPending(arrayList.get(i));
+	}
+
+	/** Adds the input event to the pending stack, without processing it. */
+	public static void addToPending(DungeonEvent event)
+	{
+		pending.add(event);
 	}
 
 	public static boolean hasPendingEvents()
@@ -61,6 +71,7 @@ public final class DungeonEventProcessor
 	public static void processEvent(DungeonEvent event)
 	{
 		processPending = true;
+		DungeonPersistance.dungeon.eventOccured(event);
 
 		if (event.isValid())
 		{
@@ -97,6 +108,23 @@ public final class DungeonEventProcessor
 	public static void processPending()
 	{
 		if (!pending.empty()) processEvent(pending.pop());
+		else
+		{
+			DungeonInstance dungeon = DungeonPersistance.dungeon;
+			DungeonPokemon actor = dungeon.getNextActor();
+			if (actor == null)
+			{
+				if (!dungeon.currentTurn().turnEnded()) addToPending(dungeon.currentTurn().onTurnEnd());
+				else dungeon.endTurn();
+				processPending();
+				return;
+			} else if (actor.pokemon.player != null && actor.pokemon.player.getDungeonPokemon() == actor) return;
+			else
+			{
+				addToPending(new MessageEvent(dungeon.currentFloor(), new Message("It's " + actor.pokemon.getNickname() + "'s turn!", false)));
+				processPending();
+			}
+		}
 	}
 
 	private static void processTravelEvent(PokemonTravelEvent event)
