@@ -3,8 +3,8 @@ package com.darkxell.client.persistance;
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
 import com.darkxell.client.mechanics.freezones.FreezonePlayer;
 import com.darkxell.client.mechanics.freezones.entities.FreezoneCamera;
-import com.darkxell.client.resources.images.PokemonSprite;
-import com.darkxell.client.resources.images.PokemonSpritesets;
+import com.darkxell.client.resources.images.pokemon.PokemonSprite;
+import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
 
 /**
  * Holds a static reference to the freezone map currently active. Can be null.

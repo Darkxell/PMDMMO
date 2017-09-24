@@ -8,7 +8,7 @@ import com.darkxell.client.persistance.DungeonPersistance;
 import com.darkxell.client.renderers.DungeonPokemonRenderer;
 import com.darkxell.client.renderers.MoveRenderer;
 import com.darkxell.client.renderers.TextRenderer;
-import com.darkxell.client.resources.images.PokemonSprite;
+import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.state.DialogState;
 import com.darkxell.client.state.DialogState.DialogScreen;
 import com.darkxell.client.state.dungeon.AnimationState;

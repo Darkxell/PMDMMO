@@ -6,7 +6,7 @@ import java.util.Random;
 
 import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.mechanics.freezones.FreezoneEntity;
-import com.darkxell.client.resources.images.PokemonSprite;
+import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.state.DialogState;
 import com.darkxell.client.state.DialogState.DialogScreen;
 import com.darkxell.common.pokemon.Pokemon;

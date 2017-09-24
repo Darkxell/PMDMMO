@@ -1,4 +1,4 @@
-package com.darkxell.client.resources.images;
+package com.darkxell.client.resources.images.pokemon;
 
 import java.awt.image.BufferedImage;
 

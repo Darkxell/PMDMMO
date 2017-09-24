@@ -12,7 +12,7 @@ import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.renderers.TextRenderer.PMDChar;
 import com.darkxell.client.resources.images.Hud;
 import com.darkxell.client.resources.images.MenuHudSpriteset;
-import com.darkxell.client.resources.images.PokemonPortrait;
+import com.darkxell.client.resources.images.pokemon.PokemonPortrait;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.Message;

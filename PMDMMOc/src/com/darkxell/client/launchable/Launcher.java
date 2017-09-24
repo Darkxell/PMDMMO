@@ -2,7 +2,7 @@ package com.darkxell.client.launchable;
 
 import com.darkxell.client.mechanics.chat.ChatBox;
 import com.darkxell.client.renderers.TextRenderer;
-import com.darkxell.client.resources.images.PokemonSpritesets;
+import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
 import com.darkxell.client.resources.music.SoundManager;
 import com.darkxell.client.state.OpenningState;
 import com.darkxell.client.state.StateManager;

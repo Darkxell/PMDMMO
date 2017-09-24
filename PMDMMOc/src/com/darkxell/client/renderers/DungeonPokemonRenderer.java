@@ -6,8 +6,8 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.HashMap;
 
-import com.darkxell.client.resources.images.PokemonSprite;
-import com.darkxell.client.resources.images.PokemonSpritesets;
+import com.darkxell.client.resources.images.pokemon.PokemonSprite;
+import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.GameUtil;
 

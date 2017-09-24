@@ -1,8 +1,8 @@
 package com.darkxell.client.mechanics.freezones;
 
 import com.darkxell.client.persistance.FreezoneMapHolder;
-import com.darkxell.client.resources.images.AbstractPokemonSpriteset;
-import com.darkxell.client.resources.images.PokemonSprite;
+import com.darkxell.client.resources.images.pokemon.AbstractPokemonSpriteset;
+import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.common.util.DoubleRectangle;
 

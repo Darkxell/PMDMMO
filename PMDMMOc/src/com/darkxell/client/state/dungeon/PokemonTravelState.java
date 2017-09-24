@@ -7,7 +7,7 @@ import com.darkxell.client.mechanics.event.ClientEventProcessor;
 import com.darkxell.client.persistance.DungeonPersistance;
 import com.darkxell.client.renderers.DungeonPokemonRenderer;
 import com.darkxell.client.resources.images.AbstractDungeonTileset;
-import com.darkxell.client.resources.images.PokemonSprite;
+import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.state.dungeon.DungeonState.DungeonSubState;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;

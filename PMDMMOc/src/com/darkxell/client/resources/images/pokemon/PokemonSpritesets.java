@@ -1,4 +1,4 @@
-package com.darkxell.client.resources.images;
+package com.darkxell.client.resources.images.pokemon;
 
 import java.io.File;
 import java.util.HashMap;
@@ -34,8 +34,7 @@ public final class PokemonSpritesets
 		Element xml = XMLUtils.readFile(new File("resources/data/spritesets.xml"));
 		for (Element pokemon : xml.getChildren("pokemon"))
 			spritedata.put(Integer.parseInt(pokemon.getAttributeValue("id")), pokemon);
-		spritesets.put(0, new AbstractPokemonSpriteset("/pokemons/pkmn0.png", 16, 16, 32, new int[]
-		{ 32 }, 1, 1, 1, 1));
+		loadSpriteset(0);
 	}
 
 	/** Loads the Spritesheet for the Pokémon with the input ID. */
@@ -49,27 +48,7 @@ public final class PokemonSpritesets
 			return;
 		}
 
-		int width = 0, height = 0;
-		if (xml.getAttribute("size") != null) width = height = Integer.parseInt(xml.getAttributeValue("size"));
-		else
-		{
-			width = Integer.parseInt(xml.getAttributeValue("w"));
-			height = Integer.parseInt(xml.getAttributeValue("h"));
-		}
-		int wake = xml.getAttribute("wake") == null ? 0 : Integer.parseInt(xml.getAttributeValue("wake"));
-		int victory = xml.getAttribute("victory") == null ? 0 : Integer.parseInt(xml.getAttributeValue("victory"));
-
-		String[] idle = xml.getAttributeValue("idle").split(",");
-		int[] idleAnimation = new int[idle.length];
-		for (int i = 0; i < idleAnimation.length; ++i)
-			idleAnimation[i] = Integer.parseInt(idle[i]);
-
-		spritesets.put(
-				id,
-				new AbstractPokemonSpriteset("/pokemons/pkmn" + id + ".png", Integer.parseInt(xml.getAttributeValue("x")), Integer.parseInt(xml
-						.getAttributeValue("y")), width, height, idleAnimation, Integer.parseInt(xml.getAttributeValue("move")), Integer.parseInt(xml
-						.getAttributeValue("attack")), Integer.parseInt(xml.getAttributeValue("spe1")), Integer.parseInt(xml.getAttributeValue("spe2")), "true"
-						.equals(xml.getAttributeValue("ambient")), wake, victory));
+		spritesets.put(id, new AbstractPokemonSpriteset("/pokemons/pkmn" + id + ".png", xml));
 	}
 
 	private PokemonSpritesets()

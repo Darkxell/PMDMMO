@@ -6,7 +6,7 @@ import com.darkxell.client.mechanics.animation.AbstractAnimation;
 import com.darkxell.client.mechanics.animation.AnimationEndListener;
 import com.darkxell.client.mechanics.animation.TravelAnimation;
 import com.darkxell.client.renderers.DungeonPokemonRenderer;
-import com.darkxell.client.resources.images.PokemonSprite;
+import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
