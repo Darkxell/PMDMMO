@@ -30,7 +30,6 @@ public class ActionSelectionState extends DungeonSubState
 
 	public short checkMovement()
 	{
-		DungeonPersistance.dungeon.getActor();
 		short direction = -1;
 
 		if (Keys.isPressed(Keys.KEY_UP) && Keys.isPressed(Keys.KEY_RIGHT) && !Keys.isPressed(Keys.KEY_DOWN) && !Keys.isPressed(Keys.KEY_LEFT)) direction = GameUtil.NORTHEAST;
@@ -104,7 +103,7 @@ public class ActionSelectionState extends DungeonSubState
 		if (this.isMain())
 		{
 			short direction = this.checkMovement();
-			if (direction != -1) ClientEventProcessor.actorTravels(direction);
+			if (direction != -1) ClientEventProcessor.actorTravels(direction, Keys.isPressed(Keys.KEY_RUN));
 		}
 
 		++this.rotationCounter;

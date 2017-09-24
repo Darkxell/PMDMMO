@@ -16,10 +16,12 @@ public class PokemonTravelEvent extends DungeonEvent
 		public final short direction;
 		public final Tile origin, destination;
 		public final DungeonPokemon pokemon;
+		public final boolean running;
 
-		public PokemonTravel(DungeonPokemon pokemon, short direction)
+		public PokemonTravel(DungeonPokemon pokemon, boolean running, short direction)
 		{
 			this.pokemon = pokemon;
+			this.running = running;
 			this.direction = direction;
 			this.origin = pokemon.tile;
 			this.destination = pokemon.tile.adjacentTile(this.direction);
@@ -28,9 +30,14 @@ public class PokemonTravelEvent extends DungeonEvent
 
 	private PokemonTravel[] travels;
 
+	public PokemonTravelEvent(Floor floor, DungeonPokemon pokemon, boolean running, short direction)
+	{
+		this(floor, new PokemonTravel(pokemon, running, direction));
+	}
+
 	public PokemonTravelEvent(Floor floor, DungeonPokemon pokemon, short direction)
 	{
-		this(floor, new PokemonTravel(pokemon, direction));
+		this(floor, pokemon, false, direction);
 	}
 
 	public PokemonTravelEvent(Floor floor, PokemonTravel... travels)
@@ -45,6 +52,13 @@ public class PokemonTravelEvent extends DungeonEvent
 		return this.travels[0];
 	}
 
+	public boolean isRunning()
+	{
+		for (PokemonTravel travel : this.travels)
+			if (travel.running) return true;
+		return false;
+	}
+
 	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{
@@ -52,7 +66,7 @@ public class PokemonTravelEvent extends DungeonEvent
 		{
 			travel.origin.removePokemon(travel.pokemon);
 			travel.destination.setPokemon(travel.pokemon);
-			this.resultingEvents.addAll(travel.destination.onPokemonStep(this.floor, travel.pokemon));
+			this.resultingEvents.addAll(travel.destination.onPokemonStep(this.floor, travel.pokemon, travel.running));
 		}
 		return super.processServer();
 	}

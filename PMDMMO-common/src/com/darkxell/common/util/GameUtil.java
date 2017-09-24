@@ -1,6 +1,7 @@
 package com.darkxell.common.util;
 
 import java.awt.Point;
+import java.util.ArrayList;
 import java.util.Random;
 
 import javafx.util.Pair;
@@ -51,6 +52,19 @@ public class GameUtil
 	public static short[] directions()
 	{
 		return directions.clone();
+	}
+
+	/** @return The directions contained in the input direction sum. */
+	public static short[] directions(short sum)
+	{
+		ArrayList<Short> d = new ArrayList<Short>();
+		for (short dir : directions())
+			if (containsDirection(sum, dir)) d.add(dir);
+
+		short[] toreturn = new short[d.size()];
+		for (int i = 0; i < toreturn.length; i++)
+			toreturn[i] = d.get(i);
+		return toreturn;
 	}
 
 	public static int indexOf(short direction)
@@ -136,6 +150,15 @@ public class GameUtil
 		int d = indexOf(direction);
 		d += 1;
 		if (d > 7) d = 0;
+		return directions[d];
+	}
+
+	/** @return The next direction after rotating clockwise from the input direction. */
+	public static short rotateCounterClockwise(short direction)
+	{
+		int d = indexOf(direction);
+		d -= 1;
+		if (d < 0) d = 7;
 		return directions[d];
 	}
 

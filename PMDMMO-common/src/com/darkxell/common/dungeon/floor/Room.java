@@ -41,7 +41,7 @@ public class Room
 	/** @return True if the input coordinates are inside this Room. */
 	public boolean contains(int x, int y)
 	{
-		return x >= this.x && x <= this.x + this.width && y >= this.y && y <= this.y + this.height;
+		return x >= this.x && x < this.x + this.width && y >= this.y && y < this.y + this.height;
 	}
 
 	/** @return All tiles in this Room. */

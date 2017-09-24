@@ -48,10 +48,10 @@ public final class ClientEventProcessor
 	/** While processing an event, setting this to false will stop processing the pending events. */
 	static boolean processPending = true;
 
-	public static void actorTravels(short direction)
+	public static void actorTravels(short direction, boolean running)
 	{
 		ArrayList<PokemonTravel> travellers = new ArrayList<PokemonTravel>();
-		travellers.add(new PokemonTravel(DungeonPersistance.dungeon.getActor(), direction));
+		travellers.add(new PokemonTravel(DungeonPersistance.dungeon.getActor(), running, direction));
 		boolean flag = true;
 		DungeonEvent e = null;
 		while (flag)
@@ -178,7 +178,7 @@ public final class ClientEventProcessor
 	private static void processTravelEvent(PokemonTravelEvent event)
 	{
 		processPending = false;
-		DungeonPersistance.dungeonState.setSubstate(new PokemonTravelState(DungeonPersistance.dungeonState, event.travels()));
+		DungeonPersistance.dungeonState.setSubstate(new PokemonTravelState(DungeonPersistance.dungeonState, event.isRunning(), event.travels()));
 	}
 
 	private ClientEventProcessor()

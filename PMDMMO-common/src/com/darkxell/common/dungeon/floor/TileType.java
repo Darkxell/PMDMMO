@@ -2,19 +2,21 @@ package com.darkxell.common.dungeon.floor;
 
 import java.util.ArrayList;
 
+import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.pokemon.PokemonType;
+
 public enum TileType
 {
 
+	AIR(5, 'a'),
 	GROUND(0, ' '),
+	LAVA(4, 'l'),
+	STAIR(6, 'S'),
 	WALL(1, 'M'),
 	WALL_END(2, 'm'),
+	WARP_ZONE(9, 'x'),
 	WATER(3, 'w'),
-	LAVA(4, 'l'),
-	AIR(5, 'a'),
-	STAIR(6, 'S'),
-	WONDER_TILE(7, 'W'),
-	TRAP(8, 'X'),
-	WARP_ZONE(9, 'x');
+	WONDER_TILE(7, 'W');
 
 	@SuppressWarnings("unchecked")
 	private static ArrayList<TileType>[] tileGroups = new ArrayList[]
@@ -27,7 +29,6 @@ public enum TileType
 		tileGroups[1].add(GROUND);
 		tileGroups[1].add(STAIR);
 		tileGroups[1].add(WONDER_TILE);
-		tileGroups[1].add(TRAP);
 		tileGroups[1].add(WARP_ZONE);
 	}
 
@@ -55,6 +56,15 @@ public enum TileType
 	{
 		this.id = id;
 		this.c = c;
+	}
+
+	public boolean canWalkOn(DungeonPokemon pokemon)
+	{
+		if (pokemon.pokemon.species.isType(PokemonType.GHOST)) return this != WALL_END;
+		if (pokemon.pokemon.species.isType(PokemonType.WATER) && this == WATER) return true;
+		if (pokemon.pokemon.species.isType(PokemonType.FIRE) && this == LAVA) return true;
+		if (pokemon.pokemon.species.isType(PokemonType.FLYING) && this == AIR) return true;
+		return this == GROUND || this == STAIR || this == WONDER_TILE;
 	}
 
 	/** @return True if this Tile connects to the input Tile. */
