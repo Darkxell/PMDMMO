@@ -8,6 +8,7 @@ import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.dungeon.DungeonState;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.client.state.menu.dungeon.item.ItemContainersMenuState;
+import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.player.ItemContainer;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.Message;
@@ -63,7 +64,8 @@ public class DungeonMenuState extends OptionSelectionMenuState
 		else if (option == this.ground)
 		{
 			this.onExit();
-			if (DungeonPersistance.player.getDungeonPokemon().tile.getItem() == null) s.logger.showMessage(new Message("ground.empty"));
+			if (DungeonPersistance.player.getDungeonPokemon().tile.type() == TileType.STAIR) Launcher.stateManager.setState(new StairMenuState());
+			else if (DungeonPersistance.player.getDungeonPokemon().tile.getItem() == null) s.logger.showMessage(new Message("ground.empty"));
 			else Launcher.stateManager.setState(new ItemContainersMenuState(s, DungeonPersistance.player.getDungeonPokemon().tile));
 		}
 	}

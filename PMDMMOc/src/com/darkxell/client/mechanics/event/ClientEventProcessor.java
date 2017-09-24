@@ -34,6 +34,7 @@ import com.darkxell.common.pokemon.DungeonPokemon;
  * Takes in Events to display messages, manage resources or change game states. */
 public final class ClientEventProcessor
 {
+	public static boolean landedOnStairs = false;
 	/** Pending events to process. */
 	private static final Stack<DungeonEvent> pending = new Stack<DungeonEvent>();
 	public static final DialogEndListener processEventsOnDialogEnd = new DialogEndListener()
@@ -157,6 +158,11 @@ public final class ClientEventProcessor
 			DungeonPokemon actor = dungeon.nextActor();
 			if (actor == null)
 			{
+				if (landedOnStairs)
+				{
+					addToPending(new StairLandingEvent());
+					landedOnStairs = false;
+				}
 				addToPending(dungeon.endTurn());
 				processPending();
 				return;

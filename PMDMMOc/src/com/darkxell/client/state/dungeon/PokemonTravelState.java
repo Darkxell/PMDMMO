@@ -4,7 +4,6 @@ import java.awt.Graphics2D;
 
 import com.darkxell.client.mechanics.animation.TravelAnimation;
 import com.darkxell.client.mechanics.event.ClientEventProcessor;
-import com.darkxell.client.mechanics.event.StairLandingEvent;
 import com.darkxell.client.persistance.DungeonPersistance;
 import com.darkxell.client.renderers.DungeonPokemonRenderer;
 import com.darkxell.client.resources.images.AbstractDungeonTileset;
@@ -123,6 +122,7 @@ public class PokemonTravelState extends DungeonSubState
 				travel.destination.setPokemon(travel.pokemon);
 				if (travel.destination.type() == TileType.STAIR) stairLand = travel.pokemon == DungeonPersistance.player.getDungeonPokemon();
 			}
+			ClientEventProcessor.landedOnStairs = stairLand;
 			this.parent.setSubstate(this.parent.actionSelectionState);
 
 			short direction = this.running ? -1 : this.parent.actionSelectionState.checkMovement();
@@ -139,7 +139,6 @@ public class PokemonTravelState extends DungeonSubState
 					|| DungeonPersistance.dungeon.getNextActor() != null;
 			else shouldStop = direction == -1 || ClientEventProcessor.hasPendingEvents() || DungeonPersistance.dungeon.getNextActor() != null;
 
-			if (stairLand) ClientEventProcessor.addToPending(new StairLandingEvent()); // TODO don't use event!
 			if (shouldStop) this.stopTravel();
 			else
 			{
