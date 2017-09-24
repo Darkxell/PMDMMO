@@ -8,17 +8,18 @@ import org.jdom2.input.SAXBuilder;
 
 import com.darkxell.client.persistance.FreezoneMapHolder;
 import com.darkxell.client.resources.images.AbstractTileset;
+import com.darkxell.client.state.map.LocalMap.LOCALMAPLOCATION;
 
 /**
  * A tiled map of a freezone. Freezones are the areas where you can move freely
  * and don't have to fight.
  */
-public class FreezoneMap {
+public abstract class FreezoneMap {
 
 	public FreezoneTile[] tiles;
 	/** The width of the map, in tiles. */
 	public int mapWidth;
-	/** The height of the map, in tiles.s*/
+	/** The height of the map, in tiles.s */
 	public int mapHeight;
 
 	public String freezonebgm = "";
@@ -73,5 +74,7 @@ public class FreezoneMap {
 			return FreezoneTile.TYPE_WALKABLE;
 		return this.tiles[calc].type;
 	}
+
+	public abstract LOCALMAPLOCATION getMapLocation();
 
 }

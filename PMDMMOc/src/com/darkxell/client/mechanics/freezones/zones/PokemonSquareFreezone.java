@@ -7,6 +7,7 @@ import com.darkxell.client.mechanics.freezones.entities.PokemonFreezoneEntity;
 import com.darkxell.client.mechanics.freezones.entities.SignSoulEntity;
 import com.darkxell.client.resources.images.PokemonSprite;
 import com.darkxell.client.resources.images.PokemonSpritesets;
+import com.darkxell.client.state.map.LocalMap.LOCALMAPLOCATION;
 import com.darkxell.common.util.DoubleRectangle;
 import com.darkxell.common.util.Message;
 
@@ -78,6 +79,11 @@ public class PokemonSquareFreezone extends FreezoneMap {
 		this.entities.add(new SignSoulEntity(68.5, 10, new Message("sign.pokemonsquare.north")));
 		this.entities.add(new SignSoulEntity(114.5, 36, new Message("sign.pokemonsquare.east")));
 
+	}
+
+	@Override
+	public LOCALMAPLOCATION getMapLocation() {
+		return LOCALMAPLOCATION.SQUARE;
 	}
 
 }

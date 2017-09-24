@@ -2,6 +2,7 @@ package com.darkxell.client.state.map;
 
 import java.awt.Graphics2D;
 
+import com.darkxell.client.persistance.FreezoneMapHolder;
 import com.darkxell.client.resources.images.MapResources;
 
 public class LocalMap extends AbstractDisplayMap {
@@ -24,7 +25,8 @@ public class LocalMap extends AbstractDisplayMap {
 
 	@Override
 	public void update() {
-
+		if (FreezoneMapHolder.currentmap != null && FreezoneMapHolder.currentmap.getMapLocation() != currentlocation)
+			currentlocation = FreezoneMapHolder.currentmap.getMapLocation();
 	}
 
 	public enum LOCALMAPLOCATION {

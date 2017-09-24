@@ -146,6 +146,7 @@ public class StateManager {
 		if (this.currentState != null)
 			this.currentState.update();
 		AnimationTicker.instance.update();
+		Launcher.displaymap.update();
 	}
 
 	// GETTERS,SETTERS AND UTILITY

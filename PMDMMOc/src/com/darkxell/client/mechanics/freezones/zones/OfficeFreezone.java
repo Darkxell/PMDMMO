@@ -4,6 +4,7 @@ import com.darkxell.client.mechanics.freezones.FreezoneMap;
 import com.darkxell.client.mechanics.freezones.WarpZone;
 import com.darkxell.client.mechanics.freezones.entities.AnimatedFlowerEntity;
 import com.darkxell.client.renderers.layers.BackgroundSeaLayer;
+import com.darkxell.client.state.map.LocalMap.LOCALMAPLOCATION;
 import com.darkxell.common.util.DoubleRectangle;
 
 public class OfficeFreezone extends FreezoneMap {
@@ -19,17 +20,22 @@ public class OfficeFreezone extends FreezoneMap {
 				return new PokemonSquareFreezone();
 			}
 		});
-		
+
 		this.entities.add(new AnimatedFlowerEntity(7, 25, false));
 		this.entities.add(new AnimatedFlowerEntity(4, 47, false));
 		this.entities.add(new AnimatedFlowerEntity(20, 41, false));
 		this.entities.add(new AnimatedFlowerEntity(43, 26, false));
-		
+
 		this.entities.add(new AnimatedFlowerEntity(18, 21, true));
 		this.entities.add(new AnimatedFlowerEntity(23, 20, true));
 		this.entities.add(new AnimatedFlowerEntity(55, 24, true));
 		this.entities.add(new AnimatedFlowerEntity(40, 39, true));
 		this.entities.add(new AnimatedFlowerEntity(15, 46, true));
+	}
+
+	@Override
+	public LOCALMAPLOCATION getMapLocation() {
+		return LOCALMAPLOCATION.OFFICE;
 	}
 
 }

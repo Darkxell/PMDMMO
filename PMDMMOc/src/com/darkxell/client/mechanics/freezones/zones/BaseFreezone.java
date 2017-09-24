@@ -7,6 +7,7 @@ import com.darkxell.client.mechanics.freezones.entities.AnimatedFlowerEntity;
 import com.darkxell.client.mechanics.freezones.entities.FlagEntity;
 import com.darkxell.client.persistance.DungeonPersistance;
 import com.darkxell.client.state.dungeon.DungeonState;
+import com.darkxell.client.state.map.LocalMap.LOCALMAPLOCATION;
 import com.darkxell.common.dungeon.DungeonRegistry;
 import com.darkxell.common.util.DoubleRectangle;
 
@@ -45,6 +46,11 @@ public class BaseFreezone extends FreezoneMap {
 		this.entities.add(new AnimatedFlowerEntity(42.5, 59, false));
 
 		this.entities.add(new FlagEntity(24.4, 10));
+	}
+
+	@Override
+	public LOCALMAPLOCATION getMapLocation() {
+		return LOCALMAPLOCATION.BASE;
 	}
 
 }
