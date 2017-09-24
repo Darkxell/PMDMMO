@@ -146,8 +146,7 @@ public final class ClientEventProcessor
 			DungeonPokemon actor = dungeon.nextActor();
 			if (actor == null)
 			{
-				if (!dungeon.currentTurn().turnEnded()) addToPending(dungeon.currentTurn().onTurnEnd());
-				else dungeon.endTurn();
+				addToPending(dungeon.endTurn());
 				processPending();
 				return;
 			} else if (actor.pokemon.player != null && actor.pokemon.player.getDungeonPokemon() == actor) return;

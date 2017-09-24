@@ -59,6 +59,13 @@ public class PokemonTravelState extends DungeonSubState
 			DungeonPokemonRenderer.instance.draw(g, this.travels[i].pokemon, this.animations[i].current().getX(), this.animations[i].current().getY());
 	}
 
+	private void stopTravel()
+	{
+		for (PokemonTravel travel : this.travels)
+			DungeonPokemonRenderer.instance.getSprite(travel.pokemon).setState(PokemonSprite.STATE_IDDLE);
+		ClientEventProcessor.processPending();
+	}
+
 	@Override
 	public void update()
 	{
@@ -80,12 +87,12 @@ public class PokemonTravelState extends DungeonSubState
 				this.travels[i].destination.setPokemon(this.travels[i].pokemon);
 			this.parent.setSubstate(this.parent.actionSelectionState);
 			short direction = this.parent.actionSelectionState.checkMovement();
-			if (direction == -1 || ClientEventProcessor.hasPendingEvents() || DungeonPersistance.dungeon.getNextActor() != null)
+			if (direction == -1 || ClientEventProcessor.hasPendingEvents() || DungeonPersistance.dungeon.getNextActor() != null) this.stopTravel();
+			else
 			{
-				for (PokemonTravel travel : this.travels)
-					DungeonPokemonRenderer.instance.getSprite(travel.pokemon).setState(PokemonSprite.STATE_IDDLE);
-				ClientEventProcessor.processPending();
-			} else DungeonPersistance.dungeon.endTurn();
+				ClientEventProcessor.addToPending(DungeonPersistance.dungeon.endTurn());
+				if (ClientEventProcessor.hasPendingEvents()) this.stopTravel();
+			}
 		}
 	}
 }

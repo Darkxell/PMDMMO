@@ -11,7 +11,7 @@ public class GameTurn
 	private ArrayList<DungeonEvent> events = new ArrayList<DungeonEvent>();
 	/** The Floor this Turn occurs in. */
 	public final Floor floor;
-	private boolean turnEnded = false;
+	public boolean turnEnded = false;
 
 	public GameTurn(Floor floor)
 	{
@@ -27,18 +27,6 @@ public class GameTurn
 	public DungeonEvent[] events()
 	{
 		return this.events.toArray(new DungeonEvent[this.events.size()]);
-	}
-
-	public ArrayList<DungeonEvent> onTurnEnd()
-	{
-		this.turnEnded = true;
-		return new ArrayList<DungeonEvent>();
-	}
-
-	/** @return True if the End turn Events have already been checked. */
-	public boolean turnEnded()
-	{
-		return this.turnEnded;
 	}
 
 }

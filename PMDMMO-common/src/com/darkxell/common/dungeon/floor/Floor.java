@@ -1,10 +1,12 @@
 package com.darkxell.common.dungeon.floor;
 
 import java.awt.Point;
+import java.util.ArrayList;
 import java.util.Random;
 
 import com.darkxell.common.dungeon.DungeonInstance;
 import com.darkxell.common.dungeon.floor.layout.Layout;
+import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
 /** Represents a generated Floor in a Dungeon. */
@@ -103,5 +105,11 @@ public class Floor {
 	/** Overrides all of the floor's tiles. */
 	public void setTiles(Tile[][] tiles) {
 		this.tiles = tiles;
+	}
+
+	public ArrayList<DungeonEvent> onTurnStart()
+	{
+		ArrayList<DungeonEvent> e = new ArrayList<DungeonEvent>();
+		return e;
 	}
 }

@@ -61,12 +61,15 @@ public class DungeonInstance
 		return this.currentFloor = this.createFloor(this.currentFloor.id + 1);
 	}
 
-	/** Ends the current Turn, creates the next and returns it. */
-	public GameTurn endTurn()
+	/** Ends the current Turn.
+	 * 
+	 * @return The Events created for the start of the new turn. */
+	public ArrayList<DungeonEvent> endTurn()
 	{
 		if (this.currentTurn != null) this.pastTurns.add(this.currentTurn);
 		this.currentActor = -1;
-		return this.currentTurn = new GameTurn(this.currentFloor);
+		this.currentTurn = new GameTurn(this.currentFloor);
+		return this.currentFloor.onTurnStart();
 	}
 
 	/** Called when the input event is processed. */
