@@ -30,9 +30,9 @@ public class DungeonInstance
 	{
 		this.id = id;
 		this.random = random;
-		this.currentFloor = this.createFloor(4);
+		this.currentFloor = this.createFloor(1);
 		this.endTurn();
-		this.currentActor = 1;
+		this.currentActor = 0;
 	}
 
 	private Floor createFloor(int floorID)
@@ -65,7 +65,7 @@ public class DungeonInstance
 	public GameTurn endTurn()
 	{
 		if (this.currentTurn != null) this.pastTurns.add(this.currentTurn);
-		this.currentActor = 0;
+		this.currentActor = -1;
 		return this.currentTurn = new GameTurn(this.currentFloor);
 	}
 
@@ -73,6 +73,14 @@ public class DungeonInstance
 	public void eventOccured(DungeonEvent event)
 	{
 		this.currentTurn.addEvent(event);
+	}
+
+	/** @return The Pokémon taking its turn. null if there is no actor left, thus the turn is over. */
+	public DungeonPokemon getActor()
+	{
+		if (this.currentActor >= this.actors.size()) return null;
+		if (this.currentActor == -1) ++this.currentActor;
+		return this.actors.get(this.currentActor);
 	}
 
 	/** @return The last past turn. null if this is the first turn. */
@@ -85,9 +93,20 @@ public class DungeonInstance
 	/** @return The next Pokémon to take its turn. null if there is no actor left, thus the turn is over. */
 	public DungeonPokemon getNextActor()
 	{
-		if (this.currentActor >= this.actors.size()) return null;
+		if (this.currentActor >= this.actors.size() - 1) return null;
+		return this.actors.get(this.currentActor + 1);
+	}
+
+	public void insertActor(DungeonPokemon pokemon, int index)
+	{
+		this.actors.add(index, pokemon);
+	}
+
+	/** Proceeds to the next actor and returns it. */
+	public DungeonPokemon nextActor()
+	{
 		++this.currentActor;
-		return this.actors.get(this.currentActor - 1);
+		return this.getActor();
 	}
 
 	public void registerActor(DungeonPokemon pokemon)

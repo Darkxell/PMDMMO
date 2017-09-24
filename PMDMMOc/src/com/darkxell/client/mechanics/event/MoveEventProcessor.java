@@ -30,7 +30,7 @@ public final class MoveEventProcessor
 		DungeonPokemonRenderer.instance.getSprite(event.target).setState(PokemonSprite.STATE_HURT);
 		DungeonPokemonRenderer.instance.getSprite(event.target).setHealthChange(-event.damage);
 		DungeonPersistance.dungeonState.setSubstate(new DelayState(DungeonPersistance.dungeonState, PokemonSprite.FRAMELENGTH));
-		DungeonEventProcessor.processPending = false;
+		ClientEventProcessor.processPending = false;
 	}
 
 	public static void processExperienceEvent(ExperienceGainedEvent event)
@@ -38,7 +38,7 @@ public final class MoveEventProcessor
 		int levels = event.levelsup();
 		if (levels != 0 && DungeonPersistance.player.isAlly(event.pokemon))
 		{
-			DungeonEventProcessor.processPending = false;
+			ClientEventProcessor.processPending = false;
 
 			ArrayList<DialogScreen> screens = new ArrayList<DialogScreen>();
 			for (int level = event.pokemon.getLevel() - levels + 1; level <= event.pokemon.getLevel(); ++level)
@@ -53,7 +53,7 @@ public final class MoveEventProcessor
 						.addReplacement("<spd>", TextRenderer.instance.alignNumber(stats.getSpecialDefense(), 2))));
 			}
 
-			Launcher.stateManager.setState(new DialogState(DungeonPersistance.dungeonState, DungeonEventProcessor.processEventsOnDialogEnd, false, screens));
+			Launcher.stateManager.setState(new DialogState(DungeonPersistance.dungeonState, ClientEventProcessor.processEventsOnDialogEnd, false, screens));
 		}
 	}
 
@@ -67,7 +67,7 @@ public final class MoveEventProcessor
 		AnimationState s = new AnimationState(DungeonPersistance.dungeonState);
 		s.animation = MoveRenderer.createAnimation(s, event.user, event.move.move());
 		DungeonPersistance.dungeonState.setSubstate(s);
-		DungeonEventProcessor.processPending = false;
+		ClientEventProcessor.processPending = false;
 	}
 
 	static void processMoveUseEvent(MoveUseEvent event)
@@ -77,7 +77,7 @@ public final class MoveEventProcessor
 		if (s.animation != null)
 		{
 			DungeonPersistance.dungeonState.setSubstate(s);
-			DungeonEventProcessor.processPending = false;
+			ClientEventProcessor.processPending = false;
 		}
 	}
 
@@ -88,7 +88,7 @@ public final class MoveEventProcessor
 		if (s.animation != null)
 		{
 			DungeonPersistance.dungeonState.setSubstate(s);
-			DungeonEventProcessor.processPending = false;
+			ClientEventProcessor.processPending = false;
 		}
 	}
 

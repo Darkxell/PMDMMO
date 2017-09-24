@@ -52,9 +52,7 @@ public class DungeonState extends AbstractState
 	public DungeonState()
 	{
 		this.floorRenderer = new FloorRenderer(DungeonPersistance.floor);
-		Point p = DungeonPersistance.floor.teamSpawn;
-		DungeonPersistance.floor.summonPokemon(DungeonPersistance.player.getDungeonPokemon(), p.x, p.y);
-		this.placeAllies();
+		this.placeTeam();
 
 		this.logger = new DungeonLogger(this);
 		this.camera = new Point(DungeonPersistance.player.getDungeonPokemon().tile.x * AbstractDungeonTileset.TILE_SIZE,
@@ -96,8 +94,12 @@ public class DungeonState extends AbstractState
 		Launcher.soundmanager.setBackgroundMusic(SoundsHolder.getSong("07 Tiny Woods.mp3"));
 	}
 
-	private void placeAllies()
+	private void placeTeam()
 	{
+		Point spawn = DungeonPersistance.floor.teamSpawn;
+		DungeonPersistance.floor.tileAt(spawn.x, spawn.y).setPokemon(DungeonPersistance.player.getDungeonPokemon());
+		DungeonPersistance.dungeon.insertActor(DungeonPersistance.player.getDungeonPokemon(), 0);
+
 		ArrayList<Tile> candidates = new ArrayList<Tile>();
 		Tile initial = DungeonPersistance.player.getDungeonPokemon().tile;
 		candidates.add(initial.adjacentTile(GameUtil.WEST));
@@ -126,7 +128,8 @@ public class DungeonState extends AbstractState
 				Logger.e("DungeonState.placeAllies() @124 : Could not find a spawn location for ally " + p.pokemon.getNickname() + "!");
 				continue;
 			}
-			DungeonPersistance.floor.summonPokemon(p, candidates.get(0).x, candidates.get(0).y);
+			DungeonPersistance.floor.tileAt(candidates.get(0).x, candidates.get(0).y).setPokemon(p);
+			DungeonPersistance.dungeon.insertActor(p, 1);
 			candidates.remove(0);
 		}
 	}

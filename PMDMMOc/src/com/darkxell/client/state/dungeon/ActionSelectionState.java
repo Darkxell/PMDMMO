@@ -7,14 +7,13 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 
 import com.darkxell.client.launchable.Launcher;
-import com.darkxell.client.mechanics.event.DungeonEventProcessor;
+import com.darkxell.client.mechanics.event.ClientEventProcessor;
 import com.darkxell.client.persistance.DungeonPersistance;
 import com.darkxell.client.resources.images.DungeonHudSpriteset;
 import com.darkxell.client.state.dungeon.DungeonState.DungeonSubState;
 import com.darkxell.client.state.menu.dungeon.DungeonMenuState;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.common.event.move.MoveSelectionEvent;
-import com.darkxell.common.event.pokemon.PokemonTravelEvent;
 import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.LearnedMove;
 import com.darkxell.common.util.GameUtil;
@@ -29,8 +28,9 @@ public class ActionSelectionState extends DungeonSubState
 		super(parent);
 	}
 
-	public boolean checkMovement()
+	public short checkMovement()
 	{
+		DungeonPersistance.dungeon.getActor();
 		short direction = -1;
 
 		if (Keys.isPressed(Keys.KEY_UP) && Keys.isPressed(Keys.KEY_RIGHT) && !Keys.isPressed(Keys.KEY_DOWN) && !Keys.isPressed(Keys.KEY_LEFT)) direction = GameUtil.NORTHEAST;
@@ -49,13 +49,9 @@ public class ActionSelectionState extends DungeonSubState
 		if (direction != -1)
 		{
 			DungeonPersistance.player.getDungeonPokemon().setFacing(direction);
-			if (!this.parent.rotating && DungeonPersistance.player.getDungeonPokemon().tryMoveTo(direction))
-			{
-				DungeonEventProcessor.processEvent(new PokemonTravelEvent(DungeonPersistance.floor, DungeonPersistance.player.getDungeonPokemon(), direction));
-				return true;
-			}
+			if (!this.parent.rotating && DungeonPersistance.player.getDungeonPokemon().tryMoveTo(direction)) return direction;
 		}
-		return false;
+		return -1;
 	}
 
 	private void drawArrow(Graphics2D g, short direction)
@@ -78,8 +74,8 @@ public class ActionSelectionState extends DungeonSubState
 	public void onKeyPressed(short key)
 	{
 		if (key == Keys.KEY_MENU) Launcher.stateManager.setState(new DungeonMenuState(this.parent));
-		if (key == Keys.KEY_ATTACK) DungeonEventProcessor.processEvent(new MoveSelectionEvent(DungeonPersistance.floor,
-				new LearnedMove(MoveRegistry.ATTACK.id), DungeonPersistance.player.getDungeonPokemon()));
+		if (key == Keys.KEY_ATTACK) ClientEventProcessor.processEvent(new MoveSelectionEvent(DungeonPersistance.floor, new LearnedMove(MoveRegistry.ATTACK.id),
+				DungeonPersistance.player.getDungeonPokemon()));
 	}
 
 	@Override
@@ -105,7 +101,11 @@ public class ActionSelectionState extends DungeonSubState
 	@Override
 	public void update()
 	{
-		if (this.isMain()) this.checkMovement();
+		if (this.isMain())
+		{
+			short direction = this.checkMovement();
+			if (direction != -1) ClientEventProcessor.actorTravels(direction);
+		}
 
 		++this.rotationCounter;
 		if (this.rotationCounter > TILE_SIZE * 2 / 3) this.rotationCounter = 0;

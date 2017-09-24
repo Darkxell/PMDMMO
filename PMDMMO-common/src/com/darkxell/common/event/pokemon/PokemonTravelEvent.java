@@ -39,6 +39,12 @@ public class PokemonTravelEvent extends DungeonEvent
 		this.travels = travels;
 	}
 
+	/** @return The first of these Event's travels. */
+	public PokemonTravel getTravel()
+	{
+		return this.travels[0];
+	}
+
 	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{

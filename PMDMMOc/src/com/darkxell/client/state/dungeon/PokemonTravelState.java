@@ -3,7 +3,7 @@ package com.darkxell.client.state.dungeon;
 import java.awt.Graphics2D;
 
 import com.darkxell.client.mechanics.animation.TravelAnimation;
-import com.darkxell.client.mechanics.event.DungeonEventProcessor;
+import com.darkxell.client.mechanics.event.ClientEventProcessor;
 import com.darkxell.client.persistance.DungeonPersistance;
 import com.darkxell.client.renderers.DungeonPokemonRenderer;
 import com.darkxell.client.resources.images.AbstractDungeonTileset;
@@ -79,12 +79,13 @@ public class PokemonTravelState extends DungeonSubState
 			for (int i = 0; i < this.animations.length; ++i)
 				this.travels[i].destination.setPokemon(this.travels[i].pokemon);
 			this.parent.setSubstate(this.parent.actionSelectionState);
-			if (DungeonEventProcessor.hasPendingEvents() || !this.parent.actionSelectionState.checkMovement())
+			short direction = this.parent.actionSelectionState.checkMovement();
+			if (direction == -1 || ClientEventProcessor.hasPendingEvents() || DungeonPersistance.dungeon.getNextActor() != null)
 			{
 				for (PokemonTravel travel : this.travels)
 					DungeonPokemonRenderer.instance.getSprite(travel.pokemon).setState(PokemonSprite.STATE_IDDLE);
-				DungeonEventProcessor.processPending();
-			}
+				ClientEventProcessor.processPending();
+			} else DungeonPersistance.dungeon.endTurn();
 		}
 	}
 }

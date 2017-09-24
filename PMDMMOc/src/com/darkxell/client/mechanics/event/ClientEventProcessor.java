@@ -11,9 +11,9 @@ import com.darkxell.client.state.DialogState.DialogEndListener;
 import com.darkxell.client.state.FreezoneExploreState;
 import com.darkxell.client.state.dungeon.AnimationState;
 import com.darkxell.client.state.dungeon.PokemonTravelState;
+import com.darkxell.common.ai.AI;
 import com.darkxell.common.dungeon.DungeonInstance;
 import com.darkxell.common.event.DungeonEvent;
-import com.darkxell.common.event.DungeonEvent.MessageEvent;
 import com.darkxell.common.event.dungeon.DungeonExitEvent;
 import com.darkxell.common.event.item.ItemUseSelectionEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent;
@@ -21,14 +21,14 @@ import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.FaintedPokemonEvent;
 import com.darkxell.common.event.pokemon.PokemonTravelEvent;
+import com.darkxell.common.event.pokemon.PokemonTravelEvent.PokemonTravel;
 import com.darkxell.common.event.stats.ExperienceGainedEvent;
 import com.darkxell.common.event.stats.StatChangedEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
-import com.darkxell.common.util.Message;
 
 /** Translates game logic events into displayable content to the client.<br />
  * Takes in Events to display messages, manage resources or change game states. */
-public final class DungeonEventProcessor
+public final class ClientEventProcessor
 {
 	/** Pending events to process. */
 	private static final Stack<DungeonEvent> pending = new Stack<DungeonEvent>();
@@ -44,6 +44,38 @@ public final class DungeonEventProcessor
 	/** While processing an event, setting this to false will stop processing the pending events. */
 	static boolean processPending = true;
 
+	public static void actorTravels(short direction)
+	{
+		ArrayList<PokemonTravel> travellers = new ArrayList<PokemonTravel>();
+		travellers.add(new PokemonTravel(DungeonPersistance.dungeon.getActor(), direction));
+		boolean flag = true;
+		DungeonEvent e = null;
+		while (flag)
+		{
+			e = AI.makeAction(DungeonPersistance.floor, DungeonPersistance.dungeon.nextActor());
+
+			if (e instanceof PokemonTravelEvent)
+			{
+				PokemonTravel event = ((PokemonTravelEvent) e).getTravel();
+				travellers.add(event);
+				// Simulating travel
+				event.origin.removePokemon(event.pokemon);
+				event.destination.setPokemon(event.pokemon);
+			} else flag = false;
+		}
+
+		// Resetting simulations
+		for (PokemonTravel travel : travellers)
+		{
+			travel.destination.removePokemon(travel.pokemon);
+			travel.origin.setPokemon(travel.pokemon);
+		}
+
+		if (e != null) addToPending(e);
+		PokemonTravelEvent event = new PokemonTravelEvent(DungeonPersistance.floor, travellers.toArray(new PokemonTravel[travellers.size()]));
+		processEvent(event);
+	}
+
 	/** Adds the input events to the pending stack, without processing them. */
 	public static void addToPending(ArrayList<DungeonEvent> arrayList)
 	{
@@ -54,7 +86,7 @@ public final class DungeonEventProcessor
 	/** Adds the input event to the pending stack, without processing it. */
 	public static void addToPending(DungeonEvent event)
 	{
-		pending.add(event);
+		if (event != null) pending.add(event);
 	}
 
 	public static boolean hasPendingEvents()
@@ -111,7 +143,7 @@ public final class DungeonEventProcessor
 		else
 		{
 			DungeonInstance dungeon = DungeonPersistance.dungeon;
-			DungeonPokemon actor = dungeon.getNextActor();
+			DungeonPokemon actor = dungeon.nextActor();
 			if (actor == null)
 			{
 				if (!dungeon.currentTurn().turnEnded()) addToPending(dungeon.currentTurn().onTurnEnd());
@@ -121,7 +153,7 @@ public final class DungeonEventProcessor
 			} else if (actor.pokemon.player != null && actor.pokemon.player.getDungeonPokemon() == actor) return;
 			else
 			{
-				addToPending(new MessageEvent(dungeon.currentFloor(), new Message("It's " + actor.pokemon.getNickname() + "'s turn!", false)));
+				addToPending(AI.makeAction(DungeonPersistance.floor, actor));
 				processPending();
 			}
 		}
@@ -133,7 +165,7 @@ public final class DungeonEventProcessor
 		DungeonPersistance.dungeonState.setSubstate(new PokemonTravelState(DungeonPersistance.dungeonState, event.travels()));
 	}
 
-	private DungeonEventProcessor()
+	private ClientEventProcessor()
 	{}
 
 }

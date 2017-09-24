@@ -122,7 +122,7 @@ public class Move
 		boolean crit = false;
 		{
 			double c = 0.12;
-			if (Math.random() < c) crit = true;
+			if (floor.random.nextDouble() < c) crit = true;
 		}
 		if (crit) d *= 1.5;
 
@@ -135,7 +135,7 @@ public class Move
 		}
 
 		// Damage randomness
-		d *= (57344 + Math.floor(Math.random() * 16384)) / 65536;
+		d *= (57344 + Math.floor(floor.random.nextDouble() * 16384)) / 65536;
 
 		return (int) d;
 	}
