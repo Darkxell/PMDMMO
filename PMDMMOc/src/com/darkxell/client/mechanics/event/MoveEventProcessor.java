@@ -2,9 +2,8 @@ package com.darkxell.client.mechanics.event;
 
 import java.util.ArrayList;
 
-import com.darkxell.client.launchable.Launcher;
+import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.animation.StatChangeAnimation;
-import com.darkxell.client.persistance.DungeonPersistance;
 import com.darkxell.client.renderers.DungeonPokemonRenderer;
 import com.darkxell.client.renderers.MoveRenderer;
 import com.darkxell.client.renderers.TextRenderer;
@@ -29,14 +28,14 @@ public final class MoveEventProcessor
 	{
 		DungeonPokemonRenderer.instance.getSprite(event.target).setState(PokemonSprite.STATE_HURT);
 		DungeonPokemonRenderer.instance.getSprite(event.target).setHealthChange(-event.damage);
-		DungeonPersistance.dungeonState.setSubstate(new DelayState(DungeonPersistance.dungeonState, PokemonSprite.FRAMELENGTH));
+		Persistance.dungeonState.setSubstate(new DelayState(Persistance.dungeonState, PokemonSprite.FRAMELENGTH));
 		ClientEventProcessor.processPending = false;
 	}
 
 	public static void processExperienceEvent(ExperienceGainedEvent event)
 	{
 		int levels = event.levelsup();
-		if (levels != 0 && DungeonPersistance.player.isAlly(event.pokemon))
+		if (levels != 0 && Persistance.player.isAlly(event.pokemon))
 		{
 			ClientEventProcessor.processPending = false;
 
@@ -53,7 +52,7 @@ public final class MoveEventProcessor
 						.addReplacement("<spd>", TextRenderer.instance.alignNumber(stats.getSpecialDefense(), 2))));
 			}
 
-			Launcher.stateManager.setState(new DialogState(DungeonPersistance.dungeonState, ClientEventProcessor.processEventsOnDialogEnd, false, screens));
+			Persistance.stateManager.setState(new DialogState(Persistance.dungeonState, ClientEventProcessor.processEventsOnDialogEnd, false, screens));
 		}
 	}
 
@@ -64,30 +63,30 @@ public final class MoveEventProcessor
 
 	static void processMoveEvent(MoveSelectionEvent event)
 	{
-		AnimationState s = new AnimationState(DungeonPersistance.dungeonState);
+		AnimationState s = new AnimationState(Persistance.dungeonState);
 		s.animation = MoveRenderer.createAnimation(s, event.user, event.move.move());
-		DungeonPersistance.dungeonState.setSubstate(s);
+		Persistance.dungeonState.setSubstate(s);
 		ClientEventProcessor.processPending = false;
 	}
 
 	static void processMoveUseEvent(MoveUseEvent event)
 	{
-		AnimationState s = new AnimationState(DungeonPersistance.dungeonState);
+		AnimationState s = new AnimationState(Persistance.dungeonState);
 		s.animation = MoveRenderer.createTargetAnimation(s, event.user, event.move.move());
 		if (s.animation != null)
 		{
-			DungeonPersistance.dungeonState.setSubstate(s);
+			Persistance.dungeonState.setSubstate(s);
 			ClientEventProcessor.processPending = false;
 		}
 	}
 
 	public static void processStatEvent(StatChangedEvent event)
 	{
-		AnimationState s = new AnimationState(DungeonPersistance.dungeonState);
+		AnimationState s = new AnimationState(Persistance.dungeonState);
 		s.animation = new StatChangeAnimation(s, event.target, event.stat, event.stage);
 		if (s.animation != null)
 		{
-			DungeonPersistance.dungeonState.setSubstate(s);
+			Persistance.dungeonState.setSubstate(s);
 			ClientEventProcessor.processPending = false;
 		}
 	}

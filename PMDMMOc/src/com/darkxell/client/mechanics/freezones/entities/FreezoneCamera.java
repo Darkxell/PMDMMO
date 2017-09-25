@@ -1,7 +1,7 @@
 package com.darkxell.client.mechanics.freezones.entities;
 
+import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.freezones.FreezonePlayer;
-import com.darkxell.client.persistance.FreezoneMapHolder;
 
 /**
  * The camera "entity". This behaves pretty much exactly like an entity, but is
@@ -42,7 +42,7 @@ public class FreezoneCamera {
 			if (isXposOOB(x)) {
 				if (x < (renderwidth / 2) / TILESIZE + 1)
 					x += cameraspeed * 3;
-				if (x > FreezoneMapHolder.currentmap.mapWidth - ((renderwidth / 2) / TILESIZE - 1))
+				if (x > Persistance.currentmap.mapWidth - ((renderwidth / 2) / TILESIZE - 1))
 					x -= cameraspeed * 3;
 			}
 		} else
@@ -53,7 +53,7 @@ public class FreezoneCamera {
 			if (isYposOOB(y)) {
 				if (y < (renderheight / 2) / TILESIZE + 1)
 					y += cameraspeed * 3;
-				if (y > FreezoneMapHolder.currentmap.mapHeight - ((renderheight / 2) / TILESIZE - 1))
+				if (y > Persistance.currentmap.mapHeight - ((renderheight / 2) / TILESIZE - 1))
 					y -= cameraspeed * 3;
 			}
 		} else
@@ -62,11 +62,11 @@ public class FreezoneCamera {
 
 	private boolean isYposOOB(double y) {
 		return (y < (renderheight / 2) / TILESIZE + 1)
-				|| (y > FreezoneMapHolder.currentmap.mapHeight - ((renderheight / 2) / TILESIZE) - 1);
+				|| (y > Persistance.currentmap.mapHeight - ((renderheight / 2) / TILESIZE) - 1);
 	}
 
 	private boolean isXposOOB(double x) {
 		return (x < (renderwidth / 2) / TILESIZE + 1)
-				|| (x > FreezoneMapHolder.currentmap.mapWidth - ((renderwidth / 2) / TILESIZE) - 1);
+				|| (x > Persistance.currentmap.mapWidth - ((renderwidth / 2) / TILESIZE) - 1);
 	}
 }

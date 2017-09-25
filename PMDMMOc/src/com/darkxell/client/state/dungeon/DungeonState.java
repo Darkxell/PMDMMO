@@ -5,8 +5,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.function.Predicate;
 
-import com.darkxell.client.launchable.Launcher;
-import com.darkxell.client.persistance.DungeonPersistance;
+import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.DungeonPokemonRenderer;
 import com.darkxell.client.renderers.FloorRenderer;
 import com.darkxell.client.resources.images.AbstractDungeonTileset;
@@ -20,21 +19,17 @@ import com.darkxell.common.util.GameUtil;
 import com.darkxell.common.util.Logger;
 
 /** The main state for Dungeon exploration. */
-public class DungeonState extends AbstractState
-{
+public class DungeonState extends AbstractState {
 	/** A substate for Dungeon exploration. */
-	static abstract class DungeonSubState extends AbstractState
-	{
+	static abstract class DungeonSubState extends AbstractState {
 		public final DungeonState parent;
 
-		public DungeonSubState(DungeonState parent)
-		{
+		public DungeonSubState(DungeonState parent) {
 			this.parent = parent;
 		}
 
 		@Override
-		public boolean isMain()
-		{
+		public boolean isMain() {
 			return this.parent.isMain();
 		}
 
@@ -49,59 +44,57 @@ public class DungeonState extends AbstractState
 	final FloorRenderer floorRenderer;
 	public final DungeonLogger logger;
 
-	public DungeonState()
-	{
-		this.floorRenderer = new FloorRenderer(DungeonPersistance.floor);
+	public DungeonState() {
+		this.floorRenderer = new FloorRenderer(Persistance.floor);
 		this.placeTeam();
 
 		this.logger = new DungeonLogger(this);
-		this.camera = new Point(DungeonPersistance.player.getDungeonPokemon().tile.x * AbstractDungeonTileset.TILE_SIZE,
-				DungeonPersistance.player.getDungeonPokemon().tile.y * AbstractDungeonTileset.TILE_SIZE);
+		this.camera = new Point(Persistance.player.getDungeonPokemon().tile.x * AbstractDungeonTileset.TILE_SIZE,
+				Persistance.player.getDungeonPokemon().tile.y * AbstractDungeonTileset.TILE_SIZE);
 		this.currentSubstate = this.actionSelectionState = new ActionSelectionState(this);
 		this.currentSubstate.onStart();
 	}
 
 	@Override
-	public void onEnd()
-	{
+	public void onEnd() {
 		super.onEnd();
 		this.logger.hideMessages();
 	}
 
 	@Override
-	public void onKeyPressed(short key)
-	{
-		if (key == Keys.KEY_DIAGONAL) this.diagonal = true;
-		if (key == Keys.KEY_ROTATE) this.rotating = true;
+	public void onKeyPressed(short key) {
+		if (key == Keys.KEY_DIAGONAL)
+			this.diagonal = true;
+		if (key == Keys.KEY_ROTATE)
+			this.rotating = true;
 
 		this.currentSubstate.onKeyPressed(key);
 
 	}
 
 	@Override
-	public void onKeyReleased(short key)
-	{
-		if (key == Keys.KEY_DIAGONAL) this.diagonal = false;
-		if (key == Keys.KEY_ROTATE) this.rotating = false;
+	public void onKeyReleased(short key) {
+		if (key == Keys.KEY_DIAGONAL)
+			this.diagonal = false;
+		if (key == Keys.KEY_ROTATE)
+			this.rotating = false;
 
 		this.currentSubstate.onKeyReleased(key);
 	}
 
 	@Override
-	public void onStart()
-	{
+	public void onStart() {
 		super.onStart();
-		Launcher.soundmanager.setBackgroundMusic(SoundsHolder.getSong("07 Tiny Woods.mp3"));
+		Persistance.soundmanager.setBackgroundMusic(SoundsHolder.getSong("07 Tiny Woods.mp3"));
 	}
 
-	private void placeTeam()
-	{
-		Point spawn = DungeonPersistance.floor.teamSpawn;
-		DungeonPersistance.floor.tileAt(spawn.x, spawn.y).setPokemon(DungeonPersistance.player.getDungeonPokemon());
-		DungeonPersistance.dungeon.insertActor(DungeonPersistance.player.getDungeonPokemon(), 0);
+	private void placeTeam() {
+		Point spawn = Persistance.floor.teamSpawn;
+		Persistance.floor.tileAt(spawn.x, spawn.y).setPokemon(Persistance.player.getDungeonPokemon());
+		Persistance.dungeon.insertActor(Persistance.player.getDungeonPokemon(), 0);
 
 		ArrayList<Tile> candidates = new ArrayList<Tile>();
-		Tile initial = DungeonPersistance.player.getDungeonPokemon().tile;
+		Tile initial = Persistance.player.getDungeonPokemon().tile;
 		candidates.add(initial.adjacentTile(GameUtil.WEST));
 		candidates.add(initial.adjacentTile(GameUtil.EAST));
 		candidates.add(initial.adjacentTile(GameUtil.SOUTH));
@@ -110,40 +103,38 @@ public class DungeonState extends AbstractState
 		candidates.add(initial.adjacentTile(GameUtil.NORTHEAST));
 		candidates.add(initial.adjacentTile(GameUtil.SOUTHWEST));
 		candidates.add(initial.adjacentTile(GameUtil.SOUTHEAST));
-		candidates.removeIf(new Predicate<Tile>()
-		{
+		candidates.removeIf(new Predicate<Tile>() {
 			@Override
-			public boolean test(Tile t)
-			{
-				return t.getPokemon() != null || t.type() == TileType.WALL || t.type() == TileType.WATER || t.type() == TileType.LAVA
-						|| t.type() == TileType.AIR;
+			public boolean test(Tile t) {
+				return t.getPokemon() != null || t.type() == TileType.WALL || t.type() == TileType.WATER
+						|| t.type() == TileType.LAVA || t.type() == TileType.AIR;
 			}
 		});
 
-		for (DungeonPokemon p : DungeonPersistance.player.getDungeonTeam())
-		{
-			if (p == DungeonPersistance.player.getDungeonPokemon()) continue;
-			if (candidates.size() == 0)
-			{
-				Logger.e("DungeonState.placeAllies() @124 : Could not find a spawn location for ally " + p.pokemon.getNickname() + "!");
+		for (DungeonPokemon p : Persistance.player.getDungeonTeam()) {
+			if (p == Persistance.player.getDungeonPokemon())
+				continue;
+			if (candidates.size() == 0) {
+				Logger.e("DungeonState.placeAllies() @124 : Could not find a spawn location for ally "
+						+ p.pokemon.getNickname() + "!");
 				continue;
 			}
-			DungeonPersistance.floor.tileAt(candidates.get(0).x, candidates.get(0).y).setPokemon(p);
-			DungeonPersistance.dungeon.insertActor(p, 1);
+			Persistance.floor.tileAt(candidates.get(0).x, candidates.get(0).y).setPokemon(p);
+			Persistance.dungeon.insertActor(p, 1);
 			candidates.remove(0);
 		}
 	}
 
 	@Override
-	public void render(Graphics2D g, int width, int height)
-	{
+	public void render(Graphics2D g, int width, int height) {
 		int x = this.camera.x - width / 2, y = this.camera.y - height / 2;
 
 		g.translate(-x, -y);
 
 		this.floorRenderer.drawFloor(g, x, y, width, height);
-		if (this.isMain()) if (this.rotating && this.currentSubstate == this.actionSelectionState) this.floorRenderer.drawGrid(g,
-				DungeonPersistance.player.getDungeonPokemon(), x, y, width, height);
+		if (this.isMain())
+			if (this.rotating && this.currentSubstate == this.actionSelectionState)
+				this.floorRenderer.drawGrid(g, Persistance.player.getDungeonPokemon(), x, y, width, height);
 		this.floorRenderer.drawEntities(g, x, y, width, height);
 
 		this.currentSubstate.render(g, width, height);
@@ -152,17 +143,18 @@ public class DungeonState extends AbstractState
 		this.logger.render(g, width, height);
 	}
 
-	/** @param substate - The new substate to use. */
-	public void setSubstate(DungeonSubState substate)
-	{
+	/**
+	 * @param substate
+	 *            - The new substate to use.
+	 */
+	public void setSubstate(DungeonSubState substate) {
 		this.currentSubstate.onEnd();
 		this.currentSubstate = substate;
 		this.currentSubstate.onStart();
 	}
 
 	@Override
-	public void update()
-	{
+	public void update() {
 		DungeonPokemonRenderer.instance.update();
 		this.logger.update();
 		this.currentSubstate.update();

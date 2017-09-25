@@ -3,8 +3,7 @@ package com.darkxell.client.mechanics.event;
 import java.util.ArrayList;
 import java.util.Stack;
 
-import com.darkxell.client.launchable.Launcher;
-import com.darkxell.client.persistance.DungeonPersistance;
+import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.ItemRenderer;
 import com.darkxell.client.state.DialogState;
 import com.darkxell.client.state.DialogState.DialogEndListener;
@@ -42,7 +41,7 @@ public final class ClientEventProcessor
 		@Override
 		public void onDialogEnd(DialogState dialog)
 		{
-			if (!hasPendingEvents()) Launcher.stateManager.setState(DungeonPersistance.dungeonState);
+			if (!hasPendingEvents()) Persistance.stateManager.setState(Persistance.dungeonState);
 			else processPending();
 		}
 	};
@@ -52,12 +51,12 @@ public final class ClientEventProcessor
 	public static void actorTravels(short direction, boolean running)
 	{
 		ArrayList<PokemonTravel> travellers = new ArrayList<PokemonTravel>();
-		travellers.add(new PokemonTravel(DungeonPersistance.dungeon.getActor(), running, direction));
+		travellers.add(new PokemonTravel(Persistance.dungeon.getActor(), running, direction));
 		boolean flag = true;
 		DungeonEvent e = null;
 		while (flag)
 		{
-			e = AI.makeAction(DungeonPersistance.floor, DungeonPersistance.dungeon.nextActor());
+			e = AI.makeAction(Persistance.floor, Persistance.dungeon.nextActor());
 
 			if (e instanceof PokemonTravelEvent)
 			{
@@ -77,7 +76,7 @@ public final class ClientEventProcessor
 		}
 
 		if (e != null) addToPending(e);
-		PokemonTravelEvent event = new PokemonTravelEvent(DungeonPersistance.floor, travellers.toArray(new PokemonTravel[travellers.size()]));
+		PokemonTravelEvent event = new PokemonTravelEvent(Persistance.floor, travellers.toArray(new PokemonTravel[travellers.size()]));
 		processEvent(event);
 	}
 
@@ -101,19 +100,19 @@ public final class ClientEventProcessor
 
 	private static void processDungeonExitEvent(DungeonExitEvent event)
 	{
-		if (event.pokemon == DungeonPersistance.player.getDungeonPokemon()) Launcher.stateManager.setState(new FreezoneExploreState());
+		if (event.pokemon == Persistance.player.getDungeonPokemon()) Persistance.stateManager.setState(new FreezoneExploreState());
 	}
 
 	/** Processes the input event and adds the resulting events to the pending stack. */
 	public static void processEvent(DungeonEvent event)
 	{
 		processPending = true;
-		DungeonPersistance.dungeon.eventOccured(event);
+		Persistance.dungeon.eventOccured(event);
 
 		if (event.isValid())
 		{
 			addToPending(event.processServer());
-			DungeonPersistance.dungeonState.logger.showMessages(event.getMessages());
+			Persistance.dungeonState.logger.showMessages(event.getMessages());
 
 			if (event instanceof MoveSelectionEvent) MoveEventProcessor.processMoveEvent((MoveSelectionEvent) event);
 			if (event instanceof MoveUseEvent) MoveEventProcessor.processMoveUseEvent((MoveUseEvent) event);
@@ -137,14 +136,14 @@ public final class ClientEventProcessor
 
 	private static void processFloorEvent(NextFloorEvent event)
 	{
-		Launcher.stateManager.setState(new NextFloorState(event.floor.id + 1));
+		Persistance.stateManager.setState(new NextFloorState(event.floor.id + 1));
 	}
 
 	private static void processItemEvent(ItemUseSelectionEvent event)
 	{
-		AnimationState a = new AnimationState(DungeonPersistance.dungeonState);
+		AnimationState a = new AnimationState(Persistance.dungeonState);
 		a.animation = ItemRenderer.createItemAnimation(event, a);
-		DungeonPersistance.dungeonState.setSubstate(a);
+		Persistance.dungeonState.setSubstate(a);
 		processPending = false;
 	}
 
@@ -154,7 +153,7 @@ public final class ClientEventProcessor
 		if (!pending.empty()) processEvent(pending.pop());
 		else
 		{
-			DungeonInstance dungeon = DungeonPersistance.dungeon;
+			DungeonInstance dungeon = Persistance.dungeon;
 			DungeonPokemon actor = dungeon.nextActor();
 			if (actor == null)
 			{
@@ -169,7 +168,7 @@ public final class ClientEventProcessor
 			} else if (actor.pokemon.player != null && actor.pokemon.player.getDungeonPokemon() == actor) return;
 			else
 			{
-				addToPending(AI.makeAction(DungeonPersistance.floor, actor));
+				addToPending(AI.makeAction(Persistance.floor, actor));
 				processPending();
 			}
 		}
@@ -178,13 +177,13 @@ public final class ClientEventProcessor
 	private static void processStairEvent(StairLandingEvent event)
 	{
 		processPending = false;
-		Launcher.stateManager.setState(new StairMenuState());
+		Persistance.stateManager.setState(new StairMenuState());
 	}
 
 	private static void processTravelEvent(PokemonTravelEvent event)
 	{
 		processPending = false;
-		DungeonPersistance.dungeonState.setSubstate(new PokemonTravelState(DungeonPersistance.dungeonState, event.isRunning(), event.travels()));
+		Persistance.dungeonState.setSubstate(new PokemonTravelState(Persistance.dungeonState, event.isRunning(), event.travels()));
 	}
 
 	private ClientEventProcessor()

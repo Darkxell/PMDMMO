@@ -4,12 +4,12 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import com.darkxell.client.launchable.Launcher;
+import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
 import com.darkxell.client.mechanics.freezones.FreezoneTile;
 import com.darkxell.client.mechanics.freezones.WarpZone;
 import com.darkxell.client.mechanics.freezones.zones.BaseFreezone;
 import com.darkxell.client.mechanics.freezones.zones.OfficeFreezone;
-import com.darkxell.client.persistance.FreezoneMapHolder;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.Hud;
 import com.darkxell.client.resources.music.SoundsHolder;
@@ -20,13 +20,13 @@ public class FreezoneExploreState extends AbstractState {
 
 	public FreezoneExploreState() {
 		if (Keys.isPressed(Keys.KEY_UP))
-			FreezoneMapHolder.currentplayer.pressKey(Keys.KEY_UP);
+			Persistance.currentplayer.pressKey(Keys.KEY_UP);
 		if (Keys.isPressed(Keys.KEY_RIGHT))
-			FreezoneMapHolder.currentplayer.pressKey(Keys.KEY_RIGHT);
+			Persistance.currentplayer.pressKey(Keys.KEY_RIGHT);
 		if (Keys.isPressed(Keys.KEY_DOWN))
-			FreezoneMapHolder.currentplayer.pressKey(Keys.KEY_DOWN);
+			Persistance.currentplayer.pressKey(Keys.KEY_DOWN);
 		if (Keys.isPressed(Keys.KEY_LEFT))
-			FreezoneMapHolder.currentplayer.pressKey(Keys.KEY_LEFT);
+			Persistance.currentplayer.pressKey(Keys.KEY_LEFT);
 	}
 
 	/**
@@ -38,34 +38,34 @@ public class FreezoneExploreState extends AbstractState {
 
 	@Override
 	public void onKeyPressed(short key) {
-		if (FreezoneMapHolder.currentmap != null)
-			FreezoneMapHolder.currentplayer.pressKey(key);
+		if (Persistance.currentmap != null)
+			Persistance.currentplayer.pressKey(key);
 	}
 
 	@Override
 	public void onKeyReleased(short key) {
-		if (FreezoneMapHolder.currentmap != null)
-			FreezoneMapHolder.currentplayer.releaseKey(key);
+		if (Persistance.currentmap != null)
+			Persistance.currentplayer.releaseKey(key);
 	}
 
 	@Override
 	public void onEnd() {
 		super.onEnd();
-		FreezoneMapHolder.currentplayer.forceStop();
+		Persistance.currentplayer.forceStop();
 	}
 
 	@Override
 	public void render(Graphics2D g, int width, int height) {
-		FreezoneMap map = FreezoneMapHolder.currentmap;
-		FreezoneMapHolder.playerCamera.renderheight = height;
-		FreezoneMapHolder.playerCamera.renderwidth = width;
+		FreezoneMap map = Persistance.currentmap;
+		Persistance.playerCamera.renderheight = height;
+		Persistance.playerCamera.renderwidth = width;
 		// Draws the sea background if needed.
 		if (map instanceof OfficeFreezone)
 			((OfficeFreezone) map).background.render(g, width, height);
 		// Draws the surroundings.
 		if (map != null) {
-			int translateX = (int) (-FreezoneMapHolder.playerCamera.x * 8 + (width / 2));
-			int translateY = (int) (-FreezoneMapHolder.playerCamera.y * 8 + (height / 2));
+			int translateX = (int) (-Persistance.playerCamera.x * 8 + (width / 2));
+			int translateY = (int) (-Persistance.playerCamera.y * 8 + (height / 2));
 
 			g.translate(translateX, translateY);
 			// Draws the map
@@ -96,20 +96,20 @@ public class FreezoneExploreState extends AbstractState {
 				}
 			}
 			// Draws the player
-			g.drawImage(FreezoneMapHolder.currentplayer.playersprite.getCurrentSprite(),
-					(int) (FreezoneMapHolder.currentplayer.x * 8
-							- FreezoneMapHolder.currentplayer.playersprite.pointer.gravityX),
-					(int) (FreezoneMapHolder.currentplayer.y * 8
-							- FreezoneMapHolder.currentplayer.playersprite.pointer.gravityY),
+			g.drawImage(Persistance.currentplayer.playersprite.getCurrentSprite(),
+					(int) (Persistance.currentplayer.x * 8
+							- Persistance.currentplayer.playersprite.pointer.gravityX),
+					(int) (Persistance.currentplayer.y * 8
+							- Persistance.currentplayer.playersprite.pointer.gravityY),
 					null);
 			if (debugdisplaymode) {
 				g.setColor(new Color(20, 20, 200, 160));
-				DoubleRectangle dbrct = FreezoneMapHolder.currentplayer.getHitboxAt(FreezoneMapHolder.currentplayer.x,
-						FreezoneMapHolder.currentplayer.y);
+				DoubleRectangle dbrct = Persistance.currentplayer.getHitboxAt(Persistance.currentplayer.x,
+						Persistance.currentplayer.y);
 				g.fillRect((int) (dbrct.x * 8), (int) (dbrct.y * 8), (int) (dbrct.width * 8), (int) (dbrct.height * 8));
 
 				g.setColor(new Color(150, 20, 130, 120));
-				dbrct = FreezoneMapHolder.currentplayer.getInteractionBox();
+				dbrct = Persistance.currentplayer.getInteractionBox();
 				g.fillRect((int) (dbrct.x * 8), (int) (dbrct.y * 8), (int) (dbrct.width * 8), (int) (dbrct.height * 8));
 			}
 
@@ -122,13 +122,13 @@ public class FreezoneExploreState extends AbstractState {
 							(int) (dbrct.height * 8));
 				}
 				g.setColor(new Color(240, 55, 54, 150));
-				g.fillRect((int) (FreezoneMapHolder.playerCamera.x * 8), (int) (FreezoneMapHolder.playerCamera.y * 8),
+				g.fillRect((int) (Persistance.playerCamera.x * 8), (int) (Persistance.playerCamera.y * 8),
 						4, 4);
 			}
 
 			g.translate(-translateX, -translateY);
 
-			if (FreezoneMapHolder.currentplayer.canInteract()) {
+			if (Persistance.currentplayer.canInteract()) {
 				g.drawImage(Hud.button, width - 70, 5, null);
 				TextRenderer.instance.render(g, "Interact", width - 50, 10);
 				// TODO : change the "INTERACT" here to a language dependent
@@ -140,7 +140,7 @@ public class FreezoneExploreState extends AbstractState {
 				TextRenderer.instance.render(g, "UPS: " + Launcher.getUps() + ", FPS: " + Launcher.getFps(), 1,
 						TextRenderer.CHAR_HEIGHT);
 				TextRenderer.instance.render(g,
-						"Position: " + FreezoneMapHolder.currentplayer.x + " / " + FreezoneMapHolder.currentplayer.y, 1,
+						"Position: " + Persistance.currentplayer.x + " / " + Persistance.currentplayer.y, 1,
 						TextRenderer.CHAR_HEIGHT * 3);
 			}
 		}
@@ -151,27 +151,27 @@ public class FreezoneExploreState extends AbstractState {
 	@Override
 	public void update() {
 		// Updates the freezoneBackground if needeed
-		if (FreezoneMapHolder.currentmap instanceof OfficeFreezone)
-			((OfficeFreezone) FreezoneMapHolder.currentmap).background.update();
+		if (Persistance.currentmap instanceof OfficeFreezone)
+			((OfficeFreezone) Persistance.currentmap).background.update();
 		// CREATES AND UPDATES THE MAP
-		if (FreezoneMapHolder.currentmap == null)
-			FreezoneMapHolder.currentmap = new BaseFreezone();
+		if (Persistance.currentmap == null)
+			Persistance.currentmap = new BaseFreezone();
 		else
-			FreezoneMapHolder.currentmap.update();
+			Persistance.currentmap.update();
 		// UPDATES THE CAMERA
-		if (FreezoneMapHolder.playerCamera != null)
-			FreezoneMapHolder.playerCamera.update();
+		if (Persistance.playerCamera != null)
+			Persistance.playerCamera.update();
 		if (!musicset) {
 			musicset = true;
-			Launcher.soundmanager.setBackgroundMusic(SoundsHolder.getSong(FreezoneMapHolder.currentmap.freezonebgm));
+			Persistance.soundmanager.setBackgroundMusic(SoundsHolder.getSong(Persistance.currentmap.freezonebgm));
 		}
-		for (int i = 0; i < FreezoneMapHolder.currentmap.warpzones.size(); i++)
-			if (FreezoneMapHolder.currentmap.warpzones.get(i).hitbox.intersects(FreezoneMapHolder.currentplayer
-					.getHitboxAt(FreezoneMapHolder.currentplayer.x, FreezoneMapHolder.currentplayer.y))) {
-				WarpZone wz = FreezoneMapHolder.currentmap.warpzones.get(i);
-				FreezoneMapHolder.currentmap = wz.getDestination();
-				FreezoneMapHolder.playerCamera.x = FreezoneMapHolder.currentplayer.x = wz.toX;
-				FreezoneMapHolder.playerCamera.y = FreezoneMapHolder.currentplayer.y = wz.toY;
+		for (int i = 0; i < Persistance.currentmap.warpzones.size(); i++)
+			if (Persistance.currentmap.warpzones.get(i).hitbox.intersects(Persistance.currentplayer
+					.getHitboxAt(Persistance.currentplayer.x, Persistance.currentplayer.y))) {
+				WarpZone wz = Persistance.currentmap.warpzones.get(i);
+				Persistance.currentmap = wz.getDestination();
+				Persistance.playerCamera.x = Persistance.currentplayer.x = wz.toX;
+				Persistance.playerCamera.y = Persistance.currentplayer.y = wz.toY;
 				musicset = false;
 				break;
 			}

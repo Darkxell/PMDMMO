@@ -2,7 +2,7 @@ package com.darkxell.client.state;
 
 import java.awt.Graphics2D;
 
-import com.darkxell.client.launchable.Launcher;
+import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.renderers.layers.BackgroundSeaLayer;
 import com.darkxell.client.resources.images.Hud;
@@ -18,7 +18,7 @@ public class OpenningState extends AbstractState {
 	@Override
 	public void onKeyPressed(short key) {
 		if (key == Keys.KEY_ATTACK)
-			Launcher.stateManager.setState(new FreezoneExploreState());
+			Persistance.stateManager.setState(new FreezoneExploreState());
 	}
 
 	@Override
@@ -40,7 +40,7 @@ public class OpenningState extends AbstractState {
 	public void update() {
 		if (!ismusicset) {
 			ismusicset = true;
-			Launcher.soundmanager.setBackgroundMusic(SoundsHolder.getSong("01 Intro.mp3"));
+			Persistance.soundmanager.setBackgroundMusic(SoundsHolder.getSong("01 Intro.mp3"));
 		}
 
 		background.update();

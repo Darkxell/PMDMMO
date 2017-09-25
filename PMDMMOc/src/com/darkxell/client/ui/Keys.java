@@ -4,7 +4,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import com.darkxell.client.launchable.ClientSettings;
-import com.darkxell.client.launchable.Launcher;
+import com.darkxell.client.launchable.Persistance;
 
 public class Keys implements KeyListener {
 
@@ -91,9 +91,9 @@ public class Keys implements KeyListener {
 		short key = getKeyFromID(e.getKeyCode());
 		if (key != -1 && !isPressed(key)) {
 			isPressed[key] = true;
-			Launcher.stateManager.onKeyPressed(e, key);
+			Persistance.stateManager.onKeyPressed(e, key);
 		} else
-			Launcher.stateManager.onKeyPressed(e, (short) -1);
+			Persistance.stateManager.onKeyPressed(e, (short) -1);
 	}
 
 	@Override
@@ -101,14 +101,14 @@ public class Keys implements KeyListener {
 		short key = getKeyFromID(e.getKeyCode());
 		if (key != -1) {
 			isPressed[key] = false;
-			Launcher.stateManager.onKeyReleased(e, key);
+			Persistance.stateManager.onKeyReleased(e, key);
 		} else
-			Launcher.stateManager.onKeyReleased(e, (short) -1);
+			Persistance.stateManager.onKeyReleased(e, (short) -1);
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		Launcher.stateManager.onKeyTyped(e);
+		Persistance.stateManager.onKeyTyped(e);
 	}
 
 }

@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.jdom2.input.SAXBuilder;
 
-import com.darkxell.client.persistance.FreezoneMapHolder;
+import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.resources.images.AbstractTileset;
 import com.darkxell.client.state.map.LocalMap.LOCALMAPLOCATION;
 
@@ -63,7 +63,7 @@ public abstract class FreezoneMap {
 	}
 
 	public void update() {
-		FreezoneMapHolder.currentplayer.update();
+		Persistance.currentplayer.update();
 		for (int i = 0; i < entities.size(); i++)
 			entities.get(i).update();
 	}

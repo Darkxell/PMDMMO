@@ -6,11 +6,11 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.Shape;
 
-import com.darkxell.common.util.Logger;
-
 public class CustomTextfield {
 
+	@SuppressWarnings("unused")
 	private int width = 0;
+	@SuppressWarnings("unused")
 	private int height = 0;
 	private FontMetrics lastusedfontmetrics = null;
 	private String charsbefore = "";
@@ -26,8 +26,8 @@ public class CustomTextfield {
 		this.height = height;
 		this.lastusedfontmetrics = g.getFontMetrics();
 		// Starts to draw
-		int beforelength = g.getFontMetrics().stringWidth(charsbefore);
-		int afterlength = g.getFontMetrics().stringWidth(charsafter);
+		int beforelength = lastusedfontmetrics.stringWidth(charsbefore);
+		int afterlength = lastusedfontmetrics.stringWidth(charsafter);
 		g.setColor(Color.WHITE);
 		if (beforelength + afterlength + 2 <= width || beforelength <= width / 2) {
 			g.drawString(charsbefore, 0, height - 2);

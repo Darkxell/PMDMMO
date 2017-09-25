@@ -2,8 +2,7 @@ package com.darkxell.client.state.menu.dungeon;
 
 import java.util.ArrayList;
 
-import com.darkxell.client.launchable.Launcher;
-import com.darkxell.client.persistance.DungeonPersistance;
+import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.dungeon.DungeonState;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
@@ -13,21 +12,18 @@ import com.darkxell.common.player.ItemContainer;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.Message;
 
-public class DungeonMenuState extends OptionSelectionMenuState
-{
+public class DungeonMenuState extends OptionSelectionMenuState {
 
 	@SuppressWarnings("unused")
 	private MenuOption moves, items, team, others, ground;
 
-	public DungeonMenuState(AbstractState background)
-	{
+	public DungeonMenuState(AbstractState background) {
 		super(background);
 		this.createOptions();
 	}
 
 	@Override
-	protected void createOptions()
-	{
+	protected void createOptions() {
 		MenuTab tab = new MenuTab();
 		tab.addOption((this.moves = new MenuOption("menu.moves")));
 		tab.addOption((this.items = new MenuOption("menu.items")));
@@ -38,35 +34,41 @@ public class DungeonMenuState extends OptionSelectionMenuState
 	}
 
 	@Override
-	protected void onExit()
-	{
-		Launcher.stateManager.setState(this.backgroundState);
+	protected void onExit() {
+		Persistance.stateManager.setState(this.backgroundState);
 	}
 
 	@Override
-	protected void onOptionSelected(MenuOption option)
-	{
-		DungeonState s = DungeonPersistance.dungeonState;
-		if (option == this.moves) Launcher.stateManager.setState(new MovesMenuState(s));
-		else if (option == this.items)
-		{
+	protected void onOptionSelected(MenuOption option) {
+		DungeonState s = Persistance.dungeonState;
+		if (option == this.moves)
+			Persistance.stateManager.setState(new MovesMenuState(s));
+		else if (option == this.items) {
 			ArrayList<ItemContainer> containers = new ArrayList<ItemContainer>();
-			if (!DungeonPersistance.player.inventory.isEmpty()) containers.add(DungeonPersistance.player.inventory);
-			if (DungeonPersistance.player.getDungeonPokemon().tile.getItem() != null) containers.add(DungeonPersistance.player.getDungeonPokemon().tile);
-			for (Pokemon pokemon : DungeonPersistance.player.getTeam())
-				if (pokemon.getItem() != null) containers.add(pokemon);
-			if (containers.isEmpty())
-			{
+			if (!Persistance.player.inventory.isEmpty())
+				containers.add(Persistance.player.inventory);
+			if (Persistance.player.getDungeonPokemon().tile.getItem() != null)
+				containers.add(Persistance.player.getDungeonPokemon().tile);
+			for (Pokemon pokemon : Persistance.player.getTeam())
+				if (pokemon.getItem() != null)
+					containers.add(pokemon);
+			if (containers.isEmpty()) {
 				this.onExit();
 				s.logger.showMessage(new Message("inventory.empty"));
-			} else Launcher.stateManager.setState(new ItemContainersMenuState(s, containers.toArray(new ItemContainer[containers.size()])));
-		} else if (option == this.team) Launcher.stateManager.setState(new TeamMenuState(s));
-		else if (option == this.ground)
-		{
+			} else
+				Persistance.stateManager.setState(
+						new ItemContainersMenuState(s, containers.toArray(new ItemContainer[containers.size()])));
+		} else if (option == this.team)
+			Persistance.stateManager.setState(new TeamMenuState(s));
+		else if (option == this.ground) {
 			this.onExit();
-			if (DungeonPersistance.player.getDungeonPokemon().tile.type() == TileType.STAIR) Launcher.stateManager.setState(new StairMenuState());
-			else if (DungeonPersistance.player.getDungeonPokemon().tile.getItem() == null) s.logger.showMessage(new Message("ground.empty"));
-			else Launcher.stateManager.setState(new ItemContainersMenuState(s, DungeonPersistance.player.getDungeonPokemon().tile));
+			if (Persistance.player.getDungeonPokemon().tile.type() == TileType.STAIR)
+				Persistance.stateManager.setState(new StairMenuState());
+			else if (Persistance.player.getDungeonPokemon().tile.getItem() == null)
+				s.logger.showMessage(new Message("ground.empty"));
+			else
+				Persistance.stateManager
+						.setState(new ItemContainersMenuState(s, Persistance.player.getDungeonPokemon().tile));
 		}
 	}
 }

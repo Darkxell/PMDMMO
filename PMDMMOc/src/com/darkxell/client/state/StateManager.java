@@ -8,7 +8,7 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
-import com.darkxell.client.launchable.Launcher;
+import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.animation.AnimationTicker;
 import com.darkxell.client.ui.MainUiUtility;
 
@@ -45,13 +45,13 @@ public class StateManager {
 		if (this.currentState != null && isGameFocused)
 			this.currentState.onKeyPressed(key);
 		if (e.getKeyCode() == KeyEvent.VK_ENTER && isChatFocused)
-			Launcher.chatbox.send();
+			Persistance.chatbox.send();
 		if (e.getKeyCode() == KeyEvent.VK_LEFT && isChatFocused)
-			Launcher.chatbox.textfield.pressLeft();
+			Persistance.chatbox.textfield.pressLeft();
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT && isChatFocused)
-			Launcher.chatbox.textfield.pressRight();
+			Persistance.chatbox.textfield.pressRight();
 		if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE && isChatFocused)
-			Launcher.chatbox.textfield.pressDelete();
+			Persistance.chatbox.textfield.pressDelete();
 	}
 
 	public void onKeyReleased(KeyEvent e, short key) {
@@ -61,7 +61,7 @@ public class StateManager {
 
 	public void onKeyTyped(KeyEvent e) {
 		if (e.getKeyChar() != '\b' && isChatFocused)
-			Launcher.chatbox.textfield.insertString(e.getKeyChar() + "");
+			Persistance.chatbox.textfield.insertString(e.getKeyChar() + "");
 	}
 
 	public void onMouseClick(int x, int y) {
@@ -73,7 +73,7 @@ public class StateManager {
 		} else if (x > chatx && x < chatx + chatwidth && y > chaty && y < chaty + chatheight) {
 			isChatFocused = true;
 			isGameFocused = false;
-			Launcher.chatbox.onClick(x - chatx, y - chaty);
+			Persistance.chatbox.onClick(x - chatx, y - chaty);
 		}
 	}
 
@@ -130,14 +130,14 @@ public class StateManager {
 		g.translate(chatx, chaty);
 		Shape clp = g.getClip();
 		g.setClip(new Rectangle(0, 0, chatwidth, chatheight));
-		Launcher.chatbox.render(g, chatwidth, chatheight, isChatFocused);
+		Persistance.chatbox.render(g, chatwidth, chatheight, isChatFocused);
 		g.setClip(clp);
 		g.translate(-chatx, -chaty);
 		// draws the map inside
 		g.translate(mapx, mapy);
 		clp = g.getClip();
 		g.setClip(new Rectangle(0, 0, mapsize, mapsize));
-		Launcher.displaymap.render(g, mapsize, mapsize);
+		Persistance.displaymap.render(g, mapsize, mapsize);
 		g.setClip(clp);
 		g.translate(-mapx, -mapy);
 	}
@@ -146,7 +146,7 @@ public class StateManager {
 		if (this.currentState != null)
 			this.currentState.update();
 		AnimationTicker.instance.update();
-		Launcher.displaymap.update();
+		Persistance.displaymap.update();
 	}
 
 	// GETTERS,SETTERS AND UTILITY

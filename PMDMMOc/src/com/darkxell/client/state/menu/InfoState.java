@@ -3,7 +3,7 @@ package com.darkxell.client.state.menu;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
-import com.darkxell.client.launchable.Launcher;
+import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.menu.components.TextWindow;
 import com.darkxell.client.ui.Keys;
@@ -32,7 +32,7 @@ public class InfoState extends AbstractMenuState
 	@Override
 	protected void onExit()
 	{
-		Launcher.stateManager.setState(this.parent);
+		Persistance.stateManager.setState(this.parent);
 	}
 
 	@Override

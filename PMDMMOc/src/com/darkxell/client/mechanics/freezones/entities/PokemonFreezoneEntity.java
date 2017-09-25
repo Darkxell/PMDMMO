@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Random;
 
-import com.darkxell.client.launchable.Launcher;
+import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.freezones.FreezoneEntity;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.state.DialogState;
@@ -30,7 +30,7 @@ public class PokemonFreezoneEntity extends FreezoneEntity {
 		screens.add(new DialogScreen(p, new Message("Hey there! <br>This is a debug string to try to know if the dialog boxes are working! Item descriptions are coming next.", false)));
 		screens.add(new DialogScreen(p, new Message("item.info.53")));
 		screens.add(new DialogScreen(PokemonRegistry.find(168).generate(new Random(), 0), new Message("item.info.69")));
-		Launcher.stateManager.setState(new DialogState(Launcher.stateManager.getCurrentState(), screens));
+		Persistance.stateManager.setState(new DialogState(Persistance.stateManager.getCurrentState(), screens));
 	}
 
 	@Override

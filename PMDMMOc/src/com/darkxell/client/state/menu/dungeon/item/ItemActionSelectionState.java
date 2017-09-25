@@ -5,14 +5,13 @@ import java.awt.Rectangle;
 import java.awt.Shape;
 import java.util.ArrayList;
 
-import com.darkxell.client.launchable.Launcher;
+import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.menu.AbstractMenuState;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.common.item.Item.ItemAction;
 
-public class ItemActionSelectionState extends OptionSelectionMenuState
-{
+public class ItemActionSelectionState extends OptionSelectionMenuState {
 
 	private ArrayList<ItemAction> actions;
 	public final ItemActionSource actionSource;
@@ -42,14 +41,14 @@ public class ItemActionSelectionState extends OptionSelectionMenuState
 	@Override
 	protected Rectangle mainWindowDimensions() {
 		Rectangle r = super.mainWindowDimensions();
-		if (this.backgroundState instanceof OptionSelectionMenuState) r.x = (int) (((OptionSelectionMenuState) this.backgroundState).getMainWindow().dimensions
-				.getMaxX() + 5);
+		if (this.backgroundState instanceof OptionSelectionMenuState)
+			r.x = (int) (((OptionSelectionMenuState) this.backgroundState).getMainWindow().dimensions.getMaxX() + 5);
 		return r;
 	}
 
 	@Override
 	protected void onExit() {
-		Launcher.stateManager.setState(this.backgroundState);
+		Persistance.stateManager.setState(this.backgroundState);
 	}
 
 	@Override
@@ -61,8 +60,7 @@ public class ItemActionSelectionState extends OptionSelectionMenuState
 	public void render(Graphics2D g, int width, int height) {
 		// If background state hasn't been drawn yet.
 		if (this.getMainWindow() == null && this.backgroundState instanceof AbstractMenuState
-				&& ((OptionSelectionMenuState) this.backgroundState).getMainWindow() == null)
-		{
+				&& ((OptionSelectionMenuState) this.backgroundState).getMainWindow() == null) {
 			Shape c = g.getClip();
 			g.setClip(0, 0, 0, 0);
 			this.backgroundState.render(g, width, height);

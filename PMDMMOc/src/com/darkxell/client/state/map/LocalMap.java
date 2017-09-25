@@ -3,7 +3,7 @@ package com.darkxell.client.state.map;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import com.darkxell.client.persistance.FreezoneMapHolder;
+import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.MapResources;
 import com.darkxell.common.util.Message;
@@ -34,8 +34,8 @@ public class LocalMap extends AbstractDisplayMap {
 
 	@Override
 	public void update() {
-		if (FreezoneMapHolder.currentmap != null && FreezoneMapHolder.currentmap.getMapLocation() != currentlocation)
-			currentlocation = FreezoneMapHolder.currentmap.getMapLocation();
+		if (Persistance.currentmap != null && Persistance.currentmap.getMapLocation() != currentlocation)
+			currentlocation = Persistance.currentmap.getMapLocation();
 	}
 
 	public enum LOCALMAPLOCATION {

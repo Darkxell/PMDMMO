@@ -55,7 +55,7 @@ public class Updater implements Runnable
 		// If a tick has passed, update until there is no delayed update
 		while (this.updateTime >= 1)
 		{
-			Launcher.stateManager.update();
+			Persistance.stateManager.update();
 			++this.updatesCurrentSecond;
 			--this.updateTime;
 		}

@@ -1,6 +1,6 @@
 package com.darkxell.client.mechanics.freezones;
 
-import com.darkxell.client.persistance.FreezoneMapHolder;
+import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.resources.images.pokemon.AbstractPokemonSpriteset;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.ui.Keys;
@@ -35,22 +35,22 @@ public class FreezonePlayer {
 	 * it were at the wanted location, true otherwise.
 	 */
 	public boolean canBeAt(double x, double y) {
-		if (FreezoneMapHolder.currentmap == null)
+		if (Persistance.currentmap == null)
 			return true;
 		DoubleRectangle hbx = getHitboxAt(x, y);
-		for (int i = 0; i < FreezoneMapHolder.currentmap.entities.size(); i++) {
-			FreezoneEntity ety = FreezoneMapHolder.currentmap.entities.get(i);
+		for (int i = 0; i < Persistance.currentmap.entities.size(); i++) {
+			FreezoneEntity ety = Persistance.currentmap.entities.get(i);
 			if (ety.isSolid && ety.getHitbox(ety.posX, ety.posY).intersects(this.getHitboxAt(x, y)))
 				return false;
 		}
 
-		if (FreezoneMapHolder.currentmap.getTileTypeAt(hbx.x, hbx.y) == FreezoneTile.TYPE_SOLID)
+		if (Persistance.currentmap.getTileTypeAt(hbx.x, hbx.y) == FreezoneTile.TYPE_SOLID)
 			return false;
-		if (FreezoneMapHolder.currentmap.getTileTypeAt(hbx.x, hbx.y + hbx.height) == FreezoneTile.TYPE_SOLID)
+		if (Persistance.currentmap.getTileTypeAt(hbx.x, hbx.y + hbx.height) == FreezoneTile.TYPE_SOLID)
 			return false;
-		if (FreezoneMapHolder.currentmap.getTileTypeAt(hbx.x + hbx.width, hbx.y) == FreezoneTile.TYPE_SOLID)
+		if (Persistance.currentmap.getTileTypeAt(hbx.x + hbx.width, hbx.y) == FreezoneTile.TYPE_SOLID)
 			return false;
-		if (FreezoneMapHolder.currentmap.getTileTypeAt(hbx.x + hbx.width,
+		if (Persistance.currentmap.getTileTypeAt(hbx.x + hbx.width,
 				hbx.y + hbx.height) == FreezoneTile.TYPE_SOLID)
 			return false;
 		return true;
@@ -229,10 +229,10 @@ public class FreezonePlayer {
 	 * position.
 	 */
 	public boolean canInteract() {
-		if (FreezoneMapHolder.currentmap == null)
+		if (Persistance.currentmap == null)
 			return false;
-		for (int i = 0; i < FreezoneMapHolder.currentmap.entities.size(); ++i) {
-			FreezoneEntity et = FreezoneMapHolder.currentmap.entities.get(i);
+		for (int i = 0; i < Persistance.currentmap.entities.size(); ++i) {
+			FreezoneEntity et = Persistance.currentmap.entities.get(i);
 			if (et.canInteract && et.getHitbox(et.posX, et.posY).intersects(this.getInteractionBox()))
 				return true;
 		}
@@ -241,10 +241,10 @@ public class FreezonePlayer {
 
 	/** Returns the first entity found the player can interact with. */
 	public FreezoneEntity getInteractionTarget() {
-		if (FreezoneMapHolder.currentmap == null)
+		if (Persistance.currentmap == null)
 			return null;
-		for (int i = 0; i < FreezoneMapHolder.currentmap.entities.size(); i++) {
-			FreezoneEntity et = FreezoneMapHolder.currentmap.entities.get(i);
+		for (int i = 0; i < Persistance.currentmap.entities.size(); i++) {
+			FreezoneEntity et = Persistance.currentmap.entities.get(i);
 			if (et.canInteract && et.getHitbox(et.posX, et.posY).intersects(this.getInteractionBox()))
 				return et;
 		}

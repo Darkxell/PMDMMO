@@ -1,13 +1,10 @@
 package com.darkxell.client.launchable;
 
-import com.darkxell.client.mechanics.chat.ChatBox;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
 import com.darkxell.client.resources.music.SoundManager;
 import com.darkxell.client.state.OpenningState;
 import com.darkxell.client.state.StateManager;
-import com.darkxell.client.state.map.AbstractDisplayMap;
-import com.darkxell.client.state.map.LocalMap;
 import com.darkxell.client.ui.Frame;
 import com.darkxell.common.dungeon.DungeonRegistry;
 import com.darkxell.common.item.ItemRegistry;
@@ -23,18 +20,11 @@ public class Launcher {
 	/** If true, data is saved on exit. */
 	public static boolean SAVE_ON_EXIT = false;
 
-	/** The sound manager of the client. */
-	public static SoundManager soundmanager;
-	public static Frame frame;
 	/** Set to false to stop the game. */
 	public static boolean isRunning;
 	private static Renderer renderer;
 	private static UpdaterAndRenderer updaterandrenderer;
 	private static Updater updater;
-	public static ChatBox chatbox;
-	public static AbstractDisplayMap displaymap;
-
-	public static StateManager stateManager;
 
 	public static void main(String[] args) {
 		isRunning = true;
@@ -49,17 +39,14 @@ public class Launcher {
 		DungeonRegistry.loadClient();
 		PokemonSpritesets.loadData();
 		TextRenderer.load();
-		soundmanager = new SoundManager();
+		Persistance.soundmanager = new SoundManager();
 		Logger.instance().info("Lang & Data loaded.");
 
-		frame = new Frame();
-		frame.canvas.requestFocus();
-		stateManager = new StateManager();
-		stateManager.setState(new OpenningState());
-		stateManager.randomizeBackground();
-
-		chatbox = new ChatBox();
-		displaymap = new LocalMap();
+		Persistance.frame = new Frame();
+		Persistance.frame.canvas.requestFocus();
+		Persistance.stateManager = new StateManager();
+		Persistance.stateManager.setState(new OpenningState());
+		Persistance.stateManager.randomizeBackground();
 
 		setProcessingProfile(PROFILE_SYNCHRONIZED);
 
