@@ -40,9 +40,9 @@ public class FreezoneCamera {
 		double newx = (x > target.x + 1) ? x - cameraspeed : (x < target.x - 1) ? x + cameraspeed : x;
 		if (isXposOOB(newx)) {
 			if (isXposOOB(x)) {
-				if (x < (renderwidth / 2) / TILESIZE)
+				if (x < (renderwidth / 2) / TILESIZE + 1)
 					x += cameraspeed * 3;
-				if (x > FreezoneMapHolder.currentmap.mapWidth - ((renderwidth / 2) / TILESIZE))
+				if (x > FreezoneMapHolder.currentmap.mapWidth - ((renderwidth / 2) / TILESIZE - 1))
 					x -= cameraspeed * 3;
 			}
 		} else
@@ -51,9 +51,9 @@ public class FreezoneCamera {
 		double newy = (y > target.y + 1) ? y - cameraspeed : (y < target.y - 1) ? y + cameraspeed : y;
 		if (isYposOOB(newy)) {
 			if (isYposOOB(y)) {
-				if (y < (renderheight / 2) / TILESIZE)
+				if (y < (renderheight / 2) / TILESIZE + 1)
 					y += cameraspeed * 3;
-				if (y > FreezoneMapHolder.currentmap.mapHeight - ((renderheight / 2) / TILESIZE))
+				if (y > FreezoneMapHolder.currentmap.mapHeight - ((renderheight / 2) / TILESIZE - 1))
 					y -= cameraspeed * 3;
 			}
 		} else

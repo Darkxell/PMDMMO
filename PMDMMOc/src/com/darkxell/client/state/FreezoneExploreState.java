@@ -34,7 +34,7 @@ public class FreezoneExploreState extends AbstractState {
 	 * have a hight CPU drain. It also makes the game really ugly, it's a debug
 	 * mode...
 	 */
-	static boolean debugdisplaymode = false;
+	static boolean debugdisplaymode = true;
 
 	@Override
 	public void onKeyPressed(short key) {
@@ -113,14 +113,18 @@ public class FreezoneExploreState extends AbstractState {
 				g.fillRect((int) (dbrct.x * 8), (int) (dbrct.y * 8), (int) (dbrct.width * 8), (int) (dbrct.height * 8));
 			}
 
-			// draws the warpzones if debugmode
-			if (debugdisplaymode)
+			// draws the warpzones and camera position if debugmode
+			if (debugdisplaymode) {
 				for (int i = 0; i < map.warpzones.size(); i++) {
 					g.setColor(new Color(255, 255, 255, 130));
 					DoubleRectangle dbrct = map.warpzones.get(i).hitbox;
 					g.fillRect((int) (dbrct.x * 8), (int) (dbrct.y * 8), (int) (dbrct.width * 8),
 							(int) (dbrct.height * 8));
 				}
+				g.setColor(new Color(240, 55, 54, 150));
+				g.fillRect((int) (FreezoneMapHolder.playerCamera.x * 8), (int) (FreezoneMapHolder.playerCamera.y * 8),
+						4, 4);
+			}
 
 			g.translate(-translateX, -translateY);
 

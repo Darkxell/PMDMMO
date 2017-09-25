@@ -9,7 +9,6 @@ public class FlagEntity extends FreezoneEntity {
 
 	private byte state = 0;
 	private byte counter = 0;
-	private boolean color;
 
 	public FlagEntity(double x, double y) {
 		super(false, false, x, y);
