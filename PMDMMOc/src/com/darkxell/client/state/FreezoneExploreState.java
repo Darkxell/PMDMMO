@@ -34,7 +34,7 @@ public class FreezoneExploreState extends AbstractState {
 	 * have a hight CPU drain. It also makes the game really ugly, it's a debug
 	 * mode...
 	 */
-	static boolean debugdisplaymode = true;
+	static boolean debugdisplaymode = false;
 
 	@Override
 	public void onKeyPressed(short key) {
@@ -97,10 +97,8 @@ public class FreezoneExploreState extends AbstractState {
 			}
 			// Draws the player
 			g.drawImage(Persistance.currentplayer.playersprite.getCurrentSprite(),
-					(int) (Persistance.currentplayer.x * 8
-							- Persistance.currentplayer.playersprite.pointer.gravityX),
-					(int) (Persistance.currentplayer.y * 8
-							- Persistance.currentplayer.playersprite.pointer.gravityY),
+					(int) (Persistance.currentplayer.x * 8 - Persistance.currentplayer.playersprite.pointer.gravityX),
+					(int) (Persistance.currentplayer.y * 8 - Persistance.currentplayer.playersprite.pointer.gravityY),
 					null);
 			if (debugdisplaymode) {
 				g.setColor(new Color(20, 20, 200, 160));
@@ -122,8 +120,7 @@ public class FreezoneExploreState extends AbstractState {
 							(int) (dbrct.height * 8));
 				}
 				g.setColor(new Color(240, 55, 54, 150));
-				g.fillRect((int) (Persistance.playerCamera.x * 8), (int) (Persistance.playerCamera.y * 8),
-						4, 4);
+				g.fillRect((int) (Persistance.playerCamera.x * 8), (int) (Persistance.playerCamera.y * 8), 4, 4);
 			}
 
 			g.translate(-translateX, -translateY);
@@ -166,8 +163,8 @@ public class FreezoneExploreState extends AbstractState {
 			Persistance.soundmanager.setBackgroundMusic(SoundsHolder.getSong(Persistance.currentmap.freezonebgm));
 		}
 		for (int i = 0; i < Persistance.currentmap.warpzones.size(); i++)
-			if (Persistance.currentmap.warpzones.get(i).hitbox.intersects(Persistance.currentplayer
-					.getHitboxAt(Persistance.currentplayer.x, Persistance.currentplayer.y))) {
+			if (Persistance.currentmap.warpzones.get(i).hitbox.intersects(
+					Persistance.currentplayer.getHitboxAt(Persistance.currentplayer.x, Persistance.currentplayer.y))) {
 				WarpZone wz = Persistance.currentmap.warpzones.get(i);
 				Persistance.currentmap = wz.getDestination();
 				Persistance.playerCamera.x = Persistance.currentplayer.x = wz.toX;

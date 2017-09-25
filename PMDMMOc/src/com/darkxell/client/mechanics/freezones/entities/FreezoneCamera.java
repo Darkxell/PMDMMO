@@ -19,6 +19,7 @@ public class FreezoneCamera {
 	public double y = 0;
 	private FreezonePlayer target;
 	private static final int TILESIZE = 8;
+	private static final int OOBSPEEDMULTI = 3;
 
 	/**
 	 * Creates a new Freezonecamera following the wanted player. (Don't go and
@@ -40,10 +41,10 @@ public class FreezoneCamera {
 		double newx = (x > target.x + 1) ? x - cameraspeed : (x < target.x - 1) ? x + cameraspeed : x;
 		if (isXposOOB(newx)) {
 			if (isXposOOB(x)) {
-				if (x < (renderwidth / 2) / TILESIZE + 1)
-					x += cameraspeed * 3;
-				if (x > Persistance.currentmap.mapWidth - ((renderwidth / 2) / TILESIZE - 1))
-					x -= cameraspeed * 3;
+				if (x < (renderwidth / 2) / TILESIZE + 0.3)
+					x += cameraspeed * OOBSPEEDMULTI;
+				else
+					x -= cameraspeed * OOBSPEEDMULTI;
 			}
 		} else
 			x = newx;
@@ -51,22 +52,22 @@ public class FreezoneCamera {
 		double newy = (y > target.y + 1) ? y - cameraspeed : (y < target.y - 1) ? y + cameraspeed : y;
 		if (isYposOOB(newy)) {
 			if (isYposOOB(y)) {
-				if (y < (renderheight / 2) / TILESIZE + 1)
-					y += cameraspeed * 3;
-				if (y > Persistance.currentmap.mapHeight - ((renderheight / 2) / TILESIZE - 1))
-					y -= cameraspeed * 3;
+				if (y < (renderheight / 2) / TILESIZE + 0.3)
+					y += cameraspeed * OOBSPEEDMULTI;
+				else
+					y -= cameraspeed * OOBSPEEDMULTI;
 			}
 		} else
 			y = newy;
 	}
 
-	private boolean isYposOOB(double y) {
-		return (y < (renderheight / 2) / TILESIZE + 1)
-				|| (y > Persistance.currentmap.mapHeight - ((renderheight / 2) / TILESIZE) - 1);
+	private boolean isXposOOB(double x) {
+		return (x < (renderwidth / 2) / TILESIZE + 0.3)
+				|| (x > Persistance.currentmap.mapWidth - ((renderwidth / 2) / TILESIZE) - 0.3);
 	}
 
-	private boolean isXposOOB(double x) {
-		return (x < (renderwidth / 2) / TILESIZE + 1)
-				|| (x > Persistance.currentmap.mapWidth - ((renderwidth / 2) / TILESIZE) - 1);
+	private boolean isYposOOB(double y) {
+		return (y < (renderheight / 2) / TILESIZE + 0.3)
+				|| (y > Persistance.currentmap.mapHeight - ((renderheight / 2) / TILESIZE) - 0.3);
 	}
 }
