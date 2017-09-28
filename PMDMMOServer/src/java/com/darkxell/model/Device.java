@@ -6,7 +6,6 @@
 package com.darkxell.model;
 
 /**
- * Describes a device currently connected to the websocket server.
  * @author Darkxell
  */
 public class Device {
