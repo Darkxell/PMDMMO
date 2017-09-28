@@ -43,7 +43,7 @@ public abstract class Layout {
 		this.generateLiquids();
 		this.placeStairs();
 		this.placeWonderTiles();
-		if (this.floor.dungeon.dungeon().hasTraps)
+		if (this.floor.dungeon.dungeon().hasTraps())
 			this.placeTraps();
 		this.placeItems();
 		this.summonPokemon();

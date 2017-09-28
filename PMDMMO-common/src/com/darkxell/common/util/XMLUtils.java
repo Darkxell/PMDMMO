@@ -76,4 +76,17 @@ public final class XMLUtils
 		return new Element(id).setText(value);
 	}
 
+	/** Exports an array of Integers to an XML element and returns it. <br />
+	 * e.g. 1,2,4,5,-1
+	 * 
+	 * @param id - The Element name. */
+	public static Element toXML(String id, int[] array)
+	{
+		String value = "";
+		for (Integer floor : array)
+			if (value.equals("")) value += floor;
+			else value += "," + floor;
+		return new Element(id).setText(value);
+	}
+
 }

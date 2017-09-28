@@ -37,7 +37,7 @@ public class DungeonInstance
 
 	private Floor createFloor(int floorID)
 	{
-		return new Floor(floorID, this.dungeon().getLayout(floorID), this, new Random(this.random.nextLong()));
+		return new Floor(floorID, this.dungeon().getData(floorID).layout(), this, new Random(this.random.nextLong()));
 	}
 
 	public Floor currentFloor()
