@@ -49,11 +49,11 @@ public class ChatWebsocketServer {
     public void handleMessage(String message, Session session) {
         try (JsonReader reader = Json.createReader(new StringReader(message))) {
             JsonObject jsonMessage = reader.readObject();
-
             if ("message".equals(jsonMessage.getString("action"))) {
                 sessionHandler.sendToAllConnectedSessions(jsonMessage);
             }
         } catch(Exception e){
+            System.out.println(message);
             e.printStackTrace();
         }
     }
