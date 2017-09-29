@@ -22,7 +22,7 @@ new function() {
 		serverUrl.attr('disabled', 'disabled');
 		connectButton.hide();
 		disconnectButton.show();
-	}
+	};
 	
 	var close = function() {
 		if (ws) {
@@ -37,11 +37,11 @@ new function() {
 		disconnectButton.hide();
 		sendMessage.attr('disabled', 'disabled');
 		sendButton.attr('disabled', 'disabled');
-	}
+	};
 	
 	var clearLog = function() {
 		$('#messages').html('');
-	}
+	};
 	
 	var onOpen = function() {
 		console.log('OPENED: ' + serverUrl.val());
@@ -63,13 +63,10 @@ new function() {
 	
 	var onError = function(event) {
 		alert(event.data);
-	}
+	};
 	
-	var addMessage = function(data, type) {
+	var addMessage = function(data) {
 		var msg = $('<pre>').text(data);
-		if (type === 'SENT') {
-			msg.addClass('sent');
-		}
 		var messages = $('#messages');
 		messages.append(msg);
 		
@@ -78,7 +75,7 @@ new function() {
 			msgBox.removeChild(msgBox.firstChild);
 		}
 		msgBox.scrollTop = msgBox.scrollHeight;
-	}
+	};
 
 	WebSocketClient = {
 		init: function() {
@@ -101,8 +98,18 @@ new function() {
 			
 			sendButton.click(function(e) {
 				var msg = $('#sendMessage').val();
-				addMessage(msg, 'SENT');
-				ws.send(msg);
+				
+                                var jsonmessage = {
+                                    action: "message",
+                                    tag:"",
+                                    sender:"Web user",
+                                    message:msg,
+                                    tagcolor:"000000",
+                                    messagecolor:"000000",
+                                    sendercolor:"07D407"
+                                };
+                                
+				ws.send(JSON.stringify(jsonmessage));
 			});
 			
 			$('#clearMessage').click(function(e) {
@@ -121,7 +128,7 @@ new function() {
 			});
 		}
 	};
-}
+};
 
 $(function() {
 	WebSocketClient.init();

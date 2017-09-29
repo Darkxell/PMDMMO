@@ -21,7 +21,11 @@
 			<span id="connectionStatus">CLOSED</span>
 		</div>
 	</fieldset>
-	<fieldset id="requestArea">
+	<fieldset id="messageArea">
+		<legend>Message Log <button id="clearMessage">Clear</button></legend>
+		<div id="messages"></div>
+	</fieldset>
+        <fieldset id="requestArea">
 		<legend>Enter a message</legend>
 		<div>
 			<textarea id="sendMessage" disabled="disabled"></textarea>
@@ -31,12 +35,8 @@
 			[Shortcut] Ctr + Enter
 		</div>
 	</fieldset>
-	<fieldset id="messageArea">
-		<legend>Message Log <button id="clearMessage">Clear</button></legend>
-		<div id="messages"></div>
-	</fieldset>
 </div>
-<script type="text/javascript" src="lib/jquery-1.4.3.min.js"></script>
+<script type="text/javascript" src="jquery-1.4.3.min.js"></script>
 <script type="text/javascript" src="index.js"></script>
 </body>
 </html>
