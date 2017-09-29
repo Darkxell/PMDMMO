@@ -1,6 +1,6 @@
 
 window.onload = init;
-var socket = new WebSocket("ws://localhost:8080/PMDMMOServer/actions");
+var socket = new WebSocket("ws://86.196.106.182:8866/PMDMMOServer/actions");
 socket.onmessage = onMessage;
 
 function onMessage(event) {

@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.darkxell.server;
+package com.darkxell.chatserver;
 
-import com.darkxell.model.Device;
 import java.io.StringReader;
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
@@ -24,8 +23,8 @@ import javax.json.JsonReader;
  * @author Darkxell
  */
 @ApplicationScoped
-@ServerEndpoint("/actions")
-public class DeviceWebsocketServer {
+@ServerEndpoint("/chat")
+public class ChatWebsocketServer {
     
     @Inject
     private DeviceSessionHandler sessionHandler;
@@ -44,33 +43,18 @@ public class DeviceWebsocketServer {
     public void onError(Throwable error) {
         System.err.println("Websocket error :");
         error.printStackTrace();
-        //TODO: define behavior here
     }
 
      @OnMessage
     public void handleMessage(String message, Session session) {
-
         try (JsonReader reader = Json.createReader(new StringReader(message))) {
             JsonObject jsonMessage = reader.readObject();
 
-            if ("add".equals(jsonMessage.getString("action"))) {
-                Device device = new Device();
-                device.setName(jsonMessage.getString("name"));
-                device.setDescription(jsonMessage.getString("description"));
-                device.setType(jsonMessage.getString("type"));
-                device.setStatus("Off");
-                sessionHandler.addDevice(device);
+            if ("message".equals(jsonMessage.getString("action"))) {
+                sessionHandler.sendToAllConnectedSessions(jsonMessage);
             }
-
-            if ("remove".equals(jsonMessage.getString("action"))) {
-                int id = (int) jsonMessage.getInt("id");
-                sessionHandler.removeDevice(id);
-            }
-
-            if ("toggle".equals(jsonMessage.getString("action"))) {
-                int id = (int) jsonMessage.getInt("id");
-                sessionHandler.toggleDevice(id);
-            }
+        } catch(Exception e){
+            e.printStackTrace();
         }
     }
     
