@@ -2,11 +2,15 @@ package com.darkxell.client.mechanics.chat;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 
+import com.darkxell.client.launchable.ClientSettings;
 import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.resources.images.ChatResources;
 import com.darkxell.common.util.Logger;
+import com.eclipsesource.json.JsonObject;
 
 public class ChatBox {
 
@@ -21,13 +25,23 @@ public class ChatBox {
 	public static final byte CHAT_GUILD = 2;
 	public static final byte CHAT_WHISPER = 3;
 
+	private ChatClientEndpoint endpoint;
+
 	/**
 	 * Creates a new chatBox instance. Note that this instance will create it's
 	 * own thread and connection to the server when created.
 	 */
 	public ChatBox() {
+		try {
+			String loc = "ws://" + ClientSettings.getSetting(ClientSettings.SERVER_ADDRESS) + "chat";
+			Logger.i("Started chat endpoint creation at address : " + loc);
+			URI servwslocation = new URI(loc);
+			this.endpoint = new ChatClientEndpoint(servwslocation, this);
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
+		this.textfield = new CustomTextfield();
 		this.thread = new Thread(new Runnable() {
-
 			@Override
 			public void run() {
 				long timePerUpdate = 1000 / 60;
@@ -43,7 +57,6 @@ public class ChatBox {
 			}
 		});
 		this.thread.start();
-		this.textfield = new CustomTextfield();
 	}
 
 	private int boxwidth = 0;
@@ -121,10 +134,18 @@ public class ChatBox {
 	}
 
 	public void send() {
-		this.messages.add(new ChatMessage("User", textfield.getContent(), Color.WHITE,
-				ChatResources.getColorFromChat(selectedcategory), "DEV", Color.RED));
-		this.messages.add(new ChatMessage("WARNING", "Chat server is not yet implemented!", Color.RED, Color.RED));
-		this.textfield.clear();
+		if (this.endpoint != null) {
+			JsonObject mess = new JsonObject().add("action", "message").add("tag", "DEV")
+					.add("sender", ClientSettings.getSetting(ClientSettings.LOGIN))
+					.add("message", this.textfield.getContent()).add("tagcolor", "").add("messagecolor", "")
+					.add("sendercolor", "");
+			this.endpoint.sendMessage(mess.toString());
+			this.textfield.clear();
+		} else {
+			messages.add(new ChatMessage("Error", "Message not sent: no active connection to the chat server.",
+					Color.RED, Color.RED));
+			Logger.e("Could not send message, endpoint does not exist.");
+		}
 	}
 
 	public void onClick(int x, int y) {

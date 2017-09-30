@@ -79,7 +79,7 @@ public class Launcher {
 		switch (profile) {
 		case PROFILE_SYNCHRONIZED:
 			new Thread(updaterandrenderer = new UpdaterAndRenderer()).start();
-			Logger.instance().debug("Processing profile switched: PROFILE_SYNCHRONIZED");
+			Logger.i("Processing profile switched: PROFILE_SYNCHRONIZED");
 			break;
 		case PROFILE_UNCAPPED:
 			new Thread(updater = new Updater()).start();
