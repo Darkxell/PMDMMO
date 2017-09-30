@@ -4,6 +4,7 @@ import static com.darkxell.client.resources.images.AbstractDungeonTileset.TILE_S
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.HashSet;
 
 import com.darkxell.client.resources.images.AbstractDungeonTileset;
@@ -24,7 +25,9 @@ public class FloorRenderer {
 
 	public FloorRenderer(Floor floor) {
 		this.floor = floor;
-		this.tileset = new FloorDungeonTileset("resources/tilesets/dungeon-" + floor.dungeon.id + ".png");
+		if (new File("resources/tilesets/dungeon/dungeon-" + floor.data.terrainSpriteset + ".png").exists()) this.tileset = new FloorDungeonTileset(
+				"resources/tilesets/dungeon/dungeon-" + floor.data.terrainSpriteset + ".png");
+		else this.tileset = new FloorDungeonTileset("resources/tilesets/dungeon/dungeon-0.png");
 	}
 
 	/** Draws entities. */

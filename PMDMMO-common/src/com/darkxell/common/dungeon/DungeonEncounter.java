@@ -14,31 +14,25 @@ public class DungeonEncounter
 	public final FloorSet floors;
 	/** The Pokémon ID. */
 	public final int id;
-	/** True if this Pokémon can be recruited. If so, {@link DungeonEncounter#recruitRate} is its recruit rate. */
-	public final boolean isRecruitable;
 	/** The Level of the Pokémon. */
 	public final int level;
-	/** The recruit rate of the Pokémon. */
-	public final float recruitRate;
+	/** The weight of the encounter. */
+	public final int weight;
 
 	public DungeonEncounter(Element xml)
 	{
 		this.id = Integer.parseInt(xml.getAttributeValue("id"));
 		this.level = Integer.parseInt(xml.getAttributeValue("level"));
+		this.weight = xml.getAttribute("weight") == null ? 1 : Integer.parseInt(xml.getAttributeValue("weight"));
 		this.floors = new FloorSet(xml.getChild(FloorSet.XML_ROOT));
-
-		String recruit = xml.getAttributeValue("recruit");
-		this.isRecruitable = recruit != null;
-		this.recruitRate = recruit == null ? 0 : Float.parseFloat(recruit);
 	}
 
-	public DungeonEncounter(int id, int level, FloorSet floors, boolean isRecruitable, float recruitRate)
+	public DungeonEncounter(int id, int level, int weight, FloorSet floors)
 	{
 		this.id = id;
 		this.level = level;
 		this.floors = floors;
-		this.isRecruitable = isRecruitable;
-		this.recruitRate = recruitRate;
+		this.weight = weight;
 	}
 
 	public PokemonSpecies pokemon()
@@ -51,7 +45,7 @@ public class DungeonEncounter
 		Element root = new Element(XML_ROOT);
 		root.setAttribute("id", Integer.toString(this.id));
 		root.setAttribute("level", Integer.toString(this.level));
-		if (this.isRecruitable) root.setAttribute("recruit", Float.toString(this.recruitRate));
+		if (this.weight != 1) root.setAttribute("weight", Integer.toString(this.weight));
 		root.addContent(this.floors.toXML());
 		return root;
 	}

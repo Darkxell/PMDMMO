@@ -5,16 +5,16 @@
   <items>
     <item id="0" x="5" y="6" quantity="5" />
     <item id="2" x="6" y="6" />
-    <item id="7" x="7" y="6" />
-    <item id="13" x="8" y="6" />
-    <item id="24" x="9" y="6" />
-    <item id="45" x="10" y="6" />
-    <item id="59" x="11" y="6" />
-    <item id="114" x="12" y="6" />
-    <item id="152" x="13" y="6" />
-    <item id="150" x="8" y="7" />
-    <item id="135" x="9" y="7" />
-    <item id="210" x="10" y="7" />
+    <item id="8" x="7" y="6" />
+    <item id="21" x="8" y="6" />
+    <item id="31" x="9" y="6" />
+    <item id="78" x="10" y="6" />
+    <item id="86" x="11" y="6" />
+    <item id="171" x="12" y="6" />
+    <item id="208" x="13" y="6" />
+    <item id="314" x="8" y="7" />
+    <item id="225" x="9" y="7" />
+    <item id="352" x="10" y="7" />
   </items>
   <pokemons>
     <pokemon id="16" x="7" y="8" level="1" />

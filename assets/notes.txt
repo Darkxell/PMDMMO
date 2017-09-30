@@ -1,0 +1,69 @@
+------------- ITEM IDs -------------
+0		: Poké
+1-20	: Food
+21-30	: Projectiles
+31-60	: Seeds
+61-80	: Gummies
+81-150	: Orbs
+151-170	: Drinks
+171-220 : Equipables
+221-300 : TMs
+300-310 : HMs
+311-350 : Evolution Items
+351-380 : Usables
+381-400 : Unusables
+
+
+Dungeons input
+0=Tiny Woods
+1=Thunderwave Cave
+2=Mt. Steel
+3=Sinister Woods
+4=Silent Chasm
+5=Mt. Thunder
+6=Mt. Thunder Peak
+7=Great Canyon
+8=Lapis Cave
+9=Mt. Blaze
+10=Mt. Blaze Peak
+11=Frosty Forest
+12=Frosty Grotto
+13=Mt. Freeze
+14=Mt. Freeze Peak
+15=Magma Cavern
+16=Magma Cavern Pit
+17=Sky Tower
+18=Sky Tower Summit
+19=Stormy Sea
+20=Silver Trench
+21=Meteor Cave
+23=Western Cave
+26=Wish Cave
+27=Buried Relic
+28=Pitfall Valley
+29=Northern Range
+31=Desert Region
+32=Southern Cavern
+33=Wyvern Hill
+34=Fiery Field
+35=Northwind Field
+36=Solar Cave
+37=Lightning Field
+38=Darknight Relic
+39=Wondrous Sea
+40=Murky Cave
+41=Grand Sea
+42=Uproar Forest
+43=Oddity Cave
+44=Remains Island
+45=Marvelous Sea
+46=Fantasy Strait
+47=Rock Path
+48=Snow Path
+53=Howling Forest
+56=Waterfall Pond
+57=Unown Relic
+58=Joyous Tower
+59=Far-off Sea
+60=Mt. Faraway
+62=Purity Forest

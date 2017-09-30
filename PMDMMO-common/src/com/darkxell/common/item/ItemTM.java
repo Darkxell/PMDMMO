@@ -40,7 +40,7 @@ public class ItemTM extends ItemHM
 	@Override
 	public int getSpriteID()
 	{
-		return super.getSpriteID() + MoveRegistry.find(this.moveID).type.id;
+		return 64 + MoveRegistry.find(this.moveID).type.id;
 	}
 
 	@Override

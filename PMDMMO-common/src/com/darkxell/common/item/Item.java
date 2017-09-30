@@ -111,7 +111,7 @@ public class Item
 		this.id = Integer.parseInt(xml.getAttributeValue("id"));
 		this.price = Integer.parseInt(xml.getAttributeValue("price"));
 		this.sell = Integer.parseInt(xml.getAttributeValue("sell"));
-		this.spriteID = Integer.parseInt(xml.getAttributeValue("sprite"));
+		this.spriteID = xml.getAttribute("sprite") == null ? 255 : Integer.parseInt(xml.getAttributeValue("sprite"));
 		this.isStackable = "true".equals(xml.getAttributeValue("stackable"));
 	}
 
@@ -168,7 +168,7 @@ public class Item
 		root.setAttribute("type", this.getClass().getName().substring(Item.class.getName().length()));
 		root.setAttribute("price", Integer.toString(this.price));
 		root.setAttribute("sell", Integer.toString(this.sell));
-		root.setAttribute("sprite", Integer.toString(this.spriteID));
+		if (this.spriteID != 255) root.setAttribute("sprite", Integer.toString(this.spriteID));
 		if (this.isStackable) root.setAttribute("stackable", "true");
 		return root;
 	}

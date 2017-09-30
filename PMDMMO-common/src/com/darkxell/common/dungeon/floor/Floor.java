@@ -12,10 +12,14 @@ import com.darkxell.common.pokemon.DungeonPokemon;
 /** Represents a generated Floor in a Dungeon. */
 public class Floor {
 
+	
+	/** This Floor's data. */
+	public final FloorData data;
 	/** This Floor's Dungeon. */
 	public final DungeonInstance dungeon;
 	/** This Floor's ID. */
 	public final int id;
+	private boolean isGenerating = true;
 	/** This Floor's layout. */
 	public final Layout layout;
 	/** RNG for game logic: moves, mob spawning, etc. */
@@ -30,11 +34,11 @@ public class Floor {
 	 * array to generate the floor.
 	 */
 	public Tile[][] tiles;
-	private boolean isGenerating = true;;
 
 	public Floor(int id, Layout layout, DungeonInstance dungeon, Random random) {
 		this.id = id;
 		this.dungeon = dungeon;
+		this.data = this.dungeon.dungeon().getData(this.id);
 		this.layout = layout;
 		this.random = random;
 	}
@@ -48,11 +52,27 @@ public class Floor {
 				t.updateNeighbors();
 	}
 
+	public int getHeight() {
+		return this.tiles[0].length;
+	}
+
+	public int getWidth() {
+		return this.tiles.length;
+	}
+
 	/** @return True if this Floor is done generating. */
 	public boolean isGenerated() {
 		return !isGenerating ;
 	}
 
+	/** Called when a new turn starts. */
+	public ArrayList<DungeonEvent> onTurnStart()
+	{
+		ArrayList<DungeonEvent> e = new ArrayList<DungeonEvent>();
+		// e.add(new MessageEvent(this, new Message("New turn!", false)));
+		return e;
+	}
+	
 	/** @return A random Room in this Floor. */
 	public Room randomRoom(Random random) {
 		return this.rooms[random.nextInt(this.rooms.length)];
@@ -68,23 +88,15 @@ public class Floor {
 		return null;
 	}
 
-	public int getWidth() {
-		return this.tiles.length;
+	/** Overrides all of the floor's tiles. */
+	public void setTiles(Tile[][] tiles) {
+		this.tiles = tiles;
 	}
 
-	public int getHeight() {
-		return this.tiles[0].length;
-	}
-	
 	public void summonPokemon(DungeonPokemon pokemon, int x, int y) {
 		if (!(this.tiles == null || x < 0 || x >= this.tiles.length || y < 0 || y >= this.tiles[x].length))
 			this.tileAt(x, y).setPokemon(pokemon);
 		this.dungeon.registerActor(pokemon);
-	}
-
-	public void unsummonPokemon(DungeonPokemon pokemon)	{
-		pokemon.tile.setPokemon(null);
-		this.dungeon.unregisterActor(pokemon);
 	}
 
 	/** @return The tile at the input X, Y coordinates. */
@@ -107,16 +119,8 @@ public class Floor {
 		return s;
 	}
 
-	/** Overrides all of the floor's tiles. */
-	public void setTiles(Tile[][] tiles) {
-		this.tiles = tiles;
-	}
-
-	/** Called when a new turn starts. */
-	public ArrayList<DungeonEvent> onTurnStart()
-	{
-		ArrayList<DungeonEvent> e = new ArrayList<DungeonEvent>();
-		// e.add(new MessageEvent(this, new Message("New turn!", false)));
-		return e;
+	public void unsummonPokemon(DungeonPokemon pokemon)	{
+		pokemon.tile.setPokemon(null);
+		this.dungeon.unregisterActor(pokemon);
 	}
 }
