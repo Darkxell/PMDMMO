@@ -19,11 +19,14 @@ public class DungeonItem
 	public final FloorSet floors;
 	/** The Item ID. */
 	public final int[] items;
+	// TODO remove type
+	public final int type;
 	/** This Item group's weight. */
 	public final int weight;
 
 	public DungeonItem(Element xml)
 	{
+		this.type = 0;
 		this.weight = Integer.parseInt(xml.getAttributeValue("weight"));
 		this.floors = new FloorSet(xml.getChild(FloorSet.XML_ROOT));
 		ArrayList<Integer> i = XMLUtils.readIntArray(xml.getChild("ids")), c = XMLUtils.readIntArray(xml.getChild("chances"));
@@ -36,8 +39,9 @@ public class DungeonItem
 		}
 	}
 
-	public DungeonItem(FloorSet floors, int weight, int[] items, int[] chances)
+	public DungeonItem(int type, FloorSet floors, int weight, int[] items, int[] chances)
 	{
+		this.type = type;
 		this.weight = weight;
 		this.floors = floors;
 		this.items = items;

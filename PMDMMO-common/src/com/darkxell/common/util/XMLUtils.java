@@ -50,9 +50,9 @@ public final class XMLUtils
 	/** Saves the input XML Element into the input file. */
 	public static void saveFile(File file, Element element)
 	{
-		if (!file.exists()) return;
 		try
 		{
+			if (!file.exists()) file.createNewFile();
 			new XMLOutputter(Format.getPrettyFormat()).output(new Document(element), new FileOutputStream(file));
 		} catch (FileNotFoundException e)
 		{

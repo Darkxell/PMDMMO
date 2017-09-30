@@ -13,6 +13,7 @@ import com.darkxell.common.util.Message;
 /** Describes a Dungeon: floors, Pokémon, items... */
 public class Dungeon
 {
+	// TODO make lists private when data is gathered.
 	public static final boolean UP = false, DOWN = true;
 	public static final String XML_ROOT = "dungeon";
 
@@ -21,15 +22,15 @@ public class Dungeon
 	/** The number of Floors in this Dungeon. */
 	public final int floorCount;
 	/** Describes this Dungeon's Floors' data. */
-	private ArrayList<FloorData> floorData;
+	public ArrayList<FloorData> floorData;
 	/** This Dungeon's ID. */
 	public final int id;
 	/** Lists the Items found in this Dungeon. */
-	private ArrayList<DungeonItem> items;
+	public ArrayList<DungeonItem> items;
 	/** The chance of a Room to be a Monster House in this Dungeon. */
 	public final double monsterHouseChance;
 	/** Lists the Pokémon found in this Dungeon. */
-	private ArrayList<DungeonEncounter> pokemon;
+	public ArrayList<DungeonEncounter> pokemon;
 	/** Number of Items the entering team is allowed to carry. -1 for no limit. */
 	// public final int teamItems;
 	/** Level the entering team is set to. -1 for no change. */
@@ -39,7 +40,7 @@ public class Dungeon
 	/** Amount of Money the entering team is allowed to carry. -1 for no limit. */
 	// public final int teamMoney;
 	/** Lists the Traps found in this Dungeon. */
-	private ArrayList<DungeonTrap> traps;
+	public ArrayList<DungeonTrap> traps;
 
 	public Dungeon(Element xml)
 	{
@@ -67,7 +68,7 @@ public class Dungeon
 			this.floorData.add(new FloorData(data));
 	}
 
-	public Dungeon(int id, int floorCount, boolean direction, double monsterHouseChance, boolean hasTraps, // int teamItems, int teamLevel, int teamMoney,int teamMembers,
+	public Dungeon(int id, int floorCount, boolean direction, double monsterHouseChance, // int teamItems, int teamLevel, int teamMoney,int teamMembers,
 			ArrayList<DungeonEncounter> pokemon, ArrayList<DungeonItem> items, ArrayList<DungeonTrap> traps, ArrayList<FloorData> floorData)
 	{
 		this.id = id;
