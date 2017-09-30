@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import com.darkxell.client.launchable.ClientSettings;
 import com.darkxell.client.launchable.Launcher;
+import com.darkxell.client.resources.Palette;
 import com.darkxell.client.resources.images.ChatResources;
 import com.darkxell.common.util.Logger;
 import com.eclipsesource.json.JsonObject;
@@ -137,8 +138,9 @@ public class ChatBox {
 		if (this.endpoint != null) {
 			JsonObject mess = new JsonObject().add("action", "message").add("tag", "DEV")
 					.add("sender", ClientSettings.getSetting(ClientSettings.LOGIN))
-					.add("message", this.textfield.getContent()).add("tagcolor", "").add("messagecolor", "")
-					.add("sendercolor", "");
+					.add("message", this.textfield.getContent()).add("tagcolor", Palette.getHexaFromClor(Color.RED))
+					.add("messagecolor", Palette.getHexaFromClor(Color.WHITE))
+					.add("sendercolor", Palette.getHexaFromClor(Palette.CHAT_GLOBAL));
 			this.endpoint.sendMessage(mess.toString());
 			this.textfield.clear();
 		} else {

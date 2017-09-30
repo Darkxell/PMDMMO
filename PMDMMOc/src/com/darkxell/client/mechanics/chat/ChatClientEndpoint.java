@@ -1,7 +1,7 @@
 package com.darkxell.client.mechanics.chat;
 
-import java.awt.Color;
 import java.net.URI;
+
 import javax.websocket.ClientEndpoint;
 import javax.websocket.CloseReason;
 import javax.websocket.ContainerProvider;
@@ -12,6 +12,8 @@ import javax.websocket.Session;
 import javax.websocket.WebSocketContainer;
 
 import com.darkxell.common.util.Logger;
+import com.eclipsesource.json.Json;
+import com.eclipsesource.json.JsonValue;
 
 @ClientEndpoint
 public class ChatClientEndpoint {
@@ -64,8 +66,14 @@ public class ChatClientEndpoint {
 	 */
 	@OnMessage
 	public void onMessage(String message) {
-		holder.messages.add(new ChatMessage("User", message, Color.WHITE, Color.WHITE, "DEV", Color.RED));
-		// TODO: change the message attributes to match the recived JSON string.
+		try {
+			JsonValue obj = Json.parse(message);
+			holder.messages.add(new ChatMessage(obj));
+		} catch (Exception e) {
+			Logger.w("Could not add the recieved message to messages list : " + message);
+			e.printStackTrace();
+		}
+
 	}
 
 	/**
