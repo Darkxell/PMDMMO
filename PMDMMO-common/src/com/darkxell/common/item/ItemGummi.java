@@ -30,6 +30,12 @@ public class ItemGummi extends Item
 	}
 
 	@Override
+	public int getSpriteID()
+	{
+		return 32 + this.type;
+	}
+
+	@Override
 	public Message getUseName()
 	{
 		return new Message("item.eat");

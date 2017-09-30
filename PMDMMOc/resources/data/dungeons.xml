@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dungeons>
-  <dungeon id="1" floors="3" down="true">
+  <dungeon id="1" floors="4" down="true">
     <encounters>
       <pokemon id="16" level="1" weight="2">
         <floors>
@@ -44,6 +44,11 @@
       <d difficulty="1" money="1" layout="2" terrain="14" shadows="0" camouflage="11" nature="220" secret="Poison">
         <floors>
           <part start="1" end="3" />
+        </floors>
+      </d>
+      <d difficulty="1" money="1" layout="0" terrain="14" shadows="0" camouflage="11" nature="220" secret="Poison">
+        <floors>
+          <part start="4" end="4" />
         </floors>
       </d>
     </data>
