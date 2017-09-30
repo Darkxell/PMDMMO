@@ -104,9 +104,9 @@ new function() {
                                     tag:"",
                                     sender:"Web user",
                                     message:msg,
-                                    tagcolor:"000000",
-                                    messagecolor:"000000",
-                                    sendercolor:"07D407"
+                                    tagcolor:"#000000",
+                                    messagecolor:"#FFFFFF",
+                                    sendercolor:"#07D407"
                                 };
                                 
 				ws.send(JSON.stringify(jsonmessage));
