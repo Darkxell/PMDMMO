@@ -28,6 +28,12 @@ public class FloorSet
 			this.set.add(new Pair<Integer, Integer>(Integer.parseInt(part.getAttributeValue("start")), Integer.parseInt(part.getAttributeValue("end"))));
 	}
 
+	public FloorSet(int start, int end)
+	{
+		this.set = new ArrayList<Pair<Integer, Integer>>();
+		this.set.add(new Pair<Integer, Integer>(start, end));
+	}
+
 	/** @return True if this Set contains the input floor. */
 	public boolean contains(int floor)
 	{

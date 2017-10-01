@@ -2,47 +2,41 @@ package com.darkxell.common.dungeon;
 
 import org.jdom2.Element;
 
-import com.darkxell.common.trap.Trap;
-import com.darkxell.common.trap.TrapRegistry;
+import com.darkxell.common.util.XMLUtils;
 
-/** Describes how an Trap appears in a Dungeon. */
+/** Describes how a Traps appear in a Dungeon. */
 public class DungeonTrap
 {
 	public static final String XML_ROOT = "trap";
 
+	/** The weight of each Trap. Represents how likely it is to appear compared to other traps on this floor. */
+	public final int[] chances;
 	/** The floors this Trap can appear on. */
 	public final FloorSet floors;
-	/** The Trap ID. */
-	public final int id;
-	/** The weight of the Trap. Represents how likely it is to appear compared to other traps on this floor. */
-	public final int weight;
+	/** The Traps IDs. */
+	public final int[] ids;
 
 	public DungeonTrap(Element xml)
 	{
-		this.id = Integer.parseInt(xml.getAttributeValue("id"));
-		this.weight = Integer.parseInt(xml.getAttributeValue("weight"));
+		this.ids = XMLUtils.readIntArray(xml.getChild("ids"));
+		this.chances = XMLUtils.readIntArray(xml.getChild("chances"));
 		this.floors = new FloorSet(xml.getChild(FloorSet.XML_ROOT));
 	}
 
-	public DungeonTrap(int id, int weight, FloorSet floors)
+	public DungeonTrap(int[] ids, int[] chances, FloorSet floors)
 	{
-		this.id = id;
-		this.weight = weight;
+		this.ids = ids;
+		this.chances = chances;
 		this.floors = floors;
 	}
 
 	public Element toXML()
 	{
 		Element root = new Element(XML_ROOT);
-		root.setAttribute("id", Integer.toString(this.id));
-		root.setAttribute("weight", Integer.toString(this.weight));
+		root.addContent(XMLUtils.toXML("ids", this.ids));
+		root.addContent(XMLUtils.toXML("chances", this.chances));
 		root.addContent(this.floors.toXML());
 		return root;
-	}
-
-	public Trap trap()
-	{
-		return TrapRegistry.find(this.id);
 	}
 
 }

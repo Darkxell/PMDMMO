@@ -43,12 +43,8 @@ public class FloorData
 	public final short shopChance;
 	/** The Spriteset to use for the terrain. */
 	public final int terrainSpriteset;
-	/** The chance of the associated trap to be chosen. */
-	private final short[] trapChances;
 	/** The density of Traps. */
 	public final short trapDensity;
-	/** The list of Traps that can appear on this Floor. */
-	private final short[] traps;
 	/** The weather in this Floor. */
 	public final byte weather;
 
@@ -70,23 +66,11 @@ public class FloorData
 		this.trapDensity = XMLUtils.getAttribute(xml, "trap", (short) 0);
 		this.buriedItemDensity = XMLUtils.getAttribute(xml, "buried", (short) 0);
 		this.weather = XMLUtils.getAttribute(xml, "weather", (byte) 0);
-		Element t = xml.getChild("traps");
-		if (t == null)
-		{
-			this.traps = new short[]
-			{ 0 };
-			this.trapChances = new short[]
-			{ 100 };
-		} else
-		{
-			this.traps = XMLUtils.readShortArray(xml.getAttributeValue("ids"));
-			this.trapChances = XMLUtils.readShortArray(xml.getAttributeValue("chances"));
-		}
 	}
 
 	public FloorData(FloorSet floors, int difficulty, int baseMoney, int layout, int terrainSpriteset, byte shadows, PokemonType camouflageType,
 			int naturePower, String secretPower, short shopChance, short monsterHouseChance, short itemDensity, short pokemonDensity, short trapDensity,
-			short buriedItemDensity, byte weather, short[] traps, short[] trapChances)
+			short buriedItemDensity, byte weather)
 	{
 		this.floors = floors;
 		this.difficulty = difficulty;
@@ -104,8 +88,6 @@ public class FloorData
 		this.trapDensity = trapDensity;
 		this.buriedItemDensity = buriedItemDensity;
 		this.weather = weather;
-		this.traps = traps;
-		this.trapChances = trapChances;
 	}
 
 	public Layout layout()
@@ -137,13 +119,6 @@ public class FloorData
 		XMLUtils.setAttribute(xml, "trap", this.trapDensity, 0);
 		XMLUtils.setAttribute(xml, "buried", this.buriedItemDensity, 0);
 		XMLUtils.setAttribute(xml, "weather", this.weather, 0);
-		if (!(this.traps.length == 1 && this.traps[0] == 0))
-		{
-			Element t = new Element("traps");
-			t.setAttribute("ids", XMLUtils.toXML(this.traps));
-			t.setAttribute("chances", XMLUtils.toXML(this.trapChances));
-			xml.addContent(t);
-		}
 		return xml;
 	}
 

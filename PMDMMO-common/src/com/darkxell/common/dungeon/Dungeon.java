@@ -72,8 +72,16 @@ public class Dungeon
 			this.shopItems.add(new DungeonItem(item));
 
 		this.traps = new ArrayList<DungeonTrap>();
-		for (Element trap : xml.getChild("traps").getChildren(DungeonTrap.XML_ROOT))
-			this.traps.add(new DungeonTrap(trap));
+		if (xml.getChild("traps") == null)
+		{
+			this.traps.add(new DungeonTrap(new int[]
+			{ 0 }, new int[]
+			{ 100 }, new FloorSet(1, this.floorCount)));
+		} else
+		{
+			for (Element trap : xml.getChild("traps").getChildren(DungeonTrap.XML_ROOT))
+				this.traps.add(new DungeonTrap(trap));
+		}
 
 		this.floorData = new ArrayList<FloorData>();
 		for (Element data : xml.getChild("data").getChildren(FloorData.XML_ROOT))
