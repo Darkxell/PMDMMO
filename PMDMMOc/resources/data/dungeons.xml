@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dungeons>
-  <dungeon id="1" floors="4" down="false" recruits="false" limit="1000">
+  <dungeon id="1" floors="4" recruits="false" limit="1000">
     <encounters>
       <pokemon id="16" level="1" weight="2">
         <floors>
@@ -39,9 +39,8 @@
         <chances>1</chances>
       </group>
     </items>
-    
     <data>
-      <d difficulty="1" money="1" layout="2" terrain="0" camouflage="11" nature="220" secret="Poison" pokemon="4" items="2">
+      <d difficulty="1" money="1" layout="2" terrain="0" camouflage="11" nature="220" secret="Poison" items="2" pokemon="4">
         <floors>
           <part start="1" end="3" />
         </floors>
@@ -121,21 +120,20 @@
         <chances>1</chances>
       </group>
     </items>
-    
     <data>
-      <d difficulty="1" money="2" layout="2" terrain="1" camouflage="11" nature="220" secret="Poison" pokemon="4" items="4" traps="3">
+      <d difficulty="1" money="2" layout="2" terrain="1" camouflage="11" nature="220" secret="Poison" items="4" pokemon="4" traps="3">
         <floors>
           <part start="1" end="2" />
         </floors>
       </d>
-      <d difficulty="1" money="2" layout="2" terrain="1" camouflage="11" nature="220" secret="Poison" pokemon="4" items="5" traps="3">
+      <d difficulty="1" money="2" layout="2" terrain="1" camouflage="11" nature="220" secret="Poison" items="5" pokemon="4" traps="3">
         <floors>
           <part start="3" end="5" />
         </floors>
       </d>
     </data>
   </dungeon>
-  <dungeon id="3" floors="9" down="false" limit="1000">
+  <dungeon id="3" floors="9" limit="1000">
     <encounters>
       <pokemon id="304" level="6" weight="10">
         <floors>
@@ -220,24 +218,23 @@
         <chances>1429,1428,1429,1428,2857,1429</chances>
       </group>
     </items>
-    
     <data>
-      <d difficulty="1" money="3" layout="2" terrain="2" camouflage="5" nature="504" secret="Confusion" pokemon="5" items="3" traps="3">
+      <d difficulty="1" money="3" layout="2" terrain="2" camouflage="5" nature="504" secret="Confusion" items="3" pokemon="5" traps="3">
         <floors>
           <part start="1" end="2" />
         </floors>
       </d>
-      <d difficulty="1" money="3" layout="2" terrain="2" camouflage="5" nature="504" secret="Confusion" pokemon="6" items="4" traps="3">
+      <d difficulty="1" money="3" layout="2" terrain="2" camouflage="5" nature="504" secret="Confusion" items="4" pokemon="6" traps="3">
         <floors>
           <part start="3" end="5" />
         </floors>
       </d>
-      <d difficulty="1" money="3" layout="2" terrain="3" camouflage="5" nature="504" secret="Confusion" pokemon="6" items="4" traps="3">
+      <d difficulty="1" money="3" layout="2" terrain="3" camouflage="5" nature="504" secret="Confusion" items="4" pokemon="6" traps="3">
         <floors>
           <part start="6" end="6" />
         </floors>
       </d>
-      <d difficulty="1" money="3" layout="2" terrain="3" camouflage="5" nature="504" secret="Confusion" pokemon="7" items="5" traps="3">
+      <d difficulty="1" money="3" layout="2" terrain="3" camouflage="5" nature="504" secret="Confusion" items="5" pokemon="7" traps="3">
         <floors>
           <part start="7" end="8" />
         </floors>
@@ -249,49 +246,49 @@
       </d>
     </data>
   </dungeon>
-  <dungeon id="4" floors="13" down="false" limit="1000">
+  <dungeon id="4" floors="13" limit="1000">
     <encounters>
-      <pokemon id="192" level="8" weight="1000">
+      <pokemon id="192" level="8" weight="10">
         <floors>
           <part start="2" end="7" />
         </floors>
       </pokemon>
-      <pokemon id="161" level="6" weight="2667">
+      <pokemon id="161" level="6" weight="27">
         <floors>
           <part start="3" end="6" />
         </floors>
       </pokemon>
-      <pokemon id="194" level="10" weight="1668">
+      <pokemon id="194" level="10" weight="17">
         <floors>
           <part start="8" end="10" />
         </floors>
       </pokemon>
-      <pokemon id="163" level="6" weight="2668">
+      <pokemon id="163" level="6" weight="27">
         <floors>
           <part start="10" end="12" />
         </floors>
       </pokemon>
-      <pokemon id="165" level="7" weight="2000">
+      <pokemon id="165" level="7" weight="20">
         <floors>
           <part start="7" end="10" />
         </floors>
       </pokemon>
-      <pokemon id="103" level="8" weight="2668">
+      <pokemon id="103" level="8" weight="27">
         <floors>
           <part start="10" end="12" />
         </floors>
       </pokemon>
-      <pokemon id="264" level="8" weight="2666">
+      <pokemon id="264" level="8" weight="27">
         <floors>
           <part start="7" end="9" />
         </floors>
       </pokemon>
-      <pokemon id="266" level="8" weight="1666">
+      <pokemon id="266" level="8" weight="17">
         <floors>
           <part start="4" end="6" />
         </floors>
       </pokemon>
-      <pokemon id="43" level="7" weight="1000">
+      <pokemon id="43" level="7" weight="10">
         <floors>
           <part start="1" end="4" />
         </floors>
@@ -357,20 +354,19 @@
         <chances>1111,1111,1667,555,2223,1111,1111,1111</chances>
       </group>
     </items>
-    
     <data>
-      <d difficulty="2" money="3" layout="2" terrain="4" camouflage="11" nature="220" secret="Poison" pokemon="5" items="4" traps="3">
+      <d difficulty="2" money="3" layout="2" terrain="4" camouflage="11" nature="220" secret="Poison" items="4" pokemon="5" traps="3">
         <floors>
           <part start="1" end="4" />
         </floors>
       </d>
-      <d difficulty="2" money="3" layout="2" terrain="4" shadows="1" camouflage="11" nature="220" secret="Poison" pokemon="6" items="5" traps="3">
+      <d difficulty="2" money="3" layout="2" terrain="4" shadows="1" camouflage="11" nature="220" secret="Poison" items="5" pokemon="6" traps="3">
         <floors>
           <part start="5" end="7" />
           <part start="11" end="12" />
         </floors>
       </d>
-      <d difficulty="2" money="3" layout="2" terrain="4" camouflage="11" nature="220" secret="Poison" pokemon="6" items="4" traps="3">
+      <d difficulty="2" money="3" layout="2" terrain="4" camouflage="11" nature="220" secret="Poison" items="4" pokemon="6" traps="3">
         <floors>
           <part start="8" end="10" />
         </floors>
@@ -384,62 +380,62 @@
   </dungeon>
   <dungeon id="5" floors="9" down="true" limit="1000">
     <encounters>
-      <pokemon id="193" level="10" weight="808">
+      <pokemon id="193" level="10" weight="81">
         <floors>
           <part start="1" end="8" />
         </floors>
       </pokemon>
-      <pokemon id="228" level="11" weight="983">
+      <pokemon id="228" level="11" weight="98">
         <floors>
           <part start="5" end="7" />
         </floors>
       </pokemon>
-      <pokemon id="167" level="11" weight="746">
+      <pokemon id="167" level="11" weight="75">
         <floors>
           <part start="6" end="9" />
         </floors>
       </pokemon>
-      <pokemon id="328" level="11" weight="995">
+      <pokemon id="328" level="11" weight="100">
         <floors>
           <part start="6" end="9" />
         </floors>
       </pokemon>
-      <pokemon id="44" level="10" weight="390">
+      <pokemon id="44" level="10" weight="39">
         <floors>
           <part start="1" end="9" />
         </floors>
       </pokemon>
-      <pokemon id="13" level="8" weight="663">
+      <pokemon id="13" level="8" weight="66">
         <floors>
           <part start="1" end="6" />
         </floors>
       </pokemon>
-      <pokemon id="269" level="10" weight="887">
+      <pokemon id="269" level="10" weight="89">
         <floors>
           <part start="4" end="7" />
         </floors>
       </pokemon>
-      <pokemon id="46" level="11" weight="499">
+      <pokemon id="46" level="11" weight="50">
         <floors>
           <part start="7" end="9" />
         </floors>
       </pokemon>
-      <pokemon id="15" level="10" weight="624">
+      <pokemon id="15" level="10" weight="62">
         <floors>
           <part start="9" end="9" />
         </floors>
       </pokemon>
-      <pokemon id="83" level="10" weight="1067">
+      <pokemon id="83" level="10" weight="107">
         <floors>
           <part start="1" end="3" />
         </floors>
       </pokemon>
-      <pokemon id="216" level="10" weight="1067">
+      <pokemon id="216" level="10" weight="107">
         <floors>
           <part start="1" end="3" />
         </floors>
       </pokemon>
-      <pokemon id="60" level="10" weight="372">
+      <pokemon id="60" level="10" weight="37">
         <floors>
           <part start="5" end="9" />
         </floors>
@@ -490,24 +486,24 @@
       </group>
     </items>
     <data>
-      <d difficulty="2" money="3" layout="2" terrain="2" camouflage="5" nature="504" secret="Confusion" pokemon="6" items="4" traps="3">
+      <d difficulty="2" money="3" layout="2" terrain="2" camouflage="5" nature="504" secret="Confusion" items="4" pokemon="6" traps="3">
         <floors>
           <part start="1" end="4" />
         </floors>
       </d>
-      <d difficulty="2" money="3" layout="2" terrain="2" camouflage="5" nature="504" secret="Confusion" pokemon="7" items="5" traps="3">
+      <d difficulty="2" money="3" layout="2" terrain="2" camouflage="5" nature="504" secret="Confusion" items="5" pokemon="7" traps="3">
         <floors>
           <part start="5" end="7" />
         </floors>
       </d>
-      <d difficulty="3" money="3" layout="2" terrain="2" camouflage="5" nature="504" secret="Confusion" pokemon="7" items="4" traps="3">
+      <d difficulty="3" money="3" layout="2" terrain="2" camouflage="5" nature="504" secret="Confusion" items="4" pokemon="7" traps="3">
         <floors>
           <part start="8" end="9" />
         </floors>
       </d>
     </data>
   </dungeon>
-  <dungeon id="6" floors="10" down="false" limit="1000" linked="7">
+  <dungeon id="6" floors="10" limit="1000" linked="7">
     <encounters>
       <pokemon id="32" level="12" weight="5">
         <floors>
@@ -621,21 +617,20 @@
         <chances>1</chances>
       </group>
     </items>
-    
     <data>
-      <d difficulty="3" money="5" layout="2" terrain="5" camouflage="5" nature="504" secret="Confusion" pokemon="6" items="4" traps="3">
+      <d difficulty="3" money="5" layout="2" terrain="5" camouflage="5" nature="504" secret="Confusion" items="4" pokemon="6" traps="3">
         <floors>
           <part start="1" end="5" />
         </floors>
       </d>
-      <d difficulty="3" money="5" layout="2" terrain="5" camouflage="5" nature="504" secret="Confusion" pokemon="6" items="5" traps="3">
+      <d difficulty="3" money="5" layout="2" terrain="5" camouflage="5" nature="504" secret="Confusion" items="5" pokemon="6" traps="3">
         <floors>
           <part start="6" end="10" />
         </floors>
       </d>
     </data>
   </dungeon>
-  <dungeon id="7" floors="3" down="false" limit="800">
+  <dungeon id="7" floors="3" limit="800">
     <encounters>
       <pokemon id="207" level="12">
         <floors>
@@ -686,9 +681,8 @@
         <chances>1</chances>
       </group>
     </items>
-    
     <data>
-      <d difficulty="3" money="5" layout="2" terrain="55" camouflage="5" nature="504" secret="Confusion" pokemon="7" items="4">
+      <d difficulty="3" money="5" layout="2" terrain="55" camouflage="5" nature="504" secret="Confusion" items="4" pokemon="7">
         <floors>
           <part start="1" end="2" />
         </floors>
@@ -700,7 +694,7 @@
       </d>
     </data>
   </dungeon>
-  <dungeon id="8" floors="12" down="false" limit="1000">
+  <dungeon id="8" floors="12" limit="1000">
     <encounters>
       <pokemon id="128" level="15" weight="4">
         <floors>
@@ -819,14 +813,13 @@
         <chances>1</chances>
       </group>
     </items>
-    
     <data>
-      <d difficulty="4" money="7" layout="2" terrain="7" camouflage="4" nature="223" secret="Accuracy down 1 stage" pokemon="6" items="4" traps="3">
+      <d difficulty="4" money="7" layout="2" terrain="7" camouflage="4" nature="223" secret="Accuracy down 1 stage" items="4" pokemon="6" traps="3">
         <floors>
-          <part start="1" end=4 />
+          <part start="1" end="4" />
         </floors>
       </d>
-      <d difficulty="4" money="7" layout="2" terrain="7" camouflage="4" nature="223" secret="Accuracy down 1 stage" pokemon="7" items="5" traps="3">
+      <d difficulty="4" money="7" layout="2" terrain="7" camouflage="4" nature="223" secret="Accuracy down 1 stage" items="5" pokemon="7" traps="3">
         <floors>
           <part start="5" end="12" />
         </floors>
@@ -1011,26 +1004,25 @@
         <chances>1</chances>
       </group>
     </items>
-    
     <data>
-      <d difficulty="4" money="2" layout="2" shadows="1" terrain="8" camouflage="0" nature="299" secret="Paralysis" pokemon="3" items="3" traps="3">
+      <d difficulty="4" money="2" layout="2" terrain="8" shadows="1" camouflage="0" nature="299" secret="Paralysis" items="3" pokemon="3" traps="3">
         <floors>
           <part start="1" end="4" />
         </floors>
       </d>
-      <d difficulty="4" money="2" layout="2" terrain="8" camouflage="0" nature="299" secret="Paralysis" pokemon="3" items="3" traps="3">
+      <d difficulty="4" money="2" layout="2" terrain="8" camouflage="0" nature="299" secret="Paralysis" items="3" pokemon="3" traps="3">
         <floors>
           <part start="5" end="8" />
         </floors>
       </d>
-      <d difficulty="4" money="2" layout="2" shadows="1" terrain="8" camouflage="0" nature="299" secret="Paralysis" pokemon="3" items="4" traps="3">
+      <d difficulty="4" money="2" layout="2" terrain="8" shadows="1" camouflage="0" nature="299" secret="Paralysis" items="4" pokemon="3" traps="3">
         <floors>
           <part start="9" end="14" />
         </floors>
       </d>
     </data>
   </dungeon>
-  <dungeon id="10" floors="12" down="false" limit="1000" linked="11">
+  <dungeon id="10" floors="12" limit="1000" linked="11">
     <encounters>
       <pokemon id="322" level="14" weight="8">
         <floors>
@@ -1136,25 +1128,25 @@
       </group>
     </shops>
     <data>
-      <d difficulty="4" money="2" layout="2" terrain="9" camouflage="5" nature="504" secret="Confusion" pokemon="3" items="4" traps="4">
+      <d difficulty="4" money="2" layout="2" terrain="9" camouflage="5" nature="504" secret="Confusion" items="4" pokemon="3" traps="4">
         <floors>
           <part start="1" end="2" />
         </floors>
       </d>
-      <d difficulty="4" money="2" layout="2" terrain="9" camouflage="5" nature="504" secret="Confusion" shop="6" pokemon="3" items="4" traps="4">
+      <d difficulty="4" money="2" layout="2" terrain="9" camouflage="5" nature="504" secret="Confusion" shop="6" items="4" pokemon="3" traps="4">
         <floors>
           <part start="3" end="5" />
           <part start="10" end="12" />
         </floors>
       </d>
-      <d difficulty="4" money="2" layout="2" terrain="9" camouflage="5" nature="504" secret="Confusion" shop="9" pokemon="3" items="4" traps="4">
+      <d difficulty="4" money="2" layout="2" terrain="9" camouflage="5" nature="504" secret="Confusion" shop="9" items="4" pokemon="3" traps="4">
         <floors>
           <part start="6" end="9" />
         </floors>
       </d>
     </data>
   </dungeon>
-  <dungeon id="11" floors="3" down="false" limit="800">
+  <dungeon id="11" floors="3" limit="800">
     <encounters>
       <pokemon id="22" level="17">
         <floors>
@@ -1183,9 +1175,8 @@
         <chances>1</chances>
       </group>
     </items>
-    
     <data>
-      <d difficulty="4" money="2" layout="2" terrain="9" camouflage="5" nature="504" secret="Confusion" pokemon="6" items="4" traps="4" buried="5">
+      <d difficulty="4" money="2" layout="2" terrain="9" camouflage="5" nature="504" secret="Confusion" items="4" pokemon="6" traps="4" buried="5">
         <floors>
           <part start="1" end="2" />
         </floors>
@@ -1197,7 +1188,7 @@
       </d>
     </data>
   </dungeon>
-  <dungeon id="12" floors="9" down="false" limit="1000" linked="13">
+  <dungeon id="12" floors="9" limit="1000" linked="13">
     <encounters>
       <pokemon id="162" level="14" weight="10">
         <floors>
@@ -1322,14 +1313,14 @@
       </group>
     </shops>
     <data>
-      <d difficulty="4" money="2" layout="2" terrain="10" camouflage="14" nature="299" secret="Paralysis" shop="8" pokemon="3" item="4" trap="3">
+      <d difficulty="4" money="2" layout="2" terrain="10" camouflage="14" nature="299" secret="Paralysis" shop="8" items="4" pokemon="3" traps="3">
         <floors>
           <part start="1" end="9" />
         </floors>
       </d>
     </data>
   </dungeon>
-  <dungeon id="13" floors="5" down="false" limit="800">
+  <dungeon id="13" floors="5" limit="800">
     <encounters>
       <pokemon id="111" level="16">
         <floors>
@@ -1365,9 +1356,8 @@
         <chances>1</chances>
       </group>
     </items>
-    
     <data>
-      <d difficulty="5" money="2" layout="2" terrain="10" camouflage="14" nature="299" secret="Paralysis" pokemon="4" items="4" traps="4" buried="6">
+      <d difficulty="5" money="2" layout="2" terrain="10" camouflage="14" nature="299" secret="Paralysis" items="4" pokemon="4" traps="4" buried="6">
         <floors>
           <part start="1" end="4" />
         </floors>
@@ -1386,7 +1376,7 @@
       </w>
     </weather>
   </dungeon>
-  <dungeon id="14" floors="15" down="false" linked="15">
+  <dungeon id="14" floors="15" linked="15">
     <encounters>
       <pokemon id="288" level="20" weight="8">
         <floors>
@@ -1497,9 +1487,8 @@
         <chances>1</chances>
       </group>
     </items>
-    
     <data>
-      <d difficulty="5" money="2" layout="2" terrain="11" camouflage="14" nature="504" secret="Confusion" pokemon="3" items="4" traps="3">
+      <d difficulty="5" money="2" layout="2" terrain="11" camouflage="14" nature="504" secret="Confusion" items="4" pokemon="3" traps="3">
         <floors>
           <part start="1" end="15" />
         </floors>
@@ -1513,7 +1502,7 @@
       </w>
     </weather>
   </dungeon>
-  <dungeon id="15" floors="5" down="false" limit="800">
+  <dungeon id="15" floors="5" limit="800">
     <encounters>
       <pokemon id="362" level="20">
         <floors>
@@ -1544,14 +1533,13 @@
         <chances>1</chances>
       </group>
     </items>
-    
     <data>
-      <d difficulty="5" money="2" layout="2" terrain="11" camouflage="14" nature="504" secret="Confusion" pokemon="3" items="3" traps="4" buried="4">
+      <d difficulty="5" money="2" layout="2" terrain="11" camouflage="14" nature="504" secret="Confusion" items="3" pokemon="3" traps="4" buried="4">
         <floors>
           <part start="1" end="2" />
         </floors>
       </d>
-      <d difficulty="5" money="2" layout="2" terrain="11" camouflage="14" nature="504" secret="Confusion" pokemon="5" items="3" traps="4" buried="4">
+      <d difficulty="5" money="2" layout="2" terrain="11" camouflage="14" nature="504" secret="Confusion" items="3" pokemon="5" traps="4" buried="4">
         <floors>
           <part start="3" end="4" />
         </floors>
@@ -1753,27 +1741,27 @@
       </group>
     </shops>
     <data>
-      <d difficulty="6" money="7" layout="2" terrain="9" shadows="1" camouflage="5" nature="504" secret="Confusion" shop="7" pokemon="7" items="4" traps="4">
+      <d difficulty="6" money="7" layout="2" terrain="9" shadows="1" camouflage="5" nature="504" secret="Confusion" shop="7" items="4" pokemon="7" traps="4">
         <floors>
           <part start="1" end="7" />
         </floors>
       </d>
-      <d difficulty="6" money="7" layout="2" terrain="12" shadows="1" camouflage="5" nature="504" secret="Confusion" mhouse="8" pokemon="7" items="4" traps="4">
+      <d difficulty="6" money="7" layout="2" terrain="12" shadows="1" camouflage="5" nature="504" secret="Confusion" mhouse="8" items="4" pokemon="7" traps="4">
         <floors>
           <part start="8" end="1" />
         </floors>
       </d>
-      <d difficulty="6" money="7" layout="2" terrain="12" shadows="1" camouflage="5" nature="504" secret="Confusion" mhouse="8" pokemon="7" items="5" traps="4">
+      <d difficulty="6" money="7" layout="2" terrain="12" shadows="1" camouflage="5" nature="504" secret="Confusion" mhouse="8" items="5" pokemon="7" traps="4">
         <floors>
           <part start="12" end="17" />
         </floors>
       </d>
-      <d difficulty="6" money="7" layout="2" terrain="13" shadows="1" camouflage="5" nature="504" secret="Confusion" mhouse="8" pokemon="7" items="3" traps="4">
+      <d difficulty="6" money="7" layout="2" terrain="13" shadows="1" camouflage="5" nature="504" secret="Confusion" mhouse="8" items="3" pokemon="7" traps="4">
         <floors>
           <part start="18" end="20" />
         </floors>
       </d>
-      <d difficulty="6" money="7" layout="2" terrain="13" shadows="1" camouflage="5" nature="504" secret="Confusion" pokemon="7" items="3" traps="4">
+      <d difficulty="6" money="7" layout="2" terrain="13" shadows="1" camouflage="5" nature="504" secret="Confusion" items="3" pokemon="7" traps="4">
         <floors>
           <part start="21" end="23" />
         </floors>
@@ -1802,9 +1790,8 @@
         <chances>1</chances>
       </group>
     </items>
-    
     <data>
-      <d difficulty="6" money="13" layout="2" shadows="1" terrain="13" camouflage="5" nature="504" secret="Confusion" pokemon="8" items="4" traps="4" buried="6">
+      <d difficulty="6" money="13" layout="2" terrain="13" shadows="1" camouflage="5" nature="504" secret="Confusion" items="4" pokemon="8" traps="4" buried="6">
         <floors>
           <part start="1" end="1" />
         </floors>
@@ -1816,7 +1803,7 @@
       </d>
     </data>
   </dungeon>
-  <dungeon id="18" floors="25" down="false" linked="19">
+  <dungeon id="18" floors="25" linked="19">
     <encounters>
       <pokemon id="353" level="28" weight="8">
         <floors>
@@ -1936,14 +1923,13 @@
         <chances>1</chances>
       </group>
     </items>
-    
     <data>
-      <d difficulty="6" money="8" layout="2" terrain="14" camouflage="0" nature="299" secret="Paralysis" mhouse="5" pokemon="4" items="4" traps="4">
+      <d difficulty="6" money="8" layout="2" terrain="14" camouflage="0" nature="299" secret="Paralysis" mhouse="5" items="4" pokemon="4" traps="4">
         <floors>
           <part start="1" end="22" />
         </floors>
       </d>
-      <d difficulty="6" money="8" layout="2" terrain="14" camouflage="0" nature="299" secret="Paralysis" mhouse="5" pokemon="4" items="3" traps="4">
+      <d difficulty="6" money="8" layout="2" terrain="14" camouflage="0" nature="299" secret="Paralysis" mhouse="5" items="3" pokemon="4" traps="4">
         <floors>
           <part start="23" end="25" />
         </floors>
@@ -1975,34 +1961,34 @@
       </w>
     </weather>
   </dungeon>
-  <dungeon id="19" floors="9" down="false">
+  <dungeon id="19" floors="9">
     <encounters>
-      <pokemon id="357" level="27" weight="1">
+      <pokemon id="357" level="27">
         <floors>
           <part start="1" end="8" />
         </floors>
       </pokemon>
-      <pokemon id="330" level="27" weight="1">
+      <pokemon id="330" level="27">
         <floors>
           <part start="1" end="8" />
         </floors>
       </pokemon>
-      <pokemon id="142" level="25" weight="1">
+      <pokemon id="142" level="25">
         <floors>
           <part start="1" end="8" />
         </floors>
       </pokemon>
-      <pokemon id="373" level="29" weight="1">
+      <pokemon id="373" level="29">
         <floors>
           <part start="1" end="8" />
         </floors>
       </pokemon>
-      <pokemon id="344" level="26" weight="1">
+      <pokemon id="344" level="26">
         <floors>
           <part start="1" end="8" />
         </floors>
       </pokemon>
-      <pokemon id="376" level="30" weight="1">
+      <pokemon id="376" level="30">
         <floors>
           <part start="1" end="8" />
         </floors>
@@ -2031,14 +2017,13 @@
         <chances>1</chances>
       </group>
     </items>
-    
     <data>
-      <d difficulty="7" money="8" layout="2" terrain="14" camouflage="0" nature="299" secret="Paralysis" pokemon="4" items="3" traps="4">
+      <d difficulty="7" money="8" layout="2" terrain="14" camouflage="0" nature="299" secret="Paralysis" items="3" pokemon="4" traps="4">
         <floors>
           <part start="1" end="4" />
         </floors>
       </d>
-      <d difficulty="7" money="8" layout="2" terrain="14" camouflage="0" nature="299" secret="Paralysis" pokemon="5" items="3" traps="4">
+      <d difficulty="7" money="8" layout="2" terrain="14" camouflage="0" nature="299" secret="Paralysis" items="3" pokemon="5" traps="4">
         <floors>
           <part start="5" end="8" />
         </floors>
@@ -2337,7 +2322,6 @@
         <chances>556,555,833,556,833,556,555,556,556,1666,556,555,556,555,556</chances>
       </group>
     </items>
-    
     <data>
       <d difficulty="7" money="2" layout="2" terrain="15" camouflage="10" nature="538" secret="Attack down 1 stage">
         <floors>
@@ -2862,7 +2846,6 @@
         <chances>556,555,833,556,833,556,555,556,556,1666,556,555,556,555,556</chances>
       </group>
     </items>
-    
     <data>
       <d difficulty="7" money="2" layout="2" terrain="15" camouflage="10" nature="538" secret="Attack down 1 stage">
         <floors>
@@ -2935,7 +2918,6 @@
         <chances>1</chances>
       </group>
     </items>
-    
     <data>
       <d difficulty="7" money="6" layout="2" terrain="18" camouflage="5" nature="504" secret="Confusion">
         <floors>
@@ -3234,7 +3216,6 @@
         <chances>1</chances>
       </group>
     </items>
-    
     <data>
       <d difficulty="7" money="7" layout="2" terrain="19" camouflage="0" nature="299" secret="Paralysis">
         <floors>
@@ -3788,7 +3769,6 @@
         <chances>1</chances>
       </group>
     </items>
-    
     <data>
       <d difficulty="7" money="7" layout="2" terrain="22" camouflage="5" nature="175" secret="Cringing">
         <floors>
@@ -4142,7 +4122,6 @@
         <chances>1</chances>
       </group>
     </items>
-    
     <data>
       <d difficulty="7" money="7" layout="2" terrain="29" camouflage="11" nature="220" secret="Poison">
         <floors>
@@ -4367,7 +4346,6 @@
         <chances>1</chances>
       </group>
     </items>
-    
     <data>
       <d difficulty="7" money="6" layout="2" terrain="25" camouflage="5" nature="175" secret="Cringing">
         <floors>
@@ -4572,7 +4550,6 @@
         <chances>1</chances>
       </group>
     </items>
-    
     <data>
       <d difficulty="7" money="6" layout="2" terrain="34" camouflage="5" nature="504" secret="Confusion">
         <floors>
@@ -4841,7 +4818,6 @@
         <chances>1</chances>
       </group>
     </items>
-    
     <data>
       <d difficulty="7" money="7" layout="2" terrain="26" camouflage="5" nature="175" secret="Cringing">
         <floors>
@@ -5023,7 +4999,6 @@
         <chances>556,555,833,556,833,556,555,556,556,1666,556,555,556,555,556</chances>
       </group>
     </items>
-    
     <data>
       <d difficulty="7" money="7" layout="2" terrain="12" camouflage="5" nature="504" secret="Confusion">
         <floors>
@@ -5188,7 +5163,6 @@
         <chances>556,555,833,556,833,556,555,556,556,1666,556,555,556,555,556</chances>
       </group>
     </items>
-    
     <data>
       <d difficulty="7" money="7" layout="2" terrain="37" camouflage="11" nature="205" secret="Sleep">
         <floors>
@@ -5355,7 +5329,6 @@
         <chances>556,555,833,556,833,556,555,556,556,1666,556,555,556,555,556</chances>
       </group>
     </items>
-    
     <data>
       <d difficulty="7" money="7" layout="2" terrain="10" camouflage="14" nature="299" secret="Paralysis">
         <floors>
@@ -5476,7 +5449,6 @@
         <chances>1</chances>
       </group>
     </items>
-    
     <data>
       <d difficulty="7" money="8" layout="2" terrain="33" camouflage="14" nature="504" secret="Confusion">
         <floors>
@@ -5601,7 +5573,6 @@
         <chances>1</chances>
       </group>
     </items>
-    
     <data>
       <d difficulty="7" money="7" layout="2" terrain="35" camouflage="5" nature="175" secret="Cringing">
         <floors>
@@ -5692,7 +5663,6 @@
         <chances>1</chances>
       </group>
     </items>
-    
     <data>
       <d difficulty="5" money="6" layout="2" terrain="42" camouflage="4" nature="223" secret="Accuracy down 1 stage">
         <floors>
@@ -5823,7 +5793,6 @@
         <chances>1</chances>
       </group>
     </items>
-    
     <data>
       <d difficulty="7" money="6" layout="2" terrain="43" camouflage="11" nature="220" secret="Poison">
         <floors>
@@ -5875,7 +5844,6 @@
         <chances>556,555,833,556,833,556,555,556,556,1666,556,555,556,555,556</chances>
       </group>
     </items>
-    
     <data>
       <d difficulty="7" money="6" layout="2" terrain="23" camouflage="5" nature="175" secret="Cringing">
         <floors>
@@ -6669,7 +6637,6 @@
         <chances>1</chances>
       </group>
     </items>
-    
     <data>
       <d difficulty="7" money="8" layout="2" terrain="24" camouflage="0" nature="299" secret="Paralysis">
         <floors>
@@ -7527,7 +7494,6 @@
         <chances>1</chances>
       </group>
     </items>
-    
     <data>
       <d difficulty="8" money="7" layout="2" terrain="0" camouflage="11" nature="220" secret="Poison">
         <floors>
@@ -7681,9 +7647,8 @@
         <chances>556,555,833,556,833,556,555,556,556,1666,556,555,556,555,556</chances>
       </group>
     </items>
-    
     <data>
-      <d difficulty="1" money="3" layout="2" terrain="21" camouflage="5" nature="504" secret="Confusion" pokemon="3" items="3" traps="3">
+      <d difficulty="1" money="3" layout="2" terrain="21" camouflage="5" nature="504" secret="Confusion" items="3" pokemon="3" traps="3">
         <floors>
           <part start="1" end="4" />
         </floors>
@@ -7750,9 +7715,8 @@
         <chances>556,555,833,556,833,556,555,556,556,1666,556,555,556,555,556</chances>
       </group>
     </items>
-    
     <data>
-      <d difficulty="1" money="3" layout="2" terrain="33" camouflage="14" nature="504" secret="Confusion" pokemon="3" items="3" traps="3">
+      <d difficulty="1" money="3" layout="2" terrain="33" camouflage="14" nature="504" secret="Confusion" items="3" pokemon="3" traps="3">
         <floors>
           <part start="1" end="4" />
         </floors>
@@ -7891,7 +7855,6 @@
         <chances>556,555,833,556,833,556,555,556,556,1666,556,555,556,555,556</chances>
       </group>
     </items>
-    
     <data>
       <d difficulty="7" money="6" layout="2" terrain="50" camouflage="4" nature="223" secret="Accuracy down 1 stage">
         <floors>
@@ -8078,7 +8041,6 @@
         <chances>556,555,833,556,833,556,555,556,556,1666,556,555,556,555,556</chances>
       </group>
     </items>
-    
     <data>
       <d difficulty="7" money="6" layout="2" terrain="51" camouflage="5" nature="504" secret="Confusion">
         <floors>
@@ -8277,7 +8239,6 @@
         <chances>556,555,833,556,833,556,555,556,556,1666,556,555,556,555,556</chances>
       </group>
     </items>
-    
     <data>
       <d difficulty="7" money="6" layout="2" terrain="52" camouflage="11" nature="220" secret="Poison">
         <floors>
@@ -8395,7 +8356,6 @@
         <chances>1</chances>
       </group>
     </items>
-    
     <data>
       <d difficulty="7" money="7" layout="2" terrain="53" camouflage="0" nature="299" secret="Paralysis">
         <floors>
@@ -8456,7 +8416,6 @@
         <chances>556,555,833,556,833,556,555,556,556,1666,556,555,556,555,556</chances>
       </group>
     </items>
-    
     <data>
       <d difficulty="7" money="8" layout="2" terrain="23" camouflage="5" nature="175" secret="Cringing">
         <floors>
@@ -8626,7 +8585,6 @@
         <chances>513,513,769,513,769,513,513,512,513,1539,512,513,513,513,769,513</chances>
       </group>
     </items>
-    
     <data>
       <d difficulty="7" money="8" layout="2" terrain="15" camouflage="10" nature="538" secret="Attack down 1 stage">
         <floors>
@@ -8787,7 +8745,6 @@
         <chances>556,555,833,556,833,556,555,556,556,1666,556,555,556,555,556</chances>
       </group>
     </items>
-    
     <data>
       <d difficulty="7" money="2" layout="2" terrain="1" camouflage="11" nature="220" secret="Poison">
         <floors>
@@ -8958,7 +8915,6 @@
         <chances>556,555,833,556,833,556,555,556,556,1666,556,555,556,555,556</chances>
       </group>
     </items>
-    
     <data>
       <d difficulty="7" money="2" layout="2" terrain="34" camouflage="5" nature="504" secret="Confusion">
         <floors>
@@ -9077,7 +9033,6 @@
         <chances>556,555,833,556,833,556,555,556,556,1666,556,555,556,555,556</chances>
       </group>
     </items>
-    
     <data>
       <d difficulty="7" money="2" layout="2" terrain="15" camouflage="10" nature="538" secret="Attack down 1 stage">
         <floors>
@@ -9262,7 +9217,6 @@
         <chances>556,555,833,556,833,556,555,556,556,1666,556,555,556,555,556</chances>
       </group>
     </items>
-    
     <data>
       <d difficulty="7" money="7" layout="2" terrain="15" camouflage="10" nature="538" secret="Attack down 1 stage">
         <floors>
@@ -9417,7 +9371,6 @@
         <chances>1</chances>
       </group>
     </items>
-    
     <data>
       <d difficulty="7" money="6" layout="2" terrain="54" camouflage="0" nature="299" secret="Paralysis">
         <floors>
@@ -9671,7 +9624,6 @@
         <chances>556,555,833,556,833,556,555,556,556,1666,556,555,556,555,556</chances>
       </group>
     </items>
-    
     <data>
       <d difficulty="7" money="8" layout="2" terrain="15" camouflage="10" nature="538" secret="Attack down 1 stage">
         <floors>

@@ -63,7 +63,7 @@ public class FloorData
 		this.monsterHouseChance = XMLUtils.getAttribute(xml, "mhouse", (byte) 0);
 		this.itemDensity = XMLUtils.getAttribute(xml, "items", (short) 0);
 		this.pokemonDensity = XMLUtils.getAttribute(xml, "pokemon", (short) 0);
-		this.trapDensity = XMLUtils.getAttribute(xml, "trap", (short) 0);
+		this.trapDensity = XMLUtils.getAttribute(xml, "traps", (short) 0);
 		this.buriedItemDensity = XMLUtils.getAttribute(xml, "buried", (short) 0);
 		this.weather = XMLUtils.getAttribute(xml, "weather", (byte) 0);
 	}
@@ -116,7 +116,7 @@ public class FloorData
 		XMLUtils.setAttribute(xml, "mhouse", this.monsterHouseChance, 0);
 		XMLUtils.setAttribute(xml, "items", this.itemDensity, 0);
 		XMLUtils.setAttribute(xml, "pokemon", this.pokemonDensity, 0);
-		XMLUtils.setAttribute(xml, "trap", this.trapDensity, 0);
+		XMLUtils.setAttribute(xml, "traps", this.trapDensity, 0);
 		XMLUtils.setAttribute(xml, "buried", this.buriedItemDensity, 0);
 		XMLUtils.setAttribute(xml, "weather", this.weather, 0);
 		return xml;

@@ -9,6 +9,7 @@ import org.jdom2.Element;
 
 import com.darkxell.common.dungeon.floor.FloorData;
 import com.darkxell.common.item.ItemStack;
+import com.darkxell.common.trap.TrapRegistry;
 import com.darkxell.common.util.Message;
 import com.darkxell.common.util.XMLUtils;
 
@@ -78,7 +79,7 @@ public class Dungeon
 		if (xml.getChild("traps") == null)
 		{
 			this.traps.add(new DungeonTrap(new int[]
-			{ 0 }, new int[]
+			{ TrapRegistry.WONDER_TILE.id }, new int[]
 			{ 100 }, new FloorSet(1, this.floorCount)));
 		} else
 		{
@@ -125,6 +126,7 @@ public class Dungeon
 
 	public boolean hasTraps()
 	{
+		if (this.traps.size() == 1 && this.traps.get(0).ids.length == 1 && this.traps.get(0).ids[0] == TrapRegistry.WONDER_TILE.id) return false;
 		return !this.traps.isEmpty();
 	}
 
@@ -186,10 +188,13 @@ public class Dungeon
 			root.addContent(shops);
 		}
 
-		Element traps = new Element("traps");
-		for (DungeonTrap trap : this.traps)
-			traps.addContent(trap.toXML());
-		root.addContent(traps);
+		if (this.hasTraps())
+		{
+			Element traps = new Element("traps");
+			for (DungeonTrap trap : this.traps)
+				traps.addContent(trap.toXML());
+			root.addContent(traps);
+		}
 
 		Element data = new Element("data");
 		for (FloorData d : this.floorData)
