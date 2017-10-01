@@ -33,6 +33,8 @@ public abstract class Ability
 	public Message description()
 	{
 		Message d = this.name();
+		d.addPrefix("<red>");
+		d.addSuffix("</color>");
 		d.addSuffix(": ");
 		d.addSuffix(new Message("ability.info." + this.id));
 		return d;

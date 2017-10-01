@@ -1,17 +1,25 @@
 package com.darkxell.client.renderers;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
+import java.awt.image.FilteredImageSource;
+import java.awt.image.RGBImageFilter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.darkxell.client.resources.Palette;
 import com.darkxell.client.resources.Res;
 import com.darkxell.common.util.Message;
 
-public class TextRenderer {
+public class TextRenderer
+{
 
-	public static enum PMDChar {
+	public static enum PMDChar
+	{
 		new_line("<br>", 0, 0),
 		tabulation("<tab>", 0, 0),
 		space(" ", 0, 4),
@@ -182,12 +190,17 @@ public class TextRenderer {
 		num7d(null, 167, 7),
 		num8d(null, 168, 7),
 		num9d(null, 169, 7),
-		num0d(null, 170, 7);
+		num0d(null, 170, 7),
+		colorReset("</color>", -1, 0),
+		colorBlue("<blue>", -1, 0),
+		colorGreen("<green>", -1, 0),
+		colorRed("<red>", -1, 0),
+		colorYellow("<yellow>", -1, 0);
 
-		public static PMDChar find(String value) {
+		public static PMDChar find(String value)
+		{
 			for (PMDChar c : values())
-				if (c.value != null && c.value.equals(value))
-					return c;
+				if (c.value != null && c.value.equals(value)) return c;
 			return null;
 		}
 
@@ -198,7 +211,8 @@ public class TextRenderer {
 		/** Width of the sprite. */
 		public final int width;
 
-		private PMDChar(String value, int id, int width) {
+		private PMDChar(String value, int id, int width)
+		{
 			this.value = value;
 			this.id = id;
 			this.width = width;
@@ -214,19 +228,25 @@ public class TextRenderer {
 	public static final int TAB_ALIGN = 25;
 
 	/** Called on startup to load the font. */
-	public static void load() {
+	public static void load()
+	{
+		instance.setColor(null);
 	}
 
+	private Color color, previous;
+	private HashMap<PMDChar, Image> coloredSprites;
 	private HashMap<PMDChar, PMDChar> dungeonChars;
 	private HashMap<PMDChar, BufferedImage> sprites;
 
-	private TextRenderer() {
+	private TextRenderer()
+	{
 		this.sprites = new HashMap<PMDChar, BufferedImage>();
+		this.coloredSprites = new HashMap<PMDChar, Image>();
 		this.dungeonChars = new HashMap<PMDChar, PMDChar>();
 		BufferedImage source = Res.getBase("resources/hud/font.png");
 		for (PMDChar c : PMDChar.values())
-			this.sprites.put(c, Res.createimage(source, c.id % GRID_COLS * GRID_WIDTH,
-					(c.id - c.id % GRID_COLS) / GRID_COLS * GRID_HEIGHT, GRID_WIDTH, GRID_HEIGHT));
+			if (c.id != -1) this.sprites.put(c,
+					Res.createimage(source, c.id % GRID_COLS * GRID_WIDTH, (c.id - c.id % GRID_COLS) / GRID_COLS * GRID_HEIGHT, GRID_WIDTH, GRID_HEIGHT));
 
 		this.dungeonChars.put(PMDChar.minus, PMDChar.minusd);
 		this.dungeonChars.put(PMDChar.num1, PMDChar.num1d);
@@ -241,11 +261,9 @@ public class TextRenderer {
 		this.dungeonChars.put(PMDChar.num0, PMDChar.num0d);
 	}
 
-	/**
-	 * Adds spaces in front of the input number to match the input number of
-	 * digits.
-	 */
-	public Message alignNumber(int n, int digits) {
+	/** Adds spaces in front of the input number to match the input number of digits. */
+	public Message alignNumber(int n, int digits)
+	{
 		String s = Integer.toString(n);
 		int diff = s.length() - digits;
 		for (int i = diff; i < 0; ++i)
@@ -253,34 +271,41 @@ public class TextRenderer {
 		return new Message(s, false);
 	}
 
-	public ArrayList<PMDChar> decode(String text) {
+	public ArrayList<PMDChar> decode(String text)
+	{
 		ArrayList<PMDChar> chars = new ArrayList<TextRenderer.PMDChar>();
-		if (text == null)
-			return chars;
+		if (text == null) return chars;
 		int c = 0;
 		String value;
-		while (c < text.length()) {
-			if (text.charAt(c) == '<') {
+		while (c < text.length())
+		{
+			if (text.charAt(c) == '<')
+			{
 				value = "";
 				++c;
-				while (c < text.length() && text.charAt(c) != '>') {
+				while (c < text.length() && text.charAt(c) != '>')
+				{
 					value += text.charAt(c);
 					++c;
 				}
 				chars.add(PMDChar.find("<" + value + ">"));
-			} else
-				chars.add(PMDChar.find(text.substring(c, c + 1)));
+			} else chars.add(PMDChar.find(text.substring(c, c + 1)));
 			++c;
 		}
 
 		for (c = 0; c < chars.size(); ++c)
-			if (chars.get(c) == null)
-				chars.remove(c);
+			if (chars.get(c) == null) chars.remove(c);
 		return chars;
 	}
 
+	public Color getColor()
+	{
+		return this.color;
+	}
+
 	/** Renders the input message at the topright x, y coordinates. */
-	public void render(Graphics2D g, Message message, int x, int y) {
+	public void render(Graphics2D g, Message message, int x, int y)
+	{
 		this.render(g, message.toString(), x, y);
 	}
 
@@ -290,7 +315,8 @@ public class TextRenderer {
 	}
 
 	/** Renders the input text at the topright x, y coordinates. */
-	public void render(Graphics2D g, String text, int x, int y, boolean dungeonHUD) {
+	public void render(Graphics2D g, String text, int x, int y, boolean dungeonHUD)
+	{
 		ArrayList<PMDChar> chars = this.decode(text);
 		ArrayList<PMDChar> toprint = new ArrayList<TextRenderer.PMDChar>();
 		if (dungeonHUD) for (PMDChar c : chars)
@@ -301,34 +327,70 @@ public class TextRenderer {
 	}
 
 	/** Renders the input text at the topright x, y coordinates. */
-	public void render(Graphics2D g, List<PMDChar> text, int x, int y, boolean dungeonHUD) {
+	public void render(Graphics2D g, List<PMDChar> text, int x, int y, boolean dungeonHUD)
+	{
 		int w = 0;
-		for (PMDChar c : text) {
-			g.drawImage(this.sprites.get(c), x + w, y, null);
-			if (c == PMDChar.tabulation)
-				w += this.tabWidth(w);
-			else
-				w += c.width;
+		for (PMDChar c : text)
+		{
+			if (c.id < 0)
+			{
+				if (c == PMDChar.colorReset) this.setColor(null);
+				if (c == PMDChar.colorBlue) this.setColor(Palette.FONT_BLUE);
+				if (c == PMDChar.colorGreen) this.setColor(Palette.FONT_GREEN);
+				if (c == PMDChar.colorRed) this.setColor(Palette.FONT_RED);
+				if (c == PMDChar.colorYellow) this.setColor(Palette.FONT_YELLOW);
+			} else
+			{
+				g.drawImage((this.color == null ? this.sprites : this.coloredSprites).get(c), x + w, y, null);
+				if (c == PMDChar.tabulation) w += this.tabWidth(w);
+				else w += c.width;
+			}
+		}
+		this.setColor(null);
+	}
+
+	/** Sets the Color of the Text for the next drawn Text. Color is reset to default at the end of each Text. */
+	public void setColor(final Color color)
+	{
+		boolean shouldUpdate = color != null && color != this.previous;
+		this.previous = this.color;
+		this.color = color;
+		if (shouldUpdate)
+		{
+			RGBImageFilter filter = new RGBImageFilter()
+			{
+				@Override
+				public int filterRGB(int x, int y, int rgb)
+				{
+					return rgb == 0xFFFFFFFE ? color.getRGB() : rgb;
+				}
+			};
+
+			for (PMDChar c : PMDChar.values())
+				if (c.id != -1) this.coloredSprites.put(c,
+						Toolkit.getDefaultToolkit().createImage(new FilteredImageSource(this.sprites.get(c).getSource(), filter)));
 		}
 	}
 
 	/** Transforms a String into an array of strings printable to the screen. */
-	public ArrayList<String> splitLines(String text, int boxwidth) {
+	public ArrayList<String> splitLines(String text, int boxwidth)
+	{
 		ArrayList<String> textlines = new ArrayList<>();
-		if (text == null)
-			return textlines;
+		if (text == null) return textlines;
 		int currentlength = 0, iterator = 0;
 		String[] parts = text.split("\n");
-		for (int i = 0; i < parts.length; i++) {
+		for (int i = 0; i < parts.length; i++)
+		{
 			textlines.add("");
 			currentlength = 0;
 			String[] words = parts[i].split(" ");
 			for (int j = 0; j < words.length; j++)
-				if (!words[j].startsWith(PMDChar.new_line.value)
-						&& (currentlength == 0 || currentlength + this.width(words[j]) < boxwidth)) {
+				if (!words[j].startsWith(PMDChar.new_line.value) && (currentlength == 0 || currentlength + this.width(words[j]) < boxwidth))
+				{
 					textlines.set(iterator, textlines.get(iterator) + words[j] + " ");
 					currentlength += this.width(words[j] + " ");
-				} else {
+				} else
+				{
 					textlines.add(words[j] + " ");
 					++iterator;
 					currentlength = this.width(words[j] + " ");
@@ -338,29 +400,28 @@ public class TextRenderer {
 		return textlines;
 	}
 
-	/**
-	 * @return The width of a Tabulation character, depending on the current
-	 *         width of the text.
-	 */
-	public int tabWidth(int currentWidth) {
+	/** @return The width of a Tabulation character, depending on the current width of the text. */
+	public int tabWidth(int currentWidth)
+	{
 		return TAB_ALIGN - currentWidth % TAB_ALIGN;
 	}
 
 	/** @return The width of the input message. */
-	public int width(Message message) {
-		if (message == null)
-			return 0;
+	public int width(Message message)
+	{
+		if (message == null) return 0;
 		return this.width(message.toString());
 	}
 
 	/** @return The width of the input text. */
-	public int width(String text) {
-		if (text == null)
-			return 0;
+	public int width(String text)
+	{
+		if (text == null) return 0;
 		return this.width(this.decode(text));
 	}
 
-	public int width(List<PMDChar> chars) {
+	public int width(List<PMDChar> chars)
+	{
 		int w = 0;
 		for (PMDChar c : chars)
 			if (c == PMDChar.tabulation) w += this.tabWidth(w);

@@ -80,7 +80,6 @@ public class Message
 	@Override
 	public String toString()
 	{
-		if (!this.shouldTranslate) return this.id;
 		if (!Lang.getLanguage().id.equals(this.lastLang)) this.update();
 		return this.value;
 	}
