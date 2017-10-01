@@ -1,6 +1,7 @@
 package com.darkxell.common.dungeon;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 import java.util.function.Predicate;
 
@@ -22,19 +23,19 @@ public class Dungeon
 	/** The number of Floors in this Dungeon. */
 	public final int floorCount;
 	/** Describes this Dungeon's Floors' data. */
-	private ArrayList<FloorData> floorData;
+	private final ArrayList<FloorData> floorData;
 	/** This Dungeon's ID. */
 	public final int id;
 	/** Lists the Items found in this Dungeon. */
-	private ArrayList<DungeonItem> items;
+	private final ArrayList<DungeonItem> items;
 	/** ID of the Dungeon this Dungeon leads to (e.g. Mt. Blaze to Mt. Blaze Peak). -1 if no leading Dungeon. */
 	public final int linkedTo;
 	/** Lists the Pokémon found in this Dungeon. */
-	private ArrayList<DungeonEncounter> pokemon;
+	private final ArrayList<DungeonEncounter> pokemon;
 	/** True if Pokémon from this Dungeon can be recruited. */
 	public final boolean recruitsAllowed;
 	/** Lists the Items found in this Dungeon's shops. */
-	private ArrayList<DungeonItem> shopItems;
+	private final ArrayList<DungeonItem> shopItems;
 	/** The number of turns to spend on a single floor before being kicked. */
 	public final int timeLimit;
 	/** Number of Items the entering team is allowed to carry. -1 for no limit. */
@@ -46,7 +47,9 @@ public class Dungeon
 	/** Amount of Money the entering team is allowed to carry. -1 for no limit. */
 	// public final int teamMoney;
 	/** Lists the Traps found in this Dungeon. */
-	private ArrayList<DungeonTrap> traps;
+	private final ArrayList<DungeonTrap> traps;
+	/** The Weather in this Dungeon (Weather ID -> floors). */
+	private final HashMap<Integer, FloorSet> weather;
 
 	public Dungeon(Element xml)
 	{
@@ -86,10 +89,16 @@ public class Dungeon
 		this.floorData = new ArrayList<FloorData>();
 		for (Element data : xml.getChild("data").getChildren(FloorData.XML_ROOT))
 			this.floorData.add(new FloorData(data));
+
+		this.weather = new HashMap<Integer, FloorSet>();
+		if (xml.getChild("weather") != null) for (Element data : xml.getChild("weather").getChildren("w"))
+			this.weather.put(Integer.parseInt(data.getAttributeValue("id")), new FloorSet(data.getChild(FloorSet.XML_ROOT)));
 	}
 
-	public Dungeon(int id, int floorCount, boolean direction, double monsterHouseChance, boolean recruits, int timeLimit, int linkedTo, // int teamItems, int teamLevel, int teamMoney,int teamMembers,
-			ArrayList<DungeonEncounter> pokemon, ArrayList<DungeonItem> items, ArrayList<DungeonTrap> traps, ArrayList<FloorData> floorData)
+	public Dungeon(int id, int floorCount, boolean direction, double monsterHouseChance, boolean recruits, int timeLimit,
+			int linkedTo, // int teamItems, int teamLevel, int teamMoney,int teamMembers,
+			ArrayList<DungeonEncounter> pokemon, ArrayList<DungeonItem> items, ArrayList<DungeonItem> shopItems, ArrayList<DungeonTrap> traps,
+			ArrayList<FloorData> floorData, HashMap<Integer, FloorSet> weather)
 	{
 		this.id = id;
 		this.floorCount = floorCount;
@@ -100,8 +109,10 @@ public class Dungeon
 		/* this.teamItems = teamItems; this.teamLevel = teamLevel; this.teamMembers = teamMembers; this.teamMoney = teamMoney; */
 		this.pokemon = pokemon;
 		this.items = items;
+		this.shopItems = shopItems;
 		this.traps = traps;
 		this.floorData = floorData;
+		this.weather = weather;
 	}
 
 	/** @return The Data of the input floor. */
@@ -184,6 +195,14 @@ public class Dungeon
 		for (FloorData d : this.floorData)
 			data.addContent(d.toXML());
 		root.addContent(data);
+
+		if (!this.weather.isEmpty())
+		{
+			Element weather = new Element("weather");
+			for (Integer id : this.weather.keySet())
+				weather.addContent(new Element("w").setAttribute("id", Integer.toString(id)).addContent(this.weather.get(id).toXML()));
+			root.addContent(weather);
+		}
 
 		return root;
 	}
