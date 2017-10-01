@@ -4,6 +4,7 @@ import org.jdom2.Element;
 
 import com.darkxell.common.util.Lang;
 import com.darkxell.common.util.Message;
+import com.darkxell.common.util.XMLUtils;
 
 public class ItemStack implements Comparable<ItemStack>
 {
@@ -18,7 +19,7 @@ public class ItemStack implements Comparable<ItemStack>
 	public ItemStack(Element xml)
 	{
 		this.id = Integer.parseInt(xml.getAttributeValue("id"));
-		this.quantity = xml.getAttribute("quantity") == null ? 1 : Integer.parseInt(xml.getAttributeValue("quantity"));
+		this.quantity = XMLUtils.getAttribute(xml, "quantity", 1);
 	}
 
 	public ItemStack(int id)
@@ -74,7 +75,7 @@ public class ItemStack implements Comparable<ItemStack>
 	{
 		Element root = new Element(Item.XML_ROOT);
 		root.setAttribute("id", Integer.toString(this.id));
-		if (this.quantity != 1) root.setAttribute("quantity", Integer.toString(this.quantity));
+		XMLUtils.setAttribute(root, "quantity", this.quantity, 1);
 		return root;
 	}
 

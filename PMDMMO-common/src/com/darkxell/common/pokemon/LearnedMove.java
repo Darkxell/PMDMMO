@@ -4,6 +4,7 @@ import org.jdom2.Element;
 
 import com.darkxell.common.move.Move;
 import com.darkxell.common.move.MoveRegistry;
+import com.darkxell.common.util.XMLUtils;
 
 public class LearnedMove
 {
@@ -24,11 +25,11 @@ public class LearnedMove
 	public LearnedMove(Element xml)
 	{
 		this.id = Integer.parseInt(xml.getAttributeValue("id"));
-		this.maxPP = xml.getAttribute("pp-max") == null ? this.move().pp : Integer.parseInt(xml.getAttributeValue("pp-max"));
-		this.pp = xml.getAttribute("pp") == null ? this.maxPP : Integer.parseInt(xml.getAttributeValue("pp"));
-		this.isLinked = xml.getAttribute("linked") != null;
+		this.maxPP = XMLUtils.getAttribute(xml, "pp-max", this.move().pp);
+		this.pp = XMLUtils.getAttribute(xml, "pp", this.maxPP);
+		this.isLinked = XMLUtils.getAttribute(xml, "linked", false);
 		this.slot = Integer.parseInt(xml.getAttributeValue("slot"));
-		this.isEnabled = xml.getAttribute("enabled") == null;
+		this.isEnabled = XMLUtils.getAttribute(xml, "enabled", true);
 	}
 
 	public LearnedMove(int id)
@@ -90,11 +91,11 @@ public class LearnedMove
 	{
 		Element root = new Element("move");
 		root.setAttribute("id", Integer.toString(this.id));
-		if (this.maxPP != this.move().pp) root.setAttribute("pp-max", Integer.toString(this.maxPP));
-		if (this.pp != this.maxPP) root.setAttribute("pp", Integer.toString(this.pp));
-		if (this.isLinked) root.setAttribute("linked", "true");
+		XMLUtils.setAttribute(root, "pp-max", this.maxPP, this.move().pp);
+		XMLUtils.setAttribute(root, "pp", this.pp, this.move().pp);
+		XMLUtils.setAttribute(root, "linked", this.isLinked, false);
 		root.setAttribute("slot", Integer.toString(this.slot));
-		if (!this.isEnabled) root.setAttribute("enabled", "false");
+		XMLUtils.setAttribute(root, "enabled", this.isEnabled, true);
 		return root;
 	}
 

@@ -6,6 +6,8 @@ import java.util.function.Predicate;
 
 import org.jdom2.Element;
 
+import com.darkxell.common.util.XMLUtils;
+
 /** Represents a Room in a Floor. */
 public class Room
 {
@@ -25,7 +27,7 @@ public class Room
 		this.y = Integer.parseInt(xml.getAttributeValue("y"));
 		this.width = Integer.parseInt(xml.getAttributeValue("width"));
 		this.height = Integer.parseInt(xml.getAttributeValue("height"));
-		this.isMonsterHouse = xml.getAttribute("mhouse") == null && xml.getAttributeValue("mhouse").equals("true");
+		this.isMonsterHouse = XMLUtils.getAttribute(xml, "mhouse", false);
 	}
 
 	public Room(Floor floor, int x, int y, int width, int height, boolean isMonsterHouse)

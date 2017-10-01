@@ -9,6 +9,7 @@ import org.jdom2.Element;
 import com.darkxell.common.dungeon.floor.FloorData;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.util.Message;
+import com.darkxell.common.util.XMLUtils;
 
 /** Describes a Dungeon: floors, Pokémon, items... */
 public class Dungeon
@@ -45,8 +46,8 @@ public class Dungeon
 	{
 		this.id = Integer.parseInt(xml.getAttributeValue("id"));
 		this.floorCount = Integer.parseInt(xml.getAttributeValue("floors"));
-		this.direction = xml.getAttribute("down") != null;
-		this.monsterHouseChance = xml.getAttribute("mhouse") == null ? 0 : Double.parseDouble(xml.getAttributeValue("mhouse"));
+		this.direction = XMLUtils.getAttribute(xml, "down", false);
+		this.monsterHouseChance = XMLUtils.getAttribute(xml, "mhouse", 0d);
 		/* this.teamItems = xml.getAttribute("t-items") == null ? -1 : Integer.parseInt(xml.getAttributeValue("t-items")); this.teamLevel = xml.getAttribute("t-level") == null ? -1 : Integer.parseInt(xml.getAttributeValue("t-level")); this.teamMembers = xml.getAttribute("t-members") == null ? 4 :
 		 * Integer.parseInt(xml.getAttributeValue("t-members")); this.teamMoney = xml.getAttribute("t-money") == null ? -1 : Integer.parseInt(xml.getAttributeValue("t-money")); */
 
@@ -127,8 +128,8 @@ public class Dungeon
 		Element root = new Element(XML_ROOT);
 		root.setAttribute("id", Integer.toString(this.id));
 		root.setAttribute("floors", Integer.toString(this.floorCount));
-		if (this.direction) root.setAttribute("down", "true");
-		if (this.monsterHouseChance != 0) root.setAttribute("mhouse", Double.toString(this.monsterHouseChance));
+		XMLUtils.setAttribute(root, "down", this.direction, false);
+		XMLUtils.setAttribute(root, "mhouse", this.monsterHouseChance, 0);
 		/* if (this.teamItems != -1) root.setAttribute("t-items", Integer.toString(this.teamItems)); if (this.teamLevel != -1) root.setAttribute("t-level", Integer.toString(this.teamLevel)); if (this.teamMembers != 4) root.setAttribute("t-members", Integer.toString(this.teamMembers)); if
 		 * (this.teamMoney != -1) root.setAttribute("t-money", Integer.toString(this.teamMoney)); */
 

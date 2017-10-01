@@ -9,6 +9,7 @@ import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Message;
+import com.darkxell.common.util.XMLUtils;
 
 /** Represents an Item type. */
 public class Item
@@ -111,8 +112,8 @@ public class Item
 		this.id = Integer.parseInt(xml.getAttributeValue("id"));
 		this.price = Integer.parseInt(xml.getAttributeValue("price"));
 		this.sell = Integer.parseInt(xml.getAttributeValue("sell"));
-		this.spriteID = xml.getAttribute("sprite") == null ? 255 : Integer.parseInt(xml.getAttributeValue("sprite"));
-		this.isStackable = "true".equals(xml.getAttributeValue("stackable"));
+		this.spriteID = XMLUtils.getAttribute(xml, "sprite", 255);
+		this.isStackable = XMLUtils.getAttribute(xml, "stackable", false);
 	}
 
 	public Item(int id, int price, int sell, int spriteID, boolean stackable)
@@ -168,8 +169,8 @@ public class Item
 		root.setAttribute("type", this.getClass().getName().substring(Item.class.getName().length()));
 		root.setAttribute("price", Integer.toString(this.price));
 		root.setAttribute("sell", Integer.toString(this.sell));
-		if (this.spriteID != 255) root.setAttribute("sprite", Integer.toString(this.spriteID));
-		if (this.isStackable) root.setAttribute("stackable", "true");
+		XMLUtils.setAttribute(root, "sprite", this.spriteID, 255);
+		XMLUtils.setAttribute(root, "stackable", this.isStackable, false);
 		return root;
 	}
 

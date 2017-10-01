@@ -41,12 +41,12 @@
     </items>
     <traps />
     <data>
-      <d difficulty="1" money="1" layout="2" terrain="0" shadows="0" camouflage="11" nature="220" secret="Poison">
+      <d difficulty="1" money="1" layout="2" terrain="0" camouflage="11" nature="220" secret="Poison">
         <floors>
           <part start="1" end="3" />
         </floors>
       </d>
-      <d difficulty="1" money="1" layout="0" terrain="0" shadows="0" camouflage="11" nature="220" secret="Poison">
+      <d difficulty="1" money="1" layout="0" terrain="0" camouflage="11" nature="220" secret="Poison">
         <floors>
           <part start="4" end="4" />
         </floors>
@@ -123,7 +123,7 @@
     </items>
     <traps />
     <data>
-      <d difficulty="1" money="2" layout="2" terrain="1" shadows="0" camouflage="11" nature="220" secret="Poison">
+      <d difficulty="1" money="2" layout="2" terrain="1" camouflage="11" nature="220" secret="Poison">
         <floors>
           <part start="1" end="3" />
         </floors>
@@ -217,17 +217,17 @@
     </items>
     <traps />
     <data>
-      <d difficulty="1" money="3" layout="2" terrain="2" shadows="0" camouflage="5" nature="504" secret="Confusion">
+      <d difficulty="1" money="3" layout="2" terrain="2" camouflage="5" nature="504" secret="Confusion">
         <floors>
           <part start="1" end="5" />
         </floors>
       </d>
-      <d difficulty="1" money="3" layout="2" terrain="3" shadows="0" camouflage="5" nature="504" secret="Confusion">
+      <d difficulty="1" money="3" layout="2" terrain="3" camouflage="5" nature="504" secret="Confusion">
         <floors>
           <part start="6" end="8" />
         </floors>
       </d>
-      <d difficulty="1" money="3" layout="2" terrain="3" shadows="0" camouflage="5" nature="504" secret="Confusion">
+      <d difficulty="1" money="3" layout="2" terrain="3" camouflage="5" nature="504" secret="Confusion">
         <floors>
           <part start="9" end="9" />
         </floors>
@@ -359,12 +359,12 @@
     </items>
     <traps />
     <data>
-      <d difficulty="2" money="3" layout="2" terrain="4" shadows="0" camouflage="11" nature="220" secret="Poison">
+      <d difficulty="2" money="3" layout="2" terrain="4" camouflage="11" nature="220" secret="Poison">
         <floors>
           <part start="1" end="12" />
         </floors>
       </d>
-      <d difficulty="2" money="3" layout="2" terrain="4" shadows="0" camouflage="11" nature="205" secret="Sleep">
+      <d difficulty="2" money="3" layout="2" terrain="4" camouflage="11" nature="205" secret="Sleep">
         <floors>
           <part start="13" end="13" />
         </floors>
@@ -480,12 +480,12 @@
     </items>
     <traps />
     <data>
-      <d difficulty="2" money="3" layout="2" terrain="2" shadows="0" camouflage="5" nature="504" secret="Confusion">
+      <d difficulty="2" money="3" layout="2" terrain="2" camouflage="5" nature="504" secret="Confusion">
         <floors>
           <part start="1" end="7" />
         </floors>
       </d>
-      <d difficulty="3" money="3" layout="2" terrain="2" shadows="0" camouflage="5" nature="504" secret="Confusion">
+      <d difficulty="3" money="3" layout="2" terrain="2" camouflage="5" nature="504" secret="Confusion">
         <floors>
           <part start="8" end="9" />
         </floors>
@@ -608,7 +608,7 @@
     </items>
     <traps />
     <data>
-      <d difficulty="3" money="5" layout="2" terrain="5" shadows="0" camouflage="5" nature="504" secret="Confusion">
+      <d difficulty="3" money="5" layout="2" terrain="5" camouflage="5" nature="504" secret="Confusion">
         <floors>
           <part start="1" end="3" />
         </floors>
@@ -673,12 +673,12 @@
     </items>
     <traps />
     <data>
-      <d difficulty="3" money="5" layout="2" terrain="55" shadows="0" camouflage="5" nature="504" secret="Confusion">
+      <d difficulty="3" money="5" layout="2" terrain="55" camouflage="5" nature="504" secret="Confusion">
         <floors>
           <part start="1" end="2" />
         </floors>
       </d>
-      <d difficulty="3" money="5" layout="2" terrain="55" shadows="0" camouflage="5" nature="504" secret="Confusion">
+      <d difficulty="3" money="5" layout="2" terrain="55" camouflage="5" nature="504" secret="Confusion">
         <floors>
           <part start="3" end="3" />
         </floors>
@@ -806,7 +806,7 @@
     </items>
     <traps />
     <data>
-      <d difficulty="4" money="7" layout="2" terrain="7" shadows="0" camouflage="4" nature="223" secret="Accuracy down 1 stage">
+      <d difficulty="4" money="7" layout="2" terrain="7" camouflage="4" nature="223" secret="Accuracy down 1 stage">
         <floors>
           <part start="1" end="3" />
         </floors>
@@ -993,7 +993,7 @@
     </items>
     <traps />
     <data>
-      <d difficulty="4" money="2" layout="2" terrain="8" shadows="0" camouflage="0" nature="299" secret="Paralysis">
+      <d difficulty="4" money="2" layout="2" terrain="8" camouflage="0" nature="299" secret="Paralysis">
         <floors>
           <part start="1" end="3" />
         </floors>
@@ -1084,7 +1084,7 @@
     </items>
     <traps />
     <data>
-      <d difficulty="4" money="2" layout="2" terrain="9" shadows="0" camouflage="5" nature="504" secret="Confusion">
+      <d difficulty="4" money="2" layout="2" terrain="9" camouflage="5" nature="504" secret="Confusion">
         <floors>
           <part start="1" end="3" />
         </floors>
@@ -1127,12 +1127,12 @@
     </items>
     <traps />
     <data>
-      <d difficulty="4" money="2" layout="2" terrain="9" shadows="0" camouflage="5" nature="504" secret="Confusion">
+      <d difficulty="4" money="2" layout="2" terrain="9" camouflage="5" nature="504" secret="Confusion">
         <floors>
           <part start="1" end="2" />
         </floors>
       </d>
-      <d difficulty="4" money="2" layout="2" terrain="9" shadows="0" camouflage="5" nature="504" secret="Confusion">
+      <d difficulty="4" money="2" layout="2" terrain="9" camouflage="5" nature="504" secret="Confusion">
         <floors>
           <part start="3" end="3" />
         </floors>
@@ -1235,12 +1235,12 @@
     </items>
     <traps />
     <data>
-      <d difficulty="4" money="2" layout="2" terrain="10" shadows="0" camouflage="14" nature="299" secret="Paralysis">
+      <d difficulty="4" money="2" layout="2" terrain="10" camouflage="14" nature="299" secret="Paralysis">
         <floors>
           <part start="1" end="5" />
         </floors>
       </d>
-      <d difficulty="5" money="2" layout="2" terrain="10" shadows="0" camouflage="14" nature="299" secret="Paralysis">
+      <d difficulty="5" money="2" layout="2" terrain="10" camouflage="14" nature="299" secret="Paralysis">
         <floors>
           <part start="6" end="9" />
         </floors>
@@ -1290,12 +1290,12 @@
     </items>
     <traps />
     <data>
-      <d difficulty="5" money="2" layout="2" terrain="10" shadows="0" camouflage="14" nature="299" secret="Paralysis">
+      <d difficulty="5" money="2" layout="2" terrain="10" camouflage="14" nature="299" secret="Paralysis">
         <floors>
           <part start="1" end="4" />
         </floors>
       </d>
-      <d difficulty="5" money="2" layout="2" terrain="10" shadows="0" camouflage="0" nature="299" secret="Paralysis">
+      <d difficulty="5" money="2" layout="2" terrain="10" camouflage="0" nature="299" secret="Paralysis">
         <floors>
           <part start="5" end="5" />
         </floors>
@@ -1415,7 +1415,7 @@
     </items>
     <traps />
     <data>
-      <d difficulty="5" money="2" layout="2" terrain="11" shadows="0" camouflage="14" nature="504" secret="Confusion">
+      <d difficulty="5" money="2" layout="2" terrain="11" camouflage="14" nature="504" secret="Confusion">
         <floors>
           <part start="1" end="3" />
         </floors>
@@ -1455,12 +1455,12 @@
     </items>
     <traps />
     <data>
-      <d difficulty="5" money="2" layout="2" terrain="11" shadows="0" camouflage="14" nature="504" secret="Confusion">
+      <d difficulty="5" money="2" layout="2" terrain="11" camouflage="14" nature="504" secret="Confusion">
         <floors>
           <part start="1" end="4" />
         </floors>
       </d>
-      <d difficulty="5" money="2" layout="2" terrain="11" shadows="0" camouflage="0" nature="299" secret="Paralysis">
+      <d difficulty="5" money="2" layout="2" terrain="11" camouflage="0" nature="299" secret="Paralysis">
         <floors>
           <part start="5" end="5" />
         </floors>
@@ -1628,17 +1628,17 @@
     </items>
     <traps />
     <data>
-      <d difficulty="6" money="7" layout="2" terrain="9" shadows="0" camouflage="5" nature="504" secret="Confusion">
+      <d difficulty="6" money="7" layout="2" terrain="9" camouflage="5" nature="504" secret="Confusion">
         <floors>
           <part start="1" end="7" />
         </floors>
       </d>
-      <d difficulty="6" money="7" layout="2" terrain="12" shadows="0" camouflage="5" nature="504" secret="Confusion">
+      <d difficulty="6" money="7" layout="2" terrain="12" camouflage="5" nature="504" secret="Confusion">
         <floors>
           <part start="8" end="17" />
         </floors>
       </d>
-      <d difficulty="6" money="7" layout="2" terrain="13" shadows="0" camouflage="5" nature="504" secret="Confusion">
+      <d difficulty="6" money="7" layout="2" terrain="13" camouflage="5" nature="504" secret="Confusion">
         <floors>
           <part start="18" end="23" />
         </floors>
@@ -1684,12 +1684,12 @@
     </items>
     <traps />
     <data>
-      <d difficulty="6" money="13" layout="2" terrain="13" shadows="0" camouflage="5" nature="504" secret="Confusion">
+      <d difficulty="6" money="13" layout="2" terrain="13" camouflage="5" nature="504" secret="Confusion">
         <floors>
           <part start="1" end="2" />
         </floors>
       </d>
-      <d difficulty="6" money="13" layout="2" terrain="13" shadows="0" camouflage="5" nature="504" secret="Confusion">
+      <d difficulty="6" money="13" layout="2" terrain="13" camouflage="5" nature="504" secret="Confusion">
         <floors>
           <part start="3" end="3" />
         </floors>
@@ -1818,7 +1818,7 @@
     </items>
     <traps />
     <data>
-      <d difficulty="6" money="8" layout="2" terrain="14" shadows="0" camouflage="0" nature="299" secret="Paralysis">
+      <d difficulty="6" money="8" layout="2" terrain="14" camouflage="0" nature="299" secret="Paralysis">
         <floors>
           <part start="1" end="3" />
         </floors>
@@ -1888,12 +1888,12 @@
     </items>
     <traps />
     <data>
-      <d difficulty="7" money="8" layout="2" terrain="14" shadows="0" camouflage="0" nature="299" secret="Paralysis">
+      <d difficulty="7" money="8" layout="2" terrain="14" camouflage="0" nature="299" secret="Paralysis">
         <floors>
           <part start="1" end="8" />
         </floors>
       </d>
-      <d difficulty="7" money="8" layout="2" terrain="14" shadows="0" camouflage="0" nature="299" secret="Paralysis">
+      <d difficulty="7" money="8" layout="2" terrain="14" camouflage="0" nature="299" secret="Paralysis">
         <floors>
           <part start="9" end="9" />
         </floors>
@@ -2172,47 +2172,47 @@
     </items>
     <traps />
     <data>
-      <d difficulty="7" money="2" layout="2" terrain="15" shadows="0" camouflage="10" nature="538" secret="Attack down 1 stage">
+      <d difficulty="7" money="2" layout="2" terrain="15" camouflage="10" nature="538" secret="Attack down 1 stage">
         <floors>
           <part start="1" end="7" />
         </floors>
       </d>
-      <d difficulty="7" money="5" layout="2" terrain="15" shadows="0" camouflage="10" nature="538" secret="Attack down 1 stage">
+      <d difficulty="7" money="5" layout="2" terrain="15" camouflage="10" nature="538" secret="Attack down 1 stage">
         <floors>
           <part start="8" end="15" />
         </floors>
       </d>
-      <d difficulty="7" money="5" layout="2" terrain="16" shadows="0" camouflage="10" nature="538" secret="Attack down 1 stage">
+      <d difficulty="7" money="5" layout="2" terrain="16" camouflage="10" nature="538" secret="Attack down 1 stage">
         <floors>
           <part start="16" end="16" />
         </floors>
       </d>
-      <d difficulty="7" money="7" layout="2" terrain="16" shadows="0" camouflage="10" nature="538" secret="Attack down 1 stage">
+      <d difficulty="7" money="7" layout="2" terrain="16" camouflage="10" nature="538" secret="Attack down 1 stage">
         <floors>
           <part start="17" end="19" />
         </floors>
       </d>
-      <d difficulty="8" money="7" layout="2" terrain="16" shadows="0" camouflage="10" nature="538" secret="Attack down 1 stage">
+      <d difficulty="8" money="7" layout="2" terrain="16" camouflage="10" nature="538" secret="Attack down 1 stage">
         <floors>
           <part start="20" end="27" />
         </floors>
       </d>
-      <d difficulty="8" money="10" layout="2" terrain="16" shadows="0" camouflage="10" nature="538" secret="Attack down 1 stage">
+      <d difficulty="8" money="10" layout="2" terrain="16" camouflage="10" nature="538" secret="Attack down 1 stage">
         <floors>
           <part start="28" end="29" />
         </floors>
       </d>
-      <d difficulty="9" money="10" layout="2" terrain="16" shadows="0" camouflage="10" nature="538" secret="Attack down 1 stage">
+      <d difficulty="9" money="10" layout="2" terrain="16" camouflage="10" nature="538" secret="Attack down 1 stage">
         <floors>
           <part start="30" end="38" />
         </floors>
       </d>
-      <d difficulty="9" money="12" layout="2" terrain="16" shadows="0" camouflage="10" nature="538" secret="Attack down 1 stage">
+      <d difficulty="9" money="12" layout="2" terrain="16" camouflage="10" nature="538" secret="Attack down 1 stage">
         <floors>
           <part start="39" end="39" />
         </floors>
       </d>
-      <d difficulty="9" money="12" layout="2" terrain="16" shadows="0" camouflage="10" nature="538" secret="Attack down 1 stage">
+      <d difficulty="9" money="12" layout="2" terrain="16" camouflage="10" nature="538" secret="Attack down 1 stage">
         <floors>
           <part start="40" end="40" />
         </floors>
@@ -2697,52 +2697,52 @@
     </items>
     <traps />
     <data>
-      <d difficulty="7" money="2" layout="2" terrain="15" shadows="0" camouflage="10" nature="538" secret="Attack down 1 stage">
+      <d difficulty="7" money="2" layout="2" terrain="15" camouflage="10" nature="538" secret="Attack down 1 stage">
         <floors>
           <part start="1" end="15" />
         </floors>
       </d>
-      <d difficulty="7" money="2" layout="2" terrain="16" shadows="0" camouflage="10" nature="538" secret="Attack down 1 stage">
+      <d difficulty="7" money="2" layout="2" terrain="16" camouflage="10" nature="538" secret="Attack down 1 stage">
         <floors>
           <part start="16" end="19" />
         </floors>
       </d>
-      <d difficulty="8" money="2" layout="2" terrain="16" shadows="0" camouflage="10" nature="538" secret="Attack down 1 stage">
+      <d difficulty="8" money="2" layout="2" terrain="16" camouflage="10" nature="538" secret="Attack down 1 stage">
         <floors>
           <part start="20" end="23" />
         </floors>
       </d>
-      <d difficulty="8" money="5" layout="2" terrain="16" shadows="0" camouflage="10" nature="538" secret="Attack down 1 stage">
+      <d difficulty="8" money="5" layout="2" terrain="16" camouflage="10" nature="538" secret="Attack down 1 stage">
         <floors>
           <part start="24" end="29" />
         </floors>
       </d>
-      <d difficulty="9" money="5" layout="2" terrain="16" shadows="0" camouflage="10" nature="538" secret="Attack down 1 stage">
+      <d difficulty="9" money="5" layout="2" terrain="16" camouflage="10" nature="538" secret="Attack down 1 stage">
         <floors>
           <part start="30" end="35" />
         </floors>
       </d>
-      <d difficulty="10" money="5" layout="2" terrain="16" shadows="0" camouflage="10" nature="538" secret="Attack down 1 stage">
+      <d difficulty="10" money="5" layout="2" terrain="16" camouflage="10" nature="538" secret="Attack down 1 stage">
         <floors>
           <part start="36" end="59" />
         </floors>
       </d>
-      <d difficulty="11" money="7" layout="2" terrain="16" shadows="0" camouflage="10" nature="538" secret="Attack down 1 stage">
+      <d difficulty="11" money="7" layout="2" terrain="16" camouflage="10" nature="538" secret="Attack down 1 stage">
         <floors>
           <part start="60" end="69" />
         </floors>
       </d>
-      <d difficulty="11" money="7" layout="2" terrain="17" shadows="0" camouflage="5" nature="175" secret="Cringing">
+      <d difficulty="11" money="7" layout="2" terrain="17" camouflage="5" nature="175" secret="Cringing">
         <floors>
           <part start="70" end="86" />
         </floors>
       </d>
-      <d difficulty="11" money="12" layout="2" terrain="17" shadows="0" camouflage="5" nature="175" secret="Cringing">
+      <d difficulty="11" money="12" layout="2" terrain="17" camouflage="5" nature="175" secret="Cringing">
         <floors>
           <part start="87" end="98" />
         </floors>
       </d>
-      <d difficulty="11" money="12" layout="2" terrain="17" shadows="0" camouflage="10" nature="538" secret="Attack down 1 stage">
+      <d difficulty="11" money="12" layout="2" terrain="17" camouflage="10" nature="538" secret="Attack down 1 stage">
         <floors>
           <part start="99" end="99" />
         </floors>
@@ -2770,12 +2770,12 @@
     </items>
     <traps />
     <data>
-      <d difficulty="7" money="6" layout="2" terrain="18" shadows="0" camouflage="5" nature="504" secret="Confusion">
+      <d difficulty="7" money="6" layout="2" terrain="18" camouflage="5" nature="504" secret="Confusion">
         <floors>
           <part start="1" end="9" />
         </floors>
       </d>
-      <d difficulty="8" money="6" layout="2" terrain="18" shadows="0" camouflage="5" nature="504" secret="Confusion">
+      <d difficulty="8" money="6" layout="2" terrain="18" camouflage="5" nature="504" secret="Confusion">
         <floors>
           <part start="10" end="20" />
         </floors>
@@ -3069,42 +3069,42 @@
     </items>
     <traps />
     <data>
-      <d difficulty="7" money="7" layout="2" terrain="19" shadows="0" camouflage="0" nature="299" secret="Paralysis">
+      <d difficulty="7" money="7" layout="2" terrain="19" camouflage="0" nature="299" secret="Paralysis">
         <floors>
           <part start="1" end="19" />
         </floors>
       </d>
-      <d difficulty="8" money="7" layout="2" terrain="19" shadows="0" camouflage="0" nature="299" secret="Paralysis">
+      <d difficulty="8" money="7" layout="2" terrain="19" camouflage="0" nature="299" secret="Paralysis">
         <floors>
           <part start="20" end="27" />
         </floors>
       </d>
-      <d difficulty="8" money="7" layout="2" terrain="20" shadows="0" camouflage="0" nature="299" secret="Paralysis">
+      <d difficulty="8" money="7" layout="2" terrain="20" camouflage="0" nature="299" secret="Paralysis">
         <floors>
           <part start="28" end="29" />
         </floors>
       </d>
-      <d difficulty="9" money="7" layout="2" terrain="20" shadows="0" camouflage="0" nature="299" secret="Paralysis">
+      <d difficulty="9" money="7" layout="2" terrain="20" camouflage="0" nature="299" secret="Paralysis">
         <floors>
           <part start="30" end="35" />
         </floors>
       </d>
-      <d difficulty="10" money="7" layout="2" terrain="20" shadows="0" camouflage="0" nature="299" secret="Paralysis">
+      <d difficulty="10" money="7" layout="2" terrain="20" camouflage="0" nature="299" secret="Paralysis">
         <floors>
           <part start="36" end="39" />
         </floors>
       </d>
-      <d difficulty="10" money="7" layout="2" terrain="21" shadows="0" camouflage="5" nature="504" secret="Confusion">
+      <d difficulty="10" money="7" layout="2" terrain="21" camouflage="5" nature="504" secret="Confusion">
         <floors>
           <part start="40" end="59" />
         </floors>
       </d>
-      <d difficulty="11" money="7" layout="2" terrain="21" shadows="0" camouflage="5" nature="504" secret="Confusion">
+      <d difficulty="11" money="7" layout="2" terrain="21" camouflage="5" nature="504" secret="Confusion">
         <floors>
           <part start="60" end="74" />
         </floors>
       </d>
-      <d difficulty="12" money="7" layout="2" terrain="21" shadows="0" camouflage="5" nature="504" secret="Confusion">
+      <d difficulty="12" money="7" layout="2" terrain="21" camouflage="5" nature="504" secret="Confusion">
         <floors>
           <part start="75" end="99" />
         </floors>
@@ -3623,72 +3623,72 @@
     </items>
     <traps />
     <data>
-      <d difficulty="7" money="7" layout="2" terrain="22" shadows="0" camouflage="5" nature="175" secret="Cringing">
+      <d difficulty="7" money="7" layout="2" terrain="22" camouflage="5" nature="175" secret="Cringing">
         <floors>
           <part start="1" end="13" />
         </floors>
       </d>
-      <d difficulty="7" money="7" layout="2" terrain="23" shadows="0" camouflage="5" nature="175" secret="Cringing">
+      <d difficulty="7" money="7" layout="2" terrain="23" camouflage="5" nature="175" secret="Cringing">
         <floors>
           <part start="14" end="19" />
         </floors>
       </d>
-      <d difficulty="8" money="7" layout="2" terrain="23" shadows="0" camouflage="5" nature="175" secret="Cringing">
+      <d difficulty="8" money="7" layout="2" terrain="23" camouflage="5" nature="175" secret="Cringing">
         <floors>
           <part start="20" end="29" />
         </floors>
       </d>
-      <d difficulty="9" money="7" layout="2" terrain="24" shadows="0" camouflage="0" nature="299" secret="Paralysis">
+      <d difficulty="9" money="7" layout="2" terrain="24" camouflage="0" nature="299" secret="Paralysis">
         <floors>
           <part start="30" end="35" />
         </floors>
       </d>
-      <d difficulty="10" money="7" layout="2" terrain="24" shadows="0" camouflage="0" nature="299" secret="Paralysis">
+      <d difficulty="10" money="7" layout="2" terrain="24" camouflage="0" nature="299" secret="Paralysis">
         <floors>
           <part start="36" end="38" />
         </floors>
       </d>
-      <d difficulty="10" money="12" layout="2" terrain="24" shadows="0" camouflage="0" nature="299" secret="Paralysis">
+      <d difficulty="10" money="12" layout="2" terrain="24" camouflage="0" nature="299" secret="Paralysis">
         <floors>
           <part start="39" end="39" />
         </floors>
       </d>
-      <d difficulty="10" money="12" layout="2" terrain="25" shadows="0" camouflage="5" nature="175" secret="Cringing">
+      <d difficulty="10" money="12" layout="2" terrain="25" camouflage="5" nature="175" secret="Cringing">
         <floors>
           <part start="40" end="49" />
         </floors>
       </d>
-      <d difficulty="10" money="12" layout="2" terrain="26" shadows="0" camouflage="5" nature="175" secret="Cringing">
+      <d difficulty="10" money="12" layout="2" terrain="26" camouflage="5" nature="175" secret="Cringing">
         <floors>
           <part start="50" end="59" />
         </floors>
       </d>
-      <d difficulty="11" money="12" layout="2" terrain="3" shadows="0" camouflage="5" nature="504" secret="Confusion">
+      <d difficulty="11" money="12" layout="2" terrain="3" camouflage="5" nature="504" secret="Confusion">
         <floors>
           <part start="60" end="69" />
         </floors>
       </d>
-      <d difficulty="11" money="12" layout="2" terrain="8" shadows="0" camouflage="0" nature="299" secret="Paralysis">
+      <d difficulty="11" money="12" layout="2" terrain="8" camouflage="0" nature="299" secret="Paralysis">
         <floors>
           <part start="70" end="70" />
         </floors>
       </d>
-      <d difficulty="11" money="25" layout="2" terrain="8" shadows="0" camouflage="0" nature="299" secret="Paralysis">
+      <d difficulty="11" money="25" layout="2" terrain="8" camouflage="0" nature="299" secret="Paralysis">
         <floors>
           <part start="71" end="74" />
         </floors>
       </d>
-      <d difficulty="12" money="25" layout="2" terrain="8" shadows="0" camouflage="0" nature="299" secret="Paralysis">
+      <d difficulty="12" money="25" layout="2" terrain="8" camouflage="0" nature="299" secret="Paralysis">
         <floors>
           <part start="75" end="79" />
         </floors>
       </d>
-      <d difficulty="12" money="25" layout="2" terrain="27" shadows="0" camouflage="0" nature="299" secret="Paralysis">
+      <d difficulty="12" money="25" layout="2" terrain="27" camouflage="0" nature="299" secret="Paralysis">
         <floors>
           <part start="80" end="89" />
         </floors>
       </d>
-      <d difficulty="12" money="25" layout="2" terrain="28" shadows="0" camouflage="0" nature="299" secret="Paralysis">
+      <d difficulty="12" money="25" layout="2" terrain="28" camouflage="0" nature="299" secret="Paralysis">
         <floors>
           <part start="90" end="99" />
         </floors>
@@ -3977,47 +3977,47 @@
     </items>
     <traps />
     <data>
-      <d difficulty="7" money="7" layout="2" terrain="29" shadows="0" camouflage="11" nature="220" secret="Poison">
+      <d difficulty="7" money="7" layout="2" terrain="29" camouflage="11" nature="220" secret="Poison">
         <floors>
           <part start="1" end="19" />
         </floors>
       </d>
-      <d difficulty="8" money="7" layout="2" terrain="29" shadows="0" camouflage="11" nature="220" secret="Poison">
+      <d difficulty="8" money="7" layout="2" terrain="29" camouflage="11" nature="220" secret="Poison">
         <floors>
           <part start="20" end="20" />
         </floors>
       </d>
-      <d difficulty="8" money="7" layout="2" terrain="30" shadows="0" camouflage="5" nature="175" secret="Cringing">
+      <d difficulty="8" money="7" layout="2" terrain="30" camouflage="5" nature="175" secret="Cringing">
         <floors>
           <part start="21" end="29" />
         </floors>
       </d>
-      <d difficulty="9" money="7" layout="2" terrain="30" shadows="0" camouflage="5" nature="175" secret="Cringing">
+      <d difficulty="9" money="7" layout="2" terrain="30" camouflage="5" nature="175" secret="Cringing">
         <floors>
           <part start="30" end="35" />
         </floors>
       </d>
-      <d difficulty="10" money="7" layout="2" terrain="30" shadows="0" camouflage="5" nature="175" secret="Cringing">
+      <d difficulty="10" money="7" layout="2" terrain="30" camouflage="5" nature="175" secret="Cringing">
         <floors>
           <part start="36" end="38" />
         </floors>
       </d>
-      <d difficulty="10" money="12" layout="2" terrain="30" shadows="0" camouflage="5" nature="175" secret="Cringing">
+      <d difficulty="10" money="12" layout="2" terrain="30" camouflage="5" nature="175" secret="Cringing">
         <floors>
           <part start="39" end="50" />
         </floors>
       </d>
-      <d difficulty="10" money="12" layout="2" terrain="31" shadows="0" camouflage="5" nature="175" secret="Cringing">
+      <d difficulty="10" money="12" layout="2" terrain="31" camouflage="5" nature="175" secret="Cringing">
         <floors>
           <part start="51" end="59" />
         </floors>
       </d>
-      <d difficulty="11" money="12" layout="2" terrain="31" shadows="0" camouflage="5" nature="175" secret="Cringing">
+      <d difficulty="11" money="12" layout="2" terrain="31" camouflage="5" nature="175" secret="Cringing">
         <floors>
           <part start="60" end="74" />
         </floors>
       </d>
-      <d difficulty="12" money="12" layout="2" terrain="31" shadows="0" camouflage="5" nature="175" secret="Cringing">
+      <d difficulty="12" money="12" layout="2" terrain="31" camouflage="5" nature="175" secret="Cringing">
         <floors>
           <part start="75" end="99" />
         </floors>
@@ -4202,32 +4202,32 @@
     </items>
     <traps />
     <data>
-      <d difficulty="7" money="6" layout="2" terrain="25" shadows="0" camouflage="5" nature="175" secret="Cringing">
+      <d difficulty="7" money="6" layout="2" terrain="25" camouflage="5" nature="175" secret="Cringing">
         <floors>
           <part start="1" end="7" />
         </floors>
       </d>
-      <d difficulty="7" money="6" layout="2" terrain="32" shadows="0" camouflage="5" nature="504" secret="Confusion">
+      <d difficulty="7" money="6" layout="2" terrain="32" camouflage="5" nature="504" secret="Confusion">
         <floors>
           <part start="8" end="9" />
         </floors>
       </d>
-      <d difficulty="8" money="6" layout="2" terrain="32" shadows="0" camouflage="5" nature="504" secret="Confusion">
+      <d difficulty="8" money="6" layout="2" terrain="32" camouflage="5" nature="504" secret="Confusion">
         <floors>
           <part start="10" end="16" />
         </floors>
       </d>
-      <d difficulty="8" money="6" layout="2" terrain="33" shadows="0" camouflage="14" nature="504" secret="Confusion">
+      <d difficulty="8" money="6" layout="2" terrain="33" camouflage="14" nature="504" secret="Confusion">
         <floors>
           <part start="17" end="19" />
         </floors>
       </d>
-      <d difficulty="9" money="6" layout="2" terrain="33" shadows="0" camouflage="14" nature="504" secret="Confusion">
+      <d difficulty="9" money="6" layout="2" terrain="33" camouflage="14" nature="504" secret="Confusion">
         <floors>
           <part start="20" end="24" />
         </floors>
       </d>
-      <d difficulty="9" money="6" layout="2" terrain="33" shadows="0" camouflage="5" nature="504" secret="Confusion">
+      <d difficulty="9" money="6" layout="2" terrain="33" camouflage="5" nature="504" secret="Confusion">
         <floors>
           <part start="25" end="25" />
         </floors>
@@ -4407,22 +4407,22 @@
     </items>
     <traps />
     <data>
-      <d difficulty="7" money="6" layout="2" terrain="34" shadows="0" camouflage="5" nature="504" secret="Confusion">
+      <d difficulty="7" money="6" layout="2" terrain="34" camouflage="5" nature="504" secret="Confusion">
         <floors>
           <part start="1" end="9" />
         </floors>
       </d>
-      <d difficulty="8" money="6" layout="2" terrain="34" shadows="0" camouflage="5" nature="504" secret="Confusion">
+      <d difficulty="8" money="6" layout="2" terrain="34" camouflage="5" nature="504" secret="Confusion">
         <floors>
           <part start="10" end="10" />
         </floors>
       </d>
-      <d difficulty="8" money="6" layout="2" terrain="21" shadows="0" camouflage="5" nature="504" secret="Confusion">
+      <d difficulty="8" money="6" layout="2" terrain="21" camouflage="5" nature="504" secret="Confusion">
         <floors>
           <part start="11" end="19" />
         </floors>
       </d>
-      <d difficulty="9" money="6" layout="2" terrain="21" shadows="0" camouflage="5" nature="504" secret="Confusion">
+      <d difficulty="9" money="6" layout="2" terrain="21" camouflage="5" nature="504" secret="Confusion">
         <floors>
           <part start="20" end="25" />
         </floors>
@@ -4676,22 +4676,22 @@
     </items>
     <traps />
     <data>
-      <d difficulty="7" money="7" layout="2" terrain="26" shadows="0" camouflage="5" nature="175" secret="Cringing">
+      <d difficulty="7" money="7" layout="2" terrain="26" camouflage="5" nature="175" secret="Cringing">
         <floors>
           <part start="1" end="6" />
         </floors>
       </d>
-      <d difficulty="7" money="7" layout="2" terrain="35" shadows="0" camouflage="5" nature="175" secret="Cringing">
+      <d difficulty="7" money="7" layout="2" terrain="35" camouflage="5" nature="175" secret="Cringing">
         <floors>
           <part start="7" end="9" />
         </floors>
       </d>
-      <d difficulty="8" money="7" layout="2" terrain="35" shadows="0" camouflage="5" nature="175" secret="Cringing">
+      <d difficulty="8" money="7" layout="2" terrain="35" camouflage="5" nature="175" secret="Cringing">
         <floors>
           <part start="10" end="12" />
         </floors>
       </d>
-      <d difficulty="8" money="7" layout="2" terrain="36" shadows="0" camouflage="5" nature="175" secret="Cringing">
+      <d difficulty="8" money="7" layout="2" terrain="36" camouflage="5" nature="175" secret="Cringing">
         <floors>
           <part start="13" end="20" />
         </floors>
@@ -4858,17 +4858,17 @@
     </items>
     <traps />
     <data>
-      <d difficulty="7" money="7" layout="2" terrain="12" shadows="0" camouflage="5" nature="504" secret="Confusion">
+      <d difficulty="7" money="7" layout="2" terrain="12" camouflage="5" nature="504" secret="Confusion">
         <floors>
           <part start="1" end="19" />
         </floors>
       </d>
-      <d difficulty="8" money="7" layout="2" terrain="12" shadows="0" camouflage="5" nature="504" secret="Confusion">
+      <d difficulty="8" money="7" layout="2" terrain="12" camouflage="5" nature="504" secret="Confusion">
         <floors>
           <part start="20" end="29" />
         </floors>
       </d>
-      <d difficulty="9" money="7" layout="2" terrain="12" shadows="0" camouflage="5" nature="504" secret="Confusion">
+      <d difficulty="9" money="7" layout="2" terrain="12" camouflage="5" nature="504" secret="Confusion">
         <floors>
           <part start="30" end="30" />
         </floors>
@@ -5023,17 +5023,17 @@
     </items>
     <traps />
     <data>
-      <d difficulty="7" money="7" layout="2" terrain="37" shadows="0" camouflage="11" nature="205" secret="Sleep">
+      <d difficulty="7" money="7" layout="2" terrain="37" camouflage="11" nature="205" secret="Sleep">
         <floors>
           <part start="1" end="19" />
         </floors>
       </d>
-      <d difficulty="8" money="7" layout="2" terrain="37" shadows="0" camouflage="11" nature="205" secret="Sleep">
+      <d difficulty="8" money="7" layout="2" terrain="37" camouflage="11" nature="205" secret="Sleep">
         <floors>
           <part start="20" end="29" />
         </floors>
       </d>
-      <d difficulty="9" money="7" layout="2" terrain="37" shadows="0" camouflage="11" nature="205" secret="Sleep">
+      <d difficulty="9" money="7" layout="2" terrain="37" camouflage="11" nature="205" secret="Sleep">
         <floors>
           <part start="30" end="30" />
         </floors>
@@ -5190,17 +5190,17 @@
     </items>
     <traps />
     <data>
-      <d difficulty="7" money="7" layout="2" terrain="10" shadows="0" camouflage="14" nature="299" secret="Paralysis">
+      <d difficulty="7" money="7" layout="2" terrain="10" camouflage="14" nature="299" secret="Paralysis">
         <floors>
           <part start="1" end="19" />
         </floors>
       </d>
-      <d difficulty="8" money="7" layout="2" terrain="38" shadows="0" camouflage="5" nature="504" secret="Confusion">
+      <d difficulty="8" money="7" layout="2" terrain="38" camouflage="5" nature="504" secret="Confusion">
         <floors>
           <part start="20" end="29" />
         </floors>
       </d>
-      <d difficulty="9" money="7" layout="2" terrain="38" shadows="0" camouflage="5" nature="504" secret="Confusion">
+      <d difficulty="9" money="7" layout="2" terrain="38" camouflage="5" nature="504" secret="Confusion">
         <floors>
           <part start="30" end="30" />
         </floors>
@@ -5311,42 +5311,42 @@
     </items>
     <traps />
     <data>
-      <d difficulty="7" money="8" layout="2" terrain="33" shadows="0" camouflage="14" nature="504" secret="Confusion">
+      <d difficulty="7" money="8" layout="2" terrain="33" camouflage="14" nature="504" secret="Confusion">
         <floors>
           <part start="1" end="9" />
         </floors>
       </d>
-      <d difficulty="7" money="8" layout="2" terrain="39" shadows="0" camouflage="14" nature="175" secret="Cringing">
+      <d difficulty="7" money="8" layout="2" terrain="39" camouflage="14" nature="175" secret="Cringing">
         <floors>
           <part start="10" end="19" />
         </floors>
       </d>
-      <d difficulty="8" money="8" layout="2" terrain="39" shadows="0" camouflage="14" nature="175" secret="Cringing">
+      <d difficulty="8" money="8" layout="2" terrain="39" camouflage="14" nature="175" secret="Cringing">
         <floors>
           <part start="20" end="20" />
         </floors>
       </d>
-      <d difficulty="8" money="8" layout="2" terrain="40" shadows="0" camouflage="14" nature="299" secret="Paralysis">
+      <d difficulty="8" money="8" layout="2" terrain="40" camouflage="14" nature="299" secret="Paralysis">
         <floors>
           <part start="21" end="29" />
         </floors>
       </d>
-      <d difficulty="9" money="8" layout="2" terrain="41" shadows="0" camouflage="14" nature="175" secret="Cringing">
+      <d difficulty="9" money="8" layout="2" terrain="41" camouflage="14" nature="175" secret="Cringing">
         <floors>
           <part start="30" end="31" />
         </floors>
       </d>
-      <d difficulty="9" money="12" layout="2" terrain="41" shadows="0" camouflage="14" nature="175" secret="Cringing">
+      <d difficulty="9" money="12" layout="2" terrain="41" camouflage="14" nature="175" secret="Cringing">
         <floors>
           <part start="32" end="35" />
         </floors>
       </d>
-      <d difficulty="10" money="12" layout="2" terrain="41" shadows="0" camouflage="14" nature="175" secret="Cringing">
+      <d difficulty="10" money="12" layout="2" terrain="41" camouflage="14" nature="175" secret="Cringing">
         <floors>
           <part start="36" end="39" />
         </floors>
       </d>
-      <d difficulty="10" money="12" layout="2" terrain="41" shadows="0" camouflage="14" nature="299" secret="Paralysis">
+      <d difficulty="10" money="12" layout="2" terrain="41" camouflage="14" nature="299" secret="Paralysis">
         <floors>
           <part start="40" end="40" />
         </floors>
@@ -5436,12 +5436,12 @@
     </items>
     <traps />
     <data>
-      <d difficulty="7" money="7" layout="2" terrain="35" shadows="0" camouflage="5" nature="175" secret="Cringing">
+      <d difficulty="7" money="7" layout="2" terrain="35" camouflage="5" nature="175" secret="Cringing">
         <floors>
           <part start="1" end="9" />
         </floors>
       </d>
-      <d difficulty="8" money="7" layout="2" terrain="35" shadows="0" camouflage="5" nature="175" secret="Cringing">
+      <d difficulty="8" money="7" layout="2" terrain="35" camouflage="5" nature="175" secret="Cringing">
         <floors>
           <part start="10" end="19" />
         </floors>
@@ -5527,7 +5527,7 @@
     </items>
     <traps />
     <data>
-      <d difficulty="5" money="6" layout="2" terrain="42" shadows="0" camouflage="4" nature="223" secret="Accuracy down 1 stage">
+      <d difficulty="5" money="6" layout="2" terrain="42" camouflage="4" nature="223" secret="Accuracy down 1 stage">
         <floors>
           <part start="1" end="3" />
         </floors>
@@ -5658,12 +5658,12 @@
     </items>
     <traps />
     <data>
-      <d difficulty="7" money="6" layout="2" terrain="43" shadows="0" camouflage="11" nature="220" secret="Poison">
+      <d difficulty="7" money="6" layout="2" terrain="43" camouflage="11" nature="220" secret="Poison">
         <floors>
           <part start="1" end="7" />
         </floors>
       </d>
-      <d difficulty="7" money="6" layout="2" terrain="36" shadows="0" camouflage="5" nature="175" secret="Cringing">
+      <d difficulty="7" money="6" layout="2" terrain="36" camouflage="5" nature="175" secret="Cringing">
         <floors>
           <part start="8" end="15" />
         </floors>
@@ -5710,7 +5710,7 @@
     </items>
     <traps />
     <data>
-      <d difficulty="7" money="6" layout="2" terrain="23" shadows="0" camouflage="5" nature="175" secret="Cringing">
+      <d difficulty="7" money="6" layout="2" terrain="23" camouflage="5" nature="175" secret="Cringing">
         <floors>
           <part start="1" end="3" />
         </floors>
@@ -6504,37 +6504,37 @@
     </items>
     <traps />
     <data>
-      <d difficulty="7" money="8" layout="2" terrain="24" shadows="0" camouflage="0" nature="299" secret="Paralysis">
+      <d difficulty="7" money="8" layout="2" terrain="24" camouflage="0" nature="299" secret="Paralysis">
         <floors>
           <part start="1" end="19" />
         </floors>
       </d>
-      <d difficulty="8" money="8" layout="2" terrain="24" shadows="0" camouflage="0" nature="299" secret="Paralysis">
+      <d difficulty="8" money="8" layout="2" terrain="24" camouflage="0" nature="299" secret="Paralysis">
         <floors>
           <part start="20" end="27" />
         </floors>
       </d>
-      <d difficulty="8" money="12" layout="2" terrain="24" shadows="0" camouflage="0" nature="299" secret="Paralysis">
+      <d difficulty="8" money="12" layout="2" terrain="24" camouflage="0" nature="299" secret="Paralysis">
         <floors>
           <part start="28" end="29" />
         </floors>
       </d>
-      <d difficulty="9" money="12" layout="2" terrain="24" shadows="0" camouflage="0" nature="299" secret="Paralysis">
+      <d difficulty="9" money="12" layout="2" terrain="24" camouflage="0" nature="299" secret="Paralysis">
         <floors>
           <part start="30" end="35" />
         </floors>
       </d>
-      <d difficulty="10" money="12" layout="2" terrain="24" shadows="0" camouflage="0" nature="299" secret="Paralysis">
+      <d difficulty="10" money="12" layout="2" terrain="24" camouflage="0" nature="299" secret="Paralysis">
         <floors>
           <part start="36" end="59" />
         </floors>
       </d>
-      <d difficulty="11" money="12" layout="2" terrain="24" shadows="0" camouflage="0" nature="299" secret="Paralysis">
+      <d difficulty="11" money="12" layout="2" terrain="24" camouflage="0" nature="299" secret="Paralysis">
         <floors>
           <part start="60" end="74" />
         </floors>
       </d>
-      <d difficulty="12" money="12" layout="2" terrain="24" shadows="0" camouflage="0" nature="299" secret="Paralysis">
+      <d difficulty="12" money="12" layout="2" terrain="24" camouflage="0" nature="299" secret="Paralysis">
         <floors>
           <part start="75" end="99" />
         </floors>
@@ -7362,87 +7362,87 @@
     </items>
     <traps />
     <data>
-      <d difficulty="8" money="7" layout="2" terrain="0" shadows="0" camouflage="11" nature="220" secret="Poison">
+      <d difficulty="8" money="7" layout="2" terrain="0" camouflage="11" nature="220" secret="Poison">
         <floors>
           <part start="1" end="3" />
         </floors>
       </d>
-      <d difficulty="8" money="7" layout="2" terrain="44" shadows="0" camouflage="4" nature="223" secret="Accuracy down 1 stage">
+      <d difficulty="8" money="7" layout="2" terrain="44" camouflage="4" nature="223" secret="Accuracy down 1 stage">
         <floors>
           <part start="4" end="4" />
         </floors>
       </d>
-      <d difficulty="8" money="10" layout="2" terrain="44" shadows="0" camouflage="4" nature="223" secret="Accuracy down 1 stage">
+      <d difficulty="8" money="10" layout="2" terrain="44" camouflage="4" nature="223" secret="Accuracy down 1 stage">
         <floors>
           <part start="5" end="7" />
         </floors>
       </d>
-      <d difficulty="8" money="10" layout="2" terrain="4" shadows="0" camouflage="11" nature="220" secret="Poison">
+      <d difficulty="8" money="10" layout="2" terrain="4" camouflage="11" nature="220" secret="Poison">
         <floors>
           <part start="8" end="8" />
         </floors>
       </d>
-      <d difficulty="8" money="12" layout="2" terrain="4" shadows="0" camouflage="11" nature="220" secret="Poison">
+      <d difficulty="8" money="12" layout="2" terrain="4" camouflage="11" nature="220" secret="Poison">
         <floors>
           <part start="9" end="12" />
         </floors>
       </d>
-      <d difficulty="8" money="12" layout="2" terrain="45" shadows="0" camouflage="10" nature="546" secret="Movement Speed down">
+      <d difficulty="8" money="12" layout="2" terrain="45" camouflage="10" nature="546" secret="Movement Speed down">
         <floors>
           <part start="13" end="19" />
         </floors>
       </d>
-      <d difficulty="9" money="12" layout="2" terrain="45" shadows="0" camouflage="10" nature="546" secret="Movement Speed down">
+      <d difficulty="9" money="12" layout="2" terrain="45" camouflage="10" nature="546" secret="Movement Speed down">
         <floors>
           <part start="20" end="20" />
         </floors>
       </d>
-      <d difficulty="9" money="12" layout="2" terrain="42" shadows="0" camouflage="4" nature="223" secret="Accuracy down 1 stage">
+      <d difficulty="9" money="12" layout="2" terrain="42" camouflage="4" nature="223" secret="Accuracy down 1 stage">
         <floors>
           <part start="21" end="24" />
         </floors>
       </d>
-      <d difficulty="10" money="12" layout="2" terrain="42" shadows="0" camouflage="4" nature="223" secret="Accuracy down 1 stage">
+      <d difficulty="10" money="12" layout="2" terrain="42" camouflage="4" nature="223" secret="Accuracy down 1 stage">
         <floors>
           <part start="25" end="29" />
         </floors>
       </d>
-      <d difficulty="10" money="12" layout="2" terrain="46" shadows="0" camouflage="11" nature="220" secret="Poison">
+      <d difficulty="10" money="12" layout="2" terrain="46" camouflage="11" nature="220" secret="Poison">
         <floors>
           <part start="30" end="35" />
         </floors>
       </d>
-      <d difficulty="11" money="12" layout="2" terrain="46" shadows="0" camouflage="11" nature="220" secret="Poison">
+      <d difficulty="11" money="12" layout="2" terrain="46" camouflage="11" nature="220" secret="Poison">
         <floors>
           <part start="36" end="43" />
         </floors>
       </d>
-      <d difficulty="11" money="12" layout="2" terrain="47" shadows="0" camouflage="11" nature="220" secret="Poison">
+      <d difficulty="11" money="12" layout="2" terrain="47" camouflage="11" nature="220" secret="Poison">
         <floors>
           <part start="44" end="59" />
         </floors>
       </d>
-      <d difficulty="12" money="12" layout="2" terrain="47" shadows="0" camouflage="11" nature="220" secret="Poison">
+      <d difficulty="12" money="12" layout="2" terrain="47" camouflage="11" nature="220" secret="Poison">
         <floors>
           <part start="60" end="60" />
         </floors>
       </d>
-      <d difficulty="12" money="12" layout="2" terrain="48" shadows="0" camouflage="11" nature="220" secret="Poison">
+      <d difficulty="12" money="12" layout="2" terrain="48" camouflage="11" nature="220" secret="Poison">
         <floors>
           <part start="61" end="74" />
         </floors>
       </d>
-      <d difficulty="13" money="12" layout="2" terrain="48" shadows="0" camouflage="11" nature="220" secret="Poison">
+      <d difficulty="13" money="12" layout="2" terrain="48" camouflage="11" nature="220" secret="Poison">
         <floors>
           <part start="75" end="79" />
         </floors>
       </d>
-      <d difficulty="13" money="12" layout="2" terrain="49" shadows="0" camouflage="11" nature="220" secret="Poison">
+      <d difficulty="13" money="12" layout="2" terrain="49" camouflage="11" nature="220" secret="Poison">
         <floors>
           <part start="80" end="88" />
         </floors>
       </d>
-      <d difficulty="14" money="12" layout="2" terrain="49" shadows="0" camouflage="11" nature="220" secret="Poison">
+      <d difficulty="14" money="12" layout="2" terrain="49" camouflage="11" nature="220" secret="Poison">
         <floors>
           <part start="89" end="99" />
         </floors>
@@ -7516,7 +7516,7 @@
     </items>
     <traps />
     <data>
-      <d difficulty="1" money="3" layout="2" terrain="21" shadows="0" camouflage="5" nature="504" secret="Confusion">
+      <d difficulty="1" money="3" layout="2" terrain="21" camouflage="5" nature="504" secret="Confusion">
         <floors>
           <part start="1" end="3" />
         </floors>
@@ -7585,7 +7585,7 @@
     </items>
     <traps />
     <data>
-      <d difficulty="1" money="3" layout="2" terrain="33" shadows="0" camouflage="14" nature="504" secret="Confusion">
+      <d difficulty="1" money="3" layout="2" terrain="33" camouflage="14" nature="504" secret="Confusion">
         <floors>
           <part start="1" end="3" />
         </floors>
@@ -7726,12 +7726,12 @@
     </items>
     <traps />
     <data>
-      <d difficulty="7" money="6" layout="2" terrain="50" shadows="0" camouflage="4" nature="223" secret="Accuracy down 1 stage">
+      <d difficulty="7" money="6" layout="2" terrain="50" camouflage="4" nature="223" secret="Accuracy down 1 stage">
         <floors>
           <part start="1" end="9" />
         </floors>
       </d>
-      <d difficulty="8" money="6" layout="2" terrain="50" shadows="0" camouflage="4" nature="223" secret="Accuracy down 1 stage">
+      <d difficulty="8" money="6" layout="2" terrain="50" camouflage="4" nature="223" secret="Accuracy down 1 stage">
         <floors>
           <part start="10" end="20" />
         </floors>
@@ -7913,22 +7913,22 @@
     </items>
     <traps />
     <data>
-      <d difficulty="7" money="6" layout="2" terrain="51" shadows="0" camouflage="5" nature="504" secret="Confusion">
+      <d difficulty="7" money="6" layout="2" terrain="51" camouflage="5" nature="504" secret="Confusion">
         <floors>
           <part start="1" end="19" />
         </floors>
       </d>
-      <d difficulty="8" money="6" layout="2" terrain="51" shadows="0" camouflage="5" nature="504" secret="Confusion">
+      <d difficulty="8" money="6" layout="2" terrain="51" camouflage="5" nature="504" secret="Confusion">
         <floors>
           <part start="20" end="23" />
         </floors>
       </d>
-      <d difficulty="8" money="6" layout="2" terrain="27" shadows="0" camouflage="0" nature="299" secret="Paralysis">
+      <d difficulty="8" money="6" layout="2" terrain="27" camouflage="0" nature="299" secret="Paralysis">
         <floors>
           <part start="24" end="29" />
         </floors>
       </d>
-      <d difficulty="9" money="6" layout="2" terrain="27" shadows="0" camouflage="0" nature="299" secret="Paralysis">
+      <d difficulty="9" money="6" layout="2" terrain="27" camouflage="0" nature="299" secret="Paralysis">
         <floors>
           <part start="30" end="50" />
         </floors>
@@ -8112,17 +8112,17 @@
     </items>
     <traps />
     <data>
-      <d difficulty="7" money="6" layout="2" terrain="52" shadows="0" camouflage="11" nature="220" secret="Poison">
+      <d difficulty="7" money="6" layout="2" terrain="52" camouflage="11" nature="220" secret="Poison">
         <floors>
           <part start="1" end="19" />
         </floors>
       </d>
-      <d difficulty="8" money="6" layout="2" terrain="52" shadows="0" camouflage="11" nature="220" secret="Poison">
+      <d difficulty="8" money="6" layout="2" terrain="52" camouflage="11" nature="220" secret="Poison">
         <floors>
           <part start="20" end="29" />
         </floors>
       </d>
-      <d difficulty="9" money="6" layout="2" terrain="52" shadows="0" camouflage="11" nature="220" secret="Poison">
+      <d difficulty="9" money="6" layout="2" terrain="52" camouflage="11" nature="220" secret="Poison">
         <floors>
           <part start="30" end="30" />
         </floors>
@@ -8230,7 +8230,7 @@
     </items>
     <traps />
     <data>
-      <d difficulty="7" money="7" layout="2" terrain="53" shadows="0" camouflage="0" nature="299" secret="Paralysis">
+      <d difficulty="7" money="7" layout="2" terrain="53" camouflage="0" nature="299" secret="Paralysis">
         <floors>
           <part start="1" end="3" />
         </floors>
@@ -8291,27 +8291,27 @@
     </items>
     <traps />
     <data>
-      <d difficulty="7" money="8" layout="2" terrain="23" shadows="0" camouflage="5" nature="175" secret="Cringing">
+      <d difficulty="7" money="8" layout="2" terrain="23" camouflage="5" nature="175" secret="Cringing">
         <floors>
           <part start="1" end="2" />
         </floors>
       </d>
-      <d difficulty="7" money="8" layout="2" terrain="24" shadows="0" camouflage="0" nature="299" secret="Paralysis">
+      <d difficulty="7" money="8" layout="2" terrain="24" camouflage="0" nature="299" secret="Paralysis">
         <floors>
           <part start="3" end="5" />
         </floors>
       </d>
-      <d difficulty="7" money="8" layout="2" terrain="53" shadows="0" camouflage="0" nature="299" secret="Paralysis">
+      <d difficulty="7" money="8" layout="2" terrain="53" camouflage="0" nature="299" secret="Paralysis">
         <floors>
           <part start="6" end="8" />
         </floors>
       </d>
-      <d difficulty="7" money="8" layout="2" terrain="30" shadows="0" camouflage="5" nature="175" secret="Cringing">
+      <d difficulty="7" money="8" layout="2" terrain="30" camouflage="5" nature="175" secret="Cringing">
         <floors>
           <part start="9" end="9" />
         </floors>
       </d>
-      <d difficulty="8" money="8" layout="2" terrain="30" shadows="0" camouflage="5" nature="175" secret="Cringing">
+      <d difficulty="8" money="8" layout="2" terrain="30" camouflage="5" nature="175" secret="Cringing">
         <floors>
           <part start="10" end="12" />
         </floors>
@@ -8461,17 +8461,17 @@
     </items>
     <traps />
     <data>
-      <d difficulty="7" money="8" layout="2" terrain="15" shadows="0" camouflage="10" nature="538" secret="Attack down 1 stage">
+      <d difficulty="7" money="8" layout="2" terrain="15" camouflage="10" nature="538" secret="Attack down 1 stage">
         <floors>
           <part start="1" end="10" />
         </floors>
       </d>
-      <d difficulty="8" money="8" layout="2" terrain="15" shadows="0" camouflage="10" nature="538" secret="Attack down 1 stage">
+      <d difficulty="8" money="8" layout="2" terrain="15" camouflage="10" nature="538" secret="Attack down 1 stage">
         <floors>
           <part start="11" end="15" />
         </floors>
       </d>
-      <d difficulty="8" money="8" layout="2" terrain="16" shadows="0" camouflage="10" nature="538" secret="Attack down 1 stage">
+      <d difficulty="8" money="8" layout="2" terrain="16" camouflage="10" nature="538" secret="Attack down 1 stage">
         <floors>
           <part start="16" end="30" />
         </floors>
@@ -8622,17 +8622,17 @@
     </items>
     <traps />
     <data>
-      <d difficulty="7" money="2" layout="2" terrain="1" shadows="0" camouflage="11" nature="220" secret="Poison">
+      <d difficulty="7" money="2" layout="2" terrain="1" camouflage="11" nature="220" secret="Poison">
         <floors>
           <part start="1" end="5" />
         </floors>
       </d>
-      <d difficulty="7" money="2" layout="2" terrain="10" shadows="0" camouflage="14" nature="299" secret="Paralysis">
+      <d difficulty="7" money="2" layout="2" terrain="10" camouflage="14" nature="299" secret="Paralysis">
         <floors>
           <part start="6" end="10" />
         </floors>
       </d>
-      <d difficulty="7" money="2" layout="2" terrain="11" shadows="0" camouflage="14" nature="504" secret="Confusion">
+      <d difficulty="7" money="2" layout="2" terrain="11" camouflage="14" nature="504" secret="Confusion">
         <floors>
           <part start="11" end="15" />
         </floors>
@@ -8793,22 +8793,22 @@
     </items>
     <traps />
     <data>
-      <d difficulty="7" money="2" layout="2" terrain="34" shadows="0" camouflage="5" nature="504" secret="Confusion">
+      <d difficulty="7" money="2" layout="2" terrain="34" camouflage="5" nature="504" secret="Confusion">
         <floors>
           <part start="1" end="9" />
         </floors>
       </d>
-      <d difficulty="8" money="2" layout="2" terrain="34" shadows="0" camouflage="5" nature="504" secret="Confusion">
+      <d difficulty="8" money="2" layout="2" terrain="34" camouflage="5" nature="504" secret="Confusion">
         <floors>
           <part start="10" end="10" />
         </floors>
       </d>
-      <d difficulty="8" money="2" layout="2" terrain="21" shadows="0" camouflage="5" nature="504" secret="Confusion">
+      <d difficulty="8" money="2" layout="2" terrain="21" camouflage="5" nature="504" secret="Confusion">
         <floors>
           <part start="11" end="15" />
         </floors>
       </d>
-      <d difficulty="8" money="5" layout="2" terrain="21" shadows="0" camouflage="5" nature="504" secret="Confusion">
+      <d difficulty="8" money="5" layout="2" terrain="21" camouflage="5" nature="504" secret="Confusion">
         <floors>
           <part start="16" end="20" />
         </floors>
@@ -8912,27 +8912,27 @@
     </items>
     <traps />
     <data>
-      <d difficulty="7" money="2" layout="2" terrain="15" shadows="0" camouflage="10" nature="538" secret="Attack down 1 stage">
+      <d difficulty="7" money="2" layout="2" terrain="15" camouflage="10" nature="538" secret="Attack down 1 stage">
         <floors>
           <part start="1" end="7" />
         </floors>
       </d>
-      <d difficulty="7" money="5" layout="2" terrain="15" shadows="0" camouflage="10" nature="538" secret="Attack down 1 stage">
+      <d difficulty="7" money="5" layout="2" terrain="15" camouflage="10" nature="538" secret="Attack down 1 stage">
         <floors>
           <part start="8" end="15" />
         </floors>
       </d>
-      <d difficulty="7" money="5" layout="2" terrain="16" shadows="0" camouflage="10" nature="538" secret="Attack down 1 stage">
+      <d difficulty="7" money="5" layout="2" terrain="16" camouflage="10" nature="538" secret="Attack down 1 stage">
         <floors>
           <part start="16" end="16" />
         </floors>
       </d>
-      <d difficulty="7" money="7" layout="2" terrain="16" shadows="0" camouflage="10" nature="538" secret="Attack down 1 stage">
+      <d difficulty="7" money="7" layout="2" terrain="16" camouflage="10" nature="538" secret="Attack down 1 stage">
         <floors>
           <part start="17" end="19" />
         </floors>
       </d>
-      <d difficulty="8" money="7" layout="2" terrain="16" shadows="0" camouflage="10" nature="538" secret="Attack down 1 stage">
+      <d difficulty="8" money="7" layout="2" terrain="16" camouflage="10" nature="538" secret="Attack down 1 stage">
         <floors>
           <part start="20" end="20" />
         </floors>
@@ -9097,32 +9097,32 @@
     </items>
     <traps />
     <data>
-      <d difficulty="7" money="7" layout="2" terrain="15" shadows="0" camouflage="10" nature="538" secret="Attack down 1 stage">
+      <d difficulty="7" money="7" layout="2" terrain="15" camouflage="10" nature="538" secret="Attack down 1 stage">
         <floors>
           <part start="1" end="11" />
         </floors>
       </d>
-      <d difficulty="7" money="12" layout="2" terrain="15" shadows="0" camouflage="10" nature="538" secret="Attack down 1 stage">
+      <d difficulty="7" money="12" layout="2" terrain="15" camouflage="10" nature="538" secret="Attack down 1 stage">
         <floors>
           <part start="12" end="15" />
         </floors>
       </d>
-      <d difficulty="7" money="12" layout="2" terrain="16" shadows="0" camouflage="10" nature="538" secret="Attack down 1 stage">
+      <d difficulty="7" money="12" layout="2" terrain="16" camouflage="10" nature="538" secret="Attack down 1 stage">
         <floors>
           <part start="16" end="19" />
         </floors>
       </d>
-      <d difficulty="8" money="12" layout="2" terrain="16" shadows="0" camouflage="10" nature="538" secret="Attack down 1 stage">
+      <d difficulty="8" money="12" layout="2" terrain="16" camouflage="10" nature="538" secret="Attack down 1 stage">
         <floors>
           <part start="20" end="26" />
         </floors>
       </d>
-      <d difficulty="8" money="25" layout="2" terrain="16" shadows="0" camouflage="10" nature="538" secret="Attack down 1 stage">
+      <d difficulty="8" money="25" layout="2" terrain="16" camouflage="10" nature="538" secret="Attack down 1 stage">
         <floors>
           <part start="27" end="29" />
         </floors>
       </d>
-      <d difficulty="9" money="25" layout="2" terrain="16" shadows="0" camouflage="10" nature="538" secret="Attack down 1 stage">
+      <d difficulty="9" money="25" layout="2" terrain="16" camouflage="10" nature="538" secret="Attack down 1 stage">
         <floors>
           <part start="30" end="30" />
         </floors>
@@ -9252,7 +9252,7 @@
     </items>
     <traps />
     <data>
-      <d difficulty="7" money="6" layout="2" terrain="54" shadows="0" camouflage="0" nature="299" secret="Paralysis">
+      <d difficulty="7" money="6" layout="2" terrain="54" camouflage="0" nature="299" secret="Paralysis">
         <floors>
           <part start="1" end="3" />
         </floors>
@@ -9506,52 +9506,52 @@
     </items>
     <traps />
     <data>
-      <d difficulty="7" money="8" layout="2" terrain="15" shadows="0" camouflage="10" nature="538" secret="Attack down 1 stage">
+      <d difficulty="7" money="8" layout="2" terrain="15" camouflage="10" nature="538" secret="Attack down 1 stage">
         <floors>
           <part start="1" end="15" />
         </floors>
       </d>
-      <d difficulty="7" money="8" layout="2" terrain="8" shadows="0" camouflage="0" nature="299" secret="Paralysis">
+      <d difficulty="7" money="8" layout="2" terrain="8" camouflage="0" nature="299" secret="Paralysis">
         <floors>
           <part start="16" end="19" />
         </floors>
       </d>
-      <d difficulty="8" money="8" layout="2" terrain="8" shadows="0" camouflage="0" nature="299" secret="Paralysis">
+      <d difficulty="8" money="8" layout="2" terrain="8" camouflage="0" nature="299" secret="Paralysis">
         <floors>
           <part start="20" end="29" />
         </floors>
       </d>
-      <d difficulty="9" money="8" layout="2" terrain="8" shadows="0" camouflage="0" nature="299" secret="Paralysis">
+      <d difficulty="9" money="8" layout="2" terrain="8" camouflage="0" nature="299" secret="Paralysis">
         <floors>
           <part start="30" end="30" />
         </floors>
       </d>
-      <d difficulty="9" money="12" layout="2" terrain="8" shadows="0" camouflage="0" nature="299" secret="Paralysis">
+      <d difficulty="9" money="12" layout="2" terrain="8" camouflage="0" nature="299" secret="Paralysis">
         <floors>
           <part start="31" end="32" />
         </floors>
       </d>
-      <d difficulty="9" money="12" layout="2" terrain="16" shadows="0" camouflage="10" nature="538" secret="Attack down 1 stage">
+      <d difficulty="9" money="12" layout="2" terrain="16" camouflage="10" nature="538" secret="Attack down 1 stage">
         <floors>
           <part start="33" end="35" />
         </floors>
       </d>
-      <d difficulty="10" money="12" layout="2" terrain="16" shadows="0" camouflage="10" nature="538" secret="Attack down 1 stage">
+      <d difficulty="10" money="12" layout="2" terrain="16" camouflage="10" nature="538" secret="Attack down 1 stage">
         <floors>
           <part start="36" end="59" />
         </floors>
       </d>
-      <d difficulty="11" money="12" layout="2" terrain="16" shadows="0" camouflage="10" nature="538" secret="Attack down 1 stage">
+      <d difficulty="11" money="12" layout="2" terrain="16" camouflage="10" nature="538" secret="Attack down 1 stage">
         <floors>
           <part start="60" end="69" />
         </floors>
       </d>
-      <d difficulty="11" money="12" layout="2" terrain="17" shadows="0" camouflage="5" nature="175" secret="Cringing">
+      <d difficulty="11" money="12" layout="2" terrain="17" camouflage="5" nature="175" secret="Cringing">
         <floors>
           <part start="70" end="74" />
         </floors>
       </d>
-      <d difficulty="12" money="12" layout="2" terrain="17" shadows="0" camouflage="5" nature="175" secret="Cringing">
+      <d difficulty="12" money="12" layout="2" terrain="17" camouflage="5" nature="175" secret="Cringing">
         <floors>
           <part start="75" end="75" />
         </floors>

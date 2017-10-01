@@ -35,16 +35,16 @@ public class PokemonSpecies
 	public PokemonSpecies(Element xml)
 	{
 		this.id = Integer.parseInt(xml.getAttributeValue("id"));
-		this.formID = xml.getAttribute("form-id") == null ? 0 : Integer.parseInt(xml.getAttributeValue("id"));
+		this.formID = XMLUtils.getAttribute(xml, "form-id", 0);
 		this.type1 = PokemonType.find(Integer.parseInt(xml.getAttributeValue("type1")));
 		this.type2 = xml.getAttribute("type2") == null ? null : PokemonType.find(Integer.parseInt(xml.getAttributeValue("type2")));
 		this.baseXP = Integer.parseInt(xml.getAttributeValue("base-xp"));
 		this.height = Float.parseFloat(xml.getAttributeValue("height"));
 		this.weight = Float.parseFloat(xml.getAttributeValue("weight"));
-		this.abilities = XMLUtils.readIntArray(xml.getChild("abilities"));
+		this.abilities = XMLUtils.readIntArrayAsList(xml.getChild("abilities"));
 		this.baseStats = new ArrayList<PokemonStats>();
 		this.learnset = new HashMap<Integer, ArrayList<Integer>>();
-		this.tms = XMLUtils.readIntArray(xml.getChild("tms"));
+		this.tms = XMLUtils.readIntArrayAsList(xml.getChild("tms"));
 		this.evolutions = new ArrayList<Evolution>();
 
 		if (xml.getChild("statline") != null)
@@ -77,7 +77,7 @@ public class PokemonSpecies
 			this.tms.add(Integer.parseInt(tm.getAttributeValue("id")));
 
 		if (xml.getChild("learnset") != null) for (Element level : xml.getChild("learnset").getChildren())
-			this.learnset.put(Integer.parseInt(level.getAttributeValue("l")), XMLUtils.readIntArray(level));
+			this.learnset.put(Integer.parseInt(level.getAttributeValue("l")), XMLUtils.readIntArrayAsList(level));
 	}
 
 	public PokemonSpecies(int id, int formID, PokemonType type1, PokemonType type2, int baseXP, ArrayList<PokemonStats> baseStats, float height, float weight,
@@ -209,7 +209,7 @@ public class PokemonSpecies
 	{
 		Element root = new Element("pokemon");
 		root.setAttribute("id", Integer.toString(this.id));
-		if (this.formID != 0) root.setAttribute("form-id", Integer.toString(this.formID));
+		XMLUtils.setAttribute(root, "form-id", this.formID, 0);
 		root.setAttribute("type1", Integer.toString(this.type1.id));
 		if (this.type2 != null) root.setAttribute("type2", Integer.toString(this.type2.id));
 		root.setAttribute("base-xp", Integer.toString(this.baseXP));

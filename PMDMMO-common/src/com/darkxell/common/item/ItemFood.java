@@ -3,6 +3,7 @@ package com.darkxell.common.item;
 import org.jdom2.Element;
 
 import com.darkxell.common.util.Message;
+import com.darkxell.common.util.XMLUtils;
 
 /** An Item that restores belly when eaten. */
 public class ItemFood extends Item
@@ -18,9 +19,9 @@ public class ItemFood extends Item
 	public ItemFood(Element xml)
 	{
 		super(xml);
-		this.food = xml.getAttribute("food") == null ? 0 : Integer.parseInt(xml.getAttributeValue("food"));
-		this.bellyIfFull = xml.getAttribute("full") == null ? 0 : Integer.parseInt(xml.getAttributeValue("full"));
-		this.belly = xml.getAttribute("belly") == null ? 0 : Integer.parseInt(xml.getAttributeValue("belly"));
+		this.food = XMLUtils.getAttribute(xml, "food", 0);
+		this.bellyIfFull = XMLUtils.getAttribute(xml, "full", 0);
+		this.belly = XMLUtils.getAttribute(xml, "belly", 0);
 	}
 
 	public ItemFood(int id, int price, int sell, int sprite, boolean isStackable, int food, int bellyIfFull, int belly)
@@ -45,9 +46,9 @@ public class ItemFood extends Item
 	public Element toXML()
 	{
 		Element root = super.toXML();
-		if (this.food != 0) root.setAttribute("food", Integer.toString(this.food));
-		if (this.bellyIfFull != 0) root.setAttribute("full", Integer.toString(this.bellyIfFull));
-		if (this.belly != 0) root.setAttribute("belly", Integer.toString(this.belly));
+		XMLUtils.setAttribute(root, "food", this.food, 0);
+		XMLUtils.setAttribute(root, "full", this.bellyIfFull, 0);
+		XMLUtils.setAttribute(root, "belly", this.belly, 0);
 		return root;
 	}
 

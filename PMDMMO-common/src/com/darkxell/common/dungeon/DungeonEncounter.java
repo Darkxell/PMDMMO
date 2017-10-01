@@ -4,6 +4,7 @@ import org.jdom2.Element;
 
 import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.pokemon.PokemonSpecies;
+import com.darkxell.common.util.XMLUtils;
 
 /** Describes how a Pokémon appears in a Dungeon. */
 public class DungeonEncounter
@@ -23,7 +24,7 @@ public class DungeonEncounter
 	{
 		this.id = Integer.parseInt(xml.getAttributeValue("id"));
 		this.level = Integer.parseInt(xml.getAttributeValue("level"));
-		this.weight = xml.getAttribute("weight") == null ? 1 : Integer.parseInt(xml.getAttributeValue("weight"));
+		this.weight = XMLUtils.getAttribute(xml, "weight", 1);
 		this.floors = new FloorSet(xml.getChild(FloorSet.XML_ROOT));
 	}
 

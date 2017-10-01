@@ -55,59 +55,59 @@
   <item id="76" type="Gummi" price="800" sell="50" g-type="15" />
   <item id="77" type="Gummi" price="800" sell="50" g-type="16" />
   <item id="78" type="Gummi" price="800" sell="50" g-type="17" />
-  <item id="81" type="Orb" price="0" sell="50" sprite="57"/>
-  <item id="82" type="Orb" price="300" sell="150" sprite="57"/>
-  <item id="83" type="Orb" price="300" sell="150" sprite="57"/>
-  <item id="84" type="Orb" price="300" sell="150" sprite="57"/>
-  <item id="85" type="Orb" price="300" sell="150" sprite="57"/>
-  <item id="86" type="EscapeOrb" price="300" sell="150" sprite="57"/>
-  <item id="87" type="Orb" price="300" sell="150" sprite="57"/>
-  <item id="88" type="Orb" price="300" sell="150" sprite="57"/>
-  <item id="89" type="Orb" price="300" sell="150" sprite="57"/>
-  <item id="90" type="Orb" price="300" sell="150" sprite="57"/>
-  <item id="91" type="Orb" price="300" sell="150" sprite="57"/>
-  <item id="92" type="Orb" price="300" sell="150" sprite="57"/>
-  <item id="93" type="Orb" price="300" sell="150" sprite="57"/>
-  <item id="94" type="Orb" price="300" sell="150" sprite="57"/>
-  <item id="95" type="Orb" price="300" sell="150" sprite="57"/>
-  <item id="96" type="Orb" price="300" sell="150" sprite="57"/>
-  <item id="97" type="Orb" price="300" sell="150" sprite="57"/>
-  <item id="98" type="Orb" price="300" sell="150" sprite="57"/>
-  <item id="99" type="Orb" price="0" sell="150" sprite="57"/>
-  <item id="100" type="Orb" price="300" sell="150" sprite="57"/>
-  <item id="101" type="Orb" price="300" sell="150" sprite="57"/>
-  <item id="102" type="Orb" price="300" sell="150" sprite="57"/>
-  <item id="103" type="Orb" price="300" sell="150" sprite="57"/>
-  <item id="104" type="Orb" price="0" sell="150" sprite="57"/>
-  <item id="105" type="Orb" price="300" sell="150" sprite="57"/>
-  <item id="106" type="Orb" price="300" sell="150" sprite="57"/>
-  <item id="107" type="Orb" price="300" sell="150" sprite="57"/>
-  <item id="108" type="Orb" price="300" sell="150" sprite="57"/>
-  <item id="109" type="Orb" price="300" sell="150" sprite="57"/>
-  <item id="110" type="Orb" price="0" sell="150" sprite="57"/>
-  <item id="111" type="Orb" price="500" sell="250" sprite="57"/>
-  <item id="112" type="Orb" price="300" sell="150" sprite="57"/>
-  <item id="113" type="Orb" price="300" sell="250" sprite="57"/>
-  <item id="114" type="Orb" price="300" sell="150" sprite="57"/>
-  <item id="115" type="Orb" price="300" sell="150" sprite="57"/>
-  <item id="116" type="Orb" price="300" sell="150" sprite="57"/>
-  <item id="117" type="Orb" price="300" sell="150" sprite="57"/>
-  <item id="118" type="Orb" price="300" sell="150" sprite="57"/>
-  <item id="119" type="Orb" price="300" sell="150" sprite="57"/>
-  <item id="120" type="Orb" price="300" sell="150" sprite="57"/>
-  <item id="121" type="Orb" price="300" sell="150" sprite="57"/>
-  <item id="122" type="Orb" price="300" sell="150" sprite="57"/>
-  <item id="123" type="Orb" price="300" sell="150" sprite="57"/>
-  <item id="124" type="Orb" price="300" sell="150" sprite="57"/>
-  <item id="125" type="Orb" price="300" sell="150" sprite="57"/>
-  <item id="126" type="Orb" price="0" sell="150" sprite="57"/>
-  <item id="127" type="Orb" price="300" sell="150" sprite="57"/>
-  <item id="128" type="Orb" price="300" sell="150" sprite="57"/>
-  <item id="129" type="Orb" price="300" sell="150" sprite="57"/>
-  <item id="130" type="Orb" price="300" sell="150" sprite="57"/>
-  <item id="131" type="Orb" price="300" sell="150" sprite="57"/>
-  <item id="132" type="Orb" price="300" sell="150" sprite="57"/>
-  <item id="133" type="Orb" price="300" sell="150" sprite="57"/>
+  <item id="81" type="Orb" price="0" sell="50" sprite="57" />
+  <item id="82" type="Orb" price="300" sell="150" sprite="57" />
+  <item id="83" type="Orb" price="300" sell="150" sprite="57" />
+  <item id="84" type="Orb" price="300" sell="150" sprite="57" />
+  <item id="85" type="Orb" price="300" sell="150" sprite="57" />
+  <item id="86" type="EscapeOrb" price="300" sell="150" sprite="57" />
+  <item id="87" type="Orb" price="300" sell="150" sprite="57" />
+  <item id="88" type="Orb" price="300" sell="150" sprite="57" />
+  <item id="89" type="Orb" price="300" sell="150" sprite="57" />
+  <item id="90" type="Orb" price="300" sell="150" sprite="57" />
+  <item id="91" type="Orb" price="300" sell="150" sprite="57" />
+  <item id="92" type="Orb" price="300" sell="150" sprite="57" />
+  <item id="93" type="Orb" price="300" sell="150" sprite="57" />
+  <item id="94" type="Orb" price="300" sell="150" sprite="57" />
+  <item id="95" type="Orb" price="300" sell="150" sprite="57" />
+  <item id="96" type="Orb" price="300" sell="150" sprite="57" />
+  <item id="97" type="Orb" price="300" sell="150" sprite="57" />
+  <item id="98" type="Orb" price="300" sell="150" sprite="57" />
+  <item id="99" type="Orb" price="0" sell="150" sprite="57" />
+  <item id="100" type="Orb" price="300" sell="150" sprite="57" />
+  <item id="101" type="Orb" price="300" sell="150" sprite="57" />
+  <item id="102" type="Orb" price="300" sell="150" sprite="57" />
+  <item id="103" type="Orb" price="300" sell="150" sprite="57" />
+  <item id="104" type="Orb" price="0" sell="150" sprite="57" />
+  <item id="105" type="Orb" price="300" sell="150" sprite="57" />
+  <item id="106" type="Orb" price="300" sell="150" sprite="57" />
+  <item id="107" type="Orb" price="300" sell="150" sprite="57" />
+  <item id="108" type="Orb" price="300" sell="150" sprite="57" />
+  <item id="109" type="Orb" price="300" sell="150" sprite="57" />
+  <item id="110" type="Orb" price="0" sell="150" sprite="57" />
+  <item id="111" type="Orb" price="500" sell="250" sprite="57" />
+  <item id="112" type="Orb" price="300" sell="150" sprite="57" />
+  <item id="113" type="Orb" price="300" sell="250" sprite="57" />
+  <item id="114" type="Orb" price="300" sell="150" sprite="57" />
+  <item id="115" type="Orb" price="300" sell="150" sprite="57" />
+  <item id="116" type="Orb" price="300" sell="150" sprite="57" />
+  <item id="117" type="Orb" price="300" sell="150" sprite="57" />
+  <item id="118" type="Orb" price="300" sell="150" sprite="57" />
+  <item id="119" type="Orb" price="300" sell="150" sprite="57" />
+  <item id="120" type="Orb" price="300" sell="150" sprite="57" />
+  <item id="121" type="Orb" price="300" sell="150" sprite="57" />
+  <item id="122" type="Orb" price="300" sell="150" sprite="57" />
+  <item id="123" type="Orb" price="300" sell="150" sprite="57" />
+  <item id="124" type="Orb" price="300" sell="150" sprite="57" />
+  <item id="125" type="Orb" price="300" sell="150" sprite="57" />
+  <item id="126" type="Orb" price="0" sell="150" sprite="57" />
+  <item id="127" type="Orb" price="300" sell="150" sprite="57" />
+  <item id="128" type="Orb" price="300" sell="150" sprite="57" />
+  <item id="129" type="Orb" price="300" sell="150" sprite="57" />
+  <item id="130" type="Orb" price="300" sell="150" sprite="57" />
+  <item id="131" type="Orb" price="300" sell="150" sprite="57" />
+  <item id="132" type="Orb" price="300" sell="150" sprite="57" />
+  <item id="133" type="Orb" price="300" sell="150" sprite="57" />
   <item id="151" type="Elixir" price="25" sell="5" sprite="58" food="5" pp="10" />
   <item id="152" type="Elixir" price="250" sell="100" sprite="58" food="5" pp="100" />
   <item id="153" type="Drink" price="5000" sell="5" sprite="58" food="5" stat="0" />

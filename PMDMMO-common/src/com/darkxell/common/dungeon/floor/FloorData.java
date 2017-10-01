@@ -7,6 +7,7 @@ import com.darkxell.common.dungeon.floor.layout.Layout;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.PokemonType;
+import com.darkxell.common.util.XMLUtils;
 
 public class FloorData
 {
@@ -40,8 +41,8 @@ public class FloorData
 		this.baseMoney = Integer.parseInt(xml.getAttributeValue("money"));
 		this.layout = Integer.parseInt(xml.getAttributeValue("layout"));
 		this.terrainSpriteset = Integer.parseInt(xml.getAttributeValue("terrain"));
-		this.shadows = xml.getAttribute("shadows") == null ? 0 : Byte.parseByte(xml.getAttributeValue("shadows"));
-		this.camouflageType = PokemonType.find(xml.getAttribute("camouflage") == null ? 0 : Integer.parseInt(xml.getAttributeValue("camouflage")));
+		this.shadows = XMLUtils.getAttribute(xml, "shadows", (byte) 0);
+		this.camouflageType = PokemonType.find(XMLUtils.getAttribute(xml, "camouflage", 0));
 		this.naturePower = Integer.parseInt(xml.getAttributeValue("nature"));
 		this.secretPower = xml.getAttributeValue("secret");
 	}
@@ -78,7 +79,7 @@ public class FloorData
 		xml.setAttribute("money", Integer.toString(this.baseMoney));
 		xml.setAttribute("layout", Integer.toString(this.layout));
 		xml.setAttribute("terrain", Integer.toString(this.terrainSpriteset));
-		xml.setAttribute("shadows", Byte.toString(this.shadows));
+		XMLUtils.setAttribute(xml, "shadows", this.shadows, 0);
 		xml.setAttribute("camouflage", Integer.toString(this.camouflageType.id));
 		xml.setAttribute("nature", Integer.toString(this.naturePower));
 		xml.setAttribute("secret", this.secretPower);

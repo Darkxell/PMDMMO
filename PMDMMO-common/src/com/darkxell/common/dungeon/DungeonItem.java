@@ -1,6 +1,5 @@
 package com.darkxell.common.dungeon;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 import org.jdom2.Element;
@@ -26,14 +25,8 @@ public class DungeonItem
 	{
 		this.weight = Integer.parseInt(xml.getAttributeValue("weight"));
 		this.floors = new FloorSet(xml.getChild(FloorSet.XML_ROOT));
-		ArrayList<Integer> i = XMLUtils.readIntArray(xml.getChild("ids")), c = XMLUtils.readIntArray(xml.getChild("chances"));
-		this.items = new int[i.size()];
-		this.chances = new int[i.size()];
-		for (int j = 0; j < this.chances.length; j++)
-		{
-			this.items[j] = i.get(j);
-			this.chances[j] = c.get(j);
-		}
+		this.items = XMLUtils.readIntArray(xml.getChild("ids"));
+		this.chances = XMLUtils.readIntArray(xml.getChild("chances"));
 	}
 
 	public DungeonItem(FloorSet floors, int weight, int[] items, int[] chances)
