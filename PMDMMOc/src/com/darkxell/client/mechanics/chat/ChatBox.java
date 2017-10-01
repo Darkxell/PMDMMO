@@ -47,9 +47,9 @@ public class ChatBox {
 			public void run() {
 				long timePerUpdate = 1000 / 60;
 				Logger.instance().debug("Started chat updater thread!");
+				endpoint.connect();
 				while (Launcher.isRunning) {
 					update();
-					endpoint.connect();
 					try {
 						Thread.sleep(timePerUpdate);
 					} catch (InterruptedException e) {
