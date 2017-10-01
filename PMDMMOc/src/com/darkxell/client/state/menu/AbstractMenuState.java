@@ -79,7 +79,7 @@ public abstract class AbstractMenuState extends AbstractState
 		{
 			int width = 0;
 			for (MenuOption option : this.options)
-				width = Math.max(width, TextRenderer.instance.width(option.name.toString()));
+				width = Math.max(width, TextRenderer.instance.width(option.name));
 			width = Math.max(width, TextRenderer.instance.width(this.name) + MenuHudSpriteset.instance.cornerSize.width * 2);
 			return width;
 		}

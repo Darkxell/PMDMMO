@@ -8,8 +8,16 @@ public class Palette {
 	public static final Color CHAT_GLOBAL = new Color(97, 255, 58);
 	public static final Color CHAT_GUILD = new Color(255, 170, 0);
 	public static final Color CHAT_PRIVATE = new Color(197, 73, 55);
+
 	public static final Color TRANSPARENT_GRAY = new Color(0, 0, 0, 120);
-	
+
+
+	public static final Color FONT_BLUE = new Color(0, 255, 255);
+	public static final Color FONT_GREEN = new Color(90, 255, 90);
+	public static final Color FONT_RED = new Color(255, 132, 90);
+	public static final Color FONT_YELLOW = new Color(255, 255, 0);
+
+
 	public static Color getColorFromHexa(String hexa) {
 		return Color.decode(hexa);
 	}

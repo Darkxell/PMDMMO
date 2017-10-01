@@ -6,6 +6,7 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import com.darkxell.client.renderers.TextRenderer;
+import com.darkxell.client.resources.Palette;
 import com.darkxell.client.resources.images.MenuHudSpriteset;
 import com.darkxell.client.state.menu.AbstractMenuState;
 import com.darkxell.client.state.menu.AbstractMenuState.MenuOption;
@@ -51,8 +52,11 @@ public class MoveSelectionWindow extends MenuWindow
 			MenuOption[] options = this.menu.currentTab().options();
 			for (MenuOption option : options)
 			{
+				if (((MoveMenuOption) option).move.getPP() == 0) TextRenderer.instance.setColor(Palette.FONT_RED);
+				else TextRenderer.instance.setColor(Palette.FONT_GREEN);
 				TextRenderer.instance.render(g, option.name, x, y);
 				TextRenderer.instance.render(g, ((MoveMenuOption) option).move.getPP() + "/" + ((MoveMenuOption) option).move.getMaxPP(), ppX, y);
+				TextRenderer.instance.setColor(null);
 
 				if ((this.cursor > 9 || !this.menu.isMain()) && this.menu.currentOption() == option) g.drawImage(this.menu.isMain() ? selectionArrow
 						: MenuHudSpriteset.instance.selectedArrow(), x - selectionArrow.getWidth() - 4,
