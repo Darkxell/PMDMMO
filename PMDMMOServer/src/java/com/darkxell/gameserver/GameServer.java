@@ -3,31 +3,27 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.darkxell.chatserver;
+package com.darkxell.gameserver;
 
-import java.io.StringReader;
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
 
 /**
  *
  * @author Darkxell
  */
 @ApplicationScoped
-@ServerEndpoint("/chat")
-public class ChatWebsocketServer {
+@ServerEndpoint("/game")
+public class GameServer {
     
-    @Inject
-    private DeviceSessionHandler sessionHandler;
+     @Inject
+    private GameSessionHandler sessionHandler;
     
     @OnOpen
         public void open(Session session) {
@@ -41,13 +37,13 @@ public class ChatWebsocketServer {
 
     @OnError
     public void onError(Throwable error) {
-        System.err.println("Chat websocket error :");
+        System.err.println("Game websocket error :");
         error.printStackTrace();
     }
 
      @OnMessage
     public void handleMessage(String message, Session session) {
-        try (JsonReader reader = Json.createReader(new StringReader(message))) {
+        /*try (JsonReader reader = Json.createReader(new StringReader(message))) {
             JsonObject jsonMessage = reader.readObject();
             if ("message".equals(jsonMessage.getString("action"))) {
                 sessionHandler.sendToAllConnectedSessions(jsonMessage);
@@ -55,7 +51,7 @@ public class ChatWebsocketServer {
         } catch(Exception e){
             System.out.println(message);
             e.printStackTrace();
-        }
+        }*/
     }
     
 }
