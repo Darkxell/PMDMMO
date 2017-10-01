@@ -23,7 +23,7 @@ public class CommonDungeonTileset extends AbstractDungeonTileset
 
 	public BufferedImage rescue()
 	{
-		return this.tileAt(0, 1);
+		return this.tileAt(2, 0);
 	}
 
 	public BufferedImage shop()
@@ -42,7 +42,7 @@ public class CommonDungeonTileset extends AbstractDungeonTileset
 	 * @return A Trap tile. */
 	public BufferedImage trap(int id)
 	{
-		int x = id + 7, y = 0;
+		int x = id + 6, y = 0;
 		while (x > 5)
 		{
 			x -= 6;

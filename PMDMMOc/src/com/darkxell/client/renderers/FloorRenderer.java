@@ -94,8 +94,6 @@ public class FloorRenderer {
 			sprite = CommonDungeonTileset.INSTANCE.trap(tile.trap.id);
 		else if (tile.type() == TileType.STAIR)
 			sprite = CommonDungeonTileset.INSTANCE.stairs(this.floor.dungeon.dungeon().direction);
-		else if (tile.type() == TileType.WONDER_TILE)
-			sprite = CommonDungeonTileset.INSTANCE.wonderTile();
 		else if (tile.type() == TileType.WARP_ZONE)
 			sprite = CommonDungeonTileset.INSTANCE.warp();
 		else

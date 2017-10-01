@@ -4,7 +4,9 @@ import java.util.Random;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Room;
+import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
+import com.darkxell.common.trap.TrapRegistry;
 
 /** Represents a Floor's layout. */
 public abstract class Layout {
@@ -69,10 +71,12 @@ public abstract class Layout {
 	/** Places Wonder Tiles. */
 	protected void placeWonderTiles() {
 		int wonder = 2; // Number of wonder tiles to place
-		wonder += this.random.nextInt(3) - 2; // wonder =
-												// random[wonder-1;wonder+1]
-		for (int i = 0; i <= wonder; ++i)
-			this.floor.randomRoom(this.random).randomTile(this.random, TileType.GROUND).setType(TileType.WONDER_TILE);
+		wonder += this.random.nextInt(3) - 2; // wonder = random[wonder-1;wonder+1]
+		for (int i = 0; i <= wonder; ++i) {
+			Tile t = this.floor.randomRoom(this.random).randomTile(this.random, TileType.GROUND);
+			t.trap = TrapRegistry.WONDER_TILE;
+			t.trapRevealed = true;
+		}
 	}
 
 	/** Places traps. */

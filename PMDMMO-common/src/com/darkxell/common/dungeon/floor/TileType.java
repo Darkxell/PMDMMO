@@ -14,9 +14,8 @@ public enum TileType
 	STAIR(6, 'S'),
 	WALL(1, 'M'),
 	WALL_END(2, 'm'),
-	WARP_ZONE(9, 'x'),
-	WATER(3, 'w'),
-	WONDER_TILE(7, 'W');
+	WARP_ZONE(7, 'x'),
+	WATER(3, 'w');
 
 	@SuppressWarnings("unchecked")
 	private static ArrayList<TileType>[] tileGroups = new ArrayList[]
@@ -28,7 +27,6 @@ public enum TileType
 
 		tileGroups[1].add(GROUND);
 		tileGroups[1].add(STAIR);
-		tileGroups[1].add(WONDER_TILE);
 		tileGroups[1].add(WARP_ZONE);
 	}
 
@@ -64,7 +62,7 @@ public enum TileType
 		if (pokemon.pokemon.species.isType(PokemonType.WATER) && this == WATER) return true;
 		if (pokemon.pokemon.species.isType(PokemonType.FIRE) && this == LAVA) return true;
 		if (pokemon.pokemon.species.isType(PokemonType.FLYING) && this == AIR) return true;
-		return this == GROUND || this == STAIR || this == WONDER_TILE;
+		return this == GROUND || this == STAIR;
 	}
 
 	/** @return True if this Tile connects to the input Tile. */
