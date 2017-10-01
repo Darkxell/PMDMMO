@@ -130,11 +130,15 @@ public class ChatBox {
 				i -= INTERLINE_SMALL * linesammount;
 			}
 		}
-		
+
 		if (this.endpoint.connectionStatus() != ChatClientEndpoint.CONNECTED) {
+			g.setColor(Palette.TRANSPARENT_GRAY);
+			g.fillRect(0, headerheight, width, 30);
 			g.setColor(Color.RED);
-			if (this.endpoint.connectionStatus() == ChatClientEndpoint.CONNECTING) g.drawString("Connecting to chat...", 10, height - footerheight - 20);
-			else if (this.endpoint.connectionStatus() == ChatClientEndpoint.FAILED) g.drawString("[ERROR] Connection failed.", 10, height - footerheight - 20);
+			if (this.endpoint.connectionStatus() == ChatClientEndpoint.CONNECTING)
+				g.drawString("Connecting to chat...", 10, headerheight + 20);
+			else if (this.endpoint.connectionStatus() == ChatClientEndpoint.FAILED)
+				g.drawString("Connection failed.", 10, headerheight + 20);
 		}
 	}
 
@@ -156,6 +160,7 @@ public class ChatBox {
 			messages.add(new ChatMessage("Error", "Message not sent: no active connection to the chat server.",
 					Color.RED, Color.RED));
 			Logger.e("Could not send message, endpoint does not exist.");
+			this.textfield.clear();
 		}
 	}
 

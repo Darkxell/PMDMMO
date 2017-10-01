@@ -1,17 +1,16 @@
 package com.darkxell.client.state.map;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.TextRenderer;
+import com.darkxell.client.resources.Palette;
 import com.darkxell.client.resources.images.MapResources;
 import com.darkxell.common.util.Message;
 
 public class LocalMap extends AbstractDisplayMap {
 
 	public LOCALMAPLOCATION currentlocation = LOCALMAPLOCATION.BASE;
-	private Color alpha = new Color(0, 0, 0, 120);
 
 	@Override
 	public void render(Graphics2D g, int width, int height) {
@@ -22,7 +21,7 @@ public class LocalMap extends AbstractDisplayMap {
 		for (LOCALMAPLOCATION loc : LOCALMAPLOCATION.values())
 			g2.drawImage(currentlocation == loc ? MapResources.PIN_RED : MapResources.PIN_YELLOW, offsetx + loc.x,
 					offsety + loc.y, null);
-		g2.setColor(alpha);
+		g2.setColor(Palette.TRANSPARENT_GRAY);
 		g2.fillRect(0, this.canvas.getHeight() - 20, this.canvas.getWidth(), 20);
 		TextRenderer.instance.render(g2, currentlocation.displayname.toString(),
 				this.canvas.getWidth() / 2 - TextRenderer.instance.width(currentlocation.displayname) / 2,

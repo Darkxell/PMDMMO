@@ -56,7 +56,6 @@ public class ChatClientEndpoint {
 	public void onOpen(Session userSession) {
 		Logger.i("Chat connected to the server sucessfully.");
 		this.connectionStatus = CONNECTED;
-		this.holder.messages.add(new ChatMessage("", "Connected!", Color.GREEN, Color.GREEN, "INFO", Color.GREEN));
 		this.userSession = userSession;
 	}
 
