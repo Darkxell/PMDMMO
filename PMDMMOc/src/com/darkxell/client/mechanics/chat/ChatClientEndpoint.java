@@ -1,5 +1,6 @@
 package com.darkxell.client.mechanics.chat;
 
+import java.awt.Color;
 import java.net.URI;
 
 import javax.websocket.ClientEndpoint;
@@ -17,18 +18,32 @@ import com.eclipsesource.json.JsonValue;
 
 @ClientEndpoint
 public class ChatClientEndpoint {
+	
+	public static final byte CONNECTING = 0, CONNECTED = 1, FAILED = 2;
 
 	Session userSession = null;
 	private ChatBox holder;
+	private final URI endpointURI;
+	private byte connectionStatus = CONNECTING;
 
 	public ChatClientEndpoint(URI endpointURI, ChatBox parent) {
 		this.holder = parent;
+		this.endpointURI = endpointURI;
+	}
+	
+	public void connect() {
 		try {
 			WebSocketContainer container = ContainerProvider.getWebSocketContainer();
-			container.connectToServer(this, endpointURI);
+			container.connectToServer(this, this.endpointURI);
 		} catch (Exception e) {
 			e.printStackTrace();
+			this.connectionStatus = FAILED;
+			this.holder.messages.add(new ChatMessage("", "Connection to the server failed.", Color.RED, Color.RED, "ERROR", Color.RED));
 		}
+	}
+	
+	public byte connectionStatus() {
+		return this.connectionStatus;
 	}
 
 	/**
@@ -40,6 +55,8 @@ public class ChatClientEndpoint {
 	@OnOpen
 	public void onOpen(Session userSession) {
 		Logger.i("Chat connected to the server sucessfully.");
+		this.connectionStatus = CONNECTED;
+		this.holder.messages.add(new ChatMessage("", "Connected!", Color.GREEN, Color.GREEN, "INFO", Color.GREEN));
 		this.userSession = userSession;
 	}
 
@@ -54,6 +71,7 @@ public class ChatClientEndpoint {
 	@OnClose
 	public void onClose(Session userSession, CloseReason reason) {
 		Logger.i("Chat socket connection closed.");
+		this.connectionStatus = FAILED;
 		this.userSession = null;
 	}
 

@@ -33,15 +33,15 @@ public class ChatBox {
 	 * own thread and connection to the server when created.
 	 */
 	public ChatBox() {
+		this.textfield = new CustomTextfield();
 		try {
 			String loc = "ws://" + ClientSettings.getSetting(ClientSettings.SERVER_ADDRESS) + "chat";
 			Logger.i("Started chat endpoint creation at address : " + loc);
 			URI servwslocation = new URI(loc);
-			this.endpoint = new ChatClientEndpoint(servwslocation, this);
+			endpoint = new ChatClientEndpoint(servwslocation, this);
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}
-		this.textfield = new CustomTextfield();
 		this.thread = new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -49,6 +49,7 @@ public class ChatBox {
 				Logger.instance().debug("Started chat updater thread!");
 				while (Launcher.isRunning) {
 					update();
+					endpoint.connect();
 					try {
 						Thread.sleep(timePerUpdate);
 					} catch (InterruptedException e) {
@@ -127,6 +128,11 @@ public class ChatBox {
 				i -= INTERLINE_SMALL * linesammount;
 			}
 		}
+		
+		if (this.endpoint.connectionStatus() == ChatClientEndpoint.CONNECTING) {
+			g.setColor(Color.RED);
+			g.drawString("Connecting to chat...", 10, height - footerheight - 20);
+		}
 	}
 
 	private void update() {
@@ -135,7 +141,7 @@ public class ChatBox {
 	}
 
 	public void send() {
-		if (this.endpoint != null) {
+		if (this.endpoint != null && this.endpoint.connectionStatus() == ChatClientEndpoint.CONNECTED) {
 			JsonObject mess = new JsonObject().add("action", "message").add("tag", "DEV")
 					.add("sender", ClientSettings.getSetting(ClientSettings.LOGIN))
 					.add("message", this.textfield.getContent()).add("tagcolor", Palette.getHexaFromClor(Color.RED))
