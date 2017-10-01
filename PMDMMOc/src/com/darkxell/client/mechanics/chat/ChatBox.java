@@ -98,6 +98,7 @@ public class ChatBox {
 			int taglength = g.getFontMetrics().stringWidth("[" + m.tag + "]"),
 					messagelength = g.getFontMetrics().stringWidth(m.sender + " : " + m.message);
 			if (taglength + messagelength + 3 < width - 10) {
+				// if fits in one line
 				if (!m.tag.equals("")) {
 					g.setColor(m.tagColor);
 					g.drawString("[" + m.tag + "]", 10, i);
@@ -107,6 +108,7 @@ public class ChatBox {
 				g.setColor(m.messageColor);
 				g.drawString(m.message, 13 + taglength + g.getFontMetrics().stringWidth(m.sender + " : "), i);
 			} else {
+				// if takes multiple lines
 				int letterx = taglength + 13, linesammount = (taglength + messagelength + 3) / (width - 10);
 				char[] completemessage = (m.sender + " : " + m.message).toCharArray();
 				i -= INTERLINE_SMALL * linesammount;
@@ -116,7 +118,7 @@ public class ChatBox {
 				}
 				g.setColor(m.senderColor);
 				for (int j = 0; j < completemessage.length; j++) {
-					if (j == m.tag.length() + 3)
+					if (j == m.sender.length() + 3)
 						g.setColor(m.messageColor);
 					g.drawString(completemessage[j] + "", letterx, i);
 					letterx += g.getFontMetrics().stringWidth(completemessage[j] + "");
