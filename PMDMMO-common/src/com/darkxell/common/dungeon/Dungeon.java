@@ -27,10 +27,16 @@ public class Dungeon
 	public final int id;
 	/** Lists the Items found in this Dungeon. */
 	private ArrayList<DungeonItem> items;
-	/** The chance of a Room to be a Monster House in this Dungeon. */
-	public final double monsterHouseChance;
+	/** ID of the Dungeon this Dungeon leads to (e.g. Mt. Blaze to Mt. Blaze Peak). -1 if no leading Dungeon. */
+	public final int linkedTo;
 	/** Lists the Pokémon found in this Dungeon. */
 	private ArrayList<DungeonEncounter> pokemon;
+	/** True if Pokémon from this Dungeon can be recruited. */
+	public final boolean recruitsAllowed;
+	/** Lists the Items found in this Dungeon's shops. */
+	private ArrayList<DungeonItem> shopItems;
+	/** The number of turns to spend on a single floor before being kicked. */
+	public final int timeLimit;
 	/** Number of Items the entering team is allowed to carry. -1 for no limit. */
 	// public final int teamItems;
 	/** Level the entering team is set to. -1 for no change. */
@@ -47,7 +53,9 @@ public class Dungeon
 		this.id = Integer.parseInt(xml.getAttributeValue("id"));
 		this.floorCount = Integer.parseInt(xml.getAttributeValue("floors"));
 		this.direction = XMLUtils.getAttribute(xml, "down", false);
-		this.monsterHouseChance = XMLUtils.getAttribute(xml, "mhouse", 0d);
+		this.recruitsAllowed = XMLUtils.getAttribute(xml, "recruits", true);
+		this.timeLimit = XMLUtils.getAttribute(xml, "limit", 2000);
+		this.linkedTo = XMLUtils.getAttribute(xml, "linked", -1);
 		/* this.teamItems = xml.getAttribute("t-items") == null ? -1 : Integer.parseInt(xml.getAttributeValue("t-items")); this.teamLevel = xml.getAttribute("t-level") == null ? -1 : Integer.parseInt(xml.getAttributeValue("t-level")); this.teamMembers = xml.getAttribute("t-members") == null ? 4 :
 		 * Integer.parseInt(xml.getAttributeValue("t-members")); this.teamMoney = xml.getAttribute("t-money") == null ? -1 : Integer.parseInt(xml.getAttributeValue("t-money")); */
 
@@ -59,6 +67,10 @@ public class Dungeon
 		for (Element item : xml.getChild("items").getChildren(DungeonItem.XML_ROOT))
 			this.items.add(new DungeonItem(item));
 
+		this.shopItems = new ArrayList<DungeonItem>();
+		if (xml.getChild("shops") != null) for (Element item : xml.getChild("shops").getChildren(DungeonItem.XML_ROOT))
+			this.shopItems.add(new DungeonItem(item));
+
 		this.traps = new ArrayList<DungeonTrap>();
 		for (Element trap : xml.getChild("traps").getChildren(DungeonTrap.XML_ROOT))
 			this.traps.add(new DungeonTrap(trap));
@@ -68,13 +80,15 @@ public class Dungeon
 			this.floorData.add(new FloorData(data));
 	}
 
-	public Dungeon(int id, int floorCount, boolean direction, double monsterHouseChance, // int teamItems, int teamLevel, int teamMoney,int teamMembers,
+	public Dungeon(int id, int floorCount, boolean direction, double monsterHouseChance, boolean recruits, int timeLimit, int linkedTo, // int teamItems, int teamLevel, int teamMoney,int teamMembers,
 			ArrayList<DungeonEncounter> pokemon, ArrayList<DungeonItem> items, ArrayList<DungeonTrap> traps, ArrayList<FloorData> floorData)
 	{
 		this.id = id;
 		this.floorCount = floorCount;
 		this.direction = direction;
-		this.monsterHouseChance = monsterHouseChance;
+		this.recruitsAllowed = recruits;
+		this.timeLimit = timeLimit;
+		this.linkedTo = linkedTo;
 		/* this.teamItems = teamItems; this.teamLevel = teamLevel; this.teamMembers = teamMembers; this.teamMoney = teamMoney; */
 		this.pokemon = pokemon;
 		this.items = items;
@@ -129,7 +143,9 @@ public class Dungeon
 		root.setAttribute("id", Integer.toString(this.id));
 		root.setAttribute("floors", Integer.toString(this.floorCount));
 		XMLUtils.setAttribute(root, "down", this.direction, false);
-		XMLUtils.setAttribute(root, "mhouse", this.monsterHouseChance, 0);
+		XMLUtils.setAttribute(root, "recruits", this.recruitsAllowed, true);
+		XMLUtils.setAttribute(root, "limit", this.timeLimit, 2000);
+		XMLUtils.setAttribute(root, "linked", this.linkedTo, -1);
 		/* if (this.teamItems != -1) root.setAttribute("t-items", Integer.toString(this.teamItems)); if (this.teamLevel != -1) root.setAttribute("t-level", Integer.toString(this.teamLevel)); if (this.teamMembers != 4) root.setAttribute("t-members", Integer.toString(this.teamMembers)); if
 		 * (this.teamMoney != -1) root.setAttribute("t-money", Integer.toString(this.teamMoney)); */
 
@@ -142,6 +158,14 @@ public class Dungeon
 		for (DungeonItem item : this.items)
 			items.addContent(item.toXML());
 		root.addContent(items);
+
+		if (!this.shopItems.isEmpty())
+		{
+			Element shops = new Element("shops");
+			for (DungeonItem item : this.shopItems)
+				shops.addContent(item.toXML());
+			root.addContent(shops);
+		}
 
 		Element traps = new Element("traps");
 		for (DungeonTrap trap : this.traps)

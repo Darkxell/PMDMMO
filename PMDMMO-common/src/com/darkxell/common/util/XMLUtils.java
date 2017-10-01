@@ -103,6 +103,15 @@ public final class XMLUtils
 		return array;
 	}
 
+	public static short[] readShortArray(String value)
+	{
+		String[] values = value.split(",");
+		short[] array = new short[values.length];
+		for (int i = 0; i < array.length; ++i)
+			array[i] = Short.parseShort(values[i]);
+		return array;
+	}
+
 	/** Saves the input XML Element into the input file. */
 	public static void saveFile(File file, Element element)
 	{
@@ -164,6 +173,15 @@ public final class XMLUtils
 		if (!value.equals(defaultValue)) element.setAttribute(id, value);
 	}
 
+	public static String toXML(short[] array)
+	{
+		String value = "";
+		for (short floor : array)
+			if (value.equals("")) value += floor;
+			else value += "," + floor;
+		return value;
+	}
+
 	/** Exports an array of Integers to an XML element and returns it. <br />
 	 * e.g. 1,2,4,5,-1
 	 * 
@@ -171,7 +189,7 @@ public final class XMLUtils
 	public static Element toXML(String id, int[] array)
 	{
 		String value = "";
-		for (Integer floor : array)
+		for (int floor : array)
 			if (value.equals("")) value += floor;
 			else value += "," + floor;
 		return new Element(id).setText(value);

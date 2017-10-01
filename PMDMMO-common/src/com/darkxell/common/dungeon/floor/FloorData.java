@@ -17,22 +17,40 @@ public class FloorData
 
 	/** The base Money of the Floor. Used to generate piles of Poké. */
 	public final int baseMoney;
+	/** The density of Buried Items. */
+	public final short buriedItemDensity;
 	/** The type given to a Pokémon using the move Camouflage. */
 	public final PokemonType camouflageType;
 	/** The Floor's difficulty. */
 	public final int difficulty;
 	/** Describes which Floors this Data applies to. */
 	public final FloorSet floors;
+	/** The density of Items. */
+	public final short itemDensity;
 	/** The Layout to use to generate the Floor. */
 	public final int layout;
+	/** The chance of generating a Monster House in this Floor. */
+	public final short monsterHouseChance;
 	/** The ID of the move chosen by Nature Power. */
 	public final int naturePower;
+	/** The density of Pokémon. */
+	public final short pokemonDensity;
 	/** The Effect of the Secret Power move. (Strings, will later be replaced with IDs when implementing the move.) */
 	public final String secretPower;
 	/** The type of shadows for this Floor. See {@link FloorData#NO_SHADOW} */
 	public final byte shadows;
+	/** The chance of generating a Shop in this Floor. */
+	public final short shopChance;
 	/** The Spriteset to use for the terrain. */
 	public final int terrainSpriteset;
+	/** The chance of the associated trap to be chosen. */
+	private final short[] trapChances;
+	/** The density of Traps. */
+	public final short trapDensity;
+	/** The list of Traps that can appear on this Floor. */
+	private final short[] traps;
+	/** The weather in this Floor. */
+	public final byte weather;
 
 	public FloorData(Element xml)
 	{
@@ -45,10 +63,30 @@ public class FloorData
 		this.camouflageType = PokemonType.find(XMLUtils.getAttribute(xml, "camouflage", 0));
 		this.naturePower = Integer.parseInt(xml.getAttributeValue("nature"));
 		this.secretPower = xml.getAttributeValue("secret");
+		this.shopChance = XMLUtils.getAttribute(xml, "shop", (byte) 0);
+		this.monsterHouseChance = XMLUtils.getAttribute(xml, "mhouse", (byte) 0);
+		this.itemDensity = XMLUtils.getAttribute(xml, "items", (short) 0);
+		this.pokemonDensity = XMLUtils.getAttribute(xml, "pokemon", (short) 0);
+		this.trapDensity = XMLUtils.getAttribute(xml, "trap", (short) 0);
+		this.buriedItemDensity = XMLUtils.getAttribute(xml, "buried", (short) 0);
+		this.weather = XMLUtils.getAttribute(xml, "weather", (byte) 0);
+		Element t = xml.getChild("traps");
+		if (t == null)
+		{
+			this.traps = new short[]
+			{ 0 };
+			this.trapChances = new short[]
+			{ 100 };
+		} else
+		{
+			this.traps = XMLUtils.readShortArray(xml.getAttributeValue("ids"));
+			this.trapChances = XMLUtils.readShortArray(xml.getAttributeValue("chances"));
+		}
 	}
 
 	public FloorData(FloorSet floors, int difficulty, int baseMoney, int layout, int terrainSpriteset, byte shadows, PokemonType camouflageType,
-			int naturePower, String secretPower)
+			int naturePower, String secretPower, short shopChance, short monsterHouseChance, short itemDensity, short pokemonDensity, short trapDensity,
+			short buriedItemDensity, byte weather, short[] traps, short[] trapChances)
 	{
 		this.floors = floors;
 		this.difficulty = difficulty;
@@ -59,6 +97,15 @@ public class FloorData
 		this.camouflageType = camouflageType;
 		this.naturePower = naturePower;
 		this.secretPower = secretPower;
+		this.shopChance = shopChance;
+		this.monsterHouseChance = monsterHouseChance;
+		this.itemDensity = itemDensity;
+		this.pokemonDensity = pokemonDensity;
+		this.trapDensity = trapDensity;
+		this.buriedItemDensity = buriedItemDensity;
+		this.weather = weather;
+		this.traps = traps;
+		this.trapChances = trapChances;
 	}
 
 	public Layout layout()
@@ -83,6 +130,20 @@ public class FloorData
 		xml.setAttribute("camouflage", Integer.toString(this.camouflageType.id));
 		xml.setAttribute("nature", Integer.toString(this.naturePower));
 		xml.setAttribute("secret", this.secretPower);
+		XMLUtils.setAttribute(xml, "shop", this.shopChance, 0);
+		XMLUtils.setAttribute(xml, "mhouse", this.monsterHouseChance, 0);
+		XMLUtils.setAttribute(xml, "items", this.itemDensity, 0);
+		XMLUtils.setAttribute(xml, "pokemon", this.pokemonDensity, 0);
+		XMLUtils.setAttribute(xml, "trap", this.trapDensity, 0);
+		XMLUtils.setAttribute(xml, "buried", this.buriedItemDensity, 0);
+		XMLUtils.setAttribute(xml, "weather", this.weather, 0);
+		if (!(this.traps.length == 1 && this.traps[0] == 0))
+		{
+			Element t = new Element("traps");
+			t.setAttribute("ids", XMLUtils.toXML(this.traps));
+			t.setAttribute("chances", XMLUtils.toXML(this.trapChances));
+			xml.addContent(t);
+		}
 		return xml;
 	}
 
