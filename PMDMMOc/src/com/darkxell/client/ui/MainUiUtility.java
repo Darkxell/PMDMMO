@@ -10,6 +10,8 @@ import com.darkxell.client.resources.images.FrameResources;
  * the components on the frame.
  */
 public abstract class MainUiUtility {
+	
+	private static final int OUTLINE_WIDTH = 16, OUTLINE_HEIGHT = 8;
 
 	public static void drawBackground(Graphics2D g, int fwidth, int fheight, byte backgroundID) {
 		BufferedImage img;
@@ -46,14 +48,14 @@ public abstract class MainUiUtility {
 	}
 
 	public static void drawBoxOutline(Graphics2D g, int x, int y, int width, int height) {
-		g.drawImage(FrameResources.box_NW, x - 16, y - 10, 16, 10, null);
-		g.drawImage(FrameResources.box_NE, x + width, y - 10, 16, 10, null);
-		g.drawImage(FrameResources.box_SW, x - 16, y + height, 16, 10, null);
-		g.drawImage(FrameResources.box_SE, x + width, y + height, 16, 10, null);
-		g.drawImage(FrameResources.box_N, x, y - 10, width, 10, null);
-		g.drawImage(FrameResources.box_S, x, y + height, width, 10, null);
-		g.drawImage(FrameResources.box_W, x - 16, y, 16, height, null);
-		g.drawImage(FrameResources.box_E, x + width, y, 16, height, null);
+		g.drawImage(FrameResources.box_NW, x - OUTLINE_WIDTH, y - OUTLINE_HEIGHT, OUTLINE_WIDTH, OUTLINE_HEIGHT, null);
+		g.drawImage(FrameResources.box_NE, x + width, y - OUTLINE_HEIGHT, OUTLINE_WIDTH, OUTLINE_HEIGHT, null);
+		g.drawImage(FrameResources.box_SW, x - OUTLINE_WIDTH, y + height, OUTLINE_WIDTH, OUTLINE_HEIGHT, null);
+		g.drawImage(FrameResources.box_SE, x + width, y + height, OUTLINE_WIDTH, OUTLINE_HEIGHT, null);
+		g.drawImage(FrameResources.box_N, x, y - OUTLINE_HEIGHT, width, OUTLINE_HEIGHT, null);
+		g.drawImage(FrameResources.box_S, x, y + height, width, OUTLINE_HEIGHT, null);
+		g.drawImage(FrameResources.box_W, x - OUTLINE_WIDTH, y, OUTLINE_WIDTH, height, null);
+		g.drawImage(FrameResources.box_E, x + width, y, OUTLINE_WIDTH, height, null);
 	}
 
 }

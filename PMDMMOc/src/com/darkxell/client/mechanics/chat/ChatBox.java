@@ -131,9 +131,10 @@ public class ChatBox {
 			}
 		}
 		
-		if (this.endpoint.connectionStatus() == ChatClientEndpoint.CONNECTING) {
+		if (this.endpoint.connectionStatus() != ChatClientEndpoint.CONNECTED) {
 			g.setColor(Color.RED);
-			g.drawString("Connecting to chat...", 10, height - footerheight - 20);
+			if (this.endpoint.connectionStatus() == ChatClientEndpoint.CONNECTING) g.drawString("Connecting to chat...", 10, height - footerheight - 20);
+			else if (this.endpoint.connectionStatus() == ChatClientEndpoint.FAILED) g.drawString("[ERROR] Connection failed.", 10, height - footerheight - 20);
 		}
 	}
 
