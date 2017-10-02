@@ -32,4 +32,9 @@ public class SessionsInfoHolder {
             infos.put(sessionID, new GameSessionInfo());
     }
     
+    /**Returns a pointer to the hashmap containing the sessions data.*/
+    public static HashMap getMap(){
+        return infos;
+    }
+    
 }

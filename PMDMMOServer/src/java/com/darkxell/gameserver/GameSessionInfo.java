@@ -11,11 +11,16 @@ package com.darkxell.gameserver;
  */
 public class GameSessionInfo {
     
+    // COMMON DATA
+    
     public boolean isconnected = true;
     public String name = "DefaultServerName";
     
+    // FREEZONE DATA
     
-    
-    
+    public String currentPokemon = "";
+    public String freezoneID = "";
+    public int posFX;
+    public int posFY;
     
 }

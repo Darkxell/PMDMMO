@@ -5,14 +5,20 @@
  */
 package com.darkxell.gameserver;
 
+import java.io.StringReader;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
+
+import com.darkxell.gameserver.freezones.FreezonePositionHandler;
 
 /**
  *
@@ -43,15 +49,16 @@ public class GameServer {
 
      @OnMessage
     public void handleMessage(String message, Session session) {
-        /*try (JsonReader reader = Json.createReader(new StringReader(message))) {
+        try (JsonReader reader = Json.createReader(new StringReader(message))) {
             JsonObject jsonMessage = reader.readObject();
-            if ("message".equals(jsonMessage.getString("action"))) {
-                sessionHandler.sendToAllConnectedSessions(jsonMessage);
+            if ("freezoneposition".equals(jsonMessage.getString("action"))) {
+                FreezonePositionHandler fph = new FreezonePositionHandler();
+                fph.handleMessage(jsonMessage, session);
             }
         } catch(Exception e){
             System.out.println(message);
             e.printStackTrace();
-        }*/
+        }
     }
     
 }
