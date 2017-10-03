@@ -20,7 +20,7 @@ public class GameSessionInfo {
     
     public String currentPokemon = "";
     public String freezoneID = "";
-    public int posFX;
-    public int posFY;
+    public int posFX = 0;
+    public int posFY = 0;
     
 }

@@ -53,7 +53,7 @@ public class GameServer {
             JsonObject jsonMessage = reader.readObject();
             if ("freezoneposition".equals(jsonMessage.getString("action"))) {
                 FreezonePositionHandler fph = new FreezonePositionHandler();
-                fph.handleMessage(jsonMessage, session);
+                fph.handleMessage(jsonMessage, session,sessionHandler);
             }
         } catch(Exception e){
             System.out.println(message);

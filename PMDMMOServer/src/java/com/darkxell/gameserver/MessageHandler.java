@@ -15,6 +15,6 @@ import javax.websocket.Session;
 public interface MessageHandler {
     
     /**Describes what this messageHandler should do when recieving a message from a session.*/
-    public abstract void handleMessage(JsonObject json,Session from);
+    public abstract void handleMessage(JsonObject json,Session from,GameSessionHandler sessionshandler);
     
 }
