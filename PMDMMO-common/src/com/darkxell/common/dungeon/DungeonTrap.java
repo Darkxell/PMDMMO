@@ -19,7 +19,12 @@ public class DungeonTrap
 	public DungeonTrap(Element xml)
 	{
 		this.ids = XMLUtils.readIntArray(xml.getChild("ids"));
-		this.chances = XMLUtils.readIntArray(xml.getChild("chances"));
+		if (xml.getChild("chances") == null)
+		{
+			this.chances = new int[this.ids.length];
+			for (int i = 0; i < this.chances.length; ++i)
+				this.chances[i] = 1;
+		} else this.chances = XMLUtils.readIntArray(xml.getChild("chances"));
 		this.floors = new FloorSet(xml.getChild(FloorSet.XML_ROOT));
 	}
 
@@ -34,8 +39,17 @@ public class DungeonTrap
 	{
 		Element root = new Element(XML_ROOT);
 		root.addContent(XMLUtils.toXML("ids", this.ids));
-		root.addContent(XMLUtils.toXML("chances", this.chances));
 		root.addContent(this.floors.toXML());
+
+		boolean chances = false;
+		for (int c : this.chances)
+			if (c != 1)
+			{
+				chances = true;
+				break;
+			}
+		if (chances) root.addContent(XMLUtils.toXML("chances", this.chances));
+
 		return root;
 	}
 

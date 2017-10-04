@@ -26,7 +26,12 @@ public class DungeonItem
 		this.weight = Integer.parseInt(xml.getAttributeValue("weight"));
 		this.floors = new FloorSet(xml.getChild(FloorSet.XML_ROOT));
 		this.items = XMLUtils.readIntArray(xml.getChild("ids"));
-		this.chances = XMLUtils.readIntArray(xml.getChild("chances"));
+		if (xml.getChild("chances") == null)
+		{
+			this.chances = new int[this.items.length];
+			for (int i = 0; i < this.chances.length; ++i)
+				this.chances[i] = 1;
+		} else this.chances = XMLUtils.readIntArray(xml.getChild("chances"));
 	}
 
 	public DungeonItem(FloorSet floors, int weight, int[] items, int[] chances)
@@ -48,7 +53,15 @@ public class DungeonItem
 		root.setAttribute("weight", Integer.toString(this.weight));
 		root.addContent(this.floors.toXML());
 		root.addContent(XMLUtils.toXML("ids", this.items));
-		root.addContent(XMLUtils.toXML("chances", this.chances));
+
+		boolean chances = false;
+		for (int c : this.chances)
+			if (c != 1)
+			{
+				chances = true;
+				break;
+			}
+		if (chances) root.addContent(XMLUtils.toXML("chances", this.chances));
 		return root;
 	}
 

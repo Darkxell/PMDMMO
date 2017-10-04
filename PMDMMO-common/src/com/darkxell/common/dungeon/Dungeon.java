@@ -19,6 +19,8 @@ public class Dungeon
 	public static final boolean UP = false, DOWN = true;
 	public static final String XML_ROOT = "dungeon";
 
+	/** Lists the buried Items found in this Dungeon. If empty, use the standard list. */
+	private final ArrayList<DungeonItem> buriedItems;
 	/** Whether this Dungeon goes up or down. See {@link Dungeon#UP} */
 	public final boolean direction;
 	/** The number of Floors in this Dungeon. */
@@ -75,6 +77,10 @@ public class Dungeon
 		if (xml.getChild("shops") != null) for (Element item : xml.getChild("shops").getChildren(DungeonItem.XML_ROOT))
 			this.shopItems.add(new DungeonItem(item));
 
+		this.buriedItems = new ArrayList<DungeonItem>();
+		if (xml.getChild("buried") != null) for (Element item : xml.getChild("buried").getChildren(DungeonItem.XML_ROOT))
+			this.buriedItems.add(new DungeonItem(item));
+
 		this.traps = new ArrayList<DungeonTrap>();
 		if (xml.getChild("traps") == null)
 		{
@@ -98,8 +104,8 @@ public class Dungeon
 
 	public Dungeon(int id, int floorCount, boolean direction, double monsterHouseChance, boolean recruits, int timeLimit,
 			int linkedTo, // int teamItems, int teamLevel, int teamMoney,int teamMembers,
-			ArrayList<DungeonEncounter> pokemon, ArrayList<DungeonItem> items, ArrayList<DungeonItem> shopItems, ArrayList<DungeonTrap> traps,
-			ArrayList<FloorData> floorData, HashMap<Integer, FloorSet> weather)
+			ArrayList<DungeonEncounter> pokemon, ArrayList<DungeonItem> items, ArrayList<DungeonItem> shopItems, ArrayList<DungeonItem> buriedItems,
+			ArrayList<DungeonTrap> traps, ArrayList<FloorData> floorData, HashMap<Integer, FloorSet> weather)
 	{
 		this.id = id;
 		this.floorCount = floorCount;
@@ -111,6 +117,7 @@ public class Dungeon
 		this.pokemon = pokemon;
 		this.items = items;
 		this.shopItems = shopItems;
+		this.buriedItems = buriedItems;
 		this.traps = traps;
 		this.floorData = floorData;
 		this.weather = weather;
@@ -186,6 +193,14 @@ public class Dungeon
 			for (DungeonItem item : this.shopItems)
 				shops.addContent(item.toXML());
 			root.addContent(shops);
+		}
+
+		if (!this.buriedItems.isEmpty())
+		{
+			Element buried = new Element("buried");
+			for (DungeonItem item : this.buriedItems)
+				buried.addContent(item.toXML());
+			root.addContent(buried);
 		}
 
 		if (this.hasTraps())
