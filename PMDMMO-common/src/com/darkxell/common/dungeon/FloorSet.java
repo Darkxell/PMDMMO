@@ -7,23 +7,29 @@ import javafx.util.Pair;
 
 import org.jdom2.Element;
 
+import com.darkxell.common.util.XMLUtils;
+
 /** Holds a set of Floors. */
 @SuppressWarnings("restriction")
 public class FloorSet
 {
 	public static final String XML_ROOT = "floors";
 
+	/** Lists of floors not part of this set. */
+	private ArrayList<Integer> except;
 	/** List of parts, with start and end. */
 	private ArrayList<Pair<Integer, Integer>> set;
 
-	public FloorSet(ArrayList<Pair<Integer, Integer>> set)
+	public FloorSet(ArrayList<Pair<Integer, Integer>> set, ArrayList<Integer> except)
 	{
 		this.set = set;
+		this.except = except;
 	}
 
 	public FloorSet(Element xml)
 	{
 		this.set = new ArrayList<Pair<Integer, Integer>>();
+		this.except = XMLUtils.readIntArrayAsList(xml.getChild("except"));
 		for (Element part : xml.getChildren("part"))
 		{
 			if (part.getAttribute("floor") != null) this.set.add(new Pair<Integer, Integer>(Integer.parseInt(part.getAttributeValue("floor")), Integer
@@ -36,13 +42,14 @@ public class FloorSet
 	{
 		this.set = new ArrayList<Pair<Integer, Integer>>();
 		this.set.add(new Pair<Integer, Integer>(start, end));
+		this.except = new ArrayList<Integer>();
 	}
 
 	/** @return True if this Set contains the input floor. */
 	public boolean contains(int floor)
 	{
 		for (Pair<Integer, Integer> part : this.set)
-			if (floor >= part.getKey() && floor <= part.getValue()) return true;
+			if (floor >= part.getKey() && floor <= part.getValue() && !this.except.contains(floor)) return true;
 		return false;
 	}
 
@@ -52,7 +59,7 @@ public class FloorSet
 		int count = 0;
 		for (Pair<Integer, Integer> part : this.set)
 			count += part.getValue() - part.getKey() + 1; // 15 - 15 + 1 = 1 ; 15 - 18 + 1 = 4
-		return count;
+		return count - this.except.size();
 	}
 
 	/** @return The list of Floors this Set holds. */
@@ -64,7 +71,7 @@ public class FloorSet
 			int floor = part.getKey();
 			do
 			{
-				floors.add(floor);
+				if (!this.except.contains(floors)) floors.add(floor);
 				++floor;
 			} while (floor <= part.getValue());
 		}
@@ -85,6 +92,7 @@ public class FloorSet
 					Integer.toString(part.getKey())));
 			root.addContent(new Element("part").setAttribute("start", Integer.toString(part.getKey())).setAttribute("end", Integer.toString(part.getValue())));
 		}
+		if (this.except.size() != 0) root.addContent(XMLUtils.toXML("except", this.except));
 		return root;
 	}
 

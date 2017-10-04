@@ -2874,8 +2874,8 @@
       </d>
       <d difficulty="10" money="5" layout="2" shadows="1" terrain="16" camouflage="10" nature="538" secret="Attack down 1 stage" mhouse="9" pokemon="5" items="4" traps="8">
         <floors>
-          <part start="36" end="54" />
-          <part start="56" end="59" />
+          <part start="36" end="59" />
+          <except>55</except>
         </floors>
       </d>
       <d difficulty="10" money="5" layout="0" shadows="1" terrain="16" camouflage="10" nature="538" secret="Attack down 1 stage" pokemon="5" items="6" traps="8">
@@ -2890,8 +2890,8 @@
       </d>
       <d difficulty="11" money="7" layout="2" shadows="2" terrain="17" camouflage="5" nature="175" secret="Cringing" mhouse="9" pokemon="5" items="4" traps="8">
         <floors>
-          <part start="70" end="74" /
-          <part start="76" end="86" />
+          <part start="70" end="86" />
+          <except>75</except>
         </floors>
       </d>
       <d difficulty="11" money="7" layout="1" shadows="2" terrain="17" camouflage="5" nature="175" secret="Cringing" pokemon="5" items="6" traps="8">
@@ -3122,12 +3122,12 @@
       </pokemon>
       <pokemon id="241" level="30" weight="3">
         <floors>
-          <part start="10" end="10" />
-          <part start="20" end="20" />
-          <part start="30" end="30" />
-          <part start="40" end="40" />
-          <part start="50" end="53" />
-          <part start="60" end="98" />
+          <part floor="10" />
+          <part floor="20" />
+          <part floor="30" />
+          <part floor="40" />
+          <part floor="53" />
+          <part floor="98" />
         </floors>
       </pokemon>
       <pokemon id="306" level="34" weight="9">
@@ -3344,17 +3344,12 @@
   </dungeon>
   <dungeon id="24" floors="99" down="true">
     <encounters>
-      <pokemon id="128" level="15" weight="992">
+      <pokemon id="128" level="15" weight="99">
         <floors>
           <part start="36" end="43" />
         </floors>
       </pokemon>
-      <pokemon id="385" level="40">
-        <floors>
-          <part start="99" end="99" />
-        </floors>
-      </pokemon>
-      <pokemon id="132" level="25" weight="248">
+      <pokemon id="132" level="25" weight="25">
         <floors>
           <part start="53" end="64" />
         </floors>
@@ -3369,42 +3364,42 @@
           <part start="5" end="7" />
         </floors>
       </pokemon>
-      <pokemon id="280" level="8" weight="969">
+      <pokemon id="280" level="8" weight="97">
         <floors>
           <part start="11" end="13" />
         </floors>
       </pokemon>
-      <pokemon id="24" level="21" weight="992">
+      <pokemon id="24" level="21" weight="99">
         <floors>
           <part start="60" end="64" />
         </floors>
       </pokemon>
-      <pokemon id="30" level="15" weight="744">
+      <pokemon id="30" level="15" weight="74">
         <floors>
           <part start="47" end="50" />
         </floors>
       </pokemon>
-      <pokemon id="31" level="20" weight="868">
+      <pokemon id="31" level="20" weight="87">
         <floors>
           <part start="74" end="76" />
         </floors>
       </pokemon>
-      <pokemon id="32" level="12" weight="988">
+      <pokemon id="32" level="12" weight="99">
         <floors>
           <part start="33" end="37" />
         </floors>
       </pokemon>
-      <pokemon id="33" level="15" weight="620">
+      <pokemon id="33" level="15" weight="62">
         <floors>
           <part start="47" end="50" />
         </floors>
       </pokemon>
-      <pokemon id="290" level="14" weight="496">
+      <pokemon id="290" level="14" weight="50">
         <floors>
           <part start="44" end="49" />
         </floors>
       </pokemon>
-      <pokemon id="34" level="21" weight="868">
+      <pokemon id="34" level="21" weight="87">
         <floors>
           <part start="77" end="79" />
         </floors>
@@ -3414,17 +3409,17 @@
           <part start="1" end="4" />
         </floors>
       </pokemon>
-      <pokemon id="167" level="11" weight="981">
+      <pokemon id="167" level="11" weight="98">
         <floors>
           <part start="26" end="32" />
         </floors>
       </pokemon>
-      <pokemon id="168" level="14" weight="992">
+      <pokemon id="168" level="14" weight="99">
         <floors>
           <part start="42" end="46" />
         </floors>
       </pokemon>
-      <pokemon id="42" level="10" weight="620">
+      <pokemon id="42" level="10" weight="62">
         <floors>
           <part start="46" end="50" />
         </floors>
@@ -3444,22 +3439,22 @@
           <part start="7" end="10" />
         </floors>
       </pokemon>
-      <pokemon id="177" level="8" weight="717">
+      <pokemon id="177" level="8" weight="72">
         <floors>
           <part start="13" end="17" />
         </floors>
       </pokemon>
-      <pokemon id="305" level="17" weight="993">
+      <pokemon id="305" level="17" weight="99">
         <floors>
           <part start="62" end="64" />
         </floors>
       </pokemon>
-      <pokemon id="307" level="6" weight="602">
+      <pokemon id="307" level="6" weight="60">
         <floors>
           <part start="11" end="14" />
         </floors>
       </pokemon>
-      <pokemon id="51" level="20" weight="868">
+      <pokemon id="51" level="20" weight="87">
         <floors>
           <part start="50" end="55" />
         </floors>
@@ -3469,12 +3464,12 @@
           <part start="20" end="20" />
         </floors>
       </pokemon>
-      <pokemon id="309" level="12" weight="982">
+      <pokemon id="309" level="12" weight="98">
         <floors>
           <part start="26" end="33" />
         </floors>
       </pokemon>
-      <pokemon id="310" level="10" weight="991">
+      <pokemon id="310" level="10" weight="99">
         <floors>
           <part start="36" end="40" />
         </floors>
@@ -3484,7 +3479,7 @@
           <part start="4" end="6" />
         </floors>
       </pokemon>
-      <pokemon id="314" level="20" weight="744">
+      <pokemon id="314" level="20" weight="74">
         <floors>
           <part start="47" end="52" />
         </floors>
@@ -3494,33 +3489,33 @@
           <part start="1" end="3" />
         </floors>
       </pokemon>
-      <pokemon id="63" level="16" weight="496">
+      <pokemon id="63" level="16" weight="50">
         <floors>
           <part start="38" end="42" />
         </floors>
       </pokemon>
-      <pokemon id="64" level="30" weight="992">
+      <pokemon id="64" level="30" weight="99">
         <floors>
           <part start="46" end="50" />
         </floors>
       </pokemon>
-      <pokemon id="66" level="11" weight="1211">
+      <pokemon id="66" level="11" weight="121">
         <floors>
           <part start="17" end="19" />
           <part start="21" end="25" />
         </floors>
       </pokemon>
-      <pokemon id="322" level="14" weight="992">
+      <pokemon id="322" level="14" weight="99">
         <floors>
           <part start="53" end="56" />
         </floors>
       </pokemon>
-      <pokemon id="323" level="25" weight="992">
+      <pokemon id="323" level="25" weight="99">
         <floors>
           <part start="80" end="85" />
         </floors>
       </pokemon>
-      <pokemon id="324" level="15" weight="992">
+      <pokemon id="324" level="15" weight="99">
         <floors>
           <part start="57" end="59" />
         </floors>
@@ -3530,58 +3525,58 @@
           <part start="1" end="3" />
         </floors>
       </pokemon>
-      <pokemon id="198" level="14" weight="992">
+      <pokemon id="198" level="14" weight="99">
         <floors>
           <part start="39" end="42" />
         </floors>
       </pokemon>
-      <pokemon id="328" level="11" weight="608">
+      <pokemon id="328" level="11" weight="61">
         <floors>
           <part start="21" end="28" />
         </floors>
       </pokemon>
-      <pokemon id="74" level="5" weight="680">
+      <pokemon id="74" level="5" weight="68">
         <floors>
           <part start="12" end="14" />
         </floors>
       </pokemon>
-      <pokemon id="330" level="25" weight="744">
+      <pokemon id="330" level="25" weight="74">
         <floors>
           <part start="94" end="96" />
         </floors>
       </pokemon>
-      <pokemon id="75" level="22" weight="868">
+      <pokemon id="75" level="22" weight="87">
         <floors>
           <part start="72" end="75" />
         </floors>
       </pokemon>
-      <pokemon id="204" level="18" weight="992">
+      <pokemon id="204" level="18" weight="99">
         <floors>
           <part start="61" end="64" />
         </floors>
       </pokemon>
-      <pokemon id="76" level="15" weight="992">
+      <pokemon id="76" level="15" weight="99">
         <floors>
           <part start="76" end="79" />
         </floors>
       </pokemon>
-      <pokemon id="205" level="23" weight="992">
+      <pokemon id="205" level="23" weight="99">
         <floors>
           <part start="51" end="53" />
           <part start="86" end="88" />
         </floors>
       </pokemon>
-      <pokemon id="206" level="13" weight="992">
+      <pokemon id="206" level="13" weight="99">
         <floors>
           <part start="43" end="44" />
         </floors>
       </pokemon>
-      <pokemon id="207" level="12" weight="985">
+      <pokemon id="207" level="12" weight="99">
         <floors>
           <part start="31" end="35" />
         </floors>
       </pokemon>
-      <pokemon id="335" level="18" weight="744">
+      <pokemon id="335" level="18" weight="74">
         <floors>
           <part start="65" end="71" />
         </floors>
@@ -3591,54 +3586,54 @@
           <part start="1" end="3" />
         </floors>
       </pokemon>
-      <pokemon id="338" level="24" weight="992">
+      <pokemon id="338" level="24" weight="99">
         <floors>
           <part start="86" end="89" />
         </floors>
       </pokemon>
-      <pokemon id="212" level="24" weight="993">
+      <pokemon id="212" level="24" weight="99">
         <floors>
           <part start="90" end="95" />
         </floors>
       </pokemon>
-      <pokemon id="343" level="5" weight="602">
+      <pokemon id="343" level="5" weight="60">
         <floors>
           <part start="11" end="14" />
         </floors>
       </pokemon>
-      <pokemon id="88" level="20" weight="992">
+      <pokemon id="88" level="20" weight="99">
         <floors>
           <part start="80" end="85" />
         </floors>
       </pokemon>
-      <pokemon id="344" level="26" weight="992">
+      <pokemon id="344" level="26" weight="99">
         <floors>
           <part start="97" end="98" />
         </floors>
       </pokemon>
-      <pokemon id="219" level="21" weight="992">
+      <pokemon id="219" level="21" weight="99">
         <floors>
           <part start="56" end="61" />
           <part start="71" end="77" />
         </floors>
       </pokemon>
-      <pokemon id="220" level="8" weight="848">
+      <pokemon id="220" level="8" weight="85">
         <floors>
           <part start="17" end="19" />
           <part start="21" end="25" />
         </floors>
       </pokemon>
-      <pokemon id="221" level="16" weight="992">
+      <pokemon id="221" level="16" weight="99">
         <floors>
           <part start="59" end="63" />
         </floors>
       </pokemon>
-      <pokemon id="353" level="28" weight="620">
+      <pokemon id="353" level="28" weight="62">
         <floors>
           <part start="81" end="84" />
         </floors>
       </pokemon>
-      <pokemon id="227" level="10" weight="848">
+      <pokemon id="227" level="10" weight="85">
         <floors>
           <part start="18" end="19" />
         </floors>
@@ -3648,97 +3643,97 @@
           <part start="8" end="10" />
         </floors>
       </pokemon>
-      <pokemon id="356" level="24" weight="992">
+      <pokemon id="356" level="24" weight="99">
         <floors>
           <part start="90" end="93" />
         </floors>
       </pokemon>
-      <pokemon id="101" level="20" weight="992">
+      <pokemon id="101" level="20" weight="99">
         <floors>
           <part start="50" end="55" />
         </floors>
       </pokemon>
-      <pokemon id="233" level="20" weight="744">
+      <pokemon id="233" level="20" weight="74">
         <floors>
           <part start="79" end="84" />
         </floors>
       </pokemon>
-      <pokemon id="106" level="22" weight="868">
+      <pokemon id="106" level="22" weight="87">
         <floors>
           <part start="51" end="56" />
         </floors>
       </pokemon>
-      <pokemon id="107" level="22" weight="868">
+      <pokemon id="107" level="22" weight="87">
         <floors>
           <part start="51" end="56" />
         </floors>
       </pokemon>
-      <pokemon id="109" level="20" weight="992">
+      <pokemon id="109" level="20" weight="99">
         <floors>
           <part start="71" end="75" />
         </floors>
       </pokemon>
-      <pokemon id="237" level="22" weight="993">
+      <pokemon id="237" level="22" weight="99">
         <floors>
           <part start="83" end="89" />
         </floors>
       </pokemon>
-      <pokemon id="110" level="20" weight="248">
+      <pokemon id="110" level="20" weight="25">
         <floors>
           <part start="86" end="98" />
         </floors>
       </pokemon>
-      <pokemon id="111" level="16" weight="992">
+      <pokemon id="111" level="16" weight="99">
         <floors>
           <part start="58" end="61" />
         </floors>
       </pokemon>
-      <pokemon id="112" level="23" weight="992">
+      <pokemon id="112" level="23" weight="99">
         <floors>
           <part start="71" end="76" />
         </floors>
       </pokemon>
-      <pokemon id="240" level="17" weight="745">
+      <pokemon id="240" level="17" weight="75">
         <floors>
           <part start="72" end="76" />
         </floors>
       </pokemon>
-      <pokemon id="371" level="16" weight="868">
+      <pokemon id="371" level="16" weight="87">
         <floors>
           <part start="45" end="49" />
         </floors>
       </pokemon>
-      <pokemon id="372" level="19" weight="992">
+      <pokemon id="372" level="19" weight="99">
         <floors>
           <part start="65" end="69" />
         </floors>
       </pokemon>
-      <pokemon id="373" level="26" weight="992">
+      <pokemon id="373" level="26" weight="99">
         <floors>
           <part start="98" end="98" />
         </floors>
       </pokemon>
-      <pokemon id="374" level="5" weight="600">
+      <pokemon id="374" level="5" weight="60">
         <floors>
           <part start="15" end="17" />
         </floors>
       </pokemon>
-      <pokemon id="375" level="17" weight="993">
+      <pokemon id="375" level="17" weight="99">
         <floors>
           <part start="62" end="64" />
         </floors>
       </pokemon>
-      <pokemon id="376" level="28" weight="992">
+      <pokemon id="376" level="28" weight="99">
         <floors>
           <part start="94" end="98" />
         </floors>
       </pokemon>
-      <pokemon id="125" level="12" weight="988">
+      <pokemon id="125" level="12" weight="99">
         <floors>
           <part start="33" end="37" />
         </floors>
       </pokemon>
-      <pokemon id="126" level="21" weight="992">
+      <pokemon id="126" level="21" weight="99">
         <floors>
           <part start="47" end="50" />
           <part start="77" end="80" />
@@ -3746,184 +3741,332 @@
       </pokemon>
     </encounters>
     <items>
-      <group weight="793">
+      <group weight="8">
         <floors>
           <part start="1" end="98" />
         </floors>
         <ids>22</ids>
         <chances>1</chances>
       </group>
-      <group weight="1041">
+      <group weight="10">
         <floors>
-          <part start="99" end="99" />
+          <part floor="99" />
         </floors>
         <ids>22</ids>
         <chances>1</chances>
       </group>
-      <group weight="2381">
+      <group weight="24">
         <floors>
           <part start="1" end="98" />
         </floors>
         <ids>35,7,8,34,41,46,12,36,40,11,9,44,42,45,31,10,43,152</ids>
         <chances>169,1685,843,281,280,281,281,281,843,281,281,561,562,843,1124,280,281,843</chances>
       </group>
-      <group weight="3125">
+      <group weight="31">
         <floors>
-          <part start="99" end="99" />
+          <part floor="99" />
         </floors>
         <ids>35,7,8,34,41,46,12,36,40,11,9,44,42,45,31,10,43,152</ids>
         <chances>169,1685,843,281,280,281,281,281,843,281,281,561,562,843,1124,280,281,843</chances>
       </group>
-      <group weight="794">
+      <group weight="8">
         <floors>
           <part start="1" end="98" />
         </floors>
         <ids>3</ids>
         <chances>1</chances>
       </group>
-      <group weight="1042">
+      <group weight="10">
         <floors>
           <part start="99" end="99" />
         </floors>
         <ids>3</ids>
         <chances>1</chances>
       </group>
-      <group weight="635">
+      <group weight="6">
         <floors>
           <part start="1" end="98" />
         </floors>
         <ids>188,186,199,206,191,192,208,178,173,177,203,200,195,182,194,171,196,174,175,172,180,204,189,190,179</ids>
         <chances>370,371,370,370,371,370,371,370,370,371,370,370,371,370,371,370,370,371,370,370,371,370,371,1111,370</chances>
       </group>
-      <group weight="833">
+      <group weight="8">
         <floors>
-          <part start="99" end="99" />
+          <part floor="99" />
         </floors>
         <ids>188,186,199,206,191,192,208,178,173,177,203,200,195,182,194,171,196,174,175,172,180,204,189,190,179</ids>
         <chances>370,371,370,370,371,370,371,370,370,371,370,370,371,370,371,370,370,371,370,370,371,370,371,1111,370</chances>
       </group>
-      <group weight="635">
+      <group weight="6">
         <floors>
           <part start="1" end="98" />
         </floors>
         <ids>221,224,225,226,228,229,230,231,234,236,237,238,239,241,243,244,245,246,247,248,249,250,251,253,254,255,256,257,258,259,260</ids>
         <chances>79,318,635,79,318,634,635,318,317,80,79,318,79,317,80,317,318,79,79,318,317,318,317,80,79,635,635,635,317,635,635</chances>
       </group>
-      <group weight="834">
+      <group weight="8">
         <floors>
-          <part start="99" end="99" />
+          <part floor="99" />
         </floors>
         <ids>221,224,225,226,228,229,230,231,234,236,237,238,239,241,243,244,245,246,247,248,249,250,251,253,254,255,256,257,258,259,260</ids>
         <chances>79,318,635,79,318,634,635,318,317,80,79,318,79,317,80,317,318,79,79,318,317,318,317,80,79,635,635,635,317,635,635</chances>
       </group>
-      <group weight="2381">
+      <group weight="24">
         <floors>
           <part start="1" end="98" />
         </floors>
         <ids>0</ids>
         <chances>1</chances>
       </group>
-      <group weight="1190">
+      <group weight="12">
         <floors>
           <part start="1" end="98" />
         </floors>
         <ids>87,111,121,115,98,109,94,125,82,133,128,119,106,96,102,123,105,131,83,84,120,127,117,86,114,107,85,129,101,91,116,118,100,88,90,97,122,95,103</ids>
         <chances>233,232,233,232,233,232,233,232,466,232,233,232,233,465,232,233,465,465,233,232,233,233,232,233,232,233,232,233,232,233,233,232,233,232,233,232,233,232,233</chances>
       </group>
-      <group weight="1562">
+      <group weight="16">
         <floors>
-          <part start="99" end="99" />
+          <part floor="99" />
         </floors>
         <ids>87,111,121,115,98,109,94,125,82,133,128,119,106,96,102,123,105,131,83,84,120,127,117,86,114,107,85,129,101,91,116,118,100,88,90,97,122,95,103</ids>
         <chances>233,232,233,232,233,232,233,232,466,232,233,232,233,465,232,233,465,465,233,232,233,233,232,233,232,233,232,233,232,233,233,232,233,232,233,232,233,232,233</chances>
       </group>
-      <group weight="397">
+      <group weight="4">
         <floors>
           <part start="1" end="98" />
         </floors>
         <ids>352</ids>
         <chances>1</chances>
       </group>
-      <group weight="521">
+      <group weight="5">
         <floors>
-          <part start="99" end="99" />
+          <part floor="99" />
         </floors>
         <ids>352</ids>
         <chances>1</chances>
       </group>
     </items>
+    <shops>
+      <group weight="1">
+        <floors>
+          <part start="1" end="98" />
+          <except>88,93</except>
+        </floors>
+        <ids>23,24</ids>
+        <chances>1,5</chances>
+      </group>
+      <group weight="1">
+        <floors>
+          <part start="1" end="98" />
+          <except>88,93</except>
+        </floors>
+        <ids>21,22</ids>
+        <chances>3,7</chances>
+      </group>
+      <group weight="2">
+        <floors>
+          <part start="1" end="98" />
+          <except>88,93</except>
+        </floors>
+        <ids>3,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78</ids>
+        <chances>1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1</chances>
+      </group>
+      <group weight="2">
+        <floors>
+          <part start="1" end="98" />
+          <except>88,93</except>
+        </floors>
+        <ids>3,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78</ids>
+        <chances>1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1</chances>
+      </group>
+      <group weight="2">
+        <floors>
+          <part start="1" end="98" />
+          <except>13,26,33,41,49,56,65,71,78,83,88,93</except>
+        </floors>
+        <ids>7,9,10,11,12,31,32,34,42,43,44,45,41,152</ids>
+        <chances>2,2,2,2,2,2,2,2,2,2,2,2,4,5</chances>
+      </group>
+      <group weight="2">
+        <floors>
+          <part start="1" end="98" />
+          <except>13,26,33,41,49,56,65,71,78,83,88,93</except>
+        </floors>
+        <ids>171,173,177,178,185,186,187,189,194,196,199,200,203,206,208</ids>
+        <chances>1,1,1,1,1,1,1,1,1,1,1,1,1,1,1</chances>
+      </group>
+      <group weight="2">
+        <floors>
+          <part start="1" end="98" />
+          <except>13,26,33,41,49,56,65,71,78,83,88,93</except>
+        </floors>
+        <ids>87,88,89,90,94,95,97,98,102,103,108,109,111,113,115,116,118,121,122,123,124,125,133,82,105</ids>
+        <chances>1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2</chances>
+      </group>
+      <group weight="2">
+        <floors>
+          <part floor="13" />
+          <part floor="26" />
+          <part floor="33" />
+          <part floor="41" />
+          <part floor="49" />
+          <part floor="56" />
+          <part floor="65" />
+          <part floor="71" />
+          <part floor="78" />
+          <part floor="83" />
+          <part floor="88" />
+          <part floor="93" />
+        </floors>
+        <ids>41,152</ids>
+        <chances>1,1</chances>
+      </group>
+      <group weight="2">
+        <floors>
+          <part floor="13" />
+          <part floor="26" />
+          <part floor="33" />
+          <part floor="41" />
+          <part floor="49" />
+          <part floor="56" />
+          <part floor="65" />
+          <part floor="71" />
+          <part floor="78" />
+          <part floor="83" />
+          <part floor="88" />
+          <part floor="93" />
+        </floors>
+        <ids>323,324</ids>
+        <chances>1,1,1,1</chances>
+      </group>
+    </shops>
     <data>
-      <d difficulty="7" money="7" layout="2" terrain="22" camouflage="5" nature="175" secret="Cringing">
+      <d difficulty="7" money="7" layout="2" terrain="22" camouflage="5" nature="175" secret="Cringing" shop="8" pokemon="6" items="5" traps="6">
         <floors>
           <part start="1" end="13" />
+          <except>7</except>
         </floors>
       </d>
-      <d difficulty="7" money="7" layout="2" terrain="23" camouflage="5" nature="175" secret="Cringing">
+      <d difficulty="7" money="7" layout="2" terrain="22" camouflage="5" nature="175" secret="Cringing" shop="50" pokemon="6" items="5" traps="6">
+        <floors>
+          <part floor="7" />
+        </floors>
+      </d>
+      <d difficulty="7" money="7" layout="2" terrain="23" camouflage="5" nature="175" secret="Cringing" shop="8" pokemon="6" items="5" traps="6">
         <floors>
           <part start="14" end="19" />
         </floors>
       </d>
-      <d difficulty="8" money="7" layout="2" terrain="23" camouflage="5" nature="175" secret="Cringing">
+      <d difficulty="8" money="7" layout="0" terrain="23" camouflage="5" nature="175" secret="Cringing">
         <floors>
-          <part start="20" end="29" />
+          <part floor="20" />
         </floors>
       </d>
-      <d difficulty="9" money="7" layout="2" terrain="24" camouflage="0" nature="299" secret="Paralysis">
+      <d difficulty="8" money="7" layout="2" terrain="23" camouflage="5" nature="175" secret="Cringing" shop="50" mhouse="6" pokemon="7" items="5" traps="6">
+        <floors>
+          <part floor="21" />
+        </floors>
+      </d>
+      <d difficulty="8" money="7" layout="2" terrain="23" camouflage="5" nature="175" secret="Cringing" shop="8" mhouse="6" pokemon="7" items="5" traps="6">
+        <floors>
+          <part start="22" end="28" />
+        </floors>
+      </d>
+      <d difficulty="8" money="7" layout="2" terrain="23" camouflage="5" nature="175" secret="Cringing" shop="8" mhouse="100" pokemon="7" items="5" traps="6">
+        <floors>
+          <part floor="29" />
+        </floors>
+      </d>
+      <d difficulty="9" money="7" layout="2" shadows="1" terrain="24" camouflage="0" nature="299" secret="Paralysis" shop="8" mhouse="6" pokemon="7" items="5" traps="6">
         <floors>
           <part start="30" end="35" />
         </floors>
       </d>
-      <d difficulty="10" money="7" layout="2" terrain="24" camouflage="0" nature="299" secret="Paralysis">
+      <d difficulty="10" money="7" layout="2" shadows="1" terrain="24" camouflage="0" nature="299" secret="Paralysis" shop="8" mhouse="6" pokemon="7" items="5" traps="6">
         <floors>
           <part start="36" end="38" />
         </floors>
       </d>
-      <d difficulty="10" money="12" layout="2" terrain="24" camouflage="0" nature="299" secret="Paralysis">
+      <d difficulty="10" money="12" layout="2" shadows="1" terrain="24" camouflage="0" nature="299" secret="Paralysis" shop="50" mhouse="6" pokemon="7" items="5" traps="6">
         <floors>
-          <part start="39" end="39" />
+          <part floor="39" />
         </floors>
       </d>
-      <d difficulty="10" money="12" layout="2" terrain="25" camouflage="5" nature="175" secret="Cringing">
+      <d difficulty="10" money="12" layout="2" shadows="1" terrain="25" camouflage="5" nature="175" secret="Cringing" shop="8" mhouse="6" pokemon="7" items="5" traps="6">
         <floors>
-          <part start="40" end="49" />
+          <part start="40" end="48" />
         </floors>
       </d>
-      <d difficulty="10" money="12" layout="2" terrain="26" camouflage="5" nature="175" secret="Cringing">
+      <d difficulty="10" money="12" layout="2" shadows="1" terrain="25" camouflage="5" nature="175" secret="Cringing" shop="8" mhouse="100" pokemon="7" items="5" traps="6">
+        <floors>
+          <part floor="49" />
+        </floors>
+      </d>
+      <d difficulty="10" money="12" layout="2" shadows="1" terrain="26" camouflage="5" nature="175" secret="Cringing" shop="8" mhouse="6" pokemon="7" items="5" traps="6">
         <floors>
           <part start="50" end="59" />
+          <except>55</except>
         </floors>
       </d>
-      <d difficulty="11" money="12" layout="2" terrain="3" camouflage="5" nature="504" secret="Confusion">
+      <d difficulty="10" money="12" layout="2" shadows="1" terrain="26" camouflage="5" nature="175" secret="Cringing" shop="50" mhouse="6" pokemon="7" items="5" traps="6">
+        <floors>
+          <part floor="55" />
+        </floors>
+      </d>
+      <d difficulty="11" money="12" layout="2" shadows="1" terrain="3" camouflage="5" nature="504" secret="Confusion" shop="8" mhouse="6" pokemon="7" items="5" traps="6">
         <floors>
           <part start="60" end="69" />
         </floors>
       </d>
-      <d difficulty="11" money="12" layout="2" terrain="8" camouflage="0" nature="299" secret="Paralysis">
+      <d difficulty="11" money="12" layout="2" shadows="2" terrain="8" camouflage="0" nature="299" secret="Paralysis" shop="8" mhouse="100" pokemon="7" items="5" traps="6">
         <floors>
-          <part start="70" end="70" />
+          <part floor="70" />
         </floors>
       </d>
-      <d difficulty="11" money="25" layout="2" terrain="8" camouflage="0" nature="299" secret="Paralysis">
+      <d difficulty="11" money="25" layout="2" shadows="2" terrain="8" camouflage="0" nature="299" secret="Paralysis" shop="8" mhouse="6" pokemon="7" items="5" traps="6">
         <floors>
           <part start="71" end="74" />
         </floors>
       </d>
-      <d difficulty="12" money="25" layout="2" terrain="8" camouflage="0" nature="299" secret="Paralysis">
+      <d difficulty="12" money="25" layout="2" shadows="2" terrain="8" camouflage="0" nature="299" secret="Paralysis" shop="50" mhouse="6" pokemon="7" items="5" traps="6">
         <floors>
-          <part start="75" end="79" />
+          <part floor="75" />
         </floors>
       </d>
-      <d difficulty="12" money="25" layout="2" terrain="27" camouflage="0" nature="299" secret="Paralysis">
+      <d difficulty="12" money="25" layout="2" shadows="2" terrain="8" camouflage="0" nature="299" secret="Paralysis" shop="8" mhouse="6" pokemon="7" items="5" traps="6">
         <floors>
-          <part start="80" end="89" />
+          <part start="76" end="79" />
         </floors>
       </d>
-      <d difficulty="12" money="25" layout="2" terrain="28" camouflage="0" nature="299" secret="Paralysis">
+      <d difficulty="12" money="25" layout="2" shadows="2" terrain="27" camouflage="0" nature="299" secret="Paralysis" shop="8" mhouse="6" pokemon="7" items="5" traps="6">
         <floors>
-          <part start="90" end="99" />
+          <part start="80" end="88" />
+        </floors>
+      </d>
+      <d difficulty="12" money="25" layout="2" shadows="2" terrain="27" camouflage="0" nature="299" secret="Paralysis" shop="8" mhouse="100" pokemon="7" items="5" traps="6">
+        <floors>
+          <part floor="89" />
+        </floors>
+      </d>
+      <d difficulty="12" money="25" layout="2" shadows="2" terrain="28" camouflage="0" nature="299" secret="Paralysis" shop="8" mhouse="6" pokemon="7" items="5" traps="6">
+        <floors>
+          <part start="90" end="98" />
+        </floors>
+      </d>
+      <d difficulty="12" money="25" layout="0" shadows="2" terrain="28" camouflage="0" nature="299" secret="Paralysis">
+        <floors>
+          <part floor="99" />
         </floors>
       </d>
     </data>
+    <traps>
+      <ids>0,1,2,3,4,13,14,15,17,16,5,6,9,10,11,7,8</ids>
+      <chances>30,5,5,5,5,5,5,5,5,4,3,3,3,3,3,2,2</chances>
+      <floors>
+        <part start="1" end="98" />
+      </floors>
+    </traps>
   </dungeon>
   <dungeon id="25" floors="99" down="true">
     <encounters>
