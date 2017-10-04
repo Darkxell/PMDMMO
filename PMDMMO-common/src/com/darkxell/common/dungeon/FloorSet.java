@@ -25,7 +25,11 @@ public class FloorSet
 	{
 		this.set = new ArrayList<Pair<Integer, Integer>>();
 		for (Element part : xml.getChildren("part"))
-			this.set.add(new Pair<Integer, Integer>(Integer.parseInt(part.getAttributeValue("start")), Integer.parseInt(part.getAttributeValue("end"))));
+		{
+			if (part.getAttribute("floor") != null) this.set.add(new Pair<Integer, Integer>(Integer.parseInt(part.getAttributeValue("floor")), Integer
+					.parseInt(part.getAttributeValue("floor"))));
+			else this.set.add(new Pair<Integer, Integer>(Integer.parseInt(part.getAttributeValue("start")), Integer.parseInt(part.getAttributeValue("end"))));
+		}
 	}
 
 	public FloorSet(int start, int end)
@@ -76,7 +80,11 @@ public class FloorSet
 	{
 		Element root = new Element(XML_ROOT);
 		for (Pair<Integer, Integer> part : this.set)
+		{
+			if (part.getKey().intValue() == part.getValue().intValue()) root.addContent(new Element("part").setAttribute("floor",
+					Integer.toString(part.getKey())));
 			root.addContent(new Element("part").setAttribute("start", Integer.toString(part.getKey())).setAttribute("end", Integer.toString(part.getValue())));
+		}
 		return root;
 	}
 
