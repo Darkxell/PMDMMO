@@ -8,6 +8,7 @@ package com.darkxell.gameserver;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
+import javax.enterprise.context.ApplicationScoped;
 import javax.json.JsonObject;
 import javax.websocket.Session;
 
@@ -15,6 +16,7 @@ import javax.websocket.Session;
  *
  * @author Darkxell
  */
+@ApplicationScoped
 public class GameSessionHandler {
     
     private final Set<Session> sessions = new HashSet<>();

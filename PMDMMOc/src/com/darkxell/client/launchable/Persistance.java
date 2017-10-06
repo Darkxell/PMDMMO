@@ -1,6 +1,5 @@
 package com.darkxell.client.launchable;
 
-import java.net.URI;
 import java.util.Random;
 
 import com.darkxell.client.mechanics.chat.ChatBox;

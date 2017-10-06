@@ -19,6 +19,7 @@ import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
 import com.darkxell.gameserver.freezones.FreezonePositionHandler;
+import com.darkxell.gameserver.freezones.SessionOpenHandler;
 
 /**
  *
@@ -39,6 +40,8 @@ public class GameServer {
      @OnClose
     public void close(Session session) {
         sessionHandler.removeSession(session);
+        if(SessionsInfoHolder.infoExists(session.getId()))
+            SessionsInfoHolder.removeInfo(session.getId());
     }
 
     @OnError
@@ -51,7 +54,10 @@ public class GameServer {
     public void handleMessage(String message, Session session) {
         try (JsonReader reader = Json.createReader(new StringReader(message))) {
             JsonObject jsonMessage = reader.readObject();
-            if ("freezoneposition".equals(jsonMessage.getString("action"))) {
+            if ("sessioninfo".equals(jsonMessage.getString("action"))) {
+                SessionOpenHandler soh = new SessionOpenHandler();
+                soh.handleMessage(jsonMessage, session, sessionHandler);
+            }else if ("freezoneposition".equals(jsonMessage.getString("action"))) {
                 FreezonePositionHandler fph = new FreezonePositionHandler();
                 fph.handleMessage(jsonMessage, session,sessionHandler);
             }

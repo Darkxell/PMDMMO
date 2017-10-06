@@ -13,7 +13,7 @@ public class GameSessionInfo {
     
     // COMMON DATA
     
-    public boolean isconnected = true;
+    public boolean isconnected = false;
     public String name = "DefaultServerName";
     
     // FREEZONE DATA

@@ -3,6 +3,7 @@ package com.darkxell.client.state;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
+import com.darkxell.client.launchable.GameSocketEndpoint;
 import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
@@ -15,6 +16,8 @@ import com.darkxell.client.resources.images.Hud;
 import com.darkxell.client.resources.music.SoundsHolder;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.common.util.DoubleRectangle;
+import com.darkxell.common.util.Logger;
+import com.eclipsesource.json.JsonObject;
 
 public class FreezoneExploreState extends AbstractState {
 
@@ -144,6 +147,7 @@ public class FreezoneExploreState extends AbstractState {
 	}
 
 	private boolean musicset = false;
+	private int serversynccooldown = 0;
 
 	@Override
 	public void update() {
@@ -162,6 +166,30 @@ public class FreezoneExploreState extends AbstractState {
 			musicset = true;
 			Persistance.soundmanager.setBackgroundMusic(SoundsHolder.getSong(Persistance.currentmap.freezonebgm));
 		}
+		// Sends the serverync message if it's time to do so
+		if (serversynccooldown > 60 && serversynccooldown != -1)
+			if (Persistance.socketendpoint.connectionStatus() != GameSocketEndpoint.CONNECTED) {
+				serversynccooldown = -1;
+				Logger.w(
+						"Game socket endpoint is not connected, server sync has been deactivated for this FreezoneExploreState.");
+			} else {
+				serversynccooldown = 0;
+				try {
+					String message = "";
+					JsonObject mess = new JsonObject().add("action", "freezoneposition")
+							.add("posfx",Persistance.currentplayer.x)
+							.add("posfy",Persistance.currentplayer.y)
+							.add("currentpokemon",Persistance.currentplayer.playersprite.pointer.pokemonID)
+							.add("freezoneid",Persistance.currentmap.getMapLocation().id);
+					message = mess.toString();
+					Persistance.socketendpoint.sendMessage(message);
+				} catch (Exception e) {
+					Logger.w("Could not send freezone information message to the server.");
+					e.printStackTrace();
+				}
+			}
+		else
+			++serversynccooldown;
 		for (int i = 0; i < Persistance.currentmap.warpzones.size(); i++)
 			if (Persistance.currentmap.warpzones.get(i).hitbox.intersects(
 					Persistance.currentplayer.getHitboxAt(Persistance.currentplayer.x, Persistance.currentplayer.y))) {

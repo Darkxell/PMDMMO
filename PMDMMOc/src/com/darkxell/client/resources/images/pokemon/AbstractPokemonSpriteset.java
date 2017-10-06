@@ -40,9 +40,11 @@ public class AbstractPokemonSpriteset
 	private BufferedImage sprites;
 	public final int spriteWidth;
 	final PokemonSpritesetState[] states;
-
-	protected AbstractPokemonSpriteset(String path, Element xml)
+	public final int pokemonID;
+	
+	protected AbstractPokemonSpriteset(String path, Element xml,int pokemonID)
 	{
+		this.pokemonID = pokemonID;
 		if (xml.getAttribute("size") != null) this.spriteWidth = this.spriteHeight = Integer.parseInt(xml.getAttributeValue("size"));
 		else
 		{

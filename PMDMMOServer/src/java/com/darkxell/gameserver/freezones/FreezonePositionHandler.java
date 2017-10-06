@@ -24,19 +24,21 @@ public class FreezonePositionHandler implements MessageHandler{
     @Override
     public void handleMessage(JsonObject json, Session from,GameSessionHandler sessionshandler) {
         try{
-            if(!SessionsInfoHolder.infoExists(from.getId()))
+            if(!SessionsInfoHolder.infoExists(from.getId())){
                 SessionsInfoHolder.createDefaultInfo(from.getId());
+                System.out.println("Recieved a message from an unknown session, created new information set.");
+            }
+                
             GameSessionInfo si = SessionsInfoHolder.getInfo(from.getId());
             si.posFX = json.getInt("posfx", 0);
             si.posFY = json.getInt("posfy", 0);
             si.currentPokemon = json.getString("currentpokemon", "1");
             si.freezoneID = json.getString("freezoneid", "base");
-            
             Iterator it = SessionsInfoHolder.getMap().entrySet().iterator();
             while (it.hasNext()) {
                 Map.Entry pair = (Map.Entry)it.next();
                 GameSessionInfo gsi = (GameSessionInfo)pair.getValue();
-                if(gsi.freezoneID.equals(si.freezoneID)){
+                if(gsi.freezoneID.equals(si.freezoneID) && gsi.isconnected && si.isconnected){
                     JsonObject value = Json.createObjectBuilder()
                             .add("action","freezoneposition")
                             .add("name",gsi.name)
@@ -47,7 +49,6 @@ public class FreezonePositionHandler implements MessageHandler{
                             .build();
                     sessionshandler.sendToSession(from, value);
                 }
-                it.remove();
             }
         }catch(Exception e){
             e.printStackTrace();
