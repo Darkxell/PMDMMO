@@ -1,6 +1,7 @@
-package com.darkxell.client.mechanics.chat;
+package com.darkxell.client.launchable;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 
 import javax.websocket.ClientEndpoint;
 import javax.websocket.CloseReason;
@@ -12,24 +13,33 @@ import javax.websocket.Session;
 import javax.websocket.WebSocketContainer;
 
 import com.darkxell.common.util.Logger;
-import com.eclipsesource.json.Json;
-import com.eclipsesource.json.JsonValue;
 
 @ClientEndpoint
-public class ChatClientEndpoint {
-	
-	public static final byte CONNECTING = 0, CONNECTED = 1, FAILED = 2;
-	
-	Session userSession = null;
-	private ChatBox holder;
-	private final URI endpointURI;
-	private byte connectionStatus = CONNECTING;
+public class GameSocketEndpoint {
 
-	public ChatClientEndpoint(URI endpointURI, ChatBox parent) {
-		this.holder = parent;
-		this.endpointURI = endpointURI;
+	public static final byte CONNECTING = 0, CONNECTED = 1, FAILED = 2;
+
+	Session userSession = null;
+	private URI endpointURI;
+	private byte connectionStatus = CONNECTING;
+	private Thread thr;
+
+	public GameSocketEndpoint() {
+		try {
+			this.endpointURI = new URI("ws://" + ClientSettings.getSetting(ClientSettings.SERVER_ADDRESS) + "game");
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
+		thr = new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				connect();
+			}
+		});
+		thr.start();
 	}
-	
+
 	public void connect() {
 		try {
 			WebSocketContainer container = ContainerProvider.getWebSocketContainer();
@@ -37,10 +47,11 @@ public class ChatClientEndpoint {
 		} catch (Exception e) {
 			e.printStackTrace();
 			this.connectionStatus = FAILED;
-			//this.holder.messages.add(new ChatMessage("", "Connection to the server failed.", Color.RED, Color.RED, "ERROR", Color.RED));
+			// this.holder.messages.add(new ChatMessage("", "Connection to the
+			// server failed.", Color.RED, Color.RED, "ERROR", Color.RED));
 		}
 	}
-	
+
 	public byte connectionStatus() {
 		return this.connectionStatus;
 	}
@@ -53,7 +64,7 @@ public class ChatClientEndpoint {
 	 */
 	@OnOpen
 	public void onOpen(Session userSession) {
-		Logger.i("Chat connected to the server sucessfully.");
+		Logger.i("Game socket connected to the server sucessfully.");
 		this.connectionStatus = CONNECTED;
 		this.userSession = userSession;
 	}
@@ -68,36 +79,36 @@ public class ChatClientEndpoint {
 	 */
 	@OnClose
 	public void onClose(Session userSession, CloseReason reason) {
-		Logger.i("Chat socket connection closed.");
+		Logger.i("Game socket connection closed.");
 		this.connectionStatus = FAILED;
 		this.userSession = null;
 	}
 
 	/**
-	 * Callback hook for Message Events. This method will be invoked when a
-	 * client send a message.
+	 * Callback hook for Message Events. This method will be invoked when the
+	 * server sends informations to the client.
 	 *
 	 * @param message
 	 *            The text message
 	 */
 	@OnMessage
 	public void onMessage(String message) {
-		try {
-			JsonValue obj = Json.parse(message);
-			holder.messages.add(new ChatMessage(obj));
-		} catch (Exception e) {
-			Logger.w("Could not add the recieved message to messages list : " + message);
-			e.printStackTrace();
-		}
+		/*
+		 * try { JsonValue obj = Json.parse(message); holder.messages.add(new
+		 * ChatMessage(obj)); } catch (Exception e) {
+		 * Logger.w("Could not add the recieved message to messages list : " +
+		 * message); e.printStackTrace(); }
+		 */
 
 	}
 
 	/**
-	 * Send a message.
+	 * Send a message to the server.
 	 *
 	 * @param message
 	 */
 	public void sendMessage(String message) {
 		this.userSession.getAsyncRemote().sendText(message);
 	}
+
 }

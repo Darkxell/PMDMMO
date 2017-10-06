@@ -1,5 +1,6 @@
 package com.darkxell.client.launchable;
 
+import java.net.URI;
 import java.util.Random;
 
 import com.darkxell.client.mechanics.chat.ChatBox;
@@ -31,6 +32,7 @@ public abstract class Persistance {
 	public static SoundManager soundmanager;
 	public static ChatBox chatbox = new ChatBox();
 	public static AbstractDisplayMap displaymap = new LocalMap();
+	public static GameSocketEndpoint socketendpoint = new GameSocketEndpoint();
 
 	// FREEZONE RELATED OBJECTS
 	public static FreezoneMap currentmap;
