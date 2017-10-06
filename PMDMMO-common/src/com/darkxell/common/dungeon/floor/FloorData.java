@@ -173,20 +173,26 @@ public class FloorData
 	{
 		Element xml = new Element(XML_ROOT);
 		xml.addContent(this.floors.toXML());
-		if (this.difficulty != 0) XMLUtils.setAttribute(xml, "difficulty", this.difficulty, previous != null ? previous.difficulty : 0);
-		if (this.baseMoney != 0) XMLUtils.setAttribute(xml, "money", this.baseMoney, previous != null ? previous.baseMoney : 0);
-		if (this.layout != 0) XMLUtils.setAttribute(xml, "layout", this.layout, previous != null ? previous.layout : 0);
-		if (this.terrainSpriteset != 0) XMLUtils.setAttribute(xml, "terrain", this.terrainSpriteset, previous != null ? previous.terrainSpriteset : 0);
-		if (this.shadows != 0) XMLUtils.setAttribute(xml, "shadows", this.shadows, previous != null ? previous.shadows : 0);
-		XMLUtils.setAttribute(xml, "camouflage", this.camouflageType.id, previous != null ? previous.camouflageType.id : 0);
-		if (this.naturePower != 0) XMLUtils.setAttribute(xml, "nature", this.naturePower, previous != null ? previous.naturePower : 0);
-		if (this.secretPower != null) XMLUtils.setAttribute(xml, "secret", this.secretPower, previous != null ? previous.secretPower : null);
-		if (this.shopChance != 0) XMLUtils.setAttribute(xml, "shop", this.shopChance, previous != null ? previous.shopChance : 0);
-		if (this.monsterHouseChance != 0) XMLUtils.setAttribute(xml, "mhouse", this.monsterHouseChance, previous != null ? previous.monsterHouseChance : 0);
-		if (this.itemDensity != 0) XMLUtils.setAttribute(xml, "items", this.itemDensity, previous != null ? previous.itemDensity : 0);
-		if (this.pokemonDensity != 0) XMLUtils.setAttribute(xml, "pokemon", this.pokemonDensity, previous != null ? previous.pokemonDensity : 0);
-		if (this.trapDensity != 0) XMLUtils.setAttribute(xml, "traps", this.trapDensity, previous != null ? previous.trapDensity : 0);
-		if (this.buriedItemDensity != 0) XMLUtils.setAttribute(xml, "buried", this.buriedItemDensity, previous != null ? previous.buriedItemDensity : 0);
+		if (previous != null || this.difficulty != 0) XMLUtils.setAttribute(xml, "difficulty", this.difficulty, previous != null ? previous.difficulty : 0);
+		if (previous != null || this.baseMoney != 0) XMLUtils.setAttribute(xml, "money", this.baseMoney, previous != null ? previous.baseMoney : 0);
+		if (previous != null || this.layout != 0) XMLUtils.setAttribute(xml, "layout", this.layout, previous != null ? previous.layout : 0);
+		if (previous != null || this.terrainSpriteset != 0) XMLUtils.setAttribute(xml, "terrain", this.terrainSpriteset,
+				previous != null ? previous.terrainSpriteset : 0);
+		if (previous != null || this.shadows != 0) XMLUtils.setAttribute(xml, "shadows", this.shadows, previous != null ? previous.shadows : 0);
+		if (previous != null || this.camouflageType.id != 0) XMLUtils.setAttribute(xml, "camouflage", this.camouflageType.id,
+				previous != null ? previous.camouflageType.id : 0);
+		if (previous != null || this.naturePower != 0) XMLUtils.setAttribute(xml, "nature", this.naturePower, previous != null ? previous.naturePower : 0);
+		if (previous != null || this.secretPower != null) XMLUtils
+				.setAttribute(xml, "secret", this.secretPower, previous != null ? previous.secretPower : null);
+		if (previous != null || this.shopChance != 0) XMLUtils.setAttribute(xml, "shop", this.shopChance, previous != null ? previous.shopChance : 0);
+		if (previous != null || this.monsterHouseChance != 0) XMLUtils.setAttribute(xml, "mhouse", this.monsterHouseChance,
+				previous != null ? previous.monsterHouseChance : 0);
+		if (previous != null || this.itemDensity != 0) XMLUtils.setAttribute(xml, "items", this.itemDensity, previous != null ? previous.itemDensity : 0);
+		if (previous != null || this.pokemonDensity != 0) XMLUtils.setAttribute(xml, "pokemon", this.pokemonDensity, previous != null ? previous.pokemonDensity
+				: 0);
+		if (previous != null || this.trapDensity != 0) XMLUtils.setAttribute(xml, "traps", this.trapDensity, previous != null ? previous.trapDensity : 0);
+		if (previous != null || this.buriedItemDensity != 0) XMLUtils.setAttribute(xml, "buried", this.buriedItemDensity,
+				previous != null ? previous.buriedItemDensity : 0);
 		return xml;
 	}
 
