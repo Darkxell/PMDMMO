@@ -118,20 +118,20 @@ public class FloorData
 	public void load(Element xml)
 	{
 		this.floors = new FloorSet(xml.getChild(FloorSet.XML_ROOT));
-		this.difficulty = XMLUtils.getAttribute(xml, "difficulty", 0);
-		this.baseMoney = XMLUtils.getAttribute(xml, "money", 0);
-		this.layout = XMLUtils.getAttribute(xml, "layout", 0);
-		this.terrainSpriteset = XMLUtils.getAttribute(xml, "terrain", 0);
-		this.shadows = XMLUtils.getAttribute(xml, "shadows", (byte) 0);
-		this.camouflageType = PokemonType.find(XMLUtils.getAttribute(xml, "camouflage", 0));
-		this.naturePower = XMLUtils.getAttribute(xml, "nature", 0);
+		this.difficulty = XMLUtils.getAttribute(xml, "difficulty", this.difficulty);
+		this.baseMoney = XMLUtils.getAttribute(xml, "money", this.baseMoney);
+		this.layout = XMLUtils.getAttribute(xml, "layout", this.layout);
+		this.terrainSpriteset = XMLUtils.getAttribute(xml, "terrain", this.terrainSpriteset);
+		this.shadows = XMLUtils.getAttribute(xml, "shadows", this.shadows);
+		this.camouflageType = PokemonType.find(XMLUtils.getAttribute(xml, "camouflage", this.camouflageType == null ? 0 : this.camouflageType.id));
+		this.naturePower = XMLUtils.getAttribute(xml, "nature", this.naturePower);
 		this.secretPower = xml.getAttributeValue("secret");
-		this.shopChance = XMLUtils.getAttribute(xml, "shop", (byte) 0);
-		this.monsterHouseChance = XMLUtils.getAttribute(xml, "mhouse", (byte) 0);
-		this.itemDensity = XMLUtils.getAttribute(xml, "items", (short) 0);
-		this.pokemonDensity = XMLUtils.getAttribute(xml, "pokemon", (short) 0);
-		this.trapDensity = XMLUtils.getAttribute(xml, "traps", (short) 0);
-		this.buriedItemDensity = XMLUtils.getAttribute(xml, "buried", (short) 0);
+		this.shopChance = XMLUtils.getAttribute(xml, "shop", this.shopChance);
+		this.monsterHouseChance = XMLUtils.getAttribute(xml, "mhouse", this.monsterHouseChance);
+		this.itemDensity = XMLUtils.getAttribute(xml, "items", this.itemDensity);
+		this.pokemonDensity = XMLUtils.getAttribute(xml, "pokemon", this.pokemonDensity);
+		this.trapDensity = XMLUtils.getAttribute(xml, "traps", this.trapDensity);
+		this.buriedItemDensity = XMLUtils.getAttribute(xml, "buried", this.buriedItemDensity);
 	}
 
 	public short monsterHouseChance()
@@ -173,26 +173,26 @@ public class FloorData
 	{
 		Element xml = new Element(XML_ROOT);
 		xml.addContent(this.floors.toXML());
-		if (previous != null || this.difficulty != 0) XMLUtils.setAttribute(xml, "difficulty", this.difficulty, previous != null ? previous.difficulty : 0);
-		if (previous != null || this.baseMoney != 0) XMLUtils.setAttribute(xml, "money", this.baseMoney, previous != null ? previous.baseMoney : 0);
-		if (previous != null || this.layout != 0) XMLUtils.setAttribute(xml, "layout", this.layout, previous != null ? previous.layout : 0);
+		if (previous != null || this.difficulty != 0) XMLUtils.setAttribute(xml, "difficulty", this.difficulty, previous != null ? previous.difficulty : -1);
+		if (previous != null || this.baseMoney != 0) XMLUtils.setAttribute(xml, "money", this.baseMoney, previous != null ? previous.baseMoney : -1);
+		if (previous != null || this.layout != 0) XMLUtils.setAttribute(xml, "layout", this.layout, previous != null ? previous.layout : -1);
 		if (previous != null || this.terrainSpriteset != 0) XMLUtils.setAttribute(xml, "terrain", this.terrainSpriteset,
-				previous != null ? previous.terrainSpriteset : 0);
-		if (previous != null || this.shadows != 0) XMLUtils.setAttribute(xml, "shadows", this.shadows, previous != null ? previous.shadows : 0);
+				previous != null ? previous.terrainSpriteset : -1);
+		if (previous != null || this.shadows != 0) XMLUtils.setAttribute(xml, "shadows", this.shadows, previous != null ? previous.shadows : -1);
 		if (previous != null || this.camouflageType.id != 0) XMLUtils.setAttribute(xml, "camouflage", this.camouflageType.id,
-				previous != null ? previous.camouflageType.id : 0);
-		if (previous != null || this.naturePower != 0) XMLUtils.setAttribute(xml, "nature", this.naturePower, previous != null ? previous.naturePower : 0);
+				previous != null ? previous.camouflageType.id : -1);
+		if (previous != null || this.naturePower != 0) XMLUtils.setAttribute(xml, "nature", this.naturePower, previous != null ? previous.naturePower : -1);
 		if (previous != null || this.secretPower != null) XMLUtils
 				.setAttribute(xml, "secret", this.secretPower, previous != null ? previous.secretPower : null);
-		if (previous != null || this.shopChance != 0) XMLUtils.setAttribute(xml, "shop", this.shopChance, previous != null ? previous.shopChance : 0);
+		if (previous != null || this.shopChance != 0) XMLUtils.setAttribute(xml, "shop", this.shopChance, previous != null ? previous.shopChance : -1);
 		if (previous != null || this.monsterHouseChance != 0) XMLUtils.setAttribute(xml, "mhouse", this.monsterHouseChance,
-				previous != null ? previous.monsterHouseChance : 0);
-		if (previous != null || this.itemDensity != 0) XMLUtils.setAttribute(xml, "items", this.itemDensity, previous != null ? previous.itemDensity : 0);
+				previous != null ? previous.monsterHouseChance : -1);
+		if (previous != null || this.itemDensity != 0) XMLUtils.setAttribute(xml, "items", this.itemDensity, previous != null ? previous.itemDensity : -1);
 		if (previous != null || this.pokemonDensity != 0) XMLUtils.setAttribute(xml, "pokemon", this.pokemonDensity, previous != null ? previous.pokemonDensity
-				: 0);
-		if (previous != null || this.trapDensity != 0) XMLUtils.setAttribute(xml, "traps", this.trapDensity, previous != null ? previous.trapDensity : 0);
+				: -1);
+		if (previous != null || this.trapDensity != 0) XMLUtils.setAttribute(xml, "traps", this.trapDensity, previous != null ? previous.trapDensity : -1);
 		if (previous != null || this.buriedItemDensity != 0) XMLUtils.setAttribute(xml, "buried", this.buriedItemDensity,
-				previous != null ? previous.buriedItemDensity : 0);
+				previous != null ? previous.buriedItemDensity : -1);
 		return xml;
 	}
 

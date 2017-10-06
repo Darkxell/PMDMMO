@@ -363,7 +363,7 @@
           <part start="8" end="10" />
         </floors>
       </d>
-      <d nature="205" secret="Sleep">
+      <d layout="0" nature="205" secret="Sleep">
         <floors>
           <part floor="13" />
         </floors>
@@ -1317,8 +1317,8 @@
           <part start="1" end="4" />
         </floors>
       </d>
-      <d layout="0">
-        <floors layout="0">
+      <d layout="0" camouflage="0">
+        <floors>
           <part floor="5" />
         </floors>
       </d>
@@ -1495,7 +1495,7 @@
           <part start="3" end="4" />
         </floors>
       </d>
-      <d nature="299" secret="Paralysis">
+      <d camouflage="0" nature="299" secret="Paralysis">
         <floors>
           <part floor="5" />
         </floors>
@@ -2782,7 +2782,7 @@
           <part start="20" end="24" />
         </floors>
       </d>
-      <d money="5" items="6">
+      <d money="5" layout="0" items="6">
         <floors>
           <part floor="25" />
         </floors>
@@ -2803,12 +2803,12 @@
           <except>55</except>
         </floors>
       </d>
-      <d items="6">
+      <d layout="0" items="6">
         <floors>
           <part floor="55" />
         </floors>
       </d>
-      <d difficulty="11" money="7" layout="2" mhouse="9" items="4">
+      <d difficulty="11" money="7" layout="2" items="4">
         <floors>
           <part start="60" end="69" />
         </floors>
@@ -2824,12 +2824,12 @@
           <part floor="75" />
         </floors>
       </d>
-      <d money="12" layout="2" mhouse="9">
+      <d money="12" layout="2">
         <floors>
           <part start="87" end="98" />
         </floors>
       </d>
-      <d camouflage="10" nature="538" secret="Attack down 1 stage">
+      <d layout="0" camouflage="10" nature="538" secret="Attack down 1 stage">
         <floors>
           <part floor="99" />
         </floors>
@@ -2853,7 +2853,7 @@
       </group>
     </items>
     <data>
-      <d difficulty="7" money="6" layout="2" terrain="18" shadows="1" camouflage="5" nature="504" secret="Confusion" items="4" pokemon="-1" traps="5">
+      <d difficulty="7" money="6" layout="2" terrain="18" shadows="1" camouflage="5" nature="504" secret="Confusion" items="4" traps="5">
         <floors>
           <part start="1" end="9" />
         </floors>
@@ -3870,12 +3870,12 @@
           <part start="14" end="19" />
         </floors>
       </d>
-      <d difficulty="8">
+      <d difficulty="8" layout="0">
         <floors>
           <part floor="20" />
         </floors>
       </d>
-      <d layout="2" shop="50" mhouse="6" items="5" pokemon="7" traps="6">
+      <d layout="2" shop="50" mhouse="6" pokemon="7">
         <floors>
           <part floor="21" />
         </floors>
@@ -3890,7 +3890,7 @@
           <part floor="29" />
         </floors>
       </d>
-      <d difficulty="9" terrain="24" shadows="1" nature="299" secret="Paralysis" mhouse="6">
+      <d difficulty="9" terrain="24" shadows="1" camouflage="0" nature="299" secret="Paralysis" mhouse="6">
         <floors>
           <part start="30" end="35" />
         </floors>
@@ -3931,7 +3931,7 @@
           <part start="60" end="69" />
         </floors>
       </d>
-      <d terrain="8" shadows="2" nature="299" secret="Paralysis" mhouse="100">
+      <d terrain="8" shadows="2" camouflage="0" nature="299" secret="Paralysis" mhouse="100">
         <floors>
           <part floor="70" />
         </floors>
@@ -4254,12 +4254,12 @@
           <part start="1" end="14" />
         </floors>
       </d>
-      <d shadows="1">
+      <d layout="0" shadows="1">
         <floors>
           <part floor="15" />
         </floors>
       </d>
-      <d layout="2" items="5" pokemon="6" traps="6" buried="3">
+      <d layout="2">
         <floors>
           <part start="16" end="20" />
         </floors>
@@ -4276,7 +4276,7 @@
           <part floor="35" />
         </floors>
       </d>
-      <d difficulty="9" layout="2" items="5" pokemon="5" traps="6" buried="3">
+      <d difficulty="9" layout="2" pokemon="5">
         <floors>
           <part start="30" end="35" />
         </floors>
@@ -4504,7 +4504,7 @@
           <part start="20" end="24" />
         </floors>
       </d>
-      <d camouflage="5">
+      <d layout="0" camouflage="5">
         <floors>
           <part floor="25" />
         </floors>
@@ -8136,7 +8136,7 @@
           <part start="20" end="23" />
         </floors>
       </d>
-      <d terrain="27" nature="299" secret="Paralysis">
+      <d terrain="27" camouflage="0" nature="299" secret="Paralysis">
         <floors>
           <part start="24" end="29" />
         </floors>
@@ -8496,7 +8496,7 @@
           <part start="1" end="2" />
         </floors>
       </d>
-      <d terrain="24" nature="299" secret="Paralysis">
+      <d terrain="24" camouflage="0" nature="299" secret="Paralysis">
         <floors>
           <part start="3" end="5" />
         </floors>
@@ -9691,7 +9691,7 @@
           <part start="1" end="15" />
         </floors>
       </d>
-      <d terrain="8" nature="299" secret="Paralysis">
+      <d terrain="8" camouflage="0" nature="299" secret="Paralysis">
         <floors>
           <part start="16" end="19" />
         </floors>

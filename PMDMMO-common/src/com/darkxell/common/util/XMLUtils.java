@@ -170,7 +170,7 @@ public final class XMLUtils
 
 	public static void setAttribute(Element element, String id, String value, String defaultValue)
 	{
-		if (!value.equals(defaultValue)) element.setAttribute(id, value);
+		if (value != null && !value.equals(defaultValue)) element.setAttribute(id, value);
 	}
 
 	public static String toXML(short[] array)
