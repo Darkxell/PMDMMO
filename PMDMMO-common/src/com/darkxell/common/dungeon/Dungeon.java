@@ -41,14 +41,6 @@ public class Dungeon
 	private final ArrayList<DungeonItem> shopItems;
 	/** The number of turns to spend on a single floor before being kicked. */
 	public final int timeLimit;
-	/** Number of Items the entering team is allowed to carry. -1 for no limit. */
-	// public final int teamItems;
-	/** Level the entering team is set to. -1 for no change. */
-	// public final int teamLevel;
-	/** Number of members the entering team is allowed to have. */
-	// public final int teamMembers;
-	/** Amount of Money the entering team is allowed to carry. -1 for no limit. */
-	// public final int teamMoney;
 	/** Lists the Traps found in this Dungeon. */
 	private final ArrayList<DungeonTrap> traps;
 	/** The Weather in this Dungeon (Weather ID -> floors). */
@@ -62,8 +54,6 @@ public class Dungeon
 		this.recruitsAllowed = XMLUtils.getAttribute(xml, "recruits", true);
 		this.timeLimit = XMLUtils.getAttribute(xml, "limit", 2000);
 		this.linkedTo = XMLUtils.getAttribute(xml, "linked", -1);
-		/* this.teamItems = xml.getAttribute("t-items") == null ? -1 : Integer.parseInt(xml.getAttributeValue("t-items")); this.teamLevel = xml.getAttribute("t-level") == null ? -1 : Integer.parseInt(xml.getAttributeValue("t-level")); this.teamMembers = xml.getAttribute("t-members") == null ? 4 :
-		 * Integer.parseInt(xml.getAttributeValue("t-members")); this.teamMoney = xml.getAttribute("t-money") == null ? -1 : Integer.parseInt(xml.getAttributeValue("t-money")); */
 
 		this.pokemon = new ArrayList<DungeonEncounter>();
 		for (Element pokemon : xml.getChild("encounters").getChildren(DungeonEncounter.XML_ROOT))
@@ -95,7 +85,16 @@ public class Dungeon
 
 		this.floorData = new ArrayList<FloorData>();
 		for (Element data : xml.getChild("data").getChildren(FloorData.XML_ROOT))
-			this.floorData.add(new FloorData(data));
+		{
+			FloorData d = null;
+			if (this.floorData.isEmpty()) d = new FloorData(data);
+			else
+			{
+				d = this.floorData.get(this.floorData.size() - 1).copy();
+				d.load(data);
+			}
+			this.floorData.add(d);
+		}
 
 		this.weather = new HashMap<Integer, FloorSet>();
 		if (xml.getChild("weather") != null) for (Element data : xml.getChild("weather").getChildren("w"))
@@ -113,7 +112,6 @@ public class Dungeon
 		this.recruitsAllowed = recruits;
 		this.timeLimit = timeLimit;
 		this.linkedTo = linkedTo;
-		/* this.teamItems = teamItems; this.teamLevel = teamLevel; this.teamMembers = teamMembers; this.teamMoney = teamMoney; */
 		this.pokemon = pokemon;
 		this.items = items;
 		this.shopItems = shopItems;
@@ -127,7 +125,7 @@ public class Dungeon
 	public FloorData getData(int floor)
 	{
 		for (FloorData data : this.floorData)
-			if (data.floors.contains(floor)) return data;
+			if (data.floors().contains(floor)) return data;
 		return this.floorData.get(0);
 	}
 
@@ -213,7 +211,7 @@ public class Dungeon
 
 		Element data = new Element("data");
 		for (FloorData d : this.floorData)
-			data.addContent(d.toXML());
+			data.addContent(d.toXML(this.floorData.indexOf(d) == 0 ? null : this.floorData.get(this.floorData.indexOf(d) - 1)));
 		root.addContent(data);
 
 		if (!this.weather.isEmpty())

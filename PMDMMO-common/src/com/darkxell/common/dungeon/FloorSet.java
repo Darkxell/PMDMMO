@@ -53,6 +53,19 @@ public class FloorSet
 		return false;
 	}
 
+	/** @return A copy of this Floor set. */
+	public FloorSet copy()
+	{
+		ArrayList<Pair<Integer, Integer>> s = new ArrayList<Pair<Integer, Integer>>();
+		for (Pair<Integer, Integer> pair : this.set)
+			s.add(new Pair<Integer, Integer>(pair.getKey(), pair.getValue()));
+
+		ArrayList<Integer> e = new ArrayList<Integer>();
+		e.addAll(this.except);
+
+		return new FloorSet(s, e);
+	}
+
 	/** @return The number of Floors in this Set. */
 	public int floorCount()
 	{
@@ -90,7 +103,8 @@ public class FloorSet
 		{
 			if (part.getKey().intValue() == part.getValue().intValue()) root.addContent(new Element("part").setAttribute("floor",
 					Integer.toString(part.getKey())));
-			root.addContent(new Element("part").setAttribute("start", Integer.toString(part.getKey())).setAttribute("end", Integer.toString(part.getValue())));
+			else root.addContent(new Element("part").setAttribute("start", Integer.toString(part.getKey())).setAttribute("end",
+					Integer.toString(part.getValue())));
 		}
 		if (this.except.size() != 0) root.addContent(XMLUtils.toXML("except", this.except));
 		return root;

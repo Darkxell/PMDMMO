@@ -25,8 +25,8 @@ public class FloorRenderer {
 
 	public FloorRenderer(Floor floor) {
 		this.floor = floor;
-		if (new File("resources/tilesets/dungeon/dungeon-" + floor.data.terrainSpriteset + ".png").exists()) this.tileset = new FloorDungeonTileset(
-				"resources/tilesets/dungeon/dungeon-" + floor.data.terrainSpriteset + ".png");
+		if (new File("resources/tilesets/dungeon/dungeon-" + floor.data.terrainSpriteset() + ".png").exists()) this.tileset = new FloorDungeonTileset(
+				"resources/tilesets/dungeon/dungeon-" + floor.data.terrainSpriteset() + ".png");
 		else this.tileset = new FloorDungeonTileset("resources/tilesets/dungeon/dungeon-0.png");
 	}
 
