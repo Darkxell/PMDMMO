@@ -107,7 +107,8 @@ public class GameSocketEndpoint {
 	public void onMessage(String message) {
 		try {
 			JsonValue obj = Json.parse(message);
-			Logger.d("Message from server : " + message);
+			if (obj.asObject().getString("action", "").equals("freezoneposition") && Persistance.currentmap != null)
+				Persistance.currentmap.updateOtherPlayers(obj);
 		} catch (Exception e) {
 			Logger.w("Could not read the recieved message from the server : " + message);
 			e.printStackTrace();

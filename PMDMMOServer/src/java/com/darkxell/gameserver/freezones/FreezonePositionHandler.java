@@ -30,8 +30,8 @@ public class FreezonePositionHandler implements MessageHandler{
             }
                 
             GameSessionInfo si = SessionsInfoHolder.getInfo(from.getId());
-            si.posFX = json.getInt("posfx", 0);
-            si.posFY = json.getInt("posfy", 0);
+            si.posFX = json.getJsonNumber("posfx").doubleValue();
+            si.posFY = json.getJsonNumber("posfy").doubleValue();
             si.currentPokemon = json.getString("currentpokemon", "1");
             si.freezoneID = json.getString("freezoneid", "base");
             Iterator it = SessionsInfoHolder.getMap().entrySet().iterator();

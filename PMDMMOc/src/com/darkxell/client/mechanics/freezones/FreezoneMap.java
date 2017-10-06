@@ -7,8 +7,10 @@ import java.util.List;
 import org.jdom2.input.SAXBuilder;
 
 import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.mechanics.freezones.entities.OtherPlayerEntity;
 import com.darkxell.client.resources.images.AbstractTileset;
 import com.darkxell.client.state.map.LocalMap.LOCALMAPLOCATION;
+import com.eclipsesource.json.JsonValue;
 
 /**
  * A tiled map of a freezone. Freezones are the areas where you can move freely
@@ -76,5 +78,25 @@ public abstract class FreezoneMap {
 	}
 
 	public abstract LOCALMAPLOCATION getMapLocation();
+
+	public void updateOtherPlayers(JsonValue data) {
+		String dataname = data.asObject().getString("name", "");
+		double pfx = data.asObject().getDouble("posfx", 0d);
+		double pfy = data.asObject().getDouble("posfy", 0d);
+		int spriteID = Integer.parseInt(data.asObject().getString("currentpokemon", ""));
+		boolean found = false;
+		if (!dataname.equals("")) {
+			for (int i = 0; i < entities.size(); i++)
+				if (entities.get(i) instanceof OtherPlayerEntity
+						&& ((OtherPlayerEntity) entities.get(i)).name.equals(dataname)) {
+					OtherPlayerEntity etty = (OtherPlayerEntity) entities.get(i);
+					etty.applyServerUpdate(pfx, pfy, spriteID);
+					found = true;
+					break;
+				}
+			if (!found)
+				entities.add(new OtherPlayerEntity(pfx, pfy, spriteID, dataname));
+		}
+	}
 
 }
