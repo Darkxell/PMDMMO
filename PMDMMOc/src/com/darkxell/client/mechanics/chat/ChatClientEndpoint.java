@@ -37,7 +37,6 @@ public class ChatClientEndpoint {
 		} catch (Exception e) {
 			e.printStackTrace();
 			this.connectionStatus = FAILED;
-			//this.holder.messages.add(new ChatMessage("", "Connection to the server failed.", Color.RED, Color.RED, "ERROR", Color.RED));
 		}
 	}
 	
