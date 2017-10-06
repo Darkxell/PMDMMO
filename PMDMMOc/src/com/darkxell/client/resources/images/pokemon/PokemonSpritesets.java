@@ -48,7 +48,7 @@ public final class PokemonSpritesets
 			return;
 		}
 
-		spritesets.put(id, new AbstractPokemonSpriteset("/pokemons/pkmn" + id + ".png", xml));
+		spritesets.put(id, new AbstractPokemonSpriteset("/pokemons/pkmn" + id + ".png", xml,id));
 	}
 
 	private PokemonSpritesets()

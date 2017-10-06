@@ -12,7 +12,11 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.WebSocketContainer;
 
+import com.darkxell.client.mechanics.chat.ChatMessage;
 import com.darkxell.common.util.Logger;
+import com.eclipsesource.json.Json;
+import com.eclipsesource.json.JsonObject;
+import com.eclipsesource.json.JsonValue;
 
 @ClientEndpoint
 public class GameSocketEndpoint {
@@ -47,8 +51,7 @@ public class GameSocketEndpoint {
 		} catch (Exception e) {
 			e.printStackTrace();
 			this.connectionStatus = FAILED;
-			// this.holder.messages.add(new ChatMessage("", "Connection to the
-			// server failed.", Color.RED, Color.RED, "ERROR", Color.RED));
+			Logger.e("Could not connect to the server for game communication");
 		}
 	}
 
@@ -64,9 +67,18 @@ public class GameSocketEndpoint {
 	 */
 	@OnOpen
 	public void onOpen(Session userSession) {
-		Logger.i("Game socket connected to the server sucessfully.");
-		this.connectionStatus = CONNECTED;
-		this.userSession = userSession;
+		try {
+			this.userSession = userSession;
+			JsonObject mess = new JsonObject().add("action", "sessioninfo").add("name",
+					ClientSettings.getSetting(ClientSettings.LOGIN));
+			this.sendMessage(mess.toString());
+			Logger.i("Game socket connected to the server sucessfully.");
+			this.connectionStatus = CONNECTED;
+		} catch (Exception e) {
+			Logger.e("Could not aggree with the server for a valid session");
+			e.printStackTrace();
+		}
+
 	}
 
 	/**
@@ -93,13 +105,13 @@ public class GameSocketEndpoint {
 	 */
 	@OnMessage
 	public void onMessage(String message) {
-		/*
-		 * try { JsonValue obj = Json.parse(message); holder.messages.add(new
-		 * ChatMessage(obj)); } catch (Exception e) {
-		 * Logger.w("Could not add the recieved message to messages list : " +
-		 * message); e.printStackTrace(); }
-		 */
-
+		try {
+			JsonValue obj = Json.parse(message);
+			Logger.d("Message from server : " + message);
+		} catch (Exception e) {
+			Logger.w("Could not read the recieved message from the server : " + message);
+			e.printStackTrace();
+		}
 	}
 
 	/**
