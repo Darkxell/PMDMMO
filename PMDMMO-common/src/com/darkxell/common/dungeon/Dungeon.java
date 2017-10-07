@@ -125,12 +125,32 @@ public class Dungeon
 		this.weather = weather;
 	}
 
+	/** @return The buried items found on the input floor. Keys are Item IDs, Values are Item weights. */
+	public HashMap<DungeonItem, Integer> buriedItems(int floor)
+	{
+		HashMap<DungeonItem, Integer> items = new HashMap<DungeonItem, Integer>();
+		for (DungeonItem item : this.buriedItems)
+			if (item.floors.contains(floor)) for (int i = 0; i < item.items.length; ++i)
+				items.put(item, item.weight);
+		return items;
+	}
+
 	/** @return The Data of the input floor. */
 	public FloorData getData(int floor)
 	{
 		for (FloorData data : this.floorData)
 			if (data.floors().contains(floor)) return data;
 		return this.floorData.get(0);
+	}
+
+	/** @return The items found on the input floor. Keys are Item IDs, Values are Item weights. */
+	public HashMap<DungeonItem, Integer> items(int floor)
+	{
+		HashMap<DungeonItem, Integer> items = new HashMap<DungeonItem, Integer>();
+		for (DungeonItem item : this.items)
+			if (item.floors.contains(floor)) for (int i = 0; i < item.items.length; ++i)
+				items.put(item, item.weight);
+		return items;
 	}
 
 	/** @return This Dungeon's name. */
@@ -224,7 +244,7 @@ public class Dungeon
 		return root;
 	}
 
-	/** @return The traps found on the input floor. Keys are Traps IDs, Values are Traps weights. */
+	/** @return The traps found on the input floor. Keys are Trap IDs, Values are Trap weights. */
 	public HashMap<Integer, Integer> traps(int floor)
 	{
 		HashMap<Integer, Integer> traps = new HashMap<Integer, Integer>();

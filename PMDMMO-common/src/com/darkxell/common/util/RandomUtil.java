@@ -8,6 +8,24 @@ import java.util.Random;
 public final class RandomUtil
 {
 
+	/** @param mean - The Mean of the distribution.
+	 * @param deviation - The Deviation of the distribution.
+	 * @param random - A Random Number Generator.
+	 * @return A Random double from the input Gaussian distribution. */
+	public static double nextGaussian(double mean, double deviation, Random random)
+	{
+		return (int) (random.nextGaussian() * deviation + mean);
+	}
+
+	/** @param mean - The Mean of the distribution.
+	 * @param deviation - The Deviation of the distribution.
+	 * @param random - A Random Number Generator.
+	 * @return A Random integer from the input Gaussian distribution. */
+	public static int nextGaussian(int mean, double deviation, Random random)
+	{
+		return (int) (random.nextGaussian() * deviation) + mean;
+	}
+
 	/** @param objects - A List of Objects to choose from.
 	 * @param random - A Random Number Generator.
 	 * @return A random Object from the input List. All Objects are equally probable to be chosen. */
@@ -19,6 +37,13 @@ public final class RandomUtil
 			return null;
 		}
 		return candidates.get(random.nextInt(candidates.size()));
+	}
+
+	/** @return A Random number close to the input number, according to a Gaussian distribution. */
+	public static int randomize(int number, Random random)
+	{
+		if (number < 3) return nextGaussian(number - 1, 1.5, random);
+		return nextGaussian(number * 3 / 4, number / 3, random);
 	}
 
 	/** @param objects - A List of Objects to choose from.

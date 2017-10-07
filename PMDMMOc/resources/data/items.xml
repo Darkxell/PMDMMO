@@ -13,14 +13,14 @@
   <item id="10" type="Berry" price="12" sell="15" sprite="11" food="5" />
   <item id="11" type="Berry" price="80" sell="5" sprite="12" food="5" />
   <item id="12" type="Berry" price="150" sell="20" sprite="13" food="5" />
-  <item id="21" type="Throwable" price="25" sell="5" sprite="16" trajectory="1" damage="15" />
-  <item id="22" type="Throwable" price="50" sell="5" sprite="17" trajectory="1" damage="20" />
-  <item id="23" type="Throwable" price="6" sell="3" sprite="18" trajectory="0" damage="6" />
-  <item id="24" type="Throwable" price="4" sell="2" sprite="19" trajectory="0" damage="4" />
-  <item id="25" type="Throwable" price="2" sell="1" sprite="20" trajectory="0" damage="1" />
-  <item id="26" type="Throwable" price="0" sell="5" sprite="21" trajectory="0" damage="2" />
-  <item id="27" type="Throwable" price="0" sell="6" sprite="22" trajectory="0" damage="2" />
-  <item id="28" type="Throwable" price="0" sell="4" sprite="23" trajectory="0" damage="2" />
+  <item id="21" type="Throwable" price="25" sell="5" sprite="16" trajectory="1" damage="15" stackable="true" />
+  <item id="22" type="Throwable" price="50" sell="5" sprite="17" trajectory="1" damage="20" stackable="true" />
+  <item id="23" type="Throwable" price="6" sell="3" sprite="18" trajectory="0" damage="6" stackable="true" />
+  <item id="24" type="Throwable" price="4" sell="2" sprite="19" trajectory="0" damage="4" stackable="true" />
+  <item id="25" type="Throwable" price="2" sell="1" sprite="20" trajectory="0" damage="1" stackable="true" />
+  <item id="26" type="Throwable" price="0" sell="5" sprite="21" trajectory="0" damage="2" stackable="true" />
+  <item id="27" type="Throwable" price="0" sell="6" sprite="22" trajectory="0" damage="2" stackable="true" />
+  <item id="28" type="Throwable" price="0" sell="4" sprite="23" trajectory="0" damage="2" stackable="true" />
   <item id="31" type="Food" price="30" sell="15" sprite="56" food="5" />
   <item id="32" type="Food" price="60" sell="30" sprite="56" food="5" />
   <item id="33" type="Food" price="10" sell="5" sprite="56" food="5" />

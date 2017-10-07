@@ -7,11 +7,15 @@ import java.util.Random;
 import java.util.function.Predicate;
 
 import com.darkxell.common.dungeon.DungeonInstance;
+import com.darkxell.common.dungeon.DungeonItem;
 import com.darkxell.common.dungeon.floor.layout.Layout;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.item.Item;
+import com.darkxell.common.item.ItemRegistry;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.trap.Trap;
 import com.darkxell.common.trap.TrapRegistry;
+import com.darkxell.common.util.Directions;
 import com.darkxell.common.util.RandomUtil;
 
 /** Represents a generated Floor in a Dungeon. */
@@ -43,6 +47,15 @@ public class Floor
 		this.data = this.dungeon.dungeon().getData(this.id);
 		this.layout = layout;
 		this.random = random;
+	}
+
+	/** @return True if the input Tile connects to a path outside a Room (considering that Tile is in a Room, which is not tested in this method). */
+	public boolean connectsToPath(Tile tile)
+	{
+		for (short direction : new short[]
+		{ Directions.NORTH, Directions.EAST, Directions.SOUTH, Directions.WEST })
+			if (!tile.adjacentTile(direction).isInRoom()) return true;
+		return false;
 	}
 
 	/** Generates this Floor. */
@@ -77,6 +90,12 @@ public class Floor
 		ArrayList<DungeonEvent> e = new ArrayList<DungeonEvent>();
 		// e.add(new MessageEvent(this, new Message("New turn!", false)));
 		return e;
+	}
+
+	public Item randomBuriedItem(Random random)
+	{
+		HashMap<DungeonItem, Integer> items = this.dungeon.dungeon().buriedItems(this.id);
+		return randomItem(items, random);
 	}
 
 	/** @param inRoom - True if the Tile should be in a Room (will also avoid tiles adjacent to corridors in rooms).
@@ -119,7 +138,36 @@ public class Floor
 			}
 		});
 
+		if (inRoom) candidates.removeIf(new Predicate<Tile>()
+		{
+			@Override
+			public boolean test(Tile t)
+			{
+				return connectsToPath(t);
+			}
+
+		});
+
 		return RandomUtil.random(candidates, random);
+	}
+
+	public Item randomItem(HashMap<DungeonItem, Integer> items, Random random)
+	{
+		DungeonItem itemGroup = RandomUtil.weightedRandom(items, random);
+		ArrayList<Integer> ids = new ArrayList<Integer>();
+		ArrayList<Integer> chances = new ArrayList<Integer>();
+		for (int i = 0; i < itemGroup.items.length; ++i)
+		{
+			ids.add(itemGroup.items[i]);
+			chances.add(itemGroup.chances[i]);
+		}
+		return ItemRegistry.find(RandomUtil.weightedRandom(ids, chances, random));
+	}
+
+	public Item randomItem(Random random)
+	{
+		HashMap<DungeonItem, Integer> items = this.dungeon.dungeon().items(this.id);
+		return randomItem(items, random);
 	}
 
 	/** @return A random Room in this Floor. */

@@ -3,10 +3,12 @@ package com.darkxell.common.dungeon.floor.layout;
 import java.util.Random;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.dungeon.floor.Room;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
+import com.darkxell.common.item.Item;
+import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.trap.TrapRegistry;
+import com.darkxell.common.util.RandomUtil;
 
 /** Represents a Floor's layout. */
 public abstract class Layout {
@@ -46,6 +48,7 @@ public abstract class Layout {
 		this.placeStairs();
 		this.placeTraps();
 		this.placeItems();
+		this.placeBuriedItems();
 		this.summonPokemon();
 
 		this.placeTeam();
@@ -62,29 +65,86 @@ public abstract class Layout {
 
 	/** Randomly places the Stairs tile in a random room. */
 	protected void placeStairs() {
-		Room exitRoom = this.floor.randomRoom(this.random);
-		exitRoom.randomTile(this.random).setType(TileType.STAIR);
+		this.floor.randomEmptyTile(true, this.random).setType(TileType.STAIR);
 	}
 
 	/** Places traps. */
 	protected void placeTraps()
 	{
-		int traps = this.floor.data.trapDensity(); // Number of traps to place
+		int traps = this.floor.data.trapDensity();
 		if (traps == 0) return;
-		traps += this.random.nextInt(3) - 2; // traps = random[traps-1;traps+1]
-		if (traps < 0) traps = 0;
+		traps = RandomUtil.randomize(traps, this.random);
+		if (traps < 1) traps = 1;
 		if (traps > 63) traps = 63;
 		for (int i = 0; i < traps; ++i)
 		{
-			Tile t = this.floor.randomEmptyTile(true, this.random);
+			Tile t = this.floor.randomEmptyTile(true, TileType.GROUND, this.random);
 			t.trap = this.floor.randomTrap(this.random);
 			t.trapRevealed = t.trap == TrapRegistry.WONDER_TILE;
 		}
+	}
+	
+	/** @return The quantity of Poké in a single stack. */
+	protected int getMoneyQuantity()
+	{
+		final int[] moneyTable = new int[]
+		{ 4, 6, 10, 14, 22, 26, 37, 38, 46, 58, 62, 74, 82, 86, 94, 106, 118, 122, 134, 142, 146, 158, 166, 178, 194, 202, 206, 214, 218, 226, 254,
+				262, 274, 278, 298, 302, 314, 326, 334, 346, 358, 362, 382, 386, 394, 398, 422, 454, 458, 466, 478, 482, 502, 514, 526, 538, 542, 554,
+				562, 566, 586, 614, 622, 626, 634, 662, 674, 694, 698, 706, 718, 734, 746, 758, 768, 778, 794, 802, 818, 838, 842, 862, 866, 878, 886,
+				898, 914, 922, 926, 934, 958, 974, 982, 998, 1000, 1100, 1300, 1500, 20000 };
 
+		int random = this.random.nextInt(99) + 1;
+		int value = 0;
+		int max = this.floor.data.baseMoney() * 40;
+
+		for (int i = 0; i < 200; ++i)
+		{
+			value = moneyTable[random];
+			if (value <= max) return value;
+			else random /= 2;
+		}
+		return moneyTable[0];
 	}
 
 	/** Places Items. */
-	protected abstract void placeItems();
+	protected void placeItems()
+	{
+		int items = this.floor.data.itemDensity();
+		if (items == 0) return;
+		items = RandomUtil.randomize(items, this.random);
+		if (items < 1) items = 1;
+		if (items > 63) items = 63;
+		for (int i = 0; i < items; ++i)
+		{
+			Tile tile = this.floor.randomEmptyTile(true, TileType.GROUND, this.random);
+			Item item = this.floor.randomItem(this.random);
+			int quantity = 0;
+			if (item.id == Item.POKE) quantity = this.getMoneyQuantity();
+			else if (item.isStackable) quantity = RandomUtil.nextGaussian(10, 7, this.random);
+
+			tile.setItem(new ItemStack(item.id).setQuantity(quantity));
+		}
+	}
+
+	/** Places buried Items. */
+	protected void placeBuriedItems()
+	{
+		int items = this.floor.data.buriedItemDensity();
+		if (items == 0) return;
+		items = RandomUtil.randomize(items, this.random);
+		if (items < 1) items = 1;
+		if (items > 63) items = 63;
+		for (int i = 0; i < items; ++i)
+		{
+			Tile tile = this.floor.randomEmptyTile(false, TileType.WALL, this.random);
+			Item item = this.floor.randomBuriedItem(this.random);
+			int quantity = 0;
+			if (item.id == Item.POKE) quantity = this.getMoneyQuantity();
+			else if (item.isStackable) quantity = RandomUtil.nextGaussian(10, 7, this.random);
+
+			tile.setItem(new ItemStack(item.id).setQuantity(quantity));
+		}
+	}
 
 	protected abstract void placeTeam();
 

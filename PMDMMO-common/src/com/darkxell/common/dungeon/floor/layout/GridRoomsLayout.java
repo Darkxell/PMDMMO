@@ -112,10 +112,6 @@ public class GridRoomsLayout extends Layout {
 	}
 
 	@Override
-	protected void placeItems() {
-	}
-
-	@Override
 	protected void placeTeam() {
 		Tile t = this.floor.randomRoom(this.random).randomTile(this.random);
 		this.floor.teamSpawn = new Point(t.x, t.y);
