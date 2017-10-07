@@ -1,6 +1,5 @@
 package com.darkxell.common.dungeon;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 import org.jdom2.Element;
@@ -24,16 +23,15 @@ public class DungeonItem
 
 	public DungeonItem(Element xml)
 	{
-		this.weight = Integer.parseInt(xml.getAttributeValue("weight"));
+		this.weight = XMLUtils.getAttribute(xml, "weight", 1);
 		this.floors = new FloorSet(xml.getChild(FloorSet.XML_ROOT));
-		ArrayList<Integer> i = XMLUtils.readIntArray(xml.getChild("ids")), c = XMLUtils.readIntArray(xml.getChild("chances"));
-		this.items = new int[i.size()];
-		this.chances = new int[i.size()];
-		for (int j = 0; j < this.chances.length; j++)
+		this.items = XMLUtils.readIntArray(xml.getChild("ids"));
+		if (xml.getChild("chances") == null)
 		{
-			this.items[j] = i.get(j);
-			this.chances[j] = c.get(j);
-		}
+			this.chances = new int[this.items.length];
+			for (int i = 0; i < this.chances.length; ++i)
+				this.chances[i] = 1;
+		} else this.chances = XMLUtils.readIntArray(xml.getChild("chances"));
 	}
 
 	public DungeonItem(FloorSet floors, int weight, int[] items, int[] chances)
@@ -52,10 +50,18 @@ public class DungeonItem
 	public Element toXML()
 	{
 		Element root = new Element(XML_ROOT);
-		root.setAttribute("weight", Integer.toString(this.weight));
+		XMLUtils.setAttribute(root, "weight", this.weight, 1);
 		root.addContent(this.floors.toXML());
 		root.addContent(XMLUtils.toXML("ids", this.items));
-		root.addContent(XMLUtils.toXML("chances", this.chances));
+
+		boolean chances = false;
+		for (int c : this.chances)
+			if (c != 1)
+			{
+				chances = true;
+				break;
+			}
+		if (chances) root.addContent(XMLUtils.toXML("chances", this.chances));
 		return root;
 	}
 

@@ -7,6 +7,7 @@ import com.darkxell.common.dungeon.floor.layout.Layout;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.PokemonType;
+import com.darkxell.common.util.XMLUtils;
 
 public class FloorData
 {
@@ -15,39 +16,44 @@ public class FloorData
 	public static final String XML_ROOT = "d";
 
 	/** The base Money of the Floor. Used to generate piles of Poké. */
-	public final int baseMoney;
+	private int baseMoney;
+	/** The density of Buried Items. */
+	private short buriedItemDensity;
 	/** The type given to a Pokémon using the move Camouflage. */
-	public final PokemonType camouflageType;
+	private PokemonType camouflageType;
 	/** The Floor's difficulty. */
-	public final int difficulty;
+	private int difficulty;
 	/** Describes which Floors this Data applies to. */
-	public final FloorSet floors;
+	private FloorSet floors;
+	/** The density of Items. */
+	private short itemDensity;
 	/** The Layout to use to generate the Floor. */
-	public final int layout;
+	private int layout;
+	/** The chance of generating a Monster House in this Floor. */
+	private short monsterHouseChance;
 	/** The ID of the move chosen by Nature Power. */
-	public final int naturePower;
+	private int naturePower;
+	/** The density of Pokémon. */
+	private short pokemonDensity;
 	/** The Effect of the Secret Power move. (Strings, will later be replaced with IDs when implementing the move.) */
-	public final String secretPower;
+	private String secretPower;
 	/** The type of shadows for this Floor. See {@link FloorData#NO_SHADOW} */
-	public final byte shadows;
+	private byte shadows;
+	/** The chance of generating a Shop in this Floor. */
+	private short shopChance;
 	/** The Spriteset to use for the terrain. */
-	public final int terrainSpriteset;
+	private int terrainSpriteset;
+	/** The density of Traps. */
+	private short trapDensity;
 
 	public FloorData(Element xml)
 	{
-		this.floors = new FloorSet(xml.getChild(FloorSet.XML_ROOT));
-		this.difficulty = Integer.parseInt(xml.getAttributeValue("difficulty"));
-		this.baseMoney = Integer.parseInt(xml.getAttributeValue("money"));
-		this.layout = Integer.parseInt(xml.getAttributeValue("layout"));
-		this.terrainSpriteset = Integer.parseInt(xml.getAttributeValue("terrain"));
-		this.shadows = xml.getAttribute("shadows") == null ? 0 : Byte.parseByte(xml.getAttributeValue("shadows"));
-		this.camouflageType = PokemonType.find(xml.getAttribute("camouflage") == null ? 0 : Integer.parseInt(xml.getAttributeValue("camouflage")));
-		this.naturePower = Integer.parseInt(xml.getAttributeValue("nature"));
-		this.secretPower = xml.getAttributeValue("secret");
+		this.load(xml);
 	}
 
 	public FloorData(FloorSet floors, int difficulty, int baseMoney, int layout, int terrainSpriteset, byte shadows, PokemonType camouflageType,
-			int naturePower, String secretPower)
+			int naturePower, String secretPower, short shopChance, short monsterHouseChance, short itemDensity, short pokemonDensity, short trapDensity,
+			short buriedItemDensity)
 	{
 		this.floors = floors;
 		this.difficulty = difficulty;
@@ -58,6 +64,50 @@ public class FloorData
 		this.camouflageType = camouflageType;
 		this.naturePower = naturePower;
 		this.secretPower = secretPower;
+		this.shopChance = shopChance;
+		this.monsterHouseChance = monsterHouseChance;
+		this.itemDensity = itemDensity;
+		this.pokemonDensity = pokemonDensity;
+		this.trapDensity = trapDensity;
+		this.buriedItemDensity = buriedItemDensity;
+	}
+
+	public int baseMoney()
+	{
+		return this.baseMoney;
+	}
+
+	public short buriedItemDensity()
+	{
+		return this.buriedItemDensity;
+	}
+
+	public PokemonType camouflageType()
+	{
+		return this.camouflageType;
+	}
+
+	/** @return this.A copy of this Data. */
+	public FloorData copy()
+	{
+		return new FloorData(this.floors.copy(), this.difficulty, this.baseMoney, this.layout, this.terrainSpriteset, this.shadows, this.camouflageType,
+				this.naturePower, this.secretPower, this.shopChance, this.monsterHouseChance, this.itemDensity, this.pokemonDensity, this.trapDensity,
+				this.buriedItemDensity);
+	}
+
+	public int difficulty()
+	{
+		return this.difficulty;
+	}
+
+	public FloorSet floors()
+	{
+		return this.floors;
+	}
+
+	public short itemDensity()
+	{
+		return this.itemDensity;
 	}
 
 	public Layout layout()
@@ -65,24 +115,90 @@ public class FloorData
 		return Layout.find(this.layout);
 	}
 
+	public void load(Element xml)
+	{
+		this.floors = new FloorSet(xml.getChild(FloorSet.XML_ROOT));
+		this.difficulty = XMLUtils.getAttribute(xml, "difficulty", this.difficulty);
+		this.baseMoney = XMLUtils.getAttribute(xml, "money", this.baseMoney);
+		this.layout = XMLUtils.getAttribute(xml, "layout", this.layout);
+		this.terrainSpriteset = XMLUtils.getAttribute(xml, "terrain", this.terrainSpriteset);
+		this.shadows = XMLUtils.getAttribute(xml, "shadows", this.shadows);
+		this.camouflageType = PokemonType.find(XMLUtils.getAttribute(xml, "camouflage", this.camouflageType == null ? 0 : this.camouflageType.id));
+		this.naturePower = XMLUtils.getAttribute(xml, "nature", this.naturePower);
+		this.secretPower = xml.getAttributeValue("secret");
+		this.shopChance = XMLUtils.getAttribute(xml, "shop", this.shopChance);
+		this.monsterHouseChance = XMLUtils.getAttribute(xml, "mhouse", this.monsterHouseChance);
+		this.itemDensity = XMLUtils.getAttribute(xml, "items", this.itemDensity);
+		this.pokemonDensity = XMLUtils.getAttribute(xml, "pokemon", this.pokemonDensity);
+		this.trapDensity = XMLUtils.getAttribute(xml, "traps", this.trapDensity);
+		this.buriedItemDensity = XMLUtils.getAttribute(xml, "buried", this.buriedItemDensity);
+	}
+
+	public short monsterHouseChance()
+	{
+		return this.monsterHouseChance;
+	}
+
 	public Move naturePower()
 	{
 		return MoveRegistry.find(this.naturePower);
 	}
 
-	public Element toXML()
+	public short pokemonDensity()
+	{
+		return this.pokemonDensity;
+	}
+
+	public String secretPower()
+	{
+		return this.secretPower;
+	}
+
+	public byte shadows()
+	{
+		return this.shadows;
+	}
+
+	public short shopChance()
+	{
+		return this.shopChance;
+	}
+
+	public int terrainSpriteset()
+	{
+		return this.terrainSpriteset;
+	}
+
+	public Element toXML(FloorData previous)
 	{
 		Element xml = new Element(XML_ROOT);
 		xml.addContent(this.floors.toXML());
-		xml.setAttribute("difficulty", Integer.toString(this.difficulty));
-		xml.setAttribute("money", Integer.toString(this.baseMoney));
-		xml.setAttribute("layout", Integer.toString(this.layout));
-		xml.setAttribute("terrain", Integer.toString(this.terrainSpriteset));
-		xml.setAttribute("shadows", Byte.toString(this.shadows));
-		xml.setAttribute("camouflage", Integer.toString(this.camouflageType.id));
-		xml.setAttribute("nature", Integer.toString(this.naturePower));
-		xml.setAttribute("secret", this.secretPower);
+		if (previous != null || this.difficulty != 0) XMLUtils.setAttribute(xml, "difficulty", this.difficulty, previous != null ? previous.difficulty : -1);
+		if (previous != null || this.baseMoney != 0) XMLUtils.setAttribute(xml, "money", this.baseMoney, previous != null ? previous.baseMoney : -1);
+		if (previous != null || this.layout != 0) XMLUtils.setAttribute(xml, "layout", this.layout, previous != null ? previous.layout : -1);
+		if (previous != null || this.terrainSpriteset != 0) XMLUtils.setAttribute(xml, "terrain", this.terrainSpriteset,
+				previous != null ? previous.terrainSpriteset : -1);
+		if (previous != null || this.shadows != 0) XMLUtils.setAttribute(xml, "shadows", this.shadows, previous != null ? previous.shadows : -1);
+		if (previous != null || this.camouflageType.id != 0) XMLUtils.setAttribute(xml, "camouflage", this.camouflageType.id,
+				previous != null ? previous.camouflageType.id : -1);
+		if (previous != null || this.naturePower != 0) XMLUtils.setAttribute(xml, "nature", this.naturePower, previous != null ? previous.naturePower : -1);
+		if (previous != null || this.secretPower != null) XMLUtils
+				.setAttribute(xml, "secret", this.secretPower, previous != null ? previous.secretPower : null);
+		if (previous != null || this.shopChance != 0) XMLUtils.setAttribute(xml, "shop", this.shopChance, previous != null ? previous.shopChance : -1);
+		if (previous != null || this.monsterHouseChance != 0) XMLUtils.setAttribute(xml, "mhouse", this.monsterHouseChance,
+				previous != null ? previous.monsterHouseChance : -1);
+		if (previous != null || this.itemDensity != 0) XMLUtils.setAttribute(xml, "items", this.itemDensity, previous != null ? previous.itemDensity : -1);
+		if (previous != null || this.pokemonDensity != 0) XMLUtils.setAttribute(xml, "pokemon", this.pokemonDensity, previous != null ? previous.pokemonDensity
+				: -1);
+		if (previous != null || this.trapDensity != 0) XMLUtils.setAttribute(xml, "traps", this.trapDensity, previous != null ? previous.trapDensity : -1);
+		if (previous != null || this.buriedItemDensity != 0) XMLUtils.setAttribute(xml, "buried", this.buriedItemDensity,
+				previous != null ? previous.buriedItemDensity : -1);
 		return xml;
+	}
+
+	public short trapDensity()
+	{
+		return this.trapDensity;
 	}
 
 }

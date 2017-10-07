@@ -70,7 +70,7 @@ public class PokemonTravelState extends DungeonSubState {
 			return true;
 		if (travel.destination.isInRoom() != travel.destination.adjacentTile(runner.facing()).isInRoom())
 			return true;
-		if (travel.destination.type() == TileType.STAIR || travel.destination.type() == TileType.WONDER_TILE
+		if (travel.destination.type() == TileType.STAIR || travel.destination.trapRevealed
 				|| travel.destination.getItem() != null)
 			return true;
 		int origin = 0, destination = 0;
@@ -89,7 +89,7 @@ public class PokemonTravelState extends DungeonSubState {
 				++origin;
 			if (!(GameUtil.isDiagonal(dir) && !d.isInRoom()) && d.type().canWalkOn(runner))
 				++destination;
-			if (d.type() == TileType.STAIR || d.type() == TileType.WONDER_TILE || d.getItem() != null)
+			if (d.type() == TileType.STAIR || d.trapRevealed || d.getItem() != null)
 				return true;
 		}
 

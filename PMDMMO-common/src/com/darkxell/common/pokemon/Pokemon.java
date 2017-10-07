@@ -11,6 +11,7 @@ import com.darkxell.common.player.ItemContainer;
 import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.ability.Ability;
 import com.darkxell.common.util.Message;
+import com.darkxell.common.util.XMLUtils;
 
 public class Pokemon implements ItemContainer
 {
@@ -50,16 +51,16 @@ public class Pokemon implements ItemContainer
 	{
 		// todo: handle ID of null.
 		Random r = new Random();
-		this.id = xml.getAttribute("pk-id") == null ? 0 : Integer.parseInt(xml.getAttributeValue("pk-id"));
+		this.id = XMLUtils.getAttribute(xml, "pk-id", 0);
 		this.species = PokemonRegistry.find(Integer.parseInt(xml.getAttributeValue("id")));
 		this.nickname = xml.getAttributeValue("nickname");
 		this.item = xml.getChild(ItemStack.XML_ROOT) == null ? null : new ItemStack(xml.getChild(ItemStack.XML_ROOT));
 		this.level = Integer.parseInt(xml.getAttributeValue("level"));
 		this.stats = xml.getChild(PokemonStats.XML_ROOT) == null ? this.species.statsForLevel(this.level) : new PokemonStats(
 				xml.getChild(PokemonStats.XML_ROOT));
-		this.abilityID = xml.getAttribute("ability") == null ? this.species.randomAbility(r) : Integer.parseInt(xml.getAttributeValue("ability"));
-		this.experience = xml.getAttribute("xp") == null ? 0 : Integer.parseInt(xml.getAttributeValue("xp"));
-		this.gender = xml.getAttribute("gender") == null ? this.species.randomGender(r) : Byte.parseByte(xml.getAttributeValue("gender"));
+		this.abilityID = XMLUtils.getAttribute(xml, "ability", this.species.randomAbility(r));
+		this.experience = XMLUtils.getAttribute(xml, "xp", 0);
+		this.gender = XMLUtils.getAttribute(xml, "gender", this.species.randomGender(r));
 		this.moves = new LearnedMove[4];
 		ArrayList<Integer> moves = new ArrayList<Integer>();
 		for (Element move : xml.getChildren("move"))
@@ -286,7 +287,7 @@ public class Pokemon implements ItemContainer
 		root.setAttribute("level", Integer.toString(this.level));
 		root.addContent(this.stats.toXML());
 		root.setAttribute("ability", Integer.toString(this.abilityID));
-		if (this.experience != 0) root.setAttribute("xp", Integer.toString(this.experience));
+		XMLUtils.setAttribute(root, "xp", this.experience, 0);
 		root.setAttribute("gender", Byte.toString(this.gender));
 		this.moves = new LearnedMove[4];
 		for (int i = 0; i < this.moves.length; ++i)

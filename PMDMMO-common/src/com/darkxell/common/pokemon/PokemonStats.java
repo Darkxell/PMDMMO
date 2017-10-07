@@ -2,6 +2,8 @@ package com.darkxell.common.pokemon;
 
 import org.jdom2.Element;
 
+import com.darkxell.common.util.XMLUtils;
+
 public class PokemonStats
 {
 	/** Stat IDs.<br />
@@ -33,12 +35,12 @@ public class PokemonStats
 
 	public PokemonStats(Element xml)
 	{
-		this.attack = xml.getAttribute("atk") == null ? 0 : Integer.parseInt(xml.getAttributeValue("atk"));
-		this.defense = xml.getAttribute("def") == null ? 0 : Integer.parseInt(xml.getAttributeValue("def"));
-		this.health = xml.getAttribute("hea") == null ? 0 : Integer.parseInt(xml.getAttributeValue("hea"));
-		this.specialAttack = xml.getAttribute("spa") == null ? 0 : Integer.parseInt(xml.getAttributeValue("spa"));
-		this.specialDefense = xml.getAttribute("spd") == null ? 0 : Integer.parseInt(xml.getAttributeValue("spd"));
-		this.moveSpeed = xml.getAttribute("msp") == null ? 1 : Integer.parseInt(xml.getAttributeValue("msp"));
+		this.attack = XMLUtils.getAttribute(xml, "atk", 0);
+		this.defense = XMLUtils.getAttribute(xml, "def", 0);
+		this.health = XMLUtils.getAttribute(xml, "hea", 0);
+		this.specialAttack = XMLUtils.getAttribute(xml, "spa", 0);
+		this.specialDefense = XMLUtils.getAttribute(xml, "spd", 0);
+		this.moveSpeed = XMLUtils.getAttribute(xml, "msp", 1);
 	}
 
 	public PokemonStats(int attack, int defense, int health, int specialAttack, int specialDefense, int moveSpeed)
@@ -94,12 +96,12 @@ public class PokemonStats
 	public Element toXML()
 	{
 		Element root = new Element("stats");
-		if (this.attack != 0) root.setAttribute("atk", Integer.toString(this.attack));
-		if (this.defense != 0) root.setAttribute("def", Integer.toString(this.defense));
-		if (this.health != 0) root.setAttribute("hea", Integer.toString(this.health));
-		if (this.specialAttack != 0) root.setAttribute("spa", Integer.toString(this.specialAttack));
-		if (this.specialDefense != 0) root.setAttribute("spd", Integer.toString(this.specialDefense));
-		if (this.moveSpeed != 1) root.setAttribute("msp", Float.toString(this.moveSpeed));
+		XMLUtils.setAttribute(root, "atk", this.attack, 0);
+		XMLUtils.setAttribute(root, "def", this.defense, 0);
+		XMLUtils.setAttribute(root, "hea", this.health, 0);
+		XMLUtils.setAttribute(root, "spa", this.specialAttack, 0);
+		XMLUtils.setAttribute(root, "spd", this.specialDefense, 0);
+		XMLUtils.setAttribute(root, "msp", this.moveSpeed, 1);
 		return root;
 	}
 

@@ -8,6 +8,8 @@ public final class TrapRegistry
 {
 
 	static HashMap<Integer, Trap> traps = new HashMap<Integer, Trap>();
+	public static final Trap WONDER_TILE = new Trap(0)
+	{};
 
 	/** @return The Trap with the input ID. */
 	public static Trap find(int id)
@@ -23,7 +25,7 @@ public final class TrapRegistry
 
 	public static void load()
 	{
-		for (int i = 0; i < 17; i++)
+		for (int i = 1; i < 18; i++)
 			new Trap(i)
 			{};
 	}

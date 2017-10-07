@@ -2,6 +2,8 @@ package com.darkxell.common.item;
 
 import org.jdom2.Element;
 
+import com.darkxell.common.util.XMLUtils;
+
 /** An Item that restores belly when eaten, and inflicts negative status effects. */
 public class ItemHeal extends ItemFood
 {
@@ -14,8 +16,8 @@ public class ItemHeal extends ItemFood
 	public ItemHeal(Element xml)
 	{
 		super(xml);
-		this.hp = xml.getAttribute("hp") == null ? 0 : Integer.parseInt(xml.getAttributeValue("hp"));
-		this.hpFull = xml.getAttribute("hp-full") == null ? 0 : Integer.parseInt(xml.getAttributeValue("hp-full"));
+		this.hp = XMLUtils.getAttribute(xml, "hp", 0);
+		this.hpFull = XMLUtils.getAttribute(xml, "hp-full", 0);
 	}
 
 	public ItemHeal(int id, int price, int sell, int sprite, boolean isStackable, int food, int bellyIfFull, int belly, int hp, int hpFull)
@@ -34,8 +36,8 @@ public class ItemHeal extends ItemFood
 	public Element toXML()
 	{
 		Element root = super.toXML();
-		if (this.hp != 0) root.setAttribute("hp", Integer.toString(this.hp));
-		if (this.hpFull != 0) root.setAttribute("hp-full", Integer.toString(this.hpFull));
+		XMLUtils.setAttribute(root, "hp", this.hp, 0);
+		XMLUtils.setAttribute(root, "hp-full", this.hpFull, 0);
 		return root;
 	}
 

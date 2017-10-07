@@ -1,6 +1,7 @@
 package com.darkxell.common.dungeon;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 import java.util.function.Predicate;
 
@@ -8,7 +9,9 @@ import org.jdom2.Element;
 
 import com.darkxell.common.dungeon.floor.FloorData;
 import com.darkxell.common.item.ItemStack;
+import com.darkxell.common.trap.TrapRegistry;
 import com.darkxell.common.util.Message;
+import com.darkxell.common.util.XMLUtils;
 
 /** Describes a Dungeon: floors, Pokémon, items... */
 public class Dungeon
@@ -16,39 +19,44 @@ public class Dungeon
 	public static final boolean UP = false, DOWN = true;
 	public static final String XML_ROOT = "dungeon";
 
+	/** Lists the buried Items found in this Dungeon. If empty, use the standard list. */
+	private final ArrayList<DungeonItem> buriedItems;
 	/** Whether this Dungeon goes up or down. See {@link Dungeon#UP} */
 	public final boolean direction;
 	/** The number of Floors in this Dungeon. */
 	public final int floorCount;
 	/** Describes this Dungeon's Floors' data. */
-	private ArrayList<FloorData> floorData;
+	private final ArrayList<FloorData> floorData;
 	/** This Dungeon's ID. */
 	public final int id;
 	/** Lists the Items found in this Dungeon. */
-	private ArrayList<DungeonItem> items;
-	/** The chance of a Room to be a Monster House in this Dungeon. */
-	public final double monsterHouseChance;
+	private final ArrayList<DungeonItem> items;
+	/** ID of the Dungeon this Dungeon leads to (e.g. Mt. Blaze to Mt. Blaze Peak). -1 if no leading Dungeon. */
+	public final int linkedTo;
 	/** Lists the Pokémon found in this Dungeon. */
-	private ArrayList<DungeonEncounter> pokemon;
-	/** Number of Items the entering team is allowed to carry. -1 for no limit. */
-	// public final int teamItems;
-	/** Level the entering team is set to. -1 for no change. */
-	// public final int teamLevel;
-	/** Number of members the entering team is allowed to have. */
-	// public final int teamMembers;
-	/** Amount of Money the entering team is allowed to carry. -1 for no limit. */
-	// public final int teamMoney;
+	private final ArrayList<DungeonEncounter> pokemon;
+	/** True if Pokémon from this Dungeon can be recruited. */
+	public final boolean recruitsAllowed;
+	/** Lists the Items found in this Dungeon's shops. */
+	private final ArrayList<DungeonItem> shopItems;
+	/** The chance of an Item being Sticky in this Dungeon. */
+	public final int stickyChance;
+	/** The number of turns to spend on a single floor before being kicked. */
+	public final int timeLimit;
 	/** Lists the Traps found in this Dungeon. */
-	private ArrayList<DungeonTrap> traps;
+	private final ArrayList<DungeonTrap> traps;
+	/** The Weather in this Dungeon (Weather ID -> floors). */
+	private final HashMap<Integer, FloorSet> weather;
 
 	public Dungeon(Element xml)
 	{
 		this.id = Integer.parseInt(xml.getAttributeValue("id"));
 		this.floorCount = Integer.parseInt(xml.getAttributeValue("floors"));
-		this.direction = xml.getAttribute("down") != null;
-		this.monsterHouseChance = xml.getAttribute("mhouse") == null ? 0 : Double.parseDouble(xml.getAttributeValue("mhouse"));
-		/* this.teamItems = xml.getAttribute("t-items") == null ? -1 : Integer.parseInt(xml.getAttributeValue("t-items")); this.teamLevel = xml.getAttribute("t-level") == null ? -1 : Integer.parseInt(xml.getAttributeValue("t-level")); this.teamMembers = xml.getAttribute("t-members") == null ? 4 :
-		 * Integer.parseInt(xml.getAttributeValue("t-members")); this.teamMoney = xml.getAttribute("t-money") == null ? -1 : Integer.parseInt(xml.getAttributeValue("t-money")); */
+		this.direction = XMLUtils.getAttribute(xml, "down", false);
+		this.recruitsAllowed = XMLUtils.getAttribute(xml, "recruits", true);
+		this.timeLimit = XMLUtils.getAttribute(xml, "limit", 2000);
+		this.linkedTo = XMLUtils.getAttribute(xml, "linked", -1);
+		this.stickyChance = XMLUtils.getAttribute(xml, "sticky", 0);
 
 		this.pokemon = new ArrayList<DungeonEncounter>();
 		for (Element pokemon : xml.getChild("encounters").getChildren(DungeonEncounter.XML_ROOT))
@@ -58,39 +66,76 @@ public class Dungeon
 		for (Element item : xml.getChild("items").getChildren(DungeonItem.XML_ROOT))
 			this.items.add(new DungeonItem(item));
 
+		this.shopItems = new ArrayList<DungeonItem>();
+		if (xml.getChild("shops") != null) for (Element item : xml.getChild("shops").getChildren(DungeonItem.XML_ROOT))
+			this.shopItems.add(new DungeonItem(item));
+
+		this.buriedItems = new ArrayList<DungeonItem>();
+		if (xml.getChild("buried") != null) for (Element item : xml.getChild("buried").getChildren(DungeonItem.XML_ROOT))
+			this.buriedItems.add(new DungeonItem(item));
+
 		this.traps = new ArrayList<DungeonTrap>();
-		for (Element trap : xml.getChild("traps").getChildren(DungeonTrap.XML_ROOT))
-			this.traps.add(new DungeonTrap(trap));
+		if (xml.getChild("traps") == null)
+		{
+			this.traps.add(new DungeonTrap(new int[]
+			{ TrapRegistry.WONDER_TILE.id }, new int[]
+			{ 100 }, new FloorSet(1, this.floorCount)));
+		} else
+		{
+			for (Element trap : xml.getChild("traps").getChildren(DungeonTrap.XML_ROOT))
+				this.traps.add(new DungeonTrap(trap));
+		}
 
 		this.floorData = new ArrayList<FloorData>();
 		for (Element data : xml.getChild("data").getChildren(FloorData.XML_ROOT))
-			this.floorData.add(new FloorData(data));
+		{
+			FloorData d = null;
+			if (this.floorData.isEmpty()) d = new FloorData(data);
+			else
+			{
+				d = this.floorData.get(this.floorData.size() - 1).copy();
+				d.load(data);
+			}
+			this.floorData.add(d);
+		}
+
+		this.weather = new HashMap<Integer, FloorSet>();
+		if (xml.getChild("weather") != null) for (Element data : xml.getChild("weather").getChildren("w"))
+			this.weather.put(Integer.parseInt(data.getAttributeValue("id")), new FloorSet(data.getChild(FloorSet.XML_ROOT)));
 	}
 
-	public Dungeon(int id, int floorCount, boolean direction, double monsterHouseChance, // int teamItems, int teamLevel, int teamMoney,int teamMembers,
-			ArrayList<DungeonEncounter> pokemon, ArrayList<DungeonItem> items, ArrayList<DungeonTrap> traps, ArrayList<FloorData> floorData)
+	public Dungeon(int id, int floorCount, boolean direction, double monsterHouseChance, boolean recruits, int timeLimit, int stickyChance,
+			int linkedTo, // int teamItems, int teamLevel, int teamMoney,int teamMembers,
+			ArrayList<DungeonEncounter> pokemon, ArrayList<DungeonItem> items, ArrayList<DungeonItem> shopItems, ArrayList<DungeonItem> buriedItems,
+			ArrayList<DungeonTrap> traps, ArrayList<FloorData> floorData, HashMap<Integer, FloorSet> weather)
 	{
 		this.id = id;
 		this.floorCount = floorCount;
 		this.direction = direction;
-		this.monsterHouseChance = monsterHouseChance;
-		/* this.teamItems = teamItems; this.teamLevel = teamLevel; this.teamMembers = teamMembers; this.teamMoney = teamMoney; */
+		this.recruitsAllowed = recruits;
+		this.timeLimit = timeLimit;
+		this.stickyChance = stickyChance;
+		this.linkedTo = linkedTo;
 		this.pokemon = pokemon;
 		this.items = items;
+		this.shopItems = shopItems;
+		this.buriedItems = buriedItems;
 		this.traps = traps;
 		this.floorData = floorData;
+		this.weather = weather;
 	}
 
 	/** @return The Data of the input floor. */
 	public FloorData getData(int floor)
 	{
 		for (FloorData data : this.floorData)
-			if (data.floors.contains(floor)) return data;
+			if (data.floors().contains(floor)) return data;
 		return this.floorData.get(0);
 	}
 
 	public boolean hasTraps()
 	{
+		if (this.traps.size() == 1 && this.traps.get(0).ids.length == 1 && this.traps.get(0).ids[0] == TrapRegistry.WONDER_TILE.id) return false;
 		return !this.traps.isEmpty();
 	}
 
@@ -127,8 +172,11 @@ public class Dungeon
 		Element root = new Element(XML_ROOT);
 		root.setAttribute("id", Integer.toString(this.id));
 		root.setAttribute("floors", Integer.toString(this.floorCount));
-		if (this.direction) root.setAttribute("down", "true");
-		if (this.monsterHouseChance != 0) root.setAttribute("mhouse", Double.toString(this.monsterHouseChance));
+		XMLUtils.setAttribute(root, "down", this.direction, false);
+		XMLUtils.setAttribute(root, "recruits", this.recruitsAllowed, true);
+		XMLUtils.setAttribute(root, "limit", this.timeLimit, 2000);
+		XMLUtils.setAttribute(root, "sticky", this.stickyChance, 0);
+		XMLUtils.setAttribute(root, "linked", this.linkedTo, -1);
 		/* if (this.teamItems != -1) root.setAttribute("t-items", Integer.toString(this.teamItems)); if (this.teamLevel != -1) root.setAttribute("t-level", Integer.toString(this.teamLevel)); if (this.teamMembers != 4) root.setAttribute("t-members", Integer.toString(this.teamMembers)); if
 		 * (this.teamMoney != -1) root.setAttribute("t-money", Integer.toString(this.teamMoney)); */
 
@@ -142,15 +190,42 @@ public class Dungeon
 			items.addContent(item.toXML());
 		root.addContent(items);
 
-		Element traps = new Element("traps");
-		for (DungeonTrap trap : this.traps)
-			traps.addContent(trap.toXML());
-		root.addContent(traps);
+		if (!this.shopItems.isEmpty())
+		{
+			Element shops = new Element("shops");
+			for (DungeonItem item : this.shopItems)
+				shops.addContent(item.toXML());
+			root.addContent(shops);
+		}
+
+		if (!this.buriedItems.isEmpty())
+		{
+			Element buried = new Element("buried");
+			for (DungeonItem item : this.buriedItems)
+				buried.addContent(item.toXML());
+			root.addContent(buried);
+		}
+
+		if (this.hasTraps())
+		{
+			Element traps = new Element("traps");
+			for (DungeonTrap trap : this.traps)
+				traps.addContent(trap.toXML());
+			root.addContent(traps);
+		}
 
 		Element data = new Element("data");
 		for (FloorData d : this.floorData)
-			data.addContent(d.toXML());
+			data.addContent(d.toXML(this.floorData.indexOf(d) == 0 ? null : this.floorData.get(this.floorData.indexOf(d) - 1)));
 		root.addContent(data);
+
+		if (!this.weather.isEmpty())
+		{
+			Element weather = new Element("weather");
+			for (Integer id : this.weather.keySet())
+				weather.addContent(new Element("w").setAttribute("id", Integer.toString(id)).addContent(this.weather.get(id).toXML()));
+			root.addContent(weather);
+		}
 
 		return root;
 	}

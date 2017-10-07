@@ -16,6 +16,7 @@ import com.darkxell.common.pokemon.LearnedMove;
 import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.util.GameUtil;
 import com.darkxell.common.util.Message;
+import com.darkxell.common.util.XMLUtils;
 
 public class Move
 {
@@ -64,15 +65,15 @@ public class Move
 	{
 		this.id = Integer.parseInt(xml.getAttributeValue("id"));
 		this.type = PokemonType.find(Integer.parseInt(xml.getAttributeValue("type")));
-		this.behaviorID = xml.getAttribute("behavior") == null ? -1 : Integer.parseInt(xml.getAttributeValue("behavior"));
+		this.behaviorID = XMLUtils.getAttribute(xml, "behavior", -1);
 		this.category = Byte.parseByte(xml.getAttributeValue("category"));
 		this.pp = Integer.parseInt(xml.getAttributeValue("pp"));
 		this.power = Integer.parseInt(xml.getAttributeValue("power"));
-		this.accuracy = xml.getAttribute("accuracy") == null ? 100 : Integer.parseInt(xml.getAttributeValue("accuracy"));
+		this.accuracy = XMLUtils.getAttribute(xml, "accuracy", 100);
 		this.targets = Byte.parseByte(xml.getAttributeValue("targets"));
-		this.priority = xml.getAttribute("priority") == null ? 0 : Integer.parseInt(xml.getAttributeValue("priority"));
-		this.additionalEffectChance = xml.getAttribute("random") == null ? 100 : Integer.parseInt(xml.getAttributeValue("random"));
-		this.makesContact = xml.getAttribute("contact") != null;
+		this.priority = XMLUtils.getAttribute(xml, "priority", 0);
+		this.additionalEffectChance = XMLUtils.getAttribute(xml, "random", 100);
+		this.makesContact = XMLUtils.getAttribute(xml, "contact", false);
 	}
 
 	public Move(int id, PokemonType type, int behaviorID, byte category, int pp, int power, int accuracy, byte targets, int priority,
@@ -226,11 +227,11 @@ public class Move
 		root.setAttribute("category", Byte.toString(this.category));
 		root.setAttribute("pp", Integer.toString(this.pp));
 		root.setAttribute("power", Integer.toString(this.power));
-		if (this.accuracy != 100) root.setAttribute("accuracy", Integer.toString(this.accuracy));
+		XMLUtils.setAttribute(root, "accuracy", this.accuracy, 100);
 		root.setAttribute("targets", Byte.toString(this.targets));
-		if (this.priority != 0) root.setAttribute("priority", Integer.toString(this.priority));
-		if (this.additionalEffectChance != 100) root.setAttribute("random", Integer.toString(this.additionalEffectChance));
-		if (this.makesContact) root.setAttribute("contact", Boolean.toString(this.makesContact));
+		XMLUtils.setAttribute(root, "priority", this.priority, 0);
+		XMLUtils.setAttribute(root, "random", this.additionalEffectChance, 100);
+		XMLUtils.setAttribute(root, "contact", this.makesContact, false);
 		return root;
 	}
 
