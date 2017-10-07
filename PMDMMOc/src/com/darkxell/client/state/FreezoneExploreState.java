@@ -167,7 +167,7 @@ public class FreezoneExploreState extends AbstractState {
 			Persistance.soundmanager.setBackgroundMusic(SoundsHolder.getSong(Persistance.currentmap.freezonebgm));
 		}
 		// Sends the serverync message if it's time to do so
-		if (serversynccooldown > 60 && serversynccooldown != -1)
+		if (serversynccooldown > 15 && serversynccooldown != -1)
 			if (Persistance.socketendpoint.connectionStatus() != GameSocketEndpoint.CONNECTED) {
 				serversynccooldown = -1;
 				Logger.w(
@@ -177,10 +177,9 @@ public class FreezoneExploreState extends AbstractState {
 				try {
 					String message = "";
 					JsonObject mess = new JsonObject().add("action", "freezoneposition")
-							.add("posfx",Persistance.currentplayer.x)
-							.add("posfy",Persistance.currentplayer.y)
-							.add("currentpokemon",Persistance.currentplayer.playersprite.pointer.pokemonID)
-							.add("freezoneid",Persistance.currentmap.getMapLocation().id);
+							.add("posfx", Persistance.currentplayer.x).add("posfy", Persistance.currentplayer.y)
+							.add("currentpokemon", Persistance.currentplayer.playersprite.pointer.pokemonID + "")
+							.add("freezoneid", Persistance.currentmap.getMapLocation().id);
 					message = mess.toString();
 					Persistance.socketendpoint.sendMessage(message);
 				} catch (Exception e) {
@@ -188,7 +187,7 @@ public class FreezoneExploreState extends AbstractState {
 					e.printStackTrace();
 				}
 			}
-		else
+		else if (serversynccooldown != -1)
 			++serversynccooldown;
 		for (int i = 0; i < Persistance.currentmap.warpzones.size(); i++)
 			if (Persistance.currentmap.warpzones.get(i).hitbox.intersects(

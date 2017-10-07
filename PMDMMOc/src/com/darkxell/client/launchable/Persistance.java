@@ -36,7 +36,7 @@ public abstract class Persistance {
 	// FREEZONE RELATED OBJECTS
 	public static FreezoneMap currentmap;
 	public static FreezonePlayer currentplayer = new FreezonePlayer(
-			new PokemonSprite(PokemonSpritesets.getSpriteset(1)), 35, 28);
+			new PokemonSprite(PokemonSpritesets.getSpriteset(102)), 35, 28);
 	public static FreezoneCamera playerCamera = new FreezoneCamera(currentplayer);
 
 	// DUNGEON RELATED OBJECTS

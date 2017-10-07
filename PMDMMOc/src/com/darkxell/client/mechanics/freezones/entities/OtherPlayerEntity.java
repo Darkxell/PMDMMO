@@ -14,8 +14,10 @@ public class OtherPlayerEntity extends FreezoneEntity {
 	public final String name;
 	private double destinationX;
 	private double destinationY;
+	/** The nano timestamp of the last update. */
+	public long lastupdate;
 
-	public OtherPlayerEntity(double x, double y, int spriteID, String name) {
+	public OtherPlayerEntity(double x, double y, int spriteID, String name, long timestamp) {
 		super(false, true, x, y);
 		this.sprite = new PokemonSprite(PokemonSpritesets.getSpriteset(spriteID));
 		this.spriteID = spriteID;
@@ -34,22 +36,55 @@ public class OtherPlayerEntity extends FreezoneEntity {
 		g.drawImage(sprite.getCurrentSprite(), (int) (super.posX * 8 - sprite.pointer.gravityX),
 				(int) (super.posY * 8 - sprite.pointer.gravityY), null);
 		int namewidth = TextRenderer.instance.width(this.name);
-		TextRenderer.instance.render(g, this.name,(int)(super.posX * 8 - (namewidth / 2)), (int)(super.posY * 8 - sprite.pointer.gravityY - 20));
+		TextRenderer.instance.render(g, this.name, (int) (super.posX * 8 - (namewidth / 2)),
+				(int) (super.posY * 8 - sprite.pointer.gravityY - 20));
 	}
 
 	@Override
 	public void update() {
 		this.sprite.update();
+		// Calculates the movespeed of the pokemon
 		double movespeed = 0.2d;
-		if (destinationX > posX + 1)
+		boolean up = false, right = false, down = false, left = false;
+		if (destinationX > posX + 5 || destinationX < posX - 5 || destinationY > posY + 5 || destinationY < posY - 5)
+			movespeed *= 2;
+		// Moves the pokemon accordingly
+		if (destinationX > posX + 0.5) {
 			posX += movespeed;
-		else if (destinationX < posX - 1)
+			right = true;
+		} else if (destinationX < posX - 0.5) {
 			posX -= movespeed;
-		if (destinationY > posY + 1)
+			left = true;
+		}
+		if (destinationY > posY + 0.5) {
 			posY += movespeed;
-		else if (destinationY < posY - 1)
+			down = true;
+		} else if (destinationY < posY - 0.5) {
 			posY -= movespeed;
-
+			up = true;
+		}
+		// Sets the rotation of the pokemonSprite used
+		if (up && right)
+			this.sprite.setFacingDirection(PokemonSprite.FACING_NE);
+		else if (right && down)
+			this.sprite.setFacingDirection(PokemonSprite.FACING_SE);
+		else if (down && left)
+			this.sprite.setFacingDirection(PokemonSprite.FACING_SW);
+		else if (left && up)
+			this.sprite.setFacingDirection(PokemonSprite.FACING_NW);
+		else if (up)
+			this.sprite.setFacingDirection(PokemonSprite.FACING_N);
+		else if (right)
+			this.sprite.setFacingDirection(PokemonSprite.FACING_E);
+		else if (down)
+			this.sprite.setFacingDirection(PokemonSprite.FACING_S);
+		else if (left)
+			this.sprite.setFacingDirection(PokemonSprite.FACING_W);
+		// Sets the running/idle state
+		if (up || right || down || left)
+			this.sprite.setState(PokemonSprite.STATE_MOVE);
+		else
+			this.sprite.setState(PokemonSprite.STATE_IDDLE);
 	}
 
 	public void applyServerUpdate(double x, double y, int spriteID) {
@@ -59,6 +94,7 @@ public class OtherPlayerEntity extends FreezoneEntity {
 			this.spriteID = spriteID;
 			this.sprite = new PokemonSprite(PokemonSpritesets.getSpriteset(spriteID));
 		}
+		this.lastupdate = System.nanoTime();
 	}
 
 }
