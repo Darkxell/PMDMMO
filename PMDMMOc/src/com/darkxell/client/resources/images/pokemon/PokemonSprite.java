@@ -14,18 +14,20 @@ public class PokemonSprite {
 	public void update() {
 		++this.counter;
 		PokemonSpritesetState state = this.pointer.states[this.state];
-		if (this.counter > state.duration(this.statecounter))
-		{
+		if (this.counter > state.duration(this.statecounter)) {
 			this.counter = 0;
-			if (this.statecounter + 1 < state.indexes.length) ++this.statecounter;
-			else
-			{
-				if (this.state == STATE_ATTACK || this.state == STATE_HURT || this.state == STATE_SPECIAL1 || this.state == STATE_SPECIAL2 || this.state == STATE_WAKING
-						|| this.state == STATE_VICTORYPOSE) this.setState(STATE_IDDLE);
-				else this.statecounter = 0;
+			if (this.statecounter + 1 < state.indexes.length)
+				++this.statecounter;
+			else {
+				if (this.state == STATE_ATTACK || this.state == STATE_HURT || this.state == STATE_SPECIAL1
+						|| this.state == STATE_SPECIAL2 || this.state == STATE_WAKING
+						|| this.state == STATE_VICTORYPOSE)
+					this.setState(STATE_IDDLE);
+				else
+					this.statecounter = 0;
 			}
 		}
-		
+
 		if (this.healthCounter > 0)
 			--this.healthCounter;
 		if (this.healthCounter == 0) {
@@ -37,10 +39,16 @@ public class PokemonSprite {
 		return this.pointer.getSprite(this.state, this.facing, this.statecounter);
 	}
 
+	/**
+	 * Changes the state of this Sprite to the wanted one. If the parsed state
+	 * is already the state used by the pokemon sprite, this does nothing.
+	 */
 	public void setState(byte state) {
-		this.state = state;
-		this.counter = 0;
-		this.statecounter = 0;
+		if (this.state != state) {
+			this.state = state;
+			this.counter = 0;
+			this.statecounter = 0;
+		}
 	}
 
 	private byte facing = 4;
@@ -93,7 +101,7 @@ public class PokemonSprite {
 	public void setFacingDirection(byte dir) {
 		this.facing = dir;
 	}
-	
+
 	public void setHealthChange(int healthChange) {
 		this.healthChange = healthChange;
 		this.healthCounter = HEALTHLENGTH;

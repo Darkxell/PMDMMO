@@ -95,7 +95,7 @@ public abstract class FreezoneMap {
 					break;
 				}
 			if (!found)
-				entities.add(new OtherPlayerEntity(pfx, pfy, spriteID, dataname));
+				entities.add(new OtherPlayerEntity(pfx, pfy, spriteID, dataname,System.nanoTime()));
 		}
 	}
 
