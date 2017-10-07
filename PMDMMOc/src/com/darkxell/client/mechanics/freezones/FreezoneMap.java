@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.jdom2.input.SAXBuilder;
 
+import com.darkxell.client.launchable.ClientSettings;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.freezones.entities.OtherPlayerEntity;
 import com.darkxell.client.resources.images.AbstractTileset;
@@ -64,10 +65,25 @@ public abstract class FreezoneMap {
 		}
 	}
 
+	private int flushcounter = 0;
+	private static final long FLUSHTIMEOUT = 1000000000;
+
 	public void update() {
 		Persistance.currentplayer.update();
 		for (int i = 0; i < entities.size(); i++)
 			entities.get(i).update();
+		if (flushcounter >= 120) {
+			flushcounter = 0;
+			long ct = System.nanoTime();
+			for (int i = 0; i < entities.size(); i++)
+				if (entities.get(i) instanceof OtherPlayerEntity
+						&& ((OtherPlayerEntity) entities.get(i)).lastupdate < ct - FLUSHTIMEOUT) {
+					entities.remove(i);
+					// FIXME : make this code so it can remove 2 timeouted
+					// entities next to each others
+				}
+		} else
+			++flushcounter;
 	}
 
 	public byte getTileTypeAt(double x, double y) {
@@ -81,6 +97,8 @@ public abstract class FreezoneMap {
 
 	public void updateOtherPlayers(JsonValue data) {
 		String dataname = data.asObject().getString("name", "");
+		if (ClientSettings.getSetting(ClientSettings.LOGIN).equals(dataname))
+			return;
 		double pfx = data.asObject().getDouble("posfx", 0d);
 		double pfy = data.asObject().getDouble("posfy", 0d);
 		int spriteID = Integer.parseInt(data.asObject().getString("currentpokemon", ""));
@@ -95,7 +113,7 @@ public abstract class FreezoneMap {
 					break;
 				}
 			if (!found)
-				entities.add(new OtherPlayerEntity(pfx, pfy, spriteID, dataname,System.nanoTime()));
+				entities.add(new OtherPlayerEntity(pfx, pfy, spriteID, dataname, System.nanoTime()));
 		}
 	}
 
