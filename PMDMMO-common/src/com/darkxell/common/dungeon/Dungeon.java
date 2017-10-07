@@ -39,6 +39,8 @@ public class Dungeon
 	public final boolean recruitsAllowed;
 	/** Lists the Items found in this Dungeon's shops. */
 	private final ArrayList<DungeonItem> shopItems;
+	/** The chance of an Item being Sticky in this Dungeon. */
+	public final int stickyChance;
 	/** The number of turns to spend on a single floor before being kicked. */
 	public final int timeLimit;
 	/** Lists the Traps found in this Dungeon. */
@@ -54,6 +56,7 @@ public class Dungeon
 		this.recruitsAllowed = XMLUtils.getAttribute(xml, "recruits", true);
 		this.timeLimit = XMLUtils.getAttribute(xml, "limit", 2000);
 		this.linkedTo = XMLUtils.getAttribute(xml, "linked", -1);
+		this.stickyChance = XMLUtils.getAttribute(xml, "sticky", 0);
 
 		this.pokemon = new ArrayList<DungeonEncounter>();
 		for (Element pokemon : xml.getChild("encounters").getChildren(DungeonEncounter.XML_ROOT))
@@ -101,7 +104,7 @@ public class Dungeon
 			this.weather.put(Integer.parseInt(data.getAttributeValue("id")), new FloorSet(data.getChild(FloorSet.XML_ROOT)));
 	}
 
-	public Dungeon(int id, int floorCount, boolean direction, double monsterHouseChance, boolean recruits, int timeLimit,
+	public Dungeon(int id, int floorCount, boolean direction, double monsterHouseChance, boolean recruits, int timeLimit, int stickyChance,
 			int linkedTo, // int teamItems, int teamLevel, int teamMoney,int teamMembers,
 			ArrayList<DungeonEncounter> pokemon, ArrayList<DungeonItem> items, ArrayList<DungeonItem> shopItems, ArrayList<DungeonItem> buriedItems,
 			ArrayList<DungeonTrap> traps, ArrayList<FloorData> floorData, HashMap<Integer, FloorSet> weather)
@@ -111,6 +114,7 @@ public class Dungeon
 		this.direction = direction;
 		this.recruitsAllowed = recruits;
 		this.timeLimit = timeLimit;
+		this.stickyChance = stickyChance;
 		this.linkedTo = linkedTo;
 		this.pokemon = pokemon;
 		this.items = items;
@@ -171,6 +175,7 @@ public class Dungeon
 		XMLUtils.setAttribute(root, "down", this.direction, false);
 		XMLUtils.setAttribute(root, "recruits", this.recruitsAllowed, true);
 		XMLUtils.setAttribute(root, "limit", this.timeLimit, 2000);
+		XMLUtils.setAttribute(root, "sticky", this.stickyChance, 0);
 		XMLUtils.setAttribute(root, "linked", this.linkedTo, -1);
 		/* if (this.teamItems != -1) root.setAttribute("t-items", Integer.toString(this.teamItems)); if (this.teamLevel != -1) root.setAttribute("t-level", Integer.toString(this.teamLevel)); if (this.teamMembers != 4) root.setAttribute("t-members", Integer.toString(this.teamMembers)); if
 		 * (this.teamMoney != -1) root.setAttribute("t-money", Integer.toString(this.teamMoney)); */
