@@ -167,7 +167,7 @@ public class FreezoneExploreState extends AbstractState {
 			Persistance.soundmanager.setBackgroundMusic(SoundsHolder.getSong(Persistance.currentmap.freezonebgm));
 		}
 		// Sends the serverync message if it's time to do so
-		if (serversynccooldown > 60 && serversynccooldown != -1)
+		if (serversynccooldown > 20 && serversynccooldown != -1)
 			if (Persistance.socketendpoint.connectionStatus() != GameSocketEndpoint.CONNECTED) {
 				serversynccooldown = -1;
 				Logger.w(

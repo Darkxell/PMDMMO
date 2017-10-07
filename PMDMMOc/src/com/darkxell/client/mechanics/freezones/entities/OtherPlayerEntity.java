@@ -41,13 +41,13 @@ public class OtherPlayerEntity extends FreezoneEntity {
 	public void update() {
 		this.sprite.update();
 		double movespeed = 0.2d;
-		if (destinationX > posX + 1)
+		if (destinationX > posX + 0.5)
 			posX += movespeed;
-		else if (destinationX < posX - 1)
+		else if (destinationX < posX - 0.5)
 			posX -= movespeed;
-		if (destinationY > posY + 1)
+		if (destinationY > posY + 0.5)
 			posY += movespeed;
-		else if (destinationY < posY - 1)
+		else if (destinationY < posY - 0.5)
 			posY -= movespeed;
 
 	}

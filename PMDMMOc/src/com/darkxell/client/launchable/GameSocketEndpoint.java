@@ -12,7 +12,6 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.WebSocketContainer;
 
-import com.darkxell.client.mechanics.chat.ChatMessage;
 import com.darkxell.common.util.Logger;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonObject;
