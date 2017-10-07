@@ -48,6 +48,7 @@ public class FreezonePositionHandler implements MessageHandler{
                             .add("posfy",gsi.posFY)
                             .build();
                     sessionshandler.sendToSession(from, value);
+                    System.out.println("Sent message to a session:"+value.toString());
                 }
             }
         }catch(Exception e){

@@ -177,10 +177,9 @@ public class FreezoneExploreState extends AbstractState {
 				try {
 					String message = "";
 					JsonObject mess = new JsonObject().add("action", "freezoneposition")
-							.add("posfx",Persistance.currentplayer.x)
-							.add("posfy",Persistance.currentplayer.y)
-							.add("currentpokemon",Persistance.currentplayer.playersprite.pointer.pokemonID)
-							.add("freezoneid",Persistance.currentmap.getMapLocation().id);
+							.add("posfx", Persistance.currentplayer.x).add("posfy", Persistance.currentplayer.y)
+							.add("currentpokemon", Persistance.currentplayer.playersprite.pointer.pokemonID)
+							.add("freezoneid", Persistance.currentmap.getMapLocation().id);
 					message = mess.toString();
 					Persistance.socketendpoint.sendMessage(message);
 				} catch (Exception e) {
@@ -188,7 +187,7 @@ public class FreezoneExploreState extends AbstractState {
 					e.printStackTrace();
 				}
 			}
-		else
+		else if (serversynccooldown != -1)
 			++serversynccooldown;
 		for (int i = 0; i < Persistance.currentmap.warpzones.size(); i++)
 			if (Persistance.currentmap.warpzones.get(i).hitbox.intersects(
