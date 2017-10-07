@@ -23,7 +23,7 @@ public class DungeonItem
 
 	public DungeonItem(Element xml)
 	{
-		this.weight = Integer.parseInt(xml.getAttributeValue("weight"));
+		this.weight = XMLUtils.getAttribute(xml, "weight", 1);
 		this.floors = new FloorSet(xml.getChild(FloorSet.XML_ROOT));
 		this.items = XMLUtils.readIntArray(xml.getChild("ids"));
 		if (xml.getChild("chances") == null)
@@ -50,7 +50,7 @@ public class DungeonItem
 	public Element toXML()
 	{
 		Element root = new Element(XML_ROOT);
-		root.setAttribute("weight", Integer.toString(this.weight));
+		XMLUtils.setAttribute(root, "weight", this.weight, 1);
 		root.addContent(this.floors.toXML());
 		root.addContent(XMLUtils.toXML("ids", this.items));
 
