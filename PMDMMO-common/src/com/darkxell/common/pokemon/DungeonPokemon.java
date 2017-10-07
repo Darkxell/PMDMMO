@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.status.StatusCondition;
 import com.darkxell.common.status.StatusConditionInstance;
-import com.darkxell.common.util.GameUtil;
+import com.darkxell.common.util.Directions;
 
 /** Represents a Pokémon in a Dungeon. */
 public class DungeonPokemon
@@ -20,7 +20,7 @@ public class DungeonPokemon
 	/** This Pokémon's belly size. */
 	private int bellySize;
 	/** The direction this Pokémon is facing. */
-	private short facing = GameUtil.SOUTH;
+	private short facing = Directions.SOUTH;
 	/** This Pokémon's current Hit Points. */
 	private int hp;
 	/** This Pokémon's data. */

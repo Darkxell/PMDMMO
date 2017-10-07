@@ -9,7 +9,7 @@ import java.util.HashMap;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
 import com.darkxell.common.pokemon.DungeonPokemon;
-import com.darkxell.common.util.GameUtil;
+import com.darkxell.common.util.Directions;
 
 /** Renders Dungeon Pokémon. */
 public class DungeonPokemonRenderer
@@ -19,8 +19,8 @@ public class DungeonPokemonRenderer
 
 	private static byte spriteDirection(short facing)
 	{
-		for (byte i = 0; i < GameUtil.directions().length; ++i)
-			if (facing == GameUtil.directions()[i]) return i;
+		for (byte i = 0; i < Directions.directions().length; ++i)
+			if (facing == Directions.directions()[i]) return i;
 		return 0;
 	}
 

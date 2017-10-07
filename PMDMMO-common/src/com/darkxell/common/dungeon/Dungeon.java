@@ -133,12 +133,6 @@ public class Dungeon
 		return this.floorData.get(0);
 	}
 
-	public boolean hasTraps()
-	{
-		if (this.traps.size() == 1 && this.traps.get(0).ids.length == 1 && this.traps.get(0).ids[0] == TrapRegistry.WONDER_TILE.id) return false;
-		return !this.traps.isEmpty();
-	}
-
 	/** @return This Dungeon's name. */
 	public Message name()
 	{
@@ -206,7 +200,7 @@ public class Dungeon
 			root.addContent(buried);
 		}
 
-		if (this.hasTraps())
+		if (!this.traps.isEmpty() && !(this.traps.size() == 1 && this.traps.get(0).ids.length == 1 && this.traps.get(0).ids[0] == TrapRegistry.WONDER_TILE.id))
 		{
 			Element traps = new Element("traps");
 			for (DungeonTrap trap : this.traps)
@@ -228,6 +222,16 @@ public class Dungeon
 		}
 
 		return root;
+	}
+
+	/** @return The traps found on the input floor. Keys are Traps IDs, Values are Traps weights. */
+	public HashMap<Integer, Integer> traps(int floor)
+	{
+		HashMap<Integer, Integer> traps = new HashMap<Integer, Integer>();
+		for (DungeonTrap t : this.traps)
+			if (t.floors.contains(floor)) for (int i = 0; i < t.ids.length; ++i)
+				traps.put(t.ids[i], t.chances[i]);
+		return traps;
 	}
 
 }

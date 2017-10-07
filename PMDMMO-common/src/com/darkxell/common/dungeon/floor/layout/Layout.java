@@ -44,9 +44,7 @@ public abstract class Layout {
 		this.generatePaths();
 		this.generateLiquids();
 		this.placeStairs();
-		this.placeWonderTiles();
-		if (this.floor.dungeon.dungeon().hasTraps())
-			this.placeTraps();
+		this.placeTraps();
 		this.placeItems();
 		this.summonPokemon();
 
@@ -68,19 +66,22 @@ public abstract class Layout {
 		exitRoom.randomTile(this.random).setType(TileType.STAIR);
 	}
 
-	/** Places Wonder Tiles. */
-	protected void placeWonderTiles() {
-		int wonder = 2; // Number of wonder tiles to place
-		wonder += this.random.nextInt(3) - 2; // wonder = random[wonder-1;wonder+1]
-		for (int i = 0; i <= wonder; ++i) {
-			Tile t = this.floor.randomRoom(this.random).randomTile(this.random, TileType.GROUND);
-			t.trap = TrapRegistry.WONDER_TILE;
-			t.trapRevealed = true;
-		}
-	}
-
 	/** Places traps. */
-	protected abstract void placeTraps();
+	protected void placeTraps()
+	{
+		int traps = this.floor.data.trapDensity(); // Number of traps to place
+		if (traps == 0) return;
+		traps += this.random.nextInt(3) - 2; // traps = random[traps-1;traps+1]
+		if (traps < 0) traps = 0;
+		if (traps > 63) traps = 63;
+		for (int i = 0; i < traps; ++i)
+		{
+			Tile t = this.floor.randomEmptyTile(true, this.random);
+			t.trap = this.floor.randomTrap(this.random);
+			t.trapRevealed = t.trap == TrapRegistry.WONDER_TILE;
+		}
+
+	}
 
 	/** Places Items. */
 	protected abstract void placeItems();

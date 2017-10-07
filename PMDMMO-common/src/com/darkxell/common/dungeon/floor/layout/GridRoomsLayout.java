@@ -122,10 +122,6 @@ public class GridRoomsLayout extends Layout {
 	}
 
 	@Override
-	protected void placeTraps() {
-	}
-
-	@Override
 	protected void summonPokemon() {
 	}
 

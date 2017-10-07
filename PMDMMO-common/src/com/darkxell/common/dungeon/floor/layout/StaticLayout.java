@@ -15,6 +15,7 @@ import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.trap.TrapRegistry;
+import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.XMLUtils;
 
 public class StaticLayout extends Layout {
@@ -44,12 +45,21 @@ public class StaticLayout extends Layout {
 		this.floor.rooms = new Room[rooms.size()];
 		for (int i = 0; i < this.floor.rooms.length; ++i)
 			this.floor.rooms[i] = new Room(this.floor, rooms.get(i));
+		
 		//TILES
 		String[] data = xml.getChildText("tiles").split(";");
 		this.floor.tiles = new Tile[data[0].length()][data.length];
 		for (int y = 0; y < data.length; y++)
 			for (int x = 0; x < data[y].length(); x++)
-				this.floor.tiles[x][y] = new Tile(this.floor, x, y, TileType.find(data[y].charAt(x)));
+			{
+				Tile t = new Tile(this.floor, x, y, TileType.find(data[y].charAt(x)));
+				if (t.type() == null)
+				{
+					Logger.e("Invalid tile type: " + data[y].charAt(x));
+					t.setType(TileType.GROUND);
+				}
+				this.floor.tiles[x][y] = t;
+			}
 	}
 
 	@Override
@@ -73,12 +83,11 @@ public class StaticLayout extends Layout {
 	@Override
 	protected void placeTraps() {
 		if (this.xml.getChild("traps") != null) for (Element trap : this.xml.getChild("traps").getChildren("trap"))
-			this.floor.tiles[Integer.parseInt(trap.getAttributeValue("x"))][Integer.parseInt(trap.getAttributeValue("y"))].trap = TrapRegistry.find(Integer
-					.parseInt(trap.getAttributeValue("id")));
-	}
-
-	@Override
-	protected void placeWonderTiles() {
+		{
+			Tile t = this.floor.tiles[Integer.parseInt(trap.getAttributeValue("x"))][Integer.parseInt(trap.getAttributeValue("y"))];
+			t.trap = TrapRegistry.find(Integer.parseInt(trap.getAttributeValue("id")));
+			if (t.trap == TrapRegistry.WONDER_TILE) t.trapRevealed = true;
+		}
 	}
 
 	@Override

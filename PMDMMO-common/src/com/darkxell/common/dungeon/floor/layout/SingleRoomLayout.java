@@ -22,12 +22,6 @@ public class SingleRoomLayout extends Layout {
 	}
 
 	@Override
-	protected void placeTraps() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	protected void placeItems() {
 		// TODO Auto-generated method stub
 

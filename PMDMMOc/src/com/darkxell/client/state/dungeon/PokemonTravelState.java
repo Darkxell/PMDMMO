@@ -13,7 +13,7 @@ import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.event.pokemon.PokemonTravelEvent.PokemonTravel;
 import com.darkxell.common.pokemon.DungeonPokemon;
-import com.darkxell.common.util.GameUtil;
+import com.darkxell.common.util.Directions;
 
 /** Used for Pokémon travel animations. */
 public class PokemonTravelState extends DungeonSubState {
@@ -76,18 +76,18 @@ public class PokemonTravelState extends DungeonSubState {
 		int origin = 0, destination = 0;
 		short facing = runner.facing();
 
-		for (short dir : GameUtil.isDiagonal(facing)
-				? new short[] { facing, GameUtil.rotateClockwise(facing), GameUtil.rotateClockwise(facing),
-						GameUtil.rotateCounterClockwise(facing) }
-				: new short[] { facing, GameUtil.rotateClockwise(facing), GameUtil.rotateClockwise(facing),
-						GameUtil.rotateClockwise(GameUtil.rotateClockwise(facing)),
-						GameUtil.rotateCounterClockwise(facing),
-						GameUtil.rotateCounterClockwise(GameUtil.rotateCounterClockwise(facing)) }) {
+		for (short dir : Directions.isDiagonal(facing)
+				? new short[] { facing, Directions.rotateClockwise(facing), Directions.rotateClockwise(facing),
+						Directions.rotateCounterClockwise(facing) }
+				: new short[] { facing, Directions.rotateClockwise(facing), Directions.rotateClockwise(facing),
+						Directions.rotateClockwise(Directions.rotateClockwise(facing)),
+						Directions.rotateCounterClockwise(facing),
+						Directions.rotateCounterClockwise(Directions.rotateCounterClockwise(facing)) }) {
 			Tile o = travel.origin.adjacentTile(dir);
 			Tile d = travel.destination.adjacentTile(dir);
-			if (!(GameUtil.isDiagonal(dir) && !o.isInRoom()) && o.type().canWalkOn(runner))
+			if (!(Directions.isDiagonal(dir) && !o.isInRoom()) && o.type().canWalkOn(runner))
 				++origin;
-			if (!(GameUtil.isDiagonal(dir) && !d.isInRoom()) && d.type().canWalkOn(runner))
+			if (!(Directions.isDiagonal(dir) && !d.isInRoom()) && d.type().canWalkOn(runner))
 				++destination;
 			if (d.type() == TileType.STAIR || d.trapRevealed || d.getItem() != null)
 				return true;

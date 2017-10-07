@@ -15,7 +15,7 @@ import com.darkxell.client.ui.Keys;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.LearnedMove;
-import com.darkxell.common.util.GameUtil;
+import com.darkxell.common.util.Directions;
 
 public class ActionSelectionState extends DungeonSubState {
 
@@ -30,30 +30,30 @@ public class ActionSelectionState extends DungeonSubState {
 
 		if (Keys.isPressed(Keys.KEY_UP) && Keys.isPressed(Keys.KEY_RIGHT) && !Keys.isPressed(Keys.KEY_DOWN)
 				&& !Keys.isPressed(Keys.KEY_LEFT))
-			direction = GameUtil.NORTHEAST;
+			direction = Directions.NORTHEAST;
 		else if (Keys.isPressed(Keys.KEY_DOWN) && Keys.isPressed(Keys.KEY_RIGHT) && !Keys.isPressed(Keys.KEY_UP)
 				&& !Keys.isPressed(Keys.KEY_LEFT))
-			direction = GameUtil.SOUTHEAST;
+			direction = Directions.SOUTHEAST;
 		else if (Keys.isPressed(Keys.KEY_DOWN) && Keys.isPressed(Keys.KEY_LEFT) && !Keys.isPressed(Keys.KEY_UP)
 				&& !Keys.isPressed(Keys.KEY_RIGHT))
-			direction = GameUtil.SOUTHWEST;
+			direction = Directions.SOUTHWEST;
 		else if (Keys.isPressed(Keys.KEY_UP) && Keys.isPressed(Keys.KEY_LEFT) && !Keys.isPressed(Keys.KEY_DOWN)
 				&& !Keys.isPressed(Keys.KEY_RIGHT))
-			direction = GameUtil.NORTHWEST;
+			direction = Directions.NORTHWEST;
 
 		else if (!this.parent.diagonal) {
 			if (Keys.isPressed(Keys.KEY_UP) && !Keys.isPressed(Keys.KEY_LEFT) && !Keys.isPressed(Keys.KEY_DOWN)
 					&& !Keys.isPressed(Keys.KEY_RIGHT))
-				direction = GameUtil.NORTH;
+				direction = Directions.NORTH;
 			else if (Keys.isPressed(Keys.KEY_DOWN) && !Keys.isPressed(Keys.KEY_LEFT) && !Keys.isPressed(Keys.KEY_UP)
 					&& !Keys.isPressed(Keys.KEY_RIGHT))
-				direction = GameUtil.SOUTH;
+				direction = Directions.SOUTH;
 			else if (Keys.isPressed(Keys.KEY_LEFT) && !Keys.isPressed(Keys.KEY_UP) && !Keys.isPressed(Keys.KEY_DOWN)
 					&& !Keys.isPressed(Keys.KEY_RIGHT))
-				direction = GameUtil.WEST;
+				direction = Directions.WEST;
 			else if (Keys.isPressed(Keys.KEY_RIGHT) && !Keys.isPressed(Keys.KEY_LEFT) && !Keys.isPressed(Keys.KEY_DOWN)
 					&& !Keys.isPressed(Keys.KEY_UP))
-				direction = GameUtil.EAST;
+				direction = Directions.EAST;
 		}
 
 		if (direction != -1) {
@@ -65,7 +65,7 @@ public class ActionSelectionState extends DungeonSubState {
 	}
 
 	private void drawArrow(Graphics2D g, short direction) {
-		Point p = GameUtil.moveTo(0, 0, direction);
+		Point p = Directions.moveTo(0, 0, direction);
 		BufferedImage img = DungeonHudSpriteset.instance.getArrow(direction);
 		int x = this.parent.camera.x + (1 + p.x) * TILE_SIZE / 2 - img.getWidth() / 2 + this.rotationCounter / 3 * p.x;
 		int y = this.parent.camera.y + (1 + p.y) * TILE_SIZE / 2 - img.getHeight() / 2 + this.rotationCounter / 3 * p.y;
@@ -95,10 +95,10 @@ public class ActionSelectionState extends DungeonSubState {
 	public void render(Graphics2D g, int width, int height) {
 		if (this.isMain()) {
 			if (this.parent.diagonal) {
-				this.drawArrow(g, GameUtil.NORTHEAST);
-				this.drawArrow(g, GameUtil.SOUTHEAST);
-				this.drawArrow(g, GameUtil.SOUTHWEST);
-				this.drawArrow(g, GameUtil.NORTHWEST);
+				this.drawArrow(g, Directions.NORTHEAST);
+				this.drawArrow(g, Directions.SOUTHEAST);
+				this.drawArrow(g, Directions.SOUTHWEST);
+				this.drawArrow(g, Directions.NORTHWEST);
 			}
 			if (this.parent.rotating)
 				if (!this.parent.diagonal)

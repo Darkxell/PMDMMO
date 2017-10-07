@@ -15,7 +15,7 @@ import com.darkxell.client.ui.Keys;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.pokemon.DungeonPokemon;
-import com.darkxell.common.util.GameUtil;
+import com.darkxell.common.util.Directions;
 import com.darkxell.common.util.Logger;
 
 /** The main state for Dungeon exploration. */
@@ -95,14 +95,14 @@ public class DungeonState extends AbstractState {
 
 		ArrayList<Tile> candidates = new ArrayList<Tile>();
 		Tile initial = Persistance.player.getDungeonPokemon().tile;
-		candidates.add(initial.adjacentTile(GameUtil.WEST));
-		candidates.add(initial.adjacentTile(GameUtil.EAST));
-		candidates.add(initial.adjacentTile(GameUtil.SOUTH));
-		candidates.add(initial.adjacentTile(GameUtil.NORTH));
-		candidates.add(initial.adjacentTile(GameUtil.NORTHWEST));
-		candidates.add(initial.adjacentTile(GameUtil.NORTHEAST));
-		candidates.add(initial.adjacentTile(GameUtil.SOUTHWEST));
-		candidates.add(initial.adjacentTile(GameUtil.SOUTHEAST));
+		candidates.add(initial.adjacentTile(Directions.WEST));
+		candidates.add(initial.adjacentTile(Directions.EAST));
+		candidates.add(initial.adjacentTile(Directions.SOUTH));
+		candidates.add(initial.adjacentTile(Directions.NORTH));
+		candidates.add(initial.adjacentTile(Directions.NORTHWEST));
+		candidates.add(initial.adjacentTile(Directions.NORTHEAST));
+		candidates.add(initial.adjacentTile(Directions.SOUTHWEST));
+		candidates.add(initial.adjacentTile(Directions.SOUTHEAST));
 		candidates.removeIf(new Predicate<Tile>() {
 			@Override
 			public boolean test(Tile t) {

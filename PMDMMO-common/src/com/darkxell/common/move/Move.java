@@ -14,7 +14,7 @@ import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.LearnedMove;
 import com.darkxell.common.pokemon.PokemonType;
-import com.darkxell.common.util.GameUtil;
+import com.darkxell.common.util.Directions;
 import com.darkxell.common.util.Message;
 import com.darkxell.common.util.XMLUtils;
 
@@ -151,7 +151,7 @@ public class Move
 		{
 			case ALL_ALLIES:
 				Room r = floor.roomAt(user.tile.x, user.tile.y);
-				if (r == null) for (short d : GameUtil.directions())
+				if (r == null) for (short d : Directions.directions())
 				{
 					Tile t = user.tile.adjacentTile(d);
 					if (t.getPokemon() != null && user.pokemon.isAlliedWith(t.getPokemon().pokemon)) targets.add(t.getPokemon());
@@ -165,7 +165,7 @@ public class Move
 			case ALL_ENEMIES:
 			case ALL_ROOM:
 				r = floor.roomAt(user.tile.x, user.tile.y);
-				if (r == null) for (short d : GameUtil.directions())
+				if (r == null) for (short d : Directions.directions())
 				{
 					Tile t = user.tile.adjacentTile(d);
 					if (t.getPokemon() != null && (this.targets == ALL_ROOM || !user.pokemon.isAlliedWith(t.getPokemon().pokemon))) targets.add(t.getPokemon());

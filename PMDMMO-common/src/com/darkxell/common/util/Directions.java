@@ -7,7 +7,7 @@ import java.util.Random;
 import javafx.util.Pair;
 
 /** Contains various constants and methods for the Game. */
-public class GameUtil
+public class Directions
 {
 
 	/** Cardinal directions.<br />

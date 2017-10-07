@@ -4,7 +4,7 @@ import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 
 import com.darkxell.client.resources.Res;
-import com.darkxell.common.util.GameUtil;
+import com.darkxell.common.util.Directions;
 
 public class MenuHudSpriteset
 {
@@ -64,13 +64,13 @@ public class MenuHudSpriteset
 	{
 		switch (direction)
 		{
-			case GameUtil.NORTHEAST:
+			case Directions.NORTHEAST:
 				return this.sprites[5];
 
-			case GameUtil.SOUTHEAST:
+			case Directions.SOUTHEAST:
 				return this.sprites[7];
 
-			case GameUtil.SOUTHWEST:
+			case Directions.SOUTHWEST:
 				return this.sprites[6];
 
 			default:
@@ -82,13 +82,13 @@ public class MenuHudSpriteset
 	{
 		switch (direction)
 		{
-			case GameUtil.NORTHEAST:
+			case Directions.NORTHEAST:
 				return this.sprites[9];
 
-			case GameUtil.SOUTHEAST:
+			case Directions.SOUTHEAST:
 				return this.sprites[11];
 
-			case GameUtil.SOUTHWEST:
+			case Directions.SOUTHWEST:
 				return this.sprites[10];
 
 			default:

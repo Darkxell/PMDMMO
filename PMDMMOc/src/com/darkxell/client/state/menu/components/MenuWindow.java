@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.MenuHudSpriteset;
-import com.darkxell.common.util.GameUtil;
+import com.darkxell.common.util.Directions;
 import com.darkxell.common.util.Message;
 
 public class MenuWindow
@@ -31,7 +31,7 @@ public class MenuWindow
 
 	private void initColors()
 	{
-		BufferedImage corner = MenuHudSpriteset.instance.windowCorner(GameUtil.NORTHWEST);
+		BufferedImage corner = MenuHudSpriteset.instance.windowCorner(Directions.NORTHWEST);
 		out = new Color(corner.getRGB(corner.getWidth() - 1, 0), true);
 		middle = new Color(corner.getRGB(corner.getWidth() - 1, 2), true);
 		in = new Color(corner.getRGB(corner.getWidth() - 1, corner.getHeight() - 1), true);
@@ -59,10 +59,10 @@ public class MenuWindow
 		g.fillRect(inside.x - 2, inside.y - 2, inside.width + 4, inside.height + 4);
 
 		// Corners
-		g.drawImage(MenuHudSpriteset.instance.windowCorner(GameUtil.NORTHEAST), (int) inside.getMaxX(), this.dimensions.y, null);
-		g.drawImage(MenuHudSpriteset.instance.windowCorner(GameUtil.SOUTHEAST), (int) inside.getMaxX(), (int) inside.getMaxY(), null);
-		g.drawImage(MenuHudSpriteset.instance.windowCorner(GameUtil.SOUTHWEST), this.dimensions.x, (int) inside.getMaxY(), null);
-		g.drawImage(MenuHudSpriteset.instance.windowCorner(GameUtil.NORTHWEST), this.dimensions.x, this.dimensions.y, null);
+		g.drawImage(MenuHudSpriteset.instance.windowCorner(Directions.NORTHEAST), (int) inside.getMaxX(), this.dimensions.y, null);
+		g.drawImage(MenuHudSpriteset.instance.windowCorner(Directions.SOUTHEAST), (int) inside.getMaxX(), (int) inside.getMaxY(), null);
+		g.drawImage(MenuHudSpriteset.instance.windowCorner(Directions.SOUTHWEST), this.dimensions.x, (int) inside.getMaxY(), null);
+		g.drawImage(MenuHudSpriteset.instance.windowCorner(Directions.NORTHWEST), this.dimensions.x, this.dimensions.y, null);
 
 		// Sides
 		g.setColor(out);
@@ -94,10 +94,10 @@ public class MenuWindow
 			g.fillRect(nameInside.x, (int) nameInside.getMaxY() + 2, nameInside.width, 4);
 
 			// Corners
-			g.drawImage(MenuHudSpriteset.instance.windowNameCorner(GameUtil.NORTHEAST), (int) nameInside.getMaxX(), nameInside.y - cornerName.height, null);
-			g.drawImage(MenuHudSpriteset.instance.windowNameCorner(GameUtil.SOUTHEAST), (int) nameInside.getMaxX(), this.dimensions.y, null);
-			g.drawImage(MenuHudSpriteset.instance.windowNameCorner(GameUtil.SOUTHWEST), inside.x, this.dimensions.y, null);
-			g.drawImage(MenuHudSpriteset.instance.windowNameCorner(GameUtil.NORTHWEST), inside.x, nameInside.y - cornerName.height, null);
+			g.drawImage(MenuHudSpriteset.instance.windowNameCorner(Directions.NORTHEAST), (int) nameInside.getMaxX(), nameInside.y - cornerName.height, null);
+			g.drawImage(MenuHudSpriteset.instance.windowNameCorner(Directions.SOUTHEAST), (int) nameInside.getMaxX(), this.dimensions.y, null);
+			g.drawImage(MenuHudSpriteset.instance.windowNameCorner(Directions.SOUTHWEST), inside.x, this.dimensions.y, null);
+			g.drawImage(MenuHudSpriteset.instance.windowNameCorner(Directions.NORTHWEST), inside.x, nameInside.y - cornerName.height, null);
 
 			// Sides
 			g.setColor(out);

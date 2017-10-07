@@ -1,6 +1,6 @@
 package com.darkxell.client.resources.images.tilesets;
 
-import static com.darkxell.common.util.GameUtil.*;
+import static com.darkxell.common.util.Directions.*;
 
 import java.awt.Point;
 import java.awt.image.BufferedImage;
