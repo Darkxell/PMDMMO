@@ -14,7 +14,7 @@ import com.darkxell.common.util.Message;
 import com.darkxell.common.util.XMLUtils;
 
 /** Describes a Dungeon: floors, Pokémon, items... */
-public class Dungeon
+public class Dungeon implements Comparable<Dungeon>
 {
 	public static final boolean UP = false, DOWN = true;
 	public static final String XML_ROOT = "dungeon";
@@ -133,6 +133,12 @@ public class Dungeon
 			if (item.floors.contains(floor)) for (int i = 0; i < item.items.length; ++i)
 				items.put(item, item.weight);
 		return items;
+	}
+
+	@Override
+	public int compareTo(Dungeon o)
+	{
+		return Integer.compare(this.id, o.id);
 	}
 
 	/** @return The Data of the input floor. */

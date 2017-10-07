@@ -11,6 +11,7 @@ public abstract class OptionSelectionMenuState extends AbstractMenuState
 
 	/** The main window to display the options in. */
 	private OptionSelectionWindow mainWindow;
+	protected boolean isOpaque = false;
 
 	public OptionSelectionMenuState(AbstractState backgroundState)
 	{
@@ -27,6 +28,7 @@ public abstract class OptionSelectionMenuState extends AbstractMenuState
 	{
 		super.onTabChanged(tab);
 		this.mainWindow = new OptionSelectionWindow(this, this.mainWindowDimensions());
+		this.mainWindow.isOpaque = this.isOpaque;
 	}
 
 	@Override
@@ -34,7 +36,11 @@ public abstract class OptionSelectionMenuState extends AbstractMenuState
 	{
 		super.render(g, width, height);
 
-		if (this.mainWindow == null) this.mainWindow = new OptionSelectionWindow(this, this.mainWindowDimensions());
+		if (this.mainWindow == null)
+		{
+			this.mainWindow = new OptionSelectionWindow(this, this.mainWindowDimensions());
+			this.mainWindow.isOpaque = this.isOpaque;
+		}
 		if (this.tabs.size() != 0) this.mainWindow.render(g, this.currentTab().name, width, height);
 	}
 

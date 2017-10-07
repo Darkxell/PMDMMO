@@ -5,9 +5,8 @@ import com.darkxell.client.mechanics.freezones.FreezoneMap;
 import com.darkxell.client.mechanics.freezones.WarpZone;
 import com.darkxell.client.mechanics.freezones.entities.AnimatedFlowerEntity;
 import com.darkxell.client.mechanics.freezones.entities.FlagEntity;
-import com.darkxell.client.state.dungeon.DungeonState;
 import com.darkxell.client.state.map.LocalMap.LOCALMAPLOCATION;
-import com.darkxell.common.dungeon.DungeonRegistry;
+import com.darkxell.client.state.menu.freezone.DungeonSelectionState;
 import com.darkxell.common.util.DoubleRectangle;
 
 public class BaseFreezone extends FreezoneMap {
@@ -21,14 +20,12 @@ public class BaseFreezone extends FreezoneMap {
 				return new PokemonSquareFreezone();
 			}
 		});
+		final BaseFreezone f = this;
 		this.warpzones.add(new WarpZone(35, 29, new DoubleRectangle(29, 63, 9, 2)) {
 			@Override
 			public FreezoneMap getDestination() {
-				Persistance.dungeon = DungeonRegistry.find(1).newInstance();
-				Persistance.floor = Persistance.dungeon.currentFloor();
-				Persistance.floor.generate();
-				Persistance.stateManager.setState(Persistance.dungeonState = new DungeonState());
-				return new BaseFreezone();
+				Persistance.stateManager.setState(new DungeonSelectionState(Persistance.stateManager.getCurrentState()));
+				return f;
 			}
 		});
 		this.entities.add(new AnimatedFlowerEntity(17.5, 16, true));
