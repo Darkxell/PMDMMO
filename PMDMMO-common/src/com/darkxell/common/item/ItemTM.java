@@ -8,7 +8,7 @@ import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.DungeonPokemon;
-import com.darkxell.common.util.Message;
+import com.darkxell.common.util.language.Message;
 
 /** An Item that teaches a move to a Pokémon when used, then turns into a Used TM. */
 public class ItemTM extends ItemHM

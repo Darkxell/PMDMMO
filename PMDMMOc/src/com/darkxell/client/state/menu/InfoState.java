@@ -7,7 +7,7 @@ import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.menu.components.TextWindow;
 import com.darkxell.client.ui.Keys;
-import com.darkxell.common.util.Message;
+import com.darkxell.common.util.language.Message;
 
 public class InfoState extends AbstractMenuState
 {

@@ -1,7 +1,9 @@
-package com.darkxell.common.util;
+package com.darkxell.common.util.language;
 
 import java.io.*;
 import java.util.Properties;
+
+import com.darkxell.common.util.Logger;
 
 public class Lang
 {
@@ -44,6 +46,7 @@ public class Lang
 		Logger.instance().info("Language set to " + language.name + ".");
 		selected = language;
 		updateTranslations();
+		Keywords.updateKeywords();
 	}
 
 	public static String translate(String id)

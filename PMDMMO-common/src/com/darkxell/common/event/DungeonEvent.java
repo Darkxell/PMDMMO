@@ -3,7 +3,7 @@ package com.darkxell.common.event;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.util.Message;
+import com.darkxell.common.util.language.Message;
 
 public abstract class DungeonEvent
 {

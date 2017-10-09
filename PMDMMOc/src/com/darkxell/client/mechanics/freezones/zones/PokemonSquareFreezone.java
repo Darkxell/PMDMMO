@@ -9,7 +9,7 @@ import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
 import com.darkxell.client.state.map.LocalMap.LOCALMAPLOCATION;
 import com.darkxell.common.util.DoubleRectangle;
-import com.darkxell.common.util.Message;
+import com.darkxell.common.util.language.Message;
 
 public class PokemonSquareFreezone extends FreezoneMap {
 

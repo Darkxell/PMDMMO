@@ -10,7 +10,7 @@ import java.util.LinkedList;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.state.menu.components.MenuWindow;
-import com.darkxell.common.util.Message;
+import com.darkxell.common.util.language.Message;
 
 public class DungeonLogger {
 

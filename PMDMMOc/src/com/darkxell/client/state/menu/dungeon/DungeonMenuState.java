@@ -10,7 +10,7 @@ import com.darkxell.client.state.menu.dungeon.item.ItemContainersMenuState;
 import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.player.ItemContainer;
 import com.darkxell.common.pokemon.Pokemon;
-import com.darkxell.common.util.Message;
+import com.darkxell.common.util.language.Message;
 
 public class DungeonMenuState extends OptionSelectionMenuState {
 

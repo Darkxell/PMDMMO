@@ -7,7 +7,7 @@ import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.pokemon.DungeonPokemon;
-import com.darkxell.common.util.Message;
+import com.darkxell.common.util.language.Message;
 
 public class MoneyCollectedEvent extends DungeonEvent
 {

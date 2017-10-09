@@ -7,7 +7,7 @@ import java.util.function.Predicate;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.Item.ItemAction;
 import com.darkxell.common.item.ItemStack;
-import com.darkxell.common.util.Message;
+import com.darkxell.common.util.language.Message;
 
 public class Inventory implements ItemContainer
 {

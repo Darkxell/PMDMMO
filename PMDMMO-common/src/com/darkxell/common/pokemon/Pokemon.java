@@ -10,8 +10,8 @@ import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.player.ItemContainer;
 import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.ability.Ability;
-import com.darkxell.common.util.Message;
 import com.darkxell.common.util.XMLUtils;
+import com.darkxell.common.util.language.Message;
 
 public class Pokemon implements ItemContainer
 {

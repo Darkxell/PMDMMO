@@ -9,8 +9,8 @@ import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.item.ItemUseSelectionEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
-import com.darkxell.common.util.Message;
 import com.darkxell.common.util.XMLUtils;
+import com.darkxell.common.util.language.Message;
 
 /** Represents an Item type. */
 public class Item

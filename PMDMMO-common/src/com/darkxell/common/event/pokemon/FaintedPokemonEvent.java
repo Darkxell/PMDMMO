@@ -7,7 +7,7 @@ import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.stats.ExperienceGainedEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.Pokemon;
-import com.darkxell.common.util.Message;
+import com.darkxell.common.util.language.Message;
 
 public class FaintedPokemonEvent extends DungeonEvent
 {

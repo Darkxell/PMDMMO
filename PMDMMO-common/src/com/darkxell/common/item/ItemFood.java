@@ -2,8 +2,8 @@ package com.darkxell.common.item;
 
 import org.jdom2.Element;
 
-import com.darkxell.common.util.Message;
 import com.darkxell.common.util.XMLUtils;
+import com.darkxell.common.util.language.Message;
 
 /** An Item that restores belly when eaten. */
 public class ItemFood extends Item

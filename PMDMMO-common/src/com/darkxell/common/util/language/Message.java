@@ -1,4 +1,4 @@
-package com.darkxell.common.util;
+package com.darkxell.common.util.language;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,6 +9,8 @@ public class Message
 
 	/** ID of the message. */
 	public final String id;
+	/** Keyword values contained in this Message. */
+	private ArrayList<String> keywords = new ArrayList<String>();
 	/** ID of the last language this message was translated with. Used to update the translation when the user changes the Language. */
 	private String lastLang = null;
 	private ArrayList<Message> prefixes = new ArrayList<Message>(), suffixes = new ArrayList<Message>();
@@ -76,6 +78,11 @@ public class Message
 		return this;
 	}
 
+	public String[] getKeywords()
+	{
+		return this.keywords.toArray(new String[this.keywords.size()]);
+	}
+
 	/** @return The translated value of this Message. */
 	@Override
 	public String toString()
@@ -98,6 +105,9 @@ public class Message
 			this.value += suffix.toString();
 
 		this.lastLang = Lang.getLanguage().id;
+
+		this.keywords.clear();
+		this.keywords.addAll(Keywords.findKeywords(this.value));
 	}
 
 }

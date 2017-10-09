@@ -8,7 +8,7 @@ import com.darkxell.common.item.Item.ItemAction;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.player.ItemContainer;
 import com.darkxell.common.pokemon.DungeonPokemon;
-import com.darkxell.common.util.Message;
+import com.darkxell.common.util.language.Message;
 
 public class ItemSwappedEvent extends DungeonEvent
 {

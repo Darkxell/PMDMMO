@@ -2,7 +2,7 @@ package com.darkxell.common.item;
 
 import org.jdom2.Element;
 
-import com.darkxell.common.util.Message;
+import com.darkxell.common.util.language.Message;
 
 /** An Item that increases a stat when drunk. */
 public class ItemDrink extends ItemFood

@@ -15,7 +15,7 @@ import com.darkxell.client.resources.images.MenuHudSpriteset;
 import com.darkxell.client.resources.images.pokemon.PokemonPortrait;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.common.pokemon.Pokemon;
-import com.darkxell.common.util.Message;
+import com.darkxell.common.util.language.Message;
 
 public class DialogState extends AbstractState {
 

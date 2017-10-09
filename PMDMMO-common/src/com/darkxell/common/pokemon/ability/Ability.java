@@ -3,7 +3,7 @@ package com.darkxell.common.pokemon.ability;
 import java.util.HashMap;
 
 import com.darkxell.common.pokemon.PokemonType;
-import com.darkxell.common.util.Message;
+import com.darkxell.common.util.language.Message;
 
 public abstract class Ability
 {

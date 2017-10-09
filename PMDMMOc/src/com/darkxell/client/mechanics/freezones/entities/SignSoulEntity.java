@@ -7,7 +7,7 @@ import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.freezones.FreezoneEntity;
 import com.darkxell.client.state.DialogState;
 import com.darkxell.client.state.DialogState.DialogScreen;
-import com.darkxell.common.util.Message;
+import com.darkxell.common.util.language.Message;
 
 /**
  * Describes a sign. Note that this entity doesn't have a graphical display and

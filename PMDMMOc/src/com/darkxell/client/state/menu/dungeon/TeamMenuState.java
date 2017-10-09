@@ -6,7 +6,7 @@ import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.menu.InfoState;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.common.pokemon.Pokemon;
-import com.darkxell.common.util.Message;
+import com.darkxell.common.util.language.Message;
 
 public class TeamMenuState extends OptionSelectionMenuState {
 

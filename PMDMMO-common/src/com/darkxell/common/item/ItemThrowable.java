@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import org.jdom2.Element;
 
-import com.darkxell.common.util.Message;
+import com.darkxell.common.util.language.Message;
 
 public class ItemThrowable extends Item
 {

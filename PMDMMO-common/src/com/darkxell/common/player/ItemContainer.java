@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.item.Item.ItemAction;
 import com.darkxell.common.item.ItemStack;
-import com.darkxell.common.util.Message;
+import com.darkxell.common.util.language.Message;
 
 /** Represents an object that can store Items. */
 public interface ItemContainer
