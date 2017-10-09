@@ -28,6 +28,12 @@ public class ItemElixir extends ItemFood
 	}
 
 	@Override
+	protected String getUseID()
+	{
+		return "item.ingested";
+	}
+
+	@Override
 	public Message getUseName()
 	{
 		return new Message("item.ingest");
@@ -37,6 +43,12 @@ public class ItemElixir extends ItemFood
 	public Element toXML()
 	{
 		return super.toXML().setAttribute("pp", Integer.toString(this.pp));
+	}
+	
+	@Override
+	public boolean usedOnTeamMember()
+	{
+		return true;
 	}
 
 }

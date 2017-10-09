@@ -7,6 +7,7 @@ import org.jdom2.Element;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.item.ItemUseSelectionEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Message;
 import com.darkxell.common.util.XMLUtils;
@@ -144,11 +145,19 @@ public class Item
 		return this.spriteID;
 	}
 
-	/** @param pokemon - The Pokémon using the Item.
-	 * @return The message to display when using this Item. */
-	public Message getUseMessage(DungeonPokemon pokemon)
+	/** The ID of the translation to use for the message to display when using this Item. */
+	protected String getUseID()
 	{
-		return new Message("item.used").addReplacement("<pokemon>", pokemon.pokemon.getNickname()).addReplacement("<item>", this.name());
+		return "item.used";
+	}
+
+	/** @param event - The Pokémon using the Item.
+	 * @return The message to display when using this Item. */
+	public Message getUseMessage(ItemUseSelectionEvent event)
+	{
+		return new Message(this.getUseID()).addReplacement("<user>", event.user.pokemon.getNickname())
+				.addReplacement("<target>", event.target == null ? new Message("?", false) : event.target.pokemon.getNickname())
+				.addReplacement("<item>", this.name());
 	}
 
 	/** @return The name of the "Use" option for this Item. */
@@ -183,6 +192,12 @@ public class Item
 	public ArrayList<DungeonEvent> use(Floor floor, DungeonPokemon pokemon, DungeonPokemon target)
 	{
 		return new ArrayList<DungeonEvent>();
+	}
+
+	/** @return True if the user has to select a Team member as target for this Item. */
+	public boolean usedOnTeamMember()
+	{
+		return false;
 	}
 
 }

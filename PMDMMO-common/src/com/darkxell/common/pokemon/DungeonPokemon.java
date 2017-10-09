@@ -41,6 +41,13 @@ public class DungeonPokemon
 		this.belly = this.bellySize = DEFAULT_BELLY_SIZE;
 		this.hp = this.stats.getHealth();
 		this.statusConditions = new ArrayList<StatusConditionInstance>();
+		pokemon.dungeonPokemon = this;
+	}
+
+	/** Clears references to this Dungeon Pokémon in the Pokémon object. */
+	public void dispose()
+	{
+		this.pokemon.dungeonPokemon = null;
 	}
 
 	/** @return The amount of experience gained when defeating this Pokémon. */

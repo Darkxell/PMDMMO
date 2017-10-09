@@ -22,4 +22,16 @@ public class ItemBerry extends ItemFood
 		return ItemCategory.BERRIES;
 	}
 
+	@Override
+	protected String getUseID()
+	{
+		return "item.eaten";
+	}
+
+	@Override
+	public boolean usedOnTeamMember()
+	{
+		return true;
+	}
+
 }

@@ -42,6 +42,8 @@ public class Pokemon implements ItemContainer
 	private String nickname;
 	/** The Player controlling this Pokémon. null if it's an NPC. */
 	public Player player;
+	/** A reference to the Dungeon entity of this Pokémon if in a Dungeon. null else. */
+	DungeonPokemon dungeonPokemon;
 	/** This Pokémon's species. */
 	public final PokemonSpecies species;
 	/** This Pokémon's stats. */
@@ -170,6 +172,11 @@ public class Pokemon implements ItemContainer
 	public Ability getAbility()
 	{
 		return Ability.find(this.abilityID);
+	}
+
+	public DungeonPokemon getDungeonPokemon()
+	{
+		return this.dungeonPokemon;
 	}
 
 	public int getExperience()

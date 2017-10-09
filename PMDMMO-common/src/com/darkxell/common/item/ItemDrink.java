@@ -28,6 +28,12 @@ public class ItemDrink extends ItemFood
 	}
 
 	@Override
+	protected String getUseID()
+	{
+		return "item.ingested";
+	}
+
+	@Override
 	public Message getUseName()
 	{
 		return new Message("item.ingest");
@@ -37,6 +43,12 @@ public class ItemDrink extends ItemFood
 	public Element toXML()
 	{
 		return super.toXML().setAttribute("stat", Byte.toString(this.stat));
+	}
+	
+	@Override
+	public boolean usedOnTeamMember()
+	{
+		return true;
 	}
 
 }

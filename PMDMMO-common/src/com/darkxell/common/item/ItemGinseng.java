@@ -24,9 +24,21 @@ public class ItemGinseng extends ItemFood
 	}
 
 	@Override
+	protected String getUseID()
+	{
+		return "item.ingested";
+	}
+
+	@Override
 	public Message getUseName()
 	{
 		return new Message("item.ingest");
+	}
+	
+	@Override
+	public boolean usedOnTeamMember()
+	{
+		return true;
 	}
 
 }

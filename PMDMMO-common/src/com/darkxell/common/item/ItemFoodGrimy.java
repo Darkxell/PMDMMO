@@ -16,4 +16,16 @@ public class ItemFoodGrimy extends ItemFood
 		super(id, price, sell, sprite, isStackable, food, bellyIfFull, belly);
 	}
 
+	@Override
+	protected String getUseID()
+	{
+		return "item.eaten";
+	}
+	
+	@Override
+	public boolean usedOnTeamMember()
+	{
+		return true;
+	}
+
 }

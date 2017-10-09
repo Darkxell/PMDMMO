@@ -40,5 +40,11 @@ public class ItemHM extends Item
 	{
 		return super.toXML().setAttribute("move", Integer.toString(this.moveID));
 	}
+	
+	@Override
+	public boolean usedOnTeamMember()
+	{
+		return true;
+	}
 
 }

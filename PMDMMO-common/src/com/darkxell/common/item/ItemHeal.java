@@ -33,12 +33,24 @@ public class ItemHeal extends ItemFood
 	}
 
 	@Override
+	protected String getUseID()
+	{
+		return "item.eaten";
+	}
+
+	@Override
 	public Element toXML()
 	{
 		Element root = super.toXML();
 		XMLUtils.setAttribute(root, "hp", this.hp, 0);
 		XMLUtils.setAttribute(root, "hp-full", this.hpFull, 0);
 		return root;
+	}
+	
+	@Override
+	public boolean usedOnTeamMember()
+	{
+		return true;
 	}
 
 }

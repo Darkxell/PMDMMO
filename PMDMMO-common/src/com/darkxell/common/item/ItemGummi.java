@@ -36,6 +36,12 @@ public class ItemGummi extends Item
 	}
 
 	@Override
+	protected String getUseID()
+	{
+		return "item.eaten";
+	}
+
+	@Override
 	public Message getUseName()
 	{
 		return new Message("item.eat");
@@ -51,6 +57,12 @@ public class ItemGummi extends Item
 	public PokemonType type()
 	{
 		return PokemonType.find(this.type);
+	}
+	
+	@Override
+	public boolean usedOnTeamMember()
+	{
+		return true;
 	}
 
 }

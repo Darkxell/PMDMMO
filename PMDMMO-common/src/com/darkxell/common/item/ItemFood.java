@@ -38,6 +38,12 @@ public class ItemFood extends Item
 	}
 
 	@Override
+	protected String getUseID()
+	{
+		return "item.eaten";
+	}
+
+	@Override
 	public Message getUseName()
 	{
 		return new Message("item.eat");
@@ -50,6 +56,12 @@ public class ItemFood extends Item
 		XMLUtils.setAttribute(root, "full", this.bellyIfFull, 0);
 		XMLUtils.setAttribute(root, "belly", this.belly, 0);
 		return root;
+	}
+	
+	@Override
+	public boolean usedOnTeamMember()
+	{
+		return true;
 	}
 
 }

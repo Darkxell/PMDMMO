@@ -58,6 +58,14 @@ public class Floor
 		return false;
 	}
 
+	/** Clears unnecessary data of this Floor. */
+	public void dispose()
+	{
+		for (Tile[] row : this.tiles)
+			for (Tile tile : row)
+				if (tile.getPokemon() != null && tile.getPokemon().pokemon.player == null) tile.getPokemon().dispose();
+	}
+
 	/** Generates this Floor. */
 	public void generate()
 	{
@@ -230,6 +238,7 @@ public class Floor
 	{
 		pokemon.tile.setPokemon(null);
 		this.dungeon.unregisterActor(pokemon);
+		pokemon.dispose();
 	}
 
 }

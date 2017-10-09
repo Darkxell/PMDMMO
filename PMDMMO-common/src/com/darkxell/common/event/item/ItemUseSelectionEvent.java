@@ -33,7 +33,7 @@ public class ItemUseSelectionEvent extends DungeonEvent
 		this.source = source;
 		this.sourceIndex = sourceIndex;
 
-		this.messages.add(this.item.getUseMessage(this.user));
+		this.messages.add(this.item.getUseMessage(this));
 	}
 
 	@Override
