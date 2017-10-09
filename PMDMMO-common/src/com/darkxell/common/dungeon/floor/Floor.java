@@ -54,7 +54,7 @@ public class Floor
 	{
 		for (short direction : new short[]
 		{ Directions.NORTH, Directions.EAST, Directions.SOUTH, Directions.WEST })
-			if (!tile.adjacentTile(direction).isInRoom()) return true;
+			if (!tile.adjacentTile(direction).isInRoom() && tile.adjacentTile(direction).type() == TileType.GROUND) return true;
 		return false;
 	}
 
