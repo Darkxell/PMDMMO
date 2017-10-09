@@ -78,17 +78,23 @@ public class Message
 		return this;
 	}
 
-	public void findKeywords()
+	private void colorKeywords()
 	{
-		this.keywords.clear();
-		this.keywords.addAll(Keywords.findKeywords(this.value));
-
 		for (String keyword : this.keywords)
 		{
 			int index = this.value.toLowerCase().indexOf(keyword.toLowerCase());
 			this.value = this.value.substring(0, index) + "<green>" + this.value.substring(index, index + keyword.length()) + "</color>"
 					+ this.value.substring(index + keyword.length(), this.value.length());
 		}
+	}
+
+	public Message findKeywords()
+	{
+		this.keywords.clear();
+		this.keywords.addAll(Keywords.findKeywords(this.toString()));
+
+		this.colorKeywords();
+		return this;
 	}
 
 	public String[] getKeywords()
@@ -118,6 +124,8 @@ public class Message
 			this.value += suffix.toString();
 
 		this.lastLang = Lang.getLanguage().id;
+
+		this.colorKeywords();
 	}
 
 }

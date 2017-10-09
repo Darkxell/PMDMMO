@@ -27,7 +27,6 @@ public class InfoState extends AbstractMenuState
 		while (!toProcess.isEmpty())
 		{
 			Message m = toProcess.pop();
-			m.toString();
 			m.findKeywords();
 			String[] newKeywords = m.getKeywords();
 			for (String keyword : newKeywords)
@@ -65,7 +64,7 @@ public class InfoState extends AbstractMenuState
 		for (String keyword : keywords)
 		{
 			t.add(new Message(keyword, false));
-			i.add(new Message(Keywords.getKeyword(keyword)));
+			i.add(new Message(Keywords.getKeyword(keyword)).findKeywords());
 		}
 
 		this.titles = t.toArray(new Message[t.size()]);
