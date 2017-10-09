@@ -37,9 +37,8 @@ public class Keywords
 
 		// Finding Keywords
 		ArrayList<String> keywords = new ArrayList<String>();
-		String[] words = text.split(" ");
-		for (String word : words)
-			if (isKeyword(word)) keywords.add(word);
+		for (String keyword : dictionnary.keySet())
+			if (text.contains(keyword)) keywords.add(keyword);
 
 		return keywords;
 	}
@@ -73,7 +72,7 @@ public class Keywords
 		try
 		{
 			Properties data = new Properties();
-			data.load(new FileInputStream(new File("resources/lang/" + Lang.getLanguage().id + ".properties")));
+			data.load(new FileInputStream(new File("resources/lang/" + Lang.getLanguage().id + "_keywords.properties")));
 
 			for (Object keyword : data.keySet())
 			{
