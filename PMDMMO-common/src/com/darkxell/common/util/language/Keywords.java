@@ -30,15 +30,16 @@ public class Keywords
 	public static ArrayList<String> findKeywords(String text)
 	{
 		// Removing non-word components
+		text = text.toLowerCase();
 		text = text.replaceAll("( [0-9]* )|(<.*?>)", "");
-		text = text.replaceAll("[[:punct:]]", "");
+		text = text.replaceAll("(?!-)\\p{Punct}", "");
 		while (text.contains("  "))
 			text = text.replaceAll("  ", " ");
 
 		// Finding Keywords
 		ArrayList<String> keywords = new ArrayList<String>();
 		for (String keyword : dictionnary.keySet())
-			if (text.contains(keyword)) keywords.add(keyword);
+			if (text.contains(keyword.toLowerCase())) keywords.add(keyword);
 
 		return keywords;
 	}
@@ -81,7 +82,7 @@ public class Keywords
 				{
 					String[] values = ((String) data.getProperty(key)).split(",");
 					for (String value : values)
-						dictionnary.put(key, value);
+						dictionnary.put(value, key);
 				} catch (Exception e)
 				{
 					Logger.e("Keywords.updateKeywords(): Wrong format for keyword: " + key);
