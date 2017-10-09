@@ -12,7 +12,7 @@ import com.darkxell.client.state.menu.AbstractMenuState;
 import com.darkxell.client.state.menu.AbstractMenuState.MenuOption;
 import com.darkxell.client.state.menu.AbstractMenuState.MenuTab;
 import com.darkxell.client.state.menu.dungeon.MovesMenuState.MoveMenuOption;
-import com.darkxell.common.util.Message;
+import com.darkxell.common.util.language.Message;
 
 public class MoveSelectionWindow extends MenuWindow
 {

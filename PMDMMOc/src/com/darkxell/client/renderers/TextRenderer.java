@@ -13,7 +13,7 @@ import java.util.List;
 
 import com.darkxell.client.resources.Palette;
 import com.darkxell.client.resources.Res;
-import com.darkxell.common.util.Message;
+import com.darkxell.common.util.language.Message;
 
 public class TextRenderer
 {

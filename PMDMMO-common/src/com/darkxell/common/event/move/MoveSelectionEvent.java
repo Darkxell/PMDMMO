@@ -7,7 +7,7 @@ import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.LearnedMove;
-import com.darkxell.common.util.Message;
+import com.darkxell.common.util.language.Message;
 
 public class MoveSelectionEvent extends DungeonEvent
 {

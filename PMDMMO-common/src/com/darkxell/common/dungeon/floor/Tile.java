@@ -19,7 +19,7 @@ import com.darkxell.common.player.ItemContainer;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.trap.Trap;
 import com.darkxell.common.util.Directions;
-import com.darkxell.common.util.Message;
+import com.darkxell.common.util.language.Message;
 
 /** Represents a single tile in a Floor. */
 public class Tile implements ItemContainer

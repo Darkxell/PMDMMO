@@ -9,7 +9,7 @@ import com.darkxell.client.resources.images.MenuHudSpriteset;
 import com.darkxell.client.state.menu.AbstractMenuState;
 import com.darkxell.client.state.menu.AbstractMenuState.MenuOption;
 import com.darkxell.client.state.menu.AbstractMenuState.MenuTab;
-import com.darkxell.common.util.Message;
+import com.darkxell.common.util.language.Message;
 
 public class OptionSelectionWindow extends MenuWindow
 {

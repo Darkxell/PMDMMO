@@ -2,7 +2,7 @@ package com.darkxell.common.item;
 
 import org.jdom2.Element;
 
-import com.darkxell.common.util.Message;
+import com.darkxell.common.util.language.Message;
 
 /** An Item that restores PP when eaten. */
 public class ItemElixir extends ItemFood

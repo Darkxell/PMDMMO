@@ -7,7 +7,7 @@ import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.common.dungeon.Dungeon;
-import com.darkxell.common.util.Message;
+import com.darkxell.common.util.language.Message;
 
 public class NextFloorState extends AbstractState {
 	private static final int fade = 30, pause = 30, text = 60;

@@ -3,7 +3,7 @@ package com.darkxell.common.item;
 import org.jdom2.Element;
 
 import com.darkxell.common.pokemon.PokemonType;
-import com.darkxell.common.util.Message;
+import com.darkxell.common.util.language.Message;
 
 /** A Gummi restores belly, increases stats and IQ, depending on the Pokémon's type. */
 public class ItemGummi extends Item

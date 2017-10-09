@@ -11,7 +11,7 @@ import com.darkxell.client.state.DialogState;
 import com.darkxell.client.state.DialogState.DialogScreen;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.PokemonRegistry;
-import com.darkxell.common.util.Message;
+import com.darkxell.common.util.language.Message;
 
 public class PokemonFreezoneEntity extends FreezoneEntity {
 

@@ -10,8 +10,8 @@ import org.jdom2.Element;
 import com.darkxell.common.dungeon.floor.FloorData;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.trap.TrapRegistry;
-import com.darkxell.common.util.Message;
 import com.darkxell.common.util.XMLUtils;
+import com.darkxell.common.util.language.Message;
 
 /** Describes a Dungeon: floors, Pokémon, items... */
 public class Dungeon implements Comparable<Dungeon>

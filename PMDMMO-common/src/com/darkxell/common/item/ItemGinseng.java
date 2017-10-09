@@ -2,7 +2,7 @@ package com.darkxell.common.item;
 
 import org.jdom2.Element;
 
-import com.darkxell.common.util.Message;
+import com.darkxell.common.util.language.Message;
 
 /** An Item that Increases the power of selected move by 1, and rarely 3. */
 public class ItemGinseng extends ItemFood

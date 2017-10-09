@@ -2,7 +2,7 @@ package com.darkxell.common.pokemon;
 
 import java.awt.Color;
 
-import com.darkxell.common.util.Message;
+import com.darkxell.common.util.language.Message;
 
 /** Pokémon types. */
 public enum PokemonType

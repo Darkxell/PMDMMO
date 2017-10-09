@@ -16,7 +16,7 @@ import com.darkxell.client.ui.Keys;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.pokemon.LearnedMove;
 import com.darkxell.common.pokemon.Pokemon;
-import com.darkxell.common.util.Message;
+import com.darkxell.common.util.language.Message;
 
 public class MovesMenuState extends AbstractMenuState
 {

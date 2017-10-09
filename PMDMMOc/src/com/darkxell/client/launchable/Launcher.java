@@ -11,8 +11,8 @@ import com.darkxell.common.item.ItemRegistry;
 import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.trap.TrapRegistry;
-import com.darkxell.common.util.Lang;
 import com.darkxell.common.util.Logger;
+import com.darkxell.common.util.language.Lang;
 
 /** Launching class of the client */
 public class Launcher {

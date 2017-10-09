@@ -19,7 +19,7 @@ import com.darkxell.common.event.pokemon.FaintedPokemonEvent;
 import com.darkxell.common.event.stats.ExperienceGainedEvent;
 import com.darkxell.common.event.stats.StatChangedEvent;
 import com.darkxell.common.pokemon.PokemonStats;
-import com.darkxell.common.util.Message;
+import com.darkxell.common.util.language.Message;
 
 public final class MoveEventProcessor
 {

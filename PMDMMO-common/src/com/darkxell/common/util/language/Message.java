@@ -1,4 +1,4 @@
-package com.darkxell.common.util;
+package com.darkxell.common.util.language;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,6 +9,8 @@ public class Message
 
 	/** ID of the message. */
 	public final String id;
+	/** Keyword values contained in this Message. */
+	private ArrayList<String> keywords = new ArrayList<String>();
 	/** ID of the last language this message was translated with. Used to update the translation when the user changes the Language. */
 	private String lastLang = null;
 	private ArrayList<Message> prefixes = new ArrayList<Message>(), suffixes = new ArrayList<Message>();
@@ -76,6 +78,30 @@ public class Message
 		return this;
 	}
 
+	private void colorKeywords()
+	{
+		for (String keyword : this.keywords)
+		{
+			int index = this.value.toLowerCase().indexOf(keyword.toLowerCase());
+			this.value = this.value.substring(0, index) + "<green>" + this.value.substring(index, index + keyword.length()) + "</color>"
+					+ this.value.substring(index + keyword.length(), this.value.length());
+		}
+	}
+
+	public Message findKeywords()
+	{
+		this.keywords.clear();
+		this.keywords.addAll(Keywords.findKeywords(this.toString()));
+
+		this.colorKeywords();
+		return this;
+	}
+
+	public String[] getKeywords()
+	{
+		return this.keywords.toArray(new String[this.keywords.size()]);
+	}
+
 	/** @return The translated value of this Message. */
 	@Override
 	public String toString()
@@ -98,6 +124,8 @@ public class Message
 			this.value += suffix.toString();
 
 		this.lastLang = Lang.getLanguage().id;
+
+		this.colorKeywords();
 	}
 
 }

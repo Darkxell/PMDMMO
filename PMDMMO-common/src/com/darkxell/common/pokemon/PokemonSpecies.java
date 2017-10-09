@@ -6,8 +6,8 @@ import org.jdom2.Element;
 
 import com.darkxell.common.move.Move;
 import com.darkxell.common.move.MoveRegistry;
-import com.darkxell.common.util.Message;
 import com.darkxell.common.util.XMLUtils;
+import com.darkxell.common.util.language.Message;
 
 public class PokemonSpecies
 {

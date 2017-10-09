@@ -9,7 +9,7 @@ import com.darkxell.client.resources.images.MenuHudSpriteset;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.menu.components.OptionSelectionWindow;
 import com.darkxell.client.ui.Keys;
-import com.darkxell.common.util.Message;
+import com.darkxell.common.util.language.Message;
 
 public abstract class AbstractMenuState extends AbstractState
 {

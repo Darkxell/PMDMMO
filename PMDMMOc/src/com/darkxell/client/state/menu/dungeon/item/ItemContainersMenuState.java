@@ -19,7 +19,7 @@ import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.player.ItemContainer;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.Pokemon;
-import com.darkxell.common.util.Message;
+import com.darkxell.common.util.language.Message;
 
 public class ItemContainersMenuState extends OptionSelectionMenuState
 		implements ItemActionSource, ItemSelectionListener, TeamMemberSelectionListener {

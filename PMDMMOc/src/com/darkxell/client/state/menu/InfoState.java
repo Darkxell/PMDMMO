@@ -2,15 +2,43 @@ package com.darkxell.client.state.menu;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.util.ArrayList;
+import java.util.Stack;
 
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.menu.components.TextWindow;
 import com.darkxell.client.ui.Keys;
-import com.darkxell.common.util.Message;
+import com.darkxell.common.util.Logger;
+import com.darkxell.common.util.language.Keywords;
+import com.darkxell.common.util.language.Message;
 
 public class InfoState extends AbstractMenuState
 {
+
+	private static ArrayList<String> getKeywords(Message[] infos)
+	{
+		ArrayList<String> keywords = new ArrayList<String>();
+		Stack<Message> toProcess = new Stack<Message>();
+
+		for (Message info : infos)
+			toProcess.add(info);
+
+		while (!toProcess.isEmpty())
+		{
+			Message m = toProcess.pop();
+			m.findKeywords();
+			String[] newKeywords = m.getKeywords();
+			for (String keyword : newKeywords)
+				if (!keywords.contains(keyword))
+				{
+					keywords.add(keyword);
+					toProcess.add(new Message(Keywords.getKeyword(keyword)));
+				}
+		}
+
+		return keywords;
+	}
 
 	public final Message[] infos, titles;
 	public final AbstractState parent;
@@ -21,8 +49,26 @@ public class InfoState extends AbstractMenuState
 	{
 		super(background);
 		this.parent = parent;
-		this.titles = titles;
-		this.infos = infos;
+		if (titles.length != infos.length) Logger.e("InfoState(): titles and infos have different sizes!");
+
+		ArrayList<Message> t = new ArrayList<Message>();
+		ArrayList<Message> i = new ArrayList<Message>();
+
+		for (int j = 0; j < infos.length; ++j)
+		{
+			t.add(titles[j]);
+			i.add(infos[j]);
+		}
+
+		ArrayList<String> keywords = getKeywords(infos);
+		for (String keyword : keywords)
+		{
+			t.add(new Message(keyword, false));
+			i.add(new Message(Keywords.getKeyword(keyword)).findKeywords());
+		}
+
+		this.titles = t.toArray(new Message[t.size()]);
+		this.infos = i.toArray(new Message[i.size()]);
 	}
 
 	@Override
