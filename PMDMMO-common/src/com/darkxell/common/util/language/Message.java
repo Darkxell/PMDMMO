@@ -78,6 +78,19 @@ public class Message
 		return this;
 	}
 
+	public void findKeywords()
+	{
+		this.keywords.clear();
+		this.keywords.addAll(Keywords.findKeywords(this.value));
+
+		for (String keyword : this.keywords)
+		{
+			int index = this.value.toLowerCase().indexOf(keyword.toLowerCase());
+			this.value = this.value.substring(0, index) + "<green>" + this.value.substring(index, index + keyword.length()) + "</color>"
+					+ this.value.substring(index + keyword.length(), this.value.length());
+		}
+	}
+
 	public String[] getKeywords()
 	{
 		return this.keywords.toArray(new String[this.keywords.size()]);
@@ -105,9 +118,6 @@ public class Message
 			this.value += suffix.toString();
 
 		this.lastLang = Lang.getLanguage().id;
-
-		this.keywords.clear();
-		this.keywords.addAll(Keywords.findKeywords(this.value));
 	}
 
 }

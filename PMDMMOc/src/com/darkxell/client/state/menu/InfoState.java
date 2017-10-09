@@ -28,6 +28,7 @@ public class InfoState extends AbstractMenuState
 		{
 			Message m = toProcess.pop();
 			m.toString();
+			m.findKeywords();
 			String[] newKeywords = m.getKeywords();
 			for (String keyword : newKeywords)
 				if (!keywords.contains(keyword))
