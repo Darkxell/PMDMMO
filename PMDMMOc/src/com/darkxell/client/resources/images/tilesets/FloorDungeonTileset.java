@@ -4,6 +4,7 @@ import static com.darkxell.common.util.Directions.*;
 
 import java.awt.Point;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.HashMap;
 
 import com.darkxell.client.resources.images.AbstractDungeonTileset;
@@ -13,6 +14,8 @@ import com.darkxell.common.dungeon.floor.TileType;
 public class FloorDungeonTileset extends AbstractDungeonTileset
 {
 
+	/** The last tileset to be used. */
+	private static FloorDungeonTileset previous = null;
 	private static final HashMap<Integer, Point> tileLocations = new HashMap<Integer, Point>();
 
 	static
@@ -84,9 +87,20 @@ public class FloorDungeonTileset extends AbstractDungeonTileset
 		tileLocations.put(NORTH + EAST + SOUTH + WEST + NORTHEAST + SOUTHWEST + SOUTHEAST, new Point(1, 16));
 	}
 
-	public FloorDungeonTileset(String path)
+	public static FloorDungeonTileset load(int id)
+	{
+		if (previous != null && previous.id == id) return previous;
+		if (new File("resources/tilesets/dungeon/dungeon-" + id + ".png").exists()) return previous = new FloorDungeonTileset(id,
+				"resources/tilesets/dungeon/dungeon-" + id + ".png");
+		return previous = new FloorDungeonTileset(id, "resources/tilesets/dungeon/dungeon-0.png");
+	}
+
+	public final int id;
+
+	public FloorDungeonTileset(int id, String path)
 	{
 		super(path);
+		this.id = id;
 	}
 
 	public BufferedImage tile(Tile tile)
