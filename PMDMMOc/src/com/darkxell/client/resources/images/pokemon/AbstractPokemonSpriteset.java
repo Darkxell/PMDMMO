@@ -75,7 +75,7 @@ public class AbstractPokemonSpriteset
 		int x = 0, y = 0;
 		if (state == PokemonSprite.STATE_HURT) x += facing;
 		else if (state != PokemonSprite.STATE_SLEEP) y += facing;
-		x += variant;
+		x += this.states[state].indexes[variant];
 		x += stateOffsets[state][0];
 		y += stateOffsets[state][1];
 		return this.sprites.getSubimage(x * spriteWidth, y * spriteHeight, spriteWidth, spriteHeight);

@@ -51,6 +51,13 @@
     <spe1 duration="50" />
     <spe2 duration="50" />
   </pokemon>
+  <pokemon id="260" size ="48" x="24" y="33">
+    <attack duration="15,20" />
+    <idle duration="60,20" />
+    <move duration="15,10,15,10" index="0,2,1,2" />
+    <spe1 duration="50" />
+    <spe2 duration="50" />
+  </pokemon>
   <pokemon id="261" size ="32" x="16" y="18">
     <attack duration="10,10,10" />
     <idle duration="30,6,6,6,6,6" index="0,1,2,1,2,1" />
