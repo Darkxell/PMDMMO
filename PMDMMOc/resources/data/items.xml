@@ -153,59 +153,59 @@
   <item id="206" type="Equipable" price="7500" sell="450" sprite="60" />
   <item id="207" type="Equipable" price="2500" sell="50" sprite="60" />
   <item id="208" type="Equipable" price="9000" sell="2000" sprite="60" />
-  <item id="221" type="TM" price="0" sell="0" move="84" />
-  <item id="222" type="TM" price="0" sell="0" move="57" />
-  <item id="223" type="TM" price="0" sell="0" move="548" />
-  <item id="224" type="TM" price="8000" sell="0" move="470" />
-  <item id="225" type="TM" price="1500" sell="0" move="397" />
-  <item id="226" type="TM" price="0" sell="0" move="446" />
-  <item id="227" type="TM" price="0" sell="0" move="120" />
-  <item id="228" type="TM" price="6000" sell="0" move="209" />
-  <item id="229" type="TM" price="1500" sell="0" move="333" />
-  <item id="230" type="TM" price="1500" sell="0" move="49" />
-  <item id="231" type="TM" price="8000" sell="0" move="243" />
-  <item id="232" type="TM" price="0" sell="0" move="242" />
-  <item id="233" type="TM" price="0" sell="0" move="263" />
-  <item id="234" type="TM" price="2500" sell="0" move="482" />
-  <item id="235" type="TM" price="0" sell="0" move="391" />
-  <item id="236" type="TM" price="0" sell="0" move="200" />
-  <item id="237" type="TM" price="0" sell="0" move="398" />
-  <item id="238" type="TM" price="3000" sell="0" move="331" />
-  <item id="239" type="TM" price="0" sell="0" move="195" />
-  <item id="240" type="TM" price="0" sell="0" move="517" />
-  <item id="241" type="TM" price="8000" sell="0" move="69" />
-  <item id="242" type="TM" price="0" sell="0" move="65" />
-  <item id="243" type="TM" price="0" sell="0" move="223" />
-  <item id="244" type="TM" price="3000" sell="0" move="337" />
-  <item id="245" type="TM" price="3000" sell="0" move="225" />
-  <item id="246" type="TM" price="0" sell="0" move="452" />
-  <item id="247" type="TM" price="0" sell="0" move="175" />
-  <item id="248" type="TM" price="2500" sell="0" move="98" />
-  <item id="249" type="TM" price="2500" sell="0" move="492" />
-  <item id="250" type="TM" price="7500" sell="0" move="76" />
-  <item id="251" type="TM" price="8000" sell="0" move="136" />
-  <item id="252" type="TM" price="0" sell="0" move="429" />
-  <item id="253" type="TM" price="0" sell="0" move="128" />
-  <item id="254" type="TM" price="0" sell="0" move="160" />
-  <item id="255" type="TM" price="1500" sell="0" move="50" />
-  <item id="256" type="TM" price="1500" sell="0" move="289" />
-  <item id="257" type="TM" price="1500" sell="0" move="292" />
-  <item id="258" type="TM" price="3000" sell="0" move="493" />
-  <item id="259" type="TM" price="1500" sell="0" move="346" />
-  <item id="260" type="TM" price="1500" sell="0" move="34" />
-  <item id="261" type="TM" price="0" sell="0" move="521" />
-  <item id="262" type="TM" price="0" sell="0" move="495" />
-  <item id="263" type="TM" price="0" sell="0" move="126" />
-  <item id="264" type="TM" price="0" sell="0" move="622" />
-  <item id="265" type="TM" price="0" sell="0" move="623" />
-  <item id="301" type="HM" price="0" sell="0" sprite="94" move="301" />
-  <item id="302" type="HM" price="0" sell="0" sprite="94" move="156" />
-  <item id="303" type="HM" price="0" sell="0" sprite="94" move="538" />
-  <item id="304" type="HM" price="0" sell="0" sprite="94" move="283" />
-  <item id="305" type="HM" price="0" sell="0" sprite="94" move="363" />
-  <item id="306" type="HM" price="0" sell="0" sprite="94" move="109" />
-  <item id="307" type="HM" price="0" sell="0" sprite="94" move="543" />
-  <item id="308" type="HM" price="0" sell="0" sprite="94" move="541" />
+  <item id="221" type="TM" price="0" sell="0" move="21" />
+  <item id="222" type="TM" price="0" sell="0" move="906" />
+  <item id="223" type="TM" price="0" sell="0" move="666" />
+  <item id="224" type="TM" price="8000" sell="0" move="818" />
+  <item id="225" type="TM" price="1500" sell="0" move="44" />
+  <item id="226" type="TM" price="0" sell="0" move="308" />
+  <item id="227" type="TM" price="0" sell="0" move="220" />
+  <item id="228" type="TM" price="6000" sell="0" move="715" />
+  <item id="229" type="TM" price="1500" sell="0" move="87" />
+  <item id="230" type="TM" price="1500" sell="0" move="962" />
+  <item id="231" type="TM" price="8000" sell="0" move="854" />
+  <item id="232" type="TM" price="0" sell="0" move="852" />
+  <item id="233" type="TM" price="0" sell="0" move="29" />
+  <item id="234" type="TM" price="2500" sell="0" move="808" />
+  <item id="235" type="TM" price="0" sell="0" move="96" />
+  <item id="236" type="TM" price="0" sell="0" move="712" />
+  <item id="237" type="TM" price="0" sell="0" move="122" />
+  <item id="238" type="TM" price="3000" sell="0" move="85" />
+  <item id="239" type="TM" price="0" sell="0" move="707" />
+  <item id="240" type="TM" price="0" sell="0" move="551" />
+  <item id="241" type="TM" price="8000" sell="0" move="752" />
+  <item id="242" type="TM" price="0" sell="0" move="751" />
+  <item id="243" type="TM" price="0" sell="0" move="354" />
+  <item id="244" type="TM" price="3000" sell="0" move="99" />
+  <item id="245" type="TM" price="3000" sell="0" move="353" />
+  <item id="246" type="TM" price="0" sell="0" move="811" />
+  <item id="247" type="TM" price="0" sell="0" move="507" />
+  <item id="248" type="TM" price="2500" sell="0" move="219" />
+  <item id="249" type="TM" price="2500" sell="0" move="813" />
+  <item id="250" type="TM" price="7500" sell="0" move="759" />
+  <item id="251" type="TM" price="8000" sell="0" move="605" />
+  <item id="252" type="TM" price="0" sell="0" move="309" />
+  <item id="253" type="TM" price="0" sell="0" move="602" />
+  <item id="254" type="TM" price="0" sell="0" move="259" />
+  <item id="255" type="TM" price="1500" sell="0" move="963" />
+  <item id="256" type="TM" price="1500" sell="0" move="113" />
+  <item id="257" type="TM" price="1500" sell="0" move="123" />
+  <item id="258" type="TM" price="3000" sell="0" move="814" />
+  <item id="259" type="TM" price="1500" sell="0" move="75" />
+  <item id="260" type="TM" price="1500" sell="0" move="956" />
+  <item id="261" type="TM" price="0" sell="0" move="553" />
+  <item id="262" type="TM" price="0" sell="0" move="827" />
+  <item id="263" type="TM" price="0" sell="0" move="613" />
+  <item id="264" type="TM" price="0" sell="0" move="420000" />
+  <item id="265" type="TM" price="0" sell="0" move="420001" />
+  <item id="301" type="HM" price="0" sell="0" sprite="94" move="8" />
+  <item id="302" type="HM" price="0" sell="0" sprite="94" move="252" />
+  <item id="303" type="HM" price="0" sell="0" sprite="94" move="656" />
+  <item id="304" type="HM" price="0" sell="0" sprite="94" move="59" />
+  <item id="305" type="HM" price="0" sell="0" sprite="94" move="17" />
+  <item id="306" type="HM" price="0" sell="0" sprite="94" move="215" />
+  <item id="307" type="HM" price="0" sell="0" sprite="94" move="657" />
+  <item id="308" type="HM" price="0" sell="0" sprite="94" move="663" />
   <item id="311" type="Unusable" price="0" sell="1" sprite="96" />
   <item id="312" type="Unusable" price="0" sell="1" sprite="97" />
   <item id="313" type="Unusable" price="0" sell="1" sprite="98" />
