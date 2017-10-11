@@ -6,6 +6,7 @@ import java.util.Comparator;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.dungeon.DungeonState;
+import com.darkxell.client.state.map.DungeonFloorMap;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.common.dungeon.Dungeon;
 import com.darkxell.common.dungeon.DungeonRegistry;
@@ -62,6 +63,7 @@ public class DungeonSelectionState extends OptionSelectionMenuState
 		Persistance.floor = Persistance.dungeon.currentFloor();
 		Persistance.floor.generate();
 		Persistance.stateManager.setState(Persistance.dungeonState = new DungeonState());
+		Persistance.displaymap = new DungeonFloorMap();
 	}
 
 }
