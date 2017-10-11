@@ -11,17 +11,20 @@ public class DungeonFloorMap extends AbstractDisplayMap
 {
 
 	/** True if the default location needs has been set. Reset to false for each new floor. */
-	boolean defaultLocationSet = false;
+	private boolean defaultLocationSet = false;
 	private Floor floor;
+	/** True if the map should follow the leader. Set to false whenever the player moves the map themselves. */
+	private boolean followLeader = true;
 	/** Map offsets. */
 	private int x = 0, y = 0;
 
 	@Override
 	public void render(Graphics2D g, int width, int height)
 	{
-		if (!this.defaultLocationSet && this.floor != null)
+		if ((this.followLeader || !this.defaultLocationSet) && this.floor != null && Persistance.player.getDungeonPokemon().tile != null)
 		{
-			this.x = this.y = 0;
+			this.x = Persistance.player.getDungeonPokemon().tile.x * 2 - width / 2;
+			this.y = Persistance.player.getDungeonPokemon().tile.y * 2 - height / 2;
 			this.defaultLocationSet = true;
 		}
 
@@ -30,8 +33,13 @@ public class DungeonFloorMap extends AbstractDisplayMap
 
 		g.translate(-this.x, -this.y);
 
-		g.setColor(Color.BLUE);
-		g.fillRect(width / 3, height / 3, width / 3, height / 3);
+		if (this.floor != null)
+		{
+			g.setColor(Color.WHITE);
+			g.drawRect(0, 0, this.floor.getWidth() * 4, this.floor.getHeight() * 4);
+			g.drawLine(0, 0, this.floor.getWidth() * 4, this.floor.getHeight() * 4);
+			g.drawLine(this.floor.getWidth() * 4, 0, 0, this.floor.getHeight() * 4);
+		}
 
 		g.translate(this.x, this.y);
 	}
@@ -51,7 +59,12 @@ public class DungeonFloorMap extends AbstractDisplayMap
 		if (Keys.isPressed(Keys.KEY_MAP_DOWN)) this.y += mapSpeed;
 		if (Keys.isPressed(Keys.KEY_MAP_LEFT)) this.x -= mapSpeed;
 		if (Keys.isPressed(Keys.KEY_MAP_RIGHT)) this.x += mapSpeed;
-		if (Keys.isPressed(Keys.KEY_MAP_RESET)) this.defaultLocationSet = false;
+		if (Keys.isPressed(Keys.KEY_MAP_RESET))
+		{
+			this.followLeader = true;
+			this.defaultLocationSet = false;
+		}
+		if (Keys.isPressed(Keys.KEY_MAP_UP) || Keys.isPressed(Keys.KEY_MAP_DOWN) || Keys.isPressed(Keys.KEY_MAP_LEFT) || Keys.isPressed(Keys.KEY_MAP_RIGHT)) this.followLeader = false;
 	}
 
 }
