@@ -77,7 +77,6 @@ public class GameSocketEndpoint {
 			Logger.e("Could not aggree with the server for a valid session");
 			e.printStackTrace();
 		}
-
 	}
 
 	/**
