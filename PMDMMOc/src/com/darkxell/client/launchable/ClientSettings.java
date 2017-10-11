@@ -5,12 +5,11 @@ import java.io.*;
 import java.util.Properties;
 
 public class ClientSettings {
-	public static final String KEY_UP = "key.up", KEY_DOWN = "key.down", KEY_LEFT = "key.left", KEY_RIGHT = "key.right",
-			KEY_ATTACK = "key.attack", KEY_ROTATE = "key.rotate", KEY_RUN = "key.run", KEY_DIAGONAL = "key.diagonal",
-			KEY_MENU = "key.menu", KEY_MOVE_1 = "key.move1", KEY_MOVE_2 = "key.move2", KEY_MOVE_3 = "key.move3",
-			KEY_MOVE_4 = "key.move4", KEY_ITEM_1 = "key.item1", KEY_ITEM_2 = "key.item2",
-			KEY_INVENTORY = "key.inventory", KEY_MAP = "key.map", KEY_PARTY = "key.party",
-			SERVER_ADDRESS = "server.address", LOGIN = "login";
+	public static final String KEY_UP = "key.up", KEY_DOWN = "key.down", KEY_LEFT = "key.left", KEY_RIGHT = "key.right", KEY_ATTACK = "key.attack",
+			KEY_ROTATE = "key.rotate", KEY_RUN = "key.run", KEY_DIAGONAL = "key.diagonal", KEY_MENU = "key.menu", KEY_MOVE_1 = "key.move1",
+			KEY_MOVE_2 = "key.move2", KEY_MOVE_3 = "key.move3", KEY_MOVE_4 = "key.move4", KEY_ITEM_1 = "key.item1", KEY_ITEM_2 = "key.item2",
+			KEY_INVENTORY = "key.inventory", KEY_MAP_UP = "key.map.up", KEY_MAP_DOWN = "key.map.down", KEY_MAP_LEFT = "key.map.left",
+			KEY_MAP_RIGHT = "key.map.right", KEY_MAP_RESET = "key.map.reset", KEY_PARTY = "key.party", SERVER_ADDRESS = "server.address", LOGIN = "login";
 
 	private static Properties settings;
 
@@ -48,8 +47,16 @@ public class ClientSettings {
 			return Integer.toString(KeyEvent.VK_6);
 		case KEY_INVENTORY:
 			return Integer.toString(KeyEvent.VK_I);
-		case KEY_MAP:
-			return Integer.toString(KeyEvent.VK_M);
+		case KEY_MAP_UP:
+			return Integer.toString(KeyEvent.VK_NUMPAD8);
+		case KEY_MAP_DOWN:
+			return Integer.toString(KeyEvent.VK_NUMPAD2);
+		case KEY_MAP_LEFT:
+			return Integer.toString(KeyEvent.VK_NUMPAD4);
+		case KEY_MAP_RIGHT:
+			return Integer.toString(KeyEvent.VK_NUMPAD6);
+		case KEY_MAP_RESET:
+			return Integer.toString(KeyEvent.VK_NUMPAD5);
 		case KEY_PARTY:
 			return Integer.toString(KeyEvent.VK_P);
 		case SERVER_ADDRESS:
