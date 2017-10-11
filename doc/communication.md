@@ -10,9 +10,9 @@ https://tools.ietf.org/html/rfc6455
 
 The server is divided in two parts, each having their own TCP socket endpoint: a chat and a game information endpoint.
 It is the client's job to connect to both to send and be able to recieve the appropriate information.
-The endpoints are available at he following adresses:
-[server ip or linked dns]:8080/PMDMMOServer/chat
-[server ip or linked dns]:8080/PMDMMOServer/game
+The endpoints are available at the following adresses:
+<br/>[server ip or linked dns]:8080/PMDMMOServer/chat
+<br/>[server ip or linked dns]:8080/PMDMMOServer/game
 
 #2 - Required payload structure
 
