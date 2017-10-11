@@ -18,7 +18,7 @@ import com.darkxell.common.util.language.Lang;
 public class Launcher {
 
 	/** If true, data is saved on exit. */
-	public static boolean SAVE_ON_EXIT = true;
+	public static boolean SAVE_ON_EXIT = false;
 
 	/** Set to false to stop the game. */
 	public static boolean isRunning;

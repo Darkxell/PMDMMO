@@ -105,7 +105,7 @@ public class ItemContainersMenuState extends OptionSelectionMenuState
 	@Override
 	public void onKeyPressed(short key) {
 		super.onKeyPressed(key);
-		if (key == Keys.KEY_MAP && this.container() == Persistance.player.inventory) {
+		if (key == Keys.KEY_MAP_RESET && this.container() == Persistance.player.inventory) {
 			Persistance.player.inventory.sort();
 			ArrayList<ItemContainer> containers = new ArrayList<ItemContainer>();
 			for (ItemContainer c : this.containers)

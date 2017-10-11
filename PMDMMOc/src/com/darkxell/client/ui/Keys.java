@@ -5,10 +5,11 @@ import java.awt.event.KeyListener;
 
 import com.darkxell.client.launchable.ClientSettings;
 import com.darkxell.client.launchable.Persistance;
+import com.darkxell.common.util.Logger;
 
 public class Keys implements KeyListener {
 
-	public static final short KEY_COUNT = 18;
+	public static final short KEY_COUNT = 22;
 	private static boolean[] isPressed = new boolean[KEY_COUNT];
 
 	/**
@@ -30,19 +31,23 @@ public class Keys implements KeyListener {
 	 * <li>KEY_ITEM_2 = 13</li>
 	 * <li>KEY_ITEM_1 = 14</li>
 	 * <li>KEY_INVENTORY = 15</li>
-	 * <li>KEY_MAP = 16</li>
-	 * <li>KEY_PARTY = 17</li>
+	 * <li>KEY_PARTY = 16</li>
+	 * <li>KEY_MAP_UP = 17</li>
+	 * <li>KEY_MAP_DOWN = 18</li>
+	 * <li>KEY_MAP_LEFT = 19</li>
+	 * <li>KEY_MAP_RIGHT = 20</li>
+	 * <li>KEY_MAP_RESET = 21</li>
 	 * </ul>
 	 */
-	public static final short KEY_UP = 0, KEY_DOWN = 1, KEY_LEFT = 2, KEY_RIGHT = 3, KEY_ATTACK = 4, KEY_ROTATE = 5,
-			KEY_RUN = 6, KEY_DIAGONAL = 7, KEY_MENU = 8, KEY_MOVE_1 = 9, KEY_MOVE_2 = 10, KEY_MOVE_3 = 11,
-			KEY_MOVE_4 = 12, KEY_ITEM_1 = 13, KEY_ITEM_2 = 14, KEY_INVENTORY = 15, KEY_MAP = 16, KEY_PARTY = 17;
+	public static final short KEY_UP = 0, KEY_DOWN = 1, KEY_LEFT = 2, KEY_RIGHT = 3, KEY_ATTACK = 4, KEY_ROTATE = 5, KEY_RUN = 6, KEY_DIAGONAL = 7,
+			KEY_MENU = 8, KEY_MOVE_1 = 9, KEY_MOVE_2 = 10, KEY_MOVE_3 = 11, KEY_MOVE_4 = 12, KEY_ITEM_1 = 13, KEY_ITEM_2 = 14, KEY_INVENTORY = 15,
+			KEY_PARTY = 16, KEY_MAP_UP = 17, KEY_MAP_DOWN = 18, KEY_MAP_LEFT = 19, KEY_MAP_RIGHT = 20, KEY_MAP_RESET = 21;
 
 	/** User-defined keys. */
 	private static int[] keys;
 	/** Key names. */
-	private static String[] NAMES = new String[] { "up", "down", "left", "right", "attack", "rotate", "run", "diagonal",
-			"menu", "move1", "move2", "move3", "move4", "item1", "item2", "inventory", "map", "party" };
+	private static String[] NAMES = new String[] { "up", "down", "left", "right", "attack", "rotate", "run", "diagonal", "menu", "move1", "move2", "move3", "move4", "item1", "item2", "inventory", "party",
+			"map.up", "map.down", "map.left", "map.right", "map.reset" };
 
 	/**
 	 * @param keyID
@@ -80,6 +85,7 @@ public class Keys implements KeyListener {
 			try {
 				keys[i] = Integer.parseInt(ClientSettings.getSetting(s));
 			} catch (Exception e) {
+				Logger.e("Invalid key ID: " + ClientSettings.getSetting(s));
 				ClientSettings.resetSetting(s);
 				keys[i] = Integer.parseInt(ClientSettings.getSetting(s));
 			}
