@@ -4,17 +4,25 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.resources.images.tilesets.DungeonMapTileset;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.common.dungeon.floor.Floor;
+import com.darkxell.common.dungeon.floor.Tile;
+import com.darkxell.common.dungeon.floor.TileType;
+import com.darkxell.common.util.Logger;
 
 public class DungeonFloorMap extends AbstractDisplayMap
 {
+
+	public static final int TILE_SIZE = 4;
+	public static final Color walls = Color.WHITE;
 
 	/** True if the default location needs has been set. Reset to false for each new floor. */
 	private boolean defaultLocationSet = false;
 	private Floor floor;
 	/** True if the map should follow the leader. Set to false whenever the player moves the map themselves. */
 	private boolean followLeader = true;
+	public final DungeonMapTileset tileset = DungeonMapTileset.INSTANCE;
 	/** Map offsets. */
 	private int x = 0, y = 0;
 
@@ -23,8 +31,8 @@ public class DungeonFloorMap extends AbstractDisplayMap
 	{
 		if ((this.followLeader || !this.defaultLocationSet) && this.floor != null && Persistance.player.getDungeonPokemon().tile != null)
 		{
-			this.x = Persistance.player.getDungeonPokemon().tile.x * 2 - width / 2;
-			this.y = Persistance.player.getDungeonPokemon().tile.y * 2 - height / 2;
+			this.x = Persistance.player.getDungeonPokemon().tile.x * TILE_SIZE - width / 2;
+			this.y = Persistance.player.getDungeonPokemon().tile.y * TILE_SIZE - height / 2;
 			this.defaultLocationSet = true;
 		}
 
@@ -35,10 +43,17 @@ public class DungeonFloorMap extends AbstractDisplayMap
 
 		if (this.floor != null)
 		{
-			g.setColor(Color.WHITE);
-			g.drawRect(0, 0, this.floor.getWidth() * 4, this.floor.getHeight() * 4);
-			g.drawLine(0, 0, this.floor.getWidth() * 4, this.floor.getHeight() * 4);
-			g.drawLine(this.floor.getWidth() * 4, 0, 0, this.floor.getHeight() * 4);
+			int xStart = this.x - width / 2, yStart = this.y - height / 2;
+			if (xStart < 0) xStart = 0;
+			if (yStart < 0) yStart = 0;
+
+			for (int x = xStart; x < this.floor.getWidth() && x <= xStart + width / TILE_SIZE + 1; ++x)
+				for (int y = yStart; y < this.floor.getHeight() && y <= yStart + height / TILE_SIZE + 1; ++y)
+				{
+					Tile tile = this.floor.tileAt(x, y);
+					if (tile == null) Logger.e("null tile at " + x + ", " + y);
+					if (tile.type() == TileType.GROUND) g.drawImage(tileset.ground(), tile.x * TILE_SIZE, tile.y * TILE_SIZE, null);
+				}
 		}
 
 		g.translate(this.x, this.y);
