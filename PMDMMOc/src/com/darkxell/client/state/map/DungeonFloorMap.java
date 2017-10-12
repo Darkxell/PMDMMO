@@ -9,6 +9,8 @@ import com.darkxell.client.ui.Keys;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
+import com.darkxell.common.trap.TrapRegistry;
+import com.darkxell.common.util.Directions;
 import com.darkxell.common.util.Logger;
 
 public class DungeonFloorMap extends AbstractDisplayMap
@@ -52,7 +54,33 @@ public class DungeonFloorMap extends AbstractDisplayMap
 				{
 					Tile tile = this.floor.tileAt(x, y);
 					if (tile == null) Logger.e("null tile at " + x + ", " + y);
-					if (tile.type() == TileType.GROUND) g.drawImage(tileset.ground(), tile.x * TILE_SIZE, tile.y * TILE_SIZE, null);
+					else
+					{
+						int tx = tile.x * TILE_SIZE, ty = tile.y * TILE_SIZE;
+						if (tile.getPokemon() != null)
+						{
+							if (tile.getPokemon() == Persistance.player.getDungeonPokemon()) g.drawImage(this.tileset.player(), tx, ty, null);
+							else if (Persistance.player.isAlly(tile.getPokemon().pokemon)) g.drawImage(this.tileset.ally(), tx, ty, null);
+							else g.drawImage(this.tileset.enemy(), tx, ty, null);
+						} else if (tile.getItem() != null) g.drawImage(this.tileset.item(), tx, ty, null);
+						else if (tile.trap == TrapRegistry.WONDER_TILE) g.drawImage(this.tileset.wonder(), tx, ty, null);
+						else if (tile.trapRevealed) g.drawImage(this.tileset.trap(), tx, ty, null);
+						else if (tile.type() == TileType.STAIR) g.drawImage(this.tileset.stairs(), tx, ty, null);
+						else if (tile.type() == TileType.WARP_ZONE) g.drawImage(this.tileset.warpzone(), tx, ty, null);
+						else if (tile.type() == TileType.GROUND) g.drawImage(this.tileset.ground(), tx, ty, null);
+						else
+						{
+							g.setColor(walls);
+							if (tile.isAdjacentWalkable(Directions.NORTH)) g.drawLine(tx, ty, tx + 3, ty);
+							if (tile.isAdjacentWalkable(Directions.EAST)) g.drawLine(tx + 3, ty, tx + 3, ty + 3);
+							if (tile.isAdjacentWalkable(Directions.SOUTH)) g.drawLine(tx, ty + 3, tx + 3, ty + 3);
+							if (tile.isAdjacentWalkable(Directions.WEST)) g.drawLine(tx, ty, tx, ty + 3);
+							if (tile.isAdjacentWalkable(Directions.NORTHEAST)) g.drawLine(tx + 3, ty, tx + 3, ty);
+							if (tile.isAdjacentWalkable(Directions.SOUTHEAST)) g.drawLine(tx + 3, ty + 3, tx + 3, ty + 3);
+							if (tile.isAdjacentWalkable(Directions.SOUTHWEST)) g.drawLine(tx, ty + 3, tx, ty + 3);
+							if (tile.isAdjacentWalkable(Directions.NORTHWEST)) g.drawLine(tx, ty, tx, ty);
+						}
+					}
 				}
 		}
 

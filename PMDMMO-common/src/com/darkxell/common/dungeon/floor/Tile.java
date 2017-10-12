@@ -155,6 +155,12 @@ public class Tile implements ItemContainer
 		return this.trap != null;
 	}
 
+	public boolean isAdjacentWalkable(short direction)
+	{
+		Tile t = this.adjacentTile(direction);
+		return t != null && (t.type() == TileType.GROUND || t.type() == TileType.STAIR || t.type() == TileType.WARP_ZONE);
+	}
+
 	/** @return True if this Tile has no trap or item. */
 	public boolean isEmpty()
 	{

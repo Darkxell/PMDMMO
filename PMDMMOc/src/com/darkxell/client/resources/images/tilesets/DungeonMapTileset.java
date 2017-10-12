@@ -44,9 +44,9 @@ public class DungeonMapTileset extends AbstractTileset
 		return this.tileAt(1, 1);
 	}
 
-	public BufferedImage player(byte variant)
+	public BufferedImage player()
 	{
-		return this.tileAt(variant, 0);
+		return this.tileAt(0, 0);
 	}
 
 	public BufferedImage stairs()
