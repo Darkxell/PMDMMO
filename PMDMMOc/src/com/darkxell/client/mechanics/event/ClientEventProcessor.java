@@ -11,6 +11,7 @@ import com.darkxell.client.state.FreezoneExploreState;
 import com.darkxell.client.state.dungeon.AnimationState;
 import com.darkxell.client.state.dungeon.NextFloorState;
 import com.darkxell.client.state.dungeon.PokemonTravelState;
+import com.darkxell.client.state.map.LocalMap;
 import com.darkxell.client.state.menu.dungeon.StairMenuState;
 import com.darkxell.common.ai.AI;
 import com.darkxell.common.dungeon.DungeonInstance;
@@ -100,7 +101,10 @@ public final class ClientEventProcessor
 
 	private static void processDungeonExitEvent(DungeonExitEvent event)
 	{
-		if (event.pokemon == Persistance.player.getDungeonPokemon()) Persistance.stateManager.setState(new FreezoneExploreState());
+		if (event.pokemon == Persistance.player.getDungeonPokemon()) {
+			Persistance.stateManager.setState(new FreezoneExploreState());
+			Persistance.displaymap = LocalMap.instance;
+		}
 	}
 
 	/** Processes the input event and adds the resulting events to the pending stack. */

@@ -30,7 +30,7 @@ public abstract class Persistance {
 	public static StateManager stateManager;
 	public static SoundManager soundmanager;
 	public static ChatBox chatbox = new ChatBox();
-	public static AbstractDisplayMap displaymap = new LocalMap();
+	public static AbstractDisplayMap displaymap = LocalMap.instance;
 	public static GameSocketEndpoint socketendpoint = new GameSocketEndpoint();
 
 	// FREEZONE RELATED OBJECTS

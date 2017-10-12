@@ -10,6 +10,8 @@ import com.darkxell.common.util.language.Message;
 
 public class LocalMap extends AbstractDisplayMap {
 
+	public static final LocalMap instance = new LocalMap();
+	
 	public LOCALMAPLOCATION currentlocation = LOCALMAPLOCATION.BASE;
 
 	@Override
