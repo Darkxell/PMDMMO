@@ -16,6 +16,7 @@ import com.darkxell.common.util.Logger;
 public class DungeonFloorMap extends AbstractDisplayMap
 {
 
+	public static final int PLAYER_TICK = 30;
 	public static final int TILE_SIZE = 4;
 	public static final Color walls = Color.WHITE;
 
@@ -24,6 +25,7 @@ public class DungeonFloorMap extends AbstractDisplayMap
 	private Floor floor;
 	/** True if the map should follow the leader. Set to false whenever the player moves the map themselves. */
 	private boolean followLeader = true;
+	private int tick = 0;
 	public final DungeonMapTileset tileset = DungeonMapTileset.INSTANCE;
 	/** Map offsets. */
 	private int x = 0, y = 0;
@@ -57,10 +59,11 @@ public class DungeonFloorMap extends AbstractDisplayMap
 					else
 					{
 						int tx = tile.x * TILE_SIZE, ty = tile.y * TILE_SIZE;
-						if (tile.getPokemon() != null)
+						boolean isMain = tile.getPokemon() == Persistance.player.getDungeonPokemon();
+						if (isMain && this.tick >= PLAYER_TICK) g.drawImage(this.tileset.player(), tx, ty, null);
+						else if (!isMain && tile.getPokemon() != null)
 						{
-							if (tile.getPokemon() == Persistance.player.getDungeonPokemon()) g.drawImage(this.tileset.player(), tx, ty, null);
-							else if (Persistance.player.isAlly(tile.getPokemon().pokemon)) g.drawImage(this.tileset.ally(), tx, ty, null);
+							if (Persistance.player.isAlly(tile.getPokemon().pokemon)) g.drawImage(this.tileset.ally(), tx, ty, null);
 							else g.drawImage(this.tileset.enemy(), tx, ty, null);
 						} else if (tile.getItem() != null) g.drawImage(this.tileset.item(), tx, ty, null);
 						else if (tile.trap == TrapRegistry.WONDER_TILE) g.drawImage(this.tileset.wonder(), tx, ty, null);
@@ -108,6 +111,9 @@ public class DungeonFloorMap extends AbstractDisplayMap
 			this.defaultLocationSet = false;
 		}
 		if (Keys.isPressed(Keys.KEY_MAP_UP) || Keys.isPressed(Keys.KEY_MAP_DOWN) || Keys.isPressed(Keys.KEY_MAP_LEFT) || Keys.isPressed(Keys.KEY_MAP_RIGHT)) this.followLeader = false;
+
+		++this.tick;
+		if (this.tick >= PLAYER_TICK * 2) this.tick = 0;
 	}
 
 }
