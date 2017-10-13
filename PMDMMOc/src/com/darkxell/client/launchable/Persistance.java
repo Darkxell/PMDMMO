@@ -51,4 +51,10 @@ public abstract class Persistance {
 		player.addAlly(PokemonRegistry.find(1).generate(new Random(), 1));
 	}
 
+	/**
+	 * Displays the debug information. Careful, this is not optimized and will
+	 * have a hight CPU drain. It also makes the game really ugly, it's a debug
+	 * mode...
+	 */
+	public static boolean debugdisplaymode = true;
 }

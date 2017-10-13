@@ -32,13 +32,6 @@ public class FreezoneExploreState extends AbstractState {
 			Persistance.currentplayer.pressKey(Keys.KEY_LEFT);
 	}
 
-	/**
-	 * Displays the debug information. Careful, this is not optimized and will
-	 * have a hight CPU drain. It also makes the game really ugly, it's a debug
-	 * mode...
-	 */
-	static boolean debugdisplaymode = false;
-
 	@Override
 	public void onKeyPressed(short key) {
 		if (Persistance.currentmap != null)
@@ -76,7 +69,7 @@ public class FreezoneExploreState extends AbstractState {
 				for (int j = 0; j < map.mapWidth; j++) {
 					int tileid = (i * map.mapWidth) + j;
 					g.drawImage(map.tiles[tileid].sprite, 8 * j, 8 * i, null);
-					if (debugdisplaymode)
+					if (Persistance.debugdisplaymode)
 						if (map.tiles[tileid].type == FreezoneTile.TYPE_SOLID) {
 							g.setColor(new Color(150, 20, 20, 100));
 							g.fillRect(8 * j, 8 * i, 8, 8);
@@ -90,7 +83,7 @@ public class FreezoneExploreState extends AbstractState {
 			// draws the entities
 			for (int i = 0; i < map.entities.size(); i++) {
 				map.entities.get(i).print(g);
-				if (debugdisplaymode) {
+				if (Persistance.debugdisplaymode) {
 					g.setColor(new Color(20, 20, 200, 160));
 					DoubleRectangle dbrct = map.entities.get(i).getHitbox(map.entities.get(i).posX,
 							map.entities.get(i).posY);
@@ -103,7 +96,7 @@ public class FreezoneExploreState extends AbstractState {
 					(int) (Persistance.currentplayer.x * 8 - Persistance.currentplayer.playersprite.pointer.gravityX),
 					(int) (Persistance.currentplayer.y * 8 - Persistance.currentplayer.playersprite.pointer.gravityY),
 					null);
-			if (debugdisplaymode) {
+			if (Persistance.debugdisplaymode) {
 				g.setColor(new Color(20, 20, 200, 160));
 				DoubleRectangle dbrct = Persistance.currentplayer.getHitboxAt(Persistance.currentplayer.x,
 						Persistance.currentplayer.y);
@@ -115,7 +108,7 @@ public class FreezoneExploreState extends AbstractState {
 			}
 
 			// draws the warpzones and camera position if debugmode
-			if (debugdisplaymode) {
+			if (Persistance.debugdisplaymode) {
 				for (int i = 0; i < map.warpzones.size(); i++) {
 					g.setColor(new Color(255, 255, 255, 130));
 					DoubleRectangle dbrct = map.warpzones.get(i).hitbox;
@@ -135,7 +128,7 @@ public class FreezoneExploreState extends AbstractState {
 				// string, and change it to match the action.
 			}
 
-			if (debugdisplaymode) {
+			if (Persistance.debugdisplaymode) {
 				g.setColor(Color.BLACK);
 				TextRenderer.instance.render(g, "UPS: " + Launcher.getUps() + ", FPS: " + Launcher.getFps(), 1,
 						TextRenderer.CHAR_HEIGHT);
