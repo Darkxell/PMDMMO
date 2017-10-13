@@ -11,9 +11,11 @@ import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.DungeonEvent.MessageEvent;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
+import com.darkxell.common.event.pokemon.TriggeredAbilityEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.LearnedMove;
 import com.darkxell.common.pokemon.PokemonType;
+import com.darkxell.common.pokemon.ability.AbilityTypeBoost;
 import com.darkxell.common.util.Directions;
 import com.darkxell.common.util.XMLUtils;
 import com.darkxell.common.util.language.Message;
@@ -106,8 +108,9 @@ public class Move
 	/** @param user - The Pokémon using the move.
 	 * @param target - The Pokémon receiving the move.
 	 * @param floor - The floor context.
+	 * @param events - The list of Events created by this Move.
 	 * @return The damage dealt by this move. */
-	public int damageDealt(DungeonPokemon user, DungeonPokemon target, Floor floor)
+	public int damageDealt(DungeonPokemon user, DungeonPokemon target, Floor floor, ArrayList<DungeonEvent> events)
 	{
 		int atk = this.category == PHYSICAL ? user.stats.getAttack() : user.stats.getSpecialAttack() + this.power;
 		int level = user.pokemon.getLevel();
@@ -118,6 +121,14 @@ public class Move
 		float d = (((constant * 2) - def) + 10) + ((constant * constant) / 20);
 		if (d < 1) d = 1;
 		else if (d > 999) d = 999;
+
+		// Abilities
+		if (user.pokemon.getAbility() instanceof AbilityTypeBoost && user.getHp() <= Math.floor(user.getMaxHP() / 4)
+				&& this.type == ((AbilityTypeBoost) user.pokemon.getAbility()).type)
+		{
+			events.add(new TriggeredAbilityEvent(floor, user));
+			d *= 2;
+		}
 
 		// Critical hit ?
 		boolean crit = false;
@@ -257,7 +268,7 @@ public class Move
 						"<pokemon>", target.pokemon.getNickname())));
 				else if (effectiveness == PokemonType.NOT_VERY_EFFECTIVE) events.add(new MessageEvent(floor, new Message("move.effectiveness.not_very")
 						.addReplacement("<pokemon>", target.pokemon.getNickname())));
-				events.add(new DamageDealtEvent(floor, target, user, missed ? 0 : this.damageDealt(user, target, floor)));
+				events.add(new DamageDealtEvent(floor, target, user, missed ? 0 : this.damageDealt(user, target, floor, events)));
 			}
 			if (!missed && this.additionalEffectLands(user, target, floor)) events.addAll(this.additionalEffects(user, target, floor));
 		}

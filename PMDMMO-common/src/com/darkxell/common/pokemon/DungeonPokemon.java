@@ -81,6 +81,11 @@ public class DungeonPokemon
 		return this.hp;
 	}
 
+	public int getMaxHP()
+	{
+		return this.pokemon.getStats().getHealth();
+	}
+
 	/** @return True if this Pokémon is affected by the input Status Condition. */
 	public boolean hasStatusCondition(StatusCondition condition)
 	{

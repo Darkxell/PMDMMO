@@ -170,6 +170,7 @@ public class StateManager {
 	}
 
 	public void setState(AbstractState state) {
+		if (state == this.currentState) return;
 		if (this.currentState != null)
 			this.currentState.onEnd();
 		this.currentState = state;

@@ -2,17 +2,19 @@ package com.darkxell.common.pokemon.ability;
 
 import java.util.HashMap;
 
+import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.PokemonType;
+import com.darkxell.common.util.language.Lang;
 import com.darkxell.common.util.language.Message;
 
 public abstract class Ability
 {
 	private static final HashMap<Integer, Ability> abilities = new HashMap<Integer, Ability>();
 
-	public static final AbilityTypeBoost BLAZE = new AbilityTypeBoost(1, PokemonType.FIRE);
-	public static final AbilityTypeBoost OVERGROW = new AbilityTypeBoost(2, PokemonType.GRASS);
-	public static final AbilityTypeBoost SWARM = new AbilityTypeBoost(3, PokemonType.BUG);
-	public static final AbilityTypeBoost TORRENT = new AbilityTypeBoost(4, PokemonType.WATER);
+	public static final AbilityTypeBoost BLAZE = new AbilityTypeBoost(0, PokemonType.FIRE);
+	public static final AbilityTypeBoost OVERGROW = new AbilityTypeBoost(1, PokemonType.GRASS);
+	public static final AbilityTypeBoost SWARM = new AbilityTypeBoost(2, PokemonType.BUG);
+	public static final AbilityTypeBoost TORRENT = new AbilityTypeBoost(3, PokemonType.WATER);
 
 	/** @return The Ability with the input ID. */
 	public static Ability find(int id)
@@ -40,9 +42,19 @@ public abstract class Ability
 		return d;
 	}
 
+	public boolean hasTriggeredMessage()
+	{
+		return Lang.containsKey("ability.trigger." + this.id);
+	}
+
 	public Message name()
 	{
 		return new Message("ability." + this.id);
+	}
+
+	public Message triggeredMessage(DungeonPokemon pokemon)
+	{
+		return new Message("ability.trigger." + this.id).addReplacement("<pokemon>", pokemon.pokemon.getNickname());
 	}
 
 }

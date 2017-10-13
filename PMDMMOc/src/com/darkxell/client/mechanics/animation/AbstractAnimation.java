@@ -8,6 +8,8 @@ public class AbstractAnimation
 	/** The total duration of this Animation. */
 	public final int duration;
 	public final AnimationEndListener listener;
+	/** True if displaying this Animation should stop the Pending Events. */
+	public boolean needsPause = true;
 	private int tick = 0;
 
 	public AbstractAnimation(int duration, AnimationEndListener listener)

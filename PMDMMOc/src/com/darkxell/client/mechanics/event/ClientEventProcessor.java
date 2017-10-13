@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.mechanics.animation.AbstractAnimation;
+import com.darkxell.client.mechanics.animation.AnimationEndListener;
 import com.darkxell.client.renderers.ItemAnimationRenderer;
 import com.darkxell.client.state.DialogState;
 import com.darkxell.client.state.DialogState.DialogEndListener;
@@ -22,9 +24,7 @@ import com.darkxell.common.event.dungeon.NextFloorEvent;
 import com.darkxell.common.event.item.ItemUseSelectionEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.move.MoveUseEvent;
-import com.darkxell.common.event.pokemon.DamageDealtEvent;
-import com.darkxell.common.event.pokemon.FaintedPokemonEvent;
-import com.darkxell.common.event.pokemon.PokemonTravelEvent;
+import com.darkxell.common.event.pokemon.*;
 import com.darkxell.common.event.pokemon.PokemonTravelEvent.PokemonTravel;
 import com.darkxell.common.event.stats.ExperienceGainedEvent;
 import com.darkxell.common.event.stats.StatChangedEvent;
@@ -37,6 +37,15 @@ public final class ClientEventProcessor
 	public static boolean landedOnStairs = false;
 	/** Pending events to process. */
 	private static final Stack<DungeonEvent> pending = new Stack<DungeonEvent>();
+	public static final AnimationEndListener processEventsOnAnimationEnd = new AnimationEndListener()
+	{
+		@Override
+		public void onAnimationEnd(AbstractAnimation animation)
+		{
+			if (!hasPendingEvents()) Persistance.stateManager.setState(Persistance.dungeonState);
+			else processPending();
+		}
+	};
 	public static final DialogEndListener processEventsOnDialogEnd = new DialogEndListener()
 	{
 		@Override
@@ -126,6 +135,7 @@ public final class ClientEventProcessor
 			if (event instanceof FaintedPokemonEvent) MoveEventProcessor.processFaintedEvent((FaintedPokemonEvent) event);
 
 			if (event instanceof StatChangedEvent) MoveEventProcessor.processStatEvent((StatChangedEvent) event);
+			if (event instanceof TriggeredAbilityEvent) MoveEventProcessor.processAbilityEvent((TriggeredAbilityEvent) event);
 			if (event instanceof ExperienceGainedEvent) MoveEventProcessor.processExperienceEvent((ExperienceGainedEvent) event);
 
 			if (event instanceof ItemUseSelectionEvent) processItemEvent((ItemUseSelectionEvent) event);

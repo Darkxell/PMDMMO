@@ -3,7 +3,9 @@ package com.darkxell.client.mechanics.event;
 import java.util.ArrayList;
 
 import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.mechanics.animation.AbstractAnimation;
 import com.darkxell.client.mechanics.animation.StatChangeAnimation;
+import com.darkxell.client.renderers.AbilityAnimationRenderer;
 import com.darkxell.client.renderers.MoveRenderer;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
@@ -15,6 +17,7 @@ import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.FaintedPokemonEvent;
+import com.darkxell.common.event.pokemon.TriggeredAbilityEvent;
 import com.darkxell.common.event.stats.ExperienceGainedEvent;
 import com.darkxell.common.event.stats.StatChangedEvent;
 import com.darkxell.common.pokemon.PokemonStats;
@@ -22,6 +25,18 @@ import com.darkxell.common.util.language.Message;
 
 public final class MoveEventProcessor
 {
+
+	public static void processAbilityEvent(TriggeredAbilityEvent event)
+	{
+		AbstractAnimation animation = AbilityAnimationRenderer.createAnimation(event);
+		if (animation != null && animation.needsPause)
+		{
+			AnimationState s = new AnimationState(Persistance.dungeonState);
+			s.animation = animation;
+			Persistance.dungeonState.setSubstate(s);
+			ClientEventProcessor.processPending = false;
+		} else animation.start();
+	}
 
 	static void processDamageEvent(DamageDealtEvent event)
 	{
