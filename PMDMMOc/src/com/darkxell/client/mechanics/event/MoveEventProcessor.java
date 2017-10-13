@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.animation.StatChangeAnimation;
-import com.darkxell.client.renderers.DungeonPokemonRenderer;
 import com.darkxell.client.renderers.MoveRenderer;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
@@ -26,8 +25,8 @@ public final class MoveEventProcessor
 
 	static void processDamageEvent(DamageDealtEvent event)
 	{
-		DungeonPokemonRenderer.instance.getSprite(event.target).setState(PokemonSprite.STATE_HURT);
-		DungeonPokemonRenderer.instance.getSprite(event.target).setHealthChange(-event.damage);
+		Persistance.dungeonState.pokemonRenderer.getRenderer(event.target).sprite.setState(PokemonSprite.STATE_HURT);
+		Persistance.dungeonState.pokemonRenderer.getRenderer(event.target).sprite.setHealthChange(-event.damage);
 		Persistance.dungeonState.setSubstate(new DelayState(Persistance.dungeonState, PokemonSprite.FRAMELENGTH));
 		ClientEventProcessor.processPending = false;
 	}
@@ -58,7 +57,7 @@ public final class MoveEventProcessor
 
 	static void processFaintedEvent(FaintedPokemonEvent event)
 	{
-		DungeonPokemonRenderer.instance.unregister(event.pokemon);
+		Persistance.dungeonState.pokemonRenderer.unregister(event.pokemon);
 	}
 
 	static void processMoveEvent(MoveSelectionEvent event)

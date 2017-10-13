@@ -6,7 +6,6 @@ import org.jdom2.Element;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
-import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Message;
 
@@ -40,13 +39,14 @@ public class ItemTM extends ItemHM
 	@Override
 	public int getSpriteID()
 	{
-		if (MoveRegistry.find(this.moveID) == null) return 64;
-		return 64 + MoveRegistry.find(this.moveID).type.id;
+		if (this.move() == null) return 64;
+		return 64 + this.move().type.id;
 	}
 
 	@Override
 	public Message name()
 	{
+		if (this.move() == null) return new Message("move." + this.moveID).addPrefix("<tm" + 0 + ">");
 		return new Message("move." + this.moveID).addPrefix("<tm" + this.move().type.id + ">");
 	}
 

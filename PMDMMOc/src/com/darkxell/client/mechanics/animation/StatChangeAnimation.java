@@ -1,26 +1,21 @@
 package com.darkxell.client.mechanics.animation;
 
-import static com.darkxell.client.resources.images.AbstractDungeonTileset.TILE_SIZE;
-
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import com.darkxell.client.renderers.DungeonPokemonRenderer;
 import com.darkxell.client.resources.images.tilesets.StatusSpritesets;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
-public class StatChangeAnimation extends AbstractAnimation
+public class StatChangeAnimation extends PokemonAnimation
 {
 
 	private BufferedImage[] frontSprites, backSprites;
 	public final int stage;
 	public final int stat;
-	public final DungeonPokemon target;
 
 	public StatChangeAnimation(AnimationEndListener listener, DungeonPokemon target, int stat, int stage)
 	{
-		super(30, listener);
-		this.target = target;
+		super(target, 30, listener);
 		this.stat = stat;
 		this.stage = stage;
 
@@ -39,14 +34,25 @@ public class StatChangeAnimation extends AbstractAnimation
 	}
 
 	@Override
-	public void render(Graphics2D g, int width, int height)
+	public void postrender(Graphics2D g, int width, int height)
 	{
-		super.render(g, width, height);
-		int x = this.target.tile.x * TILE_SIZE + TILE_SIZE / 2 - StatusSpritesets.SPRITE_SIZE / 2;
-		int y = this.target.tile.y * TILE_SIZE + TILE_SIZE / 2 - StatusSpritesets.SPRITE_SIZE / 2;
-
-		g.drawImage(this.backSprite(), x, y, null);
-		DungeonPokemonRenderer.instance.draw(g, this.target);
-		g.drawImage(this.frontSprite(), x, y, null);
+		super.postrender(g, width, height);
+		g.drawImage(this.frontSprite(), (int) this.x, (int) this.y, null);
 	}
+
+	@Override
+	public void prerender(Graphics2D g, int width, int height)
+	{
+		super.prerender(g, width, height);
+		g.drawImage(this.backSprite(), (int) this.x, (int) this.y, null);
+	}
+
+	@Override
+	public void update()
+	{
+		super.update();
+		this.x -= StatusSpritesets.SPRITE_SIZE / 2;
+		this.y -= StatusSpritesets.SPRITE_SIZE / 2;
+	}
+
 }

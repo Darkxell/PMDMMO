@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 import com.darkxell.client.launchable.Persistance;
-import com.darkxell.client.renderers.ItemRenderer;
+import com.darkxell.client.renderers.ItemAnimationRenderer;
 import com.darkxell.client.state.DialogState;
 import com.darkxell.client.state.DialogState.DialogEndListener;
 import com.darkxell.client.state.FreezoneExploreState;
@@ -146,7 +146,7 @@ public final class ClientEventProcessor
 	private static void processItemEvent(ItemUseSelectionEvent event)
 	{
 		AnimationState a = new AnimationState(Persistance.dungeonState);
-		a.animation = ItemRenderer.createItemAnimation(event, a);
+		a.animation = ItemAnimationRenderer.createItemAnimation(event, a);
 		Persistance.dungeonState.setSubstate(a);
 		processPending = false;
 	}

@@ -10,7 +10,7 @@ import com.darkxell.client.resources.images.tilesets.FloorDungeonTileset;
 import com.darkxell.common.event.item.ItemUseSelectionEvent;
 import com.darkxell.common.item.ItemEscapeOrb;
 
-public class ItemRenderer
+public class ItemAnimationRenderer
 {
 
 	/** Creates an Animation for using an Item and returns it.
