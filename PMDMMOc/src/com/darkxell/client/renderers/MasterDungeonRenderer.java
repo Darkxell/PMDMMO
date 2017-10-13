@@ -4,7 +4,8 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-public class DungeonRenderer
+/** Master Renderer for the DungeonState. All Renderers should be registered in this Master Renderer. It will call them when needed. */
+public class MasterDungeonRenderer
 {
 
 	public static final int LAYER_TILES = 0, LAYER_GRID = 2, LAYER_ITEMS = 10, LAYER_POKEMON = 15, LAYER_LOGGER = 30;
@@ -42,7 +43,7 @@ public class DungeonRenderer
 		}
 
 		for (AbstractRenderer renderer : this.renderers)
-			renderer.render(g, width, height);
+			if (renderer.shouldRender(width, height)) renderer.render(g, width, height);
 	}
 
 }

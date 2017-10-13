@@ -74,14 +74,11 @@ public class ActionSelectionState extends DungeonSubState
 		if (key == Keys.KEY_MENU) Persistance.stateManager.setState(new DungeonMenuState(this.parent));
 		if (key == Keys.KEY_ATTACK) ClientEventProcessor.processEvent(new MoveSelectionEvent(Persistance.floor, new LearnedMove(MoveRegistry.ATTACK.id),
 				Persistance.player.getDungeonPokemon()));
-		if (key == Keys.KEY_ROTATE) Persistance.dungeonState.gridRenderer.shouldRender = true;
 	}
 
 	@Override
 	public void onKeyReleased(short key)
-	{
-		if (key == Keys.KEY_ROTATE) Persistance.dungeonState.gridRenderer.shouldRender = false;
-	}
+	{}
 
 	@Override
 	public void render(Graphics2D g, int width, int height)

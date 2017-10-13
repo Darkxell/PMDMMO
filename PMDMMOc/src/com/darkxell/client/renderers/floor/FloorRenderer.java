@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.AbstractRenderer;
-import com.darkxell.client.renderers.DungeonRenderer;
+import com.darkxell.client.renderers.MasterDungeonRenderer;
 import com.darkxell.client.resources.images.tilesets.CommonDungeonTileset;
 import com.darkxell.client.resources.images.tilesets.FloorDungeonTileset;
 import com.darkxell.common.dungeon.floor.Floor;
@@ -22,9 +22,9 @@ public class FloorRenderer extends AbstractRenderer
 
 	public FloorRenderer()
 	{
+		super(0, 0, MasterDungeonRenderer.LAYER_TILES);
 		this.floor = Persistance.floor;
 		this.tileset = FloorDungeonTileset.load(this.floor.data.terrainSpriteset());
-		this.setZ(DungeonRenderer.LAYER_TILES);
 	}
 
 	/** Renders a Tile. */
@@ -43,7 +43,7 @@ public class FloorRenderer extends AbstractRenderer
 
 	public void render(Graphics2D g, int width, int height)
 	{
-		int xStart = (int) (this.x() / TILE_SIZE), yStart = (int) (this.x() / TILE_SIZE);
+		int xStart = (int) (this.x() / TILE_SIZE), yStart = (int) (this.y() / TILE_SIZE);
 
 		for (int x = xStart; x <= xStart + width / TILE_SIZE + 1; ++x)
 			for (int y = yStart; y <= yStart + height / TILE_SIZE + 1; ++y)

@@ -1,24 +1,22 @@
 package com.darkxell.client.renderers.floor;
 
-import static com.darkxell.client.resources.images.AbstractDungeonTileset.TILE_SIZE;
-
 import java.awt.Graphics2D;
 import java.util.HashMap;
 
+import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.AbstractRenderer;
-import com.darkxell.client.renderers.DungeonRenderer;
+import com.darkxell.client.renderers.MasterDungeonRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
 public class DungeonPokemonRenderer extends AbstractRenderer
 {
 
-	private HashMap<DungeonPokemon, PokemonRenderer> renderers;
+	private final HashMap<DungeonPokemon, PokemonRenderer> renderers = new HashMap<DungeonPokemon, PokemonRenderer>();
 
 	public DungeonPokemonRenderer()
 	{
-		this.setZ(DungeonRenderer.LAYER_POKEMON);
-		this.renderers = new HashMap<DungeonPokemon, PokemonRenderer>();
+		super(0, 0, MasterDungeonRenderer.LAYER_POKEMON);
 	}
 
 	public void draw(Graphics2D g, DungeonPokemon pokemon, int width, int height)
@@ -30,7 +28,8 @@ public class DungeonPokemonRenderer extends AbstractRenderer
 	/** @return The Renderer of the input Pokémon. */
 	public PokemonRenderer getRenderer(DungeonPokemon pokemon)
 	{
-		return this.renderers.get(pokemon);
+		if (this.renderers.containsKey(pokemon)) return this.renderers.get(pokemon);
+		return this.register(pokemon);
 	}
 
 	/** @return The Sprite of the input Pokémon. */
@@ -42,29 +41,20 @@ public class DungeonPokemonRenderer extends AbstractRenderer
 	/** Creates a Renderer for the input Pokémon. */
 	public PokemonRenderer register(DungeonPokemon pokemon)
 	{
-		if (!this.renderers.containsKey(pokemon)) this.renderers.put(pokemon, new PokemonRenderer(pokemon));
+		PokemonRenderer renderer = new PokemonRenderer(pokemon);
+		this.renderers.put(pokemon, renderer);
+		Persistance.dungeonRenderer.addRenderer(renderer);
 		return this.getRenderer(pokemon);
 	}
 
 	@Override
 	public void render(Graphics2D g, int width, int height)
-	{
-		double xStart = this.x() / TILE_SIZE, yStart = this.y() / TILE_SIZE;
-
-		for (DungeonPokemon pokemon : this.renderers.keySet())
-			if (this.shouldDraw(pokemon, xStart, yStart, width / TILE_SIZE, height / TILE_SIZE)) this.draw(g, pokemon, width, height);
-	}
-
-	private boolean shouldDraw(DungeonPokemon pokemon, double screenX, double screenY, int screenWidth, int screenHeight)
-	{
-		PokemonRenderer renderer = this.getRenderer(pokemon);
-		return renderer.x() >= screenX - 1 && renderer.x() <= screenX + screenWidth + 1 && renderer.y() >= screenY - 1
-				&& renderer.y() <= screenY + screenHeight + 1;
-	}
+	{}
 
 	/** Creates the Sprite of the input Pokémon. */
 	public void unregister(DungeonPokemon pokemon)
 	{
+		Persistance.dungeonRenderer.removeRenderer(this.getRenderer(pokemon));
 		this.renderers.remove(pokemon);
 	}
 

@@ -6,8 +6,10 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.ArrayList;
 
+import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.animation.PokemonAnimation;
 import com.darkxell.client.renderers.AbstractRenderer;
+import com.darkxell.client.renderers.MasterDungeonRenderer;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
@@ -31,6 +33,7 @@ public class PokemonRenderer extends AbstractRenderer
 
 	public PokemonRenderer(DungeonPokemon pokemon)
 	{
+		super(pokemon.tile.x, pokemon.tile.y, MasterDungeonRenderer.LAYER_POKEMON);
 		this.pokemon = pokemon;
 		this.sprite = new PokemonSprite(PokemonSpritesets.getSpriteset(this.pokemon.pokemon.species.id));
 	}
@@ -65,21 +68,41 @@ public class PokemonRenderer extends AbstractRenderer
 				animation.prerender(g, width, height);
 
 			Point p = this.drawLocation();
-			int xPos = (int) (this.x() * TILE_SIZE + p.x), yPos = (int) (this.y() * TILE_SIZE + p.y);
+			int xPos = (int) (this.x() + p.x), yPos = (int) (this.y() + p.y);
 			g.drawImage(this.sprite.getCurrentSprite(), xPos, yPos, null);
 
 			int h = this.sprite.getHealthChange();
 			if (h != 0)
 			{
 				String text = (h < 0 ? "" : "+") + Integer.toString(h);
-				xPos = (int) (this.x() * TILE_SIZE + TILE_SIZE / 2 - TextRenderer.instance.width(text) / 2);
-				yPos = (int) (this.y() * TILE_SIZE - this.sprite.getHealthPos() - TextRenderer.CHAR_HEIGHT / 2);
+				xPos = (int) (this.x() + TILE_SIZE / 2 - TextRenderer.instance.width(text) / 2);
+				yPos = (int) (this.y() - this.sprite.getHealthPos() - TextRenderer.CHAR_HEIGHT / 2);
 				TextRenderer.instance.render(g, text, xPos, yPos, true);
 			}
 
 			for (PokemonAnimation animation : this.animations)
 				animation.postrender(g, width, height);
 		}
+	}
+
+	@Override
+	public boolean shouldRender(int width, int height)
+	{
+		double screenX = Persistance.dungeonState.pokemonRenderer.x();
+		double screenY = Persistance.dungeonState.pokemonRenderer.y();
+		return this.x() >= screenX - 1 && this.x() <= screenX + width + 1 && this.y() >= screenY - 1 && this.y() <= screenY + height + 1;
+	}
+
+	@Override
+	public double x()
+	{
+		return super.x() * TILE_SIZE;
+	}
+
+	@Override
+	public double y()
+	{
+		return super.y() * TILE_SIZE;
 	}
 
 }

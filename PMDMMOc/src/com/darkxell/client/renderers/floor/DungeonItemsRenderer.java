@@ -6,7 +6,7 @@ import java.awt.Graphics2D;
 
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.AbstractRenderer;
-import com.darkxell.client.renderers.DungeonRenderer;
+import com.darkxell.client.renderers.MasterDungeonRenderer;
 import com.darkxell.client.resources.images.AbstractDungeonTileset;
 import com.darkxell.client.resources.images.tilesets.ItemsSpriteset;
 import com.darkxell.common.dungeon.floor.Floor;
@@ -21,8 +21,8 @@ public class DungeonItemsRenderer extends AbstractRenderer
 
 	public DungeonItemsRenderer()
 	{
+		super(0, 0, MasterDungeonRenderer.LAYER_ITEMS);
 		this.floor = Persistance.floor;
-		this.setZ(DungeonRenderer.LAYER_ITEMS);
 	}
 
 	@Override

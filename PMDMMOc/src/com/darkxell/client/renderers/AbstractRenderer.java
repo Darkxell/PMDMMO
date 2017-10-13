@@ -7,11 +7,21 @@ import com.darkxell.client.launchable.Persistance;
 public abstract class AbstractRenderer implements Comparable<AbstractRenderer>
 {
 
-	/** True if this Renderer should be used. */
-	public boolean shouldRender = true;
 	/** Rendering locations. X is horizontal position, Y is vertical position, Z is drawing order. <br />
 	 * Objects with lowest Z will be drawn first. Then if Z is equal, lowest Y will be drawn, then lowest X. */
 	private double x, y, z;
+
+	public AbstractRenderer()
+	{
+		this(0, 0, 0);
+	}
+
+	public AbstractRenderer(int x, int y, int z)
+	{
+		this.x = x;
+		this.y = y;
+		this.z = z;
+	}
 
 	@Override
 	public int compareTo(AbstractRenderer o)
@@ -19,6 +29,11 @@ public abstract class AbstractRenderer implements Comparable<AbstractRenderer>
 		if (this.z != o.z) return Double.compare(this.z, o.z);
 		if (this.y != o.y) return Double.compare(this.y, o.y);
 		return Double.compare(this.x, o.x);
+	}
+
+	private void onUpdate()
+	{
+		if (Persistance.dungeonState != null && Persistance.dungeonRenderer != null) Persistance.dungeonRenderer.onObjectUpdated();
 	}
 
 	/** Draws this Renderer's Object.
@@ -31,7 +46,7 @@ public abstract class AbstractRenderer implements Comparable<AbstractRenderer>
 	public void setX(double x)
 	{
 		this.x = x;
-		Persistance.dungeonState.dungeonRenderer.onObjectUpdated();
+		this.onUpdate();
 	}
 
 	public void setXY(double x, double y)
@@ -50,13 +65,19 @@ public abstract class AbstractRenderer implements Comparable<AbstractRenderer>
 	public void setY(double y)
 	{
 		this.y = y;
-		Persistance.dungeonState.dungeonRenderer.onObjectUpdated();
+		this.onUpdate();
 	}
 
 	public void setZ(double z)
 	{
 		this.z = z;
-		Persistance.dungeonState.dungeonRenderer.onObjectUpdated();
+		this.onUpdate();
+	}
+
+	/** @return True if this Renderer should be called. */
+	public boolean shouldRender(int width, int height)
+	{
+		return true;
 	}
 
 	public double x()

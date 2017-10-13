@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.function.Predicate;
 
 import com.darkxell.client.launchable.Persistance;
-import com.darkxell.client.renderers.DungeonRenderer;
+import com.darkxell.client.renderers.MasterDungeonRenderer;
 import com.darkxell.client.renderers.floor.DungeonItemsRenderer;
 import com.darkxell.client.renderers.floor.DungeonPokemonRenderer;
 import com.darkxell.client.renderers.floor.FloorRenderer;
@@ -48,7 +48,6 @@ public class DungeonState extends AbstractState
 	/** The current substate. */
 	private DungeonSubState currentSubstate;
 	boolean diagonal = false, rotating = false;
-	public final DungeonRenderer dungeonRenderer;
 	public final FloorRenderer floorRenderer;
 	public final GridRenderer gridRenderer;
 	public final DungeonItemsRenderer itemRenderer;
@@ -59,17 +58,15 @@ public class DungeonState extends AbstractState
 
 	public DungeonState()
 	{
-		this.dungeonRenderer = new DungeonRenderer();
+		Persistance.dungeonRenderer = new MasterDungeonRenderer();
 		this.floorRenderer = new FloorRenderer();
 		this.gridRenderer = new GridRenderer();
 		this.itemRenderer = new DungeonItemsRenderer();
 		this.pokemonRenderer = new DungeonPokemonRenderer();
-		this.dungeonRenderer.addRenderer(this.floorRenderer);
-		this.dungeonRenderer.addRenderer(this.gridRenderer);
-		this.dungeonRenderer.addRenderer(this.itemRenderer);
-		this.dungeonRenderer.addRenderer(this.pokemonRenderer);
+		Persistance.dungeonRenderer.addRenderer(this.floorRenderer);
+		Persistance.dungeonRenderer.addRenderer(this.gridRenderer);
+		Persistance.dungeonRenderer.addRenderer(this.itemRenderer);
 		this.placeTeam();
-		this.gridRenderer.shouldRender = false;
 
 		this.logger = new DungeonLogger(this);
 		this.camera = new Point(Persistance.player.getDungeonPokemon().tile.x * AbstractDungeonTileset.TILE_SIZE, Persistance.player.getDungeonPokemon().tile.y
@@ -83,7 +80,6 @@ public class DungeonState extends AbstractState
 	{
 		super.onEnd();
 		this.logger.hideMessages();
-		this.gridRenderer.shouldRender = false;
 	}
 
 	@Override
@@ -117,6 +113,7 @@ public class DungeonState extends AbstractState
 		Point spawn = Persistance.floor.teamSpawn;
 		Persistance.floor.tileAt(spawn.x, spawn.y).setPokemon(Persistance.player.getDungeonPokemon());
 		Persistance.dungeon.insertActor(Persistance.player.getDungeonPokemon(), 0);
+		this.pokemonRenderer.register(Persistance.player.getDungeonPokemon());
 
 		ArrayList<Tile> candidates = new ArrayList<Tile>();
 		Tile initial = Persistance.player.getDungeonPokemon().tile;
@@ -149,7 +146,6 @@ public class DungeonState extends AbstractState
 			Persistance.floor.tileAt(candidates.get(0).x, candidates.get(0).y).setPokemon(p);
 			Persistance.dungeon.insertActor(p, 1);
 			candidates.remove(0);
-
 			this.pokemonRenderer.register(p);
 		}
 	}
@@ -167,7 +163,7 @@ public class DungeonState extends AbstractState
 		}
 
 		g.translate(-x, -y);
-		this.dungeonRenderer.render(g, width, height);
+		Persistance.dungeonRenderer.render(g, width, height);
 		g.translate(x, y);
 		this.logger.render(g, width, height);
 

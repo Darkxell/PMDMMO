@@ -6,6 +6,7 @@ import com.darkxell.client.mechanics.chat.ChatBox;
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
 import com.darkxell.client.mechanics.freezones.FreezonePlayer;
 import com.darkxell.client.mechanics.freezones.entities.FreezoneCamera;
+import com.darkxell.client.renderers.MasterDungeonRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
 import com.darkxell.client.resources.music.SoundManager;
@@ -42,6 +43,7 @@ public abstract class Persistance {
 	// DUNGEON RELATED OBJECTS
 	public static DungeonInstance dungeon;
 	public static DungeonState dungeonState;
+	public static MasterDungeonRenderer dungeonRenderer;
 	public static Floor floor;
 	public static Player player = new Player(0, PokemonRegistry.find(260).generate(new Random(), 1));
 
