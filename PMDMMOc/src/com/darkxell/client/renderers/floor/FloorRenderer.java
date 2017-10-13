@@ -43,7 +43,7 @@ public class FloorRenderer extends AbstractRenderer
 
 	public void render(Graphics2D g, int width, int height)
 	{
-		int xStart = this.x() / TILE_SIZE, yStart = this.x() / TILE_SIZE;
+		int xStart = (int) (this.x() / TILE_SIZE), yStart = (int) (this.x() / TILE_SIZE);
 
 		for (int x = xStart; x <= xStart + width / TILE_SIZE + 1; ++x)
 			for (int y = yStart; y <= yStart + height / TILE_SIZE + 1; ++y)

@@ -4,7 +4,9 @@ import static com.darkxell.client.resources.images.AbstractDungeonTileset.TILE_S
 
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.util.ArrayList;
 
+import com.darkxell.client.mechanics.animation.PokemonAnimation;
 import com.darkxell.client.renderers.AbstractRenderer;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
@@ -12,6 +14,7 @@ import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Directions;
 
+/** Renders a Pokémon. This Renderer's Coordinates' units are Tiles. */
 public class PokemonRenderer extends AbstractRenderer
 {
 
@@ -22,6 +25,7 @@ public class PokemonRenderer extends AbstractRenderer
 		return 0;
 	}
 
+	private final ArrayList<PokemonAnimation> animations = new ArrayList<PokemonAnimation>();
 	public final DungeonPokemon pokemon;
 	public final PokemonSprite sprite;
 
@@ -31,9 +35,19 @@ public class PokemonRenderer extends AbstractRenderer
 		this.sprite = new PokemonSprite(PokemonSpritesets.getSpriteset(this.pokemon.pokemon.species.id));
 	}
 
+	public void addAnimation(PokemonAnimation animation)
+	{
+		this.animations.add(animation);
+	}
+
 	public Point drawLocation()
 	{
 		return new Point(TILE_SIZE / 2 - this.sprite.pointer.gravityX, TILE_SIZE / 2 - this.sprite.pointer.gravityY);
+	}
+
+	public void removeAnimation(PokemonAnimation animation)
+	{
+		this.animations.remove(animation);
 	}
 
 	@Override
@@ -47,6 +61,9 @@ public class PokemonRenderer extends AbstractRenderer
 
 		if (this.sprite.getCurrentSprite() != null)
 		{
+			for (PokemonAnimation animation : this.animations)
+				animation.prerender(g, width, height);
+
 			Point p = this.drawLocation();
 			int xPos = (int) (this.x() * TILE_SIZE + p.x), yPos = (int) (this.y() * TILE_SIZE + p.y);
 			g.drawImage(this.sprite.getCurrentSprite(), xPos, yPos, null);
@@ -59,6 +76,9 @@ public class PokemonRenderer extends AbstractRenderer
 				yPos = (int) (this.y() * TILE_SIZE - this.sprite.getHealthPos() - TextRenderer.CHAR_HEIGHT / 2);
 				TextRenderer.instance.render(g, text, xPos, yPos, true);
 			}
+
+			for (PokemonAnimation animation : this.animations)
+				animation.postrender(g, width, height);
 		}
 	}
 

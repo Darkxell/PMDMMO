@@ -69,6 +69,7 @@ public class DungeonState extends AbstractState
 		this.dungeonRenderer.addRenderer(this.itemRenderer);
 		this.dungeonRenderer.addRenderer(this.pokemonRenderer);
 		this.placeTeam();
+		this.gridRenderer.shouldRender = false;
 
 		this.logger = new DungeonLogger(this);
 		this.camera = new Point(Persistance.player.getDungeonPokemon().tile.x * AbstractDungeonTileset.TILE_SIZE, Persistance.player.getDungeonPokemon().tile.y
@@ -82,6 +83,7 @@ public class DungeonState extends AbstractState
 	{
 		super.onEnd();
 		this.logger.hideMessages();
+		this.gridRenderer.shouldRender = false;
 	}
 
 	@Override
@@ -147,6 +149,8 @@ public class DungeonState extends AbstractState
 			Persistance.floor.tileAt(candidates.get(0).x, candidates.get(0).y).setPokemon(p);
 			Persistance.dungeon.insertActor(p, 1);
 			candidates.remove(0);
+
+			this.pokemonRenderer.register(p);
 		}
 	}
 

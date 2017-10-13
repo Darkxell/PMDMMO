@@ -29,7 +29,7 @@ public class GridRenderer extends AbstractRenderer
 	@Override
 	public void render(Graphics2D g, int width, int height)
 	{
-		int xStart = this.x() / TILE_SIZE, yStart = this.y() / TILE_SIZE;
+		int xStart = (int) (this.x() / TILE_SIZE), yStart = (int) (this.y() / TILE_SIZE);
 
 		DungeonPokemon player = Persistance.player.getDungeonPokemon();
 

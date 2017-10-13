@@ -42,13 +42,13 @@ public class DungeonPokemonRenderer extends AbstractRenderer
 	@Override
 	public void render(Graphics2D g, int width, int height)
 	{
-		int xStart = this.x() / TILE_SIZE, yStart = this.y() / TILE_SIZE;
+		double xStart = this.x() / TILE_SIZE, yStart = this.y() / TILE_SIZE;
 
 		for (DungeonPokemon pokemon : this.renderers.keySet())
 			if (this.shouldDraw(pokemon, xStart, yStart, width / TILE_SIZE, height / TILE_SIZE)) this.draw(g, pokemon, width, height);
 	}
 
-	private boolean shouldDraw(DungeonPokemon pokemon, int screenX, int screenY, int screenWidth, int screenHeight)
+	private boolean shouldDraw(DungeonPokemon pokemon, double screenX, double screenY, int screenWidth, int screenHeight)
 	{
 		PokemonRenderer renderer = this.getRenderer(pokemon);
 		return renderer.x() >= screenX - 1 && renderer.x() <= screenX + screenWidth + 1 && renderer.y() >= screenY - 1
