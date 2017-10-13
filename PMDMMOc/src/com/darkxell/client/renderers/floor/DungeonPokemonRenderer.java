@@ -1,4 +1,4 @@
-package com.darkxell.client.renderers;
+package com.darkxell.client.renderers.floor;
 
 import static com.darkxell.client.resources.images.AbstractDungeonTileset.TILE_SIZE;
 
@@ -6,16 +6,16 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.HashMap;
 
+import com.darkxell.client.renderers.AbstractRenderer;
+import com.darkxell.client.renderers.DungeonRenderer;
+import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Directions;
 
-/** Renders Dungeon Pokémon. */
-public class DungeonPokemonRenderer
+public class DungeonPokemonRenderer extends AbstractRenderer
 {
-
-	public static final DungeonPokemonRenderer instance = new DungeonPokemonRenderer();
 
 	private static byte spriteDirection(short facing)
 	{
@@ -28,12 +28,13 @@ public class DungeonPokemonRenderer
 
 	public DungeonPokemonRenderer()
 	{
+		this.setZ(DungeonRenderer.LAYER_POKEMON);
 		this.sprites = new HashMap<DungeonPokemon, PokemonSprite>();
 	}
 
 	public void draw(Graphics2D g, DungeonPokemon pokemon)
 	{
-		this.draw(g, pokemon, pokemon.tile.x, pokemon.tile.y);
+		if (pokemon.tile != null) this.draw(g, pokemon, pokemon.tile.x, pokemon.tile.y);
 	}
 
 	public void draw(Graphics2D g, DungeonPokemon pokemon, double x, double y)
@@ -81,6 +82,17 @@ public class DungeonPokemonRenderer
 	{
 		if (!this.sprites.containsKey(pokemon)) this.sprites.put(pokemon, new PokemonSprite(PokemonSpritesets.getSpriteset(pokemon.pokemon.species.id)));
 		return this.getSprite(pokemon);
+	}
+
+	@Override
+	public void render(Graphics2D g, int width, int height)
+	{
+		int xStart = this.x() / TILE_SIZE, yStart = this.y() / TILE_SIZE;
+
+		/* for (int x = xStart; x <= xStart + width / TILE_SIZE + 1; ++x) for (int y = yStart; y <= yStart + height / TILE_SIZE + 1; ++y) { Tile tile = this.floor.tileAt(x, y); if (tile != null) if (tile.getPokemon() != null) this.draw(g, tile.getPokemon(), x, y); } */
+
+		for (DungeonPokemon pokemon : this.sprites.keySet())
+			this.draw(g, pokemon);
 	}
 
 	/** Creates the Sprite of the input Pokémon. */

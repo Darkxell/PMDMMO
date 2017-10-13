@@ -7,6 +7,8 @@ import java.util.Comparator;
 public class DungeonRenderer
 {
 
+	public static final int LAYER_TILES = 0, LAYER_GRID = 2, LAYER_ITEMS = 10, LAYER_POKEMON = 15, LAYER_LOGGER = 30;
+
 	private final ArrayList<AbstractRenderer> renderers = new ArrayList<AbstractRenderer>();
 	private boolean updateRequired;
 

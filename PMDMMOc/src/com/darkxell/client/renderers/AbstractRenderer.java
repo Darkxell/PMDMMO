@@ -2,6 +2,8 @@ package com.darkxell.client.renderers;
 
 import java.awt.Graphics2D;
 
+import com.darkxell.client.launchable.Persistance;
+
 public abstract class AbstractRenderer implements Comparable<AbstractRenderer>
 {
 
@@ -27,19 +29,32 @@ public abstract class AbstractRenderer implements Comparable<AbstractRenderer>
 	public void setX(int x)
 	{
 		this.x = x;
-		// update Master Renderer
+		Persistance.dungeonState.dungeonRenderer.onObjectUpdated();
+	}
+
+	public void setXY(int x, int y)
+	{
+		this.setX(x);
+		this.setY(y);
+	}
+
+	public void setXYZ(int x, int y, int z)
+	{
+		this.setX(x);
+		this.setY(y);
+		this.setZ(z);
 	}
 
 	public void setY(int y)
 	{
 		this.y = y;
-		// update Master Renderer
+		Persistance.dungeonState.dungeonRenderer.onObjectUpdated();
 	}
 
 	public void setZ(int z)
 	{
 		this.z = z;
-		// update Master Renderer
+		Persistance.dungeonState.dungeonRenderer.onObjectUpdated();
 	}
 
 	public int x()
