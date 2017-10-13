@@ -12,7 +12,7 @@ public class PokemonSprite {
 
 	/** Updates this sprite to the next frame. */
 	public void update() {
-		++this.counter;
+		this.counter += this.tickSpeed;
 		PokemonSpritesetState state = this.pointer.states[this.state];
 		if (this.counter > state.duration(this.statecounter)) {
 			this.counter = 0;
@@ -81,6 +81,7 @@ public class PokemonSprite {
 	private int healthChange = 0;
 	private int healthCounter = 0;
 	private int statecounter = 0;
+	private int tickSpeed = 1;
 
 	public byte getState() {
 		return this.state;
@@ -105,6 +106,10 @@ public class PokemonSprite {
 	public void setHealthChange(int healthChange) {
 		this.healthChange = healthChange;
 		this.healthCounter = HEALTHLENGTH;
+	}
+
+	public void setTickingSpeed(int tickSpeed) {
+		this.tickSpeed = tickSpeed;
 	}
 
 }

@@ -40,6 +40,15 @@ public class PokemonTravelState extends DungeonSubState
 	}
 
 	@Override
+	public void onEnd()
+	{
+		super.onEnd();
+
+		if (this.running) for (PokemonTravel travel : this.travels)
+			Persistance.dungeonState.pokemonRenderer.getRenderer(travel.pokemon).sprite.setTickingSpeed(1);
+	}
+
+	@Override
 	public void onKeyPressed(short key)
 	{}
 
@@ -56,6 +65,7 @@ public class PokemonTravelState extends DungeonSubState
 			PokemonRenderer renderer = Persistance.dungeonState.pokemonRenderer.getRenderer(travel.pokemon);
 			if (renderer.sprite.getState() != PokemonSprite.STATE_MOVE) renderer.sprite.setState(PokemonSprite.STATE_MOVE);
 			travel.pokemon.setFacing(travel.direction);
+			if (this.running) renderer.sprite.setTickingSpeed(3);
 		}
 	}
 
@@ -140,8 +150,9 @@ public class PokemonTravelState extends DungeonSubState
 			if (shouldStop) this.stopTravel();
 			else
 			{
+				boolean hasPending = ClientEventProcessor.hasPendingEvents();
 				ClientEventProcessor.addToPending(Persistance.dungeon.endTurn());
-				if (ClientEventProcessor.hasPendingEvents()) this.stopTravel();
+				if (hasPending) this.stopTravel();
 				else if (this.running) ClientEventProcessor.actorTravels(travel.pokemon.facing(), true);
 			}
 		}
