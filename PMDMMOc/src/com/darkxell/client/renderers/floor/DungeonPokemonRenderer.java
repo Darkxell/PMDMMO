@@ -17,6 +17,8 @@ public class DungeonPokemonRenderer extends AbstractRenderer
 	public DungeonPokemonRenderer()
 	{
 		super(0, 0, MasterDungeonRenderer.LAYER_POKEMON);
+		for (DungeonPokemon pokemon : Persistance.floor.listPokemon())
+			this.register(pokemon);
 	}
 
 	public void draw(Graphics2D g, DungeonPokemon pokemon, int width, int height)

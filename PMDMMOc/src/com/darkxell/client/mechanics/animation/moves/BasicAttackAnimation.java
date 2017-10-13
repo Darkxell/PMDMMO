@@ -44,7 +44,7 @@ public class BasicAttackAnimation extends PokemonAnimation
 		else if (this.tick() >= CHARGE * 2 + MOVEMENT && this.tick() <= TOTAL) completion = 30 - completion;
 		else completion = -1;
 
-		if (completion != -1)
+		if (completion != -1 && !this.isOver())
 		{
 			this.travel.update(completion * 0.75f / MOVEMENT);
 			this.renderer.setXY(this.travel.current().getX(), this.travel.current().getY());

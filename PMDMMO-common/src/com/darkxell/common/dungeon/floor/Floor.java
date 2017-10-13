@@ -92,6 +92,15 @@ public class Floor
 		return !isGenerating;
 	}
 
+	public ArrayList<DungeonPokemon> listPokemon()
+	{
+		ArrayList<DungeonPokemon> pokemon = new ArrayList<DungeonPokemon>();
+		for (Tile[] row : this.tiles)
+			for (Tile t : row)
+				if (t.getPokemon() != null && !pokemon.contains(t.getPokemon())) pokemon.add(t.getPokemon());
+		return pokemon;
+	}
+
 	/** Called when a new turn starts. */
 	public ArrayList<DungeonEvent> onTurnStart()
 	{
