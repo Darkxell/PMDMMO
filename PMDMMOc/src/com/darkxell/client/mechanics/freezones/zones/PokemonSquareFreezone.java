@@ -5,6 +5,7 @@ import com.darkxell.client.mechanics.freezones.WarpZone;
 import com.darkxell.client.mechanics.freezones.entities.AnimatedFlowerEntity;
 import com.darkxell.client.mechanics.freezones.entities.PokemonFreezoneEntity;
 import com.darkxell.client.mechanics.freezones.entities.SignSoulEntity;
+import com.darkxell.client.mechanics.freezones.entities.WatersparklesEntity;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
 import com.darkxell.client.state.map.LocalMap.LOCALMAPLOCATION;
@@ -78,6 +79,16 @@ public class PokemonSquareFreezone extends FreezoneMap {
 		this.entities.add(new SignSoulEntity(13.5, 37, new Message("sign.pokemonsquare.west")));
 		this.entities.add(new SignSoulEntity(68.5, 10, new Message("sign.pokemonsquare.north")));
 		this.entities.add(new SignSoulEntity(114.5, 36, new Message("sign.pokemonsquare.east")));
+
+		this.entities.add(new WatersparklesEntity(6.5, 8, WatersparklesEntity.TYPE_SIDE));
+		this.entities.add(new WatersparklesEntity(17.5, 25, WatersparklesEntity.TYPE_SIDE));
+		this.entities.add(new WatersparklesEntity(17.5, 35, WatersparklesEntity.TYPE_BOT));
+		this.entities.add(new WatersparklesEntity(17.5, 46, WatersparklesEntity.TYPE_TOP));
+		this.entities.add(new WatersparklesEntity(17.5, 55, WatersparklesEntity.TYPE_SIDE));
+		this.entities.add(new WatersparklesEntity(17.5, 62, WatersparklesEntity.TYPE_SIDE));
+		this.entities.add(new WatersparklesEntity(25, 69, WatersparklesEntity.TYPE_LONG));
+		this.entities.add(new WatersparklesEntity(32.5, 70, WatersparklesEntity.TYPE_SIDE));
+		this.entities.add(new WatersparklesEntity(32.5, 79, WatersparklesEntity.TYPE_SIDE));
 
 	}
 
