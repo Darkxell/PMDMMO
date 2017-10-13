@@ -27,27 +27,26 @@ public class FloorRenderer extends AbstractRenderer
 		this.tileset = FloorDungeonTileset.load(this.floor.data.terrainSpriteset());
 	}
 
-	/** Renders a Tile. */
-	public void drawTile(Graphics2D g, Tile tile)
-	{
-		if (tile == null) return;
-
-		BufferedImage sprite = null;
-		if (tile.trapRevealed) sprite = CommonDungeonTileset.INSTANCE.trap(tile.trap.id);
-		else if (tile.type() == TileType.STAIR) sprite = CommonDungeonTileset.INSTANCE.stairs(this.floor.dungeon.dungeon().direction);
-		else if (tile.type() == TileType.WARP_ZONE) sprite = CommonDungeonTileset.INSTANCE.warp();
-		else sprite = this.tileset.tile(tile);
-
-		g.drawImage(sprite, tile.x * TILE_SIZE, tile.y * TILE_SIZE, null);
-	}
-
 	public void render(Graphics2D g, int width, int height)
 	{
-		int xStart = (int) (this.x() / TILE_SIZE), yStart = (int) (this.y() / TILE_SIZE);
+		int xStart = (int) (this.x() / TILE_SIZE) - 1, yStart = (int) (this.y() / TILE_SIZE) - 1;
 
-		for (int x = xStart; x <= xStart + width / TILE_SIZE + 1; ++x)
-			for (int y = yStart; y <= yStart + height / TILE_SIZE + 1; ++y)
-				this.drawTile(g, this.floor.tileAt(x, y));
+		// +1 is not sufficient, +2 is needed to cover the hole screen. God knows why.
+		for (int x = xStart; x <= xStart + width / TILE_SIZE + 2; ++x)
+			for (int y = yStart; y <= yStart + height / TILE_SIZE + 2; ++y)
+			{
+				Tile tile = this.floor.tileAt(x, y);
+				BufferedImage sprite = null;
+
+				if (tile == null) sprite = this.tileset.defaultTile();
+				else if (tile.trapRevealed) sprite = CommonDungeonTileset.INSTANCE.trap(tile.trap.id);
+				else if (tile.type() == TileType.STAIR) sprite = CommonDungeonTileset.INSTANCE.stairs(this.floor.dungeon.dungeon().direction);
+				else if (tile.type() == TileType.WARP_ZONE) sprite = CommonDungeonTileset.INSTANCE.warp();
+				else sprite = this.tileset.tile(tile);
+
+				g.drawImage(sprite, x * TILE_SIZE, y * TILE_SIZE, null);
+
+			}
 	}
 
 }

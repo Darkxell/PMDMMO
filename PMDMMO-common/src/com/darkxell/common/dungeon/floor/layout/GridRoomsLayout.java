@@ -3,7 +3,6 @@ package com.darkxell.common.dungeon.floor.layout;
 import java.awt.Point;
 
 import com.darkxell.common.dungeon.floor.Room;
-import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
 
 /** A Layout with random rooms in a grid-like pattern. */
@@ -27,7 +26,6 @@ public class GridRoomsLayout extends Layout {
 		this.maxRoomWidth = maxRoomWidth;
 		this.maxRoomHeight = maxRoomHeight;
 		this.roomcenters = new Point[gridwidth][gridheight];
-
 	}
 
 	@Override
@@ -39,15 +37,14 @@ public class GridRoomsLayout extends Layout {
 	protected void generateRooms() {
 		int gridCellWidth = this.maxRoomWidth + OFFSET;
 		int gridCellHeight = this.maxRoomHeight + OFFSET;
-		this.floor.tiles = new Tile[gridCellWidth * this.gridwidth][gridCellHeight * this.gridheight];
-		for (int x = 0; x < this.floor.tiles.length; x++)
-			for (int y = 0; y < this.floor.tiles[0].length; y++)
-				this.floor.tiles[x][y] = new Tile(this.floor, x, y, TileType.WALL);
+		this.createDefaultTiles(2 + this.gridwidth * (this.maxRoomWidth + OFFSET), 2 + this.gridheight * (this.maxRoomHeight + OFFSET));
+		
 		// Sets the centers.
 		for (int x = 0; x < this.gridwidth; x++)
 			for (int y = 0; y < this.gridheight; y++)
 				this.roomcenters[x][y] = new Point((gridCellWidth / 2) + (gridCellWidth * x),
 						(gridCellHeight / 2) + (gridCellHeight * y));
+		
 		// Create new rooms
 		this.floor.rooms = new Room[this.gridheight * this.gridwidth];
 		for (int x = 0; x < this.gridwidth; x++)
@@ -60,15 +57,11 @@ public class GridRoomsLayout extends Layout {
 						+ ((this.random.nextInt(maxRoomWidth - minRoomWidth) + minRoomWidth) / 2) - roomX;
 				int roomHeight = this.roomcenters[x][y].y
 						+ ((this.random.nextInt(maxRoomHeight - minRoomHeight) + minRoomHeight) / 2) - roomY;
-				this.floor.rooms[x + (y * this.gridwidth)] = new Room(this.floor, roomX, roomY, roomWidth, roomHeight,
-						false);
+				this.floor.rooms[x + (y * this.gridwidth)] = new Room(this.floor, 1 + roomX, 1 + roomY, roomWidth, roomHeight, false);
 			}
-
-		for (int i = 0; i < this.floor.rooms.length; ++i)
-			for (int x = this.floor.rooms[i].x; x < this.floor.rooms[i].width + this.floor.rooms[i].x; ++x)
-				for (int y = this.floor.rooms[i].y; y < this.floor.rooms[i].height + this.floor.rooms[i].y; ++y)
-					this.floor.tiles[x][y].setType(TileType.GROUND);
+		
 		// TODO : remove rooms randomely
+		this.fillRoomsWithGround();
 	}
 
 	@Override
@@ -109,16 +102,6 @@ public class GridRoomsLayout extends Layout {
 							this.floor.tiles[i][starty1 + (endy1 - starty1) / 2].setType(TileType.GROUND);
 				}
 			}
-	}
-
-	@Override
-	protected void placeTeam() {
-		Tile t = this.floor.randomRoom(this.random).randomTile(this.random);
-		this.floor.teamSpawn = new Point(t.x, t.y);
-	}
-
-	@Override
-	protected void summonPokemon() {
 	}
 
 }

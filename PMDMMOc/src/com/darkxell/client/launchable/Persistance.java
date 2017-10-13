@@ -56,5 +56,5 @@ public abstract class Persistance {
 	 * have a hight CPU drain. It also makes the game really ugly, it's a debug
 	 * mode...
 	 */
-	public static boolean debugdisplaymode = true;
+	public static boolean debugdisplaymode = false;
 }

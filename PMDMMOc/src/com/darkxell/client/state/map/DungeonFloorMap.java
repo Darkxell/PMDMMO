@@ -50,13 +50,12 @@ public class DungeonFloorMap extends AbstractDisplayMap
 
 		if (this.floor != null)
 		{
-			int xStart = this.x - width / 2, yStart = this.y - height / 2;
-			if (xStart < 0) xStart = 0;
-			if (yStart < 0) yStart = 0;
+			int xStart = this.x / TILE_SIZE, yStart = this.y / TILE_SIZE;
 
-			for (int x = xStart; x < this.floor.getWidth() && x <= xStart + width / TILE_SIZE + 1; ++x)
-				for (int y = yStart; y < this.floor.getHeight() && y <= yStart + height / TILE_SIZE + 1; ++y)
+			for (int x = xStart; x < this.floor.getWidth() && x <= xStart + width / TILE_SIZE; ++x)
+				for (int y = yStart; y < this.floor.getHeight() && y <= yStart + height / TILE_SIZE; ++y)
 				{
+					if (x < 0 || y < 0) continue;
 					Tile tile = this.floor.tileAt(x, y);
 					if (tile == null) Logger.e("null tile at " + x + ", " + y);
 					else

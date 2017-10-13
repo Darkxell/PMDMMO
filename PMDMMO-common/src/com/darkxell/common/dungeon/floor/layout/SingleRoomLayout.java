@@ -1,36 +1,27 @@
 package com.darkxell.common.dungeon.floor.layout;
 
+import com.darkxell.common.dungeon.floor.Room;
+
 /** A single room using the hole floor, always a Monster house. */
-public class SingleRoomLayout extends Layout {
+public class SingleRoomLayout extends Layout
+{
 
 	@Override
-	protected void generateRooms() {
-		// TODO Auto-generated method stub
-
-	}
+	protected void generateLiquids()
+	{}
 
 	@Override
-	protected void generatePaths() {
-		// TODO Auto-generated method stub
-
-	}
+	protected void generatePaths()
+	{}
 
 	@Override
-	protected void generateLiquids() {
-		// TODO Auto-generated method stub
+	protected void generateRooms()
+	{
+		this.createDefaultTiles(56, 32);
 
-	}
-
-	@Override
-	protected void placeTeam() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	protected void summonPokemon() {
-		// TODO Auto-generated method stub
-
+		this.floor.rooms = new Room[1];
+		this.floor.rooms[0] = new Room(this.floor, 2, 2, 52, 28, true);
+		this.fillRoomsWithGround();
 	}
 
 }

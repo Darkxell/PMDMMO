@@ -103,6 +103,11 @@ public class FloorDungeonTileset extends AbstractDungeonTileset
 		this.id = id;
 	}
 
+	public BufferedImage defaultTile()
+	{
+		return this.tileAt(1, 1);
+	}
+
 	public BufferedImage tile(Tile tile)
 	{
 		int x = 0, y = 0;
