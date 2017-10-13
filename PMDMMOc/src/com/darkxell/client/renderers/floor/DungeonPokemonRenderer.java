@@ -7,6 +7,7 @@ import java.util.HashMap;
 
 import com.darkxell.client.renderers.AbstractRenderer;
 import com.darkxell.client.renderers.DungeonRenderer;
+import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
 public class DungeonPokemonRenderer extends AbstractRenderer
@@ -30,6 +31,12 @@ public class DungeonPokemonRenderer extends AbstractRenderer
 	public PokemonRenderer getRenderer(DungeonPokemon pokemon)
 	{
 		return this.renderers.get(pokemon);
+	}
+
+	/** @return The Sprite of the input Pokémon. */
+	public PokemonSprite getSprite(DungeonPokemon pokemon)
+	{
+		return this.getRenderer(pokemon).sprite;
 	}
 
 	/** Creates a Renderer for the input Pokémon. */
