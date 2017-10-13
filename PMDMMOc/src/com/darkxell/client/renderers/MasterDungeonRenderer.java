@@ -46,4 +46,10 @@ public class MasterDungeonRenderer
 			if (renderer.shouldRender(width, height)) renderer.render(g, width, height);
 	}
 
+	public void update()
+	{
+		for (AbstractRenderer renderer : this.renderers)
+			renderer.update();
+	}
+
 }

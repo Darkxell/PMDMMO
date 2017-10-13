@@ -51,8 +51,8 @@ public class PokemonAnimation extends AbstractAnimation
 	public void update()
 	{
 		super.update();
-		this.x = this.renderer.x() * TILE_SIZE + TILE_SIZE / 2;
-		this.y = this.renderer.y() * TILE_SIZE + TILE_SIZE / 2;
+		this.x = this.renderer.x() + TILE_SIZE / 2;
+		this.y = this.renderer.y() + TILE_SIZE / 2;
 	}
 
 }

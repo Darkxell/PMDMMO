@@ -80,6 +80,9 @@ public abstract class AbstractRenderer implements Comparable<AbstractRenderer>
 		return true;
 	}
 
+	public void update()
+	{}
+
 	public double x()
 	{
 		return this.x;

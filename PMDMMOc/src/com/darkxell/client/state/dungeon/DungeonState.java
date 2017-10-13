@@ -181,6 +181,7 @@ public class DungeonState extends AbstractState
 	@Override
 	public void update()
 	{
+		Persistance.dungeonRenderer.update();
 		this.pokemonRenderer.update();
 		this.logger.update();
 		this.currentSubstate.update();
