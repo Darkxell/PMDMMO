@@ -21,7 +21,7 @@ public class FlagEntity extends FreezoneEntity {
 	@Override
 	public void print(Graphics2D g) {
 		g.drawImage(FreezoneEntities.flag[state] ,
-				(int) (super.posX * 8 - 0), (int) (super.posY * 8 -0), null);
+				(int) (super.posX * 8), (int) (super.posY * 8), null);
 	}
 
 	@Override
