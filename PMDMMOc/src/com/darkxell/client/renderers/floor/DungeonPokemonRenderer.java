@@ -1,6 +1,7 @@
 package com.darkxell.client.renderers.floor;
 
 import java.awt.Graphics2D;
+import java.util.Collection;
 import java.util.HashMap;
 
 import com.darkxell.client.launchable.Persistance;
@@ -38,6 +39,11 @@ public class DungeonPokemonRenderer extends AbstractRenderer
 	public PokemonSprite getSprite(DungeonPokemon pokemon)
 	{
 		return this.getRenderer(pokemon).sprite;
+	}
+
+	public Collection<PokemonRenderer> listRenderers()
+	{
+		return this.renderers.values();
 	}
 
 	/** Creates a Renderer for the input Pokémon. */
