@@ -53,6 +53,16 @@ public class PokemonStats
 		this.moveSpeed = moveSpeed;
 	}
 
+	public PokemonStats(int[] stat)
+	{
+		this.attack = stat[ATTACK];
+		this.defense = stat[DEFENSE];
+		this.health = stat[HEALTH];
+		this.specialAttack = stat[SPECIAL_ATTACK];
+		this.specialDefense = stat[SPECIAL_DEFENSE];
+		this.moveSpeed = stat.length == 5 ? 1 : stat[SPEED];
+	}
+
 	/** Adds the input stats to these stats. */
 	public void add(PokemonStats stats)
 	{
@@ -78,7 +88,7 @@ public class PokemonStats
 		return this.health;
 	}
 
-	public float getMoveSpeed()
+	public int getMoveSpeed()
 	{
 		return this.moveSpeed;
 	}

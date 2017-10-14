@@ -62,6 +62,22 @@ public final class XMLUtils
 		return element.getAttribute(id) == null ? defaultValue : element.getAttributeValue(id);
 	}
 
+	/** Reads a double array of Integers in an XML element and returns it. <br />
+	 * e.g. 1,2,4,5,-1;5,1,3 */
+	public static int[][] readDoubleIntArray(Element element)
+	{
+		String[] rows = element.getValue().split(";");
+		int[][] array = new int[rows.length][];
+		for (int i = 0; i < array.length; ++i)
+		{
+			String[] cells = rows[i].split(",");
+			array[i] = new int[cells.length];
+			for (int j = 0; j < cells.length; ++j)
+				array[i][j] = Integer.parseInt(cells[j]);
+		}
+		return array;
+	}
+
 	/** Reads an XML File and returns its root Element. */
 	public static Element readFile(File file)
 	{
@@ -192,6 +208,23 @@ public final class XMLUtils
 		for (int floor : array)
 			if (value.equals("")) value += floor;
 			else value += "," + floor;
+		return new Element(id).setText(value);
+	}
+
+	/** Exports a double array of Integers to an XML element and returns it. <br />
+	 * e.g. 1,2,4,5,-1;5,1,3
+	 * 
+	 * @param id - The Element name. */
+	public static Element toXML(String id, int[][] array)
+	{
+		String value = "";
+		for (int[] row : array)
+		{
+			if (!value.equals("")) value += ";";
+			for (int cell : row)
+				if (value.equals("") || value.endsWith(";")) value += cell;
+				else value += "," + cell;
+		}
 		return new Element(id).setText(value);
 	}
 

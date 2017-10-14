@@ -49,16 +49,8 @@ public class PokemonSpecies
 
 		if (xml.getChild("statline") != null)
 		{
-			List<Element> statline = xml.getChild("statline").getChildren();
-			statline.sort(new Comparator<Element>()
-			{
-				@Override
-				public int compare(Element o1, Element o2)
-				{
-					return Integer.compare(Integer.parseInt(o1.getAttributeValue("level")), Integer.parseInt(o2.getAttributeValue("level")));
-				}
-			});
-			for (Element stat : statline)
+			int[][] statline = XMLUtils.readDoubleIntArray(xml.getChild("statline"));
+			for (int[] stat : statline)
 				this.baseStats.add(new PokemonStats(stat));
 		}
 
@@ -216,10 +208,21 @@ public class PokemonSpecies
 		root.setAttribute("height", Float.toString(this.height));
 		root.setAttribute("weight", Float.toString(this.weight));
 
-		Element statline = new Element("statline");
+		int[][] line = new int[100][];
 		for (int lvl = 0; lvl < this.baseStats.size(); lvl++)
-			statline.addContent(this.baseStats.get(lvl).toXML().setAttribute("level", Integer.toString(lvl + 1)));
-		root.addContent(statline);
+		{
+			PokemonStats stats = this.baseStats.get(lvl);
+			if (stats.moveSpeed != 1) line[lvl] = new int[6];
+			else line[lvl] = new int[5];
+
+			line[lvl][PokemonStats.ATTACK] = stats.getAttack();
+			line[lvl][PokemonStats.DEFENSE] = stats.getDefense();
+			line[lvl][PokemonStats.HEALTH] = stats.getHealth();
+			line[lvl][PokemonStats.SPECIAL_ATTACK] = stats.getSpecialAttack();
+			line[lvl][PokemonStats.SPECIAL_DEFENSE] = stats.getSpecialDefense();
+			if (stats.moveSpeed != 1) line[lvl][PokemonStats.SPEED] = stats.getMoveSpeed();
+		}
+		root.addContent(XMLUtils.toXML("statline", line));
 
 		String s = "";
 		for (int lvl = 0; lvl < this.experiencePerLevel.length; lvl++)
