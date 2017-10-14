@@ -20,6 +20,7 @@ import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Directions;
 import com.darkxell.common.util.Logger;
+import com.darkxell.common.util.language.Message;
 
 /** The main state for Dungeon exploration. */
 public class DungeonState extends AbstractState

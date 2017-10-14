@@ -129,7 +129,7 @@ public class PokemonSpecies
 
 		// todo: Generate random ID.
 		return new Pokemon(0, this, null, null, this.statsForLevel(level), this.randomAbility(random), 0, level, move1, move2, move3, move4,
-				this.randomGender(random));
+				this.randomGender(random), 0);
 	}
 
 	/** @return True if one of this Pokémon's type equals the input type. */
