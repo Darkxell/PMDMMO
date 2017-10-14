@@ -251,8 +251,9 @@ public class Move
 	 * @param user - The Pokémon using the Move.
 	 * @param target - The Pokémon the Move is being used on.
 	 * @param floor - The Floor context.
+	 * @param move - The Move instance that was selected.
 	 * @return The events resulting from this Move. They typically include damage, healing, stat changes... */
-	public ArrayList<DungeonEvent> useOn(DungeonPokemon user, DungeonPokemon target, Floor floor)
+	public ArrayList<DungeonEvent> useOn(DungeonPokemon user, DungeonPokemon target, Floor floor, LearnedMove move)
 	{
 		ArrayList<DungeonEvent> events = new ArrayList<DungeonEvent>();
 		boolean missed = this.misses(user, target, floor);
@@ -262,6 +263,7 @@ public class Move
 				target.pokemon.getNickname())));
 		else
 		{
+			if (!missed && this != MoveRegistry.ATTACK) target.receiveMove(move.isLinked() ? DungeonPokemon.LINKED_MOVES : DungeonPokemon.MOVES);
 			if (this.power != -1)
 			{
 				if (effectiveness == PokemonType.SUPER_EFFECTIVE) events.add(new MessageEvent(floor, new Message("move.effectiveness.super").addReplacement(

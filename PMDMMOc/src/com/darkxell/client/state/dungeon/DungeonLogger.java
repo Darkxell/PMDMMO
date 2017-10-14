@@ -131,7 +131,7 @@ public class DungeonLogger {
 		}
 
 		if (this.messageOffset > -(this.displayedMessages() - 3) * MESSAGE_HEIGHT)
-			--this.messageOffset;
+			this.messageOffset -= 2;
 	}
 
 }

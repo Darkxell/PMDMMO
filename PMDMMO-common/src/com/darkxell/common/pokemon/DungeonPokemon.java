@@ -11,7 +11,7 @@ import com.darkxell.common.util.Directions;
 public class DungeonPokemon
 {
 	public static final int DEFAULT_BELLY_SIZE = 100;
-	public static final byte REGULAR_ATTACKS = 0, MOVES = 1, LINKED_MOVE = 2;
+	public static final byte REGULAR_ATTACKS = 0, MOVES = 1, LINKED_MOVES = 2;
 
 	/** The attacks this Pokémon has received. Use in experience calculation. */
 	private byte attacksReceived = REGULAR_ATTACKS;
@@ -54,9 +54,9 @@ public class DungeonPokemon
 	public int experienceGained()
 	{
 		int base = this.pokemon.species.baseXP;
-		base += Math.floor(base * (this.pokemon.getLevel() - 1) / 10);
+		base += Math.floor(base * (this.pokemon.getLevel() - 1) / 10) + base;
 		if (this.attacksReceived == REGULAR_ATTACKS) base = (int) (base * 0.5);
-		else if (this.attacksReceived == LINKED_MOVE) base = (int) (base * 1.5);
+		else if (this.attacksReceived == LINKED_MOVES) base = (int) (base * 1.5);
 		return base;
 	}
 
@@ -92,6 +92,11 @@ public class DungeonPokemon
 		for (StatusConditionInstance c : this.statusConditions)
 			if (c.condition == condition) return true;
 		return false;
+	}
+
+	public void receiveMove(byte attackType)
+	{
+		if (attackType > this.attacksReceived) this.attacksReceived = attackType;
 	}
 
 	/** Changes the direction this Pokémon is facing. */

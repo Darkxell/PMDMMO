@@ -104,9 +104,7 @@ public class PokemonSpecies
 	/** @return The amount of experience needed to level up from the input level. */
 	public int experienceToNextLevel(int level)
 	{
-		int xp = (int) (5 * Math.pow(level, 3) / 4);
-		if (xp > 30000) xp = 30000;
-		return xp;
+		return this.experiencePerLevel[level - 1];
 	}
 
 	/** Generates a Pokémon of this species.
@@ -152,7 +150,7 @@ public class PokemonSpecies
 				@SuppressWarnings("unchecked")
 				ArrayList<Integer> moves = (ArrayList<Integer>) this.learnset.get(level).clone();
 				moves.removeAll(learnedMoves);
-				if (moves.size() != 0) return moves.get(0);
+				if (moves.size() != 0 && MoveRegistry.find(moves.get(0)) != null) return moves.get(0);
 			}
 			--level;
 		}
