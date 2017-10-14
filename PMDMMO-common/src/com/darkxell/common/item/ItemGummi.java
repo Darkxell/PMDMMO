@@ -1,7 +1,13 @@
 package com.darkxell.common.item;
 
+import java.util.ArrayList;
+
 import org.jdom2.Element;
 
+import com.darkxell.common.dungeon.floor.Floor;
+import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.pokemon.IncreasedIQEvent;
+import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.util.language.Message;
 
@@ -47,6 +53,22 @@ public class ItemGummi extends Item
 		return new Message("item.eat");
 	}
 
+	private int iqIncrease(DungeonPokemon pokemon)
+	{
+		return iqIncrease(pokemon.pokemon.species.type1) + iqIncrease(pokemon.pokemon.species.type2);
+	}
+
+	private int iqIncrease(PokemonType type)
+	{
+		if (type == null) return 0;
+		if (type == this.type()) return 7;
+		float effectiveness = this.type().effectivenessOn(type);
+		if (effectiveness == PokemonType.NO_EFFECT) return 1;
+		if (effectiveness == PokemonType.NOT_VERY_EFFECTIVE) return 2;
+		if (effectiveness == PokemonType.SUPER_EFFECTIVE) return 4;
+		return 3;
+	}
+
 	public Element toXML()
 	{
 		Element root = super.toXML();
@@ -58,7 +80,15 @@ public class ItemGummi extends Item
 	{
 		return PokemonType.find(this.type);
 	}
-	
+
+	@Override
+	public ArrayList<DungeonEvent> use(Floor floor, DungeonPokemon pokemon, DungeonPokemon target)
+	{
+		ArrayList<DungeonEvent> events = super.use(floor, pokemon, target);
+		events.add(new IncreasedIQEvent(floor, pokemon, this.iqIncrease(target)));
+		return events;
+	}
+
 	@Override
 	public boolean usedOnTeamMember()
 	{
