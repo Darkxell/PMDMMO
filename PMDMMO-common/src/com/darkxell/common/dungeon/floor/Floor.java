@@ -19,6 +19,7 @@ import com.darkxell.common.trap.Trap;
 import com.darkxell.common.trap.TrapRegistry;
 import com.darkxell.common.util.Directions;
 import com.darkxell.common.util.RandomUtil;
+import com.darkxell.common.weather.Weather;
 import com.darkxell.common.weather.WeatherInstance;
 
 /** Represents a generated Floor in a Dungeon. */
@@ -81,6 +82,7 @@ public class Floor
 
 	public WeatherInstance currentWeather()
 	{
+		if (this.weatherCondition.size() == 0) return new WeatherInstance(Weather.CLEAR, null, 0, this, 0);
 		return this.weatherCondition.get(0);
 	}
 

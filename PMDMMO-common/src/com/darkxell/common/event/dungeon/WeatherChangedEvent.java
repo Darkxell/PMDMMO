@@ -2,6 +2,7 @@ package com.darkxell.common.event.dungeon;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.util.language.Message;
 import com.darkxell.common.weather.WeatherInstance;
 
 public class WeatherChangedEvent extends DungeonEvent
@@ -14,6 +15,8 @@ public class WeatherChangedEvent extends DungeonEvent
 		super(floor);
 		this.previous = previous;
 		this.next = next;
+
+		this.messages.add(new Message("weather.changed").addReplacement("<weather>", this.next.weather.name()));
 	}
 
 }

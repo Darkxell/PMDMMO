@@ -1,5 +1,6 @@
 package com.darkxell.client.state.dungeon;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.ArrayList;
@@ -20,7 +21,6 @@ import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Directions;
 import com.darkxell.common.util.Logger;
-import com.darkxell.common.util.language.Message;
 
 /** The main state for Dungeon exploration. */
 public class DungeonState extends AbstractState
@@ -166,6 +166,14 @@ public class DungeonState extends AbstractState
 		g.translate(-x, -y);
 		Persistance.dungeonRenderer.render(g, width, height);
 		g.translate(x, y);
+
+		Color weather = Persistance.floor.currentWeather().weather.layer;
+		if (weather != null)
+		{
+			g.setColor(weather);
+			g.fillRect(0, 0, width, height);
+		}
+
 		this.logger.render(g, width, height);
 
 		this.previousCamera = new Point(this.camera);

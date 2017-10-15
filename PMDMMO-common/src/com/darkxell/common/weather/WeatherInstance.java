@@ -9,9 +9,11 @@ import com.darkxell.common.event.dungeon.WeatherCleanedEvent;
 public class WeatherInstance implements Comparable<WeatherInstance>
 {
 
+	/** -1 for infinite duration. */
 	public final int duration;
 	public final Floor floor;
 	public final int priority;
+	/** May be null for the Floor's prevailing weather. */
 	public final WeatherSource source;
 	protected int ticksLeft;
 	public final Weather weather;

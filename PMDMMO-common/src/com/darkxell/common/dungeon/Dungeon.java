@@ -12,6 +12,7 @@ import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.trap.TrapRegistry;
 import com.darkxell.common.util.XMLUtils;
 import com.darkxell.common.util.language.Message;
+import com.darkxell.common.weather.Weather;
 
 /** Describes a Dungeon: floors, Pokémon, items... */
 public class Dungeon implements Comparable<Dungeon>
@@ -260,4 +261,21 @@ public class Dungeon implements Comparable<Dungeon>
 		return traps;
 	}
 
+	/** @param floor - A Floor ID.
+	 * @param random - A Random Number Generator.
+	 * @return The prevailing Weather for the input Floor. */
+	public Weather weather(int floor, Random random)
+	{
+		Weather w = Weather.CLEAR;
+
+		for (Integer id : this.weather.keySet())
+			if (this.weather.get(id).contains(floor))
+			{
+				w = Weather.find(id);
+				if (w == null) w = Weather.CLEAR;
+				else return w;
+			}
+
+		return w;
+	}
 }
