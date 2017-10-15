@@ -2,6 +2,7 @@ package com.darkxell.common.dungeon.floor;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.function.Predicate;
@@ -10,6 +11,7 @@ import com.darkxell.common.dungeon.DungeonInstance;
 import com.darkxell.common.dungeon.DungeonItem;
 import com.darkxell.common.dungeon.floor.layout.Layout;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.dungeon.WeatherChangedEvent;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.ItemRegistry;
 import com.darkxell.common.pokemon.DungeonPokemon;
@@ -17,6 +19,7 @@ import com.darkxell.common.trap.Trap;
 import com.darkxell.common.trap.TrapRegistry;
 import com.darkxell.common.util.Directions;
 import com.darkxell.common.util.RandomUtil;
+import com.darkxell.common.weather.WeatherInstance;
 
 /** Represents a generated Floor in a Dungeon. */
 public class Floor
@@ -39,6 +42,8 @@ public class Floor
 	public Point teamSpawn;
 	/** This Floor's tiles. null before generating. Note that this array must NOT be modified. It is only public because the generation algorithm uses this array to generate the floor. */
 	public Tile[][] tiles;
+	/** List of Weather conditions applied to this Floor. */
+	private final ArrayList<WeatherInstance> weatherCondition;
 
 	public Floor(int id, Layout layout, DungeonInstance dungeon, Random random)
 	{
@@ -47,6 +52,22 @@ public class Floor
 		this.data = this.dungeon.dungeon().getData(this.id);
 		this.layout = layout;
 		this.random = random;
+		this.weatherCondition = new ArrayList<WeatherInstance>();
+	}
+
+	/** @param weather - The weather to add.
+	 * @return The Weather Changed Event if the Weather changes. */
+	public WeatherChangedEvent addWeather(WeatherInstance weather)
+	{
+		WeatherInstance previous = this.currentWeather();
+		if (!this.weatherCondition.contains(weather))
+		{
+			this.weatherCondition.add(weather);
+			this.weatherCondition.sort(Comparator.naturalOrder());
+		}
+		WeatherInstance next = this.currentWeather();
+		if (previous == next) return null;
+		return new WeatherChangedEvent(this, previous, next);
 	}
 
 	/** @return True if the input Tile connects to a path outside a Room (considering that Tile is in a Room, which is not tested in this method). */
@@ -56,6 +77,11 @@ public class Floor
 		{ Directions.NORTH, Directions.EAST, Directions.SOUTH, Directions.WEST })
 			if (!tile.adjacentTile(direction).isInRoom() && tile.adjacentTile(direction).type() == TileType.GROUND) return true;
 		return false;
+	}
+
+	public WeatherInstance currentWeather()
+	{
+		return this.weatherCondition.get(0);
 	}
 
 	/** Clears unnecessary data of this Floor. */
@@ -198,6 +224,17 @@ public class Floor
 	{
 		HashMap<Integer, Integer> traps = this.dungeon.dungeon().traps(this.id);
 		return TrapRegistry.find(RandomUtil.weightedRandom(traps, random));
+	}
+
+	/** @param weather - The weather to clean.
+	 * @return The Weather Changed Event if the Weather changes. */
+	public WeatherChangedEvent removeWeather(WeatherInstance weather)
+	{
+		WeatherInstance previous = this.currentWeather();
+		if (this.weatherCondition.size() > 0 && this.weatherCondition.contains(weather)) this.weatherCondition.remove(weather);
+		WeatherInstance next = this.currentWeather();
+		if (previous == next) return null;
+		return new WeatherChangedEvent(this, previous, next);
 	}
 
 	/** @return The room at the input X, Y coordinates. null if not in a Room. */

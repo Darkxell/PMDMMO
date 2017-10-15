@@ -1,5 +1,7 @@
 package com.darkxell.common.event.dungeon;
 
+import java.util.ArrayList;
+
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.weather.WeatherInstance;
 
@@ -14,6 +16,12 @@ public class WeatherCleanedEvent extends DungeonEvent
 		this.weather = weather;
 	}
 
-	// TODO process Server
+	@Override
+	public ArrayList<DungeonEvent> processServer()
+	{
+		WeatherChangedEvent e = this.floor.removeWeather(this.weather);
+		if (e != null) this.resultingEvents.add(e);
+		return super.processServer();
+	}
 
 }

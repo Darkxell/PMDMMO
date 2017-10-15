@@ -12,12 +12,14 @@ public class WeatherInstance implements Comparable<WeatherInstance>
 	public final int duration;
 	public final Floor floor;
 	public final int priority;
-	private int ticksLeft;
+	public final WeatherSource source;
+	protected int ticksLeft;
 	public final Weather weather;
 
-	public WeatherInstance(Weather weather, int priority, Floor floor, int duration)
+	public WeatherInstance(Weather weather, WeatherSource source, int priority, Floor floor, int duration)
 	{
 		this.weather = weather;
+		this.source = source;
 		this.priority = priority;
 		this.floor = floor;
 		this.ticksLeft = this.duration = duration;
@@ -29,19 +31,22 @@ public class WeatherInstance implements Comparable<WeatherInstance>
 		return -Integer.compare(this.priority, o.priority);
 	}
 
+	protected boolean isOver()
+	{
+		return this.ticksLeft == 0;
+	}
+
 	public ArrayList<DungeonEvent> update()
 	{
 		ArrayList<DungeonEvent> events = new ArrayList<DungeonEvent>();
 		boolean isOver = false;
 
-		if (this.ticksLeft != -1)
+		if (this.ticksLeft != -1) --this.ticksLeft;
+
+		if (this.isOver())
 		{
-			--this.ticksLeft;
-			if (this.ticksLeft == 0)
-			{
-				isOver = true;
-				events.add(new WeatherCleanedEvent(this));
-			}
+			isOver = true;
+			events.add(new WeatherCleanedEvent(this));
 		}
 
 		if (!isOver) events.addAll(this.weather.weatherTick(this.floor));
