@@ -6,21 +6,27 @@ import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.dungeon.WeatherCleanedEvent;
 
-public class WeatherInstance
+public class WeatherInstance implements Comparable<WeatherInstance>
 {
 
 	public final int duration;
 	public final Floor floor;
-	public final WeatherSource source;
+	public final int priority;
 	private int ticksLeft;
 	public final Weather weather;
 
-	public WeatherInstance(Weather weather, WeatherSource source, Floor floor, int duration)
+	public WeatherInstance(Weather weather, int priority, Floor floor, int duration)
 	{
 		this.weather = weather;
-		this.source = source;
+		this.priority = priority;
 		this.floor = floor;
 		this.ticksLeft = this.duration = duration;
+	}
+
+	@Override
+	public int compareTo(WeatherInstance o)
+	{
+		return -Integer.compare(this.priority, o.priority);
 	}
 
 	public ArrayList<DungeonEvent> update()
