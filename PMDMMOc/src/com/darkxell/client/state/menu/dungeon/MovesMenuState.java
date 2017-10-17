@@ -4,7 +4,6 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
 import com.darkxell.client.launchable.Persistance;
-import com.darkxell.client.mechanics.event.ClientEventProcessor;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.MenuHudSpriteset;
 import com.darkxell.client.state.dungeon.DungeonState;
@@ -136,7 +135,7 @@ public class MovesMenuState extends AbstractMenuState
 		if (this.isMainSelected())
 		{
 			Persistance.stateManager.setState(s);
-			ClientEventProcessor.processEvent(new MoveSelectionEvent(Persistance.floor, move, Persistance.player.getDungeonPokemon()));
+			Persistance.eventProcessor.processEvent(new MoveSelectionEvent(Persistance.floor, move, Persistance.player.getDungeonPokemon()));
 		} else
 		{
 			move.isEnabled = !move.isEnabled;

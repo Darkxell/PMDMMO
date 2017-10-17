@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.mechanics.event.ClientEventProcessor;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.dungeon.DungeonState;
 import com.darkxell.client.state.map.DungeonFloorMap;
@@ -60,6 +61,7 @@ public class DungeonSelectionState extends OptionSelectionMenuState
 	protected void onOptionSelected(MenuOption option)
 	{
 		Persistance.dungeon = ((DungeonMenuOption) option).dungeon.newInstance();
+		Persistance.eventProcessor = new ClientEventProcessor(Persistance.dungeon);
 		Persistance.floor = Persistance.dungeon.currentFloor();
 		Persistance.floor.generate();
 		Persistance.stateManager.setState(Persistance.dungeonState = new DungeonState());

@@ -3,6 +3,7 @@ package com.darkxell.client.launchable;
 import java.util.Random;
 
 import com.darkxell.client.mechanics.chat.ChatBox;
+import com.darkxell.client.mechanics.event.ClientEventProcessor;
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
 import com.darkxell.client.mechanics.freezones.FreezonePlayer;
 import com.darkxell.client.mechanics.freezones.entities.FreezoneCamera;
@@ -46,6 +47,7 @@ public abstract class Persistance {
 	public static MasterDungeonRenderer dungeonRenderer;
 	public static Floor floor;
 	public static Player player = new Player(0, PokemonRegistry.find(260).generate(new Random(), 1));
+	public static ClientEventProcessor eventProcessor;
 
 	static {
 		player.addAlly(PokemonRegistry.find(1).generate(new Random(), 1));

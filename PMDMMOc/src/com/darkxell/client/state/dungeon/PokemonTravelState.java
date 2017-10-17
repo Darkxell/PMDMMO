@@ -4,7 +4,6 @@ import java.awt.Graphics2D;
 
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.animation.TravelAnimation;
-import com.darkxell.client.mechanics.event.ClientEventProcessor;
 import com.darkxell.client.renderers.floor.PokemonRenderer;
 import com.darkxell.client.resources.images.AbstractDungeonTileset;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
@@ -102,7 +101,7 @@ public class PokemonTravelState extends DungeonSubState
 	{
 		for (PokemonTravel travel : this.travels)
 			Persistance.dungeonState.pokemonRenderer.getSprite(travel.pokemon).setState(PokemonSprite.STATE_IDDLE);
-		ClientEventProcessor.processPending();
+		Persistance.eventProcessor.processPending();
 	}
 
 	@Override
@@ -130,7 +129,7 @@ public class PokemonTravelState extends DungeonSubState
 				Persistance.dungeonState.pokemonRenderer.getRenderer(travel.pokemon).setXY(travel.destination.x, travel.destination.y);
 				if (travel.destination.type() == TileType.STAIR) stairLand = travel.pokemon == Persistance.player.getDungeonPokemon();
 			}
-			ClientEventProcessor.landedOnStairs = stairLand;
+			Persistance.eventProcessor.landedOnStairs = stairLand;
 			this.parent.setSubstate(this.parent.actionSelectionState);
 
 			short direction = this.running ? -1 : this.parent.actionSelectionState.checkMovement();
@@ -143,17 +142,17 @@ public class PokemonTravelState extends DungeonSubState
 					break;
 				}
 
-			if (this.running) shouldStop = this.shouldStopRunning(travel.pokemon, travel) || ClientEventProcessor.hasPendingEvents()
+			if (this.running) shouldStop = this.shouldStopRunning(travel.pokemon, travel) || Persistance.eventProcessor.hasPendingEvents()
 					|| Persistance.dungeon.getNextActor() != null;
-			else shouldStop = direction == -1 || ClientEventProcessor.hasPendingEvents() || Persistance.dungeon.getNextActor() != null;
+			else shouldStop = direction == -1 || Persistance.eventProcessor.hasPendingEvents() || Persistance.dungeon.getNextActor() != null;
 
 			if (shouldStop) this.stopTravel();
 			else
 			{
-				boolean hasPending = ClientEventProcessor.hasPendingEvents();
-				ClientEventProcessor.addToPending(Persistance.dungeon.endTurn());
+				boolean hasPending = Persistance.eventProcessor.hasPendingEvents();
+				Persistance.eventProcessor.addToPending(Persistance.dungeon.endTurn());
 				if (hasPending) this.stopTravel();
-				else if (this.running) ClientEventProcessor.actorTravels(travel.pokemon.facing(), true);
+				else if (this.running) Persistance.eventProcessor.actorTravels(travel.pokemon.facing(), true);
 			}
 		}
 	}

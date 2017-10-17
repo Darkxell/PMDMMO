@@ -7,7 +7,6 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 
 import com.darkxell.client.launchable.Persistance;
-import com.darkxell.client.mechanics.event.ClientEventProcessor;
 import com.darkxell.client.resources.images.DungeonHudSpriteset;
 import com.darkxell.client.state.dungeon.DungeonState.DungeonSubState;
 import com.darkxell.client.state.menu.dungeon.DungeonMenuState;
@@ -72,7 +71,7 @@ public class ActionSelectionState extends DungeonSubState
 	public void onKeyPressed(short key)
 	{
 		if (key == Keys.KEY_MENU) Persistance.stateManager.setState(new DungeonMenuState(this.parent));
-		if (key == Keys.KEY_ATTACK) ClientEventProcessor.processEvent(new MoveSelectionEvent(Persistance.floor, new LearnedMove(MoveRegistry.ATTACK.id),
+		if (key == Keys.KEY_ATTACK) Persistance.eventProcessor.processEvent(new MoveSelectionEvent(Persistance.floor, new LearnedMove(MoveRegistry.ATTACK.id),
 				Persistance.player.getDungeonPokemon()));
 	}
 
@@ -102,7 +101,7 @@ public class ActionSelectionState extends DungeonSubState
 		if (this.isMain())
 		{
 			short direction = this.checkMovement();
-			if (direction != -1) ClientEventProcessor.actorTravels(direction, Keys.isPressed(Keys.KEY_RUN));
+			if (direction != -1) Persistance.eventProcessor.actorTravels(direction, Keys.isPressed(Keys.KEY_RUN));
 		}
 
 		++this.rotationCounter;

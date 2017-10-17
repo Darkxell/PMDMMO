@@ -2,9 +2,9 @@ package com.darkxell.client.state.dungeon;
 
 import java.awt.Graphics2D;
 
+import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.animation.AbstractAnimation;
 import com.darkxell.client.mechanics.animation.AnimationEndListener;
-import com.darkxell.client.mechanics.event.ClientEventProcessor;
 import com.darkxell.client.state.dungeon.DungeonState.DungeonSubState;
 
 /** A State that displays an Animation, then refers to the DungeonEventProcessor for pending events.<br />
@@ -23,7 +23,7 @@ public class AnimationState extends DungeonSubState implements AnimationEndListe
 	public void onAnimationEnd(AbstractAnimation animation)
 	{
 		this.parent.setSubstate(this.parent.actionSelectionState);
-		ClientEventProcessor.processPending();
+		Persistance.eventProcessor.processPending();
 	}
 
 	@Override
