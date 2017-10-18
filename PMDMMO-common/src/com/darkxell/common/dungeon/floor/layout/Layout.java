@@ -29,7 +29,7 @@ public abstract class Layout
 			case 1:
 				return new SingleRoomLayout();
 			case 2:
-				return new GridRoomsLayout(id, 2, 2, 5, 5, 14, 14, 1);
+				return new GridRoomsLayout(id, 2, 2, 5, 5, 14, 14, 2);
 			default:
 				return null;
 		}

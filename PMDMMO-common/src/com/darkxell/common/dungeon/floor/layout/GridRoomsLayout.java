@@ -122,8 +122,8 @@ public class GridRoomsLayout extends Layout {
 					int startx1 = (r1 == null) ? roomcenters[x][y].x : this.random.nextInt(r1.width) + r1.x;
 					int starty1 = (r1 == null) ? roomcenters[x][y].y : r1.y + r1.height;
 					Room r2 = this.floor.roomAt(roomcenters[x][y + 1].x, roomcenters[x][y + 1].y);
-					int endx1 = (r1 == null) ? roomcenters[x][y + 1].x : this.random.nextInt(r2.width) + r2.x;
-					int endy1 = (r1 == null) ? roomcenters[x][y + 1].y : r2.y;
+					int endx1 = (r2 == null) ? roomcenters[x][y + 1].x : this.random.nextInt(r2.width) + r2.x;
+					int endy1 = (r2 == null) ? roomcenters[x][y + 1].y : r2.y;
 					// Sets the floor in the corridor
 					for (int i = starty1; i < endy1; ++i)
 						this.floor.tiles[i - starty1 > (endy1 - starty1) / 2 ? endx1 : startx1][i]
