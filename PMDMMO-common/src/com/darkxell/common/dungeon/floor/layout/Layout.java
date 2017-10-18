@@ -15,6 +15,10 @@ import com.darkxell.common.util.RandomUtil;
 public abstract class Layout
 {
 
+	public static final int LAYOUT_STATIC = 0;
+	public static final int LAYOUT_SINGLEROOM = 1;
+	public static final int LAYOUT_GRIDROOMS_2x2 = 2;
+	
 	/** @return A new layout from the input ID. */
 	public static Layout find(int id)
 	{
@@ -25,7 +29,7 @@ public abstract class Layout
 			case 1:
 				return new SingleRoomLayout();
 			case 2:
-				return new GridRoomsLayout(id, 2, 2, 5, 5, 14, 14);
+				return new GridRoomsLayout(id, 2, 2, 5, 5, 14, 14, 1);
 			default:
 				return null;
 		}
