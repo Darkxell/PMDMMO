@@ -23,7 +23,7 @@ import com.darkxell.common.event.stats.StatChangedEvent;
 import com.darkxell.common.pokemon.PokemonStats;
 import com.darkxell.common.util.language.Message;
 
-public final class MoveEventProcessor
+public final class MoveEvents
 {
 
 	public static void processAbilityEvent(TriggeredAbilityEvent event)
@@ -34,7 +34,7 @@ public final class MoveEventProcessor
 			AnimationState s = new AnimationState(Persistance.dungeonState);
 			s.animation = animation;
 			Persistance.dungeonState.setSubstate(s);
-			ClientEventProcessor.processPending = false;
+			Persistance.eventProcessor.processPending = false;
 		} else animation.start();
 	}
 
@@ -43,7 +43,7 @@ public final class MoveEventProcessor
 		Persistance.dungeonState.pokemonRenderer.getRenderer(event.target).sprite.setState(PokemonSprite.STATE_HURT);
 		Persistance.dungeonState.pokemonRenderer.getRenderer(event.target).sprite.setHealthChange(-event.damage);
 		Persistance.dungeonState.setSubstate(new DelayState(Persistance.dungeonState, PokemonSprite.FRAMELENGTH));
-		ClientEventProcessor.processPending = false;
+		Persistance.eventProcessor.processPending = false;
 	}
 
 	public static void processExperienceEvent(ExperienceGainedEvent event)
@@ -51,7 +51,7 @@ public final class MoveEventProcessor
 		int levels = event.levelsup();
 		if (levels != 0 && Persistance.player.isAlly(event.pokemon))
 		{
-			ClientEventProcessor.processPending = false;
+			Persistance.eventProcessor.processPending = false;
 
 			ArrayList<DialogScreen> screens = new ArrayList<DialogScreen>();
 			for (int level = event.pokemon.getLevel() - levels + 1; level <= event.pokemon.getLevel(); ++level)
@@ -80,7 +80,7 @@ public final class MoveEventProcessor
 		AnimationState s = new AnimationState(Persistance.dungeonState);
 		s.animation = MoveRenderer.createAnimation(s, event.user, event.move.move());
 		Persistance.dungeonState.setSubstate(s);
-		ClientEventProcessor.processPending = false;
+		Persistance.eventProcessor.processPending = false;
 	}
 
 	static void processMoveUseEvent(MoveUseEvent event)
@@ -90,7 +90,7 @@ public final class MoveEventProcessor
 		if (s.animation != null)
 		{
 			Persistance.dungeonState.setSubstate(s);
-			ClientEventProcessor.processPending = false;
+			Persistance.eventProcessor.processPending = false;
 		}
 	}
 
@@ -101,11 +101,11 @@ public final class MoveEventProcessor
 		if (s.animation != null)
 		{
 			Persistance.dungeonState.setSubstate(s);
-			ClientEventProcessor.processPending = false;
+			Persistance.eventProcessor.processPending = false;
 		}
 	}
 
-	private MoveEventProcessor()
+	private MoveEvents()
 	{}
 
 }

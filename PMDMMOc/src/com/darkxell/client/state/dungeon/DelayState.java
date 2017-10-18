@@ -2,6 +2,7 @@ package com.darkxell.client.state.dungeon;
 
 import java.awt.Graphics2D;
 
+import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.event.ClientEventProcessor;
 import com.darkxell.client.state.dungeon.DungeonState.DungeonSubState;
 
@@ -37,7 +38,7 @@ public class DelayState extends DungeonSubState
 		if (this.tick >= this.duration)
 		{
 			this.parent.setSubstate(this.parent.actionSelectionState);
-			ClientEventProcessor.processPending();
+			Persistance.eventProcessor.processPending();
 		}
 	}
 

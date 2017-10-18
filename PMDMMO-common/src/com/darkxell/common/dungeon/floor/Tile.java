@@ -261,7 +261,7 @@ public class Tile implements ItemContainer
 		if (pokemon == null) this.pokemon = null;
 		else
 		{
-			if (pokemon.tile != null) pokemon.tile.setPokemon(null);
+			if (pokemon.tile != null) pokemon.tile.removePokemon(pokemon);
 			this.pokemon = pokemon;
 			this.pokemon.tile = this;
 		}
