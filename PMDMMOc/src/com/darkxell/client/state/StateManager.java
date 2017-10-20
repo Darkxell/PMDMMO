@@ -10,6 +10,7 @@ import java.util.Random;
 
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.animation.AnimationTicker;
+import com.darkxell.client.ui.Keys;
 import com.darkxell.client.ui.MainUiUtility;
 
 public class StateManager {
@@ -147,6 +148,7 @@ public class StateManager {
 			this.currentState.update();
 		AnimationTicker.instance.update();
 		Persistance.displaymap.update();
+		Keys.update();
 	}
 
 	// GETTERS,SETTERS AND UTILITY

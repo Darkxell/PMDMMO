@@ -30,17 +30,17 @@ public class ActionSelectionState extends DungeonSubState
 	{
 		short direction = -1;
 
-		if (Keys.isPressed(Keys.KEY_UP) && Keys.isPressed(Keys.KEY_RIGHT) && !Keys.isPressed(Keys.KEY_DOWN) && !Keys.isPressed(Keys.KEY_LEFT)) direction = Directions.NORTHEAST;
-		else if (Keys.isPressed(Keys.KEY_DOWN) && Keys.isPressed(Keys.KEY_RIGHT) && !Keys.isPressed(Keys.KEY_UP) && !Keys.isPressed(Keys.KEY_LEFT)) direction = Directions.SOUTHEAST;
-		else if (Keys.isPressed(Keys.KEY_DOWN) && Keys.isPressed(Keys.KEY_LEFT) && !Keys.isPressed(Keys.KEY_UP) && !Keys.isPressed(Keys.KEY_RIGHT)) direction = Directions.SOUTHWEST;
-		else if (Keys.isPressed(Keys.KEY_UP) && Keys.isPressed(Keys.KEY_LEFT) && !Keys.isPressed(Keys.KEY_DOWN) && !Keys.isPressed(Keys.KEY_RIGHT)) direction = Directions.NORTHWEST;
+		if (Keys.directionPressed(Keys.KEY_UP, Keys.KEY_RIGHT)) direction = Directions.NORTHEAST;
+		else if (Keys.directionPressed(Keys.KEY_DOWN, Keys.KEY_RIGHT)) direction = Directions.SOUTHEAST;
+		else if (Keys.directionPressed(Keys.KEY_DOWN, Keys.KEY_LEFT)) direction = Directions.SOUTHWEST;
+		else if (Keys.directionPressed(Keys.KEY_UP, Keys.KEY_LEFT)) direction = Directions.NORTHWEST;
 
 		else if (!this.parent.diagonal)
 		{
-			if (Keys.isPressed(Keys.KEY_UP) && !Keys.isPressed(Keys.KEY_LEFT) && !Keys.isPressed(Keys.KEY_DOWN) && !Keys.isPressed(Keys.KEY_RIGHT)) direction = Directions.NORTH;
-			else if (Keys.isPressed(Keys.KEY_DOWN) && !Keys.isPressed(Keys.KEY_LEFT) && !Keys.isPressed(Keys.KEY_UP) && !Keys.isPressed(Keys.KEY_RIGHT)) direction = Directions.SOUTH;
-			else if (Keys.isPressed(Keys.KEY_LEFT) && !Keys.isPressed(Keys.KEY_UP) && !Keys.isPressed(Keys.KEY_DOWN) && !Keys.isPressed(Keys.KEY_RIGHT)) direction = Directions.WEST;
-			else if (Keys.isPressed(Keys.KEY_RIGHT) && !Keys.isPressed(Keys.KEY_LEFT) && !Keys.isPressed(Keys.KEY_DOWN) && !Keys.isPressed(Keys.KEY_UP)) direction = Directions.EAST;
+			if (Keys.directionPressed(Keys.KEY_UP)) direction = Directions.NORTH;
+			else if (Keys.directionPressed(Keys.KEY_DOWN)) direction = Directions.SOUTH;
+			else if (Keys.directionPressed(Keys.KEY_LEFT)) direction = Directions.WEST;
+			else if (Keys.directionPressed(Keys.KEY_RIGHT)) direction = Directions.EAST;
 		}
 
 		if (direction != -1)
