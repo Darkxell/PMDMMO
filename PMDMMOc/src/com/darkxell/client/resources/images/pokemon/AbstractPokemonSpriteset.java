@@ -5,6 +5,8 @@ import java.awt.image.BufferedImage;
 import org.jdom2.Element;
 
 import com.darkxell.client.resources.Res;
+import com.darkxell.common.util.Logger;
+import com.darkxell.common.util.XMLUtils;
 
 public class AbstractPokemonSpriteset
 {
@@ -36,13 +38,13 @@ public class AbstractPokemonSpriteset
 
 	public final int gravityX;
 	public final int gravityY;
+	public final int pokemonID;
 	public final int spriteHeight;
 	private BufferedImage sprites;
 	public final int spriteWidth;
 	final PokemonSpritesetState[] states;
-	public final int pokemonID;
-	
-	protected AbstractPokemonSpriteset(String path, Element xml,int pokemonID)
+
+	protected AbstractPokemonSpriteset(String path, Element xml, int pokemonID)
 	{
 		this.pokemonID = pokemonID;
 		if (xml.getAttribute("size") != null) this.spriteWidth = this.spriteHeight = Integer.parseInt(xml.getAttributeValue("size"));
@@ -51,8 +53,10 @@ public class AbstractPokemonSpriteset
 			this.spriteWidth = Integer.parseInt(xml.getAttributeValue("width"));
 			this.spriteHeight = Integer.parseInt(xml.getAttributeValue("height"));
 		}
-		this.gravityX = Integer.parseInt(xml.getAttributeValue("x"));
-		this.gravityY = Integer.parseInt(xml.getAttributeValue("y"));
+		this.gravityX = XMLUtils.getAttribute(xml, "x", this.defaultX());
+		this.gravityY = XMLUtils.getAttribute(xml, "y", this.defaultY());
+		if (this.gravityX == -1 || this.gravityY == -1) Logger
+				.e("AbstractPokemonSpriteset(): There is no default gravity coordinates for this Sprite's dimension.");
 		this.sprites = Res.getBase(path);
 
 		this.states = new PokemonSpritesetState[11];
@@ -68,6 +72,42 @@ public class AbstractPokemonSpriteset
 			{ 0, 1 }, new int[]
 			{ 10, 10 });
 			else this.states[i] = new PokemonSpritesetState(0);
+	}
+
+	private int defaultX()
+	{
+		if (this.spriteWidth != this.spriteHeight) return 0;
+		switch (this.spriteWidth)
+		{
+			case 32:
+				return 15;
+			case 48:
+				return 24;
+			case 64:
+				return 33;
+			case 96:
+				return 51;
+			default:
+				return -1;
+		}
+	}
+
+	private int defaultY()
+	{
+		if (this.spriteWidth != this.spriteHeight) return 0;
+		switch (this.spriteWidth)
+		{
+			case 32:
+				return 23;
+			case 48:
+				return 33;
+			case 64:
+				return 43;
+			case 96:
+				return 63;
+			default:
+				return -1;
+		}
 	}
 
 	public BufferedImage getSprite(byte state, byte facing, int variant)
