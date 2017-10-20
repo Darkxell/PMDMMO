@@ -59,7 +59,10 @@ public class NextFloorState extends AbstractState {
 			Persistance.dungeonState.update();
 		++this.counter;
 		if (this.counter >= total)
+		{
 			Persistance.stateManager.setState(Persistance.dungeonState);
+			Persistance.eventProcessor.processPending();
+		}
 		if (this.counter == fade + pause) {
 			Persistance.floor = Persistance.dungeon.currentFloor();
 			Persistance.dungeonState = new DungeonState();
