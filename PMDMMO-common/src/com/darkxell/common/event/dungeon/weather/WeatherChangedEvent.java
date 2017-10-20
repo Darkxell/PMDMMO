@@ -8,7 +8,10 @@ import com.darkxell.common.weather.WeatherInstance;
 public class WeatherChangedEvent extends DungeonEvent
 {
 
-	public final WeatherInstance previous, next;
+	/** The new current Weather. */
+	public final WeatherInstance next;
+	/** The previous Weather. may be null if this describes the application of the Floor's prevailing Weather. */
+	public final WeatherInstance previous;
 
 	public WeatherChangedEvent(Floor floor, WeatherInstance previous, WeatherInstance next)
 	{

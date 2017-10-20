@@ -86,10 +86,10 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	@Override
 	protected void onTurnEnd()
 	{
-		if (landedOnStairs)
+		if (this.landedOnStairs)
 		{
 			addToPending(new StairLandingEvent());
-			landedOnStairs = false;
+			this.landedOnStairs = false;
 		}
 		super.onTurnEnd();
 	}
@@ -105,6 +105,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 
 	private void processFloorEvent(NextFloorEvent event)
 	{
+		this.processPending = false;
 		Persistance.stateManager.setState(new NextFloorState(event.floor.id + 1));
 	}
 

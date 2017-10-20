@@ -66,6 +66,7 @@ public class DungeonSelectionState extends OptionSelectionMenuState
 		Persistance.floor.generate();
 		Persistance.stateManager.setState(Persistance.dungeonState = new DungeonState());
 		Persistance.displaymap = new DungeonFloorMap();
+		Persistance.eventProcessor.processEvents(Persistance.dungeon.currentFloor().onFloorStart());
 	}
 
 }

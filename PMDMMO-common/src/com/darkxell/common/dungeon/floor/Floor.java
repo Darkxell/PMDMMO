@@ -12,6 +12,7 @@ import com.darkxell.common.dungeon.DungeonItem;
 import com.darkxell.common.dungeon.floor.layout.Layout;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.dungeon.weather.WeatherChangedEvent;
+import com.darkxell.common.event.dungeon.weather.WeatherCreatedEvent;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.ItemRegistry;
 import com.darkxell.common.pokemon.DungeonPokemon;
@@ -67,7 +68,7 @@ public class Floor
 			this.weatherCondition.sort(Comparator.naturalOrder());
 		}
 		WeatherInstance next = this.currentWeather();
-		if (previous == next) return null;
+		if (previous.weather == next.weather) return null;
 		return new WeatherChangedEvent(this, previous, next);
 	}
 
@@ -129,11 +130,22 @@ public class Floor
 		return pokemon;
 	}
 
+	/** Called when a this Floor starts. */
+	public ArrayList<DungeonEvent> onFloorStart()
+	{
+		ArrayList<DungeonEvent> e = new ArrayList<DungeonEvent>();
+		Weather w = this.dungeon.dungeon().weather(this.id, this.random);
+		e.add(new WeatherCreatedEvent(new WeatherInstance(w, null, 0, this, -1)));
+		return e;
+	}
+
 	/** Called when a new turn starts. */
 	public ArrayList<DungeonEvent> onTurnStart()
 	{
 		ArrayList<DungeonEvent> e = new ArrayList<DungeonEvent>();
 		// e.add(new MessageEvent(this, new Message("New turn!", false)));
+		for (int w = this.weatherCondition.size() - 1; w >= 0; --w)
+			e.addAll(this.weatherCondition.get(w).update());
 		return e;
 	}
 

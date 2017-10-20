@@ -18,7 +18,7 @@ public abstract class Layout
 	public static final int LAYOUT_STATIC = 0;
 	public static final int LAYOUT_SINGLEROOM = 1;
 	public static final int LAYOUT_GRIDROOMS_2x2 = 2;
-	
+
 	/** @return A new layout from the input ID. */
 	public static Layout find(int id)
 	{
@@ -102,7 +102,7 @@ public abstract class Layout
 
 		for (int i = 0; i < 200; ++i)
 		{
-			value = moneyTable[random];
+			value = moneyTable[random - 1];
 			if (value <= max) return value;
 			else random /= 2;
 		}

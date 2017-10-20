@@ -94,6 +94,13 @@ public class CommonEventProcessor
 		if (this.processPending) processPending();
 	}
 
+	/** Adds all the input events to the pending stack and starts processing them. May not process all events in order if some produce new Events. */
+	public void processEvents(ArrayList<DungeonEvent> events)
+	{
+		this.addToPending(events);
+		this.processPending();
+	}
+
 	/** Processes the next pending event. */
 	public void processPending()
 	{
