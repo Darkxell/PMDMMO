@@ -1,4 +1,4 @@
-package com.darkxell.common.event.dungeon;
+package com.darkxell.common.event.dungeon.weather;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;

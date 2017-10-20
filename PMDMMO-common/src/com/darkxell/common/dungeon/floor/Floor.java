@@ -11,7 +11,7 @@ import com.darkxell.common.dungeon.DungeonInstance;
 import com.darkxell.common.dungeon.DungeonItem;
 import com.darkxell.common.dungeon.floor.layout.Layout;
 import com.darkxell.common.event.DungeonEvent;
-import com.darkxell.common.event.dungeon.WeatherChangedEvent;
+import com.darkxell.common.event.dungeon.weather.WeatherChangedEvent;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.ItemRegistry;
 import com.darkxell.common.pokemon.DungeonPokemon;

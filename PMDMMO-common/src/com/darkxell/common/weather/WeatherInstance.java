@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
-import com.darkxell.common.event.dungeon.WeatherCleanedEvent;
+import com.darkxell.common.event.dungeon.weather.WeatherCleanedEvent;
 
 public class WeatherInstance implements Comparable<WeatherInstance>
 {
