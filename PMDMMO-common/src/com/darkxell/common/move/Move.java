@@ -9,16 +9,17 @@ import com.darkxell.common.dungeon.floor.Room;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.DungeonEvent.MessageEvent;
+import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.TriggeredAbilityEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
-import com.darkxell.common.pokemon.LearnedMove;
 import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.pokemon.ability.AbilityTypeBoost;
 import com.darkxell.common.util.Directions;
 import com.darkxell.common.util.XMLUtils;
 import com.darkxell.common.util.language.Message;
+import com.darkxell.common.weather.Weather;
 
 public class Move
 {
@@ -130,6 +131,21 @@ public class Move
 			d *= 2;
 		}
 
+		// Weather
+		{
+			Weather w = floor.currentWeather().weather;
+			if (w == Weather.SUNNY)
+			{
+				if (this.type == PokemonType.FIRE) d *= 1.5;
+				else if (this.type == PokemonType.WATER) d *= 0.5;
+			} else if (w == Weather.RAIN)
+			{
+				if (this.type == PokemonType.FIRE) d *= 0.5;
+				else if (this.type == PokemonType.WATER) d *= 1.5;
+			} else if (w == Weather.CLOUDS && this.type != PokemonType.NORMAL) d *= 0.75;
+			else if (w == Weather.FOG && this.type == PokemonType.ELECTR) d *= 0.5;
+		}
+
 		// Critical hit ?
 		boolean crit = false;
 		{
@@ -196,11 +212,11 @@ public class Move
 		return targets.toArray(new DungeonPokemon[targets.size()]);
 	}
 
-	/** @param user - The Pokémon using the Move.
+	/** @param usedMove - The Move used.
 	 * @param target - The Pokémon receiving the Move.
 	 * @param floor - The Floor context.
 	 * @return True if this Move misses. */
-	public boolean misses(DungeonPokemon user, DungeonPokemon target, Floor floor)
+	public boolean misses(MoveUse usedMove, DungeonPokemon target, Floor floor)
 	{
 		return false;
 	}
@@ -211,16 +227,15 @@ public class Move
 		return new Message("move." + this.id).addPrefix("<type-" + this.type.id + "> ");
 	}
 
-	/** @param user - The Pokémon using the Move.
-	 * @param move - The Learned move.
+	/** @param move - The used move.
 	 * @param floor - The Floor context.
 	 * @return The Events created by this selection. Creates MoveUseEvents, distributing this Move on targets. */
-	public final ArrayList<DungeonEvent> prepareUse(DungeonPokemon user, LearnedMove move, Floor floor)
+	public final ArrayList<DungeonEvent> prepareUse(MoveUse move, Floor floor)
 	{
-		DungeonPokemon[] pokemon = this.getTargets(user, floor);
+		DungeonPokemon[] pokemon = this.getTargets(move.user, floor);
 		ArrayList<DungeonEvent> events = new ArrayList<DungeonEvent>();
 		for (int i = 0; i < pokemon.length; ++i)
-			events.add(new MoveUseEvent(floor, move, user, pokemon[i]));
+			events.add(new MoveUseEvent(floor, move, pokemon[i]));
 
 		if (events.size() == 0 && this != MoveRegistry.ATTACK) events.add(new MessageEvent(floor, new Message("move.no_target")));
 		return events;
@@ -248,31 +263,30 @@ public class Move
 
 	/** Applies this Move's effects to a Pokémon.
 	 * 
-	 * @param user - The Pokémon using the Move.
+	 * @param usedMove - The Move instance that was selected.
 	 * @param target - The Pokémon the Move is being used on.
 	 * @param floor - The Floor context.
-	 * @param move - The Move instance that was selected.
 	 * @return The events resulting from this Move. They typically include damage, healing, stat changes... */
-	public ArrayList<DungeonEvent> useOn(DungeonPokemon user, DungeonPokemon target, Floor floor, LearnedMove move)
+	public ArrayList<DungeonEvent> useOn(MoveUse usedMove, DungeonPokemon target, Floor floor)
 	{
 		ArrayList<DungeonEvent> events = new ArrayList<DungeonEvent>();
-		boolean missed = this.misses(user, target, floor);
+		boolean missed = this.misses(usedMove, target, floor);
 
 		float effectiveness = this.type == null ? PokemonType.NORMALLY_EFFECTIVE : this.type.effectivenessOn(target.pokemon.species);
 		if (effectiveness == PokemonType.NO_EFFECT) events.add(new MessageEvent(floor, new Message("move.effectiveness.none").addReplacement("<pokemon>",
 				target.pokemon.getNickname())));
 		else
 		{
-			if (!missed && this != MoveRegistry.ATTACK) target.receiveMove(move.isLinked() ? DungeonPokemon.LINKED_MOVES : DungeonPokemon.MOVES);
+			if (!missed && this != MoveRegistry.ATTACK) target.receiveMove(usedMove.move.isLinked() ? DungeonPokemon.LINKED_MOVES : DungeonPokemon.MOVES);
 			if (this.power != -1)
 			{
 				if (effectiveness == PokemonType.SUPER_EFFECTIVE) events.add(new MessageEvent(floor, new Message("move.effectiveness.super").addReplacement(
 						"<pokemon>", target.pokemon.getNickname())));
 				else if (effectiveness == PokemonType.NOT_VERY_EFFECTIVE) events.add(new MessageEvent(floor, new Message("move.effectiveness.not_very")
 						.addReplacement("<pokemon>", target.pokemon.getNickname())));
-				events.add(new DamageDealtEvent(floor, target, user, missed ? 0 : this.damageDealt(user, target, floor, events)));
+				events.add(new DamageDealtEvent(floor, target, usedMove, missed ? 0 : this.damageDealt(usedMove.user, target, floor, events)));
 			}
-			if (!missed && this.additionalEffectLands(user, target, floor)) events.addAll(this.additionalEffects(user, target, floor));
+			if (!missed && this.additionalEffectLands(usedMove.user, target, floor)) events.addAll(this.additionalEffects(usedMove.user, target, floor));
 		}
 
 		return events;

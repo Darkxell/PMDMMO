@@ -9,13 +9,15 @@ import com.darkxell.common.event.dungeon.weather.WeatherCleanedEvent;
 public class WeatherInstance implements Comparable<WeatherInstance>
 {
 
+	public static final int DEFAULT_DURATION = 20;
+
 	/** -1 for infinite duration. */
 	public final int duration;
 	public final Floor floor;
 	public final int priority;
 	/** May be null for the Floor's prevailing weather. */
 	public final WeatherSource source;
-	protected int ticksLeft;
+	protected int tick;
 	public final Weather weather;
 
 	public WeatherInstance(Weather weather, WeatherSource source, int priority, Floor floor, int duration)
@@ -24,7 +26,8 @@ public class WeatherInstance implements Comparable<WeatherInstance>
 		this.source = source;
 		this.priority = priority;
 		this.floor = floor;
-		this.ticksLeft = this.duration = duration;
+		this.tick = 0;
+		this.duration = duration;
 	}
 
 	@Override
@@ -35,7 +38,8 @@ public class WeatherInstance implements Comparable<WeatherInstance>
 
 	protected boolean isOver()
 	{
-		return this.ticksLeft == 0;
+		if (this.duration == -1) return this.source != null && this.source.isOver();
+		return this.tick >= this.duration;
 	}
 
 	public ArrayList<DungeonEvent> update()
@@ -43,7 +47,7 @@ public class WeatherInstance implements Comparable<WeatherInstance>
 		ArrayList<DungeonEvent> events = new ArrayList<DungeonEvent>();
 		boolean isOver = false;
 
-		if (this.ticksLeft != -1) --this.ticksLeft;
+		++this.tick;
 
 		if (this.isOver())
 		{
@@ -51,7 +55,7 @@ public class WeatherInstance implements Comparable<WeatherInstance>
 			events.add(new WeatherCleanedEvent(this));
 		}
 
-		if (!isOver) events.addAll(this.weather.weatherTick(this.floor));
+		if (!isOver) events.addAll(this.weather.weatherTick(this.floor, this.tick));
 
 		return events;
 	}

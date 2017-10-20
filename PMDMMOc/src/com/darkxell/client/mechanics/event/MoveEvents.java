@@ -78,7 +78,7 @@ public final class MoveEvents
 	static void processMoveEvent(MoveSelectionEvent event)
 	{
 		AnimationState s = new AnimationState(Persistance.dungeonState);
-		s.animation = MoveRenderer.createAnimation(s, event.user, event.move.move());
+		s.animation = MoveRenderer.createAnimation(s, event.usedMove.user, event.usedMove.move.move());
 		Persistance.dungeonState.setSubstate(s);
 		Persistance.eventProcessor.processPending = false;
 	}
@@ -86,7 +86,7 @@ public final class MoveEvents
 	static void processMoveUseEvent(MoveUseEvent event)
 	{
 		AnimationState s = new AnimationState(Persistance.dungeonState);
-		s.animation = MoveRenderer.createTargetAnimation(s, event.user, event.move.move());
+		s.animation = MoveRenderer.createTargetAnimation(s, event.usedMove.user, event.usedMove.move.move());
 		if (s.animation != null)
 		{
 			Persistance.dungeonState.setSubstate(s);

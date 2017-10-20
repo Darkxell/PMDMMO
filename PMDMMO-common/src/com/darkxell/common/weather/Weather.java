@@ -8,9 +8,10 @@ import javafx.animation.Animation;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.util.language.Message;
 
-// TODO make abstract
+// TODO make abstract when Weather Animations are done
 public class Weather
 {
 
@@ -21,9 +22,10 @@ public class Weather
 	public static final Weather CLEAR = new Weather(clear, null);
 	public static final Weather CLOUDS = new Weather(clouds, new Color(200, 200, 200, 100));
 	public static final Weather FOG = new Weather(fog, new Color(150, 150, 150, 100));
-	public static final Weather HAIL = new Weather(hail, new Color(150, 150, 200, 100));
+	public static final Weather HAIL = new WeatherDamaging(hail, new Color(150, 150, 200, 100), 10, 5, PokemonType.ICE);
 	public static final Weather RAIN = new Weather(rain, new Color(100, 100, 150, 100));
-	public static final Weather SANDSTORM = new Weather(sandstorm, new Color(100, 150, 150, 100));
+	public static final Weather SANDSTORM = new WeatherDamaging(sandstorm, new Color(100, 150, 150, 100), 10, 5, PokemonType.GROUND, PokemonType.ROCK,
+			PokemonType.STEEL);
 	public static final Weather SNOW = new Weather(snow, new Color(250, 250, 250, 100));
 	public static final Weather SUNNY = new Weather(sunny, new Color(150, 200, 200, 100));
 
@@ -37,7 +39,7 @@ public class Weather
 	/** The Color to fill the screen with as a Weather Layer. May be null if no Layer. */
 	public final Color layer;
 
-	private Weather(int id, Color layer)
+	Weather(int id, Color layer)
 	{
 		this.id = id;
 		this.layer = layer;
@@ -56,7 +58,7 @@ public class Weather
 	}
 
 	/** Called whenever this Weather ticks. */
-	public ArrayList<DungeonEvent> weatherTick(Floor floor)
+	public ArrayList<DungeonEvent> weatherTick(Floor floor, int tick)
 	{
 		return new ArrayList<DungeonEvent>();
 	}
