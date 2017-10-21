@@ -5,6 +5,7 @@ import com.darkxell.client.mechanics.animation.AbstractAnimation;
 import com.darkxell.client.mechanics.animation.AnimationEndListener;
 import com.darkxell.client.mechanics.animation.SpritesetAnimation;
 import com.darkxell.client.mechanics.animation.misc.RainAnimation;
+import com.darkxell.client.mechanics.animation.misc.SnowAnimation;
 import com.darkxell.client.state.DialogState;
 import com.darkxell.client.state.DialogState.DialogEndListener;
 import com.darkxell.client.state.FreezoneExploreState;
@@ -139,7 +140,9 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	private void processWeatherEvent(WeatherChangedEvent event)
 	{
 		AnimationState a = new AnimationState(Persistance.dungeonState);
-		if (event.next.weather == Weather.RAIN) a.animation = new RainAnimation(a);
+		if (event.next.weather == Weather.RAIN) a.animation = new RainAnimation(100, a);
+		else if (event.next.weather == Weather.SNOW) a.animation = new SnowAnimation(a);
+		else if (event.next.weather == Weather.HAIL) a.animation = new RainAnimation(103, a);
 		else if (event.next.weather == Weather.SUNNY) a.animation = SpritesetAnimation.getCustomAnimation(null, 101, a);
 		if (a.animation != null)
 		{

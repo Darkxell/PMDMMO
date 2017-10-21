@@ -12,21 +12,23 @@ public class RainAnimation extends AbstractAnimation
 {
 
 	public static final int DURATION = 120;
-	private static int dropDuration = -1;
 
+	private int dropDuration = -1;
 	private HashMap<SpritesetAnimation, Boolean> drops;
+	private final int spritesetID;
 
-	public RainAnimation(AnimationEndListener listener)
+	public RainAnimation(int spritesetID, AnimationEndListener listener)
 	{
 		super(DURATION, listener);
+		this.spritesetID = spritesetID;
 		this.drops = new HashMap<SpritesetAnimation, Boolean>();
 	}
 
 	private void createDrop()
 	{
-		SpritesetAnimation a = (SpritesetAnimation) SpritesetAnimation.getCustomAnimation(null, 100, null);
+		SpritesetAnimation a = (SpritesetAnimation) SpritesetAnimation.getCustomAnimation(null, this.spritesetID, null);
 		this.drops.put(a, false);
-		if (dropDuration == -1) dropDuration = a.duration;
+		if (this.dropDuration == -1) this.dropDuration = a.duration;
 	}
 
 	@Override
@@ -37,7 +39,8 @@ public class RainAnimation extends AbstractAnimation
 		{
 			if (!this.drops.get(animation))
 			{
-				animation.setXY(Math.random() * width - animation.spriteset.spriteWidth, Math.random() * height - animation.spriteset.spriteHeight);
+				animation.setXY(Math.random() * width - animation.spriteset.spriteWidth, Math.random() * height - animation.spriteset.spriteHeight
+						* animation.spriteDuration);
 				this.drops.put(animation, true);
 			}
 			animation.postrender(g, width, height);
@@ -48,7 +51,7 @@ public class RainAnimation extends AbstractAnimation
 	public void update()
 	{
 		super.update();
-		if (this.tick() < DURATION - dropDuration) this.createDrop();
+		if (this.tick() < DURATION - this.dropDuration) this.createDrop();
 
 		ArrayList<SpritesetAnimation> toremove = new ArrayList<SpritesetAnimation>();
 		for (SpritesetAnimation animation : this.drops.keySet())
@@ -56,7 +59,7 @@ public class RainAnimation extends AbstractAnimation
 			{
 				if (animation.isOver()) toremove.add(animation);
 				animation.update();
-				if (animation.index() == 0) animation.setXY(animation.getX() + 1, animation.getY() + 3);
+				if (animation.index() == 0 || (this.spritesetID == 103 && animation.index() == 1)) animation.setXY(animation.getX() + 1, animation.getY() + 3);
 			}
 
 		for (SpritesetAnimation animation : toremove)
