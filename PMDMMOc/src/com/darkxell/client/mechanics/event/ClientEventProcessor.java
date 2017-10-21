@@ -17,6 +17,7 @@ import com.darkxell.common.event.CommonEventProcessor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.dungeon.DungeonExitEvent;
 import com.darkxell.common.event.dungeon.NextFloorEvent;
+import com.darkxell.common.event.dungeon.weather.WeatherChangedEvent;
 import com.darkxell.common.event.item.ItemUseSelectionEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.move.MoveUseEvent;
@@ -28,6 +29,7 @@ import com.darkxell.common.event.stats.ExperienceGainedEvent;
 import com.darkxell.common.event.stats.StatChangedEvent;
 import com.darkxell.common.item.ItemFood;
 import com.darkxell.common.item.ItemGummi;
+import com.darkxell.common.weather.Weather;
 
 /** Translates game logic events into displayable content to the client.<br />
  * Takes in Events to display messages, manage resources or change game states. */
@@ -80,6 +82,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 
 		if (event instanceof ItemUseSelectionEvent) this.processItemEvent((ItemUseSelectionEvent) event);
 
+		if (event instanceof WeatherChangedEvent) this.processWeatherEvent((WeatherChangedEvent) event);
 		if (event instanceof StairLandingEvent) this.processStairEvent((StairLandingEvent) event);
 		if (event instanceof NextFloorEvent) this.processFloorEvent((NextFloorEvent) event);
 		if (event instanceof DungeonExitEvent) this.processDungeonExitEvent((DungeonExitEvent) event);
@@ -130,6 +133,17 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	{
 		this.processPending = false;
 		Persistance.dungeonState.setSubstate(new PokemonTravelState(Persistance.dungeonState, event.isRunning(), event.travels()));
+	}
+
+	private void processWeatherEvent(WeatherChangedEvent event)
+	{
+		AnimationState a = new AnimationState(Persistance.dungeonState);
+		if (event.next.weather == Weather.SUNNY) a.animation = SpritesetAnimation.getCustomAnimation(null, 101, a);
+		if (a.animation != null)
+		{
+			Persistance.dungeonState.setSubstate(a);
+			this.processPending = false;
+		}
 	}
 
 }

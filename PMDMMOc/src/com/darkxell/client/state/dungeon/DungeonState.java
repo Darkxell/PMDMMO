@@ -166,6 +166,7 @@ public class DungeonState extends AbstractState
 		g.translate(-x, -y);
 		Persistance.dungeonRenderer.render(g, width, height);
 		g.translate(x, y);
+		this.currentSubstate.render(g, width, height);
 
 		Color weather = Persistance.floor.currentWeather().weather.layer;
 		if (weather != null)

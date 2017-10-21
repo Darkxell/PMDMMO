@@ -45,7 +45,9 @@ public class PokemonAnimation extends AbstractAnimation
 	@Override
 	@Deprecated
 	public void render(Graphics2D g, int width, int height)
-	{}
+	{
+		if (this.target == null) this.postrender(g, width, height);
+	}
 
 	@Override
 	public void update()
