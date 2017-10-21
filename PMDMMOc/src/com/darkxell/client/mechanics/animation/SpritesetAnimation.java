@@ -103,6 +103,16 @@ public class SpritesetAnimation extends PokemonAnimation
 				(int) (this.y - this.gravityY), null);
 	}
 
+	public double getX()
+	{
+		return this.x;
+	}
+
+	public double getY()
+	{
+		return this.y;
+	}
+
 	public int index()
 	{
 		return this.sprites[this.tick() / this.spriteDuration];
@@ -120,6 +130,12 @@ public class SpritesetAnimation extends PokemonAnimation
 	{
 		super.prerender(g, width, height);
 		this.draw(g, true);
+	}
+
+	public void setXY(double x, double y)
+	{
+		this.x = x;
+		this.y = y;
 	}
 
 }

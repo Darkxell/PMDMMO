@@ -17,17 +17,20 @@ public class AnimationSpriteset
 	}
 
 	private BufferedImage[] sprites;
+	public final int spriteWidth, spriteHeight;
 
 	private AnimationSpriteset(String path, int width, int height)
 	{
+		this.spriteWidth = width;
+		this.spriteHeight = height;
 		BufferedImage source = Res.getBase(path);
 		int rows, cols;
-		cols = source.getWidth() / width;
-		rows = source.getHeight() / height;
+		cols = source.getWidth() / this.spriteWidth;
+		rows = source.getHeight() / this.spriteHeight;
 		this.sprites = new BufferedImage[cols * rows];
 		for (int i = 0; i < rows; i++)
 			for (int j = 0; j < cols; j++)
-				this.sprites[(cols * i) + j] = Res.createimage(source, width * j, height * i, width, height);
+				this.sprites[(cols * i) + j] = Res.createimage(source, this.spriteWidth * j, this.spriteHeight * i, this.spriteWidth, this.spriteHeight);
 	}
 
 	public BufferedImage getSprite(int id)
