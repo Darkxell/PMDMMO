@@ -7,6 +7,7 @@ import com.darkxell.client.resources.Res;
 public class MapResources {
 
 	public static final BufferedImage LOCALMAP = Res.getBase("resources/hud/map/localmap.png");
+	public static final BufferedImage GLOBALMAP = Res.getBase("resources/hud/map/globalmap.png");
 
 	private static final BufferedImage PINSBASE = Res.getBase("resources/hud/map/pins.png");
 	public static final BufferedImage PIN_RED = Res.createimage(PINSBASE, 0, 0, 12, 12);
