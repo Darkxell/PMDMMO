@@ -32,6 +32,7 @@ public class AnimationSpriteset
 
 	public BufferedImage getSprite(int id)
 	{
+		if (id < 0 || id > this.sprites.length) return null;
 		return this.sprites[id];
 	}
 

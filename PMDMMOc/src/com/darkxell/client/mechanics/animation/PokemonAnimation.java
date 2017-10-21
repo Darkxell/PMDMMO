@@ -23,14 +23,14 @@ public class PokemonAnimation extends AbstractAnimation
 	{
 		super(duration, listener);
 		this.target = target;
-		this.renderer = Persistance.dungeonState.pokemonRenderer.getRenderer(this.target);
-		this.renderer.addAnimation(this);
+		this.renderer = this.target == null ? null : Persistance.dungeonState.pokemonRenderer.getRenderer(this.target);
+		if (this.renderer != null) this.renderer.addAnimation(this);
 	}
 
 	@Override
 	public void onFinish()
 	{
-		this.renderer.removeAnimation(this);
+		if (this.renderer != null) this.renderer.removeAnimation(this);
 		super.onFinish();
 	}
 
@@ -51,8 +51,11 @@ public class PokemonAnimation extends AbstractAnimation
 	public void update()
 	{
 		super.update();
-		this.x = this.renderer.x() + TILE_SIZE / 2;
-		this.y = this.renderer.y() + TILE_SIZE / 2;
+		if (this.renderer != null)
+		{
+			this.x = this.renderer.x() + TILE_SIZE / 2;
+			this.y = this.renderer.y() + TILE_SIZE / 2;
+		}
 	}
 
 }

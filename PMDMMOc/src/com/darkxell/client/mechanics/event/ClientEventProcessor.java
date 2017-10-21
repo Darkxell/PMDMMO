@@ -3,7 +3,7 @@ package com.darkxell.client.mechanics.event;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.animation.AbstractAnimation;
 import com.darkxell.client.mechanics.animation.AnimationEndListener;
-import com.darkxell.client.renderers.ItemAnimationRenderer;
+import com.darkxell.client.mechanics.animation.SpritesetAnimation;
 import com.darkxell.client.state.DialogState;
 import com.darkxell.client.state.DialogState.DialogEndListener;
 import com.darkxell.client.state.FreezoneExploreState;
@@ -112,7 +112,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	private void processItemEvent(ItemUseSelectionEvent event)
 	{
 		AnimationState a = new AnimationState(Persistance.dungeonState);
-		a.animation = ItemAnimationRenderer.createItemAnimation(event, a);
+		a.animation = SpritesetAnimation.getItemAnimation(event.user, event.item, a);
 		Persistance.dungeonState.setSubstate(a);
 		this.processPending = false;
 	}
