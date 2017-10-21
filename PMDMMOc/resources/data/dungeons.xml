@@ -492,7 +492,7 @@
       </d>
     </data>
   </dungeon>
-  <dungeon id="6" floors="10" limit="1000" linked="7" mapx="192" mapy="154">
+  <dungeon id="6" floors="10" limit="1000" linked="7" mapx="292" mapy="154">
     <encounters>
       <pokemon id="32" level="12" weight="5">
         <floors>

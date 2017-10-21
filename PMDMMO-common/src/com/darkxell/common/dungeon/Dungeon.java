@@ -66,8 +66,8 @@ public class Dungeon implements Comparable<Dungeon> {
 		this.timeLimit = XMLUtils.getAttribute(xml, "limit", 2000);
 		this.linkedTo = XMLUtils.getAttribute(xml, "linked", -1);
 		this.stickyChance = XMLUtils.getAttribute(xml, "sticky", 0);
-		this.mapx = XMLUtils.getAttribute(xml, "mapx", 0);
-		this.mapy = XMLUtils.getAttribute(xml, "mapy", 0);
+		this.mapx = XMLUtils.getAttribute(xml, "mapx", -260) + 260;
+		this.mapy = XMLUtils.getAttribute(xml, "mapy", -140) + 140;
 
 		this.pokemon = new ArrayList<DungeonEncounter>();
 		for (Element pokemon : xml.getChild("encounters").getChildren(DungeonEncounter.XML_ROOT))
