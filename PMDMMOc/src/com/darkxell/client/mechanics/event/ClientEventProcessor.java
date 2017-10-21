@@ -26,6 +26,8 @@ import com.darkxell.common.event.pokemon.PokemonTravelEvent;
 import com.darkxell.common.event.pokemon.TriggeredAbilityEvent;
 import com.darkxell.common.event.stats.ExperienceGainedEvent;
 import com.darkxell.common.event.stats.StatChangedEvent;
+import com.darkxell.common.item.ItemFood;
+import com.darkxell.common.item.ItemGummi;
 
 /** Translates game logic events into displayable content to the client.<br />
  * Takes in Events to display messages, manage resources or change game states. */
@@ -112,7 +114,8 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	private void processItemEvent(ItemUseSelectionEvent event)
 	{
 		AnimationState a = new AnimationState(Persistance.dungeonState);
-		a.animation = SpritesetAnimation.getItemAnimation(event.user, event.item, a);
+		if (event.item instanceof ItemFood || event.item instanceof ItemGummi) a.animation = SpritesetAnimation.getCustomAnimation(event.user, 0, a);
+		else a.animation = SpritesetAnimation.getItemAnimation(event.user, event.item, a);
 		Persistance.dungeonState.setSubstate(a);
 		this.processPending = false;
 	}

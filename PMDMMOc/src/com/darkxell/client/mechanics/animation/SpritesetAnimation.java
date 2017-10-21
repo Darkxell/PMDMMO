@@ -16,6 +16,7 @@ import com.darkxell.common.util.XMLUtils;
 public class SpritesetAnimation extends PokemonAnimation
 {
 
+	private static final HashMap<Integer, Element> custom = new HashMap<Integer, Element>();
 	private static final HashMap<Integer, Element> items = new HashMap<Integer, Element>();
 	private static final HashMap<Integer, Element> moves = new HashMap<Integer, Element>();
 
@@ -31,11 +32,11 @@ public class SpritesetAnimation extends PokemonAnimation
 		}
 		int width = Integer.parseInt(xml.getAttributeValue("width"));
 		int height = Integer.parseInt(xml.getAttributeValue("height"));
-		AnimationSpriteset spriteset = AnimationSpriteset.getSpriteset((registry == items ? "/items" : "/moves") + "/" + id + ".png", width,
-				height);
+		AnimationSpriteset spriteset = AnimationSpriteset.getSpriteset((registry == items ? "/items" : registry == custom ? "/animations" : "/moves") + "/"
+				+ id + ".png", width, height);
 		int x = XMLUtils.getAttribute(xml, "x", width / 2);
 		int y = XMLUtils.getAttribute(xml, "y", height / 2);
-		int spriteDuration = XMLUtils.getAttribute(xml, "spriteduration", 3);
+		int spriteDuration = XMLUtils.getAttribute(xml, "spriteduration", 2);
 		int[] sprites = XMLUtils.readIntArray(xml);
 
 		String back = xml.getAttributeValue("backsprites");
@@ -44,6 +45,11 @@ public class SpritesetAnimation extends PokemonAnimation
 			backSprites[Integer.parseInt(b)] = true;
 
 		return new SpritesetAnimation(target, spriteset, sprites, backSprites, spriteDuration, x, y, listener);
+	}
+
+	public static AbstractAnimation getCustomAnimation(DungeonPokemon target, int id, AnimationEndListener listener)
+	{
+		return getAnimation(id, custom, target, listener);
 	}
 
 	public static AbstractAnimation getItemAnimation(DungeonPokemon target, Item i, AnimationEndListener listener)
@@ -59,6 +65,8 @@ public class SpritesetAnimation extends PokemonAnimation
 	public static void loadData()
 	{
 		Element xml = XMLUtils.readFile(new File("resources/data/animations.xml"));
+		for (Element c : xml.getChild("custom").getChildren("c"))
+			custom.put(Integer.parseInt(c.getAttributeValue("id")), c);
 		for (Element item : xml.getChild("items").getChildren("item"))
 			items.put(Integer.parseInt(item.getAttributeValue("id")), item);
 		for (Element move : xml.getChild("moves").getChildren("move"))
