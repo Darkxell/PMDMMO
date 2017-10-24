@@ -36,7 +36,6 @@ public class WeatherDamaging extends Weather implements DamageSource
 		ArrayList<DungeonEvent> e = super.weatherTick(floor, tick);
 		if (tick % this.period == 0)
 		{
-			System.out.println(tick);
 			ArrayList<DungeonPokemon> pokemon = floor.listPokemon();
 			pokemon.removeIf(new Predicate<DungeonPokemon>()
 			{

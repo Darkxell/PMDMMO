@@ -475,7 +475,7 @@
       </group>
     </items>
     <data>
-      <d difficulty="2" money="3" layout="2" terrain="2" camouflage="5" nature="401" secret="Confusion" items="4" pokemon="6" traps="3">
+      <d difficulty="2" money="3" layout="2" terrain="54" camouflage="5" nature="401" secret="Confusion" items="4" pokemon="6" traps="3">
         <floors>
           <part start="1" end="4" />
         </floors>
@@ -10232,7 +10232,7 @@
       </group>
     </items>
     <data>
-      <d difficulty="7" money="6" layout="2" terrain="54" nature="64" secret="Paralysis" items="5" pokemon="6" traps="5">
+      <d difficulty="7" money="6" layout="2" terrain="15" nature="64" secret="Paralysis" items="5" pokemon="6" traps="5">
         <floors>
           <part start="1" end="19" />
         </floors>
