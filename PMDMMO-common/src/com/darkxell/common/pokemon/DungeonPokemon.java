@@ -16,7 +16,7 @@ public class DungeonPokemon
 	/** The attacks this Pokémon has received. Use in experience calculation. */
 	private byte attacksReceived = REGULAR_ATTACKS;
 	/** This Pokémon's current belly points. */
-	private int belly;
+	private double belly;
 	/** This Pokémon's belly size. */
 	private int bellySize;
 	/** The direction this Pokémon is facing. */
@@ -50,6 +50,12 @@ public class DungeonPokemon
 		this.pokemon.dungeonPokemon = null;
 	}
 
+	/** @return The multiplier to apply to base energy values for the team leader's actions. Used to determine how much belly is lost for that action. */
+	public double energyMultiplier()
+	{
+		return 1;
+	}
+
 	/** @return The amount of experience gained when defeating this Pokémon. */
 	public int experienceGained()
 	{
@@ -66,7 +72,7 @@ public class DungeonPokemon
 		return this.facing;
 	}
 
-	public int getBelly()
+	public double getBelly()
 	{
 		return this.belly;
 	}
@@ -92,6 +98,34 @@ public class DungeonPokemon
 		for (StatusConditionInstance c : this.statusConditions)
 			if (c.condition == condition) return true;
 		return false;
+	}
+
+	public void increaseBelly(double quantity)
+	{
+		this.belly += quantity;
+		this.belly = this.belly < 0 ? 0 : this.belly > this.getBellySize() ? this.getBellySize() : this.belly;
+	}
+
+	public void increaseBellySize(int quantity)
+	{
+		this.bellySize += quantity;
+		this.bellySize = this.bellySize < 0 ? 0 : this.bellySize > 200 ? 200 : this.bellySize;
+		this.increaseBelly(quantity);
+	}
+
+	public boolean isBellyFull()
+	{
+		return this.getBelly() == this.getBellySize();
+	}
+
+	public boolean isFamished()
+	{
+		return this.getBelly() == 0;
+	}
+
+	public boolean isTeamLeader()
+	{
+		return this.pokemon.player != null && this.pokemon.player.getDungeonPokemon() == this;
 	}
 
 	public void receiveMove(byte attackType)

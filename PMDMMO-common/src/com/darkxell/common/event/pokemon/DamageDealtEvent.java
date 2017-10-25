@@ -29,8 +29,8 @@ public class DamageDealtEvent extends DungeonEvent
 
 		if (this.source instanceof WeatherDamaging) this.messages.add(new Message("weather.damage_dealt").addReplacement("<pokemon>",
 				target.pokemon.getNickname()).addReplacement("<amount>", Integer.toString(damage)));
-		else this.messages.add(new Message("move.damage_dealt").addReplacement("<pokemon>", target.pokemon.getNickname()).addReplacement("<amount>",
-				Integer.toString(damage)));
+		else if (!(this.source instanceof BellyChangedEvent)) this.messages.add(new Message("move.damage_dealt").addReplacement("<pokemon>",
+				target.pokemon.getNickname()).addReplacement("<amount>", Integer.toString(damage)));
 	}
 
 	@Override

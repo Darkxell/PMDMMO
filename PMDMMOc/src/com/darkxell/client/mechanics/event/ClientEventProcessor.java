@@ -23,10 +23,7 @@ import com.darkxell.common.event.dungeon.weather.WeatherChangedEvent;
 import com.darkxell.common.event.item.ItemUseSelectionEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.move.MoveUseEvent;
-import com.darkxell.common.event.pokemon.DamageDealtEvent;
-import com.darkxell.common.event.pokemon.FaintedPokemonEvent;
-import com.darkxell.common.event.pokemon.PokemonTravelEvent;
-import com.darkxell.common.event.pokemon.TriggeredAbilityEvent;
+import com.darkxell.common.event.pokemon.*;
 import com.darkxell.common.event.stats.ExperienceGainedEvent;
 import com.darkxell.common.event.stats.StatChangedEvent;
 import com.darkxell.common.item.ItemFood;
@@ -149,6 +146,13 @@ public final class ClientEventProcessor extends CommonEventProcessor
 			Persistance.dungeonState.setSubstate(a);
 			this.processPending = false;
 		}
+	}
+
+	public boolean shouldStopMoving()
+	{
+		for (DungeonEvent event : this.pending)
+			if (!(event instanceof BellyChangedEvent)) return true;
+		return false;
 	}
 
 }

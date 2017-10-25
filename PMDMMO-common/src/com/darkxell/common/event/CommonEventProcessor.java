@@ -14,7 +14,7 @@ public class CommonEventProcessor
 {
 	public final DungeonInstance dungeon;
 	/** Pending events to process. */
-	private final Stack<DungeonEvent> pending = new Stack<DungeonEvent>();
+	protected final Stack<DungeonEvent> pending = new Stack<DungeonEvent>();
 	/** While processing an event, setting this to false will stop processing the pending events. */
 	public boolean processPending = true;
 
@@ -113,7 +113,7 @@ public class CommonEventProcessor
 			{
 				this.onTurnEnd();
 				return;
-			} else if (actor.pokemon.player != null && actor.pokemon.player.getDungeonPokemon() == actor) return;
+			} else if (actor.isTeamLeader()) return;
 			else
 			{
 				addToPending(AI.makeAction(this.dungeon.currentFloor(), actor));

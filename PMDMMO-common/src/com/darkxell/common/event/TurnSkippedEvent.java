@@ -1,6 +1,9 @@
 package com.darkxell.common.event;
 
+import java.util.ArrayList;
+
 import com.darkxell.common.dungeon.floor.Floor;
+import com.darkxell.common.event.pokemon.BellyChangedEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
 public class TurnSkippedEvent extends DungeonEvent
@@ -14,4 +17,10 @@ public class TurnSkippedEvent extends DungeonEvent
 		this.pokemon = pokemon;
 	}
 
+	@Override
+	public ArrayList<DungeonEvent> processServer()
+	{
+		if (this.pokemon.isTeamLeader()) this.resultingEvents.add(new BellyChangedEvent(this.floor, this.pokemon, -.1 * this.pokemon.energyMultiplier()));
+		return super.processServer();
+	}
 }

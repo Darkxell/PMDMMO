@@ -1,7 +1,14 @@
 package com.darkxell.common.item;
 
+import java.util.ArrayList;
+
 import org.jdom2.Element;
 
+import com.darkxell.common.dungeon.floor.Floor;
+import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.pokemon.BellyChangedEvent;
+import com.darkxell.common.event.pokemon.BellySizeChangedEvent;
+import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.XMLUtils;
 import com.darkxell.common.util.language.Message;
 
@@ -57,7 +64,21 @@ public class ItemFood extends Item
 		XMLUtils.setAttribute(root, "belly", this.belly, 0);
 		return root;
 	}
-	
+
+	@Override
+	public ArrayList<DungeonEvent> use(Floor floor, DungeonPokemon pokemon, DungeonPokemon target)
+	{
+		ArrayList<DungeonEvent> events = super.use(floor, pokemon, target);
+
+		int increase = this.belly;
+		if (target.getBelly() < target.getBellySize()) events.add(new BellyChangedEvent(floor, target, this.belly));
+		else increase += this.bellyIfFull;
+
+		if (increase != 0) events.add(new BellySizeChangedEvent(floor, target, increase));
+
+		return events;
+	}
+
 	@Override
 	public boolean usedOnTeamMember()
 	{

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.pokemon.BellyChangedEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageSource;
 import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.DungeonPokemon;
@@ -40,6 +41,8 @@ public class MoveSelectionEvent extends DungeonEvent
 	public ArrayList<DungeonEvent> processServer()
 	{
 		this.usedMove.move.setPP(this.usedMove.move.getPP() - 1);
+		if (this.usedMove.user.isTeamLeader()) this.resultingEvents.add(new BellyChangedEvent(this.floor, this.usedMove.user,
+				-(this.usedMove.move.isLinked() ? .9 : .1) * this.usedMove.user.energyMultiplier()));
 		this.resultingEvents.addAll(this.usedMove.move.move().prepareUse(this.usedMove, this.floor));
 		return super.processServer();
 	}

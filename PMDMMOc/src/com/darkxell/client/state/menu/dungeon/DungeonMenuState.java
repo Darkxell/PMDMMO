@@ -1,8 +1,10 @@
 package com.darkxell.client.state.menu.dungeon;
 
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.dungeon.DungeonState;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
@@ -70,5 +72,13 @@ public class DungeonMenuState extends OptionSelectionMenuState {
 				Persistance.stateManager
 						.setState(new ItemContainersMenuState(s, Persistance.player.getDungeonPokemon().tile));
 		}
+	}
+	
+	@Override
+	public void render(Graphics2D g, int width, int height)
+	{
+		super.render(g, width, height);
+		TextRenderer.instance.render(g, "Belly: " + Persistance.player.getDungeonPokemon().getBelly() + "/"
+				+ Persistance.player.getDungeonPokemon().getBellySize(), 0, 0);
 	}
 }

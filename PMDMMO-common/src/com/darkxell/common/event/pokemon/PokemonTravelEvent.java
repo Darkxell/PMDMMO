@@ -64,6 +64,9 @@ public class PokemonTravelEvent extends DungeonEvent
 	{
 		for (PokemonTravel travel : this.travels)
 		{
+
+			if (travel.pokemon.isTeamLeader()) this.resultingEvents.add(new BellyChangedEvent(this.floor, travel.pokemon, -.1
+					* travel.pokemon.energyMultiplier()));
 			travel.origin.removePokemon(travel.pokemon);
 			travel.destination.setPokemon(travel.pokemon);
 			this.resultingEvents.addAll(travel.destination.onPokemonStep(this.floor, travel.pokemon, travel.running));

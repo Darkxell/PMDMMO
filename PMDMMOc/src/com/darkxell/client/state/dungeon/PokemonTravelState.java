@@ -136,21 +136,21 @@ public class PokemonTravelState extends DungeonSubState
 			boolean shouldStop = false;
 			PokemonTravel travel = null;
 			if (this.running) for (PokemonTravel t : this.travels)
-				if (t.pokemon.pokemon.player.getDungeonPokemon() == t.pokemon)
+				if (t.pokemon.isTeamLeader())
 				{
 					travel = t;
 					break;
 				}
 
-			if (this.running) shouldStop = this.shouldStopRunning(travel.pokemon, travel) || Persistance.eventProcessor.hasPendingEvents()
+			if (this.running) shouldStop = this.shouldStopRunning(travel.pokemon, travel) || Persistance.eventProcessor.shouldStopMoving()
 					|| Persistance.dungeon.getNextActor() != null;
-			else shouldStop = direction == -1 || Persistance.eventProcessor.hasPendingEvents() || Persistance.dungeon.getNextActor() != null;
+			else shouldStop = direction == -1 || Persistance.eventProcessor.shouldStopMoving() || Persistance.dungeon.getNextActor() != null;
 
 			if (shouldStop) this.stopTravel();
 			else
 			{
-				boolean hasPending = Persistance.eventProcessor.hasPendingEvents();
-				Persistance.eventProcessor.addToPending(Persistance.dungeon.endTurn());
+				boolean hasPending = Persistance.eventProcessor.shouldStopMoving();
+				Persistance.eventProcessor.processEvents(Persistance.dungeon.endTurn());
 				if (hasPending) this.stopTravel();
 				else if (this.running) Persistance.eventProcessor.actorTravels(travel.pokemon.facing(), true);
 			}

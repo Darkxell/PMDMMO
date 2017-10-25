@@ -15,6 +15,7 @@ import com.darkxell.client.state.dungeon.AnimationState;
 import com.darkxell.client.state.dungeon.DelayState;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.move.MoveUseEvent;
+import com.darkxell.common.event.pokemon.BellyChangedEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.FaintedPokemonEvent;
 import com.darkxell.common.event.pokemon.TriggeredAbilityEvent;
@@ -40,10 +41,13 @@ public final class MoveEvents
 
 	static void processDamageEvent(DamageDealtEvent event)
 	{
-		Persistance.dungeonState.pokemonRenderer.getRenderer(event.target).sprite.setState(PokemonSprite.STATE_HURT);
-		Persistance.dungeonState.pokemonRenderer.getRenderer(event.target).sprite.setHealthChange(-event.damage);
-		Persistance.dungeonState.setSubstate(new DelayState(Persistance.dungeonState, PokemonSprite.FRAMELENGTH));
-		Persistance.eventProcessor.processPending = false;
+		if (!(event.source instanceof BellyChangedEvent))
+		{
+			Persistance.dungeonState.pokemonRenderer.getRenderer(event.target).sprite.setState(PokemonSprite.STATE_HURT);
+			Persistance.dungeonState.pokemonRenderer.getRenderer(event.target).sprite.setHealthChange(-event.damage);
+			Persistance.dungeonState.setSubstate(new DelayState(Persistance.dungeonState, PokemonSprite.FRAMELENGTH));
+			Persistance.eventProcessor.processPending = false;
+		}
 	}
 
 	public static void processExperienceEvent(ExperienceGainedEvent event)

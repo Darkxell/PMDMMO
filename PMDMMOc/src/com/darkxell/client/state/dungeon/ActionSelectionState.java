@@ -11,6 +11,7 @@ import com.darkxell.client.resources.images.DungeonHudSpriteset;
 import com.darkxell.client.state.dungeon.DungeonState.DungeonSubState;
 import com.darkxell.client.state.menu.dungeon.DungeonMenuState;
 import com.darkxell.client.ui.Keys;
+import com.darkxell.common.event.TurnSkippedEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.LearnedMove;
@@ -29,18 +30,19 @@ public class ActionSelectionState extends DungeonSubState
 	public short checkMovement()
 	{
 		short direction = -1;
+		boolean canRun = !Persistance.player.getDungeonPokemon().isFamished();
 
-		if (Keys.directionPressed(Keys.KEY_UP, Keys.KEY_RIGHT)) direction = Directions.NORTHEAST;
-		else if (Keys.directionPressed(Keys.KEY_DOWN, Keys.KEY_RIGHT)) direction = Directions.SOUTHEAST;
-		else if (Keys.directionPressed(Keys.KEY_DOWN, Keys.KEY_LEFT)) direction = Directions.SOUTHWEST;
-		else if (Keys.directionPressed(Keys.KEY_UP, Keys.KEY_LEFT)) direction = Directions.NORTHWEST;
+		if (Keys.directionPressed(canRun, Keys.KEY_UP, Keys.KEY_RIGHT)) direction = Directions.NORTHEAST;
+		else if (Keys.directionPressed(canRun, Keys.KEY_DOWN, Keys.KEY_RIGHT)) direction = Directions.SOUTHEAST;
+		else if (Keys.directionPressed(canRun, Keys.KEY_DOWN, Keys.KEY_LEFT)) direction = Directions.SOUTHWEST;
+		else if (Keys.directionPressed(canRun, Keys.KEY_UP, Keys.KEY_LEFT)) direction = Directions.NORTHWEST;
 
 		else if (!this.parent.diagonal)
 		{
-			if (Keys.directionPressed(Keys.KEY_UP)) direction = Directions.NORTH;
-			else if (Keys.directionPressed(Keys.KEY_DOWN)) direction = Directions.SOUTH;
-			else if (Keys.directionPressed(Keys.KEY_LEFT)) direction = Directions.WEST;
-			else if (Keys.directionPressed(Keys.KEY_RIGHT)) direction = Directions.EAST;
+			if (Keys.directionPressed(canRun, Keys.KEY_UP)) direction = Directions.NORTH;
+			else if (Keys.directionPressed(canRun, Keys.KEY_DOWN)) direction = Directions.SOUTH;
+			else if (Keys.directionPressed(canRun, Keys.KEY_LEFT)) direction = Directions.WEST;
+			else if (Keys.directionPressed(canRun, Keys.KEY_RIGHT)) direction = Directions.EAST;
 		}
 
 		if (direction != -1)
@@ -71,8 +73,8 @@ public class ActionSelectionState extends DungeonSubState
 	public void onKeyPressed(short key)
 	{
 		if (key == Keys.KEY_MENU) Persistance.stateManager.setState(new DungeonMenuState(this.parent));
-		if (key == Keys.KEY_ATTACK) Persistance.eventProcessor.processEvent(new MoveSelectionEvent(Persistance.floor, new LearnedMove(MoveRegistry.ATTACK.id),
-				Persistance.player.getDungeonPokemon()));
+		if (key == Keys.KEY_ATTACK && (Persistance.player.getDungeonPokemon().isFamished() || !Keys.isPressed(Keys.KEY_RUN))) Persistance.eventProcessor
+				.processEvent(new MoveSelectionEvent(Persistance.floor, new LearnedMove(MoveRegistry.ATTACK.id), Persistance.player.getDungeonPokemon()));
 	}
 
 	@Override
@@ -100,8 +102,14 @@ public class ActionSelectionState extends DungeonSubState
 	{
 		if (this.isMain())
 		{
-			short direction = this.checkMovement();
-			if (direction != -1) Persistance.eventProcessor.actorTravels(direction, Keys.isPressed(Keys.KEY_RUN));
+			if (Keys.isPressed(Keys.KEY_ATTACK) && Keys.isPressed(Keys.KEY_RUN) && !Persistance.player.getDungeonPokemon().isFamished()) Persistance.eventProcessor
+					.processEvent(new TurnSkippedEvent(Persistance.floor, Persistance.player.getDungeonPokemon()));
+			else
+			{
+				short direction = this.checkMovement();
+				if (direction != -1) Persistance.eventProcessor.actorTravels(direction, Keys.isPressed(Keys.KEY_RUN)
+						&& !Persistance.player.getDungeonPokemon().isFamished());
+			}
 		}
 
 		++this.rotationCounter;

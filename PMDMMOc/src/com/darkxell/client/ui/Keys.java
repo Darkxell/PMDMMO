@@ -103,10 +103,11 @@ public class Keys implements KeyListener
 	 * If the RUN key is pressed, will check if they were'nt pressed the last tick.<br />
 	 * Else, will check if they're the only directional keys pressed.
 	 * 
+	 * @param canRun - True if the RUN key should be checked. 
 	 * @param keys - The keys to check. */
-	public static boolean directionPressed(short... keys)
+	public static boolean directionPressed(boolean canRun, short... keys)
 	{
-		boolean running = isPressed(KEY_RUN);
+		boolean running = isPressed(KEY_RUN) && canRun;
 		for (short key : keys)
 		{
 			if (!isPressed(key)) return false;
