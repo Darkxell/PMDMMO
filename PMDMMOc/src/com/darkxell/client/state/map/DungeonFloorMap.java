@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.floor.PokemonRenderer;
-import com.darkxell.client.resources.images.AbstractDungeonTileset;
+import com.darkxell.client.resources.images.tilesets.AbstractDungeonTileset;
 import com.darkxell.client.resources.images.tilesets.DungeonMapTileset;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.common.dungeon.floor.Floor;

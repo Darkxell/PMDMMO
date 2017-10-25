@@ -2,8 +2,6 @@ package com.darkxell.client.resources.images.tilesets;
 
 import java.awt.image.BufferedImage;
 
-import com.darkxell.client.resources.images.AbstractTileset;
-
 public class DungeonMapTileset extends AbstractTileset
 {
 

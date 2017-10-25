@@ -3,7 +3,7 @@ package com.darkxell.client.ui;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import com.darkxell.client.resources.images.FrameResources;
+import com.darkxell.client.resources.images.others.FrameResources;
 
 /**
  * Class that contains various utility methods for the statemanager to display

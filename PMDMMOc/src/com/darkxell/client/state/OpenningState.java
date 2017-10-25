@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.renderers.layers.BackgroundSeaLayer;
-import com.darkxell.client.resources.images.Hud;
+import com.darkxell.client.resources.images.others.Hud;
 import com.darkxell.client.resources.music.SoundsHolder;
 import com.darkxell.client.ui.Keys;
 

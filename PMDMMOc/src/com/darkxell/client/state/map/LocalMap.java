@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.Palette;
-import com.darkxell.client.resources.images.MapResources;
+import com.darkxell.client.resources.images.others.MapResources;
 import com.darkxell.common.util.language.Message;
 
 public class LocalMap extends AbstractDisplayMap {

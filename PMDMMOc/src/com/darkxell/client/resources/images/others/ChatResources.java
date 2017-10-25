@@ -1,4 +1,4 @@
-package com.darkxell.client.resources.images;
+package com.darkxell.client.resources.images.others;
 
 import java.awt.Color;
 import java.awt.Graphics2D;

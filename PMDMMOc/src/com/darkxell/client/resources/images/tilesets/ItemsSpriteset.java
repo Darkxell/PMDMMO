@@ -1,7 +1,5 @@
 package com.darkxell.client.resources.images.tilesets;
 
-import com.darkxell.client.resources.images.AbstractTileset;
-
 public class ItemsSpriteset extends AbstractTileset
 {
 

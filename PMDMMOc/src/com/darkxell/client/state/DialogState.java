@@ -10,8 +10,8 @@ import java.util.List;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.renderers.TextRenderer.PMDChar;
-import com.darkxell.client.resources.images.Hud;
 import com.darkxell.client.resources.images.MenuHudSpriteset;
+import com.darkxell.client.resources.images.others.Hud;
 import com.darkxell.client.resources.images.pokemon.PokemonPortrait;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.common.pokemon.Pokemon;
@@ -65,7 +65,7 @@ public class DialogState extends AbstractState {
 		}
 	}
 
-	private static final BufferedImage arrow = MenuHudSpriteset.instance.nextWindowArrow();
+	private static final BufferedImage arrow = MenuHudSpriteset.NEXT_WINDOW_ARROW;
 	private static final byte PRINTING = 0, PAUSED = 1, SWITCHING = 2;
 
 	private int arrowtick;

@@ -9,7 +9,7 @@ import org.jdom2.input.SAXBuilder;
 import com.darkxell.client.launchable.ClientSettings;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.freezones.entities.OtherPlayerEntity;
-import com.darkxell.client.resources.images.AbstractTileset;
+import com.darkxell.client.resources.images.tilesets.AbstractTileset;
 import com.darkxell.client.state.map.LocalMap.LOCALMAPLOCATION;
 import com.eclipsesource.json.JsonValue;
 

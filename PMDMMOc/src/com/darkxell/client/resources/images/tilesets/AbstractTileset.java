@@ -1,13 +1,13 @@
-package com.darkxell.client.resources.images;
+package com.darkxell.client.resources.images.tilesets;
 
 import java.awt.image.BufferedImage;
 
 import com.darkxell.client.resources.Res;
-import com.darkxell.client.resources.images.tilesets.BaseTileset;
-import com.darkxell.client.resources.images.tilesets.DojoTileset;
-import com.darkxell.client.resources.images.tilesets.OfficeTileset;
-import com.darkxell.client.resources.images.tilesets.PondTileset;
-import com.darkxell.client.resources.images.tilesets.SquareTileset;
+import com.darkxell.client.resources.images.tilesets.freezones.BaseTileset;
+import com.darkxell.client.resources.images.tilesets.freezones.DojoTileset;
+import com.darkxell.client.resources.images.tilesets.freezones.OfficeTileset;
+import com.darkxell.client.resources.images.tilesets.freezones.PondTileset;
+import com.darkxell.client.resources.images.tilesets.freezones.SquareTileset;
 
 /**
  * Represents a tileset. A tileset contains all of the images used in a certain

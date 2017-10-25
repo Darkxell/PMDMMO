@@ -8,7 +8,7 @@ import java.awt.event.WindowListener;
 import javax.swing.JFrame;
 
 import com.darkxell.client.launchable.Launcher;
-import com.darkxell.client.resources.images.FrameResources;
+import com.darkxell.client.resources.images.others.FrameResources;
 
 /** Main frame for the client. */
 public class Frame extends JFrame implements WindowListener

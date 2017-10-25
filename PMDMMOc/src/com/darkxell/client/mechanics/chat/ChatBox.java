@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import com.darkxell.client.launchable.ClientSettings;
 import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.resources.Palette;
-import com.darkxell.client.resources.images.ChatResources;
+import com.darkxell.client.resources.images.others.ChatResources;
 import com.darkxell.common.util.Logger;
 import com.eclipsesource.json.JsonObject;
 

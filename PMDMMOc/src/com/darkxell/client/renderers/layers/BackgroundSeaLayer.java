@@ -3,7 +3,7 @@ package com.darkxell.client.renderers.layers;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import com.darkxell.client.resources.images.GraphicalLayersAssets;
+import com.darkxell.client.resources.images.others.GraphicalLayersAssets;
 
 public class BackgroundSeaLayer extends AbstractGraphiclayer {
 

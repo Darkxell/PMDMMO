@@ -8,23 +8,24 @@ import javax.imageio.ImageIO;
 
 import com.darkxell.common.util.Logger;
 
+/** Class that holds commonly used resources utility. */
 public class Res {
 
 	/** Gets an image from the res folder as a BufferedImage. */
 	public static BufferedImage getBase(String path) {
 		BufferedImage img = null;
-		
+
 		try {
 			InputStream is = Res.class.getResourceAsStream(path);
 			img = ImageIO.read(is);
 		} catch (Exception e) {
 			try {
-				img=ImageIO.read(new File(path));
-			} catch (Exception e1){
+				img = ImageIO.read(new File(path));
+			} catch (Exception e1) {
 				e.printStackTrace();
 			}
 		}
-		Logger.instance().debug("Loaded resource from hard memory : "+ path);
+		Logger.instance().debug("Loaded resource from hard memory : " + path);
 		return img;
 	}
 

@@ -1,6 +1,6 @@
-package com.darkxell.client.resources.images.tilesets;
+package com.darkxell.client.resources.images.tilesets.freezones;
 
-import com.darkxell.client.resources.images.AbstractTileset;
+import com.darkxell.client.resources.images.tilesets.AbstractTileset;
 
 public class DojoTileset extends AbstractTileset {
 

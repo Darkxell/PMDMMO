@@ -12,7 +12,7 @@ import com.darkxell.client.mechanics.freezones.WarpZone;
 import com.darkxell.client.mechanics.freezones.zones.BaseFreezone;
 import com.darkxell.client.mechanics.freezones.zones.OfficeFreezone;
 import com.darkxell.client.renderers.TextRenderer;
-import com.darkxell.client.resources.images.Hud;
+import com.darkxell.client.resources.images.others.Hud;
 import com.darkxell.client.resources.music.SoundsHolder;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.common.util.DoubleRectangle;

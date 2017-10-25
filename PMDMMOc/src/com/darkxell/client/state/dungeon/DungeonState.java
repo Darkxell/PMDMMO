@@ -12,7 +12,7 @@ import com.darkxell.client.renderers.floor.DungeonItemsRenderer;
 import com.darkxell.client.renderers.floor.DungeonPokemonRenderer;
 import com.darkxell.client.renderers.floor.FloorRenderer;
 import com.darkxell.client.renderers.floor.GridRenderer;
-import com.darkxell.client.resources.images.AbstractDungeonTileset;
+import com.darkxell.client.resources.images.tilesets.AbstractDungeonTileset;
 import com.darkxell.client.resources.music.SoundsHolder;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.ui.Keys;

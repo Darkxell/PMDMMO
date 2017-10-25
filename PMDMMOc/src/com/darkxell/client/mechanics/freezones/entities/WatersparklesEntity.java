@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import com.darkxell.client.mechanics.freezones.FreezoneEntity;
-import com.darkxell.client.resources.images.FreezoneEntities;
+import com.darkxell.client.resources.images.others.FreezoneEntities;
 
 public class WatersparklesEntity extends FreezoneEntity {
 

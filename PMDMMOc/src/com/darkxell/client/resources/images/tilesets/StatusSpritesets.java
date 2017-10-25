@@ -2,7 +2,6 @@ package com.darkxell.client.resources.images.tilesets;
 
 import java.awt.image.BufferedImage;
 
-import com.darkxell.client.resources.images.AbstractTileset;
 import com.darkxell.common.pokemon.PokemonStats;
 
 public class StatusSpritesets extends AbstractTileset
