@@ -25,8 +25,8 @@ public class LocalMap extends AbstractDisplayMap {
 					offsety + loc.y, null);
 		g2.setColor(Palette.TRANSPARENT_GRAY);
 		g2.fillRect(0, this.canvas.getHeight() - 20, this.canvas.getWidth(), 20);
-		TextRenderer.instance.render(g2, currentlocation.displayname.toString(),
-				this.canvas.getWidth() / 2 - TextRenderer.instance.width(currentlocation.displayname) / 2,
+		TextRenderer.render(g2, currentlocation.displayname.toString(),
+				this.canvas.getWidth() / 2 - TextRenderer.width(currentlocation.displayname) / 2,
 				this.canvas.getHeight() - 15);
 		// finished the render
 		g2.dispose();

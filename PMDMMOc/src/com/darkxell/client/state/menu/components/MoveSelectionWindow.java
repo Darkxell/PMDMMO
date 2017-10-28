@@ -15,7 +15,7 @@ import com.darkxell.common.util.language.Message;
 
 public class MoveSelectionWindow extends MenuWindow {
 
-	private static final int ppLength = TextRenderer.instance.width("00/00");
+	private static final int ppLength = TextRenderer.width("00/00");
 
 	private int cursor = 0;
 	private final AbstractMenuState menu;
@@ -46,32 +46,32 @@ public class MoveSelectionWindow extends MenuWindow {
 
 			// Text
 			int x = MARGIN_X + this.dimensions.x, ppX = (int) (this.inside.getMaxX() - ppLength - 5);
-			int y = MARGIN_Y + this.dimensions.y + TextRenderer.LINE_SPACING / 2;
+			int y = MARGIN_Y + this.dimensions.y + TextRenderer.lineSpacing() / 2;
 			MenuOption[] options = this.menu.currentTab().options();
 			for (MenuOption option : options) {
 				if (((MoveMenuOption) option).move.getPP() == 0)
-					TextRenderer.instance.setColor(Palette.FONT_RED);
+					TextRenderer.setColor(Palette.FONT_RED);
 				else
-					TextRenderer.instance.setColor(Palette.FONT_GREEN);
-				TextRenderer.instance.render(g, option.name, x, y);
-				TextRenderer.instance.render(g,
+					TextRenderer.setColor(Palette.FONT_GREEN);
+				TextRenderer.render(g, option.name, x, y);
+				TextRenderer.render(g,
 						((MoveMenuOption) option).move.getPP() + "/" + ((MoveMenuOption) option).move.getMaxPP(), ppX,
 						y);
-				TextRenderer.instance.setColor(null);
+				TextRenderer.setColor(null);
 
 				if ((this.cursor > 9 || !this.menu.isMain()) && this.menu.currentOption() == option)
 					g.drawImage(this.menu.isMain() ? MenuHudSpriteset.SELECTION_ARROW : MenuHudSpriteset.SELECTED_ARROW,
 							x - MenuHudSpriteset.SELECTION_ARROW.getWidth() - 4,
-							y + TextRenderer.CHAR_HEIGHT / 2 - MenuHudSpriteset.SELECTION_ARROW.getHeight() / 2, null);
+							y + TextRenderer.height() / 2 - MenuHudSpriteset.SELECTION_ARROW.getHeight() / 2, null);
 
-				y += TextRenderer.CHAR_HEIGHT;
+				y += TextRenderer.height();
 				if (option != options[options.length - 1]) {
 					g.setColor(Color.WHITE);
 					g.drawLine(x, y, (int) this.inside.getMaxX() - 5, y);
 					g.setColor(Color.BLACK);
 					g.drawLine(x, y + 1, (int) this.inside.getMaxX() - 5, y + 1);
 				}
-				y += TextRenderer.LINE_SPACING;
+				y += TextRenderer.lineSpacing();
 			}
 		}
 	}

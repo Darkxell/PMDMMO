@@ -75,9 +75,9 @@ public class PokemonRenderer extends AbstractRenderer
 			if (h != 0)
 			{
 				String text = (h < 0 ? "" : "+") + Integer.toString(h);
-				xPos = (int) (this.x() + TILE_SIZE / 2 - TextRenderer.instance.width(text) / 2);
-				yPos = (int) (this.y() - this.sprite.getHealthPos() - TextRenderer.CHAR_HEIGHT / 2);
-				TextRenderer.instance.render(g, text, xPos, yPos, true);
+				xPos = (int) (this.x() + TILE_SIZE / 2 - TextRenderer.width(text) / 2);
+				yPos = (int) (this.y() - this.sprite.getHealthPos() - TextRenderer.height() / 2);
+				TextRenderer.render(g, text, xPos, yPos, true);
 			}
 
 			for (PokemonAnimation animation : this.animations)

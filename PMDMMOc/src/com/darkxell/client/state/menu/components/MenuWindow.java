@@ -46,12 +46,12 @@ public class MenuWindow
 	{
 		if (in == null) this.initColors();
 		boolean hasName = name != null;
-		int font = TextRenderer.CHAR_HEIGHT;
+		int font = TextRenderer.height();
 		Dimension corner = MenuHudSpriteset.cornerSize;
 		Dimension cornerName = MenuHudSpriteset.cornerNameSize;
 		this.inside = new Rectangle(this.dimensions.x + corner.width, this.dimensions.y + corner.height, this.dimensions.width - corner.width * 2,
 				this.dimensions.height - corner.height * 2);
-		Rectangle nameInside = new Rectangle(inside.x + cornerName.width, this.dimensions.y - font, (hasName ? TextRenderer.instance.width(name) : 10) + 8,
+		Rectangle nameInside = new Rectangle(inside.x + cornerName.width, this.dimensions.y - font, (hasName ? TextRenderer.width(name) : 10) + 8,
 				font);
 
 		// Inside
@@ -115,7 +115,7 @@ public class MenuWindow
 			g.fillRect(nameInside.x - cornerName.width + 10, nameInside.y, 2, nameInside.height);
 			g.fillRect((int) nameInside.getMaxX() + cornerName.width - 12, nameInside.y, 2, nameInside.height);
 
-			TextRenderer.instance.render(g, name, nameInside.x + 4, nameInside.y + font * 1 / 5);
+			TextRenderer.render(g, name, nameInside.x + 4, nameInside.y + font * 1 / 5);
 		}
 
 	}

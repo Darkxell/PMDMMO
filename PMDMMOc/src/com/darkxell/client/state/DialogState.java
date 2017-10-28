@@ -184,9 +184,9 @@ public class DialogState extends AbstractState {
 				box.height - marginy * 2);
 
 		if (this.lines.isEmpty()) {
-			ArrayList<String> l = TextRenderer.instance.splitLines(this.currentMessage().toString(), inside.width);
+			ArrayList<String> l = TextRenderer.splitLines(this.currentMessage().toString(), inside.width);
 			for (String line : l)
-				this.lines.add(TextRenderer.instance.decode(line));
+				this.lines.add(TextRenderer.decode(line));
 		}
 
 		g.drawImage(this.isOpaque ? Hud.textwindow : Hud.textwindow_transparent, box.x, box.y, box.width, box.height,
@@ -199,10 +199,10 @@ public class DialogState extends AbstractState {
 			List<PMDChar> line = this.lines.get(i).subList(0, count);
 			int x = inside.x;
 			if (this.currentScreen().isCentered)
-				x += inside.getWidth() / 2 - TextRenderer.instance.width(line) / 2;
+				x += inside.getWidth() / 2 - TextRenderer.width(line) / 2;
 
-			TextRenderer.instance.render(g, line, x,
-					inside.y - this.offset + i * (TextRenderer.CHAR_HEIGHT + TextRenderer.LINE_SPACING), false);
+			TextRenderer.render(g, line, x,
+					inside.y - this.offset + i * (TextRenderer.height() + TextRenderer.lineSpacing()), false);
 			length += count;
 		}
 		g.setClip(c);
@@ -223,9 +223,9 @@ public class DialogState extends AbstractState {
 	private void requestNextLine() {
 		if (this.currentLine < this.lines.size() - 1 || this.switchAnimation()) {
 			this.state = SWITCHING;
-			this.targetOffset = this.offset + TextRenderer.CHAR_HEIGHT + TextRenderer.LINE_SPACING;
+			this.targetOffset = this.offset + TextRenderer.height() + TextRenderer.lineSpacing();
 			if (this.currentLine >= this.lines.size() - 1)
-				this.targetOffset += (TextRenderer.CHAR_HEIGHT + TextRenderer.LINE_SPACING) * 2;
+				this.targetOffset += (TextRenderer.height() + TextRenderer.lineSpacing()) * 2;
 		} else
 			this.nextLine();
 	}

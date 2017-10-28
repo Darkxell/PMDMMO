@@ -78,7 +78,7 @@ public class DungeonMenuState extends OptionSelectionMenuState {
 	public void render(Graphics2D g, int width, int height)
 	{
 		super.render(g, width, height);
-		TextRenderer.instance.render(g, "Belly: " + Persistance.player.getDungeonPokemon().getBelly() + "/"
+		TextRenderer.render(g, "Belly: " + Persistance.player.getDungeonPokemon().getBelly() + "/"
 				+ Persistance.player.getDungeonPokemon().getBellySize(), 0, 0);
 	}
 }

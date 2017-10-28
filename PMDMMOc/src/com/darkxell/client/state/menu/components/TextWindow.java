@@ -32,12 +32,12 @@ public class TextWindow extends MenuWindow {
 		super.render(g, name, width, height);
 
 		if (this.lines == null)
-			this.lines = TextRenderer.instance.splitLines(this.message.toString(), this.inside().width - 10);
+			this.lines = TextRenderer.splitLines(this.message.toString(), this.inside().width - 10);
 
 		int x = this.inside().x + 5, y = this.inside().y + 5;
 		for (String line : this.lines) {
-			TextRenderer.instance.render(g, line, x, y);
-			y += TextRenderer.CHAR_HEIGHT + TextRenderer.LINE_SPACING;
+			TextRenderer.render(g, line, x, y);
+			y += TextRenderer.height() + TextRenderer.lineSpacing();
 		}
 
 		if (this.rightTab)

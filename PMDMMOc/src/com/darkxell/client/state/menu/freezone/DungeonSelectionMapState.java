@@ -106,10 +106,10 @@ public class DungeonSelectionMapState extends AbstractState {
 		// TRANSLATES THE GRAPHICS BACK
 		g.translate(-translateX, -translateY);
 		// DRAWS THE HUD OVER THE MAP
-		int textxpos = width - Math.max(TextRenderer.instance.width(new Message("dungeonmap.select")),
-				TextRenderer.instance.width(new Message("dungeonmap.return"))) - 10;
-		TextRenderer.instance.render(g, new Message("dungeonmap.select"), textxpos, 20);
-		TextRenderer.instance.render(g, new Message("dungeonmap.return"), textxpos, 40);
+		int textxpos = width - Math.max(TextRenderer.width(new Message("dungeonmap.select")),
+				TextRenderer.width(new Message("dungeonmap.return"))) - 10;
+		TextRenderer.render(g, new Message("dungeonmap.select"), textxpos, 20);
+		TextRenderer.render(g, new Message("dungeonmap.return"), textxpos, 40);
 
 		int temp_width = width - 40;
 		int temp_height = temp_width * Hud.textwindow.getHeight() / Hud.textwindow.getWidth();
@@ -118,9 +118,9 @@ public class DungeonSelectionMapState extends AbstractState {
 		g.drawImage(MenuHudSpriteset.TAB_ARROW_LEFT, box.x + box.width - 45, box.y, null);
 		g.drawImage(MenuHudSpriteset.TAB_ARROW_RIGHT, box.x + box.width - 30, box.y, null);
 		String dungeonsmarker = (this.cursor + 1) + " / " + this.dungeonslist.size();
-		TextRenderer.instance.render(g, dungeonsmarker, box.x + box.width - 55, box.y + 10);
+		TextRenderer.render(g, dungeonsmarker, box.x + box.width - 55, box.y + 10);
 
-		TextRenderer.instance.render(g, dungeonslist.get(cursor).name(), box.x + 15, box.y + 10);
+		TextRenderer.render(g, dungeonslist.get(cursor).name(), box.x + 15, box.y + 10);
 	}
 
 	@Override

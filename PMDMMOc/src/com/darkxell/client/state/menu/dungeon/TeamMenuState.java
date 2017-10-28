@@ -57,15 +57,15 @@ public class TeamMenuState extends OptionSelectionMenuState
 		if (this.listener == null)
 		{
 			Message stats = new Message("summary.stats.content");
-			stats.addReplacement("<level>", TextRenderer.instance.alignNumber(p.getLevel(), 7));
-			stats.addReplacement("<exp>", TextRenderer.instance.alignNumber(p.totalExperience(), 7));
-			stats.addReplacement("<exp-next>", TextRenderer.instance.alignNumber(p.experienceToNextLevel(), 7));
-			stats.addReplacement("<hp>", TextRenderer.instance.alignNumber(dp == null ? p.getStats().getHealth() : dp.getHp(), 3));
-			stats.addReplacement("<hp-max>", TextRenderer.instance.alignNumber(p.getStats().getHealth(), 3));
-			stats.addReplacement("<atk>", TextRenderer.instance.alignNumber(p.getStats().getAttack(), 7));
-			stats.addReplacement("<def>", TextRenderer.instance.alignNumber(p.getStats().getDefense(), 7));
-			stats.addReplacement("<spa>", TextRenderer.instance.alignNumber(p.getStats().getSpecialAttack(), 7));
-			stats.addReplacement("<spd>", TextRenderer.instance.alignNumber(p.getStats().getSpecialDefense(), 7));
+			stats.addReplacement("<level>", TextRenderer.alignNumber(p.getLevel(), 7));
+			stats.addReplacement("<exp>", TextRenderer.alignNumber(p.totalExperience(), 7));
+			stats.addReplacement("<exp-next>", TextRenderer.alignNumber(p.experienceToNextLevel(), 7));
+			stats.addReplacement("<hp>", TextRenderer.alignNumber(dp == null ? p.getStats().getHealth() : dp.getHp(), 3));
+			stats.addReplacement("<hp-max>", TextRenderer.alignNumber(p.getStats().getHealth(), 3));
+			stats.addReplacement("<atk>", TextRenderer.alignNumber(p.getStats().getAttack(), 7));
+			stats.addReplacement("<def>", TextRenderer.alignNumber(p.getStats().getDefense(), 7));
+			stats.addReplacement("<spa>", TextRenderer.alignNumber(p.getStats().getSpecialAttack(), 7));
+			stats.addReplacement("<spd>", TextRenderer.alignNumber(p.getStats().getSpecialDefense(), 7));
 			stats.addReplacement("<item>", p.getItem() == null ? new Message("item.none") : p.getItem().name());
 
 			String iq = "";

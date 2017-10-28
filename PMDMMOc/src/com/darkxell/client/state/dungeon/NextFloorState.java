@@ -40,10 +40,10 @@ public class NextFloorState extends AbstractState {
 			alpha = (this.counter <= fade ? this.counter : total - this.counter) * 255 / fade;
 		}
 		if (this.counter >= fade + pause && this.counter <= total - fade) {
-			TextRenderer.instance.render(g, this.t, width / 2 - TextRenderer.instance.width(this.t) / 2,
-					height / 2 + TextRenderer.LINE_SPACING / 2);
-			TextRenderer.instance.render(g, this.dungeon, width / 2 - TextRenderer.instance.width(this.dungeon) / 2,
-					height / 2 - TextRenderer.CHAR_HEIGHT - TextRenderer.LINE_SPACING / 2);
+			TextRenderer.render(g, this.t, width / 2 - TextRenderer.width(this.t) / 2,
+					height / 2 + TextRenderer.lineSpacing() / 2);
+			TextRenderer.render(g, this.dungeon, width / 2 - TextRenderer.width(this.dungeon) / 2,
+					height / 2 - TextRenderer.height() - TextRenderer.lineSpacing() / 2);
 			if (this.counter >= fade + pause + text)
 				alpha = (this.counter - fade - pause - text) * 255 / pause;
 		}
