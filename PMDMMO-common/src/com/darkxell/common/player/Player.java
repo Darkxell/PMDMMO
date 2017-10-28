@@ -21,10 +21,12 @@ public class Player
 	private Pokemon mainPokemon;
 	/** The current amount of Money of this Player. */
 	public int money;
+	public final String name;
 
-	public Player(int id, Pokemon pokemon)
+	public Player(int id, String name, Pokemon pokemon)
 	{
 		this.id = id;
+		this.name = name;
 		this.setMainPokemon(pokemon);
 		this.inventory = new Inventory(Inventory.MAX_SIZE);
 		this.money = 0;

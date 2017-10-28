@@ -10,6 +10,7 @@ import java.util.Random;
 
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.animation.AnimationTicker;
+import com.darkxell.client.renderers.TeamInfoRenderer;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.client.ui.MainUiUtility;
 
@@ -36,6 +37,7 @@ public class StateManager {
 	private int chatheight;
 	private int chatx;
 	private int chaty;
+	private int teamwidth;
 
 	private boolean isChatFocused = false;
 	private boolean isGameFocused = true;
@@ -95,6 +97,7 @@ public class StateManager {
 			return;
 		if (internalBuffer == null)
 			internalBuffer = new BufferedImage(displayWidth, displayHeight, BufferedImage.TYPE_INT_ARGB);
+		
 		// Displays the game on the buffer
 		Graphics2D g2 = internalBuffer.createGraphics();
 		g2.clearRect(0, 0, displayWidth, displayHeight);
@@ -105,6 +108,7 @@ public class StateManager {
 			g2.fillRect(0, 0, displayWidth, displayHeight);
 		}
 		g2.dispose();
+		
 		// Calculates various values to draw the components to the window
 		gamewidth = (int) (0.6 * height * displayWidth / displayHeight <= 0.6 * width
 				? 0.6 * height * displayWidth / displayHeight : 0.6 * width);
@@ -119,14 +123,20 @@ public class StateManager {
 		chatheight = (int) (height * 0.9);
 		chatx = (int) (width * 0.05);
 		chaty = (int) (height * 0.05);
+		teamwidth = (int) (gamewidth - mapsize - width * 0.05);
+		
 		// Draws the background
 		MainUiUtility.drawBackground(g, width, height, backgroundID);
+		
 		// Draw the outlines
+		MainUiUtility.drawBoxOutline(g, gamex, mapy, teamwidth, mapsize);
 		MainUiUtility.drawBoxOutline(g, gamex, gamey, gamewidth, gameheight);
 		MainUiUtility.drawBoxOutline(g, mapx, mapy, mapsize, mapsize);
 		MainUiUtility.drawBoxOutline(g, chatx, chaty, chatwidth, chatheight);
+		
 		// draws the game inside
 		g.drawImage(internalBuffer, gamex, gamey, gamewidth, gameheight, null);
+		
 		// draws the chat inside
 		g.translate(chatx, chaty);
 		Shape clp = g.getClip();
@@ -134,6 +144,7 @@ public class StateManager {
 		Persistance.chatbox.render(g, chatwidth, chatheight, isChatFocused);
 		g.setClip(clp);
 		g.translate(-chatx, -chaty);
+		
 		// draws the map inside
 		g.translate(mapx, mapy);
 		clp = g.getClip();
@@ -141,6 +152,14 @@ public class StateManager {
 		Persistance.displaymap.render(g, mapsize, mapsize);
 		g.setClip(clp);
 		g.translate(-mapx, -mapy);
+		
+		// draws the team info
+		g.translate(gamex, mapy);
+		clp = g.getClip();
+		g.setClip(new Rectangle(0, 0, teamwidth, mapsize));
+		TeamInfoRenderer.render(g, teamwidth, mapsize);
+		g.setClip(clp);
+		g.translate(-gamex, -mapy);
 	}
 
 	public synchronized void update() {
