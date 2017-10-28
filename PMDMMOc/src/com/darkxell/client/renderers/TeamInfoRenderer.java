@@ -45,9 +45,12 @@ public final class TeamInfoRenderer
 			TextRenderer.render(g, pokemon.species.type1.symbol(), x + MEMBER_WIDTH - 2 - symbol - (pokemon.species.type2 == null ? 0 : symbol + 1), y);
 		} else
 		{
-			Message types = pokemon.species.type1.getName().addSuffix(
+			Message m = pokemon.species.type1.getName().addSuffix(
 					pokemon.species.type2 == null ? new Message("", false) : pokemon.species.type2.getName().addPrefix(" "));
-			TextRenderer.render(g, types, x + MEMBER_WIDTH * 2 - 5 - TextRenderer.width(types), y);
+			TextRenderer.render(g, m, x + MEMBER_WIDTH * 2 - 5 - TextRenderer.width(m), y);
+			m = new Message("team.hp").addReplacement("<max>", TextRenderer.alignNumber(pokemon.getStats().getHealth(), 3)).addReplacement("<current>",
+					TextRenderer.alignNumber(pokemon.getDungeonPokemon() == null ? pokemon.getStats().getHealth() : pokemon.getDungeonPokemon().getHp(), 3));
+			TextRenderer.render(g, m, x + MEMBER_WIDTH * 2 - 5 - TextRenderer.width(m), y + 5 + TextRenderer.height());
 		}
 
 		int barsize = width - 5 - PORTRAIT_SIZE;
@@ -78,8 +81,8 @@ public final class TeamInfoRenderer
 		y -= PORTRAIT_SIZE - 1;
 		TextRenderer.render(g, pokemon.getNickname(), x, y);
 		String gender = pokemon.gender == Pokemon.MALE ? PMDChar.male.value : pokemon.gender == Pokemon.FEMALE ? PMDChar.female.value : PMDChar.minus.value;
-		TextRenderer.render(g, new Message("team.level").addReplacement("<lvl>", TextRenderer.alignNumber(pokemon.getLevel(), 3)).addReplacement("<gender>", gender), x, y + 5
-						+ TextRenderer.height());
+		TextRenderer.render(g, new Message("team.level").addReplacement("<lvl>", Integer.toString(pokemon.getLevel())).addReplacement("<gender>", gender), x, y
+				+ 5 + TextRenderer.height());
 	}
 
 	public static void render(Graphics2D parentGraphics, int canvasWidth, int canvasHeight)
