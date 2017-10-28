@@ -37,8 +37,7 @@ public class DamageDealtEvent extends DungeonEvent
 	public ArrayList<DungeonEvent> processServer()
 	{
 		this.target.setHP(this.target.getHp() - this.damage);
-		if (this.target.getHp() == 0) this.resultingEvents.add(new FaintedPokemonEvent(this.floor, this.target,
-				this.source instanceof DungeonPokemon ? (DungeonPokemon) this.source : null));
+		if (this.target.getHp() == 0) this.resultingEvents.add(new FaintedPokemonEvent(this.floor, this.target, this.source));
 		return super.processServer();
 	}
 

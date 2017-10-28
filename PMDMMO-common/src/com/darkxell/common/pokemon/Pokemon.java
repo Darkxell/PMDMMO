@@ -143,9 +143,14 @@ public class Pokemon implements ItemContainer
 	}
 
 	/** @return The amount of experience to gain in order to level up. */
-	public int experienceToNextLevel()
+	public int experienceLeftNextLevel()
 	{
 		return this.species.experienceToNextLevel(this.level) - this.experience;
+	}
+
+	public int experienceToNextLevel()
+	{
+		return this.species.experienceToNextLevel(this.level);
 	}
 
 	/** @param amount - The amount of experience gained.
@@ -156,7 +161,7 @@ public class Pokemon implements ItemContainer
 
 		while (amount != 0)
 		{
-			int next = this.experienceToNextLevel();
+			int next = this.experienceLeftNextLevel();
 			if (next <= amount)
 			{
 				amount -= next;
