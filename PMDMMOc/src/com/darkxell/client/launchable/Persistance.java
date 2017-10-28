@@ -52,6 +52,7 @@ public abstract class Persistance {
 	static {
 		player.addAlly(PokemonRegistry.find(1).generate(new Random(), 1));
 		player.addAlly(PokemonRegistry.find(375).generate(new Random(), 1));
+		player.getPokemon().gainExperience(5);
 	}
 
 	/**

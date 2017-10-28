@@ -10,9 +10,12 @@ public class Palette {
 	public static final Color CHAT_PRIVATE = new Color(197, 73, 55);
 	
 	public static final Color TEAM = new Color(0, 155, 155);
+	public static final Color TEAM_HP_GREEN = new Color(41, 255, 49);
+	public static final Color TEAM_HP_RED = new Color(255, 132, 90);
+	public static final Color TEAM_XP_BLUE = new Color(100, 200, 255);
+	public static final Color TEAM_XP_PURPLE = new Color(132, 90, 255);
 
 	public static final Color TRANSPARENT_GRAY = new Color(0, 0, 0, 120);
-
 
 	public static final Color FONT_BLUE = new Color(0, 255, 255);
 	public static final Color FONT_GREEN = new Color(90, 255, 90);

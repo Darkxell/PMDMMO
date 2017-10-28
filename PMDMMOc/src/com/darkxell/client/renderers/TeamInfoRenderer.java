@@ -1,5 +1,7 @@
 package com.darkxell.client.renderers;
 
+import static com.darkxell.client.resources.images.pokemon.PokemonPortrait.PORTRAIT_SIZE;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -35,19 +37,49 @@ public final class TeamInfoRenderer
 	{
 		y += 5;
 		g.drawImage(PokemonPortrait.portrait(pokemon), x + 5, y, null);
-		TextRenderer.render(g, pokemon.getNickname(), x + 10 + PokemonPortrait.PORTRAIT_SIZE, y);
 
 		if (width == MEMBER_WIDTH)
 		{
 			int symbol = TextRenderer.width(PMDChar.type_0);
-			if (pokemon.species.type2 != null) TextRenderer.render(g, pokemon.species.type2.symbol(), x + MEMBER_WIDTH - 1 - symbol, y);
-			TextRenderer.render(g, pokemon.species.type1.symbol(), x + MEMBER_WIDTH - 1 - symbol - (pokemon.species.type2 == null ? 0 : symbol + 1), y);
+			if (pokemon.species.type2 != null) TextRenderer.render(g, pokemon.species.type2.symbol(), x + MEMBER_WIDTH - 2 - symbol, y);
+			TextRenderer.render(g, pokemon.species.type1.symbol(), x + MEMBER_WIDTH - 2 - symbol - (pokemon.species.type2 == null ? 0 : symbol + 1), y);
 		} else
 		{
 			Message types = pokemon.species.type1.getName().addSuffix(
 					pokemon.species.type2 == null ? new Message("", false) : pokemon.species.type2.getName().addPrefix(" "));
 			TextRenderer.render(g, types, x + MEMBER_WIDTH * 2 - 5 - TextRenderer.width(types), y);
 		}
+
+		int barsize = width - 5 - PORTRAIT_SIZE;
+		int hp = (int) (barsize * (pokemon.getDungeonPokemon() == null ? 1 : pokemon.getDungeonPokemon().getHp() * 1d / pokemon.getStats().getHealth()));
+		int xp = (int) (barsize * (pokemon.getExperience() * 1d / pokemon.experienceToNextLevel()));
+
+		x += 5 + PORTRAIT_SIZE;
+		y += PORTRAIT_SIZE - 1;
+		g.setColor(Palette.TRANSPARENT_GRAY);
+		g.drawLine(x, y - 3, x + barsize - 1, y - 3);
+		g.drawLine(x, y - 3 - 5, x + barsize - 1, y - 3 - 5);
+		g.setColor(Color.WHITE);
+		g.drawLine(x, y - 1, x + barsize - 1, y - 1);
+		g.drawLine(x, y - 1 - 3, x + barsize - 1, y - 1 - 3);
+		g.drawLine(x, y - 1 - 3 - 5, x + barsize - 1, y - 1 - 3 - 5);
+
+		g.setColor(Palette.TEAM_HP_GREEN);
+		g.fillRect(x, y - 3 - 4, hp, 3);
+		g.setColor(Palette.TEAM_HP_RED);
+		g.fillRect(x + hp, y - 3 - 4, barsize - hp, 3);
+
+		g.setColor(Palette.TEAM_XP_BLUE);
+		g.fillRect(x, y - 2, xp, 3);
+		g.setColor(Palette.TEAM_XP_PURPLE);
+		g.fillRect(x + xp, y - 2, barsize - xp, 3);
+
+		x += 5;
+		y -= PORTRAIT_SIZE - 1;
+		TextRenderer.render(g, pokemon.getNickname(), x, y);
+		String gender = pokemon.gender == Pokemon.MALE ? PMDChar.male.value : pokemon.gender == Pokemon.FEMALE ? PMDChar.female.value : PMDChar.minus.value;
+		TextRenderer.render(g, new Message("team.level").addReplacement("<lvl>", TextRenderer.alignNumber(pokemon.getLevel(), 3)).addReplacement("<gender>", gender), x, y + 5
+						+ TextRenderer.height());
 	}
 
 	public static void render(Graphics2D parentGraphics, int canvasWidth, int canvasHeight)
@@ -80,6 +112,7 @@ public final class TeamInfoRenderer
 		if (team.length == 2) drawMember(team[1], 0, y + MEMBER_HEIGHT, MEMBER_WIDTH * 2, MEMBER_HEIGHT);
 		else if (team.length == 3 || team.length == 4)
 		{
+			g.setColor(Palette.TRANSPARENT_GRAY);
 			g.drawLine(MEMBER_WIDTH, team.length == 3 ? y + MEMBER_HEIGHT : y, MEMBER_WIDTH, height);
 			drawMember(team[team.length == 3 ? 1 : 2], 0, y + MEMBER_HEIGHT, MEMBER_WIDTH, MEMBER_HEIGHT);
 			drawMember(team[team.length == 3 ? 2 : 3], MEMBER_WIDTH, y + MEMBER_HEIGHT, MEMBER_WIDTH, MEMBER_HEIGHT);
