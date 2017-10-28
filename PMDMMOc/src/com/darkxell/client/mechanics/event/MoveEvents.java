@@ -63,11 +63,11 @@ public final class MoveEvents
 				screens.add(new DialogScreen(new Message("xp.levelup").addReplacement("<pokemon>", event.pokemon.getNickname()).addReplacement("<level>",
 						Integer.toString(level))));
 				PokemonStats stats = event.pokemon.species.baseStatsIncrease(level - 1);
-				screens.add(new DialogScreen(new Message("xp.stats").addReplacement("<atk>", TextRenderer.instance.alignNumber(stats.getAttack(), 2))
-						.addReplacement("<def>", TextRenderer.instance.alignNumber(stats.getDefense(), 2))
-						.addReplacement("<hea>", TextRenderer.instance.alignNumber(stats.getHealth(), 2))
-						.addReplacement("<spa>", TextRenderer.instance.alignNumber(stats.getSpecialAttack(), 2))
-						.addReplacement("<spd>", TextRenderer.instance.alignNumber(stats.getSpecialDefense(), 2))));
+				screens.add(new DialogScreen(new Message("xp.stats").addReplacement("<atk>", TextRenderer.alignNumber(stats.getAttack(), 2))
+						.addReplacement("<def>", TextRenderer.alignNumber(stats.getDefense(), 2))
+						.addReplacement("<hea>", TextRenderer.alignNumber(stats.getHealth(), 2))
+						.addReplacement("<spa>", TextRenderer.alignNumber(stats.getSpecialAttack(), 2))
+						.addReplacement("<spd>", TextRenderer.alignNumber(stats.getSpecialDefense(), 2))));
 			}
 
 			Persistance.stateManager.setState(new DialogState(Persistance.dungeonState, ClientEventProcessor.processEventsOnDialogEnd, false, screens));

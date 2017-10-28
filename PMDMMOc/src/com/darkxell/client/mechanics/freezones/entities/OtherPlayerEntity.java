@@ -35,8 +35,8 @@ public class OtherPlayerEntity extends FreezoneEntity {
 	public void print(Graphics2D g) {
 		g.drawImage(sprite.getCurrentSprite(), (int) (super.posX * 8 - sprite.pointer.gravityX),
 				(int) (super.posY * 8 - sprite.pointer.gravityY), null);
-		int namewidth = TextRenderer.instance.width(this.name);
-		TextRenderer.instance.render(g, this.name, (int) (super.posX * 8 - (namewidth / 2)),
+		int namewidth = TextRenderer.width(this.name);
+		TextRenderer.render(g, this.name, (int) (super.posX * 8 - (namewidth / 2)),
 				(int) (super.posY * 8 - sprite.pointer.gravityY - 20));
 	}
 

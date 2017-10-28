@@ -42,14 +42,14 @@ public class OptionSelectionWindow extends MenuWindow {
 
 			// Text
 			int x = MARGIN_X + this.dimensions.x;
-			int y = MARGIN_Y + this.dimensions.y + TextRenderer.LINE_SPACING / 2;
+			int y = MARGIN_Y + this.dimensions.y + TextRenderer.lineSpacing() / 2;
 			for (MenuOption option : this.menu.currentTab().options()) {
-				TextRenderer.instance.render(g, option.name, x, y);
+				TextRenderer.render(g, option.name, x, y);
 				if ((this.cursor > 9 || !this.menu.isMain()) && this.menu.currentOption() == option)
 					g.drawImage(this.menu.isMain() ? MenuHudSpriteset.SELECTION_ARROW : MenuHudSpriteset.SELECTED_ARROW,
 							x - MenuHudSpriteset.SELECTION_ARROW.getWidth() - 4,
-							y + TextRenderer.CHAR_HEIGHT / 2 - MenuHudSpriteset.SELECTION_ARROW.getHeight() / 2, null);
-				y += TextRenderer.CHAR_HEIGHT + TextRenderer.LINE_SPACING;
+							y + TextRenderer.height() / 2 - MenuHudSpriteset.SELECTION_ARROW.getHeight() / 2, null);
+				y += TextRenderer.height() + TextRenderer.lineSpacing();
 			}
 		}
 	}

@@ -210,13 +210,18 @@ public enum PokemonType
 
 	public Message getName()
 	{
-		return new Message("type." + this.id).addPrefix("<type-" + this.id + "> ");
+		return new Message("type." + this.id).addPrefix(this.symbol() + " ");
 	}
 
 	/** Sets the effectiveness of this type on the input type. */
 	private void setEffectivenessOn(PokemonType type, float effectiveness)
 	{
 		this.effectiveness[type.id] = effectiveness;
+	}
+
+	public String symbol()
+	{
+		return "<type-" + this.id + ">";
 	}
 
 }

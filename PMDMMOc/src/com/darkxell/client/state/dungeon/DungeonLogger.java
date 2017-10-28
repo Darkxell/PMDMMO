@@ -14,7 +14,6 @@ import com.darkxell.common.util.language.Message;
 
 public class DungeonLogger {
 
-	public static final int MESSAGE_HEIGHT = TextRenderer.CHAR_HEIGHT + 5;
 	public static final int MESSAGE_TIME = 60 * 6;
 
 	/**
@@ -65,7 +64,7 @@ public class DungeonLogger {
 		ArrayList<String> toReturn = new ArrayList<String>();
 		for (Message m : this.messages)
 			if (m != null)
-				toReturn.addAll(TextRenderer.instance.splitLines(m.toString(), w - 40));
+				toReturn.addAll(TextRenderer.splitLines(m.toString(), w - 40));
 
 		this.messages.clear();
 		for (int i = 0; i < toReturn.size(); ++i) {
@@ -96,8 +95,8 @@ public class DungeonLogger {
 				g.setColor(Color.BLACK);
 				g.drawLine(0, y - 3, width, y - 3);
 			} else {
-				TextRenderer.instance.render(g, s, this.messagesWindow.dimensions.x + 20, y);
-				y += MESSAGE_HEIGHT;
+				TextRenderer.render(g, s, this.messagesWindow.dimensions.x + 20, y);
+				y += TextRenderer.height() + 5;
 			}
 		}
 		g.setClip(clip);
@@ -130,7 +129,7 @@ public class DungeonLogger {
 			--this.messageTime;
 		}
 
-		if (this.messageOffset > -(this.displayedMessages() - 3) * MESSAGE_HEIGHT)
+		if (this.messageOffset > -(this.displayedMessages() - 3) * (TextRenderer.height() + 5))
 			this.messageOffset -= 2;
 	}
 

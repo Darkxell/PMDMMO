@@ -56,7 +56,7 @@ public abstract class AbstractMenuState extends AbstractState {
 		}
 
 		public int height() {
-			return this.options.size() * (TextRenderer.CHAR_HEIGHT + TextRenderer.LINE_SPACING);
+			return this.options.size() * (TextRenderer.height() + TextRenderer.lineSpacing());
 		}
 
 		public MenuOption[] options() {
@@ -66,8 +66,8 @@ public abstract class AbstractMenuState extends AbstractState {
 		public int width() {
 			int width = 0;
 			for (MenuOption option : this.options)
-				width = Math.max(width, TextRenderer.instance.width(option.name));
-			width = Math.max(width, TextRenderer.instance.width(this.name) + MenuHudSpriteset.cornerSize.width * 2);
+				width = Math.max(width, TextRenderer.width(option.name));
+			width = Math.max(width, TextRenderer.width(this.name) + MenuHudSpriteset.cornerSize.width * 2);
 			return width;
 		}
 

@@ -123,18 +123,18 @@ public class FreezoneExploreState extends AbstractState {
 
 			if (Persistance.currentplayer.canInteract()) {
 				g.drawImage(Hud.button, width - 70, 5, null);
-				TextRenderer.instance.render(g, "Interact", width - 50, 10);
+				TextRenderer.render(g, "Interact", width - 50, 10);
 				// TODO : change the "INTERACT" here to a language dependent
 				// string, and change it to match the action.
 			}
 
 			if (Persistance.debugdisplaymode) {
 				g.setColor(Color.BLACK);
-				TextRenderer.instance.render(g, "UPS: " + Launcher.getUps() + ", FPS: " + Launcher.getFps(), 1,
-						TextRenderer.CHAR_HEIGHT);
-				TextRenderer.instance.render(g,
+				TextRenderer.render(g, "UPS: " + Launcher.getUps() + ", FPS: " + Launcher.getFps(), 1,
+						TextRenderer.height());
+				TextRenderer.render(g,
 						"Position: " + Persistance.currentplayer.x + " / " + Persistance.currentplayer.y, 1,
-						TextRenderer.CHAR_HEIGHT * 3);
+						TextRenderer.height() * 3);
 			}
 		}
 	}

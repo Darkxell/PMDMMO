@@ -32,7 +32,7 @@ public class OpenningState extends AbstractState {
 				null);
 		if (textblink >= 50) {
 			String press = "Press attack (default D) to continue.";
-			TextRenderer.instance.render(g, press, width / 2 - TextRenderer.instance.width(press) / 2, height / 4 * 3);
+			TextRenderer.render(g, press, width / 2 - TextRenderer.width(press) / 2, height / 4 * 3);
 		}
 	}
 

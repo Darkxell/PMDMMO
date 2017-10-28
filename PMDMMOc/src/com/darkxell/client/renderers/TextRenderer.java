@@ -20,117 +20,17 @@ public class TextRenderer
 
 	public static enum PMDChar
 	{
-		new_line("<br>", 0, 0),
-		tabulation("<tab>", 0, 0),
-		space(" ", 0, 4),
-		space_number("<spn>", 0, 6),
 		a("a", 1, 5),
-		b("b", 2, 5),
-		c("c", 3, 5),
-		d("d", 4, 5),
-		e("e", 5, 5),
-		f("f", 6, 5),
-		g("g", 7, 5),
-		h("h", 8, 5),
-		i("i", 9, 3),
-		j("j", 10, 3),
-		k("k", 11, 5),
-		l("l", 12, 3),
-		m("m", 13, 8),
-		n("n", 14, 5),
-		o("o", 15, 5),
-		p("p", 16, 5),
-		q("q", 17, 5),
-		r("r", 18, 5),
-		s("s", 19, 5),
-		t("t", 20, 4),
-		u("u", 21, 5),
-		v("v", 22, 6),
-		w("w", 23, 8),
-		x("x", 24, 6),
-		y("y", 25, 5),
-		z("z", 26, 5),
 		A("A", 27, 6),
-		B("B", 28, 6),
-		C("C", 29, 6),
-		D("D", 30, 6),
-		E("E", 31, 5),
-		F("F", 32, 5),
-		G("G", 33, 6),
-		H("H", 34, 6),
-		I("I", 35, 4),
-		J("J", 36, 6),
-		K("K", 37, 6),
-		L("L", 38, 5),
-		M("M", 39, 8),
-		N("N", 40, 6),
-		O("O", 41, 6),
-		P("P", 42, 6),
-		Q("Q", 43, 6),
-		R("R", 44, 6),
-		S("S", 45, 6),
-		T("T", 46, 6),
-		U("U", 47, 6),
-		V("V", 48, 6),
-		W("W", 49, 10),
-		X("X", 50, 6),
-		Y("Y", 51, 6),
-		Z("Z", 52, 6),
-		num1("1", 53, 6),
-		num2("2", 54, 6),
-		num3("3", 55, 6),
-		num4("4", 56, 6),
-		num5("5", 57, 6),
-		num6("6", 58, 6),
-		num7("7", 59, 6),
-		num8("8", 60, 6),
-		num9("9", 61, 6),
-		num0("0", 62, 6),
-		column(":", 63, 2),
-		plus("+", 64, 6),
-		minus("-", 65, 5),
-		coma(",", 66, 3),
-		dot(".", 67, 3),
-		exclamation_("<!>", 68, 4),
-		exclamation("!", 69, 4),
-		interrogation_("<?>", 70, 6),
-		interrogation("?", 71, 6),
-		apostrophe_("`", 72, 3),
 		apostrophe("'", 73, 3),
-		quote_("<\">", 74, 6),
-		quote("\"", 75, 6),
-		male("<male>", 76, 8),
-		female("<female>", 77, 6),
-		space_visible("_", 78, 10),
-		three_dots("<dots>", 79, 9),
-		parenthesis_o("(", 80, 5),
-		parenthesis_c(")", 81, 5),
-		slash("/", 82, 5),
-		poke1("<poke1>", 83, 8),
-		poke2("<poke2>", 84, 7),
-		e_accent("é", 85, 7),
-		tilde("~", 86, 6),
-		sharp("#", 87, 9),
-		music("<music>", 88, 8),
-		arrow_up("<arrow-up>", 89, 8),
-		arrow_right("<arrow-right>", 90, 8),
+		apostrophe_("`", 72, 3),
 		arrow_down("<arrow-down>", 91, 8),
 		arrow_left("<arrow-left>", 92, 8),
-		tick("<tick>", 94, 9),
-		star("<star>", 95, 7),
-		glued("<glued>", 96, 8),
-		mission("<mission>", 97, 8),
-		mission_accepted("<mission-a>", 98, 10),
-		news("<news>", 99, 10),
-		story("<story>", 100, 9),
-		speech_bubble("<speech>", 101, 9),
-		key_A("<key-a>", 102, 10),
-		key_B("<key-b>", 103, 10),
-		key_L("<key-l>", 104, 10),
-		key_R("<key-r>", 105, 10),
-		key_PLUS("<key-+>", 106, 10),
-		key_SELECT1("<select1>", 107, 10),
-		key_SELECT2("<select2>", 108, 10),
+		arrow_right("<arrow-right>", 90, 8),
+		arrow_up("<arrow-up>", 89, 8),
+		b("b", 2, 5),
+		B("B", 28, 6),
+		buy_0("<0>", 118, 6),
 		buy_1("<1>", 109, 6),
 		buy_2("<2>", 110, 6),
 		buy_3("<3>", 111, 6),
@@ -140,20 +40,115 @@ public class TextRenderer
 		buy_7("<7>", 115, 6),
 		buy_8("<8>", 116, 6),
 		buy_9("<9>", 117, 6),
-		buy_0("<0>", 118, 6),
-		orb("<orb>", 119, 10),
-		tm_used("<tmu>", 120, 10),
+		c("c", 3, 5),
+		C("C", 29, 6),
+		colorBlue("<blue>", -1, 0),
+		colorGreen("<green>", -1, 0),
+		colorRed("<red>", -1, 0),
+		colorReset("</color>", -1, 0),
+		colorYellow("<yellow>", -1, 0),
+		column(":", 63, 2),
+		coma(",", 66, 3),
+		d("d", 4, 5),
+		D("D", 30, 6),
+		dot(".", 67, 3),
+		e("e", 5, 5),
+		E("E", 31, 5),
+		e_accent("é", 85, 7),
+		exclamation("!", 69, 4),
+		exclamation_("<!>", 68, 4),
+		f("f", 6, 5),
+		F("F", 32, 5),
+		female("<female>", 77, 6),
+		g("g", 7, 5),
+		G("G", 33, 6),
+		glued("<glued>", 96, 8),
+		h("h", 8, 5),
+		H("H", 34, 6),
 		hm("<hm>", 121, 10),
+		i("i", 9, 3),
+		I("I", 35, 4),
+		interrogation("?", 71, 6),
+		interrogation_("<?>", 70, 6),
+		j("j", 10, 3),
+		J("J", 36, 6),
+		k("k", 11, 5),
+		K("K", 37, 6),
+		key_A("<key-a>", 102, 10),
+		key_B("<key-b>", 103, 10),
+		key_L("<key-l>", 104, 10),
+		key_PLUS("<key-+>", 106, 10),
+		key_R("<key-r>", 105, 10),
+		key_SELECT1("<select1>", 107, 10),
+		key_SELECT2("<select2>", 108, 10),
+		l("l", 12, 3),
+		L("L", 38, 5),
+		m("m", 13, 8),
+		M("M", 39, 8),
+		male("<male>", 76, 8),
+		minus("-", 65, 5),
+		minusd(null, 160, 7),
+		mission("<mission>", 97, 8),
+		mission_accepted("<mission-a>", 98, 10),
+		music("<music>", 88, 8),
+		n("n", 14, 5),
+		N("N", 40, 6),
+		new_line("<br>", 0, 0),
+		news("<news>", 99, 10),
+		num0("0", 62, 6),
+		num0d(null, 170, 7),
+		num1("1", 53, 6),
+		num1d(null, 161, 7),
+		num2("2", 54, 6),
+		num2d(null, 162, 7),
+		num3("3", 55, 6),
+		num3d(null, 163, 7),
+		num4("4", 56, 6),
+		num4d(null, 164, 7),
+		num5("5", 57, 6),
+		num5d(null, 165, 7),
+		num6("6", 58, 6),
+		num6d(null, 166, 7),
+		num7("7", 59, 6),
+		num7d(null, 167, 7),
+		num8("8", 60, 6),
+		num8d(null, 168, 7),
+		num9("9", 61, 6),
+		num9d(null, 169, 7),
+		o("o", 15, 5),
+		O("O", 41, 6),
+		orb("<orb>", 119, 10),
+		p("p", 16, 5),
+		P("P", 42, 6),
+		parenthesis_c(")", 81, 5),
+		parenthesis_o("(", 80, 5),
+		plus("+", 64, 6),
+		poke1("<poke1>", 83, 8),
+		poke2("<poke2>", 84, 7),
+		q("q", 17, 5),
+		Q("Q", 43, 6),
+		quote("\"", 75, 6),
+		quote_("<\">", 74, 6),
+		r("r", 18, 5),
+		R("R", 44, 6),
+		s("s", 19, 5),
+		S("S", 45, 6),
+		sharp("#", 87, 9),
+		slash("/", 82, 5),
+		space(" ", 0, 4),
+		space_number("<spn>", 0, 6),
+		space_visible("_", 78, 10),
+		speech_bubble("<speech>", 101, 9),
+		star("<star>", 95, 7),
+		story("<story>", 100, 9),
+		t("t", 20, 4),
+		T("T", 46, 6),
+		tabulation("<tab>", 0, 0),
+		three_dots("<dots>", 79, 9),
+		tick("<tick>", 94, 9),
+		tilde("~", 86, 6),
 		tm_0("<tm0>", 122, 10),
 		tm_1("<tm1>", 123, 10),
-		tm_2("<tm2>", 124, 10),
-		tm_3("<tm3>", 125, 10),
-		tm_4("<tm4>", 126, 10),
-		tm_5("<tm5>", 127, 10),
-		tm_6("<tm6>", 128, 10),
-		tm_7("<tm7>", 129, 10),
-		tm_8("<tm8>", 130, 10),
-		tm_9("<tm9>", 131, 10),
 		tm_10("<tm10>", 132, 10),
 		tm_11("<tm11>", 133, 10),
 		tm_12("<tm12>", 134, 10),
@@ -162,16 +157,17 @@ public class TextRenderer
 		tm_15("<tm15>", 137, 10),
 		tm_16("<tm16>", 138, 10),
 		tm_17("<tm17>", 139, 10),
+		tm_2("<tm2>", 124, 10),
+		tm_3("<tm3>", 125, 10),
+		tm_4("<tm4>", 126, 10),
+		tm_5("<tm5>", 127, 10),
+		tm_6("<tm6>", 128, 10),
+		tm_7("<tm7>", 129, 10),
+		tm_8("<tm8>", 130, 10),
+		tm_9("<tm9>", 131, 10),
+		tm_used("<tmu>", 120, 10),
 		type_0("<type-0>", 140, 11),
 		type_1("<type-1>", 141, 11),
-		type_2("<type-2>", 142, 11),
-		type_3("<type-3>", 143, 11),
-		type_4("<type-4>", 144, 11),
-		type_5("<type-5>", 145, 11),
-		type_6("<type-6>", 146, 11),
-		type_7("<type-7>", 147, 11),
-		type_8("<type-8>", 148, 11),
-		type_9("<type-9>", 149, 11),
 		type_10("<type-10>", 150, 11),
 		type_11("<type-11>", 151, 11),
 		type_12("<type-12>", 152, 11),
@@ -180,22 +176,26 @@ public class TextRenderer
 		type_15("<type-15>", 155, 11),
 		type_16("<type-16>", 156, 11),
 		type_17("<type-17>", 157, 11),
-		minusd(null, 160, 7),
-		num1d(null, 161, 7),
-		num2d(null, 162, 7),
-		num3d(null, 163, 7),
-		num4d(null, 164, 7),
-		num5d(null, 165, 7),
-		num6d(null, 166, 7),
-		num7d(null, 167, 7),
-		num8d(null, 168, 7),
-		num9d(null, 169, 7),
-		num0d(null, 170, 7),
-		colorReset("</color>", -1, 0),
-		colorBlue("<blue>", -1, 0),
-		colorGreen("<green>", -1, 0),
-		colorRed("<red>", -1, 0),
-		colorYellow("<yellow>", -1, 0);
+		type_2("<type-2>", 142, 11),
+		type_3("<type-3>", 143, 11),
+		type_4("<type-4>", 144, 11),
+		type_5("<type-5>", 145, 11),
+		type_6("<type-6>", 146, 11),
+		type_7("<type-7>", 147, 11),
+		type_8("<type-8>", 148, 11),
+		type_9("<type-9>", 149, 11),
+		u("u", 21, 5),
+		U("U", 47, 6),
+		v("v", 22, 6),
+		V("V", 48, 6),
+		w("w", 23, 8),
+		W("W", 49, 10),
+		x("x", 24, 6),
+		X("X", 50, 6),
+		y("y", 25, 5),
+		Y("Y", 51, 6),
+		z("z", 26, 5),
+		Z("Z", 52, 6);
 
 		public static PMDChar find(String value)
 		{
@@ -207,7 +207,6 @@ public class TextRenderer
 		/** Location on the Font sprite. */
 		public final int id;
 		public final String value;
-
 		/** Width of the sprite. */
 		public final int width;
 
@@ -220,49 +219,48 @@ public class TextRenderer
 
 	}
 
-	public static final int CHAR_HEIGHT = 11;
+	private static final int CHAR_HEIGHT = 11;
+	private static Color color, previous;
+	private static HashMap<PMDChar, Image> coloredSprites;
+	private static HashMap<PMDChar, PMDChar> dungeonChars;
+	public static double fontSize = 1;
 	private static final int GRID_COLS = 20;
 	private static final int GRID_WIDTH = CHAR_HEIGHT, GRID_HEIGHT = CHAR_HEIGHT;
-	public static final TextRenderer instance = new TextRenderer();
-	public static final int LINE_SPACING = 3;
-	public static final int TAB_ALIGN = 25;
+	private static final int LINE_SPACING = 3;
+	private static HashMap<PMDChar, BufferedImage> sprites;
+	private static final int TAB_ALIGN = 25;
 
 	/** Called on startup to load the font. */
 	public static void load()
 	{
-		instance.setColor(null);
-	}
+		setColor(null);
 
-	private Color color, previous;
-	private HashMap<PMDChar, Image> coloredSprites;
-	private HashMap<PMDChar, PMDChar> dungeonChars;
-	private HashMap<PMDChar, BufferedImage> sprites;
-
-	private TextRenderer()
-	{
-		this.sprites = new HashMap<PMDChar, BufferedImage>();
-		this.coloredSprites = new HashMap<PMDChar, Image>();
-		this.dungeonChars = new HashMap<PMDChar, PMDChar>();
+		sprites = new HashMap<PMDChar, BufferedImage>();
+		coloredSprites = new HashMap<PMDChar, Image>();
+		dungeonChars = new HashMap<PMDChar, PMDChar>();
 		BufferedImage source = Res.getBase("resources/hud/font.png");
 		for (PMDChar c : PMDChar.values())
-			if (c.id != -1) this.sprites.put(c,
+			if (c.id != -1) sprites.put(c,
 					Res.createimage(source, c.id % GRID_COLS * GRID_WIDTH, (c.id - c.id % GRID_COLS) / GRID_COLS * GRID_HEIGHT, GRID_WIDTH, GRID_HEIGHT));
 
-		this.dungeonChars.put(PMDChar.minus, PMDChar.minusd);
-		this.dungeonChars.put(PMDChar.num1, PMDChar.num1d);
-		this.dungeonChars.put(PMDChar.num2, PMDChar.num2d);
-		this.dungeonChars.put(PMDChar.num3, PMDChar.num3d);
-		this.dungeonChars.put(PMDChar.num4, PMDChar.num4d);
-		this.dungeonChars.put(PMDChar.num5, PMDChar.num5d);
-		this.dungeonChars.put(PMDChar.num6, PMDChar.num6d);
-		this.dungeonChars.put(PMDChar.num7, PMDChar.num7d);
-		this.dungeonChars.put(PMDChar.num8, PMDChar.num8d);
-		this.dungeonChars.put(PMDChar.num9, PMDChar.num9d);
-		this.dungeonChars.put(PMDChar.num0, PMDChar.num0d);
+		dungeonChars.put(PMDChar.minus, PMDChar.minusd);
+		dungeonChars.put(PMDChar.num1, PMDChar.num1d);
+		dungeonChars.put(PMDChar.num2, PMDChar.num2d);
+		dungeonChars.put(PMDChar.num3, PMDChar.num3d);
+		dungeonChars.put(PMDChar.num4, PMDChar.num4d);
+		dungeonChars.put(PMDChar.num5, PMDChar.num5d);
+		dungeonChars.put(PMDChar.num6, PMDChar.num6d);
+		dungeonChars.put(PMDChar.num7, PMDChar.num7d);
+		dungeonChars.put(PMDChar.num8, PMDChar.num8d);
+		dungeonChars.put(PMDChar.num9, PMDChar.num9d);
+		dungeonChars.put(PMDChar.num0, PMDChar.num0d);
 	}
 
+	private TextRenderer()
+	{}
+
 	/** Adds spaces in front of the input number to match the input number of digits. */
-	public Message alignNumber(int n, int digits)
+	public static Message alignNumber(int n, int digits)
 	{
 		String s = Integer.toString(n);
 		int diff = s.length() - digits;
@@ -271,7 +269,7 @@ public class TextRenderer
 		return new Message(s, false);
 	}
 
-	public ArrayList<PMDChar> decode(String text)
+	public static ArrayList<PMDChar> decode(String text)
 	{
 		ArrayList<PMDChar> chars = new ArrayList<TextRenderer.PMDChar>();
 		if (text == null) return chars;
@@ -298,63 +296,74 @@ public class TextRenderer
 		return chars;
 	}
 
-	public Color getColor()
+	public static Color getColor()
 	{
-		return this.color;
+		return color;
 	}
 
-	/** Renders the input message at the topright x, y coordinates. */
-	public void render(Graphics2D g, Message message, int x, int y)
+	public static int height()
 	{
-		this.render(g, message.toString(), x, y);
+		return (int) (CHAR_HEIGHT * fontSize);
 	}
 
-	public void render(Graphics2D g, String text, int x, int y)
+	public static int lineSpacing()
 	{
-		this.render(g, text, x, y, false);
-	}
-
-	/** Renders the input text at the topright x, y coordinates. */
-	public void render(Graphics2D g, String text, int x, int y, boolean dungeonHUD)
-	{
-		ArrayList<PMDChar> chars = this.decode(text);
-		ArrayList<PMDChar> toprint = new ArrayList<TextRenderer.PMDChar>();
-		if (dungeonHUD) for (PMDChar c : chars)
-			if (this.dungeonChars.containsKey(c)) toprint.add(this.dungeonChars.get(c));
-			else toprint.add(c);
-		else toprint.addAll(chars);
-		this.render(g, toprint, x, y, dungeonHUD);
+		return (int) (LINE_SPACING * fontSize);
 	}
 
 	/** Renders the input text at the topright x, y coordinates. */
-	public void render(Graphics2D g, List<PMDChar> text, int x, int y, boolean dungeonHUD)
+	public static void render(Graphics2D g, List<PMDChar> text, int x, int y, boolean dungeonHUD)
 	{
 		int w = 0;
 		for (PMDChar c : text)
 		{
 			if (c.id < 0)
 			{
-				if (c == PMDChar.colorReset) this.setColor(null);
-				if (c == PMDChar.colorBlue) this.setColor(Palette.FONT_BLUE);
-				if (c == PMDChar.colorGreen) this.setColor(Palette.FONT_GREEN);
-				if (c == PMDChar.colorRed) this.setColor(Palette.FONT_RED);
-				if (c == PMDChar.colorYellow) this.setColor(Palette.FONT_YELLOW);
+				if (c == PMDChar.colorReset) setColor(null);
+				if (c == PMDChar.colorBlue) setColor(Palette.FONT_BLUE);
+				if (c == PMDChar.colorGreen) setColor(Palette.FONT_GREEN);
+				if (c == PMDChar.colorRed) setColor(Palette.FONT_RED);
+				if (c == PMDChar.colorYellow) setColor(Palette.FONT_YELLOW);
 			} else
 			{
-				g.drawImage((this.color == null ? this.sprites : this.coloredSprites).get(c), x + w, y, null);
-				if (c == PMDChar.tabulation) w += this.tabWidth(w);
-				else w += c.width;
+				Image sprite = (color == null ? sprites : coloredSprites).get(c);
+				g.drawImage(sprite, x + w, y, (int) (sprite.getWidth(null) * fontSize), (int) (sprite.getHeight(null) * fontSize), null);
+				if (c == PMDChar.tabulation) w += tabWidth(w);
+				else w += width(c);
 			}
 		}
-		this.setColor(null);
+		setColor(null);
+	}
+
+	/** Renders the input message at the topright x, y coordinates. */
+	public static void render(Graphics2D g, Message message, int x, int y)
+	{
+		render(g, message.toString(), x, y);
+	}
+
+	public static void render(Graphics2D g, String text, int x, int y)
+	{
+		render(g, text, x, y, false);
+	}
+
+	/** Renders the input text at the topright x, y coordinates. */
+	public static void render(Graphics2D g, String text, int x, int y, boolean dungeonHUD)
+	{
+		ArrayList<PMDChar> chars = decode(text);
+		ArrayList<PMDChar> toprint = new ArrayList<TextRenderer.PMDChar>();
+		if (dungeonHUD) for (PMDChar c : chars)
+			if (dungeonChars.containsKey(c)) toprint.add(dungeonChars.get(c));
+			else toprint.add(c);
+		else toprint.addAll(chars);
+		render(g, toprint, x, y, dungeonHUD);
 	}
 
 	/** Sets the Color of the Text for the next drawn Text. Color is reset to default at the end of each Text. */
-	public void setColor(final Color color)
+	public static void setColor(final Color color)
 	{
-		boolean shouldUpdate = color != null && color != this.previous;
-		this.previous = this.color;
-		this.color = color;
+		boolean shouldUpdate = color != null && color != previous;
+		previous = color;
+		TextRenderer.color = color;
 		if (shouldUpdate)
 		{
 			RGBImageFilter filter = new RGBImageFilter()
@@ -367,13 +376,12 @@ public class TextRenderer
 			};
 
 			for (PMDChar c : PMDChar.values())
-				if (c.id != -1) this.coloredSprites.put(c,
-						Toolkit.getDefaultToolkit().createImage(new FilteredImageSource(this.sprites.get(c).getSource(), filter)));
+				if (c.id != -1) coloredSprites.put(c, Toolkit.getDefaultToolkit().createImage(new FilteredImageSource(sprites.get(c).getSource(), filter)));
 		}
 	}
 
 	/** Transforms a String into an array of strings printable to the screen. */
-	public ArrayList<String> splitLines(String text, int boxwidth)
+	public static ArrayList<String> splitLines(String text, int boxwidth)
 	{
 		ArrayList<String> textlines = new ArrayList<>();
 		if (text == null) return textlines;
@@ -385,15 +393,15 @@ public class TextRenderer
 			currentlength = 0;
 			String[] words = parts[i].split(" ");
 			for (int j = 0; j < words.length; j++)
-				if (!words[j].startsWith(PMDChar.new_line.value) && (currentlength == 0 || currentlength + this.width(words[j]) < boxwidth))
+				if (!words[j].startsWith(PMDChar.new_line.value) && (currentlength == 0 || currentlength + width(words[j]) < boxwidth))
 				{
 					textlines.set(iterator, textlines.get(iterator) + words[j] + " ");
-					currentlength += this.width(words[j] + " ");
+					currentlength += width(words[j] + " ");
 				} else
 				{
 					textlines.add(words[j] + " ");
 					++iterator;
-					currentlength = this.width(words[j] + " ");
+					currentlength = width(words[j] + " ");
 				}
 			++iterator;
 		}
@@ -401,32 +409,37 @@ public class TextRenderer
 	}
 
 	/** @return The width of a Tabulation character, depending on the current width of the text. */
-	public int tabWidth(int currentWidth)
+	public static int tabWidth(int currentWidth)
 	{
-		return TAB_ALIGN - currentWidth % TAB_ALIGN;
+		return (int) (TAB_ALIGN * fontSize - currentWidth % TAB_ALIGN * fontSize);
 	}
 
-	/** @return The width of the input message. */
-	public int width(Message message)
-	{
-		if (message == null) return 0;
-		return this.width(message.toString());
-	}
-
-	/** @return The width of the input text. */
-	public int width(String text)
-	{
-		if (text == null) return 0;
-		return this.width(this.decode(text));
-	}
-
-	public int width(List<PMDChar> chars)
+	public static int width(List<PMDChar> chars)
 	{
 		int w = 0;
 		for (PMDChar c : chars)
-			if (c == PMDChar.tabulation) w += this.tabWidth(w);
-			else w += c.width;
+			if (c == PMDChar.tabulation) w += tabWidth(w);
+			else w += width(c);
 		return w;
+	}
+
+	/** @return The width of the input message. */
+	public static int width(Message message)
+	{
+		if (message == null) return 0;
+		return width(message.toString());
+	}
+
+	public static int width(PMDChar c)
+	{
+		return (int) (c.width * fontSize);
+	}
+
+	/** @return The width of the input text. */
+	public static int width(String text)
+	{
+		if (text == null) return 0;
+		return width(decode(text));
 	}
 
 }
