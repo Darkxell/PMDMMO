@@ -1,9 +1,6 @@
 package com.darkxell.client.state;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.Shape;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.Random;
@@ -69,7 +66,10 @@ public class StateManager {
 
 	public void onMouseClick(int x, int y) {
 		if (this.currentState != null && isGameFocused)
-			this.currentState.onMouseClick(x, y);
+		{
+			Point p = this.inGameLocation(x, y);
+			if (p != null) this.currentState.onMouseClick(p.x, p.y);
+		}
 		if (x > gamex && x < gamex + gamewidth && y > gamey && y < gamey + gameheight) {
 			isGameFocused = true;
 			isChatFocused = false;
@@ -80,14 +80,29 @@ public class StateManager {
 		}
 	}
 
-	public void onMouseMove(int x, int y) {
+	public void onMouseMove(int x, int y)
+	{
 		if (this.currentState != null && isGameFocused)
-			this.currentState.onMouseMove(x, y);
+		{
+			Point p = this.inGameLocation(x, y);
+			if (p != null) this.currentState.onMouseMove(p.x, p.y);
+		}
 	}
 
-	public void onMouseRightClick(int x, int y) {
+	public void onMouseRightClick(int x, int y)
+	{
 		if (this.currentState != null && isGameFocused)
-			this.currentState.onMouseRightClick(x, y);
+		{
+			Point p = this.inGameLocation(x, y);
+			if (p != null) this.currentState.onMouseRightClick(p.x, p.y);
+		}
+	}
+
+	private Point inGameLocation(int x, int y)
+	{
+		Point p = new Point((x - this.gamex) * this.internalBuffer.getWidth() / this.gamewidth, (y - this.gamey)* this.internalBuffer.getHeight() / this.gameheight);
+		if (p.x < 0 || p.y < 0 || p.x > this.internalBuffer.getWidth() || p.y > this.internalBuffer.getHeight()) return null;
+		return p;
 	}
 
 	// RENDER AND UPDATE

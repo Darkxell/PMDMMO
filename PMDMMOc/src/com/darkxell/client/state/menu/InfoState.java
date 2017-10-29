@@ -101,6 +101,18 @@ public class InfoState extends AbstractMenuState
 	}
 
 	@Override
+	public void onMouseClick(int x, int y)
+	{
+		super.onMouseClick(x, y);
+		if (this.window.inside().contains(x, y))
+		{
+			++this.tab;
+			if (this.tab == this.infos.length) this.tab = 0;
+			this.window = null;
+		} else this.onExit();
+	}
+
+	@Override
 	protected void onOptionSelected(MenuOption option)
 	{}
 

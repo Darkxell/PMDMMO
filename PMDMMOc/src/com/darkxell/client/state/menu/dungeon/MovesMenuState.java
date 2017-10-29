@@ -7,9 +7,10 @@ import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.MenuHudSpriteset;
 import com.darkxell.client.state.dungeon.DungeonState;
-import com.darkxell.client.state.menu.AbstractMenuState;
 import com.darkxell.client.state.menu.InfoState;
+import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.client.state.menu.components.MoveSelectionWindow;
+import com.darkxell.client.state.menu.components.OptionSelectionWindow;
 import com.darkxell.client.state.menu.components.TextWindow;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.common.event.move.MoveSelectionEvent;
@@ -17,7 +18,7 @@ import com.darkxell.common.pokemon.LearnedMove;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.language.Message;
 
-public class MovesMenuState extends AbstractMenuState
+public class MovesMenuState extends OptionSelectionMenuState
 {
 
 	public static class MoveMenuOption extends MenuOption
@@ -56,9 +57,22 @@ public class MovesMenuState extends AbstractMenuState
 		}
 	}
 
+	@Override
+	public OptionSelectionWindow getMainWindow()
+	{
+		return this.window;
+	}
+
 	private boolean isMainSelected()
 	{
 		return this.selectedPokemon() == Persistance.player.getPokemon();
+	}
+
+	@Override
+	protected Rectangle mainWindowDimensions()
+	{
+		Rectangle r = super.mainWindowDimensions();
+		return new Rectangle(r.x, r.y, r.width + MoveSelectionWindow.ppLength, r.height);
 	}
 
 	@Override
@@ -156,15 +170,13 @@ public class MovesMenuState extends AbstractMenuState
 	@Override
 	public void render(Graphics2D g, int width, int height)
 	{
-		super.render(g, width, height);
-
 		if (this.window == null) this.window = new MoveSelectionWindow(this, this.mainWindowDimensions());
-		this.window.render(g, this.currentTab().name, width, height);
+		super.render(g, width, height);
 
 		if (this.windowInfo == null)
 		{
-			Rectangle r = new Rectangle(this.window.dimensions.x, (int) (this.window.dimensions.getMaxY() + 20), width - 40,
-					MenuHudSpriteset.cornerSize.height * 2 + TextRenderer.height() * 4 + TextRenderer.lineSpacing() * 2);
+			Rectangle r = new Rectangle(this.window.dimensions.x, (int) (this.window.dimensions.getMaxY() + 20), width - 40, MenuHudSpriteset.cornerSize.height
+					* 2 + TextRenderer.height() * 4 + TextRenderer.lineSpacing() * 2);
 			this.windowInfo = new TextWindow(r, new Message(this.isMainSelected() ? "moves.info.main" : "moves.info.ally"), false);
 		}
 		this.windowInfo.render(g, null, width, height);

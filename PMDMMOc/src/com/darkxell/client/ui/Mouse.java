@@ -69,7 +69,7 @@ public class Mouse implements MouseListener, MouseMotionListener {
 	public void mouseReleased(MouseEvent e) {
 		if (isClicking && e.getButton() == MouseEvent.BUTTON1) {
 			Persistance.stateManager.onMouseClick(x, y);
-			isClicking = true;
+			isClicking = false;
 		}
 		if (isRightClicking && e.getButton() == MouseEvent.BUTTON3) {
 			Persistance.stateManager.onMouseRightClick(x, y);
