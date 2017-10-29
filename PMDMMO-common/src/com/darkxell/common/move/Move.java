@@ -168,6 +168,12 @@ public class Move
 		return (int) d;
 	}
 
+	/** @return This Move's description. */
+	public Message description()
+	{
+		return new Message("move.info." + this.id);
+	}
+
 	/** @param user - The Pokémon using this Move.
 	 * @param floor - The Floor context.
 	 * @return The Pokémon affected by this Move. */
