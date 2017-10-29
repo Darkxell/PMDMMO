@@ -207,19 +207,13 @@ public class Dungeon implements Comparable<Dungeon> {
 		Element root = new Element(XML_ROOT);
 		root.setAttribute("id", Integer.toString(this.id));
 		root.setAttribute("floors", Integer.toString(this.floorCount));
+		root.setAttribute("mapx", Integer.toString(this.mapx));
+		root.setAttribute("mapy", Integer.toString(this.mapy));
 		XMLUtils.setAttribute(root, "down", this.direction, false);
 		XMLUtils.setAttribute(root, "recruits", this.recruitsAllowed, true);
 		XMLUtils.setAttribute(root, "limit", this.timeLimit, 2000);
 		XMLUtils.setAttribute(root, "sticky", this.stickyChance, 0);
 		XMLUtils.setAttribute(root, "linked", this.linkedTo, -1);
-		/*
-		 * if (this.teamItems != -1) root.setAttribute("t-items",
-		 * Integer.toString(this.teamItems)); if (this.teamLevel != -1)
-		 * root.setAttribute("t-level", Integer.toString(this.teamLevel)); if
-		 * (this.teamMembers != 4) root.setAttribute("t-members",
-		 * Integer.toString(this.teamMembers)); if (this.teamMoney != -1)
-		 * root.setAttribute("t-money", Integer.toString(this.teamMoney));
-		 */
 
 		Element pokemon = new Element("encounters");
 		for (DungeonEncounter poke : this.pokemon)

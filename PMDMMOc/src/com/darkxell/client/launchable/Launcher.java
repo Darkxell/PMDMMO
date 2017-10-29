@@ -18,9 +18,6 @@ import com.darkxell.common.util.language.Lang;
 /** Launching class of the client */
 public class Launcher {
 
-	/** If true, data is saved on exit. */
-	public static boolean SAVE_ON_EXIT = false;
-
 	/** Set to false to stop the game. */
 	public static boolean isRunning;
 	private static Renderer renderer;
@@ -64,7 +61,7 @@ public class Launcher {
 
 	public static void stopGame() {
 		isRunning = false;
-		if (SAVE_ON_EXIT) {
+		if (Persistance.saveDataOnExit) {
 			PokemonRegistry.saveClient();
 			MoveRegistry.saveClient();
 			ItemRegistry.saveClient();
