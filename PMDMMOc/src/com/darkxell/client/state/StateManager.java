@@ -100,6 +100,7 @@ public class StateManager {
 
 	private Point inGameLocation(int x, int y)
 	{
+		if (this.internalBuffer == null) return null;
 		Point p = new Point((x - this.gamex) * this.internalBuffer.getWidth() / this.gamewidth, (y - this.gamey)* this.internalBuffer.getHeight() / this.gameheight);
 		if (p.x < 0 || p.y < 0 || p.x > this.internalBuffer.getWidth() || p.y > this.internalBuffer.getHeight()) return null;
 		return p;
