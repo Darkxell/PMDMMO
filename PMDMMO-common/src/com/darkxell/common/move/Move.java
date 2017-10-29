@@ -31,8 +31,9 @@ public class Move
 	 * <li>ALL_ENEMIES = 3</li>
 	 * <li>ALL_ALLIES = 4</li>
 	 * <li>ALL_ROOM = 5</li>
+	 * <li>AMBIENT = 6</li>
 	 * </ul> */
-	public static final byte FRONT = 0, ONE_AUTO = 1, SELF = 2, ALL_ENEMIES = 3, ALL_ALLIES = 4, ALL_ROOM = 5;
+	public static final byte FRONT = 0, ONE_AUTO = 1, SELF = 2, ALL_ENEMIES = 3, ALL_ALLIES = 4, ALL_ROOM = 5, AMBIENT = 6;
 	/** Move categories.<br />
 	 * <ul>
 	 * <li>PHYSICAL = 0</li>
@@ -166,6 +167,12 @@ public class Move
 		d *= (57344 + Math.floor(floor.random.nextDouble() * 16384)) / 65536;
 
 		return (int) d;
+	}
+
+	/** @return This Move's description. */
+	public Message description()
+	{
+		return new Message("move.info." + this.id);
 	}
 
 	/** @param user - The Pokémon using this Move.

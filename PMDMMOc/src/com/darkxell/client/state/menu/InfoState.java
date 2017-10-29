@@ -43,7 +43,7 @@ public class InfoState extends AbstractMenuState
 	public final Message[] infos, titles;
 	public final AbstractState parent;
 	private int tab;
-	private TextWindow window;
+	protected TextWindow window;
 
 	public InfoState(AbstractState background, AbstractState parent, Message[] titles, Message[] infos)
 	{

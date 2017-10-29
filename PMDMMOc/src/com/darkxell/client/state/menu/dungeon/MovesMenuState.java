@@ -7,7 +7,6 @@ import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.MenuHudSpriteset;
 import com.darkxell.client.state.dungeon.DungeonState;
-import com.darkxell.client.state.menu.InfoState;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.client.state.menu.components.MoveSelectionWindow;
 import com.darkxell.client.state.menu.components.OptionSelectionWindow;
@@ -72,7 +71,8 @@ public class MovesMenuState extends OptionSelectionMenuState
 	protected Rectangle mainWindowDimensions()
 	{
 		Rectangle r = super.mainWindowDimensions();
-		return new Rectangle(r.x, r.y, r.width + MoveSelectionWindow.ppLength, r.height);
+		return new Rectangle(r.x, r.y, r.width + MoveSelectionWindow.ppLength, r.height + (4 - this.currentTab().options().length)
+				* (TextRenderer.height() + TextRenderer.lineSpacing()));
 	}
 
 	@Override
@@ -132,12 +132,17 @@ public class MovesMenuState extends OptionSelectionMenuState
 		}
 	}
 
+	@Override
+	public void onMouseRightClick(int x, int y)
+	{
+		super.onMouseRightClick(x, y);
+		if (this.getHoveredOption() != null) this.onOptionInfo(this.getHoveredOption());
+	}
+
 	private void onOptionInfo(MenuOption option)
 	{
 		DungeonState s = Persistance.dungeonState;
-		Persistance.stateManager.setState(new InfoState(s, this, new Message[]
-		{ ((MoveMenuOption) option).move.move().name() }, new Message[]
-		{ ((MoveMenuOption) option).move.move().name() }));
+		Persistance.stateManager.setState(new MoveInfoState(((MoveMenuOption) option).move.move(), s, this));
 	}
 
 	@Override
@@ -185,13 +190,6 @@ public class MovesMenuState extends OptionSelectionMenuState
 	private Pokemon selectedPokemon()
 	{
 		return this.pokemon[this.tabIndex()];
-	}
-
-	@Override
-	public void update()
-	{
-		super.update();
-		if (this.window != null) this.window.update();
 	}
 
 }

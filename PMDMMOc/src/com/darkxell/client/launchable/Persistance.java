@@ -61,4 +61,7 @@ public abstract class Persistance {
 	 * mode...
 	 */
 	public static boolean debugdisplaymode = false;
+
+	/** If true, data for pokemon, dungeon, moves, etc. is saved on exit. */
+	public static boolean saveDataOnExit = false;
 }
