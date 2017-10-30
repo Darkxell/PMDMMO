@@ -1,6 +1,7 @@
 package com.darkxell.common.pokemon;
 
 import java.util.ArrayList;
+import java.util.function.Predicate;
 
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.status.StatusCondition;
@@ -113,6 +114,11 @@ public class DungeonPokemon
 		this.increaseBelly(quantity);
 	}
 
+	public void inflictStatusCondition(StatusConditionInstance condition)
+	{
+		this.statusConditions.add(condition);
+	}
+
 	public boolean isBellyFull()
 	{
 		return this.getBelly() == this.getBellySize();
@@ -131,6 +137,23 @@ public class DungeonPokemon
 	public void receiveMove(byte attackType)
 	{
 		if (attackType > this.attacksReceived) this.attacksReceived = attackType;
+	}
+
+	public void removeStatusCondition(StatusCondition condition)
+	{
+		this.statusConditions.removeIf(new Predicate<StatusConditionInstance>()
+		{
+			@Override
+			public boolean test(StatusConditionInstance t)
+			{
+				return t.condition == condition;
+			}
+		});
+	}
+
+	public void removeStatusCondition(StatusConditionInstance condition)
+	{
+		this.statusConditions.remove(condition);
 	}
 
 	/** Changes the direction this Pokémon is facing. */
