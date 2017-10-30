@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.pokemon.DungeonPokemon;
 
 public class StatusCondition
 {
@@ -31,6 +32,12 @@ public class StatusCondition
 		this.durationMin = durationMin;
 		this.durationMax = durationMax;
 		_registry.put(this.id, this);
+	}
+
+	/** @return True if this Status Condition affects the input Pokémon. */
+	public boolean affects(DungeonPokemon pokemon)
+	{
+		return true;
 	}
 
 	public ArrayList<DungeonEvent> tick(Floor floor, StatusConditionInstance instance)

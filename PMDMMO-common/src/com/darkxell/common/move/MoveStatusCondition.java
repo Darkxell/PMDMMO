@@ -6,6 +6,7 @@ import org.jdom2.Element;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.DungeonEvent.MessageEvent;
 import com.darkxell.common.event.pokemon.StatusConditionCreatedEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.PokemonType;
@@ -40,8 +41,9 @@ public class MoveStatusCondition extends Move
 		if (this.condition != -1)
 		{
 			StatusCondition c = StatusCondition.find(this.condition);
-			e.add(new StatusConditionCreatedEvent(floor, new StatusConditionInstance(c, target, RandomUtil.nextIntInBounds(c.durationMin, c.durationMax + 1,
-					floor.random))));
+			if (c.affects(target)) e.add(new StatusConditionCreatedEvent(floor, new StatusConditionInstance(c, target, RandomUtil.nextIntInBounds(
+					c.durationMin, c.durationMax + 1, floor.random))));
+			else e.add(new MessageEvent(floor, this.unaffectedMessage(target)));
 		}
 		return e;
 	}

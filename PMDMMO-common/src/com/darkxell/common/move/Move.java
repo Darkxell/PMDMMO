@@ -268,6 +268,11 @@ public class Move
 		return root;
 	}
 
+	protected Message unaffectedMessage(DungeonPokemon target)
+	{
+		return new Message("move.effectiveness.none").addReplacement("<pokemon>", target.pokemon.getNickname());
+	}
+
 	/** Applies this Move's effects to a Pokémon.
 	 * 
 	 * @param usedMove - The Move instance that was selected.
@@ -280,8 +285,7 @@ public class Move
 		boolean missed = this.misses(usedMove, target, floor);
 
 		float effectiveness = this.type == null ? PokemonType.NORMALLY_EFFECTIVE : this.type.effectivenessOn(target.pokemon.species);
-		if (effectiveness == PokemonType.NO_EFFECT) events.add(new MessageEvent(floor, new Message("move.effectiveness.none").addReplacement("<pokemon>",
-				target.pokemon.getNickname())));
+		if (effectiveness == PokemonType.NO_EFFECT) events.add(new MessageEvent(floor, this.unaffectedMessage(target)));
 		else
 		{
 			if (!missed && this != MoveRegistry.ATTACK) target.receiveMove(usedMove.move.isLinked() ? DungeonPokemon.LINKED_MOVES : DungeonPokemon.MOVES);

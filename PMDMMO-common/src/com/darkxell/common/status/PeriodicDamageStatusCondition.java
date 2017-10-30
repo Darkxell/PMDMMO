@@ -6,6 +6,8 @@ import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageSource;
+import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.pokemon.PokemonType;
 
 public class PeriodicDamageStatusCondition extends StatusCondition implements DamageSource
 {
@@ -19,6 +21,14 @@ public class PeriodicDamageStatusCondition extends StatusCondition implements Da
 		super(id, durationMin, durationMax);
 		this.period = period;
 		this.damage = damage;
+	}
+
+	@Override
+	public boolean affects(DungeonPokemon pokemon)
+	{
+		if (this == POISONED || this == BADLY_POISONED) return !pokemon.pokemon.species.isType(PokemonType.POISON);
+		if (this == BURN) return !pokemon.pokemon.species.isType(PokemonType.FIRE);
+		return true;
 	}
 
 	@Override
