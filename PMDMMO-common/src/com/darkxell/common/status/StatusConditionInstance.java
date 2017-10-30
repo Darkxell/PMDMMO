@@ -52,8 +52,8 @@ public class StatusConditionInstance
 	public ArrayList<DungeonEvent> tick(Floor floor)
 	{
 		ArrayList<DungeonEvent> events = new ArrayList<DungeonEvent>();
+		if (!this.isOver()) events.addAll(this.condition.tick(floor, this));
 		if (this.duration != -1) ++this.tick;
-		events.addAll(this.condition.tick(floor, this));
 		if (this.isOver()) events.add(new StatusConditionEndedEvent(floor, this));
 		return events;
 	}

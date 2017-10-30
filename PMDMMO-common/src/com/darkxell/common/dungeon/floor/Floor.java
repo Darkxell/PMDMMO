@@ -124,7 +124,7 @@ public class Floor
 	public ArrayList<DungeonPokemon> listPokemon()
 	{
 		ArrayList<DungeonPokemon> pokemon = new ArrayList<DungeonPokemon>();
-		for (Tile[] row : this.tiles)
+		if (this.tiles != null) for (Tile[] row : this.tiles)
 			for (Tile t : row)
 				if (t.getPokemon() != null && !pokemon.contains(t.getPokemon())) pokemon.add(t.getPokemon());
 		return pokemon;
@@ -144,6 +144,8 @@ public class Floor
 	{
 		ArrayList<DungeonEvent> e = new ArrayList<DungeonEvent>();
 		// e.add(new MessageEvent(this, new Message("New turn!", false)));
+		for (DungeonPokemon pokemon : this.listPokemon())
+			e.addAll(pokemon.onTurnStart(this));
 		for (int w = this.weatherCondition.size() - 1; w >= 0; --w)
 			e.addAll(this.weatherCondition.get(w).update());
 		return e;

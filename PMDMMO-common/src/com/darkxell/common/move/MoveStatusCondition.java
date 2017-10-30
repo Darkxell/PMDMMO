@@ -37,9 +37,12 @@ public class MoveStatusCondition extends Move
 	public ArrayList<DungeonEvent> additionalEffects(DungeonPokemon user, DungeonPokemon target, Floor floor)
 	{
 		ArrayList<DungeonEvent> e = super.additionalEffects(user, target, floor);
-		StatusCondition c = StatusCondition.find(this.condition);
-		e.add(new StatusConditionCreatedEvent(floor, new StatusConditionInstance(c, target, RandomUtil.nextIntInBounds(c.durationMin, c.durationMax + 1,
-				floor.random))));
+		if (this.condition != -1)
+		{
+			StatusCondition c = StatusCondition.find(this.condition);
+			e.add(new StatusConditionCreatedEvent(floor, new StatusConditionInstance(c, target, RandomUtil.nextIntInBounds(c.durationMin, c.durationMax + 1,
+					floor.random))));
+		}
 		return e;
 	}
 

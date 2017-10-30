@@ -3,7 +3,9 @@ package com.darkxell.common.pokemon;
 import java.util.ArrayList;
 import java.util.function.Predicate;
 
+import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
+import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.status.StatusCondition;
 import com.darkxell.common.status.StatusConditionInstance;
 import com.darkxell.common.util.Directions;
@@ -132,6 +134,14 @@ public class DungeonPokemon
 	public boolean isTeamLeader()
 	{
 		return this.pokemon.player != null && this.pokemon.player.getDungeonPokemon() == this;
+	}
+
+	public ArrayList<DungeonEvent> onTurnStart(Floor floor)
+	{
+		ArrayList<DungeonEvent> events = new ArrayList<DungeonEvent>();
+		for (StatusConditionInstance condition : this.statusConditions)
+			events.addAll(condition.tick(floor));
+		return events;
 	}
 
 	public void receiveMove(byte attackType)
