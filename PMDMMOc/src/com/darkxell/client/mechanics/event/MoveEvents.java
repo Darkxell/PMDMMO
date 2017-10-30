@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.animation.AbstractAnimation;
+import com.darkxell.client.mechanics.animation.SpritesetAnimation;
 import com.darkxell.client.mechanics.animation.StatChangeAnimation;
 import com.darkxell.client.renderers.AbilityAnimationRenderer;
 import com.darkxell.client.renderers.MoveRenderer;
@@ -15,13 +16,11 @@ import com.darkxell.client.state.dungeon.AnimationState;
 import com.darkxell.client.state.dungeon.DelayState;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.move.MoveUseEvent;
-import com.darkxell.common.event.pokemon.BellyChangedEvent;
-import com.darkxell.common.event.pokemon.DamageDealtEvent;
-import com.darkxell.common.event.pokemon.FaintedPokemonEvent;
-import com.darkxell.common.event.pokemon.TriggeredAbilityEvent;
+import com.darkxell.common.event.pokemon.*;
 import com.darkxell.common.event.stats.ExperienceGainedEvent;
 import com.darkxell.common.event.stats.StatChangedEvent;
 import com.darkxell.common.pokemon.PokemonStats;
+import com.darkxell.common.status.StatusCondition;
 import com.darkxell.common.util.language.Message;
 
 public final class MoveEvents
@@ -102,6 +101,18 @@ public final class MoveEvents
 	{
 		AnimationState s = new AnimationState(Persistance.dungeonState);
 		s.animation = new StatChangeAnimation(s, event.target, event.stat, event.stage);
+		if (s.animation != null)
+		{
+			Persistance.dungeonState.setSubstate(s);
+			Persistance.eventProcessor.processPending = false;
+		}
+	}
+
+	public static void processStatusEvent(StatusConditionCreatedEvent event)
+	{
+		AnimationState s = new AnimationState(Persistance.dungeonState);
+		if (event.condition.condition == StatusCondition.POISONED || event.condition.condition == StatusCondition.BADLY_POISONED) s.animation = SpritesetAnimation
+				.getCustomAnimation(event.condition.pokemon, 200, s);
 		if (s.animation != null)
 		{
 			Persistance.dungeonState.setSubstate(s);

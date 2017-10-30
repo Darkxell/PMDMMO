@@ -71,6 +71,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		if (event instanceof MoveSelectionEvent) MoveEvents.processMoveEvent((MoveSelectionEvent) event);
 		if (event instanceof MoveUseEvent) MoveEvents.processMoveUseEvent((MoveUseEvent) event);
 		if (event instanceof DamageDealtEvent) MoveEvents.processDamageEvent((DamageDealtEvent) event);
+		if (event instanceof StatusConditionCreatedEvent) MoveEvents.processStatusEvent((StatusConditionCreatedEvent) event);
 
 		if (event instanceof PokemonTravelEvent) this.processTravelEvent((PokemonTravelEvent) event);
 		if (event instanceof FaintedPokemonEvent) MoveEvents.processFaintedEvent((FaintedPokemonEvent) event);
