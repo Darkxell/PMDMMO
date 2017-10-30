@@ -13,15 +13,18 @@ public class StatusConditionInstance
 
 	/** This Status Condition's ID. */
 	public final StatusCondition condition;
+	/** This Status Condition's duration. */
+	public final int duration;
 	/** The Pokémon this Status condition affects. */
 	public final DungeonPokemon pokemon;
 	/** The number of turns this Condition has been in effect. */
 	int tick;
 
-	public StatusConditionInstance(StatusCondition condition, DungeonPokemon pokemon)
+	public StatusConditionInstance(StatusCondition condition, DungeonPokemon pokemon, int duration)
 	{
 		this.condition = condition;
 		this.pokemon = pokemon;
+		this.duration = duration;
 		this.tick = 0;
 	}
 
@@ -37,8 +40,8 @@ public class StatusConditionInstance
 
 	public boolean isOver()
 	{
-		if (this.condition.duration == -1) return false;
-		return this.tick >= this.condition.duration;
+		if (this.duration == -1) return false;
+		return this.tick >= this.duration;
 	}
 
 	public Message startMessage()
@@ -49,7 +52,7 @@ public class StatusConditionInstance
 	public ArrayList<DungeonEvent> tick(Floor floor)
 	{
 		ArrayList<DungeonEvent> events = new ArrayList<DungeonEvent>();
-		if (this.condition.duration != -1) ++this.tick;
+		if (this.duration != -1) ++this.tick;
 		events.addAll(this.condition.tick(floor, this));
 		if (this.isOver()) events.add(new StatusConditionEndedEvent(floor, this));
 		return events;

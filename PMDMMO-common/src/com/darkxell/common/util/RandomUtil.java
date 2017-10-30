@@ -26,6 +26,15 @@ public final class RandomUtil
 		return (int) (random.nextGaussian() * deviation) + mean;
 	}
 
+	/** @param min - A minimum value.
+	 * @param max - A maximum value.
+	 * @param random - A Random Number Generator.
+	 * @return A Random integer between a minimum and a maximum value (max excluded). */
+	public static int nextIntInBounds(int min, int max, Random random)
+	{
+		return min + random.nextInt(max - min);
+	}
+
 	/** @param objects - A List of Objects to choose from.
 	 * @param random - A Random Number Generator.
 	 * @return A random Object from the input List. All Objects are equally probable to be chosen. */

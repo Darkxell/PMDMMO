@@ -11,6 +11,7 @@ import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.status.StatusCondition;
 import com.darkxell.common.status.StatusConditionInstance;
+import com.darkxell.common.util.RandomUtil;
 import com.darkxell.common.util.XMLUtils;
 
 public class MoveStatusCondition extends Move
@@ -36,7 +37,9 @@ public class MoveStatusCondition extends Move
 	public ArrayList<DungeonEvent> additionalEffects(DungeonPokemon user, DungeonPokemon target, Floor floor)
 	{
 		ArrayList<DungeonEvent> e = super.additionalEffects(user, target, floor);
-		e.add(new StatusConditionCreatedEvent(floor, new StatusConditionInstance(StatusCondition.find(this.condition), target)));
+		StatusCondition c = StatusCondition.find(this.condition);
+		e.add(new StatusConditionCreatedEvent(floor, new StatusConditionInstance(c, target, RandomUtil.nextIntInBounds(c.durationMin, c.durationMax + 1,
+				floor.random))));
 		return e;
 	}
 
