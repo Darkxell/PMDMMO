@@ -6,11 +6,11 @@ import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.status.StatusConditionInstance;
 
-public class StatusConditionEnded extends DungeonEvent
+public class StatusConditionEndedEvent extends DungeonEvent
 {
 	public final StatusConditionInstance condition;
 
-	public StatusConditionEnded(Floor floor, StatusConditionInstance condition)
+	public StatusConditionEndedEvent(Floor floor, StatusConditionInstance condition)
 	{
 		super(floor);
 		this.condition = condition;
