@@ -24,7 +24,7 @@ public class SpritesetAnimation extends PokemonAnimation
 
 	private static AbstractAnimation getAnimation(int id, HashMap<Integer, Element> registry, DungeonPokemon target, AnimationEndListener listener)
 	{
-		if (!registry.containsKey(id)) return new AbstractAnimation(60, listener);
+		if (!registry.containsKey(id)) return null;
 		Element xml = registry.get(id);
 
 		if (xml.getAttribute("width") == null || xml.getAttribute("height") == null)
@@ -68,7 +68,7 @@ public class SpritesetAnimation extends PokemonAnimation
 	public static AbstractAnimation getStatusAnimation(DungeonPokemon target, StatusCondition s, AnimationEndListener listener)
 	{
 		AbstractAnimation a = getAnimation(s.id, statuses, target, listener);
-		a.plays = -1;
+		if (a != null) a.plays = -1;
 		return a;
 	}
 

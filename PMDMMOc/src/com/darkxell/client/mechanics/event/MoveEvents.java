@@ -21,7 +21,6 @@ import com.darkxell.common.event.pokemon.*;
 import com.darkxell.common.event.stats.ExperienceGainedEvent;
 import com.darkxell.common.event.stats.StatChangedEvent;
 import com.darkxell.common.pokemon.PokemonStats;
-import com.darkxell.common.status.StatusCondition;
 import com.darkxell.common.util.language.Message;
 
 public final class MoveEvents
@@ -117,13 +116,14 @@ public final class MoveEvents
 			@Override
 			public void onAnimationEnd(AbstractAnimation animation)
 			{
-				s.onAnimationEnd(animation);
-				SpritesetAnimation.getStatusAnimation(event.condition.pokemon, event.condition.condition, null).start();
+				if (animation != null) s.onAnimationEnd(animation);
+				AbstractAnimation a = SpritesetAnimation.getStatusAnimation(event.condition.pokemon, event.condition.condition, null);
+				if (a != null) a.start();
 			}
 		};
-		if (event.condition.condition == StatusCondition.POISONED || event.condition.condition == StatusCondition.BADLY_POISONED) s.animation = SpritesetAnimation
-				.getCustomAnimation(event.condition.pokemon, 200, end);
-		if (s.animation != null)
+		s.animation = SpritesetAnimation.getCustomAnimation(event.condition.pokemon, 200 + event.condition.condition.id, end);
+		if (s.animation == null) end.onAnimationEnd(null);
+		else
 		{
 			Persistance.dungeonState.setSubstate(s);
 			Persistance.eventProcessor.processPending = false;
