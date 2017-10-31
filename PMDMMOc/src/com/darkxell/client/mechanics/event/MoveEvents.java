@@ -118,7 +118,11 @@ public final class MoveEvents
 			{
 				if (animation != null) s.onAnimationEnd(animation);
 				AbstractAnimation a = SpritesetAnimation.getStatusAnimation(event.condition.pokemon, event.condition.condition, null);
-				if (a != null) a.start();
+				if (a != null)
+				{
+					a.source = event.condition;
+					a.start();
+				}
 			}
 		};
 		s.animation = SpritesetAnimation.getCustomAnimation(event.condition.pokemon, 200 + event.condition.condition.id, end);
@@ -128,6 +132,11 @@ public final class MoveEvents
 			Persistance.dungeonState.setSubstate(s);
 			Persistance.eventProcessor.processPending = false;
 		}
+	}
+
+	public static void processStatusEvent(StatusConditionEndedEvent event)
+	{
+		Persistance.dungeonState.pokemonRenderer.getRenderer(event.condition.pokemon).removeAnimation(event.condition);
 	}
 
 	private MoveEvents()

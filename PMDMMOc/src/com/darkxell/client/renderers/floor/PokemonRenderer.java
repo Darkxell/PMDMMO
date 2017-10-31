@@ -5,8 +5,10 @@ import static com.darkxell.client.resources.images.tilesets.AbstractDungeonTiles
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.function.Predicate;
 
 import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.mechanics.animation.AbstractAnimation;
 import com.darkxell.client.mechanics.animation.PokemonAnimation;
 import com.darkxell.client.renderers.AbstractRenderer;
 import com.darkxell.client.renderers.MasterDungeonRenderer;
@@ -46,6 +48,18 @@ public class PokemonRenderer extends AbstractRenderer
 	public Point drawLocation()
 	{
 		return new Point(TILE_SIZE / 2 - this.sprite.pointer.gravityX, TILE_SIZE / 2 - this.sprite.pointer.gravityY);
+	}
+
+	public void removeAnimation(Object source)
+	{
+		this.animations.removeIf(new Predicate<AbstractAnimation>()
+		{
+			@Override
+			public boolean test(AbstractAnimation t)
+			{
+				return t.source == source;
+			}
+		});
 	}
 
 	public void removeAnimation(PokemonAnimation animation)

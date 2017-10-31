@@ -12,6 +12,8 @@ public class AbstractAnimation
 	public boolean needsPause = true;
 	/** The number of times this animation plays. Usually 1, or -1 as until removed. */
 	public int plays = 1;
+	/** Used to remove this animation when this Source is dropped. */
+	public Object source;
 	private int tick = 0;
 
 	public AbstractAnimation(int duration, AnimationEndListener listener)
