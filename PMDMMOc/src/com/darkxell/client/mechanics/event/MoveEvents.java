@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.animation.AbstractAnimation;
+import com.darkxell.client.mechanics.animation.AnimationEndListener;
+import com.darkxell.client.mechanics.animation.SpritesetAnimation;
 import com.darkxell.client.mechanics.animation.StatChangeAnimation;
 import com.darkxell.client.renderers.AbilityAnimationRenderer;
 import com.darkxell.client.renderers.MoveRenderer;
@@ -15,10 +17,7 @@ import com.darkxell.client.state.dungeon.AnimationState;
 import com.darkxell.client.state.dungeon.DelayState;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.move.MoveUseEvent;
-import com.darkxell.common.event.pokemon.BellyChangedEvent;
-import com.darkxell.common.event.pokemon.DamageDealtEvent;
-import com.darkxell.common.event.pokemon.FaintedPokemonEvent;
-import com.darkxell.common.event.pokemon.TriggeredAbilityEvent;
+import com.darkxell.common.event.pokemon.*;
 import com.darkxell.common.event.stats.ExperienceGainedEvent;
 import com.darkxell.common.event.stats.StatChangedEvent;
 import com.darkxell.common.pokemon.PokemonStats;
@@ -107,6 +106,37 @@ public final class MoveEvents
 			Persistance.dungeonState.setSubstate(s);
 			Persistance.eventProcessor.processPending = false;
 		}
+	}
+
+	public static void processStatusEvent(StatusConditionCreatedEvent event)
+	{
+		AnimationState s = new AnimationState(Persistance.dungeonState);
+		AnimationEndListener end = new AnimationEndListener()
+		{
+			@Override
+			public void onAnimationEnd(AbstractAnimation animation)
+			{
+				if (animation != null) s.onAnimationEnd(animation);
+				AbstractAnimation a = SpritesetAnimation.getStatusAnimation(event.condition.pokemon, event.condition.condition, null);
+				if (a != null)
+				{
+					a.source = event.condition;
+					a.start();
+				}
+			}
+		};
+		s.animation = SpritesetAnimation.getCustomAnimation(event.condition.pokemon, 200 + event.condition.condition.id, end);
+		if (s.animation == null) end.onAnimationEnd(null);
+		else
+		{
+			Persistance.dungeonState.setSubstate(s);
+			Persistance.eventProcessor.processPending = false;
+		}
+	}
+
+	public static void processStatusEvent(StatusConditionEndedEvent event)
+	{
+		Persistance.dungeonState.pokemonRenderer.getRenderer(event.condition.pokemon).removeAnimation(event.condition);
 	}
 
 	private MoveEvents()

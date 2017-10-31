@@ -19,6 +19,7 @@ import com.darkxell.client.ui.Frame;
 import com.darkxell.common.dungeon.DungeonInstance;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.player.Player;
+import com.darkxell.common.pokemon.LearnedMove;
 import com.darkxell.common.pokemon.PokemonRegistry;
 
 /**
@@ -51,8 +52,8 @@ public abstract class Persistance {
 
 	static {
 		player.addAlly(PokemonRegistry.find(1).generate(new Random(), 1));
-		player.addAlly(PokemonRegistry.find(375).generate(new Random(), 1));
-		player.getPokemon().gainExperience(5);
+		player.addAlly(PokemonRegistry.find(16).generate(new Random(), 1));
+		player.getPokemon().setMove(0, new LearnedMove(303));
 	}
 
 	/**

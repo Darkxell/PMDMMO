@@ -124,7 +124,7 @@ public class Floor
 	public ArrayList<DungeonPokemon> listPokemon()
 	{
 		ArrayList<DungeonPokemon> pokemon = new ArrayList<DungeonPokemon>();
-		for (Tile[] row : this.tiles)
+		if (this.tiles != null) for (Tile[] row : this.tiles)
 			for (Tile t : row)
 				if (t.getPokemon() != null && !pokemon.contains(t.getPokemon())) pokemon.add(t.getPokemon());
 		return pokemon;
@@ -135,6 +135,8 @@ public class Floor
 	{
 		ArrayList<DungeonEvent> e = new ArrayList<DungeonEvent>();
 		Weather w = this.dungeon.dungeon().weather(this.id, this.random);
+		for (DungeonPokemon pokemon : this.listPokemon())
+			e.addAll(pokemon.onFloorStart(this));
 		e.add(new WeatherCreatedEvent(new WeatherInstance(w, null, 0, this, -1)));
 		return e;
 	}
@@ -144,6 +146,8 @@ public class Floor
 	{
 		ArrayList<DungeonEvent> e = new ArrayList<DungeonEvent>();
 		// e.add(new MessageEvent(this, new Message("New turn!", false)));
+		for (DungeonPokemon pokemon : this.listPokemon())
+			e.addAll(pokemon.onTurnStart(this));
 		for (int w = this.weatherCondition.size() - 1; w >= 0; --w)
 			e.addAll(this.weatherCondition.get(w).update());
 		return e;
@@ -265,10 +269,11 @@ public class Floor
 		this.tiles = tiles;
 	}
 
-	public void summonPokemon(DungeonPokemon pokemon, int x, int y)
+	public ArrayList<DungeonEvent> summonPokemon(DungeonPokemon pokemon, int x, int y)
 	{
 		if (!(this.tiles == null || x < 0 || x >= this.tiles.length || y < 0 || y >= this.tiles[x].length)) this.tileAt(x, y).setPokemon(pokemon);
 		this.dungeon.registerActor(pokemon);
+		return pokemon.onFloorStart(this);
 	}
 
 	/** @return The tile at the input X, Y coordinates. */

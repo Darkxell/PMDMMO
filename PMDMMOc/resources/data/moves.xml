@@ -274,8 +274,8 @@
       <statchange stat="1" stage="2" />
     </statchanges>
   </move>
-  <move id="303" type="3" behavior="5" category="2" pp="40" power="-1" accuracy="90" targets="3" />
-  <move id="304" type="3" behavior="5" category="2" pp="35" power="-1" accuracy="75" targets="0" />
+  <move id="303" type="3" movetype="StatusCondition" category="2" pp="40" power="-1" accuracy="90" targets="0" status="0" />
+  <move id="304" type="3" movetype="StatusCondition" category="2" pp="35" power="-1" accuracy="75" targets="0" status="0" />
   <move id="305" type="3" behavior="5" category="0" pp="35" power="15" targets="0" random="30" />
   <move id="306" type="3" behavior="5" category="1" pp="20" power="65" targets="0" random="30" />
   <move id="307" type="3" behavior="5" category="1" pp="20" power="30" accuracy="70" targets="0" random="40" />

@@ -1,8 +1,11 @@
 package com.darkxell.common.pokemon;
 
 import java.util.ArrayList;
+import java.util.function.Predicate;
 
+import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
+import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.status.StatusCondition;
 import com.darkxell.common.status.StatusConditionInstance;
 import com.darkxell.common.util.Directions;
@@ -113,6 +116,11 @@ public class DungeonPokemon
 		this.increaseBelly(quantity);
 	}
 
+	public void inflictStatusCondition(StatusConditionInstance condition)
+	{
+		this.statusConditions.add(condition);
+	}
+
 	public boolean isBellyFull()
 	{
 		return this.getBelly() == this.getBellySize();
@@ -128,9 +136,41 @@ public class DungeonPokemon
 		return this.pokemon.player != null && this.pokemon.player.getDungeonPokemon() == this;
 	}
 
+	public ArrayList<DungeonEvent> onFloorStart(Floor floor)
+	{
+		ArrayList<DungeonEvent> events = new ArrayList<DungeonEvent>();
+		this.statusConditions.clear();
+		return events;
+	}
+
+	public ArrayList<DungeonEvent> onTurnStart(Floor floor)
+	{
+		ArrayList<DungeonEvent> events = new ArrayList<DungeonEvent>();
+		for (StatusConditionInstance condition : this.statusConditions)
+			events.addAll(condition.tick(floor));
+		return events;
+	}
+
 	public void receiveMove(byte attackType)
 	{
 		if (attackType > this.attacksReceived) this.attacksReceived = attackType;
+	}
+
+	public void removeStatusCondition(StatusCondition condition)
+	{
+		this.statusConditions.removeIf(new Predicate<StatusConditionInstance>()
+		{
+			@Override
+			public boolean test(StatusConditionInstance t)
+			{
+				return t.condition == condition;
+			}
+		});
+	}
+
+	public void removeStatusCondition(StatusConditionInstance condition)
+	{
+		this.statusConditions.remove(condition);
 	}
 
 	/** Changes the direction this Pokémon is facing. */
