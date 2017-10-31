@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.animation.AbstractAnimation;
+import com.darkxell.client.mechanics.animation.AnimationEndListener;
 import com.darkxell.client.mechanics.animation.SpritesetAnimation;
 import com.darkxell.client.mechanics.animation.StatChangeAnimation;
 import com.darkxell.client.renderers.AbilityAnimationRenderer;
@@ -111,8 +112,17 @@ public final class MoveEvents
 	public static void processStatusEvent(StatusConditionCreatedEvent event)
 	{
 		AnimationState s = new AnimationState(Persistance.dungeonState);
+		AnimationEndListener end = new AnimationEndListener()
+		{
+			@Override
+			public void onAnimationEnd(AbstractAnimation animation)
+			{
+				s.onAnimationEnd(animation);
+				SpritesetAnimation.getStatusAnimation(event.condition.pokemon, event.condition.condition, null).start();
+			}
+		};
 		if (event.condition.condition == StatusCondition.POISONED || event.condition.condition == StatusCondition.BADLY_POISONED) s.animation = SpritesetAnimation
-				.getCustomAnimation(event.condition.pokemon, 200, s);
+				.getCustomAnimation(event.condition.pokemon, 200, end);
 		if (s.animation != null)
 		{
 			Persistance.dungeonState.setSubstate(s);

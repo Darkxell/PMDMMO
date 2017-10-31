@@ -10,6 +10,8 @@ public class AbstractAnimation
 	public final AnimationEndListener listener;
 	/** True if displaying this Animation should stop the Pending Events. */
 	public boolean needsPause = true;
+	/** The number of times this animation plays. Usually 1, or -1 as until removed. */
+	public int plays = 1;
 	private int tick = 0;
 
 	public AbstractAnimation(int duration, AnimationEndListener listener)
@@ -21,13 +23,14 @@ public class AbstractAnimation
 	/** @return From 0 to 1, how far this Animation is. */
 	public float completion()
 	{
-		return this.tick * 1f / this.duration;
+		return this.tick * 1f / (this.duration * Math.abs(this.plays));
 	}
 
 	/** @return True if this Animation has ended. */
 	public boolean isOver()
 	{
-		return this.tick == this.duration - 1;
+		if (this.plays == -1) return false;
+		return this.tick == (this.duration - 1) * Math.abs(this.plays);
 	}
 
 	/** Called when this Animation finishes. */

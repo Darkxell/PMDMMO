@@ -10,6 +10,7 @@ import com.darkxell.client.resources.images.AnimationSpriteset;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.status.StatusCondition;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.XMLUtils;
 
@@ -19,6 +20,7 @@ public class SpritesetAnimation extends PokemonAnimation
 	private static final HashMap<Integer, Element> custom = new HashMap<Integer, Element>();
 	private static final HashMap<Integer, Element> items = new HashMap<Integer, Element>();
 	private static final HashMap<Integer, Element> moves = new HashMap<Integer, Element>();
+	private static final HashMap<Integer, Element> statuses = new HashMap<Integer, Element>();
 
 	private static AbstractAnimation getAnimation(int id, HashMap<Integer, Element> registry, DungeonPokemon target, AnimationEndListener listener)
 	{
@@ -32,8 +34,9 @@ public class SpritesetAnimation extends PokemonAnimation
 		}
 		int width = Integer.parseInt(xml.getAttributeValue("width"));
 		int height = Integer.parseInt(xml.getAttributeValue("height"));
-		AnimationSpriteset spriteset = AnimationSpriteset.getSpriteset((registry == items ? "/items" : registry == custom ? "/animations" : "/moves") + "/"
-				+ id + ".png", width, height);
+		AnimationSpriteset spriteset = AnimationSpriteset.getSpriteset((registry == items ? "/items" : registry == moves ? "/moves"
+				: registry == statuses ? "/status" : "/animations")
+				+ "/" + id + ".png", width, height);
 		int x = XMLUtils.getAttribute(xml, "x", width / 2);
 		int y = XMLUtils.getAttribute(xml, "y", height / 2);
 		int spriteDuration = XMLUtils.getAttribute(xml, "spriteduration", 2);
@@ -62,6 +65,13 @@ public class SpritesetAnimation extends PokemonAnimation
 		return getAnimation(m.id, moves, target, listener);
 	}
 
+	public static AbstractAnimation getStatusAnimation(DungeonPokemon target, StatusCondition s, AnimationEndListener listener)
+	{
+		AbstractAnimation a = getAnimation(s.id, statuses, target, listener);
+		a.plays = -1;
+		return a;
+	}
+
 	public static void loadData()
 	{
 		Element xml = XMLUtils.readFile(new File("resources/data/animations.xml"));
@@ -71,6 +81,8 @@ public class SpritesetAnimation extends PokemonAnimation
 			items.put(Integer.parseInt(item.getAttributeValue("id")), item);
 		for (Element move : xml.getChild("moves").getChildren("move"))
 			moves.put(Integer.parseInt(move.getAttributeValue("id")), move);
+		for (Element move : xml.getChild("statuses").getChildren("status"))
+			statuses.put(Integer.parseInt(move.getAttributeValue("id")), move);
 	}
 
 	/** For each sprite, true if it should be drawn behind the Pokémon. */
@@ -115,7 +127,7 @@ public class SpritesetAnimation extends PokemonAnimation
 
 	public int index()
 	{
-		return this.sprites[this.tick() / this.spriteDuration];
+		return this.sprites[this.tick() % this.duration / this.spriteDuration];
 	}
 
 	@Override

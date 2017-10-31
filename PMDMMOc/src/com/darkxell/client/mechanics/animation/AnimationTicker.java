@@ -1,13 +1,13 @@
 package com.darkxell.client.mechanics.animation;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 
 public final class AnimationTicker
 {
 
 	public static final AnimationTicker instance = new AnimationTicker();
 
-	private HashSet<AbstractAnimation> animations = new HashSet<AbstractAnimation>();
+	private ArrayList<AbstractAnimation> animations = new ArrayList<AbstractAnimation>();
 
 	private AnimationTicker()
 	{}
@@ -24,8 +24,8 @@ public final class AnimationTicker
 
 	public void update()
 	{
-		for (AbstractAnimation a : animations)
-			a.update();
+		for (int i = 0; i < this.animations.size(); ++i)
+			this.animations.get(i).update();
 	}
 
 }

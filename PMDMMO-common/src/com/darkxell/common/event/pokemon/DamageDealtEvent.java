@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.status.PeriodicDamageStatusCondition;
 import com.darkxell.common.util.language.Message;
 import com.darkxell.common.weather.WeatherDamaging;
 
@@ -29,8 +30,8 @@ public class DamageDealtEvent extends DungeonEvent
 
 		if (this.source instanceof WeatherDamaging) this.messages.add(new Message("weather.damage_dealt").addReplacement("<pokemon>",
 				target.pokemon.getNickname()).addReplacement("<amount>", Integer.toString(damage)));
-		else if (!(this.source instanceof BellyChangedEvent)) this.messages.add(new Message("move.damage_dealt").addReplacement("<pokemon>",
-				target.pokemon.getNickname()).addReplacement("<amount>", Integer.toString(damage)));
+		else if (!(this.source instanceof BellyChangedEvent || this.source instanceof PeriodicDamageStatusCondition)) this.messages.add(new Message(
+				"move.damage_dealt").addReplacement("<pokemon>", target.pokemon.getNickname()).addReplacement("<amount>", Integer.toString(damage)));
 	}
 
 	@Override
