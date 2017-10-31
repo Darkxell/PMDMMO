@@ -136,6 +136,13 @@ public class DungeonPokemon
 		return this.pokemon.player != null && this.pokemon.player.getDungeonPokemon() == this;
 	}
 
+	public ArrayList<DungeonEvent> onFloorStart(Floor floor)
+	{
+		ArrayList<DungeonEvent> events = new ArrayList<DungeonEvent>();
+		this.statusConditions.clear();
+		return events;
+	}
+
 	public ArrayList<DungeonEvent> onTurnStart(Floor floor)
 	{
 		ArrayList<DungeonEvent> events = new ArrayList<DungeonEvent>();

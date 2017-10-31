@@ -107,6 +107,7 @@ public class DungeonState extends AbstractState
 	{
 		super.onStart();
 		Persistance.soundmanager.setBackgroundMusic(SoundsHolder.getSong("07 Tiny Woods.mp3"));
+		Persistance.eventProcessor.processPending();
 	}
 
 	private void placeTeam()
@@ -136,7 +137,9 @@ public class DungeonState extends AbstractState
 			}
 		});
 
-		for (DungeonPokemon p : Persistance.player.getDungeonTeam())
+		DungeonPokemon[] team = Persistance.player.getDungeonTeam();
+
+		for (DungeonPokemon p : team)
 		{
 			if (p == Persistance.player.getDungeonPokemon()) continue;
 			if (candidates.size() == 0)
@@ -149,6 +152,9 @@ public class DungeonState extends AbstractState
 			candidates.remove(0);
 			this.pokemonRenderer.register(p);
 		}
+
+		for (int i = team.length - 1; i >= 0; --i)
+			Persistance.eventProcessor.addToPending(team[i].onFloorStart(Persistance.floor));
 	}
 
 	@Override
