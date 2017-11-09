@@ -102,7 +102,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 
 	private void processDungeonExitEvent(DungeonExitEvent event)
 	{
-		if (event.pokemon == Persistance.player.getDungeonPokemon())
+		if (event.pokemon == Persistance.player.getDungeonLeader())
 		{
 			Persistance.stateManager.setState(new FreezoneExploreState());
 			Persistance.displaymap = LocalMap.instance;

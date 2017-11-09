@@ -25,6 +25,8 @@ public class DungeonInstance
 	private ArrayList<GameTurn> pastTurns = new ArrayList<GameTurn>();
 	/** RNG for floor generation. */
 	public final Random random;
+	/** For each actor, whether it has taken its action. */
+	private ArrayList<Boolean> wasActionTaken = new ArrayList<Boolean>();
 
 	public DungeonInstance(int id, Random random)
 	{
@@ -32,7 +34,7 @@ public class DungeonInstance
 		this.random = random;
 		this.currentFloor = this.createFloor(1);
 		this.endTurn();
-		this.currentActor = 0;
+		this.currentActor = -1;
 	}
 
 	private Floor createFloor(int floorID)
@@ -72,6 +74,8 @@ public class DungeonInstance
 		if (this.currentTurn != null) this.pastTurns.add(this.currentTurn);
 		this.currentActor = -1;
 		this.currentTurn = new GameTurn(this.currentFloor);
+		for (int i = 0; i < this.wasActionTaken.size(); ++i)
+			this.wasActionTaken.set(i, false);
 		return this.currentFloor.onTurnStart();
 	}
 
@@ -84,8 +88,7 @@ public class DungeonInstance
 	/** @return The Pokémon taking its turn. null if there is no actor left, thus the turn is over. */
 	public DungeonPokemon getActor()
 	{
-		if (this.currentActor >= this.actors.size()) return null;
-		if (this.currentActor == -1) ++this.currentActor;
+		if (this.currentActor >= this.actors.size() || this.currentActor < 0) return null;
 		return this.actors.get(this.currentActor);
 	}
 
@@ -99,29 +102,54 @@ public class DungeonInstance
 	/** @return The next Pokémon to take its turn. null if there is no actor left, thus the turn is over. */
 	public DungeonPokemon getNextActor()
 	{
-		if (this.currentActor >= this.actors.size() - 1) return null;
-		return this.actors.get(this.currentActor + 1);
+		boolean found = this.currentActor == -1; // If start of turn, still needs to select first actor.
+		for (int i = 0; i < this.actors.size(); ++i)
+			if (!this.wasActionTaken.get(i))
+			{
+				// Needs to return the second one, the first is the current actor.
+				if (found) return this.actors.get(i);
+				else found = true;
+			}
+		return null;
 	}
 
 	public void insertActor(DungeonPokemon pokemon, int index)
 	{
 		this.actors.add(index, pokemon);
+		this.wasActionTaken.add(index, true);
 	}
 
 	/** Proceeds to the next actor and returns it. */
 	public DungeonPokemon nextActor()
 	{
-		++this.currentActor;
+		DungeonPokemon p = this.getNextActor();
+		if (p == null) this.currentActor = this.actors.size();
+		else this.currentActor = this.actors.indexOf(p);
 		return this.getActor();
 	}
 
 	public void registerActor(DungeonPokemon pokemon)
 	{
 		this.actors.add(pokemon);
+		this.wasActionTaken.add(true);
+	}
+
+	public void resetAction(DungeonPokemon pokemon)
+	{
+		if (!this.actors.contains(pokemon)) return;
+		this.wasActionTaken.set(this.actors.indexOf(pokemon), false);
+	}
+
+	public void takeAction(DungeonPokemon pokemon)
+	{
+		if (!this.actors.contains(pokemon)) return;
+		this.wasActionTaken.set(this.actors.indexOf(pokemon), true);
 	}
 
 	public void unregisterActor(DungeonPokemon pokemon)
 	{
+		if (!this.actors.contains(pokemon)) return;
+		this.wasActionTaken.remove(this.actors.indexOf(pokemon));
 		this.actors.remove(pokemon);
 	}
 

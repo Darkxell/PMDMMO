@@ -14,18 +14,21 @@ import com.darkxell.common.player.ItemContainer;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.language.Message;
 
-public class DungeonMenuState extends OptionSelectionMenuState {
+public class DungeonMenuState extends OptionSelectionMenuState
+{
 
 	@SuppressWarnings("unused")
 	private MenuOption moves, items, team, others, ground;
 
-	public DungeonMenuState(AbstractState background) {
+	public DungeonMenuState(AbstractState background)
+	{
 		super(background);
 		this.createOptions();
 	}
 
 	@Override
-	protected void createOptions() {
+	protected void createOptions()
+	{
 		MenuTab tab = new MenuTab();
 		tab.addOption((this.moves = new MenuOption("menu.moves")));
 		tab.addOption((this.items = new MenuOption("menu.items")));
@@ -36,49 +39,42 @@ public class DungeonMenuState extends OptionSelectionMenuState {
 	}
 
 	@Override
-	protected void onExit() {
+	protected void onExit()
+	{
 		Persistance.stateManager.setState(this.backgroundState);
 	}
 
 	@Override
-	protected void onOptionSelected(MenuOption option) {
+	protected void onOptionSelected(MenuOption option)
+	{
 		DungeonState s = Persistance.dungeonState;
-		if (option == this.moves)
-			Persistance.stateManager.setState(new MovesMenuState(s));
-		else if (option == this.items) {
+		if (option == this.moves) Persistance.stateManager.setState(new MovesMenuState(s));
+		else if (option == this.items)
+		{
 			ArrayList<ItemContainer> containers = new ArrayList<ItemContainer>();
-			if (!Persistance.player.inventory.isEmpty())
-				containers.add(Persistance.player.inventory);
-			if (Persistance.player.getDungeonPokemon().tile.getItem() != null)
-				containers.add(Persistance.player.getDungeonPokemon().tile);
+			if (!Persistance.player.inventory.isEmpty()) containers.add(Persistance.player.inventory);
+			if (Persistance.player.getDungeonLeader().tile.getItem() != null) containers.add(Persistance.player.getDungeonLeader().tile);
 			for (Pokemon pokemon : Persistance.player.getTeam())
-				if (pokemon.getItem() != null)
-					containers.add(pokemon);
-			if (containers.isEmpty()) {
+				if (pokemon.getItem() != null) containers.add(pokemon);
+			if (containers.isEmpty())
+			{
 				this.onExit();
 				s.logger.showMessage(new Message("inventory.empty"));
-			} else
-				Persistance.stateManager.setState(
-						new ItemContainersMenuState(s, containers.toArray(new ItemContainer[containers.size()])));
-		} else if (option == this.team)
-			Persistance.stateManager.setState(new TeamMenuState(s));
-		else if (option == this.ground) {
+			} else Persistance.stateManager.setState(new ItemContainersMenuState(s, containers.toArray(new ItemContainer[containers.size()])));
+		} else if (option == this.team) Persistance.stateManager.setState(new TeamMenuState(s));
+		else if (option == this.ground)
+		{
 			this.onExit();
-			if (Persistance.player.getDungeonPokemon().tile.type() == TileType.STAIR)
-				Persistance.stateManager.setState(new StairMenuState());
-			else if (Persistance.player.getDungeonPokemon().tile.getItem() == null)
-				s.logger.showMessage(new Message("ground.empty"));
-			else
-				Persistance.stateManager
-						.setState(new ItemContainersMenuState(s, Persistance.player.getDungeonPokemon().tile));
+			if (Persistance.player.getDungeonLeader().tile.type() == TileType.STAIR) Persistance.stateManager.setState(new StairMenuState());
+			else if (Persistance.player.getDungeonLeader().tile.getItem() == null) s.logger.showMessage(new Message("ground.empty"));
+			else Persistance.stateManager.setState(new ItemContainersMenuState(s, Persistance.player.getDungeonLeader().tile));
 		}
 	}
-	
+
 	@Override
 	public void render(Graphics2D g, int width, int height)
 	{
 		super.render(g, width, height);
-		TextRenderer.render(g, "Belly: " + Persistance.player.getDungeonPokemon().getBelly() + "/"
-				+ Persistance.player.getDungeonPokemon().getBellySize(), 0, 0);
+		TextRenderer.render(g, "Belly: " + Persistance.player.getDungeonLeader().getBelly() + "/" + Persistance.player.getDungeonLeader().getBellySize(), 0, 0);
 	}
 }

@@ -70,7 +70,7 @@ public class DungeonState extends AbstractState
 		this.placeTeam();
 
 		this.logger = new DungeonLogger(this);
-		this.camera = new Point(Persistance.player.getDungeonPokemon().tile.x * AbstractDungeonTileset.TILE_SIZE, Persistance.player.getDungeonPokemon().tile.y
+		this.camera = new Point(Persistance.player.getDungeonLeader().tile.x * AbstractDungeonTileset.TILE_SIZE, Persistance.player.getDungeonLeader().tile.y
 				* AbstractDungeonTileset.TILE_SIZE);
 		this.currentSubstate = this.actionSelectionState = new ActionSelectionState(this);
 		this.currentSubstate.onStart();
@@ -113,12 +113,12 @@ public class DungeonState extends AbstractState
 	private void placeTeam()
 	{
 		Point spawn = Persistance.floor.teamSpawn;
-		Persistance.floor.tileAt(spawn.x, spawn.y).setPokemon(Persistance.player.getDungeonPokemon());
-		Persistance.dungeon.insertActor(Persistance.player.getDungeonPokemon(), 0);
-		this.pokemonRenderer.register(Persistance.player.getDungeonPokemon());
+		Persistance.floor.tileAt(spawn.x, spawn.y).setPokemon(Persistance.player.getDungeonLeader());
+		Persistance.dungeon.insertActor(Persistance.player.getDungeonLeader(), 0);
+		this.pokemonRenderer.register(Persistance.player.getDungeonLeader());
 
 		ArrayList<Tile> candidates = new ArrayList<Tile>();
-		Tile initial = Persistance.player.getDungeonPokemon().tile;
+		Tile initial = Persistance.player.getDungeonLeader().tile;
 		candidates.add(initial.adjacentTile(Directions.WEST));
 		candidates.add(initial.adjacentTile(Directions.EAST));
 		candidates.add(initial.adjacentTile(Directions.SOUTH));
@@ -141,7 +141,7 @@ public class DungeonState extends AbstractState
 
 		for (DungeonPokemon p : team)
 		{
-			if (p == Persistance.player.getDungeonPokemon()) continue;
+			if (p == Persistance.player.getDungeonLeader()) continue;
 			if (candidates.size() == 0)
 			{
 				Logger.e("DungeonState.placeAllies() @124 : Could not find a spawn location for ally " + p.pokemon.getNickname() + "!");

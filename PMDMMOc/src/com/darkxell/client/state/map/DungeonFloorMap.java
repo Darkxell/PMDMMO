@@ -35,9 +35,9 @@ public class DungeonFloorMap extends AbstractDisplayMap
 	@Override
 	public void render(Graphics2D g, int width, int height)
 	{
-		if ((this.followLeader || !this.defaultLocationSet) && this.floor != null && Persistance.player.getDungeonPokemon().tile != null)
+		if ((this.followLeader || !this.defaultLocationSet) && this.floor != null && Persistance.player.getDungeonLeader().tile != null)
 		{
-			PokemonRenderer renderer = Persistance.dungeonState.pokemonRenderer.getRenderer(Persistance.player.getDungeonPokemon());
+			PokemonRenderer renderer = Persistance.dungeonState.pokemonRenderer.getRenderer(Persistance.player.getDungeonLeader());
 			this.x = (int) (renderer.x() * TILE_SIZE / AbstractDungeonTileset.TILE_SIZE - width / 2);
 			this.y = (int) (renderer.y() * TILE_SIZE / AbstractDungeonTileset.TILE_SIZE - height / 2);
 			this.defaultLocationSet = true;
@@ -61,7 +61,7 @@ public class DungeonFloorMap extends AbstractDisplayMap
 					else
 					{
 						int tx = tile.x * TILE_SIZE, ty = tile.y * TILE_SIZE;
-						boolean isMain = tile.getPokemon() == Persistance.player.getDungeonPokemon();
+						boolean isMain = tile.getPokemon() == Persistance.player.getDungeonLeader();
 						if ((this.tick >= PLAYER_TICK || !isMain) && tile.getPokemon() != null) g.drawImage(this.tileset.ground(), tx, ty, null);
 						else if (tile.getItem() != null) g.drawImage(this.tileset.item(), tx, ty, null);
 						else if (tile.trap == TrapRegistry.WONDER_TILE) g.drawImage(this.tileset.wonder(), tx, ty, null);
@@ -86,7 +86,7 @@ public class DungeonFloorMap extends AbstractDisplayMap
 
 			for (PokemonRenderer renderer : Persistance.dungeonState.pokemonRenderer.listRenderers())
 			{
-				boolean isMain = renderer.pokemon == Persistance.player.getDungeonPokemon();
+				boolean isMain = renderer.pokemon == Persistance.player.getDungeonLeader();
 				int x = (int) (renderer.x() * TILE_SIZE / AbstractDungeonTileset.TILE_SIZE), y = (int) (renderer.y() * TILE_SIZE / AbstractDungeonTileset.TILE_SIZE);
 				if (isMain && this.tick >= PLAYER_TICK) g.drawImage(this.tileset.player(), x, y, null);
 				else if (!isMain)

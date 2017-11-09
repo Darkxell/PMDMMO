@@ -49,7 +49,7 @@ public class Player
 		this.resetDungeonTeam();
 	}
 
-	public DungeonPokemon getDungeonPokemon()
+	public DungeonPokemon getDungeonLeader()
 	{
 		if (this.dungeonPokemon == null) this.dungeonPokemon = new DungeonPokemon(this.mainPokemon);
 		return this.dungeonPokemon;
@@ -65,23 +65,23 @@ public class Player
 
 	public DungeonPokemon getMember(int index)
 	{
-		if (index == 0) return this.getDungeonPokemon();
+		if (index == 0) return this.getDungeonLeader();
 		else if (index < this.dungeonAllies.size() + 1) return this.dungeonAllies.get(index - 1);
 		return null;
-	}
-
-	public Pokemon getPokemon()
-	{
-		return this.mainPokemon;
 	}
 
 	public Pokemon[] getTeam()
 	{
 		Pokemon[] team = new Pokemon[this.allies.size() + 1];
-		team[0] = this.getPokemon();
+		team[0] = this.getTeamLeader();
 		for (int i = 1; i < team.length; ++i)
 			team[i] = this.allies.get(i - 1);
 		return team;
+	}
+
+	public Pokemon getTeamLeader()
+	{
+		return this.mainPokemon;
 	}
 
 	public boolean isAlly(Pokemon pokemon)
@@ -109,7 +109,7 @@ public class Player
 
 	public void setDungeonPokemon(Pokemon pokemon, DungeonPokemon dungeonPokemon)
 	{
-		if (pokemon == this.getPokemon()) this.setDungeonPokemon(dungeonPokemon);
+		if (pokemon == this.getTeamLeader()) this.setDungeonPokemon(dungeonPokemon);
 		else if (this.allies.contains(pokemon)) this.dungeonAllies.set(this.allies.indexOf(pokemon), dungeonPokemon);
 	}
 

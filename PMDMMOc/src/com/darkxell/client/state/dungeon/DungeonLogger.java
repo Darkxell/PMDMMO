@@ -104,7 +104,7 @@ public class DungeonLogger {
 
 	/** Shows a message to the player. */
 	public void showMessage(Message message) {
-		message.addReplacement("<player>", Persistance.player.getPokemon().getNickname());
+		message.addReplacement("<player>", Persistance.player.getTeamLeader().getNickname());
 		this.log.add(message);
 		this.messages.add(message);
 		if (this.log.size() > 40)

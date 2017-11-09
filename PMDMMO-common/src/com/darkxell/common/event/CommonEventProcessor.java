@@ -27,11 +27,13 @@ public class CommonEventProcessor
 	{
 		ArrayList<PokemonTravel> travellers = new ArrayList<PokemonTravel>();
 		travellers.add(new PokemonTravel(this.dungeon.getActor(), running, direction));
+		this.dungeon.takeAction(this.dungeon.getActor());
 		boolean flag = true;
 		DungeonEvent e = null;
+		ArrayList<DungeonPokemon> skippers = new ArrayList<DungeonPokemon>();
 		while (flag)
 		{
-			e = AI.makeAction(this.dungeon.currentFloor(), this.dungeon.nextActor());
+			e = AI.takeAction(this.dungeon.currentFloor(), this.dungeon.nextActor());
 
 			if (e instanceof PokemonTravelEvent)
 			{
@@ -40,7 +42,14 @@ public class CommonEventProcessor
 				// Simulating travel
 				event.origin.removePokemon(event.pokemon);
 				event.destination.setPokemon(event.pokemon);
-			} else if (!(e instanceof TurnSkippedEvent)) flag = false;
+				this.dungeon.takeAction(event.pokemon);
+			} else if (e instanceof TurnSkippedEvent)
+			{
+				// Simulating skipping
+				skippers.add(e.actor);
+				this.dungeon.takeAction(e.actor);
+				this.addToPending(e);
+			} else flag = false;
 		}
 
 		// Resetting simulations
@@ -49,9 +58,15 @@ public class CommonEventProcessor
 		for (PokemonTravel travel : travellers)
 			travel.origin.setPokemon(travel.pokemon);
 
-		if (e != null) addToPending(e);
+		// Resetting turns taken
+		for (PokemonTravel travel : travellers)
+			this.dungeon.resetAction(travel.pokemon);
+		for (DungeonPokemon pokemon : skippers)
+			this.dungeon.resetAction(pokemon);
+
+		if (e != null) this.addToPending(e);
 		PokemonTravelEvent event = new PokemonTravelEvent(this.dungeon.currentFloor(), travellers.toArray(new PokemonTravel[travellers.size()]));
-		processEvent(event);
+		this.processEvent(event);
 	}
 
 	/** Adds the input events to the pending stack, without processing them. */
@@ -80,8 +95,8 @@ public class CommonEventProcessor
 
 	protected void onTurnEnd()
 	{
-		addToPending(this.dungeon.endTurn());
-		processPending();
+		this.addToPending(this.dungeon.endTurn());
+		this.processPending();
 	}
 
 	/** Processes the input event and adds the resulting events to the pending stack. */
@@ -89,9 +104,12 @@ public class CommonEventProcessor
 	{
 		this.processPending = true;
 		this.dungeon.eventOccured(event);
+		if (event.actor != null) this.dungeon.takeAction(event.actor);
+		else if (event instanceof PokemonTravelEvent) for (PokemonTravel travel : ((PokemonTravelEvent) event).travels())
+			this.dungeon.takeAction(travel.pokemon);
 
-		if (event.isValid()) doProcess(event);
-		if (this.processPending) processPending();
+		if (event.isValid()) this.doProcess(event);
+		if (this.processPending) this.processPending();
 	}
 
 	/** Adds all the input events to the pending stack and starts processing them. May not process all events in order if some produce new Events. */
@@ -104,11 +122,10 @@ public class CommonEventProcessor
 	/** Processes the next pending event. */
 	public void processPending()
 	{
-		if (this.hasPendingEvents()) processEvent(this.pending.pop());
+		if (this.hasPendingEvents()) this.processEvent(this.pending.pop());
 		else
 		{
-			DungeonInstance dungeon = this.dungeon;
-			DungeonPokemon actor = dungeon.nextActor();
+			DungeonPokemon actor = this.dungeon.nextActor();
 			if (actor == null)
 			{
 				this.onTurnEnd();
@@ -116,8 +133,8 @@ public class CommonEventProcessor
 			} else if (actor.isTeamLeader()) return;
 			else
 			{
-				addToPending(AI.makeAction(this.dungeon.currentFloor(), actor));
-				processPending();
+				this.addToPending(AI.takeAction(this.dungeon.currentFloor(), actor));
+				this.processPending();
 			}
 		}
 	}

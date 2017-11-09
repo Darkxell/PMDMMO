@@ -133,7 +133,7 @@ public class DungeonPokemon
 
 	public boolean isTeamLeader()
 	{
-		return this.pokemon.player != null && this.pokemon.player.getDungeonPokemon() == this;
+		return this.pokemon.player != null && this.pokemon.player.getDungeonLeader() == this;
 	}
 
 	public ArrayList<DungeonEvent> onFloorStart(Floor floor)

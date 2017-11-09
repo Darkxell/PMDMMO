@@ -112,7 +112,7 @@ public class PokemonTravelState extends DungeonSubState
 		for (int i = 0; i < this.travels.length; ++i)
 		{
 			this.animations[i].update(completion);
-			if (this.travels[i].pokemon.pokemon == Persistance.player.getPokemon())
+			if (this.travels[i].pokemon.pokemon == Persistance.player.getTeamLeader())
 			{
 				this.parent.camera.x = (int) (this.animations[i].current().getX() * AbstractDungeonTileset.TILE_SIZE);
 				this.parent.camera.y = (int) (this.animations[i].current().getY() * AbstractDungeonTileset.TILE_SIZE);
@@ -127,7 +127,7 @@ public class PokemonTravelState extends DungeonSubState
 			for (PokemonTravel travel : this.travels)
 			{
 				Persistance.dungeonState.pokemonRenderer.getRenderer(travel.pokemon).setXY(travel.destination.x, travel.destination.y);
-				if (travel.destination.type() == TileType.STAIR) stairLand = travel.pokemon == Persistance.player.getDungeonPokemon();
+				if (travel.destination.type() == TileType.STAIR) stairLand = travel.pokemon == Persistance.player.getDungeonLeader();
 			}
 			Persistance.eventProcessor.landedOnStairs = stairLand;
 			this.parent.setSubstate(this.parent.actionSelectionState);
