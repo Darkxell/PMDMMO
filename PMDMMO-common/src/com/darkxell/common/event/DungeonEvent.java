@@ -3,6 +3,7 @@ package com.darkxell.common.event;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
+import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Message;
 
 public abstract class DungeonEvent
@@ -19,6 +20,8 @@ public abstract class DungeonEvent
 		}
 	}
 
+	/** The Pokémon that performed the action triggering this Event. This action will consume its turn. May be null if no performer or if this Event doesn't consume the actor's turn. */
+	public final DungeonPokemon actor;
 	/** The Floor this Event occurs on. */
 	public final Floor floor;
 	/** The messages that were generated. */
@@ -28,7 +31,13 @@ public abstract class DungeonEvent
 
 	public DungeonEvent(Floor floor)
 	{
+		this(floor, null);
+	}
+
+	public DungeonEvent(Floor floor, DungeonPokemon actor)
+	{
 		this.floor = floor;
+		this.actor = actor;
 		this.messages = new ArrayList<Message>();
 		this.resultingEvents = new ArrayList<DungeonEvent>();
 	}

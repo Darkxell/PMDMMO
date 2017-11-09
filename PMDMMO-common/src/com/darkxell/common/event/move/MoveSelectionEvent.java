@@ -30,7 +30,7 @@ public class MoveSelectionEvent extends DungeonEvent
 
 	public MoveSelectionEvent(Floor floor, LearnedMove move, DungeonPokemon user)
 	{
-		super(floor);
+		super(floor, user);
 		this.usedMove = new MoveUse(move, user);
 
 		if (this.usedMove.move.move() != MoveRegistry.ATTACK) this.messages.add(new Message("move.used")

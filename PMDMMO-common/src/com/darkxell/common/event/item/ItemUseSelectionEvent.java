@@ -26,7 +26,7 @@ public class ItemUseSelectionEvent extends DungeonEvent
 
 	public ItemUseSelectionEvent(Floor floor, Item item, DungeonPokemon user, DungeonPokemon target, ItemContainer source, int sourceIndex)
 	{
-		super(floor);
+		super(floor, user);
 		this.item = item;
 		this.user = user;
 		this.target = target;
