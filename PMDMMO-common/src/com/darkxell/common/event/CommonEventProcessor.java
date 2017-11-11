@@ -23,11 +23,11 @@ public class CommonEventProcessor
 		this.dungeon = dungeon;
 	}
 
-	public void actorTravels(short direction, boolean running)
+	public void actorTravels(DungeonPokemon actor, short direction, boolean running)
 	{
 		ArrayList<PokemonTravel> travellers = new ArrayList<PokemonTravel>();
-		travellers.add(new PokemonTravel(this.dungeon.getActor(), running, direction));
-		this.dungeon.takeAction(this.dungeon.getActor());
+		travellers.add(new PokemonTravel(actor, running, direction));
+		this.dungeon.takeAction(actor);
 		boolean flag = true;
 		DungeonEvent e = null;
 		ArrayList<DungeonPokemon> skippers = new ArrayList<DungeonPokemon>();

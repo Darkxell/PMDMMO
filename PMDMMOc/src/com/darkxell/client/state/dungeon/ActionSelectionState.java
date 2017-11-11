@@ -107,7 +107,7 @@ public class ActionSelectionState extends DungeonSubState
 			else
 			{
 				short direction = this.checkMovement();
-				if (direction != -1) Persistance.eventProcessor.actorTravels(direction, Keys.isPressed(Keys.KEY_RUN)
+				if (direction != -1) Persistance.eventProcessor.actorTravels(Persistance.player.getDungeonLeader(), direction, Keys.isPressed(Keys.KEY_RUN)
 						&& !Persistance.player.getDungeonLeader().isFamished());
 			}
 		}

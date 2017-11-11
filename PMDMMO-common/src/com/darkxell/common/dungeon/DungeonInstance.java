@@ -109,6 +109,7 @@ public class DungeonInstance
 
 	public void insertActor(DungeonPokemon pokemon, int index)
 	{
+		if (this.actors.contains(pokemon)) return;
 		this.actors.add(index, pokemon);
 		this.wasActionTaken.add(index, true);
 	}
@@ -124,6 +125,7 @@ public class DungeonInstance
 
 	public void registerActor(DungeonPokemon pokemon)
 	{
+		if (this.actors.contains(pokemon)) return;
 		this.actors.add(pokemon);
 		this.wasActionTaken.add(true);
 	}
