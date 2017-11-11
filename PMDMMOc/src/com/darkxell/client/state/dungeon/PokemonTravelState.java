@@ -74,7 +74,11 @@ public class PokemonTravelState extends DungeonSubState
 
 	private boolean shouldStopRunning(DungeonPokemon runner, PokemonTravel travel)
 	{
-		if (!runner.tryMoveTo(runner.facing())) return true;
+		// Checking if just switched with ally
+		for (PokemonTravel t : this.travels)
+			if (travel != t && travel.isReversed(t)) return true;
+
+		if (!runner.tryMoveTo(runner.facing(), false)) return true;
 		if (travel.destination.isInRoom() != travel.destination.adjacentTile(runner.facing()).isInRoom()) return true;
 		if (travel.destination.type() == TileType.STAIR || travel.destination.trapRevealed || travel.destination.getItem() != null) return true;
 		int origin = 0, destination = 0;

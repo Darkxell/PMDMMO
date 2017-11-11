@@ -78,18 +78,23 @@ public class Tile implements ItemContainer
 
 	/** @param direction - The direction of the movement.
 	 * @return True if the input Pokémon can walk on this Tile. */
-	public boolean canMoveTo(DungeonPokemon pokemon, short direction)
+	public boolean canMoveTo(DungeonPokemon pokemon, short direction, boolean allowSwitching)
 	{
-		if (!this.canWalkOn(pokemon)) return false;
+		if (!this.canWalkOn(pokemon, allowSwitching)) return false;
 		if (!Directions.isDiagonal(direction)) return true;
 		Pair<Short, Short> corners = Directions.splitDiagonal(direction);
 		return pokemon.tile.adjacentTile(corners.getKey()).canCross(pokemon) && pokemon.tile.adjacentTile(corners.getValue()).canCross(pokemon);
 	}
 
-	/** @return True if the input Pokémon can walk on this Tile. */
-	public boolean canWalkOn(DungeonPokemon pokemon)
+	/** @param allowSwitching - True if switching leader and ally is allowed.
+	 * @return True if the input Pokémon can walk on this Tile. */
+	public boolean canWalkOn(DungeonPokemon pokemon, boolean allowSwitching)
 	{
-		if (this.getPokemon() != null && this.getPokemon() != pokemon) return false;
+		if (this.getPokemon() != null)
+		{
+			// If team leader and pokémon here is ally, can exchange position
+			if (!(allowSwitching && pokemon.isTeamLeader() && pokemon.pokemon.player.isAlly(this.getPokemon().pokemon))) return false;
+		}
 		return this.type.canWalkOn(pokemon);
 	}
 

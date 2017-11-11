@@ -48,7 +48,7 @@ public class ActionSelectionState extends DungeonSubState
 		if (direction != -1)
 		{
 			Persistance.player.getDungeonLeader().setFacing(direction);
-			if (!this.parent.rotating && Persistance.player.getDungeonLeader().tryMoveTo(direction)) return direction;
+			if (!this.parent.rotating && Persistance.player.getDungeonLeader().tryMoveTo(direction, true)) return direction;
 		}
 		return -1;
 	}
