@@ -61,8 +61,6 @@ public class CommonEventProcessor
 		// Resetting turns taken
 		for (PokemonTravel travel : travellers)
 			this.dungeon.resetAction(travel.pokemon);
-		for (DungeonPokemon pokemon : skippers)
-			this.dungeon.resetAction(pokemon);
 
 		if (e != null) this.addToPending(e);
 		PokemonTravelEvent event = new PokemonTravelEvent(this.dungeon.currentFloor(), travellers.toArray(new PokemonTravel[travellers.size()]));

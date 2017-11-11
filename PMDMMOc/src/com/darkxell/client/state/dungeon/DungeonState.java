@@ -139,18 +139,17 @@ public class DungeonState extends AbstractState
 
 		DungeonPokemon[] team = Persistance.player.getDungeonTeam();
 
-		for (DungeonPokemon p : team)
+		for (int i = team.length - 1; i > 0; --i)
 		{
-			if (p == Persistance.player.getDungeonLeader()) continue;
 			if (candidates.size() == 0)
 			{
-				Logger.e("DungeonState.placeAllies() @124 : Could not find a spawn location for ally " + p.pokemon.getNickname() + "!");
+				Logger.e("DungeonState.placeAllies() @124 : Could not find a spawn location for ally " + team[i].pokemon.getNickname() + "!");
 				continue;
 			}
-			Persistance.floor.tileAt(candidates.get(0).x, candidates.get(0).y).setPokemon(p);
-			Persistance.dungeon.insertActor(p, 1);
+			Persistance.floor.tileAt(candidates.get(0).x, candidates.get(0).y).setPokemon(team[i]);
+			Persistance.dungeon.insertActor(team[i], 1);
 			candidates.remove(0);
-			this.pokemonRenderer.register(p);
+			this.pokemonRenderer.register(team[i]);
 		}
 
 		for (int i = team.length - 1; i >= 0; --i)

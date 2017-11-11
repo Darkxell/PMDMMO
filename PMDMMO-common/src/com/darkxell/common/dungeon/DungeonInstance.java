@@ -102,14 +102,8 @@ public class DungeonInstance
 	/** @return The next Pokémon to take its turn. null if there is no actor left, thus the turn is over. */
 	public DungeonPokemon getNextActor()
 	{
-		boolean found = this.currentActor == -1; // If start of turn, still needs to select first actor.
 		for (int i = 0; i < this.actors.size(); ++i)
-			if (!this.wasActionTaken.get(i))
-			{
-				// Needs to return the second one, the first is the current actor.
-				if (found) return this.actors.get(i);
-				else found = true;
-			}
+			if (!this.wasActionTaken.get(i)) return this.actors.get(i);
 		return null;
 	}
 
