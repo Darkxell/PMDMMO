@@ -84,7 +84,7 @@ public class OtherPlayerEntity extends FreezoneEntity {
 		if (up || right || down || left)
 			this.sprite.setState(PokemonSprite.STATE_MOVE);
 		else
-			this.sprite.setState(PokemonSprite.STATE_IDDLE);
+			this.sprite.setState(PokemonSprite.STATE_IDLE);
 	}
 
 	public void applyServerUpdate(double x, double y, int spriteID) {
