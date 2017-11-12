@@ -51,7 +51,7 @@ public class MovesMenuState extends OptionSelectionMenuState
 		{
 			MenuTab moves = new MenuTab(new Message("moves.title").addReplacement("<pokemon>", pokemon.getNickname()));
 			for (int i = 0; i < 4; ++i)
-				if (pokemon.move(i) != null) moves.addOption(new MoveMenuOption(pokemon.move(i), pokemon == Persistance.player.getPokemon()));
+				if (pokemon.move(i) != null) moves.addOption(new MoveMenuOption(pokemon.move(i), pokemon == Persistance.player.getTeamLeader()));
 			this.tabs.add(moves);
 		}
 	}
@@ -64,7 +64,7 @@ public class MovesMenuState extends OptionSelectionMenuState
 
 	private boolean isMainSelected()
 	{
-		return this.selectedPokemon() == Persistance.player.getPokemon();
+		return this.selectedPokemon() == Persistance.player.getTeamLeader();
 	}
 
 	@Override
@@ -154,7 +154,7 @@ public class MovesMenuState extends OptionSelectionMenuState
 		if (this.isMainSelected())
 		{
 			Persistance.stateManager.setState(s);
-			Persistance.eventProcessor.processEvent(new MoveSelectionEvent(Persistance.floor, move, Persistance.player.getDungeonPokemon()));
+			Persistance.eventProcessor.processEvent(new MoveSelectionEvent(Persistance.floor, move, Persistance.player.getDungeonLeader()));
 		} else
 		{
 			move.isEnabled = !move.isEnabled;

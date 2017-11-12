@@ -13,7 +13,7 @@ public class TurnSkippedEvent extends DungeonEvent
 
 	public TurnSkippedEvent(Floor floor, DungeonPokemon pokemon)
 	{
-		super(floor);
+		super(floor, pokemon);
 		this.pokemon = pokemon;
 	}
 

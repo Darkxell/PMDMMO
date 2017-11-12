@@ -110,28 +110,28 @@ public class FreezonePlayer {
 		case Keys.KEY_UP:
 			ismovingUP = false;
 			if (!ismoving())
-				playersprite.setState(PokemonSprite.STATE_IDDLE);
+				playersprite.setState(PokemonSprite.STATE_IDLE);
 			else
 				playersprite.setFacingDirection(getFacingFromMoveDirections());
 			break;
 		case Keys.KEY_RIGHT:
 			ismovingRIGHT = false;
 			if (!ismoving())
-				playersprite.setState(PokemonSprite.STATE_IDDLE);
+				playersprite.setState(PokemonSprite.STATE_IDLE);
 			else
 				playersprite.setFacingDirection(getFacingFromMoveDirections());
 			break;
 		case Keys.KEY_DOWN:
 			ismovingDOWN = false;
 			if (!ismoving())
-				playersprite.setState(PokemonSprite.STATE_IDDLE);
+				playersprite.setState(PokemonSprite.STATE_IDLE);
 			else
 				playersprite.setFacingDirection(getFacingFromMoveDirections());
 			break;
 		case Keys.KEY_LEFT:
 			ismovingLEFT = false;
 			if (!ismoving())
-				playersprite.setState(PokemonSprite.STATE_IDDLE);
+				playersprite.setState(PokemonSprite.STATE_IDLE);
 			else
 				playersprite.setFacingDirection(getFacingFromMoveDirections());
 			break;
@@ -155,7 +155,7 @@ public class FreezonePlayer {
 		ismovingDOWN = false;
 		ismovingLEFT = false;
 		isSprinting = false;
-		playersprite.setState(PokemonSprite.STATE_IDDLE);
+		playersprite.setState(PokemonSprite.STATE_IDLE);
 	}
 
 	public static final double MOVESPEED = 0.2;

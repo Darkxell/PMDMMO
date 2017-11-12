@@ -21,7 +21,7 @@ public class ItemMovedEvent extends DungeonEvent
 	public ItemMovedEvent(Floor floor, ItemAction action, DungeonPokemon mover, ItemContainer source, int sourceIndex, ItemContainer destination,
 			int destinationIndex)
 	{
-		super(floor);
+		super(floor, mover);
 		this.mover = mover;
 		this.source = source;
 		this.sourceIndex = sourceIndex;

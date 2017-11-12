@@ -45,6 +45,8 @@ public class PokemonTravelState extends DungeonSubState
 
 		if (this.running) for (PokemonTravel travel : this.travels)
 			Persistance.dungeonState.pokemonRenderer.getRenderer(travel.pokemon).sprite.setTickingSpeed(1);
+		for (PokemonTravel travel : this.travels)
+			Persistance.dungeonState.pokemonRenderer.getSprite(travel.pokemon).resetOnAnimationEnd();
 	}
 
 	@Override
@@ -62,7 +64,7 @@ public class PokemonTravelState extends DungeonSubState
 		for (PokemonTravel travel : this.travels)
 		{
 			PokemonRenderer renderer = Persistance.dungeonState.pokemonRenderer.getRenderer(travel.pokemon);
-			if (renderer.sprite.getState() != PokemonSprite.STATE_MOVE) renderer.sprite.setState(PokemonSprite.STATE_MOVE);
+			renderer.sprite.setState(PokemonSprite.STATE_MOVE, true);
 			travel.pokemon.setFacing(travel.direction);
 			if (this.running) renderer.sprite.setTickingSpeed(3);
 		}
@@ -74,7 +76,11 @@ public class PokemonTravelState extends DungeonSubState
 
 	private boolean shouldStopRunning(DungeonPokemon runner, PokemonTravel travel)
 	{
-		if (!runner.tryMoveTo(runner.facing())) return true;
+		// Checking if just switched with ally
+		for (PokemonTravel t : this.travels)
+			if (travel != t && travel.isReversed(t)) return true;
+
+		if (!runner.tryMoveTo(runner.facing(), false)) return true;
 		if (travel.destination.isInRoom() != travel.destination.adjacentTile(runner.facing()).isInRoom()) return true;
 		if (travel.destination.type() == TileType.STAIR || travel.destination.trapRevealed || travel.destination.getItem() != null) return true;
 		int origin = 0, destination = 0;
@@ -99,8 +105,6 @@ public class PokemonTravelState extends DungeonSubState
 
 	private void stopTravel()
 	{
-		for (PokemonTravel travel : this.travels)
-			Persistance.dungeonState.pokemonRenderer.getSprite(travel.pokemon).setState(PokemonSprite.STATE_IDDLE);
 		Persistance.eventProcessor.processPending();
 	}
 
@@ -112,7 +116,7 @@ public class PokemonTravelState extends DungeonSubState
 		for (int i = 0; i < this.travels.length; ++i)
 		{
 			this.animations[i].update(completion);
-			if (this.travels[i].pokemon.pokemon == Persistance.player.getPokemon())
+			if (this.travels[i].pokemon.pokemon == Persistance.player.getTeamLeader())
 			{
 				this.parent.camera.x = (int) (this.animations[i].current().getX() * AbstractDungeonTileset.TILE_SIZE);
 				this.parent.camera.y = (int) (this.animations[i].current().getY() * AbstractDungeonTileset.TILE_SIZE);
@@ -127,7 +131,7 @@ public class PokemonTravelState extends DungeonSubState
 			for (PokemonTravel travel : this.travels)
 			{
 				Persistance.dungeonState.pokemonRenderer.getRenderer(travel.pokemon).setXY(travel.destination.x, travel.destination.y);
-				if (travel.destination.type() == TileType.STAIR) stairLand = travel.pokemon == Persistance.player.getDungeonPokemon();
+				if (travel.destination.type() == TileType.STAIR) stairLand = travel.pokemon == Persistance.player.getDungeonLeader();
 			}
 			Persistance.eventProcessor.landedOnStairs = stairLand;
 			this.parent.setSubstate(this.parent.actionSelectionState);
@@ -152,7 +156,7 @@ public class PokemonTravelState extends DungeonSubState
 				boolean hasPending = Persistance.eventProcessor.shouldStopMoving();
 				Persistance.eventProcessor.processEvents(Persistance.dungeon.endTurn());
 				if (hasPending) this.stopTravel();
-				else if (this.running) Persistance.eventProcessor.actorTravels(travel.pokemon.facing(), true);
+				else if (this.running) Persistance.eventProcessor.actorTravels(Persistance.player.getDungeonLeader(), travel.pokemon.facing(), true);
 			}
 		}
 	}

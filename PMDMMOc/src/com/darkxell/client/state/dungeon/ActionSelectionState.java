@@ -30,7 +30,7 @@ public class ActionSelectionState extends DungeonSubState
 	public short checkMovement()
 	{
 		short direction = -1;
-		boolean canRun = !Persistance.player.getDungeonPokemon().isFamished();
+		boolean canRun = !Persistance.player.getDungeonLeader().isFamished();
 
 		if (Keys.directionPressed(canRun, Keys.KEY_UP, Keys.KEY_RIGHT)) direction = Directions.NORTHEAST;
 		else if (Keys.directionPressed(canRun, Keys.KEY_DOWN, Keys.KEY_RIGHT)) direction = Directions.SOUTHEAST;
@@ -47,8 +47,8 @@ public class ActionSelectionState extends DungeonSubState
 
 		if (direction != -1)
 		{
-			Persistance.player.getDungeonPokemon().setFacing(direction);
-			if (!this.parent.rotating && Persistance.player.getDungeonPokemon().tryMoveTo(direction)) return direction;
+			Persistance.player.getDungeonLeader().setFacing(direction);
+			if (!this.parent.rotating && Persistance.player.getDungeonLeader().tryMoveTo(direction, true)) return direction;
 		}
 		return -1;
 	}
@@ -73,8 +73,8 @@ public class ActionSelectionState extends DungeonSubState
 	public void onKeyPressed(short key)
 	{
 		if (key == Keys.KEY_MENU) Persistance.stateManager.setState(new DungeonMenuState(this.parent));
-		if (key == Keys.KEY_ATTACK && (Persistance.player.getDungeonPokemon().isFamished() || !Keys.isPressed(Keys.KEY_RUN))) Persistance.eventProcessor
-				.processEvent(new MoveSelectionEvent(Persistance.floor, new LearnedMove(MoveRegistry.ATTACK.id), Persistance.player.getDungeonPokemon()));
+		if (key == Keys.KEY_ATTACK && (Persistance.player.getDungeonLeader().isFamished() || !Keys.isPressed(Keys.KEY_RUN))) Persistance.eventProcessor
+				.processEvent(new MoveSelectionEvent(Persistance.floor, new LearnedMove(MoveRegistry.ATTACK.id), Persistance.player.getDungeonLeader()));
 	}
 
 	@Override
@@ -93,7 +93,7 @@ public class ActionSelectionState extends DungeonSubState
 				this.drawArrow(g, Directions.SOUTHWEST);
 				this.drawArrow(g, Directions.NORTHWEST);
 			}
-			if (this.parent.rotating) if (!this.parent.diagonal) this.drawArrow(g, Persistance.player.getDungeonPokemon().facing());
+			if (this.parent.rotating) if (!this.parent.diagonal) this.drawArrow(g, Persistance.player.getDungeonLeader().facing());
 		}
 	}
 
@@ -102,13 +102,13 @@ public class ActionSelectionState extends DungeonSubState
 	{
 		if (this.isMain())
 		{
-			if (Keys.isPressed(Keys.KEY_ATTACK) && Keys.isPressed(Keys.KEY_RUN) && !Persistance.player.getDungeonPokemon().isFamished()) Persistance.eventProcessor
-					.processEvent(new TurnSkippedEvent(Persistance.floor, Persistance.player.getDungeonPokemon()));
+			if (Keys.isPressed(Keys.KEY_ATTACK) && Keys.isPressed(Keys.KEY_RUN) && !Persistance.player.getDungeonLeader().isFamished()) Persistance.eventProcessor
+					.processEvent(new TurnSkippedEvent(Persistance.floor, Persistance.player.getDungeonLeader()));
 			else
 			{
 				short direction = this.checkMovement();
-				if (direction != -1) Persistance.eventProcessor.actorTravels(direction, Keys.isPressed(Keys.KEY_RUN)
-						&& !Persistance.player.getDungeonPokemon().isFamished());
+				if (direction != -1) Persistance.eventProcessor.actorTravels(Persistance.player.getDungeonLeader(), direction, Keys.isPressed(Keys.KEY_RUN)
+						&& !Persistance.player.getDungeonLeader().isFamished());
 			}
 		}
 

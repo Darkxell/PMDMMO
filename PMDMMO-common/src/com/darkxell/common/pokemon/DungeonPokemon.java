@@ -133,7 +133,7 @@ public class DungeonPokemon
 
 	public boolean isTeamLeader()
 	{
-		return this.pokemon.player != null && this.pokemon.player.getDungeonPokemon() == this;
+		return this.pokemon.player != null && this.pokemon.player.getDungeonLeader() == this;
 	}
 
 	public ArrayList<DungeonEvent> onFloorStart(Floor floor)
@@ -194,13 +194,13 @@ public class DungeonPokemon
 	}
 
 	/** Called when this Pokémon tries to move in the input direction. */
-	public boolean tryMoveTo(short direction)
+	public boolean tryMoveTo(short direction, boolean allowSwitching)
 	{
 		boolean success = false;
 		if (this.tile != null)
 		{
 			Tile t = this.tile.adjacentTile(direction);
-			if (t.canMoveTo(this, direction)) success = true;
+			if (t.canMoveTo(this, direction, allowSwitching)) success = true;
 		}
 		this.setFacing(direction);
 		return success;

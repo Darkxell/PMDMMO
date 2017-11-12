@@ -34,7 +34,7 @@ public class StairMenuState extends OptionSelectionMenuState
 		if (option == this.proceed)
 		{
 			if (Persistance.floor.id == Persistance.dungeon.dungeon().floorCount) Persistance.eventProcessor.processEvent(new DungeonExitEvent(
-					Persistance.floor, Persistance.player.getDungeonPokemon()));
+					Persistance.floor, Persistance.player.getDungeonLeader()));
 			else Persistance.eventProcessor.processEvent(new NextFloorEvent(Persistance.floor, Persistance.player));
 		}
 	}

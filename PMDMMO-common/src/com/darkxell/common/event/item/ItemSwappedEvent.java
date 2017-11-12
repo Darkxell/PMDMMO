@@ -20,7 +20,7 @@ public class ItemSwappedEvent extends DungeonEvent
 	public ItemSwappedEvent(Floor floor, ItemAction action, DungeonPokemon mover, ItemContainer source, int sourceIndex, ItemContainer destination,
 			int destinationIndex)
 	{
-		super(floor);
+		super(floor, mover);
 		this.mover = mover;
 		this.source = source;
 		this.sourceIndex = sourceIndex;

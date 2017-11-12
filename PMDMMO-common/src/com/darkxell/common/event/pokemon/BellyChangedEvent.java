@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageSource;
+import com.darkxell.common.event.stats.ExperienceGeneratedEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Message;
 
@@ -20,6 +21,13 @@ public class BellyChangedEvent extends DungeonEvent implements DamageSource
 		super(floor);
 		this.pokemon = pokemon;
 		this.quantity = quantity;
+		this.priority = PRIORITY_ACTION_END;
+	}
+
+	@Override
+	public ExperienceGeneratedEvent getExperienceEvent()
+	{
+		return null;
 	}
 
 	@Override

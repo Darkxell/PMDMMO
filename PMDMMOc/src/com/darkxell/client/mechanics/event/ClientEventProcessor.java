@@ -17,6 +17,7 @@ import com.darkxell.client.state.menu.dungeon.StairMenuState;
 import com.darkxell.common.dungeon.DungeonInstance;
 import com.darkxell.common.event.CommonEventProcessor;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.TurnSkippedEvent;
 import com.darkxell.common.event.dungeon.DungeonExitEvent;
 import com.darkxell.common.event.dungeon.NextFloorEvent;
 import com.darkxell.common.event.dungeon.weather.WeatherChangedEvent;
@@ -94,7 +95,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	{
 		if (this.landedOnStairs)
 		{
-			addToPending(new StairLandingEvent());
+			this.addToPending(new StairLandingEvent());
 			this.landedOnStairs = false;
 		}
 		super.onTurnEnd();
@@ -102,7 +103,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 
 	private void processDungeonExitEvent(DungeonExitEvent event)
 	{
-		if (event.pokemon == Persistance.player.getDungeonPokemon())
+		if (event.pokemon == Persistance.player.getDungeonLeader())
 		{
 			Persistance.stateManager.setState(new FreezoneExploreState());
 			Persistance.displaymap = LocalMap.instance;
@@ -153,7 +154,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	public boolean shouldStopMoving()
 	{
 		for (DungeonEvent event : this.pending)
-			if (!(event instanceof BellyChangedEvent)) return true;
+			if (!(event instanceof BellyChangedEvent || event instanceof TurnSkippedEvent)) return true;
 		return false;
 	}
 

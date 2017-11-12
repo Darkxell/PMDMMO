@@ -31,7 +31,7 @@ public class GridRenderer extends AbstractRenderer
 	{
 		int xStart = (int) (this.x() / TILE_SIZE), yStart = (int) (this.y() / TILE_SIZE);
 
-		DungeonPokemon player = Persistance.player.getDungeonPokemon();
+		DungeonPokemon player = Persistance.player.getDungeonLeader();
 
 		HashSet<Tile> faced = new HashSet<Tile>();
 		Tile tile = player.tile;
