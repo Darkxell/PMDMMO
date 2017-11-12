@@ -1,5 +1,7 @@
 package com.darkxell.client.state.dungeon;
 
+import static com.darkxell.client.resources.images.tilesets.AbstractDungeonTileset.TILE_SIZE;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -8,11 +10,7 @@ import java.util.function.Predicate;
 
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.MasterDungeonRenderer;
-import com.darkxell.client.renderers.floor.DungeonItemsRenderer;
-import com.darkxell.client.renderers.floor.DungeonPokemonRenderer;
-import com.darkxell.client.renderers.floor.FloorRenderer;
-import com.darkxell.client.renderers.floor.GridRenderer;
-import com.darkxell.client.resources.images.tilesets.AbstractDungeonTileset;
+import com.darkxell.client.renderers.floor.*;
 import com.darkxell.client.resources.music.SoundsHolder;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.ui.Keys;
@@ -44,36 +42,51 @@ public class DungeonState extends AbstractState
 	}
 
 	public final ActionSelectionState actionSelectionState;
-	/** The current location of the Player on the screen (centered). */
-	Point camera;
+	private Point camera = new Point(0, 0);
+	/** The Pokémon around which to draw. */
+	private DungeonPokemon cameraPokemon;
 	/** The current substate. */
 	private DungeonSubState currentSubstate;
 	boolean diagonal = false, rotating = false;
 	public final FloorRenderer floorRenderer;
+	public final FloorVisibility floorVisibility;
 	public final GridRenderer gridRenderer;
 	public final DungeonItemsRenderer itemRenderer;
 	public final DungeonLogger logger;
 	public final DungeonPokemonRenderer pokemonRenderer;
-	/** The current location of the Player on the screen (centered). */
-	Point previousCamera;
+	/** The last Camera. */
+	private Point previousCamera;
+	public final ShadowRenderer shadowRenderer;
 
 	public DungeonState()
 	{
+		this.cameraPokemon = Persistance.player.getDungeonLeader();
 		Persistance.dungeonRenderer = new MasterDungeonRenderer();
 		this.floorRenderer = new FloorRenderer();
 		this.gridRenderer = new GridRenderer();
 		this.itemRenderer = new DungeonItemsRenderer();
 		this.pokemonRenderer = new DungeonPokemonRenderer();
+		this.shadowRenderer = new ShadowRenderer();
 		Persistance.dungeonRenderer.addRenderer(this.floorRenderer);
 		Persistance.dungeonRenderer.addRenderer(this.gridRenderer);
 		Persistance.dungeonRenderer.addRenderer(this.itemRenderer);
+		Persistance.dungeonRenderer.addRenderer(this.shadowRenderer);
 		this.placeTeam();
 
 		this.logger = new DungeonLogger(this);
-		this.camera = new Point(Persistance.player.getDungeonLeader().tile.x * AbstractDungeonTileset.TILE_SIZE, Persistance.player.getDungeonLeader().tile.y
-				* AbstractDungeonTileset.TILE_SIZE);
 		this.currentSubstate = this.actionSelectionState = new ActionSelectionState(this);
 		this.currentSubstate.onStart();
+		this.floorVisibility = new FloorVisibility();
+	}
+
+	public Point camera()
+	{
+		return this.camera;
+	}
+
+	public DungeonPokemon getCameraPokemon()
+	{
+		return this.cameraPokemon;
 	}
 
 	@Override
@@ -108,6 +121,7 @@ public class DungeonState extends AbstractState
 		super.onStart();
 		Persistance.soundmanager.setBackgroundMusic(SoundsHolder.getSong("07 Tiny Woods.mp3"));
 		Persistance.eventProcessor.processPending();
+		this.floorVisibility.onCameraMoved();
 	}
 
 	private void placeTeam()
@@ -159,13 +173,17 @@ public class DungeonState extends AbstractState
 	@Override
 	public void render(Graphics2D g, int width, int height)
 	{
-		int x = this.camera.x - width / 2, y = this.camera.y - height / 2;
-		if (this.previousCamera == null || !this.previousCamera.equals(this.camera))
+		PokemonRenderer r = Persistance.dungeonState.pokemonRenderer.getRenderer(this.cameraPokemon);
+		int x = (int) (r.x() + TILE_SIZE / 2 - width / 2), y = (int) (r.y() + TILE_SIZE / 2 - height / 2);
+		this.camera = new Point(x, y);
+
+		if (this.previousCamera == null || !this.previousCamera.equals(this.camera()))
 		{
 			this.floorRenderer.setXY(x, y);
 			this.gridRenderer.setXY(x, y);
 			this.itemRenderer.setXY(x, y);
 			this.pokemonRenderer.setXY(x, y);
+			this.shadowRenderer.setXY(x, y);
 		}
 
 		g.translate(-x, -y);
@@ -182,7 +200,13 @@ public class DungeonState extends AbstractState
 
 		this.logger.render(g, width, height);
 
-		this.previousCamera = new Point(this.camera);
+		this.previousCamera = (Point) this.camera().clone();
+	}
+
+	public void setCamera(DungeonPokemon pokemon)
+	{
+		this.cameraPokemon = pokemon;
+		this.floorVisibility.onCameraMoved();
 	}
 
 	/** @param substate - The new substate to use. */

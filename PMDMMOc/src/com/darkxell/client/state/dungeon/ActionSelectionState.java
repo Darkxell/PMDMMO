@@ -57,8 +57,8 @@ public class ActionSelectionState extends DungeonSubState
 	{
 		Point p = Directions.moveTo(0, 0, direction);
 		BufferedImage img = DungeonHudSpriteset.instance.getArrow(direction);
-		int x = this.parent.camera.x + (1 + p.x) * TILE_SIZE / 2 - img.getWidth() / 2 + this.rotationCounter / 3 * p.x;
-		int y = this.parent.camera.y + (1 + p.y) * TILE_SIZE / 2 - img.getHeight() / 2 + this.rotationCounter / 3 * p.y;
+		int x = this.parent.camera().x + (1 + p.x) * TILE_SIZE / 2 - img.getWidth() / 2 + this.rotationCounter / 3 * p.x;
+		int y = this.parent.camera().y + (1 + p.y) * TILE_SIZE / 2 - img.getHeight() / 2 + this.rotationCounter / 3 * p.y;
 
 		if (p.distance(0, 0) > 1)
 		{

@@ -31,7 +31,7 @@ public class FloorRenderer extends AbstractRenderer
 	{
 		int xStart = (int) (this.x() / TILE_SIZE) - 1, yStart = (int) (this.y() / TILE_SIZE) - 1;
 
-		// +1 is not sufficient, +2 is needed to cover the hole screen. God knows why.
+		// +1 is not sufficient, +2 is needed to cover the hole screen. God knows why -- Actually I know ! Because I need before the first and after the last.
 		for (int x = xStart; x <= xStart + width / TILE_SIZE + 2; ++x)
 			for (int y = yStart; y <= yStart + height / TILE_SIZE + 2; ++y)
 			{
@@ -45,8 +45,6 @@ public class FloorRenderer extends AbstractRenderer
 				else sprite = this.tileset.tile(tile);
 
 				g.drawImage(sprite, x * TILE_SIZE, y * TILE_SIZE, null);
-
 			}
 	}
-
 }
