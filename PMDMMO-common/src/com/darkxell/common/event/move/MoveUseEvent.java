@@ -11,10 +11,10 @@ import com.darkxell.common.util.language.Message;
 public class MoveUseEvent extends DungeonEvent
 {
 
-	/** The move that was used. */
-	public final MoveUse usedMove;
 	/** The Targets of this Move. */
 	public final DungeonPokemon target;
+	/** The move that was used. */
+	public final MoveUse usedMove;
 
 	public MoveUseEvent(Floor floor, MoveUse move, DungeonPokemon target)
 	{
@@ -28,6 +28,7 @@ public class MoveUseEvent extends DungeonEvent
 	{
 		this.resultingEvents.addAll(this.usedMove.move.move().useOn(this.usedMove, this.target, this.floor));
 		if (this.resultingEvents.size() == 0) this.resultingEvents.add(new MessageEvent(this.floor, new Message("move.no_effect")));
+		this.resultingEvents.add(this.usedMove.getExperienceEvent());
 		return super.processServer();
 	}
 }

@@ -6,6 +6,7 @@ import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageSource;
+import com.darkxell.common.event.stats.ExperienceGeneratedEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.PokemonType;
 
@@ -29,6 +30,12 @@ public class PeriodicDamageStatusCondition extends StatusCondition implements Da
 		if (this == POISONED || this == BADLY_POISONED) return !pokemon.pokemon.species.isType(PokemonType.POISON);
 		if (this == BURN) return !pokemon.pokemon.species.isType(PokemonType.FIRE);
 		return true;
+	}
+
+	@Override
+	public ExperienceGeneratedEvent getExperienceEvent()
+	{
+		return null;
 	}
 
 	@Override

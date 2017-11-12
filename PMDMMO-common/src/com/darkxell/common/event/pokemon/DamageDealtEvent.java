@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.stats.ExperienceGeneratedEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.status.PeriodicDamageStatusCondition;
 import com.darkxell.common.util.language.Message;
@@ -14,6 +15,8 @@ public class DamageDealtEvent extends DungeonEvent
 
 	public static interface DamageSource
 	{
+		/** @return The ExperienceGainedEvent to add experience to. */
+		public ExperienceGeneratedEvent getExperienceEvent();
 	}
 
 	public final int damage;

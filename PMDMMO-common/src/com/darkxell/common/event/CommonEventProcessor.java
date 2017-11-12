@@ -86,13 +86,24 @@ public class CommonEventProcessor
 	/** Adds the input event to the pending stack, without processing it. */
 	public void addToPending(DungeonEvent event)
 	{
-		if (event != null) this.pending.add(event);
+		if (event != null)
+		{
+			for (int i = this.pending.size() - 1; i >= 0; --i)
+			{
+				if (this.pending.get(i).priority >= event.priority)
+				{
+					this.pending.insertElementAt(event, i + 1);
+					return;
+				}
+			}
+			this.pending.insertElementAt(event, 0);
+		}
 	}
 
 	/** This Event is checked and ready to be processed. */
 	protected void doProcess(DungeonEvent event)
 	{
-		addToPending(event.processServer());
+		this.addToPending(event.processServer());
 	}
 
 	public boolean hasPendingEvents()

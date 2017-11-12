@@ -4,11 +4,8 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
-import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageSource;
-import com.darkxell.common.event.stats.ExperienceGainedEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
-import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.language.Message;
 
 public class FaintedPokemonEvent extends DungeonEvent
@@ -32,11 +29,8 @@ public class FaintedPokemonEvent extends DungeonEvent
 	{
 		this.floor.unsummonPokemon(this.pokemon);
 		if (this.pokemon.pokemon.getItem() != null) this.pokemon.tile.setItem(this.pokemon.pokemon.getItem());
-
-		if (this.damage instanceof MoveUse) for (Pokemon pokemon : ((MoveUse) this.damage).user.pokemon.player.getTeam())
-			this.resultingEvents.add(new ExperienceGainedEvent(this.floor, pokemon, this.pokemon.experienceGained()));
+		if (this.damage.getExperienceEvent() != null) this.damage.getExperienceEvent().experience += this.pokemon.experienceGained();
 
 		return super.processServer();
 	}
-
 }

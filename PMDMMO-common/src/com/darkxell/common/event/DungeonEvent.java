@@ -20,12 +20,16 @@ public abstract class DungeonEvent
 		}
 	}
 
+	public static final byte PRIORITY_DEFAULT = 0, PRIORITY_AFTER_MOVE = 1, PRIORITY_ACTION_END = 2, PRIORITY_TURN_END = 3;
+
 	/** The Pokémon that performed the action triggering this Event. This action will consume its turn. May be null if no performer or if this Event doesn't consume the actor's turn. */
 	public final DungeonPokemon actor;
 	/** The Floor this Event occurs on. */
 	public final Floor floor;
 	/** The messages that were generated. */
 	protected ArrayList<Message> messages;
+	/** The priority of this DungeonEvent. */
+	protected byte priority;
 	/** The events that resulted from this Event. */
 	protected ArrayList<DungeonEvent> resultingEvents;
 
@@ -38,6 +42,7 @@ public abstract class DungeonEvent
 	{
 		this.floor = floor;
 		this.actor = actor;
+		this.priority = PRIORITY_DEFAULT;
 		this.messages = new ArrayList<Message>();
 		this.resultingEvents = new ArrayList<DungeonEvent>();
 	}

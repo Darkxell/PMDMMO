@@ -10,9 +10,10 @@ import com.darkxell.common.util.language.Message;
 public class ExperienceGainedEvent extends DungeonEvent
 {
 
-	public final int experience;
+	public int experience;
 	/** The amount of levels that were passed with this experience gain. */
 	private int levelsup;
+	/** The Pokémon which will gain experience. */
 	public final Pokemon pokemon;
 
 	public ExperienceGainedEvent(Floor floor, Pokemon pokemon, int experience)
