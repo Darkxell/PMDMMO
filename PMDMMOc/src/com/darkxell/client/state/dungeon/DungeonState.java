@@ -55,6 +55,7 @@ public class DungeonState extends AbstractState
 	public final DungeonPokemonRenderer pokemonRenderer;
 	/** The last Camera. */
 	private Point previousCamera;
+	public final ShadowRenderer shadowRenderer;
 
 	public DungeonState()
 	{
@@ -64,9 +65,11 @@ public class DungeonState extends AbstractState
 		this.gridRenderer = new GridRenderer();
 		this.itemRenderer = new DungeonItemsRenderer();
 		this.pokemonRenderer = new DungeonPokemonRenderer();
+		this.shadowRenderer = new ShadowRenderer();
 		Persistance.dungeonRenderer.addRenderer(this.floorRenderer);
 		Persistance.dungeonRenderer.addRenderer(this.gridRenderer);
 		Persistance.dungeonRenderer.addRenderer(this.itemRenderer);
+		Persistance.dungeonRenderer.addRenderer(this.shadowRenderer);
 		this.placeTeam();
 
 		this.logger = new DungeonLogger(this);
@@ -77,6 +80,11 @@ public class DungeonState extends AbstractState
 	public Point camera()
 	{
 		return this.camera;
+	}
+
+	public DungeonPokemon getCameraPokemon()
+	{
+		return this.cameraPokemon;
 	}
 
 	@Override
@@ -172,6 +180,7 @@ public class DungeonState extends AbstractState
 			this.gridRenderer.setXY(x, y);
 			this.itemRenderer.setXY(x, y);
 			this.pokemonRenderer.setXY(x, y);
+			this.shadowRenderer.setXY(x, y);
 		}
 
 		g.translate(-x, -y);
