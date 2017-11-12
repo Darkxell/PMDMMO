@@ -70,6 +70,8 @@ public class PokemonRenderer extends AbstractRenderer
 	@Override
 	public void render(Graphics2D g, int width, int height)
 	{
+		if (!Persistance.dungeonState.floorVisibility.isVisible(this.pokemon)) return;
+
 		if (this.pokemon.stateChanged)
 		{
 			this.sprite.setFacingDirection(spriteDirection(this.pokemon.facing()));

@@ -15,16 +15,20 @@ import com.darkxell.client.state.dungeon.PokemonTravelState;
 import com.darkxell.client.state.map.LocalMap;
 import com.darkxell.client.state.menu.dungeon.StairMenuState;
 import com.darkxell.common.dungeon.DungeonInstance;
+import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.event.CommonEventProcessor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.TurnSkippedEvent;
 import com.darkxell.common.event.dungeon.DungeonExitEvent;
 import com.darkxell.common.event.dungeon.NextFloorEvent;
 import com.darkxell.common.event.dungeon.weather.WeatherChangedEvent;
+import com.darkxell.common.event.item.ItemMovedEvent;
+import com.darkxell.common.event.item.ItemSwappedEvent;
 import com.darkxell.common.event.item.ItemUseSelectionEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.event.pokemon.*;
+import com.darkxell.common.event.pokemon.PokemonTravelEvent.PokemonTravel;
 import com.darkxell.common.event.stats.ExperienceGainedEvent;
 import com.darkxell.common.event.stats.StatChangedEvent;
 import com.darkxell.common.item.ItemFood;
@@ -83,6 +87,8 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		if (event instanceof ExperienceGainedEvent) MoveEvents.processExperienceEvent((ExperienceGainedEvent) event);
 
 		if (event instanceof ItemUseSelectionEvent) this.processItemEvent((ItemUseSelectionEvent) event);
+		if (event instanceof ItemMovedEvent) this.processItemMovedEvent((ItemMovedEvent) event);
+		if (event instanceof ItemSwappedEvent) this.processItemSwappedEvent((ItemSwappedEvent) event);
 
 		if (event instanceof WeatherChangedEvent) this.processWeatherEvent((WeatherChangedEvent) event);
 		if (event instanceof StairLandingEvent) this.processStairEvent((StairLandingEvent) event);
@@ -125,6 +131,17 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		this.processPending = false;
 	}
 
+	private void processItemMovedEvent(ItemMovedEvent event)
+	{
+		if (event.source instanceof Tile) Persistance.dungeonState.floorVisibility.onItemremoved((Tile) event.source);
+	}
+
+	private void processItemSwappedEvent(ItemSwappedEvent event)
+	{
+		if (event.source instanceof Tile) Persistance.dungeonState.floorVisibility.onItemremoved((Tile) event.source);
+		else if (event.destination instanceof Tile) Persistance.dungeonState.floorVisibility.onItemremoved((Tile) event.destination);
+	}
+
 	private void processStairEvent(StairLandingEvent event)
 	{
 		this.processPending = false;
@@ -135,6 +152,8 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	{
 		this.processPending = false;
 		Persistance.dungeonState.setSubstate(new PokemonTravelState(Persistance.dungeonState, event.isRunning(), event.travels()));
+		for (PokemonTravel travel : event.travels())
+			if (travel.pokemon == Persistance.dungeonState.getCameraPokemon()) Persistance.dungeonState.floorVisibility.onCameraMoved();
 	}
 
 	private void processWeatherEvent(WeatherChangedEvent event)

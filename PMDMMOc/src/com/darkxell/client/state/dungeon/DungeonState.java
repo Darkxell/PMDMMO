@@ -49,6 +49,7 @@ public class DungeonState extends AbstractState
 	private DungeonSubState currentSubstate;
 	boolean diagonal = false, rotating = false;
 	public final FloorRenderer floorRenderer;
+	public final FloorVisibility floorVisibility;
 	public final GridRenderer gridRenderer;
 	public final DungeonItemsRenderer itemRenderer;
 	public final DungeonLogger logger;
@@ -75,6 +76,7 @@ public class DungeonState extends AbstractState
 		this.logger = new DungeonLogger(this);
 		this.currentSubstate = this.actionSelectionState = new ActionSelectionState(this);
 		this.currentSubstate.onStart();
+		this.floorVisibility = new FloorVisibility();
 	}
 
 	public Point camera()
@@ -119,6 +121,7 @@ public class DungeonState extends AbstractState
 		super.onStart();
 		Persistance.soundmanager.setBackgroundMusic(SoundsHolder.getSong("07 Tiny Woods.mp3"));
 		Persistance.eventProcessor.processPending();
+		this.floorVisibility.onCameraMoved();
 	}
 
 	private void placeTeam()
@@ -203,6 +206,7 @@ public class DungeonState extends AbstractState
 	public void setCamera(DungeonPokemon pokemon)
 	{
 		this.cameraPokemon = pokemon;
+		this.floorVisibility.onCameraMoved();
 	}
 
 	/** @param substate - The new substate to use. */

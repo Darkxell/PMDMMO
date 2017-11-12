@@ -41,7 +41,6 @@ public class ShadowRenderer extends AbstractRenderer
 		Rectangle screen = new Rectangle((int) this.x(), (int) this.y(), width, height);
 
 		int shadows = Persistance.dungeon.dungeon().getData(Persistance.floor.id).shadows();
-		shadows = 2;
 		if (shadows != FloorData.NO_SHADOW)
 		{
 			Point camera = Persistance.dungeonState.camera();

@@ -58,12 +58,13 @@ public class DungeonFloorMap extends AbstractDisplayMap
 					if (x < 0 || y < 0) continue;
 					Tile tile = this.floor.tileAt(x, y);
 					if (tile == null) Logger.e("null tile at " + x + ", " + y);
-					else
+					else if (Persistance.dungeonState.floorVisibility.isVisible(tile))
 					{
 						int tx = tile.x * TILE_SIZE, ty = tile.y * TILE_SIZE;
 						boolean isMain = tile.getPokemon() == Persistance.player.getDungeonLeader();
 						if ((this.tick >= PLAYER_TICK || !isMain) && tile.getPokemon() != null) g.drawImage(this.tileset.ground(), tx, ty, null);
-						else if (tile.getItem() != null) g.drawImage(this.tileset.item(), tx, ty, null);
+						else if (tile.getItem() != null && Persistance.dungeonState.floorVisibility.hasVisibleItem(tile)) g.drawImage(this.tileset.item(), tx,
+								ty, null);
 						else if (tile.trap == TrapRegistry.WONDER_TILE) g.drawImage(this.tileset.wonder(), tx, ty, null);
 						else if (tile.trapRevealed) g.drawImage(this.tileset.trap(), tx, ty, null);
 						else if (tile.type() == TileType.STAIR) g.drawImage(this.tileset.stairs(), tx, ty, null);
@@ -85,16 +86,17 @@ public class DungeonFloorMap extends AbstractDisplayMap
 				}
 
 			for (PokemonRenderer renderer : Persistance.dungeonState.pokemonRenderer.listRenderers())
-			{
-				boolean isMain = renderer.pokemon == Persistance.player.getDungeonLeader();
-				int x = (int) (renderer.x() * TILE_SIZE / AbstractDungeonTileset.TILE_SIZE), y = (int) (renderer.y() * TILE_SIZE / AbstractDungeonTileset.TILE_SIZE);
-				if (isMain && this.tick >= PLAYER_TICK) g.drawImage(this.tileset.player(), x, y, null);
-				else if (!isMain)
+				if (Persistance.dungeonState.floorVisibility.isVisible(renderer.pokemon))
 				{
-					if (Persistance.player.isAlly(renderer.pokemon.pokemon)) g.drawImage(this.tileset.ally(), x, y, null);
-					else g.drawImage(this.tileset.enemy(), x, y, null);
+					boolean isMain = renderer.pokemon == Persistance.player.getDungeonLeader();
+					int x = (int) (renderer.x() * TILE_SIZE / AbstractDungeonTileset.TILE_SIZE), y = (int) (renderer.y() * TILE_SIZE / AbstractDungeonTileset.TILE_SIZE);
+					if (isMain && this.tick >= PLAYER_TICK) g.drawImage(this.tileset.player(), x, y, null);
+					else if (!isMain)
+					{
+						if (Persistance.player.isAlly(renderer.pokemon.pokemon)) g.drawImage(this.tileset.ally(), x, y, null);
+						else g.drawImage(this.tileset.enemy(), x, y, null);
+					}
 				}
-			}
 		}
 
 		g.translate(this.x, this.y);
