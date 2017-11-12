@@ -2,7 +2,10 @@ package com.darkxell.client.renderers.floor;
 
 import static com.darkxell.client.resources.images.tilesets.AbstractDungeonTileset.TILE_SIZE;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.Area;
+import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 
 import com.darkxell.client.launchable.Persistance;
@@ -16,6 +19,10 @@ import com.darkxell.common.dungeon.floor.TileType;
 
 public class FloorRenderer extends AbstractRenderer
 {
+	private static Graphics2D gs;
+	private static Area inPathsTwoTiles, inPathsOneTile;
+	public static final Color SHADOW = new Color(0, 0, 0, 128), VISIBLE = new Color(0, 0, 0, 0);
+	private static BufferedImage shadowBuffer;
 
 	public final Floor floor;
 	public final FloorDungeonTileset tileset;
@@ -31,7 +38,23 @@ public class FloorRenderer extends AbstractRenderer
 	{
 		int xStart = (int) (this.x() / TILE_SIZE) - 1, yStart = (int) (this.y() / TILE_SIZE) - 1;
 
-		// +1 is not sufficient, +2 is needed to cover the hole screen. God knows why.
+		if (shadowBuffer == null || shadowBuffer.getWidth() != width || shadowBuffer.getHeight() != height)
+		{
+			shadowBuffer = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB_PRE);
+			gs = shadowBuffer.createGraphics();
+			gs.setBackground(VISIBLE);
+			gs.setColor(SHADOW);
+
+			inPathsTwoTiles = new Area(new java.awt.Rectangle(0, 0, width, height));
+			inPathsOneTile = (Area) inPathsTwoTiles.clone();
+			inPathsTwoTiles
+					.subtract(new Area(new Ellipse2D.Double(width / 2 - TILE_SIZE * 5 / 2, height / 2 - TILE_SIZE * 5 / 2, TILE_SIZE * 5, TILE_SIZE * 5)));
+			inPathsOneTile
+					.subtract(new Area(new Ellipse2D.Double(width / 2 - TILE_SIZE * 3 / 2, height / 2 - TILE_SIZE * 3 / 2, TILE_SIZE * 3, TILE_SIZE * 3)));
+
+		}
+
+		// +1 is not sufficient, +2 is needed to cover the hole screen. God knows why -- Actually I know ! Because I need before the first and after the last.
 		for (int x = xStart; x <= xStart + width / TILE_SIZE + 2; ++x)
 			for (int y = yStart; y <= yStart + height / TILE_SIZE + 2; ++y)
 			{
@@ -45,8 +68,11 @@ public class FloorRenderer extends AbstractRenderer
 				else sprite = this.tileset.tile(tile);
 
 				g.drawImage(sprite, x * TILE_SIZE, y * TILE_SIZE, null);
-
 			}
+
+		gs.clearRect(0, 0, width, height);
+		gs.fill(inPathsTwoTiles);
+		g.drawImage(shadowBuffer, (int) this.x(), (int) this.y(), null);
 	}
 
 }
