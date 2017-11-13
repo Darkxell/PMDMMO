@@ -14,7 +14,7 @@ import com.darkxell.client.resources.images.others.Hud;
 import com.darkxell.client.resources.images.others.MapResources;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.FreezoneExploreState;
-import com.darkxell.client.state.dungeon.DungeonState;
+import com.darkxell.client.state.dungeon.NextFloorState;
 import com.darkxell.client.state.map.DungeonFloorMap;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.common.dungeon.Dungeon;
@@ -78,9 +78,9 @@ public class DungeonSelectionMapState extends AbstractState {
 			Persistance.eventProcessor = new ClientEventProcessor(Persistance.dungeon);
 			Persistance.floor = Persistance.dungeon.currentFloor();
 			Persistance.floor.generate();
-			Persistance.stateManager.setState(Persistance.dungeonState = new DungeonState());
+			Persistance.stateManager.setState(new NextFloorState(this, 1));
 			Persistance.displaymap = new DungeonFloorMap();
-			Persistance.eventProcessor.processEvents(Persistance.dungeon.currentFloor().onFloorStart());
+			Persistance.eventProcessor.addToPending(Persistance.dungeon.currentFloor().onFloorStart());
 			break;
 		default:
 			break;

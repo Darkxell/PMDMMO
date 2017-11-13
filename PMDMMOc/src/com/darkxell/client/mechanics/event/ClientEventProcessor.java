@@ -119,7 +119,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	private void processFloorEvent(NextFloorEvent event)
 	{
 		this.processPending = false;
-		Persistance.stateManager.setState(new NextFloorState(event.floor.id + 1));
+		Persistance.stateManager.setState(new NextFloorState(Persistance.dungeonState, event.floor.id + 1));
 	}
 
 	private void processItemEvent(ItemUseSelectionEvent event)
