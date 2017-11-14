@@ -1,6 +1,8 @@
 package com.darkxell.common.pokemon;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Random;
 
 import org.jdom2.Element;
 
@@ -22,6 +24,8 @@ public class PokemonSpecies
 	private final ArrayList<Evolution> evolutions;
 	/** Lists the required experience to level up for each level. */
 	final int[] experiencePerLevel;
+	/** The list of different forms Pokémon of this species can have. */
+	private final ArrayList<PokemonSpecies> forms;
 	public final float height, weight;
 	public final int id, formID;
 	/** List of moves learned by leveling up. Key is level, value is the list of move IDs. */
@@ -70,11 +74,15 @@ public class PokemonSpecies
 
 		if (xml.getChild("learnset") != null) for (Element level : xml.getChild("learnset").getChildren())
 			this.learnset.put(Integer.parseInt(level.getAttributeValue("l")), XMLUtils.readIntArrayAsList(level));
+
+		this.forms = new ArrayList<PokemonSpecies>();
+		for (Element form : xml.getChildren("form"))
+			this.forms.add(createForm(form));
 	}
 
 	public PokemonSpecies(int id, int formID, PokemonType type1, PokemonType type2, int baseXP, ArrayList<PokemonStats> baseStats, float height, float weight,
 			ArrayList<Integer> abilities, int[] experiencePerLevel, HashMap<Integer, ArrayList<Integer>> learnset, ArrayList<Integer> tms,
-			ArrayList<Evolution> evolutions)
+			ArrayList<Evolution> evolutions, ArrayList<PokemonSpecies> forms)
 	{
 		this.id = id;
 		this.formID = formID;
@@ -89,11 +97,64 @@ public class PokemonSpecies
 		this.learnset = learnset;
 		this.tms = tms;
 		this.evolutions = evolutions;
+		this.forms = forms;
 	}
 
 	public PokemonStats baseStatsIncrease(int level)
 	{
 		return this.baseStats.get(level);
+	}
+
+	@SuppressWarnings("unchecked")
+	private PokemonSpecies createForm(Element xml)
+	{
+		int formID = XMLUtils.getAttribute(xml, "form", 0);
+
+		PokemonType type1 = xml.getAttribute("type1") == null ? this.type1 : PokemonType.find(Integer.parseInt(xml.getAttributeValue("type1")));
+		PokemonType type2 = xml.getAttribute("type2") == null ? this.type2 : xml.getAttribute("type2").equals("null") ? null : PokemonType.find(Integer
+				.parseInt(xml.getAttributeValue("type2")));
+		int baseXP = XMLUtils.getAttribute(xml, "base-xp", this.baseXP);
+		float height = XMLUtils.getAttribute(xml, "height", this.height);
+		float weight = XMLUtils.getAttribute(xml, "weight", this.weight);
+		ArrayList<Integer> abilities = xml.getChild("abilities") == null ? (ArrayList<Integer>) this.abilities.clone() : XMLUtils.readIntArrayAsList(xml
+				.getChild("abilities"));
+		ArrayList<PokemonStats> baseStats = new ArrayList<PokemonStats>();
+		HashMap<Integer, ArrayList<Integer>> learnset = new HashMap<Integer, ArrayList<Integer>>();
+		ArrayList<Integer> tms = xml.getChild("tms") == null ? (ArrayList<Integer>) this.tms.clone() : XMLUtils.readIntArrayAsList(xml.getChild("tms"));
+		ArrayList<Evolution> evolutions = new ArrayList<Evolution>();
+
+		if (xml.getChild("statline") == null) baseStats = (ArrayList<PokemonStats>) this.baseStats.clone();
+		else
+		{
+			int[][] statline = XMLUtils.readDoubleIntArray(xml.getChild("statline"));
+			for (int[] stat : statline)
+				baseStats.add(new PokemonStats(stat));
+		}
+
+		int[] experiencePerLevel;
+		if (xml.getChild("experience") == null) experiencePerLevel = this.experiencePerLevel.clone();
+		else
+		{
+			String[] lvls = xml.getChildText("experience").split(",");
+			experiencePerLevel = new int[lvls.length];
+			for (int lvl = 0; lvl < lvls.length; lvl++)
+				experiencePerLevel[lvl] = Integer.parseInt(lvls[lvl]);
+		}
+
+		if (xml.getChild("evolves") == null) evolutions = (ArrayList<Evolution>) this.evolutions.clone();
+		else for (Element e : xml.getChild("evolves").getChildren())
+			evolutions.add(new Evolution(e));
+
+		if (xml.getChild("tms") == null) tms = (ArrayList<Integer>) this.tms.clone();
+		else for (Element tm : xml.getChild("tms").getChildren())
+			tms.add(Integer.parseInt(tm.getAttributeValue("id")));
+
+		if (xml.getChild("learnset") == null) learnset = (HashMap<Integer, ArrayList<Integer>>) this.learnset.clone();
+		for (Element level : xml.getChild("learnset").getChildren())
+			learnset.put(Integer.parseInt(level.getAttributeValue("l")), XMLUtils.readIntArrayAsList(level));
+
+		return new PokemonSpecies(this.id, formID, type1, type2, baseXP, baseStats, height, weight, abilities, experiencePerLevel, learnset, tms, evolutions,
+				forms);
 	}
 
 	public Evolution[] evolutions()
@@ -105,6 +166,13 @@ public class PokemonSpecies
 	public int experienceToNextLevel(int level)
 	{
 		return this.experiencePerLevel[level - 1];
+	}
+
+	/** @return This form's name. */
+	public Message formName()
+	{
+		if (this.forms.isEmpty()) return this.speciesName();
+		return new Message("pokemon." + this.id + "." + this.formID);
 	}
 
 	/** Generates a Pokémon of this species.
@@ -166,12 +234,6 @@ public class PokemonSpecies
 		return moves;
 	}
 
-	/** @return This Pokémon's name. */
-	public Message name()
-	{
-		return new Message("pokemon." + this.id);
-	}
-
 	/** @return A random ability for this Pokémon. */
 	public int randomAbility(Random random)
 	{
@@ -184,6 +246,12 @@ public class PokemonSpecies
 	{
 		// todo: include gender probability.
 		return (byte) random.nextInt(3);
+	}
+
+	/** @return This species' name. */
+	public Message speciesName()
+	{
+		return new Message("pokemon." + this.id);
 	}
 
 	/** @return Regular stats for a Pokémon at the input level. */
@@ -254,7 +322,84 @@ public class PokemonSpecies
 			root.addContent(learnset);
 		}
 
+		for (PokemonSpecies form : this.forms)
+			this.toXML(root, form);
+
 		return root;
+	}
+
+	private void toXML(Element root, PokemonSpecies form)
+	{
+		Element e = new Element("form");
+		e.setAttribute("id", Integer.toString(form.formID));
+		if (this.type1 != form.type1) e.setAttribute("type1", Integer.toString(form.type1.id));
+		if (this.type2 != form.type2) e.setAttribute("type2", form.type2 == null ? "null" : Integer.toString(form.type1.id));
+		if (this.baseXP != form.baseXP) e.setAttribute("base-xp", Integer.toString(form.baseXP));
+		if (this.height != form.height) e.setAttribute("height", Float.toString(form.height));
+		if (this.weight != form.weight) e.setAttribute("weight", Float.toString(form.weight));
+
+		if (!this.baseStats.equals(form.baseStats))
+		{
+			int[][] line = new int[100][];
+			for (int lvl = 0; lvl < form.baseStats.size(); lvl++)
+			{
+				PokemonStats stats = form.baseStats.get(lvl);
+				if (stats.moveSpeed != 1) line[lvl] = new int[6];
+				else line[lvl] = new int[5];
+
+				line[lvl][PokemonStats.ATTACK] = stats.getAttack();
+				line[lvl][PokemonStats.DEFENSE] = stats.getDefense();
+				line[lvl][PokemonStats.HEALTH] = stats.getHealth();
+				line[lvl][PokemonStats.SPECIAL_ATTACK] = stats.getSpecialAttack();
+				line[lvl][PokemonStats.SPECIAL_DEFENSE] = stats.getSpecialDefense();
+				if (stats.moveSpeed != 1) line[lvl][PokemonStats.SPEED] = stats.getMoveSpeed();
+			}
+			e.addContent(XMLUtils.toXML("statline", line));
+		}
+
+		{
+			boolean flag = false;
+			for (int i = 0; i < this.experiencePerLevel.length; ++i)
+				if (this.experiencePerLevel[i] != form.experiencePerLevel[i])
+				{
+					flag = true;
+					break;
+				}
+			if (flag)
+			{
+				String s = "";
+				for (int lvl = 0; lvl < form.experiencePerLevel.length; lvl++)
+				{
+					if (lvl != 0) s += ",";
+					s += form.experiencePerLevel[lvl];
+				}
+				e.addContent(new Element("experience").setText(s));
+			}
+		}
+
+		if (!this.evolutions.equals(form.evolutions))
+		{
+			Element evolutions = new Element("evolves");
+			for (Evolution evolution : form.evolutions)
+				evolutions.addContent(evolution.toXML());
+			e.addContent(evolutions);
+		}
+
+		if (!this.abilities.equals(form.abilities)) e.addContent(XMLUtils.toXML("abilities", form.abilities));
+
+		if (!this.tms.equals(form.tms)) e.addContent(XMLUtils.toXML("tms", form.tms));
+
+		if (!this.learnset.equals(form.learnset))
+		{
+			Element learnset = new Element("learnset");
+			for (Integer level : form.learnset.keySet())
+			{
+				Element lv = XMLUtils.toXML("level", form.learnset.get(level));
+				lv.setAttribute("l", Integer.toString(level));
+				learnset.addContent(lv);
+			}
+			e.addContent(learnset);
+		}
 	}
 
 }

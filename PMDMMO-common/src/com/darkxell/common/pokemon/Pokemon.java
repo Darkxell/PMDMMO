@@ -220,7 +220,7 @@ public class Pokemon implements ItemContainer
 
 	public Message getNickname()
 	{
-		return (this.nickname == null ? this.species.name() : new Message(this.nickname, false)).addPrefix(this.player == null ? "<blue>" : "<yellow>")
+		return (this.nickname == null ? this.species.speciesName() : new Message(this.nickname, false)).addPrefix(this.player == null ? "<blue>" : "<yellow>")
 				.addSuffix("</color>");
 	}
 

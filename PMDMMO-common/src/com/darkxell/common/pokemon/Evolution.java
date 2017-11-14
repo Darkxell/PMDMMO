@@ -2,6 +2,8 @@ package com.darkxell.common.pokemon;
 
 import org.jdom2.Element;
 
+import com.darkxell.common.util.XMLUtils;
+
 public class Evolution
 {
 	/** Evolution methods.<br />
@@ -33,7 +35,7 @@ public class Evolution
 	public Evolution(Element xml)
 	{
 		this.species = Integer.parseInt(xml.getAttributeValue("pokemon"));
-		this.speciesForm = Integer.parseInt(xml.getAttributeValue("form"));
+		this.speciesForm = XMLUtils.getAttribute(xml, "form", 0);
 		this.method = Byte.parseByte(xml.getAttributeValue("method"));
 		this.value = Integer.parseInt(xml.getAttributeValue("value"));
 	}
@@ -48,8 +50,10 @@ public class Evolution
 
 	public Element toXML()
 	{
-		return new Element("e").setAttribute("pokemon", Integer.toString(this.species)).setAttribute("form", Integer.toString(this.speciesForm))
-				.setAttribute("method", Integer.toString(this.method)).setAttribute("value", Integer.toString(this.value));
+		Element e = new Element("e").setAttribute("pokemon", Integer.toString(this.species)).setAttribute("method", Integer.toString(this.method))
+				.setAttribute("value", Integer.toString(this.value));
+		XMLUtils.setAttribute(e, "form", this.speciesForm, 0);
+		return e;
 	}
 
 }
