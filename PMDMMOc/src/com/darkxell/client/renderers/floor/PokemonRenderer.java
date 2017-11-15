@@ -37,7 +37,7 @@ public class PokemonRenderer extends AbstractRenderer
 	{
 		super(pokemon.tile.x, pokemon.tile.y, MasterDungeonRenderer.LAYER_POKEMON);
 		this.pokemon = pokemon;
-		this.sprite = new PokemonSprite(PokemonSpritesets.getSpriteset(this.pokemon.pokemon.species.id));
+		this.sprite = new PokemonSprite(PokemonSpritesets.getSpriteset(this.pokemon.pokemon.species.compoundID()));
 	}
 
 	public void addAnimation(PokemonAnimation animation)

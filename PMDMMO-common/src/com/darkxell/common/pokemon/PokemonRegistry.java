@@ -37,7 +37,9 @@ public final class PokemonRegistry
 			try
 			{
 				PokemonSpecies species = new PokemonSpecies(e);
-				pokemon.put(species.id, species);
+				pokemon.put(species.compoundID(), species);
+				for (PokemonSpecies form : species.forms())
+					pokemon.put(form.compoundID(), form);
 			} catch (Exception e1)
 			{
 				e1.printStackTrace();
@@ -49,7 +51,7 @@ public final class PokemonRegistry
 	{
 		Element species = new Element("species");
 		for (PokemonSpecies pk : pokemon.values())
-			species.addContent(pk.toXML());
+			if (pk.formID == 0) species.addContent(pk.toXML());
 		XMLUtils.saveFile(new File("resources/data/pokemon.xml"), species);
 	}
 

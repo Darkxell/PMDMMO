@@ -81,7 +81,7 @@ public class TeamMenuState extends OptionSelectionMenuState
 			features.addReplacement("<ability>", p.getAbility().description());
 
 			Message info = new Message("summary.info.content");
-			info.addReplacement("<species>", p.species.name());
+			info.addReplacement("<species>", p.species.formName());
 			info.addReplacement("<area>", new Message("Stratos Lookout", false));
 			info.addReplacement("<joined>", new Message("Pokémon Square", false));
 			info.addReplacement("<evolve>", p.evolutionStatus());

@@ -220,7 +220,7 @@ public class Pokemon implements ItemContainer
 
 	public Message getNickname()
 	{
-		return (this.nickname == null ? this.species.name() : new Message(this.nickname, false)).addPrefix(this.player == null ? "<blue>" : "<yellow>")
+		return (this.nickname == null ? this.species.speciesName() : new Message(this.nickname, false)).addPrefix(this.player == null ? "<blue>" : "<yellow>")
 				.addSuffix("</color>");
 	}
 
@@ -316,7 +316,7 @@ public class Pokemon implements ItemContainer
 	{
 		Element root = new Element(XML_ROOT);
 		root.setAttribute("pk-id", Integer.toString(this.id));
-		root.setAttribute("id", Integer.toString(this.species.id));
+		root.setAttribute("id", Integer.toString(this.species.compoundID()));
 		if (this.nickname != null) root.setAttribute("nickname", this.nickname);
 		if (this.item != null) root.addContent(this.item.toXML());
 		root.setAttribute("level", Integer.toString(this.level));
