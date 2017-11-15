@@ -175,6 +175,12 @@ public class PokemonSpecies
 		return new Message("pokemon." + this.id + "." + this.formID);
 	}
 
+	@SuppressWarnings("unchecked")
+	public ArrayList<PokemonSpecies> forms()
+	{
+		return (ArrayList<PokemonSpecies>) this.forms.clone();
+	}
+
 	/** Generates a Pokémon of this species.
 	 * 
 	 * @param level - The level of the Pokémon to generate. */
