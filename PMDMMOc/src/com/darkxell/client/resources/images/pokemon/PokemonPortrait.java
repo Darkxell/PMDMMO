@@ -10,7 +10,7 @@ import com.darkxell.common.pokemon.PokemonSpecies;
 
 public class PokemonPortrait
 {
-	private static final HashMap<String, Integer> alternateIDs = new HashMap<String, Integer>();
+	private static final HashMap<Integer, Integer> alternateIDs = new HashMap<Integer, Integer>();
 	private static final int cols = 10, rows = 10;
 	public static final int PORTRAIT_SIZE = 40;
 	private static final PokemonPortrait portraits0 = new PokemonPortrait("resources/pokemons/portraits/portraits0.png"), portraits1 = new PokemonPortrait(
@@ -23,7 +23,7 @@ public class PokemonPortrait
 		int id = 0;
 		for (PokemonSpecies pokemon : PokemonRegistry.list())
 			for (PokemonSpecies form : pokemon.forms())
-				alternateIDs.put(form.id + "." + form.formID, id++);
+				alternateIDs.put(form.compoundID(), id++);
 	}
 
 	/** @return The portrait for the input Pokémon. */
@@ -34,7 +34,7 @@ public class PokemonPortrait
 		if (pokemon.species.formID != 0)
 		{
 			sheet = portraitsAlternate;
-			index = alternateIDs.get(pokemon.species.id + "." + pokemon.species.formID);
+			index = alternateIDs.get(pokemon.species.compoundID());
 		} else
 		{
 			if (index == -1) // ID 100 is on first page but would give set=1, index=-1

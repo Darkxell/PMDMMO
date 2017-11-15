@@ -13,6 +13,7 @@ import com.darkxell.common.util.language.Message;
 
 public class PokemonSpecies
 {
+	public static final int COMPOUND_ID_FACTOR = 10000;
 
 	/** List of possible Abilities for this Pokémon. */
 	private ArrayList<Integer> abilities;
@@ -103,6 +104,11 @@ public class PokemonSpecies
 	public PokemonStats baseStatsIncrease(int level)
 	{
 		return this.baseStats.get(level);
+	}
+
+	public int compoundID()
+	{
+		return this.id * COMPOUND_ID_FACTOR + this.formID;
 	}
 
 	@SuppressWarnings("unchecked")
