@@ -128,6 +128,7 @@ public class DungeonPokemon
 
 	public boolean isFainted()
 	{
+		return this.getHp() <= 0;
 	}
 
 	public boolean isFamished()
