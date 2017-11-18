@@ -26,6 +26,12 @@ public class ExperienceGainedEvent extends DungeonEvent
 				Integer.toString(this.experience)));
 	}
 
+	@Override
+	public boolean isValid()
+	{
+		return !this.pokemon.getDungeonPokemon().isFainted();
+	}
+
 	public int levelsup()
 	{
 		return this.levelsup;

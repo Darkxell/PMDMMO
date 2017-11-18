@@ -30,7 +30,7 @@ public class StatChangedEvent extends DungeonEvent
 	@Override
 	public boolean isValid()
 	{
-		return this.target.getHp() > 0;
+		return !this.target.isFainted();
 	}
 
 	@Override

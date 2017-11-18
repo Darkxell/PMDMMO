@@ -303,7 +303,6 @@ public class Floor
 	{
 		pokemon.tile.setPokemon(null);
 		this.dungeon.unregisterActor(pokemon);
-		pokemon.dispose();
 	}
 
 }

@@ -108,6 +108,7 @@ public class PokemonSpecies
 
 	public int compoundID()
 	{
+		if (this.formID == 0) return this.id;
 		return this.id * COMPOUND_ID_FACTOR + this.formID;
 	}
 
@@ -156,7 +157,7 @@ public class PokemonSpecies
 			tms.add(Integer.parseInt(tm.getAttributeValue("id")));
 
 		if (xml.getChild("learnset") == null) learnset = (HashMap<Integer, ArrayList<Integer>>) this.learnset.clone();
-		for (Element level : xml.getChild("learnset").getChildren())
+		else for (Element level : xml.getChild("learnset").getChildren())
 			learnset.put(Integer.parseInt(level.getAttributeValue("l")), XMLUtils.readIntArrayAsList(level));
 
 		return new PokemonSpecies(this.id, formID, type1, type2, baseXP, baseStats, height, weight, abilities, experiencePerLevel, learnset, tms, evolutions,

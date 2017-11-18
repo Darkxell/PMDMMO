@@ -5,6 +5,7 @@ import static com.darkxell.client.resources.images.pokemon.PokemonPortrait.PORTR
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.TextRenderer.PMDChar;
@@ -88,7 +89,10 @@ public final class TeamInfoRenderer
 	public static void render(Graphics2D parentGraphics, int canvasWidth, int canvasHeight)
 	{
 		Player p = Persistance.player;
-		Pokemon[] team = p.getTeam();
+		Pokemon[] realTeam = p.getTeam();
+		ArrayList<Pokemon> team = new ArrayList<Pokemon>();
+		for (Pokemon pk : realTeam)
+			if (!(pk.getDungeonPokemon() != null && pk.getDungeonPokemon().isFainted())) team.add(pk);
 
 		g.clearRect(0, 0, width, height);
 		g.setColor(new Color(0, 120, 180));
@@ -102,23 +106,23 @@ public final class TeamInfoRenderer
 		int y = TITLE_HEIGHT;
 		g.setColor(Palette.TRANSPARENT_GRAY);
 
-		if (team.length == 1) drawMember(team[0], 0, y, MEMBER_WIDTH * 2, MEMBER_HEIGHT * 2);
+		if (team.size() == 1) drawMember(team.get(0), 0, y, MEMBER_WIDTH * 2, MEMBER_HEIGHT * 2);
 		else g.drawLine(0, y + MEMBER_HEIGHT, width, y + MEMBER_HEIGHT);
 
-		if (team.length == 4)
+		if (team.size() == 4)
 		{
-			drawMember(team[0], 0, y, MEMBER_WIDTH, MEMBER_HEIGHT);
-			drawMember(team[1], MEMBER_WIDTH, y, MEMBER_WIDTH, MEMBER_HEIGHT);
+			drawMember(team.get(0), 0, y, MEMBER_WIDTH, MEMBER_HEIGHT);
+			drawMember(team.get(1), MEMBER_WIDTH, y, MEMBER_WIDTH, MEMBER_HEIGHT);
 		}
 
-		if (team.length == 2 || team.length == 3) drawMember(team[0], 0, y, MEMBER_WIDTH * 2, MEMBER_HEIGHT);
-		if (team.length == 2) drawMember(team[1], 0, y + MEMBER_HEIGHT, MEMBER_WIDTH * 2, MEMBER_HEIGHT);
-		else if (team.length == 3 || team.length == 4)
+		if (team.size() == 2 || team.size() == 3) drawMember(team.get(0), 0, y, MEMBER_WIDTH * 2, MEMBER_HEIGHT);
+		if (team.size() == 2) drawMember(team.get(1), 0, y + MEMBER_HEIGHT, MEMBER_WIDTH * 2, MEMBER_HEIGHT);
+		else if (team.size() == 3 || team.size() == 4)
 		{
 			g.setColor(Palette.TRANSPARENT_GRAY);
-			g.drawLine(MEMBER_WIDTH, team.length == 3 ? y + MEMBER_HEIGHT : y, MEMBER_WIDTH, height);
-			drawMember(team[team.length == 3 ? 1 : 2], 0, y + MEMBER_HEIGHT, MEMBER_WIDTH, MEMBER_HEIGHT);
-			drawMember(team[team.length == 3 ? 2 : 3], MEMBER_WIDTH, y + MEMBER_HEIGHT, MEMBER_WIDTH, MEMBER_HEIGHT);
+			g.drawLine(MEMBER_WIDTH, team.size() == 3 ? y + MEMBER_HEIGHT : y, MEMBER_WIDTH, height);
+			drawMember(team.get(team.size() == 3 ? 1 : 2), 0, y + MEMBER_HEIGHT, MEMBER_WIDTH, MEMBER_HEIGHT);
+			drawMember(team.get(team.size() == 3 ? 2 : 3), MEMBER_WIDTH, y + MEMBER_HEIGHT, MEMBER_WIDTH, MEMBER_HEIGHT);
 		}
 
 		parentGraphics.drawImage(canvas, 0, 0, canvasWidth, canvasHeight, null);

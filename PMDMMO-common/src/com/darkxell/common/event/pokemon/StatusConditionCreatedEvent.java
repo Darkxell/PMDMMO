@@ -17,6 +17,12 @@ public class StatusConditionCreatedEvent extends DungeonEvent
 
 		this.messages.add(this.condition.startMessage());
 	}
+	
+	@Override
+	public boolean isValid()
+	{
+		return !this.condition.pokemon.isFainted();
+	}
 
 	@Override
 	public ArrayList<DungeonEvent> processServer()

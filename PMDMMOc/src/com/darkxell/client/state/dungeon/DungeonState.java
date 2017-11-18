@@ -155,6 +155,7 @@ public class DungeonState extends AbstractState
 
 		for (int i = team.length - 1; i > 0; --i)
 		{
+			if (team[i].isFainted()) continue;
 			if (candidates.size() == 0)
 			{
 				Logger.e("DungeonState.placeAllies() @124 : Could not find a spawn location for ally " + team[i].pokemon.getNickname() + "!");

@@ -126,6 +126,10 @@ public class DungeonPokemon
 		return this.getBelly() == this.getBellySize();
 	}
 
+	public boolean isFainted()
+	{
+	}
+
 	public boolean isFamished()
 	{
 		return this.getBelly() == 0;
