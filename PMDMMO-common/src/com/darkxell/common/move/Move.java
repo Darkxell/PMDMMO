@@ -7,6 +7,7 @@ import org.jdom2.Element;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Room;
 import com.darkxell.common.dungeon.floor.Tile;
+import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.DungeonEvent.MessageEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
@@ -26,14 +27,18 @@ public class Move
 	/** Move targets.<br />
 	 * <ul>
 	 * <li>FRONT = 0</li>
-	 * <li>ONE_AUTO = 1</li>
-	 * <li>SELF = 2</li>
-	 * <li>ALL_ENEMIES = 3</li>
-	 * <li>ALL_ALLIES = 4</li>
-	 * <li>ALL_ROOM = 5</li>
-	 * <li>AMBIENT = 6</li>
+	 * <li>TWO_TILES_FRONT = 1</li>
+	 * <li>LINE_FRONT = 2</li>
+	 * <li>SELF = 3</li>
+	 * <li>ALL_ENEMIES = 4</li>
+	 * <li>ALL_ALLIES = 5</li>
+	 * <li>ALL_ALLIES_WITH_SELF = 6</li>
+	 * <li>ALL_ROOM = 7</li>
+	 * <li>ALL_ROOM_WITH_SELF = 8</li>
+	 * <li>AMBIENT = 9</li>
 	 * </ul> */
-	public static final byte FRONT = 0, ONE_AUTO = 1, SELF = 2, ALL_ENEMIES = 3, ALL_ALLIES = 4, ALL_ROOM = 5, AMBIENT = 6;
+	public static final byte FRONT = 0, TWO_TILES_FRONT = 1, LINE_FRONT = 2, SELF = 3, ALL_ENEMIES = 4, ALL_ALLIES = 5, ALL_ALLIES_WITH_SELF = 6, ALL_ROOM = 7,
+			ALL_ROOM_WITH_SELF = 8, AMBIENT = 9;
 	/** Move categories.<br />
 	 * <ul>
 	 * <li>PHYSICAL = 0</li>
@@ -183,18 +188,44 @@ public class Move
 		ArrayList<DungeonPokemon> targets = new ArrayList<DungeonPokemon>();
 		switch (this.targets)
 		{
+			case TWO_TILES_FRONT:
+				Tile t0 = user.tile.adjacentTile(user.facing());
+				if (t0.getPokemon() != null && !t0.getPokemon().pokemon.isAlliedWith(user.pokemon)) targets.add(t0.getPokemon());
+				else if (t0.type().canWalkOn(user))
+				;
+				{
+					t0 = t0.adjacentTile(user.facing());
+					if (t0.getPokemon() != null && !t0.getPokemon().pokemon.isAlliedWith(user.pokemon)) targets.add(t0.getPokemon());
+				}
+
+			case LINE_FRONT:
+				Tile t2 = user.tile;
+				int distance = 0;
+				boolean done;
+				do
+				{
+					t2 = t2.adjacentTile(user.facing());
+					if (t2.getPokemon() != null && !t2.getPokemon().pokemon.isAlliedWith(user.pokemon)) targets.add(t2.getPokemon());
+					++distance;
+					done = !targets.isEmpty() || distance >= 50 || t2.type() == TileType.WALL || t2.type() == TileType.WALL_END;
+				} while (!done);
+
 			case ALL_ALLIES:
 				Room r = floor.roomAt(user.tile.x, user.tile.y);
 				if (r == null) for (short d : Directions.directions())
 				{
-					Tile t = user.tile.adjacentTile(d);
-					if (t.getPokemon() != null && user.pokemon.isAlliedWith(t.getPokemon().pokemon)) targets.add(t.getPokemon());
+					Tile t1 = user.tile.adjacentTile(d);
+					if (t1.getPokemon() != null && user.pokemon.isAlliedWith(t1.getPokemon().pokemon)) targets.add(t1.getPokemon());
 				}
-				else for (Tile t : r.listTiles())
-					if (t.getPokemon() != null && t.getPokemon() != user && user.pokemon.isAlliedWith(t.getPokemon().pokemon)) targets.add(t.getPokemon());
-			case SELF:
-				targets.add(user);
+				else for (Tile t1 : r.listTiles())
+					if (t1.getPokemon() != null && t1.getPokemon() != user && user.pokemon.isAlliedWith(t1.getPokemon().pokemon)) targets.add(t1.getPokemon());
 				break;
+
+			case SELF:
+			case ALL_ROOM_WITH_SELF:
+			case ALL_ALLIES_WITH_SELF:
+				targets.add(user);
+				if (this.targets != ALL_ROOM_WITH_SELF) break;
 
 			case ALL_ENEMIES:
 			case ALL_ROOM:
@@ -202,12 +233,15 @@ public class Move
 				if (r == null) for (short d : Directions.directions())
 				{
 					Tile t = user.tile.adjacentTile(d);
-					if (t.getPokemon() != null && (this.targets == ALL_ROOM || !user.pokemon.isAlliedWith(t.getPokemon().pokemon))) targets.add(t.getPokemon());
+					if (t.getPokemon() != null
+							&& (this.targets == ALL_ROOM || this.targets == ALL_ROOM_WITH_SELF || !user.pokemon.isAlliedWith(t.getPokemon().pokemon))) targets
+							.add(t.getPokemon());
 				}
 				else for (Tile t : r.listTiles())
 					if (t.getPokemon() != null && t.getPokemon() != user)
 					{
-						if (this.targets == ALL_ROOM || !user.pokemon.isAlliedWith(t.getPokemon().pokemon)) targets.add(t.getPokemon());
+						if (this.targets == ALL_ROOM || this.targets == ALL_ROOM_WITH_SELF || !user.pokemon.isAlliedWith(t.getPokemon().pokemon)) targets.add(t
+								.getPokemon());
 					}
 				break;
 
@@ -243,6 +277,7 @@ public class Move
 		ArrayList<DungeonEvent> events = new ArrayList<DungeonEvent>();
 		for (int i = 0; i < pokemon.length; ++i)
 			events.add(new MoveUseEvent(floor, move, pokemon[i]));
+		if (this.targets == AMBIENT) events.add(new MoveUseEvent(floor, move, null));
 
 		if (events.size() == 0 && this != MoveRegistry.ATTACK) events.add(new MessageEvent(floor, new Message("move.no_target")));
 		return events;
