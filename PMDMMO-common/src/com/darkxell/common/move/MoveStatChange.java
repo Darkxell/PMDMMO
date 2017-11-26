@@ -35,9 +35,9 @@ public class MoveStatChange extends Move
 	}
 
 	public MoveStatChange(int id, PokemonType type, int pp, int power, int accuracy, byte targets, int priority, int additionalEffectChance,
-			boolean makesContact, int[][] statChanges)
+			boolean makesContact, boolean cutsEdges, int[][] statChanges)
 	{
-		super(id, type, -1, Move.STATUS, pp, power, accuracy, targets, priority, additionalEffectChance, makesContact);
+		super(id, type, -1, Move.STATUS, pp, power, accuracy, targets, priority, additionalEffectChance, makesContact, cutsEdges);
 		this.statChanges = statChanges;
 	}
 
