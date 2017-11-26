@@ -55,6 +55,8 @@ public class Move
 	public final int behaviorID;
 	/** This move's category. See {@link Move#PHYSICAL}. */
 	public final byte category;
+	/** True if this move doesn't fail if used diagonally with solid walls. */
+	public final boolean cutsEdges;
 	/** This move's ID. */
 	public final int id;
 	/** True if this move makes contact. */
@@ -83,10 +85,11 @@ public class Move
 		this.priority = XMLUtils.getAttribute(xml, "priority", 0);
 		this.additionalEffectChance = XMLUtils.getAttribute(xml, "random", 100);
 		this.makesContact = XMLUtils.getAttribute(xml, "contact", false);
+		this.cutsEdges = XMLUtils.getAttribute(xml, "cutedges", false);
 	}
 
 	public Move(int id, PokemonType type, int behaviorID, byte category, int pp, int power, int accuracy, byte targets, int priority,
-			int additionalEffectChance, boolean makesContact)
+			int additionalEffectChance, boolean makesContact, boolean cutsEdges)
 	{
 		this.id = id;
 		this.type = type;
@@ -99,6 +102,7 @@ public class Move
 		this.priority = priority;
 		this.additionalEffectChance = additionalEffectChance;
 		this.makesContact = makesContact;
+		this.cutsEdges = cutsEdges;
 	}
 
 	/** @return True if this Move's additional effects land. */
@@ -192,7 +196,6 @@ public class Move
 				Tile t0 = user.tile.adjacentTile(user.facing());
 				if (t0.getPokemon() != null && !t0.getPokemon().pokemon.isAlliedWith(user.pokemon)) targets.add(t0.getPokemon());
 				else if (t0.type().canWalkOn(user))
-				;
 				{
 					t0 = t0.adjacentTile(user.facing());
 					if (t0.getPokemon() != null && !t0.getPokemon().pokemon.isAlliedWith(user.pokemon)) targets.add(t0.getPokemon());
@@ -247,7 +250,18 @@ public class Move
 
 			default:
 				DungeonPokemon front = user.tile.adjacentTile(user.facing()).getPokemon();
-				if (front != null) targets.add(front);
+				if (front != null)
+				{
+					boolean valid = true;
+					if (Directions.isDiagonal(user.facing()) && !this.cutsEdges)
+					{
+						Tile t = user.tile.adjacentTile(Directions.rotateClockwise(user.facing()));
+						if (t.type() == TileType.WALL || t.type() == TileType.WALL_END) valid = false;
+						t = user.tile.adjacentTile(Directions.rotateCounterClockwise(user.facing()));
+						if (t.type() == TileType.WALL || t.type() == TileType.WALL_END) valid = false;
+					}
+					if (valid) targets.add(front);
+				}
 		}
 
 		return targets.toArray(new DungeonPokemon[targets.size()]);
@@ -300,6 +314,7 @@ public class Move
 		XMLUtils.setAttribute(root, "priority", this.priority, 0);
 		XMLUtils.setAttribute(root, "random", this.additionalEffectChance, 100);
 		XMLUtils.setAttribute(root, "contact", this.makesContact, false);
+		XMLUtils.setAttribute(root, "cutedges", this.cutsEdges, false);
 		return root;
 	}
 
