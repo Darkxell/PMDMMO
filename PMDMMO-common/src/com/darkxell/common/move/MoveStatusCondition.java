@@ -28,9 +28,9 @@ public class MoveStatusCondition extends Move
 	}
 
 	public MoveStatusCondition(int id, PokemonType type, int pp, int power, int accuracy, byte targets, int priority, int additionalEffectChance,
-			boolean makesContact, int condition)
+			boolean makesContact, boolean cutsEdges, int condition)
 	{
-		super(id, type, -1, Move.STATUS, pp, power, accuracy, targets, priority, additionalEffectChance, makesContact);
+		super(id, type, -1, Move.STATUS, pp, power, accuracy, targets, priority, additionalEffectChance, makesContact, cutsEdges);
 		this.condition = condition;
 	}
 
