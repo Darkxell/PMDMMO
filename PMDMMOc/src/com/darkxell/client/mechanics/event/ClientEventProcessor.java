@@ -127,8 +127,11 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		AnimationState a = new AnimationState(Persistance.dungeonState);
 		if (event.item instanceof ItemFood || event.item instanceof ItemGummi) a.animation = SpritesetAnimation.getCustomAnimation(event.user, 0, a);
 		else a.animation = SpritesetAnimation.getItemAnimation(event.user, event.item, a);
-		Persistance.dungeonState.setSubstate(a);
-		this.processPending = false;
+		if (a.animation != null)
+		{
+			Persistance.dungeonState.setSubstate(a);
+			this.processPending = false;
+		}
 	}
 
 	private void processItemMovedEvent(ItemMovedEvent event)
