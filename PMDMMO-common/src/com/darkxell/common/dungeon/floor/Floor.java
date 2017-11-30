@@ -7,12 +7,14 @@ import java.util.HashMap;
 import java.util.Random;
 import java.util.function.Predicate;
 
+import com.darkxell.common.dungeon.DungeonEncounter;
 import com.darkxell.common.dungeon.DungeonInstance;
 import com.darkxell.common.dungeon.DungeonItem;
 import com.darkxell.common.dungeon.floor.layout.Layout;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.dungeon.weather.WeatherChangedEvent;
 import com.darkxell.common.event.dungeon.weather.WeatherCreatedEvent;
+import com.darkxell.common.event.pokemon.PokemonSpawnedEvent;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.ItemRegistry;
 import com.darkxell.common.pokemon.DungeonPokemon;
@@ -36,6 +38,8 @@ public class Floor
 	private boolean isGenerating = true;
 	/** This Floor's layout. */
 	public final Layout layout;
+	/** The number of turns until a Pokémon spawns. */
+	private int nextSpawn;
 	/** RNG for game logic: moves, mob spawning, etc. */
 	public final Random random;
 	/** This Floor's rooms. null before generating. */
@@ -79,6 +83,14 @@ public class Floor
 		{ Directions.NORTH, Directions.EAST, Directions.SOUTH, Directions.WEST })
 			if (!tile.adjacentTile(direction).isInRoom() && tile.adjacentTile(direction).type() == TileType.GROUND) return true;
 		return false;
+	}
+
+	private int countWildPokemon()
+	{
+		int count = 0;
+		for (DungeonPokemon p : this.listPokemon())
+			if (p.pokemon.player == null) ++count;
+		return count;
 	}
 
 	public WeatherInstance currentWeather()
@@ -146,10 +158,34 @@ public class Floor
 	{
 		ArrayList<DungeonEvent> e = new ArrayList<DungeonEvent>();
 		// e.add(new MessageEvent(this, new Message("New turn!", false)));
+
+		// For each existing Pokémon
 		for (DungeonPokemon pokemon : this.listPokemon())
 			e.addAll(pokemon.onTurnStart(this));
+
+		// Weather
 		for (int w = this.weatherCondition.size() - 1; w >= 0; --w)
 			e.addAll(this.weatherCondition.get(w).update());
+
+		// Pokémon spawning
+		if (this.data.pokemonDensity() > this.countWildPokemon())
+		{
+			if (this.nextSpawn <= 0)
+			{
+				DungeonEncounter s = this.dungeon.dungeon().randomEncounter(this.random, this.id);
+				if (s != null)
+				{
+					DungeonPokemon wild = new DungeonPokemon(s.pokemon().generate(this.random, s.level));
+					Tile tile = this.randomEmptyTile(true, true, this.random);
+					if (tile != null)
+					{
+						e.add(new PokemonSpawnedEvent(this, wild, tile));
+						this.nextSpawn = RandomUtil.nextIntInBounds(50, 100, this.random) / this.data.pokemonDensity();
+					}
+				}
+			} else --this.nextSpawn;
+		}
+
 		return e;
 	}
 
@@ -160,16 +196,18 @@ public class Floor
 	}
 
 	/** @param inRoom - True if the Tile should be in a Room (will also avoid tiles adjacent to corridors in rooms).
+	 * @param awayFromPlayers - True if the Tile should be far away from players (to avoid spawning a pokémon close to a player for example).
 	 * @return A Random Tile in this floor. */
-	public Tile randomEmptyTile(boolean inRoom, Random random)
+	public Tile randomEmptyTile(boolean inRoom, boolean awayFromPlayers, Random random)
 	{
-		return this.randomEmptyTile(inRoom, null, random);
+		return this.randomEmptyTile(inRoom, awayFromPlayers, null, random);
 	}
 
 	/** @param inRoom - True if the Tile should be in a Room (will also avoid tiles adjacent to corridors in rooms).
+	 * @param awayFromPlayers - True if the Tile should be far away from players (to avoid spawning a pokémon close to a player for example).
 	 * @param type - A Type that the Tile has to match. null for any type.
 	 * @return A Random Tile in this floor. */
-	public Tile randomEmptyTile(boolean inRoom, TileType type, Random random)
+	public Tile randomEmptyTile(boolean inRoom, boolean awayFromPlayers, TileType type, Random random)
 	{
 		ArrayList<Tile> candidates = new ArrayList<Tile>();
 		if (inRoom) for (Room room : this.rooms)
@@ -206,8 +244,20 @@ public class Floor
 			{
 				return connectsToPath(t);
 			}
-
 		});
+
+		if (awayFromPlayers)
+		{
+			ArrayList<DungeonPokemon> players = new ArrayList<DungeonPokemon>(this.listPokemon());
+			players.removeIf((DungeonPokemon p) -> {
+				return p.pokemon.player == null;
+			});
+			candidates.removeIf((Tile t) -> {
+				for (DungeonPokemon player : players)
+					if (Math.abs(t.x - player.tile.x) < 10 && Math.abs(t.y - player.tile.y) < 7) return true;
+				return false;
+			});
+		}
 
 		return RandomUtil.random(candidates, random);
 	}

@@ -31,6 +31,7 @@ public class FloorVisibility
 
 	public boolean isVisible(DungeonPokemon pokemon)
 	{
+		if (Persistance.floor.data.shadows() == FloorData.NO_SHADOW) return true;
 		return pokemon.pokemon.player == Persistance.player || this.currentlyVisible.contains(pokemon.tile);
 	}
 

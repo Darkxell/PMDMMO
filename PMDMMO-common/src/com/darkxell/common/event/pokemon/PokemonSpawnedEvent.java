@@ -1,0 +1,33 @@
+package com.darkxell.common.event.pokemon;
+
+import java.util.ArrayList;
+
+import com.darkxell.common.dungeon.floor.Floor;
+import com.darkxell.common.dungeon.floor.Tile;
+import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.pokemon.DungeonPokemon;
+
+public class PokemonSpawnedEvent extends DungeonEvent
+{
+
+	/** The spawned Pokémon. */
+	public final DungeonPokemon spawned;
+	/** The Tile to spawn the Pokémon on. */
+	public final Tile tile;
+
+	public PokemonSpawnedEvent(Floor floor, DungeonPokemon spawned, Tile tile)
+	{
+		super(floor, null);
+		this.spawned = spawned;
+		this.tile = tile;
+	}
+
+	@Override
+	public ArrayList<DungeonEvent> processServer()
+	{
+		this.tile.setPokemon(this.spawned);
+		this.resultingEvents.addAll(this.spawned.onFloorStart(this.floor));
+		return super.processServer();
+	}
+
+}

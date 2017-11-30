@@ -22,6 +22,8 @@ public class DungeonStats
 	private int health;
 	/** Movement Speed. */
 	private float moveSpeed;
+	/** Owner of these stats. */
+	public final DungeonPokemon pokemon;
 	/** Special Attack. */
 	private int specialAttack;
 	/** Special Defense. */
@@ -29,9 +31,10 @@ public class DungeonStats
 	private int[] stages = new int[]
 	{ 10, 10, 10, 10, 10, 10, 10, 10 };
 
-	public DungeonStats(PokemonStats baseStats)
+	public DungeonStats(DungeonPokemon pokemon)
 	{
-		this.baseStats = baseStats;
+		this.pokemon = pokemon;
+		this.baseStats = this.pokemon.pokemon.getStats();
 		this.health = this.baseStats.health;
 		this.onStatChange();
 	}
@@ -89,6 +92,7 @@ public class DungeonStats
 	/** Called when the base stats change. */
 	public void onStatChange()
 	{
+		int hpchange = this.baseStats.health - this.health;
 		this.attack = this.baseStats.attack;
 		this.defense = this.baseStats.defense;
 		this.health = this.baseStats.health;
@@ -97,6 +101,7 @@ public class DungeonStats
 		this.moveSpeed = this.baseStats.moveSpeed;
 		this.evasiveness = DEFAULT_EVASIVENESS;
 		this.accuracy = DEFAULT_ACCURACY;
+		this.pokemon.setHP(this.pokemon.getHp() + hpchange);
 	}
 
 	/** Called when the Pokémon steps on a Wonder Tile or changes Floor. */

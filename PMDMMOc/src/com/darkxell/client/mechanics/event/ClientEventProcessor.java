@@ -79,6 +79,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		if (event instanceof StatusConditionCreatedEvent) MoveEvents.processStatusEvent((StatusConditionCreatedEvent) event);
 		if (event instanceof StatusConditionEndedEvent) MoveEvents.processStatusEvent((StatusConditionEndedEvent) event);
 
+		if (event instanceof PokemonSpawnedEvent) this.processSpawnEvent((PokemonSpawnedEvent) event);
 		if (event instanceof PokemonTravelEvent) this.processTravelEvent((PokemonTravelEvent) event);
 		if (event instanceof FaintedPokemonEvent) MoveEvents.processFaintedEvent((FaintedPokemonEvent) event);
 
@@ -143,6 +144,11 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	{
 		if (event.source instanceof Tile) Persistance.dungeonState.floorVisibility.onItemremoved((Tile) event.source);
 		else if (event.destination instanceof Tile) Persistance.dungeonState.floorVisibility.onItemremoved((Tile) event.destination);
+	}
+
+	private void processSpawnEvent(PokemonSpawnedEvent event)
+	{
+		Persistance.dungeonState.pokemonRenderer.register(event.spawned);
 	}
 
 	private void processStairEvent(StairLandingEvent event)

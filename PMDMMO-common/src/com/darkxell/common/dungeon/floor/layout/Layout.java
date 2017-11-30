@@ -119,7 +119,7 @@ public abstract class Layout
 		if (items > 63) items = 63;
 		for (int i = 0; i < items; ++i)
 		{
-			Tile tile = this.floor.randomEmptyTile(false, TileType.WALL, this.random);
+			Tile tile = this.floor.randomEmptyTile(false, false, TileType.WALL, this.random);
 			Item item = this.floor.randomBuriedItem(this.random);
 			int quantity = 0;
 			if (item.id == Item.POKE) quantity = this.getMoneyQuantity();
@@ -139,7 +139,7 @@ public abstract class Layout
 		if (items > 63) items = 63;
 		for (int i = 0; i < items; ++i)
 		{
-			Tile tile = this.floor.randomEmptyTile(true, TileType.GROUND, this.random);
+			Tile tile = this.floor.randomEmptyTile(true, false, TileType.GROUND, this.random);
 			Item item = this.floor.randomItem(this.random);
 			int quantity = 0;
 			if (item.id == Item.POKE) quantity = this.getMoneyQuantity();
@@ -152,7 +152,7 @@ public abstract class Layout
 	/** Randomly places the Stairs tile in a random room. */
 	protected void placeStairs()
 	{
-		this.floor.randomEmptyTile(true, this.random).setType(TileType.STAIR);
+		this.floor.randomEmptyTile(true, false, this.random).setType(TileType.STAIR);
 	}
 
 	protected void placeTeam()
@@ -171,7 +171,7 @@ public abstract class Layout
 		if (traps > 63) traps = 63;
 		for (int i = 0; i < traps; ++i)
 		{
-			Tile t = this.floor.randomEmptyTile(true, TileType.GROUND, this.random);
+			Tile t = this.floor.randomEmptyTile(true, false, TileType.GROUND, this.random);
 			t.trap = this.floor.randomTrap(this.random);
 			t.trapRevealed = t.trap == TrapRegistry.WONDER_TILE;
 		}

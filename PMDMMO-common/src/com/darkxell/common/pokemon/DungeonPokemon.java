@@ -40,7 +40,7 @@ public class DungeonPokemon
 	public DungeonPokemon(Pokemon pokemon)
 	{
 		this.pokemon = pokemon;
-		this.stats = new DungeonStats(this.pokemon.getStats());
+		this.stats = new DungeonStats(this);
 		this.belly = this.bellySize = DEFAULT_BELLY_SIZE;
 		this.hp = this.stats.getHealth();
 		this.statusConditions = new ArrayList<StatusConditionInstance>();
@@ -141,6 +141,7 @@ public class DungeonPokemon
 		return this.pokemon.player != null && this.pokemon.player.getDungeonLeader() == this;
 	}
 
+	/** Called when this Pokémon enters a new Floor or when it spawns. */
 	public ArrayList<DungeonEvent> onFloorStart(Floor floor)
 	{
 		ArrayList<DungeonEvent> events = new ArrayList<DungeonEvent>();
@@ -148,6 +149,7 @@ public class DungeonPokemon
 		return events;
 	}
 
+	/** Called at the beginning of each turn. */
 	public ArrayList<DungeonEvent> onTurnStart(Floor floor)
 	{
 		ArrayList<DungeonEvent> events = new ArrayList<DungeonEvent>();

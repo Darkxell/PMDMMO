@@ -15,6 +15,7 @@ import com.darkxell.client.renderers.MasterDungeonRenderer;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
+import com.darkxell.client.resources.images.tilesets.AbstractDungeonTileset;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Directions;
 
@@ -106,7 +107,8 @@ public class PokemonRenderer extends AbstractRenderer
 	{
 		double screenX = Persistance.dungeonState.pokemonRenderer.x();
 		double screenY = Persistance.dungeonState.pokemonRenderer.y();
-		return this.x() >= screenX - 1 && this.x() <= screenX + width + 1 && this.y() >= screenY - 1 && this.y() <= screenY + height + 1;
+		return this.x() + AbstractDungeonTileset.TILE_SIZE >= screenX - 1 && this.x() <= screenX + width + 1
+				&& this.y() + AbstractDungeonTileset.TILE_SIZE >= screenY - 1 && this.y() <= screenY + height + 1;
 	}
 
 	@Override

@@ -33,6 +33,7 @@ public class DungeonInstance
 		this.id = id;
 		this.random = random;
 		this.currentFloor = this.createFloor(1);
+		this.currentFloor.generate();
 		this.endTurn();
 		this.currentActor = -1;
 	}

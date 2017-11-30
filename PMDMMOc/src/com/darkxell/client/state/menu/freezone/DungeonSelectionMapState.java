@@ -77,7 +77,6 @@ public class DungeonSelectionMapState extends AbstractState {
 			Persistance.dungeon = dungeonslist.get(cursor).newInstance();
 			Persistance.eventProcessor = new ClientEventProcessor(Persistance.dungeon);
 			Persistance.floor = Persistance.dungeon.currentFloor();
-			Persistance.floor.generate();
 			Persistance.stateManager.setState(new NextFloorState(this, 1));
 			Persistance.displaymap = new DungeonFloorMap();
 			Persistance.eventProcessor.addToPending(Persistance.dungeon.currentFloor().onFloorStart());
