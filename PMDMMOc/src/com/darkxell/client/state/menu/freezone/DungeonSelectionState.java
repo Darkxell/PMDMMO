@@ -7,6 +7,7 @@ import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.event.ClientEventProcessor;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.dungeon.DungeonState;
+import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.client.state.map.DungeonFloorMap;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.common.dungeon.Dungeon;
@@ -46,7 +47,8 @@ public class DungeonSelectionState extends OptionSelectionMenuState {
 
 	@Override
 	protected void onExit() {
-		Persistance.stateManager.setState(this.backgroundState);
+		if(Persistance.stateManager instanceof PrincipalMainState)
+			((PrincipalMainState) Persistance.stateManager).setState(this.backgroundState);
 	}
 
 	@Override
@@ -54,7 +56,8 @@ public class DungeonSelectionState extends OptionSelectionMenuState {
 		Persistance.dungeon = ((DungeonMenuOption) option).dungeon.newInstance();
 		Persistance.eventProcessor = new ClientEventProcessor(Persistance.dungeon);
 		Persistance.floor = Persistance.dungeon.currentFloor();
-		Persistance.stateManager.setState(Persistance.dungeonState = new DungeonState());
+		if(Persistance.stateManager instanceof PrincipalMainState)
+			((PrincipalMainState) Persistance.stateManager).setState(Persistance.dungeonState = new DungeonState());
 		Persistance.displaymap = new DungeonFloorMap();
 		Persistance.eventProcessor.processEvents(Persistance.dungeon.currentFloor().onFloorStart());
 	}

@@ -7,6 +7,7 @@ import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.renderers.layers.BackgroundSeaLayer;
 import com.darkxell.client.resources.images.others.Hud;
 import com.darkxell.client.resources.music.SoundsHolder;
+import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.client.ui.Keys;
 
 public class OpenningState extends AbstractState {
@@ -18,7 +19,8 @@ public class OpenningState extends AbstractState {
 	@Override
 	public void onKeyPressed(short key) {
 		if (key == Keys.KEY_ATTACK)
-			Persistance.stateManager.setState(new FreezoneExploreState());
+			if(Persistance.stateManager instanceof PrincipalMainState)
+				((PrincipalMainState) Persistance.stateManager).setState(new FreezoneExploreState());
 	}
 
 	@Override

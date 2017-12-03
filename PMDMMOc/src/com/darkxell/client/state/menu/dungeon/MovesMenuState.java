@@ -7,6 +7,7 @@ import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.MenuHudSpriteset;
 import com.darkxell.client.state.dungeon.DungeonState;
+import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.client.state.menu.components.MoveSelectionWindow;
 import com.darkxell.client.state.menu.components.OptionSelectionWindow;
@@ -78,7 +79,8 @@ public class MovesMenuState extends OptionSelectionMenuState
 	@Override
 	protected void onExit()
 	{
-		Persistance.stateManager.setState(new DungeonMenuState(this.backgroundState));
+		if(Persistance.stateManager instanceof PrincipalMainState)
+			((PrincipalMainState) Persistance.stateManager).setState(new DungeonMenuState(this.backgroundState));
 	}
 
 	@Override
@@ -127,7 +129,8 @@ public class MovesMenuState extends OptionSelectionMenuState
 				MovesMenuState s = new MovesMenuState(Persistance.dungeonState);
 				s.selection = this.selection;
 				s.tab = this.tab;
-				Persistance.stateManager.setState(s);
+				if(Persistance.stateManager instanceof PrincipalMainState)
+					((PrincipalMainState) Persistance.stateManager).setState(s);
 			}
 		}
 	}
@@ -142,7 +145,8 @@ public class MovesMenuState extends OptionSelectionMenuState
 	private void onOptionInfo(MenuOption option)
 	{
 		DungeonState s = Persistance.dungeonState;
-		Persistance.stateManager.setState(new MoveInfoState(((MoveMenuOption) option).move.move(), s, this));
+		if(Persistance.stateManager instanceof PrincipalMainState)
+			((PrincipalMainState) Persistance.stateManager).setState(new MoveInfoState(((MoveMenuOption) option).move.move(), s, this));
 	}
 
 	@Override
@@ -153,7 +157,8 @@ public class MovesMenuState extends OptionSelectionMenuState
 
 		if (this.isMainSelected())
 		{
-			Persistance.stateManager.setState(s);
+			if(Persistance.stateManager instanceof PrincipalMainState)
+				((PrincipalMainState) Persistance.stateManager).setState(s);
 			Persistance.eventProcessor.processEvent(new MoveSelectionEvent(Persistance.floor, move, Persistance.player.getDungeonLeader()));
 		} else
 		{
@@ -161,7 +166,8 @@ public class MovesMenuState extends OptionSelectionMenuState
 			MovesMenuState state = new MovesMenuState(s);
 			state.tab = this.tab;
 			state.selection = this.selection;
-			Persistance.stateManager.setState(state);
+			if(Persistance.stateManager instanceof PrincipalMainState)
+				((PrincipalMainState) Persistance.stateManager).setState(state);
 		}
 	}
 

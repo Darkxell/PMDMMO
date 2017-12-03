@@ -15,6 +15,7 @@ import com.darkxell.client.state.DialogState;
 import com.darkxell.client.state.DialogState.DialogScreen;
 import com.darkxell.client.state.dungeon.AnimationState;
 import com.darkxell.client.state.dungeon.DelayState;
+import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.event.pokemon.*;
@@ -68,8 +69,8 @@ public final class MoveEvents
 						.addReplacement("<spa>", TextRenderer.alignNumber(stats.getSpecialAttack(), 2))
 						.addReplacement("<spd>", TextRenderer.alignNumber(stats.getSpecialDefense(), 2))));
 			}
-
-			Persistance.stateManager.setState(new DialogState(Persistance.dungeonState, ClientEventProcessor.processEventsOnDialogEnd, false, screens));
+			if(Persistance.stateManager instanceof PrincipalMainState)
+			((PrincipalMainState) Persistance.stateManager).setState(new DialogState(Persistance.dungeonState, ClientEventProcessor.processEventsOnDialogEnd, false, screens));
 		}
 	}
 

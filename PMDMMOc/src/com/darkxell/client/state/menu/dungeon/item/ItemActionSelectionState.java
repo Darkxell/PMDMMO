@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.state.AbstractState;
+import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.client.state.menu.AbstractMenuState;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.common.item.Item.ItemAction;
@@ -48,7 +49,8 @@ public class ItemActionSelectionState extends OptionSelectionMenuState {
 
 	@Override
 	protected void onExit() {
-		Persistance.stateManager.setState(this.backgroundState);
+		if(Persistance.stateManager instanceof PrincipalMainState)
+		((PrincipalMainState) Persistance.stateManager).setState(this.backgroundState);
 	}
 
 	@Override

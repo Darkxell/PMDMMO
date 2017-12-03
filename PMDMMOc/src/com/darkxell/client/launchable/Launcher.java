@@ -5,7 +5,7 @@ import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
 import com.darkxell.client.resources.music.SoundManager;
 import com.darkxell.client.state.OpenningState;
-import com.darkxell.client.state.StateManager;
+import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.client.ui.Frame;
 import com.darkxell.common.dungeon.DungeonRegistry;
 import com.darkxell.common.item.ItemRegistry;
@@ -43,9 +43,9 @@ public class Launcher {
 
 		Persistance.frame = new Frame();
 		Persistance.frame.canvas.requestFocus();
-		Persistance.stateManager = new StateManager();
-		Persistance.stateManager.setState(new OpenningState());
-		Persistance.stateManager.randomizeBackground();
+		Persistance.stateManager = new PrincipalMainState();
+		((PrincipalMainState) Persistance.stateManager).setState(new OpenningState());
+		((PrincipalMainState) Persistance.stateManager).randomizeBackground();
 
 		setProcessingProfile(PROFILE_SYNCHRONIZED);
 

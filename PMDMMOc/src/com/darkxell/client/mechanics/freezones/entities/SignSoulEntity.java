@@ -7,6 +7,7 @@ import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.freezones.FreezoneEntity;
 import com.darkxell.client.state.DialogState;
 import com.darkxell.client.state.DialogState.DialogScreen;
+import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.common.util.language.Message;
 
 /**
@@ -26,7 +27,8 @@ public class SignSoulEntity extends FreezoneEntity {
 	public void onInteract() {
 		ArrayList<DialogScreen> screens = new ArrayList<DialogState.DialogScreen>();
 		screens.add(new DialogScreen(null, this.mess).setInstant().setCentered());
-		Persistance.stateManager.setState(new DialogState(Persistance.stateManager.getCurrentState(), screens));
+		if(Persistance.stateManager instanceof PrincipalMainState)
+			((PrincipalMainState) Persistance.stateManager).setState(new DialogState(((PrincipalMainState) Persistance.stateManager).getCurrentState(), screens));
 	}
 
 	@Override
