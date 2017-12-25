@@ -108,7 +108,7 @@ public class TextRenderer
 		slash("/", 82, 5),
 		poke1("<poke1>", 83, 8),
 		poke2("<poke2>", 84, 7),
-		e_accent("Ã©", 85, 7),
+		e_accent("é", 85, 7),
 		tilde("~", 86, 6),
 		sharp("#", 87, 9),
 		music("<music>", 88, 8),
