@@ -6,6 +6,8 @@ import com.darkxell.client.mechanics.animation.AnimationEndListener;
 import com.darkxell.client.mechanics.animation.SpritesetAnimation;
 import com.darkxell.client.mechanics.animation.misc.RainAnimation;
 import com.darkxell.client.mechanics.animation.misc.SnowAnimation;
+import com.darkxell.client.renderers.floor.PokemonRenderer;
+import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.state.DialogState;
 import com.darkxell.client.state.DialogState.DialogEndListener;
 import com.darkxell.client.state.FreezoneExploreState;
@@ -148,7 +150,15 @@ public final class ClientEventProcessor extends CommonEventProcessor
 
 	private void processSpawnEvent(PokemonSpawnedEvent event)
 	{
-		Persistance.dungeonState.pokemonRenderer.register(event.spawned);
+		PokemonRenderer renderer = Persistance.dungeonState.pokemonRenderer.register(event.spawned);
+		if (event.spawned.pokemon.player != null)
+		{
+			if (event.spawned.pokemon.player != Persistance.player)
+			{
+				if (event.spawned.isTeamLeader()) renderer.sprite.setShadowColor(PokemonSprite.PLAYER_SHADOW);
+				else renderer.sprite.setShadowColor(PokemonSprite.ENEMY_SHADOW);
+			} else renderer.sprite.setShadowColor(PokemonSprite.ALLY_SHADOW);
+		}
 	}
 
 	private void processStairEvent(StairLandingEvent event)

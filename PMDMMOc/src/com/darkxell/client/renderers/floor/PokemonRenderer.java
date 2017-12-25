@@ -4,6 +4,7 @@ import static com.darkxell.client.resources.images.tilesets.AbstractDungeonTiles
 
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.function.Predicate;
 
@@ -15,6 +16,7 @@ import com.darkxell.client.renderers.MasterDungeonRenderer;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
+import com.darkxell.client.resources.images.pokemon.ShadowSprites;
 import com.darkxell.client.resources.images.tilesets.AbstractDungeonTileset;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Directions;
@@ -81,11 +83,16 @@ public class PokemonRenderer extends AbstractRenderer
 
 		if (this.sprite.getCurrentSprite() != null)
 		{
+			Point p = this.drawLocation();
+			int xPos = (int) (this.x() + p.x), yPos = (int) (this.y() + p.y);
+			BufferedImage shadow = this.sprite.getCurrentSprite().getWidth() >= 48 ? ShadowSprites.instance.getBig(this.sprite.getShadowColor())
+					: ShadowSprites.instance.getSmall(this.sprite.getShadowColor());
+			g.drawImage(shadow, xPos + this.sprite.getCurrentSprite().getWidth() / 2 - shadow.getWidth() / 2, yPos + this.sprite.getCurrentSprite().getHeight()
+					- shadow.getHeight(), null);
+
 			for (PokemonAnimation animation : this.animations)
 				animation.prerender(g, width, height);
 
-			Point p = this.drawLocation();
-			int xPos = (int) (this.x() + p.x), yPos = (int) (this.y() + p.y);
 			g.drawImage(this.sprite.getCurrentSprite(), xPos, yPos, null);
 
 			int h = this.sprite.getHealthChange();

@@ -85,6 +85,11 @@ public class PokemonSprite {
 	public static final int FRAMELENGTH = 10;
 	public static final int HEALTHLENGTH = 60;
 
+	public static final byte NEUTRAL_SHADOW = 0;
+	public static final byte ALLY_SHADOW = 1;
+	public static final byte PLAYER_SHADOW = 2;
+	public static final byte ENEMY_SHADOW = 3;
+
 	private int counter = 0;
 	private int healthChange = 0;
 	private int healthCounter = 0;
@@ -92,6 +97,15 @@ public class PokemonSprite {
 	private boolean resetToIdleOnFinish = false;
 	private int statecounter = 0;
 	private int tickSpeed = 1;
+	private byte shadowColor = NEUTRAL_SHADOW;
+
+	public byte getShadowColor() {
+		return this.shadowColor;
+	}
+
+	public void setShadowColor(byte shadowColor) {
+		this.shadowColor = shadowColor;
+	}
 
 	public byte getState() {
 		return this.state;
