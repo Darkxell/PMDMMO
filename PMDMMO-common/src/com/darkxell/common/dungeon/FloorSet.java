@@ -82,7 +82,7 @@ public class FloorSet
 			int floor = start;
 			do
 			{
-				if (!this.except.contains(floors)) floors.add(floor);
+				if (!this.except.contains(floor)) floors.add(floor);
 				++floor;
 			} while (floor <= this.parts.get(start));
 		}

@@ -118,13 +118,13 @@ public class PokemonSpecies
 		int formID = XMLUtils.getAttribute(xml, "form", 0);
 
 		PokemonType type1 = xml.getAttribute("type1") == null ? this.type1 : PokemonType.find(Integer.parseInt(xml.getAttributeValue("type1")));
-		PokemonType type2 = xml.getAttribute("type2") == null ? this.type2 : xml.getAttribute("type2").equals("null") ? null : PokemonType.find(Integer
-				.parseInt(xml.getAttributeValue("type2")));
+		PokemonType type2 = xml.getAttribute("type2") == null ? this.type2
+				: xml.getAttributeValue("type2").equals("null") ? null : PokemonType.find(Integer.parseInt(xml.getAttributeValue("type2")));
 		int baseXP = XMLUtils.getAttribute(xml, "base-xp", this.baseXP);
 		float height = XMLUtils.getAttribute(xml, "height", this.height);
 		float weight = XMLUtils.getAttribute(xml, "weight", this.weight);
-		ArrayList<Integer> abilities = xml.getChild("abilities") == null ? (ArrayList<Integer>) this.abilities.clone() : XMLUtils.readIntArrayAsList(xml
-				.getChild("abilities"));
+		ArrayList<Integer> abilities = xml.getChild("abilities") == null ? (ArrayList<Integer>) this.abilities.clone()
+				: XMLUtils.readIntArrayAsList(xml.getChild("abilities"));
 		ArrayList<PokemonStats> baseStats = new ArrayList<PokemonStats>();
 		HashMap<Integer, ArrayList<Integer>> learnset = new HashMap<Integer, ArrayList<Integer>>();
 		ArrayList<Integer> tms = xml.getChild("tms") == null ? (ArrayList<Integer>) this.tms.clone() : XMLUtils.readIntArrayAsList(xml.getChild("tms"));
