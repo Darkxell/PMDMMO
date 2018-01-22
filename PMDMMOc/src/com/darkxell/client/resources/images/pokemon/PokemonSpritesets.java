@@ -5,6 +5,8 @@ import java.util.HashMap;
 
 import org.jdom2.Element;
 
+import com.darkxell.client.resources.Res;
+import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.XMLUtils;
 
 public final class PokemonSpritesets
@@ -28,6 +30,16 @@ public final class PokemonSpritesets
 		return spritesets.get(id);
 	}
 
+	public static AbstractPokemonSpriteset getSpriteset(Pokemon pokemon)
+	{
+		return getSpriteset(getSpritesetID(pokemon));
+	}
+
+	public static int getSpritesetID(Pokemon pokemon)
+	{
+		return (pokemon.isShiny ? -1 : 1) * pokemon.species.compoundID();
+	}
+
 	/** Reads the sprites data file. */
 	public static void loadData()
 	{
@@ -41,14 +53,15 @@ public final class PokemonSpritesets
 	private static void loadSpriteset(int id)
 	{
 		if (spritesets.containsKey(id)) return;
-		Element xml = spritedata.get(id);
+		Element xml = spritedata.get(Math.abs(id));
 		if (xml == null)
 		{
 			spritesets.put(id, spritesets.get(0));
 			return;
 		}
 
-		spritesets.put(id, new AbstractPokemonSpriteset("/pokemons/pkmn" + id + ".png", xml,id));
+		if (id < 0 && Res.exists("/pokemons/pkmn" + (-id) + "s.png")) spritesets.put(id, new AbstractPokemonSpriteset("/pokemons/pkmn" + (-id) + "s.png", xml, -id));
+		else spritesets.put(id, new AbstractPokemonSpriteset("/pokemons/pkmn" + Math.abs(id) + ".png", xml, Math.abs(id)));
 	}
 
 	private PokemonSpritesets()

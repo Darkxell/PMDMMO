@@ -14,6 +14,8 @@ import com.darkxell.common.util.language.Message;
 public class PokemonSpecies
 {
 	public static final int COMPOUND_ID_FACTOR = 10000;
+	public static final double SHINY_CHANCE = 1d / 8192;
+	// public static final double SHINY_CHANCE = .5; // Used to test shiny pokémon
 
 	/** List of possible Abilities for this Pokémon. */
 	private ArrayList<Integer> abilities;
@@ -191,7 +193,15 @@ public class PokemonSpecies
 	/** Generates a Pokémon of this species.
 	 * 
 	 * @param level - The level of the Pokémon to generate. */
-	public Pokemon generate(Random random, int level)
+	public Pokemon generate(Random random, int level) {
+		return this.generate(random, level, SHINY_CHANCE);
+	}
+
+	/** Generates a Pokémon of this species.
+	 * 
+	 * @param level - The level of the Pokémon to generate.
+	 * @param shinyChance - The chance for the generated Pokémon to be a shiny (0 to 1). */
+	public Pokemon generate(Random random, int level, double shinyChance)
 	{
 		ArrayList<Integer> moves = new ArrayList<Integer>();
 
@@ -210,7 +220,7 @@ public class PokemonSpecies
 
 		// todo: Generate random ID.
 		return new Pokemon(0, this, null, null, this.statsForLevel(level), this.randomAbility(random), 0, level, move1, move2, move3, move4,
-				this.randomGender(random), 0);
+				this.randomGender(random), 0, random.nextDouble() <= shinyChance);
 	}
 
 	/** @return True if one of this Pokémon's type equals the input type. */

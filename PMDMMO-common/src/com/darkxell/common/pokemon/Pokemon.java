@@ -20,7 +20,8 @@ public class Pokemon implements ItemContainer
 	 * <li>MALE = 0</li>
 	 * <li>FEMALE = 1</li>
 	 * <li>GENDERLESS = 2</li>
-	 * </ul> */
+	 * </ul>
+	 */
 	public static final byte MALE = 0, FEMALE = 1, GENDERLESS = 2;
 	public static final String XML_ROOT = "pokemon";
 
@@ -36,6 +37,8 @@ public class Pokemon implements ItemContainer
 	public final int id;
 	/** This Pokémon's IQ. */
 	private int iq;
+	/** True if this Pokémon is shiny. */
+	public final boolean isShiny;
 	/** This Pokémon's held Item's ID. -1 for no Item. */
 	private ItemStack item;
 	/** This Pokémon's level. */
@@ -60,12 +63,13 @@ public class Pokemon implements ItemContainer
 		this.nickname = xml.getAttributeValue("nickname");
 		this.item = xml.getChild(ItemStack.XML_ROOT) == null ? null : new ItemStack(xml.getChild(ItemStack.XML_ROOT));
 		this.level = Integer.parseInt(xml.getAttributeValue("level"));
-		this.stats = xml.getChild(PokemonStats.XML_ROOT) == null ? this.species.statsForLevel(this.level) : new PokemonStats(
-				xml.getChild(PokemonStats.XML_ROOT));
+		this.stats = xml.getChild(PokemonStats.XML_ROOT) == null ? this.species.statsForLevel(this.level)
+				: new PokemonStats(xml.getChild(PokemonStats.XML_ROOT));
 		this.abilityID = XMLUtils.getAttribute(xml, "ability", this.species.randomAbility(r));
 		this.experience = XMLUtils.getAttribute(xml, "xp", 0);
 		this.gender = XMLUtils.getAttribute(xml, "gender", this.species.randomGender(r));
 		this.iq = XMLUtils.getAttribute(xml, "iq", 0);
+		this.isShiny = XMLUtils.getAttribute(xml, "shiny", false);
 		this.moves = new LearnedMove[4];
 		ArrayList<Integer> moves = new ArrayList<Integer>();
 		for (Element move : xml.getChildren("move"))
@@ -90,7 +94,7 @@ public class Pokemon implements ItemContainer
 	}
 
 	public Pokemon(int id, PokemonSpecies species, String nickname, ItemStack item, PokemonStats stats, int ability, int experience, int level,
-			LearnedMove move1, LearnedMove move2, LearnedMove move3, LearnedMove move4, byte gender, int iq)
+			LearnedMove move1, LearnedMove move2, LearnedMove move3, LearnedMove move4, byte gender, int iq, boolean shiny)
 	{
 		this.id = id;
 		this.species = species;
@@ -100,10 +104,10 @@ public class Pokemon implements ItemContainer
 		this.abilityID = ability;
 		this.experience = experience;
 		this.level = level;
-		this.moves = new LearnedMove[]
-		{ move1, move2, move3, move4 };
+		this.moves = new LearnedMove[] { move1, move2, move3, move4 };
 		this.gender = gender;
 		this.iq = iq;
+		this.isShiny = shiny;
 	}
 
 	@Override
@@ -195,8 +199,7 @@ public class Pokemon implements ItemContainer
 
 	public int getIQLevel()
 	{
-		final int[] levels =
-		{ 10, 50, 100, 150, 200, 300, 400, 500, 600, 700, 990, Integer.MAX_VALUE };
+		final int[] levels = { 10, 50, 100, 150, 200, 300, 400, 500, 600, 700, 990, Integer.MAX_VALUE };
 		for (int i = 0; i < levels.length; ++i)
 			if (levels[i] > this.iq()) return i + 1;
 		return 1;
@@ -327,6 +330,7 @@ public class Pokemon implements ItemContainer
 		XMLUtils.setAttribute(root, "xp", this.experience, 0);
 		root.setAttribute("gender", Byte.toString(this.gender));
 		XMLUtils.setAttribute(root, "iq", this.iq, 0);
+		XMLUtils.setAttribute(root, "shiny", this.isShiny, false);
 		this.moves = new LearnedMove[4];
 		for (int i = 0; i < this.moves.length; ++i)
 			if (this.moves[i] != null) root.addContent(this.moves[i].toXML());

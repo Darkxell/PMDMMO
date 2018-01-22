@@ -13,10 +13,16 @@ public class PokemonPortrait
 	private static final HashMap<Integer, Integer> alternateIDs = new HashMap<Integer, Integer>();
 	private static final int cols = 10, rows = 10;
 	public static final int PORTRAIT_SIZE = 40;
-	private static final PokemonPortrait portraits0 = new PokemonPortrait("resources/pokemons/portraits/portraits0.png"), portraits1 = new PokemonPortrait(
-			"resources/pokemons/portraits/portraits1.png"), portraits2 = new PokemonPortrait("resources/pokemons/portraits/portraits2.png"),
+	private static final PokemonPortrait portraits0 = new PokemonPortrait("resources/pokemons/portraits/portraits0.png"),
+			portraits1 = new PokemonPortrait("resources/pokemons/portraits/portraits1.png"),
+			portraits2 = new PokemonPortrait("resources/pokemons/portraits/portraits2.png"),
 			portraits3 = new PokemonPortrait("resources/pokemons/portraits/portraits3.png");
+	private static final PokemonPortrait portraits0S = new PokemonPortrait("resources/pokemons/portraits/portraits0s.png"),
+			portraits1S = new PokemonPortrait("resources/pokemons/portraits/portraits1s.png"),
+			portraits2S = new PokemonPortrait("resources/pokemons/portraits/portraits2s.png"),
+			portraits3S = new PokemonPortrait("resources/pokemons/portraits/portraits3s.png");
 	private static final PokemonPortrait portraitsAlternate = new PokemonPortrait("resources/pokemons/portraits/portraits-alternate.png");
+	private static final PokemonPortrait portraitsAlternateS = new PokemonPortrait("resources/pokemons/portraits/portraits-alternates.png");
 
 	static
 	{
@@ -33,7 +39,7 @@ public class PokemonPortrait
 		int set = pokemon.species.id / 100, index = pokemon.species.id % 100 - 1;
 		if (pokemon.species.formID != 0)
 		{
-			sheet = portraitsAlternate;
+			sheet = pokemon.isShiny ? portraitsAlternateS : portraitsAlternate;
 			index = alternateIDs.get(pokemon.species.compoundID());
 		} else
 		{
@@ -46,19 +52,19 @@ public class PokemonPortrait
 			switch (set)
 			{
 				case 1:
-					sheet = portraits1;
+					sheet = pokemon.isShiny ? portraits1S : portraits1;
 					break;
 
 				case 2:
-					sheet = portraits2;
+					sheet = pokemon.isShiny ? portraits2S : portraits2;
 					break;
 
 				case 3:
-					sheet = portraits3;
+					sheet = pokemon.isShiny ? portraits3S : portraits3;
 					break;
 
 				default:
-					sheet = portraits0;
+					sheet = pokemon.isShiny ? portraits0S : portraits0;
 					break;
 			}
 		}

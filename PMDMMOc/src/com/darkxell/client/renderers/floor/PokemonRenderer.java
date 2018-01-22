@@ -40,7 +40,7 @@ public class PokemonRenderer extends AbstractRenderer
 	{
 		super(pokemon.tile.x, pokemon.tile.y, MasterDungeonRenderer.LAYER_POKEMON);
 		this.pokemon = pokemon;
-		this.sprite = new PokemonSprite(PokemonSpritesets.getSpriteset(this.pokemon.pokemon.species.compoundID()));
+		this.sprite = new PokemonSprite(PokemonSpritesets.getSpriteset(this.pokemon.pokemon));
 	}
 
 	public void addAnimation(PokemonAnimation animation)
@@ -55,8 +55,7 @@ public class PokemonRenderer extends AbstractRenderer
 
 	public void removeAnimation(Object source)
 	{
-		this.animations.removeIf(new Predicate<AbstractAnimation>()
-		{
+		this.animations.removeIf(new Predicate<AbstractAnimation>() {
 			@Override
 			public boolean test(AbstractAnimation t)
 			{
@@ -87,8 +86,8 @@ public class PokemonRenderer extends AbstractRenderer
 			int xPos = (int) (this.x() + p.x), yPos = (int) (this.y() + p.y);
 			BufferedImage shadow = this.sprite.getCurrentSprite().getWidth() >= 48 ? ShadowSprites.instance.getBig(this.sprite.getShadowColor())
 					: ShadowSprites.instance.getSmall(this.sprite.getShadowColor());
-			g.drawImage(shadow, xPos + this.sprite.getCurrentSprite().getWidth() / 2 - shadow.getWidth() / 2, yPos + this.sprite.getCurrentSprite().getHeight()
-					- shadow.getHeight(), null);
+			g.drawImage(shadow, xPos + this.sprite.getCurrentSprite().getWidth() / 2 - shadow.getWidth() / 2,
+					yPos + this.sprite.getCurrentSprite().getHeight() - shadow.getHeight(), null);
 
 			for (PokemonAnimation animation : this.animations)
 				animation.prerender(g, width, height);

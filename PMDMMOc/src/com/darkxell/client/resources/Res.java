@@ -11,6 +11,13 @@ import com.darkxell.common.util.Logger;
 /** Class that holds commonly used resources utility. */
 public class Res {
 
+	/** @param path - Path to a resource.
+	 * @return True if the resource exists. */
+	public static boolean exists(String path)
+	{
+		return Res.class.getResourceAsStream(path) != null;
+	}
+
 	/** Gets an image from the res folder as a BufferedImage. */
 	public static BufferedImage getBase(String path) {
 		BufferedImage img = null;
