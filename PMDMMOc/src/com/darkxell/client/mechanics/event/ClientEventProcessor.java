@@ -14,6 +14,7 @@ import com.darkxell.client.state.FreezoneExploreState;
 import com.darkxell.client.state.dungeon.AnimationState;
 import com.darkxell.client.state.dungeon.NextFloorState;
 import com.darkxell.client.state.dungeon.PokemonTravelState;
+import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.client.state.map.LocalMap;
 import com.darkxell.client.state.menu.dungeon.StairMenuState;
 import com.darkxell.common.dungeon.DungeonInstance;
@@ -47,7 +48,8 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		@Override
 		public void onAnimationEnd(AbstractAnimation animation)
 		{
-			if (!Persistance.eventProcessor.hasPendingEvents()) Persistance.stateManager.setState(Persistance.dungeonState);
+			if (!Persistance.eventProcessor.hasPendingEvents()) if(Persistance.stateManager instanceof PrincipalMainState)
+				((PrincipalMainState) Persistance.stateManager).setState(Persistance.dungeonState);
 			else Persistance.eventProcessor.processPending();
 		}
 	};
@@ -57,7 +59,9 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		@Override
 		public void onDialogEnd(DialogState dialog)
 		{
-			if (!Persistance.eventProcessor.hasPendingEvents()) Persistance.stateManager.setState(Persistance.dungeonState);
+			if (!Persistance.eventProcessor.hasPendingEvents()) 
+				if(Persistance.stateManager instanceof PrincipalMainState)
+					((PrincipalMainState) Persistance.stateManager).setState(Persistance.dungeonState);
 			else Persistance.eventProcessor.processPending();
 		}
 	};
@@ -114,7 +118,8 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	{
 		if (event.pokemon == Persistance.player.getDungeonLeader())
 		{
-			Persistance.stateManager.setState(new FreezoneExploreState());
+			if(Persistance.stateManager instanceof PrincipalMainState)
+				((PrincipalMainState) Persistance.stateManager).setState(new FreezoneExploreState());
 			Persistance.displaymap = LocalMap.instance;
 		}
 	}
@@ -122,7 +127,8 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	private void processFloorEvent(NextFloorEvent event)
 	{
 		this.processPending = false;
-		Persistance.stateManager.setState(new NextFloorState(Persistance.dungeonState, event.floor.id + 1));
+		if(Persistance.stateManager instanceof PrincipalMainState)
+			((PrincipalMainState) Persistance.stateManager).setState(new NextFloorState(Persistance.dungeonState, event.floor.id + 1));
 	}
 
 	private void processItemEvent(ItemUseSelectionEvent event)
@@ -164,7 +170,8 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	private void processStairEvent(StairLandingEvent event)
 	{
 		this.processPending = false;
-		Persistance.stateManager.setState(new StairMenuState());
+		if(Persistance.stateManager instanceof PrincipalMainState)
+			((PrincipalMainState) Persistance.stateManager).setState(new StairMenuState());
 	}
 
 	private void processTravelEvent(PokemonTravelEvent event)

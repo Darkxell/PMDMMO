@@ -3,6 +3,7 @@ package com.darkxell.client.state;
 import java.awt.Graphics2D;
 
 import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.client.ui.Keys;
 
 public abstract class AbstractState {
@@ -12,7 +13,8 @@ public abstract class AbstractState {
 	 *         {@link StateManager#getCurrentState()} returns this State).
 	 */
 	public boolean isMain() {
-		return this == Persistance.stateManager.getCurrentState();
+		return Persistance.stateManager instanceof PrincipalMainState
+				&& this == ((PrincipalMainState) Persistance.stateManager).getCurrentState();
 	}
 
 	/** Called when this State is ended. */

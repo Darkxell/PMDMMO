@@ -15,6 +15,7 @@ import com.darkxell.client.resources.images.others.MapResources;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.FreezoneExploreState;
 import com.darkxell.client.state.dungeon.NextFloorState;
+import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.client.state.map.DungeonFloorMap;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.common.dungeon.Dungeon;
@@ -71,13 +72,15 @@ public class DungeonSelectionMapState extends AbstractState {
 				cursor = (dungeonslist.size() - 1);
 			break;
 		case Keys.KEY_RUN:
-			Persistance.stateManager.setState(new FreezoneExploreState());
+			if(Persistance.stateManager instanceof PrincipalMainState)
+				((PrincipalMainState) Persistance.stateManager).setState(new FreezoneExploreState());
 			break;
 		case Keys.KEY_ATTACK:
 			Persistance.dungeon = dungeonslist.get(cursor).newInstance();
 			Persistance.eventProcessor = new ClientEventProcessor(Persistance.dungeon);
 			Persistance.floor = Persistance.dungeon.currentFloor();
-			Persistance.stateManager.setState(new NextFloorState(this, 1));
+			if(Persistance.stateManager instanceof PrincipalMainState)
+				((PrincipalMainState) Persistance.stateManager).setState(new NextFloorState(this, 1));
 			Persistance.displaymap = new DungeonFloorMap();
 			Persistance.eventProcessor.addToPending(Persistance.dungeon.currentFloor().onFloorStart());
 			break;

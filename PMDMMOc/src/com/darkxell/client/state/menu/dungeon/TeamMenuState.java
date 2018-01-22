@@ -3,6 +3,7 @@ package com.darkxell.client.state.menu.dungeon;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.state.AbstractState;
+import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.client.state.menu.InfoState;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.common.pokemon.DungeonPokemon;
@@ -46,7 +47,8 @@ public class TeamMenuState extends OptionSelectionMenuState
 	@Override
 	protected void onExit()
 	{
-		Persistance.stateManager.setState(new DungeonMenuState(this.backgroundState));
+		if(Persistance.stateManager instanceof PrincipalMainState)
+			((PrincipalMainState) Persistance.stateManager).setState(new DungeonMenuState(this.backgroundState));
 	}
 
 	@Override
@@ -86,7 +88,8 @@ public class TeamMenuState extends OptionSelectionMenuState
 			info.addReplacement("<joined>", new Message("Pokémon Square", false));
 			info.addReplacement("<evolve>", p.evolutionStatus());
 
-			Persistance.stateManager.setState(new InfoState(this.backgroundState, this, new Message[]
+			if(Persistance.stateManager instanceof PrincipalMainState)
+				((PrincipalMainState) Persistance.stateManager).setState(new InfoState(this.backgroundState, this, new Message[]
 			{ new Message("summary.stats"), new Message("summary.features"), new Message("summary.info") }, new Message[]
 			{ stats, features, info }));
 		} else this.listener.teamMemberSelected(p);

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.state.dungeon.DungeonState;
+import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.client.state.menu.InfoState;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.client.state.menu.dungeon.DungeonMenuState;
@@ -94,10 +95,12 @@ public class ItemContainersMenuState extends OptionSelectionMenuState implements
 	@Override
 	public void itemSelected(ItemStack item, int index)
 	{
-		if (item == null) Persistance.stateManager.setState(this);
+		if (item == null) if(Persistance.stateManager instanceof PrincipalMainState)
+			((PrincipalMainState) Persistance.stateManager).setState(this);
 		else
 		{
-			Persistance.stateManager.setState(Persistance.dungeonState);
+			if(Persistance.stateManager instanceof PrincipalMainState)
+				((PrincipalMainState) Persistance.stateManager).setState(Persistance.dungeonState);
 			Persistance.eventProcessor.processEvent(new ItemSwappedEvent(Persistance.floor, ItemAction.SWAP, Persistance.player.getDungeonLeader(),
 					Persistance.player.inventory, index, Persistance.player.getDungeonLeader().tile, 0));
 		}
@@ -106,7 +109,8 @@ public class ItemContainersMenuState extends OptionSelectionMenuState implements
 	@Override
 	protected void onExit()
 	{
-		Persistance.stateManager.setState(new DungeonMenuState(this.backgroundState));
+		if(Persistance.stateManager instanceof PrincipalMainState)
+			((PrincipalMainState) Persistance.stateManager).setState(new DungeonMenuState(this.backgroundState));
 	}
 
 	@Override
@@ -119,7 +123,8 @@ public class ItemContainersMenuState extends OptionSelectionMenuState implements
 			ArrayList<ItemContainer> containers = new ArrayList<ItemContainer>();
 			for (ItemContainer c : this.containers)
 				if (!containers.contains(c)) containers.add(c);
-			Persistance.stateManager.setState(new ItemContainersMenuState(Persistance.dungeonState, containers.toArray(new ItemContainer[containers.size()])));
+			if(Persistance.stateManager instanceof PrincipalMainState)
+				((PrincipalMainState) Persistance.stateManager).setState(new ItemContainersMenuState(Persistance.dungeonState, containers.toArray(new ItemContainer[containers.size()])));
 		}
 	}
 
@@ -141,7 +146,8 @@ public class ItemContainersMenuState extends OptionSelectionMenuState implements
 			}
 			ItemAction.sort(actions);
 
-			Persistance.stateManager.setState(new ItemActionSelectionState(this, this, actions));
+			if(Persistance.stateManager instanceof PrincipalMainState)
+				((PrincipalMainState) Persistance.stateManager).setState(new ItemActionSelectionState(this, this, actions));
 		} else this.listener.itemSelected(i, this.itemIndex());
 	}
 
@@ -149,7 +155,8 @@ public class ItemContainersMenuState extends OptionSelectionMenuState implements
 	public void performAction(ItemAction action)
 	{
 		DungeonState s = Persistance.dungeonState;
-		Persistance.stateManager.setState(s);
+		if(Persistance.stateManager instanceof PrincipalMainState)
+			((PrincipalMainState) Persistance.stateManager).setState(s);
 		ItemContainer container = this.container();
 		int index = this.itemIndex();
 		ItemStack i = container.getItem(index);
@@ -158,17 +165,21 @@ public class ItemContainersMenuState extends OptionSelectionMenuState implements
 		this.currentAction = action;
 		if (action == ItemAction.USE)
 		{
-			if (i.item().usedOnTeamMember()) Persistance.stateManager.setState(new TeamMenuState(s, this));
+			if (i.item().usedOnTeamMember()) if(Persistance.stateManager instanceof PrincipalMainState)
+				((PrincipalMainState) Persistance.stateManager).setState(new TeamMenuState(s, this));
 			else Persistance.eventProcessor.processEvent(new ItemUseSelectionEvent(Persistance.floor, i.item(), user, null, container, index));
 		} else if (action == ItemAction.GET || action == ItemAction.TAKE) Persistance.eventProcessor.processEvent(new ItemMovedEvent(Persistance.floor, action,
 				user, container, 0, user.pokemon.player.inventory, user.pokemon.player.inventory.canAccept(i)));
-		else if (action == ItemAction.GIVE) Persistance.stateManager.setState(new TeamMenuState(s, this));
+		else if (action == ItemAction.GIVE) if(Persistance.stateManager instanceof PrincipalMainState)
+			((PrincipalMainState) Persistance.stateManager).setState(new TeamMenuState(s, this));
 		else if (action == ItemAction.PLACE) Persistance.eventProcessor.processEvent(new ItemMovedEvent(Persistance.floor, action, user, container, index,
 				user.tile, 0));
 		else if (action == ItemAction.SWITCH) Persistance.eventProcessor.processEvent(new ItemSwappedEvent(Persistance.floor, action, user, container, index,
 				user.tile, 0));
-		else if (action == ItemAction.SWAP) Persistance.stateManager.setState(new ItemContainersMenuState(s, this, Persistance.player.inventory));
-		else if (action == ItemAction.INFO) Persistance.stateManager.setState(new InfoState(s, this, new Message[]
+		else if (action == ItemAction.SWAP) if(Persistance.stateManager instanceof PrincipalMainState)
+			((PrincipalMainState) Persistance.stateManager).setState(new ItemContainersMenuState(s, this, Persistance.player.inventory));
+		else if (action == ItemAction.INFO) if(Persistance.stateManager instanceof PrincipalMainState)
+			((PrincipalMainState) Persistance.stateManager).setState(new InfoState(s, this, new Message[]
 		{ i.item().name() }, new Message[]
 		{ i.info() }));
 	}
@@ -182,9 +193,11 @@ public class ItemContainersMenuState extends OptionSelectionMenuState implements
 	@Override
 	public void teamMemberSelected(Pokemon pokemon)
 	{
-		Persistance.stateManager.setState(Persistance.dungeonState);
+		if(Persistance.stateManager instanceof PrincipalMainState)
+			((PrincipalMainState) Persistance.stateManager).setState(Persistance.dungeonState);
 		DungeonState s = Persistance.dungeonState;
-		Persistance.stateManager.setState(s);
+		if(Persistance.stateManager instanceof PrincipalMainState)
+			((PrincipalMainState) Persistance.stateManager).setState(s);
 		ItemContainer container = this.container();
 		int index = this.itemIndex();
 		ItemStack i = container.getItem(index);
