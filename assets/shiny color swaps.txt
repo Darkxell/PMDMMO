@@ -1,0 +1,42 @@
+Ivysaur(Venusaur)
+body 		-102 126(137) 0 / -20 6
+leaves+bulb 30 100 5
+
+Charmander(Charmeleon) 52(46) 88 9
+
+Charizard -127 10 0
+
+Squirtle
+Shell(back) 	102 79 0
+Shell(front)	37 109 -3
+Body			20 123 0
+
+Wartortle
+Shell(back) 	80 79 0
+Shell(front)	5 108 -10
+Body			0 109 -9
+
+Blastoise
+Shell(back) 	102 79 0
+Shell(front)	37 109 -9
+Body			47 100 -3
+
+Caterpie -42 133
+
+Metapod
+eyes	0 0 28
+body	-55 131 0 / 0 -43
+
+Butterfree
+body&wings	15 200 42
+eyes		105 83 14
+
+Weedle
+body	27 90 0
+nose	0 106 0
+
+Kakuna 47 53 0
+
+Beedrill
+body	47 75 0 / -61 34
+eyes 	-109

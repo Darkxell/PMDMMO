@@ -21,6 +21,8 @@ import com.darkxell.common.util.Directions;
 public class ActionSelectionState extends DungeonSubState
 {
 
+	public static final int ROTATION_COUNTER_MAX = TILE_SIZE * 2 / 3;
+
 	private int rotationCounter = 0;
 
 	public ActionSelectionState(DungeonState parent)
@@ -54,18 +56,13 @@ public class ActionSelectionState extends DungeonSubState
 		return -1;
 	}
 
-	private void drawArrow(Graphics2D g, short direction)
+	private void drawArrow(Graphics2D g, int width, int height, short direction)
 	{
 		Point p = Directions.moveTo(0, 0, direction);
 		BufferedImage img = DungeonHudSpriteset.instance.getArrow(direction);
-		int x = this.parent.camera().x + (1 + p.x) * TILE_SIZE / 2 - img.getWidth() / 2 + this.rotationCounter / 3 * p.x;
-		int y = this.parent.camera().y + (1 + p.y) * TILE_SIZE / 2 - img.getHeight() / 2 + this.rotationCounter / 3 * p.y;
-
-		if (p.distance(0, 0) > 1)
-		{
-			x -= p.x * TILE_SIZE / 8;
-			y -= p.y * TILE_SIZE / 8;
-		}
+		double rotation = (ROTATION_COUNTER_MAX + this.rotationCounter) * 1d / ROTATION_COUNTER_MAX * 3 / 4;
+		int x = (int) (width / 2 + p.x * TILE_SIZE / 2 * rotation) - TILE_SIZE / 8;
+		int y = (int) (height / 2 + p.y * TILE_SIZE / 2 * rotation) - TILE_SIZE / 8;
 
 		g.drawImage(img, x, y, null);
 	}
@@ -73,7 +70,7 @@ public class ActionSelectionState extends DungeonSubState
 	@Override
 	public void onKeyPressed(short key)
 	{
-		if (key == Keys.KEY_MENU) if(Persistance.stateManager instanceof PrincipalMainState)
+		if (key == Keys.KEY_MENU) if (Persistance.stateManager instanceof PrincipalMainState)
 			((PrincipalMainState) Persistance.stateManager).setState(new DungeonMenuState(this.parent));
 		if (key == Keys.KEY_ATTACK && (Persistance.player.getDungeonLeader().isFamished() || !Keys.isPressed(Keys.KEY_RUN))) Persistance.eventProcessor
 				.processEvent(new MoveSelectionEvent(Persistance.floor, new LearnedMove(MoveRegistry.ATTACK.id), Persistance.player.getDungeonLeader()));
@@ -90,12 +87,12 @@ public class ActionSelectionState extends DungeonSubState
 		{
 			if (this.parent.diagonal)
 			{
-				this.drawArrow(g, Directions.NORTHEAST);
-				this.drawArrow(g, Directions.SOUTHEAST);
-				this.drawArrow(g, Directions.SOUTHWEST);
-				this.drawArrow(g, Directions.NORTHWEST);
+				this.drawArrow(g, width, height, Directions.NORTHEAST);
+				this.drawArrow(g, width, height, Directions.SOUTHEAST);
+				this.drawArrow(g, width, height, Directions.SOUTHWEST);
+				this.drawArrow(g, width, height, Directions.NORTHWEST);
 			}
-			if (this.parent.rotating) if (!this.parent.diagonal) this.drawArrow(g, Persistance.player.getDungeonLeader().facing());
+			if (this.parent.rotating) if (!this.parent.diagonal) this.drawArrow(g, width, height, Persistance.player.getDungeonLeader().facing());
 		}
 	}
 
@@ -104,17 +101,17 @@ public class ActionSelectionState extends DungeonSubState
 	{
 		if (this.isMain())
 		{
-			if (Keys.isPressed(Keys.KEY_ATTACK) && Keys.isPressed(Keys.KEY_RUN) && !Persistance.player.getDungeonLeader().isFamished()) Persistance.eventProcessor
-					.processEvent(new TurnSkippedEvent(Persistance.floor, Persistance.player.getDungeonLeader()));
+			if (Keys.isPressed(Keys.KEY_ATTACK) && Keys.isPressed(Keys.KEY_RUN) && !Persistance.player.getDungeonLeader().isFamished())
+				Persistance.eventProcessor.processEvent(new TurnSkippedEvent(Persistance.floor, Persistance.player.getDungeonLeader()));
 			else
 			{
 				short direction = this.checkMovement();
-				if (direction != -1) Persistance.eventProcessor.actorTravels(Persistance.player.getDungeonLeader(), direction, Keys.isPressed(Keys.KEY_RUN)
-						&& !Persistance.player.getDungeonLeader().isFamished());
+				if (direction != -1) Persistance.eventProcessor.actorTravels(Persistance.player.getDungeonLeader(), direction,
+						Keys.isPressed(Keys.KEY_RUN) && !Persistance.player.getDungeonLeader().isFamished());
 			}
 		}
 
 		++this.rotationCounter;
-		if (this.rotationCounter > TILE_SIZE * 2 / 3) this.rotationCounter = 0;
+		if (this.rotationCounter > ROTATION_COUNTER_MAX) this.rotationCounter = 0;
 	}
 }
