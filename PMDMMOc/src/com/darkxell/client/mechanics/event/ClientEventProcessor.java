@@ -43,26 +43,25 @@ import com.darkxell.common.weather.Weather;
 public final class ClientEventProcessor extends CommonEventProcessor
 {
 	/** Pending events to process. */
-	public static final AnimationEndListener processEventsOnAnimationEnd = new AnimationEndListener()
-	{
+	public static final AnimationEndListener processEventsOnAnimationEnd = new AnimationEndListener() {
 		@Override
 		public void onAnimationEnd(AbstractAnimation animation)
 		{
-			if (!Persistance.eventProcessor.hasPendingEvents()) if(Persistance.stateManager instanceof PrincipalMainState)
-				((PrincipalMainState) Persistance.stateManager).setState(Persistance.dungeonState);
-			else Persistance.eventProcessor.processPending();
+			if (!Persistance.eventProcessor.hasPendingEvents())
+			{
+				if (Persistance.stateManager instanceof PrincipalMainState) ((PrincipalMainState) Persistance.stateManager).setState(Persistance.dungeonState);
+			} else Persistance.eventProcessor.processPending();
 		}
 	};
 
-	public static final DialogEndListener processEventsOnDialogEnd = new DialogEndListener()
-	{
+	public static final DialogEndListener processEventsOnDialogEnd = new DialogEndListener() {
 		@Override
 		public void onDialogEnd(DialogState dialog)
 		{
-			if (!Persistance.eventProcessor.hasPendingEvents()) 
-				if(Persistance.stateManager instanceof PrincipalMainState)
-					((PrincipalMainState) Persistance.stateManager).setState(Persistance.dungeonState);
-			else Persistance.eventProcessor.processPending();
+			if (!Persistance.eventProcessor.hasPendingEvents())
+			{
+				if (Persistance.stateManager instanceof PrincipalMainState) ((PrincipalMainState) Persistance.stateManager).setState(Persistance.dungeonState);
+			} else Persistance.eventProcessor.processPending();
 		}
 	};
 
@@ -118,8 +117,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	{
 		if (event.pokemon == Persistance.player.getDungeonLeader())
 		{
-			if(Persistance.stateManager instanceof PrincipalMainState)
-				((PrincipalMainState) Persistance.stateManager).setState(new FreezoneExploreState());
+			if (Persistance.stateManager instanceof PrincipalMainState) ((PrincipalMainState) Persistance.stateManager).setState(new FreezoneExploreState());
 			Persistance.displaymap = LocalMap.instance;
 		}
 	}
@@ -127,7 +125,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	private void processFloorEvent(NextFloorEvent event)
 	{
 		this.processPending = false;
-		if(Persistance.stateManager instanceof PrincipalMainState)
+		if (Persistance.stateManager instanceof PrincipalMainState)
 			((PrincipalMainState) Persistance.stateManager).setState(new NextFloorState(Persistance.dungeonState, event.floor.id + 1));
 	}
 
@@ -170,8 +168,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	private void processStairEvent(StairLandingEvent event)
 	{
 		this.processPending = false;
-		if(Persistance.stateManager instanceof PrincipalMainState)
-			((PrincipalMainState) Persistance.stateManager).setState(new StairMenuState());
+		if (Persistance.stateManager instanceof PrincipalMainState) ((PrincipalMainState) Persistance.stateManager).setState(new StairMenuState());
 	}
 
 	private void processTravelEvent(PokemonTravelEvent event)

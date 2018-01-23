@@ -42,17 +42,17 @@ public class DungeonMenuState extends OptionSelectionMenuState
 	@Override
 	protected void onExit()
 	{
-		if(Persistance.stateManager instanceof PrincipalMainState)
-			((PrincipalMainState) Persistance.stateManager).setState(this.backgroundState);
+		if (Persistance.stateManager instanceof PrincipalMainState) ((PrincipalMainState) Persistance.stateManager).setState(this.backgroundState);
 	}
 
 	@Override
 	protected void onOptionSelected(MenuOption option)
 	{
 		DungeonState s = Persistance.dungeonState;
-		if (option == this.moves) if(Persistance.stateManager instanceof PrincipalMainState)
-			((PrincipalMainState) Persistance.stateManager).setState(new MovesMenuState(s));
-		else if (option == this.items)
+		if (option == this.moves)
+		{
+			if (Persistance.stateManager instanceof PrincipalMainState) ((PrincipalMainState) Persistance.stateManager).setState(new MovesMenuState(s));
+		} else if (option == this.items)
 		{
 			ArrayList<ItemContainer> containers = new ArrayList<ItemContainer>();
 			if (!Persistance.player.inventory.isEmpty()) containers.add(Persistance.player.inventory);
@@ -63,19 +63,26 @@ public class DungeonMenuState extends OptionSelectionMenuState
 			{
 				this.onExit();
 				s.logger.showMessage(new Message("inventory.empty"));
-			} else if(Persistance.stateManager instanceof PrincipalMainState)
-				((PrincipalMainState) Persistance.stateManager).setState(new ItemContainersMenuState(s, containers.toArray(new ItemContainer[containers.size()])));
-		} else if (option == this.team) if(Persistance.stateManager instanceof PrincipalMainState)
-			((PrincipalMainState) Persistance.stateManager).setState(new TeamMenuState(s));
-		else if (option == this.ground)
-		{
+			} else
+			{
+				if (Persistance.stateManager instanceof PrincipalMainState) ((PrincipalMainState) Persistance.stateManager)
+						.setState(new ItemContainersMenuState(s, containers.toArray(new ItemContainer[containers.size()])));
+			}
+		} else if (option == this.team)
+			if (Persistance.stateManager instanceof PrincipalMainState) ((PrincipalMainState) Persistance.stateManager).setState(new TeamMenuState(s));
+			else if (option == this.ground)
+			{
 			this.onExit();
-			if (Persistance.player.getDungeonLeader().tile.type() == TileType.STAIR) if(Persistance.stateManager instanceof PrincipalMainState)
-				((PrincipalMainState) Persistance.stateManager).setState(new StairMenuState());
-			else if (Persistance.player.getDungeonLeader().tile.getItem() == null) s.logger.showMessage(new Message("ground.empty"));
-			else if(Persistance.stateManager instanceof PrincipalMainState)
+			if (Persistance.player.getDungeonLeader().tile.type() == TileType.STAIR)
+			{
+			if (Persistance.stateManager instanceof PrincipalMainState) ((PrincipalMainState) Persistance.stateManager).setState(new StairMenuState());
+			} else if (Persistance.player.getDungeonLeader().tile.getItem() == null) s.logger.showMessage(new Message("ground.empty"));
+			else
+			{
+			if (Persistance.stateManager instanceof PrincipalMainState)
 				((PrincipalMainState) Persistance.stateManager).setState(new ItemContainersMenuState(s, Persistance.player.getDungeonLeader().tile));
-		}
+			}
+			}
 	}
 
 	@Override

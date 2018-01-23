@@ -70,8 +70,11 @@ public class ActionSelectionState extends DungeonSubState
 	@Override
 	public void onKeyPressed(short key)
 	{
-		if (key == Keys.KEY_MENU) if (Persistance.stateManager instanceof PrincipalMainState)
-			((PrincipalMainState) Persistance.stateManager).setState(new DungeonMenuState(this.parent));
+		if (key == Keys.KEY_MENU)
+		{
+			if (Persistance.stateManager instanceof PrincipalMainState)
+				((PrincipalMainState) Persistance.stateManager).setState(new DungeonMenuState(this.parent));
+		}
 		if (key == Keys.KEY_ATTACK && (Persistance.player.getDungeonLeader().isFamished() || !Keys.isPressed(Keys.KEY_RUN))) Persistance.eventProcessor
 				.processEvent(new MoveSelectionEvent(Persistance.floor, new LearnedMove(MoveRegistry.ATTACK.id), Persistance.player.getDungeonLeader()));
 	}

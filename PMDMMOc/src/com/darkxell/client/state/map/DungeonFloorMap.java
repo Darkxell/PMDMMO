@@ -67,8 +67,8 @@ public class DungeonFloorMap extends AbstractDisplayMap
 						int tx = tile.x * TILE_SIZE, ty = tile.y * TILE_SIZE;
 						boolean isMain = tile.getPokemon() == Persistance.player.getDungeonLeader();
 						if ((this.tick >= PLAYER_TICK || !isMain) && tile.getPokemon() != null) g.drawImage(this.tileset.ground(), tx, ty, null);
-						else if (tile.getItem() != null && Persistance.dungeonState.floorVisibility.hasVisibleItem(tile)) g.drawImage(this.tileset.item(), tx,
-								ty, null);
+						else if (tile.getItem() != null && Persistance.dungeonState.floorVisibility.hasVisibleItem(tile))
+							g.drawImage(this.tileset.item(), tx, ty, null);
 						else if (tile.trap == TrapRegistry.WONDER_TILE) g.drawImage(this.tileset.wonder(), tx, ty, null);
 						else if (tile.trapRevealed) g.drawImage(this.tileset.trap(), tx, ty, null);
 						else if (tile.type() == TileType.STAIR) g.drawImage(this.tileset.stairs(), tx, ty, null);
@@ -93,7 +93,8 @@ public class DungeonFloorMap extends AbstractDisplayMap
 				if (Persistance.dungeonState.floorVisibility.isVisible(renderer.pokemon))
 				{
 					boolean isMain = renderer.pokemon == Persistance.player.getDungeonLeader();
-					int x = (int) (renderer.x() * TILE_SIZE / AbstractDungeonTileset.TILE_SIZE), y = (int) (renderer.y() * TILE_SIZE / AbstractDungeonTileset.TILE_SIZE);
+					int x = (int) (renderer.x() * TILE_SIZE / AbstractDungeonTileset.TILE_SIZE),
+							y = (int) (renderer.y() * TILE_SIZE / AbstractDungeonTileset.TILE_SIZE);
 					if (isMain && this.tick >= PLAYER_TICK) g.drawImage(this.tileset.player(), x, y, null);
 					else if (!isMain)
 					{
@@ -104,14 +105,14 @@ public class DungeonFloorMap extends AbstractDisplayMap
 		}
 
 		g.translate(this.x, this.y);
-		
-		if(Persistance.stateManager instanceof PrincipalMainState)
-			if (((PrincipalMainState) Persistance.stateManager).getCurrentState() instanceof NextFloorState)
-			{
-				int alpha = ((NextFloorState) ((PrincipalMainState) Persistance.stateManager).getCurrentState()).fading();
-				g.setColor(new Color(0, 0, 0, alpha));
-				g.fillRect(0, 0, width, height);
-			}
+
+		if (Persistance.stateManager instanceof PrincipalMainState
+				&& ((PrincipalMainState) Persistance.stateManager).getCurrentState() instanceof NextFloorState)
+		{
+			int alpha = ((NextFloorState) ((PrincipalMainState) Persistance.stateManager).getCurrentState()).fading();
+			g.setColor(new Color(0, 0, 0, alpha));
+			g.fillRect(0, 0, width, height);
+		}
 	}
 
 	@Override
@@ -134,7 +135,8 @@ public class DungeonFloorMap extends AbstractDisplayMap
 			this.followLeader = true;
 			this.defaultLocationSet = false;
 		}
-		if (Keys.isPressed(Keys.KEY_MAP_UP) || Keys.isPressed(Keys.KEY_MAP_DOWN) || Keys.isPressed(Keys.KEY_MAP_LEFT) || Keys.isPressed(Keys.KEY_MAP_RIGHT)) this.followLeader = false;
+		if (Keys.isPressed(Keys.KEY_MAP_UP) || Keys.isPressed(Keys.KEY_MAP_DOWN) || Keys.isPressed(Keys.KEY_MAP_LEFT) || Keys.isPressed(Keys.KEY_MAP_RIGHT))
+			this.followLeader = false;
 
 		++this.tick;
 		if (this.tick >= PLAYER_TICK * 2) this.tick = 0;

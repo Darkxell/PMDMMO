@@ -60,8 +60,8 @@ public final class MoveEvents
 			ArrayList<DialogScreen> screens = new ArrayList<DialogScreen>();
 			for (int level = event.pokemon.getLevel() - levels + 1; level <= event.pokemon.getLevel(); ++level)
 			{
-				screens.add(new DialogScreen(new Message("xp.levelup").addReplacement("<pokemon>", event.pokemon.getNickname()).addReplacement("<level>",
-						Integer.toString(level))));
+				screens.add(new DialogScreen(
+						new Message("xp.levelup").addReplacement("<pokemon>", event.pokemon.getNickname()).addReplacement("<level>", Integer.toString(level))));
 				PokemonStats stats = event.pokemon.species.baseStatsIncrease(level - 1);
 				screens.add(new DialogScreen(new Message("xp.stats").addReplacement("<atk>", TextRenderer.alignNumber(stats.getAttack(), 2))
 						.addReplacement("<def>", TextRenderer.alignNumber(stats.getDefense(), 2))
@@ -69,8 +69,8 @@ public final class MoveEvents
 						.addReplacement("<spa>", TextRenderer.alignNumber(stats.getSpecialAttack(), 2))
 						.addReplacement("<spd>", TextRenderer.alignNumber(stats.getSpecialDefense(), 2))));
 			}
-			if(Persistance.stateManager instanceof PrincipalMainState)
-			((PrincipalMainState) Persistance.stateManager).setState(new DialogState(Persistance.dungeonState, ClientEventProcessor.processEventsOnDialogEnd, false, screens));
+			if (Persistance.stateManager instanceof PrincipalMainState) ((PrincipalMainState) Persistance.stateManager)
+					.setState(new DialogState(Persistance.dungeonState, ClientEventProcessor.processEventsOnDialogEnd, false, screens));
 		}
 	}
 
@@ -112,8 +112,7 @@ public final class MoveEvents
 	public static void processStatusEvent(StatusConditionCreatedEvent event)
 	{
 		AnimationState s = new AnimationState(Persistance.dungeonState);
-		AnimationEndListener end = new AnimationEndListener()
-		{
+		AnimationEndListener end = new AnimationEndListener() {
 			@Override
 			public void onAnimationEnd(AbstractAnimation animation)
 			{

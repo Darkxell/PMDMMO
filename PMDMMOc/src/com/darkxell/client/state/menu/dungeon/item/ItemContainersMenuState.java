@@ -95,12 +95,12 @@ public class ItemContainersMenuState extends OptionSelectionMenuState implements
 	@Override
 	public void itemSelected(ItemStack item, int index)
 	{
-		if (item == null) if(Persistance.stateManager instanceof PrincipalMainState)
-			((PrincipalMainState) Persistance.stateManager).setState(this);
-		else
+		if (item == null)
 		{
-			if(Persistance.stateManager instanceof PrincipalMainState)
-				((PrincipalMainState) Persistance.stateManager).setState(Persistance.dungeonState);
+			if (Persistance.stateManager instanceof PrincipalMainState) ((PrincipalMainState) Persistance.stateManager).setState(this);
+		} else
+		{
+			if (Persistance.stateManager instanceof PrincipalMainState) ((PrincipalMainState) Persistance.stateManager).setState(Persistance.dungeonState);
 			Persistance.eventProcessor.processEvent(new ItemSwappedEvent(Persistance.floor, ItemAction.SWAP, Persistance.player.getDungeonLeader(),
 					Persistance.player.inventory, index, Persistance.player.getDungeonLeader().tile, 0));
 		}
@@ -109,7 +109,7 @@ public class ItemContainersMenuState extends OptionSelectionMenuState implements
 	@Override
 	protected void onExit()
 	{
-		if(Persistance.stateManager instanceof PrincipalMainState)
+		if (Persistance.stateManager instanceof PrincipalMainState)
 			((PrincipalMainState) Persistance.stateManager).setState(new DungeonMenuState(this.backgroundState));
 	}
 
@@ -123,8 +123,8 @@ public class ItemContainersMenuState extends OptionSelectionMenuState implements
 			ArrayList<ItemContainer> containers = new ArrayList<ItemContainer>();
 			for (ItemContainer c : this.containers)
 				if (!containers.contains(c)) containers.add(c);
-			if(Persistance.stateManager instanceof PrincipalMainState)
-				((PrincipalMainState) Persistance.stateManager).setState(new ItemContainersMenuState(Persistance.dungeonState, containers.toArray(new ItemContainer[containers.size()])));
+			if (Persistance.stateManager instanceof PrincipalMainState) ((PrincipalMainState) Persistance.stateManager)
+					.setState(new ItemContainersMenuState(Persistance.dungeonState, containers.toArray(new ItemContainer[containers.size()])));
 		}
 	}
 
@@ -146,7 +146,7 @@ public class ItemContainersMenuState extends OptionSelectionMenuState implements
 			}
 			ItemAction.sort(actions);
 
-			if(Persistance.stateManager instanceof PrincipalMainState)
+			if (Persistance.stateManager instanceof PrincipalMainState)
 				((PrincipalMainState) Persistance.stateManager).setState(new ItemActionSelectionState(this, this, actions));
 		} else this.listener.itemSelected(i, this.itemIndex());
 	}
@@ -155,8 +155,7 @@ public class ItemContainersMenuState extends OptionSelectionMenuState implements
 	public void performAction(ItemAction action)
 	{
 		DungeonState s = Persistance.dungeonState;
-		if(Persistance.stateManager instanceof PrincipalMainState)
-			((PrincipalMainState) Persistance.stateManager).setState(s);
+		if (Persistance.stateManager instanceof PrincipalMainState) ((PrincipalMainState) Persistance.stateManager).setState(s);
 		ItemContainer container = this.container();
 		int index = this.itemIndex();
 		ItemStack i = container.getItem(index);
@@ -165,23 +164,29 @@ public class ItemContainersMenuState extends OptionSelectionMenuState implements
 		this.currentAction = action;
 		if (action == ItemAction.USE)
 		{
-			if (i.item().usedOnTeamMember()) if(Persistance.stateManager instanceof PrincipalMainState)
-				((PrincipalMainState) Persistance.stateManager).setState(new TeamMenuState(s, this));
-			else Persistance.eventProcessor.processEvent(new ItemUseSelectionEvent(Persistance.floor, i.item(), user, null, container, index));
-		} else if (action == ItemAction.GET || action == ItemAction.TAKE) Persistance.eventProcessor.processEvent(new ItemMovedEvent(Persistance.floor, action,
-				user, container, 0, user.pokemon.player.inventory, user.pokemon.player.inventory.canAccept(i)));
-		else if (action == ItemAction.GIVE) if(Persistance.stateManager instanceof PrincipalMainState)
-			((PrincipalMainState) Persistance.stateManager).setState(new TeamMenuState(s, this));
-		else if (action == ItemAction.PLACE) Persistance.eventProcessor.processEvent(new ItemMovedEvent(Persistance.floor, action, user, container, index,
-				user.tile, 0));
-		else if (action == ItemAction.SWITCH) Persistance.eventProcessor.processEvent(new ItemSwappedEvent(Persistance.floor, action, user, container, index,
-				user.tile, 0));
-		else if (action == ItemAction.SWAP) if(Persistance.stateManager instanceof PrincipalMainState)
-			((PrincipalMainState) Persistance.stateManager).setState(new ItemContainersMenuState(s, this, Persistance.player.inventory));
-		else if (action == ItemAction.INFO) if(Persistance.stateManager instanceof PrincipalMainState)
-			((PrincipalMainState) Persistance.stateManager).setState(new InfoState(s, this, new Message[]
-		{ i.item().name() }, new Message[]
-		{ i.info() }));
+			if (i.item().usedOnTeamMember())
+			{
+				if (Persistance.stateManager instanceof PrincipalMainState)
+					((PrincipalMainState) Persistance.stateManager).setState(new TeamMenuState(s, this));
+			} else Persistance.eventProcessor.processEvent(new ItemUseSelectionEvent(Persistance.floor, i.item(), user, null, container, index));
+		} else if (action == ItemAction.GET || action == ItemAction.TAKE) Persistance.eventProcessor.processEvent(
+				new ItemMovedEvent(Persistance.floor, action, user, container, 0, user.pokemon.player.inventory, user.pokemon.player.inventory.canAccept(i)));
+		else if (action == ItemAction.GIVE)
+		{
+			if (Persistance.stateManager instanceof PrincipalMainState) ((PrincipalMainState) Persistance.stateManager).setState(new TeamMenuState(s, this));
+		} else if (action == ItemAction.PLACE)
+			Persistance.eventProcessor.processEvent(new ItemMovedEvent(Persistance.floor, action, user, container, index, user.tile, 0));
+		else if (action == ItemAction.SWITCH)
+			Persistance.eventProcessor.processEvent(new ItemSwappedEvent(Persistance.floor, action, user, container, index, user.tile, 0));
+		else if (action == ItemAction.SWAP)
+		{
+			if (Persistance.stateManager instanceof PrincipalMainState)
+				((PrincipalMainState) Persistance.stateManager).setState(new ItemContainersMenuState(s, this, Persistance.player.inventory));
+		} else if (action == ItemAction.INFO)
+		{
+			if (Persistance.stateManager instanceof PrincipalMainState)
+				((PrincipalMainState) Persistance.stateManager).setState(new InfoState(s, this, new Message[] { i.item().name() }, new Message[] { i.info() }));
+		}
 	}
 
 	@Override
@@ -193,11 +198,9 @@ public class ItemContainersMenuState extends OptionSelectionMenuState implements
 	@Override
 	public void teamMemberSelected(Pokemon pokemon)
 	{
-		if(Persistance.stateManager instanceof PrincipalMainState)
-			((PrincipalMainState) Persistance.stateManager).setState(Persistance.dungeonState);
+		if (Persistance.stateManager instanceof PrincipalMainState) ((PrincipalMainState) Persistance.stateManager).setState(Persistance.dungeonState);
 		DungeonState s = Persistance.dungeonState;
-		if(Persistance.stateManager instanceof PrincipalMainState)
-			((PrincipalMainState) Persistance.stateManager).setState(s);
+		if (Persistance.stateManager instanceof PrincipalMainState) ((PrincipalMainState) Persistance.stateManager).setState(s);
 		ItemContainer container = this.container();
 		int index = this.itemIndex();
 		ItemStack i = container.getItem(index);
@@ -214,8 +217,8 @@ public class ItemContainersMenuState extends OptionSelectionMenuState implements
 				break;
 
 			case USE:
-				Persistance.eventProcessor.processEvent(new ItemUseSelectionEvent(Persistance.floor, i.item(), user, pokemon.getDungeonPokemon(), container,
-						index));
+				Persistance.eventProcessor
+						.processEvent(new ItemUseSelectionEvent(Persistance.floor, i.item(), user, pokemon.getDungeonPokemon(), container, index));
 				break;
 
 			default:
