@@ -163,6 +163,7 @@ public class DungeonState extends AbstractState
 				continue;
 			}
 			Persistance.floor.tileAt(candidates.get(0).x, candidates.get(0).y).setPokemon(team[i]);
+			Persistance.floor.aiManager.register(team[i]);
 			Persistance.dungeon.insertActor(team[i], 1);
 			candidates.remove(0);
 			this.pokemonRenderer.register(team[i]).sprite.setShadowColor(PokemonSprite.ALLY_SHADOW);

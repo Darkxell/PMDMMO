@@ -3,7 +3,6 @@ package com.darkxell.common.event;
 import java.util.ArrayList;
 import java.util.Stack;
 
-import com.darkxell.common.ai.AI;
 import com.darkxell.common.dungeon.DungeonInstance;
 import com.darkxell.common.event.pokemon.PokemonTravelEvent;
 import com.darkxell.common.event.pokemon.PokemonTravelEvent.PokemonTravel;
@@ -42,7 +41,7 @@ public class CommonEventProcessor
 		ArrayList<DungeonPokemon> skippers = new ArrayList<DungeonPokemon>();
 		while (flag)
 		{
-			e = AI.takeAction(this.dungeon.currentFloor(), this.dungeon.nextActor());
+			e = this.dungeon.currentFloor().aiManager.takeAction(this.dungeon.nextActor());
 
 			if (e instanceof PokemonTravelEvent)
 			{
@@ -151,7 +150,7 @@ public class CommonEventProcessor
 			} else if (actor.isTeamLeader()) return;
 			else
 			{
-				this.addToPending(AI.takeAction(this.dungeon.currentFloor(), actor));
+				this.addToPending(this.dungeon.currentFloor().aiManager.takeAction(actor));
 				this.processPending();
 			}
 		}

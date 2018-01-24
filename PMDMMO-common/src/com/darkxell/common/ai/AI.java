@@ -2,17 +2,22 @@ package com.darkxell.common.ai;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
-import com.darkxell.common.event.TurnSkippedEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
-public class AI
+public abstract class AI
 {
 
-	public static DungeonEvent takeAction(Floor floor, DungeonPokemon pokemon)
+	/** The Floor context. */
+	public final Floor floor;
+	/** The Pokémon this AI controls. */
+	public final DungeonPokemon pokemon;
+
+	public AI(Floor floor, DungeonPokemon pokemon)
 	{
-		if (pokemon == null) return null;
-		// if (pokemon.pokemon.player != null) return new PokemonTravelEvent(floor, pokemon, GameUtil.randomDirection(floor.random));
-		return new TurnSkippedEvent(floor, pokemon);
+		this.floor = floor;
+		this.pokemon = pokemon;
 	}
+
+	public abstract DungeonEvent takeAction();
 
 }

@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Random;
 import java.util.function.Predicate;
 
+import com.darkxell.common.ai.AIManager;
 import com.darkxell.common.dungeon.DungeonEncounter;
 import com.darkxell.common.dungeon.DungeonInstance;
 import com.darkxell.common.dungeon.DungeonItem;
@@ -29,6 +30,8 @@ import com.darkxell.common.weather.WeatherInstance;
 public class Floor
 {
 
+	/** Stores all AI objects for Pokémon on this Floor. */
+	public final AIManager aiManager;
 	/** This Floor's data. */
 	public final FloorData data;
 	/** This Floor's Dungeon. */
@@ -59,6 +62,7 @@ public class Floor
 		this.layout = layout;
 		this.random = random;
 		this.weatherCondition = new ArrayList<WeatherInstance>();
+		this.aiManager = new AIManager(this);
 	}
 
 	/** @param weather - The weather to add.
@@ -79,8 +83,7 @@ public class Floor
 	/** @return True if the input Tile connects to a path outside a Room (considering that Tile is in a Room, which is not tested in this method). */
 	public boolean connectsToPath(Tile tile)
 	{
-		for (short direction : new short[]
-		{ Directions.NORTH, Directions.EAST, Directions.SOUTH, Directions.WEST })
+		for (short direction : new short[] { Directions.NORTH, Directions.EAST, Directions.SOUTH, Directions.WEST })
 			if (!tile.adjacentTile(direction).isInRoom() && tile.adjacentTile(direction).type() == TileType.GROUND) return true;
 		return false;
 	}
@@ -183,7 +186,7 @@ public class Floor
 						this.nextSpawn = RandomUtil.nextIntInBounds(50, 100, this.random) / this.data.pokemonDensity();
 					}
 				}
-			} else --this.nextSpawn;
+			} else--this.nextSpawn;
 		}
 
 		return e;
@@ -219,8 +222,7 @@ public class Floor
 					candidates.add(tile);
 		}
 
-		if (type != null) candidates.removeIf(new Predicate<Tile>()
-		{
+		if (type != null) candidates.removeIf(new Predicate<Tile>() {
 			@Override
 			public boolean test(Tile t)
 			{
@@ -228,8 +230,7 @@ public class Floor
 			}
 		});
 
-		candidates.removeIf(new Predicate<Tile>()
-		{
+		candidates.removeIf(new Predicate<Tile>() {
 			@Override
 			public boolean test(Tile t)
 			{
@@ -237,8 +238,7 @@ public class Floor
 			}
 		});
 
-		if (inRoom) candidates.removeIf(new Predicate<Tile>()
-		{
+		if (inRoom) candidates.removeIf(new Predicate<Tile>() {
 			@Override
 			public boolean test(Tile t)
 			{
@@ -323,6 +323,7 @@ public class Floor
 	{
 		if (!(this.tiles == null || x < 0 || x >= this.tiles.length || y < 0 || y >= this.tiles[x].length)) this.tileAt(x, y).setPokemon(pokemon);
 		this.dungeon.registerActor(pokemon);
+		if (!pokemon.isTeamLeader()) this.aiManager.register(pokemon);
 		return pokemon.onFloorStart(this);
 	}
 
@@ -353,6 +354,7 @@ public class Floor
 	{
 		pokemon.tile.setPokemon(null);
 		this.dungeon.unregisterActor(pokemon);
+		this.aiManager.unregister(pokemon);
 	}
 
 }
