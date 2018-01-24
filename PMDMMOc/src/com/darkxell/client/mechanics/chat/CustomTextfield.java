@@ -32,21 +32,21 @@ public class CustomTextfield {
 		if (beforelength + afterlength + 2 <= width || beforelength <= width / 2) {
 			g.drawString(charsbefore, 0, height - 2);
 			g.drawString(charsafter, beforelength + 2, height - 2);
-			if (this.showCursor) {
+			if (this.showCursor && !unselected) {
 				g.setColor(Color.BLACK);
 				g.drawLine(beforelength + 1, height, beforelength + 1, height - 10);
 			}
 		} else if (afterlength <= width / 2) {
 			g.drawString(charsafter, width - afterlength, height - 2);
 			g.drawString(charsbefore, width - afterlength - beforelength - 2, height - 2);
-			if (this.showCursor) {
+			if (this.showCursor && !unselected) {
 				g.setColor(Color.BLACK);
 				g.drawLine(width - afterlength - 1, height, width - afterlength - 1, height - 10);
 			}
 		} else {
 			g.drawString(charsafter, width / 2 + 1, height - 2);
 			g.drawString(charsbefore, width / 2 - 1 - beforelength, height - 2);
-			if (this.showCursor) {
+			if (this.showCursor && !unselected) {
 				g.setColor(Color.BLACK);
 				g.drawLine(width / 2, height, width / 2, height - 10);
 			}
@@ -96,6 +96,17 @@ public class CustomTextfield {
 
 	public String getContent() {
 		return charsbefore + charsafter;
+	}
+
+	private boolean unselected = false;
+
+	/**
+	 * Sets this textfield as the selected one. This simply forces the display
+	 * of the cursor so you don't have two textfields with blinking cursors on a
+	 * state aty the same time.
+	 */
+	public void setSelection(boolean a) {
+		this.unselected = !a;
 	}
 
 }
