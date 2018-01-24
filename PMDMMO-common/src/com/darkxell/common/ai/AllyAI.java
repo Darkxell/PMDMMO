@@ -3,6 +3,7 @@ package com.darkxell.common.ai;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.pokemon.PokemonRotateEvent;
+import com.darkxell.common.event.pokemon.PokemonTravelEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
 public class AllyAI extends AI
@@ -19,7 +20,9 @@ public class AllyAI extends AI
 	@Override
 	public DungeonEvent takeAction()
 	{
-		return new PokemonRotateEvent(this.floor, this.pokemon, AIUtils.generalDirection(this.pokemon, this.leader), true);
+		short direction = AIUtils.generalDirection(this.pokemon, this.leader);
+		if (AIUtils.isAdjacentTo(this.pokemon, this.leader, false)) return new PokemonRotateEvent(this.floor, this.pokemon, direction, true);
+		return new PokemonTravelEvent(this.floor, this.pokemon, direction);
 	}
 
 }

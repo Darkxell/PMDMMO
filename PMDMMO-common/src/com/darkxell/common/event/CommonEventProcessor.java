@@ -28,14 +28,20 @@ public class CommonEventProcessor
 		ArrayList<PokemonTravel> travellers = new ArrayList<PokemonTravel>();
 		{
 			PokemonTravel t = new PokemonTravel(actor, running, direction);
+			DungeonPokemon switching = t.destination.getPokemon();
+			t.origin.removePokemon(actor);
+			t.destination.setPokemon(actor);
 			travellers.add(t);
-			if (t.destination.getPokemon() != null)
+			if (switching != null)
 			{
-				travellers.add(new PokemonTravel(t.destination.getPokemon(), running, Directions.oppositeOf(direction)));
-				this.dungeon.takeAction(t.destination.getPokemon());
+				travellers.add(new PokemonTravel(switching, running, Directions.oppositeOf(direction)));
+				t.destination.removePokemon(switching);
+				t.origin.setPokemon(switching);
+				this.dungeon.takeAction(switching);
 			}
 		}
 		this.dungeon.takeAction(actor);
+
 		boolean flag = true;
 		DungeonEvent e = null;
 		ArrayList<DungeonPokemon> skippers = new ArrayList<DungeonPokemon>();

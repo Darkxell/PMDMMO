@@ -26,6 +26,22 @@ public final class AIUtils
 		return closestDirection(angle);
 	}
 
+	/** @return True if the input pokemon is just one tile away from the target. If they're diagonally disposed, also checks if there is a wall blocking their interaction. */
+	public static boolean isAdjacentTo(DungeonPokemon pokemon, DungeonPokemon target)
+	{
+		return isAdjacentTo(pokemon, target, true);
+	}
+
+	/** @param checkBlockingWalls - If true and the pokemon are diagonally disposed, also checks if there is a wall blocking their interaction.
+	 * @return True if the input pokemon is just one tile away from the target. */
+	public static boolean isAdjacentTo(DungeonPokemon pokemon, DungeonPokemon target, boolean checkBlockingWalls)
+	{
+		short direction = generalDirection(pokemon, target);
+		if (pokemon.tile.adjacentTile(direction).getPokemon() != target) return false; // Adjacent test
+		else if (!checkBlockingWalls) return true;
+		return pokemon.tile.blockingWalls(pokemon, direction); // Blocking walls test
+	}
+
 	private AIUtils()
 	{}
 
