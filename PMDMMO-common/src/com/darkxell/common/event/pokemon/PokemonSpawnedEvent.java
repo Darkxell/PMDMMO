@@ -25,7 +25,8 @@ public class PokemonSpawnedEvent extends DungeonEvent
 	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{
-		return this.floor.summonPokemon(this.spawned, this.tile.x, this.tile.y);
+		this.resultingEvents.addAll(this.floor.summonPokemon(this.spawned, this.tile.x, this.tile.y));
+		return super.processServer();
 	}
 
 }

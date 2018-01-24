@@ -21,6 +21,7 @@ public class AIManager
 	/** @return The AI the input Pokémon should have. */
 	private AI aiFor(DungeonPokemon pokemon)
 	{
+		if (pokemon.pokemon.player != null) return new AllyAI(this.floor, pokemon, pokemon.pokemon.player.getDungeonLeader());
 		return new SkipTurnsAI(this.floor, pokemon);
 	}
 

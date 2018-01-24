@@ -70,7 +70,6 @@ public class CommonEventProcessor
 		for (PokemonTravel travel : travellers)
 			this.dungeon.resetAction(travel.pokemon);
 
-		if (e != null) this.addToPending(e);
 		PokemonTravelEvent event = new PokemonTravelEvent(this.dungeon.currentFloor(), travellers.toArray(new PokemonTravel[travellers.size()]));
 		this.processEvent(event);
 	}
