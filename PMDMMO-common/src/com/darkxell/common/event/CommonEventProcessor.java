@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 import com.darkxell.common.dungeon.DungeonInstance;
+import com.darkxell.common.event.pokemon.PokemonRotateEvent;
 import com.darkxell.common.event.pokemon.PokemonTravelEvent;
 import com.darkxell.common.event.pokemon.PokemonTravelEvent.PokemonTravel;
 import com.darkxell.common.pokemon.DungeonPokemon;
@@ -53,12 +54,13 @@ public class CommonEventProcessor
 			if (e instanceof PokemonTravelEvent)
 			{
 				PokemonTravel event = ((PokemonTravelEvent) e).getTravel();
+				System.out.println(event.toString());
 				travellers.add(event);
 				// Simulating travel
 				event.origin.removePokemon(event.pokemon);
 				event.destination.setPokemon(event.pokemon);
 				this.dungeon.takeAction(event.pokemon);
-			} else if (e instanceof TurnSkippedEvent)
+			} else if (e instanceof TurnSkippedEvent || e instanceof PokemonRotateEvent)
 			{
 				// Simulating skipping
 				skippers.add(e.actor);

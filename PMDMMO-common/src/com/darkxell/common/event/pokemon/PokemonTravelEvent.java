@@ -31,6 +31,12 @@ public class PokemonTravelEvent extends DungeonEvent
 		{
 			return this.origin == t.destination && this.destination == t.origin;
 		}
+
+		@Override
+		public String toString()
+		{
+			return this.pokemon.toString() + " travels";
+		}
 	}
 
 	private PokemonTravel[] travels;
@@ -70,8 +76,8 @@ public class PokemonTravelEvent extends DungeonEvent
 		for (PokemonTravel travel : this.travels)
 		{
 
-			if (travel.pokemon.isTeamLeader()) this.resultingEvents.add(new BellyChangedEvent(this.floor, travel.pokemon, -.1
-					* travel.pokemon.energyMultiplier()));
+			if (travel.pokemon.isTeamLeader())
+				this.resultingEvents.add(new BellyChangedEvent(this.floor, travel.pokemon, -.1 * travel.pokemon.energyMultiplier()));
 			travel.origin.removePokemon(travel.pokemon);
 			travel.destination.setPokemon(travel.pokemon);
 			this.resultingEvents.addAll(travel.destination.onPokemonStep(this.floor, travel.pokemon, travel.running));
