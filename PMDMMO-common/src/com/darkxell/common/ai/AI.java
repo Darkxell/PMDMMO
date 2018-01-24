@@ -1,5 +1,6 @@
 package com.darkxell.common.ai;
 
+import com.darkxell.common.ai.states.AIStateTurnSkipper;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.TurnSkippedEvent;
@@ -30,12 +31,18 @@ public abstract class AI
 	{
 		this.floor = floor;
 		this.pokemon = pokemon;
+		this.state = new AIStateTurnSkipper(this);
 	}
 
+	/** Calls the AIState to determine the action to execute. */
 	public DungeonEvent takeAction()
 	{
+		this.update();
 		if (this.state == null) return new TurnSkippedEvent(this.floor, this.pokemon);
 		return this.state.takeAction();
 	}
+
+	/** Changes the AIState depending on the current situation. */
+	protected abstract void update();
 
 }

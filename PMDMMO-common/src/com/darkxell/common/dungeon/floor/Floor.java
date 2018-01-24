@@ -305,6 +305,11 @@ public class Floor
 		return new WeatherChangedEvent(this, previous, next);
 	}
 
+	public Room room(Tile tile)
+	{
+		return this.roomAt(tile.x, tile.y);
+	}
+
 	/** @return The room at the input X, Y coordinates. null if not in a Room. */
 	public Room roomAt(int x, int y)
 	{

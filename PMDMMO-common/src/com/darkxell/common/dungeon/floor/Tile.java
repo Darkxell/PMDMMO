@@ -69,12 +69,12 @@ public class Tile implements ItemContainer
 		return this.floor.tileAt(p.x, p.y);
 	}
 
-	/** @return True if there are walls block */
+	/** @return True if there are walls blocking the path in the input direction. */
 	public boolean blockingWalls(DungeonPokemon pokemon, short direction)
 	{
 		if (!Directions.isDiagonal(direction)) return false;
 		Pair<Short, Short> corners = Directions.splitDiagonal(direction);
-		return !pokemon.tile.adjacentTile(corners.getKey()).canCross(pokemon) || !pokemon.tile.adjacentTile(corners.getValue()).canCross(pokemon);
+		return !this.adjacentTile(corners.getKey()).canCross(pokemon) || !this.adjacentTile(corners.getValue()).canCross(pokemon);
 	}
 
 	@Override
@@ -95,7 +95,8 @@ public class Tile implements ItemContainer
 	public boolean canMoveTo(DungeonPokemon pokemon, short direction, boolean allowSwitching)
 	{
 		if (!this.canWalkOn(pokemon, allowSwitching)) return false;
-		return !this.blockingWalls(pokemon, direction);
+		if (!Directions.isDiagonal(direction)) return true;
+		return !this.blockingWalls(pokemon, Directions.oppositeOf(direction));
 	}
 
 	/** @param allowSwitching - True if switching leader and ally is allowed.
@@ -120,6 +121,12 @@ public class Tile implements ItemContainer
 	public void deleteItem(int index)
 	{
 		this.setItem(null);
+	}
+
+	/** @return The distance between this Tile and another input Tile. WARNING : This methods considers that going diagonally is a distance of 1! */
+	public double distance(Tile tile)
+	{
+		return Math.max(Math.abs(this.x - tile.x), Math.abs(this.y - tile.y));
 	}
 
 	/** @return The sum of NORTH, EAST, SOUTH, WEST if the tile in that direction is the same type as this tile. */
