@@ -38,6 +38,13 @@ public final class AIUtils
 			if (cardinal == split.getKey()) other = split.getValue();
 			else other = split.getKey();
 			if (pokemon.tile.adjacentTile(other).canMoveTo(pokemon, other, false)) return other;
+		} else
+		{
+			int distance = pokemon.tile.distance(target.tile);
+			if (pokemon.tile.adjacentTile((short) (direction + Directions.rotateClockwise(direction))).distance(target.tile) < distance)
+				return (short) (direction + Directions.rotateClockwise(direction));
+			if (pokemon.tile.adjacentTile((short) (direction + Directions.rotateCounterClockwise(direction))).distance(target.tile) < distance)
+				return (short) (direction + Directions.rotateCounterClockwise(direction));
 		}
 		return -1;
 	}
@@ -47,9 +54,9 @@ public final class AIUtils
 	{
 		double angle = Math.toDegrees(Math.atan2(target.tile.x - pokemon.tile.x, target.tile.y - pokemon.tile.y));
 		if (angle < 0) angle += 360;
-		if (angle < 45) return Directions.NORTH;
+		if (angle < 45 || angle > 315) return Directions.SOUTH;
 		if (angle < 135) return Directions.EAST;
-		if (angle < 225) return Directions.SOUTH;
+		if (angle < 225) return Directions.NORTH;
 		return Directions.WEST;
 	}
 
@@ -85,11 +92,9 @@ public final class AIUtils
 			if (target.tile.isInRoom()) return floor.room(pokemon.tile) == floor.room(target.tile);
 			for (Tile t : floor.room(pokemon.tile).outline())
 				if (t == target.tile) return true;
-			return false;
 		}
 
-		int viewDistance = 3 - floor.data.shadows();
-		return pokemon.tile.distance(target.tile) <= viewDistance;
+		return pokemon.tile.distance(target.tile) <= 3;
 	}
 
 	private AIUtils()

@@ -24,6 +24,7 @@ public class AIStateFollowPokemon extends AIState
 	{
 		short direction = AIUtils.generalDirection(this.ai.pokemon, this.target);
 		if (AIUtils.isAdjacentTo(this.ai.pokemon, this.target, true)) return new PokemonRotateEvent(this.ai.floor, this.ai.pokemon, direction, true);
+
 		short go = AIUtils.direction(this.ai.floor, this.ai.pokemon, this.target);
 		if (go == -1) return new PokemonRotateEvent(this.ai.floor, this.ai.pokemon, direction, true);
 		return new PokemonTravelEvent(this.ai.floor, this.ai.pokemon, go);

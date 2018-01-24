@@ -124,7 +124,7 @@ public class Tile implements ItemContainer
 	}
 
 	/** @return The distance between this Tile and another input Tile. WARNING : This methods considers that going diagonally is a distance of 1! */
-	public double distance(Tile tile)
+	public int distance(Tile tile)
 	{
 		return Math.max(Math.abs(this.x - tile.x), Math.abs(this.y - tile.y));
 	}
