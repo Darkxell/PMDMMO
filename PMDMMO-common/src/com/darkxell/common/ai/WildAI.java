@@ -2,6 +2,7 @@ package com.darkxell.common.ai;
 
 import java.util.ArrayList;
 
+import com.darkxell.common.ai.states.AIStateAttackPokemon;
 import com.darkxell.common.ai.states.AIStateFollowPokemon;
 import com.darkxell.common.ai.states.AIStateTurnSkipper;
 import com.darkxell.common.dungeon.floor.Floor;
@@ -25,7 +26,7 @@ public class WildAI extends AI
 		} else if (AIUtils.hasVisibleEnemies(this.floor, this.pokemon))
 		{
 			ArrayList<DungeonPokemon> candidates = AIUtils.visibleEnemies(this.floor, this.pokemon);
-			this.state = new AIStateFollowPokemon(this, candidates.get(0));
+			this.state = new AIStateAttackPokemon(this, candidates.get(0));
 		}
 	}
 
