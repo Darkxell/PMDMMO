@@ -85,10 +85,11 @@ public class PokemonTravelState extends DungeonSubState
 		int origin = 0, destination = 0;
 		short facing = runner.facing();
 
-		for (short dir : Directions.isDiagonal(facing) ? new short[]
-		{ facing, Directions.rotateClockwise(facing), Directions.rotateClockwise(facing), Directions.rotateCounterClockwise(facing) } : new short[]
-		{ facing, Directions.rotateClockwise(facing), Directions.rotateClockwise(facing), Directions.rotateClockwise(Directions.rotateClockwise(facing)),
-				Directions.rotateCounterClockwise(facing), Directions.rotateCounterClockwise(Directions.rotateCounterClockwise(facing)) })
+		for (short dir : Directions.isDiagonal(facing)
+				? new short[] { facing, Directions.rotateClockwise(facing), Directions.rotateClockwise(facing), Directions.rotateCounterClockwise(facing) }
+				: new short[] { facing, Directions.rotateClockwise(facing), Directions.rotateClockwise(facing),
+						Directions.rotateClockwise(Directions.rotateClockwise(facing)), Directions.rotateCounterClockwise(facing),
+						Directions.rotateCounterClockwise(Directions.rotateCounterClockwise(facing)) })
 		{
 			Tile o = travel.origin.adjacentTile(dir);
 			Tile d = travel.destination.adjacentTile(dir);

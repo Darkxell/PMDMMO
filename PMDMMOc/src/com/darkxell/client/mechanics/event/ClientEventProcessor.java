@@ -196,7 +196,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	public boolean shouldStopMoving()
 	{
 		for (DungeonEvent event : this.pending)
-			if (!(event instanceof BellyChangedEvent || event instanceof TurnSkippedEvent)) return true;
+			if (!(event instanceof BellyChangedEvent || event instanceof TurnSkippedEvent || event instanceof PokemonRotateEvent)) return true;
 		return false;
 	}
 
