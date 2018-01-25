@@ -43,9 +43,11 @@ public final class AIUtils
 		} else
 		{
 			int distance = pokemon.tile().distance(target.tile());
-			if (pokemon.tile().adjacentTile(Directions.rotateClockwise(direction)).distance(target.tile()) < distance)
+			if (pokemon.tile().adjacentTile(Directions.rotateClockwise(direction)).distance(target.tile()) < distance
+					&& pokemon.tile().adjacentTile(Directions.rotateClockwise(direction)).canMoveTo(pokemon, direction, false))
 				return Directions.rotateClockwise(direction);
-			if (pokemon.tile().adjacentTile(Directions.rotateCounterClockwise(direction)).distance(target.tile()) < distance)
+			if (pokemon.tile().adjacentTile(Directions.rotateCounterClockwise(direction)).distance(target.tile()) < distance
+					&& pokemon.tile().adjacentTile(Directions.rotateCounterClockwise(direction)).canMoveTo(pokemon, direction, false))
 				return Directions.rotateCounterClockwise(direction);
 		}
 		return -1;
