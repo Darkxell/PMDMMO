@@ -133,7 +133,7 @@ public class DungeonState extends AbstractState
 		this.pokemonRenderer.register(Persistance.player.getDungeonLeader()).sprite.setShadowColor(PokemonSprite.ALLY_SHADOW);
 
 		ArrayList<Tile> candidates = new ArrayList<Tile>();
-		Tile initial = Persistance.player.getDungeonLeader().tile;
+		Tile initial = Persistance.player.getDungeonLeader().tile();
 		candidates.add(initial.adjacentTile(Directions.WEST));
 		candidates.add(initial.adjacentTile(Directions.EAST));
 		candidates.add(initial.adjacentTile(Directions.SOUTH));

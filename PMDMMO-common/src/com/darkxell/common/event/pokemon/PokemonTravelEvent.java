@@ -23,8 +23,8 @@ public class PokemonTravelEvent extends DungeonEvent
 			this.pokemon = pokemon;
 			this.running = running;
 			this.direction = direction;
-			this.origin = pokemon.tile;
-			this.destination = pokemon.tile.adjacentTile(this.direction);
+			this.origin = pokemon.tile();
+			this.destination = pokemon.tile().adjacentTile(this.direction);
 		}
 
 		public boolean isReversed(PokemonTravel t)

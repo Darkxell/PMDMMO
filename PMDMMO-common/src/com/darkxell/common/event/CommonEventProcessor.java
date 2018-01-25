@@ -35,7 +35,7 @@ public class CommonEventProcessor
 			travellers.add(t);
 			if (switching != null)
 			{
-				switching.tile = t.destination;
+				switching.setTile(t.destination);
 				travellers.add(new PokemonTravel(switching, running, Directions.oppositeOf(direction)));
 				t.destination.removePokemon(switching);
 				t.origin.setPokemon(switching);

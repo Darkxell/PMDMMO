@@ -102,7 +102,7 @@ public class ItemContainersMenuState extends OptionSelectionMenuState implements
 		{
 			if (Persistance.stateManager instanceof PrincipalMainState) ((PrincipalMainState) Persistance.stateManager).setState(Persistance.dungeonState);
 			Persistance.eventProcessor.processEvent(new ItemSwappedEvent(Persistance.floor, ItemAction.SWAP, Persistance.player.getDungeonLeader(),
-					Persistance.player.inventory, index, Persistance.player.getDungeonLeader().tile, 0));
+					Persistance.player.inventory, index, Persistance.player.getDungeonLeader().tile(), 0));
 		}
 	}
 
@@ -138,7 +138,7 @@ public class ItemContainersMenuState extends OptionSelectionMenuState implements
 		{
 			ArrayList<ItemAction> actions = container.legalItemActions();
 			actions.addAll(i.item().getLegalActions(true));
-			actions.remove(Persistance.player.getDungeonLeader().tile.getItem() == null ? ItemAction.SWITCH : ItemAction.PLACE);
+			actions.remove(Persistance.player.getDungeonLeader().tile().getItem() == null ? ItemAction.SWITCH : ItemAction.PLACE);
 			if (Persistance.player.inventory.isFull())
 			{
 				actions.remove(ItemAction.GET);
@@ -175,9 +175,9 @@ public class ItemContainersMenuState extends OptionSelectionMenuState implements
 		{
 			if (Persistance.stateManager instanceof PrincipalMainState) ((PrincipalMainState) Persistance.stateManager).setState(new TeamMenuState(s, this));
 		} else if (action == ItemAction.PLACE)
-			Persistance.eventProcessor.processEvent(new ItemMovedEvent(Persistance.floor, action, user, container, index, user.tile, 0));
+			Persistance.eventProcessor.processEvent(new ItemMovedEvent(Persistance.floor, action, user, container, index, user.tile(), 0));
 		else if (action == ItemAction.SWITCH)
-			Persistance.eventProcessor.processEvent(new ItemSwappedEvent(Persistance.floor, action, user, container, index, user.tile, 0));
+			Persistance.eventProcessor.processEvent(new ItemSwappedEvent(Persistance.floor, action, user, container, index, user.tile(), 0));
 		else if (action == ItemAction.SWAP)
 		{
 			if (Persistance.stateManager instanceof PrincipalMainState)

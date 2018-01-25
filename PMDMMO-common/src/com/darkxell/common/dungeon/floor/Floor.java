@@ -254,7 +254,7 @@ public class Floor
 			});
 			candidates.removeIf((Tile t) -> {
 				for (DungeonPokemon player : players)
-					if (Math.abs(t.x - player.tile.x) < 10 && Math.abs(t.y - player.tile.y) < 7) return true;
+					if (Math.abs(t.x - player.tile().x) < 10 && Math.abs(t.y - player.tile().y) < 7) return true;
 				return false;
 			});
 		}
@@ -357,7 +357,7 @@ public class Floor
 
 	public void unsummonPokemon(DungeonPokemon pokemon)
 	{
-		pokemon.tile.setPokemon(null);
+		pokemon.tile().setPokemon(null);
 		this.dungeon.unregisterActor(pokemon);
 		this.aiManager.unregister(pokemon);
 	}

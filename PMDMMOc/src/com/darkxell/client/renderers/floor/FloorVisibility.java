@@ -32,7 +32,7 @@ public class FloorVisibility
 	public boolean isVisible(DungeonPokemon pokemon)
 	{
 		if (Persistance.floor.data.shadows() == FloorData.NO_SHADOW) return true;
-		return pokemon.pokemon.player == Persistance.player || this.currentlyVisible.contains(pokemon.tile);
+		return pokemon.pokemon.player == Persistance.player || this.currentlyVisible.contains(pokemon.tile());
 	}
 
 	public boolean isVisible(Tile tile)
@@ -47,7 +47,7 @@ public class FloorVisibility
 		if (camera == null) return;
 		this.currentlyVisible.clear();
 
-		Tile t = camera.tile;
+		Tile t = camera.tile();
 		Room r = this.floor.roomAt(t.x, t.y);
 		if (r == null)
 		{

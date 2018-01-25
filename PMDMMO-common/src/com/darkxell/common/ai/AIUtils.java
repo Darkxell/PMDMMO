@@ -28,23 +28,24 @@ public final class AIUtils
 	public static short direction(Floor floor, DungeonPokemon pokemon, DungeonPokemon target)
 	{
 		short direction = generalDirection(pokemon, target);
-		if (pokemon.tile.adjacentTile(direction).canMoveTo(pokemon, direction, false)) return direction;
+		if (pokemon.tile().adjacentTile(direction).canMoveTo(pokemon, direction, false)) return direction;
 
 		if (Directions.isDiagonal(direction))
 		{
 			short cardinal = generalCardinalDirection(pokemon, target);
-			if (pokemon.tile.adjacentTile(cardinal).canMoveTo(pokemon, cardinal, false)) return cardinal;
+			if (pokemon.tile().adjacentTile(cardinal).canMoveTo(pokemon, cardinal, false)) return cardinal;
 
 			Pair<Short, Short> split = Directions.splitDiagonal(direction);
 			short other;
 			if (cardinal == split.getKey()) other = split.getValue();
 			else other = split.getKey();
-			if (pokemon.tile.adjacentTile(other).canMoveTo(pokemon, other, false)) return other;
+			if (pokemon.tile().adjacentTile(other).canMoveTo(pokemon, other, false)) return other;
 		} else
 		{
-			int distance = pokemon.tile.distance(target.tile);
-			if (pokemon.tile.adjacentTile(Directions.rotateClockwise(direction)).distance(target.tile) < distance) return Directions.rotateClockwise(direction);
-			if (pokemon.tile.adjacentTile(Directions.rotateCounterClockwise(direction)).distance(target.tile) < distance)
+			int distance = pokemon.tile().distance(target.tile());
+			if (pokemon.tile().adjacentTile(Directions.rotateClockwise(direction)).distance(target.tile()) < distance)
+				return Directions.rotateClockwise(direction);
+			if (pokemon.tile().adjacentTile(Directions.rotateCounterClockwise(direction)).distance(target.tile()) < distance)
 				return Directions.rotateCounterClockwise(direction);
 		}
 		return -1;
@@ -53,7 +54,7 @@ public final class AIUtils
 	/** @return The general cardinal direction the input Pokémon has to face to look at the target. */
 	public static short generalCardinalDirection(DungeonPokemon pokemon, DungeonPokemon target)
 	{
-		double angle = Math.toDegrees(Math.atan2(target.tile.x - pokemon.tile.x, target.tile.y - pokemon.tile.y));
+		double angle = Math.toDegrees(Math.atan2(target.tile().x - pokemon.tile().x, target.tile().y - pokemon.tile().y));
 		if (angle < 0) angle += 360;
 		if (angle < 45 || angle > 315) return Directions.SOUTH;
 		if (angle < 135) return Directions.EAST;
@@ -64,8 +65,8 @@ public final class AIUtils
 	/** @return The general direction the input Pokémon has to face to look at the target. */
 	public static short generalDirection(DungeonPokemon pokemon, DungeonPokemon target)
 	{
-		/* if (pokemon == null) System.out.println("pokemon"); if (target == null) System.out.println("target"); if (pokemon.tile == null) System.out.println(pokemon); if (target.tile == null) System.out.println(target); */
-		double angle = Math.toDegrees(Math.atan2(target.tile.x - pokemon.tile.x, target.tile.y - pokemon.tile.y));
+		/* if (pokemon == null) System.out.println("pokemon"); if (target == null) System.out.println("target"); if (pokemon.tile() == null) System.out.println(pokemon); if (target.tile == null) System.out.println(target); */
+		double angle = Math.toDegrees(Math.atan2(target.tile().x - pokemon.tile().x, target.tile().y - pokemon.tile().y));
 		if (angle < 0) angle += 360;
 		return closestDirection(angle);
 	}
@@ -74,17 +75,17 @@ public final class AIUtils
 	 *         This method avoids calling visibleEnemies when there is none, which is heavier than this one. */
 	public static boolean hasVisibleEnemies(Floor floor, DungeonPokemon pokemon)
 	{
-		if (pokemon.tile == null) System.out.println(pokemon);
+		if (pokemon.tile() == null) System.out.println(pokemon);
 		// Change this to use floor shadows when exploring AI is done
-		for (int x = pokemon.tile.x - 3; x <= pokemon.tile.x + 3; ++x)
-			for (int y = pokemon.tile.y - 3; y <= pokemon.tile.y + 3; ++y)
+		for (int x = pokemon.tile().x - 3; x <= pokemon.tile().x + 3; ++x)
+			for (int y = pokemon.tile().y - 3; y <= pokemon.tile().y + 3; ++y)
 				if (floor.tileAt(x, y).getPokemon() != null && !floor.tileAt(x, y).getPokemon().pokemon.isAlliedWith(pokemon.pokemon)) return true;
 
-		if (pokemon.tile.isInRoom())
+		if (pokemon.tile().isInRoom())
 		{
-			for (Tile t : floor.room(pokemon.tile).listTiles())
+			for (Tile t : floor.room(pokemon.tile()).listTiles())
 				if (t.getPokemon() != null && !t.getPokemon().pokemon.isAlliedWith(pokemon.pokemon)) return true;
-			for (Tile t : floor.room(pokemon.tile).outline())
+			for (Tile t : floor.room(pokemon.tile()).outline())
 				if (t.getPokemon() != null && !t.getPokemon().pokemon.isAlliedWith(pokemon.pokemon)) return true;
 		}
 
@@ -102,46 +103,46 @@ public final class AIUtils
 	public static boolean isAdjacentTo(DungeonPokemon pokemon, DungeonPokemon target, boolean checkBlockingWalls)
 	{
 		short direction = generalDirection(pokemon, target);
-		if (pokemon.tile.adjacentTile(direction).getPokemon() != target) return false; // Adjacent test
+		if (pokemon.tile().adjacentTile(direction).getPokemon() != target) return false; // Adjacent test
 		else if (!checkBlockingWalls) return true;
-		return !pokemon.tile.blockingWalls(pokemon, direction); // Blocking walls test
+		return !pokemon.tile().blockingWalls(pokemon, direction); // Blocking walls test
 	}
 
 	public static boolean isVisible(Floor floor, DungeonPokemon pokemon, DungeonPokemon target)
 	{
-		if (pokemon.tile.isInRoom())
+		if (pokemon.tile().isInRoom())
 		{
-			if (target.tile.isInRoom()) return floor.room(pokemon.tile) == floor.room(target.tile);
-			for (Tile t : floor.room(pokemon.tile).outline())
-				if (t == target.tile) return true;
+			if (target.tile().isInRoom()) return floor.room(pokemon.tile()) == floor.room(target.tile());
+			for (Tile t : floor.room(pokemon.tile()).outline())
+				if (t == target.tile()) return true;
 		}
 
 		// Change this to use floor shadows when exploring AI is done
-		return pokemon.tile.distance(target.tile) <= 3;
+		return pokemon.tile().distance(target.tile()) <= 3;
 	}
 
 	/** @return The list of enemy Pokémon the input Pokémon can see, sorted by distance to the Pokémon. */
 	public static ArrayList<DungeonPokemon> visibleEnemies(Floor floor, DungeonPokemon pokemon)
 	{
 		ArrayList<DungeonPokemon> visible = new ArrayList<>();
-		if (pokemon.tile.isInRoom())
+		if (pokemon.tile().isInRoom())
 		{
-			for (Tile t : floor.room(pokemon.tile).listTiles())
+			for (Tile t : floor.room(pokemon.tile()).listTiles())
 				if (t.getPokemon() != null) visible.add(t.getPokemon());
-			for (Tile t : floor.room(pokemon.tile).outline())
+			for (Tile t : floor.room(pokemon.tile()).outline())
 				if (t.getPokemon() != null) visible.add(t.getPokemon());
 		}
 
 		// Change this to use floor shadows when exploring AI is done
-		for (int x = pokemon.tile.x - 3; x <= pokemon.tile.x + 3; ++x)
-			for (int y = pokemon.tile.y - 3; y <= pokemon.tile.y + 3; ++y)
+		for (int x = pokemon.tile().x - 3; x <= pokemon.tile().x + 3; ++x)
+			for (int y = pokemon.tile().y - 3; y <= pokemon.tile().y + 3; ++y)
 				if (floor.tileAt(x, y).getPokemon() != null) visible.add(floor.tileAt(x, y).getPokemon());
 
 		visible.removeIf((DungeonPokemon p) -> {
 			return pokemon.pokemon.isAlliedWith(p.pokemon);
 		});
 		visible.sort((DungeonPokemon p1, DungeonPokemon p2) -> {
-			return Integer.compare(pokemon.tile.distance(p1.tile), pokemon.tile.distance(p2.tile));
+			return Integer.compare(pokemon.tile().distance(p1.tile()), pokemon.tile().distance(p2.tile()));
 		});
 		return visible;
 	}
