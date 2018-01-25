@@ -21,8 +21,9 @@ public class AIManager
 	/** @return The AI the input Pokémon should have. */
 	private AI aiFor(DungeonPokemon pokemon)
 	{
-		if (pokemon.pokemon.player != null) return new AllyAI(this.floor, pokemon, pokemon.pokemon.player.getDungeonLeader());
-		return new SkipTurnsAI(this.floor, pokemon);
+		if (pokemon.pokemon.player == null) return new WildAI(this.floor, pokemon);
+		else return new AllyAI(this.floor, pokemon, pokemon.pokemon.player.getDungeonLeader());
+		// return new SkipTurnsAI(this.floor, pokemon);
 	}
 
 	public AI getAI(DungeonPokemon pokemon)
@@ -32,7 +33,7 @@ public class AIManager
 
 	public void register(DungeonPokemon pokemon)
 	{
-		this.ais.put(pokemon, this.aiFor(pokemon));
+		if (!pokemon.isTeamLeader()) this.ais.put(pokemon, this.aiFor(pokemon));
 	}
 
 	public DungeonEvent takeAction(DungeonPokemon pokemon)

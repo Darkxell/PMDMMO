@@ -54,7 +54,6 @@ public class CommonEventProcessor
 			if (e instanceof PokemonTravelEvent)
 			{
 				PokemonTravel event = ((PokemonTravelEvent) e).getTravel();
-				System.out.println(event.toString());
 				travellers.add(event);
 				// Simulating travel
 				event.origin.removePokemon(event.pokemon);
