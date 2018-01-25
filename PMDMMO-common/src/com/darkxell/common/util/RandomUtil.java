@@ -42,7 +42,7 @@ public final class RandomUtil
 	{
 		if (candidates.isEmpty())
 		{
-			Logger.e("random(): no objects to randomize!");
+			new Exception("random(): no objects to randomize!").printStackTrace();
 			return null;
 		}
 		return candidates.get(random.nextInt(candidates.size()));

@@ -47,6 +47,15 @@ public class Room
 		return x >= this.x && x < this.x + this.width && y >= this.y && y < this.y + this.height;
 	}
 
+	public ArrayList<Tile> exits()
+	{
+		ArrayList<Tile> exits = new ArrayList<>(this.outline());
+		exits.removeIf((Tile t) -> {
+			return t.type() != TileType.GROUND;
+		});
+		return exits;
+	}
+
 	/** @return All tiles in this Room. */
 	public ArrayList<Tile> listTiles()
 	{

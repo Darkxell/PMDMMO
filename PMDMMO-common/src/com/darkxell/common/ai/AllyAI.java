@@ -1,7 +1,7 @@
 package com.darkxell.common.ai;
 
+import com.darkxell.common.ai.states.AIStateExplore;
 import com.darkxell.common.ai.states.AIStateFollowPokemon;
-import com.darkxell.common.ai.states.AIStateTurnSkipper;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
@@ -22,7 +22,7 @@ public class AllyAI extends AI
 		if (AIUtils.isVisible(this.floor, this.pokemon, this.leader))
 		{
 			if (!(this.state instanceof AIStateFollowPokemon)) this.state = new AIStateFollowPokemon(this, this.leader);
-		} else if (!(this.state instanceof AIStateTurnSkipper)) this.state = new AIStateTurnSkipper(this);
+		} else if (this.state instanceof AIStateFollowPokemon) this.state = new AIStateExplore(this, ((AIStateFollowPokemon) this.state).lastSeen());
 	}
 
 }

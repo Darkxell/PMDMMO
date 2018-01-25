@@ -25,14 +25,20 @@ public final class AIUtils
 	}
 
 	/** @return The direction to go to for the input pokemon to reach the target. May return -1 if there is no path. */
-	public static short direction(Floor floor, DungeonPokemon pokemon, DungeonPokemon target)
+	public static short direction(DungeonPokemon pokemon, DungeonPokemon target)
 	{
-		short direction = generalDirection(pokemon, target);
+		return direction(pokemon, target.tile());
+	}
+
+	/** @return The direction to go to for the input pokemon to reach the destination. May return -1 if there is no path. */
+	public static short direction(DungeonPokemon pokemon, Tile destination)
+	{
+		short direction = generalDirection(pokemon, destination);
 		if (pokemon.tile().adjacentTile(direction).canMoveTo(pokemon, direction, false)) return direction;
 
 		if (Directions.isDiagonal(direction))
 		{
-			short cardinal = generalCardinalDirection(pokemon, target);
+			short cardinal = generalCardinalDirection(pokemon, destination);
 			if (pokemon.tile().adjacentTile(cardinal).canMoveTo(pokemon, cardinal, false)) return cardinal;
 
 			Pair<Short, Short> split = Directions.splitDiagonal(direction);
@@ -42,21 +48,60 @@ public final class AIUtils
 			if (pokemon.tile().adjacentTile(other).canMoveTo(pokemon, other, false)) return other;
 		} else
 		{
-			int distance = pokemon.tile().distance(target.tile());
-			if (pokemon.tile().adjacentTile(Directions.rotateClockwise(direction)).distance(target.tile()) < distance
+			int distance = pokemon.tile().distance(destination);
+			if (pokemon.tile().adjacentTile(Directions.rotateClockwise(direction)).distance(destination) < distance
 					&& pokemon.tile().adjacentTile(Directions.rotateClockwise(direction)).canMoveTo(pokemon, direction, false))
 				return Directions.rotateClockwise(direction);
-			if (pokemon.tile().adjacentTile(Directions.rotateCounterClockwise(direction)).distance(target.tile()) < distance
+			if (pokemon.tile().adjacentTile(Directions.rotateCounterClockwise(direction)).distance(destination) < distance
 					&& pokemon.tile().adjacentTile(Directions.rotateCounterClockwise(direction)).canMoveTo(pokemon, direction, false))
 				return Directions.rotateCounterClockwise(direction);
+			if (pokemon.tile().adjacentTile(Directions.rotateClockwise(Directions.rotateClockwise(direction))).distance(destination) < distance
+					&& pokemon.tile().adjacentTile(Directions.rotateClockwise(Directions.rotateClockwise(direction))).canMoveTo(pokemon, direction, false))
+				return Directions.rotateClockwise(Directions.rotateClockwise(direction));
+			if (pokemon.tile().adjacentTile(Directions.rotateCounterClockwise(Directions.rotateCounterClockwise(direction))).distance(destination) < distance
+					&& pokemon.tile().adjacentTile(Directions.rotateCounterClockwise(Directions.rotateCounterClockwise(direction))).canMoveTo(pokemon,
+							direction, false))
+				return Directions.rotateCounterClockwise(Directions.rotateCounterClockwise(direction));
 		}
 		return -1;
+	}
+
+	/** @return The furthest Tiles that can be seen and walked on by the input Pokémon. This method condiers the Pokémon is not in a Room. */
+	public static ArrayList<Tile> furthestWalkableTiles(Floor floor, DungeonPokemon pokemon)
+	{
+		int shadow = 3 - floor.data.shadows();
+		int maxDistance = 0, distance;
+		ArrayList<Tile> tiles = new ArrayList<>();
+		for (int x = pokemon.tile().x - shadow; x <= pokemon.tile().x + shadow; ++x)
+			for (int y = pokemon.tile().y - shadow; y <= pokemon.tile().y + shadow; ++y)
+			{
+				Tile t = floor.tileAt(x, y);
+				distance = t.distance(pokemon.tile());
+				if (distance >= maxDistance && t.canWalkOn(pokemon, false))
+				{
+					maxDistance = distance;
+					tiles.add(t);
+				}
+			}
+
+		final int maxD = maxDistance;
+		tiles.removeIf((Tile t) -> {
+			return t.distance(pokemon.tile()) < maxD;
+		});
+
+		return tiles;
 	}
 
 	/** @return The general cardinal direction the input Pokémon has to face to look at the target. */
 	public static short generalCardinalDirection(DungeonPokemon pokemon, DungeonPokemon target)
 	{
-		double angle = Math.toDegrees(Math.atan2(target.tile().x - pokemon.tile().x, target.tile().y - pokemon.tile().y));
+		return generalCardinalDirection(pokemon, target.tile());
+	}
+
+	/** @return The general cardinal direction the input Pokémon has to face to look at the destination. */
+	public static short generalCardinalDirection(DungeonPokemon pokemon, Tile destination)
+	{
+		double angle = Math.toDegrees(Math.atan2(destination.x - pokemon.tile().x, destination.y - pokemon.tile().y));
 		if (angle < 0) angle += 360;
 		if (angle < 45 || angle > 315) return Directions.SOUTH;
 		if (angle < 135) return Directions.EAST;
@@ -67,8 +112,14 @@ public final class AIUtils
 	/** @return The general direction the input Pokémon has to face to look at the target. */
 	public static short generalDirection(DungeonPokemon pokemon, DungeonPokemon target)
 	{
+		return generalDirection(pokemon, target.tile());
+	}
+
+	/** @return The general direction the input Pokémon has to face to look at the destination. */
+	public static short generalDirection(DungeonPokemon pokemon, Tile destination)
+	{
 		/* if (pokemon == null) System.out.println("pokemon"); if (target == null) System.out.println("target"); if (pokemon.tile() == null) System.out.println(pokemon); if (target.tile == null) System.out.println(target); */
-		double angle = Math.toDegrees(Math.atan2(target.tile().x - pokemon.tile().x, target.tile().y - pokemon.tile().y));
+		double angle = Math.toDegrees(Math.atan2(destination.x - pokemon.tile().x, destination.y - pokemon.tile().y));
 		if (angle < 0) angle += 360;
 		return closestDirection(angle);
 	}
