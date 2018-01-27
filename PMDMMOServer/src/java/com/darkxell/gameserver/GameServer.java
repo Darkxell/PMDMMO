@@ -20,6 +20,8 @@ import javax.websocket.server.ServerEndpoint;
 
 import com.darkxell.gameserver.freezones.FreezonePositionHandler;
 import com.darkxell.gameserver.freezones.SessionOpenHandler;
+import com.darkxell.model.ejb.PlayerDAO;
+import javax.ejb.EJB;
 
 /**
  *
@@ -28,20 +30,30 @@ import com.darkxell.gameserver.freezones.SessionOpenHandler;
 @ApplicationScoped
 @ServerEndpoint("/game")
 public class GameServer {
-    
-     @Inject
+
+    @Inject
     private GameSessionHandler sessionHandler;
-    
+
+    @EJB
+    private PlayerDAO playerDAO;
+
+    /**
+     * Called when a client opens a websocket connection with the server.
+     */
     @OnOpen
-        public void open(Session session) {
-            sessionHandler.addSession(session);
+    public void open(Session session) {
+        sessionHandler.addSession(session);
     }
 
-     @OnClose
+    /**
+     * Called when a client closes his websocket connection with the server.
+     */
+    @OnClose
     public void close(Session session) {
         sessionHandler.removeSession(session);
-        if(SessionsInfoHolder.infoExists(session.getId()))
+        if (SessionsInfoHolder.infoExists(session.getId())) {
             SessionsInfoHolder.removeInfo(session.getId());
+        }
     }
 
     @OnError
@@ -50,21 +62,26 @@ public class GameServer {
         error.printStackTrace();
     }
 
-     @OnMessage
+    /**
+     * Main method called when the game server recieves a message. This method
+     * redirects the message to the appropriate MessageHandler.
+     */
+    @OnMessage
     public void handleMessage(String message, Session session) {
         try (JsonReader reader = Json.createReader(new StringReader(message))) {
             JsonObject jsonMessage = reader.readObject();
             if ("sessioninfo".equals(jsonMessage.getString("action"))) {
-                SessionOpenHandler soh = new SessionOpenHandler();
+                SessionOpenHandler soh = new SessionOpenHandler(this);
                 soh.handleMessage(jsonMessage, session, sessionHandler);
-            }else if ("freezoneposition".equals(jsonMessage.getString("action"))) {
-                FreezonePositionHandler fph = new FreezonePositionHandler();
-                fph.handleMessage(jsonMessage, session,sessionHandler);
+            } else if ("freezoneposition".equals(jsonMessage.getString("action"))) {
+                FreezonePositionHandler fph = new FreezonePositionHandler(this);
+                fph.handleMessage(jsonMessage, session, sessionHandler);
             }
-        } catch(Exception e){
+            
+        } catch (Exception e) {
             System.out.println(message);
             e.printStackTrace();
         }
     }
-    
+
 }

@@ -5,6 +5,7 @@
  */
 package com.darkxell.gameserver.freezones;
 
+import com.darkxell.gameserver.GameServer;
 import com.darkxell.gameserver.GameSessionHandler;
 import com.darkxell.gameserver.GameSessionInfo;
 import com.darkxell.gameserver.MessageHandler;
@@ -16,7 +17,11 @@ import javax.websocket.Session;
  *
  * @author Darkxell
  */
-public class SessionOpenHandler implements MessageHandler{
+public class SessionOpenHandler extends MessageHandler{
+
+    public SessionOpenHandler(GameServer gs) {
+        super(gs);
+    }
 
     @Override
     public void handleMessage(JsonObject json, Session from, GameSessionHandler sessionshandler) {

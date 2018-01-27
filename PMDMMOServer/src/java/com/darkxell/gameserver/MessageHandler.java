@@ -9,12 +9,26 @@ import javax.json.JsonObject;
 import javax.websocket.Session;
 
 /**
- * A messageHandler is an object that describes the behavior of the server when recieving a specific message from a session.
+ * A messageHandler is an object that describes the behavior of the server when
+ * recieving a specific message from a session.
+ *
  * @author Darkxell
  */
-public interface MessageHandler {
-    
-    /**Describes what this messageHandler should do when recieving a message from a session.*/
-    public abstract void handleMessage(JsonObject json,Session from,GameSessionHandler sessionshandler);
-    
+public abstract class MessageHandler {
+
+    /**
+     * Back pointer the the parent endpoint.
+     */
+    protected GameServer endpoint;
+
+    public MessageHandler(GameServer endpoint) {
+        this.endpoint = endpoint;
+    }
+
+    /**
+     * Describes what this messageHandler should do when recieving a message
+     * from a session.
+     */
+    public abstract void handleMessage(JsonObject json, Session from, GameSessionHandler sessionshandler);
+
 }

@@ -13,15 +13,16 @@ import javax.json.JsonObject;
 import javax.websocket.Session;
 
 /**
- *
- * @author Darkxell
+ * @author Darkxell This class should have an instance per gameserver. It holds
+ * the information about all sessions with the server. This class contains
+ * methods able to communicate with the wanted sessions.
  */
 @ApplicationScoped
 public class GameSessionHandler {
-    
+
     private final Set<Session> sessions = new HashSet<>();
-    
-     public void addSession(Session session) {
+
+    public void addSession(Session session) {
         sessions.add(session);
     }
 
@@ -43,5 +44,5 @@ public class GameSessionHandler {
             System.err.println("Error while sending a message");
         }
     }
-    
+
 }
