@@ -1,6 +1,8 @@
 package com.darkxell.common.ai;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Stack;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
@@ -78,7 +80,7 @@ public final class AIUtils
 			{
 				Tile t = floor.tileAt(x, y);
 				distance = t.distance(pokemon.tile());
-				if (distance >= maxDistance && t.canWalkOn(pokemon, false))
+				if (distance >= maxDistance && t.canWalkOn(pokemon, false) && isReachable(floor, pokemon, t))
 				{
 					maxDistance = distance;
 					tiles.add(t);
@@ -162,6 +164,42 @@ public final class AIUtils
 		return !pokemon.tile().blockingWalls(pokemon, direction); // Blocking walls test
 	}
 
+	public static boolean isReachable(Floor floor, DungeonPokemon pokemon, Tile tile)
+	{
+		if (pokemon.tile() == tile) return true;
+
+		ArrayList<Tile> visible = new ArrayList<>(visibleTiles(floor, pokemon));
+		Stack<Tile> accessible = new Stack<>();
+		HashSet<Tile> treated = new HashSet<>();
+		accessible.add(pokemon.tile());
+
+		while (!accessible.isEmpty())
+		{
+			Tile t = accessible.pop();
+			for (short direction : Directions.directions())
+			{
+				Tile a = t.adjacentTile(direction);
+				if (!treated.contains(a) && visible.contains(a) && a.canWalkOn(pokemon, false))
+				{
+					boolean ok = true;
+					if (Directions.isDiagonal(direction))
+					{
+						Pair<Short, Short> others = Directions.splitDiagonal(direction);
+						if (!t.adjacentTile(others.getKey()).canCross(pokemon) || !t.adjacentTile(others.getValue()).canCross(pokemon)) ok = false;
+					}
+					if (ok)
+					{
+						if (a == tile) return true;
+						accessible.push(a);
+						treated.add(a);
+					}
+				}
+			}
+		}
+
+		return false;
+	}
+
 	public static boolean isVisible(Floor floor, DungeonPokemon pokemon, DungeonPokemon target)
 	{
 		if (target.isFainted()) return false;
@@ -207,24 +245,28 @@ public final class AIUtils
 	public static ArrayList<DungeonPokemon> visibleEnemies(Floor floor, DungeonPokemon pokemon)
 	{
 		ArrayList<DungeonPokemon> visible = new ArrayList<>();
+		ArrayList<Tile> tiles = visibleTiles(floor, pokemon);
+		for (Tile t : tiles)
+			if (t.getPokemon() != null && !pokemon.pokemon.isAlliedWith(t.getPokemon().pokemon)) visible.add(t.getPokemon());
+		return visible;
+	}
+
+	public static ArrayList<Tile> visibleTiles(Floor floor, DungeonPokemon pokemon)
+	{
+		ArrayList<Tile> visible = new ArrayList<>();
 		if (pokemon.tile().isInRoom())
 		{
-			for (Tile t : floor.room(pokemon.tile()).listTiles())
-				if (t.getPokemon() != null) visible.add(t.getPokemon());
-			for (Tile t : floor.room(pokemon.tile()).outline())
-				if (t.getPokemon() != null) visible.add(t.getPokemon());
+			visible.addAll(floor.room(pokemon.tile()).listTiles());
+			visible.addAll(floor.room(pokemon.tile()).outline());
 		}
 
-		// Change this to use floor shadows when exploring AI is done
-		for (int x = pokemon.tile().x - 3; x <= pokemon.tile().x + 3; ++x)
-			for (int y = pokemon.tile().y - 3; y <= pokemon.tile().y + 3; ++y)
-				if (floor.tileAt(x, y).getPokemon() != null) visible.add(floor.tileAt(x, y).getPokemon());
+		int visibility = 3 - floor.data.shadows();
+		for (int x = pokemon.tile().x - visibility; x <= pokemon.tile().x + visibility; ++x)
+			for (int y = pokemon.tile().y - visibility; y <= pokemon.tile().y + visibility; ++y)
+				visible.add(floor.tileAt(x, y));
 
-		visible.removeIf((DungeonPokemon p) -> {
-			return pokemon.pokemon.isAlliedWith(p.pokemon);
-		});
-		visible.sort((DungeonPokemon p1, DungeonPokemon p2) -> {
-			return Double.compare(pokemon.tile().distance(p1.tile()), pokemon.tile().distance(p2.tile()));
+		visible.sort((Tile t1, Tile t2) -> {
+			return Double.compare(pokemon.tile().distance(t1), pokemon.tile().distance(t2));
 		});
 		return visible;
 	}
