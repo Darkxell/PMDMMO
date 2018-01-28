@@ -6,8 +6,8 @@ import java.util.Stack;
 import com.darkxell.common.ai.AIUtils;
 import com.darkxell.common.dungeon.DungeonInstance;
 import com.darkxell.common.event.pokemon.BellyChangedEvent;
-import com.darkxell.common.event.pokemon.CancelRunningEvent;
 import com.darkxell.common.event.pokemon.PokemonRotateEvent;
+import com.darkxell.common.event.pokemon.PokemonSpawnedEvent;
 import com.darkxell.common.event.pokemon.PokemonTravelEvent;
 import com.darkxell.common.event.pokemon.PokemonTravelEvent.PokemonTravel;
 import com.darkxell.common.pokemon.DungeonPokemon;
@@ -100,7 +100,7 @@ public class CommonEventProcessor
 			if (actor != null && actor.isTeamLeader())
 			{
 				if (!this.runners.contains(actor)) e = null;
-				else if (this.shouldStopRunning(actor)) e = null;
+				else if (AIUtils.shouldStopRunning(actor)) e = null;
 				else e = new PokemonTravelEvent(this.dungeon.currentFloor(), actor, true, actor.facing());
 			} else e = this.dungeon.currentFloor().aiManager.takeAction(actor);
 
@@ -157,7 +157,10 @@ public class CommonEventProcessor
 			}
 			this.dungeon.takeAction(travel.pokemon);
 		}
-		else if (event instanceof CancelRunningEvent) this.runners.remove(((CancelRunningEvent) event).pokemon);
+
+		if (!(event instanceof BellyChangedEvent || event instanceof TurnSkippedEvent || event instanceof PokemonRotateEvent
+				|| event instanceof PokemonTravelEvent || event instanceof PokemonSpawnedEvent))
+			this.runners.clear();
 
 		if (event.isValid()) this.doProcess(event);
 		if (this.processPending) this.processPending();
@@ -185,7 +188,7 @@ public class CommonEventProcessor
 			{
 				if (this.runners.contains(actor))
 				{
-					if (this.shouldStopRunning(actor))
+					if (AIUtils.shouldStopRunning(actor))
 					{
 						this.runners.clear();
 						return;
@@ -205,13 +208,6 @@ public class CommonEventProcessor
 				}
 			}
 		}
-	}
-
-	private boolean shouldStopRunning(DungeonPokemon pokemon)
-	{
-		for (DungeonEvent event : this.pending)
-			if (!(event instanceof BellyChangedEvent || event instanceof TurnSkippedEvent || event instanceof PokemonRotateEvent)) return true;
-		return AIUtils.shouldStopRunning(pokemon);
 	}
 
 }

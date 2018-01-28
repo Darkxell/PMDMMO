@@ -164,7 +164,7 @@ public final class AIUtils
 
 	public static boolean isVisible(Floor floor, DungeonPokemon pokemon, DungeonPokemon target)
 	{
-		if (pokemon.isFainted()) return false;
+		if (target.isFainted()) return false;
 		if (pokemon.tile().isInRoom())
 		{
 			if (target.tile().isInRoom()) return floor.room(pokemon.tile()) == floor.room(target.tile());
