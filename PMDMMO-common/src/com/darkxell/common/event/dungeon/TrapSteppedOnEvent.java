@@ -24,6 +24,12 @@ public class TrapSteppedOnEvent extends DungeonEvent
 	}
 
 	@Override
+	public String loggerMessage()
+	{
+		return this.pokemon + " stepped on a " + this.trap.name();
+	}
+
+	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{
 		this.tile.trapRevealed = true;

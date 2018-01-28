@@ -16,7 +16,13 @@ public class DungeonExitEvent extends DungeonEvent
 		super(floor);
 		this.pokemon = pokemon;
 	}
-	
+
+	@Override
+	public String loggerMessage()
+	{
+		return this.pokemon + " exited the Dungeon.";
+	}
+
 	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{

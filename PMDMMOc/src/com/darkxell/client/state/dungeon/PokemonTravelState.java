@@ -10,8 +10,6 @@ import com.darkxell.client.state.dungeon.DungeonState.DungeonSubState;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.event.pokemon.PokemonTravelEvent.PokemonTravel;
-import com.darkxell.common.pokemon.DungeonPokemon;
-import com.darkxell.common.util.Directions;
 
 /** Used for Pokémon travel animations. */
 public class PokemonTravelState extends DungeonSubState
@@ -21,6 +19,7 @@ public class PokemonTravelState extends DungeonSubState
 
 	private TravelAnimation[] animations;
 	public final int duration;
+	public final boolean faraway;
 	public final boolean running;
 	private int tick;
 	private PokemonTravel[] travels;
@@ -35,6 +34,17 @@ public class PokemonTravelState extends DungeonSubState
 		for (int i = 0; i < this.travels.length; i++)
 			this.animations[i] = new TravelAnimation(this.travels[i].origin.location(), this.travels[i].destination.location());
 		this.tick = 0;
+
+		boolean f = true;
+		Tile camera = this.parent.getCameraPokemon().tile();
+		for (PokemonTravel t : travels)
+			if ((Math.abs(t.origin.x - camera.x) < 10 && Math.abs(t.origin.y - camera.y) < 10)
+					|| (Math.abs(t.destination.x - camera.x) < 10 && Math.abs(t.destination.y - camera.y) < 10))
+			{
+				f = false;
+				break;
+			}
+		this.faraway = f;
 	}
 
 	@Override
@@ -73,44 +83,12 @@ public class PokemonTravelState extends DungeonSubState
 	public void render(Graphics2D g, int width, int height)
 	{}
 
-	private boolean shouldStopRunning(DungeonPokemon runner, PokemonTravel travel)
-	{
-		// Checking if just switched with ally
-		for (PokemonTravel t : this.travels)
-			if (travel != t && travel.isReversed(t)) return true;
-
-		if (!runner.tryMoveTo(runner.facing(), false)) return true;
-		if (travel.destination.isInRoom() != travel.destination.adjacentTile(runner.facing()).isInRoom()) return true;
-		if (travel.destination.type() == TileType.STAIR || travel.destination.trapRevealed || travel.destination.getItem() != null) return true;
-		int origin = 0, destination = 0;
-		short facing = runner.facing();
-
-		for (short dir : Directions.isDiagonal(facing) ? new short[]
-		{ facing, Directions.rotateClockwise(facing), Directions.rotateClockwise(facing), Directions.rotateCounterClockwise(facing) } : new short[]
-		{ facing, Directions.rotateClockwise(facing), Directions.rotateClockwise(facing), Directions.rotateClockwise(Directions.rotateClockwise(facing)),
-				Directions.rotateCounterClockwise(facing), Directions.rotateCounterClockwise(Directions.rotateCounterClockwise(facing)) })
-		{
-			Tile o = travel.origin.adjacentTile(dir);
-			Tile d = travel.destination.adjacentTile(dir);
-			if (!(Directions.isDiagonal(dir) && !o.isInRoom()) && o.type().canWalkOn(runner)) ++origin;
-			if (!(Directions.isDiagonal(dir) && !d.isInRoom()) && d.type().canWalkOn(runner)) ++destination;
-			if (d.type() == TileType.STAIR || d.trapRevealed || d.getItem() != null) return true;
-		}
-
-		if (destination > origin) return true;
-
-		return false;
-	}
-
-	private void stopTravel()
-	{
-		Persistance.eventProcessor.processPending();
-	}
-
 	@Override
 	public void update()
 	{
 		++this.tick;
+		if (this.faraway) this.tick = this.duration;
+
 		float completion = this.tick * 1f / this.duration;
 		for (int i = 0; i < this.travels.length; ++i)
 		{
@@ -129,29 +107,7 @@ public class PokemonTravelState extends DungeonSubState
 			}
 			Persistance.eventProcessor.landedOnStairs = stairLand;
 			this.parent.setSubstate(this.parent.actionSelectionState);
-
-			short direction = this.running ? -1 : this.parent.actionSelectionState.checkMovement();
-			boolean shouldStop = false;
-			PokemonTravel travel = null;
-			if (this.running) for (PokemonTravel t : this.travels)
-				if (t.pokemon.isTeamLeader())
-				{
-					travel = t;
-					break;
-				}
-
-			if (this.running) shouldStop = this.shouldStopRunning(travel.pokemon, travel) || Persistance.eventProcessor.shouldStopMoving()
-					|| Persistance.dungeon.getNextActor() != null;
-			else shouldStop = direction == -1 || Persistance.eventProcessor.shouldStopMoving() || Persistance.dungeon.getNextActor() != null;
-
-			if (shouldStop) this.stopTravel();
-			else
-			{
-				boolean hasPending = Persistance.eventProcessor.shouldStopMoving();
-				Persistance.eventProcessor.processEvents(Persistance.dungeon.endTurn());
-				if (hasPending) this.stopTravel();
-				else if (this.running) Persistance.eventProcessor.actorTravels(Persistance.player.getDungeonLeader(), travel.pokemon.facing(), true);
-			}
+			Persistance.eventProcessor.processPending();
 		}
 	}
 }

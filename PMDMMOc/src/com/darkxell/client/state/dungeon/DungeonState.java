@@ -37,7 +37,7 @@ public class DungeonState extends AbstractState
 		@Override
 		public boolean isMain()
 		{
-			return this.parent.isMain();
+			return this.parent.isMain() && this.parent.currentSubstate == this;
 		}
 
 	}
@@ -133,7 +133,7 @@ public class DungeonState extends AbstractState
 		this.pokemonRenderer.register(Persistance.player.getDungeonLeader()).sprite.setShadowColor(PokemonSprite.ALLY_SHADOW);
 
 		ArrayList<Tile> candidates = new ArrayList<Tile>();
-		Tile initial = Persistance.player.getDungeonLeader().tile;
+		Tile initial = Persistance.player.getDungeonLeader().tile();
 		candidates.add(initial.adjacentTile(Directions.WEST));
 		candidates.add(initial.adjacentTile(Directions.EAST));
 		candidates.add(initial.adjacentTile(Directions.SOUTH));
@@ -142,8 +142,7 @@ public class DungeonState extends AbstractState
 		candidates.add(initial.adjacentTile(Directions.NORTHEAST));
 		candidates.add(initial.adjacentTile(Directions.SOUTHWEST));
 		candidates.add(initial.adjacentTile(Directions.SOUTHEAST));
-		candidates.removeIf(new Predicate<Tile>()
-		{
+		candidates.removeIf(new Predicate<Tile>() {
 			@Override
 			public boolean test(Tile t)
 			{
@@ -163,6 +162,7 @@ public class DungeonState extends AbstractState
 				continue;
 			}
 			Persistance.floor.tileAt(candidates.get(0).x, candidates.get(0).y).setPokemon(team[i]);
+			Persistance.floor.aiManager.register(team[i]);
 			Persistance.dungeon.insertActor(team[i], 1);
 			candidates.remove(0);
 			this.pokemonRenderer.register(team[i]).sprite.setShadowColor(PokemonSprite.ALLY_SHADOW);

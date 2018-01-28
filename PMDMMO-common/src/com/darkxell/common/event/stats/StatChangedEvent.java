@@ -9,8 +9,8 @@ import com.darkxell.common.util.language.Message;
 
 public class StatChangedEvent extends DungeonEvent
 {
-	public static final String[] MESSAGES = new String[]
-	{ "stat.decrease.3", "stat.decrease.2", "stat.decrease.1", null, "stat.increase.1", "stat.increase.2", "stat.increase.3", };
+	public static final String[] MESSAGES = new String[] { "stat.decrease.3", "stat.decrease.2", "stat.decrease.1", null, "stat.increase.1", "stat.increase.2",
+			"stat.increase.3", };
 
 	public final int stage;
 	public final int stat;
@@ -31,6 +31,12 @@ public class StatChangedEvent extends DungeonEvent
 	public boolean isValid()
 	{
 		return !this.target.isFainted();
+	}
+
+	@Override
+	public String loggerMessage()
+	{
+		return this.messages.get(0).toString();
 	}
 
 	@Override

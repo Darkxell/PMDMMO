@@ -38,7 +38,7 @@ public class PokemonRenderer extends AbstractRenderer
 
 	public PokemonRenderer(DungeonPokemon pokemon)
 	{
-		super(pokemon.tile.x, pokemon.tile.y, MasterDungeonRenderer.LAYER_POKEMON);
+		super(pokemon.tile().x, pokemon.tile().y, MasterDungeonRenderer.LAYER_POKEMON);
 		this.pokemon = pokemon;
 		this.sprite = new PokemonSprite(PokemonSpritesets.getSpriteset(this.pokemon.pokemon));
 	}

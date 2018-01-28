@@ -193,7 +193,7 @@ public class Move
 		switch (this.targets)
 		{
 			case TWO_TILES_FRONT:
-				Tile t0 = user.tile.adjacentTile(user.facing());
+				Tile t0 = user.tile().adjacentTile(user.facing());
 				if (t0.getPokemon() != null && !t0.getPokemon().pokemon.isAlliedWith(user.pokemon)) targets.add(t0.getPokemon());
 				else if (t0.type().canWalkOn(user))
 				{
@@ -202,7 +202,7 @@ public class Move
 				}
 
 			case LINE_FRONT:
-				Tile t2 = user.tile;
+				Tile t2 = user.tile();
 				int distance = 0;
 				boolean done;
 				do
@@ -214,10 +214,10 @@ public class Move
 				} while (!done);
 
 			case ALL_ALLIES:
-				Room r = floor.roomAt(user.tile.x, user.tile.y);
+				Room r = floor.roomAt(user.tile().x, user.tile().y);
 				if (r == null) for (short d : Directions.directions())
 				{
-					Tile t1 = user.tile.adjacentTile(d);
+					Tile t1 = user.tile().adjacentTile(d);
 					if (t1.getPokemon() != null && user.pokemon.isAlliedWith(t1.getPokemon().pokemon)) targets.add(t1.getPokemon());
 				}
 				else for (Tile t1 : r.listTiles())
@@ -232,10 +232,10 @@ public class Move
 
 			case ALL_ENEMIES:
 			case ALL_ROOM:
-				r = floor.roomAt(user.tile.x, user.tile.y);
+				r = floor.roomAt(user.tile().x, user.tile().y);
 				if (r == null) for (short d : Directions.directions())
 				{
-					Tile t = user.tile.adjacentTile(d);
+					Tile t = user.tile().adjacentTile(d);
 					if (t.getPokemon() != null
 							&& (this.targets == ALL_ROOM || this.targets == ALL_ROOM_WITH_SELF || !user.pokemon.isAlliedWith(t.getPokemon().pokemon))) targets
 							.add(t.getPokemon());
@@ -249,15 +249,15 @@ public class Move
 				break;
 
 			default:
-				DungeonPokemon front = user.tile.adjacentTile(user.facing()).getPokemon();
+				DungeonPokemon front = user.tile().adjacentTile(user.facing()).getPokemon();
 				if (front != null)
 				{
 					boolean valid = true;
 					if (Directions.isDiagonal(user.facing()) && !this.cutsEdges)
 					{
-						Tile t = user.tile.adjacentTile(Directions.rotateClockwise(user.facing()));
+						Tile t = user.tile().adjacentTile(Directions.rotateClockwise(user.facing()));
 						if (t.type() == TileType.WALL || t.type() == TileType.WALL_END) valid = false;
-						t = user.tile.adjacentTile(Directions.rotateCounterClockwise(user.facing()));
+						t = user.tile().adjacentTile(Directions.rotateCounterClockwise(user.facing()));
 						if (t.type() == TileType.WALL || t.type() == TileType.WALL_END) valid = false;
 					}
 					if (valid) targets.add(front);

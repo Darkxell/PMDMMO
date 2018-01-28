@@ -29,10 +29,15 @@ public class FloorVisibility
 		return this.itemTiles.contains(tile);
 	}
 
+	public boolean isMapVisible(DungeonPokemon pokemon)
+	{
+		return pokemon.pokemon.player == Persistance.player || this.currentlyVisible.contains(pokemon.tile());
+	}
+
 	public boolean isVisible(DungeonPokemon pokemon)
 	{
 		if (Persistance.floor.data.shadows() == FloorData.NO_SHADOW) return true;
-		return pokemon.pokemon.player == Persistance.player || this.currentlyVisible.contains(pokemon.tile);
+		return this.isMapVisible(pokemon);
 	}
 
 	public boolean isVisible(Tile tile)
@@ -47,7 +52,7 @@ public class FloorVisibility
 		if (camera == null) return;
 		this.currentlyVisible.clear();
 
-		Tile t = camera.tile;
+		Tile t = camera.tile();
 		Room r = this.floor.roomAt(t.x, t.y);
 		if (r == null)
 		{
@@ -55,11 +60,11 @@ public class FloorVisibility
 			for (short direction : Directions.directions())
 				this.visit(t.adjacentTile(direction));
 
-			if (this.floor.dungeon.dungeon().getData(this.floor.id).shadows() != FloorData.DENSE_SHADOW) for (Tile corner : new Tile[]
-			{ t.adjacentTile(Directions.NORTHWEST), t.adjacentTile(Directions.SOUTHWEST), t.adjacentTile(Directions.SOUTHEAST),
-					t.adjacentTile(Directions.NORTHEAST) })
+			if (this.floor.dungeon.dungeon().getData(this.floor.id).shadows() != FloorData.DENSE_SHADOW)
+				for (Tile corner : new Tile[] { t.adjacentTile(Directions.NORTHWEST), t.adjacentTile(Directions.SOUTHWEST),
+						t.adjacentTile(Directions.SOUTHEAST), t.adjacentTile(Directions.NORTHEAST) })
 				for (short direction : Directions.directions())
-					this.visit(corner.adjacentTile(direction));
+				this.visit(corner.adjacentTile(direction));
 		} else for (int x = r.x - 1; x <= r.maxX() + 1; ++x)
 			for (int y = r.y - 1; y <= r.maxY() + 1; ++y)
 				this.visit(this.floor.tileAt(x, y));

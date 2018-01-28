@@ -24,6 +24,12 @@ public class ExperienceGeneratedEvent extends DungeonEvent
 	}
 
 	@Override
+	public String loggerMessage()
+	{
+		return null;
+	}
+
+	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{
 		if (this.experience > 0) for (Pokemon member : this.player.getTeam())

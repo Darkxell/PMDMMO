@@ -18,8 +18,7 @@ public enum TileType
 	WATER(3, 'w');
 
 	@SuppressWarnings("unchecked")
-	private static ArrayList<TileType>[] tileGroups = new ArrayList[]
-	{ new ArrayList<TileType>(), new ArrayList<TileType>() };
+	private static ArrayList<TileType>[] tileGroups = new ArrayList[] { new ArrayList<TileType>(), new ArrayList<TileType>() };
 	static
 	{
 		tileGroups[0].add(WALL);

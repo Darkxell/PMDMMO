@@ -23,10 +23,15 @@ public class PokemonSpawnedEvent extends DungeonEvent
 	}
 
 	@Override
+	public String loggerMessage()
+	{
+		return this.spawned + " spawned at " + this.tile.x + "," + this.tile.y;
+	}
+
+	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{
-		this.tile.setPokemon(this.spawned);
-		this.resultingEvents.addAll(this.spawned.onFloorStart(this.floor));
+		this.resultingEvents.addAll(this.floor.summonPokemon(this.spawned, this.tile.x, this.tile.y));
 		return super.processServer();
 	}
 

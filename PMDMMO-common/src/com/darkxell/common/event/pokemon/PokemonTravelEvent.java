@@ -23,13 +23,19 @@ public class PokemonTravelEvent extends DungeonEvent
 			this.pokemon = pokemon;
 			this.running = running;
 			this.direction = direction;
-			this.origin = pokemon.tile;
-			this.destination = pokemon.tile.adjacentTile(this.direction);
+			this.origin = pokemon.tile();
+			this.destination = pokemon.tile().adjacentTile(this.direction);
 		}
 
 		public boolean isReversed(PokemonTravel t)
 		{
 			return this.origin == t.destination && this.destination == t.origin;
+		}
+
+		@Override
+		public String toString()
+		{
+			return this.pokemon.toString() + " travels";
 		}
 	}
 
@@ -65,13 +71,25 @@ public class PokemonTravelEvent extends DungeonEvent
 	}
 
 	@Override
+	public String loggerMessage()
+	{
+		String m = "";
+		for (PokemonTravel t : this.travels)
+		{
+			if (!m.equals("")) m += ", ";
+			m += t.pokemon;
+		}
+		return m + " travelled.";
+	}
+
+	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{
 		for (PokemonTravel travel : this.travels)
 		{
 
-			if (travel.pokemon.isTeamLeader()) this.resultingEvents.add(new BellyChangedEvent(this.floor, travel.pokemon, -.1
-					* travel.pokemon.energyMultiplier()));
+			if (travel.pokemon.isTeamLeader())
+				this.resultingEvents.add(new BellyChangedEvent(this.floor, travel.pokemon, -.1 * travel.pokemon.energyMultiplier()));
 			travel.origin.removePokemon(travel.pokemon);
 			travel.destination.setPokemon(travel.pokemon);
 			this.resultingEvents.addAll(travel.destination.onPokemonStep(this.floor, travel.pokemon, travel.running));

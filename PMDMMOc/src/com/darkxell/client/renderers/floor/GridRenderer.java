@@ -34,7 +34,7 @@ public class GridRenderer extends AbstractRenderer
 		DungeonPokemon player = Persistance.player.getDungeonLeader();
 
 		HashSet<Tile> faced = new HashSet<Tile>();
-		Tile tile = player.tile;
+		Tile tile = player.tile();
 		do
 		{
 			faced.add(tile);
@@ -53,7 +53,7 @@ public class GridRenderer extends AbstractRenderer
 	@Override
 	public boolean shouldRender(int width, int height)
 	{
-		return Persistance.dungeonState.isMain() && Keys.isPressed(Keys.KEY_ROTATE);
+		return Persistance.dungeonState.isMain() && Persistance.dungeonState.actionSelectionState.isMain() && Keys.isPressed(Keys.KEY_ROTATE);
 	}
 
 }

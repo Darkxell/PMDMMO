@@ -23,8 +23,14 @@ public class MoneyCollectedEvent extends DungeonEvent
 		this.tile = tile;
 		this.moneyItem = moneyItem;
 
-		this.messages.add(new Message("ground.pickup").addReplacement("<pokemon>", this.pokemon.pokemon.getNickname()).addReplacement("<item>",
-				this.moneyItem.name()));
+		this.messages.add(
+				new Message("ground.pickup").addReplacement("<pokemon>", this.pokemon.pokemon.getNickname()).addReplacement("<item>", this.moneyItem.name()));
+	}
+
+	@Override
+	public String loggerMessage()
+	{
+		return this.messages.get(0).toString();
 	}
 
 	@Override

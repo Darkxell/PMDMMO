@@ -36,6 +36,12 @@ public class ItemSwappedEvent extends DungeonEvent
 	}
 
 	@Override
+	public String loggerMessage()
+	{
+		return this.mover + " moved an item";
+	}
+
+	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{
 		ItemStack i = this.source.getItem(this.sourceIndex);

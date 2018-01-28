@@ -1,11 +1,13 @@
 package com.darkxell.common.dungeon.floor;
 
-import static com.darkxell.common.dungeon.floor.TileType.*;
+import static com.darkxell.common.dungeon.floor.TileType.AIR;
+import static com.darkxell.common.dungeon.floor.TileType.LAVA;
+import static com.darkxell.common.dungeon.floor.TileType.STAIR;
+import static com.darkxell.common.dungeon.floor.TileType.WARP_ZONE;
+import static com.darkxell.common.dungeon.floor.TileType.WATER;
 
 import java.awt.Point;
 import java.util.ArrayList;
-
-import javafx.util.Pair;
 
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.DungeonEvent.MessageEvent;
@@ -17,9 +19,12 @@ import com.darkxell.common.item.Item.ItemAction;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.player.ItemContainer;
 import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.trap.Trap;
 import com.darkxell.common.util.Directions;
 import com.darkxell.common.util.language.Message;
+
+import javafx.util.Pair;
 
 /** Represents a single tile in a Floor. */
 public class Tile implements ItemContainer
@@ -64,6 +69,14 @@ public class Tile implements ItemContainer
 		return this.floor.tileAt(p.x, p.y);
 	}
 
+	/** @return True if there are walls blocking the path in the input direction. */
+	public boolean blockingWalls(DungeonPokemon pokemon, short direction)
+	{
+		if (!Directions.isDiagonal(direction)) return false;
+		Pair<Short, Short> corners = Directions.splitDiagonal(direction);
+		return !this.adjacentTile(corners.getKey()).canCross(pokemon) || !this.adjacentTile(corners.getValue()).canCross(pokemon);
+	}
+
 	@Override
 	public int canAccept(ItemStack item)
 	{
@@ -73,6 +86,7 @@ public class Tile implements ItemContainer
 	/** @return True if the input Pokémon can walk diagonally with this Tile as a corner. */
 	public boolean canCross(DungeonPokemon pokemon)
 	{
+		if (pokemon.pokemon.species.isType(PokemonType.GHOST)) return true;
 		return this.type == TileType.GROUND || this.type == WATER || this.type == LAVA || this.type == AIR || this.type == STAIR || this.type == WARP_ZONE;
 	}
 
@@ -82,8 +96,7 @@ public class Tile implements ItemContainer
 	{
 		if (!this.canWalkOn(pokemon, allowSwitching)) return false;
 		if (!Directions.isDiagonal(direction)) return true;
-		Pair<Short, Short> corners = Directions.splitDiagonal(direction);
-		return pokemon.tile.adjacentTile(corners.getKey()).canCross(pokemon) && pokemon.tile.adjacentTile(corners.getValue()).canCross(pokemon);
+		return !this.blockingWalls(pokemon, Directions.oppositeOf(direction));
 	}
 
 	/** @param allowSwitching - True if switching leader and ally is allowed.
@@ -108,6 +121,12 @@ public class Tile implements ItemContainer
 	public void deleteItem(int index)
 	{
 		this.setItem(null);
+	}
+
+	/** @return The distance between this Tile and another input Tile. */
+	public double distance(Tile tile)
+	{
+		return Math.sqrt(Math.pow(this.x - tile.x, 2) + Math.pow(this.y - tile.y, 2));
 	}
 
 	/** @return The sum of NORTH, EAST, SOUTH, WEST if the tile in that direction is the same type as this tile. */
@@ -215,11 +234,11 @@ public class Tile implements ItemContainer
 			ItemStack i = this.getItem();
 			int index = pokemon.pokemon.player == null ? -1 : pokemon.pokemon.player.inventory.canAccept(i);
 			if (!running && i.id == Item.POKE && pokemon.pokemon.player != null) events.add(new MoneyCollectedEvent(floor, pokemon, this, i));
-			else if (!running && pokemon.pokemon.player != null && index != -1) events.add(new ItemMovedEvent(floor, ItemAction.GET, pokemon, this, 0,
-					pokemon.pokemon.player.inventory, index));
+			else if (!running && pokemon.pokemon.player != null && index != -1)
+				events.add(new ItemMovedEvent(floor, ItemAction.GET, pokemon, this, 0, pokemon.pokemon.player.inventory, index));
 			else if (!running && pokemon.pokemon.getItem() == null) events.add(new ItemMovedEvent(floor, ItemAction.GET, pokemon, this, 0, pokemon.pokemon, 0));
-			else events.add(new MessageEvent(floor, new Message("ground.step").addReplacement("<pokemon>", pokemon.pokemon.getNickname()).addReplacement(
-					"<item>", this.getItem().name())));
+			else events.add(new MessageEvent(floor,
+					new Message("ground.step").addReplacement("<pokemon>", pokemon.pokemon.getNickname()).addReplacement("<item>", this.getItem().name())));
 		}
 
 		if (this.hasTrap()) events.add(new TrapSteppedOnEvent(floor, pokemon, this, this.trap));
@@ -262,13 +281,13 @@ public class Tile implements ItemContainer
 	/** Sets the Pokémon on this tile. Also changes this Pokémon's previous tile's Pokémon to null. */
 	public void setPokemon(DungeonPokemon pokemon)
 	{
-		if (this.pokemon != null) this.pokemon.tile = null;
+		if (this.pokemon != null && this.pokemon.tile() == this) this.pokemon.setTile(null);
 		if (pokemon == null) this.pokemon = null;
 		else
 		{
-			if (pokemon.tile != null) pokemon.tile.removePokemon(pokemon);
+			if (pokemon.tile() != null) pokemon.tile().removePokemon(pokemon);
 			this.pokemon = pokemon;
-			this.pokemon.tile = this;
+			this.pokemon.setTile(this);
 		}
 	}
 

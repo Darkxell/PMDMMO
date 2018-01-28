@@ -3,8 +3,11 @@ package com.darkxell.common.event;
 import java.util.ArrayList;
 import java.util.Stack;
 
-import com.darkxell.common.ai.AI;
+import com.darkxell.common.ai.AIUtils;
 import com.darkxell.common.dungeon.DungeonInstance;
+import com.darkxell.common.event.pokemon.BellyChangedEvent;
+import com.darkxell.common.event.pokemon.PokemonRotateEvent;
+import com.darkxell.common.event.pokemon.PokemonSpawnedEvent;
 import com.darkxell.common.event.pokemon.PokemonTravelEvent;
 import com.darkxell.common.event.pokemon.PokemonTravelEvent.PokemonTravel;
 import com.darkxell.common.pokemon.DungeonPokemon;
@@ -18,62 +21,12 @@ public class CommonEventProcessor
 	protected final Stack<DungeonEvent> pending = new Stack<DungeonEvent>();
 	/** While processing an event, setting this to false will stop processing the pending events. */
 	public boolean processPending = true;
+	/** Lists the Players currently running. */
+	private ArrayList<DungeonPokemon> runners = new ArrayList<>();
 
 	public CommonEventProcessor(DungeonInstance dungeon)
 	{
 		this.dungeon = dungeon;
-	}
-
-	public void actorTravels(DungeonPokemon actor, short direction, boolean running)
-	{
-		ArrayList<PokemonTravel> travellers = new ArrayList<PokemonTravel>();
-		{
-			PokemonTravel t = new PokemonTravel(actor, running, direction);
-			travellers.add(t);
-			if (t.destination.getPokemon() != null)
-			{
-				travellers.add(new PokemonTravel(t.destination.getPokemon(), running, Directions.oppositeOf(direction)));
-				this.dungeon.takeAction(t.destination.getPokemon());
-			}
-		}
-		this.dungeon.takeAction(actor);
-		boolean flag = true;
-		DungeonEvent e = null;
-		ArrayList<DungeonPokemon> skippers = new ArrayList<DungeonPokemon>();
-		while (flag)
-		{
-			e = AI.takeAction(this.dungeon.currentFloor(), this.dungeon.nextActor());
-
-			if (e instanceof PokemonTravelEvent)
-			{
-				PokemonTravel event = ((PokemonTravelEvent) e).getTravel();
-				travellers.add(event);
-				// Simulating travel
-				event.origin.removePokemon(event.pokemon);
-				event.destination.setPokemon(event.pokemon);
-				this.dungeon.takeAction(event.pokemon);
-			} else if (e instanceof TurnSkippedEvent)
-			{
-				// Simulating skipping
-				skippers.add(e.actor);
-				this.dungeon.takeAction(e.actor);
-				this.addToPending(e);
-			} else flag = false;
-		}
-
-		// Resetting simulations
-		for (PokemonTravel travel : travellers)
-			travel.destination.removePokemon(travel.pokemon);
-		for (PokemonTravel travel : travellers)
-			travel.origin.setPokemon(travel.pokemon);
-
-		// Resetting turns taken
-		for (PokemonTravel travel : travellers)
-			this.dungeon.resetAction(travel.pokemon);
-
-		if (e != null) this.addToPending(e);
-		PokemonTravelEvent event = new PokemonTravelEvent(this.dungeon.currentFloor(), travellers.toArray(new PokemonTravel[travellers.size()]));
-		this.processEvent(event);
 	}
 
 	/** Adds the input events to the pending stack, without processing them. */
@@ -111,10 +64,75 @@ public class CommonEventProcessor
 		return this.pending.size() != 0;
 	}
 
-	protected void onTurnEnd()
+	public void onTurnEnd()
 	{
 		this.addToPending(this.dungeon.endTurn());
 		this.processPending();
+	}
+
+	public void pokemonTravels(DungeonPokemon pokemon, short direction, boolean running)
+	{
+		ArrayList<PokemonTravel> travellers = new ArrayList<PokemonTravel>();
+
+		{ // Applying first travel & checking if switching with ally
+			PokemonTravel t = new PokemonTravel(pokemon, running, direction);
+			DungeonPokemon switching = t.destination.getPokemon();
+			t.origin.removePokemon(pokemon);
+			t.destination.setPokemon(pokemon);
+			travellers.add(t);
+			if (switching != null)
+			{
+				switching.setTile(t.destination);
+				travellers.add(new PokemonTravel(switching, running, Directions.oppositeOf(direction)));
+				t.destination.removePokemon(switching);
+				t.origin.setPokemon(switching);
+				this.dungeon.takeAction(switching);
+			}
+		}
+		this.dungeon.takeAction(pokemon);
+
+		boolean flag = true;
+		DungeonEvent e = null;
+		ArrayList<DungeonPokemon> skippers = new ArrayList<DungeonPokemon>();
+		while (flag)
+		{
+			DungeonPokemon actor = this.dungeon.nextActor();
+			if (actor != null && actor.isTeamLeader())
+			{
+				if (!this.runners.contains(actor)) e = null;
+				else if (AIUtils.shouldStopRunning(actor)) e = null;
+				else e = new PokemonTravelEvent(this.dungeon.currentFloor(), actor, true, actor.facing());
+			} else e = this.dungeon.currentFloor().aiManager.takeAction(actor);
+
+			if (e instanceof PokemonTravelEvent)
+			{
+				PokemonTravel event = ((PokemonTravelEvent) e).getTravel();
+				travellers.add(event);
+				// Simulating travel
+				event.origin.removePokemon(event.pokemon);
+				event.destination.setPokemon(event.pokemon);
+				this.dungeon.takeAction(event.pokemon);
+			} else if (e instanceof TurnSkippedEvent || e instanceof PokemonRotateEvent)
+			{
+				// Simulating skipping
+				skippers.add(e.actor);
+				this.dungeon.takeAction(e.actor);
+				this.addToPending(e);
+			} else flag = false;
+		}
+
+		// Resetting simulations
+		for (PokemonTravel travel : travellers)
+			travel.destination.removePokemon(travel.pokemon);
+		for (PokemonTravel travel : travellers)
+			travel.origin.setPokemon(travel.pokemon);
+
+		// Resetting turns taken
+		for (PokemonTravel travel : travellers)
+			this.dungeon.resetAction(travel.pokemon);
+
+		PokemonTravelEvent event = new PokemonTravelEvent(this.dungeon.currentFloor(), travellers.toArray(new PokemonTravel[travellers.size()]));
+		this.processEvent(event);
 	}
 
 	/** Processes the input event and adds the resulting events to the pending stack. */
@@ -124,7 +142,25 @@ public class CommonEventProcessor
 		this.dungeon.eventOccured(event);
 		if (event.actor != null) this.dungeon.takeAction(event.actor);
 		else if (event instanceof PokemonTravelEvent) for (PokemonTravel travel : ((PokemonTravelEvent) event).travels())
+		{
+			if (travel.pokemon.isTeamLeader() && travel.running)
+			{
+				boolean switched = false; // Checking if just switched with ally
+				for (PokemonTravel t : ((PokemonTravelEvent) event).travels())
+					if (travel != t && travel.isReversed(t))
+					{
+						switched = true;
+						break;
+					}
+
+				if (!switched) this.runners.add(travel.pokemon);
+			}
 			this.dungeon.takeAction(travel.pokemon);
+		}
+
+		if (!(event instanceof BellyChangedEvent || event instanceof TurnSkippedEvent || event instanceof PokemonRotateEvent
+				|| event instanceof PokemonTravelEvent || event instanceof PokemonSpawnedEvent))
+			this.runners.clear();
 
 		if (event.isValid()) this.doProcess(event);
 		if (this.processPending) this.processPending();
@@ -148,11 +184,28 @@ public class CommonEventProcessor
 			{
 				this.onTurnEnd();
 				return;
-			} else if (actor.isTeamLeader()) return;
-			else
+			} else if (actor.isTeamLeader())
 			{
-				this.addToPending(AI.takeAction(this.dungeon.currentFloor(), actor));
-				this.processPending();
+				if (this.runners.contains(actor))
+				{
+					if (AIUtils.shouldStopRunning(actor))
+					{
+						this.runners.clear();
+						return;
+					} else this.pokemonTravels(actor, actor.facing(), true);
+				} else return;
+			} else
+			{
+				DungeonEvent event = this.dungeon.currentFloor().aiManager.takeAction(actor);
+				if (event instanceof PokemonTravelEvent)
+				{
+					PokemonTravelEvent e = (PokemonTravelEvent) event;
+					this.pokemonTravels(e.getTravel().pokemon, e.getTravel().direction, e.getTravel().running);
+				} else
+				{
+					this.addToPending(event);
+					this.processPending();
+				}
 			}
 		}
 	}

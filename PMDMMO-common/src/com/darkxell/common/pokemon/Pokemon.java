@@ -270,6 +270,14 @@ public class Pokemon implements ItemContainer
 		return this.moves[slot];
 	}
 
+	public int moveCount()
+	{
+		if (this.moves[3] != null) return 4;
+		if (this.moves[2] != null) return 3;
+		if (this.moves[1] != null) return 2;
+		return 1;
+	}
+
 	@Override
 	public void setItem(int index, ItemStack item)
 	{

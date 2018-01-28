@@ -28,6 +28,12 @@ public class ItemUseEvent extends DungeonEvent
 	}
 
 	@Override
+	public String loggerMessage()
+	{
+		return this.user + " used the " + this.item.name();
+	}
+
+	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{
 		this.resultingEvents.addAll(this.item.use(this.floor, this.user, this.target));

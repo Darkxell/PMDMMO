@@ -31,10 +31,18 @@ public class DamageDealtEvent extends DungeonEvent
 		this.source = source;
 		this.damage = damage;
 
-		if (this.source instanceof WeatherDamaging) this.messages.add(new Message("weather.damage_dealt").addReplacement("<pokemon>",
-				target.pokemon.getNickname()).addReplacement("<amount>", Integer.toString(damage)));
-		else if (!(this.source instanceof BellyChangedEvent || this.source instanceof PeriodicDamageStatusCondition)) this.messages.add(new Message(
-				"move.damage_dealt").addReplacement("<pokemon>", target.pokemon.getNickname()).addReplacement("<amount>", Integer.toString(damage)));
+		if (this.source instanceof WeatherDamaging) this.messages.add(new Message("weather.damage_dealt")
+				.addReplacement("<pokemon>", target.pokemon.getNickname()).addReplacement("<amount>", Integer.toString(damage)));
+		else if (!(this.source instanceof BellyChangedEvent || this.source instanceof PeriodicDamageStatusCondition))
+			this.messages.add(new Message("move.damage_dealt").addReplacement("<pokemon>", target.pokemon.getNickname()).addReplacement("<amount>",
+					Integer.toString(damage)));
+
+	}
+
+	@Override
+	public String loggerMessage()
+	{
+		return this.target + " took " + this.damage + " from " + this.source;
 	}
 
 	@Override

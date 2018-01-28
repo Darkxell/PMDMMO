@@ -7,6 +7,7 @@ import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.GameTurn;
 import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.util.Logger;
 
 public class DungeonInstance
 {
@@ -72,6 +73,12 @@ public class DungeonInstance
 	 * @return The Events created for the start of the new turn. */
 	public ArrayList<DungeonEvent> endTurn()
 	{
+		// Checking for Pokémon who didn't act
+		{
+			for (int i = 0; i < this.actors.size(); ++i)
+				if (!this.wasActionTaken.get(i)) Logger.e("Turn ended but " + this.actors.get(i) + " couldn't act!");
+		}
+
 		if (this.currentTurn != null) this.pastTurns.add(this.currentTurn);
 		this.currentActor = -1;
 		this.currentTurn = new GameTurn(this.currentFloor);

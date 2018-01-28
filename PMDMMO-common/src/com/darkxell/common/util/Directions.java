@@ -20,12 +20,14 @@ public class Directions
 	 * <li>SOUTHWEST = 5</li>
 	 * <li>WEST = 6</li>
 	 * <li>NORTHWEST = 7</li>
-	 * </ul> */
+	 * </ul>
+	 */
 	public static final short NORTH = 1, NORTHEAST = 2, EAST = 4, SOUTHEAST = 8, SOUTH = 16, SOUTHWEST = 32, WEST = 64, NORTHWEST = 128;
 
 	/** Lists directions. */
-	private static short[] directions = new short[]
-	{ NORTH, NORTHEAST, EAST, SOUTHEAST, SOUTH, SOUTHWEST, WEST, NORTHWEST };
+	private static final short[] directions = new short[] { NORTH, NORTHEAST, EAST, SOUTHEAST, SOUTH, SOUTHWEST, WEST, NORTHWEST };
+
+	private static final String[] names = new String[] { "North", "Northeast", "East", "Southeast", "South", "Southeast", "West", "Northwest" };
 
 	/** Removes corner directions that are not connected to both adjacent directions. */
 	public static short clean(short neighbors)
@@ -127,6 +129,11 @@ public class Directions
 	public static Point moveTo(Point origin, short direction)
 	{
 		return moveTo(origin.x, origin.y, direction);
+	}
+
+	public static String name(short direction)
+	{
+		return names[indexOf(direction)];
 	}
 
 	/** @return The opposite of the input direction. */

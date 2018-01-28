@@ -17,7 +17,7 @@ public class BasicAttackAnimation extends PokemonAnimation
 	public BasicAttackAnimation(DungeonPokemon user, AnimationEndListener listener)
 	{
 		super(user, TOTAL, listener);
-		this.location = this.target.tile;
+		this.location = this.target.tile();
 		this.travel = new TravelAnimation(this.location.location(), this.location.adjacentTile(this.target.facing()).location());
 	}
 

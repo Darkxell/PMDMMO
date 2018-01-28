@@ -35,7 +35,7 @@ public class DungeonPokemon
 	/** This Pokémon's active Status Conditions. */
 	private final ArrayList<StatusConditionInstance> statusConditions;
 	/** The tile this Pokémon is standing on. */
-	public Tile tile;
+	private Tile tile;
 
 	public DungeonPokemon(Pokemon pokemon)
 	{
@@ -165,8 +165,7 @@ public class DungeonPokemon
 
 	public void removeStatusCondition(StatusCondition condition)
 	{
-		this.statusConditions.removeIf(new Predicate<StatusConditionInstance>()
-		{
+		this.statusConditions.removeIf(new Predicate<StatusConditionInstance>() {
 			@Override
 			public boolean test(StatusConditionInstance t)
 			{
@@ -192,6 +191,16 @@ public class DungeonPokemon
 		this.hp = hp;
 		if (this.hp < 0) this.hp = 0;
 		if (this.hp > this.pokemon.getStats().health) this.hp = this.pokemon.getStats().health;
+	}
+
+	public void setTile(Tile tile)
+	{
+		this.tile = tile;
+	}
+
+	public Tile tile()
+	{
+		return this.tile;
 	}
 
 	@Override

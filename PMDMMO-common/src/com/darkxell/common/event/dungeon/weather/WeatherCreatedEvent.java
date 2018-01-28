@@ -17,6 +17,12 @@ public class WeatherCreatedEvent extends DungeonEvent
 	}
 
 	@Override
+	public String loggerMessage()
+	{
+		return this.weather.weather.name() + " started.";
+	}
+
+	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{
 		WeatherChangedEvent e = this.floor.addWeather(this.weather);
