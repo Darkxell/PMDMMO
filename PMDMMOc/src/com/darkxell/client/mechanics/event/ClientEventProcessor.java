@@ -103,7 +103,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	}
 
 	@Override
-	protected void onTurnEnd()
+	public void onTurnEnd()
 	{
 		if (this.landedOnStairs)
 		{

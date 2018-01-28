@@ -37,7 +37,7 @@ public class DungeonState extends AbstractState
 		@Override
 		public boolean isMain()
 		{
-			return this.parent.isMain();
+			return this.parent.isMain() && this.parent.currentSubstate == this;
 		}
 
 	}
@@ -142,8 +142,7 @@ public class DungeonState extends AbstractState
 		candidates.add(initial.adjacentTile(Directions.NORTHEAST));
 		candidates.add(initial.adjacentTile(Directions.SOUTHWEST));
 		candidates.add(initial.adjacentTile(Directions.SOUTHEAST));
-		candidates.removeIf(new Predicate<Tile>()
-		{
+		candidates.removeIf(new Predicate<Tile>() {
 			@Override
 			public boolean test(Tile t)
 			{

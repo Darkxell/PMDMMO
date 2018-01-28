@@ -24,14 +24,57 @@ public class CommonEventProcessor
 		this.dungeon = dungeon;
 	}
 
-	public void actorTravels(DungeonPokemon actor, short direction, boolean running)
+	/** Adds the input events to the pending stack, without processing them. */
+	public void addToPending(ArrayList<DungeonEvent> arrayList)
+	{
+		for (int i = arrayList.size() - 1; i >= 0; --i)
+			this.addToPending(arrayList.get(i));
+	}
+
+	/** Adds the input event to the pending stack, without processing it. */
+	public void addToPending(DungeonEvent event)
+	{
+		if (event != null)
+		{
+			for (int i = this.pending.size() - 1; i >= 0; --i)
+			{
+				if (this.pending.get(i).priority >= event.priority)
+				{
+					this.pending.insertElementAt(event, i + 1);
+					return;
+				}
+			}
+			this.pending.insertElementAt(event, 0);
+		}
+	}
+
+	/** This Event is checked and ready to be processed. */
+	protected void doProcess(DungeonEvent event)
+	{
+		this.addToPending(event.processServer());
+	}
+
+	public boolean hasPendingEvents()
+	{
+		return this.pending.size() != 0;
+	}
+
+	public void onTurnEnd()
+	{
+		System.out.println("End turn -------------");
+		this.addToPending(this.dungeon.endTurn());
+		this.processPending();
+	}
+
+	public void pokemonTravels(DungeonPokemon pokemon, short direction, boolean running)
 	{
 		ArrayList<PokemonTravel> travellers = new ArrayList<PokemonTravel>();
-		{
-			PokemonTravel t = new PokemonTravel(actor, running, direction);
+
+		{ // Applying first travel & checking if switching with ally
+			PokemonTravel t = new PokemonTravel(pokemon, running, direction);
 			DungeonPokemon switching = t.destination.getPokemon();
-			t.origin.removePokemon(actor);
-			t.destination.setPokemon(actor);
+			t.origin.removePokemon(pokemon);
+			t.destination.setPokemon(pokemon);
 			travellers.add(t);
 			if (switching != null)
 			{
@@ -42,7 +85,7 @@ public class CommonEventProcessor
 				this.dungeon.takeAction(switching);
 			}
 		}
-		this.dungeon.takeAction(actor);
+		this.dungeon.takeAction(pokemon);
 
 		boolean flag = true;
 		DungeonEvent e = null;
@@ -82,55 +125,20 @@ public class CommonEventProcessor
 		this.processEvent(event);
 	}
 
-	/** Adds the input events to the pending stack, without processing them. */
-	public void addToPending(ArrayList<DungeonEvent> arrayList)
-	{
-		for (int i = arrayList.size() - 1; i >= 0; --i)
-			this.addToPending(arrayList.get(i));
-	}
-
-	/** Adds the input event to the pending stack, without processing it. */
-	public void addToPending(DungeonEvent event)
-	{
-		if (event != null)
-		{
-			for (int i = this.pending.size() - 1; i >= 0; --i)
-			{
-				if (this.pending.get(i).priority >= event.priority)
-				{
-					this.pending.insertElementAt(event, i + 1);
-					return;
-				}
-			}
-			this.pending.insertElementAt(event, 0);
-		}
-	}
-
-	/** This Event is checked and ready to be processed. */
-	protected void doProcess(DungeonEvent event)
-	{
-		this.addToPending(event.processServer());
-	}
-
-	public boolean hasPendingEvents()
-	{
-		return this.pending.size() != 0;
-	}
-
-	protected void onTurnEnd()
-	{
-		this.addToPending(this.dungeon.endTurn());
-		this.processPending();
-	}
-
 	/** Processes the input event and adds the resulting events to the pending stack. */
 	public void processEvent(DungeonEvent event)
 	{
 		this.processPending = true;
 		this.dungeon.eventOccured(event);
-		if (event.actor != null) this.dungeon.takeAction(event.actor);
-		else if (event instanceof PokemonTravelEvent) for (PokemonTravel travel : ((PokemonTravelEvent) event).travels())
+		if (event.actor != null)
+		{
+			System.out.println(event.actor + " acts!");
+			this.dungeon.takeAction(event.actor);
+		} else if (event instanceof PokemonTravelEvent) for (PokemonTravel travel : ((PokemonTravelEvent) event).travels())
+		{
+			System.out.println(travel.pokemon + " travels!");
 			this.dungeon.takeAction(travel.pokemon);
+		}
 
 		if (event.isValid()) this.doProcess(event);
 		if (this.processPending) this.processPending();
@@ -157,8 +165,16 @@ public class CommonEventProcessor
 			} else if (actor.isTeamLeader()) return;
 			else
 			{
-				this.addToPending(this.dungeon.currentFloor().aiManager.takeAction(actor));
-				this.processPending();
+				DungeonEvent event = this.dungeon.currentFloor().aiManager.takeAction(actor);
+				if (event instanceof PokemonTravelEvent)
+				{
+					PokemonTravelEvent e = (PokemonTravelEvent) event;
+					this.pokemonTravels(e.getTravel().pokemon, e.getTravel().direction, e.getTravel().running);
+				} else
+				{
+					this.addToPending(event);
+					this.processPending();
+				}
 			}
 		}
 	}

@@ -281,7 +281,7 @@ public class Tile implements ItemContainer
 	/** Sets the Pokémon on this tile. Also changes this Pokémon's previous tile's Pokémon to null. */
 	public void setPokemon(DungeonPokemon pokemon)
 	{
-		if (this.pokemon != null) this.pokemon.setTile(null);
+		if (this.pokemon != null && this.pokemon.tile() == this) this.pokemon.setTile(null);
 		if (pokemon == null) this.pokemon = null;
 		else
 		{
