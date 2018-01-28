@@ -19,15 +19,12 @@ public class WildAI extends AI
 	@Override
 	protected void update()
 	{
-		if (this.state instanceof AIStateFollowPokemon)
-		{
-			DungeonPokemon target = ((AIStateFollowPokemon) this.state).target;
-			if (!AIUtils.isVisible(this.floor, this.pokemon, target)) this.state = new AIStateExplore(this, ((AIStateFollowPokemon) this.state).lastSeen());
-		} else if (AIUtils.hasVisibleEnemies(this.floor, this.pokemon))
+		if (AIUtils.hasVisibleEnemies(this.floor, this.pokemon))
 		{
 			ArrayList<DungeonPokemon> candidates = AIUtils.visibleEnemies(this.floor, this.pokemon);
 			this.state = new AIStateAttackPokemon(this, candidates.get(0));
-		} else this.state = new AIStateExplore(this);
+		} else if (this.state instanceof AIStateFollowPokemon) this.state = new AIStateExplore(this, ((AIStateFollowPokemon) this.state).lastSeen());
+		else this.state = new AIStateExplore(this);
 	}
 
 }

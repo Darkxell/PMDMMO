@@ -123,10 +123,10 @@ public class Tile implements ItemContainer
 		this.setItem(null);
 	}
 
-	/** @return The distance between this Tile and another input Tile. WARNING : This methods considers that going diagonally is a distance of 1! */
-	public int distance(Tile tile)
+	/** @return The distance between this Tile and another input Tile. */
+	public double distance(Tile tile)
 	{
-		return Math.max(Math.abs(this.x - tile.x), Math.abs(this.y - tile.y));
+		return Math.sqrt(Math.pow(this.x - tile.x, 2) + Math.pow(this.y - tile.y, 2));
 	}
 
 	/** @return The sum of NORTH, EAST, SOUTH, WEST if the tile in that direction is the same type as this tile. */

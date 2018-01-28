@@ -49,7 +49,7 @@ public final class AIUtils
 			if (pokemon.tile().adjacentTile(other).canMoveTo(pokemon, other, false)) return other;
 		} else
 		{
-			int distance = pokemon.tile().distance(destination);
+			double distance = pokemon.tile().distance(destination);
 			if (pokemon.tile().adjacentTile(Directions.rotateClockwise(direction)).distance(destination) < distance
 					&& pokemon.tile().adjacentTile(Directions.rotateClockwise(direction)).canMoveTo(pokemon, direction, false))
 				return Directions.rotateClockwise(direction);
@@ -71,7 +71,7 @@ public final class AIUtils
 	public static ArrayList<Tile> furthestWalkableTiles(Floor floor, DungeonPokemon pokemon)
 	{
 		int shadow = 3 - floor.data.shadows();
-		int maxDistance = 0, distance;
+		double maxDistance = 0, distance;
 		ArrayList<Tile> tiles = new ArrayList<>();
 		for (int x = pokemon.tile().x - shadow; x <= pokemon.tile().x + shadow; ++x)
 			for (int y = pokemon.tile().y - shadow; y <= pokemon.tile().y + shadow; ++y)
@@ -85,7 +85,7 @@ public final class AIUtils
 				}
 			}
 
-		final int maxD = maxDistance;
+		final double maxD = maxDistance;
 		tiles.removeIf((Tile t) -> {
 			return t.distance(pokemon.tile()) < maxD;
 		});
@@ -224,7 +224,7 @@ public final class AIUtils
 			return pokemon.pokemon.isAlliedWith(p.pokemon);
 		});
 		visible.sort((DungeonPokemon p1, DungeonPokemon p2) -> {
-			return Integer.compare(pokemon.tile().distance(p1.tile()), pokemon.tile().distance(p2.tile()));
+			return Double.compare(pokemon.tile().distance(p1.tile()), pokemon.tile().distance(p2.tile()));
 		});
 		return visible;
 	}
