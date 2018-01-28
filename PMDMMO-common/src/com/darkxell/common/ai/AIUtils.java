@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
+import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Directions;
 
@@ -163,6 +164,7 @@ public final class AIUtils
 
 	public static boolean isVisible(Floor floor, DungeonPokemon pokemon, DungeonPokemon target)
 	{
+		if (pokemon.isFainted()) return false;
 		if (pokemon.tile().isInRoom())
 		{
 			if (target.tile().isInRoom()) return floor.room(pokemon.tile()) == floor.room(target.tile());
@@ -172,6 +174,33 @@ public final class AIUtils
 
 		// Change this to use floor shadows when exploring AI is done
 		return pokemon.tile().distance(target.tile()) <= 3;
+	}
+
+	public static boolean shouldStopRunning(DungeonPokemon pokemon)
+	{
+		Tile tile = pokemon.tile();
+		Tile previous = tile.adjacentTile(Directions.oppositeOf(pokemon.facing()));
+
+		if (!pokemon.tryMoveTo(pokemon.facing(), false)) return true;
+		if (tile.isInRoom() != previous.isInRoom()) return true;
+		if (tile.type() == TileType.STAIR || tile.trapRevealed || tile.getItem() != null) return true;
+		int origin = 0, destination = 0;
+		short facing = pokemon.facing();
+
+		for (short dir : Directions.isDiagonal(facing)
+				? new short[] { facing, Directions.rotateClockwise(facing), Directions.rotateClockwise(facing), Directions.rotateCounterClockwise(facing) }
+				: new short[] { facing, Directions.rotateClockwise(facing), Directions.rotateClockwise(facing),
+						Directions.rotateClockwise(Directions.rotateClockwise(facing)), Directions.rotateCounterClockwise(facing),
+						Directions.rotateCounterClockwise(Directions.rotateCounterClockwise(facing)) })
+		{
+			Tile o = previous.adjacentTile(dir);
+			Tile d = tile.adjacentTile(dir);
+			if (!(Directions.isDiagonal(dir) && !o.isInRoom()) && o.type().canWalkOn(pokemon)) ++origin;
+			if (!(Directions.isDiagonal(dir) && !d.isInRoom()) && d.type().canWalkOn(pokemon)) ++destination;
+			if (d.type() == TileType.STAIR || d.trapRevealed || d.getItem() != null) return true;
+		}
+
+		return destination > origin;
 	}
 
 	/** @return The list of enemy Pokémon the input Pokémon can see, sorted by distance to the Pokémon. */

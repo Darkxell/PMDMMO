@@ -3,7 +3,9 @@ package com.darkxell.common.event;
 import java.util.ArrayList;
 import java.util.Stack;
 
+import com.darkxell.common.ai.AIUtils;
 import com.darkxell.common.dungeon.DungeonInstance;
+import com.darkxell.common.event.pokemon.BellyChangedEvent;
 import com.darkxell.common.event.pokemon.PokemonRotateEvent;
 import com.darkxell.common.event.pokemon.PokemonTravelEvent;
 import com.darkxell.common.event.pokemon.PokemonTravelEvent.PokemonTravel;
@@ -18,6 +20,8 @@ public class CommonEventProcessor
 	protected final Stack<DungeonEvent> pending = new Stack<DungeonEvent>();
 	/** While processing an event, setting this to false will stop processing the pending events. */
 	public boolean processPending = true;
+	/** Lists the Players currently running. */
+	private ArrayList<DungeonPokemon> runners = new ArrayList<>();
 
 	public CommonEventProcessor(DungeonInstance dungeon)
 	{
@@ -61,7 +65,6 @@ public class CommonEventProcessor
 
 	public void onTurnEnd()
 	{
-		System.out.println("End turn -------------");
 		this.addToPending(this.dungeon.endTurn());
 		this.processPending();
 	}
@@ -92,7 +95,13 @@ public class CommonEventProcessor
 		ArrayList<DungeonPokemon> skippers = new ArrayList<DungeonPokemon>();
 		while (flag)
 		{
-			e = this.dungeon.currentFloor().aiManager.takeAction(this.dungeon.nextActor());
+			DungeonPokemon actor = this.dungeon.nextActor();
+			if (actor != null && actor.isTeamLeader())
+			{
+				if (!this.runners.contains(actor)) e = null;
+				else if (this.shouldStopRunning(actor)) e = null;
+				else e = new PokemonTravelEvent(this.dungeon.currentFloor(), actor, true, actor.facing());
+			} else e = this.dungeon.currentFloor().aiManager.takeAction(actor);
 
 			if (e instanceof PokemonTravelEvent)
 			{
@@ -130,13 +139,21 @@ public class CommonEventProcessor
 	{
 		this.processPending = true;
 		this.dungeon.eventOccured(event);
-		if (event.actor != null)
+		if (event.actor != null) this.dungeon.takeAction(event.actor);
+		else if (event instanceof PokemonTravelEvent) for (PokemonTravel travel : ((PokemonTravelEvent) event).travels())
 		{
-			System.out.println(event.actor + " acts!");
-			this.dungeon.takeAction(event.actor);
-		} else if (event instanceof PokemonTravelEvent) for (PokemonTravel travel : ((PokemonTravelEvent) event).travels())
-		{
-			System.out.println(travel.pokemon + " travels!");
+			if (travel.pokemon.isTeamLeader() && travel.running)
+			{
+				boolean switched = false; // Checking if just switched with ally
+				for (PokemonTravel t : ((PokemonTravelEvent) event).travels())
+					if (travel != t && travel.isReversed(t))
+					{
+						switched = true;
+						break;
+					}
+
+				if (!switched) this.runners.add(travel.pokemon);
+			}
 			this.dungeon.takeAction(travel.pokemon);
 		}
 
@@ -162,8 +179,18 @@ public class CommonEventProcessor
 			{
 				this.onTurnEnd();
 				return;
-			} else if (actor.isTeamLeader()) return;
-			else
+			} else if (actor.isTeamLeader())
+			{
+				if (this.runners.contains(actor))
+				{
+					if (this.shouldStopRunning(actor))
+					{
+						this.runners.clear();
+						return;
+					}
+					this.pokemonTravels(actor, actor.facing(), true);
+				} else return;
+			} else
 			{
 				DungeonEvent event = this.dungeon.currentFloor().aiManager.takeAction(actor);
 				if (event instanceof PokemonTravelEvent)
@@ -177,6 +204,13 @@ public class CommonEventProcessor
 				}
 			}
 		}
+	}
+
+	private boolean shouldStopRunning(DungeonPokemon pokemon)
+	{
+		for (DungeonEvent event : this.pending)
+			if (!(event instanceof BellyChangedEvent || event instanceof TurnSkippedEvent || event instanceof PokemonRotateEvent)) return true;
+		return AIUtils.shouldStopRunning(pokemon) || this.dungeon.getNextActor() != null;
 	}
 
 }
