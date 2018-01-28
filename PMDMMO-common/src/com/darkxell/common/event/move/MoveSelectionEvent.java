@@ -10,6 +10,7 @@ import com.darkxell.common.event.stats.ExperienceGeneratedEvent;
 import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.LearnedMove;
+import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.language.Message;
 
 public class MoveSelectionEvent extends DungeonEvent
@@ -17,13 +18,13 @@ public class MoveSelectionEvent extends DungeonEvent
 
 	public static class MoveUse implements DamageSource
 	{
-		public final short direction;
+		public final Direction direction;
 		/** The experience event resulting from this move's use. */
 		private final ExperienceGeneratedEvent experienceEvent;
 		public final LearnedMove move;
 		public final DungeonPokemon user;
 
-		public MoveUse(Floor floor, LearnedMove move, DungeonPokemon user, short direction)
+		public MoveUse(Floor floor, LearnedMove move, DungeonPokemon user, Direction direction)
 		{
 			this.move = move;
 			this.user = user;
@@ -45,7 +46,7 @@ public class MoveSelectionEvent extends DungeonEvent
 		this(floor, move, user, user.facing());
 	}
 
-	public MoveSelectionEvent(Floor floor, LearnedMove move, DungeonPokemon user, short direction)
+	public MoveSelectionEvent(Floor floor, LearnedMove move, DungeonPokemon user, Direction direction)
 	{
 		super(floor, user);
 		this.usedMove = new MoveUse(floor, move, user, direction);

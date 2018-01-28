@@ -19,16 +19,16 @@ import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
 import com.darkxell.client.resources.images.pokemon.ShadowSprites;
 import com.darkxell.client.resources.images.tilesets.AbstractDungeonTileset;
 import com.darkxell.common.pokemon.DungeonPokemon;
-import com.darkxell.common.util.Directions;
+import com.darkxell.common.util.Direction;
 
 /** Renders a Pokémon. This Renderer's Coordinates' units are Tiles. */
 public class PokemonRenderer extends AbstractRenderer
 {
 
-	private static byte spriteDirection(short facing)
+	private static byte spriteDirection(Direction facing)
 	{
-		for (byte i = 0; i < Directions.directions().length; ++i)
-			if (facing == Directions.directions()[i]) return i;
+		for (byte i = 0; i < Direction.directions.length; ++i)
+			if (facing == Direction.directions[i]) return i;
 		return 0;
 	}
 

@@ -8,7 +8,7 @@ import com.darkxell.common.dungeon.floor.FloorData;
 import com.darkxell.common.dungeon.floor.Room;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.pokemon.DungeonPokemon;
-import com.darkxell.common.util.Directions;
+import com.darkxell.common.util.Direction;
 
 public class FloorVisibility
 {
@@ -57,13 +57,13 @@ public class FloorVisibility
 		if (r == null)
 		{
 			this.visit(t);
-			for (short direction : Directions.directions())
+			for (Direction direction : Direction.directions)
 				this.visit(t.adjacentTile(direction));
 
 			if (this.floor.dungeon.dungeon().getData(this.floor.id).shadows() != FloorData.DENSE_SHADOW)
-				for (Tile corner : new Tile[] { t.adjacentTile(Directions.NORTHWEST), t.adjacentTile(Directions.SOUTHWEST),
-						t.adjacentTile(Directions.SOUTHEAST), t.adjacentTile(Directions.NORTHEAST) })
-				for (short direction : Directions.directions())
+				for (Tile corner : new Tile[] { t.adjacentTile(Direction.NORTHWEST), t.adjacentTile(Direction.SOUTHWEST),
+						t.adjacentTile(Direction.SOUTHEAST), t.adjacentTile(Direction.NORTHEAST) })
+				for (Direction direction : Direction.directions)
 				this.visit(corner.adjacentTile(direction));
 		} else for (int x = r.x - 1; x <= r.maxX() + 1; ++x)
 			for (int y = r.y - 1; y <= r.maxY() + 1; ++y)

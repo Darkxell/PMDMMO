@@ -4,9 +4,10 @@ import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 
 import com.darkxell.client.resources.Res;
-import com.darkxell.common.util.Directions;
+import com.darkxell.common.util.Direction;
 
-public class MenuHudSpriteset {
+public class MenuHudSpriteset
+{
 
 	private static final BufferedImage source = Res.getBase("resources/hud/menu_hud.png");
 
@@ -25,32 +26,35 @@ public class MenuHudSpriteset {
 	public static final BufferedImage NEXT_WINDOW_ARROW = Res.createimage(source, 0, 56, 11, 7);
 
 	public static final Dimension cornerSize = new Dimension(WINDOW_CORNER_NW.getWidth(), WINDOW_CORNER_NW.getHeight());
-	public static final Dimension cornerNameSize = new Dimension(WINDOW_NAME_CORNER_NW.getWidth(),
-			WINDOW_NAME_CORNER_NW.getHeight());
+	public static final Dimension cornerNameSize = new Dimension(WINDOW_NAME_CORNER_NW.getWidth(), WINDOW_NAME_CORNER_NW.getHeight());
 
-	public static BufferedImage windowCorner(short direction) {
-		switch (direction) {
-		case Directions.NORTHEAST:
-			return WINDOW_CORNER_NE;
-		case Directions.SOUTHEAST:
-			return WINDOW_CORNER_SE;
-		case Directions.SOUTHWEST:
-			return WINDOW_CORNER_SW;
-		default:
-			return WINDOW_CORNER_NW;
+	public static BufferedImage windowCorner(Direction direction)
+	{
+		switch (direction)
+		{
+			case NORTHEAST:
+				return WINDOW_CORNER_NE;
+			case SOUTHEAST:
+				return WINDOW_CORNER_SE;
+			case SOUTHWEST:
+				return WINDOW_CORNER_SW;
+			default:
+				return WINDOW_CORNER_NW;
 		}
 	}
 
-	public static BufferedImage windowNameCorner(short direction) {
-		switch (direction) {
-		case Directions.NORTHEAST:
-			return WINDOW_NAME_CORNER_NE;
-		case Directions.SOUTHEAST:
-			return WINDOW_NAME_CORNER_SE;
-		case Directions.SOUTHWEST:
-			return WINDOW_NAME_CORNER_SW;
-		default:
-			return WINDOW_NAME_CORNER_NW;
+	public static BufferedImage windowNameCorner(Direction direction)
+	{
+		switch (direction)
+		{
+			case NORTHEAST:
+				return WINDOW_NAME_CORNER_NE;
+			case SOUTHEAST:
+				return WINDOW_NAME_CORNER_SE;
+			case SOUTHWEST:
+				return WINDOW_NAME_CORNER_SW;
+			default:
+				return WINDOW_NAME_CORNER_NW;
 		}
 	}
 

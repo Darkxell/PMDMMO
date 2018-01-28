@@ -1,6 +1,13 @@
 package com.darkxell.client.resources.images.tilesets;
 
-import static com.darkxell.common.util.Directions.*;
+import static com.darkxell.common.util.Direction.EAST;
+import static com.darkxell.common.util.Direction.NORTH;
+import static com.darkxell.common.util.Direction.NORTHEAST;
+import static com.darkxell.common.util.Direction.NORTHWEST;
+import static com.darkxell.common.util.Direction.SOUTH;
+import static com.darkxell.common.util.Direction.SOUTHEAST;
+import static com.darkxell.common.util.Direction.SOUTHWEST;
+import static com.darkxell.common.util.Direction.WEST;
 
 import java.awt.Point;
 import java.awt.image.BufferedImage;
@@ -9,89 +16,96 @@ import java.util.HashMap;
 
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
+import com.darkxell.common.util.Direction;
+import com.darkxell.common.util.DirectionSet;
 
 public class FloorDungeonTileset extends AbstractDungeonTileset
 {
 
 	/** The last tileset to be used. */
 	private static FloorDungeonTileset previous = null;
-	private static final HashMap<Integer, Point> tileLocations = new HashMap<Integer, Point>();
+	private static final HashMap<DirectionSet, Point> tileLocations = new HashMap<>();
 
 	static
 	{
 		// Single
-		tileLocations.put((int) NORTH, new Point(1, 8));
-		tileLocations.put((int) EAST, new Point(2, 7));
-		tileLocations.put((int) SOUTH, new Point(1, 6));
-		tileLocations.put((int) WEST, new Point(0, 7));
+		register(new Point(1, 8), NORTH);
+		register(new Point(2, 7), EAST);
+		register(new Point(1, 6), SOUTH);
+		register(new Point(0, 7), WEST);
 
 		// Two
-		tileLocations.put(NORTH + SOUTH, new Point(0, 4));
-		tileLocations.put(NORTH + EAST, new Point(0, 5));
-		tileLocations.put(NORTH + WEST, new Point(2, 5));
-		tileLocations.put(SOUTH + EAST, new Point(0, 3));
-		tileLocations.put(SOUTH + WEST, new Point(2, 3));
-		tileLocations.put(EAST + WEST, new Point(1, 3));
+		register(new Point(0, 4), NORTH, SOUTH);
+		register(new Point(0, 5), NORTH, EAST);
+		register(new Point(2, 5), NORTH, WEST);
+		register(new Point(0, 3), SOUTH, EAST);
+		register(new Point(2, 3), SOUTH, WEST);
+		register(new Point(1, 3), EAST, WEST);
 
 		// Corner
-		tileLocations.put(NORTH + EAST + NORTHEAST, new Point(0, 2));
-		tileLocations.put(SOUTH + EAST + SOUTHEAST, new Point(0, 0));
-		tileLocations.put(NORTH + WEST + NORTHWEST, new Point(2, 2));
-		tileLocations.put(SOUTH + WEST + SOUTHWEST, new Point(2, 0));
+		register(new Point(0, 2), NORTH, EAST, NORTHEAST);
+		register(new Point(0, 0), SOUTH, EAST, SOUTHEAST);
+		register(new Point(2, 2), NORTH, WEST, NORTHWEST);
+		register(new Point(2, 0), SOUTH, WEST, SOUTHWEST);
 
 		// T-shape
-		tileLocations.put(NORTH + EAST + SOUTH, new Point(0, 10));
-		tileLocations.put(NORTH + WEST + SOUTH, new Point(2, 10));
-		tileLocations.put(NORTH + EAST + WEST, new Point(1, 11));
-		tileLocations.put(SOUTH + EAST + WEST, new Point(1, 9));
+		register(new Point(0, 10), NORTH, EAST, SOUTH);
+		register(new Point(2, 10), NORTH, WEST, SOUTH);
+		register(new Point(1, 11), NORTH, EAST, WEST);
+		register(new Point(1, 9), SOUTH, EAST, WEST);
 
 		// T with one corner
-		tileLocations.put(NORTH + EAST + SOUTH + NORTHEAST, new Point(0, 17));
-		tileLocations.put(NORTH + EAST + SOUTH + SOUTHEAST, new Point(0, 18));
-		tileLocations.put(NORTH + WEST + SOUTH + NORTHWEST, new Point(1, 17));
-		tileLocations.put(NORTH + WEST + SOUTH + SOUTHWEST, new Point(1, 18));
-		tileLocations.put(SOUTH + EAST + WEST + SOUTHWEST, new Point(0, 19));
-		tileLocations.put(SOUTH + EAST + WEST + SOUTHEAST, new Point(1, 19));
-		tileLocations.put(NORTH + EAST + WEST + NORTHWEST, new Point(0, 20));
-		tileLocations.put(NORTH + EAST + WEST + NORTHEAST, new Point(1, 20));
+		register(new Point(0, 17), NORTH, EAST, SOUTH, NORTHEAST);
+		register(new Point(0, 18), NORTH, EAST, SOUTH, SOUTHEAST);
+		register(new Point(1, 17), NORTH, WEST, SOUTH, NORTHWEST);
+		register(new Point(1, 18), NORTH, WEST, SOUTH, SOUTHWEST);
+		register(new Point(0, 19), SOUTH, EAST, WEST, SOUTHWEST);
+		register(new Point(1, 19), SOUTH, EAST, WEST, SOUTHEAST);
+		register(new Point(0, 20), NORTH, EAST, WEST, NORTHWEST);
+		register(new Point(1, 20), NORTH, EAST, WEST, NORTHEAST);
 
 		// T with two corners
-		tileLocations.put(NORTH + EAST + SOUTH + NORTHEAST + SOUTHEAST, new Point(0, 1));
-		tileLocations.put(NORTH + WEST + SOUTH + NORTHWEST + SOUTHWEST, new Point(2, 1));
-		tileLocations.put(SOUTH + EAST + WEST + SOUTHWEST + SOUTHEAST, new Point(1, 0));
-		tileLocations.put(NORTH + EAST + WEST + NORTHWEST + NORTHEAST, new Point(1, 2));
+		register(new Point(0, 1), NORTH, EAST, SOUTH, NORTHEAST, SOUTHEAST);
+		register(new Point(2, 1), NORTH, WEST, SOUTH, NORTHWEST, SOUTHWEST);
+		register(new Point(1, 0), SOUTH, EAST, WEST, SOUTHWEST, SOUTHEAST);
+		register(new Point(1, 2), NORTH, EAST, WEST, NORTHWEST, NORTHEAST);
 
 		// Cross
-		tileLocations.put(NORTH + NORTHEAST + EAST + SOUTHEAST + SOUTH + SOUTHWEST + WEST + NORTHWEST, new Point(1, 1));
-		tileLocations.put(NORTH + EAST + SOUTH + WEST, new Point(1, 7));
+		register(new Point(1, 1), NORTH, NORTHEAST, EAST, SOUTHEAST, SOUTH, SOUTHWEST, WEST, NORTHWEST);
+		register(new Point(1, 7), NORTH, EAST, SOUTH, WEST);
 
 		// Cross, one corner
-		tileLocations.put(NORTH + EAST + SOUTH + WEST + SOUTHEAST, new Point(0, 22));
-		tileLocations.put(NORTH + EAST + SOUTH + WEST + SOUTHWEST, new Point(1, 22));
-		tileLocations.put(NORTH + EAST + SOUTH + WEST + NORTHEAST, new Point(0, 23));
-		tileLocations.put(NORTH + EAST + SOUTH + WEST + NORTHWEST, new Point(1, 23));
+		register(new Point(0, 22), NORTH, EAST, SOUTH, WEST, SOUTHEAST);
+		register(new Point(1, 22), NORTH, EAST, SOUTH, WEST, SOUTHWEST);
+		register(new Point(0, 23), NORTH, EAST, SOUTH, WEST, NORTHEAST);
+		register(new Point(1, 23), NORTH, EAST, SOUTH, WEST, NORTHWEST);
 
 		// Cross, two corners
-		tileLocations.put(NORTH + EAST + SOUTH + WEST + NORTHWEST + NORTHEAST, new Point(1, 12));
-		tileLocations.put(NORTH + EAST + SOUTH + WEST + SOUTHWEST + SOUTHEAST, new Point(1, 14));
-		tileLocations.put(NORTH + EAST + SOUTH + WEST + NORTHWEST + SOUTHWEST, new Point(0, 13));
-		tileLocations.put(NORTH + EAST + SOUTH + WEST + NORTHEAST + SOUTHEAST, new Point(2, 13));
-		tileLocations.put(NORTH + EAST + SOUTH + WEST + SOUTHWEST + NORTHEAST, new Point(0, 24));
-		tileLocations.put(NORTH + EAST + SOUTH + WEST + SOUTHEAST + NORTHWEST, new Point(1, 24));
+		register(new Point(1, 12), NORTH, EAST, SOUTH, WEST, NORTHWEST, NORTHEAST);
+		register(new Point(1, 14), NORTH, EAST, SOUTH, WEST, SOUTHWEST, SOUTHEAST);
+		register(new Point(0, 13), NORTH, EAST, SOUTH, WEST, NORTHWEST, SOUTHWEST);
+		register(new Point(2, 13), NORTH, EAST, SOUTH, WEST, NORTHEAST, SOUTHEAST);
+		register(new Point(0, 24), NORTH, EAST, SOUTH, WEST, SOUTHWEST, NORTHEAST);
+		register(new Point(1, 24), NORTH, EAST, SOUTH, WEST, SOUTHEAST, NORTHWEST);
 
 		// Cross, three corners
-		tileLocations.put(NORTH + EAST + SOUTH + WEST + NORTHWEST + NORTHEAST + SOUTHWEST, new Point(0, 15));
-		tileLocations.put(NORTH + EAST + SOUTH + WEST + SOUTHEAST + NORTHWEST + NORTHEAST, new Point(1, 15));
-		tileLocations.put(NORTH + EAST + SOUTH + WEST + SOUTHWEST + SOUTHEAST + NORTHWEST, new Point(0, 16));
-		tileLocations.put(NORTH + EAST + SOUTH + WEST + NORTHEAST + SOUTHWEST + SOUTHEAST, new Point(1, 16));
+		register(new Point(0, 15), NORTH, EAST, SOUTH, WEST, NORTHWEST, NORTHEAST, SOUTHWEST);
+		register(new Point(1, 15), NORTH, EAST, SOUTH, WEST, SOUTHEAST, NORTHWEST, NORTHEAST);
+		register(new Point(0, 16), NORTH, EAST, SOUTH, WEST, SOUTHWEST, SOUTHEAST, NORTHWEST);
+		register(new Point(1, 16), NORTH, EAST, SOUTH, WEST, NORTHEAST, SOUTHWEST, SOUTHEAST);
 	}
 
 	public static FloorDungeonTileset load(int id)
 	{
 		if (previous != null && previous.id == id) return previous;
-		if (new File("resources/tilesets/dungeon/dungeon-" + id + ".png").exists()) return previous = new FloorDungeonTileset(id,
-				"resources/tilesets/dungeon/dungeon-" + id + ".png");
+		if (new File("resources/tilesets/dungeon/dungeon-" + id + ".png").exists())
+			return previous = new FloorDungeonTileset(id, "resources/tilesets/dungeon/dungeon-" + id + ".png");
 		return previous = new FloorDungeonTileset(id, "resources/tilesets/dungeon/dungeon-0.png");
+	}
+
+	private static void register(Point p, Direction... directions)
+	{
+		tileLocations.put(new DirectionSet(directions), p);
 	}
 
 	public final int id;
@@ -113,7 +127,7 @@ public class FloorDungeonTileset extends AbstractDungeonTileset
 		if (tile.type() == TileType.GROUND) x = 3 * 3;
 		else if (tile.type() == TileType.WATER || tile.type() == TileType.LAVA || tile.type() == TileType.AIR) x = 5 * 3;
 
-		Point p = tileLocations.get((int) tile.getNeighbors());
+		Point p = tileLocations.get(tile.getNeighbors());
 		if (p == null)
 		{
 			x += 1;

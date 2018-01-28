@@ -21,7 +21,8 @@ import com.darkxell.common.player.ItemContainer;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.trap.Trap;
-import com.darkxell.common.util.Directions;
+import com.darkxell.common.util.Direction;
+import com.darkxell.common.util.DirectionSet;
 import com.darkxell.common.util.language.Message;
 
 import javafx.util.Pair;
@@ -36,7 +37,7 @@ public class Tile implements ItemContainer
 	/** The Item on this Tile. null if no Item. */
 	private ItemStack item;
 	/** This Tile's neighbors connections. */
-	private short neighbors = 0;
+	private DirectionSet neighbors = new DirectionSet();
 	/** The Pokémon standing on this Tile. null if no Pokémon. */
 	private DungeonPokemon pokemon;
 	/** This Tile's Trap. null if no trap. */
@@ -62,18 +63,18 @@ public class Tile implements ItemContainer
 		this.setItem(item);
 	}
 
-	/** @return The Tile adjacent to this Tile in the input direction. See {@link Directions#NORTH}. */
-	public Tile adjacentTile(short direction)
+	/** @return The Tile adjacent to this Tile in the input direction. See {@link DirectionSet#NORTH}. */
+	public Tile adjacentTile(Direction direction)
 	{
-		Point p = Directions.moveTo(this.x, this.y, direction);
+		Point p = direction.move(this.x, this.y);
 		return this.floor.tileAt(p.x, p.y);
 	}
 
 	/** @return True if there are walls blocking the path in the input direction. */
-	public boolean blockingWalls(DungeonPokemon pokemon, short direction)
+	public boolean blockingWalls(DungeonPokemon pokemon, Direction direction)
 	{
-		if (!Directions.isDiagonal(direction)) return false;
-		Pair<Short, Short> corners = Directions.splitDiagonal(direction);
+		if (!direction.isDiagonal()) return false;
+		Pair<Direction, Direction> corners = direction.splitDiagonal();
 		return !this.adjacentTile(corners.getKey()).canCross(pokemon) || !this.adjacentTile(corners.getValue()).canCross(pokemon);
 	}
 
@@ -92,11 +93,11 @@ public class Tile implements ItemContainer
 
 	/** @param direction - The direction of the movement.
 	 * @return True if the input Pokémon can walk on this Tile. */
-	public boolean canMoveTo(DungeonPokemon pokemon, short direction, boolean allowSwitching)
+	public boolean canMoveTo(DungeonPokemon pokemon, Direction direction, boolean allowSwitching)
 	{
 		if (!this.canWalkOn(pokemon, allowSwitching)) return false;
-		if (!Directions.isDiagonal(direction)) return true;
-		return !this.blockingWalls(pokemon, Directions.oppositeOf(direction));
+		if (!direction.isDiagonal()) return true;
+		return !this.blockingWalls(pokemon, direction.opposite());
 	}
 
 	/** @param allowSwitching - True if switching leader and ally is allowed.
@@ -130,13 +131,13 @@ public class Tile implements ItemContainer
 	}
 
 	/** @return The sum of NORTH, EAST, SOUTH, WEST if the tile in that direction is the same type as this tile. */
-	public short getCardinalDifferences()
+	public DirectionSet getCardinalDifferences()
 	{
-		short s = 0;
-		if (this.adjacentTile(Directions.NORTH).type() != this.type()) s += Directions.NORTH;
-		if (this.adjacentTile(Directions.EAST).type() != this.type()) s += Directions.EAST;
-		if (this.adjacentTile(Directions.SOUTH).type() != this.type()) s += Directions.SOUTH;
-		if (this.adjacentTile(Directions.WEST).type() != this.type()) s += Directions.WEST;
+		DirectionSet s = new DirectionSet();
+		if (this.adjacentTile(Direction.NORTH).type() != this.type()) s.add(Direction.NORTH);
+		if (this.adjacentTile(Direction.EAST).type() != this.type()) s.add(Direction.EAST);
+		if (this.adjacentTile(Direction.SOUTH).type() != this.type()) s.add(Direction.SOUTH);
+		if (this.adjacentTile(Direction.WEST).type() != this.type()) s.add(Direction.WEST);
 		return s;
 	}
 
@@ -152,7 +153,7 @@ public class Tile implements ItemContainer
 		return this.getItem();
 	}
 
-	public short getNeighbors()
+	public DirectionSet getNeighbors()
 	{
 		return this.neighbors;
 	}
@@ -164,13 +165,13 @@ public class Tile implements ItemContainer
 	}
 
 	/** @return The sum of each direction if the tile in that direction is the same type as this tile. */
-	public short getSurroundingDifferences()
+	public DirectionSet getSurroundingDifferences()
 	{
-		short s = this.getCardinalDifferences();
-		if (this.adjacentTile(Directions.NORTHEAST).type() != this.type()) s += Directions.NORTHEAST;
-		if (this.adjacentTile(Directions.NORTHWEST).type() != this.type()) s += Directions.NORTHWEST;
-		if (this.adjacentTile(Directions.SOUTHEAST).type() != this.type()) s += Directions.SOUTHEAST;
-		if (this.adjacentTile(Directions.SOUTHWEST).type() != this.type()) s += Directions.SOUTHWEST;
+		DirectionSet s = this.getCardinalDifferences();
+		if (this.adjacentTile(Direction.NORTHEAST).type() != this.type()) s.add(Direction.NORTHEAST);
+		if (this.adjacentTile(Direction.NORTHWEST).type() != this.type()) s.add(Direction.NORTHWEST);
+		if (this.adjacentTile(Direction.SOUTHEAST).type() != this.type()) s.add(Direction.SOUTHEAST);
+		if (this.adjacentTile(Direction.SOUTHWEST).type() != this.type()) s.add(Direction.SOUTHWEST);
 		return s;
 	}
 
@@ -179,7 +180,7 @@ public class Tile implements ItemContainer
 		return this.trap != null;
 	}
 
-	public boolean isAdjacentWalkable(short direction)
+	public boolean isAdjacentWalkable(Direction direction)
 	{
 		Tile t = this.adjacentTile(direction);
 		return t != null && (t.type() == TileType.GROUND || t.type() == TileType.STAIR || t.type() == TileType.WARP_ZONE);
@@ -211,14 +212,19 @@ public class Tile implements ItemContainer
 		return new Point(this.x, this.y);
 	}
 
+	public int maxHorizontalDistance(Tile tile)
+	{
+		return Math.max(Math.abs(this.x - tile.x), Math.abs(this.y - tile.y));
+	}
+
 	/** Called when an adjacent tile has its type changed.
 	 * 
-	 * @param direction - The direction of the Tile. See {@link Directions#NORTH}. */
-	private void onNeighborTypeChange(short direction)
+	 * @param direction - The direction of the Tile. See {@link DirectionSet#NORTH}. */
+	private void onNeighborTypeChange(Direction direction)
 	{
-		if (Directions.containsDirection(this.neighbors, direction)) this.neighbors -= direction;
-		if (this.type.connectsTo(this.adjacentTile(direction).type)) this.neighbors += direction;
-		this.neighbors = Directions.clean(this.neighbors);
+		if (this.neighbors.contains(direction)) this.neighbors.remove(direction);
+		if (this.type.connectsTo(this.adjacentTile(direction).type)) this.neighbors.add(direction);
+		this.neighbors.removeFreeCorners();
 	}
 
 	/** Called when a Pokémon steps on this Tile.
@@ -252,12 +258,12 @@ public class Tile implements ItemContainer
 		if (this.floor.isGenerated())
 		{
 			this.updateNeighbors();
-			for (short direction : Directions.directions())
+			for (Direction direction : Direction.directions)
 			{
 				Tile t = this.adjacentTile(direction);
-				if (t != null) t.onNeighborTypeChange(Directions.oppositeOf(direction));
+				if (t != null) t.onNeighborTypeChange(direction.opposite());
 			}
-			this.neighbors = Directions.clean(this.neighbors);
+			this.neighbors.removeFreeCorners();
 		}
 	}
 
@@ -315,6 +321,12 @@ public class Tile implements ItemContainer
 		return this.getItem() == null ? 0 : 1;
 	}
 
+	@Override
+	public String toString()
+	{
+		return this.x + "," + this.y + ": " + this.type.name();
+	}
+
 	/** @return This Tile's type. */
 	public TileType type()
 	{
@@ -324,13 +336,13 @@ public class Tile implements ItemContainer
 	/** Checks each neighbor. */
 	public void updateNeighbors()
 	{
-		this.neighbors = 0;
-		for (short direction : Directions.directions())
+		this.neighbors.clear();
+		for (Direction direction : Direction.directions)
 		{
 			Tile t = this.adjacentTile(direction);
-			if (t == null || t.type.connectsTo(this.type)) this.neighbors += direction;
+			if (t == null || t.type.connectsTo(this.type)) this.neighbors.add(direction);
 		}
-		this.neighbors = Directions.clean(this.neighbors);
+		this.neighbors.removeFreeCorners();
 	}
 
 }

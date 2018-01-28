@@ -10,7 +10,13 @@ import java.util.function.Predicate;
 
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.MasterDungeonRenderer;
-import com.darkxell.client.renderers.floor.*;
+import com.darkxell.client.renderers.floor.DungeonItemsRenderer;
+import com.darkxell.client.renderers.floor.DungeonPokemonRenderer;
+import com.darkxell.client.renderers.floor.FloorRenderer;
+import com.darkxell.client.renderers.floor.FloorVisibility;
+import com.darkxell.client.renderers.floor.GridRenderer;
+import com.darkxell.client.renderers.floor.PokemonRenderer;
+import com.darkxell.client.renderers.floor.ShadowRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.music.SoundsHolder;
 import com.darkxell.client.state.AbstractState;
@@ -18,7 +24,7 @@ import com.darkxell.client.ui.Keys;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.pokemon.DungeonPokemon;
-import com.darkxell.common.util.Directions;
+import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.Logger;
 
 /** The main state for Dungeon exploration. */
@@ -134,14 +140,14 @@ public class DungeonState extends AbstractState
 
 		ArrayList<Tile> candidates = new ArrayList<Tile>();
 		Tile initial = Persistance.player.getDungeonLeader().tile();
-		candidates.add(initial.adjacentTile(Directions.WEST));
-		candidates.add(initial.adjacentTile(Directions.EAST));
-		candidates.add(initial.adjacentTile(Directions.SOUTH));
-		candidates.add(initial.adjacentTile(Directions.NORTH));
-		candidates.add(initial.adjacentTile(Directions.NORTHWEST));
-		candidates.add(initial.adjacentTile(Directions.NORTHEAST));
-		candidates.add(initial.adjacentTile(Directions.SOUTHWEST));
-		candidates.add(initial.adjacentTile(Directions.SOUTHEAST));
+		candidates.add(initial.adjacentTile(Direction.WEST));
+		candidates.add(initial.adjacentTile(Direction.EAST));
+		candidates.add(initial.adjacentTile(Direction.SOUTH));
+		candidates.add(initial.adjacentTile(Direction.NORTH));
+		candidates.add(initial.adjacentTile(Direction.NORTHWEST));
+		candidates.add(initial.adjacentTile(Direction.NORTHEAST));
+		candidates.add(initial.adjacentTile(Direction.SOUTHWEST));
+		candidates.add(initial.adjacentTile(Direction.SOUTHEAST));
 		candidates.removeIf(new Predicate<Tile>() {
 			@Override
 			public boolean test(Tile t)

@@ -5,15 +5,15 @@ import java.util.ArrayList;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
-import com.darkxell.common.util.Directions;
+import com.darkxell.common.util.Direction;
 
 public class PokemonRotateEvent extends DungeonEvent
 {
 
-	public final short direction;
+	public final Direction direction;
 	public final DungeonPokemon pokemon;
 
-	public PokemonRotateEvent(Floor floor, DungeonPokemon pokemon, short direction)
+	public PokemonRotateEvent(Floor floor, DungeonPokemon pokemon, Direction direction)
 	{
 		this(floor, pokemon, direction, false);
 	}
@@ -21,7 +21,7 @@ public class PokemonRotateEvent extends DungeonEvent
 	/** @param pokemon - The Pokémon that rotates.
 	 * @param direction - The new direction the Pokémon should face.
 	 * @param consumesTurn - True if this Action consumes the Pokémon's turn. Default is false. */
-	public PokemonRotateEvent(Floor floor, DungeonPokemon pokemon, short direction, boolean consumesTurn)
+	public PokemonRotateEvent(Floor floor, DungeonPokemon pokemon, Direction direction, boolean consumesTurn)
 	{
 		super(floor, consumesTurn ? pokemon : null);
 		this.pokemon = pokemon;
@@ -31,7 +31,7 @@ public class PokemonRotateEvent extends DungeonEvent
 	@Override
 	public String loggerMessage()
 	{
-		return this.pokemon + " rotated to face " + Directions.name(this.direction);
+		return this.pokemon + " rotated to face " + this.direction.getName();
 	}
 
 	@Override

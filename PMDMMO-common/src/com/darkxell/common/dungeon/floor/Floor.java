@@ -21,7 +21,7 @@ import com.darkxell.common.item.ItemRegistry;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.trap.Trap;
 import com.darkxell.common.trap.TrapRegistry;
-import com.darkxell.common.util.Directions;
+import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.RandomUtil;
 import com.darkxell.common.weather.Weather;
 import com.darkxell.common.weather.WeatherInstance;
@@ -83,7 +83,7 @@ public class Floor
 	/** @return True if the input Tile connects to a path outside a Room (considering that Tile is in a Room, which is not tested in this method). */
 	public boolean connectsToPath(Tile tile)
 	{
-		for (short direction : new short[] { Directions.NORTH, Directions.EAST, Directions.SOUTH, Directions.WEST })
+		for (Direction direction : Direction.cardinal)
 			if (!tile.adjacentTile(direction).isInRoom() && tile.adjacentTile(direction).type() == TileType.GROUND) return true;
 		return false;
 	}

@@ -8,6 +8,7 @@ import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.pokemon.PokemonRotateEvent;
 import com.darkxell.common.event.pokemon.PokemonTravelEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.util.Direction;
 
 public class AIStateFollowPokemon extends AIState
 {
@@ -32,11 +33,11 @@ public class AIStateFollowPokemon extends AIState
 	{
 		this.lastSeen = this.target.tile();
 
-		short direction = AIUtils.generalDirection(this.ai.pokemon, this.target);
+		Direction direction = AIUtils.generalDirection(this.ai.pokemon, this.target);
 		if (AIUtils.isAdjacentTo(this.ai.pokemon, this.target, true)) return new PokemonRotateEvent(this.ai.floor, this.ai.pokemon, direction, true);
 
-		short go = AIUtils.direction(this.ai.pokemon, this.target);
-		if (go == -1) return new PokemonRotateEvent(this.ai.floor, this.ai.pokemon, direction, true);
+		Direction go = AIUtils.direction(this.ai.pokemon, this.target);
+		if (go == null) return new PokemonRotateEvent(this.ai.floor, this.ai.pokemon, direction, true);
 		return new PokemonTravelEvent(this.ai.floor, this.ai.pokemon, go);
 	}
 

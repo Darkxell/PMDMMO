@@ -6,6 +6,7 @@ import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.util.Direction;
 
 /** The travel of Pokémon. */
 public class PokemonTravelEvent extends DungeonEvent
@@ -13,12 +14,12 @@ public class PokemonTravelEvent extends DungeonEvent
 
 	public static class PokemonTravel
 	{
-		public final short direction;
+		public final Direction direction;
 		public final Tile origin, destination;
 		public final DungeonPokemon pokemon;
 		public final boolean running;
 
-		public PokemonTravel(DungeonPokemon pokemon, boolean running, short direction)
+		public PokemonTravel(DungeonPokemon pokemon, boolean running, Direction direction)
 		{
 			this.pokemon = pokemon;
 			this.running = running;
@@ -41,12 +42,12 @@ public class PokemonTravelEvent extends DungeonEvent
 
 	private PokemonTravel[] travels;
 
-	public PokemonTravelEvent(Floor floor, DungeonPokemon pokemon, boolean running, short direction)
+	public PokemonTravelEvent(Floor floor, DungeonPokemon pokemon, boolean running, Direction direction)
 	{
 		this(floor, new PokemonTravel(pokemon, running, direction));
 	}
 
-	public PokemonTravelEvent(Floor floor, DungeonPokemon pokemon, short direction)
+	public PokemonTravelEvent(Floor floor, DungeonPokemon pokemon, Direction direction)
 	{
 		this(floor, pokemon, false, direction);
 	}

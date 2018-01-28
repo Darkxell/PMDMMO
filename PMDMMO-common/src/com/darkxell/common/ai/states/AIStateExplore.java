@@ -8,7 +8,7 @@ import com.darkxell.common.ai.AIUtils;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.pokemon.PokemonTravelEvent;
-import com.darkxell.common.util.Directions;
+import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.RandomUtil;
 
@@ -30,7 +30,7 @@ public class AIStateExplore extends AIState
 
 	private void findNewDestination()
 	{
-		short facing = this.ai.pokemon.facing();
+		Direction facing = this.ai.pokemon.facing();
 		ArrayList<Tile> candidates;
 
 		if (this.ai.pokemon.tile().isInRoom()) candidates = this.ai.floor.room(this.ai.pokemon.tile()).exits();
@@ -38,7 +38,7 @@ public class AIStateExplore extends AIState
 
 		if (candidates.size() == 0) Logger.e(this.ai.pokemon + " didn't find a way to go :(");
 		if (candidates.size() > 1) candidates.removeIf((Tile t) -> {
-			return AIUtils.generalDirection(this.ai.pokemon, t) == Directions.oppositeOf(facing);
+			return AIUtils.generalDirection(this.ai.pokemon, t) == facing.opposite();
 		}); // If more than one solution, we should remove the one it's coming from.
 
 		this.currentDestination = RandomUtil.random(candidates, this.ai.floor.random);

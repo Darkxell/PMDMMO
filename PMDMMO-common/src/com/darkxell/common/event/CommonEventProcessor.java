@@ -11,7 +11,7 @@ import com.darkxell.common.event.pokemon.PokemonSpawnedEvent;
 import com.darkxell.common.event.pokemon.PokemonTravelEvent;
 import com.darkxell.common.event.pokemon.PokemonTravelEvent.PokemonTravel;
 import com.darkxell.common.pokemon.DungeonPokemon;
-import com.darkxell.common.util.Directions;
+import com.darkxell.common.util.Direction;
 
 /** Processes game logic events. */
 public class CommonEventProcessor
@@ -70,7 +70,7 @@ public class CommonEventProcessor
 		this.processPending();
 	}
 
-	public void pokemonTravels(DungeonPokemon pokemon, short direction, boolean running)
+	public void pokemonTravels(DungeonPokemon pokemon, Direction direction, boolean running)
 	{
 		ArrayList<PokemonTravel> travellers = new ArrayList<PokemonTravel>();
 
@@ -83,7 +83,7 @@ public class CommonEventProcessor
 			if (switching != null)
 			{
 				switching.setTile(t.destination);
-				travellers.add(new PokemonTravel(switching, running, Directions.oppositeOf(direction)));
+				travellers.add(new PokemonTravel(switching, running, direction.opposite()));
 				t.destination.removePokemon(switching);
 				t.origin.setPokemon(switching);
 				this.dungeon.takeAction(switching);

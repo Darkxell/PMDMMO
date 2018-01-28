@@ -8,7 +8,7 @@ import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.status.StatusCondition;
 import com.darkxell.common.status.StatusConditionInstance;
-import com.darkxell.common.util.Directions;
+import com.darkxell.common.util.Direction;
 
 /** Represents a Pokémon in a Dungeon. */
 public class DungeonPokemon
@@ -23,7 +23,7 @@ public class DungeonPokemon
 	/** This Pokémon's belly size. */
 	private int bellySize;
 	/** The direction this Pokémon is facing. */
-	private short facing = Directions.SOUTH;
+	private Direction facing = Direction.SOUTH;
 	/** This Pokémon's current Hit Points. */
 	private int hp;
 	/** This Pokémon's data. */
@@ -70,7 +70,7 @@ public class DungeonPokemon
 	}
 
 	/** @return The direction this Pokémon is facing. */
-	public short facing()
+	public Direction facing()
 	{
 		return this.facing;
 	}
@@ -180,7 +180,7 @@ public class DungeonPokemon
 	}
 
 	/** Changes the direction this Pokémon is facing. */
-	public void setFacing(short direction)
+	public void setFacing(Direction direction)
 	{
 		this.facing = direction;
 		this.stateChanged = true;
@@ -210,7 +210,7 @@ public class DungeonPokemon
 	}
 
 	/** Called when this Pokémon tries to move in the input direction. */
-	public boolean tryMoveTo(short direction, boolean allowSwitching)
+	public boolean tryMoveTo(Direction direction, boolean allowSwitching)
 	{
 		boolean success = false;
 		if (this.tile != null)

@@ -17,7 +17,7 @@ import com.darkxell.common.event.pokemon.TriggeredAbilityEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.pokemon.ability.AbilityTypeBoost;
-import com.darkxell.common.util.Directions;
+import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.XMLUtils;
 import com.darkxell.common.util.language.Message;
 import com.darkxell.common.weather.Weather;
@@ -36,7 +36,8 @@ public class Move
 	 * <li>ALL_ROOM = 7</li>
 	 * <li>ALL_ROOM_WITH_SELF = 8</li>
 	 * <li>AMBIENT = 9</li>
-	 * </ul> */
+	 * </ul>
+	 */
 	public static final byte FRONT = 0, TWO_TILES_FRONT = 1, LINE_FRONT = 2, SELF = 3, ALL_ENEMIES = 4, ALL_ALLIES = 5, ALL_ALLIES_WITH_SELF = 6, ALL_ROOM = 7,
 			ALL_ROOM_WITH_SELF = 8, AMBIENT = 9;
 	/** Move categories.<br />
@@ -44,7 +45,8 @@ public class Move
 	 * <li>PHYSICAL = 0</li>
 	 * <li>SPECIAL = 1</li>
 	 * <li>STATUS = 2</li>
-	 * </ul> */
+	 * </ul>
+	 */
 	public static final byte PHYSICAL = 0, SPECIAL = 1, STATUS = 2;
 
 	/** This move's accuracy. */
@@ -215,7 +217,7 @@ public class Move
 
 			case ALL_ALLIES:
 				Room r = floor.roomAt(user.tile().x, user.tile().y);
-				if (r == null) for (short d : Directions.directions())
+				if (r == null) for (Direction d : Direction.directions)
 				{
 					Tile t1 = user.tile().adjacentTile(d);
 					if (t1.getPokemon() != null && user.pokemon.isAlliedWith(t1.getPokemon().pokemon)) targets.add(t1.getPokemon());
@@ -233,18 +235,18 @@ public class Move
 			case ALL_ENEMIES:
 			case ALL_ROOM:
 				r = floor.roomAt(user.tile().x, user.tile().y);
-				if (r == null) for (short d : Directions.directions())
+				if (r == null) for (Direction d : Direction.directions)
 				{
 					Tile t = user.tile().adjacentTile(d);
 					if (t.getPokemon() != null
-							&& (this.targets == ALL_ROOM || this.targets == ALL_ROOM_WITH_SELF || !user.pokemon.isAlliedWith(t.getPokemon().pokemon))) targets
-							.add(t.getPokemon());
+							&& (this.targets == ALL_ROOM || this.targets == ALL_ROOM_WITH_SELF || !user.pokemon.isAlliedWith(t.getPokemon().pokemon)))
+						targets.add(t.getPokemon());
 				}
 				else for (Tile t : r.listTiles())
 					if (t.getPokemon() != null && t.getPokemon() != user)
 					{
-						if (this.targets == ALL_ROOM || this.targets == ALL_ROOM_WITH_SELF || !user.pokemon.isAlliedWith(t.getPokemon().pokemon)) targets.add(t
-								.getPokemon());
+						if (this.targets == ALL_ROOM || this.targets == ALL_ROOM_WITH_SELF || !user.pokemon.isAlliedWith(t.getPokemon().pokemon))
+							targets.add(t.getPokemon());
 					}
 				break;
 
@@ -253,11 +255,11 @@ public class Move
 				if (front != null)
 				{
 					boolean valid = true;
-					if (Directions.isDiagonal(user.facing()) && !this.cutsEdges)
+					if (user.facing().isDiagonal() && !this.cutsEdges)
 					{
-						Tile t = user.tile().adjacentTile(Directions.rotateClockwise(user.facing()));
+						Tile t = user.tile().adjacentTile(user.facing().rotateClockwise());
 						if (t.type() == TileType.WALL || t.type() == TileType.WALL_END) valid = false;
-						t = user.tile().adjacentTile(Directions.rotateCounterClockwise(user.facing()));
+						t = user.tile().adjacentTile(user.facing().rotateCounterClockwise());
 						if (t.type() == TileType.WALL || t.type() == TileType.WALL_END) valid = false;
 					}
 					if (valid) targets.add(front);
@@ -341,10 +343,10 @@ public class Move
 			if (!missed && this != MoveRegistry.ATTACK) target.receiveMove(usedMove.move.isLinked() ? DungeonPokemon.LINKED_MOVES : DungeonPokemon.MOVES);
 			if (this.power != -1)
 			{
-				if (effectiveness == PokemonType.SUPER_EFFECTIVE) events.add(new MessageEvent(floor, new Message("move.effectiveness.super").addReplacement(
-						"<pokemon>", target.pokemon.getNickname())));
-				else if (effectiveness == PokemonType.NOT_VERY_EFFECTIVE) events.add(new MessageEvent(floor, new Message("move.effectiveness.not_very")
-						.addReplacement("<pokemon>", target.pokemon.getNickname())));
+				if (effectiveness == PokemonType.SUPER_EFFECTIVE)
+					events.add(new MessageEvent(floor, new Message("move.effectiveness.super").addReplacement("<pokemon>", target.pokemon.getNickname())));
+				else if (effectiveness == PokemonType.NOT_VERY_EFFECTIVE)
+					events.add(new MessageEvent(floor, new Message("move.effectiveness.not_very").addReplacement("<pokemon>", target.pokemon.getNickname())));
 				events.add(new DamageDealtEvent(floor, target, usedMove, missed ? 0 : this.damageDealt(usedMove.user, target, floor, events)));
 			}
 			if (!missed && this.additionalEffectLands(usedMove.user, target, floor)) events.addAll(this.additionalEffects(usedMove.user, target, floor));

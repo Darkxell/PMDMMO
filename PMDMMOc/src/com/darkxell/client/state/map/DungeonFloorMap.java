@@ -14,7 +14,7 @@ import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.trap.TrapRegistry;
-import com.darkxell.common.util.Directions;
+import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.Logger;
 
 public class DungeonFloorMap extends AbstractDisplayMap
@@ -77,14 +77,14 @@ public class DungeonFloorMap extends AbstractDisplayMap
 						else
 						{
 							g.setColor(walls);
-							if (tile.isAdjacentWalkable(Directions.NORTH)) g.drawLine(tx, ty, tx + 3, ty);
-							if (tile.isAdjacentWalkable(Directions.EAST)) g.drawLine(tx + 3, ty, tx + 3, ty + 3);
-							if (tile.isAdjacentWalkable(Directions.SOUTH)) g.drawLine(tx, ty + 3, tx + 3, ty + 3);
-							if (tile.isAdjacentWalkable(Directions.WEST)) g.drawLine(tx, ty, tx, ty + 3);
-							if (tile.isAdjacentWalkable(Directions.NORTHEAST)) g.drawLine(tx + 3, ty, tx + 3, ty);
-							if (tile.isAdjacentWalkable(Directions.SOUTHEAST)) g.drawLine(tx + 3, ty + 3, tx + 3, ty + 3);
-							if (tile.isAdjacentWalkable(Directions.SOUTHWEST)) g.drawLine(tx, ty + 3, tx, ty + 3);
-							if (tile.isAdjacentWalkable(Directions.NORTHWEST)) g.drawLine(tx, ty, tx, ty);
+							if (tile.isAdjacentWalkable(Direction.NORTH)) g.drawLine(tx, ty, tx + 3, ty);
+							if (tile.isAdjacentWalkable(Direction.EAST)) g.drawLine(tx + 3, ty, tx + 3, ty + 3);
+							if (tile.isAdjacentWalkable(Direction.SOUTH)) g.drawLine(tx, ty + 3, tx + 3, ty + 3);
+							if (tile.isAdjacentWalkable(Direction.WEST)) g.drawLine(tx, ty, tx, ty + 3);
+							if (tile.isAdjacentWalkable(Direction.NORTHEAST)) g.drawLine(tx + 3, ty, tx + 3, ty);
+							if (tile.isAdjacentWalkable(Direction.SOUTHEAST)) g.drawLine(tx + 3, ty + 3, tx + 3, ty + 3);
+							if (tile.isAdjacentWalkable(Direction.SOUTHWEST)) g.drawLine(tx, ty + 3, tx, ty + 3);
+							if (tile.isAdjacentWalkable(Direction.NORTHWEST)) g.drawLine(tx, ty, tx, ty);
 						}
 					}
 				}

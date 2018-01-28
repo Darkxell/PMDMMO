@@ -3,7 +3,7 @@ package com.darkxell.client.resources.images.others;
 import java.awt.image.BufferedImage;
 
 import com.darkxell.client.resources.Res;
-import com.darkxell.common.util.Directions;
+import com.darkxell.common.util.Direction;
 
 public class DungeonHudSpriteset
 {
@@ -27,9 +27,9 @@ public class DungeonHudSpriteset
 	}
 
 	/** @return The arrow pointing in the input direction. */
-	public BufferedImage getArrow(short direction)
+	public BufferedImage getArrow(Direction direction)
 	{
-		return this.arrows[Directions.indexOf(direction)];
+		return this.arrows[direction.index()];
 	}
 
 }
