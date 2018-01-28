@@ -117,6 +117,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 			this.addToPending(new StairLandingEvent());
 			this.landedOnStairs = false;
 		}
+		Logger.event("Turn ended ---------------");
 		super.onTurnEnd();
 	}
 
