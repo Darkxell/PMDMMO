@@ -55,6 +55,12 @@ public class MoveSelectionEvent extends DungeonEvent
 	}
 
 	@Override
+	public String loggerMessage()
+	{
+		return this.usedMove.user + " used " + this.usedMove.move.move().name();
+	}
+
+	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{
 		// Rotate

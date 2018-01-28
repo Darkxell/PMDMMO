@@ -18,6 +18,12 @@ public class TurnSkippedEvent extends DungeonEvent
 	}
 
 	@Override
+	public String loggerMessage()
+	{
+		return this.pokemon + " skipped its turn.";
+	}
+
+	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{
 		if (this.pokemon.isTeamLeader()) this.resultingEvents.add(new BellyChangedEvent(this.floor, this.pokemon, -.1 * this.pokemon.energyMultiplier()));

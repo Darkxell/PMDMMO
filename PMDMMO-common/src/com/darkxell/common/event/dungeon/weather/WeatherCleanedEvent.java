@@ -17,6 +17,12 @@ public class WeatherCleanedEvent extends DungeonEvent
 	}
 
 	@Override
+	public String loggerMessage()
+	{
+		return this.weather.weather.name() + " ended.";
+	}
+
+	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{
 		WeatherChangedEvent e = this.floor.removeWeather(this.weather);

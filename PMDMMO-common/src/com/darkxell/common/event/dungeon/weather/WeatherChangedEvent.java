@@ -22,4 +22,10 @@ public class WeatherChangedEvent extends DungeonEvent
 		this.messages.add(new Message("weather.changed").addReplacement("<weather>", this.next.weather.name()));
 	}
 
+	@Override
+	public String loggerMessage()
+	{
+		return this.next.weather.name() + " is now the main Weather.";
+	}
+
 }

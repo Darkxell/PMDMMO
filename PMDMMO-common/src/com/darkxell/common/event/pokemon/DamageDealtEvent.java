@@ -40,6 +40,12 @@ public class DamageDealtEvent extends DungeonEvent
 	}
 
 	@Override
+	public String loggerMessage()
+	{
+		return this.target + " took " + this.damage + " from " + this.source;
+	}
+
+	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{
 		this.target.setHP(this.target.getHp() - this.damage);

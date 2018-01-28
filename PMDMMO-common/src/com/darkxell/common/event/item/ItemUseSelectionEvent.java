@@ -37,6 +37,12 @@ public class ItemUseSelectionEvent extends DungeonEvent
 	}
 
 	@Override
+	public String loggerMessage()
+	{
+		return this.user + " selected the " + this.item.name();
+	}
+
+	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{
 		ItemStack stack = this.source.getItem(this.sourceIndex);

@@ -28,6 +28,12 @@ public class IncreasedIQEvent extends DungeonEvent
 	}
 
 	@Override
+	public String loggerMessage()
+	{
+		return this.pokemon + "'s IQ increased by " + this.iq;
+	}
+
+	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{
 		this.pokemon.pokemon.increaseIQ(this.iq);

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.util.Directions;
 
 public class PokemonRotateEvent extends DungeonEvent
 {
@@ -26,7 +27,13 @@ public class PokemonRotateEvent extends DungeonEvent
 		this.pokemon = pokemon;
 		this.direction = direction;
 	}
-	
+
+	@Override
+	public String loggerMessage()
+	{
+		return this.pokemon + " rotated to face " + Directions.name(this.direction);
+	}
+
 	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{

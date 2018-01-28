@@ -71,6 +71,18 @@ public class PokemonTravelEvent extends DungeonEvent
 	}
 
 	@Override
+	public String loggerMessage()
+	{
+		String m = "";
+		for (PokemonTravel t : this.travels)
+		{
+			if (!m.equals("")) m += ", ";
+			m += t.pokemon;
+		}
+		return m + " travelled.";
+	}
+
+	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{
 		for (PokemonTravel travel : this.travels)

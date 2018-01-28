@@ -25,6 +25,12 @@ public class FaintedPokemonEvent extends DungeonEvent
 	}
 
 	@Override
+	public String loggerMessage()
+	{
+		return this.messages.get(0).toString();
+	}
+
+	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{
 		this.floor.unsummonPokemon(this.pokemon);

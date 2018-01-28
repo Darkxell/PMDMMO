@@ -41,6 +41,7 @@ import com.darkxell.common.event.stats.ExperienceGainedEvent;
 import com.darkxell.common.event.stats.StatChangedEvent;
 import com.darkxell.common.item.ItemFood;
 import com.darkxell.common.item.ItemGummi;
+import com.darkxell.common.util.Logger;
 import com.darkxell.common.weather.Weather;
 
 /** Translates game logic events into displayable content to the client.<br />
@@ -82,6 +83,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	{
 		super.doProcess(event);
 		Persistance.dungeonState.logger.showMessages(event.getMessages());
+		Logger.event(event.loggerMessage());
 
 		if (event instanceof MoveSelectionEvent) MoveEvents.processMoveEvent((MoveSelectionEvent) event);
 		if (event instanceof MoveUseEvent) MoveEvents.processMoveUseEvent((MoveUseEvent) event);

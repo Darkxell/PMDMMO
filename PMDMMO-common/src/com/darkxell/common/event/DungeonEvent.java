@@ -18,6 +18,12 @@ public abstract class DungeonEvent
 			super(floor);
 			this.messages.add(message);
 		}
+
+		@Override
+		public String loggerMessage()
+		{
+			return "Showed message: " + this.messages.get(0);
+		}
 	}
 
 	public static final byte PRIORITY_DEFAULT = 0, PRIORITY_AFTER_MOVE = 1, PRIORITY_ACTION_END = 2, PRIORITY_TURN_END = 3;
@@ -64,6 +70,8 @@ public abstract class DungeonEvent
 	{
 		return true;
 	}
+
+	public abstract String loggerMessage();
 
 	/** Processes this Event server-side.
 	 * 

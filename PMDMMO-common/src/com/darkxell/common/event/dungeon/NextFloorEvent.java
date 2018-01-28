@@ -18,6 +18,12 @@ public class NextFloorEvent extends DungeonEvent
 	}
 
 	@Override
+	public String loggerMessage()
+	{
+		return this.player.name + " went to the next floor.";
+	}
+
+	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{
 		this.floor.dungeon.endFloor();

@@ -24,6 +24,12 @@ public class MoveUseEvent extends DungeonEvent
 	}
 
 	@Override
+	public String loggerMessage()
+	{
+		return this.target + " received the effect of " + this.usedMove.move.move().name();
+	}
+
+	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{
 		this.resultingEvents.addAll(this.usedMove.move.move().useOn(this.usedMove, this.target, this.floor));
