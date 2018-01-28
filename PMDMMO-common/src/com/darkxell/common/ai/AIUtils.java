@@ -182,7 +182,7 @@ public final class AIUtils
 		Tile previous = tile.adjacentTile(Directions.oppositeOf(pokemon.facing()));
 
 		if (!pokemon.tryMoveTo(pokemon.facing(), false)) return true;
-		if (tile.isInRoom() != previous.isInRoom()) return true;
+		if (tile.isInRoom() && !previous.isInRoom()) return true;
 		if (tile.type() == TileType.STAIR || tile.trapRevealed || tile.getItem() != null) return true;
 		int origin = 0, destination = 0;
 		short facing = pokemon.facing();

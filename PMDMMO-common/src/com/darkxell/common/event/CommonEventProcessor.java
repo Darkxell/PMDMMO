@@ -6,6 +6,7 @@ import java.util.Stack;
 import com.darkxell.common.ai.AIUtils;
 import com.darkxell.common.dungeon.DungeonInstance;
 import com.darkxell.common.event.pokemon.BellyChangedEvent;
+import com.darkxell.common.event.pokemon.CancelRunningEvent;
 import com.darkxell.common.event.pokemon.PokemonRotateEvent;
 import com.darkxell.common.event.pokemon.PokemonTravelEvent;
 import com.darkxell.common.event.pokemon.PokemonTravelEvent.PokemonTravel;
@@ -156,6 +157,7 @@ public class CommonEventProcessor
 			}
 			this.dungeon.takeAction(travel.pokemon);
 		}
+		else if (event instanceof CancelRunningEvent) this.runners.remove(((CancelRunningEvent) event).pokemon);
 
 		if (event.isValid()) this.doProcess(event);
 		if (this.processPending) this.processPending();
@@ -187,8 +189,7 @@ public class CommonEventProcessor
 					{
 						this.runners.clear();
 						return;
-					}
-					this.pokemonTravels(actor, actor.facing(), true);
+					} else this.pokemonTravels(actor, actor.facing(), true);
 				} else return;
 			} else
 			{
@@ -210,7 +211,7 @@ public class CommonEventProcessor
 	{
 		for (DungeonEvent event : this.pending)
 			if (!(event instanceof BellyChangedEvent || event instanceof TurnSkippedEvent || event instanceof PokemonRotateEvent)) return true;
-		return AIUtils.shouldStopRunning(pokemon) || this.dungeon.getNextActor() != null;
+		return AIUtils.shouldStopRunning(pokemon);
 	}
 
 }
