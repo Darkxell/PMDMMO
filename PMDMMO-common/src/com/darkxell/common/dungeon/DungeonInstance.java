@@ -65,6 +65,7 @@ public class DungeonInstance
 		this.currentFloor.dispose();
 		this.currentFloor = this.createFloor(this.currentFloor.id + 1);
 		this.currentFloor.generate();
+		this.actors.clear();
 		return this.currentFloor;
 	}
 
