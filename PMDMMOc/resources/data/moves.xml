@@ -622,4 +622,6 @@
     </statchanges>
   </move>
   <move id="1003" type="17" behavior="216" category="2" pp="5" power="-1" accuracy="0" targets="2" />
+  <move id="2000" type="19" behavior="2000" category="0" pp="10" power="-1" accuracy="0" targets="500" />
+  <move id="2001" type="19" behavior="2001" category="0" pp="10" power="-1" accuracy="0" targets="500" />
 </moves>

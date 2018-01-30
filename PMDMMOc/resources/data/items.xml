@@ -196,8 +196,8 @@
   <item id="261" type="TM" price="0" sell="0" move="553" />
   <item id="262" type="TM" price="0" sell="0" move="827" />
   <item id="263" type="TM" price="0" sell="0" move="613" />
-  <item id="264" type="TM" price="0" sell="0" move="420000" />
-  <item id="265" type="TM" price="0" sell="0" move="420001" />
+  <item id="264" type="TM" price="0" sell="0" move="2000" />
+  <item id="265" type="TM" price="0" sell="0" move="2001" />
   <item id="301" type="HM" price="0" sell="0" sprite="94" move="8" />
   <item id="302" type="HM" price="0" sell="0" sprite="94" move="252" />
   <item id="303" type="HM" price="0" sell="0" sprite="94" move="656" />

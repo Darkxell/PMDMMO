@@ -25,6 +25,7 @@ public enum PokemonType
 	PSYCHC(13, new Color(248, 88, 136)),
 	ROCK(5, new Color(184, 160, 56)),
 	STEEL(8, new Color(184, 184, 208)),
+	UNKNOWN(19, new Color(104, 160, 144)),
 	WATER(10, new Color(104, 144, 240));
 
 	public static final float SUPER_EFFECTIVE = 1.4f, NORMALLY_EFFECTIVE = 1, NOT_VERY_EFFECTIVE = 0.7f, NO_EFFECT = 0;
@@ -186,8 +187,7 @@ public enum PokemonType
 	{
 		this.id = id;
 		this.color = color;
-		this.effectiveness = new float[]
-		{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+		this.effectiveness = new float[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
 	}
 
 	public float effectivenessOn(PokemonSpecies species)
