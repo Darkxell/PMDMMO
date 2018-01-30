@@ -62,30 +62,34 @@ public class DungeonFloorMap extends AbstractDisplayMap
 					if (x < 0 || y < 0) continue;
 					Tile tile = this.floor.tileAt(x, y);
 					if (tile == null) Logger.e("null tile at " + x + ", " + y);
-					else if (Persistance.dungeonState.floorVisibility.isVisible(tile))
+					else
 					{
 						int tx = tile.x * TILE_SIZE, ty = tile.y * TILE_SIZE;
-						boolean isMain = tile.getPokemon() == Persistance.player.getDungeonLeader();
-						if ((this.tick >= PLAYER_TICK || !isMain) && tile.getPokemon() != null) g.drawImage(this.tileset.ground(), tx, ty, null);
-						else if (tile.getItem() != null && Persistance.dungeonState.floorVisibility.hasVisibleItem(tile))
-							g.drawImage(this.tileset.item(), tx, ty, null);
-						else if (tile.trap == TrapRegistry.WONDER_TILE) g.drawImage(this.tileset.wonder(), tx, ty, null);
-						else if (tile.trapRevealed) g.drawImage(this.tileset.trap(), tx, ty, null);
-						else if (tile.type() == TileType.STAIR) g.drawImage(this.tileset.stairs(), tx, ty, null);
-						else if (tile.type() == TileType.WARP_ZONE) g.drawImage(this.tileset.warpzone(), tx, ty, null);
-						else if (tile.type() == TileType.GROUND) g.drawImage(this.tileset.ground(), tx, ty, null);
-						else
+						if (Persistance.dungeonState.floorVisibility.isVisible(tile))
 						{
-							g.setColor(walls);
-							if (tile.isAdjacentWalkable(Direction.NORTH)) g.drawLine(tx, ty, tx + 3, ty);
-							if (tile.isAdjacentWalkable(Direction.EAST)) g.drawLine(tx + 3, ty, tx + 3, ty + 3);
-							if (tile.isAdjacentWalkable(Direction.SOUTH)) g.drawLine(tx, ty + 3, tx + 3, ty + 3);
-							if (tile.isAdjacentWalkable(Direction.WEST)) g.drawLine(tx, ty, tx, ty + 3);
-							if (tile.isAdjacentWalkable(Direction.NORTHEAST)) g.drawLine(tx + 3, ty, tx + 3, ty);
-							if (tile.isAdjacentWalkable(Direction.SOUTHEAST)) g.drawLine(tx + 3, ty + 3, tx + 3, ty + 3);
-							if (tile.isAdjacentWalkable(Direction.SOUTHWEST)) g.drawLine(tx, ty + 3, tx, ty + 3);
-							if (tile.isAdjacentWalkable(Direction.NORTHWEST)) g.drawLine(tx, ty, tx, ty);
-						}
+							boolean isMain = tile.getPokemon() == Persistance.player.getDungeonLeader();
+							if ((this.tick >= PLAYER_TICK || !isMain) && tile.getPokemon() != null) g.drawImage(this.tileset.ground(), tx, ty, null);
+							else if (tile.getItem() != null && Persistance.dungeonState.floorVisibility.hasVisibleItem(tile))
+								g.drawImage(this.tileset.item(), tx, ty, null);
+							else if (tile.trap == TrapRegistry.WONDER_TILE) g.drawImage(this.tileset.wonder(), tx, ty, null);
+							else if (tile.trapRevealed) g.drawImage(this.tileset.trap(), tx, ty, null);
+							else if (tile.type() == TileType.STAIR) g.drawImage(this.tileset.stairs(), tx, ty, null);
+							else if (tile.type() == TileType.WARP_ZONE) g.drawImage(this.tileset.warpzone(), tx, ty, null);
+							else if (tile.type() == TileType.GROUND) g.drawImage(this.tileset.ground(), tx, ty, null);
+							else
+							{
+								g.setColor(walls);
+								if (tile.isAdjacentWalkable(Direction.NORTH)) g.drawLine(tx, ty, tx + 3, ty);
+								if (tile.isAdjacentWalkable(Direction.EAST)) g.drawLine(tx + 3, ty, tx + 3, ty + 3);
+								if (tile.isAdjacentWalkable(Direction.SOUTH)) g.drawLine(tx, ty + 3, tx + 3, ty + 3);
+								if (tile.isAdjacentWalkable(Direction.WEST)) g.drawLine(tx, ty, tx, ty + 3);
+								if (tile.isAdjacentWalkable(Direction.NORTHEAST)) g.drawLine(tx + 3, ty, tx + 3, ty);
+								if (tile.isAdjacentWalkable(Direction.SOUTHEAST)) g.drawLine(tx + 3, ty + 3, tx + 3, ty + 3);
+								if (tile.isAdjacentWalkable(Direction.SOUTHWEST)) g.drawLine(tx, ty + 3, tx, ty + 3);
+								if (tile.isAdjacentWalkable(Direction.NORTHWEST)) g.drawLine(tx, ty, tx, ty);
+							}
+						} else if (tile.getItem() != null && Persistance.dungeonState.floorVisibility.hasVisibleItem(tile))
+							g.drawImage(this.tileset.item(), tx, ty, null);
 					}
 				}
 

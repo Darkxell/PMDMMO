@@ -7,6 +7,8 @@ import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.FloorData;
 import com.darkxell.common.dungeon.floor.Room;
 import com.darkxell.common.dungeon.floor.Tile;
+import com.darkxell.common.item.ItemID;
+import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Direction;
 
@@ -26,11 +28,13 @@ public class FloorVisibility
 
 	public boolean hasVisibleItem(Tile tile)
 	{
+		if (this.isXrayOn()) return true;
 		return this.itemTiles.contains(tile);
 	}
 
 	public boolean isMapVisible(DungeonPokemon pokemon)
 	{
+		if (this.isXrayOn()) return true;
 		return pokemon.pokemon.player == Persistance.player || this.currentlyVisible.contains(pokemon.tile());
 	}
 
@@ -43,6 +47,12 @@ public class FloorVisibility
 	public boolean isVisible(Tile tile)
 	{
 		return this.seenTiles.contains(tile);
+	}
+
+	public boolean isXrayOn()
+	{
+		ItemStack item = Persistance.dungeonState.getCameraPokemon().pokemon.getItem();
+		return item != null && item.id == ItemID.XRaySpecs;
 	}
 
 	public void onCameraMoved()
@@ -72,7 +82,7 @@ public class FloorVisibility
 
 	public void onItemremoved(Tile tile)
 	{
-		this.itemTiles.remove(tile);
+		if (!this.isXrayOn()) this.itemTiles.remove(tile);
 	}
 
 	@SuppressWarnings("unchecked")
