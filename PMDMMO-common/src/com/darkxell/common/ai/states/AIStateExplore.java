@@ -7,6 +7,7 @@ import com.darkxell.common.ai.AI.AIState;
 import com.darkxell.common.ai.AIUtils;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.pokemon.PokemonRotateEvent;
 import com.darkxell.common.event.pokemon.PokemonTravelEvent;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.Logger;
@@ -48,7 +49,10 @@ public class AIStateExplore extends AIState
 	public DungeonEvent takeAction()
 	{
 		if (this.ai.pokemon.tile() == this.currentDestination || this.currentDestination == null) this.findNewDestination();
-		return new PokemonTravelEvent(this.ai.floor, this.ai.pokemon, AIUtils.direction(this.ai.pokemon, this.currentDestination));
+		Direction dir = AIUtils.direction(this.ai.pokemon, this.currentDestination);
+		if (dir == null)
+			return new PokemonRotateEvent(this.ai.floor, this.ai.pokemon, AIUtils.generalDirection(this.ai.pokemon, this.currentDestination), true);
+		return new PokemonTravelEvent(this.ai.floor, this.ai.pokemon, dir);
 	}
 
 }
