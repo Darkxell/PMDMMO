@@ -15,6 +15,17 @@ import javafx.util.Pair;
 public final class AIUtils
 {
 
+	/** @return The list of adjacent Tiles reachable for the input Pokémon. */
+	public static ArrayList<Tile> adjacentReachableTiles(Floor floor, DungeonPokemon pokemon)
+	{
+		ArrayList<Tile> tiles = new ArrayList<>();
+		Tile t = pokemon.tile();
+		for (Direction d : Direction.directions)
+			tiles.add(t.adjacentTile(d));
+		tiles.removeIf((Tile tile) -> !tile.canMoveTo(pokemon, generalDirection(pokemon, tile), false));
+		return tiles;
+	}
+
 	/** @param angle - An angle in degrees.
 	 * @return The direction closest to the input angle (0 = North). */
 	public static Direction closestDirection(double angle)
@@ -72,7 +83,7 @@ public final class AIUtils
 		return null;
 	}
 
-	/** @return The furthest Tiles that can be seen and walked on by the input Pokémon. This method considers the Pokémon is not in a Room. */
+	/** @return The furthest Tiles that can be seen and walked on by the input Pokémon, sorted by closeness from the Pokémon's facing direction. This method considers the Pokémon is not in a Room. */
 	public static ArrayList<Tile> furthestWalkableTiles(Floor floor, DungeonPokemon pokemon)
 	{
 		int shadow = 3 - floor.data.shadows();
@@ -94,6 +105,9 @@ public final class AIUtils
 		tiles.removeIf((Tile t) -> {
 			return t.distance(pokemon.tile()) < maxD;
 		});
+
+		tiles.sort((Tile t1, Tile t2) -> Integer.compare(pokemon.facing().distance(generalDirection(pokemon, t1)),
+				pokemon.facing().distance(generalDirection(pokemon, t2))));
 
 		return tiles;
 	}

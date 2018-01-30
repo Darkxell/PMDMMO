@@ -57,6 +57,28 @@ public enum Direction
 		return false;
 	}
 
+	/** @return How many times this direction needs to rotate (in any way) to match the input Direction. */
+	public int distance(Direction direction)
+	{
+		if (this == direction) return 0;
+		int d = 1;
+		while (d < 4)
+		{
+			Direction o = direction;
+			for (int i = 0; i < d; ++i)
+				o = o.rotateClockwise();
+			if (o == direction) return d;
+
+			o = direction;
+			for (int i = 0; i < d; ++i)
+				o = o.rotateCounterClockwise();
+			if (o == direction) return d;
+
+			++d;
+		}
+		return 4;
+	}
+
 	/** @return This Direction's name. */
 	public String getName()
 	{

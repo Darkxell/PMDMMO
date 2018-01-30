@@ -35,12 +35,21 @@ public class AIStateExplore extends AIState
 		ArrayList<Tile> candidates;
 
 		if (this.ai.pokemon.tile().isInRoom()) candidates = this.ai.floor.room(this.ai.pokemon.tile()).exits();
-		else candidates = AIUtils.furthestWalkableTiles(this.ai.floor, this.ai.pokemon);
+		else
+		{
+			candidates = AIUtils.adjacentReachableTiles(this.ai.floor, this.ai.pokemon);
+			if (candidates.size() == 0) return;
+			if (candidates.size() == 1)
+			{
+				this.currentDestination = candidates.get(0);
+				return;
+			}
+			candidates = AIUtils.furthestWalkableTiles(this.ai.floor, this.ai.pokemon);
+		}
 
 		if (candidates.size() == 0) Logger.e(this.ai.pokemon + " didn't find a way to go :(");
-		if (candidates.size() > 1) candidates.removeIf((Tile t) -> {
-			return AIUtils.generalDirection(this.ai.pokemon, t) == facing.opposite();
-		}); // If more than one solution, we should remove the one it's coming from.
+		if (candidates.size() > 1) // If more than one solution, we should remove the one it's coming from.
+			candidates.removeIf((Tile t) -> AIUtils.generalDirection(this.ai.pokemon, t) == facing.opposite());
 
 		this.currentDestination = RandomUtil.random(candidates, this.ai.floor.random);
 	}
