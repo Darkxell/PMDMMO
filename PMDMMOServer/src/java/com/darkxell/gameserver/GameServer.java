@@ -21,6 +21,7 @@ import javax.websocket.server.ServerEndpoint;
 import com.darkxell.gameserver.freezones.FreezonePositionHandler;
 import com.darkxell.gameserver.freezones.SessionOpenHandler;
 import com.darkxell.model.ejb.PlayerDAO;
+import com.darkxell.model.ejb.dbobjects.DBPlayer;
 import javax.ejb.EJB;
 
 /**
@@ -34,6 +35,13 @@ public class GameServer {
     @Inject
     private GameSessionHandler sessionHandler;
 
+    /**
+     * Flag marking if the DAOs in this class have been instancied. This
+     * basically replace the whole DAOFactory pattern since only this class will
+     * ever have to access the database.
+     */
+    private boolean daoset = false;
+
     @EJB
     private PlayerDAO playerDAO;
 
@@ -42,6 +50,10 @@ public class GameServer {
      */
     @OnOpen
     public void open(Session session) {
+        if (sessionHandler == null) {
+            System.err.println("Game session handler was null, created a new one before adding a session to it.");
+            this.sessionHandler = new GameSessionHandler();
+        }
         sessionHandler.addSession(session);
     }
 
@@ -50,6 +62,10 @@ public class GameServer {
      */
     @OnClose
     public void close(Session session) {
+        if (sessionHandler == null) {
+            System.err.println("Game session handler was null, created a new one before adding a session to it.");
+            this.sessionHandler = new GameSessionHandler();
+        }
         sessionHandler.removeSession(session);
         if (SessionsInfoHolder.infoExists(session.getId())) {
             SessionsInfoHolder.removeInfo(session.getId());
@@ -68,6 +84,13 @@ public class GameServer {
      */
     @OnMessage
     public void handleMessage(String message, Session session) {
+        if (!daoset) {
+            if (this.playerDAO == null) {
+                this.playerDAO = new PlayerDAO();
+            }
+            //ADD new DAOs
+            daoset = true;
+        }
         try (JsonReader reader = Json.createReader(new StringReader(message))) {
             JsonObject jsonMessage = reader.readObject();
             if ("sessioninfo".equals(jsonMessage.getString("action"))) {
@@ -77,7 +100,9 @@ public class GameServer {
                 FreezonePositionHandler fph = new FreezonePositionHandler(this);
                 fph.handleMessage(jsonMessage, session, sessionHandler);
             }
-            
+            //ADD other "action" json message types if needed.
+            // DON'T FORGET TO ADD THEM TO THE DOCUMENTATION!!!
+            playerDAO.create(null);
         } catch (Exception e) {
             System.out.println(message);
             e.printStackTrace();

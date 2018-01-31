@@ -25,16 +25,20 @@ import javax.json.JsonReader;
 @ApplicationScoped
 @ServerEndpoint("/chat")
 public class ChatWebsocketServer {
-    
+
     @Inject
     private DeviceSessionHandler sessionHandler;
-    
+
     @OnOpen
-        public void open(Session session) {
-            sessionHandler.addSession(session);
+    public void open(Session session) {
+        if (sessionHandler == null) {
+            System.err.println("Chat session handler was null, created a new one before adding a session to it.");
+            this.sessionHandler = new DeviceSessionHandler();
+        }
+        sessionHandler.addSession(session);
     }
 
-     @OnClose
+    @OnClose
     public void close(Session session) {
         sessionHandler.removeSession(session);
     }
@@ -45,17 +49,17 @@ public class ChatWebsocketServer {
         error.printStackTrace();
     }
 
-     @OnMessage
+    @OnMessage
     public void handleMessage(String message, Session session) {
         try (JsonReader reader = Json.createReader(new StringReader(message))) {
             JsonObject jsonMessage = reader.readObject();
             if ("message".equals(jsonMessage.getString("action"))) {
                 sessionHandler.sendToAllConnectedSessions(jsonMessage);
             }
-        } catch(Exception e){
+        } catch (Exception e) {
             System.out.println(message);
             e.printStackTrace();
         }
     }
-    
+
 }
