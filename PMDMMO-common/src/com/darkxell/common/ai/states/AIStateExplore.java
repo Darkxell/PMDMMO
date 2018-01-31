@@ -44,12 +44,28 @@ public class AIStateExplore extends AIState
 				this.currentDestination = candidates.get(0);
 				return;
 			}
-			candidates = AIUtils.furthestWalkableTiles(this.ai.floor, this.ai.pokemon);
+			if (candidates.size() > 2) candidates = AIUtils.furthestWalkableTiles(this.ai.floor, this.ai.pokemon);
 		}
 
 		if (candidates.size() == 0) Logger.e(this.ai.pokemon + " didn't find a way to go :(");
-		if (candidates.size() > 1) // If more than one solution, we should remove the one it's coming from.
-			candidates.removeIf((Tile t) -> AIUtils.generalDirection(this.ai.pokemon, t) == facing.opposite());
+
+		boolean continu = candidates.size() > 1;
+		while (continu) // If more than one solution, we should remove the one it's coming from.
+		{
+			Tile delete = null;
+			for (Tile t : candidates)
+				if (AIUtils.generalDirection(this.ai.pokemon, t) == facing.opposite())
+				{
+					delete = t;
+					break;
+				}
+			if (delete == null) continu = false;
+			else
+			{
+				candidates.remove(delete);
+				continu = candidates.size() > 1;
+			}
+		}
 
 		this.currentDestination = RandomUtil.random(candidates, this.ai.floor.random);
 	}

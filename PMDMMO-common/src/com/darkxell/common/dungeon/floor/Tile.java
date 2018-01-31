@@ -96,7 +96,6 @@ public class Tile implements ItemContainer
 	public boolean canMoveTo(DungeonPokemon pokemon, Direction direction, boolean allowSwitching)
 	{
 		if (!this.canWalkOn(pokemon, allowSwitching)) return false;
-		if (!direction.isDiagonal()) return true;
 		return !this.blockingWalls(pokemon, direction.opposite());
 	}
 

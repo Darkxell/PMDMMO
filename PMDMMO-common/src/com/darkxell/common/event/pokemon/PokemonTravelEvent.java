@@ -7,6 +7,7 @@ import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Direction;
+import com.darkxell.common.util.Logger;
 
 /** The travel of Pokémon. */
 public class PokemonTravelEvent extends DungeonEvent
@@ -26,6 +27,26 @@ public class PokemonTravelEvent extends DungeonEvent
 			this.direction = direction;
 			this.origin = pokemon.tile();
 			this.destination = pokemon.tile().adjacentTile(this.direction);
+			if (!this.destination.canMoveTo(this.pokemon, this.direction, false))
+			{
+				Logger.e("Illegal movement!");
+				this.displayInConsole();
+			}
+		}
+
+		private void displayInConsole()
+		{
+			System.out.println(this.direction);
+			Floor floor = this.origin.floor;
+			int xs = this.origin.x, ys = this.origin.y;
+			for (int x = xs - 2; x <= xs + 2; ++x)
+			{
+				for (int y = ys - 2; y <= ys + 2; ++y)
+					if (floor.tileAt(x, y) == this.origin) System.out.print("O");
+					else if (floor.tileAt(x, y).getPokemon() != null) System.out.print("P");
+					else System.out.print(floor.tileAt(x, y).type().c);
+				System.out.println();
+			}
 		}
 
 		public boolean isReversed(PokemonTravel t)
