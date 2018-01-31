@@ -106,7 +106,7 @@ public class Tile implements ItemContainer
 		if (this.getPokemon() != null)
 		{
 			// If team leader and pokémon here is ally, can exchange position
-			if (!(allowSwitching && pokemon.isTeamLeader() && pokemon.pokemon.player.isAlly(this.getPokemon().pokemon))) return false;
+			if (!(allowSwitching && pokemon.pokemon.player.isAlly(this.getPokemon().pokemon))) return false;
 		}
 		return this.type.canWalkOn(pokemon);
 	}

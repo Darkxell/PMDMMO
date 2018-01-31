@@ -38,7 +38,11 @@ public class AIStateExplore extends AIState
 		else
 		{
 			candidates = AIUtils.adjacentReachableTiles(this.ai.floor, this.ai.pokemon);
-			if (candidates.size() == 0) return;
+			if (candidates.size() == 0)
+			{
+				this.currentDestination = this.ai.pokemon.tile();
+				return;
+			}
 			if (candidates.size() == 1)
 			{
 				this.currentDestination = candidates.get(0);

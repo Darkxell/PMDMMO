@@ -27,7 +27,7 @@ public class PokemonTravelEvent extends DungeonEvent
 			this.direction = direction;
 			this.origin = pokemon.tile();
 			this.destination = pokemon.tile().adjacentTile(this.direction);
-			if (!this.destination.canMoveTo(this.pokemon, this.direction, false))
+			if (!this.destination.canMoveTo(this.pokemon, this.direction, true))
 			{
 				Logger.e("Illegal movement!");
 				this.displayInConsole();
