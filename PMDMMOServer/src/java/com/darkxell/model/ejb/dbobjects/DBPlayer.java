@@ -16,15 +16,15 @@ public class DBPlayer {
     public long id;
     public String name;
     public long passhash;
-    public int moneyinbank;
-    public int moneyinbag;
+    public long moneyinbank;
+    public long moneyinbag;
     public ArrayList<DatabaseIdentifier> pokemonsinzones;
     public ArrayList<DatabaseIdentifier> pokemonsinparty;
     public DatabaseIdentifier mainpokemon;
     public DatabaseIdentifier toolboxinventory;
     public DatabaseIdentifier storageinventory;
 
-    public DBPlayer(long id, String name, long passhash, int moneyinbank, int moneyinbag,
+    public DBPlayer(long id, String name, long passhash, long moneyinbank, long moneyinbag,
             ArrayList<DatabaseIdentifier> pokemonsinzones, ArrayList<DatabaseIdentifier> pokemonsinparty,
             DatabaseIdentifier mainpokemon, DatabaseIdentifier toolboxinventory, DatabaseIdentifier storageinventory) {
         this.id = id;

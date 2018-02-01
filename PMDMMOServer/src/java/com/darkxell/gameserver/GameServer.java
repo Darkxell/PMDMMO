@@ -102,7 +102,6 @@ public class GameServer {
             }
             //ADD other "action" json message types if needed.
             // DON'T FORGET TO ADD THEM TO THE DOCUMENTATION!!!
-            playerDAO.create(null);
         } catch (Exception e) {
             System.out.println(message);
             e.printStackTrace();
