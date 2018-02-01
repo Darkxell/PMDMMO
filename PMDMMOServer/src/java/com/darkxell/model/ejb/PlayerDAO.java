@@ -19,10 +19,10 @@ import javax.sql.DataSource;
 @Stateless
 @LocalBean
 public class PlayerDAO {
-
+    
     @Resource(mappedName = "jdbc/pmdmmodatabase")
     private DataSource ds;
-
+    
     public void create(DBPlayer player) {
         try {
             // ID AUTOINCREMENT CODE
@@ -58,7 +58,7 @@ public class PlayerDAO {
             e.printStackTrace();
         }
     }
-
+    
     public void delete(DBPlayer player) {
         try {
             Connection cn = ds.getConnection();
@@ -69,11 +69,12 @@ public class PlayerDAO {
                     "DELETE FROM player WHERE id = " + player.id
             );
             cn.close();
+            System.out.print("Player " + player.name + " has been deleted from the database.");
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-
+    
     public DBPlayer find(long id) {
         DBPlayer toreturn = null;
         try {
@@ -97,7 +98,7 @@ public class PlayerDAO {
         }
         return toreturn;
     }
-
+    
     public void update(DBPlayer player) {
         try {
             Connection cn = ds.getConnection();
