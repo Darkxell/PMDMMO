@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.jdom2.Element;
 
+import com.darkxell.common.ai.AIUtils;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Room;
 import com.darkxell.common.dungeon.floor.Tile;
@@ -24,22 +25,60 @@ import com.darkxell.common.weather.Weather;
 
 public class Move
 {
-	/** Move targets.<br />
+	/** Move range.<br />
 	 * <ul>
-	 * <li>FRONT = 0</li>
-	 * <li>TWO_TILES_FRONT = 1</li>
-	 * <li>LINE_FRONT = 2</li>
-	 * <li>SELF = 3</li>
-	 * <li>ALL_ENEMIES = 4</li>
-	 * <li>ALL_ALLIES = 5</li>
-	 * <li>ALL_ALLIES_WITH_SELF = 6</li>
-	 * <li>ALL_ROOM = 7</li>
-	 * <li>ALL_ROOM_WITH_SELF = 8</li>
-	 * <li>AMBIENT = 9</li>
+	 * <li>FRONT = 0 ; The Pokémon on the Tile in front of the user.</li>
+	 * <li>FRONT_ROW = 1 ; The Pokémon on the Tiles in front and diagonals of the user.</li>
+	 * <li>AROUND = 2 ; All Pokémon within a 1-Tile range of the user.</li>
+	 * <li>ROOM = 3 ; All Pokémon in a room (or visible, if not in a room.)</li>
+	 * <li>TWO_TILES = 4 ; The Pokémon on the Tile in front of the user, or if no Pokémon, the one on the second Tile in front.</li>
+	 * <li>LINE = 5 ; The first Pokémon in the user's direction (up to ten tiles), cuts corners.</li>
+	 * <li>FLOOR = 6 ; All Pokémon on the Floor.</li>
+	 * <li>USER = 7 ; Only the user.</li>
+	 * <li>FRONT_CORNERS = 8 ; The Pokémon on the Tile in front of the user, cuts corners.</li>
+	 * <li>AMBIENT = 9 ; Does not target any Pokémon.</li>
 	 * </ul>
 	 */
-	public static final byte FRONT = 0, TWO_TILES_FRONT = 1, LINE_FRONT = 2, SELF = 3, ALL_ENEMIES = 4, ALL_ALLIES = 5, ALL_ALLIES_WITH_SELF = 6, ALL_ROOM = 7,
-			ALL_ROOM_WITH_SELF = 8, AMBIENT = 9;
+	public static enum MoveRange
+	{
+		/** Does not target any Pokémon. */
+		Ambient,
+		/** */
+		Around,
+		/** All Pokémon within a 1-Tile range of the user. */
+		Floor,
+		/** The Pokémon on the Tile in front of the user. */
+		Front,
+		/** The Pokémon on the Tile in front of the user, cuts corners. */
+		Front_corners,
+		/** The Pokémon on the Tiles in front and diagonals of the user. */
+		Front_row,
+		/** The first Pokémon in the user's direction (up to ten tiles), cuts corners. */
+		Line,
+		/** All Pokémon in a room (or visible, if not in a room.) */
+		Room,
+		/** Only the user. */
+		Self,
+		/** The Pokémon on the Tile in front of the user, or if no Pokémon, the one on the second Tile in front. */
+		Two_tiles;
+	}
+
+	public static enum MoveTarget
+	{
+		/** Any Pokémon. */
+		All,
+		/** The user's allies. */
+		Allies,
+		/** Only foes. */
+		Foes,
+		/** Any Pokémon except the user. */
+		Others,
+		/** The user and its allies. */
+		Team,
+		/** Only the user. */
+		User;
+	}
+
 	/** Move categories.<br />
 	 * <ul>
 	 * <li>PHYSICAL = 0</li>
@@ -57,8 +96,6 @@ public class Move
 	public final int behaviorID;
 	/** This move's category. See {@link Move#PHYSICAL}. */
 	public final byte category;
-	/** True if this move doesn't fail if used diagonally with solid walls. */
-	public final boolean cutsEdges;
 	/** This move's ID. */
 	public final int id;
 	/** True if this move makes contact. */
@@ -69,8 +106,10 @@ public class Move
 	public final int pp;
 	/** This move's priority. */
 	public final int priority;
-	/** This move's targets. See {@link Move#SINGLE}. */
-	public final byte targets;
+	/** This move's range. */
+	public final MoveRange range;
+	/** This move's targets. */
+	public final MoveTarget targets;
 	/** This move's type. */
 	public final PokemonType type;
 
@@ -83,15 +122,15 @@ public class Move
 		this.pp = Integer.parseInt(xml.getAttributeValue("pp"));
 		this.power = Integer.parseInt(xml.getAttributeValue("power"));
 		this.accuracy = XMLUtils.getAttribute(xml, "accuracy", 100);
-		this.targets = Byte.parseByte(xml.getAttributeValue("targets"));
+		this.range = MoveRange.valueOf(XMLUtils.getAttribute(xml, "range", MoveRange.Front.name()));
+		this.targets = MoveTarget.valueOf(XMLUtils.getAttribute(xml, "targets", MoveTarget.Foes.name()));
 		this.priority = XMLUtils.getAttribute(xml, "priority", 0);
 		this.additionalEffectChance = XMLUtils.getAttribute(xml, "random", 100);
 		this.makesContact = XMLUtils.getAttribute(xml, "contact", false);
-		this.cutsEdges = XMLUtils.getAttribute(xml, "cutedges", false);
 	}
 
-	public Move(int id, PokemonType type, int behaviorID, byte category, int pp, int power, int accuracy, byte targets, int priority,
-			int additionalEffectChance, boolean makesContact, boolean cutsEdges)
+	public Move(int id, PokemonType type, int behaviorID, byte category, int pp, int power, int accuracy, MoveRange range, MoveTarget targets, int priority,
+			int additionalEffectChance, boolean makesContact)
 	{
 		this.id = id;
 		this.type = type;
@@ -100,11 +139,11 @@ public class Move
 		this.pp = pp;
 		this.power = power;
 		this.accuracy = accuracy;
+		this.range = range;
 		this.targets = targets;
 		this.priority = priority;
 		this.additionalEffectChance = additionalEffectChance;
 		this.makesContact = makesContact;
-		this.cutsEdges = cutsEdges;
 	}
 
 	/** @return True if this Move's additional effects land. */
@@ -186,85 +225,120 @@ public class Move
 		return new Message("move.info." + this.id);
 	}
 
+	/** Removes all Pokémon this move is not supposed to target. */
+	private void filterTargets(Floor floor, DungeonPokemon user, ArrayList<DungeonPokemon> targets)
+	{
+		switch (this.targets)
+		{
+			case All:
+				break;
+
+			case Allies:
+				targets.removeIf((DungeonPokemon p) -> p == user || !p.pokemon.isAlliedWith(user.pokemon));
+				break;
+
+			case Foes:
+				targets.removeIf((DungeonPokemon p) -> p == user || p.pokemon.isAlliedWith(user.pokemon));
+				break;
+
+			case Others:
+				targets.remove(user);
+				break;
+
+			case Team:
+				targets.removeIf((DungeonPokemon p) -> !p.pokemon.isAlliedWith(user.pokemon));
+				break;
+
+			case User:
+				targets.removeIf((DungeonPokemon p) -> p != user);
+				break;
+		}
+	}
+
 	/** @param user - The Pokémon using this Move.
 	 * @param floor - The Floor context.
 	 * @return The Pokémon affected by this Move. */
 	public DungeonPokemon[] getTargets(DungeonPokemon user, Floor floor)
 	{
 		ArrayList<DungeonPokemon> targets = new ArrayList<DungeonPokemon>();
-		switch (this.targets)
-		{
-			case TWO_TILES_FRONT:
-				Tile t0 = user.tile().adjacentTile(user.facing());
-				if (t0.getPokemon() != null && !t0.getPokemon().pokemon.isAlliedWith(user.pokemon)) targets.add(t0.getPokemon());
-				else if (t0.type().canWalkOn(user))
-				{
-					t0 = t0.adjacentTile(user.facing());
-					if (t0.getPokemon() != null && !t0.getPokemon().pokemon.isAlliedWith(user.pokemon)) targets.add(t0.getPokemon());
-				}
+		Tile t = user.tile(), front = t.adjacentTile(user.facing());
 
-			case LINE_FRONT:
-				Tile t2 = user.tile();
+		switch (this.range)
+		{
+			case Ambient:
+				break;
+
+			case Around:
+				for (Direction d : Direction.directions)
+					if (t.adjacentTile(d).getPokemon() != null) targets.add(t.adjacentTile(d).getPokemon());
+				break;
+
+			case Floor:
+				targets.addAll(floor.listPokemon());
+				break;
+
+			case Front_row:
+				for (Direction d : new Direction[] { user.facing().rotateCounterClockwise(), user.facing(), user.facing().rotateClockwise() })
+					if (t.adjacentTile(d).getPokemon() != null) targets.add(t.adjacentTile(d).getPokemon());
+				break;
+
+			case Line:
 				int distance = 0;
 				boolean done;
+				Tile current = t;
 				do
 				{
-					t2 = t2.adjacentTile(user.facing());
-					if (t2.getPokemon() != null && !t2.getPokemon().pokemon.isAlliedWith(user.pokemon)) targets.add(t2.getPokemon());
+					current = current.adjacentTile(user.facing());
+					if (current.getPokemon() != null) targets.add(current.getPokemon());
 					++distance;
-					done = !targets.isEmpty() || distance >= 50 || t2.type() == TileType.WALL || t2.type() == TileType.WALL_END;
+					done = !targets.isEmpty() || distance > 10 || current.type() == TileType.WALL || current.type() == TileType.WALL_END;
 				} while (!done);
+				break;
 
-			case ALL_ALLIES:
+			case Room:
 				Room r = floor.roomAt(user.tile().x, user.tile().y);
-				if (r == null) for (Direction d : Direction.directions)
+				if (r == null)
 				{
-					Tile t1 = user.tile().adjacentTile(d);
-					if (t1.getPokemon() != null && user.pokemon.isAlliedWith(t1.getPokemon().pokemon)) targets.add(t1.getPokemon());
-				}
-				else for (Tile t1 : r.listTiles())
-					if (t1.getPokemon() != null && t1.getPokemon() != user && user.pokemon.isAlliedWith(t1.getPokemon().pokemon)) targets.add(t1.getPokemon());
+					for (Tile tile : AIUtils.visibleTiles(floor, user))
+						if (tile.getPokemon() != null) targets.add(tile.getPokemon());
+				} else for (Tile t2 : r.listTiles())
+					if (t2.getPokemon() != null) targets.add(t2.getPokemon());
 				break;
 
-			case SELF:
-			case ALL_ROOM_WITH_SELF:
-			case ALL_ALLIES_WITH_SELF:
+			case Self:
 				targets.add(user);
-				if (this.targets != ALL_ROOM_WITH_SELF) break;
-
-			case ALL_ENEMIES:
-			case ALL_ROOM:
-				r = floor.roomAt(user.tile().x, user.tile().y);
-				if (r == null) for (Direction d : Direction.directions)
-				{
-					Tile t = user.tile().adjacentTile(d);
-					if (t.getPokemon() != null
-							&& (this.targets == ALL_ROOM || this.targets == ALL_ROOM_WITH_SELF || !user.pokemon.isAlliedWith(t.getPokemon().pokemon)))
-						targets.add(t.getPokemon());
-				}
-				else for (Tile t : r.listTiles())
-					if (t.getPokemon() != null && t.getPokemon() != user)
-					{
-						if (this.targets == ALL_ROOM || this.targets == ALL_ROOM_WITH_SELF || !user.pokemon.isAlliedWith(t.getPokemon().pokemon))
-							targets.add(t.getPokemon());
-					}
 				break;
 
+			case Two_tiles:
+				if (front.getPokemon() != null) targets.add(front.getPokemon());
+				else if (front.type().canWalkOn(user))
+				{
+					Tile behind = front.adjacentTile(user.facing());
+					if (behind.getPokemon() != null) targets.add(behind.getPokemon());
+				}
+				break;
+
+			case Front:
+			case Front_corners:
 			default:
-				DungeonPokemon front = user.tile().adjacentTile(user.facing()).getPokemon();
-				if (front != null)
+				DungeonPokemon f = user.tile().adjacentTile(user.facing()).getPokemon();
+				if (f != null)
 				{
 					boolean valid = true;
-					if (user.facing().isDiagonal() && !this.cutsEdges)
+					if (user.facing().isDiagonal() && this.range != MoveRange.Front_corners)
 					{
-						Tile t = user.tile().adjacentTile(user.facing().rotateClockwise());
-						if (t.type() == TileType.WALL || t.type() == TileType.WALL_END) valid = false;
-						t = user.tile().adjacentTile(user.facing().rotateCounterClockwise());
-						if (t.type() == TileType.WALL || t.type() == TileType.WALL_END) valid = false;
+						Tile t1 = user.tile().adjacentTile(user.facing().rotateClockwise());
+						if (t1.type() == TileType.WALL || t1.type() == TileType.WALL_END) valid = false;
+						t1 = user.tile().adjacentTile(user.facing().rotateCounterClockwise());
+						if (t1.type() == TileType.WALL || t1.type() == TileType.WALL_END) valid = false;
 					}
-					if (valid) targets.add(front);
+					if (valid) targets.add(f);
 				}
 		}
+
+		this.filterTargets(floor, user, targets);
+		if (this.range == MoveRange.Room || this.range == MoveRange.Floor)
+			targets.sort((DungeonPokemon p1, DungeonPokemon p2) -> floor.dungeon.compare(p1, p2));
 
 		return targets.toArray(new DungeonPokemon[targets.size()]);
 	}
@@ -293,7 +367,7 @@ public class Move
 		ArrayList<DungeonEvent> events = new ArrayList<DungeonEvent>();
 		for (int i = 0; i < pokemon.length; ++i)
 			events.add(new MoveUseEvent(floor, move, pokemon[i]));
-		if (this.targets == AMBIENT) events.add(new MoveUseEvent(floor, move, null));
+		if (this.range == MoveRange.Ambient) events.add(new MoveUseEvent(floor, move, null));
 
 		if (events.size() == 0 && this != MoveRegistry.ATTACK) events.add(new MessageEvent(floor, new Message("move.no_target")));
 		return events;
@@ -312,11 +386,11 @@ public class Move
 		root.setAttribute("pp", Integer.toString(this.pp));
 		root.setAttribute("power", Integer.toString(this.power));
 		XMLUtils.setAttribute(root, "accuracy", this.accuracy, 100);
-		root.setAttribute("targets", Byte.toString(this.targets));
+		XMLUtils.setAttribute(root, "range", this.range.name(), MoveRange.Front.name());
+		XMLUtils.setAttribute(root, "targets", this.targets.name(), MoveTarget.Foes.name());
 		XMLUtils.setAttribute(root, "priority", this.priority, 0);
 		XMLUtils.setAttribute(root, "random", this.additionalEffectChance, 100);
 		XMLUtils.setAttribute(root, "contact", this.makesContact, false);
-		XMLUtils.setAttribute(root, "cutedges", this.cutsEdges, false);
 		return root;
 	}
 

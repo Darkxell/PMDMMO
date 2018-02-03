@@ -39,6 +39,12 @@ public class DungeonInstance
 		this.currentActor = -1;
 	}
 
+	/** Compares the input Pokémon depending on their order of action. */
+	public int compare(DungeonPokemon p1, DungeonPokemon p2)
+	{
+		return Integer.compare(this.actors.indexOf(p1), this.actors.indexOf(p2));
+	}
+
 	private Floor createFloor(int floorID)
 	{
 		return new Floor(floorID, this.dungeon().getData(floorID).layout(), this, new Random(this.random.nextLong()));

@@ -27,10 +27,10 @@ public class MoveStatusCondition extends Move
 		this.condition = XMLUtils.getAttribute(xml, "status", -1);
 	}
 
-	public MoveStatusCondition(int id, PokemonType type, int pp, int power, int accuracy, byte targets, int priority, int additionalEffectChance,
-			boolean makesContact, boolean cutsEdges, int condition)
+	public MoveStatusCondition(int id, PokemonType type, int pp, int power, int accuracy, MoveRange range, MoveTarget targets, int priority,
+			int additionalEffectChance, boolean makesContact, int condition)
 	{
-		super(id, type, -1, Move.STATUS, pp, power, accuracy, targets, priority, additionalEffectChance, makesContact, cutsEdges);
+		super(id, type, -1, Move.STATUS, pp, power, accuracy, range, targets, priority, additionalEffectChance, makesContact);
 		this.condition = condition;
 	}
 
@@ -41,8 +41,8 @@ public class MoveStatusCondition extends Move
 		if (this.condition != -1)
 		{
 			StatusCondition c = StatusCondition.find(this.condition);
-			if (c.affects(target)) e.add(new StatusConditionCreatedEvent(floor, new StatusConditionInstance(c, target, RandomUtil.nextIntInBounds(
-					c.durationMin, c.durationMax + 1, floor.random))));
+			if (c.affects(target)) e.add(new StatusConditionCreatedEvent(floor,
+					new StatusConditionInstance(c, target, RandomUtil.nextIntInBounds(c.durationMin, c.durationMax + 1, floor.random))));
 			else e.add(new MessageEvent(floor, this.unaffectedMessage(target)));
 		}
 		return e;
