@@ -9,20 +9,36 @@ import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Direction;
+import com.darkxell.common.util.RandomUtil;
 
 import javafx.util.Pair;
 
 public final class AIUtils
 {
 
+	/** @return The direction to face to look at an adjacent enemy. May be null if there are no adjacent enemies. */
+	public static Direction adjacentEnemyDirection(Floor floor, DungeonPokemon pokemon)
+	{
+		ArrayList<Tile> tiles = adjacentTiles(floor, pokemon);
+		tiles.removeIf((Tile t) -> t.getPokemon() == null || pokemon.pokemon.isAlliedWith(t.getPokemon().pokemon));
+		if (tiles.isEmpty()) return null;
+		return generalDirection(pokemon, RandomUtil.random(tiles, floor.random));
+	}
+
 	/** @return The list of adjacent Tiles reachable for the input Pokémon. */
 	public static ArrayList<Tile> adjacentReachableTiles(Floor floor, DungeonPokemon pokemon)
+	{
+		ArrayList<Tile> tiles = adjacentTiles(floor, pokemon);
+		tiles.removeIf((Tile tile) -> !tile.canMoveTo(pokemon, generalDirection(pokemon, tile), false));
+		return tiles;
+	}
+
+	public static ArrayList<Tile> adjacentTiles(Floor floor, DungeonPokemon pokemon)
 	{
 		ArrayList<Tile> tiles = new ArrayList<>();
 		Tile t = pokemon.tile();
 		for (Direction d : Direction.directions)
 			tiles.add(t.adjacentTile(d));
-		tiles.removeIf((Tile tile) -> !tile.canMoveTo(pokemon, generalDirection(pokemon, tile), false));
 		return tiles;
 	}
 
