@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import com.darkxell.common.dungeon.floor.Floor;
+import com.darkxell.common.dungeon.floor.layout.Layout;
+import com.darkxell.common.dungeon.floor.layout.StaticLayout;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.GameTurn;
 import com.darkxell.common.pokemon.DungeonPokemon;
@@ -47,7 +49,8 @@ public class DungeonInstance
 
 	private Floor createFloor(int floorID)
 	{
-		return new Floor(floorID, this.dungeon().getData(floorID).layout(), this, new Random(this.random.nextLong()));
+		Layout l = this.dungeon().getData(floorID).layout();
+		return new Floor(floorID, l, this, new Random(this.random.nextLong()), (l instanceof StaticLayout));
 	}
 
 	public Floor currentFloor()

@@ -1273,6 +1273,7 @@
     <abilities>4</abilities>
     <tms>308,87,608,96,85,707,99,13,813,309,113,814,75,956,17,65,105,103,61,123,119,8</tms>
     <learnset>
+      <level l="1">710</level>
       <level l="17">709</level>
       <level l="7">23</level>
       <level l="23">301</level>

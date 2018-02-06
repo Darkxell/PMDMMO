@@ -39,6 +39,8 @@ public class Floor
 	/** This Floor's ID. */
 	public final int id;
 	private boolean isGenerating = true;
+	/** True if this Floor is a static floor. No random Pokémon will spawn. */
+	public final boolean isStatic;
 	/** This Floor's layout. */
 	public final Layout layout;
 	/** The number of turns until a Pokémon spawns. */
@@ -54,13 +56,14 @@ public class Floor
 	/** List of Weather conditions applied to this Floor. */
 	private final ArrayList<WeatherInstance> weatherCondition;
 
-	public Floor(int id, Layout layout, DungeonInstance dungeon, Random random)
+	public Floor(int id, Layout layout, DungeonInstance dungeon, Random random, boolean isStatic)
 	{
 		this.id = id;
 		this.dungeon = dungeon;
 		this.data = this.dungeon.dungeon().getData(this.id);
 		this.layout = layout;
 		this.random = random;
+		this.isStatic = isStatic;
 		this.weatherCondition = new ArrayList<WeatherInstance>();
 		this.aiManager = new AIManager(this);
 	}
@@ -151,7 +154,10 @@ public class Floor
 		ArrayList<DungeonEvent> e = new ArrayList<DungeonEvent>();
 		Weather w = this.dungeon.dungeon().weather(this.id, this.random);
 		for (DungeonPokemon pokemon : this.listPokemon())
+		{
+			this.dungeon.registerActor(pokemon);
 			e.addAll(pokemon.onFloorStart(this));
+		}
 		e.add(new WeatherCreatedEvent(new WeatherInstance(w, null, 0, this, -1)));
 		return e;
 	}
@@ -171,7 +177,7 @@ public class Floor
 			e.addAll(this.weatherCondition.get(w).update());
 
 		// Pokémon spawning
-		if (this.data.pokemonDensity() > this.countWildPokemon())
+		if (!this.isStatic && this.data.pokemonDensity() > this.countWildPokemon())
 		{
 			if (this.nextSpawn <= 0)
 			{
