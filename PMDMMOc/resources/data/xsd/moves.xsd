@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="moved">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="move" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="move">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="statchanges" minOccurs="0" />
+			</xs:sequence>
+			<xs:attribute name="id" type="xs:positiveInteger" />
+			<xs:attribute name="type" type="xs:positiveInteger" />
+			<xs:attribute name="behavior" type="xs:positiveInteger"
+				use="optional" />
+			<xs:attribute name="movetype" type="xs:string" use="optional" />
+			<xs:attribute name="category" type="xs:positiveInteger" />
+			<xs:attribute name="pp" type="xs:positiveInteger" />
+			<xs:attribute name="power" type="xs:integer" />
+			<xs:attribute name="accuracy" type="xs:positiveInteger" />
+			<xs:attribute name="priority" type="xs:integer" use="optional" />
+			<xs:attribute name="random" type="xs:positiveInteger"
+				use="optional" />
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="statchanges">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="statchange" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:attribute name="stat" type="xs:positiveInteger" />
+						<xs:attribute name="stage" type="xs:integer" />
+						<xs:attribute name="self" type="xs:positiveInteger"
+							use="optional" />
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
