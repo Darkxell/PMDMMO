@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:simpleType name="animationValue">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="((-1)|[0-9]*)(((-1)|[0-9]*),)*" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="animation">
+		<xs:simpleContent>
+			<xs:extension base="animationValue">
+				<xs:attribute name="id" type="xs:positiveInteger" />
+				<xs:attribute name="spriteduration" type="xs:positiveInteger"
+					use="optional" />
+				<xs:attribute name="x" type="xs:positiveInteger" use="optional" />
+				<xs:attribute name="y" type="xs:positiveInteger" use="optional" />
+				<xs:attribute name="width" type="xs:positiveInteger"
+					use="optional" />
+				<xs:attribute name="height" type="xs:positiveInteger"
+					use="optional" />
+				<xs:attribute name="backsprites" type="xs:positiveInteger"
+					use="optional" />
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:element name="animations">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="custom" />
+				<xs:element ref="items" />
+				<xs:element ref="moves" />
+				<xs:element ref="statuses" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="custom">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="c" minOccurs="0" maxOccurs="unbounded"
+					type="animation" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="items">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="item" minOccurs="0" maxOccurs="unbounded"
+					type="animation" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="moves">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="move" minOccurs="0" maxOccurs="unbounded"
+					type="animation" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="statuses">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="status" minOccurs="0" maxOccurs="unbounded"
+					type="animation" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
