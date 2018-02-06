@@ -101,6 +101,8 @@ public class DungeonState extends AbstractState
 	{
 		super.onEnd();
 		this.logger.hideMessages();
+		this.diagonal = false;
+		this.rotating = false;
 	}
 
 	@Override
