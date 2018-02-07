@@ -34,9 +34,9 @@ public class SpritesetAnimation extends PokemonAnimation
 		}
 		int width = Integer.parseInt(xml.getAttributeValue("width"));
 		int height = Integer.parseInt(xml.getAttributeValue("height"));
-		AnimationSpriteset spriteset = AnimationSpriteset.getSpriteset((registry == items ? "/items" : registry == moves ? "/moves"
-				: registry == statuses ? "/status" : "/animations")
-				+ "/" + id + ".png", width, height);
+		AnimationSpriteset spriteset = AnimationSpriteset.getSpriteset(
+				(registry == items ? "/items" : registry == moves ? "/moves" : registry == statuses ? "/status" : "/animations") + "/" + id + ".png", width,
+				height);
 		int x = XMLUtils.getAttribute(xml, "x", width / 2);
 		int y = XMLUtils.getAttribute(xml, "y", height / 2);
 		int spriteDuration = XMLUtils.getAttribute(xml, "spriteduration", 2);
@@ -47,7 +47,9 @@ public class SpritesetAnimation extends PokemonAnimation
 		if (back != null) for (String b : back.split(","))
 			backSprites[Integer.parseInt(b)] = true;
 
-		return new SpritesetAnimation(target, spriteset, sprites, backSprites, spriteDuration, x, y, listener);
+		SpritesetAnimation a = new SpritesetAnimation(target, spriteset, sprites, backSprites, spriteDuration, x, y, listener);
+		a.sound = XMLUtils.getAttribute(xml, "sound", null);
+		return a;
 	}
 
 	public static AbstractAnimation getCustomAnimation(DungeonPokemon target, int id, AnimationEndListener listener)
@@ -111,8 +113,8 @@ public class SpritesetAnimation extends PokemonAnimation
 	private void draw(Graphics2D g, boolean back)
 	{
 		int index = this.index();
-		if (index != -1 && this.backSprites[index] == back) g.drawImage(this.spriteset.getSprite(index), (int) this.x - this.gravityX,
-				(int) (this.y - this.gravityY), null);
+		if (index != -1 && this.backSprites[index] == back)
+			g.drawImage(this.spriteset.getSprite(index), (int) this.x - this.gravityX, (int) (this.y - this.gravityY), null);
 	}
 
 	public double getX()

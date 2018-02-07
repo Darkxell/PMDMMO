@@ -2,6 +2,8 @@ package com.darkxell.client.mechanics.animation;
 
 import java.awt.Graphics2D;
 
+import com.darkxell.client.resources.music.SoundManager;
+
 public class AbstractAnimation
 {
 
@@ -12,6 +14,8 @@ public class AbstractAnimation
 	public boolean needsPause = true;
 	/** The number of times this animation plays. Usually 1, or -1 as until removed. */
 	public int plays = 1;
+	/** The ID of the sound to play when this Animation is played. */
+	public String sound = null;
 	/** Used to remove this animation when this Source is dropped. */
 	public Object source;
 	private int tick = 0;
@@ -48,6 +52,7 @@ public class AbstractAnimation
 	public void start()
 	{
 		AnimationTicker.instance.register(this);
+		if (this.sound != null) SoundManager.playSound(this.sound);
 	}
 
 	/** @return The current tick of this Animation. */
