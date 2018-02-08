@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<moves xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:noNamespaceSchemaLocation="xsd/moves.xsd">
+<moves xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="pmdmmo"
+  xsi:schemaLocation="pmdmmo xsd/moves.xsd">
   <move id="1" type="Normal" behavior="192" category="Physical" pp="20" power="15" accuracy="85"/>
-  <move id="2" type="Normal" behavior="212" category="Physical" pp="10" power="1" accuracy="0" priority="1"/>
+  <move id="2" type="Normal" behavior="212" category="Physical" pp="10" power="1" accuracy="0"
+    priority="1"/>
   <move id="3" type="Normal" behavior="207" category="Physical" pp="20" power="15" accuracy="85"/>
-  <move id="4" type="Normal" behavior="235" category="Status" pp="20" power="-1" accuracy="0" priority="-6"/>
+  <move id="4" type="Normal" behavior="235" category="Status" pp="20" power="-1" accuracy="0"
+    priority="-6"/>
   <move id="5" type="Normal" behavior="192" category="Physical" pp="15" power="18" accuracy="85"/>
-  <movestatchange id="6" type="Normal" movetype="StatChange" category="Physical" pp="35" power="10" random="10">
+  <movestatchange id="6" type="Normal" movetype="StatChange" category="Physical" pp="35" power="10"
+    random="10">
     <statchange stat="5" stage="-1"/>
   </movestatchange>
   <move id="7" type="Normal" behavior="94" category="Status" pp="30" power="-1" accuracy="0"/>
   <move id="8" type="Normal" movetype="" category="Physical" pp="30" power="50" accuracy="95"/>
-  <movestatchange id="9" type="Normal" movetype="StatChange" category="Status" pp="40" power="-1" accuracy="0">
+  <movestatchange id="9" type="Normal" movetype="StatChange" category="Status" pp="40" power="-1"
+    accuracy="0">
     <statchange stat="1" stage="1"/>
   </movestatchange>
   <move id="10" type="Normal" behavior="185" category="Status" pp="20" power="-1"/>
@@ -48,7 +52,8 @@
   <move id="27" type="Normal" movetype="" category="Physical" pp="25" power="65"/>
   <move id="28" type="Normal" behavior="112" category="Physical" pp="5" power="1" accuracy="30"/>
   <move id="29" type="Normal" behavior="194" category="Special" pp="5" power="150" accuracy="90"/>
-  <move id="30" type="Normal" behavior="15" category="Physical" pp="15" power="80" accuracy="90" random="10"/>
+  <move id="30" type="Normal" behavior="15" category="Physical" pp="15" power="80" accuracy="90"
+    random="10"/>
   <movestatchange id="31" type="Normal" movetype="StatChange" category="Status" pp="30" power="-1">
     <statchange stat="1" stage="-1"/>
   </movestatchange>
@@ -108,14 +113,16 @@
   <move id="70" type="Normal" behavior="105" category="Status" pp="10" power="-1" accuracy="0"/>
   <move id="71" type="Normal" behavior="23" category="Special" pp="10" power="80" random="20"/>
   <move id="72" type="Normal" movetype="" category="Physical" pp="30" power="55"/>
-  <move id="73" type="Normal" behavior="235" category="Status" pp="20" power="-1" accuracy="0" priority="-6"/>
+  <move id="73" type="Normal" behavior="235" category="Status" pp="20" power="-1" accuracy="0"
+    priority="-6"/>
   <move id="74" type="Normal" behavior="207" category="Physical" pp="20" power="15" accuracy="90"/>
   <move id="75" type="Normal" behavior="22" category="Status" pp="15" power="-1"/>
   <move id="76" type="Normal" behavior="237" category="Status" pp="40" power="-1" accuracy="0"/>
   <move id="77" type="Normal" behavior="58" category="Status" pp="10" power="-1" accuracy="0"/>
   <move id="78" type="Normal" behavior="95" category="Status" pp="30" power="-1" accuracy="0"/>
   <move id="79" type="Normal" behavior="188" category="Status" pp="5" power="-1"/>
-  <move id="80" type="Normal" behavior="232" category="Status" pp="10" power="-1" accuracy="0" priority="3"/>
+  <move id="80" type="Normal" behavior="232" category="Status" pp="10" power="-1" accuracy="0"
+    priority="3"/>
   <move id="81" type="Normal" movetype="" category="Physical" pp="5" power="80" priority="2"/>
   <move id="82" type="Normal" behavior="233" category="Physical" pp="40" power="40"/>
   <move id="83" type="Normal" behavior="152" category="Physical" pp="15" power="1"/>
@@ -131,7 +138,8 @@
   <move id="93" type="Normal" behavior="90" category="Status" pp="20" power="-1" accuracy="0"/>
   <move id="94" type="Normal" behavior="229" category="Status" pp="5" power="-1" accuracy="0"/>
   <move id="95" type="Normal" behavior="148" category="Physical" pp="15" power="1" accuracy="90"/>
-  <move id="96" type="Normal" behavior="170" category="Status" pp="10" power="-1" accuracy="0" priority="4"/>
+  <move id="96" type="Normal" behavior="170" category="Status" pp="10" power="-1" accuracy="0"
+    priority="4"/>
   <move id="97" type="Normal" behavior="85" category="Status" pp="10" power="-1" accuracy="0"/>
   <move id="98" type="Normal" behavior="272" category="Physical" pp="40" power="20"/>
   <move id="99" type="Normal" behavior="137" category="Physical" pp="20" power="1"/>
@@ -150,15 +158,17 @@
   <move id="108" type="Normal" behavior="239" category="Status" pp="5" power="-1" accuracy="0"/>
   <move id="109" type="Normal" behavior="96" category="Status" pp="20" power="-1" accuracy="0"/>
   <move id="110" type="Normal" behavior="241" category="Physical" pp="25" power="60"/>
-  <movestatchange id="111" type="Normal" movetype="StatChange" category="Physical" pp="10" power="75"
-    accuracy="95" random="50">
+  <movestatchange id="111" type="Normal" movetype="StatChange" category="Physical" pp="10"
+    power="75" accuracy="95" random="50">
     <statchange stat="1" stage="-1"/>
   </movestatchange>
   <move id="112" type="Normal" behavior="110" category="Physical" pp="5" power="1"/>
   <move id="113" type="Normal" behavior="126" category="Physical" pp="20" power="70"/>
   <move id="114" type="Normal" behavior="18" category="Physical" pp="10" power="40" priority="3"/>
-  <move id="115" type="Normal" behavior="279" category="Status" pp="20" power="-1" accuracy="0" priority="2"/>
-  <move id="116" type="Normal" behavior="156" category="Status" pp="20" power="-1" accuracy="0" priority="5"/>
+  <move id="115" type="Normal" behavior="279" category="Status" pp="20" power="-1" accuracy="0"
+    priority="2"/>
+  <move id="116" type="Normal" behavior="156" category="Status" pp="20" power="-1" accuracy="0"
+    priority="5"/>
   <movestatchange id="117" type="Normal" movetype="StatChange" category="Status" pp="40" power="-1"
     accuracy="0">
     <statchange stat="0" stage="1"/>
@@ -184,35 +194,42 @@
   <move id="133" type="Normal" behavior="4" category="Status" pp="10" power="-1" accuracy="0"/>
   <move id="201" type="Fighting" behavior="113" category="Physical" pp="20" power="1" priority="-5"/>
   <move id="202" type="Fighting" behavior="189" category="Physical" pp="30" power="30"/>
-  <move id="203" type="Fighting" behavior="267" category="Physical" pp="10" power="130" accuracy="90"/>
-  <move id="204" type="Fighting" behavior="267" category="Physical" pp="10" power="100" accuracy="95"/>
+  <move id="203" type="Fighting" behavior="267" category="Physical" pp="10" power="130"
+    accuracy="90"/>
+  <move id="204" type="Fighting" behavior="267" category="Physical" pp="10" power="100"
+    accuracy="95"/>
   <move id="205" type="Fighting" movetype="" category="Physical" pp="25" power="50"/>
   <move id="206" type="Fighting" behavior="154" category="Physical" pp="20" power="1"/>
-  <move id="207" type="Fighting" behavior="15" category="Physical" pp="15" power="60" accuracy="85" random="30"/>
+  <move id="207" type="Fighting" behavior="15" category="Physical" pp="15" power="60" accuracy="85"
+    random="30"/>
   <move id="208" type="Fighting" behavior="109" category="Physical" pp="20" power="1"/>
   <move id="209" type="Fighting" behavior="250" category="Physical" pp="25" power="80" accuracy="80"/>
   <move id="210" type="Fighting" movetype="" category="Physical" pp="5" power="100" accuracy="80"/>
-  <move id="211" type="Fighting" behavior="170" category="Status" pp="5" power="-1" accuracy="0" priority="4"/>
+  <move id="211" type="Fighting" behavior="170" category="Status" pp="5" power="-1" accuracy="0"
+    priority="4"/>
   <move id="212" type="Fighting" behavior="19" category="Physical" pp="5" power="100" accuracy="50"/>
   <move id="213" type="Fighting" movetype="" category="Physical" pp="30" power="40" priority="1"/>
   <move id="214" type="Fighting" behavior="152" category="Physical" pp="15" power="1"/>
-  <movestatchange id="215" type="Fighting" movetype="StatChange" category="Physical" pp="15" power="40"
-    random="50">
+  <movestatchange id="215" type="Fighting" movetype="StatChange" category="Physical" pp="15"
+    power="40" random="50">
     <statchange stat="1" stage="-1"/>
   </movestatchange>
   <move id="216" type="Fighting" behavior="191" category="Physical" pp="10" power="10" accuracy="90"/>
-  <move id="217" type="Fighting" behavior="165" category="Physical" pp="10" power="70" accuracy="0" priority="-1"/>
+  <move id="217" type="Fighting" behavior="165" category="Physical" pp="10" power="70" accuracy="0"
+    priority="-1"/>
   <move id="218" type="Fighting" behavior="192" category="Physical" pp="20" power="15"/>
   <move id="219" type="Fighting" behavior="266" category="Physical" pp="15" power="75"/>
-  <movestatchange id="220" type="Fighting" movetype="StatChange" category="Status" pp="20" power="-1"
-    accuracy="0">
+  <movestatchange id="220" type="Fighting" movetype="StatChange" category="Status" pp="20"
+    power="-1" accuracy="0">
     <statchange stat="0" stage="1"/>
     <statchange stat="1" stage="1"/>
   </movestatchange>
-  <move id="221" type="Fighting" behavior="277" category="Physical" pp="20" power="150" priority="-3"/>
+  <move id="221" type="Fighting" behavior="277" category="Physical" pp="20" power="150"
+    priority="-3"/>
   <move id="222" type="Fighting" behavior="129" category="Physical" pp="10" power="60" priority="-4"/>
   <move id="223" type="Fighting" behavior="283" category="Physical" pp="15" power="85" accuracy="90"/>
-  <movestatchange id="224" type="Fighting" movetype="StatChange" category="Physical" pp="5" power="120">
+  <movestatchange id="224" type="Fighting" movetype="StatChange" category="Physical" pp="5"
+    power="120">
     <statchange stat="0" stage="-1" self="1"/>
     <statchange stat="1" stage="-1" self="1"/>
   </movestatchange>
@@ -221,12 +238,14 @@
   <move id="253" type="Flying" behavior="119" category="Special" pp="35" power="40"/>
   <move id="254" type="Flying" behavior="174" category="Status" pp="20" power="-1" accuracy="0"/>
   <move id="255" type="Flying" movetype="" category="Physical" pp="35" power="35"/>
-  <move id="256" type="Flying" behavior="199" category="Physical" pp="5" power="140" accuracy="90" random="30"/>
+  <move id="256" type="Flying" behavior="199" category="Physical" pp="5" power="140" accuracy="90"
+    random="30"/>
   <move id="257" type="Flying" movetype="" category="Physical" pp="35" power="60"/>
   <move id="258" type="Flying" movetype="" category="Special" pp="5" power="100" accuracy="95"/>
   <move id="259" type="Flying" behavior="165" category="Physical" pp="20" power="60" accuracy="0"/>
   <move id="260" type="Flying" movetype="" category="Special" pp="25" power="60" accuracy="95"/>
-  <move id="261" type="Flying" behavior="204" category="Physical" pp="5" power="85" accuracy="85" random="30"/>
+  <move id="261" type="Flying" behavior="204" category="Physical" pp="5" power="85" accuracy="85"
+    random="30"/>
   <movestatchange id="262" type="Flying" movetype="StatChange" category="Status" pp="15" power="-1">
     <statchange stat="0" stage="-2"/>
   </movestatchange>
@@ -238,18 +257,20 @@
     accuracy="0">
     <statchange stat="1" stage="2"/>
   </movestatchange>
-  <movestatuscondition id="303" type="Poison" movetype="StatusCondition" category="Status" pp="40" power="-1"
-    accuracy="90" status="0"/>
-  <movestatuscondition id="304" type="Poison" movetype="StatusCondition" category="Status" pp="35" power="-1"
-    accuracy="75" status="0"/>
+  <movestatuscondition id="303" type="Poison" movetype="StatusCondition" category="Status" pp="40"
+    power="-1" accuracy="90" status="0"/>
+  <movestatuscondition id="304" type="Poison" movetype="StatusCondition" category="Status" pp="35"
+    power="-1" accuracy="75" status="0"/>
   <move id="305" type="Poison" behavior="5" category="Physical" pp="35" power="15" random="30"/>
   <move id="306" type="Poison" behavior="5" category="Special" pp="20" power="65" random="30"/>
-  <move id="307" type="Poison" behavior="5" category="Special" pp="20" power="30" accuracy="70" random="40"/>
+  <move id="307" type="Poison" behavior="5" category="Special" pp="20" power="30" accuracy="70"
+    random="40"/>
   <move id="308" type="Poison" behavior="6" category="Status" pp="10" power="-1" accuracy="90"/>
   <move id="309" type="Poison" behavior="5" category="Special" pp="10" power="90" random="30"/>
   <move id="310" type="Poison" behavior="6" category="Physical" pp="15" power="50" random="30"/>
   <move id="311" type="Poison" behavior="5" category="Physical" pp="25" power="50" random="10"/>
-  <move id="351" type="Ground" behavior="15" category="Physical" pp="20" power="65" accuracy="85" random="10"/>
+  <move id="351" type="Ground" behavior="15" category="Physical" pp="20" power="65" accuracy="85"
+    random="10"/>
   <move id="352" type="Ground" behavior="189" category="Physical" pp="10" power="50" accuracy="90"/>
   <move id="353" type="Ground" behavior="202" category="Physical" pp="10" power="80"/>
   <move id="354" type="Ground" behavior="118" category="Physical" pp="10" power="100"/>
@@ -269,9 +290,11 @@
   </movestatchange>
   <move id="362" type="Ground" behavior="157" category="Status" pp="15" power="-1" accuracy="0"/>
   <move id="363" type="Ground" behavior="207" category="Physical" pp="15" power="35" accuracy="85"/>
-  <move id="401" type="Rock" behavior="15" category="Physical" pp="10" power="75" accuracy="90" random="30"/>
+  <move id="401" type="Rock" behavior="15" category="Physical" pp="10" power="75" accuracy="90"
+    random="30"/>
   <move id="402" type="Rock" movetype="" category="Physical" pp="15" power="50" accuracy="90"/>
-  <movestatchange id="403" type="Rock" movetype="StatChange" category="Special" pp="5" power="60" random="10">
+  <movestatchange id="403" type="Rock" movetype="StatChange" category="Special" pp="5" power="60"
+    random="10">
     <statchange stat="0" stage="1" self="1"/>
     <statchange stat="1" stage="1" self="1"/>
     <statchange stat="3" stage="1" self="1"/>
@@ -296,7 +319,8 @@
   <move id="456" type="Bug" movetype="" category="Physical" pp="10" power="120" accuracy="85"/>
   <move id="457" type="Bug" behavior="239" category="Status" pp="10" power="-1" accuracy="0"/>
   <move id="458" type="Bug" behavior="19" category="Special" pp="15" power="75" random="10"/>
-  <movestatchange id="459" type="Bug" movetype="StatChange" category="Special" pp="5" power="60" random="10">
+  <movestatchange id="459" type="Bug" movetype="StatChange" category="Special" pp="5" power="60"
+    random="10">
     <statchange stat="0" stage="1" self="1"/>
     <statchange stat="1" stage="1" self="1"/>
     <statchange stat="3" stage="1" self="1"/>
@@ -317,8 +341,8 @@
   <move id="509" type="Ghost" behavior="15" category="Physical" pp="15" power="30" random="30"/>
   <move id="510" type="Ghost" behavior="230" category="Status" pp="5" power="-1" accuracy="0"/>
   <move id="511" type="Ghost" behavior="165" category="Physical" pp="20" power="60" accuracy="0"/>
-  <movestatchange id="551" type="Steel" movetype="StatChange" category="Physical" pp="15" power="100"
-    accuracy="75" random="30">
+  <movestatchange id="551" type="Steel" movetype="StatChange" category="Physical" pp="15"
+    power="100" accuracy="75" random="30">
     <statchange stat="1" stage="-1"/>
   </movestatchange>
   <movestatchange id="552" type="Steel" movetype="StatChange" category="Physical" pp="35" power="50"
@@ -347,17 +371,21 @@
     <statchange stat="3" stage="3"/>
   </movestatchange>
   <move id="601" type="Fire" behavior="10" category="Special" pp="25" power="40" random="10"/>
-  <move id="602" type="Fire" behavior="10" category="Special" pp="5" power="110" accuracy="85" random="10"/>
+  <move id="602" type="Fire" behavior="10" category="Special" pp="5" power="110" accuracy="85"
+    random="10"/>
   <move id="603" type="Fire" behavior="10" category="Physical" pp="15" power="75" random="10"/>
   <move id="604" type="Fire" behavior="207" category="Special" pp="15" power="35" accuracy="85"/>
   <move id="605" type="Fire" behavior="10" category="Special" pp="15" power="90" random="10"/>
   <move id="606" type="Fire" behavior="10" category="Physical" pp="25" power="60" random="10"/>
-  <move id="607" type="Fire" behavior="10" category="Physical" pp="5" power="100" accuracy="95" random="50"/>
+  <move id="607" type="Fire" behavior="10" category="Physical" pp="5" power="100" accuracy="95"
+    random="50"/>
   <move id="608" type="Fire" behavior="255" category="Status" pp="5" power="-1" accuracy="0"/>
   <move id="609" type="Fire" behavior="194" category="Special" pp="5" power="150" accuracy="90"/>
-  <move id="610" type="Fire" behavior="10" category="Physical" pp="10" power="85" accuracy="90" random="10"/>
+  <move id="610" type="Fire" behavior="10" category="Physical" pp="10" power="85" accuracy="90"
+    random="10"/>
   <move id="611" type="Fire" behavior="139" category="Special" pp="5" power="150"/>
-  <move id="612" type="Fire" behavior="10" category="Special" pp="10" power="95" accuracy="90" random="10"/>
+  <move id="612" type="Fire" behavior="10" category="Special" pp="10" power="95" accuracy="90"
+    random="10"/>
   <movestatchange id="613" type="Fire" movetype="StatChange" category="Special" pp="5" power="130"
     accuracy="90">
     <statchange stat="3" stage="-1" self="1"/>
@@ -419,7 +447,8 @@
   <move id="719" type="Grass" movetype="" category="Physical" pp="15" power="90"/>
   <move id="720" type="Grass" behavior="165" category="Special" pp="20" power="60" accuracy="0"/>
   <move id="721" type="Grass" behavior="15" category="Physical" pp="15" power="60" random="30"/>
-  <move id="751" type="Electric" behavior="8" category="Special" pp="10" power="110" accuracy="70" random="30"/>
+  <move id="751" type="Electric" behavior="8" category="Special" pp="10" power="110" accuracy="70"
+    random="30"/>
   <move id="752" type="Electric" behavior="7" category="Special" pp="15" power="90" random="10"/>
   <move id="753" type="Electric" behavior="7" category="Physical" pp="15" power="75" random="10"/>
   <move id="754" type="Electric" behavior="7" category="Special" pp="30" power="40" random="10"/>
@@ -454,8 +483,8 @@
     <statchange stat="1" stage="-1"/>
   </movestatchange>
   <move id="810" type="Psychic" behavior="19" category="Special" pp="20" power="65" random="10"/>
-  <movestatchange id="811" type="Psychic" movetype="StatChange" category="Special" pp="10" power="90"
-    random="10">
+  <movestatchange id="811" type="Psychic" movetype="StatChange" category="Special" pp="10"
+    power="90" random="10">
     <statchange stat="4" stage="-1"/>
   </movestatchange>
   <move id="812" type="Psychic" behavior="111" category="Special" pp="15" power="1"/>
@@ -480,13 +509,14 @@
     random="50">
     <statchange stat="4" stage="-1"/>
   </movestatchange>
-  <move id="823" type="Psychic" behavior="177" category="Status" pp="15" power="-1" accuracy="0" priority="4"/>
+  <move id="823" type="Psychic" behavior="177" category="Status" pp="15" power="-1" accuracy="0"
+    priority="4"/>
   <movestatchange id="824" type="Psychic" movetype="StatChange" category="Special" pp="5" power="70"
     random="50">
     <statchange stat="3" stage="-1"/>
   </movestatchange>
-  <movestatchange id="825" type="Psychic" movetype="StatChange" category="Special" pp="5" power="140"
-    accuracy="90">
+  <movestatchange id="825" type="Psychic" movetype="StatChange" category="Special" pp="5"
+    power="140" accuracy="90">
     <statchange stat="3" stage="-1" self="1"/>
   </movestatchange>
   <move id="826" type="Psychic" behavior="101" category="Status" pp="10" power="-1" accuracy="0"/>
@@ -496,7 +526,8 @@
     random="10">
     <statchange stat="0" stage="-1"/>
   </movestatchange>
-  <move id="852" type="Ice" behavior="13" category="Special" pp="5" power="110" accuracy="70" random="10"/>
+  <move id="852" type="Ice" behavior="13" category="Special" pp="5" power="110" accuracy="70"
+    random="10"/>
   <move id="853" type="Ice" behavior="81" category="Status" pp="30" power="-1" accuracy="0"/>
   <move id="854" type="Ice" behavior="12" category="Special" pp="10" power="90" random="10"/>
   <move id="855" type="Ice" behavior="12" category="Physical" pp="15" power="75" random="10"/>
@@ -534,7 +565,8 @@
   <move id="958" type="Dark" behavior="64" category="Status" pp="15" power="-1"/>
   <move id="959" type="Dark" behavior="240" category="Physical" pp="20" power="60"/>
   <move id="960" type="Dark" behavior="226" category="Status" pp="10" power="-1"/>
-  <move id="961" type="Dark" behavior="178" category="Status" pp="10" power="-1" accuracy="0" priority="4"/>
+  <move id="961" type="Dark" behavior="178" category="Status" pp="10" power="-1" accuracy="0"
+    priority="4"/>
   <move id="962" type="Dark" behavior="186" category="Status" pp="20" power="-1"/>
   <move id="963" type="Dark" behavior="183" category="Status" pp="15" power="-1"/>
   <move id="1001" type="Fairy" behavior="19" category="Status" pp="10" power="-1" accuracy="75"/>
@@ -543,5 +575,6 @@
   </movestatchange>
   <move id="1003" type="Fairy" behavior="216" category="Status" pp="5" power="-1" accuracy="0"/>
   <move id="2000" type="Unknown" behavior="2000" category="Physical" pp="10" power="-1" accuracy="0"/>
-  <move id="2001" type="Unknown" behavior="2001" category="Physical" pp="10" power="-1" accuracy="0"/>
+  <move id="2001" type="Unknown" behavior="2001" category="Physical" pp="10" power="-1" accuracy="0"
+  />
 </moves>
