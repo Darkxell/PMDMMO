@@ -1,47 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:simpleType name="posInt">
+		<xs:restriction base="xs:int">
+			<xs:minInclusive value="0"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="movebase">
+		<xs:attribute name="id" type="posInt"/>
+		<xs:attribute name="type" type="posInt"/>
+		<xs:attribute name="category" type="posInt"/>
+		<xs:attribute name="pp" type="posInt"/>
+		<xs:attribute name="power" type="xs:int"/>
+		<xs:attribute name="accuracy" type="xs:int"/>
+		<xs:attribute name="priority" type="xs:int" use="optional"/>
+		<xs:attribute name="random" type="posInt" use="optional"/>
+	</xs:complexType>
+
 	<xs:element name="moves">
 		<xs:complexType>
-			<xs:sequence>
-				<xs:element ref="move" maxOccurs="unbounded" />
-			</xs:sequence>
+			<xs:choice maxOccurs="unbounded">
+				<xs:element name="move" type="movedefault"/>
+				<xs:element name="movestatchange" type="movestatchange"/>
+				<xs:element name="movestatuscondition" type="movestatuscondition"/>
+			</xs:choice>
 		</xs:complexType>
 	</xs:element>
 
-	<xs:element name="move">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element ref="statchanges" minOccurs="0" />
-			</xs:sequence>
-			<xs:attribute name="id" type="xs:int"/>
-			<xs:attribute name="type" type="xs:int" />
-			<xs:attribute name="behavior" type="xs:int"
-				use="optional" />
-			<xs:attribute name="movetype" type="xs:string" use="optional" />
-			<xs:attribute name="category" type="xs:int" />
-			<xs:attribute name="pp" type="xs:int" />
-			<xs:attribute name="power" type="xs:int" />
-			<xs:attribute name="accuracy" type="xs:int" />
-			<xs:attribute name="priority" type="xs:int" use="optional" />
-			<xs:attribute name="random" type="xs:int"
-				use="optional" />
-			<xs:attribute name="status" type="xs:int"
-				use="optional" />
-		</xs:complexType>
-	</xs:element>
+	<xs:complexType name="movedefault">
+		<xs:complexContent>
+			<xs:extension base="movebase">
+				<xs:attribute name="behavior" type="posInt" use="optional"/>
+				<xs:attribute name="movetype" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
 
-	<xs:element name="statchanges">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element name="statchange" maxOccurs="unbounded">
-					<xs:complexType>
-						<xs:attribute name="stat" type="xs:int" />
-						<xs:attribute name="stage" type="xs:int" />
-						<xs:attribute name="self" type="xs:int"
-							use="optional" />
-					</xs:complexType>
-				</xs:element>
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
+	<xs:complexType name="movestatchange">
+		<xs:complexContent>
+			<xs:extension base="movebase">
+				<xs:sequence>
+					<xs:element name="statchange" maxOccurs="unbounded">
+						<xs:complexType>
+							<xs:attribute name="stat" type="xs:int"/>
+							<xs:attribute name="stage" type="xs:int"/>
+							<xs:attribute name="self" type="xs:int" use="optional"/>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="movetype" fixed="StatChange"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="movestatuscondition">
+		<xs:complexContent>
+			<xs:extension base="movebase">
+				<xs:attribute name="movetype" fixed="StatusCondition"/>
+				<xs:attribute name="status" type="xs:int"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
 </xs:schema>
