@@ -34,7 +34,7 @@ public final class MoveRegistry
 		Logger.instance().debug("Loading Moves...");
 
 		Element root = XMLUtils.readFile(new File("resources/data/moves.xml"));
-		for (Element e : root.getChildren("move"))
+		for (Element e : root.getChildren())
 			try
 			{
 				String className = e.getAttributeValue("movetype");
