@@ -1,34 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
-	<xs:simpleType name="posInt">
-		<xs:restriction base="xs:int">
-			<xs:minInclusive value="0"/>
-		</xs:restriction>
-	</xs:simpleType>
-
-	<xs:simpleType name="pkmntype">
-		<xs:restriction base="xs:token">
-			<xs:enumeration value="Normal"/>
-			<xs:enumeration value="Fighting"/>
-			<xs:enumeration value="Flying"/>
-			<xs:enumeration value="Poison"/>
-			<xs:enumeration value="Ground"/>
-			<xs:enumeration value="Rock"/>
-			<xs:enumeration value="Bug"/>
-			<xs:enumeration value="Ghost"/>
-			<xs:enumeration value="Steel"/>
-			<xs:enumeration value="Fire"/>
-			<xs:enumeration value="Water"/>
-			<xs:enumeration value="Grass"/>
-			<xs:enumeration value="Electric"/>
-			<xs:enumeration value="Psychic"/>
-			<xs:enumeration value="Ice"/>
-			<xs:enumeration value="Dragon"/>
-			<xs:enumeration value="Dark"/>
-			<xs:enumeration value="Fairy"/>
-			<xs:enumeration value="Unknown"/>
-		</xs:restriction>
-	</xs:simpleType>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="pmdmmo" targetNamespace="pmdmmo">
+	<xs:include schemaLocation="base.xsd"/>
 
 	<xs:simpleType name="movecategory">
 		<xs:restriction base="xs:token">

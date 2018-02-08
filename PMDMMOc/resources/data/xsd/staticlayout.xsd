@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="pmdmmo" targetNamespace="pmdmmo">
+	<xs:include schemaLocation="base.xsd"/>
 	<xs:element name="floor">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element ref="rooms" />
-				<xs:element name="tiles" />
-				<xs:element ref="items" />
-				<xs:element ref="pokemons" />
+				<xs:element ref="rooms"/>
+				<xs:element name="tiles"/>
+				<xs:element ref="items"/>
+				<xs:element ref="pokemons"/>
 				<xs:element name="spawn">
 					<xs:complexType>
-						<xs:attribute name="x" type="xs:int" />
-						<xs:attribute name="y" type="xs:int" />
+						<xs:attribute name="x" type="posInt"/>
+						<xs:attribute name="y" type="posInt"/>
 					</xs:complexType>
 				</xs:element>
-				<xs:element ref="traps" />
+				<xs:element ref="traps"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -23,10 +24,10 @@
 			<xs:sequence>
 				<xs:element name="room" minOccurs="0" maxOccurs="unbounded">
 					<xs:complexType>
-						<xs:attribute name="x" type="xs:int" />
-						<xs:attribute name="y" type="xs:int" />
-						<xs:attribute name="width" type="xs:int" />
-						<xs:attribute name="height" type="xs:int" />
+						<xs:attribute name="x" type="posInt"/>
+						<xs:attribute name="y" type="posInt"/>
+						<xs:attribute name="width" type="xs:positiveInteger"/>
+						<xs:attribute name="height" type="xs:positiveInteger"/>
 					</xs:complexType>
 				</xs:element>
 			</xs:sequence>
@@ -38,11 +39,10 @@
 			<xs:sequence>
 				<xs:element name="item" minOccurs="0" maxOccurs="unbounded">
 					<xs:complexType>
-						<xs:attribute name="id" type="xs:int" />
-						<xs:attribute name="x" type="xs:int" />
-						<xs:attribute name="y" type="xs:int" />
-						<xs:attribute name="quantity" type="xs:int"
-							use="optional" />
+						<xs:attribute name="id" type="posInt"/>
+						<xs:attribute name="x" type="posInt"/>
+						<xs:attribute name="y" type="posInt"/>
+						<xs:attribute name="quantity" type="xs:positiveInteger" use="optional"/>
 					</xs:complexType>
 				</xs:element>
 			</xs:sequence>
@@ -54,10 +54,10 @@
 			<xs:sequence>
 				<xs:element name="pokemon" minOccurs="0" maxOccurs="unbounded">
 					<xs:complexType>
-						<xs:attribute name="id" type="xs:int" />
-						<xs:attribute name="x" type="xs:int" />
-						<xs:attribute name="y" type="xs:int" />
-						<xs:attribute name="level" type="xs:int" />
+						<xs:attribute name="id" type="posInt"/>
+						<xs:attribute name="x" type="posInt"/>
+						<xs:attribute name="y" type="posInt"/>
+						<xs:attribute name="level" type="xs:positiveInteger"/>
 					</xs:complexType>
 				</xs:element>
 			</xs:sequence>
@@ -69,9 +69,9 @@
 			<xs:sequence>
 				<xs:element name="trap" minOccurs="0" maxOccurs="unbounded">
 					<xs:complexType>
-						<xs:attribute name="id" type="xs:int" />
-						<xs:attribute name="x" type="xs:int" />
-						<xs:attribute name="y" type="xs:int" />
+						<xs:attribute name="id" type="posInt"/>
+						<xs:attribute name="x" type="posInt"/>
+						<xs:attribute name="y" type="posInt"/>
 					</xs:complexType>
 				</xs:element>
 			</xs:sequence>
