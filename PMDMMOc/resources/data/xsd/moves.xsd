@@ -16,7 +16,7 @@
 		<xs:attribute name="type" type="pkmntype"/>
 		<xs:attribute name="category" type="movecategory"/>
 		<xs:attribute name="pp" type="posInt"/>
-		<xs:attribute name="power" type="xs:int"/>
+		<xs:attribute name="power" type="posInt-1"/>
 		<xs:attribute name="accuracy" type="xs:int"/>
 		<xs:attribute name="priority" type="xs:int" use="optional"/>
 		<xs:attribute name="random" type="posInt" use="optional"/>
