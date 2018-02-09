@@ -1,0 +1,149 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="pmdmmo" targetNamespace="pmdmmo"
+    elementFormDefault="qualified" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+    vc:minVersion="1.1">
+    <xs:include schemaLocation="base.xsd"/>
+
+    <xs:element name="floors">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="part" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:attribute name="floor" use="optional" type="xs:positiveInteger"/>
+                        <xs:attribute name="start" use="optional" type="xs:positiveInteger"/>
+                        <xs:attribute name="end" use="optional" type="xs:positiveInteger"/>
+                        <xs:assert
+                            test="(@floor and not(@start) and not(@end)) or (not(@floor) and @start and @end)"
+                        />
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="except" minOccurs="0" type="intList"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="dungeons">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="dungeon" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="dungeon">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="encounters">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="pokemon" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="items">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="group" type="group" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="shops" minOccurs="0">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="group" type="group" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="buried" minOccurs="0">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="group" type="group" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="traps" minOccurs="0">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="trap" type="group" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="data">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="d" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="weather" minOccurs="0">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="w" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:positiveInteger"/>
+            <xs:attribute name="floors" type="xs:positiveInteger"/>
+            <xs:attribute name="down" type="xs:boolean" use="optional"/>
+            <xs:attribute name="recruits" type="xs:boolean"/>
+            <xs:attribute name="sticky" type="xs:positiveInteger" use="optional"/>
+            <xs:attribute name="limit" type="xs:positiveInteger" use="optional"/>
+            <xs:attribute name="mapx" type="xs:positiveInteger"/>
+            <xs:attribute name="mapy" type="xs:positiveInteger"/>
+            <xs:attribute name="linked" type="xs:positiveInteger"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="pokemon">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="floors"/>
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:positiveInteger"/>
+            <xs:attribute name="level" type="xs:positiveInteger"/>
+            <xs:attribute name="weight" type="xs:positiveInteger"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="group">
+        <xs:all>
+            <xs:element ref="floors"/>
+            <xs:element name="ids" type="intList"/>
+            <xs:element name="chances" type="intList" minOccurs="0"/>
+        </xs:all>
+        <xs:attribute name="weight" type="xs:positiveInteger" use="optional"/>
+    </xs:complexType>
+
+    <xs:element name="d">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="floors"/>
+            </xs:sequence>
+            <xs:attribute name="difficulty" type="xs:positiveInteger" use="optional"/>
+            <xs:attribute name="money" type="posInt" use="optional"/>
+            <xs:attribute name="layout" type="posInt" use="optional"/>
+            <xs:attribute name="terrain" type="posInt" use="optional"/>
+            <xs:attribute name="shadows" type="posInt" use="optional"/>
+            <xs:attribute name="camouflage" type="posInt" use="optional"/>
+            <xs:attribute name="nature" type="xs:positiveInteger" use="optional"/>
+            <xs:attribute name="secret" type="xs:string" use="optional"/>
+            <xs:attribute name="items" type="posInt" use="optional"/>
+            <xs:attribute name="pokemon" type="posInt" use="optional"/>
+            <xs:attribute name="traps" type="posInt" use="optional"/>
+            <xs:attribute name="buried" type="posInt" use="optional"/>
+            <xs:attribute name="mhouse" type="posInt" use="optional"/>
+            <xs:attribute name="shop" type="posInt" use="optional"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="w">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="floors"/>
+            </xs:sequence>
+            <xs:attribute name="id" type="posInt-1"/>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>
