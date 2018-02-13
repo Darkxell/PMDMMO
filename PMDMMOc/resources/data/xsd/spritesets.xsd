@@ -5,7 +5,7 @@
 
     <xs:complexType name="spritebase">
         <xs:simpleContent>
-            <xs:extension base="strList"/>
+            <xs:extension base="intList"/>
         </xs:simpleContent>
     </xs:complexType>
 
@@ -13,7 +13,6 @@
         <xs:complexContent>
             <xs:extension base="spritebase">
                 <xs:attribute name="duration" type="intList"/>
-                <xs:attribute name="index" type="intList"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
@@ -33,6 +32,7 @@
                 <xs:element name="attack" type="sprite"/>
                 <xs:element name="idle" type="sprite"/>
                 <xs:element name="move" type="sprite"/>
+                <xs:element name="sleep" type="sprite" minOccurs="0"/>
                 <xs:element name="spe1" type="sprite"/>
                 <xs:element name="spe2" type="sprite"/>
                 <xs:element name="victory" type="sprite" minOccurs="0"/>
