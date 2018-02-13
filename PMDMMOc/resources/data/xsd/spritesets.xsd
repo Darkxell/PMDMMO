@@ -35,7 +35,7 @@
                 <xs:element name="move" type="sprite"/>
                 <xs:element name="sleep" type="sprite" minOccurs="0"/>
                 <xs:element name="spe1" type="sprite"/>
-                <xs:element name="spe2" type="sprite"/>
+                <xs:element name="spe2" type="sprite" minOccurs="0"/>
                 <xs:element name="victory" type="sprite" minOccurs="0"/>
                 <xs:element name="wake" type="sprite" minOccurs="0"/>
             </xs:sequence>

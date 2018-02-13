@@ -51,6 +51,7 @@ public class AbstractPokemonSpriteset
 		{
 			if (xml.getChild(xmlElementNames[i], xml.getNamespace()) != null)
 				this.states[i] = new PokemonSpritesetState(xml.getChild(xmlElementNames[i], xml.getNamespace()));
+			else if (i == PokemonSprite.STATE_SPECIAL2) this.states[i] = this.states[PokemonSprite.STATE_SPECIAL1];
 			else if (i == PokemonSprite.STATE_HURT) this.states[i] = new PokemonSpritesetState(new int[] { 2 }, new int[] { 25 });
 			else if (i == PokemonSprite.STATE_SLEEP || i == PokemonSprite.STATE_REST)
 				this.states[i] = new PokemonSpritesetState(new int[] { 0, 1 }, new int[] { 30, 10 });
