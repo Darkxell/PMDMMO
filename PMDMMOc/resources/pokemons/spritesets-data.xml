@@ -2,11 +2,13 @@
 <sprites xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="pmdmmo"
   xsi:schemaLocation="pmdmmo ../data/xsd/spritesets.xsd">
   <pokemon id="0" size="32">
-    <attack duration="32">5</attack>
-    <idle duration="32">3</idle>
-    <move duration="32">4</move>
-    <spe1 duration="32">6</spe1>
-    <spe2 duration="32">7</spe2>
+    <attack duration="32">4</attack>
+    <hurt duration="32">1</hurt>
+    <idle duration="32">2</idle>
+    <move duration="32">3</move>
+    <sleep duration="32">0</sleep>
+    <spe1 duration="32">4</spe1>
+    <spe2 duration="32">4</spe2>
   </pokemon>
   <pokemon id="1" size="25" x="12" y="15">
     <attack duration="20,6,6">9,10,11</attack>
