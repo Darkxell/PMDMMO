@@ -49,12 +49,12 @@ public abstract class Persistance {
 	public static DungeonState dungeonState;
 	public static MasterDungeonRenderer dungeonRenderer;
 	public static Floor floor;
-	public static Player player = new Player(0, ClientSettings.getSetting(ClientSettings.LOGIN), PokemonRegistry.find(260).generate(new Random(), 1));
+	public static Player player = new Player(0, ClientSettings.getSetting(ClientSettings.LOGIN), PokemonRegistry.find(2).generate(new Random(), 1));
 	public static ClientEventProcessor eventProcessor;
 
 	static {
-		player.addAlly(PokemonRegistry.find(1).generate(new Random(), 1, 1));
-		player.addAlly(PokemonRegistry.find(16).generate(new Random(), 1));
+		//player.addAlly(PokemonRegistry.find(1).generate(new Random(), 1, 1));
+		//player.addAlly(PokemonRegistry.find(16).generate(new Random(), 1));
 		player.getTeamLeader().setMove(0, new LearnedMove(303));
 		player.getTeamLeader().setItem(new ItemStack(ItemID.XRaySpecs));
 	}

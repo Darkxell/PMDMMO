@@ -25,7 +25,7 @@ public class DungeonEncounter
 		this.id = Integer.parseInt(xml.getAttributeValue("id"));
 		this.level = Integer.parseInt(xml.getAttributeValue("level"));
 		this.weight = XMLUtils.getAttribute(xml, "weight", 1);
-		this.floors = new FloorSet(xml.getChild(FloorSet.XML_ROOT));
+		this.floors = new FloorSet(xml.getChild(FloorSet.XML_ROOT, xml.getNamespace()));
 	}
 
 	public DungeonEncounter(int id, int level, int weight, FloorSet floors)

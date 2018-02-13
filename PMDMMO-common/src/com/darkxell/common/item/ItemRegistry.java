@@ -33,7 +33,7 @@ public final class ItemRegistry
 		Logger.instance().debug("Loading Items...");
 
 		Element root = XMLUtils.readFile(new File("resources/data/items.xml"));
-		for (Element e : root.getChildren("item"))
+		for (Element e : root.getChildren("item", root.getNamespace()))
 			try
 			{
 				String className = e.getAttributeValue("type");

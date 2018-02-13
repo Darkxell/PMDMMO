@@ -67,35 +67,35 @@ public class Dungeon implements Comparable<Dungeon>
 		this.mapy = XMLUtils.getAttribute(xml, "mapy", -140) + 140;
 
 		this.pokemon = new ArrayList<DungeonEncounter>();
-		for (Element pokemon : xml.getChild("encounters").getChildren(DungeonEncounter.XML_ROOT))
+		for (Element pokemon : xml.getChild("encounters", xml.getNamespace()).getChildren(DungeonEncounter.XML_ROOT, xml.getNamespace()))
 			this.pokemon.add(new DungeonEncounter(pokemon));
 
 		this.items = new ArrayList<DungeonItem>();
-		for (Element item : xml.getChild("items").getChildren(DungeonItem.XML_ROOT))
+		for (Element item : xml.getChild("items", xml.getNamespace()).getChildren(DungeonItem.XML_ROOT, xml.getNamespace()))
 			this.items.add(new DungeonItem(item));
 
 		this.shopItems = new ArrayList<DungeonItem>();
-		if (xml.getChild("shops") != null) for (Element item : xml.getChild("shops").getChildren(DungeonItem.XML_ROOT))
+		if (xml.getChild("shops", xml.getNamespace()) != null) for (Element item : xml.getChild("shops", xml.getNamespace()).getChildren(DungeonItem.XML_ROOT, xml.getNamespace()))
 			this.shopItems.add(new DungeonItem(item));
 
 		this.buriedItems = new ArrayList<DungeonItem>();
-		if (xml.getChild("buried") != null) for (Element item : xml.getChild("buried").getChildren(DungeonItem.XML_ROOT))
+		if (xml.getChild("buried", xml.getNamespace()) != null) for (Element item : xml.getChild("buried", xml.getNamespace()).getChildren(DungeonItem.XML_ROOT, xml.getNamespace()))
 			this.buriedItems.add(new DungeonItem(item));
 
 		this.traps = new ArrayList<DungeonTrap>();
-		if (xml.getChild("traps") == null)
+		if (xml.getChild("traps", xml.getNamespace()) == null)
 		{
 			this.traps.add(new DungeonTrap(new int[]
 			{ TrapRegistry.WONDER_TILE.id }, new int[]
 			{ 100 }, new FloorSet(1, this.floorCount)));
 		} else
 		{
-			for (Element trap : xml.getChild("traps").getChildren(DungeonTrap.XML_ROOT))
+			for (Element trap : xml.getChild("traps", xml.getNamespace()).getChildren(DungeonTrap.XML_ROOT, xml.getNamespace()))
 				this.traps.add(new DungeonTrap(trap));
 		}
 
 		this.floorData = new ArrayList<FloorData>();
-		for (Element data : xml.getChild("data").getChildren(FloorData.XML_ROOT))
+		for (Element data : xml.getChild("data", xml.getNamespace()).getChildren(FloorData.XML_ROOT, xml.getNamespace()))
 		{
 			FloorData d = null;
 			if (this.floorData.isEmpty()) d = new FloorData(data);
@@ -108,8 +108,8 @@ public class Dungeon implements Comparable<Dungeon>
 		}
 
 		this.weather = new HashMap<Integer, FloorSet>();
-		if (xml.getChild("weather") != null) for (Element data : xml.getChild("weather").getChildren("w"))
-			this.weather.put(Integer.parseInt(data.getAttributeValue("id")), new FloorSet(data.getChild(FloorSet.XML_ROOT)));
+		if (xml.getChild("weather", xml.getNamespace()) != null) for (Element data : xml.getChild("weather", xml.getNamespace()).getChildren("w", xml.getNamespace()))
+			this.weather.put(Integer.parseInt(data.getAttributeValue("id")), new FloorSet(data.getChild(FloorSet.XML_ROOT, xml.getNamespace())));
 	}
 
 	public Dungeon(int id, int floorCount, boolean direction, double monsterHouseChance,
