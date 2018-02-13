@@ -3,9 +3,19 @@
     elementFormDefault="qualified" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning">
     <xs:include schemaLocation="base.xsd"/>
 
+    <xs:complexType name="spritebase">
+        <xs:simpleContent>
+            <xs:extension base="strList"/>
+        </xs:simpleContent>
+    </xs:complexType>
+
     <xs:complexType name="sprite">
-        <xs:attribute name="duration" type="intList"/>
-        <xs:attribute name="index" type="intList"/>
+        <xs:complexContent>
+            <xs:extension base="spritebase">
+                <xs:attribute name="duration" type="intList"/>
+                <xs:attribute name="index" type="intList"/>
+            </xs:extension>
+        </xs:complexContent>
     </xs:complexType>
 
     <xs:element name="sprites">
@@ -19,6 +29,7 @@
     <xs:element name="pokemon">
         <xs:complexType>
             <xs:sequence>
+                <xs:element name="spritenames" type="strList" minOccurs="0"/>
                 <xs:element name="attack" type="sprite"/>
                 <xs:element name="idle" type="sprite"/>
                 <xs:element name="move" type="sprite"/>
