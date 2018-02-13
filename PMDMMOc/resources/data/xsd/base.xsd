@@ -16,7 +16,7 @@
 
     <xs:simpleType name="strList">
         <xs:restriction base="xs:string">
-            <xs:pattern value="[A-z]+(,[A-z]+)*"/>
+            <xs:pattern value="([A-z]|[0-9])+(,([A-z]|[0-9])+)*"/>
         </xs:restriction>
     </xs:simpleType>
 
