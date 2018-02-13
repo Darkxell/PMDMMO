@@ -16,18 +16,10 @@ public class PokemonSpritesetState
 		for (int i = 0; i < data.length; i++)
 			this.durations[i] = Integer.parseInt(data[i]);
 
-		if (xml.getAttribute("index") != null)
-		{
-			data = xml.getAttributeValue("index").split(",");
-			this.indexes = new int[data.length];
-			for (int i = 0; i < data.length; i++)
-				this.indexes[i] = Integer.parseInt(data[i]);
-		} else
-		{
-			this.indexes = new int[this.durations.length];
-			for (int i = 0; i < this.indexes.length; ++i)
-				this.indexes[i] = i;
-		}
+		data = xml.getText().split(",");
+		this.indexes = new int[data.length];
+		for (int i = 0; i < data.length; i++)
+			this.indexes[i] = Integer.parseInt(data[i]);
 
 		this.duration = this.totalDuration();
 	}
