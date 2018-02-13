@@ -117,7 +117,7 @@ public class FloorData
 
 	public void load(Element xml)
 	{
-		this.floors = new FloorSet(xml.getChild(FloorSet.XML_ROOT));
+		this.floors = new FloorSet(xml.getChild(FloorSet.XML_ROOT, xml.getNamespace()));
 		this.difficulty = XMLUtils.getAttribute(xml, "difficulty", this.difficulty);
 		this.baseMoney = XMLUtils.getAttribute(xml, "money", this.baseMoney);
 		this.layout = XMLUtils.getAttribute(xml, "layout", this.layout);
