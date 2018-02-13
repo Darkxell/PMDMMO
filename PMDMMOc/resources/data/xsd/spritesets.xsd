@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="pmdmmo" targetNamespace="pmdmmo"
+    elementFormDefault="qualified" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning">
+    <xs:include schemaLocation="base.xsd"/>
+
+    <xs:complexType name="sprite">
+        <xs:attribute name="duration" type="intList"/>
+        <xs:attribute name="index" type="intList"/>
+    </xs:complexType>
+
+    <xs:element name="sprites">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="pokemon" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="pokemon">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="attack" type="sprite"/>
+                <xs:element name="idle" type="sprite"/>
+                <xs:element name="move" type="sprite"/>
+                <xs:element name="spe1" type="sprite"/>
+                <xs:element name="spe2" type="sprite"/>
+                <xs:element name="victory" type="sprite" minOccurs="0"/>
+                <xs:element name="wake" type="sprite" minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="id" type="posInt"/>
+            <xs:attribute name="size" type="xs:positiveInteger"/>
+            <xs:attribute name="x" type="xs:positiveInteger" use="optional"/>
+            <xs:attribute name="y" type="xs:positiveInteger" use="optional"/>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

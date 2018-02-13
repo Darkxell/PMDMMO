@@ -8,167 +8,167 @@ import com.darkxell.common.util.language.Message;
 public enum PokemonType
 {
 
-	BUG(6, new Color(168, 184, 32)),
-	DARK(16, new Color(112, 88, 72)),
-	DRAGON(15, new Color(112, 56, 248)),
-	ELECTR(12, new Color(248, 208, 48)),
-	FAIRY(17, new Color(238, 153, 172)),
-	FIGHT(1, new Color(192, 48, 40)),
-	FIRE(9, new Color(240, 128, 48)),
-	FLYING(2, new Color(168, 144, 240)),
-	GHOST(7, new Color(112, 88, 152)),
-	GRASS(11, new Color(120, 200, 80)),
-	GROUND(4, new Color(224, 192, 104)),
-	ICE(14, new Color(152, 216, 216)),
-	NORMAL(0, new Color(168, 168, 120)),
-	POISON(3, new Color(160, 64, 160)),
-	PSYCHC(13, new Color(248, 88, 136)),
-	ROCK(5, new Color(184, 160, 56)),
-	STEEL(8, new Color(184, 184, 208)),
-	UNKNOWN(19, new Color(104, 160, 144)),
-	WATER(10, new Color(104, 144, 240));
+	Bug(6, new Color(168, 184, 32)),
+	Dark(16, new Color(112, 88, 72)),
+	Dragon(15, new Color(112, 56, 248)),
+	Electric(12, new Color(248, 208, 48)),
+	Fairy(17, new Color(238, 153, 172)),
+	Fighting(1, new Color(192, 48, 40)),
+	Fire(9, new Color(240, 128, 48)),
+	Flying(2, new Color(168, 144, 240)),
+	Ghost(7, new Color(112, 88, 152)),
+	Grass(11, new Color(120, 200, 80)),
+	Ground(4, new Color(224, 192, 104)),
+	Ice(14, new Color(152, 216, 216)),
+	Normal(0, new Color(168, 168, 120)),
+	Poison(3, new Color(160, 64, 160)),
+	Psychic(13, new Color(248, 88, 136)),
+	Rock(5, new Color(184, 160, 56)),
+	Steel(8, new Color(184, 184, 208)),
+	Unknown(19, new Color(104, 160, 144)),
+	Water(10, new Color(104, 144, 240));
 
 	public static final float SUPER_EFFECTIVE = 1.4f, NORMALLY_EFFECTIVE = 1, NOT_VERY_EFFECTIVE = 0.7f, NO_EFFECT = 0;
 
 	static
 	{
-		NORMAL.setEffectivenessOn(GHOST, NO_EFFECT);
-		NORMAL.setEffectivenessOn(ROCK, NOT_VERY_EFFECTIVE);
-		NORMAL.setEffectivenessOn(STEEL, NOT_VERY_EFFECTIVE);
+		Normal.setEffectivenessOn(Ghost, NO_EFFECT);
+		Normal.setEffectivenessOn(Rock, NOT_VERY_EFFECTIVE);
+		Normal.setEffectivenessOn(Steel, NOT_VERY_EFFECTIVE);
 
-		FIGHT.setEffectivenessOn(GHOST, NO_EFFECT);
-		FIGHT.setEffectivenessOn(FLYING, NOT_VERY_EFFECTIVE);
-		FIGHT.setEffectivenessOn(POISON, NOT_VERY_EFFECTIVE);
-		FIGHT.setEffectivenessOn(BUG, NOT_VERY_EFFECTIVE);
-		FIGHT.setEffectivenessOn(PSYCHC, NOT_VERY_EFFECTIVE);
-		FIGHT.setEffectivenessOn(FAIRY, NOT_VERY_EFFECTIVE);
-		FIGHT.setEffectivenessOn(NORMAL, SUPER_EFFECTIVE);
-		FIGHT.setEffectivenessOn(ROCK, SUPER_EFFECTIVE);
-		FIGHT.setEffectivenessOn(STEEL, SUPER_EFFECTIVE);
-		FIGHT.setEffectivenessOn(ICE, SUPER_EFFECTIVE);
-		FIGHT.setEffectivenessOn(DARK, SUPER_EFFECTIVE);
+		Fighting.setEffectivenessOn(Ghost, NO_EFFECT);
+		Fighting.setEffectivenessOn(Flying, NOT_VERY_EFFECTIVE);
+		Fighting.setEffectivenessOn(Poison, NOT_VERY_EFFECTIVE);
+		Fighting.setEffectivenessOn(Bug, NOT_VERY_EFFECTIVE);
+		Fighting.setEffectivenessOn(Psychic, NOT_VERY_EFFECTIVE);
+		Fighting.setEffectivenessOn(Fairy, NOT_VERY_EFFECTIVE);
+		Fighting.setEffectivenessOn(Normal, SUPER_EFFECTIVE);
+		Fighting.setEffectivenessOn(Rock, SUPER_EFFECTIVE);
+		Fighting.setEffectivenessOn(Steel, SUPER_EFFECTIVE);
+		Fighting.setEffectivenessOn(Ice, SUPER_EFFECTIVE);
+		Fighting.setEffectivenessOn(Dark, SUPER_EFFECTIVE);
 
-		FLYING.setEffectivenessOn(ROCK, NOT_VERY_EFFECTIVE);
-		FLYING.setEffectivenessOn(STEEL, NOT_VERY_EFFECTIVE);
-		FLYING.setEffectivenessOn(ELECTR, NOT_VERY_EFFECTIVE);
-		FLYING.setEffectivenessOn(FIGHT, SUPER_EFFECTIVE);
-		FLYING.setEffectivenessOn(BUG, SUPER_EFFECTIVE);
-		FLYING.setEffectivenessOn(GRASS, SUPER_EFFECTIVE);
+		Flying.setEffectivenessOn(Rock, NOT_VERY_EFFECTIVE);
+		Flying.setEffectivenessOn(Steel, NOT_VERY_EFFECTIVE);
+		Flying.setEffectivenessOn(Electric, NOT_VERY_EFFECTIVE);
+		Flying.setEffectivenessOn(Fighting, SUPER_EFFECTIVE);
+		Flying.setEffectivenessOn(Bug, SUPER_EFFECTIVE);
+		Flying.setEffectivenessOn(Grass, SUPER_EFFECTIVE);
 
-		POISON.setEffectivenessOn(STEEL, NO_EFFECT);
-		POISON.setEffectivenessOn(POISON, NOT_VERY_EFFECTIVE);
-		POISON.setEffectivenessOn(GROUND, NOT_VERY_EFFECTIVE);
-		POISON.setEffectivenessOn(ROCK, NOT_VERY_EFFECTIVE);
-		POISON.setEffectivenessOn(GHOST, NOT_VERY_EFFECTIVE);
-		POISON.setEffectivenessOn(GRASS, SUPER_EFFECTIVE);
-		POISON.setEffectivenessOn(FAIRY, SUPER_EFFECTIVE);
+		Poison.setEffectivenessOn(Steel, NO_EFFECT);
+		Poison.setEffectivenessOn(Poison, NOT_VERY_EFFECTIVE);
+		Poison.setEffectivenessOn(Ground, NOT_VERY_EFFECTIVE);
+		Poison.setEffectivenessOn(Rock, NOT_VERY_EFFECTIVE);
+		Poison.setEffectivenessOn(Ghost, NOT_VERY_EFFECTIVE);
+		Poison.setEffectivenessOn(Grass, SUPER_EFFECTIVE);
+		Poison.setEffectivenessOn(Fairy, SUPER_EFFECTIVE);
 
-		GROUND.setEffectivenessOn(FLYING, NO_EFFECT);
-		GROUND.setEffectivenessOn(BUG, NOT_VERY_EFFECTIVE);
-		GROUND.setEffectivenessOn(GRASS, NOT_VERY_EFFECTIVE);
-		GROUND.setEffectivenessOn(POISON, SUPER_EFFECTIVE);
-		GROUND.setEffectivenessOn(ROCK, SUPER_EFFECTIVE);
-		GROUND.setEffectivenessOn(STEEL, SUPER_EFFECTIVE);
-		GROUND.setEffectivenessOn(FIRE, SUPER_EFFECTIVE);
-		GROUND.setEffectivenessOn(ELECTR, SUPER_EFFECTIVE);
+		Ground.setEffectivenessOn(Flying, NO_EFFECT);
+		Ground.setEffectivenessOn(Bug, NOT_VERY_EFFECTIVE);
+		Ground.setEffectivenessOn(Grass, NOT_VERY_EFFECTIVE);
+		Ground.setEffectivenessOn(Poison, SUPER_EFFECTIVE);
+		Ground.setEffectivenessOn(Rock, SUPER_EFFECTIVE);
+		Ground.setEffectivenessOn(Steel, SUPER_EFFECTIVE);
+		Ground.setEffectivenessOn(Fire, SUPER_EFFECTIVE);
+		Ground.setEffectivenessOn(Electric, SUPER_EFFECTIVE);
 
-		ROCK.setEffectivenessOn(FIGHT, NOT_VERY_EFFECTIVE);
-		ROCK.setEffectivenessOn(GROUND, NOT_VERY_EFFECTIVE);
-		ROCK.setEffectivenessOn(STEEL, NOT_VERY_EFFECTIVE);
-		ROCK.setEffectivenessOn(FLYING, SUPER_EFFECTIVE);
-		ROCK.setEffectivenessOn(BUG, SUPER_EFFECTIVE);
-		ROCK.setEffectivenessOn(FIRE, SUPER_EFFECTIVE);
-		ROCK.setEffectivenessOn(ICE, SUPER_EFFECTIVE);
+		Rock.setEffectivenessOn(Fighting, NOT_VERY_EFFECTIVE);
+		Rock.setEffectivenessOn(Ground, NOT_VERY_EFFECTIVE);
+		Rock.setEffectivenessOn(Steel, NOT_VERY_EFFECTIVE);
+		Rock.setEffectivenessOn(Flying, SUPER_EFFECTIVE);
+		Rock.setEffectivenessOn(Bug, SUPER_EFFECTIVE);
+		Rock.setEffectivenessOn(Fire, SUPER_EFFECTIVE);
+		Rock.setEffectivenessOn(Ice, SUPER_EFFECTIVE);
 
-		BUG.setEffectivenessOn(FIGHT, NOT_VERY_EFFECTIVE);
-		BUG.setEffectivenessOn(FLYING, NOT_VERY_EFFECTIVE);
-		BUG.setEffectivenessOn(POISON, NOT_VERY_EFFECTIVE);
-		BUG.setEffectivenessOn(GHOST, NOT_VERY_EFFECTIVE);
-		BUG.setEffectivenessOn(STEEL, NOT_VERY_EFFECTIVE);
-		BUG.setEffectivenessOn(FIRE, NOT_VERY_EFFECTIVE);
-		BUG.setEffectivenessOn(ELECTR, NOT_VERY_EFFECTIVE);
-		BUG.setEffectivenessOn(GRASS, SUPER_EFFECTIVE);
-		BUG.setEffectivenessOn(PSYCHC, SUPER_EFFECTIVE);
-		BUG.setEffectivenessOn(DARK, SUPER_EFFECTIVE);
+		Bug.setEffectivenessOn(Fighting, NOT_VERY_EFFECTIVE);
+		Bug.setEffectivenessOn(Flying, NOT_VERY_EFFECTIVE);
+		Bug.setEffectivenessOn(Poison, NOT_VERY_EFFECTIVE);
+		Bug.setEffectivenessOn(Ghost, NOT_VERY_EFFECTIVE);
+		Bug.setEffectivenessOn(Steel, NOT_VERY_EFFECTIVE);
+		Bug.setEffectivenessOn(Fire, NOT_VERY_EFFECTIVE);
+		Bug.setEffectivenessOn(Electric, NOT_VERY_EFFECTIVE);
+		Bug.setEffectivenessOn(Grass, SUPER_EFFECTIVE);
+		Bug.setEffectivenessOn(Psychic, SUPER_EFFECTIVE);
+		Bug.setEffectivenessOn(Dark, SUPER_EFFECTIVE);
 
-		GHOST.setEffectivenessOn(NORMAL, NO_EFFECT);
-		GHOST.setEffectivenessOn(DARK, NOT_VERY_EFFECTIVE);
-		GHOST.setEffectivenessOn(GHOST, SUPER_EFFECTIVE);
-		GHOST.setEffectivenessOn(PSYCHC, SUPER_EFFECTIVE);
+		Ghost.setEffectivenessOn(Normal, NO_EFFECT);
+		Ghost.setEffectivenessOn(Dark, NOT_VERY_EFFECTIVE);
+		Ghost.setEffectivenessOn(Ghost, SUPER_EFFECTIVE);
+		Ghost.setEffectivenessOn(Psychic, SUPER_EFFECTIVE);
 
-		STEEL.setEffectivenessOn(STEEL, NOT_VERY_EFFECTIVE);
-		STEEL.setEffectivenessOn(FIRE, NOT_VERY_EFFECTIVE);
-		STEEL.setEffectivenessOn(WATER, NOT_VERY_EFFECTIVE);
-		STEEL.setEffectivenessOn(ELECTR, NOT_VERY_EFFECTIVE);
-		STEEL.setEffectivenessOn(ROCK, SUPER_EFFECTIVE);
-		STEEL.setEffectivenessOn(ICE, SUPER_EFFECTIVE);
-		STEEL.setEffectivenessOn(FAIRY, SUPER_EFFECTIVE);
+		Steel.setEffectivenessOn(Steel, NOT_VERY_EFFECTIVE);
+		Steel.setEffectivenessOn(Fire, NOT_VERY_EFFECTIVE);
+		Steel.setEffectivenessOn(Water, NOT_VERY_EFFECTIVE);
+		Steel.setEffectivenessOn(Electric, NOT_VERY_EFFECTIVE);
+		Steel.setEffectivenessOn(Rock, SUPER_EFFECTIVE);
+		Steel.setEffectivenessOn(Ice, SUPER_EFFECTIVE);
+		Steel.setEffectivenessOn(Fairy, SUPER_EFFECTIVE);
 
-		FIRE.setEffectivenessOn(ROCK, NOT_VERY_EFFECTIVE);
-		FIRE.setEffectivenessOn(FIRE, NOT_VERY_EFFECTIVE);
-		FIRE.setEffectivenessOn(WATER, NOT_VERY_EFFECTIVE);
-		FIRE.setEffectivenessOn(DRAGON, NOT_VERY_EFFECTIVE);
-		FIRE.setEffectivenessOn(BUG, SUPER_EFFECTIVE);
-		FIRE.setEffectivenessOn(STEEL, SUPER_EFFECTIVE);
-		FIRE.setEffectivenessOn(GRASS, SUPER_EFFECTIVE);
-		FIRE.setEffectivenessOn(ICE, SUPER_EFFECTIVE);
+		Fire.setEffectivenessOn(Rock, NOT_VERY_EFFECTIVE);
+		Fire.setEffectivenessOn(Fire, NOT_VERY_EFFECTIVE);
+		Fire.setEffectivenessOn(Water, NOT_VERY_EFFECTIVE);
+		Fire.setEffectivenessOn(Dragon, NOT_VERY_EFFECTIVE);
+		Fire.setEffectivenessOn(Bug, SUPER_EFFECTIVE);
+		Fire.setEffectivenessOn(Steel, SUPER_EFFECTIVE);
+		Fire.setEffectivenessOn(Grass, SUPER_EFFECTIVE);
+		Fire.setEffectivenessOn(Ice, SUPER_EFFECTIVE);
 
-		WATER.setEffectivenessOn(WATER, NOT_VERY_EFFECTIVE);
-		WATER.setEffectivenessOn(GRASS, NOT_VERY_EFFECTIVE);
-		WATER.setEffectivenessOn(DRAGON, NOT_VERY_EFFECTIVE);
-		WATER.setEffectivenessOn(GROUND, SUPER_EFFECTIVE);
-		WATER.setEffectivenessOn(ROCK, SUPER_EFFECTIVE);
-		WATER.setEffectivenessOn(FIRE, SUPER_EFFECTIVE);
+		Water.setEffectivenessOn(Water, NOT_VERY_EFFECTIVE);
+		Water.setEffectivenessOn(Grass, NOT_VERY_EFFECTIVE);
+		Water.setEffectivenessOn(Dragon, NOT_VERY_EFFECTIVE);
+		Water.setEffectivenessOn(Ground, SUPER_EFFECTIVE);
+		Water.setEffectivenessOn(Rock, SUPER_EFFECTIVE);
+		Water.setEffectivenessOn(Fire, SUPER_EFFECTIVE);
 
-		GRASS.setEffectivenessOn(FLYING, NOT_VERY_EFFECTIVE);
-		GRASS.setEffectivenessOn(POISON, NOT_VERY_EFFECTIVE);
-		GRASS.setEffectivenessOn(BUG, NOT_VERY_EFFECTIVE);
-		GRASS.setEffectivenessOn(STEEL, NOT_VERY_EFFECTIVE);
-		GRASS.setEffectivenessOn(FIRE, NOT_VERY_EFFECTIVE);
-		GRASS.setEffectivenessOn(GRASS, NOT_VERY_EFFECTIVE);
-		GRASS.setEffectivenessOn(DRAGON, NOT_VERY_EFFECTIVE);
-		GRASS.setEffectivenessOn(GROUND, SUPER_EFFECTIVE);
-		GRASS.setEffectivenessOn(ROCK, SUPER_EFFECTIVE);
-		GRASS.setEffectivenessOn(WATER, SUPER_EFFECTIVE);
+		Grass.setEffectivenessOn(Flying, NOT_VERY_EFFECTIVE);
+		Grass.setEffectivenessOn(Poison, NOT_VERY_EFFECTIVE);
+		Grass.setEffectivenessOn(Bug, NOT_VERY_EFFECTIVE);
+		Grass.setEffectivenessOn(Steel, NOT_VERY_EFFECTIVE);
+		Grass.setEffectivenessOn(Fire, NOT_VERY_EFFECTIVE);
+		Grass.setEffectivenessOn(Grass, NOT_VERY_EFFECTIVE);
+		Grass.setEffectivenessOn(Dragon, NOT_VERY_EFFECTIVE);
+		Grass.setEffectivenessOn(Ground, SUPER_EFFECTIVE);
+		Grass.setEffectivenessOn(Rock, SUPER_EFFECTIVE);
+		Grass.setEffectivenessOn(Water, SUPER_EFFECTIVE);
 
-		ELECTR.setEffectivenessOn(GROUND, NO_EFFECT);
-		ELECTR.setEffectivenessOn(GRASS, NOT_VERY_EFFECTIVE);
-		ELECTR.setEffectivenessOn(ELECTR, NOT_VERY_EFFECTIVE);
-		ELECTR.setEffectivenessOn(DRAGON, NOT_VERY_EFFECTIVE);
-		ELECTR.setEffectivenessOn(FLYING, SUPER_EFFECTIVE);
-		ELECTR.setEffectivenessOn(WATER, SUPER_EFFECTIVE);
+		Electric.setEffectivenessOn(Ground, NO_EFFECT);
+		Electric.setEffectivenessOn(Grass, NOT_VERY_EFFECTIVE);
+		Electric.setEffectivenessOn(Electric, NOT_VERY_EFFECTIVE);
+		Electric.setEffectivenessOn(Dragon, NOT_VERY_EFFECTIVE);
+		Electric.setEffectivenessOn(Flying, SUPER_EFFECTIVE);
+		Electric.setEffectivenessOn(Water, SUPER_EFFECTIVE);
 
-		PSYCHC.setEffectivenessOn(DARK, NO_EFFECT);
-		PSYCHC.setEffectivenessOn(STEEL, NOT_VERY_EFFECTIVE);
-		PSYCHC.setEffectivenessOn(PSYCHC, NOT_VERY_EFFECTIVE);
-		PSYCHC.setEffectivenessOn(FIGHT, SUPER_EFFECTIVE);
-		PSYCHC.setEffectivenessOn(POISON, SUPER_EFFECTIVE);
+		Psychic.setEffectivenessOn(Dark, NO_EFFECT);
+		Psychic.setEffectivenessOn(Steel, NOT_VERY_EFFECTIVE);
+		Psychic.setEffectivenessOn(Psychic, NOT_VERY_EFFECTIVE);
+		Psychic.setEffectivenessOn(Fighting, SUPER_EFFECTIVE);
+		Psychic.setEffectivenessOn(Poison, SUPER_EFFECTIVE);
 
-		ICE.setEffectivenessOn(STEEL, NOT_VERY_EFFECTIVE);
-		ICE.setEffectivenessOn(FIRE, NOT_VERY_EFFECTIVE);
-		ICE.setEffectivenessOn(WATER, NOT_VERY_EFFECTIVE);
-		ICE.setEffectivenessOn(ICE, NOT_VERY_EFFECTIVE);
-		ICE.setEffectivenessOn(FLYING, SUPER_EFFECTIVE);
-		ICE.setEffectivenessOn(GROUND, SUPER_EFFECTIVE);
-		ICE.setEffectivenessOn(GRASS, SUPER_EFFECTIVE);
-		ICE.setEffectivenessOn(DRAGON, SUPER_EFFECTIVE);
+		Ice.setEffectivenessOn(Steel, NOT_VERY_EFFECTIVE);
+		Ice.setEffectivenessOn(Fire, NOT_VERY_EFFECTIVE);
+		Ice.setEffectivenessOn(Water, NOT_VERY_EFFECTIVE);
+		Ice.setEffectivenessOn(Ice, NOT_VERY_EFFECTIVE);
+		Ice.setEffectivenessOn(Flying, SUPER_EFFECTIVE);
+		Ice.setEffectivenessOn(Ground, SUPER_EFFECTIVE);
+		Ice.setEffectivenessOn(Grass, SUPER_EFFECTIVE);
+		Ice.setEffectivenessOn(Dragon, SUPER_EFFECTIVE);
 
-		DRAGON.setEffectivenessOn(FAIRY, NO_EFFECT);
-		DRAGON.setEffectivenessOn(STEEL, NOT_VERY_EFFECTIVE);
-		DRAGON.setEffectivenessOn(DRAGON, NOT_VERY_EFFECTIVE);
+		Dragon.setEffectivenessOn(Fairy, NO_EFFECT);
+		Dragon.setEffectivenessOn(Steel, NOT_VERY_EFFECTIVE);
+		Dragon.setEffectivenessOn(Dragon, NOT_VERY_EFFECTIVE);
 
-		DARK.setEffectivenessOn(FIGHT, NOT_VERY_EFFECTIVE);
-		DARK.setEffectivenessOn(DARK, NOT_VERY_EFFECTIVE);
-		DARK.setEffectivenessOn(FAIRY, NOT_VERY_EFFECTIVE);
-		DARK.setEffectivenessOn(GHOST, SUPER_EFFECTIVE);
-		DARK.setEffectivenessOn(PSYCHC, SUPER_EFFECTIVE);
+		Dark.setEffectivenessOn(Fighting, NOT_VERY_EFFECTIVE);
+		Dark.setEffectivenessOn(Dark, NOT_VERY_EFFECTIVE);
+		Dark.setEffectivenessOn(Fairy, NOT_VERY_EFFECTIVE);
+		Dark.setEffectivenessOn(Ghost, SUPER_EFFECTIVE);
+		Dark.setEffectivenessOn(Psychic, SUPER_EFFECTIVE);
 
-		FAIRY.setEffectivenessOn(POISON, NOT_VERY_EFFECTIVE);
-		FAIRY.setEffectivenessOn(STEEL, NOT_VERY_EFFECTIVE);
-		FAIRY.setEffectivenessOn(FIRE, NOT_VERY_EFFECTIVE);
-		FAIRY.setEffectivenessOn(FIGHT, SUPER_EFFECTIVE);
-		FAIRY.setEffectivenessOn(DRAGON, SUPER_EFFECTIVE);
-		FAIRY.setEffectivenessOn(DARK, SUPER_EFFECTIVE);
+		Fairy.setEffectivenessOn(Poison, NOT_VERY_EFFECTIVE);
+		Fairy.setEffectivenessOn(Steel, NOT_VERY_EFFECTIVE);
+		Fairy.setEffectivenessOn(Fire, NOT_VERY_EFFECTIVE);
+		Fairy.setEffectivenessOn(Fighting, SUPER_EFFECTIVE);
+		Fairy.setEffectivenessOn(Dragon, SUPER_EFFECTIVE);
+		Fairy.setEffectivenessOn(Dark, SUPER_EFFECTIVE);
 	}
 
 	/** @return The Pokémon type with the input ID. null if ID doesn't match a type. */

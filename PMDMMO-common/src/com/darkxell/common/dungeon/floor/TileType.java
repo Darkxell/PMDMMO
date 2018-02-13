@@ -57,10 +57,10 @@ public enum TileType
 
 	public boolean canWalkOn(DungeonPokemon pokemon)
 	{
-		if (pokemon.pokemon.species.isType(PokemonType.GHOST)) return this != WALL_END;
-		if (pokemon.pokemon.species.isType(PokemonType.WATER) && this == WATER) return true;
-		if (pokemon.pokemon.species.isType(PokemonType.FIRE) && this == LAVA) return true;
-		if (pokemon.pokemon.species.isType(PokemonType.FLYING) && this == AIR) return true;
+		if (pokemon.pokemon.species.isType(PokemonType.Ghost)) return this != WALL_END;
+		if (pokemon.pokemon.species.isType(PokemonType.Water) && this == WATER) return true;
+		if (pokemon.pokemon.species.isType(PokemonType.Fire) && this == LAVA) return true;
+		if (pokemon.pokemon.species.isType(PokemonType.Flying) && this == AIR) return true;
 		return this == GROUND || this == STAIR;
 	}
 

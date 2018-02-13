@@ -33,7 +33,7 @@ public final class PokemonRegistry
 		Logger.instance().debug("Loading Pokémon...");
 
 		Element root = XMLUtils.readFile(new File("resources/data/pokemon.xml"));
-		for (Element e : root.getChildren("pokemon"))
+		for (Element e : root.getChildren("pokemon", root.getNamespace()))
 			try
 			{
 				PokemonSpecies species = new PokemonSpecies(e);

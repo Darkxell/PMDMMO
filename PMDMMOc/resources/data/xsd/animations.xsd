@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="pmdmmo" targetNamespace="pmdmmo"
+	elementFormDefault="qualified">
+	<xs:include schemaLocation="base.xsd"/>
+	<xs:complexType name="animation">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="id" type="posInt"/>
+				<xs:attribute name="spriteduration" type="xs:positiveInteger" use="optional"/>
+				<xs:attribute name="x" type="xs:int" use="optional"/>
+				<xs:attribute name="y" type="xs:int" use="optional"/>
+				<xs:attribute name="width" type="xs:positiveInteger" use="optional"/>
+				<xs:attribute name="height" type="xs:positiveInteger" use="optional"/>
+				<xs:attribute name="backsprites" type="posInt" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:element name="animations">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="custom"/>
+				<xs:element ref="items"/>
+				<xs:element ref="moves"/>
+				<xs:element ref="statuses"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="custom">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="c" minOccurs="0" maxOccurs="unbounded" type="animation"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="items">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="item" minOccurs="0" maxOccurs="unbounded" type="animation"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="moves">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="move" minOccurs="0" maxOccurs="unbounded" type="animation"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="statuses">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="status" minOccurs="0" maxOccurs="unbounded" type="animation"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

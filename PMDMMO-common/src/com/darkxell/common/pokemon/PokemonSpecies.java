@@ -43,43 +43,43 @@ public class PokemonSpecies
 	{
 		this.id = Integer.parseInt(xml.getAttributeValue("id"));
 		this.formID = XMLUtils.getAttribute(xml, "form-id", 0);
-		this.type1 = PokemonType.find(Integer.parseInt(xml.getAttributeValue("type1")));
-		this.type2 = xml.getAttribute("type2") == null ? null : PokemonType.find(Integer.parseInt(xml.getAttributeValue("type2")));
+		this.type1 = PokemonType.valueOf(xml.getAttributeValue("type1"));
+		this.type2 = xml.getAttribute("type2") == null ? null : PokemonType.valueOf(xml.getAttributeValue("type2"));
 		this.baseXP = Integer.parseInt(xml.getAttributeValue("base-xp"));
 		this.height = Float.parseFloat(xml.getAttributeValue("height"));
 		this.weight = Float.parseFloat(xml.getAttributeValue("weight"));
-		this.abilities = XMLUtils.readIntArrayAsList(xml.getChild("abilities"));
+		this.abilities = XMLUtils.readIntArrayAsList(xml.getChild("abilities", xml.getNamespace()));
 		this.baseStats = new ArrayList<PokemonStats>();
 		this.learnset = new HashMap<Integer, ArrayList<Integer>>();
-		this.tms = XMLUtils.readIntArrayAsList(xml.getChild("tms"));
+		this.tms = XMLUtils.readIntArrayAsList(xml.getChild("tms", xml.getNamespace()));
 		this.evolutions = new ArrayList<Evolution>();
 
-		if (xml.getChild("statline") != null)
+		if (xml.getChild("statline", xml.getNamespace()) != null)
 		{
-			int[][] statline = XMLUtils.readDoubleIntArray(xml.getChild("statline"));
+			int[][] statline = XMLUtils.readDoubleIntArray(xml.getChild("statline", xml.getNamespace()));
 			for (int[] stat : statline)
 				this.baseStats.add(new PokemonStats(stat));
 		}
 
-		if (xml.getChild("experience") != null)
+		if (xml.getChild("experience", xml.getNamespace()) != null)
 		{
-			String[] lvls = xml.getChildText("experience").split(",");
+			String[] lvls = xml.getChildText("experience", xml.getNamespace()).split(",");
 			this.experiencePerLevel = new int[lvls.length];
 			for (int lvl = 0; lvl < lvls.length; lvl++)
 				this.experiencePerLevel[lvl] = Integer.parseInt(lvls[lvl]);
 		} else this.experiencePerLevel = new int[0];
 
-		if (xml.getChild("evolves") != null) for (Element e : xml.getChild("evolves").getChildren())
+		if (xml.getChild("evolves", xml.getNamespace()) != null) for (Element e : xml.getChild("evolves", xml.getNamespace()).getChildren())
 			this.evolutions.add(new Evolution(e));
 
-		if (xml.getChild("tms") != null) for (Element tm : xml.getChild("tms").getChildren())
+		if (xml.getChild("tms", xml.getNamespace()) != null) for (Element tm : xml.getChild("tms", xml.getNamespace()).getChildren())
 			this.tms.add(Integer.parseInt(tm.getAttributeValue("id")));
 
-		if (xml.getChild("learnset") != null) for (Element level : xml.getChild("learnset").getChildren())
+		if (xml.getChild("learnset", xml.getNamespace()) != null) for (Element level : xml.getChild("learnset", xml.getNamespace()).getChildren())
 			this.learnset.put(Integer.parseInt(level.getAttributeValue("l")), XMLUtils.readIntArrayAsList(level));
 
 		this.forms = new ArrayList<PokemonSpecies>();
-		for (Element form : xml.getChildren("form"))
+		for (Element form : xml.getChildren("form", xml.getNamespace()))
 			this.forms.add(createForm(form));
 	}
 
@@ -119,47 +119,48 @@ public class PokemonSpecies
 	{
 		int formID = XMLUtils.getAttribute(xml, "form", 0);
 
-		PokemonType type1 = xml.getAttribute("type1") == null ? this.type1 : PokemonType.find(Integer.parseInt(xml.getAttributeValue("type1")));
+		PokemonType type1 = xml.getAttribute("type1") == null ? this.type1 : PokemonType.valueOf(xml.getAttributeValue("type1"));
 		PokemonType type2 = xml.getAttribute("type2") == null ? this.type2
-				: xml.getAttributeValue("type2").equals("null") ? null : PokemonType.find(Integer.parseInt(xml.getAttributeValue("type2")));
+				: xml.getAttributeValue("type2").equals("null") ? null : PokemonType.valueOf(xml.getAttributeValue("type2"));
 		int baseXP = XMLUtils.getAttribute(xml, "base-xp", this.baseXP);
 		float height = XMLUtils.getAttribute(xml, "height", this.height);
 		float weight = XMLUtils.getAttribute(xml, "weight", this.weight);
-		ArrayList<Integer> abilities = xml.getChild("abilities") == null ? (ArrayList<Integer>) this.abilities.clone()
-				: XMLUtils.readIntArrayAsList(xml.getChild("abilities"));
+		ArrayList<Integer> abilities = xml.getChild("abilities", xml.getNamespace()) == null ? (ArrayList<Integer>) this.abilities.clone()
+				: XMLUtils.readIntArrayAsList(xml.getChild("abilities", xml.getNamespace()));
 		ArrayList<PokemonStats> baseStats = new ArrayList<PokemonStats>();
 		HashMap<Integer, ArrayList<Integer>> learnset = new HashMap<Integer, ArrayList<Integer>>();
-		ArrayList<Integer> tms = xml.getChild("tms") == null ? (ArrayList<Integer>) this.tms.clone() : XMLUtils.readIntArrayAsList(xml.getChild("tms"));
+		ArrayList<Integer> tms = xml.getChild("tms", xml.getNamespace()) == null ? (ArrayList<Integer>) this.tms.clone()
+				: XMLUtils.readIntArrayAsList(xml.getChild("tms", xml.getNamespace()));
 		ArrayList<Evolution> evolutions = new ArrayList<Evolution>();
 
-		if (xml.getChild("statline") == null) baseStats = (ArrayList<PokemonStats>) this.baseStats.clone();
+		if (xml.getChild("statline", xml.getNamespace()) == null) baseStats = (ArrayList<PokemonStats>) this.baseStats.clone();
 		else
 		{
-			int[][] statline = XMLUtils.readDoubleIntArray(xml.getChild("statline"));
+			int[][] statline = XMLUtils.readDoubleIntArray(xml.getChild("statline", xml.getNamespace()));
 			for (int[] stat : statline)
 				baseStats.add(new PokemonStats(stat));
 		}
 
 		int[] experiencePerLevel;
-		if (xml.getChild("experience") == null) experiencePerLevel = this.experiencePerLevel.clone();
+		if (xml.getChild("experience", xml.getNamespace()) == null) experiencePerLevel = this.experiencePerLevel.clone();
 		else
 		{
-			String[] lvls = xml.getChildText("experience").split(",");
+			String[] lvls = xml.getChildText("experience", xml.getNamespace()).split(",");
 			experiencePerLevel = new int[lvls.length];
 			for (int lvl = 0; lvl < lvls.length; lvl++)
 				experiencePerLevel[lvl] = Integer.parseInt(lvls[lvl]);
 		}
 
-		if (xml.getChild("evolves") == null) evolutions = (ArrayList<Evolution>) this.evolutions.clone();
-		else for (Element e : xml.getChild("evolves").getChildren())
+		if (xml.getChild("evolves", xml.getNamespace()) == null) evolutions = (ArrayList<Evolution>) this.evolutions.clone();
+		else for (Element e : xml.getChild("evolves", xml.getNamespace()).getChildren())
 			evolutions.add(new Evolution(e));
 
-		if (xml.getChild("tms") == null) tms = (ArrayList<Integer>) this.tms.clone();
-		else for (Element tm : xml.getChild("tms").getChildren())
+		if (xml.getChild("tms", xml.getNamespace()) == null) tms = (ArrayList<Integer>) this.tms.clone();
+		else for (Element tm : xml.getChild("tms", xml.getNamespace()).getChildren())
 			tms.add(Integer.parseInt(tm.getAttributeValue("id")));
 
-		if (xml.getChild("learnset") == null) learnset = (HashMap<Integer, ArrayList<Integer>>) this.learnset.clone();
-		else for (Element level : xml.getChild("learnset").getChildren())
+		if (xml.getChild("learnset", xml.getNamespace()) == null) learnset = (HashMap<Integer, ArrayList<Integer>>) this.learnset.clone();
+		else for (Element level : xml.getChild("learnset", xml.getNamespace()).getChildren())
 			learnset.put(Integer.parseInt(level.getAttributeValue("l")), XMLUtils.readIntArrayAsList(level));
 
 		return new PokemonSpecies(this.id, formID, type1, type2, baseXP, baseStats, height, weight, abilities, experiencePerLevel, learnset, tms, evolutions,
@@ -193,7 +194,8 @@ public class PokemonSpecies
 	/** Generates a Pokémon of this species.
 	 * 
 	 * @param level - The level of the Pokémon to generate. */
-	public Pokemon generate(Random random, int level) {
+	public Pokemon generate(Random random, int level)
+	{
 		return this.generate(random, level, SHINY_CHANCE);
 	}
 
@@ -291,8 +293,8 @@ public class PokemonSpecies
 		Element root = new Element("pokemon");
 		root.setAttribute("id", Integer.toString(this.id));
 		XMLUtils.setAttribute(root, "form-id", this.formID, 0);
-		root.setAttribute("type1", Integer.toString(this.type1.id));
-		if (this.type2 != null) root.setAttribute("type2", Integer.toString(this.type2.id));
+		root.setAttribute("type1", this.type1.name());
+		if (this.type2 != null) root.setAttribute("type2", this.type2.name());
 		root.setAttribute("base-xp", Integer.toString(this.baseXP));
 		root.setAttribute("height", Float.toString(this.height));
 		root.setAttribute("weight", Float.toString(this.weight));
@@ -355,8 +357,8 @@ public class PokemonSpecies
 	{
 		Element e = new Element("form");
 		e.setAttribute("id", Integer.toString(form.formID));
-		if (this.type1 != form.type1) e.setAttribute("type1", Integer.toString(form.type1.id));
-		if (this.type2 != form.type2) e.setAttribute("type2", form.type2 == null ? "null" : Integer.toString(form.type1.id));
+		if (this.type1 != form.type1) e.setAttribute("type1", form.type1.name());
+		if (this.type2 != form.type2) e.setAttribute("type2", form.type2 == null ? "null" : form.type2.name());
 		if (this.baseXP != form.baseXP) e.setAttribute("base-xp", Integer.toString(form.baseXP));
 		if (this.height != form.height) e.setAttribute("height", Float.toString(form.height));
 		if (this.weight != form.weight) e.setAttribute("weight", Float.toString(form.weight));

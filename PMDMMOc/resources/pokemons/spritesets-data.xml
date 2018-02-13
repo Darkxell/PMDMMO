@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sprites>
+<sprites xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="pmdmmo"
+  xsi:schemaLocation="pmdmmo ../data/xsd/spritesets.xsd">
   <pokemon id="0" size="32">
     <attack duration="32" />
     <idle duration="32" />

@@ -27,10 +27,10 @@ public class MoveStatusCondition extends Move
 		this.condition = XMLUtils.getAttribute(xml, "status", -1);
 	}
 
-	public MoveStatusCondition(int id, PokemonType type, int pp, int power, int accuracy, MoveRange range, MoveTarget targets, int priority,
-			int additionalEffectChance, boolean makesContact, int condition)
+	public MoveStatusCondition(int id, PokemonType type, int pp, MoveCategory category, int power, int accuracy, MoveRange range, MoveTarget targets,
+			int priority, int additionalEffectChance, boolean makesContact, int condition)
 	{
-		super(id, type, -1, Move.STATUS, pp, power, accuracy, range, targets, priority, additionalEffectChance, makesContact);
+		super(id, type, -1, category, pp, power, accuracy, range, targets, priority, additionalEffectChance, makesContact);
 		this.condition = condition;
 	}
 

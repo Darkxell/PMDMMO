@@ -34,9 +34,9 @@ public class SpritesetAnimation extends PokemonAnimation
 		}
 		int width = Integer.parseInt(xml.getAttributeValue("width"));
 		int height = Integer.parseInt(xml.getAttributeValue("height"));
-		AnimationSpriteset spriteset = AnimationSpriteset.getSpriteset((registry == items ? "/items" : registry == moves ? "/moves"
-				: registry == statuses ? "/status" : "/animations")
-				+ "/" + id + ".png", width, height);
+		AnimationSpriteset spriteset = AnimationSpriteset.getSpriteset(
+				(registry == items ? "/items" : registry == moves ? "/moves" : registry == statuses ? "/status" : "/animations") + "/" + id + ".png", width,
+				height);
 		int x = XMLUtils.getAttribute(xml, "x", width / 2);
 		int y = XMLUtils.getAttribute(xml, "y", height / 2);
 		int spriteDuration = XMLUtils.getAttribute(xml, "spriteduration", 2);
@@ -75,13 +75,13 @@ public class SpritesetAnimation extends PokemonAnimation
 	public static void loadData()
 	{
 		Element xml = XMLUtils.readFile(new File("resources/data/animations.xml"));
-		for (Element c : xml.getChild("custom").getChildren("c"))
+		for (Element c : xml.getChild("custom", xml.getNamespace()).getChildren("c"))
 			custom.put(Integer.parseInt(c.getAttributeValue("id")), c);
-		for (Element item : xml.getChild("items").getChildren("item"))
+		for (Element item : xml.getChild("items", xml.getNamespace()).getChildren("item"))
 			items.put(Integer.parseInt(item.getAttributeValue("id")), item);
-		for (Element move : xml.getChild("moves").getChildren("move"))
+		for (Element move : xml.getChild("moves", xml.getNamespace()).getChildren("move"))
 			moves.put(Integer.parseInt(move.getAttributeValue("id")), move);
-		for (Element move : xml.getChild("statuses").getChildren("status"))
+		for (Element move : xml.getChild("statuses", xml.getNamespace()).getChildren("status"))
 			statuses.put(Integer.parseInt(move.getAttributeValue("id")), move);
 	}
 
@@ -111,8 +111,8 @@ public class SpritesetAnimation extends PokemonAnimation
 	private void draw(Graphics2D g, boolean back)
 	{
 		int index = this.index();
-		if (index != -1 && this.backSprites[index] == back) g.drawImage(this.spriteset.getSprite(index), (int) this.x - this.gravityX,
-				(int) (this.y - this.gravityY), null);
+		if (index != -1 && this.backSprites[index] == back)
+			g.drawImage(this.spriteset.getSprite(index), (int) this.x - this.gravityX, (int) (this.y - this.gravityY), null);
 	}
 
 	public double getX()
