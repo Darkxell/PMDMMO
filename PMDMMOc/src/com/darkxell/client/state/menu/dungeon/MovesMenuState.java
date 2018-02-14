@@ -13,6 +13,7 @@ import com.darkxell.client.state.menu.components.MoveSelectionWindow;
 import com.darkxell.client.state.menu.components.OptionSelectionWindow;
 import com.darkxell.client.state.menu.components.TextWindow;
 import com.darkxell.client.ui.Keys;
+import com.darkxell.common.event.move.MoveEnabledEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.move.MoveSwitchedEvent;
 import com.darkxell.common.pokemon.LearnedMove;
@@ -167,7 +168,7 @@ public class MovesMenuState extends OptionSelectionMenuState
 			Persistance.eventProcessor.processEvent(new MoveSelectionEvent(Persistance.floor, move, Persistance.player.getDungeonLeader()));
 		} else
 		{
-			move.isEnabled = !move.isEnabled;
+			Persistance.eventProcessor.processEvent(new MoveEnabledEvent(Persistance.floor, move, !move.isEnabled));
 			MovesMenuState state = new MovesMenuState(s);
 			state.tab = this.tab;
 			state.selection = this.selection;
