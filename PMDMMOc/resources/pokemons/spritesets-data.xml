@@ -30,12 +30,11 @@
     <move duration="15,15,15">3,4,5</move>
     <spe1 duration="5,10,8">3,4,7</spe1>
   </pokemon>
-  <pokemon id="69" size="25" x="13" y="16">
-    <attack duration="10,10,10">8,9,10</attack>
+  <pokemon id="69" size="32">
+    <attack duration="10,10,10">7,8,9</attack>
     <idle duration="40,40">3,4</idle>
-    <move duration="10,10,10">5,6,7</move>
-    <spe1 duration="10,10,10">11,12,13</spe1>
-    <spe2 duration="10,10,10">14,15,16</spe2>
+    <move duration="10,10,10">3,5,6</move>
+    <spe1 duration="10,10,10">6,10,11</spe1>
   </pokemon>
   <pokemon id="102" size="32">
     <attack duration="5,5,5,20">3,5,4,6</attack>
@@ -56,11 +55,10 @@
     <spe1 duration="50">6</spe1>
   </pokemon>
   <pokemon id="260" size="48">
-    <attack duration="15,20">8,9</attack>
+    <attack duration="15,20">7,5</attack>
     <idle duration="60,20">3,4</idle>
-    <move duration="15,10,15,10">5,7,6,7</move>
-    <spe1 duration="50">10</spe1>
-    <spe2 duration="50">11</spe2>
+    <move duration="15,10,15,10">5,3,6,3</move>
+    <spe1 duration="50">7</spe1>
   </pokemon>
   <pokemon id="261" size="32">
     <attack duration="10,10,10">8,9,10</attack>
