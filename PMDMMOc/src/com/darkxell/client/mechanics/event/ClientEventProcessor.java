@@ -232,9 +232,9 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		if (Persistance.player.isAlly(event.pokemon) && Persistance.stateManager instanceof PrincipalMainState)
 		{
 			this.processPending = false;
-			((PrincipalMainState) Persistance.stateManager).setState(
-					new DialogState(Persistance.dungeonState, ClientEventProcessor.processEventsOnDialogEnd, false, new DialogScreen(new Message("xp.levelup")
-							.addReplacement("<pokemon>", event.pokemon.getNickname()).addReplacement("<level>", Integer.toString(event.pokemon.getLevel())))));
+			((PrincipalMainState) Persistance.stateManager).setState(new DialogState(Persistance.dungeonState, ClientEventProcessor.processEventsOnDialogEnd,
+					false, new DialogScreen(new Message("moves.learned").addReplacement("<pokemon>", event.pokemon.getNickname()).addReplacement("<move>",
+							event.move.name()))));
 		}
 	}
 
