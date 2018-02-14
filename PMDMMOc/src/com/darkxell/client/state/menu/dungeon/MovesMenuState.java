@@ -33,7 +33,6 @@ public class MovesMenuState extends OptionSelectionMenuState
 			super((move == null ? new Message("", false) : move.move().name().addPrefix(isMain || !move.isEnabled ? "  " : "<star> ")));
 			this.move = move;
 		}
-
 	}
 
 	private Pokemon[] pokemon;

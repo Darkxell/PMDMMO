@@ -5,8 +5,11 @@ import java.util.Random;
 
 import org.jdom2.Element;
 
+import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.move.MoveDiscoveredEvent;
 import com.darkxell.common.item.Item.ItemAction;
 import com.darkxell.common.item.ItemStack;
+import com.darkxell.common.move.Move;
 import com.darkxell.common.player.ItemContainer;
 import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.ability.Ability;
@@ -159,9 +162,9 @@ public class Pokemon implements ItemContainer
 
 	/** @param amount - The amount of experience gained.
 	 * @return The number of levels this experience granted. */
-	public int gainExperience(int amount)
+	public ArrayList<DungeonEvent> gainExperience(int amount)
 	{
-		int levelups = 0;
+		ArrayList<DungeonEvent> events = new ArrayList<>();
 
 		while (amount != 0)
 		{
@@ -170,8 +173,7 @@ public class Pokemon implements ItemContainer
 			{
 				amount -= next;
 				this.experience = 0;
-				++levelups;
-				this.levelUp();
+				events.addAll(this.levelUp());
 			} else
 			{
 				this.experience += amount;
@@ -179,7 +181,7 @@ public class Pokemon implements ItemContainer
 			}
 		}
 
-		return levelups;
+		return events;
 	}
 
 	public Ability getAbility()
@@ -256,12 +258,19 @@ public class Pokemon implements ItemContainer
 		return actions;
 	}
 
-	private void levelUp()
+	private ArrayList<DungeonEvent> levelUp()
 	{
+		ArrayList<DungeonEvent> events = new ArrayList<>();
 		++this.level;
 		PokemonStats stats = this.species.baseStatsIncrease(this.level - 1);
 		this.stats.add(stats);
 		if (this.dungeonPokemon != null) this.dungeonPokemon.stats.onStatChange();
+
+		ArrayList<Move> moves = this.species.learnedMoves(this.level);
+		for (Move move : moves)
+			events.add(new MoveDiscoveredEvent(this, move));
+
+		return events;
 	}
 
 	public LearnedMove move(int slot)
