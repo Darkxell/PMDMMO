@@ -18,10 +18,15 @@ public class ExperienceGainedEvent extends DungeonEvent
 
 	public ExperienceGainedEvent(Floor floor, Pokemon pokemon, int experience)
 	{
+		this(floor, pokemon, experience, true);
+	}
+
+	public ExperienceGainedEvent(Floor floor, Pokemon pokemon, int experience, boolean showMessage)
+	{
 		super(floor);
 		this.pokemon = pokemon;
 		this.experience = experience;
-		this.messages
+		if (showMessage) this.messages
 				.add(new Message("xp.gain").addReplacement("<pokemon>", this.pokemon.getNickname()).addReplacement("<xp>", Integer.toString(this.experience)));
 	}
 
@@ -39,14 +44,15 @@ public class ExperienceGainedEvent extends DungeonEvent
 	@Override
 	public String loggerMessage()
 	{
-		return this.messages.get(0).toString();
+		return new Message("xp.gain").addReplacement("<pokemon>", this.pokemon.getNickname()).addReplacement("<xp>", Integer.toString(this.experience))
+				.toString();
 	}
 
 	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{
 		this.levelsup = this.pokemon.getLevel();
-		this.resultingEvents.addAll(this.pokemon.gainExperience(this.experience));
+		this.resultingEvents.addAll(this.pokemon.gainExperience(this));
 		this.levelsup = this.pokemon.getLevel() - this.levelsup;
 
 		return super.processServer();

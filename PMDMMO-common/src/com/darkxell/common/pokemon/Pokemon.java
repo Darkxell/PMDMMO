@@ -7,6 +7,8 @@ import org.jdom2.Element;
 
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.move.MoveDiscoveredEvent;
+import com.darkxell.common.event.stats.ExperienceGainedEvent;
+import com.darkxell.common.event.stats.LevelupEvent;
 import com.darkxell.common.item.Item.ItemAction;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.move.Move;
@@ -162,23 +164,21 @@ public class Pokemon implements ItemContainer
 
 	/** @param amount - The amount of experience gained.
 	 * @return The number of levels this experience granted. */
-	public ArrayList<DungeonEvent> gainExperience(int amount)
+	public ArrayList<DungeonEvent> gainExperience(ExperienceGainedEvent event)
 	{
 		ArrayList<DungeonEvent> events = new ArrayList<>();
 
-		while (amount != 0)
+		int amount = event.experience, next = this.experienceLeftNextLevel();
+		if (next <= amount)
 		{
-			int next = this.experienceLeftNextLevel();
-			if (next <= amount)
-			{
-				amount -= next;
-				this.experience = 0;
-				events.addAll(this.levelUp());
-			} else
-			{
-				this.experience += amount;
-				amount = 0;
-			}
+			amount -= next;
+			this.experience = 0;
+			events.add(new LevelupEvent(event.floor, this));
+			events.add(new ExperienceGainedEvent(event.floor, this, amount, false));
+		} else
+		{
+			this.experience += amount;
+			amount = 0;
 		}
 
 		return events;
@@ -258,10 +258,11 @@ public class Pokemon implements ItemContainer
 		return actions;
 	}
 
-	private ArrayList<DungeonEvent> levelUp()
+	public ArrayList<DungeonEvent> levelUp()
 	{
 		ArrayList<DungeonEvent> events = new ArrayList<>();
 		++this.level;
+		this.experience = 0;
 		PokemonStats stats = this.species.baseStatsIncrease(this.level - 1);
 		this.stats.add(stats);
 		if (this.dungeonPokemon != null) this.dungeonPokemon.stats.onStatChange();

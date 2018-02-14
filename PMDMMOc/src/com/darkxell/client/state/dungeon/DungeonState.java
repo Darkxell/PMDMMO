@@ -129,7 +129,6 @@ public class DungeonState extends AbstractState
 	{
 		super.onStart();
 		Persistance.soundmanager.setBackgroundMusic(SoundsHolder.getSong("07 Tiny Woods.mp3"));
-		Persistance.eventProcessor.processPending();
 		this.floorVisibility.onCameraMoved();
 	}
 
@@ -232,7 +231,7 @@ public class DungeonState extends AbstractState
 	{
 		Persistance.dungeonRenderer.update();
 		this.pokemonRenderer.update();
-		this.logger.update();
+		if (this.isMain()) this.logger.update();
 		this.currentSubstate.update();
 	}
 

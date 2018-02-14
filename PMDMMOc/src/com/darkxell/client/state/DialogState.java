@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.darkxell.client.launchable.Persistance;
@@ -13,6 +14,7 @@ import com.darkxell.client.renderers.TextRenderer.PMDChar;
 import com.darkxell.client.resources.images.MenuHudSpriteset;
 import com.darkxell.client.resources.images.others.Hud;
 import com.darkxell.client.resources.images.pokemon.PokemonPortrait;
+import com.darkxell.client.state.dungeon.DungeonState;
 import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.common.pokemon.Pokemon;
@@ -121,6 +123,11 @@ public class DialogState extends AbstractState
 	public DialogState(AbstractState backgroundState, List<DialogScreen> elements)
 	{
 		this(backgroundState, null, elements);
+	}
+
+	public DialogState(DungeonState backgroundState, DialogEndListener listener, boolean isOpaque, DialogScreen screen)
+	{
+		this(backgroundState, listener, isOpaque, Arrays.asList(screen));
 	}
 
 	/** @return Length of the current Message. */
