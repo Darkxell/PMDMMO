@@ -317,6 +317,12 @@ public class Pokemon implements ItemContainer
 		this.setMove(slot2, temp);
 	}
 
+	@Override
+	public String toString()
+	{
+		return this.getNickname().toString();
+	}
+
 	public int totalExperience()
 	{
 		int xp = this.experience;
