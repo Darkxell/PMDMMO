@@ -168,17 +168,23 @@ public class Pokemon implements ItemContainer
 	{
 		ArrayList<DungeonEvent> events = new ArrayList<>();
 
-		int amount = event.experience, next = this.experienceLeftNextLevel();
-		if (next <= amount)
+		int amount = event.experience;
+		int levelsup = 0;
+		int next = this.experienceLeftNextLevel();
+		while (amount != 0)
 		{
-			amount -= next;
-			this.experience = 0;
-			events.add(new LevelupEvent(event.floor, this));
-			events.add(new ExperienceGainedEvent(event.floor, this, amount, false));
-		} else
-		{
-			this.experience += amount;
-			amount = 0;
+			if (next <= amount)
+			{
+				amount -= next;
+				this.experience = 0;
+				events.add(new LevelupEvent(event.floor, this));
+			} else
+			{
+				this.experience += amount;
+				amount = 0;
+			}
+			++levelsup;
+			next = this.species.experienceToNextLevel(this.getLevel() + levelsup);
 		}
 
 		return events;
@@ -262,7 +268,6 @@ public class Pokemon implements ItemContainer
 	{
 		ArrayList<DungeonEvent> events = new ArrayList<>();
 		++this.level;
-		this.experience = 0;
 		PokemonStats stats = this.species.baseStatsIncrease(this.level - 1);
 		this.stats.add(stats);
 		if (this.dungeonPokemon != null) this.dungeonPokemon.stats.onStatChange();

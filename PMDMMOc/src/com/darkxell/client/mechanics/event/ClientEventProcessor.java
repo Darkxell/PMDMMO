@@ -51,6 +51,7 @@ import com.darkxell.common.event.stats.LevelupEvent;
 import com.darkxell.common.event.stats.StatChangedEvent;
 import com.darkxell.common.item.ItemFood;
 import com.darkxell.common.item.ItemGummi;
+import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.PokemonStats;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.language.Message;
@@ -80,6 +81,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	};
 
 	public boolean landedOnStairs = false;
+	private PokemonStats levelupStats = null;
 
 	public ClientEventProcessor(DungeonInstance dungeon)
 	{
@@ -199,23 +201,43 @@ public final class ClientEventProcessor extends CommonEventProcessor
 
 	private void processLevelupEvent(LevelupEvent event)
 	{
-		if (Persistance.player.isAlly(event.pokemon) && Persistance.stateManager instanceof PrincipalMainState)
+		Pokemon pokemon = event.pokemon;
+		if (Persistance.player.isAlly(pokemon) && Persistance.stateManager instanceof PrincipalMainState)
 		{
-			ArrayList<DialogScreen> screens = new ArrayList<DialogScreen>();
-			screens.add(new DialogScreen(new Message("xp.levelup").addReplacement("<pokemon>", event.pokemon.getNickname()).addReplacement("<level>",
-					Integer.toString(event.pokemon.getLevel()))));
-			PokemonStats stats = event.pokemon.species.baseStatsIncrease(event.pokemon.getLevel() - 1);
-			screens.add(new DialogScreen(new Message("xp.stats").addReplacement("<atk>", TextRenderer.alignNumber(stats.getAttack(), 2))
-					.addReplacement("<def>", TextRenderer.alignNumber(stats.getDefense(), 2))
-					.addReplacement("<hea>", TextRenderer.alignNumber(stats.getHealth(), 2))
-					.addReplacement("<spa>", TextRenderer.alignNumber(stats.getSpecialAttack(), 2))
-					.addReplacement("<spd>", TextRenderer.alignNumber(stats.getSpecialDefense(), 2))));
-
 			this.processPending = false;
-			System.out.println(event.pokemon.getLevel());
-			Persistance.dungeonState
-					.setSubstate(new DelayState(Persistance.dungeonState, 60, (DelayState state) -> ((PrincipalMainState) Persistance.stateManager)
-							.setState(new DialogState(Persistance.dungeonState, ClientEventProcessor.processEventsOnDialogEnd, false, screens))));
+			boolean firstLevel = this.levelupStats == null;
+
+			if (this.levelupStats == null) this.levelupStats = pokemon.species.baseStatsIncrease(pokemon.getLevel() - 1);
+			else this.levelupStats.add(pokemon.species.baseStatsIncrease(pokemon.getLevel() - 1));
+
+			ArrayList<DialogScreen> screens = new ArrayList<DialogScreen>();
+			screens.add(new DialogScreen(new Message("xp.levelup").addReplacement("<pokemon>", pokemon.getNickname()).addReplacement("<level>",
+					Integer.toString(pokemon.getLevel()))));
+
+			{
+				boolean hasMoreLevels = false;
+				for (DungeonEvent e : this.pending)
+					if (e instanceof LevelupEvent && ((LevelupEvent) e).pokemon == pokemon)
+					{
+						hasMoreLevels = true;
+						break;
+					}
+				if (!hasMoreLevels)
+				{
+					screens.add(new DialogScreen(new Message("xp.stats").addReplacement("<atk>", TextRenderer.alignNumber(this.levelupStats.getAttack(), 2))
+							.addReplacement("<def>", TextRenderer.alignNumber(this.levelupStats.getDefense(), 2))
+							.addReplacement("<hea>", TextRenderer.alignNumber(this.levelupStats.getHealth(), 2))
+							.addReplacement("<spa>", TextRenderer.alignNumber(this.levelupStats.getSpecialAttack(), 2))
+							.addReplacement("<spd>", TextRenderer.alignNumber(this.levelupStats.getSpecialDefense(), 2))));
+					this.levelupStats = null;
+				}
+			}
+
+			DialogState state = new DialogState(Persistance.dungeonState, processEventsOnDialogEnd, false, screens);
+
+			if (firstLevel) Persistance.dungeonState.setSubstate(
+					new DelayState(Persistance.dungeonState, 60, (DelayState s) -> ((PrincipalMainState) Persistance.stateManager).setState(state)));
+			else((PrincipalMainState) Persistance.stateManager).setState(state);
 		}
 	}
 
