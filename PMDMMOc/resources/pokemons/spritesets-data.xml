@@ -18,6 +18,12 @@
     <victory duration="10,40">6,7</victory>
     <wake duration="2,2,2,2,2,2">0,1,0,1,0,1</wake>
   </pokemon>
+  <pokemon id="4" size="32">
+    <attack duration="20,6,6">6,7,8</attack>
+    <idle duration="70,6,6">3,4,5</idle>
+    <move duration="10,10,10">3,4,5</move>
+    <spe1 duration="60">9</spe1>
+  </pokemon>
   <pokemon id="16" size="32">
     <attack duration="2,2,2,2,2,2,2,2,20">6,7,6,7,6,7,6,7,8</attack>
     <idle duration="60,10">3,4</idle>
