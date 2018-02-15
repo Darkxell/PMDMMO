@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.darkxell.client.launchable.Persistance;
@@ -82,23 +83,29 @@ public class DialogState extends AbstractState
 	/** The current line to display. When displayed, paused until the player skips. */
 	private int currentLine;
 	/** The current screen. */
-	private int currentScreen;
+	protected int currentScreen;
 	/** The current maximum character to print. */
 	private int cursor;
+	private Rectangle dialogBox;
 	/** True if this Dialog's window is opaque. */
 	public boolean isOpaque;
 	/** The split lines of the current messages. */
 	private ArrayList<ArrayList<PMDChar>> lines;
 	/** The listener called when this Dialog ends. If null, the Background State is used instead. */
-	private final DialogEndListener listener;
+	protected final DialogEndListener listener;
 	/** Text offset. */
 	private int offset;
 	/** The screens to show. */
-	private final List<DialogScreen> screens;
+	protected final List<DialogScreen> screens;
 	/** True if the end of the current line has been reached. */
 	private byte state;
 	/** The offset to reach to switch back to printing. */
 	private int targetOffset;
+
+	public DialogState(AbstractState backgroundState, DialogEndListener listener, boolean isOpaque, DialogScreen screen)
+	{
+		this(backgroundState, listener, isOpaque, Arrays.asList(screen));
+	}
 
 	public DialogState(AbstractState backgroundState, DialogEndListener listener, boolean isOpaque, List<DialogScreen> screens)
 	{
@@ -141,6 +148,11 @@ public class DialogState extends AbstractState
 	private DialogScreen currentScreen()
 	{
 		return this.screens.get(this.currentScreen);
+	}
+
+	public Rectangle dialogBox()
+	{
+		return this.dialogBox;
 	}
 
 	private void nextLine()
@@ -187,9 +199,10 @@ public class DialogState extends AbstractState
 
 		int temp_width = width - 40;
 		int temp_height = temp_width * Hud.textwindow.getHeight() / Hud.textwindow.getWidth();
-		Rectangle box = new Rectangle(20, height - temp_height - 20, temp_width, temp_height);
-		int marginx = box.width / 20, marginy = box.height / 5;
-		Rectangle inside = new Rectangle(box.x + marginx, box.y + marginy, box.width - marginx * 2, box.height - marginy * 2);
+		this.dialogBox = new Rectangle(20, height - temp_height - 20, temp_width, temp_height);
+		int marginx = this.dialogBox.width / 20, marginy = this.dialogBox.height / 5;
+		Rectangle inside = new Rectangle(this.dialogBox.x + marginx, this.dialogBox.y + marginy, this.dialogBox.width - marginx * 2,
+				this.dialogBox.height - marginy * 2);
 
 		if (this.lines.isEmpty())
 		{
@@ -198,7 +211,8 @@ public class DialogState extends AbstractState
 				this.lines.add(TextRenderer.decode(line));
 		}
 
-		g.drawImage(this.isOpaque ? Hud.textwindow : Hud.textwindow_transparent, box.x, box.y, box.width, box.height, null);
+		g.drawImage(this.isOpaque ? Hud.textwindow : Hud.textwindow_transparent, this.dialogBox.x, this.dialogBox.y, this.dialogBox.width,
+				this.dialogBox.height, null);
 		Shape c = g.getClip();
 		g.setClip(inside);
 		int length = 0;
@@ -214,13 +228,13 @@ public class DialogState extends AbstractState
 		}
 		g.setClip(c);
 
-		if (this.state == PAUSED && this.arrowtick > 9)
-			g.drawImage(arrow, box.x + box.width / 2 - arrow.getWidth() / 2, (int) (box.getMaxY() - arrow.getHeight() * 3 / 4), null);
+		if (this.state == PAUSED && this.arrowtick > 9 && this.isMain()) g.drawImage(arrow, this.dialogBox.x + this.dialogBox.width / 2 - arrow.getWidth() / 2,
+				(int) (this.dialogBox.getMaxY() - arrow.getHeight() * 3 / 4), null);
 
 		if (this.currentScreen < this.screens.size() && this.currentScreen().pokemon != null)
 		{
-			int x = (int) (box.getMaxX() - Hud.portrait.getWidth());
-			int y = (int) (box.y - Hud.portrait.getHeight() - 5);
+			int x = (int) (this.dialogBox.x + 5);
+			int y = (int) (this.dialogBox.y - Hud.portrait.getHeight() - 5);
 
 			g.drawImage(PokemonPortrait.portrait(this.currentScreen().pokemon), x + 4, y + 4, null);
 			g.drawImage(Hud.portrait, x, y, null);

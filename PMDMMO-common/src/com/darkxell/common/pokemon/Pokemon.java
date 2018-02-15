@@ -5,8 +5,13 @@ import java.util.Random;
 
 import org.jdom2.Element;
 
+import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.move.MoveDiscoveredEvent;
+import com.darkxell.common.event.stats.ExperienceGainedEvent;
+import com.darkxell.common.event.stats.LevelupEvent;
 import com.darkxell.common.item.Item.ItemAction;
 import com.darkxell.common.item.ItemStack;
+import com.darkxell.common.move.Move;
 import com.darkxell.common.player.ItemContainer;
 import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.ability.Ability;
@@ -159,27 +164,30 @@ public class Pokemon implements ItemContainer
 
 	/** @param amount - The amount of experience gained.
 	 * @return The number of levels this experience granted. */
-	public int gainExperience(int amount)
+	public ArrayList<DungeonEvent> gainExperience(ExperienceGainedEvent event)
 	{
-		int levelups = 0;
+		ArrayList<DungeonEvent> events = new ArrayList<>();
 
+		int amount = event.experience;
+		int levelsup = 0;
+		int next = this.experienceLeftNextLevel();
 		while (amount != 0)
 		{
-			int next = this.experienceLeftNextLevel();
 			if (next <= amount)
 			{
 				amount -= next;
 				this.experience = 0;
-				++levelups;
-				this.levelUp();
+				events.add(new LevelupEvent(event.floor, this));
 			} else
 			{
 				this.experience += amount;
 				amount = 0;
 			}
+			++levelsup;
+			next = this.species.experienceToNextLevel(this.getLevel() + levelsup);
 		}
 
-		return levelups;
+		return events;
 	}
 
 	public Ability getAbility()
@@ -256,12 +264,19 @@ public class Pokemon implements ItemContainer
 		return actions;
 	}
 
-	private void levelUp()
+	public ArrayList<DungeonEvent> levelUp()
 	{
+		ArrayList<DungeonEvent> events = new ArrayList<>();
 		++this.level;
 		PokemonStats stats = this.species.baseStatsIncrease(this.level - 1);
 		this.stats.add(stats);
 		if (this.dungeonPokemon != null) this.dungeonPokemon.stats.onStatChange();
+
+		ArrayList<Move> moves = this.species.learnedMoves(this.level);
+		for (Move move : moves)
+			events.add(new MoveDiscoveredEvent(this, move));
+
+		return events;
 	}
 
 	public LearnedMove move(int slot)
@@ -315,6 +330,12 @@ public class Pokemon implements ItemContainer
 		LearnedMove temp = this.move(slot1);
 		this.setMove(slot1, this.move(slot2));
 		this.setMove(slot2, temp);
+	}
+
+	@Override
+	public String toString()
+	{
+		return this.getNickname().toString();
 	}
 
 	public int totalExperience()

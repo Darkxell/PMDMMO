@@ -353,7 +353,7 @@ public class Move
 	/** @return This Move's name. */
 	public Message name()
 	{
-		return new Message("move." + this.id).addPrefix("<type-" + this.type.id + "> ");
+		return new Message("move." + this.id).addPrefix("<type-" + this.type.id + "> ").addPrefix("<green>").addSuffix("</color>");
 	}
 
 	/** @param move - The used move.

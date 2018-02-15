@@ -9,14 +9,34 @@ import com.darkxell.client.state.dungeon.DungeonState.DungeonSubState;
 /** A State that delays a certain number of ticks, then refers to the {@link ClientEventProcessor} for pending events. */
 public class DelayState extends DungeonSubState
 {
+	public static interface DelayElapsedListener
+	{
+		public void onDelayElapsed(DelayState state);
+	}
+
+	public static final DelayElapsedListener processEvents = new DelayElapsedListener() {
+
+		@Override
+		public void onDelayElapsed(DelayState state)
+		{
+			Persistance.eventProcessor.processPending();
+		}
+	};
 
 	public final int duration;
+	public final DelayElapsedListener listener;
 	private int tick = 0;
 
 	public DelayState(DungeonState parent, int duration)
 	{
+		this(parent, duration, processEvents);
+	}
+
+	public DelayState(DungeonState parent, int duration, DelayElapsedListener listener)
+	{
 		super(parent);
 		this.duration = duration;
+		this.listener = listener;
 	}
 
 	@Override
@@ -38,7 +58,7 @@ public class DelayState extends DungeonSubState
 		if (this.tick >= this.duration)
 		{
 			this.parent.setSubstate(this.parent.actionSelectionState);
-			Persistance.eventProcessor.processPending();
+			this.listener.onDelayElapsed(this);
 		}
 	}
 

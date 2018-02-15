@@ -20,7 +20,7 @@ public class CommonEventProcessor
 	/** Pending events to process. */
 	protected final Stack<DungeonEvent> pending = new Stack<DungeonEvent>();
 	/** While processing an event, setting this to false will stop processing the pending events. */
-	public boolean processPending = true;
+	protected boolean processPending = true;
 	/** Lists the Players currently running. */
 	private ArrayList<DungeonPokemon> runners = new ArrayList<>();
 

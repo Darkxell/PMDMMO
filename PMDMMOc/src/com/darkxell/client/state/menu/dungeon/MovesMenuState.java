@@ -13,7 +13,9 @@ import com.darkxell.client.state.menu.components.MoveSelectionWindow;
 import com.darkxell.client.state.menu.components.OptionSelectionWindow;
 import com.darkxell.client.state.menu.components.TextWindow;
 import com.darkxell.client.ui.Keys;
+import com.darkxell.common.event.move.MoveEnabledEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent;
+import com.darkxell.common.event.move.MoveSwitchedEvent;
 import com.darkxell.common.pokemon.LearnedMove;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.language.Message;
@@ -31,17 +33,23 @@ public class MovesMenuState extends OptionSelectionMenuState
 			super((move == null ? new Message("", false) : move.move().name().addPrefix(isMain || !move.isEnabled ? "  " : "<star> ")));
 			this.move = move;
 		}
-
 	}
 
+	/** True if moves can be ordered in this State. */
+	protected boolean canOrder = true;
 	private Pokemon[] pokemon;
 	private MoveSelectionWindow window;
 	private TextWindow windowInfo;
 
 	public MovesMenuState(DungeonState parent)
 	{
+		this(parent, Persistance.player.getTeam());
+	}
+
+	public MovesMenuState(DungeonState parent, Pokemon... pokemon)
+	{
 		super(parent);
-		this.pokemon = Persistance.player.getTeam();
+		this.pokemon = pokemon;
 		this.createOptions();
 	}
 
@@ -63,6 +71,11 @@ public class MovesMenuState extends OptionSelectionMenuState
 		return this.window;
 	}
 
+	protected Message infoText()
+	{
+		return new Message(this.isMainSelected() ? "moves.info.main" : "moves.info.ally");
+	}
+
 	private boolean isMainSelected()
 	{
 		return this.selectedPokemon() == Persistance.player.getTeamLeader();
@@ -72,21 +85,21 @@ public class MovesMenuState extends OptionSelectionMenuState
 	protected Rectangle mainWindowDimensions()
 	{
 		Rectangle r = super.mainWindowDimensions();
-		return new Rectangle(r.x, r.y, r.width + MoveSelectionWindow.ppLength, r.height + (4 - this.currentTab().options().length)
-				* (TextRenderer.height() + TextRenderer.lineSpacing()));
+		return new Rectangle(r.x, r.y, r.width + MoveSelectionWindow.ppLength,
+				r.height + (4 - this.currentTab().options().length) * (TextRenderer.height() + TextRenderer.lineSpacing()));
 	}
 
 	@Override
 	protected void onExit()
 	{
-		if(Persistance.stateManager instanceof PrincipalMainState)
+		if (Persistance.stateManager instanceof PrincipalMainState)
 			((PrincipalMainState) Persistance.stateManager).setState(new DungeonMenuState(this.backgroundState));
 	}
 
 	@Override
 	public void onKeyPressed(short key)
 	{
-		if (!Keys.isPressed(Keys.KEY_DIAGONAL))
+		if (!this.canOrder || !Keys.isPressed(Keys.KEY_DIAGONAL))
 		{
 			if (this.tabs.size() != 0)
 			{
@@ -111,26 +124,31 @@ public class MovesMenuState extends OptionSelectionMenuState
 			if (key == Keys.KEY_MENU || key == Keys.KEY_RUN) this.onExit();
 		} else
 		{
+			int from = -1, to = -1;
+
 			boolean success = false;
 			if (key == Keys.KEY_UP && this.selection > 0)
 			{
-				this.selectedPokemon().switchMoves(this.selection, this.selection - 1);
+				from = this.selection;
+				to = this.selection - 1;
 				--this.selection;
 				success = true;
 			} else if (key == Keys.KEY_DOWN && this.selection < this.currentTab().options().length - 1)
 			{
-				this.selectedPokemon().switchMoves(this.selection, this.selection + 1);
+				from = this.selection;
+				to = this.selection + 1;
 				++this.selection;
 				success = true;
 			}
 
 			if (success)
 			{
+				Persistance.eventProcessor.processEvent(new MoveSwitchedEvent(Persistance.floor, this.selectedPokemon(), from, to));
+
 				MovesMenuState s = new MovesMenuState(Persistance.dungeonState);
 				s.selection = this.selection;
 				s.tab = this.tab;
-				if(Persistance.stateManager instanceof PrincipalMainState)
-					((PrincipalMainState) Persistance.stateManager).setState(s);
+				if (Persistance.stateManager instanceof PrincipalMainState) ((PrincipalMainState) Persistance.stateManager).setState(s);
 			}
 		}
 	}
@@ -145,7 +163,7 @@ public class MovesMenuState extends OptionSelectionMenuState
 	private void onOptionInfo(MenuOption option)
 	{
 		DungeonState s = Persistance.dungeonState;
-		if(Persistance.stateManager instanceof PrincipalMainState)
+		if (Persistance.stateManager instanceof PrincipalMainState)
 			((PrincipalMainState) Persistance.stateManager).setState(new MoveInfoState(((MoveMenuOption) option).move.move(), s, this));
 	}
 
@@ -157,17 +175,15 @@ public class MovesMenuState extends OptionSelectionMenuState
 
 		if (this.isMainSelected())
 		{
-			if(Persistance.stateManager instanceof PrincipalMainState)
-				((PrincipalMainState) Persistance.stateManager).setState(s);
+			if (Persistance.stateManager instanceof PrincipalMainState) ((PrincipalMainState) Persistance.stateManager).setState(s);
 			Persistance.eventProcessor.processEvent(new MoveSelectionEvent(Persistance.floor, move, Persistance.player.getDungeonLeader()));
 		} else
 		{
-			move.isEnabled = !move.isEnabled;
+			Persistance.eventProcessor.processEvent(new MoveEnabledEvent(Persistance.floor, move, !move.isEnabled));
 			MovesMenuState state = new MovesMenuState(s);
 			state.tab = this.tab;
 			state.selection = this.selection;
-			if(Persistance.stateManager instanceof PrincipalMainState)
-				((PrincipalMainState) Persistance.stateManager).setState(state);
+			if (Persistance.stateManager instanceof PrincipalMainState) ((PrincipalMainState) Persistance.stateManager).setState(state);
 		}
 	}
 
@@ -186,9 +202,9 @@ public class MovesMenuState extends OptionSelectionMenuState
 
 		if (this.windowInfo == null)
 		{
-			Rectangle r = new Rectangle(this.window.dimensions.x, (int) (this.window.dimensions.getMaxY() + 20), width - 40, MenuHudSpriteset.cornerSize.height
-					* 2 + TextRenderer.height() * 4 + TextRenderer.lineSpacing() * 2);
-			this.windowInfo = new TextWindow(r, new Message(this.isMainSelected() ? "moves.info.main" : "moves.info.ally"), false);
+			Rectangle r = new Rectangle(this.window.dimensions.x, (int) (this.window.dimensions.getMaxY() + 20), width - 40,
+					MenuHudSpriteset.cornerSize.height * 2 + TextRenderer.height() * 4 + TextRenderer.lineSpacing() * 2);
+			this.windowInfo = new TextWindow(r, this.infoText(), false);
 		}
 		this.windowInfo.render(g, null, width, height);
 	}
