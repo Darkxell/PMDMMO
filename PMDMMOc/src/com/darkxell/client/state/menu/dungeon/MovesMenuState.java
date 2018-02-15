@@ -35,14 +35,21 @@ public class MovesMenuState extends OptionSelectionMenuState
 		}
 	}
 
+	/** True if moves can be ordered in this State. */
+	protected boolean canOrder = true;
 	private Pokemon[] pokemon;
 	private MoveSelectionWindow window;
 	private TextWindow windowInfo;
 
 	public MovesMenuState(DungeonState parent)
 	{
+		this(parent, Persistance.player.getTeam());
+	}
+
+	public MovesMenuState(DungeonState parent, Pokemon... pokemon)
+	{
 		super(parent);
-		this.pokemon = Persistance.player.getTeam();
+		this.pokemon = pokemon;
 		this.createOptions();
 	}
 
@@ -62,6 +69,11 @@ public class MovesMenuState extends OptionSelectionMenuState
 	public OptionSelectionWindow getMainWindow()
 	{
 		return this.window;
+	}
+
+	protected Message infoText()
+	{
+		return new Message(this.isMainSelected() ? "moves.info.main" : "moves.info.ally");
 	}
 
 	private boolean isMainSelected()
@@ -87,7 +99,7 @@ public class MovesMenuState extends OptionSelectionMenuState
 	@Override
 	public void onKeyPressed(short key)
 	{
-		if (!Keys.isPressed(Keys.KEY_DIAGONAL))
+		if (!this.canOrder || !Keys.isPressed(Keys.KEY_DIAGONAL))
 		{
 			if (this.tabs.size() != 0)
 			{
@@ -192,7 +204,7 @@ public class MovesMenuState extends OptionSelectionMenuState
 		{
 			Rectangle r = new Rectangle(this.window.dimensions.x, (int) (this.window.dimensions.getMaxY() + 20), width - 40,
 					MenuHudSpriteset.cornerSize.height * 2 + TextRenderer.height() * 4 + TextRenderer.lineSpacing() * 2);
-			this.windowInfo = new TextWindow(r, new Message(this.isMainSelected() ? "moves.info.main" : "moves.info.ally"), false);
+			this.windowInfo = new TextWindow(r, this.infoText(), false);
 		}
 		this.windowInfo.render(g, null, width, height);
 	}

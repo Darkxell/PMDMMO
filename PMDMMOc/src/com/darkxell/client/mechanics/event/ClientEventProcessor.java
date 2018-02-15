@@ -24,6 +24,7 @@ import com.darkxell.client.state.dungeon.NextFloorState;
 import com.darkxell.client.state.dungeon.PokemonTravelState;
 import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.client.state.map.LocalMap;
+import com.darkxell.client.state.menu.dungeon.MoveLearnMenuState;
 import com.darkxell.client.state.menu.dungeon.StairMenuState;
 import com.darkxell.common.dungeon.DungeonInstance;
 import com.darkxell.common.dungeon.floor.Tile;
@@ -35,6 +36,7 @@ import com.darkxell.common.event.dungeon.weather.WeatherChangedEvent;
 import com.darkxell.common.event.item.ItemMovedEvent;
 import com.darkxell.common.event.item.ItemSwappedEvent;
 import com.darkxell.common.event.item.ItemUseSelectionEvent;
+import com.darkxell.common.event.move.MoveDiscoveredEvent;
 import com.darkxell.common.event.move.MoveLearnedEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.move.MoveUseEvent;
@@ -108,6 +110,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		if (event instanceof StatChangedEvent) this.processStatEvent((StatChangedEvent) event);
 		if (event instanceof TriggeredAbilityEvent) this.processAbilityEvent((TriggeredAbilityEvent) event);
 		if (event instanceof LevelupEvent) this.processLevelupEvent((LevelupEvent) event);
+		if (event instanceof MoveDiscoveredEvent) this.processMoveDiscoveredEvent((MoveDiscoveredEvent) event);
 		if (event instanceof MoveLearnedEvent) this.processMoveLearnedEvent((MoveLearnedEvent) event);
 
 		if (event instanceof ItemUseSelectionEvent) this.processItemEvent((ItemUseSelectionEvent) event);
@@ -238,6 +241,26 @@ public final class ClientEventProcessor extends CommonEventProcessor
 			if (firstLevel) Persistance.dungeonState.setSubstate(
 					new DelayState(Persistance.dungeonState, 60, (DelayState s) -> ((PrincipalMainState) Persistance.stateManager).setState(state)));
 			else((PrincipalMainState) Persistance.stateManager).setState(state);
+		}
+	}
+
+	private void processMoveDiscoveredEvent(MoveDiscoveredEvent event)
+	{
+		if (event.pokemon.moveCount() == 4 && Persistance.stateManager instanceof PrincipalMainState)
+		{
+			this.processPending = false;
+
+			DialogEndListener listener = new DialogEndListener() {
+
+				@Override
+				public void onDialogEnd(DialogState dialog)
+				{
+					((PrincipalMainState) Persistance.stateManager).setState(new MoveLearnMenuState(Persistance.dungeonState, event.pokemon, event.move));
+				}
+			};
+
+			((PrincipalMainState) Persistance.stateManager).setState(new DialogState(Persistance.dungeonState, listener, false, new DialogScreen(
+					new Message("moves.learned.full").addReplacement("<pokemon>", event.pokemon.getNickname()).addReplacement("<move>", event.move.name()))));
 		}
 	}
 
