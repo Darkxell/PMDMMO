@@ -86,8 +86,7 @@ public class PokemonRenderer extends AbstractRenderer
 			int xPos = (int) (this.x() + p.x), yPos = (int) (this.y() + p.y);
 			BufferedImage shadow = this.sprite.getCurrentSprite().getWidth() >= 48 ? ShadowSprites.instance.getBig(this.sprite.getShadowColor())
 					: ShadowSprites.instance.getSmall(this.sprite.getShadowColor());
-			g.drawImage(shadow, xPos + this.sprite.getCurrentSprite().getWidth() / 2 - shadow.getWidth() / 2,
-					yPos + this.sprite.getCurrentSprite().getHeight() - shadow.getHeight(), null);
+			g.drawImage(shadow, (int) this.x() + TILE_SIZE / 2 - shadow.getWidth() / 2, (int) this.y() + TILE_SIZE * 9 / 10 - shadow.getHeight(), null);
 
 			for (PokemonAnimation animation : this.animations)
 				animation.prerender(g, width, height);

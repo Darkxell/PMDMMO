@@ -65,13 +65,13 @@ public class AbstractPokemonSpriteset
 		switch (this.spriteWidth)
 		{
 			case 32:
-				return 15;
+				return 16;
 			case 48:
 				return 24;
 			case 64:
-				return 33;
+				return 32;
 			case 96:
-				return 51;
+				return 48;
 			default:
 				return -1;
 		}
