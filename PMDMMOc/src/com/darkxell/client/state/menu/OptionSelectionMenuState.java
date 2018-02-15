@@ -73,7 +73,6 @@ public abstract class OptionSelectionMenuState extends AbstractMenuState
 		if (this.mainWindow == null)
 		{
 			this.mainWindow = new OptionSelectionWindow(this, this.mainWindowDimensions());
-			System.out.println("asked dimensions");
 			this.mainWindow.isOpaque = this.isOpaque;
 		}
 		if (this.tabs.size() != 0) this.getMainWindow().render(g, this.currentTab().name, width, height);
