@@ -108,10 +108,29 @@ public class CommonEventProcessor
 			{
 				PokemonTravel event = ((PokemonTravelEvent) e).getTravel();
 				travellers.add(event);
+
 				// Simulating travel
 				event.origin.removePokemon(event.pokemon);
 				event.destination.setPokemon(event.pokemon);
 				this.dungeon.takeAction(event.pokemon);
+
+				// Testing if skippers can now move
+				for (int i = 0; i < skippers.size(); ++i)
+				{
+					DungeonEvent s = this.dungeon.currentFloor().aiManager.takeAction(skippers.get(i));
+					if (s instanceof PokemonTravelEvent)
+					{
+						PokemonTravel se = ((PokemonTravelEvent) s).getTravel();
+						travellers.add(se);
+						skippers.remove(i);
+						--i;
+
+						// Simulating travel
+						se.origin.removePokemon(se.pokemon);
+						se.destination.setPokemon(se.pokemon);
+					}
+				}
+
 			} else if (e instanceof TurnSkippedEvent || e instanceof PokemonRotateEvent)
 			{
 				// Simulating skipping
