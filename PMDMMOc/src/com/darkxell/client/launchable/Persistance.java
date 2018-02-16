@@ -49,7 +49,7 @@ public abstract class Persistance {
 	public static DungeonState dungeonState;
 	public static MasterDungeonRenderer dungeonRenderer;
 	public static Floor floor;
-	public static Player player = new Player(0, ClientSettings.getSetting(ClientSettings.LOGIN), PokemonRegistry.find(152).generate(new Random(), 1));
+	public static Player player = new Player(0, ClientSettings.getSetting(ClientSettings.LOGIN), PokemonRegistry.find(155).generate(new Random(), 1));
 	public static ClientEventProcessor eventProcessor;
 
 	static {
