@@ -8,6 +8,9 @@ import javax.sound.sampled.Line;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.Mixer;
 
+import com.darkxell.client.launchable.Persistance;
+import com.darkxell.common.util.Logger;
+
 import javazoom.jl.player.Player;
 
 /**
@@ -31,7 +34,7 @@ public class SoundManager implements Runnable {
 	 */
 	private Thread runner;
 	/** The current playing Player. */
-	private Player currentplayer;
+	private PausablePlayer currentplayer;
 	/** The current song being played (even if paused). */
 	private Song currentsong;
 	/**
@@ -41,22 +44,42 @@ public class SoundManager implements Runnable {
 	private boolean ischanging;
 	/** Is true if the SM is killed. */
 	private boolean iskilled;
+	/** A sound to play over the music. */
+	private Song soundOverSong;
+	private Player soundPlayer;
 
 	public void run() {
-		while (!iskilled) {
-			try {
+		while (!iskilled)
+		{
+			try
+			{
 				Thread.sleep(100);
-			} catch (InterruptedException e1) {
-			}
-			try {
-				if (this.currentplayer.isComplete() && !iskilled) {
-					this.currentplayer.close();
-					this.forceBackgroundMusic(currentsong);
+			} catch (InterruptedException e1)
+			{}
+			try
+			{
+				if (this.soundPlayer != null)
+				{
+					if (this.soundPlayer.isComplete() && !iskilled)
+					{
+						this.soundPlayer.close();
+						this.soundPlayer = null;
+						this.currentplayer.play();
+					}
+					if (!ischanging && !iskilled) this.soundPlayer.play();
 				}
-				if (!ischanging && !iskilled)
-					this.currentplayer.play();
-			} catch (Exception e) {
-			}
+
+				else
+				{
+					if (this.currentplayer.isComplete() && !iskilled)
+					{
+						this.currentplayer.close();
+						this.forceBackgroundMusic(currentsong);
+					}
+					if (!ischanging && !iskilled) this.currentplayer.play();
+				}
+			} catch (Exception e)
+			{}
 		}
 	}
 
@@ -84,7 +107,7 @@ public class SoundManager implements Runnable {
 			} catch (Exception e) {
 			}
 			try {
-				this.currentplayer = new Player(new FileInputStream(song.getfilepath()));
+				this.currentplayer = new PausablePlayer(new FileInputStream(song.getfilepath()));
 			} catch (Exception e) {
 				if (song != null) {
 					System.err.println("Erreur lors de l'ouverture du fichier son.");
@@ -136,6 +159,38 @@ public class SoundManager implements Runnable {
 	}
 
 	/**
+	 * Pauses the background music to play the input sound.
+	 */
+	private void playSoundOverMusic(Song sound)
+	{
+		if (!iskilled)
+		{
+			this.ischanging = true;
+			this.soundOverSong = sound;
+			try
+			{
+				this.currentplayer.pause();
+			} catch (Exception e)
+			{}
+			try
+			{
+				this.soundPlayer = new Player(new FileInputStream(this.soundOverSong.getfilepath()));
+			} catch (Exception e)
+			{
+				if (this.soundOverSong != null)
+				{
+					System.err.println("Erreur lors de l'ouverture du fichier son.");
+					e.printStackTrace();
+				}
+			} finally
+			{
+				this.ischanging = false;
+			}
+		} else System.err.println("Can't set the BGM of a killed sound manager.");
+
+	}
+
+	/**
 	 * Closes the SoundManager and release the ressources. Also stop the thread.
 	 */
 	public void kill() {
@@ -173,4 +228,19 @@ public class SoundManager implements Runnable {
 			}
 		}
 	}
+
+	public static void playSound(String sound)
+	{
+		Song s = SoundsHolder.getSfx(sound);
+		if (s == null) Logger.e("Unknown sound ID: " + sound);
+		else Persistance.soundmanager.playSound(s);
+	}
+
+	public static void playSoundOverMusic(String sound)
+	{
+		Song s = SoundsHolder.getSfx(sound);
+		if (s == null) Logger.e("Unknown sound ID: " + sound);
+		else Persistance.soundmanager.playSoundOverMusic(s);
+	}
+
 }

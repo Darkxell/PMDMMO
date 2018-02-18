@@ -21,7 +21,6 @@ import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.item.ItemID;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.player.Player;
-import com.darkxell.common.pokemon.LearnedMove;
 import com.darkxell.common.pokemon.PokemonRegistry;
 
 /**

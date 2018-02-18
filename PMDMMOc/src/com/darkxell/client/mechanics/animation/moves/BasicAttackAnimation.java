@@ -19,6 +19,8 @@ public class BasicAttackAnimation extends PokemonAnimation
 		super(user, TOTAL, listener);
 		this.location = this.target.tile();
 		this.travel = new TravelAnimation(this.location.location(), this.location.adjacentTile(this.target.facing()).location());
+		this.sound = "move-tackle";
+		this.soundDelay = CHARGE;
 	}
 
 	@Override

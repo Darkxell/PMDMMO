@@ -14,6 +14,7 @@ import com.darkxell.client.renderers.MoveRenderer;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.renderers.floor.PokemonRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
+import com.darkxell.client.resources.music.SoundManager;
 import com.darkxell.client.state.DialogState;
 import com.darkxell.client.state.DialogState.DialogEndListener;
 import com.darkxell.client.state.DialogState.DialogScreen;
@@ -36,6 +37,7 @@ import com.darkxell.common.event.dungeon.weather.WeatherChangedEvent;
 import com.darkxell.common.event.item.ItemMovedEvent;
 import com.darkxell.common.event.item.ItemSwappedEvent;
 import com.darkxell.common.event.item.ItemUseSelectionEvent;
+import com.darkxell.common.event.item.MoneyCollectedEvent;
 import com.darkxell.common.event.move.MoveDiscoveredEvent;
 import com.darkxell.common.event.move.MoveLearnedEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent;
@@ -53,6 +55,7 @@ import com.darkxell.common.event.stats.LevelupEvent;
 import com.darkxell.common.event.stats.StatChangedEvent;
 import com.darkxell.common.item.ItemFood;
 import com.darkxell.common.item.ItemGummi;
+import com.darkxell.common.player.Inventory;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.PokemonStats;
 import com.darkxell.common.util.Logger;
@@ -116,6 +119,8 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		if (event instanceof ItemUseSelectionEvent) this.processItemEvent((ItemUseSelectionEvent) event);
 		if (event instanceof ItemMovedEvent) this.processItemMovedEvent((ItemMovedEvent) event);
 		if (event instanceof ItemSwappedEvent) this.processItemSwappedEvent((ItemSwappedEvent) event);
+		if (event instanceof MoneyCollectedEvent && Persistance.player.isAlly(((MoneyCollectedEvent) event).pokemon.pokemon))
+			SoundManager.playSound("dungeon-money");
 
 		if (event instanceof WeatherChangedEvent) this.processWeatherEvent((WeatherChangedEvent) event);
 		if (event instanceof StairLandingEvent) this.processStairEvent((StairLandingEvent) event);
@@ -193,7 +198,14 @@ public final class ClientEventProcessor extends CommonEventProcessor
 
 	private void processItemMovedEvent(ItemMovedEvent event)
 	{
-		if (event.source instanceof Tile) Persistance.dungeonState.floorVisibility.onItemremoved((Tile) event.source);
+		if (event.source instanceof Tile)
+		{
+			boolean ally = true;
+			if (event.destination instanceof Pokemon) ally = Persistance.player.isAlly((Pokemon) event.destination);
+			else if (event.destination instanceof Inventory) ally = Persistance.player.inventory == (Inventory) event.destination;
+			SoundManager.playSound(ally ? "dungeon-item" : "dungeon-enemygrab");
+			Persistance.dungeonState.floorVisibility.onItemremoved((Tile) event.source);
+		}
 	}
 
 	private void processItemSwappedEvent(ItemSwappedEvent event)
@@ -238,9 +250,12 @@ public final class ClientEventProcessor extends CommonEventProcessor
 
 			DialogState state = new DialogState(Persistance.dungeonState, processEventsOnDialogEnd, false, screens);
 
-			if (firstLevel) Persistance.dungeonState.setSubstate(
-					new DelayState(Persistance.dungeonState, 60, (DelayState s) -> ((PrincipalMainState) Persistance.stateManager).setState(state)));
-			else((PrincipalMainState) Persistance.stateManager).setState(state);
+			if (firstLevel)
+			{
+				SoundManager.playSoundOverMusic("game-levelup");
+				Persistance.dungeonState.setSubstate(
+						new DelayState(Persistance.dungeonState, 60, (DelayState s) -> ((PrincipalMainState) Persistance.stateManager).setState(state)));
+			} else((PrincipalMainState) Persistance.stateManager).setState(state);
 		}
 	}
 
@@ -277,6 +292,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		if (Persistance.player.isAlly(event.pokemon) && Persistance.stateManager instanceof PrincipalMainState)
 		{
 			this.processPending = false;
+			SoundManager.playSound("game-movelearned");
 			((PrincipalMainState) Persistance.stateManager).setState(new DialogState(Persistance.dungeonState, ClientEventProcessor.processEventsOnDialogEnd,
 					false, new DialogScreen(new Message("moves.learned").addReplacement("<pokemon>", event.pokemon.getNickname()).addReplacement("<move>",
 							event.move.name()))));
@@ -365,10 +381,23 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	private void processWeatherEvent(WeatherChangedEvent event)
 	{
 		AnimationState a = new AnimationState(Persistance.dungeonState);
-		if (event.next.weather == Weather.RAIN) a.animation = new RainAnimation(100, a);
-		else if (event.next.weather == Weather.SNOW) a.animation = new SnowAnimation(a);
-		else if (event.next.weather == Weather.HAIL) a.animation = new RainAnimation(103, a);
-		else if (event.next.weather == Weather.SUNNY) a.animation = SpritesetAnimation.getCustomAnimation(null, 101, a);
+		if (event.next.weather == Weather.RAIN)
+		{
+			a.animation = new RainAnimation(100, a);
+			a.animation.sound = "weather-rain";
+		} else if (event.next.weather == Weather.SNOW)
+		{
+			a.animation = new SnowAnimation(a);
+			a.animation.sound = "weather-snow";
+		} else if (event.next.weather == Weather.HAIL)
+		{
+			a.animation = new RainAnimation(103, a);
+			a.animation.sound = "weather-hail";
+		} else if (event.next.weather == Weather.SUNNY)
+		{
+			a.animation = SpritesetAnimation.getCustomAnimation(null, 101, a);
+			a.animation.sound = "weather-sunny";
+		}
 		if (a.animation != null)
 		{
 			Persistance.dungeonState.setSubstate(a);

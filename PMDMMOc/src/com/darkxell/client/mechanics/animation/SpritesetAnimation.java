@@ -47,7 +47,9 @@ public class SpritesetAnimation extends PokemonAnimation
 		if (back != null) for (String b : back.split(","))
 			backSprites[Integer.parseInt(b)] = true;
 
-		return new SpritesetAnimation(target, spriteset, sprites, backSprites, spriteDuration, x, y, listener);
+		SpritesetAnimation a = new SpritesetAnimation(target, spriteset, sprites, backSprites, spriteDuration, x, y, listener);
+		a.sound = XMLUtils.getAttribute(xml, "sound", null);
+		return a;
 	}
 
 	public static AbstractAnimation getCustomAnimation(DungeonPokemon target, int id, AnimationEndListener listener)

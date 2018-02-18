@@ -18,6 +18,7 @@ public final class ItemRegistry
 	/** @return The Item with the input ID. */
 	public static Item find(int id)
 	{
+		if (!items.containsKey(id)) Logger.e("Item ID " + id + " doesnt exist!");
 		return items.get(id);
 	}
 
@@ -33,7 +34,7 @@ public final class ItemRegistry
 		Logger.instance().debug("Loading Items...");
 
 		Element root = XMLUtils.readFile(new File("resources/data/items.xml"));
-		for (Element e : root.getChildren("item", root.getNamespace()))
+		for (Element e : root.getChildren())
 			try
 			{
 				String className = e.getAttributeValue("type");
