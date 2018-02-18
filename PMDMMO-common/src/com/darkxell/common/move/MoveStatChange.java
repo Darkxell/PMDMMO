@@ -23,7 +23,7 @@ public class MoveStatChange extends Move
 		if (xml.getChild("statchanges") == null) this.statChanges = new int[0][0];
 		else
 		{
-			List<Element> s = xml.getChild("statchanges").getChildren("statchange");
+			List<Element> s = xml.getChildren("statchange");
 			this.statChanges = new int[s.size()][3];
 			for (int i = 0; i < s.size(); ++i)
 			{
@@ -34,10 +34,10 @@ public class MoveStatChange extends Move
 		}
 	}
 
-	public MoveStatChange(int id, PokemonType type, int pp, int power, int accuracy, MoveRange range, MoveTarget targets, int priority,
+	public MoveStatChange(int id, PokemonType type, MoveCategory category, int pp, int power, int accuracy, MoveRange range, MoveTarget targets, int priority,
 			int additionalEffectChance, boolean makesContact, int[][] statChanges)
 	{
-		super(id, type, -1, Move.STATUS, pp, power, accuracy, range, targets, priority, additionalEffectChance, makesContact);
+		super(id, type, -1, category, pp, power, accuracy, range, targets, priority, additionalEffectChance, makesContact);
 		this.statChanges = statChanges;
 	}
 
@@ -55,14 +55,12 @@ public class MoveStatChange extends Move
 	{
 		if (this.statChanges.length == 0) return super.toXML();
 		Element root = super.toXML();
-		Element stages = new Element("statchanges");
 		for (int[] s : this.statChanges)
 		{
 			Element e = new Element("statchange").setAttribute("stat", Integer.toString(s[0])).setAttribute("stage", Integer.toString(s[1]));
 			if (s[2] == 1) e.setAttribute("self", "1");
-			stages.addContent(e);
+			root.addContent(e);
 		}
-		root.addContent(stages);
 		return root;
 	}
 

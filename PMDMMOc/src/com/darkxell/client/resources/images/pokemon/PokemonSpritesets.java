@@ -44,7 +44,7 @@ public final class PokemonSpritesets
 	public static void loadData()
 	{
 		Element xml = XMLUtils.readFile(new File("resources/pokemons/spritesets-data.xml"));
-		for (Element pokemon : xml.getChildren("pokemon"))
+		for (Element pokemon : xml.getChildren("pokemon", xml.getNamespace()))
 			spritedata.put(Integer.parseInt(pokemon.getAttributeValue("id")), pokemon);
 		loadSpriteset(0);
 	}

@@ -11,10 +11,10 @@ public abstract class Ability
 {
 	private static final HashMap<Integer, Ability> abilities = new HashMap<Integer, Ability>();
 
-	public static final AbilityTypeBoost BLAZE = new AbilityTypeBoost(0, PokemonType.FIRE);
-	public static final AbilityTypeBoost OVERGROW = new AbilityTypeBoost(1, PokemonType.GRASS);
-	public static final AbilityTypeBoost SWARM = new AbilityTypeBoost(2, PokemonType.BUG);
-	public static final AbilityTypeBoost TORRENT = new AbilityTypeBoost(3, PokemonType.WATER);
+	public static final AbilityTypeBoost BLAZE = new AbilityTypeBoost(0, PokemonType.Fire);
+	public static final AbilityTypeBoost OVERGROW = new AbilityTypeBoost(1, PokemonType.Grass);
+	public static final AbilityTypeBoost SWARM = new AbilityTypeBoost(2, PokemonType.Bug);
+	public static final AbilityTypeBoost TORRENT = new AbilityTypeBoost(3, PokemonType.Water);
 
 	/** @return The Ability with the input ID. */
 	public static Ability find(int id)

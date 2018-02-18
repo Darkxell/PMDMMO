@@ -33,7 +33,7 @@ public final class DungeonRegistry
 		Logger.instance().debug("Loading Dungeons...");
 
 		Element root = XMLUtils.readFile(new File("resources/data/dungeons.xml"));
-		for (Element e : root.getChildren("dungeon"))
+		for (Element e : root.getChildren("dungeon", root.getNamespace()))
 		{
 			Dungeon dungeon = new Dungeon(e);
 			dungeons.put(dungeon.id, dungeon);

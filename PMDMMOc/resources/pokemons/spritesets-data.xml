@@ -1,103 +1,120 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sprites>
+<sprites xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="pmdmmo"
+  xsi:schemaLocation="pmdmmo ../data/xsd/spritesets.xsd">
   <pokemon id="0" size="32">
-    <attack duration="32" />
-    <idle duration="32" />
-    <move duration="32" />
-    <spe1 duration="32" />
-    <spe2 duration="32" />
+    <attack duration="32">4</attack>
+    <hurt duration="32">1</hurt>
+    <idle duration="32">2</idle>
+    <move duration="32">3</move>
+    <sleep duration="32">0</sleep>
+    <spe1 duration="32">4</spe1>
   </pokemon>
-  <pokemon id="1" size ="25" x="12" y="15">
-    <attack duration="20,6,6" />
-    <idle duration="70,6,6" />
-    <move duration="10,10,10" />
-    <spe1 duration="20,40" />
-    <spe2 duration="20,40" />
-    <victory duration="10,40" />
-    <wake duration="2,2,2,2,2,2" />
+  <pokemon id="1" size="32">
+    <attack duration="20,6,6">4,5,3</attack>
+    <idle duration="70,6,6">3,4,5</idle>
+    <move duration="10,10,10">4,5,3</move>
+    <spe1 duration="20,40">6,7</spe1>
+    <spe2 duration="20,40">8,9</spe2>
+    <victory duration="10,40">6,7</victory>
+    <wake duration="2,2,2,2,2,2">0,1,0,1,0,1</wake>
   </pokemon>
-  <pokemon id="16" size ="32">
-    <attack duration="2,2,2,2,2,2,2,2,20" index="0,1,0,1,0,1,0,1,2" />
-    <idle duration="60,10" />
-    <move duration="15,15,15" />
-    <spe1 duration="2,2,2,2,2,2,2,2" index="0,1,0,1,0,1,0,1" />
-    <spe2 duration="2,2,2,2,2,2,2,2" index="0,1,0,1,0,1,0,1" />
+  <pokemon id="4" size="32">
+    <attack duration="10,10,10">3,4,5</attack>
+    <idle duration="70,6,6">3,4,5</idle>
+    <move duration="10,10,10">3,4,5</move>
+    <spe1 duration="20,5,5,5,5">6,7,8,7,8</spe1>
+    <spe2 duration="60">9</spe2>
   </pokemon>
-  <pokemon id="19" size ="32">
-    <attack duration="5,5,5,20" />
-    <idle duration="30,5,5,5" index="0,1,0,1" />
-    <move duration="15,15,15" />
-    <spe1 duration="5,10,2,2,2,2" index="0,1,2,3,2,3" />
-    <spe2 duration="5,10,2,2,2,2" index="0,1,2,3,2,3" />
+  <pokemon id="7" size="32" y="20">
+    <attack duration="20,6,6">3,4,5</attack>
+    <idle duration="70,6,6">3,4,5</idle>
+    <move duration="10,10,10">3,4,5</move>
+    <spe1 duration="60">9</spe1>
   </pokemon>
-  <pokemon id="69" size ="25" x="13" y="16">
-    <attack duration="10,10,10" />
-    <idle duration="40,40" />
-    <move duration="10,10,10" />
-    <spe1 duration="10,10,10" />
-    <spe2 duration="10,10,10" />
+  <pokemon id="16" size="32">
+    <attack duration="2,2,2,2,2,2,2,2,20">6,7,6,7,6,7,6,7,8</attack>
+    <idle duration="60,10">3,4</idle>
+    <move duration="15,15,15">3,5,4</move>
+    <spe1 duration="2,2,2,2,2,2,2,2">6,7,6,7,6,7,6,7</spe1>
   </pokemon>
-  <pokemon id="102" size ="32">
-    <attack duration="5,5,5,20" />
-    <idle duration="40,20" />
-    <move duration="10,10,10" />
-    <spe1 duration="10,10,20" />
-    <spe2 duration="10,10,20" />
+  <pokemon id="19" size="32">
+    <attack duration="5,5,5,20">3,4,5,6</attack>
+    <idle duration="30,5,5,5">3,4,3,4</idle>
+    <move duration="15,15,15">3,4,5</move>
+    <spe1 duration="5,10,8">3,4,7</spe1>
   </pokemon>
-  <pokemon id="191" size ="32">
-    <attack duration="10,30" />
-    <idle duration="20,15" />
-    <move duration="20,15" />
-    <spe1 duration="50" />
-    <spe2 duration="50" />
+  <pokemon id="69" size="32">
+    <attack duration="10,10,10">7,8,9</attack>
+    <idle duration="40,40">3,4</idle>
+    <move duration="10,10,10">3,5,6</move>
+    <spe1 duration="10,10,10">6,10,11</spe1>
   </pokemon>
-  <pokemon id="258" size ="32">
-    <attack duration="15,15,15" />
-    <idle duration="60,10,10" />
-    <move duration="15,15,15" />
-    <spe1 duration="50" />
-    <spe2 duration="50" />
+  <pokemon id="102" size="32">
+    <attack duration="5,5,5,20">3,5,4,6</attack>
+    <idle duration="40,20">3,4</idle>
+    <move duration="10,10,10">5,3,4</move>
+    <spe1 duration="10,10,20">3,5,7</spe1>
   </pokemon>
-  <pokemon id="260" size ="48">
-    <attack duration="15,20" />
-    <idle duration="60,20" />
-    <move duration="15,10,15,10" index="0,2,1,2" />
-    <spe1 duration="50" />
-    <spe2 duration="50" />
+  <pokemon id="152" size="32">
+    <attack duration="10,10,10,10">3,5,3,6</attack>
+    <idle duration="40,5,15">3,4,5</idle>
+    <move duration="10,10,10,10">3,5,3,6</move>
+    <spe1 duration="40,20">4,7</spe1>
   </pokemon>
-  <pokemon id="261" size ="32">
-    <attack duration="10,10,10" />
-    <idle duration="30,6,6,6,6,6" index="0,1,2,1,2,1" />
-    <move duration="10,10,10" />
-    <spe1 duration="10,40" />
-    <spe2 duration="10,40" />
+  <pokemon id="155" size="32">
+    <attack duration="20,20,20">7,8,9</attack>
+    <idle duration="35,25">3,4</idle>
+    <move duration="10,10,10,10">3,5,3,6</move>
+    <spe1 duration="15,15,15,15">6,9,10,4</spe1>
   </pokemon>
-  <pokemon id="265" size ="32">
-    <attack duration="30,5,10" />
-    <idle duration="30,30" />
-    <move duration="20,15,15" />
-    <spe1 duration="10,40" />
-    <spe2 duration="10,40" />
+  <pokemon id="191" size="32">
+    <attack duration="10,30">4,5</attack>
+    <idle duration="20,15">3,4</idle>
+    <move duration="20,15">3,4</move>
+    <spe1 duration="50">6</spe1>
   </pokemon>
-  <pokemon id="311" size ="32">
-    <attack duration="10,10,10" />
-    <idle duration="30,5,5,5" index="0,1,0,1" />
-    <move duration="20,20,20,20" index="1,0,1,2" />
-    <spe1 duration="10,40" />
-    <spe2 duration="10,40" />
+  <pokemon id="258" size="32">
+    <attack duration="15,15,15">3,4,5</attack>
+    <idle duration="60,10,10">3,4,5</idle>
+    <move duration="15,15,15">3,4,5</move>
+    <spe1 duration="50">6</spe1>
   </pokemon>
-  <pokemon id="312" size ="32">
-    <attack duration="10,10,10" />
-    <idle duration="30,5,5,5" index="0,1,0,1" />
-    <move duration="20,20,20,20" index="1,0,1,2" />
-    <spe1 duration="10,40" />
-    <spe2 duration="10,40" />
+  <pokemon id="260" size="48">
+    <attack duration="15,20">7,5</attack>
+    <idle duration="60,20">3,4</idle>
+    <move duration="15,10,15,10">5,3,6,3</move>
+    <spe1 duration="50">7</spe1>
   </pokemon>
-  <pokemon id="343" size ="32">
-    <attack duration="40" />
-    <idle duration="70" />
-    <move duration="40" />
-    <spe1 duration="40" />
-    <spe2 duration="40" />
+  <pokemon id="261" size="32">
+    <attack duration="10,10,10">8,9,10</attack>
+    <idle duration="30,6,6,6,6,6">3,4,5,4,5,4</idle>
+    <move duration="10,10,10">6,7,8</move>
+    <spe1 duration="10,40">4,10</spe1>
+  </pokemon>
+  <pokemon id="265" size="32">
+    <attack duration="30,5,10">3,5,6</attack>
+    <idle duration="30,30">3,4</idle>
+    <move duration="20,15,15">3,5,6</move>
+    <spe1 duration="10,40">3,4</spe1>
+  </pokemon>
+  <pokemon id="311" size="32">
+    <attack duration="10,10,10">3,4,6</attack>
+    <idle duration="30,5,5,5">3,5,3,5</idle>
+    <move duration="20,20,20,20">3,4,3,5</move>
+    <spe1 duration="40,10">6,7</spe1>
+  </pokemon>
+  <pokemon id="312" size="32">
+    <attack duration="10,10,10">3,5,6</attack>
+    <idle duration="30,5,5,5">3,4,3,4</idle>
+    <move duration="20,20,20,20">3,5,3,4</move>
+    <spe1 duration="40,10">6,7</spe1>
+  </pokemon>
+  <pokemon id="343" size="32">
+    <attack duration="40">4</attack>
+    <hurt duration="32">3</hurt>
+    <idle duration="70">4</idle>
+    <move duration="40">4</move>
+    <sleep duration="20,15,15">1,2,0</sleep>
+    <spe1 duration="40">5</spe1>
   </pokemon>
 </sprites>

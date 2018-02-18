@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="pmdmmo" targetNamespace="pmdmmo"
+	elementFormDefault="qualified">
+	<xs:include schemaLocation="base.xsd"/>
+
+	<xs:simpleType name="movecategory">
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="Physical"/>
+			<xs:enumeration value="Special"/>
+			<xs:enumeration value="Status"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="movebase">
+		<xs:attribute name="id" type="posInt"/>
+		<xs:attribute name="type" type="pkmntype"/>
+		<xs:attribute name="category" type="movecategory"/>
+		<xs:attribute name="pp" type="posInt"/>
+		<xs:attribute name="power" type="posInt-1"/>
+		<xs:attribute name="accuracy" type="xs:int"/>
+		<xs:attribute name="priority" type="xs:int" use="optional"/>
+		<xs:attribute name="random" type="posInt" use="optional"/>
+	</xs:complexType>
+
+	<xs:element name="moves">
+		<xs:complexType>
+			<xs:choice maxOccurs="unbounded">
+				<xs:element name="move" type="movedefault"/>
+				<xs:element name="movestatchange" type="movestatchange"/>
+				<xs:element name="movestatuscondition" type="movestatuscondition"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:complexType name="movedefault">
+		<xs:complexContent>
+			<xs:extension base="movebase">
+				<xs:attribute name="behavior" type="posInt" use="optional"/>
+				<xs:attribute name="movetype" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="movestatchange">
+		<xs:complexContent>
+			<xs:extension base="movebase">
+				<xs:sequence>
+					<xs:element name="statchange" maxOccurs="unbounded">
+						<xs:complexType>
+							<xs:attribute name="stat" type="xs:int"/>
+							<xs:attribute name="stage" type="xs:int"/>
+							<xs:attribute name="self" type="xs:int" use="optional"/>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="movetype" fixed="StatChange"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="movestatuscondition">
+		<xs:complexContent>
+			<xs:extension base="movebase">
+				<xs:attribute name="movetype" fixed="StatusCondition"/>
+				<xs:attribute name="status" type="xs:int"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

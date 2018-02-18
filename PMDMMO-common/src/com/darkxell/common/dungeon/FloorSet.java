@@ -21,8 +21,8 @@ public class FloorSet
 	public FloorSet(Element xml)
 	{
 		this.parts = new HashMap<Integer, Integer>();
-		this.except = XMLUtils.readIntArrayAsList(xml.getChild("except"));
-		for (Element part : xml.getChildren("part"))
+		this.except = XMLUtils.readIntArrayAsList(xml.getChild("except", xml.getNamespace()));
+		for (Element part : xml.getChildren("part", xml.getNamespace()))
 		{
 			if (part.getAttribute("floor") != null) this.parts.put(Integer.parseInt(part.getAttributeValue("floor")),
 					Integer.parseInt(part.getAttributeValue("floor")));

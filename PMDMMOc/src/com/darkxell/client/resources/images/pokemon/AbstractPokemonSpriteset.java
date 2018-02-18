@@ -20,21 +20,8 @@ public class AbstractPokemonSpriteset
 	public static final byte FACING_SW = 5;
 	public static final byte FACING_W = 6;
 
-	private static final int[][] stateOffsets = new int[][]
-	{
-	{ 0, 2 },
-	{ 4, 2 },
-	{ 8, 2 },
-	{ 0, 10 },
-	{ 8, 10 },
-	{ 0, 0 },
-	{ 0, 1 },
-	{ 0, 18 },
-	{ 2, 18 },
-	{ 2, 19 },
-	{ 5, 19 } };
-	private static final String[] xmlElementNames = new String[]
-	{ "idle", "move", "attack", "spe1", "spe2", "sleep", "hurt", "rest", "wake", "victory", "eating" };
+	private static final String[] xmlElementNames = new String[] { "idle", "move", "attack", "spe1", "spe2", "sleep", "hurt", "rest", "wake", "victory",
+			"eating" };
 
 	public final int gravityX;
 	public final int gravityY;
@@ -55,23 +42,21 @@ public class AbstractPokemonSpriteset
 		}
 		this.gravityX = XMLUtils.getAttribute(xml, "x", this.defaultX());
 		this.gravityY = XMLUtils.getAttribute(xml, "y", this.defaultY());
-		if (this.gravityX == -1 || this.gravityY == -1) Logger
-				.e("AbstractPokemonSpriteset(): There is no default gravity coordinates for this Sprite's dimension.");
+		if (this.gravityX == -1 || this.gravityY == -1)
+			Logger.e("AbstractPokemonSpriteset(): There is no default gravity coordinates for this Sprite's dimension.");
 		this.sprites = Res.getBase(path);
 
 		this.states = new PokemonSpritesetState[11];
 		for (int i = 0; i < this.states.length; ++i)
-			if (xml.getChild(xmlElementNames[i]) != null) this.states[i] = new PokemonSpritesetState(xml.getChild(xmlElementNames[i]));
-			else if (i == PokemonSprite.STATE_HURT) this.states[i] = new PokemonSpritesetState(new int[]
-			{ 0 }, new int[]
-			{ 25 });
-			else if (i == PokemonSprite.STATE_SLEEP || i == PokemonSprite.STATE_REST) this.states[i] = new PokemonSpritesetState(new int[]
-			{ 0, 1 }, new int[]
-			{ 30, 10 });
-			else if (i == PokemonSprite.STATE_EATING) this.states[i] = new PokemonSpritesetState(new int[]
-			{ 0, 1 }, new int[]
-			{ 10, 10 });
+		{
+			if (xml.getChild(xmlElementNames[i], xml.getNamespace()) != null)
+				this.states[i] = new PokemonSpritesetState(xml.getChild(xmlElementNames[i], xml.getNamespace()));
+			else if (i == PokemonSprite.STATE_SPECIAL2) this.states[i] = this.states[PokemonSprite.STATE_SPECIAL1];
+			else if (i == PokemonSprite.STATE_HURT) this.states[i] = new PokemonSpritesetState(new int[] { 2 }, new int[] { 25 });
+			else if (i == PokemonSprite.STATE_SLEEP || i == PokemonSprite.STATE_REST)
+				this.states[i] = new PokemonSpritesetState(new int[] { 0, 1 }, new int[] { 30, 10 });
 			else this.states[i] = new PokemonSpritesetState(0);
+		}
 	}
 
 	private int defaultX()
@@ -80,13 +65,13 @@ public class AbstractPokemonSpriteset
 		switch (this.spriteWidth)
 		{
 			case 32:
-				return 15;
+				return 16;
 			case 48:
 				return 24;
 			case 64:
-				return 33;
+				return 32;
 			case 96:
-				return 51;
+				return 48;
 			default:
 				return -1;
 		}
@@ -113,12 +98,9 @@ public class AbstractPokemonSpriteset
 	public BufferedImage getSprite(byte state, byte facing, int variant)
 	{
 		int x = 0, y = 0;
-		if (state == PokemonSprite.STATE_HURT) x += facing;
-		else if (state != PokemonSprite.STATE_SLEEP) y += facing;
-		x += this.states[state].indexes[variant];
-		x += stateOffsets[state][0];
-		y += stateOffsets[state][1];
-		return this.sprites.getSubimage(x * spriteWidth, y * spriteHeight, spriteWidth, spriteHeight);
+		if (state != PokemonSprite.STATE_SLEEP) y += facing;
+		x = this.states[state].indexes[variant];
+		return this.sprites.getSubimage(x * this.spriteWidth, y * this.spriteHeight, this.spriteWidth, this.spriteHeight);
 	}
 
 }

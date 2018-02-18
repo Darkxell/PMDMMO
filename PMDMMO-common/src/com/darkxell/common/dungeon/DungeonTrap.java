@@ -18,14 +18,14 @@ public class DungeonTrap
 
 	public DungeonTrap(Element xml)
 	{
-		this.ids = XMLUtils.readIntArray(xml.getChild("ids"));
-		if (xml.getChild("chances") == null)
+		this.ids = XMLUtils.readIntArray(xml.getChild("ids", xml.getNamespace()));
+		if (xml.getChild("chances", xml.getNamespace()) == null)
 		{
 			this.chances = new int[this.ids.length];
 			for (int i = 0; i < this.chances.length; ++i)
 				this.chances[i] = 1;
-		} else this.chances = XMLUtils.readIntArray(xml.getChild("chances"));
-		this.floors = new FloorSet(xml.getChild(FloorSet.XML_ROOT));
+		} else this.chances = XMLUtils.readIntArray(xml.getChild("chances", xml.getNamespace()));
+		this.floors = new FloorSet(xml.getChild(FloorSet.XML_ROOT, xml.getNamespace()));
 	}
 
 	public DungeonTrap(int[] ids, int[] chances, FloorSet floors)

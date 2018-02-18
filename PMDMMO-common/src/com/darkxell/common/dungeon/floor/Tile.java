@@ -87,7 +87,7 @@ public class Tile implements ItemContainer
 	/** @return True if the input Pokémon can walk diagonally with this Tile as a corner. */
 	public boolean canCross(DungeonPokemon pokemon)
 	{
-		if (pokemon.pokemon.species.isType(PokemonType.GHOST)) return true;
+		if (pokemon.pokemon.species.isType(PokemonType.Ghost)) return true;
 		return this.type == TileType.GROUND || this.type == WATER || this.type == LAVA || this.type == AIR || this.type == STAIR || this.type == WARP_ZONE;
 	}
 

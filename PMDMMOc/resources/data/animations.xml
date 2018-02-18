@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<animations>
+<animations xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="pmdmmo"
+  xsi:schemaLocation="pmdmmo xsd/animations.xsd">
   <custom>
     <c id="0" width="16" height="16">0,1,2,3,4,5,6,7,8</c>
     <c id="100" width="11" height="16" x="5" y="13">0,0,0,0,0,0,1,2,3,4</c>
@@ -13,8 +14,7 @@
   <items>
     <item id="86" width="64" height="228" y="210" backsprites="3">0,0,1,1,2,2,3,3,4,4,3,3,5,4,-1,5,4,3,5,4,-1,5,4,3,5,2,1,0</item>
   </items>
-  <moves>
-  </moves>
+  <moves> </moves>
   <statuses>
     <status id="0" spriteduration="5" width="16" height="16" y="25">6,5,6,5,6,5,4,3,2,1,0,1,2,3,4</status>
     <status id="1" spriteduration="5" width="16" height="16" y="25">6,5,6,5,6,5,4,3,2,1,0,1,2,3,4</status>

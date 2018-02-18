@@ -25,6 +25,13 @@ import com.darkxell.common.weather.Weather;
 
 public class Move
 {
+	public static enum MoveCategory
+	{
+		Physical,
+		Special,
+		Status
+	}
+
 	/** Move range.<br />
 	 * <ul>
 	 * <li>FRONT = 0 ; The Pokémon on the Tile in front of the user.</li>
@@ -79,15 +86,6 @@ public class Move
 		User;
 	}
 
-	/** Move categories.<br />
-	 * <ul>
-	 * <li>PHYSICAL = 0</li>
-	 * <li>SPECIAL = 1</li>
-	 * <li>STATUS = 2</li>
-	 * </ul>
-	 */
-	public static final byte PHYSICAL = 0, SPECIAL = 1, STATUS = 2;
-
 	/** This move's accuracy. */
 	public final int accuracy;
 	/** If this move has an additional effect, its chance to happen. */
@@ -95,7 +93,7 @@ public class Move
 	/** This move's behavior type. -1 if already replaced with a proper class. */
 	public final int behaviorID;
 	/** This move's category. See {@link Move#PHYSICAL}. */
-	public final byte category;
+	public final MoveCategory category;
 	/** This move's ID. */
 	public final int id;
 	/** True if this move makes contact. */
@@ -116,9 +114,9 @@ public class Move
 	public Move(Element xml)
 	{
 		this.id = Integer.parseInt(xml.getAttributeValue("id"));
-		this.type = PokemonType.find(Integer.parseInt(xml.getAttributeValue("type")));
+		this.type = PokemonType.valueOf(xml.getAttributeValue("type"));
 		this.behaviorID = XMLUtils.getAttribute(xml, "behavior", -1);
-		this.category = Byte.parseByte(xml.getAttributeValue("category"));
+		this.category = MoveCategory.valueOf(xml.getAttributeValue("category"));
 		this.pp = Integer.parseInt(xml.getAttributeValue("pp"));
 		this.power = Integer.parseInt(xml.getAttributeValue("power"));
 		this.accuracy = XMLUtils.getAttribute(xml, "accuracy", 100);
@@ -129,8 +127,8 @@ public class Move
 		this.makesContact = XMLUtils.getAttribute(xml, "contact", false);
 	}
 
-	public Move(int id, PokemonType type, int behaviorID, byte category, int pp, int power, int accuracy, MoveRange range, MoveTarget targets, int priority,
-			int additionalEffectChance, boolean makesContact)
+	public Move(int id, PokemonType type, int behaviorID, MoveCategory category, int pp, int power, int accuracy, MoveRange range, MoveTarget targets,
+			int priority, int additionalEffectChance, boolean makesContact)
 	{
 		this.id = id;
 		this.type = type;
@@ -164,9 +162,9 @@ public class Move
 	 * @return The damage dealt by this move. */
 	public int damageDealt(DungeonPokemon user, DungeonPokemon target, Floor floor, ArrayList<DungeonEvent> events)
 	{
-		int atk = this.category == PHYSICAL ? user.stats.getAttack() : user.stats.getSpecialAttack() + this.power;
+		int atk = this.category == MoveCategory.Physical ? user.stats.getAttack() : user.stats.getSpecialAttack() + this.power;
 		int level = user.pokemon.getLevel();
-		int def = this.category == PHYSICAL ? target.stats.getDefense() : target.stats.getSpecialDefense();
+		int def = this.category == MoveCategory.Physical ? target.stats.getDefense() : target.stats.getSpecialDefense();
 		float constant = ((atk - def) * 1f / 8) + (level * 2 / 3);
 
 		// Damage modification
@@ -187,14 +185,14 @@ public class Move
 			Weather w = floor.currentWeather().weather;
 			if (w == Weather.SUNNY)
 			{
-				if (this.type == PokemonType.FIRE) d *= 1.5;
-				else if (this.type == PokemonType.WATER) d *= 0.5;
+				if (this.type == PokemonType.Fire) d *= 1.5;
+				else if (this.type == PokemonType.Water) d *= 0.5;
 			} else if (w == Weather.RAIN)
 			{
-				if (this.type == PokemonType.FIRE) d *= 0.5;
-				else if (this.type == PokemonType.WATER) d *= 1.5;
-			} else if (w == Weather.CLOUDS && this.type != PokemonType.NORMAL) d *= 0.75;
-			else if (w == Weather.FOG && this.type == PokemonType.ELECTR) d *= 0.5;
+				if (this.type == PokemonType.Fire) d *= 0.5;
+				else if (this.type == PokemonType.Water) d *= 1.5;
+			} else if (w == Weather.CLOUDS && this.type != PokemonType.Normal) d *= 0.75;
+			else if (w == Weather.FOG && this.type == PokemonType.Electric) d *= 0.5;
 		}
 
 		// Critical hit ?
@@ -355,7 +353,7 @@ public class Move
 	/** @return This Move's name. */
 	public Message name()
 	{
-		return new Message("move." + this.id).addPrefix("<type-" + this.type.id + "> ");
+		return new Message("move." + this.id).addPrefix("<type-" + this.type.id + "> ").addPrefix("<green>").addSuffix("</color>");
 	}
 
 	/** @param move - The used move.
@@ -382,7 +380,7 @@ public class Move
 		root.setAttribute("type", Integer.toString(this.type.id));
 		if (this.behaviorID > 0) root.setAttribute("behavior", Integer.toString(this.behaviorID));
 		else root.setAttribute("movetype", className);
-		root.setAttribute("category", Byte.toString(this.category));
+		root.setAttribute("category", this.category.name());
 		root.setAttribute("pp", Integer.toString(this.pp));
 		root.setAttribute("power", Integer.toString(this.power));
 		XMLUtils.setAttribute(root, "accuracy", this.accuracy, 100);

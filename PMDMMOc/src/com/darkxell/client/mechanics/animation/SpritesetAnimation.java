@@ -77,13 +77,13 @@ public class SpritesetAnimation extends PokemonAnimation
 	public static void loadData()
 	{
 		Element xml = XMLUtils.readFile(new File("resources/data/animations.xml"));
-		for (Element c : xml.getChild("custom").getChildren("c"))
+		for (Element c : xml.getChild("custom", xml.getNamespace()).getChildren("c"))
 			custom.put(Integer.parseInt(c.getAttributeValue("id")), c);
-		for (Element item : xml.getChild("items").getChildren("item"))
+		for (Element item : xml.getChild("items", xml.getNamespace()).getChildren("item"))
 			items.put(Integer.parseInt(item.getAttributeValue("id")), item);
-		for (Element move : xml.getChild("moves").getChildren("move"))
+		for (Element move : xml.getChild("moves", xml.getNamespace()).getChildren("move"))
 			moves.put(Integer.parseInt(move.getAttributeValue("id")), move);
-		for (Element move : xml.getChild("statuses").getChildren("status"))
+		for (Element move : xml.getChild("statuses", xml.getNamespace()).getChildren("status"))
 			statuses.put(Integer.parseInt(move.getAttributeValue("id")), move);
 	}
 

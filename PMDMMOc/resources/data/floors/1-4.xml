@@ -1,31 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<floor>
-  <rooms />
-  <tiles>MMMMMMMMMMMMMMMMMMM;MMMMMMMMMMMMMMMMMMM;MMMMMMMMMMMMMMMMMMM;MMMMMMMMMMMMMMMMMMM;MMMMMMMMMMMMMMMMMMM;MMMMM    S    MMMMM;MMMMM         MMMMM;MMMMM         MMMMM;MMMMM         MMMMM;MMMMM         MMMMM;MMMMMMM     MMMMMMM;MMMMMMM     MMMMMMM;MMMMMMM     MMMMMMM;MMMMMMM     MMMMMMM;MMMMMMM     MMMMMMM;MMMMMMMMMMMMMMMMMMM;MMMMMMMMMMMMMMMMMMM;MMMMMMMMMMMMMMMMMMM;MMMMMMMMMMMMMMMMMMM;MMMMMMMMMMMMMMMMMMM</tiles>
+<floor xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="pmdmmo"
+  xsi:schemaLocation="pmdmmo ../xsd/staticlayout.xsd">
+  <rooms/>
+  <tiles>MMMMMMMMMMMMMMMMMMM;MMMMMMMMMMMMMMMMMMM;MMMMMMMMMMMMMMMMMMM;MMMMMMMMMMMMMMMMMMM;MMMMMMMMMMMMMMMMMMM;MMMMM
+    S MMMMM;MMMMM MMMMM;MMMMM MMMMM;MMMMM MMMMM;MMMMM MMMMM;MMMMMMM MMMMMMM;MMMMMMM MMMMMMM;MMMMMMM
+    MMMMMMM;MMMMMMM MMMMMMM;MMMMMMM
+    MMMMMMM;MMMMMMMMMMMMMMMMMMM;MMMMMMMMMMMMMMMMMMM;MMMMMMMMMMMMMMMMMMM;MMMMMMMMMMMMMMMMMMM;MMMMMMMMMMMMMMMMMMM</tiles>
   <items>
-    <item id="0" x="5" y="6" quantity="5" />
-    <item id="2" x="6" y="6" />
-    <item id="8" x="7" y="6" />
-    <item id="21" x="8" y="6" />
-    <item id="31" x="9" y="6" />
-    <item id="78" x="10" y="6" />
-    <item id="86" x="11" y="6" />
-    <item id="171" x="12" y="6" />
-    <item id="208" x="13" y="6" />
-    <item id="314" x="8" y="7" />
-    <item id="225" x="9" y="7" />
-    <item id="352" x="10" y="7" />
+    <item id="0" x="5" y="6" quantity="5"/>
+    <item id="2" x="6" y="6"/>
+    <item id="8" x="7" y="6"/>
+    <item id="21" x="8" y="6"/>
+    <item id="31" x="9" y="6"/>
+    <item id="78" x="10" y="6"/>
+    <item id="86" x="11" y="6"/>
+    <item id="171" x="12" y="6"/>
+    <item id="208" x="13" y="6"/>
+    <item id="314" x="8" y="7"/>
+    <item id="225" x="9" y="7"/>
+    <item id="352" x="10" y="7"/>
   </items>
   <pokemons>
-    <pokemon id="16" x="7" y="8" level="1" />
-    <pokemon id="69" x="8" y="8" level="1" />
-    <pokemon id="102" x="9" y="8" level="5" />
-    <pokemon id="191" x="10" y="8" level="1" />
-    <pokemon id="265" x="11" y="8" level="1" />
+    <pokemon id="16" x="7" y="8" level="1"/>
+    <pokemon id="69" x="8" y="8" level="1"/>
+    <pokemon id="102" x="9" y="8" level="5"/>
+    <pokemon id="191" x="10" y="8" level="1"/>
+    <pokemon id="265" x="11" y="8" level="1"/>
   </pokemons>
-  <spawn x="9" y="10" />
+  <spawn x="9" y="10"/>
   <traps>
-    <trap id="0" x="7" y="5" />
-    <trap id="5" x="11" y="5" />
+    <trap id="0" x="7" y="5"/>
+    <trap id="5" x="11" y="5"/>
   </traps>
 </floor>

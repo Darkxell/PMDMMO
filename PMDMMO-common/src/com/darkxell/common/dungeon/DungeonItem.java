@@ -24,14 +24,14 @@ public class DungeonItem
 	public DungeonItem(Element xml)
 	{
 		this.weight = XMLUtils.getAttribute(xml, "weight", 1);
-		this.floors = new FloorSet(xml.getChild(FloorSet.XML_ROOT));
-		this.items = XMLUtils.readIntArray(xml.getChild("ids"));
-		if (xml.getChild("chances") == null)
+		this.floors = new FloorSet(xml.getChild(FloorSet.XML_ROOT, xml.getNamespace()));
+		this.items = XMLUtils.readIntArray(xml.getChild("ids", xml.getNamespace()));
+		if (xml.getChild("chances", xml.getNamespace()) == null)
 		{
 			this.chances = new int[this.items.length];
 			for (int i = 0; i < this.chances.length; ++i)
 				this.chances[i] = 1;
-		} else this.chances = XMLUtils.readIntArray(xml.getChild("chances"));
+		} else this.chances = XMLUtils.readIntArray(xml.getChild("chances", xml.getNamespace()));
 	}
 
 	public DungeonItem(FloorSet floors, int weight, int[] items, int[] chances)
