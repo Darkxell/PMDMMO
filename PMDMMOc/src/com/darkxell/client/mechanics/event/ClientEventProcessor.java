@@ -14,6 +14,7 @@ import com.darkxell.client.renderers.MoveRenderer;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.renderers.floor.PokemonRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
+import com.darkxell.client.resources.music.SoundManager;
 import com.darkxell.client.state.DialogState;
 import com.darkxell.client.state.DialogState.DialogEndListener;
 import com.darkxell.client.state.DialogState.DialogScreen;
@@ -238,9 +239,12 @@ public final class ClientEventProcessor extends CommonEventProcessor
 
 			DialogState state = new DialogState(Persistance.dungeonState, processEventsOnDialogEnd, false, screens);
 
-			if (firstLevel) Persistance.dungeonState.setSubstate(
-					new DelayState(Persistance.dungeonState, 60, (DelayState s) -> ((PrincipalMainState) Persistance.stateManager).setState(state)));
-			else((PrincipalMainState) Persistance.stateManager).setState(state);
+			if (firstLevel)
+			{
+				SoundManager.playSoundOverMusic("game-levelup");
+				Persistance.dungeonState.setSubstate(
+						new DelayState(Persistance.dungeonState, 60, (DelayState s) -> ((PrincipalMainState) Persistance.stateManager).setState(state)));
+			} else((PrincipalMainState) Persistance.stateManager).setState(state);
 		}
 	}
 
