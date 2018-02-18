@@ -12,7 +12,6 @@ import com.darkxell.client.launchable.Persistance;
 import com.darkxell.common.util.Logger;
 
 import javazoom.jl.player.Player;
-import javazoom.jl.player.advenced.AdvancedPlayer;
 
 /**
  * An object that manages all the sounds. Able to play a sound, and to
@@ -35,7 +34,7 @@ public class SoundManager implements Runnable {
 	 */
 	private Thread runner;
 	/** The current playing Player. */
-	private Player currentplayer;
+	private PausablePlayer currentplayer;
 	/** The current song being played (even if paused). */
 	private Song currentsong;
 	/**
@@ -108,7 +107,7 @@ public class SoundManager implements Runnable {
 			} catch (Exception e) {
 			}
 			try {
-				this.currentplayer = new Player(new FileInputStream(song.getfilepath()));
+				this.currentplayer = new PausablePlayer(new FileInputStream(song.getfilepath()));
 			} catch (Exception e) {
 				if (song != null) {
 					System.err.println("Erreur lors de l'ouverture du fichier son.");
@@ -170,8 +169,7 @@ public class SoundManager implements Runnable {
 			this.soundOverSong = sound;
 			try
 			{
-				this.currentplayer.close();
-				this.currentplayer = new Player(new FileInputStream(this.currentsong.getfilepath()));
+				this.currentplayer.pause();
 			} catch (Exception e)
 			{}
 			try
