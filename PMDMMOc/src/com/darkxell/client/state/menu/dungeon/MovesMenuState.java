@@ -6,6 +6,7 @@ import java.awt.Rectangle;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.MenuHudSpriteset;
+import com.darkxell.client.resources.music.SoundManager;
 import com.darkxell.client.state.dungeon.DungeonState;
 import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
@@ -108,20 +109,30 @@ public class MovesMenuState extends OptionSelectionMenuState
 				else if (key == Keys.KEY_UP) --this.selection;
 				else if (key == Keys.KEY_DOWN) ++this.selection;
 				else if (key == Keys.KEY_ATTACK) this.onOptionSelected(this.currentOption());
-				else if (key == Keys.KEY_ROTATE) this.onOptionInfo(this.currentOption());
+				else if (key == Keys.KEY_ROTATE)
+				{
+					this.onOptionInfo(this.currentOption());
+					SoundManager.playSound("ui-select");
+				}
 
 				if (key == Keys.KEY_LEFT || key == Keys.KEY_RIGHT)
 				{
 					if (this.selection >= this.currentTab().options().length) this.selection = this.currentTab().options().length - 1;
 					this.onTabChanged(this.currentTab());
+					SoundManager.playSound("ui-move");
 				} else if (key == Keys.KEY_UP || key == Keys.KEY_DOWN)
 				{
 					if (this.selection == -1) this.selection = this.currentTab().options().length - 1;
 					else if (this.selection == this.currentTab().options().length) this.selection = 0;
 					this.onOptionChanged(this.currentOption());
+					SoundManager.playSound("ui-move");
 				}
 			}
-			if (key == Keys.KEY_MENU || key == Keys.KEY_RUN) this.onExit();
+			if (key == Keys.KEY_MENU || key == Keys.KEY_RUN)
+			{
+				this.onExit();
+				SoundManager.playSound("ui-back");
+			}
 		} else
 		{
 			int from = -1, to = -1;
@@ -133,12 +144,14 @@ public class MovesMenuState extends OptionSelectionMenuState
 				to = this.selection - 1;
 				--this.selection;
 				success = true;
+				SoundManager.playSound("ui-sort");
 			} else if (key == Keys.KEY_DOWN && this.selection < this.currentTab().options().length - 1)
 			{
 				from = this.selection;
 				to = this.selection + 1;
 				++this.selection;
 				success = true;
+				SoundManager.playSound("ui-sort");
 			}
 
 			if (success)
