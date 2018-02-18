@@ -3,6 +3,7 @@ package com.darkxell.client.state.menu.dungeon.item;
 import java.util.ArrayList;
 
 import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.resources.music.SoundManager;
 import com.darkxell.client.state.dungeon.DungeonState;
 import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.client.state.menu.InfoState;
@@ -119,6 +120,7 @@ public class ItemContainersMenuState extends OptionSelectionMenuState implements
 		super.onKeyPressed(key);
 		if (key == Keys.KEY_MAP_RESET && this.container() == Persistance.player.inventory)
 		{
+			SoundManager.playSound("ui-sort");
 			Persistance.player.inventory.sort();
 			ArrayList<ItemContainer> containers = new ArrayList<ItemContainer>();
 			for (ItemContainer c : this.containers)

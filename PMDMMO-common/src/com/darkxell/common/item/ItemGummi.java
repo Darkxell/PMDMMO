@@ -9,6 +9,7 @@ import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.pokemon.IncreasedIQEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.PokemonType;
+import com.darkxell.common.util.XMLUtils;
 import com.darkxell.common.util.language.Message;
 
 /** A Gummi restores belly, increases stats and IQ, depending on the Pokémon's type. */
@@ -16,15 +17,15 @@ public class ItemGummi extends Item
 {
 
 	/** The type of the gummy. */
-	public final short type;
+	public final PokemonType type;
 
 	public ItemGummi(Element xml)
 	{
 		super(xml);
-		this.type = Short.parseShort(xml.getAttributeValue("g-type"));
+		this.type = PokemonType.valueOf(XMLUtils.getAttribute(xml, "g-type", "Normal"));
 	}
 
-	public ItemGummi(int id, int price, int sell, int sprite, boolean isStackable, short type)
+	public ItemGummi(int id, int price, int sell, int sprite, boolean isStackable, PokemonType type)
 	{
 		super(id, price, sell, sprite, isStackable);
 		this.type = type;
@@ -38,7 +39,7 @@ public class ItemGummi extends Item
 	@Override
 	public int getSpriteID()
 	{
-		return 32 + this.type;
+		return 32 + this.type.id;
 	}
 
 	@Override
@@ -61,8 +62,8 @@ public class ItemGummi extends Item
 	private int iqIncrease(PokemonType type)
 	{
 		if (type == null) return 0;
-		if (type == this.type()) return 7;
-		float effectiveness = this.type().effectivenessOn(type);
+		if (type == this.type) return 7;
+		float effectiveness = this.type.effectivenessOn(type);
 		if (effectiveness == PokemonType.NO_EFFECT) return 1;
 		if (effectiveness == PokemonType.NOT_VERY_EFFECTIVE) return 2;
 		if (effectiveness == PokemonType.SUPER_EFFECTIVE) return 4;
@@ -72,13 +73,8 @@ public class ItemGummi extends Item
 	public Element toXML()
 	{
 		Element root = super.toXML();
-		root.setAttribute("g-type", Short.toString(this.type));
+		root.setAttribute("g-type", this.type.name());
 		return root;
-	}
-
-	public PokemonType type()
-	{
-		return PokemonType.find(this.type);
 	}
 
 	@Override
