@@ -128,7 +128,6 @@ public class DungeonState extends AbstractState
 	public void onStart()
 	{
 		super.onStart();
-		Persistance.soundmanager.setBackgroundMusic(SoundsHolder.getSong("07 Tiny Woods.mp3"));
 		this.floorVisibility.onCameraMoved();
 	}
 

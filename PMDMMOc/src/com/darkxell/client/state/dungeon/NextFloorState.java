@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.TextRenderer;
+import com.darkxell.client.resources.music.SoundsHolder;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.common.dungeon.Dungeon;
@@ -83,6 +84,7 @@ public class NextFloorState extends AbstractState
 			Persistance.floor = Persistance.dungeon.currentFloor();
 			Persistance.dungeonState = new DungeonState();
 			Persistance.dungeonState.floorVisibility.onCameraMoved();
+			Persistance.soundmanager.setBackgroundMusic(SoundsHolder.getSong("07 Tiny Woods.mp3"));
 		}
 
 	}

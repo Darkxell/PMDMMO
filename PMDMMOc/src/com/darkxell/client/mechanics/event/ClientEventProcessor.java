@@ -156,6 +156,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	{
 		if (!(event.source instanceof BellyChangedEvent))
 		{
+			SoundManager.playSound("dungeon-hurt");
 			Persistance.dungeonState.pokemonRenderer.getRenderer(event.target).sprite.setState(PokemonSprite.STATE_HURT);
 			Persistance.dungeonState.pokemonRenderer.getRenderer(event.target).sprite.setHealthChange(-event.damage);
 			Persistance.dungeonState.setSubstate(new DelayState(Persistance.dungeonState, PokemonSprite.FRAMELENGTH));
