@@ -61,6 +61,12 @@
     <move duration="10,10,10">5,3,4</move>
     <spe1 duration="10,10,20">3,5,7</spe1>
   </pokemon>
+  <pokemon id="133" size="32">
+    <attack duration="10,10,10">6,7,5</attack>
+    <idle duration="30,30">3,4</idle>
+    <move duration="15,15,15">5,6,7</move>
+    <spe1 duration="10,10,10,10">8,9,8,9</spe1>
+  </pokemon>
   <pokemon id="152" size="32">
     <attack duration="10,10,10,10">3,5,3,6</attack>
     <idle duration="40,5,15">3,4,5</idle>
