@@ -18,7 +18,6 @@ import com.darkxell.client.renderers.floor.GridRenderer;
 import com.darkxell.client.renderers.floor.PokemonRenderer;
 import com.darkxell.client.renderers.floor.ShadowRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
-import com.darkxell.client.resources.music.SoundsHolder;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.common.dungeon.floor.Tile;
