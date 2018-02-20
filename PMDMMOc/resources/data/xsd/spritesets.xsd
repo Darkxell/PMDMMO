@@ -43,6 +43,7 @@
             <xs:attribute name="size" type="xs:positiveInteger"/>
             <xs:attribute name="x" type="xs:positiveInteger" use="optional"/>
             <xs:attribute name="y" type="xs:positiveInteger" use="optional"/>
+            <xs:attribute name="bigshadow" type="xs:boolean" use="optional"/>
         </xs:complexType>
     </xs:element>
 

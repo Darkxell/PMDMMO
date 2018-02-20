@@ -25,6 +25,7 @@ public class AbstractPokemonSpriteset
 
 	public final int gravityX;
 	public final int gravityY;
+	public final boolean hasBigShadow;
 	public final int pokemonID;
 	public final int spriteHeight;
 	private BufferedImage sprites;
@@ -42,6 +43,7 @@ public class AbstractPokemonSpriteset
 		}
 		this.gravityX = XMLUtils.getAttribute(xml, "x", this.defaultX());
 		this.gravityY = XMLUtils.getAttribute(xml, "y", this.defaultY());
+		this.hasBigShadow = XMLUtils.getAttribute(xml, "bigshadow", false);
 		if (this.gravityX == -1 || this.gravityY == -1)
 			Logger.e("AbstractPokemonSpriteset(): There is no default gravity coordinates for this Sprite's dimension.");
 		this.sprites = Res.getBase(path);
@@ -85,11 +87,11 @@ public class AbstractPokemonSpriteset
 			case 32:
 				return 23;
 			case 48:
-				return 33;
+				return 38;
 			case 64:
-				return 43;
+				return 58;
 			case 96:
-				return 63;
+				return 80;
 			default:
 				return -1;
 		}

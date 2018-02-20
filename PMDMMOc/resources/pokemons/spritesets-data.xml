@@ -109,7 +109,7 @@
     <move duration="15,15,15">3,4,5</move>
     <spe1 duration="50">6</spe1>
   </pokemon>
-  <pokemon id="260" size="48">
+  <pokemon id="260" size="48" bigshadow="true">
     <attack duration="15,20">7,5</attack>
     <idle duration="60,20">3,4</idle>
     <move duration="15,10,15,10">5,3,6,3</move>
@@ -126,6 +126,12 @@
     <idle duration="30,30">3,4</idle>
     <move duration="20,15,15">3,5,6</move>
     <spe1 duration="10,40">3,4</spe1>
+  </pokemon>
+  <pokemon id="300" size="48">
+    <attack duration="10,5,10">3,5,6</attack>
+    <idle duration="20,10,10,10">3,4,3,4</idle>
+    <move duration="15,15,15">5,6,3</move>
+    <spe1 duration="10,10,10,10,10">6,7,8,7,8</spe1>
   </pokemon>
   <pokemon id="311" size="32">
     <attack duration="10,10,10">3,4,6</attack>
