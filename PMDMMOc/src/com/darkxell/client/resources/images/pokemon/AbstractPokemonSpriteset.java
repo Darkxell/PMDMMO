@@ -20,8 +20,8 @@ public class AbstractPokemonSpriteset
 	public static final byte FACING_SW = 5;
 	public static final byte FACING_W = 6;
 
-	private static final String[] xmlElementNames = new String[] { "idle", "move", "attack", "spe1", "spe2", "sleep", "hurt", "rest", "wake", "victory",
-			"eating" };
+	private static final String[] xmlElementNames = new String[] { "idle", "move", "attack", "attack2", "spe1", "spe2", "sleep", "hurt", "rest", "wake",
+			"victory", "eating" };
 
 	public final int gravityX;
 	public final int gravityY;
@@ -53,7 +53,8 @@ public class AbstractPokemonSpriteset
 		{
 			if (xml.getChild(xmlElementNames[i], xml.getNamespace()) != null)
 				this.states[i] = new PokemonSpritesetState(xml.getChild(xmlElementNames[i], xml.getNamespace()));
-			else if (i == PokemonSprite.STATE_SPECIAL2) this.states[i] = this.states[PokemonSprite.STATE_SPECIAL1];
+			else if (i == PokemonSprite.STATE_ATTACK2) this.states[i] = this.states[PokemonSprite.STATE_ATTACK];
+			else if (i == PokemonSprite.STATE_SPECIAL2) this.states[i] = this.states[PokemonSprite.STATE_SPECIAL];
 			else if (i == PokemonSprite.STATE_HURT) this.states[i] = new PokemonSpritesetState(new int[] { 2 }, new int[] { 25 });
 			else if (i == PokemonSprite.STATE_SLEEP || i == PokemonSprite.STATE_REST)
 				this.states[i] = new PokemonSpritesetState(new int[] { 0, 1 }, new int[] { 30, 10 });

@@ -73,14 +73,15 @@ public class PokemonSprite {
 	public static final byte STATE_IDLE = 0;
 	public static final byte STATE_MOVE = 1;
 	public static final byte STATE_ATTACK = 2;
-	public static final byte STATE_SPECIAL1 = 3;
-	public static final byte STATE_SPECIAL2 = 4;
-	public static final byte STATE_SLEEP = 5;
-	public static final byte STATE_HURT = 6;
-	public static final byte STATE_REST = 7;
-	public static final byte STATE_WAKING = 8;
-	public static final byte STATE_VICTORYPOSE = 9;
-	public static final byte STATE_EATING = 10;
+	public static final byte STATE_ATTACK2 = 3;
+	public static final byte STATE_SPECIAL = 4;
+	public static final byte STATE_SPECIAL2 = 5;
+	public static final byte STATE_SLEEP = 6;
+	public static final byte STATE_HURT = 7;
+	public static final byte STATE_REST = 8;
+	public static final byte STATE_WAKING = 9;
+	public static final byte STATE_VICTORYPOSE = 10;
+	public static final byte STATE_EATING = 11;
 
 	public static final int FRAMELENGTH = 10;
 	public static final int HEALTHLENGTH = 60;

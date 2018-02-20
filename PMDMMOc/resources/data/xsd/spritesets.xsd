@@ -30,6 +30,7 @@
             <xs:sequence>
                 <xs:element name="spritenames" type="strList" minOccurs="0"/>
                 <xs:element name="attack" type="sprite"/>
+                <xs:element name="attack2" type="sprite" minOccurs="0"/>
                 <xs:element name="hurt" type="sprite" minOccurs="0"/>
                 <xs:element name="idle" type="sprite"/>
                 <xs:element name="move" type="sprite"/>
