@@ -1,10 +1,12 @@
 package com.darkxell.client.mechanics.freezones;
 
 import com.darkxell.client.launchable.Persistance;
-import com.darkxell.client.resources.images.pokemon.AbstractPokemonSpriteset;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
+import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
 import com.darkxell.client.ui.Keys;
+import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.DoubleRectangle;
+import com.darkxell.common.util.Logger;
 
 public class FreezonePlayer {
 
@@ -75,25 +77,25 @@ public class FreezonePlayer {
 			ismovingUP = true;
 			ismovingDOWN = false;
 			playersprite.setFacingDirection(getFacingFromMoveDirections());
-			playersprite.setState(PokemonSprite.STATE_MOVE);
+			playersprite.setState(PokemonSpriteState.MOVE);
 			break;
 		case Keys.KEY_RIGHT:
 			ismovingRIGHT = true;
 			ismovingLEFT = false;
 			playersprite.setFacingDirection(getFacingFromMoveDirections());
-			playersprite.setState(PokemonSprite.STATE_MOVE);
+			playersprite.setState(PokemonSpriteState.MOVE);
 			break;
 		case Keys.KEY_DOWN:
 			ismovingDOWN = true;
 			ismovingUP = false;
 			playersprite.setFacingDirection(getFacingFromMoveDirections());
-			playersprite.setState(PokemonSprite.STATE_MOVE);
+			playersprite.setState(PokemonSpriteState.MOVE);
 			break;
 		case Keys.KEY_LEFT:
 			ismovingLEFT = true;
 			ismovingRIGHT = false;
 			playersprite.setFacingDirection(getFacingFromMoveDirections());
-			playersprite.setState(PokemonSprite.STATE_MOVE);
+			playersprite.setState(PokemonSpriteState.MOVE);
 			break;
 		case Keys.KEY_ATTACK:
 			if (canInteract())
@@ -110,28 +112,28 @@ public class FreezonePlayer {
 		case Keys.KEY_UP:
 			ismovingUP = false;
 			if (!ismoving())
-				playersprite.setState(PokemonSprite.STATE_IDLE);
+				playersprite.setState(PokemonSpriteState.IDLE);
 			else
 				playersprite.setFacingDirection(getFacingFromMoveDirections());
 			break;
 		case Keys.KEY_RIGHT:
 			ismovingRIGHT = false;
 			if (!ismoving())
-				playersprite.setState(PokemonSprite.STATE_IDLE);
+				playersprite.setState(PokemonSpriteState.IDLE);
 			else
 				playersprite.setFacingDirection(getFacingFromMoveDirections());
 			break;
 		case Keys.KEY_DOWN:
 			ismovingDOWN = false;
 			if (!ismoving())
-				playersprite.setState(PokemonSprite.STATE_IDLE);
+				playersprite.setState(PokemonSpriteState.IDLE);
 			else
 				playersprite.setFacingDirection(getFacingFromMoveDirections());
 			break;
 		case Keys.KEY_LEFT:
 			ismovingLEFT = false;
 			if (!ismoving())
-				playersprite.setState(PokemonSprite.STATE_IDLE);
+				playersprite.setState(PokemonSpriteState.IDLE);
 			else
 				playersprite.setFacingDirection(getFacingFromMoveDirections());
 			break;
@@ -141,7 +143,7 @@ public class FreezonePlayer {
 		}
 	}
 
-	public void setState(byte state) {
+	public void setState(PokemonSpriteState state) {
 		playersprite.setState(state);
 	}
 
@@ -155,7 +157,7 @@ public class FreezonePlayer {
 		ismovingDOWN = false;
 		ismovingLEFT = false;
 		isSprinting = false;
-		playersprite.setState(PokemonSprite.STATE_IDLE);
+		playersprite.setState(PokemonSpriteState.IDLE);
 	}
 
 	public static final double MOVESPEED = 0.2;
@@ -165,39 +167,24 @@ public class FreezonePlayer {
 	private boolean ismovingLEFT = false;
 	private boolean isSprinting = false;
 
-	private byte getFacingFromMoveDirections() {
+	private Direction getFacingFromMoveDirections()
+	{
 		if (ismovingUP)
-			if (ismovingRIGHT)
-				return AbstractPokemonSpriteset.FACING_NE;
-			else if (ismovingLEFT)
-				return AbstractPokemonSpriteset.FACING_NW;
-			else
-				return AbstractPokemonSpriteset.FACING_N;
-		else if (ismovingRIGHT)
-			if (ismovingUP)
-				return AbstractPokemonSpriteset.FACING_NE;
-			else if (ismovingDOWN)
-				return AbstractPokemonSpriteset.FACING_SE;
-			else
-				return AbstractPokemonSpriteset.FACING_E;
-		else if (ismovingDOWN)
-			if (ismovingRIGHT)
-				return AbstractPokemonSpriteset.FACING_SE;
-			else if (ismovingLEFT)
-				return AbstractPokemonSpriteset.FACING_SW;
-			else
-				return AbstractPokemonSpriteset.FACING_S;
-		else if (ismovingLEFT)
-			if (ismovingUP)
-				return AbstractPokemonSpriteset.FACING_NW;
-			else if (ismovingDOWN)
-				return AbstractPokemonSpriteset.FACING_SW;
-			else
-				return AbstractPokemonSpriteset.FACING_W;
+		{
+			if (ismovingRIGHT) return Direction.NORTHEAST;
+			else if (ismovingLEFT) return Direction.NORTHWEST;
+			else return Direction.NORTH;
+		} else if (ismovingDOWN)
+		{
+			if (ismovingRIGHT) return Direction.SOUTHEAST;
+			else if (ismovingLEFT) return Direction.SOUTHWEST;
+			else return Direction.SOUTH;
+		} else if (ismovingLEFT) return Direction.WEST;
+		else if (ismovingRIGHT) return Direction.EAST;
+
 		// NOT MOVING, CAN'T DETERMINE!
-		System.err.println(
-				"Could not determine facing direction from movements since the player is not moving. Returned north.");
-		return AbstractPokemonSpriteset.FACING_N;
+		Logger.e("Could not determine facing direction from movements since the player is not moving. Returned north.");
+		return Direction.NORTH;
 	}
 
 	public boolean ismoving() {
@@ -205,22 +192,18 @@ public class FreezonePlayer {
 	}
 
 	/** Returns the hitbox of the interaction window in front of the player. */
-	public DoubleRectangle getInteractionBox() {
-		byte facing = playersprite.getFacingDirection();
+	public DoubleRectangle getInteractionBox()
+	{
+		Direction facing = playersprite.getFacingDirection();
+
 		double tpx = this.x;
-		if (facing == AbstractPokemonSpriteset.FACING_E || facing == AbstractPokemonSpriteset.FACING_NE
-				|| facing == AbstractPokemonSpriteset.FACING_SE)
-			tpx += 2.5;
-		if (facing == AbstractPokemonSpriteset.FACING_W || facing == AbstractPokemonSpriteset.FACING_NW
-				|| facing == AbstractPokemonSpriteset.FACING_SW)
-			tpx -= 2.5;
+		if (facing.contains(Direction.EAST)) tpx += 2.5;
+		if (facing.contains(Direction.WEST)) tpx -= 2.5;
+
 		double tpy = this.y;
-		if (facing == AbstractPokemonSpriteset.FACING_S || facing == AbstractPokemonSpriteset.FACING_SE
-				|| facing == AbstractPokemonSpriteset.FACING_SW)
-			tpy += 2.5;
-		if (facing == AbstractPokemonSpriteset.FACING_N || facing == AbstractPokemonSpriteset.FACING_NE
-				|| facing == AbstractPokemonSpriteset.FACING_NW)
-			tpy -= 2.5;
+		if (facing.contains(Direction.SOUTH)) tpy += 2.5;
+		if (facing.contains(Direction.NORTH)) tpy -= 2.5;
+
 		return new DoubleRectangle(tpx, tpy, 1.3, 1.3, true);
 	}
 

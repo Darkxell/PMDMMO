@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 import com.darkxell.client.mechanics.animation.AbstractAnimation;
 import com.darkxell.client.mechanics.animation.AnimationEndListener;
+import com.darkxell.client.mechanics.animation.Animations;
 import com.darkxell.client.mechanics.animation.SpritesetAnimation;
 
 public class RainAnimation extends AbstractAnimation
@@ -26,9 +27,9 @@ public class RainAnimation extends AbstractAnimation
 
 	private void createDrop()
 	{
-		SpritesetAnimation a = (SpritesetAnimation) SpritesetAnimation.getCustomAnimation(null, this.spritesetID, null);
+		SpritesetAnimation a = (SpritesetAnimation) Animations.getCustomAnimation(null, this.spritesetID, null);
 		this.drops.put(a, false);
-		if (this.dropDuration == -1) this.dropDuration = a.duration;
+		if (this.dropDuration == -1) this.dropDuration = a.duration();
 	}
 
 	@Override

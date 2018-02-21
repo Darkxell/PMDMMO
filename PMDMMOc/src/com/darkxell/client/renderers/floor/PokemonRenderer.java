@@ -19,18 +19,10 @@ import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
 import com.darkxell.client.resources.images.pokemon.ShadowSprites;
 import com.darkxell.client.resources.images.tilesets.AbstractDungeonTileset;
 import com.darkxell.common.pokemon.DungeonPokemon;
-import com.darkxell.common.util.Direction;
 
 /** Renders a Pokémon. This Renderer's Coordinates' units are Tiles. */
 public class PokemonRenderer extends AbstractRenderer
 {
-
-	private static byte spriteDirection(Direction facing)
-	{
-		for (byte i = 0; i < Direction.directions.length; ++i)
-			if (facing == Direction.directions[i]) return i;
-		return 0;
-	}
 
 	private final ArrayList<PokemonAnimation> animations = new ArrayList<PokemonAnimation>();
 	public final DungeonPokemon pokemon;
@@ -76,7 +68,7 @@ public class PokemonRenderer extends AbstractRenderer
 
 		if (this.pokemon.stateChanged)
 		{
-			this.sprite.setFacingDirection(spriteDirection(this.pokemon.facing()));
+			this.sprite.setFacingDirection(this.pokemon.facing());
 			pokemon.stateChanged = false;
 		}
 

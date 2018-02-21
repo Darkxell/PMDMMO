@@ -8,7 +8,7 @@ public class AbstractAnimation
 {
 
 	/** The total duration of this Animation. */
-	public final int duration;
+	int duration;
 	public final AnimationEndListener listener;
 	/** True if displaying this Animation should stop the Pending Events. */
 	public boolean needsPause = true;
@@ -32,6 +32,11 @@ public class AbstractAnimation
 	public float completion()
 	{
 		return this.tick * 1f / (this.duration * Math.abs(this.plays));
+	}
+
+	public int duration()
+	{
+		return this.duration;
 	}
 
 	/** @return True if this Animation has ended. */

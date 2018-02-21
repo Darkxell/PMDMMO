@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 
 import com.darkxell.client.mechanics.animation.AbstractAnimation;
 import com.darkxell.client.mechanics.animation.AnimationEndListener;
+import com.darkxell.client.mechanics.animation.Animations;
 import com.darkxell.client.mechanics.animation.SpritesetAnimation;
 
 public class SnowAnimation extends AbstractAnimation
@@ -33,7 +34,7 @@ public class SnowAnimation extends AbstractAnimation
 		super.render(g, width, height);
 		if (this.snow == null)
 		{
-			SpritesetAnimation a = (SpritesetAnimation) SpritesetAnimation.getCustomAnimation(null, 102, null);
+			SpritesetAnimation a = (SpritesetAnimation) Animations.getCustomAnimation(null, 102, null);
 			int cols = width / a.spriteset.spriteWidth, lines = height / a.spriteset.spriteHeight;
 			if (width % a.spriteset.spriteWidth != 0) ++cols;
 			if (height % a.spriteset.spriteHeight != 0) ++lines;
@@ -41,7 +42,7 @@ public class SnowAnimation extends AbstractAnimation
 			for (int x = 0; x < cols; ++x)
 				for (int y = 0; y < lines; ++y)
 				{
-					this.snow[x + y * cols] = (SpritesetAnimation) SpritesetAnimation.getCustomAnimation(null, 102, null);
+					this.snow[x + y * cols] = (SpritesetAnimation) Animations.getCustomAnimation(null, 102, null);
 					this.snow[x + y * cols].setXY(x * a.spriteset.spriteWidth, y * a.spriteset.spriteHeight);
 				}
 		}

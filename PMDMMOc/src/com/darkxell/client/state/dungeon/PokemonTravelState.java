@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.animation.TravelAnimation;
 import com.darkxell.client.renderers.floor.PokemonRenderer;
-import com.darkxell.client.resources.images.pokemon.PokemonSprite;
+import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
 import com.darkxell.client.state.dungeon.DungeonState.DungeonSubState;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
@@ -73,7 +73,7 @@ public class PokemonTravelState extends DungeonSubState
 		for (PokemonTravel travel : this.travels)
 		{
 			PokemonRenderer renderer = Persistance.dungeonState.pokemonRenderer.getRenderer(travel.pokemon);
-			renderer.sprite.setState(PokemonSprite.STATE_MOVE, true);
+			renderer.sprite.setState(PokemonSpriteState.MOVE, true);
 			travel.pokemon.setFacing(travel.direction);
 			if (this.running) renderer.sprite.setTickingSpeed(3);
 		}
