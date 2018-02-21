@@ -22,7 +22,7 @@ import javax.sql.DataSource;
 @LocalBean
 public class Inventorycontains_DAO {
 
-     @Resource(mappedName = "jdbc/pmdmmodatabase")
+    @Resource(mappedName = "jdbc/pmdmmodatabase")
     private DataSource ds;
 
     public void create(long stackid, long inventoryid) {
@@ -77,7 +77,7 @@ public class Inventorycontains_DAO {
         return toreturn;
     }
 
-    public long findPlayerID(long inventoryid) {
+    public long findStackID(long inventoryid) {
         long toreturn = 0;
         try {
             Connection cn = ds.getConnection();
