@@ -37,8 +37,10 @@ public final class Animations
 		Element xml = registry.get(id);
 
 		PokemonAnimation a;
+		String sprites = XMLUtils.getAttribute(xml, "sprites", null);
+		if (sprites == null) sprites = String.valueOf(id);
 
-		if (XMLUtils.getAttribute(xml, "nosprites", false)) a = new PokemonAnimation(target, 0, listener);
+		if (sprites.equals("none")) a = new PokemonAnimation(target, 0, listener);
 		else
 		{
 			if (xml.getAttribute("width") == null || xml.getAttribute("height") == null)
@@ -50,19 +52,19 @@ public final class Animations
 			int height = Integer.parseInt(xml.getAttributeValue("height"));
 
 			AnimationSpriteset spriteset = AnimationSpriteset.getSpriteset(
-					(registry == items ? "/items" : registry == moves ? "/moves" : registry == statuses ? "/status" : "/animations") + "/" + id + ".png", width,
-					height);
+					(registry == items ? "/items" : registry == moves ? "/moves" : registry == statuses ? "/status" : "/animations") + "/" + sprites + ".png",
+					width, height);
 			int x = XMLUtils.getAttribute(xml, "x", width / 2);
 			int y = XMLUtils.getAttribute(xml, "y", height / 2);
 			int spriteDuration = XMLUtils.getAttribute(xml, "spriteduration", 2);
-			int[] sprites = XMLUtils.readIntArray(xml);
+			int[] spriteOrder = XMLUtils.readIntArray(xml);
 
 			String back = xml.getAttributeValue("backsprites");
 			boolean[] backSprites = new boolean[spriteset.spriteCount()];
 			if (back != null) for (String b : back.split(","))
 				backSprites[Integer.parseInt(b)] = true;
 
-			a = new SpritesetAnimation(target, spriteset, sprites, backSprites, spriteDuration, x, y, listener);
+			a = new SpritesetAnimation(target, spriteset, spriteOrder, backSprites, spriteDuration, x, y, listener);
 		}
 
 		String movement = XMLUtils.getAttribute(xml, "movement", null);
