@@ -65,7 +65,7 @@ public class Inventorycontains_DAO {
                             ResultSet.TYPE_SCROLL_INSENSITIVE,
                             ResultSet.CONCUR_UPDATABLE
                     ).executeQuery(
-                            "SELECT * FROM inventorycontains_ WHERE playerid = " + stackid
+                            "SELECT * FROM inventorycontains_ WHERE stackid = " + stackid
                     );
             if (result.first()) {
                 toreturn = result.getLong("inventoryid");
