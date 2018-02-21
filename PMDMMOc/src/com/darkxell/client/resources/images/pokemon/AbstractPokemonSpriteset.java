@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import org.jdom2.Element;
 
 import com.darkxell.client.resources.Res;
+import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.XMLUtils;
 
@@ -53,10 +54,10 @@ public class AbstractPokemonSpriteset
 		{
 			if (xml.getChild(xmlElementNames[i], xml.getNamespace()) != null)
 				this.states[i] = new PokemonSpritesetState(xml.getChild(xmlElementNames[i], xml.getNamespace()));
-			else if (i == PokemonSprite.STATE_ATTACK2) this.states[i] = this.states[PokemonSprite.STATE_ATTACK];
-			else if (i == PokemonSprite.STATE_SPECIAL2) this.states[i] = this.states[PokemonSprite.STATE_SPECIAL];
-			else if (i == PokemonSprite.STATE_HURT) this.states[i] = new PokemonSpritesetState(new int[] { 2 }, new int[] { 25 });
-			else if (i == PokemonSprite.STATE_SLEEP || i == PokemonSprite.STATE_REST)
+			else if (i == PokemonSpriteState.ATTACK2.id) this.states[i] = this.states[PokemonSpriteState.ATTACK.id];
+			else if (i == PokemonSpriteState.SPECIAL2.id) this.states[i] = this.states[PokemonSpriteState.SPECIAL.id];
+			else if (i == PokemonSpriteState.HURT.id) this.states[i] = new PokemonSpritesetState(new int[] { 2 }, new int[] { 25 });
+			else if (i == PokemonSpriteState.SLEEP.id || i == PokemonSpriteState.REST.id)
 				this.states[i] = new PokemonSpritesetState(new int[] { 0, 1 }, new int[] { 30, 10 });
 			else this.states[i] = new PokemonSpritesetState(0);
 		}
@@ -98,11 +99,11 @@ public class AbstractPokemonSpriteset
 		}
 	}
 
-	public BufferedImage getSprite(byte state, byte facing, int variant)
+	public BufferedImage getSprite(PokemonSpriteState state, byte facing, int variant)
 	{
 		int x = 0, y = 0;
-		if (state != PokemonSprite.STATE_SLEEP) y += facing;
-		x = this.states[state].indexes[variant];
+		if (state != PokemonSpriteState.SLEEP) y += facing;
+		x = this.states[state.id].indexes[variant];
 		return this.sprites.getSubimage(x * this.spriteWidth, y * this.spriteHeight, this.spriteWidth, this.spriteHeight);
 	}
 

@@ -2,7 +2,6 @@ package com.darkxell.client.mechanics.animation.movement;
 
 import com.darkxell.client.mechanics.animation.PokemonAnimation;
 import com.darkxell.client.mechanics.animation.TravelAnimation;
-import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.common.dungeon.floor.Tile;
 
 public class TackleAnimationMovement extends PokemonAnimationMovement
@@ -24,13 +23,6 @@ public class TackleAnimationMovement extends PokemonAnimationMovement
 	{
 		super.onFinish();
 		this.renderer.setXY(this.location.x, this.location.y);
-	}
-
-	@Override
-	public void start()
-	{
-		super.start();
-		this.renderer.sprite.setState(PokemonSprite.STATE_ATTACK);
 	}
 
 	@Override

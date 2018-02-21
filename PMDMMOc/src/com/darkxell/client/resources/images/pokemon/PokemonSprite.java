@@ -13,14 +13,14 @@ public class PokemonSprite {
 	/** Updates this sprite to the next frame. */
 	public void update() {
 		this.counter += this.tickSpeed;
-		PokemonSpritesetState state = this.pointer.states[this.state];
+		PokemonSpritesetState state = this.pointer.states[this.state.id];
 		if (this.counter > state.duration(this.statecounter)) {
 			this.counter = 0;
 			if (this.statecounter + 1 < state.indexes.length)
 				++this.statecounter;
 			else {
-				if (this.resetToIdleOnFinish && this.state != STATE_IDLE)
-					this.setState(STATE_IDLE);
+				if (this.resetToIdleOnFinish && this.state != PokemonSpriteState.IDLE)
+					this.setState(PokemonSpriteState.IDLE);
 				else
 					this.statecounter = 0;
 			}
@@ -41,7 +41,7 @@ public class PokemonSprite {
 		this.resetToIdleOnFinish = true;
 	}
 	
-	public void setState(byte state) {
+	public void setState(PokemonSpriteState state) {
 		this.setState(state, false);
 	}
 
@@ -50,7 +50,7 @@ public class PokemonSprite {
 	 * is already the state used by the pokemon sprite, this does nothing.
 	 * @param playOnLoop - true if the state should play on loop until notified to stop. Defaults to false (i.e. only plays once).
 	 */
-	public void setState(byte state, boolean playOnLoop) {
+	public void setState(PokemonSpriteState state, boolean playOnLoop) {
 		if (this.state != state) {
 			this.state = state;
 			this.counter = 0;
@@ -69,19 +69,29 @@ public class PokemonSprite {
 	public static final byte FACING_W = 6;
 	public static final byte FACING_NW = 7;
 
-	private byte state = 0;
-	public static final byte STATE_IDLE = 0;
-	public static final byte STATE_MOVE = 1;
-	public static final byte STATE_ATTACK = 2;
-	public static final byte STATE_ATTACK2 = 3;
-	public static final byte STATE_SPECIAL = 4;
-	public static final byte STATE_SPECIAL2 = 5;
-	public static final byte STATE_SLEEP = 6;
-	public static final byte STATE_HURT = 7;
-	public static final byte STATE_REST = 8;
-	public static final byte STATE_WAKING = 9;
-	public static final byte STATE_VICTORYPOSE = 10;
-	public static final byte STATE_EATING = 11;
+	public static enum PokemonSpriteState
+	{
+		IDLE(0),
+		MOVE(1),
+		ATTACK(2),
+		ATTACK2(3),
+		SPECIAL(4),
+		SPECIAL2(5),
+		SLEEP(6),
+		HURT(7),
+		REST(8),
+		WAKING(9),
+		VICTORYPOSE(10),
+		EATING(11);
+
+		public final int id;
+
+		private PokemonSpriteState(int id)
+		{
+			this.id = id;
+		}
+	}
+	private PokemonSpriteState state = PokemonSpriteState.IDLE;
 
 	public static final int FRAMELENGTH = 10;
 	public static final int HEALTHLENGTH = 60;
@@ -108,7 +118,7 @@ public class PokemonSprite {
 		this.shadowColor = shadowColor;
 	}
 
-	public byte getState() {
+	public PokemonSpriteState getState() {
 		return this.state;
 	}
 

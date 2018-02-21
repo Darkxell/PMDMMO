@@ -7,8 +7,10 @@ import org.jdom2.Element;
 
 import com.darkxell.client.mechanics.animation.movement.PokemonAnimationMovement;
 import com.darkxell.client.resources.images.AnimationSpriteset;
+import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.move.Move;
+import com.darkxell.common.move.Move.MoveCategory;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.status.StatusCondition;
 import com.darkxell.common.util.Logger;
@@ -24,6 +26,12 @@ public final class Animations
 	private static final HashMap<Integer, Element> statuses = new HashMap<Integer, Element>();
 
 	private static AbstractAnimation getAnimation(int id, HashMap<Integer, Element> registry, DungeonPokemon target, AnimationEndListener listener)
+	{
+		return getAnimation(id, registry, target, null, listener);
+	}
+
+	private static AbstractAnimation getAnimation(int id, HashMap<Integer, Element> registry, DungeonPokemon target, PokemonSpriteState defaultState,
+			AnimationEndListener listener)
 	{
 		if (!registry.containsKey(id)) return null;
 		Element xml = registry.get(id);
@@ -73,6 +81,7 @@ public final class Animations
 		}
 
 		a.sound = XMLUtils.getAttribute(xml, "sound", null);
+		a.state = xml.getAttribute("state") == null ? defaultState : PokemonSpriteState.valueOf(XMLUtils.getAttribute(xml, "state", null));
 		return a;
 	}
 
@@ -88,7 +97,7 @@ public final class Animations
 
 	public static AbstractAnimation getMoveAnimation(DungeonPokemon user, Move m, AnimationEndListener listener)
 	{
-		return getAnimation(m.id, moves, user, listener);
+		return getAnimation(m.id, moves, user, m.category == MoveCategory.Physical ? PokemonSpriteState.ATTACK : PokemonSpriteState.SPECIAL, listener);
 	}
 
 	public static AbstractAnimation getMoveTargetAnimation(DungeonPokemon target, Move m, AnimationEndListener listener)

@@ -15,6 +15,7 @@
 				<xs:attribute name="nosprites" type="xs:boolean" use="optional"/>
 				<xs:attribute name="movement" type="xs:string"/>
 				<xs:attribute name="sound" type="xs:string"/>
+				<xs:attribute name="state" type="xs:string" use="optional"/>
 			</xs:extension>
 		</xs:simpleContent>
 	</xs:complexType>
@@ -46,7 +47,7 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-	
+
 	<xs:element name="moves">
 		<xs:complexType>
 			<xs:sequence>
@@ -54,7 +55,7 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-	
+
 	<xs:element name="movetargets">
 		<xs:complexType>
 			<xs:sequence>

@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.animation.movement.PokemonAnimationMovement;
 import com.darkxell.client.renderers.floor.PokemonRenderer;
+import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
 /** An animation that is displayed on a Pokémon. */
@@ -17,6 +18,8 @@ public class PokemonAnimation extends AbstractAnimation
 	PokemonAnimationMovement movement;
 	/** A reference to the Pokémon's renderer. */
 	public final PokemonRenderer renderer;
+	/** The state to give to the Pokémon. null if shouldn't be changed. */
+	PokemonSpriteState state;
 	/** The Pokémon to draw. */
 	public final DungeonPokemon target;
 	/** Coordinates of the center of the Pokémon. */
@@ -57,6 +60,7 @@ public class PokemonAnimation extends AbstractAnimation
 	public void start()
 	{
 		super.start();
+		if (this.state != null) this.renderer.sprite.setState(this.state);
 		if (this.movement != null) this.movement.start();
 	}
 

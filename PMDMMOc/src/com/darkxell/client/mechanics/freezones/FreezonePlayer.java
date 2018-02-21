@@ -3,6 +3,7 @@ package com.darkxell.client.mechanics.freezones;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.resources.images.pokemon.AbstractPokemonSpriteset;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
+import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.common.util.DoubleRectangle;
 
@@ -75,25 +76,25 @@ public class FreezonePlayer {
 			ismovingUP = true;
 			ismovingDOWN = false;
 			playersprite.setFacingDirection(getFacingFromMoveDirections());
-			playersprite.setState(PokemonSprite.STATE_MOVE);
+			playersprite.setState(PokemonSpriteState.MOVE);
 			break;
 		case Keys.KEY_RIGHT:
 			ismovingRIGHT = true;
 			ismovingLEFT = false;
 			playersprite.setFacingDirection(getFacingFromMoveDirections());
-			playersprite.setState(PokemonSprite.STATE_MOVE);
+			playersprite.setState(PokemonSpriteState.MOVE);
 			break;
 		case Keys.KEY_DOWN:
 			ismovingDOWN = true;
 			ismovingUP = false;
 			playersprite.setFacingDirection(getFacingFromMoveDirections());
-			playersprite.setState(PokemonSprite.STATE_MOVE);
+			playersprite.setState(PokemonSpriteState.MOVE);
 			break;
 		case Keys.KEY_LEFT:
 			ismovingLEFT = true;
 			ismovingRIGHT = false;
 			playersprite.setFacingDirection(getFacingFromMoveDirections());
-			playersprite.setState(PokemonSprite.STATE_MOVE);
+			playersprite.setState(PokemonSpriteState.MOVE);
 			break;
 		case Keys.KEY_ATTACK:
 			if (canInteract())
@@ -110,28 +111,28 @@ public class FreezonePlayer {
 		case Keys.KEY_UP:
 			ismovingUP = false;
 			if (!ismoving())
-				playersprite.setState(PokemonSprite.STATE_IDLE);
+				playersprite.setState(PokemonSpriteState.IDLE);
 			else
 				playersprite.setFacingDirection(getFacingFromMoveDirections());
 			break;
 		case Keys.KEY_RIGHT:
 			ismovingRIGHT = false;
 			if (!ismoving())
-				playersprite.setState(PokemonSprite.STATE_IDLE);
+				playersprite.setState(PokemonSpriteState.IDLE);
 			else
 				playersprite.setFacingDirection(getFacingFromMoveDirections());
 			break;
 		case Keys.KEY_DOWN:
 			ismovingDOWN = false;
 			if (!ismoving())
-				playersprite.setState(PokemonSprite.STATE_IDLE);
+				playersprite.setState(PokemonSpriteState.IDLE);
 			else
 				playersprite.setFacingDirection(getFacingFromMoveDirections());
 			break;
 		case Keys.KEY_LEFT:
 			ismovingLEFT = false;
 			if (!ismoving())
-				playersprite.setState(PokemonSprite.STATE_IDLE);
+				playersprite.setState(PokemonSpriteState.IDLE);
 			else
 				playersprite.setFacingDirection(getFacingFromMoveDirections());
 			break;
@@ -141,7 +142,7 @@ public class FreezonePlayer {
 		}
 	}
 
-	public void setState(byte state) {
+	public void setState(PokemonSpriteState state) {
 		playersprite.setState(state);
 	}
 
@@ -155,7 +156,7 @@ public class FreezonePlayer {
 		ismovingDOWN = false;
 		ismovingLEFT = false;
 		isSprinting = false;
-		playersprite.setState(PokemonSprite.STATE_IDLE);
+		playersprite.setState(PokemonSpriteState.IDLE);
 	}
 
 	public static final double MOVESPEED = 0.2;

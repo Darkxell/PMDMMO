@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import com.darkxell.client.mechanics.freezones.FreezoneEntity;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
+import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
 
 public class OtherPlayerEntity extends FreezoneEntity {
@@ -82,9 +83,9 @@ public class OtherPlayerEntity extends FreezoneEntity {
 			this.sprite.setFacingDirection(PokemonSprite.FACING_W);
 		// Sets the running/idle state
 		if (up || right || down || left)
-			this.sprite.setState(PokemonSprite.STATE_MOVE);
+			this.sprite.setState(PokemonSpriteState.MOVE);
 		else
-			this.sprite.setState(PokemonSprite.STATE_IDLE);
+			this.sprite.setState(PokemonSpriteState.IDLE);
 	}
 
 	public void applyServerUpdate(double x, double y, int spriteID) {
