@@ -75,7 +75,7 @@ public final class Animations
 				a.duration = Math.max(a.duration, a.movement.duration);
 			} catch (Exception e1)
 			{
-				Logger.e("Animation instanciation failed!");
+				Logger.e("Movement instanciation failed!");
 				e1.printStackTrace();
 			}
 		}

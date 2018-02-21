@@ -2,6 +2,8 @@ package com.darkxell.client.resources.images.pokemon;
 
 import java.awt.image.BufferedImage;
 
+import com.darkxell.common.util.Direction;
+
 public class PokemonSprite {
 
 	public final AbstractPokemonSpriteset pointer;
@@ -59,15 +61,7 @@ public class PokemonSprite {
 		this.resetToIdleOnFinish = !playOnLoop;
 	}
 
-	private byte facing = 4;
-	public static final byte FACING_N = 0;
-	public static final byte FACING_NE = 1;
-	public static final byte FACING_E = 2;
-	public static final byte FACING_SE = 3;
-	public static final byte FACING_S = 4;
-	public static final byte FACING_SW = 5;
-	public static final byte FACING_W = 6;
-	public static final byte FACING_NW = 7;
+	private Direction facing = Direction.SOUTH;
 
 	public static enum PokemonSpriteState
 	{
@@ -122,7 +116,7 @@ public class PokemonSprite {
 		return this.state;
 	}
 
-	public byte getFacingDirection() {
+	public Direction getFacingDirection() {
 		return this.facing;
 	}
 
@@ -134,7 +128,7 @@ public class PokemonSprite {
 		return (HEALTHLENGTH - this.healthCounter) / 4;
 	}
 
-	public void setFacingDirection(byte dir) {
+	public void setFacingDirection(Direction dir) {
 		this.facing = dir;
 	}
 

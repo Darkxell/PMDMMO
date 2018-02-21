@@ -7,6 +7,7 @@ import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
+import com.darkxell.common.util.Direction;
 
 public class OtherPlayerEntity extends FreezoneEntity {
 
@@ -66,21 +67,21 @@ public class OtherPlayerEntity extends FreezoneEntity {
 		}
 		// Sets the rotation of the pokemonSprite used
 		if (up && right)
-			this.sprite.setFacingDirection(PokemonSprite.FACING_NE);
+			this.sprite.setFacingDirection(Direction.NORTHEAST);
 		else if (right && down)
-			this.sprite.setFacingDirection(PokemonSprite.FACING_SE);
+			this.sprite.setFacingDirection(Direction.SOUTHEAST);
 		else if (down && left)
-			this.sprite.setFacingDirection(PokemonSprite.FACING_SW);
+			this.sprite.setFacingDirection(Direction.SOUTHWEST);
 		else if (left && up)
-			this.sprite.setFacingDirection(PokemonSprite.FACING_NW);
+			this.sprite.setFacingDirection(Direction.NORTHWEST);
 		else if (up)
-			this.sprite.setFacingDirection(PokemonSprite.FACING_N);
+			this.sprite.setFacingDirection(Direction.NORTH);
 		else if (right)
-			this.sprite.setFacingDirection(PokemonSprite.FACING_E);
+			this.sprite.setFacingDirection(Direction.EAST);
 		else if (down)
-			this.sprite.setFacingDirection(PokemonSprite.FACING_S);
+			this.sprite.setFacingDirection(Direction.SOUTH);
 		else if (left)
-			this.sprite.setFacingDirection(PokemonSprite.FACING_W);
+			this.sprite.setFacingDirection(Direction.WEST);
 		// Sets the running/idle state
 		if (up || right || down || left)
 			this.sprite.setState(PokemonSpriteState.MOVE);

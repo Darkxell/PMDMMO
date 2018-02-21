@@ -6,20 +6,12 @@ import org.jdom2.Element;
 
 import com.darkxell.client.resources.Res;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
+import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.XMLUtils;
 
 public class AbstractPokemonSpriteset
 {
-
-	public static final byte FACING_E = 2;
-	public static final byte FACING_N = 0;
-	public static final byte FACING_NE = 1;
-	public static final byte FACING_NW = 7;
-	public static final byte FACING_S = 4;
-	public static final byte FACING_SE = 3;
-	public static final byte FACING_SW = 5;
-	public static final byte FACING_W = 6;
 
 	private static final String[] xmlElementNames = new String[] { "idle", "move", "attack", "attack2", "spe1", "spe2", "sleep", "hurt", "rest", "wake",
 			"victory", "eating" };
@@ -99,10 +91,10 @@ public class AbstractPokemonSpriteset
 		}
 	}
 
-	public BufferedImage getSprite(PokemonSpriteState state, byte facing, int variant)
+	public BufferedImage getSprite(PokemonSpriteState state, Direction facing, int variant)
 	{
 		int x = 0, y = 0;
-		if (state != PokemonSpriteState.SLEEP) y += facing;
+		if (state != PokemonSpriteState.SLEEP) y += facing.index();
 		x = this.states[state.id].indexes[variant];
 		return this.sprites.getSubimage(x * this.spriteWidth, y * this.spriteHeight, this.spriteWidth, this.spriteHeight);
 	}
