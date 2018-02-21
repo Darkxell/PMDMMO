@@ -1,26 +1,22 @@
-package com.darkxell.client.mechanics.animation.custom;
+package com.darkxell.client.mechanics.animation.movement;
 
-import com.darkxell.client.mechanics.animation.AnimationEndListener;
 import com.darkxell.client.mechanics.animation.PokemonAnimation;
 import com.darkxell.client.mechanics.animation.TravelAnimation;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.common.dungeon.floor.Tile;
-import com.darkxell.common.pokemon.DungeonPokemon;
 
-public class TackleAnimation extends PokemonAnimation
+public class TackleAnimationMovement extends PokemonAnimationMovement
 {
 	public static final int TOTAL = 30, CHARGE = TOTAL / 3, MOVEMENT = TOTAL / 6;
 
 	private final Tile location;
 	private TravelAnimation travel;
 
-	public TackleAnimation(DungeonPokemon user, AnimationEndListener listener)
+	public TackleAnimationMovement(PokemonAnimation animation)
 	{
-		super(user, TOTAL, listener);
-		this.location = this.target.tile();
-		this.travel = new TravelAnimation(this.location.location(), this.location.adjacentTile(this.target.facing()).location());
-		this.sound = "move-basicattack";
-		this.soundDelay = CHARGE;
+		super(animation, TOTAL);
+		this.location = this.pokemon.tile();
+		this.travel = new TravelAnimation(this.location.location(), this.location.adjacentTile(this.pokemon.facing()).location());
 	}
 
 	@Override
@@ -40,7 +36,6 @@ public class TackleAnimation extends PokemonAnimation
 	@Override
 	public void update()
 	{
-		super.update();
 		float completion = this.tick() * 1f;
 		if (this.tick() >= CHARGE && this.tick() <= CHARGE + MOVEMENT) completion -= CHARGE;
 		else if (this.tick() >= CHARGE * 2 + MOVEMENT && this.tick() <= TOTAL) completion = 30 - completion;

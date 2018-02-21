@@ -5,6 +5,7 @@ import static com.darkxell.client.resources.images.tilesets.AbstractDungeonTiles
 import java.awt.Graphics2D;
 
 import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.mechanics.animation.movement.PokemonAnimationMovement;
 import com.darkxell.client.renderers.floor.PokemonRenderer;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
@@ -12,6 +13,8 @@ import com.darkxell.common.pokemon.DungeonPokemon;
 public class PokemonAnimation extends AbstractAnimation
 {
 
+	/** Describes the movement of the Pokémon during this Animation. May be null if the Pokémon doesn't move. */
+	PokemonAnimationMovement movement;
 	/** A reference to the Pokémon's renderer. */
 	public final PokemonRenderer renderer;
 	/** The Pokémon to draw. */
@@ -30,6 +33,7 @@ public class PokemonAnimation extends AbstractAnimation
 	@Override
 	public void onFinish()
 	{
+		if (this.movement != null) this.movement.onFinish();
 		if (this.renderer != null) this.renderer.removeAnimation(this);
 		super.onFinish();
 	}
@@ -50,6 +54,13 @@ public class PokemonAnimation extends AbstractAnimation
 	}
 
 	@Override
+	public void start()
+	{
+		super.start();
+		if (this.movement != null) this.movement.start();
+	}
+
+	@Override
 	public void update()
 	{
 		super.update();
@@ -58,6 +69,7 @@ public class PokemonAnimation extends AbstractAnimation
 			this.x = this.renderer.x() + TILE_SIZE / 2;
 			this.y = this.renderer.y() + TILE_SIZE / 2;
 		}
+		if (this.movement != null) this.movement.update();
 	}
 
 }

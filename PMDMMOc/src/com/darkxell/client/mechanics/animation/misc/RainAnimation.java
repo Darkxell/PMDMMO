@@ -29,7 +29,7 @@ public class RainAnimation extends AbstractAnimation
 	{
 		SpritesetAnimation a = (SpritesetAnimation) Animations.getCustomAnimation(null, this.spritesetID, null);
 		this.drops.put(a, false);
-		if (this.dropDuration == -1) this.dropDuration = a.duration;
+		if (this.dropDuration == -1) this.dropDuration = a.duration();
 	}
 
 	@Override

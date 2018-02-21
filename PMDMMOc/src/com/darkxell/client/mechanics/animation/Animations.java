@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import org.jdom2.Element;
 
+import com.darkxell.client.mechanics.animation.movement.PokemonAnimationMovement;
 import com.darkxell.client.resources.images.AnimationSpriteset;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.move.Move;
@@ -27,23 +28,10 @@ public final class Animations
 		if (!registry.containsKey(id)) return null;
 		Element xml = registry.get(id);
 
-		AbstractAnimation a = null;
-		if (XMLUtils.getAttribute(xml, "nosprites", false))
-		{
-			String custom = XMLUtils.getAttribute(xml, "movement", null);
-			if (custom != null)
-			{
-				try
-				{
-					Class<?> c = Class.forName("com.darkxell.client.mechanics.animation.custom." + custom + "Animation");
-					a = (AbstractAnimation) c.getConstructor(DungeonPokemon.class, AnimationEndListener.class).newInstance(target, listener);
-				} catch (Exception e1)
-				{
-					Logger.e("Animation instanciation failed!");
-					e1.printStackTrace();
-				}
-			} else a = new AbstractAnimation(0, listener);
-		} else
+		PokemonAnimation a;
+
+		if (XMLUtils.getAttribute(xml, "nosprites", false)) a = new PokemonAnimation(target, 0, listener);
+		else
 		{
 			if (xml.getAttribute("width") == null || xml.getAttribute("height") == null)
 			{
@@ -67,6 +55,21 @@ public final class Animations
 				backSprites[Integer.parseInt(b)] = true;
 
 			a = new SpritesetAnimation(target, spriteset, sprites, backSprites, spriteDuration, x, y, listener);
+		}
+
+		String movement = XMLUtils.getAttribute(xml, "movement", null);
+		if (movement != null)
+		{
+			try
+			{
+				Class<?> c = Class.forName("com.darkxell.client.mechanics.animation.movement." + movement + "AnimationMovement");
+				a.movement = (PokemonAnimationMovement) c.getConstructor(PokemonAnimation.class).newInstance(a);
+				a.duration = Math.max(a.duration, a.movement.duration);
+			} catch (Exception e1)
+			{
+				Logger.e("Animation instanciation failed!");
+				e1.printStackTrace();
+			}
 		}
 
 		a.sound = XMLUtils.getAttribute(xml, "sound", null);
