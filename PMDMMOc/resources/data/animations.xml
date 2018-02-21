@@ -14,7 +14,11 @@
   <items>
     <item id="86" width="64" height="228" y="210" backsprites="3">0,0,1,1,2,2,3,3,4,4,3,3,5,4,-1,5,4,3,5,4,-1,5,4,3,5,2,1,0</item>
   </items>
-  <moves> </moves>
+  <moves>
+    <move id="0" nosprites="true" movement="Tackle" sound="move-basicattack"/>
+    <move id="66" nosprites="true" movement="Tackle" sound="move-tackle"/>
+  </moves>
+  <movetargets />
   <statuses>
     <status id="0" spriteduration="5" width="16" height="16" y="25">6,5,6,5,6,5,4,3,2,1,0,1,2,3,4</status>
     <status id="1" spriteduration="5" width="16" height="16" y="25">6,5,6,5,6,5,4,3,2,1,0,1,2,3,4</status>

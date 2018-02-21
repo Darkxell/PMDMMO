@@ -12,6 +12,9 @@
 				<xs:attribute name="width" type="xs:positiveInteger" use="optional"/>
 				<xs:attribute name="height" type="xs:positiveInteger" use="optional"/>
 				<xs:attribute name="backsprites" type="posInt" use="optional"/>
+				<xs:attribute name="nosprites" type="xs:boolean" use="optional"/>
+				<xs:attribute name="movement" type="xs:string"/>
+				<xs:attribute name="sound" type="xs:string"/>
 			</xs:extension>
 		</xs:simpleContent>
 	</xs:complexType>
@@ -22,6 +25,7 @@
 				<xs:element ref="custom"/>
 				<xs:element ref="items"/>
 				<xs:element ref="moves"/>
+				<xs:element ref="movetargets"/>
 				<xs:element ref="statuses"/>
 			</xs:sequence>
 		</xs:complexType>
@@ -42,11 +46,19 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-
+	
 	<xs:element name="moves">
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element name="move" minOccurs="0" maxOccurs="unbounded" type="animation"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="movetargets">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="movetarget" minOccurs="0" maxOccurs="unbounded" type="animation"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>

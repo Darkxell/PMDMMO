@@ -5,12 +5,11 @@ import java.util.ArrayList;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.animation.AbstractAnimation;
 import com.darkxell.client.mechanics.animation.AnimationEndListener;
-import com.darkxell.client.mechanics.animation.SpritesetAnimation;
+import com.darkxell.client.mechanics.animation.Animations;
 import com.darkxell.client.mechanics.animation.StatChangeAnimation;
 import com.darkxell.client.mechanics.animation.misc.RainAnimation;
 import com.darkxell.client.mechanics.animation.misc.SnowAnimation;
 import com.darkxell.client.renderers.AbilityAnimationRenderer;
-import com.darkxell.client.renderers.MoveRenderer;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.renderers.floor.PokemonRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
@@ -188,8 +187,8 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	private void processItemEvent(ItemUseSelectionEvent event)
 	{
 		AnimationState a = new AnimationState(Persistance.dungeonState);
-		if (event.item instanceof ItemFood || event.item instanceof ItemGummi) a.animation = SpritesetAnimation.getCustomAnimation(event.user, 0, a);
-		else a.animation = SpritesetAnimation.getItemAnimation(event.user, event.item, a);
+		if (event.item instanceof ItemFood || event.item instanceof ItemGummi) a.animation = Animations.getCustomAnimation(event.user, 0, a);
+		else a.animation = Animations.getItemAnimation(event.user, event.item, a);
 		if (a.animation != null)
 		{
 			Persistance.dungeonState.setSubstate(a);
@@ -283,9 +282,12 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	private void processMoveEvent(MoveSelectionEvent event)
 	{
 		AnimationState s = new AnimationState(Persistance.dungeonState);
-		s.animation = MoveRenderer.createAnimation(s, event.usedMove.user, event.usedMove.move.move());
-		Persistance.dungeonState.setSubstate(s);
-		this.processPending = false;
+		s.animation = Animations.getMoveAnimation(event.usedMove.user, event.usedMove.move.move(), s);
+		if (s.animation != null)
+		{
+			Persistance.dungeonState.setSubstate(s);
+			this.processPending = false;
+		}
 	}
 
 	private void processMoveLearnedEvent(MoveLearnedEvent event)
@@ -303,7 +305,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	private void processMoveUseEvent(MoveUseEvent event)
 	{
 		AnimationState s = new AnimationState(Persistance.dungeonState);
-		s.animation = MoveRenderer.createTargetAnimation(s, event.usedMove.user, event.usedMove.move.move());
+		s.animation = Animations.getMoveTargetAnimation(event.target, event.usedMove.move.move(), s);
 		if (s.animation != null)
 		{
 			Persistance.dungeonState.setSubstate(s);
@@ -349,7 +351,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 			public void onAnimationEnd(AbstractAnimation animation)
 			{
 				if (animation != null) s.onAnimationEnd(animation);
-				AbstractAnimation a = SpritesetAnimation.getStatusAnimation(event.condition.pokemon, event.condition.condition, null);
+				AbstractAnimation a = Animations.getStatusAnimation(event.condition.pokemon, event.condition.condition, null);
 				if (a != null)
 				{
 					a.source = event.condition;
@@ -357,7 +359,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 				}
 			}
 		};
-		s.animation = SpritesetAnimation.getCustomAnimation(event.condition.pokemon, 200 + event.condition.condition.id, end);
+		s.animation = Animations.getCustomAnimation(event.condition.pokemon, 200 + event.condition.condition.id, end);
 		if (s.animation == null) end.onAnimationEnd(null);
 		else
 		{
@@ -396,7 +398,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 			a.animation.sound = "weather-hail";
 		} else if (event.next.weather == Weather.SUNNY)
 		{
-			a.animation = SpritesetAnimation.getCustomAnimation(null, 101, a);
+			a.animation = Animations.getCustomAnimation(null, 101, a);
 			a.animation.sound = "weather-sunny";
 		}
 		if (a.animation != null)
