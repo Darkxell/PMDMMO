@@ -4,64 +4,64 @@
   <FrameHeight>96</FrameHeight>
   <AnimGroupTable>
     <AnimGroup state="idle">
-      <AnimSequenceIndex sequence="17" direction="North" />
-      <AnimSequenceIndex sequence="24" direction="NorthEast" />
-      <AnimSequenceIndex sequence="23" direction="East" />
-      <AnimSequenceIndex sequence="22" direction="SouthEast" />
-      <AnimSequenceIndex sequence="21" direction="South" />
-      <AnimSequenceIndex sequence="20" direction="SouthWest" />
-      <AnimSequenceIndex sequence="19" direction="West" />
-      <AnimSequenceIndex sequence="18" direction="NorthWest" />
+      <AnimSequenceIndex sequence="17" direction="South" />
+      <AnimSequenceIndex sequence="24" direction="SouthWest" />
+      <AnimSequenceIndex sequence="23" direction="West" />
+      <AnimSequenceIndex sequence="22" direction="NorthWest" />
+      <AnimSequenceIndex sequence="21" direction="North" />
+      <AnimSequenceIndex sequence="20" direction="NorthEast" />
+      <AnimSequenceIndex sequence="19" direction="East" />
+      <AnimSequenceIndex sequence="18" direction="SouthEast" />
     </AnimGroup>
     <AnimGroup state="move">
-      <AnimSequenceIndex sequence="0" direction="North" />
-      <AnimSequenceIndex sequence="7" direction="NorthEast" />
-      <AnimSequenceIndex sequence="6" direction="East" />
-      <AnimSequenceIndex sequence="5" direction="SouthEast" />
-      <AnimSequenceIndex sequence="4" direction="South" />
-      <AnimSequenceIndex sequence="3" direction="SouthWest" />
-      <AnimSequenceIndex sequence="2" direction="West" />
-      <AnimSequenceIndex sequence="1" direction="NorthWest" />
+      <AnimSequenceIndex sequence="0" direction="South" />
+      <AnimSequenceIndex sequence="7" direction="SouthWest" />
+      <AnimSequenceIndex sequence="6" direction="West" />
+      <AnimSequenceIndex sequence="5" direction="NorthWest" />
+      <AnimSequenceIndex sequence="4" direction="North" />
+      <AnimSequenceIndex sequence="3" direction="NorthEast" />
+      <AnimSequenceIndex sequence="2" direction="East" />
+      <AnimSequenceIndex sequence="1" direction="SouthEast" />
     </AnimGroup>
     <AnimGroup state="sleep">
-      <AnimSequenceIndex sequence="8" direction="North" />
-      <AnimSequenceIndex sequence="8" direction="NorthEast" />
-      <AnimSequenceIndex sequence="8" direction="East" />
-      <AnimSequenceIndex sequence="8" direction="SouthEast" />
       <AnimSequenceIndex sequence="8" direction="South" />
       <AnimSequenceIndex sequence="8" direction="SouthWest" />
       <AnimSequenceIndex sequence="8" direction="West" />
       <AnimSequenceIndex sequence="8" direction="NorthWest" />
+      <AnimSequenceIndex sequence="8" direction="North" />
+      <AnimSequenceIndex sequence="8" direction="NorthEast" />
+      <AnimSequenceIndex sequence="8" direction="East" />
+      <AnimSequenceIndex sequence="8" direction="SouthEast" />
     </AnimGroup>
     <AnimGroup state="hurt">
-      <AnimSequenceIndex sequence="9" direction="North" />
-      <AnimSequenceIndex sequence="16" direction="NorthEast" />
-      <AnimSequenceIndex sequence="15" direction="East" />
-      <AnimSequenceIndex sequence="14" direction="SouthEast" />
-      <AnimSequenceIndex sequence="13" direction="South" />
-      <AnimSequenceIndex sequence="12" direction="SouthWest" />
-      <AnimSequenceIndex sequence="11" direction="West" />
-      <AnimSequenceIndex sequence="10" direction="NorthWest" />
+      <AnimSequenceIndex sequence="9" direction="South" />
+      <AnimSequenceIndex sequence="16" direction="SouthWest" />
+      <AnimSequenceIndex sequence="15" direction="West" />
+      <AnimSequenceIndex sequence="14" direction="NorthWest" />
+      <AnimSequenceIndex sequence="13" direction="North" />
+      <AnimSequenceIndex sequence="12" direction="NorthEast" />
+      <AnimSequenceIndex sequence="11" direction="East" />
+      <AnimSequenceIndex sequence="10" direction="SouthEast" />
     </AnimGroup>
     <AnimGroup state="attack">
-      <AnimSequenceIndex sequence="33" direction="North" />
-      <AnimSequenceIndex sequence="40" direction="NorthEast" />
-      <AnimSequenceIndex sequence="39" direction="East" />
-      <AnimSequenceIndex sequence="38" direction="SouthEast" />
-      <AnimSequenceIndex sequence="37" direction="South" />
-      <AnimSequenceIndex sequence="36" direction="SouthWest" />
-      <AnimSequenceIndex sequence="35" direction="West" />
-      <AnimSequenceIndex sequence="34" direction="NorthWest" />
+      <AnimSequenceIndex sequence="33" direction="South" />
+      <AnimSequenceIndex sequence="40" direction="SouthWest" />
+      <AnimSequenceIndex sequence="39" direction="West" />
+      <AnimSequenceIndex sequence="38" direction="NorthWest" />
+      <AnimSequenceIndex sequence="37" direction="North" />
+      <AnimSequenceIndex sequence="36" direction="NorthEast" />
+      <AnimSequenceIndex sequence="35" direction="East" />
+      <AnimSequenceIndex sequence="34" direction="SouthEast" />
     </AnimGroup>
     <AnimGroup state="special">
-      <AnimSequenceIndex sequence="57" direction="North" />
-      <AnimSequenceIndex sequence="64" direction="NorthEast" />
-      <AnimSequenceIndex sequence="63" direction="East" />
-      <AnimSequenceIndex sequence="62" direction="SouthEast" />
-      <AnimSequenceIndex sequence="61" direction="South" />
-      <AnimSequenceIndex sequence="60" direction="SouthWest" />
-      <AnimSequenceIndex sequence="59" direction="West" />
-      <AnimSequenceIndex sequence="58" direction="NorthWest" />
+      <AnimSequenceIndex sequence="57" direction="South" />
+      <AnimSequenceIndex sequence="64" direction="SouthWest" />
+      <AnimSequenceIndex sequence="63" direction="West" />
+      <AnimSequenceIndex sequence="62" direction="NorthWest" />
+      <AnimSequenceIndex sequence="61" direction="North" />
+      <AnimSequenceIndex sequence="60" direction="NorthEast" />
+      <AnimSequenceIndex sequence="59" direction="East" />
+      <AnimSequenceIndex sequence="58" direction="SouthEast" />
     </AnimGroup>
   </AnimGroupTable>
   <AnimSequenceTable>
