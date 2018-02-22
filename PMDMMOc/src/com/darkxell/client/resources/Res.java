@@ -77,4 +77,9 @@ public class Res {
 		return toreturn;
 	}
 
+	public static File getFile(String path)
+	{
+		return new File(Res.class.getResource(path).getFile());
+	}
+
 }

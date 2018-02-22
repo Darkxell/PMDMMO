@@ -1,6 +1,5 @@
 package com.darkxell.client.resources.images.pokemon;
 
-import java.io.File;
 import java.util.HashMap;
 
 import org.jdom2.Element;
@@ -12,8 +11,6 @@ import com.darkxell.common.util.XMLUtils;
 public final class PokemonSpritesets
 {
 
-	/** Stores the Spritesheets data. */
-	private static final HashMap<Integer, Element> spritedata = new HashMap<Integer, Element>();
 	/** Stores the loaded Spritesheets. */
 	private static final HashMap<Integer, AbstractPokemonSpriteset> spritesets = new HashMap<Integer, AbstractPokemonSpriteset>();
 
@@ -43,25 +40,25 @@ public final class PokemonSpritesets
 	/** Reads the sprites data file. */
 	public static void loadData()
 	{
-		Element xml = XMLUtils.readFile(new File("resources/pokemons/spritesets-data.xml"));
-		for (Element pokemon : xml.getChildren("pokemon", xml.getNamespace()))
-			spritedata.put(Integer.parseInt(pokemon.getAttributeValue("id")), pokemon);
-		loadSpriteset(0);
+		loadSpriteset(1);
 	}
 
 	/** Loads the Spritesheet for the Pokémon with the input ID. */
 	private static void loadSpriteset(int id)
 	{
+		String filename = id + "";
+		int effectiveID = Math.abs(id);
+		if (id < 0 && Res.exists("/pokemons/" + (-id) + "s.png")) filename = (-id) + "s";
+
 		if (spritesets.containsKey(id)) return;
-		Element xml = spritedata.get(Math.abs(id));
+		Element xml = XMLUtils.readFile(Res.getFile("/pokemons/data/" + effectiveID + ".xml"));
 		if (xml == null)
 		{
-			spritesets.put(id, spritesets.get(0));
+			spritesets.put(id, spritesets.get(1));
 			return;
 		}
 
-		if (id < 0 && Res.exists("/pokemons/pkmn" + (-id) + "s.png")) spritesets.put(id, new AbstractPokemonSpriteset("/pokemons/pkmn" + (-id) + "s.png", xml, -id));
-		else spritesets.put(id, new AbstractPokemonSpriteset("/pokemons/pkmn" + Math.abs(id) + ".png", xml, Math.abs(id)));
+		spritesets.put(id, new AbstractPokemonSpriteset("/pokemons/" + filename + ".png", xml, effectiveID));
 	}
 
 	private PokemonSpritesets()

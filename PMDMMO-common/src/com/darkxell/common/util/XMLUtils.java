@@ -81,7 +81,7 @@ public final class XMLUtils
 	/** Reads an XML File and returns its root Element. */
 	public static Element readFile(File file)
 	{
-		if (file.exists()) try
+		if (file != null && file.exists()) try
 		{
 			return new SAXBuilder().build(file).getRootElement();
 		} catch (JDOMException e)
