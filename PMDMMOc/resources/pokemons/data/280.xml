@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AnimData>
+  <FrameWidth>48</FrameWidth>
+  <FrameHeight>48</FrameHeight>
+  <AnimGroupTable>
+    <AnimGroup state="idle">
+      <AnimSequenceIndex sequence="17" direction="North" />
+      <AnimSequenceIndex sequence="24" direction="NorthEast" />
+      <AnimSequenceIndex sequence="23" direction="East" />
+      <AnimSequenceIndex sequence="22" direction="SouthEast" />
+      <AnimSequenceIndex sequence="21" direction="South" />
+      <AnimSequenceIndex sequence="20" direction="SouthWest" />
+      <AnimSequenceIndex sequence="19" direction="West" />
+      <AnimSequenceIndex sequence="18" direction="NorthWest" />
+    </AnimGroup>
+    <AnimGroup state="move">
+      <AnimSequenceIndex sequence="0" direction="North" />
+      <AnimSequenceIndex sequence="7" direction="NorthEast" />
+      <AnimSequenceIndex sequence="6" direction="East" />
+      <AnimSequenceIndex sequence="5" direction="SouthEast" />
+      <AnimSequenceIndex sequence="4" direction="South" />
+      <AnimSequenceIndex sequence="3" direction="SouthWest" />
+      <AnimSequenceIndex sequence="2" direction="West" />
+      <AnimSequenceIndex sequence="1" direction="NorthWest" />
+    </AnimGroup>
+    <AnimGroup state="sleep">
+      <AnimSequenceIndex sequence="8" direction="North" />
+      <AnimSequenceIndex sequence="8" direction="NorthEast" />
+      <AnimSequenceIndex sequence="8" direction="East" />
+      <AnimSequenceIndex sequence="8" direction="SouthEast" />
+      <AnimSequenceIndex sequence="8" direction="South" />
+      <AnimSequenceIndex sequence="8" direction="SouthWest" />
+      <AnimSequenceIndex sequence="8" direction="West" />
+      <AnimSequenceIndex sequence="8" direction="NorthWest" />
+    </AnimGroup>
+    <AnimGroup state="hurt">
+      <AnimSequenceIndex sequence="9" direction="North" />
+      <AnimSequenceIndex sequence="16" direction="NorthEast" />
+      <AnimSequenceIndex sequence="15" direction="East" />
+      <AnimSequenceIndex sequence="14" direction="SouthEast" />
+      <AnimSequenceIndex sequence="13" direction="South" />
+      <AnimSequenceIndex sequence="12" direction="SouthWest" />
+      <AnimSequenceIndex sequence="11" direction="West" />
+      <AnimSequenceIndex sequence="10" direction="NorthWest" />
+    </AnimGroup>
+    <AnimGroup state="attack">
+      <AnimSequenceIndex sequence="33" direction="North" />
+      <AnimSequenceIndex sequence="40" direction="NorthEast" />
+      <AnimSequenceIndex sequence="39" direction="East" />
+      <AnimSequenceIndex sequence="38" direction="SouthEast" />
+      <AnimSequenceIndex sequence="37" direction="South" />
+      <AnimSequenceIndex sequence="36" direction="SouthWest" />
+      <AnimSequenceIndex sequence="35" direction="West" />
+      <AnimSequenceIndex sequence="34" direction="NorthWest" />
+    </AnimGroup>
+    <AnimGroup state="special">
+      <AnimSequenceIndex sequence="49" direction="North" />
+      <AnimSequenceIndex sequence="56" direction="NorthEast" />
+      <AnimSequenceIndex sequence="55" direction="East" />
+      <AnimSequenceIndex sequence="54" direction="SouthEast" />
+      <AnimSequenceIndex sequence="53" direction="South" />
+      <AnimSequenceIndex sequence="52" direction="SouthWest" />
+      <AnimSequenceIndex sequence="51" direction="West" />
+      <AnimSequenceIndex sequence="50" direction="NorthWest" />
+    </AnimGroup>
+  </AnimGroupTable>
+  <AnimSequenceTable>
+    <AnimSequence id="0" rush="0" hit="36" return="36">
+      <AnimFrame duration="10" sprite="0" />
+      <AnimFrame duration="8" sprite="1" />
+      <AnimFrame duration="10" sprite="0" />
+      <AnimFrame duration="8" sprite="1" flip="true" spritex="1" />
+    </AnimSequence>
+    <AnimSequence id="1" rush="0" hit="36" return="36">
+      <AnimFrame duration="10" sprite="2" />
+      <AnimFrame duration="8" sprite="3" />
+      <AnimFrame duration="10" sprite="2" />
+      <AnimFrame duration="8" sprite="4" />
+    </AnimSequence>
+    <AnimSequence id="2" rush="0" hit="36" return="36">
+      <AnimFrame duration="10" sprite="5" />
+      <AnimFrame duration="8" sprite="6" />
+      <AnimFrame duration="10" sprite="5" />
+      <AnimFrame duration="8" sprite="7" />
+    </AnimSequence>
+    <AnimSequence id="3" rush="0" hit="36" return="36">
+      <AnimFrame duration="10" sprite="8" />
+      <AnimFrame duration="8" sprite="9" />
+      <AnimFrame duration="10" sprite="8" />
+      <AnimFrame duration="8" sprite="10" />
+    </AnimSequence>
+    <AnimSequence id="4" rush="0" hit="36" return="36">
+      <AnimFrame duration="10" sprite="11" />
+      <AnimFrame duration="8" sprite="12" />
+      <AnimFrame duration="10" sprite="11" />
+      <AnimFrame duration="8" sprite="13" />
+    </AnimSequence>
+    <AnimSequence id="5" rush="0" hit="36" return="36">
+      <AnimFrame duration="10" sprite="8" flip="true" spritex="1" />
+      <AnimFrame duration="8" sprite="9" flip="true" spritex="1" />
+      <AnimFrame duration="10" sprite="8" flip="true" spritex="1" />
+      <AnimFrame duration="8" sprite="10" flip="true" spritex="1" />
+    </AnimSequence>
+    <AnimSequence id="6" rush="0" hit="36" return="36">
+      <AnimFrame duration="10" sprite="5" flip="true" spritex="1" />
+      <AnimFrame duration="8" sprite="6" flip="true" spritex="1" />
+      <AnimFrame duration="10" sprite="5" flip="true" spritex="1" />
+      <AnimFrame duration="8" sprite="7" flip="true" spritex="1" />
+    </AnimSequence>
+    <AnimSequence id="7" rush="0" hit="36" return="36">
+      <AnimFrame duration="10" sprite="2" flip="true" spritex="1" />
+      <AnimFrame duration="8" sprite="3" flip="true" spritex="1" />
+      <AnimFrame duration="10" sprite="2" flip="true" spritex="1" />
+      <AnimFrame duration="8" sprite="4" flip="true" spritex="1" />
+    </AnimSequence>
+    <AnimSequence id="8" rush="0" hit="65" return="65">
+      <AnimFrame duration="30" sprite="14" />
+      <AnimFrame duration="35" sprite="15" />
+    </AnimSequence>
+    <AnimSequence id="9" rush="0" hit="10" return="10">
+      <AnimFrame duration="2" sprite="16" spritey="-2" shadowy="-2" />
+      <AnimFrame duration="8" sprite="16" spritey="-3" shadowy="-3" />
+    </AnimSequence>
+    <AnimSequence id="10" rush="0" hit="10" return="10">
+      <AnimFrame duration="2" sprite="17" spritex="-2" spritey="-2" shadowx="-2" shadowy="-2" />
+      <AnimFrame duration="8" sprite="17" spritex="-3" spritey="-3" shadowx="-3" shadowy="-3" />
+    </AnimSequence>
+    <AnimSequence id="11" rush="0" hit="10" return="10">
+      <AnimFrame duration="2" sprite="18" spritex="-2" shadowx="-2" />
+      <AnimFrame duration="8" sprite="18" spritex="-3" shadowx="-3" />
+    </AnimSequence>
+    <AnimSequence id="12" rush="0" hit="10" return="10">
+      <AnimFrame duration="2" sprite="19" spritex="-2" spritey="2" shadowx="-2" shadowy="2" />
+      <AnimFrame duration="8" sprite="19" spritex="-3" spritey="3" shadowx="-3" shadowy="3" />
+    </AnimSequence>
+    <AnimSequence id="13" rush="0" hit="10" return="10">
+      <AnimFrame duration="2" sprite="20" spritey="2" shadowy="2" />
+      <AnimFrame duration="8" sprite="20" spritey="3" shadowy="3" />
+    </AnimSequence>
+    <AnimSequence id="14" rush="0" hit="10" return="10">
+      <AnimFrame duration="2" sprite="19" flip="true" spritex="2" spritey="2" shadowx="2" shadowy="2" />
+      <AnimFrame duration="8" sprite="19" flip="true" spritex="3" spritey="3" shadowx="3" shadowy="3" />
+    </AnimSequence>
+    <AnimSequence id="15" rush="0" hit="10" return="10">
+      <AnimFrame duration="2" sprite="18" flip="true" spritex="3" spritey="2" shadowx="2" />
+      <AnimFrame duration="8" sprite="18" flip="true" spritex="4" spritey="2" shadowx="3" />
+    </AnimSequence>
+    <AnimSequence id="16" rush="0" hit="10" return="10">
+      <AnimFrame duration="2" sprite="17" flip="true" spritex="2" spritey="-2" shadowx="2" shadowy="-2" />
+      <AnimFrame duration="8" sprite="17" flip="true" spritex="3" spritey="-3" shadowx="3" shadowy="-3" />
+    </AnimSequence>
+    <AnimSequence id="17" rush="0" hit="65" return="65">
+      <AnimFrame duration="40" sprite="0" />
+      <AnimFrame duration="25" sprite="21" />
+    </AnimSequence>
+    <AnimSequence id="18" rush="0" hit="65" return="65">
+      <AnimFrame duration="40" sprite="2" />
+      <AnimFrame duration="25" sprite="22" />
+    </AnimSequence>
+    <AnimSequence id="19" rush="0" hit="65" return="65">
+      <AnimFrame duration="40" sprite="5" />
+      <AnimFrame duration="25" sprite="23" />
+    </AnimSequence>
+    <AnimSequence id="20" rush="0" hit="65" return="65">
+      <AnimFrame duration="40" sprite="8" />
+      <AnimFrame duration="25" sprite="24" />
+    </AnimSequence>
+    <AnimSequence id="21" rush="0" hit="65" return="65">
+      <AnimFrame duration="40" sprite="11" />
+      <AnimFrame duration="25" sprite="25" />
+    </AnimSequence>
+    <AnimSequence id="22" rush="0" hit="65" return="65">
+      <AnimFrame duration="40" sprite="8" flip="true" spritex="1" />
+      <AnimFrame duration="25" sprite="24" flip="true" spritex="1" />
+    </AnimSequence>
+    <AnimSequence id="23" rush="0" hit="65" return="65">
+      <AnimFrame duration="40" sprite="5" flip="true" spritex="1" />
+      <AnimFrame duration="25" sprite="23" flip="true" spritex="1" />
+    </AnimSequence>
+    <AnimSequence id="24" rush="0" hit="65" return="65">
+      <AnimFrame duration="40" sprite="2" flip="true" spritex="1" />
+      <AnimFrame duration="25" sprite="22" flip="true" spritex="1" />
+    </AnimSequence>
+    <AnimSequence id="33" rush="8" hit="10" return="15">
+      <AnimFrame duration="2" sprite="0" spritey="-1" shadowy="-1" />
+      <AnimFrame duration="6" sprite="0" spritey="-2" shadowy="-2" />
+      <AnimFrame duration="1" sprite="1" flip="true" spritey="-1" shadowy="-1" />
+      <AnimFrame duration="1" sprite="1" spritey="1" shadowy="1" />
+      <AnimFrame duration="1" sprite="1" flip="true" spritey="4" shadowy="4" />
+      <AnimFrame duration="2" sprite="0" spritey="9" shadowy="9" />
+      <AnimFrame duration="2" sprite="0" spritey="9" shadowy="9" />
+      <AnimFrame duration="2" sprite="0" spritey="9" shadowy="9" />
+      <AnimFrame duration="2" sprite="0" spritey="9" shadowy="9" />
+      <AnimFrame duration="2" sprite="0" spritey="2" shadowy="2" />
+    </AnimSequence>
+    <AnimSequence id="34" rush="8" hit="10" return="15">
+      <AnimFrame duration="2" sprite="2" spritex="-1" spritey="-1" shadowx="-1" shadowy="-1" />
+      <AnimFrame duration="6" sprite="2" spritex="-2" spritey="-2" shadowx="-2" shadowy="-2" />
+      <AnimFrame duration="1" sprite="4" spritex="-1" spritey="-1" shadowx="-1" shadowy="-1" />
+      <AnimFrame duration="1" sprite="3" spritex="1" spritey="1" shadowx="1" shadowy="1" />
+      <AnimFrame duration="1" sprite="4" spritex="4" spritey="4" shadowx="4" shadowy="4" />
+      <AnimFrame duration="2" sprite="2" spritex="10" spritey="10" shadowx="10" shadowy="10" />
+      <AnimFrame duration="2" sprite="2" spritex="11" spritey="10" shadowx="11" shadowy="10" />
+      <AnimFrame duration="2" sprite="2" spritex="10" spritey="10" shadowx="10" shadowy="10" />
+      <AnimFrame duration="2" sprite="2" spritex="11" spritey="10" shadowx="11" shadowy="10" />
+      <AnimFrame duration="2" sprite="2" spritex="2" spritey="2" shadowx="2" shadowy="2" />
+    </AnimSequence>
+    <AnimSequence id="35" rush="8" hit="10" return="15">
+      <AnimFrame duration="2" sprite="5" spritex="-1" shadowx="-1" />
+      <AnimFrame duration="6" sprite="5" spritex="-2" shadowx="-2" />
+      <AnimFrame duration="1" sprite="7" spritex="-1" shadowx="-1" />
+      <AnimFrame duration="1" sprite="6" spritex="1" shadowx="1" />
+      <AnimFrame duration="1" sprite="7" spritex="5" shadowx="5" />
+      <AnimFrame duration="2" sprite="5" spritex="10" shadowx="10" />
+      <AnimFrame duration="2" sprite="5" spritex="10" shadowx="10" />
+      <AnimFrame duration="2" sprite="5" spritex="10" shadowx="10" />
+      <AnimFrame duration="2" sprite="5" spritex="10" shadowx="10" />
+      <AnimFrame duration="2" sprite="5" spritex="2" shadowx="2" />
+    </AnimSequence>
+    <AnimSequence id="36" rush="8" hit="10" return="15">
+      <AnimFrame duration="2" sprite="8" spritex="-1" spritey="1" shadowx="-1" shadowy="1" />
+      <AnimFrame duration="6" sprite="8" spritex="-2" spritey="2" shadowx="-2" shadowy="2" />
+      <AnimFrame duration="1" sprite="10" spritex="-1" shadowx="-1" />
+      <AnimFrame duration="1" sprite="9" spritex="1" spritey="-2" shadowx="1" shadowy="-2" />
+      <AnimFrame duration="1" sprite="10" spritex="5" spritey="-6" shadowx="5" shadowy="-6" />
+      <AnimFrame duration="2" sprite="8" spritex="10" spritey="-11" shadowx="10" shadowy="-11" />
+      <AnimFrame duration="2" sprite="8" spritex="10" spritey="-10" shadowx="10" shadowy="-10" />
+      <AnimFrame duration="2" sprite="8" spritex="10" spritey="-11" shadowx="10" shadowy="-11" />
+      <AnimFrame duration="2" sprite="8" spritex="10" spritey="-10" shadowx="10" shadowy="-10" />
+      <AnimFrame duration="2" sprite="8" spritex="2" spritey="-2" shadowx="2" shadowy="-2" />
+    </AnimSequence>
+    <AnimSequence id="37" rush="8" hit="10" return="15">
+      <AnimFrame duration="2" sprite="11" spritey="1" shadowy="1" />
+      <AnimFrame duration="6" sprite="11" spritey="2" shadowy="2" />
+      <AnimFrame duration="1" sprite="13" spritey="1" shadowy="1" />
+      <AnimFrame duration="1" sprite="12" spritey="-2" shadowy="-2" />
+      <AnimFrame duration="1" sprite="13" spritey="-5" shadowy="-5" />
+      <AnimFrame duration="2" sprite="11" spritey="-11" shadowy="-11" />
+      <AnimFrame duration="2" sprite="11" spritey="-11" shadowy="-11" />
+      <AnimFrame duration="2" sprite="11" spritey="-11" shadowy="-11" />
+      <AnimFrame duration="2" sprite="11" spritey="-11" shadowy="-11" />
+      <AnimFrame duration="2" sprite="11" spritey="-2" shadowy="-2" />
+    </AnimSequence>
+    <AnimSequence id="38" rush="8" hit="10" return="15">
+      <AnimFrame duration="2" sprite="8" flip="true" spritex="2" spritey="1" shadowx="1" shadowy="1" />
+      <AnimFrame duration="6" sprite="8" flip="true" spritex="3" spritey="2" shadowx="2" shadowy="2" />
+      <AnimFrame duration="1" sprite="10" flip="true" spritex="2" shadowx="1" />
+      <AnimFrame duration="1" sprite="9" flip="true" spritex="-1" spritey="-2" shadowx="-1" shadowy="-2" />
+      <AnimFrame duration="1" sprite="10" flip="true" spritex="-5" spritey="-6" shadowx="-5" shadowy="-6" />
+      <AnimFrame duration="2" sprite="8" flip="true" spritex="-9" spritey="-11" shadowx="-10" shadowy="-11" />
+      <AnimFrame duration="2" sprite="8" flip="true" spritex="-10" spritey="-10" shadowx="-10" shadowy="-10" />
+      <AnimFrame duration="2" sprite="8" flip="true" spritex="-9" spritey="-11" shadowx="-10" shadowy="-11" />
+      <AnimFrame duration="2" sprite="8" flip="true" spritex="-10" spritey="-10" shadowx="-10" shadowy="-10" />
+      <AnimFrame duration="2" sprite="8" flip="true" spritex="-1" spritey="-2" shadowx="-2" shadowy="-2" />
+    </AnimSequence>
+    <AnimSequence id="39" rush="8" hit="10" return="15">
+      <AnimFrame duration="2" sprite="5" flip="true" spritex="2" shadowx="1" />
+      <AnimFrame duration="6" sprite="5" flip="true" spritex="3" shadowx="2" />
+      <AnimFrame duration="1" sprite="7" flip="true" spritex="2" shadowx="1" />
+      <AnimFrame duration="1" sprite="6" flip="true" shadowx="-1" />
+      <AnimFrame duration="1" sprite="7" flip="true" spritex="-4" shadowx="-5" />
+      <AnimFrame duration="2" sprite="5" flip="true" spritex="-10" shadowx="-10" />
+      <AnimFrame duration="2" sprite="5" flip="true" spritex="-10" shadowx="-10" />
+      <AnimFrame duration="2" sprite="5" flip="true" spritex="-10" shadowx="-10" />
+      <AnimFrame duration="2" sprite="5" flip="true" spritex="-10" shadowx="-10" />
+      <AnimFrame duration="2" sprite="5" flip="true" spritex="-1" shadowx="-2" />
+    </AnimSequence>
+    <AnimSequence id="40" rush="8" hit="10" return="15">
+      <AnimFrame duration="2" sprite="2" flip="true" spritex="2" spritey="-1" shadowx="1" shadowy="-1" />
+      <AnimFrame duration="6" sprite="2" flip="true" spritex="3" spritey="-2" shadowx="2" shadowy="-2" />
+      <AnimFrame duration="1" sprite="4" flip="true" spritex="2" spritey="-1" shadowx="1" shadowy="-1" />
+      <AnimFrame duration="1" sprite="3" flip="true" spritey="1" shadowx="-1" shadowy="1" />
+      <AnimFrame duration="1" sprite="4" flip="true" spritex="-4" spritey="4" shadowx="-4" shadowy="4" />
+      <AnimFrame duration="2" sprite="2" flip="true" spritex="-10" spritey="10" shadowx="-10" shadowy="10" />
+      <AnimFrame duration="2" sprite="2" flip="true" spritex="-10" spritey="10" shadowx="-11" shadowy="10" />
+      <AnimFrame duration="2" sprite="2" flip="true" spritex="-10" spritey="10" shadowx="-10" shadowy="10" />
+      <AnimFrame duration="2" sprite="2" flip="true" spritex="-10" spritey="10" shadowx="-11" shadowy="10" />
+      <AnimFrame duration="2" sprite="2" flip="true" spritex="-1" spritey="2" shadowx="-2" shadowy="2" />
+    </AnimSequence>
+    <AnimSequence id="49" rush="0" hit="12" return="20">
+      <AnimFrame duration="2" sprite="21" spritex="1" shadowx="1" />
+      <AnimFrame duration="2" sprite="21" />
+      <AnimFrame duration="2" sprite="21" spritex="1" shadowx="1" />
+      <AnimFrame duration="2" sprite="21" />
+      <AnimFrame duration="2" sprite="21" spritex="1" shadowx="1" />
+      <AnimFrame duration="2" sprite="21" />
+      <AnimFrame duration="2" sprite="21" spritex="1" shadowx="1" />
+      <AnimFrame duration="2" sprite="21" />
+      <AnimFrame duration="2" sprite="21" spritex="1" shadowx="1" />
+      <AnimFrame duration="2" sprite="21" />
+    </AnimSequence>
+    <AnimSequence id="50" rush="0" hit="12" return="20">
+      <AnimFrame duration="2" sprite="22" spritex="2" spritey="-2" shadowx="1" shadowy="-1" />
+      <AnimFrame duration="2" sprite="22" spritex="1" spritey="-1" />
+      <AnimFrame duration="2" sprite="22" spritex="2" spritey="-2" shadowx="1" shadowy="-1" />
+      <AnimFrame duration="2" sprite="22" spritex="1" spritey="-1" />
+      <AnimFrame duration="2" sprite="22" spritex="2" spritey="-2" shadowx="1" shadowy="-1" />
+      <AnimFrame duration="2" sprite="22" spritex="1" spritey="-1" />
+      <AnimFrame duration="2" sprite="22" spritex="2" spritey="-2" shadowx="1" shadowy="-1" />
+      <AnimFrame duration="2" sprite="22" spritex="1" spritey="-1" />
+      <AnimFrame duration="2" sprite="22" spritex="2" spritey="-2" shadowx="1" shadowy="-1" />
+      <AnimFrame duration="2" sprite="22" spritex="1" spritey="-1" />
+    </AnimSequence>
+    <AnimSequence id="51" rush="0" hit="12" return="20">
+      <AnimFrame duration="2" sprite="23" spritex="2" spritey="-2" shadowy="-1" />
+      <AnimFrame duration="2" sprite="23" spritex="2" spritey="-1" />
+      <AnimFrame duration="2" sprite="23" spritex="2" spritey="-2" shadowy="-1" />
+      <AnimFrame duration="2" sprite="23" spritex="2" spritey="-1" />
+      <AnimFrame duration="2" sprite="23" spritex="2" spritey="-2" shadowy="-1" />
+      <AnimFrame duration="2" sprite="23" spritex="2" spritey="-1" />
+      <AnimFrame duration="2" sprite="23" spritex="2" spritey="-2" shadowy="-1" />
+      <AnimFrame duration="2" sprite="23" spritex="2" spritey="-1" />
+      <AnimFrame duration="2" sprite="23" spritex="2" spritey="-2" shadowy="-1" />
+      <AnimFrame duration="2" sprite="23" spritex="2" spritey="-1" />
+    </AnimSequence>
+    <AnimSequence id="52" rush="0" hit="12" return="20">
+      <AnimFrame duration="2" sprite="24" spritey="-2" shadowx="-1" shadowy="-1" />
+      <AnimFrame duration="2" sprite="24" spritex="1" spritey="-1" />
+      <AnimFrame duration="2" sprite="24" spritey="-2" shadowx="-1" shadowy="-1" />
+      <AnimFrame duration="2" sprite="24" spritex="1" spritey="-1" />
+      <AnimFrame duration="2" sprite="24" spritey="-2" shadowx="-1" shadowy="-1" />
+      <AnimFrame duration="2" sprite="24" spritex="1" spritey="-1" />
+      <AnimFrame duration="2" sprite="24" spritey="-2" shadowx="-1" shadowy="-1" />
+      <AnimFrame duration="2" sprite="24" spritex="1" spritey="-1" />
+      <AnimFrame duration="2" sprite="24" spritey="-2" shadowx="-1" shadowy="-1" />
+      <AnimFrame duration="2" sprite="24" spritex="1" spritey="-1" />
+    </AnimSequence>
+    <AnimSequence id="53" rush="0" hit="12" return="20">
+      <AnimFrame duration="2" sprite="25" spritex="1" spritey="-1" shadowx="1" />
+      <AnimFrame duration="2" sprite="25" spritey="-1" />
+      <AnimFrame duration="2" sprite="25" spritex="1" spritey="-1" shadowx="1" />
+      <AnimFrame duration="2" sprite="25" spritey="-1" />
+      <AnimFrame duration="2" sprite="25" spritex="1" spritey="-1" shadowx="1" />
+      <AnimFrame duration="2" sprite="25" spritey="-1" />
+      <AnimFrame duration="2" sprite="25" spritex="1" spritey="-1" shadowx="1" />
+      <AnimFrame duration="2" sprite="25" spritey="-1" />
+      <AnimFrame duration="2" sprite="25" spritex="1" spritey="-1" shadowx="1" />
+      <AnimFrame duration="2" sprite="25" spritey="-1" />
+    </AnimSequence>
+    <AnimSequence id="54" rush="0" hit="12" return="20">
+      <AnimFrame duration="2" sprite="24" flip="true" spritex="3" spritey="-2" shadowx="1" shadowy="-1" />
+      <AnimFrame duration="2" sprite="24" flip="true" spritex="2" spritey="-1" />
+      <AnimFrame duration="2" sprite="24" flip="true" spritex="3" spritey="-2" shadowx="1" shadowy="-1" />
+      <AnimFrame duration="2" sprite="24" flip="true" spritex="2" spritey="-1" />
+      <AnimFrame duration="2" sprite="24" flip="true" spritex="3" spritey="-2" shadowx="1" shadowy="-1" />
+      <AnimFrame duration="2" sprite="24" flip="true" spritex="2" spritey="-1" />
+      <AnimFrame duration="2" sprite="24" flip="true" spritex="3" spritey="-2" shadowx="1" shadowy="-1" />
+      <AnimFrame duration="2" sprite="24" flip="true" spritex="2" spritey="-1" />
+      <AnimFrame duration="2" sprite="24" flip="true" spritex="3" spritey="-2" shadowx="1" shadowy="-1" />
+      <AnimFrame duration="2" sprite="24" flip="true" spritex="2" spritey="-1" />
+    </AnimSequence>
+    <AnimSequence id="55" rush="0" hit="12" return="20">
+      <AnimFrame duration="2" sprite="23" flip="true" spritex="3" spritey="-2" shadowy="-1" />
+      <AnimFrame duration="2" sprite="23" flip="true" spritex="3" spritey="-1" />
+      <AnimFrame duration="2" sprite="23" flip="true" spritex="3" spritey="-2" shadowy="-1" />
+      <AnimFrame duration="2" sprite="23" flip="true" spritex="3" spritey="-1" />
+      <AnimFrame duration="2" sprite="23" flip="true" spritex="3" spritey="-2" shadowy="-1" />
+      <AnimFrame duration="2" sprite="23" flip="true" spritex="3" spritey="-1" />
+      <AnimFrame duration="2" sprite="23" flip="true" spritex="3" spritey="-2" shadowy="-1" />
+      <AnimFrame duration="2" sprite="23" flip="true" spritex="3" spritey="-1" />
+      <AnimFrame duration="2" sprite="23" flip="true" spritex="3" spritey="-2" shadowy="-1" />
+      <AnimFrame duration="2" sprite="23" flip="true" spritex="3" spritey="-1" />
+    </AnimSequence>
+    <AnimSequence id="56" rush="0" hit="12" return="20">
+      <AnimFrame duration="2" sprite="22" flip="true" spritex="1" spritey="-2" shadowx="-1" shadowy="-1" />
+      <AnimFrame duration="2" sprite="22" flip="true" spritex="2" spritey="-1" />
+      <AnimFrame duration="2" sprite="22" flip="true" spritex="1" spritey="-2" shadowx="-1" shadowy="-1" />
+      <AnimFrame duration="2" sprite="22" flip="true" spritex="2" spritey="-1" />
+      <AnimFrame duration="2" sprite="22" flip="true" spritex="1" spritey="-2" shadowx="-1" shadowy="-1" />
+      <AnimFrame duration="2" sprite="22" flip="true" spritex="2" spritey="-1" />
+      <AnimFrame duration="2" sprite="22" flip="true" spritex="1" spritey="-2" shadowx="-1" shadowy="-1" />
+      <AnimFrame duration="2" sprite="22" flip="true" spritex="2" spritey="-1" />
+      <AnimFrame duration="2" sprite="22" flip="true" spritex="1" spritey="-2" shadowx="-1" shadowy="-1" />
+      <AnimFrame duration="2" sprite="22" flip="true" spritex="2" spritey="-1" />
+    </AnimSequence>
+  </AnimSequenceTable>
+</AnimData>
