@@ -13,6 +13,8 @@ public class PokemonSpriteFrame
 	public final int duration;
 	/** ID of the Frame to use. */
 	public final int frameID;
+	/** True if the sprite should be flipped horizontally. */
+	public final boolean isFlipped;
 	/** Offset to apply to the shadow. */
 	public final int shadowX, shadowY;
 	public final AbstractPokemonSpriteset spriteset;
@@ -28,6 +30,7 @@ public class PokemonSpriteFrame
 		this.spriteY = XMLUtils.getAttribute(xml, "spritey", 0);
 		this.shadowX = XMLUtils.getAttribute(xml, "shadowx", 0);
 		this.shadowY = XMLUtils.getAttribute(xml, "shadowy", 0);
+		this.isFlipped = XMLUtils.getAttribute(xml, "flip", false);
 	}
 
 	public BufferedImage getSprite()

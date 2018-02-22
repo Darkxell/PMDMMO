@@ -34,11 +34,11 @@ public class PokemonSpriteSequence
 
 	private int getFrameIndex(int tick)
 	{
-		int i = 0;
-		while (tick > 0)
+		int i = -1;
+		while (tick >= 0)
 		{
-			tick -= this.frames[i].duration;
 			++i;
+			tick -= this.frames[i].duration;
 		}
 		return i;
 	}

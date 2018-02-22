@@ -3,7 +3,6 @@ package com.darkxell.client.renderers.floor;
 import static com.darkxell.client.resources.images.tilesets.AbstractDungeonTileset.TILE_SIZE;
 
 import java.awt.Graphics2D;
-import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.function.Predicate;
@@ -41,12 +40,6 @@ public class PokemonRenderer extends AbstractRenderer
 		this.animations.add(animation);
 	}
 
-	public Point drawLocation()
-	{
-		PokemonSpriteFrame frame = this.sprite.getCurrentFrame();
-		return new Point(TILE_SIZE / 2 + frame.spriteX, TILE_SIZE / 2 + frame.spriteY);
-	}
-
 	public void removeAnimation(Object source)
 	{
 		this.animations.removeIf(new Predicate<AbstractAnimation>() {
@@ -76,16 +69,22 @@ public class PokemonRenderer extends AbstractRenderer
 
 		if (this.sprite.getCurrentSprite() != null)
 		{
-			Point p = this.drawLocation();
-			int xPos = (int) (this.x() + p.x), yPos = (int) (this.y() + p.y);
+			PokemonSpriteFrame frame = this.sprite.getCurrentFrame();
+			BufferedImage sprite = this.sprite.getCurrentSprite();
+
+			int xPos = (int) (this.x() + TILE_SIZE / 2 - sprite.getWidth() / 2 + frame.spriteX),
+					yPos = (int) (this.y() + TILE_SIZE / 2 - sprite.getHeight() / 2 + frame.spriteY);
+
 			BufferedImage shadow = this.sprite.pointer.hasBigShadow ? ShadowSprites.instance.getBig(this.sprite.getShadowColor())
 					: ShadowSprites.instance.getSmall(this.sprite.getShadowColor());
-			g.drawImage(shadow, (int) this.x() + TILE_SIZE / 2 - shadow.getWidth() / 2, (int) this.y() + TILE_SIZE * 9 / 10 - shadow.getHeight(), null);
+			g.drawImage(shadow, (int) this.x() + TILE_SIZE / 2 - shadow.getWidth() / 2 + frame.shadowX,
+					(int) this.y() + TILE_SIZE * 9 / 10 - shadow.getHeight() + frame.shadowY, null);
 
 			for (PokemonAnimation animation : this.animations)
 				animation.prerender(g, width, height);
 
-			g.drawImage(this.sprite.getCurrentSprite(), xPos, yPos, null);
+			g.drawImage(sprite, (frame.isFlipped ? sprite.getWidth() : 0) + xPos, yPos, (frame.isFlipped ? -1 : 1) * sprite.getWidth(), sprite.getHeight(),
+					null);
 
 			int h = this.sprite.getHealthChange();
 			if (h != 0)

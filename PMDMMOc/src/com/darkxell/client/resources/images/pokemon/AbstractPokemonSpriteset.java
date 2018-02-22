@@ -33,16 +33,17 @@ public class AbstractPokemonSpriteset
 
 		int x = 0, y = 0, width = spriteset.getWidth() / this.spriteWidth, height = spriteset.getHeight() / this.spriteHeight;
 		this.sprites = new BufferedImage[width * height];
-		for (; x < width; ++x)
-			for (; y < height; ++y)
-				this.sprites[y * width + x] = spriteset.getSubimage(x * this.spriteWidth, y * this.spriteHeight, this.spriteWidth, this.spriteHeight);
-
+		for (; y < height; ++y)
+			for (x = 0; x < width; ++x)
+				this.sprites[x + y * width] = spriteset.getSubimage(x * this.spriteWidth, y * this.spriteHeight, this.spriteWidth, this.spriteHeight);
+	
 		this.states = new HashMap<>();
 		for (Element e : xml.getChild("AnimGroupTable").getChildren())
 		{
 			PokemonSpriteState state = PokemonSpriteState.valueOf(e.getAttributeValue("state").toUpperCase());
 			for (Element s : e.getChildren())
-				this.states.put(new Pair<>(state, Direction.valueOf(s.getAttributeValue("direction").toUpperCase())), Integer.parseInt(s.getAttributeValue("sequence")));
+				this.states.put(new Pair<>(state, Direction.valueOf(s.getAttributeValue("direction").toUpperCase())),
+						Integer.parseInt(s.getAttributeValue("sequence")));
 		}
 
 		this.sequences = new HashMap<>();
