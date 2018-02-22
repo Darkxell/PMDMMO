@@ -46,7 +46,7 @@ public final class PokemonSpritesets
 	/** Loads the Spritesheet for the Pokémon with the input ID. */
 	private static void loadSpriteset(int id)
 	{
-		String filename = id + "";
+		String filename = Math.abs(id) + "";
 		int effectiveID = Math.abs(id);
 		if (id < 0 && Res.exists("/pokemons/" + (-id) + "s.png")) filename = (-id) + "s";
 

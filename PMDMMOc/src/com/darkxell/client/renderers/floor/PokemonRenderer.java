@@ -15,6 +15,7 @@ import com.darkxell.client.renderers.AbstractRenderer;
 import com.darkxell.client.renderers.MasterDungeonRenderer;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
+import com.darkxell.client.resources.images.pokemon.PokemonSpriteFrame;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
 import com.darkxell.client.resources.images.pokemon.ShadowSprites;
 import com.darkxell.client.resources.images.tilesets.AbstractDungeonTileset;
@@ -42,7 +43,8 @@ public class PokemonRenderer extends AbstractRenderer
 
 	public Point drawLocation()
 	{
-		return new Point(TILE_SIZE / 2 - this.sprite.pointer.gravityX, TILE_SIZE / 2 - this.sprite.pointer.gravityY);
+		PokemonSpriteFrame frame = this.sprite.getCurrentFrame();
+		return new Point(TILE_SIZE / 2 + frame.spriteX, TILE_SIZE / 2 + frame.spriteY);
 	}
 
 	public void removeAnimation(Object source)

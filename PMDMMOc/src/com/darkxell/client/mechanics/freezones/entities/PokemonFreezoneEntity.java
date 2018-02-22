@@ -36,9 +36,10 @@ public class PokemonFreezoneEntity extends FreezoneEntity {
 	}
 
 	@Override
-	public void print(Graphics2D g) {
-		g.drawImage(pkmnsprite.getCurrentSprite(), (int) (super.posX * 8 - pkmnsprite.pointer.gravityX),
-				(int) (super.posY * 8 - pkmnsprite.pointer.gravityY), null);
+	public void print(Graphics2D g)
+	{
+		g.drawImage(pkmnsprite.getCurrentSprite(), (int) (super.posX * 8 + pkmnsprite.getCurrentFrame().spriteX),
+				(int) (super.posY * 8 + pkmnsprite.getCurrentFrame().spriteY), null);
 	}
 
 	@Override

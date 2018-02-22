@@ -6,6 +6,7 @@ import com.darkxell.client.mechanics.freezones.FreezoneEntity;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
+import com.darkxell.client.resources.images.pokemon.PokemonSpriteFrame;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
 import com.darkxell.common.util.Direction;
 
@@ -34,12 +35,12 @@ public class OtherPlayerEntity extends FreezoneEntity {
 	}
 
 	@Override
-	public void print(Graphics2D g) {
-		g.drawImage(sprite.getCurrentSprite(), (int) (super.posX * 8 - sprite.pointer.gravityX),
-				(int) (super.posY * 8 - sprite.pointer.gravityY), null);
+	public void print(Graphics2D g)
+	{
+		PokemonSpriteFrame frame = this.sprite.getCurrentFrame();
+		g.drawImage(sprite.getCurrentSprite(), (int) (super.posX * 8 + frame.spriteX), (int) (super.posY * 8 + frame.spriteY), null);
 		int namewidth = TextRenderer.width(this.name);
-		TextRenderer.render(g, this.name, (int) (super.posX * 8 - (namewidth / 2)),
-				(int) (super.posY * 8 - sprite.pointer.gravityY - 20));
+		TextRenderer.render(g, this.name, (int) (super.posX * 8 - (namewidth / 2)), (int) (super.posY * 8 + frame.spriteY - 20));
 	}
 
 	@Override

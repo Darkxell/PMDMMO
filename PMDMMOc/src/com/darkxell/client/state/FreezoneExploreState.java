@@ -13,6 +13,7 @@ import com.darkxell.client.mechanics.freezones.zones.BaseFreezone;
 import com.darkxell.client.mechanics.freezones.zones.OfficeFreezone;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.others.Hud;
+import com.darkxell.client.resources.images.pokemon.PokemonSpriteFrame;
 import com.darkxell.client.resources.music.SoundsHolder;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.common.util.DoubleRectangle;
@@ -92,9 +93,10 @@ public class FreezoneExploreState extends AbstractState {
 				}
 			}
 			// Draws the player
+			PokemonSpriteFrame frame = Persistance.currentplayer.playersprite.getCurrentFrame();
 			g.drawImage(Persistance.currentplayer.playersprite.getCurrentSprite(),
-					(int) (Persistance.currentplayer.x * 8 - Persistance.currentplayer.playersprite.pointer.gravityX),
-					(int) (Persistance.currentplayer.y * 8 - Persistance.currentplayer.playersprite.pointer.gravityY),
+					(int) (Persistance.currentplayer.x * 8 + frame.spriteX),
+					(int) (Persistance.currentplayer.y * 8 + frame.spriteY),
 					null);
 			if (Persistance.debugdisplaymode) {
 				g.setColor(new Color(20, 20, 200, 160));

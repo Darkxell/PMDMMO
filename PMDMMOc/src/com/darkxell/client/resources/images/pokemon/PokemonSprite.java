@@ -22,7 +22,7 @@ public class PokemonSprite
 		if (this.counter > state.duration(this.statecounter))
 		{
 			this.counter = 0;
-			if (this.statecounter + 1 < state.indexes.length) ++this.statecounter;
+			if (this.statecounter + 1 < state.duration) ++this.statecounter;
 			else
 			{
 				if (this.resetToIdleOnFinish && this.state != PokemonSpriteState.IDLE) this.setState(PokemonSpriteState.IDLE);
@@ -37,9 +37,14 @@ public class PokemonSprite
 		}
 	}
 
-	public BufferedImage getCurrentSprite()
+	public PokemonSpriteFrame getCurrentFrame()
 	{
 		return this.pointer.getSprite(this.state, this.facing, this.statecounter);
+	}
+
+	public BufferedImage getCurrentSprite()
+	{
+		return this.getCurrentFrame().getSprite();
 	}
 
 	public void resetOnAnimationEnd()

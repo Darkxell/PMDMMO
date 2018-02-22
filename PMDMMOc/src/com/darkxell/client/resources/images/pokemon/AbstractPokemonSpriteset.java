@@ -27,14 +27,14 @@ public class AbstractPokemonSpriteset
 		this.pokemonID = pokemonID;
 
 		this.spriteWidth = Integer.parseInt(xml.getChildText("FrameWidth"));
-		this.spriteHeight = Integer.parseInt(xml.getAttributeValue("FrameHeight"));
+		this.spriteHeight = Integer.parseInt(xml.getChildText("FrameHeight"));
 		this.hasBigShadow = this.spriteWidth > 48 || this.spriteHeight > 48;
 		BufferedImage spriteset = Res.getBase(path);
 
 		int x = 0, y = 0, width = spriteset.getWidth() / this.spriteWidth, height = spriteset.getHeight() / this.spriteHeight;
-		this.sprites = new BufferedImage[x * y];
+		this.sprites = new BufferedImage[width * height];
 		for (; x < width; ++x)
-			for (; y < height; ++height)
+			for (; y < height; ++y)
 				this.sprites[y * width + x] = spriteset.getSubimage(x * this.spriteWidth, y * this.spriteHeight, this.spriteWidth, this.spriteHeight);
 
 		this.states = new HashMap<>();
@@ -42,7 +42,7 @@ public class AbstractPokemonSpriteset
 		{
 			PokemonSpriteState state = PokemonSpriteState.valueOf(e.getAttributeValue("state").toUpperCase());
 			for (Element s : e.getChildren())
-				this.states.put(new Pair<>(state, Direction.valueOf(s.getAttributeValue("direction"))), Integer.parseInt(s.getAttributeValue("sequence")));
+				this.states.put(new Pair<>(state, Direction.valueOf(s.getAttributeValue("direction").toUpperCase())), Integer.parseInt(s.getAttributeValue("sequence")));
 		}
 
 		this.sequences = new HashMap<>();
