@@ -2,6 +2,7 @@ package com.darkxell.client.state;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 
 import com.darkxell.client.launchable.GameSocketEndpoint;
 import com.darkxell.client.launchable.Launcher;
@@ -94,10 +95,9 @@ public class FreezoneExploreState extends AbstractState {
 			}
 			// Draws the player
 			PokemonSpriteFrame frame = Persistance.currentplayer.playersprite.getCurrentFrame();
-			g.drawImage(Persistance.currentplayer.playersprite.getCurrentSprite(),
-					(int) (Persistance.currentplayer.x * 8 + frame.spriteX),
-					(int) (Persistance.currentplayer.y * 8 + frame.spriteY),
-					null);
+			BufferedImage sprite =Persistance.currentplayer.playersprite.getCurrentSprite(); 
+			g.drawImage(sprite, (int) (Persistance.currentplayer.x * 8 - sprite.getWidth() / 2 + frame.spriteX),
+					(int) (Persistance.currentplayer.y * 8 - sprite.getHeight() / 2 + frame.spriteY), null);
 			if (Persistance.debugdisplaymode) {
 				g.setColor(new Color(20, 20, 200, 160));
 				DoubleRectangle dbrct = Persistance.currentplayer.getHitboxAt(Persistance.currentplayer.x,
