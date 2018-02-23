@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <AnimData>
   <FrameWidth>32</FrameWidth>
-  <FrameHeight>32</FrameHeight>
+  <FrameHeight>48</FrameHeight>
   <AnimGroupTable>
     <AnimGroup state="idle">
       <AnimSequenceIndex sequence="17" direction="South" />
