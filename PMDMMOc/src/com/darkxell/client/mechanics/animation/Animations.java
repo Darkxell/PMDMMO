@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 import org.jdom2.Element;
 
-import com.darkxell.client.mechanics.animation.movement.PokemonAnimationMovement;
+import com.darkxell.client.mechanics.animation.movement.TackleAnimationMovement;
 import com.darkxell.client.resources.images.AnimationSpriteset;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
 import com.darkxell.common.item.Item;
@@ -67,23 +67,17 @@ public final class Animations
 			a = new SpritesetAnimation(target, spriteset, spriteOrder, backSprites, spriteDuration, x, y, listener);
 		}
 
-		String movement = XMLUtils.getAttribute(xml, "movement", null);
-		if (movement != null)
-		{
-			try
-			{
-				Class<?> c = Class.forName("com.darkxell.client.mechanics.animation.movement." + movement + "AnimationMovement");
-				a.movement = (PokemonAnimationMovement) c.getConstructor(PokemonAnimation.class).newInstance(a);
-				a.duration = Math.max(a.duration, a.movement.duration);
-			} catch (Exception e1)
-			{
-				Logger.e("Movement instanciation failed!");
-				e1.printStackTrace();
-			}
-		}
+		/* String movement = XMLUtils.getAttribute(xml, "movement", null); if (movement != null) { try { Class<?> c = Class.forName("com.darkxell.client.mechanics.animation.movement." + movement + "AnimationMovement"); a.movement = (PokemonAnimationMovement)
+		 * c.getConstructor(PokemonAnimation.class).newInstance(a); a.duration = Math.max(a.duration, a.movement.duration); } catch (Exception e1) { Logger.e("Movement instanciation failed!"); e1.printStackTrace(); } } */
 
 		a.sound = XMLUtils.getAttribute(xml, "sound", null);
-		a.state = xml.getAttribute("state") == null ? defaultState : PokemonSpriteState.valueOf(XMLUtils.getAttribute(xml, "state", null));
+		a.state = xml.getAttribute("state") == null ? defaultState : PokemonSpriteState.valueOf(XMLUtils.getAttribute(xml, "state", null).toUpperCase());
+		if (a.state != null)
+		{
+			a.duration = Math.max(a.duration, a.renderer.sprite.pointer.getSequence(a.state, a.renderer.pokemon.facing()).duration);
+			if (a.state.hasDash) a.movement = new TackleAnimationMovement(a);
+		}
+
 		return a;
 	}
 

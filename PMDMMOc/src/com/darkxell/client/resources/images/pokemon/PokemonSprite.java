@@ -71,26 +71,26 @@ public class PokemonSprite
 	{
 		IDLE(0),
 		MOVE(1),
-		ATTACK(2),
+		ATTACK(2, true),
 		SPECIAL(3),
 		SLEEP(4),
 		HURT(5),
 		CHARGE(6),
 		SHOOT(7),
-		STRIKE(8),
-		CHOP(9),
-		SLICE(10),
-		MULTISCRATCH(11),
-		MULTISTRIKE(12),
-		UPPERCUT(13),
-		RICOCHET(14),
-		BITE(15),
+		STRIKE(8, true),
+		CHOP(9, true),
+		SLICE(10, true),
+		MULTISCRATCH(11, true),
+		MULTISTRIKE(12, true),
+		UPPERCUT(13, true),
+		RICOCHET(14, true),
+		BITE(15, true),
 		SHAKE(16),
-		JAB(17),
-		KICK(18),
-		LICK(19),
-		SLAM(20),
-		STOMP(21),
+		JAB(17, true),
+		KICK(18, true),
+		LICK(19, true),
+		SLAM(20, true),
+		STOMP(21, true),
 		APPEAL(22),
 		DANCE(23),
 		TWIRL(24),
@@ -99,7 +99,7 @@ public class PokemonSprite
 		SOUND(27),
 		RUMBLE(28),
 		FLAPAROUND(29),
-		GAS(30),
+		GAS(30, true),
 		SHOCK(31),
 		EMIT(32),
 		WITHDRAW(33),
@@ -113,11 +113,19 @@ public class PokemonSprite
 		HIGHJUMP(41);
 		/* REST(6), WAKING(7), VICTORYPOSE(8), EATING(9); */
 
+		/** True if the State's animation should dash forward. */
+		public final boolean hasDash;
 		public final int id;
 
 		private PokemonSpriteState(int id)
 		{
+			this(id, false);
+		}
+
+		private PokemonSpriteState(int id, boolean hasDash)
+		{
 			this.id = id;
+			this.hasDash = hasDash;
 		}
 	}
 
