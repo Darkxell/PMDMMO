@@ -41,7 +41,7 @@ public final class PokemonSpritesets
 	public static void loadData()
 	{
 		/* System.out.println("Loading Pokémon sprites..."); for (PokemonSpecies s : PokemonRegistry.list()) loadSpriteset(s.id); */
-		loadSpriteset(1);
+		loadSpriteset(0);
 	}
 
 	/** Loads the Spritesheet for the Pokémon with the input ID. */
@@ -55,7 +55,7 @@ public final class PokemonSpritesets
 		Element xml = XMLUtils.readFile(Res.getFile("/pokemons/data/" + effectiveID + ".xml"));
 		if (xml == null)
 		{
-			spritesets.put(id, spritesets.get(1));
+			spritesets.put(id, spritesets.get(0));
 			return;
 		}
 
