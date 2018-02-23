@@ -28,6 +28,8 @@ public class DungeonPokemon
 	private int hp;
 	/** This Pokémon's data. */
 	public final Pokemon pokemon;
+	/** Variable used to compute HP regeneration. */
+	private int regenCounter = 0;
 	/** True if this Pokémon's state changed (direction, state...). Used for rendering. */
 	public boolean stateChanged;
 	/** This Pokémon's stats for the current dungeon. */
@@ -45,6 +47,12 @@ public class DungeonPokemon
 		this.hp = this.stats.getHealth();
 		this.statusConditions = new ArrayList<StatusConditionInstance>();
 		pokemon.dungeonPokemon = this;
+	}
+
+	/** @return True if this Pokémon can regenerate HP. */
+	public boolean canRegen()
+	{
+		return !this.hasStatusCondition(StatusCondition.BADLY_POISONED) && !this.hasStatusCondition(StatusCondition.POISONED);
 	}
 
 	/** Clears references to this Dungeon Pokémon in the Pokémon object. */
@@ -146,6 +154,7 @@ public class DungeonPokemon
 	{
 		ArrayList<DungeonEvent> events = new ArrayList<DungeonEvent>();
 		this.statusConditions.clear();
+		this.regenCounter = 0;
 		return events;
 	}
 
@@ -153,6 +162,21 @@ public class DungeonPokemon
 	public ArrayList<DungeonEvent> onTurnStart(Floor floor)
 	{
 		ArrayList<DungeonEvent> events = new ArrayList<DungeonEvent>();
+		if (this.canRegen())
+		{
+			int recoveryRate = 200;
+			int healthGain = 0;
+
+			this.regenCounter += this.regenCounter + this.pokemon.getStats().health;
+			healthGain += this.pokemon.getStats().health / recoveryRate;
+			if (this.regenCounter >= recoveryRate)
+			{
+				healthGain += 1;
+				this.regenCounter %= recoveryRate;
+			}
+			this.setHP(this.getHp() + healthGain);
+		}
+
 		for (StatusConditionInstance condition : this.statusConditions)
 			events.addAll(condition.tick(floor));
 		return events;
