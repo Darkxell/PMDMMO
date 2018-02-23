@@ -25,7 +25,7 @@ public class PokemonSpriteFrame
 	{
 		this.spriteset = spriteset;
 		this.frameID = XMLUtils.getAttribute(xml, "sprite", 0);
-		this.duration = XMLUtils.getAttribute(xml, "duration", 0) / 2;
+		this.duration = XMLUtils.getAttribute(xml, "duration", 0);
 		this.spriteX = XMLUtils.getAttribute(xml, "spritex", 0);
 		this.spriteY = XMLUtils.getAttribute(xml, "spritey", 0);
 		this.shadowX = XMLUtils.getAttribute(xml, "shadowx", 0);

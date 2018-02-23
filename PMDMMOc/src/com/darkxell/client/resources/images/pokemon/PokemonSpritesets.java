@@ -40,6 +40,7 @@ public final class PokemonSpritesets
 	/** Reads the sprites data file. */
 	public static void loadData()
 	{
+		/* System.out.println("Loading Pokémon sprites..."); for (PokemonSpecies s : PokemonRegistry.list()) loadSpriteset(s.id); */
 		loadSpriteset(1);
 	}
 

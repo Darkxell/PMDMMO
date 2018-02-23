@@ -27,11 +27,6 @@ public class PokemonSpriteSequence
 		this.duration = this.totalDuration();
 	}
 
-	public int duration(int tick)
-	{
-		return this.frames[this.getFrameIndex(tick)].duration;
-	}
-
 	private int getFrameIndex(int tick)
 	{
 		int i = -1;

@@ -19,15 +19,10 @@ public class PokemonSprite
 	{
 		this.counter += this.tickSpeed;
 		PokemonSpriteSequence state = this.pointer.getSequence(this.state, this.facing);
-		if (this.counter > state.duration(this.statecounter))
+		if (this.counter >= state.duration)
 		{
 			this.counter = 0;
-			if (this.statecounter + 1 < state.duration) ++this.statecounter;
-			else
-			{
-				if (this.resetToIdleOnFinish && this.state != PokemonSpriteState.IDLE) this.setState(PokemonSpriteState.IDLE);
-				else this.statecounter = 0;
-			}
+			if (this.resetToIdleOnFinish && this.state != PokemonSpriteState.IDLE) this.setState(PokemonSpriteState.IDLE);
 		}
 
 		if (this.healthCounter > 0) --this.healthCounter;
@@ -39,7 +34,7 @@ public class PokemonSprite
 
 	public PokemonSpriteFrame getCurrentFrame()
 	{
-		return this.pointer.getSprite(this.state, this.facing, this.statecounter);
+		return this.pointer.getSprite(this.state, this.facing, this.counter);
 	}
 
 	public BufferedImage getCurrentSprite()
@@ -66,7 +61,6 @@ public class PokemonSprite
 		{
 			this.state = state;
 			this.counter = 0;
-			this.statecounter = 0;
 		}
 		this.resetToIdleOnFinish = !playOnLoop;
 	}
@@ -80,7 +74,43 @@ public class PokemonSprite
 		ATTACK(2),
 		SPECIAL(3),
 		SLEEP(4),
-		HURT(5);
+		HURT(5),
+		CHARGE(6),
+		SHOOT(7),
+		STRIKE(8),
+		CHOP(9),
+		SLICE(10),
+		MULTISCRATCH(11),
+		MULTISTRIKE(12),
+		UPPERCUT(13),
+		RICOCHET(14),
+		BITE(15),
+		SHAKE(16),
+		JAB(17),
+		KICK(18),
+		LICK(19),
+		SLAM(20),
+		STOMP(21),
+		APPEAL(22),
+		DANCE(23),
+		TWIRL(24),
+		TAILWHIP(25),
+		SING(26),
+		SOUND(27),
+		RUMBLE(28),
+		FLAPAROUND(29),
+		GAS(30),
+		SHOCK(31),
+		EMIT(32),
+		WITHDRAW(33),
+		REARUP(34),
+		SWELL(35),
+		SWING(36),
+		DOUBLE(37),
+		ROTATE(38),
+		SPIN(39),
+		JUMP(40),
+		HIGHJUMP(41);
 		/* REST(6), WAKING(7), VICTORYPOSE(8), EATING(9); */
 
 		public final int id;
@@ -106,7 +136,6 @@ public class PokemonSprite
 	private int healthCounter = 0;
 	/** When true, if in a repeatable state, will reset to idle state at the end of the current animation. Else, will keep on the same animation. */
 	private boolean resetToIdleOnFinish = false;
-	private int statecounter = 0;
 	private int tickSpeed = 1;
 	private byte shadowColor = NEUTRAL_SHADOW;
 
