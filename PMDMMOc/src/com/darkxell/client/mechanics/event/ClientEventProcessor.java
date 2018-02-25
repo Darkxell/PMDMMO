@@ -159,6 +159,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 			SoundManager.playSound("dungeon-hurt");
 			Persistance.dungeonState.pokemonRenderer.getRenderer(event.target).sprite.setState(PokemonSpriteState.HURT);
 			Persistance.dungeonState.pokemonRenderer.getRenderer(event.target).sprite.setHealthChange(-event.damage);
+			Animations.getCustomAnimation(event.target, 1, null).start();
 			Persistance.dungeonState.setSubstate(new DelayState(Persistance.dungeonState, PokemonSprite.FRAMELENGTH));
 			this.processPending = false;
 		}

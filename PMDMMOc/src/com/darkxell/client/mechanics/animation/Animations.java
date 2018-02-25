@@ -25,12 +25,12 @@ public final class Animations
 	private static final HashMap<Integer, Element> moveTargets = new HashMap<Integer, Element>();
 	private static final HashMap<Integer, Element> statuses = new HashMap<Integer, Element>();
 
-	private static AbstractAnimation getAnimation(int id, HashMap<Integer, Element> registry, DungeonPokemon target, AnimationEndListener listener)
+	private static PokemonAnimation getAnimation(int id, HashMap<Integer, Element> registry, DungeonPokemon target, AnimationEndListener listener)
 	{
 		return getAnimation(id, registry, target, null, listener);
 	}
 
-	private static AbstractAnimation getAnimation(int id, HashMap<Integer, Element> registry, DungeonPokemon target, PokemonSpriteState defaultState,
+	private static PokemonAnimation getAnimation(int id, HashMap<Integer, Element> registry, DungeonPokemon target, PokemonSpriteState defaultState,
 			AnimationEndListener listener)
 	{
 		if (!registry.containsKey(id)) return null;
@@ -58,6 +58,12 @@ public final class Animations
 			int y = XMLUtils.getAttribute(xml, "y", height / 2);
 			int spriteDuration = XMLUtils.getAttribute(xml, "spriteduration", 2);
 			int[] spriteOrder = XMLUtils.readIntArray(xml);
+			if (spriteOrder.length == 0)
+			{
+				spriteOrder = new int[spriteset.spriteCount()];
+				for (int i = 0; i < spriteOrder.length; ++i)
+					spriteOrder[i] = i;
+			}
 
 			String back = xml.getAttributeValue("backsprites");
 			boolean[] backSprites = new boolean[spriteset.spriteCount()];
@@ -81,29 +87,29 @@ public final class Animations
 		return a;
 	}
 
-	public static AbstractAnimation getCustomAnimation(DungeonPokemon target, int id, AnimationEndListener listener)
+	public static PokemonAnimation getCustomAnimation(DungeonPokemon target, int id, AnimationEndListener listener)
 	{
 		return getAnimation(id, custom, target, listener);
 	}
 
-	public static AbstractAnimation getItemAnimation(DungeonPokemon target, Item i, AnimationEndListener listener)
+	public static PokemonAnimation getItemAnimation(DungeonPokemon target, Item i, AnimationEndListener listener)
 	{
 		return getAnimation(i.id, items, target, listener);
 	}
 
-	public static AbstractAnimation getMoveAnimation(DungeonPokemon user, Move m, AnimationEndListener listener)
+	public static PokemonAnimation getMoveAnimation(DungeonPokemon user, Move m, AnimationEndListener listener)
 	{
 		return getAnimation(m.id, moves, user, m.category == MoveCategory.Physical ? PokemonSpriteState.ATTACK : PokemonSpriteState.SPECIAL, listener);
 	}
 
-	public static AbstractAnimation getMoveTargetAnimation(DungeonPokemon target, Move m, AnimationEndListener listener)
+	public static PokemonAnimation getMoveTargetAnimation(DungeonPokemon target, Move m, AnimationEndListener listener)
 	{
 		return getAnimation(m.id, moveTargets, target, listener);
 	}
 
-	public static AbstractAnimation getStatusAnimation(DungeonPokemon target, StatusCondition s, AnimationEndListener listener)
+	public static PokemonAnimation getStatusAnimation(DungeonPokemon target, StatusCondition s, AnimationEndListener listener)
 	{
-		AbstractAnimation a = getAnimation(s.id, statuses, target, listener);
+		PokemonAnimation a = getAnimation(s.id, statuses, target, listener);
 		if (a != null) a.plays = -1;
 		return a;
 	}

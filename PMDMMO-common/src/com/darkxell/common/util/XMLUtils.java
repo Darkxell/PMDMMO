@@ -113,7 +113,7 @@ public final class XMLUtils
 		if (element != null)
 		{
 			String value = element.getText();
-			if (value != null) for (String floor : value.split(","))
+			if (value != null && !value.equals("")) for (String floor : value.split(","))
 				array.add(Integer.parseInt(floor));
 		}
 		return array;
