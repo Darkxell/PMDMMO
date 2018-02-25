@@ -2,10 +2,10 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="pmdmmo" targetNamespace="pmdmmo"
 	elementFormDefault="qualified">
 	<xs:include schemaLocation="base.xsd"/>
-	<xs:complexType name="animation">
+
+	<xs:complexType name="animationbase">
 		<xs:simpleContent>
 			<xs:extension base="xs:string">
-				<xs:attribute name="id" type="posInt"/>
 				<xs:attribute name="spriteduration" type="xs:positiveInteger" use="optional"/>
 				<xs:attribute name="x" type="xs:int" use="optional"/>
 				<xs:attribute name="y" type="xs:int" use="optional"/>
@@ -16,8 +16,24 @@
 				<xs:attribute name="movement" type="xs:string"/>
 				<xs:attribute name="sound" type="xs:string"/>
 				<xs:attribute name="state" type="xs:string" use="optional"/>
+				<xs:attribute name="oriented" type="xs:boolean" use="optional"/>
 			</xs:extension>
 		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:complexType name="animation">
+		<xs:sequence>
+			<xs:element name="default" type="animationbase" minOccurs="0"/>
+			<xs:element name="north" type="animationbase" minOccurs="0"/>
+			<xs:element name="northeast" type="animationbase" minOccurs="0"/>
+			<xs:element name="east" type="animationbase" minOccurs="0"/>
+			<xs:element name="southeast" type="animationbase" minOccurs="0"/>
+			<xs:element name="south" type="animationbase" minOccurs="0"/>
+			<xs:element name="southwest" type="animationbase" minOccurs="0"/>
+			<xs:element name="west" type="animationbase" minOccurs="0"/>
+			<xs:element name="northwest" type="animationbase" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="id" type="posInt"/>
 	</xs:complexType>
 
 	<xs:element name="animations">

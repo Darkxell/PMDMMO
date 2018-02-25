@@ -36,6 +36,10 @@ public final class Animations
 		if (!registry.containsKey(id)) return null;
 		Element xml = registry.get(id);
 
+		if (XMLUtils.getAttribute(xml, "oriented", false) && xml.getChild(target.facing().name().toLowerCase(), xml.getNamespace()) != null)
+			xml = xml.getChild(target.facing().name().toLowerCase(), xml.getNamespace());
+		else xml = xml.getChild("default", xml.getNamespace());
+
 		PokemonAnimation a;
 		String sprites = XMLUtils.getAttribute(xml, "sprites", null);
 		if (sprites == null) sprites = String.valueOf(id);
