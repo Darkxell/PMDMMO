@@ -84,9 +84,14 @@ public class Player
 		return this.mainPokemon;
 	}
 
+	public boolean isAlly(DungeonPokemon pokemon)
+	{
+		return pokemon != null && this.isAlly(pokemon.pokemon);
+	}
+
 	public boolean isAlly(Pokemon pokemon)
 	{
-		return this.mainPokemon == pokemon || this.allies.contains(pokemon);
+		return pokemon != null && (this.mainPokemon == pokemon || this.allies.contains(pokemon));
 	}
 
 	public void removeAlly(Pokemon pokemon)

@@ -124,6 +124,27 @@ public class DungeonState extends AbstractState
 	}
 
 	@Override
+	public void onMouseClick(int x, int y)
+	{
+		super.onMouseClick(x, y);
+		this.currentSubstate.onMouseClick(x, y);
+	}
+
+	@Override
+	public void onMouseMove(int x, int y)
+	{
+		super.onMouseMove(x, y);
+		this.currentSubstate.onMouseMove(x, y);
+	}
+
+	@Override
+	public void onMouseRightClick(int x, int y)
+	{
+		super.onMouseRightClick(x, y);
+		this.currentSubstate.onMouseRightClick(x, y);
+	}
+
+	@Override
 	public void onStart()
 	{
 		super.onStart();

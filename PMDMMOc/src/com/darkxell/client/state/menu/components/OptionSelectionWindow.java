@@ -67,7 +67,7 @@ public class OptionSelectionWindow extends MenuWindow
 			{
 				if (this.menu.getHoveredOption() == option)
 				{
-					g.setColor(Palette.TEAM_XP_BLUE);
+					g.setColor(Palette.MENU_HOVERED);
 					g.fillRect(x - 1, y - 1, this.dimensions.width - MARGIN_X * 2 + 2, TextRenderer.height() + 2);
 				}
 				this.drawOption(g, option, x, y);

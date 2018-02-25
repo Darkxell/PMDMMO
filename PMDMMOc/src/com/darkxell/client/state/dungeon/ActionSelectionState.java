@@ -4,25 +4,39 @@ import static com.darkxell.client.resources.images.tilesets.AbstractDungeonTiles
 
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.renderers.TextRenderer;
+import com.darkxell.client.resources.Palette;
 import com.darkxell.client.resources.images.others.DungeonHudSpriteset;
 import com.darkxell.client.state.dungeon.DungeonState.DungeonSubState;
 import com.darkxell.client.state.mainstates.PrincipalMainState;
+import com.darkxell.client.state.menu.components.MenuWindow;
 import com.darkxell.client.state.menu.dungeon.DungeonMenuState;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.common.event.TurnSkippedEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent;
+import com.darkxell.common.event.pokemon.PokemonRotateEvent;
 import com.darkxell.common.move.MoveRegistry;
+import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.LearnedMove;
+import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.Direction;
+import com.darkxell.common.util.language.Message;
 
 public class ActionSelectionState extends DungeonSubState
 {
 
+	public static final Message moves = new Message("moves.hint");
+	public static final int MOVES_WINDOW_HEIGHT = 40;
 	public static final int ROTATION_COUNTER_MAX = TILE_SIZE * 2 / 3;
 
+	private short delay = 0;
+	private byte hoveredMove = -1;
+	private Rectangle[] moveLocations;
+	MenuWindow movesWindow;
 	private int rotationCounter = 0;
 
 	public ActionSelectionState(DungeonState parent)
@@ -68,13 +82,38 @@ public class ActionSelectionState extends DungeonSubState
 	}
 
 	@Override
+	public void onEnd()
+	{
+		super.onEnd();
+		this.delay = 0;
+	}
+
+	@Override
 	public void onKeyPressed(short key)
 	{
+		DungeonPokemon leader = Persistance.player.getDungeonLeader();
 		if (key == Keys.KEY_MENU)
 		{
 			if (Persistance.stateManager instanceof PrincipalMainState)
 				((PrincipalMainState) Persistance.stateManager).setState(new DungeonMenuState(this.parent));
-		}
+		} else if (key == Keys.KEY_ROTATE)
+		{
+			Direction d = leader.facing();
+			do
+			{
+				d = d.rotateClockwise();
+				if (leader.tile().adjacentTile(d).getPokemon() != null && !leader.pokemon.player.isAlly(leader.tile().adjacentTile(d).getPokemon())) break;
+			} while (d != leader.facing());
+			Persistance.eventProcessor.processEvent(new PokemonRotateEvent(Persistance.floor, leader, d));
+		} else if (key == Keys.KEY_MOVE_1 && leader.pokemon.move(0) != null)
+			Persistance.eventProcessor.processEvent(new MoveSelectionEvent(Persistance.floor, leader.pokemon.move(0), leader));
+		else if (key == Keys.KEY_MOVE_2 && leader.pokemon.move(1) != null)
+			Persistance.eventProcessor.processEvent(new MoveSelectionEvent(Persistance.floor, leader.pokemon.move(1), leader));
+		else if (key == Keys.KEY_MOVE_3 && leader.pokemon.move(2) != null)
+			Persistance.eventProcessor.processEvent(new MoveSelectionEvent(Persistance.floor, leader.pokemon.move(2), leader));
+		else if (key == Keys.KEY_MOVE_4 && leader.pokemon.move(3) != null)
+			Persistance.eventProcessor.processEvent(new MoveSelectionEvent(Persistance.floor, leader.pokemon.move(3), leader));
+
 		if (key == Keys.KEY_ATTACK && (Persistance.player.getDungeonLeader().isFamished() || !Keys.isPressed(Keys.KEY_RUN))) Persistance.eventProcessor
 				.processEvent(new MoveSelectionEvent(Persistance.floor, new LearnedMove(MoveRegistry.ATTACK.id), Persistance.player.getDungeonLeader()));
 	}
@@ -84,18 +123,72 @@ public class ActionSelectionState extends DungeonSubState
 	{}
 
 	@Override
+	public void onMouseClick(int x, int y)
+	{
+		super.onMouseClick(x, y);
+		for (byte i = 0; i < this.moveLocations.length; ++i)
+			if (this.moveLocations[i] != null && this.moveLocations[i].contains(x, y))
+			{
+				Persistance.eventProcessor.processEvent(
+						new MoveSelectionEvent(Persistance.floor, Persistance.player.getTeamLeader().move(i), Persistance.player.getDungeonLeader()));
+				break;
+			}
+	}
+
+	@Override
+	public void onMouseMove(int x, int y)
+	{
+		super.onMouseMove(x, y);
+		this.hoveredMove = -1;
+		for (byte i = 0; i < this.moveLocations.length; ++i)
+			if (this.moveLocations[i] != null && this.moveLocations[i].contains(x, y))
+			{
+				this.hoveredMove = i;
+				break;
+			}
+	}
+
+	@Override
 	public void render(Graphics2D g, int width, int height)
 	{
+		int w = width - 40;
+		if (this.movesWindow == null)
+			this.movesWindow = new MenuWindow(new Rectangle((width - w) / 2, height - MOVES_WINDOW_HEIGHT - 5, w, MOVES_WINDOW_HEIGHT));
+
 		if (this.isMain())
 		{
-			if (this.parent.diagonal)
+			if (this.delay >= 3 && this.movesWindow != null && !this.parent.logger.isVisible())
+			{
+				this.movesWindow.render(g, moves, width, height);
+
+				int y = this.movesWindow.inside().y + 5;
+				int mw = (this.movesWindow.inside().width - 10) / 4;
+				this.moveLocations = new Rectangle[4];
+				Pokemon leader = Persistance.player.getTeamLeader();
+				for (int i = 0; i < 4; ++i)
+					if (leader.move(i) != null)
+					{
+						this.moveLocations[i] = new Rectangle(this.movesWindow.inside().x + 5 + i * mw - 1, y - 1,
+								TextRenderer.width(leader.move(i).move().name()) + 2, TextRenderer.height() + 2);
+						if (i == this.hoveredMove)
+						{
+							g.setColor(Palette.MENU_HOVERED);
+							g.fillRect(this.moveLocations[i].x, this.moveLocations[i].y, this.moveLocations[i].width, this.moveLocations[i].height);
+						}
+						TextRenderer.render(g, Persistance.player.getDungeonLeader().pokemon.move(i).move().name(), this.movesWindow.inside().x + 5 + i * mw,
+								y);
+					} else this.moveLocations[i] = null;
+			}
+
+			if (this.delay >= 3 && this.parent.diagonal)
 			{
 				this.drawArrow(g, width, height, Direction.NORTHEAST);
 				this.drawArrow(g, width, height, Direction.SOUTHEAST);
 				this.drawArrow(g, width, height, Direction.SOUTHWEST);
 				this.drawArrow(g, width, height, Direction.NORTHWEST);
 			}
-			if (this.parent.rotating) if (!this.parent.diagonal) this.drawArrow(g, width, height, Persistance.player.getDungeonLeader().facing());
+			if (this.delay >= 3 && this.parent.rotating)
+				if (!this.parent.diagonal) this.drawArrow(g, width, height, Persistance.player.getDungeonLeader().facing());
 		}
 	}
 
@@ -104,6 +197,7 @@ public class ActionSelectionState extends DungeonSubState
 	{
 		if (this.isMain())
 		{
+			if (this.delay < 3) ++this.delay;
 			if (Keys.isPressed(Keys.KEY_ATTACK) && Keys.isPressed(Keys.KEY_RUN) && !Persistance.player.getDungeonLeader().isFamished())
 				Persistance.eventProcessor.processEvent(new TurnSkippedEvent(Persistance.floor, Persistance.player.getDungeonLeader()));
 			else

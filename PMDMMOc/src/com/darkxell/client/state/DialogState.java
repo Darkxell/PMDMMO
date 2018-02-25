@@ -199,7 +199,7 @@ public class DialogState extends AbstractState
 
 		int temp_width = width - 40;
 		int temp_height = temp_width * Hud.textwindow.getHeight() / Hud.textwindow.getWidth();
-		this.dialogBox = new Rectangle(20, height - temp_height - 20, temp_width, temp_height);
+		this.dialogBox = new Rectangle(20, height - temp_height - 5, temp_width, temp_height);
 		int marginx = this.dialogBox.width / 20, marginy = this.dialogBox.height / 5;
 		Rectangle inside = new Rectangle(this.dialogBox.x + marginx, this.dialogBox.y + marginy, this.dialogBox.width - marginx * 2,
 				this.dialogBox.height - marginy * 2);
