@@ -9,10 +9,12 @@ import com.darkxell.client.mechanics.animation.SpritesetAnimation.BackSpriteUsag
 import com.darkxell.client.mechanics.animation.movement.TackleAnimationMovement;
 import com.darkxell.client.resources.images.AnimationSpriteset;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
+import com.darkxell.common.event.stats.StatChangedEvent;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.move.Move.MoveCategory;
 import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.pokemon.PokemonStats;
 import com.darkxell.common.status.StatusCondition;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.XMLUtils;
@@ -22,6 +24,23 @@ public final class Animations
 	public static final int HURT = 1;
 	public static final int ORB = 2;
 	public static final int HEAL = 3;
+
+	public static final int ATTACK_UP = 10;
+	public static final int DEFENSE_UP = 11;
+	public static final int SP_ATTACK_UP = 12;
+	public static final int SP_DEFENSE_UP = 13;
+	public static final int SPEED_UP = 14;
+	public static final int EVASION_UP = 15;
+	public static final int ACCURACY_UP = 16;
+
+	public static final int STAT_UP_TO_DOWN = 10;
+	public static final int ATTACK_DOWN = ATTACK_UP + STAT_UP_TO_DOWN;
+	public static final int DEFENSE_DOWN = DEFENSE_UP + STAT_UP_TO_DOWN;
+	public static final int SP_ATTACK_DOWN = SP_ATTACK_UP + STAT_UP_TO_DOWN;
+	public static final int SP_DEFENSE_DOWN = SP_DEFENSE_UP + STAT_UP_TO_DOWN;
+	public static final int SPEED_DOWN = SPEED_UP + STAT_UP_TO_DOWN;
+	public static final int EVASION_DOWN = EVASION_UP + STAT_UP_TO_DOWN;
+	public static final int ACCURACY_DOWN = ACCURACY_UP + STAT_UP_TO_DOWN;
 
 	private static final HashMap<Integer, Element> custom = new HashMap<Integer, Element>();
 	private static final HashMap<Integer, Element> items = new HashMap<Integer, Element>();
@@ -162,5 +181,39 @@ public final class Animations
 
 	private Animations()
 	{}
+
+	public static AbstractAnimation getStatChangeAnimation(StatChangedEvent event, AnimationEndListener listener)
+	{
+		int statID;
+
+		switch (event.stat)
+		{
+			case PokemonStats.DEFENSE:
+				statID = DEFENSE_UP;
+				break;
+			case PokemonStats.SPECIAL_ATTACK:
+				statID = SP_ATTACK_UP;
+				break;
+			case PokemonStats.SPECIAL_DEFENSE:
+				statID = SP_DEFENSE_UP;
+				break;
+			case PokemonStats.SPEED:
+				statID = SPEED_UP;
+				break;
+			case PokemonStats.EVASIVENESS:
+				statID = EVASION_UP;
+				break;
+			case PokemonStats.ACCURACY:
+				statID = ACCURACY_UP;
+				break;
+
+			default:
+				statID = ATTACK_UP;
+				break;
+		}
+
+		if (event.stage < 0) statID += STAT_UP_TO_DOWN;
+		return getCustomAnimation(event.target, statID, listener);
+	}
 
 }

@@ -14,6 +14,48 @@
     <c id="3">
       <default sound="dungeon-heal" spriteduration="3" width="64" height="96" y="71" backsprites="yes"/>
     </c>
+    <c id="10">
+      <default sound="stat-attack" width="50" height="50" y="28" backsprites="yes"/>
+    </c>
+    <c id="11">
+      <default sound="stat-defense" width="50" height="50" y="28" backsprites="yes"/>
+    </c>
+    <c id="12">
+      <default sound="stat-spattack" width="50" height="50" y="28" backsprites="yes"/>
+    </c>
+    <c id="13">
+      <default sound="stat-spdefense" width="50" height="50" y="28" backsprites="yes"/>
+    </c>
+    <c id="14">
+      <default sound="stat-speed" width="50" height="50" y="28" backsprites="yes"/>
+    </c>
+    <c id="15">
+      <default sound="stat-evasion" width="50" height="50" y="28" backsprites="yes"/>
+    </c>
+    <c id="16">
+      <default sound="stat-accuracy" width="50" height="50" y="28" backsprites="yes"/>
+    </c>
+    <c id="20">
+      <default sound="stat-attack_down" sprites="10" width="50" height="50" y="28" backsprites="yes">12,11,10,9,8,7,6,5,4,3,2,1,0</default>
+    </c>
+    <c id="21">
+      <default sound="stat-defense_down" sprites="11" width="50" height="50" y="28" backsprites="yes">12,11,10,9,8,7,6,5,4,3,2,1,0</default>
+    </c>
+    <c id="22">
+      <default sound="stat-spattack_down" sprites="12" width="50" height="50" y="28" backsprites="yes">12,11,10,9,8,7,6,5,4,3,2,1,0</default>
+    </c>
+    <c id="23">
+      <default sound="stat-spdefense_down" sprites="13" width="50" height="50" y="28" backsprites="yes">12,11,10,9,8,7,6,5,4,3,2,1,0</default>
+    </c>
+    <c id="24">
+      <default sound="stat-speed_down" sprites="14" width="50" height="50" y="28" backsprites="yes">12,11,10,9,8,7,6,5,4,3,2,1,0</default>
+    </c>
+    <c id="25">
+      <default sound="stat-evasion_down" sprites="15" width="50" height="50" y="28" backsprites="yes">12,11,10,9,8,7,6,5,4,3,2,1,0</default>
+    </c>
+    <c id="26">
+      <default sound="stat-accuracy_down" sprites="16" width="50" height="50" y="28" backsprites="yes">12,11,10,9,8,7,6,5,4,3,2,1,0</default>
+    </c>
     <c id="100">
       <default width="11" height="16" x="5" y="13">0,0,0,0,0,0,1,2,3,4</default>
     </c>

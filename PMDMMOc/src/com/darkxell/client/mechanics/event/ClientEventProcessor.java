@@ -6,7 +6,6 @@ import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.animation.AbstractAnimation;
 import com.darkxell.client.mechanics.animation.AnimationEndListener;
 import com.darkxell.client.mechanics.animation.Animations;
-import com.darkxell.client.mechanics.animation.StatChangeAnimation;
 import com.darkxell.client.mechanics.animation.misc.RainAnimation;
 import com.darkxell.client.mechanics.animation.misc.SnowAnimation;
 import com.darkxell.client.renderers.AbilityAnimationRenderer;
@@ -355,7 +354,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	private void processStatEvent(StatChangedEvent event)
 	{
 		AnimationState s = new AnimationState(Persistance.dungeonState);
-		s.animation = new StatChangeAnimation(s, event.target, event.stat, event.stage);
+		s.animation = Animations.getStatChangeAnimation(event, s);
 		if (s.animation != null)
 		{
 			Persistance.dungeonState.setSubstate(s);

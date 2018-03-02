@@ -1,10 +1,10 @@
 package com.darkxell.client.renderers;
 
 import com.darkxell.client.mechanics.animation.AbstractAnimation;
-import com.darkxell.client.mechanics.animation.StatChangeAnimation;
+import com.darkxell.client.mechanics.animation.Animations;
+import com.darkxell.client.mechanics.animation.PokemonAnimation;
 import com.darkxell.client.mechanics.event.ClientEventProcessor;
 import com.darkxell.common.event.pokemon.TriggeredAbilityEvent;
-import com.darkxell.common.pokemon.PokemonStats;
 import com.darkxell.common.pokemon.ability.Ability;
 import com.darkxell.common.pokemon.ability.AbilityTypeBoost;
 
@@ -17,7 +17,7 @@ public class AbilityAnimationRenderer
 
 		if (ability instanceof AbilityTypeBoost)
 		{
-			StatChangeAnimation a = new StatChangeAnimation(ClientEventProcessor.processEventsOnAnimationEnd, event.pokemon, PokemonStats.ATTACK, 1);
+			PokemonAnimation a = Animations.getCustomAnimation(event.pokemon, Animations.ATTACK_UP, ClientEventProcessor.processEventsOnAnimationEnd);
 			a.needsPause = false;
 			return a;
 		}

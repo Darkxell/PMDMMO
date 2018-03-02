@@ -69,8 +69,8 @@ public class DungeonLogger
 		this.messagesWindow = new MenuWindow(new Rectangle((width - w) / 2, height - h - 5, w, h));
 
 		ArrayList<String> toReturn = new ArrayList<String>();
-		for (Message m : this.messages)
-			if (m != null) toReturn.addAll(TextRenderer.splitLines(m.toString(), w - 40));
+		for (int i = 0; i < this.messages.size(); ++i)
+			if (this.messages.get(i) != null) toReturn.addAll(TextRenderer.splitLines(this.messages.get(i).toString(), w - 40));
 
 		this.messages.clear();
 		for (int i = 0; i < toReturn.size(); ++i)

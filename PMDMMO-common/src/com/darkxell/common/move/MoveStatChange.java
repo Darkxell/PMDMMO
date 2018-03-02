@@ -20,17 +20,13 @@ public class MoveStatChange extends Move
 	public MoveStatChange(Element xml)
 	{
 		super(xml);
-		if (xml.getChild("statchanges") == null) this.statChanges = new int[0][0];
-		else
+		List<Element> s = xml.getChildren("statchange", xml.getNamespace());
+		this.statChanges = new int[s.size()][3];
+		for (int i = 0; i < s.size(); ++i)
 		{
-			List<Element> s = xml.getChildren("statchange");
-			this.statChanges = new int[s.size()][3];
-			for (int i = 0; i < s.size(); ++i)
-			{
-				this.statChanges[i][0] = Integer.parseInt(s.get(i).getAttributeValue("stat"));
-				this.statChanges[i][1] = Integer.parseInt(s.get(i).getAttributeValue("stage"));
-				this.statChanges[i][2] = s.get(i).getAttribute("self") == null ? 0 : 1; // Force self if 1
-			}
+			this.statChanges[i][0] = Integer.parseInt(s.get(i).getAttributeValue("stat"));
+			this.statChanges[i][1] = Integer.parseInt(s.get(i).getAttributeValue("stage"));
+			this.statChanges[i][2] = s.get(i).getAttribute("self") == null ? 0 : 1; // Force self if 1
 		}
 	}
 
