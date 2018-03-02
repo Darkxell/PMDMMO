@@ -38,13 +38,13 @@ public class Player
 	{
 		this.allies.add(pokemon);
 		this.dungeonAllies.add(new DungeonPokemon(pokemon));
-		pokemon.player = this;
+		pokemon.setPlayer(this);
 	}
 
 	public void clearAllies()
 	{
 		for (Pokemon pokemon : this.allies)
-			pokemon.player = null;
+			pokemon.setPlayer(this);
 		this.allies.clear();
 		this.resetDungeonTeam();
 	}
@@ -86,19 +86,19 @@ public class Player
 
 	public boolean isAlly(DungeonPokemon pokemon)
 	{
-		return pokemon != null && this.isAlly(pokemon.pokemon);
+		return pokemon.player() == this;
 	}
 
 	public boolean isAlly(Pokemon pokemon)
 	{
-		return pokemon != null && (this.mainPokemon == pokemon || this.allies.contains(pokemon));
+		return pokemon != null && pokemon.player() == this;
 	}
 
 	public void removeAlly(Pokemon pokemon)
 	{
 		this.dungeonAllies.remove(this.allies.indexOf(pokemon));
 		this.allies.remove(pokemon);
-		pokemon.player = null;
+		pokemon.setPlayer(null);
 	}
 
 	public void resetDungeonTeam()
@@ -120,9 +120,9 @@ public class Player
 
 	public void setMainPokemon(Pokemon pokemon)
 	{
-		if (this.mainPokemon != null) this.mainPokemon.player = null;
+		if (this.mainPokemon != null) this.mainPokemon.setPlayer(null);
 		this.mainPokemon = pokemon;
-		this.mainPokemon.player = this;
+		this.mainPokemon.setPlayer(this);
 	}
 
 }

@@ -30,7 +30,7 @@ public class ItemSwappedEvent extends DungeonEvent
 		String message = null;
 		if (action == ItemAction.GIVE) message = "inventory.swap";
 		if (action == ItemAction.SWITCH || action == ItemAction.SWAP) message = "ground.swap";
-		this.messages.add(new Message(message).addReplacement("<pokemon>", mover.pokemon.getNickname())
+		this.messages.add(new Message(message).addReplacement("<pokemon>", mover.getNickname())
 				.addReplacement("<item-given>", this.source.getItem(this.sourceIndex).name())
 				.addReplacement("<item-gotten>", this.destination.getItem(this.destinationIndex).name()));
 	}

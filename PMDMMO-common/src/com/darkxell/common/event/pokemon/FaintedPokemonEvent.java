@@ -21,7 +21,7 @@ public class FaintedPokemonEvent extends DungeonEvent
 		this.pokemon = pokemon;
 		this.damage = damage;
 
-		this.messages.add(new Message("pokemon.fainted").addReplacement("<pokemon>", pokemon.pokemon.getNickname()));
+		this.messages.add(new Message("pokemon.fainted").addReplacement("<pokemon>", pokemon.getNickname()));
 	}
 
 	@Override
@@ -33,7 +33,7 @@ public class FaintedPokemonEvent extends DungeonEvent
 	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{
-		if (this.pokemon.pokemon.getItem() != null) this.pokemon.tile().setItem(this.pokemon.pokemon.getItem());
+		if (this.pokemon.getItem() != null) this.pokemon.tile().setItem(this.pokemon.getItem());
 		if (this.damage.getExperienceEvent() != null) this.damage.getExperienceEvent().experience += this.pokemon.experienceGained();
 		this.floor.unsummonPokemon(this.pokemon);
 

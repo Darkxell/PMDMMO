@@ -54,7 +54,7 @@ public abstract class Ability
 
 	public Message triggeredMessage(DungeonPokemon pokemon)
 	{
-		return new Message("ability.trigger." + this.id).addReplacement("<pokemon>", pokemon.pokemon.getNickname());
+		return new Message("ability.trigger." + this.id).addReplacement("<pokemon>", pokemon.getNickname());
 	}
 
 }

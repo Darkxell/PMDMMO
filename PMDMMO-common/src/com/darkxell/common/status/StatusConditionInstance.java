@@ -30,7 +30,7 @@ public class StatusConditionInstance
 
 	public Message endMessage()
 	{
-		return new Message("status.end." + this.condition.id).addReplacement("<pokemon>", this.pokemon.pokemon.getNickname());
+		return new Message("status.end." + this.condition.id).addReplacement("<pokemon>", this.pokemon.getNickname());
 	}
 
 	public int getTurns()
@@ -46,7 +46,7 @@ public class StatusConditionInstance
 
 	public Message startMessage()
 	{
-		return new Message("status.start." + this.condition.id).addReplacement("<pokemon>", this.pokemon.pokemon.getNickname());
+		return new Message("status.start." + this.condition.id).addReplacement("<pokemon>", this.pokemon.getNickname());
 	}
 
 	public ArrayList<DungeonEvent> tick(Floor floor)

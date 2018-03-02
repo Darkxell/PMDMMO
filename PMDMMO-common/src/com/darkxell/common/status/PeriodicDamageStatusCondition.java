@@ -27,8 +27,8 @@ public class PeriodicDamageStatusCondition extends StatusCondition implements Da
 	@Override
 	public boolean affects(DungeonPokemon pokemon)
 	{
-		if (this == POISONED || this == BADLY_POISONED) return !pokemon.pokemon.species.isType(PokemonType.Poison);
-		if (this == BURN) return !pokemon.pokemon.species.isType(PokemonType.Fire);
+		if (this == POISONED || this == BADLY_POISONED) return !pokemon.species().isType(PokemonType.Poison);
+		if (this == BURN) return !pokemon.species().isType(PokemonType.Fire);
 		return true;
 	}
 

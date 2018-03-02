@@ -102,7 +102,7 @@ public class DungeonFloorMap extends AbstractDisplayMap
 					if (isMain && this.tick >= PLAYER_TICK) g.drawImage(this.tileset.player(), x, y, null);
 					else if (!isMain && Persistance.dungeonState.floorVisibility.isMapVisible(renderer.pokemon))
 					{
-						if (Persistance.player.isAlly(renderer.pokemon.pokemon)) g.drawImage(this.tileset.ally(), x, y, null);
+						if (Persistance.player.isAlly(renderer.pokemon)) g.drawImage(this.tileset.ally(), x, y, null);
 						else g.drawImage(this.tileset.enemy(), x, y, null);
 					}
 				}

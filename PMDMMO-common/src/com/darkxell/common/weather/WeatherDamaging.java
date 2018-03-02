@@ -51,7 +51,7 @@ public class WeatherDamaging extends Weather implements DamageSource
 				{
 					for (PokemonType type : immunes)
 					{
-						if (pokemon.pokemon.species.isType(type)) return true;
+						if (pokemon.species().isType(type)) return true;
 					}
 					return false;
 				}

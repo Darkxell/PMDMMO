@@ -22,11 +22,17 @@ public class AIStateAttackPokemon extends AIStateFollowPokemon
 		if (AIUtils.isAdjacentTo(this.ai.pokemon, this.target, true))
 		{
 			LearnedMove move;
-			if (this.ai.pokemon.pokemon.moveCount() == 0) move = new LearnedMove(MoveRegistry.ATTACK.id);
-			move = this.ai.pokemon.pokemon.move(this.ai.floor.random.nextInt(this.ai.pokemon.pokemon.moveCount()));
+			if (this.ai.pokemon.moveCount() == 0) move = new LearnedMove(MoveRegistry.ATTACK.id);
+			move = this.ai.pokemon.move(this.ai.floor.random.nextInt(this.ai.pokemon.moveCount()));
 			return new MoveSelectionEvent(this.ai.floor, move, this.ai.pokemon, AIUtils.generalDirection(this.ai.pokemon, this.target));
 		}
 		return super.takeAction();
+	}
+
+	@Override
+	public String toString()
+	{
+		return "Attacks " + this.target;
 	}
 
 }

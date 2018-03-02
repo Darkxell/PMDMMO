@@ -53,10 +53,10 @@ public class ItemTM extends ItemHM
 	@Override
 	public ArrayList<DungeonEvent> use(Floor floor, DungeonPokemon pokemon, DungeonPokemon target)
 	{
-		if (pokemon.pokemon.player != null)
+		if (pokemon.player() != null)
 		{
-			if (pokemon.pokemon.player.inventory.isFull()) pokemon.tile().setItem(new ItemStack(Item.USED_TM));
-			else pokemon.pokemon.player.inventory.addItem(new ItemStack(Item.USED_TM));
+			if (pokemon.player().inventory.isFull()) pokemon.tile().setItem(new ItemStack(Item.USED_TM));
+			else pokemon.player().inventory.addItem(new ItemStack(Item.USED_TM));
 		}
 		return super.use(floor, pokemon, target);
 	}

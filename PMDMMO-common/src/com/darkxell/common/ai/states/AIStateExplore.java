@@ -84,4 +84,10 @@ public class AIStateExplore extends AIState
 		return new PokemonTravelEvent(this.ai.floor, this.ai.pokemon, dir);
 	}
 
+	@Override
+	public String toString()
+	{
+		return "Explores to " + this.currentDestination;
+	}
+
 }

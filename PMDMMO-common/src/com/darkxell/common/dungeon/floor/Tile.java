@@ -87,7 +87,7 @@ public class Tile implements ItemContainer
 	/** @return True if the input Pokémon can walk diagonally with this Tile as a corner. */
 	public boolean canCross(DungeonPokemon pokemon)
 	{
-		if (pokemon.pokemon.species.isType(PokemonType.Ghost)) return true;
+		if (pokemon.species().isType(PokemonType.Ghost)) return true;
 		return this.type == TileType.GROUND || this.type == WATER || this.type == LAVA || this.type == AIR || this.type == STAIR || this.type == WARP_ZONE;
 	}
 
@@ -106,7 +106,7 @@ public class Tile implements ItemContainer
 		if (this.getPokemon() != null)
 		{
 			// If team leader and pokémon here is ally, can exchange position
-			if (!(allowSwitching && pokemon.pokemon.player.isAlly(this.getPokemon().pokemon))) return false;
+			if (!(allowSwitching && pokemon.player().isAlly(this.getPokemon()))) return false;
 		}
 		return this.type.canWalkOn(pokemon);
 	}
@@ -237,13 +237,13 @@ public class Tile implements ItemContainer
 		if (this.getItem() != null)
 		{
 			ItemStack i = this.getItem();
-			int index = pokemon.pokemon.player == null ? -1 : pokemon.pokemon.player.inventory.canAccept(i);
-			if (!running && i.id == Item.POKE && pokemon.pokemon.player != null) events.add(new MoneyCollectedEvent(floor, pokemon, this, i));
-			else if (!running && pokemon.pokemon.player != null && index != -1)
-				events.add(new ItemMovedEvent(floor, ItemAction.GET, pokemon, this, 0, pokemon.pokemon.player.inventory, index));
-			else if (!running && pokemon.pokemon.getItem() == null) events.add(new ItemMovedEvent(floor, ItemAction.GET, pokemon, this, 0, pokemon.pokemon, 0));
+			int index = pokemon.player() == null ? -1 : pokemon.player().inventory.canAccept(i);
+			if (!running && i.id == Item.POKE && pokemon.player() != null) events.add(new MoneyCollectedEvent(floor, pokemon, this, i));
+			else if (!running && pokemon.player() != null && index != -1)
+				events.add(new ItemMovedEvent(floor, ItemAction.GET, pokemon, this, 0, pokemon.player().inventory, index));
+			else if (!running && pokemon.getItem() == null) events.add(new ItemMovedEvent(floor, ItemAction.GET, pokemon, this, 0, pokemon, 0));
 			else events.add(new MessageEvent(floor,
-					new Message("ground.step").addReplacement("<pokemon>", pokemon.pokemon.getNickname()).addReplacement("<item>", this.getItem().name())));
+					new Message("ground.step").addReplacement("<pokemon>", pokemon.getNickname()).addReplacement("<item>", this.getItem().name())));
 		}
 
 		if (this.hasTrap()) events.add(new TrapSteppedOnEvent(floor, pokemon, this, this.trap));

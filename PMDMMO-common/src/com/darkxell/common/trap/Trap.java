@@ -28,7 +28,7 @@ public abstract class Trap
 	public ArrayList<DungeonEvent> onPokemonStep(Floor floor, DungeonPokemon pokemon)
 	{
 		ArrayList<DungeonEvent> events = new ArrayList<DungeonEvent>();
-		events.add(new MessageEvent(floor, new Message("trap.stepped").addReplacement("<pokemon>", pokemon.pokemon.getNickname()).addReplacement("<trap>",
+		events.add(new MessageEvent(floor, new Message("trap.stepped").addReplacement("<pokemon>", pokemon.getNickname()).addReplacement("<trap>",
 				this.name())));
 		return events;
 	}

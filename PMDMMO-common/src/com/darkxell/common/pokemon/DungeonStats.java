@@ -34,7 +34,7 @@ public class DungeonStats
 	public DungeonStats(DungeonPokemon pokemon)
 	{
 		this.pokemon = pokemon;
-		this.baseStats = this.pokemon.pokemon.getStats();
+		this.baseStats = this.pokemon.getStats();
 		this.health = this.baseStats.health;
 		this.onStatChange();
 	}

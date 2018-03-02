@@ -29,7 +29,7 @@ public class MoveSelectionEvent extends DungeonEvent
 			this.move = move;
 			this.user = user;
 			this.direction = direction;
-			this.experienceEvent = this.user.pokemon.player == null ? null : new ExperienceGeneratedEvent(floor, this.user.pokemon.player);
+			this.experienceEvent = this.user.player() == null ? null : new ExperienceGeneratedEvent(floor, this.user.player());
 		}
 
 		@Override
@@ -51,8 +51,8 @@ public class MoveSelectionEvent extends DungeonEvent
 		super(floor, user);
 		this.usedMove = new MoveUse(floor, move, user, direction);
 
-		if (this.usedMove.move.move() != MoveRegistry.ATTACK) this.messages.add(
-				new Message("move.used").addReplacement("<pokemon>", user.pokemon.getNickname()).addReplacement("<move>", this.usedMove.move.move().name()));
+		if (this.usedMove.move.move() != MoveRegistry.ATTACK) this.messages
+				.add(new Message("move.used").addReplacement("<pokemon>", user.getNickname()).addReplacement("<move>", this.usedMove.move.move().name()));
 	}
 
 	@Override

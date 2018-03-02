@@ -23,7 +23,7 @@ public class StatChangedEvent extends DungeonEvent
 		this.stat = stat;
 		this.stage = stage;
 
-		this.messages.add(new Message(MESSAGES[this.stage + 3]).addReplacement("<pokemon>", this.target.pokemon.getNickname()).addReplacement("<stat>",
+		this.messages.add(new Message(MESSAGES[this.stage + 3]).addReplacement("<pokemon>", this.target.getNickname()).addReplacement("<stat>",
 				new Message("stat." + this.stat)));
 	}
 

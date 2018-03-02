@@ -6,12 +6,19 @@ import java.util.function.Predicate;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.stats.ExperienceGainedEvent;
+import com.darkxell.common.item.Item.ItemAction;
+import com.darkxell.common.item.ItemStack;
+import com.darkxell.common.player.ItemContainer;
+import com.darkxell.common.player.Player;
+import com.darkxell.common.pokemon.ability.Ability;
 import com.darkxell.common.status.StatusCondition;
 import com.darkxell.common.status.StatusConditionInstance;
 import com.darkxell.common.util.Direction;
+import com.darkxell.common.util.language.Message;
 
 /** Represents a Pokémon in a Dungeon. */
-public class DungeonPokemon
+public class DungeonPokemon implements ItemContainer
 {
 	public static final int DEFAULT_BELLY_SIZE = 100;
 	public static final byte REGULAR_ATTACKS = 0, MOVES = 1, LINKED_MOVES = 2;
@@ -26,8 +33,8 @@ public class DungeonPokemon
 	private Direction facing = Direction.SOUTH;
 	/** This Pokémon's current Hit Points. */
 	private int hp;
-	/** This Pokémon's data. */
-	public final Pokemon pokemon;
+	/** The original Pokémon that entered the Dungeon. This object is necessary for Dungeons that modify the visiting Pokémon, such as Dungeons resetting the level to 1. */
+	public final Pokemon originalPokemon;
 	/** Variable used to compute HP regeneration. */
 	private int regenCounter = 0;
 	/** True if this Pokémon's state changed (direction, state...). Used for rendering. */
@@ -38,15 +45,36 @@ public class DungeonPokemon
 	private final ArrayList<StatusConditionInstance> statusConditions;
 	/** The tile this Pokémon is standing on. */
 	private Tile tile;
+	/** The Pokémon to use in the current Dungeon. See {@link DungeonPokemon#originalPokemon}. */
+	public final Pokemon usedPokemon;
 
 	public DungeonPokemon(Pokemon pokemon)
 	{
-		this.pokemon = pokemon;
+		this.usedPokemon = pokemon;
+		this.originalPokemon = pokemon;
 		this.stats = new DungeonStats(this);
 		this.belly = this.bellySize = DEFAULT_BELLY_SIZE;
 		this.hp = this.stats.getHealth();
 		this.statusConditions = new ArrayList<StatusConditionInstance>();
 		pokemon.dungeonPokemon = this;
+	}
+
+	public Ability ability()
+	{
+		return this.usedPokemon.getAbility();
+	}
+
+	@Override
+	public void addItem(ItemStack item)
+	{
+		this.usedPokemon.addItem(item);
+		if (this.isCopy()) this.originalPokemon.addItem(item);
+	}
+
+	@Override
+	public int canAccept(ItemStack item)
+	{
+		return this.usedPokemon.canAccept(item);
 	}
 
 	/** @return True if this Pokémon can regenerate HP. */
@@ -55,10 +83,22 @@ public class DungeonPokemon
 		return !this.hasStatusCondition(StatusCondition.BADLY_POISONED) && !this.hasStatusCondition(StatusCondition.POISONED);
 	}
 
+	@Override
+	public Message containerName()
+	{
+		return this.usedPokemon.containerName();
+	}
+
+	@Override
+	public void deleteItem(int index)
+	{
+		this.originalPokemon.deleteItem(index);
+	}
+
 	/** Clears references to this Dungeon Pokémon in the Pokémon object. */
 	public void dispose()
 	{
-		this.pokemon.dungeonPokemon = null;
+		this.originalPokemon.dungeonPokemon = null;
 	}
 
 	/** @return The multiplier to apply to base energy values for the team leader's actions. Used to determine how much belly is lost for that action. */
@@ -70,8 +110,8 @@ public class DungeonPokemon
 	/** @return The amount of experience gained when defeating this Pokémon. */
 	public int experienceGained()
 	{
-		int base = this.pokemon.species.baseXP;
-		base += Math.floor(base * (this.pokemon.getLevel() - 1) / 10) + base;
+		int base = this.usedPokemon.species.baseXP;
+		base += Math.floor(base * (this.originalPokemon.getLevel() - 1) / 10) + base;
 		if (this.attacksReceived == REGULAR_ATTACKS) base = (int) (base * 0.5);
 		else if (this.attacksReceived == LINKED_MOVES) base = (int) (base * 1.5);
 		return base;
@@ -81,6 +121,11 @@ public class DungeonPokemon
 	public Direction facing()
 	{
 		return this.facing;
+	}
+
+	public ArrayList<DungeonEvent> gainExperience(ExperienceGainedEvent event)
+	{
+		return this.usedPokemon.gainExperience(event);
 	}
 
 	public double getBelly()
@@ -98,9 +143,30 @@ public class DungeonPokemon
 		return this.hp;
 	}
 
+	public ItemStack getItem()
+	{
+		return this.usedPokemon.getItem();
+	}
+
+	@Override
+	public ItemStack getItem(int index)
+	{
+		return this.usedPokemon.getItem(index);
+	}
+
 	public int getMaxHP()
 	{
-		return this.pokemon.getStats().getHealth();
+		return this.usedPokemon.getStats().getHealth();
+	}
+
+	public Message getNickname()
+	{
+		return this.usedPokemon.getNickname();
+	}
+
+	public PokemonStats getStats()
+	{
+		return this.usedPokemon.getStats();
 	}
 
 	/** @return True if this Pokémon is affected by the input Status Condition. */
@@ -124,14 +190,31 @@ public class DungeonPokemon
 		this.increaseBelly(quantity);
 	}
 
+	public void increaseIQ(int iq)
+	{
+		this.usedPokemon.increaseIQ(iq);
+	}
+
 	public void inflictStatusCondition(StatusConditionInstance condition)
 	{
 		this.statusConditions.add(condition);
 	}
 
+	public boolean isAlliedWith(DungeonPokemon pokemon)
+	{
+		if (this == pokemon) return true;
+		return this.player() == pokemon.player();
+	}
+
 	public boolean isBellyFull()
 	{
 		return this.getBelly() == this.getBellySize();
+	}
+
+	/** @return True if this Pokémon is the original Pokémon that visits this Dungeon. Only false for Dungeons that modify the visiting Pokémon, such as Dungeons resetting the level to 1. */
+	public boolean isCopy()
+	{
+		return this.usedPokemon != this.originalPokemon;
 	}
 
 	public boolean isFainted()
@@ -146,7 +229,28 @@ public class DungeonPokemon
 
 	public boolean isTeamLeader()
 	{
-		return this.pokemon.player != null && this.pokemon.player.getDungeonLeader() == this;
+		return this.player() != null && this.player().getTeamLeader() == this.originalPokemon;
+	}
+
+	@Override
+	public ArrayList<ItemAction> legalItemActions()
+	{
+		return this.usedPokemon.legalItemActions();
+	}
+
+	public int level()
+	{
+		return this.usedPokemon.getLevel();
+	}
+
+	public LearnedMove move(int slot)
+	{
+		return this.usedPokemon.move(slot);
+	}
+
+	public int moveCount()
+	{
+		return this.usedPokemon.moveCount();
 	}
 
 	/** Called when this Pokémon enters a new Floor or when it spawns. */
@@ -167,8 +271,8 @@ public class DungeonPokemon
 			int recoveryRate = 200;
 			int healthGain = 0;
 
-			this.regenCounter += this.regenCounter + this.pokemon.getStats().health;
-			healthGain += this.pokemon.getStats().health / recoveryRate;
+			this.regenCounter += this.regenCounter + this.usedPokemon.getStats().health;
+			healthGain += this.usedPokemon.getStats().health / recoveryRate;
 			if (this.regenCounter >= recoveryRate)
 			{
 				healthGain += 1;
@@ -180,6 +284,11 @@ public class DungeonPokemon
 		for (StatusConditionInstance condition : this.statusConditions)
 			events.addAll(condition.tick(floor));
 		return events;
+	}
+
+	public Player player()
+	{
+		return this.usedPokemon.player();
 	}
 
 	public void receiveMove(byte attackType)
@@ -214,12 +323,52 @@ public class DungeonPokemon
 	{
 		this.hp = hp;
 		if (this.hp < 0) this.hp = 0;
-		if (this.hp > this.pokemon.getStats().health) this.hp = this.pokemon.getStats().health;
+		if (this.hp > this.usedPokemon.getStats().health) this.hp = this.usedPokemon.getStats().health;
+	}
+
+	@Override
+	public void setItem(int index, ItemStack item)
+	{
+		this.usedPokemon.setItem(index, item);
+		if (this.isCopy()) this.originalPokemon.setItem(index, item);
+	}
+
+	public void setItem(ItemStack item)
+	{
+		this.usedPokemon.setItem(item);
+		this.originalPokemon.setItem(item);
+	}
+
+	public void setMove(int slot, LearnedMove move)
+	{
+		this.usedPokemon.setMove(slot, move);
+	}
+
+	public void setNickname(String nickname)
+	{
+		this.usedPokemon.setNickname(nickname);
+		this.originalPokemon.setNickname(nickname);
 	}
 
 	public void setTile(Tile tile)
 	{
 		this.tile = tile;
+	}
+
+	@Override
+	public int size()
+	{
+		return this.usedPokemon.size();
+	}
+
+	public PokemonSpecies species()
+	{
+		return this.usedPokemon.species;
+	}
+
+	public void switchMoves(int slot1, int slot2)
+	{
+		this.usedPokemon.switchMoves(slot1, slot2);
 	}
 
 	public Tile tile()
@@ -230,7 +379,7 @@ public class DungeonPokemon
 	@Override
 	public String toString()
 	{
-		return this.pokemon.getNickname().toString();
+		return this.usedPokemon.toString();
 	}
 
 	/** Called when this Pokémon tries to move in the input direction. */

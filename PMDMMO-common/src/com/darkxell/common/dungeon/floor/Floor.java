@@ -95,7 +95,7 @@ public class Floor
 	{
 		int count = 0;
 		for (DungeonPokemon p : this.listPokemon())
-			if (p.pokemon.player == null) ++count;
+			if (p.player() == null) ++count;
 		return count;
 	}
 
@@ -110,7 +110,7 @@ public class Floor
 	{
 		for (Tile[] row : this.tiles)
 			for (Tile tile : row)
-				if (tile.getPokemon() != null && tile.getPokemon().pokemon.player == null) tile.getPokemon().dispose();
+				if (tile.getPokemon() != null && tile.getPokemon().player() == null) tile.getPokemon().dispose();
 	}
 
 	/** Generates this Floor. */
@@ -256,7 +256,7 @@ public class Floor
 		{
 			ArrayList<DungeonPokemon> players = new ArrayList<DungeonPokemon>(this.listPokemon());
 			players.removeIf((DungeonPokemon p) -> {
-				return p.pokemon.player == null;
+				return p.player() == null;
 			});
 			candidates.removeIf((Tile t) -> {
 				for (DungeonPokemon player : players)

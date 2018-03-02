@@ -18,5 +18,11 @@ public class AIStateTurnSkipper extends AIState
 	{
 		return new TurnSkippedEvent(this.ai.floor, this.ai.pokemon);
 	}
+	
+	@Override
+	public String toString()
+	{
+		return "Skips turns";
+	}
 
 }

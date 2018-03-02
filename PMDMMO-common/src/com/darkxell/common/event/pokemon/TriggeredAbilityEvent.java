@@ -15,7 +15,7 @@ public class TriggeredAbilityEvent extends DungeonEvent
 	{
 		super(floor);
 		this.pokemon = pokemon;
-		this.ability = this.pokemon.pokemon.getAbility();
+		this.ability = this.pokemon.ability();
 
 		if (this.ability.hasTriggeredMessage()) this.messages.add(this.ability.triggeredMessage(this.pokemon));
 	}

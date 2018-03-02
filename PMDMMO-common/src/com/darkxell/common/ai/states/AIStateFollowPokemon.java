@@ -41,7 +41,7 @@ public class AIStateFollowPokemon extends AIState
 			Direction d = AIUtils.adjacentEnemyDirection(this.ai.floor, this.ai.pokemon);
 			if (d != null)
 			{
-				LearnedMove move = this.ai.pokemon.pokemon.move(this.ai.floor.random.nextInt(this.ai.pokemon.pokemon.moveCount()));
+				LearnedMove move = this.ai.pokemon.move(this.ai.floor.random.nextInt(this.ai.pokemon.moveCount()));
 				return new MoveSelectionEvent(this.ai.floor, move, this.ai.pokemon, d);
 			}
 			return new PokemonRotateEvent(this.ai.floor, this.ai.pokemon, direction, true);
@@ -50,6 +50,12 @@ public class AIStateFollowPokemon extends AIState
 		Direction go = AIUtils.direction(this.ai.pokemon, this.target);
 		if (go == null) return new PokemonRotateEvent(this.ai.floor, this.ai.pokemon, direction, true);
 		return new PokemonTravelEvent(this.ai.floor, this.ai.pokemon, go);
+	}
+
+	@Override
+	public String toString()
+	{
+		return "Follows " + this.target;
 	}
 
 }

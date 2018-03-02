@@ -53,7 +53,7 @@ public class Pokemon implements ItemContainer
 	/** This Pokémon's nickname. If null, use the species' name. */
 	private String nickname;
 	/** The Player controlling this Pokémon. null if it's an NPC. */
-	public Player player;
+	private Player player;
 	/** This Pokémon's species. */
 	public final PokemonSpecies species;
 	/** This Pokémon's stats. */
@@ -113,6 +113,12 @@ public class Pokemon implements ItemContainer
 		this.gender = gender;
 		this.iq = iq;
 		this.isShiny = shiny;
+	}
+
+	public Pokemon(Pokemon pokemon)
+	{
+		this(pokemon.id, pokemon.species, pokemon.nickname, pokemon.item, pokemon.stats, pokemon.abilityID, pokemon.experience, pokemon.level, pokemon.move(0),
+				pokemon.move(1), pokemon.move(2), pokemon.move(3), pokemon.gender, pokemon.iq, pokemon.isShiny);
 	}
 
 	@Override
@@ -252,8 +258,7 @@ public class Pokemon implements ItemContainer
 
 	public boolean isAlliedWith(Pokemon pokemon)
 	{
-		if (this.player == null && pokemon.player == null) return true;
-		return this.player != null && this.player.isAlly(pokemon);
+		return this.player() != null && this.player().isAlly(pokemon);
 	}
 
 	@Override
@@ -293,6 +298,11 @@ public class Pokemon implements ItemContainer
 		return 1;
 	}
 
+	public Player player()
+	{
+		return this.player;
+	}
+
 	@Override
 	public void setItem(int index, ItemStack item)
 	{
@@ -318,6 +328,11 @@ public class Pokemon implements ItemContainer
 	public void setNickname(String nickname)
 	{
 		this.nickname = nickname;
+	}
+
+	public void setPlayer(Player player)
+	{
+		this.player = player;
 	}
 
 	@Override

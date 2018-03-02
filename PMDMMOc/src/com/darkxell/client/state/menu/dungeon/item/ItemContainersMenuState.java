@@ -171,8 +171,8 @@ public class ItemContainersMenuState extends OptionSelectionMenuState implements
 				if (Persistance.stateManager instanceof PrincipalMainState)
 					((PrincipalMainState) Persistance.stateManager).setState(new TeamMenuState(s, this));
 			} else Persistance.eventProcessor.processEvent(new ItemUseSelectionEvent(Persistance.floor, i.item(), user, null, container, index));
-		} else if (action == ItemAction.GET || action == ItemAction.TAKE) Persistance.eventProcessor.processEvent(
-				new ItemMovedEvent(Persistance.floor, action, user, container, 0, user.pokemon.player.inventory, user.pokemon.player.inventory.canAccept(i)));
+		} else if (action == ItemAction.GET || action == ItemAction.TAKE) Persistance.eventProcessor
+				.processEvent(new ItemMovedEvent(Persistance.floor, action, user, container, 0, user.player().inventory, user.player().inventory.canAccept(i)));
 		else if (action == ItemAction.GIVE)
 		{
 			if (Persistance.stateManager instanceof PrincipalMainState) ((PrincipalMainState) Persistance.stateManager).setState(new TeamMenuState(s, this));

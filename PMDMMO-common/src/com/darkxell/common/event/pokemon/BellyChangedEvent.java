@@ -43,10 +43,10 @@ public class BellyChangedEvent extends DungeonEvent implements DamageSource
 		this.pokemon.increaseBelly(this.quantity);
 		if (this.quantity > 10)
 		{
-			if (this.pokemon.isBellyFull()) this.messages.add(new Message("belly.filled.full").addReplacement("<pokemon>", this.pokemon.pokemon.getNickname()));
-			else this.messages.add(new Message("belly.filled").addReplacement("<pokemon>", this.pokemon.pokemon.getNickname()));
+			if (this.pokemon.isBellyFull()) this.messages.add(new Message("belly.filled.full").addReplacement("<pokemon>", this.pokemon.getNickname()));
+			else this.messages.add(new Message("belly.filled").addReplacement("<pokemon>", this.pokemon.getNickname()));
 		} else if (this.pokemon.getBelly() == 0 && previous != 0)
-			this.messages.add(new Message("belly.empty").addReplacement("<pokemon>", this.pokemon.pokemon.getNickname()));
+			this.messages.add(new Message("belly.empty").addReplacement("<pokemon>", this.pokemon.getNickname()));
 
 		double now = this.pokemon.getBelly();
 

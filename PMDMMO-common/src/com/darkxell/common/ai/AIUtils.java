@@ -9,6 +9,7 @@ import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Direction;
+import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.RandomUtil;
 
 import javafx.util.Pair;
@@ -20,7 +21,7 @@ public final class AIUtils
 	public static Direction adjacentEnemyDirection(Floor floor, DungeonPokemon pokemon)
 	{
 		ArrayList<Tile> tiles = adjacentTiles(floor, pokemon);
-		tiles.removeIf((Tile t) -> t.getPokemon() == null || pokemon.pokemon.isAlliedWith(t.getPokemon().pokemon));
+		tiles.removeIf((Tile t) -> t.getPokemon() == null || pokemon.isAlliedWith(t.getPokemon()));
 		if (tiles.isEmpty()) return null;
 		return generalDirection(pokemon, RandomUtil.random(tiles, floor.random));
 	}
@@ -164,18 +165,18 @@ public final class AIUtils
 	 *         This method avoids calling visibleEnemies when there is none, which is heavier than this one. */
 	public static boolean hasVisibleEnemies(Floor floor, DungeonPokemon pokemon)
 	{
-		if (pokemon.tile() == null) System.out.println(pokemon);
+		if (pokemon.tile() == null) Logger.e(pokemon + " has no tile!");
 		// Change this to use floor shadows when exploring AI is done
 		for (int x = pokemon.tile().x - 3; x <= pokemon.tile().x + 3; ++x)
 			for (int y = pokemon.tile().y - 3; y <= pokemon.tile().y + 3; ++y)
-				if (floor.tileAt(x, y).getPokemon() != null && !floor.tileAt(x, y).getPokemon().pokemon.isAlliedWith(pokemon.pokemon)) return true;
+				if (floor.tileAt(x, y).getPokemon() != null && !floor.tileAt(x, y).getPokemon().isAlliedWith(pokemon)) return true;
 
 		if (pokemon.tile().isInRoom())
 		{
 			for (Tile t : floor.room(pokemon.tile()).listTiles())
-				if (t.getPokemon() != null && !t.getPokemon().pokemon.isAlliedWith(pokemon.pokemon)) return true;
+				if (t.getPokemon() != null && !t.getPokemon().isAlliedWith(pokemon)) return true;
 			for (Tile t : floor.room(pokemon.tile()).outline())
-				if (t.getPokemon() != null && !t.getPokemon().pokemon.isAlliedWith(pokemon.pokemon)) return true;
+				if (t.getPokemon() != null && !t.getPokemon().isAlliedWith(pokemon)) return true;
 		}
 
 		return false;
@@ -279,7 +280,7 @@ public final class AIUtils
 		ArrayList<DungeonPokemon> visible = new ArrayList<>();
 		ArrayList<Tile> tiles = visibleTiles(floor, pokemon);
 		for (Tile t : tiles)
-			if (t.getPokemon() != null && !pokemon.pokemon.isAlliedWith(t.getPokemon().pokemon)) visible.add(t.getPokemon());
+			if (t.getPokemon() != null && !pokemon.isAlliedWith(t.getPokemon())) visible.add(t.getPokemon());
 		return visible;
 	}
 

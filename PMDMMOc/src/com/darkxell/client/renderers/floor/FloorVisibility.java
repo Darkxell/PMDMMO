@@ -35,7 +35,7 @@ public class FloorVisibility
 	public boolean isMapVisible(DungeonPokemon pokemon)
 	{
 		if (this.isXrayOn()) return true;
-		return pokemon.pokemon.player == Persistance.player || this.currentlyVisible.contains(pokemon.tile());
+		return pokemon.player() == Persistance.player || this.currentlyVisible.contains(pokemon.tile());
 	}
 
 	public boolean isVisible(DungeonPokemon pokemon)
@@ -51,7 +51,7 @@ public class FloorVisibility
 
 	public boolean isXrayOn()
 	{
-		ItemStack item = Persistance.dungeonState.getCameraPokemon().pokemon.getItem();
+		ItemStack item = Persistance.dungeonState.getCameraPokemon().getItem();
 		return item != null && item.id == ItemID.XRaySpecs;
 	}
 

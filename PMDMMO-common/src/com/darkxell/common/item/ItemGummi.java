@@ -56,7 +56,7 @@ public class ItemGummi extends Item
 
 	private int iqIncrease(DungeonPokemon pokemon)
 	{
-		return iqIncrease(pokemon.pokemon.species.type1) + iqIncrease(pokemon.pokemon.species.type2);
+		return iqIncrease(pokemon.species().type1) + iqIncrease(pokemon.species().type2);
 	}
 
 	private int iqIncrease(PokemonType type)

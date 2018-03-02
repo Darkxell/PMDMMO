@@ -36,9 +36,9 @@ public class HealthRestoredEvent extends DungeonEvent
 	public ArrayList<DungeonEvent> processServer()
 	{
 		this.effectiveHeal = Math.min(this.target.getMaxHP() - this.target.getHp(), this.health);
-		if (this.effectiveHeal == 0) this.messages.add(new Message("move.heal.zero").addReplacement("<pokemon>", this.target.pokemon.getNickname()));
-		else this.messages.add(new Message("move.heal").addReplacement("<pokemon>", this.target.pokemon.getNickname()).addReplacement("<amount>",
-				String.valueOf(this.effectiveHeal)));
+		if (this.effectiveHeal == 0) this.messages.add(new Message("move.heal.zero").addReplacement("<pokemon>", this.target.getNickname()));
+		else this.messages.add(
+				new Message("move.heal").addReplacement("<pokemon>", this.target.getNickname()).addReplacement("<amount>", String.valueOf(this.effectiveHeal)));
 		this.target.setHP(this.target.getHp() + this.health);
 		return super.processServer();
 	}

@@ -36,7 +36,7 @@ public class IncreasedIQEvent extends DungeonEvent
 	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{
-		this.pokemon.pokemon.increaseIQ(this.iq);
+		this.pokemon.increaseIQ(this.iq);
 		return super.processServer();
 	}
 

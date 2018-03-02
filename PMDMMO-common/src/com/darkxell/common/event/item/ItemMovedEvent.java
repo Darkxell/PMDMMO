@@ -36,8 +36,8 @@ public class ItemMovedEvent extends DungeonEvent
 			else message = "ground.pickup";
 		} else if (action == ItemAction.PLACE) message = "ground.place";
 		else if (action == ItemAction.TAKE) message = "inventory.taken";
-		this.messages.add(new Message(message).addReplacement("<pokemon>", mover.pokemon.getNickname()).addReplacement("<item>",
-				this.source.getItem(this.sourceIndex).name()));
+		this.messages.add(
+				new Message(message).addReplacement("<pokemon>", mover.getNickname()).addReplacement("<item>", this.source.getItem(this.sourceIndex).name()));
 	}
 
 	@Override

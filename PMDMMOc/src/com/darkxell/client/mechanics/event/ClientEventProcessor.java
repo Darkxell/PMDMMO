@@ -122,8 +122,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		if (event instanceof ItemUseSelectionEvent) this.processItemEvent((ItemUseSelectionEvent) event);
 		if (event instanceof ItemMovedEvent) this.processItemMovedEvent((ItemMovedEvent) event);
 		if (event instanceof ItemSwappedEvent) this.processItemSwappedEvent((ItemSwappedEvent) event);
-		if (event instanceof MoneyCollectedEvent && Persistance.player.isAlly(((MoneyCollectedEvent) event).pokemon.pokemon))
-			SoundManager.playSound("dungeon-money");
+		if (event instanceof MoneyCollectedEvent && Persistance.player.isAlly(((MoneyCollectedEvent) event).pokemon)) SoundManager.playSound("dungeon-money");
 
 		if (event instanceof WeatherChangedEvent) this.processWeatherEvent((WeatherChangedEvent) event);
 		if (event instanceof StairLandingEvent) this.processStairEvent((StairLandingEvent) event);
@@ -337,9 +336,9 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	private void processSpawnEvent(PokemonSpawnedEvent event)
 	{
 		PokemonRenderer renderer = Persistance.dungeonState.pokemonRenderer.register(event.spawned);
-		if (event.spawned.pokemon.player != null)
+		if (event.spawned.player() != null)
 		{
-			if (event.spawned.pokemon.player != Persistance.player)
+			if (event.spawned.player() != Persistance.player)
 			{
 				if (event.spawned.isTeamLeader()) renderer.sprite.setShadowColor(PokemonSprite.PLAYER_SHADOW);
 				else renderer.sprite.setShadowColor(PokemonSprite.ENEMY_SHADOW);

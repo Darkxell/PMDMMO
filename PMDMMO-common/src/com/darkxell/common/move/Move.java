@@ -161,7 +161,7 @@ public class Move
 	public int damageDealt(DungeonPokemon user, DungeonPokemon target, Floor floor, ArrayList<DungeonEvent> events)
 	{
 		int atk = this.category == MoveCategory.Physical ? user.stats.getAttack() : user.stats.getSpecialAttack() + this.power;
-		int level = user.pokemon.getLevel();
+		int level = user.level();
 		int def = this.category == MoveCategory.Physical ? target.stats.getDefense() : target.stats.getSpecialDefense();
 		float constant = ((atk - def) * 1f / 8) + (level * 2 / 3);
 
@@ -171,8 +171,8 @@ public class Move
 		else if (d > 999) d = 999;
 
 		// Abilities
-		if (user.pokemon.getAbility() instanceof AbilityTypeBoost && user.getHp() <= Math.floor(user.getMaxHP() / 4)
-				&& this.type == ((AbilityTypeBoost) user.pokemon.getAbility()).type)
+		if (user.ability() instanceof AbilityTypeBoost && user.getHp() <= Math.floor(user.getMaxHP() / 4)
+				&& this.type == ((AbilityTypeBoost) user.ability()).type)
 		{
 			events.add(new TriggeredAbilityEvent(floor, user));
 			d *= 2;
@@ -203,8 +203,8 @@ public class Move
 
 		// Damage multiplier
 		{
-			float multiplier = this.type == null ? 1 : this.type.effectivenessOn(target.pokemon.species);
-			if (user.pokemon.species.type1 == this.type || user.pokemon.species.type2 == this.type) multiplier *= 1.5;
+			float multiplier = this.type == null ? 1 : this.type.effectivenessOn(target.species());
+			if (user.species().type1 == this.type || user.species().type2 == this.type) multiplier *= 1.5;
 
 			d *= multiplier;
 		}
@@ -230,11 +230,11 @@ public class Move
 				break;
 
 			case Allies:
-				targets.removeIf((DungeonPokemon p) -> p == user || !p.pokemon.isAlliedWith(user.pokemon));
+				targets.removeIf((DungeonPokemon p) -> p == user || !p.isAlliedWith(user));
 				break;
 
 			case Foes:
-				targets.removeIf((DungeonPokemon p) -> p == user || p.pokemon.isAlliedWith(user.pokemon));
+				targets.removeIf((DungeonPokemon p) -> p == user || p.isAlliedWith(user));
 				break;
 
 			case Others:
@@ -242,7 +242,7 @@ public class Move
 				break;
 
 			case Team:
-				targets.removeIf((DungeonPokemon p) -> !p.pokemon.isAlliedWith(user.pokemon));
+				targets.removeIf((DungeonPokemon p) -> !p.isAlliedWith(user));
 				break;
 
 			case User:
@@ -392,7 +392,7 @@ public class Move
 
 	protected Message unaffectedMessage(DungeonPokemon target)
 	{
-		return new Message("move.effectiveness.none").addReplacement("<pokemon>", target.pokemon.getNickname());
+		return new Message("move.effectiveness.none").addReplacement("<pokemon>", target.getNickname());
 	}
 
 	/** Applies this Move's effects to a Pokémon.
@@ -406,7 +406,7 @@ public class Move
 		ArrayList<DungeonEvent> events = new ArrayList<DungeonEvent>();
 		boolean missed = this.misses(usedMove, target, floor);
 
-		float effectiveness = this.type == null ? PokemonType.NORMALLY_EFFECTIVE : this.type.effectivenessOn(target.pokemon.species);
+		float effectiveness = this.type == null ? PokemonType.NORMALLY_EFFECTIVE : this.type.effectivenessOn(target.species());
 		if (effectiveness == PokemonType.NO_EFFECT) events.add(new MessageEvent(floor, this.unaffectedMessage(target)));
 		else
 		{
@@ -414,9 +414,9 @@ public class Move
 			if (this.power != -1)
 			{
 				if (effectiveness == PokemonType.SUPER_EFFECTIVE)
-					events.add(new MessageEvent(floor, new Message("move.effectiveness.super").addReplacement("<pokemon>", target.pokemon.getNickname())));
+					events.add(new MessageEvent(floor, new Message("move.effectiveness.super").addReplacement("<pokemon>", target.getNickname())));
 				else if (effectiveness == PokemonType.NOT_VERY_EFFECTIVE)
-					events.add(new MessageEvent(floor, new Message("move.effectiveness.not_very").addReplacement("<pokemon>", target.pokemon.getNickname())));
+					events.add(new MessageEvent(floor, new Message("move.effectiveness.not_very").addReplacement("<pokemon>", target.getNickname())));
 				events.add(new DamageDealtEvent(floor, target, usedMove, missed ? 0 : this.damageDealt(usedMove.user, target, floor, events)));
 			}
 			if (!missed && this.additionalEffectLands(usedMove.user, target, floor)) this.addAdditionalEffects(usedMove.user, target, floor, events);
