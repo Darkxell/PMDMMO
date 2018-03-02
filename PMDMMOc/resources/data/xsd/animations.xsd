@@ -48,6 +48,7 @@
 	<xs:element name="animations">
 		<xs:complexType>
 			<xs:sequence>
+				<xs:element ref="abilities"/>
 				<xs:element ref="custom"/>
 				<xs:element ref="items"/>
 				<xs:element ref="moves"/>
@@ -56,7 +57,15 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-
+	
+	<xs:element name="abilities">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="a" minOccurs="0" maxOccurs="unbounded" type="animation"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
 	<xs:element name="custom">
 		<xs:complexType>
 			<xs:sequence>

@@ -9,12 +9,14 @@ import com.darkxell.client.mechanics.animation.SpritesetAnimation.BackSpriteUsag
 import com.darkxell.client.mechanics.animation.movement.TackleAnimationMovement;
 import com.darkxell.client.resources.images.AnimationSpriteset;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
+import com.darkxell.client.state.dungeon.AnimationState;
 import com.darkxell.common.event.stats.StatChangedEvent;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.move.Move.MoveCategory;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.PokemonStats;
+import com.darkxell.common.pokemon.ability.Ability;
 import com.darkxell.common.status.StatusCondition;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.XMLUtils;
@@ -42,11 +44,17 @@ public final class Animations
 	public static final int EVASION_DOWN = EVASION_UP + STAT_UP_TO_DOWN;
 	public static final int ACCURACY_DOWN = ACCURACY_UP + STAT_UP_TO_DOWN;
 
+	private static final HashMap<Integer, Element> abilities = new HashMap<Integer, Element>();
 	private static final HashMap<Integer, Element> custom = new HashMap<Integer, Element>();
 	private static final HashMap<Integer, Element> items = new HashMap<Integer, Element>();
 	private static final HashMap<Integer, Element> moves = new HashMap<Integer, Element>();
 	private static final HashMap<Integer, Element> moveTargets = new HashMap<Integer, Element>();
 	private static final HashMap<Integer, Element> statuses = new HashMap<Integer, Element>();
+
+	public static AbstractAnimation getAbilityAnimation(DungeonPokemon pokemon, Ability ability, AnimationState s)
+	{
+		return getAnimation(ability.id, abilities, pokemon, s);
+	}
 
 	private static PokemonAnimation getAnimation(int id, HashMap<Integer, Element> registry, DungeonPokemon target, AnimationEndListener listener)
 	{
@@ -66,11 +74,13 @@ public final class Animations
 
 		PokemonAnimation a;
 		String sprites = XMLUtils.getAttribute(xml, "sprites", XMLUtils.getAttribute(defaultXml, "sprites", "default"));
-		if (sprites.equals("default")) sprites = String.valueOf(id) + (xml == defaultXml ? "" : ("-" + target.facing().index()));
-
 		if (sprites.equals("none")) a = new PokemonAnimation(target, 0, listener);
 		else
 		{
+			if (sprites.equals("default")) sprites = String.valueOf(id) + (xml == defaultXml ? "" : ("-" + target.facing().index()));
+			if (!sprites.contains("/")) sprites = (registry == items ? "/items"
+					: registry == moves ? "/moves" : registry == statuses ? "/status" : registry == abilities ? "/abilities" : "/animations") + "/" + sprites;
+
 			if ((xml.getAttribute("width") == null && defaultXml.getAttribute("width") == null)
 					|| xml.getAttribute("height") == null && defaultXml.getAttribute("height") == null)
 			{
@@ -81,9 +91,7 @@ public final class Animations
 			int height = XMLUtils.getAttribute(xml, "height", XMLUtils.getAttribute(defaultXml, "height", 0));
 
 			BackSpriteUsage backsprites = BackSpriteUsage.valueOf(XMLUtils.getAttribute(xml, "backsprites", XMLUtils.getAttribute(xml, "backsprites", "no")));
-			AnimationSpriteset spriteset = AnimationSpriteset.getSpriteset(
-					(registry == items ? "/items" : registry == moves ? "/moves" : registry == statuses ? "/status" : "/animations") + "/" + sprites + ".png",
-					width, height);
+			AnimationSpriteset spriteset = AnimationSpriteset.getSpriteset(sprites + ".png", width, height);
 			int x = XMLUtils.getAttribute(xml, "x", XMLUtils.getAttribute(defaultXml, "x", width / 2));
 			int y = XMLUtils.getAttribute(xml, "y", XMLUtils.getAttribute(defaultXml, "y", height / 2));
 			int spriteDuration = XMLUtils.getAttribute(xml, "spriteduration", XMLUtils.getAttribute(defaultXml, "spriteduration", 2));
@@ -154,6 +162,8 @@ public final class Animations
 	public static void loadData()
 	{
 		Element xml = XMLUtils.readFile(new File("resources/data/animations.xml"));
+		for (Element a : xml.getChild("abilities", xml.getNamespace()).getChildren("a", xml.getNamespace()))
+			abilities.put(Integer.parseInt(a.getAttributeValue("id")), a);
 		for (Element c : xml.getChild("custom", xml.getNamespace()).getChildren("c", xml.getNamespace()))
 			custom.put(Integer.parseInt(c.getAttributeValue("id")), c);
 		for (Element item : xml.getChild("items", xml.getNamespace()).getChildren("item", xml.getNamespace()))

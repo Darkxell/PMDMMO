@@ -8,7 +8,6 @@ import com.darkxell.client.mechanics.animation.AnimationEndListener;
 import com.darkxell.client.mechanics.animation.Animations;
 import com.darkxell.client.mechanics.animation.misc.RainAnimation;
 import com.darkxell.client.mechanics.animation.misc.SnowAnimation;
-import com.darkxell.client.renderers.AbilityAnimationRenderer;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.renderers.floor.PokemonRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
@@ -143,14 +142,16 @@ public final class ClientEventProcessor extends CommonEventProcessor
 
 	private void processAbilityEvent(TriggeredAbilityEvent event)
 	{
-		AbstractAnimation animation = AbilityAnimationRenderer.createAnimation(event);
-		if (animation != null && animation.needsPause)
+		AnimationState s = new AnimationState(Persistance.dungeonState);
+		s.animation = Animations.getAbilityAnimation(event.pokemon, event.ability, s);
+		if (s.animation != null)
 		{
-			AnimationState s = new AnimationState(Persistance.dungeonState);
-			s.animation = animation;
-			Persistance.dungeonState.setSubstate(s);
-			this.processPending = false;
-		} else animation.start();
+			if (s.animation.needsPause)
+			{
+				Persistance.dungeonState.setSubstate(s);
+				this.processPending = false;
+			} else s.animation.start();
+		}
 	}
 
 	private void processDamageEvent(DamageDealtEvent event)
