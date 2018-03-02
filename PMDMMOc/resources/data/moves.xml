@@ -104,7 +104,7 @@
     accuracy="0">
     <statchange stat="0" stage="2"/>
   </movestatchange>
-  <move id="66" type="Normal" movetype="" category="Physical" pp="35" power="50"/>
+  <move id="66" type="Normal" movetype="" category="Physical" pp="22" power="7" accuracy="95"/>
   <movestatchange id="67" type="Normal" movetype="StatChange" category="Status" pp="30" power="-1">
     <statchange stat="1" stage="-1"/>
   </movestatchange>
@@ -424,7 +424,7 @@
   <move id="666" type="Water" behavior="19" category="Special" pp="20" power="60" random="20"/>
   <move id="667" type="Water" behavior="158" category="Status" pp="15" power="-1" accuracy="0"/>
   <move id="668" type="Water" behavior="139" category="Special" pp="5" power="150"/>
-  <move id="701" type="Grass" behavior="221" category="Special" pp="25" power="20"/>
+  <move id="701" type="Grass" movetype="Drain" category="Special" pp="18" power="1" accuracy="70"/>
   <move id="702" type="Grass" behavior="220" category="Status" pp="10" power="-1" accuracy="90"/>
   <move id="703" type="Grass" behavior="221" category="Special" pp="15" power="40"/>
   <move id="704" type="Grass" behavior="210" category="Special" pp="10" power="120"/>

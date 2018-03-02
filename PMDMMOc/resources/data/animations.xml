@@ -8,6 +8,12 @@
     <c id="1">
       <default spriteduration="3" width="32" height="32"/>
     </c>
+    <c id="2">
+      <default state="shock" sound="item-orb" width="64" height="32"/>
+    </c>
+    <c id="3">
+      <default sound="dungeon-heal" spriteduration="3" width="64" height="96" y="71" backsprites="yes"/>
+    </c>
     <c id="100">
       <default width="11" height="16" x="5" y="13">0,0,0,0,0,0,1,2,3,4</default>
     </c>
@@ -32,7 +38,7 @@
   </custom>
   <items>
     <item id="86">
-      <default width="64" height="228" y="210" backsprites="3">0,0,1,1,2,2,3,3,4,4,3,3,5,4,-1,5,4,3,5,4,-1,5,4,3,5,2,1,0</default>
+      <default width="64" height="228" y="210" backsprites="only">0,0,1,1,2,2,3,3,4,4,3,3,5,4,-1,5,4,3,5,4,-1,5,4,3,5,2,1,0</default>
     </item>
   </items>
   <moves>
@@ -41,6 +47,17 @@
     </move>
     <move id="66">
       <default sprites="none" sound="move-tackle"/>
+    </move>
+    <move id="701" oriented="true">
+      <default state="none" width="96" height="96" sound="move-absorb" playsorbanim="true"/>
+      <north width="64"/>
+      <northeast/>
+      <east height="64"/>
+      <southeast/>
+      <south width="64"/>
+      <southwest/>
+      <west height="64"/>
+      <northwest/>
     </move>
   </moves>
   <movetargets/>

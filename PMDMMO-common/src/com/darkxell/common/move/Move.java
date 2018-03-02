@@ -144,15 +144,13 @@ public class Move
 		this.makesContact = makesContact;
 	}
 
+	public void addAdditionalEffects(DungeonPokemon user, DungeonPokemon target, Floor floor, ArrayList<DungeonEvent> events)
+	{}
+
 	/** @return True if this Move's additional effects land. */
 	public boolean additionalEffectLands(DungeonPokemon user, DungeonPokemon target, Floor floor)
 	{
 		return floor.random.nextInt(100) < this.additionalEffectChance;
-	}
-
-	public ArrayList<DungeonEvent> additionalEffects(DungeonPokemon user, DungeonPokemon target, Floor floor)
-	{
-		return new ArrayList<DungeonEvent>();
 	}
 
 	/** @param user - The Pokémon using the move.
@@ -421,7 +419,7 @@ public class Move
 					events.add(new MessageEvent(floor, new Message("move.effectiveness.not_very").addReplacement("<pokemon>", target.pokemon.getNickname())));
 				events.add(new DamageDealtEvent(floor, target, usedMove, missed ? 0 : this.damageDealt(usedMove.user, target, floor, events)));
 			}
-			if (!missed && this.additionalEffectLands(usedMove.user, target, floor)) events.addAll(this.additionalEffects(usedMove.user, target, floor));
+			if (!missed && this.additionalEffectLands(usedMove.user, target, floor)) this.addAdditionalEffects(usedMove.user, target, floor, events);
 		}
 
 		return events;

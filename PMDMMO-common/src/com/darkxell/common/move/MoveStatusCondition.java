@@ -35,17 +35,15 @@ public class MoveStatusCondition extends Move
 	}
 
 	@Override
-	public ArrayList<DungeonEvent> additionalEffects(DungeonPokemon user, DungeonPokemon target, Floor floor)
+	public void addAdditionalEffects(DungeonPokemon user, DungeonPokemon target, Floor floor, ArrayList<DungeonEvent> events)
 	{
-		ArrayList<DungeonEvent> e = super.additionalEffects(user, target, floor);
 		if (this.condition != -1)
 		{
 			StatusCondition c = StatusCondition.find(this.condition);
-			if (c.affects(target)) e.add(new StatusConditionCreatedEvent(floor,
+			if (c.affects(target)) events.add(new StatusConditionCreatedEvent(floor,
 					new StatusConditionInstance(c, target, RandomUtil.nextIntInBounds(c.durationMin, c.durationMax + 1, floor.random))));
-			else e.add(new MessageEvent(floor, this.unaffectedMessage(target)));
+			else events.add(new MessageEvent(floor, this.unaffectedMessage(target)));
 		}
-		return e;
 	}
 
 	@Override

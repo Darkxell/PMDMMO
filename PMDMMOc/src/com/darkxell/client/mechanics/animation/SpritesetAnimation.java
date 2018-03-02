@@ -8,8 +8,17 @@ import com.darkxell.common.pokemon.DungeonPokemon;
 public class SpritesetAnimation extends PokemonAnimation
 {
 
-	/** For each sprite, true if it should be drawn behind the Pokémon. */
-	private final boolean[] backSprites;
+	public static enum BackSpriteUsage
+	{
+		/** The sprites should be drawn behind the Pokémon. */
+		no,
+		/** The sprites should be drawn above the Pokémon. */
+		only,
+		/** There are sprites behind and above the Pokémon. */
+		yes;
+	}
+
+	public final BackSpriteUsage backSprites;
 	/** Gravity values for this Animation. Defaults to half this Spriteset's size. */
 	public final int gravityX, gravityY;
 	/** The duration of each sprite. */
@@ -19,13 +28,13 @@ public class SpritesetAnimation extends PokemonAnimation
 	/** The spriteset to use. */
 	public final AnimationSpriteset spriteset;
 
-	public SpritesetAnimation(DungeonPokemon target, AnimationSpriteset spriteset, int[] sprites, boolean[] backSprites, int spriteDuration, int gravityX,
+	public SpritesetAnimation(DungeonPokemon target, AnimationSpriteset spriteset, int[] sprites, BackSpriteUsage backsprites, int spriteDuration, int gravityX,
 			int gravityY, AnimationEndListener listener)
 	{
 		super(target, sprites.length * spriteDuration, listener);
 		this.spriteset = spriteset;
 		this.sprites = sprites;
-		this.backSprites = backSprites;
+		this.backSprites = backsprites;
 		this.spriteDuration = spriteDuration;
 		this.gravityX = gravityX;
 		this.gravityY = gravityY;
@@ -34,7 +43,9 @@ public class SpritesetAnimation extends PokemonAnimation
 	private void draw(Graphics2D g, boolean back)
 	{
 		int index = this.index();
-		if (index != -1 && this.backSprites[index] == back)
+		if (back && this.backSprites == BackSpriteUsage.yes) index += this.spriteset.spriteCount() / 2;
+
+		if (index != -1 && ((back && this.backSprites != BackSpriteUsage.no) || (!back && this.backSprites != BackSpriteUsage.only)))
 			g.drawImage(this.spriteset.getSprite(index), (int) this.x - this.gravityX, (int) (this.y - this.gravityY), null);
 	}
 
@@ -50,7 +61,9 @@ public class SpritesetAnimation extends PokemonAnimation
 
 	public int index()
 	{
-		return this.sprites[this.tick() % this.duration / this.spriteDuration];
+		int i = this.tick() % this.duration / this.spriteDuration;
+		if (i >= this.sprites.length) return -1;
+		return this.sprites[i];
 	}
 
 	@Override

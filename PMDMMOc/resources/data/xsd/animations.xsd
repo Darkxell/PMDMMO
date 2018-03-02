@@ -11,12 +11,20 @@
 				<xs:attribute name="y" type="xs:int" use="optional"/>
 				<xs:attribute name="width" type="xs:positiveInteger" use="optional"/>
 				<xs:attribute name="height" type="xs:positiveInteger" use="optional"/>
-				<xs:attribute name="backsprites" type="posInt" use="optional"/>
+				<xs:attribute name="backsprites" use="optional">
+					<xs:simpleType>
+						<xs:restriction base="xs:token">
+							<xs:enumeration value="no"/>
+							<xs:enumeration value="yes"/>
+							<xs:enumeration value="only"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
 				<xs:attribute name="sprites" type="xs:string" use="optional"/>
 				<xs:attribute name="movement" type="xs:string"/>
 				<xs:attribute name="sound" type="xs:string"/>
 				<xs:attribute name="state" type="xs:string" use="optional"/>
-				<xs:attribute name="oriented" type="xs:boolean" use="optional"/>
+				<xs:attribute name="playsorbanim" type="xs:boolean" use="optional"/>
 			</xs:extension>
 		</xs:simpleContent>
 	</xs:complexType>
@@ -34,6 +42,7 @@
 			<xs:element name="northwest" type="animationbase" minOccurs="0"/>
 		</xs:sequence>
 		<xs:attribute name="id" type="posInt"/>
+		<xs:attribute name="oriented" type="xs:boolean" use="optional"/>
 	</xs:complexType>
 
 	<xs:element name="animations">

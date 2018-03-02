@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import org.jdom2.Element;
 
+import com.darkxell.client.mechanics.animation.SpritesetAnimation.BackSpriteUsage;
 import com.darkxell.client.mechanics.animation.movement.TackleAnimationMovement;
 import com.darkxell.client.resources.images.AnimationSpriteset;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
@@ -18,6 +19,9 @@ import com.darkxell.common.util.XMLUtils;
 
 public final class Animations
 {
+	public static final int HURT = 1;
+	public static final int ORB = 2;
+	public static final int HEAL = 3;
 
 	private static final HashMap<Integer, Element> custom = new HashMap<Integer, Element>();
 	private static final HashMap<Integer, Element> items = new HashMap<Integer, Element>();
@@ -35,57 +39,62 @@ public final class Animations
 	{
 		if (!registry.containsKey(id)) return null;
 		Element xml = registry.get(id);
+		Element defaultXml = xml.getChild("default", xml.getNamespace());
 
 		if (XMLUtils.getAttribute(xml, "oriented", false) && xml.getChild(target.facing().name().toLowerCase(), xml.getNamespace()) != null)
 			xml = xml.getChild(target.facing().name().toLowerCase(), xml.getNamespace());
-		else xml = xml.getChild("default", xml.getNamespace());
+		else xml = defaultXml;
 
 		PokemonAnimation a;
-		String sprites = XMLUtils.getAttribute(xml, "sprites", null);
-		if (sprites == null) sprites = String.valueOf(id);
+		String sprites = XMLUtils.getAttribute(xml, "sprites", XMLUtils.getAttribute(defaultXml, "sprites", "default"));
+		if (sprites.equals("default")) sprites = String.valueOf(id) + (xml == defaultXml ? "" : ("-" + target.facing().index()));
 
 		if (sprites.equals("none")) a = new PokemonAnimation(target, 0, listener);
 		else
 		{
-			if (xml.getAttribute("width") == null || xml.getAttribute("height") == null)
+			if ((xml.getAttribute("width") == null && defaultXml.getAttribute("width") == null)
+					|| xml.getAttribute("height") == null && defaultXml.getAttribute("height") == null)
 			{
 				Logger.e("Missing dimension for animation " + id + "!");
 				return null;
 			}
-			int width = Integer.parseInt(xml.getAttributeValue("width"));
-			int height = Integer.parseInt(xml.getAttributeValue("height"));
+			int width = XMLUtils.getAttribute(xml, "width", XMLUtils.getAttribute(defaultXml, "width", 0));
+			int height = XMLUtils.getAttribute(xml, "height", XMLUtils.getAttribute(defaultXml, "height", 0));
 
+			BackSpriteUsage backsprites = BackSpriteUsage.valueOf(XMLUtils.getAttribute(xml, "backsprites", XMLUtils.getAttribute(xml, "backsprites", "no")));
 			AnimationSpriteset spriteset = AnimationSpriteset.getSpriteset(
 					(registry == items ? "/items" : registry == moves ? "/moves" : registry == statuses ? "/status" : "/animations") + "/" + sprites + ".png",
 					width, height);
-			int x = XMLUtils.getAttribute(xml, "x", width / 2);
-			int y = XMLUtils.getAttribute(xml, "y", height / 2);
-			int spriteDuration = XMLUtils.getAttribute(xml, "spriteduration", 2);
+			int x = XMLUtils.getAttribute(xml, "x", XMLUtils.getAttribute(defaultXml, "x", width / 2));
+			int y = XMLUtils.getAttribute(xml, "y", XMLUtils.getAttribute(defaultXml, "y", height / 2));
+			int spriteDuration = XMLUtils.getAttribute(xml, "spriteduration", XMLUtils.getAttribute(defaultXml, "spriteduration", 2));
 			int[] spriteOrder = XMLUtils.readIntArray(xml);
+			if (spriteOrder.length == 0) XMLUtils.readIntArray(defaultXml);
 			if (spriteOrder.length == 0)
 			{
-				spriteOrder = new int[spriteset.spriteCount()];
+				spriteOrder = new int[backsprites == BackSpriteUsage.yes ? spriteset.spriteCount() / 2 : spriteset.spriteCount()];
 				for (int i = 0; i < spriteOrder.length; ++i)
 					spriteOrder[i] = i;
 			}
 
-			String back = xml.getAttributeValue("backsprites");
-			boolean[] backSprites = new boolean[spriteset.spriteCount()];
-			if (back != null) for (String b : back.split(","))
-				backSprites[Integer.parseInt(b)] = true;
-
-			a = new SpritesetAnimation(target, spriteset, spriteOrder, backSprites, spriteDuration, x, y, listener);
+			a = new SpritesetAnimation(target, spriteset, spriteOrder, backsprites, spriteDuration, x, y, listener);
 		}
 
 		/* String movement = XMLUtils.getAttribute(xml, "movement", null); if (movement != null) { try { Class<?> c = Class.forName("com.darkxell.client.mechanics.animation.movement." + movement + "AnimationMovement"); a.movement = (PokemonAnimationMovement)
 		 * c.getConstructor(PokemonAnimation.class).newInstance(a); a.duration = Math.max(a.duration, a.movement.duration); } catch (Exception e1) { Logger.e("Movement instanciation failed!"); e1.printStackTrace(); } } */
 
-		a.sound = XMLUtils.getAttribute(xml, "sound", null);
-		a.state = xml.getAttribute("state") == null ? defaultState : PokemonSpriteState.valueOf(XMLUtils.getAttribute(xml, "state", null).toUpperCase());
+		a.sound = XMLUtils.getAttribute(xml, "sound", XMLUtils.getAttribute(defaultXml, "sound", "null"));
+		if (a.sound.equals("null")) a.sound = null;
+		String state = XMLUtils.getAttribute(xml, "state", XMLUtils.getAttribute(defaultXml, "state", "null"));
+		a.state = state.equals("null") ? defaultState : state.equals("none") ? null : PokemonSpriteState.valueOf(state.toUpperCase());
 		if (a.state != null)
 		{
 			a.duration = Math.max(a.duration, a.renderer.sprite.pointer.getSequence(a.state, a.renderer.pokemon.facing()).duration);
-			if (a.state.hasDash) a.movement = new TackleAnimationMovement(a);
+			if (a.state.hasDash)
+			{
+				a.movement = new TackleAnimationMovement(a);
+				a.duration = Math.max(a.duration, a.movement.duration);
+			}
 		}
 
 		return a;
@@ -111,6 +120,11 @@ public final class Animations
 		return getAnimation(m.id, moveTargets, target, listener);
 	}
 
+	public static AbstractAnimation getOrbAnimation(DungeonPokemon user, AnimationEndListener listener)
+	{
+		return getAnimation(ORB, custom, user, listener);
+	}
+
 	public static PokemonAnimation getStatusAnimation(DungeonPokemon target, StatusCondition s, AnimationEndListener listener)
 	{
 		PokemonAnimation a = getAnimation(s.id, statuses, target, listener);
@@ -131,6 +145,19 @@ public final class Animations
 			moveTargets.put(Integer.parseInt(move.getAttributeValue("id")), move);
 		for (Element move : xml.getChild("statuses", xml.getNamespace()).getChildren("status", xml.getNamespace()))
 			statuses.put(Integer.parseInt(move.getAttributeValue("id")), move);
+	}
+
+	public static boolean playsOrbAnimation(DungeonPokemon user, Move move)
+	{
+		if (!moves.containsKey(move.id)) return false;
+		Element xml = moves.get(move.id);
+		Element defaultXml = xml.getChild("default", xml.getNamespace());
+
+		if (XMLUtils.getAttribute(xml, "oriented", false) && xml.getChild(user.facing().name().toLowerCase(), xml.getNamespace()) != null)
+			xml = xml.getChild(user.facing().name().toLowerCase(), xml.getNamespace());
+		else xml = defaultXml;
+
+		return XMLUtils.getAttribute(xml, "playsorbanim", XMLUtils.getAttribute(defaultXml, "playsorbanim", false));
 	}
 
 	private Animations()

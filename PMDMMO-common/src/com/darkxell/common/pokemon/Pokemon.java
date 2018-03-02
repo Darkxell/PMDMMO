@@ -308,6 +308,8 @@ public class Pokemon implements ItemContainer
 	{
 		if (slot >= 0 && slot < this.moves.length)
 		{
+			while (slot > this.moveCount())
+				--slot;
 			this.moves[slot] = move;
 			this.moves[slot].setSlot(slot);
 		}

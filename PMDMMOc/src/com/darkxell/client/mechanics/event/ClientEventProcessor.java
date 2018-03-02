@@ -22,6 +22,7 @@ import com.darkxell.client.state.FreezoneExploreState;
 import com.darkxell.client.state.dungeon.AnimationState;
 import com.darkxell.client.state.dungeon.DelayState;
 import com.darkxell.client.state.dungeon.NextFloorState;
+import com.darkxell.client.state.dungeon.OrbAnimationState;
 import com.darkxell.client.state.dungeon.PokemonTravelState;
 import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.client.state.map.LocalMap;
@@ -45,6 +46,7 @@ import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.event.pokemon.BellyChangedEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.FaintedPokemonEvent;
+import com.darkxell.common.event.pokemon.HealthRestoredEvent;
 import com.darkxell.common.event.pokemon.PokemonSpawnedEvent;
 import com.darkxell.common.event.pokemon.PokemonTravelEvent;
 import com.darkxell.common.event.pokemon.PokemonTravelEvent.PokemonTravel;
@@ -103,6 +105,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		if (event instanceof MoveSelectionEvent) this.processMoveEvent((MoveSelectionEvent) event);
 		if (event instanceof MoveUseEvent) this.processMoveUseEvent((MoveUseEvent) event);
 		if (event instanceof DamageDealtEvent) this.processDamageEvent((DamageDealtEvent) event);
+		if (event instanceof HealthRestoredEvent) this.processHealEvent((HealthRestoredEvent) event);
 		if (event instanceof StatusConditionCreatedEvent) this.processStatusEvent((StatusConditionCreatedEvent) event);
 		if (event instanceof StatusConditionEndedEvent) this.processStatusEvent((StatusConditionEndedEvent) event);
 
@@ -159,7 +162,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 			SoundManager.playSound("dungeon-hurt");
 			Persistance.dungeonState.pokemonRenderer.getRenderer(event.target).sprite.setState(PokemonSpriteState.HURT);
 			Persistance.dungeonState.pokemonRenderer.getRenderer(event.target).sprite.setHealthChange(-event.damage);
-			Animations.getCustomAnimation(event.target, 1, null).start();
+			Animations.getCustomAnimation(event.target, Animations.HURT, null).start();
 			Persistance.dungeonState.setSubstate(new DelayState(Persistance.dungeonState, PokemonSprite.FRAMELENGTH));
 			this.processPending = false;
 		}
@@ -184,6 +187,19 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		this.processPending = false;
 		if (Persistance.stateManager instanceof PrincipalMainState)
 			((PrincipalMainState) Persistance.stateManager).setState(new NextFloorState(Persistance.dungeonState, event.floor.id + 1));
+	}
+
+	private void processHealEvent(HealthRestoredEvent event)
+	{
+		if (event.effectiveHeal() <= 0) return;
+		Persistance.dungeonState.pokemonRenderer.getRenderer(event.target).sprite.setHealthChange(event.effectiveHeal());
+		AnimationState s = new AnimationState(Persistance.dungeonState);
+		s.animation = Animations.getCustomAnimation(event.target, Animations.HEAL, s);
+		if (s.animation != null)
+		{
+			Persistance.dungeonState.setSubstate(s);
+			this.processPending = false;
+		}
 	}
 
 	private void processItemEvent(ItemUseSelectionEvent event)
@@ -287,6 +303,9 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		s.animation = Animations.getMoveAnimation(event.usedMove.user, event.usedMove.move.move(), s);
 		if (s.animation != null)
 		{
+			if (Animations.playsOrbAnimation(event.usedMove.user, event.usedMove.move.move()))
+				s = new OrbAnimationState(Persistance.dungeonState, event.usedMove.user, s);
+
 			Persistance.dungeonState.setSubstate(s);
 			this.processPending = false;
 		}

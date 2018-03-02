@@ -42,12 +42,10 @@ public class MoveStatChange extends Move
 	}
 
 	@Override
-	public ArrayList<DungeonEvent> additionalEffects(DungeonPokemon user, DungeonPokemon target, Floor floor)
+	public void addAdditionalEffects(DungeonPokemon user, DungeonPokemon target, Floor floor, ArrayList<DungeonEvent> events)
 	{
-		ArrayList<DungeonEvent> e = super.additionalEffects(user, target, floor);
 		for (int[] statChange : this.statChanges)
-			e.add(new StatChangedEvent(floor, statChange[2] == 1 ? user : target, statChange[0], statChange[1]));
-		return e;
+			events.add(new StatChangedEvent(floor, statChange[2] == 1 ? user : target, statChange[0], statChange[1]));
 	}
 
 	@Override
