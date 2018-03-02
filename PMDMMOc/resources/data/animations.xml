@@ -3,16 +3,16 @@
   xsi:schemaLocation="pmdmmo xsd/animations.xsd">
   <abilities>
     <a id="0">
-      <default sprites="/animations/10" sound="stat-defense" width="50" height="50" y="28" backsprites="yes"/>
+      <default sprites="/10" sound="stat-defense" width="50" height="50" y="28" backsprites="yes"/>
     </a>
     <a id="1">
-      <default sprites="/animations/11" sound="stat-defense" width="50" height="50" y="28" backsprites="yes"/>
+      <default sprites="/11" sound="stat-defense" width="50" height="50" y="28" backsprites="yes"/>
     </a>
     <a id="2">
-      <default sprites="/animations/13" sound="stat-defense" width="50" height="50" y="28" backsprites="yes"/>
+      <default sprites="/13" sound="stat-defense" width="50" height="50" y="28" backsprites="yes"/>
     </a>
     <a id="3">
-      <default sprites="/animations/14" sound="stat-defense" width="50" height="50" y="28" backsprites="yes"/>
+      <default sprites="/14" sound="stat-defense" width="50" height="50" y="28" backsprites="yes"/>
     </a>
   </abilities>
   <custom>
