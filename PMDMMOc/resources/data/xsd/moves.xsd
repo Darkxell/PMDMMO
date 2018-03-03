@@ -20,6 +20,34 @@
 		<xs:attribute name="accuracy" type="xs:int"/>
 		<xs:attribute name="priority" type="xs:int" use="optional"/>
 		<xs:attribute name="random" type="posInt" use="optional"/>
+		<xs:attribute name="range" use="optional">
+			<xs:simpleType>
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="Ambient"/>
+					<xs:enumeration value="Around"/>
+					<xs:enumeration value="Floor"/>
+					<xs:enumeration value="Front"/>
+					<xs:enumeration value="Front_corners"/>
+					<xs:enumeration value="Front_row"/>
+					<xs:enumeration value="Line"/>
+					<xs:enumeration value="Room"/>
+					<xs:enumeration value="Self"/>
+					<xs:enumeration value="Two_tiles"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="targets" use="optional">
+			<xs:simpleType>
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="All"/>
+					<xs:enumeration value="Allies"/>
+					<xs:enumeration value="Foes"/>
+					<xs:enumeration value="Others"/>
+					<xs:enumeration value="Team"/>
+					<xs:enumeration value="User"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
 	</xs:complexType>
 
 	<xs:element name="moves">

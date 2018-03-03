@@ -29,25 +29,25 @@
       <default sound="dungeon-heal" spriteduration="3" width="64" height="96" y="71" backsprites="yes"/>
     </c>
     <c id="10">
-      <default sound="stat-attack" width="50" height="50" y="28" backsprites="yes"/>
+      <default sound="stat-attack_up" width="50" height="50" y="28" backsprites="yes"/>
     </c>
     <c id="11">
-      <default sound="stat-defense" width="50" height="50" y="28" backsprites="yes"/>
+      <default sound="stat-defense_up" width="50" height="50" y="28" backsprites="yes"/>
     </c>
     <c id="12">
-      <default sound="stat-spattack" width="50" height="50" y="28" backsprites="yes"/>
+      <default sound="stat-spattack_up" width="50" height="50" y="28" backsprites="yes"/>
     </c>
     <c id="13">
-      <default sound="stat-spdefense" width="50" height="50" y="28" backsprites="yes"/>
+      <default sound="stat-spdefense_up" width="50" height="50" y="28" backsprites="yes"/>
     </c>
     <c id="14">
-      <default sound="stat-speed" width="50" height="50" y="28" backsprites="yes"/>
+      <default sound="stat-speed_up" width="50" height="50" y="28" backsprites="yes"/>
     </c>
     <c id="15">
-      <default sound="stat-evasion" width="50" height="50" y="28" backsprites="yes"/>
+      <default sound="stat-evasion_up" width="50" height="50" y="28" backsprites="yes"/>
     </c>
     <c id="16">
-      <default sound="stat-accuracy" width="50" height="50" y="28" backsprites="yes"/>
+      <default sound="stat-accuracy_up" width="50" height="50" y="28" backsprites="yes"/>
     </c>
     <c id="20">
       <default sound="stat-attack_down" sprites="10" width="50" height="50" y="28" backsprites="yes">12,11,10,9,8,7,6,5,4,3,2,1,0</default>
@@ -100,6 +100,9 @@
   <moves>
     <move id="0">
       <default sprites="none" sound="move-basicattack"/>
+    </move>
+    <move id="23">
+      <default width="32" height="32" state="shock" sound="move-growth"/>
     </move>
     <move id="66">
       <default sprites="none" sound="move-tackle"/>

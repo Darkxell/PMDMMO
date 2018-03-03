@@ -39,7 +39,7 @@
     <statchange stat="0" stage="-1"/>
   </movestatchange>
   <movestatchange id="23" type="Normal" movetype="StatChange" category="Status" pp="20" power="-1"
-    accuracy="0">
+    accuracy="0" range="Self" targets="User">
     <statchange stat="0" stage="1"/>
     <statchange stat="3" stage="1"/>
   </movestatchange>
