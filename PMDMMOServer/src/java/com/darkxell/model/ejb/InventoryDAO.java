@@ -6,7 +6,6 @@
 package com.darkxell.model.ejb;
 
 import com.darkxell.model.ejb.dbobjects.DBInventory;
-import com.darkxell.model.ejb.dbobjects.DBPlayer;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -45,7 +44,7 @@ public class InventoryDAO {
                 Connection cn = ds.getConnection();
                 PreparedStatement prepare
                         = cn.prepareStatement(
-                                "INSERT INTO inventory (id maxsize) VALUES(?, ?)"
+                                "INSERT INTO inventory (id, maxsize) VALUES(?, ?)"
                         );
                 prepare.setLong(1, newid);
                 prepare.setInt(2, inventory.maxsize);
@@ -97,17 +96,15 @@ public class InventoryDAO {
         return toreturn;
     }
 
-    public void update(DBPlayer player) {
+    public void update(DBInventory inventory) {
         try {
             Connection cn = ds.getConnection();
             PreparedStatement prepare
                     = cn.prepareStatement(
-                            "UPDATE player SET moneyinbank = ?, moneyinbag = ?, name = ?, passhash = ? WHERE id = ?"
+                            "UPDATE inventory SET maxsize = ? WHERE id = ?"
                     );
-            prepare.setLong(1, player.moneyinbank);
-            prepare.setLong(2, player.moneyinbag);
-            prepare.setString(3, player.name);
-            prepare.setLong(4, player.passhash);
+            prepare.setLong(1, inventory.maxsize);
+            prepare.setLong(2, inventory.id);
             prepare.executeUpdate();
             cn.close();
             //TODO: add the references here too

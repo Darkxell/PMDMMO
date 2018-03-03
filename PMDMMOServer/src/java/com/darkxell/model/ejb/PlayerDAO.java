@@ -108,6 +108,7 @@ public class PlayerDAO {
             prepare.setLong(2, player.moneyinbag);
             prepare.setString(3, player.name);
             prepare.setLong(4, player.passhash);
+            prepare.setLong(5, player.id);
             prepare.executeUpdate();
             cn.close();
             //TODO: add the references here too
