@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.darkxell.gameserver.freezones;
+package com.darkxell.gameserver.messagehandlers;
 
 import com.darkxell.gameserver.GameServer;
 import com.darkxell.gameserver.GameSessionHandler;
@@ -29,7 +29,6 @@ public class SessionOpenHandler extends MessageHandler{
                 SessionsInfoHolder.createDefaultInfo(from.getId());
         GameSessionInfo si = SessionsInfoHolder.getInfo(from.getId());
         si.name = json.getString("name");
-        si.isconnected = true;
     }
     
 }

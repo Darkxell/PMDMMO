@@ -14,12 +14,13 @@ public class GameSessionInfo {
     // COMMON DATA
     
     public boolean isconnected = false;
+    public String salt = "";
     public String name = "DefaultServerName";
     
     // FREEZONE DATA
     
     public String currentPokemon = "";
-    public String freezoneID = "";
+    public String freezoneID = "undefined";
     public double posFX = 0;
     public double posFY = 0;
     
