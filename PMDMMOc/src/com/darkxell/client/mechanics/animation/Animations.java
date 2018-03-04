@@ -68,7 +68,8 @@ public final class Animations
 		Element xml = registry.get(id);
 		Element defaultXml = xml.getChild("default", xml.getNamespace());
 
-		if (XMLUtils.getAttribute(xml, "oriented", false) && xml.getChild(target.facing().name().toLowerCase(), xml.getNamespace()) != null)
+		boolean oriented = XMLUtils.getAttribute(xml, "oriented", false);
+		if (oriented && xml.getChild(target.facing().name().toLowerCase(), xml.getNamespace()) != null)
 			xml = xml.getChild(target.facing().name().toLowerCase(), xml.getNamespace());
 		else xml = defaultXml;
 
@@ -77,7 +78,7 @@ public final class Animations
 		if (sprites.equals("none")) a = new PokemonAnimation(target, 0, listener);
 		else
 		{
-			if (sprites.equals("default")) sprites = String.valueOf(id) + (xml == defaultXml ? "" : ("-" + target.facing().index()));
+			if (sprites.equals("default")) sprites = String.valueOf(id) + (oriented ? ("-" + target.facing().index()) : "");
 			if (!sprites.contains("/")) sprites = (registry == items ? "/items/"
 					: registry == moves ? "/moves/" : registry == statuses ? "/status/" : registry == abilities ? "/abilities/" : "/") + sprites;
 			sprites = "/animations" + sprites;
@@ -97,7 +98,7 @@ public final class Animations
 			int y = XMLUtils.getAttribute(xml, "y", XMLUtils.getAttribute(defaultXml, "y", height / 2));
 			int spriteDuration = XMLUtils.getAttribute(xml, "spriteduration", XMLUtils.getAttribute(defaultXml, "spriteduration", 2));
 			int[] spriteOrder = XMLUtils.readIntArray(xml);
-			if (spriteOrder.length == 0) XMLUtils.readIntArray(defaultXml);
+			if (spriteOrder.length == 0) spriteOrder = XMLUtils.readIntArray(defaultXml);
 			if (spriteOrder.length == 0)
 			{
 				spriteOrder = new int[backsprites == BackSpriteUsage.yes ? spriteset.spriteCount() / 2 : spriteset.spriteCount()];

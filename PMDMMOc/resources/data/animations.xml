@@ -101,6 +101,17 @@
     <move id="0">
       <default sprites="none" sound="move-basicattack"/>
     </move>
+    <move id="22" oriented="true">
+      <default width="96" height="48" y="48" sound="move-growl" state="special">0,1,2,3,4,5,0,1,2,3,4,5</default>
+      <north width="72" backsprites="only"/>
+      <northeast x="40" backsprites="only"/>
+      <east x="40" height="72"/>
+      <southeast x="40" y="0"/>
+      <south width="72" y="0"/>
+      <southwest x="56" y="0"/>
+      <west x="56" height="72"/>
+      <northwest x="56" backsprites="only"/>
+    </move>
     <move id="23">
       <default width="32" height="32" state="shock" sound="move-growth"/>
     </move>

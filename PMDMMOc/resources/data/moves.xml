@@ -35,7 +35,8 @@
   <move id="19" type="Normal" behavior="192" category="Physical" pp="20" power="15" accuracy="85"/>
   <move id="20" type="Normal" behavior="192" category="Physical" pp="15" power="18" accuracy="80"/>
   <move id="21" type="Normal" behavior="7" category="Status" pp="30" power="-1"/>
-  <movestatchange id="22" type="Normal" movetype="StatChange" category="Status" pp="40" power="-1">
+  <movestatchange id="22" type="Normal" movetype="StatChange" category="Status" pp="40" power="-1"
+    range="Room">
     <statchange stat="0" stage="-1"/>
   </movestatchange>
   <movestatchange id="23" type="Normal" movetype="StatChange" category="Status" pp="20" power="-1"
