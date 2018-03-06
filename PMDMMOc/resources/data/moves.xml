@@ -460,7 +460,7 @@
   <move id="759" type="Electric" behavior="165" category="Special" pp="20" power="60" accuracy="0"/>
   <move id="760" type="Electric" behavior="253" category="Physical" pp="15" power="120" random="10"/>
   <movestatchange id="801" type="Psychic" movetype="StatChange" category="Status" pp="30" power="-1"
-    accuracy="0">
+    accuracy="0" range="Self" targets="User">
     <statchange stat="5" stage="1"/>
   </movestatchange>
   <movestatchange id="802" type="Psychic" movetype="StatChange" category="Status" pp="20" power="-1"

@@ -7,6 +7,7 @@ import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.stats.ExperienceGainedEvent;
+import com.darkxell.common.event.stats.StatChangedEvent;
 import com.darkxell.common.item.Item.ItemAction;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.player.ItemContainer;
@@ -279,6 +280,12 @@ public class DungeonPokemon implements ItemContainer
 				this.regenCounter %= recoveryRate;
 			}
 			this.setHP(this.getHp() + healthGain);
+		}
+
+		if (this.stats.speedRecharge > 0)
+		{
+			--this.stats.speedRecharge;
+			if (this.stats.speedRecharge == 0) events.add(new StatChangedEvent(floor, this, PokemonStats.SPEED, 1));
 		}
 
 		for (StatusConditionInstance condition : this.statusConditions)

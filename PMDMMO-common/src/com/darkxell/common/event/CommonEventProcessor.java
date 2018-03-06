@@ -97,6 +97,8 @@ public class CommonEventProcessor
 		while (flag)
 		{
 			DungeonPokemon actor = this.dungeon.nextActor();
+			if (actor == pokemon) break;
+			
 			if (actor != null && actor.isTeamLeader())
 			{
 				if (!this.runners.contains(actor)) e = null;
