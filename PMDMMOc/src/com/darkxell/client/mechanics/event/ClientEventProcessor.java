@@ -57,7 +57,7 @@ import com.darkxell.common.item.ItemFood;
 import com.darkxell.common.item.ItemGummi;
 import com.darkxell.common.player.Inventory;
 import com.darkxell.common.pokemon.Pokemon;
-import com.darkxell.common.pokemon.PokemonStats;
+import com.darkxell.common.pokemon.BaseStats;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.language.Message;
 import com.darkxell.common.weather.Weather;
@@ -86,7 +86,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	};
 
 	public boolean landedOnStairs = false;
-	private PokemonStats levelupStats = null;
+	private BaseStats levelupStats = null;
 
 	public ClientEventProcessor(DungeonInstance dungeon)
 	{

@@ -75,9 +75,22 @@
 				<xs:sequence>
 					<xs:element name="statchange" maxOccurs="unbounded">
 						<xs:complexType>
-							<xs:attribute name="stat" type="xs:int"/>
+							<xs:attribute name="stat">
+								<xs:simpleType>
+									<xs:restriction base="xs:token">
+										<xs:enumeration value="Accuracy"/>
+										<xs:enumeration value="Attack"/>
+										<xs:enumeration value="Defense"/>
+										<xs:enumeration value="Evasiveness"/>
+										<xs:enumeration value="Health"/>
+										<xs:enumeration value="SpecialAttack"/>
+										<xs:enumeration value="SpecialDefense"/>
+										<xs:enumeration value="Speed"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:attribute>
 							<xs:attribute name="stage" type="xs:int"/>
-							<xs:attribute name="self" type="xs:int" use="optional"/>
+							<xs:attribute name="self" type="xs:boolean" use="optional"/>
 						</xs:complexType>
 					</xs:element>
 				</xs:sequence>

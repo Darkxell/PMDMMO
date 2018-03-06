@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
-import com.darkxell.common.pokemon.PokemonStats;
+import com.darkxell.common.pokemon.BaseStats.Stat;
 import com.darkxell.common.util.language.Message;
 
 public class StatChangedEvent extends DungeonEvent
@@ -14,10 +14,10 @@ public class StatChangedEvent extends DungeonEvent
 			"stat.increase.3", };
 
 	public final int stage;
-	public final int stat;
+	public final Stat stat;
 	public final DungeonPokemon target;
 
-	public StatChangedEvent(Floor floor, DungeonPokemon target, int stat, int stage)
+	public StatChangedEvent(Floor floor, DungeonPokemon target, Stat stat, int stage)
 	{
 		super(floor);
 		this.target = target;
@@ -41,10 +41,10 @@ public class StatChangedEvent extends DungeonEvent
 	public ArrayList<DungeonEvent> processServer()
 	{
 		this.target.stats.addStage(this.stat, this.stage);
-		if (this.stat == PokemonStats.SPEED) this.floor.dungeon.onSpeedChange(this.target, this.stage);
+		if (this.stat == Stat.Speed) this.floor.dungeon.onSpeedChange(this.target, this.stage);
 
 		this.messages.add(new Message(
-				this.stat == PokemonStats.SPEED ? "stat.speed." + String.valueOf(this.target.stats.getMoveSpeed()).substring(0, 1) : MESSAGES[this.stage + 3])
+				this.stat == Stat.Speed ? "stat.speed." + String.valueOf(this.target.stats.getMoveSpeed()).substring(0, 1) : MESSAGES[this.stage + 3])
 						.addReplacement("<pokemon>", this.target.getNickname()).addReplacement("<stat>", new Message("stat." + this.stat)));
 
 		return super.processServer();

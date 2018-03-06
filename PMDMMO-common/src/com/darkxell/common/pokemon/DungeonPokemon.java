@@ -12,6 +12,7 @@ import com.darkxell.common.item.Item.ItemAction;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.player.ItemContainer;
 import com.darkxell.common.player.Player;
+import com.darkxell.common.pokemon.BaseStats.Stat;
 import com.darkxell.common.pokemon.ability.Ability;
 import com.darkxell.common.status.StatusCondition;
 import com.darkxell.common.status.StatusConditionInstance;
@@ -165,7 +166,7 @@ public class DungeonPokemon implements ItemContainer
 		return this.usedPokemon.getNickname();
 	}
 
-	public PokemonStats getStats()
+	public BaseStats getStats()
 	{
 		return this.usedPokemon.getStats();
 	}
@@ -285,7 +286,7 @@ public class DungeonPokemon implements ItemContainer
 		if (this.stats.speedRecharge > 0)
 		{
 			--this.stats.speedRecharge;
-			if (this.stats.speedRecharge == 0) events.add(new StatChangedEvent(floor, this, PokemonStats.SPEED, 1));
+			if (this.stats.speedRecharge == 0) events.add(new StatChangedEvent(floor, this, Stat.Speed, 1));
 		}
 
 		for (StatusConditionInstance condition : this.statusConditions)

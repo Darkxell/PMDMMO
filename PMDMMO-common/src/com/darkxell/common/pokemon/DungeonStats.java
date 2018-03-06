@@ -1,5 +1,7 @@
 package com.darkxell.common.pokemon;
 
+import com.darkxell.common.pokemon.BaseStats.Stat;
+
 public class DungeonStats
 {
 	public static final int[] attackTable = new int[] { 64, 69, 74, 79, 84, 89, 102, 115, 128, 179, 256, 332, 384, 406, 422, 435, 448, 460, 473, 486, 512 };
@@ -12,7 +14,7 @@ public class DungeonStats
 	/** Attack. */
 	private int attack;
 	/** The base stats. */
-	public final PokemonStats baseStats;
+	public final BaseStats baseStats;
 	/** Defense. */
 	private int defense;
 	/** Evasiveness. */
@@ -26,7 +28,7 @@ public class DungeonStats
 	/** Special Defense. */
 	private int specialDefense;
 	int speedRecharge = 0;
-	private int[] stages = new int[] { 10, 10, 10, 10, 10, 10, 10, 10 };
+	private int[] stages = new int[] { 10, 10, 10, 10, 10, 10, 10 };
 
 	public DungeonStats(DungeonPokemon pokemon)
 	{
@@ -37,7 +39,7 @@ public class DungeonStats
 		this.resetStages();
 	}
 
-	public void addStage(int stat, int stage)
+	public void addStage(Stat stat, int stage)
 	{
 		this.setStage(stat, this.getStage(stat) + stage);
 	}
@@ -49,12 +51,12 @@ public class DungeonStats
 
 	public int getAttack()
 	{
-		return this.attack * attackTable[this.stages[PokemonStats.ATTACK]] / 256;
+		return this.attack * attackTable[this.stages[Stat.Attack.id]] / 256;
 	}
 
 	public int getDefense()
 	{
-		return this.defense * defenseTable[this.stages[PokemonStats.DEFENSE]] / 256;
+		return this.defense * defenseTable[this.stages[Stat.Defense.id]] / 256;
 	}
 
 	public float getEvasiveness()
@@ -69,22 +71,22 @@ public class DungeonStats
 
 	public float getMoveSpeed()
 	{
-		return speedTable[this.stages[PokemonStats.SPEED]];
+		return speedTable[1];
 	}
 
 	public int getSpecialAttack()
 	{
-		return this.specialAttack * attackTable[this.stages[PokemonStats.SPECIAL_ATTACK]] / 256;
+		return this.specialAttack * attackTable[this.stages[Stat.SpecialAttack.id]] / 256;
 	}
 
 	public int getSpecialDefense()
 	{
-		return this.specialDefense * defenseTable[this.stages[PokemonStats.SPECIAL_DEFENSE]] / 256;
+		return this.specialDefense * defenseTable[this.stages[Stat.SpecialDefense.id]] / 256;
 	}
 
-	public int getStage(int stat)
+	public int getStage(Stat stat)
 	{
-		return this.stages[stat];
+		return this.stages[stat.id];
 	}
 
 	/** Called when the base stats change. */
@@ -106,19 +108,18 @@ public class DungeonStats
 	{
 		for (int i = 0; i < this.stages.length; i++)
 			this.stages[i] = 10;
-		this.stages[PokemonStats.SPEED] = 1;
 	}
 
-	public void setStage(int stat, int stage)
+	public void setStage(Stat stat, int stage)
 	{
 		if (stage < 0) stage = 0;
-		if (stat == PokemonStats.SPEED)
+		if (stat == Stat.Speed)
 		{
 			if (stage >= speedTable.length) stage = speedTable.length - 1;
 			if (stage == 0) this.speedRecharge = 8;
 		} else if (stage > 20) stage = 20;
 
-		if (stat >= 0 && stat < this.stages.length) this.stages[stat] = stage;
+		this.stages[stat.id] = stage;
 	}
 
 }

@@ -15,7 +15,6 @@ import com.darkxell.common.item.Item;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.move.Move.MoveCategory;
 import com.darkxell.common.pokemon.DungeonPokemon;
-import com.darkxell.common.pokemon.PokemonStats;
 import com.darkxell.common.pokemon.ability.Ability;
 import com.darkxell.common.status.StatusCondition;
 import com.darkxell.common.util.Logger;
@@ -200,22 +199,22 @@ public final class Animations
 
 		switch (event.stat)
 		{
-			case PokemonStats.DEFENSE:
+			case Defense:
 				statID = DEFENSE_UP;
 				break;
-			case PokemonStats.SPECIAL_ATTACK:
+			case SpecialAttack:
 				statID = SP_ATTACK_UP;
 				break;
-			case PokemonStats.SPECIAL_DEFENSE:
+			case SpecialDefense:
 				statID = SP_DEFENSE_UP;
 				break;
-			case PokemonStats.SPEED:
+			case Speed:
 				statID = SPEED_UP;
 				break;
-			case PokemonStats.EVASIVENESS:
+			case Evasiveness:
 				statID = EVASION_UP;
 				break;
-			case PokemonStats.ACCURACY:
+			case Accuracy:
 				statID = ACCURACY_UP;
 				break;
 

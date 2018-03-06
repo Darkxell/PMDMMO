@@ -8,6 +8,7 @@ import org.jdom2.Element;
 
 import com.darkxell.common.move.Move;
 import com.darkxell.common.move.MoveRegistry;
+import com.darkxell.common.pokemon.BaseStats.Stat;
 import com.darkxell.common.util.XMLUtils;
 import com.darkxell.common.util.language.Message;
 
@@ -20,7 +21,7 @@ public class PokemonSpecies
 	/** List of possible Abilities for this Pokémon. */
 	private ArrayList<Integer> abilities;
 	/** This species' stat gains at each level. First in this Array is the stats at level 1. */
-	private final ArrayList<PokemonStats> baseStats;
+	private final ArrayList<BaseStats> baseStats;
 	/** Base experience gained when this Pokémon is defeated. */
 	public final int baseXP;
 	/** List of species this Pokémon can evolve into. */
@@ -49,7 +50,7 @@ public class PokemonSpecies
 		this.height = Float.parseFloat(xml.getAttributeValue("height"));
 		this.weight = Float.parseFloat(xml.getAttributeValue("weight"));
 		this.abilities = XMLUtils.readIntArrayAsList(xml.getChild("abilities", xml.getNamespace()));
-		this.baseStats = new ArrayList<PokemonStats>();
+		this.baseStats = new ArrayList<BaseStats>();
 		this.learnset = new HashMap<Integer, ArrayList<Integer>>();
 		this.tms = XMLUtils.readIntArrayAsList(xml.getChild("tms", xml.getNamespace()));
 		this.evolutions = new ArrayList<Evolution>();
@@ -58,7 +59,7 @@ public class PokemonSpecies
 		{
 			int[][] statline = XMLUtils.readDoubleIntArray(xml.getChild("statline", xml.getNamespace()));
 			for (int[] stat : statline)
-				this.baseStats.add(new PokemonStats(stat));
+				this.baseStats.add(new BaseStats(stat));
 		}
 
 		if (xml.getChild("experience", xml.getNamespace()) != null)
@@ -83,7 +84,7 @@ public class PokemonSpecies
 			this.forms.add(createForm(form));
 	}
 
-	public PokemonSpecies(int id, int formID, PokemonType type1, PokemonType type2, int baseXP, ArrayList<PokemonStats> baseStats, float height, float weight,
+	public PokemonSpecies(int id, int formID, PokemonType type1, PokemonType type2, int baseXP, ArrayList<BaseStats> baseStats, float height, float weight,
 			ArrayList<Integer> abilities, int[] experiencePerLevel, HashMap<Integer, ArrayList<Integer>> learnset, ArrayList<Integer> tms,
 			ArrayList<Evolution> evolutions, ArrayList<PokemonSpecies> forms)
 	{
@@ -103,7 +104,7 @@ public class PokemonSpecies
 		this.forms = forms;
 	}
 
-	public PokemonStats baseStatsIncrease(int level)
+	public BaseStats baseStatsIncrease(int level)
 	{
 		return this.baseStats.get(level);
 	}
@@ -127,18 +128,18 @@ public class PokemonSpecies
 		float weight = XMLUtils.getAttribute(xml, "weight", this.weight);
 		ArrayList<Integer> abilities = xml.getChild("abilities", xml.getNamespace()) == null ? (ArrayList<Integer>) this.abilities.clone()
 				: XMLUtils.readIntArrayAsList(xml.getChild("abilities", xml.getNamespace()));
-		ArrayList<PokemonStats> baseStats = new ArrayList<PokemonStats>();
+		ArrayList<BaseStats> baseStats = new ArrayList<BaseStats>();
 		HashMap<Integer, ArrayList<Integer>> learnset = new HashMap<Integer, ArrayList<Integer>>();
 		ArrayList<Integer> tms = xml.getChild("tms", xml.getNamespace()) == null ? (ArrayList<Integer>) this.tms.clone()
 				: XMLUtils.readIntArrayAsList(xml.getChild("tms", xml.getNamespace()));
 		ArrayList<Evolution> evolutions = new ArrayList<Evolution>();
 
-		if (xml.getChild("statline", xml.getNamespace()) == null) baseStats = (ArrayList<PokemonStats>) this.baseStats.clone();
+		if (xml.getChild("statline", xml.getNamespace()) == null) baseStats = (ArrayList<BaseStats>) this.baseStats.clone();
 		else
 		{
 			int[][] statline = XMLUtils.readDoubleIntArray(xml.getChild("statline", xml.getNamespace()));
 			for (int[] stat : statline)
-				baseStats.add(new PokemonStats(stat));
+				baseStats.add(new BaseStats(stat));
 		}
 
 		int[] experiencePerLevel;
@@ -280,9 +281,9 @@ public class PokemonSpecies
 	}
 
 	/** @return Regular stats for a Pokémon at the input level. */
-	public PokemonStats statsForLevel(int level)
+	public BaseStats statsForLevel(int level)
 	{
-		PokemonStats stats = this.baseStats.get(0);
+		BaseStats stats = this.baseStats.get(0);
 		for (int lvl = 1; lvl < level; ++lvl)
 			stats.add(this.baseStats.get(lvl));
 		return stats;
@@ -302,16 +303,16 @@ public class PokemonSpecies
 		int[][] line = new int[100][];
 		for (int lvl = 0; lvl < this.baseStats.size(); lvl++)
 		{
-			PokemonStats stats = this.baseStats.get(lvl);
+			BaseStats stats = this.baseStats.get(lvl);
 			if (stats.moveSpeed != 1) line[lvl] = new int[6];
 			else line[lvl] = new int[5];
 
-			line[lvl][PokemonStats.ATTACK] = stats.getAttack();
-			line[lvl][PokemonStats.DEFENSE] = stats.getDefense();
-			line[lvl][PokemonStats.HEALTH] = stats.getHealth();
-			line[lvl][PokemonStats.SPECIAL_ATTACK] = stats.getSpecialAttack();
-			line[lvl][PokemonStats.SPECIAL_DEFENSE] = stats.getSpecialDefense();
-			if (stats.moveSpeed != 1) line[lvl][PokemonStats.SPEED] = stats.getMoveSpeed();
+			line[lvl][Stat.Attack.id] = stats.getAttack();
+			line[lvl][Stat.Defense.id] = stats.getDefense();
+			line[lvl][Stat.Health.id] = stats.getHealth();
+			line[lvl][Stat.SpecialAttack.id] = stats.getSpecialAttack();
+			line[lvl][Stat.SpecialDefense.id] = stats.getSpecialDefense();
+			if (stats.moveSpeed != 1) line[lvl][5] = stats.getMoveSpeed();
 		}
 		root.addContent(XMLUtils.toXML("statline", line));
 
@@ -368,16 +369,16 @@ public class PokemonSpecies
 			int[][] line = new int[100][];
 			for (int lvl = 0; lvl < form.baseStats.size(); lvl++)
 			{
-				PokemonStats stats = form.baseStats.get(lvl);
+				BaseStats stats = form.baseStats.get(lvl);
 				if (stats.moveSpeed != 1) line[lvl] = new int[6];
 				else line[lvl] = new int[5];
 
-				line[lvl][PokemonStats.ATTACK] = stats.getAttack();
-				line[lvl][PokemonStats.DEFENSE] = stats.getDefense();
-				line[lvl][PokemonStats.HEALTH] = stats.getHealth();
-				line[lvl][PokemonStats.SPECIAL_ATTACK] = stats.getSpecialAttack();
-				line[lvl][PokemonStats.SPECIAL_DEFENSE] = stats.getSpecialDefense();
-				if (stats.moveSpeed != 1) line[lvl][PokemonStats.SPEED] = stats.getMoveSpeed();
+				line[lvl][Stat.Attack.id] = stats.getAttack();
+				line[lvl][Stat.Defense.id] = stats.getDefense();
+				line[lvl][Stat.Health.id] = stats.getHealth();
+				line[lvl][Stat.SpecialAttack.id] = stats.getSpecialAttack();
+				line[lvl][Stat.SpecialDefense.id] = stats.getSpecialDefense();
+				if (stats.moveSpeed != 1) line[lvl][5] = stats.getMoveSpeed();
 			}
 			e.addContent(XMLUtils.toXML("statline", line));
 		}
