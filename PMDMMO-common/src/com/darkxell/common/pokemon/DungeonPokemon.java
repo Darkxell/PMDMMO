@@ -7,12 +7,10 @@ import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.stats.ExperienceGainedEvent;
-import com.darkxell.common.event.stats.StatChangedEvent;
 import com.darkxell.common.item.Item.ItemAction;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.player.ItemContainer;
 import com.darkxell.common.player.Player;
-import com.darkxell.common.pokemon.BaseStats.Stat;
 import com.darkxell.common.pokemon.ability.Ability;
 import com.darkxell.common.status.StatusCondition;
 import com.darkxell.common.status.StatusConditionInstance;
@@ -265,9 +263,8 @@ public class DungeonPokemon implements ItemContainer
 	}
 
 	/** Called at the beginning of each turn. */
-	public ArrayList<DungeonEvent> onTurnStart(Floor floor)
+	public void onTurnStart(Floor floor, ArrayList<DungeonEvent> events)
 	{
-		ArrayList<DungeonEvent> events = new ArrayList<DungeonEvent>();
 		if (this.canRegen())
 		{
 			int recoveryRate = 200;
@@ -283,15 +280,10 @@ public class DungeonPokemon implements ItemContainer
 			this.setHP(this.getHp() + healthGain);
 		}
 
-		if (this.stats.speedRecharge > 0)
-		{
-			--this.stats.speedRecharge;
-			if (this.stats.speedRecharge == 0) events.add(new StatChangedEvent(floor, this, Stat.Speed, 1));
-		}
+		if (this.stats.speedBuffs() > 0 || this.stats.speedDebuffs() > 0) this.stats.onTurnStart(floor, events);
 
 		for (StatusConditionInstance condition : this.statusConditions)
 			events.addAll(condition.tick(floor));
-		return events;
 	}
 
 	public Player player()

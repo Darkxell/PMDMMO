@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
-import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.BaseStats.Stat;
+import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Message;
 
 public class StatChangedEvent extends DungeonEvent
@@ -34,18 +34,25 @@ public class StatChangedEvent extends DungeonEvent
 	@Override
 	public String loggerMessage()
 	{
-		return this.messages.get(0).toString();
+		return this.target + " has its " + this.stat + " changed by " + this.stage;
 	}
 
 	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{
-		this.target.stats.addStage(this.stat, this.stage);
-		if (this.stat == Stat.Speed) this.floor.dungeon.onSpeedChange(this.target, this.stage);
+		int effective = this.target.stats.effectiveChange(this.stat, this.stage);
 
-		this.messages.add(new Message(
-				this.stat == Stat.Speed ? "stat.speed." + String.valueOf(this.target.stats.getMoveSpeed()).substring(0, 1) : MESSAGES[this.stage + 3])
-						.addReplacement("<pokemon>", this.target.getNickname()).addReplacement("<stat>", new Message("stat." + this.stat)));
+		if (effective != 0) this.target.stats.addStage(this.stat, effective);
+		if (this.stat == Stat.Speed && effective != 0) this.floor.dungeon.onSpeedChange(this.target, effective);
+
+		String messageID = MESSAGES[effective + 3];
+		if (effective == 0)
+		{
+			if (this.stage > 0) messageID = "stat.increase.fail";
+			else messageID = "stat.decrease.fail";
+		} else if (this.stat == Stat.Speed) messageID = "stat.speed." + String.valueOf(this.target.stats.getMoveSpeed()).substring(0, 1);
+		this.messages
+				.add(new Message(messageID).addReplacement("<pokemon>", this.target.getNickname()).addReplacement("<stat>", new Message("stat." + this.stat)));
 
 		return super.processServer();
 	}

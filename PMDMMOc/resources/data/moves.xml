@@ -146,7 +146,7 @@
   <move id="99" type="Normal" behavior="137" category="Physical" pp="20" power="1"/>
   <move id="100" type="Normal" behavior="26" category="Status" pp="25" power="-1" accuracy="0"/>
   <movestatchange id="101" type="Normal" movetype="StatChange" category="Status" pp="10" power="-1">
-    <statchange stat="Speed" stage="-2"/>
+    <statchange stat="Speed" stage="-1"/>
   </movestatchange>
   <move id="102" type="Normal" behavior="93" category="Status" pp="1" power="-1" accuracy="0"/>
   <move id="103" type="Normal" behavior="180" category="Status" pp="10" power="-1" accuracy="0"/>
@@ -313,7 +313,7 @@
   <move id="452" type="Bug" behavior="192" category="Physical" pp="20" power="25" accuracy="90"/>
   <movestatchange id="453" type="Bug" movetype="StatChange" category="Status" pp="40" power="-1"
     accuracy="95">
-    <statchange stat="Speed" stage="-2"/>
+    <statchange stat="Speed" stage="-1"/>
   </movestatchange>
   <move id="454" type="Bug" behavior="190" category="Physical" pp="20" power="25" random="20"/>
   <move id="455" type="Bug" behavior="145" category="Physical" pp="20" power="40" accuracy="95"/>
@@ -436,7 +436,7 @@
   <move id="709" type="Grass" behavior="7" category="Status" pp="30" power="-1" accuracy="75"/>
   <move id="710" type="Grass" movetype="" category="Physical" pp="25" power="45"/>
   <movestatchange id="711" type="Grass" movetype="StatChange" category="Status" pp="40" power="-1">
-    <statchange stat="Speed" stage="-2"/>
+    <statchange stat="Speed" stage="-1"/>
   </movestatchange>
   <move id="712" type="Grass" behavior="221" category="Special" pp="10" power="75"/>
   <move id="713" type="Grass" behavior="216" category="Status" pp="5" power="-1" accuracy="0"/>

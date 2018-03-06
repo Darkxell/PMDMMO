@@ -95,7 +95,10 @@ public class DungeonInstance
 		this.currentTurn = new GameTurn(this.currentFloor);
 		for (int i = 0; i < this.actionsLeft.size(); ++i)
 			this.actionsLeft.set(i, this.actionsLeft.get(i) + this.actors.get(i).stats.getMoveSpeed());
-		return this.currentFloor.onTurnStart();
+		
+		ArrayList<DungeonEvent> events = new ArrayList<>();
+		this.currentFloor.onTurnStart(events);
+		return events;
 	}
 
 	/** Called when the input event is processed. */

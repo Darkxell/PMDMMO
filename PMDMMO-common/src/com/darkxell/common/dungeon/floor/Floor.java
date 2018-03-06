@@ -163,18 +163,17 @@ public class Floor
 	}
 
 	/** Called when a new turn starts. */
-	public ArrayList<DungeonEvent> onTurnStart()
+	public void onTurnStart(ArrayList<DungeonEvent> events)
 	{
-		ArrayList<DungeonEvent> e = new ArrayList<DungeonEvent>();
-		// e.add(new MessageEvent(this, new Message("New turn!", false)));
+		// events.add(new MessageEvent(this, new Message("New turn!", false)));
 
 		// For each existing Pokémon
 		for (DungeonPokemon pokemon : this.listPokemon())
-			e.addAll(pokemon.onTurnStart(this));
+			pokemon.onTurnStart(this, events);
 
 		// Weather
 		for (int w = this.weatherCondition.size() - 1; w >= 0; --w)
-			e.addAll(this.weatherCondition.get(w).update());
+			events.addAll(this.weatherCondition.get(w).update());
 
 		// Pokémon spawning
 		if (!this.isStatic && this.data.pokemonDensity() > this.countWildPokemon())
@@ -188,14 +187,12 @@ public class Floor
 					Tile tile = this.randomEmptyTile(true, true, this.random);
 					if (tile != null)
 					{
-						e.add(new PokemonSpawnedEvent(this, wild, tile));
+						events.add(new PokemonSpawnedEvent(this, wild, tile));
 						this.nextSpawn = RandomUtil.nextIntInBounds(50, 100, this.random) / this.data.pokemonDensity();
 					}
 				}
 			} else--this.nextSpawn;
 		}
-
-		return e;
 	}
 
 	public Item randomBuriedItem(Random random)

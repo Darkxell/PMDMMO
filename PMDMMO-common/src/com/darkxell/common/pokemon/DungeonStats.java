@@ -1,6 +1,12 @@
 package com.darkxell.common.pokemon;
 
+import java.util.ArrayList;
+
+import com.darkxell.common.dungeon.floor.Floor;
+import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.DungeonEvent.MessageEvent;
 import com.darkxell.common.pokemon.BaseStats.Stat;
+import com.darkxell.common.util.language.Message;
 
 public class DungeonStats
 {
@@ -27,7 +33,7 @@ public class DungeonStats
 	private int specialAttack;
 	/** Special Defense. */
 	private int specialDefense;
-	int speedRecharge = 0;
+	private int[] speedBuffs = { -1, -1, -1, -1 }, speedDebuffs = { -1, -1, -1, -1 };
 	private int[] stages = new int[] { 10, 10, 10, 10, 10, 10, 10 };
 
 	public DungeonStats(DungeonPokemon pokemon)
@@ -42,6 +48,22 @@ public class DungeonStats
 	public void addStage(Stat stat, int stage)
 	{
 		this.setStage(stat, this.getStage(stat) + stage);
+	}
+
+	public int effectiveChange(Stat stat, int stage)
+	{
+		switch (stat)
+		{
+			case Speed:
+				if (stage < 0 && this.speedDebuffs() == this.speedDebuffs.length) return 0;
+				if (stage > 0 && this.speedBuffs() == this.speedBuffs.length) return 0;
+				return stage;
+
+			default:
+				if (this.stages[stat.id] + stage < 0) return -this.stages[stat.id];
+				if (this.stages[stat.id] + stage >= 20) return 20 - this.stages[stat.id];
+				return stage;
+		}
 	}
 
 	public float getAccuracy()
@@ -71,7 +93,7 @@ public class DungeonStats
 
 	public float getMoveSpeed()
 	{
-		return speedTable[1];
+		return speedTable[this.getStage(Stat.Speed)];
 	}
 
 	public int getSpecialAttack()
@@ -86,6 +108,7 @@ public class DungeonStats
 
 	public int getStage(Stat stat)
 	{
+		if (stat == Stat.Speed) return Math.max(0, this.speedBuffs() - this.speedBuffs() + 1);
 		return this.stages[stat.id];
 	}
 
@@ -103,6 +126,21 @@ public class DungeonStats
 		this.pokemon.setHP(this.pokemon.getHp() + hpchange);
 	}
 
+	public void onTurnStart(Floor floor, ArrayList<DungeonEvent> events)
+	{
+		int speed = this.getStage(Stat.Speed);
+
+		for (int i = 0; i < this.speedBuffs.length; ++i)
+			if (this.speedBuffs[i] > -1) --this.speedBuffs[i];
+		for (int i = 0; i < this.speedDebuffs.length; ++i)
+			if (this.speedDebuffs[i] > -1) --this.speedDebuffs[i];
+
+		int newSpeed = this.getStage(Stat.Speed);
+
+		if (speed != newSpeed) events.add(new MessageEvent(floor,
+				new Message("stat.speed." + String.valueOf(newSpeed).substring(0, 1)).addReplacement("<pokemon>", this.pokemon.getNickname())));
+	}
+
 	/** Called when the Pokémon steps on a Wonder Tile or changes Floor. */
 	public void resetStages()
 	{
@@ -112,14 +150,45 @@ public class DungeonStats
 
 	public void setStage(Stat stat, int stage)
 	{
-		if (stage < 0) stage = 0;
 		if (stat == Stat.Speed)
 		{
-			if (stage >= speedTable.length) stage = speedTable.length - 1;
-			if (stage == 0) this.speedRecharge = 8;
-		} else if (stage > 20) stage = 20;
+			if (stage > 0)
+			{
+				for (int i = 0; i < this.speedBuffs.length; ++i)
+					if (this.speedBuffs[i] == -1)
+					{
+						this.speedBuffs[i] = 7;
+						break;
+					}
+			} else for (int i = 0; i < this.speedDebuffs.length; ++i)
+				if (this.speedDebuffs[i] == -1)
+				{
+					this.speedDebuffs[i] = 7;
+					break;
+				}
+		} else
+		{
+			if (stage < 0) stage = 0;
+			else if (stage > 20) stage = 20;
 
-		this.stages[stat.id] = stage;
+			this.stages[stat.id] = stage;
+		}
+	}
+
+	public int speedBuffs()
+	{
+		int b = 0;
+		for (int buff : this.speedBuffs)
+			if (buff != -1) ++b;
+		return b;
+	}
+
+	public int speedDebuffs()
+	{
+		int b = 0;
+		for (int debuff : this.speedDebuffs)
+			if (debuff != -1) ++b;
+		return b;
 	}
 
 }
