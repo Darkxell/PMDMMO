@@ -18,7 +18,8 @@ public class CommonEventProcessor
 	{
 		ANIMATING,
 		AWATING_INPUT,
-		PROCESSING
+		PROCESSING,
+		DELAYED
 	}
 
 	public final DungeonInstance dungeon;
@@ -27,7 +28,7 @@ public class CommonEventProcessor
 	/** Lists the Players currently running. */
 	private ArrayList<DungeonPokemon> runners = new ArrayList<>();
 	/** While processing an event, setting this to false will stop processing the pending events. */
-	private CommonEventProcessor.State state = CommonEventProcessor.State.AWATING_INPUT;
+	private State state = State.PROCESSING;
 
 	public CommonEventProcessor(DungeonInstance dungeon)
 	{
@@ -78,7 +79,7 @@ public class CommonEventProcessor
 
 	/** Called just before processing an event.
 	 * 
-	 * @return false if the event processing should not be processed. */
+	 * @return false if the event should not be processed. */
 	protected boolean preProcess(DungeonEvent event)
 	{
 		if (event instanceof PokemonTravelEvent)
@@ -86,7 +87,7 @@ public class CommonEventProcessor
 			PokemonTravelEvent travel = (PokemonTravelEvent) event;
 			if (travel.pokemon.isTeamLeader() && travel.running)
 			{// Checking if switching with ally
-				if (travel.destination.getPokemon() != null && !travel.destination.getPokemon().isAlliedWith(travel.pokemon)) this.runners.add(travel.pokemon);
+				if (travel.destination.getPokemon() == null || !travel.destination.getPokemon().isAlliedWith(travel.pokemon)) this.runners.add(travel.pokemon);
 			}
 		}
 

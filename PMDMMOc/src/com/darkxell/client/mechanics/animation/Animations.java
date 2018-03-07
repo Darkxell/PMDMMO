@@ -9,7 +9,6 @@ import com.darkxell.client.mechanics.animation.SpritesetAnimation.BackSpriteUsag
 import com.darkxell.client.mechanics.animation.movement.TackleAnimationMovement;
 import com.darkxell.client.resources.images.AnimationSpriteset;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
-import com.darkxell.client.state.dungeon.AnimationState;
 import com.darkxell.common.event.stats.StatChangedEvent;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.move.Move;
@@ -50,7 +49,7 @@ public final class Animations
 	private static final HashMap<Integer, Element> moveTargets = new HashMap<Integer, Element>();
 	private static final HashMap<Integer, Element> statuses = new HashMap<Integer, Element>();
 
-	public static AbstractAnimation getAbilityAnimation(DungeonPokemon pokemon, Ability ability, AnimationState s)
+	public static AbstractAnimation getAbilityAnimation(DungeonPokemon pokemon, Ability ability, AnimationEndListener s)
 	{
 		return getAnimation(ability.id, abilities, pokemon, s);
 	}

@@ -2,14 +2,12 @@ package com.darkxell.client.state.dungeon;
 
 import java.awt.Graphics2D;
 
-import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.animation.AbstractAnimation;
-import com.darkxell.client.mechanics.animation.AnimationEndListener;
 import com.darkxell.client.state.dungeon.DungeonState.DungeonSubState;
 
 /** A State that displays an Animation, then refers to the DungeonEventProcessor for pending events.<br />
  * The Animation should not be null of this State will never end ! It should be set after creation, to allow the Animation to have this State as listener. */
-public class AnimationState extends DungeonSubState implements AnimationEndListener
+public class AnimationState extends DungeonSubState
 {
 
 	public AbstractAnimation animation;
@@ -17,13 +15,6 @@ public class AnimationState extends DungeonSubState implements AnimationEndListe
 	public AnimationState(DungeonState parent)
 	{
 		super(parent);
-	}
-
-	@Override
-	public void onAnimationEnd(AbstractAnimation animation)
-	{
-		this.parent.setSubstate(this.parent.actionSelectionState);
-		Persistance.eventProcessor.processPending();
 	}
 
 	@Override

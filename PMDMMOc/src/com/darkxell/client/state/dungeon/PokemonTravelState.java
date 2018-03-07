@@ -113,8 +113,7 @@ public class PokemonTravelState extends DungeonSubState
 				if (travel.destination.type() == TileType.STAIR) stairLand = travel.pokemon == Persistance.player.getDungeonLeader();
 			}
 			Persistance.eventProcessor.landedOnStairs = stairLand;
-			this.parent.setSubstate(this.parent.actionSelectionState);
-			Persistance.eventProcessor.processPending();
+			Persistance.eventProcessor.animateDelayed();
 		}
 	}
 }

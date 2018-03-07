@@ -39,7 +39,6 @@ public class DungeonInstance
 		this.currentFloor = this.createFloor(1);
 		this.currentFloor.generate();
 		this.currentSubTurn = GameTurn.SUB_TURNS - 1;
-		this.currentActor = -1;
 		this.endSubTurn();
 	}
 
@@ -88,7 +87,7 @@ public class DungeonInstance
 	{
 		/* // Checking for Pokémon who didn't act { for (int i = 0; i < this.actors.size(); ++i) if (this.actors.get(i).ac >= 1) Logger.e("Turn ended but " + this.actors.get(i) + " had " + this.actionsLeft.get(i) + " actions left!"); } */
 
-		this.currentActor = -1;
+		this.currentActor = 0;
 		++this.currentSubTurn;
 		// Logger.i("Subturn end!");
 
@@ -152,11 +151,10 @@ public class DungeonInstance
 	private void nextActorIndex()
 	{
 		if (this.currentActor == this.actors.size()) return;
-		++this.currentActor;
-		if (this.currentActor == this.actors.size()) return;
 
 		// Make sure 2nd test doesn't get called if first returns true
 		if (!this.actors.get(this.currentActor).actedThisSubturn()) if (this.actors.get(this.currentActor).subTurn()) return;
+		++this.currentActor;
 		this.nextActorIndex();
 	}
 

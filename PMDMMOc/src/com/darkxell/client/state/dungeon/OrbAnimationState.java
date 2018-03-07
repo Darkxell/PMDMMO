@@ -1,10 +1,11 @@
 package com.darkxell.client.state.dungeon;
 
 import com.darkxell.client.mechanics.animation.AbstractAnimation;
+import com.darkxell.client.mechanics.animation.AnimationEndListener;
 import com.darkxell.client.mechanics.animation.Animations;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
-public class OrbAnimationState extends AnimationState
+public class OrbAnimationState extends AnimationState implements AnimationEndListener
 {
 
 	/** The State to set when this Animation ends. */
@@ -20,7 +21,6 @@ public class OrbAnimationState extends AnimationState
 	@Override
 	public void onAnimationEnd(AbstractAnimation animation)
 	{
-		super.onAnimationEnd(animation);
 		this.parent.setSubstate(this.next);
 	}
 
