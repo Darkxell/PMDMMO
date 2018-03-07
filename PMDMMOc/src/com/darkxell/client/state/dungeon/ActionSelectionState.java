@@ -19,6 +19,7 @@ import com.darkxell.client.ui.Keys;
 import com.darkxell.common.event.TurnSkippedEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.pokemon.PokemonRotateEvent;
+import com.darkxell.common.event.pokemon.PokemonTravelEvent;
 import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.LearnedMove;
@@ -202,8 +203,8 @@ public class ActionSelectionState extends DungeonSubState
 			else
 			{
 				Direction direction = this.checkMovement();
-				if (direction != null) Persistance.eventProcessor.pokemonTravels(Persistance.player.getDungeonLeader(), direction,
-						Keys.isPressed(Keys.KEY_RUN) && !Persistance.player.getDungeonLeader().isFamished());
+				if (direction != null) Persistance.eventProcessor.processEvent(new PokemonTravelEvent(Persistance.floor, Persistance.player.getDungeonLeader(),
+						Keys.isPressed(Keys.KEY_RUN) && !Persistance.player.getDungeonLeader().isFamished(), direction));
 			}
 		}
 

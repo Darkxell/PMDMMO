@@ -9,7 +9,7 @@ import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteS
 import com.darkxell.client.state.dungeon.DungeonState.DungeonSubState;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
-import com.darkxell.common.event.pokemon.PokemonTravelEvent.PokemonTravel;
+import com.darkxell.common.event.pokemon.PokemonTravelEvent;
 
 /** Used for Pokémon travel animations. */
 public class PokemonTravelState extends DungeonSubState
@@ -22,9 +22,9 @@ public class PokemonTravelState extends DungeonSubState
 	public final boolean faraway;
 	public final boolean running;
 	private int tick;
-	private PokemonTravel[] travels;
+	private PokemonTravelEvent[] travels;
 
-	public PokemonTravelState(DungeonState parent, boolean running, PokemonTravel... travels)
+	public PokemonTravelState(DungeonState parent, boolean running, PokemonTravelEvent... travels)
 	{
 		super(parent);
 		this.travels = travels;
@@ -37,7 +37,7 @@ public class PokemonTravelState extends DungeonSubState
 
 		boolean f = true;
 		Tile camera = this.parent.getCameraPokemon().tile();
-		for (PokemonTravel t : travels)
+		for (PokemonTravelEvent t : travels)
 			if ((Math.abs(t.origin.x - camera.x) < 10 && Math.abs(t.origin.y - camera.y) < 10)
 					|| (Math.abs(t.destination.x - camera.x) < 10 && Math.abs(t.destination.y - camera.y) < 10))
 			{
@@ -52,9 +52,9 @@ public class PokemonTravelState extends DungeonSubState
 	{
 		super.onEnd();
 
-		if (this.running) for (PokemonTravel travel : this.travels)
+		if (this.running) for (PokemonTravelEvent travel : this.travels)
 			Persistance.dungeonState.pokemonRenderer.getRenderer(travel.pokemon).sprite.setTickingSpeed(1);
-		for (PokemonTravel travel : this.travels)
+		for (PokemonTravelEvent travel : this.travels)
 			Persistance.dungeonState.pokemonRenderer.getSprite(travel.pokemon).resetOnAnimationEnd();
 	}
 
@@ -70,7 +70,7 @@ public class PokemonTravelState extends DungeonSubState
 	public void onStart()
 	{
 		super.onStart();
-		for (PokemonTravel travel : this.travels)
+		for (PokemonTravelEvent travel : this.travels)
 		{
 			PokemonRenderer renderer = Persistance.dungeonState.pokemonRenderer.getRenderer(travel.pokemon);
 			renderer.sprite.setState(PokemonSpriteState.MOVE, true);
@@ -100,7 +100,7 @@ public class PokemonTravelState extends DungeonSubState
 		if (this.tick >= this.duration)
 		{
 			boolean stairLand = false;
-			for (PokemonTravel travel : this.travels)
+			for (PokemonTravelEvent travel : this.travels)
 			{
 				Persistance.dungeonState.pokemonRenderer.getRenderer(travel.pokemon).setXY(travel.destination.x, travel.destination.y);
 				if (travel.destination.type() == TileType.STAIR) stairLand = travel.pokemon == Persistance.player.getDungeonLeader();

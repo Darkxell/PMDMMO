@@ -47,7 +47,6 @@ import com.darkxell.common.event.pokemon.FaintedPokemonEvent;
 import com.darkxell.common.event.pokemon.HealthRestoredEvent;
 import com.darkxell.common.event.pokemon.PokemonSpawnedEvent;
 import com.darkxell.common.event.pokemon.PokemonTravelEvent;
-import com.darkxell.common.event.pokemon.PokemonTravelEvent.PokemonTravel;
 import com.darkxell.common.event.pokemon.StatusConditionCreatedEvent;
 import com.darkxell.common.event.pokemon.StatusConditionEndedEvent;
 import com.darkxell.common.event.pokemon.TriggeredAbilityEvent;
@@ -56,8 +55,8 @@ import com.darkxell.common.event.stats.StatChangedEvent;
 import com.darkxell.common.item.ItemFood;
 import com.darkxell.common.item.ItemGummi;
 import com.darkxell.common.player.Inventory;
-import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.BaseStats;
+import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.language.Message;
 import com.darkxell.common.weather.Weather;
@@ -396,9 +395,8 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	private void processTravelEvent(PokemonTravelEvent event)
 	{
 		this.processPending = false;
-		Persistance.dungeonState.setSubstate(new PokemonTravelState(Persistance.dungeonState, event.isRunning(), event.travels()));
-		for (PokemonTravel travel : event.travels())
-			if (travel.pokemon == Persistance.dungeonState.getCameraPokemon()) Persistance.dungeonState.floorVisibility.onCameraMoved();
+		Persistance.dungeonState.setSubstate(new PokemonTravelState(Persistance.dungeonState, event.running, event));
+		if (event.pokemon == Persistance.dungeonState.getCameraPokemon()) Persistance.dungeonState.floorVisibility.onCameraMoved();
 	}
 
 	private void processWeatherEvent(WeatherChangedEvent event)

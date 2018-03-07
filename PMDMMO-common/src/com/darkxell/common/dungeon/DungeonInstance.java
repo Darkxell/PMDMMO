@@ -180,12 +180,6 @@ public class DungeonInstance
 		this.actors.add(this.actorMap.get(pokemon));
 	}
 
-	public void takeAction(DungeonPokemon pokemon)
-	{
-		if (!this.actorMap.containsKey(pokemon)) return;
-		//this.actorMap.get(pokemon).subTurn();
-	}
-
 	public void unregisterActor(DungeonPokemon pokemon)
 	{
 		if (!this.actorMap.containsKey(pokemon)) return;
