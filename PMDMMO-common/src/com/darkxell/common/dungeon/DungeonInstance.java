@@ -86,7 +86,6 @@ public class DungeonInstance
 	 * @return The Events created for the start of the new turn. */
 	public ArrayList<DungeonEvent> endSubTurn()
 	{
-		// Logger.d("Turn ended");
 		/* // Checking for Pokémon who didn't act { for (int i = 0; i < this.actors.size(); ++i) if (this.actors.get(i).ac >= 1) Logger.e("Turn ended but " + this.actors.get(i) + " had " + this.actionsLeft.get(i) + " actions left!"); } */
 
 		this.currentActor = -1;
@@ -152,6 +151,7 @@ public class DungeonInstance
 
 	private void nextActorIndex()
 	{
+		if (this.currentActor == this.actors.size()) return;
 		++this.currentActor;
 		if (this.currentActor == this.actors.size()) return;
 

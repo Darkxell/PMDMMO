@@ -24,27 +24,34 @@ public class PokemonTravelState extends DungeonSubState
 	private int tick;
 	private PokemonTravelEvent[] travels;
 
-	public PokemonTravelState(DungeonState parent, boolean running, PokemonTravelEvent... travels)
+	public PokemonTravelState(DungeonState parent, PokemonTravelEvent... travels)
 	{
 		super(parent);
 		this.travels = travels;
-		this.running = running;
-		this.duration = this.running ? DURATION_RUN : DURATION_WALK;
 		this.animations = new TravelAnimation[this.travels.length];
 		for (int i = 0; i < this.travels.length; i++)
 			this.animations[i] = new TravelAnimation(this.travels[i].origin.location(), this.travels[i].destination.location());
 		this.tick = 0;
 
-		boolean f = true;
+		boolean f = true, r = false;
 		Tile camera = this.parent.getCameraPokemon().tile();
 		for (PokemonTravelEvent t : travels)
+		{
+			if (t.running)
+			{
+				r = true;
+				if (!f) break;
+			}
 			if ((Math.abs(t.origin.x - camera.x) < 10 && Math.abs(t.origin.y - camera.y) < 10)
 					|| (Math.abs(t.destination.x - camera.x) < 10 && Math.abs(t.destination.y - camera.y) < 10))
 			{
 				f = false;
-				break;
+				if (r) break;
 			}
+		}
+		this.running = r;
 		this.faraway = f;
+		this.duration = this.running ? DURATION_RUN : DURATION_WALK;
 	}
 
 	@Override

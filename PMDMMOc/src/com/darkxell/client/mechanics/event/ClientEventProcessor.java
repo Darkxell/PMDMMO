@@ -86,10 +86,26 @@ public final class ClientEventProcessor extends CommonEventProcessor
 
 	public boolean landedOnStairs = false;
 	private BaseStats levelupStats = null;
+	/** Stores consecutive travel events to animate them at the same time. */
+	private ArrayList<PokemonTravelEvent> travels = new ArrayList<>();
 
 	public ClientEventProcessor(DungeonInstance dungeon)
 	{
 		super(dungeon);
+	}
+
+	private void animateTravels()
+	{
+		this.setState(State.ANIMATING);
+		Persistance.dungeonState
+				.setSubstate(new PokemonTravelState(Persistance.dungeonState, this.travels.toArray(new PokemonTravelEvent[this.travels.size()])));
+		for (PokemonTravelEvent event : travels)
+			if (event.pokemon == Persistance.dungeonState.getCameraPokemon())
+			{
+				Persistance.dungeonState.floorVisibility.onCameraMoved();
+				break;
+			}
+		this.travels.clear();
 	}
 
 	@Override
@@ -107,7 +123,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		if (event instanceof StatusConditionEndedEvent) this.processStatusEvent((StatusConditionEndedEvent) event);
 
 		if (event instanceof PokemonSpawnedEvent) this.processSpawnEvent((PokemonSpawnedEvent) event);
-		if (event instanceof PokemonTravelEvent) this.processTravelEvent((PokemonTravelEvent) event);
+		if (event instanceof PokemonTravelEvent) this.travels.add((PokemonTravelEvent) event);
 		if (event instanceof FaintedPokemonEvent) this.processFaintedEvent((FaintedPokemonEvent) event);
 
 		if (event instanceof StatChangedEvent) this.processStatEvent((StatChangedEvent) event);
@@ -130,13 +146,24 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	@Override
 	public void onTurnEnd()
 	{
-		if (this.landedOnStairs)
+		if (!this.travels.isEmpty()) this.animateTravels();
+		else
 		{
-			this.addToPending(new StairLandingEvent());
-			this.landedOnStairs = false;
+			if (this.landedOnStairs)
+			{
+				this.addToPending(new StairLandingEvent());
+				this.landedOnStairs = false;
+			}
+			Logger.event("Turn ended ---------------");
+			super.onTurnEnd();
 		}
-		Logger.event("Turn ended ---------------");
-		super.onTurnEnd();
+	}
+
+	@Override
+	protected void preProcess(DungeonEvent event)
+	{
+		if (!this.travels.isEmpty() && this.stopsTravel(event)) this.animateTravels();
+		else super.preProcess(event);
 	}
 
 	private void processAbilityEvent(TriggeredAbilityEvent event)
@@ -390,13 +417,6 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	private void processStatusEvent(StatusConditionEndedEvent event)
 	{
 		Persistance.dungeonState.pokemonRenderer.getRenderer(event.condition.pokemon).removeAnimation(event.condition);
-	}
-
-	private void processTravelEvent(PokemonTravelEvent event)
-	{
-		this.setState(State.ANIMATING);
-		Persistance.dungeonState.setSubstate(new PokemonTravelState(Persistance.dungeonState, event.running, event));
-		if (event.pokemon == Persistance.dungeonState.getCameraPokemon()) Persistance.dungeonState.floorVisibility.onCameraMoved();
 	}
 
 	private void processWeatherEvent(WeatherChangedEvent event)
