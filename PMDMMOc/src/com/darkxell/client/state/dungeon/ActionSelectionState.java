@@ -203,8 +203,14 @@ public class ActionSelectionState extends DungeonSubState
 			else
 			{
 				Direction direction = this.checkMovement();
-				if (direction != null) Persistance.eventProcessor.processEvent(new PokemonTravelEvent(Persistance.floor, Persistance.player.getDungeonLeader(),
-						Keys.isPressed(Keys.KEY_RUN) && !Persistance.player.getDungeonLeader().isFamished(), direction));
+				if (direction != null)
+				{
+					DungeonPokemon leader = Persistance.player.getDungeonLeader();
+					if (leader.tile().adjacentTile(direction).getPokemon() != null) Persistance.eventProcessor
+							.addToPending(new PokemonTravelEvent(Persistance.floor, leader.tile().adjacentTile(direction).getPokemon(), direction.opposite()));
+					Persistance.eventProcessor
+							.processEvent(new PokemonTravelEvent(Persistance.floor, leader, Keys.isPressed(Keys.KEY_RUN) && !leader.isFamished(), direction));
+				}
 			}
 		}
 

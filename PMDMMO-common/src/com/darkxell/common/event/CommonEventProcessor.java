@@ -14,13 +14,20 @@ import com.darkxell.common.pokemon.DungeonPokemon;
 /** Processes game logic events. */
 public class CommonEventProcessor
 {
+	public static enum State
+	{
+		ANIMATING,
+		AWATING_INPUT,
+		PROCESSING
+	}
+
 	public final DungeonInstance dungeon;
 	/** Pending events to process. */
 	protected final Stack<DungeonEvent> pending = new Stack<DungeonEvent>();
-	/** While processing an event, setting this to false will stop processing the pending events. */
-	protected boolean processPending = true;
 	/** Lists the Players currently running. */
 	private ArrayList<DungeonPokemon> runners = new ArrayList<>();
+	/** While processing an event, setting this to false will stop processing the pending events. */
+	private CommonEventProcessor.State state = CommonEventProcessor.State.AWATING_INPUT;
 
 	public CommonEventProcessor(DungeonInstance dungeon)
 	{
@@ -98,14 +105,14 @@ public class CommonEventProcessor
 	/** Processes the input event and adds the resulting events to the pending stack. */
 	public void processEvent(DungeonEvent event)
 	{
-		this.processPending = true;
+		this.setState(State.PROCESSING);
 		this.dungeon.eventOccured(event);
 		if (event instanceof PokemonTravelEvent)
 		{
 			PokemonTravelEvent travel = (PokemonTravelEvent) event;
 			if (travel.pokemon.isTeamLeader() && travel.running)
 			{// Checking if switching with ally
-				if (!travel.destination.getPokemon().isAlliedWith(travel.pokemon)) this.runners.add(travel.pokemon);
+				if (travel.destination.getPokemon() != null && !travel.destination.getPokemon().isAlliedWith(travel.pokemon)) this.runners.add(travel.pokemon);
 			}
 		}
 
@@ -114,7 +121,7 @@ public class CommonEventProcessor
 			this.runners.clear();
 
 		if (event.isValid()) this.doProcess(event);
-		if (this.processPending) this.processPending();
+		if (this.state() == State.PROCESSING) this.processPending();
 	}
 
 	/** Adds all the input events to the pending stack and starts processing them. May not process all events in order if some produce new Events. */
@@ -142,11 +149,26 @@ public class CommonEventProcessor
 					if (AIUtils.shouldStopRunning(actor))
 					{
 						this.runners.clear();
+						this.setState(State.AWATING_INPUT);
 						return;
 					} else this.processEvent(new PokemonTravelEvent(this.dungeon.currentFloor(), actor, true, actor.facing()));
-				} else return;
+				} else
+				{
+					this.setState(State.AWATING_INPUT);
+					return;
+				}
 			} else this.processEvent(this.dungeon.currentFloor().aiManager.takeAction(actor));
 		}
+	}
+
+	protected void setState(State state)
+	{
+		this.state = state;
+	}
+
+	public State state()
+	{
+		return this.state;
 	}
 
 }
