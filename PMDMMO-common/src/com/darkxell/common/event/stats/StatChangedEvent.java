@@ -43,7 +43,7 @@ public class StatChangedEvent extends DungeonEvent
 		int effective = this.target.stats.effectiveChange(this.stat, this.stage);
 
 		if (effective != 0) this.target.stats.addStage(this.stat, effective);
-		if (this.stat == Stat.Speed && effective != 0) this.floor.dungeon.onSpeedChange(this.target, effective);
+		if (this.stat == Stat.Speed && effective != 0) this.floor.dungeon.onSpeedChange(this.target);
 
 		String messageID = MESSAGES[effective + 3];
 		if (effective == 0)

@@ -6,6 +6,8 @@ import com.darkxell.common.dungeon.floor.Floor;
 
 public class GameTurn
 {
+	
+	public static final int SUB_TURNS = 4;
 
 	/** Lists the Events that occur in this turn. */
 	private ArrayList<DungeonEvent> events = new ArrayList<DungeonEvent>();

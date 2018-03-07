@@ -167,9 +167,7 @@ public class Floor
 	{
 		// events.add(new MessageEvent(this, new Message("New turn!", false)));
 
-		// For each existing Pokémon
-		for (DungeonPokemon pokemon : this.listPokemon())
-			pokemon.onTurnStart(this, events);
+		// For each existing Pokémon: has been moved to DungeonInstance to be able to trigger it at subturn end
 
 		// Weather
 		for (int w = this.weatherCondition.size() - 1; w >= 0; --w)

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.GameTurn;
 import com.darkxell.common.event.DungeonEvent.MessageEvent;
 import com.darkxell.common.pokemon.BaseStats.Stat;
 import com.darkxell.common.util.language.Message;
@@ -33,7 +34,7 @@ public class DungeonStats
 	private int specialAttack;
 	/** Special Defense. */
 	private int specialDefense;
-	private int[] speedBuffs = { -1, -1, -1, -1 }, speedDebuffs = { -1, -1, -1, -1 };
+	private int[] speedBuffs = new int[GameTurn.SUB_TURNS], speedDebuffs = new int[GameTurn.SUB_TURNS];
 	private int[] stages = new int[] { 10, 10, 10, 10, 10, 10, 10 };
 
 	public DungeonStats(DungeonPokemon pokemon)
@@ -131,9 +132,9 @@ public class DungeonStats
 		int speed = this.getStage(Stat.Speed);
 
 		for (int i = 0; i < this.speedBuffs.length; ++i)
-			if (this.speedBuffs[i] > -1) --this.speedBuffs[i];
+			if (this.speedBuffs[i] > 0) --this.speedBuffs[i];
 		for (int i = 0; i < this.speedDebuffs.length; ++i)
-			if (this.speedDebuffs[i] > -1) --this.speedDebuffs[i];
+			if (this.speedDebuffs[i] > 0) --this.speedDebuffs[i];
 
 		int newSpeed = this.getStage(Stat.Speed);
 
@@ -155,13 +156,13 @@ public class DungeonStats
 			if (stage > 0)
 			{
 				for (int i = 0; i < this.speedBuffs.length; ++i)
-					if (this.speedBuffs[i] == -1)
+					if (this.speedBuffs[i] == 0)
 					{
 						this.speedBuffs[i] = 7;
 						break;
 					}
 			} else for (int i = 0; i < this.speedDebuffs.length; ++i)
-				if (this.speedDebuffs[i] == -1)
+				if (this.speedDebuffs[i] == 0)
 				{
 					this.speedDebuffs[i] = 7;
 					break;
@@ -179,7 +180,7 @@ public class DungeonStats
 	{
 		int b = 0;
 		for (int buff : this.speedBuffs)
-			if (buff != -1) ++b;
+			if (buff != 0) ++b;
 		return b;
 	}
 
@@ -187,7 +188,7 @@ public class DungeonStats
 	{
 		int b = 0;
 		for (int debuff : this.speedDebuffs)
-			if (debuff != -1) ++b;
+			if (debuff != 0) ++b;
 		return b;
 	}
 

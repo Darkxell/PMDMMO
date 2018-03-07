@@ -66,7 +66,7 @@ public class CommonEventProcessor
 
 	public void onTurnEnd()
 	{
-		this.addToPending(this.dungeon.endTurn());
+		this.addToPending(this.dungeon.endSubTurn());
 		this.processPending();
 	}
 
@@ -98,7 +98,7 @@ public class CommonEventProcessor
 		{
 			DungeonPokemon actor = this.dungeon.nextActor();
 			if (actor == pokemon) break;
-			
+
 			if (actor != null && actor.isTeamLeader())
 			{
 				if (!this.runners.contains(actor)) e = null;
@@ -149,8 +149,9 @@ public class CommonEventProcessor
 			travel.origin.setPokemon(travel.pokemon);
 
 		// Resetting turns taken
-		for (PokemonTravel travel : travellers)
-			this.dungeon.resetAction(travel.pokemon);
+		int total = travellers.size() + skippers.size();
+		for (int i = 0; i < total; ++i)
+			this.dungeon.previousActor();
 
 		PokemonTravelEvent event = new PokemonTravelEvent(this.dungeon.currentFloor(), travellers.toArray(new PokemonTravel[travellers.size()]));
 		this.processEvent(event);

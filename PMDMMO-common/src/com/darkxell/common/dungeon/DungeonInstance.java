@@ -1,33 +1,34 @@
 package com.darkxell.common.dungeon;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.layout.Layout;
 import com.darkxell.common.dungeon.floor.layout.StaticLayout;
+import com.darkxell.common.event.Actor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.GameTurn;
 import com.darkxell.common.pokemon.DungeonPokemon;
-import com.darkxell.common.util.Logger;
 
 public class DungeonInstance
 {
 
-	/** For each actor, the number of actions left it can take. */
-	private ArrayList<Float> actionsLeft = new ArrayList<>();
+	private HashMap<DungeonPokemon, Actor> actorMap = new HashMap<>();
 	/** The Pokémon to take turn in order. */
-	private ArrayList<DungeonPokemon> actors = new ArrayList<DungeonPokemon>();
+	private ArrayList<Actor> actors = new ArrayList<>();
 	/** The current Pokémon taking its turn. */
 	private int currentActor;
 	/** The current Floor. */
 	private Floor currentFloor;
+	private int currentSubTurn;
 	/** The current turn. */
 	private GameTurn currentTurn;
 	/** ID of the Dungeon. */
 	public final int id;
 	/** Lists the previous turns. */
-	private ArrayList<GameTurn> pastTurns = new ArrayList<GameTurn>();
+	private ArrayList<GameTurn> pastTurns = new ArrayList<>();
 	/** RNG for floor generation. */
 	public final Random random;
 
@@ -37,14 +38,15 @@ public class DungeonInstance
 		this.random = random;
 		this.currentFloor = this.createFloor(1);
 		this.currentFloor.generate();
-		this.endTurn();
+		this.currentSubTurn = GameTurn.SUB_TURNS - 1;
 		this.currentActor = -1;
+		this.endSubTurn();
 	}
 
 	/** Compares the input Pokémon depending on their order of action. */
 	public int compare(DungeonPokemon p1, DungeonPokemon p2)
 	{
-		return Integer.compare(this.actors.indexOf(p1), this.actors.indexOf(p2));
+		return Integer.compare(this.indexOf(p1), this.indexOf(p2));
 	}
 
 	private Floor createFloor(int floorID)
@@ -75,29 +77,33 @@ public class DungeonInstance
 		this.currentFloor = this.createFloor(this.currentFloor.id + 1);
 		this.currentFloor.generate();
 		this.actors.clear();
+		this.actorMap.clear();
 		return this.currentFloor;
 	}
 
 	/** Ends the current Turn.
 	 * 
 	 * @return The Events created for the start of the new turn. */
-	public ArrayList<DungeonEvent> endTurn()
+	public ArrayList<DungeonEvent> endSubTurn()
 	{
 		// Logger.d("Turn ended");
-		// Checking for Pokémon who didn't act
-		{
-			for (int i = 0; i < this.actors.size(); ++i)
-				if (this.actionsLeft.get(i) >= 1) Logger.e("Turn ended but " + this.actors.get(i) + " had " + this.actionsLeft.get(i) + " actions left!");
-		}
+		/* // Checking for Pokémon who didn't act { for (int i = 0; i < this.actors.size(); ++i) if (this.actors.get(i).ac >= 1) Logger.e("Turn ended but " + this.actors.get(i) + " had " + this.actionsLeft.get(i) + " actions left!"); } */
 
-		if (this.currentTurn != null) this.pastTurns.add(this.currentTurn);
 		this.currentActor = -1;
-		this.currentTurn = new GameTurn(this.currentFloor);
-		for (int i = 0; i < this.actionsLeft.size(); ++i)
-			this.actionsLeft.set(i, this.actionsLeft.get(i) + this.actors.get(i).stats.getMoveSpeed());
-		
+		++this.currentSubTurn;
+
 		ArrayList<DungeonEvent> events = new ArrayList<>();
-		this.currentFloor.onTurnStart(events);
+		boolean turnEnd = this.currentSubTurn == GameTurn.SUB_TURNS;
+
+		for (Actor a : this.actors)
+			if (turnEnd || a.actedThisSubturn()) a.onTurnEnd(this.currentFloor, events);
+
+		if (turnEnd)
+		{
+			this.currentFloor.onTurnStart(events);
+			if (this.currentTurn != null) this.pastTurns.add(this.currentTurn);
+			this.currentTurn = new GameTurn(this.currentFloor);
+		}
 		return events;
 	}
 
@@ -111,7 +117,7 @@ public class DungeonInstance
 	public DungeonPokemon getActor()
 	{
 		if (this.currentActor >= this.actors.size() || this.currentActor < 0) return null;
-		return this.actors.get(this.currentActor);
+		return this.actors.get(this.currentActor).pokemon;
 	}
 
 	/** @return The last past turn. null if this is the first turn. */
@@ -121,62 +127,65 @@ public class DungeonInstance
 		return this.pastTurns.get(this.pastTurns.size() - 1);
 	}
 
-	/** @return The next Pokémon to take its turn. null if there is no actor left, thus the turn is over. */
-	public DungeonPokemon getNextActor()
+	private int indexOf(DungeonPokemon pokemon)
 	{
-		for (int i = 0; i < this.actors.size(); ++i)
-			if (this.actionsLeft.get(i) >= 1) return this.actors.get(i);
-		return null;
+		if (this.actorMap.containsKey(pokemon)) return this.actors.indexOf(this.actorMap.get(pokemon));
+		return -1;
 	}
 
 	public void insertActor(DungeonPokemon pokemon, int index)
 	{
-		if (this.actors.contains(pokemon)) return;
-		this.actors.add(index, pokemon);
-		this.actionsLeft.add(index, pokemon.stats.getMoveSpeed());
+		if (this.actorMap.containsKey(pokemon)) return;
+		this.actors.add(index, new Actor(pokemon));
 	}
 
 	/** Proceeds to the next actor and returns it. */
 	public DungeonPokemon nextActor()
 	{
-		DungeonPokemon p = this.getNextActor();
-		if (p == null) this.currentActor = this.actors.size();
-		else this.currentActor = this.actors.indexOf(p);
+		this.nextActorIndex();
 		return this.getActor();
 	}
 
-	public void onSpeedChange(DungeonPokemon pokemon, int stage)
+	private void nextActorIndex()
 	{
-		if (!this.actors.contains(pokemon)) return;
-		int index = this.actors.indexOf(pokemon);
-		this.actionsLeft.set(index, Math.max(Math.min(this.actionsLeft.get(index), 1), this.actionsLeft.get(index) + stage));
+		++this.currentActor;
+		if (this.currentActor == this.actors.size()) return;
+
+		// Make sure 2nd test doesn't get called if first returns true
+		if (!this.actors.get(this.currentActor).actedThisSubturn()) if (this.actors.get(this.currentActor).subTurn()) return;
+		this.nextActorIndex();
+	}
+
+	public void onSpeedChange(DungeonPokemon pokemon)
+	{
+		if (!this.actorMap.containsKey(pokemon)) return;
+		this.actorMap.get(pokemon).onSpeedChange();
+	}
+
+	public void previousActor()
+	{
+		if (this.currentActor == -1) return;
+		if (this.currentActor < this.actors.size()) this.actors.get(this.currentActor).cancelSubTurn();
+		--this.currentActor;
 	}
 
 	public void registerActor(DungeonPokemon pokemon)
 	{
-		if (this.actors.contains(pokemon)) return;
-		this.actors.add(pokemon);
-		this.actionsLeft.add(pokemon.stats.getMoveSpeed());
-	}
-
-	public void resetAction(DungeonPokemon pokemon)
-	{
-		if (!this.actors.contains(pokemon)) return;
-		this.actionsLeft.set(this.actors.indexOf(pokemon), pokemon.stats.getMoveSpeed());
+		if (this.actorMap.containsKey(pokemon)) return;
+		this.actorMap.put(pokemon, new Actor(pokemon));
 	}
 
 	public void takeAction(DungeonPokemon pokemon)
 	{
-		if (!this.actors.contains(pokemon)) return;
-		int index = this.actors.indexOf(pokemon);
-		this.actionsLeft.set(index, this.actionsLeft.get(index) - 1);
+		if (!this.actorMap.containsKey(pokemon)) return;
+		this.actorMap.get(pokemon).subTurn();
 	}
 
 	public void unregisterActor(DungeonPokemon pokemon)
 	{
-		if (!this.actors.contains(pokemon)) return;
-		this.actionsLeft.remove(this.actors.indexOf(pokemon));
-		this.actors.remove(pokemon);
+		if (!this.actorMap.containsKey(pokemon)) return;
+		this.actors.remove(this.indexOf(pokemon));
+		this.actorMap.remove(pokemon);
 	}
 
 }
