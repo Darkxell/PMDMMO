@@ -59,6 +59,7 @@ public class Actor
 	{
 		++this.actionTick;
 		boolean acts = this.actionTick >= this.actionTime;
+		// Logger.i("Time for " + this.pokemon + " to play ! Tick now at " + this.actionTick + ", with action time of " + this.actionTime + ". Will it act? " + acts);
 		this.actionTick %= this.actionTime;
 		this.actedThisSubturn = acts;
 		return acts;
