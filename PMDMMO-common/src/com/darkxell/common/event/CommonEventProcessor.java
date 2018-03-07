@@ -76,8 +76,10 @@ public class CommonEventProcessor
 		this.processPending();
 	}
 
-	/** Called just before processing an event. */
-	protected void preProcess(DungeonEvent event)
+	/** Called just before processing an event.
+	 * 
+	 * @return false if the event processing should not be processed. */
+	protected boolean preProcess(DungeonEvent event)
 	{
 		if (event instanceof PokemonTravelEvent)
 		{
@@ -89,14 +91,15 @@ public class CommonEventProcessor
 		}
 
 		if (this.stopsTravel(event)) this.runners.clear();
+
+		return event.isValid();
 	}
 
 	/** Processes the input event and adds the resulting events to the pending stack. */
 	public void processEvent(DungeonEvent event)
 	{
 		this.setState(State.PROCESSING);
-		this.preProcess(event);
-		if (event.isValid() && this.state() == State.PROCESSING) this.doProcess(event);
+		if (this.preProcess(event)) if (this.state() == State.PROCESSING) this.doProcess(event);
 		if (this.state() == State.PROCESSING) this.processPending();
 	}
 
