@@ -94,6 +94,7 @@ public class CustomTextfield {
 			charsbefore = charsbefore.substring(0, charsbefore.length() - 1);
 	}
 
+	/**Returns the String contained in this textfield.*/
 	public String getContent() {
 		return charsbefore + charsafter;
 	}

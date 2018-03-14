@@ -5,6 +5,7 @@
  */
 package com.darkxell.gameserver;
 
+import com.darkxell.gameserver.messagehandlers.CreateAccountHandler;
 import java.io.StringReader;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -97,19 +98,26 @@ public class GameServer {
             if ("sessioninfo".equals(jsonMessage.getString("action"))) {
                 SessionOpenHandler hand = new SessionOpenHandler(this);
                 hand.handleMessage(jsonMessage, session, sessionHandler);
-            } else if ("freezoneposition".equals(jsonMessage.getString("action"))) {
-                FreezonePositionHandler hand = new FreezonePositionHandler(this);
+            } else if ("createaccount".equals(jsonMessage.getString("action"))) {
+                CreateAccountHandler hand = new CreateAccountHandler(this);
                 hand.handleMessage(jsonMessage, session, sessionHandler);
             } else if ("saltreset".equals(jsonMessage.getString("action"))) {
                 SaltResetHandler hand = new SaltResetHandler(this);
                 hand.handleMessage(jsonMessage, session, sessionHandler);
+            } else if ("freezoneposition".equals(jsonMessage.getString("action"))) {
+                FreezonePositionHandler hand = new FreezonePositionHandler(this);
+                hand.handleMessage(jsonMessage, session, sessionHandler);
             }
-            //ADD other "action" json message types if needed.
+            // ADD other "action" json message types if needed.
             // DON'T FORGET TO ADD THEM TO THE DOCUMENTATION!!!
         } catch (Exception e) {
             System.out.println(message);
             e.printStackTrace();
         }
+    }
+
+    public PlayerDAO getPlayerDAO() {
+        return this.playerDAO;
     }
 
 }

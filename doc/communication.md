@@ -48,6 +48,13 @@ This payload must be sent by any client before they send any other game related 
 This payload must be sent by a client to get a salt in order to log in. The server will generate a new random salt and send it back to the client. The client must authentificate by salting his hashed password using the set salt.
 Trying to authentificate without reseting the salt will not be taken into account by the server.
 
+■ CREATEACCOUNT
+<br/>{"action":"createaccount",
+<br/>"name":"Darkxell", // The name of the player
+<br/>"passhash":"h4guz8eph5u", // The hashed password
+<br/>}
+This payload must by a client to create a new account. This will create a new account entry in the database.
+
 ■ FREEZONEPOSITION
 <br/>{"action":"freezoneposition",
 <br/>"name":"Darkxell", // The name of the player
