@@ -43,6 +43,11 @@ This is the payload you should send to the server when you want to add a message
 <br/>}
 This payload must be sent by any client before they send any other game related payload. It contains the basic login informations used by the server to autentificate the user.
 
+■ SALTRESET
+<br/>{"action":"saltreset",}
+This payload must be sent by a client to get a salt in order to log in. The server will generate a new random salt and send it back to the client. The client must authentificate by salting his hashed password using the set salt.
+Trying to authentificate without reseting the salt will not be taken into account by the server.
+
 ■ FREEZONEPOSITION
 <br/>{"action":"freezoneposition",
 <br/>"name":"Darkxell", // The name of the player
@@ -64,6 +69,7 @@ This payload should be sent by a client to the server to notify it about the pla
 <br/>"messagecolor":"#333333", // (Optionnal) The color of the message, in valid hexadecimal string
 <br/>"sendercolor":"#333333" // (Optionnal) The color of the sender, in valid hexadecimal string
 <br/>}
+This payload is sent by the server to notify the client of a new chat message.
 
 ■ FREEZONEPOSITION
 <br/>{"action":"freezoneposition",
@@ -73,3 +79,16 @@ This payload should be sent by a client to the server to notify it about the pla
 <br/>"currentpokemon":"1", // The id of the pokemon as a String
 <br/>}
 This payload is sent by the server to any client who sent a valid freezoneposition payload to the server.
+Note that this payload is sent each time you notify the server of your movement for each other player.
+
+■ SALTRESET
+<br/>{"action":"saltreset",
+<br/>"value":"mynameAUbr5af7ef51gre"
+<br/>}
+This payload is sent after a client request and contains the needed salt to authentificate and prevent MIM attacks (in case of an SSL breach, wich is unlikely to happen in the first place).
+The client must authentificate using the salt value in this payload using an authentificate client payload.
+
+
+
+
+
