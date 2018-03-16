@@ -31,12 +31,11 @@ public class LoginMainState extends StateManager {
 	private int mouseY = 1;
 	private int offsetx = 100;
 	private int offsety = 20;
-	private boolean focus_login = true;
-	private boolean focus_pass = false;
 
 	@Override
 	public void onKeyPressed(KeyEvent e, short key) {
-
+		login.onKeyPressed(e);
+		password.onKeyPressed(e);
 	}
 
 	@Override
@@ -46,10 +45,8 @@ public class LoginMainState extends StateManager {
 
 	@Override
 	public void onKeyTyped(KeyEvent e) {
-		if (focus_login)
-			this.login.insertString(e.getKeyChar() + "");
-		if (focus_pass)
-			this.password.insertString(e.getKeyChar() + "");
+		login.onKeyTyped(e);
+		password.onKeyTyped(e);
 	}
 
 	@Override
@@ -66,14 +63,14 @@ public class LoginMainState extends StateManager {
 		}
 		// Textfield focus
 		if (textfield_login.isInside(new Position(mouseX - offsetx, mouseY - offsety))) {
-			this.login.setSelection(focus_login = true);
-			this.password.setSelection(focus_pass = false);
+			this.login.setSelection(true);
+			this.password.setSelection(false);
 		} else if (textfield_pass.isInside(new Position(mouseX - offsetx, mouseY - offsety))) {
-			this.login.setSelection(focus_login = false);
-			this.password.setSelection(focus_pass = true);
+			this.login.setSelection(false);
+			this.password.setSelection(true);
 		} else {
-			this.login.setSelection(focus_login = false);
-			this.password.setSelection(focus_pass = false);
+			this.login.setSelection(false);
+			this.password.setSelection(false);
 		}
 	}
 

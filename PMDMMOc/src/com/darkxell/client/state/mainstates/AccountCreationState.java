@@ -16,6 +16,7 @@ public class AccountCreationState extends StateManager {
 
 	private CustomTextfield login = new CustomTextfield();
 	private CustomTextfield password = new CustomTextfield();
+	private CustomTextfield confirm = new CustomTextfield();
 	/**
 	 * The width of the non responsive square containing the login componnents.
 	 * I'm lazy.
