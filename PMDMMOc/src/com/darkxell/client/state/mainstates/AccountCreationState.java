@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 
+import com.darkxell.client.launchable.GameSocketEndpoint;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.chat.CustomTextfield;
 import com.darkxell.client.resources.images.others.Hud;
@@ -32,9 +33,9 @@ public class AccountCreationState extends StateManager {
 	private int mouseY = 1;
 	private int offsetx = 100;
 	private int offsety = 20;
-	
-	private String errormessage = "Template error message";
-	
+
+	private String errormessage = "";
+
 	@Override
 	public void onKeyPressed(KeyEvent e, short key) {
 		login.onKeyPressed(e);
@@ -58,13 +59,24 @@ public class AccountCreationState extends StateManager {
 	public void onMouseClick(int x, int y) {
 		// Button clicks
 		if (button_create.isInside(new Position(mouseX - offsetx, mouseY - offsety))) {
-			Persistance.stateManager = new LoginMainState();
-			// Sends the account creation payload to the server
-			String message = "";
-			JsonObject mess = new JsonObject().add("action", "createaccount").add("name", this.login.getContent())
-					.add("passhash", this.password.getContent());
-			message = mess.toString();
-			Persistance.socketendpoint.sendMessage(message);
+			if (password.getContent().length() < 8) {
+				this.errormessage = "Your password is too short, 8 characters minimum.";
+			} else if (!password.getContent().equals(confirm.getContent())) {
+				this.errormessage = "Confirmation field is not identical to you password.";
+			} else if (Persistance.socketendpoint == null
+					|| Persistance.socketendpoint.connectionStatus() != GameSocketEndpoint.CONNECTED) {
+				this.errormessage = "Could not contact the server to create an account.";
+			} else {
+				// Sends the account creation payload to the server
+
+				String message = "";
+				JsonObject mess = new JsonObject().add("action", "createaccount").add("name", this.login.getContent())
+						.add("passhash", this.password.getContent());
+				message = mess.toString();
+				Persistance.socketendpoint.sendMessage(message);
+				Persistance.stateManager = new LoginMainState();
+
+			}
 		} else if (button_back.isInside(new Position(mouseX - offsetx, mouseY - offsety))) {
 			Persistance.stateManager = new LoginMainState();
 		}
@@ -114,7 +126,10 @@ public class AccountCreationState extends StateManager {
 		g.translate(offsetx, offsety);
 		// DRAWS THE ACCOUNT CREATION FACILITIES
 		g.drawImage(Hud.createaccountframe, 0, 0, null);
-		
+
+		g.setColor(Color.RED);
+		g.drawString(errormessage, 155, 143);
+
 		g.translate(textfield_login.x + 10, textfield_login.y);
 		this.login.render(g, (int) textfield_login.width - 20, (int) textfield_login.height - 15);
 		g.translate(-textfield_login.x - 10, -textfield_login.y);
