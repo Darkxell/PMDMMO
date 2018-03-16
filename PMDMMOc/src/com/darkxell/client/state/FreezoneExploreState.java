@@ -179,7 +179,6 @@ public class FreezoneExploreState extends AbstractState {
 					Persistance.socketendpoint.sendMessage(message);
 				} catch (Exception e) {
 					Logger.w("Could not send freezone information message to the server.");
-					e.printStackTrace();
 				}
 			}
 		else if (serversynccooldown != -1)

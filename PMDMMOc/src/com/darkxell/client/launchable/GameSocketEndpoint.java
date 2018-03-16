@@ -31,7 +31,7 @@ public class GameSocketEndpoint {
 		try {
 			this.endpointURI = new URI("ws://" + ClientSettings.getSetting(ClientSettings.SERVER_ADDRESS) + "game");
 		} catch (URISyntaxException e) {
-			e.printStackTrace();
+			Logger.e("Could not create a valid URI to: ws://" + ClientSettings.getSetting(ClientSettings.SERVER_ADDRESS) + "game");
 		}
 		thr = new Thread(new Runnable() {
 
@@ -48,9 +48,8 @@ public class GameSocketEndpoint {
 			WebSocketContainer container = ContainerProvider.getWebSocketContainer();
 			container.connectToServer(this, this.endpointURI);
 		} catch (Exception e) {
-			e.printStackTrace();
 			this.connectionStatus = FAILED;
-			Logger.e("Could not connect to the server for game communication");
+			Logger.e("Could not connect to the server for game communication : "+e.toString());
 		}
 	}
 
@@ -74,8 +73,8 @@ public class GameSocketEndpoint {
 			Logger.i("Game socket connected to the server sucessfully.");
 			this.connectionStatus = CONNECTED;
 		} catch (Exception e) {
-			Logger.e("Could not aggree with the server for a valid session");
-			e.printStackTrace();
+			Logger.e("Could not aggree with the server for a valid session : " + e.toString());
+			
 		}
 	}
 
@@ -119,7 +118,12 @@ public class GameSocketEndpoint {
 	 * @param message
 	 */
 	public void sendMessage(String message) {
-		this.userSession.getAsyncRemote().sendText(message);
+		try {
+			this.userSession.getAsyncRemote().sendText(message);
+		} catch (Exception e) {
+			Logger.e("Could not send message to server socket.");
+		}
+
 	}
 
 }

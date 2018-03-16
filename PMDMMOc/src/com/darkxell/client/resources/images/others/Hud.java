@@ -13,5 +13,6 @@ public class Hud {
 	public static final BufferedImage textwindow_transparent = Res.getBase("/hud/textwindow_transparent.png");
 	public static final BufferedImage gametitle = Res.getBase("/hud/title.png");
 	public static final BufferedImage loginframe = Res.getBase("/hud/login.png");
+	public static final BufferedImage createaccountframe = Res.getBase("/hud/create.png");
 
 }

@@ -11,10 +11,12 @@ import com.darkxell.common.util.Logger;
 /** Class that holds commonly used resources utility. */
 public class Res {
 
-	/** @param path - Path to a resource.
-	 * @return True if the resource exists. */
-	public static boolean exists(String path)
-	{
+	/**
+	 * @param path
+	 *            - Path to a resource.
+	 * @return True if the resource exists.
+	 */
+	public static boolean exists(String path) {
 		return Res.class.getResourceAsStream(path) != null;
 	}
 
@@ -29,7 +31,7 @@ public class Res {
 			try {
 				img = ImageIO.read(new File(path));
 			} catch (Exception e1) {
-				e.printStackTrace();
+				Logger.e("Could not read the following image file : " + path + "\nerrors : " + e + " / " + e1);
 			}
 		}
 		Logger.instance().debug("Loaded resource from hard memory : " + path);
@@ -77,8 +79,7 @@ public class Res {
 		return toreturn;
 	}
 
-	public static File getFile(String path)
-	{
+	public static File getFile(String path) {
 		return new File(Res.class.getResource(path).getFile());
 	}
 
