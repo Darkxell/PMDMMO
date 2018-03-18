@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 
+import com.darkxell.client.launchable.Encryption;
 import com.darkxell.client.launchable.GameSocketEndpoint;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.chat.CustomTextfield;
@@ -11,6 +12,7 @@ import com.darkxell.client.resources.images.others.Hud;
 import com.darkxell.client.state.StateManager;
 import com.darkxell.client.ui.MainUiUtility;
 import com.darkxell.common.util.DoubleRectangle;
+import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.Position;
 import com.eclipsesource.json.JsonObject;
 
@@ -68,14 +70,8 @@ public class AccountCreationState extends StateManager {
 				this.errormessage = "Could not contact the server to create an account.";
 			} else {
 				// Sends the account creation payload to the server
-
-				String message = "";
-				JsonObject mess = new JsonObject().add("action", "createaccount").add("name", this.login.getContent())
-						.add("passhash", this.password.getContent());
-				message = mess.toString();
-				Persistance.socketendpoint.sendMessage(message);
+				sendAccountcreationMessage();
 				Persistance.stateManager = new LoginMainState();
-
 			}
 		} else if (button_back.isInside(new Position(mouseX - offsetx, mouseY - offsety))) {
 			Persistance.stateManager = new LoginMainState();
@@ -172,4 +168,30 @@ public class AccountCreationState extends StateManager {
 	}
 
 	private boolean firstupdate = true;
+
+	/**
+	 * Sends the account creation payload to the server after proper encryption.
+	 */
+	private void sendAccountcreationMessage() {
+		try {
+			String message = "";
+			// local hash that is somewhat safer to keep in memory. It doesn't
+			// make sense securizing this variable as it's value is identical to
+			// the user's local storage.
+			String localhash = Encryption.clientHash(this.password.getContent(), this.login.getContent(),
+					Encryption.HASHSALTTYPE_CLIENT);
+			JsonObject mess = new JsonObject().add("action", "createaccount").add("name", this.login.getContent()).add(
+					"passhash",
+					Encryption.clientHash(localhash, this.login.getContent(), Encryption.HASHSALTTYPE_SERVER));
+			message = mess.toString();
+			Persistance.socketendpoint.sendMessage(message);
+		} catch (Exception e) {
+			Logger.e(
+					"Could not send the create account information payload because... HOLY SHIT THIS SHOULD NOT BE HAPPENING");
+			Encryption.death256message();
+			System.exit(666);
+		}
+
+	}
+
 }
