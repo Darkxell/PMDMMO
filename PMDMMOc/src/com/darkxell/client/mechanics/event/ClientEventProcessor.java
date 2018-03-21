@@ -190,13 +190,12 @@ public final class ClientEventProcessor extends CommonEventProcessor
 			this.travels.add((PokemonTravelEvent) event);
 		} else if (!this.travels.isEmpty())
 		{
-			this.delayedWithTravels.push(event);
 			if (this.stopsTravel(event))
 			{
 				this.addToPending(event);
 				this.animateDelayed();
 				return false;
-			}
+			} else this.delayedWithTravels.push(event);
 		}
 		return super.preProcess(event);
 	}

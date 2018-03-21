@@ -50,7 +50,7 @@ public class DungeonInstance
 
 	public void consumeTurn(DungeonPokemon actor)
 	{
-		if (actor != null && this.getActor() == actor) this.actors.get(this.currentActor).act();
+		if (actor != null && this.actorMap.containsKey(actor)) this.actorMap.get(actor).act();
 	}
 
 	private Floor createFloor(int floorID)
