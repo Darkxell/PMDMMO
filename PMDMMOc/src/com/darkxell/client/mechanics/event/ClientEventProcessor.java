@@ -163,7 +163,6 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	public void doProcess(DungeonEvent event)
 	{
 		super.doProcess(event);
-
 		this.doClientProcess(event);
 	}
 
@@ -192,7 +191,12 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		} else if (!this.travels.isEmpty())
 		{
 			this.delayedWithTravels.push(event);
-			if (this.stopsTravel(event)) this.animateDelayed();
+			if (this.stopsTravel(event))
+			{
+				this.addToPending(event);
+				this.animateDelayed();
+				return false;
+			}
 		}
 		return super.preProcess(event);
 	}

@@ -103,7 +103,7 @@ public class CommonEventProcessor
 		if (this.preProcess(event))
 		{
 			this.dungeon.consumeTurn(event.actor);
-			if (this.state() == State.PROCESSING) this.doProcess(event);
+			this.doProcess(event);
 		}
 		if (this.state() == State.PROCESSING) this.processPending();
 	}
