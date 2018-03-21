@@ -20,7 +20,7 @@ public class PokemonTravelEvent extends DungeonEvent
 
 	public PokemonTravelEvent(Floor floor, DungeonPokemon pokemon, boolean running, Direction direction)
 	{
-		super(floor);
+		super(floor, pokemon);
 		this.pokemon = pokemon;
 		this.running = running;
 		this.direction = direction;

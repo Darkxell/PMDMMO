@@ -18,10 +18,11 @@ public class CommonEventProcessor
 	{
 		ANIMATING,
 		AWATING_INPUT,
-		PROCESSING,
-		DELAYED
+		DELAYED,
+		PROCESSING
 	}
 
+	private boolean actorConsumedTurn = false;
 	public final DungeonInstance dungeon;
 	/** Pending events to process. */
 	protected final Stack<DungeonEvent> pending = new Stack<DungeonEvent>();
@@ -100,7 +101,11 @@ public class CommonEventProcessor
 	public void processEvent(DungeonEvent event)
 	{
 		this.setState(State.PROCESSING);
-		if (this.preProcess(event)) if (this.state() == State.PROCESSING) this.doProcess(event);
+		if (this.preProcess(event))
+		{
+			if (event.actor == this.dungeon.getActor()) this.actorConsumedTurn = true;
+			if (this.state() == State.PROCESSING) this.doProcess(event);
+		}
 		if (this.state() == State.PROCESSING) this.processPending();
 	}
 
@@ -117,7 +122,12 @@ public class CommonEventProcessor
 		if (this.hasPendingEvents()) this.processEvent(this.pending.pop());
 		else
 		{
-			DungeonPokemon actor = this.dungeon.nextActor();
+			DungeonPokemon actor = this.dungeon.getActor();
+			if (this.actorConsumedTurn)
+			{
+				this.actorConsumedTurn = false;
+				actor = this.dungeon.nextActor();
+			}
 			if (actor == null)
 			{
 				this.onTurnEnd();

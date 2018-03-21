@@ -125,7 +125,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	private void doClientProcess(DungeonEvent event)
 	{
 		if (this.delayedWithTravels.contains(event)) return;
-		
+
 		Persistance.dungeonState.logger.showMessages(event.getMessages());
 		Logger.event(event.loggerMessage());
 
@@ -186,8 +186,10 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	@Override
 	protected boolean preProcess(DungeonEvent event)
 	{
-		if (event instanceof PokemonTravelEvent) this.travels.add((PokemonTravelEvent) event);
-		else if (!this.travels.isEmpty())
+		if (event instanceof PokemonTravelEvent)
+		{
+			this.travels.add((PokemonTravelEvent) event);
+		} else if (!this.travels.isEmpty())
 		{
 			this.delayedWithTravels.push(event);
 			if (this.stopsTravel(event)) this.animateDelayed();

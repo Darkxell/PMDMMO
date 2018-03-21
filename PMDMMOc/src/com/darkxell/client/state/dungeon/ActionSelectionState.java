@@ -65,8 +65,9 @@ public class ActionSelectionState extends DungeonSubState
 
 		if (direction != null)
 		{
-			Persistance.player.getDungeonLeader().setFacing(direction);
-			if (!this.parent.rotating && Persistance.player.getDungeonLeader().tryMoveTo(direction, true)) return direction;
+			DungeonPokemon leader = Persistance.player.getDungeonLeader();
+			if (direction != leader.facing()) Persistance.eventProcessor.processEvent(new PokemonRotateEvent(Persistance.floor, leader, direction, false));
+			if (!this.parent.rotating && leader.tryMoveTo(direction, true)) return direction;
 		}
 		return null;
 	}
@@ -105,7 +106,7 @@ public class ActionSelectionState extends DungeonSubState
 				d = d.rotateClockwise();
 				if (leader.tile().adjacentTile(d).getPokemon() != null && !leader.player().isAlly(leader.tile().adjacentTile(d).getPokemon())) break;
 			} while (d != leader.facing());
-			Persistance.eventProcessor.processEvent(new PokemonRotateEvent(Persistance.floor, leader, d));
+			if (d != leader.facing()) Persistance.eventProcessor.processEvent(new PokemonRotateEvent(Persistance.floor, leader, d, false));
 		} else if (key == Keys.KEY_MOVE_1 && leader.move(0) != null)
 			Persistance.eventProcessor.processEvent(new MoveSelectionEvent(Persistance.floor, leader.move(0), leader));
 		else if (key == Keys.KEY_MOVE_2 && leader.move(1) != null)
