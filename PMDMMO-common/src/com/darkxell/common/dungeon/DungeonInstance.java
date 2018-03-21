@@ -11,6 +11,7 @@ import com.darkxell.common.event.Actor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.GameTurn;
 import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.util.Logger;
 
 public class DungeonInstance
 {
@@ -90,7 +91,11 @@ public class DungeonInstance
 	 * @return The Events created for the start of the new turn. */
 	public ArrayList<DungeonEvent> endSubTurn()
 	{
-		/* // Checking for Pokémon who didn't act { for (int i = 0; i < this.actors.size(); ++i) if (this.actors.get(i).ac >= 1) Logger.e("Turn ended but " + this.actors.get(i) + " had " + this.actionsLeft.get(i) + " actions left!"); } */
+		for (Actor a : this.actors)
+		{
+			if (!a.hasSubTurnTriggered()) Logger.e("Subturn ended but " + a + " wasn't called!");
+			a.subTurnEnded();
+		}
 
 		this.currentActor = -1;
 		this.nextActor();
@@ -158,12 +163,11 @@ public class DungeonInstance
 	{
 		if (this.currentActor == this.actors.size()) return;
 
-		// Make sure 2nd test doesn't get called if first returns true
+		// Make sure subturn() doesn't get called if actedThisSubturn() returns true
 		if (this.currentActor != -1 && !this.actors.get(this.currentActor).actedThisSubturn())
 		{
 			if (this.actors.get(this.currentActor).hasSubTurnTriggered()) return;
 			if (this.actors.get(this.currentActor).subTurn()) return;
-			this.actors.get(this.currentActor).subTurnEnded();
 		}
 		++this.currentActor;
 		this.nextActorIndex();

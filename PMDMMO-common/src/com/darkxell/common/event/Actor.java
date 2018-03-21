@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.util.Logger;
 
 public class Actor
 {
@@ -48,7 +49,7 @@ public class Actor
 
 	public void onSpeedChange()
 	{
-		this.actionTime = GameTurn.SUB_TURNS / this.pokemon.stats.getMoveSpeed();
+		this.actionTime = GameTurn.SUB_TURNS * 1f / this.pokemon.stats.getMoveSpeed();
 		this.actionTick = (this.actionTime / 2) % 1;
 	}
 
@@ -65,7 +66,7 @@ public class Actor
 	{
 		++this.actionTick;
 		boolean acts = this.actionTick >= this.actionTime;
-		// Logger.i("Time for " + this.pokemon + " to play ! Tick now at " + this.actionTick + ", with action time of " + this.actionTime + ". Will it act? " + acts);
+		 Logger.i("Time for " + this.pokemon + " to play ! Tick now at " + this.actionTick + ", with action time of " + this.actionTime + ". Will it act? " + acts);
 		this.actionTick %= this.actionTime;
 		this.subTurnTriggered = true;
 		return acts;
@@ -74,6 +75,12 @@ public class Actor
 	public void subTurnEnded()
 	{
 		this.subTurnTriggered = false;
+	}
+
+	@Override
+	public String toString()
+	{
+		return this.pokemon.toString();
 	}
 
 }

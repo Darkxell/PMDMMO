@@ -156,13 +156,13 @@ public class DungeonStats
 				for (int i = 0; i < this.speedBuffs.length; ++i)
 					if (this.speedBuffs[i] == 0)
 					{
-						this.speedBuffs[i] = 7;
+						this.speedBuffs[i] = 15;
 						break;
 					}
 			} else for (int i = 0; i < this.speedDebuffs.length; ++i)
 				if (this.speedDebuffs[i] == 0)
 				{
-					this.speedDebuffs[i] = 7;
+					this.speedDebuffs[i] = 15;
 					break;
 				}
 		} else
