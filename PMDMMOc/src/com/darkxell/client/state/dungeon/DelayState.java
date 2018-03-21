@@ -19,6 +19,7 @@ public class DelayState extends DungeonSubState
 		@Override
 		public void onDelayElapsed(DelayState state)
 		{
+			state.parent.setSubstate(state.parent.actionSelectionState);
 			Persistance.eventProcessor.processPending();
 		}
 	};
@@ -57,7 +58,7 @@ public class DelayState extends DungeonSubState
 		++this.tick;
 		if (this.tick >= this.duration)
 		{
-			this.parent.setSubstate(this.parent.actionSelectionState);
+			this.parent.setSubstate(this.parent.defaultSubstate);
 			this.listener.onDelayElapsed(this);
 		}
 	}

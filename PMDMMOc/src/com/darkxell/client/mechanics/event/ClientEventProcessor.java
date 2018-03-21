@@ -79,7 +79,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		@Override
 		public void onAnimationEnd(AbstractAnimation animation)
 		{
-			if (Persistance.eventProcessor.hasPendingEvents()) Persistance.eventProcessor.processPending();
+			Persistance.eventProcessor.processPending();
 		}
 	};
 
@@ -87,7 +87,8 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		@Override
 		public void onDialogEnd(DialogState dialog)
 		{
-			if (Persistance.eventProcessor.hasPendingEvents()) Persistance.eventProcessor.processPending();
+			((PrincipalMainState) Persistance.stateManager).setState(Persistance.dungeonState);
+			Persistance.eventProcessor.processPending();
 		}
 	};
 
