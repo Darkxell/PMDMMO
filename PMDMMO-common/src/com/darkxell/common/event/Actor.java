@@ -8,12 +8,13 @@ import com.darkxell.common.pokemon.DungeonPokemon;
 public class Actor
 {
 
-	private boolean actedThisSubturn;
+	boolean actedThisSubturn;
 	/** The current ticking. When it exceeds actionTime, an action may be taken. */
 	private float actionTick;
 	/** The time this Actor needs to take an action. */
 	private float actionTime;
 	public final DungeonPokemon pokemon;
+	private boolean subTurnTriggered;
 
 	public Actor(DungeonPokemon pokemon)
 	{
@@ -22,22 +23,27 @@ public class Actor
 		this.onSpeedChange();
 	}
 
+	public void act()
+	{
+		this.actedThisSubturn = true;
+	}
+
 	public boolean actedThisSubturn()
 	{
 		return this.actedThisSubturn;
 	}
 
-	public void cancelSubTurn()
-	{
-		--this.actionTick;
-		if (this.actionTick < 0) this.actionTick += this.actionTime;
-		this.actedThisSubturn = false;
-	}
+	/* public void cancelSubTurn() { --this.actionTick; if (this.actionTick < 0) this.actionTick += this.actionTime; this.actedThisSubturn = false; } */
 
 	@Override
 	public int hashCode()
 	{
 		return this.pokemon.hashCode(); // Allows checking for already existing actor in the list.
+	}
+
+	public boolean hasSubTurnTriggered()
+	{
+		return this.subTurnTriggered;
 	}
 
 	public void onSpeedChange()
@@ -61,8 +67,13 @@ public class Actor
 		boolean acts = this.actionTick >= this.actionTime;
 		// Logger.i("Time for " + this.pokemon + " to play ! Tick now at " + this.actionTick + ", with action time of " + this.actionTime + ". Will it act? " + acts);
 		this.actionTick %= this.actionTime;
-		this.actedThisSubturn = acts;
+		this.subTurnTriggered = true;
 		return acts;
+	}
+
+	public void subTurnEnded()
+	{
+		this.subTurnTriggered = false;
 	}
 
 }

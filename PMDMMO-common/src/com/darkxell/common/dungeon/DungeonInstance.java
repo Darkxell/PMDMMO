@@ -48,6 +48,11 @@ public class DungeonInstance
 		return Integer.compare(this.indexOf(p1), this.indexOf(p2));
 	}
 
+	public void consumeTurn(DungeonPokemon actor)
+	{
+		if (actor != null && this.getActor() == actor) this.actors.get(this.currentActor).act();
+	}
+
 	private Floor createFloor(int floorID)
 	{
 		Layout l = this.dungeon().getData(floorID).layout();
@@ -87,7 +92,8 @@ public class DungeonInstance
 	{
 		/* // Checking for Pokémon who didn't act { for (int i = 0; i < this.actors.size(); ++i) if (this.actors.get(i).ac >= 1) Logger.e("Turn ended but " + this.actors.get(i) + " had " + this.actionsLeft.get(i) + " actions left!"); } */
 
-		this.currentActor = 0;
+		this.currentActor = -1;
+		this.nextActor();
 		++this.currentSubTurn;
 		// Logger.i("Subturn end!");
 
@@ -153,7 +159,12 @@ public class DungeonInstance
 		if (this.currentActor == this.actors.size()) return;
 
 		// Make sure 2nd test doesn't get called if first returns true
-		if (!this.actors.get(this.currentActor).actedThisSubturn()) if (this.actors.get(this.currentActor).subTurn()) return;
+		if (this.currentActor != -1 && !this.actors.get(this.currentActor).actedThisSubturn())
+		{
+			if (this.actors.get(this.currentActor).hasSubTurnTriggered()) return;
+			if (this.actors.get(this.currentActor).subTurn()) return;
+			this.actors.get(this.currentActor).subTurnEnded();
+		}
 		++this.currentActor;
 		this.nextActorIndex();
 	}
@@ -164,12 +175,7 @@ public class DungeonInstance
 		this.actorMap.get(pokemon).onSpeedChange();
 	}
 
-	public void previousActor()
-	{
-		if (this.currentActor == -1) return;
-		if (this.currentActor < this.actors.size()) this.actors.get(this.currentActor).cancelSubTurn();
-		--this.currentActor;
-	}
+	/* public void previousActor() { if (this.currentActor == -1) return; if (this.currentActor < this.actors.size()) this.actors.get(this.currentActor).cancelSubTurn(); --this.currentActor; } */
 
 	public void registerActor(DungeonPokemon pokemon)
 	{
