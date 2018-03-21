@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.animation.TravelAnimation;
 import com.darkxell.client.renderers.floor.PokemonRenderer;
+import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
 import com.darkxell.client.state.dungeon.DungeonState.DungeonSubState;
 import com.darkxell.common.dungeon.floor.Tile;
@@ -60,7 +61,7 @@ public class PokemonTravelState extends DungeonSubState
 		super.onEnd();
 
 		if (this.running) for (PokemonTravelEvent travel : this.travels)
-			Persistance.dungeonState.pokemonRenderer.getRenderer(travel.pokemon).sprite.setTickingSpeed(1);
+			Persistance.dungeonState.pokemonRenderer.getRenderer(travel.pokemon).sprite.updateTickingSpeed(travel.pokemon);
 		for (PokemonTravelEvent travel : this.travels)
 			Persistance.dungeonState.pokemonRenderer.getSprite(travel.pokemon).resetOnAnimationEnd();
 	}
@@ -82,7 +83,7 @@ public class PokemonTravelState extends DungeonSubState
 			PokemonRenderer renderer = Persistance.dungeonState.pokemonRenderer.getRenderer(travel.pokemon);
 			renderer.sprite.setState(PokemonSpriteState.MOVE, true);
 			travel.pokemon.setFacing(travel.direction);
-			if (this.running) renderer.sprite.setTickingSpeed(3);
+			if (this.running) renderer.sprite.setTickingSpeed(PokemonSprite.QUICKER);
 		}
 	}
 

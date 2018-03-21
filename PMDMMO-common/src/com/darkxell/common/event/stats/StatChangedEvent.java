@@ -45,7 +45,7 @@ public class StatChangedEvent extends DungeonEvent
 		if (effective != 0)
 		{
 			this.target.stats.addStage(this.stat, effective);
-			if (this.stat == Stat.Speed) this.floor.dungeon.onSpeedChange(this.target);
+			if (this.stat == Stat.Speed) this.resultingEvents.add(new SpeedChangedEvent(this.floor, this.target));
 		}
 
 		String messageID = MESSAGES[effective + 3];
@@ -53,8 +53,8 @@ public class StatChangedEvent extends DungeonEvent
 		{
 			if (this.stage > 0) messageID = "stat.increase.fail";
 			else messageID = "stat.decrease.fail";
-		} else if (this.stat == Stat.Speed) messageID = "stat.speed." + String.valueOf(this.target.stats.getMoveSpeed()).substring(0, 1);
-		this.messages
+		}
+		if (this.stat != Stat.Speed || effective == 0) this.messages
 				.add(new Message(messageID).addReplacement("<pokemon>", this.target.getNickname()).addReplacement("<stat>", new Message("stat." + this.stat)));
 
 		return super.processServer();

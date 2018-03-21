@@ -52,6 +52,7 @@ import com.darkxell.common.event.pokemon.StatusConditionCreatedEvent;
 import com.darkxell.common.event.pokemon.StatusConditionEndedEvent;
 import com.darkxell.common.event.pokemon.TriggeredAbilityEvent;
 import com.darkxell.common.event.stats.LevelupEvent;
+import com.darkxell.common.event.stats.SpeedChangedEvent;
 import com.darkxell.common.event.stats.StatChangedEvent;
 import com.darkxell.common.item.ItemFood;
 import com.darkxell.common.item.ItemGummi;
@@ -142,6 +143,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		if (event instanceof FaintedPokemonEvent) this.processFaintedEvent((FaintedPokemonEvent) event);
 
 		if (event instanceof StatChangedEvent) this.processStatEvent((StatChangedEvent) event);
+		if (event instanceof SpeedChangedEvent) this.processSpeedEvent((SpeedChangedEvent) event);
 		if (event instanceof TriggeredAbilityEvent) this.processAbilityEvent((TriggeredAbilityEvent) event);
 		if (event instanceof LevelupEvent) this.processLevelupEvent((LevelupEvent) event);
 		if (event instanceof MoveDiscoveredEvent) this.processMoveDiscoveredEvent((MoveDiscoveredEvent) event);
@@ -405,6 +407,11 @@ public final class ClientEventProcessor extends CommonEventProcessor
 				else renderer.sprite.setShadowColor(PokemonSprite.ENEMY_SHADOW);
 			} else renderer.sprite.setShadowColor(PokemonSprite.ALLY_SHADOW);
 		}
+	}
+
+	private void processSpeedEvent(SpeedChangedEvent event)
+	{
+		Persistance.dungeonState.pokemonRenderer.getRenderer(event.pokemon).sprite.updateTickingSpeed(event.pokemon);
 	}
 
 	private void processStairEvent(StairLandingEvent event)
