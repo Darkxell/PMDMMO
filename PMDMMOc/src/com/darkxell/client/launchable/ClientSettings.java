@@ -4,6 +4,8 @@ import java.awt.event.KeyEvent;
 import java.io.*;
 import java.util.Properties;
 
+import com.darkxell.common.util.Logger;
+
 public class ClientSettings {
 	public static final String KEY_UP = "key.up", KEY_DOWN = "key.down", KEY_LEFT = "key.left", KEY_RIGHT = "key.right", KEY_ATTACK = "key.attack",
 			KEY_ROTATE = "key.rotate", KEY_RUN = "key.run", KEY_DIAGONAL = "key.diagonal", KEY_MENU = "key.menu", KEY_MOVE_1 = "key.move1",
@@ -81,9 +83,9 @@ public class ClientSettings {
 			try {
 				settings.load(new FileInputStream(f));
 			} catch (FileNotFoundException e) {
-				e.printStackTrace();
+				Logger.e("Could not find settings.properties : " + e);
 			} catch (IOException e) {
-				e.printStackTrace();
+				Logger.e("Could not open settings.properties : " + e);
 			}
 	}
 
@@ -96,9 +98,9 @@ public class ClientSettings {
 		try {
 			settings.store(new FileOutputStream(new File("resources/settings.properties")), null);
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			Logger.e("Could not find settings.properties : " + e);
 		} catch (IOException e) {
-			e.printStackTrace();
+			Logger.e("Could not open settings.properties : " + e);
 		}
 	}
 

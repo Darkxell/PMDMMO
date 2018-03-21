@@ -40,7 +40,7 @@ public class ChatBox {
 			URI servwslocation = new URI(loc);
 			endpoint = new ChatClientEndpoint(servwslocation, this);
 		} catch (URISyntaxException e) {
-			e.printStackTrace();
+			Logger.e("Could not connect to the chat socket : " + e.toString());
 		}
 		this.thread = new Thread(new Runnable() {
 			@Override

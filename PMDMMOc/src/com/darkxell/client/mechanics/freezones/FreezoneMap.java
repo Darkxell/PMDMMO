@@ -11,6 +11,7 @@ import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.freezones.entities.OtherPlayerEntity;
 import com.darkxell.client.resources.images.tilesets.AbstractTileset;
 import com.darkxell.client.state.map.LocalMap.LOCALMAPLOCATION;
+import com.darkxell.common.util.Logger;
 import com.eclipsesource.json.JsonValue;
 
 /**
@@ -61,7 +62,7 @@ public abstract class FreezoneMap {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Logger.e("Could not build freezonemap from XML file : " + e);
 		}
 	}
 

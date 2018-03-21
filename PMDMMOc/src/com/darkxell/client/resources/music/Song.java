@@ -5,6 +5,8 @@ import java.util.Map;
 
 import javax.sound.sampled.AudioFileFormat;
 
+import com.darkxell.common.util.Logger;
+
 import javazoom.spi.mpeg.sampled.file.MpegAudioFileReader;
 
 public class Song {
@@ -35,7 +37,7 @@ public class Song {
 			this.author = (String) properties.get("author");
 			this.name = (String) properties.get("title");
 		} catch (Exception e) {
-			e.printStackTrace();
+			Logger.e("Could not read song properties properly : " + e);
 		}
 		File tempfile = new File(path);
 		this.displayname = tempfile.getName();
@@ -61,9 +63,9 @@ public class Song {
 	 * Note : I'm aware that this is not hte best method to get it, but I just
 	 * couldn't find something better. <br/>
 	 * <strong>Deprecated :</strong> this method has been deprecated due to high
-	 * and not necessary CPU usage. MP3 length can now
-	 * be obtained by creating a Song Object with the filepath, and using the
-	 * public Song.length attribute.
+	 * and not necessary CPU usage. MP3 length can now be obtained by creating a
+	 * Song Object with the filepath, and using the public Song.length
+	 * attribute.
 	 */
 	@Deprecated
 	public static int getmp3Length(File file) {
@@ -75,7 +77,7 @@ public class Song {
 			long duration = (long) properties.get("duration");
 			return (int) duration / 1000;
 		} catch (Exception e) {
-			e.printStackTrace();
+			Logger.e("Could not obtain song length : " + e);
 			return 0;
 		}
 	}

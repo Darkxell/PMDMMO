@@ -35,7 +35,7 @@ public class ChatClientEndpoint {
 			WebSocketContainer container = ContainerProvider.getWebSocketContainer();
 			container.connectToServer(this, this.endpointURI);
 		} catch (Exception e) {
-			e.printStackTrace();
+			Logger.e("Could not connect to chat server : " + e);
 			this.connectionStatus = FAILED;
 		}
 	}
@@ -85,8 +85,7 @@ public class ChatClientEndpoint {
 			JsonValue obj = Json.parse(message);
 			holder.messages.add(new ChatMessage(obj));
 		} catch (Exception e) {
-			Logger.w("Could not add the recieved message to messages list : " + message);
-			e.printStackTrace();
+			Logger.e("Could not add the recieved message to messages list : " + message + " / " + e);
 		}
 
 	}

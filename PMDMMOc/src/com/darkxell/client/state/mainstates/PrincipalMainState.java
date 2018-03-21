@@ -57,12 +57,7 @@ public class PrincipalMainState extends StateManager {
 			this.currentState.onKeyPressed(key);
 		if (e.getKeyCode() == KeyEvent.VK_ENTER && isChatFocused)
 			Persistance.chatbox.send();
-		if (e.getKeyCode() == KeyEvent.VK_LEFT && isChatFocused)
-			Persistance.chatbox.textfield.pressLeft();
-		if (e.getKeyCode() == KeyEvent.VK_RIGHT && isChatFocused)
-			Persistance.chatbox.textfield.pressRight();
-		if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE && isChatFocused)
-			Persistance.chatbox.textfield.pressDelete();
+		Persistance.chatbox.textfield.onKeyPressed(e);
 	}
 
 	@Override
@@ -73,8 +68,7 @@ public class PrincipalMainState extends StateManager {
 
 	@Override
 	public void onKeyTyped(KeyEvent e) {
-		if (e.getKeyChar() != '\b' && isChatFocused)
-			Persistance.chatbox.textfield.insertString(e.getKeyChar() + "");
+		Persistance.chatbox.textfield.onKeyTyped(e);
 	}
 
 	@Override

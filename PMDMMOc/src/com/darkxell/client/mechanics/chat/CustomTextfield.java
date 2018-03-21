@@ -5,6 +5,7 @@ import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.Shape;
+import java.awt.event.KeyEvent;
 
 public class CustomTextfield {
 
@@ -94,7 +95,7 @@ public class CustomTextfield {
 			charsbefore = charsbefore.substring(0, charsbefore.length() - 1);
 	}
 
-	/**Returns the String contained in this textfield.*/
+	/** Returns the String contained in this textfield. */
 	public String getContent() {
 		return charsbefore + charsafter;
 	}
@@ -108,6 +109,28 @@ public class CustomTextfield {
 	 */
 	public void setSelection(boolean a) {
 		this.unselected = !a;
+	}
+
+	/**
+	 * Should be called by a state that uses this textfield upon recieving a
+	 * KeyPressed event.
+	 */
+	public void onKeyPressed(KeyEvent e) {
+		if (e.getKeyCode() == KeyEvent.VK_LEFT && !unselected)
+			this.pressLeft();
+		if (e.getKeyCode() == KeyEvent.VK_RIGHT && !unselected)
+			this.pressRight();
+		if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE && !unselected)
+			this.pressDelete();
+	}
+
+	/**
+	 * Should be called by a state that uses this textfield upon recieving a
+	 * KeyTyped event.
+	 */
+	public void onKeyTyped(KeyEvent e) {
+		if (e.getKeyChar() != '\b' && !unselected)
+			this.insertString(e.getKeyChar() + "");
 	}
 
 }

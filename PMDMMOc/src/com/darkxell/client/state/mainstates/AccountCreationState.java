@@ -4,11 +4,15 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 
+import com.darkxell.client.launchable.Encryption;
+import com.darkxell.client.launchable.GameSocketEndpoint;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.chat.CustomTextfield;
+import com.darkxell.client.resources.images.others.Hud;
 import com.darkxell.client.state.StateManager;
 import com.darkxell.client.ui.MainUiUtility;
 import com.darkxell.common.util.DoubleRectangle;
+import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.Position;
 import com.eclipsesource.json.JsonObject;
 
@@ -16,6 +20,7 @@ public class AccountCreationState extends StateManager {
 
 	private CustomTextfield login = new CustomTextfield();
 	private CustomTextfield password = new CustomTextfield();
+	private CustomTextfield confirm = new CustomTextfield();
 	/**
 	 * The width of the non responsive square containing the login componnents.
 	 * I'm lazy.
@@ -30,12 +35,14 @@ public class AccountCreationState extends StateManager {
 	private int mouseY = 1;
 	private int offsetx = 100;
 	private int offsety = 20;
-	private boolean focus_login = true;
-	private boolean focus_pass = false;
+
+	private String errormessage = "";
 
 	@Override
 	public void onKeyPressed(KeyEvent e, short key) {
-
+		login.onKeyPressed(e);
+		password.onKeyPressed(e);
+		confirm.onKeyPressed(e);
 	}
 
 	@Override
@@ -45,33 +52,47 @@ public class AccountCreationState extends StateManager {
 
 	@Override
 	public void onKeyTyped(KeyEvent e) {
-		if (focus_login)
-			this.login.insertString(e.getKeyChar() + "");
-		if (focus_pass)
-			this.password.insertString(e.getKeyChar() + "");
+		login.onKeyTyped(e);
+		password.onKeyTyped(e);
+		confirm.onKeyTyped(e);
 	}
 
 	@Override
 	public void onMouseClick(int x, int y) {
+		// Button clicks
 		if (button_create.isInside(new Position(mouseX - offsetx, mouseY - offsety))) {
+			if (password.getContent().length() < 8) {
+				this.errormessage = "Your password is too short, 8 characters minimum.";
+			} else if (!password.getContent().equals(confirm.getContent())) {
+				this.errormessage = "Confirmation field is not identical to you password.";
+			} else if (Persistance.socketendpoint == null
+					|| Persistance.socketendpoint.connectionStatus() != GameSocketEndpoint.CONNECTED) {
+				this.errormessage = "Could not contact the server to create an account.";
+			} else {
+				// Sends the account creation payload to the server
+				sendAccountcreationMessage();
+				Persistance.stateManager = new LoginMainState();
+			}
+		} else if (button_back.isInside(new Position(mouseX - offsetx, mouseY - offsety))) {
 			Persistance.stateManager = new LoginMainState();
-			// Sends the account creation payload to the server
-			String message = "";
-			JsonObject mess = new JsonObject().add("action", "createaccount").add("name", this.login.getContent())
-					.add("passhash", this.password.getContent());
-			message = mess.toString();
-			Persistance.socketendpoint.sendMessage(message);
-			System.out.println(message);
 		}
+		// Textfield focus
 		if (textfield_login.isInside(new Position(mouseX - offsetx, mouseY - offsety))) {
-			this.login.setSelection(focus_login = true);
-			this.password.setSelection(focus_pass = false);
+			this.login.setSelection(true);
+			this.password.setSelection(false);
+			this.confirm.setSelection(false);
 		} else if (textfield_pass.isInside(new Position(mouseX - offsetx, mouseY - offsety))) {
-			this.login.setSelection(focus_login = false);
-			this.password.setSelection(focus_pass = true);
+			this.login.setSelection(false);
+			this.password.setSelection(true);
+			this.confirm.setSelection(false);
+		} else if (textfield_confirm.isInside(new Position(mouseX - offsetx, mouseY - offsety))) {
+			this.login.setSelection(false);
+			this.password.setSelection(false);
+			this.confirm.setSelection(true);
 		} else {
-			this.login.setSelection(focus_login = false);
-			this.password.setSelection(focus_pass = false);
+			this.login.setSelection(false);
+			this.password.setSelection(false);
+			this.confirm.setSelection(false);
 		}
 	}
 
@@ -86,9 +107,11 @@ public class AccountCreationState extends StateManager {
 
 	}
 
-	private DoubleRectangle textfield_login = new DoubleRectangle(40, 30, 400, 45);
-	private DoubleRectangle textfield_pass = new DoubleRectangle(40, 130, 400, 45);
-	private DoubleRectangle button_create = new DoubleRectangle(150, 230, 150, 55);
+	private DoubleRectangle textfield_login = new DoubleRectangle(155, 157, 257, 32);
+	private DoubleRectangle textfield_pass = new DoubleRectangle(155, 203, 257, 32);
+	private DoubleRectangle textfield_confirm = new DoubleRectangle(155, 249, 257, 32);
+	private DoubleRectangle button_create = new DoubleRectangle(211, 301, 128, 38);
+	private DoubleRectangle button_back = new DoubleRectangle(33, 150, 82, 27);
 
 	@Override
 	public void render(Graphics2D g, int width, int height) {
@@ -97,15 +120,11 @@ public class AccountCreationState extends StateManager {
 		offsety = height / 2 - squareheight / 2;
 		int relativemousex = mouseX - offsetx, relativemousey = mouseY - offsety;
 		g.translate(offsetx, offsety);
-		// DRAWS THE LOGIN FACILITIES
-		g.setColor(new Color(63, 197, 255, 105));
-		g.fillRect(0, 0, squarewidth, squareheight);
-		MainUiUtility.drawBoxOutline(g, 0, 0, squarewidth, squareheight);
-		g.setColor(Color.BLUE);
-		g.fillRect((int) textfield_login.x, (int) textfield_login.y, (int) textfield_login.width,
-				(int) textfield_login.height);
-		g.fillRect((int) textfield_pass.x, (int) textfield_pass.y, (int) textfield_pass.width,
-				(int) textfield_pass.height);
+		// DRAWS THE ACCOUNT CREATION FACILITIES
+		g.drawImage(Hud.createaccountframe, 0, 0, null);
+
+		g.setColor(Color.RED);
+		g.drawString(errormessage, 155, 143);
 
 		g.translate(textfield_login.x + 10, textfield_login.y);
 		this.login.render(g, (int) textfield_login.width - 20, (int) textfield_login.height - 15);
@@ -115,14 +134,22 @@ public class AccountCreationState extends StateManager {
 		this.password.render(g, (int) textfield_pass.width - 20, (int) textfield_pass.height - 15);
 		g.translate(-textfield_pass.x - 10, -textfield_pass.y);
 
-		g.setColor(Color.WHITE);
-		g.drawString("LOGIN", (int) textfield_login.x, (int) textfield_login.y - 10);
-		g.drawString("PASSWORD", (int) textfield_pass.x, (int) textfield_pass.y - 10);
+		g.translate(textfield_confirm.x + 10, textfield_confirm.y);
+		this.confirm.render(g, (int) textfield_confirm.width - 20, (int) textfield_confirm.height - 15);
+		g.translate(-textfield_confirm.x - 10, -textfield_confirm.y);
 
-		g.setColor((button_create.isInside(new Position(relativemousex, relativemousey))) ? Color.CYAN : Color.GREEN);
+		Color buttoncolor = new Color(124, 163, 255), selectedbuttoncolor = new Color(183, 222, 255);
+		g.setColor((button_create.isInside(new Position(relativemousex, relativemousey))) ? selectedbuttoncolor
+				: buttoncolor);
 		g.fillRect((int) button_create.x, (int) button_create.y, (int) button_create.width, (int) button_create.height);
 		g.setColor(Color.BLACK);
-		g.drawString("CREATE ACCOUNT", (int) button_create.x + 20, (int) button_create.y + 30);
+		g.drawString("CREATE ACCOUNT", (int) button_create.x + 8, (int) button_create.y + 25);
+
+		g.setColor((button_back.isInside(new Position(relativemousex, relativemousey))) ? selectedbuttoncolor
+				: buttoncolor);
+		g.fillRect((int) button_back.x, (int) button_back.y, (int) button_back.width, (int) button_back.height);
+		g.setColor(Color.BLACK);
+		g.drawString("BACK", (int) button_back.x + 10, (int) button_back.y + 15);
 
 		// REVERT GRAPHICS
 		g.translate(-offsetx, -offsety);
@@ -132,11 +159,39 @@ public class AccountCreationState extends StateManager {
 	public void update() {
 		this.login.update();
 		this.password.update();
+		this.confirm.update();
 		if (firstupdate) {
 			firstupdate = false;
 			this.password.setSelection(false);
+			this.confirm.setSelection(false);
 		}
 	}
 
 	private boolean firstupdate = true;
+
+	/**
+	 * Sends the account creation payload to the server after proper encryption.
+	 */
+	private void sendAccountcreationMessage() {
+		try {
+			String message = "";
+			// local hash that is somewhat safer to keep in memory. It doesn't
+			// make sense securizing this variable as it's value is identical to
+			// the user's local storage.
+			String localhash = Encryption.clientHash(this.password.getContent(), this.login.getContent(),
+					Encryption.HASHSALTTYPE_CLIENT);
+			JsonObject mess = new JsonObject().add("action", "createaccount").add("name", this.login.getContent()).add(
+					"passhash",
+					Encryption.clientHash(localhash, this.login.getContent(), Encryption.HASHSALTTYPE_SERVER));
+			message = mess.toString();
+			Persistance.socketendpoint.sendMessage(message);
+		} catch (Exception e) {
+			Logger.e(
+					"Could not send the create account information payload because... HOLY SHIT THIS SHOULD NOT BE HAPPENING");
+			Encryption.death256message();
+			System.exit(666);
+		}
+
+	}
+
 }
