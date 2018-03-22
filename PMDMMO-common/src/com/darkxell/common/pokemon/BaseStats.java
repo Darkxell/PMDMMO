@@ -4,21 +4,27 @@ import org.jdom2.Element;
 
 import com.darkxell.common.util.XMLUtils;
 
-public class PokemonStats
+public class BaseStats
 {
-	/** Stat IDs.<br />
-	 * <ul>
-	 * <li>ATTACK = 0</li>
-	 * <li>DEFENSE = 1</li>
-	 * <li>HEALTH = 2</li>
-	 * <li>SPECIAL_ATTACK = 3</li>
-	 * <li>SPECIAL_DEFENSE = 4</li>
-	 * <li>SPEED = 5</li>
-	 * <li>EVASION = 6</li>
-	 * <li>ACCURACY = 7</li>
-	 * </ul> */
-	public static final byte ATTACK = 0, DEFENSE = 1, HEALTH = 2, SPECIAL_ATTACK = 3, SPECIAL_DEFENSE = 4, SPEED = 5, EVASIVENESS = 6, ACCURACY = 7;
-	public static final String XML_ROOT = "stats";
+	public static enum Stat
+	{
+		Accuracy(6),
+		Attack(0),
+		Defense(1),
+		Evasiveness(5),
+		Health(2),
+		SpecialAttack(3),
+		SpecialDefense(4),
+		Speed(7);
+
+		public final int id;
+
+		private Stat(int id)
+		{
+			this.id = id;
+		}
+
+	}public static final String XML_ROOT = "stats";
 
 	/** Attack. */
 	int attack;
@@ -33,7 +39,7 @@ public class PokemonStats
 	/** Special Defense. */
 	int specialDefense;
 
-	public PokemonStats(Element xml)
+	public BaseStats(Element xml)
 	{
 		this.attack = XMLUtils.getAttribute(xml, "atk", 0);
 		this.defense = XMLUtils.getAttribute(xml, "def", 0);
@@ -43,7 +49,7 @@ public class PokemonStats
 		this.moveSpeed = XMLUtils.getAttribute(xml, "msp", 1);
 	}
 
-	public PokemonStats(int attack, int defense, int health, int specialAttack, int specialDefense, int moveSpeed)
+	public BaseStats(int attack, int defense, int health, int specialAttack, int specialDefense, int moveSpeed)
 	{
 		this.attack = attack;
 		this.defense = defense;
@@ -53,18 +59,18 @@ public class PokemonStats
 		this.moveSpeed = moveSpeed;
 	}
 
-	public PokemonStats(int[] stat)
+	public BaseStats(int[] stat)
 	{
-		this.attack = stat[ATTACK];
-		this.defense = stat[DEFENSE];
-		this.health = stat[HEALTH];
-		this.specialAttack = stat[SPECIAL_ATTACK];
-		this.specialDefense = stat[SPECIAL_DEFENSE];
-		this.moveSpeed = stat.length == 5 ? 1 : stat[SPEED];
+		this.attack = stat[Stat.Attack.id];
+		this.defense = stat[Stat.Defense.id];
+		this.health = stat[Stat.Health.id];
+		this.specialAttack = stat[Stat.SpecialAttack.id];
+		this.specialDefense = stat[Stat.SpecialDefense.id];
+		this.moveSpeed = stat.length == 5 ? 1 : stat[5];
 	}
 
 	/** Adds the input stats to these stats. */
-	public void add(PokemonStats stats)
+	public void add(BaseStats stats)
 	{
 		this.attack += stats.attack;
 		this.attack += stats.defense;

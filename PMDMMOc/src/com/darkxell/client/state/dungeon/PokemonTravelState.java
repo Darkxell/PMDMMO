@@ -5,11 +5,12 @@ import java.awt.Graphics2D;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.animation.TravelAnimation;
 import com.darkxell.client.renderers.floor.PokemonRenderer;
+import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
 import com.darkxell.client.state.dungeon.DungeonState.DungeonSubState;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
-import com.darkxell.common.event.pokemon.PokemonTravelEvent.PokemonTravel;
+import com.darkxell.common.event.pokemon.PokemonTravelEvent;
 
 /** Used for Pokémon travel animations. */
 public class PokemonTravelState extends DungeonSubState
@@ -22,29 +23,36 @@ public class PokemonTravelState extends DungeonSubState
 	public final boolean faraway;
 	public final boolean running;
 	private int tick;
-	private PokemonTravel[] travels;
+	private PokemonTravelEvent[] travels;
 
-	public PokemonTravelState(DungeonState parent, boolean running, PokemonTravel... travels)
+	public PokemonTravelState(DungeonState parent, PokemonTravelEvent... travels)
 	{
 		super(parent);
 		this.travels = travels;
-		this.running = running;
-		this.duration = this.running ? DURATION_RUN : DURATION_WALK;
 		this.animations = new TravelAnimation[this.travels.length];
 		for (int i = 0; i < this.travels.length; i++)
 			this.animations[i] = new TravelAnimation(this.travels[i].origin.location(), this.travels[i].destination.location());
 		this.tick = 0;
 
-		boolean f = true;
+		boolean f = true, r = false;
 		Tile camera = this.parent.getCameraPokemon().tile();
-		for (PokemonTravel t : travels)
+		for (PokemonTravelEvent t : travels)
+		{
+			if (t.running)
+			{
+				r = true;
+				if (!f) break;
+			}
 			if ((Math.abs(t.origin.x - camera.x) < 10 && Math.abs(t.origin.y - camera.y) < 10)
 					|| (Math.abs(t.destination.x - camera.x) < 10 && Math.abs(t.destination.y - camera.y) < 10))
 			{
 				f = false;
-				break;
+				if (r) break;
 			}
+		}
+		this.running = r;
 		this.faraway = f;
+		this.duration = this.running ? DURATION_RUN : DURATION_WALK;
 	}
 
 	@Override
@@ -52,9 +60,9 @@ public class PokemonTravelState extends DungeonSubState
 	{
 		super.onEnd();
 
-		if (this.running) for (PokemonTravel travel : this.travels)
-			Persistance.dungeonState.pokemonRenderer.getRenderer(travel.pokemon).sprite.setTickingSpeed(1);
-		for (PokemonTravel travel : this.travels)
+		if (this.running) for (PokemonTravelEvent travel : this.travels)
+			Persistance.dungeonState.pokemonRenderer.getRenderer(travel.pokemon).sprite.updateTickingSpeed(travel.pokemon);
+		for (PokemonTravelEvent travel : this.travels)
 			Persistance.dungeonState.pokemonRenderer.getSprite(travel.pokemon).resetOnAnimationEnd();
 	}
 
@@ -70,12 +78,12 @@ public class PokemonTravelState extends DungeonSubState
 	public void onStart()
 	{
 		super.onStart();
-		for (PokemonTravel travel : this.travels)
+		for (PokemonTravelEvent travel : this.travels)
 		{
 			PokemonRenderer renderer = Persistance.dungeonState.pokemonRenderer.getRenderer(travel.pokemon);
 			renderer.sprite.setState(PokemonSpriteState.MOVE, true);
 			travel.pokemon.setFacing(travel.direction);
-			if (this.running) renderer.sprite.setTickingSpeed(3);
+			if (this.running) renderer.sprite.setTickingSpeed(PokemonSprite.QUICKER);
 		}
 	}
 
@@ -100,14 +108,13 @@ public class PokemonTravelState extends DungeonSubState
 		if (this.tick >= this.duration)
 		{
 			boolean stairLand = false;
-			for (PokemonTravel travel : this.travels)
+			for (PokemonTravelEvent travel : this.travels)
 			{
 				Persistance.dungeonState.pokemonRenderer.getRenderer(travel.pokemon).setXY(travel.destination.x, travel.destination.y);
 				if (travel.destination.type() == TileType.STAIR) stairLand = travel.pokemon == Persistance.player.getDungeonLeader();
 			}
 			Persistance.eventProcessor.landedOnStairs = stairLand;
-			this.parent.setSubstate(this.parent.actionSelectionState);
-			Persistance.eventProcessor.processPending();
+			Persistance.eventProcessor.animateDelayed();
 		}
 	}
 }

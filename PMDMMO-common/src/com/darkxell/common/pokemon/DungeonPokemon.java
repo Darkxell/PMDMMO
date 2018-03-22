@@ -128,6 +128,11 @@ public class DungeonPokemon implements ItemContainer
 		return this.usedPokemon.gainExperience(event);
 	}
 
+	public BaseStats getBaseStats()
+	{
+		return this.usedPokemon.getBaseStats();
+	}
+
 	public double getBelly()
 	{
 		return this.belly;
@@ -156,17 +161,12 @@ public class DungeonPokemon implements ItemContainer
 
 	public int getMaxHP()
 	{
-		return this.usedPokemon.getStats().getHealth();
+		return this.getBaseStats().getHealth();
 	}
 
 	public Message getNickname()
 	{
 		return this.usedPokemon.getNickname();
-	}
-
-	public PokemonStats getStats()
-	{
-		return this.usedPokemon.getStats();
 	}
 
 	/** @return True if this Pokémon is affected by the input Status Condition. */
@@ -263,16 +263,15 @@ public class DungeonPokemon implements ItemContainer
 	}
 
 	/** Called at the beginning of each turn. */
-	public ArrayList<DungeonEvent> onTurnStart(Floor floor)
+	public void onTurnStart(Floor floor, ArrayList<DungeonEvent> events)
 	{
-		ArrayList<DungeonEvent> events = new ArrayList<DungeonEvent>();
 		if (this.canRegen())
 		{
 			int recoveryRate = 200;
 			int healthGain = 0;
 
-			this.regenCounter += this.regenCounter + this.usedPokemon.getStats().health;
-			healthGain += this.usedPokemon.getStats().health / recoveryRate;
+			this.regenCounter += this.regenCounter + this.getBaseStats().health;
+			healthGain += this.getBaseStats().health / recoveryRate;
 			if (this.regenCounter >= recoveryRate)
 			{
 				healthGain += 1;
@@ -281,9 +280,10 @@ public class DungeonPokemon implements ItemContainer
 			this.setHP(this.getHp() + healthGain);
 		}
 
+		if (this.stats.speedBuffs() > 0 || this.stats.speedDebuffs() > 0) this.stats.onTurnStart(floor, events);
+
 		for (StatusConditionInstance condition : this.statusConditions)
 			events.addAll(condition.tick(floor));
-		return events;
 	}
 
 	public Player player()
@@ -323,7 +323,7 @@ public class DungeonPokemon implements ItemContainer
 	{
 		this.hp = hp;
 		if (this.hp < 0) this.hp = 0;
-		if (this.hp > this.usedPokemon.getStats().health) this.hp = this.usedPokemon.getStats().health;
+		if (this.hp > this.getBaseStats().health) this.hp = this.getBaseStats().health;
 	}
 
 	@Override

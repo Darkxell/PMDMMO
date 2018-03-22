@@ -57,7 +57,7 @@ public class Pokemon implements ItemContainer
 	/** This Pokémon's species. */
 	public final PokemonSpecies species;
 	/** This Pokémon's stats. */
-	private PokemonStats stats;
+	private BaseStats stats;
 
 	public Pokemon(Element xml)
 	{
@@ -68,8 +68,7 @@ public class Pokemon implements ItemContainer
 		this.nickname = xml.getAttributeValue("nickname");
 		this.item = xml.getChild(ItemStack.XML_ROOT) == null ? null : new ItemStack(xml.getChild(ItemStack.XML_ROOT));
 		this.level = Integer.parseInt(xml.getAttributeValue("level"));
-		this.stats = xml.getChild(PokemonStats.XML_ROOT) == null ? this.species.statsForLevel(this.level)
-				: new PokemonStats(xml.getChild(PokemonStats.XML_ROOT));
+		this.stats = xml.getChild(BaseStats.XML_ROOT) == null ? this.species.statsForLevel(this.level) : new BaseStats(xml.getChild(BaseStats.XML_ROOT));
 		this.abilityID = XMLUtils.getAttribute(xml, "ability", this.species.randomAbility(r));
 		this.experience = XMLUtils.getAttribute(xml, "xp", 0);
 		this.gender = XMLUtils.getAttribute(xml, "gender", this.species.randomGender(r));
@@ -98,8 +97,8 @@ public class Pokemon implements ItemContainer
 
 	}
 
-	public Pokemon(int id, PokemonSpecies species, String nickname, ItemStack item, PokemonStats stats, int ability, int experience, int level,
-			LearnedMove move1, LearnedMove move2, LearnedMove move3, LearnedMove move4, byte gender, int iq, boolean shiny)
+	public Pokemon(int id, PokemonSpecies species, String nickname, ItemStack item, BaseStats stats, int ability, int experience, int level, LearnedMove move1,
+			LearnedMove move2, LearnedMove move3, LearnedMove move4, byte gender, int iq, boolean shiny)
 	{
 		this.id = id;
 		this.species = species;
@@ -201,6 +200,11 @@ public class Pokemon implements ItemContainer
 		return Ability.find(this.abilityID);
 	}
 
+	public BaseStats getBaseStats()
+	{
+		return this.stats;
+	}
+
 	public DungeonPokemon getDungeonPokemon()
 	{
 		return this.dungeonPokemon;
@@ -241,11 +245,6 @@ public class Pokemon implements ItemContainer
 				.addSuffix("</color>");
 	}
 
-	public PokemonStats getStats()
-	{
-		return this.stats;
-	}
-
 	public void increaseIQ(int iq)
 	{
 		this.iq += iq;
@@ -273,7 +272,7 @@ public class Pokemon implements ItemContainer
 	{
 		ArrayList<DungeonEvent> events = new ArrayList<>();
 		++this.level;
-		PokemonStats stats = this.species.baseStatsIncrease(this.level - 1);
+		BaseStats stats = this.species.baseStatsIncrease(this.level - 1);
 		this.stats.add(stats);
 		if (this.dungeonPokemon != null) this.dungeonPokemon.stats.onStatChange();
 

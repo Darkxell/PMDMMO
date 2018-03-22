@@ -9,13 +9,11 @@ import com.darkxell.client.mechanics.animation.SpritesetAnimation.BackSpriteUsag
 import com.darkxell.client.mechanics.animation.movement.TackleAnimationMovement;
 import com.darkxell.client.resources.images.AnimationSpriteset;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
-import com.darkxell.client.state.dungeon.AnimationState;
 import com.darkxell.common.event.stats.StatChangedEvent;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.move.Move.MoveCategory;
 import com.darkxell.common.pokemon.DungeonPokemon;
-import com.darkxell.common.pokemon.PokemonStats;
 import com.darkxell.common.pokemon.ability.Ability;
 import com.darkxell.common.status.StatusCondition;
 import com.darkxell.common.util.Logger;
@@ -51,7 +49,7 @@ public final class Animations
 	private static final HashMap<Integer, Element> moveTargets = new HashMap<Integer, Element>();
 	private static final HashMap<Integer, Element> statuses = new HashMap<Integer, Element>();
 
-	public static AbstractAnimation getAbilityAnimation(DungeonPokemon pokemon, Ability ability, AnimationState s)
+	public static AbstractAnimation getAbilityAnimation(DungeonPokemon pokemon, Ability ability, AnimationEndListener s)
 	{
 		return getAnimation(ability.id, abilities, pokemon, s);
 	}
@@ -200,22 +198,22 @@ public final class Animations
 
 		switch (event.stat)
 		{
-			case PokemonStats.DEFENSE:
+			case Defense:
 				statID = DEFENSE_UP;
 				break;
-			case PokemonStats.SPECIAL_ATTACK:
+			case SpecialAttack:
 				statID = SP_ATTACK_UP;
 				break;
-			case PokemonStats.SPECIAL_DEFENSE:
+			case SpecialDefense:
 				statID = SP_DEFENSE_UP;
 				break;
-			case PokemonStats.SPEED:
+			case Speed:
 				statID = SPEED_UP;
 				break;
-			case PokemonStats.EVASIVENESS:
+			case Evasiveness:
 				statID = EVASION_UP;
 				break;
-			case PokemonStats.ACCURACY:
+			case Accuracy:
 				statID = ACCURACY_UP;
 				break;
 

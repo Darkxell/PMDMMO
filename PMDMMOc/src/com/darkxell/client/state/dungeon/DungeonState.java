@@ -29,6 +29,30 @@ import com.darkxell.common.util.Logger;
 /** The main state for Dungeon exploration. */
 public class DungeonState extends AbstractState
 {
+	static class DefaultDungeonSubState extends DungeonSubState
+	{
+		public DefaultDungeonSubState(DungeonState parent)
+		{
+			super(parent);
+		}
+
+		@Override
+		public void onKeyPressed(short key)
+		{}
+
+		@Override
+		public void onKeyReleased(short key)
+		{}
+
+		@Override
+		public void render(Graphics2D g, int width, int height)
+		{}
+
+		@Override
+		public void update()
+		{}
+	}
+
 	/** A substate for Dungeon exploration. */
 	static abstract class DungeonSubState extends AbstractState
 	{
@@ -53,6 +77,7 @@ public class DungeonState extends AbstractState
 	private DungeonPokemon cameraPokemon;
 	/** The current substate. */
 	private DungeonSubState currentSubstate;
+	public final DungeonSubState defaultSubstate = new DefaultDungeonSubState(this);
 	boolean diagonal = false, rotating = false;
 	public final FloorRenderer floorRenderer;
 	public final FloorVisibility floorVisibility;
@@ -226,7 +251,7 @@ public class DungeonState extends AbstractState
 			g.fillRect(0, 0, width, height);
 		}
 
-		this.logger.render(g, width, height);
+		if (this.isMain()) this.logger.render(g, width, height);
 
 		this.previousCamera = (Point) this.camera().clone();
 	}
