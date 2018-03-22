@@ -91,6 +91,7 @@ public class DungeonInstance
 	 * @return The Events created for the start of the new turn. */
 	public ArrayList<DungeonEvent> endSubTurn()
 	{
+		// Logger.i("Subturn end!");
 		for (Actor a : this.actors)
 		{
 			if (!a.hasSubTurnTriggered()) Logger.e("Subturn ended but " + a + " wasn't called!");
@@ -100,7 +101,6 @@ public class DungeonInstance
 		this.currentActor = -1;
 		this.nextActor();
 		++this.currentSubTurn;
-		// Logger.i("Subturn end!");
 
 		ArrayList<DungeonEvent> events = new ArrayList<>();
 		boolean turnEnd = this.currentSubTurn == GameTurn.SUB_TURNS;
@@ -164,10 +164,11 @@ public class DungeonInstance
 		if (this.currentActor == this.actors.size()) return;
 
 		// Make sure subturn() doesn't get called if actedThisSubturn() returns true
-		if (this.currentActor != -1 && !this.actors.get(this.currentActor).actedThisSubturn())
+		if (this.currentActor != -1)
 		{
-			if (this.actors.get(this.currentActor).hasSubTurnTriggered()) return;
-			if (this.actors.get(this.currentActor).subTurn()) return;
+			boolean acts = !this.actors.get(this.currentActor).actedThisSubturn();
+			if (!this.actors.get(this.currentActor).hasSubTurnTriggered()) acts = this.actors.get(this.currentActor).subTurn();
+			if (acts) return;
 		}
 		++this.currentActor;
 		this.nextActorIndex();
