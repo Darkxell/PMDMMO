@@ -4,13 +4,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+import com.darkxell.common.ai.AI;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.layout.Layout;
 import com.darkxell.common.dungeon.floor.layout.StaticLayout;
 import com.darkxell.common.event.Actor;
+import com.darkxell.common.event.Actor.Action;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.GameTurn;
+import com.darkxell.common.event.TurnSkippedEvent;
+import com.darkxell.common.event.pokemon.PokemonRotateEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.Logger;
 
 public class DungeonInstance
@@ -47,11 +52,6 @@ public class DungeonInstance
 	public int compare(DungeonPokemon p1, DungeonPokemon p2)
 	{
 		return Integer.compare(this.indexOf(p1), this.indexOf(p2));
-	}
-
-	public void consumeTurn(DungeonPokemon actor)
-	{
-		if (actor != null && this.actorMap.containsKey(actor)) this.actorMap.get(actor).act();
 	}
 
 	private Floor createFloor(int floorID)
@@ -105,8 +105,20 @@ public class DungeonInstance
 		ArrayList<DungeonEvent> events = new ArrayList<>();
 		boolean turnEnd = this.currentSubTurn == GameTurn.SUB_TURNS;
 
+		if (turnEnd)
+		{
+			Direction d;
+			for (Actor a : this.actors)
+			{
+				AI ai = this.currentFloor.aiManager.getAI(a.pokemon);
+				if (ai == null) continue;
+				d = ai.mayRotate();
+				if (d != null && d != a.pokemon.facing()) events.add(new PokemonRotateEvent(this.currentFloor, a.pokemon, d));
+			}
+		}
+
 		for (Actor a : this.actors)
-			if (turnEnd || a.actedThisSubturn()) a.onTurnEnd(this.currentFloor, events);
+			if (turnEnd || a.actionThisSubturn() != Action.NO_ACTION) a.onTurnEnd(this.currentFloor, events);
 
 		if (turnEnd)
 		{
@@ -123,6 +135,11 @@ public class DungeonInstance
 	public void eventOccured(DungeonEvent event)
 	{
 		this.currentTurn.addEvent(event);
+		if (event.actor != null && this.actorMap.containsKey(event.actor))
+		{
+			if (event instanceof TurnSkippedEvent) this.actorMap.get(event.actor).skip();
+			else this.actorMap.get(event.actor).act();
+		}
 	}
 
 	/** @return The Pokémon taking its turn. null if there is no actor left, thus the turn is over. */
@@ -166,7 +183,7 @@ public class DungeonInstance
 		// Make sure subturn() doesn't get called if actedThisSubturn() returns true
 		if (this.currentActor != -1)
 		{
-			boolean acts = !this.actors.get(this.currentActor).actedThisSubturn();
+			boolean acts = this.actors.get(this.currentActor).actionThisSubturn() == Action.NO_ACTION;
 			if (!this.actors.get(this.currentActor).hasSubTurnTriggered()) acts = this.actors.get(this.currentActor).subTurn();
 			if (acts) return;
 		}
