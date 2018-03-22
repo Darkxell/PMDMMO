@@ -100,11 +100,7 @@ public class CommonEventProcessor
 	public void processEvent(DungeonEvent event)
 	{
 		this.setState(State.PROCESSING);
-		if (this.preProcess(event))
-		{
-			this.dungeon.consumeTurn(event.actor);
-			this.doProcess(event);
-		}
+		if (this.preProcess(event)) this.doProcess(event);
 		if (this.state() == State.PROCESSING) this.processPending();
 	}
 

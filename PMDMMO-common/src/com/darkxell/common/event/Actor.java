@@ -8,7 +8,14 @@ import com.darkxell.common.pokemon.DungeonPokemon;
 public class Actor
 {
 
-	boolean actedThisSubturn;
+	public static enum Action
+	{
+		ACTED,
+		NO_ACTION,
+		SKIPPED;
+	}
+
+	Action actionThisSubturn;
 	/** The current ticking. When it exceeds actionTime, an action may be taken. */
 	private float actionTick;
 	/** The time this Actor needs to take an action. */
@@ -19,18 +26,18 @@ public class Actor
 	public Actor(DungeonPokemon pokemon)
 	{
 		this.pokemon = pokemon;
-		this.actedThisSubturn = false;
+		this.actionThisSubturn = Action.NO_ACTION;
 		this.onSpeedChange();
 	}
 
 	public void act()
 	{
-		this.actedThisSubturn = true;
+		this.actionThisSubturn = Action.ACTED;
 	}
 
-	public boolean actedThisSubturn()
+	public Action actionThisSubturn()
 	{
-		return this.actedThisSubturn;
+		return this.actionThisSubturn;
 	}
 
 	/* public void cancelSubTurn() { --this.actionTick; if (this.actionTick < 0) this.actionTick += this.actionTime; this.actedThisSubturn = false; } */
@@ -54,8 +61,13 @@ public class Actor
 
 	public void onTurnEnd(Floor floor, ArrayList<DungeonEvent> events)
 	{
-		this.actedThisSubturn = false;
+		this.actionThisSubturn = Action.NO_ACTION;
 		this.pokemon.onTurnStart(floor, events);
+	}
+
+	public void skip()
+	{
+		this.actionThisSubturn = Action.SKIPPED;
 	}
 
 	/** Called at each subturn. Should advance calculations.

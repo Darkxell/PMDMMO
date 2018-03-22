@@ -5,6 +5,7 @@ import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.TurnSkippedEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.util.Direction;
 
 public abstract class AI
 {
@@ -16,6 +17,11 @@ public abstract class AI
 		public AIState(AI ai)
 		{
 			this.ai = ai;
+		}
+
+		public Direction mayRotate()
+		{
+			return null;
 		}
 
 		public abstract DungeonEvent takeAction();
@@ -32,6 +38,15 @@ public abstract class AI
 		this.floor = floor;
 		this.pokemon = pokemon;
 		this.state = new AIStateTurnSkipper(this);
+	}
+
+	/** Called at the end of each turn. Allows the Pokémon to rotate.
+	 * 
+	 * @return The Direction to rotate to. */
+	public Direction mayRotate()
+	{
+		if (this.state == null) return null;
+		return this.state.mayRotate();
 	}
 
 	/** Calls the AIState to determine the action to execute. */

@@ -5,6 +5,7 @@ import com.darkxell.common.ai.AI.AIState;
 import com.darkxell.common.ai.AIUtils;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.TurnSkippedEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.pokemon.PokemonRotateEvent;
 import com.darkxell.common.event.pokemon.PokemonTravelEvent;
@@ -31,6 +32,12 @@ public class AIStateFollowPokemon extends AIState
 	}
 
 	@Override
+	public Direction mayRotate()
+	{
+		return AIUtils.generalDirection(this.ai.pokemon, this.target);
+	}
+
+	@Override
 	public DungeonEvent takeAction()
 	{
 		this.lastSeen = this.target.tile();
@@ -44,11 +51,16 @@ public class AIStateFollowPokemon extends AIState
 				LearnedMove move = this.ai.pokemon.move(this.ai.floor.random.nextInt(this.ai.pokemon.moveCount()));
 				return new MoveSelectionEvent(this.ai.floor, move, this.ai.pokemon, d);
 			}
-			return new PokemonRotateEvent(this.ai.floor, this.ai.pokemon, direction, true);
+			if (direction != this.ai.pokemon.facing()) return new PokemonRotateEvent(this.ai.floor, this.ai.pokemon, direction);
+			return new TurnSkippedEvent(this.ai.floor, this.ai.pokemon);
 		}
 
 		Direction go = AIUtils.direction(this.ai.pokemon, this.target);
-		if (go == null) return new PokemonRotateEvent(this.ai.floor, this.ai.pokemon, direction, true);
+		if (go == null)
+		{
+			if (direction != this.ai.pokemon.facing()) return new PokemonRotateEvent(this.ai.floor, this.ai.pokemon, direction);
+			return new TurnSkippedEvent(this.ai.floor, this.ai.pokemon);
+		}
 		return new PokemonTravelEvent(this.ai.floor, this.ai.pokemon, go);
 	}
 

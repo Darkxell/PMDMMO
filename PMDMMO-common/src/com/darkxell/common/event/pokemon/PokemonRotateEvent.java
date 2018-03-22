@@ -13,17 +13,11 @@ public class PokemonRotateEvent extends DungeonEvent
 	public final Direction direction;
 	public final DungeonPokemon pokemon;
 
+	/** @param pokemon - The Pokémon that rotates.
+	 * @param direction - The new direction the Pokémon should face. */
 	public PokemonRotateEvent(Floor floor, DungeonPokemon pokemon, Direction direction)
 	{
-		this(floor, pokemon, direction, false);
-	}
-
-	/** @param pokemon - The Pokémon that rotates.
-	 * @param direction - The new direction the Pokémon should face.
-	 * @param consumesTurn - True if this Action consumes the Pokémon's turn. Default is false. */
-	public PokemonRotateEvent(Floor floor, DungeonPokemon pokemon, Direction direction, boolean consumesTurn)
-	{
-		super(floor, consumesTurn ? pokemon : null);
+		super(floor);
 		this.pokemon = pokemon;
 		this.direction = direction;
 	}
