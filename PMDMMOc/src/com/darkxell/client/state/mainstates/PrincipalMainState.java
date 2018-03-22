@@ -57,7 +57,8 @@ public class PrincipalMainState extends StateManager {
 			this.currentState.onKeyPressed(key);
 		if (e.getKeyCode() == KeyEvent.VK_ENTER && isChatFocused)
 			Persistance.chatbox.send();
-		Persistance.chatbox.textfield.onKeyPressed(e);
+		if (isChatFocused)
+			Persistance.chatbox.textfield.onKeyPressed(e);
 	}
 
 	@Override
@@ -68,7 +69,8 @@ public class PrincipalMainState extends StateManager {
 
 	@Override
 	public void onKeyTyped(KeyEvent e) {
-		Persistance.chatbox.textfield.onKeyTyped(e);
+		if (isChatFocused)
+			Persistance.chatbox.textfield.onKeyTyped(e);
 	}
 
 	@Override
