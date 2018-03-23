@@ -27,26 +27,26 @@ public class CustomTextfield {
 		this.height = height;
 		this.lastusedfontmetrics = g.getFontMetrics();
 		// Starts to draw
-		int beforelength = lastusedfontmetrics.stringWidth(charsbefore);
-		int afterlength = lastusedfontmetrics.stringWidth(charsafter);
+		int beforelength = lastusedfontmetrics.stringWidth(obfuscate(charsbefore));
+		int afterlength = lastusedfontmetrics.stringWidth(obfuscate(charsafter));
 		g.setColor(Color.WHITE);
 		if (beforelength + afterlength + 2 <= width || beforelength <= width / 2) {
-			g.drawString(charsbefore, 0, height - 2);
-			g.drawString(charsafter, beforelength + 2, height - 2);
+			g.drawString(obfuscate(charsbefore), 0, height - 2);
+			g.drawString(obfuscate(charsafter), beforelength + 2, height - 2);
 			if (this.showCursor && !unselected) {
 				g.setColor(Color.BLACK);
 				g.drawLine(beforelength + 1, height, beforelength + 1, height - 10);
 			}
 		} else if (afterlength <= width / 2) {
-			g.drawString(charsafter, width - afterlength, height - 2);
-			g.drawString(charsbefore, width - afterlength - beforelength - 2, height - 2);
+			g.drawString(obfuscate(charsafter), width - afterlength, height - 2);
+			g.drawString(obfuscate(charsbefore), width - afterlength - beforelength - 2, height - 2);
 			if (this.showCursor && !unselected) {
 				g.setColor(Color.BLACK);
 				g.drawLine(width - afterlength - 1, height, width - afterlength - 1, height - 10);
 			}
 		} else {
-			g.drawString(charsafter, width / 2 + 1, height - 2);
-			g.drawString(charsbefore, width / 2 - 1 - beforelength, height - 2);
+			g.drawString(obfuscate(charsafter), width / 2 + 1, height - 2);
+			g.drawString(obfuscate(charsbefore), width / 2 - 1 - beforelength, height - 2);
 			if (this.showCursor && !unselected) {
 				g.setColor(Color.BLACK);
 				g.drawLine(width / 2, height, width / 2, height - 10);
@@ -133,4 +133,32 @@ public class CustomTextfield {
 			this.insertString(e.getKeyChar() + "");
 	}
 
+	private boolean isobfuscated = false;
+
+	/**
+	 * Sets this textfield to be an obfuscated textfield. <br/>
+	 * Obfuscated textfields still store their information without encription in
+	 * memory but will not display their exact value when rendered using
+	 * render(Graphics2D g, int width, int height).<br/>
+	 * Note that an obfuscated textfield cannot be unobfuscated.
+	 * 
+	 * @return This object.
+	 */
+	public CustomTextfield setObfuscated() {
+		this.isobfuscated = true;
+		return this;
+	}
+
+	/**
+	 * Will obfuscate the parsed string if this textfield is in obfuscated mode
+	 * and rteturn it.
+	 */
+	private String obfuscate(String str) {
+		if (!this.isobfuscated)
+			return str;
+		String toreturn = "";
+		for (int i = 0; i < str.length(); ++i)
+			toreturn += "*";
+		return toreturn;
+	}
 }

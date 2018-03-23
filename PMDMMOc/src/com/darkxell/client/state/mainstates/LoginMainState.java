@@ -16,7 +16,7 @@ import com.darkxell.common.util.Position;
 public class LoginMainState extends StateManager {
 
 	private CustomTextfield login = new CustomTextfield();
-	private CustomTextfield password = new CustomTextfield();
+	private CustomTextfield password = new CustomTextfield().setObfuscated();
 	/**
 	 * The width of the non responsive square containing the login componnents.
 	 * I'm lazy.
