@@ -7,7 +7,7 @@ import org.jdom2.Element;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
-import com.darkxell.common.event.item.ItemUseSelectionEvent;
+import com.darkxell.common.event.item.ItemSelectionEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.XMLUtils;
 import com.darkxell.common.util.language.Message;
@@ -152,7 +152,7 @@ public class Item
 
 	/** @param event - The Pokémon using the Item.
 	 * @return The message to display when using this Item. */
-	public Message getUseMessage(ItemUseSelectionEvent event)
+	public Message getUseMessage(ItemSelectionEvent event)
 	{
 		return new Message(this.getUseID()).addReplacement("<user>", event.user.getNickname())
 				.addReplacement("<target>", event.target == null ? new Message("?", false) : event.target.getNickname()).addReplacement("<item>", this.name());

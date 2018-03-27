@@ -5,10 +5,11 @@ import java.util.Stack;
 
 import com.darkxell.common.ai.AIUtils;
 import com.darkxell.common.dungeon.DungeonInstance;
-import com.darkxell.common.event.pokemon.BellyChangedEvent;
-import com.darkxell.common.event.pokemon.PokemonRotateEvent;
-import com.darkxell.common.event.pokemon.PokemonSpawnedEvent;
-import com.darkxell.common.event.pokemon.PokemonTravelEvent;
+import com.darkxell.common.event.action.PokemonRotateEvent;
+import com.darkxell.common.event.action.PokemonSpawnedEvent;
+import com.darkxell.common.event.action.PokemonTravelEvent;
+import com.darkxell.common.event.action.TurnSkippedEvent;
+import com.darkxell.common.event.stats.BellyChangedEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
 /** Processes game logic events. */

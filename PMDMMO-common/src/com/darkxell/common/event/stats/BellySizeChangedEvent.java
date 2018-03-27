@@ -1,4 +1,4 @@
-package com.darkxell.common.event.pokemon;
+package com.darkxell.common.event.stats;
 
 import java.util.ArrayList;
 

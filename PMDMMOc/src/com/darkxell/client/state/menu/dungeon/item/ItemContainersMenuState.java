@@ -14,7 +14,7 @@ import com.darkxell.client.state.menu.dungeon.TeamMenuState.TeamMemberSelectionL
 import com.darkxell.client.ui.Keys;
 import com.darkxell.common.event.item.ItemMovedEvent;
 import com.darkxell.common.event.item.ItemSwappedEvent;
-import com.darkxell.common.event.item.ItemUseSelectionEvent;
+import com.darkxell.common.event.item.ItemSelectionEvent;
 import com.darkxell.common.item.Item.ItemAction;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.player.ItemContainer;
@@ -170,7 +170,7 @@ public class ItemContainersMenuState extends OptionSelectionMenuState implements
 			{
 				if (Persistance.stateManager instanceof PrincipalMainState)
 					((PrincipalMainState) Persistance.stateManager).setState(new TeamMenuState(s, this));
-			} else Persistance.eventProcessor.processEvent(new ItemUseSelectionEvent(Persistance.floor, i.item(), user, null, container, index));
+			} else Persistance.eventProcessor.processEvent(new ItemSelectionEvent(Persistance.floor, i.item(), user, null, container, index));
 		} else if (action == ItemAction.GET || action == ItemAction.TAKE) Persistance.eventProcessor
 				.processEvent(new ItemMovedEvent(Persistance.floor, action, user, container, 0, user.player().inventory, user.player().inventory.canAccept(i)));
 		else if (action == ItemAction.GIVE)
@@ -220,7 +220,7 @@ public class ItemContainersMenuState extends OptionSelectionMenuState implements
 
 			case USE:
 				Persistance.eventProcessor
-						.processEvent(new ItemUseSelectionEvent(Persistance.floor, i.item(), user, pokemon.getDungeonPokemon(), container, index));
+						.processEvent(new ItemSelectionEvent(Persistance.floor, i.item(), user, pokemon.getDungeonPokemon(), container, index));
 				break;
 
 			default:

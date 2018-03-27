@@ -6,8 +6,8 @@ import org.jdom2.Element;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
-import com.darkxell.common.event.pokemon.BellyChangedEvent;
-import com.darkxell.common.event.pokemon.BellySizeChangedEvent;
+import com.darkxell.common.event.stats.BellyChangedEvent;
+import com.darkxell.common.event.stats.BellySizeChangedEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.XMLUtils;
 import com.darkxell.common.util.language.Message;

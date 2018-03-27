@@ -10,7 +10,7 @@ import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteS
 import com.darkxell.client.state.dungeon.DungeonState.DungeonSubState;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
-import com.darkxell.common.event.pokemon.PokemonTravelEvent;
+import com.darkxell.common.event.action.PokemonTravelEvent;
 
 /** Used for Pokémon travel animations. */
 public class PokemonTravelState extends DungeonSubState

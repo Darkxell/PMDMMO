@@ -1,4 +1,4 @@
-package com.darkxell.common.event.pokemon;
+package com.darkxell.common.event.action;
 
 import java.util.ArrayList;
 

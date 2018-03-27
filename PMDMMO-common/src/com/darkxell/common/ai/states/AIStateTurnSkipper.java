@@ -3,7 +3,7 @@ package com.darkxell.common.ai.states;
 import com.darkxell.common.ai.AI;
 import com.darkxell.common.ai.AI.AIState;
 import com.darkxell.common.event.DungeonEvent;
-import com.darkxell.common.event.TurnSkippedEvent;
+import com.darkxell.common.event.action.TurnSkippedEvent;
 
 public class AIStateTurnSkipper extends AIState
 {

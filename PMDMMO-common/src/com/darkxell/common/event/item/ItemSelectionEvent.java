@@ -10,7 +10,7 @@ import com.darkxell.common.player.ItemContainer;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
 /** Describes the events occurring before using an Item. */
-public class ItemUseSelectionEvent extends DungeonEvent
+public class ItemSelectionEvent extends DungeonEvent
 {
 
 	/** The Item that was used. */
@@ -24,7 +24,7 @@ public class ItemUseSelectionEvent extends DungeonEvent
 	/** The Pokémon that used the Item. */
 	public final DungeonPokemon user;
 
-	public ItemUseSelectionEvent(Floor floor, Item item, DungeonPokemon user, DungeonPokemon target, ItemContainer source, int sourceIndex)
+	public ItemSelectionEvent(Floor floor, Item item, DungeonPokemon user, DungeonPokemon target, ItemContainer source, int sourceIndex)
 	{
 		super(floor, user);
 		this.item = item;

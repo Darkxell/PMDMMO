@@ -31,26 +31,26 @@ import com.darkxell.common.dungeon.DungeonInstance;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.event.CommonEventProcessor;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.action.PokemonSpawnedEvent;
+import com.darkxell.common.event.action.PokemonTravelEvent;
 import com.darkxell.common.event.dungeon.DungeonExitEvent;
 import com.darkxell.common.event.dungeon.NextFloorEvent;
 import com.darkxell.common.event.dungeon.weather.WeatherChangedEvent;
 import com.darkxell.common.event.item.ItemMovedEvent;
 import com.darkxell.common.event.item.ItemSwappedEvent;
-import com.darkxell.common.event.item.ItemUseSelectionEvent;
+import com.darkxell.common.event.item.ItemSelectionEvent;
 import com.darkxell.common.event.item.MoneyCollectedEvent;
 import com.darkxell.common.event.move.MoveDiscoveredEvent;
 import com.darkxell.common.event.move.MoveLearnedEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.move.MoveUseEvent;
-import com.darkxell.common.event.pokemon.BellyChangedEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.FaintedPokemonEvent;
 import com.darkxell.common.event.pokemon.HealthRestoredEvent;
-import com.darkxell.common.event.pokemon.PokemonSpawnedEvent;
-import com.darkxell.common.event.pokemon.PokemonTravelEvent;
 import com.darkxell.common.event.pokemon.StatusConditionCreatedEvent;
 import com.darkxell.common.event.pokemon.StatusConditionEndedEvent;
 import com.darkxell.common.event.pokemon.TriggeredAbilityEvent;
+import com.darkxell.common.event.stats.BellyChangedEvent;
 import com.darkxell.common.event.stats.LevelupEvent;
 import com.darkxell.common.event.stats.SpeedChangedEvent;
 import com.darkxell.common.event.stats.StatChangedEvent;
@@ -149,7 +149,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		if (event instanceof MoveDiscoveredEvent) this.processMoveDiscoveredEvent((MoveDiscoveredEvent) event);
 		if (event instanceof MoveLearnedEvent) this.processMoveLearnedEvent((MoveLearnedEvent) event);
 
-		if (event instanceof ItemUseSelectionEvent) this.processItemEvent((ItemUseSelectionEvent) event);
+		if (event instanceof ItemSelectionEvent) this.processItemEvent((ItemSelectionEvent) event);
 		if (event instanceof ItemMovedEvent) this.processItemMovedEvent((ItemMovedEvent) event);
 		if (event instanceof ItemSwappedEvent) this.processItemSwappedEvent((ItemSwappedEvent) event);
 		if (event instanceof MoneyCollectedEvent && Persistance.player.isAlly(((MoneyCollectedEvent) event).pokemon)) SoundManager.playSound("dungeon-money");
@@ -264,7 +264,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		}
 	}
 
-	private void processItemEvent(ItemUseSelectionEvent event)
+	private void processItemEvent(ItemSelectionEvent event)
 	{
 		AnimationState a = new AnimationState(Persistance.dungeonState);
 		if (event.item instanceof ItemFood || event.item instanceof ItemGummi) a.animation = Animations.getCustomAnimation(event.user, 0, this.currentAnimEnd);

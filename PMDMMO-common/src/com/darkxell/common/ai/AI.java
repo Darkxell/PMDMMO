@@ -3,7 +3,7 @@ package com.darkxell.common.ai;
 import com.darkxell.common.ai.states.AIStateTurnSkipper;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
-import com.darkxell.common.event.TurnSkippedEvent;
+import com.darkxell.common.event.action.TurnSkippedEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Direction;
 

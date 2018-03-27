@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
-import com.darkxell.common.event.pokemon.PokemonTravelEvent;
+import com.darkxell.common.event.action.PokemonTravelEvent;
 
 public class PokemonTravelsEvent extends DungeonEvent
 {
