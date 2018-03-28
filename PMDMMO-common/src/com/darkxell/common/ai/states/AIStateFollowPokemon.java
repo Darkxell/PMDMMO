@@ -9,6 +9,7 @@ import com.darkxell.common.event.action.PokemonRotateEvent;
 import com.darkxell.common.event.action.PokemonTravelEvent;
 import com.darkxell.common.event.action.TurnSkippedEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent;
+import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.LearnedMove;
 import com.darkxell.common.util.Direction;
@@ -48,7 +49,8 @@ public class AIStateFollowPokemon extends AIState
 			Direction d = AIUtils.adjacentEnemyDirection(this.ai.floor, this.ai.pokemon);
 			if (d != null)
 			{
-				LearnedMove move = this.ai.pokemon.move(this.ai.floor.random.nextInt(this.ai.pokemon.moveCount()));
+				int moveIndex = this.ai.floor.random.nextInt(this.ai.pokemon.moveCount() + 1);
+				LearnedMove move = moveIndex == this.ai.pokemon.moveCount() ? new LearnedMove(MoveRegistry.ATTACK.id) : this.ai.pokemon.move(moveIndex);
 				return new MoveSelectionEvent(this.ai.floor, move, this.ai.pokemon, d);
 			}
 			if (direction != this.ai.pokemon.facing()) return new PokemonRotateEvent(this.ai.floor, this.ai.pokemon, direction);

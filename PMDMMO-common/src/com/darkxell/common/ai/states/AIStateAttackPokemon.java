@@ -21,9 +21,8 @@ public class AIStateAttackPokemon extends AIStateFollowPokemon
 	{
 		if (AIUtils.isAdjacentTo(this.ai.pokemon, this.target, true))
 		{
-			LearnedMove move;
-			if (this.ai.pokemon.moveCount() == 0) move = new LearnedMove(MoveRegistry.ATTACK.id);
-			move = this.ai.pokemon.move(this.ai.floor.random.nextInt(this.ai.pokemon.moveCount()));
+			int moveIndex = this.ai.floor.random.nextInt(this.ai.pokemon.moveCount() + 1);
+			LearnedMove move = moveIndex == this.ai.pokemon.moveCount() ? new LearnedMove(MoveRegistry.ATTACK.id) : this.ai.pokemon.move(moveIndex);
 			return new MoveSelectionEvent(this.ai.floor, move, this.ai.pokemon, AIUtils.generalDirection(this.ai.pokemon, this.target));
 		}
 		return super.takeAction();

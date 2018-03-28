@@ -10,10 +10,10 @@ import com.darkxell.common.dungeon.floor.layout.Layout;
 import com.darkxell.common.dungeon.floor.layout.StaticLayout;
 import com.darkxell.common.event.Actor;
 import com.darkxell.common.event.Actor.Action;
-import com.darkxell.common.event.action.PokemonRotateEvent;
-import com.darkxell.common.event.action.TurnSkippedEvent;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.GameTurn;
+import com.darkxell.common.event.action.PokemonRotateEvent;
+import com.darkxell.common.event.action.TurnSkippedEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.Logger;
@@ -184,7 +184,7 @@ public class DungeonInstance
 		if (this.currentActor != -1)
 		{
 			boolean acts = this.actors.get(this.currentActor).actionThisSubturn() == Action.NO_ACTION;
-			if (!this.actors.get(this.currentActor).hasSubTurnTriggered()) acts = this.actors.get(this.currentActor).subTurn();
+			if (!this.actors.get(this.currentActor).hasSubTurnTriggered()) acts = this.actors.get(this.currentActor).subTurn() && acts;
 			if (acts) return;
 		}
 		++this.currentActor;
