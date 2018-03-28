@@ -69,6 +69,17 @@
         <xs:attribute name="base-xp" type="posInt"/>
         <xs:attribute name="weight" type="xs:double"/>
         <xs:attribute name="height" type="xs:double"/>
+        <xs:attribute name="mobility">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="Fire"/>
+                    <xs:enumeration value="Flying"/>
+                    <xs:enumeration value="Ghost"/>
+                    <xs:enumeration value="Normal"/>
+                    <xs:enumeration value="Water"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
     </xs:complexType>
 
     <xs:complexType name="moveids">

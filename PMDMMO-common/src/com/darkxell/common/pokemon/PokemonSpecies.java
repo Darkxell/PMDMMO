@@ -6,9 +6,11 @@ import java.util.Random;
 
 import org.jdom2.Element;
 
+import com.darkxell.common.dungeon.floor.TileType.Mobility;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.BaseStats.Stat;
+import com.darkxell.common.pokemon.ability.Ability;
 import com.darkxell.common.util.XMLUtils;
 import com.darkxell.common.util.language.Message;
 
@@ -34,6 +36,7 @@ public class PokemonSpecies
 	public final int id, formID;
 	/** List of moves learned by leveling up. Key is level, value is the list of move IDs. */
 	private final HashMap<Integer, ArrayList<Integer>> learnset;
+	public final Mobility mobility;
 	/** List of TMs that can be taught. */
 	private final ArrayList<Integer> tms;
 	/** This Pokémon's types. type2 can be null. */
@@ -50,6 +53,7 @@ public class PokemonSpecies
 		this.height = Float.parseFloat(xml.getAttributeValue("height"));
 		this.weight = Float.parseFloat(xml.getAttributeValue("weight"));
 		this.abilities = XMLUtils.readIntArrayAsList(xml.getChild("abilities", xml.getNamespace()));
+		this.mobility = xml.getAttribute("mobility") == null ? this.defaultMobility() : Mobility.valueOf(xml.getAttributeValue("mobility"));
 		this.baseStats = new ArrayList<BaseStats>();
 		this.learnset = new HashMap<Integer, ArrayList<Integer>>();
 		this.tms = XMLUtils.readIntArrayAsList(xml.getChild("tms", xml.getNamespace()));
@@ -85,7 +89,7 @@ public class PokemonSpecies
 	}
 
 	public PokemonSpecies(int id, int formID, PokemonType type1, PokemonType type2, int baseXP, ArrayList<BaseStats> baseStats, float height, float weight,
-			ArrayList<Integer> abilities, int[] experiencePerLevel, HashMap<Integer, ArrayList<Integer>> learnset, ArrayList<Integer> tms,
+			Mobility mobility, ArrayList<Integer> abilities, int[] experiencePerLevel, HashMap<Integer, ArrayList<Integer>> learnset, ArrayList<Integer> tms,
 			ArrayList<Evolution> evolutions, ArrayList<PokemonSpecies> forms)
 	{
 		this.id = id;
@@ -96,6 +100,7 @@ public class PokemonSpecies
 		this.baseStats = baseStats;
 		this.height = height;
 		this.weight = weight;
+		this.mobility = mobility;
 		this.abilities = abilities;
 		this.experiencePerLevel = experiencePerLevel;
 		this.learnset = learnset;
@@ -126,6 +131,7 @@ public class PokemonSpecies
 		int baseXP = XMLUtils.getAttribute(xml, "base-xp", this.baseXP);
 		float height = XMLUtils.getAttribute(xml, "height", this.height);
 		float weight = XMLUtils.getAttribute(xml, "weight", this.weight);
+		Mobility mobility = xml.getAttribute("mobility") == null ? this.mobility : Mobility.valueOf(xml.getAttributeValue("mobility"));
 		ArrayList<Integer> abilities = xml.getChild("abilities", xml.getNamespace()) == null ? (ArrayList<Integer>) this.abilities.clone()
 				: XMLUtils.readIntArrayAsList(xml.getChild("abilities", xml.getNamespace()));
 		ArrayList<BaseStats> baseStats = new ArrayList<BaseStats>();
@@ -164,8 +170,17 @@ public class PokemonSpecies
 		else for (Element level : xml.getChild("learnset", xml.getNamespace()).getChildren())
 			learnset.put(Integer.parseInt(level.getAttributeValue("l")), XMLUtils.readIntArrayAsList(level));
 
-		return new PokemonSpecies(this.id, formID, type1, type2, baseXP, baseStats, height, weight, abilities, experiencePerLevel, learnset, tms, evolutions,
-				forms);
+		return new PokemonSpecies(this.id, formID, type1, type2, baseXP, baseStats, height, weight, mobility, abilities, experiencePerLevel, learnset, tms,
+				evolutions, forms);
+	}
+
+	private Mobility defaultMobility()
+	{
+		if (this.isType(PokemonType.Ghost)) return Mobility.Ghost;
+		if (this.isType(PokemonType.Flying) || this.abilities.contains(Ability.LEVITATE.id)) return Mobility.Flying;
+		if (this.isType(PokemonType.Fire)) return Mobility.Fire;
+		if (this.isType(PokemonType.Water)) return Mobility.Water;
+		return Mobility.Normal;
 	}
 
 	public Evolution[] evolutions()
@@ -299,6 +314,7 @@ public class PokemonSpecies
 		root.setAttribute("base-xp", Integer.toString(this.baseXP));
 		root.setAttribute("height", Float.toString(this.height));
 		root.setAttribute("weight", Float.toString(this.weight));
+		if (this.mobility != this.defaultMobility()) root.setAttribute("mobility", this.mobility.name());
 
 		int[][] line = new int[100][];
 		for (int lvl = 0; lvl < this.baseStats.size(); lvl++)
@@ -363,6 +379,7 @@ public class PokemonSpecies
 		if (this.baseXP != form.baseXP) e.setAttribute("base-xp", Integer.toString(form.baseXP));
 		if (this.height != form.height) e.setAttribute("height", Float.toString(form.height));
 		if (this.weight != form.weight) e.setAttribute("weight", Float.toString(form.weight));
+		if (this.mobility != form.mobility) e.setAttribute("mobility", form.mobility.name());
 
 		if (!this.baseStats.equals(form.baseStats))
 		{

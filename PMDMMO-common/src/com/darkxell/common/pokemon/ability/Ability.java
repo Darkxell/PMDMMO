@@ -16,6 +16,8 @@ public abstract class Ability
 	public static final AbilityTypeBoost SWARM = new AbilityTypeBoost(2, PokemonType.Bug);
 	public static final AbilityTypeBoost TORRENT = new AbilityTypeBoost(3, PokemonType.Water);
 
+	public static final Ability LEVITATE = new Ability(16) {};
+
 	/** @return The Ability with the input ID. */
 	public static Ability find(int id)
 	{

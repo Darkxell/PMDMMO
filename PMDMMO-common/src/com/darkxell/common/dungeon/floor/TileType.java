@@ -3,7 +3,6 @@ package com.darkxell.common.dungeon.floor;
 import java.util.ArrayList;
 
 import com.darkxell.common.pokemon.DungeonPokemon;
-import com.darkxell.common.pokemon.PokemonType;
 
 public enum TileType
 {
@@ -16,6 +15,15 @@ public enum TileType
 	WALL_END(2, 'm'),
 	WARP_ZONE(7, 'x'),
 	WATER(3, 'w');
+
+	public static enum Mobility
+	{
+		Fire,
+		Flying,
+		Ghost,
+		Normal,
+		Water;
+	}
 
 	@SuppressWarnings("unchecked")
 	private static ArrayList<TileType>[] tileGroups = new ArrayList[] { new ArrayList<TileType>(), new ArrayList<TileType>() };
@@ -57,10 +65,10 @@ public enum TileType
 
 	public boolean canWalkOn(DungeonPokemon pokemon)
 	{
-		if (pokemon.species().isType(PokemonType.Ghost)) return this != WALL_END;
-		if (pokemon.species().isType(PokemonType.Water) && this == WATER) return true;
-		if (pokemon.species().isType(PokemonType.Fire) && this == LAVA) return true;
-		if (pokemon.species().isType(PokemonType.Flying) && this == AIR) return true;
+		if (pokemon.species().mobility == Mobility.Ghost) return this != WALL_END;
+		if (pokemon.species().mobility == Mobility.Water && this == WATER) return true;
+		if (pokemon.species().mobility == Mobility.Fire && this == LAVA) return true;
+		if (pokemon.species().mobility == Mobility.Flying && this == AIR) return true;
 		return this == GROUND || this == STAIR;
 	}
 
