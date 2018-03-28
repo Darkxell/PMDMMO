@@ -80,20 +80,24 @@ public final class AIUtils
 		} else
 		{
 			int distance = pokemon.tile().maxHorizontalDistance(destination);
-			if (pokemon.tile().adjacentTile(direction.rotateClockwise()).maxHorizontalDistance(destination) < distance
-					&& pokemon.tile().adjacentTile(direction.rotateClockwise()).canMoveTo(pokemon, direction, false))
-				return direction.rotateClockwise();
+			Direction testing = direction.rotateClockwise();
+			if (pokemon.tile().adjacentTile(testing).maxHorizontalDistance(destination) < distance
+					&& pokemon.tile().adjacentTile(testing).canMoveTo(pokemon, testing, false))
+				return testing;
 
-			if (pokemon.tile().adjacentTile(direction.rotateCounterClockwise()).maxHorizontalDistance(destination) < distance
-					&& pokemon.tile().adjacentTile(direction.rotateCounterClockwise()).canMoveTo(pokemon, direction, false))
+			testing = direction.rotateCounterClockwise();
+			if (pokemon.tile().adjacentTile(testing).maxHorizontalDistance(destination) < distance
+					&& pokemon.tile().adjacentTile(testing).canMoveTo(pokemon, testing, false))
 				return direction.rotateCounterClockwise();
 
-			if (pokemon.tile().adjacentTile(direction.rotateClockwise().rotateClockwise()).maxHorizontalDistance(destination) < distance
-					&& pokemon.tile().adjacentTile(direction.rotateClockwise().rotateClockwise()).canMoveTo(pokemon, direction, false))
+			testing = direction.rotateClockwise().rotateClockwise();
+			if (pokemon.tile().adjacentTile(testing).maxHorizontalDistance(destination) < distance
+					&& pokemon.tile().adjacentTile(testing).canMoveTo(pokemon, testing, false))
 				return direction.rotateClockwise().rotateClockwise();
 
-			if (pokemon.tile().adjacentTile(direction.rotateCounterClockwise().rotateCounterClockwise()).maxHorizontalDistance(destination) < distance
-					&& pokemon.tile().adjacentTile(direction.rotateCounterClockwise().rotateCounterClockwise()).canMoveTo(pokemon, direction, false))
+			testing = direction.rotateCounterClockwise().rotateCounterClockwise();
+			if (pokemon.tile().adjacentTile(testing).maxHorizontalDistance(destination) < distance
+					&& pokemon.tile().adjacentTile(testing).canMoveTo(pokemon, testing, false))
 				return direction.rotateCounterClockwise().rotateCounterClockwise();
 		}
 
