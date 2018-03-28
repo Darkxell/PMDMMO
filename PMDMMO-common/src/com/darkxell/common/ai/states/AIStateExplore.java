@@ -32,6 +32,8 @@ public class AIStateExplore extends AIState
 
 	private void findNewDestination()
 	{
+		boolean debug = false;
+		if (debug) Logger.d(this.ai.pokemon + " chooses a new destination.");
 		Direction facing = this.ai.pokemon.facing();
 		ArrayList<Tile> candidates;
 
@@ -42,11 +44,13 @@ public class AIStateExplore extends AIState
 			if (candidates.size() == 0)
 			{
 				this.currentDestination = this.ai.pokemon.tile();
+				if (debug) Logger.d("No way to go: staying here.");
 				return;
 			}
 			if (candidates.size() == 1)
 			{
 				this.currentDestination = candidates.get(0);
+				if (debug) Logger.d("Only one destination: " + AIUtils.generalDirection(this.ai.pokemon, this.currentDestination));
 				return;
 			}
 			if (candidates.size() > 2) candidates = AIUtils.furthestWalkableTiles(this.ai.floor, this.ai.pokemon);
@@ -59,9 +63,10 @@ public class AIStateExplore extends AIState
 		{
 			Tile delete = null;
 			for (Tile t : candidates)
-				if (AIUtils.generalDirection(this.ai.pokemon, t) == facing.opposite())
+				if (t == this.ai.pokemon.tile() || AIUtils.generalDirection(this.ai.pokemon, t) == facing.opposite())
 				{
 					delete = t;
+					if (debug) Logger.d("Tile " + t + " removed from candidates because facing opposite.");
 					break;
 				}
 			if (delete == null) continu = false;
@@ -78,6 +83,7 @@ public class AIStateExplore extends AIState
 	@Override
 	public Direction mayRotate()
 	{
+		if (this.ai.pokemon.tile() == this.currentDestination) return null;
 		return AIUtils.generalDirection(this.ai.pokemon, this.currentDestination);
 	}
 

@@ -24,7 +24,7 @@ public class WildAI extends AI
 			ArrayList<DungeonPokemon> candidates = AIUtils.visibleEnemies(this.floor, this.pokemon);
 			this.state = new AIStateAttackPokemon(this, candidates.get(0));
 		} else if (this.state instanceof AIStateFollowPokemon) this.state = new AIStateExplore(this, ((AIStateFollowPokemon) this.state).lastSeen());
-		else this.state = new AIStateExplore(this);
+		else if (!(this.state instanceof AIStateExplore)) this.state = new AIStateExplore(this);
 	}
 
 }
