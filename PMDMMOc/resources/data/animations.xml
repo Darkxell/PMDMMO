@@ -118,6 +118,9 @@
     <move id="66">
       <default sprites="none" sound="move-tackle"/>
     </move>
+    <move id="67">
+      <default sprites="none" state="tailwhip" sound="move-tailwhip"/>
+    </move>
     <move id="701" oriented="true">
       <default state="none" width="96" height="96" sound="move-absorb" playsorbanim="true"/>
       <north width="64"/>
