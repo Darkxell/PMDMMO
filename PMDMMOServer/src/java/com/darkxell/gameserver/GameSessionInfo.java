@@ -16,6 +16,7 @@ public class GameSessionInfo {
     public boolean isconnected = false;
     public String salt = "";
     public String name = "DefaultServerName";
+    public long serverid = 0l;
     
     // FREEZONE DATA
     
