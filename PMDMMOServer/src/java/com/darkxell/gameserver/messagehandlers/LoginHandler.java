@@ -52,6 +52,7 @@ public class LoginHandler extends MessageHandler {
                 if (serversidehashtester.equals(json.getString("passhash", "randomimpossiblestring"))) {
                     si.serverid = player.id;
                     si.isconnected = true;
+                    System.err.println("Player logged in : " + si.name);
                 } else {
                     System.out.println("Did not login " + player.name + ", password hash was incorrect.");
                 }

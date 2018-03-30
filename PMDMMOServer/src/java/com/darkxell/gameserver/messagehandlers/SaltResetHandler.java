@@ -32,7 +32,7 @@ public class SaltResetHandler extends MessageHandler {
         }
         // Generates a new random salt unique for the user
         GameSessionInfo si = SessionsInfoHolder.getInfo(from.getId());
-        String salt = new RandomString().nextString() +  json.getString("name");
+        String salt = new RandomString().nextString() + from.getId();
         si.salt = salt;
         // Sends the salt back to the user
         JsonObject value = Json.createObjectBuilder()

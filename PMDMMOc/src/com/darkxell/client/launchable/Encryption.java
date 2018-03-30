@@ -10,6 +10,7 @@ public class Encryption {
 
 	public static final String HASHSALTTYPE_CLIENT = "client";
 	public static final String HASHSALTTYPE_SERVER = "server";
+	public static final String HASHSALTTYPE_LOGIN = "login";
 
 	public static String clientHash(String tohash, String salt, String hashtype) throws Exception {
 		try {

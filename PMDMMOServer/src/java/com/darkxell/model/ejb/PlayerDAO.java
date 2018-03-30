@@ -21,7 +21,13 @@ public class PlayerDAO {
     @Resource(mappedName = "jdbc/pmdmmodatabase")
     private DataSource ds;
 
-    public void create(DBPlayer player) {
+    /**
+     * Creates a new player in the database
+     *
+     * @return 0 if a player has been created, 1 if an error occured, 2 if the
+     * player name is already taken.
+     */
+    public int create(DBPlayer player) {
         try {
             // ID AUTOINCREMENT CODE
             Connection cx = ds.getConnection();
@@ -35,22 +41,9 @@ public class PlayerDAO {
             cx.close();
             if (result.first()) {
                 // Check if there isn't a player already nammed like this
-                try {
-                    Connection cn = ds.getConnection();
-                    ResultSet nametest = cn
-                            .createStatement(
-                                    ResultSet.TYPE_SCROLL_INSENSITIVE,
-                                    ResultSet.CONCUR_UPDATABLE
-                            ).executeQuery(
-                                    "SELECT * FROM player WHERE name = " + player.name
-                            );
-                    if (nametest.first()) {
-                        System.out.println("Refused player creation: " + player.name + " is already a used name in the database.");
-                        return;
-                    }
-                    cn.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
+                if (this.find(player.name) != null) {
+                    System.out.println("Refused player creation: " + player.name + " is already a used name in the database.");
+                    return 2;
                 }
                 // ADD THE PLAYER
                 long newid = result.getLong("id") + 1;
@@ -68,11 +61,14 @@ public class PlayerDAO {
                 cn.close();
             } else {
                 System.err.println("Could not autoincrement properly.");
+                return 1;
             }
         } catch (Exception e) {
             System.err.println("Error while trying to add a new  player the the database.");
             e.printStackTrace();
+            return 1;
         }
+        return 0;
     }
 
     public void delete(DBPlayer player) {
@@ -117,18 +113,16 @@ public class PlayerDAO {
 
     public DBPlayer find(String name) {
         DBPlayer toreturn = null;
-        if (name == null || name.equals("")) 
+        if (name == null || name.equals("")) {
             return toreturn;
+        }
         try {
             Connection cn = ds.getConnection();
-            ResultSet result = cn
-                    .createStatement(
-                            ResultSet.TYPE_SCROLL_INSENSITIVE,
-                            ResultSet.CONCUR_UPDATABLE
-                    ).executeQuery(
-                            "SELECT * FROM player WHERE name = " + name
-                    );
-            if (result.first()) {
+            String selectSQL = "SELECT * FROM player WHERE name = ?";
+            PreparedStatement preparedStatement = cn.prepareStatement(selectSQL);
+            preparedStatement.setString(1, name);
+            ResultSet result = preparedStatement.executeQuery();
+            if (result.next()) {
                 toreturn = new DBPlayer(result.getLong("id"), result.getString("name"), result.getString("passhash"),
                         result.getLong("moneyinbank"), result.getLong("moneyinbag"),
                         null, null, null, null, null);

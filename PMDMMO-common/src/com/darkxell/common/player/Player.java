@@ -21,7 +21,7 @@ public class Player
 	private Pokemon mainPokemon;
 	/** The current amount of Money of this Player. */
 	public int money;
-	public final String name;
+	public String name;
 
 	public Player(int id, String name, Pokemon pokemon)
 	{
