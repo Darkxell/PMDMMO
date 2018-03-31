@@ -15,7 +15,7 @@ public class DBPlayer {
 
     public long id;
     public String name;
-    public long passhash;
+    public String passhash;
     public long moneyinbank;
     public long moneyinbag;
     public ArrayList<DatabaseIdentifier> pokemonsinzones;
@@ -24,7 +24,7 @@ public class DBPlayer {
     public DatabaseIdentifier toolboxinventory;
     public DatabaseIdentifier storageinventory;
 
-    public DBPlayer(long id, String name, long passhash, long moneyinbank, long moneyinbag,
+    public DBPlayer(long id, String name, String passhash, long moneyinbank, long moneyinbag,
             ArrayList<DatabaseIdentifier> pokemonsinzones, ArrayList<DatabaseIdentifier> pokemonsinparty,
             DatabaseIdentifier mainpokemon, DatabaseIdentifier toolboxinventory, DatabaseIdentifier storageinventory) {
         this.id = id;

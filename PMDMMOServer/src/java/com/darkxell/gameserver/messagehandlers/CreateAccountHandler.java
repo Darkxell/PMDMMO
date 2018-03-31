@@ -11,7 +11,6 @@ import com.darkxell.gameserver.MessageHandler;
 import com.darkxell.gameserver.SessionsInfoHolder;
 import com.darkxell.model.ejb.dbobjects.DBPlayer;
 import javax.json.JsonObject;
-import javax.json.JsonString;
 import javax.websocket.Session;
 
 /**
@@ -32,14 +31,15 @@ public class CreateAccountHandler extends MessageHandler {
                 System.err.println("Error at\ncom.darkxell.gameserver.messagehandlers.FreezonePositionHandler.handleMessage()\n" + from + " is not in the session info handler.");
                 return;
             }
-            
+
             String name = json.getJsonString("name").getString();
-            long passhash = Long.parseLong(json.getJsonString("passhash").getString(), 36);
+            String passhash = json.getJsonString("passhash").getString();
             DBPlayer newplayer = new DBPlayer(0, name, passhash, 0, 0, null, null, null, null, null);
-            
-            endpoint.getPlayerDAO().create(newplayer);
-            System.out.println("New player created! : " + name);
-            
+
+            if (endpoint.getPlayerDAO().create(newplayer) == 0) {
+                System.out.println("New player created! : " + name);
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -12,6 +12,7 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.WebSocketContainer;
 
+import com.darkxell.client.state.mainstates.LoginMainState;
 import com.darkxell.common.util.Logger;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonObject;
@@ -106,6 +107,8 @@ public class GameSocketEndpoint {
 			JsonValue obj = Json.parse(message);
 			if (obj.asObject().getString("action", "").equals("freezoneposition") && Persistance.currentmap != null)
 				Persistance.currentmap.updateOtherPlayers(obj);
+			else if (obj.asObject().getString("action", "").equals("saltreset") && Persistance.stateManager instanceof LoginMainState)
+				((LoginMainState)Persistance.stateManager).setSalt(obj.asObject().getString("value",""));
 		} catch (Exception e) {
 			Logger.w("Could not read the recieved message from the server : " + message);
 			e.printStackTrace();

@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 
+import com.darkxell.client.launchable.ClientSettings;
+import com.darkxell.client.launchable.Encryption;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.chat.CustomTextfield;
 import com.darkxell.client.resources.images.others.Hud;
@@ -11,12 +13,15 @@ import com.darkxell.client.state.OpenningState;
 import com.darkxell.client.state.StateManager;
 import com.darkxell.client.ui.MainUiUtility;
 import com.darkxell.common.util.DoubleRectangle;
+import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.Position;
+import com.eclipsesource.json.JsonObject;
 
 public class LoginMainState extends StateManager {
 
 	private CustomTextfield login = new CustomTextfield();
 	private CustomTextfield password = new CustomTextfield().setObfuscated();
+	private String localsalt = "";
 	/**
 	 * The width of the non responsive square containing the login componnents.
 	 * I'm lazy.
@@ -55,7 +60,9 @@ public class LoginMainState extends StateManager {
 		if (button_createaccount.isInside(new Position(mouseX - offsetx, mouseY - offsety))) {
 			Persistance.stateManager = new AccountCreationState();
 		} else if (button_login.isInside(new Position(mouseX - offsetx, mouseY - offsety))) {
-
+			ClientSettings.setSetting(ClientSettings.LOGIN,this.login.getContent());
+			Persistance.player.name = this.login.getContent();
+			this.sendLogin();
 		} else if (button_offline.isInside(new Position(mouseX - offsetx, mouseY - offsety))) {
 			Persistance.stateManager = new PrincipalMainState();
 			((PrincipalMainState) Persistance.stateManager).setState(new OpenningState());
@@ -140,8 +147,37 @@ public class LoginMainState extends StateManager {
 		if (firstupdate) {
 			firstupdate = false;
 			this.password.setSelection(false);
+			this.sendSaltReset();
+			this.login.insertString(ClientSettings.getSetting(ClientSettings.LOGIN));
 		}
 	}
 
 	private boolean firstupdate = true;
+
+	private void sendLogin() {
+		String localhash;
+		try {
+			localhash = Encryption.clientHash(this.password.getContent(), this.login.getContent(),
+					Encryption.HASHSALTTYPE_CLIENT);
+			String serverhash = Encryption.clientHash(localhash, this.login.getContent(),
+					Encryption.HASHSALTTYPE_SERVER);
+			String loginhash = Encryption.clientHash(serverhash, localsalt, Encryption.HASHSALTTYPE_LOGIN);
+			JsonObject message = new JsonObject().add("action", "login").add("name", this.login.getContent())
+					.add("passhash", loginhash);
+			Persistance.socketendpoint.sendMessage(message.toString());
+		} catch (Exception e) {
+			Encryption.death256message();
+			System.exit(666);
+		}
+	}
+
+	private void sendSaltReset() {
+		JsonObject message = new JsonObject().add("action", "saltreset");
+		Persistance.socketendpoint.sendMessage(message.toString());
+	}
+
+	public void setSalt(String salt) {
+		this.localsalt = salt;
+		Logger.d("Recieved salt for this loginState : " + salt);
+	}
 }

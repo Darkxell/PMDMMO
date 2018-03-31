@@ -17,11 +17,17 @@ import javax.sql.DataSource;
 @Stateless
 @LocalBean
 public class PlayerDAO {
-    
+
     @Resource(mappedName = "jdbc/pmdmmodatabase")
     private DataSource ds;
-    
-    public void create(DBPlayer player) {
+
+    /**
+     * Creates a new player in the database
+     *
+     * @return 0 if a player has been created, 1 if an error occured, 2 if the
+     * player name is already taken.
+     */
+    public int create(DBPlayer player) {
         try {
             // ID AUTOINCREMENT CODE
             Connection cx = ds.getConnection();
@@ -33,8 +39,13 @@ public class PlayerDAO {
                             "SELECT MAX(id) as id FROM player"
                     );
             cx.close();
-            // ADD THE PLAYER
             if (result.first()) {
+                // Check if there isn't a player already nammed like this
+                if (this.find(player.name) != null) {
+                    System.out.println("Refused player creation: " + player.name + " is already a used name in the database.");
+                    return 2;
+                }
+                // ADD THE PLAYER
                 long newid = result.getLong("id") + 1;
                 Connection cn = ds.getConnection();
                 PreparedStatement prepare
@@ -44,19 +55,22 @@ public class PlayerDAO {
                 prepare.setLong(1, player.moneyinbank);
                 prepare.setLong(2, player.moneyinbag);
                 prepare.setString(3, player.name);
-                prepare.setLong(4, player.passhash);
+                prepare.setString(4, player.passhash);
                 prepare.setLong(5, newid);
                 prepare.executeUpdate();
                 cn.close();
             } else {
                 System.err.println("Could not autoincrement properly.");
+                return 1;
             }
         } catch (Exception e) {
-            System.out.println("Error while trying to add a new  player the the database.");
+            System.err.println("Error while trying to add a new  player the the database.");
             e.printStackTrace();
+            return 1;
         }
+        return 0;
     }
-    
+
     public void delete(DBPlayer player) {
         try {
             Connection cn = ds.getConnection();
@@ -72,7 +86,7 @@ public class PlayerDAO {
             e.printStackTrace();
         }
     }
-    
+
     public DBPlayer find(long id) {
         DBPlayer toreturn = null;
         try {
@@ -85,7 +99,7 @@ public class PlayerDAO {
                             "SELECT * FROM player WHERE id = " + id
                     );
             if (result.first()) {
-                toreturn = new DBPlayer(id, result.getString("name"), result.getLong("passhash"),
+                toreturn = new DBPlayer(id, result.getString("name"), result.getString("passhash"),
                         result.getLong("moneyinbank"), result.getLong("moneyinbag"),
                         null, null, null, null, null);
             }
@@ -96,7 +110,31 @@ public class PlayerDAO {
         }
         return toreturn;
     }
-    
+
+    public DBPlayer find(String name) {
+        DBPlayer toreturn = null;
+        if (name == null || name.equals("")) {
+            return toreturn;
+        }
+        try {
+            Connection cn = ds.getConnection();
+            String selectSQL = "SELECT * FROM player WHERE name = ?";
+            PreparedStatement preparedStatement = cn.prepareStatement(selectSQL);
+            preparedStatement.setString(1, name);
+            ResultSet result = preparedStatement.executeQuery();
+            if (result.next()) {
+                toreturn = new DBPlayer(result.getLong("id"), result.getString("name"), result.getString("passhash"),
+                        result.getLong("moneyinbank"), result.getLong("moneyinbag"),
+                        null, null, null, null, null);
+            }
+            cn.close();
+            //TODO: add the references here
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return toreturn;
+    }
+
     public void update(DBPlayer player) {
         try {
             Connection cn = ds.getConnection();
@@ -107,7 +145,7 @@ public class PlayerDAO {
             prepare.setLong(1, player.moneyinbank);
             prepare.setLong(2, player.moneyinbag);
             prepare.setString(3, player.name);
-            prepare.setLong(4, player.passhash);
+            prepare.setString(4, player.passhash);
             prepare.setLong(5, player.id);
             prepare.executeUpdate();
             cn.close();

@@ -55,6 +55,13 @@ Trying to authentificate without reseting the salt will not be taken into accoun
 <br/>}
 This payload must by a client to create a new account. This will create a new account entry in the database.
 
+■ LOGIN
+<br/>{"action":"login",
+<br/>"name":"Darkxell", // The name of the player
+<br/>"passhash":"h4guz8eph5u", // The hashed password
+<br/>}
+This payload must by a client to login. This must be sent with the appropriate salted password, see hashing norms.
+
 ■ FREEZONEPOSITION
 <br/>{"action":"freezoneposition",
 <br/>"name":"Darkxell", // The name of the player
