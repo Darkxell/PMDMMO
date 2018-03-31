@@ -9,7 +9,6 @@ import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Direction;
-import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.RandomUtil;
 
 import javafx.util.Pair;
@@ -163,27 +162,6 @@ public final class AIUtils
 		double angle = Math.toDegrees(Math.atan2(destination.x - pokemon.tile().x, destination.y - pokemon.tile().y));
 		if (angle < 0) angle += 360;
 		return closestDirection(angle);
-	}
-
-	/** @return True if the input Pokémon can see any enemy Pokémon. <br>
-	 *         This method avoids calling visibleEnemies when there is none, which is heavier than this one. */
-	public static boolean hasVisibleEnemies(Floor floor, DungeonPokemon pokemon)
-	{
-		if (pokemon.tile() == null) Logger.e(pokemon + " has no tile!");
-		// Change this to use floor shadows when exploring AI is done
-		for (int x = pokemon.tile().x - 3; x <= pokemon.tile().x + 3; ++x)
-			for (int y = pokemon.tile().y - 3; y <= pokemon.tile().y + 3; ++y)
-				if (floor.tileAt(x, y).getPokemon() != null && !floor.tileAt(x, y).getPokemon().isAlliedWith(pokemon)) return true;
-
-		if (pokemon.tile().isInRoom())
-		{
-			for (Tile t : floor.room(pokemon.tile()).listTiles())
-				if (t.getPokemon() != null && !t.getPokemon().isAlliedWith(pokemon)) return true;
-			for (Tile t : floor.room(pokemon.tile()).outline())
-				if (t.getPokemon() != null && !t.getPokemon().isAlliedWith(pokemon)) return true;
-		}
-
-		return false;
 	}
 
 	/** @return True if the input pokemon is just one tile away from the target. If they're diagonally disposed, also checks if there is a wall blocking their interaction. */
