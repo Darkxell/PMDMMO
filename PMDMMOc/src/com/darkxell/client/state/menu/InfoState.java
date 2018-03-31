@@ -7,7 +7,6 @@ import java.util.Stack;
 
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.state.AbstractState;
-import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.client.state.menu.components.TextWindow;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.common.util.Logger;
@@ -79,8 +78,7 @@ public class InfoState extends AbstractMenuState
 	@Override
 	protected void onExit()
 	{
-		if(Persistance.stateManager instanceof PrincipalMainState)
-			((PrincipalMainState) Persistance.stateManager).setState(this.parent);
+		Persistance.stateManager.setState(this.parent);
 	}
 
 	@Override

@@ -7,7 +7,6 @@ import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.music.SoundsHolder;
 import com.darkxell.client.state.AbstractState;
-import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.common.dungeon.Dungeon;
 import com.darkxell.common.util.language.Message;
 
@@ -75,8 +74,7 @@ public class NextFloorState extends AbstractState
 		++this.counter;
 		if (this.counter >= total)
 		{
-			if(Persistance.stateManager instanceof PrincipalMainState)
-				((PrincipalMainState) Persistance.stateManager).setState(Persistance.dungeonState);
+			Persistance.stateManager.setState(Persistance.dungeonState);
 			Persistance.eventProcessor.processPending();
 		}
 		if (this.counter == fade + pause)

@@ -23,7 +23,6 @@ import com.darkxell.client.state.dungeon.DelayState;
 import com.darkxell.client.state.dungeon.NextFloorState;
 import com.darkxell.client.state.dungeon.OrbAnimationState;
 import com.darkxell.client.state.dungeon.PokemonTravelState;
-import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.client.state.map.LocalMap;
 import com.darkxell.client.state.menu.dungeon.MoveLearnMenuState;
 import com.darkxell.client.state.menu.dungeon.StairMenuState;
@@ -37,8 +36,8 @@ import com.darkxell.common.event.dungeon.DungeonExitEvent;
 import com.darkxell.common.event.dungeon.NextFloorEvent;
 import com.darkxell.common.event.dungeon.weather.WeatherChangedEvent;
 import com.darkxell.common.event.item.ItemMovedEvent;
-import com.darkxell.common.event.item.ItemSwappedEvent;
 import com.darkxell.common.event.item.ItemSelectionEvent;
+import com.darkxell.common.event.item.ItemSwappedEvent;
 import com.darkxell.common.event.item.MoneyCollectedEvent;
 import com.darkxell.common.event.move.MoveDiscoveredEvent;
 import com.darkxell.common.event.move.MoveLearnedEvent;
@@ -88,7 +87,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		@Override
 		public void onDialogEnd(DialogState dialog)
 		{
-			((PrincipalMainState) Persistance.stateManager).setState(Persistance.dungeonState);
+			Persistance.stateManager.setState(Persistance.dungeonState);
 			Persistance.eventProcessor.processPending();
 		}
 	};
@@ -234,7 +233,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	{
 		if (event.pokemon == Persistance.player.getDungeonLeader())
 		{
-			if (Persistance.stateManager instanceof PrincipalMainState) ((PrincipalMainState) Persistance.stateManager).setState(new FreezoneExploreState());
+			Persistance.stateManager.setState(new FreezoneExploreState());
 			Persistance.displaymap = LocalMap.instance;
 		}
 	}
@@ -247,8 +246,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	private void processFloorEvent(NextFloorEvent event)
 	{
 		this.setState(State.ANIMATING);
-		if (Persistance.stateManager instanceof PrincipalMainState)
-			((PrincipalMainState) Persistance.stateManager).setState(new NextFloorState(Persistance.dungeonState, event.floor.id + 1));
+		Persistance.stateManager.setState(new NextFloorState(Persistance.dungeonState, event.floor.id + 1));
 	}
 
 	private void processHealEvent(HealthRestoredEvent event)
@@ -297,7 +295,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	private void processLevelupEvent(LevelupEvent event)
 	{
 		Pokemon pokemon = event.pokemon;
-		if (Persistance.player.isAlly(pokemon) && Persistance.stateManager instanceof PrincipalMainState)
+		if (Persistance.player.isAlly(pokemon))
 		{
 			this.setState(State.ANIMATING);
 			boolean firstLevel = this.levelupStats == null;
@@ -333,15 +331,14 @@ public final class ClientEventProcessor extends CommonEventProcessor
 			if (firstLevel)
 			{
 				SoundManager.playSoundOverMusic("game-levelup");
-				Persistance.dungeonState.setSubstate(
-						new DelayState(Persistance.dungeonState, 60, (DelayState s) -> ((PrincipalMainState) Persistance.stateManager).setState(state)));
-			} else((PrincipalMainState) Persistance.stateManager).setState(state);
+				Persistance.dungeonState.setSubstate(new DelayState(Persistance.dungeonState, 60, (DelayState s) -> Persistance.stateManager.setState(state)));
+			} else Persistance.stateManager.setState(state);
 		}
 	}
 
 	private void processMoveDiscoveredEvent(MoveDiscoveredEvent event)
 	{
-		if (event.pokemon.moveCount() == 4 && Persistance.stateManager instanceof PrincipalMainState)
+		if (event.pokemon.moveCount() == 4)
 		{
 			this.setState(State.ANIMATING);
 
@@ -350,11 +347,11 @@ public final class ClientEventProcessor extends CommonEventProcessor
 				@Override
 				public void onDialogEnd(DialogState dialog)
 				{
-					((PrincipalMainState) Persistance.stateManager).setState(new MoveLearnMenuState(Persistance.dungeonState, event.pokemon, event.move));
+					Persistance.stateManager.setState(new MoveLearnMenuState(Persistance.dungeonState, event.pokemon, event.move));
 				}
 			};
 
-			((PrincipalMainState) Persistance.stateManager).setState(new DialogState(Persistance.dungeonState, listener, false, new DialogScreen(
+			Persistance.stateManager.setState(new DialogState(Persistance.dungeonState, listener, false, new DialogScreen(
 					new Message("moves.learned.full").addReplacement("<pokemon>", event.pokemon.getNickname()).addReplacement("<move>", event.move.name()))));
 		}
 	}
@@ -375,13 +372,12 @@ public final class ClientEventProcessor extends CommonEventProcessor
 
 	private void processMoveLearnedEvent(MoveLearnedEvent event)
 	{
-		if (Persistance.player.isAlly(event.pokemon) && Persistance.stateManager instanceof PrincipalMainState)
+		if (Persistance.player.isAlly(event.pokemon))
 		{
 			this.setState(State.ANIMATING);
 			SoundManager.playSound("game-movelearned");
-			((PrincipalMainState) Persistance.stateManager).setState(new DialogState(Persistance.dungeonState, ClientEventProcessor.processEventsOnDialogEnd,
-					false, new DialogScreen(new Message("moves.learned").addReplacement("<pokemon>", event.pokemon.getNickname()).addReplacement("<move>",
-							event.move.name()))));
+			Persistance.stateManager.setState(new DialogState(Persistance.dungeonState, ClientEventProcessor.processEventsOnDialogEnd, false, new DialogScreen(
+					new Message("moves.learned").addReplacement("<pokemon>", event.pokemon.getNickname()).addReplacement("<move>", event.move.name()))));
 		}
 	}
 
@@ -417,7 +413,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	private void processStairEvent(StairLandingEvent event)
 	{
 		this.setState(State.ANIMATING);
-		if (Persistance.stateManager instanceof PrincipalMainState) ((PrincipalMainState) Persistance.stateManager).setState(new StairMenuState());
+		Persistance.stateManager.setState(new StairMenuState());
 	}
 
 	private void processStatEvent(StatChangedEvent event)

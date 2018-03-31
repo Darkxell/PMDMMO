@@ -14,7 +14,6 @@ import com.darkxell.client.renderers.TextRenderer.PMDChar;
 import com.darkxell.client.resources.images.MenuHudSpriteset;
 import com.darkxell.client.resources.images.others.Hud;
 import com.darkxell.client.resources.images.pokemon.PokemonPortrait;
-import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.language.Message;
@@ -167,10 +166,8 @@ public class DialogState extends AbstractState
 	{
 		if (this.currentScreen == this.screens.size() - 1)
 		{
-			if (this.listener == null)
-			{
-				if (Persistance.stateManager instanceof PrincipalMainState) ((PrincipalMainState) Persistance.stateManager).setState(this.backgroundState);
-			} else this.listener.onDialogEnd(this);
+			if (this.listener == null) Persistance.stateManager.setState(this.backgroundState);
+			else this.listener.onDialogEnd(this);
 		} else
 		{
 			++this.currentScreen;

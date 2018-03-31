@@ -3,6 +3,8 @@ package com.darkxell.client.state;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 
+import com.darkxell.common.util.Logger;
+
 /**
  * Describes how a statemanager is supposed to work. A statemanager is expected
  * to display A very big portion of the application, like for example the game /
@@ -29,4 +31,14 @@ public abstract class StateManager {
 	public abstract void render(Graphics2D g, int width, int height);
 
 	public abstract void update();
+	
+	public void setState(AbstractState state) {
+		Logger.e("Tried to call setState() on the wrong state manager!");
+	}
+
+	public AbstractState getCurrentState() {
+		Logger.e("Tried to call getCurrentState() on the wrong state manager!");
+		return null;
+	}
+	
 }

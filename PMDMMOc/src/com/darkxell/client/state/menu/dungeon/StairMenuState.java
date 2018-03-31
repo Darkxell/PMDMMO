@@ -1,7 +1,6 @@
 package com.darkxell.client.state.menu.dungeon;
 
 import com.darkxell.client.launchable.Persistance;
-import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.common.event.dungeon.DungeonExitEvent;
 import com.darkxell.common.event.dungeon.NextFloorEvent;
@@ -25,8 +24,7 @@ public class StairMenuState extends OptionSelectionMenuState
 	@Override
 	protected void onExit()
 	{
-		if(Persistance.stateManager instanceof PrincipalMainState)
-			((PrincipalMainState) Persistance.stateManager).setState(this.backgroundState);
+		Persistance.stateManager.setState(this.backgroundState);
 	}
 
 	@Override
@@ -35,8 +33,8 @@ public class StairMenuState extends OptionSelectionMenuState
 		this.onExit();
 		if (option == this.proceed)
 		{
-			if (Persistance.floor.id == Persistance.dungeon.dungeon().floorCount) Persistance.eventProcessor.processEvent(new DungeonExitEvent(
-					Persistance.floor, Persistance.player.getDungeonLeader()));
+			if (Persistance.floor.id == Persistance.dungeon.dungeon().floorCount)
+				Persistance.eventProcessor.processEvent(new DungeonExitEvent(Persistance.floor, Persistance.player.getDungeonLeader()));
 			else Persistance.eventProcessor.processEvent(new NextFloorEvent(Persistance.floor, Persistance.player));
 		}
 	}

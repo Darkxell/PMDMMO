@@ -219,6 +219,7 @@ public class PrincipalMainState extends StateManager {
 		return this.currentState;
 	}
 
+	@Override
 	public void setState(AbstractState state) {
 		if (state == this.currentState)
 			return;

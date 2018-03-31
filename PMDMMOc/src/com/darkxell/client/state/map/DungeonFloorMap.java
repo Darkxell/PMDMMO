@@ -8,7 +8,6 @@ import com.darkxell.client.renderers.floor.PokemonRenderer;
 import com.darkxell.client.resources.images.tilesets.AbstractDungeonTileset;
 import com.darkxell.client.resources.images.tilesets.DungeonMapTileset;
 import com.darkxell.client.state.dungeon.NextFloorState;
-import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
@@ -110,10 +109,9 @@ public class DungeonFloorMap extends AbstractDisplayMap
 
 		g.translate(this.x, this.y);
 
-		if (Persistance.stateManager instanceof PrincipalMainState
-				&& ((PrincipalMainState) Persistance.stateManager).getCurrentState() instanceof NextFloorState)
+		if (Persistance.stateManager.getCurrentState() instanceof NextFloorState)
 		{
-			int alpha = ((NextFloorState) ((PrincipalMainState) Persistance.stateManager).getCurrentState()).fading();
+			int alpha = ((NextFloorState) Persistance.stateManager.getCurrentState()).fading();
 			g.setColor(new Color(0, 0, 0, alpha));
 			g.fillRect(0, 0, width, height);
 		}

@@ -9,7 +9,6 @@ import com.darkxell.client.mechanics.freezones.FreezoneEntity;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.state.DialogState;
 import com.darkxell.client.state.DialogState.DialogScreen;
-import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.util.language.Message;
@@ -37,8 +36,7 @@ public class PokemonFreezoneEntity extends FreezoneEntity
 						false)));
 		screens.add(new DialogScreen(p, new Message("item.info.302")));
 		screens.add(new DialogScreen(PokemonRegistry.find(168).generate(new Random(), 0), new Message("item.info.69")));
-		if (Persistance.stateManager instanceof PrincipalMainState) ((PrincipalMainState) Persistance.stateManager)
-				.setState(new DialogState(((PrincipalMainState) Persistance.stateManager).getCurrentState(), screens));
+		Persistance.stateManager.setState(new DialogState(Persistance.stateManager.getCurrentState(), screens));
 	}
 
 	@Override

@@ -12,7 +12,6 @@ import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.Palette;
 import com.darkxell.client.resources.images.others.DungeonHudSpriteset;
 import com.darkxell.client.state.dungeon.DungeonState.DungeonSubState;
-import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.client.state.menu.components.MenuWindow;
 import com.darkxell.client.state.menu.dungeon.DungeonMenuState;
 import com.darkxell.client.ui.Keys;
@@ -94,11 +93,8 @@ public class ActionSelectionState extends DungeonSubState
 	public void onKeyPressed(short key)
 	{
 		DungeonPokemon leader = Persistance.player.getDungeonLeader();
-		if (key == Keys.KEY_MENU)
-		{
-			if (Persistance.stateManager instanceof PrincipalMainState)
-				((PrincipalMainState) Persistance.stateManager).setState(new DungeonMenuState(this.parent));
-		} else if (key == Keys.KEY_ROTATE)
+		if (key == Keys.KEY_MENU) Persistance.stateManager.setState(new DungeonMenuState(this.parent));
+		else if (key == Keys.KEY_ROTATE)
 		{
 			Direction d = leader.facing();
 			do
