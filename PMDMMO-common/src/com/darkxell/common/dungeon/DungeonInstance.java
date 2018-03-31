@@ -135,10 +135,10 @@ public class DungeonInstance
 	public void eventOccured(DungeonEvent event)
 	{
 		this.currentTurn.addEvent(event);
-		if (event.actor != null && this.actorMap.containsKey(event.actor))
+		if (event.actor() != null && this.actorMap.containsKey(event.actor()))
 		{
-			if (event instanceof TurnSkippedEvent) this.actorMap.get(event.actor).skip();
-			else this.actorMap.get(event.actor).act();
+			if (event instanceof TurnSkippedEvent) this.actorMap.get(event.actor()).skip();
+			else this.actorMap.get(event.actor()).act();
 		}
 	}
 

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.util.Communicable;
+import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.language.Message;
 
 public abstract class DungeonEvent
@@ -29,13 +31,16 @@ public abstract class DungeonEvent
 	public static final byte PRIORITY_DEFAULT = 0, PRIORITY_AFTER_MOVE = 1, PRIORITY_ACTION_END = 2, PRIORITY_TURN_END = 3;
 
 	/** The Pokémon that performed the action triggering this Event. This action will consume its turn. May be null if no performer or if this Event doesn't consume the actor's turn. */
-	public final DungeonPokemon actor;
+	private DungeonPokemon actor;
 	/** The Floor this Event occurs on. */
 	public final Floor floor;
+	/** True if this Event is a Player Action Event; and thus should be sent to other players in the Dungeon. If so, this Event should implement Communicable and have a (Floor) Constructor. */
+	private boolean isPAE;
 	/** The messages that were generated. */
 	protected ArrayList<Message> messages;
 	/** The priority of this DungeonEvent. */
 	protected byte priority;
+
 	/** The events that resulted from this Event. */
 	protected ArrayList<DungeonEvent> resultingEvents;
 
@@ -47,10 +52,15 @@ public abstract class DungeonEvent
 	public DungeonEvent(Floor floor, DungeonPokemon actor)
 	{
 		this.floor = floor;
-		this.actor = actor;
+		this.setActor(actor);
 		this.priority = PRIORITY_DEFAULT;
 		this.messages = new ArrayList<Message>();
 		this.resultingEvents = new ArrayList<DungeonEvent>();
+	}
+
+	public DungeonPokemon actor()
+	{
+		return this.actor;
 	}
 
 	/** @return The messages that were generated. */
@@ -63,6 +73,17 @@ public abstract class DungeonEvent
 	public DungeonEvent[] getResultingEvents()
 	{
 		return this.resultingEvents.toArray(new DungeonEvent[this.resultingEvents.size()]);
+	}
+
+	/** @return True if this Event is a PAE. */
+	public boolean isPAE()
+	{
+		if (this.isPAE && !(this instanceof Communicable))
+		{
+			Logger.e("PAE event doesn't implement Communicable!");
+			return false;
+		}
+		return this.isPAE;
 	}
 
 	/** @return True if this Event should occur. This needs to be checked when called in case other Events on the stack triggered actions that cancel this Event, such as fainting a Pokémon which is this Event's target. */
@@ -79,6 +100,17 @@ public abstract class DungeonEvent
 	public ArrayList<DungeonEvent> processServer()
 	{
 		return this.resultingEvents;
+	}
+
+	protected void setActor(DungeonPokemon actor)
+	{
+		this.actor = actor;
+	}
+
+	/** Defines this Event as a PAE. Make sure this Event implements Communicable and has a (Floor) Constructor. */
+	public void setPAE()
+	{
+		this.isPAE = true;
 	}
 
 }
