@@ -2,19 +2,27 @@ package com.darkxell.common.item;
 
 import org.jdom2.Element;
 
+import com.darkxell.common.util.Communicable;
 import com.darkxell.common.util.XMLUtils;
 import com.darkxell.common.util.language.Lang;
 import com.darkxell.common.util.language.Message;
+import com.eclipsesource.json.Json;
+import com.eclipsesource.json.JsonObject;
 
-public class ItemStack implements Comparable<ItemStack>
+public class ItemStack implements Comparable<ItemStack>, Communicable
 {
 
 	public static final String XML_ROOT = "item";
 
 	/** The ID of the Item. */
-	public final int id;
+	private int id;
 	/** The number of Items in this Stack. Almost always 1 except for Poké, Gravelerock and similar items. */
 	private int quantity;
+
+	public ItemStack()
+	{
+		this(-1);
+	}
 
 	public ItemStack(Element xml)
 	{
@@ -59,9 +67,16 @@ public class ItemStack implements Comparable<ItemStack>
 
 	public Message name()
 	{
-		if (Lang.containsKey("item." + this.id + ".stack")) return new Message("item." + this.id + ".stack").addReplacement("<quantity>",
-				Integer.toString(this.quantity));
+		if (Lang.containsKey("item." + this.id + ".stack"))
+			return new Message("item." + this.id + ".stack").addReplacement("<quantity>", Integer.toString(this.quantity));
 		return this.item().name();
+	}
+
+	@Override
+	public void read(JsonObject value)
+	{
+		this.id = value.getInt("id", -1);
+		this.quantity = value.getInt("quantity", 1);
 	}
 
 	public ItemStack setQuantity(int quantity)
@@ -69,6 +84,15 @@ public class ItemStack implements Comparable<ItemStack>
 		this.quantity = quantity;
 		if (this.quantity > 999) this.quantity = 999;
 		return this;
+	}
+
+	@Override
+	public JsonObject toJson()
+	{
+		JsonObject root = Json.object();
+		root.add("id", this.id);
+		if (this.quantity != 1) root.add("quantity", this.quantity);
+		return root;
 	}
 
 	public Element toXML()

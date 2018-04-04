@@ -300,8 +300,8 @@ public final class ClientEventProcessor extends CommonEventProcessor
 			this.setState(State.ANIMATING);
 			boolean firstLevel = this.levelupStats == null;
 
-			if (this.levelupStats == null) this.levelupStats = pokemon.species.baseStatsIncrease(pokemon.getLevel() - 1);
-			else this.levelupStats.add(pokemon.species.baseStatsIncrease(pokemon.getLevel() - 1));
+			if (this.levelupStats == null) this.levelupStats = pokemon.species().baseStatsIncrease(pokemon.getLevel() - 1);
+			else this.levelupStats.add(pokemon.species().baseStatsIncrease(pokemon.getLevel() - 1));
 
 			ArrayList<DialogScreen> screens = new ArrayList<DialogScreen>();
 			screens.add(new DialogScreen(new Message("xp.levelup").addReplacement("<pokemon>", pokemon.getNickname()).addReplacement("<level>",

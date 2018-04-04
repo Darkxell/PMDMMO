@@ -2,8 +2,8 @@ package com.darkxell.common.util;
 
 import com.eclipsesource.json.JsonObject;
 
-/** Any objects that would be sent between clients and server should implement this interface. <br/>
- * Implements generic methods for conversion for/to Json. */
+/** Any objects that would be sent between clients and server can implement this interface. <br/>
+ * Implements generic methods for conversion from/to Json. */
 public interface Communicable
 {
 

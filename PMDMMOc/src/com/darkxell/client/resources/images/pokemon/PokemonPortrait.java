@@ -36,11 +36,11 @@ public class PokemonPortrait
 	public static BufferedImage portrait(Pokemon pokemon)
 	{
 		PokemonPortrait sheet = null;
-		int set = pokemon.species.id / 100, index = pokemon.species.id % 100 - 1;
-		if (pokemon.species.formID != 0)
+		int set = pokemon.species().id / 100, index = pokemon.species().id % 100 - 1;
+		if (pokemon.species().formID != 0)
 		{
-			sheet = pokemon.isShiny ? portraitsAlternateS : portraitsAlternate;
-			index = alternateIDs.get(pokemon.species.compoundID());
+			sheet = pokemon.isShiny() ? portraitsAlternateS : portraitsAlternate;
+			index = alternateIDs.get(pokemon.species().compoundID());
 		} else
 		{
 			if (index == -1) // ID 100 is on first page but would give set=1, index=-1
@@ -52,19 +52,19 @@ public class PokemonPortrait
 			switch (set)
 			{
 				case 1:
-					sheet = pokemon.isShiny ? portraits1S : portraits1;
+					sheet = pokemon.isShiny() ? portraits1S : portraits1;
 					break;
 
 				case 2:
-					sheet = pokemon.isShiny ? portraits2S : portraits2;
+					sheet = pokemon.isShiny() ? portraits2S : portraits2;
 					break;
 
 				case 3:
-					sheet = pokemon.isShiny ? portraits3S : portraits3;
+					sheet = pokemon.isShiny() ? portraits3S : portraits3;
 					break;
 
 				default:
-					sheet = pokemon.isShiny ? portraits0S : portraits0;
+					sheet = pokemon.isShiny() ? portraits0S : portraits0;
 					break;
 			}
 		}

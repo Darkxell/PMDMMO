@@ -2,9 +2,12 @@ package com.darkxell.common.pokemon;
 
 import org.jdom2.Element;
 
+import com.darkxell.common.util.Communicable;
 import com.darkxell.common.util.XMLUtils;
+import com.eclipsesource.json.Json;
+import com.eclipsesource.json.JsonObject;
 
-public class BaseStats
+public class BaseStats implements Communicable
 {
 	public static enum Stat
 	{
@@ -24,7 +27,9 @@ public class BaseStats
 			this.id = id;
 		}
 
-	}public static final String XML_ROOT = "stats";
+	}
+
+	public static final String XML_ROOT = "stats";
 
 	/** Attack. */
 	int attack;
@@ -38,6 +43,9 @@ public class BaseStats
 	int specialAttack;
 	/** Special Defense. */
 	int specialDefense;
+
+	public BaseStats()
+	{}
 
 	public BaseStats(Element xml)
 	{
@@ -79,6 +87,15 @@ public class BaseStats
 		this.specialDefense += stats.specialDefense;
 	}
 
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (!(obj instanceof BaseStats)) return false;
+		BaseStats s = (BaseStats) obj;
+		return this.attack == s.attack && this.defense == s.defense && this.health == s.health && this.moveSpeed == s.moveSpeed
+				&& this.specialAttack == s.specialAttack && this.specialDefense == s.specialDefense;
+	}
+
 	public int getAttack()
 	{
 		return this.attack;
@@ -107,6 +124,30 @@ public class BaseStats
 	public int getSpecialDefense()
 	{
 		return this.specialDefense;
+	}
+
+	@Override
+	public void read(JsonObject value)
+	{
+		this.attack = value.getInt("atk", 0);
+		this.defense = value.getInt("def", 0);
+		this.health = value.getInt("hea", 0);
+		this.specialAttack = value.getInt("spa", 0);
+		this.specialDefense = value.getInt("spd", 0);
+		this.moveSpeed = value.getInt("msp", 1);
+	}
+
+	@Override
+	public JsonObject toJson()
+	{
+		JsonObject root = Json.object();
+		root.add("atk", this.attack);
+		root.add("def", this.defense);
+		root.add("hea", this.health);
+		root.add("spa", this.specialAttack);
+		root.add("spd", this.specialDefense);
+		if (this.moveSpeed != 1) root.add("msp", this.moveSpeed);
+		return root;
 	}
 
 	public Element toXML()

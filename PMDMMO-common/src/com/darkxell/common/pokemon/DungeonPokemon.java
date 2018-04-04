@@ -110,7 +110,7 @@ public class DungeonPokemon implements ItemContainer
 	/** @return The amount of experience gained when defeating this Pokémon. */
 	public int experienceGained()
 	{
-		int base = this.usedPokemon.species.baseXP;
+		int base = this.usedPokemon.species().baseXP;
 		base += Math.floor(base * (this.originalPokemon.getLevel() - 1) / 10) + base;
 		if (this.attacksReceived == REGULAR_ATTACKS) base = (int) (base * 0.5);
 		else if (this.attacksReceived == LINKED_MOVES) base = (int) (base * 1.5);
@@ -363,7 +363,7 @@ public class DungeonPokemon implements ItemContainer
 
 	public PokemonSpecies species()
 	{
-		return this.usedPokemon.species;
+		return this.usedPokemon.species();
 	}
 
 	public void switchMoves(int slot1, int slot2)

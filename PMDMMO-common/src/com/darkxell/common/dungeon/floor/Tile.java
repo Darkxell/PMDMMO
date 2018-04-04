@@ -81,7 +81,7 @@ public class Tile implements ItemContainer
 	@Override
 	public int canAccept(ItemStack item)
 	{
-		return (this.getItem() == null || (item.item().isStackable && this.getItem().id == item.id)) ? 0 : -1;
+		return (this.getItem() == null || (item.item().isStackable && this.getItem().item().id == item.item().id)) ? 0 : -1;
 	}
 
 	/** @return True if the input Pokémon can walk diagonally with this Tile as a corner. */
@@ -238,7 +238,7 @@ public class Tile implements ItemContainer
 		{
 			ItemStack i = this.getItem();
 			int index = pokemon.player() == null ? -1 : pokemon.player().inventory.canAccept(i);
-			if (!running && i.id == Item.POKE && pokemon.player() != null) events.add(new MoneyCollectedEvent(floor, pokemon, this, i));
+			if (!running && i.item().id == Item.POKE && pokemon.player() != null) events.add(new MoneyCollectedEvent(floor, pokemon, this, i));
 			else if (!running && pokemon.player() != null && index != -1)
 				events.add(new ItemMovedEvent(floor, ItemAction.GET, pokemon, this, 0, pokemon.player().inventory, index));
 			else if (!running && pokemon.getItem() == null) events.add(new ItemMovedEvent(floor, ItemAction.GET, pokemon, this, 0, pokemon, 0));

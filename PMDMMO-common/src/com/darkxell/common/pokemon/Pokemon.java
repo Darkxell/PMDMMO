@@ -15,10 +15,15 @@ import com.darkxell.common.move.Move;
 import com.darkxell.common.player.ItemContainer;
 import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.ability.Ability;
+import com.darkxell.common.util.Communicable;
 import com.darkxell.common.util.XMLUtils;
 import com.darkxell.common.util.language.Message;
+import com.eclipsesource.json.Json;
+import com.eclipsesource.json.JsonArray;
+import com.eclipsesource.json.JsonObject;
+import com.eclipsesource.json.JsonValue;
 
-public class Pokemon implements ItemContainer
+public class Pokemon implements ItemContainer, Communicable
 {
 	/** Pokémon gender.
 	 * <ul>
@@ -31,19 +36,19 @@ public class Pokemon implements ItemContainer
 	public static final String XML_ROOT = "pokemon";
 
 	/** This Pokémon's ability's ID. */
-	public final int abilityID;
+	private int abilityID;
 	/** A reference to the Dungeon entity of this Pokémon if in a Dungeon. null else. */
 	DungeonPokemon dungeonPokemon;
 	/** The current amount of experience of this Pokémon (for this level). */
 	private int experience;
 	/** This Pokémon's gender. See {@link Pokemon#MALE}. */
-	public final byte gender;
+	private byte gender;
 	/** This Pokémon's ID. */
-	public final int id;
+	private int id;
 	/** This Pokémon's IQ. */
 	private int iq;
 	/** True if this Pokémon is shiny. */
-	public final boolean isShiny;
+	private boolean isShiny;
 	/** This Pokémon's held Item's ID. -1 for no Item. */
 	private ItemStack item;
 	/** This Pokémon's level. */
@@ -55,23 +60,28 @@ public class Pokemon implements ItemContainer
 	/** The Player controlling this Pokémon. null if it's an NPC. */
 	private Player player;
 	/** This Pokémon's species. */
-	public final PokemonSpecies species;
+	private int species;
 	/** This Pokémon's stats. */
 	private BaseStats stats;
+
+	public Pokemon()
+	{
+		this(-1, -1, "???", null, null, 0, 0, 0, null, null, null, null, GENDERLESS, 0, false);
+	}
 
 	public Pokemon(Element xml)
 	{
 		// todo: handle ID of null.
 		Random r = new Random();
 		this.id = XMLUtils.getAttribute(xml, "pk-id", 0);
-		this.species = PokemonRegistry.find(Integer.parseInt(xml.getAttributeValue("id")));
+		this.species = Integer.parseInt(xml.getAttributeValue("id"));
 		this.nickname = xml.getAttributeValue("nickname");
 		this.item = xml.getChild(ItemStack.XML_ROOT) == null ? null : new ItemStack(xml.getChild(ItemStack.XML_ROOT));
 		this.level = Integer.parseInt(xml.getAttributeValue("level"));
-		this.stats = xml.getChild(BaseStats.XML_ROOT) == null ? this.species.statsForLevel(this.level) : new BaseStats(xml.getChild(BaseStats.XML_ROOT));
-		this.abilityID = XMLUtils.getAttribute(xml, "ability", this.species.randomAbility(r));
+		this.stats = xml.getChild(BaseStats.XML_ROOT) == null ? this.species().statsForLevel(this.level) : new BaseStats(xml.getChild(BaseStats.XML_ROOT));
+		this.abilityID = XMLUtils.getAttribute(xml, "ability", this.species().randomAbility(r));
 		this.experience = XMLUtils.getAttribute(xml, "xp", 0);
-		this.gender = XMLUtils.getAttribute(xml, "gender", this.species.randomGender(r));
+		this.gender = XMLUtils.getAttribute(xml, "gender", this.species().randomGender(r));
 		this.iq = XMLUtils.getAttribute(xml, "iq", 0);
 		this.isShiny = XMLUtils.getAttribute(xml, "shiny", false);
 		this.moves = new LearnedMove[4];
@@ -82,22 +92,22 @@ public class Pokemon implements ItemContainer
 			if (slot < 0 || slot >= this.moves.length) continue;
 			this.moves[slot] = new LearnedMove(move);
 			this.moves[slot].setSlot(slot);
-			moves.add(this.moves[slot].id);
+			moves.add(this.moves[slot].move().id);
 		}
 
 		for (int i = 0; i < this.moves.length; ++i)
 			if (this.moves[i] == null)
 			{
-				int id = this.species.latestMove(this.level, moves);
+				int id = this.species().latestMove(this.level, moves);
 				if (id == -1) break;
 				this.moves[i] = new LearnedMove(id);
-				moves.add(this.moves[i].id);
+				moves.add(this.moves[i].move().id);
 				this.moves[i].setSlot(i);
 			}
 
 	}
 
-	public Pokemon(int id, PokemonSpecies species, String nickname, ItemStack item, BaseStats stats, int ability, int experience, int level, LearnedMove move1,
+	public Pokemon(int id, int species, String nickname, ItemStack item, BaseStats stats, int ability, int experience, int level, LearnedMove move1,
 			LearnedMove move2, LearnedMove move3, LearnedMove move4, byte gender, int iq, boolean shiny)
 	{
 		this.id = id;
@@ -129,7 +139,7 @@ public class Pokemon implements ItemContainer
 	@Override
 	public int canAccept(ItemStack item)
 	{
-		return (this.getItem() == null || (item.item().isStackable && this.getItem().id == item.id)) ? 0 : -1;
+		return (this.getItem() == null || (item.item().isStackable && this.getItem().item().id == item.item().id)) ? 0 : -1;
 	}
 
 	@Override
@@ -146,7 +156,7 @@ public class Pokemon implements ItemContainer
 
 	public Message evolutionStatus()
 	{
-		Evolution[] evolutions = this.species.evolutions();
+		Evolution[] evolutions = this.species().evolutions();
 		if (evolutions.length == 0) return new Message("evolve.none");
 		for (Evolution evolution : evolutions)
 		{
@@ -159,12 +169,12 @@ public class Pokemon implements ItemContainer
 	/** @return The amount of experience to gain in order to level up. */
 	public int experienceLeftNextLevel()
 	{
-		return this.species.experienceToNextLevel(this.level) - this.experience;
+		return this.species().experienceToNextLevel(this.level) - this.experience;
 	}
 
 	public int experienceToNextLevel()
 	{
-		return this.species.experienceToNextLevel(this.level);
+		return this.species().experienceToNextLevel(this.level);
 	}
 
 	/** @param amount - The amount of experience gained.
@@ -189,10 +199,15 @@ public class Pokemon implements ItemContainer
 				amount = 0;
 			}
 			++levelsup;
-			next = this.species.experienceToNextLevel(this.getLevel() + levelsup);
+			next = this.species().experienceToNextLevel(this.getLevel() + levelsup);
 		}
 
 		return events;
+	}
+
+	public byte gender()
+	{
+		return this.gender;
 	}
 
 	public Ability getAbility()
@@ -241,7 +256,7 @@ public class Pokemon implements ItemContainer
 
 	public Message getNickname()
 	{
-		return (this.nickname == null ? this.species.speciesName() : new Message(this.nickname, false)).addPrefix(this.player == null ? "<blue>" : "<yellow>")
+		return (this.nickname == null ? this.species().speciesName() : new Message(this.nickname, false)).addPrefix(this.player == null ? "<blue>" : "<yellow>")
 				.addSuffix("</color>");
 	}
 
@@ -260,6 +275,11 @@ public class Pokemon implements ItemContainer
 		return this.player() != null && this.player().isAlly(pokemon);
 	}
 
+	public boolean isShiny()
+	{
+		return this.isShiny;
+	}
+
 	@Override
 	public ArrayList<ItemAction> legalItemActions()
 	{
@@ -272,11 +292,11 @@ public class Pokemon implements ItemContainer
 	{
 		ArrayList<DungeonEvent> events = new ArrayList<>();
 		++this.level;
-		BaseStats stats = this.species.baseStatsIncrease(this.level - 1);
+		BaseStats stats = this.species().baseStatsIncrease(this.level - 1);
 		this.stats.add(stats);
 		if (this.dungeonPokemon != null) this.dungeonPokemon.stats.onStatChange();
 
-		ArrayList<Move> moves = this.species.learnedMoves(this.level);
+		ArrayList<Move> moves = this.species().learnedMoves(this.level);
 		for (Move move : moves)
 			events.add(new MoveDiscoveredEvent(this, move));
 
@@ -300,6 +320,42 @@ public class Pokemon implements ItemContainer
 	public Player player()
 	{
 		return this.player;
+	}
+
+	@Override
+	public void read(JsonObject value)
+	{
+		this.id = value.getInt("id", -1);
+		this.species = value.getInt("species", -1);
+		this.gender = (byte) value.getInt("gender", 2);
+		this.experience = value.getInt("xp", 0);
+		this.level = value.getInt("level", 1);
+		this.iq = value.getInt("iq", 0);
+		this.abilityID = value.getInt("ability", -1);
+		this.isShiny = value.getBoolean("shiny", false);
+		this.nickname = value.getString("name", null);
+
+		if (value.get("item") != null)
+		{
+			this.item = new ItemStack(value.get("item").asObject().getInt("id", -1));
+			this.item.setQuantity(value.get("item").asObject().getInt("quantity", 1));
+		} else this.item = null;
+
+		int slot = 0;
+		if (value.get("moves") != null) for (JsonValue moveJson : value.get("moves").asArray())
+		{
+			if (slot >= 4) break;
+			LearnedMove move = new LearnedMove();
+			move.read(moveJson.asObject());
+			this.setMove(slot++, move);
+		}
+
+		if (value.get("stats") != null)
+		{
+			this.stats = new BaseStats();
+			this.stats.read(value.get("stats").asObject());
+		}
+
 	}
 
 	@Override
@@ -340,12 +396,42 @@ public class Pokemon implements ItemContainer
 		return this.getItem() == null ? 0 : 1;
 	}
 
+	public PokemonSpecies species()
+	{
+		return PokemonRegistry.find(this.species);
+	}
+
 	public void switchMoves(int slot1, int slot2)
 	{
 		if (slot1 < 0 || slot1 >= this.moves.length || slot2 < 0 || slot2 >= this.moves.length) return;
 		LearnedMove temp = this.move(slot1);
 		this.setMove(slot1, this.move(slot2));
 		this.setMove(slot2, temp);
+	}
+
+	@Override
+	public JsonObject toJson()
+	{
+		JsonObject root = Json.object();
+		root.add("id", this.id);
+		root.add("species", this.species);
+		root.add("gender", this.gender);
+		if (this.experience != 0) root.add("xp", this.experience);
+		if (this.level != 1) root.add("level", this.level);
+		if (this.iq != 0) root.add("iq", this.iq);
+		root.add("ability", this.abilityID);
+		if (this.isShiny) root.add("shiny", this.isShiny);
+		if (this.nickname != null) root.add("name", this.nickname);
+		if (this.item != null) root.add("item", this.item.toJson());
+
+		JsonArray movesJson = new JsonArray();
+		for (int i = 0; i < 4 && this.move(i) != null; ++i)
+			movesJson.add(this.move(i).toJson());
+		root.add("moves", movesJson);
+
+		if (!this.stats.equals(this.species().statsForLevel(this.level))) root.add("stats", this.stats.toJson());
+
+		return root;
 	}
 
 	@Override
@@ -358,7 +444,7 @@ public class Pokemon implements ItemContainer
 	{
 		int xp = this.experience;
 		for (int lvl = 1; lvl < this.level; ++lvl)
-			xp += this.species.experienceToNextLevel(lvl);
+			xp += this.species().experienceToNextLevel(lvl);
 		return xp;
 	}
 
@@ -366,7 +452,7 @@ public class Pokemon implements ItemContainer
 	{
 		Element root = new Element(XML_ROOT);
 		root.setAttribute("pk-id", Integer.toString(this.id));
-		root.setAttribute("id", Integer.toString(this.species.compoundID()));
+		root.setAttribute("id", Integer.toString(this.species().compoundID()));
 		if (this.nickname != null) root.setAttribute("nickname", this.nickname);
 		if (this.item != null) root.addContent(this.item.toXML());
 		root.setAttribute("level", Integer.toString(this.level));

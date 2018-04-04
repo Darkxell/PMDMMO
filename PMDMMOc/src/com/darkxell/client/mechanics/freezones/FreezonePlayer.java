@@ -64,7 +64,7 @@ public class FreezonePlayer
 
 	public void update()
 	{
-		if (this.player != null && this.player.getTeamLeader().species.compoundID() != this.playersprite.pointer.pokemonID) this.updateSprite();
+		if (this.player != null && this.player.getTeamLeader().species().compoundID() != this.playersprite.pointer.pokemonID) this.updateSprite();
 		this.playersprite.update();
 		double truemovespeed = isSprinting ? MOVESPEED * 2 : MOVESPEED;
 		if (ismovingUP && canBeAt(this.x, this.y - truemovespeed)) this.y -= truemovespeed;

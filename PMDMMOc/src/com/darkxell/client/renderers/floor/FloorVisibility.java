@@ -52,7 +52,7 @@ public class FloorVisibility
 	public boolean isXrayOn()
 	{
 		ItemStack item = Persistance.dungeonState.getCameraPokemon().getItem();
-		return item != null && item.id == ItemID.XRaySpecs;
+		return item != null && item.item().id == ItemID.XRaySpecs;
 	}
 
 	public void onCameraMoved()

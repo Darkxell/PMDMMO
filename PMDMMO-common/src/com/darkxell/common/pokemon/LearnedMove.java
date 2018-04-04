@@ -4,13 +4,16 @@ import org.jdom2.Element;
 
 import com.darkxell.common.move.Move;
 import com.darkxell.common.move.MoveRegistry;
+import com.darkxell.common.util.Communicable;
 import com.darkxell.common.util.XMLUtils;
+import com.eclipsesource.json.Json;
+import com.eclipsesource.json.JsonObject;
 
-public class LearnedMove
+public class LearnedMove implements Communicable
 {
 
 	/** This move's ID. */
-	public final int id;
+	private int id;
 	/** True if this Move is enabled (for allies). */
 	public boolean isEnabled = true;
 	/** True if this move is Linked. */
@@ -22,13 +25,17 @@ public class LearnedMove
 	/** The position of this move in the Pokémon's move set. */
 	private int slot;
 
+	public LearnedMove()
+	{
+		this(-1);
+	}
+
 	public LearnedMove(Element xml)
 	{
 		this.id = Integer.parseInt(xml.getAttributeValue("id"));
 		this.maxPP = XMLUtils.getAttribute(xml, "pp-max", this.move().pp);
 		this.pp = XMLUtils.getAttribute(xml, "pp", this.maxPP);
 		this.isLinked = XMLUtils.getAttribute(xml, "linked", false);
-		this.slot = Integer.parseInt(xml.getAttributeValue("slot"));
 		this.isEnabled = XMLUtils.getAttribute(xml, "enabled", true);
 	}
 
@@ -65,6 +72,16 @@ public class LearnedMove
 		return MoveRegistry.find(this.id);
 	}
 
+	@Override
+	public void read(JsonObject value)
+	{
+		this.id = value.getInt("id", -1);
+		this.maxPP = value.getInt("pp-max", this.move().pp);
+		this.pp = value.getInt("pp", this.maxPP);
+		this.isLinked = value.getBoolean("linked", false);
+		this.isEnabled = value.getBoolean("enabled", true);
+	}
+
 	public void setLinked(boolean isLinked)
 	{
 		this.isLinked = isLinked;
@@ -87,6 +104,18 @@ public class LearnedMove
 		this.slot = slot;
 	}
 
+	@Override
+	public JsonObject toJson()
+	{
+		JsonObject root = Json.object();
+		root.add("id", this.id);
+		if (this.maxPP != this.move().pp) root.add("pp-max", this.maxPP);
+		if (this.pp != this.maxPP) root.add("pp", this.pp);
+		if (!this.isLinked) root.add("linked", this.isLinked);
+		if (!this.isEnabled) root.add("enabled", this.isEnabled);
+		return root;
+	}
+
 	public Element toXML()
 	{
 		Element root = new Element("move");
@@ -94,7 +123,6 @@ public class LearnedMove
 		XMLUtils.setAttribute(root, "pp-max", this.maxPP, this.move().pp);
 		XMLUtils.setAttribute(root, "pp", this.pp, this.move().pp);
 		XMLUtils.setAttribute(root, "linked", this.isLinked, false);
-		root.setAttribute("slot", Integer.toString(this.slot));
 		XMLUtils.setAttribute(root, "enabled", this.isEnabled, true);
 		return root;
 	}

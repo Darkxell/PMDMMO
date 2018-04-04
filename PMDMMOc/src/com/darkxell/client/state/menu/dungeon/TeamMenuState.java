@@ -76,12 +76,12 @@ public class TeamMenuState extends OptionSelectionMenuState
 			stats.addReplacement("<iq>", iq);
 
 			Message features = new Message("summary.features.content");
-			features.addReplacement("<firsttype>", p.species.type1.getName());
-			features.addReplacement("<secondtype>", p.species.type2 == null ? new Message("", false) : p.species.type2.getName());
+			features.addReplacement("<firsttype>", p.species().type1.getName());
+			features.addReplacement("<secondtype>", p.species().type2 == null ? new Message("", false) : p.species().type2.getName());
 			features.addReplacement("<ability>", p.getAbility().description());
 
 			Message info = new Message("summary.info.content");
-			info.addReplacement("<species>", p.species.formName());
+			info.addReplacement("<species>", p.species().formName());
 			info.addReplacement("<area>", new Message("Stratos Lookout", false));
 			info.addReplacement("<joined>", new Message("Pokémon Square", false));
 			info.addReplacement("<evolve>", p.evolutionStatus());

@@ -7,9 +7,14 @@ import java.util.function.Predicate;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.Item.ItemAction;
 import com.darkxell.common.item.ItemStack;
+import com.darkxell.common.util.Communicable;
 import com.darkxell.common.util.language.Message;
+import com.eclipsesource.json.Json;
+import com.eclipsesource.json.JsonArray;
+import com.eclipsesource.json.JsonObject;
+import com.eclipsesource.json.JsonValue;
 
-public class Inventory implements ItemContainer
+public class Inventory implements ItemContainer, Communicable
 {
 
 	public static final int MAX_SIZE = 20;
@@ -27,7 +32,7 @@ public class Inventory implements ItemContainer
 	public void addItem(ItemStack item)
 	{
 		if (item.item().isStackable) for (ItemStack stack : this.items)
-			if (stack.id == item.id)
+			if (stack.item().id == item.item().id)
 			{
 				stack.setQuantity(stack.getQuantity() + item.getQuantity());
 				return;
@@ -42,7 +47,7 @@ public class Inventory implements ItemContainer
 		if (this.isFull()) return -1;
 
 		if (item.item().isStackable) for (ItemStack stack : this.items)
-			if (stack.id == item.id) return this.items.indexOf(stack);
+			if (stack.item().id == item.item().id) return this.items.indexOf(stack);
 
 		return this.size();
 	}
@@ -50,8 +55,7 @@ public class Inventory implements ItemContainer
 	/** Removes all Items with quantity equal to zero. */
 	private void clean()
 	{
-		this.items.removeIf(new Predicate<ItemStack>()
-		{
+		this.items.removeIf(new Predicate<ItemStack>() {
 			@Override
 			public boolean test(ItemStack item)
 			{
@@ -70,6 +74,11 @@ public class Inventory implements ItemContainer
 	public void deleteItem(int index)
 	{
 		this.remove(index);
+	}
+
+	public void empty()
+	{
+		this.items.clear();
 	}
 
 	@Override
@@ -110,6 +119,19 @@ public class Inventory implements ItemContainer
 		return this.maxSize;
 	}
 
+	@Override
+	public void read(JsonObject value)
+	{
+		this.maxSize = value.getInt("maxSize", MAX_SIZE);
+		this.empty();
+		for (JsonValue itemJson : value.get("content").asArray())
+		{
+			ItemStack i = new ItemStack(itemJson.asObject().getInt("id", -1));
+			i.setQuantity(itemJson.asObject().getInt("quantity", 1));
+			this.addItem(i);
+		}
+	}
+
 	/** Removes the Item in the input slot and returns it. Returns null if index is out of bounds. */
 	public ItemStack remove(int slot)
 	{
@@ -126,7 +148,7 @@ public class Inventory implements ItemContainer
 
 		for (ItemStack stack : this.items)
 		{
-			if (stack.id == item.id)
+			if (stack.item().id == item.id)
 			{
 				int remove = Math.min(quantity, stack.getQuantity());
 				stack.setQuantity(stack.getQuantity() - remove);
@@ -157,6 +179,25 @@ public class Inventory implements ItemContainer
 	public void sort()
 	{
 		this.items.sort(Comparator.naturalOrder());
+	}
+
+	@Override
+	public JsonObject toJson()
+	{
+		JsonObject root = Json.object();
+		root.set("maxSize", this.maxSize);
+
+		this.clean();
+		JsonArray contentJson = new JsonArray();
+		for (ItemStack s : this.items)
+		{
+			JsonObject o = Json.object();
+			o.set("id", s.item().id);
+			if (s.getQuantity() != 1) o.add("quantity", s.getQuantity());
+		}
+		root.set("content", contentJson);
+
+		return root;
 	}
 
 }

@@ -43,12 +43,12 @@ public final class TeamInfoRenderer
 		if (width == MEMBER_WIDTH)
 		{
 			int symbol = TextRenderer.width(PMDChar.type_0);
-			if (pokemon.species.type2 != null) TextRenderer.render(g, pokemon.species.type2.symbol(), x + MEMBER_WIDTH - 2 - symbol, y);
-			TextRenderer.render(g, pokemon.species.type1.symbol(), x + MEMBER_WIDTH - 2 - symbol - (pokemon.species.type2 == null ? 0 : symbol + 1), y);
+			if (pokemon.species().type2 != null) TextRenderer.render(g, pokemon.species().type2.symbol(), x + MEMBER_WIDTH - 2 - symbol, y);
+			TextRenderer.render(g, pokemon.species().type1.symbol(), x + MEMBER_WIDTH - 2 - symbol - (pokemon.species().type2 == null ? 0 : symbol + 1), y);
 		} else
 		{
-			Message m = pokemon.species.type1.getName()
-					.addSuffix(pokemon.species.type2 == null ? new Message("", false) : pokemon.species.type2.getName().addPrefix(" "));
+			Message m = pokemon.species().type1.getName()
+					.addSuffix(pokemon.species().type2 == null ? new Message("", false) : pokemon.species().type2.getName().addPrefix(" "));
 			TextRenderer.render(g, m, x + MEMBER_WIDTH * 2 - 5 - TextRenderer.width(m), y);
 			m = new Message("team.hp").addReplacement("<max>", TextRenderer.alignNumber(pokemon.getBaseStats().getHealth(), 3)).addReplacement("<current>",
 					TextRenderer.alignNumber(pokemon.getDungeonPokemon() == null ? pokemon.getBaseStats().getHealth() : pokemon.getDungeonPokemon().getHp(),
@@ -83,7 +83,7 @@ public final class TeamInfoRenderer
 		x += 5;
 		y -= PORTRAIT_SIZE - 1;
 		TextRenderer.render(g, pokemon.getNickname(), x, y);
-		String gender = pokemon.gender == Pokemon.MALE ? PMDChar.male.value : pokemon.gender == Pokemon.FEMALE ? PMDChar.female.value : PMDChar.minus.value;
+		String gender = pokemon.gender() == Pokemon.MALE ? PMDChar.male.value : pokemon.gender() == Pokemon.FEMALE ? PMDChar.female.value : PMDChar.minus.value;
 		TextRenderer.render(g, new Message("team.level").addReplacement("<lvl>", Integer.toString(pokemon.getLevel())).addReplacement("<gender>", gender), x,
 				y + 5 + TextRenderer.height());
 	}
