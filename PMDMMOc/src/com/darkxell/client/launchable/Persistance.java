@@ -24,11 +24,9 @@ import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.LearnedMove;
 import com.darkxell.common.pokemon.PokemonRegistry;
 
-/**
- * This class contains various static references to objects being used very
- * often.
- */
-public abstract class Persistance {
+/** This class contains various static references to objects being used very often. */
+public abstract class Persistance
+{
 
 	// APPLICATION RELATED OBJECTS
 	public static Frame frame;
@@ -40,8 +38,7 @@ public abstract class Persistance {
 
 	// FREEZONE RELATED OBJECTS
 	public static FreezoneMap currentmap;
-	public static FreezonePlayer currentplayer = new FreezonePlayer(
-			new PokemonSprite(PokemonSpritesets.getSpriteset(102)), 35, 28);
+	public static FreezonePlayer currentplayer = new FreezonePlayer(new PokemonSprite(PokemonSpritesets.getSpriteset(0)), 35, 28);
 	public static FreezoneCamera playerCamera = new FreezoneCamera(currentplayer);
 
 	// DUNGEON RELATED OBJECTS
@@ -52,20 +49,25 @@ public abstract class Persistance {
 	public static Player player = new Player(0, ClientSettings.getSetting(ClientSettings.LOGIN), PokemonRegistry.find(6).generate(new Random(), 1));
 	public static ClientEventProcessor eventProcessor;
 
-	static {
+	static
+	{
 		player.addAlly(PokemonRegistry.find(252).generate(new Random(), 1, 1));
 		player.addAlly(PokemonRegistry.find(255).generate(new Random(), 1));
 		player.getTeamLeader().setItem(new ItemStack(ItemID.XRaySpecs));
 		player.getTeamLeader().setMove(3, new LearnedMove(801));
+		currentplayer.setPlayer(player);
 	}
 
-	/**
-	 * Displays the debug information. Careful, this is not optimized and will
-	 * have a high CPU drain. It also makes the game really ugly, it's a debug
-	 * mode...
-	 */
+	/** Displays the debug information. Careful, this is not optimized and will have a high CPU drain. It also makes the game really ugly, it's a debug mode... */
 	public static boolean debugdisplaymode = false;
 
 	/** If true, data for pokemon, dungeon, moves, etc. is saved on exit. */
 	public static boolean saveDataOnExit = false;
+
+	public static void setPlayer(Player newPlayer)
+	{
+		player = newPlayer;
+		currentplayer.setPlayer(player);
+	}
+
 }

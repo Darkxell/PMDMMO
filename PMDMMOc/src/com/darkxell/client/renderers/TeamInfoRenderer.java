@@ -22,6 +22,7 @@ public final class TeamInfoRenderer
 	private static final BufferedImage canvas;
 	private static final Graphics2D g;
 	public static final int height;
+	public static final Message loading = new Message("general.loading");
 	public static final int MEMBER_HEIGHT = 50, MEMBER_WIDTH = 125;
 	public static final int TITLE_HEIGHT = 30;
 	public static final int width;
@@ -89,17 +90,24 @@ public final class TeamInfoRenderer
 
 	public static void render(Graphics2D parentGraphics, int canvasWidth, int canvasHeight)
 	{
-		Player p = Persistance.player;
-		Pokemon[] realTeam = p.getTeam();
-		ArrayList<Pokemon> team = new ArrayList<Pokemon>();
-		for (Pokemon pk : realTeam)
-			if (!(pk.getDungeonPokemon() != null && pk.getDungeonPokemon().isFainted())) team.add(pk);
-
 		g.clearRect(0, 0, width, height);
 		g.setColor(new Color(0, 120, 180));
 		g.fillRect(0, 0, width, height);
 		g.setColor(Palette.TRANSPARENT_GRAY);
 		g.fillRect(0, 0, width, TITLE_HEIGHT);
+
+		Player p = Persistance.player;
+
+		if (p == null)
+		{
+			TextRenderer.render(g, loading, canvasWidth / 2 - TextRenderer.width(loading) / 2, canvasHeight / 2 - TextRenderer.height() / 2);
+			return;
+		}
+
+		Pokemon[] realTeam = p.getTeam();
+		ArrayList<Pokemon> team = new ArrayList<Pokemon>();
+		for (Pokemon pk : realTeam)
+			if (!(pk.getDungeonPokemon() != null && pk.getDungeonPokemon().isFainted())) team.add(pk);
 
 		Message title = new Message("team.title").addReplacement("<player>", p.name);
 		TextRenderer.render(g, title, width / 2 - TextRenderer.width(title) / 2, TITLE_HEIGHT / 2 - TextRenderer.height() / 2);

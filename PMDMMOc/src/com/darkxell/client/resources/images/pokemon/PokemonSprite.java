@@ -71,35 +71,26 @@ public class PokemonSprite
 		}
 	}
 
-	public static final byte ALLY_SHADOW = 1;
-
-	public static final byte ENEMY_SHADOW = 3;
-
 	public static final int FRAMELENGTH = 10;
-
 	public static final int HEALTHLENGTH = 60;
 
 	public static final byte NEUTRAL_SHADOW = 0;
-
+	public static final byte ALLY_SHADOW = 1;
 	public static final byte PLAYER_SHADOW = 2;
+	public static final byte ENEMY_SHADOW = 3;
 
 	public static final float QUICKER = 1.5f;
-
 	public static final float REGULAR_SPEED = 1f;
-
 	public static final float SLOWER = .5f;
 
 	private float counter = 0;
-
 	private Direction facing = Direction.SOUTH;
 	private int healthChange = 0;
-
 	private int healthCounter = 0;
 	public final AbstractPokemonSpriteset pointer;
 	/** When true, if in a repeatable state, will reset to idle state at the end of the current animation. Else, will keep on the same animation. */
 	private boolean resetToIdleOnFinish = false;
 	private byte shadowColor = NEUTRAL_SHADOW;
-
 	private PokemonSpriteState state = PokemonSpriteState.IDLE;
 	private float tickSpeed = 1;
 
@@ -211,6 +202,14 @@ public class PokemonSprite
 		if (s == 0) this.setTickingSpeed(SLOWER);
 		else if (s == 1) this.setTickingSpeed(REGULAR_SPEED);
 		else this.setTickingSpeed(QUICKER);
+	}
+
+	public void copyState(PokemonSprite sprite)
+	{
+		this.facing = sprite.facing;
+		this.resetToIdleOnFinish = sprite.resetToIdleOnFinish;
+		this.shadowColor = sprite.shadowColor;
+		this.tickSpeed = sprite.tickSpeed;
 	}
 
 }
