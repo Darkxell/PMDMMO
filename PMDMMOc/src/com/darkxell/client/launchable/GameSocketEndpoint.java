@@ -13,6 +13,7 @@ import javax.websocket.Session;
 import javax.websocket.WebSocketContainer;
 
 import com.darkxell.client.state.mainstates.LoginMainState;
+import com.darkxell.common.util.Communicable;
 import com.darkxell.common.util.Logger;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonObject;
@@ -113,6 +114,17 @@ public class GameSocketEndpoint {
 			Logger.w("Could not read the recieved message from the server : " + message);
 			e.printStackTrace();
 		}
+	}
+	
+	public void sendMessage(String action, String name, Communicable value) {
+		this.sendMessage(action, name, value.toJson());
+	}
+
+	public void sendMessage(String action, String name, JsonObject value) {
+		JsonObject message = Json.object();
+		message.add("action", action);
+		message.add(name, value);
+		this.sendMessage(message.toString());
 	}
 
 	/**
