@@ -81,25 +81,25 @@ public class FreezonePlayer
 				ismovingUP = true;
 				ismovingDOWN = false;
 				playersprite.setFacingDirection(getFacingFromMoveDirections());
-				playersprite.setState(PokemonSpriteState.MOVE);
+				playersprite.setState(PokemonSpriteState.MOVE, true);
 				break;
 			case Keys.KEY_RIGHT:
 				ismovingRIGHT = true;
 				ismovingLEFT = false;
 				playersprite.setFacingDirection(getFacingFromMoveDirections());
-				playersprite.setState(PokemonSpriteState.MOVE);
+				playersprite.setState(PokemonSpriteState.MOVE, true);
 				break;
 			case Keys.KEY_DOWN:
 				ismovingDOWN = true;
 				ismovingUP = false;
 				playersprite.setFacingDirection(getFacingFromMoveDirections());
-				playersprite.setState(PokemonSpriteState.MOVE);
+				playersprite.setState(PokemonSpriteState.MOVE, true);
 				break;
 			case Keys.KEY_LEFT:
 				ismovingLEFT = true;
 				ismovingRIGHT = false;
 				playersprite.setFacingDirection(getFacingFromMoveDirections());
-				playersprite.setState(PokemonSpriteState.MOVE);
+				playersprite.setState(PokemonSpriteState.MOVE, true);
 				break;
 			case Keys.KEY_ATTACK:
 				if (canInteract()) getInteractionTarget().onInteract();

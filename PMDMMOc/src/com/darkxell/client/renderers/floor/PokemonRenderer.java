@@ -24,6 +24,26 @@ import com.darkxell.common.pokemon.DungeonPokemon;
 public class PokemonRenderer extends AbstractRenderer
 {
 
+	/** Renders a Pokémon at the input x, y (centered) coordinates. width and height are the dimensions of the draw area. */
+	public static void render(Graphics2D g, PokemonSprite sprite, int x, int y)
+	{
+		PokemonSpriteFrame frame = sprite.getCurrentFrame();
+		BufferedImage s = sprite.getCurrentSprite();
+
+		int xPos = x - s.getWidth() / 2 + frame.spriteX, yPos = y - s.getHeight() / 2 + frame.spriteY;
+
+		g.drawImage(s, (frame.isFlipped ? s.getWidth() : 0) + xPos, yPos, (frame.isFlipped ? -1 : 1) * s.getWidth(), s.getHeight(), null);
+
+		int h = sprite.getHealthChange();
+		if (h != 0)
+		{
+			String text = (h < 0 ? "" : "+") + Integer.toString(h);
+			xPos = x - TextRenderer.width(text) / 2;
+			yPos = y - sprite.getHealthPos() - TextRenderer.height() / 2;
+			TextRenderer.render(g, text, xPos, yPos, true);
+		}
+	}
+
 	private final ArrayList<PokemonAnimation> animations = new ArrayList<PokemonAnimation>();
 	public final DungeonPokemon pokemon;
 	public final PokemonSprite sprite;
@@ -70,10 +90,8 @@ public class PokemonRenderer extends AbstractRenderer
 		if (this.sprite.getCurrentSprite() != null)
 		{
 			PokemonSpriteFrame frame = this.sprite.getCurrentFrame();
-			BufferedImage sprite = this.sprite.getCurrentSprite();
 
-			int xPos = (int) (this.x() + TILE_SIZE / 2 - sprite.getWidth() / 2 + frame.spriteX),
-					yPos = (int) (this.y() + TILE_SIZE / 2 - sprite.getHeight() / 2 + frame.spriteY);
+			int xPos = (int) (this.x() + TILE_SIZE / 2), yPos = (int) (this.y() + TILE_SIZE / 2);
 
 			BufferedImage shadow = this.sprite.pointer.hasBigShadow ? ShadowSprites.instance.getBig(this.sprite.getShadowColor())
 					: ShadowSprites.instance.getSmall(this.sprite.getShadowColor());
@@ -83,17 +101,7 @@ public class PokemonRenderer extends AbstractRenderer
 			for (PokemonAnimation animation : this.animations)
 				animation.prerender(g, width, height);
 
-			g.drawImage(sprite, (frame.isFlipped ? sprite.getWidth() : 0) + xPos, yPos, (frame.isFlipped ? -1 : 1) * sprite.getWidth(), sprite.getHeight(),
-					null);
-
-			int h = this.sprite.getHealthChange();
-			if (h != 0)
-			{
-				String text = (h < 0 ? "" : "+") + Integer.toString(h);
-				xPos = (int) (this.x() + TILE_SIZE / 2 - TextRenderer.width(text) / 2);
-				yPos = (int) (this.y() - this.sprite.getHealthPos() - TextRenderer.height() / 2);
-				TextRenderer.render(g, text, xPos, yPos, true);
-			}
+			render(g, this.sprite, xPos, yPos);
 
 			for (PokemonAnimation animation : this.animations)
 				animation.postrender(g, width, height);
