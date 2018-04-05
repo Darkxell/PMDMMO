@@ -78,7 +78,7 @@ public class ClientSettings {
 
 	public static void load() {
 		settings = new Properties();
-		File f = new File("resources/settings.properties");
+		File f = new File("settings.properties");
 		if (f.exists())
 			try {
 				settings.load(new FileInputStream(f));
@@ -96,7 +96,7 @@ public class ClientSettings {
 
 	public static void save() {
 		try {
-			settings.store(new FileOutputStream(new File("resources/settings.properties")), null);
+			settings.store(new FileOutputStream(new File("settings.properties")), null);
 		} catch (FileNotFoundException e) {
 			Logger.e("Could not find settings.properties : " + e);
 		} catch (IOException e) {

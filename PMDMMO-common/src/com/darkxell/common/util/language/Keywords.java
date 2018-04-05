@@ -1,10 +1,12 @@
 package com.darkxell.common.util.language;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Properties;
 
 import com.darkxell.common.util.Logger;
 
@@ -13,8 +15,7 @@ public class Keywords
 {
 
 	/** Comparator for Keywords. */
-	public static final Comparator<String> comparator = new Comparator<String>()
-	{
+	public static final Comparator<String> comparator = new Comparator<String>() {
 		@Override
 		public int compare(String o1, String o2)
 		{
@@ -73,7 +74,7 @@ public class Keywords
 		try
 		{
 			Properties data = new Properties();
-			data.load(new FileInputStream(new File("resources/lang/" + Lang.getLanguage().id + "_keywords.properties")));
+			data.load(Lang.class.getResourceAsStream("/lang/" + Lang.getLanguage().id + "_keywords.properties"));
 
 			for (Object keyword : data.keySet())
 			{

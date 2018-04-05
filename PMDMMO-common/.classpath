@@ -8,5 +8,6 @@
 			<attribute name="javadoc_location" value="jar:file:/C:/Programming/Java/Libraries/minimal-json-0.9.5-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="src" path="resources"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

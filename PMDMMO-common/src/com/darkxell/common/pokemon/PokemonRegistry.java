@@ -28,11 +28,11 @@ public final class PokemonRegistry
 	}
 
 	/** Loads this Registry for the Client. */
-	public static void loadClient()
+	public static void load()
 	{
 		Logger.instance().debug("Loading Pokémon...");
 
-		Element root = XMLUtils.readFile(new File("resources/data/pokemon.xml"));
+		Element root = XMLUtils.readFile(new File(PokemonRegistry.class.getResource("/data/pokemon.xml").getFile()));
 		for (Element e : root.getChildren("pokemon", root.getNamespace()))
 			try
 			{

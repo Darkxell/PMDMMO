@@ -14,7 +14,7 @@ public class DungeonHudSpriteset
 
 	public DungeonHudSpriteset()
 	{
-		BufferedImage source = Res.getBase("resources/hud/dungeon_hud.png");
+		BufferedImage source = Res.getBase("/hud/dungeon_hud.png");
 		this.arrows = new BufferedImage[8];
 		this.arrows[0] = Res.createimage(source, 13, 1, 8, 5);
 		this.arrows[1] = Res.createimage(source, 6, 0, 6, 6);

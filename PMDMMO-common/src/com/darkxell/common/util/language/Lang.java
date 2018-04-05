@@ -35,7 +35,7 @@ public class Lang
 		return selected;
 	}
 
-	public static void loadClient()
+	public static void load()
 	{
 		setLanguage(Language.ENGLISH);
 	}
@@ -61,7 +61,7 @@ public class Lang
 		dictionnary.clear();
 		try
 		{
-			dictionnary.load(new FileInputStream(new File("resources/lang/" + selected.id + ".properties")));
+			dictionnary.load(Lang.class.getResourceAsStream("/lang/" + selected.id + ".properties"));
 		} catch (FileNotFoundException e)
 		{
 			e.printStackTrace();

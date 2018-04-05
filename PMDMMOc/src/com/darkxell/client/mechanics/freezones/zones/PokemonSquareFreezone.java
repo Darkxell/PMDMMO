@@ -15,7 +15,7 @@ import com.darkxell.common.util.language.Message;
 public class PokemonSquareFreezone extends FreezoneMap {
 
 	public PokemonSquareFreezone() {
-		super("resources\\freezones\\square.xml");
+		super("/freezones/square.xml");
 		this.freezonebgm = "14 Pokemon Square.mp3";
 		this.warpzones.add(new WarpZone(63, 40, new DoubleRectangle(0, 38, 2, 5)) {
 			@Override

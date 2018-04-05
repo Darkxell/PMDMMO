@@ -9,7 +9,7 @@ import com.darkxell.common.util.Direction;
 public class MenuHudSpriteset
 {
 
-	private static final BufferedImage source = Res.getBase("resources/hud/menu_hud.png");
+	private static final BufferedImage source = Res.getBase("/hud/menu_hud.png");
 
 	public static final BufferedImage SELECTION_ARROW = Res.createimage(source, 0, 0, 10, 16);
 	public static final BufferedImage SELECTED_ARROW = Res.createimage(source, 12, 0, 10, 16);

@@ -10,9 +10,9 @@ import com.darkxell.client.resources.Res;
 public class ChatResources {
 
 	public static final BufferedImage HEADER = createHeader(true, true, true);
-	public static final BufferedImage FOOTER = Res.getBase("resources/hud/chat/chatfooter.png");
+	public static final BufferedImage FOOTER = Res.getBase("/hud/chat/chatfooter.png");
 
-	private static final BufferedImage ICONSBASE = Res.getBase("resources/hud/chat/icons.png");
+	private static final BufferedImage ICONSBASE = Res.getBase("/hud/chat/icons.png");
 	public static final BufferedImage ICON_CHANNEL_GLOBAL = Res.createimage(ICONSBASE, 0, 0, 32, 32);
 	public static final BufferedImage ICON_CHANNEL_GUILD = Res.createimage(ICONSBASE, 32, 0, 32, 32);
 	public static final BufferedImage ICON_CHANNEL_PRIVATE = Res.createimage(ICONSBASE, 64, 0, 32, 32);

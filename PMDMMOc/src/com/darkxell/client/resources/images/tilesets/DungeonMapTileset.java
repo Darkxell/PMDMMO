@@ -9,7 +9,7 @@ public class DungeonMapTileset extends AbstractTileset
 
 	public DungeonMapTileset()
 	{
-		super("resources/tilesets/dungeon/map.png", 4, 4);
+		super("/tilesets/dungeon/map.png", 4, 4);
 	}
 
 	public BufferedImage ally()

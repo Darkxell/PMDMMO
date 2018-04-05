@@ -239,7 +239,7 @@ public class TextRenderer
 		sprites = new HashMap<PMDChar, BufferedImage>();
 		coloredSprites = new HashMap<PMDChar, Image>();
 		dungeonChars = new HashMap<PMDChar, PMDChar>();
-		BufferedImage source = Res.getBase("resources/hud/font.png");
+		BufferedImage source = Res.getBase("/hud/font.png");
 		for (PMDChar c : PMDChar.values())
 			if (c.id != -1) sprites.put(c,
 					Res.createimage(source, c.id % GRID_COLS * GRID_WIDTH, (c.id - c.id % GRID_COLS) / GRID_COLS * GRID_HEIGHT, GRID_WIDTH, GRID_HEIGHT));

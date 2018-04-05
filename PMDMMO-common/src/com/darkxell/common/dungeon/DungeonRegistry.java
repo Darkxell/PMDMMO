@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 import org.jdom2.Element;
 
+import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.XMLUtils;
 
@@ -28,11 +29,11 @@ public final class DungeonRegistry
 	}
 
 	/** Loads this Registry for the Client. */
-	public static void loadClient()
+	public static void load()
 	{
 		Logger.instance().debug("Loading Dungeons...");
 
-		Element root = XMLUtils.readFile(new File("resources/data/dungeons.xml"));
+		Element root = XMLUtils.readFile(new File(PokemonRegistry.class.getResource("/data/dungeons.xml").getFile()));
 		for (Element e : root.getChildren("dungeon", root.getNamespace()))
 		{
 			Dungeon dungeon = new Dungeon(e);

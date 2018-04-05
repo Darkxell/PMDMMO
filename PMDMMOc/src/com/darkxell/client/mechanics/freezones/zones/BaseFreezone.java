@@ -12,7 +12,7 @@ import com.darkxell.common.util.DoubleRectangle;
 public class BaseFreezone extends FreezoneMap {
 
 	public BaseFreezone() {
-		super("resources\\freezones\\base.xml");
+		super("/freezones/base.xml");
 		this.freezonebgm = "10 Rescue Team Base.mp3";
 		this.warpzones.add(new WarpZone(4, 40, new DoubleRectangle(66, 34, 2, 11)) {
 			@Override

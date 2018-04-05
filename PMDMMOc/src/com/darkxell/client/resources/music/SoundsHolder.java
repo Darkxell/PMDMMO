@@ -2,6 +2,8 @@ package com.darkxell.client.resources.music;
 
 import java.io.File;
 
+import com.darkxell.client.resources.Res;
+
 public class SoundsHolder {
 
 	public static final Song[] soundtracks = getSoundtracks();
@@ -9,7 +11,7 @@ public class SoundsHolder {
 	private static String[] soundtrackNames, sfxNames;
 
 	private static Song[] getSoundtracks() {
-		File[] all = new File("resources/music/").listFiles();
+		File[] all = Res.getFile("/music/").listFiles();
 		soundtrackNames = new String[all.length];
 		for (int i = 0; i < all.length; i++)
 			soundtrackNames[i] = all[i].getName();
@@ -20,7 +22,7 @@ public class SoundsHolder {
 	}
 
 	private static Song[] getSfx() {
-		File[] all = new File("resources/sound/").listFiles();
+		File[] all = Res.getFile("/sound/").listFiles();
 		sfxNames = new String[all.length];
 		for (int i = 0; i < all.length; i++)
 			sfxNames[i] = all[i].getName().substring(0, all[i].getName().length() - 4);

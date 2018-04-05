@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 import org.jdom2.Element;
 
+import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.XMLUtils;
 
@@ -29,11 +30,11 @@ public final class MoveRegistry
 	}
 
 	/** Loads this Registry for the Client. */
-	public static void loadClient()
+	public static void load()
 	{
 		Logger.instance().debug("Loading Moves...");
 
-		Element root = XMLUtils.readFile(new File("resources/data/moves.xml"));
+		Element root = XMLUtils.readFile(new File(PokemonRegistry.class.getResource("/data/moves.xml").getFile()));
 		for (Element e : root.getChildren())
 			try
 			{

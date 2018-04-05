@@ -13,7 +13,7 @@ public class ShadowSprites
 
 	public ShadowSprites()
 	{
-		BufferedImage source = Res.getBase("resources/pokemons/shadows.png");
+		BufferedImage source = Res.getBase("/pokemons/shadows.png");
 		this.sprites = new BufferedImage[8];
 		this.sprites[0] = Res.createimage(source, 0, 0, 14, 6);
 		this.sprites[1] = Res.createimage(source, 0, 6, 14, 6);

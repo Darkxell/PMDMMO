@@ -28,12 +28,12 @@ public class Launcher {
 
 		ClientSettings.load();
 		Logger.loadClient();
-		Lang.loadClient();
-		PokemonRegistry.loadClient();
-		MoveRegistry.loadClient();
-		ItemRegistry.loadClient();
+		Lang.load();
+		PokemonRegistry.load();
+		MoveRegistry.load();
+		ItemRegistry.load();
 		TrapRegistry.load();
-		DungeonRegistry.loadClient();
+		DungeonRegistry.load();
 		PokemonSpritesets.loadData();
 		Animations.loadData();
 		TextRenderer.load();
