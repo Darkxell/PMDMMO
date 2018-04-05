@@ -1,0 +1,642 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="pmdmmo"
+    xsi:schemaLocation="pmdmmo xsd/quiz.xsd">
+    <questions>
+        <questiongroup id="0">
+            <question id="0">
+                <answer id="0">
+                    <reward nature="Hardy" value="2"/>
+                </answer>
+                <answer id="1">
+                    <reward nature="Relaxed" value="2"/>
+                </answer>
+                <answer id="2">
+                    <reward nature="Impish" value="2"/>
+                </answer>
+            </question>
+            <question id="1">
+                <answer id="0">
+                    <reward nature="Hardy" value="2"/>
+                    <reward nature="Docile" value="1"/>
+                </answer>
+                <answer id="1">
+                    <reward nature="Quirky" value="2"/>
+                </answer>
+            </question>
+            <question id="2">
+                <answer id="0">
+                    <reward nature="Hardy" value="2"/>
+                    <reward nature="Brave" value="2"/>
+                </answer>
+                <answer id="1">
+                    <reward nature="Sassy" value="2"/>
+                    <reward nature="Quirky" value="2"/>
+                </answer>
+            </question>
+            <question id="3">
+                <answer id="0">
+                    <reward nature="Hardy" value="2"/>
+                </answer>
+                <answer id="1">
+                    <reward nature="Calm" value="2"/>
+                </answer>
+                <answer id="2">
+                    <reward nature="Quirky" value="2"/>
+                </answer>
+            </question>
+        </questiongroup>
+        <questiongroup id="1">
+            <question id="0">
+                <answer id="0">
+                    <reward nature="Docile" value="2"/>
+                    <reward nature="Naive" value="1"/>
+                </answer>
+                <answer id="1">
+                    <reward nature="Timid" value="2"/>
+                    <reward nature="Calm" value="1"/>
+                </answer>
+            </question>
+            <question id="1">
+                <answer id="0">
+                    <reward nature="Docile" value="2"/>
+                    <reward nature="Hasty" value="1"/>
+                </answer>
+                <answer id="1">
+                    <reward nature="Naive" value="2"/>
+                    <reward nature="Relaxed" value="1"/>
+                </answer>
+            </question>
+            <question id="2">
+                <answer id="0">
+                    <reward nature="Docile" value="2"/>
+                </answer>
+                <answer id="1">
+                    <reward nature="Naive" value="2"/>
+                    <reward nature="Lonely" value="1"/>
+                </answer>
+                <answer id="2">
+                    <reward nature="Sassy" value="2"/>
+                </answer>
+            </question>
+            <question id="3">
+                <answer id="0">
+                    <reward nature="Docile" value="2"/>
+                </answer>
+                <answer id="1">
+                    <reward nature="Naive" value="2"/>
+                </answer>
+                <answer id="2">
+                    <reward nature="Impish" value="2"/>
+                </answer>
+            </question>
+        </questiongroup>
+        <questiongroup id="2">
+            <question id="0">
+                <answer id="0">
+                    <reward nature="Brave" value="3"/>
+                    <reward nature="Impish" value="1"/>
+                </answer>
+                <answer id="1">
+                    <reward nature="Docile" value="2"/>
+                    <reward nature="Timid" value="1"/>
+                </answer>
+            </question>
+            <question id="1">
+                <answer id="0"/>
+                <answer id="1">
+                    <reward nature="Timid" value="2"/>
+                </answer>
+                <answer id="2">
+                    <reward nature="Relaxed" value="2"/>
+                </answer>
+            </question>
+            <question id="2">
+                <answer id="0">
+                    <reward nature="Brave" value="2"/>
+                    <reward nature="Hardy" value="1"/>
+                </answer>
+                <answer id="1">
+                    <reward nature="Naive" value="2"/>
+                </answer>
+            </question>
+            <question id="3">
+                <answer id="0">
+                    <reward nature="Brave" value="3"/>
+                </answer>
+                <answer id="1">
+                    <reward nature="Brave" value="2"/>
+                    <reward nature="Hardy" value="2"/>
+                </answer>
+                <answer id="2">
+                    <reward nature="Docile" value="1"/>
+                    <reward nature="Timid" value="1"/>
+                    <reward nature="Relaxed" value="1"/>
+                </answer>
+                <answer id="3">
+                    <reward nature="Timid" value="2"/>
+                </answer>
+            </question>
+        </questiongroup>
+        <questiongroup id="3">
+            <question id="0">
+                <answer id="0">
+                    <reward nature="Jolly" value="2"/>
+                    <reward nature="Naive" value="1"/>
+                </answer>
+                <answer id="1">
+                    <reward nature="Sassy" value="1"/>
+                    <reward nature="Quirky" value="1"/>
+                </answer>
+            </question>
+            <question id="1">
+                <answer id="0">
+                    <reward nature="Jolly" value="1"/>
+                    <reward nature="Lonely" value="1"/>
+                </answer>
+                <answer id="1">
+                    <reward nature="Timid" value="1"/>
+                </answer>
+            </question>
+            <question id="2">
+                <answer id="0">
+                    <reward nature="Jolly" value="2"/>
+                </answer>
+                <answer id="1">
+                    <reward nature="Calm" value="2"/>
+                </answer>
+                <answer id="1">
+                    <reward nature="Quirky" value="2"/>
+                </answer>
+            </question>
+            <question id="3">
+                <answer id="0">
+                    <reward nature="Jolly" value="3"/>
+                </answer>
+                <answer id="1">
+                    <reward nature="Hardy" value="2"/>
+                </answer>
+                <answer id="2">
+                    <reward nature="Timid" value="2"/>
+                </answer>
+            </question>
+        </questiongroup>
+        <questiongroup id="4">
+            <question id="0">
+                <answer id="0">
+                    <reward nature="Impish" value="2"/>
+                    <reward nature="Lonely" value="1"/>
+                </answer>
+                <answer id="1">
+                    <reward nature="Calm" value="2"/>
+                </answer>
+            </question>
+            <question id="1">
+                <answer id="0">
+                    <reward nature="Impish" value="2"/>
+                </answer>
+                <answer id="1">
+                    <reward nature="Docile" value="1"/>
+                    <reward nature="Relaxed" value="1"/>
+                </answer>
+            </question>
+            <question id="2">
+                <answer id="0">
+                    <reward nature="Impish" value="2"/>
+                    <reward nature="Hardy" value="1"/>
+                </answer>
+                <answer id="1">
+                    <reward nature="Quirky" value="2"/>
+                    <reward nature="Sassy" value="1"/>
+                </answer>
+            </question>
+            <question id="3">
+                <answer id="0">
+                    <reward nature="Brave" value="3"/>
+                </answer>
+                <answer id="1">
+                    <reward nature="Timid" value="2"/>
+                </answer>
+                <answer id="2">
+                    <reward nature="Impish" value="2"/>
+                </answer>
+            </question>
+        </questiongroup>
+        <questiongroup id="5">
+            <question id="0">
+                <answer id="0">
+                    <reward nature="Naive" value="3"/>
+                    <reward nature="Impish" value="1"/>
+                </answer>
+                <answer id="1">
+                    <reward nature="Jolly" value="2"/>
+                </answer>
+                <answer id="2">
+                    <reward nature="Sassy" value="2"/>
+                </answer>
+            </question>
+            <question id="1">
+                <answer id="0">
+                    <reward nature="Naive" value="2"/>
+                    <reward nature="Docile" value="1"/>
+                </answer>
+                <answer id="1">
+                    <reward nature="Quirky" value="2"/>
+                </answer>
+            </question>
+            <question id="2">
+                <answer id="0">
+                    <reward nature="Naive" value="2"/>
+                    <reward nature="Jolly" value="1"/>
+                </answer>
+                <answer id="1">
+                    <reward nature="Calm" value="2"/>
+                </answer>
+            </question>
+            <question id="3">
+                <answer id="0">
+                    <reward nature="Naive" value="2"/>
+                </answer>
+                <answer id="1">
+                    <reward nature="Hasty" value="2"/>
+                </answer>
+            </question>
+        </questiongroup>
+        <questiongroup id="6">
+            <question id="0">
+                <answer id="0">
+                    <reward nature="Timid" value="2"/>
+                </answer>
+                <answer id="1">
+                    <reward nature="Calm" value="2"/>
+                    <reward nature="Hardy" value="1"/>
+                </answer>
+                <answer id="2">
+                    <reward nature="Brave" value="2"/>
+                    <reward nature="Impish" value="1"/>
+                    <reward nature="Naive" value="1"/>
+                </answer>
+            </question>
+            <question id="1">
+                <answer id="0">
+                    <reward nature="Timid" value="2"/>
+                </answer>
+                <answer id="1">
+                    <reward nature="Hasty" value="2"/>
+                </answer>
+                <answer id="2">
+                    <reward nature="Jolly" value="2"/>
+                </answer>
+                <answer id="3">
+                    <reward nature="Sassy" value="2"/>
+                </answer>
+                <answer id="4">
+                    <reward nature="Lonely" value="2"/>
+                </answer>
+            </question>
+            <question id="2">
+                <answer id="0">
+                    <reward nature="Timid" value="2"/>
+                </answer>
+                <answer id="1">
+                    <reward nature="Lonely" value="2"/>
+                </answer>
+                <answer id="2">
+                    <reward nature="Impish" value="2"/>
+                    <reward nature="Quirky" value="1"/>
+                </answer>
+            </question>
+            <question id="3">
+                <answer id="0">
+                    <reward nature="Brave" value="3"/>
+                </answer>
+                <answer id="1">
+                    <reward nature="Timid" value="2"/>
+                </answer>
+                <answer id="2">
+                    <reward nature="Sassy" value="2"/>
+                </answer>
+            </question>
+        </questiongroup>
+        <questiongroup id="7">
+            <question id="0">
+                <answer id="0">
+                    <reward nature="Hasty" value="2"/>
+                </answer>
+                <answer id="1">
+                    <reward nature="Calm" value="2"/>
+                </answer>
+                <answer id="2">
+                    <reward nature="Timid" value="2"/>
+                </answer>
+            </question>
+            <question id="1">
+                <answer id="0">
+                    <reward nature="Jolly" value="2"/>
+                    <reward nature="Hasty" value="1"/>
+                </answer>
+                <answer id="1">
+                    <reward nature="Hardy" value="1"/>
+                    <reward nature="Calm" value="1"/>
+                </answer>
+                <answer id="2">
+                    <reward nature="Brave" value="2"/>
+                    <reward nature="Quirky" value="1"/>
+                </answer>
+            </question>
+            <question id="2">
+                <answer id="0">
+                    <reward nature="Hasty" value="2"/>
+                </answer>
+                <answer id="1">
+                    <reward nature="Timid" value="2"/>
+                </answer>
+                <answer id="2">
+                    <reward nature="Sassy" value="2"/>
+                </answer>
+            </question>
+            <question id="3">
+                <answer id="0">
+                    <reward nature="Docile" value="2"/>
+                    <reward nature="Hasty" value="1"/>
+                </answer>
+                <answer id="1">
+                    <reward nature="Relaxed" value="2"/>
+                </answer>
+                <answer id="2">
+                    <reward nature="Hasty" value="3"/>
+                </answer>
+            </question>
+        </questiongroup>
+        <questiongroup id="8">
+            <question id="0">
+                <answer id="0">
+                    <reward nature="Hardy" value="2"/>
+                </answer>
+                <answer id="1">
+                    <reward nature="Docile" value="2"/>
+                </answer>
+                <answer id="2">
+                    <reward nature="Sassy" value="2"/>
+                </answer>
+            </question>
+            <question id="1">
+                <answer id="0">
+                    <reward nature="Sassy" value="2"/>
+                    <reward nature="Impish" value="1"/>
+                </answer>
+                <answer id="1">
+                    <reward nature="Calm" value="2"/>
+                </answer>
+            </question>
+            <question id="2">
+                <answer id="0">
+                    <reward nature="Sassy" value="2"/>
+                </answer>
+                <answer id="1">
+                    <reward nature="Relaxed" value="2"/>
+                </answer>
+            </question>
+            <question id="3">
+                <answer id="0">
+                    <reward nature="Docile" value="2"/>
+                    <reward nature="Calm" value="1"/>
+                </answer>
+                <answer id="1">
+                    <reward nature="Sassy" value="2"/>
+                    <reward nature="Quirky" value="1"/>
+                </answer>
+            </question>
+        </questiongroup>
+        <questiongroup id="9">
+            <question id="0">
+                <answer id="0">
+                    <reward nature="Calm" value="2"/>
+                    <reward nature="Lonely" value="1"/>
+                </answer>
+                <answer id="1">
+                    <reward nature="Hardy" value="2"/>
+                </answer>
+            </question>
+            <question id="1">
+                <answer id="0">
+                    <reward nature="Calm" value="2"/>
+                </answer>
+                <answer id="1">
+                    <reward nature="Impish" value="2"/>
+                </answer>
+            </question>
+            <question id="2">
+                <answer id="0">
+                    <reward nature="Timid" value="2"/>
+                    <reward nature="Impish" value="1"/>
+                </answer>
+                <answer id="1">
+                    <reward nature="Calm" value="2"/>
+                    <reward nature="Lonely" value="1"/>
+                </answer>
+            </question>
+            <question id="3">
+                <answer id="0">
+                    <reward nature="Calm" value="2"/>
+                    <reward nature="Relaxed" value="1"/>
+                </answer>
+                <answer id="1">
+                    <reward nature="Hasty" value="2"/>
+                    <reward nature="Hardy" value="1"/>
+                </answer>
+            </question>
+        </questiongroup>
+        <questiongroup id="10">
+            <question id="0">
+                <answer id="0">
+                    <reward nature="Relaxed" value="2"/>
+                    <reward nature="Sassy" value="1"/>
+                </answer>
+                <answer id="1">
+                    <reward nature="Hardy" value="2"/>
+                    <reward nature="Hasty" value="1"/>
+                </answer>
+            </question>
+            <question id="1">
+                <answer id="0">
+                    <reward nature="Relaxed" value="2"/>
+                </answer>
+                <answer id="1">
+                    <reward nature="Hasty" value="2"/>
+                    <reward nature="Impish" value="1"/>
+                </answer>
+            </question>
+            <question id="2">
+                <answer id="0">
+                    <reward nature="Jolly" value="2"/>
+                </answer>
+                <answer id="1">
+                    <reward nature="Relaxed" value="2"/>
+                </answer>
+                <answer id="2">
+                    <reward nature="Hasty" value="2"/>
+                </answer>
+            </question>
+            <question id="3">
+                <answer id="0">
+                    <reward nature="Relaxed" value="2"/>
+                    <reward nature="Calm" value="1"/>
+                </answer>
+                <answer id="1">
+                    <reward nature="Hardy" value="2"/>
+                </answer>
+            </question>
+        </questiongroup>
+        <questiongroup id="11">
+            <question id="0">
+                <answer id="0">
+                    <reward nature="Lonely" value="2"/>
+                    <reward nature="Timid" value="1"/>
+                </answer>
+                <answer id="1">
+                    <reward nature="Sassy" value="2"/>
+                </answer>
+            </question>
+            <question id="1">
+                <answer id="0">
+                    <reward nature="Lonely" value="2"/>
+                    <reward nature="Timid" value="1"/>
+                </answer>
+                <answer id="1">
+                    <reward nature="Brave" value="3"/>
+                    <reward nature="Relaxed" value="1"/>
+                </answer>
+            </question>
+            <question id="2">
+                <answer id="0">
+                    <reward nature="Lonely" value="2"/>
+                    <reward nature="Timid" value="1"/>
+                </answer>
+                <answer id="1">
+                    <reward nature="Calm" value="2"/>
+                </answer>
+            </question>
+            <question id="3">
+                <answer id="0">
+                    <reward nature="Jolly" value="1"/>
+                    <reward nature="Lonely" value="1"/>
+                </answer>
+                <answer id="1">
+                    <reward nature="Relaxed" value="2"/>
+                    <reward nature="Calm" value="1"/>
+                </answer>
+                <answer id="2">
+                    <reward nature="Lonely" value="3"/>
+                    <reward nature="Timid" value="1"/>
+                </answer>
+            </question>
+        </questiongroup>
+        <questiongroup id="12">
+            <question id="0">
+                <answer id="0">
+                    <reward nature="Quirky" value="2"/>
+                </answer>
+                <answer id="1">
+                    <reward nature="Hardy" value="2"/>
+                </answer>
+            </question>
+            <question id="1">
+                <answer id="0">
+                    <reward nature="Hardy" value="1"/>
+                    <reward nature="Hasty" value="1"/>
+                </answer>
+                <answer id="1">
+                    <reward nature="Quirky" value="2"/>
+                </answer>
+                <answer id="2">
+                    <reward nature="Sassy" value="2"/>
+                </answer>
+            </question>
+            <question id="2">
+                <answer id="0">
+                    <reward nature="Brave" value="3"/>
+                    <reward nature="Hardy" value="1"/>
+                </answer>
+                <answer id="1">
+                    <reward nature="Quirky" value="2"/>
+                </answer>
+                <answer id="2">
+                    <reward nature="Impish" value="2"/>
+                </answer>
+                <answer id="3">
+                    <reward nature="Timid" value="2"/>
+                </answer>
+            </question>
+            <question id="3">
+                <answer id="0">
+                    <reward nature="Docile" value="2"/>
+                </answer>
+                <answer id="2">
+                    <reward nature="Sassy" value="2"/>
+                </answer>
+                <answer id="3">
+                    <reward nature="Quirky" value="2"/>
+                </answer>
+            </question>
+        </questiongroup>
+        <questiongroup id="13">
+            <question id="0">
+                <answer id="0">
+                    <reward nature="Hasty" value="1"/>
+                    <reward nature="Quirky" value="1"/>
+                </answer>
+                <answer id="1">
+                    <reward nature="Jolly" value="1"/>
+                    <reward nature="Lonely" value="1"/>
+                </answer>
+            </question>
+            <question id="1">
+                <answer id="0">
+                    <reward nature="Jolly" value="2"/>
+                </answer>
+                <answer id="1">
+                    <reward nature="Quirky" value="1"/>
+                    <reward nature="Sassy" value="1"/>
+                </answer>
+            </question>
+            <question id="2">
+                <answer id="0">
+                    <reward nature="Naive" value="1"/>
+                    <reward nature="Lonely" value="1"/>
+                </answer>
+                <answer id="1">
+                    <reward nature="Hasty" value="1"/>
+                    <reward nature="Sassy" value="1"/>
+                </answer>
+            </question>
+        </questiongroup>
+    </questions>
+    <starters>
+        <starter nature="Hardy" gender="boy" pokemon="4"/>
+        <starter nature="Hardy" gender="girl" pokemon="25"/>
+        <starter nature="Docile" gender="boy" pokemon="1"/>
+        <starter nature="Docile" gender="girl" pokemon="152"/>
+        <starter nature="Brave" gender="boy" pokemon="66"/>
+        <starter nature="Brave" gender="girl" pokemon="4"/>
+        <starter nature="Jolly" gender="boy" pokemon="7"/>
+        <starter nature="Jolly" gender="girl" pokemon="158"/>
+        <starter nature="Impish" gender="boy" pokemon="25"/>
+        <starter nature="Impish" gender="girl" pokemon="104"/>
+        <starter nature="Naive" gender="boy" pokemon="158"/>
+        <starter nature="Naive" gender="girl" pokemon="133"/>
+        <starter nature="Timid" gender="boy" pokemon="155"/>
+        <starter nature="Timid" gender="girl" pokemon="258"/>
+        <starter nature="Hasty" gender="boy" pokemon="255"/>
+        <starter nature="Hasty" gender="girl" pokemon="300"/>
+        <starter nature="Sassy" gender="boy" pokemon="252"/>
+        <starter nature="Sassy" gender="girl" pokemon="255"/>
+        <starter nature="Calm" gender="boy" pokemon="258"/>
+        <starter nature="Calm" gender="girl" pokemon="1"/>
+        <starter nature="Relaxed" gender="boy" pokemon="54"/>
+        <starter nature="Relaxed" gender="girl" pokemon="7"/>
+        <starter nature="Lonely" gender="boy" pokemon="104"/>
+        <starter nature="Lonely" gender="girl" pokemon="54"/>
+        <starter nature="Quirky" gender="boy" pokemon="52"/>
+        <starter nature="Quirky" gender="girl" pokemon="252"/>
+    </starters>
+</quiz>
