@@ -1,9 +1,11 @@
 package com.darkxell.client.resources.images.pokemon;
 
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
 import com.darkxell.client.resources.Res;
+import com.darkxell.client.resources.images.others.Hud;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.pokemon.PokemonSpecies;
@@ -14,12 +16,10 @@ public class PokemonPortrait
 	private static final int cols = 10, rows = 10;
 	public static final int PORTRAIT_SIZE = 40;
 	private static final PokemonPortrait portraits0 = new PokemonPortrait("/pokemons/portraits/portraits0.png"),
-			portraits1 = new PokemonPortrait("/pokemons/portraits/portraits1.png"),
-			portraits2 = new PokemonPortrait("/pokemons/portraits/portraits2.png"),
+			portraits1 = new PokemonPortrait("/pokemons/portraits/portraits1.png"), portraits2 = new PokemonPortrait("/pokemons/portraits/portraits2.png"),
 			portraits3 = new PokemonPortrait("/pokemons/portraits/portraits3.png");
 	private static final PokemonPortrait portraits0S = new PokemonPortrait("/pokemons/portraits/portraits0s.png"),
-			portraits1S = new PokemonPortrait("/pokemons/portraits/portraits1s.png"),
-			portraits2S = new PokemonPortrait("/pokemons/portraits/portraits2s.png"),
+			portraits1S = new PokemonPortrait("/pokemons/portraits/portraits1s.png"), portraits2S = new PokemonPortrait("/pokemons/portraits/portraits2s.png"),
 			portraits3S = new PokemonPortrait("/pokemons/portraits/portraits3s.png");
 	private static final PokemonPortrait portraitsAlternate = new PokemonPortrait("/pokemons/portraits/portraits-alternate.png");
 	private static final PokemonPortrait portraitsAlternateS = new PokemonPortrait("/pokemons/portraits/portraits-alternates.png");
@@ -30,6 +30,13 @@ public class PokemonPortrait
 		for (PokemonSpecies pokemon : PokemonRegistry.list())
 			for (PokemonSpecies form : pokemon.forms())
 				alternateIDs.put(form.compoundID(), id++);
+	}
+
+	/** Draws the portrait of the input pokémon at the input topright location. */
+	public static void drawPortrait(Graphics2D g, Pokemon pokemon, int x, int y)
+	{
+		g.drawImage(PokemonPortrait.portrait(pokemon), x + 4, y + 4, null);
+		g.drawImage(Hud.portrait, x, y, null);
 	}
 
 	/** @return The portrait for the input Pokémon. */

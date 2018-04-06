@@ -229,13 +229,8 @@ public class DialogState extends AbstractState
 				(int) (this.dialogBox.getMaxY() - arrow.getHeight() * 3 / 4), null);
 
 		if (this.currentScreen < this.screens.size() && this.currentScreen().pokemon != null)
-		{
-			int x = (int) (this.dialogBox.x + 5);
-			int y = (int) (this.dialogBox.y - Hud.portrait.getHeight() - 5);
+			PokemonPortrait.drawPortrait(g, this.currentScreen().pokemon, this.dialogBox.x + 5, this.dialogBox.y - Hud.portrait.getHeight() - 5);
 
-			g.drawImage(PokemonPortrait.portrait(this.currentScreen().pokemon), x + 4, y + 4, null);
-			g.drawImage(Hud.portrait, x, y, null);
-		}
 	}
 
 	private void requestNextLine()

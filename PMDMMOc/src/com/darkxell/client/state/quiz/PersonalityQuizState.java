@@ -2,17 +2,19 @@ package com.darkxell.client.state.quiz;
 
 import java.awt.Graphics2D;
 import java.util.Arrays;
+import java.util.Random;
 
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.layers.BackgroundLsdLayer;
+import com.darkxell.client.resources.images.pokemon.PokemonPortrait;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.DialogState;
 import com.darkxell.client.state.DialogState.DialogEndListener;
 import com.darkxell.client.state.DialogState.DialogScreen;
 import com.darkxell.client.state.OptionDialogState;
 import com.darkxell.client.state.quiz.QuizData.QuizGender;
+import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.PokemonRegistry;
-import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.util.language.Message;
 
 public class PersonalityQuizState extends AbstractState implements DialogEndListener
@@ -26,7 +28,7 @@ public class PersonalityQuizState extends AbstractState implements DialogEndList
 	private QuizGender gender;
 	private QuizQuestion[] questions;
 	private QuizData quizData;
-	private PokemonSpecies starter;
+	private Pokemon starter;
 
 	public PersonalityQuizState()
 	{
@@ -42,10 +44,9 @@ public class PersonalityQuizState extends AbstractState implements DialogEndList
 
 	private void loadNewDialog()
 	{
-		if (this.currentQuestion > this.questions.length) this.currentDialog = new DialogState(this, this,
-				Arrays.asList(new DialogScreen(new Message(
-						"This is the end of this test. Your nature is: " + this.finalNature + ". Your starter is: " + this.starter.speciesName() + ".",
-						false))));
+		if (this.currentQuestion >= this.questions.length + 2) this.currentDialog = new DialogState(this, this, true,
+				new DialogScreen(new Message("quiz.starter").addReplacement("<pokemon>", this.starter.getNickname())));
+		else if (this.currentQuestion == this.questions.length + 1) this.currentDialog = new DialogState(this, this, this.finalNature.description());
 		else if (this.currentQuestion == this.questions.length) this.currentDialog = new OptionDialogState(this, this,
 				Arrays.asList(new DialogScreen(new Message("quiz.gender"))), new Message("quiz.gender.boy"), new Message("quiz.gender.girl"));
 		else this.currentDialog = new OptionDialogState(this, this, Arrays.asList(new DialogScreen(this.questions[this.currentQuestion].name)),
@@ -75,7 +76,7 @@ public class PersonalityQuizState extends AbstractState implements DialogEndList
 		{
 			this.gender = ((OptionDialogState) dialog).chosenIndex() == 0 ? QuizGender.Boy : QuizGender.Girl;
 			int starterID = this.quizData.starters[this.finalNature.id][this.gender == QuizGender.Boy ? 0 : 1];
-			this.starter = PokemonRegistry.find(starterID);
+			this.starter = PokemonRegistry.find(starterID).generate(new Random(), 5);
 		}
 
 		this.loadNewDialog();
@@ -100,6 +101,8 @@ public class PersonalityQuizState extends AbstractState implements DialogEndList
 	public void render(Graphics2D g, int width, int height)
 	{
 		this.background.render(g, width, height);
+		if (this.currentQuestion == this.questions.length + 2)
+			PokemonPortrait.drawPortrait(g, this.starter, width / 2 - PokemonPortrait.PORTRAIT_SIZE / 2, height / 2 - PokemonPortrait.PORTRAIT_SIZE / 2);
 	}
 
 	@Override
