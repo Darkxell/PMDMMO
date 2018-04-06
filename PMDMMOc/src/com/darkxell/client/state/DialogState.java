@@ -166,7 +166,7 @@ public class DialogState extends AbstractState
 	{
 		if (this.currentScreen == this.screens.size() - 1)
 		{
-			if (this.listener == null) Persistance.stateManager.setState(this.backgroundState);
+			if (this.listener == null && this.backgroundState != null) Persistance.stateManager.setState(this.backgroundState);
 			else this.listener.onDialogEnd(this);
 		} else
 		{

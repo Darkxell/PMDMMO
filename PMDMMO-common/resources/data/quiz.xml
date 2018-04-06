@@ -614,31 +614,31 @@
         </questiongroup>
     </questions>
     <starters>
-        <starter nature="Hardy" gender="boy" pokemon="4"/>
-        <starter nature="Hardy" gender="girl" pokemon="25"/>
-        <starter nature="Docile" gender="boy" pokemon="1"/>
-        <starter nature="Docile" gender="girl" pokemon="152"/>
-        <starter nature="Brave" gender="boy" pokemon="66"/>
-        <starter nature="Brave" gender="girl" pokemon="4"/>
-        <starter nature="Jolly" gender="boy" pokemon="7"/>
-        <starter nature="Jolly" gender="girl" pokemon="158"/>
-        <starter nature="Impish" gender="boy" pokemon="25"/>
-        <starter nature="Impish" gender="girl" pokemon="104"/>
-        <starter nature="Naive" gender="boy" pokemon="158"/>
-        <starter nature="Naive" gender="girl" pokemon="133"/>
-        <starter nature="Timid" gender="boy" pokemon="155"/>
-        <starter nature="Timid" gender="girl" pokemon="258"/>
-        <starter nature="Hasty" gender="boy" pokemon="255"/>
-        <starter nature="Hasty" gender="girl" pokemon="300"/>
-        <starter nature="Sassy" gender="boy" pokemon="252"/>
-        <starter nature="Sassy" gender="girl" pokemon="255"/>
-        <starter nature="Calm" gender="boy" pokemon="258"/>
-        <starter nature="Calm" gender="girl" pokemon="1"/>
-        <starter nature="Relaxed" gender="boy" pokemon="54"/>
-        <starter nature="Relaxed" gender="girl" pokemon="7"/>
-        <starter nature="Lonely" gender="boy" pokemon="104"/>
-        <starter nature="Lonely" gender="girl" pokemon="54"/>
-        <starter nature="Quirky" gender="boy" pokemon="52"/>
-        <starter nature="Quirky" gender="girl" pokemon="252"/>
+        <starter nature="Hardy" gender="Boy" pokemon="4"/>
+        <starter nature="Hardy" gender="Girl" pokemon="25"/>
+        <starter nature="Docile" gender="Boy" pokemon="1"/>
+        <starter nature="Docile" gender="Girl" pokemon="152"/>
+        <starter nature="Brave" gender="Boy" pokemon="66"/>
+        <starter nature="Brave" gender="Girl" pokemon="4"/>
+        <starter nature="Jolly" gender="Boy" pokemon="7"/>
+        <starter nature="Jolly" gender="Girl" pokemon="158"/>
+        <starter nature="Impish" gender="Boy" pokemon="25"/>
+        <starter nature="Impish" gender="Girl" pokemon="104"/>
+        <starter nature="Naive" gender="Boy" pokemon="158"/>
+        <starter nature="Naive" gender="Girl" pokemon="133"/>
+        <starter nature="Timid" gender="Boy" pokemon="155"/>
+        <starter nature="Timid" gender="Girl" pokemon="258"/>
+        <starter nature="Hasty" gender="Boy" pokemon="255"/>
+        <starter nature="Hasty" gender="Girl" pokemon="300"/>
+        <starter nature="Sassy" gender="Boy" pokemon="252"/>
+        <starter nature="Sassy" gender="Girl" pokemon="255"/>
+        <starter nature="Calm" gender="Boy" pokemon="258"/>
+        <starter nature="Calm" gender="Girl" pokemon="1"/>
+        <starter nature="Relaxed" gender="Boy" pokemon="54"/>
+        <starter nature="Relaxed" gender="Girl" pokemon="7"/>
+        <starter nature="Lonely" gender="Boy" pokemon="104"/>
+        <starter nature="Lonely" gender="Girl" pokemon="54"/>
+        <starter nature="Quirky" gender="Boy" pokemon="52"/>
+        <starter nature="Quirky" gender="Girl" pokemon="252"/>
     </starters>
 </quiz>
