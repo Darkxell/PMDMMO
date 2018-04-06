@@ -8,9 +8,9 @@ import com.darkxell.common.util.language.Message;
 public class OptionState extends OptionSelectionMenuState
 {
 
-	public OptionState(OptionDialogState backgroundState)
+	public OptionState(OptionDialogState backgroundState, boolean isOpaque)
 	{
-		super(backgroundState);
+		super(backgroundState, isOpaque);
 		this.createOptions();
 	}
 

@@ -42,7 +42,7 @@ public class OptionDialogState extends DialogState
 		if (this.currentScreen == this.screens.size() - 1 && !this.showingOptions)
 		{
 			this.showingOptions = true;
-			Persistance.stateManager.setState(new OptionState(this));
+			Persistance.stateManager.setState(new OptionState(this, this.isOpaque));
 		} else super.nextMessage();
 	}
 

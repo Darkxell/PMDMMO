@@ -9,13 +9,19 @@ public abstract class OptionSelectionMenuState extends AbstractMenuState
 {
 
 	private MenuOption hovered;
-	protected boolean isOpaque = false;
+	protected boolean isOpaque;
 	/** The main window to display the options in. */
 	private OptionSelectionWindow mainWindow;
 
 	public OptionSelectionMenuState(AbstractState backgroundState)
 	{
+		this(backgroundState, false);
+	}
+
+	public OptionSelectionMenuState(AbstractState backgroundState, boolean isOpaque)
+	{
 		super(backgroundState);
+		this.isOpaque = isOpaque;
 	}
 
 	public MenuOption getHoveredOption()

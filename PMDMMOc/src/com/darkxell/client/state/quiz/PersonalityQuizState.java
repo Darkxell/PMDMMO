@@ -7,6 +7,7 @@ import java.util.Random;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.layers.BackgroundLsdLayer;
 import com.darkxell.client.resources.images.pokemon.PokemonPortrait;
+import com.darkxell.client.resources.music.SoundsHolder;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.DialogState;
 import com.darkxell.client.state.DialogState.DialogEndListener;
@@ -95,6 +96,7 @@ public class PersonalityQuizState extends AbstractState implements DialogEndList
 	{
 		super.onStart();
 		Persistance.stateManager.setState(this.currentDialog);
+		Persistance.soundmanager.setBackgroundMusic(SoundsHolder.getSong("04 Personality Test.mp3"));
 	}
 
 	@Override
