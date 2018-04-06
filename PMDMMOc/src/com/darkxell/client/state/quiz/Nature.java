@@ -17,6 +17,13 @@ public enum Nature
 	Sassy(11),
 	Timid(12);
 
+	public static Nature get(int id)
+	{
+		for (Nature n : values())
+			if (n.id == id) return n;
+		return Nature.Brave;
+	}
+
 	public final int id;
 
 	private Nature(int id)
