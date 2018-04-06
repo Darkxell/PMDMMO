@@ -264,7 +264,7 @@ public class DialogState extends AbstractState
 			if (this.currentScreen().isInstant) this.cursor = this.currentLength();
 			else++this.cursor;
 			if (this.cursor >= this.currentLength()) this.state = PAUSED;
-			if (this.state == PAUSED && Keys.isPressed(Keys.KEY_RUN)) this.requestNextLine();
+			if (this.state == PAUSED && Keys.isPressed(Keys.KEY_RUN) && this.isMain()) this.requestNextLine();
 		} else if (this.state == SWITCHING)
 		{
 			this.offset += 3;

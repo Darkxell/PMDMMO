@@ -34,4 +34,12 @@ public class QuizQuestion
 		}
 	}
 
+	public Message[] options()
+	{
+		Message[] options = new Message[this.answers.length];
+		for (int i = 0; i < options.length; ++i)
+			options[i] = this.answers[i].name;
+		return options;
+	}
+
 }
