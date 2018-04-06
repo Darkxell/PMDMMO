@@ -14,7 +14,7 @@
                     <reward nature="Impish" value="2"/>
                 </answer>
             </question>
-            <question id="1">
+            <question id="1" yesno="true">
                 <answer id="0">
                     <reward nature="Hardy" value="2"/>
                     <reward nature="Docile" value="1"/>
@@ -23,7 +23,7 @@
                     <reward nature="Quirky" value="2"/>
                 </answer>
             </question>
-            <question id="2">
+            <question id="2" yesno="true">
                 <answer id="0">
                     <reward nature="Hardy" value="2"/>
                     <reward nature="Brave" value="2"/>
@@ -91,7 +91,7 @@
             </question>
         </questiongroup>
         <questiongroup id="2">
-            <question id="0">
+            <question id="0" yesno="true">
                 <answer id="0">
                     <reward nature="Brave" value="3"/>
                     <reward nature="Impish" value="1"/>
@@ -102,7 +102,9 @@
                 </answer>
             </question>
             <question id="1">
-                <answer id="0"/>
+                <answer id="0">
+                    <reward nature="Brave" value="2"/>
+                </answer>
                 <answer id="1">
                     <reward nature="Timid" value="2"/>
                 </answer>
@@ -138,7 +140,7 @@
             </question>
         </questiongroup>
         <questiongroup id="3">
-            <question id="0">
+            <question id="0" yesno="true">
                 <answer id="0">
                     <reward nature="Jolly" value="2"/>
                     <reward nature="Naive" value="1"/>
@@ -148,7 +150,7 @@
                     <reward nature="Quirky" value="1"/>
                 </answer>
             </question>
-            <question id="1">
+            <question id="1" yesno="true">
                 <answer id="0">
                     <reward nature="Jolly" value="1"/>
                     <reward nature="Lonely" value="1"/>
@@ -181,7 +183,7 @@
             </question>
         </questiongroup>
         <questiongroup id="4">
-            <question id="0">
+            <question id="0" yesno="true">
                 <answer id="0">
                     <reward nature="Impish" value="2"/>
                     <reward nature="Lonely" value="1"/>
@@ -190,7 +192,7 @@
                     <reward nature="Calm" value="2"/>
                 </answer>
             </question>
-            <question id="1">
+            <question id="1" yesno="true">
                 <answer id="0">
                     <reward nature="Impish" value="2"/>
                 </answer>
@@ -199,7 +201,7 @@
                     <reward nature="Relaxed" value="1"/>
                 </answer>
             </question>
-            <question id="2">
+            <question id="2" yesno="true">
                 <answer id="0">
                     <reward nature="Impish" value="2"/>
                     <reward nature="Hardy" value="1"/>
@@ -234,7 +236,7 @@
                     <reward nature="Sassy" value="2"/>
                 </answer>
             </question>
-            <question id="1">
+            <question id="1" yesno="true">
                 <answer id="0">
                     <reward nature="Naive" value="2"/>
                     <reward nature="Docile" value="1"/>
@@ -243,7 +245,7 @@
                     <reward nature="Quirky" value="2"/>
                 </answer>
             </question>
-            <question id="2">
+            <question id="2" yesno="true">
                 <answer id="0">
                     <reward nature="Naive" value="2"/>
                     <reward nature="Jolly" value="1"/>
@@ -252,7 +254,7 @@
                     <reward nature="Calm" value="2"/>
                 </answer>
             </question>
-            <question id="3">
+            <question id="3" yesno="true">
                 <answer id="0">
                     <reward nature="Naive" value="2"/>
                 </answer>
@@ -379,7 +381,7 @@
                     <reward nature="Sassy" value="2"/>
                 </answer>
             </question>
-            <question id="1">
+            <question id="1" yesno="true">
                 <answer id="0">
                     <reward nature="Sassy" value="2"/>
                     <reward nature="Impish" value="1"/>
@@ -388,7 +390,7 @@
                     <reward nature="Calm" value="2"/>
                 </answer>
             </question>
-            <question id="2">
+            <question id="2" yesno="true">
                 <answer id="0">
                     <reward nature="Sassy" value="2"/>
                 </answer>
@@ -396,7 +398,7 @@
                     <reward nature="Relaxed" value="2"/>
                 </answer>
             </question>
-            <question id="3">
+            <question id="3" yesno="true">
                 <answer id="0">
                     <reward nature="Docile" value="2"/>
                     <reward nature="Calm" value="1"/>
@@ -408,7 +410,7 @@
             </question>
         </questiongroup>
         <questiongroup id="9">
-            <question id="0">
+            <question id="0" yesno="true">
                 <answer id="0">
                     <reward nature="Calm" value="2"/>
                     <reward nature="Lonely" value="1"/>
@@ -417,7 +419,7 @@
                     <reward nature="Hardy" value="2"/>
                 </answer>
             </question>
-            <question id="1">
+            <question id="1" yesno="true">
                 <answer id="0">
                     <reward nature="Calm" value="2"/>
                 </answer>
@@ -425,7 +427,7 @@
                     <reward nature="Impish" value="2"/>
                 </answer>
             </question>
-            <question id="2">
+            <question id="2" yesno="true">
                 <answer id="0">
                     <reward nature="Timid" value="2"/>
                     <reward nature="Impish" value="1"/>
@@ -435,7 +437,7 @@
                     <reward nature="Lonely" value="1"/>
                 </answer>
             </question>
-            <question id="3">
+            <question id="3" yesno="true">
                 <answer id="0">
                     <reward nature="Calm" value="2"/>
                     <reward nature="Relaxed" value="1"/>
@@ -447,7 +449,7 @@
             </question>
         </questiongroup>
         <questiongroup id="10">
-            <question id="0">
+            <question id="0" yesno="true">
                 <answer id="0">
                     <reward nature="Relaxed" value="2"/>
                     <reward nature="Sassy" value="1"/>
@@ -457,7 +459,7 @@
                     <reward nature="Hasty" value="1"/>
                 </answer>
             </question>
-            <question id="1">
+            <question id="1" yesno="true">
                 <answer id="0">
                     <reward nature="Relaxed" value="2"/>
                 </answer>
@@ -477,7 +479,7 @@
                     <reward nature="Hasty" value="2"/>
                 </answer>
             </question>
-            <question id="3">
+            <question id="3" yesno="true">
                 <answer id="0">
                     <reward nature="Relaxed" value="2"/>
                     <reward nature="Calm" value="1"/>
@@ -488,7 +490,7 @@
             </question>
         </questiongroup>
         <questiongroup id="11">
-            <question id="0">
+            <question id="0" yesno="true">
                 <answer id="0">
                     <reward nature="Lonely" value="2"/>
                     <reward nature="Timid" value="1"/>
@@ -497,7 +499,7 @@
                     <reward nature="Sassy" value="2"/>
                 </answer>
             </question>
-            <question id="1">
+            <question id="1" yesno="true">
                 <answer id="0">
                     <reward nature="Lonely" value="2"/>
                     <reward nature="Timid" value="1"/>
@@ -532,7 +534,7 @@
             </question>
         </questiongroup>
         <questiongroup id="12">
-            <question id="0">
+            <question id="0" yesno="true">
                 <answer id="0">
                     <reward nature="Quirky" value="2"/>
                 </answer>

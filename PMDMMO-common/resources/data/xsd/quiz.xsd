@@ -37,6 +37,7 @@
                 <xs:element ref="answer" maxOccurs="unbounded" minOccurs="2"/>
             </xs:sequence>
             <xs:attribute name="id" type="posInt" use="required"/>
+            <xs:attribute name="yesno" type="xs:boolean" use="optional"/>
         </xs:complexType>
     </xs:element>
 
