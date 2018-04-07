@@ -1,6 +1,8 @@
 package com.darkxell.client.state.quiz;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -9,10 +11,12 @@ import com.darkxell.client.renderers.layers.BackgroundLsdLayer;
 import com.darkxell.client.resources.images.pokemon.PokemonPortrait;
 import com.darkxell.client.resources.music.SoundsHolder;
 import com.darkxell.client.state.AbstractState;
-import com.darkxell.client.state.DialogState;
-import com.darkxell.client.state.DialogState.DialogEndListener;
-import com.darkxell.client.state.DialogState.DialogScreen;
-import com.darkxell.client.state.OptionDialogState;
+import com.darkxell.client.state.dialog.AbstractDialogState;
+import com.darkxell.client.state.dialog.AbstractDialogState.DialogEndListener;
+import com.darkxell.client.state.dialog.AbstractDialogState.DialogScreen;
+import com.darkxell.client.state.dialog.DialogState;
+import com.darkxell.client.state.dialog.NarratorDialogState;
+import com.darkxell.client.state.dialog.OptionDialogState;
 import com.darkxell.client.state.quiz.QuizData.QuizGender;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.PokemonRegistry;
@@ -20,6 +24,7 @@ import com.darkxell.common.util.language.Message;
 
 public class PersonalityQuizState extends AbstractState implements DialogEndListener
 {
+	private static final int startDialogScreens = 7;
 
 	private BackgroundLsdLayer background;
 	private DialogState currentDialog;
@@ -30,6 +35,7 @@ public class PersonalityQuizState extends AbstractState implements DialogEndList
 	private QuizQuestion[] questions;
 	private QuizData quizData;
 	private Pokemon starter;
+	private int tick = 0;
 
 	public PersonalityQuizState()
 	{
@@ -38,9 +44,7 @@ public class PersonalityQuizState extends AbstractState implements DialogEndList
 		this.quizData.chooseQuestions(8);
 		this.questions = this.quizData.askedQuestions();
 		this.currentNature = new int[Nature.values().length];
-		this.currentQuestion = 0;
-
-		this.loadNewDialog();
+		this.currentQuestion = -1;
 	}
 
 	private void loadNewDialog()
@@ -57,9 +61,10 @@ public class PersonalityQuizState extends AbstractState implements DialogEndList
 	}
 
 	@Override
-	public void onDialogEnd(DialogState dialog)
+	public void onDialogEnd(AbstractDialogState dialog)
 	{
-		if (this.currentQuestion < this.questions.length)
+
+		if (this.currentQuestion != -1 && this.currentQuestion < this.questions.length)
 		{
 			QuizAnswer answer = this.questions[this.currentQuestion].answers[((OptionDialogState) dialog).chosenIndex()];
 			for (int i = 0; i < answer.natures.length; ++i)
@@ -67,6 +72,7 @@ public class PersonalityQuizState extends AbstractState implements DialogEndList
 		}
 
 		++this.currentQuestion;
+		Persistance.stateManager.setState(this);
 
 		if (this.currentQuestion == this.questions.length)
 		{
@@ -80,7 +86,7 @@ public class PersonalityQuizState extends AbstractState implements DialogEndList
 			this.starter = PokemonRegistry.find(starterID).generate(new Random(), 5);
 		}
 
-		this.loadNewDialog();
+		if (this.currentQuestion > 0) this.loadNewDialog();
 	}
 
 	@Override
@@ -95,8 +101,15 @@ public class PersonalityQuizState extends AbstractState implements DialogEndList
 	public void onStart()
 	{
 		super.onStart();
-		Persistance.stateManager.setState(this.currentDialog);
-		Persistance.soundmanager.setBackgroundMusic(SoundsHolder.getSong("04 Personality Test.mp3"));
+
+		if (this.currentQuestion == -1)
+		{
+			Persistance.soundmanager.setBackgroundMusic(SoundsHolder.getSong("04 Personality Test.mp3"));
+			ArrayList<DialogScreen> screens = new ArrayList<>();
+			for (int i = 0; i < startDialogScreens; ++i)
+				screens.add(new DialogScreen(new Message("quiz.start_dialog." + i)));
+			Persistance.stateManager.setState(new NarratorDialogState(this, screens));
+		}
 	}
 
 	@Override
@@ -105,11 +118,23 @@ public class PersonalityQuizState extends AbstractState implements DialogEndList
 		this.background.render(g, width, height);
 		if (this.currentQuestion == this.questions.length + 2)
 			PokemonPortrait.drawPortrait(g, this.starter, width / 2 - PokemonPortrait.PORTRAIT_SIZE / 2, height / 2 - PokemonPortrait.PORTRAIT_SIZE / 2);
+
+		if (this.tick <= NarratorDialogState.FADETIME)
+		{
+			double alpha = 255 - (this.tick * 1. / NarratorDialogState.FADETIME) * 255;
+			g.setColor(new Color(0, 0, 0, (int) alpha));
+			g.fillRect(0, 0, width, height);
+		}
 	}
 
 	@Override
 	public void update()
 	{
+		if (this.isMain() && this.currentQuestion == 0)
+		{
+			if (this.tick <= NarratorDialogState.FADETIME) ++this.tick;
+			if (this.tick == NarratorDialogState.FADETIME) this.loadNewDialog();
+		}
 		this.background.update();
 	}
 

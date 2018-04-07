@@ -1,7 +1,8 @@
-package com.darkxell.client.state;
+package com.darkxell.client.state.dialog;
 
 import java.util.List;
 
+import com.darkxell.client.state.AbstractState;
 import com.darkxell.common.util.language.Message;
 
 public class ConfirmDialogState extends OptionDialogState

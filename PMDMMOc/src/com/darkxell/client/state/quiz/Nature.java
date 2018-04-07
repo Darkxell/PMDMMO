@@ -2,7 +2,7 @@ package com.darkxell.client.state.quiz;
 
 import java.util.ArrayList;
 
-import com.darkxell.client.state.DialogState.DialogScreen;
+import com.darkxell.client.state.dialog.AbstractDialogState.DialogScreen;
 import com.darkxell.common.util.language.Message;
 
 public enum Nature

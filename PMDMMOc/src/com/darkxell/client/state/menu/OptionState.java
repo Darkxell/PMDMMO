@@ -2,7 +2,7 @@ package com.darkxell.client.state.menu;
 
 import java.awt.Rectangle;
 
-import com.darkxell.client.state.OptionDialogState;
+import com.darkxell.client.state.dialog.OptionDialogState;
 import com.darkxell.common.util.language.Message;
 
 public class OptionState extends OptionSelectionMenuState
