@@ -33,7 +33,8 @@ public class GameSocketEndpoint {
 		try {
 			this.endpointURI = new URI("ws://" + ClientSettings.getSetting(ClientSettings.SERVER_ADDRESS) + "game");
 		} catch (URISyntaxException e) {
-			Logger.e("Could not create a valid URI to: ws://" + ClientSettings.getSetting(ClientSettings.SERVER_ADDRESS) + "game");
+			Logger.e("Could not create a valid URI to: ws://" + ClientSettings.getSetting(ClientSettings.SERVER_ADDRESS)
+					+ "game");
 		}
 		thr = new Thread(new Runnable() {
 
@@ -51,7 +52,7 @@ public class GameSocketEndpoint {
 			container.connectToServer(this, this.endpointURI);
 		} catch (Exception e) {
 			this.connectionStatus = FAILED;
-			Logger.e("Could not connect to the server for game communication : "+e.toString());
+			Logger.e("Could not connect to the server for game communication : " + e.toString());
 		}
 	}
 
@@ -67,17 +68,9 @@ public class GameSocketEndpoint {
 	 */
 	@OnOpen
 	public void onOpen(Session userSession) {
-		try {
-			this.userSession = userSession;
-			JsonObject mess = new JsonObject().add("action", "sessioninfo").add("name",
-					ClientSettings.getSetting(ClientSettings.LOGIN));
-			this.sendMessage(mess.toString());
-			Logger.i("Game socket connected to the server sucessfully.");
-			this.connectionStatus = CONNECTED;
-		} catch (Exception e) {
-			Logger.e("Could not aggree with the server for a valid session : " + e.toString());
-			
-		}
+		this.userSession = userSession;
+		Logger.i("Game socket connected to the server sucessfully.");
+		this.connectionStatus = CONNECTED;
 	}
 
 	/**
@@ -108,14 +101,15 @@ public class GameSocketEndpoint {
 			JsonValue obj = Json.parse(message);
 			if (obj.asObject().getString("action", "").equals("freezoneposition") && Persistance.currentmap != null)
 				Persistance.currentmap.updateOtherPlayers(obj);
-			else if (obj.asObject().getString("action", "").equals("saltreset") && Persistance.stateManager instanceof LoginMainState)
-				((LoginMainState)Persistance.stateManager).setSalt(obj.asObject().getString("value",""));
+			else if (obj.asObject().getString("action", "").equals("saltreset")
+					&& Persistance.stateManager instanceof LoginMainState)
+				((LoginMainState) Persistance.stateManager).setSalt(obj.asObject().getString("value", ""));
 		} catch (Exception e) {
 			Logger.w("Could not read the recieved message from the server : " + message);
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void sendMessage(String action, String name, Communicable value) {
 		this.sendMessage(action, name, value.toJson());
 	}

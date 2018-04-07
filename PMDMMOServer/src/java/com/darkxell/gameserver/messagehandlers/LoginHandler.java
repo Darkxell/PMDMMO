@@ -35,7 +35,7 @@ public class LoginHandler extends MessageHandler {
             if (!SessionsInfoHolder.infoExists(from.getId())) {
                 System.err.println("Error at\ncom.darkxell.gameserver.messagehandlers.LoginHandler.handleMessage()\n" + from + " is not in the session info handler.");
                 return;
-            }
+            }// was that really usefull?
             GameSessionInfo si = SessionsInfoHolder.getInfo(from.getId());
             if (si.salt == null || si.salt.equals("")) {
                 System.out.println("Could not connect a player because salt value for loging in was empty.");
@@ -48,6 +48,7 @@ public class LoginHandler extends MessageHandler {
             }
             try {
                 String serversidehashtester = sha256(player.passhash + si.salt + HASHSALTTYPE_LOGIN);
+                si.name = player.name;
                 si.salt = ""; // Salt is unique use
                 if (serversidehashtester.equals(json.getString("passhash", "randomimpossiblestring"))) {
                     si.serverid = player.id;

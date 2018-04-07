@@ -22,7 +22,6 @@ import javax.websocket.server.ServerEndpoint;
 import com.darkxell.gameserver.messagehandlers.FreezonePositionHandler;
 import com.darkxell.gameserver.messagehandlers.LoginHandler;
 import com.darkxell.gameserver.messagehandlers.SaltResetHandler;
-import com.darkxell.gameserver.messagehandlers.SessionOpenHandler;
 import com.darkxell.model.ejb.PlayerDAO;
 import com.darkxell.model.ejb.dbobjects.DBPlayer;
 import javax.ejb.EJB;
@@ -94,12 +93,11 @@ public class GameServer {
             //ADD new DAOs
             daoset = true;
         }
+        if(!SessionsInfoHolder.infoExists(session.getId()))
+                SessionsInfoHolder.createDefaultInfo(session.getId());
         try (JsonReader reader = Json.createReader(new StringReader(message))) {
             JsonObject jsonMessage = reader.readObject();
-            if ("sessioninfo".equals(jsonMessage.getString("action"))) {
-                SessionOpenHandler hand = new SessionOpenHandler(this);
-                hand.handleMessage(jsonMessage, session, sessionHandler);
-            } else if ("createaccount".equals(jsonMessage.getString("action"))) {
+            if ("createaccount".equals(jsonMessage.getString("action"))) {
                 CreateAccountHandler hand = new CreateAccountHandler(this);
                 hand.handleMessage(jsonMessage, session, sessionHandler);
             } else if ("saltreset".equals(jsonMessage.getString("action"))) {

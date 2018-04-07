@@ -24,7 +24,7 @@ public abstract class FreezoneMap {
 	public FreezoneTile[] tiles;
 	/** The width of the map, in tiles. */
 	public int mapWidth;
-	/** The height of the map, in tiles.s */
+	/** The height of the map, in tiles. */
 	public int mapHeight;
 
 	public String freezonebgm = "";
@@ -77,12 +77,14 @@ public abstract class FreezoneMap {
 		if (flushcounter >= 120) {
 			flushcounter = 0;
 			long ct = System.nanoTime();
-			for (int i = 0; i < entities.size(); i++)
+			for (int i = 0; i < entities.size(); ++i)
 				if (entities.get(i) instanceof OtherPlayerEntity
 						&& ((OtherPlayerEntity) entities.get(i)).lastupdate < ct - FLUSHTIMEOUT) {
 					entities.remove(i);
-					// FIXME : make this code so it can remove 2 timeouted
-					// entities next to each others
+					// note: this code will not remove 2 timeouted entities with
+					// conseccutive ids in a single update. This might be a
+					// problem if on average more than 60 players leave the
+					// instance per second on average.
 				}
 		} else
 			++flushcounter;
@@ -95,15 +97,20 @@ public abstract class FreezoneMap {
 		return this.tiles[calc].type;
 	}
 
+	/** Returns the map location of this freezone. */
 	public abstract LOCALMAPLOCATION getMapLocation();
 
+	/**
+	 * Update the OtherPlayer entity destinations and last update timestamp
+	 * according to the parsed json values for the specified entity.
+	 */
 	public void updateOtherPlayers(JsonValue data) {
 		String dataname = data.asObject().getString("name", "");
-		if (ClientSettings.getSetting(ClientSettings.LOGIN).equals(dataname))
+		if (Persistance.player.name.equals(dataname))
 			return;
 		double pfx = data.asObject().getDouble("posfx", 0d);
 		double pfy = data.asObject().getDouble("posfy", 0d);
-		int spriteID = Integer.parseInt(data.asObject().getString("currentpokemon", ""));
+		int spriteID = Integer.parseInt(data.asObject().getString("currentpokemon", "0"));
 		boolean found = false;
 		if (!dataname.equals("")) {
 			for (int i = 0; i < entities.size(); i++)

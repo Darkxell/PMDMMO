@@ -37,14 +37,8 @@ The other informations are payload dependant.
 <br/>}
 This is the payload you should send to the server when you want to add a message to the chat.
 
-■ SESSIONINFO
-<br/>{"action":"sessioninfo",
-<br/>"name":"Darkxell", // The name of the player
-<br/>}
-This payload must be sent by any client before they send any other game related payload. It contains the basic login informations used by the server to autentificate the user.
-
 ■ SALTRESET
-<br/>{"action":"saltreset",}
+<br/>{"action":"saltreset"}
 This payload must be sent by a client to get a salt in order to log in. The server will generate a new random salt and send it back to the client. The client must authentificate by salting his hashed password using the set salt.
 Trying to authentificate without reseting the salt will not be taken into account by the server.
 
@@ -64,7 +58,6 @@ This payload must by a client to login. This must be sent with the appropriate s
 
 ■ FREEZONEPOSITION
 <br/>{"action":"freezoneposition",
-<br/>"name":"Darkxell", // The name of the player
 <br/>"freezoneid":"base", // The string id of the player's current freezone
 <br/>"posfx":"42.1337", // The x position of the player as a Double
 <br/>"posfy":"42.1337", // The y position of the player as a Double
