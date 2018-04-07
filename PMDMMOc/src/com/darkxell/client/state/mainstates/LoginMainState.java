@@ -65,6 +65,7 @@ public class LoginMainState extends StateManager {
 			this.sendLogin();
 		} else if (button_offline.isInside(new Position(mouseX - offsetx, mouseY - offsety))) {
 			Persistance.stateManager = new PrincipalMainState();
+			//((PrincipalMainState) Persistance.stateManager).setState(new PersonalityQuizState());
 			((PrincipalMainState) Persistance.stateManager).setState(new OpenningState());
 			((PrincipalMainState) Persistance.stateManager).randomizeBackground();
 		}

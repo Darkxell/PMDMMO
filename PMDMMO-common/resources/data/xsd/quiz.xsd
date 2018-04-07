@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="pmdmmo" targetNamespace="pmdmmo"
+    elementFormDefault="qualified">
+    <xs:include schemaLocation="base.xsd"/>
+
+    <xs:element name="quiz">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="questions">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="questiongroup" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element ref="question" maxOccurs="unbounded"/>
+                                    </xs:sequence>
+                                    <xs:attribute name="id" type="posInt" use="required"/>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="starters">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="starter" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="partners">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="partner" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="question">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="answer" maxOccurs="unbounded" minOccurs="2"/>
+            </xs:sequence>
+            <xs:attribute name="id" type="posInt" use="required"/>
+            <xs:attribute name="yesno" type="xs:boolean" use="optional"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="answer">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="reward" maxOccurs="unbounded" minOccurs="0">
+                    <xs:complexType>
+                        <xs:attribute name="nature" type="nature" use="required"/>
+                        <xs:attribute name="value" type="xs:positiveInteger" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="id" type="posInt" use="required"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="starter">
+        <xs:complexType>
+            <xs:attribute name="nature" type="nature" use="required"/>
+            <xs:attribute name="gender" use="optional">
+                <xs:simpleType>
+                    <xs:restriction base="xs:token">
+                        <xs:enumeration value="Boy"/>
+                        <xs:enumeration value="Girl"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
+            <xs:attribute name="pokemon" type="xs:positiveInteger" use="required"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="partner">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="invalidates" type="xs:positiveInteger" minOccurs="0"
+                    maxOccurs="unbounded"/>
+            </xs:sequence>
+            <xs:attribute name="pokemon" type="xs:positiveInteger" use="required"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:simpleType name="nature">
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="Hardy"/>
+            <xs:enumeration value="Docile"/>
+            <xs:enumeration value="Brave"/>
+            <xs:enumeration value="Jolly"/>
+            <xs:enumeration value="Impish"/>
+            <xs:enumeration value="Naive"/>
+            <xs:enumeration value="Timid"/>
+            <xs:enumeration value="Hasty"/>
+            <xs:enumeration value="Sassy"/>
+            <xs:enumeration value="Calm"/>
+            <xs:enumeration value="Relaxed"/>
+            <xs:enumeration value="Lonely"/>
+            <xs:enumeration value="Quirky"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>

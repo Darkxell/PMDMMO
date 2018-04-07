@@ -146,8 +146,9 @@ public class Player implements Communicable
 
 	public void resetDungeonTeam()
 	{
+		this.dungeonAllies.clear();
 		for (int i = 0; i < this.dungeonAllies.size(); ++i)
-			this.dungeonAllies.set(i, new DungeonPokemon(this.allies.get(i)));
+			this.dungeonAllies.add(i, new DungeonPokemon(this.allies.get(i)));
 	}
 
 	public void setDungeonPokemon(DungeonPokemon dungeonPokemon)

@@ -7,12 +7,13 @@ import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.music.SoundsHolder;
 import com.darkxell.client.state.AbstractState;
+import com.darkxell.client.state.dialog.NarratorDialogState;
 import com.darkxell.common.dungeon.Dungeon;
 import com.darkxell.common.util.language.Message;
 
 public class NextFloorState extends AbstractState
 {
-	private static final int fade = 30, pause = 30, text = 60;
+	private static final int fade = NarratorDialogState.FADETIME, pause = 30, text = 60;
 	private static final int total = 2 * fade + 2 * pause + text;
 
 	private int counter = 0;

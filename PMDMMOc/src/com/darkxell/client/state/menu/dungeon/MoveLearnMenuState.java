@@ -4,10 +4,10 @@ import java.awt.Rectangle;
 
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.TextRenderer;
-import com.darkxell.client.state.ConfirmDialogState;
-import com.darkxell.client.state.DialogState;
-import com.darkxell.client.state.DialogState.DialogEndListener;
-import com.darkxell.client.state.DialogState.DialogScreen;
+import com.darkxell.client.state.dialog.AbstractDialogState;
+import com.darkxell.client.state.dialog.AbstractDialogState.DialogEndListener;
+import com.darkxell.client.state.dialog.AbstractDialogState.DialogScreen;
+import com.darkxell.client.state.dialog.ConfirmDialogState;
 import com.darkxell.client.state.dungeon.DungeonState;
 import com.darkxell.client.state.menu.components.MoveSelectionWindow;
 import com.darkxell.common.event.move.MoveLearnedEvent;
@@ -45,7 +45,7 @@ public class MoveLearnMenuState extends MovesMenuState implements DialogEndListe
 	}
 
 	@Override
-	public void onDialogEnd(DialogState dialog)
+	public void onDialogEnd(AbstractDialogState dialog)
 	{
 		if (((ConfirmDialogState) dialog).hasConfirmed())
 		{
