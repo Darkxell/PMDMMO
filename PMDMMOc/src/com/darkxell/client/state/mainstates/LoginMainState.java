@@ -9,8 +9,8 @@ import com.darkxell.client.launchable.Encryption;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.chat.CustomTextfield;
 import com.darkxell.client.resources.images.others.Hud;
+import com.darkxell.client.state.OpenningState;
 import com.darkxell.client.state.StateManager;
-import com.darkxell.client.state.quiz.PersonalityQuizState;
 import com.darkxell.client.ui.MainUiUtility;
 import com.darkxell.common.util.DoubleRectangle;
 import com.darkxell.common.util.Logger;
@@ -65,7 +65,8 @@ public class LoginMainState extends StateManager {
 			this.sendLogin();
 		} else if (button_offline.isInside(new Position(mouseX - offsetx, mouseY - offsety))) {
 			Persistance.stateManager = new PrincipalMainState();
-			((PrincipalMainState) Persistance.stateManager).setState(new PersonalityQuizState());
+			//((PrincipalMainState) Persistance.stateManager).setState(new PersonalityQuizState());
+			((PrincipalMainState) Persistance.stateManager).setState(new OpenningState());
 			((PrincipalMainState) Persistance.stateManager).randomizeBackground();
 		}
 		// Textfield focus

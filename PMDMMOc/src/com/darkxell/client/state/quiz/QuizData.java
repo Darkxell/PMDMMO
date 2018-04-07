@@ -8,6 +8,7 @@ import java.util.Random;
 import org.jdom2.Element;
 
 import com.darkxell.common.pokemon.PokemonRegistry;
+import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.XMLUtils;
 import com.darkxell.common.util.language.Message;
@@ -34,6 +35,7 @@ public class QuizData
 	}
 
 	private QuizQuestion[] askedQuestions;
+	private PartnerChoice[] partners;
 	/** Lists the available question groups. */
 	public final QuizQuestionGroup[] questionGroups;
 	/** Associates the pair (natureID, genderID) to the starter ID. */
@@ -55,6 +57,11 @@ public class QuizData
 			int gender = QuizGender.valueOf(XMLUtils.getAttribute(starter, "gender", QuizGender.Boy.name())).id;
 			this.starters[nature][gender] = XMLUtils.getAttribute(starter, "pokemon", 1);
 		}
+
+		List<Element> partners = xml.getChild("partners", xml.getNamespace()).getChildren("partner", xml.getNamespace());
+		this.partners = new PartnerChoice[partners.size()];
+		for (int i = 0; i < this.partners.length; ++i)
+			this.partners[i] = new PartnerChoice(partners.get(i));
 	}
 
 	public QuizQuestion[] askedQuestions()
@@ -85,6 +92,14 @@ public class QuizData
 			remainingGroups.remove(chosen);
 			this.askedQuestions[question] = group.questions[r.nextInt(group.questions.length)];
 		}
+	}
+
+	public PokemonSpecies[] validPartners(int choice)
+	{
+		ArrayList<PokemonSpecies> partners = new ArrayList<>();
+		for (PartnerChoice partner : this.partners)
+			if (partner.isValid(choice)) partners.add(PokemonRegistry.find(partner.id));
+		return partners.toArray(new PokemonSpecies[partners.size()]);
 	}
 
 }

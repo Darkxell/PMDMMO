@@ -12,7 +12,7 @@ public class OptionDialogState extends DialogState
 
 	private int chosenIndex = -1;
 	public final Message[] options;
-	private boolean showingOptions = false;
+	protected boolean showingOptions = false;
 
 	public OptionDialogState(AbstractState backgroundState, DialogEndListener listener, boolean isOpaque, DialogScreen screen, Message... options)
 	{

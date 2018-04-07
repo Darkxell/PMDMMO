@@ -87,6 +87,7 @@ public class DialogState extends AbstractDialogState
 		} else
 		{
 			++this.currentScreen;
+			this.lines.clear();
 			this.cursor = 0;
 			this.offset = 0;
 			this.currentLine = 2;

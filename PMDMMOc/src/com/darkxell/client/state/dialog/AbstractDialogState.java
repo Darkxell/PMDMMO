@@ -73,7 +73,7 @@ public abstract class AbstractDialogState extends AbstractState
 
 	int arrowtick;
 	/** The current screen. */
-	int currentScreen;
+	protected int currentScreen;
 	/** The split lines of the current message. */
 	ArrayList<ArrayList<PMDChar>> lines;
 	/** The listener called when this Dialog ends. If null, the Background State is used instead. */

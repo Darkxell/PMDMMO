@@ -27,6 +27,13 @@
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
+                <xs:element name="partners">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="partner" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -61,11 +68,21 @@
             <xs:attribute name="gender" use="optional">
                 <xs:simpleType>
                     <xs:restriction base="xs:token">
-                        <xs:enumeration value="boy"/>
-                        <xs:enumeration value="girl"/>
+                        <xs:enumeration value="Boy"/>
+                        <xs:enumeration value="Girl"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:attribute>
+            <xs:attribute name="pokemon" type="xs:positiveInteger" use="required"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="partner">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="invalidates" type="xs:positiveInteger" minOccurs="0"
+                    maxOccurs="unbounded"/>
+            </xs:sequence>
             <xs:attribute name="pokemon" type="xs:positiveInteger" use="required"/>
         </xs:complexType>
     </xs:element>
@@ -87,6 +104,5 @@
             <xs:enumeration value="Quirky"/>
         </xs:restriction>
     </xs:simpleType>
-
 
 </xs:schema>

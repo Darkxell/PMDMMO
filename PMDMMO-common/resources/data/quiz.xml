@@ -641,4 +641,49 @@
         <starter nature="Quirky" gender="Boy" pokemon="52"/>
         <starter nature="Quirky" gender="Girl" pokemon="252"/>
     </starters>
+    <partners>
+        <partner pokemon="1">
+            <invalidates>152</invalidates>
+            <invalidates>252</invalidates>
+        </partner>
+        <partner pokemon="4">
+            <invalidates>155</invalidates>
+            <invalidates>255</invalidates>
+        </partner>
+        <partner pokemon="7">
+            <invalidates>158</invalidates>
+            <invalidates>258</invalidates>
+        </partner>
+        <partner pokemon="25"/>
+        <partner pokemon="52">
+            <invalidates>300</invalidates>
+        </partner>
+        <partner pokemon="152">
+            <invalidates>1</invalidates>
+            <invalidates>252</invalidates>
+        </partner>
+        <partner pokemon="155">
+            <invalidates>4</invalidates>
+            <invalidates>255</invalidates>
+        </partner>
+        <partner pokemon="158">
+            <invalidates>7</invalidates>
+            <invalidates>258</invalidates>
+        </partner>
+        <partner pokemon="252">
+            <invalidates>1</invalidates>
+            <invalidates>152</invalidates>
+        </partner>
+        <partner pokemon="255">
+            <invalidates>4</invalidates>
+            <invalidates>155</invalidates>
+        </partner>
+        <partner pokemon="258">
+            <invalidates>7</invalidates>
+            <invalidates>158</invalidates>
+        </partner>
+        <partner pokemon="300">
+            <invalidates>52</invalidates>
+        </partner>
+    </partners>
 </quiz>
