@@ -106,7 +106,7 @@ public class PlayerDAO {
                         null, null, null, null, null);
             }
             cn.close();
-            //TODO: add the references here
+            completefind(toreturn);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -130,12 +130,21 @@ public class PlayerDAO {
                         null, null, null, null, null);
             }
             cn.close();
+            completefind(toreturn);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return toreturn;
+    }
+
+    private void completefind(DBPlayer toreturn){
+        try {
             //Select pokemon in team
-            cn = ds.getConnection();
-            selectSQL = "SELECT * FROM teammember_ WHERE playerid = ? AND location = 0";
-            preparedStatement = cn.prepareStatement(selectSQL);
+            Connection cn = ds.getConnection();
+            String selectSQL = "SELECT * FROM teammember_ WHERE playerid = ? AND location = 0";
+            PreparedStatement preparedStatement = cn.prepareStatement(selectSQL);
             preparedStatement.setLong(1, toreturn.id);
-            result = preparedStatement.executeQuery();
+            ResultSet result = preparedStatement.executeQuery();
             while (result.next()) {
                 if(toreturn.pokemonsinparty == null)
                     toreturn.pokemonsinparty = new ArrayList<>(4);
@@ -174,12 +183,11 @@ public class PlayerDAO {
                 toreturn.storageinventory = new DatabaseIdentifier(result.getLong("inventoryid"));
             }
             cn.close();
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return toreturn;
     }
-
+    
     public void update(DBPlayer player) {
         try {
             Connection cn = ds.getConnection();
