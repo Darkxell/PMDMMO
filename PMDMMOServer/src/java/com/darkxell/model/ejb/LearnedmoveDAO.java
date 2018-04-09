@@ -26,7 +26,7 @@ public class LearnedmoveDAO {
     @Resource(mappedName = "jdbc/pmdmmodatabase")
     private DataSource ds;
 
-    public void create(DBLearnedmove move) {
+    public long create(DBLearnedmove move) {
         try {
             // ID AUTOINCREMENT CODE
             Connection cx = ds.getConnection();
@@ -54,6 +54,7 @@ public class LearnedmoveDAO {
                 prepare.setInt(6, move.addedlevel);
                 prepare.executeUpdate();
                 cn.close();
+                return newid;
             } else {
                 System.err.println("Could not autoincrement properly.");
             }
@@ -61,6 +62,7 @@ public class LearnedmoveDAO {
             System.out.println("Error while trying to add a new move the the database.");
             e.printStackTrace();
         }
+        return 0;
     }
 
     public void delete(DBLearnedmove move) {

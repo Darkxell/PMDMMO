@@ -29,7 +29,7 @@ public class PlayerDAO {
      * @return 0 if a player has been created, 1 if an error occured, 2 if the
      * player name is already taken.
      */
-    public int create(DBPlayer player) {
+    public long create(DBPlayer player) {
         try {
             // ID AUTOINCREMENT CODE
             Connection cx = ds.getConnection();
@@ -45,7 +45,6 @@ public class PlayerDAO {
                 // Check if there isn't a player already nammed like this
                 if (this.find(player.name) != null) {
                     System.out.println("Refused player creation: " + player.name + " is already a used name in the database.");
-                    return 2;
                 }
                 // ADD THE PLAYER
                 long newid = result.getLong("id") + 1;
@@ -61,14 +60,13 @@ public class PlayerDAO {
                 prepare.setLong(5, newid);
                 prepare.executeUpdate();
                 cn.close();
+                return newid;
             } else {
                 System.err.println("Could not autoincrement properly.");
-                return 1;
             }
         } catch (Exception e) {
             System.err.println("Error while trying to add a new  player the the database.");
             e.printStackTrace();
-            return 1;
         }
         return 0;
     }

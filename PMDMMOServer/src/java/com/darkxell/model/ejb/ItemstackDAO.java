@@ -26,7 +26,7 @@ public class ItemstackDAO {
     @Resource(mappedName = "jdbc/pmdmmodatabase")
     private DataSource ds;
     
-    public void create(DBItemstack stack) {
+    public long create(DBItemstack stack) {
         try {
             // ID AUTOINCREMENT CODE
             Connection cx = ds.getConnection();
@@ -51,6 +51,7 @@ public class ItemstackDAO {
                 prepare.setLong(3, stack.quantity);
                 prepare.executeUpdate();
                 cn.close();
+                return newid;
             } else {
                 System.err.println("Could not autoincrement properly.");
             }
@@ -58,6 +59,7 @@ public class ItemstackDAO {
             System.out.println("Error while trying to add a new itemstack in the database.");
             e.printStackTrace();
         }
+        return 0;
     }
     
     public void delete(DBItemstack stack) {

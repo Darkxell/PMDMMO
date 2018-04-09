@@ -28,7 +28,7 @@ public class PokemonDAO {
     @Resource(mappedName = "jdbc/pmdmmodatabase")
     private DataSource ds;
 
-    public void create(DBPokemon pokemon) {
+    public long create(DBPokemon pokemon) {
         try {
             // ID AUTOINCREMENT CODE
             Connection cx = ds.getConnection();
@@ -64,7 +64,7 @@ public class PokemonDAO {
                 prepare.executeUpdate();
                 cn.close();
                 
-                
+                return newid;
             } else {
                 System.err.println("Could not autoincrement properly.");
             }
@@ -72,6 +72,7 @@ public class PokemonDAO {
             System.out.println("Error while trying to add a new  pokemon the the database.");
             e.printStackTrace();
         }
+        return 0;
     }
 
     public void delete(DBPokemon pokemon) {

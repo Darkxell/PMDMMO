@@ -28,7 +28,7 @@ public class InventoryDAO {
     @Resource(mappedName = "jdbc/pmdmmodatabase")
     private DataSource ds;
 
-    public void create(DBInventory inventory) {
+    public long create(DBInventory inventory) {
         try {
             // ID AUTOINCREMENT CODE
             Connection cx = ds.getConnection();
@@ -52,6 +52,7 @@ public class InventoryDAO {
                 prepare.setInt(2, inventory.maxsize);
                 prepare.executeUpdate();
                 cn.close();
+                return newid;
             } else {
                 System.err.println("Could not autoincrement properly.");
             }
@@ -59,6 +60,7 @@ public class InventoryDAO {
             System.out.println("Error while trying to add a new  inventory the the database.");
             e.printStackTrace();
         }
+        return 0;
     }
 
     public void delete(DBInventory inventory) {
