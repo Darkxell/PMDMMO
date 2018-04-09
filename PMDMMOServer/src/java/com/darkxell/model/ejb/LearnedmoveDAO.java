@@ -115,7 +115,6 @@ public class LearnedmoveDAO {
             prepare.setLong(6, move.id);
             prepare.executeUpdate();
             cn.close();
-            //TODO: add the references here too
         } catch (SQLException e) {
             e.printStackTrace();
         }

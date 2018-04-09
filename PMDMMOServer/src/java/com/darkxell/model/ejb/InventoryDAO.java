@@ -6,10 +6,12 @@
 package com.darkxell.model.ejb;
 
 import com.darkxell.model.ejb.dbobjects.DBInventory;
+import com.darkxell.model.ejb.dbobjects.DatabaseIdentifier;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.annotation.Resource;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -89,7 +91,18 @@ public class InventoryDAO {
                 toreturn = new DBInventory(id, result.getInt("maxsize"), null);
             }
             cn.close();
-            //TODO: add the references here
+            // match the inventory content
+            cn = ds.getConnection();
+            String selectSQL = "SELECT * FROM inventorycontains_ WHERE inventoryid = ?";
+            PreparedStatement preparedStatement = cn.prepareStatement(selectSQL);
+            preparedStatement.setLong(1, toreturn.id);
+            result = preparedStatement.executeQuery();
+            while (result.next()) {
+                if(toreturn.content == null)
+                    toreturn.content = new ArrayList<>(20);
+                toreturn.content.add(new DatabaseIdentifier(result.getLong("stackid")));
+            }
+            cn.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -107,7 +120,6 @@ public class InventoryDAO {
             prepare.setLong(2, inventory.id);
             prepare.executeUpdate();
             cn.close();
-            //TODO: add the references here too
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -1,10 +1,12 @@
 package com.darkxell.model.ejb;
 
 import com.darkxell.model.ejb.dbobjects.DBPlayer;
+import com.darkxell.model.ejb.dbobjects.DatabaseIdentifier;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.annotation.Resource;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -128,7 +130,50 @@ public class PlayerDAO {
                         null, null, null, null, null);
             }
             cn.close();
-            //TODO: add the references here
+            //Select pokemon in team
+            cn = ds.getConnection();
+            selectSQL = "SELECT * FROM teammember_ WHERE playerid = ? AND location = 0";
+            preparedStatement = cn.prepareStatement(selectSQL);
+            preparedStatement.setLong(1, toreturn.id);
+            result = preparedStatement.executeQuery();
+            while (result.next()) {
+                if(toreturn.pokemonsinparty == null)
+                    toreturn.pokemonsinparty = new ArrayList<>(4);
+                toreturn.pokemonsinparty.add(new DatabaseIdentifier(result.getLong("pokemonid")));
+            }
+            cn.close();
+            //Select pokemon in zones
+            cn = ds.getConnection();
+            selectSQL = "SELECT * FROM teammember_ WHERE playerid = ? AND location = 1";
+            preparedStatement = cn.prepareStatement(selectSQL);
+            preparedStatement.setLong(1, toreturn.id);
+            result = preparedStatement.executeQuery();
+            while (result.next()) {
+                if(toreturn.pokemonsinzones == null)
+                    toreturn.pokemonsinzones = new ArrayList<>(20);
+                toreturn.pokemonsinzones.add(new DatabaseIdentifier(result.getLong("pokemonid")));
+            }
+            cn.close();
+            // Select toolbox inventory id
+            cn = ds.getConnection();
+            selectSQL = "SELECT * FROM toolbox_ WHERE playerid = ?";
+            preparedStatement = cn.prepareStatement(selectSQL);
+            preparedStatement.setLong(1, toreturn.id);
+            result = preparedStatement.executeQuery();
+            if (result.next()) {
+                toreturn.toolboxinventory = new DatabaseIdentifier(result.getLong("inventoryid"));
+            }
+            cn.close();
+            // Select storage inventory id
+            cn = ds.getConnection();
+            selectSQL = "SELECT * FROM playerstorage_ WHERE playerid = ?";
+            preparedStatement = cn.prepareStatement(selectSQL);
+            preparedStatement.setLong(1, toreturn.id);
+            result = preparedStatement.executeQuery();
+            if (result.next()) {
+                toreturn.storageinventory = new DatabaseIdentifier(result.getLong("inventoryid"));
+            }
+            cn.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

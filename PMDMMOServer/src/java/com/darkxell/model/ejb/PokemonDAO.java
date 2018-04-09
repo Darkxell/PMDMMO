@@ -6,10 +6,12 @@
 package com.darkxell.model.ejb;
 
 import com.darkxell.model.ejb.dbobjects.DBPokemon;
+import com.darkxell.model.ejb.dbobjects.DatabaseIdentifier;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.annotation.Resource;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -38,7 +40,7 @@ public class PokemonDAO {
                             "SELECT MAX(id) as id FROM pokemon"
                     );
             cx.close();
-            // ADD THE PLAYER
+            // ADD THE POKEMON
             if (result.first()) {
                 long newid = result.getLong("id") + 1;
                 Connection cn = ds.getConnection();
@@ -61,6 +63,8 @@ public class PokemonDAO {
                 prepare.setInt(13, pokemon.stat_hp);
                 prepare.executeUpdate();
                 cn.close();
+                
+                
             } else {
                 System.err.println("Could not autoincrement properly.");
             }
@@ -102,7 +106,29 @@ public class PokemonDAO {
                         result.getInt("stat_hp"), null, null);
             }
             cn.close();
-            //TODO: add the references here
+            // Select holdeditem inventory id
+            cn = ds.getConnection();
+            String selectSQL = "SELECT * FROM holdeditem_ WHERE pokemonid = ?";
+            PreparedStatement preparedStatement = cn.prepareStatement(selectSQL);
+            preparedStatement.setLong(1, toreturn.id);
+            result = preparedStatement.executeQuery();
+            if (result.next()) {
+                toreturn.holdeditem = new DatabaseIdentifier(result.getLong("stackid"));
+            }
+            cn.close();
+            // Select moves id
+            cn = ds.getConnection();
+            selectSQL = "SELECT * FROM learnedmove_ WHERE pokemonid = ?";
+            preparedStatement = cn.prepareStatement(selectSQL);
+            preparedStatement.setLong(1, toreturn.id);
+            result = preparedStatement.executeQuery();
+            while (result.next()) {
+                if(toreturn.learnedmoves == null)
+                    toreturn.learnedmoves = new ArrayList<>(4);
+                toreturn.learnedmoves.add(new DatabaseIdentifier(result.getLong("moveid")));
+            }
+            cn.close();
+            cn.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -131,7 +157,6 @@ public class PokemonDAO {
             prepare.setLong(13, pokemon.id);
             prepare.executeUpdate();
             cn.close();
-            //TODO: add the references here too
         } catch (SQLException e) {
             e.printStackTrace();
         }
