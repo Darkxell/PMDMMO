@@ -53,7 +53,7 @@ public class PokemonPortrait
 			if (index == -1) // ID 100 is on first page but would give set=1, index=-1
 			{
 				--set;
-				++index;
+				index = 99;
 			}
 
 			switch (set)
