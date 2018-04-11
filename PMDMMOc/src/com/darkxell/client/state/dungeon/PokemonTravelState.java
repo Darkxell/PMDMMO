@@ -9,7 +9,6 @@ import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
 import com.darkxell.client.state.dungeon.DungeonState.DungeonSubState;
 import com.darkxell.common.dungeon.floor.Tile;
-import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.event.action.PokemonTravelEvent;
 
 /** Used for Pokémon travel animations. */
@@ -107,13 +106,8 @@ public class PokemonTravelState extends DungeonSubState
 
 		if (this.tick >= this.duration)
 		{
-			boolean stairLand = false;
 			for (PokemonTravelEvent travel : this.travels)
-			{
 				Persistance.dungeonState.pokemonRenderer.getRenderer(travel.pokemon).setXY(travel.destination.x, travel.destination.y);
-				if (travel.destination.type() == TileType.STAIR) stairLand = travel.pokemon == Persistance.player.getDungeonLeader();
-			}
-			Persistance.eventProcessor.landedOnStairs = stairLand;
 			Persistance.eventProcessor.animateDelayed();
 		}
 	}

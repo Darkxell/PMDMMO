@@ -29,6 +29,7 @@ import com.darkxell.client.state.menu.dungeon.MoveLearnMenuState;
 import com.darkxell.client.state.menu.dungeon.StairMenuState;
 import com.darkxell.common.dungeon.DungeonInstance;
 import com.darkxell.common.dungeon.floor.Tile;
+import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.event.CommonEventProcessor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.action.PokemonSpawnedEvent;
@@ -96,7 +97,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	private AnimationEndListener currentAnimEnd = processEventsOnAnimationEnd;
 	/** Stores events that animate at the same time as the travel events. */
 	private Stack<DungeonEvent> delayedWithTravels = new Stack<>();
-	public boolean landedOnStairs = false;
+	private boolean landedOnStairs = false;
 	private BaseStats levelupStats = null;
 	/** Stores consecutive travel events to animate them at the same time. */
 	private ArrayList<PokemonTravelEvent> travels = new ArrayList<>();
@@ -247,6 +248,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	private void processFloorEvent(NextFloorEvent event)
 	{
 		this.setState(State.ANIMATING);
+		this.delayedWithTravels.clear();
 		Persistance.stateManager.setState(new NextFloorState(Persistance.dungeonState, event.floor.id + 1));
 	}
 
@@ -463,7 +465,10 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		this.setState(State.ANIMATING);
 		Persistance.dungeonState.setSubstate(new PokemonTravelState(Persistance.dungeonState, event.travels()));
 		for (PokemonTravelEvent e : event.travels())
+		{
+			if (e.pokemon == Persistance.player.getDungeonLeader() && e.destination.type() == TileType.STAIR) this.landedOnStairs = true;
 			if (e.pokemon == Persistance.dungeonState.getCameraPokemon()) Persistance.dungeonState.floorVisibility.onCameraMoved();
+		}
 	}
 
 	private void processWeatherEvent(WeatherChangedEvent event)

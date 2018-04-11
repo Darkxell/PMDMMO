@@ -260,6 +260,11 @@ public class Pokemon implements ItemContainer, Communicable
 				.addSuffix("</color>");
 	}
 
+	public int id()
+	{
+		return this.id;
+	}
+
 	public void increaseIQ(int iq)
 	{
 		this.iq += iq;

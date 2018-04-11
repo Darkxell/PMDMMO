@@ -78,6 +78,8 @@ public class DungeonInstance
 	/** Ends the current Floor, creates the next and returns it. */
 	public Floor endFloor()
 	{
+		this.currentSubTurn = 0;
+		this.currentActor = -1;
 		this.currentFloor.dispose();
 		this.currentFloor = this.createFloor(this.currentFloor.id + 1);
 		this.currentFloor.generate();
@@ -201,7 +203,11 @@ public class DungeonInstance
 
 	public void registerActor(DungeonPokemon pokemon)
 	{
-		if (this.actorMap.containsKey(pokemon)) return;
+		if (this.actorMap.containsKey(pokemon))
+		{
+			Logger.e("Actor " + pokemon + " already registered!");
+			return;
+		}
 		this.actorMap.put(pokemon, new Actor(pokemon));
 		this.actors.add(this.actorMap.get(pokemon));
 	}
