@@ -44,6 +44,10 @@ public class DungeonSelectionMapState extends AbstractState
 			}
 		});
 		this.dungeonslist = dungeons;
+		{
+			if (!this.dungeonslist.isEmpty()) this.camerax = this.dungeonslist.get(0).mapx;
+			this.cameray = this.dungeonslist.get(0).mapy;
+		}
 	}
 
 	@Override
