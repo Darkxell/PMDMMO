@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.jdom2.input.SAXBuilder;
 
-import com.darkxell.client.launchable.ClientSettings;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.freezones.entities.OtherPlayerEntity;
 import com.darkxell.client.resources.Res;

@@ -1,4 +1,4 @@
-package com.darkxell.client.renderers.floor;
+package com.darkxell.client.renderers.pokemon;
 
 import java.awt.Graphics2D;
 import java.util.Collection;
@@ -9,50 +9,53 @@ import com.darkxell.client.renderers.AbstractRenderer;
 import com.darkxell.client.renderers.MasterDungeonRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.pokemon.Pokemon;
 
-public class DungeonPokemonRenderer extends AbstractRenderer
+public class PokemonRendererHolder extends AbstractRenderer
 {
 
-	private final HashMap<DungeonPokemon, PokemonRenderer> renderers = new HashMap<DungeonPokemon, PokemonRenderer>();
+	private final HashMap<Pokemon, AbstractPokemonRenderer> renderers = new HashMap<>();
 
-	public DungeonPokemonRenderer()
+	public PokemonRendererHolder()
 	{
 		super(0, 0, MasterDungeonRenderer.LAYER_POKEMON);
-		for (DungeonPokemon pokemon : Persistance.floor.listPokemon())
-			this.register(pokemon);
 	}
 
-	public void draw(Graphics2D g, DungeonPokemon pokemon, int width, int height)
+	public void draw(Graphics2D g, Pokemon pokemon, int width, int height)
 	{
-		if (!this.renderers.containsKey(pokemon)) this.register(pokemon);
-		this.renderers.get(pokemon).render(g, width, height);
+		if (this.renderers.containsKey(pokemon)) this.renderers.get(pokemon).render(g, width, height);
 	}
 
 	/** @return The Renderer of the input Pokémon. */
-	public PokemonRenderer getRenderer(DungeonPokemon pokemon)
+	public AbstractPokemonRenderer getRenderer(DungeonPokemon pokemon)
+	{
+		return this.getRenderer(pokemon.usedPokemon);
+	}
+
+	/** @return The Renderer of the input Pokémon. */
+	public AbstractPokemonRenderer getRenderer(Pokemon pokemon)
 	{
 		if (this.renderers.containsKey(pokemon)) return this.renderers.get(pokemon);
-		return this.register(pokemon);
+		return null;
 	}
 
 	/** @return The Sprite of the input Pokémon. */
-	public PokemonSprite getSprite(DungeonPokemon pokemon)
+	public PokemonSprite getSprite(Pokemon pokemon)
 	{
 		return this.getRenderer(pokemon).sprite;
 	}
 
-	public Collection<PokemonRenderer> listRenderers()
+	public Collection<AbstractPokemonRenderer> listRenderers()
 	{
 		return this.renderers.values();
 	}
 
 	/** Creates a Renderer for the input Pokémon. */
-	public PokemonRenderer register(DungeonPokemon pokemon)
+	public AbstractPokemonRenderer register(AbstractPokemonRenderer renderer)
 	{
-		PokemonRenderer renderer = new PokemonRenderer(pokemon);
-		this.renderers.put(pokemon, renderer);
+		this.renderers.put(renderer.pokemon, renderer);
 		Persistance.dungeonRenderer.addRenderer(renderer);
-		return this.getRenderer(pokemon);
+		return this.getRenderer(renderer.pokemon);
 	}
 
 	@Override
@@ -60,7 +63,7 @@ public class DungeonPokemonRenderer extends AbstractRenderer
 	{}
 
 	/** Creates the Sprite of the input Pokémon. */
-	public void unregister(DungeonPokemon pokemon)
+	public void unregister(Pokemon pokemon)
 	{
 		Persistance.dungeonRenderer.removeRenderer(this.getRenderer(pokemon));
 		this.renderers.remove(pokemon);
@@ -68,7 +71,7 @@ public class DungeonPokemonRenderer extends AbstractRenderer
 
 	public void update()
 	{
-		for (PokemonRenderer renderer : this.renderers.values())
+		for (AbstractPokemonRenderer renderer : this.renderers.values())
 			renderer.sprite.update();
 	}
 

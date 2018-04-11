@@ -37,8 +37,6 @@ public class DungeonPokemon implements ItemContainer
 	public final Pokemon originalPokemon;
 	/** Variable used to compute HP regeneration. */
 	private int regenCounter = 0;
-	/** True if this Pokémon's state changed (direction, state...). Used for rendering. */
-	public boolean stateChanged;
 	/** This Pokémon's stats for the current dungeon. */
 	public final DungeonStats stats;
 	/** This Pokémon's active Status Conditions. */
@@ -316,7 +314,6 @@ public class DungeonPokemon implements ItemContainer
 	public void setFacing(Direction direction)
 	{
 		this.facing = direction;
-		this.stateChanged = true;
 	}
 
 	public void setHP(int hp)

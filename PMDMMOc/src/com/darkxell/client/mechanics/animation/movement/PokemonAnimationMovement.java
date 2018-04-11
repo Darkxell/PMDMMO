@@ -1,7 +1,7 @@
 package com.darkxell.client.mechanics.animation.movement;
 
 import com.darkxell.client.mechanics.animation.PokemonAnimation;
-import com.darkxell.client.renderers.floor.PokemonRenderer;
+import com.darkxell.client.renderers.pokemon.AbstractPokemonRenderer;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
 public abstract class PokemonAnimationMovement
@@ -10,7 +10,7 @@ public abstract class PokemonAnimationMovement
 	public final int duration;
 	public final PokemonAnimation parentAnimation;
 	public final DungeonPokemon pokemon;
-	public final PokemonRenderer renderer;
+	public final AbstractPokemonRenderer renderer;
 
 	public PokemonAnimationMovement(PokemonAnimation animation, int duration)
 	{

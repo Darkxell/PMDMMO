@@ -10,7 +10,8 @@ import com.darkxell.client.mechanics.animation.Animations;
 import com.darkxell.client.mechanics.animation.misc.RainAnimation;
 import com.darkxell.client.mechanics.animation.misc.SnowAnimation;
 import com.darkxell.client.renderers.TextRenderer;
-import com.darkxell.client.renderers.floor.PokemonRenderer;
+import com.darkxell.client.renderers.pokemon.AbstractPokemonRenderer;
+import com.darkxell.client.renderers.pokemon.DungeonPokemonRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
 import com.darkxell.client.resources.music.SoundManager;
@@ -242,7 +243,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 
 	private void processFaintedEvent(FaintedPokemonEvent event)
 	{
-		Persistance.dungeonState.pokemonRenderer.unregister(event.pokemon);
+		Persistance.dungeonState.pokemonRenderer.unregister(event.pokemon.usedPokemon);
 	}
 
 	private void processFloorEvent(NextFloorEvent event)
@@ -397,7 +398,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 
 	private void processSpawnEvent(PokemonSpawnedEvent event)
 	{
-		PokemonRenderer renderer = Persistance.dungeonState.pokemonRenderer.register(event.spawned);
+		AbstractPokemonRenderer renderer = Persistance.dungeonState.pokemonRenderer.register(new DungeonPokemonRenderer(event.spawned));
 		if (event.spawned.player() != null)
 		{
 			if (event.spawned.player() != Persistance.player)

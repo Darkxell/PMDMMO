@@ -12,7 +12,7 @@ import com.darkxell.client.mechanics.freezones.WarpZone;
 import com.darkxell.client.mechanics.freezones.zones.BaseFreezone;
 import com.darkxell.client.mechanics.freezones.zones.OfficeFreezone;
 import com.darkxell.client.renderers.TextRenderer;
-import com.darkxell.client.renderers.floor.PokemonRenderer;
+import com.darkxell.client.renderers.pokemon.AbstractPokemonRenderer;
 import com.darkxell.client.resources.images.others.Hud;
 import com.darkxell.client.resources.music.SoundsHolder;
 import com.darkxell.client.ui.Keys;
@@ -96,7 +96,7 @@ public class FreezoneExploreState extends AbstractState
 				}
 			}
 			// Draws the player
-			PokemonRenderer.render(g, Persistance.currentplayer.playersprite, (int) (Persistance.currentplayer.x * 8), (int) (Persistance.currentplayer.y * 8));
+			AbstractPokemonRenderer.render(g, Persistance.currentplayer.playersprite, (int) (Persistance.currentplayer.x * 8), (int) (Persistance.currentplayer.y * 8));
 
 			if (Persistance.debugdisplaymode)
 			{

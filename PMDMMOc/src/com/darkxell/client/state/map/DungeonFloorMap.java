@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import com.darkxell.client.launchable.Persistance;
-import com.darkxell.client.renderers.floor.PokemonRenderer;
+import com.darkxell.client.renderers.pokemon.AbstractPokemonRenderer;
 import com.darkxell.client.resources.images.tilesets.AbstractDungeonTileset;
 import com.darkxell.client.resources.images.tilesets.DungeonMapTileset;
 import com.darkxell.client.state.dungeon.NextFloorState;
@@ -12,6 +12,7 @@ import com.darkxell.client.ui.Keys;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
+import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.trap.TrapRegistry;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.Logger;
@@ -43,7 +44,7 @@ public class DungeonFloorMap extends AbstractDisplayMap
 
 		if ((this.followLeader || !this.defaultLocationSet) && this.floor != null && Persistance.player.getDungeonLeader().tile() != null)
 		{
-			PokemonRenderer renderer = Persistance.dungeonState.pokemonRenderer.getRenderer(Persistance.player.getDungeonLeader());
+			AbstractPokemonRenderer renderer = Persistance.dungeonState.pokemonRenderer.getRenderer(Persistance.player.getTeamLeader());
 			this.x = (int) (renderer.x() * TILE_SIZE / AbstractDungeonTileset.TILE_SIZE - width / 2);
 			this.y = (int) (renderer.y() * TILE_SIZE / AbstractDungeonTileset.TILE_SIZE - height / 2);
 			this.defaultLocationSet = true;
@@ -92,16 +93,17 @@ public class DungeonFloorMap extends AbstractDisplayMap
 					}
 				}
 
-			for (PokemonRenderer renderer : Persistance.dungeonState.pokemonRenderer.listRenderers())
-				if (Persistance.dungeonState.floorVisibility.isVisible(renderer.pokemon))
+			for (DungeonPokemon pokemon : Persistance.floor.listPokemon())
+				if (Persistance.dungeonState.floorVisibility.isVisible(pokemon))
 				{
-					boolean isMain = renderer.pokemon == Persistance.player.getDungeonLeader();
+					boolean isMain = pokemon == Persistance.player.getDungeonLeader();
+					AbstractPokemonRenderer renderer = Persistance.dungeonState.pokemonRenderer.getRenderer(pokemon.usedPokemon);
 					int x = (int) (renderer.x() * TILE_SIZE / AbstractDungeonTileset.TILE_SIZE),
 							y = (int) (renderer.y() * TILE_SIZE / AbstractDungeonTileset.TILE_SIZE);
 					if (isMain && this.tick >= PLAYER_TICK) g.drawImage(this.tileset.player(), x, y, null);
-					else if (!isMain && Persistance.dungeonState.floorVisibility.isMapVisible(renderer.pokemon))
+					else if (!isMain && Persistance.dungeonState.floorVisibility.isMapVisible(pokemon))
 					{
-						if (Persistance.player.isAlly(renderer.pokemon)) g.drawImage(this.tileset.ally(), x, y, null);
+						if (Persistance.player.isAlly(pokemon)) g.drawImage(this.tileset.ally(), x, y, null);
 						else g.drawImage(this.tileset.enemy(), x, y, null);
 					}
 				}

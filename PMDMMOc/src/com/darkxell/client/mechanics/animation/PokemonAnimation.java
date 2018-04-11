@@ -6,7 +6,7 @@ import java.awt.Graphics2D;
 
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.animation.movement.PokemonAnimationMovement;
-import com.darkxell.client.renderers.floor.PokemonRenderer;
+import com.darkxell.client.renderers.pokemon.AbstractPokemonRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
@@ -17,7 +17,7 @@ public class PokemonAnimation extends AbstractAnimation
 	/** Describes the movement of the Pokémon during this Animation. May be null if the Pokémon doesn't move. */
 	PokemonAnimationMovement movement;
 	/** A reference to the Pokémon's renderer. */
-	public final PokemonRenderer renderer;
+	public final AbstractPokemonRenderer renderer;
 	/** The state to give to the Pokémon. null if shouldn't be changed. */
 	PokemonSpriteState state;
 	/** The Pokémon to draw. */

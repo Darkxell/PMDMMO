@@ -1,4 +1,4 @@
-package com.darkxell.client.renderers.floor;
+package com.darkxell.client.renderers.pokemon;
 
 import static com.darkxell.client.resources.images.tilesets.AbstractDungeonTileset.TILE_SIZE;
 
@@ -18,10 +18,10 @@ import com.darkxell.client.resources.images.pokemon.PokemonSpriteFrame;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
 import com.darkxell.client.resources.images.pokemon.ShadowSprites;
 import com.darkxell.client.resources.images.tilesets.AbstractDungeonTileset;
-import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.pokemon.Pokemon;
 
 /** Renders a Pokémon. This Renderer's Coordinates' units are Tiles. */
-public class PokemonRenderer extends AbstractRenderer
+public class AbstractPokemonRenderer extends AbstractRenderer
 {
 
 	/** Renders a Pokémon at the input x, y (centered) coordinates. width and height are the dimensions of the draw area. */
@@ -45,14 +45,14 @@ public class PokemonRenderer extends AbstractRenderer
 	}
 
 	private final ArrayList<PokemonAnimation> animations = new ArrayList<PokemonAnimation>();
-	public final DungeonPokemon pokemon;
+	public final Pokemon pokemon;
 	public final PokemonSprite sprite;
 
-	public PokemonRenderer(DungeonPokemon pokemon)
+	public AbstractPokemonRenderer(Pokemon pokemon)
 	{
-		super(pokemon.tile().x, pokemon.tile().y, MasterDungeonRenderer.LAYER_POKEMON);
+		super(0, 0, MasterDungeonRenderer.LAYER_POKEMON);
 		this.pokemon = pokemon;
-		this.sprite = new PokemonSprite(PokemonSpritesets.getSpriteset(this.pokemon.usedPokemon));
+		this.sprite = new PokemonSprite(PokemonSpritesets.getSpriteset(this.pokemon));
 	}
 
 	public void addAnimation(PokemonAnimation animation)
@@ -79,14 +79,6 @@ public class PokemonRenderer extends AbstractRenderer
 	@Override
 	public void render(Graphics2D g, int width, int height)
 	{
-		if (!Persistance.dungeonState.floorVisibility.isVisible(this.pokemon)) return;
-
-		if (this.pokemon.stateChanged)
-		{
-			this.sprite.setFacingDirection(this.pokemon.facing());
-			pokemon.stateChanged = false;
-		}
-
 		if (this.sprite.getCurrentSprite() != null)
 		{
 			PokemonSpriteFrame frame = this.sprite.getCurrentFrame();

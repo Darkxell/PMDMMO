@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 
 import com.darkxell.client.mechanics.freezones.FreezoneEntity;
 import com.darkxell.client.renderers.TextRenderer;
-import com.darkxell.client.renderers.floor.PokemonRenderer;
+import com.darkxell.client.renderers.pokemon.AbstractPokemonRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
 import com.darkxell.client.resources.images.pokemon.PokemonSpriteFrame;
@@ -52,7 +52,7 @@ public class OtherPlayerEntity extends FreezoneEntity
 	public void print(Graphics2D g)
 	{
 		PokemonSpriteFrame frame = this.sprite.getCurrentFrame();
-		PokemonRenderer.render(g, this.sprite, (int) (super.posX * 8), (int) (super.posY * 8));
+		AbstractPokemonRenderer.render(g, this.sprite, (int) (super.posX * 8), (int) (super.posY * 8));
 		int namewidth = TextRenderer.width(this.name);
 		TextRenderer.render(g, this.name, (int) (super.posX * 8 - (namewidth / 2)), (int) (super.posY * 8 + frame.spriteY - 20));
 	}
