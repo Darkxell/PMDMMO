@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import com.darkxell.client.launchable.Persistance;
-import com.darkxell.client.renderers.pokemon.AbstractPokemonRenderer;
+import com.darkxell.client.renderers.pokemon.DungeonPokemonRenderer;
 import com.darkxell.client.resources.images.tilesets.AbstractDungeonTileset;
 import com.darkxell.client.resources.images.tilesets.DungeonMapTileset;
 import com.darkxell.client.state.dungeon.NextFloorState;
@@ -44,7 +44,7 @@ public class DungeonFloorMap extends AbstractDisplayMap
 
 		if ((this.followLeader || !this.defaultLocationSet) && this.floor != null && Persistance.player.getDungeonLeader().tile() != null)
 		{
-			AbstractPokemonRenderer<DungeonPokemon> renderer = Persistance.dungeonState.pokemonRenderer.getRenderer(Persistance.player.getDungeonLeader());
+			DungeonPokemonRenderer renderer = Persistance.dungeonState.pokemonRenderer.getRenderer(Persistance.player.getDungeonLeader());
 			this.x = (int) (renderer.x() * TILE_SIZE / AbstractDungeonTileset.TILE_SIZE - width / 2);
 			this.y = (int) (renderer.y() * TILE_SIZE / AbstractDungeonTileset.TILE_SIZE - height / 2);
 			this.defaultLocationSet = true;
@@ -97,7 +97,7 @@ public class DungeonFloorMap extends AbstractDisplayMap
 				if (Persistance.dungeonState.floorVisibility.isVisible(pokemon))
 				{
 					boolean isMain = pokemon == Persistance.player.getDungeonLeader();
-					AbstractPokemonRenderer<DungeonPokemon> renderer = Persistance.dungeonState.pokemonRenderer.getRenderer(pokemon);
+					DungeonPokemonRenderer renderer = Persistance.dungeonState.pokemonRenderer.getRenderer(pokemon);
 					int x = (int) (renderer.x() * TILE_SIZE / AbstractDungeonTileset.TILE_SIZE),
 							y = (int) (renderer.y() * TILE_SIZE / AbstractDungeonTileset.TILE_SIZE);
 					if (isMain && this.tick >= PLAYER_TICK) g.drawImage(this.tileset.player(), x, y, null);

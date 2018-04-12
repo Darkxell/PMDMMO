@@ -10,7 +10,7 @@ public abstract class PokemonAnimationMovement
 	public final int duration;
 	public final PokemonAnimation parentAnimation;
 	public final DungeonPokemon pokemon;
-	public final AbstractPokemonRenderer<DungeonPokemon> renderer;
+	public final AbstractPokemonRenderer renderer;
 
 	public PokemonAnimationMovement(PokemonAnimation animation, int duration)
 	{

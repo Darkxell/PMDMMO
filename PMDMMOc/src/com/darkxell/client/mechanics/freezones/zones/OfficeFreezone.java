@@ -21,16 +21,16 @@ public class OfficeFreezone extends FreezoneMap {
 			}
 		});
 
-		this.entities.add(new AnimatedFlowerEntity(7, 25, false));
-		this.entities.add(new AnimatedFlowerEntity(4, 47, false));
-		this.entities.add(new AnimatedFlowerEntity(20, 41, false));
-		this.entities.add(new AnimatedFlowerEntity(43, 26, false));
+		this.addEntity(new AnimatedFlowerEntity(7, 25, false));
+		this.addEntity(new AnimatedFlowerEntity(4, 47, false));
+		this.addEntity(new AnimatedFlowerEntity(20, 41, false));
+		this.addEntity(new AnimatedFlowerEntity(43, 26, false));
 
-		this.entities.add(new AnimatedFlowerEntity(18, 21, true));
-		this.entities.add(new AnimatedFlowerEntity(23, 20, true));
-		this.entities.add(new AnimatedFlowerEntity(55, 24, true));
-		this.entities.add(new AnimatedFlowerEntity(40, 39, true));
-		this.entities.add(new AnimatedFlowerEntity(15, 46, true));
+		this.addEntity(new AnimatedFlowerEntity(18, 21, true));
+		this.addEntity(new AnimatedFlowerEntity(23, 20, true));
+		this.addEntity(new AnimatedFlowerEntity(55, 24, true));
+		this.addEntity(new AnimatedFlowerEntity(40, 39, true));
+		this.addEntity(new AnimatedFlowerEntity(15, 46, true));
 	}
 
 	@Override

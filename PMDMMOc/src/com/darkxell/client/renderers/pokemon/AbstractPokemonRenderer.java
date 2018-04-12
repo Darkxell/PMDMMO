@@ -21,7 +21,7 @@ import com.darkxell.client.resources.images.tilesets.AbstractDungeonTileset;
 import com.darkxell.common.pokemon.Pokemon;
 
 /** Renders a Pokémon. This Renderer's Coordinates' units are Tiles. */
-public class AbstractPokemonRenderer<T> extends AbstractRenderer
+public class AbstractPokemonRenderer extends AbstractRenderer
 {
 
 	/** Renders a Pokémon at the input x, y (centered) coordinates. width and height are the dimensions of the draw area. */
@@ -45,19 +45,16 @@ public class AbstractPokemonRenderer<T> extends AbstractRenderer
 	}
 
 	private final ArrayList<PokemonAnimation> animations = new ArrayList<PokemonAnimation>();
-	public final T pokemon;
 	public final PokemonSprite sprite;
 
-	@SuppressWarnings("unchecked")
 	public AbstractPokemonRenderer(Pokemon pokemon)
 	{
-		this((T) pokemon, new PokemonSprite(PokemonSpritesets.getSpriteset(pokemon)));
+		this(new PokemonSprite(PokemonSpritesets.getSpriteset(pokemon)));
 	}
 
-	public AbstractPokemonRenderer(T pokemon, PokemonSprite sprite)
+	public AbstractPokemonRenderer(PokemonSprite sprite)
 	{
 		super(0, 0, MasterDungeonRenderer.LAYER_POKEMON);
-		this.pokemon = pokemon;
 		this.sprite = sprite;
 	}
 
@@ -113,6 +110,13 @@ public class AbstractPokemonRenderer<T> extends AbstractRenderer
 		double screenY = Persistance.dungeonState.pokemonRenderer.y();
 		return this.x() + AbstractDungeonTileset.TILE_SIZE >= screenX - 1 && this.x() <= screenX + width + 1
 				&& this.y() + AbstractDungeonTileset.TILE_SIZE >= screenY - 1 && this.y() <= screenY + height + 1;
+	}
+
+	@Override
+	public void update()
+	{
+		super.update();
+		this.sprite.update();
 	}
 
 	@Override

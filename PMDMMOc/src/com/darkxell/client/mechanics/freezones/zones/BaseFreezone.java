@@ -28,20 +28,20 @@ public class BaseFreezone extends FreezoneMap {
 				return f;
 			}
 		});
-		this.entities.add(new AnimatedFlowerEntity(17.5, 16, true));
-		this.entities.add(new AnimatedFlowerEntity(33.5, 8, true));
-		this.entities.add(new AnimatedFlowerEntity(54.5, 18, true));
-		this.entities.add(new AnimatedFlowerEntity(61.5, 31, true));
-		this.entities.add(new AnimatedFlowerEntity(54.5, 48, true));
-		this.entities.add(new AnimatedFlowerEntity(4.5, 37, false));
-		this.entities.add(new AnimatedFlowerEntity(16.5, 20, false));
-		this.entities.add(new AnimatedFlowerEntity(25.5, 8, false));
-		this.entities.add(new AnimatedFlowerEntity(41.5, 8, false));
-		this.entities.add(new AnimatedFlowerEntity(59.5, 27, false));
-		this.entities.add(new AnimatedFlowerEntity(56.5, 32, false));
-		this.entities.add(new AnimatedFlowerEntity(42.5, 59, false));
+		this.addEntity(new AnimatedFlowerEntity(17.5, 16, true));
+		this.addEntity(new AnimatedFlowerEntity(33.5, 8, true));
+		this.addEntity(new AnimatedFlowerEntity(54.5, 18, true));
+		this.addEntity(new AnimatedFlowerEntity(61.5, 31, true));
+		this.addEntity(new AnimatedFlowerEntity(54.5, 48, true));
+		this.addEntity(new AnimatedFlowerEntity(4.5, 37, false));
+		this.addEntity(new AnimatedFlowerEntity(16.5, 20, false));
+		this.addEntity(new AnimatedFlowerEntity(25.5, 8, false));
+		this.addEntity(new AnimatedFlowerEntity(41.5, 8, false));
+		this.addEntity(new AnimatedFlowerEntity(59.5, 27, false));
+		this.addEntity(new AnimatedFlowerEntity(56.5, 32, false));
+		this.addEntity(new AnimatedFlowerEntity(42.5, 59, false));
 
-		this.entities.add(new FlagEntity(24.4, 10));
+		this.addEntity(new FlagEntity(24.4, 10));
 	}
 
 	@Override

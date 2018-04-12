@@ -6,6 +6,8 @@ import java.util.Random;
 
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.freezones.FreezoneEntity;
+import com.darkxell.client.renderers.AbstractRenderer;
+import com.darkxell.client.renderers.pokemon.FreezonePokemonRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.state.dialog.AbstractDialogState.DialogScreen;
 import com.darkxell.client.state.dialog.DialogState;
@@ -26,10 +28,16 @@ public class PokemonFreezoneEntity extends FreezoneEntity
 	}
 
 	@Override
+	public AbstractRenderer createRenderer()
+	{
+		return new FreezonePokemonRenderer(this, this.pkmnsprite);
+	}
+
+	@Override
 	public void onInteract()
 	{
 		Pokemon p = new Pokemon(0, 69, null, null, null, 0, 0, 1, null, null, null, null, (byte) 0, 0, true);
-		ArrayList<DialogScreen> screens = new ArrayList<DialogState.DialogScreen>();
+		ArrayList<DialogScreen> screens = new ArrayList<>();
 		screens.add(new DialogScreen(p,
 				new Message(
 						"Hey there! I'm Shiny :D <br>This is a debug string to try to know if the dialog boxes are working! Item descriptions are coming next.",

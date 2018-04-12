@@ -17,10 +17,10 @@ public class PondFreezone extends FreezoneMap {
 				return new PokemonSquareFreezone();
 			}
 		});
-		this.entities.add(new AnimatedFlowerEntity(14, 25, false));
-		this.entities.add(new AnimatedFlowerEntity(43, 25, true));
-		this.entities.add(new AnimatedFlowerEntity(17, 35, true));
-		this.entities.add(new AnimatedFlowerEntity(40, 36, false));
+		this.addEntity(new AnimatedFlowerEntity(14, 25, false));
+		this.addEntity(new AnimatedFlowerEntity(43, 25, true));
+		this.addEntity(new AnimatedFlowerEntity(17, 35, true));
+		this.addEntity(new AnimatedFlowerEntity(40, 36, false));
 	}
 
 	@Override

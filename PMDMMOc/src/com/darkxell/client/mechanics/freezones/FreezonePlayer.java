@@ -1,5 +1,7 @@
 package com.darkxell.client.mechanics.freezones;
 
+import java.util.ArrayList;
+
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
@@ -49,9 +51,10 @@ public class FreezonePlayer
 	{
 		if (Persistance.currentmap == null) return true;
 		DoubleRectangle hbx = getHitboxAt(x, y);
-		for (int i = 0; i < Persistance.currentmap.entities.size(); i++)
+		ArrayList<FreezoneEntity> entities = Persistance.currentmap.entities();
+		for (int i = 0; i < entities.size(); i++)
 		{
-			FreezoneEntity ety = Persistance.currentmap.entities.get(i);
+			FreezoneEntity ety = entities.get(i);
 			if (ety.isSolid && ety.getHitbox(ety.posX, ety.posY).intersects(this.getHitboxAt(x, y))) return false;
 		}
 
@@ -208,9 +211,10 @@ public class FreezonePlayer
 	public boolean canInteract()
 	{
 		if (Persistance.currentmap == null) return false;
-		for (int i = 0; i < Persistance.currentmap.entities.size(); ++i)
+		ArrayList<FreezoneEntity> entities = Persistance.currentmap.entities();
+		for (int i = 0; i < entities.size(); ++i)
 		{
-			FreezoneEntity et = Persistance.currentmap.entities.get(i);
+			FreezoneEntity et = entities.get(i);
 			if (et.canInteract && et.getHitbox(et.posX, et.posY).intersects(this.getInteractionBox())) return true;
 		}
 		return false;
@@ -220,9 +224,10 @@ public class FreezonePlayer
 	public FreezoneEntity getInteractionTarget()
 	{
 		if (Persistance.currentmap == null) return null;
-		for (int i = 0; i < Persistance.currentmap.entities.size(); i++)
+		ArrayList<FreezoneEntity> entities = Persistance.currentmap.entities();
+		for (int i = 0; i < entities.size(); i++)
 		{
-			FreezoneEntity et = Persistance.currentmap.entities.get(i);
+			FreezoneEntity et = entities.get(i);
 			if (et.canInteract && et.getHitbox(et.posX, et.posY).intersects(this.getInteractionBox())) return et;
 		}
 		return null;

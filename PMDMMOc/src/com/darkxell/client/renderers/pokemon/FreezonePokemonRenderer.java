@@ -1,21 +1,31 @@
 package com.darkxell.client.renderers.pokemon;
 
-import com.darkxell.client.mechanics.freezones.entities.PokemonFreezoneEntity;
+import com.darkxell.client.mechanics.freezones.FreezoneEntity;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 
 /** Renders a Pokémon. This Renderer's Coordinates' units are Tiles. */
-public class FreezonePokemonRenderer extends AbstractPokemonRenderer<PokemonFreezoneEntity>
+public class FreezonePokemonRenderer extends AbstractPokemonRenderer
 {
 
-	public FreezonePokemonRenderer(PokemonFreezoneEntity pokemon, PokemonSprite sprite)
+	public final FreezoneEntity entity;
+
+	public FreezonePokemonRenderer(FreezoneEntity entity, PokemonSprite sprite)
 	{
-		super(pokemon, sprite);
+		super(sprite);
+		this.entity = entity;
 	}
 
 	@Override
 	public boolean shouldRender(int width, int height)
 	{
 		return true;
+	}
+
+	@Override
+	public void update()
+	{
+		this.setXY(this.entity.posX, this.entity.posY);
+		super.update();
 	}
 
 }

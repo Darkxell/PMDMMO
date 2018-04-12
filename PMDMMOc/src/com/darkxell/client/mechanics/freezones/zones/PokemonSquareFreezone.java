@@ -42,53 +42,53 @@ public class PokemonSquareFreezone extends FreezoneMap {
 			}
 		});
 
-		this.entities.add(new AnimatedFlowerEntity(10, 30, false));
-		this.entities.add(new AnimatedFlowerEntity(10, 37, false));
-		this.entities.add(new AnimatedFlowerEntity(33, 45, false));
-		this.entities.add(new AnimatedFlowerEntity(41, 74, false));
-		this.entities.add(new AnimatedFlowerEntity(55, 73, false));
-		this.entities.add(new AnimatedFlowerEntity(89, 61, false));
-		this.entities.add(new AnimatedFlowerEntity(107, 55, false));
-		this.entities.add(new AnimatedFlowerEntity(107, 48, false));
-		this.entities.add(new AnimatedFlowerEntity(57, 31, false));
-		this.entities.add(new AnimatedFlowerEntity(70, 23, false));
-		this.entities.add(new AnimatedFlowerEntity(76, 22, false));
-		this.entities.add(new AnimatedFlowerEntity(60, 14, false));
-		this.entities.add(new AnimatedFlowerEntity(60, 10, false));
+		this.addEntity(new AnimatedFlowerEntity(10, 30, false));
+		this.addEntity(new AnimatedFlowerEntity(10, 37, false));
+		this.addEntity(new AnimatedFlowerEntity(33, 45, false));
+		this.addEntity(new AnimatedFlowerEntity(41, 74, false));
+		this.addEntity(new AnimatedFlowerEntity(55, 73, false));
+		this.addEntity(new AnimatedFlowerEntity(89, 61, false));
+		this.addEntity(new AnimatedFlowerEntity(107, 55, false));
+		this.addEntity(new AnimatedFlowerEntity(107, 48, false));
+		this.addEntity(new AnimatedFlowerEntity(57, 31, false));
+		this.addEntity(new AnimatedFlowerEntity(70, 23, false));
+		this.addEntity(new AnimatedFlowerEntity(76, 22, false));
+		this.addEntity(new AnimatedFlowerEntity(60, 14, false));
+		this.addEntity(new AnimatedFlowerEntity(60, 10, false));
 
-		this.entities.add(new AnimatedFlowerEntity(6, 31, true));
-		this.entities.add(new AnimatedFlowerEntity(14, 31, true));
-		this.entities.add(new AnimatedFlowerEntity(11, 34, true));
-		this.entities.add(new AnimatedFlowerEntity(29, 45, true));
-		this.entities.add(new AnimatedFlowerEntity(45, 73, true));
-		this.entities.add(new AnimatedFlowerEntity(43, 77, true));
-		this.entities.add(new AnimatedFlowerEntity(56, 70, true));
-		this.entities.add(new AnimatedFlowerEntity(60, 72, true));
-		this.entities.add(new AnimatedFlowerEntity(93, 66, true));
-		this.entities.add(new AnimatedFlowerEntity(108, 58, true));
-		this.entities.add(new AnimatedFlowerEntity(93, 30, true));
-		this.entities.add(new AnimatedFlowerEntity(70, 26, true));
-		this.entities.add(new AnimatedFlowerEntity(70, 18, true));
-		this.entities.add(new AnimatedFlowerEntity(69, 13, true));
-		this.entities.add(new AnimatedFlowerEntity(60, 18, true));
-		this.entities.add(new AnimatedFlowerEntity(57, 21, true));
-		this.entities.add(new AnimatedFlowerEntity(49, 37, true));
+		this.addEntity(new AnimatedFlowerEntity(6, 31, true));
+		this.addEntity(new AnimatedFlowerEntity(14, 31, true));
+		this.addEntity(new AnimatedFlowerEntity(11, 34, true));
+		this.addEntity(new AnimatedFlowerEntity(29, 45, true));
+		this.addEntity(new AnimatedFlowerEntity(45, 73, true));
+		this.addEntity(new AnimatedFlowerEntity(43, 77, true));
+		this.addEntity(new AnimatedFlowerEntity(56, 70, true));
+		this.addEntity(new AnimatedFlowerEntity(60, 72, true));
+		this.addEntity(new AnimatedFlowerEntity(93, 66, true));
+		this.addEntity(new AnimatedFlowerEntity(108, 58, true));
+		this.addEntity(new AnimatedFlowerEntity(93, 30, true));
+		this.addEntity(new AnimatedFlowerEntity(70, 26, true));
+		this.addEntity(new AnimatedFlowerEntity(70, 18, true));
+		this.addEntity(new AnimatedFlowerEntity(69, 13, true));
+		this.addEntity(new AnimatedFlowerEntity(60, 18, true));
+		this.addEntity(new AnimatedFlowerEntity(57, 21, true));
+		this.addEntity(new AnimatedFlowerEntity(49, 37, true));
 
-		this.entities.add(new PokemonFreezoneEntity(71, 34, new PokemonSprite(PokemonSpritesets.getSpriteset(-69))));
+		this.addEntity(new PokemonFreezoneEntity(71, 34, new PokemonSprite(PokemonSpritesets.getSpriteset(-69))));
 
-		this.entities.add(new SignSoulEntity(13.5, 37, new Message("sign.pokemonsquare.west")));
-		this.entities.add(new SignSoulEntity(68.5, 10, new Message("sign.pokemonsquare.north")));
-		this.entities.add(new SignSoulEntity(114.5, 36, new Message("sign.pokemonsquare.east")));
+		this.addEntity(new SignSoulEntity(13.5, 37, new Message("sign.pokemonsquare.west")));
+		this.addEntity(new SignSoulEntity(68.5, 10, new Message("sign.pokemonsquare.north")));
+		this.addEntity(new SignSoulEntity(114.5, 36, new Message("sign.pokemonsquare.east")));
 
-		this.entities.add(new WatersparklesEntity(6.5, 8, WatersparklesEntity.TYPE_SIDE));
-		this.entities.add(new WatersparklesEntity(17.5, 25, WatersparklesEntity.TYPE_SIDE));
-		this.entities.add(new WatersparklesEntity(17.5, 35, WatersparklesEntity.TYPE_BOT));
-		this.entities.add(new WatersparklesEntity(17.5, 46, WatersparklesEntity.TYPE_TOP));
-		this.entities.add(new WatersparklesEntity(17.5, 55, WatersparklesEntity.TYPE_SIDE));
-		this.entities.add(new WatersparklesEntity(17.5, 62, WatersparklesEntity.TYPE_SIDE));
-		this.entities.add(new WatersparklesEntity(25, 69, WatersparklesEntity.TYPE_LONG));
-		this.entities.add(new WatersparklesEntity(32.5, 70, WatersparklesEntity.TYPE_SIDE));
-		this.entities.add(new WatersparklesEntity(32.5, 79, WatersparklesEntity.TYPE_SIDE));
+		this.addEntity(new WatersparklesEntity(6.5, 8, WatersparklesEntity.TYPE_SIDE));
+		this.addEntity(new WatersparklesEntity(17.5, 25, WatersparklesEntity.TYPE_SIDE));
+		this.addEntity(new WatersparklesEntity(17.5, 35, WatersparklesEntity.TYPE_BOT));
+		this.addEntity(new WatersparklesEntity(17.5, 46, WatersparklesEntity.TYPE_TOP));
+		this.addEntity(new WatersparklesEntity(17.5, 55, WatersparklesEntity.TYPE_SIDE));
+		this.addEntity(new WatersparklesEntity(17.5, 62, WatersparklesEntity.TYPE_SIDE));
+		this.addEntity(new WatersparklesEntity(25, 69, WatersparklesEntity.TYPE_LONG));
+		this.addEntity(new WatersparklesEntity(32.5, 70, WatersparklesEntity.TYPE_SIDE));
+		this.addEntity(new WatersparklesEntity(32.5, 79, WatersparklesEntity.TYPE_SIDE));
 
 	}
 

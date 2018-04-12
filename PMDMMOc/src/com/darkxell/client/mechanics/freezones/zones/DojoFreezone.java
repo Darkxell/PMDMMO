@@ -18,15 +18,15 @@ public class DojoFreezone extends FreezoneMap {
 			}
 		});
 
-		this.entities.add(new AnimatedFlowerEntity(5, 6, false));
-		this.entities.add(new AnimatedFlowerEntity(5, 22, false));
-		this.entities.add(new AnimatedFlowerEntity(5, 38, false));
-		this.entities.add(new AnimatedFlowerEntity(31, 45, false));
-		this.entities.add(new AnimatedFlowerEntity(36, 21, false));
-		this.entities.add(new AnimatedFlowerEntity(34, 15, false));
-		this.entities.add(new AnimatedFlowerEntity(47, 23, false));
-		this.entities.add(new AnimatedFlowerEntity(56, 29, false));
-		this.entities.add(new AnimatedFlowerEntity(63, 29, false));
+		this.addEntity(new AnimatedFlowerEntity(5, 6, false));
+		this.addEntity(new AnimatedFlowerEntity(5, 22, false));
+		this.addEntity(new AnimatedFlowerEntity(5, 38, false));
+		this.addEntity(new AnimatedFlowerEntity(31, 45, false));
+		this.addEntity(new AnimatedFlowerEntity(36, 21, false));
+		this.addEntity(new AnimatedFlowerEntity(34, 15, false));
+		this.addEntity(new AnimatedFlowerEntity(47, 23, false));
+		this.addEntity(new AnimatedFlowerEntity(56, 29, false));
+		this.addEntity(new AnimatedFlowerEntity(63, 29, false));
 
 	}
 

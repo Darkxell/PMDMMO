@@ -15,9 +15,8 @@ import com.darkxell.client.renderers.floor.FloorRenderer;
 import com.darkxell.client.renderers.floor.FloorVisibility;
 import com.darkxell.client.renderers.floor.GridRenderer;
 import com.darkxell.client.renderers.floor.ShadowRenderer;
-import com.darkxell.client.renderers.pokemon.AbstractPokemonRenderer;
 import com.darkxell.client.renderers.pokemon.DungeonPokemonRenderer;
-import com.darkxell.client.renderers.pokemon.PokemonRendererHolder;
+import com.darkxell.client.renderers.pokemon.DungeonPokemonRendererHolder;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.ui.Keys;
@@ -85,7 +84,7 @@ public class DungeonState extends AbstractState
 	public final GridRenderer gridRenderer;
 	public final DungeonItemsRenderer itemRenderer;
 	public final DungeonLogger logger;
-	public final PokemonRendererHolder<DungeonPokemon> pokemonRenderer;
+	public final DungeonPokemonRendererHolder pokemonRenderer;
 	/** The last Camera. */
 	private Point previousCamera;
 	public final ShadowRenderer shadowRenderer;
@@ -97,7 +96,7 @@ public class DungeonState extends AbstractState
 		this.floorRenderer = new FloorRenderer();
 		this.gridRenderer = new GridRenderer();
 		this.itemRenderer = new DungeonItemsRenderer();
-		this.pokemonRenderer = new PokemonRendererHolder<DungeonPokemon>();
+		this.pokemonRenderer = new DungeonPokemonRendererHolder();
 		this.shadowRenderer = new ShadowRenderer();
 		Persistance.dungeonRenderer.addRenderer(this.floorRenderer);
 		Persistance.dungeonRenderer.addRenderer(this.gridRenderer);
@@ -182,7 +181,7 @@ public class DungeonState extends AbstractState
 		Point spawn = Persistance.floor.teamSpawn;
 		Persistance.floor.tileAt(spawn.x, spawn.y).setPokemon(Persistance.player.getDungeonLeader());
 		Persistance.dungeon.insertActor(Persistance.player.getDungeonLeader(), 0);
-		this.pokemonRenderer.register(new DungeonPokemonRenderer(Persistance.player.getDungeonLeader())).sprite.setShadowColor(PokemonSprite.ALLY_SHADOW);
+		this.pokemonRenderer.register(Persistance.player.getDungeonLeader()).sprite.setShadowColor(PokemonSprite.ALLY_SHADOW);
 
 		ArrayList<Tile> candidates = new ArrayList<Tile>();
 		Tile initial = Persistance.player.getDungeonLeader().tile();
@@ -217,7 +216,7 @@ public class DungeonState extends AbstractState
 			Persistance.floor.aiManager.register(team[i]);
 			Persistance.dungeon.insertActor(team[i], 1);
 			candidates.remove(0);
-			this.pokemonRenderer.register(new DungeonPokemonRenderer(team[i])).sprite.setShadowColor(PokemonSprite.ALLY_SHADOW);
+			this.pokemonRenderer.register(team[i]).sprite.setShadowColor(PokemonSprite.ALLY_SHADOW);
 		}
 
 		for (int i = team.length - 1; i >= 0; --i)
@@ -227,7 +226,7 @@ public class DungeonState extends AbstractState
 	@Override
 	public void render(Graphics2D g, int width, int height)
 	{
-		AbstractPokemonRenderer<DungeonPokemon> r = Persistance.dungeonState.pokemonRenderer.getRenderer(this.cameraPokemon);
+		DungeonPokemonRenderer r = Persistance.dungeonState.pokemonRenderer.getRenderer(this.cameraPokemon);
 		int x = (int) (r.x() + TILE_SIZE / 2 - width / 2), y = (int) (r.y() + TILE_SIZE / 2 - height / 2);
 		this.camera = new Point(x, y);
 

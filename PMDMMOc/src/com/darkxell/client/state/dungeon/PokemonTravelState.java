@@ -4,13 +4,12 @@ import java.awt.Graphics2D;
 
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.animation.TravelAnimation;
-import com.darkxell.client.renderers.pokemon.AbstractPokemonRenderer;
+import com.darkxell.client.renderers.pokemon.DungeonPokemonRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
 import com.darkxell.client.state.dungeon.DungeonState.DungeonSubState;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.event.action.PokemonTravelEvent;
-import com.darkxell.common.pokemon.DungeonPokemon;
 
 /** Used for Pokémon travel animations. */
 public class PokemonTravelState extends DungeonSubState
@@ -80,7 +79,7 @@ public class PokemonTravelState extends DungeonSubState
 		super.onStart();
 		for (PokemonTravelEvent travel : this.travels)
 		{
-			AbstractPokemonRenderer<DungeonPokemon> renderer = Persistance.dungeonState.pokemonRenderer.getRenderer(travel.pokemon);
+			DungeonPokemonRenderer renderer = Persistance.dungeonState.pokemonRenderer.getRenderer(travel.pokemon);
 			renderer.sprite.setState(PokemonSpriteState.MOVE, true);
 			travel.pokemon.setFacing(travel.direction);
 			if (this.running) renderer.sprite.setTickingSpeed(PokemonSprite.QUICKER);

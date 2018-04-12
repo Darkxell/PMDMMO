@@ -2,10 +2,12 @@ package com.darkxell.client.state;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 
 import com.darkxell.client.launchable.GameSocketEndpoint;
 import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.mechanics.freezones.FreezoneEntity;
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
 import com.darkxell.client.mechanics.freezones.FreezoneTile;
 import com.darkxell.client.mechanics.freezones.WarpZone;
@@ -85,18 +87,20 @@ public class FreezoneExploreState extends AbstractState
 			}
 			// TODO : draw the entities/player in Y position order.
 			// draws the entities
-			for (int i = 0; i < map.entities.size(); i++)
+			ArrayList<FreezoneEntity> entities = map.entities();
+			for (int i = 0; i < entities.size(); i++)
 			{
-				map.entities.get(i).print(g);
+				entities.get(i).print(g);
 				if (Persistance.debugdisplaymode)
 				{
 					g.setColor(new Color(20, 20, 200, 160));
-					DoubleRectangle dbrct = map.entities.get(i).getHitbox(map.entities.get(i).posX, map.entities.get(i).posY);
+					DoubleRectangle dbrct = entities.get(i).getHitbox(entities.get(i).posX, entities.get(i).posY);
 					g.fillRect((int) (dbrct.x * 8), (int) (dbrct.y * 8), (int) (dbrct.width * 8), (int) (dbrct.height * 8));
 				}
 			}
 			// Draws the player
-			AbstractPokemonRenderer.render(g, Persistance.currentplayer.playersprite, (int) (Persistance.currentplayer.x * 8), (int) (Persistance.currentplayer.y * 8));
+			AbstractPokemonRenderer.render(g, Persistance.currentplayer.playersprite, (int) (Persistance.currentplayer.x * 8),
+					(int) (Persistance.currentplayer.y * 8));
 
 			if (Persistance.debugdisplaymode)
 			{

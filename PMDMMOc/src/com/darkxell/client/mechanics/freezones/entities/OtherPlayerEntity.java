@@ -2,9 +2,12 @@ package com.darkxell.client.mechanics.freezones.entities;
 
 import java.awt.Graphics2D;
 
+import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.freezones.FreezoneEntity;
+import com.darkxell.client.renderers.AbstractRenderer;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.renderers.pokemon.AbstractPokemonRenderer;
+import com.darkxell.client.renderers.pokemon.FreezonePokemonRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
 import com.darkxell.client.resources.images.pokemon.PokemonSpriteFrame;
@@ -39,9 +42,19 @@ public class OtherPlayerEntity extends FreezoneEntity
 		if (this.spriteID != spriteID)
 		{
 			this.spriteID = spriteID;
+			PokemonSprite previous = this.sprite;
 			this.sprite = new PokemonSprite(PokemonSpritesets.getSpriteset(spriteID));
+			this.sprite.copyState(previous);
+			Persistance.currentmap.entityRenderers.unregister(this);
+			Persistance.currentmap.entityRenderers.register(this, this.createRenderer());
 		}
 		this.lastupdate = System.nanoTime();
+	}
+
+	@Override
+	public AbstractRenderer createRenderer()
+	{
+		return new FreezonePokemonRenderer(this, this.sprite);
 	}
 
 	@Override
