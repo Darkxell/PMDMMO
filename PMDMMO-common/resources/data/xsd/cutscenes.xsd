@@ -23,6 +23,7 @@
                                 <xs:element ref="animate"/>
                                 <xs:element ref="music"/>
                                 <xs:element ref="delay"/>
+                                <xs:element ref="wait"/>
                             </xs:choice>
                         </xs:sequence>
                     </xs:complexType>
@@ -66,28 +67,31 @@
     <xs:element name="delay">
         <xs:complexType>
             <xs:attribute name="ticks" type="posInt" use="required"/>
+            <xs:attribute ref="eventid"/>
         </xs:complexType>
     </xs:element>
 
     <xs:element name="sound">
         <xs:complexType>
-            <xs:attribute name="id" type="xs:string" use="required"/>
+            <xs:attribute name="sound" type="xs:string" use="required"/>
+            <xs:attribute ref="eventid"/>
         </xs:complexType>
     </xs:element>
 
     <xs:element name="rotate">
         <xs:complexType>
-            <xs:attribute name="id" type="xs:string" use="required"/>
             <xs:attribute ref="target" use="required"/>
             <xs:attribute ref="facing"/>
             <xs:attribute name="instantly" type="xs:boolean"/>
+            <xs:attribute ref="eventid"/>
         </xs:complexType>
     </xs:element>
 
     <xs:element name="animate">
         <xs:complexType>
-            <xs:attribute name="id" type="xs:string" use="required"/>
+            <xs:attribute name="animation" type="xs:string" use="required"/>
             <xs:attribute ref="target" use="required"/>
+            <xs:attribute ref="eventid"/>
         </xs:complexType>
     </xs:element>
 
@@ -117,12 +121,27 @@
             <xs:attribute name="instantly" type="xs:boolean"/>
             <xs:attribute name="posx" type="posInt"/>
             <xs:attribute name="posy" type="posInt"/>
+            <xs:attribute ref="eventid"/>
         </xs:complexType>
     </xs:element>
 
     <xs:element name="music">
         <xs:complexType>
-            <xs:attribute name="id" type="xs:string" use="required"/>
+            <xs:attribute name="music" type="xs:string" use="required"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="wait">
+        <xs:annotation>
+            <xs:documentation>Use this element to wait for events to finish before starting the
+                following events. If no event is specified, all events that have a duration will be
+                waited for completion.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="event" type="posInt"/>
+            </xs:sequence>
+            <xs:attribute ref="eventid"/>
         </xs:complexType>
     </xs:element>
 
@@ -194,6 +213,12 @@
     <xs:attribute name="target" type="posInt">
         <xs:annotation>
             <xs:documentation>The ID of the entity this event targets.</xs:documentation>
+        </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="eventid" type="posInt">
+        <xs:annotation>
+            <xs:documentation>An optional identifier for this event. Used by the wait
+                event.</xs:documentation>
         </xs:annotation>
     </xs:attribute>
 
