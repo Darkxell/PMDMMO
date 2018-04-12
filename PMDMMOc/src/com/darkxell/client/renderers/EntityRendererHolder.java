@@ -1,7 +1,8 @@
 package com.darkxell.client.renderers;
 
 import java.awt.Graphics2D;
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 
 import com.darkxell.client.launchable.Persistance;
@@ -32,9 +33,11 @@ public class EntityRendererHolder<T> extends AbstractRenderer
 	/** @return The Sprite of the input Pokémon. */
 	/* public PokemonSprite getSprite(T entity) { AbstractRenderer renderer = this.getRenderer(entity); return renderer == null ? null : renderer.sprite; } */
 
-	public Collection<AbstractRenderer> listRenderers()
+	public ArrayList<AbstractRenderer> listRenderers()
 	{
-		return this.renderers.values();
+		ArrayList<AbstractRenderer> renderers = new ArrayList<>(this.renderers.values());
+		renderers.sort(Comparator.naturalOrder());
+		return renderers;
 	}
 
 	/** Registers and returns the input Renderer. */

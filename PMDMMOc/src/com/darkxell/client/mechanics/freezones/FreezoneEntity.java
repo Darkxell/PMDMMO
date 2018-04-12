@@ -2,7 +2,7 @@ package com.darkxell.client.mechanics.freezones;
 
 import java.awt.Graphics2D;
 
-import com.darkxell.client.mechanics.freezones.entities.DefaultFreezoneEntityRenderer;
+import com.darkxell.client.mechanics.freezones.entities.renderers.DefaultFreezoneEntityRenderer;
 import com.darkxell.client.renderers.AbstractRenderer;
 import com.darkxell.common.util.DoubleRectangle;
 

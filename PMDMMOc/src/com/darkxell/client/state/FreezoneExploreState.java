@@ -2,19 +2,17 @@ package com.darkxell.client.state;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.util.ArrayList;
 
 import com.darkxell.client.launchable.GameSocketEndpoint;
 import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.launchable.Persistance;
-import com.darkxell.client.mechanics.freezones.FreezoneEntity;
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
 import com.darkxell.client.mechanics.freezones.FreezoneTile;
 import com.darkxell.client.mechanics.freezones.WarpZone;
 import com.darkxell.client.mechanics.freezones.zones.BaseFreezone;
 import com.darkxell.client.mechanics.freezones.zones.OfficeFreezone;
+import com.darkxell.client.renderers.AbstractRenderer;
 import com.darkxell.client.renderers.TextRenderer;
-import com.darkxell.client.renderers.pokemon.AbstractPokemonRenderer;
 import com.darkxell.client.resources.images.others.Hud;
 import com.darkxell.client.resources.music.SoundsHolder;
 import com.darkxell.client.ui.Keys;
@@ -87,20 +85,11 @@ public class FreezoneExploreState extends AbstractState
 			}
 			// TODO : draw the entities/player in Y position order.
 			// draws the entities
-			ArrayList<FreezoneEntity> entities = map.entities();
-			for (int i = 0; i < entities.size(); i++)
-			{
-				entities.get(i).print(g);
-				if (Persistance.debugdisplaymode)
-				{
-					g.setColor(new Color(20, 20, 200, 160));
-					DoubleRectangle dbrct = entities.get(i).getHitbox(entities.get(i).posX, entities.get(i).posY);
-					g.fillRect((int) (dbrct.x * 8), (int) (dbrct.y * 8), (int) (dbrct.width * 8), (int) (dbrct.height * 8));
-				}
-			}
+			for (AbstractRenderer renderer : map.entityRenderers.listRenderers())
+				renderer.render(g, width, height);
+			
 			// Draws the player
-			AbstractPokemonRenderer.render(g, Persistance.currentplayer.playersprite, (int) (Persistance.currentplayer.x * 8),
-					(int) (Persistance.currentplayer.y * 8));
+			Persistance.currentplayer.renderer().render(g, width, height);
 
 			if (Persistance.debugdisplaymode)
 			{
@@ -175,7 +164,7 @@ public class FreezoneExploreState extends AbstractState
 			{
 				String message = "";
 				JsonObject mess = new JsonObject().add("action", "freezoneposition").add("posfx", Persistance.currentplayer.x)
-						.add("posfy", Persistance.currentplayer.y).add("currentpokemon", Persistance.currentplayer.playersprite.pointer.pokemonID + "")
+						.add("posfy", Persistance.currentplayer.y).add("currentpokemon", Persistance.currentplayer.renderer().sprite.pointer.pokemonID + "")
 						.add("freezoneid", Persistance.currentmap.getMapLocation().id);
 				message = mess.toString();
 				Persistance.socketendpoint.sendMessage(message);
@@ -196,6 +185,9 @@ public class FreezoneExploreState extends AbstractState
 				musicset = false;
 				break;
 			}
+
+		for (AbstractRenderer renderer : Persistance.currentmap.entityRenderers.listRenderers())
+			renderer.update();
 
 	}
 

@@ -28,4 +28,16 @@ public class FreezonePokemonRenderer extends AbstractPokemonRenderer
 		super.update();
 	}
 
+	@Override
+	public double x()
+	{
+		return super.x() * 8;
+	}
+
+	@Override
+	public double y()
+	{
+		return super.y() * 8;
+	}
+
 }

@@ -86,12 +86,11 @@ public class AbstractPokemonRenderer extends AbstractRenderer
 		{
 			PokemonSpriteFrame frame = this.sprite.getCurrentFrame();
 
-			int xPos = (int) (this.x() + TILE_SIZE / 2), yPos = (int) (this.y() + TILE_SIZE / 2);
+			int xPos = (int) this.drawX(), yPos = (int) this.drawY();
 
 			BufferedImage shadow = this.sprite.pointer.hasBigShadow ? ShadowSprites.instance.getBig(this.sprite.getShadowColor())
 					: ShadowSprites.instance.getSmall(this.sprite.getShadowColor());
-			g.drawImage(shadow, (int) this.x() + TILE_SIZE / 2 - shadow.getWidth() / 2 + frame.shadowX,
-					(int) this.y() + TILE_SIZE * 9 / 10 - shadow.getHeight() + frame.shadowY, null);
+			g.drawImage(shadow, xPos - shadow.getWidth() / 2 + frame.shadowX, yPos + TILE_SIZE * 2 / 5 - shadow.getHeight() + frame.shadowY, null);
 
 			for (PokemonAnimation animation : this.animations)
 				animation.prerender(g, width, height);
@@ -117,18 +116,6 @@ public class AbstractPokemonRenderer extends AbstractRenderer
 	{
 		super.update();
 		this.sprite.update();
-	}
-
-	@Override
-	public double x()
-	{
-		return super.x() * TILE_SIZE;
-	}
-
-	@Override
-	public double y()
-	{
-		return super.y() * TILE_SIZE;
 	}
 
 }

@@ -4,13 +4,10 @@ import java.awt.Graphics2D;
 
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.freezones.FreezoneEntity;
+import com.darkxell.client.mechanics.freezones.entities.renderers.OtherPlayerPokemonRenderer;
 import com.darkxell.client.renderers.AbstractRenderer;
-import com.darkxell.client.renderers.TextRenderer;
-import com.darkxell.client.renderers.pokemon.AbstractPokemonRenderer;
-import com.darkxell.client.renderers.pokemon.FreezonePokemonRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
-import com.darkxell.client.resources.images.pokemon.PokemonSpriteFrame;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
 import com.darkxell.common.util.Direction;
 
@@ -54,7 +51,7 @@ public class OtherPlayerEntity extends FreezoneEntity
 	@Override
 	public AbstractRenderer createRenderer()
 	{
-		return new FreezonePokemonRenderer(this, this.sprite);
+		return new OtherPlayerPokemonRenderer(this, this.sprite);
 	}
 
 	@Override
@@ -63,12 +60,7 @@ public class OtherPlayerEntity extends FreezoneEntity
 
 	@Override
 	public void print(Graphics2D g)
-	{
-		PokemonSpriteFrame frame = this.sprite.getCurrentFrame();
-		AbstractPokemonRenderer.render(g, this.sprite, (int) (super.posX * 8), (int) (super.posY * 8));
-		int namewidth = TextRenderer.width(this.name);
-		TextRenderer.render(g, this.name, (int) (super.posX * 8 - (namewidth / 2)), (int) (super.posY * 8 + frame.spriteY - 20));
-	}
+	{}
 
 	@Override
 	public void update()

@@ -31,6 +31,16 @@ public abstract class AbstractRenderer implements Comparable<AbstractRenderer>
 		return Double.compare(this.x, o.x);
 	}
 
+	public double drawX()
+	{
+		return this.x();
+	}
+
+	public double drawY()
+	{
+		return this.y();
+	}
+
 	private void onUpdate()
 	{
 		if (Persistance.dungeonState != null && Persistance.dungeonRenderer != null) Persistance.dungeonRenderer.onObjectUpdated();
