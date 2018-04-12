@@ -17,7 +17,7 @@ public class PokemonAnimation extends AbstractAnimation
 	/** Describes the movement of the Pokémon during this Animation. May be null if the Pokémon doesn't move. */
 	PokemonAnimationMovement movement;
 	/** A reference to the Pokémon's renderer. */
-	public final AbstractPokemonRenderer renderer;
+	public final AbstractPokemonRenderer<DungeonPokemon> renderer;
 	/** The state to give to the Pokémon. null if shouldn't be changed. */
 	PokemonSpriteState state;
 	/** The Pokémon to draw. */

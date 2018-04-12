@@ -60,6 +60,7 @@ import com.darkxell.common.item.ItemFood;
 import com.darkxell.common.item.ItemGummi;
 import com.darkxell.common.player.Inventory;
 import com.darkxell.common.pokemon.BaseStats;
+import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.language.Message;
@@ -243,7 +244,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 
 	private void processFaintedEvent(FaintedPokemonEvent event)
 	{
-		Persistance.dungeonState.pokemonRenderer.unregister(event.pokemon.usedPokemon);
+		Persistance.dungeonState.pokemonRenderer.unregister(event.pokemon);
 	}
 
 	private void processFloorEvent(NextFloorEvent event)
@@ -398,7 +399,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 
 	private void processSpawnEvent(PokemonSpawnedEvent event)
 	{
-		AbstractPokemonRenderer renderer = Persistance.dungeonState.pokemonRenderer.register(new DungeonPokemonRenderer(event.spawned));
+		AbstractPokemonRenderer<DungeonPokemon> renderer = Persistance.dungeonState.pokemonRenderer.register(new DungeonPokemonRenderer(event.spawned));
 		if (event.spawned.player() != null)
 		{
 			if (event.spawned.player() != Persistance.player)

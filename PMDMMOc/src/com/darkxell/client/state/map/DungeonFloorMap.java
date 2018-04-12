@@ -44,7 +44,7 @@ public class DungeonFloorMap extends AbstractDisplayMap
 
 		if ((this.followLeader || !this.defaultLocationSet) && this.floor != null && Persistance.player.getDungeonLeader().tile() != null)
 		{
-			AbstractPokemonRenderer renderer = Persistance.dungeonState.pokemonRenderer.getRenderer(Persistance.player.getTeamLeader());
+			AbstractPokemonRenderer<DungeonPokemon> renderer = Persistance.dungeonState.pokemonRenderer.getRenderer(Persistance.player.getDungeonLeader());
 			this.x = (int) (renderer.x() * TILE_SIZE / AbstractDungeonTileset.TILE_SIZE - width / 2);
 			this.y = (int) (renderer.y() * TILE_SIZE / AbstractDungeonTileset.TILE_SIZE - height / 2);
 			this.defaultLocationSet = true;
@@ -97,7 +97,7 @@ public class DungeonFloorMap extends AbstractDisplayMap
 				if (Persistance.dungeonState.floorVisibility.isVisible(pokemon))
 				{
 					boolean isMain = pokemon == Persistance.player.getDungeonLeader();
-					AbstractPokemonRenderer renderer = Persistance.dungeonState.pokemonRenderer.getRenderer(pokemon.usedPokemon);
+					AbstractPokemonRenderer<DungeonPokemon> renderer = Persistance.dungeonState.pokemonRenderer.getRenderer(pokemon);
 					int x = (int) (renderer.x() * TILE_SIZE / AbstractDungeonTileset.TILE_SIZE),
 							y = (int) (renderer.y() * TILE_SIZE / AbstractDungeonTileset.TILE_SIZE);
 					if (isMain && this.tick >= PLAYER_TICK) g.drawImage(this.tileset.player(), x, y, null);

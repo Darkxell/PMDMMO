@@ -10,6 +10,7 @@ import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteS
 import com.darkxell.client.state.dungeon.DungeonState.DungeonSubState;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.event.action.PokemonTravelEvent;
+import com.darkxell.common.pokemon.DungeonPokemon;
 
 /** Used for Pokémon travel animations. */
 public class PokemonTravelState extends DungeonSubState
@@ -60,9 +61,9 @@ public class PokemonTravelState extends DungeonSubState
 		super.onEnd();
 
 		if (this.running) for (PokemonTravelEvent travel : this.travels)
-			Persistance.dungeonState.pokemonRenderer.getRenderer(travel.pokemon.usedPokemon).sprite.updateTickingSpeed(travel.pokemon);
+			Persistance.dungeonState.pokemonRenderer.getRenderer(travel.pokemon).sprite.updateTickingSpeed(travel.pokemon);
 		for (PokemonTravelEvent travel : this.travels)
-			Persistance.dungeonState.pokemonRenderer.getSprite(travel.pokemon.usedPokemon).resetOnAnimationEnd();
+			Persistance.dungeonState.pokemonRenderer.getSprite(travel.pokemon).resetOnAnimationEnd();
 	}
 
 	@Override
@@ -79,7 +80,7 @@ public class PokemonTravelState extends DungeonSubState
 		super.onStart();
 		for (PokemonTravelEvent travel : this.travels)
 		{
-			AbstractPokemonRenderer renderer = Persistance.dungeonState.pokemonRenderer.getRenderer(travel.pokemon.usedPokemon);
+			AbstractPokemonRenderer<DungeonPokemon> renderer = Persistance.dungeonState.pokemonRenderer.getRenderer(travel.pokemon);
 			renderer.sprite.setState(PokemonSpriteState.MOVE, true);
 			travel.pokemon.setFacing(travel.direction);
 			if (this.running) renderer.sprite.setTickingSpeed(PokemonSprite.QUICKER);
@@ -100,14 +101,14 @@ public class PokemonTravelState extends DungeonSubState
 		for (int i = 0; i < this.travels.length; ++i)
 		{
 			this.animations[i].update(completion);
-			Persistance.dungeonState.pokemonRenderer.getRenderer(this.travels[i].pokemon.usedPokemon).setXY(this.animations[i].current().getX(),
+			Persistance.dungeonState.pokemonRenderer.getRenderer(this.travels[i].pokemon).setXY(this.animations[i].current().getX(),
 					this.animations[i].current().getY());
 		}
 
 		if (this.tick >= this.duration)
 		{
 			for (PokemonTravelEvent travel : this.travels)
-				Persistance.dungeonState.pokemonRenderer.getRenderer(travel.pokemon.usedPokemon).setXY(travel.destination.x, travel.destination.y);
+				Persistance.dungeonState.pokemonRenderer.getRenderer(travel.pokemon).setXY(travel.destination.x, travel.destination.y);
 			Persistance.eventProcessor.animateDelayed();
 		}
 	}

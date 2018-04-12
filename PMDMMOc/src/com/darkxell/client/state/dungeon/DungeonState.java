@@ -85,7 +85,7 @@ public class DungeonState extends AbstractState
 	public final GridRenderer gridRenderer;
 	public final DungeonItemsRenderer itemRenderer;
 	public final DungeonLogger logger;
-	public final PokemonRendererHolder pokemonRenderer;
+	public final PokemonRendererHolder<DungeonPokemon> pokemonRenderer;
 	/** The last Camera. */
 	private Point previousCamera;
 	public final ShadowRenderer shadowRenderer;
@@ -97,7 +97,7 @@ public class DungeonState extends AbstractState
 		this.floorRenderer = new FloorRenderer();
 		this.gridRenderer = new GridRenderer();
 		this.itemRenderer = new DungeonItemsRenderer();
-		this.pokemonRenderer = new PokemonRendererHolder();
+		this.pokemonRenderer = new PokemonRendererHolder<DungeonPokemon>();
 		this.shadowRenderer = new ShadowRenderer();
 		Persistance.dungeonRenderer.addRenderer(this.floorRenderer);
 		Persistance.dungeonRenderer.addRenderer(this.gridRenderer);
@@ -227,7 +227,7 @@ public class DungeonState extends AbstractState
 	@Override
 	public void render(Graphics2D g, int width, int height)
 	{
-		AbstractPokemonRenderer r = Persistance.dungeonState.pokemonRenderer.getRenderer(this.cameraPokemon.usedPokemon);
+		AbstractPokemonRenderer<DungeonPokemon> r = Persistance.dungeonState.pokemonRenderer.getRenderer(this.cameraPokemon);
 		int x = (int) (r.x() + TILE_SIZE / 2 - width / 2), y = (int) (r.y() + TILE_SIZE / 2 - height / 2);
 		this.camera = new Point(x, y);
 
