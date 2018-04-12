@@ -23,7 +23,7 @@ public class OtherPlayerPokemonRenderer extends FreezonePokemonRenderer
 		PokemonSpriteFrame frame = this.sprite.getCurrentFrame();
 		String name = ((OtherPlayerEntity) entity).name;
 		int namewidth = TextRenderer.width(name);
-		TextRenderer.render(g, name, (int) (this.entity.posX * 8 - (namewidth / 2)), (int) (this.entity.posY * 8 + frame.spriteY - 20));
+		TextRenderer.render(g, name, (int) (this.drawX() - (namewidth / 2)), (int) (this.drawY() + frame.spriteY - 20));
 
 	}
 

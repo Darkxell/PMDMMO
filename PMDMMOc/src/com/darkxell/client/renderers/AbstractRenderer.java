@@ -26,9 +26,9 @@ public abstract class AbstractRenderer implements Comparable<AbstractRenderer>
 	@Override
 	public int compareTo(AbstractRenderer o)
 	{
-		if (this.z != o.z) return Double.compare(this.z, o.z);
-		if (this.y != o.y) return Double.compare(this.y, o.y);
-		return Double.compare(this.x, o.x);
+		if (this.z() != o.z()) return Double.compare(this.z(), o.z());
+		if (this.y() != o.y()) return Double.compare(this.y(), o.y());
+		return Double.compare(this.x(), o.x());
 	}
 
 	public double drawX()

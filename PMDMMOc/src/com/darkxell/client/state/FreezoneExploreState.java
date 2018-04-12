@@ -2,6 +2,8 @@ package com.darkxell.client.state;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
+import java.util.Comparator;
 
 import com.darkxell.client.launchable.GameSocketEndpoint;
 import com.darkxell.client.launchable.Launcher;
@@ -51,6 +53,12 @@ public class FreezoneExploreState extends AbstractState
 	}
 
 	@Override
+	public void onStart()
+	{
+		super.onStart();
+	}
+
+	@Override
 	public void render(Graphics2D g, int width, int height)
 	{
 		FreezoneMap map = Persistance.currentmap;
@@ -83,13 +91,13 @@ public class FreezoneExploreState extends AbstractState
 					}
 				}
 			}
-			// TODO : draw the entities/player in Y position order.
-			// draws the entities
-			for (AbstractRenderer renderer : map.entityRenderers.listRenderers())
-				renderer.render(g, width, height);
-			
-			// Draws the player
-			Persistance.currentplayer.renderer().render(g, width, height);
+
+			// Draw the entities & player in X & Y position order.
+			ArrayList<AbstractRenderer> entities = map.entityRenderers.listRenderers();
+			entities.add(Persistance.currentplayer.renderer());
+			entities.sort(Comparator.naturalOrder());
+			for (AbstractRenderer entity : entities)
+				entity.render(g, width, height);
 
 			if (Persistance.debugdisplaymode)
 			{
