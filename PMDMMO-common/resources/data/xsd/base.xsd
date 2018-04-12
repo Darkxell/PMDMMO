@@ -49,4 +49,64 @@
             <xs:enumeration value="Unknown"/>
         </xs:restriction>
     </xs:simpleType>
+
+    <xs:simpleType name="direction">
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="North"/>
+            <xs:enumeration value="NorthEast"/>
+            <xs:enumeration value="East"/>
+            <xs:enumeration value="SouthEast"/>
+            <xs:enumeration value="South"/>
+            <xs:enumeration value="SouthWest"/>
+            <xs:enumeration value="West"/>
+            <xs:enumeration value="NorthWest"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="spritestate">
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="Appeal"/>
+            <xs:enumeration value="Attack"/>
+            <xs:enumeration value="Bite"/>
+            <xs:enumeration value="Charge"/>
+            <xs:enumeration value="Chop"/>
+            <xs:enumeration value="Dance"/>
+            <xs:enumeration value="Double"/>
+            <xs:enumeration value="Emit"/>
+            <xs:enumeration value="FlapAround"/>
+            <xs:enumeration value="Gas"/>
+            <xs:enumeration value="HighJump"/>
+            <xs:enumeration value="Hurt"/>
+            <xs:enumeration value="Idle"/>
+            <xs:enumeration value="Jab"/>
+            <xs:enumeration value="Jump"/>
+            <xs:enumeration value="Kick"/>
+            <xs:enumeration value="Lick"/>
+            <xs:enumeration value="Move"/>
+            <xs:enumeration value="MultiScratch"/>
+            <xs:enumeration value="MultiStrike"/>
+            <xs:enumeration value="RearUp"/>
+            <xs:enumeration value="Ricochet"/>
+            <xs:enumeration value="Rotate"/>
+            <xs:enumeration value="Rumble"/>
+            <xs:enumeration value="Shake"/>
+            <xs:enumeration value="Shock"/>
+            <xs:enumeration value="Shoot"/>
+            <xs:enumeration value="Sing"/>
+            <xs:enumeration value="Slam"/>
+            <xs:enumeration value="Sleep"/>
+            <xs:enumeration value="Slice"/>
+            <xs:enumeration value="Sound"/>
+            <xs:enumeration value="Special"/>
+            <xs:enumeration value="Spin"/>
+            <xs:enumeration value="Stomp"/>
+            <xs:enumeration value="Strike"/>
+            <xs:enumeration value="Swell"/>
+            <xs:enumeration value="Swing"/>
+            <xs:enumeration value="TailWhip"/>
+            <xs:enumeration value="Swirl"/>
+            <xs:enumeration value="Uppercut"/>
+            <xs:enumeration value="Withdraw"/>
+        </xs:restriction>
+    </xs:simpleType>
 </xs:schema>

@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="pmdmmo" targetNamespace="pmdmmo"
+    elementFormDefault="qualified">
+    <xs:include schemaLocation="base.xsd"/>
+
+    <xs:element name="cutscene">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="creation"/>
+                <xs:element name="events">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:choice maxOccurs="unbounded">
+                                <xs:element ref="move"/>
+                                <xs:element ref="setstate"/>
+                                <xs:element ref="setanimated"/>
+                                <xs:element name="spawn" type="entity"/>
+                                <xs:element name="spawnpokemon" type="pokemonentity"/>
+                                <xs:element ref="despawn"/>
+                                <xs:element ref="rotate"/>
+                                <xs:element ref="dialog"/>
+                                <xs:element ref="sound"/>
+                                <xs:element ref="animate"/>
+                                <xs:element ref="music"/>
+                                <xs:element ref="delay"/>
+                            </xs:choice>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element ref="onfinish"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="dialog">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="dialogscreen">
+                    <xs:complexType>
+                        <xs:attribute name="text" type="xs:string" use="required">
+                            <xs:annotation>
+                                <xs:documentation>The ID of the text that should be
+                                    translated.</xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute ref="target">
+                            <xs:annotation>
+                                <xs:documentation>The ID of the Pokémon saying the text. Its name
+                                    and portrait will appear. If not used, no portrait or name will
+                                    appear.</xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="emotion" type="posInt">
+                            <xs:annotation>
+                                <xs:documentation>The emotion of the Pokémon saying the text. Unused
+                                    for now.</xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="isNarrator" type="xs:boolean"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="delay">
+        <xs:complexType>
+            <xs:attribute name="ticks" type="posInt" use="required"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="sound">
+        <xs:complexType>
+            <xs:attribute name="id" type="xs:string" use="required"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="rotate">
+        <xs:complexType>
+            <xs:attribute name="id" type="xs:string" use="required"/>
+            <xs:attribute ref="target" use="required"/>
+            <xs:attribute ref="facing"/>
+            <xs:attribute name="instantly" type="xs:boolean"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="animate">
+        <xs:complexType>
+            <xs:attribute name="id" type="xs:string" use="required"/>
+            <xs:attribute ref="target" use="required"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="setstate">
+        <xs:complexType>
+            <xs:attribute ref="target" use="required"/>
+            <xs:attribute name="state" type="spritestate" use="required"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="setanimated">
+        <xs:complexType>
+            <xs:attribute ref="target" use="required"/>
+            <xs:attribute name="animate" type="xs:boolean" use="required"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="despawn">
+        <xs:complexType>
+            <xs:attribute ref="target" use="required"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="move">
+        <xs:complexType>
+            <xs:attribute ref="target" use="required"/>
+            <xs:attribute name="instantly" type="xs:boolean"/>
+            <xs:attribute name="posx" type="posInt"/>
+            <xs:attribute name="posy" type="posInt"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="music">
+        <xs:complexType>
+            <xs:attribute name="id" type="xs:string" use="required"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="creation">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="player" type="pokemonentity" minOccurs="0"/>
+                <xs:element name="pokemon" type="pokemonentity" maxOccurs="unbounded" minOccurs="0"/>
+                <xs:element name="entity" type="entity" maxOccurs="unbounded" minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="freezone" type="xs:string" use="required"/>
+            <xs:attribute name="fade" type="xs:boolean"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="entity">
+        <xs:sequence>
+            <xs:element name="cutsceneid" type="posInt">
+                <xs:annotation>
+                    <xs:documentation>An identifier to reference this entity whenever
+                        needed.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="xpos" type="posInt"/>
+            <xs:element name="ypos" type="posInt"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="pokemonentity">
+        <xs:complexContent>
+            <xs:extension base="entity">
+                <xs:sequence>
+                    <xs:element name="pokemonid" type="posInt" maxOccurs="unbounded"/>
+                    <xs:element name="state" type="spritestate"/>
+                    <xs:element name="animated" type="xs:boolean"/>
+                </xs:sequence>
+                <xs:attribute ref="facing"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name="onfinish">
+        <xs:complexType>
+            <xs:choice>
+                <xs:element name="enterdungeon">
+                    <xs:complexType>
+                        <xs:attribute name="id" type="posInt"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="playcutscene">
+                    <xs:complexType>
+                        <xs:attribute name="id" type="xs:string"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="loadfreezone">
+                    <xs:complexType>
+                        <xs:attribute name="id" type="xs:string"/>
+                        <xs:attribute name="xpos" type="posInt"/>
+                        <xs:attribute name="ypos" type="posInt"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:choice>
+            <xs:attribute name="fade" type="xs:boolean"/>
+            <xs:attribute name="stopmusic" type="xs:boolean"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:attribute name="facing" type="direction"/>
+    <xs:attribute name="target" type="posInt">
+        <xs:annotation>
+            <xs:documentation>The ID of the entity this event targets.</xs:documentation>
+        </xs:annotation>
+    </xs:attribute>
+
+</xs:schema>
