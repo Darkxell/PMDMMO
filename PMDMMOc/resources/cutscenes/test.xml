@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cutscene xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="pmdmmo"
+    xsi:schemaLocation="pmdmmo ../data/xsd/cutscenes.xsd" xmlns:ns1="pmdmmo">
+    <creation freezone="unknown" fade="true">
+        <player>
+            <cutsceneid>0</cutsceneid>
+            <xpos>35</xpos>
+            <ypos>28</ypos>
+        </player>
+        <pokemon ns1:facing="North">
+            <cutsceneid>1</cutsceneid>
+            <xpos>35</xpos>
+            <ypos>30</ypos>
+            <pokemonid>380</pokemonid>
+            <state>Dance</state>
+            <animated>false</animated>
+        </pokemon>
+    </creation>
+    <events>
+        <dialog>
+            <dialogscreen text="item.info.7"/>
+            <dialogscreen text="quiz.0.0"/>
+        </dialog>
+        <rotate ns1:target="1" ns1:facing="South"/>
+        <move ns1:target="1" ypos="32"/>
+        <wait/>
+        <move ns1:target="1" ypos="35" instantly="true"/>
+        <delay ticks="40"/>
+        <rotate ns1:target="0" instantly="true" ns1:facing="East"/>
+        <delay ticks="40"/>
+        <despawn ns1:target="1"/>
+        <dialog isNarrator="true">
+            <dialogscreen text="I AM AMAZING" translate="false" ns1:target="1"/>
+        </dialog>
+    </events>
+    <onfinish>
+        <loadfreezone id="base"/>
+    </onfinish>
+</cutscene>

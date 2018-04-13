@@ -36,7 +36,7 @@
     <xs:element name="dialog">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="dialogscreen">
+                <xs:element name="dialogscreen" maxOccurs="unbounded">
                     <xs:complexType>
                         <xs:attribute name="text" type="xs:string" use="required">
                             <xs:annotation>
@@ -44,6 +44,7 @@
                                     translated.</xs:documentation>
                             </xs:annotation>
                         </xs:attribute>
+                        <xs:attribute name="translate" type="xs:boolean"/>
                         <xs:attribute ref="target">
                             <xs:annotation>
                                 <xs:documentation>The ID of the Pokémon saying the text. Its name
@@ -59,8 +60,8 @@
                         </xs:attribute>
                     </xs:complexType>
                 </xs:element>
-                <xs:element name="isNarrator" type="xs:boolean"/>
             </xs:sequence>
+            <xs:attribute name="isNarrator" type="xs:boolean" use="optional"/>
         </xs:complexType>
     </xs:element>
 
@@ -119,8 +120,8 @@
         <xs:complexType>
             <xs:attribute ref="target" use="required"/>
             <xs:attribute name="instantly" type="xs:boolean"/>
-            <xs:attribute name="posx" type="posInt"/>
-            <xs:attribute name="posy" type="posInt"/>
+            <xs:attribute name="xpos" type="xs:double"/>
+            <xs:attribute name="ypos" type="xs:double"/>
             <xs:attribute ref="eventid"/>
         </xs:complexType>
     </xs:element>
@@ -139,7 +140,7 @@
         </xs:annotation>
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="event" type="posInt"/>
+                <xs:element name="event" type="posInt" minOccurs="0" maxOccurs="unbounded"/>
             </xs:sequence>
             <xs:attribute ref="eventid"/>
         </xs:complexType>
@@ -165,8 +166,8 @@
                         needed.</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="xpos" type="posInt"/>
-            <xs:element name="ypos" type="posInt"/>
+            <xs:element name="xpos" type="xs:double"/>
+            <xs:element name="ypos" type="xs:double"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -174,9 +175,9 @@
         <xs:complexContent>
             <xs:extension base="entity">
                 <xs:sequence>
-                    <xs:element name="pokemonid" type="posInt" maxOccurs="unbounded"/>
-                    <xs:element name="state" type="spritestate"/>
-                    <xs:element name="animated" type="xs:boolean"/>
+                    <xs:element name="pokemonid" type="posInt" maxOccurs="unbounded" minOccurs="0"/>
+                    <xs:element name="state" type="spritestate" minOccurs="0"/>
+                    <xs:element name="animated" type="xs:boolean" minOccurs="0"/>
                 </xs:sequence>
                 <xs:attribute ref="facing"/>
             </xs:extension>
@@ -199,8 +200,8 @@
                 <xs:element name="loadfreezone">
                     <xs:complexType>
                         <xs:attribute name="id" type="xs:string"/>
-                        <xs:attribute name="xpos" type="posInt"/>
-                        <xs:attribute name="ypos" type="posInt"/>
+                        <xs:attribute name="xpos" type="xs:double"/>
+                        <xs:attribute name="ypos" type="xs:double"/>
                     </xs:complexType>
                 </xs:element>
             </xs:choice>
