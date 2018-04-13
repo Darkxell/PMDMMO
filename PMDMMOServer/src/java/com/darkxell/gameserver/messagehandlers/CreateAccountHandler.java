@@ -34,7 +34,7 @@ public class CreateAccountHandler extends MessageHandler {
 
             String name = json.getJsonString("name").getString();
             String passhash = json.getJsonString("passhash").getString();
-            DBPlayer newplayer = new DBPlayer(0, name, passhash, 0, 0, null, null, null, null, null);
+            DBPlayer newplayer = new DBPlayer(0, name, passhash, 0, 0, 0, null, null, null, null, null);
 
             if (endpoint.getPlayerDAO().create(newplayer) == 0) {
                 System.out.println("New player created! : " + name);
