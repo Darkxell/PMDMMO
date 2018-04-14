@@ -22,6 +22,7 @@ import javax.websocket.server.ServerEndpoint;
 import com.darkxell.gameserver.messagehandlers.FreezonePositionHandler;
 import com.darkxell.gameserver.messagehandlers.LoginHandler;
 import com.darkxell.gameserver.messagehandlers.SaltResetHandler;
+import com.darkxell.gameserver.messagehandlers.TestResultHandler;
 import com.darkxell.model.ejb.PlayerDAO;
 import com.darkxell.model.ejb.dbobjects.DBPlayer;
 import javax.ejb.EJB;
@@ -108,6 +109,9 @@ public class GameServer {
                 hand.handleMessage(jsonMessage, session, sessionHandler);
             } else if ("freezoneposition".equals(jsonMessage.getString("action"))) {
                 FreezonePositionHandler hand = new FreezonePositionHandler(this);
+                hand.handleMessage(jsonMessage, session, sessionHandler);
+            } else if ("testresults".equals(jsonMessage.getString("action"))) {
+                TestResultHandler hand = new TestResultHandler(this);
                 hand.handleMessage(jsonMessage, session, sessionHandler);
             }
             // ADD other "action" json message types if needed.
