@@ -5,9 +5,13 @@
  */
 package com.darkxell.gameserver.messagehandlers;
 
+import com.darkxell.common.pokemon.Pokemon;
+import com.darkxell.common.pokemon.PokemonRegistry;
+import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.gameserver.GameServer;
 import com.darkxell.gameserver.GameSessionHandler;
 import com.darkxell.gameserver.MessageHandler;
+import java.util.Random;
 import javax.json.JsonObject;
 import javax.websocket.Session;
 
@@ -27,11 +31,10 @@ public class TestResultHandler extends MessageHandler {
         int offid = json.getJsonNumber("offid").intValue();
         int maingender = json.getJsonNumber("offid").intValue();
         int offgender = json.getJsonNumber("offid").intValue();
-        
-        
-        
-        
-        
+        // Check that mainID is a valid number
+        PokemonSpecies espece = PokemonRegistry.find(mainid);
+        Pokemon genere = espece.generate(new Random(), 5);
+
     }
-    
+
 }
