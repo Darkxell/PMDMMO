@@ -24,12 +24,12 @@
         <rotate ns1:target="1" ns1:facing="South"/>
         <move ns1:target="1" ypos="32"/>
         <wait/>
-        <move ns1:target="1" ypos="35" instantly="true"/>
+        <move ns1:target="1" ypos="35" speed="45"/>
         <delay ticks="40"/>
         <rotate ns1:target="0" instantly="true" ns1:facing="East"/>
         <delay ticks="40"/>
         <despawn ns1:target="1"/>
-        <dialog isNarrator="true">
+        <dialog isnarrator="true">
             <dialogscreen text="I AM AMAZING" translate="false" ns1:target="1"/>
         </dialog>
     </events>

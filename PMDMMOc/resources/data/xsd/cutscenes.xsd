@@ -61,7 +61,7 @@
                     </xs:complexType>
                 </xs:element>
             </xs:sequence>
-            <xs:attribute name="isNarrator" type="xs:boolean" use="optional"/>
+            <xs:attribute name="isnarrator" type="xs:boolean" use="optional"/>
         </xs:complexType>
     </xs:element>
 
@@ -75,6 +75,7 @@
     <xs:element name="sound">
         <xs:complexType>
             <xs:attribute name="sound" type="xs:string" use="required"/>
+            <xs:attribute name="overmusic" type="xs:boolean"/>
             <xs:attribute ref="eventid"/>
         </xs:complexType>
     </xs:element>
@@ -119,7 +120,7 @@
     <xs:element name="move">
         <xs:complexType>
             <xs:attribute ref="target" use="required"/>
-            <xs:attribute name="instantly" type="xs:boolean"/>
+            <xs:attribute name="speed" type="xs:double"/>
             <xs:attribute name="xpos" type="xs:double"/>
             <xs:attribute name="ypos" type="xs:double"/>
             <xs:attribute ref="eventid"/>

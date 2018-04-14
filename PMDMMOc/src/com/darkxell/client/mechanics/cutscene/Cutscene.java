@@ -35,7 +35,17 @@ public class Cutscene
 
 		this.events = new ArrayList<>();
 		for (Element event : xml.getChild("events", xml.getNamespace()).getChildren())
-			this.events.add(CutsceneEvent.create(event));
+		{
+			CutsceneEvent e = CutsceneEvent.create(event, this);
+			if (e != null) this.events.add(e);
+		}
+	}
+
+	public CutsceneEvent getEvent(int id)
+	{
+		for (CutsceneEvent e : this.events)
+			if (e.id == id) return e;
+		return null;
 	}
 
 }
