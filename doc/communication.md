@@ -65,6 +65,13 @@ This payload must by a client to login. This must be sent with the appropriate s
 <br/>}
 This payload should be sent by a client to the server to notify it about the player's position in freezones. The server will send to the client the position of nearby other players in response.
 
+■ TESTRESULTS
+<br/>{"action":"testresults",
+<br/>"mainid":1, // The id of the main pokemon
+<br/>"maingender":1, // The gender of the main pokemon
+<br/>}
+This payload must by a client to login. This must be sent with the appropriate salted password, see hashing norms.
+
 # 4 - List of server -> client payloads
 
 ■ MESSAGE (This is a payload from to the chat endpoint)
