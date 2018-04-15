@@ -13,32 +13,29 @@ import com.eclipsesource.json.JsonValue;
 public class Player implements Communicable
 {
 
-	/** The Pokémon in the rescue team. */
+	/** The Pokï¿½mon in the rescue team. */
 	private ArrayList<Pokemon> allies;
 	public int currentStoryline;
 	private ArrayList<DungeonPokemon> dungeonAllies;
-	/** If in a Dungeon, reference to the Dungeon Pokémon. null else. */
+	/** If in a Dungeon, reference to the Dungeon Pokï¿½mon. null else. */
 	private DungeonPokemon dungeonPokemon;
-	/** This Player's ID. */
-	private int id;
 	/** This Player's Inventory. */
 	public final Inventory inventory;
-	/** The Pokémon this Player embodies. */
+	/** The Pokï¿½mon this Player embodies. */
 	private Pokemon leaderPokemon;
 	/** The current amount of Money of this Player. */
-	public int money;
+	public long money;
 	/** The current amount of Money in this Player's bank. */
-	public int moneyInBank;
+	public long moneyInBank;
 	public String name;
 
 	public Player()
 	{
-		this(-1, "???", null);
+		this("???", null);
 	}
 
-	public Player(int id, String name, Pokemon pokemon)
+	public Player(String name, Pokemon pokemon)
 	{
-		this.id = id;
 		this.name = name;
 		this.setLeaderPokemon(pokemon);
 		this.inventory = new Inventory(Inventory.MAX_SIZE);
@@ -98,11 +95,6 @@ public class Player implements Communicable
 		return this.leaderPokemon;
 	}
 
-	public int id()
-	{
-		return this.id;
-	}
-
 	public boolean isAlly(DungeonPokemon pokemon)
 	{
 		return pokemon.player() == this;
@@ -116,7 +108,6 @@ public class Player implements Communicable
 	@Override
 	public void read(JsonObject value)
 	{
-		this.id = value.getInt("id", -1);
 		this.name = value.getString("name", "???");
 		this.money = value.getInt("money", 0);
 		this.moneyInBank = value.getInt("moneyInBank", 0);
@@ -174,7 +165,6 @@ public class Player implements Communicable
 	{
 		JsonObject root = Json.object();
 
-		root.add("id", this.id);
 		root.add("name", this.name);
 		root.add("money", this.money);
 		root.add("moneryInBank", this.moneyInBank);

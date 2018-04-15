@@ -10,7 +10,9 @@ import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.gameserver.GameServer;
 import com.darkxell.gameserver.GameSessionHandler;
+import com.darkxell.gameserver.GameSessionInfo;
 import com.darkxell.gameserver.MessageHandler;
+import com.darkxell.gameserver.SessionsInfoHolder;
 import java.util.Random;
 import javax.json.JsonObject;
 import javax.websocket.Session;
@@ -27,14 +29,20 @@ public class TestResultHandler extends MessageHandler {
 
     @Override
     public void handleMessage(JsonObject json, Session from, GameSessionHandler sessionshandler) {
+        GameSessionInfo si = SessionsInfoHolder.getInfo(from.getId());
+        if (!si.isconnected) {
+            return;
+        }
         int mainid = json.getJsonNumber("mainid").intValue();
         int offid = json.getJsonNumber("offid").intValue();
         int maingender = json.getJsonNumber("offid").intValue();
         int offgender = json.getJsonNumber("offid").intValue();
-        // Check that mainID is a valid number
+        // TODO : Check that mainID is a valid number
         PokemonSpecies espece = PokemonRegistry.find(mainid);
-        Pokemon genere = espece.generate(new Random(), 5);
-
+        Pokemon main = espece.generate(new Random(), 5);
+        espece = PokemonRegistry.find(offid);
+        Pokemon off = espece.generate(new Random(), 5);
+        endpoint.getPlayerDAO().find(si.serverid);
     }
 
 }

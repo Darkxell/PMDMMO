@@ -26,8 +26,7 @@ public class PlayerDAO {
     /**
      * Creates a new player in the database
      *
-     * @return 0 if a player has been created, 1 if an error occured, 2 if the
-     * player name is already taken.
+     * @return the id of the player created
      */
     public long create(DBPlayer player) {
         try {
@@ -129,6 +128,7 @@ public class PlayerDAO {
                         null, null, null, null, null);
             }
             cn.close();
+            if(toreturn != null)
             completefind(toreturn);
         } catch (SQLException e) {
             e.printStackTrace();

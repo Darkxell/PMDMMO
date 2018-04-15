@@ -35,9 +35,12 @@ public class CreateAccountHandler extends MessageHandler {
 
             String name = json.getJsonString("name").getString();
             String passhash = json.getJsonString("passhash").getString();
-            
+
             DBPlayer newplayer = new DBPlayer(0, name, passhash, 0, 0, 0, null, null, null, null, null);
             newplayer.id = endpoint.getPlayerDAO().create(newplayer);
+            if (newplayer.id == 0) {
+                return; // Player was not created successfully.
+            }
             DBInventory toolbox = new DBInventory(0, 20, null);
             toolbox.id = endpoint.getInventoryDAO().create(toolbox);
             DBInventory playerstorage = new DBInventory(0, 1500, null);

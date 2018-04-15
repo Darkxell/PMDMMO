@@ -5,12 +5,14 @@
  */
 package com.darkxell.gameserver.messagehandlers;
 
+import com.darkxell.common.player.Player;
 import com.darkxell.gameserver.GameServer;
 import com.darkxell.gameserver.GameSessionHandler;
 import com.darkxell.gameserver.GameSessionInfo;
 import com.darkxell.gameserver.MessageHandler;
 import com.darkxell.gameserver.SessionsInfoHolder;
 import com.darkxell.model.ejb.dbobjects.DBPlayer;
+import com.eclipsesource.json.Json;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import javax.json.JsonObject;
@@ -54,6 +56,19 @@ public class LoginHandler extends MessageHandler {
                     si.serverid = player.id;
                     si.isconnected = true;
                     System.err.println("Player logged in : " + si.name);
+                    
+                    Player commplayer = new Player();
+                    commplayer.moneyInBank = player.moneyinbank;
+                    commplayer.money = player.moneyinbag;
+                    commplayer.name = player.name;
+                    //TODO : add team members, current party and Inventory
+                    
+                    com.eclipsesource.json.JsonObject value = Json.object();
+                    value.add("action", "login");
+                    value.add("player",commplayer.toJson());
+                    sessionshandler.sendToSession(from, value);
+                    System.out.println("test : " + value.toString());
+                           
                 } else {
                     System.out.println("Did not login " + player.name + ", password hash was incorrect.");
                 }

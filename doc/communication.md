@@ -69,8 +69,10 @@ This payload should be sent by a client to the server to notify it about the pla
 <br/>{"action":"testresults",
 <br/>"mainid":1, // The id of the main pokemon
 <br/>"maingender":1, // The gender of the main pokemon
+<br/>"offid":2, // The id of the teammate
+<br/>"offgender":2, // The gender of the teammate
 <br/>}
-This payload must by a client to login. This must be sent with the appropriate salted password, see hashing norms.
+This payload is sent by a client 
 
 # 4 - List of server -> client payloads
 
@@ -94,6 +96,13 @@ This payload is sent by the server to notify the client of a new chat message.
 <br/>}
 This payload is sent by the server to any client who sent a valid freezoneposition payload to the server.
 Note that this payload is sent each time you notify the server of your movement for each other player.
+
+■ LOGIN
+<br/>{"action":"login",
+<br/>"player":{JSONVALUE} // The player object
+<br/>}
+This payload is sent by the server to the client when he sucessfully logs in.
+This payload contains the information about the player the clients needs to sync in with the server upon logging in.
 
 ■ SALTRESET
 <br/>{"action":"saltreset",
