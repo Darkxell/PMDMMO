@@ -12,7 +12,8 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.WebSocketContainer;
 
-import com.darkxell.client.state.mainstates.LoginMainState;
+import com.darkxell.client.launchable.messagehandlers.FreezonePositionHandler;
+import com.darkxell.client.launchable.messagehandlers.SaltResetHandler;
 import com.darkxell.common.util.Communicable;
 import com.darkxell.common.util.Logger;
 import com.eclipsesource.json.Json;
@@ -99,21 +100,37 @@ public class GameSocketEndpoint {
 	public void onMessage(String message) {
 		try {
 			JsonValue obj = Json.parse(message);
-			if (obj.asObject().getString("action", "").equals("freezoneposition") && Persistance.currentmap != null)
-				Persistance.currentmap.updateOtherPlayers(obj);
-			else if (obj.asObject().getString("action", "").equals("saltreset")
-					&& Persistance.stateManager instanceof LoginMainState)
-				((LoginMainState) Persistance.stateManager).setSalt(obj.asObject().getString("value", ""));
+			String actionstring = obj.asObject().getString("action", "");
+			switch (actionstring) {
+			case "freezoneposition":
+				new FreezonePositionHandler().handleMessage(obj.asObject());
+				break;
+			case "saltreset":
+				new FreezonePositionHandler().handleMessage(obj.asObject());
+				new SaltResetHandler().handleMessage(obj.asObject());
+				break;
+			default:
+				Logger.w("Unrecognized message from the server : " + message);
+				break;
+			}
 		} catch (Exception e) {
 			Logger.w("Could not read the recieved message from the server : " + message);
 			e.printStackTrace();
 		}
 	}
 
+	/**
+	 * Shortcut to send a message to the server with only an action value and a
+	 * communicable.
+	 */
 	public void sendMessage(String action, String name, Communicable value) {
 		this.sendMessage(action, name, value.toJson());
 	}
 
+	/**
+	 * Shortcut to send a message to the server containing only an action value
+	 * and a Json object.
+	 */
 	public void sendMessage(String action, String name, JsonObject value) {
 		JsonObject message = Json.object();
 		message.add("action", action);
@@ -122,7 +139,8 @@ public class GameSocketEndpoint {
 	}
 
 	/**
-	 * Send a message to the server.
+	 * Send a message to the server. This message is in string form and will not
+	 * be wrapped in a JSON container.s
 	 *
 	 * @param message
 	 */
