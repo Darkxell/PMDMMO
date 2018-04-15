@@ -46,17 +46,8 @@ public abstract class Persistance
 	public static DungeonState dungeonState;
 	public static MasterDungeonRenderer dungeonRenderer;
 	public static Floor floor;
-	public static Player player = new Player(ClientSettings.getSetting(ClientSettings.LOGIN), PokemonRegistry.find(6).generate(new Random(), 1));
+	public static Player player;
 	public static ClientEventProcessor eventProcessor;
-
-	static
-	{
-		player.addAlly(PokemonRegistry.find(252).generate(new Random(), 1, 1));
-		player.addAlly(PokemonRegistry.find(255).generate(new Random(), 1));
-		player.getTeamLeader().setItem(new ItemStack(ItemID.XRaySpecs));
-		player.getTeamLeader().setMove(3, new LearnedMove(801));
-		currentplayer.setPlayer(player);
-	}
 
 	/** Displays the debug information. Careful, this is not optimized and will have a high CPU drain. It also makes the game really ugly, it's a debug mode... */
 	public static boolean debugdisplaymode = false;
