@@ -31,8 +31,9 @@ public final class PokemonRegistry
 	public static void load()
 	{
 		Logger.instance().debug("Loading Pokémon...");
-
+                    System.out.println("TEst : " + new File(PokemonRegistry.class.getResource("/data/pokemon.xml").getFile()).exists());
 		Element root = XMLUtils.readFile(new File(PokemonRegistry.class.getResource("/data/pokemon.xml").getFile()));
+                
 		for (Element e : root.getChildren("pokemon", root.getNamespace()))
 			try
 			{

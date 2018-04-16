@@ -7,11 +7,11 @@ import java.util.Arrays;
 import java.util.Random;
 
 import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.renderers.layers.BackgroundLsdLayer;
 import com.darkxell.client.resources.images.pokemon.PokemonPortrait;
 import com.darkxell.client.resources.music.SoundsHolder;
 import com.darkxell.client.state.AbstractState;
-import com.darkxell.client.state.OpenningState;
 import com.darkxell.client.state.dialog.AbstractDialogState;
 import com.darkxell.client.state.dialog.AbstractDialogState.DialogEndListener;
 import com.darkxell.client.state.dialog.AbstractDialogState.DialogScreen;
@@ -22,6 +22,7 @@ import com.darkxell.client.state.quiz.QuizData.QuizGender;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.pokemon.PokemonSpecies;
+import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.language.Message;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonObject;
@@ -152,13 +153,17 @@ public class PersonalityQuizState extends AbstractState implements DialogEndList
 					height / 2 - PokemonPortrait.PORTRAIT_SIZE / 2);
 
 		if (this.tick <= NarratorDialogState.FADETIME) {
-			double alpha = 255 - (this.tick * 1. / NarratorDialogState.FADETIME) * 255;
+			double alpha = 255 - (((double) this.tick) / NarratorDialogState.FADETIME) * 255;
 			if (alpha < 0)
 				alpha = 0;
 			else if (alpha > 255)
 				alpha = 255;
 			g.setColor(new Color(0, 0, 0, (int) alpha));
 			g.fillRect(0, 0, width, height);
+			if (this.tick < 0) {
+				g.setColor(Color.WHITE);
+				TextRenderer.render(g, "Loading. . .", 20, 20);
+			}
 		}
 	}
 
@@ -174,20 +179,23 @@ public class PersonalityQuizState extends AbstractState implements DialogEndList
 			if (this.tick <= NarratorDialogState.FADETIME)
 				--this.tick;
 			if (this.tick == 0) {
-				Persistance.player.clearAllies();
-				Persistance.player.setLeaderPokemon(this.starter);
-				Persistance.player.addAlly(this.partner);
-				Persistance.stateManager.setState(new OpenningState());
+				/*
+				 * Persistance.player.clearAllies();
+				 * Persistance.player.setLeaderPokemon(this.starter);
+				 * Persistance.player.addAlly(this.partner);
+				 * Persistance.stateManager.setState(new OpenningState());
+				 */
+				sendTestResults(this.starter.species().id, this.partner.species().id, this.starter.gender(), this.starter.gender());
 			}
 		}
 		this.background.update();
 	}
 
-	// TODO : call this method to send the results to the server.
 	private void sendTestResults(int id1, int id2, byte gender1, byte gender2) {
 		JsonObject tosend = Json.object().add("action", "testresult").add("mainid", id1).add("offid", id2)
 				.add("maingender", gender1).add("offgender", gender2);
 		Persistance.socketendpoint.sendMessage(tosend.toString());
+		Logger.i("Chosen pokemons " + id1 + " and " + id2 + ", sending to server.");
 	}
 
 }

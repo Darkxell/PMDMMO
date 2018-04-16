@@ -1,7 +1,5 @@
 package com.darkxell.client.launchable;
 
-import java.util.Random;
-
 import com.darkxell.client.mechanics.chat.ChatBox;
 import com.darkxell.client.mechanics.event.ClientEventProcessor;
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
@@ -18,11 +16,7 @@ import com.darkxell.client.state.map.LocalMap;
 import com.darkxell.client.ui.Frame;
 import com.darkxell.common.dungeon.DungeonInstance;
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.item.ItemID;
-import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.player.Player;
-import com.darkxell.common.pokemon.LearnedMove;
-import com.darkxell.common.pokemon.PokemonRegistry;
 
 /** This class contains various static references to objects being used very often. */
 public abstract class Persistance

@@ -38,11 +38,14 @@ public class TestResultHandler extends MessageHandler {
         int maingender = json.getJsonNumber("maingender").intValue();
         int offgender = json.getJsonNumber("offgender").intValue();
         // TODO : Check that mainID is a valid number
+        
         PokemonSpecies espece = PokemonRegistry.find(mainid);
         Pokemon main = espece.generate(new Random(), 5);
         espece = PokemonRegistry.find(offid);
         Pokemon off = espece.generate(new Random(), 5);
         endpoint.getPlayerDAO().find(si.serverid);
+        System.out.println("recieved test result : " + mainid +" and "+ offid);
+        
     }
 
 }
