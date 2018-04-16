@@ -61,18 +61,20 @@ public class LoginHandler extends MessageHandler {
                     commplayer.moneyInBank = player.moneyinbank;
                     commplayer.money = player.moneyinbag;
                     commplayer.name = player.name;
+                    commplayer.currentStoryline = player.storyposition;
                     //TODO : add team members, current party and Inventory
                     
                     com.eclipsesource.json.JsonObject value = Json.object();
                     value.add("action", "login");
                     value.add("player",commplayer.toJson());
                     sessionshandler.sendToSession(from, value);
-                    System.out.println("test : " + value.toString());
+                    //System.out.println("test : " + value.toString());
                            
                 } else {
                     System.out.println("Did not login " + player.name + ", password hash was incorrect.");
                 }
             } catch (Exception e) {
+                e.printStackTrace();
                 return;
             }
         } catch (Exception e) {

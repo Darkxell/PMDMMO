@@ -13,6 +13,7 @@ import javax.websocket.Session;
 import javax.websocket.WebSocketContainer;
 
 import com.darkxell.client.launchable.messagehandlers.FreezonePositionHandler;
+import com.darkxell.client.launchable.messagehandlers.LoginPlayerHandler;
 import com.darkxell.client.launchable.messagehandlers.SaltResetHandler;
 import com.darkxell.common.util.Communicable;
 import com.darkxell.common.util.Logger;
@@ -106,8 +107,10 @@ public class GameSocketEndpoint {
 				new FreezonePositionHandler().handleMessage(obj.asObject());
 				break;
 			case "saltreset":
-				new FreezonePositionHandler().handleMessage(obj.asObject());
 				new SaltResetHandler().handleMessage(obj.asObject());
+				break;
+			case "login":
+				new LoginPlayerHandler().handleMessage(obj.asObject());
 				break;
 			default:
 				Logger.w("Unrecognized message from the server : " + message);
@@ -140,7 +143,7 @@ public class GameSocketEndpoint {
 
 	/**
 	 * Send a message to the server. This message is in string form and will not
-	 * be wrapped in a JSON container.s
+	 * be wrapped in a JSON container.
 	 *
 	 * @param message
 	 */

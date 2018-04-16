@@ -37,7 +37,9 @@ public class Player implements Communicable
 	public Player(String name, Pokemon pokemon)
 	{
 		this.name = name;
-		this.setLeaderPokemon(pokemon);
+		if(pokemon != null){
+                    this.setLeaderPokemon(pokemon);
+                }
 		this.inventory = new Inventory(Inventory.MAX_SIZE);
 		this.money = 0;
 		this.moneyInBank = 0;
@@ -81,6 +83,7 @@ public class Player implements Communicable
 		return null;
 	}
 
+	/**Returns the full player's team. The team leader is at position 0 in the array.*/
 	public Pokemon[] getTeam()
 	{
 		Pokemon[] team = new Pokemon[this.allies.size() + 1];
@@ -113,9 +116,12 @@ public class Player implements Communicable
 		this.moneyInBank = value.getInt("moneyInBank", 0);
 		this.currentStoryline = value.getInt("storyline", 0);
 
-		Pokemon leader = new Pokemon();
-		leader.read(value.get("leader").asObject());
-		this.setLeaderPokemon(leader);
+		JsonValue leadervalue = value.get("leader");
+		if(leadervalue!=null){
+			Pokemon leader = new Pokemon();
+			leader.read(leadervalue.asObject());
+			this.setLeaderPokemon(leader);
+		}
 
 		this.allies.clear();
 		for (JsonValue allyJson : value.get("allies").asArray())
@@ -167,11 +173,13 @@ public class Player implements Communicable
 
 		root.add("name", this.name);
 		root.add("money", this.money);
-		root.add("moneryInBank", this.moneyInBank);
+		root.add("moneyInBank", this.moneyInBank);
 		root.add("storyline", this.currentStoryline);
 
-		root.add("leader", this.leaderPokemon.toJson());
-
+                if(this.leaderPokemon != null){
+                    root.add("leader", this.leaderPokemon.toJson());
+                }
+                
 		JsonArray alliesJson = new JsonArray();
 		for (Pokemon ally : this.allies)
 			alliesJson.add(ally.toJson());

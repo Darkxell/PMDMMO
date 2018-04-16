@@ -195,15 +195,21 @@ public class LoginMainState extends StateManager {
 	/** Called when the player clicks the login button. */
 	private void launchOnlineSend() {
 		ClientSettings.setSetting(ClientSettings.LOGIN, this.login.getContent());
-		Persistance.player.name = this.login.getContent();
 		this.sendLogin();
+		Logger.i("Sent login infos to the server, awaiting response...");
 	}
 
 	/**
 	 * Called when the server responds positively to the login attempt made by
 	 * <code>launchOnlineSend()</code>
 	 */
-	private void launchOnlineOnRecieve() {
+	public void launchOnlineOnRecieve(JsonObject pl) {
+		Logger.i("Recieved connection informations, player is connected to the server.");
+		Persistance.player = new Player();
+		Persistance.player.read(pl);
+		Persistance.stateManager = new PrincipalMainState();
+		((PrincipalMainState) Persistance.stateManager).setState(new OpenningState());
+		((PrincipalMainState) Persistance.stateManager).randomizeBackground();
 	}
 
 	/** Called when the user presses the play offline debug mode */
