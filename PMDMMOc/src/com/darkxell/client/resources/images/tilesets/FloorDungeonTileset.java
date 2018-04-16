@@ -11,6 +11,7 @@ import static com.darkxell.common.util.Direction.WEST;
 
 import java.awt.Point;
 import java.awt.image.BufferedImage;
+import java.io.InputStream;
 import java.util.HashMap;
 
 import com.darkxell.client.resources.Res;
@@ -98,8 +99,10 @@ public class FloorDungeonTileset extends AbstractDungeonTileset
 	public static FloorDungeonTileset load(int id)
 	{
 		if (previous != null && previous.id == id) return previous;
-		if (Res.getFile("/tilesets/dungeon/dungeon-" + id + ".png").exists())
-			return previous = new FloorDungeonTileset(id, "/tilesets/dungeon/dungeon-" + id + ".png");
+		{
+			InputStream is = Res.get("/tilesets/dungeon/dungeon-" + id + ".png");
+			if (is != null) return previous = new FloorDungeonTileset(id, "/tilesets/dungeon/dungeon-" + id + ".png");
+		}
 		return previous = new FloorDungeonTileset(id, "/tilesets/dungeon/dungeon-0.png");
 	}
 

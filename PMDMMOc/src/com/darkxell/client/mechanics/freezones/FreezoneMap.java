@@ -1,6 +1,6 @@
 package com.darkxell.client.mechanics.freezones;
 
-import java.io.File;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,12 +37,12 @@ public abstract class FreezoneMap
 
 	public FreezoneMap(String xmlfilepath)
 	{
-		File file = Res.getFile(xmlfilepath);
+		InputStream is = Res.get(xmlfilepath);
 		SAXBuilder builder = new SAXBuilder();
 		org.jdom2.Element rootelement;
 		try
 		{
-			rootelement = builder.build(file).getRootElement();
+			rootelement = builder.build(is).getRootElement();
 			this.mapWidth = Integer.parseInt(rootelement.getChild("width").getText()) / 8;
 			this.mapHeight = Integer.parseInt(rootelement.getChild("height").getText()) / 8;
 			List<org.jdom2.Element> tiles = rootelement.getChild("tiles").getChildren();

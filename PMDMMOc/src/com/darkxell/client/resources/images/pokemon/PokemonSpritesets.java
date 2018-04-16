@@ -52,7 +52,7 @@ public final class PokemonSpritesets
 		if (id < 0 && Res.exists("/pokemons/" + (-id) + "s.png")) filename = (-id) + "s";
 
 		if (spritesets.containsKey(id)) return;
-		Element xml = XMLUtils.readFile(Res.getFile("/pokemons/data/" + effectiveID + ".xml"));
+		Element xml = XMLUtils.read(PokemonSpritesets.class.getResourceAsStream("/pokemons/data/" + effectiveID + ".xml"));
 		if (xml == null)
 		{
 			spritesets.put(id, spritesets.get(0));

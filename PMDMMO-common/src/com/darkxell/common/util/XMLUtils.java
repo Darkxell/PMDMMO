@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import org.jdom2.Document;
@@ -79,11 +80,11 @@ public final class XMLUtils
 	}
 
 	/** Reads an XML File and returns its root Element. */
-	public static Element readFile(File file)
+	public static Element read(InputStream input)
 	{
-		if (file != null && file.exists()) try
+		if (input != null) try
 		{
-			return new SAXBuilder().build(file).getRootElement();
+			return new SAXBuilder().build(input).getRootElement();
 		} catch (JDOMException e)
 		{
 			e.printStackTrace();

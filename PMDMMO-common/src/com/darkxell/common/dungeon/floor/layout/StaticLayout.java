@@ -1,7 +1,6 @@
 package com.darkxell.common.dungeon.floor.layout;
 
 import java.awt.Point;
-import java.io.File;
 import java.util.List;
 
 import org.jdom2.Element;
@@ -25,7 +24,7 @@ public class StaticLayout extends Layout {
 
 	@Override
 	public void generate(Floor floor) {
-		this.xml = XMLUtils.readFile(new File("resources/data/floors/" + floor.dungeon.id + "-" + floor.id + ".xml"));
+		this.xml = XMLUtils.read(StaticLayout.class.getResourceAsStream("/data/floors/" + floor.dungeon.id + "-" + floor.id + ".xml"));
 		super.generate(floor);
 		this.placeTraps();
 	}

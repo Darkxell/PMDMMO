@@ -33,7 +33,7 @@ public final class DungeonRegistry
 	{
 		Logger.instance().debug("Loading Dungeons...");
 
-		Element root = XMLUtils.readFile(new File(PokemonRegistry.class.getResource("/data/dungeons.xml").getFile()));
+		Element root = XMLUtils.read(PokemonRegistry.class.getResourceAsStream("/data/dungeons.xml"));
 		for (Element e : root.getChildren("dungeon", root.getNamespace()))
 		{
 			Dungeon dungeon = new Dungeon(e);
