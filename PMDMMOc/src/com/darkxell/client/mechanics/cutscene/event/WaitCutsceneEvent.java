@@ -24,6 +24,7 @@ public class WaitCutsceneEvent extends CutsceneEvent
 				if (e != null) this.events.add(e);
 			} catch (Exception e)
 			{}
+		if (this.events.isEmpty()) this.events.addAll(this.cutscene.events);
 	}
 
 	@Override

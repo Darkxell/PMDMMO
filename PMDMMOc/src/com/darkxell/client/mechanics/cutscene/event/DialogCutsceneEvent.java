@@ -4,11 +4,20 @@ import java.util.ArrayList;
 
 import org.jdom2.Element;
 
+import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.cutscene.Cutscene;
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
+import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
+import com.darkxell.client.mechanics.cutscene.entity.CutscenePokemon;
+import com.darkxell.client.state.dialog.AbstractDialogState;
+import com.darkxell.client.state.dialog.AbstractDialogState.DialogEndListener;
+import com.darkxell.client.state.dialog.AbstractDialogState.DialogScreen;
+import com.darkxell.client.state.dialog.DialogState;
+import com.darkxell.client.state.dialog.NarratorDialogState;
 import com.darkxell.common.util.XMLUtils;
+import com.darkxell.common.util.language.Message;
 
-public class DialogCutsceneEvent extends CutsceneEvent
+public class DialogCutsceneEvent extends CutsceneEvent implements DialogEndListener
 {
 
 	public static class CutsceneDialogScreen
@@ -37,6 +46,33 @@ public class DialogCutsceneEvent extends CutsceneEvent
 		this.screens = new ArrayList<>();
 		for (Element screen : xml.getChildren("dialogscreen", xml.getNamespace()))
 			this.screens.add(new CutsceneDialogScreen(screen));
+	}
+
+	@Override
+	public void onDialogEnd(AbstractDialogState dialog)
+	{
+		Persistance.stateManager.setState(Persistance.cutsceneState);
+	}
+
+	@Override
+	public void onStart()
+	{
+		super.onStart();
+		ArrayList<DialogScreen> screens = new ArrayList<>();
+		for (CutsceneDialogScreen s : this.screens)
+		{
+			CutscenePokemon pokemon = null;
+			CutsceneEntity e = this.cutscene.get(s.pokemon);
+			if (e != null && e instanceof CutscenePokemon) pokemon = (CutscenePokemon) e;
+			Message message = new Message(s.text, s.translate);
+			DialogScreen screen = new DialogScreen(pokemon.toPokemon(), message);
+			screens.add(screen);
+		}
+
+		AbstractDialogState state;
+		if (this.isNarratorDialog) state = new NarratorDialogState(this, screens);
+		else state = new DialogState(Persistance.cutsceneState, screens);
+		Persistance.stateManager.setState(state);
 	}
 
 }

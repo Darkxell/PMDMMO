@@ -18,5 +18,12 @@ public class AnimateCutsceneEvent extends CutsceneEvent
 		this.target = XMLUtils.getAttribute(xml, "target", -1);
 		this.animation = XMLUtils.getAttribute(xml, "animation", null);
 	}
+	
+	@Override
+	public void onStart()
+	{
+		super.onStart();
+		System.out.println("Playing animation: " + this.animation);
+	}
 
 }

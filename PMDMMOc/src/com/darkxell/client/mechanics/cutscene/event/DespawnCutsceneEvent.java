@@ -4,6 +4,7 @@ import org.jdom2.Element;
 
 import com.darkxell.client.mechanics.cutscene.Cutscene;
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
+import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
 import com.darkxell.common.util.XMLUtils;
 
 public class DespawnCutsceneEvent extends CutsceneEvent
@@ -15,6 +16,14 @@ public class DespawnCutsceneEvent extends CutsceneEvent
 	{
 		super(xml, cutscene);
 		this.target = XMLUtils.getAttribute(xml, "target", -1);
+	}
+
+	@Override
+	public void onStart()
+	{
+		super.onStart();
+		CutsceneEntity entity = this.cutscene.get(this.target);
+		if (entity != null) this.cutscene.entities.remove(entity);
 	}
 
 }

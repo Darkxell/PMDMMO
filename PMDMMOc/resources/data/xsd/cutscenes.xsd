@@ -83,7 +83,7 @@
     <xs:element name="rotate">
         <xs:complexType>
             <xs:attribute ref="target" use="required"/>
-            <xs:attribute ref="facing"/>
+            <xs:attribute name="distance" type="xs:int"/>
             <xs:attribute name="instantly" type="xs:boolean"/>
             <xs:attribute ref="eventid"/>
         </xs:complexType>

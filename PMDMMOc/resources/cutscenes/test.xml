@@ -21,12 +21,12 @@
             <dialogscreen text="item.info.7"/>
             <dialogscreen text="quiz.0.0"/>
         </dialog>
-        <rotate ns1:target="1" ns1:facing="South"/>
+        <rotate ns1:target="1" distance="2"/>
         <move ns1:target="1" ypos="32"/>
         <wait/>
         <move ns1:target="1" ypos="35" speed="45"/>
         <delay ticks="40"/>
-        <rotate ns1:target="0" instantly="true" ns1:facing="East"/>
+        <rotate ns1:target="0" instantly="true" distance="-2"/>
         <delay ticks="40"/>
         <despawn ns1:target="1"/>
         <dialog isnarrator="true">

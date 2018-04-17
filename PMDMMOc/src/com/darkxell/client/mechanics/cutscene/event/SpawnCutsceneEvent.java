@@ -19,4 +19,11 @@ public class SpawnCutsceneEvent extends CutsceneEvent
 		else this.entity = new CutsceneEntity(xml);
 	}
 
+	@Override
+	public void onStart()
+	{
+		super.onStart();
+		this.cutscene.entities.add(this.entity);
+	}
+
 }
