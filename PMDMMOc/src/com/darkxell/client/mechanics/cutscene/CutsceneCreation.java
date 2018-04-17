@@ -11,13 +11,15 @@ import com.darkxell.common.util.XMLUtils;
 public class CutsceneCreation
 {
 
+	public final Cutscene cutscene;
 	private final ArrayList<CutsceneEntity> entities;
 	public final boolean fading;
 	public final String freezoneID;
 	public final CutscenePokemon player;
 
-	public CutsceneCreation(Element xml)
+	public CutsceneCreation(Cutscene cutscene, Element xml)
 	{
+		this.cutscene = cutscene;
 		this.freezoneID = XMLUtils.getAttribute(xml, "freezone", null);
 		this.fading = XMLUtils.getAttribute(xml, "fade", true);
 		this.player = new CutscenePokemon(xml.getChild("player", xml.getNamespace()));

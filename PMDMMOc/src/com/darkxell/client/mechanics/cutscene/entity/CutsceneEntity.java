@@ -2,12 +2,19 @@ package com.darkxell.client.mechanics.cutscene.entity;
 
 import org.jdom2.Element;
 
+import com.darkxell.common.util.XMLUtils;
+
 public class CutsceneEntity
 {
 
+	public final int id;
+	public double xPos, yPos;
+
 	public CutsceneEntity(Element xml)
 	{
-		// TODO Auto-generated constructor stub
+		this.id = XMLUtils.getAttribute(xml, "cutsceneid", -1);
+		this.xPos = XMLUtils.getAttribute(xml, "xpos", 0);
+		this.yPos = XMLUtils.getAttribute(xml, "ypos", 0);
 	}
 
 }

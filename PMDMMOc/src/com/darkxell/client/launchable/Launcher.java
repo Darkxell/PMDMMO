@@ -1,6 +1,7 @@
 package com.darkxell.client.launchable;
 
 import com.darkxell.client.mechanics.animation.Animations;
+import com.darkxell.client.mechanics.cutscene.CutsceneManager;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
 import com.darkxell.client.resources.music.SoundManager;
@@ -40,6 +41,7 @@ public class Launcher
 		Animations.loadData();
 		TextRenderer.load();
 		Persistance.soundmanager = new SoundManager();
+		CutsceneManager.loadCutscene("test");
 		Logger.instance().info("Lang & Data loaded.");
 
 		Persistance.frame = new Frame();
