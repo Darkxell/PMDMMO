@@ -22,7 +22,13 @@ public class CutscenePokemon extends CutsceneEntity
 	public CutscenePokemon(Element xml)
 	{
 		super(xml);
-		this.pokemonid = XMLUtils.getAttribute(xml, "pokemonid", 0);
+		try
+		{
+			this.pokemonid = Integer.parseInt(xml.getChildText("pokemonid", xml.getNamespace()));
+		} catch (Exception e)
+		{
+			this.pokemonid = 0;
+		}
 		try
 		{
 			this.currentState = PokemonSpriteState.valueOf(XMLUtils.getAttribute(xml, "state", "IDLE"));

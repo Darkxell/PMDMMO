@@ -18,6 +18,11 @@ public final class PokemonRegistry
 	/** @return The Pokémon species with the input ID. */
 	public static PokemonSpecies find(int id)
 	{
+		if (!pokemon.containsKey(id))
+		{
+			Logger.e("There is no Pokémon with ID " + id + ".");
+			return null;
+		} else if (id == 0) Logger.w("Using default Pokémon!");
 		return pokemon.get(id);
 	}
 
