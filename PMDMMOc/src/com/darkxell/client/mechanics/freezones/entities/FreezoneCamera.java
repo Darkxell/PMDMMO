@@ -35,6 +35,7 @@ public class FreezoneCamera {
 	}
 
 	public void update() {
+		if (target == null) return;
 		boolean isFarFromPlayer = x > target.x + 4 || x < target.x - 4 || y > target.y + 4 || y < target.y - 4;
 		double cameraspeed = isFarFromPlayer ? 0.4d : 0.2d;
 		// X POSITIONING

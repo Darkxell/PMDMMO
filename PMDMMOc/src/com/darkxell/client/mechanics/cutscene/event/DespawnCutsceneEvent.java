@@ -22,8 +22,8 @@ public class DespawnCutsceneEvent extends CutsceneEvent
 	public void onStart()
 	{
 		super.onStart();
-		CutsceneEntity entity = this.cutscene.get(this.target);
-		if (entity != null) this.cutscene.entities.remove(entity);
+		CutsceneEntity entity = this.cutscene.getEntity(this.target);
+		if (entity != null) this.cutscene.removeEntity(entity);
 	}
 
 }

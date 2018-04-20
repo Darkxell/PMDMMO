@@ -1,6 +1,7 @@
 package com.darkxell.client.mechanics.freezones.zones;
 
 import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.mechanics.cutscene.CutsceneManager;
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
 import com.darkxell.client.mechanics.freezones.WarpZone;
 import com.darkxell.client.mechanics.freezones.entities.AnimatedFlowerEntity;
@@ -26,6 +27,13 @@ public class BaseFreezone extends FreezoneMap {
 			public FreezoneMap getDestination() {
 				Persistance.stateManager.setState(new DungeonSelectionMapState());
 				return f;
+			}
+		});
+		this.warpzones.add(new WarpZone(0, 0, new DoubleRectangle(0, 34, 2,11)) {
+			@Override
+			public FreezoneMap getDestination() {
+				CutsceneManager.playCutsene("test");
+				return null;
 			}
 		});
 		this.addEntity(new AnimatedFlowerEntity(17.5, 16, true));

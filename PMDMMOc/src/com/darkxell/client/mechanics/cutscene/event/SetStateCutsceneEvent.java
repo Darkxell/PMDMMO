@@ -32,7 +32,7 @@ public class SetStateCutsceneEvent extends CutsceneEvent
 	public void onStart()
 	{
 		super.onStart();
-		CutsceneEntity entity = this.cutscene.get(this.target);
+		CutsceneEntity entity = this.cutscene.getEntity(this.target);
 		if (entity != null && entity instanceof CutscenePokemon) ((CutscenePokemon) entity).currentState = this.state;
 	}
 

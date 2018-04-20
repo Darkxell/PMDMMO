@@ -23,7 +23,7 @@ public class SpawnCutsceneEvent extends CutsceneEvent
 	public void onStart()
 	{
 		super.onStart();
-		this.cutscene.entities.add(this.entity);
+		this.cutscene.createEntity(this.entity);
 	}
 
 }

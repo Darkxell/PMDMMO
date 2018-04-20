@@ -24,6 +24,7 @@
                                 <xs:element ref="music"/>
                                 <xs:element ref="delay"/>
                                 <xs:element ref="wait"/>
+                                <xs:element ref="camera"/>
                             </xs:choice>
                         </xs:sequence>
                     </xs:complexType>
@@ -127,6 +128,17 @@
         </xs:complexType>
     </xs:element>
 
+    <xs:element name="camera">
+        <xs:complexType>
+            <xs:attribute name="xpos" type="xs:int"/>
+            <xs:attribute name="ypos" type="xs:int"/>
+            <xs:attribute name="xincrease" type="xs:int"/>
+            <xs:attribute name="yincrease" type="xs:int"/>
+            <xs:attribute name="speed" type="xs:double"/>
+            <xs:attribute ref="eventid"/>
+        </xs:complexType>
+    </xs:element>
+
     <xs:element name="music">
         <xs:complexType>
             <xs:attribute name="music" type="xs:string" use="required"/>
@@ -156,6 +168,8 @@
             </xs:sequence>
             <xs:attribute name="freezone" type="xs:string" use="required"/>
             <xs:attribute name="fade" type="xs:boolean"/>
+            <xs:attribute name="camerax" type="xs:int"/>
+            <xs:attribute name="cameray" type="xs:int"/>
         </xs:complexType>
     </xs:element>
 

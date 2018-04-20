@@ -3,6 +3,7 @@ package com.darkxell.client.mechanics.cutscene;
 import org.jdom2.Element;
 
 import com.darkxell.client.mechanics.cutscene.event.AnimateCutsceneEvent;
+import com.darkxell.client.mechanics.cutscene.event.CameraCutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.event.DelayCutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.event.DespawnCutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.event.DialogCutsceneEvent;
@@ -25,6 +26,9 @@ public abstract class CutsceneEvent
 		{
 			case "animate":
 				return new AnimateCutsceneEvent(xml, cutscene);
+
+			case "camera":
+				return new CameraCutsceneEvent(xml, cutscene);
 
 			case "delay":
 				return new DelayCutsceneEvent(xml, cutscene);

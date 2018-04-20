@@ -135,8 +135,11 @@ public class FreezoneExploreState extends AbstractFreezoneState
 			{
 				WarpZone wz = Persistance.currentmap.warpzones.get(i);
 				Persistance.currentmap = wz.getDestination();
-				Persistance.freezoneCamera.x = Persistance.currentplayer.x = wz.toX;
-				Persistance.freezoneCamera.y = Persistance.currentplayer.y = wz.toY;
+				if (Persistance.currentmap != null)
+				{
+					Persistance.freezoneCamera.x = Persistance.currentplayer.x = wz.toX;
+					Persistance.freezoneCamera.y = Persistance.currentplayer.y = wz.toY;
+				}
 				musicset = false;
 				break;
 			}

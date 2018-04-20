@@ -36,7 +36,7 @@ public class Cutscene
 	}
 
 	public final CutsceneCreation creation;
-	public final ArrayList<CutsceneEntity> entities;
+	private final ArrayList<CutsceneEntity> entities;
 	public final ArrayList<CutsceneEvent> events;
 	public final CutsceneEnd onFinish;
 
@@ -55,7 +55,12 @@ public class Cutscene
 		this.entities = new ArrayList<>();
 	}
 
-	public CutsceneEntity get(int id)
+	public void createEntity(CutsceneEntity entity)
+	{
+		this.entities.add(entity);
+	}
+
+	public CutsceneEntity getEntity(int id)
 	{
 		if (id == -1) return null;
 		for (CutsceneEntity e : this.entities)
@@ -86,6 +91,11 @@ public class Cutscene
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+	public void removeEntity(CutsceneEntity entity)
+	{
+		if (this.entities.contains(entity)) this.entities.remove(entity);
 	}
 
 }

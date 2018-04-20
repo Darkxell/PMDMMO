@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cutscene xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="pmdmmo"
     xsi:schemaLocation="pmdmmo ../data/xsd/cutscenes.xsd" xmlns:ns1="pmdmmo">
-    <creation freezone="unknown" fade="true">
+    <creation freezone="Base" fade="true" camerax="30" cameray="20">
         <player>
             <cutsceneid>0</cutsceneid>
             <xpos>35</xpos>
@@ -29,6 +29,7 @@
         <rotate ns1:target="0" instantly="true" distance="-2"/>
         <delay ticks="40"/>
         <despawn ns1:target="1"/>
+        <camera xpos="5" yincrease="5"/>
         <dialog isnarrator="true">
             <dialogscreen text="I AM AMAZING" translate="false" ns1:target="1"/>
         </dialog>
