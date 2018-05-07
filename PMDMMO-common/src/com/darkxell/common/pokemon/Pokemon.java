@@ -259,6 +259,11 @@ public class Pokemon implements ItemContainer, Communicable
 		return (this.nickname == null ? this.species().speciesName() : new Message(this.nickname, false)).addPrefix(this.player == null ? "<blue>" : "<yellow>")
 				.addSuffix("</color>");
 	}
+        
+        public String getRawNickname()
+	{
+		return this.nickname;
+	}
 
 	public int id()
 	{

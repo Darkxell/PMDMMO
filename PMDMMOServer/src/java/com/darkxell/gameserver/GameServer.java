@@ -11,6 +11,7 @@ import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.trap.TrapRegistry;
 import com.darkxell.common.util.Logger;
+import com.darkxell.common.util.language.Lang;
 import com.darkxell.gameserver.messagehandlers.CreateAccountHandler;
 import java.io.StringReader;
 import javax.enterprise.context.ApplicationScoped;
@@ -158,6 +159,7 @@ public class GameServer {
             }
             Logger.loadServer();
             PokemonRegistry.load();
+            //Lang.load();
             MoveRegistry.load();
             ItemRegistry.load();
             TrapRegistry.load();

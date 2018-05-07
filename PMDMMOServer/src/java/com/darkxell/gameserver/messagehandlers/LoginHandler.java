@@ -12,6 +12,7 @@ import com.darkxell.gameserver.GameSessionInfo;
 import com.darkxell.gameserver.MessageHandler;
 import com.darkxell.gameserver.SessionsInfoHolder;
 import com.darkxell.model.ejb.dbobjects.DBPlayer;
+import com.darkxell.model.ejb.dbobjectutilities.PlayerDBUtilities;
 import com.eclipsesource.json.Json;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -34,10 +35,6 @@ public class LoginHandler extends MessageHandler {
     public void handleMessage(JsonObject json, Session from, GameSessionHandler sessionshandler) {
 
         try {
-            if (!SessionsInfoHolder.infoExists(from.getId())) {
-                System.err.println("Error at\ncom.darkxell.gameserver.messagehandlers.LoginHandler.handleMessage()\n" + from + " is not in the session info handler.");
-                return;
-            }// was that really usefull?
             GameSessionInfo si = SessionsInfoHolder.getInfo(from.getId());
             if (si.salt == null || si.salt.equals("")) {
                 System.out.println("Could not connect a player because salt value for loging in was empty.");
@@ -57,18 +54,10 @@ public class LoginHandler extends MessageHandler {
                     si.isconnected = true;
                     System.err.println("Player logged in : " + si.name);
                     
-                    Player commplayer = new Player();
-                    commplayer.moneyInBank = player.moneyinbank;
-                    commplayer.money = player.moneyinbag;
-                    commplayer.name = player.name;
-                    commplayer.currentStoryline = player.storyposition;
-                    //TODO : add team members, current party and Inventory
-                    
                     com.eclipsesource.json.JsonObject value = Json.object();
                     value.add("action", "login");
-                    value.add("player",commplayer.toJson());
+                    value.add("player",PlayerDBUtilities.generateFullPlayerObject(player.id, endpoint));
                     sessionshandler.sendToSession(from, value);
-                    //System.out.println("test : " + value.toString());
                            
                 } else {
                     System.out.println("Did not login " + player.name + ", password hash was incorrect.");

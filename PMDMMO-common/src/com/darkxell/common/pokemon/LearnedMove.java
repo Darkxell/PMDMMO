@@ -24,6 +24,8 @@ public class LearnedMove implements Communicable
 	private int pp;
 	/** The position of this move in the Pokémon's move set. */
 	private int slot;
+        /** The added power of the move. goes up to +5 the the vanilla game. */
+	private int addedlevel;
 
 	public LearnedMove()
 	{
@@ -66,6 +68,21 @@ public class LearnedMove implements Communicable
 	{
 		return this.isLinked;
 	}
+	
+	public int getId()
+	{
+		return this.id;
+	}
+        
+        public int getAddedLevel()
+	{
+		return this.addedlevel;
+	}
+        
+        public void setAddedLevel(int addedlevel)
+	{
+            this.addedlevel = addedlevel;
+	}
 
 	public Move move()
 	{
@@ -80,6 +97,7 @@ public class LearnedMove implements Communicable
 		this.pp = value.getInt("pp", this.maxPP);
 		this.isLinked = value.getBoolean("linked", false);
 		this.isEnabled = value.getBoolean("enabled", true);
+                this.addedlevel= value.getInt("addedlevel", 0);
 	}
 
 	public void setLinked(boolean isLinked)
@@ -113,6 +131,7 @@ public class LearnedMove implements Communicable
 		if (this.pp != this.maxPP) root.add("pp", this.pp);
 		if (!this.isLinked) root.add("linked", this.isLinked);
 		if (!this.isEnabled) root.add("enabled", this.isEnabled);
+                root.add("addedlevel", this.addedlevel);
 		return root;
 	}
 

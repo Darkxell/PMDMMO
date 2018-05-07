@@ -35,6 +35,12 @@ public class ItemStack implements Comparable<ItemStack>, Communicable
 		this.id = id;
 		this.quantity = 1;
 	}
+        
+        public ItemStack(int id, int quantity)
+	{
+		this.id = id;
+		this.quantity = quantity;
+	}
 
 	@Override
 	public int compareTo(ItemStack o)
@@ -52,6 +58,11 @@ public class ItemStack implements Comparable<ItemStack>, Communicable
 	public int getQuantity()
 	{
 		return this.quantity;
+	}
+	
+	public int getId()
+	{
+		return this.id;
 	}
 
 	/** @return The message describing this Item. */
