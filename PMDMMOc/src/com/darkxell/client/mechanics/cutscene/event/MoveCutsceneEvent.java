@@ -25,7 +25,6 @@ public class MoveCutsceneEvent extends CameraCutsceneEvent
 	@Override
 	public void onFinish()
 	{
-		super.onFinish();
 		if (this.entity != null)
 		{
 			this.entity.xPos = this.travel.destination.getX();
@@ -36,7 +35,7 @@ public class MoveCutsceneEvent extends CameraCutsceneEvent
 	@Override
 	public void onStart()
 	{
-		this.entity = this.cutscene.getEntity(this.target);
+		this.entity = this.cutscene.player.getEntity(this.target);
 		if (this.entity != null)
 		{
 			double startX = this.entity.xPos, startY = this.entity.yPos;

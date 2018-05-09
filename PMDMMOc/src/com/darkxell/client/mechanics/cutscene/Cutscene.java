@@ -9,11 +9,9 @@ import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.cutscene.end.EnterDungeonCutsceneEnd;
 import com.darkxell.client.mechanics.cutscene.end.LoadFreezoneCutsceneEnd;
 import com.darkxell.client.mechanics.cutscene.end.PlayCutsceneCutsceneEnd;
-import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
 import com.darkxell.client.mechanics.freezones.entities.FreezoneCamera;
 import com.darkxell.client.mechanics.freezones.zones.BaseFreezone;
-import com.darkxell.client.renderers.AbstractRenderer;
 
 public class Cutscene
 {
@@ -42,9 +40,9 @@ public class Cutscene
 	}
 
 	public final CutsceneCreation creation;
-	private final ArrayList<CutsceneEntity> entities;
 	public final ArrayList<CutsceneEvent> events;
 	public final CutsceneEnd onFinish;
+	public final CutscenePlayer player;
 
 	public Cutscene(Element xml)
 	{
@@ -57,26 +55,8 @@ public class Cutscene
 			CutsceneEvent e = CutsceneEvent.create(event, this);
 			if (e != null) this.events.add(e);
 		}
-
-		this.entities = new ArrayList<>();
-	}
-
-	public void createEntity(CutsceneEntity entity)
-	{
-		this.entities.add(entity);
-		if (Persistance.cutsceneState != null)
-		{
-			AbstractRenderer renderer = entity.createRenderer();
-			if (renderer != null) Persistance.currentmap.cutsceneEntityRenderers.register(entity, renderer);
-		}
-	}
-
-	public CutsceneEntity getEntity(int id)
-	{
-		if (id == -1) return null;
-		for (CutsceneEntity e : this.entities)
-			if (e.id == id) return e;
-		return null;
+		
+		this.player = new CutscenePlayer(this);
 	}
 
 	public CutsceneEvent getEvent(int id)
@@ -101,15 +81,6 @@ public class Cutscene
 		{
 			e.printStackTrace();
 			return null;
-		}
-	}
-
-	public void removeEntity(CutsceneEntity entity)
-	{
-		if (this.entities.contains(entity))
-		{
-			this.entities.remove(entity);
-			if (Persistance.cutsceneState != null) Persistance.currentmap.cutsceneEntityRenderers.unregister(entity);
 		}
 	}
 

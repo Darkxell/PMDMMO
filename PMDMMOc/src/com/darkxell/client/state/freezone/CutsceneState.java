@@ -1,8 +1,6 @@
 package com.darkxell.client.state.freezone;
 
-import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.cutscene.Cutscene;
-import com.darkxell.client.mechanics.freezones.entities.FreezoneCamera;
 
 public class CutsceneState extends AbstractFreezoneState
 {
@@ -18,8 +16,14 @@ public class CutsceneState extends AbstractFreezoneState
 	public void onStart()
 	{
 		super.onStart();
-		Persistance.freezoneCamera = new FreezoneCamera(null);
 		this.cutscene.creation.create();
+	}
+	
+	@Override
+	public void update()
+	{
+		super.update();
+		this.cutscene.player.update();
 	}
 
 }

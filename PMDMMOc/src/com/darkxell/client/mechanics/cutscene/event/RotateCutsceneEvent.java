@@ -35,7 +35,7 @@ public class RotateCutsceneEvent extends CutsceneEvent
 	public void onStart()
 	{
 		super.onStart();
-		CutsceneEntity entity = this.cutscene.getEntity(this.target);
+		CutsceneEntity entity = this.cutscene.player.getEntity(this.target);
 		if (entity != null && entity instanceof CutscenePokemon)
 		{
 			this.pokemon = (CutscenePokemon) entity;
