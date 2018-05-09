@@ -2,6 +2,7 @@ package com.darkxell.client.mechanics.cutscene.entity;
 
 import org.jdom2.Element;
 
+import com.darkxell.client.renderers.AbstractRenderer;
 import com.darkxell.common.util.XMLUtils;
 
 public class CutsceneEntity
@@ -15,6 +16,11 @@ public class CutsceneEntity
 		this.id = XMLUtils.getAttribute(xml, "cutsceneid", -1);
 		this.xPos = XMLUtils.getAttribute(xml, "xpos", 0);
 		this.yPos = XMLUtils.getAttribute(xml, "ypos", 0);
+	}
+
+	public AbstractRenderer createRenderer()
+	{
+		return null;
 	}
 
 }

@@ -15,13 +15,6 @@ public class CutsceneState extends AbstractFreezoneState
 	}
 
 	@Override
-	public void onEnd()
-	{
-		super.onEnd();
-		Persistance.freezoneCamera = new FreezoneCamera(Persistance.currentplayer);
-	}
-
-	@Override
 	public void onStart()
 	{
 		super.onStart();

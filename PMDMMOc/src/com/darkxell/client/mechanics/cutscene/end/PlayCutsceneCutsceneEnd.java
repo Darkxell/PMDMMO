@@ -21,7 +21,8 @@ public class PlayCutsceneCutsceneEnd extends CutsceneEnd
 	@Override
 	public void onCutsceneEnd()
 	{
-		if (this.cutsceneID != null) CutsceneManager.loadCutscene(this.cutsceneID); // .doSomethingWith()
+		super.onCutsceneEnd();
+		if (this.cutsceneID != null) CutsceneManager.playCutscene(this.cutsceneID);
 	}
 
 }

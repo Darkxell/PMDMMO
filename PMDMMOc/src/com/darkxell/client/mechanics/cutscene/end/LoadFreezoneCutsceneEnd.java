@@ -23,6 +23,7 @@ public class LoadFreezoneCutsceneEnd extends CutsceneEnd
 	@Override
 	public void onCutsceneEnd()
 	{
+		super.onCutsceneEnd();
 		// TODO Auto-generated method stub
 	}
 

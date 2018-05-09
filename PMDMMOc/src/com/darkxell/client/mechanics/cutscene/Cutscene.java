@@ -5,12 +5,15 @@ import java.util.ArrayList;
 
 import org.jdom2.Element;
 
+import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.cutscene.end.EnterDungeonCutsceneEnd;
 import com.darkxell.client.mechanics.cutscene.end.LoadFreezoneCutsceneEnd;
 import com.darkxell.client.mechanics.cutscene.end.PlayCutsceneCutsceneEnd;
 import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
+import com.darkxell.client.mechanics.freezones.entities.FreezoneCamera;
 import com.darkxell.client.mechanics.freezones.zones.BaseFreezone;
+import com.darkxell.client.renderers.AbstractRenderer;
 
 public class Cutscene
 {
@@ -32,7 +35,10 @@ public class Cutscene
 			this.cutscene = cutscene;
 		}
 
-		public abstract void onCutsceneEnd();
+		public void onCutsceneEnd()
+		{
+			Persistance.freezoneCamera = new FreezoneCamera(Persistance.currentplayer);
+		}
 	}
 
 	public final CutsceneCreation creation;
@@ -58,6 +64,11 @@ public class Cutscene
 	public void createEntity(CutsceneEntity entity)
 	{
 		this.entities.add(entity);
+		if (Persistance.cutsceneState != null)
+		{
+			AbstractRenderer renderer = entity.createRenderer();
+			if (renderer != null) Persistance.currentmap.cutsceneEntityRenderers.register(entity, renderer);
+		}
 	}
 
 	public CutsceneEntity getEntity(int id)
@@ -95,7 +106,11 @@ public class Cutscene
 
 	public void removeEntity(CutsceneEntity entity)
 	{
-		if (this.entities.contains(entity)) this.entities.remove(entity);
+		if (this.entities.contains(entity))
+		{
+			this.entities.remove(entity);
+			if (Persistance.cutsceneState != null) Persistance.currentmap.cutsceneEntityRenderers.unregister(entity);
+		}
 	}
 
 }

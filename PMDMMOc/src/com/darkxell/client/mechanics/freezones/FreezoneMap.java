@@ -7,8 +7,8 @@ import java.util.List;
 import org.jdom2.input.SAXBuilder;
 
 import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
 import com.darkxell.client.mechanics.freezones.entities.OtherPlayerEntity;
-import com.darkxell.client.renderers.AbstractRenderer;
 import com.darkxell.client.renderers.EntityRendererHolder;
 import com.darkxell.client.resources.Res;
 import com.darkxell.client.resources.images.tilesets.AbstractTileset;
@@ -34,6 +34,7 @@ public abstract class FreezoneMap
 	public ArrayList<WarpZone> warpzones = new ArrayList<>();
 
 	public final EntityRendererHolder<FreezoneEntity> entityRenderers = new EntityRendererHolder<>();
+	public final EntityRendererHolder<CutsceneEntity> cutsceneEntityRenderers = new EntityRendererHolder<>();
 
 	public FreezoneMap(String xmlfilepath)
 	{
@@ -72,8 +73,7 @@ public abstract class FreezoneMap
 	public void addEntity(FreezoneEntity entity)
 	{
 		this.entities.add(entity);
-		AbstractRenderer renderer = entity.createRenderer();
-		if (renderer != null) this.entityRenderers.register(entity, renderer);
+		this.entityRenderers.register(entity, entity.createRenderer());
 	}
 
 	@SuppressWarnings("unchecked")

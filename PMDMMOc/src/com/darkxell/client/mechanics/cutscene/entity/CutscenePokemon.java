@@ -4,7 +4,11 @@ import java.util.Random;
 
 import org.jdom2.Element;
 
+import com.darkxell.client.renderers.AbstractRenderer;
+import com.darkxell.client.renderers.pokemon.AbstractPokemonRenderer;
+import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
+import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.util.Direction;
@@ -46,6 +50,15 @@ public class CutscenePokemon extends CutsceneEntity
 		this.animated = XMLUtils.getAttribute(xml, "animated", true);
 
 		this.instanciated = PokemonRegistry.find(this.pokemonid).generate(new Random(), 1);
+	}
+
+	@Override
+	public AbstractRenderer createRenderer()
+	{
+		PokemonSprite sprite = new PokemonSprite(PokemonSpritesets.getSpriteset(this.pokemonid));
+		sprite.setState(this.currentState);
+		sprite.setFacingDirection(this.facing);
+		return new AbstractPokemonRenderer(sprite);
 	}
 
 	public Pokemon toPokemon()

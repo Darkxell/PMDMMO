@@ -5,9 +5,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 
-import com.darkxell.client.launchable.Persistance;
-import com.darkxell.common.pokemon.DungeonPokemon;
-
 public class EntityRendererHolder<T> extends AbstractRenderer
 {
 
@@ -54,7 +51,6 @@ public class EntityRendererHolder<T> extends AbstractRenderer
 	/** Deletes the Renderer of the input Pokémon. */
 	public void unregister(T entity)
 	{
-		if (entity instanceof DungeonPokemon) Persistance.dungeonRenderer.removeRenderer(this.getRenderer(entity));
 		this.renderers.remove(entity);
 	}
 

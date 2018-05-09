@@ -40,16 +40,15 @@ public class RotateCutsceneEvent extends CutsceneEvent
 		{
 			this.pokemon = (CutscenePokemon) entity;
 			this.currentDistance = 0;
+
+			if (this.instantly)
+			{
+				this.currentDistance = this.distance;
+				for (int i = 0; i < this.distance; ++i)
+					if (this.distance > 0) this.pokemon.facing = this.pokemon.facing.rotateClockwise();
+					else this.pokemon.facing = this.pokemon.facing.rotateCounterClockwise();
+			}
 		} else this.currentDistance = this.distance;
-
-		if (this.instantly)
-		{
-			this.currentDistance = this.distance;
-			for (int i = 0; i < this.distance; ++i)
-				if (this.distance > 0) this.pokemon.facing.rotateClockwise();
-				else this.pokemon.facing.rotateCounterClockwise();
-
-		}
 	}
 
 	@Override
@@ -58,8 +57,8 @@ public class RotateCutsceneEvent extends CutsceneEvent
 		super.update();
 		if (!this.isOver())
 		{
-			if (this.distance > 0) this.pokemon.facing.rotateClockwise();
-			else this.pokemon.facing.rotateCounterClockwise();
+			if (this.distance > 0) this.pokemon.facing = this.pokemon.facing.rotateClockwise();
+			else this.pokemon.facing = this.pokemon.facing.rotateCounterClockwise();
 		}
 		++this.currentDistance;
 	}

@@ -13,9 +13,10 @@ public class CutsceneManager
 		return new Cutscene(XMLUtils.readFile(Res.getFile("/cutscenes/" + id + ".xml")));
 	}
 
-	public static void playCutsene(String id)
+	public static void playCutscene(String id)
 	{
-		Persistance.stateManager.setState(new CutsceneState(loadCutscene(id)));
+		Persistance.cutsceneState = new CutsceneState(loadCutscene(id));
+		Persistance.stateManager.setState(Persistance.cutsceneState);
 	}
 
 }

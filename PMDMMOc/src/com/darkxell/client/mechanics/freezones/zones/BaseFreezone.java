@@ -32,7 +32,7 @@ public class BaseFreezone extends FreezoneMap {
 		this.warpzones.add(new WarpZone(0, 0, new DoubleRectangle(0, 34, 2,11)) {
 			@Override
 			public FreezoneMap getDestination() {
-				CutsceneManager.playCutsene("test");
+				CutsceneManager.playCutscene("test");
 				return null;
 			}
 		});
