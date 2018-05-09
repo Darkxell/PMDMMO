@@ -27,7 +27,7 @@ public class CutsceneCreation
 		this.fading = XMLUtils.getAttribute(xml, "fade", true);
 		this.camerax = XMLUtils.getAttribute(xml, "camerax", -1);
 		this.cameray = XMLUtils.getAttribute(xml, "cameray", -1);
-		this.player = new CutscenePokemon(xml.getChild("player", xml.getNamespace()));
+		this.player = new CutscenePokemon(Persistance.player.getTeamLeader(), xml.getChild("player", xml.getNamespace()));
 		this.entities = new ArrayList<>();
 		for (Element pokemon : xml.getChildren("pokemon", xml.getNamespace()))
 			this.entities.add(new CutscenePokemon(pokemon));

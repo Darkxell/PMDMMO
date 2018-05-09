@@ -174,16 +174,14 @@
     </xs:element>
 
     <xs:complexType name="entity">
-        <xs:sequence>
-            <xs:element name="cutsceneid" type="posInt">
-                <xs:annotation>
-                    <xs:documentation>An identifier to reference this entity whenever
-                        needed.</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element name="xpos" type="xs:double"/>
-            <xs:element name="ypos" type="xs:double"/>
-        </xs:sequence>
+        <xs:attribute name="cutsceneid" type="posInt">
+            <xs:annotation>
+                <xs:documentation>An identifier to reference this entity whenever
+                    needed.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="xpos" type="xs:double"/>
+        <xs:attribute name="ypos" type="xs:double"/>
     </xs:complexType>
 
     <xs:complexType name="pokemonentity">

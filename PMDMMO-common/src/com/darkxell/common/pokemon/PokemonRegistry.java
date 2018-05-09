@@ -22,7 +22,7 @@ public final class PokemonRegistry
 		{
 			Logger.e("There is no Pokémon with ID " + id + ".");
 			return null;
-		} else if (id == 0) Logger.w("Using default Pokémon!");
+		} // else if (id == 0) Logger.w("Using default Pokémon!");
 		return pokemon.get(id);
 	}
 

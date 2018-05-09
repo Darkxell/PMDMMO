@@ -5,7 +5,7 @@ import java.util.Random;
 import org.jdom2.Element;
 
 import com.darkxell.client.renderers.AbstractRenderer;
-import com.darkxell.client.renderers.pokemon.AbstractPokemonRenderer;
+import com.darkxell.client.renderers.pokemon.CutscenePokemonRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
@@ -25,31 +25,39 @@ public class CutscenePokemon extends CutsceneEntity
 
 	public CutscenePokemon(Element xml)
 	{
+		this(null, xml);
+	}
+
+	/** @param pokemon - Force the use of an already created Pokémon. */
+	public CutscenePokemon(Pokemon pokemon, Element xml)
+	{
 		super(xml);
 		try
 		{
-			this.pokemonid = Integer.parseInt(xml.getChildText("pokemonid", xml.getNamespace()));
+			if (pokemon != null) this.pokemonid = pokemon.species().compoundID();
+			else this.pokemonid = Integer.parseInt(xml.getChildText("pokemonid", xml.getNamespace()));
 		} catch (Exception e)
 		{
+			e.printStackTrace();
 			this.pokemonid = 0;
 		}
 		try
 		{
-			this.currentState = PokemonSpriteState.valueOf(XMLUtils.getAttribute(xml, "state", "IDLE"));
+			this.currentState = PokemonSpriteState.valueOf(xml.getChildText("state", xml.getNamespace()));
 		} catch (Exception e)
 		{
 			this.currentState = PokemonSpriteState.IDLE;
 		}
 		try
 		{
-			this.facing = Direction.valueOf(XMLUtils.getAttribute(xml, "facing", "South"));
+			this.facing = Direction.valueOf(XMLUtils.getAttribute(xml, "facing", "South").toUpperCase());
 		} catch (Exception e)
 		{
 			this.facing = Direction.SOUTH;
 		}
-		this.animated = XMLUtils.getAttribute(xml, "animated", true);
+		this.animated = xml.getChild("animated") != null && !xml.getChildText("animated").equals("false");
 
-		this.instanciated = PokemonRegistry.find(this.pokemonid).generate(new Random(), 1);
+		this.instanciated = pokemon != null ? pokemon : PokemonRegistry.find(this.pokemonid).generate(new Random(), 1);
 	}
 
 	@Override
@@ -58,7 +66,9 @@ public class CutscenePokemon extends CutsceneEntity
 		PokemonSprite sprite = new PokemonSprite(PokemonSpritesets.getSpriteset(this.pokemonid));
 		sprite.setState(this.currentState);
 		sprite.setFacingDirection(this.facing);
-		return new AbstractPokemonRenderer(sprite);
+		CutscenePokemonRenderer renderer = new CutscenePokemonRenderer(this, sprite);
+		renderer.setXY(this.xPos, this.yPos);
+		return renderer;
 	}
 
 	public Pokemon toPokemon()

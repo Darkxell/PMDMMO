@@ -62,7 +62,10 @@ public class AbstractFreezoneState extends AbstractState
 
 			// Draw the entities & player in X & Y position order.
 			ArrayList<AbstractRenderer> entities = map.entityRenderers.listRenderers();
-			if (this instanceof CutsceneState) entities.addAll(map.cutsceneEntityRenderers.listRenderers());
+			if (this instanceof CutsceneState) {
+				//System.out.println(map.cutsceneEntityRenderers.listRenderers());
+				entities.addAll(map.cutsceneEntityRenderers.listRenderers());
+			}
 			else entities.add(Persistance.currentplayer.renderer());
 			entities.sort(Comparator.naturalOrder());
 			for (AbstractRenderer entity : entities)

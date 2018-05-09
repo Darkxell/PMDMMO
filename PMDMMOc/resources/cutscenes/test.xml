@@ -1,16 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cutscene xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="pmdmmo"
     xsi:schemaLocation="pmdmmo ../data/xsd/cutscenes.xsd" xmlns:ns1="pmdmmo">
-    <creation freezone="Base" fade="true" camerax="30" cameray="20">
-        <player>
-            <cutsceneid>0</cutsceneid>
-            <xpos>35</xpos>
-            <ypos>28</ypos>
-        </player>
-        <pokemon ns1:facing="North">
-            <cutsceneid>1</cutsceneid>
-            <xpos>35</xpos>
-            <ypos>30</ypos>
+    <creation freezone="Base" fade="true" camerax="40" cameray="30">
+        <player cutsceneid="0" xpos="35" ypos="28"/>
+        <pokemon cutsceneid="1" xpos="35" ypos="40" ns1:facing="North">
             <pokemonid>380</pokemonid>
             <state>Dance</state>
             <animated>false</animated>
@@ -31,9 +24,11 @@
         <delay ticks="40"/>
         <despawn ns1:target="1"/>
         <camera xpos="5" yincrease="5"/>
+        <wait/>
         <dialog isnarrator="true">
             <dialogscreen text="I AM AMAZING" translate="false" ns1:target="1"/>
         </dialog>
+        <wait/>
     </events>
     <onfinish>
         <loadfreezone id="base"/>

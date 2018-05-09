@@ -41,7 +41,6 @@ public class Launcher
 		Animations.loadData();
 		TextRenderer.load();
 		Persistance.soundmanager = new SoundManager();
-		CutsceneManager.loadCutscene("test");
 		Logger.instance().info("Lang & Data loaded.");
 
 		Persistance.frame = new Frame();

@@ -134,9 +134,10 @@ public class FreezoneExploreState extends AbstractFreezoneState
 					.intersects(Persistance.currentplayer.getHitboxAt(Persistance.currentplayer.x, Persistance.currentplayer.y)))
 			{
 				WarpZone wz = Persistance.currentmap.warpzones.get(i);
-				Persistance.currentmap = wz.getDestination();
-				if (Persistance.currentmap != null)
+				FreezoneMap destination = wz.getDestination();
+				if (destination != null)
 				{
+					Persistance.currentmap = destination;
 					Persistance.freezoneCamera.x = Persistance.currentplayer.x = wz.toX;
 					Persistance.freezoneCamera.y = Persistance.currentplayer.y = wz.toY;
 				}

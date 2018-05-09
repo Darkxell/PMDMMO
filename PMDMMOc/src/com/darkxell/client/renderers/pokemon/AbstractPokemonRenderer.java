@@ -19,6 +19,7 @@ import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
 import com.darkxell.client.resources.images.pokemon.ShadowSprites;
 import com.darkxell.client.resources.images.tilesets.AbstractDungeonTileset;
 import com.darkxell.common.pokemon.Pokemon;
+import com.darkxell.common.util.Logger;
 
 /** Renders a Pokémon. This Renderer's Coordinates' units are Tiles. */
 public class AbstractPokemonRenderer extends AbstractRenderer
@@ -99,7 +100,7 @@ public class AbstractPokemonRenderer extends AbstractRenderer
 
 			for (PokemonAnimation animation : this.animations)
 				animation.postrender(g, width, height);
-		}
+		} else Logger.w("Tried to render null sprite.");
 	}
 
 	@Override
