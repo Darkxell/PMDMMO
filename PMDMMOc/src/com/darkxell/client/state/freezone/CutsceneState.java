@@ -18,12 +18,12 @@ public class CutsceneState extends AbstractFreezoneState
 		super.onStart();
 		this.cutscene.creation.create();
 	}
-	
+
 	@Override
 	public void update()
 	{
 		super.update();
-		this.cutscene.player.update();
+		if (this.isMain()) this.cutscene.player.update();
 	}
 
 }

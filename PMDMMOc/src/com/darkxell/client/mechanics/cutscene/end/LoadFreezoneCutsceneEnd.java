@@ -4,6 +4,7 @@ import org.jdom2.Element;
 
 import com.darkxell.client.mechanics.cutscene.Cutscene;
 import com.darkxell.client.mechanics.cutscene.Cutscene.CutsceneEnd;
+import com.darkxell.client.state.StateManager;
 import com.darkxell.common.util.XMLUtils;
 
 public class LoadFreezoneCutsceneEnd extends CutsceneEnd
@@ -15,7 +16,7 @@ public class LoadFreezoneCutsceneEnd extends CutsceneEnd
 	public LoadFreezoneCutsceneEnd(Cutscene cutscene, Element xml)
 	{
 		super(cutscene);
-		this.freezoneID = XMLUtils.getAttribute(xml, "id", "base");
+		this.freezoneID = XMLUtils.getAttribute(xml, "id", "Base");
 		this.xPos = XMLUtils.getAttribute(xml, "xpos", -1);
 		this.yPos = XMLUtils.getAttribute(xml, "ypos", -1);
 	}
@@ -24,7 +25,7 @@ public class LoadFreezoneCutsceneEnd extends CutsceneEnd
 	public void onCutsceneEnd()
 	{
 		super.onCutsceneEnd();
-		// TODO Auto-generated method stub
+		StateManager.setExploreState(this.freezoneID, this.xPos, this.yPos);
 	}
 
 }

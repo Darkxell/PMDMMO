@@ -57,4 +57,16 @@ public class BaseFreezone extends FreezoneMap {
 		return LOCALMAPLOCATION.BASE;
 	}
 
+	@Override
+	public int defaultX()
+	{
+		return 35;
+	}
+
+	@Override
+	public int defaultY()
+	{
+		return 28;
+	}
+
 }

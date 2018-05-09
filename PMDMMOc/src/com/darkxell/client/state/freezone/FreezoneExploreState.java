@@ -138,8 +138,8 @@ public class FreezoneExploreState extends AbstractFreezoneState
 				if (destination != null)
 				{
 					Persistance.currentmap = destination;
-					Persistance.freezoneCamera.x = Persistance.currentplayer.x = wz.toX;
-					Persistance.freezoneCamera.y = Persistance.currentplayer.y = wz.toY;
+					Persistance.freezoneCamera.x = Persistance.currentplayer.x = wz.toX == -1 ? destination.defaultX() : wz.toX;
+					Persistance.freezoneCamera.y = Persistance.currentplayer.y = wz.toY == -1 ? destination.defaultY() : wz.toY;
 				}
 				musicset = false;
 				break;

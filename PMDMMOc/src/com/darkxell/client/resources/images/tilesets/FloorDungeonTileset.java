@@ -98,7 +98,7 @@ public class FloorDungeonTileset extends AbstractDungeonTileset
 	public static FloorDungeonTileset load(int id)
 	{
 		if (previous != null && previous.id == id) return previous;
-		if (Res.getFile("/tilesets/dungeon/dungeon-" + id + ".png").exists())
+		if (Res.exists("/tilesets/dungeon/dungeon-" + id + ".png"))
 			return previous = new FloorDungeonTileset(id, "/tilesets/dungeon/dungeon-" + id + ".png");
 		return previous = new FloorDungeonTileset(id, "/tilesets/dungeon/dungeon-0.png");
 	}

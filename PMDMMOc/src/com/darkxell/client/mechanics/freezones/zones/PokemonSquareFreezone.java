@@ -23,19 +23,19 @@ public class PokemonSquareFreezone extends FreezoneMap {
 				return new BaseFreezone();
 			}
 		});
-		this.warpzones.add(new WarpZone(42, 4, new DoubleRectangle(63, 87, 9, 2)) {
+		this.warpzones.add(new WarpZone(-1, -1, new DoubleRectangle(63, 87, 9, 2)) {
 			@Override
 			public FreezoneMap getDestination() {
 				return new DojoFreezone();
 			}
 		});
-		this.warpzones.add(new WarpZone(29, 60, new DoubleRectangle(61, 0, 8, 2)) {
+		this.warpzones.add(new WarpZone(-1, -1, new DoubleRectangle(61, 0, 8, 2)) {
 			@Override
 			public FreezoneMap getDestination() {
 				return new PondFreezone();
 			}
 		});
-		this.warpzones.add(new WarpZone(4, 30, new DoubleRectangle(118, 38, 2, 5)) {
+		this.warpzones.add(new WarpZone(-1, -1, new DoubleRectangle(118, 38, 2, 5)) {
 			@Override
 			public FreezoneMap getDestination() {
 				return new OfficeFreezone();
@@ -95,6 +95,18 @@ public class PokemonSquareFreezone extends FreezoneMap {
 	@Override
 	public LOCALMAPLOCATION getMapLocation() {
 		return LOCALMAPLOCATION.SQUARE;
+	}
+
+	@Override
+	public int defaultX()
+	{
+		return 4;
+	}
+
+	@Override
+	public int defaultY()
+	{
+		return 40;
 	}
 
 }

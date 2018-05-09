@@ -2,8 +2,10 @@ package com.darkxell.client.mechanics.cutscene.end;
 
 import org.jdom2.Element;
 
+import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.cutscene.Cutscene;
 import com.darkxell.client.mechanics.cutscene.Cutscene.CutsceneEnd;
+import com.darkxell.client.state.StateManager;
 import com.darkxell.common.util.XMLUtils;
 
 public class EnterDungeonCutsceneEnd extends CutsceneEnd
@@ -21,7 +23,7 @@ public class EnterDungeonCutsceneEnd extends CutsceneEnd
 	public void onCutsceneEnd()
 	{
 		super.onCutsceneEnd();
-		// TODO Auto-generated method stub
+		StateManager.setDungeonState(Persistance.cutsceneState, this.dungeonID);
 	}
 
 }

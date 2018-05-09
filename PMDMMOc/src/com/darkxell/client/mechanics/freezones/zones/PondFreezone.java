@@ -28,4 +28,16 @@ public class PondFreezone extends FreezoneMap {
 		return LOCALMAPLOCATION.POND;
 	}
 
+	@Override
+	public int defaultX()
+	{
+		return 29;
+	}
+
+	@Override
+	public int defaultY()
+	{
+		return 60;
+	}
+
 }

@@ -38,4 +38,16 @@ public class OfficeFreezone extends FreezoneMap {
 		return LOCALMAPLOCATION.OFFICE;
 	}
 
+	@Override
+	public int defaultX()
+	{
+		return 4;
+	}
+
+	@Override
+	public int defaultY()
+	{
+		return 30;
+	}
+
 }

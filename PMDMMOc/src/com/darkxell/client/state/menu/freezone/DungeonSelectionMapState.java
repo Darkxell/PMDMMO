@@ -7,15 +7,13 @@ import java.util.Comparator;
 import java.util.function.Predicate;
 
 import com.darkxell.client.launchable.Persistance;
-import com.darkxell.client.mechanics.event.ClientEventProcessor;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.MenuHudSpriteset;
 import com.darkxell.client.resources.images.others.Hud;
 import com.darkxell.client.resources.images.others.MapResources;
 import com.darkxell.client.state.AbstractState;
-import com.darkxell.client.state.dungeon.NextFloorState;
+import com.darkxell.client.state.StateManager;
 import com.darkxell.client.state.freezone.FreezoneExploreState;
-import com.darkxell.client.state.map.DungeonFloorMap;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.common.dungeon.Dungeon;
 import com.darkxell.common.dungeon.DungeonRegistry;
@@ -75,12 +73,7 @@ public class DungeonSelectionMapState extends AbstractState
 				Persistance.stateManager.setState(new FreezoneExploreState());
 				break;
 			case Keys.KEY_ATTACK:
-				Persistance.dungeon = dungeonslist.get(cursor).newInstance();
-				Persistance.eventProcessor = new ClientEventProcessor(Persistance.dungeon);
-				Persistance.floor = Persistance.dungeon.currentFloor();
-				Persistance.stateManager.setState(new NextFloorState(this, 1));
-				Persistance.displaymap = new DungeonFloorMap();
-				Persistance.eventProcessor.addToPending(Persistance.dungeon.currentFloor().onFloorStart());
+				StateManager.setDungeonState(this, dungeonslist.get(cursor).id);
 				break;
 			default:
 				break;
