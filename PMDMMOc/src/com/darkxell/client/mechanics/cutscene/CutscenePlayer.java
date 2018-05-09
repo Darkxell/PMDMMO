@@ -73,12 +73,15 @@ public class CutscenePlayer
 		while (!this.hasPausingEvent() && !this.pendingEvents.isEmpty())
 			this.startEvent(this.pendingEvents.removeFirst());
 
-		for (CutsceneEvent event : this.playingEvents)
+		for (int i = 0; i < this.playingEvents.size(); ++i)
+		{
+			CutsceneEvent event = this.playingEvents.get(i);
 			if (event.isOver())
 			{
-				this.playingEvents.remove(event);
+				this.playingEvents.remove(i--);
 				event.onFinish();
 			} else event.update();
+		}
 
 		if (this.playingEvents.isEmpty() && this.pendingEvents.isEmpty()) this.cutscene.onFinish.onCutsceneEnd();
 	}

@@ -27,7 +27,7 @@ public class DelayCutsceneEvent extends CutsceneEvent
 	public void update()
 	{
 		super.update();
-		++this.tick;
+		if (!this.isOver()) ++this.tick;
 	}
 
 }

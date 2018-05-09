@@ -19,8 +19,9 @@
     <events>
         <dialog>
             <dialogscreen text="item.info.7"/>
-            <dialogscreen text="quiz.0.0"/>
+            <dialogscreen text="quiz.0.0" ns1:target="0"/>
         </dialog>
+        <wait/>
         <rotate ns1:target="1" distance="2"/>
         <move ns1:target="1" ypos="32"/>
         <wait/>

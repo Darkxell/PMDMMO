@@ -37,6 +37,7 @@ public class DialogCutsceneEvent extends CutsceneEvent implements DialogEndListe
 	}
 
 	public final boolean isNarratorDialog;
+	private boolean isOver;
 	private ArrayList<CutsceneDialogScreen> screens;
 
 	public DialogCutsceneEvent(Element xml, Cutscene cutscene)
@@ -46,12 +47,20 @@ public class DialogCutsceneEvent extends CutsceneEvent implements DialogEndListe
 		this.screens = new ArrayList<>();
 		for (Element screen : xml.getChildren("dialogscreen", xml.getNamespace()))
 			this.screens.add(new CutsceneDialogScreen(screen));
+		this.isOver = false;
+	}
+
+	@Override
+	public boolean isOver()
+	{
+		return this.isOver;
 	}
 
 	@Override
 	public void onDialogEnd(AbstractDialogState dialog)
 	{
 		Persistance.stateManager.setState(Persistance.cutsceneState);
+		this.isOver = true;
 	}
 
 	@Override
@@ -71,7 +80,7 @@ public class DialogCutsceneEvent extends CutsceneEvent implements DialogEndListe
 
 		AbstractDialogState state;
 		if (this.isNarratorDialog) state = new NarratorDialogState(this, screens);
-		else state = new DialogState(Persistance.cutsceneState, screens);
+		else state = new DialogState(Persistance.cutsceneState, this, screens);
 		Persistance.stateManager.setState(state);
 	}
 

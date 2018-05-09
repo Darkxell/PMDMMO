@@ -1,15 +1,15 @@
 package com.darkxell.client.renderers.pokemon;
 
-import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
+import com.darkxell.client.mechanics.cutscene.entity.CutscenePokemon;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 
 /** Renders a Pokémon. This Renderer's Coordinates' units are Tiles. */
 public class CutscenePokemonRenderer extends AbstractPokemonRenderer
 {
 
-	public final CutsceneEntity entity;
+	public final CutscenePokemon entity;
 
-	public CutscenePokemonRenderer(CutsceneEntity entity, PokemonSprite sprite)
+	public CutscenePokemonRenderer(CutscenePokemon entity, PokemonSprite sprite)
 	{
 		super(sprite);
 		this.entity = entity;
@@ -25,6 +25,9 @@ public class CutscenePokemonRenderer extends AbstractPokemonRenderer
 	public void update()
 	{
 		this.setXY(this.entity.xPos, this.entity.yPos);
+		this.sprite.setFacingDirection(this.entity.facing);
+		if (this.entity.currentState != this.sprite.getState()) this.sprite.setState(this.entity.currentState, true);
+		this.sprite.setAnimated(this.entity.animated);
 		super.update();
 	}
 
