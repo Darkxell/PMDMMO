@@ -1,14 +1,16 @@
 package com.darkxell.client.mechanics.freezones;
 
 import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.jdom2.input.SAXBuilder;
 
 import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
 import com.darkxell.client.mechanics.freezones.entities.OtherPlayerEntity;
-import com.darkxell.client.renderers.AbstractRenderer;
+import com.darkxell.client.mechanics.freezones.zones.BaseFreezone;
 import com.darkxell.client.renderers.EntityRendererHolder;
 import com.darkxell.client.resources.Res;
 import com.darkxell.client.resources.images.tilesets.AbstractTileset;
@@ -19,6 +21,24 @@ import com.eclipsesource.json.JsonValue;
 /** A tiled map of a freezone. Freezones are the areas where you can move freely and don't have to fight. */
 public abstract class FreezoneMap
 {
+
+	public static FreezoneMap loadMap(String id)
+	{
+		String baseName = BaseFreezone.class.getName();
+		Class<?> c;
+		try
+		{
+			c = Class.forName(baseName.substring(0, baseName.length() - "BaseFreezone".length()) + id + "Freezone");
+			if (c == null) return null;
+			FreezoneMap map = (FreezoneMap) c.getConstructor().newInstance();
+			return map;
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
+				| NoSuchMethodException | SecurityException e)
+		{
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 	public FreezoneTile[] tiles;
 	/** The width of the map, in tiles. */
@@ -34,6 +54,7 @@ public abstract class FreezoneMap
 	public ArrayList<WarpZone> warpzones = new ArrayList<>();
 
 	public final EntityRendererHolder<FreezoneEntity> entityRenderers = new EntityRendererHolder<>();
+	public final EntityRendererHolder<CutsceneEntity> cutsceneEntityRenderers = new EntityRendererHolder<>();
 
 	public FreezoneMap(String xmlfilepath)
 	{
@@ -72,8 +93,7 @@ public abstract class FreezoneMap
 	public void addEntity(FreezoneEntity entity)
 	{
 		this.entities.add(entity);
-		AbstractRenderer renderer = entity.createRenderer();
-		if (renderer != null) this.entityRenderers.register(entity, renderer);
+		this.entityRenderers.register(entity, entity.createRenderer());
 	}
 
 	@SuppressWarnings("unchecked")
@@ -141,5 +161,10 @@ public abstract class FreezoneMap
 			if (!found) entities.add(new OtherPlayerEntity(pfx, pfy, spriteID, dataname, System.nanoTime()));
 		}
 	}
+
+	/** @return Default X position for a Player in this Map. */
+	public abstract int defaultX();
+	/** @return Default Y position for a Player in this Map. */
+	public abstract int defaultY();
 
 }

@@ -35,4 +35,16 @@ public class DojoFreezone extends FreezoneMap {
 		return LOCALMAPLOCATION.DOJO;
 	}
 
+	@Override
+	public int defaultX()
+	{
+		return 42;
+	}
+
+	@Override
+	public int defaultY()
+	{
+		return 4;
+	}
+
 }

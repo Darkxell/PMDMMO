@@ -1,28 +1,22 @@
-package com.darkxell.client.state;
+package com.darkxell.client.state.freezone;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.util.ArrayList;
-import java.util.Comparator;
 
 import com.darkxell.client.launchable.GameSocketEndpoint;
 import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
-import com.darkxell.client.mechanics.freezones.FreezoneTile;
 import com.darkxell.client.mechanics.freezones.WarpZone;
 import com.darkxell.client.mechanics.freezones.zones.BaseFreezone;
-import com.darkxell.client.mechanics.freezones.zones.OfficeFreezone;
-import com.darkxell.client.renderers.AbstractRenderer;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.others.Hud;
-import com.darkxell.client.resources.music.SoundsHolder;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.common.util.DoubleRectangle;
 import com.darkxell.common.util.Logger;
 import com.eclipsesource.json.JsonObject;
 
-public class FreezoneExploreState extends AbstractState
+public class FreezoneExploreState extends AbstractFreezoneState
 {
 
 	public FreezoneExploreState()
@@ -53,51 +47,14 @@ public class FreezoneExploreState extends AbstractState
 	}
 
 	@Override
-	public void onStart()
-	{
-		super.onStart();
-	}
-
-	@Override
 	public void render(Graphics2D g, int width, int height)
 	{
+		super.render(g, width, height);
 		FreezoneMap map = Persistance.currentmap;
-		Persistance.playerCamera.renderheight = height;
-		Persistance.playerCamera.renderwidth = width;
-		// Draws the sea background if needed.
-		if (map instanceof OfficeFreezone) ((OfficeFreezone) map).background.render(g, width, height);
-		// Draws the surroundings.
 		if (map != null)
 		{
-			int translateX = (int) (-Persistance.playerCamera.x * 8 + (width / 2));
-			int translateY = (int) (-Persistance.playerCamera.y * 8 + (height / 2));
-
-			g.translate(translateX, translateY);
-			// Draws the map
-			for (int i = 0; i < map.mapHeight; i++)
-			{
-				for (int j = 0; j < map.mapWidth; j++)
-				{
-					int tileid = (i * map.mapWidth) + j;
-					g.drawImage(map.tiles[tileid].sprite, 8 * j, 8 * i, null);
-					if (Persistance.debugdisplaymode) if (map.tiles[tileid].type == FreezoneTile.TYPE_SOLID)
-					{
-						g.setColor(new Color(150, 20, 20, 100));
-						g.fillRect(8 * j, 8 * i, 8, 8);
-					} else if (map.tiles[tileid].type == FreezoneTile.TYPE_SOLID)
-					{
-						g.setColor(new Color(20, 150, 20, 100));
-						g.fillRect(8 * j, 8 * i, 8, 8);
-					}
-				}
-			}
-
-			// Draw the entities & player in X & Y position order.
-			ArrayList<AbstractRenderer> entities = map.entityRenderers.listRenderers();
-			entities.add(Persistance.currentplayer.renderer());
-			entities.sort(Comparator.naturalOrder());
-			for (AbstractRenderer entity : entities)
-				entity.render(g, width, height);
+			int translateX = (int) (-Persistance.freezoneCamera.x * 8 + (width / 2));
+			int translateY = (int) (-Persistance.freezoneCamera.y * 8 + (height / 2));
 
 			if (Persistance.debugdisplaymode)
 			{
@@ -120,7 +77,7 @@ public class FreezoneExploreState extends AbstractState
 					g.fillRect((int) (dbrct.x * 8), (int) (dbrct.y * 8), (int) (dbrct.width * 8), (int) (dbrct.height * 8));
 				}
 				g.setColor(new Color(240, 55, 54, 150));
-				g.fillRect((int) (Persistance.playerCamera.x * 8), (int) (Persistance.playerCamera.y * 8), 4, 4);
+				g.fillRect((int) (Persistance.freezoneCamera.x * 8), (int) (Persistance.freezoneCamera.y * 8), 4, 4);
 			}
 
 			g.translate(-translateX, -translateY);
@@ -142,24 +99,13 @@ public class FreezoneExploreState extends AbstractState
 		}
 	}
 
-	private boolean musicset = false;
 	private int serversynccooldown = 0;
 
 	@Override
 	public void update()
 	{
-		// Updates the freezoneBackground if needeed
-		if (Persistance.currentmap instanceof OfficeFreezone) ((OfficeFreezone) Persistance.currentmap).background.update();
-		// CREATES AND UPDATES THE MAP
 		if (Persistance.currentmap == null) Persistance.currentmap = new BaseFreezone();
-		else Persistance.currentmap.update();
-		// UPDATES THE CAMERA
-		if (Persistance.playerCamera != null) Persistance.playerCamera.update();
-		if (!musicset)
-		{
-			musicset = true;
-			Persistance.soundmanager.setBackgroundMusic(SoundsHolder.getSong(Persistance.currentmap.freezonebgm));
-		}
+		super.update();
 		// Sends the serverync message if it's time to do so
 		if (serversynccooldown > 15 && serversynccooldown != -1) if (Persistance.socketendpoint.connectionStatus() != GameSocketEndpoint.CONNECTED)
 		{
@@ -182,20 +128,22 @@ public class FreezoneExploreState extends AbstractState
 			}
 		}
 		else if (serversynccooldown != -1) ++serversynccooldown;
+
 		for (int i = 0; i < Persistance.currentmap.warpzones.size(); i++)
 			if (Persistance.currentmap.warpzones.get(i).hitbox
 					.intersects(Persistance.currentplayer.getHitboxAt(Persistance.currentplayer.x, Persistance.currentplayer.y)))
 			{
 				WarpZone wz = Persistance.currentmap.warpzones.get(i);
-				Persistance.currentmap = wz.getDestination();
-				Persistance.playerCamera.x = Persistance.currentplayer.x = wz.toX;
-				Persistance.playerCamera.y = Persistance.currentplayer.y = wz.toY;
+				FreezoneMap destination = wz.getDestination();
+				if (destination != null)
+				{
+					Persistance.currentmap = destination;
+					Persistance.freezoneCamera.x = Persistance.currentplayer.x = wz.toX == -1 ? destination.defaultX() : wz.toX;
+					Persistance.freezoneCamera.y = Persistance.currentplayer.y = wz.toY == -1 ? destination.defaultY() : wz.toY;
+				}
 				musicset = false;
 				break;
 			}
-
-		for (AbstractRenderer renderer : Persistance.currentmap.entityRenderers.listRenderers())
-			renderer.update();
 
 	}
 

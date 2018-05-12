@@ -19,9 +19,9 @@ public abstract class WarpZone {
 	 * new map.
 	 * 
 	 * @param x
-	 *            the x position of the destination.
+	 *            the x position of the destination. If -1, uses the default X position in the destination.
 	 * @param y
-	 *            the y position of the destination.
+	 *            the y position of the destination. If -1, uses the default Y position in the destination.
 	 * @param hitbox
 	 *            the hitbox of the warpzone in the current map.
 	 */
