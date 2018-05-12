@@ -1,4 +1,4 @@
-package com.darkxell.common.unitarytests;
+package com.darkxell.common.test;
 
 import com.darkxell.common.util.Logger;
 
@@ -33,13 +33,18 @@ public abstract class UTest {
 	 * This action will skip the test if the execute method is called..
 	 */
 	public static final byte ACTION_PASS = 3;
+	
+	/**
+	 * Code to return for a successful test.
+	 */
+	public static final int TEST_SUCCESSFUL = 0;
 
-	/** Creates a new unitarytest. By default, this test */
+	/** Creates a new unitary test. By default, this test */
 	public UTest() {
 		ACTIONONFAIL = ACTION_BREAK;
 	}
 
-	/** Creates a new unitarytest with a custom onfail action. */
+	/** Creates a new unitary test with a custom on fail action. */
 	public UTest(byte onfail) {
 		if (onfail >= 0 && onfail <= 3)
 			this.ACTIONONFAIL = onfail;
@@ -51,27 +56,32 @@ public abstract class UTest {
 	public void execute() {
 		if (this.ACTIONONFAIL == ACTION_PASS)
 			Logger.d("Test was skipped");
-		else if (this.test() == 0)
-			Logger.d("Test went just fine");
-		else {
-			switch (ACTIONONFAIL) {
-			case ACTION_BREAK:
-				System.exit(-1);
-			case ACTION_WARN:
-				Logger.e("Test want wrong");
-				break;
+		else
+		{
+			int errorcode = this.test();
+			if (errorcode == 0) Logger.d("Test went just fine");
+			else
+			{
+				switch (ACTIONONFAIL)
+				{
+					case ACTION_BREAK:
+						System.exit(-1);
+					case ACTION_WARN:
+						Logger.e("Test went wrong: Error code " + errorcode);
+						break;
+				}
 			}
 		}
 	}
 
 	/**
-	 * Tests a feature. This method should be overrided for each Unitary test
+	 * Tests a feature. This method should be overridden for each unitary test
 	 * created.<br/>
 	 * <br/>
 	 * <b>Note:</b> To log messages to the console from this method, the log()
 	 * method should be used to ensure correct warning level.
 	 * 
-	 * @return 0 if the test want fine, 1 otherwise.
+	 * @return 0 if the test want fine, an error code otherwise.
 	 */
 	protected abstract int test();
 

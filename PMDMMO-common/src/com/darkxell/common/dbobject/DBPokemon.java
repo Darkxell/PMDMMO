@@ -29,6 +29,9 @@ public class DBPokemon implements Communicable
 	public int stat_speatk;
 	public int stat_spedef;
 
+	public DBPokemon()
+	{}
+
 	public DBPokemon(long id, int specieid, int formid, int abilityid, int gender, String nickname, int level, long experience, int iq, boolean isshiny,
 			int stat_atk, int stat_def, int stat_speatk, int stat_spedef, int stat_hp, DatabaseIdentifier holdeditem,
 			ArrayList<DatabaseIdentifier> learnedmoves)
@@ -57,10 +60,24 @@ public class DBPokemon implements Communicable
 	{
 		if (!(obj instanceof DBPokemon)) return false;
 		DBPokemon o = (DBPokemon) obj;
-		return this.id == o.id && this.specieid == o.specieid && this.formid == o.formid && this.abilityid == o.abilityid && this.gender == o.gender
-				&& this.nickname.equals(o.nickname) && this.level == o.level && this.experience == o.experience && this.iq == o.iq && this.isshiny == o.isshiny
-				&& this.stat_atk == o.stat_atk && this.stat_def == o.stat_def && this.stat_speatk == o.stat_speatk && this.stat_spedef == o.stat_spedef
-				&& this.stat_hp == o.stat_hp && this.holdeditem.equals(o.holdeditem) && this.learnedmoves.equals(o.learnedmoves);
+		if (this.id != o.id) return false;
+		if (this.specieid != o.specieid) return false;
+		if (this.formid != o.formid) return false;
+		if (this.abilityid != o.abilityid) return false;
+		if (this.gender != o.gender) return false;
+		if (this.nickname != o.nickname) return false;
+		if (this.level != o.level) return false;
+		if (this.experience != o.experience) return false;
+		if (this.iq != o.iq) return false;
+		if (this.isshiny != o.isshiny) return false;
+		if (this.stat_atk != o.stat_atk) return false;
+		if (this.stat_def != o.stat_def) return false;
+		if (this.stat_speatk != o.stat_speatk) return false;
+		if (this.stat_spedef != o.stat_spedef) return false;
+		if (this.stat_hp != o.stat_hp) return false;
+		if ((this.holdeditem == null) != (o.holdeditem == null) || (this.holdeditem != null && !this.holdeditem.equals(o.holdeditem))) return false;
+		if ((this.learnedmoves == null) != (o.learnedmoves == null) || (this.learnedmoves != null && !this.learnedmoves.equals(o.learnedmoves))) return false;
+		return true;
 	}
 
 	@Override
@@ -87,8 +104,11 @@ public class DBPokemon implements Communicable
 
 		this.learnedmoves = new ArrayList<>();
 		JsonValue moves = value.get("learnedmoves");
-		if (moves != null && moves.isArray()) for (JsonValue id : moves.asArray())
-			if (id.isNumber()) this.learnedmoves.add(new DatabaseIdentifier(id.asLong()));
+		if (moves != null && moves.isArray())
+		{
+			for (JsonValue id : moves.asArray())
+				if (id.isNumber()) this.learnedmoves.add(new DatabaseIdentifier(id.asLong()));
+		}
 	}
 
 	@Override
@@ -112,11 +132,14 @@ public class DBPokemon implements Communicable
 		root.add("stat_hp", this.stat_hp);
 		if (this.holdeditem != null) root.add("holdeditem", this.holdeditem.id);
 
-		JsonArray moves = new JsonArray();
-		for (DatabaseIdentifier id : this.learnedmoves)
-			moves.add(id.id);
-		root.add("learnedmoves", moves);
-		
+		if (this.learnedmoves != null)
+		{
+			JsonArray moves = new JsonArray();
+			for (DatabaseIdentifier id : this.learnedmoves)
+				moves.add(id.id);
+			root.add("learnedmoves", moves);
+		}
+
 		return root;
 	}
 

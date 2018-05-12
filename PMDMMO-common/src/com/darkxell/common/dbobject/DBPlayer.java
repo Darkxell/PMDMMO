@@ -23,6 +23,9 @@ public class DBPlayer implements Communicable
 	public int storyposition;
 	public DatabaseIdentifier toolboxinventory;
 
+	public DBPlayer()
+	{}
+
 	public DBPlayer(long id, String name, String passhash, long moneyinbank, long moneyinbag, int storyposition, ArrayList<DatabaseIdentifier> pokemonsinzones,
 			ArrayList<DatabaseIdentifier> pokemonsinparty, DatabaseIdentifier mainpokemon, DatabaseIdentifier toolboxinventory,
 			DatabaseIdentifier storageinventory)
@@ -45,10 +48,24 @@ public class DBPlayer implements Communicable
 	{
 		if (!(obj instanceof DBPlayer)) return false;
 		DBPlayer o = (DBPlayer) obj;
-		return this.id == o.id && this.name.equals(o.name) && this.passhash.equals(o.passhash) && this.moneyinbag == o.moneyinbag
-				&& this.moneyinbank == o.moneyinbank && this.storyposition == o.storyposition && this.pokemonsinzones.equals(o.pokemonsinzones)
-				&& this.pokemonsinparty.equals(o.pokemonsinparty) && this.mainpokemon.equals(o.mainpokemon) && this.toolboxinventory.equals(o.toolboxinventory)
-				&& this.storageinventory.equals(o.storageinventory);
+		if (this.id != o.id) return false;
+		if ((this.name == null) != (o.name == null) || (this.name != null && !this.name.equals(o.name))) return false;
+		if ((this.passhash == null) != (o.passhash == null) || (this.passhash != null && !this.passhash.equals(o.passhash))) return false;
+		if (this.moneyinbag != o.moneyinbag) return false;
+		if (this.moneyinbank != o.moneyinbank) return false;
+		if (this.storyposition != o.storyposition) return false;
+		if ((this.pokemonsinzones == null) != (o.pokemonsinzones == null) || (this.pokemonsinzones != null && !this.pokemonsinzones.equals(o.pokemonsinzones)))
+			return false;
+		if ((this.pokemonsinparty == null) != (o.pokemonsinparty == null) || (this.pokemonsinparty != null && !this.pokemonsinparty.equals(o.pokemonsinparty)))
+			return false;
+		if ((this.mainpokemon == null) != (o.mainpokemon == null) || (this.mainpokemon != null && !this.mainpokemon.equals(o.mainpokemon))) return false;
+		if ((this.toolboxinventory == null) != (o.toolboxinventory == null)
+				|| (this.toolboxinventory != null && !this.toolboxinventory.equals(o.toolboxinventory)))
+			return false;
+		if ((this.storageinventory == null) != (o.storageinventory == null)
+				|| (this.storageinventory != null && !this.storageinventory.equals(o.storageinventory)))
+			return false;
+		return true;
 	}
 
 	@Override
@@ -70,13 +87,19 @@ public class DBPlayer implements Communicable
 
 		this.pokemonsinzones = new ArrayList<>();
 		JsonValue zonePokes = value.get("pokemonsinzones");
-		if (zonePokes != null && zonePokes.isArray()) for (JsonValue id : zonePokes.asArray())
-			if (id.isNumber()) this.pokemonsinzones.add(new DatabaseIdentifier(id.asLong()));
+		if (zonePokes != null && zonePokes.isArray())
+		{
+			for (JsonValue id : zonePokes.asArray())
+				if (id.isNumber()) this.pokemonsinzones.add(new DatabaseIdentifier(id.asLong()));
+		}
 
 		this.pokemonsinparty = new ArrayList<>();
 		JsonValue partyPokes = value.get("pokemonsinparty");
-		if (partyPokes != null && partyPokes.isArray()) for (JsonValue id : partyPokes.asArray())
-			if (id.isNumber()) this.pokemonsinparty.add(new DatabaseIdentifier(id.asLong()));
+		if (partyPokes != null && partyPokes.isArray())
+		{
+			for (JsonValue id : partyPokes.asArray())
+				if (id.isNumber()) this.pokemonsinparty.add(new DatabaseIdentifier(id.asLong()));
+		}
 	}
 
 	@Override
@@ -93,15 +116,21 @@ public class DBPlayer implements Communicable
 		if (this.toolboxinventory != null) root.add("toolboxinventory", this.toolboxinventory.id);
 		if (this.storageinventory != null) root.add("storageinventory", this.storageinventory.id);
 
-		JsonArray zonePokes = new JsonArray();
-		for (DatabaseIdentifier id : this.pokemonsinzones)
-			zonePokes.add(id.id);
-		root.add("pokemonsinzones", zonePokes);
+		if (this.pokemonsinzones != null)
+		{
+			JsonArray zonePokes = new JsonArray();
+			for (DatabaseIdentifier id : this.pokemonsinzones)
+				zonePokes.add(id.id);
+			root.add("pokemonsinzones", zonePokes);
+		}
 
-		JsonArray partyPokes = new JsonArray();
-		for (DatabaseIdentifier id : this.pokemonsinparty)
-			partyPokes.add(id.id);
-		root.add("pokemonsinparty", partyPokes);
+		if (this.pokemonsinparty != null)
+		{
+			JsonArray partyPokes = new JsonArray();
+			for (DatabaseIdentifier id : this.pokemonsinparty)
+				partyPokes.add(id.id);
+			root.add("pokemonsinparty", partyPokes);
+		}
 
 		return root;
 	}

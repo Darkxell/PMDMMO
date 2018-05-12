@@ -30,7 +30,8 @@ public class DBInventory implements Communicable
 	{
 		if (!(obj instanceof DBInventory)) return false;
 		DBInventory o = (DBInventory) obj;
-		return this.id == o.id && this.maxsize == o.maxsize && this.content.equals(o.content);
+		if ((this.content == null) != (o.content == null) || (this.content != null && !this.content.equals(o.content))) return false;
+		return this.id == o.id && this.maxsize == o.maxsize;
 	}
 
 	@Override
@@ -38,10 +39,14 @@ public class DBInventory implements Communicable
 	{
 		this.id = value.getLong("id", this.id);
 		this.maxsize = value.getInt("maxsize", this.maxsize);
+
 		this.content = new ArrayList<>();
 		JsonValue content = value.get("content");
-		if (content != null && content.isArray()) for (JsonValue id : content.asArray())
-			if (id.isNumber()) this.content.add(new DatabaseIdentifier(id.asLong()));
+		if (content != null && content.isArray())
+		{
+			for (JsonValue id : content.asArray())
+				if (id.isNumber()) this.content.add(new DatabaseIdentifier(id.asLong()));
+		}
 	}
 
 	@Override
@@ -51,10 +56,13 @@ public class DBInventory implements Communicable
 		root.add("id", this.id);
 		root.add("maxsize", this.maxsize);
 
-		JsonArray content = new JsonArray();
-		for (DatabaseIdentifier id : this.content)
-			content.add(id.id);
-		root.add("content", content);
+		if (this.content != null)
+		{
+			JsonArray content = new JsonArray();
+			for (DatabaseIdentifier id : this.content)
+				content.add(id.id);
+			root.add("content", content);
+		}
 
 		return root;
 	}

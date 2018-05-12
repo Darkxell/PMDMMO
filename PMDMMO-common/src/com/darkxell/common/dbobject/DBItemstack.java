@@ -11,6 +11,9 @@ public class DBItemstack implements Communicable
 	public int itemid;
 	public long quantity;
 
+	public DBItemstack()
+	{}
+
 	public DBItemstack(long id, int itemid, long quantity)
 	{
 		this.id = id;

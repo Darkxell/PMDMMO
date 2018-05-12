@@ -15,6 +15,9 @@ public class DBLearnedmove implements Communicable
 	public int ppmax;
 	public int slot;
 
+	public DBLearnedmove()
+	{}
+
 	public DBLearnedmove(long id, int slot, int moveid, int ppmax, boolean isenabled, boolean islinked, int addedlevel)
 	{
 		this.id = id;
