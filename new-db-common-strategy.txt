@@ -1,0 +1,7 @@
+-DBObjects are moved to common and are transferred between server & client
+-Model classes possess those DBObjects
+-Client has to ask the server for unloaded objects using IDs in the DBObjects
+-Remove utility classes in server
+-Implement fromJson() tJson() methods in DBObjects
+
+-After all that, cleanup model classes
