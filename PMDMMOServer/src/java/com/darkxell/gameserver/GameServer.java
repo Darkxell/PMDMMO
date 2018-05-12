@@ -28,6 +28,7 @@ import javax.websocket.server.ServerEndpoint;
 
 import com.darkxell.gameserver.messagehandlers.FreezonePositionHandler;
 import com.darkxell.gameserver.messagehandlers.LoginHandler;
+import com.darkxell.gameserver.messagehandlers.ObjectrequestHandler;
 import com.darkxell.gameserver.messagehandlers.SaltResetHandler;
 import com.darkxell.gameserver.messagehandlers.TestResultHandler;
 import com.darkxell.model.ejb.Holdeditem_DAO;
@@ -196,6 +197,11 @@ public class GameServer {
                     }
                     case "testresult": {
                         TestResultHandler hand = new TestResultHandler(this);
+                        hand.handleMessage(jsonMessage, session, sessionHandler);
+                        break;
+                    }
+                    case "objectrequest": {
+                        ObjectrequestHandler hand = new ObjectrequestHandler(this);
                         hand.handleMessage(jsonMessage, session, sessionHandler);
                         break;
                     }

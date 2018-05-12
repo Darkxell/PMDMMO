@@ -70,9 +70,17 @@ This payload should be sent by a client to the server to notify it about the pla
 <br/>"mainid":1, // The id of the main pokemon
 <br/>"maingender":1, // The gender of the main pokemon
 <br/>"offid":2, // The id of the teammate
-<br/>"offgender":2, // The gender of the teammate
+<br/>"offgender":2 // The gender of the teammate
 <br/>}
-This payload is sent by a client 
+This payload is sent by a client wanting to submit test results to the server.
+
+■ OBJECTREQUEST
+<br/>{"action":"objectrequest",
+<br/>"id":1, // The requested object ID
+<br/>"object":"DBPlayer" // The object type requested
+<br/>}
+This payload notifies the server that the client would need information about a specific object knowing it's id.
+The server will typically respond with an OBJECTREQUEST payload containing the item too.
 
 # 4 - List of server -> client payloads
 
@@ -111,7 +119,13 @@ This payload contains the information about the player the clients needs to sync
 This payload is sent after a client request and contains the needed salt to authentificate and prevent MIM attacks (in case of an SSL breach, wich is unlikely to happen in the first place).
 The client must authentificate using the salt value in this payload using an authentificate client payload.
 
-
+■ OBJECTREQUEST
+<br/>{"action":"objectrequest",
+<br/>"type":"DBPlayer" // The object type requested
+<br/>"object":[JSONVALUE] // The object type requested
+<br/>}
+This payload notifies the server that the client would need information about a specific object knowing it's id.
+The server will typically respond with an OBJECTREQUEST payload containing the item too.
 
 
 

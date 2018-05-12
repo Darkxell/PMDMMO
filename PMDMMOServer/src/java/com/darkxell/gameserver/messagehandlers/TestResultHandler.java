@@ -13,8 +13,6 @@ import com.darkxell.gameserver.GameSessionHandler;
 import com.darkxell.gameserver.GameSessionInfo;
 import com.darkxell.gameserver.MessageHandler;
 import com.darkxell.gameserver.SessionsInfoHolder;
-import com.darkxell.model.ejb.dbobjectutilities.PokemonDBUtilities;
-import com.eclipsesource.json.Json;
 import java.util.Random;
 import javax.json.JsonObject;
 import javax.websocket.Session;
@@ -46,8 +44,8 @@ public class TestResultHandler extends MessageHandler {
         espece = PokemonRegistry.find(offid);
         Pokemon off = espece.generate(new Random(), 5);
         
-        PokemonDBUtilities.savePokemonInDatabase(main, endpoint, si.serverid, (byte)1);
-        PokemonDBUtilities.savePokemonInDatabase(off, endpoint, si.serverid, (byte)2);
+        // PokemonDBUtilities.savePokemonInDatabase(main, endpoint, si.serverid, (byte)1);
+        // PokemonDBUtilities.savePokemonInDatabase(off, endpoint, si.serverid, (byte)2);
         
         System.out.println("recieved test result : " + mainid +" and "+ offid);
         
