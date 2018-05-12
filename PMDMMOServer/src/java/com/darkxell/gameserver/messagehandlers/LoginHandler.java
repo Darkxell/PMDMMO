@@ -11,7 +11,7 @@ import com.darkxell.gameserver.GameSessionHandler;
 import com.darkxell.gameserver.GameSessionInfo;
 import com.darkxell.gameserver.MessageHandler;
 import com.darkxell.gameserver.SessionsInfoHolder;
-import com.darkxell.model.ejb.dbobjects.DBPlayer;
+import com.darkxell.common.dbobject.DBPlayer;
 import com.darkxell.model.ejb.dbobjectutilities.PlayerDBUtilities;
 import com.eclipsesource.json.Json;
 import java.security.MessageDigest;

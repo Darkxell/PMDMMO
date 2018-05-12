@@ -5,8 +5,9 @@
  */
 package com.darkxell.model.ejb;
 
-import com.darkxell.model.ejb.dbobjects.DBInventory;
-import com.darkxell.model.ejb.dbobjects.DatabaseIdentifier;
+
+import com.darkxell.common.dbobject.DBInventory;
+import com.darkxell.common.dbobject.DatabaseIdentifier;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

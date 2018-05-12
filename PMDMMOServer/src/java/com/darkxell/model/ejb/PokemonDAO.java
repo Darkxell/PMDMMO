@@ -5,8 +5,8 @@
  */
 package com.darkxell.model.ejb;
 
-import com.darkxell.model.ejb.dbobjects.DBPokemon;
-import com.darkxell.model.ejb.dbobjects.DatabaseIdentifier;
+import com.darkxell.common.dbobject.DBPokemon;
+import com.darkxell.common.dbobject.DatabaseIdentifier;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

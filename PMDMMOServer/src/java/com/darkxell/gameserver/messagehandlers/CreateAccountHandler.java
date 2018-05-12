@@ -9,8 +9,8 @@ import com.darkxell.gameserver.GameServer;
 import com.darkxell.gameserver.GameSessionHandler;
 import com.darkxell.gameserver.MessageHandler;
 import com.darkxell.gameserver.SessionsInfoHolder;
-import com.darkxell.model.ejb.dbobjects.DBInventory;
-import com.darkxell.model.ejb.dbobjects.DBPlayer;
+import com.darkxell.common.dbobject.DBInventory;
+import com.darkxell.common.dbobject.DBPlayer;
 import javax.json.JsonObject;
 import javax.websocket.Session;
 

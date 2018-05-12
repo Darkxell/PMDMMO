@@ -10,9 +10,9 @@ import com.darkxell.common.pokemon.BaseStats;
 import com.darkxell.common.pokemon.LearnedMove;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.gameserver.GameServer;
-import com.darkxell.model.ejb.dbobjects.DBItemstack;
-import com.darkxell.model.ejb.dbobjects.DBLearnedmove;
-import com.darkxell.model.ejb.dbobjects.DBPokemon;
+import com.darkxell.common.dbobject.DBItemstack;
+import com.darkxell.common.dbobject.DBLearnedmove;
+import com.darkxell.common.dbobject.DBPokemon;
 import java.util.ArrayList;
 
 /**

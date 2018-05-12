@@ -5,7 +5,8 @@
  */
 package com.darkxell.model.ejb;
 
-import com.darkxell.model.ejb.dbobjects.DBLearnedmove;
+
+import com.darkxell.common.dbobject.DBLearnedmove;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

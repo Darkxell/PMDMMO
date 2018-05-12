@@ -8,8 +8,8 @@ package com.darkxell.model.ejb.dbobjectutilities;
 import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.gameserver.GameServer;
-import com.darkxell.model.ejb.dbobjects.DBPlayer;
-import com.darkxell.model.ejb.dbobjects.DBPokemon;
+import com.darkxell.common.dbobject.DBPlayer;
+import com.darkxell.common.dbobject.DBPokemon;
 import com.eclipsesource.json.JsonObject;
 
 /**

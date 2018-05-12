@@ -1,19 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package com.darkxell.model.ejb.dbobjects;
+package com.darkxell.common.dbobject;
 
 import java.util.ArrayList;
 
-/**
- *
- * @author Darkxell
- */
 public class DBPlayer {
 
-    public long id;
+	public long id;
     public String name;
     public String passhash;
     public long moneyinbank;
@@ -40,4 +31,5 @@ public class DBPlayer {
         this.toolboxinventory = toolboxinventory;
         this.storageinventory = storageinventory;
     }
+	
 }
