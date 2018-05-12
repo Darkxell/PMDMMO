@@ -63,7 +63,7 @@
             </xs:element>
         </xs:sequence>
 
-        <xs:attribute name="id" type="xs:positiveInteger"/>
+        <xs:attribute name="id" type="posInt"/>
         <xs:attribute name="type1" type="pkmntype"/>
         <xs:attribute name="type2" type="pkmntype"/>
         <xs:attribute name="base-xp" type="posInt"/>

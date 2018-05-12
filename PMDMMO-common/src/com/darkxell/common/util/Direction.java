@@ -60,6 +60,12 @@ public enum Direction
 	/** @return How many times this direction needs to rotate (in any way) to match the input Direction. */
 	public int distance(Direction direction)
 	{
+		return Math.abs(distanceSigned(direction));
+	}
+
+	/** @return How many times this direction needs to rotate (in any way) to match the input Direction. Negative is counterclockwise, positive is clockwise. */
+	public int distanceSigned(Direction direction)
+	{
 		if (this == direction) return 0;
 		int d = 1;
 		while (d < 4)
@@ -72,7 +78,7 @@ public enum Direction
 			o = direction;
 			for (int i = 0; i < d; ++i)
 				o = o.rotateCounterClockwise();
-			if (o == direction) return d;
+			if (o == direction) return -d;
 
 			++d;
 		}

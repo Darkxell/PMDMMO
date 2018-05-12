@@ -83,6 +83,7 @@ public class PokemonSprite
 	public static final float REGULAR_SPEED = 1f;
 	public static final float SLOWER = .5f;
 
+	private boolean animated = true;
 	private float counter = 0;
 	private Direction facing = Direction.SOUTH;
 	private int healthChange = 0;
@@ -181,7 +182,7 @@ public class PokemonSprite
 	/** Updates this sprite to the next frame. */
 	public void update()
 	{
-		this.counter += this.tickSpeed;
+		if (this.isAnimated()) this.counter += this.tickSpeed;
 		PokemonSpriteSequence state = this.pointer.getSequence(this.state, this.facing);
 		if (this.counter >= state.duration)
 		{
@@ -210,6 +211,16 @@ public class PokemonSprite
 		this.resetToIdleOnFinish = sprite.resetToIdleOnFinish;
 		this.shadowColor = sprite.shadowColor;
 		this.tickSpeed = sprite.tickSpeed;
+	}
+
+	public void setAnimated(boolean animated)
+	{
+		this.animated = animated;
+	}
+
+	public boolean isAnimated()
+	{
+		return this.animated;
 	}
 
 }

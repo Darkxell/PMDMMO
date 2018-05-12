@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="pmdmmo" targetNamespace="pmdmmo"
+    elementFormDefault="qualified">
+    <xs:include schemaLocation="base.xsd"/>
+
+    <xs:element name="cutscene">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="creation"/>
+                <xs:element name="events">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:choice maxOccurs="unbounded">
+                                <xs:element ref="move"/>
+                                <xs:element ref="setstate"/>
+                                <xs:element ref="setanimated"/>
+                                <xs:element name="spawn" type="entity"/>
+                                <xs:element name="spawnpokemon" type="pokemonentity"/>
+                                <xs:element ref="despawn"/>
+                                <xs:element ref="rotate"/>
+                                <xs:element ref="dialog"/>
+                                <xs:element ref="sound"/>
+                                <xs:element ref="animate"/>
+                                <xs:element ref="music"/>
+                                <xs:element ref="delay"/>
+                                <xs:element ref="wait"/>
+                                <xs:element ref="camera"/>
+                            </xs:choice>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element ref="onfinish"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="dialog">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="dialogscreen" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:attribute name="text" type="xs:string" use="required">
+                            <xs:annotation>
+                                <xs:documentation>The ID of the text that should be
+                                    translated.</xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="translate" type="xs:boolean"/>
+                        <xs:attribute ref="target">
+                            <xs:annotation>
+                                <xs:documentation>The ID of the Pokémon saying the text. Its name
+                                    and portrait will appear. If not used, no portrait or name will
+                                    appear.</xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="emotion" type="posInt">
+                            <xs:annotation>
+                                <xs:documentation>The emotion of the Pokémon saying the text. Unused
+                                    for now.</xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="isnarrator" type="xs:boolean" use="optional"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="delay">
+        <xs:complexType>
+            <xs:attribute name="ticks" type="posInt" use="required"/>
+            <xs:attribute ref="eventid"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="sound">
+        <xs:complexType>
+            <xs:attribute name="sound" type="xs:string" use="required"/>
+            <xs:attribute name="overmusic" type="xs:boolean"/>
+            <xs:attribute ref="eventid"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="rotate">
+        <xs:complexType>
+            <xs:attribute ref="target" use="required"/>
+            <xs:attribute name="distance" type="xs:int"/>
+            <xs:attribute name="instantly" type="xs:boolean"/>
+            <xs:attribute ref="eventid"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="animate">
+        <xs:complexType>
+            <xs:attribute name="animation" type="xs:string" use="required"/>
+            <xs:attribute ref="target" use="required"/>
+            <xs:attribute ref="eventid"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="setstate">
+        <xs:complexType>
+            <xs:attribute ref="target" use="required"/>
+            <xs:attribute name="state" type="spritestate" use="required"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="setanimated">
+        <xs:complexType>
+            <xs:attribute ref="target" use="required"/>
+            <xs:attribute name="animate" type="xs:boolean" use="required"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="despawn">
+        <xs:complexType>
+            <xs:attribute ref="target" use="required"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="move">
+        <xs:complexType>
+            <xs:attribute ref="target" use="required"/>
+            <xs:attribute name="speed" type="xs:double"/>
+            <xs:attribute name="xpos" type="xs:double"/>
+            <xs:attribute name="ypos" type="xs:double"/>
+            <xs:attribute ref="eventid"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="camera">
+        <xs:complexType>
+            <xs:attribute name="xpos" type="xs:int"/>
+            <xs:attribute name="ypos" type="xs:int"/>
+            <xs:attribute name="xincrease" type="xs:int"/>
+            <xs:attribute name="yincrease" type="xs:int"/>
+            <xs:attribute name="speed" type="xs:double"/>
+            <xs:attribute ref="eventid"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="music">
+        <xs:complexType>
+            <xs:attribute name="music" type="xs:string" use="required"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="wait">
+        <xs:annotation>
+            <xs:documentation>Use this element to wait for events to finish before starting the
+                following events. If no event is specified, all events that have a duration will be
+                waited for completion.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="event" type="posInt" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+            <xs:attribute ref="eventid"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="creation">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="player" type="pokemonentity" minOccurs="0"/>
+                <xs:element name="pokemon" type="pokemonentity" maxOccurs="unbounded" minOccurs="0"/>
+                <xs:element name="entity" type="entity" maxOccurs="unbounded" minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="freezone" type="xs:string" use="required"/>
+            <xs:attribute name="fade" type="xs:boolean"/>
+            <xs:attribute name="camerax" type="xs:int"/>
+            <xs:attribute name="cameray" type="xs:int"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="entity">
+        <xs:attribute name="cutsceneid" type="posInt">
+            <xs:annotation>
+                <xs:documentation>An identifier to reference this entity whenever
+                    needed.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="xpos" type="xs:double"/>
+        <xs:attribute name="ypos" type="xs:double"/>
+    </xs:complexType>
+
+    <xs:complexType name="pokemonentity">
+        <xs:complexContent>
+            <xs:extension base="entity">
+                <xs:sequence>
+                    <xs:element name="pokemonid" type="posInt" maxOccurs="unbounded" minOccurs="0"/>
+                    <xs:element name="state" type="spritestate" minOccurs="0"/>
+                    <xs:element name="animated" type="xs:boolean" minOccurs="0"/>
+                </xs:sequence>
+                <xs:attribute ref="facing"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name="onfinish">
+        <xs:complexType>
+            <xs:choice>
+                <xs:element name="enterdungeon">
+                    <xs:complexType>
+                        <xs:attribute name="id" type="posInt"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="playcutscene">
+                    <xs:complexType>
+                        <xs:attribute name="id" type="xs:string"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="loadfreezone">
+                    <xs:complexType>
+                        <xs:attribute name="id" type="xs:string"/>
+                        <xs:attribute name="xpos" type="xs:double"/>
+                        <xs:attribute name="ypos" type="xs:double"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:choice>
+            <xs:attribute name="fade" type="xs:boolean"/>
+            <xs:attribute name="stopmusic" type="xs:boolean"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:attribute name="facing" type="direction"/>
+    <xs:attribute name="target" type="posInt">
+        <xs:annotation>
+            <xs:documentation>The ID of the entity this event targets.</xs:documentation>
+        </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="eventid" type="posInt">
+        <xs:annotation>
+            <xs:documentation>An optional identifier for this event. Used by the wait
+                event.</xs:documentation>
+        </xs:annotation>
+    </xs:attribute>
+
+</xs:schema>

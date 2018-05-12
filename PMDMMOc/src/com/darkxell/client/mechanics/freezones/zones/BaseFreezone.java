@@ -1,6 +1,7 @@
 package com.darkxell.client.mechanics.freezones.zones;
 
 import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.mechanics.cutscene.CutsceneManager;
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
 import com.darkxell.client.mechanics.freezones.WarpZone;
 import com.darkxell.client.mechanics.freezones.entities.AnimatedFlowerEntity;
@@ -28,6 +29,13 @@ public class BaseFreezone extends FreezoneMap {
 				return f;
 			}
 		});
+		this.warpzones.add(new WarpZone(0, 0, new DoubleRectangle(0, 34, 2,11)) {
+			@Override
+			public FreezoneMap getDestination() {
+				CutsceneManager.playCutscene("test");
+				return null;
+			}
+		});
 		this.addEntity(new AnimatedFlowerEntity(17.5, 16, true));
 		this.addEntity(new AnimatedFlowerEntity(33.5, 8, true));
 		this.addEntity(new AnimatedFlowerEntity(54.5, 18, true));
@@ -47,6 +55,18 @@ public class BaseFreezone extends FreezoneMap {
 	@Override
 	public LOCALMAPLOCATION getMapLocation() {
 		return LOCALMAPLOCATION.BASE;
+	}
+
+	@Override
+	public int defaultX()
+	{
+		return 35;
+	}
+
+	@Override
+	public int defaultY()
+	{
+		return 28;
 	}
 
 }

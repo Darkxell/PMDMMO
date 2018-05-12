@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 
-import com.darkxell.client.launchable.Persistance;
-import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.client.renderers.pokemon.AbstractPokemonRenderer;
+import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 
 public class EntityRendererHolder<T> extends AbstractRenderer
 {
@@ -30,8 +30,12 @@ public class EntityRendererHolder<T> extends AbstractRenderer
 		return null;
 	}
 
-	/** @return The Sprite of the input Pokémon. */
-	/* public PokemonSprite getSprite(T entity) { AbstractRenderer renderer = this.getRenderer(entity); return renderer == null ? null : renderer.sprite; } */
+	/** @return The Sprite of the input entity if it's a Pokémon. */
+	public PokemonSprite getSprite(T entity)
+	{
+		AbstractRenderer renderer = this.getRenderer(entity);
+		return renderer == null || !(renderer instanceof AbstractPokemonRenderer) ? null : ((AbstractPokemonRenderer) renderer).sprite;
+	}
 
 	public ArrayList<AbstractRenderer> listRenderers()
 	{
@@ -54,7 +58,6 @@ public class EntityRendererHolder<T> extends AbstractRenderer
 	/** Deletes the Renderer of the input Pokémon. */
 	public void unregister(T entity)
 	{
-		if (entity instanceof DungeonPokemon) Persistance.dungeonRenderer.removeRenderer(this.getRenderer(entity));
 		this.renderers.remove(entity);
 	}
 

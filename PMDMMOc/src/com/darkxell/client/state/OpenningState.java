@@ -7,6 +7,7 @@ import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.renderers.layers.BackgroundSeaLayer;
 import com.darkxell.client.resources.images.others.Hud;
 import com.darkxell.client.resources.music.SoundsHolder;
+import com.darkxell.client.state.freezone.FreezoneExploreState;
 import com.darkxell.client.ui.Keys;
 
 public class OpenningState extends AbstractState

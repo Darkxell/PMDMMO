@@ -11,6 +11,7 @@ import com.darkxell.client.renderers.MasterDungeonRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
 import com.darkxell.client.resources.music.SoundManager;
+import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.StateManager;
 import com.darkxell.client.state.dungeon.DungeonState;
 import com.darkxell.client.state.map.AbstractDisplayMap;
@@ -39,7 +40,9 @@ public abstract class Persistance
 	// FREEZONE RELATED OBJECTS
 	public static FreezoneMap currentmap;
 	public static FreezonePlayer currentplayer = new FreezonePlayer(new PokemonSprite(PokemonSpritesets.getSpriteset(0)), 35, 28);
-	public static FreezoneCamera playerCamera = new FreezoneCamera(currentplayer);
+	public static FreezoneCamera freezoneCamera = new FreezoneCamera(currentplayer);
+	
+	public static AbstractState cutsceneState = null;
 
 	// DUNGEON RELATED OBJECTS
 	public static DungeonInstance dungeon;
