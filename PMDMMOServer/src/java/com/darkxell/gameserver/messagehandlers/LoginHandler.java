@@ -12,7 +12,6 @@ import com.darkxell.gameserver.GameSessionInfo;
 import com.darkxell.gameserver.MessageHandler;
 import com.darkxell.gameserver.SessionsInfoHolder;
 import com.darkxell.common.dbobject.DBPlayer;
-import com.darkxell.model.ejb.dbobjectutilities.PlayerDBUtilities;
 import com.eclipsesource.json.Json;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -56,7 +55,7 @@ public class LoginHandler extends MessageHandler {
                     
                     com.eclipsesource.json.JsonObject value = Json.object();
                     value.add("action", "login");
-                    value.add("player",PlayerDBUtilities.generateFullPlayerObject(player.id, endpoint));
+                    //FIXME : value.add("player",PlayerDBUtilities.generateFullPlayerObject(player.id, endpoint));
                     sessionshandler.sendToSession(from, value);
                            
                 } else {
