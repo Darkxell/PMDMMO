@@ -237,10 +237,10 @@ public class Tile implements ItemContainer
 		if (this.getItem() != null)
 		{
 			ItemStack i = this.getItem();
-			int index = pokemon.player() == null ? -1 : pokemon.player().inventory.canAccept(i);
+			int index = pokemon.player() == null ? -1 : pokemon.player().inventory().canAccept(i);
 			if (!running && i.item().id == Item.POKE && pokemon.player() != null) events.add(new MoneyCollectedEvent(floor, pokemon, this, i));
 			else if (!running && pokemon.player() != null && index != -1)
-				events.add(new ItemMovedEvent(floor, ItemAction.GET, pokemon, this, 0, pokemon.player().inventory, index));
+				events.add(new ItemMovedEvent(floor, ItemAction.GET, pokemon, this, 0, pokemon.player().inventory(), index));
 			else if (!running && pokemon.getItem() == null) events.add(new ItemMovedEvent(floor, ItemAction.GET, pokemon, this, 0, pokemon, 0));
 			else events.add(new MessageEvent(floor,
 					new Message("ground.step").addReplacement("<pokemon>", pokemon.getNickname()).addReplacement("<item>", this.getItem().name())));

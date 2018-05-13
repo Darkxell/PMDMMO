@@ -20,7 +20,7 @@ public class OpenningState extends AbstractState {
 	@Override
 	public void onKeyPressed(short key) {
 		if (key == Keys.KEY_ATTACK)
-			if (Persistance.player.currentStoryline == 0)
+			if (Persistance.player.storyPosition() == 0)
 				Persistance.stateManager.setState(new PersonalityQuizState());
 			else
 				Persistance.stateManager.setState(new FreezoneExploreState());

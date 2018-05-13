@@ -58,7 +58,7 @@ public final class TeamInfoRenderer {
 		int barsize = width - 5 - PORTRAIT_SIZE;
 		int hp = (int) (barsize * (pokemon.getDungeonPokemon() == null ? 1
 				: pokemon.getDungeonPokemon().getHp() * 1d / pokemon.getBaseStats().getHealth()));
-		int xp = (int) (barsize * (pokemon.getExperience() * 1d / pokemon.experienceToNextLevel()));
+		int xp = (int) (barsize * (pokemon.experience() * 1d / pokemon.experienceToNextLevel()));
 
 		x += 5 + PORTRAIT_SIZE;
 		y += PORTRAIT_SIZE - 1;
@@ -85,7 +85,7 @@ public final class TeamInfoRenderer {
 		TextRenderer.render(g, pokemon.getNickname(), x, y);
 		String gender = pokemon.gender() == Pokemon.MALE ? PMDChar.male.value
 				: pokemon.gender() == Pokemon.FEMALE ? PMDChar.female.value : PMDChar.minus.value;
-		TextRenderer.render(g, new Message("team.level").addReplacement("<lvl>", Integer.toString(pokemon.getLevel()))
+		TextRenderer.render(g, new Message("team.level").addReplacement("<lvl>", Integer.toString(pokemon.level()))
 				.addReplacement("<gender>", gender), x, y + 5 + TextRenderer.height());
 	}
 
@@ -109,7 +109,7 @@ public final class TeamInfoRenderer {
 				if (!(pk.getDungeonPokemon() != null && pk.getDungeonPokemon().isFainted()))
 					team.add(pk);
 
-			Message title = new Message("team.title").addReplacement("<player>", p.name);
+			Message title = new Message("team.title").addReplacement("<player>", p.name());
 			TextRenderer.render(g, title, width / 2 - TextRenderer.width(title) / 2,
 					TITLE_HEIGHT / 2 - TextRenderer.height() / 2);
 

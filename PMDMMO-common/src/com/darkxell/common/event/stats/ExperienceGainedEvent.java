@@ -45,9 +45,9 @@ public class ExperienceGainedEvent extends DungeonEvent
 	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{
-		this.levelsup = this.pokemon.getLevel();
+		this.levelsup = this.pokemon.level();
 		this.resultingEvents.addAll(this.pokemon.gainExperience(this));
-		this.levelsup = this.pokemon.getLevel() - this.levelsup;
+		this.levelsup = this.pokemon.level() - this.levelsup;
 
 		return super.processServer();
 	}

@@ -30,7 +30,7 @@ public class MovesMenuState extends OptionSelectionMenuState
 
 		public MoveMenuOption(LearnedMove move, boolean isMain)
 		{
-			super((move == null ? new Message("", false) : move.move().name().addPrefix(isMain || !move.isEnabled ? "  " : "<star> ")));
+			super((move == null ? new Message("", false) : move.move().name().addPrefix(isMain || !move.isEnabled() ? "  " : "<star> ")));
 			this.move = move;
 		}
 	}
@@ -189,7 +189,7 @@ public class MovesMenuState extends OptionSelectionMenuState
 			Persistance.eventProcessor.processEvent(new MoveSelectionEvent(Persistance.floor, move, Persistance.player.getDungeonLeader()));
 		} else
 		{
-			Persistance.eventProcessor.processEvent(new MoveEnabledEvent(Persistance.floor, move, !move.isEnabled));
+			Persistance.eventProcessor.processEvent(new MoveEnabledEvent(Persistance.floor, move, !move.isEnabled()));
 			MovesMenuState state = new MovesMenuState(s);
 			state.tab = this.tab;
 			state.selection = this.selection;

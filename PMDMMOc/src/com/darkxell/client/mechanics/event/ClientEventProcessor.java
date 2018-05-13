@@ -283,7 +283,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		{
 			boolean ally = true;
 			if (event.destination instanceof Pokemon) ally = Persistance.player.isAlly((Pokemon) event.destination);
-			else if (event.destination instanceof Inventory) ally = Persistance.player.inventory == (Inventory) event.destination;
+			else if (event.destination instanceof Inventory) ally = Persistance.player.inventory() == (Inventory) event.destination;
 			SoundManager.playSound(ally ? "dungeon-item" : "dungeon-enemygrab");
 			Persistance.dungeonState.floorVisibility.onItemremoved((Tile) event.source);
 		}
@@ -303,12 +303,12 @@ public final class ClientEventProcessor extends CommonEventProcessor
 			this.setState(State.ANIMATING);
 			boolean firstLevel = this.levelupStats == null;
 
-			if (this.levelupStats == null) this.levelupStats = pokemon.species().baseStatsIncrease(pokemon.getLevel() - 1);
-			else this.levelupStats.add(pokemon.species().baseStatsIncrease(pokemon.getLevel() - 1));
+			if (this.levelupStats == null) this.levelupStats = pokemon.species().baseStatsIncrease(pokemon.level() - 1);
+			else this.levelupStats.add(pokemon.species().baseStatsIncrease(pokemon.level() - 1));
 
 			ArrayList<DialogScreen> screens = new ArrayList<DialogScreen>();
 			screens.add(new DialogScreen(new Message("xp.levelup").addReplacement("<pokemon>", pokemon.getNickname()).addReplacement("<level>",
-					Integer.toString(pokemon.getLevel()))));
+					Integer.toString(pokemon.level()))));
 
 			{
 				boolean hasMoreLevels = false;

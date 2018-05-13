@@ -20,7 +20,7 @@ public class NextFloorEvent extends DungeonEvent
 	@Override
 	public String loggerMessage()
 	{
-		return this.player.name + " went to the next floor.";
+		return this.player.name() + " went to the next floor.";
 	}
 
 	@Override

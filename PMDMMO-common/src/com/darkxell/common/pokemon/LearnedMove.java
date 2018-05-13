@@ -2,147 +2,122 @@ package com.darkxell.common.pokemon;
 
 import org.jdom2.Element;
 
+import com.darkxell.common.dbobject.DBLearnedmove;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.move.MoveRegistry;
-import com.darkxell.common.util.Communicable;
 import com.darkxell.common.util.XMLUtils;
-import com.eclipsesource.json.Json;
-import com.eclipsesource.json.JsonObject;
 
-public class LearnedMove implements Communicable
+public class LearnedMove
 {
+	private DBLearnedmove data;
 
-	/** This move's ID. */
-	private int id;
-	/** True if this Move is enabled (for allies). */
-	public boolean isEnabled = true;
-	/** True if this move is Linked. */
-	private boolean isLinked;
-	/** This move's maximum Power Points. */
-	private int maxPP;
+	private Move move;
+
 	/** This move's current Power Points. */
 	private int pp;
-	/** The position of this move in the Pokémon's move set. */
-	private int slot;
-        /** The added power of the move. goes up to +5 the the vanilla game. */
-	private int addedlevel;
 
-	public LearnedMove()
+	public LearnedMove(DBLearnedmove data)
 	{
-		this(-1);
+		this.setData(data);
 	}
 
-	public LearnedMove(Element xml)
+	public LearnedMove(int moveid)
 	{
-		this.id = Integer.parseInt(xml.getAttributeValue("id"));
-		this.maxPP = XMLUtils.getAttribute(xml, "pp-max", this.move().pp);
-		this.pp = XMLUtils.getAttribute(xml, "pp", this.maxPP);
-		this.isLinked = XMLUtils.getAttribute(xml, "linked", false);
-		this.isEnabled = XMLUtils.getAttribute(xml, "enabled", true);
+		this(new DBLearnedmove(0, 4, moveid, 1, true, false, 0));
 	}
 
-	public LearnedMove(int id)
+	public int getAddedLevel()
 	{
-		this.id = id;
-		this.pp = this.maxPP = this.move().pp;
-		this.isLinked = false;
-		this.slot = 4;
+		return this.data.addedlevel;
 	}
 
-	public int getMaxPP()
+	public DBLearnedmove getData()
 	{
-		return this.maxPP;
+		return this.data;
 	}
 
-	public int getPP()
+	public boolean isEnabled()
 	{
-		return this.pp;
-	}
-
-	public int getSlot()
-	{
-		return this.slot;
+		return this.data.isenabled;
 	}
 
 	public boolean isLinked()
 	{
-		return this.isLinked;
+		return this.data.islinked;
 	}
-	
-	public int getId()
+
+	public int maxPP()
 	{
-		return this.id;
-	}
-        
-        public int getAddedLevel()
-	{
-		return this.addedlevel;
-	}
-        
-        public void setAddedLevel(int addedlevel)
-	{
-            this.addedlevel = addedlevel;
+		return this.data.ppmax;
 	}
 
 	public Move move()
 	{
-		return MoveRegistry.find(this.id);
+		return this.move;
 	}
 
-	@Override
-	public void read(JsonObject value)
+	public int moveId()
 	{
-		this.id = value.getInt("id", -1);
-		this.maxPP = value.getInt("pp-max", this.move().pp);
-		this.pp = value.getInt("pp", this.maxPP);
-		this.isLinked = value.getBoolean("linked", false);
-		this.isEnabled = value.getBoolean("enabled", true);
-                this.addedlevel= value.getInt("addedlevel", 0);
+		return this.data.moveid;
+	}
+
+	public int pp()
+	{
+		return this.pp;
+	}
+
+	public void setAddedLevel(int addedLevel)
+	{
+		this.data.addedlevel = addedLevel;
+	}
+
+	public void setData(DBLearnedmove data)
+	{
+		this.data = data;
+		this.move = MoveRegistry.find(this.data.moveid);
+		if (this.pp >= this.data.ppmax) this.pp = this.data.ppmax;
+	}
+
+	public void setEnabled(boolean isEnabled)
+	{
+		this.data.isenabled = isEnabled;
 	}
 
 	public void setLinked(boolean isLinked)
 	{
-		this.isLinked = isLinked;
+		this.data.islinked = isLinked;
 	}
 
 	public void setMaxPP(int maxPP)
 	{
-		this.maxPP = maxPP;
+		this.data.ppmax = maxPP;
 	}
 
 	public void setPP(int pp)
 	{
 		this.pp = pp;
 		if (this.pp < 0) this.pp = 0;
-		if (this.pp > this.getMaxPP()) this.pp = this.getMaxPP();
+		if (this.pp > this.maxPP()) this.pp = this.maxPP();
 	}
 
 	public void setSlot(int slot)
 	{
-		this.slot = slot;
+		this.data.slot = slot;
 	}
 
-	@Override
-	public JsonObject toJson()
+	public int slot()
 	{
-		JsonObject root = Json.object();
-		root.add("id", this.id);
-		if (this.maxPP != this.move().pp) root.add("pp-max", this.maxPP);
-		if (this.pp != this.maxPP) root.add("pp", this.pp);
-		if (!this.isLinked) root.add("linked", this.isLinked);
-		if (!this.isEnabled) root.add("enabled", this.isEnabled);
-                root.add("addedlevel", this.addedlevel);
-		return root;
+		return this.data.slot;
 	}
 
 	public Element toXML()
 	{
 		Element root = new Element("move");
-		root.setAttribute("id", Integer.toString(this.id));
-		XMLUtils.setAttribute(root, "pp-max", this.maxPP, this.move().pp);
-		XMLUtils.setAttribute(root, "pp", this.pp, this.move().pp);
-		XMLUtils.setAttribute(root, "linked", this.isLinked, false);
-		XMLUtils.setAttribute(root, "enabled", this.isEnabled, true);
+		root.setAttribute("id", Integer.toString(this.moveId()));
+		XMLUtils.setAttribute(root, "pp-max", this.maxPP(), this.move().pp);
+		XMLUtils.setAttribute(root, "pp", this.pp, this.maxPP());
+		XMLUtils.setAttribute(root, "linked", this.isLinked(), false);
+		XMLUtils.setAttribute(root, "enabled", this.isEnabled(), true);
 		return root;
 	}
 

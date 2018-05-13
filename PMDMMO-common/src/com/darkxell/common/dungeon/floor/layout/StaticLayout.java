@@ -11,7 +11,6 @@ import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.ItemStack;
-import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.trap.TrapRegistry;
 import com.darkxell.common.util.Logger;
@@ -92,9 +91,8 @@ public class StaticLayout extends Layout {
 	@Override
 	protected void summonPokemon() {
 		if (this.xml.getChild("pokemons") != null)
-			for (Element pokemon : this.xml.getChild("pokemons").getChildren(Pokemon.XML_ROOT))
-				this.floor.summonPokemon(new DungeonPokemon(new Pokemon(pokemon)), Integer.parseInt(pokemon.getAttributeValue("x")), Integer
-						.parseInt(pokemon.getAttributeValue("y")));
+			for (@SuppressWarnings("unused") Element pokemon : this.xml.getChild("pokemons").getChildren(Pokemon.XML_ROOT));
+				//this.floor.summonPokemon(new DungeonPokemon(new Pokemon(pokemon)), Integer.parseInt(pokemon.getAttributeValue("x")), Integer.parseInt(pokemon.getAttributeValue("y"))); TODO Pokemon from XML
 	}
 
 }

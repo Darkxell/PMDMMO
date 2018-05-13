@@ -2,87 +2,82 @@ package com.darkxell.common.player;
 
 import java.util.ArrayList;
 
+import com.darkxell.common.dbobject.DBPlayer;
+import com.darkxell.common.dbobject.DatabaseIdentifier;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.Pokemon;
-import com.darkxell.common.util.Communicable;
-import com.eclipsesource.json.Json;
-import com.eclipsesource.json.JsonArray;
-import com.eclipsesource.json.JsonObject;
-import com.eclipsesource.json.JsonValue;
 
-public class Player implements Communicable {
+public class Player
+{
 
-	/** The Pok�mon in the rescue team. */
 	public ArrayList<Pokemon> allies;
-	public int currentStoryline;
+
+	private DBPlayer data;
+
 	public ArrayList<DungeonPokemon> dungeonAllies;
-	/** If in a Dungeon, reference to the Dungeon Pok�mon. null else. */
-	public DungeonPokemon dungeonPokemon;
+
 	/** This Player's Inventory. */
-	public final Inventory inventory;
-	/** The Pok�mon this Player embodies. */
+	private Inventory inventory;
+
 	public Pokemon leaderPokemon;
-	/** The current amount of Money of this Player. */
-	public long money;
-	/** The current amount of Money in this Player's bank. */
-	public long moneyInBank;
-	public String name;
 
-	public Player() {
-		this("???", null);
+	public Player(DBPlayer data)
+	{
+		this.setData(data);
 	}
 
-	public Player(String name, Pokemon pokemon) {
-		this.name = name;
-		if (pokemon != null) {
-			this.setLeaderPokemon(pokemon);
-		}
-		this.inventory = new Inventory(Inventory.MAX_SIZE);
-		this.money = 0;
-		this.moneyInBank = 0;
-		this.allies = new ArrayList<Pokemon>();
-		this.dungeonAllies = new ArrayList<DungeonPokemon>();
+	public Player(String name, Pokemon pokemon)
+	{
+		this(new DBPlayer(0, name, null, 0, 0, 0, new ArrayList<>(), new ArrayList<>(), pokemon == null ? null : new DatabaseIdentifier(pokemon.id()), null,
+				null));
 	}
 
-	public void addAlly(Pokemon pokemon) {
+	public void addAlly(Pokemon pokemon)
+	{
+		this.data.pokemonsinparty.add(new DatabaseIdentifier(pokemon.id()));
 		this.allies.add(pokemon);
 		this.dungeonAllies.add(new DungeonPokemon(pokemon));
 		pokemon.setPlayer(this);
 	}
 
-	public void clearAllies() {
+	public void clearAllies()
+	{
 		for (Pokemon pokemon : this.allies)
 			pokemon.setPlayer(this);
+		this.data.pokemonsinparty.clear();
 		this.allies.clear();
 		this.resetDungeonTeam();
 	}
 
-	public DungeonPokemon getDungeonLeader() {
-		if (this.dungeonPokemon == null)
-			this.dungeonPokemon = new DungeonPokemon(this.leaderPokemon);
-		return this.dungeonPokemon;
+	public DBPlayer getData()
+	{
+		return this.data;
 	}
 
-	public DungeonPokemon[] getDungeonTeam() {
+	public DungeonPokemon getDungeonLeader()
+	{
+		if (this.leaderPokemon.getDungeonPokemon() == null) new DungeonPokemon(this.leaderPokemon);
+		return this.leaderPokemon.getDungeonPokemon();
+	}
+
+	public DungeonPokemon[] getDungeonTeam()
+	{
 		DungeonPokemon[] team = new DungeonPokemon[this.allies.size() + 1];
 		for (int i = 0; i < team.length; ++i)
 			team[i] = this.getMember(i);
 		return team;
 	}
 
-	public DungeonPokemon getMember(int index) {
-		if (index == 0)
-			return this.getDungeonLeader();
-		else if (index < this.dungeonAllies.size() + 1)
-			return this.dungeonAllies.get(index - 1);
+	public DungeonPokemon getMember(int index)
+	{
+		if (index == 0) return this.getDungeonLeader();
+		else if (index < this.dungeonAllies.size() + 1) return this.dungeonAllies.get(index - 1);
 		return null;
 	}
 
-	/**
-	 * Returns the full player's team. The team leader is at position 0 in the
-	 * array.
-	 */
-	public Pokemon[] getTeam() {
+	/** Returns the full player's team. The team leader is at position 0 in the array. */
+	public Pokemon[] getTeam()
+	{
 		Pokemon[] team = new Pokemon[this.allies.size() + 1];
 		team[0] = this.getTeamLeader();
 		for (int i = 1; i < team.length; ++i)
@@ -90,93 +85,85 @@ public class Player implements Communicable {
 		return team;
 	}
 
-	public Pokemon getTeamLeader() {
+	public Pokemon getTeamLeader()
+	{
 		return this.leaderPokemon;
 	}
 
-	public boolean isAlly(DungeonPokemon pokemon) {
-		return pokemon.player() == this;
+	public Inventory inventory()
+	{
+		return this.inventory;
 	}
 
-	public boolean isAlly(Pokemon pokemon) {
+	public boolean isAlly(DungeonPokemon pokemon)
+	{
 		return pokemon != null && pokemon.player() == this;
 	}
 
-	@Override
-	public void read(JsonObject value) {
-		this.name = value.getString("name", "???");
-		this.money = value.getInt("money", 0);
-		this.moneyInBank = value.getInt("moneyInBank", 0);
-		this.currentStoryline = value.getInt("storyline", 0);
-
-		JsonValue leadervalue = value.get("leader");
-		if (leadervalue != null) {
-			Pokemon leader = new Pokemon();
-			leader.read(leadervalue.asObject());
-			this.setLeaderPokemon(leader);
-		}
-
-		this.allies.clear();
-		for (JsonValue allyJson : value.get("allies").asArray()) {
-			Pokemon ally = new Pokemon();
-			ally.read(allyJson.asObject());
-			this.addAlly(ally);
-		}
-
-		this.inventory.read(value.get("inventory").asObject());
+	public boolean isAlly(Pokemon pokemon)
+	{
+		return pokemon != null && pokemon.player() == this;
 	}
 
-	public void removeAlly(Pokemon pokemon) {
+	public long moneyInBag()
+	{
+		return this.data.moneyinbag;
+	}
+
+	public String name()
+	{
+		return this.data.name;
+	}
+
+	public void removeAlly(Pokemon pokemon)
+	{
+		if (!this.allies.contains(pokemon)) return;
+		this.data.pokemonsinparty.remove(this.allies.indexOf(pokemon));
 		this.dungeonAllies.remove(this.allies.indexOf(pokemon));
 		this.allies.remove(pokemon);
 		pokemon.setPlayer(null);
 	}
 
-	public void resetDungeonTeam() {
+	public void resetDungeonTeam()
+	{
 		this.dungeonAllies.clear();
 		for (int i = 0; i < this.dungeonAllies.size(); ++i)
 			this.dungeonAllies.add(i, new DungeonPokemon(this.allies.get(i)));
 	}
 
-	public void setDungeonPokemon(DungeonPokemon dungeonPokemon) {
-		this.dungeonPokemon = dungeonPokemon;
+	public void setData(DBPlayer data)
+	{
+		this.data = data;
+		this.allies = new ArrayList<>();
+		this.dungeonAllies = new ArrayList<>();
+		this.leaderPokemon = null; // How to get pokemon ?
+		this.inventory = new Inventory(null); // How to get inventory data?
 	}
 
-	public void setDungeonPokemon(Pokemon pokemon, DungeonPokemon dungeonPokemon) {
-		if (pokemon == this.getTeamLeader())
-			this.setDungeonPokemon(dungeonPokemon);
-		else if (this.allies.contains(pokemon))
-			this.dungeonAllies.set(this.allies.indexOf(pokemon), dungeonPokemon);
-	}
-
-	public void setLeaderPokemon(Pokemon pokemon) {
-		if (this.leaderPokemon != null)
-			this.leaderPokemon.setPlayer(null);
+	public void setLeaderPokemon(Pokemon pokemon)
+	{
+		if (this.leaderPokemon != null) this.leaderPokemon.setPlayer(null);
 		this.leaderPokemon = pokemon;
-		this.leaderPokemon.setPlayer(this);
+		if (this.leaderPokemon != null)
+		{
+			this.leaderPokemon.setPlayer(this);
+			this.data.mainpokemon = new DatabaseIdentifier(this.leaderPokemon.id());
+		} else this.data.mainpokemon = null;
 	}
 
-	@Override
-	public JsonObject toJson() {
-		JsonObject root = Json.object();
+	public void setMoneyInBag(long moneyInBag)
+	{
+		this.data.moneyinbag = moneyInBag;
+	}
 
-		root.add("name", this.name);
-		root.add("money", this.money);
-		root.add("moneyInBank", this.moneyInBank);
-		root.add("storyline", this.currentStoryline);
+	public void setStoryPosition(int storyPosition)
+	{
+		this.data.storyposition = storyPosition;
+	}
 
-		if (this.leaderPokemon != null) {
-			root.add("leader", this.leaderPokemon.toJson());
-		}
-
-		JsonArray alliesJson = new JsonArray();
-		for (Pokemon ally : this.allies)
-			alliesJson.add(ally.toJson());
-		root.add("allies", alliesJson);
-
-		root.add("inventory", this.inventory.toJson());
-
-		return root;
+	public int storyPosition()
+	{
+		return this.data.storyposition;
 	}
 
 }

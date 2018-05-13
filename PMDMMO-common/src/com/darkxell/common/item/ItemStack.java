@@ -2,44 +2,43 @@ package com.darkxell.common.item;
 
 import org.jdom2.Element;
 
-import com.darkxell.common.util.Communicable;
+import com.darkxell.common.dbobject.DBItemstack;
 import com.darkxell.common.util.XMLUtils;
 import com.darkxell.common.util.language.Lang;
 import com.darkxell.common.util.language.Message;
-import com.eclipsesource.json.Json;
-import com.eclipsesource.json.JsonObject;
 
-public class ItemStack implements Comparable<ItemStack>, Communicable
+public class ItemStack implements Comparable<ItemStack>
 {
 
 	public static final String XML_ROOT = "item";
 
-	/** The ID of the Item. */
-	private int id;
-	/** The number of Items in this Stack. Almost always 1 except for Poké, Gravelerock and similar items. */
-	private int quantity;
+	private DBItemstack data;
+
+	private Item item;
 
 	public ItemStack()
 	{
 		this(-1);
 	}
 
-	public ItemStack(Element xml)
+	public ItemStack(DBItemstack data)
 	{
-		this.id = Integer.parseInt(xml.getAttributeValue("id"));
-		this.quantity = XMLUtils.getAttribute(xml, "quantity", 1);
+		this.setData(data);
 	}
 
-	public ItemStack(int id)
+	public ItemStack(Element xml)
 	{
-		this.id = id;
-		this.quantity = 1;
+		this(Integer.parseInt(xml.getAttributeValue("id")), XMLUtils.getAttribute(xml, "quantity", 1));
 	}
-        
-        public ItemStack(int id, int quantity)
+
+	public ItemStack(int itemid)
 	{
-		this.id = id;
-		this.quantity = quantity;
+		this(itemid, 1);
+	}
+
+	public ItemStack(int itemid, int quantity)
+	{
+		this(new DBItemstack(-1, itemid, quantity));
 	}
 
 	@Override
@@ -52,65 +51,62 @@ public class ItemStack implements Comparable<ItemStack>, Communicable
 	/** @return A copy of this Item Stack. */
 	public ItemStack copy()
 	{
-		return new ItemStack(this.id).setQuantity(this.quantity);
+		return new ItemStack(this.itemid()).setQuantity(this.quantity());
 	}
 
-	public int getQuantity()
+	public DBItemstack getData()
 	{
-		return this.quantity;
+		return this.data;
 	}
-	
-	public int getId()
+
+	/** The ID of the Item. */
+	public int itemid()
 	{
-		return this.id;
+		return this.data.itemid;
 	}
 
 	/** @return The message describing this Item. */
 	public Message info()
 	{
-		return new Message("item.info." + this.id);
+		return new Message("item.info." + this.itemid());
 	}
 
 	public Item item()
 	{
-		return ItemRegistry.find(this.id);
+		return this.item;
 	}
 
 	public Message name()
 	{
-		if (Lang.containsKey("item." + this.id + ".stack"))
-			return new Message("item." + this.id + ".stack").addReplacement("<quantity>", Integer.toString(this.quantity));
+		if (Lang.containsKey("item." + this.itemid() + ".stack"))
+			return new Message("item." + this.itemid() + ".stack").addReplacement("<quantity>", Long.toString(this.quantity()));
 		return this.item().name();
 	}
 
-	@Override
-	public void read(JsonObject value)
+	/** The number of Items in this Stack. Almost always 1 except for Poké, Gravelerock and similar items. */
+	public long quantity()
 	{
-		this.id = value.getInt("id", -1);
-		this.quantity = value.getInt("quantity", 1);
+		return this.data.quantity;
 	}
 
-	public ItemStack setQuantity(int quantity)
+	public void setData(DBItemstack data)
 	{
-		this.quantity = quantity;
-		if (this.quantity > 999) this.quantity = 999;
+		this.data = data;
+		this.item = ItemRegistry.find(this.data.itemid);
+	}
+
+	public ItemStack setQuantity(long quantity)
+	{
+		this.data.quantity = quantity;
+		if (this.quantity() > 999) this.data.quantity = 999;
 		return this;
-	}
-
-	@Override
-	public JsonObject toJson()
-	{
-		JsonObject root = Json.object();
-		root.add("id", this.id);
-		if (this.quantity != 1) root.add("quantity", this.quantity);
-		return root;
 	}
 
 	public Element toXML()
 	{
 		Element root = new Element(Item.XML_ROOT);
-		root.setAttribute("id", Integer.toString(this.id));
-		XMLUtils.setAttribute(root, "quantity", this.quantity, 1);
+		root.setAttribute("id", Integer.toString(this.itemid()));
+		XMLUtils.setAttribute(root, "quantity", this.quantity(), 1);
 		return root;
 	}
 

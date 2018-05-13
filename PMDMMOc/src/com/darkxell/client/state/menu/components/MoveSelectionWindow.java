@@ -25,16 +25,17 @@ public class MoveSelectionWindow extends OptionSelectionWindow
 	@Override
 	protected void drawOption(Graphics2D g, MenuOption option, int x, int y)
 	{
-		if (((MoveMenuOption) option).move.getPP() == 0) TextRenderer.setColor(Palette.FONT_RED);
+		if (((MoveMenuOption) option).move.pp() == 0) TextRenderer.setColor(Palette.FONT_RED);
 		else TextRenderer.setColor(Palette.FONT_GREEN);
 		TextRenderer.render(g, option.name, x, y);
-		TextRenderer.render(g, ((MoveMenuOption) option).move.getPP() + "/" + ((MoveMenuOption) option).move.getMaxPP(), (int) (this.dimensions.getMaxX()
-				- ppLength - MARGIN_X), y);
+		TextRenderer.render(g, ((MoveMenuOption) option).move.pp() + "/" + ((MoveMenuOption) option).move.maxPP(),
+				(int) (this.dimensions.getMaxX() - ppLength - MARGIN_X), y);
 		TextRenderer.setColor(null);
 
-		if ((this.cursor > 9 || !this.menu.isMain()) && this.menu.currentOption() == option) g.drawImage(this.menu.isMain() ? MenuHudSpriteset.SELECTION_ARROW
-				: MenuHudSpriteset.SELECTED_ARROW, x - MenuHudSpriteset.SELECTION_ARROW.getWidth() - 4, y + TextRenderer.height() / 2
-				- MenuHudSpriteset.SELECTION_ARROW.getHeight() / 2, null);
+		if ((this.cursor > 9 || !this.menu.isMain()) && this.menu.currentOption() == option)
+			g.drawImage(this.menu.isMain() ? MenuHudSpriteset.SELECTION_ARROW : MenuHudSpriteset.SELECTED_ARROW,
+					x - MenuHudSpriteset.SELECTION_ARROW.getWidth() - 4, y + TextRenderer.height() / 2 - MenuHudSpriteset.SELECTION_ARROW.getHeight() / 2,
+					null);
 
 		y += TextRenderer.height() + TextRenderer.lineSpacing();
 	}

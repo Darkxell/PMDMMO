@@ -57,7 +57,7 @@ public class TeamMenuState extends OptionSelectionMenuState
 		if (this.listener == null)
 		{
 			Message stats = new Message("summary.stats.content");
-			stats.addReplacement("<level>", TextRenderer.alignNumber(p.getLevel(), 7));
+			stats.addReplacement("<level>", TextRenderer.alignNumber(p.level(), 7));
 			stats.addReplacement("<exp>", TextRenderer.alignNumber(p.totalExperience(), 7));
 			stats.addReplacement("<exp-next>", TextRenderer.alignNumber(p.experienceToNextLevel(), 7));
 			stats.addReplacement("<hp>", TextRenderer.alignNumber(dp == null ? p.getBaseStats().getHealth() : dp.getHp(), 3));
@@ -78,7 +78,7 @@ public class TeamMenuState extends OptionSelectionMenuState
 			Message features = new Message("summary.features.content");
 			features.addReplacement("<firsttype>", p.species().type1.getName());
 			features.addReplacement("<secondtype>", p.species().type2 == null ? new Message("", false) : p.species().type2.getName());
-			features.addReplacement("<ability>", p.getAbility().description());
+			features.addReplacement("<ability>", p.ability().description());
 
 			Message info = new Message("summary.info.content");
 			info.addReplacement("<species>", p.species().formName());

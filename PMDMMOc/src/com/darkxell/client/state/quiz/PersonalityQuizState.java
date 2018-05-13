@@ -191,7 +191,7 @@ public class PersonalityQuizState extends AbstractState implements DialogEndList
 		this.background.update();
 	}
 
-	private void sendTestResults(int id1, int id2, byte gender1, byte gender2) {
+	private void sendTestResults(int id1, int id2, int gender1, int gender2) {
 		JsonObject tosend = Json.object().add("action", "testresult").add("mainid", id1).add("offid", id2)
 				.add("maingender", gender1).add("offgender", gender2);
 		Persistance.socketendpoint.sendMessage(tosend.toString());

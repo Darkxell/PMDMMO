@@ -63,7 +63,7 @@ public class PokemonSpecies
 		{
 			int[][] statline = XMLUtils.readDoubleIntArray(xml.getChild("statline", xml.getNamespace()));
 			for (int[] stat : statline)
-				this.baseStats.add(new BaseStats(stat));
+				this.baseStats.add(new BaseStats(null, stat));
 		}
 
 		if (xml.getChild("experience", xml.getNamespace()) != null)
@@ -145,7 +145,7 @@ public class PokemonSpecies
 		{
 			int[][] statline = XMLUtils.readDoubleIntArray(xml.getChild("statline", xml.getNamespace()));
 			for (int[] stat : statline)
-				baseStats.add(new BaseStats(stat));
+				baseStats.add(new BaseStats(null, stat));
 		}
 
 		int[] experiencePerLevel;
@@ -236,7 +236,7 @@ public class PokemonSpecies
 		LearnedMove move3 = m3 == -1 ? null : new LearnedMove(m3);
 		LearnedMove move4 = m4 == -1 ? null : new LearnedMove(m4);
 
-		return new Pokemon(0, this.id, null, null, this.statsForLevel(level), this.randomAbility(random), 0, level, move1, move2, move3, move4,
+		return new Pokemon(0, this, null, null, this.statsForLevel(level), this.randomAbility(random), 0, level, move1, move2, move3, move4,
 				this.randomGender(random), 0, random.nextDouble() <= shinyChance);
 	}
 

@@ -143,7 +143,7 @@ public abstract class FreezoneMap
 	public void updateOtherPlayers(JsonValue data)
 	{
 		String dataname = data.asObject().getString("name", "");
-		if (Persistance.player.name.equals(dataname)) return;
+		if (Persistance.player.name().equals(dataname)) return;
 		double pfx = data.asObject().getDouble("posfx", 0d);
 		double pfy = data.asObject().getDouble("posfy", 0d);
 		int spriteID = Integer.parseInt(data.asObject().getString("currentpokemon", "0"));

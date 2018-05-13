@@ -261,9 +261,9 @@ public class TextRenderer
 	{}
 
 	/** Adds spaces in front of the input number to match the input number of digits. */
-	public static Message alignNumber(int n, int digits)
+	public static Message alignNumber(long n, int digits)
 	{
-		String s = Integer.toString(n);
+		String s = Long.toString(n);
 		int diff = s.length() - digits;
 		for (int i = diff; i < 0; ++i)
 			s = PMDChar.space_number.value + s;

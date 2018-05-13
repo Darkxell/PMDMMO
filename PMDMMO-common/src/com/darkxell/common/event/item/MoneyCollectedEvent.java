@@ -36,7 +36,7 @@ public class MoneyCollectedEvent extends DungeonEvent
 	public ArrayList<DungeonEvent> processServer()
 	{
 		this.tile.setItem(null);
-		this.pokemon.player().money += this.moneyItem.getQuantity();
+		this.pokemon.player().setMoneyInBag(this.pokemon.player().moneyInBag() + this.moneyItem.quantity());
 		return super.processServer();
 	}
 

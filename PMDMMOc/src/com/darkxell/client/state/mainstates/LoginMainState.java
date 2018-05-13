@@ -14,6 +14,7 @@ import com.darkxell.client.resources.images.others.Hud;
 import com.darkxell.client.state.OpenningState;
 import com.darkxell.client.state.StateManager;
 import com.darkxell.client.ui.MainUiUtility;
+import com.darkxell.common.dbobject.DBPlayer;
 import com.darkxell.common.item.ItemID;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.player.Player;
@@ -205,8 +206,9 @@ public class LoginMainState extends StateManager {
 	 */
 	public void launchOnlineOnRecieve(JsonObject pl) {
 		Logger.i("Recieved connection informations, player is connected to the server.");
-		Persistance.player = new Player();
-		Persistance.player.read(pl);
+		DBPlayer playerdata = new DBPlayer();
+		playerdata.read(pl);
+		Persistance.player = new Player(playerdata);
 		Persistance.stateManager = new PrincipalMainState();
 		((PrincipalMainState) Persistance.stateManager).setState(new OpenningState());
 		((PrincipalMainState) Persistance.stateManager).randomizeBackground();
@@ -217,7 +219,7 @@ public class LoginMainState extends StateManager {
 		// Set placeholder data to fake an account creation
 		Persistance.player = new Player("Offline debug account name",
 				PokemonRegistry.find(6).generate(new Random(), 1));
-		Persistance.player.currentStoryline = 1;
+		Persistance.player.setStoryPosition(1);
 		Persistance.player.addAlly(PokemonRegistry.find(252).generate(new Random(), 1, 1));
 		Persistance.player.addAlly(PokemonRegistry.find(255).generate(new Random(), 1));
 		Persistance.player.getTeamLeader().setItem(new ItemStack(ItemID.XRaySpecs));

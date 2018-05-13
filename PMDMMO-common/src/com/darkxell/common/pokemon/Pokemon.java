@@ -1,10 +1,11 @@
 package com.darkxell.common.pokemon;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import org.jdom2.Element;
 
+import com.darkxell.common.dbobject.DBPokemon;
+import com.darkxell.common.dbobject.DatabaseIdentifier;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.move.MoveDiscoveredEvent;
 import com.darkxell.common.event.stats.ExperienceGainedEvent;
@@ -15,15 +16,10 @@ import com.darkxell.common.move.Move;
 import com.darkxell.common.player.ItemContainer;
 import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.ability.Ability;
-import com.darkxell.common.util.Communicable;
 import com.darkxell.common.util.XMLUtils;
 import com.darkxell.common.util.language.Message;
-import com.eclipsesource.json.Json;
-import com.eclipsesource.json.JsonArray;
-import com.eclipsesource.json.JsonObject;
-import com.eclipsesource.json.JsonValue;
 
-public class Pokemon implements ItemContainer, Communicable
+public class Pokemon implements ItemContainer
 {
 	/** Pokémon gender.
 	 * <ul>
@@ -32,102 +28,67 @@ public class Pokemon implements ItemContainer, Communicable
 	 * <li>GENDERLESS = 2</li>
 	 * </ul>
 	 */
-	public static final byte MALE = 0, FEMALE = 1, GENDERLESS = 2;
+	public static final int MALE = 0, FEMALE = 1, GENDERLESS = 2;
 	public static final String XML_ROOT = "pokemon";
 
+	private static ArrayList<DatabaseIdentifier> createMovesList(LearnedMove... moves)
+	{
+		ArrayList<DatabaseIdentifier> ids = new ArrayList<>();
+		for (LearnedMove move : moves)
+			if (move != null) ids.add(new DatabaseIdentifier(move.getData().id));
+		return ids;
+	}
+
 	/** This Pokémon's ability's ID. */
-	private int abilityID;
+	private Ability ability;
+
+	private DBPokemon data;
+
 	/** A reference to the Dungeon entity of this Pokémon if in a Dungeon. null else. */
 	DungeonPokemon dungeonPokemon;
-	/** The current amount of experience of this Pokémon (for this level). */
-	private int experience;
-	/** This Pokémon's gender. See {@link Pokemon#MALE}. */
-	private byte gender;
-	/** This Pokémon's ID. */
-	private int id;
-	/** This Pokémon's IQ. */
-	private int iq;
-	/** True if this Pokémon is shiny. */
-	private boolean isShiny;
+
 	/** This Pokémon's held Item's ID. -1 for no Item. */
 	private ItemStack item;
-	/** This Pokémon's level. */
-	private int level;
+
 	/** This Pokémon's moves. */
 	private LearnedMove[] moves;
-	/** This Pokémon's nickname. If null, use the species' name. */
-	private String nickname;
+
 	/** The Player controlling this Pokémon. null if it's an NPC. */
 	private Player player;
+
 	/** This Pokémon's species. */
-	private int species;
+	private PokemonSpecies species;
+
 	/** This Pokémon's stats. */
 	private BaseStats stats;
 
-	public Pokemon()
+	public Pokemon(DBPokemon data)
 	{
-		this(-1, -1, "???", null, null, 0, 0, 0, null, null, null, null, GENDERLESS, 0, false);
+		this.setData(data);
 	}
 
-	public Pokemon(Element xml)
+	public Pokemon(long id, PokemonSpecies species, String nickname, ItemStack item, BaseStats stats, int abilityid, long experience, int level,
+			LearnedMove move1, LearnedMove move2, LearnedMove move3, LearnedMove move4, int gender, int iq, boolean shiny)
 	{
-		// todo: handle ID of null.
-		Random r = new Random();
-		this.id = XMLUtils.getAttribute(xml, "pk-id", 0);
-		this.species = Integer.parseInt(xml.getAttributeValue("id"));
-		this.nickname = xml.getAttributeValue("nickname");
-		this.item = xml.getChild(ItemStack.XML_ROOT) == null ? null : new ItemStack(xml.getChild(ItemStack.XML_ROOT));
-		this.level = Integer.parseInt(xml.getAttributeValue("level"));
-		this.stats = xml.getChild(BaseStats.XML_ROOT) == null ? this.species().statsForLevel(this.level) : new BaseStats(xml.getChild(BaseStats.XML_ROOT));
-		this.abilityID = XMLUtils.getAttribute(xml, "ability", this.species().randomAbility(r));
-		this.experience = XMLUtils.getAttribute(xml, "xp", 0);
-		this.gender = XMLUtils.getAttribute(xml, "gender", this.species().randomGender(r));
-		this.iq = XMLUtils.getAttribute(xml, "iq", 0);
-		this.isShiny = XMLUtils.getAttribute(xml, "shiny", false);
-		this.moves = new LearnedMove[4];
-		ArrayList<Integer> moves = new ArrayList<Integer>();
-		for (Element move : xml.getChildren("move"))
-		{
-			int slot = Integer.parseInt(move.getAttributeValue("slot"));
-			if (slot < 0 || slot >= this.moves.length) continue;
-			this.moves[slot] = new LearnedMove(move);
-			this.moves[slot].setSlot(slot);
-			moves.add(this.moves[slot].move().id);
-		}
-
-		for (int i = 0; i < this.moves.length; ++i)
-			if (this.moves[i] == null)
-			{
-				int id = this.species().latestMove(this.level, moves);
-				if (id == -1) break;
-				this.moves[i] = new LearnedMove(id);
-				moves.add(this.moves[i].move().id);
-				this.moves[i].setSlot(i);
-			}
-
-	}
-
-	public Pokemon(int id, int species, String nickname, ItemStack item, BaseStats stats, int ability, int experience, int level, LearnedMove move1,
-			LearnedMove move2, LearnedMove move3, LearnedMove move4, byte gender, int iq, boolean shiny)
-	{
-		this.id = id;
-		this.species = species;
-		this.nickname = nickname;
-		this.item = item;
-		this.stats = stats;
-		this.abilityID = ability;
-		this.experience = experience;
-		this.level = level;
-		this.moves = new LearnedMove[] { move1, move2, move3, move4 };
-		this.gender = gender;
-		this.iq = iq;
-		this.isShiny = shiny;
+		this(new DBPokemon(0, species.id, species.formID, abilityid, gender, nickname, level, experience, iq, shiny, stats.attack, stats.defense,
+				stats.specialAttack, stats.specialDefense, stats.health, item == null ? null : new DatabaseIdentifier(item.getData().id),
+				createMovesList(move1, move2, move3, move4)));
 	}
 
 	public Pokemon(Pokemon pokemon)
 	{
-		this(pokemon.id, pokemon.species, pokemon.nickname, pokemon.item, pokemon.stats, pokemon.abilityID, pokemon.experience, pokemon.level, pokemon.move(0),
-				pokemon.move(1), pokemon.move(2), pokemon.move(3), pokemon.gender, pokemon.iq, pokemon.isShiny);
+		this(pokemon.getData().id, pokemon.species(), pokemon.nickname(), pokemon.item(), pokemon.stats(), pokemon.abilityID(), pokemon.experience(),
+				pokemon.level(), pokemon.move(0), pokemon.move(1), pokemon.move(2), pokemon.move(3), pokemon.gender(), pokemon.iq(), pokemon.isShiny());
+	}
+
+	public Ability ability()
+	{
+		return this.ability;
+	}
+
+	public int abilityID()
+	{
+		return this.data.abilityid;
 	}
 
 	@Override
@@ -160,21 +121,26 @@ public class Pokemon implements ItemContainer, Communicable
 		if (evolutions.length == 0) return new Message("evolve.none");
 		for (Evolution evolution : evolutions)
 		{
-			if (evolution.method == Evolution.LEVEL && this.getLevel() >= evolution.value) return new Message("evolve.possible");
+			if (evolution.method == Evolution.LEVEL && this.level() >= evolution.value) return new Message("evolve.possible");
 			if (evolution.method == Evolution.ITEM) return new Message("evolve.item");
 		}
 		return new Message("evolve.not_now");
 	}
 
-	/** @return The amount of experience to gain in order to level up. */
-	public int experienceLeftNextLevel()
+	public long experience()
 	{
-		return this.species().experienceToNextLevel(this.level) - this.experience;
+		return this.data.experience;
 	}
 
-	public int experienceToNextLevel()
+	/** @return The amount of experience to gain in order to level up. */
+	public long experienceLeftNextLevel()
 	{
-		return this.species().experienceToNextLevel(this.level);
+		return this.species().experienceToNextLevel(this.level()) - this.experience();
+	}
+
+	public long experienceToNextLevel()
+	{
+		return this.species().experienceToNextLevel(this.level());
 	}
 
 	/** @param amount - The amount of experience gained.
@@ -185,34 +151,29 @@ public class Pokemon implements ItemContainer, Communicable
 
 		int amount = event.experience;
 		int levelsup = 0;
-		int next = this.experienceLeftNextLevel();
+		long next = this.experienceLeftNextLevel();
 		while (amount != 0)
 		{
 			if (next <= amount)
 			{
 				amount -= next;
-				this.experience = 0;
+				this.setExperience(0);
 				events.add(new LevelupEvent(event.floor, this));
 			} else
 			{
-				this.experience += amount;
+				this.setExperience(this.experience() + amount);
 				amount = 0;
 			}
 			++levelsup;
-			next = this.species().experienceToNextLevel(this.getLevel() + levelsup);
+			next = this.species().experienceToNextLevel(this.level() + levelsup);
 		}
 
 		return events;
 	}
 
-	public byte gender()
+	public int gender()
 	{
-		return this.gender;
-	}
-
-	public Ability getAbility()
-	{
-		return Ability.find(this.abilityID);
+		return this.data.gender;
 	}
 
 	public BaseStats getBaseStats()
@@ -220,14 +181,14 @@ public class Pokemon implements ItemContainer, Communicable
 		return this.stats;
 	}
 
+	public DBPokemon getData()
+	{
+		return this.data;
+	}
+
 	public DungeonPokemon getDungeonPokemon()
 	{
 		return this.dungeonPokemon;
-	}
-
-	public int getExperience()
-	{
-		return this.experience;
 	}
 
 	public int getIQLevel()
@@ -249,35 +210,30 @@ public class Pokemon implements ItemContainer, Communicable
 		return this.getItem();
 	}
 
-	public int getLevel()
-	{
-		return this.level;
-	}
-
 	public Message getNickname()
 	{
-		return (this.nickname == null ? this.species().speciesName() : new Message(this.nickname, false)).addPrefix(this.player == null ? "<blue>" : "<yellow>")
-				.addSuffix("</color>");
-	}
-        
-        public String getRawNickname()
-	{
-		return this.nickname;
+		return (this.nickname() == null ? this.species().speciesName() : new Message(this.nickname(), false))
+				.addPrefix(this.player == null ? "<blue>" : "<yellow>").addSuffix("</color>");
 	}
 
-	public int id()
+	public String getRawNickname()
 	{
-		return this.id;
+		return this.nickname();
+	}
+
+	public long id()
+	{
+		return this.data.id;
 	}
 
 	public void increaseIQ(int iq)
 	{
-		this.iq += iq;
+		this.setIq(this.iq() + iq);
 	}
 
 	public int iq()
 	{
-		return this.iq;
+		return this.data.iq;
 	}
 
 	public boolean isAlliedWith(Pokemon pokemon)
@@ -287,7 +243,12 @@ public class Pokemon implements ItemContainer, Communicable
 
 	public boolean isShiny()
 	{
-		return this.isShiny;
+		return this.data.isshiny;
+	}
+
+	public ItemStack item()
+	{
+		return this.item;
 	}
 
 	@Override
@@ -298,15 +259,20 @@ public class Pokemon implements ItemContainer, Communicable
 		return actions;
 	}
 
+	public int level()
+	{
+		return this.data.level;
+	}
+
 	public ArrayList<DungeonEvent> levelUp()
 	{
 		ArrayList<DungeonEvent> events = new ArrayList<>();
-		++this.level;
-		BaseStats stats = this.species().baseStatsIncrease(this.level - 1);
+		this.setLevel(this.level() + 1);
+		BaseStats stats = this.species().baseStatsIncrease(this.level() - 1);
 		this.stats.add(stats);
 		if (this.dungeonPokemon != null) this.dungeonPokemon.stats.onStatChange();
 
-		ArrayList<Move> moves = this.species().learnedMoves(this.level);
+		ArrayList<Move> moves = this.species().learnedMoves(this.level());
 		for (Move move : moves)
 			events.add(new MoveDiscoveredEvent(this, move));
 
@@ -327,45 +293,34 @@ public class Pokemon implements ItemContainer, Communicable
 		return 1;
 	}
 
+	private String nickname()
+	{
+		return this.data.nickname;
+	}
+
 	public Player player()
 	{
 		return this.player;
 	}
 
-	@Override
-	public void read(JsonObject value)
+	public void setData(DBPokemon data)
 	{
-		this.id = value.getInt("id", -1);
-		this.species = value.getInt("species", -1);
-		this.gender = (byte) value.getInt("gender", 2);
-		this.experience = value.getInt("xp", 0);
-		this.level = value.getInt("level", 1);
-		this.iq = value.getInt("iq", 0);
-		this.abilityID = value.getInt("ability", -1);
-		this.isShiny = value.getBoolean("shiny", false);
-		this.nickname = value.getString("name", null);
+		this.data = data;
+		this.ability = Ability.find(this.abilityID());
+		this.item = null; // How to update item?
+		this.moves = null; // How to update moves?
+		this.species = PokemonRegistry.find(this.data.specieid);
+		this.stats = new BaseStats(this, this.data.stat_atk, this.data.stat_def, this.data.stat_hp, this.data.stat_speatk, this.data.stat_spedef, 1);
+	}
 
-		if (value.get("item") != null)
-		{
-			this.item = new ItemStack(value.get("item").asObject().getInt("id", -1));
-			this.item.setQuantity(value.get("item").asObject().getInt("quantity", 1));
-		} else this.item = null;
+	private void setExperience(long experience)
+	{
+		this.data.experience = experience;
+	}
 
-		int slot = 0;
-		if (value.get("moves") != null) for (JsonValue moveJson : value.get("moves").asArray())
-		{
-			if (slot >= 4) break;
-			LearnedMove move = new LearnedMove();
-			move.read(moveJson.asObject());
-			this.setMove(slot++, move);
-		}
-
-		if (value.get("stats") != null)
-		{
-			this.stats = new BaseStats();
-			this.stats.read(value.get("stats").asObject());
-		}
-
+	private void setIq(int iq)
+	{
+		this.data.iq = iq;
 	}
 
 	@Override
@@ -377,6 +332,13 @@ public class Pokemon implements ItemContainer, Communicable
 	public void setItem(ItemStack item)
 	{
 		this.item = item;
+		if (item == null) this.data.holdeditem = null;
+		else this.data.holdeditem = new DatabaseIdentifier(item.getData().id);
+	}
+
+	private void setLevel(int level)
+	{
+		this.data.level = level;
 	}
 
 	public void setMove(int slot, LearnedMove move)
@@ -392,7 +354,7 @@ public class Pokemon implements ItemContainer, Communicable
 
 	public void setNickname(String nickname)
 	{
-		this.nickname = nickname;
+		this.data.nickname = nickname;
 	}
 
 	public void setPlayer(Player player)
@@ -408,7 +370,12 @@ public class Pokemon implements ItemContainer, Communicable
 
 	public PokemonSpecies species()
 	{
-		return PokemonRegistry.find(this.species);
+		return this.species;
+	}
+
+	public BaseStats stats()
+	{
+		return this.stats;
 	}
 
 	public void switchMoves(int slot1, int slot2)
@@ -420,40 +387,15 @@ public class Pokemon implements ItemContainer, Communicable
 	}
 
 	@Override
-	public JsonObject toJson()
-	{
-		JsonObject root = Json.object();
-		root.add("id", this.id);
-		root.add("species", this.species);
-		root.add("gender", this.gender);
-		if (this.experience != 0) root.add("xp", this.experience);
-		if (this.level != 1) root.add("level", this.level);
-		if (this.iq != 0) root.add("iq", this.iq);
-		root.add("ability", this.abilityID);
-		if (this.isShiny) root.add("shiny", this.isShiny);
-		if (this.nickname != null) root.add("name", this.nickname);
-		if (this.item != null) root.add("item", this.item.toJson());
-
-		JsonArray movesJson = new JsonArray();
-		for (int i = 0; i < 4 && this.move(i) != null; ++i)
-			movesJson.add(this.move(i).toJson());
-		root.add("moves", movesJson);
-
-		if (!this.stats.equals(this.species().statsForLevel(this.level))) root.add("stats", this.stats.toJson());
-
-		return root;
-	}
-
-	@Override
 	public String toString()
 	{
 		return this.getNickname().toString();
 	}
 
-	public int totalExperience()
+	public long totalExperience()
 	{
-		int xp = this.experience;
-		for (int lvl = 1; lvl < this.level; ++lvl)
+		long xp = this.experience();
+		for (int lvl = 1; lvl < this.level(); ++lvl)
 			xp += this.species().experienceToNextLevel(lvl);
 		return xp;
 	}
@@ -461,17 +403,17 @@ public class Pokemon implements ItemContainer, Communicable
 	public Element toXML()
 	{
 		Element root = new Element(XML_ROOT);
-		root.setAttribute("pk-id", Integer.toString(this.id));
+		root.setAttribute("pk-id", Long.toString(this.id()));
 		root.setAttribute("id", Integer.toString(this.species().compoundID()));
-		if (this.nickname != null) root.setAttribute("nickname", this.nickname);
+		if (this.nickname() != null) root.setAttribute("nickname", this.nickname());
 		if (this.item != null) root.addContent(this.item.toXML());
-		root.setAttribute("level", Integer.toString(this.level));
+		root.setAttribute("level", Integer.toString(this.level()));
 		root.addContent(this.stats.toXML());
-		root.setAttribute("ability", Integer.toString(this.abilityID));
-		XMLUtils.setAttribute(root, "xp", this.experience, 0);
-		root.setAttribute("gender", Byte.toString(this.gender));
-		XMLUtils.setAttribute(root, "iq", this.iq, 0);
-		XMLUtils.setAttribute(root, "shiny", this.isShiny, false);
+		root.setAttribute("ability", Integer.toString(this.abilityID()));
+		XMLUtils.setAttribute(root, "xp", this.experience(), 0);
+		root.setAttribute("gender", Integer.toString(this.gender()));
+		XMLUtils.setAttribute(root, "iq", this.iq(), 0);
+		XMLUtils.setAttribute(root, "shiny", this.isShiny(), false);
 		this.moves = new LearnedMove[4];
 		for (int i = 0; i < this.moves.length; ++i)
 			if (this.moves[i] != null) root.addContent(this.moves[i].toXML());

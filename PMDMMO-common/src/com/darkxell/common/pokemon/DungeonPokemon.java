@@ -59,7 +59,7 @@ public class DungeonPokemon implements ItemContainer
 
 	public Ability ability()
 	{
-		return this.usedPokemon.getAbility();
+		return this.usedPokemon.ability();
 	}
 
 	@Override
@@ -109,7 +109,7 @@ public class DungeonPokemon implements ItemContainer
 	public int experienceGained()
 	{
 		int base = this.usedPokemon.species().baseXP;
-		base += Math.floor(base * (this.originalPokemon.getLevel() - 1) / 10) + base;
+		base += Math.floor(base * (this.originalPokemon.level() - 1) / 10) + base;
 		if (this.attacksReceived == REGULAR_ATTACKS) base = (int) (base * 0.5);
 		else if (this.attacksReceived == LINKED_MOVES) base = (int) (base * 1.5);
 		return base;
@@ -238,7 +238,7 @@ public class DungeonPokemon implements ItemContainer
 
 	public int level()
 	{
-		return this.usedPokemon.getLevel();
+		return this.usedPokemon.level();
 	}
 
 	public LearnedMove move(int slot)

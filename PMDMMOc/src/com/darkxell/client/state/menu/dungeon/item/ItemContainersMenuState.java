@@ -100,7 +100,7 @@ public class ItemContainersMenuState extends OptionSelectionMenuState implements
 		{
 			Persistance.stateManager.setState(Persistance.dungeonState);
 			Persistance.eventProcessor.processEvent(new ItemSwappedEvent(Persistance.floor, ItemAction.SWAP, Persistance.player.getDungeonLeader(),
-					Persistance.player.inventory, index, Persistance.player.getDungeonLeader().tile(), 0));
+					Persistance.player.inventory(), index, Persistance.player.getDungeonLeader().tile(), 0));
 		}
 	}
 
@@ -114,10 +114,10 @@ public class ItemContainersMenuState extends OptionSelectionMenuState implements
 	public void onKeyPressed(short key)
 	{
 		super.onKeyPressed(key);
-		if (key == Keys.KEY_MAP_RESET && this.container() == Persistance.player.inventory)
+		if (key == Keys.KEY_MAP_RESET && this.container() == Persistance.player.inventory())
 		{
 			SoundManager.playSound("ui-sort");
-			Persistance.player.inventory.sort();
+			Persistance.player.inventory().sort();
 			ArrayList<ItemContainer> containers = new ArrayList<ItemContainer>();
 			for (ItemContainer c : this.containers)
 				if (!containers.contains(c)) containers.add(c);
@@ -136,7 +136,7 @@ public class ItemContainersMenuState extends OptionSelectionMenuState implements
 			ArrayList<ItemAction> actions = container.legalItemActions();
 			actions.addAll(i.item().getLegalActions(true));
 			actions.remove(Persistance.player.getDungeonLeader().tile().getItem() == null ? ItemAction.SWITCH : ItemAction.PLACE);
-			if (Persistance.player.inventory.isFull())
+			if (Persistance.player.inventory().isFull())
 			{
 				actions.remove(ItemAction.GET);
 				actions.remove(ItemAction.TAKE);
@@ -162,14 +162,14 @@ public class ItemContainersMenuState extends OptionSelectionMenuState implements
 		{
 			if (i.item().usedOnTeamMember()) Persistance.stateManager.setState(new TeamMenuState(s, this));
 			else Persistance.eventProcessor.processEvent(new ItemSelectionEvent(Persistance.floor, i.item(), user, null, container, index));
-		} else if (action == ItemAction.GET || action == ItemAction.TAKE) Persistance.eventProcessor
-				.processEvent(new ItemMovedEvent(Persistance.floor, action, user, container, 0, user.player().inventory, user.player().inventory.canAccept(i)));
+		} else if (action == ItemAction.GET || action == ItemAction.TAKE) Persistance.eventProcessor.processEvent(
+				new ItemMovedEvent(Persistance.floor, action, user, container, 0, user.player().inventory(), user.player().inventory().canAccept(i)));
 		else if (action == ItemAction.GIVE) Persistance.stateManager.setState(new TeamMenuState(s, this));
 		else if (action == ItemAction.PLACE)
 			Persistance.eventProcessor.processEvent(new ItemMovedEvent(Persistance.floor, action, user, container, index, user.tile(), 0));
 		else if (action == ItemAction.SWITCH)
 			Persistance.eventProcessor.processEvent(new ItemSwappedEvent(Persistance.floor, action, user, container, index, user.tile(), 0));
-		else if (action == ItemAction.SWAP) Persistance.stateManager.setState(new ItemContainersMenuState(s, this, Persistance.player.inventory));
+		else if (action == ItemAction.SWAP) Persistance.stateManager.setState(new ItemContainersMenuState(s, this, Persistance.player.inventory()));
 		else if (action == ItemAction.INFO)
 			Persistance.stateManager.setState(new InfoState(s, this, new Message[] { i.item().name() }, new Message[] { i.info() }));
 	}
@@ -195,10 +195,10 @@ public class ItemContainersMenuState extends OptionSelectionMenuState implements
 		{
 			case GIVE:
 				if (pokemon.getItem() != null) Persistance.eventProcessor.processEvent(new ItemSwappedEvent(Persistance.floor, ItemAction.GIVE,
-						Persistance.player.getDungeonLeader(), Persistance.player.inventory, this.itemIndex(), pokemon, 0));
+						Persistance.player.getDungeonLeader(), Persistance.player.inventory(), this.itemIndex(), pokemon, 0));
 
 				else Persistance.eventProcessor.processEvent(new ItemMovedEvent(Persistance.floor, ItemAction.GIVE, Persistance.player.getDungeonLeader(),
-						Persistance.player.inventory, this.itemIndex(), pokemon, 0));
+						Persistance.player.inventory(), this.itemIndex(), pokemon, 0));
 				break;
 
 			case USE:
