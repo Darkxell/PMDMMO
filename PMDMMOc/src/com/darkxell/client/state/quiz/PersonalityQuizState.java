@@ -12,6 +12,7 @@ import com.darkxell.client.renderers.layers.BackgroundLsdLayer;
 import com.darkxell.client.resources.images.pokemon.PokemonPortrait;
 import com.darkxell.client.resources.music.SoundsHolder;
 import com.darkxell.client.state.AbstractState;
+import com.darkxell.client.state.PlayerLoadingState;
 import com.darkxell.client.state.dialog.AbstractDialogState;
 import com.darkxell.client.state.dialog.AbstractDialogState.DialogEndListener;
 import com.darkxell.client.state.dialog.AbstractDialogState.DialogScreen;
@@ -179,12 +180,6 @@ public class PersonalityQuizState extends AbstractState implements DialogEndList
 			if (this.tick <= NarratorDialogState.FADETIME)
 				--this.tick;
 			if (this.tick == 0) {
-				/*
-				 * Persistance.player.clearAllies();
-				 * Persistance.player.setLeaderPokemon(this.starter);
-				 * Persistance.player.addAlly(this.partner);
-				 * Persistance.stateManager.setState(new OpenningState());
-				 */
 				sendTestResults(this.starter.species().id, this.partner.species().id, this.starter.gender(), this.starter.gender());
 			}
 		}
@@ -196,6 +191,11 @@ public class PersonalityQuizState extends AbstractState implements DialogEndList
 				.add("maingender", gender1).add("offgender", gender2);
 		Persistance.socketendpoint.sendMessage(tosend.toString());
 		Logger.i("Chosen pokemons " + id1 + " and " + id2 + ", sending to server.");
+	}
+
+	public void onResultConfirmed()
+	{
+		Persistance.stateManager.setState(new PlayerLoadingState(Persistance.player.getData().id));
 	}
 
 }

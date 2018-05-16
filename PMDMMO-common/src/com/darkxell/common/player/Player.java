@@ -136,8 +136,11 @@ public class Player
 		this.data = data;
 		this.allies = new ArrayList<>();
 		this.dungeonAllies = new ArrayList<>();
-		this.leaderPokemon = null; // How to get pokemon ?
-		this.inventory = new Inventory(null); // How to get inventory data?
+	}
+
+	public void setInventory(Inventory inventory)
+	{
+		this.inventory = inventory;
 	}
 
 	public void setLeaderPokemon(Pokemon pokemon)

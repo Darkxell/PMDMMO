@@ -12,7 +12,9 @@ import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.chat.CustomTextfield;
 import com.darkxell.client.resources.images.others.Hud;
 import com.darkxell.client.state.OpenningState;
+import com.darkxell.client.state.PlayerLoadingState;
 import com.darkxell.client.state.StateManager;
+import com.darkxell.client.state.quiz.PersonalityQuizState;
 import com.darkxell.client.ui.MainUiUtility;
 import com.darkxell.common.dbobject.DBPlayer;
 import com.darkxell.common.item.ItemID;
@@ -210,7 +212,8 @@ public class LoginMainState extends StateManager {
 		playerdata.read(pl);
 		Persistance.player = new Player(playerdata);
 		Persistance.stateManager = new PrincipalMainState();
-		((PrincipalMainState) Persistance.stateManager).setState(new OpenningState());
+		if (Persistance.player.storyPosition() == 0) Persistance.stateManager.setState(new PersonalityQuizState());
+		else Persistance.stateManager.setState(new PlayerLoadingState(Persistance.player.getData().id));
 		((PrincipalMainState) Persistance.stateManager).randomizeBackground();
 	}
 

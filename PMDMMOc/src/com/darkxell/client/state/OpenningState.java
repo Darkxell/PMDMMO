@@ -8,7 +8,6 @@ import com.darkxell.client.renderers.layers.BackgroundSeaLayer;
 import com.darkxell.client.resources.images.others.Hud;
 import com.darkxell.client.resources.music.SoundsHolder;
 import com.darkxell.client.state.freezone.FreezoneExploreState;
-import com.darkxell.client.state.quiz.PersonalityQuizState;
 import com.darkxell.client.ui.Keys;
 
 public class OpenningState extends AbstractState {
@@ -20,9 +19,6 @@ public class OpenningState extends AbstractState {
 	@Override
 	public void onKeyPressed(short key) {
 		if (key == Keys.KEY_ATTACK)
-			if (Persistance.player.storyPosition() == 0)
-				Persistance.stateManager.setState(new PersonalityQuizState());
-			else
 				Persistance.stateManager.setState(new FreezoneExploreState());
 	}
 
