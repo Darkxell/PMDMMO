@@ -16,7 +16,7 @@ public class DBPlayer implements Communicable
 	public long moneyinbag;
 	public long moneyinbank;
 	public String name;
-	public String passhash;
+	public String passhash = "";
 	public ArrayList<DatabaseIdentifier> pokemonsinparty;
 	public ArrayList<DatabaseIdentifier> pokemonsinzones;
 	public DatabaseIdentifier storageinventory;
@@ -50,7 +50,6 @@ public class DBPlayer implements Communicable
 		DBPlayer o = (DBPlayer) obj;
 		if (this.id != o.id) return false;
 		if ((this.name == null) != (o.name == null) || (this.name != null && !this.name.equals(o.name))) return false;
-		if ((this.passhash == null) != (o.passhash == null) || (this.passhash != null && !this.passhash.equals(o.passhash))) return false;
 		if (this.moneyinbag != o.moneyinbag) return false;
 		if (this.moneyinbank != o.moneyinbank) return false;
 		if (this.storyposition != o.storyposition) return false;
@@ -73,7 +72,7 @@ public class DBPlayer implements Communicable
 	{
 		this.id = value.getLong("id", this.id);
 		this.name = value.getString("name", this.name);
-		this.passhash = value.getString("passhash", this.passhash);
+		this.passhash = value.getString("passhash", "");
 		this.moneyinbag = value.getLong("moneyinbag", this.moneyinbag);
 		this.moneyinbank = value.getLong("moneyinbank", this.moneyinbank);
 		this.storyposition = value.getInt("storyposition", this.storyposition);
@@ -108,7 +107,6 @@ public class DBPlayer implements Communicable
 		JsonObject root = Json.object();
 		root.add("id", this.id);
 		root.add("name", this.name);
-		root.add("passhash", this.passhash);
 		root.add("moneyinbag", this.moneyinbag);
 		root.add("moneyinbank", this.moneyinbank);
 		root.add("storyposition", this.storyposition);
