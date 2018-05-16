@@ -19,7 +19,7 @@ import javax.websocket.Session;
  *
  * @author Darkxell
  */
-public class InventoryRequestHandler extends MessageHandler{
+public class InventoryRequestHandler extends MessageHandler {
 
     public InventoryRequestHandler(GameServer endpoint) {
         super(endpoint);
@@ -29,18 +29,20 @@ public class InventoryRequestHandler extends MessageHandler{
     public void handleMessage(JsonObject json, Session from, GameSessionHandler sessionshandler) {
         int id = json.getJsonNumber("id").intValue();
         DBInventory inventory = endpoint.getInventoryDAO().find(id);
-        
+
         com.eclipsesource.json.JsonObject value = Json.object();
         value.add("action", "requestinventory");
-        value.add("object",inventory.toJson());
+        value.add("object", inventory.toJson());
         JsonArray items = new JsonArray();
-        
-        for (int i = 0; i < inventory.content.size(); ++i) {
-            items.add(endpoint.getItemstackDAO().find(inventory.content.get(i).id).toJson());
+
+        if (inventory.content != null) {
+            for (int i = 0; i < inventory.content.size(); ++i) {
+                items.add(endpoint.getItemstackDAO().find(inventory.content.get(i).id).toJson());
+            }
         }
-        
-        value.add("items",items);
+
+        value.add("items", items);
         sessionshandler.sendToSession(from, value);
     }
-    
+
 }

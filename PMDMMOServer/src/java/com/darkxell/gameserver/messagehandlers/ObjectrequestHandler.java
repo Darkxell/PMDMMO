@@ -32,27 +32,27 @@ public class ObjectrequestHandler extends MessageHandler {
         switch (type) {
             case "dbplayer":
             case "player":
-                value.add("",endpoint.getPlayerDAO().find(id).toJson());
+                value.add("object",endpoint.getPlayerDAO().find(id).toJson());
                 value.add("type","dbplayer");
                 break;
             case "dbinventory":
             case "inventory":
-                value.add("",endpoint.getInventoryDAO().find(id).toJson());
+                value.add("object",endpoint.getInventoryDAO().find(id).toJson());
                 value.add("type","dbinventory");
                 break;
             case "dbitemstack":
             case "itemstack":
-                value.add("",endpoint.getItemstackDAO().find(id).toJson());
+                value.add("object",endpoint.getItemstackDAO().find(id).toJson());
                 value.add("type","dbitemstack");
                 break;
             case "dbpokemon":
             case "pokemon":
-                value.add("",endpoint.getPokemonDAO().find(id).toJson());
+                value.add("object",endpoint.getPokemonDAO().find(id).toJson());
                 value.add("type","dbpokemon");
                 break;
             case "dblearnedmove":
             case "learnedmove":
-                value.add("",endpoint.getLearnedmoveDAO().find(id).toJson());
+                value.add("object",endpoint.getLearnedmoveDAO().find(id).toJson());
                 value.add("type","dblearnedmove");
                 break;
         }

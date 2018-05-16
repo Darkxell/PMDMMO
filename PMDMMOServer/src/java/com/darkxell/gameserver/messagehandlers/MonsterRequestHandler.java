@@ -18,7 +18,7 @@ import javax.websocket.Session;
  *
  * @author Darkxell
  */
-public class MonsterRequestHandler extends MessageHandler{
+public class MonsterRequestHandler extends MessageHandler {
 
     public MonsterRequestHandler(GameServer endpoint) {
         super(endpoint);
@@ -28,19 +28,23 @@ public class MonsterRequestHandler extends MessageHandler{
     public void handleMessage(JsonObject json, Session from, GameSessionHandler sessionshandler) {
         int id = json.getJsonNumber("id").intValue();
         DBPokemon pokemon = endpoint.getPokemonDAO().find(id);
-        
+
         com.eclipsesource.json.JsonObject value = Json.object();
         value.add("action", "requestmonster");
-        value.add("object",pokemon.toJson());
-        value.add("item",endpoint.getItemstackDAO().find(pokemon.holdeditem.id).toJson());
-        JsonArray moves = new JsonArray();
-        
-        for (int i = 0; i < pokemon.learnedmoves.size(); ++i) {
-            moves.add(endpoint.getLearnedmoveDAO().find(pokemon.learnedmoves.get(i).id).toJson());
+        value.add("object", pokemon.toJson());
+        if (pokemon.holdeditem != null) {
+            value.add("item", endpoint.getItemstackDAO().find(pokemon.holdeditem.id).toJson());
         }
-        
-        value.add("moves",moves);
+        JsonArray moves = new JsonArray();
+
+        if (pokemon.learnedmoves != null) {
+            for (int i = 0; i < pokemon.learnedmoves.size(); ++i) {
+                moves.add(endpoint.getLearnedmoveDAO().find(pokemon.learnedmoves.get(i).id).toJson());
+            }
+        }
+
+        value.add("moves", moves);
         sessionshandler.sendToSession(from, value);
     }
-    
+
 }

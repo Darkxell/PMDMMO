@@ -176,6 +176,7 @@ public class GameServer {
         try (JsonReader reader = Json.createReader(new StringReader(message))) {
             JsonObject jsonMessage = reader.readObject();
             if (null != jsonMessage.getString("action")) {
+                System.out.println("Got message from " + session.getId() + " : " + jsonMessage.getString("action"));
                 switch (jsonMessage.getString("action")) {
                     case "createaccount": {
                         CreateAccountHandler hand = new CreateAccountHandler(this);
