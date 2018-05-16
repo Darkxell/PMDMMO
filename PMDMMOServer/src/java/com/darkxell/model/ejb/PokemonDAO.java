@@ -46,7 +46,7 @@ public class PokemonDAO {
                 Connection cn = ds.getConnection();
                 PreparedStatement prepare
                         = cn.prepareStatement(
-                                "INSERT INTO pokemon (id, specieid, formid, abilityid, gender, nickname, level, experience, stat_atk, stat_def, stat_spatk, stat_spdef, stat_hp) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+                                "INSERT INTO pokemon (id, specieid, formid, abilityid, gender, nickname, level, experience, stat_atk, stat_def, stat_spatk, stat_spdef, stat_hp, isshiny, iq) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
                         );
                 prepare.setLong(1, newid);
                 prepare.setInt(2, pokemon.specieid);
@@ -61,9 +61,11 @@ public class PokemonDAO {
                 prepare.setInt(11, pokemon.stat_speatk);
                 prepare.setInt(12, pokemon.stat_spedef);
                 prepare.setInt(13, pokemon.stat_hp);
+                prepare.setBoolean(14, pokemon.isshiny);
+                prepare.setInt(15, pokemon.iq);
                 prepare.executeUpdate();
                 cn.close();
-                
+
                 return newid;
             } else {
                 System.err.println("Could not autoincrement properly.");
@@ -103,11 +105,11 @@ public class PokemonDAO {
                     );
             if (result.first()) {
                 toreturn = new DBPokemon(id, result.getInt("specieid"), result.getInt("formid"), result.getInt("abilityid"), result.getInt("gender"), result.getString("nickname"),
-                        result.getInt("level"), result.getLong("experience"), result.getInt("stat_atk"), result.getInt("stat_def"), result.getInt("stat_spatk"), result.getInt("stat_spdef"),
+                        result.getInt("level"), result.getLong("experience"),result.getInt("iq"),result.getBoolean("isshiny"), result.getInt("stat_atk"), result.getInt("stat_def"), result.getInt("stat_spatk"), result.getInt("stat_spdef"),
                         result.getInt("stat_hp"), null, null);
             }
             cn.close();
-            // Select holdeditem inventory id
+            // Select held inventory id
             cn = ds.getConnection();
             String selectSQL = "SELECT * FROM holdeditem_ WHERE pokemonid = ?";
             PreparedStatement preparedStatement = cn.prepareStatement(selectSQL);
@@ -124,8 +126,9 @@ public class PokemonDAO {
             preparedStatement.setLong(1, toreturn.id);
             result = preparedStatement.executeQuery();
             while (result.next()) {
-                if(toreturn.learnedmoves == null)
+                if (toreturn.learnedmoves == null) {
                     toreturn.learnedmoves = new ArrayList<>(4);
+                }
                 toreturn.learnedmoves.add(new DatabaseIdentifier(result.getLong("moveid")));
             }
             cn.close();
@@ -141,7 +144,7 @@ public class PokemonDAO {
             Connection cn = ds.getConnection();
             PreparedStatement prepare
                     = cn.prepareStatement(
-                            "UPDATE pokemon SET specieid = ?, formid = ?, abilityid = ?, gender = ?, nickname = ?, level = ?, experience = ?, stat_atk = ?, stat_def = ?, stat_spatk = ?, stat_spdef = ?, stat_hp = ? WHERE id = ?"
+                            "UPDATE pokemon SET specieid = ?, formid = ?, abilityid = ?, gender = ?, nickname = ?, level = ?, experience = ?, stat_atk = ?, stat_def = ?, stat_spatk = ?, stat_spdef = ?, stat_hp = ?, iq = ?, isshiny = ? WHERE id = ?"
                     );
             prepare.setInt(1, pokemon.specieid);
             prepare.setInt(2, pokemon.formid);
@@ -155,7 +158,9 @@ public class PokemonDAO {
             prepare.setInt(10, pokemon.stat_speatk);
             prepare.setInt(11, pokemon.stat_spedef);
             prepare.setInt(12, pokemon.stat_hp);
-            prepare.setLong(13, pokemon.id);
+            prepare.setInt(13, pokemon.iq);
+            prepare.setBoolean(14, pokemon.isshiny);
+            prepare.setLong(15, pokemon.id);
             prepare.executeUpdate();
             cn.close();
         } catch (SQLException e) {
