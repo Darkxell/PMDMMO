@@ -129,6 +129,7 @@ public class PlayerLoadingState extends AbstractState
 				for (int i = 0; i < this.team.length; ++i)
 					if (!this.team[i]) Persistance.socketendpoint.requestMonster(Persistance.player.getData().pokemonsinparty.get(i).id);
 			}
+			this.hasSent = true;
 		}
 	}
 

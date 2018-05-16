@@ -56,13 +56,13 @@ public class DBInventory implements Communicable
 		root.add("id", this.id);
 		root.add("maxsize", this.maxsize);
 
+		JsonArray content = new JsonArray();
 		if (this.content != null)
 		{
-			JsonArray content = new JsonArray();
 			for (DatabaseIdentifier id : this.content)
 				content.add(id.id);
-			root.add("content", content);
 		}
+		root.add("content", content);
 
 		return root;
 	}

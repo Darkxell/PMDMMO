@@ -19,7 +19,7 @@ public class ObjectRequestHandler extends MessageHandler
 		}
 
 		String type = message.getString("type", null);
-		if (type == null || !message.get("object").isObject())
+		if (type == null)
 		{
 			Logger.e("Received ObjectRequest type is null! " + message.toString());
 			return;
@@ -27,7 +27,7 @@ public class ObjectRequestHandler extends MessageHandler
 
 		switch (type)
 		{
-			case "DBPlayer":
+			case "dbplayer":
 				AbstractState state = Persistance.stateManager.getCurrentState();
 				if (state != null && state instanceof PlayerLoadingState) ((PlayerLoadingState) state).onPlayerReceived(message.get("object").asObject());
 				break;

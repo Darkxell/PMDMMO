@@ -177,7 +177,7 @@ public class PersonalityQuizState extends AbstractState implements DialogEndList
 				this.loadNewDialog();
 		}
 		if (this.isMain() && this.currentQuestion > this.questions.length + 3) {
-			if (this.tick <= NarratorDialogState.FADETIME)
+			if (this.tick <= NarratorDialogState.FADETIME && this.tick >= -10)
 				--this.tick;
 			if (this.tick == 0) {
 				sendTestResults(this.starter.species().id, this.partner.species().id, this.starter.gender(), this.starter.gender());

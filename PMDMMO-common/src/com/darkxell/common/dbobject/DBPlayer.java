@@ -113,7 +113,7 @@ public class DBPlayer implements Communicable
 		if (this.mainpokemon != null) root.add("mainpokemon", this.mainpokemon.id);
 		if (this.toolboxinventory != null) root.add("toolboxinventory", this.toolboxinventory.id);
 		if (this.storageinventory != null) root.add("storageinventory", this.storageinventory.id);
-
+		
 		if (this.pokemonsinzones != null)
 		{
 			JsonArray zonePokes = new JsonArray();

@@ -202,7 +202,7 @@ public class GameSocketEndpoint {
 		JsonObject message = Json.object();
 		message.add("action", "objectrequest");
 		message.add("id", id);
-		message.add("object", objectType);
+		message.add("type", objectType);
 		this.sendMessage(message.toString());
 	}
 
