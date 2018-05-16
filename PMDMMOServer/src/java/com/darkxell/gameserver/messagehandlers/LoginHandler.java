@@ -55,7 +55,7 @@ public class LoginHandler extends MessageHandler {
                     
                     com.eclipsesource.json.JsonObject value = Json.object();
                     value.add("action", "login");
-                    //FIXME : value.add("player",PlayerDBUtilities.generateFullPlayerObject(player.id, endpoint));
+                    value.add("player",player.toJson());
                     sessionshandler.sendToSession(from, value);
                            
                 } else {
