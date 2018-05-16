@@ -120,7 +120,7 @@ public class DBPokemon implements Communicable
 		root.add("formid", this.formid);
 		root.add("abilityid", this.abilityid);
 		root.add("gender", this.gender);
-		root.add("nickname", this.nickname);
+		if (this.nickname != null) root.add("nickname", this.nickname);
 		root.add("level", this.level);
 		root.add("experience", this.experience);
 		root.add("iq", this.iq);

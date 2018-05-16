@@ -39,9 +39,12 @@ public class PlayerLoadingState extends AbstractState
 
 	private void checkFinished()
 	{
-		if (this.base && this.inventory && this.leader) for (boolean b : this.team)
-			if (!b) return;
-		this.finish();
+		if (this.base && this.inventory && this.leader)
+		{
+			for (boolean b : this.team)
+				if (!b) return;
+			this.finish();
+		}
 	}
 
 	private void finish()
