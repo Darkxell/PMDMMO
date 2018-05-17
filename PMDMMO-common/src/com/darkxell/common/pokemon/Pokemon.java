@@ -309,8 +309,8 @@ public class Pokemon implements ItemContainer
 	{
 		this.data = data;
 		this.ability = Ability.find(this.abilityID());
-		this.item = null; // How to update item?
-		this.moves = null; // How to update moves?
+		this.item = null;
+		this.moves = new LearnedMove[4];
 		this.species = PokemonRegistry.find(this.data.specieid);
 		this.stats = new BaseStats(this, this.data.stat_atk, this.data.stat_def, this.data.stat_hp, this.data.stat_speatk, this.data.stat_spedef, 1);
 	}
