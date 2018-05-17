@@ -73,6 +73,8 @@ public class Pokemon implements ItemContainer
 		this(new DBPokemon(0, species.id, species.formID, abilityid, gender, nickname, level, experience, iq, shiny, stats.attack, stats.defense,
 				stats.specialAttack, stats.specialDefense, stats.health, item == null ? null : new DatabaseIdentifier(item.getData().id),
 				createMovesList(move1, move2, move3, move4)));
+		this.item = item;
+		this.moves = new LearnedMove[] { move1, move2, move3, move4 };
 	}
 
 	public Pokemon(Pokemon pokemon)
