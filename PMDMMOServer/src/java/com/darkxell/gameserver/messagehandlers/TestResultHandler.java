@@ -24,11 +24,11 @@ import javax.websocket.Session;
  * @author Darkxell
  */
 public class TestResultHandler extends MessageHandler {
-    
+
     public TestResultHandler(GameServer endpoint) {
         super(endpoint);
     }
-    
+
     @Override
     public void handleMessage(JsonObject json, Session from, GameSessionHandler sessionshandler) {
         GameSessionInfo si = SessionsInfoHolder.getInfo(from.getId());
@@ -40,30 +40,45 @@ public class TestResultHandler extends MessageHandler {
         int maingender = json.getJsonNumber("maingender").intValue();
         int offgender = json.getJsonNumber("offgender").intValue();
         // TODO : Check that mainID is a valid number and storyposition = 0
-        
+
         PokemonSpecies espece = PokemonRegistry.find(mainid);
         Pokemon main = espece.generate(new Random(), 5);
         espece = PokemonRegistry.find(offid);
         Pokemon off = espece.generate(new Random(), 5);
-        
+
+        // Creates the main pokemon in db
         long t = endpoint.getPokemonDAO().create(main.getData());
         if (t > 0) {
             endpoint.getTeammember_DAO().create(si.serverid, t, (byte) 1);
+            for (int i = 0; i < main.moveCount(); ++i) {
+                long xtsd = endpoint.getLearnedmoveDAO().create(main.move(i).getData());
+                if (xtsd > 0) {
+                    endpoint.getLearnedmove_DAO().create(t, xtsd);
+                }
+            }
         }
+        // Creates the partner pokemon
         t = endpoint.getPokemonDAO().create(off.getData());
         if (t > 0) {
             endpoint.getTeammember_DAO().create(si.serverid, t, (byte) 2);
+            for (int i = 0; i < off.moveCount(); ++i) {
+                long xtsd = endpoint.getLearnedmoveDAO().create(off.move(i).getData());
+                if (xtsd > 0) {
+                    endpoint.getLearnedmove_DAO().create(t, xtsd);
+                }
+            }
         }
+        //Increments storyposition
         DBPlayer pl = endpoint.getPlayerDAO().find(si.serverid);
         pl.storyposition = 1;
         endpoint.getPlayerDAO().update(pl);
-        
+
         System.out.println("recieved test result : " + mainid + " and " + offid);
-        
+
         com.eclipsesource.json.JsonObject value = Json.object();
         value.add("action", "testresultrecieved");
         sessionshandler.sendToSession(from, value);
-        
+
     }
-    
+
 }
