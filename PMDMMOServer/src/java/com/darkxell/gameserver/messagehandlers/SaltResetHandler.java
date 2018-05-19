@@ -27,9 +27,6 @@ public class SaltResetHandler extends MessageHandler {
 
     @Override
     public void handleMessage(JsonObject json, Session from, GameSessionHandler sessionshandler) {
-        if (!SessionsInfoHolder.infoExists(from.getId())) {
-            System.err.println("Error at\ncom.darkxell.gameserver.messagehandlers.SaltResetHandler.handleMessage()\n" + from + " is not in the session info handler.");
-        }
         // Generates a new random salt unique for the user
         GameSessionInfo si = SessionsInfoHolder.getInfo(from.getId());
         String salt = new RandomString().nextString() + from.getId();

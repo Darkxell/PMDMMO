@@ -28,10 +28,6 @@ public class CreateAccountHandler extends MessageHandler {
     public void handleMessage(JsonObject json, Session from, GameSessionHandler sessionshandler) {
 
         try {
-            if (!SessionsInfoHolder.infoExists(from.getId())) {
-                System.err.println("Error at\ncom.darkxell.gameserver.messagehandlers.FreezonePositionHandler.handleMessage()\n" + from + " is not in the session info handler.");
-                return;
-            }
 
             String name = json.getJsonString("name").getString();
             String passhash = json.getJsonString("passhash").getString();
