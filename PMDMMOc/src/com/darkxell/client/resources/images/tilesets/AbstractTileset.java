@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import com.darkxell.client.resources.Res;
 import com.darkxell.client.resources.images.tilesets.freezones.BaseTileset;
 import com.darkxell.client.resources.images.tilesets.freezones.DojoTileset;
+import com.darkxell.client.resources.images.tilesets.freezones.ForestTileset;
 import com.darkxell.client.resources.images.tilesets.freezones.OfficeTileset;
 import com.darkxell.client.resources.images.tilesets.freezones.PondTileset;
 import com.darkxell.client.resources.images.tilesets.freezones.SquareTileset;
@@ -46,6 +47,8 @@ public abstract class AbstractTileset {
 			return BaseTileset.instance;
 		case "dojo":
 			return DojoTileset.instance;
+		case "forest":
+			return ForestTileset.instance;
 		case "pond":
 			return PondTileset.instance;
 		case "pelipper office":

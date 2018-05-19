@@ -21,6 +21,12 @@ public class BaseFreezone extends FreezoneMap {
 				return new PokemonSquareFreezone();
 			}
 		});
+		this.warpzones.add(new WarpZone(58, 22, new DoubleRectangle(0, 38, 2, 8)) {
+			@Override
+			public FreezoneMap getDestination() {
+				return new ForestFreezone();
+			}
+		});
 		final BaseFreezone f = this;
 		this.warpzones.add(new WarpZone(35, 29, new DoubleRectangle(29, 63, 9, 2)) {
 			@Override
@@ -29,13 +35,13 @@ public class BaseFreezone extends FreezoneMap {
 				return f;
 			}
 		});
-		this.warpzones.add(new WarpZone(0, 0, new DoubleRectangle(0, 34, 2,11)) {
+		/*this.warpzones.add(new WarpZone(0, 0, new DoubleRectangle(0, 38, 2, 8)) {
 			@Override
 			public FreezoneMap getDestination() {
 				CutsceneManager.playCutscene("test");
 				return null;
 			}
-		});
+		});*/
 		this.addEntity(new AnimatedFlowerEntity(17.5, 16, true));
 		this.addEntity(new AnimatedFlowerEntity(33.5, 8, true));
 		this.addEntity(new AnimatedFlowerEntity(54.5, 18, true));

@@ -87,6 +87,7 @@ public abstract class FreezoneMap
 		} catch (Exception e)
 		{
 			Logger.e("Could not build freezonemap from XML file : " + e);
+			e.printStackTrace();
 		}
 	}
 
