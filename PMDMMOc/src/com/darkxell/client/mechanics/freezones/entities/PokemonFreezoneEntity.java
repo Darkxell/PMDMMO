@@ -36,7 +36,7 @@ public class PokemonFreezoneEntity extends FreezoneEntity
 	@Override
 	public void onInteract()
 	{
-		Pokemon p = new Pokemon(0, 69, null, null, null, 0, 0, 1, null, null, null, null, (byte) 0, 0, true);
+		Pokemon p = PokemonRegistry.find(69).generate(new Random(), 1);
 		ArrayList<DialogScreen> screens = new ArrayList<>();
 		screens.add(new DialogScreen(p,
 				new Message(

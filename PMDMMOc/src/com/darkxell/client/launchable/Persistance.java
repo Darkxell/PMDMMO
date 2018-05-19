@@ -1,7 +1,5 @@
 package com.darkxell.client.launchable;
 
-import java.util.Random;
-
 import com.darkxell.client.mechanics.chat.ChatBox;
 import com.darkxell.client.mechanics.event.ClientEventProcessor;
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
@@ -19,11 +17,7 @@ import com.darkxell.client.state.map.LocalMap;
 import com.darkxell.client.ui.Frame;
 import com.darkxell.common.dungeon.DungeonInstance;
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.item.ItemID;
-import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.player.Player;
-import com.darkxell.common.pokemon.LearnedMove;
-import com.darkxell.common.pokemon.PokemonRegistry;
 
 /** This class contains various static references to objects being used very often. */
 public abstract class Persistance
@@ -49,28 +43,13 @@ public abstract class Persistance
 	public static DungeonState dungeonState;
 	public static MasterDungeonRenderer dungeonRenderer;
 	public static Floor floor;
-	public static Player player = new Player(0, ClientSettings.getSetting(ClientSettings.LOGIN), PokemonRegistry.find(6).generate(new Random(), 1));
+	public static Player player;
 	public static ClientEventProcessor eventProcessor;
-
-	static
-	{
-		player.addAlly(PokemonRegistry.find(252).generate(new Random(), 1, 1));
-		player.addAlly(PokemonRegistry.find(255).generate(new Random(), 1));
-		player.getTeamLeader().setItem(new ItemStack(ItemID.XRaySpecs));
-		player.getTeamLeader().setMove(3, new LearnedMove(801));
-		currentplayer.setPlayer(player);
-	}
 
 	/** Displays the debug information. Careful, this is not optimized and will have a high CPU drain. It also makes the game really ugly, it's a debug mode... */
 	public static boolean debugdisplaymode = false;
 
 	/** If true, data for pokemon, dungeon, moves, etc. is saved on exit. */
 	public static boolean saveDataOnExit = false;
-
-	public static void setPlayer(Player newPlayer)
-	{
-		player = newPlayer;
-		currentplayer.setPlayer(player);
-	}
 
 }

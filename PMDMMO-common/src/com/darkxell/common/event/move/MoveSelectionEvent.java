@@ -68,7 +68,7 @@ public class MoveSelectionEvent extends DungeonEvent
 		if (this.usedMove.direction != this.usedMove.user.facing()) this.usedMove.user.setFacing(this.usedMove.direction);
 
 		// Use PP
-		this.usedMove.move.setPP(this.usedMove.move.getPP() - 1);
+		this.usedMove.move.setPP(this.usedMove.move.pp() - 1);
 
 		// Use Move
 		this.resultingEvents.addAll(this.usedMove.move.move().prepareUse(this.usedMove, this.floor));

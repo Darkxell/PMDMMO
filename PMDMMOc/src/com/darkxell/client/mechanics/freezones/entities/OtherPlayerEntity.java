@@ -2,7 +2,6 @@ package com.darkxell.client.mechanics.freezones.entities;
 
 import java.awt.Graphics2D;
 
-import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.freezones.FreezoneEntity;
 import com.darkxell.client.mechanics.freezones.entities.renderers.OtherPlayerPokemonRenderer;
 import com.darkxell.client.renderers.AbstractRenderer;
@@ -42,8 +41,6 @@ public class OtherPlayerEntity extends FreezoneEntity
 			PokemonSprite previous = this.sprite;
 			this.sprite = new PokemonSprite(PokemonSpritesets.getSpriteset(spriteID));
 			this.sprite.copyState(previous);
-			Persistance.currentmap.entityRenderers.unregister(this);
-			Persistance.currentmap.entityRenderers.register(this, this.createRenderer());
 		}
 		this.lastupdate = System.nanoTime();
 	}
@@ -61,6 +58,11 @@ public class OtherPlayerEntity extends FreezoneEntity
 	@Override
 	public void print(Graphics2D g)
 	{}
+
+	public PokemonSprite sprite()
+	{
+		return this.sprite;
+	}
 
 	@Override
 	public void update()

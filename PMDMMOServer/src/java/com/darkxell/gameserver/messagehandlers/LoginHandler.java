@@ -5,12 +5,14 @@
  */
 package com.darkxell.gameserver.messagehandlers;
 
+import com.darkxell.common.player.Player;
 import com.darkxell.gameserver.GameServer;
 import com.darkxell.gameserver.GameSessionHandler;
 import com.darkxell.gameserver.GameSessionInfo;
 import com.darkxell.gameserver.MessageHandler;
 import com.darkxell.gameserver.SessionsInfoHolder;
-import com.darkxell.model.ejb.dbobjects.DBPlayer;
+import com.darkxell.common.dbobject.DBPlayer;
+import com.eclipsesource.json.Json;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import javax.json.JsonObject;
@@ -32,10 +34,6 @@ public class LoginHandler extends MessageHandler {
     public void handleMessage(JsonObject json, Session from, GameSessionHandler sessionshandler) {
 
         try {
-            if (!SessionsInfoHolder.infoExists(from.getId())) {
-                System.err.println("Error at\ncom.darkxell.gameserver.messagehandlers.LoginHandler.handleMessage()\n" + from + " is not in the session info handler.");
-                return;
-            }// was that really usefull?
             GameSessionInfo si = SessionsInfoHolder.getInfo(from.getId());
             if (si.salt == null || si.salt.equals("")) {
                 System.out.println("Could not connect a player because salt value for loging in was empty.");
@@ -54,10 +52,17 @@ public class LoginHandler extends MessageHandler {
                     si.serverid = player.id;
                     si.isconnected = true;
                     System.err.println("Player logged in : " + si.name);
+                    
+                    com.eclipsesource.json.JsonObject value = Json.object();
+                    value.add("action", "login");
+                    value.add("player",player.toJson());
+                    sessionshandler.sendToSession(from, value);
+                           
                 } else {
                     System.out.println("Did not login " + player.name + ", password hash was incorrect.");
                 }
             } catch (Exception e) {
+                e.printStackTrace();
                 return;
             }
         } catch (Exception e) {

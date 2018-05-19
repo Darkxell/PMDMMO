@@ -34,7 +34,7 @@ public class EntityRendererHolder<T> extends AbstractRenderer
 	public PokemonSprite getSprite(T entity)
 	{
 		AbstractRenderer renderer = this.getRenderer(entity);
-		return renderer == null || !(renderer instanceof AbstractPokemonRenderer) ? null : ((AbstractPokemonRenderer) renderer).sprite;
+		return renderer == null || !(renderer instanceof AbstractPokemonRenderer) ? null : ((AbstractPokemonRenderer) renderer).sprite();
 	}
 
 	public ArrayList<AbstractRenderer> listRenderers()

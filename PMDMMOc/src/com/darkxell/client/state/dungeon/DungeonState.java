@@ -181,7 +181,7 @@ public class DungeonState extends AbstractState
 		Point spawn = Persistance.floor.teamSpawn;
 		Persistance.floor.tileAt(spawn.x, spawn.y).setPokemon(Persistance.player.getDungeonLeader());
 		Persistance.dungeon.insertActor(Persistance.player.getDungeonLeader(), 0);
-		this.pokemonRenderer.register(Persistance.player.getDungeonLeader()).sprite.setShadowColor(PokemonSprite.ALLY_SHADOW);
+		this.pokemonRenderer.register(Persistance.player.getDungeonLeader()).sprite().setShadowColor(PokemonSprite.ALLY_SHADOW);
 
 		ArrayList<Tile> candidates = new ArrayList<Tile>();
 		Tile initial = Persistance.player.getDungeonLeader().tile();
@@ -216,7 +216,7 @@ public class DungeonState extends AbstractState
 			Persistance.floor.aiManager.register(team[i]);
 			Persistance.dungeon.insertActor(team[i], 1);
 			candidates.remove(0);
-			this.pokemonRenderer.register(team[i]).sprite.setShadowColor(PokemonSprite.ALLY_SHADOW);
+			this.pokemonRenderer.register(team[i]).sprite().setShadowColor(PokemonSprite.ALLY_SHADOW);
 		}
 
 		for (int i = team.length - 1; i >= 0; --i)

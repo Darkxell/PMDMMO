@@ -30,7 +30,7 @@ public class MoveEnabledEvent extends DungeonEvent
 	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{
-		this.move.isEnabled = this.enabled;
+		this.move.setEnabled(this.enabled);
 		return super.processServer();
 	}
 

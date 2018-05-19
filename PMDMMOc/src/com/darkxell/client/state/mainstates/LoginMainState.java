@@ -3,15 +3,25 @@ package com.darkxell.client.state.mainstates;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
+import java.util.Random;
 
 import com.darkxell.client.launchable.ClientSettings;
 import com.darkxell.client.launchable.Encryption;
+import com.darkxell.client.launchable.GameSocketEndpoint;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.chat.CustomTextfield;
 import com.darkxell.client.resources.images.others.Hud;
 import com.darkxell.client.state.OpenningState;
+import com.darkxell.client.state.PlayerLoadingState;
 import com.darkxell.client.state.StateManager;
+import com.darkxell.client.state.quiz.PersonalityQuizState;
 import com.darkxell.client.ui.MainUiUtility;
+import com.darkxell.common.dbobject.DBPlayer;
+import com.darkxell.common.item.ItemID;
+import com.darkxell.common.item.ItemStack;
+import com.darkxell.common.player.Player;
+import com.darkxell.common.pokemon.LearnedMove;
+import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.util.DoubleRectangle;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.Position;
@@ -58,16 +68,13 @@ public class LoginMainState extends StateManager {
 	public void onMouseClick(int x, int y) {
 		// Button clicks
 		if (button_createaccount.isInside(new Position(mouseX - offsetx, mouseY - offsety))) {
-			Persistance.stateManager = new AccountCreationState();
+			if (Persistance.socketendpoint.connectionStatus() == GameSocketEndpoint.CONNECTED)
+				Persistance.stateManager = new AccountCreationState();
 		} else if (button_login.isInside(new Position(mouseX - offsetx, mouseY - offsety))) {
-			ClientSettings.setSetting(ClientSettings.LOGIN,this.login.getContent());
-			Persistance.player.name = this.login.getContent();
-			this.sendLogin();
+			if (Persistance.socketendpoint.connectionStatus() == GameSocketEndpoint.CONNECTED)
+				launchOnlineSend();
 		} else if (button_offline.isInside(new Position(mouseX - offsetx, mouseY - offsety))) {
-			Persistance.stateManager = new PrincipalMainState();
-			//((PrincipalMainState) Persistance.stateManager).setState(new PersonalityQuizState());
-			((PrincipalMainState) Persistance.stateManager).setState(new OpenningState());
-			((PrincipalMainState) Persistance.stateManager).randomizeBackground();
+			launchOffline();
 		}
 		// Textfield focus
 		if (textfield_login.isInside(new Position(mouseX - offsetx, mouseY - offsety))) {
@@ -120,22 +127,28 @@ public class LoginMainState extends StateManager {
 		Color buttoncolor = new Color(124, 163, 255), selectedbuttoncolor = new Color(183, 222, 255);
 		g.setColor((button_login.isInside(new Position(relativemousex, relativemousey))) ? selectedbuttoncolor
 				: buttoncolor);
+		if (Persistance.socketendpoint.connectionStatus() != GameSocketEndpoint.CONNECTED) {
+			g.setColor(Color.RED);
+			g.drawString("Not connected to servers", (int) button_login.x - 10, (int) button_login.y + 60);
+			g.setColor(new Color(120, 120, 180));
+		}
 		g.fillRect((int) button_login.x, (int) button_login.y, (int) button_login.width, (int) button_login.height);
 		g.setColor(Color.BLACK);
 		g.drawString("LOGIN", (int) button_login.x + 25, (int) button_login.y + 20);
 		g.setColor((button_createaccount.isInside(new Position(relativemousex, relativemousey))) ? selectedbuttoncolor
 				: buttoncolor);
+		if (Persistance.socketendpoint.connectionStatus() != GameSocketEndpoint.CONNECTED)
+			g.setColor(new Color(120, 120, 180));
 		g.fillRect((int) button_createaccount.x, (int) button_createaccount.y, (int) button_createaccount.width,
 				(int) button_createaccount.height);
 		g.setColor(Color.BLACK);
 		g.drawString("CREATE ACCOUNT", (int) button_createaccount.x + 15, (int) button_createaccount.y + 20);
-
 		g.setColor((button_offline.isInside(new Position(relativemousex, relativemousey))) ? selectedbuttoncolor
 				: buttoncolor);
 		g.fillRect((int) button_offline.x, (int) button_offline.y, (int) button_offline.width,
 				(int) button_offline.height);
 		g.setColor(Color.BLACK);
-		g.drawString("Play offline", (int) button_offline.x + 13, (int) button_offline.y + 14);
+		g.drawString("Offline debug", (int) button_offline.x + 5, (int) button_offline.y + 14);
 
 		// REVERT GRAPHICS
 		g.translate(-offsetx, -offsety);
@@ -181,4 +194,47 @@ public class LoginMainState extends StateManager {
 		this.localsalt = salt;
 		Logger.d("Recieved salt for this loginState : " + salt);
 	}
+
+	/** Called when the player clicks the login button. */
+	private void launchOnlineSend() {
+		ClientSettings.setSetting(ClientSettings.LOGIN, this.login.getContent());
+		this.sendLogin();
+		Logger.i("Sent login infos to the server, awaiting response...");
+	}
+
+	/**
+	 * Called when the server responds positively to the login attempt made by
+	 * <code>launchOnlineSend()</code>
+	 */
+	public void launchOnlineOnRecieve(JsonObject pl) {
+		Logger.i("Recieved connection informations, player is connected to the server.");
+		DBPlayer playerdata = new DBPlayer();
+		playerdata.read(pl);
+		Persistance.player = new Player(playerdata);
+		Persistance.stateManager = new PrincipalMainState();
+		if (Persistance.player.storyPosition() == 0) Persistance.stateManager.setState(new PersonalityQuizState());
+		else Persistance.stateManager.setState(new PlayerLoadingState(Persistance.player.getData().id));
+		((PrincipalMainState) Persistance.stateManager).randomizeBackground();
+	}
+
+	/** Called when the user presses the play offline debug mode */
+	private void launchOffline() {
+		// Set placeholder data to fake an account creation
+		Persistance.player = new Player("Offline debug account name",
+				PokemonRegistry.find(6).generate(new Random(), 1));
+		Persistance.player.setStoryPosition(1);
+		Persistance.player.addAlly(PokemonRegistry.find(252).generate(new Random(), 1, 1));
+		Persistance.player.addAlly(PokemonRegistry.find(255).generate(new Random(), 1));
+		Persistance.player.getTeamLeader().setItem(new ItemStack(ItemID.XRaySpecs));
+		Persistance.player.getTeamLeader().setMove(3, new LearnedMove(801));
+		Persistance.currentplayer.setPlayer(Persistance.player);
+
+		// Go to the game state
+		Persistance.stateManager = new PrincipalMainState();
+		// ((PrincipalMainState) Persistance.stateManager).setState(new
+		// PersonalityQuizState());
+		((PrincipalMainState) Persistance.stateManager).setState(new OpenningState());
+		((PrincipalMainState) Persistance.stateManager).randomizeBackground();
+	}
+
 }

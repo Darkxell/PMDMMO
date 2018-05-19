@@ -2,54 +2,40 @@ package com.darkxell.common.player;
 
 import java.util.ArrayList;
 
+import com.darkxell.common.dbobject.DBPlayer;
+import com.darkxell.common.dbobject.DatabaseIdentifier;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.Pokemon;
-import com.darkxell.common.util.Communicable;
-import com.eclipsesource.json.Json;
-import com.eclipsesource.json.JsonArray;
-import com.eclipsesource.json.JsonObject;
-import com.eclipsesource.json.JsonValue;
 
-public class Player implements Communicable
+public class Player
 {
 
-	/** The Pokémon in the rescue team. */
-	private ArrayList<Pokemon> allies;
-	public int currentStoryline;
-	private ArrayList<DungeonPokemon> dungeonAllies;
-	/** If in a Dungeon, reference to the Dungeon Pokémon. null else. */
-	private DungeonPokemon dungeonPokemon;
-	/** This Player's ID. */
-	private int id;
-	/** This Player's Inventory. */
-	public final Inventory inventory;
-	/** The Pokémon this Player embodies. */
-	private Pokemon leaderPokemon;
-	/** The current amount of Money of this Player. */
-	public int money;
-	/** The current amount of Money in this Player's bank. */
-	public int moneyInBank;
-	public String name;
+	public ArrayList<Pokemon> allies;
 
-	public Player()
+	private DBPlayer data;
+
+	public ArrayList<DungeonPokemon> dungeonAllies;
+
+	/** This Player's Inventory. */
+	private Inventory inventory;
+
+	public Pokemon leaderPokemon;
+
+	public Player(DBPlayer data)
 	{
-		this(-1, "???", null);
+		this.setData(data);
 	}
 
-	public Player(int id, String name, Pokemon pokemon)
+	public Player(String name, Pokemon pokemon)
 	{
-		this.id = id;
-		this.name = name;
-		this.setLeaderPokemon(pokemon);
-		this.inventory = new Inventory(Inventory.MAX_SIZE);
-		this.money = 0;
-		this.moneyInBank = 0;
-		this.allies = new ArrayList<Pokemon>();
-		this.dungeonAllies = new ArrayList<DungeonPokemon>();
+		this(new DBPlayer(0, name, null, 0, 0, 0, new ArrayList<>(), new ArrayList<>(), pokemon == null ? null : new DatabaseIdentifier(pokemon.id()), null,
+				null));
+		this.leaderPokemon = pokemon;
 	}
 
 	public void addAlly(Pokemon pokemon)
 	{
+		this.data.pokemonsinparty.add(new DatabaseIdentifier(pokemon.id()));
 		this.allies.add(pokemon);
 		this.dungeonAllies.add(new DungeonPokemon(pokemon));
 		pokemon.setPlayer(this);
@@ -59,14 +45,20 @@ public class Player implements Communicable
 	{
 		for (Pokemon pokemon : this.allies)
 			pokemon.setPlayer(this);
+		this.data.pokemonsinparty.clear();
 		this.allies.clear();
 		this.resetDungeonTeam();
 	}
 
+	public DBPlayer getData()
+	{
+		return this.data;
+	}
+
 	public DungeonPokemon getDungeonLeader()
 	{
-		if (this.dungeonPokemon == null) this.dungeonPokemon = new DungeonPokemon(this.leaderPokemon);
-		return this.dungeonPokemon;
+		if (this.leaderPokemon.getDungeonPokemon() == null) new DungeonPokemon(this.leaderPokemon);
+		return this.leaderPokemon.getDungeonPokemon();
 	}
 
 	public DungeonPokemon[] getDungeonTeam()
@@ -84,6 +76,7 @@ public class Player implements Communicable
 		return null;
 	}
 
+	/** Returns the full player's team. The team leader is at position 0 in the array. */
 	public Pokemon[] getTeam()
 	{
 		Pokemon[] team = new Pokemon[this.allies.size() + 1];
@@ -98,14 +91,14 @@ public class Player implements Communicable
 		return this.leaderPokemon;
 	}
 
-	public int id()
+	public Inventory inventory()
 	{
-		return this.id;
+		return this.inventory;
 	}
 
 	public boolean isAlly(DungeonPokemon pokemon)
 	{
-		return pokemon.player() == this;
+		return pokemon != null && pokemon.player() == this;
 	}
 
 	public boolean isAlly(Pokemon pokemon)
@@ -113,32 +106,20 @@ public class Player implements Communicable
 		return pokemon != null && pokemon.player() == this;
 	}
 
-	@Override
-	public void read(JsonObject value)
+	public long moneyInBag()
 	{
-		this.id = value.getInt("id", -1);
-		this.name = value.getString("name", "???");
-		this.money = value.getInt("money", 0);
-		this.moneyInBank = value.getInt("moneyInBank", 0);
-		this.currentStoryline = value.getInt("storyline", 0);
+		return this.data.moneyinbag;
+	}
 
-		Pokemon leader = new Pokemon();
-		leader.read(value.get("leader").asObject());
-		this.setLeaderPokemon(leader);
-
-		this.allies.clear();
-		for (JsonValue allyJson : value.get("allies").asArray())
-		{
-			Pokemon ally = new Pokemon();
-			ally.read(allyJson.asObject());
-			this.addAlly(ally);
-		}
-
-		this.inventory.read(value.get("inventory").asObject());
+	public String name()
+	{
+		return this.data.name;
 	}
 
 	public void removeAlly(Pokemon pokemon)
 	{
+		if (!this.allies.contains(pokemon)) return;
+		this.data.pokemonsinparty.remove(this.allies.indexOf(pokemon));
 		this.dungeonAllies.remove(this.allies.indexOf(pokemon));
 		this.allies.remove(pokemon);
 		pokemon.setPlayer(null);
@@ -151,45 +132,42 @@ public class Player implements Communicable
 			this.dungeonAllies.add(i, new DungeonPokemon(this.allies.get(i)));
 	}
 
-	public void setDungeonPokemon(DungeonPokemon dungeonPokemon)
+	public void setData(DBPlayer data)
 	{
-		this.dungeonPokemon = dungeonPokemon;
+		this.data = data;
+		this.allies = new ArrayList<>();
+		this.dungeonAllies = new ArrayList<>();
 	}
 
-	public void setDungeonPokemon(Pokemon pokemon, DungeonPokemon dungeonPokemon)
+	public void setInventory(Inventory inventory)
 	{
-		if (pokemon == this.getTeamLeader()) this.setDungeonPokemon(dungeonPokemon);
-		else if (this.allies.contains(pokemon)) this.dungeonAllies.set(this.allies.indexOf(pokemon), dungeonPokemon);
+		this.inventory = inventory;
 	}
 
 	public void setLeaderPokemon(Pokemon pokemon)
 	{
 		if (this.leaderPokemon != null) this.leaderPokemon.setPlayer(null);
 		this.leaderPokemon = pokemon;
-		this.leaderPokemon.setPlayer(this);
+		if (this.leaderPokemon != null)
+		{
+			this.leaderPokemon.setPlayer(this);
+			this.data.mainpokemon = new DatabaseIdentifier(this.leaderPokemon.id());
+		} else this.data.mainpokemon = null;
 	}
 
-	@Override
-	public JsonObject toJson()
+	public void setMoneyInBag(long moneyInBag)
 	{
-		JsonObject root = Json.object();
+		this.data.moneyinbag = moneyInBag;
+	}
 
-		root.add("id", this.id);
-		root.add("name", this.name);
-		root.add("money", this.money);
-		root.add("moneryInBank", this.moneyInBank);
-		root.add("storyline", this.currentStoryline);
+	public void setStoryPosition(int storyPosition)
+	{
+		this.data.storyposition = storyPosition;
+	}
 
-		root.add("leader", this.leaderPokemon.toJson());
-
-		JsonArray alliesJson = new JsonArray();
-		for (Pokemon ally : this.allies)
-			alliesJson.add(ally.toJson());
-		root.add("allies", alliesJson);
-
-		root.add("inventory", this.inventory.toJson());
-
-		return root;
+	public int storyPosition()
+	{
+		return this.data.storyposition;
 	}
 
 }

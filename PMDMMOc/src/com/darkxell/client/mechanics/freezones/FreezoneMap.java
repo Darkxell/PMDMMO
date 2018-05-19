@@ -1,6 +1,6 @@
 package com.darkxell.client.mechanics.freezones;
 
-import java.io.File;
+import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,12 +58,12 @@ public abstract class FreezoneMap
 
 	public FreezoneMap(String xmlfilepath)
 	{
-		File file = Res.getFile(xmlfilepath);
+		InputStream is = Res.get(xmlfilepath);
 		SAXBuilder builder = new SAXBuilder();
 		org.jdom2.Element rootelement;
 		try
 		{
-			rootelement = builder.build(file).getRootElement();
+			rootelement = builder.build(is).getRootElement();
 			this.mapWidth = Integer.parseInt(rootelement.getChild("width").getText()) / 8;
 			this.mapHeight = Integer.parseInt(rootelement.getChild("height").getText()) / 8;
 			List<org.jdom2.Element> tiles = rootelement.getChild("tiles").getChildren();
@@ -143,7 +143,7 @@ public abstract class FreezoneMap
 	public void updateOtherPlayers(JsonValue data)
 	{
 		String dataname = data.asObject().getString("name", "");
-		if (Persistance.player.name.equals(dataname)) return;
+		if (Persistance.player.name().equals(dataname)) return;
 		double pfx = data.asObject().getDouble("posfx", 0d);
 		double pfy = data.asObject().getDouble("posfy", 0d);
 		int spriteID = Integer.parseInt(data.asObject().getString("currentpokemon", "0"));
@@ -158,7 +158,7 @@ public abstract class FreezoneMap
 					found = true;
 					break;
 				}
-			if (!found) entities.add(new OtherPlayerEntity(pfx, pfy, spriteID, dataname, System.nanoTime()));
+			if (!found) this.addEntity(new OtherPlayerEntity(pfx, pfy, spriteID, dataname, System.nanoTime()));
 		}
 	}
 

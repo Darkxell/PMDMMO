@@ -5,7 +5,8 @@
  */
 package com.darkxell.model.ejb;
 
-import com.darkxell.model.ejb.dbobjects.DBLearnedmove;
+
+import com.darkxell.common.dbobject.DBLearnedmove;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -44,7 +45,7 @@ public class LearnedmoveDAO {
                 Connection cn = ds.getConnection();
                 PreparedStatement prepare
                         = cn.prepareStatement(
-                                "INSERT INTO learnedmove (id, slot, moveid, ppmax, islinked, addedlevel) VALUES(?, ?, ?, ?, ?, ?)"
+                                "INSERT INTO learnedmove (id, slot, moveid, ppmax, islinked, addedlevel, isenabled) VALUES(?, ?, ?, ?, ?, ?, ?)"
                         );
                 prepare.setLong(1, newid);
                 prepare.setInt(2, move.slot);
@@ -52,6 +53,7 @@ public class LearnedmoveDAO {
                 prepare.setInt(4, move.ppmax);
                 prepare.setBoolean(5, move.islinked);
                 prepare.setInt(6, move.addedlevel);
+                prepare.setBoolean(7, move.isenabled);
                 prepare.executeUpdate();
                 cn.close();
                 return newid;
@@ -93,7 +95,7 @@ public class LearnedmoveDAO {
                     );
             if (result.first()) {
                 toreturn = new DBLearnedmove(id, result.getInt("slot"), result.getInt("moveid"),
-                        result.getInt("ppmax"), result.getBoolean("islinked"), result.getInt("addedlevel"));
+                        result.getInt("ppmax"), result.getBoolean("isenabled"),result.getBoolean("islinked"), result.getInt("addedlevel"));
             }
             cn.close();
         } catch (SQLException e) {
@@ -107,14 +109,15 @@ public class LearnedmoveDAO {
             Connection cn = ds.getConnection();
             PreparedStatement prepare
                     = cn.prepareStatement(
-                            "UPDATE learnedmove SET slot = ?, moveid = ?, ppmax = ?, islinked = ?, addedlevel = ? WHERE id = ?"
+                            "UPDATE learnedmove SET slot = ?, moveid = ?, ppmax = ?, islinked = ?, addedlevel = ?, isenabled = ? WHERE id = ?"
                     );
             prepare.setInt(1, move.slot);
             prepare.setInt(2, move.moveid);
             prepare.setInt(3, move.ppmax);
             prepare.setBoolean(4, move.islinked);
             prepare.setInt(5, move.addedlevel);
-            prepare.setLong(6, move.id);
+            prepare.setBoolean(6, move.isenabled);
+            prepare.setLong(7, move.id);
             prepare.executeUpdate();
             cn.close();
         } catch (SQLException e) {

@@ -12,7 +12,13 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.WebSocketContainer;
 
-import com.darkxell.client.state.mainstates.LoginMainState;
+import com.darkxell.client.launchable.messagehandlers.FreezonePositionHandler;
+import com.darkxell.client.launchable.messagehandlers.InventoryRequestHandler;
+import com.darkxell.client.launchable.messagehandlers.LoginPlayerHandler;
+import com.darkxell.client.launchable.messagehandlers.MonsterRequestHandler;
+import com.darkxell.client.launchable.messagehandlers.ObjectRequestHandler;
+import com.darkxell.client.launchable.messagehandlers.SaltResetHandler;
+import com.darkxell.client.launchable.messagehandlers.TestResultConfirmHandler;
 import com.darkxell.common.util.Communicable;
 import com.darkxell.common.util.Logger;
 import com.eclipsesource.json.Json;
@@ -99,21 +105,51 @@ public class GameSocketEndpoint {
 	public void onMessage(String message) {
 		try {
 			JsonValue obj = Json.parse(message);
-			if (obj.asObject().getString("action", "").equals("freezoneposition") && Persistance.currentmap != null)
-				Persistance.currentmap.updateOtherPlayers(obj);
-			else if (obj.asObject().getString("action", "").equals("saltreset")
-					&& Persistance.stateManager instanceof LoginMainState)
-				((LoginMainState) Persistance.stateManager).setSalt(obj.asObject().getString("value", ""));
+			String actionstring = obj.asObject().getString("action", "");
+			switch (actionstring) {
+			case "freezoneposition":
+				new FreezonePositionHandler().handleMessage(obj.asObject());
+				break;
+			case "saltreset":
+				new SaltResetHandler().handleMessage(obj.asObject());
+				break;
+			case "login":
+				new LoginPlayerHandler().handleMessage(obj.asObject());
+				break;
+			case "objectrequest":
+				new ObjectRequestHandler().handleMessage(obj.asObject());
+				break;
+			case "requestinventory":
+				new InventoryRequestHandler().handleMessage(obj.asObject());
+				break;
+			case "requestmonster":
+				new MonsterRequestHandler().handleMessage(obj.asObject());
+				break;
+			case "testresultrecieved":
+				new TestResultConfirmHandler().handleMessage(obj.asObject());
+				break;
+			default:
+				Logger.w("Unrecognized message from the server : " + message);
+				break;
+			}
 		} catch (Exception e) {
 			Logger.w("Could not read the recieved message from the server : " + message);
 			e.printStackTrace();
 		}
 	}
 
+	/**
+	 * Shortcut to send a message to the server with only an action value and a
+	 * communicable.
+	 */
 	public void sendMessage(String action, String name, Communicable value) {
 		this.sendMessage(action, name, value.toJson());
 	}
 
+	/**
+	 * Shortcut to send a message to the server containing only an action value
+	 * and a Json object.
+	 */
 	public void sendMessage(String action, String name, JsonObject value) {
 		JsonObject message = Json.object();
 		message.add("action", action);
@@ -122,7 +158,8 @@ public class GameSocketEndpoint {
 	}
 
 	/**
-	 * Send a message to the server.
+	 * Send a message to the server. This message is in string form and will not
+	 * be wrapped in a JSON container.
 	 *
 	 * @param message
 	 */
@@ -133,6 +170,40 @@ public class GameSocketEndpoint {
 			Logger.e("Could not send message to server socket.");
 		}
 
+	}
+
+	/**
+	 * Shortcut to send a message to the server requesting an inventory value.
+	 */
+	public void requestInventory(long id)
+	{
+		JsonObject message = Json.object();
+		message.add("action", "requestinventory");
+		message.add("id", id);
+		this.sendMessage(message.toString());
+	}
+
+	/**
+	 * Shortcut to send a message to the server requesting a Pokemon value.
+	 */
+	public void requestMonster(long id)
+	{
+		JsonObject message = Json.object();
+		message.add("action", "requestmonster");
+		message.add("id", id);
+		this.sendMessage(message.toString());
+	}
+
+	/**
+	 * Shortcut to send a message to the server requesting an object value.
+	 */
+	public void requestObject(String objectType, long id)
+	{
+		JsonObject message = Json.object();
+		message.add("action", "objectrequest");
+		message.add("id", id);
+		message.add("type", objectType);
+		this.sendMessage(message.toString());
 	}
 
 }

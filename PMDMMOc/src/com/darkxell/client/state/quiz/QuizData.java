@@ -1,6 +1,5 @@
 package com.darkxell.client.state.quiz;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -43,7 +42,7 @@ public class QuizData
 
 	public QuizData()
 	{
-		Element xml = XMLUtils.readFile(new File(PokemonRegistry.class.getResource("/data/quiz.xml").getFile()));
+		Element xml = XMLUtils.read(PokemonRegistry.class.getResourceAsStream("/data/quiz.xml"));
 		List<Element> groups = xml.getChild("questions", xml.getNamespace()).getChildren("questiongroup", xml.getNamespace());
 		this.questionGroups = new QuizQuestionGroup[groups.size()];
 		for (int i = 0; i < this.questionGroups.length; ++i)

@@ -6,7 +6,6 @@ import org.jdom2.Element;
 
 import com.darkxell.client.mechanics.animation.SpritesetAnimation.BackSpriteUsage;
 import com.darkxell.client.mechanics.animation.movement.TackleAnimationMovement;
-import com.darkxell.client.resources.Res;
 import com.darkxell.client.resources.images.AnimationSpriteset;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
 import com.darkxell.common.event.stats.StatChangedEvent;
@@ -116,7 +115,7 @@ public final class Animations
 		a.state = state.equals("null") ? defaultState : state.equals("none") ? null : PokemonSpriteState.valueOf(state.toUpperCase());
 		if (a.state != null)
 		{
-			a.duration = Math.max(a.duration, a.renderer.sprite.pointer.getSequence(a.state, target.facing()).duration);
+			a.duration = Math.max(a.duration, a.renderer.sprite().pointer.getSequence(a.state, target.facing()).duration);
 			if (a.state.hasDash)
 			{
 				a.movement = new TackleAnimationMovement(a);
@@ -161,7 +160,7 @@ public final class Animations
 
 	public static void loadData()
 	{
-		Element xml = XMLUtils.readFile(Res.getFile("/data/animations.xml"));
+		Element xml = XMLUtils.read(Animations.class.getResourceAsStream("/data/animations.xml"));
 		for (Element a : xml.getChild("abilities", xml.getNamespace()).getChildren("a", xml.getNamespace()))
 			abilities.put(Integer.parseInt(a.getAttributeValue("id")), a);
 		for (Element c : xml.getChild("custom", xml.getNamespace()).getChildren("c", xml.getNamespace()))

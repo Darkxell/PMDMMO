@@ -1,7 +1,7 @@
 package com.darkxell.model.ejb;
 
-import com.darkxell.model.ejb.dbobjects.DBPlayer;
-import com.darkxell.model.ejb.dbobjects.DatabaseIdentifier;
+import com.darkxell.common.dbobject.DBPlayer;
+import com.darkxell.common.dbobject.DatabaseIdentifier;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,8 +26,7 @@ public class PlayerDAO {
     /**
      * Creates a new player in the database
      *
-     * @return 0 if a player has been created, 1 if an error occured, 2 if the
-     * player name is already taken.
+     * @return the id of the player created
      */
     public long create(DBPlayer player) {
         try {
@@ -129,6 +128,7 @@ public class PlayerDAO {
                         null, null, null, null, null);
             }
             cn.close();
+            if(toreturn != null)
             completefind(toreturn);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -140,7 +140,7 @@ public class PlayerDAO {
         try {
             //Select pokemon in team
             Connection cn = ds.getConnection();
-            String selectSQL = "SELECT * FROM teammember_ WHERE playerid = ? AND location = 0";
+            String selectSQL = "SELECT * FROM teammember_ WHERE playerid = ? AND location = 2";
             PreparedStatement preparedStatement = cn.prepareStatement(selectSQL);
             preparedStatement.setLong(1, toreturn.id);
             ResultSet result = preparedStatement.executeQuery();
@@ -152,7 +152,7 @@ public class PlayerDAO {
             cn.close();
             //Select pokemon in zones
             cn = ds.getConnection();
-            selectSQL = "SELECT * FROM teammember_ WHERE playerid = ? AND location = 1";
+            selectSQL = "SELECT * FROM teammember_ WHERE playerid = ? AND location = 0";
             preparedStatement = cn.prepareStatement(selectSQL);
             preparedStatement.setLong(1, toreturn.id);
             result = preparedStatement.executeQuery();
@@ -160,6 +160,16 @@ public class PlayerDAO {
                 if(toreturn.pokemonsinzones == null)
                     toreturn.pokemonsinzones = new ArrayList<>(20);
                 toreturn.pokemonsinzones.add(new DatabaseIdentifier(result.getLong("pokemonid")));
+            }
+            cn.close();
+            // Select leader pokemon
+            cn = ds.getConnection();
+            selectSQL = "SELECT * FROM teammember_ WHERE playerid = ? AND location = 1";
+            preparedStatement = cn.prepareStatement(selectSQL);
+            preparedStatement.setLong(1, toreturn.id);
+            result = preparedStatement.executeQuery();
+            if (result.next()) {
+                toreturn.mainpokemon = new DatabaseIdentifier(result.getLong("pokemonid"));
             }
             cn.close();
             // Select toolbox inventory id

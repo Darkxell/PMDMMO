@@ -5,6 +5,13 @@
  */
 package com.darkxell.gameserver;
 
+import com.darkxell.common.dungeon.DungeonRegistry;
+import com.darkxell.common.item.ItemRegistry;
+import com.darkxell.common.move.MoveRegistry;
+import com.darkxell.common.pokemon.PokemonRegistry;
+import com.darkxell.common.trap.TrapRegistry;
+import com.darkxell.common.util.Logger;
+import com.darkxell.common.util.language.Lang;
 import com.darkxell.gameserver.messagehandlers.CreateAccountHandler;
 import java.io.StringReader;
 import javax.enterprise.context.ApplicationScoped;
@@ -20,7 +27,10 @@ import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
 import com.darkxell.gameserver.messagehandlers.FreezonePositionHandler;
+import com.darkxell.gameserver.messagehandlers.InventoryRequestHandler;
 import com.darkxell.gameserver.messagehandlers.LoginHandler;
+import com.darkxell.gameserver.messagehandlers.MonsterRequestHandler;
+import com.darkxell.gameserver.messagehandlers.ObjectrequestHandler;
 import com.darkxell.gameserver.messagehandlers.SaltResetHandler;
 import com.darkxell.gameserver.messagehandlers.TestResultHandler;
 import com.darkxell.model.ejb.Holdeditem_DAO;
@@ -150,31 +160,86 @@ public class GameServer {
             if (this.toolbox_DAO == null) {
                 this.toolbox_DAO = new Toolbox_DAO();
             }
+            Logger.loadServer();
+            PokemonRegistry.load();
+            //Lang.load();
+            MoveRegistry.load();
+            ItemRegistry.load();
+            TrapRegistry.load();
+            DungeonRegistry.load();
+            System.out.println("DAOs and Registries loaded.");
             daoset = true;
         }
         if (!SessionsInfoHolder.infoExists(session.getId())) {
             SessionsInfoHolder.createDefaultInfo(session.getId());
         }
+        GameSessionInfo infos = SessionsInfoHolder.getInfo(session.getId());
         try (JsonReader reader = Json.createReader(new StringReader(message))) {
             JsonObject jsonMessage = reader.readObject();
-            if ("createaccount".equals(jsonMessage.getString("action"))) {
-                CreateAccountHandler hand = new CreateAccountHandler(this);
-                hand.handleMessage(jsonMessage, session, sessionHandler);
-            } else if ("saltreset".equals(jsonMessage.getString("action"))) {
-                SaltResetHandler hand = new SaltResetHandler(this);
-                hand.handleMessage(jsonMessage, session, sessionHandler);
-            } else if ("login".equals(jsonMessage.getString("action"))) {
-                LoginHandler hand = new LoginHandler(this);
-                hand.handleMessage(jsonMessage, session, sessionHandler);
-            } else if ("freezoneposition".equals(jsonMessage.getString("action"))) {
-                FreezonePositionHandler hand = new FreezonePositionHandler(this);
-                hand.handleMessage(jsonMessage, session, sessionHandler);
-            } else if ("testresults".equals(jsonMessage.getString("action"))) {
-                TestResultHandler hand = new TestResultHandler(this);
-                hand.handleMessage(jsonMessage, session, sessionHandler);
+            if (null != jsonMessage.getString("action")) {
+                System.out.println("Got message from " + session.getId() + " : " + jsonMessage.getString("action"));
+                switch (jsonMessage.getString("action")) {
+                    case "createaccount": {
+                        CreateAccountHandler hand = new CreateAccountHandler(this);
+                        hand.handleMessage(jsonMessage, session, sessionHandler);
+                        break;
+                    }
+                    case "saltreset": {
+                        SaltResetHandler hand = new SaltResetHandler(this);
+                        hand.handleMessage(jsonMessage, session, sessionHandler);
+                        break;
+                    }
+                    case "login": {
+                        LoginHandler hand = new LoginHandler(this);
+                        hand.handleMessage(jsonMessage, session, sessionHandler);
+                        break;
+                    }
+                    case "freezoneposition": {
+                        if (!infos.isconnected) {
+                            return;
+                        }
+                        FreezonePositionHandler hand = new FreezonePositionHandler(this);
+                        hand.handleMessage(jsonMessage, session, sessionHandler);
+                        break;
+                    }
+                    case "testresult": {
+                        if (!infos.isconnected) {
+                            return;
+                        }
+                        TestResultHandler hand = new TestResultHandler(this);
+                        hand.handleMessage(jsonMessage, session, sessionHandler);
+                        break;
+                    }
+                    case "objectrequest": {
+                        if (!infos.isconnected) {
+                            return;
+                        }
+                        ObjectrequestHandler hand = new ObjectrequestHandler(this);
+                        hand.handleMessage(jsonMessage, session, sessionHandler);
+                        break;
+                    }
+                    case "requestmonster": {
+                        if (!infos.isconnected) {
+                            return;
+                        }
+                        MonsterRequestHandler hand = new MonsterRequestHandler(this);
+                        hand.handleMessage(jsonMessage, session, sessionHandler);
+                        break;
+                    }
+                    case "requestinventory": {
+                        if (!infos.isconnected) {
+                            return;
+                        }
+                        InventoryRequestHandler hand = new InventoryRequestHandler(this);
+                        hand.handleMessage(jsonMessage, session, sessionHandler);
+                        break;
+                    }
+                    default:
+                        break;
+                    // ADD other "action" json message types if needed.
+                    // DON'T FORGET TO ADD THEM TO THE DOCUMENTATION!!!
+                }
             }
-            // ADD other "action" json message types if needed.
-            // DON'T FORGET TO ADD THEM TO THE DOCUMENTATION!!!
         } catch (Exception e) {
             System.out.println(message);
             e.printStackTrace();
@@ -184,33 +249,43 @@ public class GameServer {
     public PlayerDAO getPlayerDAO() {
         return this.playerDAO;
     }
+
     public Holdeditem_DAO getHoldeditem_DAO() {
         return this.holdeditem_DAO;
     }
+
     public InventoryDAO getInventoryDAO() {
         return this.inventoryDAO;
     }
+
     public Inventorycontains_DAO getInventoryContains_DAO() {
         return this.inventorycontains_DAO;
     }
+
     public ItemstackDAO getItemstackDAO() {
         return this.itemstackDAO;
     }
+
     public LearnedmoveDAO getLearnedmoveDAO() {
         return this.learnedmoveDAO;
     }
+
     public Learnedmove_DAO getLearnedmove_DAO() {
         return this.learnedmove_DAO;
     }
+
     public Playerstorage_DAO getPlayerStorage_DAO() {
         return this.playerstorage_DAO;
     }
+
     public PokemonDAO getPokemonDAO() {
         return this.pokemonDAO;
     }
+
     public Teammember_DAO getTeammember_DAO() {
         return this.teammember_DAO;
     }
+
     public Toolbox_DAO getToolbox_DAO() {
         return this.toolbox_DAO;
     }

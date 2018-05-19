@@ -53,8 +53,6 @@ public class FreezoneExploreState extends AbstractFreezoneState
 		FreezoneMap map = Persistance.currentmap;
 		if (map != null)
 		{
-			int translateX = (int) (-Persistance.freezoneCamera.x * 8 + (width / 2));
-			int translateY = (int) (-Persistance.freezoneCamera.y * 8 + (height / 2));
 
 			if (Persistance.debugdisplaymode)
 			{
@@ -79,8 +77,6 @@ public class FreezoneExploreState extends AbstractFreezoneState
 				g.setColor(new Color(240, 55, 54, 150));
 				g.fillRect((int) (Persistance.freezoneCamera.x * 8), (int) (Persistance.freezoneCamera.y * 8), 4, 4);
 			}
-
-			g.translate(-translateX, -translateY);
 
 			if (Persistance.currentplayer.canInteract())
 			{
@@ -118,7 +114,7 @@ public class FreezoneExploreState extends AbstractFreezoneState
 			{
 				String message = "";
 				JsonObject mess = new JsonObject().add("action", "freezoneposition").add("posfx", Persistance.currentplayer.x)
-						.add("posfy", Persistance.currentplayer.y).add("currentpokemon", Persistance.currentplayer.renderer().sprite.pointer.pokemonID + "")
+						.add("posfy", Persistance.currentplayer.y).add("currentpokemon", Persistance.currentplayer.renderer().sprite().pointer.pokemonID + "")
 						.add("freezoneid", Persistance.currentmap.getMapLocation().id);
 				message = mess.toString();
 				Persistance.socketendpoint.sendMessage(message);

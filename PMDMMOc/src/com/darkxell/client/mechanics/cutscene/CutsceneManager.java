@@ -10,7 +10,7 @@ public class CutsceneManager
 
 	public static Cutscene loadCutscene(String id)
 	{
-		return new Cutscene(XMLUtils.readFile(Res.getFile("/cutscenes/" + id + ".xml")));
+		return new Cutscene(XMLUtils.read(Res.get("/cutscenes/" + id + ".xml")));
 	}
 
 	public static void playCutscene(String id)

@@ -5,7 +5,8 @@
  */
 package com.darkxell.model.ejb;
 
-import com.darkxell.model.ejb.dbobjects.DBItemstack;
+
+import com.darkxell.common.dbobject.DBItemstack;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

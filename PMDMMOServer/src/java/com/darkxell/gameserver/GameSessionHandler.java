@@ -44,5 +44,14 @@ public class GameSessionHandler {
             System.err.println("Error while sending a message");
         }
     }
+    
+    public void sendToSession(Session session, com.eclipsesource.json.JsonObject message) {
+        try {
+            session.getBasicRemote().sendText(message.toString());
+        } catch (IOException ex) {
+            sessions.remove(session);
+            System.err.println("Error while sending a message");
+        }
+    }
 
 }

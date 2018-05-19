@@ -33,32 +33,22 @@ public class BaseStats implements Communicable
 
 	/** Attack. */
 	int attack;
+
 	/** Defense. */
 	int defense;
 	/** Health Points. */
 	int health;
 	/** Movement Speed. */
 	int moveSpeed;
+	public final Pokemon pokemon;
 	/** Special Attack. */
 	int specialAttack;
 	/** Special Defense. */
 	int specialDefense;
 
-	public BaseStats()
-	{}
-
-	public BaseStats(Element xml)
+	public BaseStats(Pokemon pokemon, int attack, int defense, int health, int specialAttack, int specialDefense, int moveSpeed)
 	{
-		this.attack = XMLUtils.getAttribute(xml, "atk", 0);
-		this.defense = XMLUtils.getAttribute(xml, "def", 0);
-		this.health = XMLUtils.getAttribute(xml, "hea", 0);
-		this.specialAttack = XMLUtils.getAttribute(xml, "spa", 0);
-		this.specialDefense = XMLUtils.getAttribute(xml, "spd", 0);
-		this.moveSpeed = XMLUtils.getAttribute(xml, "msp", 1);
-	}
-
-	public BaseStats(int attack, int defense, int health, int specialAttack, int specialDefense, int moveSpeed)
-	{
+		this.pokemon = pokemon;
 		this.attack = attack;
 		this.defense = defense;
 		this.health = health;
@@ -67,8 +57,9 @@ public class BaseStats implements Communicable
 		this.moveSpeed = moveSpeed;
 	}
 
-	public BaseStats(int[] stat)
+	public BaseStats(Pokemon pokemon, int[] stat)
 	{
+		this.pokemon = pokemon;
 		this.attack = stat[Stat.Attack.id];
 		this.defense = stat[Stat.Defense.id];
 		this.health = stat[Stat.Health.id];
@@ -85,6 +76,8 @@ public class BaseStats implements Communicable
 		this.health += stats.health;
 		this.specialAttack += stats.specialAttack;
 		this.specialDefense += stats.specialDefense;
+
+		this.onStatsChange();
 	}
 
 	@Override
@@ -124,6 +117,16 @@ public class BaseStats implements Communicable
 	public int getSpecialDefense()
 	{
 		return this.specialDefense;
+	}
+
+	private void onStatsChange()
+	{
+		if (this.pokemon == null) return;
+		this.pokemon.getData().stat_atk = this.attack;
+		this.pokemon.getData().stat_def = this.defense;
+		this.pokemon.getData().stat_speatk = this.specialAttack;
+		this.pokemon.getData().stat_spedef = this.specialDefense;
+		this.pokemon.getData().stat_hp = this.health;
 	}
 
 	@Override

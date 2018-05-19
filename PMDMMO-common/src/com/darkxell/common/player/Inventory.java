@@ -2,43 +2,47 @@ package com.darkxell.common.player;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.function.Predicate;
 
+import com.darkxell.common.dbobject.DBInventory;
+import com.darkxell.common.dbobject.DatabaseIdentifier;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.Item.ItemAction;
 import com.darkxell.common.item.ItemStack;
-import com.darkxell.common.util.Communicable;
 import com.darkxell.common.util.language.Message;
-import com.eclipsesource.json.Json;
-import com.eclipsesource.json.JsonArray;
-import com.eclipsesource.json.JsonObject;
-import com.eclipsesource.json.JsonValue;
 
-public class Inventory implements ItemContainer, Communicable
+public class Inventory implements ItemContainer
 {
 
 	public static final int MAX_SIZE = 20;
 
+	private DBInventory data;
+
 	private ArrayList<ItemStack> items;
-	private int maxSize;
+
+	public Inventory(DBInventory data)
+	{
+		this.setData(data);
+	}
 
 	public Inventory(int maxSize)
 	{
-		this.maxSize = maxSize;
-		this.items = new ArrayList<ItemStack>();
+		this(new DBInventory(0, maxSize, new ArrayList<>()));
 	}
 
 	@Override
 	public void addItem(ItemStack item)
 	{
-		if (item.item().isStackable) for (ItemStack stack : this.items)
+		ArrayList<ItemStack> items = this.items();
+
+		if (item.item().isStackable) for (ItemStack stack : items)
 			if (stack.item().id == item.item().id)
 			{
-				stack.setQuantity(stack.getQuantity() + item.getQuantity());
+				stack.setQuantity(stack.quantity() + item.quantity());
 				return;
 			}
 
-		this.items.add(item);
+		this.data.content.add(new DatabaseIdentifier(item.getData().id)); // Assuming Item IDs are assigned correctly.
+		items.add(item);
 	}
 
 	@Override
@@ -46,8 +50,12 @@ public class Inventory implements ItemContainer, Communicable
 	{
 		if (this.isFull()) return -1;
 
-		if (item.item().isStackable) for (ItemStack stack : this.items)
-			if (stack.item().id == item.item().id) return this.items.indexOf(stack);
+		if (item.item().isStackable)
+		{
+			ArrayList<ItemStack> items = this.items();
+			for (ItemStack stack : items)
+				if (stack.item().id == item.item().id) return items.indexOf(stack);
+		}
 
 		return this.size();
 	}
@@ -55,13 +63,14 @@ public class Inventory implements ItemContainer, Communicable
 	/** Removes all Items with quantity equal to zero. */
 	private void clean()
 	{
-		this.items.removeIf(new Predicate<ItemStack>() {
-			@Override
-			public boolean test(ItemStack item)
+		ArrayList<ItemStack> items = this.items();
+		for (int i = 0; i < items.size(); ++i)
+			if (items.get(i).quantity() <= 0)
 			{
-				return item.getQuantity() == 0;
+				items.remove(i);
+				this.data.content.remove(i);
+				--i;
 			}
-		});
 	}
 
 	@Override
@@ -78,24 +87,35 @@ public class Inventory implements ItemContainer, Communicable
 
 	public void empty()
 	{
-		this.items.clear();
+		this.data.content.clear();
+		this.onContentChange();
+	}
+
+	public DBInventory getData()
+	{
+		return this.data;
 	}
 
 	@Override
 	public ItemStack getItem(int index)
 	{
-		if (index < 0 || index >= this.maxSize) return null;
-		return this.items.get(index);
+		if (index < 0 || index >= this.maxSize()) return null;
+		return this.items().get(index);
 	}
 
 	public boolean isEmpty()
 	{
-		return this.items.isEmpty();
+		return this.items().isEmpty();
 	}
 
 	public boolean isFull()
 	{
-		return this.items.size() == this.maxSize;
+		return this.items().size() == this.maxSize();
+	}
+
+	public ArrayList<ItemStack> items()
+	{
+		return this.items;
 	}
 
 	@Override
@@ -116,32 +136,25 @@ public class Inventory implements ItemContainer, Communicable
 
 	public int maxSize()
 	{
-		return this.maxSize;
+		return this.data.maxsize;
 	}
 
-	@Override
-	public void read(JsonObject value)
+	private void onContentChange()
 	{
-		this.maxSize = value.getInt("maxSize", MAX_SIZE);
-		this.empty();
-		for (JsonValue itemJson : value.get("content").asArray())
-		{
-			ItemStack i = new ItemStack(itemJson.asObject().getInt("id", -1));
-			i.setQuantity(itemJson.asObject().getInt("quantity", 1));
-			this.addItem(i);
-		}
+		// TODO Inventory:onContentChange()
 	}
 
 	/** Removes the Item in the input slot and returns it. Returns null if index is out of bounds. */
 	public ItemStack remove(int slot)
 	{
-		if (slot < 0 || slot >= this.maxSize) return null;
+		if (slot < 0 || slot >= this.maxSize()) return null;
 		ItemStack i = this.items.get(slot);
+		this.data.content.remove(slot);
 		this.items.remove(slot);
 		return i;
 	}
 
-	public ItemStack remove(Item item, int quantity)
+	public ItemStack remove(Item item, long quantity)
 	{
 		ItemStack toreturn = new ItemStack(item.id);
 		toreturn.setQuantity(0);
@@ -150,23 +163,30 @@ public class Inventory implements ItemContainer, Communicable
 		{
 			if (stack.item().id == item.id)
 			{
-				int remove = Math.min(quantity, stack.getQuantity());
-				stack.setQuantity(stack.getQuantity() - remove);
+				long remove = Math.min(quantity, stack.quantity());
+				stack.setQuantity(stack.quantity() - remove);
 				quantity -= remove;
-				toreturn.setQuantity(toreturn.getQuantity() + remove);
+				toreturn.setQuantity(toreturn.quantity() + remove);
 				if (quantity == 0) break;
 			}
 		}
 
 		this.clean();
 
-		if (toreturn.getQuantity() == 0) return null;
+		if (toreturn.quantity() == 0) return null;
 		return toreturn;
+	}
+
+	public void setData(DBInventory data)
+	{
+		this.data = data;
+		this.onContentChange();
 	}
 
 	@Override
 	public void setItem(int index, ItemStack item)
 	{
+		this.data.content.set(index, new DatabaseIdentifier(item.getData().id)); // Assuming Item IDs are assigned correctly
 		this.items.set(index, item);
 	}
 
@@ -179,25 +199,9 @@ public class Inventory implements ItemContainer, Communicable
 	public void sort()
 	{
 		this.items.sort(Comparator.naturalOrder());
-	}
-
-	@Override
-	public JsonObject toJson()
-	{
-		JsonObject root = Json.object();
-		root.set("maxSize", this.maxSize);
-
-		this.clean();
-		JsonArray contentJson = new JsonArray();
-		for (ItemStack s : this.items)
-		{
-			JsonObject o = Json.object();
-			o.set("id", s.item().id);
-			if (s.getQuantity() != 1) o.add("quantity", s.getQuantity());
-		}
-		root.set("content", contentJson);
-
-		return root;
+		this.data.content.clear();
+		for (ItemStack i : this.items)
+			this.data.content.add(new DatabaseIdentifier(i.getData().id)); // Assuming Item IDs are assigned correctly
 	}
 
 }
