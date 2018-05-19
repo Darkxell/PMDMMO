@@ -52,10 +52,4 @@ public abstract class Persistance
 	/** If true, data for pokemon, dungeon, moves, etc. is saved on exit. */
 	public static boolean saveDataOnExit = false;
 
-	public static void setPlayer(Player newPlayer)
-	{
-		player = newPlayer;
-		currentplayer.setPlayer(player);
-	}
-
 }

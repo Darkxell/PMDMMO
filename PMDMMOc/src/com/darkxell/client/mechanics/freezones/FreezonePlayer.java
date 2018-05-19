@@ -24,9 +24,6 @@ public class FreezonePlayer
 
 	private boolean isSprinting = false;
 
-	/** Reference to the player object if loaded. For now, only used if it's the main Player. */
-	private Player player;
-
 	private PokemonSprite playersprite;
 
 	private AbstractPokemonRenderer renderer;
@@ -37,24 +34,13 @@ public class FreezonePlayer
 	/** The y position of the middle of the player hitbox. also corresponds to the gravity center of the sprite. */
 	public double y;
 
-	public FreezonePlayer(Player player, int x, int y)
+	public FreezonePlayer(PokemonSprite sprite, int x, int y)
 	{
-		this(player, new PokemonSprite(PokemonSpritesets.getSpriteset(player.getTeamLeader())), x, y);
-	}
-
-	public FreezonePlayer(Player player, PokemonSprite sprite, int x, int y)
-	{
-		this.player = player;
 		this.playersprite = sprite;
 		this.playersprite.setShadowColor(PokemonSprite.ALLY_SHADOW);
 		this.renderer = new AbstractPokemonRenderer(this.playersprite);
 		this.x = x;
 		this.y = y;
-	}
-
-	public FreezonePlayer(PokemonSprite sprite, int x, int y)
-	{
-		this(null, sprite, x, y);
 	}
 
 	/** Returns false if the player would collide in a solid tile/tileentity if it were at the wanted location, true otherwise. */
@@ -233,7 +219,7 @@ public class FreezonePlayer
 
 	public void setPlayer(Player player)
 	{
-		this.player = player;
+		Persistance.player = player;
 		if (player != null) this.updateSprite();
 	}
 
@@ -244,7 +230,7 @@ public class FreezonePlayer
 
 	public void update()
 	{
-		if (this.player != null && this.player.getTeamLeader().species().compoundID() != this.playersprite.pointer.pokemonID) this.updateSprite();
+		if (Persistance.player != null && Persistance.player.getTeamLeader().species().compoundID() != this.playersprite.pointer.pokemonID) this.updateSprite();
 		this.renderer.update();
 		this.renderer.setXY(this.x * 8, this.y * 8);
 		double truemovespeed = isSprinting ? MOVESPEED * 2 : MOVESPEED;
@@ -256,7 +242,7 @@ public class FreezonePlayer
 
 	private void updateSprite()
 	{
-		PokemonSprite sprite = new PokemonSprite(PokemonSpritesets.getSpriteset(this.player.getTeamLeader()));
+		PokemonSprite sprite = new PokemonSprite(PokemonSpritesets.getSpriteset(Persistance.player.getTeamLeader()));
 		sprite.copyState(this.playersprite);
 		this.playersprite = sprite;
 		this.renderer = new AbstractPokemonRenderer(this.playersprite);
