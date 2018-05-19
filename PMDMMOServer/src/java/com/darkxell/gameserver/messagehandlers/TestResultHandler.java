@@ -32,14 +32,17 @@ public class TestResultHandler extends MessageHandler {
     @Override
     public void handleMessage(JsonObject json, Session from, GameSessionHandler sessionshandler) {
         GameSessionInfo si = SessionsInfoHolder.getInfo(from.getId());
-        if (!si.isconnected) {
-            return;
-        }
         int mainid = json.getJsonNumber("mainid").intValue();
         int offid = json.getJsonNumber("offid").intValue();
         int maingender = json.getJsonNumber("maingender").intValue();
         int offgender = json.getJsonNumber("offgender").intValue();
-        // TODO : Check that mainID is a valid number and storyposition = 0
+        // TODO : Check that mainID is a valid number
+
+        DBPlayer pl = endpoint.getPlayerDAO().find(si.serverid);
+        if (pl.storyposition != 0) {
+            System.out.println("Player storyposition was not 0, didn't accept test results.");
+            return;
+        }
 
         PokemonSpecies espece = PokemonRegistry.find(mainid);
         Pokemon main = espece.generate(new Random(), 5);
@@ -69,7 +72,6 @@ public class TestResultHandler extends MessageHandler {
             }
         }
         //Increments storyposition
-        DBPlayer pl = endpoint.getPlayerDAO().find(si.serverid);
         pl.storyposition = 1;
         endpoint.getPlayerDAO().update(pl);
 
