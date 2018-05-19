@@ -47,7 +47,7 @@ public abstract class Persistance
 	public static ClientEventProcessor eventProcessor;
 
 	/** Displays the debug information. Careful, this is not optimized and will have a high CPU drain. It also makes the game really ugly, it's a debug mode... */
-	public static boolean debugdisplaymode = true;
+	public static boolean debugdisplaymode = false;
 
 	/** If true, data for pokemon, dungeon, moves, etc. is saved on exit. */
 	public static boolean saveDataOnExit = false;

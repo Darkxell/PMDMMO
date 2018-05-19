@@ -14,6 +14,7 @@ import com.darkxell.client.resources.images.others.Hud;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.common.util.DoubleRectangle;
 import com.darkxell.common.util.Logger;
+import com.darkxell.common.util.language.Message;
 import com.eclipsesource.json.JsonObject;
 
 public class FreezoneExploreState extends AbstractFreezoneState
@@ -53,37 +54,10 @@ public class FreezoneExploreState extends AbstractFreezoneState
 		FreezoneMap map = Persistance.currentmap;
 		if (map != null)
 		{
-
-			if (Persistance.debugdisplaymode)
-			{
-				g.setColor(new Color(20, 20, 200, 160));
-				DoubleRectangle dbrct = Persistance.currentplayer.getHitboxAt(Persistance.currentplayer.x, Persistance.currentplayer.y);
-				g.fillRect((int) (dbrct.x * 8), (int) (dbrct.y * 8), (int) (dbrct.width * 8), (int) (dbrct.height * 8));
-
-				g.setColor(new Color(150, 20, 130, 120));
-				dbrct = Persistance.currentplayer.getInteractionBox();
-				g.fillRect((int) (dbrct.x * 8), (int) (dbrct.y * 8), (int) (dbrct.width * 8), (int) (dbrct.height * 8));
-			}
-
-			// draws the warpzones and camera position if debugmode
-			if (Persistance.debugdisplaymode)
-			{
-				for (int i = 0; i < map.warpzones.size(); i++)
-				{
-					g.setColor(new Color(255, 255, 255, 130));
-					DoubleRectangle dbrct = map.warpzones.get(i).hitbox;
-					g.fillRect((int) (dbrct.x * 8), (int) (dbrct.y * 8), (int) (dbrct.width * 8), (int) (dbrct.height * 8));
-				}
-				g.setColor(new Color(240, 55, 54, 150));
-				g.fillRect((int) (Persistance.freezoneCamera.x * 8), (int) (Persistance.freezoneCamera.y * 8), 4, 4);
-			}
-
 			if (Persistance.currentplayer.canInteract())
 			{
 				g.drawImage(Hud.button, width - 70, 5, null);
-				TextRenderer.render(g, "Interact", width - 50, 10);
-				// TODO : change the "INTERACT" here to a language dependent
-				// string, and change it to match the action.
+				TextRenderer.render(g, new Message("ui.interact"), width - 50, 10);
 			}
 
 			if (Persistance.debugdisplaymode)

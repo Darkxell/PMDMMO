@@ -80,15 +80,12 @@ public class AbstractFreezoneState extends AbstractState
 				g.setColor(new Color(150, 20, 130, 120));
 				dbrct = Persistance.currentplayer.getInteractionBox();
 				g.fillRect((int) (dbrct.x * 8), (int) (dbrct.y * 8), (int) (dbrct.width * 8), (int) (dbrct.height * 8));
-			}
 
 			// draws the warpzones and camera position if debugmode
-			if (Persistance.debugdisplaymode)
-			{
 				for (int i = 0; i < map.warpzones.size(); i++)
 				{
 					g.setColor(new Color(255, 255, 255, 130));
-					DoubleRectangle dbrct = map.warpzones.get(i).hitbox;
+					dbrct = map.warpzones.get(i).hitbox;
 					g.fillRect((int) (dbrct.x * 8), (int) (dbrct.y * 8), (int) (dbrct.width * 8), (int) (dbrct.height * 8));
 				}
 				g.setColor(new Color(240, 55, 54, 150));
