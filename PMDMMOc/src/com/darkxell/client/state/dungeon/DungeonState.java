@@ -274,7 +274,7 @@ public class DungeonState extends AbstractState
 	public void update()
 	{
 		Persistance.dungeonRenderer.update();
-		this.pokemonRenderer.update();
+		//this.pokemonRenderer.update(); Don't because the renderers are updated in MasterDungeonRenderer
 		if (this.isMain()) this.logger.update();
 		this.currentSubstate.update();
 	}

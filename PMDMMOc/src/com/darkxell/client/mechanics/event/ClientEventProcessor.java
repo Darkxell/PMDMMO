@@ -14,6 +14,7 @@ import com.darkxell.client.renderers.pokemon.DungeonPokemonRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
 import com.darkxell.client.resources.music.SoundManager;
+import com.darkxell.client.state.StateManager;
 import com.darkxell.client.state.dialog.AbstractDialogState;
 import com.darkxell.client.state.dialog.AbstractDialogState.DialogEndListener;
 import com.darkxell.client.state.dialog.AbstractDialogState.DialogScreen;
@@ -23,7 +24,6 @@ import com.darkxell.client.state.dungeon.DelayState;
 import com.darkxell.client.state.dungeon.NextFloorState;
 import com.darkxell.client.state.dungeon.OrbAnimationState;
 import com.darkxell.client.state.dungeon.PokemonTravelState;
-import com.darkxell.client.state.freezone.FreezoneExploreState;
 import com.darkxell.client.state.map.LocalMap;
 import com.darkxell.client.state.menu.dungeon.MoveLearnMenuState;
 import com.darkxell.client.state.menu.dungeon.StairMenuState;
@@ -235,7 +235,9 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	{
 		if (event.pokemon == Persistance.player.getDungeonLeader())
 		{
-			Persistance.stateManager.setState(new FreezoneExploreState());
+			event.pokemon.dispose();
+			Persistance.player.resetDungeonTeam();
+			StateManager.setExploreState("Base", -1, -1);
 			Persistance.displaymap = LocalMap.instance;
 		}
 	}

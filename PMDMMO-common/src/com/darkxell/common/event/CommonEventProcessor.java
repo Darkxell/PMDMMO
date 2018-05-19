@@ -154,8 +154,9 @@ public class CommonEventProcessor
 
 	public boolean stopsTravel(DungeonEvent event)
 	{
+		/* if (event instanceof ItemMovedEvent) { ItemMovedEvent e = (ItemMovedEvent) event; return !(e.source instanceof Tile && (e.destination instanceof Inventory || e.destination instanceof Pokemon)); } */
 		return !(event instanceof BellyChangedEvent || event instanceof TurnSkippedEvent || event instanceof PokemonRotateEvent
-				|| event instanceof PokemonTravelEvent || event instanceof PokemonSpawnedEvent);
+				|| event instanceof PokemonTravelEvent || event instanceof PokemonSpawnedEvent/* || event instanceof MoneyCollectedEvent */);
 	}
 
 }

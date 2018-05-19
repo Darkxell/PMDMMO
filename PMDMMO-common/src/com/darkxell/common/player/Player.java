@@ -137,6 +137,7 @@ public class Player
 		this.data = data;
 		this.allies = new ArrayList<>();
 		this.dungeonAllies = new ArrayList<>();
+		this.inventory = new Inventory();
 	}
 
 	public void setInventory(Inventory inventory)

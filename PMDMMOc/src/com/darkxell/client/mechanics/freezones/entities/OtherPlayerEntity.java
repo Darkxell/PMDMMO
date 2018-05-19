@@ -67,7 +67,6 @@ public class OtherPlayerEntity extends FreezoneEntity
 	@Override
 	public void update()
 	{
-		this.sprite.update();
 		// Calculates the movespeed of the pokemon
 		double movespeed = 0.2d;
 		boolean up = false, right = false, down = false, left = false;

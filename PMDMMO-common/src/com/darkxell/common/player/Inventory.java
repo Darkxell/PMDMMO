@@ -19,6 +19,11 @@ public class Inventory implements ItemContainer
 
 	private ArrayList<ItemStack> items;
 
+	public Inventory()
+	{
+		this(MAX_SIZE);
+	}
+
 	public Inventory(DBInventory data)
 	{
 		this.setData(data);
@@ -88,7 +93,7 @@ public class Inventory implements ItemContainer
 	public void empty()
 	{
 		this.data.content.clear();
-		this.onContentChange();
+		this.items.clear();
 	}
 
 	public DBInventory getData()
@@ -139,11 +144,6 @@ public class Inventory implements ItemContainer
 		return this.data.maxsize;
 	}
 
-	private void onContentChange()
-	{
-		// TODO Inventory:onContentChange()
-	}
-
 	/** Removes the Item in the input slot and returns it. Returns null if index is out of bounds. */
 	public ItemStack remove(int slot)
 	{
@@ -180,7 +180,7 @@ public class Inventory implements ItemContainer
 	public void setData(DBInventory data)
 	{
 		this.data = data;
-		this.onContentChange();
+		this.items = new ArrayList<>();
 	}
 
 	@Override
