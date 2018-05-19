@@ -125,11 +125,20 @@ public class CustomTextfield {
 	}
 
 	/**
+	 * List of all the untypable characters. Trying to type one of them will
+	 * result in the event being ignored.
+	 */
+	private static char[] untypables = new char[] {'\b','\t','\n','\f','\r',(char)0x7f};
+
+	/**
 	 * Should be called by a state that uses this textfield upon recieving a
 	 * KeyTyped event.
 	 */
 	public void onKeyTyped(KeyEvent e) {
-		if (e.getKeyChar() != '\b' && !unselected)
+		for (int i = 0; i < untypables.length; ++i)
+			if (e.getKeyChar() == untypables[i])
+				return;
+		if (!unselected)
 			this.insertString(e.getKeyChar() + "");
 	}
 
