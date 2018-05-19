@@ -30,7 +30,7 @@ public class Player
 	{
 		this(new DBPlayer(0, name, null, 0, 0, 0, new ArrayList<>(), new ArrayList<>(), pokemon == null ? null : new DatabaseIdentifier(pokemon.id()), null,
 				null));
-		this.leaderPokemon = pokemon;
+		this.setLeaderPokemon(pokemon);
 	}
 
 	public void addAlly(Pokemon pokemon)
@@ -57,7 +57,7 @@ public class Player
 
 	public DungeonPokemon getDungeonLeader()
 	{
-		if (this.leaderPokemon.getDungeonPokemon() == null) new DungeonPokemon(this.leaderPokemon);
+		if (this.leaderPokemon.getDungeonPokemon() == null) this.leaderPokemon.createDungeonPokemon();
 		return this.leaderPokemon.getDungeonPokemon();
 	}
 
@@ -150,6 +150,7 @@ public class Player
 		this.leaderPokemon = pokemon;
 		if (this.leaderPokemon != null)
 		{
+			this.leaderPokemon.createDungeonPokemon();
 			this.leaderPokemon.setPlayer(this);
 			this.data.mainpokemon = new DatabaseIdentifier(this.leaderPokemon.id());
 		} else this.data.mainpokemon = null;

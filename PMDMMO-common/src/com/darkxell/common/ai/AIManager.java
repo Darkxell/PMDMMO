@@ -5,6 +5,7 @@ import java.util.HashMap;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.util.Logger;
 
 public class AIManager
 {
@@ -38,7 +39,12 @@ public class AIManager
 
 	public DungeonEvent takeAction(DungeonPokemon pokemon)
 	{
-		if (pokemon == null || !this.ais.containsKey(pokemon)) return null;
+		if (pokemon == null) return null;
+		if (!this.ais.containsKey(pokemon))
+		{
+			Logger.e("Tried to call " + pokemon + "'s AI even though it has none.");
+			return null;
+		}
 		return this.ais.get(pokemon).takeAction();
 	}
 

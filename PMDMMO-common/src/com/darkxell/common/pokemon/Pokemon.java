@@ -111,6 +111,11 @@ public class Pokemon implements ItemContainer
 		return new Message("inventory.held").addReplacement("<pokemon>", this.getNickname());
 	}
 
+	public void createDungeonPokemon()
+	{
+		new DungeonPokemon(this);
+	}
+
 	@Override
 	public void deleteItem(int index)
 	{
