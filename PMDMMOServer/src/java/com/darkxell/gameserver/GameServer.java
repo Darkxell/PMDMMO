@@ -173,6 +173,7 @@ public class GameServer {
         if (!SessionsInfoHolder.infoExists(session.getId())) {
             SessionsInfoHolder.createDefaultInfo(session.getId());
         }
+        GameSessionInfo infos = SessionsInfoHolder.getInfo(session.getId());
         try (JsonReader reader = Json.createReader(new StringReader(message))) {
             JsonObject jsonMessage = reader.readObject();
             if (null != jsonMessage.getString("action")) {
@@ -194,26 +195,41 @@ public class GameServer {
                         break;
                     }
                     case "freezoneposition": {
+                        if (!infos.isconnected) {
+                            return;
+                        }
                         FreezonePositionHandler hand = new FreezonePositionHandler(this);
                         hand.handleMessage(jsonMessage, session, sessionHandler);
                         break;
                     }
                     case "testresult": {
+                        if (!infos.isconnected) {
+                            return;
+                        }
                         TestResultHandler hand = new TestResultHandler(this);
                         hand.handleMessage(jsonMessage, session, sessionHandler);
                         break;
                     }
                     case "objectrequest": {
+                        if (!infos.isconnected) {
+                            return;
+                        }
                         ObjectrequestHandler hand = new ObjectrequestHandler(this);
                         hand.handleMessage(jsonMessage, session, sessionHandler);
                         break;
                     }
                     case "requestmonster": {
+                        if (!infos.isconnected) {
+                            return;
+                        }
                         MonsterRequestHandler hand = new MonsterRequestHandler(this);
                         hand.handleMessage(jsonMessage, session, sessionHandler);
                         break;
                     }
                     case "requestinventory": {
+                        if (!infos.isconnected) {
+                            return;
+                        }
                         InventoryRequestHandler hand = new InventoryRequestHandler(this);
                         hand.handleMessage(jsonMessage, session, sessionHandler);
                         break;
