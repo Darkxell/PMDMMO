@@ -115,7 +115,7 @@ public final class Animations
 		a.state = state.equals("null") ? defaultState : state.equals("none") ? null : PokemonSpriteState.valueOf(state.toUpperCase());
 		if (a.state != null)
 		{
-			a.duration = Math.max(a.duration, a.renderer.sprite.pointer.getSequence(a.state, target.facing()).duration);
+			a.duration = Math.max(a.duration, a.renderer.sprite().pointer.getSequence(a.state, target.facing()).duration);
 			if (a.state.hasDash)
 			{
 				a.movement = new TackleAnimationMovement(a);

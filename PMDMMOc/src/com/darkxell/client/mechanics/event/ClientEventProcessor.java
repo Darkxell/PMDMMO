@@ -223,8 +223,8 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		if (!(event.source instanceof BellyChangedEvent))
 		{
 			SoundManager.playSound("dungeon-hurt");
-			Persistance.dungeonState.pokemonRenderer.getRenderer(event.target).sprite.setState(PokemonSpriteState.HURT);
-			Persistance.dungeonState.pokemonRenderer.getRenderer(event.target).sprite.setHealthChange(-event.damage);
+			Persistance.dungeonState.pokemonRenderer.getRenderer(event.target).sprite().setState(PokemonSpriteState.HURT);
+			Persistance.dungeonState.pokemonRenderer.getRenderer(event.target).sprite().setHealthChange(-event.damage);
 			Animations.getCustomAnimation(event.target, Animations.HURT, null).start();
 			Persistance.dungeonState.setSubstate(new DelayState(Persistance.dungeonState, PokemonSprite.FRAMELENGTH));
 			this.setState(State.ANIMATING);
@@ -255,7 +255,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	private void processHealEvent(HealthRestoredEvent event)
 	{
 		if (event.effectiveHeal() <= 0) return;
-		Persistance.dungeonState.pokemonRenderer.getRenderer(event.target).sprite.setHealthChange(event.effectiveHeal());
+		Persistance.dungeonState.pokemonRenderer.getRenderer(event.target).sprite().setHealthChange(event.effectiveHeal());
 		AnimationState s = new AnimationState(Persistance.dungeonState);
 		s.animation = Animations.getCustomAnimation(event.target, Animations.HEAL, this.currentAnimEnd);
 		if (s.animation != null)
@@ -402,15 +402,15 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		{
 			if (event.spawned.player() != Persistance.player)
 			{
-				if (event.spawned.isTeamLeader()) renderer.sprite.setShadowColor(PokemonSprite.PLAYER_SHADOW);
-				else renderer.sprite.setShadowColor(PokemonSprite.ENEMY_SHADOW);
-			} else renderer.sprite.setShadowColor(PokemonSprite.ALLY_SHADOW);
+				if (event.spawned.isTeamLeader()) renderer.sprite().setShadowColor(PokemonSprite.PLAYER_SHADOW);
+				else renderer.sprite().setShadowColor(PokemonSprite.ENEMY_SHADOW);
+			} else renderer.sprite().setShadowColor(PokemonSprite.ALLY_SHADOW);
 		}
 	}
 
 	private void processSpeedEvent(SpeedChangedEvent event)
 	{
-		Persistance.dungeonState.pokemonRenderer.getRenderer(event.pokemon).sprite.updateTickingSpeed(event.pokemon);
+		Persistance.dungeonState.pokemonRenderer.getRenderer(event.pokemon).sprite().updateTickingSpeed(event.pokemon);
 	}
 
 	private void processStairEvent(StairLandingEvent event)

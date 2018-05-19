@@ -114,7 +114,7 @@ public class FreezoneExploreState extends AbstractFreezoneState
 			{
 				String message = "";
 				JsonObject mess = new JsonObject().add("action", "freezoneposition").add("posfx", Persistance.currentplayer.x)
-						.add("posfy", Persistance.currentplayer.y).add("currentpokemon", Persistance.currentplayer.renderer().sprite.pointer.pokemonID + "")
+						.add("posfy", Persistance.currentplayer.y).add("currentpokemon", Persistance.currentplayer.renderer().sprite().pointer.pokemonID + "")
 						.add("freezoneid", Persistance.currentmap.getMapLocation().id);
 				message = mess.toString();
 				Persistance.socketendpoint.sendMessage(message);

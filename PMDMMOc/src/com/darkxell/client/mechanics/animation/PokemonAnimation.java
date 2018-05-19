@@ -60,7 +60,7 @@ public class PokemonAnimation extends AbstractAnimation
 	public void start()
 	{
 		super.start();
-		if (this.state != null) this.renderer.sprite.setState(this.state);
+		if (this.state != null) this.renderer.sprite().setState(this.state);
 		if (this.movement != null) this.movement.start();
 	}
 

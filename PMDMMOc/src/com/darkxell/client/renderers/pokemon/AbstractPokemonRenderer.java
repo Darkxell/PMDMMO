@@ -46,7 +46,7 @@ public class AbstractPokemonRenderer extends AbstractRenderer
 	}
 
 	private final ArrayList<PokemonAnimation> animations = new ArrayList<PokemonAnimation>();
-	public final PokemonSprite sprite;
+	protected PokemonSprite sprite;
 
 	public AbstractPokemonRenderer(Pokemon pokemon)
 	{
@@ -110,6 +110,11 @@ public class AbstractPokemonRenderer extends AbstractRenderer
 		double screenY = Persistance.dungeonState.pokemonRenderer.y();
 		return this.x() + AbstractDungeonTileset.TILE_SIZE >= screenX - 1 && this.x() <= screenX + width + 1
 				&& this.y() + AbstractDungeonTileset.TILE_SIZE >= screenY - 1 && this.y() <= screenY + height + 1;
+	}
+
+	public PokemonSprite sprite()
+	{
+		return this.sprite;
 	}
 
 	@Override
