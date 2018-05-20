@@ -33,10 +33,10 @@ public class SaltResetHandler extends MessageHandler {
         si.salt = salt;
         // Sends the salt back to the user
         JsonObject value = Json.createObjectBuilder()
-                            .add("action", "saltreset")
-                            .add("value", salt)
-                            .build();
-                    sessionshandler.sendToSession(from, value);
+                .add("action", "saltreset")
+                .add("value", salt)
+                .build();
+        sessionshandler.sendToSession(from, value);
     }
 
 }
