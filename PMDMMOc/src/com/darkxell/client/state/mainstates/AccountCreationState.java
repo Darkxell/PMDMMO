@@ -14,6 +14,7 @@ import com.darkxell.client.ui.MainUiUtility;
 import com.darkxell.common.util.DoubleRectangle;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.Position;
+import com.darkxell.common.util.language.Message;
 import com.eclipsesource.json.JsonObject;
 
 public class AccountCreationState extends StateManager {
@@ -37,6 +38,7 @@ public class AccountCreationState extends StateManager {
 	private int offsety = 20;
 
 	private String errormessage = "";
+	private String assessmessage = "";
 
 	@Override
 	public void onKeyPressed(KeyEvent e, short key) {
@@ -61,17 +63,20 @@ public class AccountCreationState extends StateManager {
 	public void onMouseClick(int x, int y) {
 		// Button clicks
 		if (button_create.isInside(new Position(mouseX - offsetx, mouseY - offsety))) {
-			if (password.getContent().length() < 8) {
-				this.errormessage = "Your password is too short, 8 characters minimum.";
+			if (login.getContent().length() < 2) {
+				this.errormessage = new Message("ui.login.namelengtherror").toString();
+			} else if (password.getContent().length() < 8) {
+				this.errormessage = new Message("ui.login.passtooshort").toString();
 			} else if (!password.getContent().equals(confirm.getContent())) {
-				this.errormessage = "Confirmation field is not identical to you password.";
+				this.errormessage = new Message("ui.login.passconfirmerror").toString();
 			} else if (Persistance.socketendpoint == null
 					|| Persistance.socketendpoint.connectionStatus() != GameSocketEndpoint.CONNECTED) {
-				this.errormessage = "Could not contact the server to create an account.";
+				this.errormessage = new Message("ui.login.noconnection").toString();
 			} else {
 				// Sends the account creation payload to the server
 				sendAccountcreationMessage();
-				Persistance.stateManager = new LoginMainState();
+				this.assessmessage = new Message("ui.login.serverwait").toString();
+				this.errormessage = "";
 			}
 		} else if (button_back.isInside(new Position(mouseX - offsetx, mouseY - offsety))) {
 			Persistance.stateManager = new LoginMainState();
@@ -125,6 +130,8 @@ public class AccountCreationState extends StateManager {
 
 		g.setColor(Color.RED);
 		g.drawString(errormessage, 155, 143);
+		g.setColor(new Color(4, 142, 52));
+		g.drawString(assessmessage, 185, 355);
 
 		g.translate(textfield_login.x + 10, textfield_login.y);
 		this.login.render(g, (int) textfield_login.width - 20, (int) textfield_login.height - 15);
@@ -191,7 +198,21 @@ public class AccountCreationState extends StateManager {
 			Encryption.death256message();
 			System.exit(666);
 		}
+	}
 
+	/** Method called when recieving a logininfo payload. */
+	public void servercall(String id) {
+		switch (id) {
+		case "ui.login.nametaken":
+			errormessage = new Message(id).toString();
+			assessmessage = "";
+			break;
+		case "ui.login.accountcreated":
+			errormessage = "";
+			assessmessage = new Message(id).toString();
+			Persistance.stateManager = new AccountCreatedMainState(password.getContent(), login.getContent());
+			break;
+		}
 	}
 
 }

@@ -25,6 +25,7 @@ import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.util.DoubleRectangle;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.Position;
+import com.darkxell.common.util.language.Message;
 import com.eclipsesource.json.JsonObject;
 
 public class LoginMainState extends StateManager {
@@ -46,6 +47,27 @@ public class LoginMainState extends StateManager {
 	private int mouseY = 1;
 	private int offsetx = 100;
 	private int offsety = 20;
+
+	/** A message displayed above the login button. */
+	private String message = "";
+	private Color messcolor = new Color(4, 142, 52);
+
+	public LoginMainState() {
+		super();
+	}
+
+	public LoginMainState(String message, String prefilledname, String prefilledpass) {
+		this();
+		if (prefilledname != null) {
+			login.clear();
+			login.insertString(prefilledname);
+		}
+		if (prefilledpass != null) {
+			password.clear();
+			password.insertString(prefilledpass);
+		}
+		this.message = message;
+	}
 
 	@Override
 	public void onKeyPressed(KeyEvent e, short key) {
@@ -133,6 +155,10 @@ public class LoginMainState extends StateManager {
 			g.setColor(new Color(120, 120, 180));
 		}
 		g.fillRect((int) button_login.x, (int) button_login.y, (int) button_login.width, (int) button_login.height);
+		g.setColor(Color.DARK_GRAY);
+		g.drawString(message, 39, 276);
+		g.setColor(messcolor);
+		g.drawString(message, 40, 275);
 		g.setColor(Color.BLACK);
 		g.drawString("LOGIN", (int) button_login.x + 25, (int) button_login.y + 20);
 		g.setColor((button_createaccount.isInside(new Position(relativemousex, relativemousey))) ? selectedbuttoncolor
@@ -162,7 +188,8 @@ public class LoginMainState extends StateManager {
 			firstupdate = false;
 			this.password.setSelection(false);
 			this.sendSaltReset();
-			this.login.insertString(ClientSettings.getSetting(ClientSettings.LOGIN));
+			if (this.login.getContent().equals(""))
+				this.login.insertString(ClientSettings.getSetting(ClientSettings.LOGIN));
 		}
 	}
 
@@ -212,8 +239,10 @@ public class LoginMainState extends StateManager {
 		playerdata.read(pl);
 		Persistance.player = new Player(playerdata);
 		Persistance.stateManager = new PrincipalMainState();
-		if (Persistance.player.storyPosition() == 0) Persistance.stateManager.setState(new PersonalityQuizState());
-		else Persistance.stateManager.setState(new PlayerLoadingState(Persistance.player.getData().id));
+		if (Persistance.player.storyPosition() == 0)
+			Persistance.stateManager.setState(new PersonalityQuizState());
+		else
+			Persistance.stateManager.setState(new PlayerLoadingState(Persistance.player.getData().id));
 		((PrincipalMainState) Persistance.stateManager).randomizeBackground();
 	}
 
@@ -235,6 +264,15 @@ public class LoginMainState extends StateManager {
 		// PersonalityQuizState());
 		((PrincipalMainState) Persistance.stateManager).setState(new OpenningState());
 		((PrincipalMainState) Persistance.stateManager).randomizeBackground();
+	}
+
+	/** Method called when recieving a logininfo payload. */
+	public void servercall(String id) {
+		if(id.equals("ui.login.loginunmatched") || id.equals("ui.login.loginunknown") || id.equals("ui.login.salterror")){
+			sendSaltReset();
+			this.messcolor = Color.RED;
+			this.message = new Message(id).toString();
+		}
 	}
 
 }

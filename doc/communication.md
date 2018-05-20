@@ -208,6 +208,17 @@ This payload contains the information about the player the clients needs to sync
 This payload is sent after a client request and contains the needed salt to authentificate and prevent MIM attacks (in case of an SSL breach, wich is unlikely to happen in the first place).
 The client must authentificate using the salt value in this payload using an authentificate client payload.
 
+■ LOGININFO
+
+{"action":"logininfo",
+
+"value":"info.message.id"
+
+}
+
+This payload is sent by the server to the client to nitify it of an action. This payload should be used for UID ends.
+It might be sent for exemple if the player tries to create an account but his name is already taken, or if a server error occurs when logging in.
+
 ■ TESTRESULTRECEIVED
 
 {"action":"testresultrecieved"}

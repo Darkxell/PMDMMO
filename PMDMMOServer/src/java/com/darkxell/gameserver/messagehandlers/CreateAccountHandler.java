@@ -11,6 +11,7 @@ import com.darkxell.gameserver.MessageHandler;
 import com.darkxell.gameserver.SessionsInfoHolder;
 import com.darkxell.common.dbobject.DBInventory;
 import com.darkxell.common.dbobject.DBPlayer;
+import javax.json.Json;
 import javax.json.JsonObject;
 import javax.websocket.Session;
 
@@ -35,6 +36,11 @@ public class CreateAccountHandler extends MessageHandler {
             DBPlayer newplayer = new DBPlayer(0, name, passhash, 0, 0, 0, null, null, null, null, null);
             newplayer.id = endpoint.getPlayerDAO().create(newplayer);
             if (newplayer.id == 0) {
+                JsonObject value = Json.createObjectBuilder()
+                        .add("action", "logininfo")
+                        .add("value", "ui.login.nametaken")
+                        .build();
+                sessionshandler.sendToSession(from, value);
                 return; // Player was not created successfully.
             }
             DBInventory toolbox = new DBInventory(0, 20, null);
@@ -44,7 +50,11 @@ public class CreateAccountHandler extends MessageHandler {
             endpoint.getToolbox_DAO().create(newplayer.id, toolbox.id);
             endpoint.getPlayerStorage_DAO().create(newplayer.id, playerstorage.id);
             System.out.println("New player created! : " + name);
-
+            JsonObject value = Json.createObjectBuilder()
+                    .add("action", "logininfo")
+                    .add("value", "ui.login.accountcreated")
+                    .build();
+            sessionshandler.sendToSession(from, value);
         } catch (Exception e) {
             e.printStackTrace();
         }

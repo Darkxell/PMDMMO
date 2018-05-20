@@ -37,11 +37,21 @@ public class LoginHandler extends MessageHandler {
             GameSessionInfo si = SessionsInfoHolder.getInfo(from.getId());
             if (si.salt == null || si.salt.equals("")) {
                 System.out.println("Could not connect a player because salt value for loging in was empty.");
+                JsonObject value = javax.json.Json.createObjectBuilder()
+                        .add("action", "logininfo")
+                        .add("value", "ui.login.salterror")
+                        .build();
+                sessionshandler.sendToSession(from, value);
                 return;
             }
             DBPlayer player = endpoint.getPlayerDAO().find(json.getString("name", ""));
             if (player == null) {
                 System.out.println("Could not connect a player because his name was not found in database.");
+                JsonObject value = javax.json.Json.createObjectBuilder()
+                        .add("action", "logininfo")
+                        .add("value", "ui.login.loginunknown")
+                        .build();
+                sessionshandler.sendToSession(from, value);
                 return;
             }
             try {
@@ -52,14 +62,19 @@ public class LoginHandler extends MessageHandler {
                     si.serverid = player.id;
                     si.isconnected = true;
                     System.err.println("Player logged in : " + si.name);
-                    
+
                     com.eclipsesource.json.JsonObject value = Json.object();
                     value.add("action", "login");
-                    value.add("player",player.toJson());
+                    value.add("player", player.toJson());
                     sessionshandler.sendToSession(from, value);
-                           
+
                 } else {
                     System.out.println("Did not login " + player.name + ", password hash was incorrect.");
+                    JsonObject value = javax.json.Json.createObjectBuilder()
+                            .add("action", "logininfo")
+                            .add("value", "ui.login.loginunmatched")
+                            .build();
+                    sessionshandler.sendToSession(from, value);
                 }
             } catch (Exception e) {
                 e.printStackTrace();

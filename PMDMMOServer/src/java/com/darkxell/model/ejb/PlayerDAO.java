@@ -44,6 +44,7 @@ public class PlayerDAO {
                 // Check if there isn't a player already nammed like this
                 if (this.find(player.name) != null) {
                     System.out.println("Refused player creation: " + player.name + " is already a used name in the database.");
+                    return 0;
                 }
                 // ADD THE PLAYER
                 long newid = result.getLong("id") + 1;
