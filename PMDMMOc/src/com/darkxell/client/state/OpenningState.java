@@ -3,6 +3,7 @@ package com.darkxell.client.state;
 import java.awt.Graphics2D;
 
 import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.mechanics.freezones.zones.BaseFreezone;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.renderers.layers.BackgroundSeaLayer;
 import com.darkxell.client.resources.images.others.Hud;
@@ -18,7 +19,7 @@ public class OpenningState extends AbstractState {
 	@Override
 	public void onKeyPressed(short key) {
 		if (key == Keys.KEY_ATTACK)
-				StateManager.setExploreState("Base", -1, -1);
+				StateManager.setExploreState(new BaseFreezone(), -1, -1);
 	}
 
 	@Override

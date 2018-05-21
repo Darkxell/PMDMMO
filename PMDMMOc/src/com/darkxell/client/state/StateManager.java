@@ -11,16 +11,10 @@ import com.darkxell.client.state.freezone.FreezoneExploreState;
 import com.darkxell.common.dungeon.DungeonRegistry;
 import com.darkxell.common.util.Logger;
 
-/**
- * Describes how a statemanager is supposed to work. A statemanager is expected
- * to display A very big portion of the application, like for example the game /
- * the login facilities...<br/>
- * Note that changing the statemanager removes the previous one completely, and
- * should only be done when the user does significants acts that changes the way
- * he is going to interact with the application after, like for exemple logging
- * in.
- */
-public abstract class StateManager {
+/** Describes how a statemanager is supposed to work. A statemanager is expected to display A very big portion of the application, like for example the game / the login facilities...<br/>
+ * Note that changing the statemanager removes the previous one completely, and should only be done when the user does significants acts that changes the way he is going to interact with the application after, like for exemple logging in. */
+public abstract class StateManager
+{
 
 	public abstract void onKeyPressed(KeyEvent e, short key);
 
@@ -37,30 +31,42 @@ public abstract class StateManager {
 	public abstract void render(Graphics2D g, int width, int height);
 
 	public abstract void update();
-	
-	public void setState(AbstractState state) {
+
+	public void setState(AbstractState state)
+	{
 		Logger.e("Tried to call setState() on the wrong state manager!");
 	}
 
-	public AbstractState getCurrentState() {
+	public AbstractState getCurrentState()
+	{
 		Logger.e("Tried to call getCurrentState() on the wrong state manager!");
 		return null;
 	}
-	
-	
+
 	// State switching methods
+
 	/** @param mapID - ID of a Map. If null or doesn't match a valid ID, this method will not do anything.
 	 * @param xPos, yPos - Coordinates of the Player in the map. If any is -1, uses the default coordinates for that map. */
 	public static void setExploreState(String mapID, int xPos, int yPos)
 	{
 		FreezoneMap map = FreezoneMap.loadMap(mapID);
-		if (map != null)
-		{}
-		Persistance.stateManager.setState(new TransitionState(Persistance.stateManager.getCurrentState(), new FreezoneExploreState()) {
+		if (map == null) return;
+		setExploreState(map, xPos, yPos);
+	}
+
+	/** @param map - Map to explore. If null, this method will not do anything.
+	 * @param xPos, yPos - Coordinates of the Player in the map. If any is -1, uses the default coordinates for that map. */
+	public static void setExploreState(FreezoneMap map, int xPos, int yPos)
+	{
+		AbstractState next;
+		if (Persistance.stateManager.getCurrentState() instanceof FreezoneExploreState) next = Persistance.stateManager.getCurrentState();
+		else next = new FreezoneExploreState();
+		Persistance.stateManager.setState(new TransitionState(Persistance.stateManager.getCurrentState(), next) {
 			@Override
 			public void onTransitionHalf()
 			{
 				super.onTransitionHalf();
+				((FreezoneExploreState) next).musicset = false;
 				Persistance.currentmap = map;
 				Persistance.freezoneCamera.x = Persistance.currentplayer.x = xPos == -1 ? map.defaultX() : xPos;
 				Persistance.freezoneCamera.y = Persistance.currentplayer.y = yPos == -1 ? map.defaultY() : yPos;
@@ -78,5 +84,5 @@ public abstract class StateManager {
 		Persistance.stateManager.setState(new NextFloorState(fadeOutState, 1));
 		Persistance.eventProcessor.addToPending(Persistance.dungeon.currentFloor().onFloorStart());
 	}
-	
+
 }

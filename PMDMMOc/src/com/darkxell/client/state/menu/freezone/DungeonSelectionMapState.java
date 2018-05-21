@@ -17,6 +17,7 @@ import com.darkxell.client.state.freezone.FreezoneExploreState;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.common.dungeon.Dungeon;
 import com.darkxell.common.dungeon.DungeonRegistry;
+import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.language.Message;
 
 public class DungeonSelectionMapState extends AbstractState
@@ -70,6 +71,8 @@ public class DungeonSelectionMapState extends AbstractState
 				else cursor = (dungeonslist.size() - 1);
 				break;
 			case Keys.KEY_RUN:
+				Persistance.currentplayer.y -= 1;
+				Persistance.currentplayer.renderer().sprite().setFacingDirection(Direction.NORTH);
 				Persistance.stateManager.setState(new FreezoneExploreState());
 				break;
 			case Keys.KEY_ATTACK:
