@@ -35,6 +35,7 @@ public class AIStateFollowPokemon extends AIState
 	@Override
 	public Direction mayRotate()
 	{
+		if (this.target.isFainted()) return null;
 		return AIUtils.generalDirection(this.ai.pokemon, this.target);
 	}
 

@@ -128,7 +128,7 @@ public class Player
 	public void resetDungeonTeam()
 	{
 		this.dungeonAllies.clear();
-		for (int i = 0; i < this.dungeonAllies.size(); ++i)
+		for (int i = 0; i < this.allies.size(); ++i)
 			this.dungeonAllies.add(i, new DungeonPokemon(this.allies.get(i)));
 	}
 

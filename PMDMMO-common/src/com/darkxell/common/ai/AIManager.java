@@ -50,6 +50,11 @@ public class AIManager
 
 	public void unregister(DungeonPokemon pokemon)
 	{
+		if (!this.ais.containsKey(pokemon))
+		{
+			Logger.e(pokemon + " already has no AI: can't unregister!");
+			return;
+		}
 		this.ais.remove(pokemon);
 	}
 

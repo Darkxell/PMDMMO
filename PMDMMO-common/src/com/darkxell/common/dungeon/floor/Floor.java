@@ -360,7 +360,7 @@ public class Floor
 	{
 		pokemon.tile().setPokemon(null);
 		this.dungeon.unregisterActor(pokemon);
-		this.aiManager.unregister(pokemon);
+		if (!pokemon.isTeamLeader()) this.aiManager.unregister(pokemon);
 	}
 
 }

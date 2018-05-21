@@ -214,8 +214,12 @@ public class DungeonInstance
 
 	public void unregisterActor(DungeonPokemon pokemon)
 	{
-		if (!this.actorMap.containsKey(pokemon)) return;
-		this.actors.remove(this.indexOf(pokemon));
+		if (!this.actorMap.containsKey(pokemon))
+		{
+			Logger.e("Actor " + pokemon + " isn't registered: can't unregister!");
+			return;
+		}
+		this.actors.remove(this.actorMap.get(pokemon));
 		this.actorMap.remove(pokemon);
 	}
 
