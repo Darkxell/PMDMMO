@@ -83,7 +83,7 @@ public class NextFloorState extends AbstractState
 			Persistance.floor = Persistance.dungeon.currentFloor();
 			Persistance.dungeonState = new DungeonState();
 			Persistance.dungeonState.floorVisibility.onCameraMoved();
-			Persistance.soundmanager.setBackgroundMusic(SoundsHolder.getSong("07 Tiny Woods.mp3"));
+			Persistance.soundmanager.setBackgroundMusic(SoundsHolder.getSong("dungeon-" + Persistance.floor.data.soundtrack() + ".mp3"));
 		}
 
 	}

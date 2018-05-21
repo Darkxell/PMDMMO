@@ -41,7 +41,7 @@ public class OpenningState extends AbstractState {
 	public void update() {
 		if (!ismusicset) {
 			ismusicset = true;
-			Persistance.soundmanager.setBackgroundMusic(SoundsHolder.getSong("01 Intro.mp3"));
+			Persistance.soundmanager.setBackgroundMusic(SoundsHolder.getSong("intro.mp3"));
 		}
 
 		background.update();

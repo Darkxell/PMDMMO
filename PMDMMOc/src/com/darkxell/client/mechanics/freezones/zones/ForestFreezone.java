@@ -9,7 +9,7 @@ public class ForestFreezone extends FreezoneMap {
 
 	public ForestFreezone() {
 		super("/freezones/forest.xml");
-		this.freezonebgm = "10 Rescue Team Base.mp3";
+		this.freezonebgm = "base.mp3";
 		this.warpzones.add(new WarpZone(6, 41, new DoubleRectangle(62, 17, 2, 10)) {
 			@Override
 			public FreezoneMap getDestination() {

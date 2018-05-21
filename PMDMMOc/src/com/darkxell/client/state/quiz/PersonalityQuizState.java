@@ -126,7 +126,7 @@ public class PersonalityQuizState extends AbstractState implements DialogEndList
 		super.onStart();
 
 		if (this.currentQuestion == -1) {
-			Persistance.soundmanager.setBackgroundMusic(SoundsHolder.getSong("04 Personality Test.mp3"));
+			Persistance.soundmanager.setBackgroundMusic(SoundsHolder.getSong("personality-test.mp3"));
 			ArrayList<DialogScreen> screens = new ArrayList<>();
 			for (int i = 0; i < startDialogScreens; ++i)
 				screens.add(new DialogScreen(new Message("quiz.start_dialog." + i)));

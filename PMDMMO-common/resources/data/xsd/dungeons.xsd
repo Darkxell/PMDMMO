@@ -128,6 +128,7 @@
             <xs:attribute name="camouflage" type="posInt" use="optional"/>
             <xs:attribute name="nature" type="xs:positiveInteger" use="optional"/>
             <xs:attribute name="secret" type="xs:string" use="optional"/>
+            <xs:attribute name="soundtrack" type="posInt" use="optional"/>
             <xs:attribute name="items" type="posInt" use="optional"/>
             <xs:attribute name="pokemon" type="posInt" use="optional"/>
             <xs:attribute name="traps" type="posInt" use="optional"/>

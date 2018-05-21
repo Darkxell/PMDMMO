@@ -13,7 +13,7 @@ public class OfficeFreezone extends FreezoneMap {
 
 	public OfficeFreezone() {
 		super("/freezones/office.xml");
-		this.freezonebgm = "14 Pokemon Square.mp3";
+		this.freezonebgm = "town.mp3";
 		this.warpzones.add(new WarpZone(116, 40, new DoubleRectangle(0, 25, 2, 9)) {
 			@Override
 			public FreezoneMap getDestination() {

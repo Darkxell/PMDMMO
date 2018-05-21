@@ -75,19 +75,19 @@ public class Dungeon implements Comparable<Dungeon>
 			this.items.add(new DungeonItem(item));
 
 		this.shopItems = new ArrayList<DungeonItem>();
-		if (xml.getChild("shops", xml.getNamespace()) != null) for (Element item : xml.getChild("shops", xml.getNamespace()).getChildren(DungeonItem.XML_ROOT, xml.getNamespace()))
+		if (xml.getChild("shops", xml.getNamespace()) != null)
+			for (Element item : xml.getChild("shops", xml.getNamespace()).getChildren(DungeonItem.XML_ROOT, xml.getNamespace()))
 			this.shopItems.add(new DungeonItem(item));
 
 		this.buriedItems = new ArrayList<DungeonItem>();
-		if (xml.getChild("buried", xml.getNamespace()) != null) for (Element item : xml.getChild("buried", xml.getNamespace()).getChildren(DungeonItem.XML_ROOT, xml.getNamespace()))
+		if (xml.getChild("buried", xml.getNamespace()) != null)
+			for (Element item : xml.getChild("buried", xml.getNamespace()).getChildren(DungeonItem.XML_ROOT, xml.getNamespace()))
 			this.buriedItems.add(new DungeonItem(item));
 
 		this.traps = new ArrayList<DungeonTrap>();
 		if (xml.getChild("traps", xml.getNamespace()) == null)
 		{
-			this.traps.add(new DungeonTrap(new int[]
-			{ TrapRegistry.WONDER_TILE.id }, new int[]
-			{ 100 }, new FloorSet(1, this.floorCount)));
+			this.traps.add(new DungeonTrap(new int[] { TrapRegistry.WONDER_TILE.id }, new int[] { 100 }, new FloorSet(1, this.floorCount)));
 		} else
 		{
 			for (Element trap : xml.getChild("traps", xml.getNamespace()).getChildren(DungeonTrap.XML_ROOT, xml.getNamespace()))
@@ -108,18 +108,12 @@ public class Dungeon implements Comparable<Dungeon>
 		}
 
 		this.weather = new HashMap<Integer, FloorSet>();
-		if (xml.getChild("weather", xml.getNamespace()) != null) for (Element data : xml.getChild("weather", xml.getNamespace()).getChildren("w", xml.getNamespace()))
+		if (xml.getChild("weather", xml.getNamespace()) != null)
+			for (Element data : xml.getChild("weather", xml.getNamespace()).getChildren("w", xml.getNamespace()))
 			this.weather.put(Integer.parseInt(data.getAttributeValue("id")), new FloorSet(data.getChild(FloorSet.XML_ROOT, xml.getNamespace())));
 	}
 
-	public Dungeon(int id, int floorCount, boolean direction, double monsterHouseChance,
-			boolean recruits,
-			int timeLimit,
-			int stickyChance,
-			int linkedTo, // int teamItems, int
-							// teamLevel, int
-							// teamMoney,int
-							// teamMembers,
+	public Dungeon(int id, int floorCount, boolean direction, double monsterHouseChance, boolean recruits, int timeLimit, int stickyChance, int linkedTo,
 			ArrayList<DungeonEncounter> pokemon, ArrayList<DungeonItem> items, ArrayList<DungeonItem> shopItems, ArrayList<DungeonItem> buriedItems,
 			ArrayList<DungeonTrap> traps, ArrayList<FloorData> floorData, HashMap<Integer, FloorSet> weather, int mapx, int mapy)
 	{
@@ -201,8 +195,7 @@ public class Dungeon implements Comparable<Dungeon>
 	{
 		ArrayList<DungeonItem> candidates = new ArrayList<DungeonItem>();
 		candidates.addAll(this.items);
-		candidates.removeIf(new Predicate<DungeonItem>()
-		{
+		candidates.removeIf(new Predicate<DungeonItem>() {
 			@Override
 			public boolean test(DungeonItem i)
 			{

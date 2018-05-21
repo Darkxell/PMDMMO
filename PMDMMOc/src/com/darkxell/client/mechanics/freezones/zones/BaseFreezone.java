@@ -1,7 +1,6 @@
 package com.darkxell.client.mechanics.freezones.zones;
 
 import com.darkxell.client.launchable.Persistance;
-import com.darkxell.client.mechanics.cutscene.CutsceneManager;
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
 import com.darkxell.client.mechanics.freezones.WarpZone;
 import com.darkxell.client.mechanics.freezones.entities.AnimatedFlowerEntity;
@@ -14,7 +13,7 @@ public class BaseFreezone extends FreezoneMap {
 
 	public BaseFreezone() {
 		super("/freezones/base.xml");
-		this.freezonebgm = "10 Rescue Team Base.mp3";
+		this.freezonebgm = "base.mp3";
 		this.warpzones.add(new WarpZone(4, 40, new DoubleRectangle(66, 34, 2, 11)) {
 			@Override
 			public FreezoneMap getDestination() {

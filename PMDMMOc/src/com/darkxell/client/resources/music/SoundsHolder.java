@@ -1,6 +1,7 @@
 package com.darkxell.client.resources.music;
 
 import com.darkxell.client.resources.Res;
+import com.darkxell.common.util.Logger;
 
 public class SoundsHolder {
 
@@ -34,6 +35,7 @@ public class SoundsHolder {
 		for (int i = 0; i < soundtrackNames.length; i++)
 			if (soundtrackNames[i].equals(name))
 				return soundtracks[i];
+		Logger.e("Unknown song: " + name);
 		return null;
 	}
 
@@ -41,6 +43,7 @@ public class SoundsHolder {
 		for (int i = 0; i < sfxNames.length; i++)
 			if (sfxNames[i].equals(name))
 				return sfx[i];
+		Logger.e("Unknown Sfx: " + name);
 		return null;
 	}
 

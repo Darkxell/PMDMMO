@@ -41,6 +41,8 @@ public class FloorData
 	private byte shadows;
 	/** The chance of generating a Shop in this Floor. */
 	private short shopChance;
+	/** The soundtrack to play on this Floor. */
+	private int soundtrack;
 	/** The Spriteset to use for the terrain. */
 	private int terrainSpriteset;
 	/** The density of Traps. */
@@ -52,8 +54,8 @@ public class FloorData
 	}
 
 	public FloorData(FloorSet floors, int difficulty, int baseMoney, int layout, int terrainSpriteset, byte shadows, PokemonType camouflageType,
-			int naturePower, String secretPower, short shopChance, short monsterHouseChance, short itemDensity, short pokemonDensity, short trapDensity,
-			short buriedItemDensity)
+			int naturePower, String secretPower, int soundtrack, short shopChance, short monsterHouseChance, short itemDensity, short pokemonDensity,
+			short trapDensity, short buriedItemDensity)
 	{
 		this.floors = floors;
 		this.difficulty = difficulty;
@@ -64,6 +66,7 @@ public class FloorData
 		this.camouflageType = camouflageType;
 		this.naturePower = naturePower;
 		this.secretPower = secretPower;
+		this.soundtrack = soundtrack;
 		this.shopChance = shopChance;
 		this.monsterHouseChance = monsterHouseChance;
 		this.itemDensity = itemDensity;
@@ -91,8 +94,8 @@ public class FloorData
 	public FloorData copy()
 	{
 		return new FloorData(this.floors.copy(), this.difficulty, this.baseMoney, this.layout, this.terrainSpriteset, this.shadows, this.camouflageType,
-				this.naturePower, this.secretPower, this.shopChance, this.monsterHouseChance, this.itemDensity, this.pokemonDensity, this.trapDensity,
-				this.buriedItemDensity);
+				this.naturePower, this.secretPower, this.soundtrack, this.shopChance, this.monsterHouseChance, this.itemDensity, this.pokemonDensity,
+				this.trapDensity, this.buriedItemDensity);
 	}
 
 	public int difficulty()
@@ -126,6 +129,7 @@ public class FloorData
 		this.camouflageType = PokemonType.find(XMLUtils.getAttribute(xml, "camouflage", this.camouflageType == null ? 0 : this.camouflageType.id));
 		this.naturePower = XMLUtils.getAttribute(xml, "nature", this.naturePower);
 		this.secretPower = xml.getAttributeValue("secret");
+		this.soundtrack = XMLUtils.getAttribute(xml, "soundtrack", this.soundtrack);
 		this.shopChance = XMLUtils.getAttribute(xml, "shop", this.shopChance);
 		this.monsterHouseChance = XMLUtils.getAttribute(xml, "mhouse", this.monsterHouseChance);
 		this.itemDensity = XMLUtils.getAttribute(xml, "items", this.itemDensity);
@@ -164,6 +168,11 @@ public class FloorData
 		return this.shopChance;
 	}
 
+	public int soundtrack()
+	{
+		return this.soundtrack;
+	}
+
 	public int terrainSpriteset()
 	{
 		return this.terrainSpriteset;
@@ -176,23 +185,25 @@ public class FloorData
 		if (previous != null || this.difficulty != 0) XMLUtils.setAttribute(xml, "difficulty", this.difficulty, previous != null ? previous.difficulty : -1);
 		if (previous != null || this.baseMoney != 0) XMLUtils.setAttribute(xml, "money", this.baseMoney, previous != null ? previous.baseMoney : -1);
 		if (previous != null || this.layout != 0) XMLUtils.setAttribute(xml, "layout", this.layout, previous != null ? previous.layout : -1);
-		if (previous != null || this.terrainSpriteset != 0) XMLUtils.setAttribute(xml, "terrain", this.terrainSpriteset,
-				previous != null ? previous.terrainSpriteset : -1);
+		if (previous != null || this.terrainSpriteset != 0)
+			XMLUtils.setAttribute(xml, "terrain", this.terrainSpriteset, previous != null ? previous.terrainSpriteset : -1);
 		if (previous != null || this.shadows != 0) XMLUtils.setAttribute(xml, "shadows", this.shadows, previous != null ? previous.shadows : -1);
-		if (previous != null || this.camouflageType.id != 0) XMLUtils.setAttribute(xml, "camouflage", this.camouflageType.id,
-				previous != null ? previous.camouflageType.id : -1);
+		if (previous != null || this.camouflageType.id != 0)
+			XMLUtils.setAttribute(xml, "camouflage", this.camouflageType.id, previous != null ? previous.camouflageType.id : -1);
 		if (previous != null || this.naturePower != 0) XMLUtils.setAttribute(xml, "nature", this.naturePower, previous != null ? previous.naturePower : -1);
-		if (previous != null || this.secretPower != null) XMLUtils
-				.setAttribute(xml, "secret", this.secretPower, previous != null ? previous.secretPower : null);
+		if (previous != null || this.secretPower != null)
+			XMLUtils.setAttribute(xml, "secret", this.secretPower, previous != null ? previous.secretPower : null);
+		if (previous != null || this.soundtrack != 0)
+			XMLUtils.setAttribute(xml, "soundtrack", this.soundtrack, previous != null ? previous.soundtrack : null);
 		if (previous != null || this.shopChance != 0) XMLUtils.setAttribute(xml, "shop", this.shopChance, previous != null ? previous.shopChance : -1);
-		if (previous != null || this.monsterHouseChance != 0) XMLUtils.setAttribute(xml, "mhouse", this.monsterHouseChance,
-				previous != null ? previous.monsterHouseChance : -1);
+		if (previous != null || this.monsterHouseChance != 0)
+			XMLUtils.setAttribute(xml, "mhouse", this.monsterHouseChance, previous != null ? previous.monsterHouseChance : -1);
 		if (previous != null || this.itemDensity != 0) XMLUtils.setAttribute(xml, "items", this.itemDensity, previous != null ? previous.itemDensity : -1);
-		if (previous != null || this.pokemonDensity != 0) XMLUtils.setAttribute(xml, "pokemon", this.pokemonDensity, previous != null ? previous.pokemonDensity
-				: -1);
+		if (previous != null || this.pokemonDensity != 0)
+			XMLUtils.setAttribute(xml, "pokemon", this.pokemonDensity, previous != null ? previous.pokemonDensity : -1);
 		if (previous != null || this.trapDensity != 0) XMLUtils.setAttribute(xml, "traps", this.trapDensity, previous != null ? previous.trapDensity : -1);
-		if (previous != null || this.buriedItemDensity != 0) XMLUtils.setAttribute(xml, "buried", this.buriedItemDensity,
-				previous != null ? previous.buriedItemDensity : -1);
+		if (previous != null || this.buriedItemDensity != 0)
+			XMLUtils.setAttribute(xml, "buried", this.buriedItemDensity, previous != null ? previous.buriedItemDensity : -1);
 		return xml;
 	}
 

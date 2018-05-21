@@ -10,7 +10,7 @@ public class DojoFreezone extends FreezoneMap {
 
 	public DojoFreezone() {
 		super("/freezones/dojo.xml");
-		this.freezonebgm = "14 Pokemon Square.mp3";
+		this.freezonebgm = "town.mp3";
 		this.warpzones.add(new WarpZone(67, 85, new DoubleRectangle(39, 0, 9, 2)) {
 			@Override
 			public FreezoneMap getDestination() {
