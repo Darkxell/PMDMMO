@@ -19,7 +19,7 @@ public class OpenningState extends AbstractState {
 	@Override
 	public void onKeyPressed(short key) {
 		if (key == Keys.KEY_ATTACK)
-				Persistance.stateManager.setState(new FreezoneExploreState());
+				Persistance.stateManager.setState(new TransitionState(this, new FreezoneExploreState()));
 	}
 
 	@Override
