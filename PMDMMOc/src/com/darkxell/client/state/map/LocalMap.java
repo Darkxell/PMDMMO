@@ -72,7 +72,8 @@ public class LocalMap extends AbstractDisplayMap {
 		ZONE_SOUTHERNISLAND(91, 265, new Message("zone.southernisland"),""),
 		ZONE_SOUTHWESTISLAND(37, 207, new Message("zone.southwestisland"),""),
 		ZONE_SOUTHERNSEA(147, 292, new Message("zone.southernsea"),""),
-		STRATFOREST(320, 150, new Message("zone.startforest"),"forest");
+		STRATFOREST(320, 150, new Message("zone.startforest"),"forest"),
+		LUMIOUSCAVE(355, 137, new Message("zone.lumiouscave"),"lcave");
 
 		public final int x;
 		public final int y;

@@ -6,6 +6,7 @@ import com.darkxell.client.resources.Res;
 import com.darkxell.client.resources.images.tilesets.freezones.BaseTileset;
 import com.darkxell.client.resources.images.tilesets.freezones.DojoTileset;
 import com.darkxell.client.resources.images.tilesets.freezones.ForestTileset;
+import com.darkxell.client.resources.images.tilesets.freezones.LcaveTileset;
 import com.darkxell.client.resources.images.tilesets.freezones.OfficeTileset;
 import com.darkxell.client.resources.images.tilesets.freezones.PondTileset;
 import com.darkxell.client.resources.images.tilesets.freezones.SquareTileset;
@@ -51,6 +52,9 @@ public abstract class AbstractTileset {
 			return ForestTileset.instance;
 		case "pond":
 			return PondTileset.instance;
+		case "lcave":
+		case "lumiouscave":
+			return LcaveTileset.instance;
 		case "pelipper office":
 		case "office":
 			return OfficeTileset.instance;

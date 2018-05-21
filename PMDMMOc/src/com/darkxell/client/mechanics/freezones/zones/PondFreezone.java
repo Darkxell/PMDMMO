@@ -17,6 +17,12 @@ public class PondFreezone extends FreezoneMap {
 				return new PokemonSquareFreezone();
 			}
 		});
+		this.warpzones.add(new WarpZone(29, 34, new DoubleRectangle(10, 18, 3, 3)) {
+			@Override
+			public FreezoneMap getDestination() {
+				return new LumiousCaveFreezone();
+			}
+		});
 		this.addEntity(new AnimatedFlowerEntity(14, 25, false));
 		this.addEntity(new AnimatedFlowerEntity(43, 25, true));
 		this.addEntity(new AnimatedFlowerEntity(17, 35, true));
