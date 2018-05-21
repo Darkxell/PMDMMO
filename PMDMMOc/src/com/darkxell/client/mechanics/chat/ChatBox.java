@@ -148,6 +148,8 @@ public class ChatBox {
 	}
 
 	public void send() {
+		if(this.textfield.getContent().equals(""))
+			return;
 		if (this.endpoint != null && this.endpoint.connectionStatus() == ChatClientEndpoint.CONNECTED) {
 			JsonObject mess = new JsonObject().add("action", "message").add("tag", "DEV")
 					.add("sender", ClientSettings.getSetting(ClientSettings.LOGIN))
