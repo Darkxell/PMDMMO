@@ -8,7 +8,6 @@ import com.darkxell.client.mechanics.event.ClientEventProcessor;
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
 import com.darkxell.client.state.dungeon.NextFloorState;
 import com.darkxell.client.state.freezone.FreezoneExploreState;
-import com.darkxell.client.state.map.DungeonFloorMap;
 import com.darkxell.common.dungeon.DungeonRegistry;
 import com.darkxell.common.util.Logger;
 
@@ -56,12 +55,17 @@ public abstract class StateManager {
 	{
 		FreezoneMap map = FreezoneMap.loadMap(mapID);
 		if (map != null)
-		{
-			Persistance.currentmap = map;
-			Persistance.freezoneCamera.x = Persistance.currentplayer.x = xPos == -1 ? map.defaultX() : xPos;
-			Persistance.freezoneCamera.y = Persistance.currentplayer.y = yPos == -1 ? map.defaultY() : yPos;
-		}
-		Persistance.stateManager.setState(new FreezoneExploreState());
+		{}
+		Persistance.stateManager.setState(new TransitionState(Persistance.stateManager.getCurrentState(), new FreezoneExploreState()) {
+			@Override
+			public void onTransitionHalf()
+			{
+				super.onTransitionHalf();
+				Persistance.currentmap = map;
+				Persistance.freezoneCamera.x = Persistance.currentplayer.x = xPos == -1 ? map.defaultX() : xPos;
+				Persistance.freezoneCamera.y = Persistance.currentplayer.y = yPos == -1 ? map.defaultY() : yPos;
+			}
+		});
 	}
 
 	/** @param fadeOutState - State to fade out of.
@@ -72,7 +76,6 @@ public abstract class StateManager {
 		Persistance.eventProcessor = new ClientEventProcessor(Persistance.dungeon);
 		Persistance.floor = Persistance.dungeon.currentFloor();
 		Persistance.stateManager.setState(new NextFloorState(fadeOutState, 1));
-		Persistance.displaymap = new DungeonFloorMap();
 		Persistance.eventProcessor.addToPending(Persistance.dungeon.currentFloor().onFloorStart());
 	}
 	

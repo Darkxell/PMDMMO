@@ -10,13 +10,12 @@ import com.darkxell.common.util.language.Message;
 
 public class TransitionState extends AbstractState
 {
-
 	public static final int FADEIN = NarratorDialogState.FADETIME, STAY = 10, TEXT = 60, FADEOUT = FADEIN;
 
 	private AbstractState current;
 	public final int fadeIn, stay, text, fadeOut, stayEnd, textStart, textFade, duration;
 	public final Message message;
-	public final AbstractState previous, next;
+	public AbstractState previous, next;
 	private int tick, alpha;
 
 	public TransitionState(AbstractState previous, AbstractState next)
@@ -40,13 +39,18 @@ public class TransitionState extends AbstractState
 		this.fadeOut = fadeOut;
 		this.tick = 0;
 
-		this.stayEnd = this.fadeIn + this.stay * 2 + this.text;
 		this.textStart = this.fadeIn + this.stay;
 		this.textFade = this.fadeIn + this.stay + this.text;
-		this.duration = this.fadeIn + this.stay * 2 + this.text + this.fadeOut;
+		this.stayEnd = this.fadeIn + this.stay + this.text * 2;
+		this.duration = this.fadeIn + this.stay + this.text * 2 + this.fadeOut;
 		this.current = this.previous;
 
 		if (this.previous == null) this.tick = this.fadeIn;
+	}
+
+	public int minimapFading()
+	{
+		return this.tick >= this.fadeIn && this.tick <= this.stayEnd ? 255 : this.alpha;
 	}
 
 	@Override
@@ -55,6 +59,9 @@ public class TransitionState extends AbstractState
 
 	@Override
 	public void onKeyReleased(short key)
+	{}
+
+	public void onTransitionHalf()
 	{}
 
 	@Override
@@ -72,17 +79,21 @@ public class TransitionState extends AbstractState
 	{
 		++this.tick;
 		if (this.tick == this.fadeIn) this.current = null;
-		else if (this.tick == this.textStart && this.message == null) this.tick += this.text;
-		else if (this.tick == this.stayEnd) this.current = this.next;
+		else if (this.tick == this.textStart)
+		{
+			this.onTransitionHalf();
+			if (this.message == null) this.tick += this.text + this.stay;
+		}
+		if (this.tick == this.stayEnd) this.current = this.next;
 
 		if (this.tick >= this.duration) Persistance.stateManager.setState(this.next);
 
+		this.alpha = 0;
 		if (this.tick < this.fadeIn) this.alpha = this.tick * 255 / this.fadeIn;
 		else if (this.tick > this.stayEnd) this.alpha = (this.duration - this.tick) * 255 / this.fadeOut;
-		else if (this.tick >= this.textFade && this.tick <= this.stayEnd) this.alpha = (this.tick - this.textFade) * 255 / this.stay;
+		else if (this.tick >= this.textFade && this.tick <= this.stayEnd) this.alpha = (this.tick - this.textFade) * 255 / this.text;
 
-		if (this.previous != null && this.tick < this.stay) this.previous.update();
-		if (this.tick >= this.stayEnd) this.next.update();
+		if (this.current != null) this.current.update();
 	}
 
 }
