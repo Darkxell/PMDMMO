@@ -14,6 +14,7 @@ import com.darkxell.client.mechanics.animation.AnimationTicker;
 import com.darkxell.client.renderers.TeamInfoRenderer;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.StateManager;
+import com.darkxell.client.state.TransitionState;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.client.ui.MainUiUtility;
 
@@ -178,6 +179,12 @@ public class PrincipalMainState extends StateManager {
 		clp = g.getClip();
 		g.setClip(new Rectangle(0, 0, mapsize, mapsize));
 		Persistance.displaymap.render(g, mapsize, mapsize);
+		if (Persistance.stateManager.getCurrentState() instanceof TransitionState)
+		{
+			int alpha = ((TransitionState) Persistance.stateManager.getCurrentState()).minimapFading();
+			g.setColor(new Color(0, 0, 0, alpha));
+			g.fillRect(0, 0, mapsize, mapsize);
+		}
 		g.setClip(clp);
 		g.translate(-mapx, -mapy);
 

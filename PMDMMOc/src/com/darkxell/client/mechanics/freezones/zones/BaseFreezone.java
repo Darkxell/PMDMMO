@@ -26,12 +26,11 @@ public class BaseFreezone extends FreezoneMap {
 				return new ForestFreezone();
 			}
 		});
-		final BaseFreezone f = this;
 		this.warpzones.add(new WarpZone(35, 29, new DoubleRectangle(29, 63, 9, 2)) {
 			@Override
 			public FreezoneMap getDestination() {
 				Persistance.stateManager.setState(new DungeonSelectionMapState());
-				return f;
+				return null;
 			}
 		});
 		/*this.warpzones.add(new WarpZone(0, 0, new DoubleRectangle(0, 38, 2, 8)) {

@@ -96,7 +96,7 @@ public class AbstractFreezoneState extends AbstractState
 		}
 	}
 
-	protected boolean musicset = false;
+	public boolean musicset = false;
 
 	@Override
 	public void update()
