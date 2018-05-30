@@ -49,7 +49,12 @@ public final class PokemonSpritesets
 	{
 		String filename = Math.abs(id) + "";
 		int effectiveID = Math.abs(id);
-		if (id < 0 && Res.exists("/pokemons/" + (-id) + "s.png")) filename = (-id) + "s";
+		if (id < 0 && Res.exists("/pokemons/" + effectiveID + "s.png")) filename = effectiveID + "s";
+		else if (id < 0)
+		{
+			spritesets.put(id, spritesets.get(0));
+			return;
+		}
 
 		if (spritesets.containsKey(id)) return;
 		Element xml = XMLUtils.read(PokemonSpritesets.class.getResourceAsStream("/pokemons/data/" + effectiveID + ".xml"));
