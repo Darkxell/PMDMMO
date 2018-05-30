@@ -1,6 +1,5 @@
 package com.darkxell.client.mechanics.freezones.entities;
 
-import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 import com.darkxell.client.launchable.Persistance;
@@ -30,9 +29,6 @@ public class SignSoulEntity extends FreezoneEntity {
 		Persistance.stateManager.setState(new DialogState(Persistance.stateManager.getCurrentState(), screens));
 	}
 
-	@Override
-	public void print(Graphics2D g) {
-	}
 
 	@Override
 	public void update() {
