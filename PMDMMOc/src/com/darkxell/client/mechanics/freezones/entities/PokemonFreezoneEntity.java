@@ -1,6 +1,5 @@
 package com.darkxell.client.mechanics.freezones.entities;
 
-import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -45,12 +44,6 @@ public class PokemonFreezoneEntity extends FreezoneEntity
 		screens.add(new DialogScreen(p, new Message("item.info.302")));
 		screens.add(new DialogScreen(PokemonRegistry.find(168).generate(new Random(), 0), new Message("item.info.69")));
 		Persistance.stateManager.setState(new DialogState(Persistance.stateManager.getCurrentState(), screens));
-	}
-
-	@Override
-	public void print(Graphics2D g)
-	{
-		/* g.drawImage(pkmnsprite.getCurrentSprite(), (int) (super.posX * 8 - pkmnsprite.getCurrentSprite().getWidth() / 2 + pkmnsprite.getCurrentFrame().spriteX), (int) (super.posY * 8 - pkmnsprite.getCurrentSprite().getHeight() / 2 + pkmnsprite.getCurrentFrame().spriteY), null); */
 	}
 
 	@Override

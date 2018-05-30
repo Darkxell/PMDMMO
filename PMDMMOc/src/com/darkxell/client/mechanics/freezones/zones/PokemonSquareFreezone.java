@@ -74,8 +74,6 @@ public class PokemonSquareFreezone extends FreezoneMap {
 		this.addEntity(new AnimatedFlowerEntity(57, 21, true));
 		this.addEntity(new AnimatedFlowerEntity(49, 37, true));
 
-		this.addEntity(new PokemonFreezoneEntity(71, 34, new PokemonSprite(PokemonSpritesets.getSpriteset(-69))));
-
 		this.addEntity(new SignSoulEntity(13.5, 37, new Message("sign.pokemonsquare.west")));
 		this.addEntity(new SignSoulEntity(68.5, 10, new Message("sign.pokemonsquare.north")));
 		this.addEntity(new SignSoulEntity(114.5, 36, new Message("sign.pokemonsquare.east")));
@@ -89,6 +87,10 @@ public class PokemonSquareFreezone extends FreezoneMap {
 		this.addEntity(new WatersparklesEntity(25, 69, WatersparklesEntity.TYPE_LONG));
 		this.addEntity(new WatersparklesEntity(32.5, 70, WatersparklesEntity.TYPE_SIDE));
 		this.addEntity(new WatersparklesEntity(32.5, 79, WatersparklesEntity.TYPE_SIDE));
+		
+		this.addEntity(new PokemonFreezoneEntity(36, 30, new PokemonSprite(PokemonSpritesets.getSpriteset(352))));
+		this.addEntity(new PokemonFreezoneEntity(39, 30, new PokemonSprite(PokemonSpritesets.getSpriteset(-352))));
+		this.addEntity(new PokemonFreezoneEntity(57, 33, new PokemonSprite(PokemonSpritesets.getSpriteset(6))));
 
 	}
 
