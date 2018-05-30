@@ -8,63 +8,77 @@ import java.util.HashMap;
 import com.darkxell.client.renderers.pokemon.AbstractPokemonRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 
+/** Maps objects to their renderers for complex states to render.
+ *
+ * @param <T> - The type of object to render. */
 public class EntityRendererHolder<T> extends AbstractRenderer
 {
 
+	/** True if the sorted list should be updated when called. Security in case registered() is called between update() and listRenderers(). */
+	private boolean forceReload = false;
+	/** Maps objects to their renderers. */
 	private final HashMap<T, AbstractRenderer> renderers = new HashMap<>();
+	/** Contains the sorted list of renderers by drawing order. */
+	private final ArrayList<AbstractRenderer> sortedRenderers = new ArrayList<>();
 
 	public EntityRendererHolder()
 	{
 		super(0, 0, MasterDungeonRenderer.LAYER_POKEMON);
 	}
 
-	public void draw(Graphics2D g, T pokemon, int width, int height)
+	/** @return The Renderer of the input object. If that object is not registered, returns null. */
+	public AbstractRenderer getRenderer(T object)
 	{
-		if (this.renderers.containsKey(pokemon)) this.renderers.get(pokemon).render(g, width, height);
-	}
-
-	/** @return The Renderer of the input Pokémon. */
-	public AbstractRenderer getRenderer(T pokemon)
-	{
-		if (this.renderers.containsKey(pokemon)) return this.renderers.get(pokemon);
+		if (this.renderers.containsKey(object)) return this.renderers.get(object);
 		return null;
 	}
 
-	/** @return The Sprite of the input entity if it's a Pokémon. */
-	public PokemonSprite getSprite(T entity)
+	/** @return The Sprite of the input object if it's a Pokémon. */
+	public PokemonSprite getSprite(T pokemon)
 	{
-		AbstractRenderer renderer = this.getRenderer(entity);
+		AbstractRenderer renderer = this.getRenderer(pokemon);
 		return renderer == null || !(renderer instanceof AbstractPokemonRenderer) ? null : ((AbstractPokemonRenderer) renderer).sprite();
 	}
 
+	/** @return The list of all renderers to call on render, in drawing order. */
 	public ArrayList<AbstractRenderer> listRenderers()
 	{
-		ArrayList<AbstractRenderer> renderers = new ArrayList<>(this.renderers.values());
-		renderers.sort(Comparator.naturalOrder());
-		return renderers;
+		if (this.forceReload)
+		{
+			this.sortedRenderers.sort(Comparator.naturalOrder());
+			this.forceReload = false;
+		}
+		return this.sortedRenderers;
 	}
 
 	/** Registers and returns the input Renderer. */
-	public AbstractRenderer register(T entity, AbstractRenderer renderer)
+	public AbstractRenderer register(T object, AbstractRenderer renderer)
 	{
-		this.renderers.put(entity, renderer);
+		this.renderers.put(object, renderer);
+		this.sortedRenderers.add(renderer);
+		this.forceReload = true;
 		return renderer;
 	}
 
+	@Deprecated
 	@Override
 	public void render(Graphics2D g, int width, int height)
 	{}
 
-	/** Deletes the Renderer of the input Pokémon. */
-	public void unregister(T entity)
+	/** Deletes the Renderer of the input object. */
+	public void unregister(T object)
 	{
-		this.renderers.remove(entity);
+		if (!this.renderers.containsKey(object)) return;
+		this.sortedRenderers.remove(this.renderers.get(object));
+		this.renderers.remove(object);
 	}
 
 	public void update()
 	{
 		for (AbstractRenderer renderer : this.renderers.values())
 			renderer.update();
+		this.sortedRenderers.sort(Comparator.naturalOrder());
+		this.forceReload = false;
 	}
 
 }

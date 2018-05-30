@@ -3,7 +3,6 @@ package com.darkxell.client.state.freezone;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
-import java.util.Comparator;
 
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
@@ -17,6 +16,8 @@ import com.darkxell.common.util.DoubleRectangle;
 
 public class AbstractFreezoneState extends AbstractState
 {
+
+	public boolean musicset = false;
 
 	@Override
 	public void onKeyPressed(short key)
@@ -62,12 +63,11 @@ public class AbstractFreezoneState extends AbstractState
 
 			// Draw the entities & player in X & Y position order.
 			ArrayList<AbstractRenderer> entities = map.entityRenderers.listRenderers();
-			if (this instanceof CutsceneState) {
-				//System.out.println(map.cutsceneEntityRenderers.listRenderers());
+			if (this instanceof CutsceneState)
+			{
+				// System.out.println(map.cutsceneEntityRenderers.listRenderers());
 				entities.addAll(map.cutsceneEntityRenderers.listRenderers());
-			}
-			else entities.add(Persistance.currentplayer.renderer());
-			entities.sort(Comparator.naturalOrder());
+			} else entities.add(Persistance.currentplayer.renderer());
 			for (AbstractRenderer entity : entities)
 				entity.render(g, width, height);
 
@@ -81,7 +81,7 @@ public class AbstractFreezoneState extends AbstractState
 				dbrct = Persistance.currentplayer.getInteractionBox();
 				g.fillRect((int) (dbrct.x * 8), (int) (dbrct.y * 8), (int) (dbrct.width * 8), (int) (dbrct.height * 8));
 
-			// draws the warpzones and camera position if debugmode
+				// draws the warpzones and camera position if debugmode
 				for (int i = 0; i < map.warpzones.size(); i++)
 				{
 					g.setColor(new Color(255, 255, 255, 130));
@@ -95,8 +95,6 @@ public class AbstractFreezoneState extends AbstractState
 			g.translate(-translateX, -translateY);
 		}
 	}
-
-	public boolean musicset = false;
 
 	@Override
 	public void update()
@@ -114,10 +112,8 @@ public class AbstractFreezoneState extends AbstractState
 			Persistance.soundmanager.setBackgroundMusic(SoundsHolder.getSong(Persistance.currentmap.freezonebgm));
 		}
 
-		for (AbstractRenderer renderer : Persistance.currentmap.entityRenderers.listRenderers())
-			renderer.update();
-		for (AbstractRenderer renderer : Persistance.currentmap.cutsceneEntityRenderers.listRenderers())
-			renderer.update();
+		Persistance.currentmap.entityRenderers.update();
+		Persistance.currentmap.cutsceneEntityRenderers.update();
 
 	}
 
