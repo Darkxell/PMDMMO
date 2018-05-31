@@ -20,11 +20,14 @@ import com.darkxell.common.player.ItemContainer;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.language.Message;
+import com.eclipsesource.json.Json;
+import com.eclipsesource.json.JsonObject;
 
 public class ItemContainersMenuState extends OptionSelectionMenuState implements ItemActionSource, ItemSelectionListener, TeamMemberSelectionListener
 {
 	private static final int MAX_HEIGHT = 10;
 
+	private int[] containerOffset;
 	private final ItemContainer[] containers;
 	private ItemAction currentAction = null;
 	private final int[] indexOffset;
@@ -73,23 +76,33 @@ public class ItemContainersMenuState extends OptionSelectionMenuState implements
 
 	private ItemContainer container()
 	{
-		return this.containers[this.tabIndex()];
+		return this.containers[this.tabIndex() + this.containerOffset[this.tabIndex()]];
 	}
 
 	@Override
 	protected void createOptions()
 	{
-		int inv = 1;
+		ArrayList<Integer> containerOffsets = new ArrayList<>();
+		int inv = 1, offset = 0;
 		for (int c = 0; c < this.containers.length; ++c)
 		{
 			ItemContainer container = this.containers[c];
 			if (c != 0 && container == this.containers[c - 1]) ++inv;
 			else inv = 1;
 			MenuTab tab = new MenuTab(container.containerName().addReplacement("<index>", Integer.toString(inv)));
+			if (container.size() == 0)
+			{
+				++offset;
+				continue;
+			} else containerOffsets.add(offset);
 			this.tabs.add(tab);
 			for (int i = 0; i < MAX_HEIGHT && this.indexOffset[c] + i < container.size(); ++i)
 				tab.addOption(new MenuOption(container.getItem(this.indexOffset[c] + i).name()));
 		}
+
+		this.containerOffset = new int[containerOffsets.size()];
+		for (int i = 0; i < this.containerOffset.length; ++i)
+			this.containerOffset[i] = containerOffsets.get(i);
 	}
 
 	private int itemIndex()
@@ -126,11 +139,7 @@ public class ItemContainersMenuState extends OptionSelectionMenuState implements
 		{
 			SoundManager.playSound("ui-sort");
 			Persistance.player.inventory().sort();
-			ArrayList<ItemContainer> containers = new ArrayList<ItemContainer>();
-			for (ItemContainer c : this.containers)
-				if (!containers.contains(c)) containers.add(c);
-			Persistance.stateManager
-					.setState(new ItemContainersMenuState(this.parent, this.backgroundState, true, containers.toArray(new ItemContainer[containers.size()])));
+			this.reloadContainers();
 		}
 	}
 
@@ -160,7 +169,8 @@ public class ItemContainersMenuState extends OptionSelectionMenuState implements
 	public void performAction(ItemAction action)
 	{
 		DungeonState dungeonState = Persistance.dungeonState;
-		if (this.inDungeon) Persistance.stateManager.setState(dungeonState);
+		AbstractState nextState = this;
+		if (this.inDungeon) nextState = dungeonState;
 		ItemContainer container = this.container();
 		int index = this.itemIndex();
 		ItemStack i = container.getItem(index);
@@ -169,21 +179,58 @@ public class ItemContainersMenuState extends OptionSelectionMenuState implements
 		this.currentAction = action;
 		if (action == ItemAction.USE)
 		{
-			if (i.item().usedOnTeamMember()) Persistance.stateManager.setState(new TeamMenuState(this, dungeonState));
+			if (i.item().usedOnTeamMember()) nextState = new TeamMenuState(this, dungeonState);
 			else Persistance.eventProcessor.processEvent(new ItemSelectionEvent(Persistance.floor, i.item(), user, null, container, index));
+		} else if (action == ItemAction.TRASH)
+		{// TODO actually wait for server confirm
+			JsonObject payload = Json.object();
+			payload.add("action", "itemaction");
+			payload.add("value", "trash");
+			payload.add("item", i.getData().id);
+
+			Persistance.socketendpoint.sendMessage(payload.toString());
+			container.deleteItem(index);
 		} else if (action == ItemAction.GET || action == ItemAction.TAKE)
 		{
 			if (this.inDungeon) Persistance.eventProcessor.processEvent(
 					new ItemMovedEvent(Persistance.floor, action, user, container, 0, user.player().inventory(), user.player().inventory().canAccept(i)));
-			else; // TODO Taking items in freezones
-		} else if (action == ItemAction.GIVE) Persistance.stateManager.setState(new TeamMenuState(this, this.backgroundState, this));
+			else if (action == ItemAction.TAKE)
+			{// TODO actually wait for server confirm
+				JsonObject payload = Json.object();
+				payload.add("action", "itemaction");
+				payload.add("value", "take");
+				payload.add("item", i.getData().id);
+				payload.add("pokemon", ((Pokemon) container).getData().id);
+
+				Persistance.socketendpoint.sendMessage(payload.toString());
+				user.player().inventory().addItem(container.getItem(0));
+				container.deleteItem(0);
+			}
+		} else if (action == ItemAction.GIVE) nextState = new TeamMenuState(this, this.backgroundState, this);
 		else if (action == ItemAction.PLACE)
 			Persistance.eventProcessor.processEvent(new ItemMovedEvent(Persistance.floor, action, user, container, index, user.tile(), 0));
 		else if (action == ItemAction.SWITCH)
 			Persistance.eventProcessor.processEvent(new ItemSwappedEvent(Persistance.floor, action, user, container, index, user.tile(), 0));
-		else if (action == ItemAction.SWAP) Persistance.stateManager.setState(new ItemContainersMenuState(this, dungeonState, true, Persistance.player.inventory()));
+		else if (action == ItemAction.SWAP) nextState = new ItemContainersMenuState(this, dungeonState, true, Persistance.player.inventory());
 		else if (action == ItemAction.INFO)
-			Persistance.stateManager.setState(new InfoState(this.backgroundState, this, new Message[] { i.item().name() }, new Message[] { i.info() }));
+			nextState = new InfoState(this.backgroundState, this, new Message[] { i.item().name() }, new Message[] { i.info() });
+
+		if (nextState == this) this.reloadContainers();
+		else if (nextState != null) Persistance.stateManager.setState(nextState);
+	}
+
+	private void reloadContainers()
+	{
+		boolean found = false;
+		ArrayList<ItemContainer> containers = new ArrayList<ItemContainer>();
+		for (ItemContainer c : this.containers)
+		{
+			if (!containers.contains(c)) containers.add(c);
+			if (c.size() != 0) found = true;
+		}
+		if (found) Persistance.stateManager.setState(
+				new ItemContainersMenuState(this.parent, this.backgroundState, this.inDungeon, containers.toArray(new ItemContainer[containers.size()])));
+		else Persistance.stateManager.setState(this.parent);
 	}
 
 	@Override
@@ -195,9 +242,8 @@ public class ItemContainersMenuState extends OptionSelectionMenuState implements
 	@Override
 	public void teamMemberSelected(Pokemon pokemon)
 	{
-		Persistance.stateManager.setState(Persistance.dungeonState);
-		DungeonState s = Persistance.dungeonState;
-		Persistance.stateManager.setState(s);
+		AbstractState nextState = this;
+		if (this.inDungeon) nextState = Persistance.dungeonState;
 		ItemContainer container = this.container();
 		int index = this.itemIndex();
 		ItemStack i = container.getItem(index);
@@ -210,12 +256,23 @@ public class ItemContainersMenuState extends OptionSelectionMenuState implements
 				{
 					if (this.inDungeon) Persistance.eventProcessor.processEvent(new ItemSwappedEvent(Persistance.floor, ItemAction.GIVE,
 							Persistance.player.getDungeonLeader(), Persistance.player.inventory(), this.itemIndex(), pokemon, 0));
-					else; // TODO swapping items in freezones
+					else; // TODO show error when already has item
 				} else
 				{
 					if (this.inDungeon) Persistance.eventProcessor.processEvent(new ItemMovedEvent(Persistance.floor, ItemAction.GIVE,
 							Persistance.player.getDungeonLeader(), Persistance.player.inventory(), this.itemIndex(), pokemon, 0));
-					else; // TODO giving items in freezones
+					else
+					{// TODO actually wait for server confirm
+						JsonObject payload = Json.object();
+						payload.add("action", "itemaction");
+						payload.add("value", "give");
+						payload.add("item", i.getData().id);
+						payload.add("pokemon", pokemon.getData().id);
+
+						Persistance.socketendpoint.sendMessage(payload.toString());
+						container.deleteItem(index);
+						pokemon.setItem(i);
+					}
 				}
 				break;
 
@@ -227,6 +284,9 @@ public class ItemContainersMenuState extends OptionSelectionMenuState implements
 			default:
 				break;
 		}
+
+		if (nextState == this) this.reloadContainers();
+		else if (nextState != null) Persistance.stateManager.setState(nextState);
 
 	}
 

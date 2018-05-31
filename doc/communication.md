@@ -147,6 +147,20 @@ The server will typically respond with an REQUESTINVENTORY payload containing th
 This payload notifies the server that the client would need the value of the Pokémon with the input id.
 The server will typically respond with an REQUESTMONSTER payload containing the Pokémon's value.
 
+■ ITEMACTION
+
+{"action":"itemaction",
+
+"value":"trash" OR "give" OR "take", // The action to perform on the item
+
+"item":3546512, // The ID of the item to perform the action on.
+
+"pokemon":31869846 // The ID of the affected Pokémon if action is "give" or "take".
+
+}
+
+This payload is sent when the player executes a movement action on an item in freezones.
+
 # 4 - List of server -> client payloads
 
 ■ MESSAGE (This is a payload from to the chat endpoint)
@@ -262,3 +276,17 @@ This payload is sent after a client request and contains the value of the reques
 }
 
 This payload is sent after a client request and contains the value of the requested Pokémon, its held item, and each move it knows.
+
+■ ITEMACTIONRESULT
+
+{"action":"itemactionresult",
+
+"value":"trashsuccess|givesuccess|takesuccess|pokemonhasitem|cantbetrashed", // The value of the result
+
+"item":3546512, // The ID of the item the action was performed on.
+
+"pokemon":31869846 // The ID of the affected Pokémon if action is "give" or "take".
+
+}
+
+This payload is sent after a client requests an action on an item to describe how that action went.

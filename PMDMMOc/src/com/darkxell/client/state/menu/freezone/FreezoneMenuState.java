@@ -50,10 +50,19 @@ public class FreezoneMenuState extends OptionSelectionMenuState
 		if (option == this.items)
 		{
 			ArrayList<ItemContainer> containers = new ArrayList<ItemContainer>();
-			if (!Persistance.player.inventory().isEmpty()) containers.add(Persistance.player.inventory());
+			containers.add(Persistance.player.inventory());
 			for (Pokemon pokemon : Persistance.player.getTeam())
-				if (pokemon.getItem() != null) containers.add(pokemon);
-			if (containers.isEmpty())
+				containers.add(pokemon);
+
+			boolean found = false;
+			for (ItemContainer container : containers)
+				if (container.size() != 0)
+				{
+					found = true;
+					break;
+				}
+
+			if (!found)
 			{
 				this.onExit();
 				FreezoneMenuState thismenu = this;

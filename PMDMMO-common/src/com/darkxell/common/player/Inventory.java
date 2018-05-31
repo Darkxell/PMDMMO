@@ -189,7 +189,7 @@ public class Inventory implements ItemContainer
 	@Override
 	public void setItem(int index, ItemStack item)
 	{
-		this.data.content.set(index, new DatabaseIdentifier(item.getData().id)); // Assuming Item IDs are assigned correctly
+		this.data.content.set(index, new DatabaseIdentifier(item.getData().id));
 		this.items.set(index, item);
 	}
 
@@ -204,7 +204,7 @@ public class Inventory implements ItemContainer
 		this.items.sort(Comparator.naturalOrder());
 		this.data.content.clear();
 		for (ItemStack i : this.items)
-			this.data.content.add(new DatabaseIdentifier(i.getData().id)); // Assuming Item IDs are assigned correctly
+			this.data.content.add(new DatabaseIdentifier(i.getData().id));
 	}
 
 }
