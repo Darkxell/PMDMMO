@@ -256,6 +256,7 @@ public class DungeonPokemon implements ItemContainer
 	{
 		ArrayList<DungeonEvent> events = new ArrayList<DungeonEvent>();
 		this.statusConditions.clear();
+		this.stats.onFloorStart(floor, events);
 		this.regenCounter = 0;
 		return events;
 	}

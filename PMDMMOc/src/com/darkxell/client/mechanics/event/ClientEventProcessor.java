@@ -129,7 +129,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	{
 		if (this.delayedWithTravels.contains(event)) return;
 
-		Persistance.dungeonState.logger.showMessages(event.getMessages());
+		if (event.displayMessages) Persistance.dungeonState.logger.showMessages(event.getMessages());
 		Logger.event(event.loggerMessage());
 
 		if (event instanceof MoveSelectionEvent) this.processMoveEvent((MoveSelectionEvent) event);
@@ -309,8 +309,8 @@ public final class ClientEventProcessor extends CommonEventProcessor
 			else this.levelupStats.add(pokemon.species().baseStatsIncrease(pokemon.level() - 1));
 
 			ArrayList<DialogScreen> screens = new ArrayList<DialogScreen>();
-			screens.add(new DialogScreen(new Message("xp.levelup").addReplacement("<pokemon>", pokemon.getNickname()).addReplacement("<level>",
-					Integer.toString(pokemon.level()))));
+			screens.add(new DialogScreen(
+					new Message("xp.levelup").addReplacement("<pokemon>", pokemon.getNickname()).addReplacement("<level>", Integer.toString(pokemon.level()))));
 
 			{
 				boolean hasMoreLevels = false;

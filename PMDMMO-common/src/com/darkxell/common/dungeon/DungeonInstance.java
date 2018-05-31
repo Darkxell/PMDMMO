@@ -199,8 +199,6 @@ public class DungeonInstance
 		this.actorMap.get(pokemon).onSpeedChange();
 	}
 
-	/* public void previousActor() { if (this.currentActor == -1) return; if (this.currentActor < this.actors.size()) this.actors.get(this.currentActor).cancelSubTurn(); --this.currentActor; } */
-
 	public void registerActor(DungeonPokemon pokemon)
 	{
 		if (this.actorMap.containsKey(pokemon))

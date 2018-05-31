@@ -112,6 +112,25 @@ public class DungeonStats
 		return this.stages[stat.id];
 	}
 
+	public void onFloorStart(Floor floor, ArrayList<DungeonEvent> events)
+	{
+		int speed = this.getStage(Stat.Speed);
+
+		for (int i = 0; i < this.speedBuffs.length; ++i)
+			this.speedBuffs[i] = 0;
+		for (int i = 0; i < this.speedDebuffs.length; ++i)
+			this.speedDebuffs[i] = 0;
+
+		int newSpeed = this.getStage(Stat.Speed);
+
+		if (speed != newSpeed)
+		{
+			SpeedChangedEvent e = new SpeedChangedEvent(floor, this.pokemon);
+			e.displayMessages = false;
+			events.add(e);
+		}
+	}
+
 	/** Called when the base stats change. */
 	public void onStatChange()
 	{
