@@ -9,7 +9,7 @@ import com.darkxell.client.mechanics.freezones.entities.AnimatedFlowerEntity;
 import com.darkxell.client.mechanics.freezones.entities.PokemonFreezoneEntity;
 import com.darkxell.client.mechanics.freezones.entities.SignSoulEntity;
 import com.darkxell.client.mechanics.freezones.entities.WatersparklesEntity;
-import com.darkxell.client.state.dialog.AbstractDialogState.DialogScreen;
+import com.darkxell.client.state.dialog.DialogScreen;
 import com.darkxell.client.state.map.LocalMap.LOCALMAPLOCATION;
 import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.util.Direction;

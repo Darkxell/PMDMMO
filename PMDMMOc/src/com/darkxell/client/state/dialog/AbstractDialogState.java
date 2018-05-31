@@ -10,7 +10,6 @@ import com.darkxell.client.renderers.TextRenderer.PMDChar;
 import com.darkxell.client.resources.images.MenuHudSpriteset;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.ui.Keys;
-import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.language.Message;
 
 public abstract class AbstractDialogState extends AbstractState
@@ -20,52 +19,6 @@ public abstract class AbstractDialogState extends AbstractState
 	{
 		/** Called when the input dialog ends. */
 		public void onDialogEnd(AbstractDialogState dialog);
-	}
-
-	public static class DialogScreen
-	{
-		/** The emotion of the Pokémon. Unused for now. */
-		public final short emotion;
-		/** True if this DialogScreen prints text centered horizontally. */
-		public boolean isCentered;
-		/** True if this DialogScreen prints instantaneously. */
-		public boolean isInstant;
-		/** The Message to show in this Screen. */
-		public final Message message;
-		/** The Pokémon talking. null if not a Pokémon. */
-		public final Pokemon pokemon;
-
-		public DialogScreen(Message message)
-		{
-			this(null, message);
-		}
-
-		public DialogScreen(Pokemon pokemon, Message message)
-		{
-			this((short) 0, pokemon, message);
-		}
-
-		public DialogScreen(short emotion, Pokemon pokemon, Message message)
-		{
-			this.emotion = emotion;
-			this.pokemon = pokemon;
-			this.message = message;
-			this.isInstant = false;
-
-			if (this.pokemon != null) this.message.addPrefix(new Message(": ", false)).addPrefix(this.pokemon.getNickname());
-		}
-
-		public DialogScreen setCentered()
-		{
-			this.isCentered = true;
-			return this;
-		}
-
-		public DialogScreen setInstant()
-		{
-			this.isInstant = true;
-			return this;
-		}
 	}
 
 	static final BufferedImage arrow = MenuHudSpriteset.NEXT_WINDOW_ARROW;

@@ -140,7 +140,7 @@ public class DialogState extends AbstractDialogState
 				(int) (this.dialogBox.getMaxY() - arrow.getHeight() * 3 / 4), null);
 
 		if (this.currentScreen < this.screens.size() && this.currentScreen().pokemon != null)
-			PokemonPortrait.drawPortrait(g, this.currentScreen().pokemon, this.dialogBox.x + 5, this.dialogBox.y - Hud.portrait.getHeight() - 5);
+			PokemonPortrait.drawPortrait(g, this.currentScreen().pokemon, this.currentScreen().shiny, this.dialogBox.x + 5, this.dialogBox.y - Hud.portrait.getHeight() - 5);
 
 	}
 

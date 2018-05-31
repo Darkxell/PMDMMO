@@ -11,7 +11,7 @@ import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
 import com.darkxell.client.mechanics.cutscene.entity.CutscenePokemon;
 import com.darkxell.client.state.dialog.AbstractDialogState;
 import com.darkxell.client.state.dialog.AbstractDialogState.DialogEndListener;
-import com.darkxell.client.state.dialog.AbstractDialogState.DialogScreen;
+import com.darkxell.client.state.dialog.DialogScreen;
 import com.darkxell.client.state.dialog.DialogState;
 import com.darkxell.client.state.dialog.NarratorDialogState;
 import com.darkxell.common.util.XMLUtils;

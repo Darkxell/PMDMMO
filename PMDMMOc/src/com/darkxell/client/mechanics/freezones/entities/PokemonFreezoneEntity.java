@@ -8,7 +8,7 @@ import com.darkxell.client.renderers.AbstractRenderer;
 import com.darkxell.client.renderers.pokemon.FreezonePokemonRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
-import com.darkxell.client.state.dialog.AbstractDialogState.DialogScreen;
+import com.darkxell.client.state.dialog.DialogScreen;
 import com.darkxell.client.state.dialog.DialogState;
 import com.darkxell.common.util.Direction;
 

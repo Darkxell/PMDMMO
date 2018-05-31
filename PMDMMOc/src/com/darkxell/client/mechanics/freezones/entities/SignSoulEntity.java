@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.freezones.FreezoneEntity;
-import com.darkxell.client.state.dialog.AbstractDialogState.DialogScreen;
+import com.darkxell.client.state.dialog.DialogScreen;
 import com.darkxell.client.state.dialog.DialogState;
 import com.darkxell.common.util.language.Message;
 
@@ -24,8 +24,8 @@ public class SignSoulEntity extends FreezoneEntity {
 	@Override
 	public void onInteract()
 	{
-		ArrayList<DialogScreen> screens = new ArrayList<DialogState.DialogScreen>();
-		screens.add(new DialogScreen(null, this.mess).setInstant().setCentered());
+		ArrayList<DialogScreen> screens = new ArrayList<>();
+		screens.add(new DialogScreen(this.mess).setInstant().setCentered());
 		Persistance.stateManager.setState(new DialogState(Persistance.stateManager.getCurrentState(), screens));
 	}
 

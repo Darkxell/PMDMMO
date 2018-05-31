@@ -252,7 +252,7 @@ public class LoginMainState extends StateManager {
 		Persistance.player = new Player("Offline debug account name",
 				PokemonRegistry.find(6).generate(new Random(), 1));
 		Persistance.player.setStoryPosition(1);
-		Persistance.player.addAlly(PokemonRegistry.find(252).generate(new Random(), 1, 1));
+		Persistance.player.addAlly(PokemonRegistry.find(1).generate(new Random(), 1, 1));
 		Persistance.player.addAlly(PokemonRegistry.find(255).generate(new Random(), 1));
 		Persistance.player.getTeamLeader().setItem(new ItemStack(ItemID.XRaySpecs));
 		Persistance.player.getTeamLeader().setMove(3, new LearnedMove(801));

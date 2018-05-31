@@ -6,6 +6,7 @@ import java.util.Random;
 
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.resources.images.pokemon.PokemonPortrait;
+import com.darkxell.client.state.dialog.DialogScreen;
 import com.darkxell.client.state.dialog.OptionDialogState;
 import com.darkxell.client.state.menu.OptionState;
 import com.darkxell.common.pokemon.Pokemon;

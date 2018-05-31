@@ -15,7 +15,7 @@ import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.PlayerLoadingState;
 import com.darkxell.client.state.dialog.AbstractDialogState;
 import com.darkxell.client.state.dialog.AbstractDialogState.DialogEndListener;
-import com.darkxell.client.state.dialog.AbstractDialogState.DialogScreen;
+import com.darkxell.client.state.dialog.DialogScreen;
 import com.darkxell.client.state.dialog.DialogState;
 import com.darkxell.client.state.dialog.NarratorDialogState;
 import com.darkxell.client.state.dialog.OptionDialogState;
