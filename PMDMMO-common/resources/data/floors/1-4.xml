@@ -2,10 +2,28 @@
 <floor xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="pmdmmo"
   xsi:schemaLocation="pmdmmo ../xsd/staticlayout.xsd">
   <rooms/>
-  <tiles>MMMMMMMMMMMMMMMMMMM;MMMMMMMMMMMMMMMMMMM;MMMMMMMMMMMMMMMMMMM;MMMMMMMMMMMMMMMMMMM;MMMMMMMMMMMMMMMMMMM;MMMMM
-    S MMMMM;MMMMM MMMMM;MMMMM MMMMM;MMMMM MMMMM;MMMMM MMMMM;MMMMMMM MMMMMMM;MMMMMMM MMMMMMM;MMMMMMM
-    MMMMMMM;MMMMMMM MMMMMMM;MMMMMMM
-    MMMMMMM;MMMMMMMMMMMMMMMMMMM;MMMMMMMMMMMMMMMMMMM;MMMMMMMMMMMMMMMMMMM;MMMMMMMMMMMMMMMMMMM;MMMMMMMMMMMMMMMMMMM</tiles>
+  <tiles>
+    <row>MMMMMMMMMMMMMMMMMMM</row>
+    <row>MMMMMMMMMMMMMMMMMMM</row>
+    <row>MMMMMMMMMMMMMMMMMMM</row>
+    <row>MMMMMMMMMMMMMMMMMMM</row>
+    <row>MMMMMMMMMMMMMMMMMMM</row>
+    <row>MMMMM    S    MMMMM</row>
+    <row>MMMMM         MMMMM</row>
+    <row>MMMMM         MMMMM</row>
+    <row>MMMMM         MMMMM</row>
+    <row>MMMMM         MMMMM</row>
+    <row>MMMMMMM     MMMMMMM</row>
+    <row>MMMMMMM     MMMMMMM</row>
+    <row>MMMMMMM     MMMMMMM</row>
+    <row>MMMMMMM     MMMMMMM</row>
+    <row>MMMMMMM     MMMMMMM</row>
+    <row>MMMMMMMMMMMMMMMMMMM</row>
+    <row>MMMMMMMMMMMMMMMMMMM</row>
+    <row>MMMMMMMMMMMMMMMMMMM</row>
+    <row>MMMMMMMMMMMMMMMMMMM</row>
+    <row>MMMMMMMMMMMMMMMMMMM</row>
+  </tiles>
   <items>
     <item id="0" x="5" y="6" quantity="5"/>
     <item id="2" x="6" y="6"/>

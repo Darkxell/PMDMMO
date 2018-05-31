@@ -97,6 +97,8 @@ public class DungeonState extends AbstractState
 		this.gridRenderer = new GridRenderer();
 		this.itemRenderer = new DungeonItemsRenderer();
 		this.pokemonRenderer = new DungeonPokemonRendererHolder();
+		for (DungeonPokemon pokemon : Persistance.floor.listPokemon())
+			this.pokemonRenderer.register(pokemon);
 		this.shadowRenderer = new ShadowRenderer();
 		Persistance.dungeonRenderer.addRenderer(this.floorRenderer);
 		Persistance.dungeonRenderer.addRenderer(this.gridRenderer);
@@ -274,7 +276,7 @@ public class DungeonState extends AbstractState
 	public void update()
 	{
 		Persistance.dungeonRenderer.update();
-		//this.pokemonRenderer.update(); Don't because the renderers are updated in MasterDungeonRenderer
+		// this.pokemonRenderer.update(); Don't because the renderers are updated in MasterDungeonRenderer
 		if (this.isMain()) this.logger.update();
 		this.currentSubstate.update();
 	}

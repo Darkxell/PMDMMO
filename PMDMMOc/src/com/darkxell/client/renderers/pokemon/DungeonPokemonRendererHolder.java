@@ -32,7 +32,7 @@ public class DungeonPokemonRendererHolder extends EntityRendererHolder<DungeonPo
 	@Override
 	public DungeonPokemonRenderer register(DungeonPokemon entity, AbstractRenderer renderer)
 	{
-		Persistance.dungeonRenderer.addRenderer(renderer);
+		if (!this.renderers.containsKey(entity)) Persistance.dungeonRenderer.addRenderer(renderer);
 		return (DungeonPokemonRenderer) super.register(entity, renderer);
 	}
 

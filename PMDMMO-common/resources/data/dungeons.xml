@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dungeons xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="pmdmmo"
   xsi:schemaLocation="pmdmmo xsd/dungeons.xsd">
-  <dungeon id="1" floors="3" recruits="false" limit="1000" mapx="166" mapy="169">
+  <dungeon id="1" floors="4" recruits="false" limit="1000" mapx="166" mapy="169">
     <encounters>
       <pokemon id="16" level="1" weight="2">
         <floors>

@@ -7,7 +7,13 @@
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element ref="rooms"/>
-				<xs:element name="tiles"/>
+				<xs:element name="tiles">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="row" maxOccurs="unbounded" type="xs:string"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
 				<xs:element ref="items"/>
 				<xs:element ref="pokemons"/>
 				<xs:element name="spawn">

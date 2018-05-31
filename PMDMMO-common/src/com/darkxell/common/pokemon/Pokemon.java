@@ -350,7 +350,7 @@ public class Pokemon implements ItemContainer
 
 	public void setMove(int slot, LearnedMove move)
 	{
-		if (slot >= 0 && slot < this.moves.length)
+		if (move != null && slot >= 0 && slot < this.moves.length)
 		{
 			while (slot > this.moveCount())
 				--slot;

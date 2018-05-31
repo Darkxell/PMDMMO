@@ -15,9 +15,9 @@ public class EntityRendererHolder<T> extends AbstractRenderer
 {
 
 	/** True if the sorted list should be updated when called. Security in case registered() is called between update() and listRenderers(). */
-	private boolean forceReload = false;
+	protected boolean forceReload = false;
 	/** Maps objects to their renderers. */
-	private final HashMap<T, AbstractRenderer> renderers = new HashMap<>();
+	protected final HashMap<T, AbstractRenderer> renderers = new HashMap<>();
 	/** Contains the sorted list of renderers by drawing order. */
 	private final ArrayList<AbstractRenderer> sortedRenderers = new ArrayList<>();
 
@@ -54,6 +54,7 @@ public class EntityRendererHolder<T> extends AbstractRenderer
 	/** Registers and returns the input Renderer. */
 	public AbstractRenderer register(T object, AbstractRenderer renderer)
 	{
+		if (this.renderers.containsKey(object)) return this.getRenderer(object);
 		this.renderers.put(object, renderer);
 		this.sortedRenderers.add(renderer);
 		this.forceReload = true;
