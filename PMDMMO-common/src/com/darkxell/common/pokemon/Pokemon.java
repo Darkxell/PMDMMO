@@ -259,7 +259,7 @@ public class Pokemon implements ItemContainer
 	}
 
 	@Override
-	public ArrayList<ItemAction> legalItemActions()
+	public ArrayList<ItemAction> legalItemActions(boolean inDungeon)
 	{
 		ArrayList<ItemAction> actions = new ArrayList<ItemAction>();
 		actions.add(ItemAction.TAKE);

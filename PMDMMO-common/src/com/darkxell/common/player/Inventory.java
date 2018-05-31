@@ -124,12 +124,15 @@ public class Inventory implements ItemContainer
 	}
 
 	@Override
-	public ArrayList<ItemAction> legalItemActions()
+	public ArrayList<ItemAction> legalItemActions(boolean inDungeon)
 	{
 		ArrayList<ItemAction> actions = new ArrayList<ItemAction>();
 		actions.add(ItemAction.GIVE);
-		actions.add(ItemAction.SWITCH);
-		actions.add(ItemAction.PLACE);
+		if (inDungeon)
+		{
+			actions.add(ItemAction.SWITCH);
+			actions.add(ItemAction.PLACE);
+		}
 		return actions;
 	}
 

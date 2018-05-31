@@ -18,17 +18,19 @@ public class TeamMenuState extends OptionSelectionMenuState
 	}
 
 	public final TeamMemberSelectionListener listener;
+	private final AbstractState parent;
 	private Pokemon[] pokemon;
 
-	public TeamMenuState(AbstractState background)
+	public TeamMenuState(AbstractState parent, AbstractState background)
 	{
-		this(background, null);
+		this(parent, background, null);
 	}
 
-	public TeamMenuState(AbstractState background, TeamMemberSelectionListener listener)
+	public TeamMenuState(AbstractState parent, AbstractState background, TeamMemberSelectionListener listener)
 	{
 		super(background);
 		this.pokemon = Persistance.player.getTeam();
+		this.parent = parent;
 		this.listener = listener;
 
 		this.createOptions();
@@ -46,7 +48,7 @@ public class TeamMenuState extends OptionSelectionMenuState
 	@Override
 	protected void onExit()
 	{
-		Persistance.stateManager.setState(new DungeonMenuState(this.backgroundState));
+		Persistance.stateManager.setState(this.parent);
 	}
 
 	@Override

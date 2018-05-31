@@ -133,8 +133,11 @@ public class Item
 	public ArrayList<ItemAction> getLegalActions(boolean inDungeon)
 	{
 		ArrayList<ItemAction> actions = new ArrayList<Item.ItemAction>();
-		if (inDungeon) actions.add(ItemAction.USE);
-		if (inDungeon) actions.add(ItemAction.THROW);
+		if (inDungeon)
+		{
+			actions.add(ItemAction.USE);
+			actions.add(ItemAction.THROW);
+		}
 		actions.add(ItemAction.INFO);
 		return actions;
 	}

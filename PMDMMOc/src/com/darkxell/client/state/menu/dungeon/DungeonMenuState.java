@@ -8,7 +8,7 @@ import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.dungeon.DungeonState;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
-import com.darkxell.client.state.menu.dungeon.item.ItemContainersMenuState;
+import com.darkxell.client.state.menu.item.ItemContainersMenuState;
 import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.player.ItemContainer;
 import com.darkxell.common.pokemon.Pokemon;
@@ -62,9 +62,9 @@ public class DungeonMenuState extends OptionSelectionMenuState
 				s.logger.showMessage(new Message("inventory.empty"));
 			} else
 			{
-				Persistance.stateManager.setState(new ItemContainersMenuState(s, containers.toArray(new ItemContainer[containers.size()])));
+				Persistance.stateManager.setState(new ItemContainersMenuState(this, s, true, containers.toArray(new ItemContainer[containers.size()])));
 			}
-		} else if (option == this.team) Persistance.stateManager.setState(new TeamMenuState(s));
+		} else if (option == this.team) Persistance.stateManager.setState(new TeamMenuState(this, s));
 		else if (option == this.ground)
 		{
 			this.onExit();
@@ -72,7 +72,7 @@ public class DungeonMenuState extends OptionSelectionMenuState
 			else if (Persistance.player.getDungeonLeader().tile().getItem() == null) s.logger.showMessage(new Message("ground.empty"));
 			else
 			{
-				Persistance.stateManager.setState(new ItemContainersMenuState(s, Persistance.player.getDungeonLeader().tile()));
+				Persistance.stateManager.setState(new ItemContainersMenuState(this, s, true, Persistance.player.getDungeonLeader().tile()));
 			}
 		}
 	}
