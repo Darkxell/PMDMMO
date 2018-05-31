@@ -52,11 +52,20 @@ public class DungeonMenuState extends OptionSelectionMenuState
 		else if (option == this.items)
 		{
 			ArrayList<ItemContainer> containers = new ArrayList<ItemContainer>();
-			if (!Persistance.player.inventory().isEmpty()) containers.add(Persistance.player.inventory());
-			if (Persistance.player.getDungeonLeader().tile().getItem() != null) containers.add(Persistance.player.getDungeonLeader().tile());
+			containers.add(Persistance.player.inventory());
+			containers.add(Persistance.player.getDungeonLeader().tile());
 			for (Pokemon pokemon : Persistance.player.getTeam())
-				if (pokemon.getItem() != null) containers.add(pokemon);
-			if (containers.isEmpty())
+				containers.add(pokemon);
+
+			boolean found = false;
+			for (ItemContainer container : containers)
+				if (container.size() != 0)
+				{
+					found = true;
+					break;
+				}
+
+			if (!found)
 			{
 				this.onExit();
 				s.logger.showMessage(new Message("inventory.empty"));
