@@ -1,14 +1,18 @@
 package com.darkxell.client.mechanics.freezones.zones;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
 import com.darkxell.client.mechanics.freezones.WarpZone;
 import com.darkxell.client.mechanics.freezones.entities.AnimatedFlowerEntity;
 import com.darkxell.client.mechanics.freezones.entities.PokemonFreezoneEntity;
 import com.darkxell.client.mechanics.freezones.entities.SignSoulEntity;
 import com.darkxell.client.mechanics.freezones.entities.WatersparklesEntity;
-import com.darkxell.client.resources.images.pokemon.PokemonSprite;
-import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
+import com.darkxell.client.state.dialog.AbstractDialogState.DialogScreen;
 import com.darkxell.client.state.map.LocalMap.LOCALMAPLOCATION;
+import com.darkxell.common.pokemon.PokemonRegistry;
+import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.DoubleRectangle;
 import com.darkxell.common.util.language.Message;
 
@@ -87,10 +91,33 @@ public class PokemonSquareFreezone extends FreezoneMap {
 		this.addEntity(new WatersparklesEntity(25, 69, WatersparklesEntity.TYPE_LONG));
 		this.addEntity(new WatersparklesEntity(32.5, 70, WatersparklesEntity.TYPE_SIDE));
 		this.addEntity(new WatersparklesEntity(32.5, 79, WatersparklesEntity.TYPE_SIDE));
+
+		// Add the shopkeepers
+		this.addEntity(new PokemonFreezoneEntity(36, 30, 352));
+		this.addEntity(new PokemonFreezoneEntity(39, 30, -352));
+		this.addEntity(new PokemonFreezoneEntity(82, 33, 53));
+		this.addEntity(new PokemonFreezoneEntity(97, 33, 40));
+		this.addEntity(new PokemonFreezoneEntity(41, 61, 115));
+		this.addEntity(new PokemonFreezoneEntity(82, 60, 316));
 		
-		this.addEntity(new PokemonFreezoneEntity(36, 30, new PokemonSprite(PokemonSpritesets.getSpriteset(352))));
-		this.addEntity(new PokemonFreezoneEntity(39, 30, new PokemonSprite(PokemonSpritesets.getSpriteset(-352))));
-		this.addEntity(new PokemonFreezoneEntity(57, 33, new PokemonSprite(PokemonSpritesets.getSpriteset(6))));
+
+		// Add the interactible pokemons
+		ArrayList<DialogScreen> s = new ArrayList<>(2);
+		s.add(new DialogScreen(PokemonRegistry.find(6).generate(new Random(), 0),
+				new Message("dialog.place.charizard.1")));
+		s.add(new DialogScreen(PokemonRegistry.find(6).generate(new Random(), 0),
+				new Message("dialog.place.charizard.2")));
+		this.addEntity(new PokemonFreezoneEntity(57, 33, 6, Direction.EAST, s));
+		s = new ArrayList<>(1);
+		s.add(new DialogScreen(PokemonRegistry.find(248).generate(new Random(), 0),
+				new Message("dialog.place.tyranitar")));
+		this.addEntity(new PokemonFreezoneEntity(61, 33, 248, Direction.WEST, s));
+		s = new ArrayList<>(2);
+		s.add(new DialogScreen(PokemonRegistry.find(275).generate(new Random(), 0),
+				new Message("dialog.place.shiftry.1")));
+		s.add(new DialogScreen(PokemonRegistry.find(275).generate(new Random(), 0),
+				new Message("dialog.place.shiftry.2")));
+		this.addEntity(new PokemonFreezoneEntity(69, 35, 275, Direction.SOUTHWEST, s));
 
 	}
 
@@ -100,14 +127,12 @@ public class PokemonSquareFreezone extends FreezoneMap {
 	}
 
 	@Override
-	public int defaultX()
-	{
+	public int defaultX() {
 		return 4;
 	}
 
 	@Override
-	public int defaultY()
-	{
+	public int defaultY() {
 		return 40;
 	}
 
