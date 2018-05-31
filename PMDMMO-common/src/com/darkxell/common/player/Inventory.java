@@ -132,7 +132,7 @@ public class Inventory implements ItemContainer
 		{
 			actions.add(ItemAction.SWITCH);
 			actions.add(ItemAction.PLACE);
-		}
+		} else actions.add(ItemAction.TRASH);
 		return actions;
 	}
 
