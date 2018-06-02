@@ -281,7 +281,7 @@ This payload is sent after a client request and contains the value of the reques
 
 {"action":"itemactionresult",
 
-"value":"trashsuccess|givesuccess|takesuccess|pokemonhasitem|cantbetrashed", // The value of the result
+"value":"trashsuccess|givesuccess|takesuccess|pokemonhasitem|pokemonhasnoitem|inventoryfull|cantbetrashed", // The value of the result
 
 "item":3546512, // The ID of the item the action was performed on.
 

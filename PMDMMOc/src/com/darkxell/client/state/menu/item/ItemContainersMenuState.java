@@ -43,12 +43,6 @@ public class ItemContainersMenuState extends OptionSelectionMenuState
 	private final ItemSelectionListener listener;
 	private final AbstractState parent;
 
-	// Server communication fields
-	private ItemAction selectedAction;
-	private ItemContainer selectedContainer;
-	private int selectedItemIndex;
-	private Pokemon selectedPokemon;
-
 	public ItemContainersMenuState(AbstractState parent, AbstractState background, boolean inDungeon, ItemContainer... containers)
 	{
 		this(parent, background, null, inDungeon, containers);
@@ -126,6 +120,21 @@ public class ItemContainersMenuState extends OptionSelectionMenuState
 		Persistance.isCommunicating = false;
 		String result = message.getString("value", null);
 
+		if (result == null)
+		{
+			Logger.e("Invalid itemaction result: " + result);
+			return;
+		} else if (result.equals("givesuccess")) this.itemgiveSuccess(message.getLong("item", -1), message.getLong("pokemon", -1));
+		else if (result.equals("takesuccess")) this.itemTakeSuccess(message.getLong("item", -1), message.getLong("pokemon", -1));
+		else if (result.equals("trashsuccess")) this.itemTrashSuccess(message.getLong("item", -1));
+		else if (result.equals("pokemonhasitem")) this.itemGiveFailureHasItem(message.getLong("pokemon", -1));
+		else if (result.equals("pokemonhasnoitem")) this.itemTakeFailureHasNoItem(message.getLong("pokemon", -1));
+		else if (result.equals("inventoryfull")) this.itemTakeFailureInvFull(message.getLong("pokemon", -1));
+		else if (result.equals("cantbetrashed")) this.itemCantBeTrashed();
+	}
+
+	private void itemCantBeTrashed()
+	{
 		ItemContainersMenuState nextState = this;
 		DialogEndListener listener = new DialogEndListener() {
 			@Override
@@ -134,101 +143,71 @@ public class ItemContainersMenuState extends OptionSelectionMenuState
 				Persistance.stateManager.setState(nextState);
 			}
 		};
+		Persistance.stateManager.setState(new DialogState(this.backgroundState, listener, new DialogScreen(new Message("item.trash.impossible"))));
+	}
 
-		if (result == null)
-		{
-			Logger.e("Invalid itemaction result: " + result);
-			return;
-		} else if (result.equals("givesuccess"))
-		{
-			Inventory inv = Persistance.player.inventory();
-			int index = -1, itemid = message.getInt("item", -1), pokemonid = message.getInt("pokemon", -1);
-			for (int i = 0; i < inv.size(); ++i)
-				if (inv.getItem(i).getData().id == itemid)
-				{
-					index = i;
-					break;
-				}
-
-			Pokemon pokemon = null;
-			for (int i = 0; i < 3; ++i)
-				if (Persistance.player.getMember(i).getData().id == pokemonid)
-				{
-					pokemon = Persistance.player.getMember(i);
-					break;
-				}
-
-			if (index != -1 && pokemon != null)
+	private void itemGiveFailureHasItem(long pokemonid)
+	{
+		Pokemon pokemon = null;
+		for (int i = 0; i < 3; ++i)
+			if (Persistance.player.getMember(i).getData().id == pokemonid)
 			{
-				ItemStack item = inv.getItem(index);
-				pokemon.setItem(inv.getItem(index));
-				inv.deleteItem(index);
-				Persistance.stateManager.setState(new DialogState(this.backgroundState, listener,
-						new DialogScreen(new Message("item.give").addReplacement("<item>", item.name()).addReplacement("<pokemon>", pokemon.getNickname()))));
-			} else Persistance.stateManager.setState(this);
-		} else if (result.equals("takesuccess"))
+				pokemon = Persistance.player.getMember(i);
+				break;
+			}
+
+		if (pokemon != null)
 		{
-			Inventory inv = Persistance.player.inventory();
-			int index = -1, itemid = message.getInt("item", -1), pokemonid = message.getInt("pokemon", -1);
-			for (int i = 0; i < inv.size(); ++i)
-				if (inv.getItem(i).getData().id == itemid)
+			ItemContainersMenuState nextState = this;
+			DialogEndListener listener = new DialogEndListener() {
+				@Override
+				public void onDialogEnd(AbstractDialogState dialog)
 				{
-					index = i;
-					break;
+					Persistance.stateManager.setState(nextState);
 				}
+			};
+			Persistance.stateManager.setState(new DialogState(this.backgroundState, listener, new DialogScreen(new Message("inventory.give.alreadyhasitem"))));
+		} else Persistance.stateManager.setState(this);
+	}
 
-			Pokemon pokemon = null;
-			for (int i = 0; i < 3; ++i)
-				if (Persistance.player.getMember(i).getData().id == pokemonid)
-				{
-					pokemon = Persistance.player.getMember(i);
-					break;
-				}
-
-			if (index != -1 && pokemon != null)
+	private void itemgiveSuccess(long itemid, long pokemonid)
+	{
+		Inventory inv = Persistance.player.inventory();
+		int index = -1;
+		for (int i = 0; i < inv.size(); ++i)
+			if (inv.getItem(i).getData().id == itemid)
 			{
-				ItemStack item = inv.getItem(index);
-				inv.addItem(pokemon.getItem());
-				pokemon.deleteItem(0);
-				Persistance.stateManager.setState(new DialogState(this.backgroundState, listener,
-						new DialogScreen(new Message("item.taken").addReplacement("<item>", item.name()).addReplacement("<pokemon>", pokemon.getNickname()))));
-			} else Persistance.stateManager.setState(this);
-		} else if (result.equals("trashsuccess"))
-		{
-			Inventory inv = Persistance.player.inventory();
-			int index = -1, itemid = message.getInt("item", -1);
-			for (int i = 0; i < inv.size(); ++i)
-				if (inv.getItem(i).getData().id == itemid)
-				{
-					index = i;
-					break;
-				}
+				index = i;
+				break;
+			}
 
-			if (index != -1)
+		Pokemon pokemon = null;
+		for (int i = 0; i < 3; ++i)
+			if (Persistance.player.getMember(i).getData().id == pokemonid)
 			{
-				ItemStack item = inv.getItem(index);
-				inv.deleteItem(index);
+				pokemon = Persistance.player.getMember(i);
+				break;
+			}
 
-				Persistance.stateManager.setState(new DialogState(this.backgroundState, listener,
-						new DialogScreen(new Message("item.trash.success").addReplacement("<item>", item.name()))));
-			} else Persistance.stateManager.setState(this);
-		} else if (result.equals("pokemonhasitem"))
+		if (index != -1 && pokemon != null)
 		{
-			int pokemonid = message.getInt("pokemon", -1);
+			ItemStack item = inv.getItem(index);
+			pokemon.setItem(inv.getItem(index));
+			inv.deleteItem(index);
 
-			Pokemon pokemon = null;
-			for (int i = 0; i < 3; ++i)
-				if (Persistance.player.getMember(i).getData().id == pokemonid)
+			ItemContainersMenuState nextState = this;
+			DialogEndListener listener = new DialogEndListener() {
+				@Override
+				public void onDialogEnd(AbstractDialogState dialog)
 				{
-					pokemon = Persistance.player.getMember(i);
-					break;
+					nextState.reloadContainers();
+					Persistance.stateManager.setState(nextState);
 				}
+			};
 
-			if (pokemon != null) Persistance.stateManager
-					.setState(new DialogState(this.backgroundState, listener, new DialogScreen(new Message("inventory.give.alreadyhasitem"))));
-			else Persistance.stateManager.setState(this);
-		} else if (result.equals("cantbetrashed"))
-			Persistance.stateManager.setState(new DialogState(this.backgroundState, listener, new DialogScreen(new Message("item.trash.impossible"))));
+			Persistance.stateManager.setState(new DialogState(this.backgroundState, listener,
+					new DialogScreen(new Message("item.give").addReplacement("<item>", item.name()).addReplacement("<pokemon>", pokemon.getNickname()))));
+		} else Persistance.stateManager.setState(this);
 	}
 
 	private int itemIndex()
@@ -246,6 +225,125 @@ public class ItemContainersMenuState extends OptionSelectionMenuState
 			Persistance.eventProcessor.processEvent(new ItemSwappedEvent(Persistance.floor, ItemAction.SWAP, Persistance.player.getDungeonLeader(),
 					Persistance.player.inventory(), index, Persistance.player.getDungeonLeader().tile(), 0));
 		}
+	}
+
+	private void itemTakeFailureHasNoItem(long pokemonid)
+	{
+		Pokemon pokemon = null;
+		for (int i = 0; i < 3; ++i)
+			if (Persistance.player.getMember(i).getData().id == pokemonid)
+			{
+				pokemon = Persistance.player.getMember(i);
+				break;
+			}
+
+		if (pokemon != null)
+		{
+			ItemContainersMenuState nextState = this;
+			DialogEndListener listener = new DialogEndListener() {
+				@Override
+				public void onDialogEnd(AbstractDialogState dialog)
+				{
+					Persistance.stateManager.setState(nextState);
+				}
+			};
+			Persistance.stateManager.setState(new DialogState(this.backgroundState, listener, new DialogScreen(new Message("inventory.take.hasnoitem"))));
+		} else Persistance.stateManager.setState(this);
+	}
+
+	private void itemTakeFailureInvFull(long pokemonid)
+	{
+		Pokemon pokemon = null;
+		for (int i = 0; i < 3; ++i)
+			if (Persistance.player.getMember(i).getData().id == pokemonid)
+			{
+				pokemon = Persistance.player.getMember(i);
+				break;
+			}
+
+		if (pokemon != null)
+		{
+			ItemContainersMenuState nextState = this;
+			DialogEndListener listener = new DialogEndListener() {
+				@Override
+				public void onDialogEnd(AbstractDialogState dialog)
+				{
+					Persistance.stateManager.setState(nextState);
+				}
+			};
+			Persistance.stateManager.setState(new DialogState(this.backgroundState, listener, new DialogScreen(new Message("inventory.take.full"))));
+		} else Persistance.stateManager.setState(this);
+	}
+
+	private void itemTakeSuccess(long itemid, long pokemonid)
+	{
+		Inventory inv = Persistance.player.inventory();
+		int index = -1;
+		for (int i = 0; i < inv.size(); ++i)
+			if (inv.getItem(i).getData().id == itemid)
+			{
+				index = i;
+				break;
+			}
+
+		Pokemon pokemon = null;
+		for (int i = 0; i < 3; ++i)
+			if (Persistance.player.getMember(i).getData().id == pokemonid)
+			{
+				pokemon = Persistance.player.getMember(i);
+				break;
+			}
+
+		if (index != -1 && pokemon != null)
+		{
+			ItemStack item = inv.getItem(index);
+			inv.addItem(pokemon.getItem());
+			pokemon.deleteItem(0);
+
+			ItemContainersMenuState nextState = this;
+			DialogEndListener listener = new DialogEndListener() {
+				@Override
+				public void onDialogEnd(AbstractDialogState dialog)
+				{
+					nextState.reloadContainers();
+					Persistance.stateManager.setState(nextState);
+				}
+			};
+
+			Persistance.stateManager.setState(new DialogState(this.backgroundState, listener,
+					new DialogScreen(new Message("item.taken").addReplacement("<item>", item.name()).addReplacement("<pokemon>", pokemon.getNickname()))));
+		} else Persistance.stateManager.setState(this);
+	}
+
+	private void itemTrashSuccess(long itemid)
+	{
+		Inventory inv = Persistance.player.inventory();
+		int index = -1;
+		for (int i = 0; i < inv.size(); ++i)
+			if (inv.getItem(i).getData().id == itemid)
+			{
+				index = i;
+				break;
+			}
+
+		if (index != -1)
+		{
+			ItemStack item = inv.getItem(index);
+			inv.deleteItem(index);
+
+			ItemContainersMenuState nextState = this;
+			DialogEndListener listener = new DialogEndListener() {
+				@Override
+				public void onDialogEnd(AbstractDialogState dialog)
+				{
+					nextState.reloadContainers();
+					Persistance.stateManager.setState(nextState);
+				}
+			};
+
+			Persistance.stateManager.setState(
+					new DialogState(this.backgroundState, listener, new DialogScreen(new Message("item.trash.success").addReplacement("<item>", item.name()))));
+		} else Persistance.stateManager.setState(this);
 	}
 
 	@Override
@@ -299,11 +397,6 @@ public class ItemContainersMenuState extends OptionSelectionMenuState
 		ItemStack i = container.getItem(index);
 		DungeonPokemon user = Persistance.player.getDungeonLeader();
 
-		this.selectedAction = null;
-		this.selectedContainer = null;
-		this.selectedItemIndex = -1;
-		this.selectedPokemon = null;
-
 		this.currentAction = action;
 		if (action == ItemAction.USE)
 		{
@@ -311,8 +404,8 @@ public class ItemContainersMenuState extends OptionSelectionMenuState
 			else Persistance.eventProcessor.processEvent(new ItemSelectionEvent(Persistance.floor, i.item(), user, null, container, index));
 		} else if (action == ItemAction.TRASH)
 		{
-			Persistance.isCommunicating = true;
 			nextState = null;
+			Persistance.isCommunicating = true;
 
 			JsonObject payload = Json.object();
 			payload.add("action", "itemaction");
@@ -320,17 +413,14 @@ public class ItemContainersMenuState extends OptionSelectionMenuState
 			payload.add("item", i.getData().id);
 
 			Persistance.socketendpoint.sendMessage(payload.toString());
-			this.selectedAction = action;
-			this.selectedContainer = container;
-			this.selectedItemIndex = index;
 		} else if (action == ItemAction.GET || action == ItemAction.TAKE)
 		{
 			if (this.inDungeon) Persistance.eventProcessor.processEvent(
 					new ItemMovedEvent(Persistance.floor, action, user, container, 0, user.player().inventory(), user.player().inventory().canAccept(i)));
 			else if (action == ItemAction.TAKE)
 			{
-				Persistance.isCommunicating = true;
 				nextState = null;
+				Persistance.isCommunicating = true;
 
 				JsonObject payload = Json.object();
 				payload.add("action", "itemaction");
@@ -339,10 +429,6 @@ public class ItemContainersMenuState extends OptionSelectionMenuState
 				payload.add("pokemon", ((Pokemon) container).getData().id);
 
 				Persistance.socketendpoint.sendMessage(payload.toString());
-				this.selectedAction = action;
-				this.selectedContainer = container;
-				this.selectedItemIndex = index;
-				this.selectedPokemon = (Pokemon) container;
 			}
 		} else if (action == ItemAction.GIVE) nextState = new TeamMenuState(this, this.backgroundState, this);
 		else if (action == ItemAction.PLACE)
@@ -398,8 +484,9 @@ public class ItemContainersMenuState extends OptionSelectionMenuState
 							Persistance.player.inventory(), this.itemIndex(), pokemon, 0));
 				} else
 				{
-					Persistance.isCommunicating = true;
 					nextState = null;
+
+					Persistance.isCommunicating = true;
 
 					JsonObject payload = Json.object();
 					payload.add("action", "itemaction");
@@ -408,11 +495,6 @@ public class ItemContainersMenuState extends OptionSelectionMenuState
 					payload.add("pokemon", pokemon.getData().id);
 
 					Persistance.socketendpoint.sendMessage(payload.toString());
-					this.selectedAction = this.currentAction;
-					this.selectedContainer = container;
-					this.selectedItemIndex = index;
-					this.selectedPokemon = pokemon;
-
 				}
 				break;
 
