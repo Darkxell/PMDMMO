@@ -133,7 +133,7 @@ public class GameSocketEndpoint {
 			case "logininfo":
 				new LogininfoHandler().handleMessage(obj.asObject());
 				break;
-			case "itemaction":
+			case "itemactionresult":
 				new ItemActionHandler().handleMessage(obj.asObject());
 				break;
 			default:

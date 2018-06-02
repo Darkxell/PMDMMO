@@ -6,17 +6,22 @@ import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.launchable.messagehandlers.ItemActionHandler.ItemActionMessageHandler;
 import com.darkxell.client.resources.music.SoundManager;
 import com.darkxell.client.state.AbstractState;
+import com.darkxell.client.state.dialog.AbstractDialogState;
+import com.darkxell.client.state.dialog.AbstractDialogState.DialogEndListener;
+import com.darkxell.client.state.dialog.DialogScreen;
+import com.darkxell.client.state.dialog.DialogState;
 import com.darkxell.client.state.dungeon.DungeonState;
 import com.darkxell.client.state.menu.InfoState;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
-import com.darkxell.client.state.menu.dungeon.TeamMenuState;
-import com.darkxell.client.state.menu.dungeon.TeamMenuState.TeamMemberSelectionListener;
+import com.darkxell.client.state.menu.TeamMenuState;
+import com.darkxell.client.state.menu.TeamMenuState.TeamMemberSelectionListener;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.common.event.item.ItemMovedEvent;
 import com.darkxell.common.event.item.ItemSelectionEvent;
 import com.darkxell.common.event.item.ItemSwappedEvent;
 import com.darkxell.common.item.Item.ItemAction;
 import com.darkxell.common.item.ItemStack;
+import com.darkxell.common.player.Inventory;
 import com.darkxell.common.player.ItemContainer;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.Pokemon;
@@ -120,12 +125,110 @@ public class ItemContainersMenuState extends OptionSelectionMenuState
 		if (!Persistance.isCommunicating) return;
 		Persistance.isCommunicating = false;
 		String result = message.getString("value", null);
+
+		ItemContainersMenuState nextState = this;
+		DialogEndListener listener = new DialogEndListener() {
+			@Override
+			public void onDialogEnd(AbstractDialogState dialog)
+			{
+				Persistance.stateManager.setState(nextState);
+			}
+		};
+
 		if (result == null)
 		{
 			Logger.e("Invalid itemaction result: " + result);
 			return;
-		}
-		System.out.println("Received result: " + result);
+		} else if (result.equals("givesuccess"))
+		{
+			Inventory inv = Persistance.player.inventory();
+			int index = -1, itemid = message.getInt("item", -1), pokemonid = message.getInt("pokemon", -1);
+			for (int i = 0; i < inv.size(); ++i)
+				if (inv.getItem(i).getData().id == itemid)
+				{
+					index = i;
+					break;
+				}
+
+			Pokemon pokemon = null;
+			for (int i = 0; i < 3; ++i)
+				if (Persistance.player.getMember(i).getData().id == pokemonid)
+				{
+					pokemon = Persistance.player.getMember(i);
+					break;
+				}
+
+			if (index != -1 && pokemon != null)
+			{
+				ItemStack item = inv.getItem(index);
+				pokemon.setItem(inv.getItem(index));
+				inv.deleteItem(index);
+				Persistance.stateManager.setState(new DialogState(this.backgroundState, listener,
+						new DialogScreen(new Message("item.give").addReplacement("<item>", item.name()).addReplacement("<pokemon>", pokemon.getNickname()))));
+			} else Persistance.stateManager.setState(this);
+		} else if (result.equals("takesuccess"))
+		{
+			Inventory inv = Persistance.player.inventory();
+			int index = -1, itemid = message.getInt("item", -1), pokemonid = message.getInt("pokemon", -1);
+			for (int i = 0; i < inv.size(); ++i)
+				if (inv.getItem(i).getData().id == itemid)
+				{
+					index = i;
+					break;
+				}
+
+			Pokemon pokemon = null;
+			for (int i = 0; i < 3; ++i)
+				if (Persistance.player.getMember(i).getData().id == pokemonid)
+				{
+					pokemon = Persistance.player.getMember(i);
+					break;
+				}
+
+			if (index != -1 && pokemon != null)
+			{
+				ItemStack item = inv.getItem(index);
+				inv.addItem(pokemon.getItem());
+				pokemon.deleteItem(0);
+				Persistance.stateManager.setState(new DialogState(this.backgroundState, listener,
+						new DialogScreen(new Message("item.taken").addReplacement("<item>", item.name()).addReplacement("<pokemon>", pokemon.getNickname()))));
+			} else Persistance.stateManager.setState(this);
+		} else if (result.equals("trashsuccess"))
+		{
+			Inventory inv = Persistance.player.inventory();
+			int index = -1, itemid = message.getInt("item", -1);
+			for (int i = 0; i < inv.size(); ++i)
+				if (inv.getItem(i).getData().id == itemid)
+				{
+					index = i;
+					break;
+				}
+
+			if (index != -1)
+			{
+				ItemStack item = inv.getItem(index);
+				inv.deleteItem(index);
+
+				Persistance.stateManager.setState(new DialogState(this.backgroundState, listener,
+						new DialogScreen(new Message("item.trash.success").addReplacement("<item>", item.name()))));
+			} else Persistance.stateManager.setState(this);
+		} else if (result.equals("pokemonhasitem"))
+		{
+			int pokemonid = message.getInt("pokemon", -1);
+
+			Pokemon pokemon = null;
+			for (int i = 0; i < 3; ++i)
+				if (Persistance.player.getMember(i).getData().id == pokemonid)
+				{
+					pokemon = Persistance.player.getMember(i);
+					break;
+				}
+
+			if (pokemon != null) Persistance.stateManager
+					.setState(new DialogState(this.backgroundState, listener, new DialogScreen(new Message("inventory.give.alreadyhasitem"))));
+			else Persistance.stateManager.setState(this);
+		} else if (result.equals("cantbetrashed"))
+			Persistance.stateManager.setState(new DialogState(this.backgroundState, listener, new DialogScreen(new Message("item.trash.impossible"))));
 	}
 
 	private int itemIndex()
@@ -220,8 +323,6 @@ public class ItemContainersMenuState extends OptionSelectionMenuState
 			this.selectedAction = action;
 			this.selectedContainer = container;
 			this.selectedItemIndex = index;
-
-			// container.deleteItem(index);
 		} else if (action == ItemAction.GET || action == ItemAction.TAKE)
 		{
 			if (this.inDungeon) Persistance.eventProcessor.processEvent(
@@ -242,7 +343,6 @@ public class ItemContainersMenuState extends OptionSelectionMenuState
 				this.selectedContainer = container;
 				this.selectedItemIndex = index;
 				this.selectedPokemon = (Pokemon) container;
-				/* user.player().inventory().addItem(container.getItem(0)); container.deleteItem(0); */
 			}
 		} else if (action == ItemAction.GIVE) nextState = new TeamMenuState(this, this.backgroundState, this);
 		else if (action == ItemAction.PLACE)
@@ -313,7 +413,6 @@ public class ItemContainersMenuState extends OptionSelectionMenuState
 					this.selectedItemIndex = index;
 					this.selectedPokemon = pokemon;
 
-					/* container.deleteItem(index); pokemon.setItem(i); */
 				}
 				break;
 

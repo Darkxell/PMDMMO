@@ -1,15 +1,15 @@
-package com.darkxell.client.state.menu.dungeon;
+package com.darkxell.client.state.menu;
 
 import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.messagehandlers.ItemActionHandler.ItemActionMessageHandler;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.state.AbstractState;
-import com.darkxell.client.state.menu.InfoState;
-import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.language.Message;
+import com.eclipsesource.json.JsonObject;
 
-public class TeamMenuState extends OptionSelectionMenuState
+public class TeamMenuState extends OptionSelectionMenuState implements ItemActionMessageHandler
 {
 
 	public static interface TeamMemberSelectionListener
@@ -43,6 +43,12 @@ public class TeamMenuState extends OptionSelectionMenuState
 		this.tabs.add(t);
 		for (Pokemon p : this.pokemon)
 			t.addOption(new MenuOption(p.getNickname()));
+	}
+
+	@Override
+	public void handleMessage(JsonObject message)
+	{
+		if (this.parent != null && this.parent instanceof ItemActionMessageHandler) ((ItemActionMessageHandler) this.parent).handleMessage(message);
 	}
 
 	@Override
