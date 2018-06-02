@@ -12,17 +12,18 @@ import java.util.Random;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.animation.AnimationTicker;
 import com.darkxell.client.renderers.TeamInfoRenderer;
+import com.darkxell.client.renderers.TextRenderer;
+import com.darkxell.client.resources.Palette;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.StateManager;
 import com.darkxell.client.state.TransitionState;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.client.ui.MainUiUtility;
+import com.darkxell.common.util.language.Message;
 
-/**
- * The principal state of the game. Displays the game screen, minimap, chat
- * window and pokemons informations.
- */
-public class PrincipalMainState extends StateManager {
+/** The principal state of the game. Displays the game screen, minimap, chat window and pokemons informations. */
+public class PrincipalMainState extends StateManager
+{
 
 	// ATTRIBUTES
 
@@ -53,38 +54,39 @@ public class PrincipalMainState extends StateManager {
 
 	// KEY AND MOUSE EVENTS
 	@Override
-	public void onKeyPressed(KeyEvent e, short key) {
+	public void onKeyPressed(KeyEvent e, short key)
+	{
+		if (this.currentState != null && isGameFocused) this.currentState.onKeyPressed(key);
+		if (e.getKeyCode() == KeyEvent.VK_ENTER && isChatFocused) Persistance.chatbox.send();
+		if (isChatFocused) Persistance.chatbox.textfield.onKeyPressed(e);
+	}
+
+	@Override
+	public void onKeyReleased(KeyEvent e, short key)
+	{
+		if (this.currentState != null && isGameFocused) this.currentState.onKeyReleased(key);
+	}
+
+	@Override
+	public void onKeyTyped(KeyEvent e)
+	{
+		if (isChatFocused) Persistance.chatbox.textfield.onKeyTyped(e);
+	}
+
+	@Override
+	public void onMouseClick(int x, int y)
+	{
 		if (this.currentState != null && isGameFocused)
-			this.currentState.onKeyPressed(key);
-		if (e.getKeyCode() == KeyEvent.VK_ENTER && isChatFocused)
-			Persistance.chatbox.send();
-		if (isChatFocused)
-			Persistance.chatbox.textfield.onKeyPressed(e);
-	}
-
-	@Override
-	public void onKeyReleased(KeyEvent e, short key) {
-		if (this.currentState != null && isGameFocused)
-			this.currentState.onKeyReleased(key);
-	}
-
-	@Override
-	public void onKeyTyped(KeyEvent e) {
-		if (isChatFocused)
-			Persistance.chatbox.textfield.onKeyTyped(e);
-	}
-
-	@Override
-	public void onMouseClick(int x, int y) {
-		if (this.currentState != null && isGameFocused) {
+		{
 			Point p = this.inGameLocation(x, y);
-			if (p != null)
-				this.currentState.onMouseClick(p.x, p.y);
+			if (p != null) this.currentState.onMouseClick(p.x, p.y);
 		}
-		if (x > gamex && x < gamex + gamewidth && y > gamey && y < gamey + gameheight) {
+		if (x > gamex && x < gamex + gamewidth && y > gamey && y < gamey + gameheight)
+		{
 			isGameFocused = true;
 			isChatFocused = false;
-		} else if (x > chatx && x < chatx + chatwidth && y > chaty && y < chaty + chatheight) {
+		} else if (x > chatx && x < chatx + chatwidth && y > chaty && y < chaty + chatheight)
+		{
 			isChatFocused = true;
 			isGameFocused = false;
 			Persistance.chatbox.onClick(x - chatx, y - chaty);
@@ -92,61 +94,59 @@ public class PrincipalMainState extends StateManager {
 	}
 
 	@Override
-	public void onMouseMove(int x, int y) {
-		if (this.currentState != null && isGameFocused) {
+	public void onMouseMove(int x, int y)
+	{
+		if (this.currentState != null && isGameFocused)
+		{
 			Point p = this.inGameLocation(x, y);
-			if (p != null)
-				this.currentState.onMouseMove(p.x, p.y);
+			if (p != null) this.currentState.onMouseMove(p.x, p.y);
 		}
 	}
 
 	@Override
-	public void onMouseRightClick(int x, int y) {
-		if (this.currentState != null && isGameFocused) {
+	public void onMouseRightClick(int x, int y)
+	{
+		if (this.currentState != null && isGameFocused)
+		{
 			Point p = this.inGameLocation(x, y);
-			if (p != null)
-				this.currentState.onMouseRightClick(p.x, p.y);
+			if (p != null) this.currentState.onMouseRightClick(p.x, p.y);
 		}
 	}
 
-	private Point inGameLocation(int x, int y) {
-		if (this.internalBuffer == null)
-			return null;
+	private Point inGameLocation(int x, int y)
+	{
+		if (this.internalBuffer == null) return null;
 		Point p = new Point((x - this.gamex) * this.internalBuffer.getWidth() / this.gamewidth,
 				(y - this.gamey) * this.internalBuffer.getHeight() / this.gameheight);
-		if (p.x < 0 || p.y < 0 || p.x > this.internalBuffer.getWidth() || p.y > this.internalBuffer.getHeight())
-			return null;
+		if (p.x < 0 || p.y < 0 || p.x > this.internalBuffer.getWidth() || p.y > this.internalBuffer.getHeight()) return null;
 		return p;
 	}
 
 	// RENDER AND UPDATE
 	@Override
-	public void render(Graphics2D g, int width, int height) {
-		if (width == 0)
-			return;
-		if (internalBuffer == null)
-			internalBuffer = new BufferedImage(displayWidth, displayHeight, BufferedImage.TYPE_INT_ARGB);
+	public void render(Graphics2D g, int width, int height)
+	{
+		if (width == 0) return;
+		if (internalBuffer == null) internalBuffer = new BufferedImage(displayWidth, displayHeight, BufferedImage.TYPE_INT_ARGB);
 
 		// Displays the game on the buffer
 		Graphics2D g2 = internalBuffer.createGraphics();
 		g2.clearRect(0, 0, displayWidth, displayHeight);
-		if (this.currentState != null)
-			this.currentState.render(g2, displayWidth, displayHeight);
-		if (!isGameFocused) {
+		if (this.currentState != null) this.currentState.render(g2, displayWidth, displayHeight);
+		if (!isGameFocused)
+		{
 			g2.setColor(new Color(0, 0, 0, 150));
 			g2.fillRect(0, 0, displayWidth, displayHeight);
 		}
 		g2.dispose();
 
 		// Calculates various values to draw the components to the window
-		gamewidth = (int) (0.6 * height * displayWidth / displayHeight <= 0.6 * width
-				? 0.6 * height * displayWidth / displayHeight : 0.6 * width);
+		gamewidth = (int) (0.6 * height * displayWidth / displayHeight <= 0.6 * width ? 0.6 * height * displayWidth / displayHeight : 0.6 * width);
 		gameheight = gamewidth * displayHeight / displayWidth;
 		gamex = (int) (width * 0.35);
 		gamey = (int) (height * 0.35);
 		mapsize = (int) (gamewidth / 2 >= height * 0.25 ? height * 0.25 : gamewidth / 2);
-		mapx = (int) (width * 0.95) - mapsize < gamex + gamewidth - mapsize ? (int) (width * 0.95) - mapsize
-				: gamex + gamewidth - mapsize;
+		mapx = (int) (width * 0.95) - mapsize < gamex + gamewidth - mapsize ? (int) (width * 0.95) - mapsize : gamex + gamewidth - mapsize;
 		mapy = (int) (height * 0.05);
 		chatwidth = (int) (width * 0.25);
 		chatheight = (int) (height * 0.9);
@@ -165,6 +165,15 @@ public class PrincipalMainState extends StateManager {
 
 		// draws the game inside
 		g.drawImage(internalBuffer, gamex, gamey, gamewidth, gameheight, null);
+		if (Persistance.isCommunicating)
+		{
+			g.setColor(Palette.TRANSPARENT_GRAY);
+			Message m = new Message("general.loading");
+			int mxoff = 4, myoff = 2;
+			int mwidth = TextRenderer.width(m) + mxoff * 2, mheight = TextRenderer.height() + myoff * 2;
+			g.fillRect(gamex + gamewidth - mwidth, gamey, mwidth, mheight);
+			TextRenderer.render(g, m, gamex + gamewidth - mwidth + mxoff, gamey + myoff);
+		}
 
 		// draws the chat inside
 		g.translate(chatx, chaty);
@@ -198,9 +207,9 @@ public class PrincipalMainState extends StateManager {
 	}
 
 	@Override
-	public synchronized void update() {
-		if (this.currentState != null)
-			this.currentState.update();
+	public synchronized void update()
+	{
+		if (this.currentState != null) this.currentState.update();
 		AnimationTicker.instance.update();
 		Persistance.displaymap.update();
 		Keys.update();
@@ -208,30 +217,29 @@ public class PrincipalMainState extends StateManager {
 
 	// GETTERS,SETTERS AND UTILITY
 
-	/**
-	 * Sets the resolution of the internal display. Bigger means a zoomed out
-	 * game. Defaults at [256*192]*2 (Official DS resolution * 2).
-	 */
-	public void setInternalDisplaySize(int w, int h) {
+	/** Sets the resolution of the internal display. Bigger means a zoomed out game. Defaults at [256*192]*2 (Official DS resolution * 2). */
+	public void setInternalDisplaySize(int w, int h)
+	{
 		displayHeight = h;
 		displayWidth = w;
 		internalBuffer = null;
 	}
 
-	public void randomizeBackground() {
+	public void randomizeBackground()
+	{
 		this.backgroundID = (byte) ((new Random().nextInt(7) + 1) % 7);
 	}
 
-	public AbstractState getCurrentState() {
+	public AbstractState getCurrentState()
+	{
 		return this.currentState;
 	}
 
 	@Override
-	public void setState(AbstractState state) {
-		if (state == this.currentState)
-			return;
-		if (this.currentState != null)
-			this.currentState.onEnd();
+	public void setState(AbstractState state)
+	{
+		if (state == this.currentState) return;
+		if (this.currentState != null) this.currentState.onEnd();
 		this.currentState = state;
 		this.currentState.onStart();
 	}

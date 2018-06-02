@@ -30,6 +30,7 @@ public abstract class Persistance
 	public static ChatBox chatbox = new ChatBox();
 	public static AbstractDisplayMap displaymap = LocalMap.instance;
 	public static GameSocketEndpoint socketendpoint = new GameSocketEndpoint();
+	public static boolean isCommunicating = false;
 
 	// FREEZONE RELATED OBJECTS
 	public static FreezoneMap currentmap;

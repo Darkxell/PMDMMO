@@ -3,6 +3,7 @@ package com.darkxell.client.state.menu.item;
 import java.util.ArrayList;
 
 import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.messagehandlers.ItemActionHandler.ItemActionMessageHandler;
 import com.darkxell.client.resources.music.SoundManager;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.dungeon.DungeonState;
@@ -19,11 +20,13 @@ import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.player.ItemContainer;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.Pokemon;
+import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.language.Message;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonObject;
 
-public class ItemContainersMenuState extends OptionSelectionMenuState implements ItemActionSource, ItemSelectionListener, TeamMemberSelectionListener
+public class ItemContainersMenuState extends OptionSelectionMenuState
+		implements ItemActionSource, ItemSelectionListener, TeamMemberSelectionListener, ItemActionMessageHandler
 {
 	private static final int MAX_HEIGHT = 10;
 
@@ -34,6 +37,12 @@ public class ItemContainersMenuState extends OptionSelectionMenuState implements
 	public final boolean inDungeon;
 	private final ItemSelectionListener listener;
 	private final AbstractState parent;
+
+	// Server communication fields
+	private ItemAction selectedAction;
+	private ItemContainer selectedContainer;
+	private int selectedItemIndex;
+	private Pokemon selectedPokemon;
 
 	public ItemContainersMenuState(AbstractState parent, AbstractState background, boolean inDungeon, ItemContainer... containers)
 	{
@@ -105,6 +114,20 @@ public class ItemContainersMenuState extends OptionSelectionMenuState implements
 			this.containerOffset[i] = containerOffsets.get(i);
 	}
 
+	@Override
+	public void handleMessage(JsonObject message)
+	{
+		if (!Persistance.isCommunicating) return;
+		Persistance.isCommunicating = false;
+		String result = message.getString("value", null);
+		if (result == null)
+		{
+			Logger.e("Invalid itemaction result: " + result);
+			return;
+		}
+		System.out.println("Received result: " + result);
+	}
+
 	private int itemIndex()
 	{
 		return this.optionIndex() + this.indexOffset[this.tabIndex()];
@@ -114,14 +137,11 @@ public class ItemContainersMenuState extends OptionSelectionMenuState implements
 	public void itemSelected(ItemStack item, int index)
 	{
 		if (item == null) Persistance.stateManager.setState(this);
-		else
+		else if (this.inDungeon)
 		{
-			if (this.inDungeon)
-			{
-				Persistance.stateManager.setState(Persistance.dungeonState);
-				Persistance.eventProcessor.processEvent(new ItemSwappedEvent(Persistance.floor, ItemAction.SWAP, Persistance.player.getDungeonLeader(),
-						Persistance.player.inventory(), index, Persistance.player.getDungeonLeader().tile(), 0));
-			} else;// TODO Swapping items in freezones
+			Persistance.stateManager.setState(Persistance.dungeonState);
+			Persistance.eventProcessor.processEvent(new ItemSwappedEvent(Persistance.floor, ItemAction.SWAP, Persistance.player.getDungeonLeader(),
+					Persistance.player.inventory(), index, Persistance.player.getDungeonLeader().tile(), 0));
 		}
 	}
 
@@ -176,26 +196,41 @@ public class ItemContainersMenuState extends OptionSelectionMenuState implements
 		ItemStack i = container.getItem(index);
 		DungeonPokemon user = Persistance.player.getDungeonLeader();
 
+		this.selectedAction = null;
+		this.selectedContainer = null;
+		this.selectedItemIndex = -1;
+		this.selectedPokemon = null;
+
 		this.currentAction = action;
 		if (action == ItemAction.USE)
 		{
 			if (i.item().usedOnTeamMember()) nextState = new TeamMenuState(this, dungeonState);
 			else Persistance.eventProcessor.processEvent(new ItemSelectionEvent(Persistance.floor, i.item(), user, null, container, index));
 		} else if (action == ItemAction.TRASH)
-		{// TODO actually wait for server confirm
+		{
+			Persistance.isCommunicating = true;
+			nextState = null;
+
 			JsonObject payload = Json.object();
 			payload.add("action", "itemaction");
 			payload.add("value", "trash");
 			payload.add("item", i.getData().id);
 
 			Persistance.socketendpoint.sendMessage(payload.toString());
-			container.deleteItem(index);
+			this.selectedAction = action;
+			this.selectedContainer = container;
+			this.selectedItemIndex = index;
+
+			// container.deleteItem(index);
 		} else if (action == ItemAction.GET || action == ItemAction.TAKE)
 		{
 			if (this.inDungeon) Persistance.eventProcessor.processEvent(
 					new ItemMovedEvent(Persistance.floor, action, user, container, 0, user.player().inventory(), user.player().inventory().canAccept(i)));
 			else if (action == ItemAction.TAKE)
-			{// TODO actually wait for server confirm
+			{
+				Persistance.isCommunicating = true;
+				nextState = null;
+
 				JsonObject payload = Json.object();
 				payload.add("action", "itemaction");
 				payload.add("value", "take");
@@ -203,8 +238,11 @@ public class ItemContainersMenuState extends OptionSelectionMenuState implements
 				payload.add("pokemon", ((Pokemon) container).getData().id);
 
 				Persistance.socketendpoint.sendMessage(payload.toString());
-				user.player().inventory().addItem(container.getItem(0));
-				container.deleteItem(0);
+				this.selectedAction = action;
+				this.selectedContainer = container;
+				this.selectedItemIndex = index;
+				this.selectedPokemon = (Pokemon) container;
+				/* user.player().inventory().addItem(container.getItem(0)); container.deleteItem(0); */
 			}
 		} else if (action == ItemAction.GIVE) nextState = new TeamMenuState(this, this.backgroundState, this);
 		else if (action == ItemAction.PLACE)
@@ -252,27 +290,30 @@ public class ItemContainersMenuState extends OptionSelectionMenuState implements
 		switch (this.currentAction)
 		{
 			case GIVE:
-				if (pokemon.getItem() != null)
+				if (this.inDungeon)
 				{
-					if (this.inDungeon) Persistance.eventProcessor.processEvent(new ItemSwappedEvent(Persistance.floor, ItemAction.GIVE,
+					if (pokemon.getItem() != null) Persistance.eventProcessor.processEvent(new ItemSwappedEvent(Persistance.floor, ItemAction.GIVE,
 							Persistance.player.getDungeonLeader(), Persistance.player.inventory(), this.itemIndex(), pokemon, 0));
-					else; // TODO show error when already has item
+					else Persistance.eventProcessor.processEvent(new ItemMovedEvent(Persistance.floor, ItemAction.GIVE, Persistance.player.getDungeonLeader(),
+							Persistance.player.inventory(), this.itemIndex(), pokemon, 0));
 				} else
 				{
-					if (this.inDungeon) Persistance.eventProcessor.processEvent(new ItemMovedEvent(Persistance.floor, ItemAction.GIVE,
-							Persistance.player.getDungeonLeader(), Persistance.player.inventory(), this.itemIndex(), pokemon, 0));
-					else
-					{// TODO actually wait for server confirm
-						JsonObject payload = Json.object();
-						payload.add("action", "itemaction");
-						payload.add("value", "give");
-						payload.add("item", i.getData().id);
-						payload.add("pokemon", pokemon.getData().id);
+					Persistance.isCommunicating = true;
+					nextState = null;
 
-						Persistance.socketendpoint.sendMessage(payload.toString());
-						container.deleteItem(index);
-						pokemon.setItem(i);
-					}
+					JsonObject payload = Json.object();
+					payload.add("action", "itemaction");
+					payload.add("value", "give");
+					payload.add("item", i.getData().id);
+					payload.add("pokemon", pokemon.getData().id);
+
+					Persistance.socketendpoint.sendMessage(payload.toString());
+					this.selectedAction = this.currentAction;
+					this.selectedContainer = container;
+					this.selectedItemIndex = index;
+					this.selectedPokemon = pokemon;
+
+					/* container.deleteItem(index); pokemon.setItem(i); */
 				}
 				break;
 
