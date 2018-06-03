@@ -6,6 +6,7 @@ import org.jdom2.Element;
 
 import com.darkxell.common.dbobject.DBPokemon;
 import com.darkxell.common.dbobject.DatabaseIdentifier;
+import com.darkxell.common.dungeon.TempIDRegistry.HasID;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.move.MoveDiscoveredEvent;
 import com.darkxell.common.event.stats.ExperienceGainedEvent;
@@ -19,7 +20,7 @@ import com.darkxell.common.pokemon.ability.Ability;
 import com.darkxell.common.util.XMLUtils;
 import com.darkxell.common.util.language.Message;
 
-public class Pokemon implements ItemContainer
+public class Pokemon implements ItemContainer, HasID
 {
 	/** Pokémon gender.
 	 * <ul>
@@ -228,6 +229,7 @@ public class Pokemon implements ItemContainer
 		return this.nickname();
 	}
 
+	@Override
 	public long id()
 	{
 		return this.data.id;
@@ -323,6 +325,17 @@ public class Pokemon implements ItemContainer
 	private void setExperience(long experience)
 	{
 		this.data.experience = experience;
+	}
+
+	@Override
+	public void setId(long id)
+	{
+		this.data.id = id;
+		if (this.player != null)
+		{
+			if (this.player.getTeamLeader() == this) this.player.getData().mainpokemon = new DatabaseIdentifier(id);
+			else this.player.getData().pokemonsinparty.set(this.player.allies.indexOf(this), new DatabaseIdentifier(id));
+		}
 	}
 
 	private void setIq(int iq)

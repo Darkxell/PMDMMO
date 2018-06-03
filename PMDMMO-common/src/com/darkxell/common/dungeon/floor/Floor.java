@@ -18,6 +18,7 @@ import com.darkxell.common.event.dungeon.weather.WeatherChangedEvent;
 import com.darkxell.common.event.dungeon.weather.WeatherCreatedEvent;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.ItemRegistry;
+import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.trap.Trap;
@@ -141,6 +142,17 @@ public class Floor
 		return !isGenerating;
 	}
 
+	/** @return A list of all Items laying on the ground of this Floor. */
+	public ArrayList<ItemStack> listItemsOnFloor()
+	{
+		ArrayList<ItemStack> items = new ArrayList<>();
+		for (Tile[] row : this.tiles)
+			for (Tile t : row)
+				if (t.getItem() != null) items.add(t.getItem());
+		return items;
+	}
+
+	/** @return A list of all Pokemon on this Floor. */
 	public ArrayList<DungeonPokemon> listPokemon()
 	{
 		ArrayList<DungeonPokemon> pokemon = new ArrayList<DungeonPokemon>();
@@ -373,7 +385,11 @@ public class Floor
 	public ArrayList<DungeonEvent> summonPokemon(DungeonPokemon pokemon, int x, int y)
 	{
 		if (!(this.tiles == null || x < 0 || x >= this.tiles.length || y < 0 || y >= this.tiles[x].length)) this.tileAt(x, y).setPokemon(pokemon);
-		if (!this.dungeon.isGeneratingFloor()) this.dungeon.registerActor(pokemon);
+		if (!this.dungeon.isGeneratingFloor())
+		{
+			this.dungeon.registerActor(pokemon);
+			this.dungeon.pokemonIDs.register(pokemon.originalPokemon, this.dungeon.itemIDs, this.dungeon.moveIDs);
+		}
 		if (!pokemon.isTeamLeader()) this.aiManager.register(pokemon);
 		return pokemon.onFloorStart(this);
 	}

@@ -35,7 +35,9 @@ public class MoveLearnedEvent extends DungeonEvent
 	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{
-		this.pokemon.setMove(this.index, new LearnedMove(this.move.id));
+		LearnedMove move = new LearnedMove(this.move.id);
+		this.pokemon.setMove(this.index, move);
+		this.floor.dungeon.moveIDs.register(move, this.pokemon);
 		return super.processServer();
 	}
 

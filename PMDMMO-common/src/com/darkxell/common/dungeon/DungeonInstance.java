@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.Random;
 
 import com.darkxell.common.ai.AI;
+import com.darkxell.common.dungeon.TempIDRegistry.ItemsTempIDRegistry;
+import com.darkxell.common.dungeon.TempIDRegistry.MovesTempIDRegistry;
+import com.darkxell.common.dungeon.TempIDRegistry.PokemonTempIDRegistry;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.layout.Layout;
 import com.darkxell.common.dungeon.floor.layout.StaticLayout;
@@ -17,8 +20,6 @@ import com.darkxell.common.event.action.TurnSkippedEvent;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.DungeonPokemon;
-import com.darkxell.common.pokemon.LearnedMove;
-import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.Logger;
 
@@ -41,11 +42,11 @@ public class DungeonInstance
 	public final int id;
 	/** True if this Dungeon is currently generating a floor. Used for Actor registering. */
 	private boolean isGeneratingFloor;
-	public final TempIDRegistry<ItemStack> itemIDs = new TempIDRegistry<>();
-	public final TempIDRegistry<LearnedMove> moveIDs = new TempIDRegistry<>();
+	public final ItemsTempIDRegistry itemIDs = new ItemsTempIDRegistry();
+	public final MovesTempIDRegistry moveIDs = new MovesTempIDRegistry();
 	/** Lists the previous turns. */
 	private ArrayList<GameTurn> pastTurns = new ArrayList<>();
-	public final TempIDRegistry<Pokemon> pokemonIDs = new TempIDRegistry<>();
+	public final PokemonTempIDRegistry pokemonIDs = new PokemonTempIDRegistry();
 	/** RNG for floor generation. */
 	public final Random random;
 	/** All the Players that started exploring this Dungeon, even if they left. */
@@ -72,15 +73,6 @@ public class DungeonInstance
 		itemIDs.clear();
 		moveIDs.clear();
 		pokemonIDs.clear();
-	}
-
-	/** Unregisters the input Pokemon and the item and moves it has. */
-	public void clearIDDeep(Pokemon p)
-	{
-		pokemonIDs.unregister(p.getData().id);
-		if (p.getItem() != null) itemIDs.unregister(p.getItem().getData().id);
-		for (int i = 0; i < p.moveCount(); ++i)
-			moveIDs.unregister(p.move(i).getData().id);
 	}
 
 	/** Compares the input Pokémon depending on their order of action. */
@@ -191,7 +183,13 @@ public class DungeonInstance
 				this.registerActor(pokemon);
 		// Then Wild pokemon
 		for (DungeonPokemon pokemon : this.currentFloor.listPokemon())
+		{
+			this.pokemonIDs.register(pokemon.originalPokemon, this.itemIDs, this.moveIDs);
 			if (pokemon.player() == null) this.registerActor(pokemon);
+		}
+
+		for (ItemStack item : this.currentFloor.listItemsOnFloor())
+			this.itemIDs.register(item, null);
 
 		this.isGeneratingFloor = false;
 	}
