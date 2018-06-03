@@ -2,6 +2,7 @@ package com.darkxell.client.state;
 
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
+import java.util.Random;
 
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.event.ClientEventProcessor;
@@ -78,13 +79,12 @@ public abstract class StateManager
 	 * @param dungeonID - ID of a Dungeon. If doesn't match a valid ID, this method will not do anything. */
 	public static void setDungeonState(AbstractState fadeOutState, int dungeonID)
 	{
-		Persistance.dungeon = DungeonRegistry.find(dungeonID).newInstance();
+		Persistance.dungeon = DungeonRegistry.find(dungeonID).newInstance(new Random().nextLong());
+		Persistance.dungeon.eventProcessor = Persistance.eventProcessor = new ClientEventProcessor(Persistance.dungeon);
 		Persistance.dungeon.addPlayer(Persistance.player);
 		Persistance.dungeon.initiateExploration();
-		Persistance.eventProcessor = new ClientEventProcessor(Persistance.dungeon);
 		Persistance.floor = Persistance.dungeon.currentFloor();
 		Persistance.stateManager.setState(new NextFloorState(fadeOutState, 1));
-		Persistance.eventProcessor.addToPending(Persistance.dungeon.currentFloor().onFloorStart());
 	}
 
 }

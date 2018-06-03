@@ -252,13 +252,11 @@ public class DungeonPokemon implements ItemContainer
 	}
 
 	/** Called when this Pokémon enters a new Floor or when it spawns. */
-	public ArrayList<DungeonEvent> onFloorStart(Floor floor)
+	public void onFloorStart(Floor floor, ArrayList<DungeonEvent> events)
 	{
-		ArrayList<DungeonEvent> events = new ArrayList<DungeonEvent>();
 		this.statusConditions.clear();
 		this.stats.onFloorStart(floor, events);
 		this.regenCounter = 0;
-		return events;
 	}
 
 	/** Called at the beginning of each turn. */

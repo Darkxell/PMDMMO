@@ -13,6 +13,7 @@ import com.darkxell.common.dungeon.floor.layout.Layout;
 import com.darkxell.common.dungeon.floor.layout.StaticLayout;
 import com.darkxell.common.event.Actor;
 import com.darkxell.common.event.Actor.Action;
+import com.darkxell.common.event.CommonEventProcessor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.GameTurn;
 import com.darkxell.common.event.action.PokemonRotateEvent;
@@ -36,6 +37,7 @@ public class DungeonInstance
 	private int currentSubTurn;
 	/** The current turn. */
 	private GameTurn currentTurn;
+	public CommonEventProcessor eventProcessor;
 	/** The Players that are currently exploring this Dungeon. */
 	private ArrayList<Player> exploringPlayers = new ArrayList<>();
 	/** ID of the Dungeon. */
@@ -223,7 +225,11 @@ public class DungeonInstance
 		}
 		this.generateNextFloor();
 		this.currentSubTurn = GameTurn.SUB_TURNS - 1;
-		this.endTurn(new ArrayList<>());
+
+		ArrayList<DungeonEvent> events = new ArrayList<>();
+		this.endTurn(events);
+		this.currentFloor.onFloorStart(events);
+		this.eventProcessor.addToPending(events);
 	}
 
 	/* public void insertActor(DungeonPokemon pokemon, int index) { if (this.actorMap.containsKey(pokemon)) return; this.actorMap.put(pokemon, new Actor(pokemon)); this.actors.add(index, this.actorMap.get(pokemon)); } */

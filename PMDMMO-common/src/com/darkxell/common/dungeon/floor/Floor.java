@@ -163,14 +163,12 @@ public class Floor
 	}
 
 	/** Called when a this Floor starts. */
-	public ArrayList<DungeonEvent> onFloorStart()
+	public void onFloorStart(ArrayList<DungeonEvent> events)
 	{
-		ArrayList<DungeonEvent> e = new ArrayList<DungeonEvent>();
 		Weather w = this.dungeon.dungeon().weather(this.id, this.random);
 		for (DungeonPokemon pokemon : this.listPokemon())
-			e.addAll(pokemon.onFloorStart(this));
-		e.add(new WeatherCreatedEvent(new WeatherInstance(w, null, 0, this, -1)));
-		return e;
+			pokemon.onFloorStart(this, events);
+		events.add(new WeatherCreatedEvent(new WeatherInstance(w, null, 0, this, -1)));
 	}
 
 	/** Called when a new turn starts. */
@@ -382,7 +380,7 @@ public class Floor
 		this.tiles = tiles;
 	}
 
-	public ArrayList<DungeonEvent> summonPokemon(DungeonPokemon pokemon, int x, int y)
+	public void summonPokemon(DungeonPokemon pokemon, int x, int y, ArrayList<DungeonEvent> events)
 	{
 		if (!(this.tiles == null || x < 0 || x >= this.tiles.length || y < 0 || y >= this.tiles[x].length)) this.tileAt(x, y).setPokemon(pokemon);
 		if (!this.dungeon.isGeneratingFloor())
@@ -391,7 +389,8 @@ public class Floor
 			this.dungeon.pokemonIDs.register(pokemon.originalPokemon, this.dungeon.itemIDs, this.dungeon.moveIDs);
 		}
 		if (!pokemon.isTeamLeader()) this.aiManager.register(pokemon);
-		return pokemon.onFloorStart(this);
+		
+		pokemon.onFloorStart(this, events);
 	}
 
 	/** @return The tile at the input X, Y coordinates. */

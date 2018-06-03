@@ -176,9 +176,9 @@ public class Dungeon implements Comparable<Dungeon>
 	}
 
 	/** @return A new instance of this Dungeon. */
-	public DungeonInstance newInstance()
+	public DungeonInstance newInstance(long seed)
 	{
-		return new DungeonInstance(this.id, new Random());
+		return new DungeonInstance(this.id, new Random(seed));
 	}
 
 	public DungeonEncounter randomEncounter(Random random, int floor)

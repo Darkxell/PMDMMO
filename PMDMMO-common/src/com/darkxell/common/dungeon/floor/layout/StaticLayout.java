@@ -166,7 +166,7 @@ public class StaticLayout extends Layout
 		if (this.xml.getChild("pokemons", xml.getNamespace()) != null)
 			for (Element pokemon : this.xml.getChild("pokemons", xml.getNamespace()).getChildren(Pokemon.XML_ROOT, xml.getNamespace()))
 			this.floor.summonPokemon(new DungeonPokemon(readPokemon(pokemon, this.floor.random)), Integer.parseInt(pokemon.getAttributeValue("x")),
-					Integer.parseInt(pokemon.getAttributeValue("y")));
+					Integer.parseInt(pokemon.getAttributeValue("y")), new ArrayList<>());
 	}
 
 }
