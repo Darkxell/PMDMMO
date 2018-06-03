@@ -79,6 +79,8 @@ public abstract class StateManager
 	public static void setDungeonState(AbstractState fadeOutState, int dungeonID)
 	{
 		Persistance.dungeon = DungeonRegistry.find(dungeonID).newInstance();
+		Persistance.dungeon.addPlayer(Persistance.player);
+		Persistance.dungeon.initiateExploration();
 		Persistance.eventProcessor = new ClientEventProcessor(Persistance.dungeon);
 		Persistance.floor = Persistance.dungeon.currentFloor();
 		Persistance.stateManager.setState(new NextFloorState(fadeOutState, 1));

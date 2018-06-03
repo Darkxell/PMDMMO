@@ -5,8 +5,6 @@ import static com.darkxell.client.resources.images.tilesets.AbstractDungeonTiles
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.util.ArrayList;
-import java.util.function.Predicate;
 
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.MasterDungeonRenderer;
@@ -17,14 +15,9 @@ import com.darkxell.client.renderers.floor.GridRenderer;
 import com.darkxell.client.renderers.floor.ShadowRenderer;
 import com.darkxell.client.renderers.pokemon.DungeonPokemonRenderer;
 import com.darkxell.client.renderers.pokemon.DungeonPokemonRendererHolder;
-import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.ui.Keys;
-import com.darkxell.common.dungeon.floor.Tile;
-import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.pokemon.DungeonPokemon;
-import com.darkxell.common.util.Direction;
-import com.darkxell.common.util.Logger;
 
 /** The main state for Dungeon exploration. */
 public class DungeonState extends AbstractState
@@ -104,7 +97,6 @@ public class DungeonState extends AbstractState
 		Persistance.dungeonRenderer.addRenderer(this.gridRenderer);
 		Persistance.dungeonRenderer.addRenderer(this.itemRenderer);
 		Persistance.dungeonRenderer.addRenderer(this.shadowRenderer);
-		this.placeTeam();
 
 		this.logger = new DungeonLogger(this);
 		this.currentSubstate = this.actionSelectionState = new ActionSelectionState(this);
@@ -176,53 +168,6 @@ public class DungeonState extends AbstractState
 	{
 		super.onStart();
 		this.floorVisibility.onCameraMoved();
-	}
-
-	private void placeTeam()
-	{
-		Point spawn = Persistance.floor.teamSpawn;
-		Persistance.floor.tileAt(spawn.x, spawn.y).setPokemon(Persistance.player.getDungeonLeader());
-		Persistance.dungeon.insertActor(Persistance.player.getDungeonLeader(), 0);
-		this.pokemonRenderer.register(Persistance.player.getDungeonLeader()).sprite().setShadowColor(PokemonSprite.ALLY_SHADOW);
-
-		ArrayList<Tile> candidates = new ArrayList<Tile>();
-		Tile initial = Persistance.player.getDungeonLeader().tile();
-		candidates.add(initial.adjacentTile(Direction.WEST));
-		candidates.add(initial.adjacentTile(Direction.EAST));
-		candidates.add(initial.adjacentTile(Direction.SOUTH));
-		candidates.add(initial.adjacentTile(Direction.NORTH));
-		candidates.add(initial.adjacentTile(Direction.NORTHWEST));
-		candidates.add(initial.adjacentTile(Direction.NORTHEAST));
-		candidates.add(initial.adjacentTile(Direction.SOUTHWEST));
-		candidates.add(initial.adjacentTile(Direction.SOUTHEAST));
-		candidates.removeIf(new Predicate<Tile>() {
-			@Override
-			public boolean test(Tile t)
-			{
-				return t.getPokemon() != null || t.type() == TileType.WALL || t.type() == TileType.WATER || t.type() == TileType.LAVA
-						|| t.type() == TileType.AIR;
-			}
-		});
-
-		DungeonPokemon[] team = Persistance.player.getDungeonTeam();
-
-		for (int i = team.length - 1; i > 0; --i)
-		{
-			if (team[i].isFainted()) continue;
-			if (candidates.size() == 0)
-			{
-				Logger.e("DungeonState.placeAllies() @124 : Could not find a spawn location for ally " + team[i].getNickname() + "!");
-				continue;
-			}
-			Persistance.floor.tileAt(candidates.get(0).x, candidates.get(0).y).setPokemon(team[i]);
-			Persistance.floor.aiManager.register(team[i]);
-			Persistance.dungeon.insertActor(team[i], 1);
-			candidates.remove(0);
-			this.pokemonRenderer.register(team[i]).sprite().setShadowColor(PokemonSprite.ALLY_SHADOW);
-		}
-
-		for (int i = team.length - 1; i >= 0; --i)
-			Persistance.eventProcessor.addToPending(team[i].onFloorStart(Persistance.floor));
 	}
 
 	@Override

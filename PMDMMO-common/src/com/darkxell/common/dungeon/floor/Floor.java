@@ -18,10 +18,12 @@ import com.darkxell.common.event.dungeon.weather.WeatherChangedEvent;
 import com.darkxell.common.event.dungeon.weather.WeatherCreatedEvent;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.ItemRegistry;
+import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.trap.Trap;
 import com.darkxell.common.trap.TrapRegistry;
 import com.darkxell.common.util.Direction;
+import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.RandomUtil;
 import com.darkxell.common.weather.Weather;
 import com.darkxell.common.weather.WeatherInstance;
@@ -154,10 +156,7 @@ public class Floor
 		ArrayList<DungeonEvent> e = new ArrayList<DungeonEvent>();
 		Weather w = this.dungeon.dungeon().weather(this.id, this.random);
 		for (DungeonPokemon pokemon : this.listPokemon())
-		{
-			this.dungeon.registerActor(pokemon);
 			e.addAll(pokemon.onFloorStart(this));
-		}
 		e.add(new WeatherCreatedEvent(new WeatherInstance(w, null, 0, this, -1)));
 		return e;
 	}
@@ -191,6 +190,52 @@ public class Floor
 				}
 			} else--this.nextSpawn;
 		}
+	}
+
+	private void placePlayer(Player player)
+	{
+		Point spawn = this.teamSpawn;
+		this.tileAt(spawn.x, spawn.y).setPokemon(player.getDungeonLeader());
+
+		ArrayList<Tile> candidates = new ArrayList<Tile>();
+		Tile initial = player.getDungeonLeader().tile();
+		candidates.add(initial.adjacentTile(Direction.WEST));
+		candidates.add(initial.adjacentTile(Direction.EAST));
+		candidates.add(initial.adjacentTile(Direction.SOUTH));
+		candidates.add(initial.adjacentTile(Direction.NORTH));
+		candidates.add(initial.adjacentTile(Direction.NORTHWEST));
+		candidates.add(initial.adjacentTile(Direction.NORTHEAST));
+		candidates.add(initial.adjacentTile(Direction.SOUTHWEST));
+		candidates.add(initial.adjacentTile(Direction.SOUTHEAST));
+		candidates.removeIf(new Predicate<Tile>() {
+			@Override
+			public boolean test(Tile t)
+			{
+				return t.getPokemon() != null || t.type() == TileType.WALL || t.type() == TileType.WATER || t.type() == TileType.LAVA
+						|| t.type() == TileType.AIR;
+			}
+		});
+
+		DungeonPokemon[] team = player.getDungeonTeam();
+
+		for (int i = team.length - 1; i > 0; --i)
+		{
+			if (team[i].isFainted()) continue;
+			if (candidates.size() == 0)
+			{
+				Logger.e("Could not find a spawn location for ally " + team[i].getNickname() + "!");
+				continue;
+			}
+			this.tileAt(candidates.get(0).x, candidates.get(0).y).setPokemon(team[i]);
+			this.aiManager.register(team[i]);
+			candidates.remove(0);
+		}
+	}
+
+	public void placePlayers(ArrayList<Player> players)
+	{
+		for (Player player : players)
+			this.placePlayer(player);
 	}
 
 	public Item randomBuriedItem(Random random)
@@ -328,7 +373,7 @@ public class Floor
 	public ArrayList<DungeonEvent> summonPokemon(DungeonPokemon pokemon, int x, int y)
 	{
 		if (!(this.tiles == null || x < 0 || x >= this.tiles.length || y < 0 || y >= this.tiles[x].length)) this.tileAt(x, y).setPokemon(pokemon);
-		this.dungeon.registerActor(pokemon);
+		if (!this.dungeon.isGeneratingFloor()) this.dungeon.registerActor(pokemon);
 		if (!pokemon.isTeamLeader()) this.aiManager.register(pokemon);
 		return pokemon.onFloorStart(this);
 	}

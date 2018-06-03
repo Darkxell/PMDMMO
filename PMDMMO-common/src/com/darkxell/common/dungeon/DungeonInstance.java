@@ -14,6 +14,7 @@ import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.GameTurn;
 import com.darkxell.common.event.action.PokemonRotateEvent;
 import com.darkxell.common.event.action.TurnSkippedEvent;
+import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.Logger;
@@ -31,21 +32,33 @@ public class DungeonInstance
 	private int currentSubTurn;
 	/** The current turn. */
 	private GameTurn currentTurn;
+	/** The Players that are currently exploring this Dungeon. */
+	private ArrayList<Player> exploringPlayers = new ArrayList<>();
 	/** ID of the Dungeon. */
 	public final int id;
+	/** True if this Dungeon is currently generating a floor. Used for Actor registering. */
+	private boolean isGeneratingFloor;
 	/** Lists the previous turns. */
 	private ArrayList<GameTurn> pastTurns = new ArrayList<>();
 	/** RNG for floor generation. */
 	public final Random random;
+	/** All the Players that started exploring this Dungeon, even if they left. */
+	private ArrayList<Player> startingPlayers = new ArrayList<>();
 
 	public DungeonInstance(int id, Random random)
 	{
 		this.id = id;
 		this.random = random;
-		this.currentFloor = this.createFloor(1);
-		this.currentFloor.generate();
-		this.currentSubTurn = GameTurn.SUB_TURNS - 1;
-		this.endSubTurn();
+	}
+
+	/** Adds the input Player to the list of Players currently exploring this Dungeon. */
+	public void addPlayer(Player player)
+	{
+		if (!this.startingPlayers.contains(player))
+		{
+			this.startingPlayers.add(player);
+			this.exploringPlayers.add(player);
+		}
 	}
 
 	/** Compares the input Pokémon depending on their order of action. */
@@ -80,11 +93,7 @@ public class DungeonInstance
 	{
 		this.currentSubTurn = 0;
 		this.currentActor = -1;
-		this.currentFloor.dispose();
-		this.currentFloor = this.createFloor(this.currentFloor.id + 1);
-		this.currentFloor.generate();
-		this.actors.clear();
-		this.actorMap.clear();
+		this.generateNextFloor();
 		return this.currentFloor;
 	}
 
@@ -107,30 +116,30 @@ public class DungeonInstance
 		ArrayList<DungeonEvent> events = new ArrayList<>();
 		boolean turnEnd = this.currentSubTurn == GameTurn.SUB_TURNS;
 
-		if (turnEnd)
+		if (turnEnd) this.endTurn(events);
+
+		return events;
+	}
+
+	private void endTurn(ArrayList<DungeonEvent> events)
+	{
+		Direction d;
+		for (Actor a : this.actors)
 		{
-			Direction d;
-			for (Actor a : this.actors)
-			{
-				AI ai = this.currentFloor.aiManager.getAI(a.pokemon);
-				if (ai == null) continue;
-				d = ai.mayRotate();
-				if (d != null && d != a.pokemon.facing()) events.add(new PokemonRotateEvent(this.currentFloor, a.pokemon, d));
-			}
+			AI ai = this.currentFloor.aiManager.getAI(a.pokemon);
+			if (ai == null) continue;
+			d = ai.mayRotate();
+			if (d != null && d != a.pokemon.facing()) events.add(new PokemonRotateEvent(this.currentFloor, a.pokemon, d));
 		}
 
 		for (Actor a : this.actors)
-			if (turnEnd || a.actionThisSubturn() != Action.NO_ACTION) a.onTurnEnd(this.currentFloor, events);
+			if (a.actionThisSubturn() != Action.NO_ACTION) a.onTurnEnd(this.currentFloor, events);
 
-		if (turnEnd)
-		{
-			// Logger.i("Turn end --------------------------");
-			this.currentFloor.onTurnStart(events);
-			if (this.currentTurn != null) this.pastTurns.add(this.currentTurn);
-			this.currentTurn = new GameTurn(this.currentFloor);
-			this.currentSubTurn = 0;
-		}
-		return events;
+		// Logger.i("Turn end --------------------------");
+		this.currentFloor.onTurnStart(events);
+		if (this.currentTurn != null) this.pastTurns.add(this.currentTurn);
+		this.currentTurn = new GameTurn(this.currentFloor);
+		this.currentSubTurn = 0;
 	}
 
 	/** Called when the input event is processed. */
@@ -142,6 +151,27 @@ public class DungeonInstance
 			if (event instanceof TurnSkippedEvent) this.actorMap.get(event.actor()).skip();
 			else this.actorMap.get(event.actor()).act();
 		}
+	}
+
+	private void generateNextFloor()
+	{
+		this.isGeneratingFloor = true;
+		if (this.currentFloor != null) this.currentFloor.dispose();
+		this.currentFloor = this.createFloor(this.currentFloor == null ? 1 : this.currentFloor.id + 1);
+		this.currentFloor.generate();
+		this.currentFloor.placePlayers(this.exploringPlayers);
+
+		this.actors.clear();
+		this.actorMap.clear();
+		// Register Player first
+		for (Player player : this.exploringPlayers)
+			for (DungeonPokemon pokemon : player.getDungeonTeam())
+				this.registerActor(pokemon);
+		// Then Wild pokemon
+		for (DungeonPokemon pokemon : this.currentFloor.listPokemon())
+			if (pokemon.player() == null) this.registerActor(pokemon);
+
+		this.isGeneratingFloor = false;
 	}
 
 	/** @return The Pokémon taking its turn. null if there is no actor left, thus the turn is over. */
@@ -164,11 +194,23 @@ public class DungeonInstance
 		return -1;
 	}
 
-	public void insertActor(DungeonPokemon pokemon, int index)
+	public void initiateExploration()
 	{
-		if (this.actorMap.containsKey(pokemon)) return;
-		this.actorMap.put(pokemon, new Actor(pokemon));
-		this.actors.add(index, this.actorMap.get(pokemon));
+		if (this.currentFloor != null)
+		{
+			Logger.e("Tried to start the Dungeon again!");
+			return;
+		}
+		this.generateNextFloor();
+		this.currentSubTurn = GameTurn.SUB_TURNS - 1;
+		this.endTurn(new ArrayList<>());
+	}
+
+	/* public void insertActor(DungeonPokemon pokemon, int index) { if (this.actorMap.containsKey(pokemon)) return; this.actorMap.put(pokemon, new Actor(pokemon)); this.actors.add(index, this.actorMap.get(pokemon)); } */
+
+	public boolean isGeneratingFloor()
+	{
+		return this.isGeneratingFloor;
 	}
 
 	/** Proceeds to the next actor and returns it. */
@@ -208,6 +250,12 @@ public class DungeonInstance
 		}
 		this.actorMap.put(pokemon, new Actor(pokemon));
 		this.actors.add(this.actorMap.get(pokemon));
+	}
+
+	/** Removes the input Player from this Dungeon. Called when that Player exits the Dungeon by winning, escaping or losing. */
+	public void removePlayer(Player player)
+	{
+		this.exploringPlayers.remove(player);
 	}
 
 	public void unregisterActor(DungeonPokemon pokemon)
