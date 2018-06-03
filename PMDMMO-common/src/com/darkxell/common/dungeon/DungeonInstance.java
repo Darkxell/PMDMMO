@@ -14,8 +14,11 @@ import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.GameTurn;
 import com.darkxell.common.event.action.PokemonRotateEvent;
 import com.darkxell.common.event.action.TurnSkippedEvent;
+import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.pokemon.LearnedMove;
+import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.Logger;
 
@@ -38,8 +41,11 @@ public class DungeonInstance
 	public final int id;
 	/** True if this Dungeon is currently generating a floor. Used for Actor registering. */
 	private boolean isGeneratingFloor;
+	public final TempIDRegistry<ItemStack> itemIDs = new TempIDRegistry<>();
+	public final TempIDRegistry<LearnedMove> moveIDs = new TempIDRegistry<>();
 	/** Lists the previous turns. */
 	private ArrayList<GameTurn> pastTurns = new ArrayList<>();
+	public final TempIDRegistry<Pokemon> pokemonIDs = new TempIDRegistry<>();
 	/** RNG for floor generation. */
 	public final Random random;
 	/** All the Players that started exploring this Dungeon, even if they left. */
@@ -59,6 +65,22 @@ public class DungeonInstance
 			this.startingPlayers.add(player);
 			this.exploringPlayers.add(player);
 		}
+	}
+
+	public void clearAllTempIDs()
+	{
+		itemIDs.clear();
+		moveIDs.clear();
+		pokemonIDs.clear();
+	}
+
+	/** Unregisters the input Pokemon and the item and moves it has. */
+	public void clearIDDeep(Pokemon p)
+	{
+		pokemonIDs.unregister(p.getData().id);
+		if (p.getItem() != null) itemIDs.unregister(p.getItem().getData().id);
+		for (int i = 0; i < p.moveCount(); ++i)
+			moveIDs.unregister(p.move(i).getData().id);
 	}
 
 	/** Compares the input Pokémon depending on their order of action. */
