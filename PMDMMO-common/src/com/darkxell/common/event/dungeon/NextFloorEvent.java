@@ -27,7 +27,7 @@ public class NextFloorEvent extends DungeonEvent
 	public ArrayList<DungeonEvent> processServer()
 	{
 		this.floor.dungeon.endFloor();
-		this.floor.dungeon.currentFloor().onFloorStart(this.resultingEvents);
+		this.floor.onFloorStart(this.resultingEvents);
 		return super.processServer();
 	}
 
