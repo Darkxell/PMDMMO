@@ -291,6 +291,7 @@ public class DungeonInstance
 			Logger.e("Actor " + pokemon + " isn't registered: can't unregister!");
 			return;
 		}
+		if (this.actors.indexOf(this.actorMap.get(pokemon)) <= this.currentActor) --this.currentActor;
 		this.actors.remove(this.actorMap.get(pokemon));
 		this.actorMap.remove(pokemon);
 	}

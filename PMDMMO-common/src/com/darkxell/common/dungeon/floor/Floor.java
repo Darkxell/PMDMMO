@@ -389,7 +389,7 @@ public class Floor
 			this.dungeon.pokemonIDs.register(pokemon.originalPokemon, this.dungeon.itemIDs, this.dungeon.moveIDs);
 		}
 		if (!pokemon.isTeamLeader()) this.aiManager.register(pokemon);
-		
+
 		pokemon.onFloorStart(this, events);
 	}
 

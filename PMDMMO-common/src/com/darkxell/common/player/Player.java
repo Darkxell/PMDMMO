@@ -172,4 +172,10 @@ public class Player
 		return this.data.storyposition;
 	}
 
+	@Override
+	public String toString()
+	{
+		return this.name();
+	}
+
 }

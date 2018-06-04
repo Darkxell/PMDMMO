@@ -182,7 +182,16 @@ public class DungeonState extends AbstractState
 	public void render(Graphics2D g, int width, int height)
 	{
 		DungeonPokemonRenderer r = Persistance.dungeonState.pokemonRenderer.getRenderer(this.cameraPokemon);
-		int x = (int) (r.x() + TILE_SIZE / 2 - width / 2), y = (int) (r.y() + TILE_SIZE / 2 - height / 2);
+		int x = 0, y = 0;
+		if (r == null)
+		{
+			x = Persistance.floor.getWidth() * TILE_SIZE / 2 - width / 2;
+			y = Persistance.floor.getHeight() * TILE_SIZE / 2 - height / 2;
+		} else
+		{
+			x = (int) (r.x() + TILE_SIZE / 2 - width / 2);
+			y = (int) (r.y() + TILE_SIZE / 2 - height / 2);
+		}
 		this.camera = new Point(x, y);
 
 		if (this.previousCamera == null || !this.previousCamera.equals(this.camera()))

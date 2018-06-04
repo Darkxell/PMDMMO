@@ -42,8 +42,8 @@ public class PokemonTravelState extends DungeonSubState
 				r = true;
 				if (!f) break;
 			}
-			if ((Math.abs(t.origin.x - camera.x) < 10 && Math.abs(t.origin.y - camera.y) < 10)
-					|| (Math.abs(t.destination.x - camera.x) < 10 && Math.abs(t.destination.y - camera.y) < 10))
+			if (camera != null && ((Math.abs(t.origin.x - camera.x) < 10 && Math.abs(t.origin.y - camera.y) < 10)
+					|| (Math.abs(t.destination.x - camera.x) < 10 && Math.abs(t.destination.y - camera.y) < 10)))
 			{
 				f = false;
 				if (r) break;

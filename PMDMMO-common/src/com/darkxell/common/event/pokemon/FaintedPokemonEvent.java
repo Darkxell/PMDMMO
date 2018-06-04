@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.dungeon.PlayerLosesEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageSource;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Message;
@@ -36,6 +37,7 @@ public class FaintedPokemonEvent extends DungeonEvent
 		if (this.pokemon.getItem() != null) this.pokemon.tile().setItem(this.pokemon.getItem());
 		if (this.damage.getExperienceEvent() != null) this.damage.getExperienceEvent().experience += this.pokemon.experienceGained();
 		this.floor.unsummonPokemon(this.pokemon);
+		if (this.pokemon.isTeamLeader()) this.resultingEvents.add(new PlayerLosesEvent(this.floor, this.pokemon.originalPokemon.player()));
 
 		return super.processServer();
 	}
