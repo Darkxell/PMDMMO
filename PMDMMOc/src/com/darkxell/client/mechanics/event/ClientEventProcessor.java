@@ -363,11 +363,11 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	private void processMoveEvent(MoveSelectionEvent event)
 	{
 		AnimationState s = new AnimationState(Persistance.dungeonState);
-		s.animation = Animations.getMoveAnimation(event.usedMove.user, event.usedMove.move.move(), this.currentAnimEnd);
+		s.animation = Animations.getMoveAnimation(event.usedMove().user, event.usedMove().move.move(), this.currentAnimEnd);
 		if (s.animation != null)
 		{
-			if (Animations.playsOrbAnimation(event.usedMove.user, event.usedMove.move.move()))
-				s = new OrbAnimationState(Persistance.dungeonState, event.usedMove.user, s);
+			if (Animations.playsOrbAnimation(event.usedMove().user, event.usedMove().move.move()))
+				s = new OrbAnimationState(Persistance.dungeonState, event.usedMove().user, s);
 
 			Persistance.dungeonState.setSubstate(s);
 			this.setState(State.ANIMATING);
@@ -476,8 +476,8 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		Persistance.dungeonState.setSubstate(new PokemonTravelState(Persistance.dungeonState, event.travels()));
 		for (PokemonTravelEvent e : event.travels())
 		{
-			if (e.pokemon == Persistance.player.getDungeonLeader() && e.destination.type() == TileType.STAIR) this.landedOnStairs = true;
-			if (e.pokemon == Persistance.dungeonState.getCameraPokemon()) Persistance.dungeonState.floorVisibility.onCameraMoved();
+			if (e.pokemon() == Persistance.player.getDungeonLeader() && e.destination().type() == TileType.STAIR) this.landedOnStairs = true;
+			if (e.pokemon() == Persistance.dungeonState.getCameraPokemon()) Persistance.dungeonState.floorVisibility.onCameraMoved();
 		}
 	}
 

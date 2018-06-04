@@ -5,14 +5,22 @@ import java.util.ArrayList;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.pokemon.Pokemon;
+import com.darkxell.common.util.Communicable;
+import com.eclipsesource.json.Json;
+import com.eclipsesource.json.JsonObject;
 
-public class MoveSwitchedEvent extends DungeonEvent
+public class MoveSwitchedEvent extends DungeonEvent implements Communicable
 {
 
 	/** The indices of the switched moves. */
-	public final int from, to;
+	private int from, to;
 	/** The Pokémon whose moves are switched. */
-	public final Pokemon pokemon;
+	private Pokemon pokemon;
+
+	public MoveSwitchedEvent(Floor floor)
+	{
+		super(floor);
+	}
 
 	public MoveSwitchedEvent(Floor floor, Pokemon pokemon, int from, int to)
 	{
@@ -33,6 +41,34 @@ public class MoveSwitchedEvent extends DungeonEvent
 	{
 		this.pokemon.switchMoves(this.from, this.to);
 		return super.processServer();
+	}
+
+	@Override
+	public void read(JsonObject value) throws JsonReadingException
+	{
+		this.pokemon = this.floor.dungeon.pokemonIDs.get(value.getLong("pokemon", 0));
+		if (this.pokemon == null) throw new JsonReadingException("Json Reading failed: No pokemon with ID " + value.getLong("pokemon", 0));
+		try
+		{
+			this.from = value.getInt("from", 0);
+		} catch (Exception e)
+		{
+			throw new JsonReadingException("Json reading failed: wrong value for from: " + value.get("from"));
+		}
+		try
+		{
+			this.to = value.getInt("to", 0);
+		} catch (Exception e)
+		{
+			throw new JsonReadingException("Json reading failed: wrong value for to: " + value.get("to"));
+		}
+		if (this.from == this.to) throw new JsonReadingException("Json reading failed: from and to can't be the same indices.");
+	}
+
+	@Override
+	public JsonObject toJson()
+	{
+		return Json.object().add("pokemon", this.pokemon.id()).add("from", this.from).add("to", this.to);
 	}
 
 }

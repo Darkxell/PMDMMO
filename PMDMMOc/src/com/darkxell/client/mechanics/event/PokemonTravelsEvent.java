@@ -24,7 +24,7 @@ public class PokemonTravelsEvent extends DungeonEvent
 		for (PokemonTravelEvent e : this.events)
 		{
 			if (first) s += ", ";
-			s += e.pokemon;
+			s += e.pokemon();
 		}
 		return s + " travel.";
 	}

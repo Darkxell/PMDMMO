@@ -6,6 +6,7 @@ import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.stats.BellyChangedEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.Communicable;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonObject;
@@ -40,15 +41,16 @@ public class TurnSkippedEvent extends DungeonEvent implements Communicable
 	}
 
 	@Override
-	public void read(JsonObject value)
+	public void read(JsonObject value) throws JsonReadingException
 	{
-		// TODO Auto-generated method stub
-
+		Pokemon p = this.floor.dungeon.pokemonIDs.get(value.getLong("pokemon", 0));
+		if (p == null) throw new JsonReadingException("Json Reading failed: No pokemon with ID " + value.getLong("pokemon", 0));
+		this.pokemon = this.actor = p.getDungeonPokemon();
 	}
 
 	@Override
 	public JsonObject toJson()
 	{
-		return Json.object().add("actor", this.pokemon.originalPokemon.getData().id);
+		return Json.object().add("pokemon", this.pokemon.id());
 	}
 }

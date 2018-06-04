@@ -94,9 +94,10 @@ public class CommonEventProcessor
 		if (event instanceof PokemonTravelEvent)
 		{
 			PokemonTravelEvent travel = (PokemonTravelEvent) event;
-			if (travel.pokemon.isTeamLeader() && travel.running)
+			if (travel.pokemon().isTeamLeader() && travel.running())
 			{// Checking if switching with ally
-				if (travel.destination.getPokemon() == null || !travel.destination.getPokemon().isAlliedWith(travel.pokemon)) this.runners.add(travel.pokemon);
+				if (travel.destination().getPokemon() == null || !travel.destination().getPokemon().isAlliedWith(travel.pokemon()))
+					this.runners.add(travel.pokemon());
 			}
 		}
 

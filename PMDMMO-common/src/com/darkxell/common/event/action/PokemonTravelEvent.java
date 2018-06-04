@@ -7,17 +7,26 @@ import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.stats.BellyChangedEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.pokemon.Pokemon;
+import com.darkxell.common.util.Communicable;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.Logger;
+import com.eclipsesource.json.Json;
+import com.eclipsesource.json.JsonObject;
 
 /** The travel of Pokémon. */
-public class PokemonTravelEvent extends DungeonEvent
+public class PokemonTravelEvent extends DungeonEvent implements Communicable
 {
 
-	public final Direction direction;
-	public final Tile origin, destination;
-	public final DungeonPokemon pokemon;
-	public final boolean running;
+	private Direction direction;
+	private Tile origin, destination;
+	private DungeonPokemon pokemon;
+	private boolean running;
+
+	public PokemonTravelEvent(Floor floor)
+	{
+		super(floor);
+	}
 
 	public PokemonTravelEvent(Floor floor, DungeonPokemon pokemon, boolean running, Direction direction)
 	{
@@ -37,6 +46,16 @@ public class PokemonTravelEvent extends DungeonEvent
 	public PokemonTravelEvent(Floor floor, DungeonPokemon pokemon, Direction direction)
 	{
 		this(floor, pokemon, false, direction);
+	}
+
+	public Tile destination()
+	{
+		return this.destination;
+	}
+
+	public Direction direction()
+	{
+		return this.direction;
 	}
 
 	private void displayInConsole()
@@ -65,6 +84,16 @@ public class PokemonTravelEvent extends DungeonEvent
 		return this.pokemon + " travelled.";
 	}
 
+	public Tile origin()
+	{
+		return this.origin;
+	}
+
+	public DungeonPokemon pokemon()
+	{
+		return this.pokemon;
+	}
+
 	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{
@@ -73,6 +102,45 @@ public class PokemonTravelEvent extends DungeonEvent
 		this.destination.setPokemon(this.pokemon);
 		this.resultingEvents.addAll(this.destination.onPokemonStep(this.floor, this.pokemon, this.running));
 		return super.processServer();
+	}
+
+	@Override
+	public void read(JsonObject value) throws JsonReadingException
+	{
+		Pokemon p = this.floor.dungeon.pokemonIDs.get(value.getLong("pokemon", 0));
+		try
+		{
+			this.direction = Direction.valueOf(value.getString("direction", Direction.NORTH.name()));
+		} catch (IllegalArgumentException e)
+		{
+			throw new JsonReadingException("Json reading failed: No direction with name " + value.getString("direction", "null"));
+		}
+		if (p == null) throw new JsonReadingException("Json reading failed: No pokemon with ID " + value.getLong("pokemon", 0));
+		this.pokemon = this.actor = p.getDungeonPokemon();
+		try
+		{
+			this.running = value.getBoolean("running", false);
+		} catch (IllegalArgumentException e)
+		{
+			throw new JsonReadingException("Json reading failed: wrong value for running: " + value.get("running"));
+		}
+		this.origin = pokemon.tile();
+		this.destination = pokemon.tile().adjacentTile(this.direction);
+	}
+
+	public boolean running()
+	{
+		return this.running;
+	}
+
+	@Override
+	public JsonObject toJson()
+	{
+		JsonObject root = Json.object();
+		root.add("actor", this.pokemon.id());
+		root.add("running", this.running);
+		root.add("direction", this.direction.name());
+		return root;
 	}
 
 	@Override

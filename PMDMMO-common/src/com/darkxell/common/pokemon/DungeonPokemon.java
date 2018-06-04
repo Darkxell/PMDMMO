@@ -175,6 +175,11 @@ public class DungeonPokemon implements ItemContainer
 		return false;
 	}
 
+	public long id()
+	{
+		return this.originalPokemon.id();
+	}
+
 	public void increaseBelly(double quantity)
 	{
 		this.belly += quantity;
