@@ -14,8 +14,6 @@ public class Player
 
 	private DBPlayer data;
 
-	public ArrayList<DungeonPokemon> dungeonAllies;
-
 	/** This Player's Inventory. */
 	private Inventory inventory;
 
@@ -37,7 +35,6 @@ public class Player
 	{
 		this.data.pokemonsinparty.add(new DatabaseIdentifier(pokemon.id()));
 		this.allies.add(pokemon);
-		this.dungeonAllies.add(new DungeonPokemon(pokemon));
 		pokemon.setPlayer(this);
 	}
 
@@ -57,7 +54,6 @@ public class Player
 
 	public DungeonPokemon getDungeonLeader()
 	{
-		if (this.leaderPokemon.getDungeonPokemon() == null) this.leaderPokemon.createDungeonPokemon();
 		return this.leaderPokemon.getDungeonPokemon();
 	}
 
@@ -72,7 +68,7 @@ public class Player
 	public DungeonPokemon getMember(int index)
 	{
 		if (index == 0) return this.getDungeonLeader();
-		else if (index < this.dungeonAllies.size() + 1) return this.dungeonAllies.get(index - 1);
+		else if (index < this.allies.size() + 1) return this.allies.get(index - 1).getDungeonPokemon();
 		return null;
 	}
 
@@ -120,23 +116,21 @@ public class Player
 	{
 		if (!this.allies.contains(pokemon)) return;
 		this.data.pokemonsinparty.remove(this.allies.indexOf(pokemon));
-		this.dungeonAllies.remove(this.allies.indexOf(pokemon));
 		this.allies.remove(pokemon);
 		pokemon.setPlayer(null);
 	}
 
 	public void resetDungeonTeam()
 	{
-		this.dungeonAllies.clear();
-		for (int i = 0; i < this.allies.size(); ++i)
-			this.dungeonAllies.add(i, new DungeonPokemon(this.allies.get(i)));
+		if (this.leaderPokemon.getDungeonPokemon() != null) this.leaderPokemon.getDungeonPokemon().dispose();
+		for (Pokemon ally : this.allies)
+			if (ally.getDungeonPokemon() != null) ally.getDungeonPokemon().dispose();
 	}
 
 	public void setData(DBPlayer data)
 	{
 		this.data = data;
 		this.allies = new ArrayList<>();
-		this.dungeonAllies = new ArrayList<>();
 		this.inventory = new Inventory();
 	}
 

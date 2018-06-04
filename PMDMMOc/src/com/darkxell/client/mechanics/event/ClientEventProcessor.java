@@ -24,7 +24,6 @@ import com.darkxell.client.state.dungeon.DelayState;
 import com.darkxell.client.state.dungeon.NextFloorState;
 import com.darkxell.client.state.dungeon.OrbAnimationState;
 import com.darkxell.client.state.dungeon.PokemonTravelState;
-import com.darkxell.client.state.map.LocalMap;
 import com.darkxell.client.state.menu.dungeon.MoveLearnMenuState;
 import com.darkxell.client.state.menu.dungeon.StairMenuState;
 import com.darkxell.common.dungeon.DungeonInstance;
@@ -36,6 +35,7 @@ import com.darkxell.common.event.action.PokemonSpawnedEvent;
 import com.darkxell.common.event.action.PokemonTravelEvent;
 import com.darkxell.common.event.dungeon.DungeonExitEvent;
 import com.darkxell.common.event.dungeon.NextFloorEvent;
+import com.darkxell.common.event.dungeon.PlayerLosesEvent;
 import com.darkxell.common.event.dungeon.weather.WeatherChangedEvent;
 import com.darkxell.common.event.item.ItemMovedEvent;
 import com.darkxell.common.event.item.ItemSelectionEvent;
@@ -159,6 +159,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		if (event instanceof StairLandingEvent) this.processStairEvent((StairLandingEvent) event);
 		if (event instanceof NextFloorEvent) this.processFloorEvent((NextFloorEvent) event);
 		if (event instanceof DungeonExitEvent) this.processDungeonExitEvent((DungeonExitEvent) event);
+		if (event instanceof PlayerLosesEvent) this.processPlayerLosesEvent((PlayerLosesEvent) event);
 
 		if (this.state() == State.DELAYED) this.animateDelayed();
 	}
@@ -235,10 +236,8 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	{
 		if (event.pokemon == Persistance.player.getDungeonLeader())
 		{
-			event.pokemon.dispose();
 			Persistance.player.resetDungeonTeam();
 			StateManager.setExploreState("Base", -1, -1);
-			Persistance.displaymap = LocalMap.instance;
 		}
 	}
 
@@ -394,6 +393,15 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		{
 			Persistance.dungeonState.setSubstate(s);
 			this.setState(State.ANIMATING);
+		}
+	}
+
+	private void processPlayerLosesEvent(PlayerLosesEvent event)
+	{
+		if (event.player == Persistance.player)
+		{
+			StateManager.setExploreState("Base", -1, -1);
+			Persistance.player.resetDungeonTeam();
 		}
 	}
 

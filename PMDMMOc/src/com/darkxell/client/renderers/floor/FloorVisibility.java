@@ -23,7 +23,6 @@ public class FloorVisibility
 	public FloorVisibility()
 	{
 		this.floor = Persistance.floor;
-		this.onCameraMoved();
 	}
 
 	public boolean hasVisibleItem(Tile tile)

@@ -9,7 +9,9 @@ import com.darkxell.client.mechanics.event.ClientEventProcessor;
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
 import com.darkxell.client.state.dungeon.NextFloorState;
 import com.darkxell.client.state.freezone.FreezoneExploreState;
+import com.darkxell.client.state.map.LocalMap;
 import com.darkxell.common.dungeon.DungeonRegistry;
+import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.Logger;
 
 /** Describes how a statemanager is supposed to work. A statemanager is expected to display A very big portion of the application, like for example the game / the login facilities...<br/>
@@ -71,6 +73,7 @@ public abstract class StateManager
 				Persistance.currentmap = map;
 				Persistance.freezoneCamera.x = Persistance.currentplayer.x = xPos == -1 ? map.defaultX() : xPos;
 				Persistance.freezoneCamera.y = Persistance.currentplayer.y = yPos == -1 ? map.defaultY() : yPos;
+				Persistance.displaymap = LocalMap.instance;
 			}
 		});
 	}
@@ -79,6 +82,10 @@ public abstract class StateManager
 	 * @param dungeonID - ID of a Dungeon. If doesn't match a valid ID, this method will not do anything. */
 	public static void setDungeonState(AbstractState fadeOutState, int dungeonID)
 	{
+		Persistance.player.resetDungeonTeam();
+		for (Pokemon member : Persistance.player.getTeam())
+			member.createDungeonPokemon();
+
 		Persistance.dungeon = DungeonRegistry.find(dungeonID).newInstance(new Random().nextLong());
 		Persistance.dungeon.eventProcessor = Persistance.eventProcessor = new ClientEventProcessor(Persistance.dungeon);
 		Persistance.dungeon.addPlayer(Persistance.player);

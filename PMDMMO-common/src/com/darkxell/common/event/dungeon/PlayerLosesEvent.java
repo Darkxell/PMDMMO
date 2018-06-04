@@ -6,6 +6,7 @@ import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.util.language.Message;
 
 public class PlayerLosesEvent extends DungeonEvent
 {
@@ -16,6 +17,7 @@ public class PlayerLosesEvent extends DungeonEvent
 	{
 		super(floor);
 		this.player = player;
+		this.messages.add(new Message("player.loses").addReplacement("<player>", this.player.name()));
 	}
 
 	@Override
