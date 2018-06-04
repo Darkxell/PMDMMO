@@ -278,10 +278,13 @@ public class DungeonInstance
 		this.actors.add(this.actorMap.get(pokemon));
 	}
 
-	/** Removes the input Player from this Dungeon. Called when that Player exits the Dungeon by winning, escaping or losing. */
-	public void removePlayer(Player player)
+	/** Removes the input Player from this Dungeon. Called when that Player exits the Dungeon by winning, escaping or losing.
+	 * 
+	 * @return true if there are no exploring players left. */
+	public boolean removePlayer(Player player)
 	{
 		this.exploringPlayers.remove(player);
+		return this.exploringPlayers.isEmpty();
 	}
 
 	public void unregisterActor(DungeonPokemon pokemon)

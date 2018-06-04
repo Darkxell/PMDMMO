@@ -27,11 +27,10 @@ public class PlayerLosesEvent extends DungeonEvent
 	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{
-		System.out.println("YOU LOSE");
 		ArrayList<DungeonPokemon> existing = this.floor.listPokemon();
 		for (DungeonPokemon pokemon : this.player.getDungeonTeam())
 			if (existing.contains(pokemon)) this.floor.unsummonPokemon(pokemon);
-		this.floor.dungeon.removePlayer(this.player);
+		if (this.floor.dungeon.removePlayer(this.player)) this.resultingEvents.add(new ExplorationStopEvent(this.floor));
 		return super.processServer();
 	}
 

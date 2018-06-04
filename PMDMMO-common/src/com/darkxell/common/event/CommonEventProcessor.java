@@ -9,6 +9,7 @@ import com.darkxell.common.event.action.PokemonRotateEvent;
 import com.darkxell.common.event.action.PokemonSpawnedEvent;
 import com.darkxell.common.event.action.PokemonTravelEvent;
 import com.darkxell.common.event.action.TurnSkippedEvent;
+import com.darkxell.common.event.dungeon.ExplorationStopEvent;
 import com.darkxell.common.event.stats.BellyChangedEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
@@ -17,10 +18,16 @@ public class CommonEventProcessor
 {
 	public static enum State
 	{
+		/** Playing animations. (should only be active client-side.) */
 		ANIMATING,
+		/** Waiting for a Player to decide on an action. */
 		AWATING_INPUT,
+		/** Playing delayed animations. (should only be active client-side.) */
 		DELAYED,
-		PROCESSING
+		/** Processing pending events. */
+		PROCESSING,
+		/** Stopped. This state is set when the Dungeon is done exploring. For safety it will also prevent any further added events from being processed. */
+		STOPPED
 	}
 
 	public final DungeonInstance dungeon;
@@ -65,6 +72,7 @@ public class CommonEventProcessor
 	{
 		this.dungeon.eventOccured(event);
 		this.addToPending(event.processServer());
+		if (event instanceof ExplorationStopEvent) this.setState(State.STOPPED);
 	}
 
 	public boolean hasPendingEvents()
@@ -100,6 +108,7 @@ public class CommonEventProcessor
 	/** Processes the input event and adds the resulting events to the pending stack. */
 	public void processEvent(DungeonEvent event)
 	{
+		if (this.state() == State.STOPPED) return;
 		this.setState(State.PROCESSING);
 		if (this.preProcess(event)) this.doProcess(event);
 		if (this.state() == State.PROCESSING) this.processPending();
@@ -115,6 +124,7 @@ public class CommonEventProcessor
 	/** Processes the next pending event. */
 	public void processPending()
 	{
+		if (this.state() == State.STOPPED) return;
 		if (this.hasPendingEvents()) this.processEvent(this.pending.pop());
 		else
 		{
