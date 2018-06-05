@@ -112,9 +112,21 @@ public class Tile implements ItemContainer
 	}
 
 	@Override
+	public long containerID()
+	{
+		return this.y * this.floor.getWidth() + this.x;
+	}
+
+	@Override
 	public Message containerName()
 	{
 		return new Message("menu.ground");
+	}
+
+	@Override
+	public ItemContainerType containerType()
+	{
+		return ItemContainerType.TILE;
 	}
 
 	@Override

@@ -386,7 +386,7 @@ public class Floor
 		if (!this.dungeon.isGeneratingFloor())
 		{
 			this.dungeon.registerActor(pokemon);
-			this.dungeon.pokemonIDs.register(pokemon.originalPokemon, this.dungeon.itemIDs, this.dungeon.moveIDs);
+			this.dungeon.communication.pokemonIDs.register(pokemon.originalPokemon, this.dungeon.communication.itemIDs, this.dungeon.communication.moveIDs);
 		}
 		if (!pokemon.isTeamLeader()) this.aiManager.register(pokemon);
 

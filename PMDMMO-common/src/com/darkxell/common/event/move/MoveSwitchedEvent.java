@@ -46,23 +46,23 @@ public class MoveSwitchedEvent extends DungeonEvent implements Communicable
 	@Override
 	public void read(JsonObject value) throws JsonReadingException
 	{
-		this.pokemon = this.floor.dungeon.pokemonIDs.get(value.getLong("pokemon", 0));
-		if (this.pokemon == null) throw new JsonReadingException("Json Reading failed: No pokemon with ID " + value.getLong("pokemon", 0));
+		this.pokemon = this.floor.dungeon.communication.pokemonIDs.get(value.getLong("pokemon", 0));
+		if (this.pokemon == null) throw new JsonReadingException("No pokemon with ID " + value.getLong("pokemon", 0));
 		try
 		{
 			this.from = value.getInt("from", 0);
 		} catch (Exception e)
 		{
-			throw new JsonReadingException("Json reading failed: wrong value for from: " + value.get("from"));
+			throw new JsonReadingException("Wrong value for from: " + value.get("from"));
 		}
 		try
 		{
 			this.to = value.getInt("to", 0);
 		} catch (Exception e)
 		{
-			throw new JsonReadingException("Json reading failed: wrong value for to: " + value.get("to"));
+			throw new JsonReadingException("Wrong value for to: " + value.get("to"));
 		}
-		if (this.from == this.to) throw new JsonReadingException("Json reading failed: from and to can't be the same indices.");
+		if (this.from == this.to) throw new JsonReadingException("From and to can't be the same indices.");
 	}
 
 	@Override

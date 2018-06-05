@@ -82,9 +82,21 @@ public class DungeonPokemon implements ItemContainer
 	}
 
 	@Override
+	public long containerID()
+	{
+		return this.id();
+	}
+
+	@Override
 	public Message containerName()
 	{
 		return this.usedPokemon.containerName();
+	}
+
+	@Override
+	public ItemContainerType containerType()
+	{
+		return ItemContainerType.DUNGEON_POKEMON;
 	}
 
 	@Override

@@ -43,8 +43,8 @@ public class TurnSkippedEvent extends DungeonEvent implements Communicable
 	@Override
 	public void read(JsonObject value) throws JsonReadingException
 	{
-		Pokemon p = this.floor.dungeon.pokemonIDs.get(value.getLong("pokemon", 0));
-		if (p == null) throw new JsonReadingException("Json Reading failed: No pokemon with ID " + value.getLong("pokemon", 0));
+		Pokemon p = this.floor.dungeon.communication.pokemonIDs.get(value.getLong("pokemon", 0));
+		if (p == null) throw new JsonReadingException("No pokemon with ID " + value.getLong("pokemon", 0));
 		this.pokemon = this.actor = p.getDungeonPokemon();
 	}
 

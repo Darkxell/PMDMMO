@@ -250,7 +250,7 @@ public class LoginMainState extends StateManager {
 	private void launchOffline() {
 		// Set placeholder data to fake an account creation
 		Persistance.player = new Player("Offline debug account name",
-				PokemonRegistry.find(6).generate(new Random(), 1));
+				PokemonRegistry.find(4).generate(new Random(), 1));
 		Persistance.player.setStoryPosition(1);
 		Persistance.player.addAlly(PokemonRegistry.find(1).generate(new Random(), 1, 1));
 		Persistance.player.addAlly(PokemonRegistry.find(255).generate(new Random(), 1));

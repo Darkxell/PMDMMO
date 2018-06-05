@@ -91,17 +91,17 @@ public class MoveSelectionEvent extends DungeonEvent implements Communicable
 	@Override
 	public void read(JsonObject value) throws JsonReadingException
 	{
-		Pokemon pokemon = this.floor.dungeon.pokemonIDs.get(value.getLong("pokemon", 0));
-		LearnedMove move = this.floor.dungeon.moveIDs.get(value.getLong("move", 0));
+		Pokemon pokemon = this.floor.dungeon.communication.pokemonIDs.get(value.getLong("pokemon", 0));
+		LearnedMove move = this.floor.dungeon.communication.moveIDs.get(value.getLong("move", 0));
 		Direction d = null;
-		if (pokemon == null) throw new JsonReadingException("Json Reading failed: No pokemon with ID " + value.getLong("pokemon", 0));
-		if (move == null) throw new JsonReadingException("Json Reading failed: No move with ID " + value.getLong("move", 0));
+		if (pokemon == null) throw new JsonReadingException("No pokemon with ID " + value.getLong("pokemon", 0));
+		if (move == null) throw new JsonReadingException("No move with ID " + value.getLong("move", 0));
 		try
 		{
 			d = Direction.valueOf(value.getString("direction", Direction.NORTH.name()));
 		} catch (IllegalArgumentException e)
 		{
-			throw new JsonReadingException("Json reading failed: No direction with name " + value.getString("direction", "null"));
+			throw new JsonReadingException("No direction with name " + value.getString("direction", "null"));
 		}
 		this.actor = pokemon.getDungeonPokemon();
 		this.usedMove = new MoveUse(this.floor, move, pokemon.getDungeonPokemon(), d);

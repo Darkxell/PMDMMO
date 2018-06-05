@@ -5,9 +5,6 @@ import java.util.HashMap;
 import java.util.Random;
 
 import com.darkxell.common.ai.AI;
-import com.darkxell.common.dungeon.TempIDRegistry.ItemsTempIDRegistry;
-import com.darkxell.common.dungeon.TempIDRegistry.MovesTempIDRegistry;
-import com.darkxell.common.dungeon.TempIDRegistry.PokemonTempIDRegistry;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.layout.Layout;
 import com.darkxell.common.dungeon.floor.layout.StaticLayout;
@@ -30,6 +27,7 @@ public class DungeonInstance
 	private HashMap<DungeonPokemon, Actor> actorMap = new HashMap<>();
 	/** The Pokémon to take turn in order. */
 	private ArrayList<Actor> actors = new ArrayList<>();
+	public final CommunicationUtils communication = new CommunicationUtils();;
 	/** The current Pokémon taking its turn. */
 	private int currentActor;
 	/** The current Floor. */
@@ -44,11 +42,8 @@ public class DungeonInstance
 	public final int id;
 	/** True if this Dungeon is currently generating a floor. Used for Actor registering. */
 	private boolean isGeneratingFloor;
-	public final ItemsTempIDRegistry itemIDs = new ItemsTempIDRegistry();
-	public final MovesTempIDRegistry moveIDs = new MovesTempIDRegistry();
 	/** Lists the previous turns. */
 	private ArrayList<GameTurn> pastTurns = new ArrayList<>();
-	public final PokemonTempIDRegistry pokemonIDs = new PokemonTempIDRegistry();
 	/** RNG for floor generation. */
 	public final Random random;
 	/** All the Players that started exploring this Dungeon, even if they left. */
@@ -72,9 +67,9 @@ public class DungeonInstance
 
 	public void clearAllTempIDs()
 	{
-		itemIDs.clear();
-		moveIDs.clear();
-		pokemonIDs.clear();
+		this.communication.itemIDs.clear();
+		this.communication.moveIDs.clear();
+		this.communication.pokemonIDs.clear();
 	}
 
 	/** Compares the input Pokémon depending on their order of action. */
@@ -169,6 +164,12 @@ public class DungeonInstance
 		}
 	}
 
+	@SuppressWarnings("unchecked")
+	public ArrayList<Player> exploringPlayers()
+	{
+		return (ArrayList<Player>) this.exploringPlayers.clone();
+	}
+
 	private void generateNextFloor()
 	{
 		this.isGeneratingFloor = true;
@@ -186,12 +187,12 @@ public class DungeonInstance
 		// Then Wild pokemon
 		for (DungeonPokemon pokemon : this.currentFloor.listPokemon())
 		{
-			this.pokemonIDs.register(pokemon.originalPokemon, this.itemIDs, this.moveIDs);
+			this.communication.pokemonIDs.register(pokemon.originalPokemon, this.communication.itemIDs, this.communication.moveIDs);
 			if (pokemon.player() == null) this.registerActor(pokemon);
 		}
 
 		for (ItemStack item : this.currentFloor.listItemsOnFloor())
-			this.itemIDs.register(item, null);
+			this.communication.itemIDs.register(item, null);
 
 		this.isGeneratingFloor = false;
 	}
@@ -216,6 +217,8 @@ public class DungeonInstance
 		return -1;
 	}
 
+	/* public void insertActor(DungeonPokemon pokemon, int index) { if (this.actorMap.containsKey(pokemon)) return; this.actorMap.put(pokemon, new Actor(pokemon)); this.actors.add(index, this.actorMap.get(pokemon)); } */
+
 	public void initiateExploration()
 	{
 		if (this.currentFloor != null)
@@ -231,8 +234,6 @@ public class DungeonInstance
 		this.currentFloor.onFloorStart(events);
 		this.eventProcessor.addToPending(events);
 	}
-
-	/* public void insertActor(DungeonPokemon pokemon, int index) { if (this.actorMap.containsKey(pokemon)) return; this.actorMap.put(pokemon, new Actor(pokemon)); this.actors.add(index, this.actorMap.get(pokemon)); } */
 
 	public boolean isGeneratingFloor()
 	{

@@ -37,7 +37,7 @@ public class MoveLearnedEvent extends DungeonEvent
 	{
 		LearnedMove move = new LearnedMove(this.move.id);
 		this.pokemon.setMove(this.index, move);
-		this.floor.dungeon.moveIDs.register(move, this.pokemon);
+		this.floor.dungeon.communication.moveIDs.register(move, this.pokemon);
 		return super.processServer();
 	}
 

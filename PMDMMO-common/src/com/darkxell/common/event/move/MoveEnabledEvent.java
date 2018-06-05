@@ -45,14 +45,14 @@ public class MoveEnabledEvent extends DungeonEvent implements Communicable
 	@Override
 	public void read(JsonObject value) throws JsonReadingException
 	{
-		this.move = this.floor.dungeon.moveIDs.get(value.getLong("move", 0));
-		if (this.move == null) throw new JsonReadingException("Json Reading failed: No move with ID " + value.getLong("move", 0));
+		this.move = this.floor.dungeon.communication.moveIDs.get(value.getLong("move", 0));
+		if (this.move == null) throw new JsonReadingException("No move with ID " + value.getLong("move", 0));
 		try
 		{
 			this.enabled = value.getBoolean("enabled", false);
 		} catch (Exception e)
 		{
-			throw new JsonReadingException("Json reading failed: wrong value for enabled: " + value.get("enabled"));
+			throw new JsonReadingException("Wrong value for enabled: " + value.get("enabled"));
 		}
 	}
 

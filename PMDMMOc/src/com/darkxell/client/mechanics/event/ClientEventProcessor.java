@@ -269,8 +269,9 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	private void processItemEvent(ItemSelectionEvent event)
 	{
 		AnimationState a = new AnimationState(Persistance.dungeonState);
-		if (event.item instanceof ItemFood || event.item instanceof ItemGummi) a.animation = Animations.getCustomAnimation(event.user, 0, this.currentAnimEnd);
-		else a.animation = Animations.getItemAnimation(event.user, event.item, this.currentAnimEnd);
+		if (event.item() instanceof ItemFood || event.item() instanceof ItemGummi)
+			a.animation = Animations.getCustomAnimation(event.user(), 0, this.currentAnimEnd);
+		else a.animation = Animations.getItemAnimation(event.user(), event.item(), this.currentAnimEnd);
 		if (a.animation != null)
 		{
 			Persistance.dungeonState.setSubstate(a);
@@ -280,20 +281,20 @@ public final class ClientEventProcessor extends CommonEventProcessor
 
 	private void processItemMovedEvent(ItemMovedEvent event)
 	{
-		if (event.source instanceof Tile)
+		if (event.source() instanceof Tile)
 		{
 			boolean ally = true;
-			if (event.destination instanceof Pokemon) ally = Persistance.player.isAlly((Pokemon) event.destination);
-			else if (event.destination instanceof Inventory) ally = Persistance.player.inventory() == (Inventory) event.destination;
+			if (event.destination() instanceof Pokemon) ally = Persistance.player.isAlly((Pokemon) event.destination());
+			else if (event.destination() instanceof Inventory) ally = Persistance.player.inventory() == (Inventory) event.destination();
 			SoundManager.playSound(ally ? "dungeon-item" : "dungeon-enemygrab");
-			Persistance.dungeonState.floorVisibility.onItemremoved((Tile) event.source);
+			Persistance.dungeonState.floorVisibility.onItemremoved((Tile) event.source());
 		}
 	}
 
 	private void processItemSwappedEvent(ItemSwappedEvent event)
 	{
-		if (event.source instanceof Tile) Persistance.dungeonState.floorVisibility.onItemremoved((Tile) event.source);
-		else if (event.destination instanceof Tile) Persistance.dungeonState.floorVisibility.onItemremoved((Tile) event.destination);
+		if (event.source() instanceof Tile) Persistance.dungeonState.floorVisibility.onItemremoved((Tile) event.source());
+		else if (event.destination() instanceof Tile) Persistance.dungeonState.floorVisibility.onItemremoved((Tile) event.destination());
 	}
 
 	private void processLevelupEvent(LevelupEvent event)

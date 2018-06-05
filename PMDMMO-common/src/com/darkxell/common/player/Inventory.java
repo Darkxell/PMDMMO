@@ -79,9 +79,21 @@ public class Inventory implements ItemContainer
 	}
 
 	@Override
+	public long containerID()
+	{
+		return this.getData().id;
+	}
+
+	@Override
 	public Message containerName()
 	{
 		return new Message("inventory.toolbox");
+	}
+
+	@Override
+	public ItemContainerType containerType()
+	{
+		return ItemContainerType.INVENTORY;
 	}
 
 	@Override

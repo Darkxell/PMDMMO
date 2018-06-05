@@ -107,9 +107,21 @@ public class Pokemon implements ItemContainer, HasID
 	}
 
 	@Override
+	public long containerID()
+	{
+		return this.id();
+	}
+
+	@Override
 	public Message containerName()
 	{
 		return new Message("inventory.held").addReplacement("<pokemon>", this.getNickname());
+	}
+
+	@Override
+	public ItemContainerType containerType()
+	{
+		return ItemContainerType.POKEMON;
 	}
 
 	public void createDungeonPokemon()

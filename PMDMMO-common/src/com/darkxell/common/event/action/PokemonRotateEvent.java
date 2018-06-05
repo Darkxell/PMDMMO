@@ -47,15 +47,15 @@ public class PokemonRotateEvent extends DungeonEvent implements Communicable
 	@Override
 	public void read(JsonObject value) throws JsonReadingException
 	{
-		Pokemon p = this.floor.dungeon.pokemonIDs.get(value.getLong("pokemon", 0));
+		Pokemon p = this.floor.dungeon.communication.pokemonIDs.get(value.getLong("pokemon", 0));
 		try
 		{
 			this.direction = Direction.valueOf(value.getString("direction", Direction.NORTH.name()));
 		} catch (IllegalArgumentException e)
 		{
-			throw new JsonReadingException("Json reading failed: No direction with name " + value.getString("direction", "null"));
+			throw new JsonReadingException("No direction with name " + value.getString("direction", "null"));
 		}
-		if (p == null) throw new JsonReadingException("Json reading failed: No pokemon with ID " + value.getLong("pokemon", 0));
+		if (p == null) throw new JsonReadingException("No pokemon with ID " + value.getLong("pokemon", 0));
 		this.pokemon = p.getDungeonPokemon();
 	}
 
