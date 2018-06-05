@@ -17,7 +17,6 @@ public class PlayerLosesEvent extends DungeonEvent
 	{
 		super(floor);
 		this.player = player;
-		this.messages.add(new Message("player.loses").addReplacement("<player>", this.player.name()));
 	}
 
 	@Override
@@ -29,6 +28,8 @@ public class PlayerLosesEvent extends DungeonEvent
 	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{
+		this.messages.add(new Message("player.loses").addReplacement("<player>", this.player.name()));
+
 		ArrayList<DungeonPokemon> existing = this.floor.listPokemon();
 		for (DungeonPokemon pokemon : this.player.getDungeonTeam())
 			if (existing.contains(pokemon)) this.floor.unsummonPokemon(pokemon);

@@ -22,8 +22,6 @@ public class MoveLearnedEvent extends DungeonEvent
 		this.pokemon = pokemon;
 		this.move = move;
 		this.index = index;
-
-		this.messages.add(new Message("moves.learned").addReplacement("<pokemon>", this.pokemon.getNickname()).addReplacement("<move>", this.move.name()));
 	}
 
 	@Override
@@ -35,6 +33,8 @@ public class MoveLearnedEvent extends DungeonEvent
 	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{
+		this.messages.add(new Message("moves.learned").addReplacement("<pokemon>", this.pokemon.getNickname()).addReplacement("<move>", this.move.name()));
+
 		LearnedMove move = new LearnedMove(this.move.id);
 		this.pokemon.setMove(this.index, move);
 		this.floor.dungeon.communication.moveIDs.register(move, this.pokemon);

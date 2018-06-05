@@ -42,8 +42,6 @@ public class ItemSelectionEvent extends DungeonEvent implements Communicable
 		this.target = target;
 		this.source = source;
 		this.sourceIndex = sourceIndex;
-
-		this.messages.add(this.item.getUseMessage(this));
 	}
 
 	public Item item()
@@ -60,6 +58,7 @@ public class ItemSelectionEvent extends DungeonEvent implements Communicable
 	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{
+		this.messages.add(this.item.getUseMessage(this));
 		ItemStack stack = this.source.getItem(this.sourceIndex);
 		stack.setQuantity(stack.quantity() - 1);
 		if (stack.quantity() <= 0) this.source.deleteItem(this.sourceIndex);

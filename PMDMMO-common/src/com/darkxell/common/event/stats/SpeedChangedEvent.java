@@ -17,8 +17,6 @@ public class SpeedChangedEvent extends DungeonEvent
 	{
 		super(floor);
 		this.pokemon = pokemon;
-
-		this.messages.add(new Message("stat.speed." + pokemon.stats.getStage(Stat.Speed)).addReplacement("<pokemon>", this.pokemon.getNickname()));
 	}
 
 	@Override
@@ -26,10 +24,12 @@ public class SpeedChangedEvent extends DungeonEvent
 	{
 		return this.messages.get(0).toString();
 	}
-	
+
 	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{
+		this.messages.add(new Message("stat.speed." + pokemon.stats.getStage(Stat.Speed)).addReplacement("<pokemon>", this.pokemon.getNickname()));
+
 		floor.dungeon.onSpeedChange(this.pokemon);
 		return super.processServer();
 	}

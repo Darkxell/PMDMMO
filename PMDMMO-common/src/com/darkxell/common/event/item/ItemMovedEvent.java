@@ -19,6 +19,7 @@ import com.eclipsesource.json.JsonObject;
 public class ItemMovedEvent extends DungeonEvent implements Communicable
 {
 
+	protected ItemAction action;
 	protected DungeonPokemon mover;
 	protected ItemContainer source, destination;
 	protected int sourceIndex, destinationIndex;
@@ -33,21 +34,11 @@ public class ItemMovedEvent extends DungeonEvent implements Communicable
 	{
 		super(floor, mover);
 		this.mover = mover;
+		this.action = action;
 		this.source = source;
 		this.sourceIndex = sourceIndex;
 		this.destination = destination;
 		this.destinationIndex = destinationIndex;
-
-		String message = "This shouldn't happen...";
-		if (action == ItemAction.GIVE) message = "inventory.give";
-		else if (action == ItemAction.GET)
-		{
-			if (destination instanceof Inventory) message = "ground.inventory";
-			else message = "ground.pickup";
-		} else if (action == ItemAction.PLACE) message = "ground.place";
-		else if (action == ItemAction.TAKE) message = "inventory.taken";
-		this.messages.add(
-				new Message(message).addReplacement("<pokemon>", mover.getNickname()).addReplacement("<item>", this.source.getItem(this.sourceIndex).name()));
 	}
 
 	public ItemContainer destination()
@@ -64,6 +55,17 @@ public class ItemMovedEvent extends DungeonEvent implements Communicable
 	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{
+		String message = "This shouldn't happen...";
+		if (this.action == ItemAction.GIVE) message = "inventory.give";
+		else if (this.action == ItemAction.GET)
+		{
+			if (destination instanceof Inventory) message = "ground.inventory";
+			else message = "ground.pickup";
+		} else if (this.action == ItemAction.PLACE) message = "ground.place";
+		else if (this.action == ItemAction.TAKE) message = "inventory.taken";
+		this.messages.add(
+				new Message(message).addReplacement("<pokemon>", mover.getNickname()).addReplacement("<item>", this.source.getItem(this.sourceIndex).name()));
+
 		ItemStack i = this.source.getItem(this.sourceIndex);
 		this.source.deleteItem(this.sourceIndex);
 		if (this.destinationIndex >= this.destination.size()) this.destination.addItem(i);
@@ -122,6 +124,14 @@ public class ItemMovedEvent extends DungeonEvent implements Communicable
 			throw new JsonReadingException("Wrong value for destination index: " + value.get("destinationindex"));
 		}
 
+		try
+		{
+			this.action = ItemAction.valueOf(value.getString("action", this.action.name()));
+		} catch (Exception e)
+		{
+			throw new JsonReadingException("Wrong value for item action: " + value.get("action"));
+		}
+
 		this.mover = this.actor = pokemon.getDungeonPokemon();
 	}
 
@@ -141,6 +151,7 @@ public class ItemMovedEvent extends DungeonEvent implements Communicable
 		root.add("destinationtype", this.destination.containerType().name());
 		root.add("destinationid", this.destination.containerID());
 		root.add("destinationindex", this.destinationIndex);
+		root.add("action", this.action.name());
 		return root;
 	}
 

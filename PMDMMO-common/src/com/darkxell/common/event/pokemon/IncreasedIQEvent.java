@@ -18,13 +18,6 @@ public class IncreasedIQEvent extends DungeonEvent
 		super(floor);
 		this.iq = iq;
 		this.pokemon = pokemon;
-
-		int satisfaction;
-		if (this.iq >= 9) satisfaction = 3;
-		else if (this.iq >= 5) satisfaction = 2;
-		else if (this.iq >= 3) satisfaction = 1;
-		else satisfaction = 0;
-		this.messages.add(new Message("iq." + satisfaction));
 	}
 
 	@Override
@@ -36,6 +29,13 @@ public class IncreasedIQEvent extends DungeonEvent
 	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{
+		int satisfaction;
+		if (this.iq >= 9) satisfaction = 3;
+		else if (this.iq >= 5) satisfaction = 2;
+		else if (this.iq >= 3) satisfaction = 1;
+		else satisfaction = 0;
+		this.messages.add(new Message("iq." + satisfaction));
+
 		this.pokemon.increaseIQ(this.iq);
 		return super.processServer();
 	}

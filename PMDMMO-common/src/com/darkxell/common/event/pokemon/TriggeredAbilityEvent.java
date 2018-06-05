@@ -16,13 +16,13 @@ public class TriggeredAbilityEvent extends DungeonEvent
 		super(floor);
 		this.pokemon = pokemon;
 		this.ability = this.pokemon.ability();
-
-		if (this.ability.hasTriggeredMessage()) this.messages.add(this.ability.triggeredMessage(this.pokemon));
 	}
 
 	@Override
 	public String loggerMessage()
 	{
+		if (this.ability.hasTriggeredMessage()) this.messages.add(this.ability.triggeredMessage(this.pokemon));
+
 		return this.pokemon + "'s " + this.ability.name() + " ability triggered.";
 	}
 
