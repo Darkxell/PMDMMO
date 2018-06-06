@@ -79,11 +79,18 @@ public class ItemSelectionEvent extends DungeonEvent implements Communicable
 	@Override
 	public void read(JsonObject value) throws JsonReadingException
 	{
-		if (value.get("user") == null) throw new JsonReadingException("No user value!");
-		if (!value.get("user").isNumber()) throw new JsonReadingException("Wrong value for user ID: " + value.get("user"));
-		Pokemon pokemon = this.floor.dungeon.communication.pokemonIDs.get(value.getLong("user", 0));
-		if (pokemon == null) throw new JsonReadingException("No pokemon with ID " + value.getLong("user", 0));
-		this.user = this.actor = pokemon.getDungeonPokemon();
+		try
+		{
+			Pokemon p = this.floor.dungeon.communication.pokemonIDs.get(value.getLong("user", 0));
+			if (p == null) throw new JsonReadingException("No pokemon with ID " + value.getLong("user", 0));
+			this.user = this.actor = p.getDungeonPokemon();
+		} catch (JsonReadingException e)
+		{
+			throw e;
+		} catch (Exception e)
+		{
+			throw new JsonReadingException("Wrong value for Pokémon ID: " + value.get("user"));
+		}
 
 		try
 		{
@@ -118,11 +125,18 @@ public class ItemSelectionEvent extends DungeonEvent implements Communicable
 
 		if (this.item.usedOnTeamMember())
 		{
-			if (value.get("target") == null) throw new JsonReadingException("No target value!");
-			if (!value.get("target").isNumber()) throw new JsonReadingException("Wrong value for target ID: " + value.get("target"));
-			pokemon = this.floor.dungeon.communication.pokemonIDs.get(value.getLong("target", 0));
-			if (pokemon == null) throw new JsonReadingException("No pokemon with ID " + value.getLong("target", 0));
-			this.target = pokemon.getDungeonPokemon();
+			try
+			{
+				Pokemon p = this.floor.dungeon.communication.pokemonIDs.get(value.getLong("target", 0));
+				if (p == null) throw new JsonReadingException("No pokemon with ID " + value.getLong("target", 0));
+				this.target = p.getDungeonPokemon();
+			} catch (JsonReadingException e)
+			{
+				throw e;
+			} catch (Exception e)
+			{
+				throw new JsonReadingException("Wrong value for Pokémon ID: " + value.get("target"));
+			}
 		}
 
 	}

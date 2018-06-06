@@ -16,7 +16,7 @@ public class MoveEnabledEvent extends DungeonEvent implements Communicable
 	private boolean enabled;
 	/** The modified move. */
 	private LearnedMove move;
-	
+
 	public MoveEnabledEvent(Floor floor)
 	{
 		super(floor);
@@ -45,8 +45,17 @@ public class MoveEnabledEvent extends DungeonEvent implements Communicable
 	@Override
 	public void read(JsonObject value) throws JsonReadingException
 	{
-		this.move = this.floor.dungeon.communication.moveIDs.get(value.getLong("move", 0));
-		if (this.move == null) throw new JsonReadingException("No move with ID " + value.getLong("move", 0));
+		try
+		{
+			this.move = this.floor.dungeon.communication.moveIDs.get(value.getLong("move", 0));
+			if (this.move == null) throw new JsonReadingException("No move with ID " + value.getLong("move", 0));
+		} catch (JsonReadingException e)
+		{
+			throw e;
+		} catch (Exception e)
+		{
+			throw new JsonReadingException("Wrong value for Pokémon ID: " + value.get("pokemon"));
+		}
 		try
 		{
 			this.enabled = value.getBoolean("enabled", false);

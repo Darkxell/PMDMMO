@@ -107,16 +107,25 @@ public class PokemonTravelEvent extends DungeonEvent implements Communicable
 	@Override
 	public void read(JsonObject value) throws JsonReadingException
 	{
-		Pokemon p = this.floor.dungeon.communication.pokemonIDs.get(value.getLong("pokemon", 0));
+		try
+		{
+			Pokemon p = this.floor.dungeon.communication.pokemonIDs.get(value.getLong("pokemon", 0));
+			if (p == null) throw new JsonReadingException("No pokemon with ID " + value.getLong("pokemon", 0));
+			this.pokemon = this.actor = p.getDungeonPokemon();
+		} catch (JsonReadingException e)
+		{
+			throw e;
+		} catch (Exception e)
+		{
+			throw new JsonReadingException("Wrong value for Pokémon ID: " + value.get("pokemon"));
+		}
 		try
 		{
 			this.direction = Direction.valueOf(value.getString("direction", Direction.NORTH.name()));
 		} catch (IllegalArgumentException e)
 		{
-			throw new JsonReadingException("No direction with name " + value.getString("direction", "null"));
+			throw new JsonReadingException("No direction with name " + value.get("direction"));
 		}
-		if (p == null) throw new JsonReadingException("No pokemon with ID " + value.getLong("pokemon", 0));
-		this.pokemon = this.actor = p.getDungeonPokemon();
 		try
 		{
 			this.running = value.getBoolean("running", false);

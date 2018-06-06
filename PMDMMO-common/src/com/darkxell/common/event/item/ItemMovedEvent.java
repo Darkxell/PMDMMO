@@ -76,10 +76,18 @@ public class ItemMovedEvent extends DungeonEvent implements Communicable
 	@Override
 	public void read(JsonObject value) throws JsonReadingException
 	{
-		if (value.get("actor") == null) throw new JsonReadingException("No mover value!");
-		if (!value.get("actor").isNumber()) throw new JsonReadingException("Wrong value for mover ID: " + value.get("actor"));
-		Pokemon pokemon = this.floor.dungeon.communication.pokemonIDs.get(value.getLong("actor", 0));
-		if (pokemon == null) throw new JsonReadingException("No pokemon with ID " + value.getLong("actor", 0));
+		try
+		{
+			Pokemon p = this.floor.dungeon.communication.pokemonIDs.get(value.getLong("mover", 0));
+			if (p == null) throw new JsonReadingException("No pokemon with ID " + value.getLong("mover", 0));
+			this.mover = this.actor = p.getDungeonPokemon();
+		} catch (JsonReadingException e)
+		{
+			throw e;
+		} catch (Exception e)
+		{
+			throw new JsonReadingException("Wrong value for Pokémon ID: " + value.get("mover"));
+		}
 
 		try
 		{
@@ -131,8 +139,6 @@ public class ItemMovedEvent extends DungeonEvent implements Communicable
 		{
 			throw new JsonReadingException("Wrong value for item action: " + value.get("action"));
 		}
-
-		this.mover = this.actor = pokemon.getDungeonPokemon();
 	}
 
 	public ItemContainer source()

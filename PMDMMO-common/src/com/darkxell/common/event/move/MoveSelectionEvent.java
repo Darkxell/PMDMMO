@@ -91,6 +91,12 @@ public class MoveSelectionEvent extends DungeonEvent implements Communicable
 	@Override
 	public void read(JsonObject value) throws JsonReadingException
 	{
+		if (value.get("pokemon") == null) throw new JsonReadingException("No value for Pokémon ID!");
+		if (value.get("move") == null) throw new JsonReadingException("No value for move ID!");
+
+		if (!value.get("pokemon").isNumber()) throw new JsonReadingException("Wrong value for Pokémon ID: " + value.get("pokemon"));
+		if (!value.get("move").isNumber()) throw new JsonReadingException("Wrong value for move ID: " + value.get("move"));
+
 		Pokemon pokemon = this.floor.dungeon.communication.pokemonIDs.get(value.getLong("pokemon", 0));
 		LearnedMove move = this.floor.dungeon.communication.moveIDs.get(value.getLong("move", 0));
 		Direction d = null;

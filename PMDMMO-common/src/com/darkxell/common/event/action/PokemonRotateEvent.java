@@ -16,7 +16,7 @@ public class PokemonRotateEvent extends DungeonEvent implements Communicable
 
 	private Direction direction;
 	private DungeonPokemon pokemon;
-	
+
 	public PokemonRotateEvent(Floor floor)
 	{
 		super(floor);
@@ -47,7 +47,19 @@ public class PokemonRotateEvent extends DungeonEvent implements Communicable
 	@Override
 	public void read(JsonObject value) throws JsonReadingException
 	{
-		Pokemon p = this.floor.dungeon.communication.pokemonIDs.get(value.getLong("pokemon", 0));
+		try
+		{
+			Pokemon p = this.floor.dungeon.communication.pokemonIDs.get(value.getLong("pokemon", 0));
+			if (p == null) throw new JsonReadingException("No pokemon with ID " + value.getLong("pokemon", 0));
+			this.pokemon = p.getDungeonPokemon();
+		} catch (JsonReadingException e)
+		{
+			throw e;
+		} catch (Exception e)
+		{
+			throw new JsonReadingException("Wrong value for Pokémon ID: " + value.get("pokemon"));
+		}
+
 		try
 		{
 			this.direction = Direction.valueOf(value.getString("direction", Direction.NORTH.name()));
@@ -55,8 +67,6 @@ public class PokemonRotateEvent extends DungeonEvent implements Communicable
 		{
 			throw new JsonReadingException("No direction with name " + value.getString("direction", "null"));
 		}
-		if (p == null) throw new JsonReadingException("No pokemon with ID " + value.getLong("pokemon", 0));
-		this.pokemon = p.getDungeonPokemon();
 	}
 
 	@Override
