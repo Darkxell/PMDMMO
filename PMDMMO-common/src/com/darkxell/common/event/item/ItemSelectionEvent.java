@@ -11,6 +11,7 @@ import com.darkxell.common.player.ItemContainer.ItemContainerType;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.Communicable;
+import com.darkxell.common.util.Direction;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonObject;
 
@@ -18,6 +19,8 @@ import com.eclipsesource.json.JsonObject;
 public class ItemSelectionEvent extends DungeonEvent implements Communicable
 {
 
+	/** Direction to face when using the Item. */
+	protected Direction direction;
 	/** The Item that was used. */
 	protected Item item;
 	/** The Container the Item was from. */
@@ -36,12 +39,18 @@ public class ItemSelectionEvent extends DungeonEvent implements Communicable
 
 	public ItemSelectionEvent(Floor floor, Item item, DungeonPokemon user, DungeonPokemon target, ItemContainer source, int sourceIndex)
 	{
+		this(floor, item, user, target, source, sourceIndex, user.facing());
+	}
+
+	public ItemSelectionEvent(Floor floor, Item item, DungeonPokemon user, DungeonPokemon target, ItemContainer source, int sourceIndex, Direction direction)
+	{
 		super(floor, user);
 		this.item = item;
 		this.user = user;
 		this.target = target;
 		this.source = source;
 		this.sourceIndex = sourceIndex;
+		this.direction = direction;
 	}
 
 	public Item item()
@@ -99,6 +108,14 @@ public class ItemSelectionEvent extends DungeonEvent implements Communicable
 			throw new JsonReadingException("Wrong value for source index: " + value.get("sourceindex"));
 		}
 
+		try
+		{
+			this.direction = Direction.valueOf(value.getString("direction", Direction.NORTH.name()));
+		} catch (IllegalArgumentException e)
+		{
+			throw new JsonReadingException("No direction with name " + value.get("direction"));
+		}
+
 		if (this.item.usedOnTeamMember())
 		{
 			if (value.get("target") == null) throw new JsonReadingException("No target value!");
@@ -124,6 +141,7 @@ public class ItemSelectionEvent extends DungeonEvent implements Communicable
 		root.add("sourcetype", this.source.containerType().name());
 		root.add("sourceid", this.source.containerID());
 		root.add("sourceindex", this.sourceIndex);
+		root.add("direction", this.direction.name());
 		return root;
 	}
 
