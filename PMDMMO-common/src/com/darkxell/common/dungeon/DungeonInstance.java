@@ -219,12 +219,16 @@ public class DungeonInstance
 
 	/* public void insertActor(DungeonPokemon pokemon, int index) { if (this.actorMap.containsKey(pokemon)) return; this.actorMap.put(pokemon, new Actor(pokemon)); this.actors.add(index, this.actorMap.get(pokemon)); } */
 
-	public void initiateExploration()
+	/** Starts the current exploration. Creates the first floor and starts the Event Processor.<br>
+	 * \/!\\ Make sure the Event Processor has been initialized if you want a custom one.
+	 * 
+	 * @return The generated Floor. */
+	public Floor initiateExploration()
 	{
 		if (this.currentFloor != null)
 		{
 			Logger.e("Tried to start the Dungeon again!");
-			return;
+			return this.currentFloor;
 		}
 		this.generateNextFloor();
 		this.currentSubTurn = GameTurn.SUB_TURNS - 1;
@@ -232,7 +236,14 @@ public class DungeonInstance
 		ArrayList<DungeonEvent> events = new ArrayList<>();
 		this.endTurn(events);
 		this.currentFloor.onFloorStart(events);
+		if (this.eventProcessor == null)
+		{
+			Logger.w("Event processing hasn't been initialized. Creating default CommonEventProcessor.");
+			this.eventProcessor = new CommonEventProcessor(this);
+		}
 		this.eventProcessor.addToPending(events);
+
+		return this.currentFloor;
 	}
 
 	public boolean isGeneratingFloor()

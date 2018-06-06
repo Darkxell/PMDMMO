@@ -13,7 +13,7 @@ public final class EventCommunication
 	static
 	{
 		String base = DungeonEvent.class.getName();
-		classBase = base.substring(0, base.indexOf("DungeonEvent")) + ".";
+		classBase = base.substring(0, base.indexOf("DungeonEvent"));
 	}
 
 	/** @param event - A DungeonEvent.
@@ -22,7 +22,7 @@ public final class EventCommunication
 	{
 		if (!(event instanceof Communicable)) return null;
 		JsonObject object = ((Communicable) event).toJson();
-		String className = object.getClass().getName().substring(classBase.length());
+		String className = event.getClass().getName().substring(classBase.length());
 		object.add("event", className);
 		return object;
 	}
