@@ -53,6 +53,20 @@ public class ItemSelectionEvent extends DungeonEvent implements Communicable
 		this.direction = direction;
 	}
 
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (!(obj instanceof ItemSelectionEvent)) return false;
+		ItemSelectionEvent o = (ItemSelectionEvent) obj;
+		if (this.item != o.item) return false;
+		if (this.direction != o.direction) return false;
+		if (this.source.containerID() != o.source.containerID()) return false;
+		if (this.user.id() != o.user.id()) return false;
+		if (this.sourceIndex != o.sourceIndex) return false;
+		if (this.target.id() != o.target.id()) return false;
+		return true;
+	}
+
 	public Item item()
 	{
 		return this.item;

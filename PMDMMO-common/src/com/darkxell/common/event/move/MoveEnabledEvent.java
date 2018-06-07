@@ -30,6 +30,16 @@ public class MoveEnabledEvent extends DungeonEvent implements Communicable
 	}
 
 	@Override
+	public boolean equals(Object obj)
+	{
+		if (!(obj instanceof MoveEnabledEvent)) return false;
+		MoveEnabledEvent o = (MoveEnabledEvent) obj;
+		if (this.move != o.move) return false;
+		if (this.enabled!= o.enabled) return false;
+		return true;
+	}
+
+	@Override
 	public String loggerMessage()
 	{
 		return this.move.move() + " was " + (this.enabled ? "en" : "dis") + "abled.";

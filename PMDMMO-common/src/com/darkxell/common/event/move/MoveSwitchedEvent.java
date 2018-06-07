@@ -31,6 +31,14 @@ public class MoveSwitchedEvent extends DungeonEvent implements Communicable
 	}
 
 	@Override
+	public boolean equals(Object obj)
+	{
+		if (!(obj instanceof MoveSwitchedEvent)) return false;
+		MoveSwitchedEvent o = (MoveSwitchedEvent) obj;
+		return this.pokemon.id() == o.pokemon.id() && this.from == o.from && this.to == o.to;
+	}
+
+	@Override
 	public String loggerMessage()
 	{
 		return this.pokemon + "switched moves " + this.from + " and " + this.to;

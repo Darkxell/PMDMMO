@@ -37,6 +37,14 @@ public class MoveSelectionEvent extends DungeonEvent implements Communicable
 		}
 
 		@Override
+		public boolean equals(Object obj)
+		{
+			if (!(obj instanceof MoveUse)) return false;
+			MoveUse o = (MoveUse) obj;
+			return this.direction == o.direction && this.move == o.move && this.user.id() == o.user.id();
+		}
+
+		@Override
 		public ExperienceGeneratedEvent getExperienceEvent()
 		{
 			return this.experienceEvent;
@@ -62,6 +70,15 @@ public class MoveSelectionEvent extends DungeonEvent implements Communicable
 
 		if (this.usedMove.move.move() != MoveRegistry.ATTACK) this.messages
 				.add(new Message("move.used").addReplacement("<pokemon>", user.getNickname()).addReplacement("<move>", this.usedMove.move.move().name()));
+	}
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (!(obj instanceof MoveSelectionEvent)) return false;
+		MoveSelectionEvent o = (MoveSelectionEvent) obj;
+		if (!this.usedMove.equals(o.usedMove)) return false;
+		return true;
 	}
 
 	@Override

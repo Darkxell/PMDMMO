@@ -73,6 +73,14 @@ public class PokemonTravelEvent extends DungeonEvent implements Communicable
 		}
 	}
 
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (!(obj instanceof PokemonTravelEvent)) return false;
+		PokemonTravelEvent o = (PokemonTravelEvent) obj;
+		return this.direction == o.direction && this.pokemon.id() == o.pokemon.id() && this.running == o.running;
+	}
+
 	public boolean isReversed(PokemonTravelEvent t)
 	{
 		return this.origin == t.destination && this.destination == t.origin;

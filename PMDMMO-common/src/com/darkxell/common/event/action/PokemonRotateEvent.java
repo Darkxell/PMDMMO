@@ -32,6 +32,14 @@ public class PokemonRotateEvent extends DungeonEvent implements Communicable
 	}
 
 	@Override
+	public boolean equals(Object obj)
+	{
+		if (!(obj instanceof PokemonRotateEvent)) return false;
+		PokemonRotateEvent o = (PokemonRotateEvent) obj;
+		return this.direction == o.direction && this.pokemon.id() == o.pokemon.id();
+	}
+
+	@Override
 	public String loggerMessage()
 	{
 		return this.pokemon + " rotated to face " + this.direction.getName();

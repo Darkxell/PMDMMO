@@ -47,6 +47,20 @@ public class ItemMovedEvent extends DungeonEvent implements Communicable
 	}
 
 	@Override
+	public boolean equals(Object obj)
+	{
+		if (!(obj instanceof ItemMovedEvent)) return false;
+		ItemMovedEvent o = (ItemMovedEvent) obj;
+		if (this.action != o.action) return false;
+		if (this.mover.id() != o.mover.id()) return false;
+		if (this.source.containerID() != o.source.containerID()) return false;
+		if (this.destination.containerID() != o.destination.containerID()) return false;
+		if (this.sourceIndex != o.sourceIndex) return false;
+		if (this.destinationIndex != o.destinationIndex) return false;
+		return true;
+	}
+
+	@Override
 	public String loggerMessage()
 	{
 		return this.mover + " moved an item.";

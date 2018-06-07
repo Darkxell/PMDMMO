@@ -36,7 +36,7 @@ public abstract class DungeonEvent
 	public boolean displayMessages = true;
 	/** The Floor this Event occurs on. */
 	public final Floor floor;
-	/** True if this Event is a Player Action Event; and thus should be sent to other players in the Dungeon. If so, this Event should implement Communicable and have a (Floor) Constructor. */
+	/** True if this Event is a Player Action Event; and thus should be sent to other players in the Dungeon. If so, this Event should implement Communicable, override equals() for unit tests and have a (Floor) Constructor. */
 	private boolean isPAE;
 	/** The messages that were generated. */
 	protected ArrayList<Message> messages;

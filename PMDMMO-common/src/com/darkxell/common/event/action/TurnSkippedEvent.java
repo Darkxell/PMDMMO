@@ -28,6 +28,14 @@ public class TurnSkippedEvent extends DungeonEvent implements Communicable
 	}
 
 	@Override
+	public boolean equals(Object obj)
+	{
+		if (!(obj instanceof TurnSkippedEvent)) return false;
+		TurnSkippedEvent o = (TurnSkippedEvent) obj;
+		return this.pokemon.id() == o.pokemon.id();
+	}
+
+	@Override
 	public String loggerMessage()
 	{
 		return this.pokemon + " skipped its turn.";
