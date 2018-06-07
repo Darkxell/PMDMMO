@@ -134,7 +134,8 @@ public class ItemMovedEvent extends DungeonEvent implements Communicable
 
 		try
 		{
-			this.action = ItemAction.valueOf(value.getString("action", this.action.name()));
+			this.action = ItemAction.valueOf(value.getString("action", ItemAction.INFO.name()));
+			if (this.action == ItemAction.INFO) throw new JsonReadingException("");
 		} catch (Exception e)
 		{
 			throw new JsonReadingException("Wrong value for item action: " + value.get("action"));
@@ -150,7 +151,7 @@ public class ItemMovedEvent extends DungeonEvent implements Communicable
 	public JsonObject toJson()
 	{
 		JsonObject root = Json.object();
-		root.add("actor", this.mover.id());
+		root.add("mover", this.mover.id());
 		root.add("sourcetype", this.source.containerType().name());
 		root.add("sourceid", this.source.containerID());
 		root.add("sourceindex", this.sourceIndex);

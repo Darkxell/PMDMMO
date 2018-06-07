@@ -146,7 +146,7 @@ public class PokemonTravelEvent extends DungeonEvent implements Communicable
 	public JsonObject toJson()
 	{
 		JsonObject root = Json.object();
-		root.add("actor", this.pokemon.id());
+		root.add("pokemon", this.pokemon.id());
 		root.add("running", this.running);
 		root.add("direction", this.direction.name());
 		return root;

@@ -76,7 +76,7 @@ public final class EventCommunication
 			((Communicable) e).read(json);
 		} catch (JsonReadingException ex)
 		{
-			Logger.e(ex.getMessage());
+			Logger.e("Error reading Json for " + className.substring(className.lastIndexOf('.') + 1) + ": " + ex.getMessage());
 			return null;
 		}
 

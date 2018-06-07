@@ -73,7 +73,7 @@ public class PokemonRotateEvent extends DungeonEvent implements Communicable
 	public JsonObject toJson()
 	{
 		JsonObject root = Json.object();
-		root.add("actor", this.pokemon.id());
+		root.add("pokemon", this.pokemon.id());
 		root.add("direction", this.direction.name());
 		return root;
 	}

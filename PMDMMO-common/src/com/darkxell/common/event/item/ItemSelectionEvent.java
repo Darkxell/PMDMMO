@@ -125,6 +125,7 @@ public class ItemSelectionEvent extends DungeonEvent implements Communicable
 
 		if (this.item.usedOnTeamMember())
 		{
+			if (value.get("target") == null) throw new JsonReadingException("No value for target ID!");
 			try
 			{
 				Pokemon p = this.floor.dungeon.communication.pokemonIDs.get(value.getLong("target", 0));
@@ -135,7 +136,7 @@ public class ItemSelectionEvent extends DungeonEvent implements Communicable
 				throw e;
 			} catch (Exception e)
 			{
-				throw new JsonReadingException("Wrong value for Pokémon ID: " + value.get("target"));
+				throw new JsonReadingException("Wrong value for target ID: " + value.get("target"));
 			}
 		}
 
