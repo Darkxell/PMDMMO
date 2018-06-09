@@ -2,6 +2,10 @@ package com.darkxell.client.state;
 
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Random;
 
 import com.darkxell.client.launchable.Persistance;
@@ -10,9 +14,12 @@ import com.darkxell.client.mechanics.freezones.FreezoneMap;
 import com.darkxell.client.state.dungeon.NextFloorState;
 import com.darkxell.client.state.freezone.FreezoneExploreState;
 import com.darkxell.client.state.map.LocalMap;
+import com.darkxell.common.dungeon.DungeonInstance;
 import com.darkxell.common.dungeon.DungeonRegistry;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.Logger;
+import com.eclipsesource.json.JsonObject;
+import com.eclipsesource.json.PrettyPrint;
 
 /** Describes how a statemanager is supposed to work. A statemanager is expected to display A very big portion of the application, like for example the game / the login facilities...<br/>
  * Note that changing the statemanager removes the previous one completely, and should only be done when the user does significants acts that changes the way he is going to interact with the application after, like for exemple logging in. */
@@ -92,6 +99,27 @@ public abstract class StateManager
 		Persistance.dungeon.initiateExploration();
 		Persistance.floor = Persistance.dungeon.currentFloor();
 		Persistance.stateManager.setState(new NextFloorState(fadeOutState, 1));
+	}
+
+	public static void onDungeonEnd(DungeonInstance dungeon, boolean success)
+	{
+		if (Persistance.saveDungeonExplorations)
+		{
+			JsonObject o = Persistance.dungeon.communication.explorationSummary(true);
+			try
+			{
+				BufferedWriter fw = new BufferedWriter(
+						new FileWriter(new File("dungeon-" + Persistance.dungeon.id + "-" + Persistance.dungeon.seed + ".json")));
+				fw.write(o.toString(PrettyPrint.indentWithTabs()));
+				fw.close();
+			} catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
+
+		Persistance.player.resetDungeonTeam();
+		StateManager.setExploreState("Base", -1, -1);
 	}
 
 }

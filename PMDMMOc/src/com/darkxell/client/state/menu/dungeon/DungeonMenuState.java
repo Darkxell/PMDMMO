@@ -48,8 +48,13 @@ public class DungeonMenuState extends OptionSelectionMenuState
 	protected void onOptionSelected(MenuOption option)
 	{
 		DungeonState s = Persistance.dungeonState;
-		if (option == this.moves) Persistance.stateManager.setState(new MovesMenuState(s));
-		else if (option == this.items)
+		if (option == this.moves)
+		{
+			ArrayList<Pokemon> p = new ArrayList<>();
+			for (Pokemon pok : Persistance.player.getTeam())
+				if (pok.getDungeonPokemon() != null && !pok.getDungeonPokemon().isFainted()) p.add(pok.getDungeonPokemon().usedPokemon);
+			Persistance.stateManager.setState(new MovesMenuState(s, p.toArray(new Pokemon[p.size()])));
+		} else if (option == this.items)
 		{
 			ArrayList<ItemContainer> containers = new ArrayList<ItemContainer>();
 			if (!Persistance.player.inventory().isEmpty()) containers.add(Persistance.player.inventory());

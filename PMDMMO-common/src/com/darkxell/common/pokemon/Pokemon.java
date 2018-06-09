@@ -7,6 +7,7 @@ import org.jdom2.Element;
 import com.darkxell.common.dbobject.DBPokemon;
 import com.darkxell.common.dbobject.DatabaseIdentifier;
 import com.darkxell.common.dungeon.TempIDRegistry.HasID;
+import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.move.MoveDiscoveredEvent;
 import com.darkxell.common.event.stats.ExperienceGainedEvent;
@@ -285,9 +286,8 @@ public class Pokemon implements ItemContainer, HasID
 		return this.data.level;
 	}
 
-	public ArrayList<DungeonEvent> levelUp()
+	public void levelUp(Floor floor, ArrayList<DungeonEvent> events)
 	{
-		ArrayList<DungeonEvent> events = new ArrayList<>();
 		this.setLevel(this.level() + 1);
 		BaseStats stats = this.species().baseStatsIncrease(this.level() - 1);
 		this.stats.add(stats);
@@ -295,9 +295,7 @@ public class Pokemon implements ItemContainer, HasID
 
 		ArrayList<Move> moves = this.species().learnedMoves(this.level());
 		for (Move move : moves)
-			events.add(new MoveDiscoveredEvent(this, move));
-
-		return events;
+			events.add(new MoveDiscoveredEvent(floor, this, move));
 	}
 
 	public LearnedMove move(int slot)

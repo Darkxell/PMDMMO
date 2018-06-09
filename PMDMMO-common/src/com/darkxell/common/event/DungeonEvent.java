@@ -109,9 +109,10 @@ public abstract class DungeonEvent
 	}
 
 	/** Defines this Event as a PAE. Make sure this Event implements Communicable and has a (Floor) Constructor. */
-	public void setPAE()
+	public DungeonEvent setPAE()
 	{
 		this.isPAE = true;
+		return this;
 	}
 
 }

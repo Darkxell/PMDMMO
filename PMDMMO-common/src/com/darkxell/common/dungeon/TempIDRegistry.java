@@ -38,6 +38,7 @@ public abstract class TempIDRegistry<T extends HasID>
 				for (int i = 0; i < pokemon.moveCount(); ++i)
 					if (pokemon.move(i) == move)
 					{
+						if (pokemon.getData().learnedmoves.size() == i) pokemon.getData().learnedmoves.add(new DatabaseIdentifier(id));
 						pokemon.getData().learnedmoves.set(i, new DatabaseIdentifier(id));
 						break;
 					}

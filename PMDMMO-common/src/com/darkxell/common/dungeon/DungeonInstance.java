@@ -27,7 +27,7 @@ public class DungeonInstance
 	private HashMap<DungeonPokemon, Actor> actorMap = new HashMap<>();
 	/** The Pokémon to take turn in order. */
 	private ArrayList<Actor> actors = new ArrayList<>();
-	public final CommunicationUtils communication = new CommunicationUtils();;
+	public final CommunicationUtils communication;
 	/** The current Pokémon taking its turn. */
 	private int currentActor;
 	/** The current Floor. */
@@ -38,7 +38,7 @@ public class DungeonInstance
 	public CommonEventProcessor eventProcessor;
 	/** The Players that are currently exploring this Dungeon. */
 	private ArrayList<Player> exploringPlayers = new ArrayList<>();
-	/** ID of the Dungeon. */
+	/** ID of the Dungeon being explored. */
 	public final int id;
 	/** True if this Dungeon is currently generating a floor. Used for Actor registering. */
 	private boolean isGeneratingFloor;
@@ -46,13 +46,16 @@ public class DungeonInstance
 	private ArrayList<GameTurn> pastTurns = new ArrayList<>();
 	/** RNG for floor generation. */
 	public final Random random;
+	public final long seed;
 	/** All the Players that started exploring this Dungeon, even if they left. */
 	private ArrayList<Player> startingPlayers = new ArrayList<>();
 
-	public DungeonInstance(int id, Random random)
+	public DungeonInstance(int id, long seed)
 	{
 		this.id = id;
-		this.random = random;
+		this.seed = seed;
+		this.communication = new CommunicationUtils(this);
+		this.random = new Random(this.seed);
 	}
 
 	/** Adds the input Player to the list of Players currently exploring this Dungeon. */
@@ -183,7 +186,7 @@ public class DungeonInstance
 		// Register Player first
 		for (Player player : this.exploringPlayers)
 			for (DungeonPokemon pokemon : player.getDungeonTeam())
-				this.registerActor(pokemon);
+				if (!pokemon.isFainted()) this.registerActor(pokemon);
 		// Then Wild pokemon
 		for (DungeonPokemon pokemon : this.currentFloor.listPokemon())
 		{
@@ -249,6 +252,14 @@ public class DungeonInstance
 	public boolean isGeneratingFloor()
 	{
 		return this.isGeneratingFloor;
+	}
+
+	public ArrayList<GameTurn> listTurns()
+	{
+		ArrayList<GameTurn> turns = new ArrayList<>();
+		turns.addAll(this.pastTurns);
+		turns.add(this.currentTurn);
+		return turns;
 	}
 
 	/** Proceeds to the next actor and returns it. */

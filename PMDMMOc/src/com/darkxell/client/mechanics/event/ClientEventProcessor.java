@@ -234,11 +234,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 
 	private void processDungeonExitEvent(DungeonExitEvent event)
 	{
-		if (event.pokemon == Persistance.player.getDungeonLeader())
-		{
-			Persistance.player.resetDungeonTeam();
-			StateManager.setExploreState("Base", -1, -1);
-		}
+		if (event.pokemon == Persistance.player.getDungeonLeader()) StateManager.onDungeonEnd(Persistance.dungeon, true);
 	}
 
 	private void processFaintedEvent(FaintedPokemonEvent event)
@@ -399,11 +395,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 
 	private void processPlayerLosesEvent(PlayerLosesEvent event)
 	{
-		if (event.player == Persistance.player)
-		{
-			StateManager.setExploreState("Base", -1, -1);
-			Persistance.player.resetDungeonTeam();
-		}
+		if (event.player == Persistance.player) StateManager.onDungeonEnd(Persistance.dungeon, false);
 	}
 
 	private void processSpawnEvent(PokemonSpawnedEvent event)

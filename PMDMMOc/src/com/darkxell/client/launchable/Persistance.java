@@ -35,7 +35,7 @@ public abstract class Persistance
 	public static FreezoneMap currentmap;
 	public static FreezonePlayer currentplayer = new FreezonePlayer(new PokemonSprite(PokemonSpritesets.getSpriteset(0)), 35, 28);
 	public static FreezoneCamera freezoneCamera = new FreezoneCamera(currentplayer);
-	
+
 	public static AbstractState cutsceneState = null;
 
 	// DUNGEON RELATED OBJECTS
@@ -51,5 +51,8 @@ public abstract class Persistance
 
 	/** If true, data for pokemon, dungeon, moves, etc. is saved on exit. */
 	public static boolean saveDataOnExit = false;
+
+	/** If true, dungeon explorations will be saved as Json. */
+	public static final boolean saveDungeonExplorations = true;
 
 }
