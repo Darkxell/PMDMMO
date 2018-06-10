@@ -61,7 +61,8 @@ public class Lang
 		dictionnary.clear();
 		try
 		{
-			dictionnary.load(Lang.class.getResourceAsStream("/lang/" + selected.id + ".properties"));
+			InputStream stream = Lang.class.getResourceAsStream("/lang/" + selected.id + ".properties");
+			if (stream != null) dictionnary.load(stream);
 		} catch (FileNotFoundException e)
 		{
 			e.printStackTrace();

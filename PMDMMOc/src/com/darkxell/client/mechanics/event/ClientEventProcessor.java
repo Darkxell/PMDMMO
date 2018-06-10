@@ -234,7 +234,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 
 	private void processDungeonExitEvent(DungeonExitEvent event)
 	{
-		if (event.pokemon == Persistance.player.getDungeonLeader()) StateManager.onDungeonEnd(Persistance.dungeon, true);
+		if (event.player() == Persistance.player) StateManager.onDungeonEnd(Persistance.dungeon, true);
 	}
 
 	private void processFaintedEvent(FaintedPokemonEvent event)

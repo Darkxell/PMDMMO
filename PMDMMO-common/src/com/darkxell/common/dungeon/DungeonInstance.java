@@ -18,6 +18,7 @@ import com.darkxell.common.event.action.TurnSkippedEvent;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.Logger;
 
@@ -27,7 +28,7 @@ public class DungeonInstance
 	private HashMap<DungeonPokemon, Actor> actorMap = new HashMap<>();
 	/** The Pokémon to take turn in order. */
 	private ArrayList<Actor> actors = new ArrayList<>();
-	public final CommunicationUtils communication;
+	public final DungeonCommunication communication;
 	/** The current Pokémon taking its turn. */
 	private int currentActor;
 	/** The current Floor. */
@@ -54,7 +55,7 @@ public class DungeonInstance
 	{
 		this.id = id;
 		this.seed = seed;
-		this.communication = new CommunicationUtils(this);
+		this.communication = new DungeonCommunication(this);
 		this.random = new Random(this.seed);
 	}
 
@@ -233,6 +234,14 @@ public class DungeonInstance
 			Logger.e("Tried to start the Dungeon again!");
 			return this.currentFloor;
 		}
+
+		for (Player player : this.startingPlayers)
+		{
+			player.resetDungeonTeam();
+			for (Pokemon member : player.getTeam())
+				member.createDungeonPokemon();
+		}
+
 		this.generateNextFloor();
 		this.currentSubTurn = GameTurn.SUB_TURNS - 1;
 
@@ -241,7 +250,7 @@ public class DungeonInstance
 		this.currentFloor.onFloorStart(events);
 		if (this.eventProcessor == null)
 		{
-			Logger.w("Event processing hasn't been initialized. Creating default CommonEventProcessor.");
+			Logger.w("Event processor hasn't been initialized. Creating default CommonEventProcessor.");
 			this.eventProcessor = new CommonEventProcessor(this);
 		}
 		this.eventProcessor.addToPending(events);

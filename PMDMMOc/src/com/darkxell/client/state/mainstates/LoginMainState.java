@@ -3,7 +3,6 @@ package com.darkxell.client.state.mainstates;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
-import java.util.Random;
 
 import com.darkxell.client.launchable.ClientSettings;
 import com.darkxell.client.launchable.Encryption;
@@ -17,14 +16,11 @@ import com.darkxell.client.state.StateManager;
 import com.darkxell.client.state.quiz.PersonalityQuizState;
 import com.darkxell.client.ui.MainUiUtility;
 import com.darkxell.common.dbobject.DBPlayer;
-import com.darkxell.common.item.ItemID;
-import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.player.Player;
-import com.darkxell.common.pokemon.LearnedMove;
-import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.util.DoubleRectangle;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.Position;
+import com.darkxell.common.util.Util;
 import com.darkxell.common.util.language.Message;
 import com.eclipsesource.json.JsonObject;
 
@@ -249,13 +245,7 @@ public class LoginMainState extends StateManager {
 	/** Called when the user presses the play offline debug mode */
 	private void launchOffline() {
 		// Set placeholder data to fake an account creation
-		Persistance.player = new Player("Offline debug account name",
-				PokemonRegistry.find(4).generate(new Random(), 1));
-		Persistance.player.setStoryPosition(1);
-		Persistance.player.addAlly(PokemonRegistry.find(1).generate(new Random(), 1, 1));
-		Persistance.player.addAlly(PokemonRegistry.find(255).generate(new Random(), 1));
-		Persistance.player.getTeamLeader().setItem(new ItemStack(ItemID.XRaySpecs));
-		Persistance.player.getTeamLeader().setMove(3, new LearnedMove(801));
+		Persistance.player = Util.createDefaultPlayer();
 		Persistance.currentplayer.setPlayer(Persistance.player);
 
 		// Go to the game state

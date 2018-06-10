@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 import com.darkxell.common.ai.AIUtils;
+import com.darkxell.common.dungeon.AutoDungeonInstance;
 import com.darkxell.common.dungeon.DungeonInstance;
 import com.darkxell.common.event.action.PokemonRotateEvent;
 import com.darkxell.common.event.action.PokemonSpawnedEvent;
@@ -142,14 +143,16 @@ public class CommonEventProcessor
 					{
 						this.runners.clear();
 						this.setState(State.AWATING_INPUT);
-						return;
 					} else this.processEvent(new PokemonTravelEvent(this.dungeon.currentFloor(), actor, true, actor.facing()));
-				} else
-				{
-					this.setState(State.AWATING_INPUT);
-					return;
-				}
+				} else this.setState(State.AWATING_INPUT);
 			} else this.processEvent(this.dungeon.currentFloor().aiManager.takeAction(actor));
+		}
+
+		if (this.state() == State.AWATING_INPUT && this.dungeon instanceof AutoDungeonInstance)
+		{
+			DungeonEvent event = ((AutoDungeonInstance) this.dungeon).nextEvent();
+			if (event == null) event = new ExplorationStopEvent(this.dungeon.currentFloor());
+			this.processEvent(event);
 		}
 	}
 

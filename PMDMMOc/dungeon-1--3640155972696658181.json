@@ -1,0 +1,57 @@
+{
+	"dungeon": 1,
+	"seed": -3640155972696658181,
+	"events": [
+		{
+			"pokemon": -3,
+			"direction": "SOUTHEAST",
+			"event": "action.PokemonRotateEvent"
+		},
+		{
+			"pokemon": -3,
+			"running": false,
+			"direction": "SOUTHEAST",
+			"event": "action.PokemonTravelEvent"
+		},
+		{
+			"pokemon": -3,
+			"running": false,
+			"direction": "SOUTHEAST",
+			"event": "action.PokemonTravelEvent"
+		},
+		{
+			"pokemon": -3,
+			"direction": "EAST",
+			"event": "action.PokemonRotateEvent"
+		},
+		{
+			"pokemon": -3,
+			"running": false,
+			"direction": "EAST",
+			"event": "action.PokemonTravelEvent"
+		},
+		{
+			"pokemon": -3,
+			"running": true,
+			"direction": "EAST",
+			"event": "action.PokemonTravelEvent"
+		},
+		{
+			"pokemon": -3,
+			"direction": "NORTH",
+			"event": "action.PokemonRotateEvent"
+		},
+		{
+			"pokemon": -3,
+			"running": true,
+			"direction": "NORTH",
+			"event": "action.PokemonTravelEvent"
+		},
+		{
+			"pokemon": -3,
+			"move": -4,
+			"direction": "NORTH",
+			"event": "move.MoveSelectionEvent"
+		}
+	]
+}

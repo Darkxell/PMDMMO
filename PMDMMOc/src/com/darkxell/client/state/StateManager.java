@@ -16,7 +16,6 @@ import com.darkxell.client.state.freezone.FreezoneExploreState;
 import com.darkxell.client.state.map.LocalMap;
 import com.darkxell.common.dungeon.DungeonInstance;
 import com.darkxell.common.dungeon.DungeonRegistry;
-import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.Logger;
 import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.PrettyPrint;
@@ -89,10 +88,6 @@ public abstract class StateManager
 	 * @param dungeonID - ID of a Dungeon. If doesn't match a valid ID, this method will not do anything. */
 	public static void setDungeonState(AbstractState fadeOutState, int dungeonID)
 	{
-		Persistance.player.resetDungeonTeam();
-		for (Pokemon member : Persistance.player.getTeam())
-			member.createDungeonPokemon();
-
 		Persistance.dungeon = DungeonRegistry.find(dungeonID).newInstance(new Random().nextLong());
 		Persistance.dungeon.eventProcessor = Persistance.eventProcessor = new ClientEventProcessor(Persistance.dungeon);
 		Persistance.dungeon.addPlayer(Persistance.player);

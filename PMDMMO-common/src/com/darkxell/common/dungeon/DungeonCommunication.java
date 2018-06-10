@@ -15,15 +15,49 @@ import com.darkxell.common.util.Communicable.JsonReadingException;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
+import com.eclipsesource.json.JsonValue;
 
-public class CommunicationUtils
+public class DungeonCommunication
 {
+	public static AutoDungeonInstance readExploration(JsonObject json) throws JsonReadingException
+	{
+		if (json.get("dungeon") == null) throw new JsonReadingException("No value for Dungeon ID!");
+		if (json.get("seed") == null) throw new JsonReadingException("No value for exploration seed!");
+
+		int dungeonID = -1;
+		long seed = -1;
+
+		try
+		{
+			dungeonID = json.getInt("dungeon", -1);
+		} catch (Exception e)
+		{
+			throw new JsonReadingException("Wrong value for Dungeon ID: " + json.get("dungeon"));
+		}
+		if (dungeonID <= 0) throw new JsonReadingException("Wrong value for Dungeon ID: " + dungeonID);
+
+		try
+		{
+			seed = json.getLong("seed", -1);
+		} catch (Exception e)
+		{
+			throw new JsonReadingException("Wrong value for exploration seed: " + json.get("seed"));
+		}
+
+		AutoDungeonInstance dungeon = new AutoDungeonInstance(dungeonID, seed);
+
+		if (json.get("events") != null && json.get("events").isArray()) for (JsonValue event : json.get("events").asArray())
+			if (event.isObject()) dungeon.pendingEvents.add(event.asObject());
+
+		return dungeon;
+	}
 	public final DungeonInstance dungeon;
 	public final ItemsTempIDRegistry itemIDs = new ItemsTempIDRegistry();
 	public final MovesTempIDRegistry moveIDs = new MovesTempIDRegistry();
+
 	public final PokemonTempIDRegistry pokemonIDs = new PokemonTempIDRegistry();
 
-	public CommunicationUtils(DungeonInstance dungeon)
+	public DungeonCommunication(DungeonInstance dungeon)
 	{
 		this.dungeon = dungeon;
 	}

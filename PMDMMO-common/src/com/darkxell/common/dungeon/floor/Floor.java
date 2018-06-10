@@ -418,9 +418,9 @@ public class Floor
 
 	public void unsummonPokemon(DungeonPokemon pokemon)
 	{
-		pokemon.tile().setPokemon(null);
 		this.dungeon.unregisterActor(pokemon);
 		if (!pokemon.isTeamLeader()) this.aiManager.unregister(pokemon);
+		pokemon.tile().removePokemon(pokemon);
 	}
 
 }
