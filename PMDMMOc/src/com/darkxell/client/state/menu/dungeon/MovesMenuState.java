@@ -149,7 +149,7 @@ public class MovesMenuState extends OptionSelectionMenuState
 
 			if (success)
 			{
-				Persistance.eventProcessor.processEvent(new MoveSwitchedEvent(Persistance.floor, this.selectedPokemon(), from, to).setPAE());
+				Persistance.eventProcessor().processEvent(new MoveSwitchedEvent(Persistance.floor, this.selectedPokemon(), from, to).setPAE());
 
 				MovesMenuState s = new MovesMenuState(Persistance.dungeonState, this.pokemon);
 				s.selection = this.selection;
@@ -181,10 +181,10 @@ public class MovesMenuState extends OptionSelectionMenuState
 		if (this.isMainSelected())
 		{
 			Persistance.stateManager.setState(s);
-			Persistance.eventProcessor.processEvent(new MoveSelectionEvent(Persistance.floor, move, Persistance.player.getDungeonLeader()).setPAE());
+			Persistance.eventProcessor().processEvent(new MoveSelectionEvent(Persistance.floor, move, Persistance.player.getDungeonLeader()).setPAE());
 		} else
 		{
-			Persistance.eventProcessor.processEvent(new MoveEnabledEvent(Persistance.floor, move, !move.isEnabled()).setPAE());
+			Persistance.eventProcessor().processEvent(new MoveEnabledEvent(Persistance.floor, move, !move.isEnabled()).setPAE());
 			MovesMenuState state = new MovesMenuState(s, this.pokemon);
 			state.tab = this.tab;
 			state.selection = this.selection;

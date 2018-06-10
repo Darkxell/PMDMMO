@@ -39,6 +39,7 @@ public class DungeonCommunication
 		try
 		{
 			seed = json.getLong("seed", -1);
+			if (seed == -1) throw new JsonReadingException("");
 		} catch (Exception e)
 		{
 			throw new JsonReadingException("Wrong value for exploration seed: " + json.get("seed"));
@@ -51,10 +52,10 @@ public class DungeonCommunication
 
 		return dungeon;
 	}
+
 	public final DungeonInstance dungeon;
 	public final ItemsTempIDRegistry itemIDs = new ItemsTempIDRegistry();
 	public final MovesTempIDRegistry moveIDs = new MovesTempIDRegistry();
-
 	public final PokemonTempIDRegistry pokemonIDs = new PokemonTempIDRegistry();
 
 	public DungeonCommunication(DungeonInstance dungeon)

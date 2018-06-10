@@ -63,6 +63,9 @@ public class Launcher
 	public static void stopGame()
 	{
 		isRunning = false;
+		Logger.instance().saveClient();
+		if (Persistance.isUnitTesting) return;
+		ClientSettings.save();
 		if (Persistance.saveDataOnExit)
 		{
 			PokemonRegistry.saveClient();
@@ -70,8 +73,6 @@ public class Launcher
 			ItemRegistry.saveClient();
 			DungeonRegistry.saveClient();
 		}
-		Logger.instance().saveClient();
-		ClientSettings.save();
 	}
 
 	public static void setProcessingProfile(byte profile)

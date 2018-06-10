@@ -73,7 +73,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		@Override
 		public void onAnimationEnd(AbstractAnimation animation)
 		{
-			Persistance.eventProcessor.animateDelayed();
+			Persistance.eventProcessor().animateDelayed();
 		}
 	};
 	/** Pending events to process. */
@@ -81,7 +81,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		@Override
 		public void onAnimationEnd(AbstractAnimation animation)
 		{
-			Persistance.eventProcessor.processPending();
+			Persistance.eventProcessor().processPending();
 		}
 	};
 
@@ -90,7 +90,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		public void onDialogEnd(AbstractDialogState dialog)
 		{
 			Persistance.stateManager.setState(Persistance.dungeonState);
-			Persistance.eventProcessor.processPending();
+			Persistance.eventProcessor().processPending();
 		}
 	};
 
@@ -502,7 +502,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	}
 
 	@Override
-	protected void setState(State state)
+	public void setState(State state)
 	{
 		super.setState(state);
 		if (state == State.AWATING_INPUT && this.dungeon.getActor() == Persistance.player.getDungeonLeader())

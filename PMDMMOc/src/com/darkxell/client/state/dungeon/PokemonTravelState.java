@@ -108,7 +108,7 @@ public class PokemonTravelState extends DungeonSubState
 		{
 			for (PokemonTravelEvent travel : this.travels)
 				Persistance.dungeonState.pokemonRenderer.getRenderer(travel.pokemon()).setXY(travel.destination().x, travel.destination().y);
-			Persistance.eventProcessor.animateDelayed();
+			Persistance.eventProcessor().animateDelayed();
 		}
 	}
 }

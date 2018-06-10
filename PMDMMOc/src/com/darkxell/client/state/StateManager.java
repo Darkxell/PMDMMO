@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Random;
 
+import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.event.ClientEventProcessor;
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
@@ -89,15 +90,15 @@ public abstract class StateManager
 	public static void setDungeonState(AbstractState fadeOutState, int dungeonID)
 	{
 		Persistance.dungeon = DungeonRegistry.find(dungeonID).newInstance(new Random().nextLong());
-		Persistance.dungeon.eventProcessor = Persistance.eventProcessor = new ClientEventProcessor(Persistance.dungeon);
+		Persistance.dungeon.eventProcessor = new ClientEventProcessor(Persistance.dungeon);
 		Persistance.dungeon.addPlayer(Persistance.player);
-		Persistance.dungeon.initiateExploration();
-		Persistance.floor = Persistance.dungeon.currentFloor();
+		Persistance.floor = Persistance.dungeon.initiateExploration();
 		Persistance.stateManager.setState(new NextFloorState(fadeOutState, 1));
 	}
 
 	public static void onDungeonEnd(DungeonInstance dungeon, boolean success)
 	{
+		if (Persistance.isUnitTesting) Launcher.stopGame();
 		if (Persistance.saveDungeonExplorations)
 		{
 			JsonObject o = Persistance.dungeon.communication.explorationSummary(true);

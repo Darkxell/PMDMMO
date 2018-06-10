@@ -4,25 +4,26 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 
+import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.mechanics.event.ClientEventProcessor;
+import com.darkxell.client.state.dungeon.NextFloorState;
 import com.darkxell.common.dungeon.AutoDungeonInstance;
 import com.darkxell.common.dungeon.DungeonCommunication;
-import com.darkxell.common.event.CommonEventProcessor;
+import com.darkxell.common.event.CommonEventProcessor.State;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.GameTurn;
 import com.darkxell.common.test.UTest;
 import com.darkxell.common.util.Communicable.JsonReadingException;
 import com.darkxell.common.util.Util;
 import com.eclipsesource.json.Json;
-import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
 
-public class AutoDungeonTest extends UTest
+public class DungeonReplayTest extends UTest
 {
 
-	public static final String path = "resources/replays/dungeon-1-4705260968184275559.json";
-	private JsonObject dungeonSummary;
+	public static final String path = "resources/replays/dungeon-3--2639955316216311514.json";
 
-	public AutoDungeonTest()
+	public DungeonReplayTest()
 	{
 		super(ACTION_WARN);
 	}
@@ -46,11 +47,10 @@ public class AutoDungeonTest extends UTest
 			this.log("Json data has invalid format.");
 			return null;
 		}
-		this.dungeonSummary = json.asObject();
 
 		try
 		{
-			dungeon = DungeonCommunication.readExploration(this.dungeonSummary);
+			dungeon = DungeonCommunication.readExploration(json.asObject());
 		} catch (JsonReadingException e)
 		{
 			this.log(e.getMessage());
@@ -68,30 +68,17 @@ public class AutoDungeonTest extends UTest
 	@Override
 	protected int test()
 	{
+		Persistance.player = Util.createDefaultPlayer();
 		AutoDungeonInstance dungeon = this.createDungeon();
 		if (dungeon == null) return 1;
+		Persistance.dungeon = dungeon;
 
-		dungeon.eventProcessor = new CommonEventProcessor(dungeon);
-		dungeon.addPlayer(Util.createDefaultPlayer());
-
-		long start = System.nanoTime();
-		dungeon.initiateExploration();
-		long duration = System.nanoTime() - start;
-		// this.logAllEvents(dungeon);
-
-		int eventCount = 0;
-		for (GameTurn turn : dungeon.listTurns())
-			eventCount += turn.events().length;
-		System.out.println("Exploration duration: " + (duration * 1d / 1000000) + "ms, for " + eventCount + " events.");
-
-		JsonObject summary = dungeon.communication.explorationSummary(true);
-		if (!summary.equals(this.dungeonSummary))
-		{
-			this.log("Explorations are different!");
-			this.log(this.dungeonSummary.toString());
-			this.log(summary.toString());
-			return 2;
-		}
+		dungeon.eventProcessor = new ClientEventProcessor(dungeon);
+		dungeon.addPlayer(Persistance.player);
+		Persistance.stateManager.setState(new NextFloorState(null, 1));
+		((ClientEventProcessor) dungeon.eventProcessor).setState(State.STOPPED);
+		Persistance.floor = dungeon.initiateExploration();
+		((ClientEventProcessor) dungeon.eventProcessor).setState(State.PROCESSING);
 
 		return TEST_SUCCESSFUL;
 	}

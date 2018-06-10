@@ -30,6 +30,7 @@ public abstract class Persistance
 	public static ChatBox chatbox = new ChatBox();
 	public static AbstractDisplayMap displaymap = LocalMap.instance;
 	public static GameSocketEndpoint socketendpoint = new GameSocketEndpoint();
+	public static boolean isUnitTesting = false;
 
 	// FREEZONE RELATED OBJECTS
 	public static FreezoneMap currentmap;
@@ -44,7 +45,11 @@ public abstract class Persistance
 	public static MasterDungeonRenderer dungeonRenderer;
 	public static Floor floor;
 	public static Player player;
-	public static ClientEventProcessor eventProcessor;
+
+	public static ClientEventProcessor eventProcessor()
+	{
+		return dungeon == null ? null : (ClientEventProcessor) dungeon.eventProcessor;
+	}
 
 	/** Displays the debug information. Careful, this is not optimized and will have a high CPU drain. It also makes the game really ugly, it's a debug mode... */
 	public static boolean debugdisplaymode = false;

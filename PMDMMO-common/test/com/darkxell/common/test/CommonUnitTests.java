@@ -13,7 +13,7 @@ import com.darkxell.common.util.language.Lang;
 public class CommonUnitTests
 {
 
-	public static void main(String[] args)
+	public static void executeTests()
 	{
 		Logger.loadServer();
 		Lang.load();
@@ -21,10 +21,16 @@ public class CommonUnitTests
 		DungeonRegistry.load();
 		ItemRegistry.load();
 		MoveRegistry.load();
-		
+
 		new DBObjecttransferTest().execute();
 		new DungeonEventTransferTest().execute();
 		new AutoDungeonTest().execute();
+
+	}
+
+	public static void main(String[] args)
+	{
+		executeTests();
 	}
 
 }

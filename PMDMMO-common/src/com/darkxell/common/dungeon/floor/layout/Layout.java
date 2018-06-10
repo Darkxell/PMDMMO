@@ -65,7 +65,7 @@ public abstract class Layout
 	public void generate(Floor floor)
 	{
 		this.floor = floor;
-		this.random = this.floor.dungeon.random;
+		this.random = this.floor.random;
 		this.generateRooms();
 		this.generatePaths();
 		this.generateLiquids();
