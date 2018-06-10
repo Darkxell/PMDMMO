@@ -21,7 +21,7 @@ import com.eclipsesource.json.JsonValue;
 public class DungeonReplayTest extends UTest
 {
 
-	public static final String path = "resources/replays/dungeon-3--2639955316216311514.json";
+	public static final String path = "resources/replays/dungeon-3-4211365524977815878.json";
 
 	public DungeonReplayTest()
 	{
@@ -75,9 +75,9 @@ public class DungeonReplayTest extends UTest
 
 		dungeon.eventProcessor = new ClientEventProcessor(dungeon);
 		dungeon.addPlayer(Persistance.player);
-		Persistance.stateManager.setState(new NextFloorState(null, 1));
 		((ClientEventProcessor) dungeon.eventProcessor).setState(State.STOPPED);
 		Persistance.floor = dungeon.initiateExploration();
+		Persistance.stateManager.setState(new NextFloorState(null, 1));
 		((ClientEventProcessor) dungeon.eventProcessor).setState(State.PROCESSING);
 
 		return TEST_SUCCESSFUL;

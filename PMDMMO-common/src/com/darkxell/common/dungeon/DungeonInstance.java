@@ -46,7 +46,7 @@ public class DungeonInstance
 	/** Lists the previous turns. */
 	private ArrayList<GameTurn> pastTurns = new ArrayList<>();
 	/** RNG for floor generation. */
-	public final Random random;
+	private Random random;
 	public final long seed;
 	/** All the Players that started exploring this Dungeon, even if they left. */
 	private ArrayList<Player> startingPlayers = new ArrayList<>();
@@ -56,7 +56,6 @@ public class DungeonInstance
 		this.id = id;
 		this.seed = seed;
 		this.communication = new DungeonCommunication(this);
-		this.random = new Random(this.seed);
 	}
 
 	/** Adds the input Player to the list of Players currently exploring this Dungeon. */
@@ -242,6 +241,7 @@ public class DungeonInstance
 				member.createDungeonPokemon();
 		}
 
+		this.random = new Random(this.seed);
 		this.generateNextFloor();
 		this.currentSubTurn = GameTurn.SUB_TURNS - 1;
 
