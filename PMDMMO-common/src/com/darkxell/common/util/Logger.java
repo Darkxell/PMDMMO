@@ -14,7 +14,7 @@ public class Logger
 {
 	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 	/** Booleans describing whether logging of each type should be effective. */
-	public static final boolean error = true, info = true, debug = true, warning = true, events = true;
+	public static final boolean error = true, info = true, debug = true, warning = true, events = false;
 	public static final String ERROR = "ERROR", INFO = "INFO", DEBUG = "DEBUG", WARNING = "WARNING", EVENTS = "EVENTS";
 
 	private static Logger instance;
