@@ -28,7 +28,7 @@ import com.darkxell.common.util.language.Message;
 import javafx.util.Pair;
 
 /** Represents a single tile in a Floor. */
-public class Tile implements ItemContainer
+public class Tile implements ItemContainer, Comparable<Tile>
 {
 
 	/** Alternative tiles. */
@@ -109,6 +109,13 @@ public class Tile implements ItemContainer
 			if (!(allowSwitching && pokemon.player().isAlly(this.getPokemon()))) return false;
 		}
 		return this.type.canWalkOn(pokemon);
+	}
+
+	@Override
+	public int compareTo(Tile tile)
+	{
+		if (this.y == tile.y) return Integer.compare(this.x, tile.x);
+		return Integer.compare(this.y, tile.y);
 	}
 
 	@Override

@@ -89,7 +89,7 @@ public class PokemonTravelEvent extends DungeonEvent implements Communicable
 	@Override
 	public String loggerMessage()
 	{
-		return this.pokemon + " travelled.";
+		return this.pokemon + " travels from " + this.origin + " to " + this.destination;
 	}
 
 	public Tile origin()
