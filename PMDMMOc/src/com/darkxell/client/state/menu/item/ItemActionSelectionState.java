@@ -1,4 +1,4 @@
-package com.darkxell.client.state.menu.dungeon.item;
+package com.darkxell.client.state.menu.item;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;

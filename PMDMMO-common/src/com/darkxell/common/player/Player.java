@@ -61,18 +61,25 @@ public class Player
 		return this.leaderPokemon.getDungeonPokemon();
 	}
 
+	public DungeonPokemon getDungeonMember(int index)
+	{
+		if (index == 0) return this.getDungeonLeader();
+		else if (index < this.dungeonAllies.size() + 1) return this.dungeonAllies.get(index - 1);
+		return null;
+	}
+
 	public DungeonPokemon[] getDungeonTeam()
 	{
 		DungeonPokemon[] team = new DungeonPokemon[this.allies.size() + 1];
 		for (int i = 0; i < team.length; ++i)
-			team[i] = this.getMember(i);
+			team[i] = this.getDungeonMember(i);
 		return team;
 	}
 
-	public DungeonPokemon getMember(int index)
+	public Pokemon getMember(int index)
 	{
-		if (index == 0) return this.getDungeonLeader();
-		else if (index < this.dungeonAllies.size() + 1) return this.dungeonAllies.get(index - 1);
+		if (index == 0) return this.getTeamLeader();
+		else if (index < this.allies.size() + 1) return this.allies.get(index - 1);
 		return null;
 	}
 

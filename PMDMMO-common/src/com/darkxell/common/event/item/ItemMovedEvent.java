@@ -9,6 +9,7 @@ import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.player.Inventory;
 import com.darkxell.common.player.ItemContainer;
 import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.language.Message;
 
 public class ItemMovedEvent extends DungeonEvent
@@ -36,8 +37,9 @@ public class ItemMovedEvent extends DungeonEvent
 			else message = "ground.pickup";
 		} else if (action == ItemAction.PLACE) message = "ground.place";
 		else if (action == ItemAction.TAKE) message = "inventory.taken";
-		this.messages.add(
-				new Message(message).addReplacement("<pokemon>", mover.getNickname()).addReplacement("<item>", this.source.getItem(this.sourceIndex).name()));
+		this.messages
+				.add(new Message(message).addReplacement("<pokemon>", (action == ItemAction.GIVE ? ((Pokemon) destination) : mover.usedPokemon).getNickname())
+						.addReplacement("<item>", this.source.getItem(this.sourceIndex).name()));
 	}
 
 	@Override

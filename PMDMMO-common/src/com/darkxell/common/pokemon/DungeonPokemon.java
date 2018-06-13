@@ -231,9 +231,9 @@ public class DungeonPokemon implements ItemContainer
 	}
 
 	@Override
-	public ArrayList<ItemAction> legalItemActions()
+	public ArrayList<ItemAction> legalItemActions(boolean inDungeon)
 	{
-		return this.usedPokemon.legalItemActions();
+		return this.usedPokemon.legalItemActions(inDungeon);
 	}
 
 	public int level()
