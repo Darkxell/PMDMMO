@@ -21,7 +21,7 @@ import com.eclipsesource.json.JsonValue;
 public class DungeonReplayTest extends UTest
 {
 
-	public static final String path = "resources/replays/dungeon-3-4211365524977815878.json";
+	public static final String path = "resources/replays/dungeon-3-5298719290618681750.json";
 
 	public DungeonReplayTest()
 	{
