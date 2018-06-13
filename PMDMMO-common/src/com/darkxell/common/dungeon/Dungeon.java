@@ -10,6 +10,7 @@ import org.jdom2.Element;
 import com.darkxell.common.dungeon.floor.FloorData;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.trap.TrapRegistry;
+import com.darkxell.common.util.Pair;
 import com.darkxell.common.util.RandomUtil;
 import com.darkxell.common.util.XMLUtils;
 import com.darkxell.common.util.language.Message;
@@ -136,12 +137,12 @@ public class Dungeon implements Comparable<Dungeon>
 	}
 
 	/** @return The buried items found on the input floor. Keys are Item IDs, Values are Item weights. */
-	public HashMap<DungeonItem, Integer> buriedItems(int floor)
+	public ArrayList<DungeonItem> buriedItems(int floor)
 	{
-		HashMap<DungeonItem, Integer> items = new HashMap<DungeonItem, Integer>();
+		ArrayList<DungeonItem> items = new ArrayList<>();
 		for (DungeonItem item : this.buriedItems)
 			if (item.floors.contains(floor)) for (int i = 0; i < item.items.length; ++i)
-				items.put(item, item.weight);
+				items.add(item);
 		return items;
 	}
 
@@ -160,12 +161,12 @@ public class Dungeon implements Comparable<Dungeon>
 	}
 
 	/** @return The items found on the input floor. Keys are Item IDs, Values are Item weights. */
-	public HashMap<DungeonItem, Integer> items(int floor)
+	public ArrayList<DungeonItem> items(int floor)
 	{
-		HashMap<DungeonItem, Integer> items = new HashMap<DungeonItem, Integer>();
+		ArrayList<DungeonItem> items = new ArrayList<>();
 		for (DungeonItem item : this.items)
 			if (item.floors.contains(floor)) for (int i = 0; i < item.items.length; ++i)
-				items.put(item, item.weight);
+				items.add(item);
 		return items;
 	}
 
@@ -268,14 +269,17 @@ public class Dungeon implements Comparable<Dungeon>
 		return root;
 	}
 
-	/** @return The traps found on the input floor. Keys are Trap IDs, Values are Trap weights. */
-	public HashMap<Integer, Integer> traps(int floor)
+	/** @return The traps found on the input floor. First are Trap IDs, second are Trap weights. */
+	public Pair<ArrayList<Integer>, ArrayList<Integer>> traps(int floor)
 	{
-		HashMap<Integer, Integer> traps = new HashMap<Integer, Integer>();
+		ArrayList<Integer> traps = new ArrayList<>(), weights = new ArrayList<>();
 		for (DungeonTrap t : this.traps)
 			if (t.floors.contains(floor)) for (int i = 0; i < t.ids.length; ++i)
-				traps.put(t.ids[i], t.chances[i]);
-		return traps;
+			{
+				traps.add(t.ids[i]);
+				weights.add(t.chances[i]);
+			}
+		return new Pair<>(traps, weights);
 	}
 
 	/** @param floor - A Floor ID.

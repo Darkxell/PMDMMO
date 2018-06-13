@@ -142,7 +142,7 @@ public abstract class Layout
 			Item item = this.floor.randomItem(this.random);
 			int quantity = 0;
 			if (item.id == Item.POKE) quantity = this.getMoneyQuantity();
-			else if (item.isStackable) quantity = RandomUtil.nextGaussian(10, 7, this.random); // Error here
+			else if (item.isStackable) quantity = RandomUtil.nextGaussian(10, 7, this.random);
 			if (quantity <= 0) quantity = 1;
 
 			tile.setItem(new ItemStack(item.id).setQuantity(quantity));

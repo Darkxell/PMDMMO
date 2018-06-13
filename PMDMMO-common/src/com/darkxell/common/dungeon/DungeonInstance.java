@@ -186,11 +186,16 @@ public class DungeonInstance
 		// Register Player first
 		for (Player player : this.exploringPlayers)
 			for (DungeonPokemon pokemon : player.getDungeonTeam())
-				if (!pokemon.isFainted()) this.registerActor(pokemon);
+				if (!pokemon.isFainted())
+				{
+					if (pokemon.id() == 0)
+						this.communication.pokemonIDs.register(pokemon.originalPokemon, this.communication.itemIDs, this.communication.moveIDs);
+					this.registerActor(pokemon);
+				}
 		// Then Wild pokemon
 		for (DungeonPokemon pokemon : this.currentFloor.listPokemon())
 		{
-			this.communication.pokemonIDs.register(pokemon.originalPokemon, this.communication.itemIDs, this.communication.moveIDs);
+			if (pokemon.id() == 0) this.communication.pokemonIDs.register(pokemon.originalPokemon, this.communication.itemIDs, this.communication.moveIDs);
 			if (pokemon.player() == null) this.registerActor(pokemon);
 		}
 

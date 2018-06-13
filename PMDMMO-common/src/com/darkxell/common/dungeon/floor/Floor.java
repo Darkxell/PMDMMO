@@ -3,7 +3,6 @@ package com.darkxell.common.dungeon.floor;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.Random;
 import java.util.function.Predicate;
 
@@ -25,6 +24,7 @@ import com.darkxell.common.trap.Trap;
 import com.darkxell.common.trap.TrapRegistry;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.Logger;
+import com.darkxell.common.util.Pair;
 import com.darkxell.common.util.RandomUtil;
 import com.darkxell.common.weather.Weather;
 import com.darkxell.common.weather.WeatherInstance;
@@ -250,7 +250,7 @@ public class Floor
 
 	public Item randomBuriedItem(Random random)
 	{
-		HashMap<DungeonItem, Integer> items = this.dungeon.dungeon().buriedItems(this.id);
+		ArrayList<DungeonItem> items = this.dungeon.dungeon().buriedItems(this.id);
 		return randomItem(items, random);
 	}
 
@@ -318,9 +318,9 @@ public class Floor
 		return RandomUtil.random(candidates, random);
 	}
 
-	public Item randomItem(HashMap<DungeonItem, Integer> items, Random random)
+	public Item randomItem(ArrayList<DungeonItem> items, Random random)
 	{
-		DungeonItem itemGroup = RandomUtil.weightedRandom(items, random);
+		DungeonItem itemGroup = RandomUtil.weightedRandom(items, DungeonItem.weights(items), random);
 		ArrayList<Integer> ids = new ArrayList<Integer>();
 		ArrayList<Integer> chances = new ArrayList<Integer>();
 		for (int i = 0; i < itemGroup.items.length; ++i)
@@ -333,7 +333,7 @@ public class Floor
 
 	public Item randomItem(Random random)
 	{
-		HashMap<DungeonItem, Integer> items = this.dungeon.dungeon().items(this.id);
+		ArrayList<DungeonItem> items = this.dungeon.dungeon().items(this.id);
 		return randomItem(items, random);
 	}
 
@@ -346,8 +346,8 @@ public class Floor
 	/** @return A Random Trap in this Floor. */
 	public Trap randomTrap(Random random)
 	{
-		HashMap<Integer, Integer> traps = this.dungeon.dungeon().traps(this.id);
-		return TrapRegistry.find(RandomUtil.weightedRandom(traps, random));
+		Pair<ArrayList<Integer>, ArrayList<Integer>> traps = this.dungeon.dungeon().traps(this.id);
+		return TrapRegistry.find(RandomUtil.weightedRandom(traps.first, traps.second, random));
 	}
 
 	/** @param weather - The weather to clean.
