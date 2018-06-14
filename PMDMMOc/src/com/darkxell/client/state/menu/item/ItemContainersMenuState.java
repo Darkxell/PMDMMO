@@ -222,7 +222,7 @@ public class ItemContainersMenuState extends OptionSelectionMenuState
 		else if (this.inDungeon)
 		{
 			Persistance.stateManager.setState(Persistance.dungeonState);
-			Persistance.eventProcessor.processEvent(new ItemSwappedEvent(Persistance.floor, ItemAction.SWAP, Persistance.player.getDungeonLeader(),
+			Persistance.eventProcessor().processEvent(new ItemSwappedEvent(Persistance.floor, ItemAction.SWAP, Persistance.player.getDungeonLeader(),
 					Persistance.player.inventory(), index, Persistance.player.getDungeonLeader().tile(), 0));
 		}
 	}
@@ -401,7 +401,7 @@ public class ItemContainersMenuState extends OptionSelectionMenuState
 		if (action == ItemAction.USE)
 		{
 			if (i.item().usedOnTeamMember()) nextState = new TeamMenuState(this, dungeonState);
-			else Persistance.eventProcessor.processEvent(new ItemSelectionEvent(Persistance.floor, i.item(), user, null, container, index));
+			else Persistance.eventProcessor().processEvent(new ItemSelectionEvent(Persistance.floor, i.item(), user, null, container, index));
 		} else if (action == ItemAction.TRASH)
 		{
 			nextState = null;
@@ -415,7 +415,7 @@ public class ItemContainersMenuState extends OptionSelectionMenuState
 			Persistance.socketendpoint.sendMessage(payload.toString());
 		} else if (action == ItemAction.GET || action == ItemAction.TAKE)
 		{
-			if (this.inDungeon) Persistance.eventProcessor.processEvent(
+			if (this.inDungeon) Persistance.eventProcessor().processEvent(
 					new ItemMovedEvent(Persistance.floor, action, user, container, 0, user.player().inventory(), user.player().inventory().canAccept(i)));
 			else if (action == ItemAction.TAKE)
 			{
@@ -432,9 +432,9 @@ public class ItemContainersMenuState extends OptionSelectionMenuState
 			}
 		} else if (action == ItemAction.GIVE) nextState = new TeamMenuState(this, this.backgroundState, this);
 		else if (action == ItemAction.PLACE)
-			Persistance.eventProcessor.processEvent(new ItemMovedEvent(Persistance.floor, action, user, container, index, user.tile(), 0));
+			Persistance.eventProcessor().processEvent(new ItemMovedEvent(Persistance.floor, action, user, container, index, user.tile(), 0));
 		else if (action == ItemAction.SWITCH)
-			Persistance.eventProcessor.processEvent(new ItemSwappedEvent(Persistance.floor, action, user, container, index, user.tile(), 0));
+			Persistance.eventProcessor().processEvent(new ItemSwappedEvent(Persistance.floor, action, user, container, index, user.tile(), 0));
 		else if (action == ItemAction.SWAP) nextState = new ItemContainersMenuState(this, dungeonState, true, Persistance.player.inventory());
 		else if (action == ItemAction.INFO)
 			nextState = new InfoState(this.backgroundState, this, new Message[] { i.item().name() }, new Message[] { i.info() });
@@ -478,9 +478,9 @@ public class ItemContainersMenuState extends OptionSelectionMenuState
 			case GIVE:
 				if (this.inDungeon)
 				{
-					if (pokemon.getItem() != null) Persistance.eventProcessor.processEvent(new ItemSwappedEvent(Persistance.floor, ItemAction.GIVE,
+					if (pokemon.getItem() != null) Persistance.eventProcessor().processEvent(new ItemSwappedEvent(Persistance.floor, ItemAction.GIVE,
 							Persistance.player.getDungeonLeader(), Persistance.player.inventory(), this.itemIndex(), pokemon, 0));
-					else Persistance.eventProcessor.processEvent(new ItemMovedEvent(Persistance.floor, ItemAction.GIVE, Persistance.player.getDungeonLeader(),
+					else Persistance.eventProcessor().processEvent(new ItemMovedEvent(Persistance.floor, ItemAction.GIVE, Persistance.player.getDungeonLeader(),
 							Persistance.player.inventory(), this.itemIndex(), pokemon, 0));
 				} else
 				{
@@ -499,7 +499,7 @@ public class ItemContainersMenuState extends OptionSelectionMenuState
 				break;
 
 			case USE:
-				Persistance.eventProcessor
+				Persistance.eventProcessor()
 						.processEvent(new ItemSelectionEvent(Persistance.floor, i.item(), user, pokemon.getDungeonPokemon(), container, index));
 				break;
 
