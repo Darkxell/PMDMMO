@@ -28,6 +28,7 @@ import javax.websocket.server.ServerEndpoint;
 
 import com.darkxell.gameserver.messagehandlers.FreezonePositionHandler;
 import com.darkxell.gameserver.messagehandlers.InventoryRequestHandler;
+import com.darkxell.gameserver.messagehandlers.ItemActionHandler;
 import com.darkxell.gameserver.messagehandlers.LoginHandler;
 import com.darkxell.gameserver.messagehandlers.MonsterRequestHandler;
 import com.darkxell.gameserver.messagehandlers.ObjectrequestHandler;
@@ -233,6 +234,14 @@ public class GameServer {
                             return;
                         }
                         InventoryRequestHandler hand = new InventoryRequestHandler(this);
+                        hand.handleMessage(jsonMessage, session, sessionHandler);
+                        break;
+                    }
+                    case "itemaction": {
+                        if (!infos.isconnected) {
+                            return;
+                        }
+                        ItemActionHandler hand = new ItemActionHandler(this);
                         hand.handleMessage(jsonMessage, session, sessionHandler);
                         break;
                     }

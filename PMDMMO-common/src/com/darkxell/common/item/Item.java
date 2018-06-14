@@ -25,7 +25,7 @@ public class Item
 		/** Giving the Item to an ally. */
 		GIVE(2, "item.give"),
 		/** Viewing the Item description. */
-		INFO(10, "item.info"),
+		INFO(11, "item.info"),
 		/** Placing the Item on the ground. */
 		PLACE(6, "item.place"),
 		/** Setting the Item as shortcut. */
@@ -38,6 +38,8 @@ public class Item
 		TAKE(3, "item.take"),
 		/** Throwing the Item. */
 		THROW(9, "item.throw"),
+		/** Deleting the Item (in freezones). */
+		TRASH(10, "item.trash"),
 		/** Using the Item. */
 		USE(1, "item.use");
 
@@ -133,8 +135,11 @@ public class Item
 	public ArrayList<ItemAction> getLegalActions(boolean inDungeon)
 	{
 		ArrayList<ItemAction> actions = new ArrayList<Item.ItemAction>();
-		if (inDungeon) actions.add(ItemAction.USE);
-		if (inDungeon) actions.add(ItemAction.THROW);
+		if (inDungeon)
+		{
+			actions.add(ItemAction.USE);
+			actions.add(ItemAction.THROW);
+		}
 		actions.add(ItemAction.INFO);
 		return actions;
 	}
