@@ -136,15 +136,12 @@ public class Inventory implements ItemContainer
 	}
 
 	@Override
-	public ArrayList<ItemAction> legalItemActions(boolean inDungeon)
+	public ArrayList<ItemAction> legalItemActions()
 	{
 		ArrayList<ItemAction> actions = new ArrayList<ItemAction>();
 		actions.add(ItemAction.GIVE);
-		if (inDungeon)
-		{
-			actions.add(ItemAction.SWITCH);
-			actions.add(ItemAction.PLACE);
-		} else actions.add(ItemAction.TRASH);
+		actions.add(ItemAction.SWITCH);
+		actions.add(ItemAction.PLACE);
 		return actions;
 	}
 
@@ -201,7 +198,7 @@ public class Inventory implements ItemContainer
 	@Override
 	public void setItem(int index, ItemStack item)
 	{
-		this.data.content.set(index, new DatabaseIdentifier(item.getData().id));
+		this.data.content.set(index, new DatabaseIdentifier(item.getData().id)); // Assuming Item IDs are assigned correctly
 		this.items.set(index, item);
 	}
 
@@ -216,7 +213,7 @@ public class Inventory implements ItemContainer
 		this.items.sort(Comparator.naturalOrder());
 		this.data.content.clear();
 		for (ItemStack i : this.items)
-			this.data.content.add(new DatabaseIdentifier(i.getData().id));
+			this.data.content.add(new DatabaseIdentifier(i.getData().id)); // Assuming Item IDs are assigned correctly
 	}
 
 }

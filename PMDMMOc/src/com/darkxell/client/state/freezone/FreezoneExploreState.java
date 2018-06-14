@@ -12,7 +12,6 @@ import com.darkxell.client.mechanics.freezones.zones.BaseFreezone;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.others.Hud;
 import com.darkxell.client.state.StateManager;
-import com.darkxell.client.state.menu.freezone.FreezoneMenuState;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.language.Message;
@@ -36,11 +35,7 @@ public class FreezoneExploreState extends AbstractFreezoneState
 	@Override
 	public void onKeyPressed(short key)
 	{
-		if (key == Keys.KEY_MENU)
-		{
-			Persistance.currentplayer.forceStop();
-			Persistance.stateManager.setState(new FreezoneMenuState(this));
-		} else if (Persistance.currentmap != null) Persistance.currentplayer.pressKey(key);
+		if (Persistance.currentmap != null) Persistance.currentplayer.pressKey(key);
 	}
 
 	@Override
@@ -109,15 +104,16 @@ public class FreezoneExploreState extends AbstractFreezoneState
 		}
 		else if (serversynccooldown != -1) ++serversynccooldown;
 
-		if (this.isMain()) for (int i = 0; i < Persistance.currentmap.warpzones.size(); i++)
-			if (Persistance.currentmap.warpzones.get(i).hitbox
-					.intersects(Persistance.currentplayer.getHitboxAt(Persistance.currentplayer.x, Persistance.currentplayer.y)))
-			{
-				WarpZone wz = Persistance.currentmap.warpzones.get(i);
-				FreezoneMap destination = wz.getDestination();
-				if (destination != null) StateManager.setExploreState(destination, wz.toX, wz.toY);
-				break;
-			}
+		if (this.isMain())
+			for (int i = 0; i < Persistance.currentmap.warpzones.size(); i++)
+				if (Persistance.currentmap.warpzones.get(i).hitbox
+						.intersects(Persistance.currentplayer.getHitboxAt(Persistance.currentplayer.x, Persistance.currentplayer.y)))
+				{
+					WarpZone wz = Persistance.currentmap.warpzones.get(i);
+					FreezoneMap destination = wz.getDestination();
+					if (destination != null) StateManager.setExploreState(destination, wz.toX, wz.toY);
+					break;
+				}
 
 	}
 

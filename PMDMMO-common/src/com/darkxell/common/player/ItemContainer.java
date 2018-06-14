@@ -38,8 +38,7 @@ public interface ItemContainer
 	/** @return The Item at the input index. */
 	public ItemStack getItem(int index);
 
-	/** @param inDungeon - True if actions for dungeons can be included.
-	 * @return The list of movement Item Actions legal for this Container. */
+	/** @return The list of movement Item Actions legal for this Container. */
 	public ArrayList<ItemAction> legalItemActions();
 
 	/** Sets the Item at the input index. */

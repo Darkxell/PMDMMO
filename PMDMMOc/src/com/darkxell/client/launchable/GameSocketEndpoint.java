@@ -14,7 +14,6 @@ import javax.websocket.WebSocketContainer;
 
 import com.darkxell.client.launchable.messagehandlers.FreezonePositionHandler;
 import com.darkxell.client.launchable.messagehandlers.InventoryRequestHandler;
-import com.darkxell.client.launchable.messagehandlers.ItemActionHandler;
 import com.darkxell.client.launchable.messagehandlers.LoginPlayerHandler;
 import com.darkxell.client.launchable.messagehandlers.LogininfoHandler;
 import com.darkxell.client.launchable.messagehandlers.MonsterRequestHandler;
@@ -132,9 +131,6 @@ public class GameSocketEndpoint {
 				break;
 			case "logininfo":
 				new LogininfoHandler().handleMessage(obj.asObject());
-				break;
-			case "itemactionresult":
-				new ItemActionHandler().handleMessage(obj.asObject());
 				break;
 			default:
 				Logger.w("Unrecognized message from the server : " + message);

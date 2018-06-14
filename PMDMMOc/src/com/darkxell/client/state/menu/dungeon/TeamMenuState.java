@@ -1,15 +1,15 @@
-package com.darkxell.client.state.menu;
+package com.darkxell.client.state.menu.dungeon;
 
 import com.darkxell.client.launchable.Persistance;
-import com.darkxell.client.launchable.messagehandlers.ItemActionHandler.ItemActionMessageHandler;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.state.AbstractState;
+import com.darkxell.client.state.menu.InfoState;
+import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.language.Message;
-import com.eclipsesource.json.JsonObject;
 
-public class TeamMenuState extends OptionSelectionMenuState implements ItemActionMessageHandler
+public class TeamMenuState extends OptionSelectionMenuState
 {
 
 	public static interface TeamMemberSelectionListener
@@ -18,19 +18,17 @@ public class TeamMenuState extends OptionSelectionMenuState implements ItemActio
 	}
 
 	public final TeamMemberSelectionListener listener;
-	private final AbstractState parent;
 	private Pokemon[] pokemon;
 
-	public TeamMenuState(AbstractState parent, AbstractState background)
+	public TeamMenuState(AbstractState background)
 	{
-		this(parent, background, null);
+		this(background, null);
 	}
 
-	public TeamMenuState(AbstractState parent, AbstractState background, TeamMemberSelectionListener listener)
+	public TeamMenuState(AbstractState background, TeamMemberSelectionListener listener)
 	{
 		super(background);
 		this.pokemon = Persistance.player.getTeam();
-		this.parent = parent;
 		this.listener = listener;
 
 		this.createOptions();
@@ -46,15 +44,9 @@ public class TeamMenuState extends OptionSelectionMenuState implements ItemActio
 	}
 
 	@Override
-	public void handleMessage(JsonObject message)
-	{
-		if (this.parent != null && this.parent instanceof ItemActionMessageHandler) ((ItemActionMessageHandler) this.parent).handleMessage(message);
-	}
-
-	@Override
 	protected void onExit()
 	{
-		Persistance.stateManager.setState(this.parent);
+		Persistance.stateManager.setState(new DungeonMenuState(this.backgroundState));
 	}
 
 	@Override

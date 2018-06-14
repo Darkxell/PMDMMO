@@ -45,19 +45,9 @@ public class DialogState extends AbstractDialogState
 		this.currentLine = 2;
 	}
 
-	public DialogState(AbstractState backgroundState, DialogEndListener listener, DialogScreen screen)
-	{
-		this(backgroundState, listener, true, Arrays.asList(screen));
-	}
-
 	public DialogState(AbstractState backgroundState, DialogEndListener listener, List<DialogScreen> elements)
 	{
 		this(backgroundState, listener, true, elements);
-	}
-
-	public DialogState(AbstractState backgroundState, DialogScreen screen)
-	{
-		this(backgroundState, Arrays.asList(screen));
 	}
 
 	public DialogState(AbstractState backgroundState, List<DialogScreen> elements)
@@ -149,8 +139,8 @@ public class DialogState extends AbstractDialogState
 		if (this.state == PAUSED && this.arrowtick > 9 && this.isMain()) g.drawImage(arrow, this.dialogBox.x + this.dialogBox.width / 2 - arrow.getWidth() / 2,
 				(int) (this.dialogBox.getMaxY() - arrow.getHeight() * 3 / 4), null);
 
-		if (this.currentScreen < this.screens.size() && this.currentScreen().pokemon != null) PokemonPortrait.drawPortrait(g, this.currentScreen().pokemon,
-				this.currentScreen().shiny, this.dialogBox.x + 5, this.dialogBox.y - Hud.portrait.getHeight() - 5);
+		if (this.currentScreen < this.screens.size() && this.currentScreen().pokemon != null)
+			PokemonPortrait.drawPortrait(g, this.currentScreen().pokemon, this.currentScreen().shiny, this.dialogBox.x + 5, this.dialogBox.y - Hud.portrait.getHeight() - 5);
 
 	}
 

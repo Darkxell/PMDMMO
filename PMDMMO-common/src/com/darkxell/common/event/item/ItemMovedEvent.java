@@ -39,20 +39,7 @@ public class ItemMovedEvent extends DungeonEvent implements Communicable
 		this.sourceIndex = sourceIndex;
 		this.destination = destination;
 		this.destinationIndex = destinationIndex;
-		
-		String message = null;
-		if (action == ItemAction.GIVE) message = "inventory.give";
-		else if (action == ItemAction.GET)
-		{
-			if (destination instanceof Inventory) message = "ground.inventory";
-			else message = "ground.pickup";
-		} else if (action == ItemAction.PLACE) message = "ground.place";
-		else if (action == ItemAction.TAKE) message = "inventory.taken";
-		this.messages
-				.add(new Message(message).addReplacement("<pokemon>", (action == ItemAction.GIVE ? ((Pokemon) destination) : mover.usedPokemon).getNickname())
-						.addReplacement("<item>", this.source.getItem(this.sourceIndex).name()));
 	}
-
 
 	public ItemContainer destination()
 	{
