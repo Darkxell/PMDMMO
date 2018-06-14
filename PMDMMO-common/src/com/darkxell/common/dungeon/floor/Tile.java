@@ -216,7 +216,7 @@ public class Tile implements ItemContainer, Comparable<Tile>
 	}
 
 	@Override
-	public ArrayList<ItemAction> legalItemActions()
+	public ArrayList<ItemAction> legalItemActions(boolean inDungeon)
 	{
 		ArrayList<ItemAction> actions = new ArrayList<ItemAction>();
 		actions.add(ItemAction.GET);
