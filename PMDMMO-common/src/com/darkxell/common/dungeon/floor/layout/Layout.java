@@ -71,7 +71,7 @@ public abstract class Layout
 		this.generateLiquids();
 		this.placeStairs();
 		this.placeTraps();
-		this.placeItems(); // <- Error in this
+		this.placeItems();
 		this.placeBuriedItems();
 		this.summonPokemon();
 

@@ -11,7 +11,7 @@ import com.darkxell.client.state.dialog.DialogScreen;
 import com.darkxell.client.state.dialog.DialogState;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.client.state.menu.TeamMenuState;
-import com.darkxell.client.state.menu.dungeon.item.ItemContainersMenuState;
+import com.darkxell.client.state.menu.item.ItemContainersMenuState;
 import com.darkxell.common.player.ItemContainer;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.language.Message;

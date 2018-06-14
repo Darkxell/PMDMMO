@@ -9,7 +9,7 @@ import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.dungeon.DungeonState;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.client.state.menu.TeamMenuState;
-import com.darkxell.client.state.menu.dungeon.item.ItemContainersMenuState;
+import com.darkxell.client.state.menu.item.ItemContainersMenuState;
 import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.player.ItemContainer;
 import com.darkxell.common.pokemon.Pokemon;
@@ -49,13 +49,8 @@ public class DungeonMenuState extends OptionSelectionMenuState
 	protected void onOptionSelected(MenuOption option)
 	{
 		DungeonState s = Persistance.dungeonState;
-		if (option == this.moves)
-		{
-			ArrayList<Pokemon> p = new ArrayList<>();
-			for (Pokemon pok : Persistance.player.getTeam())
-				if (pok.getDungeonPokemon() != null && !pok.getDungeonPokemon().isFainted()) p.add(pok.getDungeonPokemon().usedPokemon);
-			Persistance.stateManager.setState(new MovesMenuState(s, p.toArray(new Pokemon[p.size()])));
-		} else if (option == this.items)
+		if (option == this.moves) Persistance.stateManager.setState(new MovesMenuState(s));
+		else if (option == this.items)
 		{
 			ArrayList<ItemContainer> containers = new ArrayList<ItemContainer>();
 			containers.add(Persistance.player.inventory());
