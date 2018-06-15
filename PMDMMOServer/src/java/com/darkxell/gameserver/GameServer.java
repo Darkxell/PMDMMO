@@ -13,6 +13,7 @@ import com.darkxell.common.trap.TrapRegistry;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.language.Lang;
 import com.darkxell.gameserver.messagehandlers.CreateAccountHandler;
+import com.darkxell.gameserver.messagehandlers.DungeonstartHandler;
 import java.io.StringReader;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -242,6 +243,14 @@ public class GameServer {
                             return;
                         }
                         ItemActionHandler hand = new ItemActionHandler(this);
+                        hand.handleMessage(jsonMessage, session, sessionHandler);
+                        break;
+                    }
+                    case "dungeonstart": {
+                        if (!infos.isconnected) {
+                            return;
+                        }
+                        DungeonstartHandler hand = new DungeonstartHandler(this);
                         hand.handleMessage(jsonMessage, session, sessionHandler);
                         break;
                     }
