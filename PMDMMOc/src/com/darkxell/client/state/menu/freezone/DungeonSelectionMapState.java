@@ -18,7 +18,10 @@ import com.darkxell.client.ui.Keys;
 import com.darkxell.common.dungeon.Dungeon;
 import com.darkxell.common.dungeon.DungeonRegistry;
 import com.darkxell.common.util.Direction;
+import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.language.Message;
+import com.eclipsesource.json.Json;
+import com.eclipsesource.json.JsonObject;
 
 public class DungeonSelectionMapState extends AbstractState
 {
@@ -49,6 +52,13 @@ public class DungeonSelectionMapState extends AbstractState
 		}
 	}
 
+	public void onDungeonStart(int dungeon, long seed)
+	{
+		Persistance.isCommunicating = false;
+		if (dungeon != this.dungeonslist.get(this.cursor).id) Logger.w("Received dungeon ID to start is different than selected; starting cancelled");
+		else StateManager.setDungeonState(this, dungeon, seed);
+	}
+
 	@Override
 	public void onKeyPressed(short key)
 	{
@@ -71,12 +81,19 @@ public class DungeonSelectionMapState extends AbstractState
 				else cursor = (dungeonslist.size() - 1);
 				break;
 			case Keys.KEY_RUN:
+				Persistance.isCommunicating = false;
 				Persistance.currentplayer.y -= 1;
 				Persistance.currentplayer.renderer().sprite().setFacingDirection(Direction.NORTH);
 				Persistance.stateManager.setState(new FreezoneExploreState());
 				break;
 			case Keys.KEY_ATTACK:
-				StateManager.setDungeonState(this, dungeonslist.get(cursor).id);
+				// Sending dungeonstart to server
+				int dungeon = this.dungeonslist.get(this.cursor).id;
+				JsonObject root = Json.object();
+				root.add("action", "dungeonstart");
+				root.add("dungeon", dungeon);
+				Persistance.isCommunicating = true;
+				Persistance.socketendpoint.sendMessage(root.toString());
 				break;
 			default:
 				break;

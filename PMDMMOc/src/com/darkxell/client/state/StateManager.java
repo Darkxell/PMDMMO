@@ -6,7 +6,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Random;
 
 import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.launchable.Persistance;
@@ -86,10 +85,11 @@ public abstract class StateManager
 	}
 
 	/** @param fadeOutState - State to fade out of.
-	 * @param dungeonID - ID of a Dungeon. If doesn't match a valid ID, this method will not do anything. */
-	public static void setDungeonState(AbstractState fadeOutState, int dungeonID)
+	 * @param dungeonID - ID of a Dungeon. If doesn't match a valid ID, this method will not do anything.
+	 * @param seed - Seed to use for RNG in the Dungeon. */
+	public static void setDungeonState(AbstractState fadeOutState, int dungeonID, long seed)
 	{
-		Persistance.dungeon = DungeonRegistry.find(dungeonID).newInstance(new Random().nextLong());
+		Persistance.dungeon = DungeonRegistry.find(dungeonID).newInstance(seed);
 		Persistance.dungeon.eventProcessor = new ClientEventProcessor(Persistance.dungeon);
 		Persistance.dungeon.addPlayer(Persistance.player);
 		Persistance.floor = Persistance.dungeon.initiateExploration();
