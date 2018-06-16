@@ -30,7 +30,7 @@ public class Holdeditem_DAO {
             Connection cn = ds.getConnection();
             PreparedStatement prepare
                     = cn.prepareStatement(
-                            "INSERT INTO holdeditem_ (stackid, mokemonid) VALUES (?, ?)"
+                            "INSERT INTO holdeditem_ (stackid, pokemonid) VALUES (?, ?)"
                     );
             prepare.setLong(1, stackid);
             prepare.setLong(2, pokemonid);

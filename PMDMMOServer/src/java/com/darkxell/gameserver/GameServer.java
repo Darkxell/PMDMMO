@@ -110,6 +110,10 @@ public class GameServer {
             System.err.println("Game session handler was null, created a new one before adding a session to it.");
             this.sessionHandler = new GameSessionHandler();
         }
+        GameSessionInfo si = SessionsInfoHolder.getInfo(session.getId());
+
+        System.out.println((si == null ? "Unknown" : si.name) + " just disconnected.");
+        //Removes the session info and the game session info
         sessionHandler.removeSession(session);
         if (SessionsInfoHolder.infoExists(session.getId())) {
             SessionsInfoHolder.removeInfo(session.getId());
