@@ -131,6 +131,7 @@ public class ItemContainersMenuState extends OptionSelectionMenuState
 		else if (result.equals("pokemonhasnoitem")) this.itemTakeFailureHasNoItem(message.getLong("pokemon", -1));
 		else if (result.equals("inventoryfull")) this.itemTakeFailureInvFull(message.getLong("pokemon", -1));
 		else if (result.equals("cantbetrashed")) this.itemCantBeTrashed();
+		else Logger.e("Invalid itemaction result: " + result);
 	}
 
 	private void itemCantBeTrashed()
@@ -166,7 +167,8 @@ public class ItemContainersMenuState extends OptionSelectionMenuState
 					Persistance.stateManager.setState(nextState);
 				}
 			};
-			Persistance.stateManager.setState(new DialogState(this.backgroundState, listener, new DialogScreen(new Message("inventory.give.alreadyhasitem"))));
+			Persistance.stateManager.setState(new DialogState(this.backgroundState, listener,
+					new DialogScreen(new Message("inventory.give.alreadyhasitem").addReplacement("<pokemon>", pokemon.getNickname()))));
 		} else Persistance.stateManager.setState(this);
 	}
 
@@ -201,12 +203,11 @@ public class ItemContainersMenuState extends OptionSelectionMenuState
 				public void onDialogEnd(AbstractDialogState dialog)
 				{
 					nextState.reloadContainers();
-					Persistance.stateManager.setState(nextState);
 				}
 			};
 
 			Persistance.stateManager.setState(new DialogState(this.backgroundState, listener,
-					new DialogScreen(new Message("item.give").addReplacement("<item>", item.name()).addReplacement("<pokemon>", pokemon.getNickname()))));
+					new DialogScreen(new Message("inventory.give").addReplacement("<item>", item.name()).addReplacement("<pokemon>", pokemon.getNickname()))));
 		} else Persistance.stateManager.setState(this);
 	}
 
@@ -247,7 +248,8 @@ public class ItemContainersMenuState extends OptionSelectionMenuState
 					Persistance.stateManager.setState(nextState);
 				}
 			};
-			Persistance.stateManager.setState(new DialogState(this.backgroundState, listener, new DialogScreen(new Message("inventory.take.hasnoitem"))));
+			Persistance.stateManager.setState(new DialogState(this.backgroundState, listener,
+					new DialogScreen(new Message("inventory.take.hasnoitem").addReplacement("<pokemon>", pokemon.getNickname()))));
 		} else Persistance.stateManager.setState(this);
 	}
 
@@ -271,20 +273,14 @@ public class ItemContainersMenuState extends OptionSelectionMenuState
 					Persistance.stateManager.setState(nextState);
 				}
 			};
-			Persistance.stateManager.setState(new DialogState(this.backgroundState, listener, new DialogScreen(new Message("inventory.take.full"))));
+			Persistance.stateManager.setState(new DialogState(this.backgroundState, listener,
+					new DialogScreen(new Message("inventory.take.full").addReplacement("<pokemon>", pokemon.getNickname()))));
 		} else Persistance.stateManager.setState(this);
 	}
 
 	private void itemTakeSuccess(long itemid, long pokemonid)
 	{
 		Inventory inv = Persistance.player.inventory();
-		int index = -1;
-		for (int i = 0; i < inv.size(); ++i)
-			if (inv.getItem(i).getData().id == itemid)
-			{
-				index = i;
-				break;
-			}
 
 		Pokemon pokemon = null;
 		for (int i = 0; i < 3; ++i)
@@ -294,10 +290,10 @@ public class ItemContainersMenuState extends OptionSelectionMenuState
 				break;
 			}
 
-		if (index != -1 && pokemon != null)
+		if (pokemon != null)
 		{
-			ItemStack item = inv.getItem(index);
-			inv.addItem(pokemon.getItem());
+			ItemStack item = pokemon.getItem();
+			inv.addItem(item);
 			pokemon.deleteItem(0);
 
 			ItemContainersMenuState nextState = this;
@@ -306,12 +302,11 @@ public class ItemContainersMenuState extends OptionSelectionMenuState
 				public void onDialogEnd(AbstractDialogState dialog)
 				{
 					nextState.reloadContainers();
-					Persistance.stateManager.setState(nextState);
 				}
 			};
 
 			Persistance.stateManager.setState(new DialogState(this.backgroundState, listener,
-					new DialogScreen(new Message("item.taken").addReplacement("<item>", item.name()).addReplacement("<pokemon>", pokemon.getNickname()))));
+					new DialogScreen(new Message("inventory.taken").addReplacement("<item>", item.name()).addReplacement("<pokemon>", pokemon.getNickname()))));
 		} else Persistance.stateManager.setState(this);
 	}
 
@@ -337,7 +332,6 @@ public class ItemContainersMenuState extends OptionSelectionMenuState
 				public void onDialogEnd(AbstractDialogState dialog)
 				{
 					nextState.reloadContainers();
-					Persistance.stateManager.setState(nextState);
 				}
 			};
 
