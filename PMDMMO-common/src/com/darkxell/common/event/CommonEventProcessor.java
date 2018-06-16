@@ -156,7 +156,7 @@ public class CommonEventProcessor
 		if (this.state() == State.AWATING_INPUT && this.dungeon instanceof AutoDungeonInstance)
 		{
 			DungeonEvent event = ((AutoDungeonInstance) this.dungeon).nextEvent();
-			if (event == null) event = new ExplorationStopEvent(this.dungeon.currentFloor());
+			if (event == null) event = new ExplorationStopEvent(this.dungeon.currentFloor(), null);
 			this.processEvent(event);
 		}
 	}

@@ -1,14 +1,18 @@
 package com.darkxell.common.event.dungeon;
 
+import com.darkxell.common.dungeon.DungeonOutcome;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 
 public class ExplorationStopEvent extends DungeonEvent
 {
 
-	public ExplorationStopEvent(Floor floor)
+	public final DungeonOutcome outcome;
+
+	public ExplorationStopEvent(Floor floor, DungeonOutcome outcome)
 	{
 		super(floor);
+		this.outcome = outcome;
 	}
 
 	@Override
