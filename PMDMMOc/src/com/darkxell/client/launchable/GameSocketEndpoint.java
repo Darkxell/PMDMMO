@@ -139,9 +139,12 @@ public class GameSocketEndpoint {
 				break;
 				
 			// DUNGEON COMMUNICATION
-				
+
 			case "dungeonstartconfirm":
 				new DungeonStartConfirmHandler().handleMessage(obj.asObject());
+				break;
+			case "dungeonendconfirm":
+				new DungeonEndConfirmHandler().handleMessage(obj.asObject());
 				break;
 			default:
 				Logger.w("Unrecognized message from the server : " + message);

@@ -11,10 +11,11 @@ import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.event.ClientEventProcessor;
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
+import com.darkxell.client.state.dungeon.DungeonEndState;
 import com.darkxell.client.state.dungeon.NextFloorState;
 import com.darkxell.client.state.freezone.FreezoneExploreState;
 import com.darkxell.client.state.map.LocalMap;
-import com.darkxell.common.dungeon.DungeonInstance;
+import com.darkxell.common.dungeon.DungeonOutcome;
 import com.darkxell.common.dungeon.DungeonRegistry;
 import com.darkxell.common.util.Logger;
 import com.eclipsesource.json.JsonObject;
@@ -96,7 +97,7 @@ public abstract class StateManager
 		Persistance.stateManager.setState(new NextFloorState(fadeOutState, 1));
 	}
 
-	public static void onDungeonEnd(DungeonInstance dungeon, boolean success)
+	public static void onDungeonEnd(DungeonOutcome outcome)
 	{
 		if (Persistance.isUnitTesting) Launcher.stopGame();
 		if (Persistance.saveDungeonExplorations)
@@ -114,8 +115,16 @@ public abstract class StateManager
 			}
 		}
 
-		Persistance.player.resetDungeonTeam();
-		StateManager.setExploreState("Base", -1, -1);
+		DungeonEndState state = new DungeonEndState(outcome);
+
+		Persistance.stateManager.setState(new TransitionState(Persistance.dungeonState, state) {
+			@Override
+			public void onTransitionHalf()
+			{
+				super.onTransitionHalf();
+				Persistance.displaymap = null;
+			}
+		});
 	}
 
 }

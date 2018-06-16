@@ -50,6 +50,12 @@ public class Inventory implements ItemContainer
 		items.add(item);
 	}
 
+	/** Adds the input Item to this Inventory, without changing the data. Used when creating from Json. */
+	public void addReadItem(ItemStack itemStack)
+	{
+		this.items.add(itemStack);
+	}
+
 	@Override
 	public int canAccept(ItemStack item)
 	{

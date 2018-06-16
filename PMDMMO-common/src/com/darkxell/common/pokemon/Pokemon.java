@@ -309,7 +309,8 @@ public class Pokemon implements ItemContainer, HasID
 		if (this.moves[3] != null) return 4;
 		if (this.moves[2] != null) return 3;
 		if (this.moves[1] != null) return 2;
-		return 1;
+		if (this.moves[0] != null) return 1;
+		return 0;
 	}
 
 	private String nickname()

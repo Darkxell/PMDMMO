@@ -17,18 +17,28 @@ import com.eclipsesource.json.JsonObject;
 
 public class PlayerLoadingState extends AbstractState
 {
+	public static interface PlayerLoadingEndListener
+	{
+		public default void onPlayerLoadingEnd(PlayerLoadingState state)
+		{
+			Persistance.stateManager.setState(new OpenningState());
+		}
+	}
+
 	private static final int TIMEOUT = 600;
 
 	private boolean base = false, inventory = false, leader = false;
 	private boolean hasSent;
+	public final PlayerLoadingEndListener listener;
 	public final long playerID;
 	private boolean[] team;
 	private Pokemon[] teamtmp;
 	private int tick;
 
-	public PlayerLoadingState(long playerID)
+	public PlayerLoadingState(long playerID, PlayerLoadingEndListener listener)
 	{
 		this.playerID = playerID;
+		this.listener = listener;
 	}
 
 	private void askForMore()
@@ -52,7 +62,8 @@ public class PlayerLoadingState extends AbstractState
 		Persistance.player.clearAllies();
 		for (Pokemon p : this.teamtmp)
 			Persistance.player.addAlly(p);
-		Persistance.stateManager.setState(new OpenningState());
+		if (this.listener == null) Persistance.stateManager.setState(new OpenningState());
+		else this.listener.onPlayerLoadingEnd(this);
 	}
 
 	public void onInventoryReceived(JsonObject message)

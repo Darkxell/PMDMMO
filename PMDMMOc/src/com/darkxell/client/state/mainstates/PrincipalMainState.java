@@ -187,7 +187,7 @@ public class PrincipalMainState extends StateManager
 		g.translate(mapx, mapy);
 		clp = g.getClip();
 		g.setClip(new Rectangle(0, 0, mapsize, mapsize));
-		Persistance.displaymap.render(g, mapsize, mapsize);
+		if (Persistance.displaymap != null) Persistance.displaymap.render(g, mapsize, mapsize);
 		if (Persistance.stateManager.getCurrentState() instanceof TransitionState)
 		{
 			int alpha = ((TransitionState) Persistance.stateManager.getCurrentState()).minimapFading();
@@ -211,7 +211,7 @@ public class PrincipalMainState extends StateManager
 	{
 		if (this.currentState != null) this.currentState.update();
 		AnimationTicker.instance.update();
-		Persistance.displaymap.update();
+		if (Persistance.displaymap != null) Persistance.displaymap.update();
 		Keys.update();
 	}
 

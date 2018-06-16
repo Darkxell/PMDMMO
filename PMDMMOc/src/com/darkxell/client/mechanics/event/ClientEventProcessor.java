@@ -33,9 +33,8 @@ import com.darkxell.common.event.CommonEventProcessor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.action.PokemonSpawnedEvent;
 import com.darkxell.common.event.action.PokemonTravelEvent;
-import com.darkxell.common.event.dungeon.DungeonExitEvent;
+import com.darkxell.common.event.dungeon.ExplorationStopEvent;
 import com.darkxell.common.event.dungeon.NextFloorEvent;
-import com.darkxell.common.event.dungeon.PlayerLosesEvent;
 import com.darkxell.common.event.dungeon.weather.WeatherChangedEvent;
 import com.darkxell.common.event.item.ItemMovedEvent;
 import com.darkxell.common.event.item.ItemSelectionEvent;
@@ -158,8 +157,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		if (event instanceof WeatherChangedEvent) this.processWeatherEvent((WeatherChangedEvent) event);
 		if (event instanceof StairLandingEvent) this.processStairEvent((StairLandingEvent) event);
 		if (event instanceof NextFloorEvent) this.processFloorEvent((NextFloorEvent) event);
-		if (event instanceof DungeonExitEvent) this.processDungeonExitEvent((DungeonExitEvent) event);
-		if (event instanceof PlayerLosesEvent) this.processPlayerLosesEvent((PlayerLosesEvent) event);
+		if (event instanceof ExplorationStopEvent) this.processExplorationStopEvent((ExplorationStopEvent) event);
 
 		if (this.state() == State.DELAYED) this.animateDelayed();
 	}
@@ -232,9 +230,9 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		}
 	}
 
-	private void processDungeonExitEvent(DungeonExitEvent event)
+	private void processExplorationStopEvent(ExplorationStopEvent event)
 	{
-		if (event.player() == Persistance.player) StateManager.onDungeonEnd(Persistance.dungeon, true);
+		StateManager.onDungeonEnd(event.outcome);
 	}
 
 	private void processFaintedEvent(FaintedPokemonEvent event)
@@ -391,11 +389,6 @@ public final class ClientEventProcessor extends CommonEventProcessor
 			Persistance.dungeonState.setSubstate(s);
 			this.setState(State.ANIMATING);
 		}
-	}
-
-	private void processPlayerLosesEvent(PlayerLosesEvent event)
-	{
-		if (event.player == Persistance.player) StateManager.onDungeonEnd(Persistance.dungeon, false);
 	}
 
 	private void processSpawnEvent(PokemonSpawnedEvent event)
