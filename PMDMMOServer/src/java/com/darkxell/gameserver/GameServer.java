@@ -11,8 +11,8 @@ import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.trap.TrapRegistry;
 import com.darkxell.common.util.Logger;
-import com.darkxell.common.util.language.Lang;
 import com.darkxell.gameserver.messagehandlers.CreateAccountHandler;
+import com.darkxell.gameserver.messagehandlers.DungeonendHandler;
 import com.darkxell.gameserver.messagehandlers.DungeonstartHandler;
 import java.io.StringReader;
 import javax.enterprise.context.ApplicationScoped;
@@ -255,6 +255,14 @@ public class GameServer {
                             return;
                         }
                         DungeonstartHandler hand = new DungeonstartHandler(this);
+                        hand.handleMessage(jsonMessage, session, sessionHandler);
+                        break;
+                    }
+                    case "dungeonend": {
+                        if (!infos.isconnected) {
+                            return;
+                        }
+                        DungeonendHandler hand = new DungeonendHandler(this);
                         hand.handleMessage(jsonMessage, session, sessionHandler);
                         break;
                     }
