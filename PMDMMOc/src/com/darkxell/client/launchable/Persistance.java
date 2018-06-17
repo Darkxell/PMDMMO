@@ -60,6 +60,6 @@ public abstract class Persistance
 	public static boolean saveDataOnExit = false;
 
 	/** If true, dungeon explorations will be saved as Json. */
-	public static final boolean saveDungeonExplorations = true;
+	public static final boolean saveDungeonExplorations = false;
 
 }
