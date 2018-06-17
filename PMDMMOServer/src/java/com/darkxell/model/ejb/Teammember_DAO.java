@@ -49,7 +49,7 @@ public class Teammember_DAO {
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_UPDATABLE
             ).executeUpdate(
-                    "DELETE FROM teammember_ WHERE stackid = " + playerid + " AND inventoryid = " + pokemonid
+                    "DELETE FROM teammember_ WHERE playerid = " + playerid + " AND pokemonid = " + pokemonid
             );
             cn.close();
         } catch (SQLException e) {
