@@ -94,6 +94,7 @@ public class ActionSelectionState extends DungeonSubState
 	{
 		DungeonPokemon leader = Persistance.player.getDungeonLeader();
 		if (key == Keys.KEY_MENU) Persistance.stateManager.setState(new DungeonMenuState(this.parent));
+		else if (key == Keys.KEY_RUN && Keys.isPressed(Keys.KEY_ROTATE)) this.parent.setSubstate(new DungeonFullLoggerState(this.parent));
 		else if (key == Keys.KEY_ROTATE)
 		{
 			Direction d = leader.facing();

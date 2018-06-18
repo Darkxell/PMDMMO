@@ -21,7 +21,8 @@ public abstract class AbstractDialogState extends AbstractState
 		public void onDialogEnd(AbstractDialogState dialog);
 	}
 
-	static final BufferedImage arrow = MenuHudSpriteset.NEXT_WINDOW_ARROW;
+	public static final int ARROW_TICK_LENGTH = 20;
+	public static final BufferedImage arrow = MenuHudSpriteset.NEXT_WINDOW_ARROW;
 	static final byte PRINTING = 0, PAUSED = 1, SWITCHING = 2;
 
 	int arrowtick;
@@ -110,6 +111,6 @@ public abstract class AbstractDialogState extends AbstractState
 	public void update()
 	{
 		++this.arrowtick;
-		if (this.arrowtick > 19) this.arrowtick = 0;
+		if (this.arrowtick >= ARROW_TICK_LENGTH) this.arrowtick = 0;
 	}
 }

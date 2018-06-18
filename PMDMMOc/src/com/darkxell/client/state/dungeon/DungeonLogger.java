@@ -4,11 +4,13 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.Shape;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.TextRenderer;
+import com.darkxell.client.state.dialog.AbstractDialogState;
 import com.darkxell.client.state.menu.components.MenuWindow;
 import com.darkxell.common.util.language.Message;
 
@@ -17,16 +19,23 @@ public class DungeonLogger
 
 	public static final int MESSAGE_TIME = 60 * 6;
 
+	private int arrowtick = 0;
+	/** True if the logger is being shown full-screen. */
+	private boolean isFullscreen = false;
 	/** The last width the messages window were calculated for. Set to -1 to force reloading. */
 	private int lastWidth = -1;
 	/** Lists the last 40 messages. */
 	private LinkedList<Message> log;
+	private int maxDisplayedMessages = 3;
+	/** Maximum offset when fullscreen. */
+	private int maxOffset = 0;
 	private int messageOffset = 0;
 	/** The currently displayed messages. */
 	private LinkedList<Message> messages;
 	/** The window to draw messages in. */
 	MenuWindow messagesWindow;
 	private int messageTime = 0;
+	private boolean needsUpdate = true;
 	public final DungeonState parent;
 
 	public DungeonLogger(DungeonState parent)
@@ -53,7 +62,7 @@ public class DungeonLogger
 
 	public boolean isVisible()
 	{
-		return this.messagesWindow != null && this.messageTime > 0;
+		return this.isFullscreen || (this.messagesWindow != null && this.messageTime > 0);
 	}
 
 	/** @return The last 40 messages that were displayed to the Player. */
@@ -65,8 +74,9 @@ public class DungeonLogger
 	private void reloadMessages(int width, int height)
 	{
 		int w = width - 40;
-		int h = w * 5 / 28;
-		this.messagesWindow = new MenuWindow(new Rectangle((width - w) / 2, height - h - 5, w, h));
+		int h = this.isFullscreen ? height - 40 : w * 5 / 28;
+		int y = this.isFullscreen ? 20 : height - h - 5;
+		this.messagesWindow = new MenuWindow(new Rectangle((width - w) / 2, y, w, h));
 
 		ArrayList<String> toReturn = new ArrayList<String>();
 		for (int i = 0; i < this.messages.size(); ++i)
@@ -79,13 +89,21 @@ public class DungeonLogger
 			if (i < toReturn.size() - 1) this.messages.add(null);
 		}
 
+		this.maxDisplayedMessages = this.isFullscreen ? this.messagesWindow.inside().height / (TextRenderer.height() + 5) : 3;
+		if (this.isFullscreen)
+		{
+			this.maxOffset = this.messageOffset = -(TextRenderer.height() + 5) * (this.displayedMessages() - this.maxDisplayedMessages);
+			if (this.messageOffset > 0) this.messageOffset = 0;
+		}
 		this.lastWidth = width;
+		this.needsUpdate = false;
 	}
 
 	public void render(Graphics2D g, int width, int height)
 	{
-		if (this.lastWidth != width) this.reloadMessages(width, height);
-		if (this.messageTime == 0) return;
+		if (this.lastWidth != width) this.needsUpdate = true;
+		if (this.needsUpdate) this.reloadMessages(width, height);
+		if (!this.isVisible()) return;
 
 		this.messagesWindow.render(g, null, width, height);
 		Shape clip = g.getClip();
@@ -108,6 +126,46 @@ public class DungeonLogger
 			}
 		}
 		g.setClip(clip);
+
+		if (this.isFullscreen && this.arrowtick < AbstractDialogState.ARROW_TICK_LENGTH / 2)
+		{
+			BufferedImage arrow = AbstractDialogState.arrow;
+			int x = this.messagesWindow.dimensions.x + this.messagesWindow.dimensions.width / 2 - arrow.getWidth() / 2;
+			if (this.maxOffset - this.messageOffset <= -2)
+			{
+				y = (int) this.messagesWindow.inside().getMaxY();
+				g.drawImage(arrow, x, y, null);
+			}
+
+			if (this.messageOffset <= -2)
+			{
+				y = (int) this.messagesWindow.inside().getMinY();
+				g.drawImage(arrow, x, y, arrow.getWidth(), -arrow.getHeight(), null);
+			}
+		}
+	}
+
+	public void scrollDown()
+	{
+		if (this.isFullscreen && this.messageOffset >= this.maxOffset + 2) this.messageOffset -= 2;
+	}
+
+	public void scrollUp()
+	{
+		if (this.isFullscreen && this.messageOffset <= -2) this.messageOffset += 2;
+	}
+
+	public void setFullscreen(boolean fullscreen)
+	{
+		this.isFullscreen = fullscreen;
+		this.messages.clear();
+		if (this.isFullscreen) this.messages.addAll(this.log);
+		else
+		{
+			this.messageTime = 0;
+			this.messageOffset = 0;
+		}
+		this.needsUpdate = true;
 	}
 
 	/** Shows a message to the player. */
@@ -118,7 +176,7 @@ public class DungeonLogger
 		this.messages.add(message);
 		if (this.log.size() > 40) this.log.poll();
 		this.messageTime = MESSAGE_TIME;
-		this.lastWidth = -1;
+		this.needsUpdate = true;
 	}
 
 	public void showMessages(Message... messages)
@@ -129,7 +187,7 @@ public class DungeonLogger
 
 	public void update()
 	{
-		if (this.messageTime > 0)
+		if (this.messageTime > 0 && !this.isFullscreen)
 		{
 			if (this.messageTime == 1)
 			{
@@ -139,7 +197,11 @@ public class DungeonLogger
 			--this.messageTime;
 		}
 
-		if (this.messageOffset > -(this.displayedMessages() - 3) * (TextRenderer.height() + 5)) this.messageOffset -= 2;
+		++this.arrowtick;
+		if (this.arrowtick >= AbstractDialogState.ARROW_TICK_LENGTH) this.arrowtick = 0;
+
+		if (!this.isFullscreen && this.messageOffset > -(this.displayedMessages() - this.maxDisplayedMessages) * (TextRenderer.height() + 5))
+			this.messageOffset -= 2;
 	}
 
 }
