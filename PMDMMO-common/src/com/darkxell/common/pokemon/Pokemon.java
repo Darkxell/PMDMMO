@@ -6,6 +6,8 @@ import org.jdom2.Element;
 
 import com.darkxell.common.dbobject.DBPokemon;
 import com.darkxell.common.dbobject.DatabaseIdentifier;
+import com.darkxell.common.dungeon.TempIDRegistry.HasID;
+import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.move.MoveDiscoveredEvent;
 import com.darkxell.common.event.stats.ExperienceGainedEvent;
@@ -19,7 +21,7 @@ import com.darkxell.common.pokemon.ability.Ability;
 import com.darkxell.common.util.XMLUtils;
 import com.darkxell.common.util.language.Message;
 
-public class Pokemon implements ItemContainer
+public class Pokemon implements ItemContainer, HasID
 {
 	/** Pokémon gender.
 	 * <ul>
@@ -106,9 +108,21 @@ public class Pokemon implements ItemContainer
 	}
 
 	@Override
+	public long containerID()
+	{
+		return this.id();
+	}
+
+	@Override
 	public Message containerName()
 	{
 		return new Message("inventory.held").addReplacement("<pokemon>", this.getNickname());
+	}
+
+	@Override
+	public ItemContainerType containerType()
+	{
+		return ItemContainerType.POKEMON;
 	}
 
 	public void createDungeonPokemon()
@@ -228,6 +242,7 @@ public class Pokemon implements ItemContainer
 		return this.nickname();
 	}
 
+	@Override
 	public long id()
 	{
 		return this.data.id;
@@ -271,9 +286,8 @@ public class Pokemon implements ItemContainer
 		return this.data.level;
 	}
 
-	public ArrayList<DungeonEvent> levelUp()
+	public void levelUp(Floor floor, ArrayList<DungeonEvent> events)
 	{
-		ArrayList<DungeonEvent> events = new ArrayList<>();
 		this.setLevel(this.level() + 1);
 		BaseStats stats = this.species().baseStatsIncrease(this.level() - 1);
 		this.stats.add(stats);
@@ -281,9 +295,7 @@ public class Pokemon implements ItemContainer
 
 		ArrayList<Move> moves = this.species().learnedMoves(this.level());
 		for (Move move : moves)
-			events.add(new MoveDiscoveredEvent(this, move));
-
-		return events;
+			events.add(new MoveDiscoveredEvent(floor, this, move));
 	}
 
 	public LearnedMove move(int slot)
@@ -297,7 +309,8 @@ public class Pokemon implements ItemContainer
 		if (this.moves[3] != null) return 4;
 		if (this.moves[2] != null) return 3;
 		if (this.moves[1] != null) return 2;
-		return 1;
+		if (this.moves[0] != null) return 1;
+		return 0;
 	}
 
 	private String nickname()
@@ -323,6 +336,17 @@ public class Pokemon implements ItemContainer
 	private void setExperience(long experience)
 	{
 		this.data.experience = experience;
+	}
+
+	@Override
+	public void setId(long id)
+	{
+		this.data.id = id;
+		if (this.player != null)
+		{
+			if (this.player.getTeamLeader() == this) this.player.getData().mainpokemon = new DatabaseIdentifier(id);
+			else this.player.getData().pokemonsinparty.set(this.player.allies.indexOf(this), new DatabaseIdentifier(id));
+		}
 	}
 
 	private void setIq(int iq)

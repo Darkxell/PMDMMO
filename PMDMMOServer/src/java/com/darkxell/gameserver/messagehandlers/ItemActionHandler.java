@@ -52,16 +52,7 @@ public class ItemActionHandler extends MessageHandler {
         switch (value) {
             //Destroys the wanted item
             case "trash":
-                DBItemstack itemstack = endpoint.getItemstackDAO().find(itemid);
-                endpoint.getItemstackDAO().delete(itemstack);
-                long matchedid = endpoint.getInventoryContains_DAO().findInventoryID(itemid);
-                if (matchedid != 0) {
-                    endpoint.getInventoryContains_DAO().delete(itemid, matchedid);
-                }
-                matchedid = endpoint.getHoldeditem_DAO().findPokemonID(itemid);
-                if (matchedid != 0) {
-                    endpoint.getHoldeditem_DAO().delete(itemid, matchedid);
-                }
+                deleteItem(itemid);
                 answer.add("value", "trashsuccess");
                 sessionshandler.sendToSession(from, answer);
                 break;
@@ -76,7 +67,7 @@ public class ItemActionHandler extends MessageHandler {
                 long destinationinventory = endpoint.getPlayerDAO().find(si.serverid).toolboxinventory.id;
                 endpoint.getHoldeditem_DAO().delete(dbp.holdeditem.id, pokemonid);
                 //TODO: don't add if the toolbox is full
-                endpoint.getInventoryContains_DAO().create(dbp.holdeditem.id, destinationinventory);
+                endpoint.getInventoryContains_DAO().create(itemid, destinationinventory);
                 answer.add("value", "takesuccess");
                 sessionshandler.sendToSession(from, answer);
                 break;
@@ -129,6 +120,22 @@ public class ItemActionHandler extends MessageHandler {
             }
             return 0;
         }
+    }
+
+    /**
+     * Deletes the wanted item from the database.
+     */
+    private void deleteItem(long itemid) {
+        DBItemstack itemstack = endpoint.getItemstackDAO().find(itemid);
+        long matchedid = endpoint.getInventoryContains_DAO().findInventoryID(itemid);
+        if (matchedid != 0) {
+            endpoint.getInventoryContains_DAO().delete(itemid, matchedid);
+        }
+        matchedid = endpoint.getHoldeditem_DAO().findPokemonID(itemid);
+        if (matchedid != 0) {
+            endpoint.getHoldeditem_DAO().delete(itemid, matchedid);
+        }
+        endpoint.getItemstackDAO().delete(itemstack);
     }
 
 }

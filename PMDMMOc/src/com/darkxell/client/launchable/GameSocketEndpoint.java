@@ -12,6 +12,7 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.WebSocketContainer;
 
+import com.darkxell.client.launchable.messagehandlers.DungeonStartConfirmHandler;
 import com.darkxell.client.launchable.messagehandlers.FreezonePositionHandler;
 import com.darkxell.client.launchable.messagehandlers.InventoryRequestHandler;
 import com.darkxell.client.launchable.messagehandlers.ItemActionHandler;
@@ -135,6 +136,15 @@ public class GameSocketEndpoint {
 				break;
 			case "itemactionresult":
 				new ItemActionHandler().handleMessage(obj.asObject());
+				break;
+				
+			// DUNGEON COMMUNICATION
+
+			case "dungeonstartconfirm":
+				new DungeonStartConfirmHandler().handleMessage(obj.asObject());
+				break;
+			case "dungeonendconfirm":
+				new DungeonEndConfirmHandler().handleMessage(obj.asObject());
 				break;
 			default:
 				Logger.w("Unrecognized message from the server : " + message);

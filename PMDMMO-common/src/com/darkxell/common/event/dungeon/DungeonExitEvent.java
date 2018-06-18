@@ -1,24 +1,38 @@
 package com.darkxell.common.event.dungeon;
 
+import java.util.ArrayList;
+
+import com.darkxell.common.dungeon.DungeonOutcome;
+import com.darkxell.common.dungeon.DungeonOutcome.Outcome;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
-import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.player.Player;
 
-public class DungeonExitEvent extends DungeonEvent
+public class DungeonExitEvent extends NextFloorEvent
 {
 
-	public final DungeonPokemon pokemon;
-
-	public DungeonExitEvent(Floor floor, DungeonPokemon pokemon)
+	public DungeonExitEvent(Floor floor)
 	{
 		super(floor);
-		this.pokemon = pokemon;
+	}
+
+	public DungeonExitEvent(Floor floor, Player player)
+	{
+		super(floor, player);
 	}
 
 	@Override
 	public String loggerMessage()
 	{
-		return this.pokemon + " exited the Dungeon.";
+		return this.player.name() + " exited the Dungeon.";
+	}
+
+	@Override
+	public ArrayList<DungeonEvent> processServer()
+	{
+		DungeonOutcome outcome = new DungeonOutcome(Outcome.DUNGEON_CLEARED, this.floor.dungeon.id);
+		this.resultingEvents.add(new ExplorationStopEvent(this.floor, outcome));
+		return this.resultingEvents;
 	}
 
 }

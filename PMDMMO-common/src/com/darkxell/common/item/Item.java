@@ -159,8 +159,9 @@ public class Item
 	 * @return The message to display when using this Item. */
 	public Message getUseMessage(ItemSelectionEvent event)
 	{
-		return new Message(this.getUseID()).addReplacement("<user>", event.user.getNickname())
-				.addReplacement("<target>", event.target == null ? new Message("?", false) : event.target.getNickname()).addReplacement("<item>", this.name());
+		return new Message(this.getUseID()).addReplacement("<user>", event.user().getNickname())
+				.addReplacement("<target>", event.target() == null ? new Message("?", false) : event.target().getNickname())
+				.addReplacement("<item>", this.name());
 	}
 
 	/** @return The name of the "Use" option for this Item. */

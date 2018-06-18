@@ -6,12 +6,14 @@ import java.awt.Shape;
 import java.util.ArrayList;
 
 import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.messagehandlers.ItemActionHandler.ItemActionMessageHandler;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.menu.AbstractMenuState;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.common.item.Item.ItemAction;
+import com.eclipsesource.json.JsonObject;
 
-public class ItemActionSelectionState extends OptionSelectionMenuState
+public class ItemActionSelectionState extends OptionSelectionMenuState implements ItemActionMessageHandler
 {
 
 	private ArrayList<ItemAction> actions;
@@ -39,6 +41,12 @@ public class ItemActionSelectionState extends OptionSelectionMenuState
 			tab.addOption(this.options.get(this.actions.indexOf(action)));
 		}
 		this.tabs.add(tab);
+	}
+
+	@Override
+	public void handleMessage(JsonObject message)
+	{
+		if (this.actionSource instanceof ItemActionMessageHandler) ((ItemActionMessageHandler) this.actionSource).handleMessage(message);
 	}
 
 	@Override

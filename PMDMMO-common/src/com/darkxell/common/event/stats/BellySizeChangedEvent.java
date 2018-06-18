@@ -18,8 +18,6 @@ public class BellySizeChangedEvent extends DungeonEvent
 		super(floor);
 		this.pokemon = pokemon;
 		this.quantity = quantity;
-		this.messages
-				.add(new Message(this.quantity > 0 ? "belly.size.increased" : "belly.size.reduced").addReplacement("<pokemon>", this.pokemon.getNickname()));
 	}
 
 	@Override
@@ -31,6 +29,9 @@ public class BellySizeChangedEvent extends DungeonEvent
 	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{
+		this.messages
+				.add(new Message(this.quantity > 0 ? "belly.size.increased" : "belly.size.reduced").addReplacement("<pokemon>", this.pokemon.getNickname()));
+
 		this.pokemon.increaseBellySize(this.quantity);
 		return super.processServer();
 	}

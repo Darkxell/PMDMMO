@@ -1,0 +1,122 @@
+{
+	"dungeon": 1,
+	"seed": 4705260968184275559,
+	"events": [
+		{
+			"pokemon": -3,
+			"direction": "NORTH",
+			"event": "action.PokemonRotateEvent"
+		},
+		{
+			"pokemon": -3,
+			"running": false,
+			"direction": "NORTH",
+			"event": "action.PokemonTravelEvent"
+		},
+		{
+			"pokemon": -3,
+			"running": false,
+			"direction": "NORTH",
+			"event": "action.PokemonTravelEvent"
+		},
+		{
+			"pokemon": -3,
+			"direction": "NORTHEAST",
+			"event": "action.PokemonRotateEvent"
+		},
+		{
+			"pokemon": -3,
+			"running": false,
+			"direction": "NORTHEAST",
+			"event": "action.PokemonTravelEvent"
+		},
+		{
+			"pokemon": -3,
+			"direction": "NORTH",
+			"event": "action.PokemonRotateEvent"
+		},
+		{
+			"pokemon": -3,
+			"running": false,
+			"direction": "NORTH",
+			"event": "action.PokemonTravelEvent"
+		},
+		{
+			"pokemon": -3,
+			"running": true,
+			"direction": "NORTH",
+			"event": "action.PokemonTravelEvent"
+		},
+		{
+			"pokemon": -3,
+			"running": false,
+			"direction": "NORTH",
+			"event": "action.PokemonTravelEvent"
+		},
+		{
+			"pokemon": -3,
+			"direction": "EAST",
+			"event": "action.PokemonRotateEvent"
+		},
+		{
+			"pokemon": -3,
+			"running": false,
+			"direction": "EAST",
+			"event": "action.PokemonTravelEvent"
+		},
+		{
+			"player": 0,
+			"event": "dungeon.NextFloorEvent"
+		},
+		{
+			"pokemon": -3,
+			"direction": "SOUTH",
+			"event": "action.PokemonRotateEvent"
+		},
+		{
+			"pokemon": -3,
+			"running": true,
+			"direction": "SOUTH",
+			"event": "action.PokemonTravelEvent"
+		},
+		{
+			"pokemon": -3,
+			"running": true,
+			"direction": "SOUTH",
+			"event": "action.PokemonTravelEvent"
+		},
+		{
+			"pokemon": -3,
+			"running": true,
+			"direction": "SOUTH",
+			"event": "action.PokemonTravelEvent"
+		},
+		{
+			"pokemon": -3,
+			"event": "action.TurnSkippedEvent"
+		},
+		{
+			"pokemon": -3,
+			"direction": "EAST",
+			"event": "action.PokemonRotateEvent"
+		},
+		{
+			"pokemon": -3,
+			"move": -4,
+			"direction": "EAST",
+			"event": "move.MoveSelectionEvent"
+		},
+		{
+			"pokemon": -3,
+			"move": -4,
+			"direction": "EAST",
+			"event": "move.MoveSelectionEvent"
+		},
+		{
+			"pokemon": -3,
+			"move": -4,
+			"direction": "EAST",
+			"event": "move.MoveSelectionEvent"
+		}
+	]
+}

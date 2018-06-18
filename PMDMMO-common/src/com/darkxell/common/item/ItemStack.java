@@ -3,11 +3,12 @@ package com.darkxell.common.item;
 import org.jdom2.Element;
 
 import com.darkxell.common.dbobject.DBItemstack;
+import com.darkxell.common.dungeon.TempIDRegistry.HasID;
 import com.darkxell.common.util.XMLUtils;
 import com.darkxell.common.util.language.Lang;
 import com.darkxell.common.util.language.Message;
 
-public class ItemStack implements Comparable<ItemStack>
+public class ItemStack implements Comparable<ItemStack>, HasID
 {
 
 	public static final String XML_ROOT = "item";
@@ -59,10 +60,10 @@ public class ItemStack implements Comparable<ItemStack>
 		return this.data;
 	}
 
-	/** The ID of the Item. */
-	public int itemid()
+	@Override
+	public long id()
 	{
-		return this.data.itemid;
+		return this.getData().id;
 	}
 
 	/** @return The message describing this Item. */
@@ -74,6 +75,12 @@ public class ItemStack implements Comparable<ItemStack>
 	public Item item()
 	{
 		return this.item;
+	}
+
+	/** The ID of the Item. */
+	public int itemid()
+	{
+		return this.data.itemid;
 	}
 
 	public Message name()
@@ -93,6 +100,12 @@ public class ItemStack implements Comparable<ItemStack>
 	{
 		this.data = data;
 		this.item = ItemRegistry.find(this.data.itemid);
+	}
+
+	@Override
+	public void setId(long id)
+	{
+		this.getData().id = id;
 	}
 
 	public ItemStack setQuantity(long quantity)

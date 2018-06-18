@@ -31,12 +31,6 @@ public class DamageDealtEvent extends DungeonEvent
 		this.target = target;
 		this.source = source;
 		this.damage = damage;
-
-		if (this.source instanceof WeatherDamaging) this.messages.add(
-				new Message("weather.damage_dealt").addReplacement("<pokemon>", target.getNickname()).addReplacement("<amount>", Integer.toString(damage)));
-		else if (!(this.source instanceof BellyChangedEvent || this.source instanceof PeriodicDamageStatusCondition)) this.messages
-				.add(new Message("move.damage_dealt").addReplacement("<pokemon>", target.getNickname()).addReplacement("<amount>", Integer.toString(damage)));
-
 	}
 
 	@Override
@@ -48,6 +42,11 @@ public class DamageDealtEvent extends DungeonEvent
 	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{
+		if (this.source instanceof WeatherDamaging) this.messages.add(
+				new Message("weather.damage_dealt").addReplacement("<pokemon>", target.getNickname()).addReplacement("<amount>", Integer.toString(damage)));
+		else if (!(this.source instanceof BellyChangedEvent || this.source instanceof PeriodicDamageStatusCondition)) this.messages
+				.add(new Message("move.damage_dealt").addReplacement("<pokemon>", target.getNickname()).addReplacement("<amount>", Integer.toString(damage)));
+
 		this.target.setHP(this.target.getHp() - this.damage);
 		if (this.target.getHp() == 0) this.resultingEvents.add(new FaintedPokemonEvent(this.floor, this.target, this.source));
 		return super.processServer();

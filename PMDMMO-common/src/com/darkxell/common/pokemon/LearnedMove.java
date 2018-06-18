@@ -3,11 +3,12 @@ package com.darkxell.common.pokemon;
 import org.jdom2.Element;
 
 import com.darkxell.common.dbobject.DBLearnedmove;
+import com.darkxell.common.dungeon.TempIDRegistry.HasID;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.util.XMLUtils;
 
-public class LearnedMove
+public class LearnedMove implements HasID
 {
 	private DBLearnedmove data;
 
@@ -34,6 +35,12 @@ public class LearnedMove
 	public DBLearnedmove getData()
 	{
 		return this.data;
+	}
+
+	@Override
+	public long id()
+	{
+		return this.getData().id;
 	}
 
 	public boolean isEnabled()
@@ -81,6 +88,12 @@ public class LearnedMove
 	public void setEnabled(boolean isEnabled)
 	{
 		this.data.isenabled = isEnabled;
+	}
+
+	@Override
+	public void setId(long id)
+	{
+		this.getData().id = id;
 	}
 
 	public void setLinked(boolean isLinked)

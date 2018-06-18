@@ -1,0 +1,376 @@
+{
+	"dungeon": 2,
+	"seed": -4423535794004498318,
+	"events": [
+		{
+			"pokemon": -2,
+			"running": false,
+			"direction": "SOUTH",
+			"event": "action.PokemonTravelEvent"
+		},
+		{
+			"pokemon": -2,
+			"direction": "SOUTHEAST",
+			"event": "action.PokemonRotateEvent"
+		},
+		{
+			"pokemon": -2,
+			"running": false,
+			"direction": "SOUTHEAST",
+			"event": "action.PokemonTravelEvent"
+		},
+		{
+			"pokemon": -2,
+			"running": false,
+			"direction": "SOUTHEAST",
+			"event": "action.PokemonTravelEvent"
+		},
+		{
+			"pokemon": -2,
+			"running": false,
+			"direction": "SOUTHEAST",
+			"event": "action.PokemonTravelEvent"
+		},
+		{
+			"pokemon": -2,
+			"direction": "NORTH",
+			"event": "action.PokemonRotateEvent"
+		},
+		{
+			"pokemon": -2,
+			"running": false,
+			"direction": "NORTH",
+			"event": "action.PokemonTravelEvent"
+		},
+		{
+			"pokemon": -2,
+			"running": false,
+			"direction": "NORTH",
+			"event": "action.PokemonTravelEvent"
+		},
+		{
+			"pokemon": -2,
+			"direction": "NORTHWEST",
+			"event": "action.PokemonRotateEvent"
+		},
+		{
+			"pokemon": -2,
+			"running": false,
+			"direction": "NORTHWEST",
+			"event": "action.PokemonTravelEvent"
+		},
+		{
+			"pokemon": -2,
+			"direction": "WEST",
+			"event": "action.PokemonRotateEvent"
+		},
+		{
+			"pokemon": -2,
+			"running": false,
+			"direction": "WEST",
+			"event": "action.PokemonTravelEvent"
+		},
+		{
+			"pokemon": -2,
+			"direction": "SOUTHWEST",
+			"event": "action.PokemonRotateEvent"
+		},
+		{
+			"pokemon": -2,
+			"running": false,
+			"direction": "SOUTHWEST",
+			"event": "action.PokemonTravelEvent"
+		},
+		{
+			"pokemon": -2,
+			"direction": "SOUTHEAST",
+			"event": "action.PokemonRotateEvent"
+		},
+		{
+			"pokemon": -2,
+			"running": false,
+			"direction": "SOUTHEAST",
+			"event": "action.PokemonTravelEvent"
+		},
+		{
+			"pokemon": -2,
+			"direction": "EAST",
+			"event": "action.PokemonRotateEvent"
+		},
+		{
+			"pokemon": -2,
+			"running": false,
+			"direction": "EAST",
+			"event": "action.PokemonTravelEvent"
+		},
+		{
+			"pokemon": -2,
+			"direction": "NORTHWEST",
+			"event": "action.PokemonRotateEvent"
+		},
+		{
+			"pokemon": -2,
+			"running": false,
+			"direction": "NORTHWEST",
+			"event": "action.PokemonTravelEvent"
+		},
+		{
+			"pokemon": -2,
+			"running": false,
+			"direction": "NORTHWEST",
+			"event": "action.PokemonTravelEvent"
+		},
+		{
+			"pokemon": -2,
+			"direction": "SOUTHEAST",
+			"event": "action.PokemonRotateEvent"
+		},
+		{
+			"pokemon": -2,
+			"running": false,
+			"direction": "SOUTHEAST",
+			"event": "action.PokemonTravelEvent"
+		},
+		{
+			"pokemon": -2,
+			"running": false,
+			"direction": "SOUTHEAST",
+			"event": "action.PokemonTravelEvent"
+		},
+		{
+			"pokemon": -2,
+			"direction": "WEST",
+			"event": "action.PokemonRotateEvent"
+		},
+		{
+			"pokemon": -2,
+			"running": false,
+			"direction": "WEST",
+			"event": "action.PokemonTravelEvent"
+		},
+		{
+			"pokemon": -2,
+			"direction": "NORTHEAST",
+			"event": "action.PokemonRotateEvent"
+		},
+		{
+			"pokemon": -2,
+			"running": false,
+			"direction": "NORTHEAST",
+			"event": "action.PokemonTravelEvent"
+		},
+		{
+			"pokemon": -2,
+			"direction": "EAST",
+			"event": "action.PokemonRotateEvent"
+		},
+		{
+			"pokemon": -2,
+			"running": false,
+			"direction": "EAST",
+			"event": "action.PokemonTravelEvent"
+		},
+		{
+			"pokemon": -2,
+			"direction": "WEST",
+			"event": "action.PokemonRotateEvent"
+		},
+		{
+			"pokemon": -2,
+			"running": false,
+			"direction": "WEST",
+			"event": "action.PokemonTravelEvent"
+		},
+		{
+			"pokemon": -2,
+			"direction": "SOUTHWEST",
+			"event": "action.PokemonRotateEvent"
+		},
+		{
+			"pokemon": -2,
+			"running": false,
+			"direction": "SOUTHWEST",
+			"event": "action.PokemonTravelEvent"
+		},
+		{
+			"pokemon": -2,
+			"direction": "SOUTHEAST",
+			"event": "action.PokemonRotateEvent"
+		},
+		{
+			"pokemon": -2,
+			"running": false,
+			"direction": "SOUTHEAST",
+			"event": "action.PokemonTravelEvent"
+		},
+		{
+			"pokemon": -2,
+			"direction": "NORTHEAST",
+			"event": "action.PokemonRotateEvent"
+		},
+		{
+			"pokemon": -2,
+			"running": false,
+			"direction": "NORTHEAST",
+			"event": "action.PokemonTravelEvent"
+		},
+		{
+			"pokemon": -2,
+			"direction": "WEST",
+			"event": "action.PokemonRotateEvent"
+		},
+		{
+			"pokemon": -2,
+			"running": false,
+			"direction": "WEST",
+			"event": "action.PokemonTravelEvent"
+		},
+		{
+			"pokemon": -2,
+			"direction": "SOUTHEAST",
+			"event": "action.PokemonRotateEvent"
+		},
+		{
+			"pokemon": -2,
+			"running": false,
+			"direction": "SOUTHEAST",
+			"event": "action.PokemonTravelEvent"
+		},
+		{
+			"pokemon": -2,
+			"running": false,
+			"direction": "SOUTHEAST",
+			"event": "action.PokemonTravelEvent"
+		},
+		{
+			"pokemon": -2,
+			"direction": "WEST",
+			"event": "action.PokemonRotateEvent"
+		},
+		{
+			"pokemon": -2,
+			"running": false,
+			"direction": "WEST",
+			"event": "action.PokemonTravelEvent"
+		},
+		{
+			"pokemon": -2,
+			"running": false,
+			"direction": "WEST",
+			"event": "action.PokemonTravelEvent"
+		},
+		{
+			"pokemon": -2,
+			"direction": "NORTHEAST",
+			"event": "action.PokemonRotateEvent"
+		},
+		{
+			"pokemon": -2,
+			"running": false,
+			"direction": "NORTHEAST",
+			"event": "action.PokemonTravelEvent"
+		},
+		{
+			"pokemon": -2,
+			"running": false,
+			"direction": "NORTHEAST",
+			"event": "action.PokemonTravelEvent"
+		},
+		{
+			"pokemon": -2,
+			"direction": "SOUTHWEST",
+			"event": "action.PokemonRotateEvent"
+		},
+		{
+			"pokemon": -2,
+			"running": false,
+			"direction": "SOUTHWEST",
+			"event": "action.PokemonTravelEvent"
+		},
+		{
+			"pokemon": -2,
+			"running": false,
+			"direction": "SOUTHWEST",
+			"event": "action.PokemonTravelEvent"
+		},
+		{
+			"pokemon": -2,
+			"direction": "EAST",
+			"event": "action.PokemonRotateEvent"
+		},
+		{
+			"pokemon": -2,
+			"running": false,
+			"direction": "EAST",
+			"event": "action.PokemonTravelEvent"
+		},
+		{
+			"pokemon": -2,
+			"direction": "SOUTHEAST",
+			"event": "action.PokemonRotateEvent"
+		},
+		{
+			"pokemon": -2,
+			"running": false,
+			"direction": "SOUTHEAST",
+			"event": "action.PokemonTravelEvent"
+		},
+		{
+			"pokemon": -2,
+			"running": false,
+			"direction": "SOUTHEAST",
+			"event": "action.PokemonTravelEvent"
+		},
+		{
+			"pokemon": -2,
+			"direction": "SOUTH",
+			"event": "action.PokemonRotateEvent"
+		},
+		{
+			"pokemon": -2,
+			"running": true,
+			"direction": "SOUTH",
+			"event": "action.PokemonTravelEvent"
+		},
+		{
+			"pokemon": -2,
+			"direction": "WEST",
+			"event": "action.PokemonRotateEvent"
+		},
+		{
+			"pokemon": -2,
+			"running": true,
+			"direction": "WEST",
+			"event": "action.PokemonTravelEvent"
+		},
+		{
+			"pokemon": -2,
+			"direction": "SOUTH",
+			"event": "action.PokemonRotateEvent"
+		},
+		{
+			"pokemon": -2,
+			"running": true,
+			"direction": "SOUTH",
+			"event": "action.PokemonTravelEvent"
+		},
+		{
+			"pokemon": -2,
+			"move": -2,
+			"direction": "SOUTH",
+			"event": "move.MoveSelectionEvent"
+		},
+		{
+			"pokemon": -2,
+			"move": -2,
+			"direction": "SOUTH",
+			"event": "move.MoveSelectionEvent"
+		},
+		{
+			"pokemon": -2,
+			"move": -2,
+			"direction": "SOUTH",
+			"event": "move.MoveSelectionEvent"
+		}
+	]
+}

@@ -45,7 +45,7 @@ public class ShadowRenderer extends AbstractRenderer
 		{
 			Point camera = Persistance.dungeonState.camera();
 			Tile t = Persistance.dungeonState.getCameraPokemon().tile();
-			Room r = this.floor.roomAt(t.x, t.y);
+			Room r = t == null ? null : this.floor.roomAt(t.x, t.y);
 
 			this.gs.clearRect(screen.x, screen.y, screen.width, screen.height);
 			if (r != null)
@@ -66,10 +66,10 @@ public class ShadowRenderer extends AbstractRenderer
 			} else
 			{
 				Area a = new Area(screen);
-				if (shadows == FloorData.NORMAL_SHADOW) a.subtract(new Area(new Ellipse2D.Double(camera.x + width / 2 - TILE_SIZE * 5 / 2, camera.y + height
-						/ 2 - TILE_SIZE * 5 / 2, TILE_SIZE * 5, TILE_SIZE * 5)));
-				if (shadows == FloorData.DENSE_SHADOW) a.subtract(new Area(new Ellipse2D.Double(camera.x + width / 2 - TILE_SIZE * 3 / 2, camera.y + height / 2
-						- TILE_SIZE * 3 / 2, TILE_SIZE * 3, TILE_SIZE * 3)));
+				if (shadows == FloorData.NORMAL_SHADOW) a.subtract(new Area(new Ellipse2D.Double(camera.x + width / 2 - TILE_SIZE * 5 / 2,
+						camera.y + height / 2 - TILE_SIZE * 5 / 2, TILE_SIZE * 5, TILE_SIZE * 5)));
+				if (shadows == FloorData.DENSE_SHADOW) a.subtract(new Area(new Ellipse2D.Double(camera.x + width / 2 - TILE_SIZE * 3 / 2,
+						camera.y + height / 2 - TILE_SIZE * 3 / 2, TILE_SIZE * 3, TILE_SIZE * 3)));
 				this.gs.fill(a);
 			}
 			g.drawImage(this.shadowBuffer, 0, 0, null);

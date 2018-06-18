@@ -61,6 +61,7 @@ public class LoginHandler extends MessageHandler {
                 if (serversidehashtester.equals(json.getString("passhash", "randomimpossiblestring"))) {
                     si.serverid = player.id;
                     si.isconnected = true;
+                    si.currentdoing = GameSessionInfo.current_freezone;
                     System.err.println("Player logged in : " + si.name);
 
                     com.eclipsesource.json.JsonObject value = Json.object();

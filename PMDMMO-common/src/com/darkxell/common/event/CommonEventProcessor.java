@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 import com.darkxell.common.ai.AIUtils;
+import com.darkxell.common.dungeon.AutoDungeonInstance;
 import com.darkxell.common.dungeon.DungeonInstance;
 import com.darkxell.common.event.action.PokemonRotateEvent;
 import com.darkxell.common.event.action.PokemonSpawnedEvent;
 import com.darkxell.common.event.action.PokemonTravelEvent;
 import com.darkxell.common.event.action.TurnSkippedEvent;
+import com.darkxell.common.event.dungeon.ExplorationStopEvent;
 import com.darkxell.common.event.stats.BellyChangedEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
@@ -17,10 +19,16 @@ public class CommonEventProcessor
 {
 	public static enum State
 	{
+		/** Playing animations. (should only be active client-side.) */
 		ANIMATING,
+		/** Waiting for a Player to decide on an action. */
 		AWATING_INPUT,
+		/** Playing delayed animations. (should only be active client-side.) */
 		DELAYED,
-		PROCESSING
+		/** Processing pending events. */
+		PROCESSING,
+		/** Stopped. This state is set when the Dungeon is done exploring. For safety it will also prevent any further added events from being processed. */
+		STOPPED
 	}
 
 	public final DungeonInstance dungeon;
@@ -65,6 +73,7 @@ public class CommonEventProcessor
 	{
 		this.dungeon.eventOccured(event);
 		this.addToPending(event.processServer());
+		if (event instanceof ExplorationStopEvent) this.setState(State.STOPPED);
 	}
 
 	public boolean hasPendingEvents()
@@ -86,10 +95,16 @@ public class CommonEventProcessor
 		if (event instanceof PokemonTravelEvent)
 		{
 			PokemonTravelEvent travel = (PokemonTravelEvent) event;
-			if (travel.pokemon.isTeamLeader() && travel.running)
+			if (travel.pokemon().isTeamLeader() && travel.running())
 			{// Checking if switching with ally
-				if (travel.destination.getPokemon() == null || !travel.destination.getPokemon().isAlliedWith(travel.pokemon)) this.runners.add(travel.pokemon);
+				if (travel.destination().getPokemon() == null || !travel.destination().getPokemon().isAlliedWith(travel.pokemon()))
+					this.runners.add(travel.pokemon());
 			}
+
+			// If leader is traveling onto ally's tile, automatically create ally movement event
+			if (travel.destination().getPokemon() != null && travel.pokemon().isTeamLeader()
+					&& travel.pokemon().isAlliedWith(travel.destination().getPokemon()))
+				this.addToPending(new PokemonTravelEvent(this.dungeon.currentFloor(), travel.destination().getPokemon(), travel.direction().opposite()));
 		}
 
 		if (this.stopsTravel(event)) this.runners.clear();
@@ -100,6 +115,7 @@ public class CommonEventProcessor
 	/** Processes the input event and adds the resulting events to the pending stack. */
 	public void processEvent(DungeonEvent event)
 	{
+		if (this.state() == State.STOPPED) return;
 		this.setState(State.PROCESSING);
 		if (this.preProcess(event)) this.doProcess(event);
 		if (this.state() == State.PROCESSING) this.processPending();
@@ -115,6 +131,7 @@ public class CommonEventProcessor
 	/** Processes the next pending event. */
 	public void processPending()
 	{
+		if (this.state() == State.STOPPED) return;
 		if (this.hasPendingEvents()) this.processEvent(this.pending.pop());
 		else
 		{
@@ -131,14 +148,16 @@ public class CommonEventProcessor
 					{
 						this.runners.clear();
 						this.setState(State.AWATING_INPUT);
-						return;
 					} else this.processEvent(new PokemonTravelEvent(this.dungeon.currentFloor(), actor, true, actor.facing()));
-				} else
-				{
-					this.setState(State.AWATING_INPUT);
-					return;
-				}
+				} else this.setState(State.AWATING_INPUT);
 			} else this.processEvent(this.dungeon.currentFloor().aiManager.takeAction(actor));
+		}
+
+		if (this.state() == State.AWATING_INPUT && this.dungeon instanceof AutoDungeonInstance)
+		{
+			DungeonEvent event = ((AutoDungeonInstance) this.dungeon).nextEvent();
+			if (event == null) event = new ExplorationStopEvent(this.dungeon.currentFloor(), null);
+			this.processEvent(event);
 		}
 	}
 

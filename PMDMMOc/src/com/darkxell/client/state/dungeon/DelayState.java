@@ -20,7 +20,7 @@ public class DelayState extends DungeonSubState
 		public void onDelayElapsed(DelayState state)
 		{
 			state.parent.setSubstate(state.parent.actionSelectionState);
-			Persistance.eventProcessor.processPending();
+			Persistance.eventProcessor().processPending();
 		}
 	};
 

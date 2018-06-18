@@ -1,5 +1,6 @@
 package com.darkxell.common.dungeon;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import org.jdom2.Element;
@@ -12,12 +13,22 @@ public class DungeonItem
 {
 	public static final String XML_ROOT = "group";
 
+	/** @return The list of weights associated with the input Items. */
+	public static ArrayList<Integer> weights(ArrayList<DungeonItem> items)
+	{
+		ArrayList<Integer> weights = new ArrayList<>();
+		for (DungeonItem item : items)
+			weights.add(item.weight);
+		return weights;
+	}
+
 	/** The weight of each Item. */
 	public final int[] chances;
 	/** The floors this Item can appear on. */
 	public final FloorSet floors;
 	/** The Item ID. */
 	public final int[] items;
+
 	/** This Item group's weight. */
 	public final int weight;
 

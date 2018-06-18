@@ -51,8 +51,8 @@ public class MoveLearnMenuState extends MovesMenuState implements DialogEndListe
 		{
 			Persistance.stateManager.setState(Persistance.dungeonState);
 			if (this.optionIndex() < 4)
-				Persistance.eventProcessor.processEvent(new MoveLearnedEvent(Persistance.floor, this.pokemon, this.move.move(), this.optionIndex()));
-			else Persistance.eventProcessor.processPending();
+				Persistance.eventProcessor().processEvent(new MoveLearnedEvent(Persistance.floor, this.pokemon, this.move.move(), this.optionIndex()));
+			else Persistance.eventProcessor().processPending();
 		} else Persistance.stateManager.setState(this);
 	}
 

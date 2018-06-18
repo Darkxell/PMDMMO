@@ -26,7 +26,7 @@ public class NextFloorState extends TransitionState
 	public void onEnd()
 	{
 		super.onEnd();
-		Persistance.eventProcessor.processPending();
+		Persistance.eventProcessor().processPending();
 	}
 
 	@Override

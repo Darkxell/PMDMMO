@@ -27,7 +27,8 @@ public class ItemEscapeOrb extends ItemOrb
 	public ArrayList<DungeonEvent> use(Floor floor, DungeonPokemon pokemon, DungeonPokemon target)
 	{
 		ArrayList<DungeonEvent> events = super.use(floor, pokemon, target);
-		events.add(new DungeonExitEvent(floor, pokemon));
+		// if (pokemon.player() == null) events.addAll(new PokemonDespawnedEvent(floor, pokemon));else TODO PokemonDespawn on EscapeOrb with no Player
+		events.add(new DungeonExitEvent(floor, pokemon.player()));
 		return events;
 	}
 }

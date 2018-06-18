@@ -26,7 +26,7 @@ public class InventoryRequestHandler extends MessageHandler
 				{
 					DBItemstack item = new DBItemstack();
 					item.read(it.asObject());
-					i.addItem(new ItemStack(item));
+					i.addReadItem(new ItemStack(item));
 				}
 		}
 

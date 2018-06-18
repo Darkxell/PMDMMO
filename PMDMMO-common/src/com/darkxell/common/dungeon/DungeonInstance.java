@@ -10,11 +10,15 @@ import com.darkxell.common.dungeon.floor.layout.Layout;
 import com.darkxell.common.dungeon.floor.layout.StaticLayout;
 import com.darkxell.common.event.Actor;
 import com.darkxell.common.event.Actor.Action;
+import com.darkxell.common.event.CommonEventProcessor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.GameTurn;
 import com.darkxell.common.event.action.PokemonRotateEvent;
 import com.darkxell.common.event.action.TurnSkippedEvent;
+import com.darkxell.common.item.ItemStack;
+import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.Logger;
 
@@ -24,6 +28,7 @@ public class DungeonInstance
 	private HashMap<DungeonPokemon, Actor> actorMap = new HashMap<>();
 	/** The Pokémon to take turn in order. */
 	private ArrayList<Actor> actors = new ArrayList<>();
+	public final DungeonCommunication communication;
 	/** The current Pokémon taking its turn. */
 	private int currentActor;
 	/** The current Floor. */
@@ -31,21 +36,43 @@ public class DungeonInstance
 	private int currentSubTurn;
 	/** The current turn. */
 	private GameTurn currentTurn;
-	/** ID of the Dungeon. */
+	public CommonEventProcessor eventProcessor;
+	/** The Players that are currently exploring this Dungeon. */
+	private ArrayList<Player> exploringPlayers = new ArrayList<>();
+	/** ID of the Dungeon being explored. */
 	public final int id;
+	/** True if this Dungeon is currently generating a floor. Used for Actor registering. */
+	private boolean isGeneratingFloor;
 	/** Lists the previous turns. */
 	private ArrayList<GameTurn> pastTurns = new ArrayList<>();
 	/** RNG for floor generation. */
-	public final Random random;
+	private Random random;
+	public final long seed;
+	/** All the Players that started exploring this Dungeon, even if they left. */
+	private ArrayList<Player> startingPlayers = new ArrayList<>();
 
-	public DungeonInstance(int id, Random random)
+	public DungeonInstance(int id, long seed)
 	{
 		this.id = id;
-		this.random = random;
-		this.currentFloor = this.createFloor(1);
-		this.currentFloor.generate();
-		this.currentSubTurn = GameTurn.SUB_TURNS - 1;
-		this.endSubTurn();
+		this.seed = seed;
+		this.communication = new DungeonCommunication(this);
+	}
+
+	/** Adds the input Player to the list of Players currently exploring this Dungeon. */
+	public void addPlayer(Player player)
+	{
+		if (!this.startingPlayers.contains(player))
+		{
+			this.startingPlayers.add(player);
+			this.exploringPlayers.add(player);
+		}
+	}
+
+	public void clearAllTempIDs()
+	{
+		this.communication.itemIDs.clear();
+		this.communication.moveIDs.clear();
+		this.communication.pokemonIDs.clear();
 	}
 
 	/** Compares the input Pokémon depending on their order of action. */
@@ -80,11 +107,7 @@ public class DungeonInstance
 	{
 		this.currentSubTurn = 0;
 		this.currentActor = -1;
-		this.currentFloor.dispose();
-		this.currentFloor = this.createFloor(this.currentFloor.id + 1);
-		this.currentFloor.generate();
-		this.actors.clear();
-		this.actorMap.clear();
+		this.generateNextFloor();
 		return this.currentFloor;
 	}
 
@@ -107,30 +130,30 @@ public class DungeonInstance
 		ArrayList<DungeonEvent> events = new ArrayList<>();
 		boolean turnEnd = this.currentSubTurn == GameTurn.SUB_TURNS;
 
-		if (turnEnd)
+		if (turnEnd) this.endTurn(events);
+
+		return events;
+	}
+
+	private void endTurn(ArrayList<DungeonEvent> events)
+	{
+		Direction d;
+		for (Actor a : this.actors)
 		{
-			Direction d;
-			for (Actor a : this.actors)
-			{
-				AI ai = this.currentFloor.aiManager.getAI(a.pokemon);
-				if (ai == null) continue;
-				d = ai.mayRotate();
-				if (d != null && d != a.pokemon.facing()) events.add(new PokemonRotateEvent(this.currentFloor, a.pokemon, d));
-			}
+			AI ai = this.currentFloor.aiManager.getAI(a.pokemon);
+			if (ai == null) continue;
+			d = ai.mayRotate();
+			if (d != null && d != a.pokemon.facing()) events.add(new PokemonRotateEvent(this.currentFloor, a.pokemon, d));
 		}
 
 		for (Actor a : this.actors)
-			if (turnEnd || a.actionThisSubturn() != Action.NO_ACTION) a.onTurnEnd(this.currentFloor, events);
+			if (a.actionThisSubturn() != Action.NO_ACTION) a.onTurnEnd(this.currentFloor, events);
 
-		if (turnEnd)
-		{
-			// Logger.i("Turn end --------------------------");
-			this.currentFloor.onTurnStart(events);
-			if (this.currentTurn != null) this.pastTurns.add(this.currentTurn);
-			this.currentTurn = new GameTurn(this.currentFloor);
-			this.currentSubTurn = 0;
-		}
-		return events;
+		// Logger.i("Turn end --------------------------");
+		this.currentFloor.onTurnStart(events);
+		if (this.currentTurn != null) this.pastTurns.add(this.currentTurn);
+		this.currentTurn = new GameTurn(this.currentFloor);
+		this.currentSubTurn = 0;
 	}
 
 	/** Called when the input event is processed. */
@@ -142,6 +165,44 @@ public class DungeonInstance
 			if (event instanceof TurnSkippedEvent) this.actorMap.get(event.actor()).skip();
 			else this.actorMap.get(event.actor()).act();
 		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public ArrayList<Player> exploringPlayers()
+	{
+		return (ArrayList<Player>) this.exploringPlayers.clone();
+	}
+
+	private void generateNextFloor()
+	{
+		this.isGeneratingFloor = true;
+		if (this.currentFloor != null) this.currentFloor.dispose();
+		this.currentFloor = this.createFloor(this.currentFloor == null ? 1 : this.currentFloor.id + 1);
+		this.currentFloor.generate();
+		this.currentFloor.placePlayers(this.exploringPlayers);
+
+		this.actors.clear();
+		this.actorMap.clear();
+		// Register Player first
+		for (Player player : this.exploringPlayers)
+			for (DungeonPokemon pokemon : player.getDungeonTeam())
+				if (!pokemon.isFainted())
+				{
+					if (pokemon.id() == 0)
+						this.communication.pokemonIDs.register(pokemon.originalPokemon, this.communication.itemIDs, this.communication.moveIDs);
+					this.registerActor(pokemon);
+				}
+		// Then Wild pokemon
+		for (DungeonPokemon pokemon : this.currentFloor.listPokemon())
+		{
+			if (pokemon.id() == 0) this.communication.pokemonIDs.register(pokemon.originalPokemon, this.communication.itemIDs, this.communication.moveIDs);
+			if (pokemon.player() == null) this.registerActor(pokemon);
+		}
+
+		for (ItemStack item : this.currentFloor.listItemsOnFloor())
+			this.communication.itemIDs.register(item, null);
+
+		this.isGeneratingFloor = false;
 	}
 
 	/** @return The Pokémon taking its turn. null if there is no actor left, thus the turn is over. */
@@ -164,11 +225,55 @@ public class DungeonInstance
 		return -1;
 	}
 
-	public void insertActor(DungeonPokemon pokemon, int index)
+	/* public void insertActor(DungeonPokemon pokemon, int index) { if (this.actorMap.containsKey(pokemon)) return; this.actorMap.put(pokemon, new Actor(pokemon)); this.actors.add(index, this.actorMap.get(pokemon)); } */
+
+	/** Starts the current exploration. Creates the first floor and starts the Event Processor.<br>
+	 * \/!\\ Make sure the Event Processor has been initialized if you want a custom one.
+	 * 
+	 * @return The generated Floor. */
+	public Floor initiateExploration()
 	{
-		if (this.actorMap.containsKey(pokemon)) return;
-		this.actorMap.put(pokemon, new Actor(pokemon));
-		this.actors.add(index, this.actorMap.get(pokemon));
+		if (this.currentFloor != null)
+		{
+			Logger.e("Tried to start the Dungeon again!");
+			return this.currentFloor;
+		}
+
+		for (Player player : this.startingPlayers)
+		{
+			player.resetDungeonTeam();
+			for (Pokemon member : player.getTeam())
+				member.createDungeonPokemon();
+		}
+
+		this.random = new Random(this.seed);
+		this.generateNextFloor();
+		this.currentSubTurn = GameTurn.SUB_TURNS - 1;
+
+		ArrayList<DungeonEvent> events = new ArrayList<>();
+		this.endTurn(events);
+		this.currentFloor.onFloorStart(events);
+		if (this.eventProcessor == null)
+		{
+			Logger.w("Event processor hasn't been initialized. Creating default CommonEventProcessor.");
+			this.eventProcessor = new CommonEventProcessor(this);
+		}
+		this.eventProcessor.addToPending(events);
+
+		return this.currentFloor;
+	}
+
+	public boolean isGeneratingFloor()
+	{
+		return this.isGeneratingFloor;
+	}
+
+	public ArrayList<GameTurn> listTurns()
+	{
+		ArrayList<GameTurn> turns = new ArrayList<>();
+		turns.addAll(this.pastTurns);
+		turns.add(this.currentTurn);
+		return turns;
 	}
 
 	/** Proceeds to the next actor and returns it. */
@@ -210,6 +315,15 @@ public class DungeonInstance
 		this.actors.add(this.actorMap.get(pokemon));
 	}
 
+	/** Removes the input Player from this Dungeon. Called when that Player exits the Dungeon by winning, escaping or losing.
+	 * 
+	 * @return true if there are no exploring players left. */
+	public boolean removePlayer(Player player)
+	{
+		this.exploringPlayers.remove(player);
+		return this.exploringPlayers.isEmpty();
+	}
+
 	public void unregisterActor(DungeonPokemon pokemon)
 	{
 		if (!this.actorMap.containsKey(pokemon))
@@ -217,6 +331,7 @@ public class DungeonInstance
 			Logger.e("Actor " + pokemon + " isn't registered: can't unregister!");
 			return;
 		}
+		if (this.actors.indexOf(this.actorMap.get(pokemon)) <= this.currentActor) --this.currentActor;
 		this.actors.remove(this.actorMap.get(pokemon));
 		this.actorMap.remove(pokemon);
 	}

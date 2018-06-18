@@ -1,6 +1,7 @@
 package com.darkxell.common.ai.states;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import com.darkxell.common.ai.AI;
 import com.darkxell.common.ai.AI.AIState;
@@ -71,6 +72,7 @@ public class AIStateExplore extends AIState
 				continu = candidates.size() > 1;
 			}
 		}
+		candidates.sort(Comparator.naturalOrder());// Even if random, needs to sort to keep consistency
 
 		this.currentDestination = RandomUtil.random(candidates, this.ai.floor.random);
 	}

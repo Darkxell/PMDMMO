@@ -1,5 +1,7 @@
 package com.darkxell.client.mechanics.cutscene.end;
 
+import java.util.Random;
+
 import org.jdom2.Element;
 
 import com.darkxell.client.launchable.Persistance;
@@ -23,7 +25,8 @@ public class EnterDungeonCutsceneEnd extends CutsceneEnd
 	public void onCutsceneEnd()
 	{
 		super.onCutsceneEnd();
-		StateManager.setDungeonState(Persistance.cutsceneState, this.dungeonID);
+		// TODO ask server for dungeon start & seed!
+		StateManager.setDungeonState(Persistance.cutsceneState, this.dungeonID, new Random().nextLong());
 	}
 
 }

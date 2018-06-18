@@ -2,6 +2,7 @@ package com.darkxell.common.util.language;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
@@ -74,7 +75,9 @@ public class Keywords
 		try
 		{
 			Properties data = new Properties();
-			data.load(Lang.class.getResourceAsStream("/lang/" + Lang.getLanguage().id + "_keywords.properties"));
+			InputStream stream = Lang.class.getResourceAsStream("/lang/" + Lang.getLanguage().id + "_keywords.properties");
+			if (stream == null) return;
+			data.load(stream);
 
 			for (Object keyword : data.keySet())
 			{

@@ -11,8 +11,9 @@ import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.trap.TrapRegistry;
 import com.darkxell.common.util.Logger;
-import com.darkxell.common.util.language.Lang;
 import com.darkxell.gameserver.messagehandlers.CreateAccountHandler;
+import com.darkxell.gameserver.messagehandlers.DungeonendHandler;
+import com.darkxell.gameserver.messagehandlers.DungeonstartHandler;
 import java.io.StringReader;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -109,6 +110,10 @@ public class GameServer {
             System.err.println("Game session handler was null, created a new one before adding a session to it.");
             this.sessionHandler = new GameSessionHandler();
         }
+        GameSessionInfo si = SessionsInfoHolder.getInfo(session.getId());
+
+        System.out.println((si == null ? "Unknown" : si.name) + " just disconnected.");
+        //Removes the session info and the game session info
         sessionHandler.removeSession(session);
         if (SessionsInfoHolder.infoExists(session.getId())) {
             SessionsInfoHolder.removeInfo(session.getId());
@@ -242,6 +247,22 @@ public class GameServer {
                             return;
                         }
                         ItemActionHandler hand = new ItemActionHandler(this);
+                        hand.handleMessage(jsonMessage, session, sessionHandler);
+                        break;
+                    }
+                    case "dungeonstart": {
+                        if (!infos.isconnected) {
+                            return;
+                        }
+                        DungeonstartHandler hand = new DungeonstartHandler(this);
+                        hand.handleMessage(jsonMessage, session, sessionHandler);
+                        break;
+                    }
+                    case "dungeonend": {
+                        if (!infos.isconnected) {
+                            return;
+                        }
+                        DungeonendHandler hand = new DungeonendHandler(this);
                         hand.handleMessage(jsonMessage, session, sessionHandler);
                         break;
                     }

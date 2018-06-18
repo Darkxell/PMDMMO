@@ -82,9 +82,21 @@ public class DungeonPokemon implements ItemContainer
 	}
 
 	@Override
+	public long containerID()
+	{
+		return this.id();
+	}
+
+	@Override
 	public Message containerName()
 	{
 		return this.usedPokemon.containerName();
+	}
+
+	@Override
+	public ItemContainerType containerType()
+	{
+		return ItemContainerType.DUNGEON_POKEMON;
 	}
 
 	@Override
@@ -175,6 +187,11 @@ public class DungeonPokemon implements ItemContainer
 		return false;
 	}
 
+	public long id()
+	{
+		return this.originalPokemon.id();
+	}
+
 	public void increaseBelly(double quantity)
 	{
 		this.belly += quantity;
@@ -252,13 +269,11 @@ public class DungeonPokemon implements ItemContainer
 	}
 
 	/** Called when this Pokémon enters a new Floor or when it spawns. */
-	public ArrayList<DungeonEvent> onFloorStart(Floor floor)
+	public void onFloorStart(Floor floor, ArrayList<DungeonEvent> events)
 	{
-		ArrayList<DungeonEvent> events = new ArrayList<DungeonEvent>();
 		this.statusConditions.clear();
 		this.stats.onFloorStart(floor, events);
 		this.regenCounter = 0;
-		return events;
 	}
 
 	/** Called at the beginning of each turn. */

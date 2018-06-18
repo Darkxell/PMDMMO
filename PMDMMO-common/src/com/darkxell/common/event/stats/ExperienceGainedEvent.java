@@ -21,8 +21,6 @@ public class ExperienceGainedEvent extends DungeonEvent
 		super(floor);
 		this.pokemon = pokemon;
 		this.experience = experience;
-		this.messages
-				.add(new Message("xp.gain").addReplacement("<pokemon>", this.pokemon.getNickname()).addReplacement("<xp>", Integer.toString(this.experience)));
 	}
 
 	@Override
@@ -45,6 +43,9 @@ public class ExperienceGainedEvent extends DungeonEvent
 	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{
+		this.messages
+				.add(new Message("xp.gain").addReplacement("<pokemon>", this.pokemon.getNickname()).addReplacement("<xp>", Integer.toString(this.experience)));
+
 		this.levelsup = this.pokemon.level();
 		this.resultingEvents.addAll(this.pokemon.gainExperience(this));
 		this.levelsup = this.pokemon.level() - this.levelsup;

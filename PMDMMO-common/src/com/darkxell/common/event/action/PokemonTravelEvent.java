@@ -7,17 +7,26 @@ import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.stats.BellyChangedEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.pokemon.Pokemon;
+import com.darkxell.common.util.Communicable;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.Logger;
+import com.eclipsesource.json.Json;
+import com.eclipsesource.json.JsonObject;
 
 /** The travel of Pokémon. */
-public class PokemonTravelEvent extends DungeonEvent
+public class PokemonTravelEvent extends DungeonEvent implements Communicable
 {
 
-	public final Direction direction;
-	public final Tile origin, destination;
-	public final DungeonPokemon pokemon;
-	public final boolean running;
+	private Direction direction;
+	private Tile origin, destination;
+	private DungeonPokemon pokemon;
+	private boolean running;
+
+	public PokemonTravelEvent(Floor floor)
+	{
+		super(floor);
+	}
 
 	public PokemonTravelEvent(Floor floor, DungeonPokemon pokemon, boolean running, Direction direction)
 	{
@@ -39,6 +48,16 @@ public class PokemonTravelEvent extends DungeonEvent
 		this(floor, pokemon, false, direction);
 	}
 
+	public Tile destination()
+	{
+		return this.destination;
+	}
+
+	public Direction direction()
+	{
+		return this.direction;
+	}
+
 	private void displayInConsole()
 	{
 		System.out.println(this.direction);
@@ -54,6 +73,14 @@ public class PokemonTravelEvent extends DungeonEvent
 		}
 	}
 
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (!(obj instanceof PokemonTravelEvent)) return false;
+		PokemonTravelEvent o = (PokemonTravelEvent) obj;
+		return this.direction == o.direction && this.pokemon.id() == o.pokemon.id() && this.running == o.running;
+	}
+
 	public boolean isReversed(PokemonTravelEvent t)
 	{
 		return this.origin == t.destination && this.destination == t.origin;
@@ -62,7 +89,17 @@ public class PokemonTravelEvent extends DungeonEvent
 	@Override
 	public String loggerMessage()
 	{
-		return this.pokemon + " travelled.";
+		return this.pokemon + " travels from " + this.origin + " to " + this.destination;
+	}
+
+	public Tile origin()
+	{
+		return this.origin;
+	}
+
+	public DungeonPokemon pokemon()
+	{
+		return this.pokemon;
 	}
 
 	@Override
@@ -73,6 +110,54 @@ public class PokemonTravelEvent extends DungeonEvent
 		this.destination.setPokemon(this.pokemon);
 		this.resultingEvents.addAll(this.destination.onPokemonStep(this.floor, this.pokemon, this.running));
 		return super.processServer();
+	}
+
+	@Override
+	public void read(JsonObject value) throws JsonReadingException
+	{
+		try
+		{
+			Pokemon p = this.floor.dungeon.communication.pokemonIDs.get(value.getLong("pokemon", 0));
+			if (p == null) throw new JsonReadingException("No pokemon with ID " + value.getLong("pokemon", 0));
+			this.pokemon = this.actor = p.getDungeonPokemon();
+		} catch (JsonReadingException e)
+		{
+			throw e;
+		} catch (Exception e)
+		{
+			throw new JsonReadingException("Wrong value for Pokémon ID: " + value.get("pokemon"));
+		}
+		try
+		{
+			this.direction = Direction.valueOf(value.getString("direction", Direction.NORTH.name()));
+		} catch (IllegalArgumentException e)
+		{
+			throw new JsonReadingException("No direction with name " + value.get("direction"));
+		}
+		try
+		{
+			this.running = value.getBoolean("running", false);
+		} catch (IllegalArgumentException e)
+		{
+			throw new JsonReadingException("Wrong value for running: " + value.get("running"));
+		}
+		this.origin = pokemon.tile();
+		this.destination = pokemon.tile().adjacentTile(this.direction);
+	}
+
+	public boolean running()
+	{
+		return this.running;
+	}
+
+	@Override
+	public JsonObject toJson()
+	{
+		JsonObject root = Json.object();
+		root.add("pokemon", this.pokemon.id());
+		root.add("running", this.running);
+		root.add("direction", this.direction.name());
+		return root;
 	}
 
 	@Override

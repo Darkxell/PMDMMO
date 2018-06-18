@@ -7,10 +7,20 @@ import com.eclipsesource.json.JsonObject;
 public interface Communicable
 {
 
+	public static class JsonReadingException extends Exception
+	{
+		private static final long serialVersionUID = 2731314154564321754L;
+
+		public JsonReadingException(String message)
+		{
+			super(message);
+		}
+	}
+
 	/** Reads the Json object and sets this Object's data to the read data.
 	 * 
 	 * @param value - The value to use. */
-	public void read(JsonObject value);
+	public void read(JsonObject value) throws JsonReadingException;
 
 	/** Translates this Object to a Json object.
 	 * 

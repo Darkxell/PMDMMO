@@ -2,14 +2,24 @@ package com.darkxell.client.state;
 
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
+import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.event.ClientEventProcessor;
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
+import com.darkxell.client.state.dungeon.DungeonEndState;
 import com.darkxell.client.state.dungeon.NextFloorState;
 import com.darkxell.client.state.freezone.FreezoneExploreState;
+import com.darkxell.client.state.map.LocalMap;
+import com.darkxell.common.dungeon.DungeonOutcome;
 import com.darkxell.common.dungeon.DungeonRegistry;
 import com.darkxell.common.util.Logger;
+import com.eclipsesource.json.JsonObject;
+import com.eclipsesource.json.PrettyPrint;
 
 /** Describes how a statemanager is supposed to work. A statemanager is expected to display A very big portion of the application, like for example the game / the login facilities...<br/>
  * Note that changing the statemanager removes the previous one completely, and should only be done when the user does significants acts that changes the way he is going to interact with the application after, like for exemple logging in. */
@@ -70,19 +80,51 @@ public abstract class StateManager
 				Persistance.currentmap = map;
 				Persistance.freezoneCamera.x = Persistance.currentplayer.x = xPos == -1 ? map.defaultX() : xPos;
 				Persistance.freezoneCamera.y = Persistance.currentplayer.y = yPos == -1 ? map.defaultY() : yPos;
+				Persistance.displaymap = LocalMap.instance;
 			}
 		});
 	}
 
 	/** @param fadeOutState - State to fade out of.
-	 * @param dungeonID - ID of a Dungeon. If doesn't match a valid ID, this method will not do anything. */
-	public static void setDungeonState(AbstractState fadeOutState, int dungeonID)
+	 * @param dungeonID - ID of a Dungeon. If doesn't match a valid ID, this method will not do anything.
+	 * @param seed - Seed to use for RNG in the Dungeon. */
+	public static void setDungeonState(AbstractState fadeOutState, int dungeonID, long seed)
 	{
-		Persistance.dungeon = DungeonRegistry.find(dungeonID).newInstance();
-		Persistance.eventProcessor = new ClientEventProcessor(Persistance.dungeon);
-		Persistance.floor = Persistance.dungeon.currentFloor();
+		Persistance.dungeon = DungeonRegistry.find(dungeonID).newInstance(seed);
+		Persistance.dungeon.eventProcessor = new ClientEventProcessor(Persistance.dungeon);
+		Persistance.dungeon.addPlayer(Persistance.player);
+		Persistance.floor = Persistance.dungeon.initiateExploration();
 		Persistance.stateManager.setState(new NextFloorState(fadeOutState, 1));
-		Persistance.eventProcessor.addToPending(Persistance.dungeon.currentFloor().onFloorStart());
+	}
+
+	public static void onDungeonEnd(DungeonOutcome outcome)
+	{
+		if (Persistance.isUnitTesting) Launcher.stopGame();
+		if (Persistance.saveDungeonExplorations)
+		{
+			JsonObject o = Persistance.dungeon.communication.explorationSummary(true);
+			try
+			{
+				BufferedWriter fw = new BufferedWriter(
+						new FileWriter(new File("dungeon-" + Persistance.dungeon.id + "-" + Persistance.dungeon.seed + ".json")));
+				fw.write(o.toString(PrettyPrint.indentWithTabs()));
+				fw.close();
+			} catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
+
+		DungeonEndState state = new DungeonEndState(outcome);
+
+		Persistance.stateManager.setState(new TransitionState(Persistance.dungeonState, state) {
+			@Override
+			public void onTransitionHalf()
+			{
+				super.onTransitionHalf();
+				Persistance.displaymap = null;
+			}
+		});
 	}
 
 }

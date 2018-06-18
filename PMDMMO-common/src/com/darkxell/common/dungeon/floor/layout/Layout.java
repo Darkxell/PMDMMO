@@ -45,8 +45,8 @@ public abstract class Layout
 		this.floor.tiles = new Tile[width][height];
 		for (int x = 0; x < this.floor.tiles.length; ++x)
 			for (int y = 0; y < this.floor.tiles[x].length; ++y)
-				if (x == 0 || x == this.floor.tiles.length - 1 || y == 0 || y >= this.floor.tiles[x].length - 1) this.floor.tiles[x][y] = new Tile(this.floor,
-						x, y, TileType.WALL_END);
+				if (x == 0 || x == this.floor.tiles.length - 1 || y == 0 || y >= this.floor.tiles[x].length - 1)
+					this.floor.tiles[x][y] = new Tile(this.floor, x, y, TileType.WALL_END);
 				else this.floor.tiles[x][y] = new Tile(this.floor, x, y, TileType.WALL);
 	}
 
@@ -65,7 +65,7 @@ public abstract class Layout
 	public void generate(Floor floor)
 	{
 		this.floor = floor;
-		this.random = this.floor.dungeon.random;
+		this.random = this.floor.random;
 		this.generateRooms();
 		this.generatePaths();
 		this.generateLiquids();
@@ -90,11 +90,10 @@ public abstract class Layout
 	/** @return The quantity of Poké in a single stack. */
 	protected int getMoneyQuantity()
 	{
-		final int[] moneyTable = new int[]
-		{ 4, 6, 10, 14, 22, 26, 37, 38, 46, 58, 62, 74, 82, 86, 94, 106, 118, 122, 134, 142, 146, 158, 166, 178, 194, 202, 206, 214, 218, 226, 254, 262, 274,
-				278, 298, 302, 314, 326, 334, 346, 358, 362, 382, 386, 394, 398, 422, 454, 458, 466, 478, 482, 502, 514, 526, 538, 542, 554, 562, 566, 586,
-				614, 622, 626, 634, 662, 674, 694, 698, 706, 718, 734, 746, 758, 768, 778, 794, 802, 818, 838, 842, 862, 866, 878, 886, 898, 914, 922, 926,
-				934, 958, 974, 982, 998, 1000, 1100, 1300, 1500, 20000 };
+		final int[] moneyTable = new int[] { 4, 6, 10, 14, 22, 26, 37, 38, 46, 58, 62, 74, 82, 86, 94, 106, 118, 122, 134, 142, 146, 158, 166, 178, 194, 202,
+				206, 214, 218, 226, 254, 262, 274, 278, 298, 302, 314, 326, 334, 346, 358, 362, 382, 386, 394, 398, 422, 454, 458, 466, 478, 482, 502, 514, 526,
+				538, 542, 554, 562, 566, 586, 614, 622, 626, 634, 662, 674, 694, 698, 706, 718, 734, 746, 758, 768, 778, 794, 802, 818, 838, 842, 862, 866, 878,
+				886, 898, 914, 922, 926, 934, 958, 974, 982, 998, 1000, 1100, 1300, 1500, 20000 };
 
 		int random = this.random.nextInt(99) + 1;
 		int value = 0;
@@ -144,6 +143,7 @@ public abstract class Layout
 			int quantity = 0;
 			if (item.id == Item.POKE) quantity = this.getMoneyQuantity();
 			else if (item.isStackable) quantity = RandomUtil.nextGaussian(10, 7, this.random);
+			if (quantity <= 0) quantity = 1;
 
 			tile.setItem(new ItemStack(item.id).setQuantity(quantity));
 		}

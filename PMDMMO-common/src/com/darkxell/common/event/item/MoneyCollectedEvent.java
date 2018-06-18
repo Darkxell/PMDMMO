@@ -22,8 +22,6 @@ public class MoneyCollectedEvent extends DungeonEvent
 		this.pokemon = pokemon;
 		this.tile = tile;
 		this.moneyItem = moneyItem;
-
-		this.messages.add(new Message("ground.pickup").addReplacement("<pokemon>", this.pokemon.getNickname()).addReplacement("<item>", this.moneyItem.name()));
 	}
 
 	@Override
@@ -35,6 +33,7 @@ public class MoneyCollectedEvent extends DungeonEvent
 	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{
+		this.messages.add(new Message("ground.pickup").addReplacement("<pokemon>", this.pokemon.getNickname()).addReplacement("<item>", this.moneyItem.name()));
 		this.tile.setItem(null);
 		this.pokemon.player().setMoneyInBag(this.pokemon.player().moneyInBag() + this.moneyItem.quantity());
 		return super.processServer();

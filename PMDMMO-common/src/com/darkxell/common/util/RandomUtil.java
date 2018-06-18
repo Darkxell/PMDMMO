@@ -1,7 +1,6 @@
 package com.darkxell.common.util;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Random;
 
 /** Contains utility methods for randomness. */
@@ -85,23 +84,6 @@ public final class RandomUtil
 		}
 
 		return candidates.get(0);
-	}
-
-	/** @param weightedObjects - A List of Objects to choose from, with their respective Weights.
-	 * @param random - A Random Number Generator.
-	 * @return A random Object from the input List. The greater an Object's Weight is, the more likely it is to be chosen. */
-	public static <T> T weightedRandom(HashMap<T, Integer> weightedObjects, Random random)
-	{
-		ArrayList<T> objects = new ArrayList<T>();
-		ArrayList<Integer> weights = new ArrayList<Integer>();
-
-		for (T object : weightedObjects.keySet())
-		{
-			objects.add(object);
-			weights.add(weightedObjects.get(object));
-		}
-
-		return weightedRandom(objects, weights, random);
 	}
 
 	private RandomUtil()
