@@ -2,6 +2,7 @@ package com.darkxell.client.state.dungeon;
 
 import java.awt.Graphics2D;
 
+import com.darkxell.client.launchable.GameSocketEndpoint;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.PlayerLoadingState;
@@ -50,32 +51,39 @@ public class DungeonEndState extends AbstractState
 	{
 		super.onStart();
 
-		Persistance.isCommunicating = true;
-		JsonObject json = Json.object();
-		json.add("action", "dungeonend");
-		json.add("outcome", this.outcome.toJson());
-		json.add("player", Persistance.player.getData().toJson());
-		json.add("inventory", Persistance.player.inventory().getData().toJson());
+		if (Persistance.socketendpoint.connectionStatus() == GameSocketEndpoint.CONNECTED)
+		{
+			Persistance.isCommunicating = true;
+			JsonObject json = Json.object();
+			json.add("action", "dungeonend");
+			json.add("outcome", this.outcome.toJson());
+			json.add("player", Persistance.player.getData().toJson());
+			json.add("inventory", Persistance.player.inventory().getData().toJson());
 
-		JsonArray array = new JsonArray();
-		for (Pokemon pokemon : Persistance.player.getTeam())
-			array.add(pokemon.getData().toJson());
-		json.add("team", array);
+			JsonArray array = new JsonArray();
+			for (Pokemon pokemon : Persistance.player.getTeam())
+				array.add(pokemon.getData().toJson());
+			json.add("team", array);
 
-		array = new JsonArray();
-		for (Pokemon pokemon : Persistance.player.getTeam())
-			for (int m = 0; m < pokemon.moveCount(); ++m)
-				array.add(pokemon.move(m).getData().toJson());
-		json.add("moves", array);
+			array = new JsonArray();
+			for (Pokemon pokemon : Persistance.player.getTeam())
+				for (int m = 0; m < pokemon.moveCount(); ++m)
+					array.add(pokemon.move(m).getData().toJson());
+			json.add("moves", array);
 
-		array = new JsonArray();
-		for (Pokemon pokemon : Persistance.player.getTeam())
-			if (pokemon.getItem() != null) array.add(pokemon.getItem().getData().toJson());
-		for (ItemStack item : Persistance.player.inventory().items())
-			array.add(item.getData().toJson());
-		json.add("items", array);
+			array = new JsonArray();
+			for (Pokemon pokemon : Persistance.player.getTeam())
+				if (pokemon.getItem() != null) array.add(pokemon.getItem().getData().toJson());
+			for (ItemStack item : Persistance.player.inventory().items())
+				array.add(item.getData().toJson());
+			json.add("items", array);
 
-		Persistance.socketendpoint.sendMessage(json.toString());
+			Persistance.socketendpoint.sendMessage(json.toString());
+		} else
+		{
+			Persistance.player.resetDungeonTeam();
+			StateManager.setExploreState("Base", -1, -1);
+		}
 	}
 
 	@Override

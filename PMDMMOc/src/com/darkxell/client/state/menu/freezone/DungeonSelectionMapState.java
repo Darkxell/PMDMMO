@@ -4,8 +4,10 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Random;
 import java.util.function.Predicate;
 
+import com.darkxell.client.launchable.GameSocketEndpoint;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.MenuHudSpriteset;
@@ -89,11 +91,14 @@ public class DungeonSelectionMapState extends AbstractState
 			case Keys.KEY_ATTACK:
 				// Sending dungeonstart to server
 				int dungeon = this.dungeonslist.get(this.cursor).id;
-				JsonObject root = Json.object();
-				root.add("action", "dungeonstart");
-				root.add("dungeon", dungeon);
-				Persistance.isCommunicating = true;
-				Persistance.socketendpoint.sendMessage(root.toString());
+				if (Persistance.socketendpoint.connectionStatus() == GameSocketEndpoint.CONNECTED)
+				{
+					JsonObject root = Json.object();
+					root.add("action", "dungeonstart");
+					root.add("dungeon", dungeon);
+					Persistance.isCommunicating = true;
+					Persistance.socketendpoint.sendMessage(root.toString());
+				} else this.onDungeonStart(dungeon, new Random().nextLong());
 				break;
 			default:
 				break;
