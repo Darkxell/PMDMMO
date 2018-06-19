@@ -10,7 +10,7 @@ import com.darkxell.common.util.Logger;
 public class Keys implements KeyListener
 {
 
-	public static final short KEY_COUNT = 22;
+	public static final short KEY_COUNT = 24;
 	private static boolean[] isPressed = new boolean[KEY_COUNT];
 	private static boolean[] wasPressed = new boolean[KEY_COUNT];
 	private static boolean[] willPress = new boolean[KEY_COUNT];
@@ -39,17 +39,20 @@ public class Keys implements KeyListener
 	 * <li>KEY_MAP_LEFT = 19</li>
 	 * <li>KEY_MAP_RIGHT = 20</li>
 	 * <li>KEY_MAP_RESET = 21</li>
-	 * </ul> */
+	 * <li>KEY_MAP_PAGE_LEFT = 22</li>
+	 * <li>KEY_MAP_PAGE_RIGHT = 23</li>
+	 * </ul>
+	 */
 	public static final short KEY_UP = 0, KEY_DOWN = 1, KEY_LEFT = 2, KEY_RIGHT = 3, KEY_ATTACK = 4, KEY_ROTATE = 5, KEY_RUN = 6, KEY_DIAGONAL = 7,
 			KEY_MENU = 8, KEY_MOVE_1 = 9, KEY_MOVE_2 = 10, KEY_MOVE_3 = 11, KEY_MOVE_4 = 12, KEY_ITEM_1 = 13, KEY_ITEM_2 = 14, KEY_INVENTORY = 15,
-			KEY_PARTY = 16, KEY_MAP_UP = 17, KEY_MAP_DOWN = 18, KEY_MAP_LEFT = 19, KEY_MAP_RIGHT = 20, KEY_MAP_RESET = 21;
+			KEY_PARTY = 16, KEY_MAP_UP = 17, KEY_MAP_DOWN = 18, KEY_MAP_LEFT = 19, KEY_MAP_RIGHT = 20, KEY_MAP_RESET = 21, KEY_PAGE_LEFT = 22,
+			KEY_PAGE_RIGHT = 23;
 
 	/** User-defined keys. */
 	private static int[] keys;
 	/** Key names. */
-	private static String[] NAMES = new String[]
-	{ "up", "down", "left", "right", "attack", "rotate", "run", "diagonal", "menu", "move1", "move2", "move3", "move4", "item1", "item2", "inventory", "party",
-			"map.up", "map.down", "map.left", "map.right", "map.reset" };
+	private static String[] NAMES = new String[] { "up", "down", "left", "right", "attack", "rotate", "run", "diagonal", "menu", "move1", "move2", "move3",
+			"move4", "item1", "item2", "inventory", "party", "map.up", "map.down", "map.left", "map.right", "map.reset", "page.left", "page.right" };
 
 	/** @param keyID - The ID of the pressed key. See {@link KeyEvent}
 	 * @return The {@link Keys#KEY_UP Key} that was pressed. -1 if doesn't match a key for this game. */
@@ -103,7 +106,7 @@ public class Keys implements KeyListener
 	 * If the RUN key is pressed, will check if they were'nt pressed the last tick.<br />
 	 * Else, will check if they're the only directional keys pressed.
 	 * 
-	 * @param canRun - True if the RUN key should be checked. 
+	 * @param canRun - True if the RUN key should be checked.
 	 * @param keys - The keys to check. */
 	public static boolean directionPressed(boolean canRun, short... keys)
 	{
@@ -114,8 +117,7 @@ public class Keys implements KeyListener
 			if (running && wasPressed(key)) return false;
 		}
 
-		if (!running) for (short key : new short[]
-		{ KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT })
+		if (!running) for (short key : new short[] { KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT })
 		{
 			boolean checking = false;
 			for (short check : keys)

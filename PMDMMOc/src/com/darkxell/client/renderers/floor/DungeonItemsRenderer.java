@@ -36,8 +36,8 @@ public class DungeonItemsRenderer extends AbstractRenderer
 				Tile tile = this.floor.tileAt(x, y);
 				if (tile != null)
 				{
-					if (tile.getItem() != null && tile.type() == TileType.GROUND) g.drawImage(ItemsSpriteset.instance.SPRITES[tile.getItem().item()
-							.getSpriteID()], tile.x * TILE_SIZE + ITEM_POS, tile.y * TILE_SIZE + ITEM_POS, null);
+					if (tile.getItem() != null && tile.type() == TileType.GROUND)
+						g.drawImage(ItemsSpriteset.instance.sprite(tile.getItem()), tile.x * TILE_SIZE + ITEM_POS, tile.y * TILE_SIZE + ITEM_POS, null);
 				}
 			}
 	}

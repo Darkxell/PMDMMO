@@ -17,6 +17,10 @@ public class Util
 		player.addAlly(PokemonRegistry.find(1).generate(new Random(), 1, 1));
 		player.addAlly(PokemonRegistry.find(255).generate(new Random(), 1));
 		player.getTeamLeader().setItem(new ItemStack(ItemID.XRaySpecs));
+		for (int i = 1; i < 13; ++i)
+			player.inventory().addItem(new ItemStack(i));
+		for (int i = 21; i < 29; ++i)
+			player.inventory().addItem(new ItemStack(i, i - 20));
 		return player;
 	}
 

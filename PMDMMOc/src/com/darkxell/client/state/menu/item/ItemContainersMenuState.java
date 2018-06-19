@@ -1,9 +1,16 @@
 package com.darkxell.client.state.menu.item;
 
+import static com.darkxell.client.resources.images.tilesets.ItemsSpriteset.ITEM_SIZE;
+
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.util.ArrayList;
 
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.launchable.messagehandlers.ItemActionHandler.ItemActionMessageHandler;
+import com.darkxell.client.renderers.TextRenderer;
+import com.darkxell.client.resources.images.MenuHudSpriteset;
 import com.darkxell.client.resources.music.SoundManager;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.dialog.AbstractDialogState;
@@ -11,10 +18,12 @@ import com.darkxell.client.state.dialog.AbstractDialogState.DialogEndListener;
 import com.darkxell.client.state.dialog.DialogScreen;
 import com.darkxell.client.state.dialog.DialogState;
 import com.darkxell.client.state.dungeon.DungeonState;
+import com.darkxell.client.state.menu.AbstractMenuState;
 import com.darkxell.client.state.menu.InfoState;
-import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.client.state.menu.TeamMenuState;
 import com.darkxell.client.state.menu.TeamMenuState.TeamMemberSelectionListener;
+import com.darkxell.client.state.menu.components.InventoryWindow;
+import com.darkxell.client.state.menu.components.MenuWindow;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.common.event.item.ItemMovedEvent;
 import com.darkxell.common.event.item.ItemSelectionEvent;
@@ -30,10 +39,24 @@ import com.darkxell.common.util.language.Message;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonObject;
 
-public class ItemContainersMenuState extends OptionSelectionMenuState
+public class ItemContainersMenuState extends AbstractMenuState
 		implements ItemActionSource, ItemSelectionListener, TeamMemberSelectionListener, ItemActionMessageHandler
 {
-	private static final int MAX_HEIGHT = 10;
+	public static class MenuItemOption extends MenuOption
+	{
+		public final ItemStack item;
+
+		public MenuItemOption(ItemStack item)
+		{
+			super(item.name());
+			this.item = item;
+		}
+	}
+
+	public static final int LIST_ITEM_WIDTH = 5, LIST_ITEM_HEIGHT = 8, MAX_ITEM_COUNT = LIST_ITEM_WIDTH * LIST_ITEM_HEIGHT;
+	public static final int LIST_OFFSET = 5, ITEM_SLOT = ITEM_SIZE + 6, ITEM_OFFSET = (ITEM_SLOT - ITEM_SIZE) / 2;
+	public static final int WIDTH = (ITEM_SLOT + LIST_OFFSET) * LIST_ITEM_WIDTH + LIST_OFFSET + MenuWindow.MARGIN_X,
+			HEIGHT = (ITEM_SLOT + LIST_OFFSET) * LIST_ITEM_HEIGHT + LIST_OFFSET + MenuWindow.MARGIN_Y;
 
 	private int[] containerOffset;
 	private final ItemContainer[] containers;
@@ -41,7 +64,9 @@ public class ItemContainersMenuState extends OptionSelectionMenuState
 	private final int[] indexOffset;
 	public final boolean inDungeon;
 	private final ItemSelectionListener listener;
+	private MenuWindow nameWindow;
 	private final AbstractState parent;
+	private InventoryWindow window;
 
 	public ItemContainersMenuState(AbstractState parent, AbstractState background, boolean inDungeon, ItemContainer... containers)
 	{
@@ -66,8 +91,8 @@ public class ItemContainersMenuState extends OptionSelectionMenuState
 			{
 				c.add(container);
 				of.add(o);
-				o += MAX_HEIGHT;
-				s -= MAX_HEIGHT;
+				o += MAX_ITEM_COUNT;
+				s -= MAX_ITEM_COUNT;
 			} while (s > 0);
 		}
 
@@ -80,6 +105,11 @@ public class ItemContainersMenuState extends OptionSelectionMenuState
 		}
 
 		this.createOptions();
+	}
+
+	public Point actionSelectionWindowLocation()
+	{
+		return new Point(this.nameWindow.dimensions.x, (int) (this.nameWindow.dimensions.getMaxY() + 5));
 	}
 
 	private ItemContainer container()
@@ -104,13 +134,18 @@ public class ItemContainersMenuState extends OptionSelectionMenuState
 				continue;
 			} else containerOffsets.add(offset);
 			this.tabs.add(tab);
-			for (int i = 0; i < MAX_HEIGHT && this.indexOffset[c] + i < container.size(); ++i)
-				tab.addOption(new MenuOption(container.getItem(this.indexOffset[c] + i).name()));
+			for (int i = 0; i < MAX_ITEM_COUNT && this.indexOffset[c] + i < container.size(); ++i)
+				tab.addOption(new MenuItemOption(container.getItem(this.indexOffset[c] + i)));
 		}
 
 		this.containerOffset = new int[containerOffsets.size()];
 		for (int i = 0; i < this.containerOffset.length; ++i)
 			this.containerOffset[i] = containerOffsets.get(i);
+	}
+
+	public InventoryWindow getMainWindow()
+	{
+		return this.window;
 	}
 
 	@Override
@@ -341,6 +376,13 @@ public class ItemContainersMenuState extends OptionSelectionMenuState
 	}
 
 	@Override
+	protected Rectangle mainWindowDimensions()
+	{
+		Rectangle superRect = super.mainWindowDimensions();
+		return new Rectangle(superRect.x, superRect.y, WIDTH, HEIGHT);
+	}
+
+	@Override
 	protected void onExit()
 	{
 		Persistance.stateManager.setState(this.parent);
@@ -349,12 +391,73 @@ public class ItemContainersMenuState extends OptionSelectionMenuState
 	@Override
 	public void onKeyPressed(short key)
 	{
-		super.onKeyPressed(key);
+		if (this.tabs.size() != 0)
+		{
+			if (key == Keys.KEY_PAGE_LEFT && this.tab > 0) --this.tab;
+			else if (key == Keys.KEY_PAGE_RIGHT && this.tab < this.tabs.size() - 1) ++this.tab;
+			else if (key == Keys.KEY_LEFT) --this.selection;
+			else if (key == Keys.KEY_RIGHT) ++this.selection;
+			else if (key == Keys.KEY_UP) this.selection -= LIST_ITEM_WIDTH;
+			else if (key == Keys.KEY_DOWN) this.selection += LIST_ITEM_WIDTH;
+			else if (key == Keys.KEY_ATTACK)
+			{
+				this.onOptionSelected(this.currentOption());
+				SoundManager.playSound("ui-select");
+			}
+
+			if (key == Keys.KEY_PAGE_LEFT || key == Keys.KEY_PAGE_RIGHT)
+			{
+				if (this.selection >= this.currentTab().options().length) this.selection = this.currentTab().options().length - 1;
+				this.onTabChanged(this.currentTab());
+				SoundManager.playSound("ui-move");
+			} else if (key == Keys.KEY_UP || key == Keys.KEY_DOWN || key == Keys.KEY_LEFT || key == Keys.KEY_RIGHT)
+			{
+				if (this.selection >= this.currentTab().options().length) this.selection %= LIST_ITEM_WIDTH;
+				else if (this.selection < 0) this.selection += this.currentTab().options().length;
+				this.onOptionChanged(this.currentOption());
+				SoundManager.playSound("ui-move");
+			}
+		}
+		if (key == Keys.KEY_MENU || key == Keys.KEY_RUN)
+		{
+			SoundManager.playSound("ui-back");
+			this.onExit();
+		}
 		if (key == Keys.KEY_MAP_RESET && this.container() == Persistance.player.inventory())
 		{
 			SoundManager.playSound("ui-sort");
 			Persistance.player.inventory().sort();
 			this.reloadContainers();
+		}
+	}
+
+	@Override
+	public void onMouseClick(int x, int y)
+	{
+		super.onMouseClick(x, y);
+		if (this.window != null)
+		{
+			int option = this.window.optionAt(x, y);
+			if (option != -1)
+			{
+				this.selection = option;
+				this.onOptionSelected(this.currentOption());
+			} else if (!this.window.dimensions.contains(new Point(x, y)))
+			{
+				SoundManager.playSound("ui-back");
+				this.onExit();
+			}
+		}
+	}
+
+	@Override
+	public void onMouseMove(int x, int y)
+	{
+		super.onMouseMove(x, y);
+		if (this.window != null)
+		{
+			int option = this.window.optionAt(x, y);
+			if (option != -1) this.selection = option;
 		}
 	}
 
@@ -378,6 +481,13 @@ public class ItemContainersMenuState extends OptionSelectionMenuState
 
 			Persistance.stateManager.setState(new ItemActionSelectionState(this, this, actions));
 		} else this.listener.itemSelected(i, this.itemIndex());
+	}
+
+	@Override
+	protected void onTabChanged(MenuTab tab)
+	{
+		super.onTabChanged(tab);
+		this.updateNameWindow();
 	}
 
 	@Override
@@ -452,9 +562,25 @@ public class ItemContainersMenuState extends OptionSelectionMenuState
 	}
 
 	@Override
+	public void render(Graphics2D g, int width, int height)
+	{
+		super.render(g, width, height);
+
+		if (this.window == null) this.window = new InventoryWindow(this, this.mainWindowDimensions());
+		if (this.nameWindow == null) this.updateNameWindow();
+
+		this.window.render(g, this.currentTab().name, width, height);
+		this.nameWindow.render(g, null, width, height);
+
+		Message name = ((MenuItemOption) this.currentOption()).item.name();
+		Rectangle inside = this.nameWindow.inside();
+		TextRenderer.render(g, name, this.nameWindow.inside().x + 5, inside.y + inside.height / 2 - TextRenderer.height() / 2);
+	}
+
+	@Override
 	public ItemStack selectedItem()
 	{
-		return this.container().getItem(this.optionIndex());
+		return ((MenuItemOption) this.tabs.get(this.tabIndex()).options()[this.itemIndex()]).item;
 	}
 
 	@Override
@@ -504,6 +630,17 @@ public class ItemContainersMenuState extends OptionSelectionMenuState
 		if (nextState == this) this.reloadContainers();
 		else if (nextState != null) Persistance.stateManager.setState(nextState);
 
+	}
+
+	private void updateNameWindow()
+	{
+		int maxWidth = 0;
+		for (int i = 0; i < this.currentTab().options().length; ++i)
+			maxWidth = Math.max(maxWidth, TextRenderer.width(((MenuItemOption) this.currentTab().options()[i]).item.name()));
+		Rectangle main = this.mainWindowDimensions();
+		this.nameWindow = new MenuWindow(
+				new Rectangle((int) main.getMaxX() + 5, (int) main.getMinY(), maxWidth + MenuWindow.MARGIN_X + MenuHudSpriteset.cornerSize.width,
+						TextRenderer.height() + MenuWindow.MARGIN_Y + MenuHudSpriteset.cornerSize.height * 3 / 2));
 	}
 
 }
