@@ -2,24 +2,27 @@ package com.darkxell.client.state.menu;
 
 import java.awt.Rectangle;
 
-import com.darkxell.client.state.dialog.OptionDialogState;
+import com.darkxell.client.state.dialog.DialogState;
+import com.darkxell.client.state.dialog.OptionDialogScreen;
 import com.darkxell.common.util.language.Message;
 
 public class OptionState extends OptionSelectionMenuState
 {
 
-	public OptionState(OptionDialogState backgroundState, boolean isOpaque)
+	public final OptionDialogScreen screen;
+
+	public OptionState(DialogState backgroundState, OptionDialogScreen screen, boolean isOpaque)
 	{
 		super(backgroundState, isOpaque);
+		this.screen = screen;
 		this.createOptions();
 	}
 
 	@Override
 	protected void createOptions()
 	{
-		OptionDialogState s = (OptionDialogState) this.backgroundState;
 		MenuTab t = new MenuTab();
-		for (Message option : s.options)
+		for (Message option : this.screen.options())
 			t.addOption(new MenuOption(option));
 		this.tabs.add(t);
 	}
@@ -27,7 +30,7 @@ public class OptionState extends OptionSelectionMenuState
 	@Override
 	protected Rectangle mainWindowDimensions()
 	{
-		OptionDialogState s = (OptionDialogState) this.backgroundState;
+		DialogState s = (DialogState) this.backgroundState;
 		Rectangle r = super.mainWindowDimensions();
 		return new Rectangle((int) s.dialogBox().getMaxX() - r.width - 5, (int) s.dialogBox().getY() - r.height - 5, r.width, r.height);
 	}
@@ -39,7 +42,7 @@ public class OptionState extends OptionSelectionMenuState
 	@Override
 	protected void onOptionSelected(MenuOption option)
 	{
-		((OptionDialogState) this.backgroundState).onOptionSelected(this.selection);
+		this.screen.onOptionSelected(this.selection);
 	}
 
 }

@@ -30,12 +30,22 @@ public class DialogState extends AbstractDialogState
 	/** The offset to reach. */
 	private int targetOffset;
 
-	public DialogState(AbstractState backgroundState, DialogEndListener listener, boolean isOpaque, DialogScreen screen)
+	public DialogState(AbstractState backgroundState, AbstractDialogScreen screen)
+	{
+		this(backgroundState, Arrays.asList(screen));
+	}
+
+	public DialogState(AbstractState backgroundState, DialogEndListener listener, AbstractDialogScreen screen)
+	{
+		this(backgroundState, listener, true, Arrays.asList(screen));
+	}
+
+	public DialogState(AbstractState backgroundState, DialogEndListener listener, boolean isOpaque, AbstractDialogScreen screen)
 	{
 		this(backgroundState, listener, isOpaque, Arrays.asList(screen));
 	}
 
-	public DialogState(AbstractState backgroundState, DialogEndListener listener, boolean isOpaque, List<DialogScreen> screens)
+	public DialogState(AbstractState backgroundState, DialogEndListener listener, boolean isOpaque, List<AbstractDialogScreen> screens)
 	{
 		super(listener, screens);
 
@@ -45,22 +55,12 @@ public class DialogState extends AbstractDialogState
 		this.currentLine = 2;
 	}
 
-	public DialogState(AbstractState backgroundState, DialogEndListener listener, DialogScreen screen)
-	{
-		this(backgroundState, listener, true, Arrays.asList(screen));
-	}
-
-	public DialogState(AbstractState backgroundState, DialogEndListener listener, List<DialogScreen> elements)
+	public DialogState(AbstractState backgroundState, DialogEndListener listener, List<AbstractDialogScreen> elements)
 	{
 		this(backgroundState, listener, true, elements);
 	}
 
-	public DialogState(AbstractState backgroundState, DialogScreen screen)
-	{
-		this(backgroundState, Arrays.asList(screen));
-	}
-
-	public DialogState(AbstractState backgroundState, List<DialogScreen> elements)
+	public DialogState(AbstractState backgroundState, List<AbstractDialogScreen> elements)
 	{
 		this(backgroundState, null, elements);
 	}
@@ -168,8 +168,12 @@ public class DialogState extends AbstractDialogState
 	private boolean switchAnimation()
 	{
 		if (this.currentScreen >= this.screens.size() - 1) return false;
-		return this.currentScreen().emotion != this.screens.get(this.currentScreen + 1).emotion
-				|| (this.currentScreen().pokemon != null && this.currentScreen().pokemon.equals(this.screens.get(this.currentScreen + 1).pokemon));
+		if (this.currentScreen() instanceof PokemonDialogScreen && this.screens.get(this.currentScreen + 1) instanceof PokemonDialogScreen)
+		{
+			PokemonDialogScreen current = (PokemonDialogScreen) this.currentScreen(), next = (PokemonDialogScreen) this.screens.get(this.currentScreen + 1);
+			return current.emotion != next.emotion || (current.pokemon != null && current.pokemon.equals(next.pokemon));
+		}
+		return true;
 	}
 
 	@Override

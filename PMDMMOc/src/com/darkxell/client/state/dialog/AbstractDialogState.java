@@ -21,8 +21,8 @@ public abstract class AbstractDialogState extends AbstractState
 		public void onDialogEnd(AbstractDialogState dialog);
 	}
 
-	public static final int ARROW_TICK_LENGTH = 20;
 	public static final BufferedImage arrow = MenuHudSpriteset.NEXT_WINDOW_ARROW;
+	public static final int ARROW_TICK_LENGTH = 20;
 	static final byte PRINTING = 0, PAUSED = 1, SWITCHING = 2;
 
 	int arrowtick;
@@ -33,16 +33,16 @@ public abstract class AbstractDialogState extends AbstractState
 	/** The listener called when this Dialog ends. If null, the Background State is used instead. */
 	protected final DialogEndListener listener;
 	/** The screens to show. */
-	protected final List<DialogScreen> screens;
+	protected final List<AbstractDialogScreen> screens;
 	/** The current state of this dialog. */
 	byte state;
 
-	public AbstractDialogState(DialogEndListener listener, DialogScreen screen)
+	public AbstractDialogState(DialogEndListener listener, AbstractDialogScreen screen)
 	{
 		this(listener, Arrays.asList(screen));
 	}
 
-	public AbstractDialogState(DialogEndListener listener, List<DialogScreen> screens)
+	public AbstractDialogState(DialogEndListener listener, List<AbstractDialogScreen> screens)
 	{
 		this.screens = screens;
 
@@ -52,7 +52,7 @@ public abstract class AbstractDialogState extends AbstractState
 		this.state = PRINTING;
 	}
 
-	public AbstractDialogState(List<DialogScreen> elements)
+	public AbstractDialogState(List<AbstractDialogScreen> elements)
 	{
 		this(null, elements);
 	}
@@ -72,7 +72,7 @@ public abstract class AbstractDialogState extends AbstractState
 		return this.currentScreen().message;
 	}
 
-	public DialogScreen currentScreen()
+	public AbstractDialogScreen currentScreen()
 	{
 		return this.screens.get(this.currentScreen);
 	}
