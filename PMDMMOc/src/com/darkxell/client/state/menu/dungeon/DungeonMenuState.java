@@ -49,7 +49,7 @@ public class DungeonMenuState extends OptionSelectionMenuState
 	protected void onOptionSelected(MenuOption option)
 	{
 		DungeonState s = Persistance.dungeonState;
-		if (option == this.moves) Persistance.stateManager.setState(new MovesMenuState(s));
+		if (option == this.moves) Persistance.stateManager.setState(new MovesMenuState(s, Persistance.player.getTeam()));
 		else if (option == this.items)
 		{
 			ArrayList<ItemContainer> containers = new ArrayList<ItemContainer>();
