@@ -41,6 +41,7 @@ public class EntityRendererHolder<T> extends AbstractRenderer
 	}
 
 	/** @return The list of all renderers to call on render, in drawing order. */
+	@SuppressWarnings("unchecked")
 	public ArrayList<AbstractRenderer> listRenderers()
 	{
 		if (this.forceReload)
@@ -48,7 +49,7 @@ public class EntityRendererHolder<T> extends AbstractRenderer
 			this.sortedRenderers.sort(Comparator.naturalOrder());
 			this.forceReload = false;
 		}
-		return this.sortedRenderers;
+		return (ArrayList<AbstractRenderer>) this.sortedRenderers.clone();
 	}
 
 	/** Registers and returns the input Renderer. */
