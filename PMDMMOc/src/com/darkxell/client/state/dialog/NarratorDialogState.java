@@ -59,7 +59,7 @@ public class NarratorDialogState extends AbstractDialogState
 		}
 	}
 
-	private void requestNextMessage()
+	private void startNextMessage()
 	{
 		this.state = PRINTING;
 		this.fadingOut = true;
@@ -78,9 +78,9 @@ public class NarratorDialogState extends AbstractDialogState
 			} else if (this.fadingOut && this.fadeTick == 0)
 			{
 				this.fadingOut = false;
-				this.nextMessage();
+				this.requestNextMessage();
 			}
-			if (this.state == PAUSED && Keys.isPressed(Keys.KEY_RUN) && this.isMain()) this.requestNextMessage();
+			if (this.state == PAUSED && Keys.isPressed(Keys.KEY_RUN) && this.isMain()) this.startNextMessage();
 		}
 
 		super.update();

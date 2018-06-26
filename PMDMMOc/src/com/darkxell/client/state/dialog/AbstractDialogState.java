@@ -50,7 +50,7 @@ public abstract class AbstractDialogState extends AbstractState
 		this.lines = new ArrayList<ArrayList<PMDChar>>();
 		this.currentScreen = this.arrowtick = 0;
 		this.state = PRINTING;
-		
+
 		for (DialogScreen screen : this.screens)
 			screen.parentState = this;
 	}
@@ -80,17 +80,21 @@ public abstract class AbstractDialogState extends AbstractState
 		return this.screens.get(this.currentScreen);
 	}
 
-	/** Skips to the next message. */
-	public void requestNextMessage()
+	/** @return The first screen with the input ID. */
+	public DialogScreen getScreen(int id)
 	{
-		if (this.currentScreen == this.screens.size() - 1)
-		{
-			if (this.listener != null) this.listener.onDialogEnd(this);
-		} else
-		{
-			++this.currentScreen;
-			this.lines.clear();
-		}
+		for (DialogScreen screen : this.screens)
+			if (screen.id == id) return screen;
+		return null;
+	}
+
+	/** @return Alls screens with the input ID. */
+	public ArrayList<DialogScreen> getScreens(int id)
+	{
+		ArrayList<DialogScreen> screens = new ArrayList<>();
+		for (DialogScreen screen : this.screens)
+			if (screen.id == id) screens.add(screen);
+		return screens;
 	}
 
 	@Override
@@ -108,6 +112,19 @@ public abstract class AbstractDialogState extends AbstractState
 		ArrayList<String> l = TextRenderer.splitLines(this.currentMessage().toString(), maxwidth);
 		for (String line : l)
 			this.lines.add(TextRenderer.decode(line));
+	}
+
+	/** Skips to the next message. */
+	public void requestNextMessage()
+	{
+		if (this.currentScreen == this.screens.size() - 1)
+		{
+			if (this.listener != null) this.listener.onDialogEnd(this);
+		} else
+		{
+			++this.currentScreen;
+			this.lines.clear();
+		}
 	}
 
 	public void setOpaque(boolean opaque)
