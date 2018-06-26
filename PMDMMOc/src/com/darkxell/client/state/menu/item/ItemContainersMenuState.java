@@ -413,7 +413,10 @@ public class ItemContainersMenuState extends AbstractMenuState
 			} else if (key == Keys.KEY_UP || key == Keys.KEY_DOWN || key == Keys.KEY_LEFT || key == Keys.KEY_RIGHT)
 			{
 				if (this.selection >= this.currentTab().options().length) this.selection %= LIST_ITEM_WIDTH;
-				else if (this.selection < 0) this.selection += this.currentTab().options().length;
+				while (this.selection < 0)
+					this.selection += this.currentTab().options().length;
+				while (this.selection >= this.currentTab().options().length)
+					--this.selection;
 				this.onOptionChanged(this.currentOption());
 				SoundManager.playSound("ui-move");
 			}
@@ -519,8 +522,8 @@ public class ItemContainersMenuState extends AbstractMenuState
 			Persistance.socketendpoint.sendMessage(payload.toString());
 		} else if (action == ItemAction.GET || action == ItemAction.TAKE)
 		{
-			if (this.inDungeon) Persistance.eventProcessor().processEvent(
-					new ItemMovedEvent(Persistance.floor, action, user, container, 0, user.player().inventory(), user.player().inventory().canAccept(i)));
+			if (this.inDungeon && user.player().inventory().canAccept(i) != -1)
+				Persistance.eventProcessor().processEvent(new ItemMovedEvent(Persistance.floor, action, user, container, 0, user.player().inventory(), -1));
 			else if (action == ItemAction.TAKE)
 			{
 				nextState = null;

@@ -59,14 +59,14 @@ public class Inventory implements ItemContainer
 	@Override
 	public int canAccept(ItemStack item)
 	{
-		if (this.isFull()) return -1;
-
 		if (item.item().isStackable)
 		{
 			ArrayList<ItemStack> items = this.items();
 			for (ItemStack stack : items)
 				if (stack.item().id == item.item().id) return items.indexOf(stack);
 		}
+
+		if (this.isFull()) return -1;
 
 		return this.size();
 	}

@@ -82,7 +82,7 @@ public class ItemMovedEvent extends DungeonEvent implements Communicable
 
 		ItemStack i = this.source.getItem(this.sourceIndex);
 		this.source.deleteItem(this.sourceIndex);
-		if (this.destinationIndex >= this.destination.size()) this.destination.addItem(i);
+		if (this.destinationIndex >= this.destination.size() || this.destinationIndex == -1) this.destination.addItem(i);
 		else this.destination.setItem(this.destinationIndex, i);
 		return super.processServer();
 	}
