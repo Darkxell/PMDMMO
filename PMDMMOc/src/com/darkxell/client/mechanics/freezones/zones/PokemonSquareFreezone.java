@@ -93,12 +93,12 @@ public class PokemonSquareFreezone extends FreezoneMap {
 		this.addEntity(new WatersparklesEntity(32.5, 79, WatersparklesEntity.TYPE_SIDE));
 
 		// Add the shopkeepers
-		this.addEntity(new PokemonFreezoneEntity(36, 30, 352));
-		this.addEntity(new PokemonFreezoneEntity(39, 30, -352));
-		this.addEntity(new PokemonFreezoneEntity(82, 33, 53));
-		this.addEntity(new PokemonFreezoneEntity(97, 33, 40));
-		this.addEntity(new PokemonFreezoneEntity(41, 61, 115));
-		this.addEntity(new PokemonFreezoneEntity(82, 60, 316));
+		this.addEntity(new PokemonFreezoneEntity(36, 30, 352)); // Keckleon 1
+		this.addEntity(new PokemonFreezoneEntity(39, 30, -352)); // Keckleon 2
+		this.addEntity(new PokemonFreezoneEntity(82.5, 33, 53)); // Persian
+		this.addEntity(new PokemonFreezoneEntity(97.5, 33, 40)); // Wigglytuff
+		this.addEntity(new PokemonFreezoneEntity(41.5, 61, 115)); // Kangaskhan
+		this.addEntity(new PokemonFreezoneEntity(82.5, 60, 316)); // Gulpin
 		
 
 		// Add the interactible pokemons

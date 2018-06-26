@@ -12,44 +12,51 @@ import com.darkxell.client.state.dialog.DialogScreen;
 import com.darkxell.client.state.dialog.DialogState;
 import com.darkxell.common.util.Direction;
 
-public class PokemonFreezoneEntity extends FreezoneEntity {
+public class PokemonFreezoneEntity extends FreezoneEntity
+{
 
 	/** The intelligent sprite of the pokemon. */
 	private PokemonSprite pkmnsprite;
 
 	private ArrayList<DialogScreen> dialogs;
-	
-	public PokemonFreezoneEntity(int x, int y, PokemonSprite sprite) {
+
+	public PokemonFreezoneEntity(double x, double y, PokemonSprite sprite)
+	{
 		super(true, true, x, y);
 		this.pkmnsprite = sprite;
 	}
 
-	public PokemonFreezoneEntity(int x, int y, int spriteid) {
+	public PokemonFreezoneEntity(double x, double y, int spriteid)
+	{
 		this(x, y, new PokemonSprite(PokemonSpritesets.getSpriteset(spriteid)));
 	}
-	
-	public PokemonFreezoneEntity(int x, int y, int spriteid, Direction facing) {
+
+	public PokemonFreezoneEntity(double x, double y, int spriteid, Direction facing)
+	{
 		this(x, y, new PokemonSprite(PokemonSpritesets.getSpriteset(spriteid)));
 		this.pkmnsprite.setFacingDirection(facing);
 	}
-	
-	public PokemonFreezoneEntity(int x, int y,int spriteid, Direction facing, ArrayList<DialogScreen> dialog) {
-		this(x,y,spriteid,facing);
+
+	public PokemonFreezoneEntity(double x, double y, int spriteid, Direction facing, ArrayList<DialogScreen> dialog)
+	{
+		this(x, y, spriteid, facing);
 		this.dialogs = dialog;
 	}
 
 	@Override
-	public AbstractRenderer createRenderer() {
+	public AbstractRenderer createRenderer()
+	{
 		return new FreezonePokemonRenderer(this, this.pkmnsprite);
 	}
 
 	@Override
-	public void onInteract() {
+	public void onInteract()
+	{
 		Persistance.stateManager.setState(new DialogState(Persistance.stateManager.getCurrentState(), this.dialogs));
 	}
 
 	@Override
-	public void update() {
-	}
+	public void update()
+	{}
 
 }
