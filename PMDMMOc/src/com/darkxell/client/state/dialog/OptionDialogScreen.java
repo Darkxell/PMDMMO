@@ -56,19 +56,20 @@ public class OptionDialogScreen extends PokemonDialogScreen
 	}
 
 	@Override
-	public void nextMessage()
+	public boolean requestNextMessage()
 	{
-		if (this.currentScreen == this.screens.size() - 1 && !this.showingOptions)
+		if (!this.showingOptions)
 		{
 			this.showingOptions = true;
-			Persistance.stateManager.setState(new OptionState(this, this.isOpaque));
-		} else super.nextMessage();
+			Persistance.stateManager.setState(new OptionState((DialogState) this.parentState, this, this.isOpaque));
+			return false;
+		} else return super.requestNextMessage();
 	}
 
 	public void onOptionSelected(int option)
 	{
 		this.chosenIndex = option;
-		this.nextMessage();
+		this.parentState.requestNextMessage();
 	}
 
 	public Message[] options()

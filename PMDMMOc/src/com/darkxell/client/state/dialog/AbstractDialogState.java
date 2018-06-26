@@ -33,16 +33,16 @@ public abstract class AbstractDialogState extends AbstractState
 	/** The listener called when this Dialog ends. If null, the Background State is used instead. */
 	protected final DialogEndListener listener;
 	/** The screens to show. */
-	protected final List<AbstractDialogScreen> screens;
+	protected final List<DialogScreen> screens;
 	/** The current state of this dialog. */
 	byte state;
 
-	public AbstractDialogState(DialogEndListener listener, AbstractDialogScreen screen)
+	public AbstractDialogState(DialogEndListener listener, DialogScreen screen)
 	{
 		this(listener, Arrays.asList(screen));
 	}
 
-	public AbstractDialogState(DialogEndListener listener, List<AbstractDialogScreen> screens)
+	public AbstractDialogState(DialogEndListener listener, List<DialogScreen> screens)
 	{
 		this.screens = screens;
 
@@ -50,9 +50,12 @@ public abstract class AbstractDialogState extends AbstractState
 		this.lines = new ArrayList<ArrayList<PMDChar>>();
 		this.currentScreen = this.arrowtick = 0;
 		this.state = PRINTING;
+		
+		for (DialogScreen screen : this.screens)
+			screen.parentState = this;
 	}
 
-	public AbstractDialogState(List<AbstractDialogScreen> elements)
+	public AbstractDialogState(List<DialogScreen> elements)
 	{
 		this(null, elements);
 	}
@@ -72,13 +75,13 @@ public abstract class AbstractDialogState extends AbstractState
 		return this.currentScreen().message;
 	}
 
-	public AbstractDialogScreen currentScreen()
+	public DialogScreen currentScreen()
 	{
 		return this.screens.get(this.currentScreen);
 	}
 
 	/** Skips to the next message. */
-	public void nextMessage()
+	public void requestNextMessage()
 	{
 		if (this.currentScreen == this.screens.size() - 1)
 		{
@@ -93,7 +96,7 @@ public abstract class AbstractDialogState extends AbstractState
 	@Override
 	public void onKeyPressed(short key)
 	{
-		if (this.state == PAUSED && (key == Keys.KEY_ATTACK || key == Keys.KEY_RUN)) this.nextMessage();
+		if (this.state == PAUSED && (key == Keys.KEY_ATTACK || key == Keys.KEY_RUN)) this.requestNextMessage();
 	}
 
 	@Override
@@ -105,6 +108,12 @@ public abstract class AbstractDialogState extends AbstractState
 		ArrayList<String> l = TextRenderer.splitLines(this.currentMessage().toString(), maxwidth);
 		for (String line : l)
 			this.lines.add(TextRenderer.decode(line));
+	}
+
+	public void setOpaque(boolean opaque)
+	{
+		for (DialogScreen screen : this.screens)
+			screen.isOpaque = opaque;
 	}
 
 	@Override

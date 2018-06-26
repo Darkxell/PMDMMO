@@ -65,7 +65,7 @@ public class MoveLearnMenuState extends MovesMenuState implements DialogEndListe
 	{
 		MoveMenuOption o = (MoveMenuOption) option;
 
-		ConfirmDialogState s = new ConfirmDialogState(this.backgroundState, this, false, new DialogScreen(
+		ConfirmDialogState s = new ConfirmDialogState(this.backgroundState, this, new DialogScreen(
 				new Message("moves.forget").addReplacement("<pokemon>", this.pokemon.getNickname()).addReplacement("<move>", o.move.move().name())));
 		Persistance.stateManager.setState(s);
 	}

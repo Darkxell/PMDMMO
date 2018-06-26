@@ -325,7 +325,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 				}
 			}
 
-			DialogState state = new DialogState(Persistance.dungeonState, processEventsOnDialogEnd, false, screens);
+			DialogState state = new DialogState(Persistance.dungeonState, processEventsOnDialogEnd, screens);
 
 			if (firstLevel)
 			{
@@ -350,7 +350,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 				}
 			};
 
-			Persistance.stateManager.setState(new DialogState(Persistance.dungeonState, listener, false, new DialogScreen(
+			Persistance.stateManager.setState(new DialogState(Persistance.dungeonState, listener, new DialogScreen(
 					new Message("moves.learned.full").addReplacement("<pokemon>", event.pokemon.getNickname()).addReplacement("<move>", event.move.name()))));
 		}
 	}
@@ -375,7 +375,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		{
 			this.setState(State.ANIMATING);
 			SoundManager.playSound("game-movelearned");
-			Persistance.stateManager.setState(new DialogState(Persistance.dungeonState, ClientEventProcessor.processEventsOnDialogEnd, false, new DialogScreen(
+			Persistance.stateManager.setState(new DialogState(Persistance.dungeonState, ClientEventProcessor.processEventsOnDialogEnd, new DialogScreen(
 					new Message("moves.learned").addReplacement("<pokemon>", event.pokemon.getNickname()).addReplacement("<move>", event.move.name()))));
 		}
 	}

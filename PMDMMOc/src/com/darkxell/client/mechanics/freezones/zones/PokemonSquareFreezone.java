@@ -10,6 +10,7 @@ import com.darkxell.client.mechanics.freezones.entities.PokemonFreezoneEntity;
 import com.darkxell.client.mechanics.freezones.entities.SignSoulEntity;
 import com.darkxell.client.mechanics.freezones.entities.WatersparklesEntity;
 import com.darkxell.client.state.dialog.DialogScreen;
+import com.darkxell.client.state.dialog.PokemonDialogScreen;
 import com.darkxell.client.state.map.LocalMap.LOCALMAPLOCATION;
 import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.util.Direction;
@@ -103,19 +104,19 @@ public class PokemonSquareFreezone extends FreezoneMap {
 
 		// Add the interactible pokemons
 		ArrayList<DialogScreen> s = new ArrayList<>(2);
-		s.add(new DialogScreen(PokemonRegistry.find(6).generate(new Random(), 0),
+		s.add(new PokemonDialogScreen(PokemonRegistry.find(6).generate(new Random(), 0),
 				new Message("dialog.place.charizard.1")));
-		s.add(new DialogScreen(PokemonRegistry.find(6).generate(new Random(), 0),
+		s.add(new PokemonDialogScreen(PokemonRegistry.find(6).generate(new Random(), 0),
 				new Message("dialog.place.charizard.2")));
 		this.addEntity(new PokemonFreezoneEntity(57, 33, 6, Direction.EAST, s));
 		s = new ArrayList<>(1);
-		s.add(new DialogScreen(PokemonRegistry.find(248).generate(new Random(), 0),
+		s.add(new PokemonDialogScreen(PokemonRegistry.find(248).generate(new Random(), 0),
 				new Message("dialog.place.tyranitar")));
 		this.addEntity(new PokemonFreezoneEntity(61, 33, 248, Direction.WEST, s));
 		s = new ArrayList<>(2);
-		s.add(new DialogScreen(PokemonRegistry.find(275).generate(new Random(), 0),
+		s.add(new PokemonDialogScreen(PokemonRegistry.find(275).generate(new Random(), 0),
 				new Message("dialog.place.shiftry.1")));
-		s.add(new DialogScreen(PokemonRegistry.find(275).generate(new Random(), 0),
+		s.add(new PokemonDialogScreen(PokemonRegistry.find(275).generate(new Random(), 0),
 				new Message("dialog.place.shiftry.2")));
 		this.addEntity(new PokemonFreezoneEntity(69, 35, 275, Direction.SOUTHWEST, s));
 

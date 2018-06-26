@@ -14,6 +14,7 @@ import com.darkxell.client.state.dialog.AbstractDialogState.DialogEndListener;
 import com.darkxell.client.state.dialog.DialogScreen;
 import com.darkxell.client.state.dialog.DialogState;
 import com.darkxell.client.state.dialog.NarratorDialogState;
+import com.darkxell.client.state.dialog.PokemonDialogScreen;
 import com.darkxell.common.util.XMLUtils;
 import com.darkxell.common.util.language.Message;
 
@@ -74,7 +75,7 @@ public class DialogCutsceneEvent extends CutsceneEvent implements DialogEndListe
 			CutsceneEntity e = this.cutscene.player.getEntity(s.pokemon);
 			if (e != null && e instanceof CutscenePokemon) pokemon = (CutscenePokemon) e;
 			Message message = new Message(s.text, s.translate);
-			DialogScreen screen = new DialogScreen(pokemon == null ? null : pokemon.toPokemon(), message);
+			DialogScreen screen = pokemon == null ? new DialogScreen(message) : new PokemonDialogScreen(pokemon.toPokemon(), message);
 			screens.add(screen);
 		}
 

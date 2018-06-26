@@ -4,7 +4,7 @@ import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.util.language.Message;
 
-public class PokemonDialogScreen extends AbstractDialogScreen
+public class PokemonDialogScreen extends DialogScreen
 {
 	/** The emotion of the Pokemon. Unused for now. */
 	public short emotion;

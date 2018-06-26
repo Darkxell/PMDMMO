@@ -23,44 +23,31 @@ public class DialogState extends AbstractDialogState
 	/** The current maximum character to print. */
 	private int cursor;
 	private Rectangle dialogBox;
-	/** True if this Dialog's window is opaque. */
-	public boolean isOpaque;
 	/** Text offset. */
 	private int offset;
 	/** The offset to reach. */
 	private int targetOffset;
 
-	public DialogState(AbstractState backgroundState, AbstractDialogScreen screen)
+	public DialogState(AbstractState backgroundState, DialogScreen screen)
 	{
 		this(backgroundState, Arrays.asList(screen));
 	}
 
-	public DialogState(AbstractState backgroundState, DialogEndListener listener, AbstractDialogScreen screen)
+	public DialogState(AbstractState backgroundState, DialogEndListener listener, DialogScreen screen)
 	{
-		this(backgroundState, listener, true, Arrays.asList(screen));
+		this(backgroundState, listener, Arrays.asList(screen));
 	}
 
-	public DialogState(AbstractState backgroundState, DialogEndListener listener, boolean isOpaque, AbstractDialogScreen screen)
-	{
-		this(backgroundState, listener, isOpaque, Arrays.asList(screen));
-	}
-
-	public DialogState(AbstractState backgroundState, DialogEndListener listener, boolean isOpaque, List<AbstractDialogScreen> screens)
+	public DialogState(AbstractState backgroundState, DialogEndListener listener, List<DialogScreen> screens)
 	{
 		super(listener, screens);
 
 		this.backgroundState = backgroundState;
-		this.isOpaque = isOpaque;
 		this.cursor = this.offset = this.targetOffset = 0;
 		this.currentLine = 2;
 	}
 
-	public DialogState(AbstractState backgroundState, DialogEndListener listener, List<AbstractDialogScreen> elements)
-	{
-		this(backgroundState, listener, true, elements);
-	}
-
-	public DialogState(AbstractState backgroundState, List<AbstractDialogScreen> elements)
+	public DialogState(AbstractState backgroundState, List<DialogScreen> elements)
 	{
 		this(backgroundState, null, elements);
 	}
@@ -129,7 +116,7 @@ public class DialogState extends AbstractDialogState
 
 		if (this.lines.isEmpty()) this.reformLines(inside.width);
 
-		g.drawImage(this.isOpaque ? Hud.textwindow : Hud.textwindow_transparent, this.dialogBox.x, this.dialogBox.y, this.dialogBox.width,
+		g.drawImage(this.currentScreen().isOpaque ? Hud.textwindow : Hud.textwindow_transparent, this.dialogBox.x, this.dialogBox.y, this.dialogBox.width,
 				this.dialogBox.height, null);
 		Shape c = g.getClip();
 		g.setClip(inside);
@@ -153,7 +140,6 @@ public class DialogState extends AbstractDialogState
 				this.currentScreen().shiny, this.dialogBox.x + 5, this.dialogBox.y - Hud.portrait.getHeight() - 5);
 
 	}
-
 	private void requestNextLine()
 	{
 		if (this.currentLine < this.lines.size() - 1 || this.switchAnimation())
