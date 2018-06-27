@@ -3,7 +3,7 @@ package com.darkxell.client.state.dialog;
 import java.util.ArrayList;
 
 import com.darkxell.client.launchable.Persistance;
-import com.darkxell.client.state.dialog.AbstractDialogState.DialogEndListener;
+import com.darkxell.client.state.dialog.DialogState.DialogEndListener;
 import com.darkxell.client.state.menu.OptionState;
 import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.util.language.Message;
