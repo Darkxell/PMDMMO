@@ -54,10 +54,7 @@ public class DialogScreen
 	public DialogScreen(Message message)
 	{
 		this.message = message;
-		this.cursor = this.offset = this.targetOffset = this.arrowtick = 0;
-		this.currentLine = 2;
 		this.lines = new ArrayList<ArrayList<PMDChar>>();
-		this.state = DialogScreenState.PRINTING;
 	}
 
 	private int currentLength()
@@ -79,6 +76,14 @@ public class DialogScreen
 	public void onKeyPressed(short key)
 	{
 		if (this.state == DialogScreenState.PAUSED && (key == Keys.KEY_ATTACK || key == Keys.KEY_RUN)) this.requestNextLine();
+	}
+
+	public void onStart()
+	{
+		this.cursor = this.offset = this.targetOffset = this.arrowtick = 0;
+		this.currentLine = 2;
+		this.lines.clear();
+		this.state = DialogScreenState.PRINTING;
 	}
 
 	public DialogState parentState()

@@ -52,7 +52,7 @@ public class PokemonFreezoneEntity extends FreezoneEntity
 	@Override
 	public void onInteract()
 	{
-		Persistance.stateManager.setState(new DialogState(Persistance.stateManager.getCurrentState(), null, this.dialogs));
+		Persistance.stateManager.setState(new DialogState(Persistance.stateManager.getCurrentState(), null, this.dialogs).setOpaque(true));
 	}
 
 	@Override

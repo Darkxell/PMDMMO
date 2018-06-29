@@ -101,7 +101,11 @@ public class DialogState extends AbstractState
 		{
 			if (this.listener == null && this.backgroundState != null) Persistance.stateManager.setState(this.backgroundState);
 			else if (this.listener != null) this.listener.onDialogEnd(this);
-		} else++this.currentScreen;
+		} else
+		{
+			++this.currentScreen;
+			this.currentScreen().onStart();
+		}
 	}
 
 	public DialogScreen nextScreen()
@@ -119,6 +123,13 @@ public class DialogState extends AbstractState
 	@Override
 	public void onKeyReleased(short key)
 	{}
+
+	@Override
+	public void onStart()
+	{
+		super.onStart();
+		this.currentScreen().onStart();
+	}
 
 	@Override
 	public void render(Graphics2D g, int width, int height)
@@ -144,10 +155,11 @@ public class DialogState extends AbstractState
 		} else++this.currentScreen;
 	}
 
-	public void setOpaque(boolean opaque)
+	public DialogState setOpaque(boolean opaque)
 	{
 		for (DialogScreen screen : this.screens)
 			screen.isOpaque = opaque;
+		return this;
 	}
 
 	@Override
