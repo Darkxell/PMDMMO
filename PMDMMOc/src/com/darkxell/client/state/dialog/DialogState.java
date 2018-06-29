@@ -123,7 +123,7 @@ public class DialogState extends AbstractState
 	@Override
 	public void render(Graphics2D g, int width, int height)
 	{
-		if (this.backgroundState != null) this.backgroundState.render(g, width, height);
+		if (this.backgroundState != null && this.currentScreen().shouldRenderBackground()) this.backgroundState.render(g, width, height);
 
 		if (this.dialogBox == null)
 		{
@@ -133,7 +133,6 @@ public class DialogState extends AbstractState
 		}
 
 		this.currentScreen().render(g, width, height);
-
 	}
 
 	/** Skips to the next message. */

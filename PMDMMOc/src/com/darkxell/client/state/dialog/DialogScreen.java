@@ -148,6 +148,12 @@ public class DialogScreen
 		return this;
 	}
 
+	/** @return True if the background should be rendered when this DialogScreen is active. */
+	public boolean shouldRenderBackground()
+	{
+		return true;
+	}
+
 	/** @return True if the current message should be followed with a switching animation. */
 	protected boolean switchAnimation()
 	{
