@@ -11,6 +11,7 @@ import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.trap.TrapRegistry;
 import com.darkxell.common.util.Logger;
+import com.darkxell.gameserver.messagehandlers.BankactionHandler;
 import com.darkxell.gameserver.messagehandlers.CreateAccountHandler;
 import com.darkxell.gameserver.messagehandlers.DungeonendHandler;
 import com.darkxell.gameserver.messagehandlers.DungeonstartHandler;
@@ -263,6 +264,14 @@ public class GameServer {
                             return;
                         }
                         DungeonendHandler hand = new DungeonendHandler(this);
+                        hand.handleMessage(jsonMessage, session, sessionHandler);
+                        break;
+                    }
+                    case "bankaction": {
+                        if (!infos.isconnected) {
+                            return;
+                        }
+                        BankactionHandler hand = new BankactionHandler(this);
                         hand.handleMessage(jsonMessage, session, sessionHandler);
                         break;
                     }
