@@ -9,11 +9,10 @@ import com.darkxell.client.mechanics.cutscene.Cutscene;
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
 import com.darkxell.client.mechanics.cutscene.entity.CutscenePokemon;
-import com.darkxell.client.state.dialog.AbstractDialogState;
-import com.darkxell.client.state.dialog.AbstractDialogState.DialogEndListener;
 import com.darkxell.client.state.dialog.DialogScreen;
 import com.darkxell.client.state.dialog.DialogState;
-import com.darkxell.client.state.dialog.NarratorDialogState;
+import com.darkxell.client.state.dialog.DialogState.DialogEndListener;
+import com.darkxell.client.state.dialog.NarratorDialogScreen;
 import com.darkxell.client.state.dialog.PokemonDialogScreen;
 import com.darkxell.common.util.XMLUtils;
 import com.darkxell.common.util.language.Message;
@@ -58,7 +57,7 @@ public class DialogCutsceneEvent extends CutsceneEvent implements DialogEndListe
 	}
 
 	@Override
-	public void onDialogEnd(AbstractDialogState dialog)
+	public void onDialogEnd(DialogState dialog)
 	{
 		Persistance.stateManager.setState(Persistance.cutsceneState);
 		this.isOver = true;
@@ -76,12 +75,11 @@ public class DialogCutsceneEvent extends CutsceneEvent implements DialogEndListe
 			if (e != null && e instanceof CutscenePokemon) pokemon = (CutscenePokemon) e;
 			Message message = new Message(s.text, s.translate);
 			DialogScreen screen = pokemon == null ? new DialogScreen(message) : new PokemonDialogScreen(pokemon.toPokemon(), message);
+			if (this.isNarratorDialog) screen = new NarratorDialogScreen(message);
 			screens.add(screen);
 		}
 
-		AbstractDialogState state;
-		if (this.isNarratorDialog) state = new NarratorDialogState(this, screens);
-		else state = new DialogState(Persistance.cutsceneState, this, screens);
+		DialogState state = new DialogState(Persistance.cutsceneState, this, screens);
 		Persistance.stateManager.setState(state);
 	}
 

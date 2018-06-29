@@ -15,10 +15,9 @@ import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
 import com.darkxell.client.resources.music.SoundManager;
 import com.darkxell.client.state.StateManager;
-import com.darkxell.client.state.dialog.AbstractDialogState;
-import com.darkxell.client.state.dialog.AbstractDialogState.DialogEndListener;
 import com.darkxell.client.state.dialog.DialogScreen;
 import com.darkxell.client.state.dialog.DialogState;
+import com.darkxell.client.state.dialog.DialogState.DialogEndListener;
 import com.darkxell.client.state.dungeon.AnimationState;
 import com.darkxell.client.state.dungeon.DelayState;
 import com.darkxell.client.state.dungeon.NextFloorState;
@@ -86,7 +85,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 
 	public static final DialogEndListener processEventsOnDialogEnd = new DialogEndListener() {
 		@Override
-		public void onDialogEnd(AbstractDialogState dialog)
+		public void onDialogEnd(DialogState dialog)
 		{
 			Persistance.stateManager.setState(Persistance.dungeonState);
 			Persistance.eventProcessor().processPending();
@@ -344,7 +343,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 			DialogEndListener listener = new DialogEndListener() {
 
 				@Override
-				public void onDialogEnd(AbstractDialogState dialog)
+				public void onDialogEnd(DialogState dialog)
 				{
 					Persistance.stateManager.setState(new MoveLearnMenuState(Persistance.dungeonState, event.pokemon, event.move));
 				}

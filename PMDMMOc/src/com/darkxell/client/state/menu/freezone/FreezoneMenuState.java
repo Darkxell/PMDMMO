@@ -5,10 +5,9 @@ import java.util.Arrays;
 
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.state.AbstractState;
-import com.darkxell.client.state.dialog.AbstractDialogState;
-import com.darkxell.client.state.dialog.AbstractDialogState.DialogEndListener;
 import com.darkxell.client.state.dialog.DialogScreen;
 import com.darkxell.client.state.dialog.DialogState;
+import com.darkxell.client.state.dialog.DialogState.DialogEndListener;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.client.state.menu.TeamMenuState;
 import com.darkxell.client.state.menu.item.ItemContainersMenuState;
@@ -68,7 +67,7 @@ public class FreezoneMenuState extends OptionSelectionMenuState
 				FreezoneMenuState thismenu = this;
 				DialogEndListener listener = new DialogEndListener() {
 					@Override
-					public void onDialogEnd(AbstractDialogState dialog)
+					public void onDialogEnd(DialogState dialog)
 					{
 						Persistance.stateManager.setState(thismenu);
 					}
