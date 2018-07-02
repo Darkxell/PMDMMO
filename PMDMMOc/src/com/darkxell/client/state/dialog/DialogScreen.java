@@ -45,7 +45,7 @@ public class DialogScreen
 	public final Message message;
 	/** Text offset. */
 	private int offset;
-	DialogState parentState;
+	protected DialogState parentState;
 	/** The current state of this dialog. */
 	DialogScreenState state;
 	/** The offset to reach. */

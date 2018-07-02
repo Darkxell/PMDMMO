@@ -5,6 +5,7 @@ import java.util.Random;
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
 import com.darkxell.client.mechanics.freezones.WarpZone;
 import com.darkxell.client.mechanics.freezones.entities.AnimatedFlowerEntity;
+import com.darkxell.client.mechanics.freezones.entities.BankEntity;
 import com.darkxell.client.mechanics.freezones.entities.PokemonFreezoneEntity;
 import com.darkxell.client.mechanics.freezones.entities.SignSoulEntity;
 import com.darkxell.client.mechanics.freezones.entities.WatersparklesEntity;
@@ -105,6 +106,9 @@ public class PokemonSquareFreezone extends FreezoneMap
 		this.addEntity(new PokemonFreezoneEntity(97.5, 33, 40)); // Wigglytuff
 		this.addEntity(new PokemonFreezoneEntity(41.5, 61, 115)); // Kangaskhan
 		this.addEntity(new PokemonFreezoneEntity(82.5, 60, 316)); // Gulpin
+		
+		// Add interactible shopkeepers
+		this.addEntity(new BankEntity(82.5, 35));
 
 		// Add the interactible pokemons
 		DialogScreen[] s = new DialogScreen[2];

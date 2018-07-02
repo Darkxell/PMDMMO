@@ -129,7 +129,7 @@ public class Player
 
 	public void resetDungeonTeam()
 	{
-		if (this.leaderPokemon.getDungeonPokemon() != null) this.leaderPokemon.getDungeonPokemon().dispose();
+		if (this.leaderPokemon != null && this.leaderPokemon.getDungeonPokemon() != null) this.leaderPokemon.getDungeonPokemon().dispose();
 		for (Pokemon ally : this.allies)
 			if (ally.getDungeonPokemon() != null) ally.getDungeonPokemon().dispose();
 	}

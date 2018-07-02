@@ -66,7 +66,7 @@ public class FreezoneExploreState extends AbstractFreezoneState
 		FreezoneMap map = Persistance.currentmap;
 		if (map != null)
 		{
-			if (Persistance.currentplayer.canInteract())
+			if (this.isMain() && Persistance.currentplayer.canInteract())
 			{
 				g.drawImage(Hud.button, width - 70, 5, null);
 				TextRenderer.render(g, new Message("ui.interact"), width - 50, 10);
