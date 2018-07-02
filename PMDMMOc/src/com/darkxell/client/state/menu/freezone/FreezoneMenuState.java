@@ -1,14 +1,12 @@
 package com.darkxell.client.state.menu.freezone;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.state.AbstractState;
-import com.darkxell.client.state.dialog.AbstractDialogState;
-import com.darkxell.client.state.dialog.AbstractDialogState.DialogEndListener;
 import com.darkxell.client.state.dialog.DialogScreen;
 import com.darkxell.client.state.dialog.DialogState;
+import com.darkxell.client.state.dialog.DialogState.DialogEndListener;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.client.state.menu.TeamMenuState;
 import com.darkxell.client.state.menu.item.ItemContainersMenuState;
@@ -68,13 +66,12 @@ public class FreezoneMenuState extends OptionSelectionMenuState
 				FreezoneMenuState thismenu = this;
 				DialogEndListener listener = new DialogEndListener() {
 					@Override
-					public void onDialogEnd(AbstractDialogState dialog)
+					public void onDialogEnd(DialogState dialog)
 					{
 						Persistance.stateManager.setState(thismenu);
 					}
 				};
-				Persistance.stateManager
-						.setState(new DialogState(this.backgroundState, listener, true, Arrays.asList(new DialogScreen(new Message("inventory.empty")))));
+				Persistance.stateManager.setState(new DialogState(this.backgroundState, listener, new DialogScreen(new Message("inventory.empty"))));
 			} else Persistance.stateManager
 					.setState(new ItemContainersMenuState(this, this.backgroundState, false, containers.toArray(new ItemContainer[containers.size()])));
 		} else if (option == this.team) Persistance.stateManager.setState(new TeamMenuState(this, this.backgroundState));

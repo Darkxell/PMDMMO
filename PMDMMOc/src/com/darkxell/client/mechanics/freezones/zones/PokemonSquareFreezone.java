@@ -1,6 +1,5 @@
 package com.darkxell.client.mechanics.freezones.zones;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
@@ -10,38 +9,45 @@ import com.darkxell.client.mechanics.freezones.entities.PokemonFreezoneEntity;
 import com.darkxell.client.mechanics.freezones.entities.SignSoulEntity;
 import com.darkxell.client.mechanics.freezones.entities.WatersparklesEntity;
 import com.darkxell.client.state.dialog.DialogScreen;
+import com.darkxell.client.state.dialog.PokemonDialogScreen;
 import com.darkxell.client.state.map.LocalMap.LOCALMAPLOCATION;
 import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.DoubleRectangle;
 import com.darkxell.common.util.language.Message;
 
-public class PokemonSquareFreezone extends FreezoneMap {
+public class PokemonSquareFreezone extends FreezoneMap
+{
 
-	public PokemonSquareFreezone() {
+	public PokemonSquareFreezone()
+	{
 		super("/freezones/square.xml");
 		this.freezonebgm = "town.mp3";
 		this.warpzones.add(new WarpZone(63, 40, new DoubleRectangle(0, 38, 2, 5)) {
 			@Override
-			public FreezoneMap getDestination() {
+			public FreezoneMap getDestination()
+			{
 				return new BaseFreezone();
 			}
 		});
 		this.warpzones.add(new WarpZone(-1, -1, new DoubleRectangle(63, 87, 9, 2)) {
 			@Override
-			public FreezoneMap getDestination() {
+			public FreezoneMap getDestination()
+			{
 				return new DojoFreezone();
 			}
 		});
 		this.warpzones.add(new WarpZone(-1, -1, new DoubleRectangle(61, 0, 8, 2)) {
 			@Override
-			public FreezoneMap getDestination() {
+			public FreezoneMap getDestination()
+			{
 				return new PondFreezone();
 			}
 		});
 		this.warpzones.add(new WarpZone(-1, -1, new DoubleRectangle(118, 38, 2, 5)) {
 			@Override
-			public FreezoneMap getDestination() {
+			public FreezoneMap getDestination()
+			{
 				return new OfficeFreezone();
 			}
 		});
@@ -99,41 +105,37 @@ public class PokemonSquareFreezone extends FreezoneMap {
 		this.addEntity(new PokemonFreezoneEntity(97.5, 33, 40)); // Wigglytuff
 		this.addEntity(new PokemonFreezoneEntity(41.5, 61, 115)); // Kangaskhan
 		this.addEntity(new PokemonFreezoneEntity(82.5, 60, 316)); // Gulpin
-		
 
 		// Add the interactible pokemons
-		ArrayList<DialogScreen> s = new ArrayList<>(2);
-		s.add(new DialogScreen(PokemonRegistry.find(6).generate(new Random(), 0),
-				new Message("dialog.place.charizard.1")));
-		s.add(new DialogScreen(PokemonRegistry.find(6).generate(new Random(), 0),
-				new Message("dialog.place.charizard.2")));
+		DialogScreen[] s = new DialogScreen[2];
+		s[0] = new PokemonDialogScreen(PokemonRegistry.find(6).generate(new Random(), 0), new Message("dialog.place.charizard.1"));
+		s[1] = new PokemonDialogScreen(PokemonRegistry.find(6).generate(new Random(), 0), new Message("dialog.place.charizard.2"));
 		this.addEntity(new PokemonFreezoneEntity(57, 33, 6, Direction.EAST, s));
-		s = new ArrayList<>(1);
-		s.add(new DialogScreen(PokemonRegistry.find(248).generate(new Random(), 0),
-				new Message("dialog.place.tyranitar")));
-		this.addEntity(new PokemonFreezoneEntity(61, 33, 248, Direction.WEST, s));
-		s = new ArrayList<>(2);
-		s.add(new DialogScreen(PokemonRegistry.find(275).generate(new Random(), 0),
-				new Message("dialog.place.shiftry.1")));
-		s.add(new DialogScreen(PokemonRegistry.find(275).generate(new Random(), 0),
-				new Message("dialog.place.shiftry.2")));
+		this.addEntity(new PokemonFreezoneEntity(61, 33, 248, Direction.WEST,
+				new PokemonDialogScreen(PokemonRegistry.find(248).generate(new Random(), 0), new Message("dialog.place.tyranitar"))));
+		s = new DialogScreen[2];
+		s[0] = new PokemonDialogScreen(PokemonRegistry.find(275).generate(new Random(), 0), new Message("dialog.place.shiftry.1"));
+		s[1] = new PokemonDialogScreen(PokemonRegistry.find(275).generate(new Random(), 0), new Message("dialog.place.shiftry.2"));
 		this.addEntity(new PokemonFreezoneEntity(69, 35, 275, Direction.SOUTHWEST, s));
 
 	}
 
 	@Override
-	public LOCALMAPLOCATION getMapLocation() {
-		return LOCALMAPLOCATION.SQUARE;
-	}
-
-	@Override
-	public int defaultX() {
+	public int defaultX()
+	{
 		return 4;
 	}
 
 	@Override
-	public int defaultY() {
+	public int defaultY()
+	{
 		return 40;
+	}
+
+	@Override
+	public LOCALMAPLOCATION getMapLocation()
+	{
+		return LOCALMAPLOCATION.SQUARE;
 	}
 
 }

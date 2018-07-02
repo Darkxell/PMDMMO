@@ -1,7 +1,5 @@
 package com.darkxell.client.state.quiz;
 
-import java.util.ArrayList;
-
 import com.darkxell.client.state.dialog.DialogScreen;
 import com.darkxell.common.util.language.Message;
 
@@ -39,11 +37,11 @@ public enum Nature
 		this.textLines = textLines;
 	}
 
-	public ArrayList<DialogScreen> description()
+	public DialogScreen[] description()
 	{
-		ArrayList<DialogScreen> desc = new ArrayList<>();
+		DialogScreen[] desc = new DialogScreen[this.textLines];
 		for (int i = 0; i < this.textLines; ++i)
-			desc.add(new DialogScreen(new Message("quiz." + this.name() + "." + i)));
+			desc[i] = new DialogScreen(new Message("quiz." + this.name() + "." + i));
 		return desc;
 	}
 

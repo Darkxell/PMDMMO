@@ -10,7 +10,7 @@ import java.util.LinkedList;
 
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.TextRenderer;
-import com.darkxell.client.state.dialog.AbstractDialogState;
+import com.darkxell.client.state.dialog.DialogScreen;
 import com.darkxell.client.state.menu.components.MenuWindow;
 import com.darkxell.common.util.language.Message;
 
@@ -127,9 +127,9 @@ public class DungeonLogger
 		}
 		g.setClip(clip);
 
-		if (this.isFullscreen && this.arrowtick < AbstractDialogState.ARROW_TICK_LENGTH / 2)
+		if (this.isFullscreen && this.arrowtick < DialogScreen.ARROW_TICK_LENGTH / 2)
 		{
-			BufferedImage arrow = AbstractDialogState.arrow;
+			BufferedImage arrow = DialogScreen.arrow;
 			int x = this.messagesWindow.dimensions.x + this.messagesWindow.dimensions.width / 2 - arrow.getWidth() / 2;
 			if (this.maxOffset - this.messageOffset <= -2)
 			{
@@ -198,7 +198,7 @@ public class DungeonLogger
 		}
 
 		++this.arrowtick;
-		if (this.arrowtick >= AbstractDialogState.ARROW_TICK_LENGTH) this.arrowtick = 0;
+		if (this.arrowtick >= DialogScreen.ARROW_TICK_LENGTH) this.arrowtick = 0;
 
 		if (!this.isFullscreen && this.messageOffset > -(this.displayedMessages() - this.maxDisplayedMessages) * (TextRenderer.height() + 5))
 			this.messageOffset -= 2;

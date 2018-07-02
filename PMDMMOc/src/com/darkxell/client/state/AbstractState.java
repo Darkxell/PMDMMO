@@ -3,9 +3,10 @@ package com.darkxell.client.state;
 import java.awt.Graphics2D;
 
 import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.renderers.layers.AbstractGraphiclayer;
 import com.darkxell.client.ui.Keys;
 
-public abstract class AbstractState {
+public abstract class AbstractState extends AbstractGraphiclayer {
 
 	/**
 	 * @return True if this State is currently the Main State (i.e.

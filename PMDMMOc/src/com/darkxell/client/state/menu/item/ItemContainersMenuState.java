@@ -13,10 +13,9 @@ import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.MenuHudSpriteset;
 import com.darkxell.client.resources.music.SoundManager;
 import com.darkxell.client.state.AbstractState;
-import com.darkxell.client.state.dialog.AbstractDialogState;
-import com.darkxell.client.state.dialog.AbstractDialogState.DialogEndListener;
 import com.darkxell.client.state.dialog.DialogScreen;
 import com.darkxell.client.state.dialog.DialogState;
+import com.darkxell.client.state.dialog.DialogState.DialogEndListener;
 import com.darkxell.client.state.dungeon.DungeonState;
 import com.darkxell.client.state.menu.AbstractMenuState;
 import com.darkxell.client.state.menu.InfoState;
@@ -174,7 +173,7 @@ public class ItemContainersMenuState extends AbstractMenuState
 		ItemContainersMenuState nextState = this;
 		DialogEndListener listener = new DialogEndListener() {
 			@Override
-			public void onDialogEnd(AbstractDialogState dialog)
+			public void onDialogEnd(DialogState dialog)
 			{
 				Persistance.stateManager.setState(nextState);
 			}
@@ -197,7 +196,7 @@ public class ItemContainersMenuState extends AbstractMenuState
 			ItemContainersMenuState nextState = this;
 			DialogEndListener listener = new DialogEndListener() {
 				@Override
-				public void onDialogEnd(AbstractDialogState dialog)
+				public void onDialogEnd(DialogState dialog)
 				{
 					Persistance.stateManager.setState(nextState);
 				}
@@ -235,7 +234,7 @@ public class ItemContainersMenuState extends AbstractMenuState
 			ItemContainersMenuState nextState = this;
 			DialogEndListener listener = new DialogEndListener() {
 				@Override
-				public void onDialogEnd(AbstractDialogState dialog)
+				public void onDialogEnd(DialogState dialog)
 				{
 					nextState.reloadContainers();
 				}
@@ -278,7 +277,7 @@ public class ItemContainersMenuState extends AbstractMenuState
 			ItemContainersMenuState nextState = this;
 			DialogEndListener listener = new DialogEndListener() {
 				@Override
-				public void onDialogEnd(AbstractDialogState dialog)
+				public void onDialogEnd(DialogState dialog)
 				{
 					Persistance.stateManager.setState(nextState);
 				}
@@ -303,7 +302,7 @@ public class ItemContainersMenuState extends AbstractMenuState
 			ItemContainersMenuState nextState = this;
 			DialogEndListener listener = new DialogEndListener() {
 				@Override
-				public void onDialogEnd(AbstractDialogState dialog)
+				public void onDialogEnd(DialogState dialog)
 				{
 					Persistance.stateManager.setState(nextState);
 				}
@@ -334,7 +333,7 @@ public class ItemContainersMenuState extends AbstractMenuState
 			ItemContainersMenuState nextState = this;
 			DialogEndListener listener = new DialogEndListener() {
 				@Override
-				public void onDialogEnd(AbstractDialogState dialog)
+				public void onDialogEnd(DialogState dialog)
 				{
 					nextState.reloadContainers();
 				}
@@ -364,7 +363,7 @@ public class ItemContainersMenuState extends AbstractMenuState
 			ItemContainersMenuState nextState = this;
 			DialogEndListener listener = new DialogEndListener() {
 				@Override
-				public void onDialogEnd(AbstractDialogState dialog)
+				public void onDialogEnd(DialogState dialog)
 				{
 					nextState.reloadContainers();
 				}

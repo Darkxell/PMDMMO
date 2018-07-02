@@ -4,10 +4,9 @@ import java.awt.Rectangle;
 
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.TextRenderer;
-import com.darkxell.client.state.dialog.AbstractDialogState;
-import com.darkxell.client.state.dialog.AbstractDialogState.DialogEndListener;
-import com.darkxell.client.state.dialog.ConfirmDialogState;
-import com.darkxell.client.state.dialog.DialogScreen;
+import com.darkxell.client.state.dialog.ConfirmDialogScreen;
+import com.darkxell.client.state.dialog.DialogState;
+import com.darkxell.client.state.dialog.DialogState.DialogEndListener;
 import com.darkxell.client.state.dungeon.DungeonState;
 import com.darkxell.client.state.menu.components.MoveSelectionWindow;
 import com.darkxell.common.event.move.MoveLearnedEvent;
@@ -45,9 +44,9 @@ public class MoveLearnMenuState extends MovesMenuState implements DialogEndListe
 	}
 
 	@Override
-	public void onDialogEnd(AbstractDialogState dialog)
+	public void onDialogEnd(DialogState dialog)
 	{
-		if (((ConfirmDialogState) dialog).hasConfirmed())
+		if (((ConfirmDialogScreen) dialog.getScreen(1)).hasConfirmed())
 		{
 			Persistance.stateManager.setState(Persistance.dungeonState);
 			if (this.optionIndex() < 4)
@@ -65,9 +64,11 @@ public class MoveLearnMenuState extends MovesMenuState implements DialogEndListe
 	{
 		MoveMenuOption o = (MoveMenuOption) option;
 
-		ConfirmDialogState s = new ConfirmDialogState(this.backgroundState, this, false, new DialogScreen(
-				new Message("moves.forget").addReplacement("<pokemon>", this.pokemon.getNickname()).addReplacement("<move>", o.move.move().name())));
-		Persistance.stateManager.setState(s);
+		ConfirmDialogScreen confirm = new ConfirmDialogScreen(
+				new Message("moves.forget").addReplacement("<pokemon>", this.pokemon.getNickname()).addReplacement("<move>", o.move.move().name()));
+		confirm.id = 1;
+		DialogState dialog = new DialogState(this.backgroundState, this, confirm);
+		Persistance.stateManager.setState(dialog);
 	}
 
 }

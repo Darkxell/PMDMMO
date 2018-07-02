@@ -5,12 +5,12 @@ import java.awt.Graphics2D;
 
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.TextRenderer;
-import com.darkxell.client.state.dialog.NarratorDialogState;
+import com.darkxell.client.state.dialog.NarratorDialogScreen;
 import com.darkxell.common.util.language.Message;
 
 public class TransitionState extends AbstractState
 {
-	public static final int FADEIN = NarratorDialogState.FADETIME, STAY = 10, TEXT = 60, FADEOUT = FADEIN;
+	public static final int FADEIN = NarratorDialogScreen.FADETIME, STAY = 10, TEXT = 60, FADEOUT = FADEIN;
 
 	private AbstractState current;
 	public final int fadeIn, stay, text, fadeOut, stayEnd, textStart, textFade, duration;

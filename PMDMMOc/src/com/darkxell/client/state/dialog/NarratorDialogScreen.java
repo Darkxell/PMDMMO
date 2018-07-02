@@ -7,28 +7,18 @@ import java.util.List;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.renderers.TextRenderer.PMDChar;
 import com.darkxell.client.ui.Keys;
+import com.darkxell.common.util.language.Message;
 
-public class NarratorDialogState extends AbstractDialogState
+public class NarratorDialogScreen extends DialogScreen
 {
 	public static final int FADETIME = 30;
 
 	private int fadeTick = 0;
 	private boolean fadingOut = false;
 
-	public NarratorDialogState(DialogEndListener listener, DialogScreen screen)
+	public NarratorDialogScreen(Message message)
 	{
-		super(listener, screen);
-	}
-
-	public NarratorDialogState(DialogEndListener listener, List<DialogScreen> screens)
-	{
-		super(listener, screens);
-	}
-
-	@Override
-	public void onKeyPressed(short key)
-	{
-		if (this.state == PAUSED && (key == Keys.KEY_ATTACK || key == Keys.KEY_RUN)) this.requestNextMessage();
+		super(message);
 	}
 
 	@Override
@@ -48,42 +38,50 @@ public class NarratorDialogState extends AbstractDialogState
 			y += TextRenderer.height() + TextRenderer.lineSpacing();
 		}
 
-		if (this.state == PAUSED && this.arrowtick > 9 && this.isMain())
+		if (this.state == DialogScreenState.PAUSED && this.arrowtick > 9 && this.parentState.isMain())
 			g.drawImage(arrow, width / 2 - arrow.getWidth() / 2, y + TextRenderer.lineSpacing(), null);
 
 		if (this.fadeTick < FADETIME)
 		{
-			double alpha = 255 - (this.fadeTick * 1. / NarratorDialogState.FADETIME) * 255;
+			double alpha = 255 - (this.fadeTick * 1. / FADETIME) * 255;
 			g.setColor(new Color(0, 0, 0, (int) alpha));
 			g.fillRect(0, 0, width, height);
 		}
 	}
 
-	private void requestNextMessage()
+	@Override
+	protected void requestNextLine()
 	{
-		this.state = PRINTING;
+		this.state = DialogScreenState.PRINTING;
 		this.fadingOut = true;
+	}
+
+	@Override
+	public boolean shouldRenderBackground()
+	{
+		return false;
 	}
 
 	@Override
 	public void update()
 	{
-		if (this.state == PRINTING && !this.lines.isEmpty())
+		if (this.state == DialogScreenState.PRINTING && !this.lines.isEmpty())
 		{
 			this.fadeTick += this.fadingOut ? -1 : 1;
 			if (!this.fadingOut && this.fadeTick >= FADETIME)
 			{
-				this.state = PAUSED;
+				this.state = DialogScreenState.PAUSED;
 				this.fadeTick = FADETIME;
-			} else if (this.fadingOut && this.fadeTick == 0)
+			} else if (this.fadingOut && this.fadeTick <= 0)
 			{
 				this.fadingOut = false;
-				this.nextMessage();
+				this.parentState.nextMessage();
 			}
-			if (this.state == PAUSED && Keys.isPressed(Keys.KEY_RUN) && this.isMain()) this.requestNextMessage();
+			if (this.state == DialogScreenState.PAUSED && Keys.isPressed(Keys.KEY_RUN) && this.parentState.isMain()) this.requestNextLine();
 		}
 
-		super.update();
+		++this.arrowtick;
+		if (this.arrowtick >= ARROW_TICK_LENGTH) this.arrowtick = 0;
 	}
 
 }

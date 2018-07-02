@@ -1,7 +1,5 @@
 package com.darkxell.client.mechanics.freezones.entities;
 
-import java.util.ArrayList;
-
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.freezones.FreezoneEntity;
 import com.darkxell.client.renderers.AbstractRenderer;
@@ -18,7 +16,7 @@ public class PokemonFreezoneEntity extends FreezoneEntity
 	/** The intelligent sprite of the pokemon. */
 	private PokemonSprite pkmnsprite;
 
-	private ArrayList<DialogScreen> dialogs;
+	private DialogScreen[] dialogs;
 
 	public PokemonFreezoneEntity(double x, double y, PokemonSprite sprite)
 	{
@@ -37,10 +35,10 @@ public class PokemonFreezoneEntity extends FreezoneEntity
 		this.pkmnsprite.setFacingDirection(facing);
 	}
 
-	public PokemonFreezoneEntity(double x, double y, int spriteid, Direction facing, ArrayList<DialogScreen> dialog)
+	public PokemonFreezoneEntity(double x, double y, int spriteid, Direction facing, DialogScreen... dialogs)
 	{
 		this(x, y, spriteid, facing);
-		this.dialogs = dialog;
+		this.dialogs = dialogs;
 	}
 
 	@Override
@@ -52,7 +50,7 @@ public class PokemonFreezoneEntity extends FreezoneEntity
 	@Override
 	public void onInteract()
 	{
-		Persistance.stateManager.setState(new DialogState(Persistance.stateManager.getCurrentState(), this.dialogs));
+		Persistance.stateManager.setState(new DialogState(Persistance.stateManager.getCurrentState(), null, this.dialogs).setOpaque(true));
 	}
 
 	@Override
