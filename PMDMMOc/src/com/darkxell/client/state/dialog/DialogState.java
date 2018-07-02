@@ -3,10 +3,9 @@ package com.darkxell.client.state.dialog;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.renderers.layers.AbstractGraphiclayer;
 import com.darkxell.client.resources.images.others.Hud;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.common.util.language.Message;
@@ -21,21 +20,16 @@ public class DialogState extends AbstractState
 	}
 
 	/** The State to draw in this State's background. */
-	public final AbstractState backgroundState;
+	public final AbstractGraphiclayer backgroundState;
 	/** The current screen. */
 	protected int currentScreen;
 	private Rectangle dialogBox;
 	/** The listener called when this Dialog ends. If null, the Background State is used instead. */
 	protected final DialogEndListener listener;
 	/** The screens to show. */
-	protected final List<DialogScreen> screens;
+	protected final DialogScreen[] screens;
 
-	public DialogState(AbstractState backgroundState, DialogEndListener listener, DialogScreen screen)
-	{
-		this(backgroundState, listener, Arrays.asList(screen));
-	}
-
-	public DialogState(AbstractState backgroundState, DialogEndListener listener, List<DialogScreen> screens)
+	public DialogState(AbstractGraphiclayer backgroundState, DialogEndListener listener, DialogScreen... screens)
 	{
 		this.listener = listener;
 		this.screens = screens;
@@ -46,12 +40,7 @@ public class DialogState extends AbstractState
 			screen.parentState = this;
 	}
 
-	public DialogState(AbstractState backgroundState, DialogScreen screen)
-	{
-		this(backgroundState, Arrays.asList(screen));
-	}
-
-	public DialogState(AbstractState backgroundState, List<DialogScreen> elements)
+	public DialogState(AbstractGraphiclayer backgroundState, DialogScreen... elements)
 	{
 		this(backgroundState, null, elements);
 	}
@@ -63,7 +52,7 @@ public class DialogState extends AbstractState
 
 	public DialogScreen currentScreen()
 	{
-		return this.screens.get(this.currentScreen);
+		return this.screens[this.currentScreen];
 	}
 
 	public Rectangle dialogBox()
@@ -97,9 +86,10 @@ public class DialogState extends AbstractState
 	/** Skips to the next message. */
 	public void nextMessage()
 	{
-		if (this.currentScreen == this.screens.size() - 1)
+		if (this.currentScreen == this.screens.length - 1)
 		{
-			if (this.listener == null && this.backgroundState != null) Persistance.stateManager.setState(this.backgroundState);
+			if (this.listener == null && this.backgroundState != null && this.backgroundState instanceof AbstractState)
+				Persistance.stateManager.setState((AbstractState) this.backgroundState);
 			else if (this.listener != null) this.listener.onDialogEnd(this);
 		} else
 		{
@@ -110,8 +100,8 @@ public class DialogState extends AbstractState
 
 	public DialogScreen nextScreen()
 	{
-		if (this.currentScreen >= this.screens.size() - 1) return null;
-		return this.screens.get(this.currentScreen + 1);
+		if (this.currentScreen >= this.screens.length - 1) return null;
+		return this.screens[this.currentScreen + 1];
 	}
 
 	@Override
@@ -149,7 +139,7 @@ public class DialogState extends AbstractState
 	/** Skips to the next message. */
 	public void requestNextMessage()
 	{
-		if (this.currentScreen == this.screens.size() - 1)
+		if (this.currentScreen == this.screens.length - 1)
 		{
 			if (this.listener != null) this.listener.onDialogEnd(this);
 		} else++this.currentScreen;

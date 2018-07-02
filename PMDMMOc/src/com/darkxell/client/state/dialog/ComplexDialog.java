@@ -1,8 +1,10 @@
 package com.darkxell.client.state.dialog;
 
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.renderers.layers.AbstractGraphiclayer;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.dialog.DialogState.DialogEndListener;
 
@@ -10,10 +12,57 @@ import com.darkxell.client.state.dialog.DialogState.DialogEndListener;
 public abstract class ComplexDialog implements DialogEndListener
 {
 
-	public final AbstractState background;
+	public static enum ComplexDialogAction
+	{
+		NEW_DIALOG,
+		PAUSE,
+		TERMINATE;
+	}
+
+	public static class DialogLoadingState extends AbstractState
+	{
+
+		public final ComplexDialog dialog;
+
+		public DialogLoadingState(ComplexDialog dialog)
+		{
+			this.dialog = dialog;
+		}
+
+		@Override
+		public void onKeyPressed(short key)
+		{}
+
+		@Override
+		public void onKeyReleased(short key)
+		{}
+
+		@Override
+		public void onStart()
+		{
+			super.onStart();
+			this.dialog.start();
+		}
+
+		@Override
+		public void render(Graphics2D g, int width, int height)
+		{
+			if (this.dialog.background != null) this.dialog.background.render(g, width, height);
+		}
+
+		@Override
+		public void update()
+		{
+			if (this.dialog.background != null) this.dialog.background.update();
+		}
+
+	}
+
+	public final AbstractGraphiclayer background;
+	private boolean isPaused = false;
 	protected final ArrayList<DialogState> previousStates = new ArrayList<>();
 
-	public ComplexDialog(AbstractState background)
+	public ComplexDialog(AbstractGraphiclayer background)
 	{
 		this.background = background;
 	}
@@ -21,36 +70,83 @@ public abstract class ComplexDialog implements DialogEndListener
 	/** @return The first Dialog state to display. Should set a DialogEndListener equal to <code>this</code>. */
 	public abstract DialogState firstState();
 
+	/** @return A Loading state for this Dialog. Use for transition states. That state calls this Complex Dialog's start() method when it loads. */
+	public DialogLoadingState getLoadingState()
+	{
+		return new DialogLoadingState(this);
+	}
+
+	public boolean isPaused()
+	{
+		return this.isPaused;
+	}
+
+	private void moveToNextDialog(DialogState previous)
+	{
+		DialogState next = this.nextState(previous);
+		if (next != null) Persistance.stateManager.setState(next);
+	}
+
+	/** Utility methods for creating DialogStates.
+	 * 
+	 * @param screens - The Screens of the State.
+	 * @return A new Dialog State. */
+	protected DialogState newDialog(DialogScreen... screens)
+	{
+		return new DialogState(this.background, this, screens);
+	}
+
+	/** @param previous - The last Dialog state that was displayed.
+	 * @return The next action to be done. */
+	public abstract ComplexDialogAction nextAction(DialogState previous);
+
 	/** @param previous - The last Dialog state that was displayed.
 	 * @return The next Dialog state to display. Should set a DialogEndListener equal to <code>this</code>. */
 	public abstract DialogState nextState(DialogState previous);
 
 	@Override
-	public void onDialogEnd(DialogState dialog)
+	public final void onDialogEnd(DialogState dialog)
 	{
-		this.previousStates.add(dialog);
-		if (this.shouldFinish(dialog)) this.onFinish(dialog);
-		else
+		if (!this.previousStates.contains(dialog)) this.previousStates.add(dialog);
+		this.onDialogFinished(dialog);
+		ComplexDialogAction action = this.nextAction(dialog);
+		switch (action)
 		{
-			DialogState next = this.nextState(dialog);
-			if (next != null) Persistance.stateManager.setState(next);
+			case NEW_DIALOG:
+				this.moveToNextDialog(dialog);
+				break;
+			case TERMINATE:
+				Persistance.currentDialog = null;
+				this.onFinish(dialog);
+				break;
+			case PAUSE:
+				this.isPaused = true;
+				break;
 		}
 	}
+
+	/** Called when a Dialog State finishes.
+	 * 
+	 * @param dialog - The Dialog state that just finished. */
+	protected abstract void onDialogFinished(DialogState dialog);
 
 	/** Called when the last state has been displayed.
 	 * 
 	 * @return The next state to set at the end of this Dialog. */
 	public abstract AbstractState onFinish(DialogState lastState);
 
-	/** @param previous - The last Dialog state that was displayed.
-	 * @return True if this Dialog is over. */
-	public abstract boolean shouldFinish(DialogState previous);
-
 	/** Starts this Dialog. */
 	public void start()
 	{
+		Persistance.currentDialog = this;
 		DialogState first = this.firstState();
 		if (first != null) Persistance.stateManager.setState(first);
+	}
+
+	public void unpause()
+	{
+		this.moveToNextDialog(this.previousStates.get(this.previousStates.size() - 1));
+		this.isPaused = false;
 	}
 
 }

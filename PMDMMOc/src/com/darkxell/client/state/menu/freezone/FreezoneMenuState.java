@@ -1,7 +1,6 @@
 package com.darkxell.client.state.menu.freezone;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.state.AbstractState;
@@ -72,8 +71,7 @@ public class FreezoneMenuState extends OptionSelectionMenuState
 						Persistance.stateManager.setState(thismenu);
 					}
 				};
-				Persistance.stateManager
-						.setState(new DialogState(this.backgroundState, listener, Arrays.asList(new DialogScreen(new Message("inventory.empty")))));
+				Persistance.stateManager.setState(new DialogState(this.backgroundState, listener, new DialogScreen(new Message("inventory.empty"))));
 			} else Persistance.stateManager
 					.setState(new ItemContainersMenuState(this, this.backgroundState, false, containers.toArray(new ItemContainer[containers.size()])));
 		} else if (option == this.team) Persistance.stateManager.setState(new TeamMenuState(this, this.backgroundState));

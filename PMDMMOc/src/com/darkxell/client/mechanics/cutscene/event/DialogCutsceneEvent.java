@@ -67,7 +67,8 @@ public class DialogCutsceneEvent extends CutsceneEvent implements DialogEndListe
 	public void onStart()
 	{
 		super.onStart();
-		ArrayList<DialogScreen> screens = new ArrayList<>();
+		DialogScreen[] screens = new DialogScreen[this.screens.size()];
+		int index = 0;
 		for (CutsceneDialogScreen s : this.screens)
 		{
 			CutscenePokemon pokemon = null;
@@ -76,7 +77,7 @@ public class DialogCutsceneEvent extends CutsceneEvent implements DialogEndListe
 			Message message = new Message(s.text, s.translate);
 			DialogScreen screen = pokemon == null ? new DialogScreen(message) : new PokemonDialogScreen(pokemon.toPokemon(), message);
 			if (this.isNarratorDialog) screen = new NarratorDialogScreen(message);
-			screens.add(screen);
+			screens[index++] = screen;
 		}
 
 		DialogState state = new DialogState(Persistance.cutsceneState, this, screens);

@@ -11,6 +11,7 @@ import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
 import com.darkxell.client.resources.music.SoundManager;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.StateManager;
+import com.darkxell.client.state.dialog.ComplexDialog;
 import com.darkxell.client.state.dungeon.DungeonState;
 import com.darkxell.client.state.map.AbstractDisplayMap;
 import com.darkxell.client.state.map.LocalMap;
@@ -40,6 +41,7 @@ public abstract class Persistance
 	public static FreezoneCamera freezoneCamera = new FreezoneCamera(currentplayer);
 
 	public static AbstractState cutsceneState = null;
+	public static ComplexDialog currentDialog = null;
 
 	// DUNGEON RELATED OBJECTS
 	public static DungeonInstance dungeon;

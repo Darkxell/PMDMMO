@@ -33,10 +33,9 @@ public class PartnerChoiceScreen extends OptionDialogScreen
 	}
 
 	private OptionState currentOptionState;
-	// public final PersonalityQuizState parent;
 	private final Pokemon[] partners;
 
-	public PartnerChoiceScreen(PersonalityQuizState parent)
+	public PartnerChoiceScreen(PersonalityQuizDialog parent)
 	{
 		super(new Message("quiz.choose_partner"), parent.partnersAsOptions());
 		PokemonSpecies[] s = parent.partners();

@@ -324,7 +324,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 				}
 			}
 
-			DialogState state = new DialogState(Persistance.dungeonState, processEventsOnDialogEnd, screens);
+			DialogState state = new DialogState(Persistance.dungeonState, processEventsOnDialogEnd, screens.toArray(new DialogScreen[screens.size()]));
 
 			if (firstLevel)
 			{
