@@ -86,15 +86,18 @@ public class DialogState extends AbstractState
 	/** Skips to the next message. */
 	public void nextMessage()
 	{
-		if (this.currentScreen == this.screens.length - 1)
+		if (this.currentScreen().requestNextMessage())
 		{
-			if (this.listener == null && this.backgroundState != null && this.backgroundState instanceof AbstractState)
-				Persistance.stateManager.setState((AbstractState) this.backgroundState);
-			else if (this.listener != null) this.listener.onDialogEnd(this);
-		} else
-		{
-			++this.currentScreen;
-			this.currentScreen().onStart();
+			if (this.currentScreen == this.screens.length - 1)
+			{
+				if (this.listener == null && this.backgroundState != null && this.backgroundState instanceof AbstractState)
+					Persistance.stateManager.setState((AbstractState) this.backgroundState);
+				else if (this.listener != null) this.listener.onDialogEnd(this);
+			} else
+			{
+				++this.currentScreen;
+				this.currentScreen().onStart();
+			}
 		}
 	}
 
@@ -134,15 +137,6 @@ public class DialogState extends AbstractState
 		}
 
 		this.currentScreen().render(g, width, height);
-	}
-
-	/** Skips to the next message. */
-	public void requestNextMessage()
-	{
-		if (this.currentScreen == this.screens.length - 1)
-		{
-			if (this.listener != null) this.listener.onDialogEnd(this);
-		} else++this.currentScreen;
 	}
 
 	public DialogState setOpaque(boolean opaque)

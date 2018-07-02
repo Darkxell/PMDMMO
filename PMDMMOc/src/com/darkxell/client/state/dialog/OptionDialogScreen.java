@@ -63,7 +63,7 @@ public class OptionDialogScreen extends PokemonDialogScreen
 	public void onOptionSelected(int option)
 	{
 		this.chosenIndex = option;
-		this.parentState.requestNextMessage();
+		this.parentState.nextMessage();
 	}
 
 	public Message[] options()

@@ -23,12 +23,12 @@ public class PokemonDialogScreen extends DialogScreen
 	/** Shortcut constructor if using an instanciated Pokemon. */
 	public PokemonDialogScreen(Pokemon pokemon, Message message)
 	{
-		this(pokemon.species(), message, pokemon.isShiny(), pokemon.getNickname());
+		this(pokemon == null ? null : pokemon.species(), message, pokemon == null ? null : pokemon.isShiny(), pokemon == null ? null : pokemon.getNickname());
 	}
 
 	public PokemonDialogScreen(PokemonSpecies pokemon, Message message)
 	{
-		this(pokemon, null, message);
+		this(pokemon, message, pokemon == null ? null : pokemon.speciesName());
 	}
 
 	public PokemonDialogScreen(PokemonSpecies pokemon, Message message, boolean shiny, Message speakerName)
@@ -41,9 +41,9 @@ public class PokemonDialogScreen extends DialogScreen
 		if (this.speakerName != null) this.message.addPrefix(new Message(": ", false)).addPrefix(this.speakerName);
 	}
 
-	public PokemonDialogScreen(PokemonSpecies pokemon, Message speakerName, Message message)
+	public PokemonDialogScreen(PokemonSpecies pokemon, Message message, Message speakerName)
 	{
-		this(pokemon, speakerName, false, message);
+		this(pokemon, message, false, speakerName);
 	}
 
 	@Override

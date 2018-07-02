@@ -23,10 +23,17 @@ public abstract class ComplexDialog implements DialogEndListener
 	{
 
 		public final ComplexDialog dialog;
+		public final AbstractGraphiclayer background;
 
 		public DialogLoadingState(ComplexDialog dialog)
 		{
+			this(dialog, dialog.background);
+		}
+
+		public DialogLoadingState(ComplexDialog dialog, AbstractGraphiclayer background)
+		{
 			this.dialog = dialog;
+			this.background = background;
 		}
 
 		@Override
@@ -47,13 +54,13 @@ public abstract class ComplexDialog implements DialogEndListener
 		@Override
 		public void render(Graphics2D g, int width, int height)
 		{
-			if (this.dialog.background != null) this.dialog.background.render(g, width, height);
+			if (this.background != null) this.background.render(g, width, height);
 		}
 
 		@Override
 		public void update()
 		{
-			if (this.dialog.background != null) this.dialog.background.update();
+			if (this.background != null) this.background.update();
 		}
 
 	}

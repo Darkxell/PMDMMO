@@ -24,7 +24,7 @@ import com.eclipsesource.json.JsonObject;
 
 public class PersonalityQuizDialog extends ComplexDialog
 {
-	public static final int GENDER = 0, NATURE_DESC = 1, STARTER = 2, PARTNER = 3, END = 4;
+	public static final int GENDER = 0, NATURE_DESC = 1, STARTER = 2, PARTNER = 3, FINAL_DIALOG = 4, END = 5;
 	private static final int startDialogScreens = 7, endDialogScreens = 3;
 
 	private DialogState currentDialog;
@@ -58,6 +58,13 @@ public class PersonalityQuizDialog extends ComplexDialog
 	}
 
 	@Override
+	public DialogLoadingState getLoadingState()
+	{
+		if (this.currentQuestion >= 0 && this.currentQuestion < this.questions.length + END) return super.getLoadingState();
+		return new DialogLoadingState(this, null);
+	}
+
+	@Override
 	public ComplexDialogAction nextAction(DialogState previous)
 	{
 		if (this.currentQuestion == this.questions.length + 4) return ComplexDialogAction.PAUSE;
@@ -68,22 +75,22 @@ public class PersonalityQuizDialog extends ComplexDialog
 	public DialogState nextState(DialogState previous)
 	{
 		this.currentDialog = null;
-		if (this.currentQuestion == this.questions.length + END)
+		if (this.currentQuestion == this.questions.length + FINAL_DIALOG)
 		{
 			DialogScreen[] screens = new DialogScreen[endDialogScreens];
 			for (int i = 0; i < endDialogScreens; ++i)
 				screens[i] = new DialogScreen(new Message("quiz.end." + i));
 			this.currentDialog = this.newDialog(screens);
 		} else if (this.currentQuestion == this.questions.length + PARTNER) this.currentDialog = this.newDialog(new PartnerChoiceScreen(this));
-		else if (this.currentQuestion == this.questions.length + STARTER)
-			this.currentDialog = this.newDialog(new DialogScreen(new Message("quiz.starter").addReplacement("<pokemon>", this.starter.getNickname())));
+		else if (this.currentQuestion == this.questions.length + STARTER) this.currentDialog = this
+				.newDialog(new StarterScreen(new Message("quiz.starter").addReplacement("<pokemon>", this.starter.getNickname()), this.starter));
 		else if (this.currentQuestion == this.questions.length + NATURE_DESC) this.currentDialog = this.newDialog(this.finalNature.description());
 		else if (this.currentQuestion == this.questions.length + GENDER) this.currentDialog = this
 				.newDialog(new OptionDialogScreen(new Message("quiz.gender"), new Message("quiz.gender.boy"), new Message("quiz.gender.girl")));
 		else if (this.currentQuestion >= 0 && this.currentQuestion < this.questions.length) this.currentDialog = this
 				.newDialog(new OptionDialogScreen(this.questions[this.currentQuestion].name, this.questions[this.currentQuestion].options()));
 
-		return this.currentDialog;
+		return this.currentDialog.setOpaque(true);
 	}
 
 	@Override

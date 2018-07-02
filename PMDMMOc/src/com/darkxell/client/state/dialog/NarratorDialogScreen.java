@@ -50,15 +50,16 @@ public class NarratorDialogScreen extends DialogScreen
 	}
 
 	@Override
-	public boolean shouldRenderBackground()
-	{
-		return false;
-	}
-
-	private void startNextMessage()
+	protected void requestNextLine()
 	{
 		this.state = DialogScreenState.PRINTING;
 		this.fadingOut = true;
+	}
+
+	@Override
+	public boolean shouldRenderBackground()
+	{
+		return false;
 	}
 
 	@Override
@@ -71,12 +72,12 @@ public class NarratorDialogScreen extends DialogScreen
 			{
 				this.state = DialogScreenState.PAUSED;
 				this.fadeTick = FADETIME;
-			} else if (this.fadingOut && this.fadeTick == 0)
+			} else if (this.fadingOut && this.fadeTick <= 0)
 			{
 				this.fadingOut = false;
-				this.requestNextMessage();
+				this.parentState.nextMessage();
 			}
-			if (this.state == DialogScreenState.PAUSED && Keys.isPressed(Keys.KEY_RUN) && this.parentState.isMain()) this.startNextMessage();
+			if (this.state == DialogScreenState.PAUSED && Keys.isPressed(Keys.KEY_RUN) && this.parentState.isMain()) this.requestNextLine();
 		}
 
 		++this.arrowtick;

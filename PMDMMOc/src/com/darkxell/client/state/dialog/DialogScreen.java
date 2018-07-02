@@ -125,7 +125,7 @@ public class DialogScreen
 			g.drawImage(arrow, dialogBox.x + dialogBox.width / 2 - arrow.getWidth() / 2, (int) (dialogBox.getMaxY() - arrow.getHeight() * 3 / 4), null);
 	}
 
-	private void requestNextLine()
+	protected void requestNextLine()
 	{
 		if (this.currentLine < this.lines.size() - 1 || this.switchAnimation())
 		{
