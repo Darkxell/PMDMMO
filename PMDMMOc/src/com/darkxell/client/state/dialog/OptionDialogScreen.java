@@ -3,6 +3,7 @@ package com.darkxell.client.state.dialog;
 import java.util.ArrayList;
 
 import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.dialog.DialogState.DialogEndListener;
 import com.darkxell.client.state.menu.OptionState;
 import com.darkxell.common.pokemon.PokemonSpecies;
@@ -55,15 +56,9 @@ public class OptionDialogScreen extends PokemonDialogScreen
 		return this.results.get(this.chosenIndex);
 	}
 
-	@Override
-	public boolean requestNextMessage()
+	protected OptionState getOptionSelectionState()
 	{
-		if (!this.showingOptions)
-		{
-			this.showingOptions = true;
-			Persistance.stateManager.setState(new OptionState((DialogState) this.parentState, this, this.isOpaque));
-			return false;
-		} else return super.requestNextMessage();
+		return new OptionState((DialogState) this.parentState, this, this.isOpaque);
 	}
 
 	public void onOptionSelected(int option)
@@ -75,6 +70,17 @@ public class OptionDialogScreen extends PokemonDialogScreen
 	public Message[] options()
 	{
 		return this.options.toArray(new Message[this.options.size()]);
+	}
+
+	@Override
+	public boolean requestNextMessage()
+	{
+		if (!this.showingOptions)
+		{
+			this.showingOptions = true;
+			Persistance.stateManager.setState(this.getOptionSelectionState());
+			return false;
+		} else return super.requestNextMessage();
 	}
 
 }
