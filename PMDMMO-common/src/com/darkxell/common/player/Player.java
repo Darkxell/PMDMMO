@@ -114,6 +114,11 @@ public class Player
 		return this.data.moneyinbag;
 	}
 
+	public long moneyInBank()
+	{
+		return this.getData().moneyinbank;
+	}
+
 	public String name()
 	{
 		return this.data.name;
@@ -129,7 +134,7 @@ public class Player
 
 	public void resetDungeonTeam()
 	{
-		if (this.leaderPokemon.getDungeonPokemon() != null) this.leaderPokemon.getDungeonPokemon().dispose();
+		if (this.leaderPokemon != null && this.leaderPokemon.getDungeonPokemon() != null) this.leaderPokemon.getDungeonPokemon().dispose();
 		for (Pokemon ally : this.allies)
 			if (ally.getDungeonPokemon() != null) ally.getDungeonPokemon().dispose();
 	}
@@ -161,6 +166,11 @@ public class Player
 	public void setMoneyInBag(long moneyInBag)
 	{
 		this.data.moneyinbag = moneyInBag;
+	}
+
+	public void setMoneyInBank(long moneyInBank)
+	{
+		this.data.moneyinbank = moneyInBank;
 	}
 
 	public void setStoryPosition(int storyPosition)
