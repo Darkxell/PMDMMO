@@ -14,6 +14,8 @@ public class Util
 	{
 		Player player = new Player("Offline debug account name", PokemonRegistry.find(4).generate(new Random(), 1));
 		player.setStoryPosition(1);
+		player.setMoneyInBag(100);
+		player.setMoneyInBank(456789);
 		player.addAlly(PokemonRegistry.find(1).generate(new Random(), 1, 1));
 		player.addAlly(PokemonRegistry.find(255).generate(new Random(), 1));
 		player.getTeamLeader().setItem(new ItemStack(ItemID.XRaySpecs));

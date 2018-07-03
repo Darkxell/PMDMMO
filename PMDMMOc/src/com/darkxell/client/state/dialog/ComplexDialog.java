@@ -22,8 +22,8 @@ public abstract class ComplexDialog implements DialogEndListener
 	public static class DialogLoadingState extends AbstractState
 	{
 
-		public final ComplexDialog dialog;
 		public final AbstractGraphiclayer background;
+		public final ComplexDialog dialog;
 
 		public DialogLoadingState(ComplexDialog dialog)
 		{
@@ -124,7 +124,7 @@ public abstract class ComplexDialog implements DialogEndListener
 				break;
 			case TERMINATE:
 				Persistance.currentDialog = null;
-				this.onFinish(dialog);
+				Persistance.stateManager.setState(this.onFinish(dialog));
 				break;
 			case PAUSE:
 				this.isPaused = true;

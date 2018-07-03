@@ -147,6 +147,12 @@ public class DialogScreen
 		return this;
 	}
 
+	public DialogScreen setID(byte id)
+	{
+		this.id = id;
+		return this;
+	}
+
 	public DialogScreen setInstant()
 	{
 		this.isInstant = true;

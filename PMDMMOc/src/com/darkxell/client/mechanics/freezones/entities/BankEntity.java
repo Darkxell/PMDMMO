@@ -2,7 +2,7 @@ package com.darkxell.client.mechanics.freezones.entities;
 
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.freezones.FreezoneEntity;
-import com.darkxell.client.state.dialog.dialogs.BankDialog;
+import com.darkxell.client.state.dialog.bank.BankDialog;
 
 public class BankEntity extends FreezoneEntity
 {

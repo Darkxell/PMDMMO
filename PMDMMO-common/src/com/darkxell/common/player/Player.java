@@ -114,6 +114,11 @@ public class Player
 		return this.data.moneyinbag;
 	}
 
+	public long moneyInBank()
+	{
+		return this.getData().moneyinbank;
+	}
+
 	public String name()
 	{
 		return this.data.name;
@@ -161,6 +166,11 @@ public class Player
 	public void setMoneyInBag(long moneyInBag)
 	{
 		this.data.moneyinbag = moneyInBag;
+	}
+
+	public void setMoneyInBank(long moneyInBank)
+	{
+		this.data.moneyinbank = moneyInBank;
 	}
 
 	public void setStoryPosition(int storyPosition)
