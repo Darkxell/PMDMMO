@@ -50,8 +50,10 @@ public class Move
 	{
 		/** Does not target any Pokémon. */
 		Ambient,
-		/** */
+		/** All Pokémon adjacent to the user. */
 		Around,
+		/** All Pokémon up to two Tiles around the user in all directions. */
+		Around2,
 		/** All Pokémon within a 1-Tile range of the user. */
 		Floor,
 		/** The Pokémon on the Tile in front of the user. */
@@ -78,6 +80,8 @@ public class Move
 		Allies,
 		/** Only foes. */
 		Foes,
+		/** No targets (ambient moves.) */
+		None,
 		/** Any Pokémon except the user. */
 		Others,
 		/** The user and its allies. */
@@ -88,24 +92,34 @@ public class Move
 
 	/** This move's accuracy. */
 	public final int accuracy;
-	/** If this move has an additional effect, its chance to happen. */
-	public final int additionalEffectChance;
-	/** This move's behavior type. -1 if already replaced with a proper class. */
-	public final int behaviorID;
 	/** This move's category. See {@link Move#PHYSICAL}. */
 	public final MoveCategory category;
+	/** The change of landing critical hits. */
+	public final int critical;
+	/** True if this move deals damage. */
+	public final boolean dealsDamage;
+	/** This move's effect. */
+	private final MoveEffect effect;
+	/** True if this move can be boosted by Ginseng. */
+	public final boolean ginsengable;
 	/** This move's ID. */
 	public final int id;
 	/** True if this move makes contact. */
 	public final boolean makesContact;
+	/** True if this move pierces frozen Pokemon. */
+	public final boolean piercesFreeze;
 	/** This move's power. */
 	public final int power;
 	/** This move's default Power Points. */
 	public final int pp;
-	/** This move's priority. */
-	public final int priority;
 	/** This move's range. */
 	public final MoveRange range;
+	/** True if this move can be reflected by Magic Coat. */
+	public final boolean reflectable;
+	/** True if this move can be snatched. */
+	public final boolean snatchable;
+	/** True if this move is a sound-based move. */
+	public final boolean sound;
 	/** This move's targets. */
 	public final MoveTarget targets;
 	/** This move's type. */
@@ -115,42 +129,44 @@ public class Move
 	{
 		this.id = Integer.parseInt(xml.getAttributeValue("id"));
 		this.type = PokemonType.valueOf(xml.getAttributeValue("type"));
-		this.behaviorID = XMLUtils.getAttribute(xml, "behavior", -1);
 		this.category = MoveCategory.valueOf(xml.getAttributeValue("category"));
 		this.pp = Integer.parseInt(xml.getAttributeValue("pp"));
-		this.power = Integer.parseInt(xml.getAttributeValue("power"));
+		this.power = XMLUtils.getAttribute(xml, "power", 0);
 		this.accuracy = XMLUtils.getAttribute(xml, "accuracy", 100);
 		this.range = MoveRange.valueOf(XMLUtils.getAttribute(xml, "range", MoveRange.Front.name()));
 		this.targets = MoveTarget.valueOf(XMLUtils.getAttribute(xml, "targets", MoveTarget.Foes.name()));
-		this.priority = XMLUtils.getAttribute(xml, "priority", 0);
-		this.additionalEffectChance = XMLUtils.getAttribute(xml, "random", 100);
+		this.critical = XMLUtils.getAttribute(xml, "critical", -1);
 		this.makesContact = XMLUtils.getAttribute(xml, "contact", false);
+		this.reflectable = XMLUtils.getAttribute(xml, "reflectable", false);
+		this.snatchable = XMLUtils.getAttribute(xml, "snatchable", false);
+		this.sound = XMLUtils.getAttribute(xml, "sound", false);
+		this.piercesFreeze = XMLUtils.getAttribute(xml, "piercesFreeze", false);
+		this.dealsDamage = XMLUtils.getAttribute(xml, "damage", false);
+		this.ginsengable = XMLUtils.getAttribute(xml, "ginsengable", false);
+		this.effect = MoveEffects.find(XMLUtils.getAttribute(xml, "flag", 0));
 	}
 
-	public Move(int id, PokemonType type, int behaviorID, MoveCategory category, int pp, int power, int accuracy, MoveRange range, MoveTarget targets,
-			int priority, int additionalEffectChance, boolean makesContact)
+	public Move(int id, PokemonType type, MoveCategory category, int pp, int power, int accuracy, MoveRange range, MoveTarget targets, int critical,
+			boolean makesContact, boolean reflectable, boolean snatchable, boolean sound, boolean piercesFreeze, boolean tauntable, boolean ginsengable,
+			MoveEffect effect)
 	{
 		this.id = id;
 		this.type = type;
-		this.behaviorID = behaviorID;
 		this.category = category;
 		this.pp = pp;
 		this.power = power;
 		this.accuracy = accuracy;
 		this.range = range;
 		this.targets = targets;
-		this.priority = priority;
-		this.additionalEffectChance = additionalEffectChance;
+		this.critical = critical;
 		this.makesContact = makesContact;
-	}
-
-	public void addAdditionalEffects(DungeonPokemon user, DungeonPokemon target, Floor floor, ArrayList<DungeonEvent> events)
-	{}
-
-	/** @return True if this Move's additional effects land. */
-	public boolean additionalEffectLands(DungeonPokemon user, DungeonPokemon target, Floor floor)
-	{
-		return floor.random.nextInt(100) < this.additionalEffectChance;
+		this.reflectable = reflectable;
+		this.snatchable = snatchable;
+		this.sound = sound;
+		this.piercesFreeze = piercesFreeze;
+		this.dealsDamage = tauntable;
+		this.ginsengable = ginsengable;
+		this.effect = effect;
 	}
 
 	/** @param user - The Pokémon using the move.
@@ -247,6 +263,10 @@ public class Move
 
 			case User:
 				targets.removeIf((DungeonPokemon p) -> p != user);
+				break;
+
+			case None:
+				targets.clear();
 				break;
 		}
 	}
@@ -365,7 +385,7 @@ public class Move
 			events.add(new MoveUseEvent(floor, move, pokemon[i]));
 		if (this.range == MoveRange.Ambient) events.add(new MoveUseEvent(floor, move, null));
 
-		if (events.size() == 0 && this != MoveRegistry.ATTACK) events.add(new MessageEvent(floor, new Message("move.no_target")));
+		if (events.size() == 0 && this.effect != MoveEffects.Basic_attack) events.add(new MessageEvent(floor, new Message("move.no_target")));
 		return events;
 	}
 
@@ -376,16 +396,14 @@ public class Move
 		Element root = new Element("move");
 		root.setAttribute("id", Integer.toString(this.id));
 		root.setAttribute("type", Integer.toString(this.type.id));
-		if (this.behaviorID > 0) root.setAttribute("behavior", Integer.toString(this.behaviorID));
-		else root.setAttribute("movetype", className);
+		root.setAttribute("movetype", className);
 		root.setAttribute("category", this.category.name());
 		root.setAttribute("pp", Integer.toString(this.pp));
 		root.setAttribute("power", Integer.toString(this.power));
 		XMLUtils.setAttribute(root, "accuracy", this.accuracy, 100);
 		XMLUtils.setAttribute(root, "range", this.range.name(), MoveRange.Front.name());
 		XMLUtils.setAttribute(root, "targets", this.targets.name(), MoveTarget.Foes.name());
-		XMLUtils.setAttribute(root, "priority", this.priority, 0);
-		XMLUtils.setAttribute(root, "random", this.additionalEffectChance, 100);
+		XMLUtils.setAttribute(root, "effect", this.effect.id, 0);
 		XMLUtils.setAttribute(root, "contact", this.makesContact, false);
 		return root;
 	}
@@ -410,7 +428,8 @@ public class Move
 		if (effectiveness == PokemonType.NO_EFFECT) events.add(new MessageEvent(floor, this.unaffectedMessage(target)));
 		else
 		{
-			if (!missed && this != MoveRegistry.ATTACK) target.receiveMove(usedMove.move.isLinked() ? DungeonPokemon.LINKED_MOVES : DungeonPokemon.MOVES);
+			if (!missed && this.effect != MoveEffects.Basic_attack)
+				target.receiveMove(usedMove.move.isLinked() ? DungeonPokemon.LINKED_MOVES : DungeonPokemon.MOVES);
 			if (this.power != -1)
 			{
 				if (effectiveness == PokemonType.SUPER_EFFECTIVE)
@@ -419,7 +438,6 @@ public class Move
 					events.add(new MessageEvent(floor, new Message("move.effectiveness.not_very").addReplacement("<pokemon>", target.getNickname())));
 				events.add(new DamageDealtEvent(floor, target, usedMove, missed ? 0 : this.damageDealt(usedMove.user, target, floor, events)));
 			}
-			if (!missed && this.additionalEffectLands(usedMove.user, target, floor)) this.addAdditionalEffects(usedMove.user, target, floor, events);
 		}
 
 		return events;

@@ -12,7 +12,7 @@ import com.darkxell.common.util.XMLUtils;
 /** Holds all Moves. */
 public final class MoveRegistry
 {
-	public static final BasicAttack ATTACK = new BasicAttack();
+	public static Move ATTACK;
 
 	private static HashMap<Integer, Move> moves = new HashMap<Integer, Move>();
 
@@ -47,7 +47,7 @@ public final class MoveRegistry
 				e1.printStackTrace();
 			}
 
-		moves.put(ATTACK.id, ATTACK);
+		ATTACK = find(0);
 	}
 
 	/** Saves this Registry for the Client. */
