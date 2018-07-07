@@ -4,26 +4,15 @@ import java.util.ArrayList;
 
 import org.jdom2.Element;
 
-import com.darkxell.common.ai.AIUtils;
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.dungeon.floor.Room;
-import com.darkxell.common.dungeon.floor.Tile;
-import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.event.DungeonEvent;
-import com.darkxell.common.event.DungeonEvent.MessageEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
-import com.darkxell.common.event.move.MoveUseEvent;
-import com.darkxell.common.event.pokemon.DamageDealtEvent;
-import com.darkxell.common.event.pokemon.TriggeredAbilityEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.PokemonType;
-import com.darkxell.common.pokemon.ability.AbilityTypeBoost;
-import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.XMLUtils;
 import com.darkxell.common.util.language.Message;
-import com.darkxell.common.weather.Weather;
 
-public class Move
+public class Move implements Comparable<Move>
 {
 	public static enum MoveCategory
 	{
@@ -104,8 +93,6 @@ public class Move
 	public final boolean ginsengable;
 	/** This move's ID. */
 	public final int id;
-	/** True if this move makes contact. */
-	public final boolean makesContact;
 	/** True if this move pierces frozen Pokemon. */
 	public final boolean piercesFreeze;
 	/** This move's power. */
@@ -128,7 +115,7 @@ public class Move
 	public Move(Element xml)
 	{
 		this.id = Integer.parseInt(xml.getAttributeValue("id"));
-		this.type = PokemonType.valueOf(xml.getAttributeValue("type"));
+		this.type = PokemonType.find(Integer.parseInt(xml.getAttributeValue("type")));
 		this.category = MoveCategory.valueOf(xml.getAttributeValue("category"));
 		this.pp = Integer.parseInt(xml.getAttributeValue("pp"));
 		this.power = XMLUtils.getAttribute(xml, "power", 0);
@@ -136,19 +123,17 @@ public class Move
 		this.range = MoveRange.valueOf(XMLUtils.getAttribute(xml, "range", MoveRange.Front.name()));
 		this.targets = MoveTarget.valueOf(XMLUtils.getAttribute(xml, "targets", MoveTarget.Foes.name()));
 		this.critical = XMLUtils.getAttribute(xml, "critical", -1);
-		this.makesContact = XMLUtils.getAttribute(xml, "contact", false);
 		this.reflectable = XMLUtils.getAttribute(xml, "reflectable", false);
 		this.snatchable = XMLUtils.getAttribute(xml, "snatchable", false);
 		this.sound = XMLUtils.getAttribute(xml, "sound", false);
 		this.piercesFreeze = XMLUtils.getAttribute(xml, "piercesFreeze", false);
 		this.dealsDamage = XMLUtils.getAttribute(xml, "damage", false);
 		this.ginsengable = XMLUtils.getAttribute(xml, "ginsengable", false);
-		this.effect = MoveEffects.find(XMLUtils.getAttribute(xml, "flag", 0));
+		this.effect = MoveEffects.find(XMLUtils.getAttribute(xml, "effect", 0));
 	}
 
 	public Move(int id, PokemonType type, MoveCategory category, int pp, int power, int accuracy, MoveRange range, MoveTarget targets, int critical,
-			boolean makesContact, boolean reflectable, boolean snatchable, boolean sound, boolean piercesFreeze, boolean tauntable, boolean ginsengable,
-			MoveEffect effect)
+			boolean reflectable, boolean snatchable, boolean sound, boolean piercesFreeze, boolean tauntable, boolean ginsengable, MoveEffect effect)
 	{
 		this.id = id;
 		this.type = type;
@@ -159,7 +144,6 @@ public class Move
 		this.range = range;
 		this.targets = targets;
 		this.critical = critical;
-		this.makesContact = makesContact;
 		this.reflectable = reflectable;
 		this.snatchable = snatchable;
 		this.sound = sound;
@@ -169,203 +153,16 @@ public class Move
 		this.effect = effect;
 	}
 
-	/** @param user - The Pokémon using the move.
-	 * @param target - The Pokémon receiving the move.
-	 * @param floor - The floor context.
-	 * @param events - The list of Events created by this Move.
-	 * @return The damage dealt by this move. */
-	public int damageDealt(DungeonPokemon user, DungeonPokemon target, Floor floor, ArrayList<DungeonEvent> events)
+	@Override
+	public int compareTo(Move o)
 	{
-		int atk = this.category == MoveCategory.Physical ? user.stats.getAttack() : user.stats.getSpecialAttack() + this.power;
-		int level = user.level();
-		int def = this.category == MoveCategory.Physical ? target.stats.getDefense() : target.stats.getSpecialDefense();
-		float constant = ((atk - def) * 1f / 8) + (level * 2 / 3);
-
-		// Damage modification
-		float d = (((constant * 2) - def) + 10) + ((constant * constant) / 20);
-		if (d < 1) d = 1;
-		else if (d > 999) d = 999;
-
-		// Abilities
-		if (user.ability() instanceof AbilityTypeBoost && user.getHp() <= Math.floor(user.getMaxHP() / 4)
-				&& this.type == ((AbilityTypeBoost) user.ability()).type)
-		{
-			events.add(new TriggeredAbilityEvent(floor, user));
-			d *= 2;
-		}
-
-		// Weather
-		{
-			Weather w = floor.currentWeather().weather;
-			if (w == Weather.SUNNY)
-			{
-				if (this.type == PokemonType.Fire) d *= 1.5;
-				else if (this.type == PokemonType.Water) d *= 0.5;
-			} else if (w == Weather.RAIN)
-			{
-				if (this.type == PokemonType.Fire) d *= 0.5;
-				else if (this.type == PokemonType.Water) d *= 1.5;
-			} else if (w == Weather.CLOUDS && this.type != PokemonType.Normal) d *= 0.75;
-			else if (w == Weather.FOG && this.type == PokemonType.Electric) d *= 0.5;
-		}
-
-		// Critical hit ?
-		boolean crit = false;
-		{
-			double c = 0.12;
-			if (floor.random.nextDouble() < c) crit = true;
-		}
-		if (crit) d *= 1.5;
-
-		// Damage multiplier
-		{
-			float multiplier = this.type == null ? 1 : this.type.effectivenessOn(target.species());
-			if (user.species().type1 == this.type || user.species().type2 == this.type) multiplier *= 1.5;
-
-			d *= multiplier;
-		}
-
-		// Damage randomness
-		d *= (57344 + Math.floor(floor.random.nextDouble() * 16384)) / 65536;
-
-		return (int) d;
+		return Integer.compare(this.id, o.id);
 	}
 
 	/** @return This Move's description. */
 	public Message description()
 	{
 		return new Message("move.info." + this.id);
-	}
-
-	/** Removes all Pokémon this move is not supposed to target. */
-	private void filterTargets(Floor floor, DungeonPokemon user, ArrayList<DungeonPokemon> targets)
-	{
-		switch (this.targets)
-		{
-			case All:
-				break;
-
-			case Allies:
-				targets.removeIf((DungeonPokemon p) -> p == user || !p.isAlliedWith(user));
-				break;
-
-			case Foes:
-				targets.removeIf((DungeonPokemon p) -> p == user || p.isAlliedWith(user));
-				break;
-
-			case Others:
-				targets.remove(user);
-				break;
-
-			case Team:
-				targets.removeIf((DungeonPokemon p) -> !p.isAlliedWith(user));
-				break;
-
-			case User:
-				targets.removeIf((DungeonPokemon p) -> p != user);
-				break;
-
-			case None:
-				targets.clear();
-				break;
-		}
-	}
-
-	/** @param user - The Pokémon using this Move.
-	 * @param floor - The Floor context.
-	 * @return The Pokémon affected by this Move. */
-	public DungeonPokemon[] getTargets(DungeonPokemon user, Floor floor)
-	{
-		ArrayList<DungeonPokemon> targets = new ArrayList<DungeonPokemon>();
-		Tile t = user.tile(), front = t.adjacentTile(user.facing());
-
-		switch (this.range)
-		{
-			case Ambient:
-				break;
-
-			case Around:
-				for (Direction d : Direction.directions)
-					if (t.adjacentTile(d).getPokemon() != null) targets.add(t.adjacentTile(d).getPokemon());
-				break;
-
-			case Floor:
-				targets.addAll(floor.listPokemon());
-				break;
-
-			case Front_row:
-				for (Direction d : new Direction[] { user.facing().rotateCounterClockwise(), user.facing(), user.facing().rotateClockwise() })
-					if (t.adjacentTile(d).getPokemon() != null) targets.add(t.adjacentTile(d).getPokemon());
-				break;
-
-			case Line:
-				int distance = 0;
-				boolean done;
-				Tile current = t;
-				do
-				{
-					current = current.adjacentTile(user.facing());
-					if (current.getPokemon() != null) targets.add(current.getPokemon());
-					++distance;
-					done = !targets.isEmpty() || distance > 10 || current.type() == TileType.WALL || current.type() == TileType.WALL_END;
-				} while (!done);
-				break;
-
-			case Room:
-				Room r = floor.roomAt(user.tile().x, user.tile().y);
-				if (r == null)
-				{
-					for (Tile tile : AIUtils.visibleTiles(floor, user))
-						if (tile.getPokemon() != null) targets.add(tile.getPokemon());
-				} else for (Tile t2 : r.listTiles())
-					if (t2.getPokemon() != null) targets.add(t2.getPokemon());
-				break;
-
-			case Self:
-				targets.add(user);
-				break;
-
-			case Two_tiles:
-				if (front.getPokemon() != null) targets.add(front.getPokemon());
-				else if (front.type().canWalkOn(user))
-				{
-					Tile behind = front.adjacentTile(user.facing());
-					if (behind.getPokemon() != null) targets.add(behind.getPokemon());
-				}
-				break;
-
-			case Front:
-			case Front_corners:
-			default:
-				DungeonPokemon f = user.tile().adjacentTile(user.facing()).getPokemon();
-				if (f != null)
-				{
-					boolean valid = true;
-					if (user.facing().isDiagonal() && this.range != MoveRange.Front_corners)
-					{
-						Tile t1 = user.tile().adjacentTile(user.facing().rotateClockwise());
-						if (t1.type() == TileType.WALL || t1.type() == TileType.WALL_END) valid = false;
-						t1 = user.tile().adjacentTile(user.facing().rotateCounterClockwise());
-						if (t1.type() == TileType.WALL || t1.type() == TileType.WALL_END) valid = false;
-					}
-					if (valid) targets.add(f);
-				}
-		}
-
-		this.filterTargets(floor, user, targets);
-		if (this.range == MoveRange.Room || this.range == MoveRange.Floor)
-			targets.sort((DungeonPokemon p1, DungeonPokemon p2) -> floor.dungeon.compare(p1, p2));
-
-		return targets.toArray(new DungeonPokemon[targets.size()]);
-	}
-
-	/** @param usedMove - The Move used.
-	 * @param target - The Pokémon receiving the Move.
-	 * @param floor - The Floor context.
-	 * @return True if this Move misses. */
-	public boolean misses(MoveUse usedMove, DungeonPokemon target, Floor floor)
-	{
-		return false;
 	}
 
 	/** @return This Move's name. */
@@ -379,32 +176,30 @@ public class Move
 	 * @return The Events created by this selection. Creates MoveUseEvents, distributing this Move on targets. */
 	public final ArrayList<DungeonEvent> prepareUse(MoveUse move, Floor floor)
 	{
-		DungeonPokemon[] pokemon = this.getTargets(move.user, floor);
 		ArrayList<DungeonEvent> events = new ArrayList<DungeonEvent>();
-		for (int i = 0; i < pokemon.length; ++i)
-			events.add(new MoveUseEvent(floor, move, pokemon[i]));
-		if (this.range == MoveRange.Ambient) events.add(new MoveUseEvent(floor, move, null));
-
-		if (events.size() == 0 && this.effect != MoveEffects.Basic_attack) events.add(new MessageEvent(floor, new Message("move.no_target")));
+		this.effect.prepareUse(move, floor, events);
 		return events;
 	}
 
 	public Element toXML()
 	{
-		String className = this.getClass().getName().substring(Move.class.getName().length());
-
 		Element root = new Element("move");
 		root.setAttribute("id", Integer.toString(this.id));
 		root.setAttribute("type", Integer.toString(this.type.id));
-		root.setAttribute("movetype", className);
 		root.setAttribute("category", this.category.name());
 		root.setAttribute("pp", Integer.toString(this.pp));
-		root.setAttribute("power", Integer.toString(this.power));
+		XMLUtils.setAttribute(root, "power", this.power, 0);
 		XMLUtils.setAttribute(root, "accuracy", this.accuracy, 100);
+		XMLUtils.setAttribute(root, "critical", this.critical, 0);
 		XMLUtils.setAttribute(root, "range", this.range.name(), MoveRange.Front.name());
 		XMLUtils.setAttribute(root, "targets", this.targets.name(), MoveTarget.Foes.name());
 		XMLUtils.setAttribute(root, "effect", this.effect.id, 0);
-		XMLUtils.setAttribute(root, "contact", this.makesContact, false);
+		XMLUtils.setAttribute(root, "damage", this.dealsDamage, false);
+		XMLUtils.setAttribute(root, "ginsengable", this.ginsengable, false);
+		XMLUtils.setAttribute(root, "freeze", this.piercesFreeze, false);
+		XMLUtils.setAttribute(root, "reflectable", this.reflectable, false);
+		XMLUtils.setAttribute(root, "snatchable", this.snatchable, false);
+		XMLUtils.setAttribute(root, "sound", this.sound, false);
 		return root;
 	}
 
@@ -422,23 +217,7 @@ public class Move
 	public ArrayList<DungeonEvent> useOn(MoveUse usedMove, DungeonPokemon target, Floor floor)
 	{
 		ArrayList<DungeonEvent> events = new ArrayList<DungeonEvent>();
-		boolean missed = this.misses(usedMove, target, floor);
-
-		float effectiveness = this.type == null ? PokemonType.NORMALLY_EFFECTIVE : this.type.effectivenessOn(target.species());
-		if (effectiveness == PokemonType.NO_EFFECT) events.add(new MessageEvent(floor, this.unaffectedMessage(target)));
-		else
-		{
-			if (!missed && this.effect != MoveEffects.Basic_attack)
-				target.receiveMove(usedMove.move.isLinked() ? DungeonPokemon.LINKED_MOVES : DungeonPokemon.MOVES);
-			if (this.power != -1)
-			{
-				if (effectiveness == PokemonType.SUPER_EFFECTIVE)
-					events.add(new MessageEvent(floor, new Message("move.effectiveness.super").addReplacement("<pokemon>", target.getNickname())));
-				else if (effectiveness == PokemonType.NOT_VERY_EFFECTIVE)
-					events.add(new MessageEvent(floor, new Message("move.effectiveness.not_very").addReplacement("<pokemon>", target.getNickname())));
-				events.add(new DamageDealtEvent(floor, target, usedMove, missed ? 0 : this.damageDealt(usedMove.user, target, floor, events)));
-			}
-		}
+		this.effect.mainUse(usedMove, target, floor, events);
 
 		return events;
 	}
