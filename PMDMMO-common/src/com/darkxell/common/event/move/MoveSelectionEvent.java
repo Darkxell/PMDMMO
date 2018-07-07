@@ -49,6 +49,12 @@ public class MoveSelectionEvent extends DungeonEvent implements Communicable
 		{
 			return this.experienceEvent;
 		}
+
+		/** @return True if the Move's type is the same as one of the user's types. */
+		public boolean isStab()
+		{
+			return this.user.usedPokemon.species().type1 == this.move.move().type || this.user.usedPokemon.species().type2 == this.move.move().type;
+		}
 	}
 
 	private MoveUse usedMove;
