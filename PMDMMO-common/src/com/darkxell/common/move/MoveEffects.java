@@ -16,6 +16,7 @@ public final class MoveEffects
 	/** @return The Effect with the input ID. */
 	public static MoveEffect find(int id)
 	{
+		if (!effects.containsKey(id)) return Default;
 		return effects.get(id);
 	}
 
