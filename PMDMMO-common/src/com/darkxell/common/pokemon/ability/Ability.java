@@ -53,6 +53,14 @@ public abstract class Ability
 		return atkStage;
 	}
 
+	/** Called when a Pokémon uses a damaging move. Modifies the critical hit rate.
+	 * 
+	 * @param isUser - true if this Ability belongs to the Move's user. */
+	public int applyCriticalRateModifications(int critical, Move move, DungeonPokemon user, DungeonPokemon target, boolean isUser, Floor floor)
+	{
+		return critical;
+	}
+
 	/** Called when a Pokémon uses a damaging move. Modifies the defense stat.
 	 * 
 	 * @param isUser - true if this Ability belongs to the Move's user. */

@@ -83,10 +83,14 @@ public class MoveEffect
 		return attack;
 	}
 
-	protected boolean criticalLands(Move m, DungeonPokemon user, DungeonPokemon target, Floor floor)
+	protected boolean criticalLands(MoveUse move, DungeonPokemon user, DungeonPokemon target, Floor floor)
 	{
-		// TODO Auto-generated method stub
-		return false;
+		int crit = move.move.move().critical;
+		crit = user.usedPokemon.ability().applyCriticalRateModifications(crit, move.move.move(), user, target, true, floor);
+		crit = target.usedPokemon.ability().applyCriticalRateModifications(crit, move.move.move(), user, target, false, floor);
+
+		if (this.effectiveness(move, user, target, floor) == PokemonType.SUPER_EFFECTIVE) crit = 40;
+		return floor.random.nextInt(100) < crit;
 	}
 
 	/** @param move - The Move being used.
@@ -105,7 +109,7 @@ public class MoveEffect
 		double wildNerfer = user.player() != null ? 1 : 0.75;
 
 		double damage = ((attack + power) * 0.6 - defense / 2 + 50 * Math.log(((attack - defense) / 8 + level + 50) * 10) - 311) * wildNerfer;
-		double multiplier = this.damageMultiplier(move, this.criticalLands(m, user, target, floor), user, target, floor);
+		double multiplier = this.damageMultiplier(move, this.criticalLands(move, user, target, floor), user, target, floor);
 		damage *= multiplier;
 
 		// Damage randomness
