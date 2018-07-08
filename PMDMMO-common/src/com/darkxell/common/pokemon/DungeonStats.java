@@ -50,6 +50,23 @@ public class DungeonStats
 		this.setStage(stat, this.getStage(stat) + stage);
 	}
 
+	@Override
+	public DungeonStats clone()
+	{
+		DungeonStats s = new DungeonStats(this.pokemon);
+		s.accuracy = this.accuracy;
+		s.attack = this.attack;
+		s.defense = this.defense;
+		s.evasiveness = this.evasiveness;
+		s.health = this.health;
+		s.specialAttack = this.specialAttack;
+		s.specialDefense = this.specialDefense;
+		s.speedBuffs = this.speedBuffs.clone();
+		s.speedDebuffs = this.speedDebuffs.clone();
+		s.stages = this.stages.clone();
+		return s;
+	}
+
 	public int effectiveChange(Stat stat, int stage)
 	{
 		switch (stat)
@@ -110,6 +127,39 @@ public class DungeonStats
 	{
 		if (stat == Stat.Speed) return Math.max(0, this.speedBuffs() - this.speedDebuffs() + 1);
 		return this.stages[stat.id];
+	}
+
+	public float getStat(Stat stat)
+	{
+		switch (stat)
+		{
+			case Accuracy:
+				return this.getAccuracy();
+
+			case Attack:
+				return this.getAttack();
+
+			case Defense:
+				return this.getDefense();
+
+			case Evasiveness:
+				return this.getEvasiveness();
+
+			case Health:
+				return this.getHealth();
+
+			case SpecialAttack:
+				return this.getSpecialAttack();
+
+			case SpecialDefense:
+				return this.getSpecialDefense();
+
+			case Speed:
+				return this.getMoveSpeed();
+
+			default:
+				return 0;
+		}
 	}
 
 	public void onFloorStart(Floor floor, ArrayList<DungeonEvent> events)

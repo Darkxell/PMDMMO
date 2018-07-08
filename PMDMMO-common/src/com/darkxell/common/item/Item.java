@@ -8,6 +8,7 @@ import org.jdom2.Element;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.item.ItemSelectionEvent;
+import com.darkxell.common.move.Move;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.XMLUtils;
 import com.darkxell.common.util.language.Message;
@@ -125,6 +126,38 @@ public class Item
 		this.sell = sell;
 		this.spriteID = spriteID;
 		this.isStackable = stackable;
+	}
+
+	/** Called when a Pokémon uses a damaging move. Modifies the attack stat.
+	 * 
+	 * @param isUser - true if this Item is held by Move's user. */
+	public int applyAttackModifications(int attack, Move move, DungeonPokemon user, DungeonPokemon target, boolean isUser, Floor floor)
+	{
+		return attack;
+	}
+
+	/** Called when a Pokémon uses a damaging move. Modifies the attack stat stage.
+	 * 
+	 * @param isUser - true if this Item is held by the Move's user. */
+	public int applyAttackStageModifications(int atkStage, Move move, DungeonPokemon user, DungeonPokemon target, boolean isUser, Floor floor)
+	{
+		return atkStage;
+	}
+
+	/** Called when a Pokémon uses a damaging move. Modifies the defense stat.
+	 * 
+	 * @param isUser - true if this Ability belongs to the Move's user. */
+	public int applyDefenseModifications(int defense, Move move, DungeonPokemon user, DungeonPokemon target, boolean isUser, Floor floor)
+	{
+		return defense;
+	}
+
+	/** Called when a Pokémon uses a damaging move. Modifies the defense stat stage.
+	 * 
+	 * @param isUser - true if this Ability belongs to the Move's user. */
+	public int applyDefenseStageModifications(int defStage, Move move, DungeonPokemon user, DungeonPokemon target, boolean isUser, Floor floor)
+	{
+		return defStage;
 	}
 
 	public ItemCategory category()

@@ -12,7 +12,7 @@ import com.darkxell.common.util.XMLUtils;
 /** Holds all Moves. */
 public final class MoveRegistry
 {
-	public static final BasicAttack ATTACK = new BasicAttack();
+	public static Move ATTACK;
 
 	private static HashMap<Integer, Move> moves = new HashMap<Integer, Move>();
 
@@ -35,19 +35,12 @@ public final class MoveRegistry
 
 		Element root = XMLUtils.read(MoveRegistry.class.getResourceAsStream("/data/moves.xml"));
 		for (Element e : root.getChildren())
-			try
-			{
-				String className = e.getAttributeValue("movetype");
-				if (className == null) className = "";
-				Class<?> c = Class.forName(Move.class.getName() + className);
-				Move move = (Move) c.getConstructor(Element.class).newInstance(e);
-				moves.put(move.id, move);
-			} catch (Exception e1)
-			{
-				e1.printStackTrace();
-			}
+		{
+			Move move = new Move(e);
+			moves.put(move.id, move);
+		}
 
-		moves.put(ATTACK.id, ATTACK);
+		ATTACK = find(0);
 	}
 
 	/** Saves this Registry for the Client. */
