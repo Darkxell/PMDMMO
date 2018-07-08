@@ -339,8 +339,8 @@ public class MoveEffect
 
 	protected void useOn(MoveUse usedMove, DungeonPokemon target, Floor floor, boolean missed, ArrayList<DungeonEvent> events)
 	{
-		if (usedMove.move.move().category != MoveCategory.Status)
-			events.add(new DamageDealtEvent(floor, target, usedMove, missed ? 0 : this.damageDealt(usedMove, usedMove.user, target, floor, events)));
+		if (!missed && usedMove.move.move().category != MoveCategory.Status)
+			events.add(new DamageDealtEvent(floor, target, usedMove, this.damageDealt(usedMove, usedMove.user, target, floor, events)));
 	}
 
 }
