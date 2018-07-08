@@ -35,8 +35,8 @@ public class MoveEffect
 	{
 		attack = user.usedPokemon.ability().applyAttackModifications(attack, move, user, target, true, floor);
 		attack = target.usedPokemon.ability().applyAttackModifications(attack, move, user, target, false, floor);
-		attack = user.usedPokemon.item().item().applyAttackModifications(attack, move, user, target, true, floor);
-		attack = target.usedPokemon.item().item().applyAttackModifications(attack, move, user, target, false, floor);
+		if (user.usedPokemon.item() != null) attack = user.usedPokemon.item().item().applyAttackModifications(attack, move, user, target, true, floor);
+		if (target.usedPokemon.item() != null) attack = target.usedPokemon.item().item().applyAttackModifications(attack, move, user, target, false, floor);
 		return attack;
 	}
 
@@ -44,8 +44,9 @@ public class MoveEffect
 	{
 		atkStage = user.usedPokemon.ability().applyAttackStageModifications(atkStage, move, user, target, true, floor);
 		atkStage = target.usedPokemon.ability().applyAttackStageModifications(atkStage, move, user, target, false, floor);
-		atkStage = user.usedPokemon.item().item().applyAttackStageModifications(atkStage, move, user, target, true, floor);
-		atkStage = target.usedPokemon.item().item().applyAttackStageModifications(atkStage, move, user, target, false, floor);
+		if (user.usedPokemon.item() != null) atkStage = user.usedPokemon.item().item().applyAttackStageModifications(atkStage, move, user, target, true, floor);
+		if (target.usedPokemon.item() != null)
+			atkStage = target.usedPokemon.item().item().applyAttackStageModifications(atkStage, move, user, target, false, floor);
 		return atkStage;
 	}
 
@@ -53,8 +54,8 @@ public class MoveEffect
 	{
 		defense = user.usedPokemon.ability().applyDefenseModifications(defense, move, user, target, true, floor);
 		defense = target.usedPokemon.ability().applyDefenseModifications(defense, move, user, target, false, floor);
-		defense = user.usedPokemon.item().item().applyDefenseModifications(defense, move, user, target, true, floor);
-		defense = target.usedPokemon.item().item().applyDefenseModifications(defense, move, user, target, false, floor);
+		if (user.usedPokemon.item() != null) defense = user.usedPokemon.item().item().applyDefenseModifications(defense, move, user, target, true, floor);
+		if (target.usedPokemon.item() != null) defense = target.usedPokemon.item().item().applyDefenseModifications(defense, move, user, target, false, floor);
 		return defense;
 	}
 
@@ -62,8 +63,10 @@ public class MoveEffect
 	{
 		defStage = user.usedPokemon.ability().applyDefenseStageModifications(defStage, move, user, target, true, floor);
 		defStage = target.usedPokemon.ability().applyDefenseStageModifications(defStage, move, user, target, false, floor);
-		defStage = user.usedPokemon.item().item().applyDefenseStageModifications(defStage, move, user, target, true, floor);
-		defStage = target.usedPokemon.item().item().applyDefenseStageModifications(defStage, move, user, target, false, floor);
+		if (user.usedPokemon.item() != null)
+			defStage = user.usedPokemon.item().item().applyDefenseStageModifications(defStage, move, user, target, true, floor);
+		if (target.usedPokemon.item() != null)
+			defStage = target.usedPokemon.item().item().applyDefenseStageModifications(defStage, move, user, target, false, floor);
 		return defStage;
 	}
 
@@ -204,6 +207,15 @@ public class MoveEffect
 				targets.add(null);
 				break;
 
+			case Around2:
+				for (int x = -2; x < 3; ++x)
+					for (int y = -2; y < 3; ++y)
+						if (x == -2 || x == 2 || y == -2 || y == 2)
+						{
+							Tile t2 = floor.tileAt(t.x + x, t.y + y);
+							if (t2.getPokemon() != null) targets.add(t2.getPokemon());
+						}
+
 			case Around:
 				for (Direction d : Direction.directions)
 					if (t.adjacentTile(d).getPokemon() != null) targets.add(t.adjacentTile(d).getPokemon());
@@ -247,7 +259,7 @@ public class MoveEffect
 
 			case Two_tiles:
 				if (front.getPokemon() != null) targets.add(front.getPokemon());
-				else if (front.type().canWalkOn(user))
+				else if (front.type() != TileType.WALL && front.type() != TileType.WALL_END)
 				{
 					Tile behind = front.adjacentTile(user.facing());
 					if (behind.getPokemon() != null) targets.add(behind.getPokemon());
