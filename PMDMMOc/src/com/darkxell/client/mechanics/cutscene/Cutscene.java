@@ -10,16 +10,19 @@ import com.darkxell.client.mechanics.cutscene.end.LoadFreezoneCutsceneEnd;
 import com.darkxell.client.mechanics.cutscene.end.PlayCutsceneCutsceneEnd;
 import com.darkxell.client.mechanics.freezones.entities.FreezoneCamera;
 
-public class Cutscene
+public class Cutscene implements Comparable<Cutscene>
 {
 
 	public static abstract class CutsceneEnd
 	{
 		public static CutsceneEnd create(Cutscene cutscene, Element xml)
 		{
-			if (xml.getChild("enterdungeon", xml.getNamespace()) != null) return new EnterDungeonCutsceneEnd(cutscene, xml.getChild("enterdungeon", xml.getNamespace()));
-			if (xml.getChild("playcutscene", xml.getNamespace()) != null) return new PlayCutsceneCutsceneEnd(cutscene, xml.getChild("playcutscene", xml.getNamespace()));
-			if (xml.getChild("loadfreezone", xml.getNamespace()) != null) return new LoadFreezoneCutsceneEnd(cutscene, xml.getChild("loadfreezone", xml.getNamespace()));
+			if (xml.getChild("enterdungeon", xml.getNamespace()) != null)
+				return new EnterDungeonCutsceneEnd(cutscene, xml.getChild("enterdungeon", xml.getNamespace()));
+			if (xml.getChild("playcutscene", xml.getNamespace()) != null)
+				return new PlayCutsceneCutsceneEnd(cutscene, xml.getChild("playcutscene", xml.getNamespace()));
+			if (xml.getChild("loadfreezone", xml.getNamespace()) != null)
+				return new LoadFreezoneCutsceneEnd(cutscene, xml.getChild("loadfreezone", xml.getNamespace()));
 			return null;
 		}
 
@@ -36,13 +39,15 @@ public class Cutscene
 		}
 	}
 
-	public final CutsceneCreation creation;
+	public CutsceneCreation creation;
 	public final ArrayList<CutsceneEvent> events;
-	public final CutsceneEnd onFinish;
-	public final CutscenePlayer player;
+	public final String name;
+	public CutsceneEnd onFinish;
+	public CutscenePlayer player;
 
-	public Cutscene(Element xml)
+	public Cutscene(String name, Element xml)
 	{
+		this.name = name;
 		this.creation = new CutsceneCreation(this, xml.getChild("creation", xml.getNamespace()));
 		this.onFinish = CutsceneEnd.create(this, xml.getChild("onfinish", xml.getNamespace()));
 
@@ -52,8 +57,14 @@ public class Cutscene
 			CutsceneEvent e = CutsceneEvent.create(event, this);
 			if (e != null) this.events.add(e);
 		}
-		
+
 		this.player = new CutscenePlayer(this);
+	}
+
+	@Override
+	public int compareTo(Cutscene o)
+	{
+		return this.name.compareTo(o.name);
 	}
 
 	public CutsceneEvent getEvent(int id)
