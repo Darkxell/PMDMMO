@@ -1,6 +1,7 @@
 package fr.darkxell.dataeditor.application.util;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -15,6 +16,27 @@ public class FileManager
 	{
 		filePaths.put(LANG, "../PMDMMOc/resources/lang/");
 		filePaths.put(CUTSCENES, "../PMDMMOc/resources/cutscenes/");
+	}
+
+	public static File create(String path)
+	{
+		File file = new File(path);
+		file.mkdirs();
+		file.delete();
+		try
+		{
+			file.createNewFile();
+		} catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+		return file;
+	}
+
+	public static void delete(String path)
+	{
+		File f = new File(path);
+		if (f.exists()) f.delete();
 	}
 
 	public static ArrayList<String> findAllSubFiles(String startPath)

@@ -41,7 +41,7 @@ public class Cutscene implements Comparable<Cutscene>
 
 	public CutsceneCreation creation;
 	public final ArrayList<CutsceneEvent> events;
-	public final String name;
+	public String name;
 	public CutsceneEnd onFinish;
 	public CutscenePlayer player;
 
@@ -81,6 +81,11 @@ public class Cutscene implements Comparable<Cutscene>
 		for (CutsceneEvent e : this.events)
 			if (e.id == id) return e;
 		return null;
+	}
+
+	public Element toXML()
+	{
+		return new Element("cutscene").setAttribute("name", this.name);
 	}
 
 }

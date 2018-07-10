@@ -7,8 +7,8 @@ import java.util.ResourceBundle;
 
 import com.darkxell.client.mechanics.cutscene.Cutscene;
 
-import fr.darkxell.dataeditor.application.DEPersistance;
 import fr.darkxell.dataeditor.application.controls.CutscenesTreeCell;
+import fr.darkxell.dataeditor.application.data.Cutscenes;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -39,7 +39,7 @@ public class CutscenesTabController implements Initializable
 		this.cutscenesList.setCellFactory(param -> {
 			return new CutscenesTreeCell();
 		});
-		this.cutscenesList.getItems().addAll(DEPersistance.cutscenes.values());
+		this.cutscenesList.getItems().addAll(Cutscenes.values());
 		this.cutscenesList.getItems().sort(Comparator.naturalOrder());
 
 		this.editCutscenePane.setVisible(false);
@@ -47,22 +47,32 @@ public class CutscenesTabController implements Initializable
 
 	public void onCreateCutscene()
 	{
+		this.onCreateCutscene(null);
+	}
+
+	private void onCreateCutscene(Cutscene cutscene)
+	{
 		TextInputDialog dialog = new TextInputDialog("");
-		dialog.setTitle("New Cutscene");
+		dialog.setTitle(cutscene == null ? "New Cutscene" : "Rename Cutscene");
 		dialog.setHeaderText(null);
-		dialog.setContentText(
-				"Type in the name of the new Cutscene.\nIt will be the same as its path in the cutscenes folder.\nUse slashes to put in subfolders, and don't include extension.");
+		dialog.setContentText("Type in " + (cutscene == null ? "the name of the new Cutscene." : "the new name for Cutscene '" + cutscene.name + "'?")
+				+ "\nIt will be the same as its path in the cutscenes folder.\nUse slashes to put in subfolders, and don't include extension.");
 		Optional<String> name = dialog.showAndWait();
 		if (name.isPresent())
 		{
 			String n = name.get();
-			if (DEPersistance.cutscenes.containsKey(n))
+			if (Cutscenes.containsKey(n))
 				new Alert(AlertType.ERROR, "There is already a Cutscene named '" + n + "'.", ButtonType.OK).showAndWait();
 			else
 			{
-				Cutscene c = new Cutscene(n);
-				DEPersistance.cutscenes.put(c.name, c);
-				this.cutscenesList.getItems().add(c);
+				if (cutscene != null)
+				{
+					Cutscenes.remove(cutscene.name);
+					cutscene.name = n;
+				}
+				Cutscene c = cutscene == null ? new Cutscene(n) : cutscene;
+				Cutscenes.put(c.name, c);
+				if (cutscene == null) this.cutscenesList.getItems().add(c);
 				this.cutscenesList.getItems().sort(Comparator.naturalOrder());
 			}
 		}
@@ -76,7 +86,7 @@ public class CutscenesTabController implements Initializable
 			this.editCutscenePane.setVisible(false);
 		}
 		this.cutscenesList.getItems().remove(item);
-		DEPersistance.cutscenes.remove(item.name);
+		Cutscenes.remove(item.name);
 	}
 
 	public void onEdit(Cutscene cutscene)
@@ -84,6 +94,11 @@ public class CutscenesTabController implements Initializable
 		this.currentCutscene = cutscene;
 		this.editCutscenePane.setVisible(true);
 		this.editCutscenePane.setText(this.currentCutscene.name);
+	}
+
+	public void onRename(Cutscene cutscene)
+	{
+		this.onCreateCutscene(cutscene);
 	}
 
 }

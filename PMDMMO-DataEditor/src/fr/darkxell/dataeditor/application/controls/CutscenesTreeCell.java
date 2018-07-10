@@ -32,6 +32,11 @@ public class CutscenesTreeCell extends ListCell<Cutscene>
 				CutscenesTabController.instance.onEdit(item);
 			});
 
+			MenuItem rename = new MenuItem("Rename");
+			rename.setOnAction(e -> {
+				CutscenesTabController.instance.onRename(item);
+			});
+
 			MenuItem remove = new MenuItem("Delete");
 			remove.setOnAction(e -> {
 				Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -42,6 +47,7 @@ public class CutscenesTreeCell extends ListCell<Cutscene>
 			});
 
 			menu.getItems().add(edit);
+			menu.getItems().add(rename);
 			menu.getItems().add(remove);
 		}
 

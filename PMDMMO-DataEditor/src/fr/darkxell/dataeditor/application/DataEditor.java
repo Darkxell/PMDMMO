@@ -13,6 +13,7 @@ import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.Util;
 import com.darkxell.common.util.language.Lang;
 
+import fr.darkxell.dataeditor.application.data.Cutscenes;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -37,7 +38,7 @@ public class DataEditor extends Application
 		Animations.loadData();
 		Persistance.player = Util.createDefaultPlayer();
 
-		DEPersistance.load();
+		Cutscenes.load();
 
 		launch(args);
 	}
