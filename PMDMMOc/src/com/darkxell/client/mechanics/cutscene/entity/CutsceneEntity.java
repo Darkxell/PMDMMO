@@ -11,6 +11,12 @@ public class CutsceneEntity
 	public final int id;
 	public double xPos, yPos;
 
+	public CutsceneEntity()
+	{
+		this.id = -1;
+		this.xPos = this.yPos = 0;
+	}
+
 	public CutsceneEntity(Element xml)
 	{
 		this.id = XMLUtils.getAttribute(xml, "cutsceneid", -1);

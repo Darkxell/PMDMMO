@@ -36,4 +36,10 @@ public class SetStateCutsceneEvent extends CutsceneEvent
 		if (entity != null && entity instanceof CutscenePokemon) ((CutscenePokemon) entity).currentState = this.state;
 	}
 
+	@Override
+	public Element toXML()
+	{
+		return new Element("setstate");
+	}
+
 }

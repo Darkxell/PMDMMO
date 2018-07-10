@@ -73,4 +73,10 @@ public class CameraCutsceneEvent extends CutsceneEvent
 		}
 	}
 
+	@Override
+	public Element toXML()
+	{
+		return new Element("camera");
+	}
+
 }

@@ -26,4 +26,10 @@ public class SpawnCutsceneEvent extends CutsceneEvent
 		this.cutscene.player.createEntity(this.entity);
 	}
 
+	@Override
+	public Element toXML()
+	{
+		return new Element("spawn");
+	}
+
 }

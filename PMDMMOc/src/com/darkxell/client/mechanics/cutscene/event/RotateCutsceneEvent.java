@@ -63,4 +63,10 @@ public class RotateCutsceneEvent extends CutsceneEvent
 		++this.currentDistance;
 	}
 
+	@Override
+	public Element toXML()
+	{
+		return new Element("rotate");
+	}
+
 }

@@ -29,4 +29,10 @@ public class SetAnimatedCutsceneEvent extends CutsceneEvent
 		if (entity != null && entity instanceof CutscenePokemon) ((CutscenePokemon) entity).animated = this.animated;
 	}
 
+	@Override
+	public Element toXML()
+	{
+		return new Element("setanimated");
+	}
+
 }

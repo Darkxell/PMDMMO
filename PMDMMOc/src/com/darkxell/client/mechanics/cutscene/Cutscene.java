@@ -37,20 +37,27 @@ public class Cutscene implements Comparable<Cutscene>
 		{
 			Persistance.freezoneCamera = new FreezoneCamera(Persistance.currentplayer);
 		}
+
+		public abstract Element toXML();
 	}
 
-	public CutsceneCreation creation;
+	public final CutsceneCreation creation;
 	public final ArrayList<CutsceneEvent> events;
 	public String name;
-	public CutsceneEnd onFinish;
-	public CutscenePlayer player;
+	public final CutsceneEnd onFinish;
+	public final CutscenePlayer player;
 
 	public Cutscene(String name)
 	{
+		this(name, null, null, new ArrayList<>());
+	}
+
+	public Cutscene(String name, CutsceneCreation creation, CutsceneEnd end, ArrayList<CutsceneEvent> events)
+	{
 		this.name = name;
-		this.creation = null;
-		this.onFinish = null;
-		this.events = new ArrayList<>();
+		this.creation = creation != null ? creation : new CutsceneCreation(this);
+		this.onFinish = end != null ? end : new LoadFreezoneCutsceneEnd(this);
+		this.events = events;
 		this.player = new CutscenePlayer(this);
 	}
 
@@ -85,7 +92,14 @@ public class Cutscene implements Comparable<Cutscene>
 
 	public Element toXML()
 	{
-		return new Element("cutscene").setAttribute("name", this.name);
+		Element root = new Element("cutscene").setAttribute("name", this.name);
+		root.addContent(this.creation.toXML());
+		Element events = new Element("events");
+		for (CutsceneEvent event : this.events)
+			events.addContent(event.toXML());
+		root.addContent(events);
+		root.addContent(new Element("onfinish").addContent(this.onFinish.toXML()));
+		return root;
 	}
 
 }

@@ -26,4 +26,10 @@ public class DespawnCutsceneEvent extends CutsceneEvent
 		if (entity != null) this.cutscene.player.removeEntity(entity);
 	}
 
+	@Override
+	public Element toXML()
+	{
+		return new Element("despawn");
+	}
+
 }

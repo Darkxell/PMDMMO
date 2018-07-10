@@ -13,6 +13,14 @@ public class LoadFreezoneCutsceneEnd extends CutsceneEnd
 	public final String freezoneID;
 	public final int xPos, yPos;
 
+	public LoadFreezoneCutsceneEnd(Cutscene cutscene)
+	{
+		super(cutscene);
+		this.freezoneID = "Base";
+		this.xPos = -1;
+		this.yPos = -1;
+	}
+
 	public LoadFreezoneCutsceneEnd(Cutscene cutscene, Element xml)
 	{
 		super(cutscene);
@@ -26,6 +34,12 @@ public class LoadFreezoneCutsceneEnd extends CutsceneEnd
 	{
 		super.onCutsceneEnd();
 		StateManager.setExploreState(this.freezoneID, this.xPos, this.yPos);
+	}
+
+	@Override
+	public Element toXML()
+	{
+		return new Element("loadfreezone");
 	}
 
 }

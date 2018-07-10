@@ -77,4 +77,10 @@ public class MoveCutsceneEvent extends CutsceneEvent
 		}
 	}
 
+	@Override
+	public Element toXML()
+	{
+		return new Element("move");
+	}
+
 }

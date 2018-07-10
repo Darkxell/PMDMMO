@@ -26,4 +26,10 @@ public class AnimateCutsceneEvent extends CutsceneEvent
 		System.out.println("Playing animation: " + this.animation);
 	}
 
+	@Override
+	public Element toXML()
+	{
+		return new Element("animate");
+	}
+
 }

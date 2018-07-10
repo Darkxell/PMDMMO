@@ -61,8 +61,7 @@ public class CutscenesTabController implements Initializable
 		if (name.isPresent())
 		{
 			String n = name.get();
-			if (Cutscenes.containsKey(n))
-				new Alert(AlertType.ERROR, "There is already a Cutscene named '" + n + "'.", ButtonType.OK).showAndWait();
+			if (Cutscenes.containsKey(n)) new Alert(AlertType.ERROR, "There is already a Cutscene named '" + n + "'.", ButtonType.OK).showAndWait();
 			else
 			{
 				if (cutscene != null)
@@ -71,7 +70,7 @@ public class CutscenesTabController implements Initializable
 					cutscene.name = n;
 				}
 				Cutscene c = cutscene == null ? new Cutscene(n) : cutscene;
-				Cutscenes.put(c.name, c);
+				Cutscenes.add(c);
 				if (cutscene == null) this.cutscenesList.getItems().add(c);
 				this.cutscenesList.getItems().sort(Comparator.naturalOrder());
 			}

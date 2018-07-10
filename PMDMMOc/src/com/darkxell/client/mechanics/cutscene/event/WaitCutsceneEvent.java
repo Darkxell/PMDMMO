@@ -35,4 +35,10 @@ public class WaitCutsceneEvent extends CutsceneEvent
 		return true;
 	}
 
+	@Override
+	public Element toXML()
+	{
+		return new Element("wait");
+	}
+
 }

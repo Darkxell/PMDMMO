@@ -26,4 +26,10 @@ public class MusicCutsceneEvent extends CutsceneEvent
 		if (this.soundtrackID != null) Persistance.soundmanager.setBackgroundMusic(SoundsHolder.getSong(this.soundtrackID));
 	}
 
+	@Override
+	public Element toXML()
+	{
+		return new Element("music");
+	}
+
 }

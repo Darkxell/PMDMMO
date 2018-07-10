@@ -89,6 +89,8 @@ public abstract class CutsceneEvent
 	public void onStart()
 	{}
 
+	public abstract Element toXML();
+
 	public void update()
 	{}
 

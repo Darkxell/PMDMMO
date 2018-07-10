@@ -84,4 +84,10 @@ public class DialogCutsceneEvent extends CutsceneEvent implements DialogEndListe
 		Persistance.stateManager.setState(state);
 	}
 
+	@Override
+	public Element toXML()
+	{
+		return new Element("dialog");
+	}
+
 }

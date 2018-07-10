@@ -30,4 +30,10 @@ public class DelayCutsceneEvent extends CutsceneEvent
 		if (!this.isOver()) ++this.tick;
 	}
 
+	@Override
+	public Element toXML()
+	{
+		return new Element("delay");
+	}
+
 }

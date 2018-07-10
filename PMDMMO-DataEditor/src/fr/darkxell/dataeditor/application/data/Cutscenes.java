@@ -17,6 +17,11 @@ public class Cutscenes
 
 	private static HashMap<String, Cutscene> cutscenes = new HashMap<>();
 
+	public static void add(Cutscene cutscene)
+	{
+		if (!cutscenes.containsKey(cutscene.name)) put(cutscene.name, cutscene);
+	}
+
 	public static boolean containsKey(String name)
 	{
 		return cutscenes.containsKey(name);
@@ -37,7 +42,7 @@ public class Cutscenes
 			}
 	}
 
-	public static void put(String name, Cutscene cutscene)
+	private static void put(String name, Cutscene cutscene)
 	{
 		cutscenes.put(name, cutscene);
 		File f = FileManager.create(FileManager.filePaths.get(FileManager.CUTSCENES) + "/" + name + ".xml");
@@ -48,6 +53,11 @@ public class Cutscenes
 	{
 		cutscenes.remove(name);
 		FileManager.delete(FileManager.filePaths.get(FileManager.CUTSCENES) + "/" + name + ".xml");
+	}
+
+	public static void update(Cutscene cutscene)
+	{
+		put(cutscene.name, cutscene);
 	}
 
 	public static Collection<Cutscene> values()

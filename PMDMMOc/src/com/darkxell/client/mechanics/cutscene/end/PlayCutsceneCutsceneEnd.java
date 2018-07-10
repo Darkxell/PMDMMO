@@ -25,4 +25,10 @@ public class PlayCutsceneCutsceneEnd extends CutsceneEnd
 		if (this.cutsceneID != null) CutsceneManager.playCutscene(this.cutsceneID);
 	}
 
+	@Override
+	public Element toXML()
+	{
+		return new Element("playcutscene");
+	}
+
 }

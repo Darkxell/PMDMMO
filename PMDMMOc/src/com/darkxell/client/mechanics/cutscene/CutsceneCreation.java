@@ -21,6 +21,16 @@ public class CutsceneCreation
 	public final String freezoneID;
 	public final CutscenePokemon player;
 
+	public CutsceneCreation(Cutscene cutscene)
+	{
+		this.cutscene = cutscene;
+		this.freezoneID = null;
+		this.fading = true;
+		this.camerax = this.cameray = -1;
+		this.player = new CutscenePokemon(Persistance.player.getTeamLeader());
+		this.entities = new ArrayList<>();
+	}
+
 	public CutsceneCreation(Cutscene cutscene, Element xml)
 	{
 		this.cutscene = cutscene;
@@ -45,6 +55,11 @@ public class CutsceneCreation
 		for (CutsceneEntity entity : this.entities)
 			this.cutscene.player.createEntity(entity);
 		this.cutscene.player.createEntity(this.player);
+	}
+
+	public Element toXML()
+	{
+		return new Element("creation");
 	}
 
 }

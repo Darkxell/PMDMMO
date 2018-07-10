@@ -31,4 +31,10 @@ public class SoundCutsceneEvent extends CutsceneEvent
 		}
 	}
 
+	@Override
+	public Element toXML()
+	{
+		return new Element("sound");
+	}
+
 }

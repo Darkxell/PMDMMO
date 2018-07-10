@@ -29,4 +29,10 @@ public class EnterDungeonCutsceneEnd extends CutsceneEnd
 		StateManager.setDungeonState(Persistance.cutsceneState, this.dungeonID, new Random().nextLong());
 	}
 
+	@Override
+	public Element toXML()
+	{
+		return new Element("enterdungeon");
+	}
+
 }

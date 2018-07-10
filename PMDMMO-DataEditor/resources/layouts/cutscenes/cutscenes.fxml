@@ -4,7 +4,6 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TitledPane?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
@@ -18,7 +17,7 @@
       </VBox>
    </left>
    <center>
-      <TitledPane fx:id="editCutscenePane" alignment="CENTER" animated="false" text="Edit Cutscene" BorderPane.alignment="CENTER">
+      <TitledPane fx:id="editCutscenePane" alignment="CENTER" animated="false" collapsible="false" text="Edit Cutscene" BorderPane.alignment="CENTER">
         <content>
 		  <fx:include fx:id="editCutscene" source="edit_cutscene.fxml" />
         </content>

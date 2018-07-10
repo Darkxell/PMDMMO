@@ -21,7 +21,7 @@ public class FileManager
 	public static File create(String path)
 	{
 		File file = new File(path);
-		file.mkdirs();
+		if (!file.exists()) file.mkdirs();
 		file.delete();
 		try
 		{
