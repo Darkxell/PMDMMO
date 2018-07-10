@@ -13,14 +13,17 @@ import com.darkxell.client.mechanics.cutscene.end.PlayCutsceneCutsceneEnd;
 import com.darkxell.common.dungeon.Dungeon;
 import com.darkxell.common.dungeon.DungeonRegistry;
 
+import fr.darkxell.dataeditor.application.controller.cutscene.CutsceneEndController.CutsceneEndMode;
 import fr.darkxell.dataeditor.application.data.Cutscenes;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 
-public class CutsceneEndController implements Initializable
+public class CutsceneEndController implements Initializable, ChangeListener<CutsceneEndMode>
 {
 
 	public static enum CutsceneEndMode
@@ -56,6 +59,16 @@ public class CutsceneEndController implements Initializable
 	@FXML
 	private ComboBox<CutsceneEndMode> modeCombobox;
 
+	@Override
+	public void changed(ObservableValue<? extends CutsceneEndMode> observable, CutsceneEndMode oldValue, CutsceneEndMode newValue)
+	{
+		this.cutsceneCombobox.setVisible(newValue == CutsceneEndMode.CUTSCENE);
+		this.dungeonCombobox.setVisible(newValue == CutsceneEndMode.DUNGEON);
+		this.freezoneTextfield.setVisible(newValue == CutsceneEndMode.FREEZONE);
+		this.freezoneXTextfield.setVisible(newValue == CutsceneEndMode.FREEZONE);
+		this.freezoneYTextfield.setVisible(newValue == CutsceneEndMode.FREEZONE);
+	}
+
 	public CutsceneEnd getEnd()
 	{
 		switch (this.modeCombobox.getSelectionModel().getSelectedItem())
@@ -76,15 +89,22 @@ public class CutsceneEndController implements Initializable
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
 	{
-		Pattern pattern = Pattern.compile("\\d*");
+
+		Pattern pattern = Pattern.compile("-?\\d*");
 		TextFormatter<String> formatter = new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
 			return pattern.matcher(change.getControlNewText()).matches() ? change : null;
 		});
 		this.freezoneXTextfield.setTextFormatter(formatter);
+		formatter = new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
+			return pattern.matcher(change.getControlNewText()).matches() ? change : null;
+		});
 		this.freezoneYTextfield.setTextFormatter(formatter);
 
 		this.cutsceneCombobox.getItems().addAll(Cutscenes.values());
 		this.dungeonCombobox.getItems().addAll(DungeonRegistry.list());
+		this.modeCombobox.getItems().addAll(CutsceneEndMode.values());
+
+		this.modeCombobox.getSelectionModel().selectedItemProperty().addListener(this);
 	}
 
 	public void setupFor(Cutscene cutscene)
@@ -108,12 +128,6 @@ public class CutsceneEndController implements Initializable
 			this.freezoneYTextfield.setText(String.valueOf(e.yPos));
 			this.modeCombobox.getSelectionModel().select(CutsceneEndMode.FREEZONE);
 		}
-
-		this.cutsceneCombobox.setVisible(end instanceof PlayCutsceneCutsceneEnd);
-		this.dungeonCombobox.setVisible(end instanceof EnterDungeonCutsceneEnd);
-		this.freezoneTextfield.setVisible(end instanceof LoadFreezoneCutsceneEnd);
-		this.freezoneXTextfield.setVisible(end instanceof LoadFreezoneCutsceneEnd);
-		this.freezoneYTextfield.setVisible(end instanceof LoadFreezoneCutsceneEnd);
 	}
 
 }

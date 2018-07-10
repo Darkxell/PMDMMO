@@ -49,7 +49,7 @@ public class DataEditor extends Application
 		try
 		{
 			Parent root = FXMLLoader.load(DataEditor.class.getResource("/layouts/main.fxml"));
-			Scene scene = new Scene(root, 800, 600);
+			Scene scene = new Scene(root, 1000, 850);
 			scene.getStylesheets().add(getClass().getResource("/view/application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.getIcons().add(new Image(DataEditor.class.getResourceAsStream("/hud/framebackgrounds/icon.png")));

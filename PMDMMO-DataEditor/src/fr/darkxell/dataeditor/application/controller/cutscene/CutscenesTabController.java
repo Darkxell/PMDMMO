@@ -93,6 +93,7 @@ public class CutscenesTabController implements Initializable
 		this.currentCutscene = cutscene;
 		this.editCutscenePane.setVisible(true);
 		this.editCutscenePane.setText(this.currentCutscene.name);
+		this.editCutsceneController.setupFor(this.currentCutscene);
 	}
 
 	public void onRename(Cutscene cutscene)

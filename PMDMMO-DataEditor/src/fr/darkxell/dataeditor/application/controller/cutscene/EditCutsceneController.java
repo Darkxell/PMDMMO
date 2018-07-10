@@ -24,9 +24,7 @@ public class EditCutsceneController implements Initializable
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
-	{
-		this.cutsceneEndController.setupFor(CutscenesTabController.instance.currentCutscene);
-	}
+	{}
 
 	public void saveChanges()
 	{
@@ -34,6 +32,11 @@ public class EditCutsceneController implements Initializable
 				this.cutsceneEndController.getEnd(), new ArrayList<>(this.eventList.getItems()));
 		CutscenesTabController.instance.currentCutscene = c;
 		Cutscenes.update(c);
+	}
+
+	public void setupFor(Cutscene cutscene)
+	{
+		this.cutsceneEndController.setupFor(cutscene);
 	}
 
 }
