@@ -26,7 +26,7 @@ public class Cutscene implements Comparable<Cutscene>
 			return null;
 		}
 
-		public final Cutscene cutscene;
+		Cutscene cutscene;
 
 		public CutsceneEnd(Cutscene cutscene)
 		{
@@ -66,6 +66,7 @@ public class Cutscene implements Comparable<Cutscene>
 		this.name = name;
 		this.creation = new CutsceneCreation(this, xml.getChild("creation", xml.getNamespace()));
 		this.onFinish = CutsceneEnd.create(this, xml.getChild("onfinish", xml.getNamespace()));
+		this.onFinish.cutscene = this;
 
 		this.events = new ArrayList<>();
 		for (Element event : xml.getChild("events", xml.getNamespace()).getChildren())

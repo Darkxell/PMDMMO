@@ -29,6 +29,14 @@ public class LoadFreezoneCutsceneEnd extends CutsceneEnd
 		this.yPos = XMLUtils.getAttribute(xml, "ypos", -1);
 	}
 
+	public LoadFreezoneCutsceneEnd(String freezoneID, int x, int y)
+	{
+		super(null);
+		this.freezoneID = freezoneID;
+		this.xPos = x;
+		this.yPos = y;
+	}
+
 	@Override
 	public void onCutsceneEnd()
 	{

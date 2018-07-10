@@ -18,6 +18,12 @@ public class PlayCutsceneCutsceneEnd extends CutsceneEnd
 		this.cutsceneID = XMLUtils.getAttribute(xml, "id", null);
 	}
 
+	public PlayCutsceneCutsceneEnd(String cutsceneID)
+	{
+		super(null);
+		this.cutsceneID = cutsceneID;
+	}
+
 	@Override
 	public void onCutsceneEnd()
 	{

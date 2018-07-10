@@ -27,6 +27,11 @@ public class Cutscenes
 		return cutscenes.containsKey(name);
 	}
 
+	public static Cutscene get(String cutsceneID)
+	{
+		return cutscenes.get(cutsceneID);
+	}
+
 	public static void load()
 	{
 		String base = FileManager.filePaths.get(FileManager.CUTSCENES);
