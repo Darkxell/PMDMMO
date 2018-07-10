@@ -45,6 +45,15 @@ public class Cutscene implements Comparable<Cutscene>
 	public CutsceneEnd onFinish;
 	public CutscenePlayer player;
 
+	public Cutscene(String name)
+	{
+		this.name = name;
+		this.creation = null;
+		this.onFinish = null;
+		this.events = new ArrayList<>();
+		this.player = new CutscenePlayer(this);
+	}
+
 	public Cutscene(String name, Element xml)
 	{
 		this.name = name;

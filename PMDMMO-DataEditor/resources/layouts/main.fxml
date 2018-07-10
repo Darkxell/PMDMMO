@@ -23,7 +23,7 @@
 		<TabPane minHeight="-Infinity" minWidth="-Infinity" tabClosingPolicy="UNAVAILABLE">
 			<tabs>
 				<Tab fx:id="cutscenesTab" text="Cutscenes">
-					<fx:include fx:id="cutscenesTabPage" source="cutscenes.fxml" />
+					<fx:include fx:id="cutscenesTabPage" source="cutscenes/cutscenes.fxml" />
 				</Tab>
 			</tabs>
 		</TabPane>
