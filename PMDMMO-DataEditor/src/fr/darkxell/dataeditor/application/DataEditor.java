@@ -33,7 +33,7 @@ public class DataEditor extends Application
 		DungeonRegistry.load();
 		PokemonSpritesets.loadData();
 		Animations.loadData();
-		// TextRenderer.load();
+
 		launch(args);
 	}
 
@@ -42,7 +42,7 @@ public class DataEditor extends Application
 	{
 		try
 		{
-	        Parent root = FXMLLoader.load(DataEditor.class.getResource("/layouts/main.fxml"));
+			Parent root = FXMLLoader.load(DataEditor.class.getResource("/layouts/main.fxml"));
 			Scene scene = new Scene(root, 400, 400);
 			scene.getStylesheets().add(getClass().getResource("/view/application.css").toExternalForm());
 			primaryStage.setScene(scene);
@@ -50,11 +50,18 @@ public class DataEditor extends Application
 			primaryStage.setTitle("PMDMMO Data Editor");
 			primaryStage.setHeight(600);
 			primaryStage.setWidth(800);
-			//primaryStage.setMaximized(true);
+			// primaryStage.setMaximized(true);
 			primaryStage.show();
 		} catch (Exception e)
 		{
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public void stop() throws Exception
+	{
+		// Called when app exits
+		super.stop();
 	}
 }

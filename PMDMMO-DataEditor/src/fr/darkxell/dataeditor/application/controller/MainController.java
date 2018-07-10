@@ -14,13 +14,14 @@ public class MainController implements Initializable
 	private Tab cutscenesTab;
 	@FXML
 	private CutscenesTabController cutscenesTabPageController;
-	@FXML
-	private Tab langTab;
-	@FXML
-	public LangTabController langTabPageController;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
 	{}
+
+	public void onReloadLang()
+	{
+		System.out.println("reload");
+	}
 
 }
