@@ -29,7 +29,7 @@ public class CustomListCell<T> extends ListCell<T>
 
 	}
 
-	public boolean canEdit = true, canRename = true, canDelete = true, canCreate = true;
+	public boolean canEdit = true, canRename = true, canDelete = true, canCreate = true, canOrder = true;
 	public final ListCellParent<T> parent;
 	public final String typeName;
 
@@ -93,6 +93,36 @@ public class CustomListCell<T> extends ListCell<T>
 		}
 
 		return menu;
+	}
+
+	public CustomListCell<T> setCanOrder(boolean canOrder)
+	{
+		this.canOrder = canOrder;
+		return this;
+	}
+
+	public CustomListCell<T> setCanCreate(boolean canCreate)
+	{
+		this.canCreate = canCreate;
+		return this;
+	}
+
+	public CustomListCell<T> setCanDelete(boolean canDelete)
+	{
+		this.canDelete = canDelete;
+		return this;
+	}
+
+	public CustomListCell<T> setCanEdit(boolean canEdit)
+	{
+		this.canEdit = canEdit;
+		return this;
+	}
+
+	public CustomListCell<T> setCanRename(boolean canRename)
+	{
+		this.canRename = canRename;
+		return this;
 	}
 
 	@Override

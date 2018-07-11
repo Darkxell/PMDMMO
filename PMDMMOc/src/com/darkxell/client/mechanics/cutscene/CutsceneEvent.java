@@ -22,6 +22,7 @@ public abstract class CutsceneEvent
 
 	public static CutsceneEvent create(Element xml, Cutscene cutscene)
 	{
+		// Remember to add to Editor aswell (SelectEventTypeController#CutsceneEventType).
 		switch (xml.getName())
 		{
 			case "animate":

@@ -45,7 +45,7 @@ public class CutscenesTabController implements Initializable, ListCellParent<Cut
 	{
 		instance = this;
 		this.cutscenesList.setCellFactory(param -> {
-			return new CustomListCell<>(CutscenesTabController.instance, "Cutscene");
+			return new CustomListCell<>(CutscenesTabController.instance, "Cutscene").setCanOrder(false);
 		});
 		this.cutscenesList.getItems().addAll(Cutscenes.values());
 		this.cutscenesList.getItems().sort(Comparator.naturalOrder());

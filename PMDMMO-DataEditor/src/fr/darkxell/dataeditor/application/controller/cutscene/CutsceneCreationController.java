@@ -72,9 +72,7 @@ public class CutsceneCreationController implements Initializable, ListCellParent
 		this.cameraYTextfield.setTextFormatter(formatter);
 
 		this.entitiesList.setCellFactory(param -> {
-			CustomListCell<CutsceneEntity> c = new CustomListCell<>(this, "Cutscene Entity");
-			c.canRename = false;
-			return c;
+			return new CustomListCell<>(this, "Cutscene Entity").setCanDelete(false).setCanOrder(false);
 		});
 	}
 
