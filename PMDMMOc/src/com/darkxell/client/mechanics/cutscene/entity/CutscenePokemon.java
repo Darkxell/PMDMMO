@@ -4,6 +4,7 @@ import java.util.Random;
 
 import org.jdom2.Element;
 
+import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.AbstractRenderer;
 import com.darkxell.client.renderers.pokemon.CutscenePokemonRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
@@ -43,7 +44,11 @@ public class CutscenePokemon extends CutsceneEntity
 		try
 		{
 			if (pokemon != null) this.pokemonid = pokemon.species().compoundID();
-			else this.pokemonid = Integer.parseInt(xml.getChildText("pokemonid", xml.getNamespace()));
+			else if (xml.getChild("teammember", xml.getNamespace()) != null)
+			{
+				pokemon = this.instanciated = Persistance.player.getMember(Integer.parseInt(xml.getChildText("teammember", xml.getNamespace())));
+				this.pokemonid = pokemon.species().id;
+			} else this.pokemonid = Integer.parseInt(xml.getChildText("pokemonid", xml.getNamespace()));
 		} catch (Exception e)
 		{
 			e.printStackTrace();

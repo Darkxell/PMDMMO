@@ -19,7 +19,6 @@ public class CutsceneCreation
 	private final ArrayList<CutsceneEntity> entities;
 	public final boolean fading;
 	public final String freezoneID;
-	public final CutscenePokemon player;
 
 	public CutsceneCreation(Cutscene cutscene)
 	{
@@ -27,7 +26,6 @@ public class CutsceneCreation
 		this.freezoneID = null;
 		this.fading = true;
 		this.camerax = this.cameray = -1;
-		this.player = new CutscenePokemon(Persistance.player.getTeamLeader());
 		this.entities = new ArrayList<>();
 	}
 
@@ -38,7 +36,6 @@ public class CutsceneCreation
 		this.fading = XMLUtils.getAttribute(xml, "fade", true);
 		this.camerax = XMLUtils.getAttribute(xml, "camerax", -1);
 		this.cameray = XMLUtils.getAttribute(xml, "cameray", -1);
-		this.player = new CutscenePokemon(Persistance.player.getTeamLeader(), xml.getChild("player", xml.getNamespace()));
 		this.entities = new ArrayList<>();
 		for (Element pokemon : xml.getChildren("pokemon", xml.getNamespace()))
 			this.entities.add(new CutscenePokemon(pokemon));
@@ -54,7 +51,6 @@ public class CutsceneCreation
 		if (this.cameray != -1) Persistance.freezoneCamera.y = this.cameray;
 		for (CutsceneEntity entity : this.entities)
 			this.cutscene.player.createEntity(entity);
-		this.cutscene.player.createEntity(this.player);
 	}
 
 	public Element toXML()

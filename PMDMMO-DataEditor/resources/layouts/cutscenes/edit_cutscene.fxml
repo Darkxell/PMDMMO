@@ -6,9 +6,9 @@
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.darkxell.dataeditor.application.controller.cutscene.EditCutsceneController">
+<VBox alignment="CENTER" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.darkxell.dataeditor.application.controller.cutscene.EditCutsceneController">
    <children>
-      <TitledPane alignment="CENTER" text="Cutscene Creation">
+      <TitledPane alignment="CENTER" expanded="false" text="Cutscene Creation">
         <content>
 		  <fx:include fx:id="cutsceneCreation" source="cutscene_creation.fxml" />
         </content>
@@ -16,7 +16,7 @@
             <Insets left="10.0" right="10.0" top="10.0" />
          </VBox.margin>
       </TitledPane>
-      <TitledPane alignment="CENTER" text="Cutscene End">
+      <TitledPane alignment="CENTER" expanded="false" text="Cutscene End">
         <content>
 		  <fx:include fx:id="cutsceneEnd" source="cutscene_end.fxml" />
         </content>
