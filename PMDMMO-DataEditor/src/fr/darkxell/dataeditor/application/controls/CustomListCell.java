@@ -2,12 +2,14 @@ package fr.darkxell.dataeditor.application.controls;
 
 import java.util.Optional;
 
+import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.ListCell;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputDialog;
 
@@ -78,6 +80,38 @@ public class CustomListCell<T> extends ListCell<T>
 				menu.getItems().add(rename);
 			}
 
+			if (this.canOrder)
+			{
+				Menu order = new Menu("Order");
+				MenuItem top = new MenuItem("Move to top");
+				top.setOnAction(e -> {
+					this.move(item, -this.getListView().getItems().indexOf(item));
+				});
+				MenuItem up = new MenuItem("Move up");
+				up.setOnAction(e -> {
+					this.move(item, -1);
+				});
+				MenuItem down = new MenuItem("Move down");
+				down.setOnAction(e -> {
+					this.move(item, 2);
+				});
+				MenuItem bottom = new MenuItem("Move to bottom");
+				bottom.setOnAction(e -> {
+					this.move(item, this.getListView().getItems().size() - this.getListView().getItems().indexOf(item));
+				});
+
+				top.setDisable(this.getListView().getItems().indexOf(item) == 0);
+				up.setDisable(top.isDisable());
+				bottom.setDisable(this.getListView().getItems().indexOf(item) == this.getListView().getItems().size() - 1);
+				down.setDisable(bottom.isDisable());
+
+				order.getItems().add(top);
+				order.getItems().add(up);
+				order.getItems().add(down);
+				order.getItems().add(bottom);
+				menu.getItems().add(order);
+			}
+
 			if (this.canDelete)
 			{
 				MenuItem remove = new MenuItem("Delete");
@@ -95,10 +129,15 @@ public class CustomListCell<T> extends ListCell<T>
 		return menu;
 	}
 
-	public CustomListCell<T> setCanOrder(boolean canOrder)
+	private void move(T item, int indexMove)
 	{
-		this.canOrder = canOrder;
-		return this;
+		if (indexMove == 0) return;
+		ObservableList<T> items = this.getListView().getItems();
+		int oldIndex = items.indexOf(item);
+		int newIndex = oldIndex + indexMove;
+		items.add(newIndex, item);
+		items.remove(oldIndex + (indexMove < 0 ? 1 : 0));
+		this.getListView().getSelectionModel().select(item);
 	}
 
 	public CustomListCell<T> setCanCreate(boolean canCreate)
@@ -116,6 +155,12 @@ public class CustomListCell<T> extends ListCell<T>
 	public CustomListCell<T> setCanEdit(boolean canEdit)
 	{
 		this.canEdit = canEdit;
+		return this;
+	}
+
+	public CustomListCell<T> setCanOrder(boolean canOrder)
+	{
+		this.canOrder = canOrder;
 		return this;
 	}
 
