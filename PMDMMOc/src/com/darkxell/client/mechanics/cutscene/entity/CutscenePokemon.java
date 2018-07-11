@@ -20,7 +20,7 @@ public class CutscenePokemon extends CutsceneEntity
 	public boolean animated;
 	public PokemonSpriteState currentState;
 	public Direction facing;
-	private Pokemon instanciated;
+	public Pokemon instanciated;
 	public int pokemonid;
 
 	public CutscenePokemon(Element xml)

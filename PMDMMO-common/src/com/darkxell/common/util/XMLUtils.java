@@ -57,7 +57,7 @@ public final class XMLUtils
 	public static int getAttribute(Element element, String id, int defaultValue)
 	{
 		String value = find(element, id);
-		return value == null ? defaultValue : Integer.parseInt(value);
+		return value == null ? defaultValue : Double.valueOf(value).intValue();
 	}
 
 	public static long getAttribute(Element element, String id, long defaultValue)

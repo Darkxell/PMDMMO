@@ -12,6 +12,7 @@ import com.darkxell.client.mechanics.cutscene.CutsceneCreation;
 import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
 
 import fr.darkxell.dataeditor.application.DataEditor;
+import fr.darkxell.dataeditor.application.controls.CutsceneEntityTreeCell;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -26,8 +27,9 @@ import javafx.stage.Stage;
 
 public class CutsceneCreationController implements Initializable
 {
-	
+
 	public static Stage editEntityPopup;
+	public static CutsceneCreationController instance;
 
 	@FXML
 	private TextField cameraXTextfield;
@@ -50,6 +52,8 @@ public class CutsceneCreationController implements Initializable
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
 	{
+		instance = this;
+
 		this.fadingCombobox.getItems().addAll("No fading", "Fading in");
 		this.fadingCombobox.getSelectionModel().select(0);
 
@@ -62,13 +66,33 @@ public class CutsceneCreationController implements Initializable
 			return pattern.matcher(change.getControlNewText()).matches() ? change : null;
 		});
 		this.cameraYTextfield.setTextFormatter(formatter);
+
+		this.entitiesList.setCellFactory(param -> {
+			return new CutsceneEntityTreeCell();
+		});
 	}
 
 	public void onCreateEntity()
 	{
+		this.onEdit(null);
+	}
+
+	public void onDelete(CutsceneEntity item)
+	{
+		this.entitiesList.getItems().remove(item);
+	}
+
+	public void onEdit(CutsceneEntity entity)
+	{
 		try
 		{
-			Parent root = FXMLLoader.load(DataEditor.class.getResource("/layouts/cutscenes/edit_entity.fxml"));
+			FXMLLoader loader = new FXMLLoader(DataEditor.class.getResource("/layouts/cutscenes/edit_entity.fxml"));
+			Parent root = loader.load();
+			if (entity != null)
+			{
+				EditEntityController controller = loader.getController();
+				controller.setupFor(entity);
+			}
 			editEntityPopup = new Stage();
 			editEntityPopup.setScene(new Scene(root));
 			editEntityPopup.setTitle("Create Entity");

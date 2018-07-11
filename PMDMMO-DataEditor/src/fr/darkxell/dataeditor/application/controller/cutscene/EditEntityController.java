@@ -95,7 +95,7 @@ public class EditEntityController implements Initializable
 		this.facingCombobox.getItems().addAll(Direction.directions);
 		this.facingCombobox.getSelectionModel().select(0);
 
-		Pattern pattern = Pattern.compile("-?\\d*");
+		Pattern pattern = Pattern.compile("-?\\d*(\\.\\d*)?");
 		TextFormatter<String> formatter = new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
 			return pattern.matcher(change.getControlNewText()).matches() ? change : null;
 		});
@@ -123,6 +123,32 @@ public class EditEntityController implements Initializable
 	{
 		this.onCancel();
 		CutscenesTabController.instance.editCutsceneController.cutsceneCreationController.entitiesList.getItems().add(this.getEntity());
+	}
+
+	public void setupFor(CutsceneEntity entity)
+	{
+		this.idTextfield.setText(String.valueOf(entity.id));
+		this.xposTextfield.setText(String.valueOf(entity.xPos));
+		this.yposTextfield.setText(String.valueOf(entity.yPos));
+		this.entityTypeCombobox.getSelectionModel().select(0);
+
+		if (entity instanceof CutscenePokemon)
+		{
+			CutscenePokemon pokemon = (CutscenePokemon) entity;
+			this.entityTypeCombobox.getSelectionModel().select(1);
+			this.animatedCheckbox.setSelected(pokemon.animated);
+			this.facingCombobox.getSelectionModel().select(pokemon.facing);
+			this.stateCombobox.getSelectionModel().select(pokemon.currentState);
+			if (Persistance.player.isAlly(pokemon.instanciated))
+			{
+				this.modeCombobox.getSelectionModel().select(1);
+				this.memberTextfield.setText(String.valueOf(Persistance.player.positionInTeam(pokemon.instanciated)));
+			} else
+			{
+				this.modeCombobox.getSelectionModel().select(0);
+				this.speciesCombobox.getSelectionModel().select(PokemonRegistry.find(pokemon.pokemonid));
+			}
+		}
 	}
 
 }
