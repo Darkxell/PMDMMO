@@ -16,7 +16,7 @@ public class EditCutsceneController implements Initializable
 {
 
 	@FXML
-	private CutsceneCreationController cutsceneCreationController;
+	public CutsceneCreationController cutsceneCreationController;
 	@FXML
 	private CutsceneEndController cutsceneEndController;
 	@FXML

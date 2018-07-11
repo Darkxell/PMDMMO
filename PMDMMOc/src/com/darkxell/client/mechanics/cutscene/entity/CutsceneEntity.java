@@ -24,6 +24,13 @@ public class CutsceneEntity
 		this.yPos = XMLUtils.getAttribute(xml, "ypos", 0);
 	}
 
+	public CutsceneEntity(int id, int xpos, int ypos)
+	{
+		this.id = id;
+		this.xPos = xpos;
+		this.yPos = ypos;
+	}
+
 	public AbstractRenderer createRenderer()
 	{
 		return null;
@@ -39,8 +46,8 @@ public class CutsceneEntity
 	{
 		Element root = new Element("entity");
 		XMLUtils.setAttribute(root, "cutsceneid", this.id, -1);
-		XMLUtils.setAttribute(root, "ypos", this.xPos, 0);
-		XMLUtils.setAttribute(root, "xpos", this.yPos, 0);
+		XMLUtils.setAttribute(root, "ypos", (int) this.xPos, (int) 0);
+		XMLUtils.setAttribute(root, "xpos", (int) this.yPos, (int) 0);
 		return root;
 	}
 

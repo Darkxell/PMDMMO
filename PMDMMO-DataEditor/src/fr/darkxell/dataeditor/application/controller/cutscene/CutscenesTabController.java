@@ -28,7 +28,7 @@ public class CutscenesTabController implements Initializable
 	@FXML
 	private ListView<Cutscene> cutscenesList;
 	@FXML
-	private EditCutsceneController editCutsceneController;
+	public EditCutsceneController editCutsceneController;
 	@FXML
 	private TitledPane editCutscenePane;
 

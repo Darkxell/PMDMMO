@@ -1,5 +1,6 @@
 package fr.darkxell.dataeditor.application.controller.cutscene;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -10,22 +11,30 @@ import com.darkxell.client.mechanics.cutscene.Cutscene;
 import com.darkxell.client.mechanics.cutscene.CutsceneCreation;
 import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
 
+import fr.darkxell.dataeditor.application.DataEditor;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class CutsceneCreationController implements Initializable
 {
+	
+	public static Stage editEntityPopup;
 
 	@FXML
 	private TextField cameraXTextfield;
 	@FXML
 	private TextField cameraYTextfield;
 	@FXML
-	private ListView<CutsceneEntity> entitiesList;
+	public ListView<CutsceneEntity> entitiesList;
 	@FXML
 	private ComboBox<String> fadingCombobox;
 	@FXML
@@ -57,7 +66,21 @@ public class CutsceneCreationController implements Initializable
 
 	public void onCreateEntity()
 	{
-
+		try
+		{
+			Parent root = FXMLLoader.load(DataEditor.class.getResource("/layouts/cutscenes/edit_entity.fxml"));
+			editEntityPopup = new Stage();
+			editEntityPopup.setScene(new Scene(root));
+			editEntityPopup.setTitle("Create Entity");
+			editEntityPopup.getIcons().addAll(DataEditor.primaryStage.getIcons());
+			editEntityPopup.setWidth(300);
+			editEntityPopup.setHeight(400);
+			editEntityPopup.initModality(Modality.APPLICATION_MODAL);
+			editEntityPopup.show();
+		} catch (IOException e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 	public void setupFor(Cutscene cutscene)

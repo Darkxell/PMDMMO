@@ -24,6 +24,8 @@ import javafx.stage.Stage;
 public class DataEditor extends Application
 {
 
+	public static Stage primaryStage;
+
 	public static void main(String[] args)
 	{
 		ClientSettings.load();
@@ -46,6 +48,7 @@ public class DataEditor extends Application
 	@Override
 	public void start(Stage primaryStage)
 	{
+		DataEditor.primaryStage = primaryStage;
 		try
 		{
 			Parent root = FXMLLoader.load(DataEditor.class.getResource("/layouts/main.fxml"));
