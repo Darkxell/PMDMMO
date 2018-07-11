@@ -34,7 +34,7 @@ public class PlayCutsceneCutsceneEnd extends CutsceneEnd
 	@Override
 	public Element toXML()
 	{
-		return new Element("playcutscene");
+		return new Element("playcutscene").setAttribute("id", this.cutsceneID);
 	}
 
 }

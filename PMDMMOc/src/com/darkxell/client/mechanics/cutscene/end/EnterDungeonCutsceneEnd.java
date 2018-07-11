@@ -38,7 +38,7 @@ public class EnterDungeonCutsceneEnd extends CutsceneEnd
 	@Override
 	public Element toXML()
 	{
-		return new Element("enterdungeon");
+		return new Element("enterdungeon").setAttribute("id", String.valueOf(this.dungeonID));
 	}
 
 }

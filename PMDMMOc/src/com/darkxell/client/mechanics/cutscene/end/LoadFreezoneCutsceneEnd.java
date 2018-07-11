@@ -47,7 +47,10 @@ public class LoadFreezoneCutsceneEnd extends CutsceneEnd
 	@Override
 	public Element toXML()
 	{
-		return new Element("loadfreezone");
+		Element root = new Element("loadfreezone").setAttribute("id", this.freezoneID);
+		XMLUtils.setAttribute(root, "xpos", this.xPos, -1);
+		XMLUtils.setAttribute(root, "ypos", this.yPos, -1);
+		return root;
 	}
 
 }

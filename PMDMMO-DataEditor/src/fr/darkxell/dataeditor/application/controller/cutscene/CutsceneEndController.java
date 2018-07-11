@@ -89,7 +89,6 @@ public class CutsceneEndController implements Initializable, ChangeListener<Cuts
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
 	{
-
 		Pattern pattern = Pattern.compile("-?\\d*");
 		TextFormatter<String> formatter = new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
 			return pattern.matcher(change.getControlNewText()).matches() ? change : null;

@@ -91,6 +91,12 @@ public class Cutscene implements Comparable<Cutscene>
 		return null;
 	}
 
+	@Override
+	public String toString()
+	{
+		return this.name;
+	}
+
 	public Element toXML()
 	{
 		Element root = new Element("cutscene").setAttribute("name", this.name);
