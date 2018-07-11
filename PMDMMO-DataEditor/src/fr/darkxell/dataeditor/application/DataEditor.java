@@ -1,5 +1,6 @@
 package fr.darkxell.dataeditor.application;
 
+import com.darkxell.client.discord.DiscordEventHandlerForPMDMMO;
 import com.darkxell.client.launchable.ClientSettings;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.animation.Animations;
@@ -20,6 +21,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import net.arikia.dev.drpc.DiscordRPC;
+import net.arikia.dev.drpc.DiscordRichPresence;
 
 public class DataEditor extends Application
 {
@@ -39,6 +42,11 @@ public class DataEditor extends Application
 		PokemonSpritesets.loadData();
 		Animations.loadData();
 		Persistance.player = Util.createDefaultPlayer();
+
+		DiscordRPC.discordInitialize("463408543572426762", DiscordEventHandlerForPMDMMO.createHandler(), true);
+		DiscordRichPresence rich = new DiscordRichPresence.Builder("Developing game").setBigImage("main_develop", "")
+				.build();
+		DiscordRPC.discordUpdatePresence(rich);
 
 		Cutscenes.load();
 

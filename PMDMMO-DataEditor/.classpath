@@ -7,5 +7,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/PMDMMO-common"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/PMDMMOc"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JDOM"/>
+	<classpathentry kind="lib" path="C:/Programming/Java/PMDMMO/PMDMMOc/jar/discord-rpc.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
