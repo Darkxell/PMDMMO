@@ -1,9 +1,9 @@
 package com.darkxell.client.mechanics.freezones.zones;
 
+import com.darkxell.client.mechanics.freezones.FreezoneInfo;
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
 import com.darkxell.client.mechanics.freezones.WarpZone;
 import com.darkxell.client.mechanics.freezones.entities.AnimatedFlowerEntity;
-import com.darkxell.client.state.map.LocalMap.LOCALMAPLOCATION;
 import com.darkxell.common.util.DoubleRectangle;
 
 public class PondFreezone extends FreezoneMap {
@@ -30,19 +30,17 @@ public class PondFreezone extends FreezoneMap {
 	}
 
 	@Override
-	public LOCALMAPLOCATION getMapLocation() {
-		return LOCALMAPLOCATION.POND;
+	public FreezoneInfo getInfo() {
+		return FreezoneInfo.POND;
 	}
 
 	@Override
-	public int defaultX()
-	{
+	public int defaultX() {
 		return 29;
 	}
 
 	@Override
-	public int defaultY()
-	{
+	public int defaultY() {
 		return 60;
 	}
 
