@@ -1,5 +1,10 @@
 package fr.darkxell.dataeditor.application.util;
 
+import java.awt.image.BufferedImage;
+import java.util.HashMap;
+
+import com.darkxell.client.resources.Res;
+
 import fr.darkxell.dataeditor.application.DataEditor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -8,6 +13,14 @@ import javafx.stage.Stage;
 
 public class FXUtils
 {
+
+	private static final HashMap<String, BufferedImage> icons = new HashMap<>();
+
+	public static BufferedImage getIcon(String path)
+	{
+		if (!icons.containsKey(path)) icons.put(path, Res.getBase(path));
+		return icons.get(path);
+	}
 
 	public static Stage showPopup(Parent root, String title)
 	{

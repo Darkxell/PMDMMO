@@ -20,6 +20,12 @@ public class SpawnCutsceneEvent extends CutsceneEvent
 	}
 
 	@Override
+	public String getIconPath()
+	{
+		return "/icons/events/spawn.png";
+	}
+
+	@Override
 	public void onStart()
 	{
 		super.onStart();
@@ -30,6 +36,12 @@ public class SpawnCutsceneEvent extends CutsceneEvent
 	public Element toXML()
 	{
 		return new Element("spawn");
+	}
+
+	@Override
+	public String toString()
+	{
+		return "Spawn " + (this.entity instanceof CutscenePokemon ? ((CutscenePokemon) this.entity).instanciated.species().toString() : this.entity.id);
 	}
 
 }

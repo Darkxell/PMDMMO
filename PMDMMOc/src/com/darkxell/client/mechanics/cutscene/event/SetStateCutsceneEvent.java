@@ -29,11 +29,23 @@ public class SetStateCutsceneEvent extends CutsceneEvent
 	}
 
 	@Override
+	public String getIconPath()
+	{
+		return "/icons/events/setstate.png";
+	}
+
+	@Override
 	public void onStart()
 	{
 		super.onStart();
 		CutsceneEntity entity = this.cutscene.player.getEntity(this.target);
 		if (entity != null && entity instanceof CutscenePokemon) ((CutscenePokemon) entity).currentState = this.state;
+	}
+
+	@Override
+	public String toString()
+	{
+		return "(" + this.target + ") gains state " + this.state;
 	}
 
 	@Override

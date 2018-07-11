@@ -31,6 +31,12 @@ public class MoveCutsceneEvent extends CutsceneEvent
 	}
 
 	@Override
+	public String getIconPath()
+	{
+		return "/icons/events/move.png";
+	}
+
+	@Override
 	public boolean isOver()
 	{
 		return this.tick == this.duration;
@@ -75,6 +81,12 @@ public class MoveCutsceneEvent extends CutsceneEvent
 			this.entity.xPos = this.travel.current().getX();
 			this.entity.yPos = this.travel.current().getY();
 		}
+	}
+
+	@Override
+	public String toString()
+	{
+		return "(" + this.target + ") travels to X=" + this.xPos + ", Y=" + this.yPos;
 	}
 
 	@Override

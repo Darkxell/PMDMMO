@@ -19,11 +19,23 @@ public class DespawnCutsceneEvent extends CutsceneEvent
 	}
 
 	@Override
+	public String getIconPath()
+	{
+		return "/icons/events/despawn.png";
+	}
+
+	@Override
 	public void onStart()
 	{
 		super.onStart();
 		CutsceneEntity entity = this.cutscene.player.getEntity(this.target);
 		if (entity != null) this.cutscene.player.removeEntity(entity);
+	}
+
+	@Override
+	public String toString()
+	{
+		return "(" + this.target + ") despawns";
 	}
 
 	@Override

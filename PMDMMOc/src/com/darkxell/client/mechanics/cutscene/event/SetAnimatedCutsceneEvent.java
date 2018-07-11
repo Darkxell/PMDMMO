@@ -22,11 +22,23 @@ public class SetAnimatedCutsceneEvent extends CutsceneEvent
 	}
 
 	@Override
+	public String getIconPath()
+	{
+		return "/icons/events/setanimated.png";
+	}
+
+	@Override
 	public void onStart()
 	{
 		super.onStart();
 		CutsceneEntity entity = this.cutscene.player.getEntity(this.target);
 		if (entity != null && entity instanceof CutscenePokemon) ((CutscenePokemon) entity).animated = this.animated;
+	}
+
+	@Override
+	public String toString()
+	{
+		return "(" + this.target + ") becomes " + (this.animated ? "" : "not ") + "animated";
 	}
 
 	@Override

@@ -20,10 +20,22 @@ public class MusicCutsceneEvent extends CutsceneEvent
 	}
 
 	@Override
+	public String getIconPath()
+	{
+		return "/icons/events/music.png";
+	}
+
+	@Override
 	public void onStart()
 	{
 		super.onStart();
 		if (this.soundtrackID != null) Persistance.soundmanager.setBackgroundMusic(SoundsHolder.getSong(this.soundtrackID));
+	}
+
+	@Override
+	public String toString()
+	{
+		return "Music set to " + this.soundtrackID;
 	}
 
 	@Override

@@ -28,6 +28,12 @@ public class CameraCutsceneEvent extends CutsceneEvent
 	}
 
 	@Override
+	public String getIconPath()
+	{
+		return "/icons/events/camera.png";
+	}
+
+	@Override
 	public boolean isOver()
 	{
 		return this.tick == this.duration;
@@ -58,6 +64,18 @@ public class CameraCutsceneEvent extends CutsceneEvent
 	}
 
 	@Override
+	public String toString()
+	{
+		return "Camera moves to X=" + this.xPos + ", Y=" + this.yPos;
+	}
+
+	@Override
+	public Element toXML()
+	{
+		return new Element("camera");
+	}
+
+	@Override
 	public void update()
 	{
 		super.update();
@@ -71,12 +89,6 @@ public class CameraCutsceneEvent extends CutsceneEvent
 			Persistance.freezoneCamera.x = this.travel.current().getX();
 			Persistance.freezoneCamera.y = this.travel.current().getY();
 		}
-	}
-
-	@Override
-	public Element toXML()
-	{
-		return new Element("camera");
 	}
 
 }

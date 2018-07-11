@@ -28,11 +28,23 @@ public class WaitCutsceneEvent extends CutsceneEvent
 	}
 
 	@Override
+	public String getIconPath()
+	{
+		return "/icons/events/wait.png";
+	}
+
+	@Override
 	public boolean isOver()
 	{
 		for (CutsceneEvent event : this.events)
 			if (!event.isOver()) return false;
 		return true;
+	}
+
+	@Override
+	public String toString()
+	{
+		return "Wait for " + this.events.size() + " events";
 	}
 
 	@Override

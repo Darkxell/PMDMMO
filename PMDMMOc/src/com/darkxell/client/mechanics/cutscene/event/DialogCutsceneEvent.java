@@ -51,6 +51,12 @@ public class DialogCutsceneEvent extends CutsceneEvent implements DialogEndListe
 	}
 
 	@Override
+	public String getIconPath()
+	{
+		return "/icons/events/dialog.png";
+	}
+
+	@Override
 	public boolean isOver()
 	{
 		return this.isOver;
@@ -82,6 +88,12 @@ public class DialogCutsceneEvent extends CutsceneEvent implements DialogEndListe
 
 		DialogState state = new DialogState(Persistance.cutsceneState, this, screens);
 		Persistance.stateManager.setState(state);
+	}
+
+	@Override
+	public String toString()
+	{
+		return "Dialog: " + new Message(this.screens.get(0).text).toString() + "...";
 	}
 
 	@Override

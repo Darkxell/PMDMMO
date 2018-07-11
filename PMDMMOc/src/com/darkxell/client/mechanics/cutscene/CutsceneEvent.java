@@ -94,4 +94,6 @@ public abstract class CutsceneEvent
 	public void update()
 	{}
 
+	public abstract String getIconPath();
+
 }

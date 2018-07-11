@@ -21,6 +21,12 @@ public class SoundCutsceneEvent extends CutsceneEvent
 	}
 
 	@Override
+	public String getIconPath()
+	{
+		return "/icons/events/sound.png";
+	}
+
+	@Override
 	public void onStart()
 	{
 		super.onStart();
@@ -29,6 +35,12 @@ public class SoundCutsceneEvent extends CutsceneEvent
 			if (this.playOverMusic) SoundManager.playSoundOverMusic(this.soundID);
 			else SoundManager.playSound(this.soundID);
 		}
+	}
+
+	@Override
+	public String toString()
+	{
+		return "Play " + this.soundID + (this.playOverMusic ? " over music" : "");
 	}
 
 	@Override

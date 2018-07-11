@@ -26,6 +26,12 @@ public class RotateCutsceneEvent extends CutsceneEvent
 	}
 
 	@Override
+	public String getIconPath()
+	{
+		return "/icons/events/rotate.png";
+	}
+
+	@Override
 	public boolean isOver()
 	{
 		return this.currentDistance == this.distance;
@@ -61,6 +67,12 @@ public class RotateCutsceneEvent extends CutsceneEvent
 			else this.pokemon.facing = this.pokemon.facing.rotateCounterClockwise();
 		}
 		++this.currentDistance;
+	}
+
+	@Override
+	public String toString()
+	{
+		return "(" + this.target + ") rotates clockwise " + this.distance + " times";
 	}
 
 	@Override

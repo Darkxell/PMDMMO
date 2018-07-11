@@ -18,6 +18,12 @@ public class DelayCutsceneEvent extends CutsceneEvent
 	}
 
 	@Override
+	public String getIconPath()
+	{
+		return "/icons/events/delay.png";
+	}
+
+	@Override
 	public boolean isOver()
 	{
 		return this.tick == this.duration;
@@ -28,6 +34,12 @@ public class DelayCutsceneEvent extends CutsceneEvent
 	{
 		super.update();
 		if (!this.isOver()) ++this.tick;
+	}
+
+	@Override
+	public String toString()
+	{
+		return "Wait for " + this.duration + " ticks";
 	}
 
 	@Override
