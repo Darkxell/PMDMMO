@@ -1,8 +1,8 @@
 package com.darkxell.client.mechanics.freezones.zones;
 
+import com.darkxell.client.mechanics.freezones.FreezoneInfo;
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
 import com.darkxell.client.mechanics.freezones.WarpZone;
-import com.darkxell.client.state.map.LocalMap.LOCALMAPLOCATION;
 import com.darkxell.common.util.DoubleRectangle;
 
 public class ForestFreezone extends FreezoneMap {
@@ -19,8 +19,8 @@ public class ForestFreezone extends FreezoneMap {
 	}
 
 	@Override
-	public LOCALMAPLOCATION getMapLocation() {
-		return LOCALMAPLOCATION.STRATFOREST;
+	public FreezoneInfo getInfo() {
+		return FreezoneInfo.STARTFOREST;
 	}
 
 	@Override
