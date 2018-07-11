@@ -1,5 +1,7 @@
 package com.darkxell.client.launchable;
 
+import com.darkxell.client.discord.DiscordEventHandlerForPMDMMO;
+
 public class Updater implements Runnable
 {
 
@@ -56,6 +58,7 @@ public class Updater implements Runnable
 		while (this.updateTime >= 1)
 		{
 			Persistance.stateManager.update();
+			DiscordEventHandlerForPMDMMO.handleDiscordRP();
 			++this.updatesCurrentSecond;
 			--this.updateTime;
 		}

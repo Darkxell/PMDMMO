@@ -3,19 +3,12 @@ package com.darkxell.client.resources.images.tilesets;
 import java.awt.image.BufferedImage;
 
 import com.darkxell.client.resources.Res;
-import com.darkxell.client.resources.images.tilesets.freezones.BaseTileset;
-import com.darkxell.client.resources.images.tilesets.freezones.DojoTileset;
-import com.darkxell.client.resources.images.tilesets.freezones.ForestTileset;
-import com.darkxell.client.resources.images.tilesets.freezones.LcaveTileset;
-import com.darkxell.client.resources.images.tilesets.freezones.OfficeTileset;
-import com.darkxell.client.resources.images.tilesets.freezones.PondTileset;
-import com.darkxell.client.resources.images.tilesets.freezones.SquareTileset;
 
 /**
  * Represents a tileset. A tileset contains all of the images used in a certain
  * dungeon.
  */
-public abstract class AbstractTileset {
+public class AbstractTileset {
 
 	public AbstractTileset(String path, int tilewidth, int tileheight) {
 		this.source = Res.getBase(path);
@@ -37,31 +30,11 @@ public abstract class AbstractTileset {
 	public final BufferedImage[] SPRITES;
 
 	/**
-	 * Gets The wanted existing instance of a tileset using a string ID. THis
+	 * Gets The wanted existing instance of a tileset using a string ID. This
 	 * string ID is usually used in the maps .xml files.
 	 */
 	public static AbstractTileset getTileset(String code) {
-		switch (code) {
-		case "square":
-			return SquareTileset.instance;
-		case "base":
-			return BaseTileset.instance;
-		case "dojo":
-			return DojoTileset.instance;
-		case "forest":
-			return ForestTileset.instance;
-		case "pond":
-			return PondTileset.instance;
-		case "lcave":
-		case "lumiouscave":
-			return LcaveTileset.instance;
-		case "pelipper office":
-		case "office":
-			return OfficeTileset.instance;
-		default:
-			System.err.println("Could not find the desired tileset: " + code);
-			return null;
-		}
+		return FreezoneTilesetFactory.getTileset("/tilesets/" + code + ".png");
 	}
 
 	/** Returns the source bufferedImage of this tileset. */
