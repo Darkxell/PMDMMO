@@ -1,10 +1,12 @@
 package fr.darkxell.dataeditor.application.controller.cutscene;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 
+import com.darkxell.client.mechanics.cutscene.Cutscene;
 import com.darkxell.client.mechanics.cutscene.CutsceneCreation;
 import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
 
@@ -31,8 +33,9 @@ public class CutsceneCreationController implements Initializable
 
 	public CutsceneCreation getCreation()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return new CutsceneCreation(this.freezoneTextfield.getText(), this.fadingCombobox.getSelectionModel().getSelectedIndex() == 0,
+				Integer.parseInt(this.cameraXTextfield.getText()), Integer.parseInt(this.cameraYTextfield.getText()),
+				new ArrayList<>(this.entitiesList.getItems()));
 	}
 
 	@Override
@@ -55,6 +58,16 @@ public class CutsceneCreationController implements Initializable
 	public void onCreateEntity()
 	{
 
+	}
+
+	public void setupFor(Cutscene cutscene)
+	{
+		CutsceneCreation creation = cutscene.creation;
+		this.freezoneTextfield.setText(creation.freezoneID);
+		this.cameraXTextfield.setText(String.valueOf(creation.camerax));
+		this.cameraYTextfield.setText(String.valueOf(creation.cameray));
+		this.fadingCombobox.getSelectionModel().select(creation.fading ? 1 : 0);
+		this.entitiesList.getItems().addAll(creation.entities());
 	}
 
 }

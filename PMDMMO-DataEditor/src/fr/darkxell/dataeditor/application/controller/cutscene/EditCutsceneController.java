@@ -36,6 +36,7 @@ public class EditCutsceneController implements Initializable
 
 	public void setupFor(Cutscene cutscene)
 	{
+		this.cutsceneCreationController.setupFor(cutscene);
 		this.cutsceneEndController.setupFor(cutscene);
 	}
 

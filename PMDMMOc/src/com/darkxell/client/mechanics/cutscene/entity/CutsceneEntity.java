@@ -29,4 +29,19 @@ public class CutsceneEntity
 		return null;
 	}
 
+	@Override
+	public String toString()
+	{
+		return this.id + " @ X=" + this.xPos + ", Y=" + this.yPos;
+	}
+
+	public Element toXML()
+	{
+		Element root = new Element("entity");
+		XMLUtils.setAttribute(root, "cutsceneid", this.id, -1);
+		XMLUtils.setAttribute(root, "ypos", this.xPos, 0);
+		XMLUtils.setAttribute(root, "xpos", this.yPos, 0);
+		return root;
+	}
+
 }

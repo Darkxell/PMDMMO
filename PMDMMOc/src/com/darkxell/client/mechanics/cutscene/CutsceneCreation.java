@@ -15,7 +15,7 @@ public class CutsceneCreation
 {
 
 	public final int camerax, cameray;
-	public final Cutscene cutscene;
+	Cutscene cutscene;
 	private final ArrayList<CutsceneEntity> entities;
 	public final boolean fading;
 	public final String freezoneID;
@@ -24,8 +24,8 @@ public class CutsceneCreation
 	{
 		this.cutscene = cutscene;
 		this.freezoneID = null;
-		this.fading = true;
 		this.camerax = this.cameray = -1;
+		this.fading = false;
 		this.entities = new ArrayList<>();
 	}
 
@@ -43,6 +43,15 @@ public class CutsceneCreation
 			this.entities.add(new CutsceneEntity(entity));
 	}
 
+	public CutsceneCreation(String freezoneID, boolean fading, int camerax, int cameray, ArrayList<CutsceneEntity> entities)
+	{
+		this.freezoneID = freezoneID;
+		this.fading = fading;
+		this.camerax = camerax;
+		this.cameray = cameray;
+		this.entities = entities;
+	}
+
 	public void create()
 	{
 		Persistance.currentmap = FreezoneMap.loadMap(this.freezoneID);
@@ -53,9 +62,21 @@ public class CutsceneCreation
 			this.cutscene.player.createEntity(entity);
 	}
 
+	public CutsceneEntity[] entities()
+	{
+		return this.entities.toArray(new CutsceneEntity[this.entities.size()]);
+	}
+
 	public Element toXML()
 	{
-		return new Element("creation");
+		Element root = new Element("creation");
+		XMLUtils.setAttribute(root, "freezone", this.freezoneID, null);
+		XMLUtils.setAttribute(root, "camerax", this.camerax, -1);
+		XMLUtils.setAttribute(root, "cameray", this.cameray, -1);
+		XMLUtils.setAttribute(root, "fading", this.fading, false);
+		for (CutsceneEntity entity : this.entities)
+			root.addContent(entity.toXML());
+		return root;
 	}
 
 }
