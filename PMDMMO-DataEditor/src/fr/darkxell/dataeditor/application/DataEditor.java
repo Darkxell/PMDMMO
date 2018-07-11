@@ -44,7 +44,7 @@ public class DataEditor extends Application
 		Persistance.player = Util.createDefaultPlayer();
 
 		DiscordRPC.discordInitialize("463408543572426762", DiscordEventHandlerForPMDMMO.createHandler(), true);
-		DiscordRichPresence rich = new DiscordRichPresence.Builder("Developing game").setBigImage("main_develop", "")
+		DiscordRichPresence rich = new DiscordRichPresence.Builder("Developing game").setBigImage("main_big", "")
 				.build();
 		DiscordRPC.discordUpdatePresence(rich);
 
@@ -76,7 +76,7 @@ public class DataEditor extends Application
 	@Override
 	public void stop() throws Exception
 	{
-		// Called when app exits
 		super.stop();
+		DiscordRPC.discordShutdown();
 	}
 }
