@@ -2,6 +2,10 @@
 <cutscene name="my_cutscene">
   <creation />
   <events>
+    <spawnpokemon cutsceneid="2" ypos="3.0" xpos="4.0" facing="NORTH">
+      <pokemonid>38</pokemonid>
+      <state>APPEAL</state>
+    </spawnpokemon>
     <music music="calamity.mp3" />
     <sound eventid="3" sound="game-levelup" overmusic="true" />
     <delay eventid="4" ticks="42" />

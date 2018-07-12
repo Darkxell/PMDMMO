@@ -73,8 +73,9 @@ public class CutscenePokemon extends CutsceneEntity
 		this.instanciated = pokemon != null ? pokemon : PokemonRegistry.find(this.pokemonid).generate(new Random(), 1);
 	}
 
-	public CutscenePokemon(Pokemon pokemon, PokemonSpriteState state, Direction facing, boolean animated)
+	public CutscenePokemon(int id, double xpos, double ypos, Pokemon pokemon, PokemonSpriteState state, Direction facing, boolean animated)
 	{
+		super(id, xpos, ypos);
 		this.pokemonid = pokemon.species().compoundID();
 		this.currentState = state;
 		this.facing = facing;

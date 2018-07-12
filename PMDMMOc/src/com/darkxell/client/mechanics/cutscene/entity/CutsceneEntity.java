@@ -24,7 +24,7 @@ public class CutsceneEntity
 		this.yPos = XMLUtils.getAttribute(xml, "ypos", (double) 0);
 	}
 
-	public CutsceneEntity(int id, int xpos, int ypos)
+	public CutsceneEntity(int id, double xpos, double ypos)
 	{
 		this.id = id;
 		this.xPos = xpos;

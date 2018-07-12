@@ -41,12 +41,12 @@
             <ComboBox fx:id="entityTypeCombobox" prefWidth="150.0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
             <Label text="State" GridPane.rowIndex="5" />
             <Label text="Facing" GridPane.rowIndex="6" />
-            <CheckBox fx:id="animatedCheckbox" mnemonicParsing="false" text="Animated" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
+            <CheckBox fx:id="animatedCheckbox" mnemonicParsing="false" selected="true" text="Animated" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
             <ComboBox fx:id="stateCombobox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <ComboBox fx:id="facingCombobox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
             <ComboBox fx:id="speciesCombobox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <Button mnemonicParsing="false" onAction="#onOk" text="OK" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
-            <Button mnemonicParsing="false" onAction="#onCancel" text="Cancel" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
+            <Button fx:id="okButton" mnemonicParsing="false" onAction="#onOk" text="OK" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
+            <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#onCancel" text="Cancel" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
          </children>
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

@@ -17,6 +17,7 @@ import com.darkxell.common.util.Direction;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -28,6 +29,8 @@ public class EditEntityController implements Initializable
 	@FXML
 	private CheckBox animatedCheckbox;
 	@FXML
+	public Button cancelButton;
+	@FXML
 	private ComboBox<String> entityTypeCombobox;
 	@FXML
 	private ComboBox<Direction> facingCombobox;
@@ -38,6 +41,8 @@ public class EditEntityController implements Initializable
 	@FXML
 	private ComboBox<String> modeCombobox;
 	@FXML
+	public Button okButton;
+	@FXML
 	private ComboBox<PokemonSpecies> speciesCombobox;
 	@FXML
 	private ComboBox<PokemonSpriteState> stateCombobox;
@@ -46,21 +51,22 @@ public class EditEntityController implements Initializable
 	@FXML
 	private TextField yposTextfield;
 
-	private CutsceneEntity getEntity()
+	public CutsceneEntity getEntity()
 	{
 		CutsceneEntity e;
 		if (this.entityTypeCombobox.getSelectionModel().getSelectedIndex() == 0)
 		{
-			e = new CutsceneEntity(Integer.parseInt(this.idTextfield.getText()), Integer.parseInt(this.xposTextfield.getText()),
-					Integer.parseInt(this.yposTextfield.getText()));
+			e = new CutsceneEntity(Double.valueOf(this.idTextfield.getText()).intValue(), Double.valueOf(this.xposTextfield.getText()),
+					Double.valueOf(this.yposTextfield.getText()));
 		} else
 		{
 			Pokemon p;
-			if (this.modeCombobox.getSelectionModel().getSelectedIndex() == 0)
-				p = Persistance.player.getMember(Integer.parseInt(this.memberTextfield.getText()));
+			if (this.modeCombobox.getSelectionModel().getSelectedIndex() == 1)
+				p = Persistance.player.getMember(Double.valueOf(this.memberTextfield.getText()).intValue());
 			else p = this.speciesCombobox.getSelectionModel().getSelectedItem().generate(new Random(), 1);
-			e = new CutscenePokemon(p, this.stateCombobox.getSelectionModel().getSelectedItem(), this.facingCombobox.getSelectionModel().getSelectedItem(),
-					this.animatedCheckbox.isSelected());
+			e = new CutscenePokemon(Double.valueOf(this.idTextfield.getText()).intValue(), Double.valueOf(this.xposTextfield.getText()),
+					Double.valueOf(this.yposTextfield.getText()), p, this.stateCombobox.getSelectionModel().getSelectedItem(),
+					this.facingCombobox.getSelectionModel().getSelectedItem(), this.animatedCheckbox.isSelected());
 		}
 		return e;
 	}
@@ -105,7 +111,7 @@ public class EditEntityController implements Initializable
 		});
 		this.yposTextfield.setTextFormatter(formatter);
 		formatter = new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
-			return Pattern.compile("\\d*").matcher(change.getControlNewText()).matches() ? change : null;
+			return Pattern.compile("-?\\d*").matcher(change.getControlNewText()).matches() ? change : null;
 		});
 		this.idTextfield.setTextFormatter(formatter);
 		formatter = new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
@@ -127,9 +133,9 @@ public class EditEntityController implements Initializable
 
 	public void setupFor(CutsceneEntity entity)
 	{
-		this.idTextfield.setText(String.valueOf(entity.id));
-		this.xposTextfield.setText(String.valueOf(entity.xPos));
-		this.yposTextfield.setText(String.valueOf(entity.yPos));
+		this.idTextfield.setText(Integer.toString(entity.id));
+		this.xposTextfield.setText(Double.toString(entity.xPos));
+		this.yposTextfield.setText(Double.toString(entity.yPos));
 		this.entityTypeCombobox.getSelectionModel().select(0);
 
 		if (entity instanceof CutscenePokemon)
@@ -142,7 +148,7 @@ public class EditEntityController implements Initializable
 			if (Persistance.player.isAlly(pokemon.instanciated))
 			{
 				this.modeCombobox.getSelectionModel().select(1);
-				this.memberTextfield.setText(String.valueOf(Persistance.player.positionInTeam(pokemon.instanciated)));
+				this.memberTextfield.setText(Integer.toString(Persistance.player.positionInTeam(pokemon.instanciated)));
 			} else
 			{
 				this.modeCombobox.getSelectionModel().select(0);

@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
+import org.jdom2.Element;
+
 import com.darkxell.client.mechanics.cutscene.Cutscene;
 import com.darkxell.common.util.XMLUtils;
 
@@ -51,7 +53,8 @@ public class Cutscenes
 	{
 		cutscenes.put(name, cutscene);
 		File f = FileManager.create(FileManager.filePaths.get(FileManager.CUTSCENES) + "/" + name + ".xml");
-		XMLUtils.saveFile(f, cutscene.toXML());
+		Element xml = cutscene.toXML();
+		XMLUtils.saveFile(f, xml);
 	}
 
 	public static void remove(String name)
