@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cutscene name="my_cutscene">
+  <creation freezone="dojo">
+    <pokemon cutsceneid="45" ypos="4.0" xpos="4.0" facing="NORTH">
+      <pokemonid>6</pokemonid>
+      <state>APPEAL</state>
+    </pokemon>
+    <entity cutsceneid="1" ypos="1.0" xpos="1.0" />
+  </creation>
+  <events>
+    <spawnpokemon cutsceneid="2" ypos="4.0" xpos="3.0" facing="NORTH">
+      <pokemonid>38</pokemonid>
+      <state>APPEAL</state>
+    </spawnpokemon>
+    <music music="calamity.mp3" />
+    <sound eventid="3" sound="game-levelup" overmusic="true" />
+    <delay eventid="4" ticks="42" />
+    <wait>
+      <event>3</event>
+      <event>4</event>
+    </wait>
+    <dialog>
+      <dialogscreen translate="false">0.42049651975117663</dialogscreen>
+      <dialogscreen translate="false">0.8346756538185756</dialogscreen>
+      <dialogscreen translate="false" target="2">0.3708872568969742</dialogscreen>
+      <dialogscreen translate="false">0.7491944517574315</dialogscreen>
+      <dialogscreen translate="false">0.59006357445914</dialogscreen>
+    </dialog>
+    <setanimated target="45" animated="false" />
+    <despawn target="2" />
+    <setstate target="45" state="ROTATE" />
+    <move xpos="4.0" speed="6.0" target="45" />
+    <camera xpos="4.0" speed="2.0" />
+    <animate animation="my_anim" target="45" />
+    <rotate target="45" distance="-2" instantly="true" />
+  </events>
+  <onfinish>
+    <loadfreezone id="square" />
+  </onfinish>
+</cutscene>

@@ -29,25 +29,55 @@ public class DialogCutsceneEvent extends CutsceneEvent implements DialogEndListe
 
 		public CutsceneDialogScreen(Element xml)
 		{
-			this.text = XMLUtils.getAttribute(xml, "text", null);
+			this.text = xml.getText();
 			this.pokemon = XMLUtils.getAttribute(xml, "target", -1);
 			this.emotion = XMLUtils.getAttribute(xml, "emotion", -1);
 			this.translate = XMLUtils.getAttribute(xml, "translate", true);
+		}
+
+		public CutsceneDialogScreen(String text, boolean translate, int emotion, CutsceneEntity entity)
+		{
+			this.text = text;
+			this.translate = translate;
+			this.emotion = emotion;
+			this.pokemon = entity == null ? -1 : entity.id;
+		}
+
+		@Override
+		public String toString()
+		{
+			return new Message(this.text, this.translate).toString();
+		}
+
+		public Element toXML()
+		{
+			Element root = new Element("dialogscreen").setText(this.text);
+			XMLUtils.setAttribute(root, "translate", this.translate, true);
+			XMLUtils.setAttribute(root, "emotion", this.emotion, -1);
+			XMLUtils.setAttribute(root, "target", this.pokemon, -1);
+			return root;
 		}
 	}
 
 	public final boolean isNarratorDialog;
 	private boolean isOver;
-	private ArrayList<CutsceneDialogScreen> screens;
+	public ArrayList<CutsceneDialogScreen> screens;
 
 	public DialogCutsceneEvent(Element xml, Cutscene cutscene)
 	{
-		super(xml, cutscene);
+		super(xml, CutsceneEventType.dialog, cutscene);
 		this.isNarratorDialog = XMLUtils.getAttribute(xml, "isnarrator", false);
 		this.screens = new ArrayList<>();
 		for (Element screen : xml.getChildren("dialogscreen", xml.getNamespace()))
 			this.screens.add(new CutsceneDialogScreen(screen));
 		this.isOver = false;
+	}
+
+	public DialogCutsceneEvent(int id, boolean isNarrator, ArrayList<CutsceneDialogScreen> screens)
+	{
+		super(id, CutsceneEventType.dialog);
+		this.isNarratorDialog = isNarrator;
+		this.screens = screens;
 	}
 
 	@Override
@@ -82,6 +112,22 @@ public class DialogCutsceneEvent extends CutsceneEvent implements DialogEndListe
 
 		DialogState state = new DialogState(Persistance.cutsceneState, this, screens);
 		Persistance.stateManager.setState(state);
+	}
+
+	@Override
+	public String toString()
+	{
+		return this.displayID() + "Dialog: " + new Message(this.screens.get(0).text).toString() + "...";
+	}
+
+	@Override
+	public Element toXML()
+	{
+		Element root = super.toXML();
+		XMLUtils.setAttribute(root, "isnarrator", this.isNarratorDialog, false);
+		for (CutsceneDialogScreen screen : this.screens)
+			root.addContent(screen.toXML());
+		return root;
 	}
 
 }

@@ -15,6 +15,12 @@ public class EnterDungeonCutsceneEnd extends CutsceneEnd
 
 	public final int dungeonID;
 
+	public EnterDungeonCutsceneEnd(int dungeonID)
+	{
+		super(null);
+		this.dungeonID = dungeonID;
+	}
+
 	public EnterDungeonCutsceneEnd(Cutscene cutscene, Element xml)
 	{
 		super(cutscene);
@@ -27,6 +33,12 @@ public class EnterDungeonCutsceneEnd extends CutsceneEnd
 		super.onCutsceneEnd();
 		// TODO ask server for dungeon start & seed!
 		StateManager.setDungeonState(Persistance.cutsceneState, this.dungeonID, new Random().nextLong());
+	}
+
+	@Override
+	public Element toXML()
+	{
+		return new Element("enterdungeon").setAttribute("id", String.valueOf(this.dungeonID));
 	}
 
 }

@@ -15,20 +15,27 @@ public class CutsceneCreation
 {
 
 	public final int camerax, cameray;
-	public final Cutscene cutscene;
+	Cutscene cutscene;
 	private final ArrayList<CutsceneEntity> entities;
 	public final boolean fading;
-	public final String freezoneID;
-	public final CutscenePokemon player;
+	public final FreezoneInfo freezone;
+
+	public CutsceneCreation(Cutscene cutscene)
+	{
+		this.cutscene = cutscene;
+		this.freezone = null;
+		this.camerax = this.cameray = -1;
+		this.fading = false;
+		this.entities = new ArrayList<>();
+	}
 
 	public CutsceneCreation(Cutscene cutscene, Element xml)
 	{
 		this.cutscene = cutscene;
-		this.freezoneID = XMLUtils.getAttribute(xml, "freezone", null);
+		this.freezone = FreezoneInfo.find(xml.getAttributeValue("freezone"));
 		this.fading = XMLUtils.getAttribute(xml, "fade", true);
 		this.camerax = XMLUtils.getAttribute(xml, "camerax", -1);
 		this.cameray = XMLUtils.getAttribute(xml, "cameray", -1);
-		this.player = new CutscenePokemon(Persistance.player.getTeamLeader(), xml.getChild("player", xml.getNamespace()));
 		this.entities = new ArrayList<>();
 		for (Element pokemon : xml.getChildren("pokemon", xml.getNamespace()))
 			this.entities.add(new CutscenePokemon(pokemon));
@@ -36,15 +43,40 @@ public class CutsceneCreation
 			this.entities.add(new CutsceneEntity(entity));
 	}
 
+	public CutsceneCreation(FreezoneInfo freezone, boolean fading, int camerax, int cameray, ArrayList<CutsceneEntity> entities)
+	{
+		this.freezone = freezone;
+		this.fading = fading;
+		this.camerax = camerax;
+		this.cameray = cameray;
+		this.entities = entities;
+	}
+
 	public void create()
 	{
-		Persistance.currentmap = FreezoneInfo.loadMap(this.freezoneID);
+		Persistance.currentmap = FreezoneInfo.loadMap(this.freezone);
 		Persistance.freezoneCamera = new FreezoneCamera(null);
 		if (this.camerax != -1) Persistance.freezoneCamera.x = this.camerax;
 		if (this.cameray != -1) Persistance.freezoneCamera.y = this.cameray;
 		for (CutsceneEntity entity : this.entities)
 			this.cutscene.player.createEntity(entity);
-		this.cutscene.player.createEntity(this.player);
+	}
+
+	public CutsceneEntity[] entities()
+	{
+		return this.entities.toArray(new CutsceneEntity[this.entities.size()]);
+	}
+
+	public Element toXML()
+	{
+		Element root = new Element("creation");
+		XMLUtils.setAttribute(root, "freezone", this.freezone.id, null);
+		XMLUtils.setAttribute(root, "camerax", this.camerax, -1);
+		XMLUtils.setAttribute(root, "cameray", this.cameray, -1);
+		XMLUtils.setAttribute(root, "fading", this.fading, false);
+		for (CutsceneEntity entity : this.entities)
+			root.addContent(entity.toXML());
+		return root;
 	}
 
 }

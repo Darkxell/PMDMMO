@@ -57,7 +57,7 @@ public final class XMLUtils
 	public static int getAttribute(Element element, String id, int defaultValue)
 	{
 		String value = find(element, id);
-		return value == null ? defaultValue : Integer.parseInt(value);
+		return value == null ? defaultValue : Double.valueOf(value).intValue();
 	}
 
 	public static long getAttribute(Element element, String id, long defaultValue)
@@ -78,22 +78,6 @@ public final class XMLUtils
 		return value == null ? defaultValue : value;
 	}
 
-	/** Reads a double array of Integers in an XML element and returns it. <br />
-	 * e.g. 1,2,4,5,-1;5,1,3 */
-	public static int[][] readDoubleIntArray(Element element)
-	{
-		String[] rows = element.getValue().split(";");
-		int[][] array = new int[rows.length][];
-		for (int i = 0; i < array.length; ++i)
-		{
-			String[] cells = rows[i].split(",");
-			array[i] = new int[cells.length];
-			for (int j = 0; j < cells.length; ++j)
-				array[i][j] = Integer.parseInt(cells[j]);
-		}
-		return array;
-	}
-
 	/** Reads an XML File and returns its root Element. */
 	public static Element read(InputStream input)
 	{
@@ -108,6 +92,22 @@ public final class XMLUtils
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	/** Reads a double array of Integers in an XML element and returns it. <br />
+	 * e.g. 1,2,4,5,-1;5,1,3 */
+	public static int[][] readDoubleIntArray(Element element)
+	{
+		String[] rows = element.getValue().split(";");
+		int[][] array = new int[rows.length][];
+		for (int i = 0; i < array.length; ++i)
+		{
+			String[] cells = rows[i].split(",");
+			array[i] = new int[cells.length];
+			for (int j = 0; j < cells.length; ++j)
+				array[i][j] = Integer.parseInt(cells[j]);
+		}
+		return array;
 	}
 
 	/** Reads an array of Integers in an XML element and returns it. <br />
@@ -150,7 +150,10 @@ public final class XMLUtils
 		try
 		{
 			if (!file.exists()) file.createNewFile();
-			new XMLOutputter(Format.getPrettyFormat()).output(new Document(element), new FileOutputStream(file));
+			XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
+			FileOutputStream s = new FileOutputStream(file);
+			outputter.output(new Document(element), s);
+			s.close();
 		} catch (FileNotFoundException e)
 		{
 			e.printStackTrace();

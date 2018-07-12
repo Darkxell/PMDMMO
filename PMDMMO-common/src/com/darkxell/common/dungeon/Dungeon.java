@@ -206,6 +206,12 @@ public class Dungeon implements Comparable<Dungeon>
 		return candidates.get(random.nextInt(candidates.size())).generate(random);
 	}
 
+	@Override
+	public String toString()
+	{
+		return this.id + "- " + this.name().toString();
+	}
+
 	public Element toXML()
 	{
 		Element root = new Element(XML_ROOT);

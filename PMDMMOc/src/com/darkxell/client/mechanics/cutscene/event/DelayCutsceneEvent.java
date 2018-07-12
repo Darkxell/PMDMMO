@@ -13,14 +13,32 @@ public class DelayCutsceneEvent extends CutsceneEvent
 
 	public DelayCutsceneEvent(Element xml, Cutscene cutscene)
 	{
-		super(xml, cutscene);
+		super(xml, CutsceneEventType.delay, cutscene);
 		this.duration = XMLUtils.getAttribute(xml, "ticks", 0);
+	}
+
+	public DelayCutsceneEvent(int id, int duration)
+	{
+		super(id, CutsceneEventType.delay);
+		this.duration = duration;
 	}
 
 	@Override
 	public boolean isOver()
 	{
 		return this.tick == this.duration;
+	}
+
+	@Override
+	public String toString()
+	{
+		return this.displayID() + "Wait for " + this.duration + " ticks";
+	}
+
+	@Override
+	public Element toXML()
+	{
+		return super.toXML().setAttribute("ticks", String.valueOf(this.duration));
 	}
 
 	@Override

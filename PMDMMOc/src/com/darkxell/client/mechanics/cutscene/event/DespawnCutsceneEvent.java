@@ -14,8 +14,14 @@ public class DespawnCutsceneEvent extends CutsceneEvent
 
 	public DespawnCutsceneEvent(Element xml, Cutscene cutscene)
 	{
-		super(xml, cutscene);
+		super(xml, CutsceneEventType.despawn, cutscene);
 		this.target = XMLUtils.getAttribute(xml, "target", -1);
+	}
+
+	public DespawnCutsceneEvent(int id, CutsceneEntity entity)
+	{
+		super(id, CutsceneEventType.despawn);
+		this.target = entity.id;
 	}
 
 	@Override
@@ -24,6 +30,18 @@ public class DespawnCutsceneEvent extends CutsceneEvent
 		super.onStart();
 		CutsceneEntity entity = this.cutscene.player.getEntity(this.target);
 		if (entity != null) this.cutscene.player.removeEntity(entity);
+	}
+
+	@Override
+	public String toString()
+	{
+		return this.displayID() + "(" + this.target + ") despawns";
+	}
+
+	@Override
+	public Element toXML()
+	{
+		return super.toXML().setAttribute("target", String.valueOf(this.target));
 	}
 
 }

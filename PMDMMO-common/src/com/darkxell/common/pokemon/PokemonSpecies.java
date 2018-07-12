@@ -303,6 +303,12 @@ public class PokemonSpecies
 		return stats;
 	}
 
+	@Override
+	public String toString()
+	{
+		return this.formName().toString();
+	}
+
 	public Element toXML()
 	{
 		Element root = new Element("pokemon");

@@ -15,9 +15,16 @@ public class SoundCutsceneEvent extends CutsceneEvent
 
 	public SoundCutsceneEvent(Element xml, Cutscene cutscene)
 	{
-		super(xml, cutscene);
-		this.soundID = XMLUtils.getAttribute(xml, "music", null);
+		super(xml, CutsceneEventType.sound, cutscene);
+		this.soundID = XMLUtils.getAttribute(xml, "sound", null);
 		this.playOverMusic = XMLUtils.getAttribute(xml, "overmusic", false);
+	}
+
+	public SoundCutsceneEvent(int id, String soundID, boolean playOverMusic)
+	{
+		super(id, CutsceneEventType.sound);
+		this.soundID = soundID;
+		this.playOverMusic = playOverMusic;
 	}
 
 	@Override
@@ -29,6 +36,21 @@ public class SoundCutsceneEvent extends CutsceneEvent
 			if (this.playOverMusic) SoundManager.playSoundOverMusic(this.soundID);
 			else SoundManager.playSound(this.soundID);
 		}
+	}
+
+	@Override
+	public String toString()
+	{
+		return this.displayID() + "Play " + this.soundID + (this.playOverMusic ? " over music" : "");
+	}
+
+	@Override
+	public Element toXML()
+	{
+		Element root = super.toXML();
+		root.setAttribute("sound", this.soundID);
+		XMLUtils.setAttribute(root, "overmusic", this.playOverMusic, false);
+		return root;
 	}
 
 }

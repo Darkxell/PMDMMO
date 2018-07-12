@@ -17,7 +17,7 @@ public class SetStateCutsceneEvent extends CutsceneEvent
 
 	public SetStateCutsceneEvent(Element xml, Cutscene cutscene)
 	{
-		super(xml, cutscene);
+		super(xml, CutsceneEventType.setstate, cutscene);
 		this.target = XMLUtils.getAttribute(xml, "target", -1);
 		PokemonSpriteState s = null;
 		try
@@ -28,12 +28,31 @@ public class SetStateCutsceneEvent extends CutsceneEvent
 		this.state = s;
 	}
 
+	public SetStateCutsceneEvent(int id, CutsceneEntity entity, PokemonSpriteState state)
+	{
+		super(id, CutsceneEventType.setstate);
+		this.target = entity.id;
+		this.state = state;
+	}
+
 	@Override
 	public void onStart()
 	{
 		super.onStart();
 		CutsceneEntity entity = this.cutscene.player.getEntity(this.target);
 		if (entity != null && entity instanceof CutscenePokemon) ((CutscenePokemon) entity).currentState = this.state;
+	}
+
+	@Override
+	public String toString()
+	{
+		return this.displayID() + "(" + this.target + ") gains state " + this.state;
+	}
+
+	@Override
+	public Element toXML()
+	{
+		return super.toXML().setAttribute("target", String.valueOf(this.target)).setAttribute("state", this.state.name());
 	}
 
 }

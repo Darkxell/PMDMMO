@@ -124,6 +124,14 @@ public class Player
 		return this.data.name;
 	}
 
+	public int positionInTeam(Pokemon pokemon)
+	{
+		if (pokemon == this.getTeamLeader()) return 0;
+		for (int i = 0; i < this.allies.size(); ++i)
+			if (this.allies.get(i) == pokemon) return i + 1;
+		return -1;
+	}
+
 	public void removeAlly(Pokemon pokemon)
 	{
 		if (!this.allies.contains(pokemon)) return;

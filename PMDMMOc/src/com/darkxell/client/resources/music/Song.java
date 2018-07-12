@@ -38,6 +38,7 @@ public class Song {
 			this.name = (String) properties.get("title");
 		} catch (Exception e) {
 			Logger.e("Could not read song properties properly : " + e);
+			e.printStackTrace();
 		}
 		File tempfile = new File(path);
 		this.displayname = tempfile.getName();

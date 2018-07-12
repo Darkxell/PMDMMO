@@ -15,8 +15,14 @@ public class MusicCutsceneEvent extends CutsceneEvent
 
 	public MusicCutsceneEvent(Element xml, Cutscene cutscene)
 	{
-		super(xml, cutscene);
+		super(xml, CutsceneEventType.music, cutscene);
 		this.soundtrackID = XMLUtils.getAttribute(xml, "music", null);
+	}
+
+	public MusicCutsceneEvent(int id, String soundtrackID)
+	{
+		super(id, CutsceneEventType.music);
+		this.soundtrackID = soundtrackID;
 	}
 
 	@Override
@@ -24,6 +30,18 @@ public class MusicCutsceneEvent extends CutsceneEvent
 	{
 		super.onStart();
 		if (this.soundtrackID != null) Persistance.soundmanager.setBackgroundMusic(SoundsHolder.getSong(this.soundtrackID));
+	}
+
+	@Override
+	public String toString()
+	{
+		return this.displayID() + "Music set to " + this.soundtrackID;
+	}
+
+	@Override
+	public Element toXML()
+	{
+		return super.toXML().setAttribute("music", this.soundtrackID);
 	}
 
 }

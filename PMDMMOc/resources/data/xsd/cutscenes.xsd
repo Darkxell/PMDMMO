@@ -108,7 +108,7 @@
     <xs:element name="setanimated">
         <xs:complexType>
             <xs:attribute ref="target" use="required"/>
-            <xs:attribute name="animate" type="xs:boolean" use="required"/>
+            <xs:attribute name="animated" type="xs:boolean" use="required"/>
         </xs:complexType>
     </xs:element>
 
@@ -162,7 +162,6 @@
     <xs:element name="creation">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="player" type="pokemonentity" minOccurs="0"/>
                 <xs:element name="pokemon" type="pokemonentity" maxOccurs="unbounded" minOccurs="0"/>
                 <xs:element name="entity" type="entity" maxOccurs="unbounded" minOccurs="0"/>
             </xs:sequence>
@@ -188,7 +187,10 @@
         <xs:complexContent>
             <xs:extension base="entity">
                 <xs:sequence>
-                    <xs:element name="pokemonid" type="posInt" maxOccurs="unbounded" minOccurs="0"/>
+                	<xs:choice>
+                    	<xs:element name="pokemonid" type="posInt" maxOccurs="unbounded" minOccurs="0"/>
+                    	<xs:element name="teammember" type="posInt" maxOccurs="unbounded" minOccurs="0"/>
+                	</xs:choice>
                     <xs:element name="state" type="spritestate" minOccurs="0"/>
                     <xs:element name="animated" type="xs:boolean" minOccurs="0"/>
                 </xs:sequence>

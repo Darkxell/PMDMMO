@@ -10,11 +10,12 @@ import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
 public class WaitCutsceneEvent extends CutsceneEvent
 {
 
-	private ArrayList<CutsceneEvent> events;
+	public final boolean all;
+	public ArrayList<CutsceneEvent> events;
 
 	public WaitCutsceneEvent(Element xml, Cutscene cutscene)
 	{
-		super(xml, cutscene);
+		super(xml, CutsceneEventType.wait, cutscene);
 		this.events = new ArrayList<>();
 		for (Element event : xml.getChildren("event", xml.getNamespace()))
 			try
@@ -24,7 +25,15 @@ public class WaitCutsceneEvent extends CutsceneEvent
 				if (e != null) this.events.add(e);
 			} catch (Exception e)
 			{}
+		this.all = this.events.isEmpty();
 		if (this.events.isEmpty()) this.events.addAll(this.cutscene.events);
+	}
+
+	public WaitCutsceneEvent(int id, boolean all, ArrayList<CutsceneEvent> events)
+	{
+		super(id, CutsceneEventType.wait);
+		this.all = all;
+		this.events = events;
 	}
 
 	@Override
@@ -33,6 +42,21 @@ public class WaitCutsceneEvent extends CutsceneEvent
 		for (CutsceneEvent event : this.events)
 			if (!event.isOver()) return false;
 		return true;
+	}
+
+	@Override
+	public String toString()
+	{
+		return this.displayID() + "Wait for " + (this.all ? "all" : this.events.size()) + " events";
+	}
+
+	@Override
+	public Element toXML()
+	{
+		Element root = super.toXML();
+		if (!this.all) for (CutsceneEvent e : this.events)
+			root.addContent(new Element("event").setText(String.valueOf(e.id)));
+		return root;
 	}
 
 }

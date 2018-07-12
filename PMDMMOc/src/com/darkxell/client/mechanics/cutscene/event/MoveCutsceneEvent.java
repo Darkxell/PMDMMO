@@ -23,11 +23,20 @@ public class MoveCutsceneEvent extends CutsceneEvent
 
 	public MoveCutsceneEvent(Element xml, Cutscene cutscene)
 	{
-		super(xml, cutscene);
+		super(xml, CutsceneEventType.move, cutscene);
 		this.xPos = XMLUtils.getAttribute(xml, "xpos", UNSPECIFIED);
 		this.yPos = XMLUtils.getAttribute(xml, "ypos", UNSPECIFIED);
 		this.speed = XMLUtils.getAttribute(xml, "speed", 1.);
 		this.target = XMLUtils.getAttribute(xml, "target", -1);
+	}
+
+	public MoveCutsceneEvent(int id, CutsceneEntity entity, double xpos, double ypos, double speed)
+	{
+		super(id, CutsceneEventType.move);
+		this.target = entity.id;
+		this.xPos = xpos;
+		this.yPos = ypos;
+		this.speed = speed;
 	}
 
 	@Override
@@ -59,6 +68,24 @@ public class MoveCutsceneEvent extends CutsceneEvent
 			this.travel = new TravelAnimation(new Point.Double(startX, startY), new Point.Double(destX, destY));
 			this.duration = (int) Math.floor(this.travel.distance.distance(new Point(0, 0)) / this.speed);
 		} else this.tick = this.duration;
+	}
+
+	@Override
+	public String toString()
+	{
+		return this.displayID() + "(" + this.target + ") travels to X=" + (this.xPos == UNSPECIFIED ? "[UNCHANGED]" : this.xPos) + ", Y="
+				+ (this.yPos == UNSPECIFIED ? "[UNCHANGED]" : this.yPos);
+	}
+
+	@Override
+	public Element toXML()
+	{
+		Element root = super.toXML();
+		XMLUtils.setAttribute(root, "xpos", this.xPos, UNSPECIFIED);
+		XMLUtils.setAttribute(root, "ypos", this.yPos, UNSPECIFIED);
+		XMLUtils.setAttribute(root, "speed", this.speed, 1);
+		XMLUtils.setAttribute(root, "target", this.target, -1);
+		return root;
 	}
 
 	@Override

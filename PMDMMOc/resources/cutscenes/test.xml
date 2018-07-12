@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <cutscene xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="pmdmmo"
     xsi:schemaLocation="pmdmmo ../data/xsd/cutscenes.xsd" xmlns:ns1="pmdmmo">
-    <creation freezone="Base" fade="true" camerax="40" cameray="30">
-        <player cutsceneid="0" xpos="35" ypos="28"/>
+    <creation freezone="base" fade="true" camerax="40" cameray="30">
+        <pokemon cutsceneid="0" xpos="35" ypos="28">
+            <teammember>0</teammember>
+		</pokemon>
         <pokemon cutsceneid="1" xpos="35" ypos="40" ns1:facing="North">
             <pokemonid>380</pokemonid>
             <state>Dance</state>
@@ -11,8 +12,8 @@
     </creation>
     <events>
         <dialog>
-            <dialogscreen text="item.info.7"/>
-            <dialogscreen text="quiz.0.0" ns1:target="0"/>
+            <dialogscreen>item.info.7</dialogscreen>
+            <dialogscreen ns1:target="0">quiz.0.0</dialogscreen>
         </dialog>
         <rotate ns1:target="1" distance="2"/>
         <move ns1:target="1" ypos="32"/>
@@ -25,10 +26,10 @@
         <camera xpos="5" yincrease="5"/>
         <wait/>
         <dialog isnarrator="true">
-            <dialogscreen text="I AM AMAZING" translate="false" ns1:target="1"/>
+            <dialogscreen translate="false" ns1:target="1">I AM AMAZING</dialogscreen>
         </dialog>
     </events>
     <onfinish>
-        <loadfreezone id="Base"/>
+        <loadfreezone id="base"/>
     </onfinish>
 </cutscene>
