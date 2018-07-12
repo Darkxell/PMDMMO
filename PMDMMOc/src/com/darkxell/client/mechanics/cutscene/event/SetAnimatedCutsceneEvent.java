@@ -16,15 +16,9 @@ public class SetAnimatedCutsceneEvent extends CutsceneEvent
 
 	public SetAnimatedCutsceneEvent(Element xml, Cutscene cutscene)
 	{
-		super(xml, cutscene);
+		super(xml, CutsceneEventType.setanimated, cutscene);
 		this.target = XMLUtils.getAttribute(xml, "target", -1);
 		this.animated = XMLUtils.getAttribute(xml, "animate", false);
-	}
-
-	@Override
-	public String getIconPath()
-	{
-		return "/icons/events/setanimated.png";
 	}
 
 	@Override
@@ -39,12 +33,6 @@ public class SetAnimatedCutsceneEvent extends CutsceneEvent
 	public String toString()
 	{
 		return "(" + this.target + ") becomes " + (this.animated ? "" : "not ") + "animated";
-	}
-
-	@Override
-	public Element toXML()
-	{
-		return new Element("setanimated");
 	}
 
 }

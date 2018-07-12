@@ -23,17 +23,11 @@ public class MoveCutsceneEvent extends CutsceneEvent
 
 	public MoveCutsceneEvent(Element xml, Cutscene cutscene)
 	{
-		super(xml, cutscene);
+		super(xml, CutsceneEventType.move, cutscene);
 		this.xPos = XMLUtils.getAttribute(xml, "xpos", UNSPECIFIED);
 		this.yPos = XMLUtils.getAttribute(xml, "ypos", UNSPECIFIED);
 		this.speed = XMLUtils.getAttribute(xml, "speed", 1.);
 		this.target = XMLUtils.getAttribute(xml, "target", -1);
-	}
-
-	@Override
-	public String getIconPath()
-	{
-		return "/icons/events/move.png";
 	}
 
 	@Override
@@ -87,12 +81,6 @@ public class MoveCutsceneEvent extends CutsceneEvent
 	public String toString()
 	{
 		return "(" + this.target + ") travels to X=" + this.xPos + ", Y=" + this.yPos;
-	}
-
-	@Override
-	public Element toXML()
-	{
-		return new Element("move");
 	}
 
 }

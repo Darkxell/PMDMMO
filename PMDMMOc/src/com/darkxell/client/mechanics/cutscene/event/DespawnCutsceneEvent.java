@@ -14,14 +14,8 @@ public class DespawnCutsceneEvent extends CutsceneEvent
 
 	public DespawnCutsceneEvent(Element xml, Cutscene cutscene)
 	{
-		super(xml, cutscene);
+		super(xml, CutsceneEventType.despawn, cutscene);
 		this.target = XMLUtils.getAttribute(xml, "target", -1);
-	}
-
-	@Override
-	public String getIconPath()
-	{
-		return "/icons/events/despawn.png";
 	}
 
 	@Override
@@ -36,12 +30,6 @@ public class DespawnCutsceneEvent extends CutsceneEvent
 	public String toString()
 	{
 		return "(" + this.target + ") despawns";
-	}
-
-	@Override
-	public Element toXML()
-	{
-		return new Element("despawn");
 	}
 
 }

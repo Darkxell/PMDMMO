@@ -7,22 +7,9 @@ import java.util.ResourceBundle;
 
 import com.darkxell.client.mechanics.cutscene.Cutscene;
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
-import com.darkxell.client.mechanics.cutscene.event.AnimateCutsceneEvent;
-import com.darkxell.client.mechanics.cutscene.event.CameraCutsceneEvent;
-import com.darkxell.client.mechanics.cutscene.event.DelayCutsceneEvent;
-import com.darkxell.client.mechanics.cutscene.event.DespawnCutsceneEvent;
-import com.darkxell.client.mechanics.cutscene.event.DialogCutsceneEvent;
-import com.darkxell.client.mechanics.cutscene.event.MoveCutsceneEvent;
-import com.darkxell.client.mechanics.cutscene.event.MusicCutsceneEvent;
-import com.darkxell.client.mechanics.cutscene.event.RotateCutsceneEvent;
-import com.darkxell.client.mechanics.cutscene.event.SetAnimatedCutsceneEvent;
-import com.darkxell.client.mechanics.cutscene.event.SetStateCutsceneEvent;
-import com.darkxell.client.mechanics.cutscene.event.SoundCutsceneEvent;
-import com.darkxell.client.mechanics.cutscene.event.SpawnCutsceneEvent;
-import com.darkxell.client.mechanics.cutscene.event.WaitCutsceneEvent;
+import com.darkxell.client.mechanics.cutscene.CutsceneEvent.CutsceneEventType;
 
 import fr.darkxell.dataeditor.application.DataEditor;
-import fr.darkxell.dataeditor.application.controller.cutscene.SelectEventTypeController.CutsceneEventType;
 import fr.darkxell.dataeditor.application.controller.cutscene.event.EventController;
 import fr.darkxell.dataeditor.application.controls.CustomListCell;
 import fr.darkxell.dataeditor.application.controls.CustomListCell.ListCellParent;
@@ -59,7 +46,7 @@ public class EditCutsceneController implements Initializable, ListCellParent<Cut
 	public Node graphicFor(CutsceneEvent item)
 	{
 		if (item == null) return null;
-		Image fxImage = SwingFXUtils.toFXImage(FXUtils.getIcon(item.getIconPath()), null);
+		Image fxImage = SwingFXUtils.toFXImage(FXUtils.getIcon("/icons/events/" + item.type.name() + ".png"), null);
 		ImageView imageView = new ImageView(fxImage);
 		return imageView;
 	}
@@ -76,25 +63,9 @@ public class EditCutsceneController implements Initializable, ListCellParent<Cut
 	@Override
 	public void onCreate(CutsceneEvent event)
 	{
-		if (event != null)
+		if (event != null) this.onCreate(event, event.type);
+		else try
 		{
-			editing = event;
-			if (event instanceof AnimateCutsceneEvent) this.onCreate(event, CutsceneEventType.animate);
-			if (event instanceof CameraCutsceneEvent) this.onCreate(event, CutsceneEventType.camera);
-			if (event instanceof DelayCutsceneEvent) this.onCreate(event, CutsceneEventType.delay);
-			if (event instanceof DespawnCutsceneEvent) this.onCreate(event, CutsceneEventType.despawn);
-			if (event instanceof DialogCutsceneEvent) this.onCreate(event, CutsceneEventType.dialog);
-			if (event instanceof MoveCutsceneEvent) this.onCreate(event, CutsceneEventType.move);
-			if (event instanceof MusicCutsceneEvent) this.onCreate(event, CutsceneEventType.music);
-			if (event instanceof RotateCutsceneEvent) this.onCreate(event, CutsceneEventType.rotate);
-			if (event instanceof SetAnimatedCutsceneEvent) this.onCreate(event, CutsceneEventType.setanimated);
-			if (event instanceof SetStateCutsceneEvent) this.onCreate(event, CutsceneEventType.setstate);
-			if (event instanceof SoundCutsceneEvent) this.onCreate(event, CutsceneEventType.sound);
-			if (event instanceof SpawnCutsceneEvent) this.onCreate(event, CutsceneEventType.spawn);
-			if (event instanceof WaitCutsceneEvent) this.onCreate(event, CutsceneEventType.wait);
-		} else try
-		{
-			editing = null;
 			FXMLLoader loader = new FXMLLoader(DataEditor.class.getResource("/layouts/cutscenes/select_event_type.fxml"));
 			Parent root = loader.load();
 			selectEventTypePopup = FXUtils.showPopup(root, "New Event");
@@ -106,6 +77,7 @@ public class EditCutsceneController implements Initializable, ListCellParent<Cut
 
 	public void onCreate(CutsceneEvent event, CutsceneEventType type)
 	{
+		editing = event;
 		try
 		{
 			FXMLLoader loader = new FXMLLoader(DataEditor.class.getResource("/layouts/cutscenes/events/" + type.name() + ".fxml"));

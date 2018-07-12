@@ -10,11 +10,12 @@ import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
 public class WaitCutsceneEvent extends CutsceneEvent
 {
 
+	public final boolean all;
 	private ArrayList<CutsceneEvent> events;
 
 	public WaitCutsceneEvent(Element xml, Cutscene cutscene)
 	{
-		super(xml, cutscene);
+		super(xml, CutsceneEventType.wait, cutscene);
 		this.events = new ArrayList<>();
 		for (Element event : xml.getChildren("event", xml.getNamespace()))
 			try
@@ -24,13 +25,8 @@ public class WaitCutsceneEvent extends CutsceneEvent
 				if (e != null) this.events.add(e);
 			} catch (Exception e)
 			{}
+		this.all = this.events.isEmpty();
 		if (this.events.isEmpty()) this.events.addAll(this.cutscene.events);
-	}
-
-	@Override
-	public String getIconPath()
-	{
-		return "/icons/events/wait.png";
 	}
 
 	@Override
@@ -44,13 +40,16 @@ public class WaitCutsceneEvent extends CutsceneEvent
 	@Override
 	public String toString()
 	{
-		return "Wait for " + this.events.size() + " events";
+		return "Wait for " + (this.all ? "all" : this.events.size()) + " events";
 	}
 
 	@Override
 	public Element toXML()
 	{
-		return new Element("wait");
+		Element root = super.toXML();
+		if (!this.all) for (CutsceneEvent e : this.events)
+			root.addContent(new Element("event").setText(String.valueOf(e.id)));
+		return root;
 	}
 
 }

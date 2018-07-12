@@ -19,16 +19,10 @@ public class RotateCutsceneEvent extends CutsceneEvent
 
 	public RotateCutsceneEvent(Element xml, Cutscene cutscene)
 	{
-		super(xml, cutscene);
+		super(xml, CutsceneEventType.rotate, cutscene);
 		this.target = XMLUtils.getAttribute(xml, "target", -1);
 		this.instantly = XMLUtils.getAttribute(xml, "instantly", false);
 		this.distance = XMLUtils.getAttribute(xml, "distance", 0);
-	}
-
-	@Override
-	public String getIconPath()
-	{
-		return "/icons/events/rotate.png";
 	}
 
 	@Override
@@ -73,12 +67,6 @@ public class RotateCutsceneEvent extends CutsceneEvent
 	public String toString()
 	{
 		return "(" + this.target + ") rotates clockwise " + this.distance + " times";
-	}
-
-	@Override
-	public Element toXML()
-	{
-		return new Element("rotate");
 	}
 
 }

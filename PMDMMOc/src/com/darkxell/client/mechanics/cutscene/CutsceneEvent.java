@@ -20,6 +20,31 @@ import com.darkxell.common.util.XMLUtils;
 public abstract class CutsceneEvent
 {
 
+	public static enum CutsceneEventType
+	{
+		// Don't forget to also modify EditCutsceneController#onCreate().
+		animate("Play animation"),
+		camera("Move camera"),
+		delay("Wait X ticks"),
+		despawn("Despawn Entity"),
+		dialog("Show Dialog"),
+		move("Move Entity"),
+		music("Change soundtrack"),
+		rotate("Rotate Entity"),
+		setanimated("Animate Pokémon"),
+		setstate("Set Pokémon State"),
+		sound("Play sound"),
+		spawn("Spawn Entity"),
+		wait("Wait for events to finish");
+
+		public final String description;
+
+		private CutsceneEventType(String name)
+		{
+			this.description = name;
+		}
+	}
+
 	public static CutsceneEvent create(Element xml, Cutscene cutscene)
 	{
 		// Remember to add to Editor aswell (SelectEventTypeController#CutsceneEventType).
@@ -72,20 +97,21 @@ public abstract class CutsceneEvent
 
 	public final Cutscene cutscene;
 	public int id;
+	public final CutsceneEventType type;
 
-	public CutsceneEvent(Element xml, Cutscene cutscene)
+	public CutsceneEvent(Element xml, CutsceneEventType type, Cutscene cutscene)
 	{
 		this.id = XMLUtils.getAttribute(xml, "eventid", -1);
 		this.cutscene = cutscene;
+		this.type = type;
 	}
 
-	public CutsceneEvent(int id)
+	public CutsceneEvent(int id, CutsceneEventType type)
 	{
 		this.id = id;
+		this.type = type;
 		this.cutscene = null;
 	}
-
-	public abstract String getIconPath();
 
 	public boolean isOver()
 	{
@@ -98,7 +124,12 @@ public abstract class CutsceneEvent
 	public void onStart()
 	{}
 
-	public abstract Element toXML();
+	public Element toXML()
+	{
+		Element root = new Element(this.type.name());
+		XMLUtils.setAttribute(root, "id", this.id, -1);
+		return root;
+	}
 
 	public void update()
 	{}

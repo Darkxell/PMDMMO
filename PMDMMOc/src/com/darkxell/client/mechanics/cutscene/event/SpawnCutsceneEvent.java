@@ -14,15 +14,9 @@ public class SpawnCutsceneEvent extends CutsceneEvent
 
 	public SpawnCutsceneEvent(Element xml, Cutscene cutscene)
 	{
-		super(xml, cutscene);
+		super(xml, CutsceneEventType.spawn, cutscene);
 		if (xml.getName().equals("spawnpokemon")) this.entity = new CutscenePokemon(xml);
 		else this.entity = new CutsceneEntity(xml);
-	}
-
-	@Override
-	public String getIconPath()
-	{
-		return "/icons/events/spawn.png";
 	}
 
 	@Override
@@ -30,12 +24,6 @@ public class SpawnCutsceneEvent extends CutsceneEvent
 	{
 		super.onStart();
 		this.cutscene.player.createEntity(this.entity);
-	}
-
-	@Override
-	public Element toXML()
-	{
-		return new Element("spawn");
 	}
 
 	@Override

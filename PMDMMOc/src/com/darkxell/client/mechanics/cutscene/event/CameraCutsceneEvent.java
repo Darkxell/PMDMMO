@@ -21,16 +21,10 @@ public class CameraCutsceneEvent extends CutsceneEvent
 
 	public CameraCutsceneEvent(Element xml, Cutscene cutscene)
 	{
-		super(xml, cutscene);
+		super(xml, CutsceneEventType.camera, cutscene);
 		this.xPos = XMLUtils.getAttribute(xml, "xpos", UNSPECIFIED);
 		this.yPos = XMLUtils.getAttribute(xml, "ypos", UNSPECIFIED);
 		this.speed = XMLUtils.getAttribute(xml, "speed", 1.);
-	}
-
-	@Override
-	public String getIconPath()
-	{
-		return "/icons/events/camera.png";
 	}
 
 	@Override
@@ -67,12 +61,6 @@ public class CameraCutsceneEvent extends CutsceneEvent
 	public String toString()
 	{
 		return "Camera moves to X=" + this.xPos + ", Y=" + this.yPos;
-	}
-
-	@Override
-	public Element toXML()
-	{
-		return new Element("camera");
 	}
 
 	@Override

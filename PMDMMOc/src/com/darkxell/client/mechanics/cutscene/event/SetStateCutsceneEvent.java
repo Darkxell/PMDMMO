@@ -17,7 +17,7 @@ public class SetStateCutsceneEvent extends CutsceneEvent
 
 	public SetStateCutsceneEvent(Element xml, Cutscene cutscene)
 	{
-		super(xml, cutscene);
+		super(xml, CutsceneEventType.setstate, cutscene);
 		this.target = XMLUtils.getAttribute(xml, "target", -1);
 		PokemonSpriteState s = null;
 		try
@@ -26,12 +26,6 @@ public class SetStateCutsceneEvent extends CutsceneEvent
 		} catch (Exception e)
 		{}
 		this.state = s;
-	}
-
-	@Override
-	public String getIconPath()
-	{
-		return "/icons/events/setstate.png";
 	}
 
 	@Override
@@ -46,12 +40,6 @@ public class SetStateCutsceneEvent extends CutsceneEvent
 	public String toString()
 	{
 		return "(" + this.target + ") gains state " + this.state;
-	}
-
-	@Override
-	public Element toXML()
-	{
-		return new Element("setstate");
 	}
 
 }

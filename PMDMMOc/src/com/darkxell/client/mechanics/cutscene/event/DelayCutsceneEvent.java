@@ -13,27 +13,20 @@ public class DelayCutsceneEvent extends CutsceneEvent
 
 	public DelayCutsceneEvent(Element xml, Cutscene cutscene)
 	{
-		super(xml, cutscene);
+		super(xml, CutsceneEventType.delay, cutscene);
 		this.duration = XMLUtils.getAttribute(xml, "ticks", 0);
 	}
 
-	@Override
-	public String getIconPath()
+	public DelayCutsceneEvent(int id, int duration)
 	{
-		return "/icons/events/delay.png";
+		super(id, CutsceneEventType.delay);
+		this.duration = duration;
 	}
 
 	@Override
 	public boolean isOver()
 	{
 		return this.tick == this.duration;
-	}
-
-	@Override
-	public void update()
-	{
-		super.update();
-		if (!this.isOver()) ++this.tick;
 	}
 
 	@Override
@@ -45,7 +38,14 @@ public class DelayCutsceneEvent extends CutsceneEvent
 	@Override
 	public Element toXML()
 	{
-		return new Element("delay");
+		return super.toXML().setAttribute("ticks", String.valueOf(this.duration));
+	}
+
+	@Override
+	public void update()
+	{
+		super.update();
+		if (!this.isOver()) ++this.tick;
 	}
 
 }

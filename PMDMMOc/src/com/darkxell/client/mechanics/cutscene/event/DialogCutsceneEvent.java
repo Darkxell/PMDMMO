@@ -42,18 +42,12 @@ public class DialogCutsceneEvent extends CutsceneEvent implements DialogEndListe
 
 	public DialogCutsceneEvent(Element xml, Cutscene cutscene)
 	{
-		super(xml, cutscene);
+		super(xml, CutsceneEventType.dialog, cutscene);
 		this.isNarratorDialog = XMLUtils.getAttribute(xml, "isnarrator", false);
 		this.screens = new ArrayList<>();
 		for (Element screen : xml.getChildren("dialogscreen", xml.getNamespace()))
 			this.screens.add(new CutsceneDialogScreen(screen));
 		this.isOver = false;
-	}
-
-	@Override
-	public String getIconPath()
-	{
-		return "/icons/events/dialog.png";
 	}
 
 	@Override
@@ -94,12 +88,6 @@ public class DialogCutsceneEvent extends CutsceneEvent implements DialogEndListe
 	public String toString()
 	{
 		return "Dialog: " + new Message(this.screens.get(0).text).toString() + "...";
-	}
-
-	@Override
-	public Element toXML()
-	{
-		return new Element("dialog");
 	}
 
 }

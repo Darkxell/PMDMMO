@@ -3,6 +3,8 @@ package fr.darkxell.dataeditor.application.controller.cutscene;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.darkxell.client.mechanics.cutscene.CutsceneEvent.CutsceneEventType;
+
 import fr.darkxell.dataeditor.application.util.FXUtils;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
@@ -14,31 +16,6 @@ import javafx.scene.image.ImageView;
 
 public class SelectEventTypeController implements Initializable
 {
-
-	public static enum CutsceneEventType
-	{
-		// Don't forget to also modify EditCutsceneController#onCreate().
-		animate("Play animation"),
-		camera("Move camera"),
-		delay("Wait X ticks"),
-		despawn("Despawn Entity"),
-		dialog("Show Dialog"),
-		move("Move Entity"),
-		music("Change soundtrack"),
-		rotate("Rotate Entity"),
-		setanimated("Animate Pokémon"),
-		setstate("Set Pokémon State"),
-		sound("Play sound"),
-		spawn("Spawn Entity"),
-		wait("Wait for events to finish");
-
-		public final String description;
-
-		private CutsceneEventType(String name)
-		{
-			this.description = name;
-		}
-	}
 
 	@FXML
 	public ListView<CutsceneEventType> eventList;

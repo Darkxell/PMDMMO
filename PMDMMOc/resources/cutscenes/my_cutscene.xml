@@ -3,6 +3,8 @@
   <creation />
   <events>
     <music music="calamity.mp3" />
+    <sound sound="game-levelup" overmusic="true" />
+    <delay ticks="42" />
   </events>
   <onfinish>
     <loadfreezone id="Base" />
