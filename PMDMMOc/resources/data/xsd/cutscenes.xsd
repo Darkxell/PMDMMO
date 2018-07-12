@@ -108,7 +108,7 @@
     <xs:element name="setanimated">
         <xs:complexType>
             <xs:attribute ref="target" use="required"/>
-            <xs:attribute name="animate" type="xs:boolean" use="required"/>
+            <xs:attribute name="animated" type="xs:boolean" use="required"/>
         </xs:complexType>
     </xs:element>
 
