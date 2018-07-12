@@ -28,6 +28,7 @@ import fr.darkxell.dataeditor.application.controls.CustomListCell;
 import fr.darkxell.dataeditor.application.controls.CustomListCell.ListCellParent;
 import fr.darkxell.dataeditor.application.data.Cutscenes;
 import fr.darkxell.dataeditor.application.util.FXUtils;
+import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -43,6 +44,7 @@ public class EditCutsceneController implements Initializable, ListCellParent<Cut
 {
 
 	public static Stage editEventPopup;
+	public static CutsceneEvent editing;
 	public static EditCutsceneController instance;
 	public static Stage selectEventTypePopup;
 
@@ -76,6 +78,7 @@ public class EditCutsceneController implements Initializable, ListCellParent<Cut
 	{
 		if (event != null)
 		{
+			editing = event;
 			if (event instanceof AnimateCutsceneEvent) this.onCreate(event, CutsceneEventType.animate);
 			if (event instanceof CameraCutsceneEvent) this.onCreate(event, CutsceneEventType.camera);
 			if (event instanceof DelayCutsceneEvent) this.onCreate(event, CutsceneEventType.delay);
@@ -91,6 +94,7 @@ public class EditCutsceneController implements Initializable, ListCellParent<Cut
 			if (event instanceof WaitCutsceneEvent) this.onCreate(event, CutsceneEventType.wait);
 		} else try
 		{
+			editing = null;
 			FXMLLoader loader = new FXMLLoader(DataEditor.class.getResource("/layouts/cutscenes/select_event_type.fxml"));
 			Parent root = loader.load();
 			selectEventTypePopup = FXUtils.showPopup(root, "New Event");
@@ -133,6 +137,18 @@ public class EditCutsceneController implements Initializable, ListCellParent<Cut
 	public void onEdit(CutsceneEvent item)
 	{
 		this.onCreate(item);
+	}
+
+	public void onEditConfirm(CutsceneEvent event)
+	{
+		ObservableList<CutsceneEvent> events = this.eventList.getItems();
+		if (editing == null) events.add(event);
+		else
+		{
+			int index = events.indexOf(editing);
+			events.remove(index);
+			events.add(index, event);
+		}
 	}
 
 	@Override
