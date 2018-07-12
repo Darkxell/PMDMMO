@@ -40,7 +40,7 @@ public class EditDialogController implements Initializable
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
 	{
-		this.allEntities.addAll(EditCutsceneController.instance.listEntities()); // TODO test this
+		this.allEntities.addAll(EditCutsceneController.instance.listAvailableEntities(EditCutsceneController.editing));
 		this.targetCheckbox.selectedProperty().addListener((obs, oldValue, newValue) -> {
 			this.targetCombobox.setDisable(!newValue);
 		});

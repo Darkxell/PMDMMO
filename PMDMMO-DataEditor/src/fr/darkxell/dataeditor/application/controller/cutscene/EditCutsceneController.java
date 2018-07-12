@@ -9,6 +9,8 @@ import com.darkxell.client.mechanics.cutscene.Cutscene;
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent.CutsceneEventType;
 import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
+import com.darkxell.client.mechanics.cutscene.event.DespawnCutsceneEvent;
+import com.darkxell.client.mechanics.cutscene.event.SpawnCutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.event.WaitCutsceneEvent;
 
 import fr.darkxell.dataeditor.application.DataEditor;
@@ -62,9 +64,18 @@ public class EditCutsceneController implements Initializable, ListCellParent<Cut
 		});
 	}
 
-	public ArrayList<CutsceneEntity> listEntities()
+	public ArrayList<CutsceneEntity> listAvailableEntities(CutsceneEvent event)
 	{
-		return new ArrayList<>();
+		ArrayList<CutsceneEntity> entities = new ArrayList<>();
+		for (CutsceneEntity entity : this.cutsceneCreationController.entitiesList.getItems())
+			entities.add(entity);
+		for (CutsceneEvent e : this.eventList.getItems())
+		{
+			if (e == event) break;
+			if (e instanceof SpawnCutsceneEvent) entities.add(((SpawnCutsceneEvent) e).entity);
+			if (e instanceof DespawnCutsceneEvent) entities.removeIf(ent -> ent.id == ((DespawnCutsceneEvent) e).target);
+		}
+		return entities;
 	}
 
 	@Override

@@ -28,6 +28,16 @@ public class CutscenePokemon extends CutsceneEntity
 		this(null, xml);
 	}
 
+	public CutscenePokemon(int id, double xpos, double ypos, Pokemon pokemon, PokemonSpriteState state, Direction facing, boolean animated)
+	{
+		super(id, xpos, ypos);
+		this.pokemonid = pokemon.species().compoundID();
+		this.currentState = state;
+		this.facing = facing;
+		this.animated = animated;
+		this.instanciated = pokemon;
+	}
+
 	public CutscenePokemon(Pokemon pokemon)
 	{
 		if (pokemon != null) this.pokemonid = pokemon == null ? 0 : pokemon.species().compoundID();
@@ -73,16 +83,6 @@ public class CutscenePokemon extends CutsceneEntity
 		this.instanciated = pokemon != null ? pokemon : PokemonRegistry.find(this.pokemonid).generate(new Random(), 1);
 	}
 
-	public CutscenePokemon(int id, double xpos, double ypos, Pokemon pokemon, PokemonSpriteState state, Direction facing, boolean animated)
-	{
-		super(id, xpos, ypos);
-		this.pokemonid = pokemon.species().compoundID();
-		this.currentState = state;
-		this.facing = facing;
-		this.animated = animated;
-		this.instanciated = pokemon;
-	}
-
 	@Override
 	public AbstractRenderer createRenderer()
 	{
@@ -97,6 +97,12 @@ public class CutscenePokemon extends CutsceneEntity
 	public Pokemon toPokemon()
 	{
 		return this.instanciated;
+	}
+
+	@Override
+	public String toString()
+	{
+		return "(" + this.id + ") " + this.instanciated.species() + " @ X=" + this.xPos + ", Y=" + this.yPos;
 	}
 
 	@Override

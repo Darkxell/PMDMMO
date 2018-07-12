@@ -10,6 +10,11 @@ import java.util.HashMap;
 import org.jdom2.Element;
 
 import com.darkxell.client.mechanics.cutscene.Cutscene;
+import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
+import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
+import com.darkxell.client.mechanics.cutscene.event.DialogCutsceneEvent;
+import com.darkxell.client.mechanics.cutscene.event.DialogCutsceneEvent.CutsceneDialogScreen;
+import com.darkxell.client.mechanics.cutscene.event.SpawnCutsceneEvent;
 import com.darkxell.common.util.XMLUtils;
 
 import fr.darkxell.dataeditor.application.util.FileManager;
@@ -43,6 +48,20 @@ public class Cutscenes
 			{
 				Cutscene cutscene = new Cutscene(file.replace(".xml", ""), XMLUtils.read(new FileInputStream(new File(base + "/" + file))));
 				cutscenes.put(cutscene.name, cutscene);
+
+				HashMap<Integer, CutsceneEntity> entities = new HashMap<>();
+				for (CutsceneEntity e : cutscene.creation.entities())
+					entities.put(e.id, e);
+				for (CutsceneEvent e : cutscene.events)
+					if (e instanceof SpawnCutsceneEvent) entities.put(((SpawnCutsceneEvent) e).entity.id, ((SpawnCutsceneEvent) e).entity);
+
+				for (CutsceneEvent e : cutscene.events)
+					if (e instanceof DialogCutsceneEvent)
+					{
+						for (CutsceneDialogScreen s : ((DialogCutsceneEvent) e).screens)
+							if (s.pokemon != -1) s.entity = entities.get(s.pokemon);
+					}
+
 			} catch (FileNotFoundException e)
 			{
 				e.printStackTrace();
