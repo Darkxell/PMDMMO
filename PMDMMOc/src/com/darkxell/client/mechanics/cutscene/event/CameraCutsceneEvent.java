@@ -27,6 +27,14 @@ public class CameraCutsceneEvent extends CutsceneEvent
 		this.speed = XMLUtils.getAttribute(xml, "speed", 1.);
 	}
 
+	public CameraCutsceneEvent(int id, double xpos, double ypos, double speed)
+	{
+		super(id, CutsceneEventType.camera);
+		this.xPos = xpos;
+		this.yPos = ypos;
+		this.speed = speed;
+	}
+
 	@Override
 	public boolean isOver()
 	{
@@ -60,7 +68,18 @@ public class CameraCutsceneEvent extends CutsceneEvent
 	@Override
 	public String toString()
 	{
-		return this.displayID() + "Camera moves to X=" + this.xPos + ", Y=" + this.yPos;
+		return this.displayID() + "Camera moves to X=" + (this.xPos == UNSPECIFIED ? "[UNCHANGED]" : this.xPos) + ", Y="
+				+ (this.yPos == UNSPECIFIED ? "[UNCHANGED]" : this.yPos);
+	}
+
+	@Override
+	public Element toXML()
+	{
+		Element root = super.toXML();
+		XMLUtils.setAttribute(root, "xpos", this.xPos, UNSPECIFIED);
+		XMLUtils.setAttribute(root, "ypos", this.yPos, UNSPECIFIED);
+		XMLUtils.setAttribute(root, "speed", this.speed, 1);
+		return root;
 	}
 
 	@Override
