@@ -30,6 +30,15 @@ public class MoveCutsceneEvent extends CutsceneEvent
 		this.target = XMLUtils.getAttribute(xml, "target", -1);
 	}
 
+	public MoveCutsceneEvent(int id, CutsceneEntity entity, double xpos, double ypos, double speed)
+	{
+		super(id, CutsceneEventType.move);
+		this.target = entity.id;
+		this.xPos = xpos;
+		this.yPos = ypos;
+		this.speed = speed;
+	}
+
 	@Override
 	public boolean isOver()
 	{
@@ -62,6 +71,24 @@ public class MoveCutsceneEvent extends CutsceneEvent
 	}
 
 	@Override
+	public String toString()
+	{
+		return this.displayID() + "(" + this.target + ") travels to X=" + (this.xPos == UNSPECIFIED ? "[UNCHANGED]" : this.xPos) + ", Y="
+				+ (this.yPos == UNSPECIFIED ? "[UNCHANGED]" : this.yPos);
+	}
+
+	@Override
+	public Element toXML()
+	{
+		Element root = super.toXML();
+		XMLUtils.setAttribute(root, "xpos", this.xPos, UNSPECIFIED);
+		XMLUtils.setAttribute(root, "ypos", this.yPos, UNSPECIFIED);
+		XMLUtils.setAttribute(root, "speed", this.speed, 1);
+		XMLUtils.setAttribute(root, "target", this.target, -1);
+		return root;
+	}
+
+	@Override
 	public void update()
 	{
 		super.update();
@@ -75,12 +102,6 @@ public class MoveCutsceneEvent extends CutsceneEvent
 			this.entity.xPos = this.travel.current().getX();
 			this.entity.yPos = this.travel.current().getY();
 		}
-	}
-
-	@Override
-	public String toString()
-	{
-		return this.displayID() + "(" + this.target + ") travels to X=" + this.xPos + ", Y=" + this.yPos;
 	}
 
 }

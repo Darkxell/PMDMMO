@@ -29,6 +29,7 @@
     <setanimated target="45" animated="false" />
     <despawn target="2" />
     <setstate target="45" state="ROTATE" />
+    <move xpos="4.0" speed="6.0" target="45" />
   </events>
   <onfinish>
     <loadfreezone id="Base" />
