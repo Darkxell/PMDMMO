@@ -60,7 +60,7 @@ public class CameraCutsceneEvent extends CutsceneEvent
 	@Override
 	public String toString()
 	{
-		return "Camera moves to X=" + this.xPos + ", Y=" + this.yPos;
+		return this.displayID() + "Camera moves to X=" + this.xPos + ", Y=" + this.yPos;
 	}
 
 	@Override

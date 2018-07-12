@@ -80,7 +80,7 @@ public class MoveCutsceneEvent extends CutsceneEvent
 	@Override
 	public String toString()
 	{
-		return "(" + this.target + ") travels to X=" + this.xPos + ", Y=" + this.yPos;
+		return this.displayID() + "(" + this.target + ") travels to X=" + this.xPos + ", Y=" + this.yPos;
 	}
 
 }

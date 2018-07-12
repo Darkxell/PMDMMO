@@ -39,7 +39,7 @@ public class SetStateCutsceneEvent extends CutsceneEvent
 	@Override
 	public String toString()
 	{
-		return "(" + this.target + ") gains state " + this.state;
+		return this.displayID() + "(" + this.target + ") gains state " + this.state;
 	}
 
 }

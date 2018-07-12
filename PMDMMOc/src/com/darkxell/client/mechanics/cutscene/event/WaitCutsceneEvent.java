@@ -11,7 +11,7 @@ public class WaitCutsceneEvent extends CutsceneEvent
 {
 
 	public final boolean all;
-	private ArrayList<CutsceneEvent> events;
+	public ArrayList<CutsceneEvent> events;
 
 	public WaitCutsceneEvent(Element xml, Cutscene cutscene)
 	{
@@ -29,6 +29,13 @@ public class WaitCutsceneEvent extends CutsceneEvent
 		if (this.events.isEmpty()) this.events.addAll(this.cutscene.events);
 	}
 
+	public WaitCutsceneEvent(int id, boolean all, ArrayList<CutsceneEvent> events)
+	{
+		super(id, CutsceneEventType.wait);
+		this.all = all;
+		this.events = events;
+	}
+
 	@Override
 	public boolean isOver()
 	{
@@ -40,7 +47,7 @@ public class WaitCutsceneEvent extends CutsceneEvent
 	@Override
 	public String toString()
 	{
-		return "Wait for " + (this.all ? "all" : this.events.size()) + " events";
+		return this.displayID() + "Wait for " + (this.all ? "all" : this.events.size()) + " events";
 	}
 
 	@Override

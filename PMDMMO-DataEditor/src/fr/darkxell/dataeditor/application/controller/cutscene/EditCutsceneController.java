@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 import com.darkxell.client.mechanics.cutscene.Cutscene;
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent.CutsceneEventType;
+import com.darkxell.client.mechanics.cutscene.event.WaitCutsceneEvent;
 
 import fr.darkxell.dataeditor.application.DataEditor;
 import fr.darkxell.dataeditor.application.controller.cutscene.event.EventController;
@@ -40,7 +41,7 @@ public class EditCutsceneController implements Initializable, ListCellParent<Cut
 	@FXML
 	private CutsceneEndController cutsceneEndController;
 	@FXML
-	private ListView<CutsceneEvent> eventList;
+	public ListView<CutsceneEvent> eventList;
 
 	@Override
 	public Node graphicFor(CutsceneEvent item)
@@ -121,6 +122,17 @@ public class EditCutsceneController implements Initializable, ListCellParent<Cut
 			events.remove(index);
 			events.add(index, event);
 		}
+	}
+
+	@Override
+	public void onMove(CutsceneEvent item, int newIndex)
+	{
+		if (item instanceof WaitCutsceneEvent)
+			((WaitCutsceneEvent) item).events.removeIf(e -> this.eventList.getItems().indexOf(e) >= this.eventList.getItems().indexOf(item));
+		ObservableList<CutsceneEvent> ev = this.eventList.getItems();
+		ArrayList<CutsceneEvent> e = new ArrayList<>(ev);
+		ev.clear(); // Refreshing display
+		ev.addAll(e);
 	}
 
 	@Override

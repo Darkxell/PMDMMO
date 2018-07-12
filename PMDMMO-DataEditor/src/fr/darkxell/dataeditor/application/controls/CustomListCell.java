@@ -27,6 +27,8 @@ public class CustomListCell<T> extends ListCell<T>
 
 		void onEdit(T item);
 
+		void onMove(T item, int newIndex);
+
 		void onRename(T item, String name);
 
 	}
@@ -138,6 +140,8 @@ public class CustomListCell<T> extends ListCell<T>
 		items.add(newIndex, item);
 		items.remove(oldIndex + (indexMove < 0 ? 1 : 0));
 		this.getListView().getSelectionModel().select(item);
+
+		this.parent.onMove(item, items.indexOf(item));
 	}
 
 	public CustomListCell<T> setCanCreate(boolean canCreate)

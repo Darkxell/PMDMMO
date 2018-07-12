@@ -87,7 +87,7 @@ public class DialogCutsceneEvent extends CutsceneEvent implements DialogEndListe
 	@Override
 	public String toString()
 	{
-		return "Dialog: " + new Message(this.screens.get(0).text).toString() + "...";
+		return this.displayID() + "Dialog: " + new Message(this.screens.get(0).text).toString() + "...";
 	}
 
 }

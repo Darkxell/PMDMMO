@@ -28,8 +28,8 @@ public class FXUtils
 		s.setScene(new Scene(root));
 		s.setTitle(title);
 		s.getIcons().addAll(DataEditor.primaryStage.getIcons());
-		s.setWidth(600);
-		s.setHeight(500);
+		s.setWidth(700);
+		s.setHeight(600);
 		s.initModality(Modality.APPLICATION_MODAL);
 		s.show();
 		return s;

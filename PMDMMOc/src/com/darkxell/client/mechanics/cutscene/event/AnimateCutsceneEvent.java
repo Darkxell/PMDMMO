@@ -29,7 +29,7 @@ public class AnimateCutsceneEvent extends CutsceneEvent
 	@Override
 	public String toString()
 	{
-		return "Play animation " + this.animation;
+		return this.displayID() + "Play animation " + this.animation;
 	}
 
 }

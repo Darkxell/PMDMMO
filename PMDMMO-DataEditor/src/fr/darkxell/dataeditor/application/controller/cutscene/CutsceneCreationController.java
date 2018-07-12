@@ -110,6 +110,10 @@ public class CutsceneCreationController implements Initializable, ListCellParent
 	}
 
 	@Override
+	public void onMove(CutsceneEntity item, int newIndex)
+	{}
+
+	@Override
 	public void onRename(CutsceneEntity item, String name)
 	{}
 

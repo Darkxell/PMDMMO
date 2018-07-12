@@ -32,7 +32,7 @@ public class DelayCutsceneEvent extends CutsceneEvent
 	@Override
 	public String toString()
 	{
-		return "Wait for " + this.duration + " ticks";
+		return this.displayID() + "Wait for " + this.duration + " ticks";
 	}
 
 	@Override

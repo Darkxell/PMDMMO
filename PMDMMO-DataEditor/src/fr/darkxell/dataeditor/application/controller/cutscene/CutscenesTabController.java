@@ -97,6 +97,10 @@ public class CutscenesTabController implements Initializable, ListCellParent<Cut
 	}
 
 	@Override
+	public void onMove(Cutscene item, int newIndex)
+	{}
+
+	@Override
 	public void onRename(Cutscene cutscene, String name)
 	{
 		if (Cutscenes.containsKey(name)) new Alert(AlertType.ERROR, "There is already a Cutscene named '" + name + "'.", ButtonType.OK).showAndWait();

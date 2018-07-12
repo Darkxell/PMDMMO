@@ -32,7 +32,7 @@ public class SetAnimatedCutsceneEvent extends CutsceneEvent
 	@Override
 	public String toString()
 	{
-		return "(" + this.target + ") becomes " + (this.animated ? "" : "not ") + "animated";
+		return this.displayID() + "(" + this.target + ") becomes " + (this.animated ? "" : "not ") + "animated";
 	}
 
 }

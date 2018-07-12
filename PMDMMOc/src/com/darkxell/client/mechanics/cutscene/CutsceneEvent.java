@@ -113,6 +113,11 @@ public abstract class CutsceneEvent
 		this.cutscene = null;
 	}
 
+	public String displayID()
+	{
+		return this.id == -1 ? "" : "(" + this.id + ") ";
+	}
+
 	public boolean isOver()
 	{
 		return true;
@@ -127,7 +132,7 @@ public abstract class CutsceneEvent
 	public Element toXML()
 	{
 		Element root = new Element(this.type.name());
-		XMLUtils.setAttribute(root, "id", this.id, -1);
+		XMLUtils.setAttribute(root, "eventid", this.id, -1);
 		return root;
 	}
 

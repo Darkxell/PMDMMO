@@ -29,7 +29,7 @@ public class SpawnCutsceneEvent extends CutsceneEvent
 	@Override
 	public String toString()
 	{
-		return "Spawn " + (this.entity instanceof CutscenePokemon ? ((CutscenePokemon) this.entity).instanciated.species().toString() : this.entity.id);
+		return this.displayID() + "Spawn " + (this.entity instanceof CutscenePokemon ? ((CutscenePokemon) this.entity).instanciated.species().toString() : this.entity.id);
 	}
 
 }

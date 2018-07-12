@@ -66,7 +66,7 @@ public class RotateCutsceneEvent extends CutsceneEvent
 	@Override
 	public String toString()
 	{
-		return "(" + this.target + ") rotates clockwise " + this.distance + " times";
+		return this.displayID() + "(" + this.target + ") rotates clockwise " + this.distance + " times";
 	}
 
 }

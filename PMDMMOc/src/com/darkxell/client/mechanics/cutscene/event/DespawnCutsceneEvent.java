@@ -29,7 +29,7 @@ public class DespawnCutsceneEvent extends CutsceneEvent
 	@Override
 	public String toString()
 	{
-		return "(" + this.target + ") despawns";
+		return this.displayID() + "(" + this.target + ") despawns";
 	}
 
 }

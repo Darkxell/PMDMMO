@@ -3,8 +3,12 @@
   <creation />
   <events>
     <music music="calamity.mp3" />
-    <sound sound="game-levelup" overmusic="true" />
-    <delay ticks="42" />
+    <sound eventid="3" sound="game-levelup" overmusic="true" />
+    <delay eventid="4" ticks="42" />
+    <wait>
+      <event>3</event>
+      <event>4</event>
+    </wait>
   </events>
   <onfinish>
     <loadfreezone id="Base" />
