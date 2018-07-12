@@ -23,8 +23,6 @@ public class DialogCutsceneEvent extends CutsceneEvent implements DialogEndListe
 	public static class CutsceneDialogScreen
 	{
 		public final int emotion;
-		/** <b>Only used in editor!</b> */
-		public CutsceneEntity entity;
 		public final int pokemon;
 		public final String text;
 		public final boolean translate;
@@ -43,7 +41,6 @@ public class DialogCutsceneEvent extends CutsceneEvent implements DialogEndListe
 			this.translate = translate;
 			this.emotion = emotion;
 			this.pokemon = entity == null ? -1 : entity.id;
-			this.entity = entity;
 		}
 
 		@Override
@@ -57,7 +54,7 @@ public class DialogCutsceneEvent extends CutsceneEvent implements DialogEndListe
 			Element root = new Element("dialogscreen").setText(this.text);
 			XMLUtils.setAttribute(root, "translate", this.translate, true);
 			XMLUtils.setAttribute(root, "emotion", this.emotion, -1);
-			XMLUtils.setAttribute(root, "target", this.entity == null ? -1 : this.entity.id, -1);
+			XMLUtils.setAttribute(root, "target", this.pokemon, -1);
 			return root;
 		}
 	}

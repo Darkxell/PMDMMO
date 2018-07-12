@@ -18,6 +18,12 @@ public class DespawnCutsceneEvent extends CutsceneEvent
 		this.target = XMLUtils.getAttribute(xml, "target", -1);
 	}
 
+	public DespawnCutsceneEvent(int id, CutsceneEntity entity)
+	{
+		super(id, CutsceneEventType.despawn);
+		this.target = entity.id;
+	}
+
 	@Override
 	public void onStart()
 	{
@@ -30,6 +36,12 @@ public class DespawnCutsceneEvent extends CutsceneEvent
 	public String toString()
 	{
 		return this.displayID() + "(" + this.target + ") despawns";
+	}
+
+	@Override
+	public Element toXML()
+	{
+		return super.toXML().setAttribute("target", String.valueOf(this.target));
 	}
 
 }

@@ -64,8 +64,13 @@ public class EditDialogController implements Initializable
 	{
 		this.textTextfield.setText(screen.text);
 		this.translatedCheckbox.setSelected(screen.translate);
-		this.targetCheckbox.setSelected(screen.entity != null);
-		if (this.targetCheckbox.isSelected()) this.targetCombobox.getSelectionModel().select(screen.entity);
+		this.targetCheckbox.setSelected(screen.pokemon != -1);
+		if (this.targetCheckbox.isSelected()) for (CutsceneEntity e : this.targetCombobox.getItems())
+			if (e.id == screen.pokemon)
+			{
+				this.targetCombobox.getSelectionModel().select(e);
+				break;
+			}
 	}
 
 }
