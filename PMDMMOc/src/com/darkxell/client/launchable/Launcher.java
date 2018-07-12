@@ -5,6 +5,7 @@ import com.darkxell.client.mechanics.animation.Animations;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
 import com.darkxell.client.resources.music.SoundManager;
+import com.darkxell.client.resources.music.SoundsHolder;
 import com.darkxell.client.state.mainstates.LoginMainState;
 import com.darkxell.client.ui.Frame;
 import com.darkxell.common.dungeon.DungeonRegistry;
@@ -41,6 +42,7 @@ public class Launcher {
 		PokemonSpritesets.loadData();
 		Animations.loadData();
 		TextRenderer.load();
+		SoundsHolder.load(".");
 		Persistance.soundmanager = new SoundManager();
 		Logger.instance().info("Lang & Data loaded.");
 

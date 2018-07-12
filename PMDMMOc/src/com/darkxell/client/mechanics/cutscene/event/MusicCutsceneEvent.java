@@ -19,6 +19,12 @@ public class MusicCutsceneEvent extends CutsceneEvent
 		this.soundtrackID = XMLUtils.getAttribute(xml, "music", null);
 	}
 
+	public MusicCutsceneEvent(int id, String soundtrackID)
+	{
+		super(id);
+		this.soundtrackID = soundtrackID;
+	}
+
 	@Override
 	public String getIconPath()
 	{
@@ -41,7 +47,7 @@ public class MusicCutsceneEvent extends CutsceneEvent
 	@Override
 	public Element toXML()
 	{
-		return new Element("music");
+		return new Element("music").setAttribute("music", this.soundtrackID);
 	}
 
 }

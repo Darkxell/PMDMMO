@@ -115,7 +115,7 @@ public class EditCutsceneController implements Initializable, ListCellParent<Cut
 				EventController controller = loader.getController();
 				controller.setup(event);
 			}
-			selectEventTypePopup = FXUtils.showPopup(root, (event == null ? "New" : "Edit") + " Event");
+			editEventPopup = FXUtils.showPopup(root, (event == null ? "New" : "Edit") + " Event");
 		} catch (IOException e)
 		{
 			e.printStackTrace();

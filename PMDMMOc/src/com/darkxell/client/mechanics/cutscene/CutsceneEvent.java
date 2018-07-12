@@ -71,13 +71,21 @@ public abstract class CutsceneEvent
 	}
 
 	public final Cutscene cutscene;
-	int id;
+	public int id;
 
 	public CutsceneEvent(Element xml, Cutscene cutscene)
 	{
 		this.id = XMLUtils.getAttribute(xml, "eventid", -1);
 		this.cutscene = cutscene;
 	}
+
+	public CutsceneEvent(int id)
+	{
+		this.id = id;
+		this.cutscene = null;
+	}
+
+	public abstract String getIconPath();
 
 	public boolean isOver()
 	{
@@ -94,7 +102,5 @@ public abstract class CutsceneEvent
 
 	public void update()
 	{}
-
-	public abstract String getIconPath();
 
 }

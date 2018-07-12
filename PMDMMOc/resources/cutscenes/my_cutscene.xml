@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cutscene name="my_cutscene">
+  <creation />
+  <events>
+    <music music="calamity.mp3" />
+  </events>
+  <onfinish>
+    <loadfreezone id="Base" />
+  </onfinish>
+</cutscene>
