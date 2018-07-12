@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 
 import com.darkxell.client.launchable.GameSocketEndpoint;
 import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.mechanics.freezones.FreezoneInfo;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.PlayerLoadingState;
 import com.darkxell.client.state.PlayerLoadingState.PlayerLoadingEndListener;
@@ -33,7 +34,7 @@ public class DungeonEndState extends AbstractState
 			public void onPlayerLoadingEnd(PlayerLoadingState state)
 			{
 				Persistance.player.resetDungeonTeam();
-				StateManager.setExploreState("Base", -1, -1);
+				StateManager.setExploreState(FreezoneInfo.BASE, -1, -1);
 			}
 		}));
 	}
@@ -82,7 +83,7 @@ public class DungeonEndState extends AbstractState
 		} else
 		{
 			Persistance.player.resetDungeonTeam();
-			StateManager.setExploreState("Base", -1, -1);
+			StateManager.setExploreState(FreezoneInfo.BASE, -1, -1);
 		}
 	}
 

@@ -18,12 +18,12 @@ public class CutsceneCreation
 	Cutscene cutscene;
 	private final ArrayList<CutsceneEntity> entities;
 	public final boolean fading;
-	public final String freezoneID;
+	public final FreezoneInfo freezone;
 
 	public CutsceneCreation(Cutscene cutscene)
 	{
 		this.cutscene = cutscene;
-		this.freezoneID = null;
+		this.freezone = null;
 		this.camerax = this.cameray = -1;
 		this.fading = false;
 		this.entities = new ArrayList<>();
@@ -32,7 +32,7 @@ public class CutsceneCreation
 	public CutsceneCreation(Cutscene cutscene, Element xml)
 	{
 		this.cutscene = cutscene;
-		this.freezoneID = XMLUtils.getAttribute(xml, "freezone", null);
+		this.freezone = FreezoneInfo.find(xml.getAttributeValue("freezone"));
 		this.fading = XMLUtils.getAttribute(xml, "fade", true);
 		this.camerax = XMLUtils.getAttribute(xml, "camerax", -1);
 		this.cameray = XMLUtils.getAttribute(xml, "cameray", -1);
@@ -43,9 +43,9 @@ public class CutsceneCreation
 			this.entities.add(new CutsceneEntity(entity));
 	}
 
-	public CutsceneCreation(String freezoneID, boolean fading, int camerax, int cameray, ArrayList<CutsceneEntity> entities)
+	public CutsceneCreation(FreezoneInfo freezone, boolean fading, int camerax, int cameray, ArrayList<CutsceneEntity> entities)
 	{
-		this.freezoneID = freezoneID;
+		this.freezone = freezone;
 		this.fading = fading;
 		this.camerax = camerax;
 		this.cameray = cameray;
@@ -54,7 +54,7 @@ public class CutsceneCreation
 
 	public void create()
 	{
-		Persistance.currentmap = FreezoneInfo.loadMap(this.freezoneID);
+		Persistance.currentmap = FreezoneInfo.loadMap(this.freezone);
 		Persistance.freezoneCamera = new FreezoneCamera(null);
 		if (this.camerax != -1) Persistance.freezoneCamera.x = this.camerax;
 		if (this.cameray != -1) Persistance.freezoneCamera.y = this.cameray;
@@ -70,7 +70,7 @@ public class CutsceneCreation
 	public Element toXML()
 	{
 		Element root = new Element("creation");
-		XMLUtils.setAttribute(root, "freezone", this.freezoneID, null);
+		XMLUtils.setAttribute(root, "freezone", this.freezone.id, null);
 		XMLUtils.setAttribute(root, "camerax", this.camerax, -1);
 		XMLUtils.setAttribute(root, "cameray", this.cameray, -1);
 		XMLUtils.setAttribute(root, "fading", this.fading, false);

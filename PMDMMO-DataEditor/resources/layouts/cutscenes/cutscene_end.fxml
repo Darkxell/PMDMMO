@@ -22,11 +22,11 @@
             <Insets left="10.0" right="10.0" top="10.0" />
          </VBox.margin>
       </ComboBox>
-      <TextField fx:id="freezoneTextfield" promptText="Freezone ID">
+      <ComboBox fx:id="freezoneCombobox" prefWidth="150.0" promptText="Freezone">
          <VBox.margin>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            <Insets top="10.0" />
          </VBox.margin>
-      </TextField>
+      </ComboBox>
       <TextField fx:id="freezoneXTextfield" promptText="Freezone X Pos">
          <VBox.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

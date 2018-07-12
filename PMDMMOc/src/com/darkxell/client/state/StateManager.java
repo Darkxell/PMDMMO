@@ -61,15 +61,15 @@ public abstract class StateManager {
 	// State switching methods
 
 	/**
-	 * @param mapID
+	 * @param freezone
 	 *            - ID of a Map. If null or doesn't match a valid ID, this
 	 *            method will not do anything.
 	 * @param xPos,
 	 *            yPos - Coordinates of the Player in the map. If any is -1,
 	 *            uses the default coordinates for that map.
 	 */
-	public static void setExploreState(String mapID, int xPos, int yPos) {
-		FreezoneMap map = FreezoneInfo.loadMap(mapID);
+	public static void setExploreState(FreezoneInfo freezone, int xPos, int yPos) {
+		FreezoneMap map = FreezoneInfo.loadMap(freezone);
 		if (map == null)
 			return;
 		setExploreState(map, xPos, yPos);

@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 import com.darkxell.client.mechanics.cutscene.Cutscene;
 import com.darkxell.client.mechanics.cutscene.CutsceneCreation;
 import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
+import com.darkxell.client.mechanics.freezones.FreezoneInfo;
 
 import fr.darkxell.dataeditor.application.DataEditor;
 import fr.darkxell.dataeditor.application.controls.CustomListCell;
@@ -40,11 +41,11 @@ public class CutsceneCreationController implements Initializable, ListCellParent
 	@FXML
 	private ComboBox<String> fadingCombobox;
 	@FXML
-	private TextField freezoneTextfield;
+	private ComboBox<FreezoneInfo> freezoneCombobox;
 
 	public CutsceneCreation getCreation()
 	{
-		return new CutsceneCreation(this.freezoneTextfield.getText(), this.fadingCombobox.getSelectionModel().getSelectedIndex() == 0,
+		return new CutsceneCreation(this.freezoneCombobox.getValue(), this.fadingCombobox.getSelectionModel().getSelectedIndex() == 0,
 				Integer.parseInt(this.cameraXTextfield.getText()), Integer.parseInt(this.cameraYTextfield.getText()),
 				new ArrayList<>(this.entitiesList.getItems()));
 	}
@@ -60,6 +61,9 @@ public class CutsceneCreationController implements Initializable, ListCellParent
 	{
 		this.fadingCombobox.getItems().addAll("No fading", "Fading in");
 		this.fadingCombobox.getSelectionModel().select(0);
+
+		this.freezoneCombobox.getItems().addAll(FreezoneInfo.values());
+		this.freezoneCombobox.getSelectionModel().select(0);
 
 		Pattern pattern = Pattern.compile("-?\\d*");
 		TextFormatter<String> formatter = new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
@@ -120,7 +124,7 @@ public class CutsceneCreationController implements Initializable, ListCellParent
 	public void setupFor(Cutscene cutscene)
 	{
 		CutsceneCreation creation = cutscene.creation;
-		this.freezoneTextfield.setText(creation.freezoneID);
+		this.freezoneCombobox.setValue(creation.freezone);
 		this.cameraXTextfield.setText(String.valueOf(creation.camerax));
 		this.cameraYTextfield.setText(String.valueOf(creation.cameray));
 		this.fadingCombobox.getSelectionModel().select(creation.fading ? 1 : 0);

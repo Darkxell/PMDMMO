@@ -1,6 +1,6 @@
 <cutscene xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="pmdmmo"
     xsi:schemaLocation="pmdmmo ../data/xsd/cutscenes.xsd" xmlns:ns1="pmdmmo">
-    <creation freezone="Base" fade="true" camerax="40" cameray="30">
+    <creation freezone="base" fade="true" camerax="40" cameray="30">
         <pokemon cutsceneid="0" xpos="35" ypos="28">
             <teammember>0</teammember>
 		</pokemon>
@@ -30,6 +30,6 @@
         </dialog>
     </events>
     <onfinish>
-        <loadfreezone id="Base"/>
+        <loadfreezone id="base"/>
     </onfinish>
 </cutscene>

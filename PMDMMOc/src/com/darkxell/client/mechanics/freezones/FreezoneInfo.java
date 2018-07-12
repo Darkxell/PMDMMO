@@ -1,8 +1,12 @@
 package com.darkxell.client.mechanics.freezones;
 
-import java.lang.reflect.InvocationTargetException;
-
 import com.darkxell.client.mechanics.freezones.zones.BaseFreezone;
+import com.darkxell.client.mechanics.freezones.zones.DojoFreezone;
+import com.darkxell.client.mechanics.freezones.zones.ForestFreezone;
+import com.darkxell.client.mechanics.freezones.zones.LumiousCaveFreezone;
+import com.darkxell.client.mechanics.freezones.zones.OfficeFreezone;
+import com.darkxell.client.mechanics.freezones.zones.PokemonSquareFreezone;
+import com.darkxell.client.mechanics.freezones.zones.PondFreezone;
 
 public enum FreezoneInfo {
 
@@ -81,20 +85,40 @@ public enum FreezoneInfo {
 	}
 
 	/** Creates a new instance of the desired freezone map. */
-	public static FreezoneMap loadMap(String id) {
+	public static FreezoneMap loadMap(FreezoneInfo freezone) {
 		// FIXME : switchcase here.
-		String baseName = BaseFreezone.class.getName();
-		Class<?> c;
-		try {
-			c = Class.forName(baseName.substring(0, baseName.length() - "BaseFreezone".length()) + id + "Freezone");
-			if (c == null)
+		switch (freezone)
+		{
+			case BASE:
+				return new BaseFreezone();
+
+			case SQUARE:
+				return new PokemonSquareFreezone();
+
+			case DOJO:
+				return new DojoFreezone();
+
+			case POND:
+				return new PondFreezone();
+
+			case OFFICE:
+				return new OfficeFreezone();
+
+			case STARTFOREST:
+				return new ForestFreezone();
+
+			case LUMINOUSCAVE:
+				return new LumiousCaveFreezone();
+
+			default:
 				return null;
-			FreezoneMap map = (FreezoneMap) c.getConstructor().newInstance();
-			return map;
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException
-				| InvocationTargetException | NoSuchMethodException | SecurityException e) {
-			e.printStackTrace();
-			return null;
 		}
+	}
+
+	public static FreezoneInfo find(String id)
+	{
+		for (FreezoneInfo f : values())
+			if (f.id.equals(id)) return f;
+		return null;
 	}
 }

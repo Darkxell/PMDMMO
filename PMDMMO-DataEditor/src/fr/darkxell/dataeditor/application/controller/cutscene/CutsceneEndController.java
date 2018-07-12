@@ -10,6 +10,7 @@ import com.darkxell.client.mechanics.cutscene.Cutscene.CutsceneEnd;
 import com.darkxell.client.mechanics.cutscene.end.EnterDungeonCutsceneEnd;
 import com.darkxell.client.mechanics.cutscene.end.LoadFreezoneCutsceneEnd;
 import com.darkxell.client.mechanics.cutscene.end.PlayCutsceneCutsceneEnd;
+import com.darkxell.client.mechanics.freezones.FreezoneInfo;
 import com.darkxell.common.dungeon.Dungeon;
 import com.darkxell.common.dungeon.DungeonRegistry;
 
@@ -51,7 +52,7 @@ public class CutsceneEndController implements Initializable, ChangeListener<Cuts
 	@FXML
 	private ComboBox<Dungeon> dungeonCombobox;
 	@FXML
-	private TextField freezoneTextfield;
+	private ComboBox<FreezoneInfo> freezoneCombobox;
 	@FXML
 	private TextField freezoneXTextfield;
 	@FXML
@@ -64,7 +65,7 @@ public class CutsceneEndController implements Initializable, ChangeListener<Cuts
 	{
 		this.cutsceneCombobox.setVisible(newValue == CutsceneEndMode.CUTSCENE);
 		this.dungeonCombobox.setVisible(newValue == CutsceneEndMode.DUNGEON);
-		this.freezoneTextfield.setVisible(newValue == CutsceneEndMode.FREEZONE);
+		this.freezoneCombobox.setVisible(newValue == CutsceneEndMode.FREEZONE);
 		this.freezoneXTextfield.setVisible(newValue == CutsceneEndMode.FREEZONE);
 		this.freezoneYTextfield.setVisible(newValue == CutsceneEndMode.FREEZONE);
 	}
@@ -80,7 +81,7 @@ public class CutsceneEndController implements Initializable, ChangeListener<Cuts
 				return new EnterDungeonCutsceneEnd(this.dungeonCombobox.getSelectionModel().getSelectedItem().id);
 
 			case FREEZONE:
-				return new LoadFreezoneCutsceneEnd(this.freezoneTextfield.getText(), Integer.parseInt(this.freezoneXTextfield.getText()),
+				return new LoadFreezoneCutsceneEnd(this.freezoneCombobox.getValue(), Integer.parseInt(this.freezoneXTextfield.getText()),
 						Integer.parseInt(this.freezoneYTextfield.getText()));
 		}
 		return null;
@@ -102,8 +103,13 @@ public class CutsceneEndController implements Initializable, ChangeListener<Cuts
 		this.cutsceneCombobox.getItems().addAll(Cutscenes.values());
 		this.dungeonCombobox.getItems().addAll(DungeonRegistry.list());
 		this.modeCombobox.getItems().addAll(CutsceneEndMode.values());
+		this.freezoneCombobox.getItems().addAll(FreezoneInfo.values());
 
 		this.modeCombobox.getSelectionModel().selectedItemProperty().addListener(this);
+		this.modeCombobox.getSelectionModel().select(0);
+		this.dungeonCombobox.getSelectionModel().select(0);
+		this.cutsceneCombobox.getSelectionModel().select(0);
+		this.freezoneCombobox.getSelectionModel().select(0);
 	}
 
 	public void setupFor(Cutscene cutscene)
@@ -122,7 +128,7 @@ public class CutsceneEndController implements Initializable, ChangeListener<Cuts
 		if (end instanceof LoadFreezoneCutsceneEnd)
 		{
 			LoadFreezoneCutsceneEnd e = (LoadFreezoneCutsceneEnd) end;
-			this.freezoneTextfield.setText(e.freezoneID);
+			this.freezoneCombobox.setValue(e.freezone);
 			this.freezoneXTextfield.setText(String.valueOf(e.xPos));
 			this.freezoneYTextfield.setText(String.valueOf(e.yPos));
 			this.modeCombobox.getSelectionModel().select(CutsceneEndMode.FREEZONE);
