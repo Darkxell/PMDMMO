@@ -9,6 +9,13 @@
       <event>3</event>
       <event>4</event>
     </wait>
+    <dialog>
+      <dialogscreen translate="false">0.42049651975117663</dialogscreen>
+      <dialogscreen translate="false">0.8346756538185756</dialogscreen>
+      <dialogscreen translate="false">0.3708872568969742</dialogscreen>
+      <dialogscreen translate="false">0.7491944517574315</dialogscreen>
+      <dialogscreen translate="false">0.59006357445914</dialogscreen>
+    </dialog>
   </events>
   <onfinish>
     <loadfreezone id="Base" />

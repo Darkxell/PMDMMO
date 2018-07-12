@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 import com.darkxell.client.mechanics.cutscene.Cutscene;
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent.CutsceneEventType;
+import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
 import com.darkxell.client.mechanics.cutscene.event.WaitCutsceneEvent;
 
 import fr.darkxell.dataeditor.application.DataEditor;
@@ -59,6 +60,11 @@ public class EditCutsceneController implements Initializable, ListCellParent<Cut
 		this.eventList.setCellFactory(param -> {
 			return new CustomListCell<>(this, "Cutscene Event").setCanRename(false);
 		});
+	}
+
+	public ArrayList<CutsceneEntity> listEntities()
+	{
+		return new ArrayList<>();
 	}
 
 	@Override
@@ -151,6 +157,7 @@ public class EditCutsceneController implements Initializable, ListCellParent<Cut
 	{
 		this.cutsceneCreationController.setupFor(cutscene);
 		this.cutsceneEndController.setupFor(cutscene);
+		this.eventList.getItems().clear();
 		this.eventList.getItems().addAll(cutscene.events);
 	}
 
