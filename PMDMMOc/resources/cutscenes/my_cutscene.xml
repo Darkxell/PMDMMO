@@ -8,7 +8,7 @@
     <entity cutsceneid="1" ypos="1.0" xpos="1.0" />
   </creation>
   <events>
-    <spawnpokemon cutsceneid="2" ypos="3.0" xpos="4.0" facing="NORTH">
+    <spawnpokemon cutsceneid="2" ypos="4.0" xpos="3.0" facing="NORTH">
       <pokemonid>38</pokemonid>
       <state>APPEAL</state>
     </spawnpokemon>
@@ -31,6 +31,7 @@
     <setstate target="45" state="ROTATE" />
     <move xpos="4.0" speed="6.0" target="45" />
     <camera xpos="4.0" speed="2.0" />
+    <animate animation="my_anim" target="45" />
   </events>
   <onfinish>
     <loadfreezone id="Base" />
