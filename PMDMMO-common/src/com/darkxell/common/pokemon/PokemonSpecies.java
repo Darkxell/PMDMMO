@@ -32,6 +32,7 @@ public class PokemonSpecies
 	final int[] experiencePerLevel;
 	/** The list of different forms Pokémon of this species can have. */
 	private final ArrayList<PokemonSpecies> forms;
+	public final String friendAreaID;
 	public final float height, weight;
 	public final int id, formID;
 	/** List of moves learned by leveling up. Key is level, value is the list of move IDs. */
@@ -86,11 +87,13 @@ public class PokemonSpecies
 		this.forms = new ArrayList<PokemonSpecies>();
 		for (Element form : xml.getChildren("form", xml.getNamespace()))
 			this.forms.add(createForm(form));
+
+		this.friendAreaID = xml.getAttributeValue("area");
 	}
 
 	public PokemonSpecies(int id, int formID, PokemonType type1, PokemonType type2, int baseXP, ArrayList<BaseStats> baseStats, float height, float weight,
 			Mobility mobility, ArrayList<Integer> abilities, int[] experiencePerLevel, HashMap<Integer, ArrayList<Integer>> learnset, ArrayList<Integer> tms,
-			ArrayList<Evolution> evolutions, ArrayList<PokemonSpecies> forms)
+			ArrayList<Evolution> evolutions, ArrayList<PokemonSpecies> forms, String friendAreaID)
 	{
 		this.id = id;
 		this.formID = formID;
@@ -107,6 +110,7 @@ public class PokemonSpecies
 		this.tms = tms;
 		this.evolutions = evolutions;
 		this.forms = forms;
+		this.friendAreaID = friendAreaID;
 	}
 
 	public BaseStats baseStatsIncrease(int level)
@@ -170,8 +174,10 @@ public class PokemonSpecies
 		else for (Element level : xml.getChild("learnset", xml.getNamespace()).getChildren())
 			learnset.put(Integer.parseInt(level.getAttributeValue("l")), XMLUtils.readIntArrayAsList(level));
 
+		String friendArea = XMLUtils.getAttribute(xml, "area", this.friendAreaID);
+
 		return new PokemonSpecies(this.id, formID, type1, type2, baseXP, baseStats, height, weight, mobility, abilities, experiencePerLevel, learnset, tms,
-				evolutions, forms);
+				evolutions, forms, friendArea);
 	}
 
 	private Mobility defaultMobility()
@@ -371,6 +377,8 @@ public class PokemonSpecies
 
 		for (PokemonSpecies form : this.forms)
 			this.toXML(root, form);
+		
+		root.setAttribute("area", this.friendAreaID);
 
 		return root;
 	}
@@ -448,6 +456,8 @@ public class PokemonSpecies
 			}
 			e.addContent(learnset);
 		}
+		
+		XMLUtils.setAttribute(root, "area", form.friendAreaID, this.friendAreaID);
 	}
 
 }
