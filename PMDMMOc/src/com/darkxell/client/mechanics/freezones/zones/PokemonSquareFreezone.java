@@ -20,7 +20,7 @@ import com.darkxell.common.zones.FreezoneInfo;
 public class PokemonSquareFreezone extends FreezoneMap {
 
 	public PokemonSquareFreezone() {
-		super("/freezones/square.xml");
+		super("/freezones/square.xml", 4, 40, FreezoneInfo.SQUARE);
 		this.freezonebgm = "town.mp3";
 		this.triggerzones.add(new WarpZone(63, 40, FreezoneInfo.BASE, new DoubleRectangle(0, 38, 2, 5)));
 		this.triggerzones.add(new WarpZone(-1, -1, FreezoneInfo.DOJO, new DoubleRectangle(63, 87, 9, 2)));
@@ -100,21 +100,6 @@ public class PokemonSquareFreezone extends FreezoneMap {
 				new Message("dialog.place.shiftry.2"));
 		this.addEntity(new PokemonFreezoneEntity(69, 35, 275, Direction.SOUTHWEST, s));
 
-	}
-
-	@Override
-	public int defaultX() {
-		return 4;
-	}
-
-	@Override
-	public int defaultY() {
-		return 40;
-	}
-
-	@Override
-	public FreezoneInfo getInfo() {
-		return FreezoneInfo.SQUARE;
 	}
 
 }

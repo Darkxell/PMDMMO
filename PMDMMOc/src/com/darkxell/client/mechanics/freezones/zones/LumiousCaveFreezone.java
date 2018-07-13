@@ -9,26 +9,11 @@ import com.darkxell.common.zones.FreezoneInfo;
 public class LumiousCaveFreezone extends FreezoneMap {
 
 	public LumiousCaveFreezone() {
-		super("/freezones/lcave.xml");
+		super("/freezones/lcave.xml", 29, 34, FreezoneInfo.LUMINOUSCAVE);
 		this.freezonebgm = "pond.mp3";
 		this.triggerzones.add(new WarpZone(29, 15, FreezoneInfo.POND, new DoubleRectangle(28, 38, 4, 2)));
 
 		this.addEntity(new CrystalEntity(30.3, 26.3));
-	}
-
-	@Override
-	public FreezoneInfo getInfo() {
-		return FreezoneInfo.LUMINOUSCAVE;
-	}
-
-	@Override
-	public int defaultX() {
-		return 29;
-	}
-
-	@Override
-	public int defaultY() {
-		return 34;
 	}
 
 }

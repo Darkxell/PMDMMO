@@ -1,4 +1,4 @@
-package com.darkxell.client.mechanics.freezones.zones.friend;
+package com.darkxell.client.mechanics.freezones.zones;
 
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.freezones.TriggerZone;

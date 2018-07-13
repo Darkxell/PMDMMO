@@ -14,7 +14,7 @@ import com.darkxell.common.zones.FreezoneInfo;
 public class BaseFreezone extends FreezoneMap {
 
 	public BaseFreezone() {
-		super("/freezones/base.xml");
+		super("/freezones/base.xml", 35, 28, FreezoneInfo.BASE);
 		this.freezonebgm = "base.mp3";
 		this.triggerzones.add(new WarpZone(4, 40, FreezoneInfo.SQUARE, new DoubleRectangle(66, 34, 2, 11)));
 		this.triggerzones.add(new TriggerZone(new DoubleRectangle(0, 38, 2, 8)) {
@@ -51,21 +51,6 @@ public class BaseFreezone extends FreezoneMap {
 		this.addEntity(new AnimatedFlowerEntity(42.5, 59, false));
 
 		this.addEntity(new FlagEntity(24.4, 10));
-	}
-
-	@Override
-	public FreezoneInfo getInfo() {
-		return FreezoneInfo.BASE;
-	}
-
-	@Override
-	public int defaultX() {
-		return 35;
-	}
-
-	@Override
-	public int defaultY() {
-		return 28;
 	}
 
 }

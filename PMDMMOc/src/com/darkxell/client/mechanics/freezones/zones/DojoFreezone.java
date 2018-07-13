@@ -9,7 +9,7 @@ import com.darkxell.common.zones.FreezoneInfo;
 public class DojoFreezone extends FreezoneMap {
 
 	public DojoFreezone() {
-		super("/freezones/dojo.xml");
+		super("/freezones/dojo.xml", 42, 4, FreezoneInfo.DOJO);
 		this.freezonebgm = "town.mp3";
 		this.triggerzones.add(new WarpZone(67, 85, FreezoneInfo.SQUARE, new DoubleRectangle(39, 0, 9, 2)));
 
@@ -32,21 +32,6 @@ public class DojoFreezone extends FreezoneMap {
 		this.addEntity(new AnimatedFlowerEntity(73, 39, true));
 		this.addEntity(new AnimatedFlowerEntity(68, 40, true));
 
-	}
-
-	@Override
-	public FreezoneInfo getInfo() {
-		return FreezoneInfo.DOJO;
-	}
-
-	@Override
-	public int defaultX() {
-		return 42;
-	}
-
-	@Override
-	public int defaultY() {
-		return 4;
 	}
 
 }

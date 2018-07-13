@@ -3,12 +3,12 @@ package com.darkxell.client.mechanics.freezones.zones.friend;
 import com.darkxell.client.mechanics.freezones.zones.FriendAreaFreezone;
 import com.darkxell.common.zones.FreezoneInfo;
 
-public class MushroomForestFreezone extends FriendAreaFreezone
+public class OvergrownForestFreezone extends FriendAreaFreezone
 {
 
-	public MushroomForestFreezone()
+	public OvergrownForestFreezone()
 	{
-		super(28, 38, FreezoneInfo.FRIEND_MUSHROOMFOREST);
+		super(29, 36, FreezoneInfo.FRIEND_OVERGROWNFOREST);
 	}
 
 }
