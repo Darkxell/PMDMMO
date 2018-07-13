@@ -222,7 +222,7 @@ public class FriendSelectionState extends AbstractMenuState
 	@Override
 	protected void onOptionSelected(MenuOption option)
 	{
-		if (option == this.mapOption) System.out.println("Going to map");
+		if (option == this.mapOption) Persistance.stateManager.setState(new FriendAreaSelectionMapState());
 		else
 		{
 			FriendMenuOption o = (FriendMenuOption) option;
