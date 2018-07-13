@@ -3,6 +3,8 @@ package com.darkxell.client.state.menu.freezone;
 import java.awt.Rectangle;
 
 import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.mechanics.freezones.FreezoneInfo;
+import com.darkxell.client.state.StateManager;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.client.state.menu.TeamMenuState;
 import com.darkxell.common.pokemon.Pokemon;
@@ -51,7 +53,7 @@ public class FriendSelectionOptionState extends OptionSelectionMenuState
 	@Override
 	protected void onOptionSelected(MenuOption option)
 	{
-		if (option == this.visit) System.out.println("Visiting " + this.pokemon);
+		if (option == this.visit) StateManager.setExploreState(FreezoneInfo.find(this.pokemon.species().friendAreaID), -1, -1);
 		else if (option == this.summary) Persistance.stateManager.setState(TeamMenuState.createSummaryState(this.parent.backgroundState, this, this.pokemon));
 		else if (option == this.exit) this.onExit();
 	}

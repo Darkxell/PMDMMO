@@ -7,6 +7,7 @@ import com.darkxell.client.mechanics.freezones.zones.LumiousCaveFreezone;
 import com.darkxell.client.mechanics.freezones.zones.OfficeFreezone;
 import com.darkxell.client.mechanics.freezones.zones.PokemonSquareFreezone;
 import com.darkxell.client.mechanics.freezones.zones.PondFreezone;
+import com.darkxell.client.mechanics.freezones.zones.friend.AgedChamber1Freezone;
 import com.darkxell.common.util.language.Message;
 
 public enum FreezoneInfo
@@ -113,6 +114,9 @@ public enum FreezoneInfo
 
 			case LUMINOUSCAVE:
 				return new LumiousCaveFreezone();
+				
+			case FRIEND_AGEDCHAMBER1:
+				return new AgedChamber1Freezone();
 
 			default:
 				return null;

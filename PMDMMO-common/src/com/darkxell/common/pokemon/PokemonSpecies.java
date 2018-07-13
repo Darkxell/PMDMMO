@@ -127,7 +127,7 @@ public class PokemonSpecies
 	@SuppressWarnings("unchecked")
 	private PokemonSpecies createForm(Element xml)
 	{
-		int formID = XMLUtils.getAttribute(xml, "form", 0);
+		int formID = XMLUtils.getAttribute(xml, "id", 0);
 
 		PokemonType type1 = xml.getAttribute("type1") == null ? this.type1 : PokemonType.valueOf(xml.getAttributeValue("type1"));
 		PokemonType type2 = xml.getAttribute("type2") == null ? this.type2
