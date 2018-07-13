@@ -19,7 +19,7 @@ public class Player
 
 	public Pokemon leaderPokemon;
 
-	public HashMap<Long, Pokemon> pokemonInZones = new HashMap<>();
+	public HashMap<Long, Pokemon> pokemonInZones;
 
 	public Player(DBPlayer data)
 	{
@@ -43,7 +43,15 @@ public class Player
 	public void addPokemonInZone(Pokemon pokemon)
 	{
 		this.pokemonInZones.put(pokemon.id(), pokemon);
-		this.data.pokemonsinzones.add(new DatabaseIdentifier(pokemon.id()));
+		boolean already = false;
+		for (DatabaseIdentifier id : this.data.pokemonsinzones)
+			if (id.id == pokemon.id())
+			{
+				already = true;
+				break;
+			}
+		if (!already) this.data.pokemonsinzones.add(new DatabaseIdentifier(pokemon.id()));
+		pokemon.setPlayer(this);
 	}
 
 	public void clearAllies()
@@ -152,6 +160,7 @@ public class Player
 	{
 		this.pokemonInZones.remove(pokemon.id());
 		this.data.pokemonsinzones.removeIf(id -> id.id == pokemon.id());
+		pokemon.setPlayer(null);
 	}
 
 	public void resetDungeonTeam()
@@ -166,6 +175,9 @@ public class Player
 		this.data = data;
 		this.allies = new ArrayList<>();
 		this.inventory = new Inventory();
+		this.pokemonInZones = new HashMap<>();
+		for (DatabaseIdentifier zone : this.data.pokemonsinzones)
+			this.pokemonInZones.put(zone.id, null);
 	}
 
 	public void setInventory(Inventory inventory)

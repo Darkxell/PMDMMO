@@ -65,19 +65,20 @@ public class FriendsWindow extends MenuWindow
 		}
 		int X = startX + realX * (FRIEND_SLOT_WIDTH + LIST_OFFSET), Y = startY + realY * (FRIEND_SLOT_HEIGHT + LIST_OFFSET) + GOTOMAP_HEIGHT;
 
+		if (pokemon != null)
+		{
+			BufferedImage sprite = PokemonPortrait.portrait(pokemon);
+			g.drawImage(sprite, X + FRIEND_OFFSET, Y + FRIEND_OFFSET, FRIEND_SIZE, FRIEND_SIZE, null);
+		}
+
 		if (selected) g.setColor(Palette.MENU_HOVERED);
 		else g.setColor(Palette.TRANSPARENT_GRAY);
 		g.drawRect(X, Y, FRIEND_SLOT_WIDTH, FRIEND_SLOT_HEIGHT);
 		if (selected)
 		{
-			g.drawRect(X + 1, Y + 1, FRIEND_SLOT_WIDTH - 2, FRIEND_SLOT_HEIGHT - 2);
 			g.drawRect(X - 1, Y - 1, FRIEND_SLOT_WIDTH + 2, FRIEND_SLOT_HEIGHT + 2);
-		}
-
-		if (pokemon != null)
-		{
-			BufferedImage sprite = PokemonPortrait.portrait(pokemon);
-			g.drawImage(sprite, X + FRIEND_OFFSET, Y + FRIEND_OFFSET, FRIEND_SIZE, FRIEND_SIZE, null);
+			for (int i = 1; i < 2; ++i)
+				g.drawRect(X + i, Y + i, FRIEND_SLOT_WIDTH - i * 2, FRIEND_SLOT_HEIGHT - i * 2);
 		}
 	}
 
@@ -104,26 +105,36 @@ public class FriendsWindow extends MenuWindow
 	{
 		super.render(g, name, width, height);
 
-		for (int x = 0; x < LIST_FRIEND_WIDTH; ++x)
-			for (int y = 0; y < LIST_FRIEND_HEIGHT; ++y)
-			{
-				int index = y * LIST_FRIEND_WIDTH + x;
-				if (index < this.state.currentTab().options().length) if (this.state.currentTab().options()[index] == this.state.mapOption)
-				{
-					this.drawGoToMap(g, index == this.state.optionIndex());
-				} else
-				{
-					Pokemon pokemon = ((FriendMenuOption) this.state.currentTab().options()[index]).pokemon;
-					this.drawPokemon(g, pokemon, x, y, index == this.state.optionIndex());
-				}
-			}
-
-		int x = LIST_FRIEND_WIDTH, y = LIST_FRIEND_HEIGHT - 1;
-		int index = y * LIST_FRIEND_WIDTH + x;
-		if (index < this.state.currentTab().options().length)
+		if (this.state.isLoaded())
 		{
-			Pokemon pokemon = ((FriendMenuOption) this.state.currentTab().options()[index]).pokemon;
-			this.drawPokemon(g, pokemon, x, y, index == this.state.optionIndex());
+			for (int x = 0; x < LIST_FRIEND_WIDTH; ++x)
+				for (int y = 0; y < LIST_FRIEND_HEIGHT; ++y)
+				{
+					int index = y * LIST_FRIEND_WIDTH + x;
+					if (index < this.state.currentTab().options().length) if (this.state.currentTab().options()[index] == this.state.mapOption)
+					{
+						this.drawGoToMap(g, index == this.state.optionIndex());
+					} else
+					{
+						Pokemon pokemon = ((FriendMenuOption) this.state.currentTab().options()[index]).pokemon;
+						this.drawPokemon(g, pokemon, x, y, index == this.state.optionIndex());
+					}
+				}
+
+			int x = LIST_FRIEND_WIDTH, y = LIST_FRIEND_HEIGHT - 1;
+			int index = y * LIST_FRIEND_WIDTH + x;
+			if (index < this.state.currentTab().options().length)
+			{
+				Pokemon pokemon = ((FriendMenuOption) this.state.currentTab().options()[index]).pokemon;
+				this.drawPokemon(g, pokemon, x, y, index == this.state.optionIndex());
+			}
+		} else
+		{
+			Message loading = new Message("general.loading")
+					.addSuffix("(" + (this.state.startLoadingCount - this.state.loadingPokemon.size()) + "/" + this.state.startLoadingCount + ")");
+			Rectangle inside = this.inside();
+			TextRenderer.render(g, loading, inside.x + inside.width / 2 - TextRenderer.width(loading) / 2,
+					inside.y + inside.height / 2 - TextRenderer.height() / 2);
 		}
 
 	}

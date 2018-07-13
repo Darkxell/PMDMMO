@@ -7,6 +7,7 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 
 import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.messagehandlers.MonsterRequestHandler;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.MenuHudSpriteset;
 import com.darkxell.client.resources.music.SoundManager;
@@ -20,6 +21,7 @@ import com.darkxell.common.dbobject.DatabaseIdentifier;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.language.Message;
+import com.eclipsesource.json.JsonObject;
 
 public class FriendSelectionState extends AbstractMenuState
 {
@@ -27,49 +29,57 @@ public class FriendSelectionState extends AbstractMenuState
 	public static class FriendMenuOption extends MenuOption
 	{
 
-		public Pokemon pokemon = null;
-		public final long pokemonid;
+		public final Pokemon pokemon;
 
-		public FriendMenuOption(long pokemonid)
+		public FriendMenuOption(Pokemon pokemon)
 		{
-			super("");
-			this.pokemonid = pokemonid;
-		}
-
-		public boolean isLoaded()
-		{
-			return this.pokemon != null;
-		}
-
-		public Message name()
-		{
-			return this.isLoaded() ? this.pokemon.getNickname() : new Message("general.loading");
+			super(pokemon.getNickname());
+			this.pokemon = pokemon;
 		}
 
 	}
 
+	public static final int COMTICK_MAX = 1000;
 	public static final int LIST_FRIEND_WIDTH = 4, LIST_FRIEND_HEIGHT = 4, MAX_FRIEND_COUNT = LIST_FRIEND_WIDTH * LIST_FRIEND_HEIGHT;
 	public static final int LIST_OFFSET = 5, FRIEND_SIZE = PORTRAIT_SIZE, FRIEND_OFFSET = 1, FRIEND_SLOT_WIDTH = FRIEND_SIZE + FRIEND_OFFSET * 2 - 1,
 			FRIEND_SLOT_HEIGHT = FRIEND_SIZE + FRIEND_OFFSET * 2 - 1, FRIEND_NAME_OVERLAY_HEIGHT = TextRenderer.height() + 2;
 	public static final int WIDTH = (FRIEND_SLOT_WIDTH + LIST_OFFSET) * LIST_FRIEND_WIDTH + LIST_OFFSET + MenuWindow.MARGIN_X, GOTOMAP_HEIGHT = 20,
 			HEIGHT = (FRIEND_SLOT_HEIGHT + LIST_OFFSET) * LIST_FRIEND_HEIGHT + GOTOMAP_HEIGHT + LIST_OFFSET * 2 + MenuWindow.MARGIN_Y;
+	public static final String title = "friendareas.title";
 
+	private int comtick = 0;
+	public ArrayList<Long> loadingPokemon;
 	public MenuOption mapOption;
 	private MenuWindow nameWindow;
+	public final int startLoadingCount;
 	private FriendsWindow window;
 
 	public FriendSelectionState(AbstractState backgroundState)
 	{
 		super(backgroundState);
-		this.createOptions();
+		this.loadingPokemon = new ArrayList<>(Persistance.player.pokemonInZones.keySet());
+		this.loadingPokemon.removeIf(l -> Persistance.player.pokemonInZones.get(l) != null);
+		this.startLoadingCount = this.loadingPokemon.size();
+		if (this.isLoaded()) this.createOptions();
+		else this.askNextPokemon();
+	}
+
+	private void askNextPokemon()
+	{
+		this.comtick = 0;
+		Persistance.socketendpoint.requestMonster(this.loadingPokemon.get(0));
+		Persistance.isCommunicating = true;
 	}
 
 	@Override
 	protected void createOptions()
 	{
+		this.window = null;
 		ArrayList<DatabaseIdentifier> mons = Persistance.player.getData().pokemonsinzones;
+		mons.sort((o1, o2) -> Integer.compare(Persistance.player.pokemonInZones.get(o1.id).species().id,
+				Persistance.player.pokemonInZones.get(o2.id).species().id));
 		this.mapOption = new MenuOption("friendareas.gotomap");
-		MenuTab current = new MenuTab("friendareas.title");
+		MenuTab current = new MenuTab(title);
 		int indexInTab = 0, index = 0;
 		for (int i = 0; i < mons.size(); ++i)
 		{
@@ -81,8 +91,7 @@ public class FriendSelectionState extends AbstractMenuState
 			} else
 			{
 				long id = mons.get(index++).id;
-				option = new FriendMenuOption(id);
-				((FriendMenuOption) option).pokemon = Persistance.player.pokemonInZones.get(id);
+				option = new FriendMenuOption(Persistance.player.pokemonInZones.get(id));
 			}
 			current.addOption(option);
 			++indexInTab;
@@ -91,16 +100,21 @@ public class FriendSelectionState extends AbstractMenuState
 			{
 				indexInTab = 0;
 				this.tabs.add(current);
-				current = new MenuTab("friendareas.title");
+				current = new MenuTab(title);
 			}
 		}
 		if (indexInTab != 0) this.tabs.add(current);
 	}
 
+	public boolean isLoaded()
+	{
+		return this.loadingPokemon.isEmpty();
+	}
+
 	@Override
 	protected Rectangle mainWindowDimensions()
 	{
-		Rectangle superRect = super.mainWindowDimensions();
+		Rectangle superRect = this.isLoaded() ? super.mainWindowDimensions() : new Rectangle(16, 32, WIDTH, HEIGHT);
 		return new Rectangle(superRect.x, superRect.y, WIDTH, HEIGHT);
 	}
 
@@ -117,22 +131,23 @@ public class FriendSelectionState extends AbstractMenuState
 	{
 		if (this.tabs.size() != 0)
 		{
+			int max = this.currentTab().options().length - 1;
 			if (key == Keys.KEY_PAGE_LEFT && this.tab > 0) --this.tab;
 			else if (key == Keys.KEY_PAGE_RIGHT && this.tab < this.tabs.size() - 1) ++this.tab;
 			else if (key == Keys.KEY_LEFT) --this.selection;
 			else if (key == Keys.KEY_RIGHT)
 			{
-				if (this.selection == MAX_FRIEND_COUNT) this.selection = 0;
+				if (this.selection == max) this.selection = 0;
 				else++this.selection;
 			} else if (key == Keys.KEY_UP)
 			{
-				if (this.selection == 0) this.selection = MAX_FRIEND_COUNT;
+				if (this.selection == 0) this.selection = max;
 				else if (this.selection <= LIST_FRIEND_WIDTH && this.selection != 0) this.selection = 0;
 				else this.selection -= LIST_FRIEND_WIDTH;
 			} else if (key == Keys.KEY_DOWN)
 			{
 				if (this.selection == 0) this.selection = 1;
-				else if (this.selection > MAX_FRIEND_COUNT - LIST_FRIEND_WIDTH) this.selection = 0;
+				else if (this.selection > (max / LIST_FRIEND_WIDTH) * LIST_FRIEND_WIDTH) this.selection = 0;
 				else this.selection += LIST_FRIEND_WIDTH;
 			} else if (key == Keys.KEY_ATTACK)
 			{
@@ -164,21 +179,31 @@ public class FriendSelectionState extends AbstractMenuState
 	}
 
 	@Override
-	public void onStart()
-	{
-		super.onStart();
-		if (this.selection == 0) this.selection = 1;
-	}
-
-	@Override
 	protected void onOptionSelected(MenuOption option)
 	{
 		if (option == this.mapOption) System.out.println("Going to map");
 		else
 		{
 			FriendMenuOption o = (FriendMenuOption) option;
-			if (o.isLoaded()) System.out.println("Visiting " + o.pokemon.getNickname());
+			System.out.println("Visiting " + o.pokemon.getNickname());
 		}
+	}
+
+	public void onPokemonReceived(JsonObject message)
+	{
+		Persistance.isCommunicating = false;
+		Pokemon p = MonsterRequestHandler.readMonster(message);
+		Persistance.player.addPokemonInZone(p);
+		this.loadingPokemon.remove(p.id());
+		if (this.isLoaded()) this.createOptions();
+		else this.askNextPokemon();
+	}
+
+	@Override
+	public void onStart()
+	{
+		super.onStart();
+		if (this.selection == 0) this.selection = 1;
 	}
 
 	@Override
@@ -187,16 +212,30 @@ public class FriendSelectionState extends AbstractMenuState
 		super.render(g, width, height);
 
 		if (this.window == null) this.window = new FriendsWindow(this, this.mainWindowDimensions());
-		if (this.nameWindow == null) this.updateNameWindow();
 
-		this.window.render(g, this.currentTab().name, width, height);
+		this.window.render(g, this.isLoaded() ? this.currentTab().name : new Message(title), width, height);
 
-		if (this.currentOption() != this.mapOption)
+		if (this.isLoaded())
 		{
-			this.nameWindow.render(g, null, width, height);
-			Message name = ((FriendMenuOption) this.currentOption()).name();
-			Rectangle inside = this.nameWindow.inside();
-			TextRenderer.render(g, name, this.nameWindow.inside().x + 5, inside.y + inside.height / 2 - TextRenderer.height() / 2);
+			if (this.nameWindow == null) this.updateNameWindow();
+			if (this.currentOption() != this.mapOption)
+			{
+				this.nameWindow.render(g, null, width, height);
+				Message name = ((FriendMenuOption) this.currentOption()).pokemon.getNickname();
+				Rectangle inside = this.nameWindow.inside();
+				TextRenderer.render(g, name, this.nameWindow.inside().x + 5, inside.y + inside.height / 2 - TextRenderer.height() / 2);
+			}
+		}
+	}
+
+	@Override
+	public void update()
+	{
+		super.update();
+		if (!this.isLoaded())
+		{
+			++this.comtick;
+			if (this.comtick >= COMTICK_MAX) this.askNextPokemon();
 		}
 	}
 
@@ -205,7 +244,7 @@ public class FriendSelectionState extends AbstractMenuState
 		int maxWidth = 0;
 		for (int i = 0; i < this.currentTab().options().length; ++i)
 			if (this.currentTab().options()[i] != this.mapOption)
-				maxWidth = Math.max(maxWidth, TextRenderer.width(((FriendMenuOption) this.currentTab().options()[i]).name()));
+				maxWidth = Math.max(maxWidth, TextRenderer.width(((FriendMenuOption) this.currentTab().options()[i]).pokemon.getNickname()));
 		Rectangle main = this.mainWindowDimensions();
 		this.nameWindow = new MenuWindow(
 				new Rectangle((int) main.getMaxX() + 5, (int) main.getMinY(), maxWidth + MenuWindow.MARGIN_X + MenuHudSpriteset.cornerSize.width,
