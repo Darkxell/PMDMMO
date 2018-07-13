@@ -122,6 +122,11 @@ public class FriendSelectionState extends AbstractMenuState
 		return new Rectangle(superRect.x, superRect.y, WIDTH, HEIGHT);
 	}
 
+	public MenuWindow nameWindow()
+	{
+		return this.nameWindow;
+	}
+
 	@Override
 	protected void onExit()
 	{
@@ -221,7 +226,7 @@ public class FriendSelectionState extends AbstractMenuState
 		else
 		{
 			FriendMenuOption o = (FriendMenuOption) option;
-			System.out.println("Visiting " + o.pokemon.getNickname());
+			Persistance.stateManager.setState(new FriendSelectionOptionState(this, o.pokemon));
 		}
 	}
 
