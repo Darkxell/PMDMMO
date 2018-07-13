@@ -1,17 +1,18 @@
 package com.darkxell.client.mechanics.freezones;
 
+import com.darkxell.client.state.StateManager;
 import com.darkxell.common.util.DoubleRectangle;
 
 /**
  * Creates a new warpzone. A warpzone object has no intelligence, but describes
  * how a zone in a map can teleport you to an other position in a new map.
  */
-public abstract class WarpZone {
+public class WarpZone extends TriggerZone {
 
 	public int toX;
 	public int toY;
-
-	public DoubleRectangle hitbox;
+	
+	public FreezoneInfo destination;
 
 	/**
 	 * Creates a new warpzone. A warpzone object has no intelligence, but
@@ -25,19 +26,18 @@ public abstract class WarpZone {
 	 * @param hitbox
 	 *            the hitbox of the warpzone in the current map.
 	 */
-	public WarpZone(int x, int y, DoubleRectangle hitbox) {
+	public WarpZone(int x, int y, FreezoneInfo destination, DoubleRectangle hitbox) {
+		super(hitbox);
 		toX = x;
 		toY = y;
-		this.hitbox = hitbox;
+		this.destination = destination;
 	}
-
-	/**
-	 * Must be overriten when you create a new WarpZone. This method should
-	 * build and return a pointer to the destination map.<br/>
-	 * <br/>
-	 * <strong>Exemple:</strong><br/>
-	 * return new BaseFreezone();
-	 */
-	public abstract FreezoneMap getDestination();
+	
+	@Override
+	public void onEnter()
+	{
+		FreezoneMap destination = this.destination.getMap();
+		if (destination != null) StateManager.setExploreState(destination, this.toX, this.toY);
+	}
 
 }

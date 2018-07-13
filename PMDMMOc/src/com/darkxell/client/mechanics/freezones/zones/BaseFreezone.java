@@ -3,6 +3,7 @@ package com.darkxell.client.mechanics.freezones.zones;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.freezones.FreezoneInfo;
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
+import com.darkxell.client.mechanics.freezones.TriggerZone;
 import com.darkxell.client.mechanics.freezones.WarpZone;
 import com.darkxell.client.mechanics.freezones.entities.AnimatedFlowerEntity;
 import com.darkxell.client.mechanics.freezones.entities.FlagEntity;
@@ -14,27 +15,16 @@ public class BaseFreezone extends FreezoneMap {
 	public BaseFreezone() {
 		super("/freezones/base.xml");
 		this.freezonebgm = "base.mp3";
-		this.warpzones.add(new WarpZone(4, 40, new DoubleRectangle(66, 34, 2, 11)) {
+		this.triggerzones.add(new WarpZone(4, 40, FreezoneInfo.SQUARE, new DoubleRectangle(66, 34, 2, 11)));
+		this.triggerzones.add(new WarpZone(58, 22, FreezoneInfo.STARTFOREST, new DoubleRectangle(0, 38, 2, 8)));
+		this.triggerzones.add(new TriggerZone(new DoubleRectangle(29, 63, 9, 2)) {
 			@Override
-			public FreezoneMap getDestination() {
-				return new PokemonSquareFreezone();
-			}
-		});
-		this.warpzones.add(new WarpZone(58, 22, new DoubleRectangle(0, 38, 2, 8)) {
-			@Override
-			public FreezoneMap getDestination() {
-				return new ForestFreezone();
-			}
-		});
-		this.warpzones.add(new WarpZone(35, 29, new DoubleRectangle(29, 63, 9, 2)) {
-			@Override
-			public FreezoneMap getDestination() {
+			public void onEnter() {
 				Persistance.stateManager.setState(new DungeonSelectionMapState());
-				return null;
 			}
 		});
 		/*
-		 * this.warpzones.add(new WarpZone(0, 0, new DoubleRectangle(0, 38, 2,
+		 * this.triggerzones.add(new WarpZone(0, 0, new DoubleRectangle(0, 38, 2,
 		 * 8)) {
 		 * 
 		 * @Override public FreezoneMap getDestination() {

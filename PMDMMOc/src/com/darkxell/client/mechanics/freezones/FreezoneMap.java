@@ -35,7 +35,7 @@ public abstract class FreezoneMap {
 	 */
 	private ArrayList<FreezoneEntity> entities = new ArrayList<>();
 
-	public ArrayList<WarpZone> warpzones = new ArrayList<>();
+	public ArrayList<TriggerZone> triggerzones = new ArrayList<>();
 
 	public final EntityRendererHolder<FreezoneEntity> entityRenderers = new EntityRendererHolder<>();
 	public final EntityRendererHolder<CutsceneEntity> cutsceneEntityRenderers = new EntityRendererHolder<>();

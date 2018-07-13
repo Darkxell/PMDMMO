@@ -22,30 +22,10 @@ public class PokemonSquareFreezone extends FreezoneMap {
 	public PokemonSquareFreezone() {
 		super("/freezones/square.xml");
 		this.freezonebgm = "town.mp3";
-		this.warpzones.add(new WarpZone(63, 40, new DoubleRectangle(0, 38, 2, 5)) {
-			@Override
-			public FreezoneMap getDestination() {
-				return new BaseFreezone();
-			}
-		});
-		this.warpzones.add(new WarpZone(-1, -1, new DoubleRectangle(63, 87, 9, 2)) {
-			@Override
-			public FreezoneMap getDestination() {
-				return new DojoFreezone();
-			}
-		});
-		this.warpzones.add(new WarpZone(-1, -1, new DoubleRectangle(61, 0, 8, 2)) {
-			@Override
-			public FreezoneMap getDestination() {
-				return new PondFreezone();
-			}
-		});
-		this.warpzones.add(new WarpZone(-1, -1, new DoubleRectangle(118, 38, 2, 5)) {
-			@Override
-			public FreezoneMap getDestination() {
-				return new OfficeFreezone();
-			}
-		});
+		this.triggerzones.add(new WarpZone(63, 40, FreezoneInfo.BASE, new DoubleRectangle(0, 38, 2, 5)));
+		this.triggerzones.add(new WarpZone(-1, -1, FreezoneInfo.DOJO, new DoubleRectangle(63, 87, 9, 2)));
+		this.triggerzones.add(new WarpZone(-1, -1, FreezoneInfo.POND, new DoubleRectangle(61, 0, 8, 2)));
+		this.triggerzones.add(new WarpZone(-1, -1, FreezoneInfo.OFFICE, new DoubleRectangle(118, 38, 2, 5)));
 
 		this.addEntity(new AnimatedFlowerEntity(10, 30, false));
 		this.addEntity(new AnimatedFlowerEntity(10, 37, false));

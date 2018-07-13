@@ -11,12 +11,7 @@ public class LumiousCaveFreezone extends FreezoneMap {
 	public LumiousCaveFreezone() {
 		super("/freezones/lcave.xml");
 		this.freezonebgm = "pond.mp3";
-		this.warpzones.add(new WarpZone(29, 15, new DoubleRectangle(28, 38, 4, 2)) {
-			@Override
-			public FreezoneMap getDestination() {
-				return new PondFreezone();
-			}
-		});
+		this.triggerzones.add(new WarpZone(29, 15, FreezoneInfo.POND, new DoubleRectangle(28, 38, 4, 2)));
 
 		this.addEntity(new CrystalEntity(30.3, 26.3));
 	}

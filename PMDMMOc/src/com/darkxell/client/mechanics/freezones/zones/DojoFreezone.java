@@ -11,12 +11,7 @@ public class DojoFreezone extends FreezoneMap {
 	public DojoFreezone() {
 		super("/freezones/dojo.xml");
 		this.freezonebgm = "town.mp3";
-		this.warpzones.add(new WarpZone(67, 85, new DoubleRectangle(39, 0, 9, 2)) {
-			@Override
-			public FreezoneMap getDestination() {
-				return new PokemonSquareFreezone();
-			}
-		});
+		this.triggerzones.add(new WarpZone(67, 85, FreezoneInfo.SQUARE, new DoubleRectangle(39, 0, 9, 2)));
 
 		this.addEntity(new AnimatedFlowerEntity(5, 6, false));
 		this.addEntity(new AnimatedFlowerEntity(5, 22, false));

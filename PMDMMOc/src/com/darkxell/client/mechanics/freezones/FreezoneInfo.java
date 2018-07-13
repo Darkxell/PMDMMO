@@ -121,4 +121,9 @@ public enum FreezoneInfo {
 			if (f.id.equals(id)) return f;
 		return null;
 	}
+
+	public FreezoneMap getMap()
+	{
+		return loadMap(this);
+	}
 }
