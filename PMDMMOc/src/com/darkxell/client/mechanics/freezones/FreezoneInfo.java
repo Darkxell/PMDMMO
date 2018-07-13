@@ -75,7 +75,7 @@ public enum FreezoneInfo
 	FRIEND_TREASURESEA(LocalMapLocation.ZONE_SOUTHERNSEA, "treasuresea"),
 	FRIEND_TURTLESHELLPOND(LocalMapLocation.ZONE_POND, "turtleshellpond"),
 	FRIEND_VOLCANICPIT(LocalMapLocation.ZONE_VOLCANO, "volcanicpit"),
-	FRIEND_WATERFALLLAKE(LocalMapLocation.ZONE_EASTERNLAKESIDE, "waterfalllake"),
+	FRIEND_WATERFALLLAKE(LocalMapLocation.ZONE_ORIENTALLAKE, "waterfalllake"),
 	FRIEND_WILDPLAINS(LocalMapLocation.ZONE_SOUTHERNPLAINS, "wildplains");
 
 	public String id;
