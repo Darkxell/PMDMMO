@@ -76,7 +76,7 @@ public class FriendAreaSelectionMapState extends AbstractState {
 					for (int j = 0; j < allinfos.length; j++)
 						if (allinfos[j].maplocation == points[i])
 							dests.add(allinfos[j]);
-					Persistance.stateManager.setState(new FriendmapSelectionState(this, dests));
+					Persistance.stateManager.setState(new FriendmapSelectionState(this, dests, points[i].displayname));
 					break;
 				}
 			break;
@@ -145,14 +145,17 @@ public class FriendAreaSelectionMapState extends AbstractState {
 		g.drawImage(MenuHudSpriteset.SELECTION_ARROW, (int) cursorx, (int) cursory, null);
 		// TRANSLATES THE GRAPHICS BACK
 		g.translate(-translateX, -translateY);
-		// DRAWS THE HUD OVER THE MAP
-		int textxpos = shouldInvertUI() ? 15
-				: width - Math.max(TextRenderer.width(new Message("localmap.select")),
-						TextRenderer.width(new Message("dungeonmap.return"))) - 10;
-		boolean cursornear = isnearpoint();
-		if (cursornear)
-			TextRenderer.render(g, new Message("localmap.select"), textxpos, 20);
-		TextRenderer.render(g, new Message("dungeonmap.return"), textxpos, cursornear ? 40 : 20);
+
+		if (this.isMain()) {
+			// DRAWS THE HUD OVER THE MAP
+			int textxpos = shouldInvertUI() ? 15
+					: width - Math.max(TextRenderer.width(new Message("localmap.select")),
+							TextRenderer.width(new Message("dungeonmap.return"))) - 10;
+			boolean cursornear = isnearpoint();
+			if (cursornear)
+				TextRenderer.render(g, new Message("localmap.select"), textxpos, 20);
+			TextRenderer.render(g, new Message("dungeonmap.return"), textxpos, cursornear ? 40 : 20);
+		}
 	}
 
 	@Override
