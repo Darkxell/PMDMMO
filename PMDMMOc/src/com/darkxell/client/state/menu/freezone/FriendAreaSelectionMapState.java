@@ -10,7 +10,6 @@ import com.darkxell.client.resources.images.MenuHudSpriteset;
 import com.darkxell.client.resources.images.others.MapResources;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.StateManager;
-import com.darkxell.client.state.freezone.FreezoneExploreState;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.language.Message;
@@ -58,17 +57,16 @@ public class FriendAreaSelectionMapState extends AbstractState {
 			movingdown = true;
 			break;
 		case Keys.KEY_RUN:
-			Persistance.currentplayer.renderer().sprite().setFacingDirection(Direction.EAST);
 			StateManager.setExploreState(FreezoneInfo.BASE, 4, 42);
+			Persistance.currentplayer.renderer().sprite().setFacingDirection(Direction.EAST);
 			break;
 		case Keys.KEY_ATTACK:
 			LocalMapLocation[] points = LocalMapLocation.values();
 			for (int i = 0; i < points.length; i++)
 				if (points[i].showsonfriendsmap && isnearpoint(points[i])) {
 					if (points[i] == LocalMapLocation.BASE) {
-						Persistance.currentplayer.x += 1;
+						StateManager.setExploreState(FreezoneInfo.BASE, 4, 42);
 						Persistance.currentplayer.renderer().sprite().setFacingDirection(Direction.EAST);
-						Persistance.stateManager.setState(new FreezoneExploreState());
 						break;
 					}
 					ArrayList<FreezoneInfo> dests = new ArrayList<>(5);

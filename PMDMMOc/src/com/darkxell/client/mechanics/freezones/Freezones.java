@@ -15,6 +15,7 @@ import com.darkxell.client.mechanics.freezones.zones.PokemonSquareFreezone;
 import com.darkxell.client.mechanics.freezones.zones.PondFreezone;
 import com.darkxell.client.mechanics.freezones.zones.friend.AgedChamber1Freezone;
 import com.darkxell.client.mechanics.freezones.zones.friend.MtMoonviewFreezone;
+import com.darkxell.client.mechanics.freezones.zones.friend.MushroomForestFreezone;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.zones.FreezoneInfo;
 
@@ -71,6 +72,11 @@ public class Freezones
 			case FRIEND_MTMOONVIEW:
 				d = NORTH;
 				map = new MtMoonviewFreezone();
+				break;
+
+			case FRIEND_MUSHROOMFOREST:
+				d = NORTH;
+				map = new MushroomForestFreezone();
 				break;
 
 			default:
