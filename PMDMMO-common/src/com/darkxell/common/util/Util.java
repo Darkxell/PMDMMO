@@ -25,6 +25,10 @@ public class Util
 			player.inventory().addItem(new ItemStack(i));
 		for (int i = 21; i < 29; ++i)
 			player.inventory().addItem(new ItemStack(i, i - 20));
+
+		for (int id = 252; id <= 386; id += 3)
+			player.addPokemonInZone(PokemonRegistry.find(id).generate(new Random(), 1));
+
 		return player;
 	}
 

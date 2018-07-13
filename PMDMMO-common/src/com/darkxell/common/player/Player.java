@@ -1,6 +1,7 @@
 package com.darkxell.common.player;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.darkxell.common.dbobject.DBPlayer;
 import com.darkxell.common.dbobject.DatabaseIdentifier;
@@ -11,13 +12,14 @@ public class Player
 {
 
 	public ArrayList<Pokemon> allies;
-
 	private DBPlayer data;
 
 	/** This Player's Inventory. */
 	private Inventory inventory;
 
 	public Pokemon leaderPokemon;
+
+	public HashMap<Long, Pokemon> pokemonInZones = new HashMap<>();
 
 	public Player(DBPlayer data)
 	{
@@ -36,6 +38,12 @@ public class Player
 		this.data.pokemonsinparty.add(new DatabaseIdentifier(pokemon.id()));
 		this.allies.add(pokemon);
 		pokemon.setPlayer(this);
+	}
+
+	public void addPokemonInZone(Pokemon pokemon)
+	{
+		this.pokemonInZones.put(pokemon.id(), pokemon);
+		this.data.pokemonsinzones.add(new DatabaseIdentifier(pokemon.id()));
 	}
 
 	public void clearAllies()
@@ -138,6 +146,12 @@ public class Player
 		this.data.pokemonsinparty.remove(this.allies.indexOf(pokemon));
 		this.allies.remove(pokemon);
 		pokemon.setPlayer(null);
+	}
+
+	public void removePokemonInZone(Pokemon pokemon)
+	{
+		this.pokemonInZones.remove(pokemon.id());
+		this.data.pokemonsinzones.removeIf(id -> id.id == pokemon.id());
 	}
 
 	public void resetDungeonTeam()
