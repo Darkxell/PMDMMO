@@ -7,16 +7,18 @@ import com.darkxell.client.mechanics.freezones.zones.LumiousCaveFreezone;
 import com.darkxell.client.mechanics.freezones.zones.OfficeFreezone;
 import com.darkxell.client.mechanics.freezones.zones.PokemonSquareFreezone;
 import com.darkxell.client.mechanics.freezones.zones.PondFreezone;
+import com.darkxell.common.util.language.Message;
 
-public enum FreezoneInfo {
+public enum FreezoneInfo
+{
 
 	BASE(LocalMapLocation.BASE, "base"),
 	SQUARE(LocalMapLocation.SQUARE, "square"),
 	DOJO(LocalMapLocation.DOJO, "dojo"),
 	POND(LocalMapLocation.POND, "wpond"),
 	OFFICE(LocalMapLocation.OFFICE, "office"),
-	STARTFOREST(LocalMapLocation.STARTFOREST, "forest"),
-	LUMINOUSCAVE(LocalMapLocation.LUMINOUSCAVE, "lcave"),
+	STARTFOREST(LocalMapLocation.STARTFOREST, "startforest"),
+	LUMINOUSCAVE(LocalMapLocation.LUMINOUSCAVE, "lumiouscave"),
 
 	FRIEND_AGEDCHAMBER1(LocalMapLocation.ZONE_RUINS, "agedchamber1"),
 	FRIEND_AGEDCHAMBER2(LocalMapLocation.ZONE_RUINS, "agedchamber2"),
@@ -79,13 +81,15 @@ public enum FreezoneInfo {
 	public String id;
 	public LocalMapLocation maplocation;
 
-	private FreezoneInfo(LocalMapLocation maplocation, String id) {
+	private FreezoneInfo(LocalMapLocation maplocation, String id)
+	{
 		this.id = id;
 		this.maplocation = maplocation;
 	}
 
 	/** Creates a new instance of the desired freezone map. */
-	public static FreezoneMap loadMap(FreezoneInfo freezone) {
+	public static FreezoneMap loadMap(FreezoneInfo freezone)
+	{
 		// FIXME : switchcase here.
 		switch (freezone)
 		{
@@ -125,5 +129,10 @@ public enum FreezoneInfo {
 	public FreezoneMap getMap()
 	{
 		return loadMap(this);
+	}
+
+	public Message getName()
+	{
+		return new Message("zone." + this.id);
 	}
 }
