@@ -5,8 +5,6 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 import com.darkxell.client.launchable.Persistance;
-import com.darkxell.client.mechanics.freezones.FreezoneInfo;
-import com.darkxell.client.mechanics.freezones.LocalMapLocation;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.MenuHudSpriteset;
 import com.darkxell.client.resources.images.others.MapResources;
@@ -15,6 +13,8 @@ import com.darkxell.client.state.freezone.FreezoneExploreState;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.language.Message;
+import com.darkxell.common.zones.FreezoneInfo;
+import com.darkxell.common.zones.LocalMapLocation;
 
 public class FriendAreaSelectionMapState extends AbstractState {
 

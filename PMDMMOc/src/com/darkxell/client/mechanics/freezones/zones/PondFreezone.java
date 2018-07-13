@@ -1,10 +1,10 @@
 package com.darkxell.client.mechanics.freezones.zones;
 
-import com.darkxell.client.mechanics.freezones.FreezoneInfo;
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
 import com.darkxell.client.mechanics.freezones.WarpZone;
 import com.darkxell.client.mechanics.freezones.entities.AnimatedFlowerEntity;
 import com.darkxell.common.util.DoubleRectangle;
+import com.darkxell.common.zones.FreezoneInfo;
 
 public class PondFreezone extends FreezoneMap {
 

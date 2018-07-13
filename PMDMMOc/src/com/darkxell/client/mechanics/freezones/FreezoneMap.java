@@ -13,6 +13,7 @@ import com.darkxell.client.renderers.EntityRendererHolder;
 import com.darkxell.client.resources.Res;
 import com.darkxell.client.resources.images.tilesets.AbstractTileset;
 import com.darkxell.common.util.Logger;
+import com.darkxell.common.zones.FreezoneInfo;
 import com.eclipsesource.json.JsonValue;
 
 /**

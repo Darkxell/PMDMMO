@@ -10,8 +10,8 @@ import java.io.IOException;
 import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.event.ClientEventProcessor;
-import com.darkxell.client.mechanics.freezones.FreezoneInfo;
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
+import com.darkxell.client.mechanics.freezones.Freezones;
 import com.darkxell.client.state.dungeon.DungeonEndState;
 import com.darkxell.client.state.dungeon.NextFloorState;
 import com.darkxell.client.state.freezone.FreezoneExploreState;
@@ -19,6 +19,7 @@ import com.darkxell.client.state.map.LocalMap;
 import com.darkxell.common.dungeon.DungeonOutcome;
 import com.darkxell.common.dungeon.DungeonRegistry;
 import com.darkxell.common.util.Logger;
+import com.darkxell.common.zones.FreezoneInfo;
 import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.PrettyPrint;
 
@@ -69,7 +70,7 @@ public abstract class StateManager {
 	 *            uses the default coordinates for that map.
 	 */
 	public static void setExploreState(FreezoneInfo freezone, int xPos, int yPos) {
-		FreezoneMap map = FreezoneInfo.loadMap(freezone);
+		FreezoneMap map = Freezones.loadMap(freezone);
 		if (map == null)
 			return;
 		setExploreState(map, xPos, yPos);

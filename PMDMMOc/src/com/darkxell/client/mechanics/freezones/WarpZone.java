@@ -2,6 +2,7 @@ package com.darkxell.client.mechanics.freezones;
 
 import com.darkxell.client.state.StateManager;
 import com.darkxell.common.util.DoubleRectangle;
+import com.darkxell.common.zones.FreezoneInfo;
 
 /**
  * Creates a new warpzone. A warpzone object has no intelligence, but describes
@@ -36,7 +37,7 @@ public class WarpZone extends TriggerZone {
 	@Override
 	public void onEnter()
 	{
-		FreezoneMap destination = this.destination.getMap();
+		FreezoneMap destination = Freezones.loadMap(this.destination);
 		if (destination != null) StateManager.setExploreState(destination, this.toX, this.toY);
 	}
 

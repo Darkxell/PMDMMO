@@ -4,11 +4,11 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 
 import com.darkxell.client.launchable.Persistance;
-import com.darkxell.client.mechanics.freezones.FreezoneInfo;
 import com.darkxell.client.state.StateManager;
 import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.common.util.language.Message;
+import com.darkxell.common.zones.FreezoneInfo;
 
 public class FriendmapSelectionState extends OptionSelectionMenuState {
 

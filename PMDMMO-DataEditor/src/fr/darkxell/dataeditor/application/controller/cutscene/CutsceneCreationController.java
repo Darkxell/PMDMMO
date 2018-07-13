@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 import com.darkxell.client.mechanics.cutscene.Cutscene;
 import com.darkxell.client.mechanics.cutscene.CutsceneCreation;
 import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
-import com.darkxell.client.mechanics.freezones.FreezoneInfo;
+import com.darkxell.common.zones.FreezoneInfo;
 
 import fr.darkxell.dataeditor.application.DataEditor;
 import fr.darkxell.dataeditor.application.controls.CustomListCell;

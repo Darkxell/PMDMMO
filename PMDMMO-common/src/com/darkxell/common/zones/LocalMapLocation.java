@@ -1,4 +1,4 @@
-package com.darkxell.client.mechanics.freezones;
+package com.darkxell.common.zones;
 
 import com.darkxell.common.util.language.Message;
 

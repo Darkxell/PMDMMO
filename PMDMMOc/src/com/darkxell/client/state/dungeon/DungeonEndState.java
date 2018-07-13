@@ -4,7 +4,6 @@ import java.awt.Graphics2D;
 
 import com.darkxell.client.launchable.GameSocketEndpoint;
 import com.darkxell.client.launchable.Persistance;
-import com.darkxell.client.mechanics.freezones.FreezoneInfo;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.PlayerLoadingState;
 import com.darkxell.client.state.PlayerLoadingState.PlayerLoadingEndListener;
@@ -12,6 +11,7 @@ import com.darkxell.client.state.StateManager;
 import com.darkxell.common.dungeon.DungeonOutcome;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.pokemon.Pokemon;
+import com.darkxell.common.zones.FreezoneInfo;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
