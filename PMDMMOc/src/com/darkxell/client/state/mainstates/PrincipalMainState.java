@@ -31,8 +31,8 @@ public class PrincipalMainState extends StateManager
 	private AbstractState currentState;
 
 	private BufferedImage internalBuffer;
-	private int displayWidth = (int) (256 * 1.6);
-	private int displayHeight = (int) (192 * 1.6);
+	public static final int displayWidth = (int) (256 * 1.6);
+	public static final int displayHeight = (int) (192 * 1.6);
 
 	public byte backgroundID = 1;
 
@@ -221,13 +221,7 @@ public class PrincipalMainState extends StateManager
 
 	// GETTERS,SETTERS AND UTILITY
 
-	/** Sets the resolution of the internal display. Bigger means a zoomed out game. Defaults at [256*192]*2 (Official DS resolution * 2). */
-	public void setInternalDisplaySize(int w, int h)
-	{
-		displayHeight = h;
-		displayWidth = w;
-		internalBuffer = null;
-	}
+	
 
 	public void randomizeBackground()
 	{
