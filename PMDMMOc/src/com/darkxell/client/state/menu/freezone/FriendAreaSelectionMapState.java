@@ -9,6 +9,7 @@ import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.MenuHudSpriteset;
 import com.darkxell.client.resources.images.others.MapResources;
 import com.darkxell.client.state.AbstractState;
+import com.darkxell.client.state.StateManager;
 import com.darkxell.client.state.freezone.FreezoneExploreState;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.common.util.Direction;
@@ -57,9 +58,8 @@ public class FriendAreaSelectionMapState extends AbstractState {
 			movingdown = true;
 			break;
 		case Keys.KEY_RUN:
-			Persistance.currentplayer.x += 1;
 			Persistance.currentplayer.renderer().sprite().setFacingDirection(Direction.EAST);
-			Persistance.stateManager.setState(new FreezoneExploreState());
+			StateManager.setExploreState(FreezoneInfo.BASE, 4, 42);
 			break;
 		case Keys.KEY_ATTACK:
 			LocalMapLocation[] points = LocalMapLocation.values();
@@ -108,8 +108,7 @@ public class FriendAreaSelectionMapState extends AbstractState {
 				if (points[i].showsonfriendsmap && points[i].x > cursorx - thresholddistance
 						&& points[i].x < cursorx + thresholddistance && points[i].y > cursory - thresholddistance
 						&& points[i].y < cursory + thresholddistance) {
-					cursorx = points[i].x;
-					cursory = points[i].y;
+					this.lockOn(points[i]);
 					break;
 				}
 		}
@@ -204,6 +203,12 @@ public class FriendAreaSelectionMapState extends AbstractState {
 				cameray -= cameraspeed;
 		} else
 			cameray = newcameray;
+	}
+
+	public void lockOn(LocalMapLocation location)
+	{
+		cursorx = location.x;
+		cursory = location.y;
 	}
 
 	/** Predicate that returns true if the cursor is near a point on the map. */
