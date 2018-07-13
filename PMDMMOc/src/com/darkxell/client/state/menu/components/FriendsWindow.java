@@ -34,7 +34,7 @@ public class FriendsWindow extends MenuWindow
 
 	private void drawGoToMap(Graphics2D g, boolean selected)
 	{
-		Message m = new Message("friendareas.gotomap");
+		Message m = new Message(FriendSelectionState.GOTOMAP);
 		int x = this.inside().x + this.inside().width / 2, y = this.inside().y + LIST_OFFSET * 3 / 2;
 		int boxX = x - TextRenderer.width(m) / 2 - LIST_OFFSET * 2;
 		int width = TextRenderer.width(m) + LIST_OFFSET * 4;
@@ -55,6 +55,8 @@ public class FriendsWindow extends MenuWindow
 
 	private void drawPokemon(Graphics2D g, Pokemon pokemon, int x, int y, boolean selected)
 	{
+		// If change positions here, check #optionAt(x, y)
+
 		int startX = this.inside().x + LIST_OFFSET, startY = this.inside().y + LIST_OFFSET;
 		int realX = x - 1;
 		int realY = y;
@@ -84,19 +86,57 @@ public class FriendsWindow extends MenuWindow
 
 	public int optionAt(int xPos, int yPos)
 	{
-		int startX = this.inside().x + LIST_OFFSET, startY = this.inside().y + LIST_OFFSET;
-		for (int x = 0; x < LIST_FRIEND_WIDTH; ++x)
-			for (int y = 0; y < LIST_FRIEND_HEIGHT; ++y)
-			{
-				int index = y * LIST_FRIEND_WIDTH + x;
-				if (index < this.state.currentTab().options().length)
+
+		if (this.state.isLoaded())
+		{
+			Message m = new Message(FriendSelectionState.GOTOMAP);
+			int x = this.inside().x + this.inside().width / 2, y = this.inside().y + LIST_OFFSET * 3 / 2;
+			int boxX = x - TextRenderer.width(m) / 2 - LIST_OFFSET * 2;
+			int width = TextRenderer.width(m) + LIST_OFFSET * 4;
+			int boxY = y - 2;
+			int height = TextRenderer.height() + 4;
+
+			Rectangle r = new Rectangle(boxX, boxY, width, height);
+			if (r.contains(xPos, yPos)) return 0;
+
+			for (x = 0; x < LIST_FRIEND_WIDTH; ++x)
+				for (y = 0; y < LIST_FRIEND_HEIGHT; ++y)
 				{
-					int X = startX + x * (FRIEND_SLOT_WIDTH + LIST_OFFSET), Y = startY + y * (FRIEND_SLOT_HEIGHT + LIST_OFFSET);
-
-					if (xPos >= X && xPos <= X + FRIEND_SLOT_WIDTH && yPos >= Y && yPos <= Y + FRIEND_SLOT_HEIGHT) return index;
-
+					int index = y * LIST_FRIEND_WIDTH + x;
+					if (index < this.state.currentTab().options().length && this.state.currentTab().options()[index] != this.state.mapOption)
+					{
+						int startX = this.inside().x + LIST_OFFSET, startY = this.inside().y + LIST_OFFSET;
+						int realX = x - 1;
+						int realY = y;
+						if (x == 0)
+						{
+							--realY;
+							realX += LIST_FRIEND_WIDTH;
+						}
+						int X = startX + realX * (FRIEND_SLOT_WIDTH + LIST_OFFSET), Y = startY + realY * (FRIEND_SLOT_HEIGHT + LIST_OFFSET) + GOTOMAP_HEIGHT;
+						Rectangle poke = new Rectangle(X, Y, FRIEND_SLOT_WIDTH, FRIEND_SLOT_HEIGHT);
+						if (poke.contains(xPos, yPos)) return index;
+					}
 				}
+
+			x = LIST_FRIEND_WIDTH;
+			y = LIST_FRIEND_HEIGHT - 1;
+			int index = y * LIST_FRIEND_WIDTH + x;
+			if (index < this.state.currentTab().options().length)
+			{
+				int startX = this.inside().x + LIST_OFFSET, startY = this.inside().y + LIST_OFFSET;
+				int realX = x - 1;
+				int realY = y;
+				if (x == 0)
+				{
+					--realY;
+					realX += LIST_FRIEND_WIDTH;
+				}
+				int X = startX + realX * (FRIEND_SLOT_WIDTH + LIST_OFFSET), Y = startY + realY * (FRIEND_SLOT_HEIGHT + LIST_OFFSET) + GOTOMAP_HEIGHT;
+				Rectangle poke = new Rectangle(X, Y, FRIEND_SLOT_WIDTH, FRIEND_SLOT_HEIGHT);
+				if (poke.contains(xPos, yPos)) return index;
 			}
+		}
 		return -1;
 	}
 
@@ -107,14 +147,13 @@ public class FriendsWindow extends MenuWindow
 
 		if (this.state.isLoaded())
 		{
+			this.drawGoToMap(g, this.state.optionIndex() == 0);
+
 			for (int x = 0; x < LIST_FRIEND_WIDTH; ++x)
 				for (int y = 0; y < LIST_FRIEND_HEIGHT; ++y)
 				{
 					int index = y * LIST_FRIEND_WIDTH + x;
-					if (index < this.state.currentTab().options().length) if (this.state.currentTab().options()[index] == this.state.mapOption)
-					{
-						this.drawGoToMap(g, index == this.state.optionIndex());
-					} else
+					if (index < this.state.currentTab().options().length && this.state.currentTab().options()[index] != this.state.mapOption)
 					{
 						Pokemon pokemon = ((FriendMenuOption) this.state.currentTab().options()[index]).pokemon;
 						this.drawPokemon(g, pokemon, x, y, index == this.state.optionIndex());

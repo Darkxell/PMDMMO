@@ -3,6 +3,7 @@ package com.darkxell.client.state.menu.freezone;
 import static com.darkxell.client.resources.images.pokemon.PokemonPortrait.PORTRAIT_SIZE;
 
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
@@ -40,12 +41,12 @@ public class FriendSelectionState extends AbstractMenuState
 	}
 
 	public static final int COMTICK_MAX = 1000;
+	public static final String GOTOMAP = "friendareas.gotomap", TITLE = "friendareas.title";
 	public static final int LIST_FRIEND_WIDTH = 4, LIST_FRIEND_HEIGHT = 4, MAX_FRIEND_COUNT = LIST_FRIEND_WIDTH * LIST_FRIEND_HEIGHT;
 	public static final int LIST_OFFSET = 5, FRIEND_SIZE = PORTRAIT_SIZE, FRIEND_OFFSET = 1, FRIEND_SLOT_WIDTH = FRIEND_SIZE + FRIEND_OFFSET * 2 - 1,
 			FRIEND_SLOT_HEIGHT = FRIEND_SIZE + FRIEND_OFFSET * 2 - 1, FRIEND_NAME_OVERLAY_HEIGHT = TextRenderer.height() + 2;
 	public static final int WIDTH = (FRIEND_SLOT_WIDTH + LIST_OFFSET) * LIST_FRIEND_WIDTH + LIST_OFFSET + MenuWindow.MARGIN_X, GOTOMAP_HEIGHT = 20,
 			HEIGHT = (FRIEND_SLOT_HEIGHT + LIST_OFFSET) * LIST_FRIEND_HEIGHT + GOTOMAP_HEIGHT + LIST_OFFSET * 2 + MenuWindow.MARGIN_Y;
-	public static final String title = "friendareas.title";
 
 	private int comtick = 0;
 	public ArrayList<Long> loadingPokemon;
@@ -78,8 +79,8 @@ public class FriendSelectionState extends AbstractMenuState
 		ArrayList<DatabaseIdentifier> mons = Persistance.player.getData().pokemonsinzones;
 		mons.sort((o1, o2) -> Integer.compare(Persistance.player.pokemonInZones.get(o1.id).species().id,
 				Persistance.player.pokemonInZones.get(o2.id).species().id));
-		this.mapOption = new MenuOption("friendareas.gotomap");
-		MenuTab current = new MenuTab(title);
+		this.mapOption = new MenuOption(GOTOMAP);
+		MenuTab current = new MenuTab(TITLE);
 		int indexInTab = 0, index = 0;
 		for (int i = 0; i < mons.size(); ++i)
 		{
@@ -100,10 +101,13 @@ public class FriendSelectionState extends AbstractMenuState
 			{
 				indexInTab = 0;
 				this.tabs.add(current);
-				current = new MenuTab(title);
+				current = new MenuTab(TITLE);
 			}
 		}
 		if (indexInTab != 0) this.tabs.add(current);
+
+		for (int tab = 0; tab < this.tabs.size(); ++tab)
+			tabs.get(tab).name.addSuffix(" (" + (tab + 1) + "/" + this.tabs.size() + ")");
 	}
 
 	public boolean isLoaded()
@@ -179,6 +183,38 @@ public class FriendSelectionState extends AbstractMenuState
 	}
 
 	@Override
+	public void onMouseClick(int x, int y)
+	{
+		super.onMouseClick(x, y);
+		if (!this.isLoaded()) return;
+		if (this.window != null)
+		{
+			int option = this.window.optionAt(x, y);
+			if (option != -1)
+			{
+				this.selection = option;
+				this.onOptionSelected(this.currentOption());
+			} else if (!this.window.dimensions.contains(new Point(x, y)))
+			{
+				SoundManager.playSound("ui-back");
+				this.onExit();
+			}
+		}
+	}
+
+	@Override
+	public void onMouseMove(int x, int y)
+	{
+		super.onMouseMove(x, y);
+		if (!this.isLoaded()) return;
+		if (this.window != null)
+		{
+			int option = this.window.optionAt(x, y);
+			if (option != -1) this.selection = option;
+		}
+	}
+
+	@Override
 	protected void onOptionSelected(MenuOption option)
 	{
 		if (option == this.mapOption) System.out.println("Going to map");
@@ -213,7 +249,7 @@ public class FriendSelectionState extends AbstractMenuState
 
 		if (this.window == null) this.window = new FriendsWindow(this, this.mainWindowDimensions());
 
-		this.window.render(g, this.isLoaded() ? this.currentTab().name : new Message(title), width, height);
+		this.window.render(g, this.isLoaded() ? this.currentTab().name : new Message(TITLE), width, height);
 
 		if (this.isLoaded())
 		{
