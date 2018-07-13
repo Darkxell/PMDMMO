@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.freezones.FreezoneInfo;
+import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.common.util.language.Message;
 
@@ -56,6 +57,8 @@ public class FriendmapSelectionState extends OptionSelectionMenuState {
 	@Override
 	protected Rectangle mainWindowDimensions() {
 		Rectangle r = super.mainWindowDimensions();
+		if(parent.shouldInvertUI())
+			r.x = PrincipalMainState.displayWidth - r.width - r.x;
 		return r;
 	}
 
