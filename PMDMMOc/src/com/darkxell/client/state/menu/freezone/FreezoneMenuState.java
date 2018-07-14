@@ -8,8 +8,9 @@ import com.darkxell.client.state.dialog.DialogScreen;
 import com.darkxell.client.state.dialog.DialogState;
 import com.darkxell.client.state.dialog.DialogState.DialogEndListener;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
-import com.darkxell.client.state.menu.TeamMenuState;
 import com.darkxell.client.state.menu.item.ItemContainersMenuState;
+import com.darkxell.client.state.menu.menus.SettingsMenuState;
+import com.darkxell.client.state.menu.menus.TeamMenuState;
 import com.darkxell.common.player.ItemContainer;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.language.Message;
@@ -18,7 +19,7 @@ public class FreezoneMenuState extends OptionSelectionMenuState
 {
 
 	@SuppressWarnings("unused")
-	private MenuOption items, team, others;
+	private MenuOption items, team, settings;
 
 	public FreezoneMenuState(AbstractState background)
 	{
@@ -32,7 +33,7 @@ public class FreezoneMenuState extends OptionSelectionMenuState
 		MenuTab tab = new MenuTab();
 		tab.addOption((this.items = new MenuOption("menu.items")));
 		tab.addOption((this.team = new MenuOption("menu.team")));
-		tab.addOption((this.others = new MenuOption("menu.others")));
+		tab.addOption((this.settings = new MenuOption("menu.settings")));
 		this.tabs.add(tab);
 	}
 
@@ -75,5 +76,6 @@ public class FreezoneMenuState extends OptionSelectionMenuState
 			} else Persistance.stateManager
 					.setState(new ItemContainersMenuState(this, this.backgroundState, false, containers.toArray(new ItemContainer[containers.size()])));
 		} else if (option == this.team) Persistance.stateManager.setState(new TeamMenuState(this, this.backgroundState));
+		else if (option == this.settings) Persistance.stateManager.setState(new SettingsMenuState(this, this.backgroundState));
 	}
 }

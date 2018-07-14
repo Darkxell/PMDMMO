@@ -8,8 +8,9 @@ import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.dungeon.DungeonState;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
-import com.darkxell.client.state.menu.TeamMenuState;
 import com.darkxell.client.state.menu.item.ItemContainersMenuState;
+import com.darkxell.client.state.menu.menus.SettingsMenuState;
+import com.darkxell.client.state.menu.menus.TeamMenuState;
 import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.player.ItemContainer;
 import com.darkxell.common.pokemon.Pokemon;
@@ -19,7 +20,7 @@ public class DungeonMenuState extends OptionSelectionMenuState
 {
 
 	@SuppressWarnings("unused")
-	private MenuOption moves, items, team, others, ground;
+	private MenuOption moves, items, team, settings, ground;
 
 	public DungeonMenuState(AbstractState background)
 	{
@@ -34,7 +35,7 @@ public class DungeonMenuState extends OptionSelectionMenuState
 		tab.addOption((this.moves = new MenuOption("menu.moves")));
 		tab.addOption((this.items = new MenuOption("menu.items")));
 		tab.addOption((this.team = new MenuOption("menu.team")));
-		tab.addOption((this.others = new MenuOption("menu.others")));
+		tab.addOption((this.settings = new MenuOption("menu.settings")));
 		tab.addOption((this.ground = new MenuOption("menu.ground")));
 		this.tabs.add(tab);
 	}
@@ -75,6 +76,7 @@ public class DungeonMenuState extends OptionSelectionMenuState
 				Persistance.stateManager.setState(new ItemContainersMenuState(this, s, true, containers.toArray(new ItemContainer[containers.size()])));
 			}
 		} else if (option == this.team) Persistance.stateManager.setState(new TeamMenuState(this, s));
+		else if (option == this.settings) Persistance.stateManager.setState(new SettingsMenuState(this, this.backgroundState));
 		else if (option == this.ground)
 		{
 			this.onExit();
