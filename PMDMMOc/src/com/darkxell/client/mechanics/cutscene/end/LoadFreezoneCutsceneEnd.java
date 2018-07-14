@@ -42,7 +42,7 @@ public class LoadFreezoneCutsceneEnd extends CutsceneEnd
 	public void onCutsceneEnd()
 	{
 		super.onCutsceneEnd();
-		StateManager.setExploreState(this.freezone, this.xPos, this.yPos);
+		StateManager.setExploreState(this.freezone, null, this.xPos, this.yPos);
 	}
 
 	@Override

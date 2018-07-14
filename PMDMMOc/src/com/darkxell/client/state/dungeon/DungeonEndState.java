@@ -11,6 +11,7 @@ import com.darkxell.client.state.StateManager;
 import com.darkxell.common.dungeon.DungeonOutcome;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.pokemon.Pokemon;
+import com.darkxell.common.util.Direction;
 import com.darkxell.common.zones.FreezoneInfo;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonArray;
@@ -34,7 +35,7 @@ public class DungeonEndState extends AbstractState
 			public void onPlayerLoadingEnd(PlayerLoadingState state)
 			{
 				Persistance.player.resetDungeonTeam();
-				StateManager.setExploreState(FreezoneInfo.BASE, -1, -1);
+				StateManager.setExploreState(FreezoneInfo.BASE, Direction.SOUTH, -1, -1);
 			}
 		}));
 	}
@@ -83,7 +84,7 @@ public class DungeonEndState extends AbstractState
 		} else
 		{
 			Persistance.player.resetDungeonTeam();
-			StateManager.setExploreState(FreezoneInfo.BASE, -1, -1);
+			StateManager.setExploreState(FreezoneInfo.BASE, Direction.SOUTH, -1, -1);
 		}
 	}
 

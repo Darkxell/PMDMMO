@@ -9,6 +9,7 @@ import com.darkxell.client.renderers.layers.BackgroundSeaLayer;
 import com.darkxell.client.resources.images.others.Hud;
 import com.darkxell.client.resources.music.SoundsHolder;
 import com.darkxell.client.ui.Keys;
+import com.darkxell.common.util.Direction;
 
 public class OpenningState extends AbstractState {
 
@@ -19,7 +20,7 @@ public class OpenningState extends AbstractState {
 	@Override
 	public void onKeyPressed(short key) {
 		if (key == Keys.KEY_ATTACK)
-				StateManager.setExploreState(new BaseFreezone(), -1, -1);
+				StateManager.setExploreState(new BaseFreezone(), Direction.SOUTH, -1, -1);
 	}
 
 	@Override

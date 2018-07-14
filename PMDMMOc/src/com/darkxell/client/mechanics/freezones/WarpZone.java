@@ -1,6 +1,7 @@
 package com.darkxell.client.mechanics.freezones;
 
 import com.darkxell.client.state.StateManager;
+import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.DoubleRectangle;
 import com.darkxell.common.zones.FreezoneInfo;
 
@@ -14,6 +15,11 @@ public class WarpZone extends TriggerZone {
 	public int toY;
 	
 	public FreezoneInfo destination;
+	public Direction direction;
+
+	public WarpZone(int x, int y, FreezoneInfo destination, DoubleRectangle hitbox) {
+		this(x, y, destination, null, hitbox);
+	}
 
 	/**
 	 * Creates a new warpzone. A warpzone object has no intelligence, but
@@ -26,19 +32,22 @@ public class WarpZone extends TriggerZone {
 	 *            the y position of the destination. If -1, uses the default Y position in the destination.
 	 * @param hitbox
 	 *            the hitbox of the warpzone in the current map.
+	 * @param direction
+	 *            the new direction to face upon entering the new Freezone. null to keep current direction.
 	 */
-	public WarpZone(int x, int y, FreezoneInfo destination, DoubleRectangle hitbox) {
+	public WarpZone(int x, int y, FreezoneInfo destination, Direction direction, DoubleRectangle hitbox) {
 		super(hitbox);
 		toX = x;
 		toY = y;
 		this.destination = destination;
+		this.direction = direction;
 	}
 	
 	@Override
 	public void onEnter()
 	{
 		FreezoneMap destination = Freezones.loadMap(this.destination);
-		if (destination != null) StateManager.setExploreState(destination, this.toX, this.toY);
+		if (destination != null) StateManager.setExploreState(destination, this.direction, this.toX, this.toY);
 	}
 
 }

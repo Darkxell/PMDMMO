@@ -53,7 +53,7 @@ public class FriendSelectionOptionState extends OptionSelectionMenuState
 	@Override
 	protected void onOptionSelected(MenuOption option)
 	{
-		if (option == this.visit) StateManager.setExploreState(FreezoneInfo.find(this.pokemon.species().friendAreaID), -1, -1);
+		if (option == this.visit) StateManager.setExploreState(FreezoneInfo.find(this.pokemon.species().friendAreaID), null, -1, -1);
 		else if (option == this.summary) Persistance.stateManager.setState(TeamMenuState.createSummaryState(this.parent.backgroundState, this, this.pokemon));
 		else if (option == this.exit) this.onExit();
 	}

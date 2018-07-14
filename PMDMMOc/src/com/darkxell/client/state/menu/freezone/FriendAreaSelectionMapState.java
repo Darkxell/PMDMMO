@@ -57,7 +57,7 @@ public class FriendAreaSelectionMapState extends AbstractState {
 			movingdown = true;
 			break;
 		case Keys.KEY_RUN:
-			StateManager.setExploreState(FreezoneInfo.BASE, 4, 42);
+			StateManager.setExploreState(FreezoneInfo.BASE, Direction.EAST, 4, 42);
 			Persistance.currentplayer.renderer().sprite().setFacingDirection(Direction.EAST);
 			break;
 		case Keys.KEY_ATTACK:
@@ -65,7 +65,7 @@ public class FriendAreaSelectionMapState extends AbstractState {
 			for (int i = 0; i < points.length; i++)
 				if (points[i].showsonfriendsmap && isnearpoint(points[i])) {
 					if (points[i] == LocalMapLocation.BASE) {
-						StateManager.setExploreState(FreezoneInfo.BASE, 4, 42);
+						StateManager.setExploreState(FreezoneInfo.BASE, Direction.EAST, 4, 42);
 						Persistance.currentplayer.renderer().sprite().setFacingDirection(Direction.EAST);
 						break;
 					}

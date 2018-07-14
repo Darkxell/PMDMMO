@@ -18,6 +18,7 @@ import com.darkxell.client.state.freezone.FreezoneExploreState;
 import com.darkxell.client.state.map.LocalMap;
 import com.darkxell.common.dungeon.DungeonOutcome;
 import com.darkxell.common.dungeon.DungeonRegistry;
+import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.zones.FreezoneInfo;
 import com.eclipsesource.json.JsonObject;
@@ -68,12 +69,14 @@ public abstract class StateManager {
 	 * @param xPos,
 	 *            yPos - Coordinates of the Player in the map. If any is -1,
 	 *            uses the default coordinates for that map.
+	 * @param direction
+	 * 			  - The direction to face when entering the Freezone. null to keep current direction.
 	 */
-	public static void setExploreState(FreezoneInfo freezone, int xPos, int yPos) {
+	public static void setExploreState(FreezoneInfo freezone, Direction direction, int xPos, int yPos) {
 		FreezoneMap map = Freezones.loadMap(freezone);
 		if (map == null)
 			return;
-		setExploreState(map, xPos, yPos);
+		setExploreState(map, direction, xPos, yPos);
 	}
 
 	/**
@@ -83,7 +86,7 @@ public abstract class StateManager {
 	 *            yPos - Coordinates of the Player in the map. If any is -1,
 	 *            uses the default coordinates for that map.
 	 */
-	public static void setExploreState(FreezoneMap map, int xPos, int yPos) {
+	public static void setExploreState(FreezoneMap map, Direction direction, int xPos, int yPos) {
 		AbstractState next;
 		if (Persistance.stateManager.getCurrentState() instanceof FreezoneExploreState)
 			next = Persistance.stateManager.getCurrentState();
@@ -98,6 +101,7 @@ public abstract class StateManager {
 				Persistance.freezoneCamera.x = Persistance.currentplayer.x = xPos == -1 ? map.defaultX() : xPos;
 				Persistance.freezoneCamera.y = Persistance.currentplayer.y = yPos == -1 ? map.defaultY() : yPos;
 				Persistance.displaymap = LocalMap.instance;
+				if (direction != null) Persistance.currentplayer.renderer().sprite().setFacingDirection(direction);
 			}
 		});
 	}

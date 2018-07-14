@@ -55,7 +55,7 @@ public class FriendmapSelectionState extends OptionSelectionMenuState {
 			this.onExit();
 		else if (option instanceof MenuZoneOption) {
 			FreezoneInfo info = ((MenuZoneOption) option).info;
-			StateManager.setExploreState(info, -1, -1);
+			StateManager.setExploreState(info, null, -1, -1);
 		}
 	}
 
