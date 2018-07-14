@@ -19,7 +19,7 @@ import com.darkxell.common.zones.LocalMapLocation;
 
 public class FriendAreaSelectionMapState extends AbstractState {
 
-	private float camerax = LocalMapLocation.BASE.x - 50;
+	private float camerax = LocalMapLocation.BASE.x - 70;
 	private float cameray = LocalMapLocation.BASE.y;
 	private float cursorx = LocalMapLocation.BASE.x;
 	private float cursory = LocalMapLocation.BASE.y;
@@ -59,7 +59,6 @@ public class FriendAreaSelectionMapState extends AbstractState {
 			break;
 		case Keys.KEY_RUN:
 			StateManager.setExploreState(FreezoneInfo.BASE, Direction.EAST, 4, 42);
-			Persistance.currentplayer.renderer().sprite().setFacingDirection(Direction.EAST);
 			break;
 		case Keys.KEY_ATTACK:
 			LocalMapLocation[] points = LocalMapLocation.values();
@@ -67,7 +66,6 @@ public class FriendAreaSelectionMapState extends AbstractState {
 				if (points[i].showsonfriendsmap && isnearpoint(points[i])) {
 					if (points[i] == LocalMapLocation.BASE) {
 						StateManager.setExploreState(FreezoneInfo.BASE, Direction.EAST, 4, 42);
-						Persistance.currentplayer.renderer().sprite().setFacingDirection(Direction.EAST);
 						break;
 					}
 					ArrayList<FreezoneInfo> dests = new ArrayList<>(5);
