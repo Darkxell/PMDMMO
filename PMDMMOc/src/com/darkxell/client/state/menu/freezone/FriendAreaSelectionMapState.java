@@ -8,6 +8,7 @@ import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.MenuHudSpriteset;
 import com.darkxell.client.resources.images.others.MapResources;
+import com.darkxell.client.resources.music.SoundManager;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.StateManager;
 import com.darkxell.client.ui.Keys;
@@ -18,7 +19,7 @@ import com.darkxell.common.zones.LocalMapLocation;
 
 public class FriendAreaSelectionMapState extends AbstractState {
 
-	private float camerax = LocalMapLocation.BASE.x;
+	private float camerax = LocalMapLocation.BASE.x - 50;
 	private float cameray = LocalMapLocation.BASE.y;
 	private float cursorx = LocalMapLocation.BASE.x;
 	private float cursory = LocalMapLocation.BASE.y;
@@ -74,6 +75,7 @@ public class FriendAreaSelectionMapState extends AbstractState {
 					for (int j = 0; j < allinfos.length; j++)
 						if (allinfos[j].maplocation == points[i])
 							dests.add(allinfos[j]);
+					SoundManager.playSound("ui-select");
 					Persistance.stateManager.setState(new FriendmapSelectionState(this, dests, points[i].displayname));
 					break;
 				}
@@ -134,8 +136,13 @@ public class FriendAreaSelectionMapState extends AbstractState {
 				if (text) {
 					int twidth = TextRenderer.width(infos[i].displayname);
 					g.setColor(boxgray_inside);
-					g.fillRect(infos[i].x - (twidth / 2) - 4, infos[i].y - 20, twidth + 8, 13);
-					TextRenderer.render(g, infos[i].displayname, infos[i].x - (twidth / 2), infos[i].y - 18);
+					int leftpart = infos[i].x - (twidth / 2) - 4;
+					if (leftpart <= 0)
+						leftpart = 0;
+					else if (leftpart + twidth + 8 >= MapResources.LOCALMAP.getWidth())
+						leftpart = MapResources.LOCALMAP.getWidth() - twidth - 8;
+					g.fillRect(leftpart, infos[i].y - 20, twidth + 8, 13);
+					TextRenderer.render(g, infos[i].displayname, leftpart + 4, infos[i].y - 18);
 				}
 			}
 
@@ -203,8 +210,7 @@ public class FriendAreaSelectionMapState extends AbstractState {
 			cameray = newcameray;
 	}
 
-	public void lockOn(LocalMapLocation location)
-	{
+	public void lockOn(LocalMapLocation location) {
 		cursorx = location.x;
 		cursory = location.y;
 	}
