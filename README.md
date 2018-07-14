@@ -7,4 +7,4 @@ More information will be available very soon.
 If you are interested by joining the developpement of this project, feel free to contact us via github.
 
 We have a discord server where we are available:
-https://discord.gg/puVZWvY
+https://discord.gg/KegXRG8
