@@ -1,6 +1,7 @@
 package com.darkxell.common.player;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.darkxell.common.dbobject.DBPlayer;
 import com.darkxell.common.dbobject.DatabaseIdentifier;
@@ -11,13 +12,14 @@ public class Player
 {
 
 	public ArrayList<Pokemon> allies;
-
 	private DBPlayer data;
 
 	/** This Player's Inventory. */
 	private Inventory inventory;
 
 	public Pokemon leaderPokemon;
+
+	public HashMap<Long, Pokemon> pokemonInZones;
 
 	public Player(DBPlayer data)
 	{
@@ -35,6 +37,20 @@ public class Player
 	{
 		this.data.pokemonsinparty.add(new DatabaseIdentifier(pokemon.id()));
 		this.allies.add(pokemon);
+		pokemon.setPlayer(this);
+	}
+
+	public void addPokemonInZone(Pokemon pokemon)
+	{
+		this.pokemonInZones.put(pokemon.id(), pokemon);
+		boolean already = false;
+		for (DatabaseIdentifier id : this.data.pokemonsinzones)
+			if (id.id == pokemon.id())
+			{
+				already = true;
+				break;
+			}
+		if (!already) this.data.pokemonsinzones.add(new DatabaseIdentifier(pokemon.id()));
 		pokemon.setPlayer(this);
 	}
 
@@ -140,6 +156,13 @@ public class Player
 		pokemon.setPlayer(null);
 	}
 
+	public void removePokemonInZone(Pokemon pokemon)
+	{
+		this.pokemonInZones.remove(pokemon.id());
+		this.data.pokemonsinzones.removeIf(id -> id.id == pokemon.id());
+		pokemon.setPlayer(null);
+	}
+
 	public void resetDungeonTeam()
 	{
 		if (this.leaderPokemon != null && this.leaderPokemon.getDungeonPokemon() != null) this.leaderPokemon.getDungeonPokemon().dispose();
@@ -152,6 +175,9 @@ public class Player
 		this.data = data;
 		this.allies = new ArrayList<>();
 		this.inventory = new Inventory();
+		this.pokemonInZones = new HashMap<>();
+		for (DatabaseIdentifier zone : this.data.pokemonsinzones)
+			this.pokemonInZones.put(zone.id, null);
 	}
 
 	public void setInventory(Inventory inventory)

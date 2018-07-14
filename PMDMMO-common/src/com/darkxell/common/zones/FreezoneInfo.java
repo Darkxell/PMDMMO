@@ -1,22 +1,17 @@
-package com.darkxell.client.mechanics.freezones;
+package com.darkxell.common.zones;
 
-import com.darkxell.client.mechanics.freezones.zones.BaseFreezone;
-import com.darkxell.client.mechanics.freezones.zones.DojoFreezone;
-import com.darkxell.client.mechanics.freezones.zones.ForestFreezone;
-import com.darkxell.client.mechanics.freezones.zones.LumiousCaveFreezone;
-import com.darkxell.client.mechanics.freezones.zones.OfficeFreezone;
-import com.darkxell.client.mechanics.freezones.zones.PokemonSquareFreezone;
-import com.darkxell.client.mechanics.freezones.zones.PondFreezone;
+import com.darkxell.common.util.language.Message;
 
-public enum FreezoneInfo {
+public enum FreezoneInfo
+{
 
 	BASE(LocalMapLocation.BASE, "base"),
 	SQUARE(LocalMapLocation.SQUARE, "square"),
 	DOJO(LocalMapLocation.DOJO, "dojo"),
 	POND(LocalMapLocation.POND, "wpond"),
 	OFFICE(LocalMapLocation.OFFICE, "office"),
-	STARTFOREST(LocalMapLocation.STARTFOREST, "forest"),
-	LUMINOUSCAVE(LocalMapLocation.LUMINOUSCAVE, "lcave"),
+	STARTFOREST(LocalMapLocation.STARTFOREST, "startforest"),
+	LUMINOUSCAVE(LocalMapLocation.LUMINOUSCAVE, "lumiouscave"),
 
 	FRIEND_AGEDCHAMBER1(LocalMapLocation.ZONE_RUINS, "agedchamber1"),
 	FRIEND_AGEDCHAMBER2(LocalMapLocation.ZONE_RUINS, "agedchamber2"),
@@ -73,46 +68,16 @@ public enum FreezoneInfo {
 	FRIEND_TREASURESEA(LocalMapLocation.ZONE_SOUTHERNSEA, "treasuresea"),
 	FRIEND_TURTLESHELLPOND(LocalMapLocation.ZONE_POND, "turtleshellpond"),
 	FRIEND_VOLCANICPIT(LocalMapLocation.ZONE_VOLCANO, "volcanicpit"),
-	FRIEND_WATERFALLLAKE(LocalMapLocation.ZONE_EASTERNLAKESIDE, "waterfalllake"),
+	FRIEND_WATERFALLLAKE(LocalMapLocation.ZONE_ORIENTALLAKE, "waterfalllake"),
 	FRIEND_WILDPLAINS(LocalMapLocation.ZONE_SOUTHERNPLAINS, "wildplains");
 
 	public String id;
 	public LocalMapLocation maplocation;
 
-	private FreezoneInfo(LocalMapLocation maplocation, String id) {
+	private FreezoneInfo(LocalMapLocation maplocation, String id)
+	{
 		this.id = id;
 		this.maplocation = maplocation;
-	}
-
-	/** Creates a new instance of the desired freezone map. */
-	public static FreezoneMap loadMap(FreezoneInfo freezone) {
-		// FIXME : switchcase here.
-		switch (freezone)
-		{
-			case BASE:
-				return new BaseFreezone();
-
-			case SQUARE:
-				return new PokemonSquareFreezone();
-
-			case DOJO:
-				return new DojoFreezone();
-
-			case POND:
-				return new PondFreezone();
-
-			case OFFICE:
-				return new OfficeFreezone();
-
-			case STARTFOREST:
-				return new ForestFreezone();
-
-			case LUMINOUSCAVE:
-				return new LumiousCaveFreezone();
-
-			default:
-				return null;
-		}
 	}
 
 	public static FreezoneInfo find(String id)
@@ -120,5 +85,10 @@ public enum FreezoneInfo {
 		for (FreezoneInfo f : values())
 			if (f.id.equals(id)) return f;
 		return null;
+	}
+
+	public Message getName()
+	{
+		return new Message("zone." + this.id);
 	}
 }

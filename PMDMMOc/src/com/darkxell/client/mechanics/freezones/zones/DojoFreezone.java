@@ -1,22 +1,17 @@
 package com.darkxell.client.mechanics.freezones.zones;
 
-import com.darkxell.client.mechanics.freezones.FreezoneInfo;
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
 import com.darkxell.client.mechanics.freezones.WarpZone;
 import com.darkxell.client.mechanics.freezones.entities.AnimatedFlowerEntity;
 import com.darkxell.common.util.DoubleRectangle;
+import com.darkxell.common.zones.FreezoneInfo;
 
 public class DojoFreezone extends FreezoneMap {
 
 	public DojoFreezone() {
-		super("/freezones/dojo.xml");
+		super("/freezones/dojo.xml", 42, 4, FreezoneInfo.DOJO);
 		this.freezonebgm = "town.mp3";
-		this.warpzones.add(new WarpZone(67, 85, new DoubleRectangle(39, 0, 9, 2)) {
-			@Override
-			public FreezoneMap getDestination() {
-				return new PokemonSquareFreezone();
-			}
-		});
+		this.triggerzones.add(new WarpZone(67, 85, FreezoneInfo.SQUARE, new DoubleRectangle(39, 0, 9, 2)));
 
 		this.addEntity(new AnimatedFlowerEntity(5, 6, false));
 		this.addEntity(new AnimatedFlowerEntity(5, 22, false));
@@ -37,21 +32,6 @@ public class DojoFreezone extends FreezoneMap {
 		this.addEntity(new AnimatedFlowerEntity(73, 39, true));
 		this.addEntity(new AnimatedFlowerEntity(68, 40, true));
 
-	}
-
-	@Override
-	public FreezoneInfo getInfo() {
-		return FreezoneInfo.DOJO;
-	}
-
-	@Override
-	public int defaultX() {
-		return 42;
-	}
-
-	@Override
-	public int defaultY() {
-		return 4;
 	}
 
 }

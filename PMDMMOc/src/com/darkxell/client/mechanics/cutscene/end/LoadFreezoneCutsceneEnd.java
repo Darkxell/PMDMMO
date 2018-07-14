@@ -4,9 +4,9 @@ import org.jdom2.Element;
 
 import com.darkxell.client.mechanics.cutscene.Cutscene;
 import com.darkxell.client.mechanics.cutscene.Cutscene.CutsceneEnd;
-import com.darkxell.client.mechanics.freezones.FreezoneInfo;
 import com.darkxell.client.state.StateManager;
 import com.darkxell.common.util.XMLUtils;
+import com.darkxell.common.zones.FreezoneInfo;
 
 public class LoadFreezoneCutsceneEnd extends CutsceneEnd
 {
@@ -42,7 +42,7 @@ public class LoadFreezoneCutsceneEnd extends CutsceneEnd
 	public void onCutsceneEnd()
 	{
 		super.onCutsceneEnd();
-		StateManager.setExploreState(this.freezone, this.xPos, this.yPos);
+		StateManager.setExploreState(this.freezone, null, this.xPos, this.yPos);
 	}
 
 	@Override

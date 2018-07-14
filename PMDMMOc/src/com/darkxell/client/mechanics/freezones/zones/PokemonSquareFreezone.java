@@ -2,7 +2,6 @@ package com.darkxell.client.mechanics.freezones.zones;
 
 import java.util.Random;
 
-import com.darkxell.client.mechanics.freezones.FreezoneInfo;
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
 import com.darkxell.client.mechanics.freezones.WarpZone;
 import com.darkxell.client.mechanics.freezones.entities.AnimatedFlowerEntity;
@@ -16,36 +15,17 @@ import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.DoubleRectangle;
 import com.darkxell.common.util.language.Message;
+import com.darkxell.common.zones.FreezoneInfo;
 
 public class PokemonSquareFreezone extends FreezoneMap {
 
 	public PokemonSquareFreezone() {
-		super("/freezones/square.xml");
+		super("/freezones/square.xml", 4, 40, FreezoneInfo.SQUARE);
 		this.freezonebgm = "town.mp3";
-		this.warpzones.add(new WarpZone(63, 40, new DoubleRectangle(0, 38, 2, 5)) {
-			@Override
-			public FreezoneMap getDestination() {
-				return new BaseFreezone();
-			}
-		});
-		this.warpzones.add(new WarpZone(-1, -1, new DoubleRectangle(63, 87, 9, 2)) {
-			@Override
-			public FreezoneMap getDestination() {
-				return new DojoFreezone();
-			}
-		});
-		this.warpzones.add(new WarpZone(-1, -1, new DoubleRectangle(61, 0, 8, 2)) {
-			@Override
-			public FreezoneMap getDestination() {
-				return new PondFreezone();
-			}
-		});
-		this.warpzones.add(new WarpZone(-1, -1, new DoubleRectangle(118, 38, 2, 5)) {
-			@Override
-			public FreezoneMap getDestination() {
-				return new OfficeFreezone();
-			}
-		});
+		this.triggerzones.add(new WarpZone(63, 40, FreezoneInfo.BASE, new DoubleRectangle(0, 38, 2, 5)));
+		this.triggerzones.add(new WarpZone(-1, -1, FreezoneInfo.DOJO, new DoubleRectangle(63, 87, 9, 2)));
+		this.triggerzones.add(new WarpZone(-1, -1, FreezoneInfo.POND, new DoubleRectangle(61, 0, 8, 2)));
+		this.triggerzones.add(new WarpZone(-1, -1, FreezoneInfo.OFFICE, new DoubleRectangle(118, 38, 2, 5)));
 
 		this.addEntity(new AnimatedFlowerEntity(10, 30, false));
 		this.addEntity(new AnimatedFlowerEntity(10, 37, false));
@@ -120,21 +100,6 @@ public class PokemonSquareFreezone extends FreezoneMap {
 				new Message("dialog.place.shiftry.2"));
 		this.addEntity(new PokemonFreezoneEntity(69, 35, 275, Direction.SOUTHWEST, s));
 
-	}
-
-	@Override
-	public int defaultX() {
-		return 4;
-	}
-
-	@Override
-	public int defaultY() {
-		return 40;
-	}
-
-	@Override
-	public FreezoneInfo getInfo() {
-		return FreezoneInfo.SQUARE;
 	}
 
 }

@@ -4,7 +4,6 @@ import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.state.dungeon.DungeonState;
 import com.darkxell.client.state.freezone.FreezoneExploreState;
 import com.darkxell.client.state.mainstates.PrincipalMainState;
-import com.darkxell.client.state.map.LocalMap;
 import com.darkxell.common.util.Logger;
 
 import net.arikia.dev.drpc.DiscordEventHandlers;
@@ -46,8 +45,7 @@ public class DiscordEventHandlerForPMDMMO {
 			if (pmst.getCurrentState() instanceof FreezoneExploreState) {
 				DiscordRichPresence.Builder rich = new DiscordRichPresence.Builder("Hanging around")
 						.setBigImage("squareicon", "").setSmallImage(smallimage, smallimagetext);
-				if (Persistance.displaymap instanceof LocalMap)
-					rich.setDetails(((LocalMap) Persistance.displaymap).currentlocation.displayname.toString());
+				rich.setDetails(Persistance.currentmap.info.getName().toString());
 				DiscordRPC.discordUpdatePresence(rich.build());
 			} else if (pmst.getCurrentState() instanceof DungeonState) {
 				DiscordRichPresence.Builder rich = new DiscordRichPresence.Builder("Exploring a dungeon")

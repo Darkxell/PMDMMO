@@ -7,11 +7,9 @@ import com.darkxell.client.launchable.GameSocketEndpoint;
 import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
-import com.darkxell.client.mechanics.freezones.WarpZone;
 import com.darkxell.client.mechanics.freezones.zones.BaseFreezone;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.others.Hud;
-import com.darkxell.client.state.StateManager;
 import com.darkxell.client.state.menu.freezone.FreezoneMenuState;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.common.util.Logger;
@@ -109,13 +107,11 @@ public class FreezoneExploreState extends AbstractFreezoneState
 		}
 		else if (serversynccooldown != -1) ++serversynccooldown;
 
-		if (this.isMain()) for (int i = 0; i < Persistance.currentmap.warpzones.size(); i++)
-			if (Persistance.currentmap.warpzones.get(i).hitbox
+		if (this.isMain()) for (int i = 0; i < Persistance.currentmap.triggerzones.size(); i++)
+			if (Persistance.currentmap.triggerzones.get(i).hitbox
 					.intersects(Persistance.currentplayer.getHitboxAt(Persistance.currentplayer.x, Persistance.currentplayer.y)))
 			{
-				WarpZone wz = Persistance.currentmap.warpzones.get(i);
-				FreezoneMap destination = wz.getDestination();
-				if (destination != null) StateManager.setExploreState(destination, wz.toX, wz.toY);
+				Persistance.currentmap.triggerzones.get(i).onEnter();
 				break;
 			}
 

@@ -15,5 +15,11 @@ public class DatabaseIdentifier
 	{
 		return obj instanceof DatabaseIdentifier && this.id == ((DatabaseIdentifier) obj).id;
 	}
+	
+	@Override
+	public String toString()
+	{
+		return "ID=" + this.id;
+	}
 
 }

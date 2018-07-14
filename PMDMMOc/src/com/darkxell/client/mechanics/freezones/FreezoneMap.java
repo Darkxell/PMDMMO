@@ -13,6 +13,7 @@ import com.darkxell.client.renderers.EntityRendererHolder;
 import com.darkxell.client.resources.Res;
 import com.darkxell.client.resources.images.tilesets.AbstractTileset;
 import com.darkxell.common.util.Logger;
+import com.darkxell.common.zones.FreezoneInfo;
 import com.eclipsesource.json.JsonValue;
 
 /**
@@ -29,18 +30,21 @@ public abstract class FreezoneMap {
 
 	public String freezonebgm = "";
 
+	public final FreezoneInfo info;
+	public final int defaultX, defaultY;
+
 	/**
 	 * List the entities in this map. Note that the player isn't actually an
 	 * entity.
 	 */
 	private ArrayList<FreezoneEntity> entities = new ArrayList<>();
 
-	public ArrayList<WarpZone> warpzones = new ArrayList<>();
+	public ArrayList<TriggerZone> triggerzones = new ArrayList<>();
 
 	public final EntityRendererHolder<FreezoneEntity> entityRenderers = new EntityRendererHolder<>();
 	public final EntityRendererHolder<CutsceneEntity> cutsceneEntityRenderers = new EntityRendererHolder<>();
 
-	public FreezoneMap(String xmlfilepath) {
+	public FreezoneMap(String xmlfilepath, int defaultX, int defaultY, FreezoneInfo info) {
 		InputStream is = Res.get(xmlfilepath);
 		SAXBuilder builder = new SAXBuilder();
 		org.jdom2.Element rootelement;
@@ -69,6 +73,10 @@ public abstract class FreezoneMap {
 			Logger.e("Could not build freezonemap from XML file : " + e);
 			e.printStackTrace();
 		}
+		
+		this.defaultX = defaultX;
+		this.defaultY = defaultY;
+		this.info = info;
 	}
 
 	public void addEntity(FreezoneEntity entity) {
@@ -114,12 +122,6 @@ public abstract class FreezoneMap {
 	}
 
 	/**
-	 * Returns the additionnal informations not related to this instance about
-	 * this freezone.
-	 */
-	public abstract FreezoneInfo getInfo();
-
-	/**
 	 * Update the OtherPlayer entity destinations and last update timestamp
 	 * according to the parsed json values for the specified entity.
 	 */
@@ -145,10 +147,25 @@ public abstract class FreezoneMap {
 		}
 	}
 
+	/**
+	 * Returns the additionnal informations not related to this instance about
+	 * this freezone.
+	 */
+	public FreezoneInfo getInfo()
+	{
+		return this.info;
+	}
+
 	/** @return Default X position for a Player in this Map. */
-	public abstract int defaultX();
+	public int defaultX()
+	{
+		return this.defaultX;
+	}
 
 	/** @return Default Y position for a Player in this Map. */
-	public abstract int defaultY();
+	public int defaultY()
+	{
+		return this.defaultY;
+	}
 
 }

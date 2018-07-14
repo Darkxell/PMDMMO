@@ -3,6 +3,7 @@ package com.darkxell.client.launchable.messagehandlers;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.PlayerLoadingState;
+import com.darkxell.client.state.menu.freezone.FriendSelectionState;
 import com.darkxell.common.dbobject.DBItemstack;
 import com.darkxell.common.dbobject.DBLearnedmove;
 import com.darkxell.common.dbobject.DBPokemon;
@@ -51,7 +52,11 @@ public class MonsterRequestHandler extends MessageHandler
 	public void handleMessage(JsonObject message)
 	{
 		AbstractState state = Persistance.stateManager.getCurrentState();
-		if (state != null && state instanceof PlayerLoadingState) ((PlayerLoadingState) state).onMonsterReceived(message);
+		if (state != null)
+		{
+			if (state instanceof PlayerLoadingState) ((PlayerLoadingState) state).onMonsterReceived(message);
+			else if (state instanceof FriendSelectionState) ((FriendSelectionState) state).onPokemonReceived(message);
+		}
 	}
 
 }
