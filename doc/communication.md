@@ -16,15 +16,35 @@ The endpoints are available at the following adresses:
 
 \[server ip or linked dns]:8080/PMDMMOServer/game
 
-# 2 - Required payload structure
+# 2.1 - Required payload structure
 
 The data sent to the server MUST be in a valid JSON structure, and encoded as text in the websocket container.
 The server will ignore all binary payloads recieved (This is subject to change, refer to the latest documentation folder on github).
 
 The server will not send a direct response to a client upon recieving a payload, but can be expected to send a receipt back for most informations.
 
-The Json contained any payload must contain a String field called "action", wich is used to describe the content of the payload.
+The Json containing any payload must contain a String field called "action", wich is used to describe the content of the payload.
 The other informations are payload dependant.
+
+# 2.2 - Encryption
+
+Any payload sent by a logged client to the server can be encrypted using AES256.
+The encryption key used must be a sha256 hash of:
+serverhash + username + "sync"
+To use encrypted payloads, the client can just encrypt the JSON string as an encrypted string and send it in a clear text payload using the following structure:
+{encrypted:1,value:"YOUR ENCRYPTED VALUE HERE"}
+
+If you are logged to the server, the server will encrypt any payload it sends to the client using the exact same fashion.
+
+The only exeptions to this is are the CREATEACCOUNT and LOGIN payloads.
+A client might (and should, really) wish information in these payloads to be kept secret.
+While the login payload has additionnal layers of protection, the createaccount one does not and should be encrypted properly.
+For this, asyonchronous encryption can be used.
+{encrypted:2,value:"YOUR ENCRYPTED VALUE HERE"}
+This message can be encrypted with the server's public key obtainable using the GETPUBLICKEY payload.
+Note that the server will ignore any non CREATEACCOUNT and LOGIN, as asynchronous encryption is cpu heavy.
+
+For more informations about the login challenge, check "hashing norms.md".
 
 # 3 - List of client -> server payloads
 
@@ -362,3 +382,4 @@ This payload is sent after a client sends a dungeonstart request to give the cli
 }
 
 This payload is sent after a client sends a dungeonend request to notify the client that its Player has been updated.
+
