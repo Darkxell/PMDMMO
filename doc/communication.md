@@ -29,20 +29,14 @@ The other informations are payload dependant.
 # 2.2 - Encryption
 
 Any payload sent by a logged client to the server can be encrypted using AES256.
-The encryption key used must be a sha256 hash of:
-serverhash + username + "sync"
+The encryption key used must be the key sent by the client to the server in the SETENCRYPTIONKEY payload
 To use encrypted payloads, the client can just encrypt the JSON string as an encrypted string and send it in a clear text payload using the following structure:
 {encrypted:1,value:"YOUR ENCRYPTED VALUE HERE"}
 
-If you are logged to the server, the server will encrypt any payload it sends to the client using the exact same fashion.
+The server will encrypt any payload it sends to the client using the exact same fashion.
 
-The only exeptions to this is are the CREATEACCOUNT and LOGIN payloads.
-A client might (and should, really) wish information in these payloads to be kept secret.
-While the login payload has additionnal layers of protection, the createaccount one does not and should be encrypted properly.
-For this, asyonchronous encryption can be used.
-{encrypted:2,value:"YOUR ENCRYPTED VALUE HERE"}
-This message can be encrypted with the server's public key obtainable using the GETPUBLICKEY payload.
-Note that the server will ignore any non CREATEACCOUNT and LOGIN, as asynchronous encryption is cpu heavy.
+The only exeptions to this is is the SETENCRYPTIONKEY payload.
+Refer to the specific documentation of this payload for further information.
 
 For more informations about the login challenge, check "hashing norms.md".
 
@@ -87,6 +81,26 @@ Trying to authentificate without reseting the salt will not be taken into accoun
 }
 
 This payload must by a client to create a new account. This will create a new account entry in the database.
+
+■ PUBLICKEYREQUEST
+
+{"action":"publickeyrequest"}
+
+This payload can be sent by the client to the server anytime. This will notify the server that the client would like to know the server's public async encryption key to setup a synchronous encryption communication. 
+
+■ SETENCRYPTIONKEY
+
+{"action":"setencryptionkey",
+
+"value" : 
+        #---------encrypted as hex string of bytes obtained by encrypting with the server public key--------
+		{"key":"-------------", // Hexa string representation of the synchronous key the client wants to use from now on
+		}
+        #---------------------------------------------------------------------------------------------------
+}
+
+This payload should be sent by any client who wants to use encryption.
+The server will now return payloads encrypted with the parsed key, and will be able to decrypt any message sync encrypted with it from the client who sent it.
 
 ■ LOGIN
 
@@ -270,6 +284,16 @@ Note that this payload is sent each time you notify the server of your movement 
 
 This payload is sent by the server to the client when he sucessfully logs in.
 This payload contains the information about the player the clients needs to sync in with the server upon logging in.
+
+■ PUBLICKEYREQUEST
+
+{"action":"publickeyrequest",
+
+"keybytes":"3082012...2300D06" // Hex representation of the public key of the current server instance 
+
+}
+
+This is sent by the server to a client who asked to recieve it. This key can be turned into a byte array
 
 ■ SALTRESET
 
