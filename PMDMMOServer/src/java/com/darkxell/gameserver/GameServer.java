@@ -133,6 +133,9 @@ public class GameServer {
      */
     @OnMessage
     public void handleMessage(String message, Session session) {
+        if (!GameServerSafe.iskeipairset) {
+            GameServerSafe.setkeypair();
+        }
         if (!daoset) {
             if (this.playerDAO == null) {
                 this.playerDAO = new PlayerDAO();
