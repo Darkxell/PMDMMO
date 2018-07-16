@@ -2,11 +2,11 @@ package com.darkxell.client.state.menu.menus;
 
 import java.awt.Rectangle;
 
+import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.client.state.menu.AbstractMenuState;
 import com.darkxell.client.ui.Keys;
-import com.darkxell.common.util.language.Message;
 
 public class ControlsMenuState extends AbstractMenuState
 {
@@ -17,9 +17,9 @@ public class ControlsMenuState extends AbstractMenuState
 		public final int oldValue;
 		int newValue;
 
-		public ControlMenuOption(Message name, short key)
+		public ControlMenuOption(String nameID, short key)
 		{
-			super(name);
+			super(nameID);
 			this.key = key;
 			this.newValue = this.oldValue = Keys.getKeyFromID(key);
 		}
@@ -38,8 +38,10 @@ public class ControlsMenuState extends AbstractMenuState
 	@Override
 	protected void createOptions()
 	{
-		// TODO Auto-generated method stub
-
+		MenuTab tab = new MenuTab("menu.controls");
+		for (short key = 0; key < Keys.KEY_COUNT; ++key)
+			tab.addOption(new ControlMenuOption("key." + Keys.NAMES[key], key));
+		this.tabs.add(tab);
 	}
 
 	@Override
@@ -51,15 +53,17 @@ public class ControlsMenuState extends AbstractMenuState
 	@Override
 	protected void onExit()
 	{
-		// TODO Auto-generated method stub
+		Persistance.stateManager.setState(this.parent);
+	}
 
+	@Override
+	protected void onOptionChanged(MenuOption option)
+	{
+		super.onOptionChanged(option);
 	}
 
 	@Override
 	protected void onOptionSelected(MenuOption option)
-	{
-		// TODO Auto-generated method stub
-
-	}
+	{}
 
 }
