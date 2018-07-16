@@ -7,6 +7,7 @@ package com.darkxell.gameserver;
 
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
+import javax.xml.bind.DatatypeConverter;
 
 public class GameServerSafe {
 
@@ -17,19 +18,26 @@ public class GameServerSafe {
      */
     private static KeyPair keypair = null;
 
-    public static boolean iskeipairset = false;
+    public static boolean iskeypairset = false;
 
     public static void setkeypair() {
         try {
             KeyPairGenerator kpg = KeyPairGenerator.getInstance("RSA");
             kpg.initialize(2048);// keysize=2048
             keypair = kpg.generateKeyPair();
-            iskeipairset = true;
+            iskeypairset = true;
             System.out.println("Server keypair was set. Public key is:\n" + keypair.getPublic());
         } catch (Exception e) {
             System.err.println("Could not generate main server keypair correctly.");
             e.printStackTrace();
         }
+    }
+
+    public static String getPublicKeyHexString() {
+        if (!iskeypairset) {
+            setkeypair();
+        }
+        return DatatypeConverter.printHexBinary(keypair.getPublic().getEncoded());
     }
 
 }

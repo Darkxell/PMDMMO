@@ -22,6 +22,7 @@ import com.darkxell.client.launchable.messagehandlers.LoginPlayerHandler;
 import com.darkxell.client.launchable.messagehandlers.LogininfoHandler;
 import com.darkxell.client.launchable.messagehandlers.MonsterRequestHandler;
 import com.darkxell.client.launchable.messagehandlers.ObjectRequestHandler;
+import com.darkxell.client.launchable.messagehandlers.PublicKeyRequestHandler;
 import com.darkxell.client.launchable.messagehandlers.SaltResetHandler;
 import com.darkxell.client.launchable.messagehandlers.TestResultConfirmHandler;
 import com.darkxell.common.util.Communicable;
@@ -82,6 +83,9 @@ public class GameSocketEndpoint {
 		this.userSession = userSession;
 		Logger.i("Game socket connected to the server sucessfully.");
 		this.connectionStatus = CONNECTED;
+		// Launches the public key request asap
+		Logger.d("Sent publickeyrequest to server, awaiting response...");
+		this.sendMessage(Json.object().add("action", "publickeyrequest").toString());
 	}
 
 	/**
@@ -121,6 +125,9 @@ public class GameSocketEndpoint {
 			case "login":
 				new LoginPlayerHandler().handleMessage(obj.asObject());
 				break;
+			case "publickeyrequest":
+				new PublicKeyRequestHandler().handleMessage(obj.asObject());
+				break;
 			case "objectrequest":
 				new ObjectRequestHandler().handleMessage(obj.asObject());
 				break;
@@ -142,7 +149,7 @@ public class GameSocketEndpoint {
 			case "bankactionconfirm":
 				new BankActionConfirmHandler().handleMessage(obj.asObject());
 				break;
-				
+
 			// DUNGEON COMMUNICATION
 
 			case "dungeonstartconfirm":
@@ -198,8 +205,7 @@ public class GameSocketEndpoint {
 	/**
 	 * Shortcut to send a message to the server requesting an inventory value.
 	 */
-	public void requestInventory(long id)
-	{
+	public void requestInventory(long id) {
 		JsonObject message = Json.object();
 		message.add("action", "requestinventory");
 		message.add("id", id);
@@ -209,8 +215,7 @@ public class GameSocketEndpoint {
 	/**
 	 * Shortcut to send a message to the server requesting a Pokemon value.
 	 */
-	public void requestMonster(long id)
-	{
+	public void requestMonster(long id) {
 		JsonObject message = Json.object();
 		message.add("action", "requestmonster");
 		message.add("id", id);
@@ -220,8 +225,7 @@ public class GameSocketEndpoint {
 	/**
 	 * Shortcut to send a message to the server requesting an object value.
 	 */
-	public void requestObject(String objectType, long id)
-	{
+	public void requestObject(String objectType, long id) {
 		JsonObject message = Json.object();
 		message.add("action", "objectrequest");
 		message.add("id", id);

@@ -34,6 +34,7 @@ import com.darkxell.gameserver.messagehandlers.ItemActionHandler;
 import com.darkxell.gameserver.messagehandlers.LoginHandler;
 import com.darkxell.gameserver.messagehandlers.MonsterRequestHandler;
 import com.darkxell.gameserver.messagehandlers.ObjectrequestHandler;
+import com.darkxell.gameserver.messagehandlers.PublicKeyRequestHandler;
 import com.darkxell.gameserver.messagehandlers.SaltResetHandler;
 import com.darkxell.gameserver.messagehandlers.TestResultHandler;
 import com.darkxell.model.ejb.Holdeditem_DAO;
@@ -133,7 +134,7 @@ public class GameServer {
      */
     @OnMessage
     public void handleMessage(String message, Session session) {
-        if (!GameServerSafe.iskeipairset) {
+        if (!GameServerSafe.iskeypairset) {
             GameServerSafe.setkeypair();
         }
         if (!daoset) {
@@ -198,6 +199,11 @@ public class GameServer {
                     }
                     case "saltreset": {
                         SaltResetHandler hand = new SaltResetHandler(this);
+                        hand.handleMessage(jsonMessage, session, sessionHandler);
+                        break;
+                    }
+                     case "publickeyrequest": {
+                        PublicKeyRequestHandler hand = new PublicKeyRequestHandler(this);
                         hand.handleMessage(jsonMessage, session, sessionHandler);
                         break;
                     }
