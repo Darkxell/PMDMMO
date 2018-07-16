@@ -64,6 +64,12 @@ public class Keys implements KeyListener
 		{
 			return this.value;
 		}
+
+		public void setValue(int value)
+		{
+			this.value = value;
+			ClientSettings.setSetting("key." + this.nameID, String.valueOf(this.value));
+		}
 	}
 
 	/** Checks if the input directional keys are pressed. <br />

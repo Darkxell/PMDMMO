@@ -74,8 +74,7 @@ public abstract class OptionSelectionMenuState extends AbstractMenuState
 	protected void onTabChanged(MenuTab tab)
 	{
 		super.onTabChanged(tab);
-		this.mainWindow = new OptionSelectionWindow(this, this.mainWindowDimensions());
-		this.mainWindow.isOpaque = this.isOpaque;
+		this.mainWindow = this.createWindow();
 	}
 
 	@Override

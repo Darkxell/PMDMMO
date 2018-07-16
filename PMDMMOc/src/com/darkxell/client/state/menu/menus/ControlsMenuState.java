@@ -4,12 +4,18 @@ import java.awt.Rectangle;
 
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.state.AbstractState;
+import com.darkxell.client.state.dialog.DialogState;
+import com.darkxell.client.state.dialog.DialogState.DialogEndListener;
+import com.darkxell.client.state.dialog.OptionDialogScreen;
 import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.client.state.menu.AbstractMenuState;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
+import com.darkxell.client.state.menu.components.ControlsWindow;
+import com.darkxell.client.state.menu.components.OptionSelectionWindow;
 import com.darkxell.client.ui.Keys.Key;
+import com.darkxell.common.util.language.Message;
 
-public class ControlsMenuState extends OptionSelectionMenuState
+public class ControlsMenuState extends OptionSelectionMenuState implements DialogEndListener
 {
 
 	public static class ControlMenuOption extends MenuOption
@@ -23,6 +29,11 @@ public class ControlsMenuState extends OptionSelectionMenuState
 			super(key.getName());
 			this.key = key;
 			this.newValue = this.oldValue = key.keyValue();
+		}
+
+		public int newValue()
+		{
+			return this.newValue;
 		}
 	}
 
@@ -58,16 +69,45 @@ public class ControlsMenuState extends OptionSelectionMenuState
 	}
 
 	@Override
+	protected OptionSelectionWindow createWindow()
+	{
+		ControlsWindow window = new ControlsWindow(this, this.mainWindowDimensions());
+		window.isOpaque = this.isOpaque;
+		return window;
+	}
+
+	@Override
 	protected Rectangle mainWindowDimensions()
 	{
 		Rectangle r = super.mainWindowDimensions();
-		return new Rectangle(r.x, r.y, PrincipalMainState.displayWidth / 2, r.height);
+		return new Rectangle(r.x, r.y, PrincipalMainState.displayWidth * 3 / 4, r.height);
+	}
+
+	@Override
+	public void onDialogEnd(DialogState dialog)
+	{
+		int selection = ((OptionDialogScreen) dialog.getScreen(1)).chosenIndex();
+		if (selection == 0)
+		{
+			Persistance.stateManager.setState(this.parent);
+			for (MenuTab tab : this.tabs())
+				for (MenuOption option : tab.options())
+				{
+					ControlMenuOption o = (ControlMenuOption) option;
+					o.key.setValue(o.newValue);
+				}
+		} else if (selection == 1) Persistance.stateManager.setState(this.parent);
+		else if (selection == 2) Persistance.stateManager.setState(this);
 	}
 
 	@Override
 	protected void onExit()
 	{
-		Persistance.stateManager.setState(this.parent);
+		OptionDialogScreen confirm = new OptionDialogScreen(new Message("key.save"), new Message("ui.yes"), new Message("ui.no"), new Message("ui.cancel"));
+		confirm.id = 1;
+		DialogState dialog = new DialogState(this.backgroundState, this, confirm);
+		dialog.setOpaque(this.isOpaque);
+		Persistance.stateManager.setState(dialog);
 	}
 
 	@Override
