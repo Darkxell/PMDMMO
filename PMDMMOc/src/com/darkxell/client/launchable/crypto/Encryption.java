@@ -9,6 +9,7 @@ import javax.crypto.Cipher;
 import javax.xml.bind.DatatypeConverter;
 
 import com.darkxell.common.util.Logger;
+import com.eclipsesource.json.Json;
 
 /** Class that holds the main encryption/hashing methods used by the client. */
 public class Encryption {
@@ -90,6 +91,31 @@ public class Encryption {
 	/** Converts a hex String into the former byte array. */
 	public static byte[] hexStringToBytes(String str) {
 		return DatatypeConverter.parseHexBinary(str);
+	}
+
+	/**
+	 * Encrypts a string using the AES key in the safe and generates a
+	 * JsonString containing the encrypted data, ready to be sent to the server.
+	 */
+	public static String syncEncrypt(String data) throws Exception {
+		Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING");
+		cipher.init(Cipher.ENCRYPT_MODE, Safe.symmetricKey);
+		String toreturn = Json.object().add("encrypted", 1)
+				.add("value", bytesToHexString(cipher.doFinal(data.getBytes()))).toString();
+		System.out.println("--------------------------------"+syncDecrypt(toreturn)+"\nFROM: "+data+"\nENCRYPTED:"+toreturn);
+		return toreturn;
+	}
+
+	/**
+	 * Decrypts an encrypted json payload using the AES key in the safe. The
+	 * result is usually a json payload.
+	 */
+	public static String syncDecrypt(String data) throws Exception {
+		Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING");
+		cipher.init(Cipher.DECRYPT_MODE, Safe.symmetricKey);
+		String toreturn = new String(
+				cipher.doFinal(hexStringToBytes(Json.parse(data).asObject().getString("value", ""))));
+		return toreturn;
 	}
 
 }

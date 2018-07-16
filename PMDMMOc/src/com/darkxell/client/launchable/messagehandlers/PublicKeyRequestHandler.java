@@ -43,6 +43,14 @@ public class PublicKeyRequestHandler extends MessageHandler {
 			KeySpec spec = new PBEKeySpec((new RandomString(256)).nextString().toCharArray(), salt, 65536, 256);
 			byte[] tmp = factory.generateSecret(spec).getEncoded();
 			Safe.symmetricKey = new SecretKeySpec(tmp, "AES");
+			
+			byte[] testo = Safe.symmetricKey.getEncoded();
+			String syso = "Symmetric key (length:"+testo.length+") : ";
+			for (int i = 0; i < testo.length; i++) 
+				syso+=testo[i]+",";
+			syso+="-----------\n-------------";
+			System.out.println(syso);
+			
 			Logger.d("Secure sync key has been generated.");
 			JsonObject jsontosend = Json.object().add("action", "setencryptionkey");
 			JsonObject internal = Json.object().add("key", Encryption.bytesToHexString(tmp));

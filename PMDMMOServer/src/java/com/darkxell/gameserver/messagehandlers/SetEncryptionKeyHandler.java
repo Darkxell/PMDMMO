@@ -41,6 +41,7 @@ public class SetEncryptionKeyHandler extends MessageHandler {
                 throw new Exception();
             }
             si.encryptionkey = new SecretKeySpec(DatatypeConverter.parseHexBinary(hexsynckey), "AES");
+
             System.out.println("Session " + from.getId() + "(" + si.name + ") is now using encryption with his own key!");
             JsonObject value = javax.json.Json.createObjectBuilder()
                     .add("action", "setencryptionkey")

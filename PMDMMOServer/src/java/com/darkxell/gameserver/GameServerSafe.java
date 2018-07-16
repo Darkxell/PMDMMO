@@ -5,10 +5,12 @@
  */
 package com.darkxell.gameserver;
 
+import com.eclipsesource.json.Json;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.PrivateKey;
 import javax.crypto.Cipher;
+import javax.crypto.SecretKey;
 import javax.xml.bind.DatatypeConverter;
 
 public class GameServerSafe {
@@ -49,6 +51,36 @@ public class GameServerSafe {
         Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1PADDING");
         cipher.init(Cipher.DECRYPT_MODE, keypair.getPrivate());
         return cipher.doFinal(inpBytes);
+    }
+
+    /**
+     * Encrypts a string using the AES key in the safe and generates a
+     * JsonString containing the encrypted data, ready to be sent to the server.
+     */
+    public static String syncEncrypt(String data, SecretKey key) throws Exception {
+        Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING");
+        cipher.init(Cipher.ENCRYPT_MODE, key);
+        return Json.object().add("encrypted", 1).add("value", DatatypeConverter.printHexBinary(cipher.doFinal(data.getBytes())))
+                .toString();
+    }
+
+    /**
+     * Decrypts an encrypted json payload using the AES key in the safe. The
+     * result is usually a json payload.
+     */
+    public static String syncDecrypt(String data, SecretKey key) throws Exception {
+        Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING");
+        
+         byte[] testo = key.getEncoded();
+            String syso = "Symmetric key (length:" + testo.length + ") : ";
+            for (int i = 0; i < testo.length; i++) {
+                syso += testo[i] + ",";
+            }
+            syso += "-----------\n-------------";
+            System.out.println(syso);
+        
+        cipher.init(Cipher.DECRYPT_MODE, key);
+        return new String(cipher.doFinal(DatatypeConverter.parseHexBinary(Json.parse(data).asObject().getString("value", ""))));
     }
 
 }

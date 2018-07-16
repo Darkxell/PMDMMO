@@ -12,6 +12,8 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.WebSocketContainer;
 
+import com.darkxell.client.launchable.crypto.Encryption;
+import com.darkxell.client.launchable.crypto.Safe;
 import com.darkxell.client.launchable.messagehandlers.BankActionConfirmHandler;
 import com.darkxell.client.launchable.messagehandlers.DungeonEndConfirmHandler;
 import com.darkxell.client.launchable.messagehandlers.DungeonStartConfirmHandler;
@@ -115,6 +117,8 @@ public class GameSocketEndpoint {
 	public void onMessage(String message) {
 		try {
 			JsonValue obj = Json.parse(message);
+			if (obj.asObject().getInt("encrypted", 0) == 1)
+				obj = Json.parse(Encryption.syncDecrypt(message));
 			String actionstring = obj.asObject().getString("action", "");
 			switch (actionstring) {
 			case "freezoneposition":
@@ -199,9 +203,12 @@ public class GameSocketEndpoint {
 	 */
 	public void sendMessage(String message) {
 		try {
+			if (Safe.serverhaskey)
+				message = Encryption.syncEncrypt(message);
 			this.userSession.getAsyncRemote().sendText(message);
 		} catch (Exception e) {
 			Logger.e("Could not send message to server socket.");
+			e.printStackTrace();
 		}
 
 	}

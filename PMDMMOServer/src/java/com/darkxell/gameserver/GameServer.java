@@ -188,7 +188,21 @@ public class GameServer {
         GameSessionInfo infos = SessionsInfoHolder.getInfo(session.getId());
         try (JsonReader reader = Json.createReader(new StringReader(message))) {
             JsonObject jsonMessage = reader.readObject();
-            if (null != jsonMessage.getString("action")) {
+            //Decrypts if encrypted.
+            try {
+                int encrypted = jsonMessage.getInt("encrypted", 0);
+                if (encrypted == 1 && infos.encryptionkey != null) {
+                    System.out.println("encrypted payload is : " + jsonMessage.toString());
+                    String decryptedpayload = GameServerSafe.syncDecrypt(jsonMessage.getString("value"), infos.encryptionkey);
+                    System.out.println("Decrypted payload : " + decryptedpayload);
+                    jsonMessage = Json.createReader(new StringReader(decryptedpayload)).readObject();
+                }
+            } catch (Exception e) {
+                System.err.println("Could not parse an encrypted payload, trying to force it as non encrypted.");
+                e.printStackTrace();
+            }
+            //Tests all possible payloads
+            if (null != jsonMessage.getString("action", null)) {
                 if (!jsonMessage.getString("action").equals("freezoneposition")) {
                     System.out.println("Got message from " + session.getId() + " : " + jsonMessage.getString("action"));
                 }
@@ -295,6 +309,8 @@ public class GameServer {
                     // ADD other "action" json message types if needed.
                     // DON'T FORGET TO ADD THEM TO THE DOCUMENTATION!!!
                 }
+            } else {
+                System.err.println("Could not parse a message because it has no action value. Message from " + session.getId() + " (" + infos.name + ")");
             }
         } catch (Exception e) {
             System.out.println(message);
