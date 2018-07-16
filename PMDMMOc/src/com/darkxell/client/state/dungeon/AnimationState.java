@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 
 import com.darkxell.client.mechanics.animation.AbstractAnimation;
 import com.darkxell.client.state.dungeon.DungeonState.DungeonSubState;
+import com.darkxell.client.ui.Keys.Key;
 
 /** A State that displays an Animation, then refers to the DungeonEventProcessor for pending events.<br />
  * The Animation should not be null of this State will never end ! It should be set after creation, to allow the Animation to have this State as listener. */
@@ -18,11 +19,11 @@ public class AnimationState extends DungeonSubState
 	}
 
 	@Override
-	public void onKeyPressed(short key)
+	public void onKeyPressed(Key key)
 	{}
 
 	@Override
-	public void onKeyReleased(short key)
+	public void onKeyReleased(Key key)
 	{}
 
 	@Override

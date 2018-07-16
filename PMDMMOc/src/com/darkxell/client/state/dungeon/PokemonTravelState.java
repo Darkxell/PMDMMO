@@ -8,6 +8,7 @@ import com.darkxell.client.renderers.pokemon.DungeonPokemonRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
 import com.darkxell.client.state.dungeon.DungeonState.DungeonSubState;
+import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.event.action.PokemonTravelEvent;
 
@@ -66,11 +67,11 @@ public class PokemonTravelState extends DungeonSubState
 	}
 
 	@Override
-	public void onKeyPressed(short key)
+	public void onKeyPressed(Key key)
 	{}
 
 	@Override
-	public void onKeyReleased(short key)
+	public void onKeyReleased(Key key)
 	{}
 
 	@Override

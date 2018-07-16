@@ -18,6 +18,7 @@ import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.StateManager;
 import com.darkxell.client.state.TransitionState;
 import com.darkxell.client.ui.Keys;
+import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.client.ui.MainUiUtility;
 import com.darkxell.common.util.language.Message;
 
@@ -54,7 +55,7 @@ public class PrincipalMainState extends StateManager
 
 	// KEY AND MOUSE EVENTS
 	@Override
-	public void onKeyPressed(KeyEvent e, short key)
+	public void onKeyPressed(KeyEvent e, Key key)
 	{
 		if (this.currentState != null && isGameFocused) this.currentState.onKeyPressed(key);
 		if (e.getKeyCode() == KeyEvent.VK_ENTER && isChatFocused) Persistance.chatbox.send();
@@ -62,7 +63,7 @@ public class PrincipalMainState extends StateManager
 	}
 
 	@Override
-	public void onKeyReleased(KeyEvent e, short key)
+	public void onKeyReleased(KeyEvent e, Key key)
 	{
 		if (this.currentState != null && isGameFocused) this.currentState.onKeyReleased(key);
 	}

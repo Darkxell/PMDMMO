@@ -10,6 +10,7 @@ import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.chat.CustomTextfield;
 import com.darkxell.client.resources.images.others.Hud;
 import com.darkxell.client.state.StateManager;
+import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.client.ui.MainUiUtility;
 import com.darkxell.common.util.DoubleRectangle;
 import com.darkxell.common.util.Logger;
@@ -41,14 +42,14 @@ public class AccountCreationState extends StateManager {
 	private String assessmessage = "";
 
 	@Override
-	public void onKeyPressed(KeyEvent e, short key) {
+	public void onKeyPressed(KeyEvent e, Key key) {
 		login.onKeyPressed(e);
 		password.onKeyPressed(e);
 		confirm.onKeyPressed(e);
 	}
 
 	@Override
-	public void onKeyReleased(KeyEvent e, short key) {
+	public void onKeyReleased(KeyEvent e, Key key) {
 
 	}
 

@@ -8,7 +8,7 @@ import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.renderers.layers.BackgroundSeaLayer;
 import com.darkxell.client.resources.images.others.Hud;
 import com.darkxell.client.resources.music.SoundsHolder;
-import com.darkxell.client.ui.Keys;
+import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.util.Direction;
 
 public class OpenningState extends AbstractState {
@@ -18,13 +18,13 @@ public class OpenningState extends AbstractState {
 	private int textblink = 0;
 
 	@Override
-	public void onKeyPressed(short key) {
-		if (key == Keys.KEY_ATTACK)
+	public void onKeyPressed(Key key) {
+		if (key == Key.ATTACK)
 				StateManager.setExploreState(new BaseFreezone(), Direction.SOUTH, -1, -1);
 	}
 
 	@Override
-	public void onKeyReleased(short key) {
+	public void onKeyReleased(Key key) {
 	}
 
 	@Override

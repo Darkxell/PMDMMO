@@ -11,7 +11,7 @@ import com.darkxell.client.mechanics.freezones.zones.BaseFreezone;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.others.Hud;
 import com.darkxell.client.state.menu.freezone.FreezoneMenuState;
-import com.darkxell.client.ui.Keys;
+import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.language.Message;
 import com.eclipsesource.json.JsonObject;
@@ -32,9 +32,9 @@ public class FreezoneExploreState extends AbstractFreezoneState
 	}
 
 	@Override
-	public void onKeyPressed(short key)
+	public void onKeyPressed(Key key)
 	{
-		if (key == Keys.KEY_MENU)
+		if (key == Key.MENU)
 		{
 			Persistance.currentplayer.forceStop();
 			Persistance.stateManager.setState(new FreezoneMenuState(this));
@@ -42,7 +42,7 @@ public class FreezoneExploreState extends AbstractFreezoneState
 	}
 
 	@Override
-	public void onKeyReleased(short key)
+	public void onKeyReleased(Key key)
 	{
 		if (Persistance.currentmap != null) Persistance.currentplayer.releaseKey(key);
 	}
@@ -51,10 +51,10 @@ public class FreezoneExploreState extends AbstractFreezoneState
 	public void onStart()
 	{
 		super.onStart();
-		if (Keys.isPressed(Keys.KEY_UP)) Persistance.currentplayer.pressKey(Keys.KEY_UP);
-		if (Keys.isPressed(Keys.KEY_RIGHT)) Persistance.currentplayer.pressKey(Keys.KEY_RIGHT);
-		if (Keys.isPressed(Keys.KEY_DOWN)) Persistance.currentplayer.pressKey(Keys.KEY_DOWN);
-		if (Keys.isPressed(Keys.KEY_LEFT)) Persistance.currentplayer.pressKey(Keys.KEY_LEFT);
+		if (Key.UP.isPressed()) Persistance.currentplayer.pressKey(Key.UP);
+		if (Key.RIGHT.isPressed()) Persistance.currentplayer.pressKey(Key.RIGHT);
+		if (Key.DOWN.isPressed()) Persistance.currentplayer.pressKey(Key.DOWN);
+		if (Key.LEFT.isPressed()) Persistance.currentplayer.pressKey(Key.LEFT);
 	}
 
 	@Override

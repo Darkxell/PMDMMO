@@ -6,22 +6,22 @@ import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.client.state.menu.AbstractMenuState;
-import com.darkxell.client.ui.Keys;
+import com.darkxell.client.ui.Keys.Key;
 
 public class ControlsMenuState extends AbstractMenuState
 {
 
 	public static class ControlMenuOption extends MenuOption
 	{
-		public final short key;
-		public final int oldValue;
+		public final Key key;
 		int newValue;
+		public final int oldValue;
 
-		public ControlMenuOption(String nameID, short key)
+		public ControlMenuOption(Key key)
 		{
-			super(nameID);
+			super(key.getName());
 			this.key = key;
-			this.newValue = this.oldValue = Keys.getKeyFromID(key);
+			this.newValue = this.oldValue = key.keyValue();
 		}
 	}
 
@@ -39,8 +39,8 @@ public class ControlsMenuState extends AbstractMenuState
 	protected void createOptions()
 	{
 		MenuTab tab = new MenuTab("menu.controls");
-		for (short key = 0; key < Keys.KEY_COUNT; ++key)
-			tab.addOption(new ControlMenuOption("key." + Keys.NAMES[key], key));
+		for (Key key : Key.values())
+			tab.addOption(new ControlMenuOption(key));
 		this.tabs.add(tab);
 	}
 

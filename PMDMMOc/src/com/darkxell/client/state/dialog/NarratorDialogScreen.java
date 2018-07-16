@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.renderers.TextRenderer.PMDChar;
-import com.darkxell.client.ui.Keys;
+import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.util.language.Message;
 
 public class NarratorDialogScreen extends DialogScreen
@@ -77,7 +77,7 @@ public class NarratorDialogScreen extends DialogScreen
 				this.fadingOut = false;
 				this.parentState.nextMessage();
 			}
-			if (this.state == DialogScreenState.PAUSED && Keys.isPressed(Keys.KEY_RUN) && this.parentState.isMain()) this.requestNextLine();
+			if (this.state == DialogScreenState.PAUSED && Key.RUN.isPressed() && this.parentState.isMain()) this.requestNextLine();
 		}
 
 		++this.arrowtick;

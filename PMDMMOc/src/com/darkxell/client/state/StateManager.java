@@ -16,6 +16,7 @@ import com.darkxell.client.state.dungeon.DungeonEndState;
 import com.darkxell.client.state.dungeon.NextFloorState;
 import com.darkxell.client.state.freezone.FreezoneExploreState;
 import com.darkxell.client.state.map.LocalMap;
+import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.dungeon.DungeonOutcome;
 import com.darkxell.common.dungeon.DungeonRegistry;
 import com.darkxell.common.util.Direction;
@@ -35,9 +36,9 @@ import com.eclipsesource.json.PrettyPrint;
  */
 public abstract class StateManager {
 
-	public abstract void onKeyPressed(KeyEvent e, short key);
+	public abstract void onKeyPressed(KeyEvent e, Key key);
 
-	public abstract void onKeyReleased(KeyEvent e, short key);
+	public abstract void onKeyReleased(KeyEvent e, Key key);
 
 	public abstract void onKeyTyped(KeyEvent e);
 

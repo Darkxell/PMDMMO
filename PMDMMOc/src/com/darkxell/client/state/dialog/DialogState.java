@@ -8,6 +8,7 @@ import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.layers.AbstractGraphiclayer;
 import com.darkxell.client.resources.images.others.Hud;
 import com.darkxell.client.state.AbstractState;
+import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.util.language.Message;
 
 public class DialogState extends AbstractState
@@ -108,13 +109,13 @@ public class DialogState extends AbstractState
 	}
 
 	@Override
-	public void onKeyPressed(short key)
+	public void onKeyPressed(Key key)
 	{
 		this.currentScreen().onKeyPressed(key);
 	}
 
 	@Override
-	public void onKeyReleased(short key)
+	public void onKeyReleased(Key key)
 	{}
 
 	@Override

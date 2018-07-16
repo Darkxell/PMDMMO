@@ -9,6 +9,7 @@ import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.others.Hud;
 import com.darkxell.client.state.StateManager;
+import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.client.ui.MainUiUtility;
 import com.darkxell.common.util.DoubleRectangle;
 import com.darkxell.common.util.Position;
@@ -39,11 +40,11 @@ public class AccountCreatedMainState extends StateManager {
 	private int offsety = 20;
 
 	@Override
-	public void onKeyPressed(KeyEvent e, short key) {
+	public void onKeyPressed(KeyEvent e, Key key) {
 	}
 
 	@Override
-	public void onKeyReleased(KeyEvent e, short key) {
+	public void onKeyReleased(KeyEvent e, Key key) {
 	}
 
 	@Override

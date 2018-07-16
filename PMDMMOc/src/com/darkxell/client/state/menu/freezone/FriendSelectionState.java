@@ -17,7 +17,7 @@ import com.darkxell.client.state.freezone.FreezoneExploreState;
 import com.darkxell.client.state.menu.AbstractMenuState;
 import com.darkxell.client.state.menu.components.FriendsWindow;
 import com.darkxell.client.state.menu.components.MenuWindow;
-import com.darkxell.client.ui.Keys;
+import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.dbobject.DatabaseIdentifier;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.Direction;
@@ -136,40 +136,40 @@ public class FriendSelectionState extends AbstractMenuState
 	}
 
 	@Override
-	public void onKeyPressed(short key)
+	public void onKeyPressed(Key key)
 	{
 		if (this.tabs.size() != 0)
 		{
 			int max = this.currentTab().options().length - 1;
-			if (key == Keys.KEY_PAGE_LEFT && this.tab > 0) --this.tab;
-			else if (key == Keys.KEY_PAGE_RIGHT && this.tab < this.tabs.size() - 1) ++this.tab;
-			else if (key == Keys.KEY_LEFT) --this.selection;
-			else if (key == Keys.KEY_RIGHT)
+			if (key == Key.PAGE_LEFT && this.tab > 0) --this.tab;
+			else if (key == Key.PAGE_RIGHT && this.tab < this.tabs.size() - 1) ++this.tab;
+			else if (key == Key.LEFT) --this.selection;
+			else if (key == Key.RIGHT)
 			{
 				if (this.selection == max) this.selection = 0;
 				else++this.selection;
-			} else if (key == Keys.KEY_UP)
+			} else if (key == Key.UP)
 			{
 				if (this.selection == 0) this.selection = max;
 				else if (this.selection <= LIST_FRIEND_WIDTH && this.selection != 0) this.selection = 0;
 				else this.selection -= LIST_FRIEND_WIDTH;
-			} else if (key == Keys.KEY_DOWN)
+			} else if (key == Key.DOWN)
 			{
 				if (this.selection == 0) this.selection = 1;
 				else if (this.selection > (max / LIST_FRIEND_WIDTH) * LIST_FRIEND_WIDTH) this.selection = 0;
 				else this.selection += LIST_FRIEND_WIDTH;
-			} else if (key == Keys.KEY_ATTACK)
+			} else if (key == Key.ATTACK)
 			{
 				this.onOptionSelected(this.currentOption());
 				SoundManager.playSound("ui-select");
 			}
 
-			if (key == Keys.KEY_PAGE_LEFT || key == Keys.KEY_PAGE_RIGHT)
+			if (key == Key.PAGE_LEFT || key == Key.PAGE_RIGHT)
 			{
 				if (this.selection >= this.currentTab().options().length) this.selection = this.currentTab().options().length - 1;
 				this.onTabChanged(this.currentTab());
 				SoundManager.playSound("ui-move");
-			} else if (key == Keys.KEY_UP || key == Keys.KEY_DOWN || key == Keys.KEY_LEFT || key == Keys.KEY_RIGHT)
+			} else if (key == Key.UP || key == Key.DOWN || key == Key.LEFT || key == Key.RIGHT)
 			{
 				if (this.selection >= this.currentTab().options().length) this.selection %= LIST_FRIEND_WIDTH;
 				while (this.selection < 0)
@@ -180,7 +180,7 @@ public class FriendSelectionState extends AbstractMenuState
 				SoundManager.playSound("ui-move");
 			}
 		}
-		if (key == Keys.KEY_MENU || key == Keys.KEY_RUN)
+		if (key == Key.MENU || key == Key.RUN)
 		{
 			SoundManager.playSound("ui-back");
 			this.onExit();

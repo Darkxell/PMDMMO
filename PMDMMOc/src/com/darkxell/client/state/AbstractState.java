@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.layers.AbstractGraphiclayer;
 import com.darkxell.client.ui.Keys;
+import com.darkxell.client.ui.Keys.Key;
 
 public abstract class AbstractState extends AbstractGraphiclayer {
 
@@ -25,14 +26,14 @@ public abstract class AbstractState extends AbstractGraphiclayer {
 	 * 
 	 * @see Keys#KEY_UP
 	 */
-	public abstract void onKeyPressed(short key);
+	public abstract void onKeyPressed(Key key);
 
 	/**
 	 * Called when the user releases a key.
 	 * 
 	 * @see Keys#KEY_UP
 	 */
-	public abstract void onKeyReleased(short key);
+	public abstract void onKeyReleased(Key key);
 
 	/**
 	 * Called when the user clicks.

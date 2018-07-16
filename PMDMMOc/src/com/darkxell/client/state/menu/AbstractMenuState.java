@@ -9,7 +9,7 @@ import com.darkxell.client.resources.images.MenuHudSpriteset;
 import com.darkxell.client.resources.music.SoundManager;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.menu.components.OptionSelectionWindow;
-import com.darkxell.client.ui.Keys;
+import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.util.language.Message;
 
 public abstract class AbstractMenuState extends AbstractState
@@ -134,25 +134,25 @@ public abstract class AbstractMenuState extends AbstractState
 	protected abstract void onExit();
 
 	@Override
-	public void onKeyPressed(short key)
+	public void onKeyPressed(Key key)
 	{
 		if (this.tabs.size() != 0)
 		{
-			if (key == Keys.KEY_LEFT && this.tab > 0) --this.tab;
-			else if (key == Keys.KEY_RIGHT && this.tab < this.tabs.size() - 1) ++this.tab;
-			else if (key == Keys.KEY_UP) --this.selection;
-			else if (key == Keys.KEY_DOWN) ++this.selection;
-			else if (key == Keys.KEY_ATTACK) {
+			if (key == Key.LEFT && this.tab > 0) --this.tab;
+			else if (key == Key.RIGHT && this.tab < this.tabs.size() - 1) ++this.tab;
+			else if (key == Key.UP) --this.selection;
+			else if (key == Key.DOWN) ++this.selection;
+			else if (key == Key.ATTACK) {
 				this.onOptionSelected(this.currentOption());
 				SoundManager.playSound("ui-select");
 			}
 
-			if (key == Keys.KEY_LEFT || key == Keys.KEY_RIGHT)
+			if (key == Key.LEFT || key == Key.RIGHT)
 			{
 				if (this.selection >= this.currentTab().options.size()) this.selection = this.currentTab().options.size() - 1;
 				this.onTabChanged(this.currentTab());
 				SoundManager.playSound("ui-move");
-			} else if (key == Keys.KEY_UP || key == Keys.KEY_DOWN)
+			} else if (key == Key.UP || key == Key.DOWN)
 			{
 				if (this.selection == -1) this.selection = this.currentTab().options.size() - 1;
 				else if (this.selection == this.currentTab().options.size()) this.selection = 0;
@@ -160,7 +160,7 @@ public abstract class AbstractMenuState extends AbstractState
 				SoundManager.playSound("ui-move");
 			}
 		}
-		if (key == Keys.KEY_MENU || key == Keys.KEY_RUN)
+		if (key == Key.MENU || key == Key.RUN)
 		{
 			SoundManager.playSound("ui-back");
 			this.onExit();
@@ -168,7 +168,7 @@ public abstract class AbstractMenuState extends AbstractState
 	}
 
 	@Override
-	public void onKeyReleased(short key)
+	public void onKeyReleased(Key key)
 	{}
 
 	protected void onOptionChanged(MenuOption option)

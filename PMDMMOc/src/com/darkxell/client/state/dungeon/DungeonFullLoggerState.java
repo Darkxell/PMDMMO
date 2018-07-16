@@ -3,7 +3,7 @@ package com.darkxell.client.state.dungeon;
 import java.awt.Graphics2D;
 
 import com.darkxell.client.state.dungeon.DungeonState.DungeonSubState;
-import com.darkxell.client.ui.Keys;
+import com.darkxell.client.ui.Keys.Key;
 
 public class DungeonFullLoggerState extends DungeonSubState
 {
@@ -14,9 +14,9 @@ public class DungeonFullLoggerState extends DungeonSubState
 	}
 
 	@Override
-	public void onKeyPressed(short key)
+	public void onKeyPressed(Key key)
 	{
-		if (key == Keys.KEY_RUN)
+		if (key == Key.RUN)
 		{
 			this.parent.setSubstate(this.parent.actionSelectionState);
 			this.parent.logger.setFullscreen(false);
@@ -24,7 +24,7 @@ public class DungeonFullLoggerState extends DungeonSubState
 	}
 
 	@Override
-	public void onKeyReleased(short key)
+	public void onKeyReleased(Key key)
 	{}
 
 	@Override
@@ -41,8 +41,8 @@ public class DungeonFullLoggerState extends DungeonSubState
 	@Override
 	public void update()
 	{
-		if (Keys.isPressed(Keys.KEY_UP) && !Keys.isPressed(Keys.KEY_DOWN)) this.parent.logger.scrollUp();
-		if (!Keys.isPressed(Keys.KEY_UP) && Keys.isPressed(Keys.KEY_DOWN)) this.parent.logger.scrollDown();
+		if (Key.UP.isPressed() && !Key.DOWN.isPressed()) this.parent.logger.scrollUp();
+		if (!Key.UP.isPressed() && Key.DOWN.isPressed()) this.parent.logger.scrollDown();
 	}
 
 }

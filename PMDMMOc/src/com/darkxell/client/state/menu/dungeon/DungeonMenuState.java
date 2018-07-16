@@ -19,7 +19,6 @@ import com.darkxell.common.util.language.Message;
 public class DungeonMenuState extends OptionSelectionMenuState
 {
 
-	@SuppressWarnings("unused")
 	private MenuOption moves, items, team, settings, ground;
 
 	public DungeonMenuState(AbstractState background)

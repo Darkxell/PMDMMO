@@ -12,6 +12,7 @@ import com.darkxell.client.mechanics.freezones.zones.OfficeFreezone;
 import com.darkxell.client.renderers.AbstractRenderer;
 import com.darkxell.client.resources.music.SoundsHolder;
 import com.darkxell.client.state.AbstractState;
+import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.util.DoubleRectangle;
 
 public class AbstractFreezoneState extends AbstractState
@@ -20,11 +21,11 @@ public class AbstractFreezoneState extends AbstractState
 	public boolean musicset = false;
 
 	@Override
-	public void onKeyPressed(short key)
+	public void onKeyPressed(Key key)
 	{}
 
 	@Override
-	public void onKeyReleased(short key)
+	public void onKeyReleased(Key key)
 	{}
 
 	@Override

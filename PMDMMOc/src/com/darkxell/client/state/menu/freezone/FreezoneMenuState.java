@@ -18,7 +18,6 @@ import com.darkxell.common.util.language.Message;
 public class FreezoneMenuState extends OptionSelectionMenuState
 {
 
-	@SuppressWarnings("unused")
 	private MenuOption items, team, settings;
 
 	public FreezoneMenuState(AbstractState background)
