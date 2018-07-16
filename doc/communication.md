@@ -295,6 +295,15 @@ This payload contains the information about the player the clients needs to sync
 
 This is sent by the server to a client who asked to recieve it. This key can be turned into a byte array
 
+■ SETENCRYPTIONKEY
+
+{"action":"setencryptionkey",
+"ack":"ok"
+}
+
+This simple payload is sent by the server in response to a setencryptionkey from the client to acknowledge the receipt of the key.
+THis will usually be the first encrypted payload of the client/server communication.
+
 ■ SALTRESET
 
 {"action":"saltreset",

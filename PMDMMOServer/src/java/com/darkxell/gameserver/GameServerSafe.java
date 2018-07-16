@@ -7,6 +7,8 @@ package com.darkxell.gameserver;
 
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
+import java.security.PrivateKey;
+import javax.crypto.Cipher;
 import javax.xml.bind.DatatypeConverter;
 
 public class GameServerSafe {
@@ -38,6 +40,15 @@ public class GameServerSafe {
             setkeypair();
         }
         return DatatypeConverter.printHexBinary(keypair.getPublic().getEncoded());
+    }
+
+    /**
+     * Decrypts an array of bytes with the parsed private key.
+     */
+    public static byte[] decryptRSAPK1(byte[] inpBytes) throws Exception {
+        Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1PADDING");
+        cipher.init(Cipher.DECRYPT_MODE, keypair.getPrivate());
+        return cipher.doFinal(inpBytes);
     }
 
 }

@@ -24,6 +24,7 @@ import com.darkxell.client.launchable.messagehandlers.MonsterRequestHandler;
 import com.darkxell.client.launchable.messagehandlers.ObjectRequestHandler;
 import com.darkxell.client.launchable.messagehandlers.PublicKeyRequestHandler;
 import com.darkxell.client.launchable.messagehandlers.SaltResetHandler;
+import com.darkxell.client.launchable.messagehandlers.SetEncryptionKeyHandler;
 import com.darkxell.client.launchable.messagehandlers.TestResultConfirmHandler;
 import com.darkxell.common.util.Communicable;
 import com.darkxell.common.util.Logger;
@@ -127,6 +128,9 @@ public class GameSocketEndpoint {
 				break;
 			case "publickeyrequest":
 				new PublicKeyRequestHandler().handleMessage(obj.asObject());
+				break;
+			case "setencryptionkey":
+				new SetEncryptionKeyHandler().handleMessage(obj.asObject());
 				break;
 			case "objectrequest":
 				new ObjectRequestHandler().handleMessage(obj.asObject());

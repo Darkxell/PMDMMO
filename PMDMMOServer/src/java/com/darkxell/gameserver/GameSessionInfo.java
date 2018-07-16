@@ -5,6 +5,8 @@
  */
 package com.darkxell.gameserver;
 
+import javax.crypto.SecretKey;
+
 /**
  * A GameSessionInfo object describes the attributes of a session.
  *
@@ -19,7 +21,8 @@ public class GameSessionInfo {
     // COMMON DATA
     public boolean isconnected = false;
     public String salt = "";
-    public String name = "DefaultServerName";
+    public SecretKey encryptionkey = null;
+    public String name = "NotLoggedYet";
     public long serverid = -1l;//0 is the "not found" value. Default should not be 0.
     public byte currentdoing = current_nothing;
 

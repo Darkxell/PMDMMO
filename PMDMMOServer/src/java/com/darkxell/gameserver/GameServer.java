@@ -36,6 +36,7 @@ import com.darkxell.gameserver.messagehandlers.MonsterRequestHandler;
 import com.darkxell.gameserver.messagehandlers.ObjectrequestHandler;
 import com.darkxell.gameserver.messagehandlers.PublicKeyRequestHandler;
 import com.darkxell.gameserver.messagehandlers.SaltResetHandler;
+import com.darkxell.gameserver.messagehandlers.SetEncryptionKeyHandler;
 import com.darkxell.gameserver.messagehandlers.TestResultHandler;
 import com.darkxell.model.ejb.Holdeditem_DAO;
 import com.darkxell.model.ejb.InventoryDAO;
@@ -202,8 +203,13 @@ public class GameServer {
                         hand.handleMessage(jsonMessage, session, sessionHandler);
                         break;
                     }
-                     case "publickeyrequest": {
+                    case "publickeyrequest": {
                         PublicKeyRequestHandler hand = new PublicKeyRequestHandler(this);
+                        hand.handleMessage(jsonMessage, session, sessionHandler);
+                        break;
+                    }
+                    case "setencryptionkey": {
+                        SetEncryptionKeyHandler hand = new SetEncryptionKeyHandler(this);
                         hand.handleMessage(jsonMessage, session, sessionHandler);
                         break;
                     }
