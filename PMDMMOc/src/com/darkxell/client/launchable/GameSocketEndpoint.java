@@ -116,6 +116,8 @@ public class GameSocketEndpoint {
 	@OnMessage
 	public void onMessage(String message) {
 		try {
+			if(Persistance.debugwiresharkmode)
+				Logger.d("MESSAGE RECIEVED : " + message);
 			JsonValue obj = Json.parse(message);
 			if (obj.asObject().getInt("encrypted", 0) == 1)
 				obj = Json.parse(Encryption.syncDecrypt(message));
@@ -206,6 +208,7 @@ public class GameSocketEndpoint {
 			if (Safe.serverhaskey)
 				message = Encryption.syncEncrypt(message);
 			this.userSession.getAsyncRemote().sendText(message);
+			Logger.d("MESSAGE SENT     : " + message);
 		} catch (Exception e) {
 			Logger.e("Could not send message to server socket.");
 			e.printStackTrace();

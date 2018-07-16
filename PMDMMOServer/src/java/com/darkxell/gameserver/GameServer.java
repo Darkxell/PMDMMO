@@ -192,9 +192,7 @@ public class GameServer {
             try {
                 int encrypted = jsonMessage.getInt("encrypted", 0);
                 if (encrypted == 1 && infos.encryptionkey != null) {
-                    System.out.println("encrypted payload is : " + jsonMessage.toString());
-                    String decryptedpayload = GameServerSafe.syncDecrypt(jsonMessage.getString("value"), infos.encryptionkey);
-                    System.out.println("Decrypted payload : " + decryptedpayload);
+                    String decryptedpayload = GameServerSafe.syncDecrypt(jsonMessage.toString(), infos.encryptionkey);
                     jsonMessage = Json.createReader(new StringReader(decryptedpayload)).readObject();
                 }
             } catch (Exception e) {

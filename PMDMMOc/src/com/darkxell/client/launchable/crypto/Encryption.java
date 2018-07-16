@@ -102,7 +102,6 @@ public class Encryption {
 		cipher.init(Cipher.ENCRYPT_MODE, Safe.symmetricKey);
 		String toreturn = Json.object().add("encrypted", 1)
 				.add("value", bytesToHexString(cipher.doFinal(data.getBytes()))).toString();
-		System.out.println("--------------------------------"+syncDecrypt(toreturn)+"\nFROM: "+data+"\nENCRYPTED:"+toreturn);
 		return toreturn;
 	}
 

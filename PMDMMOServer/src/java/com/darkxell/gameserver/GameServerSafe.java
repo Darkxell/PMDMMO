@@ -8,7 +8,6 @@ package com.darkxell.gameserver;
 import com.eclipsesource.json.Json;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
-import java.security.PrivateKey;
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.xml.bind.DatatypeConverter;
@@ -70,15 +69,7 @@ public class GameServerSafe {
      */
     public static String syncDecrypt(String data, SecretKey key) throws Exception {
         Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING");
-        
-         byte[] testo = key.getEncoded();
-            String syso = "Symmetric key (length:" + testo.length + ") : ";
-            for (int i = 0; i < testo.length; i++) {
-                syso += testo[i] + ",";
-            }
-            syso += "-----------\n-------------";
-            System.out.println(syso);
-        
+            
         cipher.init(Cipher.DECRYPT_MODE, key);
         return new String(cipher.doFinal(DatatypeConverter.parseHexBinary(Json.parse(data).asObject().getString("value", ""))));
     }
