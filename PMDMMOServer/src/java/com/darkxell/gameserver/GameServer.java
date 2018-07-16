@@ -34,7 +34,9 @@ import com.darkxell.gameserver.messagehandlers.ItemActionHandler;
 import com.darkxell.gameserver.messagehandlers.LoginHandler;
 import com.darkxell.gameserver.messagehandlers.MonsterRequestHandler;
 import com.darkxell.gameserver.messagehandlers.ObjectrequestHandler;
+import com.darkxell.gameserver.messagehandlers.PublicKeyRequestHandler;
 import com.darkxell.gameserver.messagehandlers.SaltResetHandler;
+import com.darkxell.gameserver.messagehandlers.SetEncryptionKeyHandler;
 import com.darkxell.gameserver.messagehandlers.TestResultHandler;
 import com.darkxell.model.ejb.Holdeditem_DAO;
 import com.darkxell.model.ejb.InventoryDAO;
@@ -133,6 +135,9 @@ public class GameServer {
      */
     @OnMessage
     public void handleMessage(String message, Session session) {
+        if (!GameServerSafe.iskeypairset) {
+            GameServerSafe.setkeypair();
+        }
         if (!daoset) {
             if (this.playerDAO == null) {
                 this.playerDAO = new PlayerDAO();
@@ -183,7 +188,19 @@ public class GameServer {
         GameSessionInfo infos = SessionsInfoHolder.getInfo(session.getId());
         try (JsonReader reader = Json.createReader(new StringReader(message))) {
             JsonObject jsonMessage = reader.readObject();
-            if (null != jsonMessage.getString("action")) {
+            //Decrypts if encrypted.
+            try {
+                int encrypted = jsonMessage.getInt("encrypted", 0);
+                if (encrypted == 1 && infos.encryptionkey != null) {
+                    String decryptedpayload = GameServerSafe.syncDecrypt(jsonMessage.toString(), infos.encryptionkey);
+                    jsonMessage = Json.createReader(new StringReader(decryptedpayload)).readObject();
+                }
+            } catch (Exception e) {
+                System.err.println("Could not parse an encrypted payload, trying to force it as non encrypted.");
+                e.printStackTrace();
+            }
+            //Tests all possible payloads
+            if (null != jsonMessage.getString("action", null)) {
                 if (!jsonMessage.getString("action").equals("freezoneposition")) {
                     System.out.println("Got message from " + session.getId() + " : " + jsonMessage.getString("action"));
                 }
@@ -195,6 +212,16 @@ public class GameServer {
                     }
                     case "saltreset": {
                         SaltResetHandler hand = new SaltResetHandler(this);
+                        hand.handleMessage(jsonMessage, session, sessionHandler);
+                        break;
+                    }
+                    case "publickeyrequest": {
+                        PublicKeyRequestHandler hand = new PublicKeyRequestHandler(this);
+                        hand.handleMessage(jsonMessage, session, sessionHandler);
+                        break;
+                    }
+                    case "setencryptionkey": {
+                        SetEncryptionKeyHandler hand = new SetEncryptionKeyHandler(this);
                         hand.handleMessage(jsonMessage, session, sessionHandler);
                         break;
                     }
@@ -280,6 +307,8 @@ public class GameServer {
                     // ADD other "action" json message types if needed.
                     // DON'T FORGET TO ADD THEM TO THE DOCUMENTATION!!!
                 }
+            } else {
+                System.err.println("Could not parse a message because it has no action value. Message from " + session.getId() + " (" + infos.name + ")");
             }
         } catch (Exception e) {
             System.out.println(message);

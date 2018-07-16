@@ -16,15 +16,29 @@ The endpoints are available at the following adresses:
 
 \[server ip or linked dns]:8080/PMDMMOServer/game
 
-# 2 - Required payload structure
+# 2.1 - Required payload structure
 
 The data sent to the server MUST be in a valid JSON structure, and encoded as text in the websocket container.
 The server will ignore all binary payloads recieved (This is subject to change, refer to the latest documentation folder on github).
 
 The server will not send a direct response to a client upon recieving a payload, but can be expected to send a receipt back for most informations.
 
-The Json contained any payload must contain a String field called "action", wich is used to describe the content of the payload.
+The Json containing any payload must contain a String field called "action", wich is used to describe the content of the payload.
 The other informations are payload dependant.
+
+# 2.2 - Encryption
+
+Any payload sent by a logged client to the server can be encrypted using AES256.
+The encryption key used must be the key sent by the client to the server in the SETENCRYPTIONKEY payload
+To use encrypted payloads, the client can just encrypt the JSON string as an encrypted string and send it in a clear text payload using the following structure:
+{encrypted:1,value:"YOUR ENCRYPTED VALUE HERE"}
+
+The server will encrypt any payload it sends to the client using the exact same fashion.
+
+The only exeptions to this is is the SETENCRYPTIONKEY payload.
+Refer to the specific documentation of this payload for further information.
+
+For more informations about the login challenge, check "hashing norms.md".
 
 # 3 - List of client -> server payloads
 
@@ -67,6 +81,26 @@ Trying to authentificate without reseting the salt will not be taken into accoun
 }
 
 This payload must by a client to create a new account. This will create a new account entry in the database.
+
+■ PUBLICKEYREQUEST
+
+{"action":"publickeyrequest"}
+
+This payload can be sent by the client to the server anytime. This will notify the server that the client would like to know the server's public async encryption key to setup a synchronous encryption communication. 
+
+■ SETENCRYPTIONKEY
+
+{"action":"setencryptionkey",
+
+"value" : 
+        #---------encrypted as hex string of bytes obtained by encrypting with the server public key--------
+		{"key":"-------------", // Hexa string representation of the synchronous key the client wants to use from now on
+		}
+        #---------------------------------------------------------------------------------------------------
+}
+
+This payload should be sent by any client who wants to use encryption.
+The server will now return payloads encrypted with the parsed key, and will be able to decrypt any message sync encrypted with it from the client who sent it.
 
 ■ LOGIN
 
@@ -251,6 +285,25 @@ Note that this payload is sent each time you notify the server of your movement 
 This payload is sent by the server to the client when he sucessfully logs in.
 This payload contains the information about the player the clients needs to sync in with the server upon logging in.
 
+■ PUBLICKEYREQUEST
+
+{"action":"publickeyrequest",
+
+"keybytes":"3082012...2300D06" // Hex representation of the public key of the current server instance 
+
+}
+
+This is sent by the server to a client who asked to recieve it. This key can be turned into a byte array
+
+■ SETENCRYPTIONKEY
+
+{"action":"setencryptionkey",
+"ack":"ok"
+}
+
+This simple payload is sent by the server in response to a setencryptionkey from the client to acknowledge the receipt of the key.
+THis will usually be the first encrypted payload of the client/server communication.
+
 ■ SALTRESET
 
 {"action":"saltreset",
@@ -362,3 +415,4 @@ This payload is sent after a client sends a dungeonstart request to give the cli
 }
 
 This payload is sent after a client sends a dungeonend request to notify the client that its Player has been updated.
+
