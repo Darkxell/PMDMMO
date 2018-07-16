@@ -1,6 +1,6 @@
-package com.darkxell.client.launchable;
+package com.darkxell.client.launchable.messagehandlers;
 
-import com.darkxell.client.launchable.messagehandlers.MessageHandler;
+import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.state.dungeon.DungeonEndState;
 import com.eclipsesource.json.JsonObject;
 

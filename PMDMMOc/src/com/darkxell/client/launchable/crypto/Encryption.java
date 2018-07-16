@@ -1,7 +1,12 @@
-package com.darkxell.client.launchable;
+package com.darkxell.client.launchable.crypto;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+
+import javax.crypto.Cipher;
+import javax.xml.bind.DatatypeConverter;
 
 import com.darkxell.common.util.Logger;
 
@@ -55,6 +60,36 @@ public class Encryption {
 				+ "\nNote that this message isn't intended to be seen, ever. Please contact a developper if you see it."
 				+ "\nTerminating this for your own safety.");
 		System.exit(666);
+	}
+
+	/**
+	 * Encrypts an array of bytes into another array of bytes ciphered with the
+	 * parsed public key.
+	 */
+	public static byte[] encryptRSAPK1(byte[] inpBytes, PublicKey key) throws Exception {
+		Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1PADDING");
+		cipher.init(Cipher.ENCRYPT_MODE, key);
+		return cipher.doFinal(inpBytes);
+	}
+
+	/** Decrypts an array of bytes with the parsed private key. */
+	public static byte[] decryptRSAPK1(byte[] inpBytes, PrivateKey key) throws Exception {
+		Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1PADDING");
+		cipher.init(Cipher.DECRYPT_MODE, key);
+		return cipher.doFinal(inpBytes);
+	}
+
+	/**
+	 * Converts a byte array into a hexadecimal string for easy and encoding
+	 * free transport.
+	 */
+	public static String bytesToHexString(byte[] array) {
+		return DatatypeConverter.printHexBinary(array);
+	}
+
+	/** Converts a hex String into the former byte array. */
+	public static byte[] hexStringToBytes(String str) {
+		return DatatypeConverter.parseHexBinary(str);
 	}
 
 }

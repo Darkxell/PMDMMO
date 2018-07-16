@@ -13,6 +13,7 @@ import javax.websocket.Session;
 import javax.websocket.WebSocketContainer;
 
 import com.darkxell.client.launchable.messagehandlers.BankActionConfirmHandler;
+import com.darkxell.client.launchable.messagehandlers.DungeonEndConfirmHandler;
 import com.darkxell.client.launchable.messagehandlers.DungeonStartConfirmHandler;
 import com.darkxell.client.launchable.messagehandlers.FreezonePositionHandler;
 import com.darkxell.client.launchable.messagehandlers.InventoryRequestHandler;
