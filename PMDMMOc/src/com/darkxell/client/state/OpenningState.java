@@ -13,7 +13,7 @@ import com.darkxell.common.util.Direction;
 
 public class OpenningState extends AbstractState {
 
-	private BackgroundSeaLayer background = new BackgroundSeaLayer();
+	private BackgroundSeaLayer background = new BackgroundSeaLayer(true);
 	private boolean ismusicset = false;
 	private int textblink = 0;
 

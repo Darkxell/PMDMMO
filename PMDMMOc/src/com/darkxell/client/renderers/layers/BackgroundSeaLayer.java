@@ -7,6 +7,11 @@ import com.darkxell.client.resources.images.others.GraphicalLayersAssets;
 
 public class BackgroundSeaLayer extends AbstractGraphiclayer {
 
+	public BackgroundSeaLayer(boolean rising) {
+		if (!rising)
+			upcamera = 2000;
+	}
+
 	private int counter_clouds = 0;
 	private int cloudsposition = 0;
 	private int counter_horizon = 0;

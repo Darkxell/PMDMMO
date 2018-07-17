@@ -9,7 +9,7 @@ import com.darkxell.common.zones.FreezoneInfo;
 
 public class OfficeFreezone extends FreezoneMap {
 
-	public BackgroundSeaLayer background = new BackgroundSeaLayer();
+	public BackgroundSeaLayer background = new BackgroundSeaLayer(false);
 
 	public OfficeFreezone() {
 		super("/freezones/office.xml", 4, 30, FreezoneInfo.OFFICE);
