@@ -8,6 +8,8 @@ package com.darkxell.gameserver;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.ApplicationScoped;
 import javax.json.JsonObject;
 import javax.websocket.Session;
@@ -38,19 +40,38 @@ public class GameSessionHandler {
 
     public void sendToSession(Session session, JsonObject message) {
         try {
-            session.getBasicRemote().sendText(message.toString());
+            GameSessionInfo sessioninfo = SessionsInfoHolder.getInfo(session.getId());
+            boolean sent = false;
+            try {
+                if (sessioninfo.encryptionkey != null) {
+                    session.getBasicRemote().sendText(GameServerSafe.syncEncrypt(message.toString(), sessioninfo.encryptionkey));
+                    sent = true;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            if (!sent) {
+                session.getBasicRemote().sendText(message.toString());
+            }
         } catch (IOException ex) {
             sessions.remove(session);
             System.err.println("Error while sending a message");
         }
     }
-    
+
     public void sendToSession(Session session, com.eclipsesource.json.JsonObject message) {
+        GameSessionInfo sessioninfo = SessionsInfoHolder.getInfo(session.getId());
         try {
-            session.getBasicRemote().sendText(message.toString());
+            if (sessioninfo.encryptionkey != null) {
+                session.getBasicRemote().sendText(GameServerSafe.syncEncrypt(message.toString(), sessioninfo.encryptionkey));
+            } else {
+                session.getBasicRemote().sendText(message.toString());
+            }
         } catch (IOException ex) {
             sessions.remove(session);
             System.err.println("Error while sending a message");
+        } catch (Exception ex) {
+            Logger.getLogger(GameSessionHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

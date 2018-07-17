@@ -5,9 +5,9 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 
 import com.darkxell.client.launchable.ClientSettings;
-import com.darkxell.client.launchable.Encryption;
 import com.darkxell.client.launchable.GameSocketEndpoint;
 import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.crypto.Encryption;
 import com.darkxell.client.mechanics.chat.CustomTextfield;
 import com.darkxell.client.resources.images.others.Hud;
 import com.darkxell.client.state.OpenningState;
