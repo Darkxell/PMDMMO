@@ -104,6 +104,11 @@ public class FriendSelectionState extends AbstractMenuState
 				current = new MenuTab(TITLE);
 			}
 		}
+		if (mons.size() == 0)
+		{
+			++indexInTab;
+			current.addOption(this.mapOption);
+		}
 		if (indexInTab != 0) this.tabs.add(current);
 
 		for (int tab = 0; tab < this.tabs.size(); ++tab)
@@ -244,7 +249,7 @@ public class FriendSelectionState extends AbstractMenuState
 	public void onStart()
 	{
 		super.onStart();
-		if (this.selection == 0) this.selection = 1;
+		if (this.selection == 0 && this.currentTab().options().length > 1) this.selection = 1;
 	}
 
 	@Override

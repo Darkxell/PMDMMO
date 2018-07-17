@@ -39,7 +39,9 @@ public class IntegerSelectionState extends AbstractState
 		this.max = max;
 		this.current = start;
 		this.logSelection = (int) Math.floor(Math.log10(start));
+		if (this.logSelection < 0) this.logSelection = 0;
 		this.maxLog = (int) Math.floor(Math.log10(this.max));
+		if (this.maxLog < 0) this.maxLog = 0;
 		this.updateCurrentMessage();
 	}
 
