@@ -24,6 +24,13 @@ public abstract class OptionSelectionMenuState extends AbstractMenuState
 		this.isOpaque = isOpaque;
 	}
 
+	protected OptionSelectionWindow createWindow()
+	{
+		OptionSelectionWindow window = new OptionSelectionWindow(this, this.mainWindowDimensions());
+		window.isOpaque = this.isOpaque;
+		return window;
+	}
+
 	public MenuOption getHoveredOption()
 	{
 		return this.hovered;
@@ -67,8 +74,7 @@ public abstract class OptionSelectionMenuState extends AbstractMenuState
 	protected void onTabChanged(MenuTab tab)
 	{
 		super.onTabChanged(tab);
-		this.mainWindow = new OptionSelectionWindow(this, this.mainWindowDimensions());
-		this.mainWindow.isOpaque = this.isOpaque;
+		this.mainWindow = this.createWindow();
 	}
 
 	@Override
@@ -76,11 +82,7 @@ public abstract class OptionSelectionMenuState extends AbstractMenuState
 	{
 		super.render(g, width, height);
 
-		if (this.mainWindow == null)
-		{
-			this.mainWindow = new OptionSelectionWindow(this, this.mainWindowDimensions());
-			this.mainWindow.isOpaque = this.isOpaque;
-		}
+		if (this.mainWindow == null) this.mainWindow = this.createWindow();
 		if (this.tabs.size() != 0) this.getMainWindow().render(g, this.currentTab().name, width, height);
 	}
 

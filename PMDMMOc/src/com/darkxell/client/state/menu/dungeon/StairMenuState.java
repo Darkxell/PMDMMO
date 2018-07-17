@@ -18,7 +18,7 @@ public class StairMenuState extends OptionSelectionMenuState
 	@Override
 	protected void createOptions()
 	{
-		this.tabs.add(new MenuTab("stairs.title").addOption(this.proceed = new MenuOption("stairs.proceed")).addOption(new MenuOption("stairs.cancel")));
+		this.tabs.add(new MenuTab("stairs.title").addOption(this.proceed = new MenuOption("stairs.proceed")).addOption(new MenuOption("ui.cancel")));
 	}
 
 	@Override

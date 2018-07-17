@@ -6,99 +6,69 @@ import java.awt.event.KeyListener;
 import com.darkxell.client.launchable.ClientSettings;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.common.util.Logger;
+import com.darkxell.common.util.language.Message;
 
 public class Keys implements KeyListener
 {
 
-	public static final short KEY_COUNT = 24;
-	private static boolean[] isPressed = new boolean[KEY_COUNT];
-	private static boolean[] wasPressed = new boolean[KEY_COUNT];
-	private static boolean[] willPress = new boolean[KEY_COUNT];
-
-	/** Keys.<br />
-	 * <ul>
-	 * <li>KEY_UP = 0</li>
-	 * <li>KEY_DOWN = 1</li>
-	 * <li>KEY_LEFT = 2</li>
-	 * <li>KEY_RIGHT = 3</li>
-	 * <li>KEY_ATTACK = 4</li>
-	 * <li>KEY_ROTATE = 5</li>
-	 * <li>KEY_RUN = 6</li>
-	 * <li>KEY_DIAGONAL = 7</li>
-	 * <li>KEY_MENU = 8</li>
-	 * <li>KEY_MOVE_1 = 9</li>
-	 * <li>KEY_MOVE_2 = 10</li>
-	 * <li>KEY_MOVE_3 = 11</li>
-	 * <li>KEY_MOVE_4 = 12</li>
-	 * <li>KEY_ITEM_2 = 13</li>
-	 * <li>KEY_ITEM_1 = 14</li>
-	 * <li>KEY_INVENTORY = 15</li>
-	 * <li>KEY_PARTY = 16</li>
-	 * <li>KEY_MAP_UP = 17</li>
-	 * <li>KEY_MAP_DOWN = 18</li>
-	 * <li>KEY_MAP_LEFT = 19</li>
-	 * <li>KEY_MAP_RIGHT = 20</li>
-	 * <li>KEY_MAP_RESET = 21</li>
-	 * <li>KEY_MAP_PAGE_LEFT = 22</li>
-	 * <li>KEY_MAP_PAGE_RIGHT = 23</li>
-	 * </ul>
-	 */
-	public static final short KEY_UP = 0, KEY_DOWN = 1, KEY_LEFT = 2, KEY_RIGHT = 3, KEY_ATTACK = 4, KEY_ROTATE = 5, KEY_RUN = 6, KEY_DIAGONAL = 7,
-			KEY_MENU = 8, KEY_MOVE_1 = 9, KEY_MOVE_2 = 10, KEY_MOVE_3 = 11, KEY_MOVE_4 = 12, KEY_ITEM_1 = 13, KEY_ITEM_2 = 14, KEY_INVENTORY = 15,
-			KEY_PARTY = 16, KEY_MAP_UP = 17, KEY_MAP_DOWN = 18, KEY_MAP_LEFT = 19, KEY_MAP_RIGHT = 20, KEY_MAP_RESET = 21, KEY_PAGE_LEFT = 22,
-			KEY_PAGE_RIGHT = 23;
-
-	/** User-defined keys. */
-	private static int[] keys;
-	/** Key names. */
-	private static String[] NAMES = new String[] { "up", "down", "left", "right", "attack", "rotate", "run", "diagonal", "menu", "move1", "move2", "move3",
-			"move4", "item1", "item2", "inventory", "party", "map.up", "map.down", "map.left", "map.right", "map.reset", "page.left", "page.right" };
-
-	/** @param keyID - The ID of the pressed key. See {@link KeyEvent}
-	 * @return The {@link Keys#KEY_UP Key} that was pressed. -1 if doesn't match a key for this game. */
-	public static short getKeyFromID(int keyID)
+	public static enum Key
 	{
-		for (int i = 0; i < keys.length; ++i)
-			if (keyID == keys[i]) return (short) i;
-		return -1;
-	}
+		ATTACK("attack"),
+		DIAGONAL("diagonal"),
+		DOWN("down"),
+		INVENTORY("inventory"),
+		ITEM_1("item1"),
+		ITEM_2("item2"),
+		LEFT("left"),
+		MAP_DOWN("map.down"),
+		MAP_LEFT("map.left"),
+		MAP_RESET("map.reset"),
+		MAP_RIGHT("map.right"),
+		MAP_UP("map.up"),
+		MENU("menu"),
+		MOVE_1("move1"),
+		MOVE_2("move2"),
+		MOVE_3("move3"),
+		MOVE_4("move4"),
+		PAGE_LEFT("page.left"),
+		PAGE_RIGHT("page.right"),
+		PARTY("party"),
+		RIGHT("right"),
+		ROTATE("rotate"),
+		RUN("run"),
+		UNKNOWN("unknown"),
+		UP("up");
 
-	/** @return the name of the input key.
-	 * @see Keys#KEY_UP */
-	public static String getKeyName(short key)
-	{
-		return NAMES[key];
-	}
+		boolean isPressed;
+		public final String nameID;
+		int value;
+		boolean wasPressed;
+		boolean willPress;
 
-	/** @return true if the input key is pressed.
-	 * @see Keys#KEY_UP */
-	public static boolean isPressed(short key)
-	{
-		return isPressed[key];
-	}
-
-	/** @return true if the input key was pressed during the last tick.
-	 * @see Keys#KEY_UP */
-	public static boolean wasPressed(short key)
-	{
-		return wasPressed[key];
-	}
-
-	public Keys()
-	{
-		keys = new int[KEY_COUNT];
-		for (int i = 0; i < KEY_COUNT; ++i)
+		private Key(String nameID)
 		{
-			String s = "key." + NAMES[i];
-			try
-			{
-				keys[i] = Integer.parseInt(ClientSettings.getSetting(s));
-			} catch (Exception e)
-			{
-				Logger.e("Invalid key ID: " + ClientSettings.getSetting(s));
-				ClientSettings.resetSetting(s);
-				keys[i] = Integer.parseInt(ClientSettings.getSetting(s));
-			}
+			this.nameID = nameID;
+		}
+
+		public Message getName()
+		{
+			return new Message("key." + this.nameID);
+		}
+
+		public boolean isPressed()
+		{
+			return this.isPressed;
+		}
+
+		public int keyValue()
+		{
+			return this.value;
+		}
+
+		public void setValue(int value)
+		{
+			this.value = value;
+			ClientSettings.setSetting("key." + this.nameID, String.valueOf(this.value));
 		}
 	}
 
@@ -108,61 +78,89 @@ public class Keys implements KeyListener
 	 * 
 	 * @param canRun - True if the RUN key should be checked.
 	 * @param keys - The keys to check. */
-	public static boolean directionPressed(boolean canRun, short... keys)
+	public static boolean directionPressed(boolean canRun, Key... keys)
 	{
-		boolean running = isPressed(KEY_RUN) && canRun;
-		for (short key : keys)
+		boolean running = Key.RUN.isPressed() && canRun;
+		for (Key key : keys)
 		{
-			if (!isPressed(key)) return false;
-			if (running && wasPressed(key)) return false;
+			if (!key.isPressed()) return false;
+			if (running && key.wasPressed) return false;
 		}
 
-		if (!running) for (short key : new short[] { KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT })
+		if (!running) for (Key key : new Key[] { Key.UP, Key.DOWN, Key.LEFT, Key.RIGHT })
 		{
 			boolean checking = false;
-			for (short check : keys)
+			for (Key check : keys)
 				if (key == check)
 				{
 					checking = true;
 					break;
 				}
-			if (!checking && isPressed(key)) return false;
+			if (!checking && key.isPressed()) return false;
 		}
 		return true;
+	}
+
+	/** @param keyID - The ID of the pressed key. See {@link KeyEvent}
+	 * @return The {@link Keys#UP Key} that was pressed. -1 if doesn't match a key for this game. */
+	public static Key getKeyFromID(int keyID)
+	{
+		for (Key key : Key.values())
+			if (key.value == keyID) return key;
+		Key.UNKNOWN.value = keyID;
+		return Key.UNKNOWN;
+	}
+
+	public static void update()
+	{
+		for (Key key : Key.values())
+		{
+			key.wasPressed = key.isPressed;
+			key.isPressed = key.willPress;
+		}
+	}
+
+	public Keys()
+	{
+		for (Key key : Key.values())
+			if (key != Key.UNKNOWN)
+			{
+				String s = "key." + key.nameID;
+				try
+				{
+					key.value = Integer.parseInt(ClientSettings.getSetting(s));
+				} catch (Exception e)
+				{
+					Logger.e("Invalid key ID: " + ClientSettings.getSetting(s));
+					ClientSettings.resetSetting(s);
+					key.value = Integer.parseInt(ClientSettings.getSetting(s));
+				}
+			}
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e)
 	{
-		short key = getKeyFromID(e.getKeyCode());
-		if (key != -1 && !isPressed(key))
+		Key key = getKeyFromID(e.getKeyCode());
+		if (!key.isPressed())
 		{
-			willPress[key] = true;
+			if (key != Key.UNKNOWN) key.willPress = true;
 			Persistance.stateManager.onKeyPressed(e, key);
-		} else Persistance.stateManager.onKeyPressed(e, (short) -1);
+		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e)
 	{
-		short key = getKeyFromID(e.getKeyCode());
-		if (key != -1)
-		{
-			willPress[key] = false;
-			Persistance.stateManager.onKeyReleased(e, key);
-		} else Persistance.stateManager.onKeyReleased(e, (short) -1);
+		Key key = getKeyFromID(e.getKeyCode());
+		if (key != Key.UNKNOWN) key.willPress = false;
+		Persistance.stateManager.onKeyReleased(e, key);
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e)
 	{
 		Persistance.stateManager.onKeyTyped(e);
-	}
-
-	public static void update()
-	{
-		System.arraycopy(isPressed, 0, wasPressed, 0, KEY_COUNT);
-		System.arraycopy(willPress, 0, isPressed, 0, KEY_COUNT);
 	}
 
 }

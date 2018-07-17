@@ -5,7 +5,7 @@ import java.awt.Rectangle;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.state.StateManager;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
-import com.darkxell.client.state.menu.TeamMenuState;
+import com.darkxell.client.state.menu.menus.TeamMenuState;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.zones.FreezoneInfo;
 

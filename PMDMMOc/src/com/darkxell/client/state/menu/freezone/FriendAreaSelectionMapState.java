@@ -11,7 +11,7 @@ import com.darkxell.client.resources.images.others.MapResources;
 import com.darkxell.client.resources.music.SoundManager;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.StateManager;
-import com.darkxell.client.ui.Keys;
+import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.language.Message;
 import com.darkxell.common.zones.FreezoneInfo;
@@ -43,24 +43,24 @@ public class FriendAreaSelectionMapState extends AbstractState {
 	}
 
 	@Override
-	public void onKeyPressed(short key) {
+	public void onKeyPressed(Key key) {
 		switch (key) {
-		case Keys.KEY_RIGHT:
+		case RIGHT:
 			movingright = true;
 			break;
-		case Keys.KEY_LEFT:
+		case LEFT:
 			movingleft = true;
 			break;
-		case Keys.KEY_UP:
+		case UP:
 			movingup = true;
 			break;
-		case Keys.KEY_DOWN:
+		case DOWN:
 			movingdown = true;
 			break;
-		case Keys.KEY_RUN:
+		case RUN:
 			StateManager.setExploreState(FreezoneInfo.BASE, Direction.EAST, 4, 42);
 			break;
-		case Keys.KEY_ATTACK:
+		case ATTACK:
 			LocalMapLocation[] points = LocalMapLocation.values();
 			for (int i = 0; i < points.length; i++)
 				if (points[i].showsonfriendsmap && isnearpoint(points[i])) {
@@ -84,20 +84,23 @@ public class FriendAreaSelectionMapState extends AbstractState {
 	}
 
 	@Override
-	public void onKeyReleased(short key) {
-		switch (key) {
-		case Keys.KEY_RIGHT:
-			movingright = false;
-			break;
-		case Keys.KEY_LEFT:
-			movingleft = false;
-			break;
-		case Keys.KEY_UP:
-			movingup = false;
-			break;
-		case Keys.KEY_DOWN:
-			movingdown = false;
-			break;
+	public void onKeyReleased(Key key) {
+		switch (key)
+		{
+			case RIGHT:
+				movingright = false;
+				break;
+			case LEFT:
+				movingleft = false;
+				break;
+			case UP:
+				movingup = false;
+				break;
+			case DOWN:
+				movingdown = false;
+				break;
+			default:
+				break;
 		}
 		// If stopped moving, snap to closest point if near one
 		if (!(movingdown || movingup || movingleft || movingright)) {

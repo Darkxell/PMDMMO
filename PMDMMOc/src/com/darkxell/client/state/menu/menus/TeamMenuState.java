@@ -1,9 +1,11 @@
-package com.darkxell.client.state.menu;
+package com.darkxell.client.state.menu.menus;
 
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.launchable.messagehandlers.ItemActionHandler.ItemActionMessageHandler;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.state.AbstractState;
+import com.darkxell.client.state.menu.InfoState;
+import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.language.Message;

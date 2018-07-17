@@ -7,7 +7,7 @@ import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.pokemon.DungeonPokemonRenderer;
 import com.darkxell.client.resources.images.tilesets.AbstractDungeonTileset;
 import com.darkxell.client.resources.images.tilesets.DungeonMapTileset;
-import com.darkxell.client.ui.Keys;
+import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
@@ -123,17 +123,16 @@ public class DungeonFloorMap extends AbstractDisplayMap
 
 		final int mapSpeed = 3;
 
-		if (Keys.isPressed(Keys.KEY_MAP_UP)) this.y -= mapSpeed;
-		if (Keys.isPressed(Keys.KEY_MAP_DOWN)) this.y += mapSpeed;
-		if (Keys.isPressed(Keys.KEY_MAP_LEFT)) this.x -= mapSpeed;
-		if (Keys.isPressed(Keys.KEY_MAP_RIGHT)) this.x += mapSpeed;
-		if (Keys.isPressed(Keys.KEY_MAP_RESET))
+		if (Key.MAP_UP.isPressed()) this.y -= mapSpeed;
+		if (Key.MAP_DOWN.isPressed()) this.y += mapSpeed;
+		if (Key.MAP_LEFT.isPressed()) this.x -= mapSpeed;
+		if (Key.MAP_RIGHT.isPressed()) this.x += mapSpeed;
+		if (Key.MAP_RESET.isPressed())
 		{
 			this.followLeader = true;
 			this.defaultLocationSet = false;
 		}
-		if (Keys.isPressed(Keys.KEY_MAP_UP) || Keys.isPressed(Keys.KEY_MAP_DOWN) || Keys.isPressed(Keys.KEY_MAP_LEFT) || Keys.isPressed(Keys.KEY_MAP_RIGHT))
-			this.followLeader = false;
+		if (Key.MAP_UP.isPressed() || Key.MAP_DOWN.isPressed() || Key.MAP_LEFT.isPressed() || Key.MAP_RIGHT.isPressed()) this.followLeader = false;
 
 		++this.tick;
 		if (this.tick >= PLAYER_TICK * 2) this.tick = 0;

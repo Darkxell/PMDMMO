@@ -11,7 +11,7 @@ import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.renderers.TextRenderer.PMDChar;
 import com.darkxell.client.resources.images.MenuHudSpriteset;
 import com.darkxell.client.resources.images.others.Hud;
-import com.darkxell.client.ui.Keys;
+import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.util.language.Message;
 
 public class DialogScreen
@@ -73,9 +73,21 @@ public class DialogScreen
 		this.state = DialogScreenState.PRINTING;
 	}
 
-	public void onKeyPressed(short key)
+	public void onKeyPressed(Key key)
 	{
-		if (this.state == DialogScreenState.PAUSED && (key == Keys.KEY_ATTACK || key == Keys.KEY_RUN)) this.requestNextLine();
+		if (this.state == DialogScreenState.PAUSED && (key == Key.ATTACK || key == Key.RUN)) this.requestNextLine();
+	}
+
+	public void onMouseClick(int x, int y)
+	{
+		if (this.parentState().dialogBoxInside().contains(x, y))
+		{
+			if (this.state == DialogScreenState.PRINTING)
+			{
+				this.cursor = this.currentLength();
+				this.state = DialogScreenState.PAUSED;
+			} else if (this.state == DialogScreenState.PAUSED) this.requestNextLine();
+		}
 	}
 
 	public void onStart()
@@ -179,7 +191,7 @@ public class DialogScreen
 			if (this.isInstant) this.cursor = this.currentLength();
 			else++this.cursor;
 			if (this.cursor >= this.currentLength()) this.state = DialogScreenState.PAUSED;
-			if (this.state == DialogScreenState.PAUSED && Keys.isPressed(Keys.KEY_RUN) && this.parentState.isMain()) this.requestNextLine();
+			if (this.state == DialogScreenState.PAUSED && Key.RUN.isPressed() && this.parentState.isMain()) this.requestNextLine();
 		} else if (this.state == DialogScreenState.SWITCHING)
 		{
 			this.offset += 3;

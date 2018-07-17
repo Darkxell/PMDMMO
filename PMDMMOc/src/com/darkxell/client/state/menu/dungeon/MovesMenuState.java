@@ -12,7 +12,7 @@ import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.client.state.menu.components.MoveSelectionWindow;
 import com.darkxell.client.state.menu.components.OptionSelectionWindow;
 import com.darkxell.client.state.menu.components.TextWindow;
-import com.darkxell.client.ui.Keys;
+import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.event.move.MoveEnabledEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.move.MoveSwitchedEvent;
@@ -91,29 +91,29 @@ public class MovesMenuState extends OptionSelectionMenuState
 	}
 
 	@Override
-	public void onKeyPressed(short key)
+	public void onKeyPressed(Key key)
 	{
-		if (!this.canOrder || !Keys.isPressed(Keys.KEY_DIAGONAL))
+		if (!this.canOrder || !Key.DIAGONAL.isPressed())
 		{
 			if (this.tabs.size() != 0)
 			{
-				if (key == Keys.KEY_LEFT && this.tab > 0) --this.tab;
-				else if (key == Keys.KEY_RIGHT && this.tab < this.tabs.size() - 1) ++this.tab;
-				else if (key == Keys.KEY_UP) --this.selection;
-				else if (key == Keys.KEY_DOWN) ++this.selection;
-				else if (key == Keys.KEY_ATTACK) this.onOptionSelected(this.currentOption());
-				else if (key == Keys.KEY_ROTATE)
+				if (key == Key.LEFT && this.tab > 0) --this.tab;
+				else if (key == Key.RIGHT && this.tab < this.tabs.size() - 1) ++this.tab;
+				else if (key == Key.UP) --this.selection;
+				else if (key == Key.DOWN) ++this.selection;
+				else if (key == Key.ATTACK) this.onOptionSelected(this.currentOption());
+				else if (key == Key.ROTATE)
 				{
 					this.onOptionInfo(this.currentOption());
 					SoundManager.playSound("ui-select");
 				}
 
-				if (key == Keys.KEY_LEFT || key == Keys.KEY_RIGHT)
+				if (key == Key.LEFT || key == Key.RIGHT)
 				{
 					if (this.selection >= this.currentTab().options().length) this.selection = this.currentTab().options().length - 1;
 					this.onTabChanged(this.currentTab());
 					SoundManager.playSound("ui-move");
-				} else if (key == Keys.KEY_UP || key == Keys.KEY_DOWN)
+				} else if (key == Key.UP || key == Key.DOWN)
 				{
 					if (this.selection == -1) this.selection = this.currentTab().options().length - 1;
 					else if (this.selection == this.currentTab().options().length) this.selection = 0;
@@ -121,7 +121,7 @@ public class MovesMenuState extends OptionSelectionMenuState
 					SoundManager.playSound("ui-move");
 				}
 			}
-			if (key == Keys.KEY_MENU || key == Keys.KEY_RUN)
+			if (key == Key.MENU || key == Key.RUN)
 			{
 				this.onExit();
 				SoundManager.playSound("ui-back");
@@ -131,14 +131,14 @@ public class MovesMenuState extends OptionSelectionMenuState
 			int from = -1, to = -1;
 
 			boolean success = false;
-			if (key == Keys.KEY_UP && this.selection > 0)
+			if (key == Key.UP && this.selection > 0)
 			{
 				from = this.selection;
 				to = this.selection - 1;
 				--this.selection;
 				success = true;
 				SoundManager.playSound("ui-sort");
-			} else if (key == Keys.KEY_DOWN && this.selection < this.currentTab().options().length - 1)
+			} else if (key == Key.DOWN && this.selection < this.currentTab().options().length - 1)
 			{
 				from = this.selection;
 				to = this.selection + 1;

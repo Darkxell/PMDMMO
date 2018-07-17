@@ -8,6 +8,7 @@ import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.launchable.messagehandlers.InventoryRequestHandler;
 import com.darkxell.client.launchable.messagehandlers.MonsterRequestHandler;
 import com.darkxell.client.renderers.TextRenderer;
+import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.dbobject.DBPlayer;
 import com.darkxell.common.dbobject.DatabaseIdentifier;
 import com.darkxell.common.player.Player;
@@ -74,11 +75,11 @@ public class PlayerLoadingState extends AbstractState
 	}
 
 	@Override
-	public void onKeyPressed(short key)
+	public void onKeyPressed(Key key)
 	{}
 
 	@Override
-	public void onKeyReleased(short key)
+	public void onKeyReleased(Key key)
 	{}
 
 	public void onMonsterReceived(JsonObject message)

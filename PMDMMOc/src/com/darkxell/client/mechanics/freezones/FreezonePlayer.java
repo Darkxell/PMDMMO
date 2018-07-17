@@ -7,7 +7,7 @@ import com.darkxell.client.renderers.pokemon.AbstractPokemonRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
-import com.darkxell.client.ui.Keys;
+import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.player.Player;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.DoubleRectangle;
@@ -145,69 +145,75 @@ public class FreezonePlayer
 		return ismovingUP || ismovingRIGHT || ismovingDOWN || ismovingLEFT;
 	}
 
-	public void pressKey(short key)
+	public void pressKey(Key key)
 	{
 		switch (key)
 		{
-			case Keys.KEY_UP:
+			case UP:
 				ismovingUP = true;
 				ismovingDOWN = false;
 				playersprite.setFacingDirection(getFacingFromMoveDirections());
 				playersprite.setState(PokemonSpriteState.MOVE, true);
 				break;
-			case Keys.KEY_RIGHT:
+			case RIGHT:
 				ismovingRIGHT = true;
 				ismovingLEFT = false;
 				playersprite.setFacingDirection(getFacingFromMoveDirections());
 				playersprite.setState(PokemonSpriteState.MOVE, true);
 				break;
-			case Keys.KEY_DOWN:
+			case DOWN:
 				ismovingDOWN = true;
 				ismovingUP = false;
 				playersprite.setFacingDirection(getFacingFromMoveDirections());
 				playersprite.setState(PokemonSpriteState.MOVE, true);
 				break;
-			case Keys.KEY_LEFT:
+			case LEFT:
 				ismovingLEFT = true;
 				ismovingRIGHT = false;
 				playersprite.setFacingDirection(getFacingFromMoveDirections());
 				playersprite.setState(PokemonSpriteState.MOVE, true);
 				break;
-			case Keys.KEY_ATTACK:
+			case ATTACK:
 				if (canInteract()) getInteractionTarget().onInteract();
 				break;
-			case Keys.KEY_RUN:
+			case RUN:
 				this.isSprinting = true;
+				break;
+
+			default:
 				break;
 		}
 	}
 
-	public void releaseKey(short key)
+	public void releaseKey(Key key)
 	{
 		switch (key)
 		{
-			case Keys.KEY_UP:
+			case UP:
 				ismovingUP = false;
 				if (!ismoving()) playersprite.setState(PokemonSpriteState.IDLE);
 				else playersprite.setFacingDirection(getFacingFromMoveDirections());
 				break;
-			case Keys.KEY_RIGHT:
+			case RIGHT:
 				ismovingRIGHT = false;
 				if (!ismoving()) playersprite.setState(PokemonSpriteState.IDLE);
 				else playersprite.setFacingDirection(getFacingFromMoveDirections());
 				break;
-			case Keys.KEY_DOWN:
+			case DOWN:
 				ismovingDOWN = false;
 				if (!ismoving()) playersprite.setState(PokemonSpriteState.IDLE);
 				else playersprite.setFacingDirection(getFacingFromMoveDirections());
 				break;
-			case Keys.KEY_LEFT:
+			case LEFT:
 				ismovingLEFT = false;
 				if (!ismoving()) playersprite.setState(PokemonSpriteState.IDLE);
 				else playersprite.setFacingDirection(getFacingFromMoveDirections());
 				break;
-			case Keys.KEY_RUN:
+			case RUN:
 				this.isSprinting = false;
+				break;
+
+			default:
 				break;
 		}
 	}

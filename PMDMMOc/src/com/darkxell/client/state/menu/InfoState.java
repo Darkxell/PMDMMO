@@ -8,7 +8,7 @@ import java.util.Stack;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.menu.components.TextWindow;
-import com.darkxell.client.ui.Keys;
+import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.language.Keywords;
 import com.darkxell.common.util.language.Message;
@@ -82,17 +82,17 @@ public class InfoState extends AbstractMenuState
 	}
 
 	@Override
-	public void onKeyPressed(short key)
+	public void onKeyPressed(Key key)
 	{
 		super.onKeyPressed(key);
 
-		if (key == Keys.KEY_LEFT)
+		if (key == Key.LEFT)
 		{
 			if (this.tab == 0) this.tab = this.infos.length;
 			--this.tab;
 			this.window = null;
 		}
-		if (key == Keys.KEY_RIGHT)
+		if (key == Key.RIGHT)
 		{
 			++this.tab;
 			if (this.tab == this.infos.length) this.tab = 0;

@@ -8,6 +8,7 @@ import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.PlayerLoadingState;
 import com.darkxell.client.state.PlayerLoadingState.PlayerLoadingEndListener;
 import com.darkxell.client.state.StateManager;
+import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.dungeon.DungeonOutcome;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.pokemon.Pokemon;
@@ -41,11 +42,11 @@ public class DungeonEndState extends AbstractState
 	}
 
 	@Override
-	public void onKeyPressed(short key)
+	public void onKeyPressed(Key key)
 	{}
 
 	@Override
-	public void onKeyReleased(short key)
+	public void onKeyReleased(Key key)
 	{}
 
 	@Override

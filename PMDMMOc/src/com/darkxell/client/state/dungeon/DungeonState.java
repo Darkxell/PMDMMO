@@ -17,7 +17,7 @@ import com.darkxell.client.renderers.pokemon.DungeonPokemonRenderer;
 import com.darkxell.client.renderers.pokemon.DungeonPokemonRendererHolder;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.state.AbstractState;
-import com.darkxell.client.ui.Keys;
+import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
 /** The main state for Dungeon exploration. */
@@ -31,11 +31,11 @@ public class DungeonState extends AbstractState
 		}
 
 		@Override
-		public void onKeyPressed(short key)
+		public void onKeyPressed(Key key)
 		{}
 
 		@Override
-		public void onKeyReleased(short key)
+		public void onKeyReleased(Key key)
 		{}
 
 		@Override
@@ -132,20 +132,20 @@ public class DungeonState extends AbstractState
 	}
 
 	@Override
-	public void onKeyPressed(short key)
+	public void onKeyPressed(Key key)
 	{
-		if (key == Keys.KEY_DIAGONAL) this.diagonal = true;
-		if (key == Keys.KEY_ROTATE) this.rotating = true;
+		if (key == Key.DIAGONAL) this.diagonal = true;
+		if (key == Key.ROTATE) this.rotating = true;
 
 		this.currentSubstate.onKeyPressed(key);
 
 	}
 
 	@Override
-	public void onKeyReleased(short key)
+	public void onKeyReleased(Key key)
 	{
-		if (key == Keys.KEY_DIAGONAL) this.diagonal = false;
-		if (key == Keys.KEY_ROTATE) this.rotating = false;
+		if (key == Key.DIAGONAL) this.diagonal = false;
+		if (key == Key.ROTATE) this.rotating = false;
 
 		this.currentSubstate.onKeyReleased(key);
 	}

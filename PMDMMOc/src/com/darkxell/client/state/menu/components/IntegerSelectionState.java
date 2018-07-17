@@ -8,7 +8,7 @@ import com.darkxell.client.renderers.layers.AbstractGraphiclayer;
 import com.darkxell.client.resources.images.MenuHudSpriteset;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.dialog.DialogState;
-import com.darkxell.client.ui.Keys;
+import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.util.language.Message;
 
 public class IntegerSelectionState extends AbstractState
@@ -44,30 +44,30 @@ public class IntegerSelectionState extends AbstractState
 	}
 
 	@Override
-	public void onKeyPressed(short key)
+	public void onKeyPressed(Key key)
 	{
 		long newValue = this.current;
 		int newLog = this.logSelection;
 		switch (key)
 		{
-			case Keys.KEY_ATTACK:
+			case ATTACK:
 				this.listener.onIntegerSelected(this.current);
 				return;
-			case Keys.KEY_RUN:
+			case RUN:
 				this.listener.onIntegerSelected(-1);
 				return;
 
-			case Keys.KEY_UP:
+			case UP:
 				newValue += Math.pow(10, this.logSelection);
 				break;
-			case Keys.KEY_DOWN:
+			case DOWN:
 				newValue -= Math.pow(10, this.logSelection);
 				break;
 
-			case Keys.KEY_LEFT:
+			case LEFT:
 				++newLog;
 				break;
-			case Keys.KEY_RIGHT:
+			case RIGHT:
 				--newLog;
 				break;
 
@@ -90,7 +90,7 @@ public class IntegerSelectionState extends AbstractState
 	}
 
 	@Override
-	public void onKeyReleased(short key)
+	public void onKeyReleased(Key key)
 	{}
 
 	@Override

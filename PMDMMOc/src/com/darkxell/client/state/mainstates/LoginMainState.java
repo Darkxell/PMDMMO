@@ -16,6 +16,7 @@ import com.darkxell.client.state.PlayerLoadingState.PlayerLoadingEndListener;
 import com.darkxell.client.state.StateManager;
 import com.darkxell.client.state.TransitionState;
 import com.darkxell.client.state.quiz.PersonalityQuizDialog;
+import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.client.ui.MainUiUtility;
 import com.darkxell.common.dbobject.DBPlayer;
 import com.darkxell.common.player.Player;
@@ -67,14 +68,14 @@ public class LoginMainState extends StateManager
 	}
 
 	@Override
-	public void onKeyPressed(KeyEvent e, short key)
+	public void onKeyPressed(KeyEvent e, Key key)
 	{
 		login.onKeyPressed(e);
 		password.onKeyPressed(e);
 	}
 
 	@Override
-	public void onKeyReleased(KeyEvent e, short key)
+	public void onKeyReleased(KeyEvent e, Key key)
 	{
 
 	}

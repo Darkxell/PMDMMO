@@ -7,6 +7,7 @@ import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.layers.AbstractGraphiclayer;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.dialog.DialogState.DialogEndListener;
+import com.darkxell.client.ui.Keys.Key;
 
 /** Generic class for complex dialog states. */
 public abstract class ComplexDialog implements DialogEndListener
@@ -37,11 +38,11 @@ public abstract class ComplexDialog implements DialogEndListener
 		}
 
 		@Override
-		public void onKeyPressed(short key)
+		public void onKeyPressed(Key key)
 		{}
 
 		@Override
-		public void onKeyReleased(short key)
+		public void onKeyReleased(Key key)
 		{}
 
 		@Override

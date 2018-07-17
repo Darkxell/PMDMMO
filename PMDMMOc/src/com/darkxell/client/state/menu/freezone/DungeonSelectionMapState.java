@@ -16,7 +16,7 @@ import com.darkxell.client.resources.images.others.MapResources;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.StateManager;
 import com.darkxell.client.state.freezone.FreezoneExploreState;
-import com.darkxell.client.ui.Keys;
+import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.dungeon.Dungeon;
 import com.darkxell.common.dungeon.DungeonRegistry;
 import com.darkxell.common.util.Direction;
@@ -62,33 +62,33 @@ public class DungeonSelectionMapState extends AbstractState
 	}
 
 	@Override
-	public void onKeyPressed(short key)
+	public void onKeyPressed(Key key)
 	{
 		switch (key)
 		{
-			case Keys.KEY_RIGHT:
+			case RIGHT:
 				if (cursor >= dungeonslist.size() - 1) cursor = 0;
 				else++cursor;
 				break;
-			case Keys.KEY_LEFT:
+			case LEFT:
 				if (cursor <= 0) cursor = dungeonslist.size() - 1;
 				else--cursor;
 				break;
-			case Keys.KEY_UP:
+			case UP:
 				if (cursor < dungeonslist.size() - 10) cursor += 10;
 				else cursor = 0;
 				break;
-			case Keys.KEY_DOWN:
+			case DOWN:
 				if (cursor >= 10) cursor -= 10;
 				else cursor = (dungeonslist.size() - 1);
 				break;
-			case Keys.KEY_RUN:
+			case RUN:
 				Persistance.isCommunicating = false;
 				Persistance.currentplayer.y -= 1;
 				Persistance.currentplayer.renderer().sprite().setFacingDirection(Direction.NORTH);
 				Persistance.stateManager.setState(new FreezoneExploreState());
 				break;
-			case Keys.KEY_ATTACK:
+			case ATTACK:
 				// Sending dungeonstart to server
 				int dungeon = this.dungeonslist.get(this.cursor).id;
 				if (Persistance.socketendpoint.connectionStatus() == GameSocketEndpoint.CONNECTED)
@@ -106,7 +106,7 @@ public class DungeonSelectionMapState extends AbstractState
 	}
 
 	@Override
-	public void onKeyReleased(short key)
+	public void onKeyReleased(Key key)
 	{}
 
 	@Override
