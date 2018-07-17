@@ -39,16 +39,24 @@ public class DoubleRectangle {
 
 	}
 
-	/**
-	 * Predicate that returns true if the two rectangles have at least one
-	 * intersection point.
-	 */
-	public boolean intersects(DoubleRectangle other) {
-		return ((x > other.x && x < other.x + other.width) || (x + width > other.x && x + width < other.x + other.width)
-				|| (x < other.x && x + width > other.x + other.width))
-				&& ((y > other.y && y < other.y + other.height)
-						|| (y + height > other.y && y + height < other.y + other.height)
-						|| (y < other.y && y + height > other.y + other.height));
+	/** Predicate that returns true if the two rectangles have at least one intersection point. */
+	public boolean intersects(DoubleRectangle other)
+	{
+		double tw = this.width; // 4
+		double th = this.height; // 2
+		double rw = other.width; // 1.6
+		double rh = other.height;// 1.3
+		if (rw <= 0 || rh <= 0 || tw <= 0 || th <= 0) return false;
+		double tx = this.x; // 28
+		double ty = this.y; // 38
+		double rx = other.x; // 28
+		double ry = other.y; // 29.6
+		rw += rx;
+		rh += ry;
+		tw += tx;
+		th += ty;
+		// overflow || intersect
+		return ((rw < rx || rw > tx) && (rh < ry || rh > ty) && (tw < tx || tw > rx) && (th < ty || th > ry));
 	}
 
 	/**
@@ -86,5 +94,11 @@ public class DoubleRectangle {
 			return false;
 		DoubleRectangle t = (DoubleRectangle) test;
 		return x == t.x && y == t.y && width == t.width && height == t.height;
+	}
+	
+	@Override
+	public String toString()
+	{
+		return "[" + this.x + "," + this.y + "]\n"+"[" + (this.x+this.width) + "," + (this.y+this.height) + "]";
 	}
 }
