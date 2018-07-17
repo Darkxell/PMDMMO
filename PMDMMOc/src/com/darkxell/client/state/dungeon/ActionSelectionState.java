@@ -14,6 +14,7 @@ import com.darkxell.client.resources.images.others.DungeonHudSpriteset;
 import com.darkxell.client.state.dungeon.DungeonState.DungeonSubState;
 import com.darkxell.client.state.menu.components.MenuWindow;
 import com.darkxell.client.state.menu.dungeon.DungeonMenuState;
+import com.darkxell.client.state.menu.item.ItemContainersMenuState;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.event.action.PokemonRotateEvent;
@@ -94,7 +95,13 @@ public class ActionSelectionState extends DungeonSubState
 	public void onKeyPressed(Key key)
 	{
 		DungeonPokemon leader = Persistance.player.getDungeonLeader();
-		if (key == Key.MENU) Persistance.stateManager.setState(new DungeonMenuState(this.parent));
+		DungeonMenuState s = new DungeonMenuState(this.parent);
+		if (key == Key.MENU) Persistance.stateManager.setState(s);
+		else if (key == Key.INVENTORY)
+		{
+			ItemContainersMenuState i = s.createInventoryState();
+			if (i != null) Persistance.stateManager.setState(i);
+		} else if (key == Key.PARTY) Persistance.stateManager.setState(s.createPartyState());
 		else if (key == Key.RUN && Key.ROTATE.isPressed()) this.parent.setSubstate(new DungeonFullLoggerState(this.parent));
 		else if (key == Key.ROTATE)
 		{

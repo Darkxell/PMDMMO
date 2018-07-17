@@ -110,14 +110,16 @@ public class ControlsMenuState extends OptionSelectionMenuState implements Dialo
 		Persistance.stateManager.setState(dialog);
 	}
 
-	@Override
-	protected void onOptionChanged(MenuOption option)
+	public void onKeyValueSelected(ControlMenuOption option, int value)
 	{
-		super.onOptionChanged(option);
+		option.newValue = value;
+		Persistance.stateManager.setState(this);
 	}
 
 	@Override
 	protected void onOptionSelected(MenuOption option)
-	{}
+	{
+		Persistance.stateManager.setState(new EditControlState(this.backgroundState, this, (ControlMenuOption) option));
+	}
 
 }

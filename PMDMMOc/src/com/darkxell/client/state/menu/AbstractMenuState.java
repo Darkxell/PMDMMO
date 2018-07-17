@@ -138,16 +138,17 @@ public abstract class AbstractMenuState extends AbstractState
 	{
 		if (this.tabs.size() != 0)
 		{
-			if (key == Key.LEFT && this.tab > 0) --this.tab;
-			else if (key == Key.RIGHT && this.tab < this.tabs.size() - 1) ++this.tab;
+			if ((key == Key.LEFT || key == Key.PAGE_LEFT) && this.tab > 0) --this.tab;
+			else if ((key == Key.RIGHT || key == Key.PAGE_RIGHT) && this.tab < this.tabs.size() - 1) ++this.tab;
 			else if (key == Key.UP) --this.selection;
 			else if (key == Key.DOWN) ++this.selection;
-			else if (key == Key.ATTACK) {
+			else if (key == Key.ATTACK)
+			{
 				this.onOptionSelected(this.currentOption());
 				SoundManager.playSound("ui-select");
 			}
 
-			if (key == Key.LEFT || key == Key.RIGHT)
+			if (key == Key.LEFT || key == Key.RIGHT || key == Key.PAGE_RIGHT || key == Key.PAGE_RIGHT)
 			{
 				if (this.selection >= this.currentTab().options.size()) this.selection = this.currentTab().options.size() - 1;
 				this.onTabChanged(this.currentTab());

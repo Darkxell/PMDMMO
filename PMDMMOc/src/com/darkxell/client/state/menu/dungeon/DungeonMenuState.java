@@ -27,6 +27,34 @@ public class DungeonMenuState extends OptionSelectionMenuState
 		this.createOptions();
 	}
 
+	public ItemContainersMenuState createInventoryState()
+	{
+		DungeonState s = Persistance.dungeonState;
+		ArrayList<ItemContainer> containers = new ArrayList<ItemContainer>();
+		containers.add(Persistance.player.inventory());
+		containers.add(Persistance.player.getDungeonLeader().tile());
+		for (Pokemon pokemon : Persistance.player.getTeam())
+			containers.add(pokemon);
+
+		boolean found = false;
+		for (ItemContainer container : containers)
+			if (container.size() != 0)
+			{
+				found = true;
+				break;
+			}
+
+		if (!found)
+		{
+			this.onExit();
+			s.logger.showMessage(new Message("inventory.empty"));
+			return null;
+		} else
+		{
+			return new ItemContainersMenuState(this, s, true, containers.toArray(new ItemContainer[containers.size()]));
+		}
+	}
+
 	@Override
 	protected void createOptions()
 	{
@@ -37,6 +65,11 @@ public class DungeonMenuState extends OptionSelectionMenuState
 		tab.addOption((this.settings = new MenuOption("menu.settings")));
 		tab.addOption((this.ground = new MenuOption("menu.ground")));
 		this.tabs.add(tab);
+	}
+
+	public TeamMenuState createPartyState()
+	{
+		return new TeamMenuState(this, Persistance.dungeonState);
 	}
 
 	@Override
@@ -51,30 +84,7 @@ public class DungeonMenuState extends OptionSelectionMenuState
 		DungeonState s = Persistance.dungeonState;
 		if (option == this.moves) Persistance.stateManager.setState(new MovesMenuState(s, Persistance.player.getTeam()));
 		else if (option == this.items)
-		{
-			ArrayList<ItemContainer> containers = new ArrayList<ItemContainer>();
-			containers.add(Persistance.player.inventory());
-			containers.add(Persistance.player.getDungeonLeader().tile());
-			for (Pokemon pokemon : Persistance.player.getTeam())
-				containers.add(pokemon);
-
-			boolean found = false;
-			for (ItemContainer container : containers)
-				if (container.size() != 0)
-				{
-					found = true;
-					break;
-				}
-
-			if (!found)
-			{
-				this.onExit();
-				s.logger.showMessage(new Message("inventory.empty"));
-			} else
-			{
-				Persistance.stateManager.setState(new ItemContainersMenuState(this, s, true, containers.toArray(new ItemContainer[containers.size()])));
-			}
-		} else if (option == this.team) Persistance.stateManager.setState(new TeamMenuState(this, s));
+		{} else if (option == this.team) Persistance.stateManager.setState(this.createPartyState());
 		else if (option == this.settings) Persistance.stateManager.setState(new SettingsMenuState(this, this.backgroundState));
 		else if (option == this.ground)
 		{
