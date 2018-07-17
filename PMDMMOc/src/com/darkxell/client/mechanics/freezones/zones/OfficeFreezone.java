@@ -15,6 +15,7 @@ public class OfficeFreezone extends FreezoneMap {
 		super("/freezones/office.xml", 4, 30, FreezoneInfo.OFFICE);
 		this.freezonebgm = "town.mp3";
 		this.triggerzones.add(new WarpZone(116, 40, FreezoneInfo.SQUARE, new DoubleRectangle(0, 25, 2, 9)));
+		this.triggerzones.add(new WarpZone(23, 34, FreezoneInfo.OFFICEINSIDE, new DoubleRectangle(48, 22, 3, 2)));
 
 		this.addEntity(new AnimatedFlowerEntity(7, 25, false));
 		this.addEntity(new AnimatedFlowerEntity(4, 47, false));
