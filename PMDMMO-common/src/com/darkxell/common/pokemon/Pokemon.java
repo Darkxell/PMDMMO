@@ -380,6 +380,8 @@ public class Pokemon implements ItemContainer, HasID
 				--slot;
 			this.moves[slot] = move;
 			this.moves[slot].setSlot(slot);
+			if (slot == this.data.learnedmoves.size()) this.data.learnedmoves.add(new DatabaseIdentifier(move.id()));
+			else this.data.learnedmoves.set(slot, new DatabaseIdentifier(move.id()));
 		}
 	}
 

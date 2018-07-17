@@ -2,6 +2,7 @@ package com.darkxell.client.state.menu.dungeon;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.event.KeyEvent;
 
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.TextRenderer;
@@ -68,7 +69,9 @@ public class MovesMenuState extends OptionSelectionMenuState
 
 	protected Message infoText()
 	{
-		return new Message(this.isMainSelected() ? "moves.info.main" : "moves.info.ally");
+		return new Message(this.isMainSelected() ? "moves.info.main" : "moves.info.ally").addReplacement("<key-ok>", KeyEvent.getKeyText(Key.ATTACK.keyValue()))
+				.addReplacement("<key-info>", KeyEvent.getKeyText(Key.ROTATE.keyValue()))
+				.addReplacement("<key-shift>", KeyEvent.getKeyText(Key.DIAGONAL.keyValue()));
 	}
 
 	private boolean isMainSelected()

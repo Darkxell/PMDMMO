@@ -192,6 +192,8 @@ public class TextRenderer
 		num8d(null, 168, 7),
 		num9d(null, 169, 7),
 		num0d(null, 170, 7),
+		bracketOpen("[", 171, 5),
+		bracketClose("]", 172, 5),
 		colorReset("</color>", -1, 0),
 		colorBlue("<blue>", -1, 0),
 		colorGreen("<green>", -1, 0),
@@ -292,8 +294,7 @@ public class TextRenderer
 			++c;
 		}
 
-		for (c = 0; c < chars.size(); ++c)
-			if (chars.get(c) == null) chars.remove(c);
+		chars.removeIf(ch -> ch == null);
 		return chars;
 	}
 
@@ -367,8 +368,7 @@ public class TextRenderer
 		TextRenderer.color = color;
 		if (shouldUpdate)
 		{
-			RGBImageFilter filter = new RGBImageFilter()
-			{
+			RGBImageFilter filter = new RGBImageFilter() {
 				@Override
 				public int filterRGB(int x, int y, int rgb)
 				{
