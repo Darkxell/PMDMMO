@@ -9,6 +9,7 @@ public class WaterfallLakeFreezone extends FriendAreaFreezone
 	public WaterfallLakeFreezone()
 	{
 		super(29, 35, FreezoneInfo.FRIEND_WATERFALLLAKE);
+		this.freezonebgm = "friendarea-pond.mp3";
 	}
 
 }

@@ -9,6 +9,7 @@ public class CraterFreezone extends FriendAreaFreezone
 	public CraterFreezone()
 	{
 		super(28, 36, FreezoneInfo.FRIEND_CRATER);
+		this.freezonebgm = "friendarea-caves.mp3";
 	}
 
 }

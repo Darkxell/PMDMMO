@@ -9,6 +9,7 @@ public class TurtleshellPondFreezone extends FriendAreaFreezone
 	public TurtleshellPondFreezone()
 	{
 		super(29, 38, FreezoneInfo.FRIEND_TURTLESHELLPOND);
+		this.freezonebgm = "friendarea-pond.mp3";
 	}
 
 }

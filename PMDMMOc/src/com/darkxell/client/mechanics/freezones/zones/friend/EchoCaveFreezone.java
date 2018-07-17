@@ -9,6 +9,7 @@ public class EchoCaveFreezone extends FriendAreaFreezone
 	public EchoCaveFreezone()
 	{
 		super(31, 41, FreezoneInfo.FRIEND_ECHOCAVE);
+		this.freezonebgm = "friendarea-caves.mp3";
 	}
 
 }

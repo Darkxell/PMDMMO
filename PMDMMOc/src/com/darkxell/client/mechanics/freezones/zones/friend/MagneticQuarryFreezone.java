@@ -9,6 +9,7 @@ public class MagneticQuarryFreezone extends FriendAreaFreezone
 	public MagneticQuarryFreezone()
 	{
 		super(29, 27, FreezoneInfo.FRIEND_MAGNETICQUARRY);
+		this.freezonebgm = "friendarea-wilds.mp3";
 	}
 
 }

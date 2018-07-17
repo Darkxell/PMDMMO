@@ -9,6 +9,7 @@ public class SkyBluePlainsFreezone extends FriendAreaFreezone
 	public SkyBluePlainsFreezone()
 	{
 		super(25, 38, FreezoneInfo.FRIEND_SKYBLUEPLAINS);
+		this.freezonebgm = "friendarea-steppe.mp3";
 	}
 
 }

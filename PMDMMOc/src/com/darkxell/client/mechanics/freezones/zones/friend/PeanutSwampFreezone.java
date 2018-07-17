@@ -9,6 +9,7 @@ public class PeanutSwampFreezone extends FriendAreaFreezone
 	public PeanutSwampFreezone()
 	{
 		super(16, 38, FreezoneInfo.FRIEND_PEANUTSWAMP);
+		this.freezonebgm = "friendarea-swamp.mp3";
 	}
 
 }

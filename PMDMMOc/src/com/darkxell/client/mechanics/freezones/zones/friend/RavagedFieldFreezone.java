@@ -9,6 +9,7 @@ public class RavagedFieldFreezone extends FriendAreaFreezone
 	public RavagedFieldFreezone()
 	{
 		super(39, 35, FreezoneInfo.FRIEND_RAVAGEDFIELD);
+		this.freezonebgm = "friendarea-wilds.mp3";
 	}
 
 }

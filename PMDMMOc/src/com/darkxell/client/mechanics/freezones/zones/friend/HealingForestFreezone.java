@@ -9,6 +9,7 @@ public class HealingForestFreezone extends FriendAreaFreezone
 	public HealingForestFreezone()
 	{
 		super(29, 38, FreezoneInfo.FRIEND_HEALINGFOREST);
+		this.freezonebgm = "friendarea-healingforest.mp3";
 	}
 
 }

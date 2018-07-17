@@ -9,6 +9,7 @@ public class DeepseaCurrentFreezone extends FriendAreaFreezone
 	public DeepseaCurrentFreezone()
 	{
 		super(28, 36, FreezoneInfo.FRIEND_DEEPSEACURRENT);
+		this.freezonebgm = "friendarea-seafloorcave.mp3";
 	}
 
 }

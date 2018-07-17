@@ -9,6 +9,7 @@ public class EnergeticForestFreezone extends FriendAreaFreezone
 	public EnergeticForestFreezone()
 	{
 		super(29, 39, FreezoneInfo.FRIEND_ENERGETICFOREST);
+		this.freezonebgm = "friendarea-forest.mp3";
 	}
 
 }

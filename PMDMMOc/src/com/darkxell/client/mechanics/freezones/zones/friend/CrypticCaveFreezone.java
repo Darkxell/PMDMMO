@@ -9,6 +9,7 @@ public class CrypticCaveFreezone extends FriendAreaFreezone
 	public CrypticCaveFreezone()
 	{
 		super(22, 35, FreezoneInfo.FRIEND_CRYPTICCAVE);
+		this.freezonebgm = "friendarea-crypticcave.mp3";
 	}
 
 }

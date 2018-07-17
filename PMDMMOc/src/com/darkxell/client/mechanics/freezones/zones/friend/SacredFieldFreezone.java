@@ -9,6 +9,7 @@ public class SacredFieldFreezone extends FriendAreaFreezone
 	public SacredFieldFreezone()
 	{
 		super(29, 30, FreezoneInfo.FRIEND_SACREDFIELD);
+		this.freezonebgm = "friendarea-field.mp3";
 	}
 
 }

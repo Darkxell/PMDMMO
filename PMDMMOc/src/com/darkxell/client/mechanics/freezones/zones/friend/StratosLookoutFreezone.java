@@ -9,6 +9,7 @@ public class StratosLookoutFreezone extends FriendAreaFreezone
 	public StratosLookoutFreezone()
 	{
 		super(19,36,FreezoneInfo.FRIEND_STRATOSLOOKOUT);
+		this.freezonebgm = "friendarea-stratoslookout.mp3";
 	}
 
 }

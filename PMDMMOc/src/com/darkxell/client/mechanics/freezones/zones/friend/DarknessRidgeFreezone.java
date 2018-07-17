@@ -9,6 +9,7 @@ public class DarknessRidgeFreezone extends FriendAreaFreezone
 	public DarknessRidgeFreezone()
 	{
 		super(31, 35, FreezoneInfo.FRIEND_DARKNESSRIDGE);
+		this.freezonebgm = "friendarea-swamp.mp3";
 	}
 
 }

@@ -9,6 +9,7 @@ public class DecrepitLabFreezone extends FriendAreaFreezone
 	public DecrepitLabFreezone()
 	{
 		super(29, 36, FreezoneInfo.FRIEND_DECREPITLAB);
+		this.freezonebgm = "friendarea-lab.mp3";
 	}
 
 }

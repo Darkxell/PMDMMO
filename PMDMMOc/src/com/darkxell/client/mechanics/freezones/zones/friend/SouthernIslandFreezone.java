@@ -9,6 +9,7 @@ public class SouthernIslandFreezone extends FriendAreaFreezone
 	public SouthernIslandFreezone()
 	{
 		super(19, 38, FreezoneInfo.FRIEND_SOUTHERNISLAND);
+		this.freezonebgm = "friendarea-southernisland.mp3";
 	}
 
 }

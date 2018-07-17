@@ -9,6 +9,7 @@ public class MistRiseForestFreezone extends FriendAreaFreezone
 	public MistRiseForestFreezone()
 	{
 		super(28, 35, FreezoneInfo.FRIEND_MISTRISEFOREST);
+		this.freezonebgm = "friendarea-forest.mp3";
 	}
 
 }

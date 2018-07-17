@@ -9,6 +9,7 @@ public class PowerPlantFreezone extends FriendAreaFreezone
 	public PowerPlantFreezone()
 	{
 		super(29, 39, FreezoneInfo.FRIEND_POWERPLANT);
+		this.freezonebgm = "friendarea-lab.mp3";
 	}
 
 }

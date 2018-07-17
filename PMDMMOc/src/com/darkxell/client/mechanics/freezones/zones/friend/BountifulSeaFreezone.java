@@ -9,6 +9,7 @@ public class BountifulSeaFreezone extends FriendAreaFreezone
 	public BountifulSeaFreezone()
 	{
 		super(28, 27, FreezoneInfo.FRIEND_BOUNTIFULSEA);
+		this.freezonebgm = "friendarea-oceanic.mp3";
 	}
 
 }

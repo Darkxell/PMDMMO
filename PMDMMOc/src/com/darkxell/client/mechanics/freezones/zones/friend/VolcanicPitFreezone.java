@@ -9,6 +9,7 @@ public class VolcanicPitFreezone extends FriendAreaFreezone
 	public VolcanicPitFreezone()
 	{
 		super(29, 36, FreezoneInfo.FRIEND_VOLCANICPIT);
+		this.freezonebgm = "friendarea-volcanicpit.mp3";
 	}
 
 }

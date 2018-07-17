@@ -9,6 +9,7 @@ import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.MenuHudSpriteset;
 import com.darkxell.client.resources.images.others.MapResources;
 import com.darkxell.client.resources.music.SoundManager;
+import com.darkxell.client.resources.music.SoundsHolder;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.StateManager;
 import com.darkxell.client.ui.Keys.Key;
@@ -34,12 +35,13 @@ public class FriendAreaSelectionMapState extends AbstractState {
 
 	private static final Color boxgray_inside = new Color(0, 0, 0, 120);
 
+	private boolean setmusic = true;
+	
 	/** threshhold distance for cursor snapping */
 	private final float thresholddistance = 16.1f;
 
 	public FriendAreaSelectionMapState() {
 		super();
-
 	}
 
 	@Override
@@ -165,6 +167,10 @@ public class FriendAreaSelectionMapState extends AbstractState {
 
 	@Override
 	public void update() {
+		if(setmusic){
+			setmusic = false;
+			Persistance.soundmanager.setBackgroundMusic(SoundsHolder.getSong("town.mp3"));
+		}
 		// Cursor
 		float cursorspeed = 1.8f;
 		float newcursorx = cursorx, newcursory = cursory;

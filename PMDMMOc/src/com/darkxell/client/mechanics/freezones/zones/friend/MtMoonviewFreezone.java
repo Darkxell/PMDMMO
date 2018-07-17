@@ -9,6 +9,7 @@ public class MtMoonviewFreezone extends FriendAreaFreezone
 	public MtMoonviewFreezone()
 	{
 		super(30, 38, FreezoneInfo.FRIEND_MTMOONVIEW);
+		this.freezonebgm = "friendarea-forest.mp3";
 	}
 
 }

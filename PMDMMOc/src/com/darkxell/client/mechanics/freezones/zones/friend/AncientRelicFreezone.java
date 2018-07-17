@@ -9,6 +9,7 @@ public class AncientRelicFreezone extends FriendAreaFreezone
 	public AncientRelicFreezone()
 	{
 		super(29, 35, FreezoneInfo.FRIEND_ANCIENTRELIC);
+		this.freezonebgm = "friendarea-caves.mp3";
 	}
 
 }

@@ -9,6 +9,7 @@ public class MtDisciplineFreezone extends FriendAreaFreezone
 	public MtDisciplineFreezone()
 	{
 		super(30, 36, FreezoneInfo.FRIEND_MTDISCIPLINE);
+		this.freezonebgm = "friendarea-wilds.mp3";
 	}
 
 }

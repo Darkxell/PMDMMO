@@ -9,6 +9,7 @@ public class TransformForestFreezone extends FriendAreaFreezone
 	public TransformForestFreezone()
 	{
 		super(29, 36, FreezoneInfo.FRIEND_TRANSFORMFOREST);
+		this.freezonebgm = "friendarea-forest.mp3";
 	}
 
 }

@@ -9,6 +9,7 @@ public class FrigidCavernFreezone extends FriendAreaFreezone
 	public FrigidCavernFreezone()
 	{
 		super(29, 41, FreezoneInfo.FRIEND_FRIGIDCAVERN);
+		this.freezonebgm = "friendarea-oceanic.mp3";
 	}
 
 }

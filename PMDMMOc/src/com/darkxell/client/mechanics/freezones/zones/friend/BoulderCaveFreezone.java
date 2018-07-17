@@ -9,6 +9,7 @@ public class BoulderCaveFreezone extends FriendAreaFreezone
 	public BoulderCaveFreezone()
 	{
 		super(31, 41, FreezoneInfo.FRIEND_BOULDERCAVE);
+		this.freezonebgm = "friendarea-caves.mp3";
 	}
 
 }

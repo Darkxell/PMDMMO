@@ -9,6 +9,7 @@ public class ScorchedPlainsFreezone extends FriendAreaFreezone
 	public ScorchedPlainsFreezone()
 	{
 		super(28, 36, FreezoneInfo.FRIEND_SCORCHEDPLAINS);
+		this.freezonebgm = "friendarea-field.mp3";
 	}
 
 }

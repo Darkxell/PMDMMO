@@ -9,6 +9,7 @@ public class FurnaceDesertFreezone extends FriendAreaFreezone
 	public FurnaceDesertFreezone()
 	{
 		super(28, 37, FreezoneInfo.FRIEND_FURNACEDESERT);
+		this.freezonebgm = "friendarea-wilds.mp3";
 	}
 
 }

@@ -9,6 +9,7 @@ public class TreasureSeaFreezone extends FriendAreaFreezone
 	public TreasureSeaFreezone()
 	{
 		super(29, 38, FreezoneInfo.FRIEND_TREASURESEA);
+		this.freezonebgm = "friendarea-oceanic.mp3";
 	}
 
 }

@@ -9,6 +9,7 @@ public class LegendaryIslandFreezone extends FriendAreaFreezone
 	public LegendaryIslandFreezone()
 	{
 		super(29, 30, FreezoneInfo.FRIEND_LEGENDARYISLAND);
+		this.freezonebgm = "friendarea-legendaryisland.mp3";
 	}
 
 }

@@ -9,6 +9,7 @@ public class AgedChamber2Freezone extends FriendAreaFreezone
 	public AgedChamber2Freezone()
 	{
 		super(29, 35, FreezoneInfo.FRIEND_AGEDCHAMBER2);
+		this.freezonebgm = "friendarea-caves.mp3";
 	}
 
 }

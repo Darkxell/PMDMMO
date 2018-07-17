@@ -9,6 +9,7 @@ public class SafariFreezone extends FriendAreaFreezone
 	public SafariFreezone()
 	{
 		super(28, 38, FreezoneInfo.FRIEND_SAFARI);
+		this.freezonebgm = "friendarea-steppe.mp3";
 	}
 
 }

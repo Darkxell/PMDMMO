@@ -9,6 +9,7 @@ public class SeafloorCaveFreezone extends FriendAreaFreezone
 	public SeafloorCaveFreezone()
 	{
 		super(22, 37, FreezoneInfo.FRIEND_SEAFLOORCAVE);
+		this.freezonebgm = "friendarea-seafloorcave.mp3";
 	}
 
 }

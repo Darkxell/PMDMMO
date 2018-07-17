@@ -9,6 +9,7 @@ public class BeauPlainsFreezone extends FriendAreaFreezone
 	public BeauPlainsFreezone()
 	{
 		super(29, 36, FreezoneInfo.FRIEND_BEAUPLAINS);
+		this.freezonebgm = "friendarea-field.mp3";
 	}
 
 }

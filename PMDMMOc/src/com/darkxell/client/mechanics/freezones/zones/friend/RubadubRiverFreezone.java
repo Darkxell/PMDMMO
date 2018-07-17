@@ -9,6 +9,7 @@ public class RubadubRiverFreezone extends FriendAreaFreezone
 	public RubadubRiverFreezone()
 	{
 		super(28, 38, FreezoneInfo.FRIEND_RUBADUBRIVER);
+		this.freezonebgm = "friendarea-pond.mp3";
 	}
 
 }

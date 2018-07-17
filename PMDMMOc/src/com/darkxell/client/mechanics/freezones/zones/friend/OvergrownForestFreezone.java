@@ -9,6 +9,7 @@ public class OvergrownForestFreezone extends FriendAreaFreezone
 	public OvergrownForestFreezone()
 	{
 		super(29, 36, FreezoneInfo.FRIEND_OVERGROWNFOREST);
+		this.freezonebgm = "friendarea-forest.mp3";
 	}
 
 }

@@ -9,6 +9,7 @@ public class RainbowPeakFreezone extends FriendAreaFreezone
 	public RainbowPeakFreezone()
 	{
 		super(28, 36, FreezoneInfo.FRIEND_RAINBOWPEAK);
+		this.freezonebgm = "friendarea-rainbowpeak.mp3";
 	}
 
 }

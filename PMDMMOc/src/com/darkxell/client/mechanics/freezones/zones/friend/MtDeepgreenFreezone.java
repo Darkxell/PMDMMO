@@ -9,6 +9,7 @@ public class MtDeepgreenFreezone extends FriendAreaFreezone
 	public MtDeepgreenFreezone()
 	{
 		super(31, 39, FreezoneInfo.FRIEND_MTDEEPGREEN);
+		this.freezonebgm = "friendarea-steppe.mp3";
 	}
 
 }

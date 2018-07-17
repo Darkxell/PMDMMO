@@ -9,6 +9,7 @@ public class MtCleftFreezone extends FriendAreaFreezone
 	public MtCleftFreezone()
 	{
 		super(13, 38, FreezoneInfo.FRIEND_MTCLEFT);
+		this.freezonebgm = "friendarea-field.mp3";
 	}
 
 }

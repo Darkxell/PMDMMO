@@ -9,6 +9,7 @@ public class JungleFreezone extends FriendAreaFreezone
 	public JungleFreezone()
 	{
 		super(28, 38, FreezoneInfo.FRIEND_JUNGLE);
+		this.freezonebgm = "friendarea-wilds.mp3";
 	}
 
 }

@@ -9,6 +9,7 @@ public class MysticLakeFreezone extends FriendAreaFreezone
 	public MysticLakeFreezone()
 	{
 		super(29, 38, FreezoneInfo.FRIEND_MYSTICLAKE);
+		this.freezonebgm = "friendarea-oceanic.mp3";
 	}
 
 }

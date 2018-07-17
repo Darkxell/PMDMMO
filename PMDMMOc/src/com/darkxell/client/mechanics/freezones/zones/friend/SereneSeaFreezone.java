@@ -9,6 +9,7 @@ public class SereneSeaFreezone extends FriendAreaFreezone
 	public SereneSeaFreezone()
 	{
 		super(35,40,FreezoneInfo.FRIEND_SERENESEA);
+		this.freezonebgm = "friendarea-oceanic.mp3";
 	}
 
 }

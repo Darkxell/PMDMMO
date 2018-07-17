@@ -9,6 +9,7 @@ public class ThunderMeadowFreezone extends FriendAreaFreezone
 	public ThunderMeadowFreezone()
 	{
 		super(28, 38, FreezoneInfo.FRIEND_THUNDERMEADOW);
+		this.freezonebgm = "friendarea-wilds.mp3";
 	}
 
 }

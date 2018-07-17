@@ -9,6 +9,7 @@ public class SecretiveForestFreezone extends FriendAreaFreezone
 	public SecretiveForestFreezone()
 	{
 		super(27, 35, FreezoneInfo.FRIEND_SECRETIVEFOREST);
+		this.freezonebgm = "friendarea-forest.mp3";
 	}
 
 }

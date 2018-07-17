@@ -9,6 +9,7 @@ public class MushroomForestFreezone extends FriendAreaFreezone
 	public MushroomForestFreezone()
 	{
 		super(28, 38, FreezoneInfo.FRIEND_MUSHROOMFOREST);
+		this.freezonebgm = "friendarea-forest.mp3";
 	}
 
 }

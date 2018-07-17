@@ -9,6 +9,7 @@ public class DragonCaveFreezone extends FriendAreaFreezone
 	public DragonCaveFreezone()
 	{
 		super(28, 36, FreezoneInfo.FRIEND_DRAGONCAVE);
+		this.freezonebgm = "friendarea-caves.mp3";
 	}
 
 }
