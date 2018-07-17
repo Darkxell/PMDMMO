@@ -78,6 +78,18 @@ public class DialogScreen
 		if (this.state == DialogScreenState.PAUSED && (key == Key.ATTACK || key == Key.RUN)) this.requestNextLine();
 	}
 
+	public void onMouseClick(int x, int y)
+	{
+		if (this.parentState().dialogBoxInside().contains(x, y))
+		{
+			if (this.state == DialogScreenState.PRINTING)
+			{
+				this.cursor = this.currentLength();
+				this.state = DialogScreenState.PAUSED;
+			} else if (this.state == DialogScreenState.PAUSED) this.requestNextLine();
+		}
+	}
+
 	public void onStart()
 	{
 		this.cursor = this.offset = this.targetOffset = this.arrowtick = 0;

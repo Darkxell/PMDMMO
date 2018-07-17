@@ -119,6 +119,13 @@ public class DialogState extends AbstractState
 	{}
 
 	@Override
+	public void onMouseClick(int x, int y)
+	{
+		super.onMouseClick(x, y);
+		this.currentScreen().onMouseClick(x, y);
+	}
+
+	@Override
 	public void onStart()
 	{
 		super.onStart();
