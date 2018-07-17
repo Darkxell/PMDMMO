@@ -19,7 +19,6 @@ public class FreezoneCamera {
 	public double y = 0;
 	private FreezonePlayer target;
 	private static final int TILESIZE = 8;
-	private static final int OOBSPEEDMULTI = 3;
 
 	/**
 	 * Creates a new Freezonecamera following the wanted player. (Don't go and
@@ -35,31 +34,42 @@ public class FreezoneCamera {
 	}
 
 	public void update() {
-		if (target == null) return;
-		boolean isFarFromPlayer = x > target.x + 4 || x < target.x - 4 || y > target.y + 4 || y < target.y - 4;
-		double cameraspeed = isFarFromPlayer ? 0.4d : 0.2d;
+		if (target == null)
+			return;
+		boolean isXFarFromPlayer = x > target.x + 4 || x < target.x - 4;
+		boolean isYFarFromPlayer = y > target.y + 4 || y < target.y - 4;
+		double cameraspeed = isXFarFromPlayer ? 0.4d : 0.2d;
 		// X POSITIONING
-		double newx = (x > target.x + 1) ? x - cameraspeed : (x < target.x - 1) ? x + cameraspeed : x;
-		if (isXposOOB(newx)) {
-			if (isXposOOB(x)) {
-				if (x < (renderwidth / 2) / TILESIZE + 0.3)
-					x += cameraspeed * OOBSPEEDMULTI;
-				else
-					x -= cameraspeed * OOBSPEEDMULTI;
-			}
-		} else
-			x = newx;
+		if (Persistance.currentmap.mapWidth * TILESIZE <= renderwidth) {
+			this.x = ((double) Persistance.currentmap.mapWidth) / 2;
+		} else {
+			double newx = (x > target.x + 1) ? x - cameraspeed : (x < target.x - 1) ? x + cameraspeed : x;
+			if (isXposOOB(newx)) {
+				if (isXposOOB(x)) {
+					if (x <= (renderwidth / 2) / TILESIZE + 0.3)
+						x = (renderwidth / 2) / TILESIZE + 0.3;
+					else
+						x = Persistance.currentmap.mapWidth - ((renderwidth / 2) / TILESIZE) - 0.3;
+				}
+			} else
+				x = newx;
+		}
+		cameraspeed = isYFarFromPlayer ? 0.4d : 0.2d;
 		// Y POSITIONING
-		double newy = (y > target.y + 1) ? y - cameraspeed : (y < target.y - 1) ? y + cameraspeed : y;
-		if (isYposOOB(newy)) {
-			if (isYposOOB(y)) {
-				if (y < (renderheight / 2) / TILESIZE + 0.3)
-					y += cameraspeed * OOBSPEEDMULTI;
-				else
-					y -= cameraspeed * OOBSPEEDMULTI;
-			}
-		} else
-			y = newy;
+		if (Persistance.currentmap.mapHeight * TILESIZE <= renderheight) {
+			this.y = ((double) Persistance.currentmap.mapHeight) / 2;
+		} else {
+			double newy = (y > target.y + 1) ? y - cameraspeed : (y < target.y - 1) ? y + cameraspeed : y;
+			if (isYposOOB(newy)) {
+				if (isYposOOB(y)) {
+					if (y <= (renderheight / 2) / TILESIZE + 0.3)
+						y = (renderheight / 2) / TILESIZE + 0.3;
+					else
+						y = Persistance.currentmap.mapHeight - ((renderheight / 2) / TILESIZE) - 0.3;
+				}
+			} else
+				y = newy;
+		}
 	}
 
 	private boolean isXposOOB(double x) {
