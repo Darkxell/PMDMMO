@@ -205,9 +205,11 @@ This payload is sent when the player executes a movement action on an item in fr
 
 This payload is sent when the player interacts with the bank to deposit or withdraw money.
 
-■ STORAGE
+■ STORAGEACTION
 
-{"action":"withdraw|deposit",
+{"action":"storageaction",
+
+"value":"withdraw|deposit",
 
 "items":[45,897,12], // The items to deposit or withdraw.
 
@@ -408,9 +410,9 @@ This payload is sent after a client requests an action on an item to describe ho
 
 This payload is sent when the player interacts with the bank, after database update, sending confirmation and new values to the client.
 
-■ STORAGECONFIRM
+■ STORAGEACTIONCONFIRM
 
-{"action":"storageconfirm",
+{"action":"storageactionconfirm",
 
 "result":"ok|inventoryfull|storagefull" // The result of the storage interaction.
 

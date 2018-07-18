@@ -79,7 +79,7 @@ public class StorageDialog extends ComplexDialog implements ItemSelectionListene
 			if (this.quantity == -1) return ComplexDialogAction.NEW_DIALOG;
 			else return ComplexDialogAction.PAUSE;
 		} else if (previous.currentScreen().id == CONFIRM) return ComplexDialogAction.NEW_DIALOG;
-		if (this.selectedAction == EXIT) return ComplexDialogAction.TERMINATE;
+		else if (previous.currentScreen().id == ACTION && this.selectedAction == EXIT) return ComplexDialogAction.TERMINATE;
 		return ComplexDialogAction.PAUSE;
 	}
 
@@ -127,6 +127,10 @@ public class StorageDialog extends ComplexDialog implements ItemSelectionListene
 				s.setMultipleSelectionListener(this);
 				s.isOpaque = true;
 				Persistance.stateManager.setState(s);
+			} else if (this.selectedAction == WITHDRAW)
+			{
+				Persistance.isCommunicating = true;
+				Persistance.socketendpoint.requestInventory(Persistance.player.getData().storageinventory.id);
 			}
 		}
 	}
@@ -156,7 +160,12 @@ public class StorageDialog extends ComplexDialog implements ItemSelectionListene
 		{
 			Persistance.player.setInventory(i);
 			this.unpause();
-		} else if (i.getData().id == Persistance.player.getData().storageinventory.id) Persistance.player.setStorage(i);
+		} else if (i.getData().id == Persistance.player.getData().storageinventory.id)
+		{
+			Persistance.player.setStorage(i);
+			ItemContainersMenuState s = new ItemContainersMenuState(null, this.background, this, false, i);
+			s.isOpaque = true;
+		}
 	}
 
 	private void onItemsSelected()
@@ -195,7 +204,8 @@ public class StorageDialog extends ComplexDialog implements ItemSelectionListene
 		if (quantity != -1) quantities.set(0, quantity);
 
 		JsonObject root = Json.object();
-		root.set("action", action);
+		root.set("action", "storageaction");
+		root.set("value", action);
 		root.set("items", itemids);
 		root.set("quantities", quantities);
 		System.out.println(root.toString());
