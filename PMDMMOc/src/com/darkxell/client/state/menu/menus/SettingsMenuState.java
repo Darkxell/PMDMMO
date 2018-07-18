@@ -38,7 +38,7 @@ public class SettingsMenuState extends OptionSelectionMenuState
 	protected void onOptionSelected(MenuOption option)
 	{
 		if (option == this.back) this.onExit();
-		else if (option == this.controls) Persistance.stateManager.setState(new ControlsMenuState(this, this.background));
+		else if (option == this.controls) Persistance.stateManager.setState(new ControlsMenuState(this, this.background).setOpaque(this.isOpaque));
 	}
 
 }

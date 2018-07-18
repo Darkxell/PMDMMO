@@ -86,6 +86,12 @@ public abstract class OptionSelectionMenuState extends AbstractMenuState
 		if (this.tabs.size() != 0) this.getMainWindow().render(g, this.currentTab().name, width, height);
 	}
 
+	public OptionSelectionMenuState setOpaque(boolean isOpaque)
+	{
+		this.isOpaque = isOpaque;
+		return this;
+	}
+
 	@Override
 	public void update()
 	{

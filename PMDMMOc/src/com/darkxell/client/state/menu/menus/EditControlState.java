@@ -74,6 +74,12 @@ public class EditControlState extends AbstractState
 		g.draw(this.progressBar);
 	}
 
+	public EditControlState setOpaque(boolean isOpaque)
+	{
+		this.window.isOpaque = isOpaque;
+		return this;
+	}
+
 	@Override
 	public void update()
 	{

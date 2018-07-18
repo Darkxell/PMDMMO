@@ -119,7 +119,7 @@ public class ControlsMenuState extends OptionSelectionMenuState implements Dialo
 	@Override
 	protected void onOptionSelected(MenuOption option)
 	{
-		Persistance.stateManager.setState(new EditControlState(this.background, this, (ControlMenuOption) option));
+		Persistance.stateManager.setState(new EditControlState(this.background, this, (ControlMenuOption) option).setOpaque(this.isOpaque));
 	}
 
 }

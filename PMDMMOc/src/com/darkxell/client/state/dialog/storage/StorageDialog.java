@@ -82,6 +82,8 @@ public class StorageDialog extends ComplexDialog implements ItemSelectionListene
 		{
 			ItemContainersMenuState s = new ItemContainersMenuState(null, this.background, this, false, Persistance.player.inventory());
 			s.setMultipleSelectionListener(this);
+			s.isOpaque = true;
+			return s;
 		}
 		return (AbstractState) this.background;
 	}
