@@ -207,19 +207,11 @@ This payload is sent when the player interacts with the bank to deposit or withd
 
 ■ STORAGE
 
-{"action":"withdrawmany" // Or "depositmany",
+{"action":"withdraw|deposit",
 
-"items":[45,897,12] // The items to deposit or withdraw.
+"items":[45,897,12], // The items to deposit or withdraw.
 
-}
-
-This payload is sent when the player interacts with the storage to deposit or withdraw 1 item of each input id.
-
-{"action":"withdrawone" // Or "depositone",
-
-"item":42, // The item to deposit or withdraw.
-
-"quantity":69 // The quantity to move.
+"quantities":[45,1,1] // The quantities to move for each item.
 
 }
 
