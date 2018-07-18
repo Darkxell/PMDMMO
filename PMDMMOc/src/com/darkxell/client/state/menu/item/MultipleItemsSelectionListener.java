@@ -7,8 +7,7 @@ public interface MultipleItemsSelectionListener
 
 	/** Called when the Items have been selected or the player cancelled.
 	 * 
-	 * @param items - The Items that were selected. null if cancelled.
-	 * @param indexes - The indexes of the Item in the inventory. null if cancelled. */
-	public void itemsSelected(ItemStack[] items, int[] indexes);
+	 * @param items - The Items that were selected. null if cancelled. */
+	public void itemsSelected(ItemStack[] items);
 
 }

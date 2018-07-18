@@ -69,6 +69,7 @@ public class ItemContainersMenuState extends AbstractMenuState
 	public boolean isOpaque;
 	private final ItemSelectionListener listener;
 	private MultipleItemsSelectionListener multipleListener = null;
+	public ArrayList<ItemStack> multipleSelection = new ArrayList<>();
 	private TextWindow multipleWindowInfo;
 	private MenuWindow nameWindow;
 	private final AbstractState parent;
@@ -392,7 +393,8 @@ public class ItemContainersMenuState extends AbstractMenuState
 	protected void onExit()
 	{
 		if (this.listener != null) this.listener.itemSelected(null, -1);
-		Persistance.stateManager.setState(this.parent);
+		else if (this.allowMultipleSelection) this.multipleListener.itemsSelected(null);
+		else Persistance.stateManager.setState(this.parent);
 	}
 
 	@Override
@@ -410,6 +412,11 @@ public class ItemContainersMenuState extends AbstractMenuState
 			{
 				this.onOptionSelected(this.currentOption());
 				SoundManager.playSound("ui-select");
+			} else if (key == Key.ROTATE && this.allowMultipleSelection)
+			{
+				ItemStack i = this.selectedItem();
+				if (this.multipleSelection.contains(i)) this.multipleSelection.remove(i);
+				else this.multipleSelection.add(i);
 			}
 
 			if (key == Key.PAGE_LEFT || key == Key.PAGE_RIGHT)
@@ -477,7 +484,7 @@ public class ItemContainersMenuState extends AbstractMenuState
 		ItemContainer container = this.container();
 		ItemStack i = container.getItem(this.itemIndex());
 
-		if (this.listener == null)
+		if (this.listener == null && !this.allowMultipleSelection)
 		{
 			ArrayList<ItemAction> actions = container.legalItemActions(this.inDungeon);
 			actions.addAll(i.item().getLegalActions(this.inDungeon));
@@ -490,7 +497,17 @@ public class ItemContainersMenuState extends AbstractMenuState
 			ItemAction.sort(actions);
 
 			Persistance.stateManager.setState(new ItemActionSelectionState(this, this, actions).setOpaque(this.isOpaque));
-		} else this.listener.itemSelected(i, this.itemIndex());
+		} else if (this.allowMultipleSelection && (this.multipleSelection.size() > 1 || this.listener == null))
+		{
+			ItemStack[] items = new ItemStack[this.multipleSelection.size()];
+			for (int s = 0; s < items.length; ++s)
+				items[s] = this.multipleSelection.get(s);
+			this.multipleListener.itemsSelected(items);
+		} else
+		{
+			if (this.allowMultipleSelection && this.multipleSelection.size() == 1) i = this.multipleSelection.get(0);
+			this.listener.itemSelected(i, this.itemIndex());
+		}
 	}
 
 	@Override

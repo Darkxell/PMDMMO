@@ -1,5 +1,7 @@
 package com.darkxell.client.state.dialog.storage;
 
+import java.util.Arrays;
+
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.layers.AbstractGraphiclayer;
 import com.darkxell.client.state.AbstractState;
@@ -51,7 +53,7 @@ public class StorageDialog extends ComplexDialog implements ItemSelectionListene
 	}
 
 	@Override
-	public void itemsSelected(ItemStack[] items, int[] indexes)
+	public void itemsSelected(ItemStack[] items)
 	{
 		this.selection = items;
 	}

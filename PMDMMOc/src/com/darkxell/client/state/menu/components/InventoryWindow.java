@@ -69,6 +69,13 @@ public class InventoryWindow extends MenuWindow
 					}
 
 					g.setColor(Palette.TRANSPARENT_GRAY);
+					if (this.state.multipleSelection.contains(item))
+					{
+						g.setColor(Palette.MENU_HOVERED);
+						g.drawRect(X - 2, Y - 2, ITEM_SLOT + 4, ITEM_SLOT + 4);
+						g.drawRect(X - 1, Y - 1, ITEM_SLOT + 2, ITEM_SLOT + 2);
+						g.drawRect(X + 1, Y + 1, ITEM_SLOT - 2, ITEM_SLOT - 2);
+					}
 					g.drawRect(X, Y, ITEM_SLOT, ITEM_SLOT);
 
 					BufferedImage sprite = ItemsSpriteset.instance.sprite(item);
@@ -84,5 +91,4 @@ public class InventoryWindow extends MenuWindow
 			}
 
 	}
-
 }
