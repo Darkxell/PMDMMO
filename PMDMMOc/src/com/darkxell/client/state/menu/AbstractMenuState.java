@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 
 import com.darkxell.client.renderers.TextRenderer;
+import com.darkxell.client.renderers.layers.AbstractGraphiclayer;
 import com.darkxell.client.resources.images.MenuHudSpriteset;
 import com.darkxell.client.resources.music.SoundManager;
 import com.darkxell.client.state.AbstractState;
@@ -88,16 +89,16 @@ public abstract class AbstractMenuState extends AbstractState
 	}
 
 	/** The state to draw behind this menu State. */
-	public final AbstractState backgroundState;
+	public final AbstractGraphiclayer background;
 	protected int selection = 0;
 	/** The currently selected option. */
 	protected int tab = 0;
 	/** The tabs of this Menu. */
 	protected ArrayList<MenuTab> tabs;
 
-	public AbstractMenuState(AbstractState backgroundState)
+	public AbstractMenuState(AbstractGraphiclayer background)
 	{
-		this.backgroundState = backgroundState;
+		this.background = background;
 		this.tabs = new ArrayList<MenuTab>();
 	}
 
@@ -189,7 +190,7 @@ public abstract class AbstractMenuState extends AbstractState
 	@Override
 	public void render(Graphics2D g, int width, int height)
 	{
-		if (this.backgroundState != null) this.backgroundState.render(g, width, height);
+		if (this.background != null) this.background.render(g, width, height);
 	}
 
 	public int tabIndex()
@@ -205,7 +206,7 @@ public abstract class AbstractMenuState extends AbstractState
 	@Override
 	public void update()
 	{
-		if (this.backgroundState != null) this.backgroundState.update();
+		if (this.background != null) this.background.update();
 	}
 
 }

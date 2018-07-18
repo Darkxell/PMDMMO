@@ -90,7 +90,7 @@ public class MovesMenuState extends OptionSelectionMenuState
 	@Override
 	protected void onExit()
 	{
-		Persistance.stateManager.setState(new DungeonMenuState(this.backgroundState));
+		Persistance.stateManager.setState(new DungeonMenuState(this.background));
 	}
 
 	@Override

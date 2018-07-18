@@ -1,16 +1,21 @@
 package com.darkxell.client.state.dialog.storage;
 
+import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.layers.AbstractGraphiclayer;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.dialog.ComplexDialog;
 import com.darkxell.client.state.dialog.DialogScreen;
 import com.darkxell.client.state.dialog.DialogState;
 import com.darkxell.client.state.dialog.OptionDialogScreen;
+import com.darkxell.client.state.menu.item.ItemContainersMenuState;
+import com.darkxell.client.state.menu.item.ItemSelectionListener;
+import com.darkxell.client.state.menu.item.MultipleItemsSelectionListener;
+import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.util.language.Message;
 
-public class StorageDialog extends ComplexDialog
+public class StorageDialog extends ComplexDialog implements ItemSelectionListener, MultipleItemsSelectionListener
 {
 	private static final byte ACTION = 1;
 	@SuppressWarnings("unused")
@@ -38,6 +43,20 @@ public class StorageDialog extends ComplexDialog
 	}
 
 	@Override
+	public void itemSelected(ItemStack item, int index)
+	{
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void itemsSelected(ItemStack[] items, int[] indexes)
+	{
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
 	public ComplexDialogAction nextAction(DialogState previous)
 	{
 		return ComplexDialogAction.TERMINATE;
@@ -59,6 +78,11 @@ public class StorageDialog extends ComplexDialog
 	@Override
 	public AbstractState onFinish(DialogState lastState)
 	{
+		if (this.selectedAction == DEPOSIT)
+		{
+			ItemContainersMenuState s = new ItemContainersMenuState(null, this.background, this, false, Persistance.player.inventory());
+			s.setMultipleSelectionListener(this);
+		}
 		return (AbstractState) this.background;
 	}
 

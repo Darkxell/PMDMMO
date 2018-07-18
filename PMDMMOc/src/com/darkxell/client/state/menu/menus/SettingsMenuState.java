@@ -1,7 +1,7 @@
 package com.darkxell.client.state.menu.menus;
 
 import com.darkxell.client.launchable.Persistance;
-import com.darkxell.client.state.AbstractState;
+import com.darkxell.client.renderers.layers.AbstractGraphiclayer;
 import com.darkxell.client.state.menu.AbstractMenuState;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
 
@@ -11,9 +11,9 @@ public class SettingsMenuState extends OptionSelectionMenuState
 	private MenuOption controls, back;
 	public final AbstractMenuState parent;
 
-	public SettingsMenuState(AbstractMenuState parent, AbstractState backgroundState)
+	public SettingsMenuState(AbstractMenuState parent, AbstractGraphiclayer background)
 	{
-		super(backgroundState);
+		super(background);
 		this.parent = parent;
 
 		this.createOptions();
@@ -38,7 +38,7 @@ public class SettingsMenuState extends OptionSelectionMenuState
 	protected void onOptionSelected(MenuOption option)
 	{
 		if (option == this.back) this.onExit();
-		else if (option == this.controls) Persistance.stateManager.setState(new ControlsMenuState(this, this.backgroundState));
+		else if (option == this.controls) Persistance.stateManager.setState(new ControlsMenuState(this, this.background));
 	}
 
 }

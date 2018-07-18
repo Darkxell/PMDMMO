@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.launchable.messagehandlers.ItemActionHandler.ItemActionMessageHandler;
 import com.darkxell.client.renderers.TextRenderer;
+import com.darkxell.client.renderers.layers.AbstractGraphiclayer;
 import com.darkxell.client.resources.images.MenuHudSpriteset;
 import com.darkxell.client.resources.music.SoundManager;
 import com.darkxell.client.state.AbstractState;
@@ -57,22 +58,24 @@ public class ItemContainersMenuState extends AbstractMenuState
 	public static final int WIDTH = (ITEM_SLOT + LIST_OFFSET) * LIST_ITEM_WIDTH + LIST_OFFSET + MenuWindow.MARGIN_X,
 			HEIGHT = (ITEM_SLOT + LIST_OFFSET) * LIST_ITEM_HEIGHT + LIST_OFFSET + MenuWindow.MARGIN_Y;
 
+	public boolean allowMultipleSelection = false;
 	private int[] containerOffset;
 	private final ItemContainer[] containers;
 	private ItemAction currentAction = null;
 	private final int[] indexOffset;
 	public final boolean inDungeon;
 	private final ItemSelectionListener listener;
+	private MultipleItemsSelectionListener multipleListener = null;
 	private MenuWindow nameWindow;
 	private final AbstractState parent;
 	private InventoryWindow window;
 
-	public ItemContainersMenuState(AbstractState parent, AbstractState background, boolean inDungeon, ItemContainer... containers)
+	public ItemContainersMenuState(AbstractState parent, AbstractGraphiclayer background, boolean inDungeon, ItemContainer... containers)
 	{
 		this(parent, background, null, inDungeon, containers);
 	}
 
-	public ItemContainersMenuState(AbstractState parent, AbstractState background, ItemSelectionListener listener, boolean inDungeon,
+	public ItemContainersMenuState(AbstractState parent, AbstractGraphiclayer background, ItemSelectionListener listener, boolean inDungeon,
 			ItemContainer... containers)
 	{
 		super(background);
@@ -178,7 +181,7 @@ public class ItemContainersMenuState extends AbstractMenuState
 				Persistance.stateManager.setState(nextState);
 			}
 		};
-		Persistance.stateManager.setState(new DialogState(this.backgroundState, listener, new DialogScreen(new Message("item.trash.impossible"))));
+		Persistance.stateManager.setState(new DialogState(this.background, listener, new DialogScreen(new Message("item.trash.impossible"))));
 	}
 
 	private void itemGiveFailureHasItem(long pokemonid)
@@ -201,7 +204,7 @@ public class ItemContainersMenuState extends AbstractMenuState
 					Persistance.stateManager.setState(nextState);
 				}
 			};
-			Persistance.stateManager.setState(new DialogState(this.backgroundState, listener,
+			Persistance.stateManager.setState(new DialogState(this.background, listener,
 					new DialogScreen(new Message("inventory.give.alreadyhasitem").addReplacement("<pokemon>", pokemon.getNickname()))));
 		} else Persistance.stateManager.setState(this);
 	}
@@ -240,7 +243,7 @@ public class ItemContainersMenuState extends AbstractMenuState
 				}
 			};
 
-			Persistance.stateManager.setState(new DialogState(this.backgroundState, listener,
+			Persistance.stateManager.setState(new DialogState(this.background, listener,
 					new DialogScreen(new Message("inventory.give").addReplacement("<item>", item.name()).addReplacement("<pokemon>", pokemon.getNickname()))));
 		} else Persistance.stateManager.setState(this);
 	}
@@ -282,7 +285,7 @@ public class ItemContainersMenuState extends AbstractMenuState
 					Persistance.stateManager.setState(nextState);
 				}
 			};
-			Persistance.stateManager.setState(new DialogState(this.backgroundState, listener,
+			Persistance.stateManager.setState(new DialogState(this.background, listener,
 					new DialogScreen(new Message("inventory.take.hasnoitem").addReplacement("<pokemon>", pokemon.getNickname()))));
 		} else Persistance.stateManager.setState(this);
 	}
@@ -307,7 +310,7 @@ public class ItemContainersMenuState extends AbstractMenuState
 					Persistance.stateManager.setState(nextState);
 				}
 			};
-			Persistance.stateManager.setState(new DialogState(this.backgroundState, listener,
+			Persistance.stateManager.setState(new DialogState(this.background, listener,
 					new DialogScreen(new Message("inventory.take.full").addReplacement("<pokemon>", pokemon.getNickname()))));
 		} else Persistance.stateManager.setState(this);
 	}
@@ -339,7 +342,7 @@ public class ItemContainersMenuState extends AbstractMenuState
 				}
 			};
 
-			Persistance.stateManager.setState(new DialogState(this.backgroundState, listener,
+			Persistance.stateManager.setState(new DialogState(this.background, listener,
 					new DialogScreen(new Message("inventory.taken").addReplacement("<item>", item.name()).addReplacement("<pokemon>", pokemon.getNickname()))));
 		} else Persistance.stateManager.setState(this);
 	}
@@ -370,7 +373,7 @@ public class ItemContainersMenuState extends AbstractMenuState
 			};
 
 			Persistance.stateManager.setState(
-					new DialogState(this.backgroundState, listener, new DialogScreen(new Message("item.trash.success").addReplacement("<item>", item.name()))));
+					new DialogState(this.background, listener, new DialogScreen(new Message("item.trash.success").addReplacement("<item>", item.name()))));
 		} else Persistance.stateManager.setState(this);
 	}
 
@@ -536,14 +539,13 @@ public class ItemContainersMenuState extends AbstractMenuState
 
 				Persistance.socketendpoint.sendMessage(payload.toString());
 			}
-		} else if (action == ItemAction.GIVE) nextState = new TeamMenuState(this, this.backgroundState, this);
+		} else if (action == ItemAction.GIVE) nextState = new TeamMenuState(this, this.background, this);
 		else if (action == ItemAction.PLACE)
 			Persistance.eventProcessor().processEvent(new ItemMovedEvent(Persistance.floor, action, user, container, index, user.tile(), 0));
 		else if (action == ItemAction.SWITCH)
 			Persistance.eventProcessor().processEvent(new ItemSwappedEvent(Persistance.floor, action, user, container, index, user.tile(), 0));
 		else if (action == ItemAction.SWAP) nextState = new ItemContainersMenuState(this, dungeonState, true, Persistance.player.inventory());
-		else if (action == ItemAction.INFO)
-			nextState = new InfoState(this.backgroundState, this, new Message[] { i.item().name() }, new Message[] { i.info() });
+		else if (action == ItemAction.INFO) nextState = new InfoState(this.background, this, new Message[] { i.item().name() }, new Message[] { i.info() });
 
 		if (nextState == this) this.reloadContainers();
 		else if (nextState != null) Persistance.stateManager.setState(nextState);
@@ -558,8 +560,8 @@ public class ItemContainersMenuState extends AbstractMenuState
 			if (!containers.contains(c)) containers.add(c);
 			if (c.size() != 0) found = true;
 		}
-		if (found) Persistance.stateManager.setState(
-				new ItemContainersMenuState(this.parent, this.backgroundState, this.inDungeon, containers.toArray(new ItemContainer[containers.size()])));
+		if (found) Persistance.stateManager
+				.setState(new ItemContainersMenuState(this.parent, this.background, this.inDungeon, containers.toArray(new ItemContainer[containers.size()])));
 		else Persistance.stateManager.setState(this.parent);
 	}
 
@@ -583,6 +585,12 @@ public class ItemContainersMenuState extends AbstractMenuState
 	public ItemStack selectedItem()
 	{
 		return ((MenuItemOption) this.tabs.get(this.tabIndex()).options()[this.itemIndex()]).item;
+	}
+
+	public void setMultipleSelectionListener(MultipleItemsSelectionListener listener)
+	{
+		this.allowMultipleSelection = true;
+		this.multipleListener = listener;
 	}
 
 	@Override

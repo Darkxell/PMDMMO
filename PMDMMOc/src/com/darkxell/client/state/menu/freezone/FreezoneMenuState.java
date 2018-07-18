@@ -39,7 +39,7 @@ public class FreezoneMenuState extends OptionSelectionMenuState
 	@Override
 	protected void onExit()
 	{
-		Persistance.stateManager.setState(this.backgroundState);
+		Persistance.stateManager.setState((AbstractState) this.background);
 	}
 
 	@Override
@@ -71,10 +71,10 @@ public class FreezoneMenuState extends OptionSelectionMenuState
 						Persistance.stateManager.setState(thismenu);
 					}
 				};
-				Persistance.stateManager.setState(new DialogState(this.backgroundState, listener, new DialogScreen(new Message("inventory.empty"))));
+				Persistance.stateManager.setState(new DialogState(this.background, listener, new DialogScreen(new Message("inventory.empty"))));
 			} else Persistance.stateManager
-					.setState(new ItemContainersMenuState(this, this.backgroundState, false, containers.toArray(new ItemContainer[containers.size()])));
-		} else if (option == this.team) Persistance.stateManager.setState(new TeamMenuState(this, this.backgroundState));
-		else if (option == this.settings) Persistance.stateManager.setState(new SettingsMenuState(this, this.backgroundState));
+					.setState(new ItemContainersMenuState(this, this.background, false, containers.toArray(new ItemContainer[containers.size()])));
+		} else if (option == this.team) Persistance.stateManager.setState(new TeamMenuState(this, this.background));
+		else if (option == this.settings) Persistance.stateManager.setState(new SettingsMenuState(this, this.background));
 	}
 }

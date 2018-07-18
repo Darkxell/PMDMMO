@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.TextRenderer;
+import com.darkxell.client.renderers.layers.AbstractGraphiclayer;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.dungeon.DungeonState;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
@@ -21,7 +22,7 @@ public class DungeonMenuState extends OptionSelectionMenuState
 
 	private MenuOption moves, items, team, settings, ground;
 
-	public DungeonMenuState(AbstractState background)
+	public DungeonMenuState(AbstractGraphiclayer background)
 	{
 		super(background);
 		this.createOptions();
@@ -75,7 +76,7 @@ public class DungeonMenuState extends OptionSelectionMenuState
 	@Override
 	protected void onExit()
 	{
-		Persistance.stateManager.setState(this.backgroundState);
+		Persistance.stateManager.setState((AbstractState) this.background);
 	}
 
 	@Override
@@ -85,7 +86,7 @@ public class DungeonMenuState extends OptionSelectionMenuState
 		if (option == this.moves) Persistance.stateManager.setState(new MovesMenuState(s, Persistance.player.getTeam()));
 		else if (option == this.items)
 		{} else if (option == this.team) Persistance.stateManager.setState(this.createPartyState());
-		else if (option == this.settings) Persistance.stateManager.setState(new SettingsMenuState(this, this.backgroundState));
+		else if (option == this.settings) Persistance.stateManager.setState(new SettingsMenuState(this, this.background));
 		else if (option == this.ground)
 		{
 			this.onExit();

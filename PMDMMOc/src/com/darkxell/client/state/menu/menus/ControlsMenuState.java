@@ -3,7 +3,7 @@ package com.darkxell.client.state.menu.menus;
 import java.awt.Rectangle;
 
 import com.darkxell.client.launchable.Persistance;
-import com.darkxell.client.state.AbstractState;
+import com.darkxell.client.renderers.layers.AbstractGraphiclayer;
 import com.darkxell.client.state.dialog.DialogState;
 import com.darkxell.client.state.dialog.DialogState.DialogEndListener;
 import com.darkxell.client.state.dialog.OptionDialogScreen;
@@ -44,9 +44,9 @@ public class ControlsMenuState extends OptionSelectionMenuState implements Dialo
 
 	public final AbstractMenuState parent;
 
-	public ControlsMenuState(AbstractMenuState parent, AbstractState backgroundState)
+	public ControlsMenuState(AbstractMenuState parent, AbstractGraphiclayer background)
 	{
-		super(backgroundState);
+		super(background);
 		this.parent = parent;
 
 		this.createOptions();
@@ -105,7 +105,7 @@ public class ControlsMenuState extends OptionSelectionMenuState implements Dialo
 	{
 		OptionDialogScreen confirm = new OptionDialogScreen(new Message("key.save"), new Message("ui.yes"), new Message("ui.no"), new Message("ui.cancel"));
 		confirm.id = 1;
-		DialogState dialog = new DialogState(this.backgroundState, this, confirm);
+		DialogState dialog = new DialogState(this.background, this, confirm);
 		dialog.setOpaque(this.isOpaque);
 		Persistance.stateManager.setState(dialog);
 	}
@@ -119,7 +119,7 @@ public class ControlsMenuState extends OptionSelectionMenuState implements Dialo
 	@Override
 	protected void onOptionSelected(MenuOption option)
 	{
-		Persistance.stateManager.setState(new EditControlState(this.backgroundState, this, (ControlMenuOption) option));
+		Persistance.stateManager.setState(new EditControlState(this.background, this, (ControlMenuOption) option));
 	}
 
 }

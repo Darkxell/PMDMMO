@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.renderers.layers.AbstractGraphiclayer;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.menu.components.TextWindow;
 import com.darkxell.client.ui.Keys.Key;
@@ -45,7 +46,7 @@ public class InfoState extends AbstractMenuState
 	private int tab;
 	protected TextWindow window;
 
-	public InfoState(AbstractState background, AbstractState parent, Message[] titles, Message[] infos)
+	public InfoState(AbstractGraphiclayer background, AbstractState parent, Message[] titles, Message[] infos)
 	{
 		super(background);
 		this.parent = parent;
