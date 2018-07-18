@@ -13,6 +13,7 @@ import com.darkxell.common.trap.TrapRegistry;
 import com.darkxell.common.util.Logger;
 import com.darkxell.gameserver.messagehandlers.BankactionHandler;
 import com.darkxell.gameserver.messagehandlers.CreateAccountHandler;
+import com.darkxell.gameserver.messagehandlers.DepositmanyHandler;
 import com.darkxell.gameserver.messagehandlers.DungeonendHandler;
 import com.darkxell.gameserver.messagehandlers.DungeonstartHandler;
 import java.io.StringReader;
@@ -38,6 +39,7 @@ import com.darkxell.gameserver.messagehandlers.PublicKeyRequestHandler;
 import com.darkxell.gameserver.messagehandlers.SaltResetHandler;
 import com.darkxell.gameserver.messagehandlers.SetEncryptionKeyHandler;
 import com.darkxell.gameserver.messagehandlers.TestResultHandler;
+import com.darkxell.gameserver.messagehandlers.WithdrawmanyHandler;
 import com.darkxell.model.ejb.Holdeditem_DAO;
 import com.darkxell.model.ejb.InventoryDAO;
 import com.darkxell.model.ejb.Inventorycontains_DAO;
@@ -299,6 +301,22 @@ public class GameServer {
                             return;
                         }
                         BankactionHandler hand = new BankactionHandler(this);
+                        hand.handleMessage(jsonMessage, session, sessionHandler);
+                        break;
+                    }
+                    case "withdrawmany": {
+                        if (!infos.isconnected) {
+                            return;
+                        }
+                        WithdrawmanyHandler hand = new WithdrawmanyHandler(this);
+                        hand.handleMessage(jsonMessage, session, sessionHandler);
+                        break;
+                    }
+                    case "depositmany": {
+                        if (!infos.isconnected) {
+                            return;
+                        }
+                        DepositmanyHandler hand = new DepositmanyHandler(this);
                         hand.handleMessage(jsonMessage, session, sessionHandler);
                         break;
                     }
