@@ -5,6 +5,7 @@ import static com.darkxell.client.resources.images.tilesets.ItemsSpriteset.ITEM_
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import com.darkxell.client.launchable.Persistance;
@@ -22,6 +23,7 @@ import com.darkxell.client.state.menu.AbstractMenuState;
 import com.darkxell.client.state.menu.InfoState;
 import com.darkxell.client.state.menu.components.InventoryWindow;
 import com.darkxell.client.state.menu.components.MenuWindow;
+import com.darkxell.client.state.menu.components.TextWindow;
 import com.darkxell.client.state.menu.menus.TeamMenuState;
 import com.darkxell.client.state.menu.menus.TeamMenuState.TeamMemberSelectionListener;
 import com.darkxell.client.ui.Keys.Key;
@@ -67,6 +69,7 @@ public class ItemContainersMenuState extends AbstractMenuState
 	public boolean isOpaque;
 	private final ItemSelectionListener listener;
 	private MultipleItemsSelectionListener multipleListener = null;
+	private TextWindow multipleWindowInfo;
 	private MenuWindow nameWindow;
 	private final AbstractState parent;
 	private InventoryWindow window;
@@ -382,12 +385,13 @@ public class ItemContainersMenuState extends AbstractMenuState
 	protected Rectangle mainWindowDimensions()
 	{
 		Rectangle superRect = super.mainWindowDimensions();
-		return new Rectangle(superRect.x, superRect.y, WIDTH, HEIGHT);
+		return new Rectangle(superRect.x, superRect.y - (this.allowMultipleSelection ? 8 : 0), WIDTH, HEIGHT);
 	}
 
 	@Override
 	protected void onExit()
 	{
+		if (this.listener != null) this.listener.itemSelected(null, -1);
 		Persistance.stateManager.setState(this.parent);
 	}
 
@@ -580,9 +584,17 @@ public class ItemContainersMenuState extends AbstractMenuState
 			this.window.isOpaque = this.isOpaque;
 		}
 		if (this.nameWindow == null) this.updateNameWindow();
+		if (this.allowMultipleSelection && this.multipleWindowInfo == null)
+		{
+			Rectangle r = this.window.dimensions;
+			this.multipleWindowInfo = new TextWindow(new Rectangle(r.x, (int) (r.getMaxY() + 5), r.width, TextRenderer.height() + 30),
+					new Message("inventory.multiple.info").addReplacement("<key-rotate>", KeyEvent.getKeyText(Key.ROTATE.keyValue())), false);
+			this.multipleWindowInfo.isOpaque = this.isOpaque;
+		}
 
 		this.window.render(g, this.currentTab().name, width, height);
 		this.nameWindow.render(g, null, width, height);
+		if (this.allowMultipleSelection) this.multipleWindowInfo.render(g, null, width, height);
 
 		Message name = ((MenuItemOption) this.currentOption()).item.name();
 		Rectangle inside = this.nameWindow.inside();

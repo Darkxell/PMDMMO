@@ -65,7 +65,7 @@ public class InventoryWindow extends MenuWindow
 					if (index == this.state.optionIndex())
 					{
 						g.setColor(Palette.MENU_HOVERED);
-						g.fillRect(X, Y, ITEM_SLOT, ITEM_SLOT);
+						g.fillRect(X + 1, Y + 1, ITEM_SLOT - 1, ITEM_SLOT - 1);
 					}
 
 					g.setColor(Palette.TRANSPARENT_GRAY);

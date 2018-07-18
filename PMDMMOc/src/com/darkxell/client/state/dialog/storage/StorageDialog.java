@@ -21,7 +21,9 @@ public class StorageDialog extends ComplexDialog implements ItemSelectionListene
 	@SuppressWarnings("unused")
 	private static final int DEPOSIT = 0, WITHDRAW = 1, EXIT = 2;
 
+	private int quantity;
 	private int selectedAction;
+	private ItemStack[] selection;
 	private PokemonSpecies shopkeeper;
 
 	public StorageDialog(AbstractGraphiclayer background)
@@ -45,15 +47,13 @@ public class StorageDialog extends ComplexDialog implements ItemSelectionListene
 	@Override
 	public void itemSelected(ItemStack item, int index)
 	{
-		// TODO Auto-generated method stub
-
+		this.selection = new ItemStack[] { item };
 	}
 
 	@Override
 	public void itemsSelected(ItemStack[] items, int[] indexes)
 	{
-		// TODO Auto-generated method stub
-
+		this.selection = items;
 	}
 
 	@Override
