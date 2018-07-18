@@ -25,7 +25,7 @@ import com.eclipsesource.json.JsonObject;
 
 public class StorageDialog extends ComplexDialog implements ItemSelectionListener, MultipleItemsSelectionListener, IntegerSelectionListener
 {
-	private static final byte ACTION = 1, QUANTITY = 2, CONFIRM = 3;
+	private static final byte ACTION = 1, QUANTITY = 2, CONFIRM = 3, INVENTORYEMPTY = 4, STORAGEEMPTY = 5;
 	private static final int DEPOSIT = 0, WITHDRAW = 1, EXIT = 2;
 
 	private byte dialogToShow;
@@ -44,6 +44,7 @@ public class StorageDialog extends ComplexDialog implements ItemSelectionListene
 
 	private DialogState actionSelection(boolean isFirst)
 	{
+		this.quantity = -1;
 		return this
 				.newDialog(new OptionDialogScreen(this.shopkeeper, new Message("dialog.storage." + (isFirst ? "intro" : "intro2")),
 						new Message("dialog.storage.deposit"), new Message("dialog.storage.withdraw"), new Message("dialog.storage.exit")).setID(ACTION))
@@ -79,7 +80,19 @@ public class StorageDialog extends ComplexDialog implements ItemSelectionListene
 			if (this.quantity == -1) return ComplexDialogAction.NEW_DIALOG;
 			else return ComplexDialogAction.PAUSE;
 		} else if (previous.currentScreen().id == CONFIRM) return ComplexDialogAction.NEW_DIALOG;
-		else if (previous.currentScreen().id == ACTION && this.selectedAction == EXIT) return ComplexDialogAction.TERMINATE;
+		else if (previous.currentScreen().id == ACTION)
+		{
+			if (this.selectedAction == EXIT) return ComplexDialogAction.TERMINATE;
+			else if (this.selectedAction == DEPOSIT)
+			{
+				Inventory i = Persistance.player.inventory();
+				if (i.size() == 0)
+				{
+					this.dialogToShow = INVENTORYEMPTY;
+					return ComplexDialogAction.NEW_DIALOG;
+				}
+			}
+		} else if (previous.currentScreen().id == INVENTORYEMPTY || previous.currentScreen().id == STORAGEEMPTY) return ComplexDialogAction.NEW_DIALOG;
 		return ComplexDialogAction.PAUSE;
 	}
 
@@ -97,6 +110,14 @@ public class StorageDialog extends ComplexDialog implements ItemSelectionListene
 			String message = "dialog.storage." + this.result;
 			if (this.result.equals("ok")) message += "." + (this.selectedAction == WITHDRAW ? "withdraw" : "deposit");
 			return this.newDialog(new PokemonDialogScreen(this.shopkeeper, new Message(message)).setID(CONFIRM)).setOpaque(true);
+		} else if (this.dialogToShow == INVENTORYEMPTY)
+		{
+			this.dialogToShow = 0;
+			return this.newDialog(new PokemonDialogScreen(this.shopkeeper, new Message("dialog.storage.inventoryempty")).setID(INVENTORYEMPTY)).setOpaque(true);
+		} else if (this.dialogToShow == STORAGEEMPTY)
+		{
+			this.dialogToShow = 0;
+			return this.newDialog(new PokemonDialogScreen(this.shopkeeper, new Message("dialog.storage.storageempty")).setID(INVENTORYEMPTY)).setOpaque(true);
 		}
 		return this.actionSelection(false);
 	}
@@ -123,7 +144,9 @@ public class StorageDialog extends ComplexDialog implements ItemSelectionListene
 			this.selectedAction = ((OptionDialogScreen) screen).chosenIndex();
 			if (this.selectedAction == DEPOSIT)
 			{
-				ItemContainersMenuState s = new ItemContainersMenuState(dialog, this.background, this, false, Persistance.player.inventory());
+				Inventory i = Persistance.player.inventory();
+				if (i.size() == 0) return;
+				ItemContainersMenuState s = new ItemContainersMenuState(dialog, this.background, this, false, i);
 				s.setMultipleSelectionListener(this);
 				s.isOpaque = true;
 				Persistance.stateManager.setState(s);
@@ -162,14 +185,24 @@ public class StorageDialog extends ComplexDialog implements ItemSelectionListene
 			this.unpause();
 		} else if (i.getData().id == Persistance.player.getData().storageinventory.id)
 		{
-			Persistance.player.setStorage(i);
-			ItemContainersMenuState s = new ItemContainersMenuState(null, this.background, this, false, i);
-			s.isOpaque = true;
+			if (i.size() == 0)
+			{
+				this.dialogToShow = STORAGEEMPTY;
+				this.unpause();
+			} else
+			{
+				Persistance.player.setStorage(i);
+				ItemContainersMenuState s = new ItemContainersMenuState(null, this.background, this, false, i);
+				s.isOpaque = true;
+				s.setMultipleSelectionListener(this); // TODO Limit selection size
+				Persistance.stateManager.setState(s);
+			}
 		}
 	}
 
 	private void onItemsSelected()
 	{
+		this.quantity = 1;
 		if (this.selection == null)
 		{
 			this.unpause();
@@ -181,15 +214,12 @@ public class StorageDialog extends ComplexDialog implements ItemSelectionListene
 			this.max = i.quantity();
 			if (this.selectedAction == WITHDRAW)
 				this.max = Math.max(this.max, Persistance.player.inventory().maxSize() - Persistance.player.inventory().size());
-			if ((i.item().isStackable || this.selectedAction == WITHDRAW) && max != 1)
+			if ((i.item().isStackable || this.selectedAction == WITHDRAW) && this.max != 1)
 			{
 				this.dialogToShow = QUANTITY;
 				this.unpause();
-			}
-		} else
-		{
-			this.sendRequest(this.selectedAction == WITHDRAW ? "withdrawmany" : "depositmany", this.selection, this.quantity);
-		}
+			} else this.sendRequest(this.selectedAction == WITHDRAW ? "withdraw" : "deposit", this.selection, this.quantity);
+		} else this.sendRequest(this.selectedAction == WITHDRAW ? "withdraw" : "deposit", this.selection, this.quantity);
 	}
 
 	private void sendRequest(String action, ItemStack[] selection, long quantity)
