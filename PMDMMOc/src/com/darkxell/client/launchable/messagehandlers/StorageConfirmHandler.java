@@ -10,7 +10,8 @@ public class StorageConfirmHandler extends MessageHandler
 	@Override
 	public void handleMessage(JsonObject message)
 	{
-		if (Persistance.currentDialog instanceof StorageDialog) ((StorageDialog) Persistance.currentDialog).onConfirmReceived(message);
+		if (Persistance.currentDialog != null && Persistance.currentDialog instanceof StorageDialog)
+			((StorageDialog) Persistance.currentDialog).onConfirmReceived(message);
 	}
 
 }

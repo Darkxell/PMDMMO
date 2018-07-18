@@ -3,6 +3,7 @@ package com.darkxell.client.launchable.messagehandlers;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.PlayerLoadingState;
+import com.darkxell.client.state.dialog.storage.StorageDialog;
 import com.darkxell.common.dbobject.DBInventory;
 import com.darkxell.common.dbobject.DBItemstack;
 import com.darkxell.common.item.ItemStack;
@@ -38,6 +39,8 @@ public class InventoryRequestHandler extends MessageHandler
 	{
 		AbstractState state = Persistance.stateManager.getCurrentState();
 		if (state != null && state instanceof PlayerLoadingState) ((PlayerLoadingState) state).onInventoryReceived(message);
+		else if (Persistance.currentDialog != null && Persistance.currentDialog instanceof StorageDialog)
+			((StorageDialog) Persistance.currentDialog).onInventoryReceived(message);
 	}
 
 }

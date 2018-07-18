@@ -37,7 +37,7 @@ public class ItemStack implements Comparable<ItemStack>, HasID
 		this(itemid, 1);
 	}
 
-	public ItemStack(int itemid, int quantity)
+	public ItemStack(int itemid, long quantity)
 	{
 		this(new DBItemstack(-1, itemid, quantity));
 	}

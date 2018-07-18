@@ -1,6 +1,7 @@
 package com.darkxell.client.state.dialog.storage;
 
 import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.messagehandlers.InventoryRequestHandler;
 import com.darkxell.client.renderers.layers.AbstractGraphiclayer;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.dialog.ComplexDialog;
@@ -14,6 +15,7 @@ import com.darkxell.client.state.menu.item.ItemContainersMenuState;
 import com.darkxell.client.state.menu.item.ItemSelectionListener;
 import com.darkxell.client.state.menu.item.MultipleItemsSelectionListener;
 import com.darkxell.common.item.ItemStack;
+import com.darkxell.common.player.Inventory;
 import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.util.language.Message;
@@ -28,7 +30,7 @@ public class StorageDialog extends ComplexDialog implements ItemSelectionListene
 
 	private byte dialogToShow;
 	private long max;
-	private long quantity;
+	private long quantity = -1;
 	private String result;
 	private int selectedAction;
 	private ItemStack[] selection;
@@ -103,7 +105,12 @@ public class StorageDialog extends ComplexDialog implements ItemSelectionListene
 	{
 		this.result = message.getString("result", null);
 		this.dialogToShow = CONFIRM;
-		this.unpause();
+		if (this.result.equals("ok")) Persistance.socketendpoint.requestInventory(Persistance.player.getData().toolboxinventory.id);
+		else
+		{
+			Persistance.isCommunicating = false;
+			this.unpause();
+		}
 	}
 
 	@Override
@@ -137,8 +144,19 @@ public class StorageDialog extends ComplexDialog implements ItemSelectionListene
 		else
 		{
 			this.quantity = selection;
-			this.sendRequestOne(this.selectedAction == WITHDRAW ? "withdrawone" : "depositone", this.selection[0], this.quantity);
+			this.sendRequest(this.selectedAction == WITHDRAW ? "withdrawone" : "depositone", this.selection, this.quantity);
 		}
+	}
+
+	public void onInventoryReceived(JsonObject message)
+	{
+		Persistance.isCommunicating = false;
+		Inventory i = InventoryRequestHandler.readInventory(message);
+		if (i.getData().id == Persistance.player.getData().toolboxinventory.id)
+		{
+			Persistance.player.setInventory(i);
+			this.unpause();
+		} else if (i.getData().id == Persistance.player.getData().storageinventory.id) Persistance.player.setStorage(i);
 	}
 
 	private void onItemsSelected()
@@ -161,30 +179,25 @@ public class StorageDialog extends ComplexDialog implements ItemSelectionListene
 			}
 		} else
 		{
-			this.sendRequestMany(this.selectedAction == WITHDRAW ? "withdrawmany" : "depositmany", this.selection);
+			this.sendRequest(this.selectedAction == WITHDRAW ? "withdrawmany" : "depositmany", this.selection, this.quantity);
 		}
 	}
 
-	private void sendRequestMany(String action, ItemStack[] selection)
+	private void sendRequest(String action, ItemStack[] selection, long quantity)
 	{
 		JsonArray itemids = new JsonArray();
 		for (ItemStack stack : selection)
 			itemids.add(stack.id());
 
+		JsonArray quantities = new JsonArray();
+		for (int i = 0; i < selection.length; ++i)
+			quantities.add(1);
+		if (quantity != -1) quantities.set(0, quantity);
+
 		JsonObject root = Json.object();
 		root.set("action", action);
 		root.set("items", itemids);
-		System.out.println(root.toString());
-		Persistance.socketendpoint.sendMessage(root.toString());
-		Persistance.isCommunicating = true;
-	}
-
-	private void sendRequestOne(String action, ItemStack item, long quantity)
-	{
-		JsonObject root = Json.object();
-		root.set("action", action);
-		root.set("item", item.id());
-		root.set("quantity", quantity);
+		root.set("quantities", quantities);
 		System.out.println(root.toString());
 		Persistance.socketendpoint.sendMessage(root.toString());
 		Persistance.isCommunicating = true;

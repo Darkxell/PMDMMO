@@ -412,7 +412,7 @@ This payload is sent when the player interacts with the bank, after database upd
 
 {"action":"storageconfirm",
 
-"result":"ok|inventoryfull|storagefull|syncerror" // The result of the storage interaction.
+"result":"ok|inventoryfull|storagefull" // The result of the storage interaction.
 
 }
 

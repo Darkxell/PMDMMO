@@ -21,6 +21,9 @@ public class Player
 
 	public HashMap<Long, Pokemon> pokemonInZones;
 
+	/** This Player's storage. */
+	private Inventory storage;
+
 	public Player(DBPlayer data)
 	{
 		this.setData(data);
@@ -207,9 +210,19 @@ public class Player
 		this.data.moneyinbank = moneyInBank;
 	}
 
+	public void setStorage(Inventory storage)
+	{
+		this.storage = storage;
+	}
+
 	public void setStoryPosition(int storyPosition)
 	{
 		this.data.storyposition = storyPosition;
+	}
+
+	public Inventory storage()
+	{
+		return this.storage;
 	}
 
 	public int storyPosition()
