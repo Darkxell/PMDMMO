@@ -23,12 +23,13 @@ import com.eclipsesource.json.JsonObject;
 
 public class StorageDialog extends ComplexDialog implements ItemSelectionListener, MultipleItemsSelectionListener, IntegerSelectionListener
 {
-	private static final byte ACTION = 1, QUANTITY = 2;
+	private static final byte ACTION = 1, QUANTITY = 2, CONFIRM = 3;
 	private static final int DEPOSIT = 0, WITHDRAW = 1, EXIT = 2;
 
 	private byte dialogToShow;
 	private long max;
 	private long quantity;
+	private String result;
 	private int selectedAction;
 	private ItemStack[] selection;
 	private PokemonSpecies shopkeeper;
@@ -75,7 +76,7 @@ public class StorageDialog extends ComplexDialog implements ItemSelectionListene
 			this.dialogToShow = 0;
 			if (this.quantity == -1) return ComplexDialogAction.NEW_DIALOG;
 			else return ComplexDialogAction.PAUSE;
-		}
+		} else if (previous.currentScreen().id == CONFIRM) return ComplexDialogAction.NEW_DIALOG;
 		if (this.selectedAction == EXIT) return ComplexDialogAction.TERMINATE;
 		return ComplexDialogAction.PAUSE;
 	}
@@ -88,7 +89,21 @@ public class StorageDialog extends ComplexDialog implements ItemSelectionListene
 					.newDialog(new PokemonDialogScreen(this.shopkeeper,
 							new Message("dialog.storage.howmany." + (this.selectedAction == WITHDRAW ? "withdraw" : "deposit"))).setID(QUANTITY))
 					.setOpaque(true);
+		else if (this.dialogToShow == CONFIRM)
+		{
+			this.dialogToShow = 0;
+			String message = "dialog.storage." + this.result;
+			if (this.result.equals("ok")) message += "." + (this.selectedAction == WITHDRAW ? "withdraw" : "deposit");
+			return this.newDialog(new PokemonDialogScreen(this.shopkeeper, new Message(message)).setID(CONFIRM)).setOpaque(true);
+		}
 		return this.actionSelection(false);
+	}
+
+	public void onConfirmReceived(JsonObject message)
+	{
+		this.result = message.getString("result", null);
+		this.dialogToShow = CONFIRM;
+		this.unpause();
 	}
 
 	@Override
