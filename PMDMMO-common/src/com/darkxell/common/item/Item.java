@@ -9,6 +9,7 @@ import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.item.ItemSelectionEvent;
 import com.darkxell.common.move.Move;
+import com.darkxell.common.pokemon.BaseStats.Stat;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.XMLUtils;
 import com.darkxell.common.util.language.Message;
@@ -128,36 +129,20 @@ public class Item
 		this.isStackable = stackable;
 	}
 
-	/** Called when a Pokémon uses a damaging move. Modifies the attack stat.
+	/** Called when a Pokémon uses a damaging move. Modifies the stat value.
 	 * 
 	 * @param isUser - true if this Item is held by Move's user. */
-	public int applyAttackModifications(int attack, Move move, DungeonPokemon user, DungeonPokemon target, boolean isUser, Floor floor)
+	public int applyStatModifications(Stat stat, int value, Move move, DungeonPokemon user, DungeonPokemon target, boolean isUser, Floor floor)
 	{
-		return attack;
+		return value;
 	}
 
-	/** Called when a Pokémon uses a damaging move. Modifies the attack stat stage.
+	/** Called when a Pokémon uses a damaging move. Modifies the stat stage.
 	 * 
 	 * @param isUser - true if this Item is held by the Move's user. */
-	public int applyAttackStageModifications(int atkStage, Move move, DungeonPokemon user, DungeonPokemon target, boolean isUser, Floor floor)
+	public int applyStatStageModifications(Stat stat, int stage, Move move, DungeonPokemon user, DungeonPokemon target, boolean isUser, Floor floor)
 	{
-		return atkStage;
-	}
-
-	/** Called when a Pokémon uses a damaging move. Modifies the defense stat.
-	 * 
-	 * @param isUser - true if this Ability belongs to the Move's user. */
-	public int applyDefenseModifications(int defense, Move move, DungeonPokemon user, DungeonPokemon target, boolean isUser, Floor floor)
-	{
-		return defense;
-	}
-
-	/** Called when a Pokémon uses a damaging move. Modifies the defense stat stage.
-	 * 
-	 * @param isUser - true if this Ability belongs to the Move's user. */
-	public int applyDefenseStageModifications(int defStage, Move move, DungeonPokemon user, DungeonPokemon target, boolean isUser, Floor floor)
-	{
-		return defStage;
+		return stage;
 	}
 
 	public ItemCategory category()

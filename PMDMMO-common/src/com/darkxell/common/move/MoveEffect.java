@@ -31,55 +31,35 @@ public class MoveEffect
 		MoveEffects.effects.put(this.id, this);
 	}
 
-	protected int applyAttackModifications(int attack, Move move, DungeonPokemon user, DungeonPokemon target, Floor floor)
+	protected int applyStatModifications(Stat stat, int value, Move move, DungeonPokemon user, DungeonPokemon target, Floor floor)
 	{
-		attack = user.usedPokemon.ability().applyAttackModifications(attack, move, user, target, true, floor);
-		attack = target.usedPokemon.ability().applyAttackModifications(attack, move, user, target, false, floor);
-		if (user.usedPokemon.item() != null) attack = user.usedPokemon.item().item().applyAttackModifications(attack, move, user, target, true, floor);
-		if (target.usedPokemon.item() != null) attack = target.usedPokemon.item().item().applyAttackModifications(attack, move, user, target, false, floor);
-		return attack;
+		value = user.usedPokemon.ability().applyStatModifications(stat, value, move, user, target, true, floor);
+		value = target.usedPokemon.ability().applyStatModifications(stat, value, move, user, target, false, floor);
+		if (user.usedPokemon.item() != null) value = user.usedPokemon.item().item().applyStatModifications(stat, value, move, user, target, true, floor);
+		if (target.usedPokemon.item() != null) value = target.usedPokemon.item().item().applyStatModifications(stat, value, move, user, target, false, floor);
+		return value;
 	}
 
-	protected int applyAttackStageModifications(int atkStage, Move move, DungeonPokemon user, DungeonPokemon target, Floor floor)
+	protected int applyStatStageModifications(Stat stat, int stage, Move move, DungeonPokemon user, DungeonPokemon target, Floor floor)
 	{
-		atkStage = user.usedPokemon.ability().applyAttackStageModifications(atkStage, move, user, target, true, floor);
-		atkStage = target.usedPokemon.ability().applyAttackStageModifications(atkStage, move, user, target, false, floor);
-		if (user.usedPokemon.item() != null) atkStage = user.usedPokemon.item().item().applyAttackStageModifications(atkStage, move, user, target, true, floor);
+		stage = user.usedPokemon.ability().applyStatStageModifications(stat, stage, move, user, target, true, floor);
+		stage = target.usedPokemon.ability().applyStatStageModifications(stat, stage, move, user, target, false, floor);
+		if (user.usedPokemon.item() != null) stage = user.usedPokemon.item().item().applyStatStageModifications(stat, stage, move, user, target, true, floor);
 		if (target.usedPokemon.item() != null)
-			atkStage = target.usedPokemon.item().item().applyAttackStageModifications(atkStage, move, user, target, false, floor);
-		return atkStage;
-	}
-
-	protected int applyDefenseModifications(int defense, Move move, DungeonPokemon user, DungeonPokemon target, Floor floor)
-	{
-		defense = user.usedPokemon.ability().applyDefenseModifications(defense, move, user, target, true, floor);
-		defense = target.usedPokemon.ability().applyDefenseModifications(defense, move, user, target, false, floor);
-		if (user.usedPokemon.item() != null) defense = user.usedPokemon.item().item().applyDefenseModifications(defense, move, user, target, true, floor);
-		if (target.usedPokemon.item() != null) defense = target.usedPokemon.item().item().applyDefenseModifications(defense, move, user, target, false, floor);
-		return defense;
-	}
-
-	protected int applyDefenseStageModifications(int defStage, Move move, DungeonPokemon user, DungeonPokemon target, Floor floor)
-	{
-		defStage = user.usedPokemon.ability().applyDefenseStageModifications(defStage, move, user, target, true, floor);
-		defStage = target.usedPokemon.ability().applyDefenseStageModifications(defStage, move, user, target, false, floor);
-		if (user.usedPokemon.item() != null)
-			defStage = user.usedPokemon.item().item().applyDefenseStageModifications(defStage, move, user, target, true, floor);
-		if (target.usedPokemon.item() != null)
-			defStage = target.usedPokemon.item().item().applyDefenseStageModifications(defStage, move, user, target, false, floor);
-		return defStage;
+			stage = target.usedPokemon.item().item().applyStatStageModifications(stat, stage, move, user, target, false, floor);
+		return stage;
 	}
 
 	protected int attackStat(Move move, DungeonPokemon user, DungeonPokemon target, Floor floor)
 	{
 		Stat atk = move.category == MoveCategory.Special ? Stat.SpecialAttack : Stat.Attack;
 		int atkStage = user.stats.getStage(atk);
-		atkStage = this.applyAttackStageModifications(atkStage, move, user, target, floor);
+		atkStage = this.applyStatStageModifications(atk, atkStage, move, user, target, floor);
 
 		DungeonStats stats = user.stats.clone();
 		stats.setStage(atk, atkStage);
 		int attack = (int) stats.getStat(atk);
-		attack = this.applyAttackModifications(attack, move, user, target, floor);
+		attack = this.applyStatModifications(atk, attack, move, user, target, floor);
 		if (attack < 0) attack = 0;
 		if (attack > 999) attack = 999;
 
@@ -138,13 +118,13 @@ public class MoveEffect
 	protected int defenseStat(Move move, DungeonPokemon user, DungeonPokemon target, Floor floor)
 	{
 		Stat def = move.category == MoveCategory.Special ? Stat.SpecialDefense : Stat.Defense;
-		int atkStage = user.stats.getStage(def);
-		atkStage = this.applyDefenseStageModifications(atkStage, move, user, target, floor);
+		int defStage = user.stats.getStage(def);
+		defStage = this.applyStatStageModifications(def, defStage, move, user, target, floor);
 
 		DungeonStats stats = user.stats.clone();
-		stats.setStage(def, atkStage);
+		stats.setStage(def, defStage);
 		int defense = (int) stats.getStat(def);
-		defense = this.applyDefenseModifications(defense, move, user, target, floor);
+		defense = this.applyStatModifications(def, defense, move, user, target, floor);
 		if (defense < 0) defense = 0;
 		if (defense > 999) defense = 999;
 
