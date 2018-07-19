@@ -76,8 +76,15 @@ public final class Animations
 		else
 		{
 			if (sprites.equals("default")) sprites = String.valueOf(id) + (oriented ? ("-" + target.facing().index()) : "");
-			if (!sprites.contains("/")) sprites = (registry == items ? "/items/"
-					: registry == moves ? "/moves/" : registry == statuses ? "/status/" : registry == abilities ? "/abilities/" : "/") + sprites;
+			if (!sprites.contains("/"))
+			{
+				if (registry == abilities) sprites = "/items/" + sprites;
+				else if (registry == items) sprites = "/items/" + sprites;
+				else if (registry == moves) sprites = "/moves/" + sprites;
+				else if (registry == moveTargets) sprites = "/targets/" + sprites;
+				else if (registry == statuses) sprites = "/status/" + sprites;
+				else sprites = "/" + sprites;
+			}
 			sprites = "/animations" + sprites;
 
 			if ((xml.getAttribute("width") == null && defaultXml.getAttribute("width") == null)

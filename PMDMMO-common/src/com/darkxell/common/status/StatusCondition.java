@@ -37,7 +37,7 @@ public class StatusCondition
 	/** @return True if this Status Condition affects the input Pokémon. */
 	public boolean affects(DungeonPokemon pokemon)
 	{
-		return true;
+		return !pokemon.hasStatusCondition(this);
 	}
 
 	public ArrayList<DungeonEvent> tick(Floor floor, StatusConditionInstance instance)
