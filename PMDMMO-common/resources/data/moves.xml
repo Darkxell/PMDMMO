@@ -12,6 +12,7 @@
   <move id="9" type="0" category="Status" pp="27" power="2" accuracy="125" critical="12" range="Self" targets="User" effect="78" freeze="true" snatchable="true" />
   <move id="10" type="0" category="Status" pp="9" power="2" accuracy="78" critical="12" effect="46" freeze="true" />
   <move id="11" type="0" category="Physical" pp="17" power="6" accuracy="90" critical="12" effect="41" damage="true" ginsengable="true" freeze="true" />
+  <move id="12" type="0" category="Physical" pp="17" power="4" accuracy="70" critical="12" damage="true" freeze="true" ginsengable="true" />
   <move id="13" type="0" category="Status" pp="17" power="2" accuracy="125" critical="12" range="Self" targets="User" effect="180" freeze="true" snatchable="true" />
   <move id="14" type="0" category="Physical" pp="17" power="15" accuracy="88" critical="12" effect="91" damage="true" ginsengable="true" freeze="true" />
   <move id="15" type="0" category="Physical" pp="15" power="10" accuracy="78" critical="12" range="Front_corners" damage="true" ginsengable="true" freeze="true" />
@@ -43,14 +44,18 @@
   <move id="41" type="0" category="Physical" pp="22" power="4" critical="12" range="Self" targets="User" effect="73" freeze="true" />
   <move id="42" type="0" category="Special" pp="13" power="16" critical="50" range="Front_corners" effect="131" damage="true" ginsengable="true" freeze="true" />
   <move id="43" type="0" category="Status" pp="12" power="2" accuracy="125" critical="12" range="Self" targets="User" effect="116" freeze="true" snatchable="true" />
+  <move id="44" type="0" category="Status" pp="14" power="2" accuracy="100" critical="12" effect="66" sound="true" damage="true" ginsengable="true" freeze="true" />
   <move id="45" type="0" category="Physical" pp="22" power="8" accuracy="90" critical="12" damage="true" ginsengable="true" freeze="true" />
   <move id="46" type="0" category="Status" pp="22" power="2" accuracy="88" critical="12" range="Front_corners" effect="88" freeze="true" reflectable="true" sound="true" />
+  <move id="47" type="0" category="Physical" pp="12" power="80" accuracy="100" critical="12" range="Around" effect="196" freeze="true" damage="true" />
   <move id="48" type="0" category="Status" pp="17" power="2" accuracy="125" critical="12" range="Self" targets="User" effect="72" freeze="true" snatchable="true" />
   <move id="49" type="0" category="Status" pp="17" power="2" accuracy="84" critical="12" range="Front_corners" effect="52" freeze="true" reflectable="true" sound="true" />
   <move id="50" type="0" category="Physical" pp="15" power="10" critical="12" range="Self" targets="User" effect="151" damage="true" ginsengable="true" freeze="true" />
   <move id="51" type="0" category="Physical" pp="12" power="16" accuracy="78" critical="12" damage="true" ginsengable="true" freeze="true" />
   <move id="52" type="0" category="Physical" pp="11" power="14" accuracy="88" critical="50" effect="11" damage="true" ginsengable="true" freeze="true" />
   <move id="53" type="0" category="Status" pp="10" power="2" accuracy="78" critical="12" range="Front_corners" effect="203" freeze="true" reflectable="true" />
+  <move id="54" type="0" category="Status" pp="15" power="2" accuracy="100" critical="12" range="Room" targes="Allies" effect="112" snatchable="true" damage="true" />
+  <move id="55" type="0" category="Special" pp="22" power="10" accuracy="90" critical="12" range="Line" effect="48" freeze="true" ginsengable="true" />
   <move id="56" type="0" category="Physical" pp="17" power="3" accuracy="70" critical="2" range="Line" damage="true" ginsengable="true" freeze="true" />
   <move id="57" type="0" category="Status" pp="50" power="2" accuracy="125" critical="12" range="Self" targets="User" effect="232" freeze="true" />
   <move id="58" type="0" category="Physical" pp="17" power="12" accuracy="90" critical="12" effect="37" damage="true" ginsengable="true" freeze="true" />
@@ -67,6 +72,7 @@
   <move id="69" type="0" category="Physical" pp="12" power="17" accuracy="78" critical="12" damage="true" ginsengable="true" freeze="true" />
   <move id="70" type="0" category="Status" pp="1" power="2" accuracy="125" critical="12" range="Self" targets="User" effect="228" freeze="true" />
   <move id="71" type="0" category="Special" pp="17" power="6" critical="12" range="Front_corners" effect="42" damage="true" ginsengable="true" />
+  <move id="72" type="0" category="Physical" pp="22" power="6" critical="12" freeze="true" damage="true" ginsengable="true" />
   <move id="73" type="0" category="Status" pp="27" power="2" critical="12" effect="66" freeze="true" />
   <move id="74" type="0" category="Physical" pp="22" power="4" accuracy="88" critical="12" effect="101" freeze="true" />
   <move id="75" type="0" category="Status" pp="10" power="2" accuracy="78" critical="12" range="Front_corners" effect="45" freeze="true" reflectable="true" />
@@ -75,6 +81,7 @@
   <move id="78" type="0" category="Status" pp="22" power="2" critical="12" range="Self" targets="User" effect="260" freeze="true" />
   <move id="79" type="0" category="Status" pp="12" power="2" critical="12" effect="215" freeze="true" />
   <move id="80" type="0" category="Status" pp="17" power="2" critical="12" range="Self" targets="User" effect="220" freeze="true" />
+  <move id="81" type="0" category="Physical" pp="12" power="16" accuracy="88" critical="12" range="Two_tiles" freeze="true" damage="true" ginsengable="true" />
   <move id="82" type="0" category="Physical" pp="15" power="40" critical="12" effect="161" damage="true" freeze="true" />
   <move id="83" type="0" category="Physical" pp="17" power="2" critical="12" effect="195" damage="true" ginsengable="true" freeze="true" />
   <move id="84" type="0" category="Status" pp="22" power="2" critical="12" effect="231" freeze="true" />
@@ -118,6 +125,7 @@
   <move id="122" type="0" category="Status" pp="12" power="2" accuracy="125" critical="12" range="Room" targets="Allies" effect="145" snatchable="true" />
   <move id="123" type="0" category="Physical" pp="10" power="14" accuracy="88" critical="12" effect="241" damage="true" ginsengable="true" freeze="true" />
   <move id="124" type="0" category="Status" pp="17" power="2" critical="12" range="Self" targets="User" effect="116" freeze="true" snatchable="true" />
+  <move id="125" type="0" category="Physical" pp="15" power="12" accuracy="88" critical="12" effect="149" freeze="true" damage="true" ginsengable="true" />
   <move id="126" type="0" category="Physical" pp="12" power="20" accuracy="88" critical="12" effect="206" damage="true" ginsengable="true" freeze="true" sound="true" />
   <move id="127" type="0" category="Status" pp="17" power="2" accuracy="125" critical="12" range="Self" targets="User" effect="205" freeze="true" snatchable="true" sound="true" />
   <move id="128" type="0" category="Status" pp="15" power="2" accuracy="125" critical="12" range="Self" targets="User" effect="207" freeze="true" snatchable="true" sound="true" />
@@ -126,8 +134,10 @@
   <move id="131" type="0" category="Special" pp="17" power="10" critical="12" range="Room" targets="Allies" effect="102" freeze="true" sound="true" />
   <move id="132" type="0" category="Special" pp="15" power="10" accuracy="90" critical="12" range="Line" effect="216" damage="true" ginsengable="true" freeze="true" />
   <move id="133" type="0" category="Status" pp="15" power="2" critical="12" range="Self" targets="User" effect="152" freeze="true" />
+  <move id="134" type="0" category="Status" pp="17" power="4" critical="12" effect="53" freeze="true" reflectable="true" sound="true" />
   <move id="201" type="1" category="Physical" pp="17" power="2" critical="12" range="Self" targets="User" effect="122" freeze="true" />
   <move id="202" type="1" category="Physical" pp="14" power="6" accuracy="87" critical="3" damage="true" ginsengable="true" freeze="true" />
+  <move id="203" type="1" category="Physical" pp="11" power="16" critical="12" effect="128" freeze="true" damage="true" ginsengable="true" />
   <move id="204" type="1" category="Physical" pp="13" power="14" accuracy="95" critical="12" effect="191" damage="true" ginsengable="true" freeze="true" />
   <move id="205" type="1" category="Physical" pp="18" power="10" accuracy="90" critical="12" effect="11" damage="true" ginsengable="true" freeze="true" />
   <move id="206" type="1" category="Physical" pp="22" power="7" accuracy="90" critical="12" effect="200" damage="true" ginsengable="true" freeze="true" />
@@ -136,6 +146,7 @@
   <move id="209" type="1" category="Physical" pp="17" power="15" accuracy="84" critical="12" effect="92" damage="true" ginsengable="true" freeze="true" />
   <move id="210" type="1" category="Physical" pp="10" power="20" accuracy="84" critical="50" effect="11" damage="true" ginsengable="true" freeze="true" />
   <move id="211" type="1" category="Status" pp="12" power="2" critical="12" range="Self" targets="User" effect="192" freeze="true" />
+  <move id="212" type="1" category="Physical" pp="13" power="10" accuracy="78" critical="12" effect="64" freeze="true" damage="true" ginsengable="true" />
   <move id="213" type="1" category="Physical" pp="22" power="8" accuracy="90" critical="12" range="Two_tiles" damage="true" ginsengable="true" freeze="true" />
   <move id="214" type="1" category="Physical" pp="17" power="2" accuracy="90" critical="12" effect="195" damage="true" ginsengable="true" freeze="true" />
   <move id="215" type="1" category="Physical" pp="99" power="1" critical="12" effect="227" damage="true" freeze="true" />
@@ -159,9 +170,11 @@
   <move id="259" type="2" category="Physical" pp="8" power="10" accuracy="125" critical="12" damage="true" ginsengable="true" freeze="true" />
   <move id="260" type="2" category="Special" pp="17" power="2" accuracy="90" critical="50" range="Front_corners" effect="11" damage="true" ginsengable="true" freeze="true" />
   <move id="261" type="2" category="Physical" pp="11" power="16" critical="12" range="Self" targets="User" effect="176" damage="true" ginsengable="true" freeze="true" />
+  <move id="262" type="2" category="Status" pp="22" power="2" critical="12" effect="87" freeze="true" reflectable="true" />
   <move id="301" type="3" category="Special" pp="17" power="8" accuracy="88" critical="12" range="Front_corners" effect="21" damage="true" ginsengable="true" freeze="true" />
   <move id="302" type="3" category="Status" pp="27" power="2" accuracy="125" critical="12" range="Self" targets="User" effect="79" freeze="true" snatchable="true" />
   <move id="303" type="3" category="Special" pp="27" power="2" accuracy="84" critical="12" effect="58" freeze="true" reflectable="true" />
+  <move id="304" type="3" category="Status" pp="22" power="2" accuracy="84" critical="12" effect="58" freeze="true" reflectable="true" />
   <move id="305" type="3" category="Special" pp="19" power="3" accuracy="73" critical="12" range="Front_corners" effect="19" damage="true" ginsengable="true" freeze="true" />
   <move id="306" type="3" category="Special" pp="22" power="12" accuracy="88" critical="12" range="Front_corners" effect="19" damage="true" ginsengable="true" freeze="true" />
   <move id="307" type="3" category="Special" pp="17" power="4" accuracy="73" critical="12" effect="32" damage="true" ginsengable="true" freeze="true" />
@@ -174,6 +187,7 @@
   <move id="353" type="4" category="Physical" pp="12" power="12" critical="12" range="Self" targets="User" effect="178" damage="true" ginsengable="true" freeze="true" />
   <move id="354" type="4" category="Physical" pp="10" power="5" accuracy="65" critical="12" range="Room" targets="Others" effect="3" damage="true" ginsengable="true" freeze="true" />
   <move id="355" type="4" category="Physical" pp="14" power="2" critical="12" effect="12" damage="true" freeze="true" />
+  <move id="356" type="4" category="Status" pp="22" power="2" critical="12" effect="155" range="Front_corners" freeze="true" reflectable="true" />
   <move id="357" type="4" category="Physical" pp="12" power="12" accuracy="70" critical="2" range="Front_corners" damage="true" ginsengable="true" freeze="true" />
   <move id="358" type="4" category="Physical" pp="15" power="2" critical="12" range="Room" targets="Others" effect="150" damage="true" freeze="true" />
   <move id="359" type="4" category="Special" pp="16" power="4" accuracy="84" critical="12" range="Front_corners" effect="154" damage="true" ginsengable="true" freeze="true" />
@@ -183,6 +197,7 @@
   <move id="363" type="4" category="Physical" pp="17" power="4" accuracy="73" critical="12" effect="15" damage="true" ginsengable="true" freeze="true" />
   <move id="401" type="5" category="Physical" pp="13" power="14" accuracy="90" critical="12" effect="39" damage="true" ginsengable="true" freeze="true" />
   <move id="402" type="5" category="Physical" pp="16" power="5" accuracy="90" critical="12" damage="true" ginsengable="true" freeze="true" />
+  <move id="403" type="5" category="Physical" pp="12" power="12" accuracy="88" critical="12" effect="27" freeze="true" damage="true" ginsengable="true" />
   <move id="404" type="5" category="Physical" pp="14" power="1" accuracy="68" critical="12" effect="110" damage="true" ginsengable="true" freeze="true" />
   <move id="405" type="5" category="Status" pp="14" power="2" accuracy="125" critical="12" range="Ambient" targets="None" effect="106" freeze="true" />
   <move id="406" type="5" category="Physical" pp="17" power="4" accuracy="80" critical="1" range="Front_corners" damage="true" ginsengable="true" freeze="true" />
@@ -196,6 +211,7 @@
   <move id="457" type="6" category="Status" pp="16" power="2" critical="12" range="Front_corners" effect="18" freeze="true" reflectable="true" />
   <move id="458" type="6" category="Special" pp="15" power="14" accuracy="84" critical="12" range="Line" effect="28" damage="true" ginsengable="true" freeze="true" />
   <move id="459" type="6" category="Special" pp="13" power="12" accuracy="95" critical="12" range="Room" effect="27" damage="true" ginsengable="true" freeze="true" />
+  <move id="460" type="6" category="Status" pp="22" power="2" critical="12" effect="68" targets="User" range="Self" freeze="true" snatchable="true" />
   <move id="501" type="7" category="Status" pp="13" power="2" critical="12" effect="57" freeze="true" reflectable="true" />
   <move id="502" type="7" category="Physical" pp="22" power="4" critical="12" effect="35" damage="true" ginsengable="true" freeze="true" sound="true" />
   <move id="503" type="7" category="Special" pp="17" power="2" critical="12" range="Around" effect="89" damage="true" freeze="true" />
@@ -229,10 +245,12 @@
   <move id="613" type="9" category="Special" pp="10" power="20" accuracy="84" critical="12" range="Around" effect="156" damage="true" ginsengable="true" />
   <move id="614" type="9" category="Status" pp="17" power="2" accuracy="78" critical="12" range="Front_corners" effect="140" freeze="true" reflectable="true" />
   <move id="651" type="10" category="Special" pp="15" power="4" accuracy="88" critical="12" range="Line" effect="225" damage="true" ginsengable="true" freeze="true" />
+  <move id="652" type="10" category="Special" pp="19" power="10" critical="12" effect="26" range="Line" freeze="true" damage="true" ginsengable="true" />
   <move id="653" type="10" category="Physical" pp="17" power="6" accuracy="78" critical="12" effect="15" damage="true" ginsengable="true" freeze="true" />
   <move id="654" type="10" category="Physical" pp="12" power="18" accuracy="88" critical="50" effect="11" damage="true" ginsengable="true" freeze="true" />
   <move id="655" type="10" category="Special" pp="9" power="24" accuracy="84" critical="12" range="Line" damage="true" ginsengable="true" freeze="true" />
   <move id="656" type="10" category="Special" pp="11" power="18" accuracy="88" critical="12" effect="17" damage="true" ginsengable="true" freeze="true" />
+  <move id="657" type="10" category="Physical" pp="12" power="6" accuracy="88" critical="12" effect="64" freeze="true" damage="true" ginsengable="true" />
   <move id="658" type="10" category="Special" pp="17" power="5" accuracy="88" critical="12" range="Front_corners" damage="true" ginsengable="true" freeze="true" />
   <move id="659" type="10" category="Status" pp="32" power="2" accuracy="125" critical="12" range="Self" targets="User" effect="172" freeze="true" snatchable="true" />
   <move id="660" type="10" category="Special" pp="15" power="8" accuracy="88" critical="12" range="Line" effect="82" damage="true" ginsengable="true" freeze="true" sound="true" />
@@ -250,6 +268,7 @@
   <move id="704" type="11" category="Physical" pp="17" power="7" accuracy="87" critical="12" effect="100" damage="true" ginsengable="true" freeze="true" />
   <move id="705" type="11" category="Physical" pp="17" power="4" accuracy="84" critical="50" range="Line" effect="11" damage="true" ginsengable="true" freeze="true" />
   <move id="706" type="11" category="Status" pp="19" power="2" accuracy="78" critical="12" range="Around" effect="52" freeze="true" reflectable="true" />
+  <move id="707" type="11" category="Special" pp="9" power="24" critical="12" effect="97" range="Front_corners" freeze="true" damage="true" ginsengable="true" />
   <move id="708" type="11" category="Status" pp="19" power="2" critical="12" range="Room" effect="52" freeze="true" reflectable="true" />
   <move id="709" type="11" category="Status" pp="17" power="2" accuracy="78" critical="12" range="Around" effect="50" freeze="true" reflectable="true" />
   <move id="710" type="11" category="Physical" pp="15" power="8" accuracy="88" critical="12" damage="true" ginsengable="true" freeze="true" />
@@ -259,12 +278,15 @@
   <move id="714" type="11" category="Status" pp="12" power="2" accuracy="125" critical="12" range="Room" targets="Allies" effect="145" snatchable="true" />
   <move id="715" type="11" category="Physical" pp="10" power="10" accuracy="78" critical="2" range="Line" damage="true" ginsengable="true" freeze="true" />
   <move id="716" type="11" category="Special" pp="10" power="30" accuracy="84" critical="12" range="Front_corners" effect="9" damage="true" ginsengable="true" freeze="true" />
+  <move id="717" type="11" category="Status" pp="13" power="2" accuracy="90" critical="12" effect="52" range="Front_corners" freeze="true" sound="true" reflectable="true" />
   <move id="718" type="11" category="Status" pp="22" power="2" critical="12" range="Self" targets="User" effect="141" freeze="true" snatchable="true" />
   <move id="719" type="11" category="Physical" pp="12" power="14" accuracy="88" critical="50" effect="11" damage="true" ginsengable="true" freeze="true" />
   <move id="720" type="11" category="Special" pp="8" power="12" accuracy="125" critical="12" range="Front_corners" damage="true" ginsengable="true" freeze="true" />
   <move id="721" type="11" category="Physical" pp="11" power="12" accuracy="88" critical="12" effect="37" damage="true" ginsengable="true" freeze="true" />
   <move id="751" type="12" category="Special" pp="9" power="24" accuracy="73" critical="12" damage="true" ginsengable="true" freeze="true" />
   <move id="752" type="12" category="Special" pp="10" power="18" accuracy="84" critical="12" range="Around" effect="51" damage="true" ginsengable="true" freeze="true" />
+  <move id="753" type="12" category="Physical" pp="17" power="6" accuracy="88" critical="12" effect="51" freeze="true" damage="true" ginsengable="true" />
+  <move id="754" type="12" category="Special" pp="17" power="1" accuracy="88" critical="2" effect="51" freeze="true" damage="true" ginsengable="true" />
   <move id="755" type="12" category="Status" pp="17" power="2" critical="12" effect="59" freeze="true" reflectable="true" />
   <move id="756" type="12" category="Physical" pp="15" power="12" accuracy="88" critical="12" effect="35" damage="true" ginsengable="true" freeze="true" />
   <move id="757" type="12" category="Special" pp="9" power="20" accuracy="73" critical="12" range="Line" effect="61" damage="true" ginsengable="true" freeze="true" />
@@ -312,12 +334,15 @@
   <move id="861" type="14" category="Physical" pp="22" power="2" accuracy="70" critical="2" range="Front_corners" damage="true" ginsengable="true" freeze="true" />
   <move id="862" type="14" category="Physical" pp="12" power="2" critical="12" effect="13" damage="true" freeze="true" />
   <move id="901" type="15" category="Special" pp="17" power="10" critical="12" range="Front_corners" effect="49" damage="true" freeze="true" />
+  <move id="902" type="15" category="Special" pp="12" power="12" accuracy="88" critical="12" effect="35" range="Line" sound="true" freeze="true" damage="true" ginsengable="true" />
   <move id="903" type="15" category="Physical" pp="9" power="18" accuracy="78" critical="12" effect="100" damage="true" ginsengable="true" freeze="true" />
+  <move id="904" type="15" category="Special" pp="15" power="8" accuracy="90" critical="12" effect="25" freeze="true" damage="true" ginsengable="true" />
   <move id="905" type="15" category="Status" pp="22" power="2" accuracy="125" critical="12" range="Self" targets="User" effect="70" freeze="true" snatchable="true" />
   <move id="906" type="15" category="Physical" pp="10" power="16" accuracy="88" critical="12" damage="true" ginsengable="true" freeze="true" />
   <move id="951" type="16" category="Physical" pp="19" power="7" accuracy="90" critical="12" effect="37" damage="true" ginsengable="true" freeze="true" sound="true" />
   <move id="952" type="16" category="Physical" pp="15" power="2" critical="12" range="Ambient" targets="None" effect="235" freeze="true" />
   <move id="953" type="16" category="Physical" pp="13" power="16" accuracy="88" critical="12" effect="40" damage="true" ginsengable="true" freeze="true" sound="true" />
+  <move id="954" type="16" category="Physical" pp="8" power="6" accuracy="125" critical="12" freeze="true" damage="true" ginsengable="true" />
   <move id="955" type="16" category="Status" pp="17" power="8" critical="12" range="Self" targets="User" effect="122" freeze="true" />
   <move id="956" type="16" category="Physical" pp="20" power="2" critical="12" effect="120" damage="true" ginsengable="true" freeze="true" />
   <move id="957" type="16" category="Status" pp="22" power="2" critical="12" effect="65" freeze="true" reflectable="true" sound="true" />
