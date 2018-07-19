@@ -59,22 +59,8 @@ public class StorageactionHandler extends MessageHandler {
         if (items_ids.length != items_quantities.length) {
             return;
         }
-        //Checks if there is enough space in the inventory for the transaction
-        int space = 0;
-        for (int i = 0; i < items_ids.length; i++) {
-            space += items_quantities[i];
-        }
-        if (space + (dbi_to.content == null ? 0 : dbi_to.content.size()) > dbi_to.maxsize) {
-            com.eclipsesource.json.JsonObject value = Json.object();
-            value.add("action", "storageconfirm");
-            if (payloadvalue.equals("withdraw")) {
-                value.add("result", "inventoryfull");
-            } else if (payloadvalue.equals("deposit")) {
-                value.add("result", "storagefull");
-            }
-            sessionshandler.sendToSession(from, value);
-            return;
-        }
+        int spacetaken = dbi_to.content.size();
+        boolean full = false;
         // Does each part of the transaction if the item is accessible
         for (int i = 0; i < items_ids.length; i++) {
             long inventoryid = endpoint.getInventoryContains_DAO().findInventoryID(items_ids[i]);
@@ -84,24 +70,46 @@ public class StorageactionHandler extends MessageHandler {
                 if (items_quantities[i] == sourceitemstack.quantity) {
                     endpoint.getInventoryContains_DAO().delete(items_ids[i], dbi_from.id);
                     endpoint.getItemstackDAO().delete(sourceitemstack);
-                    putitem(sourceitemstack.itemid, sourceitemstack.quantity, dbi_to.id, iscurrentstackable);
+                    int putresult = putitem(sourceitemstack.itemid, sourceitemstack.quantity, dbi_to.id, iscurrentstackable, dbi_to.maxsize - spacetaken);
+                    if (putresult == -1) {
+                        full = true;
+                    } else {
+                        spacetaken += putresult;
+                    }
                 } else {
                     sourceitemstack.quantity -= items_quantities[i];
                     endpoint.getItemstackDAO().update(sourceitemstack);
-                    putitem(sourceitemstack.itemid, items_quantities[i], dbi_to.id, iscurrentstackable);
+                    int putresult = putitem(sourceitemstack.itemid, items_quantities[i], dbi_to.id, iscurrentstackable, dbi_to.maxsize - spacetaken);
+                    if (putresult == -1) {
+                        full = true;
+                    } else {
+                        spacetaken += putresult;
+                    }
                 }
             }
         }
         // Sends the result to the client
         com.eclipsesource.json.JsonObject value = Json.object();
         value.add("action", "storageconfirm");
-        value.add("result", "ok");
+        if (full) {
+            if (payloadvalue.equals("withdraw")) {
+                value.add("result", "inventoryfull");
+            } else if (payloadvalue.equals("deposit")) {
+                value.add("result", "storagefull");
+            }
+        } else {
+            value.add("result", "ok");
+        }
         sessionshandler.sendToSession(from, value);
     }
 
-    private void putitem(int itemid, long quantity, long destinationinventoryid, boolean stackitems) {
+    /**
+     * @return the ammount of new stacks in the destination inventory. -1 means
+     * it didn't put anything and there is no space left.
+     */
+    private int putitem(int itemid, long quantity, long destinationinventoryid, boolean stackitems, int leftspace) {
         if (quantity <= 0) {
-            return;
+            return 0;
         }
         if (stackitems) {
             DBInventory updatedinv = endpoint.getInventoryDAO().find(destinationinventoryid);
@@ -110,16 +118,24 @@ public class StorageactionHandler extends MessageHandler {
                 if (stack.itemid == itemid) {
                     stack.quantity += quantity;
                     endpoint.getItemstackDAO().update(stack);
-                    return;
+                    return 0;
                 }
+            }
+            if (leftspace <= 1) {
+                return -1;
             }
             long sid = endpoint.getItemstackDAO().create(new DBItemstack(0, itemid, quantity));
             endpoint.getInventoryContains_DAO().create(sid, destinationinventoryid);
+            return 1;
         } else {
+            if (leftspace <= quantity) {
+                return -1;
+            }
             for (int i = 0; i < quantity; i++) {
                 long sid = endpoint.getItemstackDAO().create(new DBItemstack(0, itemid, 1));
                 endpoint.getInventoryContains_DAO().create(sid, destinationinventoryid);
             }
+            return (int) quantity;
         }
     }
 
