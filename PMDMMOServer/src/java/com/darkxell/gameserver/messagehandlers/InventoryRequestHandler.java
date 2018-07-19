@@ -6,7 +6,6 @@
 package com.darkxell.gameserver.messagehandlers;
 
 import com.darkxell.common.dbobject.DBInventory;
-import com.darkxell.common.dbobject.DBPokemon;
 import com.darkxell.gameserver.GameServer;
 import com.darkxell.gameserver.GameSessionHandler;
 import com.darkxell.gameserver.MessageHandler;

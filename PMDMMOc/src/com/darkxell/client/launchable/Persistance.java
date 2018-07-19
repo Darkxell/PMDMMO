@@ -65,6 +65,8 @@ public abstract class Persistance {
 	public static boolean debugdisplaymode = false;
 	/** Displays all input/outputs of the gamesocket to the console. */
 	public static boolean debugwiresharkmode = false;
+	/** Displays all uncrypted input/outputs of the gamesocket to the console. */
+	public static boolean debugcommunicationmode = false;
 
 	/** If true, data for pokemon, dungeon, moves, etc. is saved on exit. */
 	public static boolean saveDataOnExit = false;

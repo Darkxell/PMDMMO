@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.renderers.layers.AbstractGraphiclayer;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.menu.components.TextWindow;
 import com.darkxell.client.ui.Keys.Key;
@@ -41,11 +42,12 @@ public class InfoState extends AbstractMenuState
 	}
 
 	public final Message[] infos, titles;
+	private boolean isOpaque = false;
 	public final AbstractState parent;
 	private int tab;
 	protected TextWindow window;
 
-	public InfoState(AbstractState background, AbstractState parent, Message[] titles, Message[] infos)
+	public InfoState(AbstractGraphiclayer background, AbstractState parent, Message[] titles, Message[] infos)
 	{
 		super(background);
 		this.parent = parent;
@@ -125,7 +127,14 @@ public class InfoState extends AbstractMenuState
 			this.window = new TextWindow(new Rectangle(16, 32, width - 16 * 2, height - 32 * 4), this.infos[this.tab], true);
 			this.window.leftTab = this.tab > 0;
 			this.window.rightTab = this.tab < this.infos.length - 1;
+			this.window.isOpaque = this.isOpaque;
 		}
 		this.window.render(g, this.titles[this.tab], width, height);
+	}
+
+	public InfoState setOpaque(boolean isOpaque)
+	{
+		this.isOpaque = isOpaque;
+		return this;
 	}
 }

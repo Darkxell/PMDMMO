@@ -8,6 +8,7 @@ import com.darkxell.client.mechanics.freezones.entities.AnimatedFlowerEntity;
 import com.darkxell.client.mechanics.freezones.entities.BankEntity;
 import com.darkxell.client.mechanics.freezones.entities.PokemonFreezoneEntity;
 import com.darkxell.client.mechanics.freezones.entities.SignSoulEntity;
+import com.darkxell.client.mechanics.freezones.entities.StorageEntity;
 import com.darkxell.client.mechanics.freezones.entities.WatersparklesEntity;
 import com.darkxell.client.state.dialog.DialogScreen;
 import com.darkxell.client.state.dialog.PokemonDialogScreen;
@@ -83,6 +84,7 @@ public class PokemonSquareFreezone extends FreezoneMap {
 		
 		// Add interactible shopkeepers
 		this.addEntity(new BankEntity(82.5, 35));
+		this.addEntity(new StorageEntity(41.5, 63));
 
 		// Add the interactible pokemons
 		DialogScreen[] s = new DialogScreen[2];

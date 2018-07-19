@@ -19,7 +19,7 @@ public class DBPokemon implements Communicable
 	public long id;
 	public int iq;
 	public boolean isshiny;
-	public ArrayList<DatabaseIdentifier> learnedmoves;
+	public ArrayList<DatabaseIdentifier> learnedmoves = new ArrayList<>();
 	public int level;
 	public String nickname;
 	public int specieid;

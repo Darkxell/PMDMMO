@@ -8,17 +8,15 @@ import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.player.Player;
 
-public class DungeonExitEvent extends NextFloorEvent
+public class DungeonExitEvent extends DungeonEvent
 {
 
-	public DungeonExitEvent(Floor floor)
-	{
-		super(floor);
-	}
+	public final Player player;
 
 	public DungeonExitEvent(Floor floor, Player player)
 	{
-		super(floor, player);
+		super(floor);
+		this.player = player;
 	}
 
 	@Override

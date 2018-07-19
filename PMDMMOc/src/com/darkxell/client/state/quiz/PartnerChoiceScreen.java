@@ -27,7 +27,7 @@ public class PartnerChoiceScreen extends OptionDialogScreen
 		protected Rectangle mainWindowDimensions()
 		{
 			Rectangle r = super.mainWindowDimensions();
-			return new Rectangle((int) ((DialogState) this.backgroundState).dialogBox().getMinX(), r.y, r.width, r.height);
+			return new Rectangle((int) ((DialogState) this.background).dialogBox().getMinX(), r.y, r.width, r.height);
 		}
 
 	}

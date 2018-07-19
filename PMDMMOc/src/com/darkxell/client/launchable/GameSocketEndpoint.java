@@ -27,6 +27,7 @@ import com.darkxell.client.launchable.messagehandlers.ObjectRequestHandler;
 import com.darkxell.client.launchable.messagehandlers.PublicKeyRequestHandler;
 import com.darkxell.client.launchable.messagehandlers.SaltResetHandler;
 import com.darkxell.client.launchable.messagehandlers.SetEncryptionKeyHandler;
+import com.darkxell.client.launchable.messagehandlers.StorageConfirmHandler;
 import com.darkxell.client.launchable.messagehandlers.TestResultConfirmHandler;
 import com.darkxell.common.util.Communicable;
 import com.darkxell.common.util.Logger;
@@ -121,6 +122,8 @@ public class GameSocketEndpoint {
 			JsonValue obj = Json.parse(message);
 			if (obj.asObject().getInt("encrypted", 0) == 1)
 				obj = Json.parse(Encryption.syncDecrypt(message));
+			if (Persistance.debugcommunicationmode)
+				Logger.d("MESSAGE RECIEVED : " + obj.toString());
 			String actionstring = obj.asObject().getString("action", "");
 			switch (actionstring) {
 			case "freezoneposition":
@@ -158,6 +161,9 @@ public class GameSocketEndpoint {
 				break;
 			case "bankactionconfirm":
 				new BankActionConfirmHandler().handleMessage(obj.asObject());
+				break;
+			case "storageconfirm":
+				new StorageConfirmHandler().handleMessage(obj.asObject());
 				break;
 
 			// DUNGEON COMMUNICATION
@@ -205,6 +211,8 @@ public class GameSocketEndpoint {
 	 */
 	public void sendMessage(String message) {
 		try {
+			if (Persistance.debugcommunicationmode)
+				Logger.d("SENDING MESSAGE  : " + message);
 			if (Safe.serverhaskey)
 				message = Encryption.syncEncrypt(message);
 			this.userSession.getAsyncRemote().sendText(message);

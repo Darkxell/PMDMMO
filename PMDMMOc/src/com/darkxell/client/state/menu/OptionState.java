@@ -30,7 +30,7 @@ public class OptionState extends OptionSelectionMenuState
 	@Override
 	protected Rectangle mainWindowDimensions()
 	{
-		DialogState s = (DialogState) this.backgroundState;
+		DialogState s = (DialogState) this.background;
 		Rectangle r = super.mainWindowDimensions();
 		return new Rectangle((int) s.dialogBox().getMaxX() - r.width - 5, (int) s.dialogBox().getY() - r.height - 5, r.width, r.height);
 	}

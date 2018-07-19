@@ -45,7 +45,7 @@ public class TextWindow extends MenuWindow
 		}
 	}
 
-	public void renderText(Graphics2D g, int width, int height)
+	private void renderText(Graphics2D g, int width, int height)
 	{
 		if (this.lines == null) this.lines = TextRenderer.splitLines(this.message.toString(), this.inside().width - 10);
 

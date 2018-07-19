@@ -72,9 +72,16 @@ public class LoginMainState extends StateManager {
 	public void onKeyPressed(KeyEvent e, Key key) {
 		login.onKeyPressed(e);
 		password.onKeyPressed(e);
-		if (e.getKeyCode() == KeyEvent.VK_ENTER)
+		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 			if (Persistance.socketendpoint.connectionStatus() == GameSocketEndpoint.CONNECTED)
 				launchOnlineSend();
+		} else if (e.getKeyCode() == KeyEvent.VK_UP && this.password.isSelected()) {
+			this.login.setSelection(true);
+			this.password.setSelection(false);
+		} else if (e.getKeyCode() == KeyEvent.VK_DOWN && this.login.isSelected()) {
+			this.login.setSelection(false);
+			this.password.setSelection(true);
+		}
 	}
 
 	@Override

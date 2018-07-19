@@ -72,7 +72,7 @@ public class Pokemon implements ItemContainer, HasID
 	public Pokemon(long id, PokemonSpecies species, String nickname, ItemStack item, BaseStats stats, int abilityid, long experience, int level,
 			LearnedMove move1, LearnedMove move2, LearnedMove move3, LearnedMove move4, int gender, int iq, boolean shiny)
 	{
-		this(new DBPokemon(0, species.id, species.formID, abilityid, gender, nickname, level, experience, iq, shiny, stats.attack, stats.defense,
+		this(new DBPokemon(id, species.id, species.formID, abilityid, gender, nickname, level, experience, iq, shiny, stats.attack, stats.defense,
 				stats.specialAttack, stats.specialDefense, stats.health, item == null ? null : new DatabaseIdentifier(item.getData().id),
 				createMovesList(move1, move2, move3, move4)));
 		this.item = item;

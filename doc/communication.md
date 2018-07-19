@@ -205,6 +205,20 @@ This payload is sent when the player executes a movement action on an item in fr
 
 This payload is sent when the player interacts with the bank to deposit or withdraw money.
 
+■ STORAGEACTION
+
+{"action":"storageaction",
+
+"value":"withdraw|deposit",
+
+"items":[45,897,12], // The items to deposit or withdraw.
+
+"quantities":[45,1,1] // The quantities to move for each item.
+
+}
+
+This payload is sent when the player interacts with the storage to deposit or withdraw a stack of a single item.
+
 ■ DUNGEONSTART
 
 {"action":"dungeonstart",
@@ -395,6 +409,16 @@ This payload is sent after a client requests an action on an item to describe ho
 }
 
 This payload is sent when the player interacts with the bank, after database update, sending confirmation and new values to the client.
+
+■ STORAGEACTIONCONFIRM
+
+{"action":"storageactionconfirm",
+
+"result":"ok|inventoryfull|storagefull" // The result of the storage interaction.
+
+}
+
+This payload is sent after a client requests an action in the storage to describe how that action went.
 
 ■ DUNGEONSTARTCONFIRM
 

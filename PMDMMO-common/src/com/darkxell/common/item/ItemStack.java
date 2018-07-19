@@ -19,7 +19,7 @@ public class ItemStack implements Comparable<ItemStack>, HasID
 
 	public ItemStack()
 	{
-		this(-1);
+		this(0);
 	}
 
 	public ItemStack(DBItemstack data)
@@ -37,9 +37,9 @@ public class ItemStack implements Comparable<ItemStack>, HasID
 		this(itemid, 1);
 	}
 
-	public ItemStack(int itemid, int quantity)
+	public ItemStack(int itemid, long quantity)
 	{
-		this(new DBItemstack(-1, itemid, quantity));
+		this(new DBItemstack(0, itemid, quantity));
 	}
 
 	@Override
@@ -113,6 +113,12 @@ public class ItemStack implements Comparable<ItemStack>, HasID
 		this.data.quantity = quantity;
 		if (this.quantity() > 999) this.data.quantity = 999;
 		return this;
+	}
+
+	@Override
+	public String toString()
+	{
+		return this.item() + "";
 	}
 
 	public Element toXML()

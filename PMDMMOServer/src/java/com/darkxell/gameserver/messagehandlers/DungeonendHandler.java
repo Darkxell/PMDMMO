@@ -27,11 +27,11 @@ import javax.websocket.Session;
  * @author Darkxell
  */
 public class DungeonendHandler extends MessageHandler {
-
+    
     public DungeonendHandler(GameServer endpoint) {
         super(endpoint);
     }
-
+    
     @Override
     public void handleMessage(JsonObject json, Session from, GameSessionHandler sessionshandler) {
         GameSessionInfo si = SessionsInfoHolder.getInfo(from.getId());
@@ -98,7 +98,9 @@ public class DungeonendHandler extends MessageHandler {
         }
         if (player_new.pokemonsinzones != null) {
             for (DatabaseIdentifier pkm : player_new.pokemonsinzones) {
-                updatePokemon(lookuptable_items, lookuptable_moves, lookuptable_pokemons.get(pkm.id));
+                if (lookuptable_pokemons.containsKey(pkm.id)) {
+                    updatePokemon(lookuptable_items, lookuptable_moves, lookuptable_pokemons.get(pkm.id));
+                }
             }
         }
         //Updates the player's team
@@ -174,5 +176,5 @@ public class DungeonendHandler extends MessageHandler {
         }
         return pokemon.id;
     }
-
+    
 }

@@ -110,6 +110,10 @@ public class CustomTextfield {
 	public void setSelection(boolean a) {
 		this.unselected = !a;
 	}
+	
+	public boolean isSelected() {
+		return !this.unselected;
+	}
 
 	/**
 	 * Should be called by a state that uses this textfield upon recieving a
