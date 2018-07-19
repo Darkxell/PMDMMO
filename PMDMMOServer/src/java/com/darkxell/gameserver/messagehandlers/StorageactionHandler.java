@@ -64,7 +64,7 @@ public class StorageactionHandler extends MessageHandler {
         for (int i = 0; i < items_ids.length; i++) {
             space += items_quantities[i];
         }
-        if (space + dbi_to.content.size() > dbi_to.maxsize) {
+        if (space + (dbi_to.content == null ? 0 : dbi_to.content.size()) > dbi_to.maxsize) {
             com.eclipsesource.json.JsonObject value = Json.object();
             value.add("action", "storageconfirm");
             if (payloadvalue.equals("withdraw")) {
