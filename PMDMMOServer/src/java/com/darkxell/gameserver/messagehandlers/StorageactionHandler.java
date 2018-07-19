@@ -8,12 +8,15 @@ package com.darkxell.gameserver.messagehandlers;
 import com.darkxell.common.dbobject.DBInventory;
 import com.darkxell.common.dbobject.DBItemstack;
 import com.darkxell.common.dbobject.DBPlayer;
+import com.darkxell.common.dbobject.DatabaseIdentifier;
+import com.darkxell.common.item.ItemRegistry;
 import com.darkxell.gameserver.GameServer;
 import com.darkxell.gameserver.GameSessionHandler;
 import com.darkxell.gameserver.GameSessionInfo;
 import com.darkxell.gameserver.MessageHandler;
 import com.darkxell.gameserver.SessionsInfoHolder;
 import com.eclipsesource.json.Json;
+import java.util.ArrayList;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.websocket.Session;
@@ -77,15 +80,15 @@ public class StorageactionHandler extends MessageHandler {
             long inventoryid = endpoint.getInventoryContains_DAO().findInventoryID(items_ids[i]);
             DBItemstack sourceitemstack = endpoint.getItemstackDAO().find(items_ids[i]);
             if (inventoryid == dbi_from.id && sourceitemstack.quantity >= items_quantities[i] && items_quantities[i] != 0) {
+                boolean iscurrentstackable = payloadvalue.equals("deposit") ? true : ItemRegistry.find(sourceitemstack.itemid).isStackable;
                 if (items_quantities[i] == sourceitemstack.quantity) {
                     endpoint.getInventoryContains_DAO().delete(items_ids[i], dbi_from.id);
-                    endpoint.getInventoryContains_DAO().create(items_ids[i], dbi_to.id);
+                    endpoint.getItemstackDAO().delete(sourceitemstack);
+                    putitem(sourceitemstack.itemid, sourceitemstack.quantity, dbi_to.id, iscurrentstackable);
                 } else {
                     sourceitemstack.quantity -= items_quantities[i];
                     endpoint.getItemstackDAO().update(sourceitemstack);
-                    DBItemstack newstack = new DBItemstack(0, sourceitemstack.itemid, items_quantities[i]);
-                    long newid = endpoint.getItemstackDAO().create(newstack);
-                    endpoint.getInventoryContains_DAO().create(newid, dbi_to.id);
+                    putitem(sourceitemstack.itemid, items_quantities[i], dbi_to.id, iscurrentstackable);
                 }
             }
         }
@@ -94,6 +97,30 @@ public class StorageactionHandler extends MessageHandler {
         value.add("action", "storageconfirm");
         value.add("result", "ok");
         sessionshandler.sendToSession(from, value);
+    }
+
+    private void putitem(int itemid, long quantity, long destinationinventoryid, boolean stackitems) {
+        if (quantity <= 0) {
+            return;
+        }
+        if (stackitems) {
+            DBInventory updatedinv = endpoint.getInventoryDAO().find(destinationinventoryid);
+            for (DatabaseIdentifier databaseIdentifier : updatedinv.content) {
+                DBItemstack stack = endpoint.getItemstackDAO().find(databaseIdentifier.id);
+                if (stack.itemid == itemid) {
+                    stack.quantity += quantity;
+                    endpoint.getItemstackDAO().update(stack);
+                    return;
+                }
+            }
+            long sid = endpoint.getItemstackDAO().create(new DBItemstack(0, itemid, quantity));
+            endpoint.getInventoryContains_DAO().create(sid, destinationinventoryid);
+        } else {
+            for (int i = 0; i < quantity; i++) {
+                long sid = endpoint.getItemstackDAO().create(new DBItemstack(0, itemid, 1));
+                endpoint.getInventoryContains_DAO().create(sid, destinationinventoryid);
+            }
+        }
     }
 
 }
