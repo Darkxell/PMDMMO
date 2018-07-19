@@ -195,6 +195,7 @@ public class StorageDialog extends ComplexDialog implements ItemSelectionListene
 				ItemContainersMenuState s = new ItemContainersMenuState(null, this.background, this, false, i);
 				s.isOpaque = true;
 				s.setMultipleSelectionListener(this); // TODO Limit selection size
+				s.multipleMax = Persistance.player.inventory().maxSize() - Persistance.player.inventory().size();
 				Persistance.stateManager.setState(s);
 			}
 		}

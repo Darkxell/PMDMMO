@@ -69,8 +69,10 @@ public class ItemContainersMenuState extends AbstractMenuState
 	public boolean isOpaque;
 	private final ItemSelectionListener listener;
 	private MultipleItemsSelectionListener multipleListener = null;
+	/** Maximum number of items that can be selected (when multiple selection is allowed.) */
+	public int multipleMax;
 	public ArrayList<ItemStack> multipleSelection = new ArrayList<>();
-	private TextWindow multipleWindowInfo;
+	private TextWindow multipleWindowInfo, multipleWindowMax;
 	private MenuWindow nameWindow;
 	private final AbstractState parent;
 	private InventoryWindow window;
@@ -415,8 +417,15 @@ public class ItemContainersMenuState extends AbstractMenuState
 			} else if (key == Key.ROTATE && this.allowMultipleSelection)
 			{
 				ItemStack i = this.selectedItem();
-				if (this.multipleSelection.contains(i)) this.multipleSelection.remove(i);
-				else this.multipleSelection.add(i);
+				if (this.multipleSelection.contains(i))
+				{
+					SoundManager.playSound("ui-select");
+					this.multipleSelection.remove(i);
+				} else if (this.multipleSelection.size() < this.multipleMax)
+				{
+					SoundManager.playSound("ui-select");
+					this.multipleSelection.add(i);
+				}
 			}
 
 			if (key == Key.PAGE_LEFT || key == Key.PAGE_RIGHT)
@@ -608,10 +617,18 @@ public class ItemContainersMenuState extends AbstractMenuState
 					new Message("inventory.multiple.info").addReplacement("<key-rotate>", KeyEvent.getKeyText(Key.ROTATE.keyValue())), false);
 			this.multipleWindowInfo.isOpaque = this.isOpaque;
 		}
+		if (this.allowMultipleSelection && this.multipleSelection.size() == this.multipleMax && this.multipleWindowMax == null)
+		{
+			Rectangle r = this.multipleWindowInfo.dimensions;
+			this.multipleWindowMax = new TextWindow(new Rectangle((int) (r.getMaxX() + 5), r.y, r.width, TextRenderer.height() + 30),
+					new Message("inventory.multiple.max"), false);
+			this.multipleWindowMax.isOpaque = this.isOpaque;
+		}
 
 		this.window.render(g, this.currentTab().name, width, height);
 		this.nameWindow.render(g, null, width, height);
 		if (this.allowMultipleSelection) this.multipleWindowInfo.render(g, null, width, height);
+		if (this.allowMultipleSelection && this.multipleSelection.size() == this.multipleMax) this.multipleWindowMax.render(g, null, width, height);
 
 		Message name = ((MenuItemOption) this.currentOption()).item.name();
 		Rectangle inside = this.nameWindow.inside();
