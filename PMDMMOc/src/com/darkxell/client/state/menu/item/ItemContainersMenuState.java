@@ -70,7 +70,7 @@ public class ItemContainersMenuState extends AbstractMenuState
 	private final ItemSelectionListener listener;
 	private MultipleItemsSelectionListener multipleListener = null;
 	/** Maximum number of items that can be selected (when multiple selection is allowed.) */
-	public int multipleMax;
+	public int multipleMax = Integer.MAX_VALUE;
 	public ArrayList<ItemStack> multipleSelection = new ArrayList<>();
 	private TextWindow multipleWindowInfo, multipleWindowMax;
 	private MenuWindow nameWindow;

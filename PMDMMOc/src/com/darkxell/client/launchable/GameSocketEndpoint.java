@@ -122,6 +122,8 @@ public class GameSocketEndpoint {
 			JsonValue obj = Json.parse(message);
 			if (obj.asObject().getInt("encrypted", 0) == 1)
 				obj = Json.parse(Encryption.syncDecrypt(message));
+			if (Persistance.debugcommunicationmode)
+				Logger.d("MESSAGE RECIEVED : " + obj.toString());
 			String actionstring = obj.asObject().getString("action", "");
 			switch (actionstring) {
 			case "freezoneposition":
@@ -209,6 +211,8 @@ public class GameSocketEndpoint {
 	 */
 	public void sendMessage(String message) {
 		try {
+			if (Persistance.debugcommunicationmode)
+				Logger.d("SENDING MESSAGE  : " + message);
 			if (Safe.serverhaskey)
 				message = Encryption.syncEncrypt(message);
 			this.userSession.getAsyncRemote().sendText(message);

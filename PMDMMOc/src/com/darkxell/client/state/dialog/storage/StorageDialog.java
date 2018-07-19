@@ -171,7 +171,7 @@ public class StorageDialog extends ComplexDialog implements ItemSelectionListene
 		else
 		{
 			this.quantity = selection;
-			this.sendRequest(this.selectedAction == WITHDRAW ? "withdrawone" : "depositone", this.selection, this.quantity);
+			this.sendRequest(this.selectedAction == WITHDRAW ? "withdraw" : "deposit", this.selection, this.quantity);
 		}
 	}
 
@@ -213,8 +213,8 @@ public class StorageDialog extends ComplexDialog implements ItemSelectionListene
 		{
 			ItemStack i = this.selection[0];
 			this.max = i.quantity();
-			if (this.selectedAction == WITHDRAW)
-				this.max = Math.max(this.max, Persistance.player.inventory().maxSize() - Persistance.player.inventory().size());
+			if (this.selectedAction == WITHDRAW && !i.item().isStackable)
+				this.max = Math.min(this.max, Persistance.player.inventory().maxSize() - Persistance.player.inventory().size());
 			if ((i.item().isStackable || this.selectedAction == WITHDRAW) && this.max != 1)
 			{
 				this.dialogToShow = QUANTITY;

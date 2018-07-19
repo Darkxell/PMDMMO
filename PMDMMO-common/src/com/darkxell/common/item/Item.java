@@ -208,6 +208,12 @@ public class Item
 		return new Message("item." + this.id);
 	}
 
+	@Override
+	public String toString()
+	{
+		return this.name().toString();
+	}
+
 	public Element toXML()
 	{
 		Element root = new Element(XML_ROOT);
