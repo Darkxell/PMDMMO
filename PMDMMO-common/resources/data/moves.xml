@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <moves>
-  <move id="0" type="19" category="Physical" pp="17" power="1" accuracy="93" effect="1" damage="true" ginsengable="true" freeze="true" />
+  <move id="0" type="19" category="Physical" pp="17" power="1" accuracy="100" effect="1" damage="true" ginsengable="true" freeze="true" />
   <move id="1" type="0" category="Physical" pp="17" power="1" accuracy="78" critical="2" range="Front_corners" damage="true" ginsengable="true" freeze="true" />
   <move id="2" type="0" category="Status" pp="15" power="2" critical="12" range="Self" targets="User" effect="123" freeze="true" />
   <move id="3" type="0" category="Physical" pp="17" power="4" accuracy="78" critical="12" effect="15" damage="true" ginsengable="true" freeze="true" />

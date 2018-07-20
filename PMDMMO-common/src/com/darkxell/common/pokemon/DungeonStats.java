@@ -10,13 +10,16 @@ import com.darkxell.common.pokemon.BaseStats.Stat;
 
 public class DungeonStats
 {
+	public static final int[] accuracyTable = new int[] { 84, 89, 94, 102, 110, 115, 140, 153, 179, 204, 256, 332, 409, 422, 435, 448, 460, 473, 486, 512 };
 	public static final int[] attackTable = new int[] { 64, 69, 74, 79, 84, 89, 102, 115, 128, 179, 256, 332, 384, 406, 422, 435, 448, 460, 473, 486, 512 };
-	public static final float DEFAULT_ACCURACY = 1, DEFAULT_EVASIVENESS = 0;
+	public static final double DEFAULT_ACCURACY = 1, DEFAULT_EVASIVENESS = 1;
 	public static final int[] defenseTable = new int[] { 64, 69, 74, 79, 84, 89, 102, 140, 179, 222, 256, 332, 384, 409, 422, 435, 448, 460, 473, 486, 512 };
+	public static final int[] evasivenessTable = new int[] { 512, 486, 473, 460, 448, 435, 422, 409, 384, 345, 256, 204, 179, 153, 128, 102, 89, 76, 64, 51,
+			38 };
 	public static final float[] speedTable = { .5f, 1f, 2f, 3f, 4f };
 
 	/** Accuracy. */
-	private float accuracy;
+	private double accuracy;
 	/** Attack. */
 	private int attack;
 	/** The base stats. */
@@ -24,7 +27,7 @@ public class DungeonStats
 	/** Defense. */
 	private int defense;
 	/** Evasiveness. */
-	private float evasiveness;
+	private double evasiveness;
 	/** Health Points. */
 	private int health;
 	/** Owner of these stats. */
@@ -83,9 +86,9 @@ public class DungeonStats
 		}
 	}
 
-	public float getAccuracy()
+	public double getAccuracy()
 	{
-		return this.accuracy;
+		return this.accuracy * accuracyTable[this.stages[Stat.Accuracy.id]] / 256;
 	}
 
 	public int getAttack()
@@ -98,9 +101,9 @@ public class DungeonStats
 		return this.defense * defenseTable[this.stages[Stat.Defense.id]] / 256;
 	}
 
-	public float getEvasiveness()
+	public double getEvasiveness()
 	{
-		return this.evasiveness;
+		return this.evasiveness * evasivenessTable[this.stages[Stat.Evasiveness.id]] / 256;
 	}
 
 	public int getHealth()
@@ -129,7 +132,7 @@ public class DungeonStats
 		return this.stages[stat.id];
 	}
 
-	public float getStat(Stat stat)
+	public double getStat(Stat stat)
 	{
 		switch (stat)
 		{
