@@ -31,48 +31,48 @@ public class MoveEffect
 		MoveEffects.effects.put(this.id, this);
 	}
 
-	protected int applyStatModifications(Stat stat, int value, Move move, DungeonPokemon user, DungeonPokemon target, Floor floor)
+	protected int applyStatModifications(Stat stat, int value, MoveUse move, DungeonPokemon target, Floor floor)
 	{
-		value = user.usedPokemon.ability().applyStatModifications(stat, value, move, user, target, true, floor);
-		value = target.usedPokemon.ability().applyStatModifications(stat, value, move, user, target, false, floor);
-		if (user.usedPokemon.item() != null) value = user.usedPokemon.item().item().applyStatModifications(stat, value, move, user, target, true, floor);
-		if (target.usedPokemon.item() != null) value = target.usedPokemon.item().item().applyStatModifications(stat, value, move, user, target, false, floor);
+		value = move.user.usedPokemon.ability().applyStatModifications(stat, value, move, target, true, floor);
+		value = target.usedPokemon.ability().applyStatModifications(stat, value, move, target, false, floor);
+		if (move.user.usedPokemon.item() != null) value = move.user.usedPokemon.item().item().applyStatModifications(stat, value, move, target, true, floor);
+		if (target.usedPokemon.item() != null) value = target.usedPokemon.item().item().applyStatModifications(stat, value, move, target, false, floor);
 		return value;
 	}
 
-	protected int applyStatStageModifications(Stat stat, int stage, Move move, DungeonPokemon user, DungeonPokemon target, Floor floor)
+	protected int applyStatStageModifications(Stat stat, int stage, MoveUse move, DungeonPokemon target, Floor floor)
 	{
-		stage = user.usedPokemon.ability().applyStatStageModifications(stat, stage, move, user, target, true, floor);
-		stage = target.usedPokemon.ability().applyStatStageModifications(stat, stage, move, user, target, false, floor);
-		if (user.usedPokemon.item() != null) stage = user.usedPokemon.item().item().applyStatStageModifications(stat, stage, move, user, target, true, floor);
-		if (target.usedPokemon.item() != null)
-			stage = target.usedPokemon.item().item().applyStatStageModifications(stat, stage, move, user, target, false, floor);
+		stage = move.user.usedPokemon.ability().applyStatStageModifications(stat, stage, move, target, true, floor);
+		stage = target.usedPokemon.ability().applyStatStageModifications(stat, stage, move, target, false, floor);
+		if (move.user.usedPokemon.item() != null)
+			stage = move.user.usedPokemon.item().item().applyStatStageModifications(stat, stage, move, target, true, floor);
+		if (target.usedPokemon.item() != null) stage = target.usedPokemon.item().item().applyStatStageModifications(stat, stage, move, target, false, floor);
 		return stage;
 	}
 
-	protected int attackStat(Move move, DungeonPokemon user, DungeonPokemon target, Floor floor)
+	protected int attackStat(MoveUse move, DungeonPokemon target, Floor floor)
 	{
-		Stat atk = move.category == MoveCategory.Special ? Stat.SpecialAttack : Stat.Attack;
-		int atkStage = user.stats.getStage(atk);
-		atkStage = this.applyStatStageModifications(atk, atkStage, move, user, target, floor);
+		Stat atk = move.move.move().category == MoveCategory.Special ? Stat.SpecialAttack : Stat.Attack;
+		int atkStage = move.user.stats.getStage(atk);
+		atkStage = this.applyStatStageModifications(atk, atkStage, move, target, floor);
 
-		DungeonStats stats = user.stats.clone();
+		DungeonStats stats = move.user.stats.clone();
 		stats.setStage(atk, atkStage);
 		int attack = (int) stats.getStat(atk);
-		attack = this.applyStatModifications(atk, attack, move, user, target, floor);
+		attack = this.applyStatModifications(atk, attack, move, target, floor);
 		if (attack < 0) attack = 0;
 		if (attack > 999) attack = 999;
 
 		return attack;
 	}
 
-	protected boolean criticalLands(MoveUse move, DungeonPokemon user, DungeonPokemon target, Floor floor)
+	protected boolean criticalLands(MoveUse move, DungeonPokemon target, Floor floor)
 	{
 		int crit = move.move.move().critical;
-		crit = user.usedPokemon.ability().applyCriticalRateModifications(crit, move.move.move(), user, target, true, floor);
-		crit = target.usedPokemon.ability().applyCriticalRateModifications(crit, move.move.move(), user, target, false, floor);
+		crit = move.user.usedPokemon.ability().applyCriticalRateModifications(crit, move, target, true, floor);
+		crit = target.usedPokemon.ability().applyCriticalRateModifications(crit, move, target, false, floor);
 
-		if (this.effectiveness(move, user, target, floor) == PokemonType.SUPER_EFFECTIVE) crit = 40;
+		if (this.effectiveness(move, target, floor) == PokemonType.SUPER_EFFECTIVE) crit = 40;
 		return floor.random.nextInt(100) < crit;
 	}
 
@@ -84,15 +84,14 @@ public class MoveEffect
 	 * @return The damage dealt by this move. */
 	public int damageDealt(MoveUse move, DungeonPokemon user, DungeonPokemon target, Floor floor, ArrayList<DungeonEvent> events)
 	{
-		Move m = move.move.move();
-		int attack = this.attackStat(m, user, target, floor);
-		int defense = this.defenseStat(m, user, target, floor);
+		int attack = this.attackStat(move, target, floor);
+		int defense = this.defenseStat(move, target, floor);
 		int level = user.level();
 		int power = this.movePower(move, user, target, floor);
 		double wildNerfer = user.player() != null ? 1 : 0.75;
 
 		double damage = ((attack + power) * 0.6 - defense / 2 + 50 * Math.log(((attack - defense) / 8 + level + 50) * 10) - 311) * wildNerfer;
-		double multiplier = this.damageMultiplier(move, this.criticalLands(move, user, target, floor), user, target, floor);
+		double multiplier = this.damageMultiplier(move, this.criticalLands(move, target, floor), target, floor);
 		damage *= multiplier;
 
 		// Damage randomness
@@ -101,37 +100,37 @@ public class MoveEffect
 		return (int) Math.round(damage);
 	}
 
-	protected double damageMultiplier(MoveUse move, boolean critical, DungeonPokemon user, DungeonPokemon target, Floor floor)
+	protected double damageMultiplier(MoveUse move, boolean critical, DungeonPokemon target, Floor floor)
 	{
 		double multiplier = 1;
-		multiplier *= this.effectiveness(move, user, target, floor);
+		multiplier *= this.effectiveness(move, target, floor);
 		if (move.isStab()) multiplier *= 1.5;
-		multiplier *= floor.currentWeather().damageMultiplier(move.move.move(), user, target, floor);
+		multiplier *= floor.currentWeather().weather.damageMultiplier(move, target, false, floor);
 		if (critical) multiplier *= 1.5;
 
-		multiplier *= user.usedPokemon.ability().damageMultiplier(move, user, target, true, floor);
-		multiplier *= target.usedPokemon.ability().damageMultiplier(move, user, target, false, floor);
+		multiplier *= move.user.usedPokemon.ability().damageMultiplier(move, target, true, floor);
+		multiplier *= target.usedPokemon.ability().damageMultiplier(move, target, false, floor);
 
 		return multiplier;
 	}
 
-	protected int defenseStat(Move move, DungeonPokemon user, DungeonPokemon target, Floor floor)
+	protected int defenseStat(MoveUse move, DungeonPokemon target, Floor floor)
 	{
-		Stat def = move.category == MoveCategory.Special ? Stat.SpecialDefense : Stat.Defense;
-		int defStage = user.stats.getStage(def);
-		defStage = this.applyStatStageModifications(def, defStage, move, user, target, floor);
+		Stat def = move.move.move().category == MoveCategory.Special ? Stat.SpecialDefense : Stat.Defense;
+		int defStage = move.user.stats.getStage(def);
+		defStage = this.applyStatStageModifications(def, defStage, move, target, floor);
 
-		DungeonStats stats = user.stats.clone();
+		DungeonStats stats = move.user.stats.clone();
 		stats.setStage(def, defStage);
 		int defense = (int) stats.getStat(def);
-		defense = this.applyStatModifications(def, defense, move, user, target, floor);
+		defense = this.applyStatModifications(def, defense, move, target, floor);
 		if (defense < 0) defense = 0;
 		if (defense > 999) defense = 999;
 
 		return defense;
 	}
 
-	protected double effectiveness(MoveUse move, DungeonPokemon user, DungeonPokemon target, Floor floor)
+	protected double effectiveness(MoveUse move, DungeonPokemon target, Floor floor)
 	{
 		double effectiveness = move.move.move().type.effectivenessOn(target.species());
 		// Ask for status effects such as Miracle Eye, or Floor effects such as Gravity later

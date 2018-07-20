@@ -8,14 +8,13 @@ import org.jdom2.Element;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.item.ItemSelectionEvent;
-import com.darkxell.common.move.Move;
-import com.darkxell.common.pokemon.BaseStats.Stat;
+import com.darkxell.common.pokemon.AffectsPokemon;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.XMLUtils;
 import com.darkxell.common.util.language.Message;
 
 /** Represents an Item type. */
-public class Item
+public class Item implements AffectsPokemon
 {
 	/** Possible actions to be executed on an Item. */
 	public static enum ItemAction
@@ -127,22 +126,6 @@ public class Item
 		this.sell = sell;
 		this.spriteID = spriteID;
 		this.isStackable = stackable;
-	}
-
-	/** Called when a Pokémon uses a damaging move. Modifies the stat value.
-	 * 
-	 * @param isUser - true if this Item is held by Move's user. */
-	public int applyStatModifications(Stat stat, int value, Move move, DungeonPokemon user, DungeonPokemon target, boolean isUser, Floor floor)
-	{
-		return value;
-	}
-
-	/** Called when a Pokémon uses a damaging move. Modifies the stat stage.
-	 * 
-	 * @param isUser - true if this Item is held by the Move's user. */
-	public int applyStatStageModifications(Stat stat, int stage, Move move, DungeonPokemon user, DungeonPokemon target, boolean isUser, Floor floor)
-	{
-		return stage;
 	}
 
 	public ItemCategory category()

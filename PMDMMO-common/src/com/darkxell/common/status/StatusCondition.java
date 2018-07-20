@@ -5,9 +5,10 @@ import java.util.HashMap;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.pokemon.AffectsPokemon;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
-public class StatusCondition
+public class StatusCondition implements AffectsPokemon
 {
 	private static final HashMap<Integer, StatusCondition> _registry = new HashMap<Integer, StatusCondition>();
 

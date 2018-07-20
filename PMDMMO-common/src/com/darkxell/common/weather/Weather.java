@@ -6,10 +6,11 @@ import java.util.HashMap;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.pokemon.AffectsPokemon;
 import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.util.language.Message;
 
-public class Weather
+public class Weather implements AffectsPokemon
 {
 
 	private static final HashMap<Integer, Weather> _weatherRegistry = new HashMap<Integer, Weather>();

@@ -2,16 +2,13 @@ package com.darkxell.common.pokemon.ability;
 
 import java.util.HashMap;
 
-import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
-import com.darkxell.common.move.Move;
-import com.darkxell.common.pokemon.BaseStats.Stat;
+import com.darkxell.common.pokemon.AffectsPokemon;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.util.language.Lang;
 import com.darkxell.common.util.language.Message;
 
-public abstract class Ability
+public abstract class Ability implements AffectsPokemon
 {
 	private static final HashMap<Integer, Ability> abilities = new HashMap<Integer, Ability>();
 
@@ -36,39 +33,6 @@ public abstract class Ability
 	{
 		this.id = id;
 		abilities.put(this.id, this);
-	}
-
-	/** Called when a Pokémon uses a damaging move. Modifies the stat.
-	 * 
-	 * @param isUser - true if this Ability belongs to the Move's user. */
-	public int applyStatModifications(Stat stat, int value, Move move, DungeonPokemon user, DungeonPokemon target, boolean isUser, Floor floor)
-	{
-		return value;
-	}
-
-	/** Called when a Pokémon uses a damaging move. Modifies the stat's stage.
-	 * 
-	 * @param isUser - true if this Ability belongs to the Move's user. */
-	public int applyStatStageModifications(Stat stat, int stage, Move move, DungeonPokemon user, DungeonPokemon target, boolean isUser, Floor floor)
-	{
-		return stage;
-	}
-
-	/** Called when a Pokémon uses a damaging move. Modifies the critical hit rate.
-	 * 
-	 * @param isUser - true if this Ability belongs to the Move's user. */
-	public int applyCriticalRateModifications(int critical, Move move, DungeonPokemon user, DungeonPokemon target, boolean isUser, Floor floor)
-	{
-		return critical;
-	}
-
-	/** Called when a Pokémon uses a damaging move.
-	 * 
-	 * @param isUser - true if this Ability belongs to the Move's user.
-	 * @return A damage multiplier applied to the final damage value. */
-	public double damageMultiplier(MoveUse move, DungeonPokemon user, DungeonPokemon target, boolean isUser, Floor floor)
-	{
-		return 1;
 	}
 
 	public Message description()

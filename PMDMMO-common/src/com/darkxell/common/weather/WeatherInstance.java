@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.dungeon.weather.WeatherCleanedEvent;
-import com.darkxell.common.move.Move;
-import com.darkxell.common.pokemon.DungeonPokemon;
 
 public class WeatherInstance implements Comparable<WeatherInstance>
 {
@@ -36,12 +34,6 @@ public class WeatherInstance implements Comparable<WeatherInstance>
 	public int compareTo(WeatherInstance o)
 	{
 		return -Integer.compare(this.priority, o.priority);
-	}
-
-	/** Called when a Pokémon uses a damaging move. Modifies the attack stat. */
-	public double damageMultiplier(Move move, DungeonPokemon user, DungeonPokemon target, Floor floor)
-	{
-		return 1;
 	}
 
 	protected boolean isOver()
