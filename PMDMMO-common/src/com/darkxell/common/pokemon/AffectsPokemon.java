@@ -7,7 +7,7 @@ import com.darkxell.common.pokemon.BaseStats.Stat;
 /** Any game object that may modify stats or behavior of a Pokemon should implement this interface, for consistency.<br>
  * This interface has default methods and only methods that are necessary can be implemented.<br>
  * This allows for all methods that may affect a Pokemon's stats or behavior to be part of this interface. <br>
- * Some objects that implement this interface do not <i>belong</i> to a Pokemon (such as Weather); in that case, <code>isUser</code> booleans in method arguments should be ignored.<br>
+ * Some objects that implement this interface do not <i>belong</i> to a Pokemon (such as Weather), or the object it belongs to is self-evident (such as Move); in that case, <code>isUser</code> booleans in method arguments should be ignored.<br>
  * <br>
  * 
  * This Interface allows the alteration of:<br>

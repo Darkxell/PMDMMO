@@ -88,7 +88,7 @@ public class Move implements Comparable<Move>
 	/** True if this move deals damage. */
 	public final boolean dealsDamage;
 	/** This move's effect. */
-	private final MoveEffect effect;
+	public final MoveEffect effect;
 	/** True if this move can be boosted by Ginseng. */
 	public final boolean ginsengable;
 	/** This move's ID. */

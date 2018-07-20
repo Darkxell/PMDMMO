@@ -14,14 +14,13 @@ import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.move.Move.MoveCategory;
 import com.darkxell.common.move.Move.MoveRange;
-import com.darkxell.common.pokemon.BaseStats.Stat;
+import com.darkxell.common.pokemon.AffectsPokemon;
 import com.darkxell.common.pokemon.DungeonPokemon;
-import com.darkxell.common.pokemon.DungeonStats;
 import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.language.Message;
 
-public class MoveEffect
+public class MoveEffect implements AffectsPokemon
 {
 	public final int id;
 
@@ -29,149 +28,6 @@ public class MoveEffect
 	{
 		this.id = id;
 		MoveEffects.effects.put(this.id, this);
-	}
-
-	protected double accuracyStat(MoveUse move, DungeonPokemon target, Floor floor)
-	{
-		Stat acc = Stat.Accuracy;
-		int accStage = move.user.stats.getStage(acc);
-		accStage = this.applyStatStageModifications(acc, accStage, move, target, floor);
-
-		DungeonStats stats = move.user.stats.clone();
-		stats.setStage(acc, accStage);
-		double accuracy = stats.getStat(acc);
-		accuracy = this.applyStatModifications(acc, accuracy, move, target, floor);
-		if (accuracy < 0) accuracy = 0;
-		if (accuracy > 999) accuracy = 999;
-
-		return accuracy;
-	}
-
-	protected double applyStatModifications(Stat stat, double value, MoveUse move, DungeonPokemon target, Floor floor)
-	{
-		value = move.user.usedPokemon.ability().applyStatModifications(stat, value, move, target, true, floor);
-		value = target.usedPokemon.ability().applyStatModifications(stat, value, move, target, false, floor);
-		if (move.user.usedPokemon.item() != null) value = move.user.usedPokemon.item().item().applyStatModifications(stat, value, move, target, true, floor);
-		if (target.usedPokemon.item() != null) value = target.usedPokemon.item().item().applyStatModifications(stat, value, move, target, false, floor);
-		value = floor.currentWeather().weather.applyStatModifications(stat, value, move, target, false, floor);
-		return value;
-	}
-
-	protected int applyStatStageModifications(Stat stat, int stage, MoveUse move, DungeonPokemon target, Floor floor)
-	{
-		stage = move.user.usedPokemon.ability().applyStatStageModifications(stat, stage, move, target, true, floor);
-		stage = target.usedPokemon.ability().applyStatStageModifications(stat, stage, move, target, false, floor);
-		if (move.user.usedPokemon.item() != null)
-			stage = move.user.usedPokemon.item().item().applyStatStageModifications(stat, stage, move, target, true, floor);
-		if (target.usedPokemon.item() != null) stage = target.usedPokemon.item().item().applyStatStageModifications(stat, stage, move, target, false, floor);
-		stage = floor.currentWeather().weather.applyStatStageModifications(stat, stage, move, target, false, floor);
-		return stage;
-	}
-
-	protected int attackStat(MoveUse move, DungeonPokemon target, Floor floor)
-	{
-		Stat atk = move.move.move().category == MoveCategory.Special ? Stat.SpecialAttack : Stat.Attack;
-		int atkStage = move.user.stats.getStage(atk);
-		atkStage = this.applyStatStageModifications(atk, atkStage, move, target, floor);
-
-		DungeonStats stats = move.user.stats.clone();
-		stats.setStage(atk, atkStage);
-		double attack = stats.getStat(atk);
-		attack = this.applyStatModifications(atk, attack, move, target, floor);
-		if (attack < 0) attack = 0;
-		if (attack > 999) attack = 999;
-
-		return (int) attack;
-	}
-
-	protected boolean criticalLands(MoveUse move, DungeonPokemon target, Floor floor)
-	{
-		int crit = move.move.move().critical;
-		crit = move.user.usedPokemon.ability().applyCriticalRateModifications(crit, move, target, true, floor);
-		crit = target.usedPokemon.ability().applyCriticalRateModifications(crit, move, target, false, floor);
-
-		if (this.effectiveness(move, target, floor) == PokemonType.SUPER_EFFECTIVE) crit = 40;
-		return floor.random.nextInt(100) < crit;
-	}
-
-	/** @param move - The Move being used.
-	 * @param user - The Pokémon using the move.
-	 * @param target - The Pokémon receiving the move.
-	 * @param floor - The floor context.
-	 * @param events - The list of Events created by this Move.
-	 * @return The damage dealt by this move. */
-	public int damageDealt(MoveUse move, DungeonPokemon user, DungeonPokemon target, Floor floor, ArrayList<DungeonEvent> events)
-	{
-		int attack = this.attackStat(move, target, floor);
-		int defense = this.defenseStat(move, target, floor);
-		int level = user.level();
-		int power = this.movePower(move, user, target, floor);
-		double wildNerfer = user.player() != null ? 1 : 0.75;
-
-		double damage = ((attack + power) * 0.6 - defense / 2 + 50 * Math.log(((attack - defense) / 8 + level + 50) * 10) - 311) * wildNerfer;
-		if (damage < 1) damage = 1;
-		if (damage > 999) damage = 999;
-
-		double multiplier = this.damageMultiplier(move, this.criticalLands(move, target, floor), target, floor);
-		damage *= multiplier;
-
-		// Damage randomness
-		damage *= (9 - floor.random.nextDouble() * 2) / 8;
-
-		return (int) Math.round(damage);
-	}
-
-	protected double damageMultiplier(MoveUse move, boolean critical, DungeonPokemon target, Floor floor)
-	{
-		double multiplier = 1;
-		multiplier *= this.effectiveness(move, target, floor);
-		if (move.isStab()) multiplier *= 1.5;
-		multiplier *= floor.currentWeather().weather.damageMultiplier(move, target, false, floor);
-		if (critical) multiplier *= 1.5;
-
-		multiplier *= move.user.usedPokemon.ability().damageMultiplier(move, target, true, floor);
-		multiplier *= target.usedPokemon.ability().damageMultiplier(move, target, false, floor);
-
-		return multiplier;
-	}
-
-	protected int defenseStat(MoveUse move, DungeonPokemon target, Floor floor)
-	{
-		Stat def = move.move.move().category == MoveCategory.Special ? Stat.SpecialDefense : Stat.Defense;
-		int defStage = target.stats.getStage(def);
-		defStage = this.applyStatStageModifications(def, defStage, move, target, floor);
-
-		DungeonStats stats = target.stats.clone();
-		stats.setStage(def, defStage);
-		double defense = stats.getStat(def);
-		defense = this.applyStatModifications(def, defense, move, target, floor);
-		if (defense < 0) defense = 0;
-		if (defense > 999) defense = 999;
-
-		return (int) defense;
-	}
-
-	protected double effectiveness(MoveUse move, DungeonPokemon target, Floor floor)
-	{
-		double effectiveness = move.move.move().type.effectivenessOn(target.species());
-		// Ask for status effects such as Miracle Eye, or Floor effects such as Gravity later
-		return effectiveness;
-	}
-
-	protected double evasionStat(MoveUse move, DungeonPokemon target, Floor floor)
-	{
-		Stat ev = Stat.Evasiveness;
-		int evStage = target.stats.getStage(ev);
-		evStage = this.applyStatStageModifications(ev, evStage, move, target, floor);
-
-		DungeonStats stats = target.stats.clone();
-		stats.setStage(ev, evStage);
-		double evasion = stats.getStat(ev);
-		evasion = this.applyStatModifications(ev, evasion, move, target, floor);
-		if (evasion < 0) evasion = 0;
-		if (evasion > 999) evasion = 999;
-
-		return evasion;
 	}
 
 	/** Removes all Pokémon this move is not supposed to target. */
@@ -311,7 +167,8 @@ public class MoveEffect
 	public void mainUse(MoveUse usedMove, DungeonPokemon target, Floor floor, ArrayList<DungeonEvent> events)
 	{
 		Move move = usedMove.move.move();
-		boolean missed = this.misses(usedMove, target, floor);
+		MoveEffectCalculator calculator = new MoveEffectCalculator(usedMove, target, floor);
+		boolean missed = calculator.misses();
 		float effectiveness = move.type == null ? PokemonType.NORMALLY_EFFECTIVE : move.type.effectivenessOn(target.species());
 		if (effectiveness == PokemonType.NO_EFFECT) events.add(new MessageEvent(floor, move.unaffectedMessage(target)));
 		else
@@ -323,32 +180,9 @@ public class MoveEffect
 					events.add(new MessageEvent(floor, new Message("move.effectiveness.super").addReplacement("<pokemon>", target.getNickname())));
 				else if (effectiveness == PokemonType.NOT_VERY_EFFECTIVE)
 					events.add(new MessageEvent(floor, new Message("move.effectiveness.not_very").addReplacement("<pokemon>", target.getNickname())));
-				this.useOn(usedMove, target, floor, missed, events);
+				this.useOn(usedMove, target, floor, calculator, missed, events);
 			}
 		}
-	}
-
-	/** @param usedMove - The Move used.
-	 * @param target - The Pokémon receiving the Move.
-	 * @param floor - The Floor context.
-	 * @return True if this Move misses. */
-	public boolean misses(MoveUse usedMove, DungeonPokemon target, Floor floor)
-	{
-		if (usedMove.user == target) return false;
-
-		int accuracy = usedMove.move.move().accuracy;
-
-		double userAccuracy = this.accuracyStat(usedMove, target, floor);
-		double evasion = this.evasionStat(usedMove, target, floor);
-
-		accuracy = (int) (accuracy * userAccuracy * evasion);
-
-		return floor.random.nextDouble() * 100 > accuracy;
-	}
-
-	protected int movePower(MoveUse move, DungeonPokemon user, DungeonPokemon target, Floor floor)
-	{
-		return move.move.move().power + move.move.getAddedLevel();
 	}
 
 	public void prepareUse(MoveUse move, Floor floor, ArrayList<DungeonEvent> events)
@@ -362,11 +196,10 @@ public class MoveEffect
 		if (events.size() == 0 && this != MoveEffects.Basic_attack) events.add(new MessageEvent(floor, new Message("move.no_target")));
 	}
 
-	protected void useOn(MoveUse usedMove, DungeonPokemon target, Floor floor, boolean missed, ArrayList<DungeonEvent> events)
+	protected void useOn(MoveUse usedMove, DungeonPokemon target, Floor floor, MoveEffectCalculator calculator, boolean missed, ArrayList<DungeonEvent> events)
 	{
 		if (missed) events.add(new MessageEvent(floor, new Message("move.miss").addReplacement("<pokemon>", target.getNickname())));
-		else if (usedMove.move.move().category != MoveCategory.Status)
-			events.add(new DamageDealtEvent(floor, target, usedMove, this.damageDealt(usedMove, usedMove.user, target, floor, events)));
+		else if (usedMove.move.move().category != MoveCategory.Status) events.add(new DamageDealtEvent(floor, target, usedMove, calculator.compute()));
 	}
 
 }

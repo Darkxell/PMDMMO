@@ -7,6 +7,7 @@ import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
 import com.darkxell.common.event.stats.StatChangedEvent;
 import com.darkxell.common.move.MoveEffect;
+import com.darkxell.common.move.MoveEffectCalculator;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.BaseStats.Stat;
 
@@ -24,9 +25,9 @@ public class StatChangeEffect extends MoveEffect
 	}
 
 	@Override
-	protected void useOn(MoveUse usedMove, DungeonPokemon target, Floor floor, boolean missed, ArrayList<DungeonEvent> events)
+	protected void useOn(MoveUse usedMove, DungeonPokemon target, Floor floor, MoveEffectCalculator calculator, boolean missed, ArrayList<DungeonEvent> events)
 	{
-		super.useOn(usedMove, target, floor, missed, events);
+		super.useOn(usedMove, target, floor, calculator, missed, events);
 
 		if (!missed) events.add(new StatChangedEvent(floor, target, this.stat, this.stage));
 	}
