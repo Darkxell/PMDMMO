@@ -140,7 +140,7 @@ public class CommonEventProcessor
 			{
 				this.onTurnEnd();
 				return;
-			} else if (actor.isTeamLeader())
+			} else if (actor.isTeamLeader() && actor.canAct(this.dungeon.currentFloor()))
 			{
 				if (this.runners.contains(actor))
 				{

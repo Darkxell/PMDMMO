@@ -108,7 +108,7 @@ public class PokemonTravelEvent extends DungeonEvent implements Communicable
 		if (this.pokemon.isTeamLeader()) this.resultingEvents.add(new BellyChangedEvent(this.floor, this.pokemon, -.1 * this.pokemon.energyMultiplier()));
 		this.origin.removePokemon(this.pokemon);
 		this.destination.setPokemon(this.pokemon);
-		this.resultingEvents.addAll(this.destination.onPokemonStep(this.floor, this.pokemon, this.running));
+		this.destination.onPokemonStep(this.floor, this.pokemon, this.running, this.resultingEvents);
 		return super.processServer();
 	}
 

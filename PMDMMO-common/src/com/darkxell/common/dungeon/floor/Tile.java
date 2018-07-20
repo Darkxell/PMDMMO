@@ -248,11 +248,9 @@ public class Tile implements ItemContainer, Comparable<Tile>
 	/** Called when a Pokémon steps on this Tile.
 	 * 
 	 * @param pokemon - The Pokémon stepping.
-	 * @param running - True if the Pokémon is running.
-	 * @return The Events triggered by this Tile. */
-	public ArrayList<DungeonEvent> onPokemonStep(Floor floor, DungeonPokemon pokemon, boolean running)
+	 * @param running - True if the Pokémon is running. */
+	public void onPokemonStep(Floor floor, DungeonPokemon pokemon, boolean running, ArrayList<DungeonEvent> events)
 	{
-		ArrayList<DungeonEvent> events = new ArrayList<DungeonEvent>();
 		if (this.getItem() != null)
 		{
 			ItemStack i = this.getItem();
@@ -266,8 +264,6 @@ public class Tile implements ItemContainer, Comparable<Tile>
 		}
 
 		if (this.hasTrap()) events.add(new TrapSteppedOnEvent(floor, pokemon, this, this.trap));
-
-		return events;
 	}
 
 	/** Called when this Tile's type is changed. Reloads the connections of itself and its neighbors. */

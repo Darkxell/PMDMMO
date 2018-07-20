@@ -180,7 +180,7 @@ public class Floor
 
 		// Weather
 		for (int w = this.weatherCondition.size() - 1; w >= 0; --w)
-			events.addAll(this.weatherCondition.get(w).update());
+			this.weatherCondition.get(w).update(events);
 
 		// Pokémon spawning
 		if (!this.isStatic && this.data.pokemonDensity() > this.countWildPokemon())

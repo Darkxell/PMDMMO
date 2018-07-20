@@ -49,13 +49,11 @@ public class StatusConditionInstance
 		return new Message("status.start." + this.condition.id).addReplacement("<pokemon>", this.pokemon.getNickname());
 	}
 
-	public ArrayList<DungeonEvent> tick(Floor floor)
+	public void tick(Floor floor, ArrayList<DungeonEvent> events)
 	{
-		ArrayList<DungeonEvent> events = new ArrayList<DungeonEvent>();
-		if (!this.isOver()) events.addAll(this.condition.tick(floor, this));
+		if (!this.isOver()) this.condition.tick(floor, this, events);
 		++this.tick;
 		if (this.isOver()) events.add(new StatusConditionEndedEvent(floor, this));
-		return events;
 	}
 
 }

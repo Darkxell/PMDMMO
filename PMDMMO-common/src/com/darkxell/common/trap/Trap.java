@@ -25,12 +25,10 @@ public abstract class Trap
 	}
 
 	/** Called when a Pokémon steps on this Trap. */
-	public ArrayList<DungeonEvent> onPokemonStep(Floor floor, DungeonPokemon pokemon)
+	public void onPokemonStep(Floor floor, DungeonPokemon pokemon, ArrayList<DungeonEvent> events)
 	{
-		ArrayList<DungeonEvent> events = new ArrayList<DungeonEvent>();
-		events.add(new MessageEvent(floor, new Message("trap.stepped").addReplacement("<pokemon>", pokemon.getNickname()).addReplacement("<trap>",
-				this.name())));
-		return events;
+		events.add(
+				new MessageEvent(floor, new Message("trap.stepped").addReplacement("<pokemon>", pokemon.getNickname()).addReplacement("<trap>", this.name())));
 	}
 
 }

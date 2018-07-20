@@ -174,11 +174,9 @@ public class Move implements Comparable<Move>
 	/** @param move - The used move.
 	 * @param floor - The Floor context.
 	 * @return The Events created by this selection. Creates MoveUseEvents, distributing this Move on targets. */
-	public final ArrayList<DungeonEvent> prepareUse(MoveUse move, Floor floor)
+	public final void prepareUse(MoveUse move, Floor floor, ArrayList<DungeonEvent> events)
 	{
-		ArrayList<DungeonEvent> events = new ArrayList<DungeonEvent>();
 		this.effect.prepareUse(move, floor, events);
-		return events;
 	}
 
 	public Element toXML()
@@ -214,11 +212,8 @@ public class Move implements Comparable<Move>
 	 * @param target - The Pokémon the Move is being used on.
 	 * @param floor - The Floor context.
 	 * @return The events resulting from this Move. They typically include damage, healing, stat changes... */
-	public ArrayList<DungeonEvent> useOn(MoveUse usedMove, DungeonPokemon target, Floor floor)
+	public void useOn(MoveUse usedMove, DungeonPokemon target, Floor floor, ArrayList<DungeonEvent> events)
 	{
-		ArrayList<DungeonEvent> events = new ArrayList<DungeonEvent>();
 		this.effect.mainUse(usedMove, target, floor, events);
-
-		return events;
 	}
 }

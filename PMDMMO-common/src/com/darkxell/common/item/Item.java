@@ -198,12 +198,9 @@ public class Item implements AffectsPokemon
 	 * 
 	 * @param floor - The current Floor.
 	 * @param pokemon - The Pokémon using the Item.
-	 * @param target - The Pokémon the Item is being used on. May be null if there is no target.
-	 * @return The messages that were created while using the Item. */
-	public ArrayList<DungeonEvent> use(Floor floor, DungeonPokemon pokemon, DungeonPokemon target)
-	{
-		return new ArrayList<DungeonEvent>();
-	}
+	 * @param target - The Pokémon the Item is being used on. May be null if there is no target. */
+	public void use(Floor floor, DungeonPokemon pokemon, DungeonPokemon target, ArrayList<DungeonEvent> events)
+	{}
 
 	/** @return True if the user has to select a Team member as target for this Item. */
 	public boolean usedOnTeamMember()

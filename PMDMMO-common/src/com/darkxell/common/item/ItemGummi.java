@@ -78,11 +78,9 @@ public class ItemGummi extends Item
 	}
 
 	@Override
-	public ArrayList<DungeonEvent> use(Floor floor, DungeonPokemon pokemon, DungeonPokemon target)
+	public void use(Floor floor, DungeonPokemon pokemon, DungeonPokemon target, ArrayList<DungeonEvent> events)
 	{
-		ArrayList<DungeonEvent> events = super.use(floor, pokemon, target);
 		events.add(new IncreasedIQEvent(floor, pokemon, this.iqIncrease(target)));
-		return events;
 	}
 
 	@Override

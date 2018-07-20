@@ -85,12 +85,13 @@ public class PokemonSprite
 
 	private boolean animated = true;
 	private float counter = 0;
+	private PokemonSpriteState defaultState = PokemonSpriteState.IDLE;
 	private Direction facing = Direction.SOUTH;
 	private int healthChange = 0;
 	private int healthCounter = 0;
 	public final AbstractPokemonSpriteset pointer;
 	/** When true, if in a repeatable state, will reset to idle state at the end of the current animation. Else, will keep on the same animation. */
-	private boolean resetToIdleOnFinish = false;
+	private boolean resetToDefaultOnFinish = false;
 	private byte shadowColor = NEUTRAL_SHADOW;
 	private PokemonSpriteState state = PokemonSpriteState.IDLE;
 	private float tickSpeed = 1;
@@ -137,7 +138,7 @@ public class PokemonSprite
 
 	public void resetOnAnimationEnd()
 	{
-		this.resetToIdleOnFinish = true;
+		this.resetToDefaultOnFinish = true;
 	}
 
 	public void setFacingDirection(Direction dir)
@@ -161,6 +162,17 @@ public class PokemonSprite
 		this.setState(state, false);
 	}
 
+	public PokemonSpriteState defaultState()
+	{
+		return this.defaultState;
+	}
+
+	public void setDefaultState(PokemonSpriteState state, boolean apply)
+	{
+		this.defaultState = state;
+		if (apply) this.setState(state);
+	}
+
 	/** Changes the state of this Sprite to the wanted one. If the parsed state is already the state used by the pokemon sprite, this does nothing.
 	 * 
 	 * @param playOnLoop - true if the state should play on loop until notified to stop. Defaults to false (i.e. only plays once). */
@@ -171,7 +183,7 @@ public class PokemonSprite
 			this.state = state;
 			this.counter = 0;
 		}
-		this.resetToIdleOnFinish = !playOnLoop;
+		this.resetToDefaultOnFinish = !playOnLoop;
 	}
 
 	public void setTickingSpeed(float tickSpeed)
@@ -187,7 +199,7 @@ public class PokemonSprite
 		if (this.counter >= state.duration)
 		{
 			this.counter = 0;
-			if (this.resetToIdleOnFinish && this.state != PokemonSpriteState.IDLE) this.setState(PokemonSpriteState.IDLE);
+			if (this.resetToDefaultOnFinish && this.state != PokemonSpriteState.IDLE) this.setState(this.defaultState);
 		}
 
 		if (this.healthCounter > 0) --this.healthCounter;
@@ -208,7 +220,7 @@ public class PokemonSprite
 	public void copyState(PokemonSprite sprite)
 	{
 		this.facing = sprite.facing;
-		this.resetToIdleOnFinish = sprite.resetToIdleOnFinish;
+		this.resetToDefaultOnFinish = sprite.resetToDefaultOnFinish;
 		this.shadowColor = sprite.shadowColor;
 		this.tickSpeed = sprite.tickSpeed;
 	}

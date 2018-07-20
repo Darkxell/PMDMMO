@@ -75,4 +75,26 @@ public interface AffectsPokemon
 		return 1;
 	}
 
+	/** Called when a Pokemon tries to move. Returns true if this Pokemon can't move.
+	 * 
+	 * @param pokemon - The Pokemon trying to use a Move.
+	 * @param floor - The Floor context.
+	 * 
+	 * @return <code>true</code> if the Pokemon can't move, <code>false</code> else. */
+	public default boolean preventsMoving(DungeonPokemon pokemon, Floor floor)
+	{
+		return false;
+	}
+
+	/** Called when a Pokemon tries to use a Move. Returns true if this object prevents the use of a Move.
+	 * 
+	 * @param pokemon - The Pokemon trying to use a Move.
+	 * @param floor - The Floor context.
+	 * 
+	 * @return <code>true</code> if a Move can't be used, <code>false</code> else. */
+	public default boolean preventsUsingMoves(DungeonPokemon pokemon, Floor floor)
+	{
+		return false;
+	}
+
 }

@@ -66,17 +66,13 @@ public class ItemFood extends Item
 	}
 
 	@Override
-	public ArrayList<DungeonEvent> use(Floor floor, DungeonPokemon pokemon, DungeonPokemon target)
+	public void use(Floor floor, DungeonPokemon pokemon, DungeonPokemon target, ArrayList<DungeonEvent> events)
 	{
-		ArrayList<DungeonEvent> events = super.use(floor, pokemon, target);
-
 		int increase = this.belly;
 		if (target.getBelly() < target.getBellySize()) events.add(new BellyChangedEvent(floor, target, this.belly));
 		else increase += this.bellyIfFull;
 
 		if (increase != 0) events.add(new BellySizeChangedEvent(floor, target, increase));
-
-		return events;
 	}
 
 	@Override

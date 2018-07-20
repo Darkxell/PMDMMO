@@ -89,7 +89,7 @@ public class AIStateExplore extends AIState
 	{
 		if (this.ai.pokemon.tile() == this.currentDestination || this.currentDestination == null) this.findNewDestination();
 		Direction dir = AIUtils.direction(this.ai.pokemon, this.currentDestination);
-		if (dir == null)
+		if (dir == null || !this.ai.pokemon.canMove(this.ai.floor))
 		{
 			dir = AIUtils.generalDirection(this.ai.pokemon, this.currentDestination);
 			if (dir != this.ai.pokemon.facing()) return new PokemonRotateEvent(this.ai.floor, this.ai.pokemon, dir);

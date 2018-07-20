@@ -42,9 +42,8 @@ public class WeatherInstance implements Comparable<WeatherInstance>
 		return this.tick >= this.duration;
 	}
 
-	public ArrayList<DungeonEvent> update()
+	public void update(ArrayList<DungeonEvent> events)
 	{
-		ArrayList<DungeonEvent> events = new ArrayList<DungeonEvent>();
 		boolean isOver = false;
 
 		++this.tick;
@@ -56,8 +55,6 @@ public class WeatherInstance implements Comparable<WeatherInstance>
 		}
 
 		if (!isOver) events.addAll(this.weather.weatherTick(this.floor, this.tick));
-
-		return events;
 	}
 
 }

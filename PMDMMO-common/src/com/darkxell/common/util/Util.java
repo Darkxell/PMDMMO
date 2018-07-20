@@ -19,9 +19,9 @@ public class Util
 		player.setMoneyInBag(100);
 		player.setMoneyInBank(456789);
 		player.addAlly(PokemonRegistry.find(1).generate(new Random(), 80, 1));
-		player.addAlly(PokemonRegistry.find(255).generate(new Random(), 80));
+		// player.addAlly(PokemonRegistry.find(255).generate(new Random(), 80));
 		player.getTeamLeader().setItem(new ItemStack(ItemID.XRaySpecs));
-		player.getTeamLeader().setMove(2, new LearnedMove(304));
+		player.getTeamLeader().setMove(2, new LearnedMove(706));
 		for (int i = 1; i < 13; ++i)
 			player.inventory().addItem(new ItemStack(i));
 		for (int i = 21; i < 29; ++i)

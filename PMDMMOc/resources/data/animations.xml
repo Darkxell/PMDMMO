@@ -91,6 +91,9 @@
     <c id="202">
       <default y="56" width="64" height="64">0,1,2,3,4,5,6,7</default>
     </c>
+    <c id="203">
+      <default spriteduration="5" width="32" height="32">0,1,2,3,4,5,6</default>
+    </c>
   </custom>
   <items>
     <item id="86">
@@ -122,7 +125,7 @@
       <default sprites="none" state="tailwhip" sound="move-tailwhip"/>
     </move>
     <move id="304">
-      <default sprites="none" state="emit" />
+      <default sprites="none" state="emit"/>
     </move>
     <move id="701" oriented="true">
       <default state="none" width="96" height="96" sound="move-absorb" playsorbanim="true"/>
@@ -135,9 +138,15 @@
       <west height="64"/>
       <northwest/>
     </move>
+    <move id="706">
+      <default sprites="none" state="emit"/>
+    </move>
   </moves>
   <movetargets>
     <movetarget id="304">
+      <default y="52" spriteduration="3" width="40" height="64">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21</default>
+    </movetarget>
+    <movetarget id="706">
       <default y="52" spriteduration="3" width="40" height="64">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21</default>
     </movetarget>
   </movetargets>
@@ -150,6 +159,9 @@
     </status>
     <status id="2">
       <default spriteduration="5" width="16" height="20" y="25">0,1,2,3,4,5,6,7</default>
+    </status>
+    <status id="3">
+      <default spriteduration="5" width="16" height="16" x="0" y="20">0,1,2,3,4,5,6,7,8,9</default>
     </status>
   </statuses>
 </animations>

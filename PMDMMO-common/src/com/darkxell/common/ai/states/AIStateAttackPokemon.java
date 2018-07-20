@@ -19,7 +19,7 @@ public class AIStateAttackPokemon extends AIStateFollowPokemon
 	@Override
 	public DungeonEvent takeAction()
 	{
-		if (AIUtils.isAdjacentTo(this.ai.pokemon, this.target, true))
+		if (AIUtils.isAdjacentTo(this.ai.pokemon, this.target, true) && this.ai.pokemon.canAttack(this.ai.floor))
 		{
 			int moveIndex = this.ai.floor.random.nextInt(this.ai.pokemon.moveCount() + 1);
 			LearnedMove move = moveIndex == this.ai.pokemon.moveCount() ? new LearnedMove(MoveRegistry.ATTACK.id) : this.ai.pokemon.move(moveIndex);

@@ -47,7 +47,7 @@ public class ExperienceGainedEvent extends DungeonEvent
 				.add(new Message("xp.gain").addReplacement("<pokemon>", this.pokemon.getNickname()).addReplacement("<xp>", Integer.toString(this.experience)));
 
 		this.levelsup = this.pokemon.level();
-		this.resultingEvents.addAll(this.pokemon.gainExperience(this));
+		this.pokemon.gainExperience(this, this.resultingEvents);
 		this.levelsup = this.pokemon.level() - this.levelsup;
 
 		return super.processServer();

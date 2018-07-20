@@ -6,7 +6,6 @@ import java.util.function.Predicate;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.event.DungeonEvent;
-import com.darkxell.common.event.stats.ExperienceGainedEvent;
 import com.darkxell.common.item.Item.ItemAction;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.player.ItemContainer;
@@ -75,10 +74,30 @@ public class DungeonPokemon implements ItemContainer
 		return this.usedPokemon.canAccept(item);
 	}
 
+	/** @return <code>false</code> if this Pokemon has no other choice but to skip their turn. */
+	public boolean canAct(Floor floor)
+	{
+		return this.canAttack(floor) || this.canMove(floor);
+	}
+
+	public boolean canAttack(Floor floor)
+	{
+		for (StatusConditionInstance instance : this.statusConditions)
+			if (instance.condition.preventsUsingMoves(this, floor)) return false;
+		return true;
+	}
+
+	public boolean canMove(Floor floor)
+	{
+		for (StatusConditionInstance instance : this.statusConditions)
+			if (instance.condition.preventsMoving(this, floor)) return false;
+		return true;
+	}
+
 	/** @return True if this Pokémon can regenerate HP. */
 	public boolean canRegen()
 	{
-		return !this.hasStatusCondition(StatusCondition.BADLY_POISONED) && !this.hasStatusCondition(StatusCondition.POISONED);
+		return !this.hasStatusCondition(StatusCondition.Badly_poisoned) && !this.hasStatusCondition(StatusCondition.Poisoned);
 	}
 
 	@Override
@@ -131,11 +150,6 @@ public class DungeonPokemon implements ItemContainer
 	public Direction facing()
 	{
 		return this.facing;
-	}
-
-	public ArrayList<DungeonEvent> gainExperience(ExperienceGainedEvent event)
-	{
-		return this.usedPokemon.gainExperience(event);
 	}
 
 	public BaseStats getBaseStats()
@@ -297,7 +311,7 @@ public class DungeonPokemon implements ItemContainer
 		if (this.stats.speedBuffs() > 0 || this.stats.speedDebuffs() > 0) this.stats.onTurnStart(floor, events);
 
 		for (StatusConditionInstance condition : this.statusConditions)
-			events.addAll(condition.tick(floor));
+			condition.tick(floor, events);
 	}
 
 	public Player player()

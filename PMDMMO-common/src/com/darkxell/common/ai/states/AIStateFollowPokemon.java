@@ -48,7 +48,7 @@ public class AIStateFollowPokemon extends AIState
 		if (AIUtils.isAdjacentTo(this.ai.pokemon, this.target, true))
 		{
 			Direction d = AIUtils.adjacentEnemyDirection(this.ai.floor, this.ai.pokemon);
-			if (d != null)
+			if (d != null && this.ai.pokemon.canAttack(this.ai.floor))
 			{
 				int moveIndex = this.ai.floor.random.nextInt(this.ai.pokemon.moveCount() + 1);
 				LearnedMove move = moveIndex == this.ai.pokemon.moveCount() ? new LearnedMove(MoveRegistry.ATTACK.id) : this.ai.pokemon.move(moveIndex);
@@ -59,7 +59,7 @@ public class AIStateFollowPokemon extends AIState
 		}
 
 		Direction go = AIUtils.direction(this.ai.pokemon, this.target);
-		if (go == null)
+		if (go == null || !this.ai.pokemon.canMove(this.ai.floor))
 		{
 			if (direction != this.ai.pokemon.facing()) return new PokemonRotateEvent(this.ai.floor, this.ai.pokemon, direction);
 			return new TurnSkippedEvent(this.ai.floor, this.ai.pokemon);

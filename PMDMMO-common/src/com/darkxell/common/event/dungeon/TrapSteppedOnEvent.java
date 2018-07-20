@@ -33,7 +33,7 @@ public class TrapSteppedOnEvent extends DungeonEvent
 	public ArrayList<DungeonEvent> processServer()
 	{
 		this.tile.trapRevealed = true;
-		this.resultingEvents.addAll(this.trap.onPokemonStep(this.floor, this.pokemon));
+		this.trap.onPokemonStep(this.floor, this.pokemon, this.resultingEvents);
 		return super.processServer();
 	}
 

@@ -28,8 +28,8 @@ public class PeriodicDamageStatusCondition extends StatusCondition implements Da
 	public boolean affects(DungeonPokemon pokemon)
 	{
 		if (!super.affects(pokemon)) return false;
-		if (this == POISONED || this == BADLY_POISONED) return !pokemon.species().isType(PokemonType.Poison);
-		if (this == BURN) return !pokemon.species().isType(PokemonType.Fire);
+		if (this == Poisoned || this == Badly_poisoned) return !pokemon.species().isType(PokemonType.Poison);
+		if (this == Burn) return !pokemon.species().isType(PokemonType.Fire);
 		return true;
 	}
 
@@ -40,11 +40,9 @@ public class PeriodicDamageStatusCondition extends StatusCondition implements Da
 	}
 
 	@Override
-	public ArrayList<DungeonEvent> tick(Floor floor, StatusConditionInstance instance)
+	public void tick(Floor floor, StatusConditionInstance instance, ArrayList<DungeonEvent> events)
 	{
-		ArrayList<DungeonEvent> events = super.tick(floor, instance);
 		if (instance.tick % this.period == 0) events.add(new DamageDealtEvent(floor, instance.pokemon, this, this.damage));
-		return events;
 	}
 
 }

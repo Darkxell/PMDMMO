@@ -32,6 +32,7 @@ import com.darkxell.common.event.CommonEventProcessor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.action.PokemonSpawnedEvent;
 import com.darkxell.common.event.action.PokemonTravelEvent;
+import com.darkxell.common.event.action.TurnSkippedEvent;
 import com.darkxell.common.event.dungeon.ExplorationStopEvent;
 import com.darkxell.common.event.dungeon.NextFloorEvent;
 import com.darkxell.common.event.dungeon.weather.WeatherChangedEvent;
@@ -58,6 +59,7 @@ import com.darkxell.common.item.ItemGummi;
 import com.darkxell.common.player.Inventory;
 import com.darkxell.common.pokemon.BaseStats;
 import com.darkxell.common.pokemon.Pokemon;
+import com.darkxell.common.status.StatusCondition;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.language.Message;
 import com.darkxell.common.weather.Weather;
@@ -139,6 +141,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 
 		if (event instanceof PokemonSpawnedEvent) this.processSpawnEvent((PokemonSpawnedEvent) event);
 		if (event instanceof PokemonTravelsEvent) this.processTravelEvent((PokemonTravelsEvent) event);
+		if (event instanceof TurnSkippedEvent) this.processSkipEvent((TurnSkippedEvent) event);
 		if (event instanceof FaintedPokemonEvent) this.processFaintedEvent((FaintedPokemonEvent) event);
 
 		if (event instanceof StatChangedEvent) this.processStatEvent((StatChangedEvent) event);
@@ -390,6 +393,24 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		}
 	}
 
+	private void processSkipEvent(TurnSkippedEvent event)
+	{
+		if (event.actor() == Persistance.player.getDungeonLeader())
+		{
+			boolean pause = false;
+			if (event.actor().hasStatusCondition(StatusCondition.Asleep))
+			{
+				Persistance.dungeonState.logger.showMessage(new Message("status.tick.sleep").addReplacement("<pokemon>", event.actor().getNickname()));
+				pause = true;
+			}
+			if (pause)
+			{
+				Persistance.dungeonState.setSubstate(new DelayState(Persistance.dungeonState, 40));
+				this.setState(State.ANIMATING);
+			}
+		}
+	}
+
 	private void processSpawnEvent(PokemonSpawnedEvent event)
 	{
 		DungeonPokemonRenderer renderer = Persistance.dungeonState.pokemonRenderer.register(event.spawned);
@@ -448,11 +469,16 @@ public final class ClientEventProcessor extends CommonEventProcessor
 			Persistance.dungeonState.setSubstate(s);
 			this.setState(State.ANIMATING);
 		}
+		if (event.condition.condition == StatusCondition.Asleep)
+			Persistance.dungeonState.pokemonRenderer.getSprite(event.condition.pokemon).setDefaultState(PokemonSpriteState.SLEEP, true);
 	}
 
 	private void processStatusEvent(StatusConditionEndedEvent event)
 	{
 		Persistance.dungeonState.pokemonRenderer.getRenderer(event.condition.pokemon).removeAnimation(event.condition);
+		PokemonSprite sprite = Persistance.dungeonState.pokemonRenderer.getSprite(event.condition.pokemon);
+		if (!event.condition.pokemon.hasStatusCondition(StatusCondition.Asleep) && sprite.defaultState() == PokemonSpriteState.SLEEP)
+			sprite.setDefaultState(PokemonSpriteState.IDLE, false);
 	}
 
 	private void processTravelEvent(PokemonTravelsEvent event)

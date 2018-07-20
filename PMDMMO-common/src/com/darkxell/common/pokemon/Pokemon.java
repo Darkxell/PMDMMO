@@ -166,10 +166,8 @@ public class Pokemon implements ItemContainer, HasID
 
 	/** @param amount - The amount of experience gained.
 	 * @return The number of levels this experience granted. */
-	public ArrayList<DungeonEvent> gainExperience(ExperienceGainedEvent event)
+	public void gainExperience(ExperienceGainedEvent event, ArrayList<DungeonEvent> events)
 	{
-		ArrayList<DungeonEvent> events = new ArrayList<>();
-
 		int amount = event.experience;
 		int levelsup = 0;
 		long next = this.experienceLeftNextLevel();
@@ -188,8 +186,6 @@ public class Pokemon implements ItemContainer, HasID
 			++levelsup;
 			next = this.species().experienceToNextLevel(this.level() + levelsup);
 		}
-
-		return events;
 	}
 
 	public int gender()
