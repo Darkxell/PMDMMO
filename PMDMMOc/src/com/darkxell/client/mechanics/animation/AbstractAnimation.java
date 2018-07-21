@@ -7,6 +7,7 @@ import com.darkxell.client.resources.music.SoundManager;
 public class AbstractAnimation
 {
 
+	int delayTime = 0;
 	/** The total duration of this Animation. */
 	int duration;
 	public final AnimationEndListener listener;
@@ -39,6 +40,13 @@ public class AbstractAnimation
 		return this.duration;
 	}
 
+	/** @return True if this Animation's delay has ended and thus other game logic and animations may begin. */
+	public boolean isDelayOver()
+	{
+		if (this.plays == -1) return false;
+		return this.tick == (this.delayTime - 1) * Math.abs(this.plays);
+	}
+
 	/** @return True if this Animation has ended. */
 	public boolean isOver()
 	{
@@ -46,11 +54,15 @@ public class AbstractAnimation
 		return this.tick == (this.duration - 1) * Math.abs(this.plays);
 	}
 
+	private void onDelayFinished()
+	{
+		if (this.listener != null) this.listener.onAnimationEnd(this);
+	}
+
 	/** Called when this Animation finishes. */
 	public void onFinish()
 	{
 		AnimationTicker.instance.unregister(this);
-		if (this.listener != null) this.listener.onAnimationEnd(this);
 	}
 
 	public void render(Graphics2D g, int width, int height)
@@ -72,6 +84,7 @@ public class AbstractAnimation
 		if (this.sound != null && this.tick == this.soundDelay) SoundManager.playSound(this.sound);
 		if (!this.isOver()) ++this.tick;
 		// Can't use else: needs to increase and finish on same tick.
+		if (this.isDelayOver()) this.onDelayFinished();
 		if (this.isOver()) this.onFinish();
 	}
 

@@ -7,6 +7,14 @@
 		<xs:simpleContent>
 			<xs:extension base="xs:string">
 				<xs:attribute name="spriteduration" type="xs:positiveInteger" use="optional"/>
+				<xs:attribute name="delaytime" type="xs:positiveInteger" use="optional">
+					<xs:annotation>
+						<xs:documentation>The time the game will pause to display this animation.
+							The animation will continue even after this time has elapsed, but game
+							logic and other animations will begin. Defaults to sprite_duration *
+							sprite_count.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
 				<xs:attribute name="x" type="xs:int" use="optional"/>
 				<xs:attribute name="y" type="xs:int" use="optional"/>
 				<xs:attribute name="width" type="xs:positiveInteger" use="optional"/>
@@ -57,7 +65,7 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-	
+
 	<xs:element name="abilities">
 		<xs:complexType>
 			<xs:sequence>
@@ -65,7 +73,7 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-	
+
 	<xs:element name="custom">
 		<xs:complexType>
 			<xs:sequence>

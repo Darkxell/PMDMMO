@@ -129,6 +129,7 @@ public final class Animations
 				a.duration = Math.max(a.duration, a.movement.duration);
 			}
 		}
+		a.delayTime = XMLUtils.getAttribute(xml, "delaytime", XMLUtils.getAttribute(defaultXml, "delaytime", a.duration));
 
 		return a;
 	}
