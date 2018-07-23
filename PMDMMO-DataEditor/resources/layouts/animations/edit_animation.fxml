@@ -1,11 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.darkxell.dataeditor.application.controller.animation.EditAnimationController">
+<BorderPane xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.darkxell.dataeditor.application.controller.animation.EditAnimationController">
+   <top>
+      <Button mnemonicParsing="false" onAction="#onReload" text="Reload" BorderPane.alignment="CENTER" />
+   </top>
+   <opaqueInsets>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </opaqueInsets>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+   <bottom>
+      <Label text="This is a preview of this Animation. Click 'Reload' to reload." BorderPane.alignment="CENTER" />
+   </bottom>
    <center>
-      <Label alignment="CENTER" text="Edit Cutscene here" BorderPane.alignment="CENTER" />
+      <ImageView fx:id="imageView" fitHeight="576.0" fitWidth="768.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
    </center>
 </BorderPane>

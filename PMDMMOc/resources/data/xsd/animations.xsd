@@ -29,7 +29,6 @@
 					</xs:simpleType>
 				</xs:attribute>
 				<xs:attribute name="sprites" type="xs:string" use="optional"/>
-				<xs:attribute name="movement" type="xs:string"/>
 				<xs:attribute name="sound" type="xs:string"/>
 				<xs:attribute name="state" type="xs:string" use="optional"/>
 				<xs:attribute name="playsorbanim" type="xs:boolean" use="optional"/>

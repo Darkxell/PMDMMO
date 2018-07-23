@@ -56,18 +56,8 @@ public class UpdaterAndRenderer implements Runnable {
 
 		// If a tick has passed, update until there is no delayed update
 		while (this.updateTime >= 1) {
-			Persistance.stateManager.update();
-			DiscordEventHandlerForPMDMMO.handleDiscordRP();
-
-			BufferStrategy bf = Persistance.frame.canvas.getBufferStrategy();
-			Graphics2D g = (Graphics2D) bf.getDrawGraphics();
-			int width = Persistance.frame.canvas.getWidth(), height = Persistance.frame.canvas.getHeight();
-			g.clearRect(0, 0, width, height);
-
-			Persistance.stateManager.render(g, width, height);
-
-			g.dispose();
-			bf.show();
+			
+			this.tickUpdate();
 
 			++this.updatesCurrentSecond;
 			--this.updateTime;
@@ -78,6 +68,22 @@ public class UpdaterAndRenderer implements Runnable {
 			this.timer = 0;
 			this.updatesCurrentSecond = 0;
 		}
+	}
+
+	protected void tickUpdate()
+	{
+		Persistance.stateManager.update();
+		DiscordEventHandlerForPMDMMO.handleDiscordRP();
+
+		BufferStrategy bf = Persistance.frame.canvas.getBufferStrategy();
+		Graphics2D g = (Graphics2D) bf.getDrawGraphics();
+		int width = Persistance.frame.canvas.getWidth(), height = Persistance.frame.canvas.getHeight();
+		g.clearRect(0, 0, width, height);
+
+		Persistance.stateManager.render(g, width, height);
+
+		g.dispose();
+		bf.show();
 	}
 
 }

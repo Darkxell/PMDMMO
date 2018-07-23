@@ -2,8 +2,10 @@ package fr.darkxell.dataeditor.application;
 
 import com.darkxell.client.discord.DiscordEventHandlerForPMDMMO;
 import com.darkxell.client.launchable.ClientSettings;
+import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.animation.Animations;
+import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
 import com.darkxell.client.resources.music.SoundsHolder;
 import com.darkxell.common.dungeon.DungeonRegistry;
@@ -42,6 +44,7 @@ public class DataEditor extends Application
 		DungeonRegistry.load();
 		PokemonSpritesets.loadData();
 		Animations.loadData();
+		TextRenderer.load();
 		SoundsHolder.load("../PMDMMOc/");
 		Persistance.player = Util.createDefaultPlayer();
 
@@ -78,6 +81,6 @@ public class DataEditor extends Application
 	public void stop() throws Exception
 	{
 		super.stop();
-		DiscordRPC.discordShutdown();
+		Launcher.stopGame();
 	}
 }

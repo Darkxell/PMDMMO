@@ -48,7 +48,7 @@ public final class Animations
 	private static final HashMap<Integer, Element> moveTargets = new HashMap<Integer, Element>();
 	private static final HashMap<Integer, Element> statuses = new HashMap<Integer, Element>();
 
-	public static AbstractAnimation getAbilityAnimation(DungeonPokemon pokemon, Ability ability, AnimationEndListener s)
+	public static PokemonAnimation getAbilityAnimation(DungeonPokemon pokemon, Ability ability, AnimationEndListener s)
 	{
 		return getAnimation(ability.id, abilities, pokemon, s);
 	}
@@ -199,7 +199,7 @@ public final class Animations
 	private Animations()
 	{}
 
-	public static AbstractAnimation getStatChangeAnimation(StatChangedEvent event, AnimationEndListener listener)
+	public static PokemonAnimation getStatChangeAnimation(StatChangedEvent event, AnimationEndListener listener)
 	{
 		int statID;
 

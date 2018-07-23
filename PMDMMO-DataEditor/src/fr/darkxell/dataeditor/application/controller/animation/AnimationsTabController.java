@@ -34,18 +34,14 @@ public class AnimationsTabController implements Initializable, ListCellParent<St
 	{
 		instance = this;
 		this.animationsListView.setCellFactory(param -> {
-			return new CustomListCell<>(AnimationsTabController.instance, "Animation").setCanOrder(false);
+			return new CustomListCell<>(AnimationsTabController.instance, "Animation").setCanOrder(false).setCanCreate(false).setCanDelete(false)
+					.setCanRename(false);
 		});
 	}
 
 	@Override
 	public void onCreate(String nullItem)
 	{}
-
-	public void onCreateAnimation()
-	{
-		this.onCreate(null);
-	}
 
 	@Override
 	public void onDelete(String item)
