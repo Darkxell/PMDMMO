@@ -29,6 +29,9 @@
 				<Tab fx:id="cutscenesTab" text="Cutscenes">
 					<fx:include fx:id="cutscenesTabPage" source="cutscenes/cutscenes.fxml" />
 				</Tab>
+				<Tab fx:id="animationsTab" text="Animations">
+					<fx:include fx:id="animationsTabPage" source="animations/animations.fxml" />
+				</Tab>
 			</tabs>
 		</TabPane>
 	</center>
