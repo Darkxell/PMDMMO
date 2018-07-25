@@ -5,27 +5,31 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
 
 <BorderPane xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.darkxell.dataeditor.application.controller.animation.EditAnimationController">
-   <top>
-      <Button mnemonicParsing="false" onAction="#onReload" text="Reload" BorderPane.alignment="CENTER" />
-   </top>
    <opaqueInsets>
       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
    </opaqueInsets>
    <padding>
       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
    </padding>
-   <bottom>
-      <Label text="This is a preview of this Animation. Click 'Reload' to reload." BorderPane.alignment="CENTER" />
-   </bottom>
    <center>
-      <ImageView fx:id="imageView" fitHeight="576.0" fitWidth="768.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+      <VBox alignment="CENTER" BorderPane.alignment="CENTER">
+         <children>
+            <Button mnemonicParsing="false" onAction="#onReload" text="Reload" />
+            <ImageView fx:id="imageView" fitHeight="576.0" fitWidth="768.0" pickOnBounds="true" preserveRatio="true" />
+            <ProgressBar fx:id="progressBar" prefWidth="400.0" progress="0.0" />
+            <Label text="This is a preview of this Animation. Click 'Reload' to reload." />
+         </children>
+      </VBox>
    </center>
    <right>
       <GridPane alignment="CENTER" BorderPane.alignment="CENTER">

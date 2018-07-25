@@ -31,6 +31,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 
 public class EditAnimationController implements Initializable
@@ -50,6 +51,8 @@ public class EditAnimationController implements Initializable
 	public ImageView imageView;
 	@FXML
 	public ComboBox<PokemonSpecies> pokemonCombobox;
+	@FXML
+	public ProgressBar progressBar;
 	@FXML
 	public CheckBox shinyCheckbox;
 	@FXML
@@ -157,6 +160,13 @@ public class EditAnimationController implements Initializable
 		thread.cooldown = 0;
 
 		this.playAnimation();
+	}
+
+	public void updateProgressBar(boolean shouldBeFull)
+	{
+		if (shouldBeFull) this.progressBar.setProgress(1);
+		else if (this.current == null || this.current.duration() == -1) this.progressBar.setProgress(0);
+		else this.progressBar.setProgress(Math.min(1, this.current.tick() * 1. / this.current.duration()));
 	}
 
 }

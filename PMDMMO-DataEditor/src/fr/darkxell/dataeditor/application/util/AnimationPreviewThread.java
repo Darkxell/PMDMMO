@@ -14,8 +14,15 @@ import javafx.embed.swing.SwingFXUtils;
 
 public class AnimationPreviewThread extends UpdaterAndRenderer implements AnimationEndListener
 {
-	private BufferedImage image;
 	public int cooldown = 50;
+	private BufferedImage image;
+
+	@Override
+	public void onAnimationEnd(AbstractAnimation animation)
+	{
+		this.cooldown = 50;
+		EditAnimationController.instance.updateProgressBar(true);
+	}
 
 	@Override
 	protected void tickUpdate()
@@ -26,7 +33,7 @@ public class AnimationPreviewThread extends UpdaterAndRenderer implements Animat
 		{
 			--this.cooldown;
 			if (this.cooldown == 0) EditAnimationController.instance.playAnimation();
-		}
+		} else EditAnimationController.instance.updateProgressBar(false);
 
 		int width = PrincipalMainState.displayWidth, height = PrincipalMainState.displayHeight;
 		image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
@@ -41,12 +48,6 @@ public class AnimationPreviewThread extends UpdaterAndRenderer implements Animat
 		g.dispose();
 
 		EditAnimationController.instance.imageView.setImage(SwingFXUtils.toFXImage(image, null));
-	}
-
-	@Override
-	public void onAnimationEnd(AbstractAnimation animation)
-	{
-		this.cooldown = 50;
 	}
 
 }
