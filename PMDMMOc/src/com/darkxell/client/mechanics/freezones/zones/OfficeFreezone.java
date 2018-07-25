@@ -3,6 +3,7 @@ package com.darkxell.client.mechanics.freezones.zones;
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
 import com.darkxell.client.mechanics.freezones.WarpZone;
 import com.darkxell.client.mechanics.freezones.entities.AnimatedFlowerEntity;
+import com.darkxell.client.mechanics.freezones.entities.MissionBillboardEntity;
 import com.darkxell.client.renderers.layers.BackgroundSeaLayer;
 import com.darkxell.common.util.DoubleRectangle;
 import com.darkxell.common.zones.FreezoneInfo;
@@ -27,6 +28,8 @@ public class OfficeFreezone extends FreezoneMap {
 		this.addEntity(new AnimatedFlowerEntity(55, 24, true));
 		this.addEntity(new AnimatedFlowerEntity(40, 39, true));
 		this.addEntity(new AnimatedFlowerEntity(15, 46, true));
+		
+		this.addEntity(new MissionBillboardEntity(37.5, 27));
 	}
 
 }
