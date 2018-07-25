@@ -211,7 +211,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		s.animation = Animations.getAbilityAnimation(event.pokemon, event.ability, this.currentAnimEnd);
 		if (s.animation != null)
 		{
-			if (s.animation.needsPause)
+			if (s.animation.needsPause())
 			{
 				Persistance.dungeonState.setSubstate(s);
 				this.setState(State.ANIMATING);
