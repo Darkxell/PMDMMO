@@ -7,8 +7,9 @@ import java.util.ResourceBundle;
 
 import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.launchable.Persistance;
-import com.darkxell.client.mechanics.animation.AbstractAnimation;
 import com.darkxell.client.mechanics.animation.Animations;
+import com.darkxell.client.mechanics.animation.PokemonAnimation;
+import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
 import com.darkxell.client.state.dungeon.AnimationState;
 import com.darkxell.client.state.dungeon.DungeonState;
 import com.darkxell.client.state.mainstates.PrincipalMainState;
@@ -19,13 +20,17 @@ import com.darkxell.common.item.ItemRegistry;
 import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.PokemonRegistry;
+import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.pokemon.ability.Ability;
 import com.darkxell.common.status.StatusCondition;
+import com.darkxell.common.util.Direction;
 
 import fr.darkxell.dataeditor.application.util.AnimationListItem;
 import fr.darkxell.dataeditor.application.util.AnimationPreviewThread;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.image.ImageView;
 
 public class EditAnimationController implements Initializable
@@ -37,10 +42,28 @@ public class EditAnimationController implements Initializable
 	public static AnimationPreviewThread thread;
 
 	private AnimationListItem animation;
-	private AbstractAnimation current;
+	private PokemonAnimation current;
 
 	@FXML
+	public ComboBox<Direction> directionCombobox;
+	@FXML
 	public ImageView imageView;
+	@FXML
+	public ComboBox<PokemonSpecies> pokemonCombobox;
+	@FXML
+	public CheckBox shinyCheckbox;
+	@FXML
+	public ComboBox<PokemonSpriteState> stateCombobox;
+
+	private DungeonPokemon generateTester()
+	{
+		DungeonPokemon pokemon = new DungeonPokemon(this.pokemonCombobox.getValue().generate(new Random(), 1, this.shinyCheckbox.isSelected() ? 1 : 0));
+		floor.summonPokemon(pokemon, floor.getWidth() / 2, floor.getHeight() / 2, new ArrayList<>());
+		pokemon.setFacing(this.directionCombobox.getValue());
+		state.pokemonRenderer.register(pokemon);
+		state.pokemonRenderer.getRenderer(pokemon).sprite().setDefaultState(this.stateCombobox.getValue(), true);
+		return pokemon;
+	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
@@ -65,10 +88,18 @@ public class EditAnimationController implements Initializable
 			Launcher.setProcessingProfile(Launcher.PROFILE_SYNCHRONIZED);
 
 			new Thread(thread = new AnimationPreviewThread()).start();
+
+			this.pokemonCombobox.getItems().addAll(PokemonRegistry.list());
+			this.stateCombobox.getItems().addAll(PokemonSpriteState.values());
+			this.directionCombobox.getItems().addAll(Direction.directions);
+
+			this.pokemonCombobox.setValue(tester.species());
+			this.stateCombobox.setValue(PokemonSpriteState.IDLE);
+			this.directionCombobox.setValue(Direction.SOUTH);
 		}
 	}
 
-	private AbstractAnimation loadAnimation()
+	private PokemonAnimation loadAnimation()
 	{
 		switch (this.animation.folder)
 		{
@@ -95,6 +126,14 @@ public class EditAnimationController implements Initializable
 		}
 	}
 
+	public void onPropertiesChanged()
+	{
+		Persistance.dungeonState.pokemonRenderer.getRenderer(tester).removeAnimation(this.current);
+		state.pokemonRenderer.unregister(tester);
+		tester = this.generateTester();
+		if (this.current != null) Persistance.dungeonState.pokemonRenderer.getRenderer(tester).addAnimation(this.current);
+	}
+
 	public void onReload()
 	{
 		Animations.loadData();
@@ -108,7 +147,7 @@ public class EditAnimationController implements Initializable
 		if (this.animation == null) return;
 		if (this.current != null) this.current.stop();
 		AnimationState s = new AnimationState(Persistance.dungeonState);
-		this.current = s.animation = this.loadAnimation();
+		s.animation = this.current = this.loadAnimation();
 		if (s.animation != null) state.setSubstate(s);
 	}
 

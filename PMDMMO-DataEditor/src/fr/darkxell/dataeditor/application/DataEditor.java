@@ -84,5 +84,6 @@ public class DataEditor extends Application
 	{
 		super.stop();
 		Launcher.stopGame();
+		System.exit(0);
 	}
 }
