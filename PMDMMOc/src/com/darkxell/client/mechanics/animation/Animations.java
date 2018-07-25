@@ -1,5 +1,7 @@
 package com.darkxell.client.mechanics.animation;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 
 import org.jdom2.Element;
@@ -58,7 +60,7 @@ public final class Animations
 		return getAnimation(id, registry, target, null, listener);
 	}
 
-	private static PokemonAnimation getAnimation(int id, HashMap<Integer, Element> registry, DungeonPokemon target, PokemonSpriteState defaultState,
+	public static PokemonAnimation getAnimation(int id, HashMap<Integer, Element> registry, DungeonPokemon target, PokemonSpriteState defaultState,
 			AnimationEndListener listener)
 	{
 		if (!registry.containsKey(id)) return null;
@@ -168,6 +170,13 @@ public final class Animations
 
 	public static void loadData()
 	{
+		abilities.clear();
+		custom.clear();
+		items.clear();
+		moves.clear();
+		moveTargets.clear();
+		statuses.clear();
+
 		Element xml = XMLUtils.read(Animations.class.getResourceAsStream("/data/animations.xml"));
 		for (Element a : xml.getChild("abilities", xml.getNamespace()).getChildren("a", xml.getNamespace()))
 			abilities.put(Integer.parseInt(a.getAttributeValue("id")), a);
@@ -231,6 +240,28 @@ public final class Animations
 
 		if (event.stage < 0) statID += STAT_UP_TO_DOWN;
 		return getCustomAnimation(event.target, statID, listener);
+	}
+
+	public static String[] listAnimations()
+	{
+		ArrayList<String> anims = new ArrayList<>();
+
+		for (Integer key : abilities.keySet())
+			anims.add("abilities/" + key);
+		for (Integer key : custom.keySet())
+			anims.add("custom/" + key);
+		for (Integer key : items.keySet())
+			anims.add("items/" + key);
+		for (Integer key : moves.keySet())
+			anims.add("moves/" + key);
+		for (Integer key : moveTargets.keySet())
+			anims.add("targets/" + key);
+		for (Integer key : statuses.keySet())
+			anims.add("statuses/" + key);
+		
+		anims.sort(Comparator.naturalOrder());
+
+		return anims.toArray(new String[anims.size()]);
 	}
 
 }

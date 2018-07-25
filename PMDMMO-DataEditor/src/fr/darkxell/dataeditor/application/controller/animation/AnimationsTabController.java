@@ -1,30 +1,34 @@
 package fr.darkxell.dataeditor.application.controller.animation;
 
 import java.net.URL;
+import java.util.Comparator;
 import java.util.ResourceBundle;
+
+import com.darkxell.client.mechanics.animation.Animations;
 
 import fr.darkxell.dataeditor.application.controls.CustomListCell;
 import fr.darkxell.dataeditor.application.controls.CustomListCell.ListCellParent;
+import fr.darkxell.dataeditor.application.util.AnimationListItem;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TitledPane;
 
-public class AnimationsTabController implements Initializable, ListCellParent<String>
+public class AnimationsTabController implements Initializable, ListCellParent<AnimationListItem>
 {
 
 	public static AnimationsTabController instance;
 
 	@FXML
-	public ListView<String> animationsListView;
+	public ListView<AnimationListItem> animationsListView;
 	@FXML
 	public EditAnimationController editAnimationController;
 	@FXML
 	private TitledPane editAnimationPane;
 
 	@Override
-	public Node graphicFor(String item)
+	public Node graphicFor(AnimationListItem item)
 	{
 		return null;
 	}
@@ -37,26 +41,34 @@ public class AnimationsTabController implements Initializable, ListCellParent<St
 			return new CustomListCell<>(AnimationsTabController.instance, "Animation").setCanOrder(false).setCanCreate(false).setCanDelete(false)
 					.setCanRename(false);
 		});
+
+		String[] anims = Animations.listAnimations();
+		for (String anim : anims)
+			animationsListView.getItems().add(AnimationListItem.create(anim));
+		animationsListView.getItems().sort(Comparator.naturalOrder());
 	}
 
 	@Override
-	public void onCreate(String nullItem)
+	public void onCreate(AnimationListItem nullItem)
 	{}
 
 	@Override
-	public void onDelete(String item)
+	public void onDelete(AnimationListItem item)
 	{}
 
 	@Override
-	public void onEdit(String item)
+	public void onEdit(AnimationListItem item)
+	{
+		AnimationListItem selected=this.animationsListView.getSelectionModel().getSelectedItem();
+		this.editAnimationController.setAnimation(selected);
+	}
+
+	@Override
+	public void onMove(AnimationListItem item, int newIndex)
 	{}
 
 	@Override
-	public void onMove(String item, int newIndex)
-	{}
-
-	@Override
-	public void onRename(String item, String name)
+	public void onRename(AnimationListItem item, String name)
 	{}
 
 }
