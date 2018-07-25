@@ -98,6 +98,7 @@ public class EditAnimationController implements Initializable
 	public void onReload()
 	{
 		Animations.loadData();
+		AnimationsTabController.instance.reloadList();
 
 		this.setAnimation(this.animation);
 	}
@@ -105,7 +106,7 @@ public class EditAnimationController implements Initializable
 	public void playAnimation()
 	{
 		if (this.animation == null) return;
-		Persistance.dungeonState.pokemonRenderer.getRenderer(tester).removeAnimation(this.current);
+		if (this.current != null) this.current.stop();
 		AnimationState s = new AnimationState(Persistance.dungeonState);
 		this.current = s.animation = this.loadAnimation();
 		if (s.animation != null) state.setSubstate(s);
@@ -114,6 +115,7 @@ public class EditAnimationController implements Initializable
 	public void setAnimation(AnimationListItem animation)
 	{
 		this.animation = animation;
+		thread.cooldown = 0;
 
 		this.playAnimation();
 	}

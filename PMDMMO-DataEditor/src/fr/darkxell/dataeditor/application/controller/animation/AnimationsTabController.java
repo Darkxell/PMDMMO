@@ -9,11 +9,13 @@ import com.darkxell.client.mechanics.animation.Animations;
 import fr.darkxell.dataeditor.application.controls.CustomListCell;
 import fr.darkxell.dataeditor.application.controls.CustomListCell.ListCellParent;
 import fr.darkxell.dataeditor.application.util.AnimationListItem;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TitledPane;
+import javafx.scene.input.MouseEvent;
 
 public class AnimationsTabController implements Initializable, ListCellParent<AnimationListItem>
 {
@@ -41,11 +43,15 @@ public class AnimationsTabController implements Initializable, ListCellParent<An
 			return new CustomListCell<>(AnimationsTabController.instance, "Animation").setCanOrder(false).setCanCreate(false).setCanDelete(false)
 					.setCanRename(false);
 		});
+		this.animationsListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent click)
+			{
+				if (click.getClickCount() == 2) onEdit(animationsListView.getSelectionModel().getSelectedItem());
+			}
+		});
 
-		String[] anims = Animations.listAnimations();
-		for (String anim : anims)
-			animationsListView.getItems().add(AnimationListItem.create(anim));
-		animationsListView.getItems().sort(Comparator.naturalOrder());
+		this.reloadList();
 	}
 
 	@Override
@@ -59,8 +65,10 @@ public class AnimationsTabController implements Initializable, ListCellParent<An
 	@Override
 	public void onEdit(AnimationListItem item)
 	{
-		AnimationListItem selected=this.animationsListView.getSelectionModel().getSelectedItem();
+		AnimationListItem selected = this.animationsListView.getSelectionModel().getSelectedItem();
 		this.editAnimationController.setAnimation(selected);
+
+		this.editAnimationPane.setText("Animation: " + selected);
 	}
 
 	@Override
@@ -70,5 +78,15 @@ public class AnimationsTabController implements Initializable, ListCellParent<An
 	@Override
 	public void onRename(AnimationListItem item, String name)
 	{}
+
+	public void reloadList()
+	{
+		animationsListView.getItems().clear();
+
+		String[] anims = Animations.listAnimations();
+		for (String anim : anims)
+			animationsListView.getItems().add(AnimationListItem.create(anim));
+		animationsListView.getItems().sort(Comparator.naturalOrder());
+	}
 
 }

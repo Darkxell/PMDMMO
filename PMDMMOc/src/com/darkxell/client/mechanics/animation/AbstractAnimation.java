@@ -92,4 +92,9 @@ public class AbstractAnimation
 		if (this.isOver()) this.onFinish();
 	}
 
+	public void stop()
+	{
+		this.onFinish();
+	}
+
 }

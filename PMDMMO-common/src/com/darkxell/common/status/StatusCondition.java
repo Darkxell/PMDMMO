@@ -7,6 +7,7 @@ import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.pokemon.AffectsPokemon;
 import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.util.language.Message;
 
 public class StatusCondition implements AffectsPokemon
 {
@@ -40,6 +41,11 @@ public class StatusCondition implements AffectsPokemon
 	public boolean affects(DungeonPokemon pokemon)
 	{
 		return !pokemon.hasStatusCondition(this);
+	}
+
+	public Message name()
+	{
+		return new Message("status." + this.id);
 	}
 
 	public void tick(Floor floor, StatusConditionInstance instance, ArrayList<DungeonEvent> events)

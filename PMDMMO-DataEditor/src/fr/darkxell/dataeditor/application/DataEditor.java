@@ -7,6 +7,7 @@ import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.animation.Animations;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
+import com.darkxell.client.resources.music.SoundManager;
 import com.darkxell.client.resources.music.SoundsHolder;
 import com.darkxell.common.dungeon.DungeonRegistry;
 import com.darkxell.common.item.ItemRegistry;
@@ -46,6 +47,7 @@ public class DataEditor extends Application
 		Animations.loadData();
 		TextRenderer.load();
 		SoundsHolder.load("../PMDMMOc/");
+		Persistance.soundmanager = new SoundManager();
 		Persistance.player = Util.createDefaultPlayer();
 
 		DiscordRPC.discordInitialize("463408543572426762", DiscordEventHandlerForPMDMMO.createHandler(), true);
