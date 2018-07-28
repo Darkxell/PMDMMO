@@ -168,7 +168,7 @@ public class MoveEffect implements AffectsPokemon
 	{
 		Move move = usedMove.move.move();
 		MoveEffectCalculator calculator = new MoveEffectCalculator(usedMove, target, floor);
-		boolean missed = calculator.misses();
+		boolean missed = calculator.misses(events);
 		float effectiveness = move.type == null ? PokemonType.NORMALLY_EFFECTIVE : move.type.effectivenessOn(target.species());
 		if (effectiveness == PokemonType.NO_EFFECT) events.add(new MessageEvent(floor, move.unaffectedMessage(target)));
 		else
@@ -199,7 +199,7 @@ public class MoveEffect implements AffectsPokemon
 	protected void useOn(MoveUse usedMove, DungeonPokemon target, Floor floor, MoveEffectCalculator calculator, boolean missed, ArrayList<DungeonEvent> events)
 	{
 		if (missed) events.add(new MessageEvent(floor, new Message("move.miss").addReplacement("<pokemon>", target.getNickname())));
-		else if (usedMove.move.move().category != MoveCategory.Status) events.add(new DamageDealtEvent(floor, target, usedMove, calculator.compute()));
+		else if (usedMove.move.move().category != MoveCategory.Status) events.add(new DamageDealtEvent(floor, target, usedMove, calculator.compute(events)));
 	}
 
 }

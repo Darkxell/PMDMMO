@@ -1,6 +1,9 @@
 package com.darkxell.common.pokemon;
 
+import java.util.ArrayList;
+
 import com.darkxell.common.dungeon.floor.Floor;
+import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
 import com.darkxell.common.pokemon.BaseStats.Stat;
 
@@ -27,9 +30,10 @@ public interface AffectsPokemon
 	 * @param move - The Move use context.
 	 * @param target - The Pokemon the move was used on.
 	 * @param isUser - <code>true</code> if this Object belongs to the Move's user (if it's its ability or an item it holds).
+	 * @param events - The current Events being generated.
 	 * 
 	 * @return The new critical hit rate with modifications applied by this object. */
-	public default int applyCriticalRateModifications(int critical, MoveUse move, DungeonPokemon target, boolean isUser, Floor floor)
+	public default int applyCriticalRateModifications(int critical, MoveUse move, DungeonPokemon target, boolean isUser, Floor floor, ArrayList<DungeonEvent> events)
 	{
 		return critical;
 	}
@@ -41,9 +45,10 @@ public interface AffectsPokemon
 	 * @param move - The Move use context.
 	 * @param target - The Pokemon the move was used on.
 	 * @param isUser - <code>true</code> if this Object belongs to the Move's user (if it's its ability or an item it holds).
+	 * @param events - The current Events being generated.
 	 * 
 	 * @return The new value of the Stat with modifications applied by this object. */
-	public default double applyStatModifications(Stat stat, double value, MoveUse move, DungeonPokemon target, boolean isUser, Floor floor)
+	public default double applyStatModifications(Stat stat, double value, MoveUse move, DungeonPokemon target, boolean isUser, Floor floor, ArrayList<DungeonEvent> events)
 	{
 		return value;
 	}
@@ -55,9 +60,10 @@ public interface AffectsPokemon
 	 * @param move - The Move use context.
 	 * @param target - The Pokemon the move was used on.
 	 * @param isUser - <code>true</code> if this Object belongs to the Move's user (if it's its ability or an item it holds).
+	 * @param events - The current Events being generated.
 	 * 
 	 * @return The new stage of the Stat with modifications applied by this object. */
-	public default int applyStatStageModifications(Stat stat, int stage, MoveUse move, DungeonPokemon target, boolean isUser, Floor floor)
+	public default int applyStatStageModifications(Stat stat, int stage, MoveUse move, DungeonPokemon target, boolean isUser, Floor floor, ArrayList<DungeonEvent> events)
 	{
 		return stage;
 	}
@@ -68,9 +74,10 @@ public interface AffectsPokemon
 	 * @param target - The Pokemon the move was used on.
 	 * @param isUser - <code>true</code> if this Object belongs to the Move's user (if it's its ability or an item it holds).
 	 * @param floor - The Floor context.
+	 * @param events - The current Events being generated.
 	 * 
 	 * @return The new stage of the Stat with modifications applied by this object. */
-	public default double damageMultiplier(MoveUse move, DungeonPokemon target, boolean isUser, Floor floor)
+	public default double damageMultiplier(MoveUse move, DungeonPokemon target, boolean isUser, Floor floor, ArrayList<DungeonEvent> events)
 	{
 		return 1;
 	}
