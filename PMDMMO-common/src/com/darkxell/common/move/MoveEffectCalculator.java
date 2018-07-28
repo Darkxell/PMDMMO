@@ -16,6 +16,7 @@ import com.darkxell.common.pokemon.PropertyModificator;
 public class MoveEffectCalculator
 {
 
+	private double effectiveness = -1;
 	public final Floor floor;
 	public final PropertyModificator modificator = new PropertyModificator();
 	public final MoveUse move;
@@ -88,6 +89,13 @@ public class MoveEffectCalculator
 		return (int) Math.round(damage);
 	}
 
+	protected double computeEffectiveness()
+	{
+		double effectiveness = move.move.move().type.effectivenessOn(target.species());
+		effectiveness = this.modificator.applyEffectivenessModifications(effectiveness, move, target, floor);
+		return effectiveness;
+	}
+
 	protected boolean criticalLands(ArrayList<DungeonEvent> events)
 	{
 		int crit = move.move.move().critical;
@@ -123,11 +131,10 @@ public class MoveEffectCalculator
 		return (int) defense;
 	}
 
-	protected double effectiveness()
+	public double effectiveness()
 	{
-		double effectiveness = move.move.move().type.effectivenessOn(target.species());
-		// Ask for status effects such as Miracle Eye, or Floor effects such as Gravity later
-		return effectiveness;
+		if (this.effectiveness == -1) this.effectiveness = this.computeEffectiveness();
+		return this.effectiveness;
 	}
 
 	protected double evasionStat(ArrayList<DungeonEvent> events)

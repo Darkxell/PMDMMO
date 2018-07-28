@@ -34,6 +34,14 @@ public class PropertyModificator
 		return critical;
 	}
 
+	/** Calls {@link AffectsPokemon#applyCriticalRateModifications} on each affecter. */
+	public double applyEffectivenessModifications(double effectiveness, MoveUse move, DungeonPokemon target, Floor floor)
+	{
+		for (AffectsPokemon affecter : this.affecters)
+			effectiveness = affecter.applyEffectivenessModifications(effectiveness, move, target, this.users.contains(affecter), floor);
+		return effectiveness;
+	}
+
 	/** Calls {@link AffectsPokemon#applyStatModifications} on each affecter. */
 	public double applyStatModifications(Stat stat, double value, MoveUse move, DungeonPokemon target, Floor floor, ArrayList<DungeonEvent> events)
 	{

@@ -63,7 +63,7 @@ public class ItemGummi extends Item
 	{
 		if (type == null) return 0;
 		if (type == this.type) return 7;
-		float effectiveness = this.type.effectivenessOn(type);
+		double effectiveness = this.type.effectivenessOn(type);
 		if (effectiveness == PokemonType.NO_EFFECT) return 1;
 		if (effectiveness == PokemonType.NOT_VERY_EFFECTIVE) return 2;
 		if (effectiveness == PokemonType.SUPER_EFFECTIVE) return 4;

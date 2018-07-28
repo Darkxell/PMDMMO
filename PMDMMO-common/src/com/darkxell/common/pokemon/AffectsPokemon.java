@@ -33,9 +33,24 @@ public interface AffectsPokemon
 	 * @param events - The current Events being generated.
 	 * 
 	 * @return The new critical hit rate with modifications applied by this object. */
-	public default int applyCriticalRateModifications(int critical, MoveUse move, DungeonPokemon target, boolean isUser, Floor floor, ArrayList<DungeonEvent> events)
+	public default int applyCriticalRateModifications(int critical, MoveUse move, DungeonPokemon target, boolean isUser, Floor floor,
+			ArrayList<DungeonEvent> events)
 	{
 		return critical;
+	}
+
+	/** Called when a Pokemon uses a damaging move. Modifies the value of the input effectiveness.
+	 * 
+	 * @param effectiveness - The effectiveness to modify.
+	 * @param value - The value of the Stat before this object applies its modifications.
+	 * @param move - The Move use context.
+	 * @param target - The Pokemon the move was used on.
+	 * @param isUser - <code>true</code> if this Object belongs to the Move's user (if it's its ability or an item it holds).
+	 * 
+	 * @return The new value of the effectiveness with modifications applied by this object. */
+	public default double applyEffectivenessModifications(double effectiveness, MoveUse move, DungeonPokemon target, boolean isUser, Floor floor)
+	{
+		return effectiveness;
 	}
 
 	/** Called when a Pokemon uses a damaging move. Modifies the value of the input Stat. (If attack or accuracy, it's for the user; if defense or evasion, it's for the target.)
@@ -48,7 +63,8 @@ public interface AffectsPokemon
 	 * @param events - The current Events being generated.
 	 * 
 	 * @return The new value of the Stat with modifications applied by this object. */
-	public default double applyStatModifications(Stat stat, double value, MoveUse move, DungeonPokemon target, boolean isUser, Floor floor, ArrayList<DungeonEvent> events)
+	public default double applyStatModifications(Stat stat, double value, MoveUse move, DungeonPokemon target, boolean isUser, Floor floor,
+			ArrayList<DungeonEvent> events)
 	{
 		return value;
 	}
@@ -63,7 +79,8 @@ public interface AffectsPokemon
 	 * @param events - The current Events being generated.
 	 * 
 	 * @return The new stage of the Stat with modifications applied by this object. */
-	public default int applyStatStageModifications(Stat stat, int stage, MoveUse move, DungeonPokemon target, boolean isUser, Floor floor, ArrayList<DungeonEvent> events)
+	public default int applyStatStageModifications(Stat stat, int stage, MoveUse move, DungeonPokemon target, boolean isUser, Floor floor,
+			ArrayList<DungeonEvent> events)
 	{
 		return stage;
 	}

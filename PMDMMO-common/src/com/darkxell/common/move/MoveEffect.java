@@ -169,16 +169,16 @@ public class MoveEffect implements AffectsPokemon
 		Move move = usedMove.move.move();
 		MoveEffectCalculator calculator = new MoveEffectCalculator(usedMove, target, floor);
 		boolean missed = calculator.misses(events);
-		float effectiveness = move.type == null ? PokemonType.NORMALLY_EFFECTIVE : move.type.effectivenessOn(target.species());
+		double effectiveness = calculator.effectiveness();
 		if (effectiveness == PokemonType.NO_EFFECT) events.add(new MessageEvent(floor, move.unaffectedMessage(target)));
 		else
 		{
 			if (!missed && this != MoveEffects.Basic_attack) target.receiveMove(usedMove.move.isLinked() ? DungeonPokemon.LINKED_MOVES : DungeonPokemon.MOVES);
 			if (!missed && move.category != MoveCategory.Status)
 			{
-				if (effectiveness == PokemonType.SUPER_EFFECTIVE)
+				if (effectiveness >= PokemonType.SUPER_EFFECTIVE)
 					events.add(new MessageEvent(floor, new Message("move.effectiveness.super").addReplacement("<pokemon>", target.getNickname())));
-				else if (effectiveness == PokemonType.NOT_VERY_EFFECTIVE)
+				else if (effectiveness <= PokemonType.NOT_VERY_EFFECTIVE)
 					events.add(new MessageEvent(floor, new Message("move.effectiveness.not_very").addReplacement("<pokemon>", target.getNickname())));
 			}
 			this.useOn(usedMove, target, floor, calculator, missed, events);
