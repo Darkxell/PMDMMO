@@ -37,7 +37,7 @@ public class MissionBoardSelectionState extends OptionSelectionMenuState {
 		if (option == exit)
 			this.onExit();
 		else if (option == board) {
-
+			Persistance.stateManager.setState(new MissionBoardState(parent));
 		} else if (option == mission) {
 			// TODO add forwarding to mission state here
 		}
