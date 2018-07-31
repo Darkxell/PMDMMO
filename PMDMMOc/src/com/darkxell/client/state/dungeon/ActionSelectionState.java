@@ -17,6 +17,7 @@ import com.darkxell.client.state.menu.dungeon.DungeonMenuState;
 import com.darkxell.client.state.menu.item.ItemContainersMenuState;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.client.ui.Keys.Key;
+import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.event.action.PokemonRotateEvent;
 import com.darkxell.common.event.action.PokemonTravelEvent;
 import com.darkxell.common.event.action.TurnSkippedEvent;
@@ -78,8 +79,12 @@ public class ActionSelectionState extends DungeonSubState
 		Point p = direction.move(0, 0);
 		BufferedImage img = DungeonHudSpriteset.instance.getArrow(direction);
 		double rotation = (ROTATION_COUNTER_MAX + this.rotationCounter) * 1d / ROTATION_COUNTER_MAX * 3 / 4;
-		int x = (int) (width / 2 + p.x * TILE_SIZE / 2 * rotation) - TILE_SIZE / 8;
-		int y = (int) (height / 2 + p.y * TILE_SIZE / 2 * rotation) - TILE_SIZE / 8;
+
+		DungeonPokemon leader = Persistance.player.getDungeonLeader();
+		Tile t = leader.tile() == null ? Persistance.floor.tileAt(0, 0) : leader.tile();
+
+		int x = (int) (t.x * TILE_SIZE + TILE_SIZE / 2 + p.x * TILE_SIZE / 2 * rotation) - TILE_SIZE / 8;
+		int y = (int) (t.y * TILE_SIZE + TILE_SIZE / 2 + p.y * TILE_SIZE / 2 * rotation) - TILE_SIZE / 8;
 
 		g.drawImage(img, x, y, null);
 	}
@@ -161,6 +166,20 @@ public class ActionSelectionState extends DungeonSubState
 	}
 
 	@Override
+	public void prerender(Graphics2D g, int width, int height)
+	{
+		if (this.delay >= 3 && this.parent.diagonal)
+		{
+			this.drawArrow(g, width, height, Direction.NORTHEAST);
+			this.drawArrow(g, width, height, Direction.SOUTHEAST);
+			this.drawArrow(g, width, height, Direction.SOUTHWEST);
+			this.drawArrow(g, width, height, Direction.NORTHWEST);
+		}
+		if (this.delay >= 3 && this.parent.rotating)
+			if (!this.parent.diagonal) this.drawArrow(g, width, height, Persistance.player.getDungeonLeader().facing());
+	}
+
+	@Override
 	public void render(Graphics2D g, int width, int height)
 	{
 		int w = width - 40;
@@ -190,16 +209,6 @@ public class ActionSelectionState extends DungeonSubState
 						TextRenderer.render(g, Persistance.player.getDungeonLeader().move(i).move().name(), this.movesWindow.inside().x + 5 + i * mw, y);
 					} else this.moveLocations[i] = null;
 			}
-
-			if (this.delay >= 3 && this.parent.diagonal)
-			{
-				this.drawArrow(g, width, height, Direction.NORTHEAST);
-				this.drawArrow(g, width, height, Direction.SOUTHEAST);
-				this.drawArrow(g, width, height, Direction.SOUTHWEST);
-				this.drawArrow(g, width, height, Direction.NORTHWEST);
-			}
-			if (this.delay >= 3 && this.parent.rotating)
-				if (!this.parent.diagonal) this.drawArrow(g, width, height, Persistance.player.getDungeonLeader().facing());
 		}
 	}
 

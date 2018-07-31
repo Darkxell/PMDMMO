@@ -25,6 +25,8 @@ public class FloorData
 	private int difficulty;
 	/** Describes which Floors this Data applies to. */
 	private FloorSet floors;
+	/** True if this is a Boss Floor. */
+	private boolean isBossFloor = false;
 	/** The density of Items. */
 	private short itemDensity;
 	/** The Layout to use to generate the Floor. */
@@ -55,7 +57,7 @@ public class FloorData
 
 	public FloorData(FloorSet floors, int difficulty, int baseMoney, int layout, int terrainSpriteset, byte shadows, PokemonType camouflageType,
 			int naturePower, String secretPower, int soundtrack, short shopChance, short monsterHouseChance, short itemDensity, short pokemonDensity,
-			short trapDensity, short buriedItemDensity)
+			short trapDensity, short buriedItemDensity, boolean isBossFloor)
 	{
 		this.floors = floors;
 		this.difficulty = difficulty;
@@ -73,6 +75,7 @@ public class FloorData
 		this.pokemonDensity = pokemonDensity;
 		this.trapDensity = trapDensity;
 		this.buriedItemDensity = buriedItemDensity;
+		this.isBossFloor = isBossFloor;
 	}
 
 	public int baseMoney()
@@ -95,7 +98,7 @@ public class FloorData
 	{
 		return new FloorData(this.floors.copy(), this.difficulty, this.baseMoney, this.layout, this.terrainSpriteset, this.shadows, this.camouflageType,
 				this.naturePower, this.secretPower, this.soundtrack, this.shopChance, this.monsterHouseChance, this.itemDensity, this.pokemonDensity,
-				this.trapDensity, this.buriedItemDensity);
+				this.trapDensity, this.buriedItemDensity, this.isBossFloor);
 	}
 
 	public int difficulty()
@@ -106,6 +109,11 @@ public class FloorData
 	public FloorSet floors()
 	{
 		return this.floors;
+	}
+
+	public boolean isBossFloor()
+	{
+		return this.isBossFloor;
 	}
 
 	public short itemDensity()
@@ -136,6 +144,7 @@ public class FloorData
 		this.pokemonDensity = XMLUtils.getAttribute(xml, "pokemon", this.pokemonDensity);
 		this.trapDensity = XMLUtils.getAttribute(xml, "traps", this.trapDensity);
 		this.buriedItemDensity = XMLUtils.getAttribute(xml, "buried", this.buriedItemDensity);
+		this.isBossFloor = XMLUtils.getAttribute(xml, "bossfloor", this.isBossFloor);
 	}
 
 	public short monsterHouseChance()
@@ -193,8 +202,7 @@ public class FloorData
 		if (previous != null || this.naturePower != 0) XMLUtils.setAttribute(xml, "nature", this.naturePower, previous != null ? previous.naturePower : -1);
 		if (previous != null || this.secretPower != null)
 			XMLUtils.setAttribute(xml, "secret", this.secretPower, previous != null ? previous.secretPower : null);
-		if (previous != null || this.soundtrack != 0)
-			XMLUtils.setAttribute(xml, "soundtrack", this.soundtrack, previous != null ? previous.soundtrack : null);
+		if (previous != null || this.soundtrack != 0) XMLUtils.setAttribute(xml, "soundtrack", this.soundtrack, previous != null ? previous.soundtrack : null);
 		if (previous != null || this.shopChance != 0) XMLUtils.setAttribute(xml, "shop", this.shopChance, previous != null ? previous.shopChance : -1);
 		if (previous != null || this.monsterHouseChance != 0)
 			XMLUtils.setAttribute(xml, "mhouse", this.monsterHouseChance, previous != null ? previous.monsterHouseChance : -1);
@@ -204,6 +212,7 @@ public class FloorData
 		if (previous != null || this.trapDensity != 0) XMLUtils.setAttribute(xml, "traps", this.trapDensity, previous != null ? previous.trapDensity : -1);
 		if (previous != null || this.buriedItemDensity != 0)
 			XMLUtils.setAttribute(xml, "buried", this.buriedItemDensity, previous != null ? previous.buriedItemDensity : -1);
+		if (previous != null || !this.isBossFloor) XMLUtils.setAttribute(xml, "bossfloor", this.isBossFloor, previous != null ? previous.isBossFloor : false);
 		return xml;
 	}
 

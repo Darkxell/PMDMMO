@@ -37,7 +37,9 @@ public class NextFloorState extends TransitionState
 		Persistance.displaymap = new DungeonFloorMap();
 		this.next = Persistance.dungeonState = new DungeonState();
 		Persistance.dungeonState.floorVisibility.onCameraMoved();
-		Persistance.soundmanager.setBackgroundMusic(SoundsHolder.getSong("dungeon-" + Persistance.floor.data.soundtrack() + ".mp3"));
+		String ost = "dungeon-" + Persistance.floor.data.soundtrack() + ".mp3";
+		if (Persistance.floor.data.isBossFloor()) ost = "boss.mp3";
+		Persistance.soundmanager.setBackgroundMusic(SoundsHolder.getSong(ost));
 	}
 
 }

@@ -135,6 +135,7 @@
             <xs:attribute name="buried" type="posInt" use="optional"/>
             <xs:attribute name="mhouse" type="posInt" use="optional"/>
             <xs:attribute name="shop" type="posInt" use="optional"/>
+            <xs:attribute name="bossfloor" type="xs:boolean" use="optional"/>
         </xs:complexType>
     </xs:element>
 

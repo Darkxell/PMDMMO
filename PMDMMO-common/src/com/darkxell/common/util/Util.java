@@ -22,9 +22,10 @@ public class Util
 		// player.addAlly(PokemonRegistry.find(255).generate(new Random(), 80));
 		player.getTeamLeader().setItem(new ItemStack(ItemID.XRaySpecs));
 		player.getTeamLeader().setMove(2, new LearnedMove(45));
-		for (int i = 1; i < 13; ++i)
+		for (int i = 1; i < 5; ++i)
 			player.inventory().addItem(new ItemStack(i));
-		for (int i = 21; i < 29; ++i)
+		player.inventory().addItem(new ItemStack(86));
+		for (int i = 21; i < 28; ++i)
 			player.inventory().addItem(new ItemStack(i, i - 20));
 
 		for (int id = 201; id <= 386; id += 3)

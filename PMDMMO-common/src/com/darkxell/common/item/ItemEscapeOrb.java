@@ -24,7 +24,7 @@ public class ItemEscapeOrb extends ItemOrb
 	}
 
 	@Override
-	public void use(Floor floor, DungeonPokemon pokemon, DungeonPokemon target, ArrayList<DungeonEvent> events)
+	public void orbEffect(Floor floor, DungeonPokemon pokemon, DungeonPokemon target, ArrayList<DungeonEvent> events)
 	{
 		// if (pokemon.player() == null) events.addAll(new PokemonDespawnedEvent(floor, pokemon));else TODO PokemonDespawn on EscapeOrb with no Player
 		events.add(new DungeonExitEvent(floor, pokemon.player()));
