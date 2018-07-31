@@ -46,12 +46,14 @@ public class Launcher {
 		Persistance.soundmanager = new SoundManager();
 		Logger.instance().info("Lang & Data loaded.");
 
-		DiscordRPC.discordInitialize("463408543572426762", DiscordEventHandlerForPMDMMO.createHandler(), true);
-		DiscordRichPresence rich = new DiscordRichPresence.Builder("In logging screen").setBigImage("main_big", "")
-				.build();
-		DiscordRPC.discordUpdatePresence(rich);
-		// DiscordRPC.discordRunCallbacks();
-
+			DiscordRPC.discordInitialize("463408543572426762", DiscordEventHandlerForPMDMMO.createHandler(), true);
+			DiscordRichPresence rich = new DiscordRichPresence.Builder("In logging screen").setBigImage("main_big", "")
+					.build();
+			DiscordRPC.discordUpdatePresence(rich);
+			// DiscordRPC.discordRunCallbacks();
+		} catch (Exception e) {
+			Logger.e("Could not connect to discord...");
+			e.printStackTrace();
 		Persistance.frame = new Frame();
 		Persistance.frame.canvas.requestFocus();
 		Persistance.stateManager = new LoginMainState();
