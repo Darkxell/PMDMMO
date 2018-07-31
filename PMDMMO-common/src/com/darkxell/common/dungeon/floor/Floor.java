@@ -136,6 +136,11 @@ public class Floor
 		return this.tiles.length;
 	}
 
+	public boolean hasCustomTileset()
+	{
+		return this.data.terrainSpriteset() == -1;
+	}
+
 	/** @return True if this Floor is done generating. */
 	public boolean isGenerated()
 	{

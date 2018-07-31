@@ -191,6 +191,15 @@ public class DungeonState extends AbstractState
 		{
 			x = (int) (r.x() + TILE_SIZE / 2 - width / 2);
 			y = (int) (r.y() + TILE_SIZE / 2 - height / 2);
+
+			if (Persistance.floor.hasCustomTileset())
+			{
+				if (x + width > Persistance.floor.getWidth() * TILE_SIZE) x = Persistance.floor.getWidth() * TILE_SIZE - width;
+				if (y + height > Persistance.floor.getHeight() * TILE_SIZE) y = Persistance.floor.getHeight() * TILE_SIZE - height;
+
+				if (x < 0) x = 0;
+				if (y < 0) y = 0;
+			}
 		}
 		this.camera = new Point(x, y);
 
