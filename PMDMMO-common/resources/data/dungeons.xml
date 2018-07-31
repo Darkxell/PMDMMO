@@ -233,7 +233,7 @@
           <part start="7" end="8" />
         </floors>
       </d>
-      <d layout="0">
+      <d layout="0" terrain="-1">
         <floors>
           <part floor="9" />
         </floors>
