@@ -24,7 +24,7 @@ public class CutsceneCreation
 	public CutsceneCreation(Cutscene cutscene)
 	{
 		this.cutscene = cutscene;
-		this.freezone = null;
+		this.freezone = FreezoneInfo.BASE;
 		this.camerax = this.cameray = -1;
 		this.fading = false;
 		this.entities = new ArrayList<>();

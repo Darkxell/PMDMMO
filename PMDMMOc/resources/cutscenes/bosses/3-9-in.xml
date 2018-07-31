@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cutscene name="bosses/3-9-in">
+  <creation freezone="mt_steel_top" />
+  <events>
+    <dialog>
+      <dialogscreen translate="false">Testing a boss cutscene!</dialogscreen>
+    </dialog>
+  </events>
+  <onfinish>
+    <resumeexploration />
+  </onfinish>
+</cutscene>

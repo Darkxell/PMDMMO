@@ -10,6 +10,7 @@ import com.darkxell.client.mechanics.cutscene.Cutscene.CutsceneEnd;
 import com.darkxell.client.mechanics.cutscene.end.EnterDungeonCutsceneEnd;
 import com.darkxell.client.mechanics.cutscene.end.LoadFreezoneCutsceneEnd;
 import com.darkxell.client.mechanics.cutscene.end.PlayCutsceneCutsceneEnd;
+import com.darkxell.client.mechanics.cutscene.end.ResumeExplorationCutsceneEnd;
 import com.darkxell.common.dungeon.Dungeon;
 import com.darkxell.common.dungeon.DungeonRegistry;
 import com.darkxell.common.zones.FreezoneInfo;
@@ -31,6 +32,7 @@ public class CutsceneEndController implements Initializable, ChangeListener<Cuts
 	{
 		CUTSCENE("Play Cutscene"),
 		DUNGEON("Enter Dungeon"),
+		EXPLORE("Resume Dungeon Exploration"),
 		FREEZONE("Load Freezone");
 
 		public final String name;
@@ -83,6 +85,9 @@ public class CutsceneEndController implements Initializable, ChangeListener<Cuts
 			case FREEZONE:
 				return new LoadFreezoneCutsceneEnd(this.freezoneCombobox.getValue(), Integer.parseInt(this.freezoneXTextfield.getText()),
 						Integer.parseInt(this.freezoneYTextfield.getText()));
+
+			case EXPLORE:
+				return new ResumeExplorationCutsceneEnd();
 		}
 		return null;
 	}
@@ -133,6 +138,7 @@ public class CutsceneEndController implements Initializable, ChangeListener<Cuts
 			this.freezoneYTextfield.setText(String.valueOf(e.yPos));
 			this.modeCombobox.getSelectionModel().select(CutsceneEndMode.FREEZONE);
 		}
+		if (end instanceof ResumeExplorationCutsceneEnd) this.modeCombobox.getSelectionModel().select(CutsceneEndMode.EXPLORE);
 	}
 
 }

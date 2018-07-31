@@ -8,6 +8,7 @@ import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.cutscene.end.EnterDungeonCutsceneEnd;
 import com.darkxell.client.mechanics.cutscene.end.LoadFreezoneCutsceneEnd;
 import com.darkxell.client.mechanics.cutscene.end.PlayCutsceneCutsceneEnd;
+import com.darkxell.client.mechanics.cutscene.end.ResumeExplorationCutsceneEnd;
 import com.darkxell.client.mechanics.freezones.entities.FreezoneCamera;
 
 public class Cutscene implements Comparable<Cutscene>
@@ -23,6 +24,7 @@ public class Cutscene implements Comparable<Cutscene>
 				return new PlayCutsceneCutsceneEnd(cutscene, xml.getChild("playcutscene", xml.getNamespace()));
 			if (xml.getChild("loadfreezone", xml.getNamespace()) != null)
 				return new LoadFreezoneCutsceneEnd(cutscene, xml.getChild("loadfreezone", xml.getNamespace()));
+			if (xml.getChild("resumeexploration", xml.getNamespace()) != null) return new ResumeExplorationCutsceneEnd(cutscene);
 			return null;
 		}
 
