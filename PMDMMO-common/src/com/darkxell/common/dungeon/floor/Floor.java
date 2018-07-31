@@ -35,6 +35,8 @@ public class Floor
 
 	/** Stores all AI objects for Pokémon on this Floor. */
 	public final AIManager aiManager;
+	/** IDs of the Cutscenes to play when, respectively, entering this Floor and defeating the boss. */
+	public String cutsceneIn, cutsceneOut;
 	/** This Floor's data. */
 	public final FloorData data;
 	/** This Floor's Dungeon. */

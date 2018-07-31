@@ -6,6 +6,7 @@
 	<xs:element name="floor">
 		<xs:complexType>
 			<xs:sequence>
+				<xs:element name="cutscenein" type="xs:string"/>
 				<xs:element ref="rooms"/>
 				<xs:element name="tiles">
 					<xs:complexType>
@@ -23,6 +24,7 @@
 					</xs:complexType>
 				</xs:element>
 				<xs:element ref="traps"/>
+				<xs:element name="cutsceneout" type="xs:string"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -71,6 +73,9 @@
 			<xs:sequence>
 				<xs:element name="pokemon" minOccurs="0" maxOccurs="unbounded">
 					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="boss" minOccurs="0"/>
+						</xs:sequence>
 						<xs:attribute name="id" type="posInt"/>
 						<xs:attribute name="x" type="posInt"/>
 						<xs:attribute name="y" type="posInt"/>

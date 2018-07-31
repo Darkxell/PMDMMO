@@ -93,7 +93,7 @@ public class FloorData
 		return this.camouflageType;
 	}
 
-	/** @return this.A copy of this Data. */
+	/** @return A copy of this Data. */
 	public FloorData copy()
 	{
 		return new FloorData(this.floors.copy(), this.difficulty, this.baseMoney, this.layout, this.terrainSpriteset, this.shadows, this.camouflageType,
