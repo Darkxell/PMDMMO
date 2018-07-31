@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <floor xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="pmdmmo"
     xsi:schemaLocation="pmdmmo ../xsd/staticlayout.xsd">
-    <rooms/>
+    <rooms>
+        <complex>
+            <room x="7" y="6" width="5" height="5"/>
+            <room x="5" y="7" width="9" height="3"/>
+        </complex>
+    </rooms>
     <tiles>
         <row>MMMMMMMMMMMMMMMMMMM</row>
         <row>MMMMMMMMMMMMMMMMMMM</row>

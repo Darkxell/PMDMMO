@@ -30,15 +30,24 @@
 	<xs:element name="rooms">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="room" minOccurs="0" maxOccurs="unbounded">
+				<xs:element ref="room" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="complex" minOccurs="0" maxOccurs="unbounded">
 					<xs:complexType>
-						<xs:attribute name="x" type="posInt"/>
-						<xs:attribute name="y" type="posInt"/>
-						<xs:attribute name="width" type="xs:positiveInteger"/>
-						<xs:attribute name="height" type="xs:positiveInteger"/>
+						<xs:sequence>
+							<xs:element ref="room" maxOccurs="unbounded"/>
+						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
 			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="room">
+		<xs:complexType>
+			<xs:attribute name="x" type="posInt"/>
+			<xs:attribute name="y" type="posInt"/>
+			<xs:attribute name="width" type="xs:positiveInteger"/>
+			<xs:attribute name="height" type="xs:positiveInteger"/>
 		</xs:complexType>
 	</xs:element>
 

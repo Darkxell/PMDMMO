@@ -9,8 +9,10 @@ import org.jdom2.Element;
 
 import com.darkxell.common.dbobject.DBLearnedmove;
 import com.darkxell.common.dbobject.DBPokemon;
+import com.darkxell.common.dungeon.floor.ComplexRoom;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Room;
+import com.darkxell.common.dungeon.floor.SquareRoom;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.item.Item;
@@ -105,10 +107,13 @@ public class StaticLayout extends Layout
 	protected void generateRooms()
 	{
 		// ROOMS
-		List<Element> rooms = this.xml.getChild("rooms", xml.getNamespace()).getChildren("room", xml.getNamespace());
+		List<Element> rooms = this.xml.getChild("rooms", xml.getNamespace()).getChildren();
 		this.floor.rooms = new Room[rooms.size()];
 		for (int i = 0; i < this.floor.rooms.length; ++i)
-			this.floor.rooms[i] = new Room(this.floor, rooms.get(i));
+		{
+			if (rooms.get(i).getName().equals("complex")) this.floor.rooms[i] = new ComplexRoom(floor, rooms.get(i));
+			else this.floor.rooms[i] = new SquareRoom(this.floor, rooms.get(i));
+		}
 
 		// TILES
 		List<Element> rows = xml.getChild("tiles", xml.getNamespace()).getChildren("row", xml.getNamespace());
