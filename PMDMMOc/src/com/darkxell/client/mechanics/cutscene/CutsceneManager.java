@@ -15,7 +15,9 @@ public class CutsceneManager
 
 	public static void playCutscene(String id)
 	{
-		Persistance.cutsceneState = new CutsceneState(loadCutscene(id));
+		Cutscene c = loadCutscene(id);
+		Persistance.cutsceneState = new CutsceneState(c);
+		c.creation.create();
 		Persistance.stateManager.setState(Persistance.cutsceneState);
 	}
 

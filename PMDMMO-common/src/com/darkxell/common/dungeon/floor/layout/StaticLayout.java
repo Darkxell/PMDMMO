@@ -95,7 +95,8 @@ public class StaticLayout extends Layout
 	{
 		this.xml = XMLUtils.read(StaticLayout.class.getResourceAsStream("/data/floors/" + floor.dungeon.id + "-" + floor.id + ".xml"));
 		super.generate(floor);
-		this.placeTraps();
+		this.floor.cutsceneIn = this.xml.getChildText("cutscenein", this.xml.getNamespace());
+		this.floor.cutsceneOut = this.xml.getChildText("cutsceneout", this.xml.getNamespace());
 	}
 
 	@Override
