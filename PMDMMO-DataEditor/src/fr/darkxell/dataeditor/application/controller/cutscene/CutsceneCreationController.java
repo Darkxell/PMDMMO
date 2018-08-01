@@ -36,6 +36,7 @@ public class CutsceneCreationController implements Initializable, ListCellParent
 	private TextField cameraXTextfield;
 	@FXML
 	private TextField cameraYTextfield;
+	private int entityEditing;
 	@FXML
 	public ListView<CutsceneEntity> entitiesList;
 	@FXML
@@ -76,7 +77,7 @@ public class CutsceneCreationController implements Initializable, ListCellParent
 		this.cameraYTextfield.setTextFormatter(formatter);
 
 		this.entitiesList.setCellFactory(param -> {
-			return new CustomListCell<>(this, "Cutscene Entity").setCanDelete(false).setCanOrder(false);
+			return new CustomListCell<>(this, "Cutscene Entity").setCanOrder(false);
 		});
 	}
 
@@ -105,12 +106,22 @@ public class CutsceneCreationController implements Initializable, ListCellParent
 			FXMLLoader loader = new FXMLLoader(DataEditor.class.getResource("/layouts/cutscenes/edit_entity.fxml"));
 			Parent root = loader.load();
 			EditEntityController controller = loader.getController();
-			if (entity != null) controller.setupFor(entity);
+			if (entity != null)
+			{
+				controller.setupFor(entity);
+				this.entityEditing = this.entitiesList.getItems().indexOf(entity);
+			} else this.entityEditing = -1;
 			editEntityPopup = FXUtils.showPopup(root, (entity == null ? "New" : "Edit") + " Cutscene Entity");
 		} catch (IOException e)
 		{
 			e.printStackTrace();
 		}
+	}
+
+	public void onEntityEdited(CutsceneEntity entity)
+	{
+		if (this.entityEditing == -1) this.entitiesList.getItems().add(entity);
+		else this.entitiesList.getItems().set(this.entityEditing, entity);
 	}
 
 	@Override

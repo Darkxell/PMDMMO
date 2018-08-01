@@ -128,7 +128,7 @@ public class EditEntityController implements Initializable
 	public void onOk()
 	{
 		this.onCancel();
-		CutscenesTabController.instance.editCutsceneController.cutsceneCreationController.entitiesList.getItems().add(this.getEntity());
+		CutscenesTabController.instance.editCutsceneController.cutsceneCreationController.onEntityEdited(this.getEntity());
 	}
 
 	public void setupFor(CutsceneEntity entity)

@@ -95,7 +95,7 @@ public abstract class CutsceneEvent
 		}
 	}
 
-	public final Cutscene cutscene;
+	protected Cutscene cutscene;
 	public int id;
 	public final CutsceneEventType type;
 

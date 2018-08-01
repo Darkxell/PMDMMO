@@ -69,6 +69,7 @@ public class Launcher {
 	}
 
 	public static void stopGame() {
+		processingprofile = PROFILE_UNDEFINED;
 		DiscordRPC.discordShutdown();
 		isRunning = false;
 		Logger.instance().saveClient();

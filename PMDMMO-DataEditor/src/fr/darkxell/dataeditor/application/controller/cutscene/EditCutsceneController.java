@@ -5,6 +5,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import com.darkxell.client.launchable.Launcher;
+import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.cutscene.Cutscene;
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent.CutsceneEventType;
@@ -12,6 +14,9 @@ import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
 import com.darkxell.client.mechanics.cutscene.event.DespawnCutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.event.SpawnCutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.event.WaitCutsceneEvent;
+import com.darkxell.client.state.freezone.CutsceneState;
+import com.darkxell.client.state.mainstates.PrincipalMainState;
+import com.darkxell.client.ui.Frame;
 
 import fr.darkxell.dataeditor.application.DataEditor;
 import fr.darkxell.dataeditor.application.controller.cutscene.event.EventController;
@@ -170,6 +175,23 @@ public class EditCutsceneController implements Initializable, ListCellParent<Cut
 		this.cutsceneEndController.setupFor(cutscene);
 		this.eventList.getItems().clear();
 		this.eventList.getItems().addAll(cutscene.events);
+	}
+
+	public void test()
+	{
+		Cutscene temp = new Cutscene(CutscenesTabController.instance.currentCutscene.name, this.cutsceneCreationController.getCreation(),
+				this.cutsceneEndController.getEnd(), new ArrayList<>(this.eventList.getItems()));
+		Cutscene test = new Cutscene("test", temp.toXML());
+		test.onFinish = new CloseTesterCutsceneEnd(test);
+
+		Persistance.frame = new Frame();
+		Persistance.frame.canvas.requestFocus();
+		Persistance.stateManager = new PrincipalMainState();
+		Persistance.cutsceneState = new CutsceneState(test);
+		Persistance.stateManager.setState(Persistance.cutsceneState);
+
+		Launcher.isRunning = true;
+		Launcher.setProcessingProfile(Launcher.PROFILE_SYNCHRONIZED);
 	}
 
 }

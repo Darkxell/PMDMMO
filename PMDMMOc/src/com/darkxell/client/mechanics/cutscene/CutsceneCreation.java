@@ -26,7 +26,7 @@ public class CutsceneCreation
 		this.cutscene = cutscene;
 		this.freezone = FreezoneInfo.BASE;
 		this.camerax = this.cameray = -1;
-		this.fading = false;
+		this.fading = true;
 		this.entities = new ArrayList<>();
 	}
 
@@ -74,7 +74,7 @@ public class CutsceneCreation
 		XMLUtils.setAttribute(root, "freezone", this.freezone.id, null);
 		XMLUtils.setAttribute(root, "camerax", this.camerax, -1);
 		XMLUtils.setAttribute(root, "cameray", this.cameray, -1);
-		XMLUtils.setAttribute(root, "fading", this.fading, false);
+		XMLUtils.setAttribute(root, "fading", this.fading, true);
 		for (CutsceneEntity entity : this.entities)
 			root.addContent(entity.toXML());
 		return root;
