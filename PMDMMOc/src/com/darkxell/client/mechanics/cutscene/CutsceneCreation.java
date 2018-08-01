@@ -15,7 +15,7 @@ import com.darkxell.common.zones.FreezoneInfo;
 public class CutsceneCreation
 {
 
-	public final int camerax, cameray;
+	public final double camerax, cameray;
 	Cutscene cutscene;
 	private final ArrayList<CutsceneEntity> entities;
 	public final boolean fading;
@@ -35,8 +35,8 @@ public class CutsceneCreation
 		this.cutscene = cutscene;
 		this.freezone = FreezoneInfo.find(xml.getAttributeValue("freezone"));
 		this.fading = XMLUtils.getAttribute(xml, "fade", true);
-		this.camerax = XMLUtils.getAttribute(xml, "camerax", -1);
-		this.cameray = XMLUtils.getAttribute(xml, "cameray", -1);
+		this.camerax = XMLUtils.getAttribute(xml, "camerax", -1.);
+		this.cameray = XMLUtils.getAttribute(xml, "cameray", -1.);
 		this.entities = new ArrayList<>();
 		for (Element pokemon : xml.getChildren("pokemon", xml.getNamespace()))
 			this.entities.add(new CutscenePokemon(pokemon));
@@ -44,7 +44,7 @@ public class CutsceneCreation
 			this.entities.add(new CutsceneEntity(entity));
 	}
 
-	public CutsceneCreation(FreezoneInfo freezone, boolean fading, int camerax, int cameray, ArrayList<CutsceneEntity> entities)
+	public CutsceneCreation(FreezoneInfo freezone, boolean fading, double camerax, double cameray, ArrayList<CutsceneEntity> entities)
 	{
 		this.freezone = freezone;
 		this.fading = fading;
@@ -72,8 +72,8 @@ public class CutsceneCreation
 	{
 		Element root = new Element("creation");
 		XMLUtils.setAttribute(root, "freezone", this.freezone.id, null);
-		XMLUtils.setAttribute(root, "camerax", this.camerax, -1);
-		XMLUtils.setAttribute(root, "cameray", this.cameray, -1);
+		XMLUtils.setAttribute(root, "camerax", this.camerax, -1.);
+		XMLUtils.setAttribute(root, "cameray", this.cameray, -1.);
 		XMLUtils.setAttribute(root, "fading", this.fading, true);
 		for (CutsceneEntity entity : this.entities)
 			root.addContent(entity.toXML());

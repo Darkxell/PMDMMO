@@ -36,7 +36,7 @@ public class RotateCutsceneEvent extends CutsceneEvent
 	@Override
 	public boolean isOver()
 	{
-		return this.currentDistance == this.distance;
+		return this.currentDistance == Math.abs(this.distance);
 	}
 
 	@Override
@@ -52,7 +52,7 @@ public class RotateCutsceneEvent extends CutsceneEvent
 			if (this.instantly)
 			{
 				this.currentDistance = this.distance;
-				for (int i = 0; i < this.distance; ++i)
+				for (int i = 0; i < Math.abs(this.distance); ++i)
 					if (this.distance > 0) this.pokemon.facing = this.pokemon.facing.rotateClockwise();
 					else this.pokemon.facing = this.pokemon.facing.rotateCounterClockwise();
 			}

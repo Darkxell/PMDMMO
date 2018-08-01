@@ -46,8 +46,8 @@ public class CutsceneEntity
 	{
 		Element root = new Element("entity");
 		XMLUtils.setAttribute(root, "cutsceneid", this.id, -1);
-		XMLUtils.setAttribute(root, "ypos", this.xPos, 0);
-		XMLUtils.setAttribute(root, "xpos", this.yPos, 0);
+		XMLUtils.setAttribute(root, "xpos", this.xPos, 0);
+		XMLUtils.setAttribute(root, "ypos", this.yPos, 0);
 		return root;
 	}
 

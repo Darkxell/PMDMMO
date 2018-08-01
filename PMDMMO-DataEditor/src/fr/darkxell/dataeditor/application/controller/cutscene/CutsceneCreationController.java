@@ -47,7 +47,7 @@ public class CutsceneCreationController implements Initializable, ListCellParent
 	public CutsceneCreation getCreation()
 	{
 		return new CutsceneCreation(this.freezoneCombobox.getValue(), this.fadingCombobox.getSelectionModel().getSelectedIndex() == 0,
-				Integer.parseInt(this.cameraXTextfield.getText()), Integer.parseInt(this.cameraYTextfield.getText()),
+				Double.parseDouble(this.cameraXTextfield.getText()), Double.parseDouble(this.cameraYTextfield.getText()),
 				new ArrayList<>(this.entitiesList.getItems()));
 	}
 
@@ -66,7 +66,7 @@ public class CutsceneCreationController implements Initializable, ListCellParent
 		this.freezoneCombobox.getItems().addAll(FreezoneInfo.values());
 		this.freezoneCombobox.getSelectionModel().select(0);
 
-		Pattern pattern = Pattern.compile("-?\\d*");
+		Pattern pattern = Pattern.compile("-?\\d*(\\.\\d*)?");
 		TextFormatter<String> formatter = new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
 			return pattern.matcher(change.getControlNewText()).matches() ? change : null;
 		});
@@ -139,6 +139,7 @@ public class CutsceneCreationController implements Initializable, ListCellParent
 		this.cameraXTextfield.setText(String.valueOf(creation.camerax));
 		this.cameraYTextfield.setText(String.valueOf(creation.cameray));
 		this.fadingCombobox.getSelectionModel().select(creation.fading ? 1 : 0);
+		this.entitiesList.getItems().clear();
 		this.entitiesList.getItems().addAll(creation.entities());
 	}
 

@@ -1,10 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cutscene name="bosses/3-9-in">
-  <creation freezone="mt_steel_top" />
+  <creation freezone="mt_steel_top" camerax="28.5" cameray="20.0" fading="false">
+    <pokemon cutsceneid="1" xpos="28.5" ypos="25.0" facing="NORTH">
+      <teammember>0</teammember>
+      <animated>false</animated>
+    </pokemon>
+    <pokemon cutsceneid="2" xpos="25.5" ypos="25.0" facing="NORTH">
+      <teammember>1</teammember>
+      <animated>false</animated>
+    </pokemon>
+    <pokemon cutsceneid="3" xpos="28.5" ypos="5.5">
+      <pokemonid>50</pokemonid>
+      <animated>false</animated>
+    </pokemon>
+    <pokemon cutsceneid="4" xpos="25.5" ypos="-5.0">
+      <pokemonid>227</pokemonid>
+      <animated>false</animated>
+    </pokemon>
+  </creation>
   <events>
     <dialog>
-      <dialogscreen translate="false">Testing a boss cutscene!</dialogscreen>
+      <dialogscreen target="2">cutscene.3-9-in.m0</dialogscreen>
+      <dialogscreen target="3">cutscene.3-9-in.m1</dialogscreen>
     </dialog>
+    <wait />
+    <setstate target="2" state="MOVE" />
+    <setanimated target="2" animated="true" />
+    <move ypos="17.5" speed="0.15" target="2" />
+    <wait />
+    <setanimated target="2" animated="false" />
+    <rotate target="2" distance="1" />
+    <dialog>
+      <dialogscreen target="2">cutscene.3-9-in.m2</dialogscreen>
+      <dialogscreen target="2">cutscene.3-9-in.m3</dialogscreen>
+    </dialog>
+    <wait />
+    <move ypos="17.0" target="4" />
+    <wait />
+    <setstate target="2" state="HURT" />
+    <move xpos="20.0" ypos="30.0" target="2" />
+    <wait />
+    <setstate target="2" state="IDLE" />
+    <dialog>
+      <dialogscreen target="4">cutscene.3-9-in.m4</dialogscreen>
+    </dialog>
+    <wait />
+    <move xpos="25.5" ypos="25.0" speed="0.5" target="2" />
+    <rotate target="2" distance="-1" />
+    <wait />
+    <dialog>
+      <dialogscreen target="2">cutscene.3-9-in.m5</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="4" distance="-1" />
+    <setanimated target="4" animated="true" />
+    <setstate target="4" state="MOVE" />
+    <move xpos="28.5" ypos="19.0" speed="0.2" target="4" />
+    <wait />
+    <rotate target="4" distance="1" />
+    <setanimated target="4" animated="false" />
+    <setstate target="4" state="IDLE" />
+    <dialog>
+      <dialogscreen target="4">cutscene.3-9-in.m6</dialogscreen>
+      <dialogscreen target="4">cutscene.3-9-in.m7</dialogscreen>
+    </dialog>
+    <wait />
   </events>
   <onfinish>
     <resumeexploration />
