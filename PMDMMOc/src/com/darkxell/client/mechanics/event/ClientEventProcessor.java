@@ -9,6 +9,7 @@ import com.darkxell.client.mechanics.animation.AnimationEndListener;
 import com.darkxell.client.mechanics.animation.Animations;
 import com.darkxell.client.mechanics.animation.misc.RainAnimation;
 import com.darkxell.client.mechanics.animation.misc.SnowAnimation;
+import com.darkxell.client.mechanics.cutscene.CutsceneManager;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.renderers.pokemon.DungeonPokemonRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
@@ -33,6 +34,7 @@ import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.action.PokemonSpawnedEvent;
 import com.darkxell.common.event.action.PokemonTravelEvent;
 import com.darkxell.common.event.action.TurnSkippedEvent;
+import com.darkxell.common.event.dungeon.BossDefeatedEvent;
 import com.darkxell.common.event.dungeon.ExplorationStopEvent;
 import com.darkxell.common.event.dungeon.NextFloorEvent;
 import com.darkxell.common.event.dungeon.weather.WeatherChangedEvent;
@@ -219,6 +221,17 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		}
 	}
 
+	@Override
+	protected void processBossDefeatedEvent(BossDefeatedEvent event)
+	{
+		super.processBossDefeatedEvent(event);
+		if (Persistance.floor.cutsceneOut != null)
+		{
+			CutsceneManager.playCutscene(Persistance.floor.cutsceneOut);
+			this.setState(State.ANIMATING);
+		}
+	}
+
 	private void processDamageEvent(DamageDealtEvent event)
 	{
 		if (!(event.source instanceof BellyChangedEvent))
@@ -235,6 +248,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	private void processExplorationStopEvent(ExplorationStopEvent event)
 	{
 		StateManager.onDungeonEnd(event.outcome);
+		Persistance.soundmanager.pauseBackgroundMusic();
 	}
 
 	private void processFaintedEvent(FaintedPokemonEvent event)

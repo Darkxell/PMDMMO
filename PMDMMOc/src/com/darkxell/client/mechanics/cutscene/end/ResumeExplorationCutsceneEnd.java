@@ -26,6 +26,7 @@ public class ResumeExplorationCutsceneEnd extends CutsceneEnd
 		super.onCutsceneEnd();
 		NextFloorState.resumeExploration();
 		Persistance.stateManager.setState(Persistance.dungeonState);
+		Persistance.eventProcessor().processPending();
 	}
 
 	@Override

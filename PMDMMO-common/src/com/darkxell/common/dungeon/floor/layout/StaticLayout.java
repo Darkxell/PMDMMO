@@ -155,7 +155,7 @@ public class StaticLayout extends Layout
 	{
 		Element spawn = this.xml.getChild("spawn", xml.getNamespace());
 		this.floor.teamSpawn = new Point(Integer.parseInt(spawn.getAttributeValue("x")), Integer.parseInt(spawn.getAttributeValue("y")));
-		this.floor.teamSpawnDirection = Direction.valueOf(XMLUtils.getAttribute(spawn, "facing", Direction.NORTH.name()));
+		this.floor.teamSpawnDirection = Direction.valueOf(XMLUtils.getAttribute(spawn, "facing", Direction.NORTH.name()).toUpperCase());
 	}
 
 	@Override

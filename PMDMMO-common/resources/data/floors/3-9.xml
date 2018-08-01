@@ -33,7 +33,6 @@
             <ai>skipper</ai>
         </pokemon>
     </pokemons>
-    <spawn x="9" y="8" facing="NORTH"/>
+    <spawn x="9" y="8" facing="North"/>
     <traps/>
-    <cutsceneout>bosses/3-9-out</cutsceneout>
 </floor>
