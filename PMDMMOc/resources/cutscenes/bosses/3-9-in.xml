@@ -9,12 +9,13 @@
       <teammember>1</teammember>
       <animated>false</animated>
     </pokemon>
-    <pokemon cutsceneid="3" xpos="28.5" ypos="5.5">
+    <pokemon cutsceneid="3" xpos="28.5" ypos="4.7">
       <pokemonid>50</pokemonid>
       <animated>false</animated>
     </pokemon>
     <pokemon cutsceneid="4" xpos="25.5" ypos="-5.0">
       <pokemonid>227</pokemonid>
+      <state>ATTACK</state>
       <animated>false</animated>
     </pokemon>
   </creation>
@@ -39,6 +40,7 @@
     <wait />
     <setstate target="2" state="HURT" />
     <move xpos="20.0" ypos="30.0" target="2" />
+    <setstate target="4" state="IDLE" />
     <wait />
     <setstate target="2" state="IDLE" />
     <dialog>
@@ -64,6 +66,8 @@
       <dialogscreen target="4">cutscene.3-9-in.m6</dialogscreen>
       <dialogscreen target="4">cutscene.3-9-in.m7</dialogscreen>
     </dialog>
+    <wait />
+    <camera ypos="22.8" speed="0.1" />
     <wait />
   </events>
   <onfinish>

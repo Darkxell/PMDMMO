@@ -7,6 +7,8 @@ import java.util.Random;
 
 import org.jdom2.Element;
 
+import com.darkxell.common.ai.AI;
+import com.darkxell.common.ai.SkipTurnsAI;
 import com.darkxell.common.dbobject.DBLearnedmove;
 import com.darkxell.common.dbobject.DBPokemon;
 import com.darkxell.common.dungeon.floor.ComplexRoom;
@@ -24,6 +26,7 @@ import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.trap.TrapRegistry;
+import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.XMLUtils;
 
@@ -151,6 +154,7 @@ public class StaticLayout extends Layout
 	{
 		Element spawn = this.xml.getChild("spawn", xml.getNamespace());
 		this.floor.teamSpawn = new Point(Integer.parseInt(spawn.getAttributeValue("x")), Integer.parseInt(spawn.getAttributeValue("y")));
+		this.floor.teamSpawnDirection = Direction.valueOf(XMLUtils.getAttribute(spawn, "facing", Direction.NORTH.name()));
 	}
 
 	@Override
@@ -169,12 +173,26 @@ public class StaticLayout extends Layout
 	protected void summonPokemon()
 	{
 		if (this.xml.getChild("pokemons", xml.getNamespace()) != null)
+		{
 			for (Element pokemon : this.xml.getChild("pokemons", xml.getNamespace()).getChildren(Pokemon.XML_ROOT, xml.getNamespace()))
 			{
-			DungeonPokemon p = new DungeonPokemon(readPokemon(pokemon, this.floor.random));
-			p.isBoss = pokemon.getChild("boss", xml.getNamespace()) != null;
-			this.floor.summonPokemon(p, Integer.parseInt(pokemon.getAttributeValue("x")), Integer.parseInt(pokemon.getAttributeValue("y")), new ArrayList<>());
+				DungeonPokemon p = new DungeonPokemon(readPokemon(pokemon, this.floor.random));
+				p.isBoss = pokemon.getChild("boss", xml.getNamespace()) != null;
+				AI ai = null;
+				String ainame = pokemon.getChildText("ai", xml.getNamespace());
+				if (ainame != null) switch (ainame)
+				{
+					case "skipper":
+						ai = new SkipTurnsAI(this.floor, p);
+						break;
+
+					default:
+						break;
+				}
+				this.floor.summonPokemon(p, Integer.parseInt(pokemon.getAttributeValue("x")), Integer.parseInt(pokemon.getAttributeValue("y")),
+						new ArrayList<>(), ai);
 			}
+		}
 	}
 
 }

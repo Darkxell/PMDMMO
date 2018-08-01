@@ -225,8 +225,6 @@ public class DungeonInstance
 		return -1;
 	}
 
-	/* public void insertActor(DungeonPokemon pokemon, int index) { if (this.actorMap.containsKey(pokemon)) return; this.actorMap.put(pokemon, new Actor(pokemon)); this.actors.add(index, this.actorMap.get(pokemon)); } */
-
 	/** Starts the current exploration. Creates the first floor and starts the Event Processor.<br>
 	 * \/!\\ Make sure the Event Processor has been initialized if you want a custom one.
 	 * 
@@ -262,6 +260,8 @@ public class DungeonInstance
 
 		return this.currentFloor;
 	}
+
+	/* public void insertActor(DungeonPokemon pokemon, int index) { if (this.actorMap.containsKey(pokemon)) return; this.actorMap.put(pokemon, new Actor(pokemon)); this.actors.add(index, this.actorMap.get(pokemon)); } */
 
 	public boolean isGeneratingFloor()
 	{

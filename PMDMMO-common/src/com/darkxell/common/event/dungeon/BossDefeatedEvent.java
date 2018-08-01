@@ -9,6 +9,7 @@ public class BossDefeatedEvent extends DungeonEvent
 	public BossDefeatedEvent(Floor floor)
 	{
 		super(floor);
+		this.priority = PRIORITY_TURN_END;
 	}
 
 	@Override

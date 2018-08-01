@@ -29,8 +29,11 @@
         <pokemon id="227" x="9" y="6" level="10">
             <boss/>
         </pokemon>
+        <pokemon id="50" x="9" y="1" level="1">
+            <ai>skipper</ai>
+        </pokemon>
     </pokemons>
-    <spawn x="9" y="8"/>
+    <spawn x="9" y="8" facing="NORTH"/>
     <traps/>
     <cutsceneout>bosses/3-9-out</cutsceneout>
 </floor>
