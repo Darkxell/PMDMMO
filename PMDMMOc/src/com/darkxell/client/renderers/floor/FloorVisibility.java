@@ -74,9 +74,13 @@ public class FloorVisibility
 						t.adjacentTile(Direction.NORTHEAST) })
 				for (Direction direction : Direction.directions)
 				this.visit(corner.adjacentTile(direction));
-		} else for (int x = r.x - 1; x <= r.maxX() + 1; ++x)
-			for (int y = r.y - 1; y <= r.maxY() + 1; ++y)
-				this.visit(this.floor.tileAt(x, y));
+		} else
+		{
+			for (Tile tile : r.listTiles())
+				this.visit(tile);
+			for (Tile tile : r.outline())
+				this.visit(tile);
+		}
 	}
 
 	public void onItemremoved(Tile tile)

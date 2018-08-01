@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.dungeon.BossDefeatedEvent;
 import com.darkxell.common.event.dungeon.PlayerLosesEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageSource;
@@ -43,6 +44,19 @@ public class FaintedPokemonEvent extends DungeonEvent
 			int moveID = -1;
 			if (this.damage != null && this.damage instanceof MoveUse) moveID = ((MoveUse) this.damage).move.moveId();
 			this.resultingEvents.add(new PlayerLosesEvent(this.floor, this.pokemon.originalPokemon.player(), moveID));
+		}
+
+		if (this.pokemon.isBoss)
+		{
+			boolean wasLastBoss = true;
+			for (DungeonPokemon p : this.floor.listPokemon())
+				if (p.isBoss)
+				{
+					wasLastBoss = false;
+					break;
+				}
+
+			if (wasLastBoss) this.resultingEvents.add(new BossDefeatedEvent(this.floor));
 		}
 
 		return super.processServer();

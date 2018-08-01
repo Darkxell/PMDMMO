@@ -39,6 +39,10 @@ public class DungeonState extends AbstractState
 		{}
 
 		@Override
+		public void prerender(Graphics2D g, int width, int height)
+		{}
+
+		@Override
 		public void render(Graphics2D g, int width, int height)
 		{}
 
@@ -62,6 +66,9 @@ public class DungeonState extends AbstractState
 		{
 			return this.parent.isMain() && this.parent.currentSubstate == this;
 		}
+
+		/** First part of this State's rendering. Called while the camera translation is still active (=coordinates are relative to the camera Pokemon). */
+		public abstract void prerender(Graphics2D g, int width, int height);
 
 	}
 
@@ -191,6 +198,15 @@ public class DungeonState extends AbstractState
 		{
 			x = (int) (r.x() + TILE_SIZE / 2 - width / 2);
 			y = (int) (r.y() + TILE_SIZE / 2 - height / 2);
+
+			if (Persistance.floor.hasCustomTileset())
+			{
+				if (x + width > Persistance.floor.getWidth() * TILE_SIZE) x = Persistance.floor.getWidth() * TILE_SIZE - width;
+				if (y + height > Persistance.floor.getHeight() * TILE_SIZE) y = Persistance.floor.getHeight() * TILE_SIZE - height;
+
+				if (x < 0) x = 0;
+				if (y < 0) y = 0;
+			}
 		}
 		this.camera = new Point(x, y);
 
@@ -205,6 +221,7 @@ public class DungeonState extends AbstractState
 
 		g.translate(-x, -y);
 		Persistance.dungeonRenderer.render(g, width, height);
+		this.currentSubstate.prerender(g, width, height);
 		g.translate(x, y);
 		this.currentSubstate.render(g, width, height);
 

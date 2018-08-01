@@ -34,6 +34,10 @@ public class AnimationState extends DungeonSubState
 	}
 
 	@Override
+	public void prerender(Graphics2D g, int width, int height)
+	{}
+
+	@Override
 	public void render(Graphics2D g, int width, int height)
 	{
 		this.animation.render(g, width, height);

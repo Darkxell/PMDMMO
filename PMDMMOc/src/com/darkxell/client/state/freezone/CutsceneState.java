@@ -13,13 +13,6 @@ public class CutsceneState extends AbstractFreezoneState
 	}
 
 	@Override
-	public void onStart()
-	{
-		super.onStart();
-		this.cutscene.creation.create();
-	}
-
-	@Override
 	public void update()
 	{
 		super.update();

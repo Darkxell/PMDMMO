@@ -7,10 +7,14 @@ import java.util.Random;
 
 import org.jdom2.Element;
 
+import com.darkxell.common.ai.AI;
+import com.darkxell.common.ai.SkipTurnsAI;
 import com.darkxell.common.dbobject.DBLearnedmove;
 import com.darkxell.common.dbobject.DBPokemon;
+import com.darkxell.common.dungeon.floor.ComplexRoom;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Room;
+import com.darkxell.common.dungeon.floor.SquareRoom;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.item.Item;
@@ -22,6 +26,7 @@ import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.trap.TrapRegistry;
+import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.XMLUtils;
 
@@ -90,7 +95,8 @@ public class StaticLayout extends Layout
 	{
 		this.xml = XMLUtils.read(StaticLayout.class.getResourceAsStream("/data/floors/" + floor.dungeon.id + "-" + floor.id + ".xml"));
 		super.generate(floor);
-		this.placeTraps();
+		this.floor.cutsceneIn = this.xml.getChildText("cutscenein", this.xml.getNamespace());
+		this.floor.cutsceneOut = this.xml.getChildText("cutsceneout", this.xml.getNamespace());
 	}
 
 	@Override
@@ -105,10 +111,13 @@ public class StaticLayout extends Layout
 	protected void generateRooms()
 	{
 		// ROOMS
-		List<Element> rooms = this.xml.getChild("rooms", xml.getNamespace()).getChildren("room", xml.getNamespace());
+		List<Element> rooms = this.xml.getChild("rooms", xml.getNamespace()).getChildren();
 		this.floor.rooms = new Room[rooms.size()];
 		for (int i = 0; i < this.floor.rooms.length; ++i)
-			this.floor.rooms[i] = new Room(this.floor, rooms.get(i));
+		{
+			if (rooms.get(i).getName().equals("complex")) this.floor.rooms[i] = new ComplexRoom(floor, rooms.get(i));
+			else this.floor.rooms[i] = new SquareRoom(this.floor, rooms.get(i));
+		}
 
 		// TILES
 		List<Element> rows = xml.getChild("tiles", xml.getNamespace()).getChildren("row", xml.getNamespace());
@@ -146,6 +155,7 @@ public class StaticLayout extends Layout
 	{
 		Element spawn = this.xml.getChild("spawn", xml.getNamespace());
 		this.floor.teamSpawn = new Point(Integer.parseInt(spawn.getAttributeValue("x")), Integer.parseInt(spawn.getAttributeValue("y")));
+		this.floor.teamSpawnDirection = Direction.valueOf(XMLUtils.getAttribute(spawn, "facing", Direction.NORTH.name()).toUpperCase());
 	}
 
 	@Override
@@ -164,9 +174,26 @@ public class StaticLayout extends Layout
 	protected void summonPokemon()
 	{
 		if (this.xml.getChild("pokemons", xml.getNamespace()) != null)
+		{
 			for (Element pokemon : this.xml.getChild("pokemons", xml.getNamespace()).getChildren(Pokemon.XML_ROOT, xml.getNamespace()))
-			this.floor.summonPokemon(new DungeonPokemon(readPokemon(pokemon, this.floor.random)), Integer.parseInt(pokemon.getAttributeValue("x")),
-					Integer.parseInt(pokemon.getAttributeValue("y")), new ArrayList<>());
+			{
+				DungeonPokemon p = new DungeonPokemon(readPokemon(pokemon, this.floor.random));
+				p.isBoss = pokemon.getChild("boss", xml.getNamespace()) != null;
+				AI ai = null;
+				String ainame = pokemon.getChildText("ai", xml.getNamespace());
+				if (ainame != null) switch (ainame)
+				{
+					case "skipper":
+						ai = new SkipTurnsAI(this.floor, p);
+						break;
+
+					default:
+						break;
+				}
+				this.floor.summonPokemon(p, Integer.parseInt(pokemon.getAttributeValue("x")), Integer.parseInt(pokemon.getAttributeValue("y")),
+						new ArrayList<>(), ai);
+			}
+		}
 	}
 
 }

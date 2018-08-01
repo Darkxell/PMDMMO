@@ -123,7 +123,7 @@
             <xs:attribute name="difficulty" type="xs:positiveInteger" use="optional"/>
             <xs:attribute name="money" type="posInt" use="optional"/>
             <xs:attribute name="layout" type="posInt" use="optional"/>
-            <xs:attribute name="terrain" type="posInt" use="optional"/>
+            <xs:attribute name="terrain" type="posInt-1" use="optional"/>
             <xs:attribute name="shadows" type="posInt" use="optional"/>
             <xs:attribute name="camouflage" type="posInt" use="optional"/>
             <xs:attribute name="nature" type="xs:positiveInteger" use="optional"/>
@@ -135,6 +135,7 @@
             <xs:attribute name="buried" type="posInt" use="optional"/>
             <xs:attribute name="mhouse" type="posInt" use="optional"/>
             <xs:attribute name="shop" type="posInt" use="optional"/>
+            <xs:attribute name="bossfloor" type="xs:boolean" use="optional"/>
         </xs:complexType>
     </xs:element>
 

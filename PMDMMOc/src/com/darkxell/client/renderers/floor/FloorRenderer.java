@@ -10,6 +10,7 @@ import com.darkxell.client.renderers.AbstractRenderer;
 import com.darkxell.client.renderers.MasterDungeonRenderer;
 import com.darkxell.client.resources.images.tilesets.CommonDungeonTileset;
 import com.darkxell.client.resources.images.tilesets.FloorDungeonTileset;
+import com.darkxell.client.resources.images.tilesets.RegularFloorDungeonTileset;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
@@ -24,7 +25,7 @@ public class FloorRenderer extends AbstractRenderer
 	{
 		super(0, 0, MasterDungeonRenderer.LAYER_TILES);
 		this.floor = Persistance.floor;
-		this.tileset = FloorDungeonTileset.load(this.floor.data.terrainSpriteset());
+		this.tileset = RegularFloorDungeonTileset.load(this.floor);
 	}
 
 	public void render(Graphics2D g, int width, int height)

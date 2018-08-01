@@ -85,6 +85,7 @@ Here is a list of all Events. Will be updated with the game. Bold events are PAE
 
 | Event name           | Description                                                                       | May trigger               |
 |----------------------|-----------------------------------------------------------------------------------|-------------------------- |
+| BossDefeatedevent    | Called when a Boss is defeated. EventProcessor then does what is required.        | ExplorationStopEvent      |
 | **DungeonExitEvent** | Exits the Dungeon.                                                                | ExplorationStopEvent      |
 | ExplorationStopEvent | Notifies the game that the Dungeon exploration is over. Stops the Dungeon engine. |                           |
 | **NextFloorEvent**   | Changes to the next floor.                                                        | Calls turn start events.  |
@@ -140,7 +141,7 @@ Here is a list of all Events. Will be updated with the game. Bold events are PAE
 | Event name                  | Description                                | May trigger               |
 |-----------------------------|--------------------------------------------|-------------------------- |
 | DamageDealtEvent            | Called when a Pokémon takes damage.        | FaintedPokemonEvent       |
-| FaintedPokemonEvent         | Called when a Pokémon faints.              | |
+| FaintedPokemonEvent         | Called when a Pokémon faints.              | BossDefeatedEvent         |
 | HealthRestoredEvent         | Called when a Pokémon's HP is healed.      | |
 | IncreasedIQEvent            | Called when a Pokémon's IQ is raised.      | |
 | StatusConditionCreatedEvent | Called when a status condition is created. | |

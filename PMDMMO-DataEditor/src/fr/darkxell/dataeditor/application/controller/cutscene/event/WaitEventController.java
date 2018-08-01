@@ -70,14 +70,18 @@ public class WaitEventController extends EventController
 	{
 		ArrayList<CutsceneEvent> events = this.allCheckbox.isSelected() ? (ArrayList<CutsceneEvent>) this.allEvents.clone()
 				: new ArrayList<>(this.addedEventsList.getItems());
-		ArrayList<CutsceneEvent> noid = new ArrayList<>(events);
-		noid.removeIf(e -> e.id != -1);
-		if (!noid.isEmpty())
+
+		if (!this.allCheckbox.isSelected())
 		{
-			String message = "The following events need an ID to be waited for properly:";
-			for (CutsceneEvent e : noid)
-				message += "\n" + e;
-			new Alert(AlertType.WARNING, message, ButtonType.OK).showAndWait();
+			ArrayList<CutsceneEvent> noid = new ArrayList<>(events);
+			noid.removeIf(e -> e.id != -1);
+			if (!noid.isEmpty())
+			{
+				String message = "The following events need an ID to be waited for properly:";
+				for (CutsceneEvent e : noid)
+					message += "\n" + e;
+				new Alert(AlertType.WARNING, message, ButtonType.OK).showAndWait();
+			}
 		}
 		return new WaitCutsceneEvent(this.id(), this.allCheckbox.isSelected(), events);
 	}
@@ -103,6 +107,8 @@ public class WaitEventController extends EventController
 		this.addedEventsList.setCellFactory(param -> {
 			return new EventListCell();
 		});
+
+		this.allCheckbox.setSelected(true);
 	}
 
 	public void removeSelected()

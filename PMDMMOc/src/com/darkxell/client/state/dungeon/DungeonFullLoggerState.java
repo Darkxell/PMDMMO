@@ -35,6 +35,10 @@ public class DungeonFullLoggerState extends DungeonSubState
 	}
 
 	@Override
+	public void prerender(Graphics2D g, int width, int height)
+	{}
+
+	@Override
 	public void render(Graphics2D g, int width, int height)
 	{}
 

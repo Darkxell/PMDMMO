@@ -45,6 +45,16 @@ public abstract class FreezoneMap {
 	public final EntityRendererHolder<CutsceneEntity> cutsceneEntityRenderers = new EntityRendererHolder<>();
 
 	public FreezoneMap(String xmlfilepath, int defaultX, int defaultY, FreezoneInfo info) {
+		
+		this.loadFreezoneData(xmlfilepath);
+		
+		this.defaultX = defaultX;
+		this.defaultY = defaultY;
+		this.info = info;
+	}
+
+	protected void loadFreezoneData(String xmlfilepath)
+	{
 		InputStream is = Res.get(xmlfilepath);
 		SAXBuilder builder = new SAXBuilder();
 		org.jdom2.Element rootelement;
@@ -73,10 +83,6 @@ public abstract class FreezoneMap {
 			Logger.e("Could not build freezonemap from XML file : " + e);
 			e.printStackTrace();
 		}
-		
-		this.defaultX = defaultX;
-		this.defaultY = defaultY;
-		this.info = info;
 	}
 
 	public void addEntity(FreezoneEntity entity) {

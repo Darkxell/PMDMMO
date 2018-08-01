@@ -86,7 +86,7 @@ public class CutscenePokemon extends CutsceneEntity
 	@Override
 	public AbstractRenderer createRenderer()
 	{
-		PokemonSprite sprite = new PokemonSprite(PokemonSpritesets.getSpriteset(this.pokemonid));
+		PokemonSprite sprite = new PokemonSprite(PokemonSpritesets.getSpriteset(this.instanciated));
 		sprite.setState(this.currentState);
 		sprite.setFacingDirection(this.facing);
 		CutscenePokemonRenderer renderer = new CutscenePokemonRenderer(this, sprite);

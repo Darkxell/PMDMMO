@@ -74,6 +74,8 @@ public class UpdaterAndRenderer implements Runnable {
 	{
 		Persistance.stateManager.update();
 		DiscordEventHandlerForPMDMMO.handleDiscordRP();
+		
+		if (!Persistance.frame.isVisible()) return;
 
 		BufferStrategy bf = Persistance.frame.canvas.getBufferStrategy();
 		Graphics2D g = (Graphics2D) bf.getDrawGraphics();

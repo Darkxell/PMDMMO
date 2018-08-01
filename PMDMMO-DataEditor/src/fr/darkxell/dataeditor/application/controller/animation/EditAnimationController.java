@@ -58,6 +58,11 @@ public class EditAnimationController implements Initializable
 	@FXML
 	public ComboBox<PokemonSpriteState> stateCombobox;
 
+	public void exitTab()
+	{
+		Launcher.stopGame();
+	}
+
 	private DungeonPokemon generateTester()
 	{
 		DungeonPokemon pokemon = new DungeonPokemon(this.pokemonCombobox.getValue().generate(new Random(), 1, this.shinyCheckbox.isSelected() ? 1 : 0));
@@ -72,34 +77,6 @@ public class EditAnimationController implements Initializable
 	public void initialize(URL location, ResourceBundle resources)
 	{
 		instance = this;
-
-		if (floor == null)
-		{
-			floor = Persistance.floor = new Floor(1, Layout.find(Layout.LAYOUT_SINGLEROOM),
-					Persistance.dungeon = DungeonRegistry.find(1).newInstance(new Random().nextLong()), new Random(), false);
-			floor.generate();
-
-			tester = new DungeonPokemon(PokemonRegistry.find(1).generate(new Random(), 5));
-			floor.summonPokemon(tester, floor.getWidth() / 2, floor.getHeight() / 2, new ArrayList<>());
-
-			state = Persistance.dungeonState = new DungeonState();
-			state.setCamera(tester);
-			Persistance.stateManager = new PrincipalMainState();
-			// Persistance.stateManager.setState(state);
-
-			Launcher.isRunning = true;
-			Launcher.setProcessingProfile(Launcher.PROFILE_SYNCHRONIZED);
-
-			new Thread(thread = new AnimationPreviewThread()).start();
-
-			this.pokemonCombobox.getItems().addAll(PokemonRegistry.list());
-			this.stateCombobox.getItems().addAll(PokemonSpriteState.values());
-			this.directionCombobox.getItems().addAll(Direction.directions);
-
-			this.pokemonCombobox.setValue(tester.species());
-			this.stateCombobox.setValue(PokemonSpriteState.IDLE);
-			this.directionCombobox.setValue(Direction.SOUTH);
-		}
 	}
 
 	private PokemonAnimation loadAnimation()
@@ -152,6 +129,34 @@ public class EditAnimationController implements Initializable
 		AnimationState s = new AnimationState(Persistance.dungeonState);
 		s.animation = this.current = this.loadAnimation();
 		if (s.animation != null) state.setSubstate(s);
+	}
+
+	public void reload()
+	{
+		floor = Persistance.floor = new Floor(1, Layout.find(Layout.LAYOUT_SINGLEROOM),
+				Persistance.dungeon = DungeonRegistry.find(1).newInstance(new Random().nextLong()), new Random(), false);
+		floor.generate();
+
+		tester = new DungeonPokemon(PokemonRegistry.find(1).generate(new Random(), 5));
+		floor.summonPokemon(tester, floor.getWidth() / 2, floor.getHeight() / 2, new ArrayList<>());
+
+		state = Persistance.dungeonState = new DungeonState();
+		state.setCamera(tester);
+		Persistance.stateManager = new PrincipalMainState();
+		// Persistance.stateManager.setState(state);
+
+		Launcher.isRunning = true;
+		Launcher.setProcessingProfile(Launcher.PROFILE_SYNCHRONIZED);
+
+		new Thread(thread = new AnimationPreviewThread()).start();
+
+		this.pokemonCombobox.getItems().addAll(PokemonRegistry.list());
+		this.stateCombobox.getItems().addAll(PokemonSpriteState.values());
+		this.directionCombobox.getItems().addAll(Direction.directions);
+
+		this.pokemonCombobox.setValue(tester.species());
+		this.stateCombobox.setValue(PokemonSpriteState.IDLE);
+		this.directionCombobox.setValue(Direction.SOUTH);
 	}
 
 	public void setAnimation(AnimationListItem animation)
