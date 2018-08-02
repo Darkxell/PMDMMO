@@ -1,9 +1,6 @@
 package com.darkxell.client.launchable;
 
-import com.darkxell.client.discord.DiscordEventHandlerForPMDMMO;
-
-public class Updater implements Runnable
-{
+public class Updater implements Runnable {
 
 	public static final int targetUPS = 60;
 
@@ -12,17 +9,15 @@ public class Updater implements Runnable
 	private double updateTime, timePerUpdate;
 	private int ups = 0;
 
-	public Updater()
-	{}
+	public Updater() {
+	}
 
-	public int currentUPS()
-	{
+	public int currentUPS() {
 		return this.ups;
 	}
 
 	@Override
-	public void run()
-	{
+	public void run() {
 		// Preparing FPS handling
 		this.startTime = System.nanoTime();
 		this.currentTime = this.startTime;
@@ -32,22 +27,18 @@ public class Updater implements Runnable
 		this.updatesCurrentSecond = 0;
 		this.ups = 0;
 
-		while (Launcher.isRunning && Launcher.getProcessingProfile() == Launcher.PROFILE_UNCAPPED)
-		{
+		while (Launcher.isRunning && Launcher.getProcessingProfile() == Launcher.PROFILE_UNCAPPED) {
 			this.update();
 
-			try
-			{
+			try {
 				Thread.sleep(2);
-			} catch (InterruptedException e)
-			{
+			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
 	}
 
-	private void update()
-	{
+	private void update() {
 		// Calculate elapsed time
 		long elapsedTime = System.nanoTime() - this.currentTime;
 		this.timer += elapsedTime;
@@ -55,16 +46,13 @@ public class Updater implements Runnable
 		this.updateTime += elapsedTime / this.timePerUpdate;
 
 		// If a tick has passed, update until there is no delayed update
-		while (this.updateTime >= 1)
-		{
+		while (this.updateTime >= 1) {
 			Persistance.stateManager.update();
-			DiscordEventHandlerForPMDMMO.handleDiscordRP();
 			++this.updatesCurrentSecond;
 			--this.updateTime;
 		}
 
-		if (this.timer >= 1000000000)
-		{
+		if (this.timer >= 1000000000) {
 			this.ups = this.updatesCurrentSecond;
 			this.timer = 0;
 			this.updatesCurrentSecond = 0;
