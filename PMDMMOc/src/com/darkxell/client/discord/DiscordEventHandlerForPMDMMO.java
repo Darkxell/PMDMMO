@@ -51,6 +51,7 @@ public class DiscordEventHandlerForPMDMMO {
 					}
 			}
 		});
+		this.runner.setName("Discord rich presence thread");
 	}
 
 	/** The discord rp update cooldown, in miliseconds. */
