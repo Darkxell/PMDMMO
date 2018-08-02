@@ -3,8 +3,6 @@ package com.darkxell.client.launchable;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 
-import com.darkxell.client.discord.DiscordEventHandlerForPMDMMO;
-
 /**
  * Experimental class that combines the updater and the renderer to synchronize
  * updates and graphical prints.
@@ -56,8 +54,8 @@ public class UpdaterAndRenderer implements Runnable {
 
 		// If a tick has passed, update until there is no delayed update
 		while (this.updateTime >= 1) {
-			
 			this.tickUpdate();
+
 
 			++this.updatesCurrentSecond;
 			--this.updateTime;
@@ -73,7 +71,6 @@ public class UpdaterAndRenderer implements Runnable {
 	protected void tickUpdate()
 	{
 		Persistance.stateManager.update();
-		DiscordEventHandlerForPMDMMO.handleDiscordRP();
 		
 		if (!Persistance.frame.isVisible()) return;
 

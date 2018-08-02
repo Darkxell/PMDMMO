@@ -16,9 +16,6 @@ import com.darkxell.common.trap.TrapRegistry;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.language.Lang;
 
-import net.arikia.dev.drpc.DiscordRPC;
-import net.arikia.dev.drpc.DiscordRichPresence;
-
 /** Launching class of the client */
 public class Launcher {
 
@@ -46,11 +43,8 @@ public class Launcher {
 		Persistance.soundmanager = new SoundManager();
 		Logger.instance().info("Lang & Data loaded.");
 
-		DiscordRPC.discordInitialize("463408543572426762", DiscordEventHandlerForPMDMMO.createHandler(), true);
-		DiscordRichPresence rich = new DiscordRichPresence.Builder("In logging screen").setBigImage("main_big", "")
-				.build();
-		DiscordRPC.discordUpdatePresence(rich);
-		// DiscordRPC.discordRunCallbacks();
+		DiscordEventHandlerForPMDMMO deh = new DiscordEventHandlerForPMDMMO();
+		deh.start();
 
 		Persistance.frame = new Frame();
 		Persistance.frame.canvas.requestFocus();
@@ -70,7 +64,6 @@ public class Launcher {
 
 	public static void stopGame() {
 		processingprofile = PROFILE_UNDEFINED;
-		DiscordRPC.discordShutdown();
 		isRunning = false;
 		Logger.instance().saveClient();
 		if (Persistance.isUnitTesting)
