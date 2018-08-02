@@ -13,11 +13,13 @@ public abstract class Ability implements AffectsPokemon
 	private static final HashMap<Integer, Ability> abilities = new HashMap<Integer, Ability>();
 
 	public static final AbilityTypeBoost BLAZE = new AbilityTypeBoost(0, PokemonType.Fire);
-	public static final Ability LEVITATE = new Ability(16) {};
 	public static final AbilityTypeBoost OVERGROW = new AbilityTypeBoost(1, PokemonType.Grass);
 	public static final AbilityTypeBoost SWARM = new AbilityTypeBoost(2, PokemonType.Bug);
-
 	public static final AbilityTypeBoost TORRENT = new AbilityTypeBoost(3, PokemonType.Water);
+
+	public static final Ability LEVITATE = new AbilityNullifyType(16, PokemonType.Ground);
+	public static final Ability SOUNDPROOF = new AbilityNullifySound(19);
+	public static final Ability WONDER_GUARD = new AbilityNullifyNonSupEff(21);
 
 	/** @return The Ability with the input ID. */
 	public static Ability find(int id)

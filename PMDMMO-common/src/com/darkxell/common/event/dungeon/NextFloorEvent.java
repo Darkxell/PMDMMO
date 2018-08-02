@@ -3,8 +3,10 @@ package com.darkxell.common.event.dungeon;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
+import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.player.Player;
+import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Communicable;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonObject;
@@ -29,6 +31,14 @@ public class NextFloorEvent extends DungeonEvent implements Communicable
 	public String loggerMessage()
 	{
 		return this.player.name() + " went to the next floor.";
+	}
+
+	@Override
+	public boolean isValid()
+	{
+		for (DungeonPokemon p : this.player.getDungeonTeam())
+			if (!p.isFainted() && p.tile().type() == TileType.STAIR) return true;
+		return false;
 	}
 
 	public Player player()

@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.Random;
 import java.util.function.Predicate;
 
+import com.darkxell.common.ai.AI;
 import com.darkxell.common.ai.AIManager;
 import com.darkxell.common.dungeon.DungeonEncounter;
 import com.darkxell.common.dungeon.DungeonInstance;
@@ -35,6 +36,8 @@ public class Floor
 
 	/** Stores all AI objects for Pokémon on this Floor. */
 	public final AIManager aiManager;
+	/** IDs of the Cutscenes to play when, respectively, entering this Floor and defeating the boss. */
+	public String cutsceneIn, cutsceneOut;
 	/** This Floor's data. */
 	public final FloorData data;
 	/** This Floor's Dungeon. */
@@ -54,6 +57,8 @@ public class Floor
 	public Room[] rooms;
 	/** The position at which the team will spawn. */
 	public Point teamSpawn;
+	/** The direction which the team will spawn facing. */
+	public Direction teamSpawnDirection = Direction.SOUTH;
 	/** This Floor's tiles. null before generating. Note that this array must NOT be modified. It is only public because the generation algorithm uses this array to generate the floor. */
 	public Tile[][] tiles;
 	/** List of Weather conditions applied to this Floor. */
@@ -136,6 +141,11 @@ public class Floor
 		return this.tiles.length;
 	}
 
+	public boolean hasCustomTileset()
+	{
+		return this.data.terrainSpriteset() == -1;
+	}
+
 	/** @return True if this Floor is done generating. */
 	public boolean isGenerated()
 	{
@@ -206,6 +216,7 @@ public class Floor
 	{
 		Point spawn = this.teamSpawn;
 		this.tileAt(spawn.x, spawn.y).setPokemon(player.getDungeonLeader());
+		player.getDungeonLeader().setFacing(this.teamSpawnDirection);
 
 		ArrayList<Tile> candidates = new ArrayList<Tile>();
 		Tile initial = player.getDungeonLeader().tile();
@@ -237,6 +248,7 @@ public class Floor
 				continue;
 			}
 			this.tileAt(candidates.get(0).x, candidates.get(0).y).setPokemon(team[i]);
+			team[i].setFacing(this.teamSpawnDirection);
 			this.aiManager.register(team[i]);
 			candidates.remove(0);
 		}
@@ -382,13 +394,18 @@ public class Floor
 
 	public void summonPokemon(DungeonPokemon pokemon, int x, int y, ArrayList<DungeonEvent> events)
 	{
+		this.summonPokemon(pokemon, x, y, events, null);
+	}
+
+	public void summonPokemon(DungeonPokemon pokemon, int x, int y, ArrayList<DungeonEvent> events, AI ai)
+	{
 		if (!(this.tiles == null || x < 0 || x >= this.tiles.length || y < 0 || y >= this.tiles[x].length)) this.tileAt(x, y).setPokemon(pokemon);
 		if (!this.dungeon.isGeneratingFloor())
 		{
 			this.dungeon.registerActor(pokemon);
 			this.dungeon.communication.pokemonIDs.register(pokemon.originalPokemon, this.dungeon.communication.itemIDs, this.dungeon.communication.moveIDs);
 		}
-		if (!pokemon.isTeamLeader()) this.aiManager.register(pokemon);
+		if (!pokemon.isTeamLeader()) this.aiManager.register(pokemon, ai);
 
 		pokemon.onFloorStart(this, events);
 	}

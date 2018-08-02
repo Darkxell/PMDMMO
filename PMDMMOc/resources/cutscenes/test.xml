@@ -1,35 +1,36 @@
-<cutscene xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="pmdmmo"
-    xsi:schemaLocation="pmdmmo ../data/xsd/cutscenes.xsd" xmlns:ns1="pmdmmo">
-    <creation freezone="base" fade="true" camerax="40" cameray="30">
-        <pokemon cutsceneid="0" xpos="35" ypos="28">
-            <teammember>0</teammember>
-		</pokemon>
-        <pokemon cutsceneid="1" xpos="35" ypos="40" ns1:facing="North">
-            <pokemonid>380</pokemonid>
-            <state>Dance</state>
-            <animated>false</animated>
-        </pokemon>
-    </creation>
-    <events>
-        <dialog>
-            <dialogscreen>item.info.7</dialogscreen>
-            <dialogscreen ns1:target="0">quiz.0.0</dialogscreen>
-        </dialog>
-        <rotate ns1:target="1" distance="2"/>
-        <move ns1:target="1" ypos="32"/>
-        <wait/>
-        <move ns1:target="1" ypos="35" speed="45"/>
-        <delay ticks="40"/>
-        <rotate ns1:target="0" instantly="true" distance="-2"/>
-        <delay ticks="40"/>
-        <despawn ns1:target="1"/>
-        <camera xpos="5" yincrease="5"/>
-        <wait/>
-        <dialog isnarrator="true">
-            <dialogscreen translate="false" ns1:target="1">I AM AMAZING</dialogscreen>
-        </dialog>
-    </events>
-    <onfinish>
-        <loadfreezone id="base"/>
-    </onfinish>
+<?xml version="1.0" encoding="UTF-8"?>
+<cutscene name="test">
+  <creation freezone="base" camerax="40.0" cameray="30.0" fading="false">
+    <pokemon cutsceneid="0" xpos="28.0" ypos="35.0">
+      <teammember>0</teammember>
+    </pokemon>
+    <pokemon cutsceneid="1" xpos="32.0" ypos="35.0" facing="NORTH">
+      <pokemonid>380</pokemonid>
+    </pokemon>
+    <pokemon cutsceneid="2" xpos="28.0" ypos="10.0">
+      <pokemonid>50</pokemonid>
+    </pokemon>
+  </creation>
+  <events>
+    <dialog>
+      <dialogscreen>item.info.7</dialogscreen>
+      <dialogscreen target="0">quiz.0.0</dialogscreen>
+    </dialog>
+    <rotate target="1" distance="2" />
+    <move ypos="32.0" target="1" />
+    <wait />
+    <move ypos="35.0" speed="45.0" target="1" />
+    <delay ticks="40" />
+    <rotate target="0" distance="-2" instantly="true" />
+    <delay ticks="40" />
+    <despawn target="1" />
+    <camera xpos="5.0" />
+    <wait />
+    <dialog isnarrator="true">
+      <dialogscreen translate="false" target="1">I AM AMAZING</dialogscreen>
+    </dialog>
+  </events>
+  <onfinish>
+    <loadfreezone id="base" />
+  </onfinish>
 </cutscene>

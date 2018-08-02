@@ -32,6 +32,8 @@ public class DungeonPokemon implements ItemContainer
 	private Direction facing = Direction.SOUTH;
 	/** This Pokémon's current Hit Points. */
 	private int hp;
+	/** True if this Pokemon is a Boss. */
+	public boolean isBoss;
 	/** The original Pokémon that entered the Dungeon. This object is necessary for Dungeons that modify the visiting Pokémon, such as Dungeons resetting the level to 1. */
 	public final Pokemon originalPokemon;
 	/** Variable used to compute HP regeneration. */
@@ -170,6 +172,12 @@ public class DungeonPokemon implements ItemContainer
 	public int getHp()
 	{
 		return this.hp;
+	}
+
+	/** @return The percentage of HP left for this Pokemon. */
+	public int getHpPercentage()
+	{
+		return (int) (this.getHp() * 100 / this.getMaxHP());
 	}
 
 	public ItemStack getItem()

@@ -28,7 +28,7 @@ public enum PokemonType
 	Unknown(19, new Color(104, 160, 144)),
 	Water(10, new Color(104, 144, 240));
 
-	public static final float SUPER_EFFECTIVE = 1.4f, NORMALLY_EFFECTIVE = 1, NOT_VERY_EFFECTIVE = 0.7f, NO_EFFECT = 0;
+	public static final double SUPER_EFFECTIVE = 1.4f, NORMALLY_EFFECTIVE = 1, NOT_VERY_EFFECTIVE = 0.7f, NO_EFFECT = 0;
 
 	static
 	{
@@ -180,30 +180,30 @@ public enum PokemonType
 	}
 
 	public final Color color;
-	private final float[] effectiveness;
+	private final double[] effectiveness;
 	public final int id;
 
 	private PokemonType(int id, Color color)
 	{
 		this.id = id;
 		this.color = color;
-		this.effectiveness = new float[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+		this.effectiveness = new double[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
 	}
 
-	public float effectivenessOn(PokemonSpecies species)
+	public double effectivenessOn(PokemonSpecies species)
 	{
 		if (species.type2 == null) return this.effectivenessOn(species.type1);
 		return this.effectivenessOn(species.type1, species.type2);
 	}
 
 	/** @return The effectiveness of this type on a single-type. */
-	public float effectivenessOn(PokemonType type)
+	public double effectivenessOn(PokemonType type)
 	{
 		return this.effectiveness[type.id];
 	}
 
 	/** @return The effectiveness of this type on a dual-type. */
-	public float effectivenessOn(PokemonType type1, PokemonType type2)
+	public double effectivenessOn(PokemonType type1, PokemonType type2)
 	{
 		return this.effectiveness[type1.id] * this.effectiveness[type2.id];
 	}
@@ -214,7 +214,7 @@ public enum PokemonType
 	}
 
 	/** Sets the effectiveness of this type on the input type. */
-	private void setEffectivenessOn(PokemonType type, float effectiveness)
+	private void setEffectivenessOn(PokemonType type, double effectiveness)
 	{
 		this.effectiveness[type.id] = effectiveness;
 	}

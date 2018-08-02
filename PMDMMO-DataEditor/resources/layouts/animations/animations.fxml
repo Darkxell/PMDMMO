@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.darkxell.dataeditor.application.controller.animation.AnimationsTabController">
+   <left>
+      <VBox alignment="CENTER" styleClass="panel" BorderPane.alignment="CENTER">
+         <children>
+            <ListView fx:id="animationsListView" VBox.vgrow="ALWAYS" />
+         </children>
+      </VBox>
+   </left>
+	<center>
+		<TitledPane fx:id="editAnimationPane" alignment="CENTER" animated="false" collapsible="false" contentDisplay="CENTER" text="Animation preview" BorderPane.alignment="CENTER">
+			<content>
+				<ScrollPane fitToWidth="true">
+					<content>
+						<fx:include fx:id="editAnimation" source="edit_animation.fxml" />
+					</content>
+				</ScrollPane>
+			</content>
+			<padding>
+				<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+			</padding>
+		</TitledPane>
+	</center>
+</BorderPane>

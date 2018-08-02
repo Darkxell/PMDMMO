@@ -11,14 +11,12 @@ public class AbstractAnimation
 	/** The total duration of this Animation. */
 	int duration;
 	public final AnimationEndListener listener;
-	/** True if displaying this Animation should stop the Pending Events. */
-	public boolean needsPause = true;
 	/** The number of times this animation plays. Usually 1, or -1 as until removed. */
 	public int plays = 1;
 	/** The ID of the sound to play when this Animation is played. */
-	public String sound = null;
+	protected String sound = null;
 	/** The number of ticks to wait before playing the sound. */
-	public int soundDelay = 0;
+	int soundDelay = 0;
 	/** Used to remove this animation when this Source is dropped. */
 	public Object source;
 	private int tick = 0;
@@ -54,6 +52,12 @@ public class AbstractAnimation
 		return this.tick == (this.duration - 1) * Math.abs(this.plays);
 	}
 
+	/** @return True if this Animation should pause the game logic. */
+	public boolean needsPause()
+	{
+		return this.delayTime > 0;
+	}
+
 	private void onDelayFinished()
 	{
 		if (this.listener != null) this.listener.onAnimationEnd(this);
@@ -71,6 +75,11 @@ public class AbstractAnimation
 	public void start()
 	{
 		AnimationTicker.instance.register(this);
+	}
+
+	public void stop()
+	{
+		this.onFinish();
 	}
 
 	/** @return The current tick of this Animation. */

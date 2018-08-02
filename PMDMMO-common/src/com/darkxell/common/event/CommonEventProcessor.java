@@ -6,10 +6,13 @@ import java.util.Stack;
 import com.darkxell.common.ai.AIUtils;
 import com.darkxell.common.dungeon.AutoDungeonInstance;
 import com.darkxell.common.dungeon.DungeonInstance;
+import com.darkxell.common.dungeon.DungeonOutcome;
+import com.darkxell.common.dungeon.DungeonOutcome.Outcome;
 import com.darkxell.common.event.action.PokemonRotateEvent;
 import com.darkxell.common.event.action.PokemonSpawnedEvent;
 import com.darkxell.common.event.action.PokemonTravelEvent;
 import com.darkxell.common.event.action.TurnSkippedEvent;
+import com.darkxell.common.event.dungeon.BossDefeatedEvent;
 import com.darkxell.common.event.dungeon.ExplorationStopEvent;
 import com.darkxell.common.event.stats.BellyChangedEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
@@ -74,6 +77,7 @@ public class CommonEventProcessor
 		this.dungeon.eventOccured(event);
 		this.addToPending(event.processServer());
 		if (event instanceof ExplorationStopEvent) this.setState(State.STOPPED);
+		else if (event instanceof BossDefeatedEvent) this.processBossDefeatedEvent((BossDefeatedEvent) event);
 	}
 
 	public boolean hasPendingEvents()
@@ -110,6 +114,12 @@ public class CommonEventProcessor
 		if (this.stopsTravel(event)) this.runners.clear();
 
 		return event.isValid();
+	}
+
+	/** Method that handles a Boss defeat. This event has very different results depending on the Dungeon, so having a separate method for it seems necessary. */
+	protected void processBossDefeatedEvent(BossDefeatedEvent event)
+	{
+		this.addToPending(new ExplorationStopEvent(this.dungeon.currentFloor(), new DungeonOutcome(Outcome.DUNGEON_CLEARED, this.dungeon.id)));
 	}
 
 	/** Processes the input event and adds the resulting events to the pending stack. */

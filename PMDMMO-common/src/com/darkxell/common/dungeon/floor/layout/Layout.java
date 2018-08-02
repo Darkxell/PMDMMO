@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.util.Random;
 
 import com.darkxell.common.dungeon.floor.Floor;
+import com.darkxell.common.dungeon.floor.Room;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.item.Item;
@@ -52,10 +53,9 @@ public abstract class Layout
 
 	protected void fillRoomsWithGround()
 	{
-		for (int i = 0; i < this.floor.rooms.length; ++i)
-			for (int x = this.floor.rooms[i].x; x < this.floor.rooms[i].width + this.floor.rooms[i].x; ++x)
-				for (int y = this.floor.rooms[i].y; y < this.floor.rooms[i].height + this.floor.rooms[i].y; ++y)
-					this.floor.tiles[x][y].setType(TileType.GROUND);
+		for (Room r : this.floor.rooms)
+			for (Tile t : r.listTiles())
+					t.setType(TileType.GROUND);
 	}
 
 	/** Generates a Floor.

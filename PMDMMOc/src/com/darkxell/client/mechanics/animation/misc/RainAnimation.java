@@ -18,10 +18,11 @@ public class RainAnimation extends AbstractAnimation
 	private HashMap<SpritesetAnimation, Boolean> drops;
 	private final int spritesetID;
 
-	public RainAnimation(int spritesetID, AnimationEndListener listener)
+	public RainAnimation(int spritesetID, String sound, AnimationEndListener listener)
 	{
 		super(DURATION, listener);
 		this.spritesetID = spritesetID;
+		this.sound = sound;
 		this.drops = new HashMap<SpritesetAnimation, Boolean>();
 	}
 
@@ -40,8 +41,8 @@ public class RainAnimation extends AbstractAnimation
 		{
 			if (!this.drops.get(animation))
 			{
-				animation.setXY(Math.random() * width - animation.spriteset.spriteWidth, Math.random() * height - animation.spriteset.spriteHeight
-						* animation.spriteDuration);
+				animation.setXY(Math.random() * width - animation.spriteset.spriteWidth,
+						Math.random() * height - animation.spriteset.spriteHeight * animation.spriteDuration);
 				this.drops.put(animation, true);
 			}
 			animation.postrender(g, width, height);

@@ -168,17 +168,17 @@ public class MoveEffect implements AffectsPokemon
 	{
 		Move move = usedMove.move.move();
 		MoveEffectCalculator calculator = new MoveEffectCalculator(usedMove, target, floor);
-		boolean missed = calculator.misses();
-		float effectiveness = move.type == null ? PokemonType.NORMALLY_EFFECTIVE : move.type.effectivenessOn(target.species());
+		boolean missed = calculator.misses(events);
+		double effectiveness = calculator.effectiveness();
 		if (effectiveness == PokemonType.NO_EFFECT) events.add(new MessageEvent(floor, move.unaffectedMessage(target)));
 		else
 		{
 			if (!missed && this != MoveEffects.Basic_attack) target.receiveMove(usedMove.move.isLinked() ? DungeonPokemon.LINKED_MOVES : DungeonPokemon.MOVES);
 			if (!missed && move.category != MoveCategory.Status)
 			{
-				if (effectiveness == PokemonType.SUPER_EFFECTIVE)
+				if (effectiveness >= PokemonType.SUPER_EFFECTIVE)
 					events.add(new MessageEvent(floor, new Message("move.effectiveness.super").addReplacement("<pokemon>", target.getNickname())));
-				else if (effectiveness == PokemonType.NOT_VERY_EFFECTIVE)
+				else if (effectiveness <= PokemonType.NOT_VERY_EFFECTIVE)
 					events.add(new MessageEvent(floor, new Message("move.effectiveness.not_very").addReplacement("<pokemon>", target.getNickname())));
 			}
 			this.useOn(usedMove, target, floor, calculator, missed, events);
@@ -199,7 +199,7 @@ public class MoveEffect implements AffectsPokemon
 	protected void useOn(MoveUse usedMove, DungeonPokemon target, Floor floor, MoveEffectCalculator calculator, boolean missed, ArrayList<DungeonEvent> events)
 	{
 		if (missed) events.add(new MessageEvent(floor, new Message("move.miss").addReplacement("<pokemon>", target.getNickname())));
-		else if (usedMove.move.move().category != MoveCategory.Status) events.add(new DamageDealtEvent(floor, target, usedMove, calculator.compute()));
+		else if (usedMove.move.move().category != MoveCategory.Status) events.add(new DamageDealtEvent(floor, target, usedMove, calculator.compute(events)));
 	}
 
 }

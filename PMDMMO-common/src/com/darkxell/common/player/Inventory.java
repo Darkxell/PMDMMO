@@ -122,7 +122,7 @@ public class Inventory implements ItemContainer
 	@Override
 	public ItemStack getItem(int index)
 	{
-		if (index < 0 || index >= this.maxSize()) return null;
+		if (index < 0 || index >= this.size()) return null;
 		return this.items().get(index);
 	}
 

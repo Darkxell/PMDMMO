@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 
 import com.darkxell.client.resources.Res;
 
-public class AbstractDungeonTileset
+public abstract class AbstractDungeonTileset
 {
 
 	public static final int TILE_SIZE = 24;
@@ -27,7 +27,8 @@ public class AbstractDungeonTileset
 	/** @return The tile at the given x, y coordinates. */
 	public BufferedImage tileAt(int x, int y)
 	{
-		return this.tiles[x][y];
+		if (x >= 0 && x < this.tiles.length && y >= 0 && y < this.tiles[x].length) return this.tiles[x][y];
+		return this.tiles[0][0];
 	}
 
 }

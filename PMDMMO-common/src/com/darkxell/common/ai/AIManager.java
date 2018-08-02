@@ -35,7 +35,13 @@ public class AIManager
 
 	public void register(DungeonPokemon pokemon)
 	{
-		if (!pokemon.isTeamLeader()) this.ais.put(pokemon, this.aiFor(pokemon));
+		this.register(pokemon, null);
+	}
+
+	public void register(DungeonPokemon pokemon, AI ai)
+	{
+		if (ai == null && !pokemon.isTeamLeader()) ai = this.aiFor(pokemon);
+		if (ai != null) this.ais.put(pokemon, ai);
 	}
 
 	public DungeonEvent takeAction(DungeonPokemon pokemon)

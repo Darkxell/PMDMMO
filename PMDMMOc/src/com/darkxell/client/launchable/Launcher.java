@@ -63,6 +63,7 @@ public class Launcher {
 	}
 
 	public static void stopGame() {
+		processingprofile = PROFILE_UNDEFINED;
 		isRunning = false;
 		Logger.instance().saveClient();
 		if (Persistance.isUnitTesting)

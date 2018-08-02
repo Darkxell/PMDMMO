@@ -20,6 +20,8 @@ public class PokemonAnimation extends AbstractAnimation
 	public final AbstractPokemonRenderer renderer;
 	/** The state to give to the Pokémon. null if shouldn't be changed. */
 	PokemonSpriteState state;
+	/** The number of ticks to wait before setting the state. */
+	int stateDelay = 0;
 	/** The Pokémon to draw. */
 	public final DungeonPokemon target;
 	/** Coordinates of the center of the Pokémon. */
@@ -60,7 +62,7 @@ public class PokemonAnimation extends AbstractAnimation
 	public void start()
 	{
 		super.start();
-		if (this.state != null) this.renderer.sprite().setState(this.state);
+		if (this.state != null && this.stateDelay == 0) this.renderer.sprite().setState(this.state);
 		if (this.movement != null) this.movement.start();
 	}
 
@@ -68,6 +70,7 @@ public class PokemonAnimation extends AbstractAnimation
 	public void update()
 	{
 		super.update();
+		if (this.state != null && this.tick() == this.stateDelay) this.renderer.sprite().setState(this.state);
 		if (this.renderer != null)
 		{
 			this.x = this.renderer.x() + TILE_SIZE / 2;

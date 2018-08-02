@@ -3,6 +3,7 @@ package com.darkxell.common.dungeon.floor.layout;
 import java.awt.Point;
 
 import com.darkxell.common.dungeon.floor.Room;
+import com.darkxell.common.dungeon.floor.SquareRoom;
 import com.darkxell.common.dungeon.floor.TileType;
 
 /** A Layout with random rooms in a grid-like pattern. */
@@ -81,7 +82,7 @@ public class GridRoomsLayout extends Layout {
 						+ ((this.random.nextInt(maxRoomWidth - minRoomWidth) + minRoomWidth) / 2) - roomX;
 				int roomHeight = this.roomcenters[x][y].y
 						+ ((this.random.nextInt(maxRoomHeight - minRoomHeight) + minRoomHeight) / 2) - roomY;
-				this.floor.rooms[x + (y * this.gridwidth)] = new Room(this.floor, 1 + roomX, 1 + roomY, roomWidth,
+				this.floor.rooms[x + (y * this.gridwidth)] = new SquareRoom(this.floor, 1 + roomX, 1 + roomY, roomWidth,
 						roomHeight, false);
 			}
 
@@ -98,12 +99,12 @@ public class GridRoomsLayout extends Layout {
 	protected void generatePaths() {
 		for (int x = 0; x < roomcenters.length; ++x)
 			for (int y = 0; y < roomcenters[0].length; ++y) {
-				Room r1 = this.floor.roomAt(roomcenters[x][y].x, roomcenters[x][y].y);
+				SquareRoom r1 = (SquareRoom) this.floor.roomAt(roomcenters[x][y].x, roomcenters[x][y].y);
 				if (x != roomcenters.length - 1) {
 					// Generate the key points
 					int startx1 = (r1 == null) ? roomcenters[x][y].x : r1.x + r1.width;
 					int starty1 = (r1 == null) ? roomcenters[x][y].y : this.random.nextInt(r1.height) + r1.y;
-					Room r2 = this.floor.roomAt(roomcenters[x + 1][y].x, roomcenters[x + 1][y].y);
+					SquareRoom r2 = (SquareRoom) this.floor.roomAt(roomcenters[x + 1][y].x, roomcenters[x + 1][y].y);
 					int endx1 = (r2 == null) ? roomcenters[x + 1][y].x : r2.x;
 					int endy1 = (r2 == null) ? roomcenters[x + 1][y].y : this.random.nextInt(r2.height) + r2.y;
 					// Sets the floor in the corridor
@@ -121,7 +122,7 @@ public class GridRoomsLayout extends Layout {
 					// Generate the key points
 					int startx1 = (r1 == null) ? roomcenters[x][y].x : this.random.nextInt(r1.width) + r1.x;
 					int starty1 = (r1 == null) ? roomcenters[x][y].y : r1.y + r1.height;
-					Room r2 = this.floor.roomAt(roomcenters[x][y + 1].x, roomcenters[x][y + 1].y);
+					SquareRoom r2 = (SquareRoom) this.floor.roomAt(roomcenters[x][y + 1].x, roomcenters[x][y + 1].y);
 					int endx1 = (r2 == null) ? roomcenters[x][y + 1].x : this.random.nextInt(r2.width) + r2.x;
 					int endy1 = (r2 == null) ? roomcenters[x][y + 1].y : r2.y;
 					// Sets the floor in the corridor
