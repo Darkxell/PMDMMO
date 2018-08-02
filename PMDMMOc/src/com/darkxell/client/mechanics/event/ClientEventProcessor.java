@@ -22,7 +22,6 @@ import com.darkxell.client.state.dialog.DialogState.DialogEndListener;
 import com.darkxell.client.state.dungeon.AnimationState;
 import com.darkxell.client.state.dungeon.DelayState;
 import com.darkxell.client.state.dungeon.NextFloorState;
-import com.darkxell.client.state.dungeon.OrbAnimationState;
 import com.darkxell.client.state.dungeon.PokemonTravelState;
 import com.darkxell.client.state.menu.dungeon.MoveLearnMenuState;
 import com.darkxell.client.state.menu.dungeon.StairMenuState;
@@ -236,12 +235,14 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	{
 		if (!(event.source instanceof BellyChangedEvent))
 		{
-			SoundManager.playSound("dungeon-hurt");
-			Persistance.dungeonState.pokemonRenderer.getRenderer(event.target).sprite().setState(PokemonSpriteState.HURT);
 			Persistance.dungeonState.pokemonRenderer.getRenderer(event.target).sprite().setHealthChange(-event.damage);
-			Animations.getCustomAnimation(event.target, Animations.HURT, null).start();
-			Persistance.dungeonState.setSubstate(new DelayState(Persistance.dungeonState, PokemonSprite.FRAMELENGTH));
-			this.setState(State.ANIMATING);
+			AnimationState s = new AnimationState(Persistance.dungeonState);
+			s.animation = Animations.getCustomAnimation(event.target, Animations.HURT, this.currentAnimEnd);
+			if (s.animation != null)
+			{
+				Persistance.dungeonState.setSubstate(s);
+				this.setState(State.ANIMATING);
+			}
 		}
 	}
 
@@ -377,9 +378,6 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		s.animation = Animations.getMoveAnimation(event.usedMove().user, event.usedMove().move.move(), this.currentAnimEnd);
 		if (s.animation != null)
 		{
-			if (Animations.playsOrbAnimation(event.usedMove().user, event.usedMove().move.move()))
-				s = new OrbAnimationState(Persistance.dungeonState, event.usedMove().user, s);
-
 			Persistance.dungeonState.setSubstate(s);
 			this.setState(State.ANIMATING);
 		}
@@ -509,25 +507,13 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	private void processWeatherEvent(WeatherChangedEvent event)
 	{
 		AnimationState a = new AnimationState(Persistance.dungeonState);
-		if (event.next.weather == Weather.RAIN)
-		{
-			a.animation = new RainAnimation(100, this.currentAnimEnd);
-			a.animation.sound = "weather-rain";
-		} else if (event.next.weather == Weather.SNOW)
-		{
-			a.animation = new SnowAnimation(this.currentAnimEnd);
-			a.animation.sound = "weather-snow";
-		} else if (event.next.weather == Weather.HAIL)
-		{
-			a.animation = new RainAnimation(103, this.currentAnimEnd);
-			a.animation.sound = "weather-hail";
-		} else if (event.next.weather == Weather.SUNNY)
-		{
-			a.animation = Animations.getCustomAnimation(null, 101, this.currentAnimEnd);
-			a.animation.sound = "weather-sunny";
-		}
+		if (event.next.weather == Weather.RAIN) a.animation = new RainAnimation(100, "weather-rain", this.currentAnimEnd);
+		else if (event.next.weather == Weather.SNOW) a.animation = new SnowAnimation(this.currentAnimEnd);
+		else if (event.next.weather == Weather.HAIL) a.animation = new RainAnimation(103, "weather-hail", this.currentAnimEnd);
+		else if (event.next.weather == Weather.SUNNY) a.animation = Animations.getCustomAnimation(null, 101, this.currentAnimEnd);
 		if (a.animation != null)
 		{
+			Persistance.dungeonState.staticAnimationsRenderer.add(a.animation);
 			Persistance.dungeonState.setSubstate(a);
 			this.setState(State.ANIMATING);
 		}

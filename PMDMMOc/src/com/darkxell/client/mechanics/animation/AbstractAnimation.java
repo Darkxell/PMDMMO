@@ -14,9 +14,9 @@ public class AbstractAnimation
 	/** The number of times this animation plays. Usually 1, or -1 as until removed. */
 	public int plays = 1;
 	/** The ID of the sound to play when this Animation is played. */
-	public String sound = null;
+	protected String sound = null;
 	/** The number of ticks to wait before playing the sound. */
-	public int soundDelay = 0;
+	int soundDelay = 0;
 	/** Used to remove this animation when this Source is dropped. */
 	public Object source;
 	private int tick = 0;
@@ -77,6 +77,11 @@ public class AbstractAnimation
 		AnimationTicker.instance.register(this);
 	}
 
+	public void stop()
+	{
+		this.onFinish();
+	}
+
 	/** @return The current tick of this Animation. */
 	public int tick()
 	{
@@ -90,11 +95,6 @@ public class AbstractAnimation
 		// Can't use else: needs to increase and finish on same tick.
 		if (this.isDelayOver()) this.onDelayFinished();
 		if (this.isOver()) this.onFinish();
-	}
-
-	public void stop()
-	{
-		this.onFinish();
 	}
 
 }

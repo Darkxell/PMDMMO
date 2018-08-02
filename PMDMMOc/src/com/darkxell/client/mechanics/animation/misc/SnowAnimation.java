@@ -7,19 +7,20 @@ import java.awt.Graphics2D;
 import com.darkxell.client.mechanics.animation.AbstractAnimation;
 import com.darkxell.client.mechanics.animation.AnimationEndListener;
 import com.darkxell.client.mechanics.animation.Animations;
+import com.darkxell.client.mechanics.animation.OverlayAnimation;
 import com.darkxell.client.mechanics.animation.SpritesetAnimation;
 
 public class SnowAnimation extends AbstractAnimation
 {
 
 	public static final int DURATION = 64;
-	public static final int FADE = 10;
 
 	private SpritesetAnimation[] snow;
 
 	public SnowAnimation(AnimationEndListener listener)
 	{
 		super(DURATION, listener);
+		this.sound = "weather-snow";
 	}
 
 	@Override
@@ -47,7 +48,8 @@ public class SnowAnimation extends AbstractAnimation
 				}
 		}
 
-		float alpha = this.tick() < FADE ? this.tick() * 1f / FADE : this.tick() >= DURATION - FADE ? (DURATION - this.tick()) * 1f / FADE : 1;
+		float alpha = this.tick() < OverlayAnimation.FADE ? this.tick() * 1f / OverlayAnimation.FADE
+				: this.tick() >= DURATION - OverlayAnimation.FADE ? (DURATION - this.tick()) * 1f / OverlayAnimation.FADE : 1;
 		AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha);
 		Composite c = g.getComposite();
 		if (alpha != 1) g.setComposite(ac);

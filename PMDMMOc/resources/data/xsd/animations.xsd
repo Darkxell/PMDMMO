@@ -30,8 +30,16 @@
 				</xs:attribute>
 				<xs:attribute name="sprites" type="xs:string" use="optional"/>
 				<xs:attribute name="sound" type="xs:string"/>
+				<xs:attribute name="sounddelay" type="xs:positiveInteger" use="optional"/>
 				<xs:attribute name="state" type="xs:string" use="optional"/>
-				<xs:attribute name="playsorbanim" type="xs:boolean" use="optional"/>
+				<xs:attribute name="statedelay" type="xs:positiveInteger" use="optional"/>
+				<xs:attribute name="alsoplay" type="strList" use="optional">
+					<xs:annotation>
+						<xs:documentation>A list of other Animations this Animation triggers when it
+							plays.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="overlay" type="posInt" use="optional"/>
 			</xs:extension>
 		</xs:simpleContent>
 	</xs:complexType>

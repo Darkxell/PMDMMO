@@ -36,7 +36,7 @@ public class AbstractPokemonSpriteset
 		for (; y < height; ++y)
 			for (x = 0; x < width; ++x)
 				this.sprites[x + y * width] = spriteset.getSubimage(x * this.spriteWidth, y * this.spriteHeight, this.spriteWidth, this.spriteHeight);
-	
+
 		this.states = new HashMap<>();
 		for (Element e : xml.getChild("AnimGroupTable").getChildren())
 		{

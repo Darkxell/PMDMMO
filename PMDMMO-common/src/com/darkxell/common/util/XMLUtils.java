@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
+import org.jdom2.Attribute;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -18,64 +19,64 @@ import org.jdom2.output.XMLOutputter;
 public final class XMLUtils
 {
 
-	private static String find(Element element, String id)
+	public static Attribute getAttribute(Element element, String id)
 	{
-		return element.getAttribute(id) != null ? element.getAttributeValue(id)
-				: element.getAttribute(id, element.getNamespace()) != null ? element.getAttributeValue(id, element.getNamespace()) : null;
+		return element.getAttribute(id) != null ? element.getAttribute(id)
+				: element.getAttribute(id, element.getNamespace()) != null ? element.getAttribute(id, element.getNamespace()) : null;
 	}
 
 	public static boolean getAttribute(Element element, String id, boolean defaultValue)
 	{
-		String value = find(element, id);
-		return value == null ? defaultValue : Boolean.parseBoolean(value);
+		Attribute attribute = getAttribute(element, id);
+		return attribute == null ? defaultValue : Boolean.parseBoolean(attribute.getValue());
 	}
 
 	public static byte getAttribute(Element element, String id, byte defaultValue)
 	{
-		String value = find(element, id);
-		return value == null ? defaultValue : Byte.parseByte(value);
+		Attribute attribute = getAttribute(element, id);
+		return attribute == null ? defaultValue : Byte.parseByte(attribute.getValue());
 	}
 
 	public static char getAttribute(Element element, String id, char defaultValue)
 	{
-		String value = find(element, id);
-		return value == null ? defaultValue : value.charAt(0);
+		Attribute attribute = getAttribute(element, id);
+		return attribute == null ? defaultValue : attribute.getValue().charAt(0);
 	}
 
 	public static double getAttribute(Element element, String id, double defaultValue)
 	{
-		String value = find(element, id);
-		return value == null ? defaultValue : Double.parseDouble(value);
+		Attribute attribute = getAttribute(element, id);
+		return attribute == null ? defaultValue : Double.parseDouble(attribute.getValue());
 	}
 
 	public static float getAttribute(Element element, String id, float defaultValue)
 	{
-		String value = find(element, id);
-		return value == null ? defaultValue : Float.parseFloat(value);
+		Attribute attribute = getAttribute(element, id);
+		return attribute == null ? defaultValue : Float.parseFloat(attribute.getValue());
 	}
 
 	public static int getAttribute(Element element, String id, int defaultValue)
 	{
-		String value = find(element, id);
-		return value == null ? defaultValue : Double.valueOf(value).intValue();
+		Attribute attribute = getAttribute(element, id);
+		return attribute == null ? defaultValue : Double.valueOf(attribute.getValue()).intValue();
 	}
 
 	public static long getAttribute(Element element, String id, long defaultValue)
 	{
-		String value = find(element, id);
-		return value == null ? defaultValue : Long.parseLong(value);
+		Attribute attribute = getAttribute(element, id);
+		return attribute == null ? defaultValue : Long.parseLong(attribute.getValue());
 	}
 
 	public static short getAttribute(Element element, String id, short defaultValue)
 	{
-		String value = find(element, id);
-		return value == null ? defaultValue : Short.parseShort(value);
+		Attribute attribute = getAttribute(element, id);
+		return attribute == null ? defaultValue : Short.parseShort(attribute.getValue());
 	}
 
 	public static String getAttribute(Element element, String id, String defaultValue)
 	{
-		String value = find(element, id);
-		return value == null ? defaultValue : value;
+		Attribute attribute = getAttribute(element, id);
+		return attribute == null ? defaultValue : attribute.getValue();
 	}
 
 	/** Reads an XML File and returns its root Element. */

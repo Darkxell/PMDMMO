@@ -16,13 +16,9 @@ import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.common.dungeon.DungeonRegistry;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.layout.Layout;
-import com.darkxell.common.item.ItemRegistry;
-import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.pokemon.PokemonSpecies;
-import com.darkxell.common.pokemon.ability.Ability;
-import com.darkxell.common.status.StatusCondition;
 import com.darkxell.common.util.Direction;
 
 import fr.darkxell.dataeditor.application.util.AnimationListItem;
@@ -81,29 +77,7 @@ public class EditAnimationController implements Initializable
 
 	private PokemonAnimation loadAnimation()
 	{
-		switch (this.animation.folder)
-		{
-			case "custom":
-				return Animations.getCustomAnimation(tester, this.animation.id, thread);
-
-			case "abilities":
-				return Animations.getAbilityAnimation(tester, Ability.find(this.animation.id), thread);
-
-			case "items":
-				return Animations.getItemAnimation(tester, ItemRegistry.find(this.animation.id), thread);
-
-			case "moves":
-				return Animations.getMoveAnimation(tester, MoveRegistry.find(this.animation.id), thread);
-
-			case "statuses":
-				return Animations.getStatusAnimation(tester, StatusCondition.find(this.animation.id), thread);
-
-			case "targets":
-				return Animations.getMoveTargetAnimation(tester, MoveRegistry.find(this.animation.id), thread);
-
-			default:
-				return null;
-		}
+		return Animations.getAnimation(tester, this.animation.folder + "/" + this.animation.id, thread);
 	}
 
 	public void onPropertiesChanged()

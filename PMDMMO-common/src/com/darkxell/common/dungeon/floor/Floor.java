@@ -58,7 +58,7 @@ public class Floor
 	/** The position at which the team will spawn. */
 	public Point teamSpawn;
 	/** The direction which the team will spawn facing. */
-	public Direction teamSpawnDirection;
+	public Direction teamSpawnDirection = Direction.SOUTH;
 	/** This Floor's tiles. null before generating. Note that this array must NOT be modified. It is only public because the generation algorithm uses this array to generate the floor. */
 	public Tile[][] tiles;
 	/** List of Weather conditions applied to this Floor. */
