@@ -56,7 +56,7 @@ public class EditAnimationController implements Initializable
 
 	public void exitTab()
 	{
-		Launcher.stopGame();
+		Launcher.setProcessingProfile(Launcher.PROFILE_UNDEFINED);
 	}
 
 	private DungeonPokemon generateTester()

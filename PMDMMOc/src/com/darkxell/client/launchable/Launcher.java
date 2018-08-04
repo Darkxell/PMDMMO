@@ -43,7 +43,7 @@ public class Launcher {
 		Persistance.soundmanager = new SoundManager();
 		Logger.instance().info("Lang & Data loaded.");
 
-		DiscordEventHandlerForPMDMMO deh = new DiscordEventHandlerForPMDMMO();
+		DiscordEventHandlerForPMDMMO deh = new DiscordEventHandlerForPMDMMO("In logging screen", "main_big");
 		deh.start();
 
 		Persistance.frame = new Frame();

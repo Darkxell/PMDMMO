@@ -3,11 +3,9 @@ package com.darkxell.client.launchable;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 
-/**
- * Experimental class that combines the updater and the renderer to synchronize
- * updates and graphical prints.
- */
-public class UpdaterAndRenderer implements Runnable {
+/** Experimental class that combines the updater and the renderer to synchronize updates and graphical prints. */
+public class UpdaterAndRenderer implements Runnable
+{
 
 	public static final int targetUPS = 60;
 
@@ -16,15 +14,17 @@ public class UpdaterAndRenderer implements Runnable {
 	private double updateTime, timePerUpdate;
 	private int ups = 0;
 
-	public UpdaterAndRenderer() {
-	}
+	public UpdaterAndRenderer()
+	{}
 
-	public int currentUPS() {
+	public int currentUPS()
+	{
 		return this.ups;
 	}
 
 	@Override
-	public void run() {
+	public void run()
+	{
 		// Preparing FPS handling
 		this.startTime = System.nanoTime();
 		this.currentTime = this.startTime;
@@ -34,18 +34,22 @@ public class UpdaterAndRenderer implements Runnable {
 		this.updatesCurrentSecond = 0;
 		this.ups = 0;
 
-		while (Launcher.isRunning && Launcher.getProcessingProfile() == Launcher.PROFILE_SYNCHRONIZED) {
+		while (Launcher.isRunning && Launcher.getProcessingProfile() == Launcher.PROFILE_SYNCHRONIZED)
+		{
 			this.update();
 
-			try {
+			try
+			{
 				Thread.sleep(2);
-			} catch (InterruptedException e) {
+			} catch (InterruptedException e)
+			{
 				e.printStackTrace();
 			}
 		}
 	}
 
-	private void update() {
+	private void update()
+	{
 		// Calculate elapsed time
 		long elapsedTime = System.nanoTime() - this.currentTime;
 		this.timer += elapsedTime;
@@ -53,15 +57,16 @@ public class UpdaterAndRenderer implements Runnable {
 		this.updateTime += elapsedTime / this.timePerUpdate;
 
 		// If a tick has passed, update until there is no delayed update
-		while (this.updateTime >= 1) {
+		while (this.updateTime >= 1)
+		{
 			this.tickUpdate();
-
 
 			++this.updatesCurrentSecond;
 			--this.updateTime;
 		}
 
-		if (this.timer >= 1000000000) {
+		if (this.timer >= 1000000000)
+		{
 			this.ups = this.updatesCurrentSecond;
 			this.timer = 0;
 			this.updatesCurrentSecond = 0;
@@ -71,8 +76,8 @@ public class UpdaterAndRenderer implements Runnable {
 	protected void tickUpdate()
 	{
 		Persistance.stateManager.update();
-		
-		if (!Persistance.frame.isVisible()) return;
+
+		if (Persistance.frame == null || !Persistance.frame.isVisible()) return;
 
 		BufferStrategy bf = Persistance.frame.canvas.getBufferStrategy();
 		Graphics2D g = (Graphics2D) bf.getDrawGraphics();

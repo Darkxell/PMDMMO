@@ -25,8 +25,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import net.arikia.dev.drpc.DiscordRPC;
-import net.arikia.dev.drpc.DiscordRichPresence;
 
 public class DataEditor extends Application
 {
@@ -50,9 +48,8 @@ public class DataEditor extends Application
 		Persistance.soundmanager = new SoundManager();
 		Persistance.player = Util.createDefaultPlayer();
 
-		DiscordRPC.discordInitialize("463408543572426762", DiscordEventHandlerForPMDMMO.createHandler(), true);
-		DiscordRichPresence rich = new DiscordRichPresence.Builder("Developing game").setBigImage("main_develop", "").build();
-		DiscordRPC.discordUpdatePresence(rich);
+		Launcher.isRunning = true;
+		new DiscordEventHandlerForPMDMMO("Developing game", "main_develop").start();
 
 		Cutscenes.load();
 

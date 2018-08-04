@@ -23,15 +23,16 @@ public class DiscordEventHandlerForPMDMMO {
 	 * highly recommended as the discordRPC lib seems to be unstable and should
 	 * be ran in it's own fail safe thread.
 	 */
-	public DiscordEventHandlerForPMDMMO() {
+	public DiscordEventHandlerForPMDMMO(String defaultName, String defaultImageID) {
 		this.runner = new Thread(new Runnable() {
 
 			@Override
 			public void run() {
 				// Sets the default discord presence for the game
+				Logger.i("Initializing Discord RPC.");
 				DiscordRPC.discordInitialize("463408543572426762", createHandler(), true);
-				DiscordRichPresence rich = new DiscordRichPresence.Builder("In logging screen")
-						.setBigImage("main_big", "").build();
+				DiscordRichPresence rich = new DiscordRichPresence.Builder(defaultName)
+						.setBigImage(defaultImageID, "").build();
 				DiscordRPC.discordUpdatePresence(rich);
 				while (isrunning && Launcher.isRunning) {
 					// As long as the RP thread and the game are running, update
@@ -45,6 +46,7 @@ public class DiscordEventHandlerForPMDMMO {
 				// Stops the discord API if the game is stopping.
 				if (!Launcher.isRunning)
 					try {
+						Logger.i("Shutting down Discord RPC.");
 						DiscordRPC.discordShutdown();
 					} catch (Exception e) {
 						Logger.e("Could not shutdown discord RPC.");
@@ -101,6 +103,7 @@ public class DiscordEventHandlerForPMDMMO {
 			return;
 		actualcooldown = updatecooldown;
 		// Updates discord if cooldown is done
+		// Lol wtf @Darkxell this only triggers once every 10 mins
 		if (Persistance.stateManager instanceof PrincipalMainState) {
 			PrincipalMainState pmst = (PrincipalMainState) Persistance.stateManager;
 			if (pmst.getCurrentState() instanceof FreezoneExploreState) {
