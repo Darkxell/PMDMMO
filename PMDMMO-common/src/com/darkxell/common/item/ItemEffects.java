@@ -28,8 +28,6 @@ public final class ItemEffects
 	public static final ItemEffect Food_50_0_5 = new FoodItemEffect(1, 50, 0, 5);
 	public static final ItemEffect Food_100_0_10 = new FoodItemEffect(2, 100, 0, 10);
 	public static final ItemEffect Food_max_10_0 = new FoodItemEffect(3, 1000, 10, 0);
-	public static final ItemEffect Chestnut = Food_50_0_5;
-	public static final ItemEffect Banana = Food_50_0_5;
 	public static final ItemEffect Grimy_Food = new FoodItemEffect(6, 30, 0, 0);
 
 	public static final ItemEffect Heal_100_0_Food_5_0_0 = new HealFoodItemEffect(7, 5, 0, 0, 100, 0);
@@ -41,12 +39,10 @@ public final class ItemEffects
 
 	public static final ItemEffect Thrown_arc_15 = new ThrowableItemEffect(21, 15, Arc);
 	public static final ItemEffect Thrown_arc_20 = new ThrowableItemEffect(22, 20, Arc);
-	public static final ItemEffect Thrown_straight_6 = new ThrowableItemEffect(21, 6, Straight);
-	public static final ItemEffect Thrown_straight_4 = new ThrowableItemEffect(21, 4, Straight);
-	public static final ItemEffect Thrown_straight_1 = new ThrowableItemEffect(21, 1, Straight);
-	public static final ItemEffect Thrown_straight_2 = new ThrowableItemEffect(21, 2, Straight);
-	public static final ItemEffect Corsola_Twig = Thrown_straight_2;
-	public static final ItemEffect Gold_Fang = Thrown_straight_2;
+	public static final ItemEffect Thrown_straight_6 = new ThrowableItemEffect(23, 6, Straight);
+	public static final ItemEffect Thrown_straight_4 = new ThrowableItemEffect(24, 4, Straight);
+	public static final ItemEffect Thrown_straight_1 = new ThrowableItemEffect(25, 1, Straight);
+	public static final ItemEffect Thrown_straight_2 = new ThrowableItemEffect(26, 2, Straight);
 
 	public static final ItemEffect Food_5_0_0 = new FoodItemEffect(39, 5, 0, 0);
 

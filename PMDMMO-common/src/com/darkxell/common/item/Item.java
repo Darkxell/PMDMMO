@@ -121,7 +121,7 @@ public class Item implements AffectsPokemon
 		this.category = ItemCategory.valueOf(XMLUtils.getAttribute(xml, "category", ItemCategory.OTHERS.name()).toUpperCase());
 		this.price = Integer.parseInt(xml.getAttributeValue("price"));
 		this.sell = Integer.parseInt(xml.getAttributeValue("sell"));
-		this.effectID = Integer.parseInt(xml.getAttributeValue("effect"));
+		this.effectID = XMLUtils.getAttribute(xml, "effect", -1);
 		this.spriteID = XMLUtils.getAttribute(xml, "sprite", 255);
 		this.isStackable = XMLUtils.getAttribute(xml, "stackable", false);
 		this.isRare = XMLUtils.getAttribute(xml, "rare", false);

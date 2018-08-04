@@ -59,7 +59,7 @@ public class ItemEffect
 	/** @return The name of an Item with this Effect. */
 	public Message name(Item item)
 	{
-		return new Message("item." + this.id);
+		return new Message("item." + item.id);
 	}
 
 	/** Called when an Item with this Effect is used.

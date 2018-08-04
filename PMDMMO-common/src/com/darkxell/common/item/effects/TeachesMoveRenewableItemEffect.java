@@ -4,6 +4,7 @@ import com.darkxell.common.item.Item;
 import com.darkxell.common.item.ItemEffect;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.move.MoveRegistry;
+import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.util.language.Message;
 
 /** An Item that teaches a move to a Pokemon when used. */
@@ -40,7 +41,7 @@ public class TeachesMoveRenewableItemEffect extends ItemEffect
 	@Override
 	public Message name(Item item)
 	{
-		if (this.move() == null) return new Message("move." + this.moveID).addPrefix("<tm" + 0 + ">");
+		if (this.move() == null || this.move().type == PokemonType.Unknown) return new Message("move." + this.moveID).addPrefix("<tm" + 0 + ">");
 		return new Message("move." + this.moveID).addPrefix("<tm" + this.move().type.id + ">");
 	}
 

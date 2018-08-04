@@ -22,11 +22,13 @@ public class Util
 		player.getTeamLeader().setItem(new ItemStack(208));
 		player.getTeamLeader().setMove(2, new LearnedMove(45));
 		player.getTeamLeader().setMove(3, new LearnedMove(806));
-		for (int i = 1; i < 5; ++i)
+
+		for (int i = 221; i <= 265; ++i)
 			player.inventory().addItem(new ItemStack(i));
-		player.inventory().addItem(new ItemStack(86));
-		for (int i = 21; i < 28; ++i)
-			player.inventory().addItem(new ItemStack(i, i - 20));
+		for (int i = 301; i <= 308; ++i)
+			player.inventory().addItem(new ItemStack(i));
+
+		/* for (int i = 1; i < 5; ++i) player.inventory().addItem(new ItemStack(i)); player.inventory().addItem(new ItemStack(86)); for (int i = 21; i < 28; ++i) player.inventory().addItem(new ItemStack(i, i - 20)); player.inventory().addItem(new ItemStack(250)); */
 
 		for (int id = 201; id <= 386; id += 3)
 		{
