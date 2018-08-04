@@ -81,7 +81,7 @@ public class ItemSelectionEvent extends DungeonEvent implements Communicable
 	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{
-		this.messages.add(this.item.getUseMessage(this));
+		this.messages.add(this.item.effect().getUseEffectMessage(this));
 		ItemStack stack = this.source.getItem(this.sourceIndex);
 		stack.setQuantity(stack.quantity() - 1);
 		if (stack.quantity() <= 0) this.source.deleteItem(this.sourceIndex);
@@ -137,7 +137,7 @@ public class ItemSelectionEvent extends DungeonEvent implements Communicable
 			throw new JsonReadingException("No direction with name " + value.get("direction"));
 		}
 
-		if (this.item.usedOnTeamMember())
+		if (this.item.effect().isUsedOnTeamMember())
 		{
 			if (value.get("target") == null) throw new JsonReadingException("No value for target ID!");
 			try

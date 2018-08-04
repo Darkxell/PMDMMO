@@ -7,7 +7,6 @@ import org.jdom2.Element;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
-import com.darkxell.common.event.item.ItemSelectionEvent;
 import com.darkxell.common.pokemon.AffectsPokemon;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.XMLUtils;
@@ -67,7 +66,7 @@ public class Item implements AffectsPokemon
 
 		public Message getName(ItemStack item)
 		{
-			if (this == USE && item != null) return item.item().getUseName();
+			if (this == USE && item != null) return item.item().effect().getUseName();
 			return new Message(this.name);
 		}
 
@@ -83,7 +82,8 @@ public class Item implements AffectsPokemon
 		GUMMIS(6),
 		HMS(11),
 		ORBS(9),
-		OTHERS(8),
+		OTHER_USABLES(8),
+		OTHERS(13),
 		SEEDS(7),
 		THROWABLE(2),
 		TMS(10);
@@ -96,11 +96,17 @@ public class Item implements AffectsPokemon
 		}
 	}
 
-	public static final int POKE = 0, USED_TM = 205;
+	public static final int POKE = 0, USED_TM = 385;
 	public static final String XML_ROOT = "item";
 
+	/** This Item's Category. */
+	public final ItemCategory category;
+	/** This Item's effect ID. */
+	public final int effectID;
 	/** This Item's ID. */
 	public final int id;
+	/** True if this Item is Rare, and thus can't be trashed, sold or thrown. */
+	public final boolean isRare;
 	/** True if this Item can be stacked. */
 	public final boolean isStackable;
 	/** This Item's price to buy. */
@@ -108,29 +114,35 @@ public class Item implements AffectsPokemon
 	/** This Item's price to sell. */
 	public final int sell;
 	/** The ID of the Item's sprite. */
-	private final int spriteID;
+	public final int spriteID;
 
 	public Item(Element xml)
 	{
 		this.id = Integer.parseInt(xml.getAttributeValue("id"));
+		this.category = ItemCategory.valueOf(XMLUtils.getAttribute(xml, "category", ItemCategory.OTHERS.name()).toUpperCase());
 		this.price = Integer.parseInt(xml.getAttributeValue("price"));
 		this.sell = Integer.parseInt(xml.getAttributeValue("sell"));
+		this.effectID = Integer.parseInt(xml.getAttributeValue("effect"));
 		this.spriteID = XMLUtils.getAttribute(xml, "sprite", 255);
 		this.isStackable = XMLUtils.getAttribute(xml, "stackable", false);
+		this.isRare = XMLUtils.getAttribute(xml, "rare", false);
 	}
 
-	public Item(int id, int price, int sell, int spriteID, boolean stackable)
+	public Item(int id, ItemCategory category, int price, int sell, int effectID, int spriteID, boolean stackable, boolean rare)
 	{
 		this.id = id;
+		this.category = category;
 		this.price = price;
 		this.sell = sell;
 		this.spriteID = spriteID;
+		this.effectID = effectID;
 		this.isStackable = stackable;
+		this.isRare = rare;
 	}
 
-	public ItemCategory category()
+	public ItemEffect effect()
 	{
-		return ItemCategory.OTHERS;
+		return ItemEffects.find(this.effectID);
 	}
 
 	public ArrayList<ItemAction> getLegalActions(boolean inDungeon)
@@ -138,37 +150,11 @@ public class Item implements AffectsPokemon
 		ArrayList<ItemAction> actions = new ArrayList<Item.ItemAction>();
 		if (inDungeon)
 		{
-			actions.add(ItemAction.USE);
-			actions.add(ItemAction.THROW);
+			if (this.effect().isUsable()) actions.add(ItemAction.USE);
+			if (!this.isRare) actions.add(ItemAction.THROW);
 		}
 		actions.add(ItemAction.INFO);
 		return actions;
-	}
-
-	public int getSpriteID()
-	{
-		return this.spriteID;
-	}
-
-	/** The ID of the translation to use for the message to display when using this Item. */
-	protected String getUseID()
-	{
-		return "item.used";
-	}
-
-	/** @param event - The Pokemon using the Item.
-	 * @return The message to display when using this Item. */
-	public Message getUseMessage(ItemSelectionEvent event)
-	{
-		return new Message(this.getUseID()).addReplacement("<user>", event.user().getNickname())
-				.addReplacement("<target>", event.target() == null ? new Message("?", false) : event.target().getNickname())
-				.addReplacement("<item>", this.name());
-	}
-
-	/** @return The name of the "Use" option for this Item. */
-	public Message getUseName()
-	{
-		return new Message("item.use");
 	}
 
 	public Message name()
@@ -186,11 +172,14 @@ public class Item implements AffectsPokemon
 	{
 		Element root = new Element(XML_ROOT);
 		root.setAttribute("id", Integer.toString(this.id));
+		XMLUtils.setAttribute(root, "category", this.category.name(), ItemCategory.OTHERS.name());
 		root.setAttribute("type", this.getClass().getName().substring(Item.class.getName().length()));
 		root.setAttribute("price", Integer.toString(this.price));
 		root.setAttribute("sell", Integer.toString(this.sell));
+		XMLUtils.setAttribute(root, "effect", this.effectID, -1);
 		XMLUtils.setAttribute(root, "sprite", this.spriteID, 255);
 		XMLUtils.setAttribute(root, "stackable", this.isStackable, false);
+		XMLUtils.setAttribute(root, "rare", this.isRare, false);
 		return root;
 	}
 
@@ -200,12 +189,8 @@ public class Item implements AffectsPokemon
 	 * @param pokemon - The Pokemon using the Item.
 	 * @param target - The Pokemon the Item is being used on. May be null if there is no target. */
 	public void use(Floor floor, DungeonPokemon pokemon, DungeonPokemon target, ArrayList<DungeonEvent> events)
-	{}
-
-	/** @return True if the user has to select a Team member as target for this Item. */
-	public boolean usedOnTeamMember()
 	{
-		return false;
+		this.effect().use(floor, this, pokemon, target, events);
 	}
 
 }

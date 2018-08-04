@@ -19,7 +19,7 @@ public class ItemsSpriteset extends AbstractTileset
 
 	public BufferedImage sprite(Item item)
 	{
-		return this.SPRITES[item.getSpriteID()];
+		return this.SPRITES[item.spriteID];
 	}
 
 	public BufferedImage sprite(ItemStack item)
