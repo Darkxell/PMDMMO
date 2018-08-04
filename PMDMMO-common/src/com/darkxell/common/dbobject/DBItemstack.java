@@ -7,7 +7,9 @@ import com.eclipsesource.json.JsonObject;
 public class DBItemstack implements Communicable
 {
 
+	/** ID of the ItemStack. */
 	public long id;
+	/** ID of the Item in this Stack. */
 	public int itemid;
 	public long quantity;
 

@@ -8,9 +8,11 @@ public class DBLearnedmove implements Communicable
 {
 
 	public int addedlevel;
+	/** ID of the Learned Move. */
 	public long id;
 	public boolean isenabled;
 	public boolean islinked;
+	/** ID of the Move. */
 	public int moveid;
 	public int ppmax;
 	public int slot;
