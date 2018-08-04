@@ -62,7 +62,7 @@ public class PokemonSpecies
 
 		if (xml.getChild("statline", xml.getNamespace()) != null)
 		{
-			int[][] statline = XMLUtils.readDoubleIntArray(xml.getChild("statline", xml.getNamespace()));
+			int[][] statline = XMLUtils.readIntMatrix(xml.getChild("statline", xml.getNamespace()));
 			for (int[] stat : statline)
 				this.baseStats.add(new BaseStats(null, stat));
 		}
@@ -147,7 +147,7 @@ public class PokemonSpecies
 		if (xml.getChild("statline", xml.getNamespace()) == null) baseStats = (ArrayList<BaseStats>) this.baseStats.clone();
 		else
 		{
-			int[][] statline = XMLUtils.readDoubleIntArray(xml.getChild("statline", xml.getNamespace()));
+			int[][] statline = XMLUtils.readIntMatrix(xml.getChild("statline", xml.getNamespace()));
 			for (int[] stat : statline)
 				baseStats.add(new BaseStats(null, stat));
 		}

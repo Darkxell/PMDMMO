@@ -4,13 +4,13 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
-import com.darkxell.common.status.StatusConditionInstance;
+import com.darkxell.common.status.AppliedStatusCondition;
 
 public class StatusConditionCreatedEvent extends DungeonEvent
 {
-	public final StatusConditionInstance condition;
+	public final AppliedStatusCondition condition;
 
-	public StatusConditionCreatedEvent(Floor floor, StatusConditionInstance condition)
+	public StatusConditionCreatedEvent(Floor floor, AppliedStatusCondition condition)
 	{
 		super(floor);
 		this.condition = condition;

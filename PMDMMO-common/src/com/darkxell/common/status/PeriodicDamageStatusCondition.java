@@ -40,7 +40,7 @@ public class PeriodicDamageStatusCondition extends StatusCondition implements Da
 	}
 
 	@Override
-	public void tick(Floor floor, StatusConditionInstance instance, ArrayList<DungeonEvent> events)
+	public void tick(Floor floor, AppliedStatusCondition instance, ArrayList<DungeonEvent> events)
 	{
 		if (instance.tick % this.period == 0) events.add(new DamageDealtEvent(floor, instance.pokemon, this, this.damage));
 	}

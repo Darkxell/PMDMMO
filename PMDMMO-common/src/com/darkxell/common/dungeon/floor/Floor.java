@@ -30,7 +30,7 @@ import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.Pair;
 import com.darkxell.common.util.RandomUtil;
 import com.darkxell.common.weather.Weather;
-import com.darkxell.common.weather.WeatherInstance;
+import com.darkxell.common.weather.ActiveWeather;
 
 /** Represents a generated Floor in a Dungeon. */
 public class Floor
@@ -64,7 +64,7 @@ public class Floor
 	/** This Floor's tiles. null before generating. Note that this array must NOT be modified. It is only public because the generation algorithm uses this array to generate the floor. */
 	public Tile[][] tiles;
 	/** List of Weather conditions applied to this Floor. */
-	private final ArrayList<WeatherInstance> weatherCondition;
+	private final ArrayList<ActiveWeather> weatherCondition;
 
 	public Floor(int id, Layout layout, DungeonExploration dungeon, Random random, boolean isStatic)
 	{
@@ -74,21 +74,21 @@ public class Floor
 		this.layout = layout;
 		this.random = random;
 		this.isStatic = isStatic;
-		this.weatherCondition = new ArrayList<WeatherInstance>();
+		this.weatherCondition = new ArrayList<ActiveWeather>();
 		this.aiManager = new AIManager(this);
 	}
 
 	/** @param weather - The weather to add.
 	 * @return The Weather Changed Event if the Weather changes. */
-	public WeatherChangedEvent addWeather(WeatherInstance weather)
+	public WeatherChangedEvent addWeather(ActiveWeather weather)
 	{
-		WeatherInstance previous = this.currentWeather();
+		ActiveWeather previous = this.currentWeather();
 		if (!this.weatherCondition.contains(weather))
 		{
 			this.weatherCondition.add(weather);
 			this.weatherCondition.sort(Comparator.naturalOrder());
 		}
-		WeatherInstance next = this.currentWeather();
+		ActiveWeather next = this.currentWeather();
 		if (previous.weather == next.weather) return null;
 		return new WeatherChangedEvent(this, previous, next);
 	}
@@ -109,9 +109,9 @@ public class Floor
 		return count;
 	}
 
-	public WeatherInstance currentWeather()
+	public ActiveWeather currentWeather()
 	{
-		if (this.weatherCondition.size() == 0) return new WeatherInstance(Weather.CLEAR, null, 0, this, 0);
+		if (this.weatherCondition.size() == 0) return new ActiveWeather(Weather.CLEAR, null, 0, this, 0);
 		return this.weatherCondition.get(0);
 	}
 
@@ -180,7 +180,7 @@ public class Floor
 		Weather w = this.dungeon.dungeon().weather(this.id, this.random);
 		for (DungeonPokemon pokemon : this.listPokemon())
 			pokemon.onFloorStart(this, events);
-		events.add(new WeatherCreatedEvent(new WeatherInstance(w, null, 0, this, -1)));
+		events.add(new WeatherCreatedEvent(new ActiveWeather(w, null, 0, this, -1)));
 	}
 
 	/** Called when a new turn starts. */
@@ -366,11 +366,11 @@ public class Floor
 
 	/** @param weather - The weather to clean.
 	 * @return The Weather Changed Event if the Weather changes. */
-	public WeatherChangedEvent removeWeather(WeatherInstance weather)
+	public WeatherChangedEvent removeWeather(ActiveWeather weather)
 	{
-		WeatherInstance previous = this.currentWeather();
+		ActiveWeather previous = this.currentWeather();
 		if (this.weatherCondition.size() > 0 && this.weatherCondition.contains(weather)) this.weatherCondition.remove(weather);
-		WeatherInstance next = this.currentWeather();
+		ActiveWeather next = this.currentWeather();
 		if (previous == next) return null;
 		return new WeatherChangedEvent(this, previous, next);
 	}

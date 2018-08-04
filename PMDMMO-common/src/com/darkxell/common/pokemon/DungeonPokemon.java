@@ -12,7 +12,7 @@ import com.darkxell.common.player.ItemContainer;
 import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.ability.Ability;
 import com.darkxell.common.status.StatusCondition;
-import com.darkxell.common.status.StatusConditionInstance;
+import com.darkxell.common.status.AppliedStatusCondition;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.language.Message;
 
@@ -41,7 +41,7 @@ public class DungeonPokemon implements ItemContainer
 	/** This Pokemon's stats for the current dungeon. */
 	public final DungeonStats stats;
 	/** This Pokemon's active Status Conditions. */
-	private final ArrayList<StatusConditionInstance> statusConditions;
+	private final ArrayList<AppliedStatusCondition> statusConditions;
 	/** The tile this Pokemon is standing on. */
 	private Tile tile;
 	/** The Pokemon to use in the current Dungeon. See {@link DungeonPokemon#originalPokemon}. */
@@ -54,7 +54,7 @@ public class DungeonPokemon implements ItemContainer
 		this.stats = new DungeonStats(this);
 		this.belly = this.bellySize = DEFAULT_BELLY_SIZE;
 		this.hp = this.stats.getHealth();
-		this.statusConditions = new ArrayList<StatusConditionInstance>();
+		this.statusConditions = new ArrayList<AppliedStatusCondition>();
 		pokemon.dungeonPokemon = this;
 	}
 
@@ -84,14 +84,14 @@ public class DungeonPokemon implements ItemContainer
 
 	public boolean canAttack(Floor floor)
 	{
-		for (StatusConditionInstance instance : this.statusConditions)
+		for (AppliedStatusCondition instance : this.statusConditions)
 			if (instance.condition.preventsUsingMoves(this, floor)) return false;
 		return true;
 	}
 
 	public boolean canMove(Floor floor)
 	{
-		for (StatusConditionInstance instance : this.statusConditions)
+		for (AppliedStatusCondition instance : this.statusConditions)
 			if (instance.condition.preventsMoving(this, floor)) return false;
 		return true;
 	}
@@ -204,7 +204,7 @@ public class DungeonPokemon implements ItemContainer
 	/** @return True if this Pokemon is affected by the input Status Condition. */
 	public boolean hasStatusCondition(StatusCondition condition)
 	{
-		for (StatusConditionInstance c : this.statusConditions)
+		for (AppliedStatusCondition c : this.statusConditions)
 			if (c.condition == condition) return true;
 		return false;
 	}
@@ -232,7 +232,7 @@ public class DungeonPokemon implements ItemContainer
 		this.usedPokemon.increaseIQ(iq);
 	}
 
-	public void inflictStatusCondition(StatusConditionInstance condition)
+	public void inflictStatusCondition(AppliedStatusCondition condition)
 	{
 		this.statusConditions.add(condition);
 	}
@@ -318,7 +318,7 @@ public class DungeonPokemon implements ItemContainer
 
 		if (this.stats.speedBuffs() > 0 || this.stats.speedDebuffs() > 0) this.stats.onTurnStart(floor, events);
 
-		for (StatusConditionInstance condition : this.statusConditions)
+		for (AppliedStatusCondition condition : this.statusConditions)
 			condition.tick(floor, events);
 	}
 
@@ -334,16 +334,16 @@ public class DungeonPokemon implements ItemContainer
 
 	public void removeStatusCondition(StatusCondition condition)
 	{
-		this.statusConditions.removeIf(new Predicate<StatusConditionInstance>() {
+		this.statusConditions.removeIf(new Predicate<AppliedStatusCondition>() {
 			@Override
-			public boolean test(StatusConditionInstance t)
+			public boolean test(AppliedStatusCondition t)
 			{
 				return t.condition == condition;
 			}
 		});
 	}
 
-	public void removeStatusCondition(StatusConditionInstance condition)
+	public void removeStatusCondition(AppliedStatusCondition condition)
 	{
 		this.statusConditions.remove(condition);
 	}

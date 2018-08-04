@@ -8,7 +8,7 @@ import com.darkxell.common.event.pokemon.StatusConditionEndedEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Message;
 
-public class StatusConditionInstance
+public class AppliedStatusCondition
 {
 
 	/** This Status Condition's ID. */
@@ -20,7 +20,7 @@ public class StatusConditionInstance
 	/** The number of turns this Condition has been in effect. */
 	int tick;
 
-	public StatusConditionInstance(StatusCondition condition, DungeonPokemon pokemon, int duration)
+	public AppliedStatusCondition(StatusCondition condition, DungeonPokemon pokemon, int duration)
 	{
 		this.condition = condition;
 		this.pokemon = pokemon;

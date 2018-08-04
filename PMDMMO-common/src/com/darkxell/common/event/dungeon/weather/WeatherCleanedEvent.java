@@ -3,14 +3,14 @@ package com.darkxell.common.event.dungeon.weather;
 import java.util.ArrayList;
 
 import com.darkxell.common.event.DungeonEvent;
-import com.darkxell.common.weather.WeatherInstance;
+import com.darkxell.common.weather.ActiveWeather;
 
 public class WeatherCleanedEvent extends DungeonEvent
 {
 
-	public final WeatherInstance weather;
+	public final ActiveWeather weather;
 
-	public WeatherCleanedEvent(WeatherInstance weather)
+	public WeatherCleanedEvent(ActiveWeather weather)
 	{
 		super(weather.floor);
 		this.weather = weather;
