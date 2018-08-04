@@ -45,6 +45,8 @@ public final class ItemRegistry
 			{
 				e1.printStackTrace();
 			}
+		
+		// TODO TMs & HMs effects init
 	}
 
 	/** Saves this Registry for the Client. */

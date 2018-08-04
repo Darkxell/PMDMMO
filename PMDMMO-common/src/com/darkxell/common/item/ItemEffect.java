@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
-import com.darkxell.common.event.DungeonEvent.MessageEvent;
 import com.darkxell.common.event.item.ItemSelectionEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Message;
@@ -70,8 +69,6 @@ public class ItemEffect
 	 * @param pokemon - The Pokemon using the Item.
 	 * @param target - The Pokemon the Item is being used on. May be null if there is no target. */
 	public void use(Floor floor, Item item, DungeonPokemon pokemon, DungeonPokemon target, ArrayList<DungeonEvent> events)
-	{
-		events.add(new MessageEvent(floor, new Message("move.no_effect")));
-	}
+	{}
 
 }
