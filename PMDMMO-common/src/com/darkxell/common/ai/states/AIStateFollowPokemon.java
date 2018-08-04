@@ -14,11 +14,13 @@ import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.LearnedMove;
 import com.darkxell.common.util.Direction;
 
+/** State in which the Pokemon follows a Pokemon. */
 public class AIStateFollowPokemon extends AIState
 {
 
 	/** The Tile the target was last seen at. */
 	protected Tile lastSeen;
+	/** The Pokemon to follow. */
 	public final DungeonPokemon target;
 
 	public AIStateFollowPokemon(AI ai, DungeonPokemon target)
@@ -42,9 +44,12 @@ public class AIStateFollowPokemon extends AIState
 	@Override
 	public DungeonEvent takeAction()
 	{
-		this.lastSeen = this.target.tile();
+		// If can see the target, update the last seen position.
+		if (AIUtils.isVisible(this.ai.floor, this.ai.pokemon, this.target)) this.lastSeen = this.target.tile();
 
 		Direction direction = AIUtils.generalDirection(this.ai.pokemon, this.target);
+		
+		// If adjacent to target, fight enemies
 		if (AIUtils.isAdjacentTo(this.ai.pokemon, this.target, true))
 		{
 			Direction d = AIUtils.adjacentEnemyDirection(this.ai.floor, this.ai.pokemon);
@@ -58,6 +63,7 @@ public class AIStateFollowPokemon extends AIState
 			return new TurnSkippedEvent(this.ai.floor, this.ai.pokemon);
 		}
 
+		// Else try to reach the target
 		Direction go = AIUtils.direction(this.ai.pokemon, this.target);
 		if (go == null || !this.ai.pokemon.canMove(this.ai.floor))
 		{

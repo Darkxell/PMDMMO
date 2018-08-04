@@ -8,9 +8,11 @@ import com.darkxell.common.event.action.TurnSkippedEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Logger;
 
+/** Class holding AI objects for Pokemon in a Dungeon. */
 public class AIManager
 {
 
+	/** Dungeon Pokemon -> Its AI. */
 	private final HashMap<DungeonPokemon, AI> ais;
 	final Floor floor;
 
@@ -44,6 +46,10 @@ public class AIManager
 		if (ai != null) this.ais.put(pokemon, ai);
 	}
 
+	/** Calls the AI of the input Pokemon to determine its action.
+	 * 
+	 * @param pokemon - The acting Pokemon.
+	 * @return A DungeonEvent describing that Pokemon's action. */
 	public DungeonEvent takeAction(DungeonPokemon pokemon)
 	{
 		if (pokemon == null) return null;

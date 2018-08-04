@@ -7,11 +7,16 @@ import com.darkxell.common.event.action.TurnSkippedEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Direction;
 
+/** Class that controls Pokémon not controlled by players in Dungeons.<br>
+ * This abstract class should be extended for each type of Pokemon, i.e. wilds, allies, bosses...<br>
+ * This class does not determine actions but sets {@link AIState}s that are then called to determine those actions. */
 public abstract class AI
 {
 
+	/** Class representing a State in a Pokemon's AI. Determines which action to take. */
 	public static abstract class AIState
 	{
+		/** Reference to the parent AI. */
 		public final AI ai;
 
 		public AIState(AI ai)
@@ -19,6 +24,9 @@ public abstract class AI
 			this.ai = ai;
 		}
 
+		/** Called at the end of each turn so that a Pokemon may rotate.
+		 * 
+		 * @return <code>null</code> if no rotation, else the new direction to face. */
 		public Direction mayRotate()
 		{
 			return null;
@@ -29,8 +37,9 @@ public abstract class AI
 
 	/** The Floor context. */
 	public final Floor floor;
-	/** The Pokémon this AI controls. */
+	/** The {@link DungeonPokemon Pokemon} this AI controls. */
 	public final DungeonPokemon pokemon;
+	/** The current {@link AIState State} of this AI. May be null. */
 	protected AIState state;
 
 	public AI(Floor floor, DungeonPokemon pokemon)
