@@ -18,7 +18,7 @@ import com.darkxell.client.state.freezone.FreezoneExploreState;
 import com.darkxell.client.state.map.LocalMap;
 import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.dungeon.DungeonOutcome;
-import com.darkxell.common.dungeon.DungeonRegistry;
+import com.darkxell.common.dungeon.data.DungeonRegistry;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.zones.FreezoneInfo;

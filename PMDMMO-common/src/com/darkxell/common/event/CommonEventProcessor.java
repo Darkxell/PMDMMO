@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 import com.darkxell.common.ai.AIUtils;
-import com.darkxell.common.dungeon.AutoDungeonInstance;
-import com.darkxell.common.dungeon.DungeonInstance;
+import com.darkxell.common.dungeon.AutoDungeonExploration;
+import com.darkxell.common.dungeon.DungeonExploration;
 import com.darkxell.common.dungeon.DungeonOutcome;
 import com.darkxell.common.dungeon.DungeonOutcome.Outcome;
 import com.darkxell.common.event.action.PokemonRotateEvent;
@@ -34,7 +34,7 @@ public class CommonEventProcessor
 		STOPPED
 	}
 
-	public final DungeonInstance dungeon;
+	public final DungeonExploration dungeon;
 	/** Pending events to process. */
 	protected final Stack<DungeonEvent> pending = new Stack<DungeonEvent>();
 	/** Lists the Players currently running. */
@@ -42,7 +42,7 @@ public class CommonEventProcessor
 	/** While processing an event, setting this to false will stop processing the pending events. */
 	private State state = State.PROCESSING;
 
-	public CommonEventProcessor(DungeonInstance dungeon)
+	public CommonEventProcessor(DungeonExploration dungeon)
 	{
 		this.dungeon = dungeon;
 	}
@@ -163,9 +163,9 @@ public class CommonEventProcessor
 			} else this.processEvent(this.dungeon.currentFloor().aiManager.takeAction(actor));
 		}
 
-		if (this.state() == State.AWATING_INPUT && this.dungeon instanceof AutoDungeonInstance)
+		if (this.state() == State.AWATING_INPUT && this.dungeon instanceof AutoDungeonExploration)
 		{
-			DungeonEvent event = ((AutoDungeonInstance) this.dungeon).nextEvent();
+			DungeonEvent event = ((AutoDungeonExploration) this.dungeon).nextEvent();
 			if (event == null) event = new ExplorationStopEvent(this.dungeon.currentFloor(), null);
 			this.processEvent(event);
 		}

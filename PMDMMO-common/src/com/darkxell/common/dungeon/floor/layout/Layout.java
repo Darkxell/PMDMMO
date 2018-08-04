@@ -4,9 +4,9 @@ import java.awt.Point;
 import java.util.Random;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.dungeon.floor.Room;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
+import com.darkxell.common.dungeon.floor.room.Room;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.trap.TrapRegistry;

@@ -1,4 +1,4 @@
-package com.darkxell.common.dungeon;
+package com.darkxell.common.dungeon.data;
 
 import java.util.ArrayList;
 import java.util.Comparator;

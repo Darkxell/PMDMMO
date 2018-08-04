@@ -1,8 +1,7 @@
-package com.darkxell.common.dungeon.floor;
+package com.darkxell.common.dungeon.data;
 
 import org.jdom2.Element;
 
-import com.darkxell.common.dungeon.FloorSet;
 import com.darkxell.common.dungeon.floor.layout.Layout;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.move.MoveRegistry;

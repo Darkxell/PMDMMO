@@ -3,10 +3,10 @@ package com.darkxell.client.renderers.floor;
 import java.util.HashSet;
 
 import com.darkxell.client.launchable.Persistance;
+import com.darkxell.common.dungeon.data.FloorData;
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.dungeon.floor.FloorData;
-import com.darkxell.common.dungeon.floor.Room;
 import com.darkxell.common.dungeon.floor.Tile;
+import com.darkxell.common.dungeon.floor.room.Room;
 import com.darkxell.common.item.ItemID;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.pokemon.DungeonPokemon;

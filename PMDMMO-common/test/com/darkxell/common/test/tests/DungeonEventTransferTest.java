@@ -7,9 +7,9 @@ import com.darkxell.common.dbobject.DBItemstack;
 import com.darkxell.common.dbobject.DBLearnedmove;
 import com.darkxell.common.dbobject.DBPlayer;
 import com.darkxell.common.dbobject.DBPokemon;
-import com.darkxell.common.dungeon.Dungeon;
-import com.darkxell.common.dungeon.DungeonInstance;
-import com.darkxell.common.dungeon.DungeonRegistry;
+import com.darkxell.common.dungeon.DungeonExploration;
+import com.darkxell.common.dungeon.data.Dungeon;
+import com.darkxell.common.dungeon.data.DungeonRegistry;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.CommonEventProcessor;
 import com.darkxell.common.event.DungeonEvent;
@@ -36,7 +36,7 @@ import com.darkxell.common.util.Direction;
 public class DungeonEventTransferTest extends UTest
 {
 	private Dungeon d = DungeonRegistry.find(4);
-	private DungeonInstance dungeon = d.newInstance(798654123);
+	private DungeonExploration dungeon = d.newInstance(798654123);
 	private Floor floor;
 	private Inventory inventory = new Inventory(new DBInventory(77, 30, new ArrayList<>()));
 	private ItemStack item1 = new ItemStack(new DBItemstack(43, 2, 1)), item2 = new ItemStack(new DBItemstack(44, 2, 1)),

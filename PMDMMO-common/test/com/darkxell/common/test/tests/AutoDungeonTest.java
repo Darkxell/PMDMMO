@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 
-import com.darkxell.common.dungeon.AutoDungeonInstance;
+import com.darkxell.common.dungeon.AutoDungeonExploration;
 import com.darkxell.common.dungeon.DungeonCommunication;
 import com.darkxell.common.event.CommonEventProcessor;
 import com.darkxell.common.event.DungeonEvent;
@@ -27,10 +27,10 @@ public class AutoDungeonTest extends UTest
 		super(ACTION_WARN);
 	}
 
-	private AutoDungeonInstance createDungeon()
+	private AutoDungeonExploration createDungeon()
 	{
 		JsonValue json = null;
-		AutoDungeonInstance dungeon = null;
+		AutoDungeonExploration dungeon = null;
 		try
 		{
 			BufferedReader br = new BufferedReader(new FileReader(new File(path)));
@@ -58,7 +58,7 @@ public class AutoDungeonTest extends UTest
 		return dungeon;
 	}
 
-	public void logAllEvents(AutoDungeonInstance dungeon)
+	public void logAllEvents(AutoDungeonExploration dungeon)
 	{
 		for (GameTurn turn : dungeon.listTurns())
 			for (DungeonEvent event : turn.events())
@@ -68,7 +68,7 @@ public class AutoDungeonTest extends UTest
 	@Override
 	protected int test()
 	{
-		AutoDungeonInstance dungeon = this.createDungeon();
+		AutoDungeonExploration dungeon = this.createDungeon();
 		if (dungeon == null) return 1;
 
 		dungeon.eventProcessor = new CommonEventProcessor(dungeon);

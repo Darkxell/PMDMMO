@@ -8,7 +8,7 @@ import com.darkxell.client.resources.music.SoundManager;
 import com.darkxell.client.resources.music.SoundsHolder;
 import com.darkxell.client.state.mainstates.LoginMainState;
 import com.darkxell.client.ui.Frame;
-import com.darkxell.common.dungeon.DungeonRegistry;
+import com.darkxell.common.dungeon.data.DungeonRegistry;
 import com.darkxell.common.item.ItemRegistry;
 import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.PokemonRegistry;

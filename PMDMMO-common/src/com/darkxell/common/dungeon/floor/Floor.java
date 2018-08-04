@@ -8,10 +8,12 @@ import java.util.function.Predicate;
 
 import com.darkxell.common.ai.AI;
 import com.darkxell.common.ai.AIManager;
-import com.darkxell.common.dungeon.DungeonEncounter;
-import com.darkxell.common.dungeon.DungeonInstance;
-import com.darkxell.common.dungeon.DungeonItem;
+import com.darkxell.common.dungeon.DungeonExploration;
+import com.darkxell.common.dungeon.data.DungeonEncounter;
+import com.darkxell.common.dungeon.data.DungeonItemGroup;
+import com.darkxell.common.dungeon.data.FloorData;
 import com.darkxell.common.dungeon.floor.layout.Layout;
+import com.darkxell.common.dungeon.floor.room.Room;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.action.PokemonSpawnedEvent;
 import com.darkxell.common.event.dungeon.weather.WeatherChangedEvent;
@@ -41,7 +43,7 @@ public class Floor
 	/** This Floor's data. */
 	public final FloorData data;
 	/** This Floor's Dungeon. */
-	public final DungeonInstance dungeon;
+	public final DungeonExploration dungeon;
 	/** This Floor's ID. */
 	public final int id;
 	private boolean isGenerating = true;
@@ -64,7 +66,7 @@ public class Floor
 	/** List of Weather conditions applied to this Floor. */
 	private final ArrayList<WeatherInstance> weatherCondition;
 
-	public Floor(int id, Layout layout, DungeonInstance dungeon, Random random, boolean isStatic)
+	public Floor(int id, Layout layout, DungeonExploration dungeon, Random random, boolean isStatic)
 	{
 		this.id = id;
 		this.dungeon = dungeon;
@@ -262,7 +264,7 @@ public class Floor
 
 	public Item randomBuriedItem(Random random)
 	{
-		ArrayList<DungeonItem> items = this.dungeon.dungeon().buriedItems(this.id);
+		ArrayList<DungeonItemGroup> items = this.dungeon.dungeon().buriedItems(this.id);
 		return randomItem(items, random);
 	}
 
@@ -330,9 +332,9 @@ public class Floor
 		return RandomUtil.random(candidates, random);
 	}
 
-	public Item randomItem(ArrayList<DungeonItem> items, Random random)
+	public Item randomItem(ArrayList<DungeonItemGroup> items, Random random)
 	{
-		DungeonItem itemGroup = RandomUtil.weightedRandom(items, DungeonItem.weights(items), random);
+		DungeonItemGroup itemGroup = RandomUtil.weightedRandom(items, DungeonItemGroup.weights(items), random);
 		ArrayList<Integer> ids = new ArrayList<Integer>();
 		ArrayList<Integer> chances = new ArrayList<Integer>();
 		for (int i = 0; i < itemGroup.items.length; ++i)
@@ -345,7 +347,7 @@ public class Floor
 
 	public Item randomItem(Random random)
 	{
-		ArrayList<DungeonItem> items = this.dungeon.dungeon().items(this.id);
+		ArrayList<DungeonItemGroup> items = this.dungeon.dungeon().items(this.id);
 		return randomItem(items, random);
 	}
 

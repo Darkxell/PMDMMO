@@ -7,7 +7,7 @@ import java.io.FileReader;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.event.ClientEventProcessor;
 import com.darkxell.client.state.dungeon.NextFloorState;
-import com.darkxell.common.dungeon.AutoDungeonInstance;
+import com.darkxell.common.dungeon.AutoDungeonExploration;
 import com.darkxell.common.dungeon.DungeonCommunication;
 import com.darkxell.common.event.CommonEventProcessor.State;
 import com.darkxell.common.event.DungeonEvent;
@@ -28,10 +28,10 @@ public class DungeonReplayTest extends UTest
 		super(ACTION_WARN);
 	}
 
-	private AutoDungeonInstance createDungeon()
+	private AutoDungeonExploration createDungeon()
 	{
 		JsonValue json = null;
-		AutoDungeonInstance dungeon = null;
+		AutoDungeonExploration dungeon = null;
 		try
 		{
 			BufferedReader br = new BufferedReader(new FileReader(new File(path)));
@@ -58,7 +58,7 @@ public class DungeonReplayTest extends UTest
 		return dungeon;
 	}
 
-	public void logAllEvents(AutoDungeonInstance dungeon)
+	public void logAllEvents(AutoDungeonExploration dungeon)
 	{
 		for (GameTurn turn : dungeon.listTurns())
 			for (DungeonEvent event : turn.events())
@@ -69,7 +69,7 @@ public class DungeonReplayTest extends UTest
 	protected int test()
 	{
 		Persistance.player = Util.createDefaultPlayer();
-		AutoDungeonInstance dungeon = this.createDungeon();
+		AutoDungeonExploration dungeon = this.createDungeon();
 		if (dungeon == null) return 1;
 		Persistance.dungeon = dungeon;
 

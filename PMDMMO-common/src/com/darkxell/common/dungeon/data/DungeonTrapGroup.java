@@ -1,11 +1,11 @@
-package com.darkxell.common.dungeon;
+package com.darkxell.common.dungeon.data;
 
 import org.jdom2.Element;
 
 import com.darkxell.common.util.XMLUtils;
 
 /** Describes how a Traps appear in a Dungeon. */
-public class DungeonTrap
+public class DungeonTrapGroup
 {
 	public static final String XML_ROOT = "trap";
 
@@ -16,7 +16,7 @@ public class DungeonTrap
 	/** The Traps IDs. */
 	public final int[] ids;
 
-	public DungeonTrap(Element xml)
+	public DungeonTrapGroup(Element xml)
 	{
 		this.ids = XMLUtils.readIntArray(xml.getChild("ids", xml.getNamespace()));
 		if (xml.getChild("chances", xml.getNamespace()) == null)
@@ -28,7 +28,7 @@ public class DungeonTrap
 		this.floors = new FloorSet(xml.getChild(FloorSet.XML_ROOT, xml.getNamespace()));
 	}
 
-	public DungeonTrap(int[] ids, int[] chances, FloorSet floors)
+	public DungeonTrapGroup(int[] ids, int[] chances, FloorSet floors)
 	{
 		this.ids = ids;
 		this.chances = chances;

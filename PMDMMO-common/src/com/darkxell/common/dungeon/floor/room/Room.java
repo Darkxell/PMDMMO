@@ -1,4 +1,4 @@
-package com.darkxell.common.dungeon.floor;
+package com.darkxell.common.dungeon.floor.room;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -7,6 +7,9 @@ import java.util.function.Predicate;
 
 import org.jdom2.Element;
 
+import com.darkxell.common.dungeon.floor.Floor;
+import com.darkxell.common.dungeon.floor.Tile;
+import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.util.XMLUtils;
 
 /** Represents a Room in a Floor. */

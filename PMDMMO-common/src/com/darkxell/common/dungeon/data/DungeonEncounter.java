@@ -1,4 +1,4 @@
-package com.darkxell.common.dungeon;
+package com.darkxell.common.dungeon.data;
 
 import org.jdom2.Element;
 

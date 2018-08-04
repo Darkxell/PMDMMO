@@ -1,4 +1,4 @@
-package com.darkxell.common.dungeon.floor;
+package com.darkxell.common.dungeon.floor.room;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -6,6 +6,9 @@ import java.util.HashSet;
 import java.util.List;
 
 import org.jdom2.Element;
+
+import com.darkxell.common.dungeon.floor.Floor;
+import com.darkxell.common.dungeon.floor.Tile;
 
 /** Represents a Room in a Floor. */
 public class ComplexRoom extends Room

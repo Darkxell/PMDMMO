@@ -13,12 +13,12 @@ import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.AbstractRenderer;
 import com.darkxell.client.renderers.MasterDungeonRenderer;
 import com.darkxell.client.renderers.pokemon.DungeonPokemonRenderer;
-import com.darkxell.common.dungeon.floor.ComplexRoom;
+import com.darkxell.common.dungeon.data.FloorData;
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.dungeon.floor.FloorData;
-import com.darkxell.common.dungeon.floor.Room;
-import com.darkxell.common.dungeon.floor.SquareRoom;
 import com.darkxell.common.dungeon.floor.Tile;
+import com.darkxell.common.dungeon.floor.room.ComplexRoom;
+import com.darkxell.common.dungeon.floor.room.Room;
+import com.darkxell.common.dungeon.floor.room.SquareRoom;
 
 public class ShadowRenderer extends AbstractRenderer
 {

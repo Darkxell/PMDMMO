@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 import com.darkxell.common.ai.AIUtils;
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.dungeon.floor.Room;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
+import com.darkxell.common.dungeon.floor.room.Room;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.DungeonEvent.MessageEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;

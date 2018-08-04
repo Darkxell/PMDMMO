@@ -7,12 +7,14 @@ import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.EventCommunication;
 import com.eclipsesource.json.JsonObject;
 
-public class AutoDungeonInstance extends DungeonInstance
+/** DungeonInstance that reads DungeonEvents stored as Json Objects and executes them.<br>
+ * Used to check an exploration for client cheats. */
+public class AutoDungeonExploration extends DungeonExploration
 {
 
 	public LinkedList<JsonObject> pendingEvents = new LinkedList<>();
 
-	public AutoDungeonInstance(int id, long seed)
+	public AutoDungeonExploration(int id, long seed)
 	{
 		super(id, seed);
 	}

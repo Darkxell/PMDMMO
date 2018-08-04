@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.Random;
 
 import com.darkxell.common.ai.AI;
+import com.darkxell.common.dungeon.data.Dungeon;
+import com.darkxell.common.dungeon.data.DungeonRegistry;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.layout.Layout;
 import com.darkxell.common.dungeon.floor.layout.StaticLayout;
@@ -22,7 +24,8 @@ import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.Logger;
 
-public class DungeonInstance
+/** Represents the behavior at the Dungeon-level while in an exploration (Floor management, Players, AI, seeds, turns & events memory...). */
+public class DungeonExploration
 {
 
 	private HashMap<DungeonPokemon, Actor> actorMap = new HashMap<>();
@@ -51,7 +54,7 @@ public class DungeonInstance
 	/** All the Players that started exploring this Dungeon, even if they left. */
 	private ArrayList<Player> startingPlayers = new ArrayList<>();
 
-	public DungeonInstance(int id, long seed)
+	public DungeonExploration(int id, long seed)
 	{
 		this.id = id;
 		this.seed = seed;
@@ -173,6 +176,7 @@ public class DungeonInstance
 		return (ArrayList<Player>) this.exploringPlayers.clone();
 	}
 
+	/** Creates the next Floor to explore, places Players in it, registers Actors, AIs, and IDs. */
 	private void generateNextFloor()
 	{
 		this.isGeneratingFloor = true;

@@ -25,7 +25,7 @@ import com.darkxell.client.state.dungeon.NextFloorState;
 import com.darkxell.client.state.dungeon.PokemonTravelState;
 import com.darkxell.client.state.menu.dungeon.MoveLearnMenuState;
 import com.darkxell.client.state.menu.dungeon.StairMenuState;
-import com.darkxell.common.dungeon.DungeonInstance;
+import com.darkxell.common.dungeon.DungeonExploration;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.event.CommonEventProcessor;
@@ -103,7 +103,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	/** Stores consecutive travel events to animate them at the same time. */
 	private ArrayList<PokemonTravelEvent> travels = new ArrayList<>();
 
-	public ClientEventProcessor(DungeonInstance dungeon)
+	public ClientEventProcessor(DungeonExploration dungeon)
 	{
 		super(dungeon);
 	}

@@ -1,5 +1,7 @@
 package com.darkxell.common.dungeon;
 
+import com.darkxell.common.dungeon.data.Dungeon;
+import com.darkxell.common.dungeon.data.DungeonRegistry;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.util.Communicable;

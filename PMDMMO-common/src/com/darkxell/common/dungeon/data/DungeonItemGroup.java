@@ -1,4 +1,4 @@
-package com.darkxell.common.dungeon;
+package com.darkxell.common.dungeon.data;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -9,15 +9,15 @@ import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.util.XMLUtils;
 
 /** A group of Items that can appear in a Dungeon. */
-public class DungeonItem
+public class DungeonItemGroup
 {
 	public static final String XML_ROOT = "group";
 
 	/** @return The list of weights associated with the input Items. */
-	public static ArrayList<Integer> weights(ArrayList<DungeonItem> items)
+	public static ArrayList<Integer> weights(ArrayList<DungeonItemGroup> items)
 	{
 		ArrayList<Integer> weights = new ArrayList<>();
-		for (DungeonItem item : items)
+		for (DungeonItemGroup item : items)
 			weights.add(item.weight);
 		return weights;
 	}
@@ -32,7 +32,7 @@ public class DungeonItem
 	/** This Item group's weight. */
 	public final int weight;
 
-	public DungeonItem(Element xml)
+	public DungeonItemGroup(Element xml)
 	{
 		this.weight = XMLUtils.getAttribute(xml, "weight", 1);
 		this.floors = new FloorSet(xml.getChild(FloorSet.XML_ROOT, xml.getNamespace()));
@@ -45,7 +45,7 @@ public class DungeonItem
 		} else this.chances = XMLUtils.readIntArray(xml.getChild("chances", xml.getNamespace()));
 	}
 
-	public DungeonItem(FloorSet floors, int weight, int[] items, int[] chances)
+	public DungeonItemGroup(FloorSet floors, int weight, int[] items, int[] chances)
 	{
 		this.weight = weight;
 		this.floors = floors;

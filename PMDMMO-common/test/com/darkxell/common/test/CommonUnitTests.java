@@ -1,6 +1,6 @@
 package com.darkxell.common.test;
 
-import com.darkxell.common.dungeon.DungeonRegistry;
+import com.darkxell.common.dungeon.data.DungeonRegistry;
 import com.darkxell.common.item.ItemRegistry;
 import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.PokemonRegistry;
