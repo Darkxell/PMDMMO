@@ -2,7 +2,6 @@ package com.darkxell.common.util;
 
 import java.util.Random;
 
-import com.darkxell.common.item.ItemID;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.LearnedMove;
@@ -20,7 +19,7 @@ public class Util
 		player.setMoneyInBank(456789);
 		player.addAlly(PokemonRegistry.find(1).generate(new Random(), 80, 1));
 		// player.addAlly(PokemonRegistry.find(255).generate(new Random(), 80));
-		player.getTeamLeader().setItem(new ItemStack(ItemID.XRaySpecs));
+		player.getTeamLeader().setItem(new ItemStack(208));
 		player.getTeamLeader().setMove(2, new LearnedMove(45));
 		player.getTeamLeader().setMove(3, new LearnedMove(806));
 		for (int i = 1; i < 5; ++i)

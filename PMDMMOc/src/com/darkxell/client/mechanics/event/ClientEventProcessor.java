@@ -55,8 +55,7 @@ import com.darkxell.common.event.stats.BellyChangedEvent;
 import com.darkxell.common.event.stats.LevelupEvent;
 import com.darkxell.common.event.stats.SpeedChangedEvent;
 import com.darkxell.common.event.stats.StatChangedEvent;
-import com.darkxell.common.item.ItemFood;
-import com.darkxell.common.item.ItemGummi;
+import com.darkxell.common.item.effects.FoodItemEffect;
 import com.darkxell.common.player.Inventory;
 import com.darkxell.common.pokemon.BaseStats;
 import com.darkxell.common.pokemon.Pokemon;
@@ -280,8 +279,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	private void processItemEvent(ItemSelectionEvent event)
 	{
 		AnimationState a = new AnimationState(Persistance.dungeonState);
-		if (event.item() instanceof ItemFood || event.item() instanceof ItemGummi)
-			a.animation = Animations.getCustomAnimation(event.user(), 0, this.currentAnimEnd);
+		if (event.item().effect() instanceof FoodItemEffect) a.animation = Animations.getCustomAnimation(event.user(), 0, this.currentAnimEnd);
 		else a.animation = Animations.getItemAnimation(event.user(), event.item(), this.currentAnimEnd);
 		if (a.animation != null)
 		{

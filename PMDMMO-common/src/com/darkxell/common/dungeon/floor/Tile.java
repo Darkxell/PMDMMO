@@ -14,8 +14,8 @@ import com.darkxell.common.event.DungeonEvent.MessageEvent;
 import com.darkxell.common.event.dungeon.TrapSteppedOnEvent;
 import com.darkxell.common.event.item.ItemMovedEvent;
 import com.darkxell.common.event.item.MoneyCollectedEvent;
-import com.darkxell.common.item.Item;
 import com.darkxell.common.item.Item.ItemAction;
+import com.darkxell.common.item.ItemEffects;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.player.ItemContainer;
 import com.darkxell.common.pokemon.DungeonPokemon;
@@ -255,7 +255,7 @@ public class Tile implements ItemContainer, Comparable<Tile>
 		{
 			ItemStack i = this.getItem();
 			int index = pokemon.player() == null ? -1 : pokemon.player().inventory().canAccept(i);
-			if (!running && i.item().id == Item.POKE && pokemon.player() != null) events.add(new MoneyCollectedEvent(floor, pokemon, this, i));
+			if (!running && i.item().effect() == ItemEffects.Pokedollars && pokemon.player() != null) events.add(new MoneyCollectedEvent(floor, pokemon, this, i));
 			else if (!running && pokemon.player() != null && index != -1)
 				events.add(new ItemMovedEvent(floor, ItemAction.GET, pokemon, this, 0, pokemon.player().inventory(), -1));
 			else if (!running && pokemon.getItem() == null) events.add(new ItemMovedEvent(floor, ItemAction.GET, pokemon, this, 0, pokemon, -1));

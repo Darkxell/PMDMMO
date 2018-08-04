@@ -40,6 +40,11 @@ public class ItemEffect
 		return new Message("item.use");
 	}
 
+	public boolean isThrowable()
+	{
+		return true;
+	}
+
 	/** @return True if the Item can be used. */
 	public boolean isUsable()
 	{
@@ -50,6 +55,12 @@ public class ItemEffect
 	public boolean isUsedOnTeamMember()
 	{
 		return false;
+	}
+
+	/** @return The name of an Item with this Effect. */
+	public Message name(Item item)
+	{
+		return new Message("item." + this.id);
 	}
 
 	/** Called when an Item with this Effect is used.

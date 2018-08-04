@@ -1,47 +1,36 @@
-package com.darkxell.common.item;
+package com.darkxell.common.item.effects;
 
 import java.util.ArrayList;
-
-import org.jdom2.Element;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.DungeonEvent.MessageEvent;
+import com.darkxell.common.item.Item;
+import com.darkxell.common.item.ItemEffect;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Message;
 
 /** An Item that has different effects when used. */
-public class ItemOrb extends Item
+public class OrbItemEffect extends ItemEffect
 {
 
-	public ItemOrb(Element xml)
+	public OrbItemEffect(int id)
 	{
-		super(xml);
-	}
-
-	public ItemOrb(int id, int price, int sell, int sprite, boolean isStackable)
-	{
-		super(id, price, sell, sprite, isStackable);
-	}
-
-	public ItemCategory category()
-	{
-		return ItemCategory.ORBS;
+		super(id);
 	}
 
 	@Override
-	public Message name()
+	public Message name(Item item)
 	{
-		return super.name().addPrefix("<orb>");
+		return super.name(item).addPrefix("<orb>");
 	}
 
 	protected void orbEffect(Floor floor, DungeonPokemon pokemon, DungeonPokemon target, ArrayList<DungeonEvent> events)
 	{}
 
 	@Override
-	public final void use(Floor floor, DungeonPokemon pokemon, DungeonPokemon target, ArrayList<DungeonEvent> events)
+	public final void use(Floor floor, Item item, DungeonPokemon pokemon, DungeonPokemon target, ArrayList<DungeonEvent> events)
 	{
-		super.use(floor, pokemon, target, events);
 		if (floor.data.isBossFloor()) events.add(new MessageEvent(floor, new Message("item.orb.boss")));
 		else this.orbEffect(floor, pokemon, target, events);
 	}

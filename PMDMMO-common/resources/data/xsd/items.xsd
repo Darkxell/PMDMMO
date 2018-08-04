@@ -27,7 +27,7 @@
         <xs:attribute name="type" type="xs:string"/>
         <xs:attribute name="price" type="posInt"/>
         <xs:attribute name="sell" type="posInt-1"/>
-        <xs:attribute name="effect" type="posInt-1"/>
+        <xs:attribute name="effect" type="xs:int"/>
         <xs:attribute name="sprite" type="posInt"/>
         <xs:attribute name="stackable" type="xs:boolean" use="optional"/>
         <xs:attribute name="rare" type="xs:boolean" use="optional"/>

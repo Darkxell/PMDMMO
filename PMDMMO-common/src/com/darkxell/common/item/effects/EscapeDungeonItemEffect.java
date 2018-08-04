@@ -1,8 +1,6 @@
-package com.darkxell.common.item;
+package com.darkxell.common.item.effects;
 
 import java.util.ArrayList;
-
-import org.jdom2.Element;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
@@ -10,17 +8,12 @@ import com.darkxell.common.event.dungeon.DungeonExitEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
 /** An Item that has different effects when used. */
-public class ItemEscapeOrb extends ItemOrb
+public class EscapeDungeonItemEffect extends OrbItemEffect
 {
 
-	public ItemEscapeOrb(Element xml)
+	public EscapeDungeonItemEffect(int id)
 	{
-		super(xml);
-	}
-
-	public ItemEscapeOrb(int id, int price, int sell, int sprite, boolean isStackable)
-	{
-		super(id, price, sell, sprite, isStackable);
+		super(id);
 	}
 
 	@Override

@@ -8,6 +8,7 @@ import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.dungeon.floor.room.Room;
 import com.darkxell.common.item.Item;
+import com.darkxell.common.item.ItemEffects;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.trap.TrapRegistry;
 import com.darkxell.common.util.RandomUtil;
@@ -121,7 +122,7 @@ public abstract class Layout
 			Tile tile = this.floor.randomEmptyTile(false, false, TileType.WALL, this.random);
 			Item item = this.floor.randomBuriedItem(this.random);
 			int quantity = 0;
-			if (item.id == Item.POKE) quantity = this.getMoneyQuantity();
+			if (item.effect() == ItemEffects.Pokedollars) quantity = this.getMoneyQuantity();
 			else if (item.isStackable) quantity = RandomUtil.nextGaussian(10, 7, this.random);
 
 			tile.setItem(new ItemStack(item.id).setQuantity(quantity));
@@ -141,7 +142,7 @@ public abstract class Layout
 			Tile tile = this.floor.randomEmptyTile(true, false, TileType.GROUND, this.random);
 			Item item = this.floor.randomItem(this.random);
 			int quantity = 0;
-			if (item.id == Item.POKE) quantity = this.getMoneyQuantity();
+			if (item.effect() == ItemEffects.Pokedollars) quantity = this.getMoneyQuantity();
 			else if (item.isStackable) quantity = RandomUtil.nextGaussian(10, 7, this.random);
 			if (quantity <= 0) quantity = 1;
 

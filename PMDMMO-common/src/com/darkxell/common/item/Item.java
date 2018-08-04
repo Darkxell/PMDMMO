@@ -96,7 +96,6 @@ public class Item implements AffectsPokemon
 		}
 	}
 
-	public static final int POKE = 0, USED_TM = 385;
 	public static final String XML_ROOT = "item";
 
 	/** This Item's Category. */
@@ -151,7 +150,7 @@ public class Item implements AffectsPokemon
 		if (inDungeon)
 		{
 			if (this.effect().isUsable()) actions.add(ItemAction.USE);
-			if (!this.isRare) actions.add(ItemAction.THROW);
+			if (!this.isRare && this.effect().isThrowable()) actions.add(ItemAction.THROW);
 		}
 		actions.add(ItemAction.INFO);
 		return actions;
@@ -159,7 +158,7 @@ public class Item implements AffectsPokemon
 
 	public Message name()
 	{
-		return new Message("item." + this.id);
+		return this.effect().name(this);
 	}
 
 	@Override
