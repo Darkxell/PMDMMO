@@ -9,24 +9,24 @@ import org.jdom2.Element;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.XMLUtils;
 
-/** Holds all Pokémon species. */
+/** Holds all Pokemon species. */
 public final class PokemonRegistry
 {
 
 	private static HashMap<Integer, PokemonSpecies> pokemon = new HashMap<Integer, PokemonSpecies>();
 
-	/** @return The Pokémon species with the input ID. */
+	/** @return The Pokemon species with the input ID. */
 	public static PokemonSpecies find(int id)
 	{
 		if (!pokemon.containsKey(id))
 		{
-			Logger.e("There is no Pokémon with ID " + id + ".");
+			Logger.e("There is no Pokemon with ID " + id + ".");
 			return null;
-		} // else if (id == 0) Logger.w("Using default Pokémon!");
+		} // else if (id == 0) Logger.w("Using default Pokemon!");
 		return pokemon.get(id);
 	}
 
-	/** @return All Pokémon species. */
+	/** @return All Pokemon species. */
 	public static Collection<PokemonSpecies> list()
 	{
 		return pokemon.values();
@@ -35,7 +35,7 @@ public final class PokemonRegistry
 	/** Loads this Registry for the Client. */
 	public static void load()
 	{
-		Logger.instance().debug("Loading Pokémon...");
+		Logger.instance().debug("Loading Pokemon...");
 		Element root = XMLUtils.read(PokemonRegistry.class.getResourceAsStream("/data/pokemon.xml"));
                 
 		for (Element e : root.getChildren("pokemon", root.getNamespace()))

@@ -26,7 +26,7 @@ public class WeatherDamageEvent extends DungeonEvent
 	@Override
 	public String loggerMessage()
 	{
-		return this.source.name() + " dealt " + this.damage + " damage to " + this.pokemon.size() + " Pokémon.";
+		return this.source.name() + " dealt " + this.damage + " damage to " + this.pokemon.size() + " Pokemon.";
 	}
 
 	@Override

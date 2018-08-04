@@ -31,8 +31,8 @@ public abstract class CutsceneEvent
 		move("Move Entity"),
 		music("Change soundtrack"),
 		rotate("Rotate Entity"),
-		setanimated("Animate Pokémon"),
-		setstate("Set Pokémon State"),
+		setanimated("Animate Pokemon"),
+		setstate("Set Pokemon State"),
 		sound("Play sound"),
 		spawn("Spawn Entity"),
 		wait("Wait for events to finish");

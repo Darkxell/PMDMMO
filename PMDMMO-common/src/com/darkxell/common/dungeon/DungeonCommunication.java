@@ -101,7 +101,7 @@ public class DungeonCommunication
 				case DUNGEON_POKEMON:
 				case POKEMON:
 					Pokemon p = this.pokemonIDs.get(id);
-					if (p == null) throw new JsonReadingException("No Pokémon with id " + id);
+					if (p == null) throw new JsonReadingException("No Pokemon with id " + id);
 					return p;
 
 				default:

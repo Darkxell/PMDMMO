@@ -27,9 +27,9 @@ public class Evolution
 	public final int species;
 	/** The ID of the species form this Evolution leads to. */
 	public final int speciesForm;
-	/** If method is LEVEL, this is the minimum level of the Pokémon.<br />
+	/** If method is LEVEL, this is the minimum level of the Pokemon.<br />
 	 * If method is ITEM, this is the ID of the Item to be used on.<br />
-	 * If method is IQ, this is the minimum IQ of the Pokémon. */
+	 * If method is IQ, this is the minimum IQ of the Pokemon. */
 	public final int value;
 
 	public Evolution(Element xml)

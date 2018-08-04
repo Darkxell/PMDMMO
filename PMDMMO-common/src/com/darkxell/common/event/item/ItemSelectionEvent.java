@@ -27,9 +27,9 @@ public class ItemSelectionEvent extends DungeonEvent implements Communicable
 	protected ItemContainer source;
 	/** The index of the Item in the source Container. */
 	protected int sourceIndex;
-	/** The Pokémon that the Item was used on. null if there was no target. */
+	/** The Pokemon that the Item was used on. null if there was no target. */
 	protected DungeonPokemon target;
-	/** The Pokémon that used the Item. */
+	/** The Pokemon that used the Item. */
 	protected DungeonPokemon user;
 
 	public ItemSelectionEvent(Floor floor)
@@ -103,7 +103,7 @@ public class ItemSelectionEvent extends DungeonEvent implements Communicable
 			throw e;
 		} catch (Exception e)
 		{
-			throw new JsonReadingException("Wrong value for Pokémon ID: " + value.get("user"));
+			throw new JsonReadingException("Wrong value for Pokemon ID: " + value.get("user"));
 		}
 
 		try

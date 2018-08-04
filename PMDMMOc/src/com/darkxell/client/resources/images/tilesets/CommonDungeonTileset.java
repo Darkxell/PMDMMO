@@ -12,7 +12,7 @@ public class CommonDungeonTileset extends AbstractDungeonTileset
 		super("/tilesets/dungeon-common.png");
 	}
 
-	/** @param facing - true if the Pokémon is facing this Tile (red grid), false else (yellow grid).
+	/** @param facing - true if the Pokemon is facing this Tile (red grid), false else (yellow grid).
 	 * @return The grid tile. */
 	public BufferedImage grid(boolean facing)
 	{

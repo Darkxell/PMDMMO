@@ -16,7 +16,7 @@ import com.darkxell.common.util.XMLUtils;
 import com.darkxell.common.util.language.Message;
 import com.darkxell.common.weather.Weather;
 
-/** Describes a Dungeon: floors, Pokémon, items... */
+/** Describes a Dungeon: floors, Pokemon, items... */
 public class Dungeon implements Comparable<Dungeon>
 {
 	public static final boolean UP = false, DOWN = true;
@@ -40,9 +40,9 @@ public class Dungeon implements Comparable<Dungeon>
 	public final int mapx;
 	/** The y position in pixels of the dungeon on the dungeons world map. */
 	public final int mapy;
-	/** Lists the Pokémon found in this Dungeon. */
+	/** Lists the Pokemon found in this Dungeon. */
 	private final ArrayList<DungeonEncounter> pokemon;
-	/** True if Pokémon from this Dungeon can be recruited. */
+	/** True if Pokemon from this Dungeon can be recruited. */
 	public final boolean recruitsAllowed;
 	/** Lists the Items found in this Dungeon's shops. */
 	private final ArrayList<DungeonItem> shopItems;

@@ -75,7 +75,7 @@ public class DungeonState extends AbstractState
 
 	public final ActionSelectionState actionSelectionState;
 	private Point camera = new Point(0, 0);
-	/** The Pokémon around which to draw. */
+	/** The Pokemon around which to draw. */
 	private DungeonPokemon cameraPokemon;
 	/** The current substate. */
 	private DungeonSubState currentSubstate;

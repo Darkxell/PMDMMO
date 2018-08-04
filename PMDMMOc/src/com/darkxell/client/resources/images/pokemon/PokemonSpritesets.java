@@ -14,13 +14,13 @@ public final class PokemonSpritesets
 	/** Stores the loaded Spritesheets. */
 	private static final HashMap<Integer, AbstractPokemonSpriteset> spritesets = new HashMap<Integer, AbstractPokemonSpriteset>();
 
-	/** Disposes of the Spritesheet for the Pokémon with the input ID. */
+	/** Disposes of the Spritesheet for the Pokemon with the input ID. */
 	public static void disposeSpriteset(int id)
 	{
 		spritesets.remove(id);
 	}
 
-	/** Returns the Spritesheet for the Pokémon with the input ID. Loads it if not loaded. */
+	/** Returns the Spritesheet for the Pokemon with the input ID. Loads it if not loaded. */
 	public static AbstractPokemonSpriteset getSpriteset(int id)
 	{
 		if (!spritesets.containsKey(id)) loadSpriteset(id);
@@ -40,11 +40,11 @@ public final class PokemonSpritesets
 	/** Reads the sprites data file. */
 	public static void loadData()
 	{
-		/* System.out.println("Loading Pokémon sprites..."); for (PokemonSpecies s : PokemonRegistry.list()) loadSpriteset(s.id); */
+		/* System.out.println("Loading Pokemon sprites..."); for (PokemonSpecies s : PokemonRegistry.list()) loadSpriteset(s.id); */
 		loadSpriteset(0);
 	}
 
-	/** Loads the Spritesheet for the Pokémon with the input ID. */
+	/** Loads the Spritesheet for the Pokemon with the input ID. */
 	private static void loadSpriteset(int id)
 	{
 		String filename = Math.abs(id) + "";

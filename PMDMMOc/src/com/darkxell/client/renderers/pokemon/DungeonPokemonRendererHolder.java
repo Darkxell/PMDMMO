@@ -17,7 +17,7 @@ public class DungeonPokemonRendererHolder extends EntityRendererHolder<DungeonPo
 		return (DungeonPokemonRenderer) super.getRenderer(pokemon);
 	}
 
-	/** @return The Sprite of the input Pokémon. */
+	/** @return The Sprite of the input Pokemon. */
 	public PokemonSprite getSprite(DungeonPokemon entity)
 	{
 		DungeonPokemonRenderer renderer = this.getRenderer(entity);
@@ -40,7 +40,7 @@ public class DungeonPokemonRendererHolder extends EntityRendererHolder<DungeonPo
 	public void render(Graphics2D g, int width, int height)
 	{}
 
-	/** Deletes the Renderer of the input Pokémon. */
+	/** Deletes the Renderer of the input Pokemon. */
 	public void unregister(DungeonPokemon entity)
 	{
 		Persistance.dungeonRenderer.removeRenderer(this.getRenderer(entity));

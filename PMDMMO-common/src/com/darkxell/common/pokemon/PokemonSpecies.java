@@ -18,19 +18,19 @@ public class PokemonSpecies
 {
 	public static final int COMPOUND_ID_FACTOR = 10000;
 	public static final double SHINY_CHANCE = 1d / 8192;
-	// public static final double SHINY_CHANCE = .5; // Used to test shiny pokémon
+	// public static final double SHINY_CHANCE = .5; // Used to test shiny Pokemon
 
-	/** List of possible Abilities for this Pokémon. */
+	/** List of possible Abilities for this Pokemon. */
 	private ArrayList<Integer> abilities;
 	/** This species' stat gains at each level. First in this Array is the stats at level 1. */
 	private final ArrayList<BaseStats> baseStats;
-	/** Base experience gained when this Pokémon is defeated. */
+	/** Base experience gained when this Pokemon is defeated. */
 	public final int baseXP;
-	/** List of species this Pokémon can evolve into. */
+	/** List of species this Pokemon can evolve into. */
 	private final ArrayList<Evolution> evolutions;
 	/** Lists the required experience to level up for each level. */
 	final int[] experiencePerLevel;
-	/** The list of different forms Pokémon of this species can have. */
+	/** The list of different forms Pokemon of this species can have. */
 	private final ArrayList<PokemonSpecies> forms;
 	public final String friendAreaID;
 	public final float height, weight;
@@ -40,7 +40,7 @@ public class PokemonSpecies
 	public final Mobility mobility;
 	/** List of TMs that can be taught. */
 	private final ArrayList<Integer> tms;
-	/** This Pokémon's types. type2 can be null. */
+	/** This Pokemon's types. type2 can be null. */
 	public final PokemonType type1, type2;
 
 	/** Constructor for XML */
@@ -213,18 +213,18 @@ public class PokemonSpecies
 		return (ArrayList<PokemonSpecies>) this.forms.clone();
 	}
 
-	/** Generates a Pokémon of this species.
+	/** Generates a Pokemon of this species.
 	 * 
-	 * @param level - The level of the Pokémon to generate. */
+	 * @param level - The level of the Pokemon to generate. */
 	public Pokemon generate(Random random, int level)
 	{
 		return this.generate(random, level, SHINY_CHANCE);
 	}
 
-	/** Generates a Pokémon of this species.
+	/** Generates a Pokemon of this species.
 	 * 
-	 * @param level - The level of the Pokémon to generate.
-	 * @param shinyChance - The chance for the generated Pokémon to be a shiny (0 to 1). */
+	 * @param level - The level of the Pokemon to generate.
+	 * @param shinyChance - The chance for the generated Pokemon to be a shiny (0 to 1). */
 	public Pokemon generate(Random random, int level, double shinyChance)
 	{
 		ArrayList<Integer> moves = new ArrayList<Integer>();
@@ -246,13 +246,13 @@ public class PokemonSpecies
 				this.randomGender(random), 0, random.nextDouble() <= shinyChance);
 	}
 
-	/** @return True if one of this Pokémon's type equals the input type. */
+	/** @return True if one of this Pokemon's type equals the input type. */
 	public boolean isType(PokemonType type)
 	{
 		return this.type1 == type || this.type2 == type;
 	}
 
-	/** @param level - The level of the Pokémon.
+	/** @param level - The level of the Pokemon.
 	 * @param learnedMoves - Moves to exclude because they're already learned.
 	 * @return The latest learned move's ID. */
 	public int latestMove(int level, ArrayList<Integer> learnedMoves)
@@ -280,14 +280,14 @@ public class PokemonSpecies
 		return moves;
 	}
 
-	/** @return A random ability for this Pokémon. */
+	/** @return A random ability for this Pokemon. */
 	public int randomAbility(Random random)
 	{
 		if (this.abilities.size() == 0) return 0;
 		return this.abilities.get(random.nextInt(this.abilities.size()));
 	}
 
-	/** @return A random gender for this Pokémon. */
+	/** @return A random gender for this Pokemon. */
 	public byte randomGender(Random random)
 	{
 		// todo: include gender probability.
@@ -300,7 +300,7 @@ public class PokemonSpecies
 		return new Message("pokemon." + this.id);
 	}
 
-	/** @return Regular stats for a Pokémon at the input level. */
+	/** @return Regular stats for a Pokemon at the input level. */
 	public BaseStats statsForLevel(int level)
 	{
 		BaseStats stats = this.baseStats.get(0);

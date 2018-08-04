@@ -26,10 +26,10 @@ public class DungeonInstance
 {
 
 	private HashMap<DungeonPokemon, Actor> actorMap = new HashMap<>();
-	/** The Pokémon to take turn in order. */
+	/** The Pokemon to take turn in order. */
 	private ArrayList<Actor> actors = new ArrayList<>();
 	public final DungeonCommunication communication;
-	/** The current Pokémon taking its turn. */
+	/** The current Pokemon taking its turn. */
 	private int currentActor;
 	/** The current Floor. */
 	private Floor currentFloor;
@@ -75,7 +75,7 @@ public class DungeonInstance
 		this.communication.pokemonIDs.clear();
 	}
 
-	/** Compares the input Pokémon depending on their order of action. */
+	/** Compares the input Pokemon depending on their order of action. */
 	public int compare(DungeonPokemon p1, DungeonPokemon p2)
 	{
 		return Integer.compare(this.indexOf(p1), this.indexOf(p2));
@@ -205,7 +205,7 @@ public class DungeonInstance
 		this.isGeneratingFloor = false;
 	}
 
-	/** @return The Pokémon taking its turn. null if there is no actor left, thus the turn is over. */
+	/** @return The Pokemon taking its turn. null if there is no actor left, thus the turn is over. */
 	public DungeonPokemon getActor()
 	{
 		if (this.currentActor >= this.actors.size() || this.currentActor < 0) return null;

@@ -64,7 +64,7 @@ public class MoveEnabledEvent extends DungeonEvent implements Communicable
 			throw e;
 		} catch (Exception e)
 		{
-			throw new JsonReadingException("Wrong value for Pokémon ID: " + value.get("pokemon"));
+			throw new JsonReadingException("Wrong value for Pokemon ID: " + value.get("pokemon"));
 		}
 		try
 		{

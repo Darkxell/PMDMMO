@@ -14,9 +14,9 @@ public class ItemUseEvent extends DungeonEvent
 
 	/** The Item that was used. */
 	public final Item item;
-	/** The Pokémon that the Item was used on. null if there was no target. */
+	/** The Pokemon that the Item was used on. null if there was no target. */
 	public final DungeonPokemon target;
-	/** The Pokémon that used the Item. */
+	/** The Pokemon that used the Item. */
 	public final DungeonPokemon user;
 
 	public ItemUseEvent(Floor floor, Item item, DungeonPokemon user, DungeonPokemon target)

@@ -23,47 +23,47 @@ public class Move implements Comparable<Move>
 
 	/** Move range.<br />
 	 * <ul>
-	 * <li>FRONT = 0 ; The Pokémon on the Tile in front of the user.</li>
-	 * <li>FRONT_ROW = 1 ; The Pokémon on the Tiles in front and diagonals of the user.</li>
-	 * <li>AROUND = 2 ; All Pokémon within a 1-Tile range of the user.</li>
-	 * <li>ROOM = 3 ; All Pokémon in a room (or visible, if not in a room.)</li>
-	 * <li>TWO_TILES = 4 ; The Pokémon on the Tile in front of the user, or if no Pokémon, the one on the second Tile in front.</li>
-	 * <li>LINE = 5 ; The first Pokémon in the user's direction (up to ten tiles), cuts corners.</li>
-	 * <li>FLOOR = 6 ; All Pokémon on the Floor.</li>
+	 * <li>FRONT = 0 ; The Pokemon on the Tile in front of the user.</li>
+	 * <li>FRONT_ROW = 1 ; The Pokemon on the Tiles in front and diagonals of the user.</li>
+	 * <li>AROUND = 2 ; All Pokemon within a 1-Tile range of the user.</li>
+	 * <li>ROOM = 3 ; All Pokemon in a room (or visible, if not in a room.)</li>
+	 * <li>TWO_TILES = 4 ; The Pokemon on the Tile in front of the user, or if no Pokemon, the one on the second Tile in front.</li>
+	 * <li>LINE = 5 ; The first Pokemon in the user's direction (up to ten tiles), cuts corners.</li>
+	 * <li>FLOOR = 6 ; All Pokemon on the Floor.</li>
 	 * <li>USER = 7 ; Only the user.</li>
-	 * <li>FRONT_CORNERS = 8 ; The Pokémon on the Tile in front of the user, cuts corners.</li>
-	 * <li>AMBIENT = 9 ; Does not target any Pokémon.</li>
+	 * <li>FRONT_CORNERS = 8 ; The Pokemon on the Tile in front of the user, cuts corners.</li>
+	 * <li>AMBIENT = 9 ; Does not target any Pokemon.</li>
 	 * </ul>
 	 */
 	public static enum MoveRange
 	{
-		/** Does not target any Pokémon. */
+		/** Does not target any Pokemon. */
 		Ambient,
-		/** All Pokémon adjacent to the user. */
+		/** All Pokemon adjacent to the user. */
 		Around,
-		/** All Pokémon up to two Tiles around the user in all directions. */
+		/** All Pokemon up to two Tiles around the user in all directions. */
 		Around2,
-		/** All Pokémon within a 1-Tile range of the user. */
+		/** All Pokemon within a 1-Tile range of the user. */
 		Floor,
-		/** The Pokémon on the Tile in front of the user. */
+		/** The Pokemon on the Tile in front of the user. */
 		Front,
-		/** The Pokémon on the Tile in front of the user, cuts corners. */
+		/** The Pokemon on the Tile in front of the user, cuts corners. */
 		Front_corners,
-		/** The Pokémon on the Tiles in front and diagonals of the user. */
+		/** The Pokemon on the Tiles in front and diagonals of the user. */
 		Front_row,
-		/** The first Pokémon in the user's direction (up to ten tiles), cuts corners. */
+		/** The first Pokemon in the user's direction (up to ten tiles), cuts corners. */
 		Line,
-		/** All Pokémon in a room (or visible, if not in a room.) */
+		/** All Pokemon in a room (or visible, if not in a room.) */
 		Room,
 		/** Only the user. */
 		Self,
-		/** The Pokémon on the Tile in front of the user, or if no Pokémon, the one on the second Tile in front. */
+		/** The Pokemon on the Tile in front of the user, or if no Pokemon, the one on the second Tile in front. */
 		Two_tiles;
 	}
 
 	public static enum MoveTarget
 	{
-		/** Any Pokémon. */
+		/** Any Pokemon. */
 		All,
 		/** The user's allies. */
 		Allies,
@@ -71,7 +71,7 @@ public class Move implements Comparable<Move>
 		Foes,
 		/** No targets (ambient moves.) */
 		None,
-		/** Any Pokémon except the user. */
+		/** Any Pokemon except the user. */
 		Others,
 		/** The user and its allies. */
 		Team,
@@ -206,10 +206,10 @@ public class Move implements Comparable<Move>
 		return new Message("move.effectiveness.none").addReplacement("<pokemon>", target.getNickname());
 	}
 
-	/** Applies this Move's effects to a Pokémon.
+	/** Applies this Move's effects to a Pokemon.
 	 * 
 	 * @param usedMove - The Move instance that was selected.
-	 * @param target - The Pokémon the Move is being used on.
+	 * @param target - The Pokemon the Move is being used on.
 	 * @param floor - The Floor context.
 	 * @return The events resulting from this Move. They typically include damage, healing, stat changes... */
 	public void useOn(MoveUse usedMove, DungeonPokemon target, Floor floor, ArrayList<DungeonEvent> events)

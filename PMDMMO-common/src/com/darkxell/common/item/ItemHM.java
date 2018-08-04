@@ -5,7 +5,7 @@ import org.jdom2.Element;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.move.MoveRegistry;
 
-/** An Item that teaches a move to a Pokémon when used. */
+/** An Item that teaches a move to a Pokemon when used. */
 public class ItemHM extends Item
 {
 

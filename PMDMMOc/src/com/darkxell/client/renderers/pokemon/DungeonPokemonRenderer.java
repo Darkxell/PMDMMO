@@ -7,7 +7,7 @@ import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
-/** Renders a Pokémon. This Renderer's Coordinates' units are Tiles. */
+/** Renders a Pokemon. This Renderer's Coordinates' units are Tiles. */
 public class DungeonPokemonRenderer extends AbstractPokemonRenderer
 {
 

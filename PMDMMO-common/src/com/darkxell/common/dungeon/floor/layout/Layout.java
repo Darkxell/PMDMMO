@@ -177,7 +177,7 @@ public abstract class Layout
 		}
 	}
 
-	/** Summons Pokémon. */
+	/** Summons Pokemon. */
 	protected void summonPokemon()
 	{}
 

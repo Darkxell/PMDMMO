@@ -6,16 +6,16 @@ import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.util.XMLUtils;
 
-/** Describes how a Pokémon appears in a Dungeon. */
+/** Describes how a Pokemon appears in a Dungeon. */
 public class DungeonEncounter
 {
 	public static final String XML_ROOT = "pokemon";
 
-	/** The floors this Pokémon can appear on. */
+	/** The floors this Pokemon can appear on. */
 	public final FloorSet floors;
-	/** The Pokémon ID. */
+	/** The Pokemon ID. */
 	public final int id;
-	/** The Level of the Pokémon. */
+	/** The Level of the Pokemon. */
 	public final int level;
 	/** The weight of the encounter. */
 	public final int weight;

@@ -10,7 +10,7 @@ public class PartnerChoice
 {
 
 	public final int id;
-	/** This Partner will be prevented from appearing if one of these IDs is the player's pokémon. */
+	/** This Partner will be prevented from appearing if one of these IDs is the player's Pokemon. */
 	private ArrayList<Integer> invalidators;
 
 	public PartnerChoice(Element xml)

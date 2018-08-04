@@ -4,7 +4,7 @@ import java.awt.Color;
 
 import com.darkxell.common.util.language.Message;
 
-/** Pokémon types. */
+/** Pokemon types. */
 public enum PokemonType
 {
 
@@ -171,7 +171,7 @@ public enum PokemonType
 		Fairy.setEffectivenessOn(Dark, SUPER_EFFECTIVE);
 	}
 
-	/** @return The Pokémon type with the input ID. null if ID doesn't match a type. */
+	/** @return The Pokemon type with the input ID. null if ID doesn't match a type. */
 	public static PokemonType find(int typeID)
 	{
 		for (PokemonType type : values())

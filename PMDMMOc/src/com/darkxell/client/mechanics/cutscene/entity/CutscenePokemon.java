@@ -47,7 +47,7 @@ public class CutscenePokemon extends CutsceneEntity
 		this.instanciated = pokemon != null ? pokemon : PokemonRegistry.find(this.pokemonid).generate(new Random(), 1);
 	}
 
-	/** @param pokemon - Force the use of an already created Pokémon. */
+	/** @param pokemon - Force the use of an already created Pokemon. */
 	public CutscenePokemon(Pokemon pokemon, Element xml)
 	{
 		super(xml);

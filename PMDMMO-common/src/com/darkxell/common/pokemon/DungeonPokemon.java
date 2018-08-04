@@ -16,35 +16,35 @@ import com.darkxell.common.status.StatusConditionInstance;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.language.Message;
 
-/** Represents a Pokémon in a Dungeon. */
+/** Represents a Pokemon in a Dungeon. */
 public class DungeonPokemon implements ItemContainer
 {
 	public static final int DEFAULT_BELLY_SIZE = 100;
 	public static final byte REGULAR_ATTACKS = 0, MOVES = 1, LINKED_MOVES = 2;
 
-	/** The attacks this Pokémon has received. Use in experience calculation. */
+	/** The attacks this Pokemon has received. Use in experience calculation. */
 	private byte attacksReceived = REGULAR_ATTACKS;
-	/** This Pokémon's current belly points. */
+	/** This Pokemon's current belly points. */
 	private double belly;
-	/** This Pokémon's belly size. */
+	/** This Pokemon's belly size. */
 	private int bellySize;
-	/** The direction this Pokémon is facing. */
+	/** The direction this Pokemon is facing. */
 	private Direction facing = Direction.SOUTH;
-	/** This Pokémon's current Hit Points. */
+	/** This Pokemon's current Hit Points. */
 	private int hp;
 	/** True if this Pokemon is a Boss. */
 	public boolean isBoss;
-	/** The original Pokémon that entered the Dungeon. This object is necessary for Dungeons that modify the visiting Pokémon, such as Dungeons resetting the level to 1. */
+	/** The original Pokemon that entered the Dungeon. This object is necessary for Dungeons that modify the visiting Pokemon, such as Dungeons resetting the level to 1. */
 	public final Pokemon originalPokemon;
 	/** Variable used to compute HP regeneration. */
 	private int regenCounter = 0;
-	/** This Pokémon's stats for the current dungeon. */
+	/** This Pokemon's stats for the current dungeon. */
 	public final DungeonStats stats;
-	/** This Pokémon's active Status Conditions. */
+	/** This Pokemon's active Status Conditions. */
 	private final ArrayList<StatusConditionInstance> statusConditions;
-	/** The tile this Pokémon is standing on. */
+	/** The tile this Pokemon is standing on. */
 	private Tile tile;
-	/** The Pokémon to use in the current Dungeon. See {@link DungeonPokemon#originalPokemon}. */
+	/** The Pokemon to use in the current Dungeon. See {@link DungeonPokemon#originalPokemon}. */
 	public final Pokemon usedPokemon;
 
 	public DungeonPokemon(Pokemon pokemon)
@@ -96,7 +96,7 @@ public class DungeonPokemon implements ItemContainer
 		return true;
 	}
 
-	/** @return True if this Pokémon can regenerate HP. */
+	/** @return True if this Pokemon can regenerate HP. */
 	public boolean canRegen()
 	{
 		return !this.hasStatusCondition(StatusCondition.Badly_poisoned) && !this.hasStatusCondition(StatusCondition.Poisoned);
@@ -126,7 +126,7 @@ public class DungeonPokemon implements ItemContainer
 		this.originalPokemon.deleteItem(index);
 	}
 
-	/** Clears references to this Dungeon Pokémon in the Pokémon object. */
+	/** Clears references to this Dungeon Pokemon in the Pokemon object. */
 	public void dispose()
 	{
 		this.originalPokemon.dungeonPokemon = null;
@@ -138,7 +138,7 @@ public class DungeonPokemon implements ItemContainer
 		return 1;
 	}
 
-	/** @return The amount of experience gained when defeating this Pokémon. */
+	/** @return The amount of experience gained when defeating this Pokemon. */
 	public int experienceGained()
 	{
 		int base = this.usedPokemon.species().baseXP;
@@ -148,7 +148,7 @@ public class DungeonPokemon implements ItemContainer
 		return base;
 	}
 
-	/** @return The direction this Pokémon is facing. */
+	/** @return The direction this Pokemon is facing. */
 	public Direction facing()
 	{
 		return this.facing;
@@ -201,7 +201,7 @@ public class DungeonPokemon implements ItemContainer
 		return this.usedPokemon.getNickname();
 	}
 
-	/** @return True if this Pokémon is affected by the input Status Condition. */
+	/** @return True if this Pokemon is affected by the input Status Condition. */
 	public boolean hasStatusCondition(StatusCondition condition)
 	{
 		for (StatusConditionInstance c : this.statusConditions)
@@ -248,7 +248,7 @@ public class DungeonPokemon implements ItemContainer
 		return this.getBelly() == this.getBellySize();
 	}
 
-	/** @return True if this Pokémon is the original Pokémon that visits this Dungeon. Only false for Dungeons that modify the visiting Pokémon, such as Dungeons resetting the level to 1. */
+	/** @return True if this Pokemon is the original Pokemon that visits this Dungeon. Only false for Dungeons that modify the visiting Pokemon, such as Dungeons resetting the level to 1. */
 	public boolean isCopy()
 	{
 		return this.usedPokemon != this.originalPokemon;
@@ -290,7 +290,7 @@ public class DungeonPokemon implements ItemContainer
 		return this.usedPokemon.moveCount();
 	}
 
-	/** Called when this Pokémon enters a new Floor or when it spawns. */
+	/** Called when this Pokemon enters a new Floor or when it spawns. */
 	public void onFloorStart(Floor floor, ArrayList<DungeonEvent> events)
 	{
 		this.statusConditions.clear();
@@ -348,7 +348,7 @@ public class DungeonPokemon implements ItemContainer
 		this.statusConditions.remove(condition);
 	}
 
-	/** Changes the direction this Pokémon is facing. */
+	/** Changes the direction this Pokemon is facing. */
 	public void setFacing(Direction direction)
 	{
 		this.facing = direction;
@@ -417,7 +417,7 @@ public class DungeonPokemon implements ItemContainer
 		return this.usedPokemon.toString();
 	}
 
-	/** Called when this Pokémon tries to move in the input direction. */
+	/** Called when this Pokemon tries to move in the input direction. */
 	public boolean tryMoveTo(Direction direction, boolean allowSwitching)
 	{
 		boolean success = false;

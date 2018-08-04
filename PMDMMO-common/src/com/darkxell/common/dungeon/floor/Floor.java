@@ -34,7 +34,7 @@ import com.darkxell.common.weather.WeatherInstance;
 public class Floor
 {
 
-	/** Stores all AI objects for Pokémon on this Floor. */
+	/** Stores all AI objects for Pokemon on this Floor. */
 	public final AIManager aiManager;
 	/** IDs of the Cutscenes to play when, respectively, entering this Floor and defeating the boss. */
 	public String cutsceneIn, cutsceneOut;
@@ -45,11 +45,11 @@ public class Floor
 	/** This Floor's ID. */
 	public final int id;
 	private boolean isGenerating = true;
-	/** True if this Floor is a static floor. No random Pokémon will spawn. */
+	/** True if this Floor is a static floor. No random Pokemon will spawn. */
 	public final boolean isStatic;
 	/** This Floor's layout. */
 	public final Layout layout;
-	/** The number of turns until a Pokémon spawns. */
+	/** The number of turns until a Pokemon spawns. */
 	private int nextSpawn;
 	/** RNG for game logic: moves, mob spawning, etc. */
 	public final Random random;
@@ -186,13 +186,13 @@ public class Floor
 	{
 		// events.add(new MessageEvent(this, new Message("New turn!", false)));
 
-		// For each existing Pokémon: has been moved to DungeonInstance to be able to trigger it at subturn end
+		// For each existing Pokemon: has been moved to DungeonInstance to be able to trigger it at subturn end
 
 		// Weather
 		for (int w = this.weatherCondition.size() - 1; w >= 0; --w)
 			this.weatherCondition.get(w).update(events);
 
-		// Pokémon spawning
+		// Pokemon spawning
 		if (!this.isStatic && this.data.pokemonDensity() > this.countWildPokemon())
 		{
 			if (this.nextSpawn <= 0)
@@ -267,7 +267,7 @@ public class Floor
 	}
 
 	/** @param inRoom - True if the Tile should be in a Room (will also avoid tiles adjacent to corridors in rooms).
-	 * @param awayFromPlayers - True if the Tile should be far away from players (to avoid spawning a pokémon close to a player for example).
+	 * @param awayFromPlayers - True if the Tile should be far away from players (to avoid spawning a Pokemon close to a player for example).
 	 * @return A Random Tile in this floor. */
 	public Tile randomEmptyTile(boolean inRoom, boolean awayFromPlayers, Random random)
 	{
@@ -275,7 +275,7 @@ public class Floor
 	}
 
 	/** @param inRoom - True if the Tile should be in a Room (will also avoid tiles adjacent to corridors in rooms).
-	 * @param awayFromPlayers - True if the Tile should be far away from players (to avoid spawning a pokémon close to a player for example).
+	 * @param awayFromPlayers - True if the Tile should be far away from players (to avoid spawning a Pokemon close to a player for example).
 	 * @param type - A Type that the Tile has to match. null for any type.
 	 * @return A Random Tile in this floor. */
 	public Tile randomEmptyTile(boolean inRoom, boolean awayFromPlayers, TileType type, Random random)

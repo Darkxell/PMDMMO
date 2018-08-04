@@ -10,9 +10,9 @@ import com.darkxell.common.pokemon.DungeonPokemon;
 public class PokemonSpawnedEvent extends DungeonEvent
 {
 
-	/** The spawned Pokémon. */
+	/** The spawned Pokemon. */
 	public final DungeonPokemon spawned;
-	/** The Tile to spawn the Pokémon on. */
+	/** The Tile to spawn the Pokemon on. */
 	public final Tile tile;
 
 	public PokemonSpawnedEvent(Floor floor, DungeonPokemon spawned, Tile tile)

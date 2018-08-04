@@ -49,7 +49,7 @@ public class TeamMenuState extends OptionSelectionMenuState implements ItemActio
 		Message info = new Message("summary.info.content");
 		info.addReplacement("<species>", pokemon.species().formName());
 		info.addReplacement("<area>", new Message(pokemon.species().friendAreaID, false));
-		info.addReplacement("<joined>", new Message("Pokémon Square", false));
+		info.addReplacement("<joined>", new Message("Pokemon Square", false));
 		info.addReplacement("<evolve>", pokemon.evolutionStatus());
 
 		return new InfoState(background, parent, new Message[] { new Message("summary.stats"), new Message("summary.features"), new Message("summary.info") },

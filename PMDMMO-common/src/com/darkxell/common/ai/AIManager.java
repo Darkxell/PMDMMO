@@ -22,7 +22,7 @@ public class AIManager
 		this.ais = new HashMap<>();
 	}
 
-	/** @return The AI the input Pokémon should have. */
+	/** @return The AI the input Pokemon should have. */
 	private AI aiFor(DungeonPokemon pokemon)
 	{
 		if (pokemon.player() == null) return new WildAI(this.floor, pokemon);

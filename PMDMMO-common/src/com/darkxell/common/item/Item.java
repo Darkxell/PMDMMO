@@ -156,7 +156,7 @@ public class Item implements AffectsPokemon
 		return "item.used";
 	}
 
-	/** @param event - The Pokémon using the Item.
+	/** @param event - The Pokemon using the Item.
 	 * @return The message to display when using this Item. */
 	public Message getUseMessage(ItemSelectionEvent event)
 	{
@@ -197,8 +197,8 @@ public class Item implements AffectsPokemon
 	/** Called when this Item is used.
 	 * 
 	 * @param floor - The current Floor.
-	 * @param pokemon - The Pokémon using the Item.
-	 * @param target - The Pokémon the Item is being used on. May be null if there is no target. */
+	 * @param pokemon - The Pokemon using the Item.
+	 * @param target - The Pokemon the Item is being used on. May be null if there is no target. */
 	public void use(Floor floor, DungeonPokemon pokemon, DungeonPokemon target, ArrayList<DungeonEvent> events)
 	{}
 

@@ -21,11 +21,11 @@ import com.darkxell.client.resources.images.tilesets.AbstractDungeonTileset;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.Logger;
 
-/** Renders a Pokémon. This Renderer's Coordinates' units are Tiles. */
+/** Renders a Pokemon. This Renderer's Coordinates' units are Tiles. */
 public class AbstractPokemonRenderer extends AbstractRenderer
 {
 
-	/** Renders a Pokémon at the input x, y (centered) coordinates. width and height are the dimensions of the draw area. */
+	/** Renders a Pokemon at the input x, y (centered) coordinates. width and height are the dimensions of the draw area. */
 	public static void render(Graphics2D g, PokemonSprite sprite, int x, int y)
 	{
 		PokemonSpriteFrame frame = sprite.getCurrentFrame();

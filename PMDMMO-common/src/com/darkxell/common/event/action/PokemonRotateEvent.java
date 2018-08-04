@@ -22,8 +22,8 @@ public class PokemonRotateEvent extends DungeonEvent implements Communicable
 		super(floor);
 	}
 
-	/** @param pokemon - The Pokémon that rotates.
-	 * @param direction - The new direction the Pokémon should face. */
+	/** @param pokemon - The Pokemon that rotates.
+	 * @param direction - The new direction the Pokemon should face. */
 	public PokemonRotateEvent(Floor floor, DungeonPokemon pokemon, Direction direction)
 	{
 		super(floor);
@@ -65,7 +65,7 @@ public class PokemonRotateEvent extends DungeonEvent implements Communicable
 			throw e;
 		} catch (Exception e)
 		{
-			throw new JsonReadingException("Wrong value for Pokémon ID: " + value.get("pokemon"));
+			throw new JsonReadingException("Wrong value for Pokemon ID: " + value.get("pokemon"));
 		}
 
 		try

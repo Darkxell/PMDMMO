@@ -15,7 +15,7 @@ public class StatusConditionInstance
 	public final StatusCondition condition;
 	/** This Status Condition's duration. */
 	public final int duration;
-	/** The Pokémon this Status condition affects. */
+	/** The Pokemon this Status condition affects. */
 	public final DungeonPokemon pokemon;
 	/** The number of turns this Condition has been in effect. */
 	int tick;

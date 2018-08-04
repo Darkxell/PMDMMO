@@ -13,7 +13,7 @@ public class BellyChangedEvent extends DungeonEvent implements DamageSource
 {
 
 	public final DungeonPokemon pokemon;
-	/** How much the Pokémon's belly was filled. */
+	/** How much the Pokemon's belly was filled. */
 	public final double quantity;
 
 	public BellyChangedEvent(Floor floor, DungeonPokemon pokemon, double quantity)

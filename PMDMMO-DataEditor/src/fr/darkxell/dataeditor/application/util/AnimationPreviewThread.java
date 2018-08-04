@@ -6,7 +6,6 @@ import java.awt.image.BufferedImage;
 import com.darkxell.client.launchable.UpdaterAndRenderer;
 import com.darkxell.client.mechanics.animation.AbstractAnimation;
 import com.darkxell.client.mechanics.animation.AnimationEndListener;
-import com.darkxell.client.mechanics.animation.AnimationTicker;
 import com.darkxell.client.state.mainstates.PrincipalMainState;
 
 import fr.darkxell.dataeditor.application.controller.animation.EditAnimationController;
@@ -27,7 +26,6 @@ public class AnimationPreviewThread extends UpdaterAndRenderer implements Animat
 	@Override
 	protected void tickUpdate()
 	{
-		AnimationTicker.instance.update();
 		EditAnimationController.state.update();
 		if (this.cooldown > 0)
 		{

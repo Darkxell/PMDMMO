@@ -32,26 +32,26 @@ public class PokemonPortrait
 				alternateIDs.put(form.compoundID(), id++);
 	}
 
-	/** Draws the portrait of the input pokémon at the input topright location. */
+	/** Draws the portrait of the input Pokemon at the input topright location. */
 	public static void drawPortrait(Graphics2D g, Pokemon pokemon, int x, int y)
 	{
 		drawPortrait(g, pokemon.species(), pokemon.isShiny(), x, y);
 	}
 
-	/** Draws the portrait of the input pokémon at the input topright location. */
+	/** Draws the portrait of the input Pokemon at the input topright location. */
 	public static void drawPortrait(Graphics2D g, PokemonSpecies pokemon, boolean shiny, int x, int y)
 	{
 		g.drawImage(PokemonPortrait.portrait(pokemon, shiny), x + 4, y + 4, null);
 		g.drawImage(Hud.portrait, x, y, null);
 	}
 
-	/** @return The portrait for the input Pokémon. */
+	/** @return The portrait for the input Pokemon. */
 	public static BufferedImage portrait(Pokemon pokemon)
 	{
 		return portrait(pokemon.species(), pokemon.isShiny());
 	}
 
-	/** @return The portrait for the input Pokémon. */
+	/** @return The portrait for the input Pokemon. */
 	public static BufferedImage portrait(PokemonSpecies pokemon, boolean shiny)
 	{
 		PokemonPortrait sheet = null;

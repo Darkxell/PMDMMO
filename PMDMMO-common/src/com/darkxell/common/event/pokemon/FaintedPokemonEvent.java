@@ -14,7 +14,7 @@ import com.darkxell.common.util.language.Message;
 public class FaintedPokemonEvent extends DungeonEvent
 {
 
-	/** The source that damaged the fainted Pokémon. Can be null if the fainting damage didn't result from a Pokémon's move. */
+	/** The source that damaged the fainted Pokemon. Can be null if the fainting damage didn't result from a Pokemon's move. */
 	public final DamageSource damage;
 	public final DungeonPokemon pokemon;
 

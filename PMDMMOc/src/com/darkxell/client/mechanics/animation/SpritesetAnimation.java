@@ -10,11 +10,11 @@ public class SpritesetAnimation extends PokemonAnimation
 
 	public static enum BackSpriteUsage
 	{
-		/** The sprites should be drawn behind the Pokémon. */
+		/** The sprites should be drawn behind the Pokemon. */
 		no,
-		/** The sprites should be drawn above the Pokémon. */
+		/** The sprites should be drawn above the Pokemon. */
 		only,
-		/** There are sprites behind and above the Pokémon. */
+		/** There are sprites behind and above the Pokemon. */
 		yes;
 	}
 

@@ -19,7 +19,7 @@ public class FloorData
 	private int baseMoney;
 	/** The density of Buried Items. */
 	private short buriedItemDensity;
-	/** The type given to a Pokémon using the move Camouflage. */
+	/** The type given to a Pokemon using the move Camouflage. */
 	private PokemonType camouflageType;
 	/** The Floor's difficulty. */
 	private int difficulty;
@@ -35,7 +35,7 @@ public class FloorData
 	private short monsterHouseChance;
 	/** The ID of the move chosen by Nature Power. */
 	private int naturePower;
-	/** The density of Pokémon. */
+	/** The density of Pokemon. */
 	private short pokemonDensity;
 	/** The Effect of the Secret Power move. (Strings, will later be replaced with IDs when implementing the move.) */
 	private String secretPower;

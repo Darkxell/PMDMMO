@@ -154,7 +154,7 @@ public class MoveEffectCalculator
 	}
 
 	/** @param usedMove - The Move used.
-	 * @param target - The Pokémon receiving the Move.
+	 * @param target - The Pokemon receiving the Move.
 	 * @param floor - The Floor context.
 	 * @return True if this Move misses. */
 	public boolean misses(ArrayList<DungeonEvent> events)
