@@ -5,11 +5,32 @@
 
     <xs:complexType name="itembase">
         <xs:attribute name="id" type="posInt"/>
+        <xs:attribute name="category">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="EQUIPABLE"/>
+                    <xs:enumeration value="THROWABLE"/>
+                    <xs:enumeration value="FOOD"/>
+                    <xs:enumeration value="BERRIES"/>
+                    <xs:enumeration value="DRINKS"/>
+                    <xs:enumeration value="GUMMIS"/>
+                    <xs:enumeration value="SEEDS"/>
+                    <xs:enumeration value="OTHER_USABLES"/>
+                    <xs:enumeration value="ORBS"/>
+                    <xs:enumeration value="TMS"/>
+                    <xs:enumeration value="HMS"/>
+                    <xs:enumeration value="EVOLUTIONARY"/>
+                    <xs:enumeration value="OTHERS"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
         <xs:attribute name="type" type="xs:string"/>
         <xs:attribute name="price" type="posInt"/>
         <xs:attribute name="sell" type="posInt-1"/>
+        <xs:attribute name="effect" type="posInt-1"/>
         <xs:attribute name="sprite" type="posInt"/>
         <xs:attribute name="stackable" type="xs:boolean" use="optional"/>
+        <xs:attribute name="rare" type="xs:boolean" use="optional"/>
     </xs:complexType>
 
     <xs:element name="items">
@@ -45,8 +66,8 @@
                 <xs:attribute name="trajectory">
                     <xs:simpleType>
                         <xs:restriction base="xs:token">
-                            <xs:enumeration value="Straight" />
-                            <xs:enumeration value="Arc" />
+                            <xs:enumeration value="Straight"/>
+                            <xs:enumeration value="Arc"/>
                         </xs:restriction>
                     </xs:simpleType>
                 </xs:attribute>
@@ -62,7 +83,7 @@
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    
+
     <xs:complexType name="itemequipable">
         <xs:complexContent>
             <xs:extension base="itembase">
