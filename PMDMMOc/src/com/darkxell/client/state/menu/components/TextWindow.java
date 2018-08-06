@@ -5,7 +5,7 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 
 import com.darkxell.client.renderers.TextRenderer;
-import com.darkxell.client.resources.images.MenuHudSpriteset;
+import com.darkxell.client.resources.images.others.MenuHudSpriteset;
 import com.darkxell.common.util.language.Message;
 
 public class TextWindow extends MenuWindow

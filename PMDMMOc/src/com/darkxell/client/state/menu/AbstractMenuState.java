@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.renderers.layers.AbstractGraphiclayer;
-import com.darkxell.client.resources.images.MenuHudSpriteset;
+import com.darkxell.client.resources.images.others.MenuHudSpriteset;
 import com.darkxell.client.resources.music.SoundManager;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.menu.components.OptionSelectionWindow;

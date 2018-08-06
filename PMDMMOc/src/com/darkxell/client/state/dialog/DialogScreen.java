@@ -9,8 +9,8 @@ import java.util.List;
 
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.renderers.TextRenderer.PMDChar;
-import com.darkxell.client.resources.images.MenuHudSpriteset;
 import com.darkxell.client.resources.images.others.Hud;
+import com.darkxell.client.resources.images.others.MenuHudSpriteset;
 import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.util.language.Message;
 

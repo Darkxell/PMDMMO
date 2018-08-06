@@ -83,7 +83,7 @@ public class SpriteFactory implements Runnable
 	}
 
 	/** @return A default image with the input dimensions. */
-	private BufferedImage getDefault(int width, int height)
+	BufferedImage getDefault(int width, int height)
 	{
 		if (width == -1 || height == -1) return this.defaultImg;
 

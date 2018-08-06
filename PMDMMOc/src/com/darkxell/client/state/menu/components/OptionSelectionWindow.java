@@ -5,7 +5,7 @@ import java.awt.Rectangle;
 
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.Palette;
-import com.darkxell.client.resources.images.MenuHudSpriteset;
+import com.darkxell.client.resources.images.others.MenuHudSpriteset;
 import com.darkxell.client.state.menu.AbstractMenuState.MenuOption;
 import com.darkxell.client.state.menu.AbstractMenuState.MenuTab;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;

@@ -5,7 +5,7 @@ import java.awt.Rectangle;
 
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.renderers.layers.AbstractGraphiclayer;
-import com.darkxell.client.resources.images.MenuHudSpriteset;
+import com.darkxell.client.resources.images.others.MenuHudSpriteset;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.dialog.DialogState;
 import com.darkxell.client.ui.Keys.Key;

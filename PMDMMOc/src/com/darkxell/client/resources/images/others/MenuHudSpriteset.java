@@ -1,4 +1,4 @@
-package com.darkxell.client.resources.images;
+package com.darkxell.client.resources.images.others;
 
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;

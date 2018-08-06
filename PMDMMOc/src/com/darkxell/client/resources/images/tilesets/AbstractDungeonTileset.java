@@ -17,7 +17,7 @@ public abstract class AbstractDungeonTileset extends RegularSpriteSet
 	/** @return The tile at the given x, y coordinates. */
 	public BufferedImage tileAt(int x, int y)
 	{
-		if (x >= 0 && x < this.columns && y >= 0 && y < this.rows) return this.getImg(x, y);
+		if (x >= 0 && x < this.columns() && y >= 0 && y < this.rows()) return this.getImg(x, y);
 		return this.getImg(0, 0);
 	}
 
