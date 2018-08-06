@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.awt.image.BufferedImage;
 import java.awt.image.FilteredImageSource;
 import java.awt.image.RGBImageFilter;
 import java.util.ArrayList;
@@ -12,7 +11,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.darkxell.client.resources.Palette;
-import com.darkxell.client.resources.Res;
+import com.darkxell.client.resources.images.SpriteSets;
+import com.darkxell.client.resources.images.others.FontSpriteSet;
 import com.darkxell.common.util.language.Message;
 
 public class TextRenderer
@@ -20,185 +20,185 @@ public class TextRenderer
 
 	public static enum PMDChar
 	{
-		new_line("<br>", 0, 0),
-		tabulation("<tab>", 0, 0),
-		space(" ", 0, 4),
-		space_number("<spn>", 0, 6),
-		a("a", 1, 5),
-		b("b", 2, 5),
-		c("c", 3, 5),
-		d("d", 4, 5),
-		e("e", 5, 5),
-		f("f", 6, 5),
-		g("g", 7, 5),
-		h("h", 8, 5),
-		i("i", 9, 3),
-		j("j", 10, 3),
-		k("k", 11, 5),
-		l("l", 12, 3),
-		m("m", 13, 8),
-		n("n", 14, 5),
-		o("o", 15, 5),
-		p("p", 16, 5),
-		q("q", 17, 5),
-		r("r", 18, 5),
-		s("s", 19, 5),
-		t("t", 20, 4),
-		u("u", 21, 5),
-		v("v", 22, 6),
-		w("w", 23, 8),
-		x("x", 24, 6),
-		y("y", 25, 5),
-		z("z", 26, 5),
-		A("A", 27, 6),
-		B("B", 28, 6),
-		C("C", 29, 6),
-		D("D", 30, 6),
-		E("E", 31, 5),
-		F("F", 32, 5),
-		G("G", 33, 6),
-		H("H", 34, 6),
-		I("I", 35, 4),
-		J("J", 36, 6),
-		K("K", 37, 6),
-		L("L", 38, 5),
-		M("M", 39, 8),
-		N("N", 40, 6),
-		O("O", 41, 6),
-		P("P", 42, 6),
-		Q("Q", 43, 6),
-		R("R", 44, 6),
-		S("S", 45, 6),
-		T("T", 46, 6),
-		U("U", 47, 6),
-		V("V", 48, 6),
-		W("W", 49, 10),
-		X("X", 50, 6),
-		Y("Y", 51, 6),
-		Z("Z", 52, 6),
-		num1("1", 53, 6),
-		num2("2", 54, 6),
-		num3("3", 55, 6),
-		num4("4", 56, 6),
-		num5("5", 57, 6),
-		num6("6", 58, 6),
-		num7("7", 59, 6),
-		num8("8", 60, 6),
-		num9("9", 61, 6),
-		num0("0", 62, 6),
-		column(":", 63, 2),
-		plus("+", 64, 6),
-		minus("-", 65, 5),
-		coma(",", 66, 3),
-		dot(".", 67, 3),
-		exclamation_("<!>", 68, 4),
-		exclamation("!", 69, 4),
-		interrogation_("<?>", 70, 6),
-		interrogation("?", 71, 6),
-		apostrophe_("`", 72, 3),
-		apostrophe("'", 73, 3),
-		quote_("<\">", 74, 6),
-		quote("\"", 75, 6),
-		male("<male>", 76, 8),
-		female("<female>", 77, 6),
-		space_visible("_", 78, 10),
-		three_dots("<dots>", 79, 9),
-		parenthesis_o("(", 80, 5),
-		parenthesis_c(")", 81, 5),
-		slash("/", 82, 5),
-		poke1("<poke1>", 83, 8),
-		poke2("<poke2>", 84, 7),
-		e_accent("é", 85, 7),
-		tilde("~", 86, 6),
-		sharp("#", 87, 9),
-		music("<music>", 88, 8),
-		arrow_up("<arrow-up>", 89, 8),
-		arrow_right("<arrow-right>", 90, 8),
-		arrow_down("<arrow-down>", 91, 8),
-		arrow_left("<arrow-left>", 92, 8),
-		percent("%", 93, 9),
-		tick("<tick>", 94, 9),
-		star("<star>", 95, 7),
-		glued("<glued>", 96, 8),
-		mission("<mission>", 97, 8),
-		mission_accepted("<mission-a>", 98, 10),
-		news("<news>", 99, 10),
-		story("<story>", 100, 9),
-		speech_bubble("<speech>", 101, 9),
-		key_A("<key-a>", 102, 10),
-		key_B("<key-b>", 103, 10),
-		key_L("<key-l>", 104, 10),
-		key_R("<key-r>", 105, 10),
-		key_PLUS("<key-+>", 106, 10),
-		key_SELECT1("<select1>", 107, 10),
-		key_SELECT2("<select2>", 108, 10),
-		buy_1("<1>", 109, 6),
-		buy_2("<2>", 110, 6),
-		buy_3("<3>", 111, 6),
-		buy_4("<4>", 112, 6),
-		buy_5("<5>", 113, 6),
-		buy_6("<6>", 114, 6),
-		buy_7("<7>", 115, 6),
-		buy_8("<8>", 116, 6),
-		buy_9("<9>", 117, 6),
-		buy_0("<0>", 118, 6),
-		orb("<orb>", 119, 10),
-		tm_used("<tmu>", 120, 10),
-		hm("<hm>", 121, 10),
-		tm_0("<tm0>", 122, 10),
-		tm_1("<tm1>", 123, 10),
-		tm_2("<tm2>", 124, 10),
-		tm_3("<tm3>", 125, 10),
-		tm_4("<tm4>", 126, 10),
-		tm_5("<tm5>", 127, 10),
-		tm_6("<tm6>", 128, 10),
-		tm_7("<tm7>", 129, 10),
-		tm_8("<tm8>", 130, 10),
-		tm_9("<tm9>", 131, 10),
-		tm_10("<tm10>", 132, 10),
-		tm_11("<tm11>", 133, 10),
-		tm_12("<tm12>", 134, 10),
-		tm_13("<tm13>", 135, 10),
-		tm_14("<tm14>", 136, 10),
-		tm_15("<tm15>", 137, 10),
-		tm_16("<tm16>", 138, 10),
-		tm_17("<tm17>", 139, 10),
-		type_0("<type-0>", 140, 11),
-		type_1("<type-1>", 141, 11),
-		type_2("<type-2>", 142, 11),
-		type_3("<type-3>", 143, 11),
-		type_4("<type-4>", 144, 11),
-		type_5("<type-5>", 145, 11),
-		type_6("<type-6>", 146, 11),
-		type_7("<type-7>", 147, 11),
-		type_8("<type-8>", 148, 11),
-		type_9("<type-9>", 149, 11),
-		type_10("<type-10>", 150, 11),
-		type_11("<type-11>", 151, 11),
-		type_12("<type-12>", 152, 11),
-		type_13("<type-13>", 153, 11),
-		type_14("<type-14>", 154, 11),
-		type_15("<type-15>", 155, 11),
-		type_16("<type-16>", 156, 11),
-		type_17("<type-17>", 157, 11),
-		minusd(null, 160, 7),
-		num1d(null, 161, 7),
-		num2d(null, 162, 7),
-		num3d(null, 163, 7),
-		num4d(null, 164, 7),
-		num5d(null, 165, 7),
-		num6d(null, 166, 7),
-		num7d(null, 167, 7),
-		num8d(null, 168, 7),
-		num9d(null, 169, 7),
-		num0d(null, 170, 7),
-		bracketOpen("[", 171, 5),
-		bracketClose("]", 172, 5),
-		colorReset("</color>", -1, 0),
-		colorBlue("<blue>", -1, 0),
-		colorGreen("<green>", -1, 0),
-		colorRed("<red>", -1, 0),
-		colorYellow("<yellow>", -1, 0);
+		new_line("<br>", 0, 0, 1),
+		tabulation("<tab>", 0, 0, 1),
+		space(" ", 0, 0, 4),
+		space_number("<spn>", 0, 0, 6),
+		a("a", 1, 0, 5),
+		b("b", 2, 0, 5),
+		c("c", 3, 0, 5),
+		d("d", 4, 0, 5),
+		e("e", 5, 0, 5),
+		f("f", 6, 0, 5),
+		g("g", 7, 0, 5),
+		h("h", 8, 0, 5),
+		i("i", 9, 0, 3),
+		j("j", 10, 0, 3),
+		k("k", 11, 0, 5),
+		l("l", 12, 0, 3),
+		m("m", 13, 0, 8),
+		n("n", 14, 0, 5),
+		o("o", 15, 0, 5),
+		p("p", 16, 0, 5),
+		q("q", 17, 0, 5),
+		r("r", 18, 0, 5),
+		s("s", 19, 0, 5),
+		t("t", 0, 1, 4),
+		u("u", 1, 1, 5),
+		v("v", 2, 1, 6),
+		w("w", 3, 1, 8),
+		x("x", 4, 1, 6),
+		y("y", 5, 1, 5),
+		z("z", 6, 1, 5),
+		A("A", 7, 1, 6),
+		B("B", 8, 1, 6),
+		C("C", 9, 1, 6),
+		D("D", 10, 1, 6),
+		E("E", 11, 1, 5),
+		F("F", 12, 1, 5),
+		G("G", 13, 1, 6),
+		H("H", 14, 1, 6),
+		I("I", 15, 1, 4),
+		J("J", 16, 1, 6),
+		K("K", 17, 1, 6),
+		L("L", 18, 1, 5),
+		M("M", 19, 1, 8),
+		N("N", 0, 2, 6),
+		O("O", 1, 2, 6),
+		P("P", 2, 2, 6),
+		Q("Q", 3, 2, 6),
+		R("R", 4, 2, 6),
+		S("S", 5, 2, 6),
+		T("T", 6, 2, 6),
+		U("U", 7, 2, 6),
+		V("V", 8, 2, 6),
+		W("W", 9, 2, 10),
+		X("X", 10, 2, 6),
+		Y("Y", 11, 2, 6),
+		Z("Z", 12, 2, 6),
+		num1("1", 13, 2, 6),
+		num2("2", 14, 2, 6),
+		num3("3", 15, 2, 6),
+		num4("4", 16, 2, 6),
+		num5("5", 17, 2, 6),
+		num6("6", 18, 2, 6),
+		num7("7", 19, 2, 6),
+		num8("8", 0, 3, 6),
+		num9("9", 1, 3, 6),
+		num0("0", 2, 3, 6),
+		column(":", 3, 3, 2),
+		plus("+", 4, 3, 6),
+		minus("-", 5, 3, 5),
+		coma(",", 6, 3, 3),
+		dot(".", 7, 3, 3),
+		exclamation_("<!>", 8, 3, 4),
+		exclamation("!", 9, 3, 4),
+		interrogation_("<?>", 10, 3, 6),
+		interrogation("?", 11, 3, 6),
+		apostrophe_("`", 12, 3, 3),
+		apostrophe("'", 13, 3, 3),
+		quote_("<\">", 14, 3, 6),
+		quote("\"", 15, 3, 6),
+		male("<male>", 16, 3, 8),
+		female("<female>", 17, 3, 6),
+		space_visible("_", 18, 3, 10),
+		three_dots("<dots>", 19, 3, 9),
+		parenthesis_o("(", 0, 4, 5),
+		parenthesis_c(")", 1, 4, 5),
+		slash("/", 2, 4, 5),
+		poke1("<poke1>", 3, 4, 8),
+		poke2("<poke2>", 4, 4, 7),
+		e_accent("é", 5, 4, 7),
+		tilde("~", 6, 4, 6),
+		sharp("#", 7, 4, 9),
+		music("<music>", 8, 4, 8),
+		arrow_up("<arrow-up>", 9, 4, 8),
+		arrow_right("<arrow-right>", 10, 4, 8),
+		arrow_down("<arrow-down>", 11, 4, 8),
+		arrow_left("<arrow-left>", 12, 4, 8),
+		percent("%", 13, 4, 9),
+		tick("<tick>", 14, 4, 9),
+		star("<star>", 15, 4, 7),
+		glued("<glued>", 16, 4, 8),
+		mission("<mission>", 17, 4, 8),
+		mission_accepted("<mission-a>", 18, 4, 10),
+		news("<news>", 19, 4, 10),
+		story("<story>", 0, 5, 9),
+		speech_bubble("<speech>", 1, 5, 9),
+		key_A("<key-a>", 2, 5, 10),
+		key_B("<key-b>", 3, 5, 10),
+		key_L("<key-l>", 4, 5, 10),
+		key_R("<key-r>", 5, 5, 10),
+		key_PLUS("<key-+>", 6, 5, 10),
+		key_SELECT1("<select1>", 7, 5, 10),
+		key_SELECT2("<select2>", 8, 5, 10),
+		buy_1("<1>", 9, 5, 6),
+		buy_2("<2>", 10, 5, 6),
+		buy_3("<3>", 11, 5, 6),
+		buy_4("<4>", 12, 5, 6),
+		buy_5("<5>", 13, 5, 6),
+		buy_6("<6>", 14, 5, 6),
+		buy_7("<7>", 15, 5, 6),
+		buy_8("<8>", 16, 5, 6),
+		buy_9("<9>", 17, 5, 6),
+		buy_0("<0>", 18, 5, 6),
+		orb("<orb>", 19, 5, 10),
+		tm_used("<tmu>", 0, 6, 10),
+		hm("<hm>", 1, 6, 10),
+		tm_0("<tm0>", 2, 6, 10),
+		tm_1("<tm1>", 3, 6, 10),
+		tm_2("<tm2>", 4, 6, 10),
+		tm_3("<tm3>", 5, 6, 10),
+		tm_4("<tm4>", 6, 6, 10),
+		tm_5("<tm5>", 7, 6, 10),
+		tm_6("<tm6>", 8, 6, 10),
+		tm_7("<tm7>", 9, 6, 10),
+		tm_8("<tm8>", 10, 6, 10),
+		tm_9("<tm9>", 11, 6, 10),
+		tm_10("<tm10>", 12, 6, 10),
+		tm_11("<tm11>", 13, 6, 10),
+		tm_12("<tm12>", 14, 6, 10),
+		tm_13("<tm13>", 15, 6, 10),
+		tm_14("<tm14>", 16, 6, 10),
+		tm_15("<tm15>", 17, 6, 10),
+		tm_16("<tm16>", 18, 6, 10),
+		tm_17("<tm17>", 19, 6, 10),
+		type_0("<type-0>", 0, 7, 11),
+		type_1("<type-1>", 1, 7, 11),
+		type_2("<type-2>", 2, 7, 11),
+		type_3("<type-3>", 3, 7, 11),
+		type_4("<type-4>", 4, 7, 11),
+		type_5("<type-5>", 5, 7, 11),
+		type_6("<type-6>", 6, 7, 11),
+		type_7("<type-7>", 7, 7, 11),
+		type_8("<type-8>", 8, 7, 11),
+		type_9("<type-9>", 9, 7, 11),
+		type_10("<type-10>", 10, 7, 11),
+		type_11("<type-11>", 11, 7, 11),
+		type_12("<type-12>", 12, 7, 11),
+		type_13("<type-13>", 13, 7, 11),
+		type_14("<type-14>", 14, 7, 11),
+		type_15("<type-15>", 15, 7, 11),
+		type_16("<type-16>", 16, 7, 11),
+		type_17("<type-17>", 17, 7, 11),
+		minusd(null, 0, 8, 7),
+		num1d(null, 1, 8, 7),
+		num2d(null, 2, 8, 7),
+		num3d(null, 3, 8, 7),
+		num4d(null, 4, 8, 7),
+		num5d(null, 5, 8, 7),
+		num6d(null, 6, 8, 7),
+		num7d(null, 7, 8, 7),
+		num8d(null, 8, 8, 7),
+		num9d(null, 9, 8, 7),
+		num0d(null, 10, 8, 7),
+		bracketOpen("[", 11, 8, 5),
+		bracketClose("]", 12, 8, 5),
+		colorReset("</color>", -1, -1, 0),
+		colorBlue("<blue>", -1, -1, 0),
+		colorGreen("<green>", -1, -1, 0),
+		colorRed("<red>", -1, -1, 0),
+		colorYellow("<yellow>", -1, -1, 0);
 
 		public static PMDChar find(String value)
 		{
@@ -208,44 +208,36 @@ public class TextRenderer
 		}
 
 		/** Location on the Font sprite. */
-		public final int id;
+		public final int xPos, yPos;
 		public final String value;
 		/** Width of the sprite. */
 		public final int width;
 
-		private PMDChar(String value, int id, int width)
+		private PMDChar(String value, int x, int y, int width)
 		{
 			this.value = value;
-			this.id = id;
+			this.xPos = x;
+			this.yPos = y;
 			this.width = width;
+		}
+
+		/** @return <code>true</code> if this is an actual displayable character. Chars that may return false are for example color marks, tabs, etc. */
+		public boolean isChar()
+		{
+			return this.xPos >= 0 && this.yPos >= 0;
 		}
 
 	}
 
-	private static final int CHAR_HEIGHT = 11;
 	private static Color color, previous;
-	private static HashMap<PMDChar, Image> coloredSprites;
-	private static HashMap<PMDChar, PMDChar> dungeonChars;
+	private static final HashMap<PMDChar, Image> coloredSprites = new HashMap<>();
+	private static final HashMap<PMDChar, PMDChar> dungeonChars = new HashMap<>();
 	public static double fontSize = 1;
-	private static final int GRID_COLS = 20;
-	private static final int GRID_WIDTH = CHAR_HEIGHT, GRID_HEIGHT = CHAR_HEIGHT;
 	private static final int LINE_SPACING = 3;
-	private static HashMap<PMDChar, BufferedImage> sprites;
 	private static final int TAB_ALIGN = 25;
 
-	/** Called on startup to load the font. */
-	public static void load()
+	static
 	{
-		setColor(null);
-
-		sprites = new HashMap<PMDChar, BufferedImage>();
-		coloredSprites = new HashMap<PMDChar, Image>();
-		dungeonChars = new HashMap<PMDChar, PMDChar>();
-		BufferedImage source = Res.getBase("/hud/font.png");
-		for (PMDChar c : PMDChar.values())
-			if (c.id != -1) sprites.put(c,
-					Res.createimage(source, c.id % GRID_COLS * GRID_WIDTH, (c.id - c.id % GRID_COLS) / GRID_COLS * GRID_HEIGHT, GRID_WIDTH, GRID_HEIGHT));
-
 		dungeonChars.put(PMDChar.minus, PMDChar.minusd);
 		dungeonChars.put(PMDChar.num1, PMDChar.num1d);
 		dungeonChars.put(PMDChar.num2, PMDChar.num2d);
@@ -305,7 +297,7 @@ public class TextRenderer
 
 	public static int height()
 	{
-		return (int) (CHAR_HEIGHT * fontSize);
+		return (int) (FontSpriteSet.CHAR_HEIGHT * fontSize);
 	}
 
 	public static int lineSpacing()
@@ -319,7 +311,7 @@ public class TextRenderer
 		int w = 0;
 		for (PMDChar c : text)
 		{
-			if (c.id < 0)
+			if (!c.isChar())
 			{
 				if (c == PMDChar.colorReset) setColor(null);
 				if (c == PMDChar.colorBlue) setColor(Palette.FONT_BLUE);
@@ -328,7 +320,7 @@ public class TextRenderer
 				if (c == PMDChar.colorYellow) setColor(Palette.FONT_YELLOW);
 			} else
 			{
-				Image sprite = (color == null ? sprites : coloredSprites).get(c);
+				Image sprite = color == null ? SpriteSets.font.getImg(c) : coloredSprites.get(c);
 				g.drawImage(sprite, x + w, y, (int) (sprite.getWidth(null) * fontSize), (int) (sprite.getHeight(null) * fontSize), null);
 				if (c == PMDChar.tabulation) w += tabWidth(w);
 				else w += width(c);
@@ -377,7 +369,8 @@ public class TextRenderer
 			};
 
 			for (PMDChar c : PMDChar.values())
-				if (c.id != -1) coloredSprites.put(c, Toolkit.getDefaultToolkit().createImage(new FilteredImageSource(sprites.get(c).getSource(), filter)));
+				if (c.isChar())
+					coloredSprites.put(c, Toolkit.getDefaultToolkit().createImage(new FilteredImageSource(SpriteSets.font.getImg(c).getSource(), filter)));
 		}
 	}
 

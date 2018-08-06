@@ -5,8 +5,6 @@ import java.awt.image.BufferedImage;
 public class CommonDungeonTileset extends AbstractDungeonTileset
 {
 
-	public static final CommonDungeonTileset INSTANCE = new CommonDungeonTileset();
-
 	public CommonDungeonTileset()
 	{
 		super("/tilesets/dungeon-common.png", 144, 96);

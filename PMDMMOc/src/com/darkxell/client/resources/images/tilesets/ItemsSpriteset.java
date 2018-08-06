@@ -9,13 +9,11 @@ import com.darkxell.common.item.ItemStack;
 public class ItemsSpriteset extends RegularSpriteSet
 {
 
-	public static ItemsSpriteset instance = new ItemsSpriteset();
-
 	public static final int ITEM_SIZE = 16;
 
 	public ItemsSpriteset()
 	{
-		super("/tilesets/items.png", ITEM_SIZE, ITEM_SIZE, -1, -1);
+		super("/tilesets/items.png", ITEM_SIZE, 256, 256);
 	}
 
 	public BufferedImage sprite(Item item)

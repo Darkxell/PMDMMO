@@ -85,7 +85,7 @@ public class SpriteFactory implements Runnable
 	/** @return A default image with the input dimensions. */
 	BufferedImage getDefault(int width, int height)
 	{
-		if (width == -1 || height == -1) return this.defaultImg;
+		if (width <= 0 || height <= 0) return this.defaultImg;
 
 		BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		Graphics2D g = img.createGraphics();
@@ -126,13 +126,16 @@ public class SpriteFactory implements Runnable
 			if (!Res.exists(image)) this.loaded.put(image, this.getDefault(width, height));
 			else
 			{
+				if (requester != null)
+				{
+					if (!this.requesters.containsKey(image)) this.requesters.put(image, new ArrayList<>());
+					this.requesters.get(image).add(requester);
+				}
 				if (!this.requested.contains(image))
 				{
-					this.requested.add(image);
-					this.requesters.put(image, new ArrayList<>());
 					this.loaded.put(image, this.getDefault(width, height));
+					this.requested.add(image);
 				}
-				if (requester != null) this.requesters.get(image).add(requester);
 			}
 		}
 

@@ -39,8 +39,8 @@ public class RegularSpriteSet extends SpriteSet
 	/** @return The Sprite at the input x, y coordinates. */
 	Sprite get(int x, int y)
 	{
-		if (x < 0 || y < 0 || x >= this.columns || y >= this.rows) return this.get("0,0");
-		return this.get(x + "," + y);
+		if (x < 0 || y < 0 || x >= this.columns || y >= this.rows) return this.get(this.id(0, 0));
+		return this.get(this.id(x, y));
 	}
 
 	/** @return The Image of the Sprite at the input position, where pos = x + y * cols. */
@@ -59,6 +59,11 @@ public class RegularSpriteSet extends SpriteSet
 		return s.image();
 	}
 
+	protected String id(int x, int y)
+	{
+		return x + "," + y;
+	}
+
 	@Override
 	protected void loaded(BufferedImage img)
 	{
@@ -72,7 +77,7 @@ public class RegularSpriteSet extends SpriteSet
 		this.rows = this.image().getHeight() / this.spriteHeight;
 		for (int x = 0; x < this.columns; ++x)
 			for (int y = 0; y < this.rows; ++y)
-				this.createSprite(x + "," + y, this.spriteWidth * x, this.spriteHeight * y, this.spriteWidth, this.spriteHeight);
+				this.createSprite(this.id(x, y), this.spriteWidth * x, this.spriteHeight * y, this.spriteWidth, this.spriteHeight);
 	}
 
 	/** @return The number of rows in this SpriteSet. May return -1 if it isn't loaded yet. */

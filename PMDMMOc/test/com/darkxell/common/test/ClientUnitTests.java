@@ -4,7 +4,6 @@ import com.darkxell.client.launchable.ClientSettings;
 import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.animation.Animations;
-import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
 import com.darkxell.client.resources.music.SoundManager;
 import com.darkxell.client.state.mainstates.PrincipalMainState;
@@ -22,7 +21,6 @@ public class ClientUnitTests
 		ClientSettings.load();
 		PokemonSpritesets.loadData();
 		Animations.loadData();
-		TextRenderer.load();
 		Persistance.soundmanager = new SoundManager();
 		Persistance.isUnitTesting = true;
 
