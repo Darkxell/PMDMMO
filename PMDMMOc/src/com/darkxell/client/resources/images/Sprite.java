@@ -7,6 +7,7 @@ public class Sprite
 {
 
 	private BufferedImage image;
+	public final String path;
 
 	public Sprite(String path)
 	{
@@ -15,13 +16,24 @@ public class Sprite
 
 	public Sprite(String path, int width, int height)
 	{
-		this.image = SpriteFactory.instance().load(this, path, width, height);
+		this(path, width, height, true);
+	}
+
+	Sprite(String path, int width, int height, boolean doLoad)
+	{
+		this.path = path;
+		if (doLoad) this.image = SpriteFactory.instance().load(this, this.path, width, height);
 	}
 
 	/** @return The Image held in this Sprite. */
 	public BufferedImage image()
 	{
 		return this.image;
+	}
+
+	public boolean isLoaded()
+	{
+		return SpriteFactory.instance().isLoaded(this.path);
 	}
 
 	/** This method is called when the SpriteFactory loads this Sprite. If overriding this method, the parent should always be called to set the base image.<br>

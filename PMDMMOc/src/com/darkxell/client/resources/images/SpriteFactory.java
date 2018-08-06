@@ -14,6 +14,21 @@ import com.darkxell.common.util.Logger;
 public class SpriteFactory implements Runnable
 {
 
+	private static class SubSprite
+	{
+		private Sprite sprite;
+		private int x, y, w, h;
+
+		SubSprite(Sprite sprite, int x, int y, int w, int h)
+		{
+			this.sprite = sprite;
+			this.x = x;
+			this.y = y;
+			this.w = w;
+			this.h = h;
+		}
+	}
+
 	private static SpriteFactory instance;
 
 	/** @return The factory's instance. */
@@ -46,6 +61,8 @@ public class SpriteFactory implements Runnable
 	private LinkedList<String> requested = new LinkedList<>();
 	/** Maps Images -> Sprites that need that Image. */
 	private HashMap<String, ArrayList<Sprite>> requesters = new HashMap<>();
+	/** Maps Images -> SubSprites that need that Image. */
+	private HashMap<String, ArrayList<SubSprite>> subsprites = new HashMap<>();
 
 	private SpriteFactory()
 	{}
@@ -81,6 +98,12 @@ public class SpriteFactory implements Runnable
 				g.drawImage(this.defaultImg, x, y, null);
 
 		return img;
+	}
+
+	/** @return <code>true</code> if the factory is currently loading sprites. */
+	public boolean hasLoadingSprites()
+	{
+		return !this.requested.isEmpty();
 	}
 
 	/** @return <code>true</code> If the input Image has been loaded and is ready for use. */
@@ -134,6 +157,15 @@ public class SpriteFactory implements Runnable
 					ArrayList<Sprite> requesters = new ArrayList<>(this.requesters.remove(path)); // Put into new ArrayList to be thread-safe.
 					for (int s = 0; s < requesters.size(); ++s)
 						requesters.get(s).loaded(img);
+					if (this.subsprites.containsKey(path))
+					{
+						ArrayList<SubSprite> subsprites = new ArrayList<>(this.subsprites.remove(path)); // Put into new ArrayList to be thread-safe.
+						for (int s = 0; s < subsprites.size(); ++s)
+						{
+							SubSprite sub = subsprites.get(s);
+							sub.sprite.loaded(Res.createimage(this.get(path), sub.x, sub.y, sub.w, sub.h));
+						}
+					}
 				}
 
 				sleepTime = loaded;
@@ -147,6 +179,24 @@ public class SpriteFactory implements Runnable
 				e.printStackTrace();
 			}
 		}
+	}
+
+	/** Creates a Sprite that's a subimage of the Image of another Sprite. The created Sprite will have a default image until the target Sprite is loaded.
+	 * 
+	 * @param source - The source Sprite to get a subimage of.
+	 * @param x <b>y width height</b> - The part of the Image to get.
+	 * @return The created subsprite. */
+	public Sprite subSprite(Sprite source, int x, int y, int width, int height)
+	{
+		Sprite sub = new Sprite(source.path, width, height, false);
+		if (this.isLoaded(source.path)) sub.loaded(Res.createimage(this.get(source.path), x, y, width, height));
+		else
+		{
+			sub.loaded(this.getDefault(width, height));
+			if (!this.subsprites.containsKey(source.path)) this.subsprites.put(source.path, new ArrayList<>());
+			this.subsprites.get(source.path).add(new SubSprite(sub, x, y, width, height));
+		}
+		return sub;
 	}
 
 }

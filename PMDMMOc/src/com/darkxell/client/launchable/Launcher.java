@@ -6,6 +6,7 @@ import com.darkxell.client.discord.DiscordEventHandlerForPMDMMO;
 import com.darkxell.client.mechanics.animation.Animations;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.SpriteFactory;
+import com.darkxell.client.resources.images.others.FrameResources;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
 import com.darkxell.client.resources.music.SoundManager;
 import com.darkxell.client.resources.music.SoundsHolder;
@@ -59,6 +60,7 @@ public class Launcher
 		deh.start();
 
 		Persistance.frame = new Frame();
+		Persistance.frame.setIconImage(FrameResources.ICON.image());
 		Persistance.frame.canvas.requestFocus();
 		Persistance.stateManager = new LoginMainState();
 

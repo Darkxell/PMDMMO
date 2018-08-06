@@ -3,6 +3,8 @@ package com.darkxell.client.launchable;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 
+import com.darkxell.client.resources.images.SpriteFactory;
+
 /** Experimental class that combines the updater and the renderer to synchronize updates and graphical prints. */
 public class UpdaterAndRenderer implements Runnable
 {
@@ -34,6 +36,15 @@ public class UpdaterAndRenderer implements Runnable
 		this.updatesCurrentSecond = 0;
 		this.ups = 0;
 
+		try
+		{
+			while (SpriteFactory.instance().hasLoadingSprites())
+				Thread.sleep(5);
+		} catch (InterruptedException e1)
+		{
+			e1.printStackTrace();
+		}
+
 		while (Launcher.isRunning && Launcher.getProcessingProfile() == Launcher.PROFILE_SYNCHRONIZED)
 		{
 			this.update();
@@ -46,6 +57,23 @@ public class UpdaterAndRenderer implements Runnable
 				e.printStackTrace();
 			}
 		}
+	}
+
+	protected void tickUpdate()
+	{
+		Persistance.stateManager.update();
+
+		if (Persistance.frame == null || !Persistance.frame.isVisible()) return;
+
+		BufferStrategy bf = Persistance.frame.canvas.getBufferStrategy();
+		Graphics2D g = (Graphics2D) bf.getDrawGraphics();
+		int width = Persistance.frame.canvas.getWidth(), height = Persistance.frame.canvas.getHeight();
+		g.clearRect(0, 0, width, height);
+
+		Persistance.stateManager.render(g, width, height);
+
+		g.dispose();
+		bf.show();
 	}
 
 	private void update()
@@ -71,23 +99,6 @@ public class UpdaterAndRenderer implements Runnable
 			this.timer = 0;
 			this.updatesCurrentSecond = 0;
 		}
-	}
-
-	protected void tickUpdate()
-	{
-		Persistance.stateManager.update();
-
-		if (Persistance.frame == null || !Persistance.frame.isVisible()) return;
-
-		BufferStrategy bf = Persistance.frame.canvas.getBufferStrategy();
-		Graphics2D g = (Graphics2D) bf.getDrawGraphics();
-		int width = Persistance.frame.canvas.getWidth(), height = Persistance.frame.canvas.getHeight();
-		g.clearRect(0, 0, width, height);
-
-		Persistance.stateManager.render(g, width, height);
-
-		g.dispose();
-		bf.show();
 	}
 
 }
