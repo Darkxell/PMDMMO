@@ -46,9 +46,12 @@ public class Res
 		return img;
 	}
 
-	/** Gets a part of a buffered Image. */
+	/** Gets a part of a buffered Image. This method is safe: if the dimensions specified are out of the image's bound, this will throw no exception but may return unexpected results. */
 	public static BufferedImage createimage(BufferedImage image, int x, int y, int width, int height)
 	{
+		if (width > image.getWidth() || height > image.getHeight()) return image;
+		if (x + width > image.getWidth()) x = image.getWidth() - width;
+		if (y + height > image.getHeight()) y = image.getHeight() - height;
 		return image.getSubimage(x, y, width, height);
 	}
 
