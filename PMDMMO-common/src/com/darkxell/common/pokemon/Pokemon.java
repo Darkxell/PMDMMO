@@ -433,7 +433,7 @@ public class Pokemon implements ItemContainer, HasID
 	{
 		Element root = new Element(XML_ROOT);
 		root.setAttribute("pk-id", Long.toString(this.id()));
-		root.setAttribute("id", Integer.toString(this.species().compoundID()));
+		root.setAttribute("id", Integer.toString(this.species().id));
 		if (this.nickname() != null) root.setAttribute("nickname", this.nickname());
 		if (this.item != null) root.addContent(this.item.toXML());
 		root.setAttribute("level", Integer.toString(this.level()));

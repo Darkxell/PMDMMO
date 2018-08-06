@@ -56,14 +56,11 @@ public class Res
 	 * 
 	 * @param x the X position of the sprite in the player.png file.
 	 * @param y the Y position of the sprite in the player.png file.
-	 * @param size the size of the sprite. The sprite is a square, and the x/y coordinates are it's top left corner.
-	 * @param spritesAmmount the ammount of sprites in the array. Also the length of the array, obviously. */
+	 * @param size the size of the sprite. The sprite is a square, and the x/y coordinates are its top left corner.
+	 * @param spritesAmmount the amount of sprites in the array. Also the length of the array, obviously. */
 	public static BufferedImage[] getSpriteRow(BufferedImage sheet, int x, int y, int size, int spritesAmmount)
 	{
-		BufferedImage[] toreturn = new BufferedImage[spritesAmmount];
-		for (int i = 0; i < toreturn.length; i++)
-			toreturn[i] = Res.createimage(sheet, x + (i * size), y, size, size);
-		return toreturn;
+		return getSpriteRectRow(sheet, x, y, size, size, spritesAmmount);
 	}
 
 	/** Basically the same a s a getspriterow command, but the sprite doesn't have to be a square.

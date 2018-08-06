@@ -29,7 +29,7 @@ public class PokemonPortrait
 		int id = 0;
 		for (PokemonSpecies pokemon : PokemonRegistry.list())
 			for (PokemonSpecies form : pokemon.forms())
-				alternateIDs.put(form.compoundID(), id++);
+				alternateIDs.put(form.id, id++);
 	}
 
 	/** Draws the portrait of the input Pokemon at the input topright location. */
@@ -59,7 +59,7 @@ public class PokemonPortrait
 		if (pokemon.formID != 0)
 		{
 			sheet = shiny ? portraitsAlternateS : portraitsAlternate;
-			index = alternateIDs.get(pokemon.compoundID());
+			index = alternateIDs.get(pokemon.id);
 		} else
 		{
 			if (index == -1) // ID 100 is on first page but would give set=1, index=-1

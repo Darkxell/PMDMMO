@@ -34,7 +34,7 @@ public final class PokemonSpritesets
 
 	public static int getSpritesetID(Pokemon pokemon)
 	{
-		return (pokemon.isShiny() ? -1 : 1) * pokemon.species().compoundID();
+		return (pokemon.isShiny() ? -1 : 1) * pokemon.species().id;
 	}
 
 	/** Reads the sprites data file. */

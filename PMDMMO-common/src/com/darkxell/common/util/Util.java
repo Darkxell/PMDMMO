@@ -37,6 +37,13 @@ public class Util
 			player.addPokemonInZone(p);
 		}
 
+		for (int id = 10001; id <= 10033; id += 2)
+		{
+			Pokemon p = PokemonRegistry.find(id).generate(new Random(), 1);
+			p.getData().id = id;
+			player.addPokemonInZone(p);
+		}
+
 		return player;
 	}
 

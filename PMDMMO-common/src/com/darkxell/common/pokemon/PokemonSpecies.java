@@ -16,7 +16,6 @@ import com.darkxell.common.util.language.Message;
 
 public class PokemonSpecies
 {
-	public static final int COMPOUND_ID_FACTOR = 10000;
 	public static final double SHINY_CHANCE = 1d / 8192;
 	// public static final double SHINY_CHANCE = .5; // Used to test shiny Pokemon
 
@@ -118,16 +117,11 @@ public class PokemonSpecies
 		return this.baseStats.get(level);
 	}
 
-	public int compoundID()
-	{
-		if (this.formID == 0) return this.id;
-		return this.id * COMPOUND_ID_FACTOR + this.formID;
-	}
-
 	@SuppressWarnings("unchecked")
 	private PokemonSpecies createForm(Element xml)
 	{
-		int formID = XMLUtils.getAttribute(xml, "id", 0);
+		int formID = XMLUtils.getAttribute(xml, "form", 0);
+		int id = XMLUtils.getAttribute(xml, "id", 0);
 
 		PokemonType type1 = xml.getAttribute("type1") == null ? this.type1 : PokemonType.valueOf(xml.getAttributeValue("type1"));
 		PokemonType type2 = xml.getAttribute("type2") == null ? this.type2
@@ -176,7 +170,7 @@ public class PokemonSpecies
 
 		String friendArea = XMLUtils.getAttribute(xml, "area", this.friendAreaID);
 
-		return new PokemonSpecies(this.id, formID, type1, type2, baseXP, baseStats, height, weight, mobility, abilities, experiencePerLevel, learnset, tms,
+		return new PokemonSpecies(id, formID, type1, type2, baseXP, baseStats, height, weight, mobility, abilities, experiencePerLevel, learnset, tms,
 				evolutions, forms, friendArea);
 	}
 
@@ -203,8 +197,9 @@ public class PokemonSpecies
 	/** @return This form's name. */
 	public Message formName()
 	{
-		if (this.forms.isEmpty()) return this.speciesName();
-		return new Message("pokemon." + this.id + "." + this.formID);
+		PokemonSpecies parent = PokemonRegistry.parentSpecies(this);
+		if (parent == null) return new Message("pokemon." + this.id);
+		return new Message("pokemon." + parent.id + "." + this.formID);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -297,7 +292,9 @@ public class PokemonSpecies
 	/** @return This species' name. */
 	public Message speciesName()
 	{
-		return new Message("pokemon." + this.id);
+		PokemonSpecies parent = PokemonRegistry.parentSpecies(this);
+		if (parent == null) return this.formName();
+		return parent.formName();
 	}
 
 	/** @return Regular stats for a Pokemon at the input level. */
@@ -377,7 +374,7 @@ public class PokemonSpecies
 
 		for (PokemonSpecies form : this.forms)
 			this.toXML(root, form);
-		
+
 		root.setAttribute("area", this.friendAreaID);
 
 		return root;
@@ -456,7 +453,7 @@ public class PokemonSpecies
 			}
 			e.addContent(learnset);
 		}
-		
+
 		XMLUtils.setAttribute(root, "area", form.friendAreaID, this.friendAreaID);
 	}
 

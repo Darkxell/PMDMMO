@@ -13,7 +13,8 @@ import com.darkxell.common.util.XMLUtils;
 public final class PokemonRegistry
 {
 
-	private static HashMap<Integer, PokemonSpecies> pokemon = new HashMap<Integer, PokemonSpecies>();
+	private static HashMap<Integer, Integer> forms = new HashMap<>();
+	private static HashMap<Integer, PokemonSpecies> pokemon = new HashMap<>();
 
 	/** @return The Pokemon species with the input ID. */
 	public static PokemonSpecies find(int id)
@@ -37,18 +38,30 @@ public final class PokemonRegistry
 	{
 		Logger.instance().debug("Loading Pokemon...");
 		Element root = XMLUtils.read(PokemonRegistry.class.getResourceAsStream("/data/pokemon.xml"));
-                
+
 		for (Element e : root.getChildren("pokemon", root.getNamespace()))
 			try
 			{
 				PokemonSpecies species = new PokemonSpecies(e);
-				pokemon.put(species.compoundID(), species);
+				pokemon.put(species.id, species);
 				for (PokemonSpecies form : species.forms())
-					pokemon.put(form.compoundID(), form);
+				{
+					pokemon.put(form.id, form);
+					forms.put(form.id, species.id);
+				}
 			} catch (Exception e1)
 			{
 				e1.printStackTrace();
 			}
+	}
+
+	/** The parent species of the input species form (e.g., will return Unown A for Unown Q).
+	 * 
+	 * @return <code>null</code> if the input species is not a form. */
+	public static PokemonSpecies parentSpecies(PokemonSpecies form)
+	{
+		if (!forms.containsKey(form.id)) return null;
+		return find(forms.get(form.id));
 	}
 
 	/** Saves this Registry for the Client. */
