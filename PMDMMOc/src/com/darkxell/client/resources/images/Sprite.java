@@ -31,6 +31,7 @@ public class Sprite
 		return this.image;
 	}
 
+	/** @return <code>true</code> if this Sprite is loaded. */
 	public boolean isLoaded()
 	{
 		return SpriteFactory.instance().isLoaded(this.path);

@@ -6,6 +6,7 @@ import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.animation.Animations;
 import com.darkxell.client.renderers.TextRenderer;
+import com.darkxell.client.resources.images.SpriteFactory;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
 import com.darkxell.client.resources.music.SoundManager;
 import com.darkxell.client.resources.music.SoundsHolder;
@@ -36,6 +37,7 @@ public class DataEditor extends Application
 		ClientSettings.load();
 		Logger.loadClient();
 		Lang.load();
+		SpriteFactory.load();
 		PokemonRegistry.load();
 		MoveRegistry.load();
 		ItemRegistry.load();

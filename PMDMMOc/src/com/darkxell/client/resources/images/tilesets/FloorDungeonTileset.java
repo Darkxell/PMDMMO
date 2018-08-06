@@ -31,7 +31,7 @@ public abstract class FloorDungeonTileset extends AbstractDungeonTileset
 
 	public FloorDungeonTileset(int id, String path)
 	{
-		super(path);
+		super(path, 432, 576);
 		this.id = id;
 	}
 

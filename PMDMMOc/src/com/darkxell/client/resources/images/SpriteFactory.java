@@ -114,7 +114,7 @@ public class SpriteFactory implements Runnable
 
 	/** Registers the input Image to be loaded.
 	 * 
-	 * @param requester - The Sprite that needs this Image. This Sprite will be called when the Image is loaded and will have the new loaded Image set.
+	 * @param requester - The Sprite that needs this Image. This Sprite will be called when the Image is loaded and will have the new loaded Image set. May be null if this method needs to be called to pre-load images.
 	 * @param image - The path to the Image to load.
 	 * @param width - The width of the Image.
 	 * @param height - The height of the Image. May be -1 if the dimensions are unknown or don't matter. These dimensions are used only to create a default Image with dimensions matching the desired Image, <b>the loaded Image will not have its dimensions set to these input dimensions.</b>
@@ -123,16 +123,31 @@ public class SpriteFactory implements Runnable
 	{
 		if (!this.isLoaded(image))
 		{
-			if (!this.requested.contains(image))
+			if (!Res.exists(image)) this.loaded.put(image, this.getDefault(width, height));
+			else
 			{
-				this.requested.add(image);
-				this.requesters.put(image, new ArrayList<>());
-				this.loaded.put(image, this.getDefault(width, height));
+				if (!this.requested.contains(image))
+				{
+					this.requested.add(image);
+					this.requesters.put(image, new ArrayList<>());
+					this.loaded.put(image, this.getDefault(width, height));
+				}
+				if (requester != null) this.requesters.get(image).add(requester);
 			}
-			this.requesters.get(image).add(requester);
 		}
 
 		return this.get(image);
+	}
+
+	/** Registers the input Image to be loaded.
+	 * 
+	 * @param image - The path to the Image to load.
+	 * @param width - The width of the Image.
+	 * @param height - The height of the Image. May be -1 if the dimensions are unknown or don't matter. These dimensions are used only to create a default Image with dimensions matching the desired Image, <b>the loaded Image will not have its dimensions set to these input dimensions.</b>
+	 * @return The image if it was already loaded, or a default image that can already be used else. */
+	BufferedImage load(String image, int width, int height)
+	{
+		return this.load(null, image, width, height);
 	}
 
 	@Override
