@@ -86,9 +86,6 @@ public class DiscordEventHandlerForPMDMMO {
 		}).build();
 	}
 
-	private static final int updatecooldown = 120;
-	private static int actualcooldown = updatecooldown;
-
 	private static String smallimage = "badgeicon_6";
 	private static String smallimagetext = "Platinium team badge";
 
@@ -97,13 +94,7 @@ public class DiscordEventHandlerForPMDMMO {
 	 * updating the game.
 	 */
 	private void handleDiscordRP() {
-		// Handles the discordRP cooldown
-		actualcooldown--;
-		if (actualcooldown >= 1)
-			return;
-		actualcooldown = updatecooldown;
 		// Updates discord if cooldown is done
-		// Lol wtf @Darkxell this only triggers once every 10 mins
 		if (Persistance.stateManager instanceof PrincipalMainState) {
 			PrincipalMainState pmst = (PrincipalMainState) Persistance.stateManager;
 			if (pmst.getCurrentState() instanceof FreezoneExploreState) {
