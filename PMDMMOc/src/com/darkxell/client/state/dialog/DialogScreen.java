@@ -128,7 +128,7 @@ public class DialogScreen
 			int x = inside.x;
 			if (this.isCentered) x += inside.getWidth() / 2 - TextRenderer.width(line) / 2;
 
-			TextRenderer.render(g, line, x, inside.y - this.offset + i * (TextRenderer.height() + TextRenderer.lineSpacing()), false);
+			TextRenderer.render(g, line, x, inside.y - this.offset + i * (TextRenderer.height() + TextRenderer.lineSpacing()));
 			length += count;
 		}
 		g.setClip(c);

@@ -72,7 +72,6 @@ public class PokemonSprite
 	}
 
 	public static final int FRAMELENGTH = 10;
-	public static final int HEALTHLENGTH = 60;
 
 	public static final byte NEUTRAL_SHADOW = 0;
 	public static final byte ALLY_SHADOW = 1;
@@ -87,8 +86,6 @@ public class PokemonSprite
 	private float counter = 0;
 	private PokemonSpriteState defaultState = PokemonSpriteState.IDLE;
 	private Direction facing = Direction.SOUTH;
-	private int healthChange = 0;
-	private int healthCounter = 0;
 	public final AbstractPokemonSpriteset pointer;
 	/** When true, if in a repeatable state, will reset to idle state at the end of the current animation. Else, will keep on the same animation. */
 	private boolean resetToDefaultOnFinish = false;
@@ -116,16 +113,6 @@ public class PokemonSprite
 		return this.facing;
 	}
 
-	public int getHealthChange()
-	{
-		return this.healthChange;
-	}
-
-	public int getHealthPos()
-	{
-		return (HEALTHLENGTH - this.healthCounter) / 4;
-	}
-
 	public byte getShadowColor()
 	{
 		return this.shadowColor;
@@ -144,12 +131,6 @@ public class PokemonSprite
 	public void setFacingDirection(Direction dir)
 	{
 		this.facing = dir;
-	}
-
-	public void setHealthChange(int healthChange)
-	{
-		this.healthChange = healthChange;
-		this.healthCounter = HEALTHLENGTH;
 	}
 
 	public void setShadowColor(byte shadowColor)
@@ -200,12 +181,6 @@ public class PokemonSprite
 		{
 			this.counter = 0;
 			if (this.resetToDefaultOnFinish && this.state != PokemonSpriteState.IDLE) this.setState(this.defaultState);
-		}
-
-		if (this.healthCounter > 0) --this.healthCounter;
-		if (this.healthCounter == 0)
-		{
-			this.healthChange = 0;
 		}
 	}
 

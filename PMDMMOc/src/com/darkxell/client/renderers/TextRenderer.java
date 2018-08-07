@@ -181,17 +181,39 @@ public class TextRenderer
 		type_15("<type-15>", 15, 7, 11),
 		type_16("<type-16>", 16, 7, 11),
 		type_17("<type-17>", 17, 7, 11),
-		minusd(null, 0, 8, 7),
-		num1d(null, 1, 8, 7),
-		num2d(null, 2, 8, 7),
-		num3d(null, 3, 8, 7),
-		num4d(null, 4, 8, 7),
-		num5d(null, 5, 8, 7),
-		num6d(null, 6, 8, 7),
-		num7d(null, 7, 8, 7),
-		num8d(null, 8, 8, 7),
-		num9d(null, 9, 8, 7),
-		num0d(null, 10, 8, 7),
+		minusd("<-d>", 0, 8, 7),
+		num1d("<1d>", 1, 8, 7),
+		num2d("<2d>", 2, 8, 7),
+		num3d("<3d>", 3, 8, 7),
+		num4d("<4d>", 4, 8, 7),
+		num5d("<5d>", 5, 8, 7),
+		num6d("<6d>", 6, 8, 7),
+		num7d("<7d>", 7, 8, 7),
+		num8d("<8d>", 8, 8, 7),
+		num9d("<9d>", 9, 8, 7),
+		num0d("<0d>", 10, 8, 7),
+		plush("<+h>", 0, 9, 7),
+		num1h("<1h>", 1, 9, 7),
+		num2h("<2h>", 2, 9, 7),
+		num3h("<3h>", 3, 9, 7),
+		num4h("<4h>", 4, 9, 7),
+		num5h("<5h>", 5, 9, 7),
+		num6h("<6h>", 6, 9, 7),
+		num7h("<7h>", 7, 9, 7),
+		num8h("<8h>", 8, 9, 7),
+		num9h("<9h>", 9, 9, 7),
+		num0h("<0h>", 10, 9, 7),
+		pluse("<+e>", 0, 10, 7),
+		num1e("<1e>", 1, 10, 7),
+		num2e("<2e>", 2, 10, 7),
+		num3e("<3e>", 3, 10, 7),
+		num4e("<4e>", 4, 10, 7),
+		num5e("<5e>", 5, 10, 7),
+		num6e("<6e>", 6, 10, 7),
+		num7e("<7e>", 7, 10, 7),
+		num8e("<8e>", 8, 10, 7),
+		num9e("<9e>", 9, 10, 7),
+		num0e("<0e>", 10, 10, 7),
 		bracketOpen("[", 11, 8, 5),
 		bracketClose("]", 12, 8, 5),
 		colorReset("</color>", -1, -1, 0),
@@ -229,26 +251,60 @@ public class TextRenderer
 
 	}
 
+	public static enum FontMode
+	{
+		NORMAL,
+		EXPERIENCE,
+		DAMAGE,
+		HEAL;
+	}
+
 	private static Color color, previous;
 	private static final HashMap<PMDChar, Image> coloredSprites = new HashMap<>();
-	private static final HashMap<PMDChar, PMDChar> dungeonChars = new HashMap<>();
+	private static final HashMap<PMDChar, PMDChar> expChars = new HashMap<>();
+	private static final HashMap<PMDChar, PMDChar> damageChars = new HashMap<>();
+	private static final HashMap<PMDChar, PMDChar> healChars = new HashMap<>();
 	public static double fontSize = 1;
 	private static final int LINE_SPACING = 3;
 	private static final int TAB_ALIGN = 25;
 
 	static
 	{
-		dungeonChars.put(PMDChar.minus, PMDChar.minusd);
-		dungeonChars.put(PMDChar.num1, PMDChar.num1d);
-		dungeonChars.put(PMDChar.num2, PMDChar.num2d);
-		dungeonChars.put(PMDChar.num3, PMDChar.num3d);
-		dungeonChars.put(PMDChar.num4, PMDChar.num4d);
-		dungeonChars.put(PMDChar.num5, PMDChar.num5d);
-		dungeonChars.put(PMDChar.num6, PMDChar.num6d);
-		dungeonChars.put(PMDChar.num7, PMDChar.num7d);
-		dungeonChars.put(PMDChar.num8, PMDChar.num8d);
-		dungeonChars.put(PMDChar.num9, PMDChar.num9d);
-		dungeonChars.put(PMDChar.num0, PMDChar.num0d);
+		damageChars.put(PMDChar.minus, PMDChar.minusd);
+		damageChars.put(PMDChar.num1, PMDChar.num1d);
+		damageChars.put(PMDChar.num2, PMDChar.num2d);
+		damageChars.put(PMDChar.num3, PMDChar.num3d);
+		damageChars.put(PMDChar.num4, PMDChar.num4d);
+		damageChars.put(PMDChar.num5, PMDChar.num5d);
+		damageChars.put(PMDChar.num6, PMDChar.num6d);
+		damageChars.put(PMDChar.num7, PMDChar.num7d);
+		damageChars.put(PMDChar.num8, PMDChar.num8d);
+		damageChars.put(PMDChar.num9, PMDChar.num9d);
+		damageChars.put(PMDChar.num0, PMDChar.num0d);
+
+		healChars.put(PMDChar.plus, PMDChar.plush);
+		healChars.put(PMDChar.num1, PMDChar.num1h);
+		healChars.put(PMDChar.num2, PMDChar.num2h);
+		healChars.put(PMDChar.num3, PMDChar.num3h);
+		healChars.put(PMDChar.num4, PMDChar.num4h);
+		healChars.put(PMDChar.num5, PMDChar.num5h);
+		healChars.put(PMDChar.num6, PMDChar.num6h);
+		healChars.put(PMDChar.num7, PMDChar.num7h);
+		healChars.put(PMDChar.num8, PMDChar.num8h);
+		healChars.put(PMDChar.num9, PMDChar.num9h);
+		healChars.put(PMDChar.num0, PMDChar.num0h);
+
+		expChars.put(PMDChar.plus, PMDChar.pluse);
+		expChars.put(PMDChar.num1, PMDChar.num1e);
+		expChars.put(PMDChar.num2, PMDChar.num2e);
+		expChars.put(PMDChar.num3, PMDChar.num3e);
+		expChars.put(PMDChar.num4, PMDChar.num4e);
+		expChars.put(PMDChar.num5, PMDChar.num5e);
+		expChars.put(PMDChar.num6, PMDChar.num6e);
+		expChars.put(PMDChar.num7, PMDChar.num7e);
+		expChars.put(PMDChar.num8, PMDChar.num8e);
+		expChars.put(PMDChar.num9, PMDChar.num9e);
+		expChars.put(PMDChar.num0, PMDChar.num0e);
 	}
 
 	private TextRenderer()
@@ -306,7 +362,7 @@ public class TextRenderer
 	}
 
 	/** Renders the input text at the topright x, y coordinates. */
-	public static void render(Graphics2D g, List<PMDChar> text, int x, int y, boolean dungeonHUD)
+	public static void render(Graphics2D g, List<PMDChar> text, int x, int y)
 	{
 		int w = 0;
 		for (PMDChar c : text)
@@ -337,19 +393,38 @@ public class TextRenderer
 
 	public static void render(Graphics2D g, String text, int x, int y)
 	{
-		render(g, text, x, y, false);
+		render(g, text, x, y, FontMode.NORMAL);
 	}
 
 	/** Renders the input text at the topright x, y coordinates. */
-	public static void render(Graphics2D g, String text, int x, int y, boolean dungeonHUD)
+	public static void render(Graphics2D g, String text, int x, int y, FontMode font)
 	{
 		ArrayList<PMDChar> chars = decode(text);
 		ArrayList<PMDChar> toprint = new ArrayList<TextRenderer.PMDChar>();
-		if (dungeonHUD) for (PMDChar c : chars)
-			if (dungeonChars.containsKey(c)) toprint.add(dungeonChars.get(c));
+		HashMap<PMDChar, PMDChar> fontmode = null;
+		switch (font)
+		{
+			case DAMAGE:
+				fontmode = damageChars;
+				break;
+
+			case EXPERIENCE:
+				fontmode = expChars;
+				break;
+
+			case HEAL:
+				fontmode = healChars;
+				break;
+
+			case NORMAL:
+			default:
+				break;
+		}
+		if (fontmode != null) for (PMDChar c : chars)
+			if (fontmode.containsKey(c)) toprint.add(fontmode.get(c));
 			else toprint.add(c);
 		else toprint.addAll(chars);
-		render(g, toprint, x, y, dungeonHUD);
+		render(g, toprint, x, y);
 	}
 
 	/** Sets the Color of the Text for the next drawn Text. Color is reset to default at the end of each Text. */

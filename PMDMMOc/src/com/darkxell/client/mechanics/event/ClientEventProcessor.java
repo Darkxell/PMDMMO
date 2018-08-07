@@ -7,10 +7,12 @@ import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.animation.AbstractAnimation;
 import com.darkxell.client.mechanics.animation.AnimationEndListener;
 import com.darkxell.client.mechanics.animation.Animations;
+import com.darkxell.client.mechanics.animation.misc.NumberAbovePokeAnimation;
 import com.darkxell.client.mechanics.animation.misc.RainAnimation;
 import com.darkxell.client.mechanics.animation.misc.SnowAnimation;
 import com.darkxell.client.mechanics.cutscene.CutsceneManager;
 import com.darkxell.client.renderers.TextRenderer;
+import com.darkxell.client.renderers.TextRenderer.FontMode;
 import com.darkxell.client.renderers.pokemon.DungeonPokemonRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
@@ -52,12 +54,14 @@ import com.darkxell.common.event.pokemon.StatusConditionCreatedEvent;
 import com.darkxell.common.event.pokemon.StatusConditionEndedEvent;
 import com.darkxell.common.event.pokemon.TriggeredAbilityEvent;
 import com.darkxell.common.event.stats.BellyChangedEvent;
+import com.darkxell.common.event.stats.ExperienceGeneratedEvent;
 import com.darkxell.common.event.stats.LevelupEvent;
 import com.darkxell.common.event.stats.SpeedChangedEvent;
 import com.darkxell.common.event.stats.StatChangedEvent;
 import com.darkxell.common.item.effects.FoodItemEffect;
 import com.darkxell.common.player.Inventory;
 import com.darkxell.common.pokemon.BaseStats;
+import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.status.StatusCondition;
 import com.darkxell.common.util.Logger;
@@ -147,6 +151,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		if (event instanceof StatChangedEvent) this.processStatEvent((StatChangedEvent) event);
 		if (event instanceof SpeedChangedEvent) this.processSpeedEvent((SpeedChangedEvent) event);
 		if (event instanceof TriggeredAbilityEvent) this.processAbilityEvent((TriggeredAbilityEvent) event);
+		if (event instanceof ExperienceGeneratedEvent) this.processExperienceEvent((ExperienceGeneratedEvent) event);
 		if (event instanceof LevelupEvent) this.processLevelupEvent((LevelupEvent) event);
 		if (event instanceof MoveDiscoveredEvent) this.processMoveDiscoveredEvent((MoveDiscoveredEvent) event);
 		if (event instanceof MoveLearnedEvent) this.processMoveLearnedEvent((MoveLearnedEvent) event);
@@ -234,7 +239,6 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	{
 		if (!(event.source instanceof BellyChangedEvent))
 		{
-			Persistance.dungeonState.pokemonRenderer.getRenderer(event.target).sprite().setHealthChange(-event.damage);
 			AnimationState s = new AnimationState(Persistance.dungeonState);
 			s.animation = Animations.getCustomAnimation(event.target, Animations.HURT, this.currentAnimEnd);
 			if (s.animation != null)
@@ -242,7 +246,14 @@ public final class ClientEventProcessor extends CommonEventProcessor
 				Persistance.dungeonState.setSubstate(s);
 				this.setState(State.ANIMATING);
 			}
+			if (event.damage != 0) new NumberAbovePokeAnimation(event.target, -event.damage, FontMode.DAMAGE).start();
 		}
+	}
+
+	private void processExperienceEvent(ExperienceGeneratedEvent event)
+	{
+		if (event.experience != 0 && event.player == Persistance.player) for (DungeonPokemon p : event.player.getDungeonTeam())
+			if (!p.isFainted()) new NumberAbovePokeAnimation(p, event.experience, FontMode.EXPERIENCE).start();
 	}
 
 	private void processExplorationStopEvent(ExplorationStopEvent event)
@@ -266,7 +277,6 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	private void processHealEvent(HealthRestoredEvent event)
 	{
 		if (event.effectiveHeal() <= 0) return;
-		Persistance.dungeonState.pokemonRenderer.getRenderer(event.target).sprite().setHealthChange(event.effectiveHeal());
 		AnimationState s = new AnimationState(Persistance.dungeonState);
 		s.animation = Animations.getCustomAnimation(event.target, Animations.HEAL, this.currentAnimEnd);
 		if (s.animation != null)
@@ -274,6 +284,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 			Persistance.dungeonState.setSubstate(s);
 			this.setState(State.ANIMATING);
 		}
+		new NumberAbovePokeAnimation(event.target, event.effectiveHeal(), FontMode.DAMAGE).start();
 	}
 
 	private void processItemEvent(ItemSelectionEvent event)

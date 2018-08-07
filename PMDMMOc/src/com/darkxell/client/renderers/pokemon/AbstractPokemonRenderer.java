@@ -12,7 +12,6 @@ import com.darkxell.client.mechanics.animation.AbstractAnimation;
 import com.darkxell.client.mechanics.animation.PokemonAnimation;
 import com.darkxell.client.renderers.AbstractRenderer;
 import com.darkxell.client.renderers.MasterDungeonRenderer;
-import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSpriteFrame;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
@@ -34,15 +33,6 @@ public class AbstractPokemonRenderer extends AbstractRenderer
 		int xPos = x - s.getWidth() / 2 + frame.spriteX, yPos = y - s.getHeight() / 2 + frame.spriteY;
 
 		g.drawImage(s, (frame.isFlipped ? s.getWidth() : 0) + xPos, yPos, (frame.isFlipped ? -1 : 1) * s.getWidth(), s.getHeight(), null);
-
-		int h = sprite.getHealthChange();
-		if (h != 0)
-		{
-			String text = (h < 0 ? "" : "+") + Integer.toString(h);
-			xPos = x - TextRenderer.width(text) / 2;
-			yPos = y - sprite.getHealthPos() - TextRenderer.height() / 2;
-			TextRenderer.render(g, text, xPos, yPos, true);
-		}
 	}
 
 	private final ArrayList<PokemonAnimation> animations = new ArrayList<PokemonAnimation>();
