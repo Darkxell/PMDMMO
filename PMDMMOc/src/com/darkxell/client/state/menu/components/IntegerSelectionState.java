@@ -109,7 +109,7 @@ public class IntegerSelectionState extends AbstractState
 
 			Rectangle dialog = this.parent.dialogBox();
 			int w = TextRenderer.width(longest) + OptionSelectionWindow.MARGIN_X * 2,
-					h = TextRenderer.height() + OptionSelectionWindow.MARGIN_Y * 3 + Sprites.menuHud.nextWindowArrow().getHeight();
+					h = TextRenderer.height() + OptionSelectionWindow.MARGIN_Y * 3 + Sprites.Hud.menuHud.nextWindowArrow().getHeight();
 			this.window = new MenuWindow(new Rectangle((int) (dialog.getMaxX() - w), dialog.y - h - 5, w, h));
 			this.window.isOpaque = this.parent.currentScreen().isOpaque;
 			this.updateLogLocation();
@@ -123,12 +123,12 @@ public class IntegerSelectionState extends AbstractState
 		int texty = (int) (inside.y + inside.getHeight() / 2 - TextRenderer.height() / 2);
 		TextRenderer.render(g, this.currentM, this.textx, texty);
 
-		int arrowx = this.textx + this.currentLogLocation - Sprites.menuHud.nextWindowArrow().getWidth();
+		int arrowx = this.textx + this.currentLogLocation - Sprites.Hud.menuHud.nextWindowArrow().getWidth();
 		int uparrowy = texty - OptionSelectionWindow.MARGIN_Y / 3;
 		int downarrowy = texty + TextRenderer.height() + OptionSelectionWindow.MARGIN_Y / 3;
-		g.drawImage(Sprites.menuHud.nextWindowArrow(), arrowx, uparrowy, Sprites.menuHud.nextWindowArrow().getWidth(),
-				-Sprites.menuHud.nextWindowArrow().getHeight(), null);
-		g.drawImage(Sprites.menuHud.nextWindowArrow(), arrowx, downarrowy, null);
+		g.drawImage(Sprites.Hud.menuHud.nextWindowArrow(), arrowx, uparrowy, Sprites.Hud.menuHud.nextWindowArrow().getWidth(),
+				-Sprites.Hud.menuHud.nextWindowArrow().getHeight(), null);
+		g.drawImage(Sprites.Hud.menuHud.nextWindowArrow(), arrowx, downarrowy, null);
 	}
 
 	@Override

@@ -33,8 +33,8 @@ public class MoveSelectionWindow extends OptionSelectionWindow
 		TextRenderer.setColor(null);
 
 		if ((this.cursor > 9 || !this.menu.isMain()) && this.menu.currentOption() == option)
-			g.drawImage(this.menu.isMain() ? Sprites.menuHud.selectionArrow() : Sprites.menuHud.selectedArrow(),
-					x - Sprites.menuHud.selectionArrow().getWidth() - 4, y + TextRenderer.height() / 2 - Sprites.menuHud.selectedArrow().getHeight() / 2,
+			g.drawImage(this.menu.isMain() ? Sprites.Hud.menuHud.selectionArrow() : Sprites.Hud.menuHud.selectedArrow(),
+					x - Sprites.Hud.menuHud.selectionArrow().getWidth() - 4, y + TextRenderer.height() / 2 - Sprites.Hud.menuHud.selectedArrow().getHeight() / 2,
 					null);
 
 		y += TextRenderer.height() + TextRenderer.lineSpacing();

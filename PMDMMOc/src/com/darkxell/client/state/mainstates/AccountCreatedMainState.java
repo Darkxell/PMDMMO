@@ -80,7 +80,7 @@ public class AccountCreatedMainState extends StateManager {
 		int relativemousex = mouseX - offsetx, relativemousey = mouseY - offsety;
 		g.translate(offsetx, offsety);
 		// DRAWS THE ACCOUNT CREATION FACILITIES
-		g.drawImage(Sprites.proceedaccountframe.image(), 0, 0, null);
+		g.drawImage(Sprites.Hud.proceedaccountframe.image(), 0, 0, null);
 
 		g.setColor(Color.BLACK);
 		TextRenderer.render(g, "Welcome, " + login + "!", 30, 150);

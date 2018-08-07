@@ -26,7 +26,7 @@ public class PokemonPortrait extends RegularSpriteSet
 	public static void drawPortrait(Graphics2D g, PokemonSpecies pokemon, boolean shiny, int x, int y)
 	{
 		g.drawImage(PokemonPortrait.portrait(pokemon, shiny), x + 4, y + 4, null);
-		g.drawImage(Sprites.portrait.image(), x, y, null);
+		g.drawImage(Sprites.Hud.portrait.image(), x, y, null);
 	}
 
 	public static void load()

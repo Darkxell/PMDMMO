@@ -155,7 +155,7 @@ public class FriendAreaSelectionMapState extends AbstractState
 				}
 			}
 
-		g.drawImage(Sprites.menuHud.selectionArrow(), (int) cursorx, (int) cursory, null);
+		g.drawImage(Sprites.Hud.menuHud.selectionArrow(), (int) cursorx, (int) cursory, null);
 		// TRANSLATES THE GRAPHICS BACK
 		g.translate(-translateX, -translateY);
 

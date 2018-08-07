@@ -128,11 +128,11 @@ public class DungeonSelectionMapState extends AbstractState
 		TextRenderer.render(g, new Message("dungeonmap.return"), textxpos, 40);
 
 		int temp_width = width - 40;
-		int temp_height = temp_width * Sprites.textwindow.image().getHeight() / Sprites.textwindow.image().getWidth();
+		int temp_height = temp_width * Sprites.Hud.textwindow.image().getHeight() / Sprites.Hud.textwindow.image().getWidth();
 		Rectangle box = new Rectangle(20, height - temp_height - 20, temp_width, temp_height);
-		g.drawImage(Sprites.textwindow.image(), box.x, box.y, box.width, box.height, null);
-		g.drawImage(Sprites.menuHud.tabLeft(), box.x + box.width - 45, box.y, null);
-		g.drawImage(Sprites.menuHud.tabRight(), box.x + box.width - 30, box.y, null);
+		g.drawImage(Sprites.Hud.textwindow.image(), box.x, box.y, box.width, box.height, null);
+		g.drawImage(Sprites.Hud.menuHud.tabLeft(), box.x + box.width - 45, box.y, null);
+		g.drawImage(Sprites.Hud.menuHud.tabRight(), box.x + box.width - 30, box.y, null);
 		String dungeonsmarker = (this.cursor + 1) + " / " + this.dungeonslist.size();
 		TextRenderer.render(g, dungeonsmarker, box.x + box.width - 55, box.y + 10);
 

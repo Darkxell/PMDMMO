@@ -127,7 +127,7 @@ public class AccountCreationState extends StateManager {
 		int relativemousex = mouseX - offsetx, relativemousey = mouseY - offsety;
 		g.translate(offsetx, offsety);
 		// DRAWS THE ACCOUNT CREATION FACILITIES
-		g.drawImage(Sprites.createaccountframe.image(), 0, 0, null);
+		g.drawImage(Sprites.Hud.createaccountframe.image(), 0, 0, null);
 
 		g.setColor(Color.RED);
 		g.drawString(errormessage, 155, 143);

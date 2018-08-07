@@ -32,17 +32,17 @@ public class TextWindow extends MenuWindow
 		super.render(g, name, width, height);
 		this.renderText(g, width, height);
 
-		if (this.rightTab) g.drawImage(Sprites.menuHud.tabRight(), (int) this.inside.getMaxX() - Sprites.menuHud.tabRight().getWidth(),
-				this.dimensions.y - Sprites.menuHud.tabRight().getHeight() / 3, null);
-		if (this.leftTab) g.drawImage(Sprites.menuHud.tabLeft(),
-				(int) this.inside.getMaxX() - Sprites.menuHud.tabLeft().getWidth() - Sprites.menuHud.tabRight().getWidth() - 5,
-				this.dimensions.y - Sprites.menuHud.tabLeft().getHeight() / 3, null);
+		if (this.rightTab) g.drawImage(Sprites.Hud.menuHud.tabRight(), (int) this.inside.getMaxX() - Sprites.Hud.menuHud.tabRight().getWidth(),
+				this.dimensions.y - Sprites.Hud.menuHud.tabRight().getHeight() / 3, null);
+		if (this.leftTab) g.drawImage(Sprites.Hud.menuHud.tabLeft(),
+				(int) this.inside.getMaxX() - Sprites.Hud.menuHud.tabLeft().getWidth() - Sprites.Hud.menuHud.tabRight().getWidth() - 5,
+				this.dimensions.y - Sprites.Hud.menuHud.tabLeft().getHeight() / 3, null);
 
 		if (this.hasNext)
 		{
-			int x = this.dimensions.x - this.dimensions.width / 2 - Sprites.menuHud.nextWindowArrow().getWidth() / 2;
-			int y = (int) (this.dimensions.getMaxY() - Sprites.menuHud.nextWindowArrow().getHeight() / 2);
-			g.drawImage(Sprites.menuHud.nextWindowArrow(), x, y, null);
+			int x = this.dimensions.x - this.dimensions.width / 2 - Sprites.Hud.menuHud.nextWindowArrow().getWidth() / 2;
+			int y = (int) (this.dimensions.getMaxY() - Sprites.Hud.menuHud.nextWindowArrow().getHeight() / 2);
+			g.drawImage(Sprites.Hud.menuHud.nextWindowArrow(), x, y, null);
 		}
 	}
 

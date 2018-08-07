@@ -32,8 +32,8 @@ public class OpenningState extends AbstractState
 	public void render(Graphics2D g, int width, int height)
 	{
 		background.render(g, width, height);
-		g.drawImage(Sprites.gametitle.image(), width / 2 - Sprites.gametitle.image().getWidth() / 2, height / 2 - Sprites.gametitle.image().getHeight() / 2,
-				null);
+		g.drawImage(Sprites.Hud.gametitle.image(), width / 2 - Sprites.Hud.gametitle.image().getWidth() / 2,
+				height / 2 - Sprites.Hud.gametitle.image().getHeight() / 2, null);
 		if (textblink >= 50)
 		{
 			String press = "Press attack (default D) to continue.";

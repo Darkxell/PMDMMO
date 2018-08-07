@@ -54,7 +54,7 @@ public class PokemonDialogScreen extends DialogScreen
 		if (this.pokemon != null)
 		{
 			Rectangle dialogBox = this.parentState.dialogBox();
-			PokemonPortrait.drawPortrait(g, this.pokemon, this.shiny, dialogBox.x + 5, dialogBox.y - Sprites.portrait.image().getHeight() - 5);
+			PokemonPortrait.drawPortrait(g, this.pokemon, this.shiny, dialogBox.x + 5, dialogBox.y - Sprites.Hud.portrait.image().getHeight() - 5);
 		}
 	}
 
