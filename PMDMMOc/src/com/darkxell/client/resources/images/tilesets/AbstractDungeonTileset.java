@@ -6,7 +6,7 @@ import com.darkxell.client.resources.images.RegularSpriteSet;
 
 public abstract class AbstractDungeonTileset extends RegularSpriteSet
 {
-
+	/** The size of a Tile in Dungeons. */
 	public static final int TILE_SIZE = 24;
 
 	public AbstractDungeonTileset(String path, int width, int height)

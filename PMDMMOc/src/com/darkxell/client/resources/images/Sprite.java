@@ -9,6 +9,12 @@ public class Sprite
 	private BufferedImage image;
 	public final String path;
 
+	public Sprite(BufferedImage image)
+	{
+		this.path = "";
+		this.image = image;
+	}
+
 	public Sprite(String path)
 	{
 		this(path, -1, -1);

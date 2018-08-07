@@ -7,7 +7,7 @@ public class RegularSpriteSet extends SpriteSet
 {
 
 	private int columns = -1, rows = -1;
-	private BufferedImage defaultSprite;
+	private Sprite defaultSprite;
 	public final int spriteWidth, spriteHeight;
 
 	public RegularSpriteSet(String path, int spriteSize, int width, int height)
@@ -20,7 +20,7 @@ public class RegularSpriteSet extends SpriteSet
 		super(path, width, height);
 		this.spriteWidth = spriteWidth;
 		this.spriteHeight = spriteHeight;
-		this.defaultSprite = SpriteFactory.instance().getDefault(spriteWidth, spriteHeight);
+		this.defaultSprite = new Sprite(SpriteFactory.instance().getDefault(spriteWidth, spriteHeight));
 		if (width != -1 && height != -1) this.onLoad();
 	}
 
@@ -31,23 +31,28 @@ public class RegularSpriteSet extends SpriteSet
 	}
 
 	/** @return The Sprite at the input position, where pos = x + y * cols. */
-	Sprite get(int pos)
+	public Sprite get(int pos)
 	{
 		return this.get(pos % this.columns, pos / this.columns);
 	}
 
 	/** @return The Sprite at the input x, y coordinates. */
-	Sprite get(int x, int y)
+	public Sprite get(int x, int y)
 	{
 		if (x < 0 || y < 0 || x >= this.columns || y >= this.rows) return this.get(this.id(0, 0));
 		return this.get(this.id(x, y));
+	}
+
+	public Sprite getDefault()
+	{
+		return this.defaultSprite;
 	}
 
 	/** @return The Image of the Sprite at the input position, where pos = x + y * cols. */
 	public BufferedImage getImg(int pos)
 	{
 		Sprite s = this.get(pos);
-		if (s == null) return this.defaultSprite;
+		if (s == null) return this.defaultSprite.image();
 		return s.image();
 	}
 
@@ -55,7 +60,7 @@ public class RegularSpriteSet extends SpriteSet
 	public BufferedImage getImg(int x, int y)
 	{
 		Sprite s = this.get(x, y);
-		if (s == null) return this.defaultSprite;
+		if (s == null) return this.defaultSprite.image();
 		return s.image();
 	}
 
