@@ -197,9 +197,8 @@ public class PokemonSpecies
 	/** @return This form's name. */
 	public Message formName()
 	{
-		PokemonSpecies parent = PokemonRegistry.parentSpecies(this);
-		if (parent == null) return new Message("pokemon." + this.id);
-		return new Message("pokemon." + parent.id + "." + this.formID);
+		if (this.formID == 0) return new Message("pokemon." + this.id);
+		return new Message("pokemon." + this.parent().id + "." + this.formID);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -275,6 +274,12 @@ public class PokemonSpecies
 		return moves;
 	}
 
+	public PokemonSpecies parent()
+	{
+		PokemonSpecies parent = PokemonRegistry.parentSpecies(this);
+		return parent == null ? this : parent;
+	}
+
 	/** @return A random ability for this Pokemon. */
 	public int randomAbility(Random random)
 	{
@@ -292,9 +297,7 @@ public class PokemonSpecies
 	/** @return This species' name. */
 	public Message speciesName()
 	{
-		PokemonSpecies parent = PokemonRegistry.parentSpecies(this);
-		if (parent == null) return this.formName();
-		return parent.formName();
+		return this.parent().formName();
 	}
 
 	/** @return Regular stats for a Pokemon at the input level. */

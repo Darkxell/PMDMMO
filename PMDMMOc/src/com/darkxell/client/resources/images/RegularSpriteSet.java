@@ -33,7 +33,7 @@ public class RegularSpriteSet extends SpriteSet
 	/** @return The Sprite at the input position, where pos = x + y * cols. */
 	Sprite get(int pos)
 	{
-		return this.get(pos % this.rows, pos / this.rows);
+		return this.get(pos % this.columns, pos / this.columns);
 	}
 
 	/** @return The Sprite at the input x, y coordinates. */

@@ -1,6 +1,6 @@
 package com.darkxell.client.state.menu.item;
 
-import static com.darkxell.client.resources.images.tilesets.ItemsSpriteset.ITEM_SIZE;
+import static com.darkxell.client.resources.images.others.ItemsSpriteset.ITEM_SIZE;
 
 import java.awt.Graphics2D;
 import java.awt.Point;

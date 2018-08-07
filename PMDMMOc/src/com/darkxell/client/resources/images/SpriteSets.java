@@ -1,9 +1,9 @@
 package com.darkxell.client.resources.images;
 
 import com.darkxell.client.resources.images.others.FontSpriteSet;
+import com.darkxell.client.resources.images.others.ItemsSpriteset;
 import com.darkxell.client.resources.images.tilesets.CommonDungeonTileset;
 import com.darkxell.client.resources.images.tilesets.DungeonMapTileset;
-import com.darkxell.client.resources.images.tilesets.ItemsSpriteset;
 
 /** Class that holds SpriteSets used in the whole project. */
 public final class SpriteSets
