@@ -1,41 +1,39 @@
 package com.darkxell.client.resources.images.pokemon;
 
-import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
 import org.jdom2.Element;
 
-import com.darkxell.client.resources.Res;
+import com.darkxell.client.resources.images.RegularSpriteSet;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
 import com.darkxell.common.util.Direction;
 
 import javafx.util.Pair;
 
-public class AbstractPokemonSpriteset
+public class AbstractPokemonSpriteset extends RegularSpriteSet
 {
+
+	private static int findHeight(Element xml)
+	{
+		return Integer.parseInt(xml.getChildText("FrameHeight"));
+	}
+
+	private static int findWidth(Element xml)
+	{
+		return Integer.parseInt(xml.getChildText("FrameWidth"));
+	}
 
 	public final boolean hasBigShadow;
 	public final int pokemonID;
 	final HashMap<Integer, PokemonSpriteSequence> sequences;
-	public final int spriteHeight;
-	final BufferedImage[] sprites;
-	public final int spriteWidth;
 	final HashMap<Pair<PokemonSpriteState, Direction>, Integer> states;
 
 	protected AbstractPokemonSpriteset(String path, Element xml, int pokemonID)
 	{
+		super(path, findWidth(xml), findHeight(xml), -1, -1);
 		this.pokemonID = pokemonID;
 
-		this.spriteWidth = Integer.parseInt(xml.getChildText("FrameWidth"));
-		this.spriteHeight = Integer.parseInt(xml.getChildText("FrameHeight"));
 		this.hasBigShadow = this.spriteWidth > 48 || this.spriteHeight > 48;
-		BufferedImage spriteset = Res.getBase(path);
-
-		int x = 0, y = 0, width = spriteset.getWidth() / this.spriteWidth, height = spriteset.getHeight() / this.spriteHeight;
-		this.sprites = new BufferedImage[width * height];
-		for (; y < height; ++y)
-			for (x = 0; x < width; ++x)
-				this.sprites[x + y * width] = spriteset.getSubimage(x * this.spriteWidth, y * this.spriteHeight, this.spriteWidth, this.spriteHeight);
 
 		this.states = new HashMap<>();
 		for (Element e : xml.getChild("AnimGroupTable").getChildren())

@@ -35,7 +35,7 @@ public class PokemonSpriteFrame
 
 	public BufferedImage getSprite()
 	{
-		return this.spriteset.sprites[this.frameID];
+		return this.spriteset.getImg(this.frameID);
 	}
 
 }

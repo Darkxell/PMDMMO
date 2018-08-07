@@ -87,9 +87,9 @@ public abstract class FreezoneMap
 					this.tiles[refferingTileID].sprite = tilesets.get(tileset).get(refferingTileID);
 				}
 
-				for (FreezoneTile t : this.tiles)
-					if (t.sprite == null) t.sprite = defaulttileset.getDefault();
 			}
+			for (FreezoneTile t : this.tiles)
+				if (t.sprite == null) t.sprite = defaulttileset.getDefault();
 		} catch (Exception e)
 		{
 			Logger.e("Could not build freezonemap from XML file : " + e);

@@ -12,10 +12,10 @@ import com.darkxell.client.mechanics.animation.AbstractAnimation;
 import com.darkxell.client.mechanics.animation.PokemonAnimation;
 import com.darkxell.client.renderers.AbstractRenderer;
 import com.darkxell.client.renderers.MasterDungeonRenderer;
+import com.darkxell.client.resources.images.SpriteSets;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSpriteFrame;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
-import com.darkxell.client.resources.images.pokemon.ShadowSprites;
 import com.darkxell.client.resources.images.tilesets.AbstractDungeonTileset;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.Logger;
@@ -79,8 +79,8 @@ public class AbstractPokemonRenderer extends AbstractRenderer
 
 			int xPos = (int) this.drawX(), yPos = (int) this.drawY();
 
-			BufferedImage shadow = this.sprite.pointer.hasBigShadow ? ShadowSprites.instance.getBig(this.sprite.getShadowColor())
-					: ShadowSprites.instance.getSmall(this.sprite.getShadowColor());
+			BufferedImage shadow = this.sprite.pointer.hasBigShadow ? SpriteSets.shadows.getBig(this.sprite.getShadowColor())
+					: SpriteSets.shadows.getSmall(this.sprite.getShadowColor());
 			g.drawImage(shadow, xPos - shadow.getWidth() / 2 + frame.shadowX, yPos + TILE_SIZE * 2 / 5 - shadow.getHeight() + frame.shadowY, null);
 
 			for (PokemonAnimation animation : this.animations)
