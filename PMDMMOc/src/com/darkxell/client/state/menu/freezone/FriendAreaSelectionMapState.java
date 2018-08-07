@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.Sprites;
-import com.darkxell.client.resources.images.others.MapResources;
+import com.darkxell.client.resources.images.Sprites.MapResources;
 import com.darkxell.client.resources.music.SoundManager;
 import com.darkxell.client.resources.music.SoundsHolder;
 import com.darkxell.client.state.AbstractState;
@@ -135,13 +135,13 @@ public class FriendAreaSelectionMapState extends AbstractState
 
 		g.translate(translateX, translateY);
 		// DRAWS THE MAP
-		g.drawImage(MapResources.LOCALMAP, 0, 0, null);
+		g.drawImage(MapResources.LOCALMAP.image(), 0, 0, null);
 		LocalMapLocation[] infos = LocalMapLocation.values();
 		for (int i = 0; i < infos.length; i++)
 			if (infos[i].showsonfriendsmap)
 			{
 				boolean text = isnearpoint(infos[i]);
-				g.drawImage(infos[i] == LocalMapLocation.BASE ? MapResources.PIN_RED : text ? MapResources.PIN_GREEN : MapResources.PIN_YELLOW, infos[i].x - 6,
+				g.drawImage(infos[i] == LocalMapLocation.BASE ? MapResources.PIN_RED.image() : text ? MapResources.PIN_GREEN.image() : MapResources.PIN_YELLOW.image(), infos[i].x - 6,
 						infos[i].y - 6, null);
 				if (text)
 				{
@@ -149,7 +149,7 @@ public class FriendAreaSelectionMapState extends AbstractState
 					g.setColor(boxgray_inside);
 					int leftpart = infos[i].x - (twidth / 2) - 4;
 					if (leftpart <= 0) leftpart = 0;
-					else if (leftpart + twidth + 8 >= MapResources.LOCALMAP.getWidth()) leftpart = MapResources.LOCALMAP.getWidth() - twidth - 8;
+					else if (leftpart + twidth + 8 >= MapResources.LOCALMAP.image().getWidth()) leftpart = MapResources.LOCALMAP.image().getWidth() - twidth - 8;
 					g.fillRect(leftpart, infos[i].y - 20, twidth + 8, 13);
 					TextRenderer.render(g, infos[i].displayname, leftpart + 4, infos[i].y - 18);
 				}
@@ -183,10 +183,10 @@ public class FriendAreaSelectionMapState extends AbstractState
 		float newcursorx = cursorx, newcursory = cursory;
 		if (movingleft) newcursorx -= cursorspeed;
 		if (movingright) newcursorx += cursorspeed;
-		if (newcursorx >= 0 && newcursorx <= MapResources.LOCALMAP.getWidth()) cursorx = newcursorx;
+		if (newcursorx >= 0 && newcursorx <= MapResources.LOCALMAP.image().getWidth()) cursorx = newcursorx;
 		if (movingdown) newcursory += cursorspeed;
 		if (movingup) newcursory -= cursorspeed;
-		if (newcursory >= 0 && newcursory <= MapResources.LOCALMAP.getHeight()) cursory = newcursory;
+		if (newcursory >= 0 && newcursory <= MapResources.LOCALMAP.image().getHeight()) cursory = newcursory;
 		// Camera X
 		float cameraspeed = 1.5f;
 		float newcamerax = camerax;
@@ -195,9 +195,9 @@ public class FriendAreaSelectionMapState extends AbstractState
 		if (newcamerax < memorywidth / 2)
 		{
 			if (camerax < memorywidth / 2) camerax += cameraspeed;
-		} else if (newcamerax > MapResources.LOCALMAP.getWidth() - (memorywidth / 2))
+		} else if (newcamerax > MapResources.LOCALMAP.image().getWidth() - (memorywidth / 2))
 		{
-			if (camerax > MapResources.LOCALMAP.getWidth() - (memorywidth / 2)) camerax -= cameraspeed;
+			if (camerax > MapResources.LOCALMAP.image().getWidth() - (memorywidth / 2)) camerax -= cameraspeed;
 		} else camerax = newcamerax;
 		// Camera Y
 		float newcameray = cameray;
@@ -206,9 +206,9 @@ public class FriendAreaSelectionMapState extends AbstractState
 		if (newcameray < memoryheight / 2)
 		{
 			if (cameray < memoryheight / 2) cameray += cameraspeed;
-		} else if (newcameray > MapResources.LOCALMAP.getHeight() - (memoryheight / 2))
+		} else if (newcameray > MapResources.LOCALMAP.image().getHeight() - (memoryheight / 2))
 		{
-			if (cameray > MapResources.LOCALMAP.getHeight() - (memoryheight / 2)) cameray -= cameraspeed;
+			if (cameray > MapResources.LOCALMAP.image().getHeight() - (memoryheight / 2)) cameray -= cameraspeed;
 		} else cameray = newcameray;
 	}
 
@@ -239,7 +239,7 @@ public class FriendAreaSelectionMapState extends AbstractState
 	/** Predicate that returns true if the cursor is on the right side of the screen of this state, meaning the UI above should be displayed on the left instead. */
 	public boolean shouldInvertUI()
 	{
-		return cursorx > MapResources.LOCALMAP.getWidth() - (this.memorywidth / 3);
+		return cursorx > MapResources.LOCALMAP.image().getWidth() - (this.memorywidth / 3);
 	}
 
 }

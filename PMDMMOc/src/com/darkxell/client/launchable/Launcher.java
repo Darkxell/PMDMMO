@@ -6,7 +6,7 @@ import com.darkxell.client.discord.DiscordEventHandlerForPMDMMO;
 import com.darkxell.client.mechanics.animation.Animations;
 import com.darkxell.client.resources.images.SpriteFactory;
 import com.darkxell.client.resources.images.Sprites;
-import com.darkxell.client.resources.images.others.FrameResources;
+import com.darkxell.client.resources.images.Sprites.FrameResources;
 import com.darkxell.client.resources.images.pokemon.PokemonPortrait;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
 import com.darkxell.client.resources.music.SoundManager;
