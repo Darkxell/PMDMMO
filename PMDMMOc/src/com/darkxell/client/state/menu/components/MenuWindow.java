@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.Sprites;
-import com.darkxell.client.resources.images.others.MenuHudSpriteset;
+import com.darkxell.client.resources.images.others.MenuStateHudSpriteset;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.language.Message;
 
@@ -26,7 +26,7 @@ public class MenuWindow
 	public MenuWindow(Rectangle dimensions)
 	{
 		this.dimensions = dimensions;
-		Dimension corner = MenuHudSpriteset.cornerSize;
+		Dimension corner = MenuStateHudSpriteset.cornerSize;
 		this.inside = new Rectangle(this.dimensions.x + corner.width, this.dimensions.y + corner.height, this.dimensions.width - corner.width * 2,
 				this.dimensions.height - corner.height * 2);
 	}
@@ -54,8 +54,8 @@ public class MenuWindow
 		if (in == null) this.initColors();
 		boolean hasName = name != null;
 		int font = TextRenderer.height();
-		Dimension corner = MenuHudSpriteset.cornerSize;
-		Dimension cornerName = MenuHudSpriteset.cornerNameSize;
+		Dimension corner = MenuStateHudSpriteset.cornerSize;
+		Dimension cornerName = MenuStateHudSpriteset.cornerNameSize;
 		Rectangle nameInside = new Rectangle(inside.x + cornerName.width, this.dimensions.y - font, (hasName ? TextRenderer.width(name) : 10) + 8, font);
 
 		// Inside

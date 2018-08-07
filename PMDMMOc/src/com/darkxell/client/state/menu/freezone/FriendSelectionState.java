@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.launchable.messagehandlers.MonsterRequestHandler;
 import com.darkxell.client.renderers.TextRenderer;
-import com.darkxell.client.resources.images.others.MenuHudSpriteset;
+import com.darkxell.client.resources.images.others.MenuStateHudSpriteset;
 import com.darkxell.client.resources.music.SoundManager;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.freezone.FreezoneExploreState;
@@ -299,8 +299,8 @@ public class FriendSelectionState extends AbstractMenuState
 				maxWidth = Math.max(maxWidth, TextRenderer.width(((FriendMenuOption) this.currentTab().options()[i]).pokemon.getNickname()));
 		Rectangle main = this.mainWindowDimensions();
 		this.nameWindow = new MenuWindow(
-				new Rectangle((int) main.getMaxX() + 5, (int) main.getMinY(), maxWidth + MenuWindow.MARGIN_X + MenuHudSpriteset.cornerSize.width,
-						TextRenderer.height() + MenuWindow.MARGIN_Y + MenuHudSpriteset.cornerSize.height * 3 / 2));
+				new Rectangle((int) main.getMaxX() + 5, (int) main.getMinY(), maxWidth + MenuWindow.MARGIN_X + MenuStateHudSpriteset.cornerSize.width,
+						TextRenderer.height() + MenuWindow.MARGIN_Y + MenuStateHudSpriteset.cornerSize.height * 3 / 2));
 	}
 
 }

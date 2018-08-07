@@ -6,7 +6,7 @@ import java.awt.event.KeyEvent;
 
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.TextRenderer;
-import com.darkxell.client.resources.images.others.MenuHudSpriteset;
+import com.darkxell.client.resources.images.others.MenuStateHudSpriteset;
 import com.darkxell.client.resources.music.SoundManager;
 import com.darkxell.client.state.dungeon.DungeonState;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
@@ -211,7 +211,7 @@ public class MovesMenuState extends OptionSelectionMenuState
 		if (this.windowInfo == null)
 		{
 			Rectangle r = new Rectangle(this.window.dimensions.x, (int) (this.window.dimensions.getMaxY() + 20), width - 40,
-					MenuHudSpriteset.cornerSize.height * 2 + TextRenderer.height() * 4 + TextRenderer.lineSpacing() * 2);
+					MenuStateHudSpriteset.cornerSize.height * 2 + TextRenderer.height() * 4 + TextRenderer.lineSpacing() * 2);
 			this.windowInfo = new TextWindow(r, this.infoText(), false);
 		}
 		this.windowInfo.render(g, null, width, height);

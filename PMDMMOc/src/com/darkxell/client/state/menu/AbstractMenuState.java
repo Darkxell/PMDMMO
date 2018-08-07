@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.renderers.layers.AbstractGraphiclayer;
-import com.darkxell.client.resources.images.others.MenuHudSpriteset;
+import com.darkxell.client.resources.images.others.MenuStateHudSpriteset;
 import com.darkxell.client.resources.music.SoundManager;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.menu.components.OptionSelectionWindow;
@@ -82,7 +82,7 @@ public abstract class AbstractMenuState extends AbstractState
 			int width = 0;
 			for (MenuOption option : this.options)
 				width = Math.max(width, TextRenderer.width(option.name));
-			width = Math.max(width, TextRenderer.width(this.name) + MenuHudSpriteset.cornerSize.width * 2);
+			width = Math.max(width, TextRenderer.width(this.name) + MenuStateHudSpriteset.cornerSize.width * 2);
 			return width;
 		}
 

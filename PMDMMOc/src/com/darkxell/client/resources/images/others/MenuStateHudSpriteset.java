@@ -6,13 +6,13 @@ import java.awt.image.BufferedImage;
 import com.darkxell.client.resources.images.SpriteSet;
 import com.darkxell.common.util.Direction;
 
-public class MenuHudSpriteset extends SpriteSet
+public class MenuStateHudSpriteset extends SpriteSet
 {
 
 	public static final Dimension cornerNameSize = new Dimension(14, 10);
 	public static final Dimension cornerSize = new Dimension(16, 10);
 
-	public MenuHudSpriteset()
+	public MenuStateHudSpriteset()
 	{
 		super("/hud/menu_hud.png", 32, 64);
 

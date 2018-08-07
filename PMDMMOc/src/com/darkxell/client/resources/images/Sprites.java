@@ -1,8 +1,9 @@
 package com.darkxell.client.resources.images;
 
+import com.darkxell.client.resources.images.others.DungeonHudSpriteset;
 import com.darkxell.client.resources.images.others.FontSpriteSet;
 import com.darkxell.client.resources.images.others.ItemsSpriteset;
-import com.darkxell.client.resources.images.others.MenuHudSpriteset;
+import com.darkxell.client.resources.images.others.MenuStateHudSpriteset;
 import com.darkxell.client.resources.images.pokemon.ShadowSpriteSet;
 import com.darkxell.client.resources.images.tilesets.CommonDungeonTileset;
 import com.darkxell.client.resources.images.tilesets.DungeonMapTileset;
@@ -15,7 +16,7 @@ public final class Sprites
 	public static class Hud
 	{
 		public static final FontSpriteSet font = new FontSpriteSet();
-		public static final MenuHudSpriteset menuHud = new MenuHudSpriteset();
+		public static final MenuStateHudSpriteset menuHud = new MenuStateHudSpriteset();
 
 		public static final Sprite button = new Sprite("/hud/button.png");
 		public static final Sprite portrait = new Sprite("/hud/portrait.png");
@@ -68,6 +69,7 @@ public final class Sprites
 
 	// Dungeon
 	public static final CommonDungeonTileset dungeonCommon = new CommonDungeonTileset();
+	public static final DungeonHudSpriteset dungeonHud = new DungeonHudSpriteset();
 	public static final DungeonMapTileset dungeonMap = new DungeonMapTileset();
 	public static final ItemsSpriteset items = new ItemsSpriteset();
 	public static final ShadowSpriteSet shadows = new ShadowSpriteSet();
