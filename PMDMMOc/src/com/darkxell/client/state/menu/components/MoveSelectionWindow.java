@@ -6,7 +6,7 @@ import java.awt.Rectangle;
 
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.Palette;
-import com.darkxell.client.resources.images.others.MenuHudSpriteset;
+import com.darkxell.client.resources.images.SpriteSets;
 import com.darkxell.client.state.menu.AbstractMenuState.MenuOption;
 import com.darkxell.client.state.menu.dungeon.MovesMenuState;
 import com.darkxell.client.state.menu.dungeon.MovesMenuState.MoveMenuOption;
@@ -33,8 +33,8 @@ public class MoveSelectionWindow extends OptionSelectionWindow
 		TextRenderer.setColor(null);
 
 		if ((this.cursor > 9 || !this.menu.isMain()) && this.menu.currentOption() == option)
-			g.drawImage(this.menu.isMain() ? MenuHudSpriteset.SELECTION_ARROW : MenuHudSpriteset.SELECTED_ARROW,
-					x - MenuHudSpriteset.SELECTION_ARROW.getWidth() - 4, y + TextRenderer.height() / 2 - MenuHudSpriteset.SELECTION_ARROW.getHeight() / 2,
+			g.drawImage(this.menu.isMain() ? SpriteSets.menuHud.selectionArrow() : SpriteSets.menuHud.selectedArrow(),
+					x - SpriteSets.menuHud.selectionArrow().getWidth() - 4, y + TextRenderer.height() / 2 - SpriteSets.menuHud.selectedArrow().getHeight() / 2,
 					null);
 
 		y += TextRenderer.height() + TextRenderer.lineSpacing();

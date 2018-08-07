@@ -10,9 +10,9 @@ import java.util.function.Predicate;
 import com.darkxell.client.launchable.GameSocketEndpoint;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.TextRenderer;
+import com.darkxell.client.resources.images.SpriteSets;
 import com.darkxell.client.resources.images.others.Hud;
 import com.darkxell.client.resources.images.others.MapResources;
-import com.darkxell.client.resources.images.others.MenuHudSpriteset;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.StateManager;
 import com.darkxell.client.state.freezone.FreezoneExploreState;
@@ -132,8 +132,8 @@ public class DungeonSelectionMapState extends AbstractState
 		int temp_height = temp_width * Hud.textwindow.getHeight() / Hud.textwindow.getWidth();
 		Rectangle box = new Rectangle(20, height - temp_height - 20, temp_width, temp_height);
 		g.drawImage(Hud.textwindow, box.x, box.y, box.width, box.height, null);
-		g.drawImage(MenuHudSpriteset.TAB_ARROW_LEFT, box.x + box.width - 45, box.y, null);
-		g.drawImage(MenuHudSpriteset.TAB_ARROW_RIGHT, box.x + box.width - 30, box.y, null);
+		g.drawImage(SpriteSets.menuHud.tabLeft(), box.x + box.width - 45, box.y, null);
+		g.drawImage(SpriteSets.menuHud.tabRight(), box.x + box.width - 30, box.y, null);
 		String dungeonsmarker = (this.cursor + 1) + " / " + this.dungeonslist.size();
 		TextRenderer.render(g, dungeonsmarker, box.x + box.width - 55, box.y + 10);
 

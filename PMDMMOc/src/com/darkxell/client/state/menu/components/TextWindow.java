@@ -5,7 +5,7 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 
 import com.darkxell.client.renderers.TextRenderer;
-import com.darkxell.client.resources.images.others.MenuHudSpriteset;
+import com.darkxell.client.resources.images.SpriteSets;
 import com.darkxell.common.util.language.Message;
 
 public class TextWindow extends MenuWindow
@@ -32,16 +32,17 @@ public class TextWindow extends MenuWindow
 		super.render(g, name, width, height);
 		this.renderText(g, width, height);
 
-		if (this.rightTab) g.drawImage(MenuHudSpriteset.TAB_ARROW_RIGHT, (int) this.inside.getMaxX() - MenuHudSpriteset.TAB_ARROW_RIGHT.getWidth(),
-				this.dimensions.y - MenuHudSpriteset.TAB_ARROW_RIGHT.getHeight() / 3, null);
-		if (this.leftTab) g.drawImage(MenuHudSpriteset.TAB_ARROW_LEFT, (int) this.inside.getMaxX() - MenuHudSpriteset.TAB_ARROW_LEFT.getWidth()
-				- MenuHudSpriteset.TAB_ARROW_RIGHT.getWidth() - 5, this.dimensions.y - MenuHudSpriteset.TAB_ARROW_LEFT.getHeight() / 3, null);
+		if (this.rightTab) g.drawImage(SpriteSets.menuHud.tabRight(), (int) this.inside.getMaxX() - SpriteSets.menuHud.tabRight().getWidth(),
+				this.dimensions.y - SpriteSets.menuHud.tabRight().getHeight() / 3, null);
+		if (this.leftTab) g.drawImage(SpriteSets.menuHud.tabLeft(),
+				(int) this.inside.getMaxX() - SpriteSets.menuHud.tabLeft().getWidth() - SpriteSets.menuHud.tabRight().getWidth() - 5,
+				this.dimensions.y - SpriteSets.menuHud.tabLeft().getHeight() / 3, null);
 
 		if (this.hasNext)
 		{
-			int x = this.dimensions.x - this.dimensions.width / 2 - MenuHudSpriteset.NEXT_WINDOW_ARROW.getWidth() / 2;
-			int y = (int) (this.dimensions.getMaxY() - MenuHudSpriteset.NEXT_WINDOW_ARROW.getHeight() / 2);
-			g.drawImage(MenuHudSpriteset.NEXT_WINDOW_ARROW, x, y, null);
+			int x = this.dimensions.x - this.dimensions.width / 2 - SpriteSets.menuHud.nextWindowArrow().getWidth() / 2;
+			int y = (int) (this.dimensions.getMaxY() - SpriteSets.menuHud.nextWindowArrow().getHeight() / 2);
+			g.drawImage(SpriteSets.menuHud.nextWindowArrow(), x, y, null);
 		}
 	}
 
