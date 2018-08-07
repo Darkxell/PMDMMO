@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.TextRenderer;
-import com.darkxell.client.resources.images.SpriteSets;
+import com.darkxell.client.resources.images.Sprites;
 import com.darkxell.client.resources.images.others.MapResources;
 import com.darkxell.client.resources.music.SoundManager;
 import com.darkxell.client.resources.music.SoundsHolder;
@@ -155,7 +155,7 @@ public class FriendAreaSelectionMapState extends AbstractState
 				}
 			}
 
-		g.drawImage(SpriteSets.menuHud.selectionArrow(), (int) cursorx, (int) cursory, null);
+		g.drawImage(Sprites.menuHud.selectionArrow(), (int) cursorx, (int) cursory, null);
 		// TRANSLATES THE GRAPHICS BACK
 		g.translate(-translateX, -translateY);
 

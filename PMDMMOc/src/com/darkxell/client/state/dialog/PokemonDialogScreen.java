@@ -3,7 +3,7 @@ package com.darkxell.client.state.dialog;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
-import com.darkxell.client.resources.images.others.Hud;
+import com.darkxell.client.resources.images.Sprites;
 import com.darkxell.client.resources.images.pokemon.PokemonPortrait;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.PokemonSpecies;
@@ -54,7 +54,7 @@ public class PokemonDialogScreen extends DialogScreen
 		if (this.pokemon != null)
 		{
 			Rectangle dialogBox = this.parentState.dialogBox();
-			PokemonPortrait.drawPortrait(g, this.pokemon, this.shiny, dialogBox.x + 5, dialogBox.y - Hud.portrait.getHeight() - 5);
+			PokemonPortrait.drawPortrait(g, this.pokemon, this.shiny, dialogBox.x + 5, dialogBox.y - Sprites.portrait.image().getHeight() - 5);
 		}
 	}
 

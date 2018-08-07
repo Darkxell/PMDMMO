@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import com.darkxell.client.resources.images.RegularSpriteSet;
-import com.darkxell.client.resources.images.others.Hud;
+import com.darkxell.client.resources.images.Sprites;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.PokemonSpecies;
 
@@ -26,7 +26,7 @@ public class PokemonPortrait extends RegularSpriteSet
 	public static void drawPortrait(Graphics2D g, PokemonSpecies pokemon, boolean shiny, int x, int y)
 	{
 		g.drawImage(PokemonPortrait.portrait(pokemon, shiny), x + 4, y + 4, null);
-		g.drawImage(Hud.portrait, x, y, null);
+		g.drawImage(Sprites.portrait.image(), x, y, null);
 	}
 
 	public static void load()

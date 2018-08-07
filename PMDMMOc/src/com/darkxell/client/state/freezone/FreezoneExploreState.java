@@ -9,7 +9,7 @@ import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
 import com.darkxell.client.mechanics.freezones.zones.BaseFreezone;
 import com.darkxell.client.renderers.TextRenderer;
-import com.darkxell.client.resources.images.others.Hud;
+import com.darkxell.client.resources.images.Sprites;
 import com.darkxell.client.state.menu.freezone.FreezoneMenuState;
 import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.util.Logger;
@@ -66,7 +66,7 @@ public class FreezoneExploreState extends AbstractFreezoneState
 		{
 			if (this.isMain() && Persistance.currentplayer.canInteract())
 			{
-				g.drawImage(Hud.button, width - 70, 5, null);
+				g.drawImage(Sprites.button.image(), width - 70, 5, null);
 				TextRenderer.render(g, new Message("ui.interact"), width - 50, 10);
 			}
 

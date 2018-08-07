@@ -9,7 +9,7 @@ import com.darkxell.client.launchable.GameSocketEndpoint;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.launchable.crypto.Encryption;
 import com.darkxell.client.mechanics.chat.CustomTextfield;
-import com.darkxell.client.resources.images.others.Hud;
+import com.darkxell.client.resources.images.Sprites;
 import com.darkxell.client.state.OpenningState;
 import com.darkxell.client.state.PlayerLoadingState;
 import com.darkxell.client.state.PlayerLoadingState.PlayerLoadingEndListener;
@@ -145,7 +145,7 @@ public class LoginMainState extends StateManager {
 		int relativemousex = mouseX - offsetx, relativemousey = mouseY - offsety;
 		g.translate(offsetx, offsety);
 		// DRAWS THE LOGIN FACILITIES
-		g.drawImage(Hud.loginframe, 0, 0, null);
+		g.drawImage(Sprites.loginframe.image(), 0, 0, null);
 
 		g.translate(textfield_login.x + 10, textfield_login.y);
 		this.login.render(g, (int) textfield_login.width - 20, (int) textfield_login.height - 15);

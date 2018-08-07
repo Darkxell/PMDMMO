@@ -5,7 +5,7 @@ import javax.swing.JOptionPane;
 import com.darkxell.client.discord.DiscordEventHandlerForPMDMMO;
 import com.darkxell.client.mechanics.animation.Animations;
 import com.darkxell.client.resources.images.SpriteFactory;
-import com.darkxell.client.resources.images.SpriteSets;
+import com.darkxell.client.resources.images.Sprites;
 import com.darkxell.client.resources.images.others.FrameResources;
 import com.darkxell.client.resources.images.pokemon.PokemonPortrait;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
@@ -50,7 +50,7 @@ public class Launcher
 		ItemRegistry.load();
 		TrapRegistry.load();
 		DungeonRegistry.load();
-		SpriteSets.loadCommon();
+		Sprites.loadCommon();
 		PokemonSpritesets.loadData();
 		PokemonPortrait.load();
 		Animations.loadData();

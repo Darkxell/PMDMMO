@@ -5,7 +5,7 @@ import java.awt.Rectangle;
 
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.renderers.layers.AbstractGraphiclayer;
-import com.darkxell.client.resources.images.SpriteSets;
+import com.darkxell.client.resources.images.Sprites;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.dialog.DialogState;
 import com.darkxell.client.ui.Keys.Key;
@@ -109,7 +109,7 @@ public class IntegerSelectionState extends AbstractState
 
 			Rectangle dialog = this.parent.dialogBox();
 			int w = TextRenderer.width(longest) + OptionSelectionWindow.MARGIN_X * 2,
-					h = TextRenderer.height() + OptionSelectionWindow.MARGIN_Y * 3 + SpriteSets.menuHud.nextWindowArrow().getHeight();
+					h = TextRenderer.height() + OptionSelectionWindow.MARGIN_Y * 3 + Sprites.menuHud.nextWindowArrow().getHeight();
 			this.window = new MenuWindow(new Rectangle((int) (dialog.getMaxX() - w), dialog.y - h - 5, w, h));
 			this.window.isOpaque = this.parent.currentScreen().isOpaque;
 			this.updateLogLocation();
@@ -123,12 +123,12 @@ public class IntegerSelectionState extends AbstractState
 		int texty = (int) (inside.y + inside.getHeight() / 2 - TextRenderer.height() / 2);
 		TextRenderer.render(g, this.currentM, this.textx, texty);
 
-		int arrowx = this.textx + this.currentLogLocation - SpriteSets.menuHud.nextWindowArrow().getWidth();
+		int arrowx = this.textx + this.currentLogLocation - Sprites.menuHud.nextWindowArrow().getWidth();
 		int uparrowy = texty - OptionSelectionWindow.MARGIN_Y / 3;
 		int downarrowy = texty + TextRenderer.height() + OptionSelectionWindow.MARGIN_Y / 3;
-		g.drawImage(SpriteSets.menuHud.nextWindowArrow(), arrowx, uparrowy, SpriteSets.menuHud.nextWindowArrow().getWidth(),
-				-SpriteSets.menuHud.nextWindowArrow().getHeight(), null);
-		g.drawImage(SpriteSets.menuHud.nextWindowArrow(), arrowx, downarrowy, null);
+		g.drawImage(Sprites.menuHud.nextWindowArrow(), arrowx, uparrowy, Sprites.menuHud.nextWindowArrow().getWidth(),
+				-Sprites.menuHud.nextWindowArrow().getHeight(), null);
+		g.drawImage(Sprites.menuHud.nextWindowArrow(), arrowx, downarrowy, null);
 	}
 
 	@Override

@@ -8,7 +8,7 @@ import com.darkxell.client.launchable.GameSocketEndpoint;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.launchable.crypto.Encryption;
 import com.darkxell.client.mechanics.chat.CustomTextfield;
-import com.darkxell.client.resources.images.others.Hud;
+import com.darkxell.client.resources.images.Sprites;
 import com.darkxell.client.state.StateManager;
 import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.client.ui.MainUiUtility;
@@ -127,7 +127,7 @@ public class AccountCreationState extends StateManager {
 		int relativemousex = mouseX - offsetx, relativemousey = mouseY - offsety;
 		g.translate(offsetx, offsety);
 		// DRAWS THE ACCOUNT CREATION FACILITIES
-		g.drawImage(Hud.createaccountframe, 0, 0, null);
+		g.drawImage(Sprites.createaccountframe.image(), 0, 0, null);
 
 		g.setColor(Color.RED);
 		g.drawString(errormessage, 155, 143);

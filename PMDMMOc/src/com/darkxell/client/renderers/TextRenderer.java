@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.darkxell.client.resources.Palette;
-import com.darkxell.client.resources.images.SpriteSets;
+import com.darkxell.client.resources.images.Sprites;
 import com.darkxell.client.resources.images.others.FontSpriteSet;
 import com.darkxell.common.util.language.Message;
 
@@ -376,7 +376,7 @@ public class TextRenderer
 				if (c == PMDChar.colorYellow) setColor(Palette.FONT_YELLOW);
 			} else
 			{
-				Image sprite = color == null ? SpriteSets.font.getImg(c) : coloredSprites.get(c);
+				Image sprite = color == null ? Sprites.font.getImg(c) : coloredSprites.get(c);
 				g.drawImage(sprite, x + w, y, (int) (sprite.getWidth(null) * fontSize), (int) (sprite.getHeight(null) * fontSize), null);
 				if (c == PMDChar.tabulation) w += tabWidth(w);
 				else w += width(c);
@@ -445,7 +445,7 @@ public class TextRenderer
 
 			for (PMDChar c : PMDChar.values())
 				if (c.isChar())
-					coloredSprites.put(c, Toolkit.getDefaultToolkit().createImage(new FilteredImageSource(SpriteSets.font.getImg(c).getSource(), filter)));
+					coloredSprites.put(c, Toolkit.getDefaultToolkit().createImage(new FilteredImageSource(Sprites.font.getImg(c).getSource(), filter)));
 		}
 	}
 
