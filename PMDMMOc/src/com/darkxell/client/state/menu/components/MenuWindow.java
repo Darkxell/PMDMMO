@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.Sprites;
-import com.darkxell.client.resources.images.others.MenuStateHudSpriteset;
+import com.darkxell.client.resources.images.hud.MenuStateHudSpriteset;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.language.Message;
 

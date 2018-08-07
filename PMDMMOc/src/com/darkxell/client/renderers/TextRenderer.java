@@ -12,7 +12,7 @@ import java.util.List;
 
 import com.darkxell.client.resources.Palette;
 import com.darkxell.client.resources.images.Sprites;
-import com.darkxell.client.resources.images.others.FontSpriteSet;
+import com.darkxell.client.resources.images.hud.FontSpriteSet;
 import com.darkxell.common.util.language.Message;
 
 public class TextRenderer

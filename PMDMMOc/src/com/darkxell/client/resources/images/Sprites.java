@@ -1,9 +1,10 @@
 package com.darkxell.client.resources.images;
 
-import com.darkxell.client.resources.images.others.DungeonHudSpriteset;
-import com.darkxell.client.resources.images.others.FontSpriteSet;
-import com.darkxell.client.resources.images.others.ItemsSpriteset;
-import com.darkxell.client.resources.images.others.MenuStateHudSpriteset;
+import com.darkxell.client.resources.images.entities.WaterSparklesSpriteSet;
+import com.darkxell.client.resources.images.hud.DungeonHudSpriteset;
+import com.darkxell.client.resources.images.hud.FontSpriteSet;
+import com.darkxell.client.resources.images.hud.ItemsSpriteset;
+import com.darkxell.client.resources.images.hud.MenuStateHudSpriteset;
 import com.darkxell.client.resources.images.pokemon.ShadowSpriteSet;
 import com.darkxell.client.resources.images.tilesets.CommonDungeonTileset;
 import com.darkxell.client.resources.images.tilesets.DungeonMapTileset;
@@ -49,6 +50,26 @@ public final class Sprites
 		public static final Sprite BG5 = new Sprite("/hud/framebackgrounds/5.jpg");
 		public static final Sprite BG6 = new Sprite("/hud/framebackgrounds/6.png");
 		public static final Sprite BG7 = new Sprite("/hud/framebackgrounds/7.jpg");
+	}
+
+	public static class FreezoneEntities
+	{
+
+		public static final RegularSpriteSet YellowFlower = new RegularSpriteSet("/freezones/entities/yellowflower.png", 32, 32, 192, 32);
+		public static final RegularSpriteSet RedFlower = new RegularSpriteSet("/freezones/entities/redflower.png", 32, 32, 192, 32);
+		public static final RegularSpriteSet flag = new RegularSpriteSet("/freezones/entities/flag.png", 32, 8, 192, 8);
+
+		public static final WaterSparklesSpriteSet waterSparkles = new WaterSparklesSpriteSet();
+
+		public static final Sprite cristal_red, cristal_yellow, cristal_lightray;
+
+		static
+		{
+			Sprite cristal = new Sprite("/freezones/entities/cristal.png");
+			cristal_red = SpriteFactory.instance().subSprite(cristal, 1, 54, 56, 81);
+			cristal_yellow = SpriteFactory.instance().subSprite(cristal, 58, 54, 56, 81);
+			cristal_lightray = SpriteFactory.instance().subSprite(cristal, 115, 1, 48, 134);
+		}
 	}
 
 	public static class MapResources

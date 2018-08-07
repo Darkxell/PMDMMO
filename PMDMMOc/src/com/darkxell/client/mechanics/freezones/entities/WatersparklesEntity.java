@@ -4,9 +4,10 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import com.darkxell.client.mechanics.freezones.FreezoneEntity;
-import com.darkxell.client.resources.images.others.FreezoneEntities;
+import com.darkxell.client.resources.images.Sprites.FreezoneEntities;
 
-public class WatersparklesEntity extends FreezoneEntity {
+public class WatersparklesEntity extends FreezoneEntity
+{
 
 	public static final byte TYPE_SIDE = 1;
 	public static final byte TYPE_BOT = 2;
@@ -17,44 +18,48 @@ public class WatersparklesEntity extends FreezoneEntity {
 	private byte state = 0;
 	private byte counter = 0;
 
-	public WatersparklesEntity(double x, double y, byte type) {
+	public WatersparklesEntity(double x, double y, byte type)
+	{
 		super(false, false, x, y);
 		this.type = type;
 	}
 
 	@Override
-	public void onInteract() {
-	}
+	public void onInteract()
+	{}
 
 	@Override
-	public void print(Graphics2D g) {
+	public void print(Graphics2D g)
+	{
 		g.drawImage(getSprite(), (int) (super.posX * 8), (int) (super.posY * 8), null);
 	}
 
 	@Override
-	public void update() {
+	public void update()
+	{
 		++counter;
-		if (counter >= 10) {
+		if (counter >= 10)
+		{
 			counter = 0;
-			if (state >= 5)
-				state = 0;
-			else
-				++state;
+			if (state >= 5) state = 0;
+			else++state;
 		}
 	}
 
-	private BufferedImage getSprite() {
-		switch (type) {
-		case TYPE_SIDE:
-			return FreezoneEntities.watersparkles_side[state];
-		case TYPE_BOT:
-			return FreezoneEntities.watersparkles_bot[state];
-		case TYPE_TOP:
-			return FreezoneEntities.watersparkles_top[state];
-		case TYPE_LONG:
-			return FreezoneEntities.watersparkles_long[state];
-		default:
-			return null;
+	private BufferedImage getSprite()
+	{
+		switch (type)
+		{
+			case TYPE_SIDE:
+				return FreezoneEntities.waterSparkles.side(this.state);
+			case TYPE_BOT:
+				return FreezoneEntities.waterSparkles.bot(this.state);
+			case TYPE_TOP:
+				return FreezoneEntities.waterSparkles.top(this.state);
+			case TYPE_LONG:
+				return FreezoneEntities.waterSparkles.lon(this.state);
+			default:
+				return null;
 		}
 	}
 

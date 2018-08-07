@@ -8,7 +8,7 @@ import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.AbstractRenderer;
 import com.darkxell.client.renderers.MasterDungeonRenderer;
 import com.darkxell.client.resources.images.Sprites;
-import com.darkxell.client.resources.images.others.ItemsSpriteset;
+import com.darkxell.client.resources.images.hud.ItemsSpriteset;
 import com.darkxell.client.resources.images.tilesets.AbstractDungeonTileset;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;

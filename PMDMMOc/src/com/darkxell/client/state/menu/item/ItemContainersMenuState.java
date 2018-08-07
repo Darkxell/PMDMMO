@@ -1,6 +1,6 @@
 package com.darkxell.client.state.menu.item;
 
-import static com.darkxell.client.resources.images.others.ItemsSpriteset.ITEM_SIZE;
+import static com.darkxell.client.resources.images.hud.ItemsSpriteset.ITEM_SIZE;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -12,7 +12,7 @@ import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.launchable.messagehandlers.ItemActionHandler.ItemActionMessageHandler;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.renderers.layers.AbstractGraphiclayer;
-import com.darkxell.client.resources.images.others.MenuStateHudSpriteset;
+import com.darkxell.client.resources.images.hud.MenuStateHudSpriteset;
 import com.darkxell.client.resources.music.SoundManager;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.dialog.DialogScreen;

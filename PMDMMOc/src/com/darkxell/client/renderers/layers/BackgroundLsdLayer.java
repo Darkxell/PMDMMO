@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.RescaleOp;
 import java.util.Random;
 
-import com.darkxell.client.resources.images.others.GraphicalLayersAssets;
+import com.darkxell.client.resources.images.hud.GraphicalLayersAssets;
 
 public class BackgroundLsdLayer extends AbstractGraphiclayer {
 

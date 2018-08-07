@@ -30,6 +30,21 @@ public class SpriteSet extends Sprite
 		return this.sprites.get(id);
 	}
 
+	/** Registers several Sprites in this Spriteset, loaded from a row from the source.
+	 * 
+	 * @param id - The prefix ID of the Sprite. Each final Sprite will have as an id: [prefix][index].
+	 * @param xStart <b>yStart</b> - Where the row starts.
+	 * @param width <b>height</b> - The dimensions of each Sprite.
+	 * @param count - The number of Sprites to create.
+	 * @return The created Sprites. */
+	public Sprite[] createSpriteRow(String id, int xStart, int yStart, int width, int height, int count)
+	{
+		Sprite[] sprites = new Sprite[count];
+		for (int i = 0; i < count; ++i)
+			this.createSprite(id + i, xStart + i * width, yStart, width, height);
+		return sprites;
+	}
+
 	/** @param id - The ID of one of this Spriteset's Sprites.
 	 * @return The Sprite with the input ID. */
 	public Sprite get(String id)

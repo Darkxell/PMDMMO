@@ -9,7 +9,7 @@ import org.jdom2.Element;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.animation.SpritesetAnimation.BackSpriteUsage;
 import com.darkxell.client.mechanics.animation.movement.TackleAnimationMovement;
-import com.darkxell.client.resources.images.others.AnimationSpriteset;
+import com.darkxell.client.resources.images.hud.AnimationSpriteset;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
 import com.darkxell.common.event.stats.StatChangedEvent;
 import com.darkxell.common.item.Item;

@@ -3,7 +3,7 @@ package com.darkxell.client.mechanics.animation;
 import java.awt.Graphics2D;
 import java.awt.Point;
 
-import com.darkxell.client.resources.images.others.AnimationSpriteset;
+import com.darkxell.client.resources.images.hud.AnimationSpriteset;
 
 public class StaticAnimation extends AbstractAnimation
 {
