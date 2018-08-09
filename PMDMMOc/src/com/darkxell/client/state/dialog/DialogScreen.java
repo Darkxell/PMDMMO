@@ -22,7 +22,7 @@ public class DialogScreen
 		SWITCHING;
 	}
 
-	public static final BufferedImage arrow = Sprites.Hud.menuHud.nextWindowArrow();
+	public static final BufferedImage arrow = Sprites.Res_Hud.menuHud.nextWindowArrow();
 	public static final int ARROW_TICK_LENGTH = 20;
 
 	int arrowtick;
@@ -116,7 +116,7 @@ public class DialogScreen
 
 		if (this.lines.isEmpty()) this.reformLines(inside.width);
 
-		g.drawImage(this.isOpaque ? Sprites.Hud.textwindow.image() : Sprites.Hud.textwindow_transparent.image(), dialogBox.x, dialogBox.y, dialogBox.width, dialogBox.height, null);
+		g.drawImage(this.isOpaque ? Sprites.Res_Hud.textwindow.image() : Sprites.Res_Hud.textwindow_transparent.image(), dialogBox.x, dialogBox.y, dialogBox.width, dialogBox.height, null);
 		Shape c = g.getClip();
 		g.setClip(inside);
 		int length = 0;

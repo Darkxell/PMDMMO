@@ -3,7 +3,7 @@ package com.darkxell.client.mechanics.freezones.entities;
 import java.awt.Graphics2D;
 
 import com.darkxell.client.mechanics.freezones.FreezoneEntity;
-import com.darkxell.client.resources.images.Sprites.FreezoneEntities;
+import com.darkxell.client.resources.images.Sprites.Res_FreezoneEntities;
 import com.darkxell.client.resources.images.tilesets.AbstractFreezoneTileset;
 
 public class AnimatedFlowerEntity extends FreezoneEntity
@@ -27,7 +27,7 @@ public class AnimatedFlowerEntity extends FreezoneEntity
 	@Override
 	public void print(Graphics2D g)
 	{
-		g.drawImage(color ? FreezoneEntities.YellowFlower.getImg(this.state) : FreezoneEntities.RedFlower.getImg(this.state),
+		g.drawImage(color ? Res_FreezoneEntities.YellowFlower.getImg(this.state) : Res_FreezoneEntities.RedFlower.getImg(this.state),
 				(int) (super.posX * AbstractFreezoneTileset.TILE_SIZE - 16), (int) (super.posY * AbstractFreezoneTileset.TILE_SIZE - 24), null);
 	}
 

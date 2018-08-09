@@ -66,7 +66,7 @@ public class FreezoneExploreState extends AbstractFreezoneState
 		{
 			if (this.isMain() && Persistance.currentplayer.canInteract())
 			{
-				g.drawImage(Sprites.Hud.button.image(), width - 70, 5, null);
+				g.drawImage(Sprites.Res_Hud.button.image(), width - 70, 5, null);
 				TextRenderer.render(g, new Message("ui.interact"), width - 50, 10);
 			}
 

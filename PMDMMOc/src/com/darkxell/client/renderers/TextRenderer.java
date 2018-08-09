@@ -376,7 +376,7 @@ public class TextRenderer
 				if (c == PMDChar.colorYellow) setColor(Palette.FONT_YELLOW);
 			} else
 			{
-				Image sprite = color == null ? Sprites.Hud.font.getImg(c) : coloredSprites.get(c);
+				Image sprite = color == null ? Sprites.Res_Hud.font.getImg(c) : coloredSprites.get(c);
 				g.drawImage(sprite, x + w, y, (int) (sprite.getWidth(null) * fontSize), (int) (sprite.getHeight(null) * fontSize), null);
 				if (c == PMDChar.tabulation) w += tabWidth(w);
 				else w += width(c);
@@ -445,7 +445,7 @@ public class TextRenderer
 
 			for (PMDChar c : PMDChar.values())
 				if (c.isChar())
-					coloredSprites.put(c, Toolkit.getDefaultToolkit().createImage(new FilteredImageSource(Sprites.Hud.font.getImg(c).getSource(), filter)));
+					coloredSprites.put(c, Toolkit.getDefaultToolkit().createImage(new FilteredImageSource(Sprites.Res_Hud.font.getImg(c).getSource(), filter)));
 		}
 	}
 

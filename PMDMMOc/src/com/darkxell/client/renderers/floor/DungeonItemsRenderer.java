@@ -7,7 +7,7 @@ import java.awt.Graphics2D;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.AbstractRenderer;
 import com.darkxell.client.renderers.MasterDungeonRenderer;
-import com.darkxell.client.resources.images.Sprites;
+import com.darkxell.client.resources.images.Sprites.Res_Dungeon;
 import com.darkxell.client.resources.images.hud.ItemsSpriteset;
 import com.darkxell.client.resources.images.tilesets.AbstractDungeonTileset;
 import com.darkxell.common.dungeon.floor.Floor;
@@ -38,7 +38,7 @@ public class DungeonItemsRenderer extends AbstractRenderer
 				if (tile != null)
 				{
 					if (tile.getItem() != null && tile.type() == TileType.GROUND)
-						g.drawImage(Sprites.items.sprite(tile.getItem()), tile.x * TILE_SIZE + ITEM_POS, tile.y * TILE_SIZE + ITEM_POS, null);
+						g.drawImage(Res_Dungeon.items.sprite(tile.getItem()), tile.x * TILE_SIZE + ITEM_POS, tile.y * TILE_SIZE + ITEM_POS, null);
 				}
 			}
 	}

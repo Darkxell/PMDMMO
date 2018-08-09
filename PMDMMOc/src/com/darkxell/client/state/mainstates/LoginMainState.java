@@ -145,7 +145,7 @@ public class LoginMainState extends StateManager {
 		int relativemousex = mouseX - offsetx, relativemousey = mouseY - offsety;
 		g.translate(offsetx, offsety);
 		// DRAWS THE LOGIN FACILITIES
-		g.drawImage(Sprites.Hud.loginframe.image(), 0, 0, null);
+		g.drawImage(Sprites.Res_Hud.loginframe.image(), 0, 0, null);
 
 		g.translate(textfield_login.x + 10, textfield_login.y);
 		this.login.render(g, (int) textfield_login.width - 20, (int) textfield_login.height - 15);

@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.image.RescaleOp;
 
 import com.darkxell.client.mechanics.freezones.FreezoneEntity;
-import com.darkxell.client.resources.images.Sprites.FreezoneEntities;
+import com.darkxell.client.resources.images.Sprites.Res_FreezoneEntities;
 
 public class CrystalEntity extends FreezoneEntity
 {
@@ -30,15 +30,15 @@ public class CrystalEntity extends FreezoneEntity
 	public void print(Graphics2D g)
 	{
 		// Draws the cristal
-		g.drawImage(FreezoneEntities.cristal_yellow.image(), (int) (super.posX * 8 - 30), (int) (super.posY * 8 - 75), null);
+		g.drawImage(Res_FreezoneEntities.cristal_yellow.image(), (int) (super.posX * 8 - 30), (int) (super.posY * 8 - 75), null);
 		float[] scales = { 1f, 1f, 1f, color };
 		float[] offsets = new float[4];
 		RescaleOp rop = new RescaleOp(scales, offsets, null);
-		g.drawImage(FreezoneEntities.cristal_red.image(), rop, (int) (super.posX * 8 - 30), (int) (super.posY * 8 - 75));
+		g.drawImage(Res_FreezoneEntities.cristal_red.image(), rop, (int) (super.posX * 8 - 30), (int) (super.posY * 8 - 75));
 		// Draws the light beam
 		int l = (int) light;
 		for (int i = 0; i < l; ++i)
-			g.drawImage(FreezoneEntities.cristal_lightray.image(), (int) (super.posX * 8 - 24), (int) (super.posY * 8 - 258) + (3 * i), null);
+			g.drawImage(Res_FreezoneEntities.cristal_lightray.image(), (int) (super.posX * 8 - 24), (int) (super.posY * 8 - 258) + (3 * i), null);
 	}
 
 	@Override

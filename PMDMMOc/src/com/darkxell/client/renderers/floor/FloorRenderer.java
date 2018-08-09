@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.AbstractRenderer;
 import com.darkxell.client.renderers.MasterDungeonRenderer;
-import com.darkxell.client.resources.images.Sprites;
+import com.darkxell.client.resources.images.Sprites.Res_Dungeon;
 import com.darkxell.client.resources.images.tilesets.FloorDungeonTileset;
 import com.darkxell.client.resources.images.tilesets.RegularFloorDungeonTileset;
 import com.darkxell.common.dungeon.floor.Floor;
@@ -40,9 +40,9 @@ public class FloorRenderer extends AbstractRenderer
 				BufferedImage sprite = null;
 
 				if (tile == null) sprite = this.tileset.defaultTile();
-				else if (tile.trapRevealed) sprite = Sprites.dungeonCommon.trap(tile.trap.id);
-				else if (tile.type() == TileType.STAIR) sprite = Sprites.dungeonCommon.stairs(this.floor.dungeon.dungeon().direction);
-				else if (tile.type() == TileType.WARP_ZONE) sprite = Sprites.dungeonCommon.warp();
+				else if (tile.trapRevealed) sprite = Res_Dungeon.dungeonCommon.trap(tile.trap.id);
+				else if (tile.type() == TileType.STAIR) sprite = Res_Dungeon.dungeonCommon.stairs(this.floor.dungeon.dungeon().direction);
+				else if (tile.type() == TileType.WARP_ZONE) sprite = Res_Dungeon.dungeonCommon.warp();
 				else sprite = this.tileset.tile(tile);
 
 				g.drawImage(sprite, x * TILE_SIZE, y * TILE_SIZE, null);

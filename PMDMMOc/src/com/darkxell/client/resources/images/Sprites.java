@@ -16,7 +16,16 @@ import com.darkxell.client.ui.Frame.FrameIconSprite;
 public final class Sprites
 {
 
-	public static class FrameResources
+	public static class Res_Dungeon
+	{
+		public static final CommonDungeonTileset dungeonCommon = new CommonDungeonTileset();
+		public static final DungeonHudSpriteset dungeonHud = new DungeonHudSpriteset();
+		public static final DungeonMapTileset dungeonMap = new DungeonMapTileset();
+		public static final ItemsSpriteset items = new ItemsSpriteset();
+		public static final ShadowSpriteSet shadows = new ShadowSpriteSet();
+	}
+
+	public static class Res_Frame
 	{
 		public static final Sprite BG1 = new Sprite("/hud/framebackgrounds/1.jpg");
 		public static final Sprite BG2 = new Sprite("/hud/framebackgrounds/2.jpg");
@@ -44,7 +53,7 @@ public final class Sprites
 		}
 	}
 
-	public static class FreezoneEntities
+	public static class Res_FreezoneEntities
 	{
 		public static final Sprite cristal_red, cristal_yellow, cristal_lightray;
 		public static final RegularSpriteSet flag = new RegularSpriteSet("/freezones/entities/flag.png", 32, 8, 192, 8);
@@ -63,13 +72,13 @@ public final class Sprites
 		}
 	}
 
-	public static class GraphicalLayersAssets
+	public static class Res_GraphicalLayers
 	{
 		public static final LSDSpriteSet LSD = new LSDSpriteSet();
 		public static final SeaSpriteSet Sea = new SeaSpriteSet();
 	}
 
-	public static class Hud
+	public static class Res_Hud
 	{
 		public static final Sprite button = new Sprite("/hud/button.png");
 		public static final Sprite createaccountframe = new Sprite("/hud/create.png");
@@ -84,7 +93,7 @@ public final class Sprites
 		public static final Sprite textwindow_transparent = new Sprite("/hud/textwindow_transparent.png");
 	}
 
-	public static class MapResources
+	public static class Res_Map
 	{
 		public static final Sprite GLOBALMAP = new Sprite("/hud/map/globalmap.png");
 		public static final Sprite LOCALMAP = new Sprite("/hud/map/localmap.png");
@@ -99,13 +108,6 @@ public final class Sprites
 			PIN_GREEN = pinsBase.createSprite("green", 36, 0, 12, 12);
 		}
 	}
-
-	// Dungeon
-	public static final CommonDungeonTileset dungeonCommon = new CommonDungeonTileset();
-	public static final DungeonHudSpriteset dungeonHud = new DungeonHudSpriteset();
-	public static final DungeonMapTileset dungeonMap = new DungeonMapTileset();
-	public static final ItemsSpriteset items = new ItemsSpriteset();
-	public static final ShadowSpriteSet shadows = new ShadowSpriteSet();
 
 	/** Loads SpriteSets used in the whole project. */
 	public static void loadCommon()
