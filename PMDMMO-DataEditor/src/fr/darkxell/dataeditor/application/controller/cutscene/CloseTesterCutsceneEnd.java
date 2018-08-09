@@ -25,6 +25,7 @@ public class CloseTesterCutsceneEnd extends CutsceneEnd
 	public void onCutsceneEnd()
 	{
 		Launcher.setProcessingProfile(Launcher.PROFILE_UNDEFINED);
+		Persistance.soundmanager.setBackgroundMusic(null);
 		Persistance.frame.dispose();
 	}
 

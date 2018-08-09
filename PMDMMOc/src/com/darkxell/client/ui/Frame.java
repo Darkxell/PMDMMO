@@ -22,12 +22,12 @@ public class Frame extends JFrame implements WindowListener
 		{
 			super(path);
 		}
-		
+
 		@Override
 		protected void loaded(BufferedImage img)
 		{
 			super.loaded(img);
-			Persistance.frame.setIconImage(this.image());
+			if (Persistance.frame != null) Persistance.frame.setIconImage(this.image());
 		}
 
 	}
