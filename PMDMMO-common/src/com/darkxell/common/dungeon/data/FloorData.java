@@ -14,7 +14,7 @@ public class FloorData
 	public static final byte NO_SHADOW = 0, NORMAL_SHADOW = 1, DENSE_SHADOW = 2;
 	public static final String XML_ROOT = "d";
 
-	/** The base Money of the Floor. Used to generate piles of Poké. */
+	/** The base Money of the Floor. Used to generate piles of Pokedollars. */
 	private int baseMoney;
 	/** The density of Buried Items. */
 	private short buriedItemDensity;

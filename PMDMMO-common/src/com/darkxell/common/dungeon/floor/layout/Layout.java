@@ -88,7 +88,7 @@ public abstract class Layout
 	/** Creates the rooms. */
 	protected abstract void generateRooms();
 
-	/** @return The quantity of Poké in a single stack. */
+	/** @return The quantity of Pokedollars in a single stack. */
 	protected int getMoneyQuantity()
 	{
 		final int[] moneyTable = new int[] { 4, 6, 10, 14, 22, 26, 37, 38, 46, 58, 62, 74, 82, 86, 94, 106, 118, 122, 134, 142, 146, 158, 166, 178, 194, 202,

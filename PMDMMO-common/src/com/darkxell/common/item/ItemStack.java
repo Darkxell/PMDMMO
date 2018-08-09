@@ -90,7 +90,7 @@ public class ItemStack implements Comparable<ItemStack>, HasID
 		return this.item().name();
 	}
 
-	/** The number of Items in this Stack. Almost always 1 except for Poké, Gravelerock and similar items. */
+	/** The number of Items in this Stack. Almost always 1 except for Pokedollars, Gravelerock and similar items. */
 	public long quantity()
 	{
 		return this.data.quantity;
