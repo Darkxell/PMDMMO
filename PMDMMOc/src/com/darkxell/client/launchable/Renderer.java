@@ -3,6 +3,8 @@ package com.darkxell.client.launchable;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 
+import com.darkxell.client.resources.images.SpriteFactory;
+
 public class Renderer implements Runnable {
 
 	public static final int UPS = 60;
@@ -37,6 +39,15 @@ public class Renderer implements Runnable {
 		this.timer = 0;
 		this.framesCurrentSecond = 0;
 		this.fps = 0;
+
+		try
+		{
+			while (SpriteFactory.instance().hasLoadingSprites())
+				Thread.sleep(5);
+		} catch (InterruptedException e1)
+		{
+			e1.printStackTrace();
+		}
 
 		while (Launcher.isRunning && Launcher.getProcessingProfile() == Launcher.PROFILE_UNCAPPED) {
 			this.render();

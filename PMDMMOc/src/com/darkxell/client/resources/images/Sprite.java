@@ -31,6 +31,11 @@ public class Sprite
 		if (doLoad) this.image = SpriteFactory.instance().load(this, this.path, width, height);
 	}
 
+	public void dispose()
+	{
+		SpriteFactory.instance().dispose(this.path);
+	}
+
 	/** @return The Image held in this Sprite. */
 	public BufferedImage image()
 	{

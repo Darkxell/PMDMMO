@@ -99,6 +99,26 @@ public class SpriteFactory implements Runnable
 		return img;
 	}
 
+	/** Shortcut to quickly get an Image. Will register the Image to be loaded if it's not already.
+	 * 
+	 * @param image - The path to the Image.
+	 * @return The Image with the input path if it's loaded, a default image else. */
+	public BufferedImage getQuick(String image)
+	{
+		return this.getQuick(image, -1, -1);
+	}
+
+	/** Shortcut to quickly get an Image. Will register the Image to be loaded if it's not already.
+	 * 
+	 * @param image - The path to the Image.
+	 * @param width - The width of the Image.
+	 * @param height - The height of the Image. May be -1 if the dimensions are unknown or don't matter. These dimensions are used only to create a default Image with dimensions matching the desired Image, <b>the loaded Image will not have its dimensions set to these input dimensions.</b>
+	 * @return The Image with the input path if it's loaded, a default image else. */
+	public BufferedImage getQuick(String image, int width, int height)
+	{
+		return this.load(null, image, width, height);
+	}
+
 	/** @return <code>true</code> if the factory is currently loading sprites. */
 	public boolean hasLoadingSprites()
 	{
@@ -169,12 +189,14 @@ public class SpriteFactory implements Runnable
 				BufferedImage img = Res.getBase(path);
 				if (img != null) this.loaded.put(path, img);
 				this.requested.removeFirst();
-				ArrayList<Sprite> requesters = new ArrayList<>(this.requesters.remove(path)); // Put into new ArrayList to be thread-safe.
+				ArrayList<Sprite> requesters = new ArrayList<>(); // Put into new ArrayList to be thread-safe.
+				if (this.requesters.containsKey(path)) requesters.addAll(this.requesters.remove(path));
 				for (int s = 0; s < requesters.size(); ++s)
 					requesters.get(s).loaded(img);
 				if (this.subsprites.containsKey(path))
 				{
-					ArrayList<SubSprite> subsprites = new ArrayList<>(this.subsprites.remove(path)); // Put into new ArrayList to be thread-safe.
+					ArrayList<SubSprite> subsprites = new ArrayList<>(); // Put into new ArrayList to be thread-safe.
+					if (this.subsprites.containsKey(path))subsprites.addAll(this.subsprites.remove(path));
 					for (int s = 0; s < subsprites.size(); ++s)
 					{
 						SubSprite sub = subsprites.get(s);

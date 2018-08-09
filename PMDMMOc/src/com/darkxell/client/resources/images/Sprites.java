@@ -23,6 +23,9 @@ public final class Sprites
 		public static final DungeonMapTileset dungeonMap = new DungeonMapTileset();
 		public static final ItemsSpriteset items = new ItemsSpriteset();
 		public static final ShadowSpriteSet shadows = new ShadowSpriteSet();
+
+		static void load()
+		{}
 	}
 
 	public static class Res_Frame
@@ -51,6 +54,9 @@ public final class Sprites
 			box_SW = SpriteFactory.instance().subSprite(source, 0, 4, 7, 3);
 			box_W = SpriteFactory.instance().subSprite(source, 0, 3, 7, 1);
 		}
+
+		static void load()
+		{}
 	}
 
 	public static class Res_FreezoneEntities
@@ -70,12 +76,18 @@ public final class Sprites
 			cristal_yellow = SpriteFactory.instance().subSprite(cristal, 58, 54, 56, 81);
 			cristal_lightray = SpriteFactory.instance().subSprite(cristal, 115, 1, 48, 134);
 		}
+
+		static void load()
+		{}
 	}
 
 	public static class Res_GraphicalLayers
 	{
 		public static final LSDSpriteSet LSD = new LSDSpriteSet();
 		public static final SeaSpriteSet Sea = new SeaSpriteSet();
+
+		static void load()
+		{}
 	}
 
 	public static class Res_Hud
@@ -91,6 +103,9 @@ public final class Sprites
 		public static final Sprite proceedaccountframe = new Sprite("/hud/create2.png");
 		public static final Sprite textwindow = new Sprite("/hud/textwindow.png");
 		public static final Sprite textwindow_transparent = new Sprite("/hud/textwindow_transparent.png");
+
+		static void load()
+		{}
 	}
 
 	public static class Res_Map
@@ -107,11 +122,21 @@ public final class Sprites
 			PIN_BLUE = pinsBase.createSprite("blue", 24, 0, 12, 12);
 			PIN_GREEN = pinsBase.createSprite("green", 36, 0, 12, 12);
 		}
+
+		static void load()
+		{}
 	}
 
 	/** Loads SpriteSets used in the whole project. */
 	public static void loadCommon()
-	{}
+	{
+		Res_Dungeon.load();
+		Res_Frame.load();
+		Res_FreezoneEntities.load();
+		Res_GraphicalLayers.load();
+		Res_Hud.load();
+		Res_Map.load();
+	}
 
 	private Sprites()
 	{}

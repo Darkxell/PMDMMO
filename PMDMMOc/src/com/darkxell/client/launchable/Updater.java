@@ -1,5 +1,7 @@
 package com.darkxell.client.launchable;
 
+import com.darkxell.client.resources.images.SpriteFactory;
+
 public class Updater implements Runnable {
 
 	public static final int targetUPS = 60;
@@ -26,6 +28,15 @@ public class Updater implements Runnable {
 		this.timePerUpdate = 1000000000 / targetUPS;
 		this.updatesCurrentSecond = 0;
 		this.ups = 0;
+
+		try
+		{
+			while (SpriteFactory.instance().hasLoadingSprites())
+				Thread.sleep(5);
+		} catch (InterruptedException e1)
+		{
+			e1.printStackTrace();
+		}
 
 		while (Launcher.isRunning && Launcher.getProcessingProfile() == Launcher.PROFILE_UNCAPPED) {
 			this.update();
