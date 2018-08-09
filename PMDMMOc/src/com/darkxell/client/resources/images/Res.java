@@ -1,4 +1,4 @@
-package com.darkxell.client.resources;
+package com.darkxell.client.resources.images;
 
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
@@ -24,7 +24,7 @@ public class Res
 	}
 
 	/** Gets an image from the res folder as a BufferedImage. */
-	public static BufferedImage getBase(String path)
+	static BufferedImage getBase(String path)
 	{
 		BufferedImage img = null;
 
@@ -47,7 +47,7 @@ public class Res
 	}
 
 	/** Gets a part of a buffered Image. This method is safe: if the dimensions specified are out of the image's bound, this will throw no exception but may return unexpected results. */
-	public static BufferedImage createimage(BufferedImage image, int x, int y, int width, int height)
+	static BufferedImage createimage(BufferedImage image, int x, int y, int width, int height)
 	{
 		if (width > image.getWidth() || height > image.getHeight()) return image;
 		if (x + width > image.getWidth()) x = image.getWidth() - width;
@@ -61,7 +61,7 @@ public class Res
 	 * @param y the Y position of the sprite in the player.png file.
 	 * @param size the size of the sprite. The sprite is a square, and the x/y coordinates are its top left corner.
 	 * @param spritesAmmount the amount of sprites in the array. Also the length of the array, obviously. */
-	public static BufferedImage[] getSpriteRow(BufferedImage sheet, int x, int y, int size, int spritesAmmount)
+	static BufferedImage[] getSpriteRow(BufferedImage sheet, int x, int y, int size, int spritesAmmount)
 	{
 		return getSpriteRectRow(sheet, x, y, size, size, spritesAmmount);
 	}
@@ -69,7 +69,7 @@ public class Res
 	/** Basically the same a s a getspriterow command, but the sprite doesn't have to be a square.
 	 * 
 	 * @see <code>getSpriteRow()</code> */
-	public static BufferedImage[] getSpriteRectRow(BufferedImage sheet, int x, int y, int width, int height, int spritesAmmount)
+	static BufferedImage[] getSpriteRectRow(BufferedImage sheet, int x, int y, int width, int height, int spritesAmmount)
 	{
 		BufferedImage[] toreturn = new BufferedImage[spritesAmmount];
 		for (int i = 0; i < toreturn.length; i++)

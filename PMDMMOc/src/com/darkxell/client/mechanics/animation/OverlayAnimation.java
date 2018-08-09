@@ -61,7 +61,7 @@ public class OverlayAnimation extends AbstractAnimation
 		if (this.sprites != null)
 		{
 			for (SpritesetAnimation animation : this.sprites)
-				animation.update();
+				if (animation != null) animation.update();
 		}
 
 		if (this.listened.isOver())

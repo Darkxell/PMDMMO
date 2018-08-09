@@ -1,9 +1,13 @@
 package fr.darkxell.dataeditor.application.util;
 
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 
-import com.darkxell.client.resources.Res;
+import javax.imageio.ImageIO;
+
+import com.darkxell.client.resources.images.Res;
 
 import fr.darkxell.dataeditor.application.DataEditor;
 import javafx.scene.Parent;
@@ -18,7 +22,16 @@ public class FXUtils
 
 	public static BufferedImage getIcon(String path)
 	{
-		if (!icons.containsKey(path)) icons.put(path, Res.getBase(path));
+		InputStream is = Res.class.getResourceAsStream(path);
+		BufferedImage img = null;
+		try
+		{
+			img = ImageIO.read(is);
+		} catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+		if (!icons.containsKey(path)) icons.put(path, img);
 		return icons.get(path);
 	}
 

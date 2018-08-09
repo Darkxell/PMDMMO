@@ -2,7 +2,7 @@ package com.darkxell.client.resources.images.tilesets;
 
 import java.awt.image.BufferedImage;
 
-import com.darkxell.client.resources.Res;
+import com.darkxell.client.resources.images.Res;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.util.Logger;

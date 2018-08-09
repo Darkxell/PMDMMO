@@ -34,6 +34,7 @@ public class DataEditor extends Application
 
 	public static void main(String[] args)
 	{
+		Launcher.isRunning = true;
 		ClientSettings.load();
 		Logger.loadClient();
 		Lang.load();
@@ -50,7 +51,6 @@ public class DataEditor extends Application
 		Persistance.soundmanager = new SoundManager();
 		Persistance.player = Util.createDefaultPlayer();
 
-		Launcher.isRunning = true;
 		new DiscordEventHandlerForPMDMMO("Developing game", "main_develop").start();
 
 		Cutscenes.load();
