@@ -84,7 +84,8 @@ public abstract class FreezoneMap
 						tilesets.put(tileset, AbstractFreezoneTileset.getTileSet(tileset, this.mapWidth * TILE_SIZE, this.mapHeight * TILE_SIZE));
 						if (defaulttileset == null) defaulttileset = tilesets.get(tileset);
 					}
-					this.tiles[refferingTileID].sprite = tilesets.get(tileset).get(refferingTileID);
+					this.tiles[refferingTileID].sprite = tilesets.get(tileset).get(Integer.parseInt(element.getAttributeValue("xo")) / TILE_SIZE,
+							Integer.parseInt(element.getAttributeValue("yo")) / TILE_SIZE);
 				}
 
 			}
