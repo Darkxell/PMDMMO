@@ -21,7 +21,7 @@ public class RegularSpriteSet extends SpriteSet
 		this.spriteWidth = spriteWidth;
 		this.spriteHeight = spriteHeight;
 		this.defaultSprite = new Sprite(SpriteFactory.instance().getDefault(spriteWidth, spriteHeight));
-		if (width != -1 && height != -1) this.onLoad();
+		if (this.isLoaded() || (width != -1 && height != -1)) this.onLoad();
 	}
 
 	/** @return The number of columns in this SpriteSet. May return -1 if it isn't loaded yet. */

@@ -61,4 +61,10 @@ public class SpriteSet extends Sprite
 		return s.image();
 	}
 
+	/** @return The number of Sprites in this SpriteSet. */
+	public int spriteCount()
+	{
+		return this.sprites.size();
+	}
+
 }

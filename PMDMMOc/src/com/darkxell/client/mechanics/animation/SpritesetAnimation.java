@@ -2,7 +2,7 @@ package com.darkxell.client.mechanics.animation;
 
 import java.awt.Graphics2D;
 
-import com.darkxell.client.resources.images.hud.AnimationSpriteset;
+import com.darkxell.client.resources.images.RegularSpriteSet;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
 public class SpritesetAnimation extends PokemonAnimation
@@ -18,23 +18,23 @@ public class SpritesetAnimation extends PokemonAnimation
 		yes;
 	}
 
-	public final BackSpriteUsage backSprites;
+	public final BackSpriteUsage backSpriteUsage;
 	/** Gravity values for this Animation. Defaults to half this Spriteset's size. */
 	public final int gravityX, gravityY;
 	/** The duration of each sprite. */
 	public final int spriteDuration;
 	/** The order of sprites. -1 for no sprite. */
-	private final int[] sprites;
+	private int[] sprites;
 	/** The spriteset to use. */
-	public final AnimationSpriteset spriteset;
+	public final RegularSpriteSet spriteset;
 
-	public SpritesetAnimation(DungeonPokemon target, AnimationSpriteset spriteset, int[] sprites, BackSpriteUsage backsprites, int spriteDuration, int gravityX,
-			int gravityY, AnimationEndListener listener)
+	public SpritesetAnimation(DungeonPokemon target, RegularSpriteSet spriteset, BackSpriteUsage backSpriteUsage, int[] sprites, int spriteDuration,
+			int gravityX, int gravityY, AnimationEndListener listener)
 	{
 		super(target, sprites.length * spriteDuration, listener);
 		this.spriteset = spriteset;
+		this.backSpriteUsage = backSpriteUsage;
 		this.sprites = sprites;
-		this.backSprites = backsprites;
 		this.spriteDuration = spriteDuration;
 		this.gravityX = gravityX;
 		this.gravityY = gravityY;
@@ -43,10 +43,10 @@ public class SpritesetAnimation extends PokemonAnimation
 	private void draw(Graphics2D g, boolean back)
 	{
 		int index = this.index();
-		if (back && this.backSprites == BackSpriteUsage.yes) index += this.spriteset.spriteCount() / 2;
+		if (back && this.backSpriteUsage == BackSpriteUsage.yes) index += this.spriteset.spriteCount() / 2;
 
-		if (index != -1 && ((back && this.backSprites != BackSpriteUsage.no) || (!back && this.backSprites != BackSpriteUsage.only)))
-			g.drawImage(this.spriteset.getSprite(index), (int) this.x - this.gravityX, (int) (this.y - this.gravityY), null);
+		if (index != -1 && ((back && this.backSpriteUsage != BackSpriteUsage.no) || (!back && this.backSpriteUsage != BackSpriteUsage.only)))
+			g.drawImage(this.spriteset.getImg(index), (int) this.x - this.gravityX, (int) (this.y - this.gravityY), null);
 	}
 
 	public double getX()
@@ -61,6 +61,7 @@ public class SpritesetAnimation extends PokemonAnimation
 
 	public int index()
 	{
+		if (this.sprites.length == 0) return -1;
 		int i = this.tick() % this.duration / this.spriteDuration;
 		if (i >= this.sprites.length) return -1;
 		return this.sprites[i];

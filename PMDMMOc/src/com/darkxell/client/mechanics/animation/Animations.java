@@ -9,7 +9,7 @@ import org.jdom2.Element;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.animation.SpritesetAnimation.BackSpriteUsage;
 import com.darkxell.client.mechanics.animation.movement.TackleAnimationMovement;
-import com.darkxell.client.resources.images.hud.AnimationSpriteset;
+import com.darkxell.client.resources.images.RegularSpriteSet;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
 import com.darkxell.common.event.stats.StatChangedEvent;
 import com.darkxell.common.item.Item;
@@ -135,20 +135,20 @@ public final class Animations
 			int height = XMLUtils.getAttribute(xml, "height", XMLUtils.getAttribute(defaultXml, "height", 0));
 
 			BackSpriteUsage backsprites = BackSpriteUsage.valueOf(XMLUtils.getAttribute(xml, "backsprites", XMLUtils.getAttribute(xml, "backsprites", "no")));
-			AnimationSpriteset spriteset = AnimationSpriteset.getSpriteset(sprites + ".png", width, height);
+			RegularSpriteSet spriteset = new RegularSpriteSet(sprites + ".png", width, height, -1, -1);
 			int x = XMLUtils.getAttribute(xml, "x", XMLUtils.getAttribute(defaultXml, "x", width / 2));
 			int y = XMLUtils.getAttribute(xml, "y", XMLUtils.getAttribute(defaultXml, "y", height / 2));
 			int spriteDuration = XMLUtils.getAttribute(xml, "spriteduration", XMLUtils.getAttribute(defaultXml, "spriteduration", 2));
 			int[] spriteOrder = XMLUtils.readIntArray(xml);
 			if (spriteOrder.length == 0) spriteOrder = XMLUtils.readIntArray(defaultXml);
-			if (spriteOrder.length == 0)
+			if (spriteOrder.length == 0 && spriteset.isLoaded())
 			{
 				spriteOrder = new int[backsprites == BackSpriteUsage.yes ? spriteset.spriteCount() / 2 : spriteset.spriteCount()];
 				for (int i = 0; i < spriteOrder.length; ++i)
 					spriteOrder[i] = i;
 			}
 
-			a = new SpritesetAnimation(target, spriteset, spriteOrder, backsprites, spriteDuration, x, y, listener);
+			a = new SpritesetAnimation(target, spriteset, backsprites, spriteOrder, spriteDuration, x, y, listener);
 		}
 
 		a.sound = XMLUtils.getAttribute(xml, "sound", XMLUtils.getAttribute(defaultXml, "sound", "null"));

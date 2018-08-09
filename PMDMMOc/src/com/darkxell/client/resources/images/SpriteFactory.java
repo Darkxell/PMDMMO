@@ -87,7 +87,7 @@ public class SpriteFactory implements Runnable
 	{
 		if (width <= 0 || height <= 0) return this.defaultImg;
 
-		BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+		BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB_PRE);
 		Graphics2D g = img.createGraphics();
 
 		int cols = width / this.defaultImg.getWidth();
@@ -168,21 +168,18 @@ public class SpriteFactory implements Runnable
 				String path = this.requested.getFirst();
 
 				BufferedImage img = Res.getBase(path);
-				if (img != null)
+				if (img != null) this.loaded.put(path, img);
+				this.requested.removeFirst();
+				ArrayList<Sprite> requesters = new ArrayList<>(this.requesters.remove(path)); // Put into new ArrayList to be thread-safe.
+				for (int s = 0; s < requesters.size(); ++s)
+					requesters.get(s).loaded(img);
+				if (this.subsprites.containsKey(path))
 				{
-					this.loaded.put(path, img);
-					this.requested.removeFirst();
-					ArrayList<Sprite> requesters = new ArrayList<>(this.requesters.remove(path)); // Put into new ArrayList to be thread-safe.
-					for (int s = 0; s < requesters.size(); ++s)
-						requesters.get(s).loaded(img);
-					if (this.subsprites.containsKey(path))
+					ArrayList<SubSprite> subsprites = new ArrayList<>(this.subsprites.remove(path)); // Put into new ArrayList to be thread-safe.
+					for (int s = 0; s < subsprites.size(); ++s)
 					{
-						ArrayList<SubSprite> subsprites = new ArrayList<>(this.subsprites.remove(path)); // Put into new ArrayList to be thread-safe.
-						for (int s = 0; s < subsprites.size(); ++s)
-						{
-							SubSprite sub = subsprites.get(s);
-							sub.sprite.loaded(Res.createimage(this.get(path), sub.x, sub.y, sub.w, sub.h));
-						}
+						SubSprite sub = subsprites.get(s);
+						sub.sprite.loaded(Res.createimage(this.get(path), sub.x, sub.y, sub.w, sub.h));
 					}
 				}
 
