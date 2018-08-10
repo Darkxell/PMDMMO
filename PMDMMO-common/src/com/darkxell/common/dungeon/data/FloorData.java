@@ -110,6 +110,11 @@ public class FloorData
 		return this.floors;
 	}
 
+	public boolean hasCustomTileset()
+	{
+		return this.terrainSpriteset() == -1;
+	}
+
 	public boolean isBossFloor()
 	{
 		return this.isBossFloor;

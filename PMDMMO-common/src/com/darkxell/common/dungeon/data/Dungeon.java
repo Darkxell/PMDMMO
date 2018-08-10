@@ -115,8 +115,9 @@ public class Dungeon implements Comparable<Dungeon>
 	}
 
 	public Dungeon(int id, int floorCount, boolean direction, double monsterHouseChance, boolean recruits, int timeLimit, int stickyChance, int linkedTo,
-			ArrayList<DungeonEncounter> pokemon, ArrayList<DungeonItemGroup> items, ArrayList<DungeonItemGroup> shopItems, ArrayList<DungeonItemGroup> buriedItems,
-			ArrayList<DungeonTrapGroup> traps, ArrayList<FloorData> floorData, HashMap<Integer, FloorSet> weather, int mapx, int mapy)
+			ArrayList<DungeonEncounter> pokemon, ArrayList<DungeonItemGroup> items, ArrayList<DungeonItemGroup> shopItems,
+			ArrayList<DungeonItemGroup> buriedItems, ArrayList<DungeonTrapGroup> traps, ArrayList<FloorData> floorData, HashMap<Integer, FloorSet> weather,
+			int mapx, int mapy)
 	{
 		this.id = id;
 		this.floorCount = floorCount;
@@ -182,12 +183,18 @@ public class Dungeon implements Comparable<Dungeon>
 		return new DungeonExploration(this.id, seed);
 	}
 
-	public DungeonEncounter randomEncounter(Random random, int floor)
+	public ArrayList<DungeonEncounter> pokemon(int floor)
 	{
-		ArrayList<DungeonEncounter> candidates = new ArrayList<DungeonEncounter>(this.pokemon);
-		candidates.removeIf((DungeonEncounter candidate) -> {
+		ArrayList<DungeonEncounter> encounters = new ArrayList<DungeonEncounter>(this.pokemon);
+		encounters.removeIf((DungeonEncounter candidate) -> {
 			return !candidate.floors.contains(floor);
 		});
+		return encounters;
+	}
+
+	public DungeonEncounter randomEncounter(Random random, int floor)
+	{
+		ArrayList<DungeonEncounter> candidates = this.pokemon(floor);
 		return RandomUtil.random(candidates, random);
 	}
 

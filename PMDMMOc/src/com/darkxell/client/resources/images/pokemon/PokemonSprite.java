@@ -86,26 +86,26 @@ public class PokemonSprite
 	private float counter = 0;
 	private PokemonSpriteState defaultState = PokemonSpriteState.IDLE;
 	private Direction facing = Direction.SOUTH;
-	public final AbstractPokemonSpriteset pointer;
+	public final PokemonSpriteset pointer;
 	/** When true, if in a repeatable state, will reset to idle state at the end of the current animation. Else, will keep on the same animation. */
 	private boolean resetToDefaultOnFinish = false;
 	private byte shadowColor = NEUTRAL_SHADOW;
 	private PokemonSpriteState state = PokemonSpriteState.IDLE;
 	private float tickSpeed = 1;
 
-	public PokemonSprite(AbstractPokemonSpriteset pointer)
+	public PokemonSprite(PokemonSpriteset pointer)
 	{
 		this.pointer = pointer;
 	}
 
 	public PokemonSpriteFrame getCurrentFrame()
 	{
-		return this.pointer.getSprite(this.state, this.facing, (int) this.counter);
+		return this.pointer.getFrame(this.state, this.facing, (int) this.counter);
 	}
 
 	public BufferedImage getCurrentSprite()
 	{
-		return this.getCurrentFrame().getSprite();
+		return this.pointer.getImg(this.getCurrentFrame().frameID);
 	}
 
 	public Direction getFacingDirection()

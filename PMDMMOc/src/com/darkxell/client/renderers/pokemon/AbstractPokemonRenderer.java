@@ -79,7 +79,7 @@ public class AbstractPokemonRenderer extends AbstractRenderer
 
 			int xPos = (int) this.drawX(), yPos = (int) this.drawY();
 
-			BufferedImage shadow = this.sprite.pointer.hasBigShadow ? Res_Dungeon.shadows.getBig(this.sprite.getShadowColor())
+			BufferedImage shadow = this.sprite.pointer.data.hasBigShadow ? Res_Dungeon.shadows.getBig(this.sprite.getShadowColor())
 					: Res_Dungeon.shadows.getSmall(this.sprite.getShadowColor());
 			g.drawImage(shadow, xPos - shadow.getWidth() / 2 + frame.shadowX, yPos + TILE_SIZE * 2 / 5 - shadow.getHeight() + frame.shadowY, null);
 

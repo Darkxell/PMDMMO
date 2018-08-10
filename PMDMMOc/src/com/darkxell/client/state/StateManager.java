@@ -12,6 +12,7 @@ import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.event.ClientEventProcessor;
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
 import com.darkxell.client.mechanics.freezones.Freezones;
+import com.darkxell.client.resources.images.SpriteLoader;
 import com.darkxell.client.state.dungeon.DungeonEndState;
 import com.darkxell.client.state.dungeon.NextFloorState;
 import com.darkxell.client.state.freezone.FreezoneExploreState;
@@ -120,6 +121,7 @@ public abstract class StateManager {
 		Persistance.dungeon = DungeonRegistry.find(dungeonID).newInstance(seed);
 		Persistance.dungeon.eventProcessor = new ClientEventProcessor(Persistance.dungeon);
 		Persistance.dungeon.addPlayer(Persistance.player);
+		SpriteLoader.loadDungeon(Persistance.dungeon);
 		Persistance.floor = Persistance.dungeon.initiateExploration();
 		Persistance.stateManager.setState(new NextFloorState(fadeOutState, 1));
 	}

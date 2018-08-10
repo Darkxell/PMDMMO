@@ -127,17 +127,6 @@ public final class Sprites
 		{}
 	}
 
-	/** Loads SpriteSets used in the whole project. */
-	public static void loadCommon()
-	{
-		Res_Dungeon.load();
-		Res_Frame.load();
-		Res_FreezoneEntities.load();
-		Res_GraphicalLayers.load();
-		Res_Hud.load();
-		Res_Map.load();
-	}
-
 	private Sprites()
 	{}
 
