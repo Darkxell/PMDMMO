@@ -14,7 +14,7 @@ import com.darkxell.common.util.Logger;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonObject;
 
-/** The travel of Pokémon. */
+/** The travel of Pokemon. */
 public class PokemonTravelEvent extends DungeonEvent implements Communicable
 {
 
@@ -125,7 +125,7 @@ public class PokemonTravelEvent extends DungeonEvent implements Communicable
 			throw e;
 		} catch (Exception e)
 		{
-			throw new JsonReadingException("Wrong value for Pokémon ID: " + value.get("pokemon"));
+			throw new JsonReadingException("Wrong value for Pokemon ID: " + value.get("pokemon"));
 		}
 		try
 		{

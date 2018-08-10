@@ -12,7 +12,7 @@ public class ExperienceGeneratedEvent extends DungeonEvent
 
 	/** The experience gained. */
 	public int experience;
-	/** The Player whose Pokémon will gain experience. */
+	/** The Player whose Pokemon will gain experience. */
 	public final Player player;
 
 	public ExperienceGeneratedEvent(Floor floor, Player player)

@@ -8,7 +8,7 @@ import java.util.HashSet;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.AbstractRenderer;
 import com.darkxell.client.renderers.MasterDungeonRenderer;
-import com.darkxell.client.resources.images.tilesets.CommonDungeonTileset;
+import com.darkxell.client.resources.images.Sprites.Res_Dungeon;
 import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
@@ -46,7 +46,7 @@ public class GridRenderer extends AbstractRenderer
 			{
 				tile = this.floor.tileAt(x, y);
 				if (tile != null && tile.type() != TileType.WALL && tile.type() != TileType.WALL_END)
-					g.drawImage(CommonDungeonTileset.INSTANCE.grid(faced.contains(tile)), tile.x * TILE_SIZE, tile.y * TILE_SIZE, null);
+					g.drawImage(Res_Dungeon.dungeonCommon.grid(faced.contains(tile)), tile.x * TILE_SIZE, tile.y * TILE_SIZE, null);
 			}
 	}
 

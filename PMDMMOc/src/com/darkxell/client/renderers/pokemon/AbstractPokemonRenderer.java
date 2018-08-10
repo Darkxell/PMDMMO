@@ -12,20 +12,19 @@ import com.darkxell.client.mechanics.animation.AbstractAnimation;
 import com.darkxell.client.mechanics.animation.PokemonAnimation;
 import com.darkxell.client.renderers.AbstractRenderer;
 import com.darkxell.client.renderers.MasterDungeonRenderer;
-import com.darkxell.client.renderers.TextRenderer;
+import com.darkxell.client.resources.images.Sprites.Res_Dungeon;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSpriteFrame;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
-import com.darkxell.client.resources.images.pokemon.ShadowSprites;
 import com.darkxell.client.resources.images.tilesets.AbstractDungeonTileset;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.Logger;
 
-/** Renders a Pokémon. This Renderer's Coordinates' units are Tiles. */
+/** Renders a Pokemon. This Renderer's Coordinates' units are Tiles. */
 public class AbstractPokemonRenderer extends AbstractRenderer
 {
 
-	/** Renders a Pokémon at the input x, y (centered) coordinates. width and height are the dimensions of the draw area. */
+	/** Renders a Pokemon at the input x, y (centered) coordinates. width and height are the dimensions of the draw area. */
 	public static void render(Graphics2D g, PokemonSprite sprite, int x, int y)
 	{
 		PokemonSpriteFrame frame = sprite.getCurrentFrame();
@@ -34,15 +33,6 @@ public class AbstractPokemonRenderer extends AbstractRenderer
 		int xPos = x - s.getWidth() / 2 + frame.spriteX, yPos = y - s.getHeight() / 2 + frame.spriteY;
 
 		g.drawImage(s, (frame.isFlipped ? s.getWidth() : 0) + xPos, yPos, (frame.isFlipped ? -1 : 1) * s.getWidth(), s.getHeight(), null);
-
-		int h = sprite.getHealthChange();
-		if (h != 0)
-		{
-			String text = (h < 0 ? "" : "+") + Integer.toString(h);
-			xPos = x - TextRenderer.width(text) / 2;
-			yPos = y - sprite.getHealthPos() - TextRenderer.height() / 2;
-			TextRenderer.render(g, text, xPos, yPos, true);
-		}
 	}
 
 	private final ArrayList<PokemonAnimation> animations = new ArrayList<PokemonAnimation>();
@@ -89,8 +79,8 @@ public class AbstractPokemonRenderer extends AbstractRenderer
 
 			int xPos = (int) this.drawX(), yPos = (int) this.drawY();
 
-			BufferedImage shadow = this.sprite.pointer.hasBigShadow ? ShadowSprites.instance.getBig(this.sprite.getShadowColor())
-					: ShadowSprites.instance.getSmall(this.sprite.getShadowColor());
+			BufferedImage shadow = this.sprite.pointer.data.hasBigShadow ? Res_Dungeon.shadows.getBig(this.sprite.getShadowColor())
+					: Res_Dungeon.shadows.getSmall(this.sprite.getShadowColor());
 			g.drawImage(shadow, xPos - shadow.getWidth() / 2 + frame.shadowX, yPos + TILE_SIZE * 2 / 5 - shadow.getHeight() + frame.shadowY, null);
 
 			for (PokemonAnimation animation : this.animations)

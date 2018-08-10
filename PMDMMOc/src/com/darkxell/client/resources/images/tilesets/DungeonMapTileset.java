@@ -2,74 +2,69 @@ package com.darkxell.client.resources.images.tilesets;
 
 import java.awt.image.BufferedImage;
 
-public class DungeonMapTileset extends AbstractTileset
-{
+import com.darkxell.client.resources.images.RegularSpriteSet;
 
-	public static final DungeonMapTileset INSTANCE = new DungeonMapTileset();
+public class DungeonMapTileset extends RegularSpriteSet
+{
 
 	public DungeonMapTileset()
 	{
-		super("/tilesets/dungeon/map.png", 4, 4);
+		super("/tilesets/dungeon/map.png", 4, 20, 20);
 	}
 
 	public BufferedImage ally()
 	{
-		return this.tileAt(2, 0);
+		return this.getImg(2, 0);
 	}
 
 	public BufferedImage enemy()
 	{
-		return this.tileAt(0, 1);
+		return this.getImg(0, 1);
 	}
 
 	public BufferedImage ground()
 	{
-		return this.tileAt(0, 2);
+		return this.getImg(0, 2);
 	}
 
 	public BufferedImage item()
 	{
-		return this.tileAt(4, 0);
+		return this.getImg(4, 0);
 	}
 
 	public BufferedImage other()
 	{
-		return this.tileAt(3, 0);
+		return this.getImg(3, 0);
 	}
 
 	public BufferedImage outlaw()
 	{
-		return this.tileAt(1, 1);
+		return this.getImg(1, 1);
 	}
 
 	public BufferedImage player()
 	{
-		return this.tileAt(0, 0);
+		return this.getImg(0, 0);
 	}
 
 	public BufferedImage stairs()
 	{
-		return this.tileAt(2, 2);
-	}
-
-	private BufferedImage tileAt(int x, int y)
-	{
-		return this.SPRITES[x + y * 5];
+		return this.getImg(2, 2);
 	}
 
 	public BufferedImage trap()
 	{
-		return this.tileAt(3, 2);
+		return this.getImg(3, 2);
 	}
 
 	public BufferedImage warpzone()
 	{
-		return this.tileAt(4, 2);
+		return this.getImg(4, 2);
 	}
 
 	public BufferedImage wonder()
 	{
-		return this.tileAt(1, 2);
+		return this.getImg(1, 2);
 	}
 
 }

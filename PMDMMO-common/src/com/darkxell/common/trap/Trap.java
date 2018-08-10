@@ -24,7 +24,7 @@ public abstract class Trap
 		return new Message("trap." + this.id);
 	}
 
-	/** Called when a Pokémon steps on this Trap. */
+	/** Called when a Pokemon steps on this Trap. */
 	public void onPokemonStep(Floor floor, DungeonPokemon pokemon, ArrayList<DungeonEvent> events)
 	{
 		events.add(

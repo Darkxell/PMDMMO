@@ -2,9 +2,9 @@ package com.darkxell.common.dungeon.floor.layout;
 
 import java.awt.Point;
 
-import com.darkxell.common.dungeon.floor.Room;
-import com.darkxell.common.dungeon.floor.SquareRoom;
 import com.darkxell.common.dungeon.floor.TileType;
+import com.darkxell.common.dungeon.floor.room.Room;
+import com.darkxell.common.dungeon.floor.room.SquareRoom;
 
 /** A Layout with random rooms in a grid-like pattern. */
 public class GridRoomsLayout extends Layout {

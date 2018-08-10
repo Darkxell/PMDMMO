@@ -10,7 +10,7 @@ import java.awt.image.BufferedImage;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.Palette;
-import com.darkxell.client.resources.images.others.DungeonHudSpriteset;
+import com.darkxell.client.resources.images.Sprites.Res_Dungeon;
 import com.darkxell.client.state.dungeon.DungeonState.DungeonSubState;
 import com.darkxell.client.state.menu.components.MenuWindow;
 import com.darkxell.client.state.menu.dungeon.DungeonMenuState;
@@ -77,7 +77,7 @@ public class ActionSelectionState extends DungeonSubState
 	private void drawArrow(Graphics2D g, int width, int height, Direction direction)
 	{
 		Point p = direction.move(0, 0);
-		BufferedImage img = DungeonHudSpriteset.instance.getArrow(direction);
+		BufferedImage img = Res_Dungeon.dungeonHud.getArrow(direction);
 		double rotation = (ROTATION_COUNTER_MAX + this.rotationCounter) * 1d / ROTATION_COUNTER_MAX * 3 / 4;
 
 		DungeonPokemon leader = Persistance.player.getDungeonLeader();

@@ -15,9 +15,11 @@ import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.RandomUtil;
 
+/** State in which the Pokemon explores the Floor. */
 public class AIStateExplore extends AIState
 {
 
+	/** Current Tile to reach. */
 	private Tile currentDestination;
 
 	public AIStateExplore(AI ai)
@@ -31,14 +33,17 @@ public class AIStateExplore extends AIState
 		this.currentDestination = startingDestination;
 	}
 
+	/** Finds the new destination to go to. */
 	private void findNewDestination()
 	{
 		Direction facing = this.ai.pokemon.facing();
-		ArrayList<Tile> candidates;
+		ArrayList<Tile> candidates; // Finding candidate Tiles
 
+		// If in Room, candidates are exits
 		if (this.ai.pokemon.tile().isInRoom()) candidates = this.ai.floor.room(this.ai.pokemon.tile()).exits();
 		else
 		{
+			// Else candidates are furthest visible Tiles
 			candidates = AIUtils.adjacentReachableTiles(this.ai.floor, this.ai.pokemon);
 			if (candidates.size() == 0)
 			{
@@ -87,7 +92,10 @@ public class AIStateExplore extends AIState
 	@Override
 	public DungeonEvent takeAction()
 	{
+		// If destination reached or not set, find a new one.
 		if (this.ai.pokemon.tile() == this.currentDestination || this.currentDestination == null) this.findNewDestination();
+
+		// Try to move towards the destination.
 		Direction dir = AIUtils.direction(this.ai.pokemon, this.currentDestination);
 		if (dir == null || !this.ai.pokemon.canMove(this.ai.floor))
 		{

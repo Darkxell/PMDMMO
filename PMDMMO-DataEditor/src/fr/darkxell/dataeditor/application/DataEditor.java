@@ -5,11 +5,12 @@ import com.darkxell.client.launchable.ClientSettings;
 import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.animation.Animations;
-import com.darkxell.client.renderers.TextRenderer;
+import com.darkxell.client.resources.images.SpriteFactory;
+import com.darkxell.client.resources.images.SpriteLoader;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
 import com.darkxell.client.resources.music.SoundManager;
 import com.darkxell.client.resources.music.SoundsHolder;
-import com.darkxell.common.dungeon.DungeonRegistry;
+import com.darkxell.common.dungeon.data.DungeonRegistry;
 import com.darkxell.common.item.ItemRegistry;
 import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.PokemonRegistry;
@@ -25,8 +26,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import net.arikia.dev.drpc.DiscordRPC;
-import net.arikia.dev.drpc.DiscordRichPresence;
 
 public class DataEditor extends Application
 {
@@ -35,24 +34,24 @@ public class DataEditor extends Application
 
 	public static void main(String[] args)
 	{
+		Launcher.isRunning = true;
 		ClientSettings.load();
 		Logger.loadClient();
 		Lang.load();
+		SpriteFactory.load();
 		PokemonRegistry.load();
 		MoveRegistry.load();
 		ItemRegistry.load();
 		TrapRegistry.load();
 		DungeonRegistry.load();
+		SpriteLoader.loadCommon();
 		PokemonSpritesets.loadData();
 		Animations.loadData();
-		TextRenderer.load();
 		SoundsHolder.load("../PMDMMOc/");
 		Persistance.soundmanager = new SoundManager();
 		Persistance.player = Util.createDefaultPlayer();
 
-		DiscordRPC.discordInitialize("463408543572426762", DiscordEventHandlerForPMDMMO.createHandler(), true);
-		DiscordRichPresence rich = new DiscordRichPresence.Builder("Developing game").setBigImage("main_develop", "").build();
-		DiscordRPC.discordUpdatePresence(rich);
+		new DiscordEventHandlerForPMDMMO("Developing game", "main_develop").start();
 
 		Cutscenes.load();
 

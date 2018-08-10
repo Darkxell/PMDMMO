@@ -16,7 +16,7 @@ import com.darkxell.client.state.dungeon.DungeonState;
 import com.darkxell.client.state.map.AbstractDisplayMap;
 import com.darkxell.client.state.map.LocalMap;
 import com.darkxell.client.ui.Frame;
-import com.darkxell.common.dungeon.DungeonInstance;
+import com.darkxell.common.dungeon.DungeonExploration;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.player.Player;
 
@@ -47,7 +47,7 @@ public abstract class Persistance {
 	public static ComplexDialog currentDialog = null;
 
 	// DUNGEON RELATED OBJECTS
-	public static DungeonInstance dungeon;
+	public static DungeonExploration dungeon;
 	public static DungeonState dungeonState;
 	public static MasterDungeonRenderer dungeonRenderer;
 	public static Floor floor;

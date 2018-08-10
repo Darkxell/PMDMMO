@@ -1,7 +1,7 @@
 package com.darkxell.common.dungeon.floor.layout;
 
-import com.darkxell.common.dungeon.floor.Room;
-import com.darkxell.common.dungeon.floor.SquareRoom;
+import com.darkxell.common.dungeon.floor.room.Room;
+import com.darkxell.common.dungeon.floor.room.SquareRoom;
 
 /** A single room using the hole floor, always a Monster house. */
 public class SingleRoomLayout extends Layout

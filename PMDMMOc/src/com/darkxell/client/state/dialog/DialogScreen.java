@@ -9,8 +9,7 @@ import java.util.List;
 
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.renderers.TextRenderer.PMDChar;
-import com.darkxell.client.resources.images.MenuHudSpriteset;
-import com.darkxell.client.resources.images.others.Hud;
+import com.darkxell.client.resources.images.Sprites;
 import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.util.language.Message;
 
@@ -23,7 +22,7 @@ public class DialogScreen
 		SWITCHING;
 	}
 
-	public static final BufferedImage arrow = MenuHudSpriteset.NEXT_WINDOW_ARROW;
+	public static final BufferedImage arrow = Sprites.Res_Hud.menuHud.nextWindowArrow();
 	public static final int ARROW_TICK_LENGTH = 20;
 
 	int arrowtick;
@@ -117,7 +116,7 @@ public class DialogScreen
 
 		if (this.lines.isEmpty()) this.reformLines(inside.width);
 
-		g.drawImage(this.isOpaque ? Hud.textwindow : Hud.textwindow_transparent, dialogBox.x, dialogBox.y, dialogBox.width, dialogBox.height, null);
+		g.drawImage(this.isOpaque ? Sprites.Res_Hud.textwindow.image() : Sprites.Res_Hud.textwindow_transparent.image(), dialogBox.x, dialogBox.y, dialogBox.width, dialogBox.height, null);
 		Shape c = g.getClip();
 		g.setClip(inside);
 		int length = 0;
@@ -128,7 +127,7 @@ public class DialogScreen
 			int x = inside.x;
 			if (this.isCentered) x += inside.getWidth() / 2 - TextRenderer.width(line) / 2;
 
-			TextRenderer.render(g, line, x, inside.y - this.offset + i * (TextRenderer.height() + TextRenderer.lineSpacing()), false);
+			TextRenderer.render(g, line, x, inside.y - this.offset + i * (TextRenderer.height() + TextRenderer.lineSpacing()));
 			length += count;
 		}
 		g.setClip(c);

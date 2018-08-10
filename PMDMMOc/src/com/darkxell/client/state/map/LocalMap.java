@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.Palette;
-import com.darkxell.client.resources.images.others.MapResources;
+import com.darkxell.client.resources.images.Sprites.Res_Map;
 import com.darkxell.common.zones.LocalMapLocation;
 
 public class LocalMap extends AbstractDisplayMap {
@@ -19,9 +19,9 @@ public class LocalMap extends AbstractDisplayMap {
 		Graphics2D g2 = this.canvas.createGraphics();
 		int offsetx = this.canvas.getWidth() / 2 - currentlocation.x,
 				offsety = this.canvas.getHeight() / 2 - currentlocation.y;
-		g2.drawImage(MapResources.LOCALMAP, offsetx, offsety, null);
+		g2.drawImage(Res_Map.LOCALMAP.image(), offsetx, offsety, null);
 		for (LocalMapLocation loc : LocalMapLocation.values())
-			g2.drawImage(currentlocation == loc ? MapResources.PIN_RED : MapResources.PIN_YELLOW, offsetx + loc.x,
+			g2.drawImage(currentlocation == loc ? Res_Map.PIN_RED.image() : Res_Map.PIN_YELLOW.image(), offsetx + loc.x,
 					offsety + loc.y, null);
 		g2.setColor(Palette.TRANSPARENT_GRAY);
 		g2.fillRect(0, this.canvas.getHeight() - 20, this.canvas.getWidth(), 20);

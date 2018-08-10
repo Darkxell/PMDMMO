@@ -11,8 +11,8 @@ import com.darkxell.client.mechanics.cutscene.end.EnterDungeonCutsceneEnd;
 import com.darkxell.client.mechanics.cutscene.end.LoadFreezoneCutsceneEnd;
 import com.darkxell.client.mechanics.cutscene.end.PlayCutsceneCutsceneEnd;
 import com.darkxell.client.mechanics.cutscene.end.ResumeExplorationCutsceneEnd;
-import com.darkxell.common.dungeon.Dungeon;
-import com.darkxell.common.dungeon.DungeonRegistry;
+import com.darkxell.common.dungeon.data.Dungeon;
+import com.darkxell.common.dungeon.data.DungeonRegistry;
 import com.darkxell.common.zones.FreezoneInfo;
 
 import fr.darkxell.dataeditor.application.controller.cutscene.CutsceneEndController.CutsceneEndMode;

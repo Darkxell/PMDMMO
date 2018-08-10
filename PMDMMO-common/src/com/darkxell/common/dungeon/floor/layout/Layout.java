@@ -4,10 +4,11 @@ import java.awt.Point;
 import java.util.Random;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.dungeon.floor.Room;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
+import com.darkxell.common.dungeon.floor.room.Room;
 import com.darkxell.common.item.Item;
+import com.darkxell.common.item.ItemEffects;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.trap.TrapRegistry;
 import com.darkxell.common.util.RandomUtil;
@@ -87,7 +88,7 @@ public abstract class Layout
 	/** Creates the rooms. */
 	protected abstract void generateRooms();
 
-	/** @return The quantity of Poké in a single stack. */
+	/** @return The quantity of Pokedollars in a single stack. */
 	protected int getMoneyQuantity()
 	{
 		final int[] moneyTable = new int[] { 4, 6, 10, 14, 22, 26, 37, 38, 46, 58, 62, 74, 82, 86, 94, 106, 118, 122, 134, 142, 146, 158, 166, 178, 194, 202,
@@ -121,7 +122,7 @@ public abstract class Layout
 			Tile tile = this.floor.randomEmptyTile(false, false, TileType.WALL, this.random);
 			Item item = this.floor.randomBuriedItem(this.random);
 			int quantity = 0;
-			if (item.id == Item.POKE) quantity = this.getMoneyQuantity();
+			if (item.effect() == ItemEffects.Pokedollars) quantity = this.getMoneyQuantity();
 			else if (item.isStackable) quantity = RandomUtil.nextGaussian(10, 7, this.random);
 
 			tile.setItem(new ItemStack(item.id).setQuantity(quantity));
@@ -141,7 +142,7 @@ public abstract class Layout
 			Tile tile = this.floor.randomEmptyTile(true, false, TileType.GROUND, this.random);
 			Item item = this.floor.randomItem(this.random);
 			int quantity = 0;
-			if (item.id == Item.POKE) quantity = this.getMoneyQuantity();
+			if (item.effect() == ItemEffects.Pokedollars) quantity = this.getMoneyQuantity();
 			else if (item.isStackable) quantity = RandomUtil.nextGaussian(10, 7, this.random);
 			if (quantity <= 0) quantity = 1;
 
@@ -177,7 +178,7 @@ public abstract class Layout
 		}
 	}
 
-	/** Summons Pokémon. */
+	/** Summons Pokemon. */
 	protected void summonPokemon()
 	{}
 

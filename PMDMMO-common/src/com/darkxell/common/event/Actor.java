@@ -72,7 +72,7 @@ public class Actor
 
 	/** Called at each subturn. Should advance calculations.
 	 * 
-	 * @return true if this Pokémon acts during this subturn. */
+	 * @return true if this Pokemon acts during this subturn. */
 	public boolean subTurn()
 	{
 		++this.actionTick;

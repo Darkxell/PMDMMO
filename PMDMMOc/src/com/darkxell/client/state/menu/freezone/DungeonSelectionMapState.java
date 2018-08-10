@@ -10,15 +10,14 @@ import java.util.function.Predicate;
 import com.darkxell.client.launchable.GameSocketEndpoint;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.TextRenderer;
-import com.darkxell.client.resources.images.MenuHudSpriteset;
-import com.darkxell.client.resources.images.others.Hud;
-import com.darkxell.client.resources.images.others.MapResources;
+import com.darkxell.client.resources.images.Sprites;
+import com.darkxell.client.resources.images.Sprites.Res_Map;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.StateManager;
 import com.darkxell.client.state.freezone.FreezoneExploreState;
 import com.darkxell.client.ui.Keys.Key;
-import com.darkxell.common.dungeon.Dungeon;
-import com.darkxell.common.dungeon.DungeonRegistry;
+import com.darkxell.common.dungeon.data.Dungeon;
+import com.darkxell.common.dungeon.data.DungeonRegistry;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.language.Message;
@@ -118,9 +117,9 @@ public class DungeonSelectionMapState extends AbstractState
 
 		g.translate(translateX, translateY);
 		// DRAWS THE MAP
-		g.drawImage(MapResources.GLOBALMAP, 0, 0, null);
+		g.drawImage(Res_Map.GLOBALMAP.image(), 0, 0, null);
 		for (int i = 0; i < dungeonslist.size(); ++i)
-			g.drawImage(i == cursor ? MapResources.PIN_BLUE : MapResources.PIN_YELLOW, dungeonslist.get(i).mapx, dungeonslist.get(i).mapy, null);
+			g.drawImage(i == cursor ? Res_Map.PIN_BLUE.image() : Res_Map.PIN_YELLOW.image(), dungeonslist.get(i).mapx, dungeonslist.get(i).mapy, null);
 		// TRANSLATES THE GRAPHICS BACK
 		g.translate(-translateX, -translateY);
 		// DRAWS THE HUD OVER THE MAP
@@ -129,11 +128,11 @@ public class DungeonSelectionMapState extends AbstractState
 		TextRenderer.render(g, new Message("dungeonmap.return"), textxpos, 40);
 
 		int temp_width = width - 40;
-		int temp_height = temp_width * Hud.textwindow.getHeight() / Hud.textwindow.getWidth();
+		int temp_height = temp_width * Sprites.Res_Hud.textwindow.image().getHeight() / Sprites.Res_Hud.textwindow.image().getWidth();
 		Rectangle box = new Rectangle(20, height - temp_height - 20, temp_width, temp_height);
-		g.drawImage(Hud.textwindow, box.x, box.y, box.width, box.height, null);
-		g.drawImage(MenuHudSpriteset.TAB_ARROW_LEFT, box.x + box.width - 45, box.y, null);
-		g.drawImage(MenuHudSpriteset.TAB_ARROW_RIGHT, box.x + box.width - 30, box.y, null);
+		g.drawImage(Sprites.Res_Hud.textwindow.image(), box.x, box.y, box.width, box.height, null);
+		g.drawImage(Sprites.Res_Hud.menuHud.tabLeft(), box.x + box.width - 45, box.y, null);
+		g.drawImage(Sprites.Res_Hud.menuHud.tabRight(), box.x + box.width - 30, box.y, null);
 		String dungeonsmarker = (this.cursor + 1) + " / " + this.dungeonslist.size();
 		TextRenderer.render(g, dungeonsmarker, box.x + box.width - 55, box.y + 10);
 

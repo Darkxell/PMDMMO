@@ -74,7 +74,7 @@ public class EditEntityController implements Initializable
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
 	{
-		this.entityTypeCombobox.getItems().addAll("Default", "Pokémon");
+		this.entityTypeCombobox.getItems().addAll("Default", "Pokemon");
 		this.entityTypeCombobox.getSelectionModel().selectedIndexProperty().addListener((obs, oldValue, newValue) -> {
 			modeCombobox.setDisable(newValue.equals(0));
 			speciesCombobox.setDisable(newValue.equals(0));
@@ -85,7 +85,7 @@ public class EditEntityController implements Initializable
 		});
 		this.entityTypeCombobox.getSelectionModel().select(0);
 
-		this.modeCombobox.getItems().addAll("Pokémon species", "Team member");
+		this.modeCombobox.getItems().addAll("Pokemon species", "Team member");
 		this.modeCombobox.getSelectionModel().selectedIndexProperty().addListener((obs, oldValue, newValue) -> {
 			speciesCombobox.setVisible(newValue.equals(0));
 			memberTextfield.setVisible(newValue.equals(1));

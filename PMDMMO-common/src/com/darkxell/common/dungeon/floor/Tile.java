@@ -14,8 +14,8 @@ import com.darkxell.common.event.DungeonEvent.MessageEvent;
 import com.darkxell.common.event.dungeon.TrapSteppedOnEvent;
 import com.darkxell.common.event.item.ItemMovedEvent;
 import com.darkxell.common.event.item.MoneyCollectedEvent;
-import com.darkxell.common.item.Item;
 import com.darkxell.common.item.Item.ItemAction;
+import com.darkxell.common.item.ItemEffects;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.player.ItemContainer;
 import com.darkxell.common.pokemon.DungeonPokemon;
@@ -38,7 +38,7 @@ public class Tile implements ItemContainer, Comparable<Tile>
 	private ItemStack item;
 	/** This Tile's neighbors connections. */
 	private DirectionSet neighbors = new DirectionSet();
-	/** The Pokémon standing on this Tile. null if no Pokémon. */
+	/** The Pokemon standing on this Tile. null if no Pokemon. */
 	private DungeonPokemon pokemon;
 	/** This Tile's Trap. null if no trap. */
 	public Trap trap;
@@ -84,7 +84,7 @@ public class Tile implements ItemContainer, Comparable<Tile>
 		return (this.getItem() == null || (item.item().isStackable && this.getItem().item().id == item.item().id)) ? 0 : -1;
 	}
 
-	/** @return True if the input Pokémon can walk diagonally with this Tile as a corner. */
+	/** @return True if the input Pokemon can walk diagonally with this Tile as a corner. */
 	public boolean canCross(DungeonPokemon pokemon)
 	{
 		if (pokemon.species().isType(PokemonType.Ghost)) return true;
@@ -92,7 +92,7 @@ public class Tile implements ItemContainer, Comparable<Tile>
 	}
 
 	/** @param direction - The direction of the movement.
-	 * @return True if the input Pokémon can walk on this Tile. */
+	 * @return True if the input Pokemon can walk on this Tile. */
 	public boolean canMoveTo(DungeonPokemon pokemon, Direction direction, boolean allowSwitching)
 	{
 		if (!this.canWalkOn(pokemon, allowSwitching)) return false;
@@ -100,12 +100,12 @@ public class Tile implements ItemContainer, Comparable<Tile>
 	}
 
 	/** @param allowSwitching - True if switching leader and ally is allowed.
-	 * @return True if the input Pokémon can walk on this Tile. */
+	 * @return True if the input Pokemon can walk on this Tile. */
 	public boolean canWalkOn(DungeonPokemon pokemon, boolean allowSwitching)
 	{
 		if (this.getPokemon() != null)
 		{
-			// If team leader and pokémon here is ally, can exchange position
+			// If team leader and Pokemon here is ally, can exchange position
 			if (!(allowSwitching && pokemon.player().isAlly(this.getPokemon()))) return false;
 		}
 		return this.type.canWalkOn(pokemon);
@@ -176,7 +176,7 @@ public class Tile implements ItemContainer, Comparable<Tile>
 		return this.neighbors;
 	}
 
-	/** @return The Pokémon standing on this Tile. null if no Pokémon. */
+	/** @return The Pokemon standing on this Tile. null if no Pokemon. */
 	public DungeonPokemon getPokemon()
 	{
 		return this.pokemon;
@@ -245,17 +245,18 @@ public class Tile implements ItemContainer, Comparable<Tile>
 		this.neighbors.removeFreeCorners();
 	}
 
-	/** Called when a Pokémon steps on this Tile.
+	/** Called when a Pokemon steps on this Tile.
 	 * 
-	 * @param pokemon - The Pokémon stepping.
-	 * @param running - True if the Pokémon is running. */
+	 * @param pokemon - The Pokemon stepping.
+	 * @param running - True if the Pokemon is running. */
 	public void onPokemonStep(Floor floor, DungeonPokemon pokemon, boolean running, ArrayList<DungeonEvent> events)
 	{
 		if (this.getItem() != null)
 		{
 			ItemStack i = this.getItem();
 			int index = pokemon.player() == null ? -1 : pokemon.player().inventory().canAccept(i);
-			if (!running && i.item().id == Item.POKE && pokemon.player() != null) events.add(new MoneyCollectedEvent(floor, pokemon, this, i));
+			if (!running && i.item().effect() == ItemEffects.Pokedollars && pokemon.player() != null)
+				events.add(new MoneyCollectedEvent(floor, pokemon, this, i));
 			else if (!running && pokemon.player() != null && index != -1)
 				events.add(new ItemMovedEvent(floor, ItemAction.GET, pokemon, this, 0, pokemon.player().inventory(), -1));
 			else if (!running && pokemon.getItem() == null) events.add(new ItemMovedEvent(floor, ItemAction.GET, pokemon, this, 0, pokemon, -1));
@@ -281,7 +282,7 @@ public class Tile implements ItemContainer, Comparable<Tile>
 		}
 	}
 
-	/** Sets this Tile's Pokémon to null, only if it is the input Pokémon. */
+	/** Sets this Tile's Pokemon to null, only if it is the input Pokemon. */
 	public void removePokemon(DungeonPokemon pokemon)
 	{
 		if (this.getPokemon() == pokemon) this.setPokemon(null);
@@ -298,7 +299,7 @@ public class Tile implements ItemContainer, Comparable<Tile>
 		this.item = item;
 	}
 
-	/** Sets the Pokémon on this tile. Also changes this Pokémon's previous tile's Pokémon to null. */
+	/** Sets the Pokemon on this tile. Also changes this Pokemon's previous tile's Pokemon to null. */
 	public void setPokemon(DungeonPokemon pokemon)
 	{
 		if (this.pokemon != null && this.pokemon.tile() == this) this.pokemon.setTile(null);

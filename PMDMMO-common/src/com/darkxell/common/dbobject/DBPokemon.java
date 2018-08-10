@@ -16,12 +16,14 @@ public class DBPokemon implements Communicable
 	public int formid;
 	public int gender;
 	public DatabaseIdentifier holdeditem;
+	/** ID of the Pokemon. */
 	public long id;
 	public int iq;
 	public boolean isshiny;
 	public ArrayList<DatabaseIdentifier> learnedmoves = new ArrayList<>();
 	public int level;
 	public String nickname;
+	/** ID of the Pokemon species. */
 	public int specieid;
 	public int stat_atk;
 	public int stat_def;

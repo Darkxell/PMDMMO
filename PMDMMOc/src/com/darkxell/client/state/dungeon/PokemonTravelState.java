@@ -12,7 +12,7 @@ import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.event.action.PokemonTravelEvent;
 
-/** Used for Pokémon travel animations. */
+/** Used for Pokemon travel animations. */
 public class PokemonTravelState extends DungeonSubState
 {
 

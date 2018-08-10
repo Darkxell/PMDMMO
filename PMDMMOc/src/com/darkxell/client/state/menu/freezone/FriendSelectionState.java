@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.launchable.messagehandlers.MonsterRequestHandler;
 import com.darkxell.client.renderers.TextRenderer;
-import com.darkxell.client.resources.images.MenuHudSpriteset;
+import com.darkxell.client.resources.images.hud.MenuStateHudSpriteset;
 import com.darkxell.client.resources.music.SoundManager;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.freezone.FreezoneExploreState;
@@ -20,6 +20,7 @@ import com.darkxell.client.state.menu.components.MenuWindow;
 import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.dbobject.DatabaseIdentifier;
 import com.darkxell.common.pokemon.Pokemon;
+import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.language.Message;
 import com.eclipsesource.json.JsonObject;
@@ -77,8 +78,13 @@ public class FriendSelectionState extends AbstractMenuState
 	{
 		this.window = null;
 		ArrayList<DatabaseIdentifier> mons = Persistance.player.getData().pokemonsinzones;
-		mons.sort((o1, o2) -> Integer.compare(Persistance.player.pokemonInZones.get(o1.id).species().id,
-				Persistance.player.pokemonInZones.get(o2.id).species().id));
+		mons.sort((o1, o2) -> {
+			PokemonSpecies s1 = Persistance.player.pokemonInZones.get(o1.id).species();
+			PokemonSpecies s2 = Persistance.player.pokemonInZones.get(o2.id).species();
+			PokemonSpecies p1 = s1.parent(), p2 = s2.parent();
+			if (p1.id == p2.id) return Integer.compare(s1.formID, s2.formID);
+			return Integer.compare(p1.id, p2.id);
+		});
 		this.mapOption = new MenuOption(GOTOMAP);
 		MenuTab current = new MenuTab(TITLE);
 		int indexInTab = 0, index = 0;
@@ -293,8 +299,8 @@ public class FriendSelectionState extends AbstractMenuState
 				maxWidth = Math.max(maxWidth, TextRenderer.width(((FriendMenuOption) this.currentTab().options()[i]).pokemon.getNickname()));
 		Rectangle main = this.mainWindowDimensions();
 		this.nameWindow = new MenuWindow(
-				new Rectangle((int) main.getMaxX() + 5, (int) main.getMinY(), maxWidth + MenuWindow.MARGIN_X + MenuHudSpriteset.cornerSize.width,
-						TextRenderer.height() + MenuWindow.MARGIN_Y + MenuHudSpriteset.cornerSize.height * 3 / 2));
+				new Rectangle((int) main.getMaxX() + 5, (int) main.getMinY(), maxWidth + MenuWindow.MARGIN_X + MenuStateHudSpriteset.cornerSize.width,
+						TextRenderer.height() + MenuWindow.MARGIN_Y + MenuStateHudSpriteset.cornerSize.height * 3 / 2));
 	}
 
 }

@@ -8,10 +8,12 @@ import java.util.function.Predicate;
 
 import com.darkxell.common.ai.AI;
 import com.darkxell.common.ai.AIManager;
-import com.darkxell.common.dungeon.DungeonEncounter;
-import com.darkxell.common.dungeon.DungeonInstance;
-import com.darkxell.common.dungeon.DungeonItem;
+import com.darkxell.common.dungeon.DungeonExploration;
+import com.darkxell.common.dungeon.data.DungeonEncounter;
+import com.darkxell.common.dungeon.data.DungeonItemGroup;
+import com.darkxell.common.dungeon.data.FloorData;
 import com.darkxell.common.dungeon.floor.layout.Layout;
+import com.darkxell.common.dungeon.floor.room.Room;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.action.PokemonSpawnedEvent;
 import com.darkxell.common.event.dungeon.weather.WeatherChangedEvent;
@@ -28,28 +30,28 @@ import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.Pair;
 import com.darkxell.common.util.RandomUtil;
 import com.darkxell.common.weather.Weather;
-import com.darkxell.common.weather.WeatherInstance;
+import com.darkxell.common.weather.ActiveWeather;
 
 /** Represents a generated Floor in a Dungeon. */
 public class Floor
 {
 
-	/** Stores all AI objects for Pokémon on this Floor. */
+	/** Stores all AI objects for Pokemon on this Floor. */
 	public final AIManager aiManager;
 	/** IDs of the Cutscenes to play when, respectively, entering this Floor and defeating the boss. */
 	public String cutsceneIn, cutsceneOut;
 	/** This Floor's data. */
 	public final FloorData data;
 	/** This Floor's Dungeon. */
-	public final DungeonInstance dungeon;
+	public final DungeonExploration dungeon;
 	/** This Floor's ID. */
 	public final int id;
 	private boolean isGenerating = true;
-	/** True if this Floor is a static floor. No random Pokémon will spawn. */
+	/** True if this Floor is a static floor. No random Pokemon will spawn. */
 	public final boolean isStatic;
 	/** This Floor's layout. */
 	public final Layout layout;
-	/** The number of turns until a Pokémon spawns. */
+	/** The number of turns until a Pokemon spawns. */
 	private int nextSpawn;
 	/** RNG for game logic: moves, mob spawning, etc. */
 	public final Random random;
@@ -62,9 +64,9 @@ public class Floor
 	/** This Floor's tiles. null before generating. Note that this array must NOT be modified. It is only public because the generation algorithm uses this array to generate the floor. */
 	public Tile[][] tiles;
 	/** List of Weather conditions applied to this Floor. */
-	private final ArrayList<WeatherInstance> weatherCondition;
+	private final ArrayList<ActiveWeather> weatherCondition;
 
-	public Floor(int id, Layout layout, DungeonInstance dungeon, Random random, boolean isStatic)
+	public Floor(int id, Layout layout, DungeonExploration dungeon, Random random, boolean isStatic)
 	{
 		this.id = id;
 		this.dungeon = dungeon;
@@ -72,21 +74,21 @@ public class Floor
 		this.layout = layout;
 		this.random = random;
 		this.isStatic = isStatic;
-		this.weatherCondition = new ArrayList<WeatherInstance>();
+		this.weatherCondition = new ArrayList<ActiveWeather>();
 		this.aiManager = new AIManager(this);
 	}
 
 	/** @param weather - The weather to add.
 	 * @return The Weather Changed Event if the Weather changes. */
-	public WeatherChangedEvent addWeather(WeatherInstance weather)
+	public WeatherChangedEvent addWeather(ActiveWeather weather)
 	{
-		WeatherInstance previous = this.currentWeather();
+		ActiveWeather previous = this.currentWeather();
 		if (!this.weatherCondition.contains(weather))
 		{
 			this.weatherCondition.add(weather);
 			this.weatherCondition.sort(Comparator.naturalOrder());
 		}
-		WeatherInstance next = this.currentWeather();
+		ActiveWeather next = this.currentWeather();
 		if (previous.weather == next.weather) return null;
 		return new WeatherChangedEvent(this, previous, next);
 	}
@@ -107,9 +109,9 @@ public class Floor
 		return count;
 	}
 
-	public WeatherInstance currentWeather()
+	public ActiveWeather currentWeather()
 	{
-		if (this.weatherCondition.size() == 0) return new WeatherInstance(Weather.CLEAR, null, 0, this, 0);
+		if (this.weatherCondition.size() == 0) return new ActiveWeather(Weather.CLEAR, null, 0, this, 0);
 		return this.weatherCondition.get(0);
 	}
 
@@ -139,11 +141,6 @@ public class Floor
 	public int getWidth()
 	{
 		return this.tiles.length;
-	}
-
-	public boolean hasCustomTileset()
-	{
-		return this.data.terrainSpriteset() == -1;
 	}
 
 	/** @return True if this Floor is done generating. */
@@ -178,7 +175,7 @@ public class Floor
 		Weather w = this.dungeon.dungeon().weather(this.id, this.random);
 		for (DungeonPokemon pokemon : this.listPokemon())
 			pokemon.onFloorStart(this, events);
-		events.add(new WeatherCreatedEvent(new WeatherInstance(w, null, 0, this, -1)));
+		events.add(new WeatherCreatedEvent(new ActiveWeather(w, null, 0, this, -1)));
 	}
 
 	/** Called when a new turn starts. */
@@ -186,13 +183,13 @@ public class Floor
 	{
 		// events.add(new MessageEvent(this, new Message("New turn!", false)));
 
-		// For each existing Pokémon: has been moved to DungeonInstance to be able to trigger it at subturn end
+		// For each existing Pokemon: has been moved to DungeonInstance to be able to trigger it at subturn end
 
 		// Weather
 		for (int w = this.weatherCondition.size() - 1; w >= 0; --w)
 			this.weatherCondition.get(w).update(events);
 
-		// Pokémon spawning
+		// Pokemon spawning
 		if (!this.isStatic && this.data.pokemonDensity() > this.countWildPokemon())
 		{
 			if (this.nextSpawn <= 0)
@@ -262,12 +259,12 @@ public class Floor
 
 	public Item randomBuriedItem(Random random)
 	{
-		ArrayList<DungeonItem> items = this.dungeon.dungeon().buriedItems(this.id);
+		ArrayList<DungeonItemGroup> items = this.dungeon.dungeon().buriedItems(this.id);
 		return randomItem(items, random);
 	}
 
 	/** @param inRoom - True if the Tile should be in a Room (will also avoid tiles adjacent to corridors in rooms).
-	 * @param awayFromPlayers - True if the Tile should be far away from players (to avoid spawning a pokémon close to a player for example).
+	 * @param awayFromPlayers - True if the Tile should be far away from players (to avoid spawning a Pokemon close to a player for example).
 	 * @return A Random Tile in this floor. */
 	public Tile randomEmptyTile(boolean inRoom, boolean awayFromPlayers, Random random)
 	{
@@ -275,7 +272,7 @@ public class Floor
 	}
 
 	/** @param inRoom - True if the Tile should be in a Room (will also avoid tiles adjacent to corridors in rooms).
-	 * @param awayFromPlayers - True if the Tile should be far away from players (to avoid spawning a pokémon close to a player for example).
+	 * @param awayFromPlayers - True if the Tile should be far away from players (to avoid spawning a Pokemon close to a player for example).
 	 * @param type - A Type that the Tile has to match. null for any type.
 	 * @return A Random Tile in this floor. */
 	public Tile randomEmptyTile(boolean inRoom, boolean awayFromPlayers, TileType type, Random random)
@@ -330,9 +327,9 @@ public class Floor
 		return RandomUtil.random(candidates, random);
 	}
 
-	public Item randomItem(ArrayList<DungeonItem> items, Random random)
+	public Item randomItem(ArrayList<DungeonItemGroup> items, Random random)
 	{
-		DungeonItem itemGroup = RandomUtil.weightedRandom(items, DungeonItem.weights(items), random);
+		DungeonItemGroup itemGroup = RandomUtil.weightedRandom(items, DungeonItemGroup.weights(items), random);
 		ArrayList<Integer> ids = new ArrayList<Integer>();
 		ArrayList<Integer> chances = new ArrayList<Integer>();
 		for (int i = 0; i < itemGroup.items.length; ++i)
@@ -345,7 +342,7 @@ public class Floor
 
 	public Item randomItem(Random random)
 	{
-		ArrayList<DungeonItem> items = this.dungeon.dungeon().items(this.id);
+		ArrayList<DungeonItemGroup> items = this.dungeon.dungeon().items(this.id);
 		return randomItem(items, random);
 	}
 
@@ -364,11 +361,11 @@ public class Floor
 
 	/** @param weather - The weather to clean.
 	 * @return The Weather Changed Event if the Weather changes. */
-	public WeatherChangedEvent removeWeather(WeatherInstance weather)
+	public WeatherChangedEvent removeWeather(ActiveWeather weather)
 	{
-		WeatherInstance previous = this.currentWeather();
+		ActiveWeather previous = this.currentWeather();
 		if (this.weatherCondition.size() > 0 && this.weatherCondition.contains(weather)) this.weatherCondition.remove(weather);
-		WeatherInstance next = this.currentWeather();
+		ActiveWeather next = this.currentWeather();
 		if (previous == next) return null;
 		return new WeatherChangedEvent(this, previous, next);
 	}

@@ -5,7 +5,7 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 
 import com.darkxell.client.renderers.TextRenderer;
-import com.darkxell.client.resources.images.MenuHudSpriteset;
+import com.darkxell.client.resources.images.Sprites;
 import com.darkxell.common.util.language.Message;
 
 public class TextWindow extends MenuWindow
@@ -32,16 +32,17 @@ public class TextWindow extends MenuWindow
 		super.render(g, name, width, height);
 		this.renderText(g, width, height);
 
-		if (this.rightTab) g.drawImage(MenuHudSpriteset.TAB_ARROW_RIGHT, (int) this.inside.getMaxX() - MenuHudSpriteset.TAB_ARROW_RIGHT.getWidth(),
-				this.dimensions.y - MenuHudSpriteset.TAB_ARROW_RIGHT.getHeight() / 3, null);
-		if (this.leftTab) g.drawImage(MenuHudSpriteset.TAB_ARROW_LEFT, (int) this.inside.getMaxX() - MenuHudSpriteset.TAB_ARROW_LEFT.getWidth()
-				- MenuHudSpriteset.TAB_ARROW_RIGHT.getWidth() - 5, this.dimensions.y - MenuHudSpriteset.TAB_ARROW_LEFT.getHeight() / 3, null);
+		if (this.rightTab) g.drawImage(Sprites.Res_Hud.menuHud.tabRight(), (int) this.inside.getMaxX() - Sprites.Res_Hud.menuHud.tabRight().getWidth(),
+				this.dimensions.y - Sprites.Res_Hud.menuHud.tabRight().getHeight() / 3, null);
+		if (this.leftTab) g.drawImage(Sprites.Res_Hud.menuHud.tabLeft(),
+				(int) this.inside.getMaxX() - Sprites.Res_Hud.menuHud.tabLeft().getWidth() - Sprites.Res_Hud.menuHud.tabRight().getWidth() - 5,
+				this.dimensions.y - Sprites.Res_Hud.menuHud.tabLeft().getHeight() / 3, null);
 
 		if (this.hasNext)
 		{
-			int x = this.dimensions.x - this.dimensions.width / 2 - MenuHudSpriteset.NEXT_WINDOW_ARROW.getWidth() / 2;
-			int y = (int) (this.dimensions.getMaxY() - MenuHudSpriteset.NEXT_WINDOW_ARROW.getHeight() / 2);
-			g.drawImage(MenuHudSpriteset.NEXT_WINDOW_ARROW, x, y, null);
+			int x = this.dimensions.x - this.dimensions.width / 2 - Sprites.Res_Hud.menuHud.nextWindowArrow().getWidth() / 2;
+			int y = (int) (this.dimensions.getMaxY() - Sprites.Res_Hud.menuHud.nextWindowArrow().getHeight() / 2);
+			g.drawImage(Sprites.Res_Hud.menuHud.nextWindowArrow(), x, y, null);
 		}
 	}
 

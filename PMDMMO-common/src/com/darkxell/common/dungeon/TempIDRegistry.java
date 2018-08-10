@@ -8,12 +8,19 @@ import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.pokemon.LearnedMove;
 import com.darkxell.common.pokemon.Pokemon;
 
+/** Class that holds temporary IDs while exploring a Dungeon.<br>
+ * As each object (Item, Pokemon...) needs an ID for Client <-> server communication, temporary IDs need to be set while exploring a Dungeon. <br>
+ * To avoid having a lot of client <-> server in-dungeon payloads, and because many Pokemon or Item will not continue to exist when exiting the Dungeon, this class creates temporary IDs for this exploration. <br>
+ * Objects that exit this Dungeon will have an ID created for them by server. */
 public abstract class TempIDRegistry<T extends HasID>
 {
+	/** Any Object that needs to be registered in a TempIDRegistry should implement this <code>HasID</code> interface. */
 	public static interface HasID
 	{
+		/** @return This Object's ID. */
 		public long id();
 
+		/** @param id - The new ID of this Object. */
 		public void setId(long id);
 	}
 
@@ -60,7 +67,7 @@ public abstract class TempIDRegistry<T extends HasID>
 			return id;
 		}
 
-		/** Unregisters the input Pokemon and the item and moves it has. */
+		/** Unregisters the input Pokemon and the Item and Moves it may have. */
 		public void unregister(Pokemon pokemon, ItemsTempIDRegistry items, TempIDRegistry<LearnedMove> moves)
 		{
 			this.unregister(pokemon.getData().id);

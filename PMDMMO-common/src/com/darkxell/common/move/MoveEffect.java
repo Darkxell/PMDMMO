@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 import com.darkxell.common.ai.AIUtils;
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.dungeon.floor.Room;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
+import com.darkxell.common.dungeon.floor.room.Room;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.DungeonEvent.MessageEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
@@ -30,7 +30,7 @@ public class MoveEffect implements AffectsPokemon
 		MoveEffects.effects.put(this.id, this);
 	}
 
-	/** Removes all Pokémon this move is not supposed to target. */
+	/** Removes all Pokemon this move is not supposed to target. */
 	protected void filterTargets(Floor floor, Move move, DungeonPokemon user, ArrayList<DungeonPokemon> targets)
 	{
 		switch (move.targets)
@@ -65,9 +65,9 @@ public class MoveEffect implements AffectsPokemon
 	}
 
 	/** @param move
-	 * @param user - The Pokémon using this Move.
+	 * @param user - The Pokemon using this Move.
 	 * @param floor - The Floor context.
-	 * @return The Pokémon affected by this Move. */
+	 * @return The Pokemon affected by this Move. */
 	public DungeonPokemon[] getTargets(Move move, DungeonPokemon user, Floor floor)
 	{
 		ArrayList<DungeonPokemon> targets = new ArrayList<DungeonPokemon>();
@@ -163,7 +163,7 @@ public class MoveEffect implements AffectsPokemon
 		return targets.toArray(new DungeonPokemon[targets.size()]);
 	}
 
-	/** Main method called when a Pokémon uses a Move on a target. */
+	/** Main method called when a Pokemon uses a Move on a target. */
 	public void mainUse(MoveUse usedMove, DungeonPokemon target, Floor floor, ArrayList<DungeonEvent> events)
 	{
 		Move move = usedMove.move.move();

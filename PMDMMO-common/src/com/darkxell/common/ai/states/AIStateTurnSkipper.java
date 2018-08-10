@@ -5,6 +5,7 @@ import com.darkxell.common.ai.AI.AIState;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.action.TurnSkippedEvent;
 
+/** State in which the Pokemon skips turns. */
 public class AIStateTurnSkipper extends AIState
 {
 

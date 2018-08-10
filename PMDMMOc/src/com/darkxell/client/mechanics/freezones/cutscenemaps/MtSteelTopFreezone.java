@@ -8,7 +8,7 @@ public class MtSteelTopFreezone extends CutsceneFreezoneMap
 
 	public MtSteelTopFreezone()
 	{
-		super("dungeon/static/3-9", FreezoneInfo.DUNGEON_MT_STEEL_TOP);
+		super("dungeon/static/3-9", FreezoneInfo.DUNGEON_MT_STEEL_TOP, 456, 336);
 	}
 
 }

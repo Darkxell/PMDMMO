@@ -1,234 +1,233 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="pmdmmo"
   xsi:schemaLocation="pmdmmo xsd/items.xsd">
-  <item id="0" type="" price="0" sell="1" sprite="0" />
-  <itemfood id="1" type="Food" price="25" sell="1" sprite="1" food="50" full="5" />
-  <itemfood id="2" type="Food" price="50" sell="1" sprite="1" food="100" full="10" />
-  <itemfood id="3" type="Food" price="100" sell="50" sprite="1" food="1000" belly="10" />
-  <itemfood id="4" type="Food" price="3" sell="1" sprite="2" food="50" full="5" />
-  <itemfood id="5" type="Food" price="9000" sell="5000" sprite="3" food="50" full="5" />
-  <itemfood id="6" type="FoodGrimy" price="5" sell="1" sprite="4" food="30" />
-  <itemfood id="7" type="Heal" price="50" sell="25" sprite="8" food="5" hp="100" />
-  <itemfood id="8" type="Heal" price="4000" sell="100" sprite="9" food="5" hp="1000" hp-full="2" />
-  <itemfood id="9" type="Berry" price="120" sell="20" sprite="10" food="5" />
-  <itemfood id="10" type="Berry" price="12" sell="15" sprite="11" food="5" />
-  <itemfood id="11" type="Berry" price="80" sell="5" sprite="12" food="5" />
-  <itemfood id="12" type="Berry" price="150" sell="20" sprite="13" food="5" />
-  <itemthrowable id="21" type="Throwable" price="25" sell="5" sprite="16" stackable="true" trajectory="Arc" damage="15" />
-  <itemthrowable id="22" type="Throwable" price="50" sell="5" sprite="17" stackable="true" trajectory="Arc" damage="20" />
-  <itemthrowable id="23" type="Throwable" price="6" sell="3" sprite="18" stackable="true" trajectory="Straight" damage="6" />
-  <itemthrowable id="24" type="Throwable" price="4" sell="2" sprite="19" stackable="true" trajectory="Straight" damage="4" />
-  <itemthrowable id="25" type="Throwable" price="2" sell="1" sprite="20" stackable="true" trajectory="Straight" damage="1" />
-  <itemthrowable id="26" type="Throwable" price="0" sell="5" sprite="21" stackable="true" trajectory="Straight" damage="2" />
-  <itemthrowable id="27" type="Throwable" price="0" sell="6" sprite="22" stackable="true" trajectory="Straight" damage="2" />
-  <itemthrowable id="28" type="Throwable" price="0" sell="4" sprite="23" stackable="true" trajectory="Straight" damage="2" />
-  <itemfood id="31" type="Food" price="30" sell="15" sprite="56" food="5" />
-  <itemfood id="32" type="Food" price="60" sell="30" sprite="56" food="5" />
-  <itemfood id="33" type="Food" price="10" sell="5" sprite="56" food="5" />
-  <itemfood id="34" type="Food" price="60" sell="20" sprite="56" food="5" />
-  <itemfood id="35" type="Food" price="250" sell="120" sprite="56" food="5" />
-  <itemfood id="36" type="Food" price="50" sell="24" sprite="56" food="5" />
-  <itemfood id="37" type="Food" price="3000" sell="1000" sprite="56" food="5" />
-  <itemfood id="38" type="Food" price="3500" sell="1500" sprite="56" food="5" />
-  <itemfood id="39" type="Food" price="0" sell="1" sprite="56" food="5" />
-  <itemfood id="40" type="Food" price="30" sell="15" sprite="56" food="5" />
-  <itemfood id="41" type="Food" price="800" sell="150" sprite="56" food="5" />
-  <itemfood id="42" type="Food" price="70" sell="35" sprite="56" food="5" />
-  <itemfood id="43" type="Food" price="50" sell="25" sprite="56" food="5" />
-  <itemfood id="44" type="Food" price="60" sell="30" sprite="56" food="5" />
-  <itemfood id="45" type="Food" price="20" sell="10" sprite="56" food="5" />
-  <itemfood id="46" type="Food" price="0" sell="30" sprite="56" food="5" />
-  <itemgummi id="61" type="Gummi" price="800" sell="50" g-type="Normal" />
-  <itemgummi id="62" type="Gummi" price="800" sell="50" g-type="Fighting" />
-  <itemgummi id="63" type="Gummi" price="800" sell="50" g-type="Flying" />
-  <itemgummi id="64" type="Gummi" price="800" sell="50" g-type="Poison" />
-  <itemgummi id="65" type="Gummi" price="800" sell="50" g-type="Ground" />
-  <itemgummi id="66" type="Gummi" price="800" sell="50" g-type="Rock" />
-  <itemgummi id="67" type="Gummi" price="800" sell="50" g-type="Bug" />
-  <itemgummi id="68" type="Gummi" price="800" sell="50" g-type="Ghost" />
-  <itemgummi id="69" type="Gummi" price="800" sell="50" g-type="Steel" />
-  <itemgummi id="70" type="Gummi" price="800" sell="50" g-type="Fire" />
-  <itemgummi id="71" type="Gummi" price="800" sell="50" g-type="Water" />
-  <itemgummi id="72" type="Gummi" price="800" sell="50" g-type="Grass" />
-  <itemgummi id="73" type="Gummi" price="800" sell="50" g-type="Electric" />
-  <itemgummi id="74" type="Gummi" price="800" sell="50" g-type="Psychic" />
-  <itemgummi id="75" type="Gummi" price="800" sell="50" g-type="Ice" />
-  <itemgummi id="76" type="Gummi" price="800" sell="50" g-type="Dragon" />
-  <itemgummi id="77" type="Gummi" price="800" sell="50" g-type="Dark" />
-  <itemgummi id="78" type="Gummi" price="800" sell="50" g-type="Fairy" />
-  <item id="81" type="Orb" price="0" sell="50" sprite="57" />
-  <item id="82" type="Orb" price="300" sell="150" sprite="57" />
-  <item id="83" type="Orb" price="300" sell="150" sprite="57" />
-  <item id="84" type="Orb" price="300" sell="150" sprite="57" />
-  <item id="85" type="Orb" price="300" sell="150" sprite="57" />
-  <item id="86" type="EscapeOrb" price="300" sell="150" sprite="57" />
-  <item id="87" type="Orb" price="300" sell="150" sprite="57" />
-  <item id="88" type="Orb" price="300" sell="150" sprite="57" />
-  <item id="89" type="Orb" price="300" sell="150" sprite="57" />
-  <item id="90" type="Orb" price="300" sell="150" sprite="57" />
-  <item id="91" type="Orb" price="300" sell="150" sprite="57" />
-  <item id="92" type="Orb" price="300" sell="150" sprite="57" />
-  <item id="93" type="Orb" price="300" sell="150" sprite="57" />
-  <item id="94" type="Orb" price="300" sell="150" sprite="57" />
-  <item id="95" type="Orb" price="300" sell="150" sprite="57" />
-  <item id="96" type="Orb" price="300" sell="150" sprite="57" />
-  <item id="97" type="Orb" price="300" sell="150" sprite="57" />
-  <item id="98" type="Orb" price="300" sell="150" sprite="57" />
-  <item id="99" type="Orb" price="0" sell="150" sprite="57" />
-  <item id="100" type="Orb" price="300" sell="150" sprite="57" />
-  <item id="101" type="Orb" price="300" sell="150" sprite="57" />
-  <item id="102" type="Orb" price="300" sell="150" sprite="57" />
-  <item id="103" type="Orb" price="300" sell="150" sprite="57" />
-  <item id="104" type="Orb" price="0" sell="150" sprite="57" />
-  <item id="105" type="Orb" price="300" sell="150" sprite="57" />
-  <item id="106" type="Orb" price="300" sell="150" sprite="57" />
-  <item id="107" type="Orb" price="300" sell="150" sprite="57" />
-  <item id="108" type="Orb" price="300" sell="150" sprite="57" />
-  <item id="109" type="Orb" price="300" sell="150" sprite="57" />
-  <item id="110" type="Orb" price="0" sell="150" sprite="57" />
-  <item id="111" type="Orb" price="500" sell="250" sprite="57" />
-  <item id="112" type="Orb" price="300" sell="150" sprite="57" />
-  <item id="113" type="Orb" price="300" sell="250" sprite="57" />
-  <item id="114" type="Orb" price="300" sell="150" sprite="57" />
-  <item id="115" type="Orb" price="300" sell="150" sprite="57" />
-  <item id="116" type="Orb" price="300" sell="150" sprite="57" />
-  <item id="117" type="Orb" price="300" sell="150" sprite="57" />
-  <item id="118" type="Orb" price="300" sell="150" sprite="57" />
-  <item id="119" type="Orb" price="300" sell="150" sprite="57" />
-  <item id="120" type="Orb" price="300" sell="150" sprite="57" />
-  <item id="121" type="Orb" price="300" sell="150" sprite="57" />
-  <item id="122" type="Orb" price="300" sell="150" sprite="57" />
-  <item id="123" type="Orb" price="300" sell="150" sprite="57" />
-  <item id="124" type="Orb" price="300" sell="150" sprite="57" />
-  <item id="125" type="Orb" price="300" sell="150" sprite="57" />
-  <item id="126" type="Orb" price="0" sell="150" sprite="57" />
-  <item id="127" type="Orb" price="300" sell="150" sprite="57" />
-  <item id="128" type="Orb" price="300" sell="150" sprite="57" />
-  <item id="129" type="Orb" price="300" sell="150" sprite="57" />
-  <item id="130" type="Orb" price="300" sell="150" sprite="57" />
-  <item id="131" type="Orb" price="300" sell="150" sprite="57" />
-  <item id="132" type="Orb" price="300" sell="150" sprite="57" />
-  <item id="133" type="Orb" price="300" sell="150" sprite="57" />
-  <itemfood id="151" type="Elixir" price="25" sell="5" sprite="58" food="5" pp="10" />
-  <itemfood id="152" type="Elixir" price="250" sell="100" sprite="58" food="5" pp="100" />
-  <itemfood id="153" type="Drink" price="5000" sell="5" sprite="58" food="5" stat="0" />
-  <itemfood id="154" type="Drink" price="7000" sell="5" sprite="58" food="5" stat="1" />
-  <itemfood id="155" type="Drink" price="6000" sell="5" sprite="58" food="5" stat="3" />
-  <itemfood id="156" type="Drink" price="8000" sell="5" sprite="58" food="5" stat="4" />
-  <itemfood id="157" type="Ginseng" price="5000" sell="1000" sprite="58" food="5" />
-  <itemequipable id="171" type="StatEquipable" price="1000" sell="1350" sprite="59" stat="1" />
-  <itemequipable id="172" type="StatEquipable" price="0" sell="1500" sprite="59" stat="6" />
-  <itemequipable id="173" type="StatEquipable" price="0" sell="250" sprite="59" stat="0" />
-  <itemequipable id="174" type="StatEquipable" price="5000" sell="1500" sprite="59" stat="3" />
-  <itemequipable id="175" type="StatEquipable" price="1000" sell="1500" sprite="59" stat="4" />
-  <item id="176" type="Equipable" price="0" sell="550" sprite="59" />
-  <item id="177" type="Equipable" price="1200" sell="500" sprite="59" />
-  <item id="178" type="Equipable" price="0" sell="750" sprite="59" />
-  <item id="179" type="Equipable" price="0" sell="1500" sprite="59" />
-  <item id="180" type="Equipable" price="0" sell="1500" sprite="59" />
-  <item id="181" type="Equipable" price="0" sell="25" sprite="59" />
-  <item id="182" type="Equipable" price="0" sell="25" sprite="59" />
-  <item id="183" type="Equipable" price="0" sell="2500" sprite="59" />
-  <item id="184" type="Equipable" price="0" sell="500" sprite="59" />
-  <item id="185" type="Equipable" price="4000" sell="2000" sprite="59" />
-  <item id="186" type="Equipable" price="1100" sell="350" sprite="59" />
-  <item id="187" type="Equipable" price="0" sell="2000" sprite="59" />
-  <item id="188" type="Equipable" price="0" sell="300" sprite="59" />
-  <item id="189" type="Equipable" price="0" sell="1500" sprite="59" />
-  <item id="190" type="Equipable" price="0" sell="1500" sprite="59" />
-  <item id="191" type="Equipable" price="0" sell="25" sprite="59" />
-  <item id="192" type="Equipable" price="0" sell="600" sprite="59" />
-  <item id="193" type="Equipable" price="0" sell="25" sprite="59" />
-  <item id="194" type="Equipable" price="0" sell="1300" sprite="59" />
-  <item id="195" type="Equipable" price="0" sell="1000" sprite="59" />
-  <item id="196" type="Equipable" price="0" sell="1400" sprite="59" />
-  <item id="197" type="Equipable" price="0" sell="1000" sprite="59" />
-  <item id="198" type="Equipable" price="0" sell="1500" sprite="59" />
-  <item id="199" type="Equipable" price="0" sell="400" sprite="59" />
-  <item id="200" type="Equipable" price="50" sell="25" sprite="59" />
-  <item id="201" type="Equipable" price="0" sell="2000" sprite="60" />
-  <item id="202" type="Equipable" price="3500" sell="500" sprite="60" />
-  <item id="203" type="Equipable" price="1200" sell="500" sprite="60" />
-  <item id="204" type="Equipable" price="4000" sell="1500" sprite="60" />
-  <item id="205" type="Equipable" price="2000" sell="50" sprite="60" />
-  <item id="206" type="Equipable" price="7500" sell="450" sprite="60" />
-  <item id="207" type="Equipable" price="2500" sell="50" sprite="60" />
-  <item id="208" type="Equipable" price="9000" sell="2000" sprite="60" />
-  <itemtm id="221" type="TM" price="0" sell="0" move="21" />
-  <itemtm id="222" type="TM" price="0" sell="0" move="906" />
-  <itemtm id="223" type="TM" price="0" sell="0" move="666" />
-  <itemtm id="224" type="TM" price="8000" sell="0" move="818" />
-  <itemtm id="225" type="TM" price="1500" sell="0" move="44" />
-  <itemtm id="226" type="TM" price="0" sell="0" move="308" />
-  <itemtm id="227" type="TM" price="0" sell="0" move="220" />
-  <itemtm id="228" type="TM" price="6000" sell="0" move="715" />
-  <itemtm id="229" type="TM" price="1500" sell="0" move="87" />
-  <itemtm id="230" type="TM" price="1500" sell="0" move="962" />
-  <itemtm id="231" type="TM" price="8000" sell="0" move="854" />
-  <itemtm id="232" type="TM" price="0" sell="0" move="852" />
-  <itemtm id="233" type="TM" price="0" sell="0" move="29" />
-  <itemtm id="234" type="TM" price="2500" sell="0" move="808" />
-  <itemtm id="235" type="TM" price="0" sell="0" move="96" />
-  <itemtm id="236" type="TM" price="0" sell="0" move="712" />
-  <itemtm id="237" type="TM" price="0" sell="0" move="122" />
-  <itemtm id="238" type="TM" price="3000" sell="0" move="85" />
-  <itemtm id="239" type="TM" price="0" sell="0" move="707" />
-  <itemtm id="240" type="TM" price="0" sell="0" move="551" />
-  <itemtm id="241" type="TM" price="8000" sell="0" move="752" />
-  <itemtm id="242" type="TM" price="0" sell="0" move="751" />
-  <itemtm id="243" type="TM" price="0" sell="0" move="354" />
-  <itemtm id="244" type="TM" price="3000" sell="0" move="99" />
-  <itemtm id="245" type="TM" price="3000" sell="0" move="353" />
-  <itemtm id="246" type="TM" price="0" sell="0" move="811" />
-  <itemtm id="247" type="TM" price="0" sell="0" move="507" />
-  <itemtm id="248" type="TM" price="2500" sell="0" move="219" />
-  <itemtm id="249" type="TM" price="2500" sell="0" move="813" />
-  <itemtm id="250" type="TM" price="7500" sell="0" move="759" />
-  <itemtm id="251" type="TM" price="8000" sell="0" move="605" />
-  <itemtm id="252" type="TM" price="0" sell="0" move="309" />
-  <itemtm id="253" type="TM" price="0" sell="0" move="602" />
-  <itemtm id="254" type="TM" price="0" sell="0" move="259" />
-  <itemtm id="255" type="TM" price="1500" sell="0" move="963" />
-  <itemtm id="256" type="TM" price="1500" sell="0" move="113" />
-  <itemtm id="257" type="TM" price="1500" sell="0" move="123" />
-  <itemtm id="258" type="TM" price="3000" sell="0" move="814" />
-  <itemtm id="259" type="TM" price="1500" sell="0" move="75" />
-  <itemtm id="260" type="TM" price="1500" sell="0" move="956" />
-  <itemtm id="261" type="TM" price="0" sell="0" move="553" />
-  <itemtm id="262" type="TM" price="0" sell="0" move="827" />
-  <itemtm id="263" type="TM" price="0" sell="0" move="613" />
-  <itemtm id="264" type="TM" price="0" sell="0" move="2000" />
-  <itemtm id="265" type="TM" price="0" sell="0" move="2001" />
-  <itemtm id="301" type="HM" price="0" sell="0" sprite="94" move="8" />
-  <itemtm id="302" type="HM" price="0" sell="0" sprite="94" move="252" />
-  <itemtm id="303" type="HM" price="0" sell="0" sprite="94" move="656" />
-  <itemtm id="304" type="HM" price="0" sell="0" sprite="94" move="59" />
-  <itemtm id="305" type="HM" price="0" sell="0" sprite="94" move="17" />
-  <itemtm id="306" type="HM" price="0" sell="0" sprite="94" move="215" />
-  <itemtm id="307" type="HM" price="0" sell="0" sprite="94" move="657" />
-  <itemtm id="308" type="HM" price="0" sell="0" sprite="94" move="663" />
-  <item id="311" type="Unusable" price="0" sell="1" sprite="96" />
-  <item id="312" type="Unusable" price="0" sell="1" sprite="97" />
-  <item id="313" type="Unusable" price="0" sell="1" sprite="98" />
-  <item id="314" type="Unusable" price="0" sell="1" sprite="99" />
-  <item id="315" type="Unusable" price="0" sell="1" sprite="100" />
-  <item id="316" type="Unusable" price="0" sell="1" sprite="101" />
-  <item id="317" type="Unusable" price="0" sell="1" sprite="102" />
-  <item id="318" type="Unusable" price="0" sell="1" sprite="103" />
-  <item id="319" type="Unusable" price="0" sell="1" sprite="104" />
-  <item id="320" type="Unusable" price="0" sell="1" sprite="105" />
-  <item id="321" type="Unusable" price="0" sell="1" sprite="106" />
-  <item id="322" type="Unusable" price="0" sell="1" sprite="107" />
-  <item id="323" type="Unusable" price="0" sell="1" sprite="108" />
-  <item id="324" type="Unusable" price="0" sell="1" sprite="109" />
-  <item id="325" type="Unusable" price="0" sell="1" sprite="110" />
-  <item id="326" type="Unusable" price="0" sell="1" sprite="111" />
-  <item id="351" type="" price="0" sell="1" sprite="112" />
-  <item id="352" type="LinkBox" price="9000" sell="500" sprite="113" />
-  <item id="381" type="Unusable" price="0" sell="1" sprite="128" />
-  <item id="382" type="Unusable" price="0" sell="1" sprite="129" />
-  <item id="383" type="Unusable" price="0" sell="1" sprite="130" />
-  <item id="384" type="Unusable" price="0" sell="1" sprite="131" />
-  <item id="385" type="Unusable" price="0" sell="1" sprite="132" />
-  <item id="386" type="Unusable" price="0" sell="1" sprite="133" />
+  <item id="0" category="OTHERS" price="0" sell="1" effect="0" sprite="0"/>
+  <item id="1" category="FOOD" price="25" sell="1" effect="1" sprite="1"/>
+  <item id="2" category="FOOD" price="50" sell="1" effect="2" sprite="1"/>
+  <item id="3" category="FOOD" price="100" sell="50" effect="3" sprite="1"/>
+  <item id="4" category="FOOD" price="3" sell="1" effect="1" sprite="2"/>
+  <item id="5" category="FOOD" price="9000" sell="5000" effect="1" sprite="3"/>
+  <item id="6" category="FOOD" price="5" sell="1" effect="6" sprite="4"/>
+  <item id="7" category="BERRIES" price="50" sell="25" effect="7" sprite="8"/>
+  <item id="8" category="BERRIES" price="4000" sell="100" effect="8" sprite="9"/>
+  <item id="9" category="BERRIES" price="120" sell="20" effect="9" sprite="10"/>
+  <item id="10" category="BERRIES" price="12" sell="15" effect="10" sprite="11"/>
+  <item id="11" category="BERRIES" price="80" sell="5" effect="11" sprite="12"/>
+  <item id="12" category="BERRIES" price="150" sell="20" effect="12" sprite="13"/>
+  <item id="21" category="THROWABLE" price="25" sell="5" effect="21" sprite="16" stackable="true"/>
+  <item id="22" category="THROWABLE" price="50" sell="5" effect="22" sprite="17" stackable="true"/>
+  <item id="23" category="THROWABLE" price="6" sell="3" effect="23" sprite="18" stackable="true"/>
+  <item id="24" category="THROWABLE" price="4" sell="2" effect="24" sprite="19" stackable="true"/>
+  <item id="25" category="THROWABLE" price="2" sell="1" effect="25" sprite="20" stackable="true"/>
+  <item id="26" category="THROWABLE" price="0" sell="5" effect="26" sprite="21" stackable="true"/>
+  <item id="27" category="THROWABLE" price="0" sell="6" effect="26" sprite="22" stackable="true"/>
+  <item id="28" category="THROWABLE" price="0" sell="4" effect="26" sprite="23" stackable="true"/>
+  <item id="31" category="SEEDS" price="30" sell="15" effect="39" sprite="56"/>
+  <item id="32" category="SEEDS" price="60" sell="30" effect="39" sprite="56"/>
+  <item id="33" category="SEEDS" price="10" sell="5" effect="39" sprite="56"/>
+  <item id="34" category="SEEDS" price="60" sell="20" effect="39" sprite="56"/>
+  <item id="35" category="SEEDS" price="250" sell="120" effect="39" sprite="56"/>
+  <item id="36" category="SEEDS" price="50" sell="24" effect="39" sprite="56"/>
+  <item id="37" category="SEEDS" price="3000" sell="1000" effect="39" sprite="56"/>
+  <item id="38" category="SEEDS" price="3500" sell="1500" effect="39" sprite="56"/>
+  <item id="39" category="SEEDS" price="0" sell="1" effect="39" sprite="56"/>
+  <item id="40" category="SEEDS" price="30" sell="15" effect="39" sprite="56"/>
+  <item id="41" category="SEEDS" price="800" sell="150" effect="39" sprite="56"/>
+  <item id="42" category="SEEDS" price="70" sell="35" effect="39" sprite="56"/>
+  <item id="43" category="SEEDS" price="50" sell="25" effect="39" sprite="56"/>
+  <item id="44" category="SEEDS" price="60" sell="30" effect="39" sprite="56"/>
+  <item id="45" category="SEEDS" price="20" sell="10" effect="39" sprite="56"/>
+  <item id="46" category="SEEDS" price="0" sell="30" effect="39" sprite="56"/>
+  <item id="61" category="GUMMIS" price="800" sell="50" effect="61" sprite="32"/>
+  <item id="62" category="GUMMIS" price="800" sell="50" effect="62" sprite="33"/>
+  <item id="63" category="GUMMIS" price="800" sell="50" effect="63" sprite="34"/>
+  <item id="64" category="GUMMIS" price="800" sell="50" effect="64" sprite="35"/>
+  <item id="65" category="GUMMIS" price="800" sell="50" effect="65" sprite="36"/>
+  <item id="66" category="GUMMIS" price="800" sell="50" effect="66" sprite="37"/>
+  <item id="67" category="GUMMIS" price="800" sell="50" effect="67" sprite="38"/>
+  <item id="68" category="GUMMIS" price="800" sell="50" effect="68" sprite="39"/>
+  <item id="69" category="GUMMIS" price="800" sell="50" effect="69" sprite="40"/>
+  <item id="70" category="GUMMIS" price="800" sell="50" effect="70" sprite="41"/>
+  <item id="71" category="GUMMIS" price="800" sell="50" effect="71" sprite="42"/>
+  <item id="72" category="GUMMIS" price="800" sell="50" effect="72" sprite="43"/>
+  <item id="73" category="GUMMIS" price="800" sell="50" effect="73" sprite="44"/>
+  <item id="74" category="GUMMIS" price="800" sell="50" effect="74" sprite="45"/>
+  <item id="75" category="GUMMIS" price="800" sell="50" effect="75" sprite="46"/>
+  <item id="76" category="GUMMIS" price="800" sell="50" effect="76" sprite="47"/>
+  <item id="77" category="GUMMIS" price="800" sell="50" effect="77" sprite="48"/>
+  <item id="78" category="GUMMIS" price="800" sell="50" effect="78" sprite="49"/>
+  <item id="81" category="ORBS" price="0" sell="50" effect="81" sprite="57"/>
+  <item id="82" category="ORBS" price="300" sell="150" effect="81" sprite="57"/>
+  <item id="83" category="ORBS" price="300" sell="150" effect="81" sprite="57"/>
+  <item id="84" category="ORBS" price="300" sell="150" effect="81" sprite="57"/>
+  <item id="85" category="ORBS" price="300" sell="150" effect="81" sprite="57"/>
+  <item id="86" category="ORBS" price="300" sell="150" effect="86" sprite="57"/>
+  <item id="87" category="ORBS" price="300" sell="150" effect="81" sprite="57"/>
+  <item id="88" category="ORBS" price="300" sell="150" effect="81" sprite="57"/>
+  <item id="89" category="ORBS" price="300" sell="150" effect="81" sprite="57"/>
+  <item id="90" category="ORBS" price="300" sell="150" effect="81" sprite="57"/>
+  <item id="91" category="ORBS" price="300" sell="150" effect="81" sprite="57"/>
+  <item id="92" category="ORBS" price="300" sell="150" effect="81" sprite="57"/>
+  <item id="93" category="ORBS" price="300" sell="150" effect="81" sprite="57"/>
+  <item id="94" category="ORBS" price="300" sell="150" effect="81" sprite="57"/>
+  <item id="95" category="ORBS" price="300" sell="150" effect="81" sprite="57"/>
+  <item id="96" category="ORBS" price="300" sell="150" effect="81" sprite="57"/>
+  <item id="97" category="ORBS" price="300" sell="150" effect="81" sprite="57"/>
+  <item id="98" category="ORBS" price="300" sell="150" effect="81" sprite="57"/>
+  <item id="99" category="ORBS" price="0" sell="150" effect="81" sprite="57"/>
+  <item id="100" category="ORBS" price="300" sell="150" effect="81" sprite="57"/>
+  <item id="101" category="ORBS" price="300" sell="150" effect="81" sprite="57"/>
+  <item id="102" category="ORBS" price="300" sell="150" effect="81" sprite="57"/>
+  <item id="103" category="ORBS" price="300" sell="150" effect="81" sprite="57"/>
+  <item id="104" category="ORBS" price="0" sell="150" effect="81" sprite="57"/>
+  <item id="105" category="ORBS" price="300" sell="150" effect="81" sprite="57"/>
+  <item id="106" category="ORBS" price="300" sell="150" effect="81" sprite="57"/>
+  <item id="107" category="ORBS" price="300" sell="150" effect="81" sprite="57"/>
+  <item id="108" category="ORBS" price="300" sell="150" effect="81" sprite="57"/>
+  <item id="109" category="ORBS" price="300" sell="150" effect="81" sprite="57"/>
+  <item id="110" category="ORBS" price="0" sell="150" effect="81" sprite="57"/>
+  <item id="111" category="ORBS" price="500" sell="250" effect="81" sprite="57"/>
+  <item id="112" category="ORBS" price="300" sell="150" effect="81" sprite="57"/>
+  <item id="113" category="ORBS" price="300" sell="250" effect="81" sprite="57"/>
+  <item id="114" category="ORBS" price="300" sell="150" effect="81" sprite="57"/>
+  <item id="115" category="ORBS" price="300" sell="150" effect="81" sprite="57"/>
+  <item id="116" category="ORBS" price="300" sell="150" effect="81" sprite="57"/>
+  <item id="117" category="ORBS" price="300" sell="150" effect="81" sprite="57"/>
+  <item id="118" category="ORBS" price="300" sell="150" effect="81" sprite="57"/>
+  <item id="119" category="ORBS" price="300" sell="150" effect="81" sprite="57"/>
+  <item id="120" category="ORBS" price="300" sell="150" effect="81" sprite="57"/>
+  <item id="121" category="ORBS" price="300" sell="150" effect="81" sprite="57"/>
+  <item id="122" category="ORBS" price="300" sell="150" effect="81" sprite="57"/>
+  <item id="123" category="ORBS" price="300" sell="150" effect="81" sprite="57"/>
+  <item id="124" category="ORBS" price="300" sell="150" effect="81" sprite="57"/>
+  <item id="125" category="ORBS" price="300" sell="150" effect="81" sprite="57"/>
+  <item id="126" category="ORBS" price="0" sell="150" effect="81" sprite="57"/>
+  <item id="127" category="ORBS" price="300" sell="150" effect="81" sprite="57"/>
+  <item id="128" category="ORBS" price="300" sell="150" effect="81" sprite="57"/>
+  <item id="129" category="ORBS" price="300" sell="150" effect="81" sprite="57"/>
+  <item id="130" category="ORBS" price="300" sell="150" effect="81" sprite="57"/>
+  <item id="131" category="ORBS" price="300" sell="150" effect="81" sprite="57"/>
+  <item id="132" category="ORBS" price="300" sell="150" effect="81" sprite="57"/>
+  <item id="133" category="ORBS" price="300" sell="150" effect="81" sprite="57"/>
+  <item id="151" category="DRINKS" price="25" sell="5" effect="151" sprite="58"/>
+  <item id="152" category="DRINKS" price="250" sell="100" effect="152" sprite="58"/>
+  <item id="153" category="DRINKS" price="5000" sell="5" effect="153" sprite="58"/>
+  <item id="154" category="DRINKS" price="7000" sell="5" effect="154" sprite="58"/>
+  <item id="155" category="DRINKS" price="6000" sell="5" effect="155" sprite="58"/>
+  <item id="156" category="DRINKS" price="8000" sell="5" effect="156" sprite="58"/>
+  <item id="157" category="EQUIPABLE" price="5000" sell="1000" effect="157" sprite="58"/>
+  <item id="171" category="EQUIPABLE" price="1000" sell="1350" sprite="59"/>
+  <item id="172" category="EQUIPABLE" price="0" sell="1500" sprite="59"/>
+  <item id="173" category="EQUIPABLE" price="0" sell="250" sprite="59"/>
+  <item id="174" category="EQUIPABLE" price="5000" sell="1500" sprite="59"/>
+  <item id="175" category="EQUIPABLE" price="1000" sell="1500" sprite="59"/>
+  <item id="176" category="EQUIPABLE" price="0" sell="550" sprite="59"/>
+  <item id="177" category="EQUIPABLE" price="1200" sell="500" sprite="59"/>
+  <item id="178" category="EQUIPABLE" price="0" sell="750" sprite="59"/>
+  <item id="179" category="EQUIPABLE" price="0" sell="1500" sprite="59"/>
+  <item id="180" category="EQUIPABLE" price="0" sell="1500" sprite="59"/>
+  <item id="181" category="EQUIPABLE" price="0" sell="25" sprite="59"/>
+  <item id="182" category="EQUIPABLE" price="0" sell="25" sprite="59"/>
+  <item id="183" category="EQUIPABLE" price="0" sell="2500" sprite="59"/>
+  <item id="184" category="EQUIPABLE" price="0" sell="500" sprite="59"/>
+  <item id="185" category="EQUIPABLE" price="4000" sell="2000" sprite="59"/>
+  <item id="186" category="EQUIPABLE" price="1100" sell="350" sprite="59"/>
+  <item id="187" category="EQUIPABLE" price="0" sell="2000" sprite="59"/>
+  <item id="188" category="EQUIPABLE" price="0" sell="300" sprite="59"/>
+  <item id="189" category="EQUIPABLE" price="0" sell="1500" sprite="59"/>
+  <item id="190" category="EQUIPABLE" price="0" sell="1500" sprite="59"/>
+  <item id="191" category="EQUIPABLE" price="0" sell="25" sprite="59"/>
+  <item id="192" category="EQUIPABLE" price="0" sell="600" sprite="59"/>
+  <item id="193" category="EQUIPABLE" price="0" sell="25" sprite="59"/>
+  <item id="194" category="EQUIPABLE" price="0" sell="1300" sprite="59"/>
+  <item id="195" category="EQUIPABLE" price="0" sell="1000" sprite="59"/>
+  <item id="196" category="EQUIPABLE" price="0" sell="1400" sprite="59"/>
+  <item id="197" category="EQUIPABLE" price="0" sell="1000" sprite="59"/>
+  <item id="198" category="EQUIPABLE" price="0" sell="1500" sprite="59"/>
+  <item id="199" category="EQUIPABLE" price="0" sell="400" sprite="59"/>
+  <item id="200" category="EQUIPABLE" price="50" sell="25" sprite="59"/>
+  <item id="201" category="EQUIPABLE" price="0" sell="2000" sprite="60"/>
+  <item id="202" category="EQUIPABLE" price="3500" sell="500" sprite="60"/>
+  <item id="203" category="EQUIPABLE" price="1200" sell="500" sprite="60"/>
+  <item id="204" category="EQUIPABLE" price="4000" sell="1500" sprite="60"/>
+  <item id="205" category="EQUIPABLE" price="2000" sell="50" sprite="60"/>
+  <item id="206" category="EQUIPABLE" price="7500" sell="450" sprite="60"/>
+  <item id="207" category="EQUIPABLE" price="2500" sell="50" sprite="60"/>
+  <item id="208" category="EQUIPABLE" price="9000" sell="2000" effect="208" sprite="60"/>
+  <item id="221" category="TMS" price="0" sell="0" effect="221" sprite="64" extra="tm:21"/>
+  <item id="222" category="TMS" price="0" sell="0" effect="222" sprite="79" extra="tm:906"/>
+  <item id="223" category="TMS" price="0" sell="0" effect="223" sprite="74" extra="tm:666"/>
+  <item id="224" category="TMS" price="8000" sell="0" effect="224" sprite="77" extra="tm:818"/>
+  <item id="225" category="TMS" price="1500" sell="0" effect="225" sprite="64" extra="tm:44"/>
+  <item id="226" category="TMS" price="0" sell="0" effect="226" sprite="67" extra="tm:308"/>
+  <item id="227" category="TMS" price="0" sell="0" effect="227" sprite="65" extra="tm:220"/>
+  <item id="228" category="TMS" price="6000" sell="0" effect="228" sprite="75" extra="tm:715"/>
+  <item id="229" category="TMS" price="1500" sell="0" effect="229" sprite="82" extra="tm:87"/>
+  <item id="230" category="TMS" price="1500" sell="0" effect="230" sprite="80" extra="tm:962"/>
+  <item id="231" category="TMS" price="8000" sell="0" effect="231" sprite="78" extra="tm:854"/>
+  <item id="232" category="TMS" price="0" sell="0" effect="232" sprite="78" extra="tm:852"/>
+  <item id="233" category="TMS" price="0" sell="0" effect="233" sprite="64" extra="tm:29"/>
+  <item id="234" category="TMS" price="2500" sell="0" effect="234" sprite="77" extra="tm:808"/>
+  <item id="235" category="TMS" price="0" sell="0" effect="235" sprite="64" extra="tm:96"/>
+  <item id="236" category="TMS" price="0" sell="0" effect="236" sprite="75" extra="tm:712"/>
+  <item id="237" category="TMS" price="0" sell="0" effect="237" sprite="64" extra="tm:122"/>
+  <item id="238" category="TMS" price="3000" sell="0" effect="238" sprite="64" extra="tm:85"/>
+  <item id="239" category="TMS" price="0" sell="0" effect="239" sprite="77" extra="tm:707"/>
+  <item id="240" category="TMS" price="0" sell="0" effect="240" sprite="72" extra="tm:551"/>
+  <item id="241" category="TMS" price="8000" sell="0" effect="241" sprite="76" extra="tm:752"/>
+  <item id="242" category="TMS" price="0" sell="0" effect="242" sprite="76" extra="tm:751"/>
+  <item id="243" category="TMS" price="0" sell="0" effect="243" sprite="68" extra="tm:354"/>
+  <item id="244" category="TMS" price="3000" sell="0" effect="244" sprite="64" extra="tm:99"/>
+  <item id="245" category="TMS" price="3000" sell="0" effect="245" sprite="68" extra="tm:353"/>
+  <item id="246" category="TMS" price="0" sell="0" effect="246" sprite="77" extra="tm:811"/>
+  <item id="247" category="TMS" price="0" sell="0" effect="247" sprite="71" extra="tm:507"/>
+  <item id="248" category="TMS" price="2500" sell="0" effect="248" sprite="65" extra="tm:219"/>
+  <item id="249" category="TMS" price="2500" sell="0" effect="249" sprite="77" extra="tm:813"/>
+  <item id="250" category="TMS" price="7500" sell="0" effect="250" sprite="76" extra="tm:759"/>
+  <item id="251" category="TMS" price="8000" sell="0" effect="251" sprite="73" extra="tm:605"/>
+  <item id="252" category="TMS" price="0" sell="0" effect="252" sprite="67" extra="tm:309"/>
+  <item id="253" category="TMS" price="0" sell="0" effect="253" sprite="73" extra="tm:602"/>
+  <item id="254" category="TMS" price="0" sell="0" effect="254" sprite="66" extra="tm:259"/>
+  <item id="255" category="TMS" price="1500" sell="0" effect="255" sprite="80" extra="tm:963"/>
+  <item id="256" category="TMS" price="1500" sell="0" effect="256" sprite="64" extra="tm:113"/>
+  <item id="257" category="TMS" price="1500" sell="0" effect="257" sprite="64" extra="tm:123"/>
+  <item id="258" category="TMS" price="3000" sell="0" effect="258" sprite="77" extra="tm:814"/>
+  <item id="259" category="TMS" price="1500" sell="0" effect="259" sprite="64" extra="tm:75"/>
+  <item id="260" category="TMS" price="1500" sell="0" effect="260" sprite="80" extra="tm:956"/>
+  <item id="261" category="TMS" price="0" sell="0" effect="261" sprite="71" extra="tm:553"/>
+  <item id="262" category="TMS" price="0" sell="0" effect="262" sprite="77" extra="tm:827"/>
+  <item id="263" category="TMS" price="0" sell="0" effect="263" sprite="73" extra="tm:613"/>
+  <item id="264" category="TMS" price="0" sell="0" effect="264" sprite="82" extra="tm:2000"/>
+  <item id="265" category="TMS" price="0" sell="0" effect="265" sprite="82" extra="tm:2001"/>
+  <item id="301" category="HMS" price="0" sell="0" effect="301" sprite="94" extra="hm:8"/>
+  <item id="302" category="HMS" price="0" sell="0" effect="302" sprite="94" extra="hm:252"/>
+  <item id="303" category="HMS" price="0" sell="0" effect="303" sprite="94" extra="hm:656"/>
+  <item id="304" category="HMS" price="0" sell="0" effect="304" sprite="94" extra="hm:59"/>
+  <item id="305" category="HMS" price="0" sell="0" effect="305" sprite="94" extra="hm:17"/>
+  <item id="306" category="HMS" price="0" sell="0" effect="306" sprite="94" extra="hm:215"/>
+  <item id="307" category="HMS" price="0" sell="0" effect="307" sprite="94" extra="hm:657"/>
+  <item id="308" category="HMS" price="0" sell="0" effect="308" sprite="94" extra="hm:663"/>
+  <item id="311" category="EVOLUTIONARY" price="0" sell="1" sprite="96"/>
+  <item id="312" category="EVOLUTIONARY" price="0" sell="1" sprite="97"/>
+  <item id="313" category="EVOLUTIONARY" price="0" sell="1" sprite="98"/>
+  <item id="314" category="EVOLUTIONARY" price="0" sell="1" sprite="99"/>
+  <item id="315" category="EVOLUTIONARY" price="0" sell="1" sprite="100"/>
+  <item id="316" category="EVOLUTIONARY" price="0" sell="1" sprite="101"/>
+  <item id="317" category="EVOLUTIONARY" price="0" sell="1" sprite="102"/>
+  <item id="318" category="EVOLUTIONARY" price="0" sell="1" sprite="103"/>
+  <item id="319" category="EVOLUTIONARY" price="0" sell="1" sprite="104"/>
+  <item id="320" category="EVOLUTIONARY" price="0" sell="1" sprite="105"/>
+  <item id="321" category="EVOLUTIONARY" price="0" sell="1" sprite="106"/>
+  <item id="322" category="EVOLUTIONARY" price="0" sell="1" sprite="107"/>
+  <item id="323" category="EVOLUTIONARY" price="0" sell="1" sprite="108"/>
+  <item id="324" category="EVOLUTIONARY" price="0" sell="1" sprite="109"/>
+  <item id="325" category="EVOLUTIONARY" price="0" sell="1" sprite="110"/>
+  <item id="326" category="EVOLUTIONARY" price="0" sell="1" sprite="111"/>
+  <item id="351" category="EVOLUTIONARY" price="0" sell="1" sprite="112"/>
+  <item id="352" category="EVOLUTIONARY" price="9000" sell="500" sprite="113"/>
+  <item id="381" category="OTHERS" price="0" sell="1" sprite="128"/>
+  <item id="382" category="OTHERS" price="0" sell="1" sprite="129"/>
+  <item id="383" category="OTHERS" price="0" sell="1" sprite="130"/>
+  <item id="384" category="OTHERS" price="0" sell="1" sprite="131"/>
+  <item id="386" category="OTHERS" price="0" sell="1" sprite="133"/>
 </items>

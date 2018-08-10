@@ -14,7 +14,7 @@ public class MoveSwitchedEvent extends DungeonEvent implements Communicable
 
 	/** The indices of the switched moves. */
 	private int from, to;
-	/** The Pokémon whose moves are switched. */
+	/** The Pokemon whose moves are switched. */
 	private Pokemon pokemon;
 
 	public MoveSwitchedEvent(Floor floor)
@@ -63,7 +63,7 @@ public class MoveSwitchedEvent extends DungeonEvent implements Communicable
 			throw e;
 		} catch (Exception e)
 		{
-			throw new JsonReadingException("Wrong value for Pokémon ID: " + value.get("pokemon"));
+			throw new JsonReadingException("Wrong value for Pokemon ID: " + value.get("pokemon"));
 		}
 		try
 		{

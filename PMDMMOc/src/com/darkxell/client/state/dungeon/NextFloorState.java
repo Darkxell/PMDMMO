@@ -8,7 +8,7 @@ import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.TransitionState;
 import com.darkxell.client.state.freezone.CutsceneState;
 import com.darkxell.client.state.map.DungeonFloorMap;
-import com.darkxell.common.dungeon.Dungeon;
+import com.darkxell.common.dungeon.data.Dungeon;
 import com.darkxell.common.util.language.Message;
 
 public class NextFloorState extends TransitionState

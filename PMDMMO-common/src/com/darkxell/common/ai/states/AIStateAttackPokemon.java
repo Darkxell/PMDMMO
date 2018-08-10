@@ -8,6 +8,7 @@ import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.LearnedMove;
 
+/** State in which the Pokemon follows then attacks a Pokemon. */
 public class AIStateAttackPokemon extends AIStateFollowPokemon
 {
 
@@ -19,8 +20,10 @@ public class AIStateAttackPokemon extends AIStateFollowPokemon
 	@Override
 	public DungeonEvent takeAction()
 	{
+		// Only attack if adjacent. TODO Change Attack AI to take Move ranges into account.
 		if (AIUtils.isAdjacentTo(this.ai.pokemon, this.target, true) && this.ai.pokemon.canAttack(this.ai.floor))
 		{
+			// Choose a move at random.
 			int moveIndex = this.ai.floor.random.nextInt(this.ai.pokemon.moveCount() + 1);
 			LearnedMove move = moveIndex == this.ai.pokemon.moveCount() ? new LearnedMove(MoveRegistry.ATTACK.id) : this.ai.pokemon.move(moveIndex);
 			return new MoveSelectionEvent(this.ai.floor, move, this.ai.pokemon, AIUtils.generalDirection(this.ai.pokemon, this.target));

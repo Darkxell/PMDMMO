@@ -75,7 +75,7 @@ public class DungeonState extends AbstractState
 
 	public final ActionSelectionState actionSelectionState;
 	private Point camera = new Point(0, 0);
-	/** The Pokémon around which to draw. */
+	/** The Pokemon around which to draw. */
 	private DungeonPokemon cameraPokemon;
 	/** The current substate. */
 	private DungeonSubState currentSubstate;
@@ -204,7 +204,7 @@ public class DungeonState extends AbstractState
 			x = (int) (r.x() + TILE_SIZE / 2 - width / 2);
 			y = (int) (r.y() + TILE_SIZE / 2 - height / 2);
 
-			if (Persistance.floor.hasCustomTileset())
+			if (Persistance.floor.data.hasCustomTileset())
 			{
 				if (x + width > Persistance.floor.getWidth() * TILE_SIZE) x = Persistance.floor.getWidth() * TILE_SIZE - width;
 				if (y + height > Persistance.floor.getHeight() * TILE_SIZE) y = Persistance.floor.getHeight() * TILE_SIZE - height;

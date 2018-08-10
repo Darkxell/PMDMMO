@@ -6,8 +6,8 @@ import java.awt.event.KeyEvent;
 
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.Palette;
-import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.client.state.menu.AbstractMenuState.MenuOption;
+import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.client.state.menu.menus.ControlsMenuState.ControlMenuOption;
 
 public class ControlsWindow extends OptionSelectionWindow

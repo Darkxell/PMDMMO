@@ -10,7 +10,7 @@ import com.darkxell.common.util.language.Message;
 public class BellySizeChangedEvent extends DungeonEvent
 {
 	public final DungeonPokemon pokemon;
-	/** How much the Pokémon's belly size was changed. */
+	/** How much the Pokemon's belly size was changed. */
 	public final int quantity;
 
 	public BellySizeChangedEvent(Floor floor, DungeonPokemon pokemon, int quantity)

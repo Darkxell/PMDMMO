@@ -11,7 +11,7 @@ public class PokemonSpriteSequence
 	final PokemonSpriteFrame[] frames;
 	public final int rushPoint, hitPoint, returnPoint;
 
-	public PokemonSpriteSequence(AbstractPokemonSpriteset spriteset, Element xml)
+	public PokemonSpriteSequence(PokemonSpritesetData pokemonSpritesetData, Element xml)
 	{
 		this.rushPoint = XMLUtils.getAttribute(xml, "rush", 0);
 		this.hitPoint = XMLUtils.getAttribute(xml, "hit", 0);
@@ -21,7 +21,7 @@ public class PokemonSpriteSequence
 		int i = 0;
 		for (Element e : xml.getChildren())
 		{
-			this.frames[i] = new PokemonSpriteFrame(spriteset, e);
+			this.frames[i] = new PokemonSpriteFrame(pokemonSpritesetData, e);
 			++i;
 		}
 		this.duration = this.totalDuration();
@@ -38,7 +38,7 @@ public class PokemonSpriteSequence
 		return i;
 	}
 
-	public PokemonSpriteFrame getSprite(int tick)
+	public PokemonSpriteFrame getFrame(int tick)
 	{
 		return this.frames[this.getFrameIndex(tick)];
 	}

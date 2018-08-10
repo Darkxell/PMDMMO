@@ -34,7 +34,7 @@ public class NarratorDialogScreen extends DialogScreen
 		{
 			List<PMDChar> line = this.lines.get(i);
 			int x = width / 2 - TextRenderer.width(line) / 2;
-			TextRenderer.render(g, line, x, y, false);
+			TextRenderer.render(g, line, x, y);
 			y += TextRenderer.height() + TextRenderer.lineSpacing();
 		}
 

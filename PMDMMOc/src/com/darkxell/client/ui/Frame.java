@@ -4,15 +4,34 @@ import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 
 import com.darkxell.client.launchable.Launcher;
-import com.darkxell.client.resources.images.others.FrameResources;
+import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.resources.images.Sprite;
 
 /** Main frame for the client. */
 public class Frame extends JFrame implements WindowListener
 {
+	public static class FrameIconSprite extends Sprite
+	{
+
+		public FrameIconSprite(String path)
+		{
+			super(path);
+		}
+
+		@Override
+		protected void loaded(BufferedImage img)
+		{
+			super.loaded(img);
+			if (Persistance.frame != null) Persistance.frame.setIconImage(this.image());
+		}
+
+	}
+
 	private static final long serialVersionUID = -6197661374941529294L;
 
 	public Canvas canvas;
@@ -20,16 +39,14 @@ public class Frame extends JFrame implements WindowListener
 	public Frame()
 	{
 		super();
-		this.setTitle("Pokémon Mystery Dungeon: Online Rescue Team");
+		this.setTitle("Pokemon Mystery Dungeon: Online Rescue Team");
 		this.setSize(1000, 800);
 		this.setMinimumSize(new Dimension(650, 400));
 		// this.setResizable(false);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		this.setIconImage(FrameResources.ICON);
 		this.setVisible(true);
 		this.addWindowListener(this);
-		
 
 		this.canvas = new Canvas();
 		this.add(this.canvas);

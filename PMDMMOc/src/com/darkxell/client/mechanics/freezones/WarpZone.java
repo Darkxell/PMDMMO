@@ -46,8 +46,7 @@ public class WarpZone extends TriggerZone {
 	@Override
 	public void onEnter()
 	{
-		FreezoneMap destination = Freezones.loadMap(this.destination);
-		if (destination != null) StateManager.setExploreState(destination, this.direction, this.toX, this.toY);
+		StateManager.setExploreState(this.destination, this.direction, this.toX, this.toY);
 	}
 
 }

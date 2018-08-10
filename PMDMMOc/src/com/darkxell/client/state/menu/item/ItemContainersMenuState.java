@@ -1,6 +1,6 @@
 package com.darkxell.client.state.menu.item;
 
-import static com.darkxell.client.resources.images.tilesets.ItemsSpriteset.ITEM_SIZE;
+import static com.darkxell.client.resources.images.hud.ItemsSpriteset.ITEM_SIZE;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -12,7 +12,7 @@ import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.launchable.messagehandlers.ItemActionHandler.ItemActionMessageHandler;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.renderers.layers.AbstractGraphiclayer;
-import com.darkxell.client.resources.images.MenuHudSpriteset;
+import com.darkxell.client.resources.images.hud.MenuStateHudSpriteset;
 import com.darkxell.client.resources.music.SoundManager;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.dialog.DialogScreen;
@@ -540,7 +540,7 @@ public class ItemContainersMenuState extends AbstractMenuState
 		this.currentAction = action;
 		if (action == ItemAction.USE)
 		{
-			if (i.item().usedOnTeamMember()) nextState = new TeamMenuState(this, dungeonState).setOpaque(this.isOpaque);
+			if (i.item().effect().isUsedOnTeamMember()) nextState = new TeamMenuState(this, dungeonState).setOpaque(this.isOpaque);
 			else Persistance.eventProcessor().processEvent(new ItemSelectionEvent(Persistance.floor, i.item(), user, null, container, index));
 		} else if (action == ItemAction.TRASH)
 		{
@@ -709,8 +709,8 @@ public class ItemContainersMenuState extends AbstractMenuState
 			maxWidth = Math.max(maxWidth, TextRenderer.width(((MenuItemOption) this.currentTab().options()[i]).item.name()));
 		Rectangle main = this.mainWindowDimensions();
 		this.nameWindow = new MenuWindow(
-				new Rectangle((int) main.getMaxX() + 5, (int) main.getMinY(), maxWidth + MenuWindow.MARGIN_X + MenuHudSpriteset.cornerSize.width,
-						TextRenderer.height() + MenuWindow.MARGIN_Y + MenuHudSpriteset.cornerSize.height * 3 / 2));
+				new Rectangle((int) main.getMaxX() + 5, (int) main.getMinY(), maxWidth + MenuWindow.MARGIN_X + MenuStateHudSpriteset.cornerSize.width,
+						TextRenderer.height() + MenuWindow.MARGIN_Y + MenuStateHudSpriteset.cornerSize.height * 3 / 2));
 		this.nameWindow.isOpaque = this.isOpaque;
 	}
 

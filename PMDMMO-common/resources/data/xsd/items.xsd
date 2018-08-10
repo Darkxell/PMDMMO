@@ -3,80 +3,42 @@
     elementFormDefault="qualified">
     <xs:include schemaLocation="base.xsd"/>
 
-    <xs:complexType name="itembase">
+    <xs:complexType name="item">
         <xs:attribute name="id" type="posInt"/>
-        <xs:attribute name="type" type="xs:string"/>
+        <xs:attribute name="category">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="EQUIPABLE"/>
+                    <xs:enumeration value="THROWABLE"/>
+                    <xs:enumeration value="FOOD"/>
+                    <xs:enumeration value="BERRIES"/>
+                    <xs:enumeration value="DRINKS"/>
+                    <xs:enumeration value="GUMMIS"/>
+                    <xs:enumeration value="SEEDS"/>
+                    <xs:enumeration value="OTHER_USABLES"/>
+                    <xs:enumeration value="ORBS"/>
+                    <xs:enumeration value="TMS"/>
+                    <xs:enumeration value="HMS"/>
+                    <xs:enumeration value="EVOLUTIONARY"/>
+                    <xs:enumeration value="OTHERS"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
         <xs:attribute name="price" type="posInt"/>
         <xs:attribute name="sell" type="posInt-1"/>
+        <xs:attribute name="effect" type="xs:int"/>
         <xs:attribute name="sprite" type="posInt"/>
         <xs:attribute name="stackable" type="xs:boolean" use="optional"/>
+        <xs:attribute name="rare" type="xs:boolean" use="optional"/>
+        <xs:attribute name="extra" type="xs:string"/>
     </xs:complexType>
 
     <xs:element name="items">
         <xs:complexType>
             <xs:choice maxOccurs="unbounded">
-                <xs:element name="item" type="itembase"/>
-                <xs:element name="itemfood" type="itemfood"/>
-                <xs:element name="itemthrowable" type="itemthrowable"/>
-                <xs:element name="itemgummi" type="itemgummi"/>
-                <xs:element name="itemequipable" type="itemequipable"/>
-                <xs:element name="itemtm" type="itemtm"/>
+                <xs:element name="item" type="item"/>
             </xs:choice>
         </xs:complexType>
     </xs:element>
-
-    <xs:complexType name="itemfood">
-        <xs:complexContent>
-            <xs:extension base="itembase">
-                <xs:attribute name="food" type="xs:int"/>
-                <xs:attribute name="full" type="xs:int" use="optional"/>
-                <xs:attribute name="belly" type="xs:int" use="optional"/>
-                <xs:attribute name="hp" type="xs:int" use="optional"/>
-                <xs:attribute name="hp-full" type="xs:int" use="optional"/>
-                <xs:attribute name="pp" type="xs:int" use="optional"/>
-                <xs:attribute name="stat" type="xs:int" use="optional"/>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
-
-    <xs:complexType name="itemthrowable">
-        <xs:complexContent>
-            <xs:extension base="itembase">
-                <xs:attribute name="trajectory">
-                    <xs:simpleType>
-                        <xs:restriction base="xs:token">
-                            <xs:enumeration value="Straight" />
-                            <xs:enumeration value="Arc" />
-                        </xs:restriction>
-                    </xs:simpleType>
-                </xs:attribute>
-                <xs:attribute name="damage" type="posInt"/>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
-
-    <xs:complexType name="itemgummi">
-        <xs:complexContent>
-            <xs:extension base="itembase">
-                <xs:attribute name="g-type" type="pkmntype"/>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
-    
-    <xs:complexType name="itemequipable">
-        <xs:complexContent>
-            <xs:extension base="itembase">
-                <xs:attribute name="stat" type="xs:int" use="optional"/>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
-
-    <xs:complexType name="itemtm">
-        <xs:complexContent>
-            <xs:extension base="itembase">
-                <xs:attribute name="move" type="posInt"/>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
 
 </xs:schema>

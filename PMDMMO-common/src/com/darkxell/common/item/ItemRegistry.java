@@ -6,6 +6,10 @@ import java.util.HashMap;
 
 import org.jdom2.Element;
 
+import com.darkxell.common.item.Item.ItemCategory;
+import com.darkxell.common.item.effects.TeachedMoveItemEffect;
+import com.darkxell.common.item.effects.TeachesMoveItemEffect;
+import com.darkxell.common.item.effects.TeachesMoveRenewableItemEffect;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.XMLUtils;
 
@@ -35,16 +39,28 @@ public final class ItemRegistry
 
 		Element root = XMLUtils.read(ItemRegistry.class.getResourceAsStream("/data/items.xml"));
 		for (Element e : root.getChildren())
-			try
+		{
+			Item item = new Item(e);
+			items.put(item.id, item);
+
+			String extra = XMLUtils.getAttribute(e, "extra", null);
+
+			if (extra != null)
 			{
-				String className = e.getAttributeValue("type");
-				Class<?> c = Class.forName(Item.class.getName() + className);
-				Item item = (Item) c.getConstructor(Element.class).newInstance(e);
-				items.put(item.id, item);
-			} catch (Exception e1)
-			{
-				e1.printStackTrace();
+				int effect = item.effectID;
+				String[] data = extra.split(":");
+				if (data[0].equals("tm"))
+				{
+					new TeachesMoveItemEffect(effect, Integer.parseInt(data[1]));
+					new TeachedMoveItemEffect(-effect, Integer.parseInt(data[1]));
+
+					Item used = new Item(-1 * item.id, ItemCategory.OTHERS, 0, 1, -effect, 95, false, false);
+					items.put(used.id, used);
+
+				} else if (data[0].equals("hm")) new TeachesMoveRenewableItemEffect(effect, Integer.parseInt(data[1]));
 			}
+
+		}
 	}
 
 	/** Saves this Registry for the Client. */

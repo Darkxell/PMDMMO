@@ -212,7 +212,7 @@ public class DungeonStats
 		if (speed != newSpeed) events.add(new SpeedChangedEvent(floor, this.pokemon));
 	}
 
-	/** Called when the Pokémon steps on a Wonder Tile or changes Floor. */
+	/** Called when the Pokemon steps on a Wonder Tile or changes Floor. */
 	public void resetStages()
 	{
 		for (int i = 0; i < this.stages.length; i++)

@@ -13,7 +13,7 @@ import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteS
 import com.darkxell.client.state.dungeon.AnimationState;
 import com.darkxell.client.state.dungeon.DungeonState;
 import com.darkxell.client.state.mainstates.PrincipalMainState;
-import com.darkxell.common.dungeon.DungeonRegistry;
+import com.darkxell.common.dungeon.data.DungeonRegistry;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.layout.Layout;
 import com.darkxell.common.pokemon.DungeonPokemon;
@@ -56,7 +56,7 @@ public class EditAnimationController implements Initializable
 
 	public void exitTab()
 	{
-		Launcher.stopGame();
+		Launcher.setProcessingProfile(Launcher.PROFILE_UNDEFINED);
 	}
 
 	private DungeonPokemon generateTester()

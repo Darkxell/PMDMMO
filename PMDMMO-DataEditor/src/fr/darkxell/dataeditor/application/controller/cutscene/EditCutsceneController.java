@@ -188,6 +188,7 @@ public class EditCutsceneController implements Initializable, ListCellParent<Cut
 		Persistance.frame.canvas.requestFocus();
 		Persistance.stateManager = new PrincipalMainState();
 		Persistance.cutsceneState = new CutsceneState(test);
+		test.creation.create();
 		Persistance.stateManager.setState(Persistance.cutsceneState);
 
 		Launcher.isRunning = true;

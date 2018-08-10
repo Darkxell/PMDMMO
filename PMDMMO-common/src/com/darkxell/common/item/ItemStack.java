@@ -45,7 +45,7 @@ public class ItemStack implements Comparable<ItemStack>, HasID
 	@Override
 	public int compareTo(ItemStack o)
 	{
-		int category = Integer.compare(this.item().category().order, o.item().category().order);
+		int category = Integer.compare(this.item().category.order, o.item().category.order);
 		return category == 0 ? this.name().toString().compareTo(o.name().toString()) : category;
 	}
 
@@ -90,7 +90,7 @@ public class ItemStack implements Comparable<ItemStack>, HasID
 		return this.item().name();
 	}
 
-	/** The number of Items in this Stack. Almost always 1 except for Poké, Gravelerock and similar items. */
+	/** The number of Items in this Stack. Almost always 1 except for Pokedollars, Gravelerock and similar items. */
 	public long quantity()
 	{
 		return this.data.quantity;

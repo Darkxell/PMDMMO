@@ -8,6 +8,7 @@ import com.darkxell.common.ai.states.AIStateFollowPokemon;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
+/** AI for wild Pokemon. */
 public class WildAI extends AI
 {
 

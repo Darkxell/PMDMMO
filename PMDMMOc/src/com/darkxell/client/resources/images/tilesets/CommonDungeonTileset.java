@@ -5,14 +5,12 @@ import java.awt.image.BufferedImage;
 public class CommonDungeonTileset extends AbstractDungeonTileset
 {
 
-	public static final CommonDungeonTileset INSTANCE = new CommonDungeonTileset();
-
 	public CommonDungeonTileset()
 	{
-		super("/tilesets/dungeon-common.png");
+		super("/tilesets/dungeon-common.png", 144, 96);
 	}
 
-	/** @param facing - true if the Pokémon is facing this Tile (red grid), false else (yellow grid).
+	/** @param facing - true if the Pokemon is facing this Tile (red grid), false else (yellow grid).
 	 * @return The grid tile. */
 	public BufferedImage grid(boolean facing)
 	{

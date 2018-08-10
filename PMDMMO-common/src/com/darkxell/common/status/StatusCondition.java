@@ -48,7 +48,7 @@ public class StatusCondition implements AffectsPokemon
 		return new Message("status." + this.id);
 	}
 
-	public void tick(Floor floor, StatusConditionInstance instance, ArrayList<DungeonEvent> events)
+	public void tick(Floor floor, AppliedStatusCondition instance, ArrayList<DungeonEvent> events)
 	{}
 
 }

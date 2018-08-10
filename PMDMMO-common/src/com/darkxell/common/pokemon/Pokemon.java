@@ -23,7 +23,7 @@ import com.darkxell.common.util.language.Message;
 
 public class Pokemon implements ItemContainer, HasID
 {
-	/** Pokémon gender.
+	/** Pokemon gender.
 	 * <ul>
 	 * <li>MALE = 0</li>
 	 * <li>FEMALE = 1</li>
@@ -41,27 +41,27 @@ public class Pokemon implements ItemContainer, HasID
 		return ids;
 	}
 
-	/** This Pokémon's ability's ID. */
+	/** This Pokemon's ability's ID. */
 	private Ability ability;
 
 	private DBPokemon data;
 
-	/** A reference to the Dungeon entity of this Pokémon if in a Dungeon. null else. */
+	/** A reference to the Dungeon entity of this Pokemon if in a Dungeon. null else. */
 	DungeonPokemon dungeonPokemon;
 
-	/** This Pokémon's held Item's ID. -1 for no Item. */
+	/** This Pokemon's held Item's ID. -1 for no Item. */
 	private ItemStack item;
 
-	/** This Pokémon's moves. */
+	/** This Pokemon's moves. */
 	private LearnedMove[] moves;
 
-	/** The Player controlling this Pokémon. null if it's an NPC. */
+	/** The Player controlling this Pokemon. null if it's an NPC. */
 	private Player player;
 
-	/** This Pokémon's species. */
+	/** This Pokemon's species. */
 	private PokemonSpecies species;
 
-	/** This Pokémon's stats. */
+	/** This Pokemon's stats. */
 	private BaseStats stats;
 
 	public Pokemon(DBPokemon data)
@@ -433,7 +433,7 @@ public class Pokemon implements ItemContainer, HasID
 	{
 		Element root = new Element(XML_ROOT);
 		root.setAttribute("pk-id", Long.toString(this.id()));
-		root.setAttribute("id", Integer.toString(this.species().compoundID()));
+		root.setAttribute("id", Integer.toString(this.species().id));
 		if (this.nickname() != null) root.setAttribute("nickname", this.nickname());
 		if (this.item != null) root.addContent(this.item.toXML());
 		root.setAttribute("level", Integer.toString(this.level()));

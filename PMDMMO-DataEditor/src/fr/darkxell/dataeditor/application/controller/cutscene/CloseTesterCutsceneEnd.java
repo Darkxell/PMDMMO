@@ -24,7 +24,8 @@ public class CloseTesterCutsceneEnd extends CutsceneEnd
 	@Override
 	public void onCutsceneEnd()
 	{
-		Launcher.stopGame();
+		Launcher.setProcessingProfile(Launcher.PROFILE_UNDEFINED);
+		Persistance.soundmanager.setBackgroundMusic(null);
 		Persistance.frame.dispose();
 	}
 

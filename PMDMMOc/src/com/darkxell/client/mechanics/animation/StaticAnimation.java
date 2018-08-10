@@ -3,7 +3,7 @@ package com.darkxell.client.mechanics.animation;
 import java.awt.Graphics2D;
 import java.awt.Point;
 
-import com.darkxell.client.resources.images.AnimationSpriteset;
+import com.darkxell.client.resources.images.RegularSpriteSet;
 
 public class StaticAnimation extends AbstractAnimation
 {
@@ -29,15 +29,15 @@ public class StaticAnimation extends AbstractAnimation
 
 	protected final Point location;
 	private final int[][] sprites;
-	public final AnimationSpriteset spriteset;
+	public final RegularSpriteSet spriteset;
 
-	public StaticAnimation(AnimationEndListener listener, AnimationSpriteset spriteset, Point location, int spriteDuration)
+	public StaticAnimation(AnimationEndListener listener, RegularSpriteSet spriteset, Point location, int spriteDuration)
 	{
 		this(listener, spriteset, location, makeSprites(spriteset.spriteCount(), spriteDuration));
 	}
 
 	/** @param sprites - Describes which sprites to display and for how long. */
-	public StaticAnimation(AnimationEndListener listener, AnimationSpriteset spriteset, Point location, int[][] sprites)
+	public StaticAnimation(AnimationEndListener listener, RegularSpriteSet spriteset, Point location, int[][] sprites)
 	{
 		super(computeDuration(sprites), listener);
 		this.spriteset = spriteset;
@@ -60,7 +60,7 @@ public class StaticAnimation extends AbstractAnimation
 	public void render(Graphics2D g, int width, int height)
 	{
 		super.render(g, width, height);
-		g.drawImage(this.spriteset.getSprite(this.currentSprite()), this.location.x, this.location.y, null);
+		g.drawImage(this.spriteset.getImg(this.currentSprite()), this.location.x, this.location.y, null);
 	}
 
 }

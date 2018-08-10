@@ -33,7 +33,7 @@ public class EntityRendererHolder<T> extends AbstractRenderer
 		return null;
 	}
 
-	/** @return The Sprite of the input object if it's a Pokémon. */
+	/** @return The Sprite of the input object if it's a Pokemon. */
 	public PokemonSprite getSprite(T pokemon)
 	{
 		AbstractRenderer renderer = this.getRenderer(pokemon);

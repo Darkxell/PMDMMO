@@ -31,7 +31,7 @@ public class CutscenePokemon extends CutsceneEntity
 	public CutscenePokemon(int id, double xpos, double ypos, Pokemon pokemon, PokemonSpriteState state, Direction facing, boolean animated)
 	{
 		super(id, xpos, ypos);
-		this.pokemonid = pokemon.species().compoundID();
+		this.pokemonid = pokemon.species().id;
 		this.currentState = state;
 		this.facing = facing;
 		this.animated = animated;
@@ -40,20 +40,20 @@ public class CutscenePokemon extends CutsceneEntity
 
 	public CutscenePokemon(Pokemon pokemon)
 	{
-		if (pokemon != null) this.pokemonid = pokemon == null ? 0 : pokemon.species().compoundID();
+		if (pokemon != null) this.pokemonid = pokemon == null ? 0 : pokemon.species().id;
 		this.currentState = PokemonSpriteState.IDLE;
 		this.facing = Direction.SOUTH;
 		this.animated = true;
 		this.instanciated = pokemon != null ? pokemon : PokemonRegistry.find(this.pokemonid).generate(new Random(), 1);
 	}
 
-	/** @param pokemon - Force the use of an already created Pokémon. */
+	/** @param pokemon - Force the use of an already created Pokemon. */
 	public CutscenePokemon(Pokemon pokemon, Element xml)
 	{
 		super(xml);
 		try
 		{
-			if (pokemon != null) this.pokemonid = pokemon.species().compoundID();
+			if (pokemon != null) this.pokemonid = pokemon.species().id;
 			else if (xml.getChild("teammember", xml.getNamespace()) != null)
 			{
 				pokemon = this.instanciated = Persistance.player.getMember(Integer.parseInt(xml.getChildText("teammember", xml.getNamespace())));
