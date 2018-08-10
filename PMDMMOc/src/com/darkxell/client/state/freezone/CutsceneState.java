@@ -1,5 +1,6 @@
 package com.darkxell.client.state.freezone;
 
+import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.cutscene.Cutscene;
 
 public class CutsceneState extends AbstractFreezoneState
@@ -17,6 +18,7 @@ public class CutsceneState extends AbstractFreezoneState
 	{
 		super.update();
 		if (this.isMain()) this.cutscene.player.update();
+		Persistance.currentmap.cutsceneEntityRenderers.update();
 	}
 
 }

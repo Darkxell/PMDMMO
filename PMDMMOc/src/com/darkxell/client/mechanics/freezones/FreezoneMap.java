@@ -87,7 +87,6 @@ public abstract class FreezoneMap
 					this.tiles[refferingTileID].sprite = tilesets.get(tileset).get(Integer.parseInt(element.getAttributeValue("xo")) / TILE_SIZE,
 							Integer.parseInt(element.getAttributeValue("yo")) / TILE_SIZE);
 				}
-
 			}
 			for (FreezoneTile t : this.tiles)
 				if (t.sprite == null) t.sprite = defaulttileset.getDefault();

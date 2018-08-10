@@ -20,8 +20,8 @@ public class CutsceneFreezoneMap extends FreezoneMap
 	private void loadLater(String tilesetPath, int width, int height)
 	{
 		AbstractFreezoneTileset t = AbstractFreezoneTileset.getTileSet(tilesetPath, width, height);
-		this.mapWidth = width;
-		this.mapHeight = height;
+		this.mapWidth = width / AbstractFreezoneTileset.TILE_SIZE;
+		this.mapHeight = height / AbstractFreezoneTileset.TILE_SIZE;
 		this.tiles = new FreezoneTile[this.mapWidth * this.mapHeight];
 		for (int x = 0; x < this.mapWidth; ++x)
 			for (int y = 0; y < this.mapHeight; ++y)

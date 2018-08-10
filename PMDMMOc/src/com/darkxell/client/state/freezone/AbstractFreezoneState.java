@@ -114,7 +114,6 @@ public class AbstractFreezoneState extends AbstractState
 		}
 
 		Persistance.currentmap.entityRenderers.update();
-		Persistance.currentmap.cutsceneEntityRenderers.update();
 
 	}
 
