@@ -29,7 +29,9 @@ public abstract class FloorDungeonTileset extends AbstractDungeonTileset
 	{
 		int id = floor.data.terrainSpriteset();
 		if (previous != null && previous.id == id && !floor.data.hasCustomTileset()) return previous;
-		return previous = new RegularFloorDungeonTileset(id, getTilesetPath(floor.dungeon.dungeon(), floor.id));
+		String path = getTilesetPath(floor.dungeon.dungeon(), floor.id);
+		if (floor.data.hasCustomTileset()) return previous = new CustomFloorDungeonTileset(id, path);
+		return previous = new RegularFloorDungeonTileset(id, path);
 	}
 
 	public final int id;
