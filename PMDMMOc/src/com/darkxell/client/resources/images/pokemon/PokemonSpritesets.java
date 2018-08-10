@@ -48,10 +48,7 @@ public final class PokemonSpritesets
 	/** Reads the sprites data file. */
 	public static void loadData()
 	{
-		/*loadSpritesetData(0);
-		Logger.d("Loading Pokemon sprite data...");
-		for (PokemonSpecies s : PokemonRegistry.list())
-			loadSpritesetData(s.id);*/
+		/* loadSpritesetData(0); Logger.d("Loading Pokemon sprite data..."); for (PokemonSpecies s : PokemonRegistry.list()) loadSpritesetData(s.id); */
 		loadSpriteset(0);
 	}
 
@@ -72,7 +69,7 @@ public final class PokemonSpritesets
 		if (!data.containsKey(effectiveID)) loadSpritesetData(effectiveID);
 
 		PokemonSpritesetData d = data.get(effectiveID);
-		if (d == data.get(0))
+		if (id != 0 && d == data.get(0))
 		{
 			spritesets.put(id, spritesets.get(0));
 			return;
