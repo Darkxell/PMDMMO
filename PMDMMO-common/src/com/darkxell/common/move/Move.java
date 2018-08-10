@@ -43,7 +43,7 @@ public class Move implements Comparable<Move>
 		Around,
 		/** All Pokemon up to two Tiles around the user in all directions. */
 		Around2,
-		/** All Pokemon within a 1-Tile range of the user. */
+		/** All Pokemon on the Floor. */
 		Floor,
 		/** The Pokemon on the Tile in front of the user. */
 		Front,
