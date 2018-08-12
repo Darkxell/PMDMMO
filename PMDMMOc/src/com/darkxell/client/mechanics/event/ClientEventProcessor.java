@@ -8,6 +8,7 @@ import com.darkxell.client.mechanics.animation.AbstractAnimation;
 import com.darkxell.client.mechanics.animation.AnimationEndListener;
 import com.darkxell.client.mechanics.animation.Animations;
 import com.darkxell.client.mechanics.animation.misc.NumberAbovePokeAnimation;
+import com.darkxell.client.mechanics.animation.misc.PokemonFaintAnimation;
 import com.darkxell.client.mechanics.animation.misc.RainAnimation;
 import com.darkxell.client.mechanics.animation.misc.SnowAnimation;
 import com.darkxell.client.mechanics.cutscene.CutsceneManager;
@@ -264,7 +265,10 @@ public final class ClientEventProcessor extends CommonEventProcessor
 
 	private void processFaintedEvent(FaintedPokemonEvent event)
 	{
-		Persistance.dungeonState.pokemonRenderer.unregister(event.pokemon);
+		AnimationState s = new AnimationState(Persistance.dungeonState);
+		s.animation = new PokemonFaintAnimation(event.pokemon, this.currentAnimEnd);
+		Persistance.dungeonState.setSubstate(s);
+		this.setState(State.ANIMATING);
 	}
 
 	private void processFloorEvent(NextFloorEvent event)

@@ -2,6 +2,8 @@ package com.darkxell.client.renderers.pokemon;
 
 import static com.darkxell.client.resources.images.tilesets.AbstractDungeonTileset.TILE_SIZE;
 
+import java.awt.AlphaComposite;
+import java.awt.Composite;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -35,6 +37,7 @@ public class AbstractPokemonRenderer extends AbstractRenderer
 		g.drawImage(s, (frame.isFlipped ? s.getWidth() : 0) + xPos, yPos, (frame.isFlipped ? -1 : 1) * s.getWidth(), s.getHeight(), null);
 	}
 
+	private float alpha = 1;
 	private final ArrayList<PokemonAnimation> animations = new ArrayList<PokemonAnimation>();
 	protected PokemonSprite sprite;
 
@@ -52,6 +55,11 @@ public class AbstractPokemonRenderer extends AbstractRenderer
 	public void addAnimation(PokemonAnimation animation)
 	{
 		this.animations.add(animation);
+	}
+
+	public void clearAnimations()
+	{
+		this.animations.clear();
 	}
 
 	public void removeAnimation(Object source)
@@ -75,6 +83,10 @@ public class AbstractPokemonRenderer extends AbstractRenderer
 	{
 		if (this.sprite.getCurrentSprite() != null)
 		{
+			AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, this.alpha);
+			Composite c = g.getComposite();
+			if (this.alpha != 1) g.setComposite(ac);
+
 			PokemonSpriteFrame frame = this.sprite.getCurrentFrame();
 
 			int xPos = (int) this.drawX(), yPos = (int) this.drawY();
@@ -90,7 +102,14 @@ public class AbstractPokemonRenderer extends AbstractRenderer
 
 			for (PokemonAnimation animation : this.animations)
 				animation.postrender(g, width, height);
+
+			if (this.alpha != 1) g.setComposite(c);
 		} else Logger.w("Tried to render null sprite.");
+	}
+
+	public void setAlpha(float alpha)
+	{
+		this.alpha = alpha;
 	}
 
 	@Override
