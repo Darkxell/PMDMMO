@@ -20,7 +20,7 @@ public class Mission {
 	private String difficulty = "";
 	/** The id of the dungeon where this mission takes place. */
 	private int dungeonid = 1;
-	/** The floor at wich you cazn complete this mission. */
+	/** The floor at wich you can complete this mission. */
 	private int floor = 1;
 	/**
 	 * The id of the first pokemon. Usually, this is the one asking for rescue,
@@ -38,6 +38,8 @@ public class Mission {
 	private MissionReward rewards = new MissionReward();
 	/** The type of the mission. This defines what you have to do. */
 	private int missiontype = TYPE_RESCUEME;
+	/** The mission flavor texts. */
+	private MissionFlavourText flavor = null;
 
 	/** Creates a new Mission Object with the wanted attributes. */
 	public Mission(String difficulty, int dungeonid, int floor, int pokemonid1, int pokemonid2, int itemid,
@@ -111,6 +113,12 @@ public class Mission {
 		return missiontype;
 	}
 
+	public MissionFlavourText getMissionFlavor() {
+		if (flavor == null)
+			flavor = new MissionFlavourText(this);
+		return flavor;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		Mission x;
@@ -127,7 +135,5 @@ public class Mission {
 	public int hashCode() {
 		return dungeonid * pokemonid1 * pokemonid2 * missiontype * itemid;
 	}
-	
-	
 
 }
