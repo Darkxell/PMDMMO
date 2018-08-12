@@ -18,12 +18,16 @@ public class MissionBoardState extends AbstractState {
 	private AbstractState exploresource;
 	private ArrayList<Mission> missions = new ArrayList<>();
 
+	private int selectedmissionpos = 0;
+
 	public MissionBoardState(AbstractState exploresource) {
 		this.exploresource = exploresource;
 
 		try {
 			this.missions.add(new Mission("E", 2, 3, 3, 6, 1,
 					new MissionReward(55, new int[] { 1 }, new int[] { 1 }, 5, null), Mission.TYPE_RESCUEME));
+			this.missions.add(new Mission("A", 12, 14, 15, 71, 2,
+					new MissionReward(70, new int[] { 1 }, new int[] { 1 }, 5, null), Mission.TYPE_DEFEAT));
 		} catch (InvalidParammetersException e) {
 			e.printStackTrace();
 		}
@@ -34,6 +38,14 @@ public class MissionBoardState extends AbstractState {
 		switch (key) {
 		case RUN:
 			Persistance.stateManager.setState(new MissionBoardSelectionState(this.exploresource));
+			break;
+		case UP:
+			if (selectedmissionpos > 0)
+				selectedmissionpos--;
+			break;
+		case DOWN:
+			if (selectedmissionpos < missions.size() - 1)
+				selectedmissionpos++;
 			break;
 		default:
 			break;
@@ -52,15 +64,25 @@ public class MissionBoardState extends AbstractState {
 		g.fillRect(0, 0, width, height);
 
 		int offsetx = 40, offsety = 50;
-		g.translate(offsetx, offsety);
-		drawMission(g, width - (2 * offsetx), 30, missions.get(0));
-		g.translate(-offsetx, -offsety);
+		int baseheight = 30, basewidth = width - (2 * offsetx);
+		for (int i = 0; i < this.missions.size(); i++) {
+			g.translate(offsetx, offsety + (i * baseheight + 15));
+			drawMission(g, basewidth, baseheight, missions.get(i));
+			if (i == selectedmissionpos) {
+				g.setColor(Color.CYAN);
+				g.drawRect(0, 0, basewidth, baseheight);
+			}
+			g.translate(-offsetx, -offsety);
+
+		}
 
 	}
 
 	@Override
 	public void update() {
 		this.exploresource.update();
+		if (selectedmissionpos >= missions.size())
+			selectedmissionpos = missions.size();
 	}
 
 	private void drawMission(Graphics2D g, int width, int height, Mission mission) {

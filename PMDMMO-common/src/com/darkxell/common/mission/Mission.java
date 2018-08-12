@@ -123,4 +123,11 @@ public class Mission {
 				&& rewards.equals(x.rewards) && missiontype == x.missiontype;
 	}
 
+	@Override
+	public int hashCode() {
+		return dungeonid * pokemonid1 * pokemonid2 * missiontype * itemid;
+	}
+	
+	
+
 }
