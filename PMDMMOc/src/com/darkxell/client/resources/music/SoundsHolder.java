@@ -64,7 +64,7 @@ public class SoundsHolder
 
 	public static void load(String externalResourcesPath)
 	{
-		Logger.i("Loading sounds...");
+		Logger.d("Loading sounds...");
 		SoundsHolder.externalResourcesPath = externalResourcesPath;
 		soundtracks = getSoundtracks();
 		sfx = getSfx();

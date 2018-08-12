@@ -150,11 +150,10 @@ public class SpriteFactory implements Runnable
 					if (!this.requesters.containsKey(image)) this.requesters.put(image, new ArrayList<>());
 					this.requesters.get(image).add(requester);
 				}
-				if (!this.requested.contains(image))
-				{
+				if (!this.loaded.containsKey(image)) 
 					this.loaded.put(image, this.getDefault(width, height));
-					this.requested.add(image);
-				}
+                if (!this.requested.contains(image)) 
+                	this.requested.add(image);
 			}
 		}
 
@@ -186,25 +185,25 @@ public class SpriteFactory implements Runnable
 			{
 				String path = this.requested.getFirst();
 
-				BufferedImage img = Res.getBase(path);
-				if (img != null) this.loaded.put(path, img);
-				this.requested.removeFirst();
-				ArrayList<Sprite> requesters = new ArrayList<>(); // Put into new ArrayList to be thread-safe.
-				if (this.requesters.containsKey(path)) requesters.addAll(this.requesters.remove(path));
-				for (int s = 0; s < requesters.size(); ++s)
-					requesters.get(s).loaded(img);
-				if (this.subsprites.containsKey(path))
-				{
-					ArrayList<SubSprite> subsprites = new ArrayList<>(); // Put into new ArrayList to be thread-safe.
-					if (this.subsprites.containsKey(path))subsprites.addAll(this.subsprites.remove(path));
-					for (int s = 0; s < subsprites.size(); ++s)
-					{
-						SubSprite sub = subsprites.get(s);
-						sub.sprite.loaded(Res.createimage(this.get(path), sub.x, sub.y, sub.w, sub.h));
-					}
-				}
+                BufferedImage img = Res.getBase(path);
+                if (img != null) this.loaded.put(path, img);
+                this.requested.removeFirst();
+                ArrayList<Sprite> requesters = new ArrayList<>(); // Put into new ArrayList to be thread-safe.
+                if (this.requesters.containsKey(path)) requesters.addAll(this.requesters.remove(path));
+                if (img != null) for (int s = 0; s < requesters.size(); ++s)
+                    requesters.get(s).loaded(img);
+                if (this.subsprites.containsKey(path))
+                {
+                    ArrayList<SubSprite> subsprites = new ArrayList<>(); // Put into new ArrayList to be thread-safe.
+                    if (this.subsprites.containsKey(path)) subsprites.addAll(this.subsprites.remove(path));
+                    if (img != null) for (int s = 0; s < subsprites.size(); ++s)
+                    {
+                        SubSprite sub = subsprites.get(s);
+                        sub.sprite.loaded(Res.createimage(img, sub.x, sub.y, sub.w, sub.h));
+                    }
+                }
 
-				sleepTime = loaded;
+                sleepTime = loaded;
 			}
 
 			try

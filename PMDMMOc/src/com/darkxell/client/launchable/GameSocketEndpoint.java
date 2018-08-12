@@ -215,9 +215,13 @@ public class GameSocketEndpoint {
 				Logger.d("SENDING MESSAGE  : " + message);
 			if (Safe.serverhaskey)
 				message = Encryption.syncEncrypt(message);
-			this.userSession.getAsyncRemote().sendText(message);
-			if (Persistance.debugwiresharkmode)
-				Logger.d("MESSAGE SENT     : " + message);
+			if(this.userSession != null) {
+				this.userSession.getAsyncRemote().sendText(message);
+				if (Persistance.debugwiresharkmode)
+					Logger.d("MESSAGE SENT     : " + message);
+			} else {
+				Logger.w("Could not sent message to server socket : session is null");
+			}
 		} catch (Exception e) {
 			Logger.e("Could not send message to server socket.");
 			e.printStackTrace();
