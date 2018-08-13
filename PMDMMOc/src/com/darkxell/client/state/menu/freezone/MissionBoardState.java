@@ -6,17 +6,22 @@ import java.util.ArrayList;
 
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.TextRenderer;
+import com.darkxell.client.resources.images.Sprite;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.dungeon.data.DungeonRegistry;
+import com.darkxell.common.item.ItemRegistry;
 import com.darkxell.common.mission.InvalidParammetersException;
 import com.darkxell.common.mission.Mission;
 import com.darkxell.common.mission.MissionReward;
+import com.darkxell.common.pokemon.PokemonRegistry;
+import com.darkxell.common.util.language.Message;
 
 public class MissionBoardState extends AbstractState {
 
 	private AbstractState exploresource;
 	private ArrayList<Mission> missions = new ArrayList<>();
+	Sprite billboard = new Sprite("/hud/billboard.png");
 
 	private int selectedmissionpos = 0;
 
@@ -39,6 +44,11 @@ public class MissionBoardState extends AbstractState {
 		case RUN:
 			Persistance.stateManager.setState(new MissionBoardSelectionState(this.exploresource));
 			break;
+		case ATTACK:
+			if (this.missions.size() > 0)
+				Persistance.stateManager
+						.setState(new MissionDetailsState(this.exploresource, this.missions.get(selectedmissionpos)));
+			break;
 		case UP:
 			if (selectedmissionpos > 0)
 				selectedmissionpos--;
@@ -60,10 +70,9 @@ public class MissionBoardState extends AbstractState {
 	@Override
 	public void render(Graphics2D g, int width, int height) {
 		this.exploresource.render(g, width, height);
-		g.setColor(new Color(100, 100, 100, 100));
-		g.fillRect(0, 0, width, height);
+		g.drawImage(billboard.image(), 0, 0, null);
 
-		int offsetx = 40, offsety = 50;
+		int offsetx = 45, offsety = 50;
 		int baseheight = 30, basewidth = width - (2 * offsetx);
 		for (int i = 0; i < this.missions.size(); i++) {
 			g.translate(offsetx, offsety + (i * baseheight + 15));
@@ -86,16 +95,20 @@ public class MissionBoardState extends AbstractState {
 	}
 
 	private void drawMission(Graphics2D g, int width, int height, Mission mission) {
-		g.setColor(Color.GRAY);
+		g.setColor(new Color(150, 150, 150, 100));
 		g.fillRect(0, 0, width, height);
 		// 1st line
-		TextRenderer.render(g, "<mission> Flavor text n" + mission.getMissiontype(), 5, 5);
+		Message m = new Message(mission.getMissionFlavor().summaryid);
+		m.addReplacement("<pokemon>", PokemonRegistry.find(mission.getPokemonid2()).speciesName());
+		m.addReplacement("<item>", ItemRegistry.find(mission.getItemid()).name());
+		TextRenderer.render(g, m, 5, 5);
 		TextRenderer.render(g, mission.getDifficulty(), width - 10, 5);
 		// 2nd line
 		int dungeontextlength = TextRenderer.width(DungeonRegistry.find(mission.getDungeonid()).name());
 		TextRenderer.setColor(Color.YELLOW);
 		TextRenderer.render(g, DungeonRegistry.find(mission.getDungeonid()).name(), 5, 15);
-		TextRenderer.render(g, "Floor " + mission.getFloor(), 15 + dungeontextlength, 15);
+		TextRenderer.render(g, new Message("mission.floor") + " <blue>" + mission.getFloor() + "</color>",
+				15 + dungeontextlength, 15);
 	}
 
 }
