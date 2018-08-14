@@ -163,8 +163,10 @@ public class MoveEffect implements AffectsPokemon
 		return targets.toArray(new DungeonPokemon[targets.size()]);
 	}
 
-	/** Main method called when a Pokemon uses a Move on a target. */
-	public void mainUse(MoveUse usedMove, DungeonPokemon target, Floor floor, ArrayList<DungeonEvent> events)
+	/** Main method called when a Pokemon uses a Move on a target.
+	 * 
+	 * @return <code>true</code> if the Move missed. */
+	public boolean mainUse(MoveUse usedMove, DungeonPokemon target, Floor floor, ArrayList<DungeonEvent> events)
 	{
 		Move move = usedMove.move.move();
 		MoveEffectCalculator calculator = new MoveEffectCalculator(usedMove, target, floor);
@@ -183,6 +185,7 @@ public class MoveEffect implements AffectsPokemon
 			}
 			this.useOn(usedMove, target, floor, calculator, missed, events);
 		}
+		return missed;
 	}
 
 	public void prepareUse(MoveUse move, Floor floor, ArrayList<DungeonEvent> events)

@@ -220,7 +220,33 @@ public class TextRenderer
 		colorBlue("<blue>", -1, -1, 0),
 		colorGreen("<green>", -1, -1, 0),
 		colorRed("<red>", -1, -1, 0),
-		colorYellow("<yellow>", -1, -1, 0);
+		colorYellow("<yellow>", -1, -1, 0),
+		ad("<ad>", 0, 15, 6),
+		bd("<bd>", 1, 15, 6),
+		cd("<cd>", 2, 15, 6),
+		dd("<dd>", 3, 15, 6),
+		ed("<ed>", 4, 15, 6),
+		fd("<fd>", 5, 15, 6),
+		gd("<gd>", 6, 15, 6),
+		hd("<hd>", 7, 15, 6),
+		id("<id>", 8, 15, 4),
+		jd("<jd>", 9, 15, 4),
+		kd("<kd>", 10, 15, 6),
+		ld("<ld>", 11, 15, 4),
+		md("<md>", 12, 15, 9),
+		nd("<nd>", 13, 15, 6),
+		od("<od>", 14, 15, 6),
+		pd("<pd>", 15, 15, 6),
+		qd("<qd>", 16, 15, 6),
+		rd("<rd>", 17, 15, 6),
+		sd("<sd>", 18, 15, 6),
+		td("<td>", 19, 16, 5),
+		ud("<ud>", 0, 16, 6),
+		vd("<vd>", 1, 16, 7),
+		wd("<wd>", 2, 16, 9),
+		xd("<xd>", 3, 16, 7),
+		yd("<yd>", 4, 16, 6),
+		zd("<zd>", 5, 16, 6);
 
 		public static PMDChar find(String value)
 		{
@@ -256,13 +282,15 @@ public class TextRenderer
 		NORMAL,
 		EXPERIENCE,
 		DAMAGE,
-		HEAL;
+		HEAL,
+		DUNGEON;
 	}
 
 	private static Color color, previous;
 	private static final HashMap<PMDChar, Image> coloredSprites = new HashMap<>();
 	private static final HashMap<PMDChar, PMDChar> expChars = new HashMap<>();
 	private static final HashMap<PMDChar, PMDChar> damageChars = new HashMap<>();
+	private static final HashMap<PMDChar, PMDChar> dungeonChars = new HashMap<>();
 	private static final HashMap<PMDChar, PMDChar> healChars = new HashMap<>();
 	public static double fontSize = 1;
 	private static final int LINE_SPACING = 3;
@@ -305,6 +333,33 @@ public class TextRenderer
 		expChars.put(PMDChar.num8, PMDChar.num8e);
 		expChars.put(PMDChar.num9, PMDChar.num9e);
 		expChars.put(PMDChar.num0, PMDChar.num0e);
+
+		dungeonChars.put(PMDChar.a, PMDChar.ad);
+		dungeonChars.put(PMDChar.b, PMDChar.bd);
+		dungeonChars.put(PMDChar.c, PMDChar.cd);
+		dungeonChars.put(PMDChar.d, PMDChar.dd);
+		dungeonChars.put(PMDChar.e, PMDChar.ed);
+		dungeonChars.put(PMDChar.f, PMDChar.fd);
+		dungeonChars.put(PMDChar.g, PMDChar.gd);
+		dungeonChars.put(PMDChar.h, PMDChar.hd);
+		dungeonChars.put(PMDChar.i, PMDChar.id);
+		dungeonChars.put(PMDChar.j, PMDChar.jd);
+		dungeonChars.put(PMDChar.k, PMDChar.kd);
+		dungeonChars.put(PMDChar.l, PMDChar.ld);
+		dungeonChars.put(PMDChar.m, PMDChar.md);
+		dungeonChars.put(PMDChar.n, PMDChar.nd);
+		dungeonChars.put(PMDChar.o, PMDChar.od);
+		dungeonChars.put(PMDChar.p, PMDChar.pd);
+		dungeonChars.put(PMDChar.q, PMDChar.qd);
+		dungeonChars.put(PMDChar.r, PMDChar.rd);
+		dungeonChars.put(PMDChar.s, PMDChar.sd);
+		dungeonChars.put(PMDChar.t, PMDChar.td);
+		dungeonChars.put(PMDChar.u, PMDChar.ud);
+		dungeonChars.put(PMDChar.v, PMDChar.vd);
+		dungeonChars.put(PMDChar.w, PMDChar.wd);
+		dungeonChars.put(PMDChar.x, PMDChar.xd);
+		dungeonChars.put(PMDChar.y, PMDChar.yd);
+		dungeonChars.put(PMDChar.z, PMDChar.zd);
 	}
 
 	private TextRenderer()
@@ -318,6 +373,39 @@ public class TextRenderer
 		for (int i = diff; i < 0; ++i)
 			s = PMDChar.space_number.value + s;
 		return new Message(s, false);
+	}
+
+	private static ArrayList<PMDChar> applyFontMode(ArrayList<PMDChar> chars, FontMode font)
+	{
+		ArrayList<PMDChar> toreturn = new ArrayList<TextRenderer.PMDChar>();
+		HashMap<PMDChar, PMDChar> fontmap = null;
+		switch (font)
+		{
+			case DAMAGE:
+				fontmap = damageChars;
+				break;
+
+			case EXPERIENCE:
+				fontmap = expChars;
+				break;
+
+			case HEAL:
+				fontmap = healChars;
+				break;
+
+			case DUNGEON:
+				fontmap = dungeonChars;
+				break;
+
+			case NORMAL:
+			default:
+				break;
+		}
+		if (fontmap != null) for (PMDChar c : chars)
+			if (fontmap.containsKey(c)) toreturn.add(fontmap.get(c));
+			else toreturn.add(c);
+		else toreturn.addAll(chars);
+		return toreturn;
 	}
 
 	public static ArrayList<PMDChar> decode(String text)
@@ -400,30 +488,7 @@ public class TextRenderer
 	public static void render(Graphics2D g, String text, int x, int y, FontMode font)
 	{
 		ArrayList<PMDChar> chars = decode(text);
-		ArrayList<PMDChar> toprint = new ArrayList<TextRenderer.PMDChar>();
-		HashMap<PMDChar, PMDChar> fontmode = null;
-		switch (font)
-		{
-			case DAMAGE:
-				fontmode = damageChars;
-				break;
-
-			case EXPERIENCE:
-				fontmode = expChars;
-				break;
-
-			case HEAL:
-				fontmode = healChars;
-				break;
-
-			case NORMAL:
-			default:
-				break;
-		}
-		if (fontmode != null) for (PMDChar c : chars)
-			if (fontmode.containsKey(c)) toprint.add(fontmode.get(c));
-			else toprint.add(c);
-		else toprint.addAll(chars);
+		ArrayList<PMDChar> toprint = applyFontMode(chars, font);
 		render(g, toprint, x, y);
 	}
 
@@ -507,8 +572,14 @@ public class TextRenderer
 	/** @return The width of the input text. */
 	public static int width(String text)
 	{
+		return width(text, FontMode.NORMAL);
+	}
+
+	/** @return The width of the input text. */
+	public static int width(String text, FontMode fontMode)
+	{
 		if (text == null) return 0;
-		return width(decode(text));
+		return width(applyFontMode(decode(text), fontMode));
 	}
 
 }

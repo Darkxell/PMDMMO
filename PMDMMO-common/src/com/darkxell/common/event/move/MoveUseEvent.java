@@ -11,6 +11,7 @@ import com.darkxell.common.util.language.Message;
 public class MoveUseEvent extends DungeonEvent
 {
 
+	private boolean missed = false;
 	/** The Targets of this Move. */
 	public final DungeonPokemon target;
 	/** The move that was used. */
@@ -29,10 +30,15 @@ public class MoveUseEvent extends DungeonEvent
 		return this.target + " received the effect of " + this.usedMove.move.move().name();
 	}
 
+	public boolean missed()
+	{
+		return this.missed;
+	}
+
 	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{
-		this.usedMove.move.move().useOn(this.usedMove, this.target, this.floor, this.resultingEvents);
+		this.missed = this.usedMove.move.move().useOn(this.usedMove, this.target, this.floor, this.resultingEvents);
 		if (this.resultingEvents.size() == 0) this.resultingEvents.add(new MessageEvent(this.floor, new Message("move.no_effect")));
 		this.resultingEvents.add(this.usedMove.getExperienceEvent());
 		return super.processServer();

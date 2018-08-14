@@ -7,10 +7,10 @@ import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.animation.AbstractAnimation;
 import com.darkxell.client.mechanics.animation.AnimationEndListener;
 import com.darkxell.client.mechanics.animation.Animations;
-import com.darkxell.client.mechanics.animation.misc.NumberAbovePokeAnimation;
 import com.darkxell.client.mechanics.animation.misc.PokemonFaintAnimation;
 import com.darkxell.client.mechanics.animation.misc.RainAnimation;
 import com.darkxell.client.mechanics.animation.misc.SnowAnimation;
+import com.darkxell.client.mechanics.animation.misc.TextAbovePokeAnimation;
 import com.darkxell.client.mechanics.cutscene.CutsceneManager;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.renderers.TextRenderer.FontMode;
@@ -260,14 +260,14 @@ public final class ClientEventProcessor extends CommonEventProcessor
 				Persistance.dungeonState.setSubstate(s);
 				this.setState(State.ANIMATING);
 			}
-			if (event.damage != 0) new NumberAbovePokeAnimation(event.target, -event.damage, FontMode.DAMAGE).start();
+			if (event.damage != 0) new TextAbovePokeAnimation(event.target, new Message("-" + event.damage, false), FontMode.DAMAGE).start();
 		}
 	}
 
 	private void processExperienceEvent(ExperienceGeneratedEvent event)
 	{
 		if (event.experience != 0 && event.player == Persistance.player) for (DungeonPokemon p : event.player.getDungeonTeam())
-			if (!p.isFainted()) new NumberAbovePokeAnimation(p, event.experience, FontMode.EXPERIENCE).start();
+			if (!p.isFainted()) new TextAbovePokeAnimation(p, new Message("+" + event.experience, false), FontMode.EXPERIENCE).start();
 	}
 
 	private void processExplorationStopEvent(ExplorationStopEvent event)
@@ -301,7 +301,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 			Persistance.dungeonState.setSubstate(s);
 			this.setState(State.ANIMATING);
 		}
-		new NumberAbovePokeAnimation(event.target, event.effectiveHeal(), FontMode.DAMAGE).start();
+		new TextAbovePokeAnimation(event.target, new Message("+" + event.effectiveHeal(), false), FontMode.DAMAGE).start();
 	}
 
 	private void processItemEvent(ItemSelectionEvent event)
@@ -422,13 +422,27 @@ public final class ClientEventProcessor extends CommonEventProcessor
 
 	private void processMoveUseEvent(MoveUseEvent event)
 	{
+		AnimationEndListener listener = this.currentAnimEnd;
+
+		if (event.missed())
+		{
+			listener = new AnimationEndListener() {
+				@Override
+				public void onAnimationEnd(AbstractAnimation animation)
+				{
+					new TextAbovePokeAnimation(event.target, new Message("move.missed"), FontMode.DUNGEON).start();
+					currentAnimEnd.onAnimationEnd(animation);
+				}
+			};
+		}
+
 		AnimationState s = new AnimationState(Persistance.dungeonState);
-		s.animation = Animations.getMoveTargetAnimation(event.target, event.usedMove.move.move(), this.currentAnimEnd);
+		s.animation = Animations.getMoveTargetAnimation(event.target, event.usedMove.move.move(), listener);
 		if (s.animation != null)
 		{
 			Persistance.dungeonState.setSubstate(s);
 			this.setState(State.ANIMATING);
-		}
+		} else if (event.missed()) new TextAbovePokeAnimation(event.target, new Message("move.missed"), FontMode.DUNGEON).start();
 	}
 
 	private void processSkipEvent(TurnSkippedEvent event)

@@ -211,9 +211,10 @@ public class Move implements Comparable<Move>
 	 * @param usedMove - The Move instance that was selected.
 	 * @param target - The Pokemon the Move is being used on.
 	 * @param floor - The Floor context.
-	 * @return The events resulting from this Move. They typically include damage, healing, stat changes... */
-	public void useOn(MoveUse usedMove, DungeonPokemon target, Floor floor, ArrayList<DungeonEvent> events)
+	 * @param events - The events resulting from this Move. They typically include damage, healing, stat changes...
+	 * @return <code>true</code> if the Move missed. */
+	public boolean useOn(MoveUse usedMove, DungeonPokemon target, Floor floor, ArrayList<DungeonEvent> events)
 	{
-		this.effect.mainUse(usedMove, target, floor, events);
+		return this.effect.mainUse(usedMove, target, floor, events);
 	}
 }

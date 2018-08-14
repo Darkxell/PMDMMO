@@ -8,19 +8,20 @@ import com.darkxell.client.mechanics.animation.PokemonAnimation;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.renderers.TextRenderer.FontMode;
 import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.util.language.Message;
 
-public class NumberAbovePokeAnimation extends PokemonAnimation
+public class TextAbovePokeAnimation extends PokemonAnimation
 {
 	public static final int DURATION = 60;
 	public static final int FADE = 40;
 
 	public final FontMode fontMode;
-	public final int number;
+	public final Message text;
 
-	public NumberAbovePokeAnimation(DungeonPokemon target, int number, FontMode fontMode)
+	public TextAbovePokeAnimation(DungeonPokemon target, Message text, FontMode fontMode)
 	{
 		super(target, DURATION, null);
-		this.number = number;
+		this.text = text;
 		this.fontMode = fontMode;
 	}
 
@@ -41,10 +42,9 @@ public class NumberAbovePokeAnimation extends PokemonAnimation
 		Composite c = g.getComposite();
 		if (alpha != 1) g.setComposite(ac);
 
-		String text = (this.number < 0 ? "" : "+") + Integer.toString(this.number);
-		int xPos = (int) (this.x - TextRenderer.width(text) / 2);
+		int xPos = (int) (this.x - TextRenderer.width(this.text.toString(), this.fontMode) / 2);
 		int yPos = (int) (this.y + this.getHealthPos() - this.renderer.sprite().getCurrentSprite().getHeight() / 2 - TextRenderer.height() / 2);
-		TextRenderer.render(g, text, xPos, yPos, this.fontMode);
+		TextRenderer.render(g, this.text.toString(), xPos, yPos, this.fontMode);
 
 		if (alpha != 1) g.setComposite(c);
 	}
