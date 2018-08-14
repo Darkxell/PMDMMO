@@ -133,6 +133,9 @@
     <move id="67">
       <default sprites="none" state="tailwhip" sound="move-tailwhip"/>
     </move>
+    <move id="106">
+      <default width="96" height="96" state="special" spriteduration="5">0,1,2,3,4,5,6,7,8,9,10,11,12,13</default>
+    </move>
     <move id="304">
       <default sprites="none" state="emit"/>
     </move>
