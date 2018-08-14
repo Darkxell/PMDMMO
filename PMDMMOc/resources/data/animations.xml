@@ -143,6 +143,9 @@
     <move id="706">
       <default sprites="none" state="emit"/>
     </move>
+    <move id="710">
+      <default sprites="none"/>
+    </move>
     <move id="806" oriented="true">
       <default state="shoot" width="32" height="32" overlay="120">-1,-1,-1,-1,-1,-1,0,1,2,3,4,5,6,7</default>
       <north height="64" backsprites="yes"/>
@@ -164,6 +167,9 @@
     </movetarget>
     <movetarget id="706">
       <default y="52" spriteduration="3" width="40" height="64">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21</default>
+    </movetarget>
+    <movetarget id="710">
+      <default spriteduration="3" width="32" height="64">0,1,2,3,4</default>
     </movetarget>
   </movetargets>
   <statuses>
