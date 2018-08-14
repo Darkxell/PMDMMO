@@ -103,6 +103,8 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	/** Stores events that animate at the same time as the travel events. */
 	private Stack<DungeonEvent> delayedWithTravels = new Stack<>();
 	private boolean landedOnStairs = false;
+	/** Used to calculate delay time between Pokemon turns. */
+	private DungeonEvent lastAction = null;
 	private BaseStats levelupStats = null;
 	/** Stores consecutive travel events to animate them at the same time. */
 	private ArrayList<PokemonTravelEvent> travels = new ArrayList<>();
@@ -174,6 +176,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	public void doProcess(DungeonEvent event)
 	{
 		super.doProcess(event);
+		if (this.shouldDelay(event)) this.lastAction = event;
 		this.doClientProcess(event);
 	}
 
@@ -196,6 +199,16 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	@Override
 	protected boolean preProcess(DungeonEvent event)
 	{
+
+		if (this.lastAction != null && this.shouldDelay(event))
+		{
+			this.addToPending(event);
+			Persistance.dungeonState.setSubstate(new DelayState(Persistance.dungeonState, 40));
+			this.setState(State.ANIMATING);
+			this.lastAction = null;
+			return false;
+		}
+
 		if (event instanceof PokemonTravelEvent)
 		{
 			this.travels.add((PokemonTravelEvent) event);
@@ -536,8 +549,20 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	public void setState(State state)
 	{
 		super.setState(state);
-		if (state == State.AWATING_INPUT && this.dungeon.getActor() == Persistance.player.getDungeonLeader())
-			Persistance.dungeonState.setSubstate(Persistance.dungeonState.actionSelectionState);
+		if (state == State.AWATING_INPUT)
+		{
+			this.lastAction = null; // Don't delay if game was already waiting for a Player's action.
+			if (this.dungeon.getActor() == Persistance.player.getDungeonLeader())
+				Persistance.dungeonState.setSubstate(Persistance.dungeonState.actionSelectionState);
+		}
+	}
+
+	/** @return <code>true</code> If having the input event and another <i>shouldDelay</i> event should delay the game for a few ticks, to give the Player a break. */
+	protected boolean shouldDelay(DungeonEvent event)
+	{
+		if (event.actor() == null) return false;
+		return (event instanceof MoveSelectionEvent) || (event instanceof ItemSelectionEvent) || (event instanceof ItemSwappedEvent)
+				|| (event instanceof ItemMovedEvent);
 	}
 
 	@Override
