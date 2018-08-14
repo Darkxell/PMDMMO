@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import com.darkxell.common.move.effects.ApplyStatusConditionEffect;
 import com.darkxell.common.move.effects.DrainEffect;
+import com.darkxell.common.move.effects.RecoilEffect;
 import com.darkxell.common.move.effects.StatChangeEffect;
 import com.darkxell.common.pokemon.BaseStats.Stat;
 import com.darkxell.common.status.StatusCondition;
@@ -21,6 +22,7 @@ public final class MoveEffects
 	public static final MoveEffect Raise_spattack = new StatChangeEffect(76, Stat.SpecialAttack, 1);
 	public static final MoveEffect Lower_attack = new StatChangeEffect(86, Stat.Attack, -1);
 	public static final MoveEffect Drain_50percent = new DrainEffect(90, 50);
+	public static final MoveEffect Recoil_12percent5 = new RecoilEffect(92, 12.5);
 	public static final MoveEffect Lower_defense = new StatChangeEffect(139, Stat.Defense, -1);
 
 	/** @return The Effect with the input ID. */
