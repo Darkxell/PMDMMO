@@ -107,6 +107,9 @@
     <move id="0">
       <default sprites="none" sound="move-basicattack"/>
     </move>
+    <move id="14">
+      <default sprites="none" alsoplay="2"/>
+    </move>
     <move id="22" oriented="true">
       <default width="96" height="48" y="48" sound="move-growl" state="special">0,1,2,3,4,5,0,1,2,3,4,5</default>
       <north width="72" backsprites="only"/>

@@ -10,7 +10,7 @@ public class AbstractAnimation
 	int delayTime = 0;
 	/** The total duration of this Animation. */
 	int duration;
-	public final AnimationEndListener listener;
+	private AnimationEndListener listener;
 	/** The number of times this animation plays. Usually 1, or -1 as until removed. */
 	public int plays = 1;
 	/** The ID of the sound to play when this Animation is played. */
@@ -60,7 +60,11 @@ public class AbstractAnimation
 
 	private void onDelayFinished()
 	{
-		if (this.listener != null) this.listener.onAnimationEnd(this);
+		if (this.listener != null)
+		{
+			this.listener.onAnimationEnd(this);
+			this.listener = null;
+		}
 	}
 
 	/** Called when this Animation finishes. */
