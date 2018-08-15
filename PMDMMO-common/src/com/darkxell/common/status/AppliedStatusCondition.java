@@ -17,13 +17,15 @@ public class AppliedStatusCondition
 	public final int duration;
 	/** The Pokemon this Status condition affects. */
 	public final DungeonPokemon pokemon;
+	public final Object source;
 	/** The number of turns this Condition has been in effect. */
 	int tick;
 
-	public AppliedStatusCondition(StatusCondition condition, DungeonPokemon pokemon, int duration)
+	public AppliedStatusCondition(StatusCondition condition, DungeonPokemon pokemon, Object source, int duration)
 	{
 		this.condition = condition;
 		this.pokemon = pokemon;
+		this.source = source;
 		this.duration = duration;
 		this.tick = 0;
 	}
@@ -31,6 +33,11 @@ public class AppliedStatusCondition
 	public Message endMessage()
 	{
 		return new Message("status.end." + this.condition.id).addReplacement("<pokemon>", this.pokemon.getNickname());
+	}
+
+	public void finish(Floor floor, ArrayList<DungeonEvent> events)
+	{
+		events.add(new StatusConditionEndedEvent(floor, this));
 	}
 
 	public int getTurns()
@@ -53,7 +60,7 @@ public class AppliedStatusCondition
 	{
 		if (!this.isOver()) this.condition.tick(floor, this, events);
 		++this.tick;
-		if (this.isOver()) events.add(new StatusConditionEndedEvent(floor, this));
+		if (this.isOver()) this.finish(floor, events);
 	}
 
 }

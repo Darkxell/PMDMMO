@@ -5,18 +5,22 @@ import java.util.HashMap;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageSource;
+import com.darkxell.common.event.stats.ExperienceGeneratedEvent;
 import com.darkxell.common.pokemon.AffectsPokemon;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Message;
 
-public class StatusCondition implements AffectsPokemon
+public class StatusCondition implements AffectsPokemon, DamageSource
 {
 	private static final HashMap<Integer, StatusCondition> _registry = new HashMap<Integer, StatusCondition>();
 
-	public static final PreventsActionStatusCondition Asleep = new PreventsActionStatusCondition(3, 3, 6);
+	public static final PeriodicDamageStatusCondition Poisoned = new PeriodicDamageStatusCondition(0, -1, -1, 10, 4);
 	public static final PeriodicDamageStatusCondition Badly_poisoned = new PeriodicDamageStatusCondition(1, -1, -1, 2, 6);
 	public static final PeriodicDamageStatusCondition Burn = new PeriodicDamageStatusCondition(2, -1, -1, 20, 5);
-	public static final PeriodicDamageStatusCondition Poisoned = new PeriodicDamageStatusCondition(0, -1, -1, 10, 4);
+	public static final PreventsActionStatusCondition Asleep = new PreventsActionStatusCondition(3, 3, 6);
+
+	public static final StealsHpStatusCondition Leech_seed = new StealsHpStatusCondition(10, 10, 2, 10);
 
 	/** @return The Status Condition with the input ID. */
 	public static StatusCondition find(int id)
@@ -41,6 +45,12 @@ public class StatusCondition implements AffectsPokemon
 	public boolean affects(DungeonPokemon pokemon)
 	{
 		return !pokemon.hasStatusCondition(this);
+	}
+
+	@Override
+	public ExperienceGeneratedEvent getExperienceEvent()
+	{
+		return null;
 	}
 
 	public Message name()

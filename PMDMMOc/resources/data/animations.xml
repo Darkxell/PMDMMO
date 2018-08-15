@@ -146,6 +146,9 @@
       <south width="64"/>
       <west height="64"/>
     </move>
+    <move id="702" oriented="true">
+      <default spriteduration="2" state="special" width="64" height="64">0,1,2,3</default>
+    </move>
     <move id="706">
       <default sprites="none" state="emit"/>
     </move>
@@ -176,6 +179,9 @@
     </movetarget>
     <movetarget id="706">
       <default y="52" spriteduration="3" width="40" height="64">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21</default>
+    </movetarget>
+    <movetarget id="702">
+      <default y="-4" spriteduration="5" width="40" height="8">0,2,3,2,3,2,3,1</default>
     </movetarget>
     <movetarget id="710">
       <default spriteduration="3" width="32" height="64">0,1,2,3,4</default>

@@ -332,6 +332,12 @@ public class DungeonPokemon implements ItemContainer
 		if (attackType > this.attacksReceived) this.attacksReceived = attackType;
 	}
 
+	/** @return <code>true</code> if the Pokemon indeed had the condition. */
+	public boolean removeStatusCondition(AppliedStatusCondition condition)
+	{
+		return this.statusConditions.remove(condition);
+	}
+
 	public void removeStatusCondition(StatusCondition condition)
 	{
 		this.statusConditions.removeIf(new Predicate<AppliedStatusCondition>() {
@@ -341,11 +347,6 @@ public class DungeonPokemon implements ItemContainer
 				return t.condition == condition;
 			}
 		});
-	}
-
-	public void removeStatusCondition(AppliedStatusCondition condition)
-	{
-		this.statusConditions.remove(condition);
 	}
 
 	/** Changes the direction this Pokemon is facing. */

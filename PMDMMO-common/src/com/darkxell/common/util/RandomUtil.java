@@ -31,6 +31,7 @@ public final class RandomUtil
 	 * @return A Random integer between a minimum and a maximum value (max excluded). */
 	public static int nextIntInBounds(int min, int max, Random random)
 	{
+		if (min == max) return min;
 		return min + random.nextInt(max - min);
 	}
 
