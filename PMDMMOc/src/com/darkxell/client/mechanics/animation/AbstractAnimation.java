@@ -83,6 +83,7 @@ public class AbstractAnimation
 
 	public void stop()
 	{
+		this.onDelayFinished();
 		this.onFinish();
 	}
 

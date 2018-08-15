@@ -26,6 +26,7 @@ import com.darkxell.client.state.dungeon.AnimationState;
 import com.darkxell.client.state.dungeon.DelayState;
 import com.darkxell.client.state.dungeon.NextFloorState;
 import com.darkxell.client.state.dungeon.PokemonTravelState;
+import com.darkxell.client.state.dungeon.ProjectileAnimationState;
 import com.darkxell.client.state.menu.dungeon.MoveLearnMenuState;
 import com.darkxell.client.state.menu.dungeon.StairMenuState;
 import com.darkxell.common.dungeon.DungeonExploration;
@@ -60,6 +61,7 @@ import com.darkxell.common.event.stats.LevelupEvent;
 import com.darkxell.common.event.stats.SpeedChangedEvent;
 import com.darkxell.common.event.stats.StatChangedEvent;
 import com.darkxell.common.item.effects.FoodItemEffect;
+import com.darkxell.common.move.Move.MoveRange;
 import com.darkxell.common.player.Inventory;
 import com.darkxell.common.pokemon.BaseStats;
 import com.darkxell.common.pokemon.DungeonPokemon;
@@ -436,11 +438,28 @@ public final class ClientEventProcessor extends CommonEventProcessor
 			};
 		}
 
+		ProjectileAnimationState proj = new ProjectileAnimationState(Persistance.dungeonState, event.usedMove.user.tile(), event.target.tile());
+		if (event.usedMove.move.move().range == MoveRange.Line)
+		{
+			proj.animation = Animations.getProjectileAnimation(null, 1000 + event.usedMove.move.moveId(), listener);
+			listener = new AnimationEndListener() {
+				@Override
+				public void onAnimationEnd(AbstractAnimation animation)
+				{
+					Persistance.dungeonState.setSubstate(proj);
+				}
+			};
+		}
+
 		AnimationState s = new AnimationState(Persistance.dungeonState);
 		s.animation = Animations.getMoveTargetAnimation(event.target, event.usedMove.move.move(), listener);
 		if (s.animation != null)
 		{
 			Persistance.dungeonState.setSubstate(s);
+			this.setState(State.ANIMATING);
+		} else if (proj.animation != null)
+		{
+			Persistance.dungeonState.setSubstate(proj);
 			this.setState(State.ANIMATING);
 		} else if (event.missed()) new TextAbovePokeAnimation(event.target, new Message("move.missed"), FontMode.DUNGEON).start();
 	}

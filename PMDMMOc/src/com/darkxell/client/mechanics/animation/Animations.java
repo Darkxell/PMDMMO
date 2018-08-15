@@ -25,7 +25,7 @@ import com.darkxell.common.util.XMLUtils;
 
 public final class Animations
 {
-	private static final HashMap<Integer, Element> abilities, custom, items, moves, moveTargets, statuses;
+	private static final HashMap<Integer, Element> abilities, custom, items, moves, moveTargets, projectiles, statuses;
 
 	public static final int ATTACK_DOWN, DEFENSE_DOWN, SP_ATTACK_DOWN, SP_DEFENSE_DOWN, SPEED_DOWN, EVASION_DOWN, ACCURACY_DOWN;
 	public static final int ATTACK_UP = 10, DEFENSE_UP = 11, SP_ATTACK_UP = 12, SP_DEFENSE_UP = 13, SPEED_UP = 14, EVASION_UP = 15, ACCURACY_UP = 16;
@@ -47,6 +47,7 @@ public final class Animations
 		items = new HashMap<>();
 		moves = new HashMap<>();
 		moveTargets = new HashMap<>();
+		projectiles = new HashMap<>();
 		statuses = new HashMap<>();
 	}
 
@@ -75,6 +76,9 @@ public final class Animations
 
 			case "moves":
 				return getMoveAnimation(target, MoveRegistry.find(anim), listener);
+
+			case "projectiles":
+				return getProjectileAnimation(target, anim, listener);
 
 			case "statuses":
 				return getStatusAnimation(target, StatusCondition.find(anim), listener);
@@ -120,6 +124,7 @@ public final class Animations
 				else if (registry == items) sprites = "/items/" + sprites;
 				else if (registry == moves) sprites = "/moves/" + sprites;
 				else if (registry == moveTargets) sprites = "/targets/" + sprites;
+				else if (registry == projectiles) sprites = "/projectiles/" + sprites;
 				else if (registry == statuses) sprites = "/status/" + sprites;
 				else sprites = "/" + sprites;
 			}
@@ -232,6 +237,13 @@ public final class Animations
 		return getAnimation(m.id, moveTargets, target, listener);
 	}
 
+	public static PokemonAnimation getProjectileAnimation(DungeonPokemon pokemon, int projectileID, AnimationEndListener listener)
+	{
+		PokemonAnimation a = getAnimation(projectileID, projectiles, pokemon, listener);
+		if (a != null) a.plays = -1;
+		return a;
+	}
+
 	public static PokemonAnimation getStatChangeAnimation(StatChangedEvent event, AnimationEndListener listener)
 	{
 		int statID;
@@ -287,6 +299,8 @@ public final class Animations
 			anims.add("moves/" + key);
 		for (Integer key : moveTargets.keySet())
 			anims.add("targets/" + key);
+		for (Integer key : projectiles.keySet())
+			anims.add("projectiles/" + key);
 		for (Integer key : statuses.keySet())
 			anims.add("statuses/" + key);
 
@@ -302,6 +316,7 @@ public final class Animations
 		items.clear();
 		moves.clear();
 		moveTargets.clear();
+		projectiles.clear();
 		statuses.clear();
 
 		Element xml = XMLUtils.read(Animations.class.getResourceAsStream("/data/animations.xml"));
@@ -315,6 +330,8 @@ public final class Animations
 			moves.put(Integer.parseInt(move.getAttributeValue("id")), move);
 		for (Element move : xml.getChild("movetargets", xml.getNamespace()).getChildren("movetarget", xml.getNamespace()))
 			moveTargets.put(Integer.parseInt(move.getAttributeValue("id")), move);
+		for (Element move : xml.getChild("projectiles", xml.getNamespace()).getChildren("projectile", xml.getNamespace()))
+			projectiles.put(Integer.parseInt(move.getAttributeValue("id")), move);
 		for (Element move : xml.getChild("statuses", xml.getNamespace()).getChildren("status", xml.getNamespace()))
 			statuses.put(Integer.parseInt(move.getAttributeValue("id")), move);
 	}

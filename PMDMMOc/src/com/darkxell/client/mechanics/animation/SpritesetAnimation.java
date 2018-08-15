@@ -43,7 +43,7 @@ public class SpritesetAnimation extends PokemonAnimation
 	private void draw(Graphics2D g, boolean back)
 	{
 		int index = this.index();
-		if (back && this.backSpriteUsage == BackSpriteUsage.yes) index += this.spriteset.spriteCount() / 2;
+		if (index != -1 && back && this.backSpriteUsage == BackSpriteUsage.yes) index += this.spriteset.spriteCount() / 2;
 
 		if (index != -1 && ((back && this.backSpriteUsage != BackSpriteUsage.no) || (!back && this.backSpriteUsage != BackSpriteUsage.only)))
 			g.drawImage(this.spriteset.getImg(index), (int) this.x - this.gravityX, (int) (this.y - this.gravityY), null);

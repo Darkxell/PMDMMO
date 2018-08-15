@@ -68,6 +68,7 @@
 				<xs:element ref="items"/>
 				<xs:element ref="moves"/>
 				<xs:element ref="movetargets"/>
+				<xs:element ref="projectiles"/>
 				<xs:element ref="statuses"/>
 			</xs:sequence>
 		</xs:complexType>
@@ -112,7 +113,15 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-
+	
+	<xs:element name="projectiles">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="projectile" minOccurs="0" maxOccurs="unbounded" type="animation"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
 	<xs:element name="statuses">
 		<xs:complexType>
 			<xs:sequence>

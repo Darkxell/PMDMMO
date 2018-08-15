@@ -53,6 +53,15 @@ public class AnimationListItem implements Comparable<AnimationListItem>
 				if (m != null) detail = m.name().toString();
 				break;
 
+			case "projectiles":
+				detail = Integer.toString(this.id);
+				if (this.id >= 1000)
+				{
+					Move mp = MoveRegistry.find(this.id - 1000);
+					if (mp != null) detail = mp.name().toString() + " projectile";
+				}
+				break;
+
 			case "statuses":
 				StatusCondition s = StatusCondition.find(this.id);
 				if (s != null) detail = s.name().toString();
