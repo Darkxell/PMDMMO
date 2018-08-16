@@ -13,6 +13,7 @@ public class StatChangedEvent extends DungeonEvent
 	public static final String[] MESSAGES = new String[] { "stat.decrease.3", "stat.decrease.2", "stat.decrease.1", null, "stat.increase.1", "stat.increase.2",
 			"stat.increase.3", };
 
+	private int effectiveChange = 0;
 	public final int stage;
 	public final Stat stat;
 	public final DungeonPokemon target;
@@ -23,6 +24,11 @@ public class StatChangedEvent extends DungeonEvent
 		this.target = target;
 		this.stat = stat;
 		this.stage = stage;
+	}
+
+	public int effectiveChange()
+	{
+		return this.effectiveChange;
 	}
 
 	@Override
@@ -40,22 +46,28 @@ public class StatChangedEvent extends DungeonEvent
 	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{
-		int effective = this.target.stats.effectiveChange(this.stat, this.stage);
+		boolean isAffected = this.target.ability().isPokemonAffected(this, this.target, this.resultingEvents)
+				&& (this.target.getItem() == null || this.target.getItem().item().isPokemonAffected(this, this.target, this.resultingEvents));
 
-		if (effective != 0)
+		if (isAffected)
 		{
-			this.target.stats.addStage(this.stat, effective);
-			if (this.stat == Stat.Speed) this.resultingEvents.add(new SpeedChangedEvent(this.floor, this.target));
-		}
+			this.effectiveChange = this.target.stats.effectiveChange(this.stat, this.stage);
 
-		String messageID = MESSAGES[effective + 3];
-		if (effective == 0)
-		{
-			if (this.stage > 0) messageID = "stat.increase.fail";
-			else messageID = "stat.decrease.fail";
+			if (this.effectiveChange != 0)
+			{
+				this.target.stats.addStage(this.stat, this.effectiveChange);
+				if (this.stat == Stat.Speed) this.resultingEvents.add(new SpeedChangedEvent(this.floor, this.target));
+			}
+
+			String messageID = MESSAGES[this.effectiveChange + 3];
+			if (this.effectiveChange == 0)
+			{
+				if (this.stage > 0) messageID = "stat.increase.fail";
+				else messageID = "stat.decrease.fail";
+			}
+			if (this.stat != Stat.Speed || this.effectiveChange == 0) this.messages.add(
+					new Message(messageID).addReplacement("<pokemon>", this.target.getNickname()).addReplacement("<stat>", new Message("stat." + this.stat)));
 		}
-		if (this.stat != Stat.Speed || effective == 0) this.messages
-				.add(new Message(messageID).addReplacement("<pokemon>", this.target.getNickname()).addReplacement("<stat>", new Message("stat." + this.stat)));
 
 		return super.processServer();
 	}

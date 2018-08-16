@@ -508,6 +508,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 
 	private void processStatEvent(StatChangedEvent event)
 	{
+		if (event.effectiveChange() == 0) return;
 		AnimationState s = new AnimationState(Persistance.dungeonState);
 		s.animation = Animations.getStatChangeAnimation(event, this.currentAnimEnd);
 		if (s.animation != null)

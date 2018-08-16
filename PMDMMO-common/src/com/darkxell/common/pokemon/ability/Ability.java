@@ -3,6 +3,7 @@ package com.darkxell.common.pokemon.ability;
 import java.util.HashMap;
 
 import com.darkxell.common.pokemon.AffectsPokemon;
+import com.darkxell.common.pokemon.BaseStats.Stat;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.util.language.Lang;
@@ -20,6 +21,8 @@ public abstract class Ability implements AffectsPokemon
 	public static final Ability LEVITATE = new AbilityNullifyType(16, PokemonType.Ground);
 	public static final Ability SOUNDPROOF = new AbilityNullifySound(19);
 	public static final Ability WONDER_GUARD = new AbilityNullifyNonSupEff(21);
+
+	public static final Ability KEEN_EYE = new AbilityPreventsStatLoss(46, Stat.Accuracy);
 
 	/** @return The Ability with the input ID. */
 	public static Ability find(int id)
