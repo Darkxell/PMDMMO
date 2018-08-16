@@ -108,7 +108,7 @@ public final class Animations
 		Element defaultXml = xml.getChild("default", xml.getNamespace());
 
 		boolean oriented = XMLUtils.getAttribute(xml, "oriented", false);
-		if (oriented && xml.getChild(target.facing().name().toLowerCase(), xml.getNamespace()) != null)
+		if (target != null && xml.getChild(target.facing().name().toLowerCase(), xml.getNamespace()) != null)
 			xml = xml.getChild(target.facing().name().toLowerCase(), xml.getNamespace());
 		else xml = defaultXml;
 

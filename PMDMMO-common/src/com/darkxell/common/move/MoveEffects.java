@@ -28,6 +28,7 @@ public final class MoveEffects
 	public static final MoveEffect Lower_defense = new StatChangeEffect(139, Stat.Defense, -1);
 	public static final MoveEffect Inflict_LeechSeed = new ApplyStatusConditionEffect(143, StatusCondition.Leech_seed, 100);
 	public static final MoveEffect Lower_evasion = new StatChangeEffect(179, Stat.Evasiveness, -1);
+	public static final MoveEffect Lower_speed = new StatChangeEffect(226, Stat.Speed, -1);
 
 	/** @return The Effect with the input ID. */
 	public static MoveEffect find(int id)

@@ -21,6 +21,7 @@ public class Util
 		// player.addAlly(PokemonRegistry.find(255).generate(new Random(), 80));
 		player.getTeamLeader().setItem(new ItemStack(208));
 		player.getTeamLeader().setMove(0, new LearnedMove(705));
+		player.getTeamLeader().setMove(2, new LearnedMove(453));
 		player.getTeamLeader().setMove(2, new LearnedMove(45));
 		player.getTeamLeader().setMove(3, new LearnedMove(806));
 

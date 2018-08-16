@@ -438,30 +438,38 @@ public final class ClientEventProcessor extends CommonEventProcessor
 			};
 		}
 
+		AnimationState s = new AnimationState(Persistance.dungeonState);
+		s.animation = Animations.getMoveTargetAnimation(event.target, event.usedMove.move.move(), listener);
+		if (s.animation != null) listener = new AnimationEndListener() {
+			@Override
+			public void onAnimationEnd(AbstractAnimation animation)
+			{
+				Persistance.dungeonState.setSubstate(s);
+			}
+		};
+
+		boolean started = false;
+
 		ProjectileAnimationState proj = new ProjectileAnimationState(Persistance.dungeonState, event.usedMove.user.tile(), event.target.tile());
 		if (event.usedMove.move.move().range == MoveRange.Line)
 		{
 			proj.animation = Animations.getProjectileAnimation(null, 1000 + event.usedMove.move.moveId(), listener);
-			listener = new AnimationEndListener() {
-				@Override
-				public void onAnimationEnd(AbstractAnimation animation)
-				{
-					Persistance.dungeonState.setSubstate(proj);
-				}
-			};
+			if (proj.animation != null)
+			{
+				Persistance.dungeonState.setSubstate(proj);
+				this.setState(State.ANIMATING);
+				started = true;
+			}
 		}
 
-		AnimationState s = new AnimationState(Persistance.dungeonState);
-		s.animation = Animations.getMoveTargetAnimation(event.target, event.usedMove.move.move(), listener);
-		if (s.animation != null)
+		if (!started)
 		{
-			Persistance.dungeonState.setSubstate(s);
-			this.setState(State.ANIMATING);
-		} else if (proj.animation != null)
-		{
-			Persistance.dungeonState.setSubstate(proj);
-			this.setState(State.ANIMATING);
-		} else if (event.missed()) new TextAbovePokeAnimation(event.target, new Message("move.missed"), FontMode.DUNGEON).start();
+			if (s.animation != null)
+			{
+				Persistance.dungeonState.setSubstate(s);
+				this.setState(State.ANIMATING);
+			} else if (event.missed()) new TextAbovePokeAnimation(event.target, new Message("move.missed"), FontMode.DUNGEON).start();
+		}
 	}
 
 	private void processSkipEvent(TurnSkippedEvent event)
