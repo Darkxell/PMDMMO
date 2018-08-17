@@ -19,7 +19,7 @@ public class MissionDetailsState extends AbstractState {
 
 	private AbstractState exploresource;
 	private Mission mission;
-	Sprite billboard = new Sprite("/hud/billboard.png");
+	Sprite billboard = new Sprite("/hud/billboard_details.png");
 
 	public MissionDetailsState(AbstractState exploresource, Mission content) {
 		this.exploresource = exploresource;
@@ -46,7 +46,7 @@ public class MissionDetailsState extends AbstractState {
 		this.exploresource.render(g, width, height);
 		g.drawImage(billboard.image(), 0, 0, null);
 
-		int offsetx = 45, offsety = 50;
+		int offsetx = 55, offsety = 50;
 		int basewidth = width - (2 * offsetx);
 		g.translate(offsetx, offsety);
 		// Draw the infos
@@ -68,11 +68,33 @@ public class MissionDetailsState extends AbstractState {
 		TextRenderer.render(g, new Message("mission.info.reward"), 5, 120);
 		TextRenderer.setColor(Color.YELLOW);
 		TextRenderer.render(g, PokemonRegistry.find(mission.getPokemonid1()).speciesName(), 70, 60);
-		TextRenderer.render(g, "TODO : objective text", 70, 75);
+		TextRenderer.render(g, mission.getMissionFlavor().getObjectiveText(), 70, 75);
 		TextRenderer.render(g, "<yellow>" + DungeonRegistry.find(mission.getDungeonid()).name() + "</color>  "
 				+ new Message("mission.floor") + " <blue>" + mission.getFloor() + "</color>", 70, 90);
 		TextRenderer.render(g, mission.getDifficulty(), 70, 105);
-		TextRenderer.render(g, "TODO : rewards display", 70, 120);
+		// Draws the rewards
+		TextRenderer.render(g,
+				new Message("mission.info.reward.points")
+						.addReplacement("<money>", mission.getRewards().getMoney() + "")
+						.addReplacement("<points>", mission.getRewards().getPoints() + ""),
+				40, 140);
+		TextRenderer.render(g,
+				new Message("mission.info.reward.points")
+						.addReplacement("<money>", mission.getRewards().getMoney() + "")
+						.addReplacement("<points>", mission.getRewards().getPoints() + ""),
+				40, 140);
+		int rewardsoffsety = 155;
+		if (mission.getRewards().getTriggers().length > 0) {
+			TextRenderer.render(g, new Message("mission.info.reward.trigger"), 40, rewardsoffsety);
+			rewardsoffsety += 15;
+		}
+		for (int i = 0; i < mission.getRewards().getItems().length && i < 3; i++) {
+			TextRenderer.render(g,
+					mission.getRewards().getQuantities()[i] + "x <blue>"
+							+ ItemRegistry.find(mission.getRewards().getItems()[i]).name() + "</color>",
+					40, rewardsoffsety);
+			rewardsoffsety += 15;
+		}
 		// Resets the graphics
 		g.translate(-offsetx, -offsety);
 	}
