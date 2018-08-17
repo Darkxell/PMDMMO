@@ -133,7 +133,7 @@ public class Mission {
 
 	@Override
 	public int hashCode() {
-		return dungeonid * pokemonid1 * pokemonid2 * missiontype * itemid;
+		return dungeonid * pokemonid1 * pokemonid2 * missiontype * itemid * floor * difficulty.hashCode();
 	}
 
 }

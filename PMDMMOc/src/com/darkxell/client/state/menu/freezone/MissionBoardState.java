@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.Sprite;
+import com.darkxell.client.resources.images.Sprites.Res_Hud;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.dungeon.data.DungeonRegistry;
@@ -21,7 +22,8 @@ public class MissionBoardState extends AbstractState {
 
 	private AbstractState exploresource;
 	private ArrayList<Mission> missions = new ArrayList<>();
-	Sprite billboard = new Sprite("/hud/billboard.png");
+	Sprite billboard = new Sprite("/hud/billboard_list.png");
+	private int currentpage = 1;
 
 	private int selectedmissionpos = 0;
 
@@ -33,6 +35,14 @@ public class MissionBoardState extends AbstractState {
 					new MissionReward(55, new int[] { 1 }, new int[] { 1 }, 5, null), Mission.TYPE_RESCUEME));
 			this.missions.add(new Mission("A", 12, 14, 15, 71, 2,
 					new MissionReward(70, new int[] { 1 }, new int[] { 1 }, 5, null), Mission.TYPE_DEFEAT));
+			this.missions.add(new Mission("A", 12, 15, 15, 71, 2,
+					new MissionReward(70, new int[] { 1 }, new int[] { 1 }, 5, null), Mission.TYPE_DEFEAT));
+			this.missions.add(new Mission("C", 12, 14, 15, 71, 2,
+					new MissionReward(70, new int[] { 1 }, new int[] { 1 }, 5, null), Mission.TYPE_ESCORT));
+			this.missions.add(new Mission("C", 12, 14, 15, 71, 2,
+					new MissionReward(70, new int[] { 1 }, new int[] { 1 }, 5, null), Mission.TYPE_ESCORT));
+			this.missions.add(new Mission("C", 12, 14, 15, 71, 2,
+					new MissionReward(70, new int[] { 1 }, new int[] { 1 }, 5, null), Mission.TYPE_ESCORT));
 		} catch (InvalidParammetersException e) {
 			e.printStackTrace();
 		}
@@ -50,12 +60,24 @@ public class MissionBoardState extends AbstractState {
 						.setState(new MissionDetailsState(this.exploresource, this.missions.get(selectedmissionpos)));
 			break;
 		case UP:
-			if (selectedmissionpos > 0)
+			if (selectedmissionpos > 0 && selectedmissionpos % 4 != 0)
 				selectedmissionpos--;
 			break;
 		case DOWN:
-			if (selectedmissionpos < missions.size() - 1)
+			if (selectedmissionpos < missions.size() - 1 && selectedmissionpos % 4 != 3)
 				selectedmissionpos++;
+			break;
+		case RIGHT:
+			if (currentpage < pages()) {
+				currentpage++;
+				selectedmissionpos += 4;
+			}
+			break;
+		case LEFT:
+			if (currentpage > 1) {
+				currentpage--;
+				selectedmissionpos -= 4;
+			}
 			break;
 		default:
 			break;
@@ -72,10 +94,17 @@ public class MissionBoardState extends AbstractState {
 		this.exploresource.render(g, width, height);
 		g.drawImage(billboard.image(), 0, 0, null);
 
-		int offsetx = 45, offsety = 50;
+		if (currentpage != 1)
+			g.drawImage(Res_Hud.menuHud.tabLeft(), 240, 40, null);
+		TextRenderer.render(g, currentpage + "/" + pages(), 250, 40);
+		if (currentpage != pages())
+			g.drawImage(Res_Hud.menuHud.tabRight(), 270, 40, null);
+
+		int offsetx = 55, offsety = -6;
 		int baseheight = 30, basewidth = width - (2 * offsetx);
-		for (int i = 0; i < this.missions.size(); i++) {
-			g.translate(offsetx, offsety + (i * baseheight + 15));
+		for (int i = (currentpage - 1) * 4; i < (currentpage - 1) * 4 + 4 && i < this.missions.size(); i++) {
+			offsety += (baseheight + 28);
+			g.translate(offsetx, offsety);
 			drawMission(g, basewidth, baseheight, missions.get(i));
 			if (i == selectedmissionpos) {
 				g.setColor(Color.CYAN);
@@ -91,7 +120,7 @@ public class MissionBoardState extends AbstractState {
 	public void update() {
 		this.exploresource.update();
 		if (selectedmissionpos >= missions.size())
-			selectedmissionpos = missions.size();
+			selectedmissionpos = missions.size() - 1;
 	}
 
 	private void drawMission(Graphics2D g, int width, int height, Mission mission) {
@@ -109,6 +138,13 @@ public class MissionBoardState extends AbstractState {
 		TextRenderer.render(g, DungeonRegistry.find(mission.getDungeonid()).name(), 5, 15);
 		TextRenderer.render(g, new Message("mission.floor") + " <blue>" + mission.getFloor() + "</color>",
 				15 + dungeontextlength, 15);
+	}
+
+	/** Returns the ammount of pages the billboard has */
+	private int pages() {
+		if (missions.size() <= 4)
+			return 1;
+		return (missions.size() + 1) / 4 + 1;
 	}
 
 }

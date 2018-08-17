@@ -2,7 +2,13 @@ package com.darkxell.common.mission;
 
 import java.util.Random;
 
+import com.darkxell.common.item.ItemRegistry;
+import com.darkxell.common.pokemon.PokemonRegistry;
+import com.darkxell.common.util.language.Message;
+
 public class MissionFlavourText {
+
+	private Mission source;
 
 	public final String summaryid;
 	public final String line1id;
@@ -10,6 +16,7 @@ public class MissionFlavourText {
 
 	/** Procedurally generated flavor text ids */
 	public MissionFlavourText(Mission source) {
+		this.source = source;
 		Random cr = new Random(source.hashCode());
 		int tid;
 		switch (source.getMissiontype()) {
@@ -66,7 +73,13 @@ public class MissionFlavourText {
 			line2id = "mission.errorflavor";
 			break;
 		}
+	}
 
+	public Message getObjectiveText() {
+		return new Message("mission.objective." + this.source.getMissiontype())
+				.addReplacement("<p1>", PokemonRegistry.find(source.getPokemonid1()).speciesName())
+				.addReplacement("<p2>", PokemonRegistry.find(source.getPokemonid2()).speciesName())
+				.addReplacement("<i>", ItemRegistry.find(source.getItemid()).name());
 	}
 
 }
