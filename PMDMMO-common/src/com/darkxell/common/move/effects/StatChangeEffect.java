@@ -1,15 +1,12 @@
 package com.darkxell.common.move.effects;
 
-import java.util.ArrayList;
-
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
 import com.darkxell.common.event.stats.StatChangedEvent;
 import com.darkxell.common.move.MoveEffect;
 import com.darkxell.common.move.MoveEffectCalculator;
-import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.BaseStats.Stat;
+import com.darkxell.common.pokemon.DungeonPokemon;
 
 public class StatChangeEffect extends MoveEffect
 {
@@ -25,11 +22,12 @@ public class StatChangeEffect extends MoveEffect
 	}
 
 	@Override
-	protected void useOn(MoveUse usedMove, DungeonPokemon target, Floor floor, MoveEffectCalculator calculator, boolean missed, ArrayList<DungeonEvent> events)
+	protected void moveEffects(MoveUse usedMove, DungeonPokemon target, Floor floor, MoveEffectCalculator calculator, boolean missed)
 	{
-		super.useOn(usedMove, target, floor, calculator, missed, events);
+		super.moveEffects(usedMove, target, floor, calculator, missed);
 
-		if (!missed) events.add(new StatChangedEvent(floor, target, this.stat, this.stage));
+		if (!missed) this.createEffect(new StatChangedEvent(floor, target, this.stat, this.stage), usedMove, target, floor, missed,
+				usedMove.move.move().dealsDamage, target);
 	}
 
 }

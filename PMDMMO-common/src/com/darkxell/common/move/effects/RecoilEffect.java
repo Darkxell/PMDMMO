@@ -1,7 +1,5 @@
 package com.darkxell.common.move.effects;
 
-import java.util.ArrayList;
-
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
@@ -22,20 +20,20 @@ public class RecoilEffect extends MoveEffect
 	}
 
 	@Override
-	protected void useOn(MoveUse usedMove, DungeonPokemon target, Floor floor, MoveEffectCalculator calculator, boolean missed, ArrayList<DungeonEvent> events)
+	protected void moveEffects(MoveUse usedMove, DungeonPokemon target, Floor floor, MoveEffectCalculator calculator, boolean missed)
 	{
-		super.useOn(usedMove, target, floor, calculator, missed, events);
+		super.moveEffects(usedMove, target, floor, calculator, missed);
 		if (!missed)
 		{
 			int damage = -1;
-			for (DungeonEvent e : events)
+			for (DungeonEvent e : this.currentEffects())
 				if (e instanceof DamageDealtEvent)
 				{
 					DamageDealtEvent d = (DamageDealtEvent) e;
 					if (d.target == target && d.source == usedMove) damage = d.damage;
 				}
 			damage *= this.percentage / 100;
-			events.add(new DamageDealtEvent(floor, usedMove.user, usedMove, damage));
+			this.createEffect(new DamageDealtEvent(floor, usedMove.user, usedMove, damage), usedMove, target, floor, missed, true, usedMove.user);
 		}
 	}
 

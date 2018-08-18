@@ -1,7 +1,5 @@
 package com.darkxell.common.move.effects;
 
-import java.util.ArrayList;
-
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
@@ -23,19 +21,20 @@ public class DrainEffect extends MoveEffect
 	}
 
 	@Override
-	protected void useOn(MoveUse usedMove, DungeonPokemon target, Floor floor, MoveEffectCalculator calculator, boolean missed, ArrayList<DungeonEvent> events)
+	protected void moveEffects(MoveUse usedMove, DungeonPokemon target, Floor floor, MoveEffectCalculator calculator, boolean missed)
 	{
-		super.useOn(usedMove, target, floor, calculator, missed, events);
+		super.moveEffects(usedMove, target, floor, calculator, missed);
 		if (!missed)
 		{
 			DamageDealtEvent damage = null;
-			for (DungeonEvent e : events)
+			for (DungeonEvent e : this.currentEffects())
 				if (e instanceof DamageDealtEvent)
 				{
 					damage = (DamageDealtEvent) e;
 					break;
 				}
-			if (damage != null) events.add(new HealthRestoredEvent(floor, usedMove.user, damage.damage * this.percent / 100));
+			if (damage != null) this.createEffect(new HealthRestoredEvent(floor, usedMove.user, damage.damage * this.percent / 100), usedMove, target, floor,
+					missed, true, usedMove.user);
 		}
 	}
 

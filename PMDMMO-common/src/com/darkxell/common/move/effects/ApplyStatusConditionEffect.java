@@ -1,9 +1,6 @@
 package com.darkxell.common.move.effects;
 
-import java.util.ArrayList;
-
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
 import com.darkxell.common.event.pokemon.StatusConditionCreatedEvent;
 import com.darkxell.common.move.MoveEffect;
@@ -27,13 +24,15 @@ public class ApplyStatusConditionEffect extends MoveEffect
 	}
 
 	@Override
-	protected void useOn(MoveUse usedMove, DungeonPokemon target, Floor floor, MoveEffectCalculator calculator, boolean missed, ArrayList<DungeonEvent> events)
+	protected void moveEffects(MoveUse usedMove, DungeonPokemon target, Floor floor, MoveEffectCalculator calculator, boolean missed)
 	{
-		super.useOn(usedMove, target, floor, calculator, missed, events);
+		super.moveEffects(usedMove, target, floor, calculator, missed);
 
-		if (!missed && floor.random.nextDouble() * 100 < this.probability && this.status.affects(target))
-			events.add(new StatusConditionCreatedEvent(floor, new AppliedStatusCondition(this.status, target, usedMove.user,
-					RandomUtil.nextIntInBounds(this.status.durationMin, this.status.durationMax, floor.random))));
+		if (!missed && floor.random.nextDouble() * 100 < this.probability && this.status.affects(target)) this.createEffect(
+				new StatusConditionCreatedEvent(floor,
+						new AppliedStatusCondition(this.status, target, usedMove.user,
+								RandomUtil.nextIntInBounds(this.status.durationMin, this.status.durationMax, floor.random))),
+				usedMove, target, floor, missed, usedMove.move.move().dealsDamage, target);
 	}
 
 }
