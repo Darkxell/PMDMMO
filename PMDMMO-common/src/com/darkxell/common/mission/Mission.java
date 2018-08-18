@@ -1,5 +1,8 @@
 package com.darkxell.common.mission;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 /** Structure that contains all the informations for a mission. */
 public class Mission {
 
@@ -30,8 +33,8 @@ public class Mission {
 	/** The id of the secondary Pokemon for the missions that need one. */
 	private int pokemonid2 = 4;
 	/**
-	 * An itemID used for the missions that are resolved by finding or bringing an
-	 * item.
+	 * An itemID used for the missions that are resolved by finding or bringing
+	 * an item.
 	 */
 	private int itemid = 2;
 	/** The list of rewards for this mission. This has its own structure. */
@@ -134,6 +137,60 @@ public class Mission {
 	@Override
 	public int hashCode() {
 		return dungeonid * pokemonid1 * pokemonid2 * missiontype * itemid * floor * difficulty.hashCode();
+	}
+
+	/** Method used by the server to get the missions for the day. */
+	public static ArrayList<Mission> getDailyMissions() {
+		ArrayList<Mission> list = new ArrayList<>(10);
+		int dungeonammount = 0;
+		Random r = new Random();
+		for (int id = 0; id < 100; id++) {
+			switch (id) {
+			case 1: // Tiny woods
+				dungeonammount = r(r, 2, 3);
+				for (int i = 0; i < dungeonammount; i++)
+					try {
+						MissionReward rewards = new MissionReward(r(r, 20, 30), null, null, 5, null);
+						Mission mission = new Mission("E", id, r(r, 2, 3), r(r, 1, 376), r(r, 1, 376), 1, rewards,
+								r(r, 1, 2));
+						list.add(mission);
+					} catch (InvalidParammetersException e) {
+						e.printStackTrace();
+					}
+				break;
+			case 2: // Thunderwave cave
+				dungeonammount = r(r, 2, 3);
+				for (int i = 0; i < dungeonammount; i++)
+					try {
+						MissionReward rewards = new MissionReward(r(r, 30, 120), null, null, 5, null);
+						Mission mission = new Mission("E", id, r(r, 2, 4), r(r, 1, 376), r(r, 1, 376), 1, rewards,
+								r(r, 1, 2));
+						list.add(mission);
+					} catch (InvalidParammetersException e) {
+						e.printStackTrace();
+					}
+				break;
+			case 3: // Mt steel
+				dungeonammount = r(r, 2, 3);
+				for (int i = 0; i < dungeonammount; i++)
+					try {
+						MissionReward rewards = new MissionReward(r(r, 150, 400), null, null, 10, null);
+						Mission mission = new Mission("D", id, r(r, 4, 7), r(r, 1, 376), r(r, 1, 376), 1, rewards,
+								r(r, 1, 2));
+						list.add(mission);
+					} catch (InvalidParammetersException e) {
+						e.printStackTrace();
+					}
+				break;
+			}
+		}
+		return list;
+	}
+
+	/** Returns a random number between a inclusive and b inclusive */
+	private static int r(Random r, int a, int b) {
+		b -= 1;
+		return r.nextInt(b - a) + a;
 	}
 
 }
