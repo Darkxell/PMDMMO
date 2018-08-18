@@ -249,6 +249,12 @@ This payload is sent when the player starts a dungeon exploration.
 
 This payload is sent when the player finishes a dungeon exploration. Allows the server to modify the database Player in consequence.
 
+■ GETMISSIONS
+
+{"action":"getmissions"}
+
+This payload is sent when the client wants to be notified shortly about all the missions available at the moment.
+
 # 4 - List of server -> client payloads
 
 ■ MESSAGE (This is a payload from to the chat endpoint)
@@ -439,4 +445,16 @@ This payload is sent after a client sends a dungeonstart request to give the cli
 }
 
 This payload is sent after a client sends a dungeonend request to notify the client that its Player has been updated.
+
+■ GETMISSIONS
+
+{"action":"getmissions"
+
+"missions":["code1","code2", ... ,"codeN"]
+
+}
+
+This payload is sent by the server upon client request. The session doesn't need to be loged in for the server to send this payload.
+The code returned are the deterministic mission ids.
+
 

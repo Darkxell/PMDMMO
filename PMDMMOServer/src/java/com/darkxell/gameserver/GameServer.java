@@ -5,7 +5,7 @@
  */
 package com.darkxell.gameserver;
 
-import com.darkxell.common.dungeon.DungeonRegistry;
+import com.darkxell.common.dungeon.data.DungeonRegistry;
 import com.darkxell.common.item.ItemRegistry;
 import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.PokemonRegistry;
@@ -29,6 +29,7 @@ import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
 import com.darkxell.gameserver.messagehandlers.FreezonePositionHandler;
+import com.darkxell.gameserver.messagehandlers.GetMissionsHandler;
 import com.darkxell.gameserver.messagehandlers.InventoryRequestHandler;
 import com.darkxell.gameserver.messagehandlers.ItemActionHandler;
 import com.darkxell.gameserver.messagehandlers.LoginHandler;
@@ -308,6 +309,11 @@ public class GameServer {
                             return;
                         }
                         StorageactionHandler hand = new StorageactionHandler(this);
+                        hand.handleMessage(jsonMessage, session, sessionHandler);
+                        break;
+                    }
+                    case "getmissions": {
+                        GetMissionsHandler hand = new GetMissionsHandler(this);
                         hand.handleMessage(jsonMessage, session, sessionHandler);
                         break;
                     }
