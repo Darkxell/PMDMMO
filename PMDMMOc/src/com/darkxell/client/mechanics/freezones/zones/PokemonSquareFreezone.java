@@ -76,7 +76,7 @@ public class PokemonSquareFreezone extends FreezoneMap {
 
 		// Add the shopkeepers
 		this.addEntity(new PokemonFreezoneEntity(36, 30, 352)); // Keckleon 1
-		this.addEntity(new PokemonFreezoneEntity(39, 30, -352)); // Keckleon 2
+		this.addEntity(new PokemonFreezoneEntity(39, 30, 10034)); // Keckleon 2
 		this.addEntity(new PokemonFreezoneEntity(82.5, 33, 53)); // Persian
 		this.addEntity(new PokemonFreezoneEntity(97.5, 33, 40)); // Wigglytuff
 		this.addEntity(new PokemonFreezoneEntity(41.5, 61, 115)); // Kangaskhan
