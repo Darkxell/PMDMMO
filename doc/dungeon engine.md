@@ -28,6 +28,17 @@ It should apply any direct changes, and add resulting Events to the
 *resultingEvents* list. This avoids code redundancy and allows complex
 interactions.
 
+# Event listening
+
+Objects from the entire project may implement the *DungeonEventListener* interface.
+If so and if implemented properly, these Objects will have a method called after an 
+Event is processed. This allows for a multitude of complex mechanics. For now, only
+Abilities implement this Interface, but more will be added if necessary.
+
+Events can also have **flags**. These should have no impact on the behavior but should
+help comunication between other objects that manipulate Events (for example, to avoid
+doing the same process multiple times on a single Event).
+
 # Turn order
 
 Due to movement speed affecting how many times a Pokémon may act in a turn,

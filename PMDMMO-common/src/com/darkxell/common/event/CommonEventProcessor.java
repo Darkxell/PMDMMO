@@ -71,11 +71,21 @@ public class CommonEventProcessor
 		}
 	}
 
+	/** Calls listeners to the input Event. */
+	private void callListeners(DungeonEvent event)
+	{
+		ArrayList<DungeonEvent> resultingEvents = new ArrayList<>();
+		for (DungeonPokemon p : this.dungeon.currentFloor().listPokemon())
+			p.ability().onEvent(this.dungeon.currentFloor(), event, resultingEvents);
+		this.addToPending(resultingEvents);
+	}
+
 	/** This Event is checked and ready to be processed. */
 	protected void doProcess(DungeonEvent event)
 	{
 		this.dungeon.eventOccured(event);
 		this.addToPending(event.processServer());
+		this.callListeners(event);
 		if (event instanceof ExplorationStopEvent) this.setState(State.STOPPED);
 		else if (event instanceof BossDefeatedEvent) this.processBossDefeatedEvent((BossDefeatedEvent) event);
 	}

@@ -57,6 +57,7 @@ public class MoveSelectionEvent extends DungeonEvent implements Communicable
 		}
 	}
 
+	private boolean consumesPP = true;
 	private MoveUse usedMove;
 
 	public MoveSelectionEvent(Floor floor)
@@ -100,7 +101,7 @@ public class MoveSelectionEvent extends DungeonEvent implements Communicable
 		if (this.usedMove.direction != this.usedMove.user.facing()) this.usedMove.user.setFacing(this.usedMove.direction);
 
 		// Use PP
-		this.usedMove.move.setPP(this.usedMove.move.pp() - 1);
+		if (this.consumesPP) this.usedMove.move.setPP(this.usedMove.move.pp() - 1);
 
 		// Use Move
 		this.usedMove.move.move().prepareUse(this.usedMove, this.floor, this.resultingEvents);
@@ -110,6 +111,9 @@ public class MoveSelectionEvent extends DungeonEvent implements Communicable
 		// Use belly
 		if (this.usedMove.user.isTeamLeader()) this.resultingEvents
 				.add(new BellyChangedEvent(this.floor, this.usedMove.user, -(this.usedMove.move.isLinked() ? .9 : .1) * this.usedMove.user.energyMultiplier()));
+
+		if (this.usedMove.move.isLinked())
+			this.resultingEvents.add(new MoveSelectionEvent(this.floor, this.usedMove.user.move(this.usedMove.move.getData().slot + 1), this.usedMove.user));
 
 		return super.processServer();
 	}
@@ -141,6 +145,11 @@ public class MoveSelectionEvent extends DungeonEvent implements Communicable
 		if (this.usedMove.move.move() != MoveRegistry.ATTACK) this.messages.add(new Message("move.used")
 				.addReplacement("<pokemon>", this.usedMove.user.getNickname()).addReplacement("<move>", this.usedMove.move.move().name()));
 
+	}
+
+	public void setConsumesNoPP()
+	{
+		this.consumesPP = false;
 	}
 
 	@Override

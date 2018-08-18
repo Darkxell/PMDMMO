@@ -2,21 +2,25 @@ package com.darkxell.common.pokemon.ability;
 
 import java.util.HashMap;
 
+import com.darkxell.common.event.DungeonEventListener;
 import com.darkxell.common.pokemon.AffectsPokemon;
 import com.darkxell.common.pokemon.BaseStats.Stat;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.util.language.Lang;
 import com.darkxell.common.util.language.Message;
+import com.darkxell.common.weather.Weather;
 
-public abstract class Ability implements AffectsPokemon
+public abstract class Ability implements AffectsPokemon, DungeonEventListener
 {
 	private static final HashMap<Integer, Ability> abilities = new HashMap<Integer, Ability>();
 
-	public static final AbilityTypeBoost BLAZE = new AbilityTypeBoost(0, PokemonType.Fire);
-	public static final AbilityTypeBoost OVERGROW = new AbilityTypeBoost(1, PokemonType.Grass);
-	public static final AbilityTypeBoost SWARM = new AbilityTypeBoost(2, PokemonType.Bug);
-	public static final AbilityTypeBoost TORRENT = new AbilityTypeBoost(3, PokemonType.Water);
+	public static final Ability BLAZE = new AbilityTypeBoost(0, PokemonType.Fire);
+	public static final Ability OVERGROW = new AbilityTypeBoost(1, PokemonType.Grass);
+	public static final Ability SWARM = new AbilityTypeBoost(2, PokemonType.Bug);
+	public static final Ability TORRENT = new AbilityTypeBoost(3, PokemonType.Water);
+	
+	public static final Ability CHLOROPHYLL = new AbilityDoubleAttacks(4, Weather.SUNNY);
 
 	public static final Ability LEVITATE = new AbilityNullifyType(16, PokemonType.Ground);
 	public static final Ability SOUNDPROOF = new AbilityNullifySound(19);
