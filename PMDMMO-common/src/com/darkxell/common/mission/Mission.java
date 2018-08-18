@@ -20,21 +20,21 @@ public class Mission {
 	private String difficulty = "";
 	/** The id of the dungeon where this mission takes place. */
 	private int dungeonid = 1;
-	/** The floor at wich you can complete this mission. */
+	/** The floor at which you can complete this mission. */
 	private int floor = 1;
 	/**
-	 * The id of the first pokemon. Usually, this is the one asking for rescue,
+	 * The id of the first Pokemon. Usually, this is the one asking for rescue,
 	 * to escort...
 	 */
 	private int pokemonid1 = 1;
-	/** The id of the secondary pokemon for the missions that need one. */
+	/** The id of the secondary Pokemon for the missions that need one. */
 	private int pokemonid2 = 4;
 	/**
-	 * An itemID used for the missions that resolve about finding or bringing an
+	 * An itemID used for the missions that are resolved by finding or bringing an
 	 * item.
 	 */
 	private int itemid = 2;
-	/** The list of rewards for this mission. This is it's own structure. */
+	/** The list of rewards for this mission. This has its own structure. */
 	private MissionReward rewards = new MissionReward();
 	/** The type of the mission. This defines what you have to do. */
 	private int missiontype = TYPE_RESCUEME;

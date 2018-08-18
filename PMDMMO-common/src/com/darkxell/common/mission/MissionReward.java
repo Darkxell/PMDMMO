@@ -3,17 +3,17 @@ package com.darkxell.common.mission;
 /** Structure holding the rewards for a mission. */
 public class MissionReward {
 
-	/** The ammount of money this mission gives when completed. */
+	/** The amount of money this mission gives when completed. */
 	private int money = 0;
 	/** The ids of the items given to you upon completion. */
 	private int[] items = new int[0];
 	/** The quantity of items given for each item. */
 	private int[] quantities = new int[0];
-	/** The ammount of rescue points this mission gives. */
+	/** The amount of rescue points this mission gives. */
 	private int points = 0;
 	/**
-	 * The additionnal triggers this mission does upon completion. Usually
-	 * nothing, but can sometimes unlock a friend area, advence a quest...<br/>
+	 * The additional triggers this mission does upon completion. Usually
+	 * nothing, but can sometimes unlock a friend area, advance a quest...<br/>
 	 * Triggers must contain ONLY alphanumerical characters.
 	 */
 	private String[] triggers = new String[0];
