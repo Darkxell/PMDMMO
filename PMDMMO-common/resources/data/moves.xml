@@ -131,7 +131,7 @@
   <move id="128" type="0" category="Status" pp="15" power="2" accuracy="125" critical="12" range="Self" targets="User" effect="207" freeze="true" snatchable="true" sound="true" />
   <move id="129" type="0" category="Status" pp="15" power="2" critical="12" range="Floor" targets="All" effect="57" freeze="true" />
   <move id="130" type="0" category="Status" pp="17" power="2" critical="12" effect="194" freeze="true" reflectable="true" />
-  <move id="131" type="0" category="Special" pp="17" power="10" critical="12" range="Room" targets="Allies" effect="102" freeze="true" sound="true" />
+  <move id="131" type="0" category="Status" pp="17" power="10" critical="12" range="Room" targets="Team" effect="102" freeze="true" sound="true" />
   <move id="132" type="0" category="Special" pp="15" power="10" accuracy="90" critical="12" range="Line" effect="216" damage="true" ginsengable="true" freeze="true" />
   <move id="133" type="0" category="Status" pp="15" power="2" critical="12" range="Self" targets="User" effect="152" freeze="true" />
   <move id="134" type="0" category="Status" pp="17" power="4" critical="12" effect="53" freeze="true" reflectable="true" sound="true" />

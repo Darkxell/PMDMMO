@@ -105,9 +105,12 @@ public class MoveSelectionEvent extends DungeonEvent implements Communicable
 		// Use Move
 		this.usedMove.move.move().prepareUse(this.usedMove, this.floor, this.resultingEvents);
 
+		this.resultingEvents.add(this.usedMove.getExperienceEvent());
+
 		// Use belly
 		if (this.usedMove.user.isTeamLeader()) this.resultingEvents
 				.add(new BellyChangedEvent(this.floor, this.usedMove.user, -(this.usedMove.move.isLinked() ? .9 : .1) * this.usedMove.user.energyMultiplier()));
+
 		return super.processServer();
 	}
 

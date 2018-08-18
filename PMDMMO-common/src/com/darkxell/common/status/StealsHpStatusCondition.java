@@ -8,6 +8,8 @@ import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.HealthRestoredEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.PokemonType;
+import com.darkxell.common.util.Pair;
+import com.darkxell.common.util.language.Message;
 
 public class StealsHpStatusCondition extends StatusCondition
 {
@@ -17,19 +19,20 @@ public class StealsHpStatusCondition extends StatusCondition
 	/** Number of turns after which the HP is stolen. */
 	public final int turnCycle;
 
-	public StealsHpStatusCondition(int id, int duration, int turnCycle, int hp)
+	public StealsHpStatusCondition(int id, int durationMin, int durationMax, int turnCycle, int hp)
 	{
-		super(id, duration, duration);
+		super(id, durationMin, durationMax);
 		this.turnCycle = turnCycle;
 		this.hp = hp;
 	}
 
 	@Override
-	public boolean affects(DungeonPokemon pokemon)
+	public Pair<Boolean, Message> affects(DungeonPokemon pokemon)
 	{
-		if (!super.affects(pokemon)) return false;
-		if (this == Leech_seed) return !pokemon.species().isType(PokemonType.Grass);
-		return true;
+		Pair<Boolean, Message> sup = super.affects(pokemon);
+		if (!sup.first) return sup;
+		if (this == Leech_seed && pokemon.species().isType(PokemonType.Grass)) return new Pair<>(false, this.immune(pokemon));
+		return new Pair<>(true, null);
 	}
 
 	@Override

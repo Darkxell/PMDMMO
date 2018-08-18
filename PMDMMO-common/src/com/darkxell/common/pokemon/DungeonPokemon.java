@@ -11,8 +11,8 @@ import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.player.ItemContainer;
 import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.ability.Ability;
-import com.darkxell.common.status.StatusCondition;
 import com.darkxell.common.status.AppliedStatusCondition;
+import com.darkxell.common.status.StatusCondition;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.language.Message;
 
@@ -61,6 +61,14 @@ public class DungeonPokemon implements ItemContainer
 	public Ability ability()
 	{
 		return this.usedPokemon.ability();
+	}
+
+	public StatusCondition[] activeStatusConditions()
+	{
+		StatusCondition[] conditions = new StatusCondition[this.statusConditions.size()];
+		for (int i = 0; i < conditions.length; ++i)
+			conditions[i] = this.statusConditions.get(i).condition;
+		return conditions;
 	}
 
 	@Override

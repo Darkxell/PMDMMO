@@ -48,8 +48,10 @@ public class MoveEffect implements AffectsPokemon
 	{
 		if (usedMove.user.ability() instanceof AbilityModifyMoveEffect)
 			effect = ((AbilityModifyMoveEffect) usedMove.user.ability()).modify(effect, usedMove, target, floor, missed, isAdditional, true, directedAt);
+
 		if (effect != null && target.ability() instanceof AbilityModifyMoveEffect)
 			effect = ((AbilityModifyMoveEffect) target.ability()).modify(effect, usedMove, target, floor, missed, isAdditional, false, directedAt);
+
 		if (effect != null) this.events.add(effect);
 	}
 

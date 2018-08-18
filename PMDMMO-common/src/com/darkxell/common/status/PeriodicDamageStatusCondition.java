@@ -7,6 +7,8 @@ import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.PokemonType;
+import com.darkxell.common.util.Pair;
+import com.darkxell.common.util.language.Message;
 
 public class PeriodicDamageStatusCondition extends StatusCondition
 {
@@ -23,12 +25,14 @@ public class PeriodicDamageStatusCondition extends StatusCondition
 	}
 
 	@Override
-	public boolean affects(DungeonPokemon pokemon)
+	public Pair<Boolean, Message> affects(DungeonPokemon pokemon)
 	{
-		if (!super.affects(pokemon)) return false;
-		if (this == Poisoned || this == Badly_poisoned) return !pokemon.species().isType(PokemonType.Poison);
-		if (this == Burn) return !pokemon.species().isType(PokemonType.Fire);
-		return true;
+		Pair<Boolean, Message> sup = super.affects(pokemon);
+		if (!sup.first) return sup;
+		if ((this == Poisoned || this == Badly_poisoned) && pokemon.species().isType(PokemonType.Poison))
+			return new Pair<>(false, this.immune(pokemon));
+		if (this == Burn && pokemon.species().isType(PokemonType.Fire)) return new Pair<>(false, this.immune(pokemon));
+		return new Pair<>(true, null);
 	}
 
 	@Override

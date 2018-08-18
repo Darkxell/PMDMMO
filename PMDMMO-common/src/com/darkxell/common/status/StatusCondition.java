@@ -2,6 +2,7 @@ package com.darkxell.common.status;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
@@ -9,6 +10,8 @@ import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageSource;
 import com.darkxell.common.event.stats.ExperienceGeneratedEvent;
 import com.darkxell.common.pokemon.AffectsPokemon;
 import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.util.Pair;
+import com.darkxell.common.util.RandomUtil;
 import com.darkxell.common.util.language.Message;
 
 public class StatusCondition implements AffectsPokemon, DamageSource
@@ -20,7 +23,9 @@ public class StatusCondition implements AffectsPokemon, DamageSource
 	public static final PeriodicDamageStatusCondition Burn = new PeriodicDamageStatusCondition(2, -1, -1, 20, 5);
 	public static final PreventsActionStatusCondition Asleep = new PreventsActionStatusCondition(3, 3, 6);
 
-	public static final StealsHpStatusCondition Leech_seed = new StealsHpStatusCondition(10, 10, 2, 10);
+	public static final StealsHpStatusCondition Leech_seed = new StealsHpStatusCondition(10, 11, 12, 2, 10);
+
+	public static final PreventsOtherStatusCondition Sleepless = new PreventsOtherStatusCondition(100, 11, 12, Asleep);
 
 	/** @return The Status Condition with the input ID. */
 	public static StatusCondition find(int id)
@@ -41,16 +46,32 @@ public class StatusCondition implements AffectsPokemon, DamageSource
 		_registry.put(this.id, this);
 	}
 
-	/** @return True if this Status Condition affects the input Pokemon. */
-	public boolean affects(DungeonPokemon pokemon)
+	/** @return - True if this Status Condition affects the input Pokemon.<br>
+	 *         - A Message to display if this Condition doesn't affect the Pokemon. May be <code>null</code> if there is no necessary message. */
+	public Pair<Boolean, Message> affects(DungeonPokemon pokemon)
 	{
-		return !pokemon.hasStatusCondition(this);
+		if (pokemon.hasStatusCondition(this)) return new Pair<>(false,
+				new Message("status.already").addReplacement("<pokemon>", pokemon.getNickname()).addReplacement("<condition>", this.name()));
+		for (StatusCondition c : pokemon.activeStatusConditions())
+			if (c instanceof PreventsOtherStatusCondition && ((PreventsOtherStatusCondition) c).prevents(this)) new Message("status.prevented.condition")
+					.addReplacement("<pokemon>", pokemon.getNickname()).addReplacement("<prevented>", this.name()).addReplacement("<preventer>", c.name());
+		return new Pair<>(true, null);
+	}
+
+	public AppliedStatusCondition create(DungeonPokemon target, Object source, Random random)
+	{
+		return new AppliedStatusCondition(this, target, source, RandomUtil.nextIntInBounds(this.durationMin, this.durationMax, random));
 	}
 
 	@Override
 	public ExperienceGeneratedEvent getExperienceEvent()
 	{
 		return null;
+	}
+
+	Message immune(DungeonPokemon pokemon)
+	{
+		return new Message("status.immune").addReplacement("<pokemon>", pokemon.getNickname()).addReplacement("<condition>", this.name());
 	}
 
 	public Message name()

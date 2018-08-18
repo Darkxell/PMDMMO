@@ -24,9 +24,10 @@ public final class MoveEffects
 	public static final MoveEffect Lower_attack = new StatChangeEffect(86, Stat.Attack, -1);
 	public static final MoveEffect Drain_50percent = new DrainEffect(90, 50);
 	public static final MoveEffect Recoil_12percent5 = new RecoilEffect(92, 12.5);
+	public static final MoveEffect Inflict_sleepless = new ApplyStatusConditionEffect(102, StatusCondition.Sleepless, 100);
 	public static final MoveEffect WeatherHeal = new WeatherHealEffect(113);
 	public static final MoveEffect Lower_defense = new StatChangeEffect(139, Stat.Defense, -1);
-	public static final MoveEffect Inflict_LeechSeed = new ApplyStatusConditionEffect(143, StatusCondition.Leech_seed, 100);
+	public static final MoveEffect Inflict_leechSeed = new ApplyStatusConditionEffect(143, StatusCondition.Leech_seed, 100);
 	public static final MoveEffect Lower_evasion = new StatChangeEffect(179, Stat.Evasiveness, -1);
 	public static final MoveEffect Lower_speed = new StatChangeEffect(226, Stat.Speed, -1);
 

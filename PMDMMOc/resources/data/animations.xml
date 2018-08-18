@@ -97,6 +97,9 @@
     <c id="203">
       <default spriteduration="5" width="32" height="32">0,1,2,3,4,5,6</default>
     </c>
+    <c id="300">
+      <default width="32" height="32">0,1,2,3,4,5,6,7,8,9</default>
+    </c>
   </custom>
   <items>
     <item id="86">
@@ -138,6 +141,9 @@
     </move>
     <move id="106">
       <default width="96" height="96" state="special" spriteduration="5">0,1,2,3,4,5,6,7,8,9,10,11,12,13</default>
+    </move>
+    <move id="131">
+      <default width="112" height="112" state="sing">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21</default>
     </move>
     <move id="304">
       <default sprites="none" state="emit"/>
@@ -227,6 +233,9 @@
     </status>
     <status id="3">
       <default spriteduration="5" width="16" height="16" x="0" y="20">0,1,2,3,4,5,6,7,8,9</default>
+    </status>
+    <status id="100">
+      <default spriteduration="7" width="8" height="8" y="25">0,1,2,3,4,5,6,7,6,5,4,3,2,1</default>
     </status>
   </statuses>
 </animations>

@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.ResourceBundle;
 
+import javax.swing.JOptionPane;
+
 import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.animation.Animations;
@@ -77,7 +79,14 @@ public class EditAnimationController implements Initializable
 
 	private PokemonAnimation loadAnimation()
 	{
-		return Animations.getAnimation(tester, this.animation.folder + "/" + this.animation.id, thread);
+		try
+		{
+			return Animations.getAnimation(tester, this.animation.folder + "/" + this.animation.id, thread);
+		} catch (Exception e)
+		{
+			JOptionPane.showMessageDialog(null, e.getMessage(), "Error while creating animation", JOptionPane.ERROR_MESSAGE);
+			return null;
+		}
 	}
 
 	public void onPropertiesChanged()
@@ -96,9 +105,10 @@ public class EditAnimationController implements Initializable
 		this.setAnimation(this.animation);
 	}
 
-	public void playAnimation()
+	public void playAnimation(boolean onChange)
 	{
 		if (this.animation == null) return;
+		if (!onChange && (this.current != null && this.current.plays == -1)) return;
 		if (this.current != null) this.current.stop();
 		AnimationState s = new AnimationState(Persistance.dungeonState);
 		s.animation = this.current = this.loadAnimation();
@@ -138,7 +148,7 @@ public class EditAnimationController implements Initializable
 		this.animation = animation;
 		thread.cooldown = 0;
 
-		this.playAnimation();
+		this.playAnimation(true);
 	}
 
 	public void updateProgressBar(boolean shouldBeFull)

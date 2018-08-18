@@ -528,6 +528,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 
 	private void processStatusEvent(StatusConditionCreatedEvent event)
 	{
+		if (!event.succeeded()) return;
 		AnimationState s = new AnimationState(Persistance.dungeonState);
 		AnimationEndListener end = new AnimationEndListener() {
 			@Override

@@ -30,7 +30,7 @@ public class AnimationPreviewThread extends UpdaterAndRenderer implements Animat
 		if (this.cooldown > 0)
 		{
 			--this.cooldown;
-			if (this.cooldown == 0) EditAnimationController.instance.playAnimation();
+			if (this.cooldown == 0) EditAnimationController.instance.playAnimation(false);
 		} else EditAnimationController.instance.updateProgressBar(false);
 
 		int width = PrincipalMainState.displayWidth, height = PrincipalMainState.displayHeight;
