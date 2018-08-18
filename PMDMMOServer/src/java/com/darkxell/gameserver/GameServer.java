@@ -46,6 +46,7 @@ import com.darkxell.model.ejb.Inventorycontains_DAO;
 import com.darkxell.model.ejb.ItemstackDAO;
 import com.darkxell.model.ejb.LearnedmoveDAO;
 import com.darkxell.model.ejb.Learnedmove_DAO;
+import com.darkxell.model.ejb.Missions_DAO;
 import com.darkxell.model.ejb.PlayerDAO;
 import com.darkxell.model.ejb.Playerstorage_DAO;
 import com.darkxell.model.ejb.PokemonDAO;
@@ -93,6 +94,8 @@ public class GameServer {
     private Teammember_DAO teammember_DAO;
     @EJB
     private Toolbox_DAO toolbox_DAO;
+    @EJB
+    private Missions_DAO missions_DAO;
 
     /**
      * Called when a client opens a websocket connection with the server.
@@ -173,6 +176,9 @@ public class GameServer {
             }
             if (this.toolbox_DAO == null) {
                 this.toolbox_DAO = new Toolbox_DAO();
+            }
+            if (this.missions_DAO == null) {
+                this.missions_DAO = new Missions_DAO();
             }
             Logger.loadServer();
             PokemonRegistry.load();
