@@ -224,7 +224,6 @@ public class Mission {
      * Returns a random number between a inclusive and b inclusive
      */
     private static int r(Random r, int a, int b) {
-        b -= 1;
         return r.nextInt(b - a) + a;
     }
 

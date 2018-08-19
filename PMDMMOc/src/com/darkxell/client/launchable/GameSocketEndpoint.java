@@ -18,6 +18,7 @@ import com.darkxell.client.launchable.messagehandlers.BankActionConfirmHandler;
 import com.darkxell.client.launchable.messagehandlers.DungeonEndConfirmHandler;
 import com.darkxell.client.launchable.messagehandlers.DungeonStartConfirmHandler;
 import com.darkxell.client.launchable.messagehandlers.FreezonePositionHandler;
+import com.darkxell.client.launchable.messagehandlers.GetMissionsHandler;
 import com.darkxell.client.launchable.messagehandlers.InventoryRequestHandler;
 import com.darkxell.client.launchable.messagehandlers.ItemActionHandler;
 import com.darkxell.client.launchable.messagehandlers.LoginPlayerHandler;
@@ -164,6 +165,9 @@ public class GameSocketEndpoint {
 				break;
 			case "storageconfirm":
 				new StorageConfirmHandler().handleMessage(obj.asObject());
+				break;
+			case "getmissions":
+				new GetMissionsHandler().handleMessage(obj.asObject());
 				break;
 
 			// DUNGEON COMMUNICATION

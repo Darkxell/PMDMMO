@@ -14,9 +14,12 @@ import com.darkxell.common.dungeon.data.DungeonRegistry;
 import com.darkxell.common.item.ItemRegistry;
 import com.darkxell.common.mission.InvalidParammetersException;
 import com.darkxell.common.mission.Mission;
-import com.darkxell.common.mission.MissionReward;
 import com.darkxell.common.pokemon.PokemonRegistry;
+import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.language.Message;
+import com.eclipsesource.json.Json;
+import com.eclipsesource.json.JsonArray;
+import com.eclipsesource.json.JsonObject;
 
 public class MissionBoardState extends AbstractState {
 
@@ -30,22 +33,23 @@ public class MissionBoardState extends AbstractState {
 	public MissionBoardState(AbstractState exploresource) {
 		this.exploresource = exploresource;
 
-		try {
-			this.missions.add(new Mission("E", 2, 3, 3, 6, 1,
-					new MissionReward(55, new int[] { 1 }, new int[] { 1 }, 5, null), Mission.TYPE_RESCUEME));
-			this.missions.add(new Mission("A", 12, 14, 15, 71, 2,
-					new MissionReward(70, new int[] { 1 }, new int[] { 1 }, 5, null), Mission.TYPE_DEFEAT));
-			this.missions.add(new Mission("A", 12, 15, 15, 71, 2,
-					new MissionReward(70, new int[] { 1 }, new int[] { 1 }, 5, null), Mission.TYPE_DEFEAT));
-			this.missions.add(new Mission("C", 12, 14, 15, 71, 2,
-					new MissionReward(70, new int[] { 1 }, new int[] { 1 }, 5, null), Mission.TYPE_ESCORT));
-			this.missions.add(new Mission("C", 12, 14, 15, 71, 2,
-					new MissionReward(70, new int[] { 1 }, new int[] { 1 }, 5, null), Mission.TYPE_ESCORT));
-			this.missions.add(new Mission("C", 12, 14, 15, 71, 2,
-					new MissionReward(70, new int[] { 1 }, new int[] { 1 }, 5, null), Mission.TYPE_ESCORT));
-		} catch (InvalidParammetersException e) {
-			e.printStackTrace();
-		}
+		/*
+		 * try { this.missions.add(new Mission("E", 2, 3, 3, 6, 1, new
+		 * MissionReward(55, new int[] { 1 }, new int[] { 1 }, 5, null),
+		 * Mission.TYPE_RESCUEME)); this.missions.add(new Mission("A", 12, 14,
+		 * 15, 71, 2, new MissionReward(70, new int[] { 1 }, new int[] { 1 }, 5,
+		 * null), Mission.TYPE_DEFEAT)); this.missions.add(new Mission("A", 12,
+		 * 15, 15, 71, 2, new MissionReward(70, new int[] { 1 }, new int[] { 1
+		 * }, 5, null), Mission.TYPE_DEFEAT)); this.missions.add(new
+		 * Mission("C", 12, 14, 15, 71, 2, new MissionReward(70, new int[] { 1
+		 * }, new int[] { 1 }, 5, null), Mission.TYPE_ESCORT));
+		 * this.missions.add(new Mission("C", 12, 14, 15, 71, 2, new
+		 * MissionReward(70, new int[] { 1 }, new int[] { 1 }, 5, null),
+		 * Mission.TYPE_ESCORT)); this.missions.add(new Mission("C", 12, 14, 15,
+		 * 71, 2, new MissionReward(70, new int[] { 1 }, new int[] { 1 }, 5,
+		 * null), Mission.TYPE_ESCORT)); } catch (InvalidParammetersException e)
+		 * { e.printStackTrace(); }
+		 */
 	}
 
 	@Override
@@ -116,11 +120,21 @@ public class MissionBoardState extends AbstractState {
 
 	}
 
+	int requesttimer = 10;
+
 	@Override
 	public void update() {
 		this.exploresource.update();
 		if (selectedmissionpos >= missions.size())
 			selectedmissionpos = missions.size() - 1;
+		if (missions.size() <= 0)
+			requesttimer--;
+		if (requesttimer <= 0) {
+			requesttimer = 240;
+			JsonObject message = Json.object();
+			message.add("action", "getmissions");
+			Persistance.socketendpoint.sendMessage(message.toString());
+		}
 	}
 
 	private void drawMission(Graphics2D g, int width, int height, Mission mission) {
@@ -145,6 +159,17 @@ public class MissionBoardState extends AbstractState {
 		if (missions.size() <= 4)
 			return 1;
 		return (missions.size() + 1) / 4 + 1;
+	}
+
+	/** Method called when the board recieves the data from the server. */
+	public void recieveMissions(JsonObject message) {
+		JsonArray arr = message.get("missions").asArray();
+		for (int i = 0; i < arr.size(); i++)
+			try {
+				this.missions.add(new Mission(arr.get(i).asString()));
+			} catch (InvalidParammetersException e) {
+				Logger.w("Could not load mission " + arr.get(i) + " to billboard.");
+			}
 	}
 
 }
