@@ -159,6 +159,12 @@
       <west x="20"/>
       <northwest x="20" y="15" backsprites="only"/>
     </move>
+    <move id="601" oriented="true">
+      <default width="64" height="64" state="special">0,1,2,3,4,5,6,7,8,9,10,11,12,13</default>
+      <north backsprites="only"/>
+      <northeast backsprites="only"/>
+      <northwest backsprites="only"/>
+    </move>
     <move id="701" oriented="true">
       <default spriteduration="2" state="none" statedelay="36" width="96" height="96" sound="move-absorb" sounddelay="36" alsoplay="2">-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,1,2,3,4,5,6,7,8,9,10,11,12</default>
       <north width="64"/>
@@ -202,6 +208,9 @@
     </movetarget>
     <movetarget id="453">
       <default spriteduration="5" width="32" height="40">0,1,2,3,2,3,2,3,4,5,5,6,6</default>
+    </movetarget>
+    <movetarget id="601">
+      <default y="32" spriteduration="3" width="16" height="32">0,1,2,3,4,5,6,7,8</default>
     </movetarget>
     <movetarget id="706">
       <default y="52" spriteduration="3" width="40" height="64">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21</default>

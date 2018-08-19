@@ -27,13 +27,13 @@ public class AbilityDoubleAttacks extends Ability
 		if (event instanceof MoveSelectionEvent && !event.hasFlag("isdoubled"))
 		{
 			MoveSelectionEvent e = (MoveSelectionEvent) event;
-			boolean active = e.usedMove().user.ability() == this;
+			boolean active = false;
 			Weather current = floor.currentWeather().weather;
 
-			if (active) for (Weather a : this.activators)
+			for (Weather a : this.activators)
 				if (current == a)
 				{
-					active = true;
+					active = e.usedMove().user.ability() == this;
 					break;
 				}
 

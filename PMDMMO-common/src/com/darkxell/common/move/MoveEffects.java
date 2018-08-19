@@ -18,6 +18,7 @@ public final class MoveEffects
 
 	public static final MoveEffect Default = new MoveEffect(0);
 	public static final MoveEffect Basic_attack = new MoveEffect(1);
+	public static final MoveEffect Inflict_burn_10 = new ApplyStatusConditionEffect(7, StatusCondition.Burn, 10);
 	public static final MoveEffect Inflict_paralysis = new ApplyStatusConditionEffect(52, StatusCondition.Asleep, 100);
 	public static final MoveEffect Inflict_poison = new ApplyStatusConditionEffect(58, StatusCondition.Poisoned, 100);
 	public static final MoveEffect Raise_spattack = new StatChangeEffect(76, Stat.SpecialAttack, 1);
