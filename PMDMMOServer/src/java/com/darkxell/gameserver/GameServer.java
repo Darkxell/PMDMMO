@@ -11,6 +11,7 @@ import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.trap.TrapRegistry;
 import com.darkxell.common.util.Logger;
+import com.darkxell.gameserver.messagehandlers.AcceptMissionHandler;
 import com.darkxell.gameserver.messagehandlers.BankactionHandler;
 import com.darkxell.gameserver.messagehandlers.CreateAccountHandler;
 import com.darkxell.gameserver.messagehandlers.DungeonendHandler;
@@ -323,6 +324,14 @@ public class GameServer {
                         hand.handleMessage(jsonMessage, session, sessionHandler);
                         break;
                     }
+                    case "acceptmission": {
+                        if (!infos.isconnected) {
+                            return;
+                        }
+                        AcceptMissionHandler hand = new AcceptMissionHandler(this);
+                        hand.handleMessage(jsonMessage, session, sessionHandler);
+                        break;
+                    }
                     default:
                         break;
                     // ADD other "action" json message types if needed.
@@ -379,6 +388,10 @@ public class GameServer {
 
     public Toolbox_DAO getToolbox_DAO() {
         return this.toolbox_DAO;
+    }
+    
+    public Missions_DAO getMissions_DAO() {
+        return this.missions_DAO;
     }
 
 }

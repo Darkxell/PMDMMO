@@ -23,7 +23,7 @@ public class RamMissionHolder {
     /**
      * A map of all the missions done today by each player.
      */
-    private static HashMap<Long, ArrayList<String>> todayscompletions = new HashMap<>();
+    private static HashMap<Long, ArrayList<String>> todaysaccept = new HashMap<>();
     private static long lastregeneration = 0l;
     private static final long REGENERATIONRATE = 1000 * 60 * 60 * 24;
 
@@ -37,26 +37,26 @@ public class RamMissionHolder {
 
     private static void regenerateDailyMissions() {
         missions = Mission.getDailyMissions();
-        todayscompletions.clear();
+        todaysaccept.clear();
     }
 
-    public static void addDailyCompletion(Long playerid, String missioncode) {
-        if (todayscompletions.containsKey(playerid)) {
-            todayscompletions.get(playerid).add(missioncode);
+    public static void addDailyAccept(Long playerid, String missioncode) {
+        if (todaysaccept.containsKey(playerid)) {
+            todaysaccept.get(playerid).add(missioncode);
         } else {
             ArrayList<String> tp = new ArrayList<>();
             tp.add(missioncode);
-            todayscompletions.put(playerid, tp);
+            todaysaccept.put(playerid, tp);
         }
     }
 
     /**
-     * Predicate that returns true if the parsed player has completed the parsed
-     * mission today.
+     * Predicate that returns true if the parsed player has already accepted
+     * the parsed mission today.
      */
-    public static boolean completedToday(Long playerid, String missioncode) {
-        if (todayscompletions.containsKey(playerid)) {
-            ArrayList l = todayscompletions.get(playerid);
+    public static boolean acceptedToday(Long playerid, String missioncode) {
+        if (todaysaccept.containsKey(playerid)) {
+            ArrayList l = todaysaccept.get(playerid);
             return l.contains(missioncode);
         }
         return false;

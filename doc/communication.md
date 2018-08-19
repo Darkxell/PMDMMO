@@ -255,6 +255,18 @@ This payload is sent when the player finishes a dungeon exploration. Allows the 
 
 This payload is sent when the client wants to be notified shortly about all the missions available at the moment.
 
+■ ACCEPTMISSION
+
+{"action":"acceptmission"
+
+"mission":"missioncode"
+
+}
+
+This payload is sent to the server to accept a mission from the daily mission board.
+Note that the server might ignore this payload if the player has already accepted this mission today
+
+
 # 4 - List of server -> client payloads
 
 ■ MESSAGE (This is a payload from to the chat endpoint)
