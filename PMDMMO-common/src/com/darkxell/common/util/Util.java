@@ -22,7 +22,7 @@ public class Util
 		player.getTeamLeader().setItem(new ItemStack(208));
 		player.getTeamLeader().setMove(0, new LearnedMove(705));
 		player.getTeamLeader().setMove(2, new LearnedMove(453));
-		player.getTeamLeader().setMove(2, new LearnedMove(53));
+		player.getTeamLeader().setMove(2, new LearnedMove(45));
 		player.getTeamLeader().setMove(3, new LearnedMove(806));
 
 		for (int i = 1; i < 5; ++i)
