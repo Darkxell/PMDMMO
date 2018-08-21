@@ -61,7 +61,6 @@ import com.darkxell.common.event.stats.LevelupEvent;
 import com.darkxell.common.event.stats.SpeedChangedEvent;
 import com.darkxell.common.event.stats.StatChangedEvent;
 import com.darkxell.common.item.effects.FoodItemEffect;
-import com.darkxell.common.move.Move.MoveRange;
 import com.darkxell.common.player.Inventory;
 import com.darkxell.common.pokemon.BaseStats;
 import com.darkxell.common.pokemon.DungeonPokemon;
@@ -451,15 +450,12 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		boolean started = false;
 
 		ProjectileAnimationState proj = new ProjectileAnimationState(Persistance.dungeonState, event.usedMove.user.tile(), event.target.tile());
-		if (event.usedMove.move.move().range == MoveRange.Line)
+		proj.animation = Animations.getProjectileAnimation(null, 1000 + event.usedMove.move.moveId(), listener);
+		if (proj.animation != null)
 		{
-			proj.animation = Animations.getProjectileAnimation(null, 1000 + event.usedMove.move.moveId(), listener);
-			if (proj.animation != null)
-			{
-				Persistance.dungeonState.setSubstate(proj);
-				this.setState(State.ANIMATING);
-				started = true;
-			}
+			Persistance.dungeonState.setSubstate(proj);
+			this.setState(State.ANIMATING);
+			started = true;
 		}
 
 		if (!started)

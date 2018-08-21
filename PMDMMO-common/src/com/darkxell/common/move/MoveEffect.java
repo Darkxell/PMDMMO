@@ -34,6 +34,11 @@ public class MoveEffect implements AffectsPokemon
 		MoveEffects.effects.put(this.id, this);
 	}
 
+	protected MoveEffectCalculator buildCalculator(MoveUse usedMove, DungeonPokemon target, Floor floor)
+	{
+		return new MoveEffectCalculator(usedMove, target, floor);
+	}
+
 	/** Creates a Move Effect.
 	 * 
 	 * @param effect - The created Effect.
@@ -200,7 +205,7 @@ public class MoveEffect implements AffectsPokemon
 	public boolean mainUse(MoveUse usedMove, DungeonPokemon target, Floor floor, ArrayList<DungeonEvent> events)
 	{
 		Move move = usedMove.move.move();
-		MoveEffectCalculator calculator = new MoveEffectCalculator(usedMove, target, floor);
+		MoveEffectCalculator calculator = this.buildCalculator(usedMove, target, floor);
 		boolean missed = calculator.misses(events);
 		double effectiveness = calculator.effectiveness();
 		if (effectiveness == PokemonType.NO_EFFECT) events.add(new MessageEvent(floor, move.unaffectedMessage(target)));

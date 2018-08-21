@@ -201,6 +201,12 @@
       <west width="64"/>
       <northwest width="64" height="64" backsprites="yes"/>
     </move>
+    <move id="901">
+      <default width="32" height="30" spriteduration="4">0,1,2,3,4</default>
+      <north backsprites="only"/>
+      <northeast backsprites="only"/>
+      <northwest backsprites="only"/>
+    </move>
   </moves>
   <movetargets>
     <movetarget id="45">
@@ -224,6 +230,9 @@
     <movetarget id="710">
       <default spriteduration="3" width="32" height="64">0,1,2,3,4</default>
     </movetarget>
+    <movetarget id="901">
+      <default width="32" height="64" y="45">0,1,2,3,4,5,6,7,8,9,10,11</default>
+    </movetarget>
   </movetargets>
   <projectiles>
     <projectile id="1453">
@@ -231,6 +240,9 @@
     </projectile>
     <projectile id="1705">
       <default width="32" height="16" spriteduration="2">0,1,2,3,4,5,6,7</default>
+    </projectile>
+    <projectile id="1901">
+      <default width="32" height="32">0,1,2,3,4,5</default>
     </projectile>
   </projectiles>
   <statuses>
