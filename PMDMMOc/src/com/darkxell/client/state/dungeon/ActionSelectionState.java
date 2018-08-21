@@ -3,8 +3,8 @@ package com.darkxell.client.state.dungeon;
 import static com.darkxell.client.resources.images.tilesets.AbstractDungeonTileset.TILE_SIZE;
 
 import java.awt.Graphics2D;
-import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 
 import com.darkxell.client.launchable.Persistance;
@@ -76,15 +76,15 @@ public class ActionSelectionState extends DungeonSubState
 
 	private void drawArrow(Graphics2D g, int width, int height, Direction direction)
 	{
-		Point p = direction.move(0, 0);
+		Point2D p = direction.move(0, 0);
 		BufferedImage img = Res_Dungeon.dungeonHud.getArrow(direction);
 		double rotation = (ROTATION_COUNTER_MAX + this.rotationCounter) * 1d / ROTATION_COUNTER_MAX * 3 / 4;
 
 		DungeonPokemon leader = Persistance.player.getDungeonLeader();
 		Tile t = leader.tile() == null ? Persistance.floor.tileAt(0, 0) : leader.tile();
 
-		int x = (int) (t.x * TILE_SIZE + TILE_SIZE / 2 + p.x * TILE_SIZE / 2 * rotation) - TILE_SIZE / 8;
-		int y = (int) (t.y * TILE_SIZE + TILE_SIZE / 2 + p.y * TILE_SIZE / 2 * rotation) - TILE_SIZE / 8;
+		int x = (int) (t.x * TILE_SIZE + TILE_SIZE / 2 + p.getX() * TILE_SIZE / 2 * rotation) - TILE_SIZE / 8;
+		int y = (int) (t.y * TILE_SIZE + TILE_SIZE / 2 + p.getY() * TILE_SIZE / 2 * rotation) - TILE_SIZE / 8;
 
 		g.drawImage(img, x, y, null);
 	}

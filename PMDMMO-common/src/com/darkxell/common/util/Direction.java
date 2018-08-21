@@ -1,6 +1,6 @@
 package com.darkxell.common.util;
 
-import java.awt.Point;
+import java.awt.geom.Point2D;
 import java.util.Comparator;
 import java.util.Random;
 
@@ -106,7 +106,7 @@ public enum Direction
 	}
 
 	/** @return The coordinates given when moving from the input X,Y coordinates along this Direction. */
-	public Point move(int x, int y)
+	public Point2D move(double x, double y)
 	{
 		if (this.contains(WEST)) --x;
 		else if (this.contains(EAST)) ++x;
@@ -114,13 +114,13 @@ public enum Direction
 		if (this.contains(NORTH)) --y;
 		else if (this.contains(SOUTH)) ++y;
 
-		return new Point(x, y);
+		return new Point2D.Double(x, y);
 	}
 
 	/** @return The coordinates given when moving from the input coordinates along this Direction. */
-	public Point move(Point origin)
+	public Point2D move(Point2D origin)
 	{
-		return this.move(origin.x, origin.y);
+		return this.move(origin.getX(), origin.getY());
 	}
 
 	/** @return The Direction opposite to this Direction. */

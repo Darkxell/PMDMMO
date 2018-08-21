@@ -2,6 +2,7 @@ package com.darkxell.client.mechanics.animation;
 
 import java.awt.Graphics2D;
 
+import com.darkxell.client.mechanics.animation.spritemovement.SpritesetAnimationMovement;
 import com.darkxell.client.resources.images.RegularSpriteSet;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
@@ -18,15 +19,17 @@ public class SpritesetAnimation extends PokemonAnimation
 		yes;
 	}
 
-	public final BackSpriteUsage backSpriteUsage;
+	public BackSpriteUsage backSpriteUsage;
 	/** Gravity values for this Animation. Defaults to half this Spriteset's size. */
-	public final int gravityX, gravityY;
+	public int gravityX, gravityY;
 	/** The duration of each sprite. */
 	public final int spriteDuration;
 	/** The order of sprites. -1 for no sprite. */
 	private int[] sprites;
 	/** The spriteset to use. */
 	public final RegularSpriteSet spriteset;
+	/** Describes how the Sprites may move. May be null for no Movement. */
+	SpritesetAnimationMovement spritesetMovement;
 
 	public SpritesetAnimation(DungeonPokemon target, RegularSpriteSet spriteset, BackSpriteUsage backSpriteUsage, int[] sprites, int spriteDuration,
 			int gravityX, int gravityY, AnimationEndListener listener)
@@ -68,6 +71,13 @@ public class SpritesetAnimation extends PokemonAnimation
 	}
 
 	@Override
+	public void onFinish()
+	{
+		super.onFinish();
+		if (this.spritesetMovement != null) this.spritesetMovement.onFinish();
+	}
+
+	@Override
 	public void postrender(Graphics2D g, int width, int height)
 	{
 		super.postrender(g, width, height);
@@ -85,6 +95,20 @@ public class SpritesetAnimation extends PokemonAnimation
 	{
 		this.x = x;
 		this.y = y;
+	}
+
+	@Override
+	public void start()
+	{
+		super.start();
+		if (this.spritesetMovement != null) this.spritesetMovement.start();
+	}
+
+	@Override
+	public void update()
+	{
+		super.update();
+		if (this.spritesetMovement != null) this.spritesetMovement.update();
 	}
 
 }

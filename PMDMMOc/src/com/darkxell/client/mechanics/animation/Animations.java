@@ -9,6 +9,7 @@ import org.jdom2.Element;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.animation.SpritesetAnimation.BackSpriteUsage;
 import com.darkxell.client.mechanics.animation.movement.TackleAnimationMovement;
+import com.darkxell.client.mechanics.animation.spritemovement.SpritesetAnimationMovement;
 import com.darkxell.client.resources.images.RegularSpriteSet;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
 import com.darkxell.common.event.stats.StatChangedEvent;
@@ -154,6 +155,9 @@ public final class Animations
 			}
 
 			a = new SpritesetAnimation(target, spriteset, backsprites, spriteOrder, spriteDuration, x, y, listener);
+
+			String movement = XMLUtils.getAttribute(xml, "movement", XMLUtils.getAttribute(defaultXml, "movement", "null"));
+			((SpritesetAnimation) a).spritesetMovement = SpritesetAnimationMovement.create(movement, (SpritesetAnimation) a);
 		}
 
 		a.sound = XMLUtils.getAttribute(xml, "sound", XMLUtils.getAttribute(defaultXml, "sound", "null"));
@@ -163,7 +167,6 @@ public final class Animations
 		a.state = state.equals("null") ? defaultState : state.equals("none") ? null : PokemonSpriteState.valueOf(state.toUpperCase());
 		if (a.state != null)
 		{
-			a.duration = Math.max(a.duration, a.renderer.sprite().pointer.getSequence(a.state, target.facing()).duration);
 			if (a.state.hasDash)
 			{
 				a.movement = new TackleAnimationMovement(a);

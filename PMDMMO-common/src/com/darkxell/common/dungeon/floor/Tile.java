@@ -7,6 +7,7 @@ import static com.darkxell.common.dungeon.floor.TileType.WARP_ZONE;
 import static com.darkxell.common.dungeon.floor.TileType.WATER;
 
 import java.awt.Point;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 import com.darkxell.common.event.DungeonEvent;
@@ -66,8 +67,8 @@ public class Tile implements ItemContainer, Comparable<Tile>
 	/** @return The Tile adjacent to this Tile in the input direction. See {@link DirectionSet#NORTH}. */
 	public Tile adjacentTile(Direction direction)
 	{
-		Point p = direction.move(this.x, this.y);
-		return this.floor.tileAt(p.x, p.y);
+		Point2D p = direction.move(this.x, this.y);
+		return this.floor.tileAt((int)p.getX(),(int) p.getY());
 	}
 
 	/** @return True if there are walls blocking the path in the input direction. */
