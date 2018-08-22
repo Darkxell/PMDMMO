@@ -25,6 +25,8 @@ public class StatusCondition implements AffectsPokemon, DamageSource
 
 	public static final StatusCondition Leech_seed = new StealsHpStatusCondition(10, 11, 12, 2, 10);
 
+	public static final StatusCondition Constricted_fire = new ConstrictedStatusCondition(20, 4, 6, 2, 5);
+
 	public static final StatusCondition Sleepless = new PreventsOtherStatusCondition(100, 11, 12, Asleep);
 
 	/** @return The Status Condition with the input ID. */
