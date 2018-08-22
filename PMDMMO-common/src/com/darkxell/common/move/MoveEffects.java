@@ -24,6 +24,7 @@ public final class MoveEffects
 	public static final MoveEffect Inflict_asleep = new ApplyStatusConditionEffect(52, StatusCondition.Asleep, 100);
 	public static final MoveEffect Inflict_poison = new ApplyStatusConditionEffect(58, StatusCondition.Poisoned, 100);
 	public static final MoveEffect Raise_spattack = new StatChangeEffect(76, Stat.SpecialAttack, 1);
+	public static final MoveEffect Lower_speed = new StatChangeEffect(85, Stat.Speed, -1);
 	public static final MoveEffect Lower_attack = new StatChangeEffect(86, Stat.Attack, -1);
 	public static final MoveEffect Drain_50percent = new DrainEffect(90, 50);
 	public static final MoveEffect Recoil_12percent5 = new RecoilEffect(92, 12.5);
@@ -33,7 +34,6 @@ public final class MoveEffects
 	public static final MoveEffect Inflict_leechSeed = new ApplyStatusConditionEffect(143, StatusCondition.Leech_seed, 100);
 	public static final MoveEffect Lower_evasion = new StatChangeEffect(179, Stat.Evasiveness, -1);
 	public static final MoveEffect Lower_accuracy_2 = new StatChangeEffect(203, Stat.Accuracy, -2);
-	public static final MoveEffect Lower_speed = new StatChangeEffect(226, Stat.Speed, -1);
 
 	/** @return The Effect with the input ID. */
 	public static MoveEffect find(int id)

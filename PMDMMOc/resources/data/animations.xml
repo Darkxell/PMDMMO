@@ -142,6 +142,17 @@
     <move id="67">
       <default sprites="none" state="tailwhip" sound="move-tailwhip"/>
     </move>
+    <move id="101">
+      <default width="32" height="24" spriteduration="2" state="special" y="15">0,1,2,3,4,5,6,7,8,8,7,6,5,4,3,2,1,0</default>
+      <north backsprites="only" y="24"/>
+      <northeast backsprites="only" x="10" y="24"/>
+      <east x="10"/>
+      <southeast x="10" y="8"/>
+      <south y="8"/>
+      <southwest x="22" y="8"/>
+      <west x="22"/>
+      <northwest backsprites="only" x="22" y="24"/>
+    </move>
     <move id="106">
       <default width="96" height="96" state="special" spriteduration="5">0,1,2,3,4,5,6,7,8,9,10,11,12,13</default>
     </move>
