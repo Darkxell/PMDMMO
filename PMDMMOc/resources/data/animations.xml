@@ -218,9 +218,14 @@
     </move>
     <move id="901">
       <default width="32" height="30" spriteduration="4">0,1,2,3,4</default>
-      <north backsprites="only"/>
-      <northeast backsprites="only"/>
-      <northwest backsprites="only"/>
+      <north y="30" backsprites="only"/>
+      <northeast y="30" backsprites="only"/>
+      <east x="0" y="20"/>
+      <southeast x="0" y="5"/>
+      <south y="5"/>
+      <southwest x="32" y="5"/>
+      <west x="32" y="20"/>
+      <northwest x="32" y="30" backsprites="only"/>
     </move>
   </moves>
   <movetargets>
