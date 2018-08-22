@@ -108,6 +108,9 @@ public final class Animations
 		Element xml = registry.get(id);
 		Element defaultXml = xml.getChild("default", xml.getNamespace());
 
+		String clone = XMLUtils.getAttribute(xml, "clone", null);
+		if (clone != null) return getAnimation(target, clone, listener);
+
 		boolean oriented = XMLUtils.getAttribute(xml, "oriented", false);
 		if (target != null && xml.getChild(target.facing().name().toLowerCase(), xml.getNamespace()) != null)
 			xml = xml.getChild(target.facing().name().toLowerCase(), xml.getNamespace());

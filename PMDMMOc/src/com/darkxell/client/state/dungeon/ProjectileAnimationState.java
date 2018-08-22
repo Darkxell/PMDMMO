@@ -38,8 +38,8 @@ public class ProjectileAnimationState extends AnimationState
 		super.update();
 		++this.tick;
 		this.travel.update(this.tick * 1d / this.duration);
-		((SpritesetAnimation) this.animation).setXY((this.travel.current().getX() + .5) * AbstractDungeonTileset.TILE_SIZE,
-				(this.travel.current().getY() + .5) * AbstractDungeonTileset.TILE_SIZE);
+		((SpritesetAnimation) this.animation).setXY(this.travel.current().getX() * AbstractDungeonTileset.TILE_SIZE,
+				this.travel.current().getY() * AbstractDungeonTileset.TILE_SIZE);
 		if (this.tick == this.duration)
 		{
 			this.parent.setSubstate(this.parent.actionSelectionState);

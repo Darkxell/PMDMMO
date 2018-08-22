@@ -85,6 +85,7 @@ public class EditAnimationController implements Initializable
 		} catch (Exception e)
 		{
 			JOptionPane.showMessageDialog(null, e.getMessage(), "Error while creating animation", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
 			return null;
 		}
 	}

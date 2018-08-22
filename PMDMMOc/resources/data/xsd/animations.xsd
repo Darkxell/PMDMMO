@@ -66,6 +66,7 @@
 		</xs:sequence>
 		<xs:attribute name="id" type="posInt"/>
 		<xs:attribute name="oriented" type="xs:boolean" use="optional"/>
+		<xs:attribute name="clone" type="xs:string" use="optional"/>
 	</xs:complexType>
 
 	<xs:element name="animations">
