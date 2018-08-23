@@ -33,6 +33,7 @@ public final class MoveEffects
 	public static final MoveEffect WeatherHeal = new WeatherHealEffect(113);
 	public static final MoveEffect Lower_defense = new StatChangeEffect(139, Stat.Defense, -1);
 	public static final MoveEffect Inflict_leechSeed = new ApplyStatusConditionEffect(143, StatusCondition.Leech_seed, 100);
+	public static final MoveEffect Increase_defense = new StatChangeEffect(172, Stat.Defense, 2);
 	public static final MoveEffect Lower_evasion = new StatChangeEffect(179, Stat.Evasiveness, -1);
 	public static final MoveEffect Lower_accuracy_2 = new StatChangeEffect(203, Stat.Accuracy, -2);
 
