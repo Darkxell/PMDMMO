@@ -14,13 +14,14 @@ import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.Communicable;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.language.Message;
+import com.darkxell.common.weather.WeatherSource;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonObject;
 
 public class MoveSelectionEvent extends DungeonEvent implements Communicable
 {
 
-	public static class MoveUse implements DamageSource
+	public static class MoveUse implements DamageSource, WeatherSource
 	{
 		public final Direction direction;
 		/** The experience event resulting from this move's use. */
@@ -54,6 +55,12 @@ public class MoveSelectionEvent extends DungeonEvent implements Communicable
 		public boolean isStab()
 		{
 			return this.user.usedPokemon.species().type1 == this.move.move().type || this.user.usedPokemon.species().type2 == this.move.move().type;
+		}
+
+		@Override
+		public boolean isOver()
+		{
+			return true;
 		}
 	}
 

@@ -449,7 +449,8 @@ public final class ClientEventProcessor extends CommonEventProcessor
 
 		boolean started = false;
 
-		ProjectileAnimationState proj = new ProjectileAnimationState(Persistance.dungeonState, event.usedMove.user.tile(), event.target.tile());
+		ProjectileAnimationState proj = new ProjectileAnimationState(Persistance.dungeonState, event.usedMove.user.tile(),
+				event.target == null ? event.usedMove.user.tile() : event.target.tile());
 		proj.animation = Animations.getProjectileAnimation(event.usedMove.user, 1000 + event.usedMove.move.moveId(), listener);
 		if (proj.animation != null)
 		{

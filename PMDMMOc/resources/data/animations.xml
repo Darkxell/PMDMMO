@@ -188,6 +188,9 @@
     <move id="659">
       <default sprites="none" state="swing" delaytime="20"/>
     </move>
+    <move id="661">
+      <default sprites="none" state="swing" delaytime="20" alsoplay="2"/>
+    </move>
     <move id="701" oriented="true">
       <default spriteduration="2" state="none" statedelay="36" width="96" height="96" sound="move-absorb" sounddelay="36" alsoplay="2">-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,1,2,3,4,5,6,7,8,9,10,11,12</default>
       <north width="64"/>

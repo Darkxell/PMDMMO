@@ -30,9 +30,9 @@ public class MoveEffectCalculator
 
 		this.modificator.add(this.move().effect);
 		this.modificator.addUser(this.user().ability());
-		this.modificator.add(target.ability());
+		if (target != null) this.modificator.add(target.ability());
 		if (this.user().getItem() != null) this.modificator.addUser(this.user().getItem().item());
-		if (target.getItem() != null) this.modificator.add(target.getItem().item());
+		if (target != null && target.getItem() != null) this.modificator.add(target.getItem().item());
 		this.modificator.add(floor.currentWeather().weather);
 	}
 
@@ -91,7 +91,8 @@ public class MoveEffectCalculator
 
 	protected double computeEffectiveness()
 	{
-		double effectiveness = move.move.move().type.effectivenessOn(target.species());
+		double effectiveness = PokemonType.NORMALLY_EFFECTIVE;
+		if (this.target != null) move.move.move().type.effectivenessOn(target.species());
 		effectiveness = this.modificator.applyEffectivenessModifications(effectiveness, move, target, floor);
 		return effectiveness;
 	}
@@ -159,7 +160,7 @@ public class MoveEffectCalculator
 	 * @return True if this Move misses. */
 	public boolean misses(ArrayList<DungeonEvent> events)
 	{
-		if (this.user() == target) return false;
+		if (this.user() == target || this.target == null) return false;
 
 		int accuracy = this.move().accuracy;
 

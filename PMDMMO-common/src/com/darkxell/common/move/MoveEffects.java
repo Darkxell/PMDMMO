@@ -8,9 +8,11 @@ import com.darkxell.common.move.effects.DrainEffect;
 import com.darkxell.common.move.effects.FixedDamageEffect;
 import com.darkxell.common.move.effects.RecoilEffect;
 import com.darkxell.common.move.effects.StatChangeEffect;
+import com.darkxell.common.move.effects.WeatherChangeEffect;
 import com.darkxell.common.move.effects.WeatherHealEffect;
 import com.darkxell.common.pokemon.BaseStats.Stat;
 import com.darkxell.common.status.StatusCondition;
+import com.darkxell.common.weather.Weather;
 
 /** Holds all Move Effects. */
 public final class MoveEffects
@@ -36,6 +38,7 @@ public final class MoveEffects
 	public static final MoveEffect Increase_defense = new StatChangeEffect(172, Stat.Defense, 2, 100);
 	public static final MoveEffect Lower_evasion = new StatChangeEffect(179, Stat.Evasiveness, -1, 100);
 	public static final MoveEffect Lower_accuracy_2s = new StatChangeEffect(203, Stat.Accuracy, -2, 100);
+	public static final MoveEffect Weather_rain = new WeatherChangeEffect(208, Weather.RAIN);
 	public static final MoveEffect Lower_speed_30 = new StatChangeEffect(225, Stat.Speed, -1, 30);
 
 	/** @return The Effect with the input ID. */

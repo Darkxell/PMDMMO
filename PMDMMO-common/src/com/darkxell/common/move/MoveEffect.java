@@ -54,7 +54,7 @@ public class MoveEffect implements AffectsPokemon
 		if (usedMove.user.ability() instanceof AbilityModifyMoveEffect)
 			effect = ((AbilityModifyMoveEffect) usedMove.user.ability()).modify(effect, usedMove, target, floor, missed, isAdditional, true, directedAt);
 
-		if (effect != null && target.ability() instanceof AbilityModifyMoveEffect)
+		if (effect != null && target != null && target.ability() instanceof AbilityModifyMoveEffect)
 			effect = ((AbilityModifyMoveEffect) target.ability()).modify(effect, usedMove, target, floor, missed, isAdditional, false, directedAt);
 
 		if (effect != null) this.events.add(effect);
@@ -95,7 +95,7 @@ public class MoveEffect implements AffectsPokemon
 				break;
 
 			case None:
-				targets.clear();
+				targets.removeIf((DungeonPokemon p) -> p != null);
 				break;
 		}
 	}
@@ -211,7 +211,8 @@ public class MoveEffect implements AffectsPokemon
 		if (effectiveness == PokemonType.NO_EFFECT) events.add(new MessageEvent(floor, move.unaffectedMessage(target)));
 		else
 		{
-			if (!missed && this != MoveEffects.Basic_attack) target.receiveMove(usedMove.move.isLinked() ? DungeonPokemon.LINKED_MOVES : DungeonPokemon.MOVES);
+			if (!missed && this != MoveEffects.Basic_attack && target != null)
+				target.receiveMove(usedMove.move.isLinked() ? DungeonPokemon.LINKED_MOVES : DungeonPokemon.MOVES);
 			if (!missed && move.category != MoveCategory.Status)
 			{
 				if (effectiveness >= PokemonType.SUPER_EFFECTIVE)
@@ -235,8 +236,8 @@ public class MoveEffect implements AffectsPokemon
 	 * @param missed - <code>true</code> if the Move missed. */
 	protected void moveEffects(MoveUse usedMove, DungeonPokemon target, Floor floor, MoveEffectCalculator calculator, boolean missed)
 	{
-		if (missed) this.createEffect(new MessageEvent(floor, new Message("move.miss").addReplacement("<pokemon>", target.getNickname())), usedMove, target,
-				floor, missed, true, null);
+		if (missed) this.createEffect(new MessageEvent(floor, new Message(target == null ? "move.miss.no_target" : "move.miss").addReplacement("<pokemon>",
+				target == null ? new Message("no one", false) : target.getNickname())), usedMove, target, floor, missed, true, null);
 		else if (usedMove.move.move().category != MoveCategory.Status)
 			this.createEffect(new DamageDealtEvent(floor, target, usedMove, calculator.compute(events)), usedMove, target, floor, missed, false, null);
 	}
