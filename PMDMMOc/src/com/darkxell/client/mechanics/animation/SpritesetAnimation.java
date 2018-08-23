@@ -22,6 +22,8 @@ public class SpritesetAnimation extends PokemonAnimation
 	public BackSpriteUsage backSpriteUsage;
 	/** Gravity values for this Animation. Defaults to half this Spriteset's size. */
 	public int gravityX, gravityY;
+	/** If not zero, the first sprite index (in the {@link SpritesetAnimation#sprites sprite order}) to use when this Animation plays several times in a row. */
+	int loopsFrom = 0;
 	/** The duration of each sprite. */
 	public final int spriteDuration;
 	/** The order of sprites. -1 for no sprite. */
@@ -65,7 +67,9 @@ public class SpritesetAnimation extends PokemonAnimation
 	public int index()
 	{
 		if (this.sprites.length == 0) return -1;
-		int i = this.tick() % this.duration / this.spriteDuration;
+		int i = this.tick() / this.spriteDuration;
+		while (i >= this.sprites.length)
+			i -= this.sprites.length - this.loopsFrom;
 		if (i >= this.sprites.length) return -1;
 		return this.sprites[i];
 	}

@@ -13,12 +13,14 @@ public class StatChangeEffect extends MoveEffect
 
 	public final int stage;
 	public final Stat stat;
+	public final int probability;
 
-	public StatChangeEffect(int id, Stat stat, int stage)
+	public StatChangeEffect(int id, Stat stat, int stage, int probability)
 	{
 		super(id);
 		this.stat = stat;
 		this.stage = stage;
+		this.probability = probability;
 	}
 
 	@Override
@@ -26,8 +28,8 @@ public class StatChangeEffect extends MoveEffect
 	{
 		super.moveEffects(usedMove, target, floor, calculator, missed);
 
-		if (!missed) this.createEffect(new StatChangedEvent(floor, target, this.stat, this.stage), usedMove, target, floor, missed,
-				usedMove.move.move().dealsDamage, target);
+		if (!missed && floor.random.nextDouble() * 100 < this.probability) this.createEffect(new StatChangedEvent(floor, target, this.stat, this.stage),
+				usedMove, target, floor, missed, usedMove.move.move().dealsDamage, target);
 	}
 
 }

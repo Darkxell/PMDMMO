@@ -220,9 +220,9 @@ public class PrincipalMainState extends StateManager {
 
 	@Override
 	public synchronized void update() {
+		AnimationTicker.instance.update(); // Update animations before to able post-update modifications.
 		if (this.currentState != null)
 			this.currentState.update();
-		AnimationTicker.instance.update();
 		if (Persistance.displaymap != null)
 			Persistance.displaymap.update();
 		Keys.update();
