@@ -110,7 +110,11 @@ public class EditAnimationController implements Initializable
 	{
 		if (this.animation == null) return;
 		if (!onChange && (this.current != null && this.current.plays == -1)) return;
-		if (this.current != null) this.current.stop();
+		if (this.current != null)
+		{
+			this.current.stop();
+			Persistance.dungeonState.pokemonRenderer.getRenderer(tester).removeAnimation(this.current);
+		}
 		AnimationState s = new AnimationState(Persistance.dungeonState);
 		s.animation = this.current = this.loadAnimation();
 		if (s.animation != null) state.setSubstate(s);
