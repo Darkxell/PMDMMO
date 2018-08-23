@@ -16,6 +16,7 @@ import com.darkxell.common.event.dungeon.BossDefeatedEvent;
 import com.darkxell.common.event.dungeon.ExplorationStopEvent;
 import com.darkxell.common.event.stats.BellyChangedEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.status.AppliedStatusCondition;
 
 /** Processes game logic events. */
 public class CommonEventProcessor
@@ -76,7 +77,11 @@ public class CommonEventProcessor
 	{
 		ArrayList<DungeonEvent> resultingEvents = new ArrayList<>();
 		for (DungeonPokemon p : this.dungeon.currentFloor().listPokemon())
+		{
 			p.ability().onEvent(this.dungeon.currentFloor(), event, resultingEvents);
+			for (AppliedStatusCondition condition : p.activeStatusConditions())
+				condition.onEvent(this.dungeon.currentFloor(), event, resultingEvents);
+		}
 		this.addToPending(resultingEvents);
 	}
 

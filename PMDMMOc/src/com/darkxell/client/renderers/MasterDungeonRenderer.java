@@ -43,8 +43,8 @@ public class MasterDungeonRenderer
 			this.updateRequired = false;
 		}
 
-		for (AbstractRenderer renderer : this.renderers)
-			if (renderer.shouldRender(width, height)) renderer.render(g, width, height);
+		for (int i = 0; i < this.renderers.size(); ++i)
+			if (this.renderers.get(i).shouldRender(width, height)) this.renderers.get(i).render(g, width, height);
 	}
 
 	public void update()

@@ -63,11 +63,11 @@ public class DungeonPokemon implements ItemContainer
 		return this.usedPokemon.ability();
 	}
 
-	public StatusCondition[] activeStatusConditions()
+	public AppliedStatusCondition[] activeStatusConditions()
 	{
-		StatusCondition[] conditions = new StatusCondition[this.statusConditions.size()];
+		AppliedStatusCondition[] conditions = new AppliedStatusCondition[this.statusConditions.size()];
 		for (int i = 0; i < conditions.length; ++i)
-			conditions[i] = this.statusConditions.get(i).condition;
+			conditions[i] = this.statusConditions.get(i);
 		return conditions;
 	}
 
@@ -327,7 +327,7 @@ public class DungeonPokemon implements ItemContainer
 		if (this.stats.speedBuffs() > 0 || this.stats.speedDebuffs() > 0) this.stats.onTurnStart(floor, events);
 
 		for (AppliedStatusCondition condition : this.statusConditions)
-			condition.tick(floor, events);
+			if (condition.actedWhileApplied()) condition.tick(floor, events);
 	}
 
 	public Player player()

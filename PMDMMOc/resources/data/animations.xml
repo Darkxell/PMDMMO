@@ -95,7 +95,10 @@
       <default y="56" width="64" height="64">0,1,2,3,4,5,6,7</default>
     </c>
     <c id="203">
-      <default spriteduration="5" width="32" height="32">0,1,2,3,4,5,6</default>
+      <default spriteduration="5" width="32" height="32" state="hurt">0,1,2,3,4,5,6</default>
+    </c>
+    <c id="225">
+      <default width="16" height="32" x="0" y="32">0,1,2,3,4,4,4,4</default>
     </c>
     <c id="300">
       <default width="32" height="32">0,1,2,3,4,5,6,7,8,9</default>
@@ -237,6 +240,17 @@
       <southwest x="32" y="5"/>
       <west x="32" y="20"/>
       <northwest x="32" y="30" backsprites="only"/>
+    </move>
+    <move id="951" oriented="true">
+      <default width="40" height="48" spriteduration="4" state="swell">0,1,2,3,3</default>
+      <north backsprites="only" width="32" y="48"/>
+      <northeast x="0" backsprites="only" y="48"/>
+      <east width="32" x="0"/>
+      <southeast width="32" x="0" y="0"/>
+      <south width="32" y="0"/>
+      <southwest x="40" y="0"/>
+      <west width="32" x="32"/>
+      <northwest backsprites="only" height="56" x="40" y="48"/>
     </move>
   </moves>
   <movetargets>

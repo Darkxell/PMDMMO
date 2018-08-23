@@ -26,6 +26,7 @@ public class StatusCondition implements AffectsPokemon, DamageSource
 	public static final StatusCondition Leech_seed = new StealsHpStatusCondition(10, 11, 12, 2, 10);
 
 	public static final StatusCondition Constricted_fire = new ConstrictedStatusCondition(20, 4, 6, 2, 5);
+	public static final StatusCondition Cringed = new CringedStatusCondition(25, 1, 1);
 
 	public static final StatusCondition Sleepless = new PreventsOtherStatusCondition(100, 11, 12, Asleep);
 
@@ -54,9 +55,10 @@ public class StatusCondition implements AffectsPokemon, DamageSource
 	{
 		if (pokemon.hasStatusCondition(this)) return new Pair<>(false,
 				new Message("status.already").addReplacement("<pokemon>", pokemon.getNickname()).addReplacement("<condition>", this.name()));
-		for (StatusCondition c : pokemon.activeStatusConditions())
-			if (c instanceof PreventsOtherStatusCondition && ((PreventsOtherStatusCondition) c).prevents(this)) new Message("status.prevented.condition")
-					.addReplacement("<pokemon>", pokemon.getNickname()).addReplacement("<prevented>", this.name()).addReplacement("<preventer>", c.name());
+		for (AppliedStatusCondition c : pokemon.activeStatusConditions())
+			if (c.condition instanceof PreventsOtherStatusCondition && ((PreventsOtherStatusCondition) c.condition).prevents(this))
+				new Message("status.prevented.condition").addReplacement("<pokemon>", pokemon.getNickname()).addReplacement("<prevented>", this.name())
+						.addReplacement("<preventer>", c.condition.name());
 		return new Pair<>(true, null);
 	}
 

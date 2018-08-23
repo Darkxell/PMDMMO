@@ -68,7 +68,7 @@ public class SpritesetAnimation extends PokemonAnimation
 	{
 		if (this.sprites.length == 0) return -1;
 		int i = this.tick() / this.spriteDuration;
-		while (i >= this.sprites.length)
+		while (i >= this.sprites.length && this.plays != 1)
 			i -= this.sprites.length - this.loopsFrom;
 		if (i >= this.sprites.length) return -1;
 		return this.sprites[i];

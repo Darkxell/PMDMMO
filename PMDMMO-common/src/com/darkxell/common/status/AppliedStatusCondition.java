@@ -4,13 +4,18 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.DungeonEventListener;
 import com.darkxell.common.event.pokemon.StatusConditionEndedEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.util.language.Lang;
 import com.darkxell.common.util.language.Message;
 
-public class AppliedStatusCondition
+public class AppliedStatusCondition implements DungeonEventListener
 {
 
+	/** True if the Pokemon this Status condition affects has acted this turn while this Status condition was active.<br>
+	 * This is necessary due to the ticking of Status conditions happening at the end of turn: because Pokemon in teams act first, they would not suffer from conditions that prevent action for a single turn if this attribute wasn't used. */
+	private boolean actedWhileApplied;
 	/** This Status Condition's ID. */
 	public final StatusCondition condition;
 	/** This Status Condition's duration. */
@@ -30,9 +35,17 @@ public class AppliedStatusCondition
 		this.tick = 0;
 	}
 
+	/** @return {@link AppliedStatusCondition#actedWhileApplied}. */
+	public boolean actedWhileApplied()
+	{
+		return this.actedWhileApplied;
+	}
+
 	public Message endMessage()
 	{
-		return new Message("status.end." + this.condition.id).addReplacement("<pokemon>", this.pokemon.getNickname());
+		String id = "status.end." + this.condition.id;
+		if (!Lang.containsKey(id)) return null;
+		return new Message(id).addReplacement("<pokemon>", this.pokemon.getNickname());
 	}
 
 	public void finish(Floor floor, ArrayList<DungeonEvent> events)
@@ -51,6 +64,12 @@ public class AppliedStatusCondition
 		return this.tick >= this.duration;
 	}
 
+	@Override
+	public void onEvent(Floor floor, DungeonEvent event, ArrayList<DungeonEvent> resultingEvents)
+	{
+		if (event.actor() == this.pokemon) this.actedWhileApplied = true;
+	}
+
 	public Message startMessage()
 	{
 		return new Message("status.start." + this.condition.id).addReplacement("<pokemon>", this.pokemon.getNickname());
@@ -60,6 +79,7 @@ public class AppliedStatusCondition
 	{
 		if (!this.isOver()) this.condition.tick(floor, this, events);
 		++this.tick;
+		this.actedWhileApplied = false;
 		if (this.isOver()) this.finish(floor, events);
 	}
 
