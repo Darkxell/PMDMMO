@@ -176,6 +176,9 @@
       <west x="20"/>
       <northwest x="20" y="15" backsprites="only"/>
     </move>
+    <move id="555">
+      <default width="32" height="208" y="195" state="swing" backsprites="yes">0,1,2,3,4,4,4,4,4,5</default>
+    </move>
     <move id="601" oriented="true">
       <default width="64" height="64" state="special">0,1,2,3,4,5,6,7,8,9,10,11,12,13</default>
       <north backsprites="only"/>

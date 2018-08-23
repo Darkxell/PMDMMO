@@ -27,6 +27,7 @@ public final class MoveEffects
 	public static final MoveEffect Inflict_asleep = new ApplyStatusConditionEffect(52, StatusCondition.Asleep, 100);
 	public static final MoveEffect Inflict_poison = new ApplyStatusConditionEffect(58, StatusCondition.Poisoned, 100);
 	public static final MoveEffect Raise_spattack = new StatChangeEffect(76, Stat.SpecialAttack, 1, 100);
+	public static final MoveEffect Raise_defense_2s = new StatChangeEffect(79, Stat.Defense, 2, 100);
 	public static final MoveEffect Lower_speed = new StatChangeEffect(85, Stat.Speed, -1, 100);
 	public static final MoveEffect Lower_attack = new StatChangeEffect(86, Stat.Attack, -1, 100);
 	public static final MoveEffect Drain_50percent = new DrainEffect(90, 50);
@@ -35,7 +36,7 @@ public final class MoveEffects
 	public static final MoveEffect WeatherHeal = new WeatherHealEffect(113);
 	public static final MoveEffect Lower_defense = new StatChangeEffect(139, Stat.Defense, -1, 100);
 	public static final MoveEffect Inflict_leechSeed = new ApplyStatusConditionEffect(143, StatusCondition.Leech_seed, 100);
-	public static final MoveEffect Increase_defense = new StatChangeEffect(172, Stat.Defense, 2, 100);
+	public static final MoveEffect Raise_defense = new StatChangeEffect(172, Stat.Defense, 2, 100);
 	public static final MoveEffect Lower_evasion = new StatChangeEffect(179, Stat.Evasiveness, -1, 100);
 	public static final MoveEffect Lower_accuracy_2s = new StatChangeEffect(203, Stat.Accuracy, -2, 100);
 	public static final MoveEffect Weather_rain = new WeatherChangeEffect(208, Weather.RAIN);
