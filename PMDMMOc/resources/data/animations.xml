@@ -190,6 +190,7 @@
     </move>
     <move id="605" clone="moves/901"/>
     <move id="651" clone="moves/901"/>
+    <move id="655" clone="moves/901"/>
     <move id="658" clone="moves/901"/>
     <move id="659">
       <default sprites="none" state="swing" delaytime="20"/>
@@ -276,6 +277,7 @@
     <movetarget id="651">
       <default width="56" height="40" spriteduration="4">0,1,2,3,4,5</default>
     </movetarget>
+    <movetarget id="655" clone="targets/658"/>
     <movetarget id="658">
       <default width="72" height="64">0,1,2,3,4,5,6,7,8</default>
     </movetarget>
@@ -299,6 +301,15 @@
     <projectile id="1605" clone="projectiles/1901"/>
     <projectile id="1651">
       <default width="32" height="32" loopsfrom="7" spriteduration="2">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17</default>
+    </projectile>
+    <projectile id="1655" oriented="true">
+      <default width="32" height="32" spriteduration="5">0,1</default>
+      <north width="32" height="16"/>
+      <east width="16"/>
+      <south sprites="/projectiles/1655-0" width="32" height="16"/>
+      <southwest sprites="/projectiles/1655-1"/>
+      <west sprites="/projectiles/1655-2" width="16"/>
+      <northwest sprites="/projectiles/1655-3"/>
     </projectile>
     <projectile id="1658" oriented="true">
       <default width="24" height="16" spriteduration="4">0,1</default>

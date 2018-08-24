@@ -80,6 +80,8 @@ public class RegularSpriteSet extends SpriteSet
 	{
 		this.columns = this.image().getWidth() / this.spriteWidth;
 		this.rows = this.image().getHeight() / this.spriteHeight;
+		if (this.columns == 0) this.columns = 1;
+		if (this.rows == 0) this.rows = 1;
 		for (int x = 0; x < this.columns; ++x)
 			for (int y = 0; y < this.rows; ++y)
 				this.createSprite(this.id(x, y), this.spriteWidth * x, this.spriteHeight * y, this.spriteWidth, this.spriteHeight);
