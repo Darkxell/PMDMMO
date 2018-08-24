@@ -402,7 +402,8 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	private void processMoveEvent(MoveSelectionEvent event)
 	{
 		AnimationState s = new AnimationState(Persistance.dungeonState);
-		s.animation = Animations.getMoveAnimation(event.usedMove().user, event.usedMove().move.move(), this.currentAnimEnd);
+		if (Animations.existsMoveAnimation(event.usedMove().move.move()))
+			s.animation = Animations.getMoveAnimation(event.usedMove().user, event.usedMove().move.move(), this.currentAnimEnd);
 		if (s.animation != null)
 		{
 			Persistance.dungeonState.setSubstate(s);
@@ -438,7 +439,8 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		}
 
 		AnimationState s = new AnimationState(Persistance.dungeonState);
-		s.animation = Animations.getMoveTargetAnimation(event.target, event.usedMove.move.move(), listener);
+		if (Animations.existsTargetAnimation(event.usedMove.move.move()))
+			s.animation = Animations.getMoveTargetAnimation(event.target, event.usedMove.move.move(), listener);
 		if (s.animation != null) listener = new AnimationEndListener() {
 			@Override
 			public void onAnimationEnd(AbstractAnimation animation)
@@ -451,7 +453,8 @@ public final class ClientEventProcessor extends CommonEventProcessor
 
 		ProjectileAnimationState proj = new ProjectileAnimationState(Persistance.dungeonState, event.usedMove.user.tile(),
 				event.target == null ? event.usedMove.user.tile() : event.target.tile());
-		proj.animation = Animations.getProjectileAnimation(event.usedMove.user, 1000 + event.usedMove.move.moveId(), listener);
+		if (Animations.existsProjectileAnimation(1000 + event.usedMove.move.moveId()))
+			proj.animation = Animations.getProjectileAnimation(event.usedMove.user, 1000 + event.usedMove.move.moveId(), listener);
 		if (proj.animation != null)
 		{
 			Persistance.dungeonState.setSubstate(proj);

@@ -52,6 +52,26 @@ public final class Animations
 		statuses = new HashMap<>();
 	}
 
+	private static boolean existsAnimation(int id, HashMap<Integer, Element> registry)
+	{
+		return registry.containsKey(id);
+	}
+
+	public static boolean existsMoveAnimation(Move move)
+	{
+		return existsAnimation(move.id, moves);
+	}
+
+	public static boolean existsProjectileAnimation(int projectileID)
+	{
+		return existsAnimation(projectileID, projectiles);
+	}
+
+	public static boolean existsTargetAnimation(Move move)
+	{
+		return existsAnimation(move.id, moveTargets);
+	}
+
 	public static PokemonAnimation getAbilityAnimation(DungeonPokemon pokemon, Ability ability, AnimationEndListener listener)
 	{
 		return getAnimation(ability.id, abilities, pokemon, listener);
