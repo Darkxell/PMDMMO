@@ -21,7 +21,7 @@ public abstract class AbilityOnHit extends Ability
 	}
 
 	@Override
-	public void onEvent(Floor floor, DungeonEvent event, ArrayList<DungeonEvent> resultingEvents)
+	public void onPostEvent(Floor floor, DungeonEvent event, ArrayList<DungeonEvent> resultingEvents)
 	{
 		if (event instanceof DamageDealtEvent)
 		{

@@ -6,6 +6,7 @@ import java.util.Random;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.DungeonEventListener;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageSource;
 import com.darkxell.common.event.stats.ExperienceGeneratedEvent;
 import com.darkxell.common.pokemon.AffectsPokemon;
@@ -14,7 +15,7 @@ import com.darkxell.common.util.Pair;
 import com.darkxell.common.util.RandomUtil;
 import com.darkxell.common.util.language.Message;
 
-public class StatusCondition implements AffectsPokemon, DamageSource
+public class StatusCondition implements AffectsPokemon, DamageSource, DungeonEventListener
 {
 	private static final HashMap<Integer, StatusCondition> _registry = new HashMap<Integer, StatusCondition>();
 

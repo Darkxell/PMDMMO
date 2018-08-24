@@ -348,6 +348,9 @@
     <status id="3">
       <default spriteduration="5" width="16" height="16" x="0" y="20">0,1,2,3,4,5,6,7,8,9</default>
     </status>
+    <status id="4">
+      <default spriteduration="5" width="32" height="16" y="20">0,1,2,3,4</default>
+    </status>
     <status id="20">
       <default spriteduration="4" width="42" height="16" backsprites="yes">0,1,2,3,4,5,6,7,8</default>
     </status>

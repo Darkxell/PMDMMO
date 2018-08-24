@@ -73,14 +73,31 @@ public class CommonEventProcessor
 	}
 
 	/** Calls listeners to the input Event. */
-	private void callListeners(DungeonEvent event)
+	private void callPostListeners(DungeonEvent event)
 	{
 		ArrayList<DungeonEvent> resultingEvents = new ArrayList<>();
 		for (DungeonPokemon p : this.dungeon.currentFloor().listPokemon())
 		{
-			p.ability().onEvent(this.dungeon.currentFloor(), event, resultingEvents);
+			p.ability().onPostEvent(this.dungeon.currentFloor(), event, resultingEvents);
 			for (AppliedStatusCondition condition : p.activeStatusConditions())
-				condition.onEvent(this.dungeon.currentFloor(), event, resultingEvents);
+				condition.onPostEvent(this.dungeon.currentFloor(), event, resultingEvents);
+		}
+		this.addToPending(resultingEvents);
+	}
+
+	/** Calls listeners to the input Event. */
+	private void callPreListeners(DungeonEvent event)
+	{
+		ArrayList<DungeonEvent> resultingEvents = new ArrayList<>();
+		for (DungeonPokemon p : this.dungeon.currentFloor().listPokemon())
+		{
+			p.ability().onPreEvent(this.dungeon.currentFloor(), event, resultingEvents);
+			if (event.isConsumed()) break;
+			for (AppliedStatusCondition condition : p.activeStatusConditions())
+			{
+				condition.onPreEvent(this.dungeon.currentFloor(), event, resultingEvents);
+				if (event.isConsumed()) break;
+			}
 		}
 		this.addToPending(resultingEvents);
 	}
@@ -90,7 +107,7 @@ public class CommonEventProcessor
 	{
 		this.dungeon.eventOccured(event);
 		this.addToPending(event.processServer());
-		this.callListeners(event);
+		this.callPostListeners(event);
 		if (event instanceof ExplorationStopEvent) this.setState(State.STOPPED);
 		else if (event instanceof BossDefeatedEvent) this.processBossDefeatedEvent((BossDefeatedEvent) event);
 	}
@@ -111,7 +128,9 @@ public class CommonEventProcessor
 	 * @return false if the event should not be processed. */
 	protected boolean preProcess(DungeonEvent event)
 	{
-		if (event instanceof PokemonTravelEvent)
+		this.callPreListeners(event);
+
+		if (!event.isConsumed() && event instanceof PokemonTravelEvent)
 		{
 			PokemonTravelEvent travel = (PokemonTravelEvent) event;
 			if (travel.pokemon().isTeamLeader() && travel.running())
@@ -126,9 +145,9 @@ public class CommonEventProcessor
 				this.addToPending(new PokemonTravelEvent(this.dungeon.currentFloor(), travel.destination().getPokemon(), travel.direction().opposite()));
 		}
 
-		if (this.stopsTravel(event)) this.runners.clear();
+		if (!event.isConsumed() && this.stopsTravel(event)) this.runners.clear();
 
-		return event.isValid();
+		return !event.isConsumed() && event.isValid();
 	}
 
 	/** Method that handles a Boss defeat. This event has very different results depending on the Dungeon, so having a separate method for it seems necessary. */
@@ -142,7 +161,7 @@ public class CommonEventProcessor
 	{
 		if (this.state() == State.STOPPED) return;
 		this.setState(State.PROCESSING);
-		if (this.preProcess(event)) this.doProcess(event);
+		if (!event.isConsumed() && this.preProcess(event)) this.doProcess(event);
 		if (this.state() == State.PROCESSING) this.processPending();
 	}
 
