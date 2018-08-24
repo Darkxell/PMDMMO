@@ -7,7 +7,7 @@ import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.ability.Ability;
 import com.darkxell.common.status.StatusCondition;
 
-public class AnimationListItem implements Comparable<AnimationListItem>
+public class AnimationListItem extends CustomTreeItem implements Comparable<AnimationListItem>
 {
 
 	public static AnimationListItem create(String anim)
@@ -79,13 +79,13 @@ public class AnimationListItem implements Comparable<AnimationListItem>
 		detail = detail.replaceAll("<.*?>", "");
 		while (detail.startsWith(" "))
 			detail = detail.substring(1);
-		return " (" + detail + ")";
+		return detail;
 	}
 
 	@Override
 	public String toString()
 	{
-		return this.folder.substring(0, 1).toUpperCase() + this.folder.substring(1) + ": " + this.id + this.nameDetails();
+		return this.id + "- " + this.nameDetails();
 	}
 
 }

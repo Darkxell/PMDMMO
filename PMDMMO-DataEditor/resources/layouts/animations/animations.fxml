@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.TreeView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
@@ -11,7 +11,7 @@
    <left>
       <VBox alignment="CENTER" styleClass="panel" BorderPane.alignment="CENTER">
          <children>
-            <ListView fx:id="animationsListView" VBox.vgrow="ALWAYS" />
+            <TreeView fx:id="animationsTreeView" VBox.vgrow="ALWAYS" />
          </children>
       </VBox>
    </left>
