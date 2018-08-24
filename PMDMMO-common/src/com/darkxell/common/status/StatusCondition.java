@@ -22,6 +22,7 @@ public class StatusCondition implements AffectsPokemon, DamageSource
 	public static final StatusCondition Badly_poisoned = new PeriodicDamageStatusCondition(1, -1, -1, 2, 6);
 	public static final StatusCondition Burn = new PeriodicDamageStatusCondition(2, -1, -1, 20, 5);
 	public static final StatusCondition Asleep = new PreventsActionStatusCondition(3, 3, 6);
+	public static final StatusCondition Confused = new ConfusedStatusCondition(4, 7, 12);
 
 	public static final StatusCondition Leech_seed = new StealsHpStatusCondition(10, 11, 12, 2, 10);
 

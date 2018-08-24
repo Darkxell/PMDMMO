@@ -198,6 +198,7 @@
     <move id="661">
       <default sprites="none" state="swing" delaytime="20" alsoplay="2"/>
     </move>
+    <move id="666" clone="moves/901"/>
     <move id="701" oriented="true">
       <default spriteduration="2" state="none" statedelay="36" width="96" height="96" sound="move-absorb" sounddelay="36" alsoplay="2">-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,1,2,3,4,5,6,7,8,9,10,11,12</default>
       <north width="64"/>
@@ -319,6 +320,13 @@
       <south width="8" height="24"/>
       <west width="32" height="8"/>
       <northwest width="16"/>
+    </projectile>
+    <projectile id="1666" oriented="true">
+      <default width="24" height="32" loopsfrom="6" spriteduration="2">0,1,2,3,4,5,6,7,8,9,9,8,7,6</default>
+      <north width="32"/>
+      <east width="16"/>
+      <south width="32" sprites="/projectiles/1666-0"/>
+      <west width="16"/>
     </projectile>
     <projectile id="1705">
       <default width="32" height="16" spriteduration="2">0,1,2,3,4,5,6,7</default>
