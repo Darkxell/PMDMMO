@@ -3,6 +3,9 @@ package com.darkxell.common.util;
 import java.util.Random;
 
 import com.darkxell.common.item.ItemStack;
+import com.darkxell.common.mission.InvalidParammetersException;
+import com.darkxell.common.mission.Mission;
+import com.darkxell.common.mission.MissionReward;
 import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.LearnedMove;
 import com.darkxell.common.pokemon.Pokemon;
@@ -44,6 +47,25 @@ public class Util
 			Pokemon p = PokemonRegistry.find(id).generate(new Random(), 1);
 			p.getData().id = id;
 			player.addPokemonInZone(p);
+		}
+
+		try
+		{
+			player.getData().missionsids
+					.add(new Mission("E", 2, 3, 3, 6, 1, new MissionReward(55, new int[] { 1 }, new int[] { 1 }, 5, null), Mission.TYPE_RESCUEME).toString());
+			player.getData().missionsids
+					.add(new Mission("A", 12, 14, 15, 71, 2, new MissionReward(70, new int[] { 1 }, new int[] { 1 }, 5, null), Mission.TYPE_DEFEAT).toString());
+			player.getData().missionsids
+					.add(new Mission("A", 12, 15, 15, 71, 2, new MissionReward(70, new int[] { 1 }, new int[] { 1 }, 5, null), Mission.TYPE_DEFEAT).toString());
+			player.getData().missionsids
+					.add(new Mission("C", 12, 14, 15, 71, 2, new MissionReward(70, new int[] { 1 }, new int[] { 1 }, 5, null), Mission.TYPE_ESCORT).toString());
+			player.getData().missionsids
+					.add(new Mission("C", 12, 14, 15, 71, 2, new MissionReward(70, new int[] { 1 }, new int[] { 1 }, 5, null), Mission.TYPE_ESCORT).toString());
+			player.getData().missionsids
+					.add(new Mission("C", 12, 14, 15, 71, 2, new MissionReward(70, new int[] { 1 }, new int[] { 1 }, 5, null), Mission.TYPE_ESCORT).toString());
+		} catch (InvalidParammetersException e)
+		{
+			e.printStackTrace();
 		}
 
 		return player;

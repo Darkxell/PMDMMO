@@ -17,7 +17,11 @@ import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.GameTurn;
 import com.darkxell.common.event.action.PokemonRotateEvent;
 import com.darkxell.common.event.action.TurnSkippedEvent;
+import com.darkxell.common.event.dungeon.MissionClearedEvent;
 import com.darkxell.common.item.ItemStack;
+import com.darkxell.common.mission.DungeonMission;
+import com.darkxell.common.mission.Mission;
+import com.darkxell.common.mission.dungeon.RescueDungeonMission;
 import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.Pokemon;
@@ -28,6 +32,8 @@ import com.darkxell.common.util.Logger;
 public class DungeonExploration
 {
 
+	/** Accepted missions that are active in this Dungeon. */
+	public ArrayList<DungeonMission> activeMissions = new ArrayList<>();
 	private HashMap<DungeonPokemon, Actor> actorMap = new HashMap<>();
 	/** The Pokemon to take turn in order. */
 	private ArrayList<Actor> actors = new ArrayList<>();
@@ -168,6 +174,9 @@ public class DungeonExploration
 			if (event instanceof TurnSkippedEvent) this.actorMap.get(event.actor()).skip();
 			else this.actorMap.get(event.actor()).act();
 		}
+
+		for (DungeonMission mission : this.activeMissions)
+			if (!mission.isCleared() && mission.clearsMission(event)) this.eventProcessor.addToPending(new MissionClearedEvent(this.currentFloor(), mission));
 	}
 
 	@SuppressWarnings("unchecked")
@@ -181,7 +190,7 @@ public class DungeonExploration
 	{
 		this.isGeneratingFloor = true;
 		if (this.currentFloor != null) this.currentFloor.dispose();
-		this.currentFloor = this.createFloor(this.currentFloor == null ? this.dungeon().floorCount : this.currentFloor.id + 1);// Change 'floorCount' back to '1'
+		this.currentFloor = this.createFloor(this.currentFloor == null ? 1 : this.currentFloor.id + 1);// Change 'floorCount' back to '1'
 		this.currentFloor.generate();
 		this.currentFloor.placePlayers(this.exploringPlayers);
 
@@ -248,6 +257,11 @@ public class DungeonExploration
 				member.createDungeonPokemon();
 		}
 
+		this.activeMissions.add(new RescueDungeonMission(this.startingPlayers.get(0), new Mission("A", 1, 2, 43, 44, -1, null, Mission.TYPE_RESCUEME)));
+
+		for (DungeonMission mission : this.activeMissions)
+			mission.onDungeonStart(this);
+
 		this.random = new Random(this.seed);
 		this.generateNextFloor();
 		this.currentSubTurn = GameTurn.SUB_TURNS - 1;
@@ -255,6 +269,7 @@ public class DungeonExploration
 		ArrayList<DungeonEvent> events = new ArrayList<>();
 		this.endTurn(events);
 		this.currentFloor.onFloorStart(events);
+
 		if (this.eventProcessor == null)
 		{
 			Logger.w("Event processor hasn't been initialized. Creating default CommonEventProcessor.");
