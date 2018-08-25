@@ -34,6 +34,7 @@ public class ConfusedStatusCondition extends StatusCondition
 		event.consume();
 		Direction direction = Direction.randomDirection(floor.random);
 		MoveSelectionEvent e = new MoveSelectionEvent(floor, event.usedMove().move, event.usedMove().user, direction);
+		e.cloneFlags(event);
 		e.addFlag("confused");
 		resultingEvents.add(e);
 	}
@@ -53,6 +54,7 @@ public class ConfusedStatusCondition extends StatusCondition
 		}
 		Direction direction = RandomUtil.random(candidates, floor.random);
 		PokemonTravelEvent e = new PokemonTravelEvent(floor, event.pokemon(), false, direction);
+		e.cloneFlags(event);
 		e.addFlag("confused");
 		resultingEvents.add(e);
 	}

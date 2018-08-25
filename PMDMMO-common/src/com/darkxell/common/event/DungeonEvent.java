@@ -73,6 +73,12 @@ public abstract class DungeonEvent
 		if (!this.hasFlag(flag)) this.flags += "|" + flag;
 	}
 
+	public void cloneFlags(DungeonEvent event)
+	{
+		for (String flag : event.flags.split("|"))
+			this.addFlag(flag);
+	}
+
 	/** Sets {@link DungeonEvent#isConsumed} to true. */
 	public void consume()
 	{
