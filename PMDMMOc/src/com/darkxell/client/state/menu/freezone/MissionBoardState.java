@@ -127,6 +127,8 @@ public class MissionBoardState extends AbstractState {
 		this.exploresource.update();
 		if (selectedmissionpos >= missions.size())
 			selectedmissionpos = missions.size() - 1;
+		if (selectedmissionpos < 0 && missions.size() > 0)
+			selectedmissionpos = 0;
 		if (missions.size() <= 0)
 			requesttimer--;
 		if (requesttimer <= 0) {

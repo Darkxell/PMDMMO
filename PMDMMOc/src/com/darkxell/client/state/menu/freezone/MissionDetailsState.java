@@ -14,12 +14,14 @@ import com.darkxell.common.item.ItemRegistry;
 import com.darkxell.common.mission.Mission;
 import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.util.language.Message;
+import com.eclipsesource.json.JsonObject;
 
 public class MissionDetailsState extends AbstractState {
 
 	private AbstractState exploresource;
 	private Mission mission;
 	Sprite billboard = new Sprite("/hud/billboard_details.png");
+	private boolean localaccepted = false;
 
 	public MissionDetailsState(AbstractState exploresource, Mission content) {
 		this.exploresource = exploresource;
@@ -31,6 +33,18 @@ public class MissionDetailsState extends AbstractState {
 		switch (key) {
 		case RUN:
 			Persistance.stateManager.setState(new MissionBoardState(this.exploresource));
+			break;
+		case ATTACK:
+			if (!localaccepted) {
+				localaccepted = true;
+
+				JsonObject value = new JsonObject();
+				value.add("action", "acceptmission");
+				value.add("missioncode", this.mission.toString());
+				Persistance.socketendpoint.sendMessage(value.toString());
+
+				Persistance.player.getMissions().add(mission.toString());
+			}
 			break;
 		default:
 			break;
@@ -61,6 +75,8 @@ public class MissionDetailsState extends AbstractState {
 
 		g.drawImage(PokemonPortrait.portrait(PokemonRegistry.find(mission.getPokemonid1()), false),
 				basewidth - PokemonPortrait.PORTRAIT_SIZE - 20, 35, null);
+		TextRenderer.render(g, new Message(localaccepted ? "mission.info.accepted" : "mission.info.acceptinfo"),
+				basewidth - 90, 80);
 		TextRenderer.render(g, new Message("mission.info.client"), 5, 60);
 		TextRenderer.render(g, new Message("mission.info.objective"), 5, 75);
 		TextRenderer.render(g, new Message("mission.info.place"), 5, 90);

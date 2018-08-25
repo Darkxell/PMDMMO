@@ -70,6 +70,11 @@ public class Player
 	{
 		return this.data;
 	}
+	
+	public ArrayList<String> getMissions()
+	{
+		return this.data.missionsids;
+	}
 
 	public DungeonPokemon getDungeonLeader()
 	{
