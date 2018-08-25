@@ -11,7 +11,7 @@ import com.eclipsesource.json.JsonValue;
 public class DBInventory implements Communicable
 {
 
-	public ArrayList<DatabaseIdentifier> content;
+	public ArrayList<DatabaseIdentifier> content = new ArrayList<>();
 	public long id;
 	public int maxsize;
 
@@ -22,7 +22,7 @@ public class DBInventory implements Communicable
 	{
 		this.id = id;
 		this.maxsize = maxsize;
-		this.content = content;
+		if (content != null) this.content = content;
 	}
 
 	@Override
@@ -30,7 +30,7 @@ public class DBInventory implements Communicable
 	{
 		if (!(obj instanceof DBInventory)) return false;
 		DBInventory o = (DBInventory) obj;
-		if ((this.content == null) != (o.content == null) || (this.content != null && !this.content.equals(o.content))) return false;
+		if (!this.content.equals(o.content)) return false;
 		return this.id == o.id && this.maxsize == o.maxsize;
 	}
 
@@ -57,11 +57,8 @@ public class DBInventory implements Communicable
 		root.add("maxsize", this.maxsize);
 
 		JsonArray content = new JsonArray();
-		if (this.content != null)
-		{
-			for (DatabaseIdentifier id : this.content)
-				content.add(id.id);
-		}
+		for (DatabaseIdentifier id : this.content)
+			content.add(id.id);
 		root.add("content", content);
 
 		return root;

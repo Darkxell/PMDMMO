@@ -15,34 +15,34 @@ public class DBPlayer implements Communicable
 	public DatabaseIdentifier mainpokemon;
 	public long moneyinbag;
 	public long moneyinbank;
-	public String name;
+	public String name = "";
 	public String passhash = "";
-	public ArrayList<DatabaseIdentifier> pokemonsinparty;
-	public ArrayList<DatabaseIdentifier> pokemonsinzones;
-	public DatabaseIdentifier storageinventory;
+	public ArrayList<DatabaseIdentifier> pokemonsinparty = new ArrayList<>();
+	public ArrayList<DatabaseIdentifier> pokemonsinzones = new ArrayList<>();
+	public DatabaseIdentifier storageinventory = new DatabaseIdentifier(0);
 	public int storyposition;
-	public DatabaseIdentifier toolboxinventory;
-        public ArrayList<String> missionsids;
+	public DatabaseIdentifier toolboxinventory = new DatabaseIdentifier(0);
+	public ArrayList<String> missionsids = new ArrayList<>();
 
 	public DBPlayer()
 	{}
 
 	public DBPlayer(long id, String name, String passhash, long moneyinbank, long moneyinbag, int storyposition, ArrayList<DatabaseIdentifier> pokemonsinzones,
 			ArrayList<DatabaseIdentifier> pokemonsinparty, DatabaseIdentifier mainpokemon, DatabaseIdentifier toolboxinventory,
-			DatabaseIdentifier storageinventory,ArrayList<String> missionsids)
+			DatabaseIdentifier storageinventory, ArrayList<String> missionsids)
 	{
 		this.id = id;
-		this.name = name;
-		this.passhash = passhash;
+		if (name != null) this.name = name;
+		if (passhash != null) this.passhash = passhash;
 		this.moneyinbag = moneyinbag;
 		this.moneyinbank = moneyinbank;
 		this.storyposition = storyposition;
-		this.pokemonsinparty = pokemonsinparty;
-		this.pokemonsinzones = pokemonsinzones;
+		if (pokemonsinparty != null) this.pokemonsinparty = pokemonsinparty;
+		if (pokemonsinzones != null) this.pokemonsinzones = pokemonsinzones;
 		this.mainpokemon = mainpokemon;
-		this.toolboxinventory = toolboxinventory;
-		this.storageinventory = storageinventory;
-                this.missionsids = missionsids;
+		if (toolboxinventory != null) this.toolboxinventory = toolboxinventory;
+		if (storageinventory != null) this.storageinventory = storageinventory;
+		if (missionsids != null) this.missionsids = missionsids;
 	}
 
 	@Override
@@ -51,24 +51,16 @@ public class DBPlayer implements Communicable
 		if (!(obj instanceof DBPlayer)) return false;
 		DBPlayer o = (DBPlayer) obj;
 		if (this.id != o.id) return false;
-		if ((this.name == null) != (o.name == null) || (this.name != null && !this.name.equals(o.name))) return false;
+		if (!this.name.equals(o.name)) return false;
 		if (this.moneyinbag != o.moneyinbag) return false;
 		if (this.moneyinbank != o.moneyinbank) return false;
 		if (this.storyposition != o.storyposition) return false;
-		if ((this.pokemonsinzones == null) != (o.pokemonsinzones == null) || (this.pokemonsinzones != null && !this.pokemonsinzones.equals(o.pokemonsinzones)))
-			return false;
-		if ((this.pokemonsinparty == null) != (o.pokemonsinparty == null) || (this.pokemonsinparty != null && !this.pokemonsinparty.equals(o.pokemonsinparty)))
-			return false;
+		if (!this.pokemonsinzones.equals(o.pokemonsinzones)) return false;
+		if (!this.pokemonsinparty.equals(o.pokemonsinparty)) return false;
 		if ((this.mainpokemon == null) != (o.mainpokemon == null) || (this.mainpokemon != null && !this.mainpokemon.equals(o.mainpokemon))) return false;
-		if ((this.toolboxinventory == null) != (o.toolboxinventory == null)
-				|| (this.toolboxinventory != null && !this.toolboxinventory.equals(o.toolboxinventory)))
-			return false;
-		if ((this.storageinventory == null) != (o.storageinventory == null)
-				|| (this.storageinventory != null && !this.storageinventory.equals(o.storageinventory)))
-			return false;
-                if ((this.missionsids == null) != (o.missionsids == null)
-				|| (this.missionsids != null && !this.missionsids.equals(o.missionsids)))
-			return false;
+		if (!this.toolboxinventory.equals(o.toolboxinventory)) return false;
+		if (!this.storageinventory.equals(o.storageinventory)) return false;
+		if (!this.missionsids.equals(o.missionsids)) return false;
 		return true;
 	}
 
@@ -104,8 +96,8 @@ public class DBPlayer implements Communicable
 			for (JsonValue id : partyPokes.asArray())
 				if (id.isNumber()) this.pokemonsinparty.add(new DatabaseIdentifier(id.asLong()));
 		}
-                
-                this.missionsids = new ArrayList<>();
+
+		this.missionsids = new ArrayList<>();
 		JsonValue missionsval = value.get("missionsids");
 		if (missionsval != null && missionsval.isArray())
 		{
@@ -124,10 +116,10 @@ public class DBPlayer implements Communicable
 		root.add("moneyinbank", this.moneyinbank);
 		root.add("storyposition", this.storyposition);
 		if (this.mainpokemon != null) root.add("mainpokemon", this.mainpokemon.id);
-		if (this.toolboxinventory != null) root.add("toolboxinventory", this.toolboxinventory.id);
-		if (this.storageinventory != null) root.add("storageinventory", this.storageinventory.id);
-		
-		if (this.pokemonsinzones != null)
+		root.add("toolboxinventory", this.toolboxinventory.id);
+		root.add("storageinventory", this.storageinventory.id);
+
+		if (!this.pokemonsinzones.isEmpty())
 		{
 			JsonArray zonePokes = new JsonArray();
 			for (DatabaseIdentifier id : this.pokemonsinzones)
@@ -135,15 +127,15 @@ public class DBPlayer implements Communicable
 			root.add("pokemonsinzones", zonePokes);
 		}
 
-		if (this.pokemonsinparty != null)
+		if (!this.pokemonsinparty.isEmpty())
 		{
 			JsonArray partyPokes = new JsonArray();
 			for (DatabaseIdentifier id : this.pokemonsinparty)
 				partyPokes.add(id.id);
 			root.add("pokemonsinparty", partyPokes);
 		}
-                
-                if (this.missionsids != null)
+
+		if (!this.missionsids.isEmpty())
 		{
 			JsonArray missionsarray = new JsonArray();
 			for (String id : this.missionsids)

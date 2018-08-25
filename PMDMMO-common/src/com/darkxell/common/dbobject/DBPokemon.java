@@ -54,7 +54,7 @@ public class DBPokemon implements Communicable
 		this.stat_spedef = stat_spedef;
 		this.stat_hp = stat_hp;
 		this.holdeditem = holdeditem;
-		this.learnedmoves = learnedmoves;
+		if (learnedmoves != null) this.learnedmoves = learnedmoves;
 	}
 
 	@Override
@@ -78,7 +78,7 @@ public class DBPokemon implements Communicable
 		if (this.stat_spedef != o.stat_spedef) return false;
 		if (this.stat_hp != o.stat_hp) return false;
 		if ((this.holdeditem == null) != (o.holdeditem == null) || (this.holdeditem != null && !this.holdeditem.equals(o.holdeditem))) return false;
-		if ((this.learnedmoves == null) != (o.learnedmoves == null) || (this.learnedmoves != null && !this.learnedmoves.equals(o.learnedmoves))) return false;
+		if (!this.learnedmoves.equals(o.learnedmoves)) return false;
 		return true;
 	}
 

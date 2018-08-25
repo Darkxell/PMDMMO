@@ -57,7 +57,7 @@ public class DBObjecttransferTest extends UTest
 
 		// Player
 		DBPlayer j = new DBPlayer(0, "My Name", "P455w0Rd----H45H", 1, 2, 3, new ArrayList<>(), idArray, new DatabaseIdentifier(4), new DatabaseIdentifier(5),
-				new DatabaseIdentifier(6));
+				new DatabaseIdentifier(6), null);
 		DBPlayer j2 = new DBPlayer();
 		j2.read(j.toJson());
 		if (!j.equals(j2))
