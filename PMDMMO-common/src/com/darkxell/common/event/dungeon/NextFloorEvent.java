@@ -50,7 +50,7 @@ public class NextFloorEvent extends DungeonEvent implements Communicable
 	public ArrayList<DungeonEvent> processServer()
 	{
 		this.floor.dungeon.endFloor();
-		this.floor.onFloorStart(this.resultingEvents);
+		this.floor.dungeon.currentFloor().onFloorStart(this.resultingEvents);
 		return super.processServer();
 	}
 

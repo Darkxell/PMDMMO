@@ -21,6 +21,7 @@ import com.darkxell.common.event.dungeon.weather.WeatherCreatedEvent;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.ItemRegistry;
 import com.darkxell.common.item.ItemStack;
+import com.darkxell.common.mission.DungeonMission;
 import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.trap.Trap;
@@ -175,6 +176,8 @@ public class Floor
 		Weather w = this.dungeon.dungeon().weather(this.id, this.random);
 		for (DungeonPokemon pokemon : this.listPokemon())
 			pokemon.onFloorStart(this, events);
+		for (DungeonMission mission : this.dungeon.activeMissions)
+			if (!mission.isCleared()) mission.onFloorStart(this);
 		events.add(new WeatherCreatedEvent(new ActiveWeather(w, null, 0, this, -1)));
 	}
 
