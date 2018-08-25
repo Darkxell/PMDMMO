@@ -33,7 +33,8 @@ interactions.
 Objects from the entire project may implement the *DungeonEventListener* interface.
 If so and if implemented properly, these Objects will have a method called after an 
 Event is processed. This allows for a multitude of complex mechanics. For now, only
-Abilities implement this Interface, but more will be added if necessary.
+Abilities and Status Conditions implement this Interface, but more will be added if 
+necessary.
 
 Events can also have **flags**. These should have no impact on the behavior but should
 help comunication between other objects that manipulate Events (for example, to avoid

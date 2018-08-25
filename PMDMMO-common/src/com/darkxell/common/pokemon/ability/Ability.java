@@ -7,6 +7,7 @@ import com.darkxell.common.pokemon.AffectsPokemon;
 import com.darkxell.common.pokemon.BaseStats.Stat;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.PokemonType;
+import com.darkxell.common.status.StatusCondition;
 import com.darkxell.common.util.language.Lang;
 import com.darkxell.common.util.language.Message;
 import com.darkxell.common.weather.Weather;
@@ -19,12 +20,14 @@ public abstract class Ability implements AffectsPokemon, DungeonEventListener
 	public static final Ability OVERGROW = new AbilityTypeBoost(1, PokemonType.Grass);
 	public static final Ability SWARM = new AbilityTypeBoost(2, PokemonType.Bug);
 	public static final Ability TORRENT = new AbilityTypeBoost(3, PokemonType.Water);
-	
+
 	public static final Ability CHLOROPHYLL = new AbilityDoubleAttacks(4, Weather.SUNNY);
 
 	public static final Ability LEVITATE = new AbilityNullifyType(16, PokemonType.Ground);
 	public static final Ability SOUNDPROOF = new AbilityNullifySound(19);
 	public static final Ability WONDER_GUARD = new AbilityNullifyNonSupEff(21);
+
+	public static final Ability POISON_POINT = new AbilityStatusOnHit(36, StatusCondition.Poisoned, 12);
 
 	public static final Ability KEEN_EYE = new AbilityPreventsStatLoss(46, Stat.Accuracy);
 

@@ -95,7 +95,7 @@ public class EditAnimationController implements Initializable
 		Persistance.dungeonState.pokemonRenderer.getRenderer(tester).removeAnimation(this.current);
 		state.pokemonRenderer.unregister(tester);
 		tester = this.generateTester();
-		if (this.current != null) Persistance.dungeonState.pokemonRenderer.getRenderer(tester).addAnimation(this.current);
+		if (this.current != null) this.playAnimation(true);
 	}
 
 	public void onReload()

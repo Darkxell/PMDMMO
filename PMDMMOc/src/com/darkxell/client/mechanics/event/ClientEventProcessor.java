@@ -274,7 +274,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	private void processExplorationStopEvent(ExplorationStopEvent event)
 	{
 		StateManager.onDungeonEnd(event.outcome);
-		Persistance.soundmanager.pauseBackgroundMusic();
+		Persistance.soundmanager.setBackgroundMusic(null);
 	}
 
 	private void processFaintedEvent(FaintedPokemonEvent event)

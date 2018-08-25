@@ -38,6 +38,8 @@ public abstract class DungeonEvent
 	private String flags = "";
 	/** The Floor this Event occurs on. */
 	public final Floor floor;
+	/** <code>true</code> if this Event has been cancelled. May be used if abilities have to change the effects or cancel various events. If so, this Event won't be processed at all. */
+	private boolean isConsumed;
 	/** True if this Event is a Player Action Event; and thus should be sent to other players in the Dungeon. If so, this Event should implement Communicable, override equals() for unit tests and have a (Floor) Constructor. */
 	private boolean isPAE;
 	/** The messages that were generated. */
@@ -71,6 +73,18 @@ public abstract class DungeonEvent
 		if (!this.hasFlag(flag)) this.flags += "|" + flag;
 	}
 
+	public void cloneFlags(DungeonEvent event)
+	{
+		for (String flag : event.flags.split("|"))
+			this.addFlag(flag);
+	}
+
+	/** Sets {@link DungeonEvent#isConsumed} to true. */
+	public void consume()
+	{
+		this.isConsumed = true;
+	}
+
 	/** @return The messages that were generated. */
 	public Message[] getMessages()
 	{
@@ -86,6 +100,12 @@ public abstract class DungeonEvent
 	public boolean hasFlag(String flag)
 	{
 		return this.flags.contains(flag);
+	}
+
+	/** @return {@link DungeonEvent#isConsumed}. */
+	public boolean isConsumed()
+	{
+		return this.isConsumed;
 	}
 
 	/** @return True if this Event is a PAE. */

@@ -21,9 +21,9 @@ public class AbilityDoubleAttacks extends Ability
 	}
 
 	@Override
-	public void onEvent(Floor floor, DungeonEvent event, ArrayList<DungeonEvent> resultingEvents)
+	public void onPostEvent(Floor floor, DungeonEvent event, ArrayList<DungeonEvent> resultingEvents)
 	{
-		super.onEvent(floor, event, resultingEvents);
+		super.onPostEvent(floor, event, resultingEvents);
 		if (event instanceof MoveSelectionEvent && !event.hasFlag("isdoubled"))
 		{
 			MoveSelectionEvent e = (MoveSelectionEvent) event;
