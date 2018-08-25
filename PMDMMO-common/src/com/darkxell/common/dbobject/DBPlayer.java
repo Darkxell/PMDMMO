@@ -22,13 +22,14 @@ public class DBPlayer implements Communicable
 	public DatabaseIdentifier storageinventory;
 	public int storyposition;
 	public DatabaseIdentifier toolboxinventory;
+        public ArrayList<String> missionsids;
 
 	public DBPlayer()
 	{}
 
 	public DBPlayer(long id, String name, String passhash, long moneyinbank, long moneyinbag, int storyposition, ArrayList<DatabaseIdentifier> pokemonsinzones,
 			ArrayList<DatabaseIdentifier> pokemonsinparty, DatabaseIdentifier mainpokemon, DatabaseIdentifier toolboxinventory,
-			DatabaseIdentifier storageinventory)
+			DatabaseIdentifier storageinventory,ArrayList<String> missionsids)
 	{
 		this.id = id;
 		this.name = name;
@@ -41,6 +42,7 @@ public class DBPlayer implements Communicable
 		this.mainpokemon = mainpokemon;
 		this.toolboxinventory = toolboxinventory;
 		this.storageinventory = storageinventory;
+                this.missionsids = missionsids;
 	}
 
 	@Override
@@ -63,6 +65,9 @@ public class DBPlayer implements Communicable
 			return false;
 		if ((this.storageinventory == null) != (o.storageinventory == null)
 				|| (this.storageinventory != null && !this.storageinventory.equals(o.storageinventory)))
+			return false;
+                if ((this.missionsids == null) != (o.missionsids == null)
+				|| (this.missionsids != null && !this.missionsids.equals(o.missionsids)))
 			return false;
 		return true;
 	}
@@ -99,6 +104,14 @@ public class DBPlayer implements Communicable
 			for (JsonValue id : partyPokes.asArray())
 				if (id.isNumber()) this.pokemonsinparty.add(new DatabaseIdentifier(id.asLong()));
 		}
+                
+                this.missionsids = new ArrayList<>();
+		JsonValue missionsval = value.get("missionsids");
+		if (missionsval != null && missionsval.isArray())
+		{
+			for (JsonValue id : missionsval.asArray())
+				if (id.isNumber()) this.missionsids.add(id.asString());
+		}
 	}
 
 	@Override
@@ -128,6 +141,14 @@ public class DBPlayer implements Communicable
 			for (DatabaseIdentifier id : this.pokemonsinparty)
 				partyPokes.add(id.id);
 			root.add("pokemonsinparty", partyPokes);
+		}
+                
+                if (this.missionsids != null)
+		{
+			JsonArray missionsarray = new JsonArray();
+			for (String id : this.missionsids)
+				missionsarray.add(id);
+			root.add("missionsids", missionsarray);
 		}
 
 		return root;
