@@ -101,8 +101,8 @@ public class PlayerDAO {
                     );
             if (result.first()) {
                 toreturn = new DBPlayer(id, result.getString("name"), result.getString("passhash"),
-                        result.getLong("moneyinbank"), result.getLong("moneyinbag"),result.getInt("storyposition"),
-                        null, null, null, null, null,null);
+                        result.getLong("moneyinbank"), result.getLong("moneyinbag"), result.getInt("storyposition"),
+                        null, null, null, null, null, null);
             }
             cn.close();
             completefind(toreturn);
@@ -125,19 +125,23 @@ public class PlayerDAO {
             ResultSet result = preparedStatement.executeQuery();
             if (result.next()) {
                 toreturn = new DBPlayer(result.getLong("id"), result.getString("name"), result.getString("passhash"),
-                        result.getLong("moneyinbank"), result.getLong("moneyinbag"),result.getInt("storyposition"),
-                        null, null, null, null, null,null);
+                        result.getLong("moneyinbank"), result.getLong("moneyinbag"), result.getInt("storyposition"),
+                        null, null, null, null, null, null);
             }
             cn.close();
-            if(toreturn != null)
-            completefind(toreturn);
+            if (toreturn != null) {
+                completefind(toreturn);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return toreturn;
     }
 
-    private void completefind(DBPlayer toreturn){
+    /**
+     * Completes a DBPlayer object with all the IDs from the different tables.
+     */
+    private void completefind(DBPlayer toreturn) {
         try {
             //Select pokemon in team
             Connection cn = ds.getConnection();
@@ -146,8 +150,9 @@ public class PlayerDAO {
             preparedStatement.setLong(1, toreturn.id);
             ResultSet result = preparedStatement.executeQuery();
             while (result.next()) {
-                if(toreturn.pokemonsinparty == null)
+                if (toreturn.pokemonsinparty == null) {
                     toreturn.pokemonsinparty = new ArrayList<>(4);
+                }
                 toreturn.pokemonsinparty.add(new DatabaseIdentifier(result.getLong("pokemonid")));
             }
             cn.close();
@@ -158,8 +163,9 @@ public class PlayerDAO {
             preparedStatement.setLong(1, toreturn.id);
             result = preparedStatement.executeQuery();
             while (result.next()) {
-                if(toreturn.pokemonsinzones == null)
+                if (toreturn.pokemonsinzones == null) {
                     toreturn.pokemonsinzones = new ArrayList<>(20);
+                }
                 toreturn.pokemonsinzones.add(new DatabaseIdentifier(result.getLong("pokemonid")));
             }
             cn.close();
@@ -193,11 +199,24 @@ public class PlayerDAO {
                 toreturn.storageinventory = new DatabaseIdentifier(result.getLong("inventoryid"));
             }
             cn.close();
+            // Select missions
+            cn = ds.getConnection();
+            selectSQL = "SELECT * FROM misisons_ WHERE playerid = ?";
+            preparedStatement = cn.prepareStatement(selectSQL);
+            preparedStatement.setLong(1, toreturn.id);
+            result = preparedStatement.executeQuery();
+            while (result.next()) {
+                if (toreturn.missionsids == null) {
+                    toreturn.missionsids = new ArrayList<>();
+                }
+                toreturn.missionsids.add(result.getString("missionid"));
+            }
+            cn.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
+
     public void update(DBPlayer player) {
         try {
             Connection cn = ds.getConnection();
