@@ -33,7 +33,7 @@ public class CreateAccountHandler extends MessageHandler {
             String name = json.getJsonString("name").getString();
             String passhash = json.getJsonString("passhash").getString();
 
-            DBPlayer newplayer = new DBPlayer(0, name, passhash, 0, 0, 0, null, null, null, null, null);
+            DBPlayer newplayer = new DBPlayer(0, name, passhash, 0, 0, 0, null, null, null, null, null,null);
             newplayer.id = endpoint.getPlayerDAO().create(newplayer);
             if (newplayer.id == 0) {
                 JsonObject value = Json.createObjectBuilder()

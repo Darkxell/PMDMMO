@@ -32,7 +32,7 @@ public class Player
 	public Player(String name, Pokemon pokemon)
 	{
 		this(new DBPlayer(0, name, null, 0, 0, 0, new ArrayList<>(), new ArrayList<>(), pokemon == null ? null : new DatabaseIdentifier(pokemon.id()), null,
-				null));
+				null,null));
 		this.setLeaderPokemon(pokemon);
 	}
 
