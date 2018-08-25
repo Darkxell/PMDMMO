@@ -102,7 +102,7 @@ public class DBPlayer implements Communicable
 		if (missionsval != null && missionsval.isArray())
 		{
 			for (JsonValue id : missionsval.asArray())
-				if (id.isNumber()) this.missionsids.add(id.asString());
+				if (id.isString()) this.missionsids.add(id.asString());
 		}
 	}
 

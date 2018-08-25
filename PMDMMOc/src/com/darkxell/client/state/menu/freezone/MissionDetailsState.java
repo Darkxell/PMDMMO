@@ -21,11 +21,22 @@ public class MissionDetailsState extends AbstractState {
 	private AbstractState exploresource;
 	private Mission mission;
 	Sprite billboard = new Sprite("/hud/billboard_details.png");
-	private boolean localaccepted = false;
+	private byte acceptstatus = STATUS_CANACCEPT;
+	private static final byte STATUS_CANACCEPT = 0;
+	private static final byte STATUS_WAITING = 1;
+	private static final byte STATUS_ACCEPTED = 2;
+	private static final byte STATUS_REFUSED = 3;
+	private static final byte STATUS_IMPOSSIBLE = 4;
 
 	public MissionDetailsState(AbstractState exploresource, Mission content) {
 		this.exploresource = exploresource;
 		this.mission = content;
+		for (int i = 0; i < Persistance.player.getMissions().size(); i++) 
+            if (Persistance.player.getMissions().get(i).toString().equals(content.toString())) {
+                acceptstatus = STATUS_ACCEPTED;
+                break;
+            }
+		System.out.println(Persistance.player.getMissions());
 	}
 
 	@Override
@@ -35,15 +46,12 @@ public class MissionDetailsState extends AbstractState {
 			Persistance.stateManager.setState(new MissionBoardState(this.exploresource));
 			break;
 		case ATTACK:
-			if (!localaccepted) {
-				localaccepted = true;
-
+			if (acceptstatus == STATUS_CANACCEPT) {
+				acceptstatus = STATUS_WAITING;
 				JsonObject value = new JsonObject();
 				value.add("action", "acceptmission");
-				value.add("missioncode", this.mission.toString());
+				value.add("mission", this.mission.toString());
 				Persistance.socketendpoint.sendMessage(value.toString());
-
-				Persistance.player.getMissions().add(mission.toString());
 			}
 			break;
 		default:
@@ -75,8 +83,23 @@ public class MissionDetailsState extends AbstractState {
 
 		g.drawImage(PokemonPortrait.portrait(PokemonRegistry.find(mission.getPokemonid1()), false),
 				basewidth - PokemonPortrait.PORTRAIT_SIZE - 20, 35, null);
-		TextRenderer.render(g, new Message(localaccepted ? "mission.info.accepted" : "mission.info.acceptinfo"),
-				basewidth - 90, 80);
+		switch (acceptstatus) {
+		case STATUS_CANACCEPT:
+			TextRenderer.render(g, new Message("mission.info.acceptinfo"), basewidth - 90, 80);
+			break;
+		case STATUS_ACCEPTED:
+			TextRenderer.render(g, new Message("mission.info.accepted"), basewidth - 90, 80);
+			break;
+		case STATUS_WAITING:
+			TextRenderer.render(g, new Message("mission.info.waiting"), basewidth - 90, 80);
+			break;
+		case STATUS_REFUSED:
+			TextRenderer.render(g, new Message("mission.info.refused"), basewidth - 90, 80);
+			break;
+		case STATUS_IMPOSSIBLE:
+			TextRenderer.render(g, new Message("mission.info.impossible"), basewidth - 90, 80);
+			break;
+		}
 		TextRenderer.render(g, new Message("mission.info.client"), 5, 60);
 		TextRenderer.render(g, new Message("mission.info.objective"), 5, 75);
 		TextRenderer.render(g, new Message("mission.info.place"), 5, 90);
@@ -113,6 +136,17 @@ public class MissionDetailsState extends AbstractState {
 		}
 		// Resets the graphics
 		g.translate(-offsetx, -offsety);
+	}
+
+	/**
+	 * Notifies this state that the mission has been accepted (by the server
+	 * typically) or not.
+	 */
+	public void notifyMissionAcceptResponse(boolean accepted) {
+		if (accepted)
+			acceptstatus = STATUS_ACCEPTED;
+		else
+			acceptstatus = STATUS_REFUSED;
 	}
 
 	@Override

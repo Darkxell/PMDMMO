@@ -14,6 +14,7 @@ import javax.websocket.WebSocketContainer;
 
 import com.darkxell.client.launchable.crypto.Encryption;
 import com.darkxell.client.launchable.crypto.Safe;
+import com.darkxell.client.launchable.messagehandlers.AcceptMissionHandler;
 import com.darkxell.client.launchable.messagehandlers.BankActionConfirmHandler;
 import com.darkxell.client.launchable.messagehandlers.DungeonEndConfirmHandler;
 import com.darkxell.client.launchable.messagehandlers.DungeonStartConfirmHandler;
@@ -169,6 +170,9 @@ public class GameSocketEndpoint {
 			case "getmissions":
 				new GetMissionsHandler().handleMessage(obj.asObject());
 				break;
+			case "acceptmission":
+				new AcceptMissionHandler().handleMessage(obj.asObject());
+				break;
 
 			// DUNGEON COMMUNICATION
 
@@ -219,7 +223,7 @@ public class GameSocketEndpoint {
 				Logger.d("SENDING MESSAGE  : " + message);
 			if (Safe.serverhaskey)
 				message = Encryption.syncEncrypt(message);
-			if(this.userSession != null) {
+			if (this.userSession != null) {
 				this.userSession.getAsyncRemote().sendText(message);
 				if (Persistance.debugwiresharkmode)
 					Logger.d("MESSAGE SENT     : " + message);

@@ -469,4 +469,14 @@ This payload is sent after a client sends a dungeonend request to notify the cli
 This payload is sent by the server upon client request. The session doesn't need to be loged in for the server to send this payload.
 The code returned are the deterministic mission ids.
 
+■ ACCEPTMISSION
 
+{"action":"acceptmission"
+
+"mission":"missioncode"
+
+"accepted":1
+}
+
+This payload is sent by the server to the client to tell him if the player was allowed to acept the mission or not.
+1 means accepted, any other value means it has been refused.

@@ -67,6 +67,7 @@ public class LoginHandler extends MessageHandler {
                     com.eclipsesource.json.JsonObject value = Json.object();
                     value.add("action", "login");
                     value.add("player", player.toJson());
+                    System.out.println(player.toJson());
                     sessionshandler.sendToSession(from, value);
 
                 } else {

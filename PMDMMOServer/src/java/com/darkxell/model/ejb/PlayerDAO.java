@@ -201,7 +201,7 @@ public class PlayerDAO {
             cn.close();
             // Select missions
             cn = ds.getConnection();
-            selectSQL = "SELECT * FROM misisons_ WHERE playerid = ?";
+            selectSQL = "SELECT * FROM missions_ WHERE playerid = ?";
             preparedStatement = cn.prepareStatement(selectSQL);
             preparedStatement.setLong(1, toreturn.id);
             result = preparedStatement.executeQuery();
