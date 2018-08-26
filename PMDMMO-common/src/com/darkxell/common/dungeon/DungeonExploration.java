@@ -20,8 +20,8 @@ import com.darkxell.common.event.action.TurnSkippedEvent;
 import com.darkxell.common.event.dungeon.MissionClearedEvent;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.mission.DungeonMission;
+import com.darkxell.common.mission.InvalidParammetersException;
 import com.darkxell.common.mission.Mission;
-import com.darkxell.common.mission.dungeon.RescueDungeonMission;
 import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.Pokemon;
@@ -239,7 +239,7 @@ public class DungeonExploration
 	}
 
 	/** Starts the current exploration. Creates the first floor and starts the Event Processor.<br>
-	 * \/!\\ Make sure the Event Processor has been initialized if you want a custom one.
+	 * /!\ Make sure the Event Processor has been initialized if you want a custom one. /!\
 	 * 
 	 * @return The generated Floor. */
 	public Floor initiateExploration()
@@ -255,9 +255,20 @@ public class DungeonExploration
 			player.resetDungeonTeam();
 			for (Pokemon member : player.getTeam())
 				member.createDungeonPokemon();
+			for (String m : player.getMissions())
+				try
+				{
+					Mission mission = new Mission(m);
+					if (mission.getDungeonid() == this.dungeon().id)
+					{
+						DungeonMission dm = DungeonMission.create(player, mission);
+						if (dm != null) this.activeMissions.add(dm);
+					}
+				} catch (InvalidParammetersException e)
+				{
+					Logger.e("Invalid mission: " + m);
+				}
 		}
-
-		this.activeMissions.add(new RescueDungeonMission(this.startingPlayers.get(0), new Mission("A", 1, 2, 43, 44, -1, null, Mission.TYPE_RESCUEME)));
 
 		for (DungeonMission mission : this.activeMissions)
 			mission.onDungeonStart(this);

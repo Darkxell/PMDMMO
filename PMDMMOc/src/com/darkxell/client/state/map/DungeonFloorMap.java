@@ -13,6 +13,7 @@ import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.pokemon.DungeonPokemon.DungeonPokemonType;
 import com.darkxell.common.trap.TrapRegistry;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.Logger;
@@ -104,7 +105,7 @@ public class DungeonFloorMap extends AbstractDisplayMap
 					if (isMain && this.tick >= PLAYER_TICK) g.drawImage(this.tileset.player(), x, y, null);
 					else if (!isMain && Persistance.dungeonState.floorVisibility.isMapVisible(pokemon))
 					{
-						if (Persistance.player.isAlly(pokemon)) g.drawImage(this.tileset.ally(), x, y, null);
+						if (Persistance.player.isAlly(pokemon) || pokemon.type == DungeonPokemonType.RESCUEABLE) g.drawImage(this.tileset.ally(), x, y, null);
 						else g.drawImage(this.tileset.enemy(), x, y, null);
 					}
 				}

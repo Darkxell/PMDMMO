@@ -3,10 +3,24 @@ package com.darkxell.common.mission;
 import com.darkxell.common.dungeon.DungeonExploration;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.mission.dungeon.RescueDungeonMission;
 import com.darkxell.common.player.Player;
 
 public abstract class DungeonMission
 {
+
+	public static DungeonMission create(Player player, Mission mission)
+	{
+		switch (mission.getMissiontype())
+		{
+			case Mission.TYPE_RESCUEME:
+			case Mission.TYPE_RESCUEHIM:
+				return new RescueDungeonMission(player, mission);
+
+			default:
+				return null;
+		}
+	}
 
 	private boolean cleared = false;
 	public final Mission missionData;
@@ -50,5 +64,11 @@ public abstract class DungeonMission
 	/** Called when the target Floor of this Mission starts, if this Mission isn't cleared yet. */
 	protected void onTargetFloorStart(Floor floor)
 	{}
+
+	@Override
+	public String toString()
+	{
+		return this.missionData.toString();
+	}
 
 }

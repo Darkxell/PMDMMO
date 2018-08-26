@@ -7,6 +7,7 @@ import com.darkxell.client.renderers.AbstractRenderer;
 import com.darkxell.client.renderers.EntityRendererHolder;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.pokemon.DungeonPokemon.DungeonPokemonType;
 
 public class DungeonPokemonRendererHolder extends EntityRendererHolder<DungeonPokemon>
 {
@@ -26,7 +27,13 @@ public class DungeonPokemonRendererHolder extends EntityRendererHolder<DungeonPo
 
 	public DungeonPokemonRenderer register(DungeonPokemon pokemon)
 	{
-		return this.register(pokemon, new DungeonPokemonRenderer(pokemon));
+		DungeonPokemonRenderer r = this.register(pokemon, new DungeonPokemonRenderer(pokemon));
+		if (pokemon.type.isAlliedWith(DungeonPokemonType.TEAM_MEMBER))
+		{
+			if (pokemon.player() == null || pokemon.player() == Persistance.player) r.sprite.setShadowColor(PokemonSprite.ALLY_SHADOW);
+			else r.sprite.setShadowColor(PokemonSprite.PLAYER_SHADOW);
+		} else r.sprite.setShadowColor(PokemonSprite.ENEMY_SHADOW);
+		return r;
 	}
 
 	@Override

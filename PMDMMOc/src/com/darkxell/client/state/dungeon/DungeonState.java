@@ -16,7 +16,6 @@ import com.darkxell.client.renderers.floor.ShadowRenderer;
 import com.darkxell.client.renderers.floor.StaticAnimationsRenderer;
 import com.darkxell.client.renderers.pokemon.DungeonPokemonRenderer;
 import com.darkxell.client.renderers.pokemon.DungeonPokemonRendererHolder;
-import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.pokemon.DungeonPokemon;
@@ -101,14 +100,7 @@ public class DungeonState extends AbstractState
 		this.itemRenderer = new DungeonItemsRenderer();
 		this.pokemonRenderer = new DungeonPokemonRendererHolder();
 		for (DungeonPokemon pokemon : Persistance.floor.listPokemon())
-		{
 			this.pokemonRenderer.register(pokemon);
-			if (pokemon.player() != null)
-			{
-				if (pokemon.player() == Persistance.player) this.pokemonRenderer.getSprite(pokemon).setShadowColor(PokemonSprite.ALLY_SHADOW);
-				else this.pokemonRenderer.getSprite(pokemon).setShadowColor(PokemonSprite.PLAYER_SHADOW);
-			} else this.pokemonRenderer.getSprite(pokemon).setShadowColor(PokemonSprite.ENEMY_SHADOW);
-		}
 		this.shadowRenderer = new ShadowRenderer();
 		this.staticAnimationsRenderer = new StaticAnimationsRenderer();
 

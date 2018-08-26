@@ -14,7 +14,6 @@ import com.darkxell.client.mechanics.animation.misc.TextAbovePokeAnimation;
 import com.darkxell.client.mechanics.cutscene.CutsceneManager;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.renderers.TextRenderer.FontMode;
-import com.darkxell.client.renderers.pokemon.DungeonPokemonRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
 import com.darkxell.client.resources.music.SoundManager;
@@ -492,15 +491,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 
 	private void processSpawnEvent(PokemonSpawnedEvent event)
 	{
-		DungeonPokemonRenderer renderer = Persistance.dungeonState.pokemonRenderer.register(event.spawned);
-		if (event.spawned.player() != null)
-		{
-			if (event.spawned.player() != Persistance.player)
-			{
-				if (event.spawned.isTeamLeader()) renderer.sprite().setShadowColor(PokemonSprite.PLAYER_SHADOW);
-				else renderer.sprite().setShadowColor(PokemonSprite.ENEMY_SHADOW);
-			} else renderer.sprite().setShadowColor(PokemonSprite.ALLY_SHADOW);
-		}
+		Persistance.dungeonState.pokemonRenderer.register(event.spawned);
 	}
 
 	private void processSpeedEvent(SpeedChangedEvent event)
