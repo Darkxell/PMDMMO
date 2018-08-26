@@ -32,24 +32,6 @@ public class MissionBoardState extends AbstractState {
 
 	public MissionBoardState(AbstractState exploresource) {
 		this.exploresource = exploresource;
-
-		/*
-		 * try { this.missions.add(new Mission("E", 2, 3, 3, 6, 1, new
-		 * MissionReward(55, new int[] { 1 }, new int[] { 1 }, 5, null),
-		 * Mission.TYPE_RESCUEME)); this.missions.add(new Mission("A", 12, 14,
-		 * 15, 71, 2, new MissionReward(70, new int[] { 1 }, new int[] { 1 }, 5,
-		 * null), Mission.TYPE_DEFEAT)); this.missions.add(new Mission("A", 12,
-		 * 15, 15, 71, 2, new MissionReward(70, new int[] { 1 }, new int[] { 1
-		 * }, 5, null), Mission.TYPE_DEFEAT)); this.missions.add(new
-		 * Mission("C", 12, 14, 15, 71, 2, new MissionReward(70, new int[] { 1
-		 * }, new int[] { 1 }, 5, null), Mission.TYPE_ESCORT));
-		 * this.missions.add(new Mission("C", 12, 14, 15, 71, 2, new
-		 * MissionReward(70, new int[] { 1 }, new int[] { 1 }, 5, null),
-		 * Mission.TYPE_ESCORT)); this.missions.add(new Mission("C", 12, 14, 15,
-		 * 71, 2, new MissionReward(70, new int[] { 1 }, new int[] { 1 }, 5,
-		 * null), Mission.TYPE_ESCORT)); } catch (InvalidParammetersException e)
-		 * { e.printStackTrace(); }
-		 */
 	}
 
 	@Override
@@ -60,8 +42,8 @@ public class MissionBoardState extends AbstractState {
 			break;
 		case ATTACK:
 			if (this.missions.size() > 0)
-				Persistance.stateManager
-						.setState(new MissionDetailsState(this.exploresource, this.missions.get(selectedmissionpos)));
+				Persistance.stateManager.setState(
+						new MissionDetailsState(this.exploresource, this.missions.get(selectedmissionpos), this));
 			break;
 		case UP:
 			if (selectedmissionpos > 0 && selectedmissionpos % 4 != 0)
@@ -115,9 +97,7 @@ public class MissionBoardState extends AbstractState {
 				g.drawRect(0, 0, basewidth, baseheight);
 			}
 			g.translate(-offsetx, -offsety);
-
 		}
-
 	}
 
 	int requesttimer = 10;

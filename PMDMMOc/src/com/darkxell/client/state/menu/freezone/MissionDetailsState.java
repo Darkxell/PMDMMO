@@ -18,6 +18,7 @@ import com.eclipsesource.json.JsonObject;
 
 public class MissionDetailsState extends AbstractState {
 
+	private AbstractState previousstate;
 	private AbstractState exploresource;
 	private Mission mission;
 	Sprite billboard = new Sprite("/hud/billboard_details.png");
@@ -28,22 +29,22 @@ public class MissionDetailsState extends AbstractState {
 	private static final byte STATUS_REFUSED = 3;
 	private static final byte STATUS_IMPOSSIBLE = 4;
 
-	public MissionDetailsState(AbstractState exploresource, Mission content) {
+	public MissionDetailsState(AbstractState exploresource, Mission content, AbstractState previousstate) {
 		this.exploresource = exploresource;
+		this.previousstate = previousstate;
 		this.mission = content;
 		for (int i = 0; i < Persistance.player.getMissions().size(); i++) 
             if (Persistance.player.getMissions().get(i).toString().equals(content.toString())) {
                 acceptstatus = STATUS_ACCEPTED;
                 break;
             }
-		System.out.println(Persistance.player.getMissions());
 	}
 
 	@Override
 	public void onKeyPressed(Key key) {
 		switch (key) {
 		case RUN:
-			Persistance.stateManager.setState(new MissionBoardState(this.exploresource));
+			Persistance.stateManager.setState(previousstate);
 			break;
 		case ATTACK:
 			if (acceptstatus == STATUS_CANACCEPT) {
