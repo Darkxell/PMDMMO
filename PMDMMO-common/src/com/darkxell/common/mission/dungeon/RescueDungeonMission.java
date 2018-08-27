@@ -12,13 +12,22 @@ import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.DungeonPokemon.DungeonPokemonType;
 import com.darkxell.common.pokemon.PokemonRegistry;
+import com.darkxell.common.util.language.Message;
 
 public class RescueDungeonMission extends DungeonMission
 {
 
+	private DungeonPokemon rescueme;
+
 	public RescueDungeonMission(Player owner, Mission missionData)
 	{
 		super(owner, missionData);
+	}
+
+	@Override
+	public Message clearedMessage()
+	{
+		return new Message("mission.rescued.you").addReplacement("<pokemon>", this.rescueme.getNickname());
 	}
 
 	@Override
@@ -32,10 +41,15 @@ public class RescueDungeonMission extends DungeonMission
 	{
 		super.onTargetFloorStart(floor, events);
 
-		DungeonPokemon rescueme = new DungeonPokemon(PokemonRegistry.find(this.missionData.getPokemonid1()).generate(floor.random, 1));
-		rescueme.type = DungeonPokemonType.RESCUEABLE;
+		this.rescueme = new DungeonPokemon(PokemonRegistry.find(this.missionData.getPokemonid1()).generate(floor.random, 1));
+		this.rescueme.type = DungeonPokemonType.RESCUEABLE;
 		Tile spawn = floor.randomEmptyTile(true, true, TileType.GROUND, floor.random);
-		floor.summonPokemon(rescueme, spawn.x, spawn.y, events);
+		floor.summonPokemon(this.rescueme, spawn.x, spawn.y, events);
+	}
+
+	public DungeonPokemon pokemonToRescue()
+	{
+		return this.rescueme;
 	}
 
 }

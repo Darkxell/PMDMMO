@@ -18,6 +18,7 @@ import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
 import com.darkxell.client.resources.music.SoundManager;
 import com.darkxell.client.state.StateManager;
+import com.darkxell.client.state.dialog.ConfirmDialogScreen;
 import com.darkxell.client.state.dialog.DialogScreen;
 import com.darkxell.client.state.dialog.DialogState;
 import com.darkxell.client.state.dialog.DialogState.DialogEndListener;
@@ -38,7 +39,9 @@ import com.darkxell.common.event.action.PokemonSpawnedEvent;
 import com.darkxell.common.event.action.PokemonTravelEvent;
 import com.darkxell.common.event.action.TurnSkippedEvent;
 import com.darkxell.common.event.dungeon.BossDefeatedEvent;
+import com.darkxell.common.event.dungeon.DungeonExitEvent;
 import com.darkxell.common.event.dungeon.ExplorationStopEvent;
+import com.darkxell.common.event.dungeon.MissionClearedEvent;
 import com.darkxell.common.event.dungeon.NextFloorEvent;
 import com.darkxell.common.event.dungeon.weather.WeatherChangedEvent;
 import com.darkxell.common.event.item.ItemMovedEvent;
@@ -172,6 +175,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		if (event instanceof WeatherChangedEvent) this.processWeatherEvent((WeatherChangedEvent) event);
 		if (event instanceof StairLandingEvent) this.processStairEvent((StairLandingEvent) event);
 		if (event instanceof NextFloorEvent) this.processFloorEvent((NextFloorEvent) event);
+		if (event instanceof MissionClearedEvent) this.processMissionEvent((MissionClearedEvent) event);
 		if (event instanceof ExplorationStopEvent) this.processExplorationStopEvent((ExplorationStopEvent) event);
 
 		if (this.state() == State.DELAYED) this.animateDelayed();
@@ -383,6 +387,30 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		}
 	}
 
+	private void processMissionEvent(MissionClearedEvent event)
+	{
+		if (event.mission.owner == Persistance.player)
+		{
+			DialogEndListener listener = new DialogEndListener() {
+
+				@Override
+				public void onDialogEnd(DialogState dialog)
+				{
+					Persistance.stateManager.setState(Persistance.dungeonState);
+					if (((ConfirmDialogScreen) dialog.getScreen(1)).hasConfirmed()) processEvent(new DungeonExitEvent(Persistance.floor, Persistance.player));
+					else processPending();
+				}
+			};
+
+			DialogScreen screen = new DialogScreen(event.mission.clearedMessage());
+			ConfirmDialogScreen confirm = new ConfirmDialogScreen(new Message("mission.cleared.exitoption"));
+			confirm.id = 1;
+			DialogState dialog = new DialogState(Persistance.dungeonState, listener, screen, confirm);
+			Persistance.stateManager.setState(dialog);
+			this.setState(State.ANIMATING);
+		}
+	}
+
 	private void processMoveDiscoveredEvent(MoveDiscoveredEvent event)
 	{
 		if (event.pokemon.moveCount() == 4)
@@ -390,7 +418,6 @@ public final class ClientEventProcessor extends CommonEventProcessor
 			this.setState(State.ANIMATING);
 
 			DialogEndListener listener = new DialogEndListener() {
-
 				@Override
 				public void onDialogEnd(DialogState dialog)
 				{

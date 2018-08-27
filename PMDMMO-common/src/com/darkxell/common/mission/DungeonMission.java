@@ -41,6 +41,9 @@ public abstract class DungeonMission
 		this.cleared = true;
 	}
 
+	/** @return A Message to display to a Player that clears this Mission. */
+	public abstract Message clearedMessage();
+
 	/** @param event - An occuring DungeonEvent.
 	 * @return <code>true</code> If the input Event clears this Mission. */
 	public boolean clearsMission(DungeonEvent event)

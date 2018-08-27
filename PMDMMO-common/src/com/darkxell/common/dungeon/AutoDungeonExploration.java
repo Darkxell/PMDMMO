@@ -19,6 +19,11 @@ public class AutoDungeonExploration extends DungeonExploration
 		super(id, seed);
 	}
 
+	public DungeonEvent getNextEvent()
+	{
+		return this.nextEvent(false);
+	}
+
 	@Override
 	public Floor initiateExploration()
 	{
@@ -29,11 +34,16 @@ public class AutoDungeonExploration extends DungeonExploration
 
 	public DungeonEvent nextEvent()
 	{
+		return this.nextEvent(true);
+	}
+
+	private DungeonEvent nextEvent(boolean checkOnly)
+	{
 		DungeonEvent e = null;
 		do
 		{
 			if (this.pendingEvents.isEmpty()) return null;
-			e = EventCommunication.read(this.pendingEvents.removeFirst(), this.currentFloor());
+			e = EventCommunication.read(checkOnly ? this.pendingEvents.peekFirst() : this.pendingEvents.removeFirst(), this.currentFloor());
 		} while (e == null);
 		e.setPAE();
 		return e;

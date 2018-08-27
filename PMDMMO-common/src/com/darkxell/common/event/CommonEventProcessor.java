@@ -13,7 +13,9 @@ import com.darkxell.common.event.action.PokemonSpawnedEvent;
 import com.darkxell.common.event.action.PokemonTravelEvent;
 import com.darkxell.common.event.action.TurnSkippedEvent;
 import com.darkxell.common.event.dungeon.BossDefeatedEvent;
+import com.darkxell.common.event.dungeon.DungeonExitEvent;
 import com.darkxell.common.event.dungeon.ExplorationStopEvent;
+import com.darkxell.common.event.dungeon.MissionClearedEvent;
 import com.darkxell.common.event.stats.BellyChangedEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.status.AppliedStatusCondition;
@@ -110,6 +112,11 @@ public class CommonEventProcessor
 		this.callPostListeners(event);
 		if (event instanceof ExplorationStopEvent) this.setState(State.STOPPED);
 		else if (event instanceof BossDefeatedEvent) this.processBossDefeatedEvent((BossDefeatedEvent) event);
+		else if (event instanceof MissionClearedEvent && this.dungeon instanceof AutoDungeonExploration)
+		{
+			DungeonEvent e = ((AutoDungeonExploration) this.dungeon).getNextEvent();
+			if (e instanceof DungeonExitEvent) this.addToPending(((AutoDungeonExploration) this.dungeon).nextEvent());
+		}
 	}
 
 	public boolean hasPendingEvents()
