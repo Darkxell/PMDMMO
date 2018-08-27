@@ -23,6 +23,9 @@ public class Res
 		return Res.class.getResourceAsStream(path) != null;
 	}
 
+	private static final int MAXMESSAGES = 5;
+	private static int messagecounter = 0;
+	
 	/** Gets an image from the res folder as a BufferedImage. */
 	static BufferedImage getBase(String path)
 	{
@@ -42,7 +45,13 @@ public class Res
 				Logger.e("Could not read the following image file : " + path + "\nerrors : " + e + " / " + e1);
 			}
 		}
-		Logger.instance().debug("Loaded resource from hard memory : " + path);
+		if(messagecounter<MAXMESSAGES) {
+			Logger.i("Loaded resource from hard memory : " + path);
+			messagecounter++;
+		}else if(messagecounter==MAXMESSAGES) {
+			Logger.i("Disabled the \"loaded resource from hard memory\" message for future loads");
+			messagecounter++;
+		}
 		return img;
 	}
 
