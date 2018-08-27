@@ -11,6 +11,7 @@ import com.darkxell.client.state.StateManager;
 import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.dungeon.DungeonOutcome;
 import com.darkxell.common.item.ItemStack;
+import com.darkxell.common.mission.DungeonMission;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.zones.FreezoneInfo;
@@ -80,6 +81,11 @@ public class DungeonEndState extends AbstractState
 			for (ItemStack item : Persistance.player.inventory().items())
 				array.add(item.getData().toJson());
 			json.add("items", array);
+
+			array = new JsonArray();
+			for (DungeonMission m : Persistance.dungeon.activeMissions)
+				if (m.isCleared() && m.owner == Persistance.player) array.add(m.missionData.toString());
+			json.add("completedmissions", array);
 
 			Persistance.socketendpoint.sendMessage(json.toString());
 		} else
