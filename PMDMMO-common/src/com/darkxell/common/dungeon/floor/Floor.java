@@ -177,7 +177,7 @@ public class Floor
 		for (DungeonPokemon pokemon : this.listPokemon())
 			pokemon.onFloorStart(this, events);
 		for (DungeonMission mission : this.dungeon.activeMissions)
-			if (!mission.isCleared()) mission.onFloorStart(this);
+			if (!mission.isCleared()) mission.onFloorStart(this, events);
 		events.add(new WeatherCreatedEvent(new ActiveWeather(w, null, 0, this, -1)));
 	}
 

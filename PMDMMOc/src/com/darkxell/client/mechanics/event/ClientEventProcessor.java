@@ -33,6 +33,7 @@ import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.event.CommonEventProcessor;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.DungeonEvent.MessageEvent;
 import com.darkxell.common.event.action.PokemonSpawnedEvent;
 import com.darkxell.common.event.action.PokemonTravelEvent;
 import com.darkxell.common.event.action.TurnSkippedEvent;
@@ -135,6 +136,8 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	private void doClientProcess(DungeonEvent event)
 	{
 		if (this.delayedWithTravels.contains(event)) return;
+
+		if (event instanceof MessageEvent && ((MessageEvent) event).target != null) event.displayMessages = ((MessageEvent) event).target == Persistance.player;
 
 		if (event.displayMessages) Persistance.dungeonState.logger.showMessages(event.getMessages());
 		Logger.event(event.loggerMessage());

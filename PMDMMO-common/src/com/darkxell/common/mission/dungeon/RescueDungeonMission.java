@@ -1,6 +1,9 @@
 package com.darkxell.common.mission.dungeon;
 
+import java.util.ArrayList;
+
 import com.darkxell.common.dungeon.floor.Floor;
+import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.mission.DungeonMission;
@@ -25,13 +28,14 @@ public class RescueDungeonMission extends DungeonMission
 	}
 
 	@Override
-	protected void onTargetFloorStart(Floor floor)
+	protected void onTargetFloorStart(Floor floor, ArrayList<DungeonEvent> events)
 	{
-		super.onTargetFloorStart(floor);
+		super.onTargetFloorStart(floor, events);
 
 		DungeonPokemon rescueme = new DungeonPokemon(PokemonRegistry.find(this.missionData.getPokemonid1()).generate(floor.random, 1));
 		rescueme.type = DungeonPokemonType.RESCUEABLE;
-		floor.randomEmptyTile(true, true, TileType.GROUND, floor.random).setPokemon(rescueme);
+		Tile spawn = floor.randomEmptyTile(true, true, TileType.GROUND, floor.random);
+		floor.summonPokemon(rescueme, spawn.x, spawn.y, events);
 	}
 
 }

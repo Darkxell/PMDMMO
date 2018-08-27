@@ -30,8 +30,13 @@ public class AIManager
 			case TEAM_MEMBER:
 				return new AllyAI(this.floor, pokemon, pokemon.player().getDungeonLeader());
 
+			case BOSS:
+			case MINIBOSS:
 			case WILD:
 				return new WildAI(this.floor, pokemon);
+
+			case RESCUEABLE:
+				return new RescueableAI(this.floor, pokemon);
 
 			default:
 				return new SkipTurnsAI(this.floor, pokemon);

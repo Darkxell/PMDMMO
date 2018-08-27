@@ -3,6 +3,7 @@ package com.darkxell.common.event;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
+import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Communicable;
 import com.darkxell.common.util.Logger;
@@ -15,16 +16,25 @@ public abstract class DungeonEvent
 	public static class MessageEvent extends DungeonEvent
 	{
 
+		/** If not null, will only be displayed for this Player. */
+		public final Player target;
+
 		public MessageEvent(Floor floor, Message message)
 		{
+			this(floor, message, null);
+		}
+
+		public MessageEvent(Floor floor, Message message, Player target)
+		{
 			super(floor);
+			this.target = target;
 			this.messages.add(message);
 		}
 
 		@Override
 		public String loggerMessage()
 		{
-			return "Showed message: " + this.messages.get(0);
+			return "Showing message: " + this.messages.get(0);
 		}
 	}
 

@@ -1,10 +1,14 @@
 package com.darkxell.common.mission;
 
+import java.util.ArrayList;
+
 import com.darkxell.common.dungeon.DungeonExploration;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.DungeonEvent.MessageEvent;
 import com.darkxell.common.mission.dungeon.RescueDungeonMission;
 import com.darkxell.common.player.Player;
+import com.darkxell.common.util.language.Message;
 
 public abstract class DungeonMission
 {
@@ -56,14 +60,16 @@ public abstract class DungeonMission
 	{}
 
 	/** Called on each new Floor, if this Mission isn't cleared yet. */
-	public void onFloorStart(Floor floor)
+	public void onFloorStart(Floor floor, ArrayList<DungeonEvent> events)
 	{
-		if (floor.id == this.missionData.getFloor()) this.onTargetFloorStart(floor);
+		if (floor.id == this.missionData.getFloor()) this.onTargetFloorStart(floor, events);
 	}
 
 	/** Called when the target Floor of this Mission starts, if this Mission isn't cleared yet. */
-	protected void onTargetFloorStart(Floor floor)
-	{}
+	protected void onTargetFloorStart(Floor floor, ArrayList<DungeonEvent> events)
+	{
+		events.add(new MessageEvent(floor, new Message("mission.target_floor")));
+	}
 
 	@Override
 	public String toString()
