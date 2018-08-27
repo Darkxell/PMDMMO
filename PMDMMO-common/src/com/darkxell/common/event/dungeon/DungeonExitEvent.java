@@ -28,6 +28,11 @@ public class DungeonExitEvent extends DungeonEvent implements Communicable
 		return this.player.name() + " exited the Dungeon.";
 	}
 
+	public Player player()
+	{
+		return this.player;
+	}
+
 	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{

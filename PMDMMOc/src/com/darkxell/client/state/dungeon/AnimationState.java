@@ -30,7 +30,7 @@ public class AnimationState extends DungeonSubState
 	public void onStart()
 	{
 		super.onStart();
-		this.animation.start();
+		if (this.animation != null) this.animation.start();
 	}
 
 	@Override

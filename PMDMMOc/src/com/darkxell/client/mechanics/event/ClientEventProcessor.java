@@ -24,6 +24,7 @@ import com.darkxell.client.state.dialog.DialogState;
 import com.darkxell.client.state.dialog.DialogState.DialogEndListener;
 import com.darkxell.client.state.dungeon.AnimationState;
 import com.darkxell.client.state.dungeon.DelayState;
+import com.darkxell.client.state.dungeon.DungeonExitAnimationState;
 import com.darkxell.client.state.dungeon.NextFloorState;
 import com.darkxell.client.state.dungeon.PokemonTravelState;
 import com.darkxell.client.state.dungeon.ProjectileAnimationState;
@@ -176,6 +177,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		if (event instanceof StairLandingEvent) this.processStairEvent((StairLandingEvent) event);
 		if (event instanceof NextFloorEvent) this.processFloorEvent((NextFloorEvent) event);
 		if (event instanceof MissionClearedEvent) this.processMissionEvent((MissionClearedEvent) event);
+		if (event instanceof DungeonExitEvent) this.processExitEvent((DungeonExitEvent) event);
 		if (event instanceof ExplorationStopEvent) this.processExplorationStopEvent((ExplorationStopEvent) event);
 
 		if (this.state() == State.DELAYED) this.animateDelayed();
@@ -271,6 +273,14 @@ public final class ClientEventProcessor extends CommonEventProcessor
 			}
 			if (event.damage != 0) new TextAbovePokeAnimation(event.target, new Message("-" + event.damage, false), FontMode.DAMAGE).start();
 		}
+	}
+
+	private void processExitEvent(DungeonExitEvent event)
+	{
+		if (event.player() == Persistance.player) Persistance.dungeonState.setCamera(null);
+		System.out.println(event.player().getDungeonLeader().tile());
+		Persistance.dungeonState.setSubstate(new DungeonExitAnimationState(Persistance.dungeonState, event.player().getDungeonTeam()));
+		this.setState(State.ANIMATING);
 	}
 
 	private void processExperienceEvent(ExperienceGeneratedEvent event)
@@ -505,7 +515,8 @@ public final class ClientEventProcessor extends CommonEventProcessor
 
 	private void processRescuedEvent(PokemonRescuedEvent event)
 	{
-		Persistance.dungeonState.pokemonRenderer.unregister(event.rescued());
+		Persistance.dungeonState.setSubstate(new DungeonExitAnimationState(Persistance.dungeonState, event.rescued()));
+		this.setState(State.ANIMATING);
 	}
 
 	private void processSkipEvent(TurnSkippedEvent event)

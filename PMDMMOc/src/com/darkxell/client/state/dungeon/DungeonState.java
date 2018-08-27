@@ -18,6 +18,7 @@ import com.darkxell.client.renderers.pokemon.DungeonPokemonRenderer;
 import com.darkxell.client.renderers.pokemon.DungeonPokemonRendererHolder;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.ui.Keys.Key;
+import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
 /** The main state for Dungeon exploration. */
@@ -84,6 +85,7 @@ public class DungeonState extends AbstractState
 	public final FloorVisibility floorVisibility;
 	public final GridRenderer gridRenderer;
 	public final DungeonItemsRenderer itemRenderer;
+	private Tile lastKnownCameraTile;
 	public final DungeonLogger logger;
 	public final DungeonPokemonRendererHolder pokemonRenderer;
 	/** The last Camera. */
@@ -189,21 +191,28 @@ public class DungeonState extends AbstractState
 		int x = 0, y = 0;
 		if (r == null)
 		{
-			x = Persistance.floor.getWidth() * TILE_SIZE / 2 - width / 2;
-			y = Persistance.floor.getHeight() * TILE_SIZE / 2 - height / 2;
+			if (this.lastKnownCameraTile == null)
+			{
+				x = Persistance.floor.getWidth() * TILE_SIZE / 2 - width / 2;
+				y = Persistance.floor.getHeight() * TILE_SIZE / 2 - height / 2;
+			} else
+			{
+				x = (int) (this.lastKnownCameraTile.x * TILE_SIZE + TILE_SIZE / 2 - width / 2);
+				y = (int) (this.lastKnownCameraTile.y * TILE_SIZE + TILE_SIZE / 2 - height / 2);
+			}
 		} else
 		{
 			x = (int) (r.x() + TILE_SIZE / 2 - width / 2);
 			y = (int) (r.y() + TILE_SIZE / 2 - height / 2);
+		}
 
-			if (Persistance.floor.data.hasCustomTileset())
-			{
-				if (x + width > Persistance.floor.getWidth() * TILE_SIZE) x = Persistance.floor.getWidth() * TILE_SIZE - width;
-				if (y + height > Persistance.floor.getHeight() * TILE_SIZE) y = Persistance.floor.getHeight() * TILE_SIZE - height;
+		if (Persistance.floor.data.hasCustomTileset())
+		{
+			if (x + width > Persistance.floor.getWidth() * TILE_SIZE) x = Persistance.floor.getWidth() * TILE_SIZE - width;
+			if (y + height > Persistance.floor.getHeight() * TILE_SIZE) y = Persistance.floor.getHeight() * TILE_SIZE - height;
 
-				if (x < 0) x = 0;
-				if (y < 0) y = 0;
-			}
+			if (x < 0) x = 0;
+			if (y < 0) y = 0;
 		}
 		this.camera = new Point(x, y);
 
@@ -241,6 +250,11 @@ public class DungeonState extends AbstractState
 		this.floorVisibility.onCameraMoved();
 	}
 
+	public void setDefaultState()
+	{
+		this.setSubstate(this.defaultSubstate);
+	}
+
 	/** @param substate - The new substate to use. */
 	public void setSubstate(DungeonSubState substate)
 	{
@@ -253,6 +267,7 @@ public class DungeonState extends AbstractState
 	public void update()
 	{
 		Persistance.dungeonRenderer.update();
+		if (this.cameraPokemon != null && this.cameraPokemon.tile() != null) this.lastKnownCameraTile = this.cameraPokemon.tile();
 		// this.pokemonRenderer.update(); Don't because the renderers are updated in MasterDungeonRenderer
 		if (this.isMain()) this.logger.update();
 		this.currentSubstate.update();
