@@ -2,6 +2,7 @@ package com.darkxell.client.state.dungeon;
 
 import java.awt.Graphics2D;
 
+import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.animation.SpritesetAnimation;
 import com.darkxell.client.mechanics.animation.TravelAnimation;
 import com.darkxell.client.resources.images.tilesets.AbstractDungeonTileset;
@@ -42,7 +43,7 @@ public class ProjectileAnimationState extends AnimationState
 				this.travel.current().getY() * AbstractDungeonTileset.TILE_SIZE);
 		if (this.tick == this.duration)
 		{
-			this.parent.setSubstate(this.parent.actionSelectionState);
+			Persistance.dungeonState.setDefaultState();
 			this.animation.stop();
 		}
 	}

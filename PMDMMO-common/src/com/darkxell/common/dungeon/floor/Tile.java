@@ -68,7 +68,7 @@ public class Tile implements ItemContainer, Comparable<Tile>
 	public Tile adjacentTile(Direction direction)
 	{
 		Point2D p = direction.move(this.x, this.y);
-		return this.floor.tileAt((int)p.getX(),(int) p.getY());
+		return this.floor.tileAt((int) p.getX(), (int) p.getY());
 	}
 
 	/** @return True if there are walls blocking the path in the input direction. */
@@ -107,7 +107,7 @@ public class Tile implements ItemContainer, Comparable<Tile>
 		if (this.getPokemon() != null)
 		{
 			// If team leader and Pokemon here is ally, can exchange position
-			if (!(allowSwitching && pokemon.player().isAlly(this.getPokemon()))) return false;
+			if (!(allowSwitching && pokemon.isAlliedWith(this.getPokemon()))) return false;
 		}
 		return this.type.canWalkOn(pokemon);
 	}
@@ -303,7 +303,7 @@ public class Tile implements ItemContainer, Comparable<Tile>
 	/** Sets the Pokemon on this tile. Also changes this Pokemon's previous tile's Pokemon to null. */
 	public void setPokemon(DungeonPokemon pokemon)
 	{
-		if (this.pokemon != null && this.pokemon.tile() == this) this.pokemon.setTile(null);
+		// if (this.pokemon != null && this.pokemon.tile() == this) this.pokemon.setTile(null);
 		if (pokemon == null) this.pokemon = null;
 		else
 		{

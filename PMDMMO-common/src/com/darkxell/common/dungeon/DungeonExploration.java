@@ -20,10 +20,11 @@ import com.darkxell.common.event.action.TurnSkippedEvent;
 import com.darkxell.common.event.dungeon.MissionClearedEvent;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.mission.DungeonMission;
+import com.darkxell.common.mission.InvalidParammetersException;
 import com.darkxell.common.mission.Mission;
-import com.darkxell.common.mission.dungeon.RescueDungeonMission;
 import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.pokemon.DungeonPokemon.DungeonPokemonType;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.Logger;
@@ -185,6 +186,27 @@ public class DungeonExploration
 		return (ArrayList<Player>) this.exploringPlayers.clone();
 	}
 
+	public DungeonMission findMission(String id)
+	{
+		for (DungeonMission m : this.activeMissions)
+			if (m.missionData.toString().equals(id)) return m;
+		return null;
+	}
+
+	/** @return The Mission corresponding to the input rescued Pokemon. */
+	public DungeonMission findRescueMission(Floor floor, DungeonPokemon rescued)
+	{
+		for (DungeonMission m : this.activeMissions)
+		{
+			Mission mission = m.missionData;
+			if (mission.getFloor() != floor.id) continue;
+			if (mission.getMissiontype() != Mission.TYPE_RESCUEHIM && mission.getMissiontype() != Mission.TYPE_RESCUEME) continue;
+			if (mission.getPokemonid1() != rescued.species().id) continue;
+			return m;
+		}
+		return null;
+	}
+
 	/** Creates the next Floor to explore, places Players in it, registers Actors, AIs, and IDs. */
 	private void generateNextFloor()
 	{
@@ -209,7 +231,7 @@ public class DungeonExploration
 		for (DungeonPokemon pokemon : this.currentFloor.listPokemon())
 		{
 			if (pokemon.id() == 0) this.communication.pokemonIDs.register(pokemon.originalPokemon, this.communication.itemIDs, this.communication.moveIDs);
-			if (pokemon.player() == null) this.registerActor(pokemon);
+			if (pokemon.type != DungeonPokemonType.TEAM_MEMBER) this.registerActor(pokemon);
 		}
 
 		for (ItemStack item : this.currentFloor.listItemsOnFloor())
@@ -232,6 +254,8 @@ public class DungeonExploration
 		return this.pastTurns.get(this.pastTurns.size() - 1);
 	}
 
+	/* public void insertActor(DungeonPokemon pokemon, int index) { if (this.actorMap.containsKey(pokemon)) return; this.actorMap.put(pokemon, new Actor(pokemon)); this.actors.add(index, this.actorMap.get(pokemon)); } */
+
 	private int indexOf(DungeonPokemon pokemon)
 	{
 		if (this.actorMap.containsKey(pokemon)) return this.actors.indexOf(this.actorMap.get(pokemon));
@@ -239,7 +263,7 @@ public class DungeonExploration
 	}
 
 	/** Starts the current exploration. Creates the first floor and starts the Event Processor.<br>
-	 * \/!\\ Make sure the Event Processor has been initialized if you want a custom one.
+	 * /!\ Make sure the Event Processor has been initialized if you want a custom one. /!\
 	 * 
 	 * @return The generated Floor. */
 	public Floor initiateExploration()
@@ -255,9 +279,20 @@ public class DungeonExploration
 			player.resetDungeonTeam();
 			for (Pokemon member : player.getTeam())
 				member.createDungeonPokemon();
+			for (String m : player.getMissions())
+				try
+				{
+					Mission mission = new Mission(m);
+					if (mission.getDungeonid() == this.dungeon().id)
+					{
+						DungeonMission dm = DungeonMission.create(player, mission);
+						if (dm != null) this.activeMissions.add(dm);
+					}
+				} catch (InvalidParammetersException e)
+				{
+					Logger.e("Invalid mission: " + m);
+				}
 		}
-
-		this.activeMissions.add(new RescueDungeonMission(this.startingPlayers.get(0), new Mission("A", 1, 2, 43, 44, -1, null, Mission.TYPE_RESCUEME)));
 
 		for (DungeonMission mission : this.activeMissions)
 			mission.onDungeonStart(this);
@@ -279,8 +314,6 @@ public class DungeonExploration
 
 		return this.currentFloor;
 	}
-
-	/* public void insertActor(DungeonPokemon pokemon, int index) { if (this.actorMap.containsKey(pokemon)) return; this.actorMap.put(pokemon, new Actor(pokemon)); this.actors.add(index, this.actorMap.get(pokemon)); } */
 
 	public boolean isGeneratingFloor()
 	{

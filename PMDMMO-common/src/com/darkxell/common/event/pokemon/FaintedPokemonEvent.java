@@ -9,6 +9,7 @@ import com.darkxell.common.event.dungeon.PlayerLosesEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageSource;
 import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.pokemon.DungeonPokemon.DungeonPokemonType;
 import com.darkxell.common.util.language.Message;
 
 public class FaintedPokemonEvent extends DungeonEvent
@@ -46,11 +47,11 @@ public class FaintedPokemonEvent extends DungeonEvent
 			this.resultingEvents.add(new PlayerLosesEvent(this.floor, this.pokemon.originalPokemon.player(), moveID));
 		}
 
-		if (this.pokemon.isBoss)
+		if (this.pokemon.type == DungeonPokemonType.BOSS)
 		{
 			boolean wasLastBoss = true;
 			for (DungeonPokemon p : this.floor.listPokemon())
-				if (p.isBoss)
+				if (p.type == DungeonPokemonType.BOSS)
 				{
 					wasLastBoss = false;
 					break;

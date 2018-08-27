@@ -14,16 +14,17 @@ import com.darkxell.client.mechanics.animation.misc.TextAbovePokeAnimation;
 import com.darkxell.client.mechanics.cutscene.CutsceneManager;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.renderers.TextRenderer.FontMode;
-import com.darkxell.client.renderers.pokemon.DungeonPokemonRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
 import com.darkxell.client.resources.music.SoundManager;
 import com.darkxell.client.state.StateManager;
+import com.darkxell.client.state.dialog.ConfirmDialogScreen;
 import com.darkxell.client.state.dialog.DialogScreen;
 import com.darkxell.client.state.dialog.DialogState;
 import com.darkxell.client.state.dialog.DialogState.DialogEndListener;
 import com.darkxell.client.state.dungeon.AnimationState;
 import com.darkxell.client.state.dungeon.DelayState;
+import com.darkxell.client.state.dungeon.DungeonExitAnimationState;
 import com.darkxell.client.state.dungeon.NextFloorState;
 import com.darkxell.client.state.dungeon.PokemonTravelState;
 import com.darkxell.client.state.dungeon.ProjectileAnimationState;
@@ -34,11 +35,14 @@ import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.event.CommonEventProcessor;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.DungeonEvent.MessageEvent;
 import com.darkxell.common.event.action.PokemonSpawnedEvent;
 import com.darkxell.common.event.action.PokemonTravelEvent;
 import com.darkxell.common.event.action.TurnSkippedEvent;
 import com.darkxell.common.event.dungeon.BossDefeatedEvent;
+import com.darkxell.common.event.dungeon.DungeonExitEvent;
 import com.darkxell.common.event.dungeon.ExplorationStopEvent;
+import com.darkxell.common.event.dungeon.MissionClearedEvent;
 import com.darkxell.common.event.dungeon.NextFloorEvent;
 import com.darkxell.common.event.dungeon.weather.WeatherChangedEvent;
 import com.darkxell.common.event.item.ItemMovedEvent;
@@ -52,6 +56,7 @@ import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.FaintedPokemonEvent;
 import com.darkxell.common.event.pokemon.HealthRestoredEvent;
+import com.darkxell.common.event.pokemon.PokemonRescuedEvent;
 import com.darkxell.common.event.pokemon.StatusConditionCreatedEvent;
 import com.darkxell.common.event.pokemon.StatusConditionEndedEvent;
 import com.darkxell.common.event.pokemon.TriggeredAbilityEvent;
@@ -137,6 +142,8 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	{
 		if (this.delayedWithTravels.contains(event)) return;
 
+		if (event instanceof MessageEvent && ((MessageEvent) event).target != null) event.displayMessages = ((MessageEvent) event).target == Persistance.player;
+
 		if (event.displayMessages) Persistance.dungeonState.logger.showMessages(event.getMessages());
 		Logger.event(event.loggerMessage());
 
@@ -147,6 +154,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		if (event instanceof StatusConditionCreatedEvent) this.processStatusEvent((StatusConditionCreatedEvent) event);
 		if (event instanceof StatusConditionEndedEvent) this.processStatusEvent((StatusConditionEndedEvent) event);
 
+		if (event instanceof PokemonRescuedEvent) this.processRescuedEvent((PokemonRescuedEvent) event);
 		if (event instanceof PokemonSpawnedEvent) this.processSpawnEvent((PokemonSpawnedEvent) event);
 		if (event instanceof PokemonTravelsEvent) this.processTravelEvent((PokemonTravelsEvent) event);
 		if (event instanceof TurnSkippedEvent) this.processSkipEvent((TurnSkippedEvent) event);
@@ -168,6 +176,8 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		if (event instanceof WeatherChangedEvent) this.processWeatherEvent((WeatherChangedEvent) event);
 		if (event instanceof StairLandingEvent) this.processStairEvent((StairLandingEvent) event);
 		if (event instanceof NextFloorEvent) this.processFloorEvent((NextFloorEvent) event);
+		if (event instanceof MissionClearedEvent) this.processMissionEvent((MissionClearedEvent) event);
+		if (event instanceof DungeonExitEvent) this.processExitEvent((DungeonExitEvent) event);
 		if (event instanceof ExplorationStopEvent) this.processExplorationStopEvent((ExplorationStopEvent) event);
 
 		if (this.state() == State.DELAYED) this.animateDelayed();
@@ -263,6 +273,14 @@ public final class ClientEventProcessor extends CommonEventProcessor
 			}
 			if (event.damage != 0) new TextAbovePokeAnimation(event.target, new Message("-" + event.damage, false), FontMode.DAMAGE).start();
 		}
+	}
+
+	private void processExitEvent(DungeonExitEvent event)
+	{
+		if (event.player() == Persistance.player) Persistance.dungeonState.setCamera(null);
+		System.out.println(event.player().getDungeonLeader().tile());
+		Persistance.dungeonState.setSubstate(new DungeonExitAnimationState(Persistance.dungeonState, event.player().getDungeonTeam()));
+		this.setState(State.ANIMATING);
 	}
 
 	private void processExperienceEvent(ExperienceGeneratedEvent event)
@@ -379,6 +397,30 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		}
 	}
 
+	private void processMissionEvent(MissionClearedEvent event)
+	{
+		if (event.mission.owner == Persistance.player)
+		{
+			DialogEndListener listener = new DialogEndListener() {
+
+				@Override
+				public void onDialogEnd(DialogState dialog)
+				{
+					Persistance.stateManager.setState(Persistance.dungeonState);
+					if (((ConfirmDialogScreen) dialog.getScreen(1)).hasConfirmed()) processEvent(new DungeonExitEvent(Persistance.floor, Persistance.player));
+					else processPending();
+				}
+			};
+
+			DialogScreen screen = new DialogScreen(event.mission.clearedMessage());
+			ConfirmDialogScreen confirm = new ConfirmDialogScreen(new Message("mission.cleared.exitoption"));
+			confirm.id = 1;
+			DialogState dialog = new DialogState(Persistance.dungeonState, listener, screen, confirm);
+			Persistance.stateManager.setState(dialog);
+			this.setState(State.ANIMATING);
+		}
+	}
+
 	private void processMoveDiscoveredEvent(MoveDiscoveredEvent event)
 	{
 		if (event.pokemon.moveCount() == 4)
@@ -386,7 +428,6 @@ public final class ClientEventProcessor extends CommonEventProcessor
 			this.setState(State.ANIMATING);
 
 			DialogEndListener listener = new DialogEndListener() {
-
 				@Override
 				public void onDialogEnd(DialogState dialog)
 				{
@@ -472,6 +513,12 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		}
 	}
 
+	private void processRescuedEvent(PokemonRescuedEvent event)
+	{
+		Persistance.dungeonState.setSubstate(new DungeonExitAnimationState(Persistance.dungeonState, event.rescued()));
+		this.setState(State.ANIMATING);
+	}
+
 	private void processSkipEvent(TurnSkippedEvent event)
 	{
 		if (event.actor() == Persistance.player.getDungeonLeader())
@@ -492,15 +539,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 
 	private void processSpawnEvent(PokemonSpawnedEvent event)
 	{
-		DungeonPokemonRenderer renderer = Persistance.dungeonState.pokemonRenderer.register(event.spawned);
-		if (event.spawned.player() != null)
-		{
-			if (event.spawned.player() != Persistance.player)
-			{
-				if (event.spawned.isTeamLeader()) renderer.sprite().setShadowColor(PokemonSprite.PLAYER_SHADOW);
-				else renderer.sprite().setShadowColor(PokemonSprite.ENEMY_SHADOW);
-			} else renderer.sprite().setShadowColor(PokemonSprite.ALLY_SHADOW);
-		}
+		Persistance.dungeonState.pokemonRenderer.register(event.spawned);
 	}
 
 	private void processSpeedEvent(SpeedChangedEvent event)

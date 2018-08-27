@@ -143,6 +143,7 @@ Here is a list of all Events. Will be updated with the game. Bold events are PAE
 
 | Event name               | Description                                         | May trigger               |
 |--------------------------|-----------------------------------------------------|-------------------------- |
+| PokemonRescuedEvent      | Called when a Pokémon is rescued.                   | MissionClearedEvent |
 | PokemonRotateEvent       | Called when a Pokémon changes its facing direction. | |
 | PokemonSpawnedEvent      | Called when a Pokémon spawns.                       | |
 | ***PokemonTravelEvent*** | Called when a Pokémon travels.                      | BellyChangedEvent. Also calls the destination tile for events. |

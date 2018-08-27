@@ -25,9 +25,22 @@ public class AIManager
 	/** @return The AI the input Pokemon should have. */
 	private AI aiFor(DungeonPokemon pokemon)
 	{
-		if (pokemon.player() == null) return new WildAI(this.floor, pokemon);
-		else return new AllyAI(this.floor, pokemon, pokemon.player().getDungeonLeader());
-		// return new SkipTurnsAI(this.floor, pokemon);
+		switch (pokemon.type)
+		{
+			case TEAM_MEMBER:
+				return new AllyAI(this.floor, pokemon, pokemon.player().getDungeonLeader());
+
+			case BOSS:
+			case MINIBOSS:
+			case WILD:
+				return new WildAI(this.floor, pokemon);
+
+			case RESCUEABLE:
+				return new RescueableAI(this.floor, pokemon);
+
+			default:
+				return new SkipTurnsAI(this.floor, pokemon);
+		}
 	}
 
 	public AI getAI(DungeonPokemon pokemon)

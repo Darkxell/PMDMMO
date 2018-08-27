@@ -19,6 +19,35 @@ import com.darkxell.common.util.language.Message;
 /** Represents a Pokemon in a Dungeon. */
 public class DungeonPokemon implements ItemContainer
 {
+	public static enum DungeonPokemonType
+	{
+		BOSS,
+		MINIBOSS,
+		RESCUEABLE,
+		TEAM_MEMBER,
+		WILD;
+
+		public boolean isAlliedWith(DungeonPokemonType type)
+		{
+			switch (this)
+			{
+				case BOSS:
+				case MINIBOSS:
+				case WILD:
+					return type != TEAM_MEMBER;
+
+				case RESCUEABLE:
+					return true;
+
+				case TEAM_MEMBER:
+					return type == TEAM_MEMBER || type == RESCUEABLE;
+
+				default:
+					return true;
+			}
+		}
+	}
+
 	public static final int DEFAULT_BELLY_SIZE = 100;
 	public static final byte REGULAR_ATTACKS = 0, MOVES = 1, LINKED_MOVES = 2;
 
@@ -32,8 +61,6 @@ public class DungeonPokemon implements ItemContainer
 	private Direction facing = Direction.SOUTH;
 	/** This Pokemon's current Hit Points. */
 	private int hp;
-	/** True if this Pokemon is a Boss. */
-	public boolean isBoss;
 	/** The original Pokemon that entered the Dungeon. This object is necessary for Dungeons that modify the visiting Pokemon, such as Dungeons resetting the level to 1. */
 	public final Pokemon originalPokemon;
 	/** Variable used to compute HP regeneration. */
@@ -44,6 +71,8 @@ public class DungeonPokemon implements ItemContainer
 	private final ArrayList<AppliedStatusCondition> statusConditions;
 	/** The tile this Pokemon is standing on. */
 	private Tile tile;
+	/** This Pokemon's {@link DungeonPokemonType}. */
+	public DungeonPokemonType type;
 	/** The Pokemon to use in the current Dungeon. See {@link DungeonPokemon#originalPokemon}. */
 	public final Pokemon usedPokemon;
 
@@ -55,6 +84,7 @@ public class DungeonPokemon implements ItemContainer
 		this.belly = this.bellySize = DEFAULT_BELLY_SIZE;
 		this.hp = this.stats.getHealth();
 		this.statusConditions = new ArrayList<AppliedStatusCondition>();
+		this.type = pokemon.player() == null ? DungeonPokemonType.WILD : DungeonPokemonType.TEAM_MEMBER;
 		pokemon.dungeonPokemon = this;
 	}
 
@@ -248,7 +278,8 @@ public class DungeonPokemon implements ItemContainer
 	public boolean isAlliedWith(DungeonPokemon pokemon)
 	{
 		if (this == pokemon) return true;
-		return this.player() == pokemon.player();
+		if (!this.type.isAlliedWith(pokemon.type)) return false;
+		return this.player() == pokemon.player() || this.type == DungeonPokemonType.RESCUEABLE || pokemon.type == DungeonPokemonType.RESCUEABLE;
 	}
 
 	public boolean isBellyFull()
@@ -260,6 +291,12 @@ public class DungeonPokemon implements ItemContainer
 	public boolean isCopy()
 	{
 		return this.usedPokemon != this.originalPokemon;
+	}
+
+	/** @return <code>true</code> if this Pokemon is a foe to Players. */
+	public boolean isEnemy()
+	{
+		return !this.type.isAlliedWith(DungeonPokemonType.TEAM_MEMBER);
 	}
 
 	public boolean isFainted()

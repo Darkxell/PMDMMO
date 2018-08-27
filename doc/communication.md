@@ -241,9 +241,11 @@ This payload is sent when the player starts a dungeon exploration.
 
 "team":[{POK1}],
 
-"moves":[{MOVE1},{MOVE2}...],
+"moves":[{MOVE1},{MOVE2},...],
 
-"items":[{ITEM1},{ITEM2}]
+"items":[{ITEM1},{ITEM2},...],
+
+"completedmissions":["mission1id","mission2id",...]
 
 }
 

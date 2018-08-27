@@ -28,7 +28,7 @@ public class StatusConditionCreatedEvent extends DungeonEvent
 	@Override
 	public String loggerMessage()
 	{
-		return this.messages.get(0).toString();
+		return "Created " + this.condition.condition.name();
 	}
 
 	@Override
@@ -38,7 +38,8 @@ public class StatusConditionCreatedEvent extends DungeonEvent
 		this.succeeded = affects.first;
 		if (this.succeeded)
 		{
-			this.messages.add(this.condition.startMessage());
+			Message m = this.condition.startMessage();
+			if (m != null) this.messages.add(m);
 			this.condition.pokemon.inflictStatusCondition(this.condition);
 		} else if (affects.second != null) this.messages.add(affects.second);
 		return super.processServer();

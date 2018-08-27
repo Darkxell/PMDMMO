@@ -25,6 +25,7 @@ import com.darkxell.common.pokemon.LearnedMove;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.pokemon.PokemonSpecies;
+import com.darkxell.common.pokemon.DungeonPokemon.DungeonPokemonType;
 import com.darkxell.common.trap.TrapRegistry;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.Logger;
@@ -178,7 +179,7 @@ public class StaticLayout extends Layout
 			for (Element pokemon : this.xml.getChild("pokemons", xml.getNamespace()).getChildren(Pokemon.XML_ROOT, xml.getNamespace()))
 			{
 				DungeonPokemon p = new DungeonPokemon(readPokemon(pokemon, this.floor.random));
-				p.isBoss = pokemon.getChild("boss", xml.getNamespace()) != null;
+				if (pokemon.getChild("boss", xml.getNamespace()) != null) p.type = DungeonPokemonType.BOSS;
 				AI ai = null;
 				String ainame = pokemon.getChildText("ai", xml.getNamespace());
 				if (ainame != null) switch (ainame)
