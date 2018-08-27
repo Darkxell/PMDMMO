@@ -44,6 +44,7 @@ public class AcceptMissionHandler extends MessageHandler {
             sessionshandler.sendToSession(from, value);
             return;
         }
+        RamMissionHolder.addDailyAccept(si.serverid, wantedmissioncode);
         endpoint.getMissions_DAO().create(si.serverid, wantedmissioncode);
         value.add("accepted", 1);
         sessionshandler.sendToSession(from, value);

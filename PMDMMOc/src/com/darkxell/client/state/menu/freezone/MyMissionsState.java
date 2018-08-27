@@ -35,14 +35,18 @@ public class MyMissionsState extends OptionSelectionMenuState {
 
 	@Override
 	protected void createOptions() {
+		this.tabs.add(generateTab());
+	}
+
+	private MenuTab generateTab() {
 		MenuTab tab = new MenuTab(new Message("mission.job.list"));
+		missions.clear();
 		for (int i = 0; i < Persistance.player.getMissions().size(); i++) {
 			try {
 				Mission m = new Mission(Persistance.player.getMissions().get(i));
 				String summary = DungeonRegistry.find(m.getDungeonid()).name() + " "
-						+ new Message("mission.floor.short") + "<blue>" + m.getFloor() + "</color>"
-						+ " - " + m.getMissionFlavor().getObjectiveText().toString() + " ("
-						+ m.getDifficulty() + ")";
+						+ new Message("mission.floor.short") + "<blue>" + m.getFloor() + "</color>" + " - "
+						+ m.getMissionFlavor().getObjectiveText().toString() + " (" + m.getDifficulty() + ")";
 				MenuOption opt = new MenuOption(summary);
 				tab.addOption(opt);
 				missions.put(opt, m);
@@ -52,7 +56,17 @@ public class MyMissionsState extends OptionSelectionMenuState {
 			}
 		}
 		tab.addOption(this.exit = new MenuOption("general.back"));
-		this.tabs.add(tab);
+		return tab;
+	}
+
+	public void refresh() {
+		if (this.tabs.size() == 0)
+			this.tabs.add(generateTab());
+		else {
+			MenuTab toremove = this.tabs.get(0);
+			this.tabs.add(generateTab());
+			this.tabs.remove(toremove);
+		}
 	}
 
 	@Override

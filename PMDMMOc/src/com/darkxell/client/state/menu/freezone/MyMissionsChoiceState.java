@@ -9,6 +9,8 @@ import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.common.mission.Mission;
 import com.darkxell.common.util.Logger;
+import com.eclipsesource.json.Json;
+import com.eclipsesource.json.JsonObject;
 
 public class MyMissionsChoiceState extends OptionSelectionMenuState {
 
@@ -41,10 +43,20 @@ public class MyMissionsChoiceState extends OptionSelectionMenuState {
 	@Override
 	protected void onOptionSelected(MenuOption option) {
 		if (option == check) {
-			Persistance.stateManager.setState(
-					new MissionDetailsState((AbstractState) this.background, this.missioncontent, this));
+			Persistance.stateManager
+					.setState(new MissionDetailsState((AbstractState) this.background, this.missioncontent, this));
 		} else if (option == delete) {
 			Logger.i("Deleting mission : " + missioncontent);
+			JsonObject message = Json.object();
+			message.add("action", "deletemission");
+			message.add("mission", missioncontent.toString());
+			Persistance.socketendpoint.sendMessage(message.toString());
+			if (Persistance.player.getMissions().remove(missioncontent.toString())) {
+				if (this.background instanceof MyMissionsState)
+					((MyMissionsState) this.background).refresh();
+				this.onExit();
+			} else
+				Logger.e("Could not delete mission : " + missioncontent);
 		} else if (option == exit)
 			this.onExit();
 	}

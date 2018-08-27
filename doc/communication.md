@@ -266,6 +266,15 @@ This payload is sent when the client wants to be notified shortly about all the 
 This payload is sent to the server to accept a mission from the daily mission board.
 Note that the server might ignore this payload if the player has already accepted this mission today
 
+■ DELETEMISSION
+
+{"action":"deletemission"
+
+"mission":"missioncode"
+
+}
+
+This payload is sent to the server to delete a mission from the player mission inventory.
 
 # 4 - List of server -> client payloads
 

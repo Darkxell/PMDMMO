@@ -14,6 +14,7 @@ import com.darkxell.common.util.Logger;
 import com.darkxell.gameserver.messagehandlers.AcceptMissionHandler;
 import com.darkxell.gameserver.messagehandlers.BankactionHandler;
 import com.darkxell.gameserver.messagehandlers.CreateAccountHandler;
+import com.darkxell.gameserver.messagehandlers.DeleteMissionHandler;
 import com.darkxell.gameserver.messagehandlers.DungeonendHandler;
 import com.darkxell.gameserver.messagehandlers.DungeonstartHandler;
 import java.io.StringReader;
@@ -332,6 +333,14 @@ public class GameServer {
                         hand.handleMessage(jsonMessage, session, sessionHandler);
                         break;
                     }
+                    case "deletemission": {
+                        if (!infos.isconnected) {
+                            return;
+                        }
+                        DeleteMissionHandler hand = new DeleteMissionHandler(this);
+                        hand.handleMessage(jsonMessage, session, sessionHandler);
+                        break;
+                    }
                     default:
                         break;
                     // ADD other "action" json message types if needed.
@@ -389,7 +398,7 @@ public class GameServer {
     public Toolbox_DAO getToolbox_DAO() {
         return this.toolbox_DAO;
     }
-    
+
     public Missions_DAO getMissions_DAO() {
         return this.missions_DAO;
     }
