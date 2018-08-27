@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
+import com.darkxell.client.launchable.GameSocketEndpoint;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.launchable.messagehandlers.InventoryRequestHandler;
 import com.darkxell.client.launchable.messagehandlers.MonsterRequestHandler;
@@ -58,13 +59,18 @@ public class PlayerLoadingState extends AbstractState
 		}
 	}
 
+	private void exit()
+	{
+		if (this.listener == null) Persistance.stateManager.setState(new OpenningState());
+		else this.listener.onPlayerLoadingEnd(this);
+	}
+
 	private void finish()
 	{
 		Persistance.player.clearAllies();
 		for (Pokemon p : this.teamtmp)
 			Persistance.player.addAlly(p);
-		if (this.listener == null) Persistance.stateManager.setState(new OpenningState());
-		else this.listener.onPlayerLoadingEnd(this);
+		this.exit();
 	}
 
 	public void onInventoryReceived(JsonObject message)
@@ -130,7 +136,8 @@ public class PlayerLoadingState extends AbstractState
 	@Override
 	public void update()
 	{
-		if (this.hasSent)
+		if (Persistance.socketendpoint.connectionStatus() != GameSocketEndpoint.CONNECTED) this.exit();
+		else if (this.hasSent)
 		{
 			++this.tick;
 			if (this.tick >= TIMEOUT) this.askForMore();

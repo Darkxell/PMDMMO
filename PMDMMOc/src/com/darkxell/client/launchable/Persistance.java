@@ -9,10 +9,10 @@ import com.darkxell.client.renderers.MasterDungeonRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
 import com.darkxell.client.resources.music.SoundManager;
-import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.StateManager;
 import com.darkxell.client.state.dialog.ComplexDialog;
 import com.darkxell.client.state.dungeon.DungeonState;
+import com.darkxell.client.state.freezone.CutsceneState;
 import com.darkxell.client.state.map.AbstractDisplayMap;
 import com.darkxell.client.state.map.LocalMap;
 import com.darkxell.client.ui.Frame;
@@ -43,7 +43,7 @@ public abstract class Persistance {
 			new PokemonSprite(PokemonSpritesets.getSpriteset(0)), 35, 28);
 	public static FreezoneCamera freezoneCamera = new FreezoneCamera(currentplayer);
 
-	public static AbstractState cutsceneState = null;
+	public static CutsceneState cutsceneState = null;
 	public static ComplexDialog currentDialog = null;
 
 	// DUNGEON RELATED OBJECTS

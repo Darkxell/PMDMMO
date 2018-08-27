@@ -62,8 +62,8 @@ public class EditDialogController implements Initializable
 
 	public void setup(CutsceneDialogScreen screen)
 	{
-		this.textTextfield.setText(screen.text);
-		this.translatedCheckbox.setSelected(screen.translate);
+		this.textTextfield.setText(screen.message.id);
+		this.translatedCheckbox.setSelected(screen.message.shouldTranslate);
 		this.targetCheckbox.setSelected(screen.pokemon != -1);
 		if (this.targetCheckbox.isSelected()) for (CutsceneEntity e : this.targetCombobox.getItems())
 			if (e.id == screen.pokemon)
