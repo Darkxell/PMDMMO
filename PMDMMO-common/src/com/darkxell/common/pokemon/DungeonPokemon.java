@@ -293,6 +293,12 @@ public class DungeonPokemon implements ItemContainer
 		return this.usedPokemon != this.originalPokemon;
 	}
 
+	/** @return <code>true</code> if this Pokemon is a foe to Players. */
+	public boolean isEnemy()
+	{
+		return !this.type.isAlliedWith(DungeonPokemonType.TEAM_MEMBER);
+	}
+
 	public boolean isFainted()
 	{
 		return this.getHp() <= 0;

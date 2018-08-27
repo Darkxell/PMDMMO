@@ -9,6 +9,7 @@ import com.darkxell.common.event.stats.BellyChangedEvent;
 import com.darkxell.common.event.stats.ExperienceGeneratedEvent;
 import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.pokemon.DungeonPokemon.DungeonPokemonType;
 import com.darkxell.common.pokemon.LearnedMove;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.Communicable;
@@ -34,7 +35,7 @@ public class MoveSelectionEvent extends DungeonEvent implements Communicable
 			this.move = move;
 			this.user = user;
 			this.direction = direction;
-			this.experienceEvent = this.user.player() == null ? null : new ExperienceGeneratedEvent(floor, this.user.player());
+			this.experienceEvent = this.user.type == DungeonPokemonType.TEAM_MEMBER ? null : new ExperienceGeneratedEvent(floor, this.user.player());
 		}
 
 		@Override

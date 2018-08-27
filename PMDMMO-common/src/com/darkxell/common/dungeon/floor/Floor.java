@@ -24,6 +24,7 @@ import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.mission.DungeonMission;
 import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.pokemon.DungeonPokemon.DungeonPokemonType;
 import com.darkxell.common.trap.Trap;
 import com.darkxell.common.trap.TrapRegistry;
 import com.darkxell.common.util.Direction;
@@ -106,7 +107,7 @@ public class Floor
 	{
 		int count = 0;
 		for (DungeonPokemon p : this.listPokemon())
-			if (p.player() == null) ++count;
+			if (p.isEnemy()) ++count;
 		return count;
 	}
 
@@ -121,7 +122,7 @@ public class Floor
 	{
 		for (Tile[] row : this.tiles)
 			for (Tile tile : row)
-				if (tile.getPokemon() != null && tile.getPokemon().player() == null) tile.getPokemon().dispose();
+				if (tile.getPokemon() != null && tile.getPokemon().type != DungeonPokemonType.TEAM_MEMBER) tile.getPokemon().dispose();
 	}
 
 	/** Generates this Floor. */
@@ -318,7 +319,7 @@ public class Floor
 		{
 			ArrayList<DungeonPokemon> players = new ArrayList<DungeonPokemon>(this.listPokemon());
 			players.removeIf((DungeonPokemon p) -> {
-				return p.player() == null;
+				return !p.isTeamLeader();
 			});
 			candidates.removeIf((Tile t) -> {
 				for (DungeonPokemon player : players)

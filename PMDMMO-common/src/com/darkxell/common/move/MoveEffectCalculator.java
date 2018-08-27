@@ -74,7 +74,7 @@ public class MoveEffectCalculator
 		int defense = this.defenseStat(events);
 		int level = this.user().level();
 		int power = this.movePower();
-		double wildNerfer = this.user().player() != null ? 1 : 0.75;
+		double wildNerfer = this.user().isEnemy() ? 1 : 0.75;
 
 		double damage = ((attack + power) * 0.6 - defense / 2 + 50 * Math.log(((attack - defense) / 8 + level + 50) * 10) - 311) * wildNerfer;
 		if (damage < 1) damage = 1;

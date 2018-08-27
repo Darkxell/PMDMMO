@@ -24,6 +24,7 @@ import com.darkxell.common.mission.InvalidParammetersException;
 import com.darkxell.common.mission.Mission;
 import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.pokemon.DungeonPokemon.DungeonPokemonType;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.Logger;
@@ -230,7 +231,7 @@ public class DungeonExploration
 		for (DungeonPokemon pokemon : this.currentFloor.listPokemon())
 		{
 			if (pokemon.id() == 0) this.communication.pokemonIDs.register(pokemon.originalPokemon, this.communication.itemIDs, this.communication.moveIDs);
-			if (pokemon.player() == null) this.registerActor(pokemon);
+			if (pokemon.type != DungeonPokemonType.TEAM_MEMBER) this.registerActor(pokemon);
 		}
 
 		for (ItemStack item : this.currentFloor.listItemsOnFloor())
