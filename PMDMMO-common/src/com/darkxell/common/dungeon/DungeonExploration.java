@@ -185,6 +185,27 @@ public class DungeonExploration
 		return (ArrayList<Player>) this.exploringPlayers.clone();
 	}
 
+	public DungeonMission findMission(String id)
+	{
+		for (DungeonMission m : this.activeMissions)
+			if (m.missionData.toString().equals(id)) return m;
+		return null;
+	}
+
+	/** @return The Mission corresponding to the input rescued Pokemon. */
+	public DungeonMission findRescueMission(Floor floor, DungeonPokemon rescued)
+	{
+		for (DungeonMission m : this.activeMissions)
+		{
+			Mission mission = m.missionData;
+			if (mission.getFloor() != floor.id) continue;
+			if (mission.getMissiontype() != Mission.TYPE_RESCUEHIM && mission.getMissiontype() != Mission.TYPE_RESCUEME) continue;
+			if (mission.getPokemonid1() != rescued.species().id) continue;
+			return m;
+		}
+		return null;
+	}
+
 	/** Creates the next Floor to explore, places Players in it, registers Actors, AIs, and IDs. */
 	private void generateNextFloor()
 	{
@@ -231,6 +252,8 @@ public class DungeonExploration
 		if (this.pastTurns.isEmpty()) return null;
 		return this.pastTurns.get(this.pastTurns.size() - 1);
 	}
+
+	/* public void insertActor(DungeonPokemon pokemon, int index) { if (this.actorMap.containsKey(pokemon)) return; this.actorMap.put(pokemon, new Actor(pokemon)); this.actors.add(index, this.actorMap.get(pokemon)); } */
 
 	private int indexOf(DungeonPokemon pokemon)
 	{
@@ -290,8 +313,6 @@ public class DungeonExploration
 
 		return this.currentFloor;
 	}
-
-	/* public void insertActor(DungeonPokemon pokemon, int index) { if (this.actorMap.containsKey(pokemon)) return; this.actorMap.put(pokemon, new Actor(pokemon)); this.actors.add(index, this.actorMap.get(pokemon)); } */
 
 	public boolean isGeneratingFloor()
 	{

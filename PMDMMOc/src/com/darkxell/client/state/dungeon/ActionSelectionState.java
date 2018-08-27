@@ -22,8 +22,11 @@ import com.darkxell.common.event.action.PokemonRotateEvent;
 import com.darkxell.common.event.action.PokemonTravelEvent;
 import com.darkxell.common.event.action.TurnSkippedEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent;
+import com.darkxell.common.event.pokemon.PokemonRescuedEvent;
+import com.darkxell.common.mission.DungeonMission;
 import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.pokemon.DungeonPokemon.DungeonPokemonType;
 import com.darkxell.common.pokemon.LearnedMove;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.Direction;
@@ -129,10 +132,21 @@ public class ActionSelectionState extends DungeonSubState
 				Persistance.eventProcessor().processEvent(new MoveSelectionEvent(Persistance.floor, leader.move(3), leader).setPAE());
 		}
 
-		if (key == Key.ATTACK && Persistance.player.getDungeonLeader().canAttack(Persistance.floor)
-				&& (Persistance.player.getDungeonLeader().isFamished() || !Key.RUN.isPressed()))
-			Persistance.eventProcessor().processEvent(
+		if (key == Key.ATTACK && (!Key.RUN.isPressed() || Persistance.player.getDungeonLeader().isFamished()))
+		{
+			DungeonPokemon facing = Persistance.player.getDungeonLeader().tile().adjacentTile(Persistance.player.getDungeonLeader().facing()).getPokemon();
+			if (facing != null && facing.type == DungeonPokemonType.RESCUEABLE)
+			{
+				DungeonMission m = Persistance.dungeon.findRescueMission(Persistance.floor, facing);
+				if (m != null && m.owner == Persistance.player)
+				{
+					Persistance.eventProcessor().processEvent(new PokemonRescuedEvent(Persistance.floor, facing, Persistance.player).setPAE());
+					return;
+				}
+			}
+			if (Persistance.player.getDungeonLeader().canAttack(Persistance.floor)) Persistance.eventProcessor().processEvent(
 					new MoveSelectionEvent(Persistance.floor, new LearnedMove(MoveRegistry.ATTACK.id), Persistance.player.getDungeonLeader()).setPAE());
+		}
 	}
 
 	@Override

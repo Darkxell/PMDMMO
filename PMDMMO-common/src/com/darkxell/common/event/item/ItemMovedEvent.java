@@ -10,6 +10,7 @@ import com.darkxell.common.player.Inventory;
 import com.darkxell.common.player.ItemContainer;
 import com.darkxell.common.player.ItemContainer.ItemContainerType;
 import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.pokemon.DungeonPokemon.DungeonPokemonType;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.Communicable;
 import com.darkxell.common.util.language.Message;
@@ -58,6 +59,13 @@ public class ItemMovedEvent extends DungeonEvent implements Communicable
 		if (this.sourceIndex != o.sourceIndex) return false;
 		if (this.destinationIndex != o.destinationIndex) return false;
 		return true;
+	}
+
+	@Override
+	public boolean isValid()
+	{
+		if (this.mover.type == DungeonPokemonType.RESCUEABLE) return false;
+		return super.isValid();
 	}
 
 	@Override

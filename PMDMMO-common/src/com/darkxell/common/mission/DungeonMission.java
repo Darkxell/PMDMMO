@@ -36,6 +36,11 @@ public abstract class DungeonMission
 		this.missionData = missionData;
 	}
 
+	public void clear()
+	{
+		this.cleared = true;
+	}
+
 	/** @param event - An occuring DungeonEvent.
 	 * @return <code>true</code> If the input Event clears this Mission. */
 	public boolean clearsMission(DungeonEvent event)

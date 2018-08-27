@@ -52,6 +52,7 @@ import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.FaintedPokemonEvent;
 import com.darkxell.common.event.pokemon.HealthRestoredEvent;
+import com.darkxell.common.event.pokemon.PokemonRescuedEvent;
 import com.darkxell.common.event.pokemon.StatusConditionCreatedEvent;
 import com.darkxell.common.event.pokemon.StatusConditionEndedEvent;
 import com.darkxell.common.event.pokemon.TriggeredAbilityEvent;
@@ -149,6 +150,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		if (event instanceof StatusConditionCreatedEvent) this.processStatusEvent((StatusConditionCreatedEvent) event);
 		if (event instanceof StatusConditionEndedEvent) this.processStatusEvent((StatusConditionEndedEvent) event);
 
+		if (event instanceof PokemonRescuedEvent) this.processRescuedEvent((PokemonRescuedEvent) event);
 		if (event instanceof PokemonSpawnedEvent) this.processSpawnEvent((PokemonSpawnedEvent) event);
 		if (event instanceof PokemonTravelsEvent) this.processTravelEvent((PokemonTravelsEvent) event);
 		if (event instanceof TurnSkippedEvent) this.processSkipEvent((TurnSkippedEvent) event);
@@ -472,6 +474,11 @@ public final class ClientEventProcessor extends CommonEventProcessor
 				this.setState(State.ANIMATING);
 			} else if (event.missed()) new TextAbovePokeAnimation(event.target, new Message("move.missed"), FontMode.DUNGEON).start();
 		}
+	}
+
+	private void processRescuedEvent(PokemonRescuedEvent event)
+	{
+		Persistance.dungeonState.pokemonRenderer.unregister(event.rescued());
 	}
 
 	private void processSkipEvent(TurnSkippedEvent event)
