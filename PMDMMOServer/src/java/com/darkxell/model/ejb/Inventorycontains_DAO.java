@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.annotation.Resource;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -77,8 +78,8 @@ public class Inventorycontains_DAO {
         return toreturn;
     }
 
-    public long findStackID(long inventoryid) {
-        long toreturn = 0;
+    public ArrayList<Long> findStacksID(long inventoryid) {
+        ArrayList<Long> toreturn = new ArrayList<>(20);
         try {
             Connection cn = ds.getConnection();
             ResultSet result = cn
@@ -88,8 +89,8 @@ public class Inventorycontains_DAO {
                     ).executeQuery(
                             "SELECT * FROM inventorycontains_ WHERE inventoryid = " + inventoryid
                     );
-            if (result.first()) {
-                toreturn = result.getLong("stackid");
+            while (result.next()) {
+                toreturn.add(result.getLong("stackid"));
             }
             cn.close();
         } catch (SQLException e) {

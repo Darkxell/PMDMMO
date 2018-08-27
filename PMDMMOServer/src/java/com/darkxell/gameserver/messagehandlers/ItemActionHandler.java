@@ -12,6 +12,7 @@ import com.darkxell.gameserver.GameSessionHandler;
 import com.darkxell.gameserver.GameSessionInfo;
 import com.darkxell.gameserver.MessageHandler;
 import com.darkxell.gameserver.SessionsInfoHolder;
+import com.darkxell.gameserver.servermechanics.GiveManager;
 import com.eclipsesource.json.Json;
 import javax.json.JsonObject;
 import javax.websocket.Session;
@@ -65,9 +66,9 @@ public class ItemActionHandler extends MessageHandler {
                     return;
                 }
                 long destinationinventory = endpoint.getPlayerDAO().find(si.serverid).toolboxinventory.id;
-                endpoint.getHoldeditem_DAO().delete(dbp.holdeditem.id, pokemonid);
-                //TODO: don't add if the toolbox is full
-                endpoint.getInventoryContains_DAO().create(itemid, destinationinventory);
+                DBItemstack item = endpoint.getItemstackDAO().find(itemid);
+                deleteItem(itemid);
+                GiveManager.giveItem(item.itemid, (int) item.quantity, si, endpoint, false);
                 answer.add("value", "takesuccess");
                 sessionshandler.sendToSession(from, answer);
                 break;
