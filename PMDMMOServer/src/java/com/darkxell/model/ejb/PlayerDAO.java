@@ -102,7 +102,7 @@ public class PlayerDAO {
             if (result.first()) {
                 toreturn = new DBPlayer(id, result.getString("name"), result.getString("passhash"),
                         result.getLong("moneyinbank"), result.getLong("moneyinbag"), result.getInt("storyposition"),
-                        null, null, null, null, null, null);
+                        null, null, null, null, null, null,result.getInt("points"));
             }
             cn.close();
             completefind(toreturn);
@@ -126,7 +126,7 @@ public class PlayerDAO {
             if (result.next()) {
                 toreturn = new DBPlayer(result.getLong("id"), result.getString("name"), result.getString("passhash"),
                         result.getLong("moneyinbank"), result.getLong("moneyinbag"), result.getInt("storyposition"),
-                        null, null, null, null, null, null);
+                        null, null, null, null, null, null,result.getInt("points"));
             }
             cn.close();
             if (toreturn != null) {
@@ -222,14 +222,15 @@ public class PlayerDAO {
             Connection cn = ds.getConnection();
             PreparedStatement prepare
                     = cn.prepareStatement(
-                            "UPDATE player SET moneyinbank = ?, moneyinbag = ?, name = ?, passhash = ?, storyposition = ? WHERE id = ?"
+                            "UPDATE player SET moneyinbank = ?, moneyinbag = ?, name = ?, passhash = ?, storyposition = ?, points = ? WHERE id = ?"
                     );
             prepare.setLong(1, player.moneyinbank);
             prepare.setLong(2, player.moneyinbag);
             prepare.setString(3, player.name);
             prepare.setString(4, player.passhash);
             prepare.setInt(5, player.storyposition);
-            prepare.setLong(6, player.id);
+            prepare.setInt(6, player.points);
+            prepare.setLong(7, player.id);
             prepare.executeUpdate();
             cn.close();
             //TODO: add the references here too

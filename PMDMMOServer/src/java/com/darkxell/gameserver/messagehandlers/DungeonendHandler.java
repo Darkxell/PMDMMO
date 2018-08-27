@@ -16,6 +16,7 @@ import com.darkxell.gameserver.GameSessionHandler;
 import com.darkxell.gameserver.GameSessionInfo;
 import com.darkxell.gameserver.MessageHandler;
 import com.darkxell.gameserver.SessionsInfoHolder;
+import com.darkxell.gameserver.servermechanics.MissionEndManager;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonValue;
 import java.util.HashMap;
@@ -41,6 +42,7 @@ public class DungeonendHandler extends MessageHandler {
         com.eclipsesource.json.JsonObject outcome = jsonm.get("outcome").asObject();
         com.eclipsesource.json.JsonObject player = jsonm.get("player").asObject();
         com.eclipsesource.json.JsonObject inventory = jsonm.get("inventory").asObject();
+        com.eclipsesource.json.JsonArray missionscomplete = jsonm.get("completedmissions").asArray();
         HashMap<Long, DBPokemon> lookuptable_pokemons = new HashMap<>();
         HashMap<Long, DBLearnedmove> lookuptable_moves = new HashMap<>();
         HashMap<Long, DBItemstack> lookuptable_items = new HashMap<>();
@@ -116,7 +118,11 @@ public class DungeonendHandler extends MessageHandler {
             endpoint.getTeammember_DAO().create(player_original.id, lookuptable_pokemons.get(j.asLong()).id, i);
             ++i;
         }
-        //Resetes the gamesessioninfo to be in a freezone
+        //Manages the mission ends
+        for (JsonValue jsonValue : missionscomplete) {
+            MissionEndManager.manageMissionCompletion(si, endpoint, jsonValue.asString());
+        }
+        //Resets the gamesessioninfo to be in a freezone
         si.currentdungeon = -1;
         si.currentdoing = GameSessionInfo.current_freezone;
         //Sends the response to the client

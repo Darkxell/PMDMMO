@@ -43,7 +43,7 @@ public class DungeonEventTransferTest extends UTest
 			item3 = new ItemStack(new DBItemstack(45, 10, 1));
 	private LearnedMove move1 = new LearnedMove(new DBLearnedmove(50, 0, 1, 5, true, false, 0)),
 			move2 = new LearnedMove(new DBLearnedmove(51, 1, 101, 5, true, false, 0));
-	private Player player = new Player(new DBPlayer(69, "DaWae", "no U", 45, 99, 0, new ArrayList<>(), new ArrayList<>(), null, null, null, null));
+	private Player player = new Player(new DBPlayer(69, "DaWae", "no U", 45, 99, 0, new ArrayList<>(), new ArrayList<>(), null, null, null, null,0));
 	private DungeonPokemon pokemon = new DungeonPokemon(
 			new Pokemon(new DBPokemon(42, 6, 0, 1, Pokemon.GENDERLESS, "My poke", 5, 126894, 111, false, 1, 2, 3, 4, 5, null, new ArrayList<>())));
 

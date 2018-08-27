@@ -23,13 +23,14 @@ public class DBPlayer implements Communicable
 	public int storyposition;
 	public DatabaseIdentifier toolboxinventory = new DatabaseIdentifier(0);
 	public ArrayList<String> missionsids = new ArrayList<>();
+	public int points = 0;
 
 	public DBPlayer()
 	{}
 
 	public DBPlayer(long id, String name, String passhash, long moneyinbank, long moneyinbag, int storyposition, ArrayList<DatabaseIdentifier> pokemonsinzones,
 			ArrayList<DatabaseIdentifier> pokemonsinparty, DatabaseIdentifier mainpokemon, DatabaseIdentifier toolboxinventory,
-			DatabaseIdentifier storageinventory, ArrayList<String> missionsids)
+			DatabaseIdentifier storageinventory, ArrayList<String> missionsids,int points)
 	{
 		this.id = id;
 		if (name != null) this.name = name;
@@ -43,6 +44,7 @@ public class DBPlayer implements Communicable
 		if (toolboxinventory != null) this.toolboxinventory = toolboxinventory;
 		if (storageinventory != null) this.storageinventory = storageinventory;
 		if (missionsids != null) this.missionsids = missionsids;
+		this.points = points;
 	}
 
 	@Override
@@ -61,6 +63,7 @@ public class DBPlayer implements Communicable
 		if (!this.toolboxinventory.equals(o.toolboxinventory)) return false;
 		if (!this.storageinventory.equals(o.storageinventory)) return false;
 		if (!this.missionsids.equals(o.missionsids)) return false;
+		if (this.points != o.points) return false;
 		return true;
 	}
 
@@ -104,6 +107,7 @@ public class DBPlayer implements Communicable
 			for (JsonValue id : missionsval.asArray())
 				if (id.isString()) this.missionsids.add(id.asString());
 		}
+		this.points = value.getInt("points", this.points);
 	}
 
 	@Override
@@ -143,6 +147,7 @@ public class DBPlayer implements Communicable
 			root.add("missionsids", missionsarray);
 		}
 
+		root.add("points", this.points);
 		return root;
 	}
 
