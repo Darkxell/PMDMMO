@@ -11,6 +11,7 @@ import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.DungeonStats;
 import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.pokemon.PropertyModificator;
+import com.darkxell.common.status.AppliedStatusCondition;
 
 /** Object that computes various values when using a move, such as damage or accuracy. */
 public class MoveEffectCalculator
@@ -34,6 +35,10 @@ public class MoveEffectCalculator
 		if (this.user().getItem() != null) this.modificator.addUser(this.user().getItem().item());
 		if (target != null && target.getItem() != null) this.modificator.add(target.getItem().item());
 		this.modificator.add(floor.currentWeather().weather);
+		for (AppliedStatusCondition s : this.move.user.activeStatusConditions())
+			this.modificator.add(s.condition);
+		for (AppliedStatusCondition s : this.target.activeStatusConditions())
+			this.modificator.add(s.condition);
 	}
 
 	protected double accuracyStat(ArrayList<DungeonEvent> events)
@@ -160,7 +165,7 @@ public class MoveEffectCalculator
 	 * @return True if this Move misses. */
 	public boolean misses(ArrayList<DungeonEvent> events)
 	{
-		if (this.user() == target || this.target == null) return false;
+		if (this.target == null) return false;
 
 		int accuracy = this.move().accuracy;
 
@@ -169,7 +174,7 @@ public class MoveEffectCalculator
 
 		accuracy = (int) (accuracy * userAccuracy * evasion);
 
-		return floor.random.nextDouble() * 100 > accuracy;
+		return floor.random.nextDouble() * 100 > accuracy; // ITS SUPERIOR because you return 'MISSES'
 	}
 
 	public Move move()

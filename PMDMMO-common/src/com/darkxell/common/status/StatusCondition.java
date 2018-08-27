@@ -30,6 +30,8 @@ public class StatusCondition implements AffectsPokemon, DamageSource, DungeonEve
 	public static final StatusCondition Constricted_fire = new ConstrictedStatusCondition(20, 4, 6, 2, 5);
 	public static final StatusCondition Cringed = new CringedStatusCondition(25, 1, 1);
 
+	public static final StatusCondition Protect = new ImmuneStatusCondition(40, 2, 3);
+
 	public static final StatusCondition Sleepless = new PreventsOtherStatusCondition(100, 11, 12, Asleep);
 
 	/** @return The Status Condition with the input ID. */

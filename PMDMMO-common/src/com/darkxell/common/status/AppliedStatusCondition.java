@@ -79,7 +79,9 @@ public class AppliedStatusCondition implements DungeonEventListener
 
 	public Message startMessage()
 	{
-		return new Message("status.start." + this.condition.id).addReplacement("<pokemon>", this.pokemon.getNickname());
+		String id = "status.start." + this.condition.id;
+		if (!Lang.containsKey(id)) return null;
+		return new Message(id).addReplacement("<pokemon>", this.pokemon.getNickname());
 	}
 
 	public void tick(Floor floor, ArrayList<DungeonEvent> events)
