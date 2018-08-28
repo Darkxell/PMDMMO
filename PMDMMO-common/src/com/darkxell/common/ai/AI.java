@@ -40,6 +40,8 @@ public abstract class AI
 	public final DungeonPokemon pokemon;
 	/** The current {@link AIState State} of this AI. May be null. */
 	protected AIState state;
+	/** A State that may be forced above the current state by other factors (status conditions, abilities...) */
+	private AIState superstate = null;
 
 	public AI(Floor floor, DungeonPokemon pokemon)
 	{
@@ -48,23 +50,39 @@ public abstract class AI
 		this.state = this.defaultState();
 	}
 
+	public AIState currentState()
+	{
+		if (this.hasSuperState()) return this.superstate;
+		return this.state;
+	}
+
 	public abstract AIState defaultState();
+
+	public boolean hasSuperState()
+	{
+		return this.superstate != null;
+	}
 
 	/** Called at the end of each turn. Allows the Pokemon to rotate.
 	 * 
 	 * @return The Direction to rotate to. */
 	public Direction mayRotate()
 	{
-		if (this.state == null) return null;
-		return this.state.mayRotate();
+		if (this.currentState() == null) return null;
+		return this.currentState().mayRotate();
+	}
+
+	public void setSuperState(AIState superstate)
+	{
+		this.superstate = superstate;
 	}
 
 	/** Calls the AIState to determine the action to execute. */
 	public DungeonEvent takeAction()
 	{
-		this.update();
-		if (this.state == null) return new TurnSkippedEvent(this.floor, this.pokemon);
-		return this.state.takeAction();
+		if (!this.hasSuperState()) this.update();
+		if (this.currentState() == null) return new TurnSkippedEvent(this.floor, this.pokemon);
+		return this.currentState().takeAction();
 	}
 
 	/** Changes the AIState depending on the current situation. */

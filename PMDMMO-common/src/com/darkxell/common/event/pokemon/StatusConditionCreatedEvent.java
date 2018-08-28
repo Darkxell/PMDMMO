@@ -41,6 +41,7 @@ public class StatusConditionCreatedEvent extends DungeonEvent
 			Message m = this.condition.startMessage();
 			if (m != null) this.messages.add(m);
 			this.condition.pokemon.inflictStatusCondition(this.condition);
+			this.condition.onConditionStart(floor, this.resultingEvents);
 		} else if (affects.second != null) this.messages.add(affects.second);
 		return super.processServer();
 	}

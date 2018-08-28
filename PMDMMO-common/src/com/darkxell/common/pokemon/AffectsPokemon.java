@@ -93,7 +93,7 @@ public interface AffectsPokemon
 	 * @param floor - The Floor context.
 	 * @param events - The current Events being generated.
 	 * 
-	 * @return The new stage of the Stat with modifications applied by this object. */
+	 * @return The multiplier to add to the final damage value (damage *= returned_multiplier). */
 	public default double damageMultiplier(MoveUse move, DungeonPokemon target, boolean isUser, Floor floor, ArrayList<DungeonEvent> events)
 	{
 		return 1;

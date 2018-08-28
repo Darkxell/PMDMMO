@@ -32,6 +32,8 @@ public class StatusCondition implements AffectsPokemon, DamageSource, DungeonEve
 
 	public static final StatusCondition Protect = new ImmuneStatusCondition(40, 2, 3);
 
+	public static final StatusCondition Skull_bash = new ChargedMoveStatusCondition(60, 1, 1, -50);
+
 	public static final StatusCondition Sleepless = new PreventsOtherStatusCondition(100, 11, 12, Asleep);
 
 	/** @return The Status Condition with the input ID. */
@@ -86,6 +88,12 @@ public class StatusCondition implements AffectsPokemon, DamageSource, DungeonEve
 	{
 		return new Message("status." + this.id);
 	}
+
+	public void onEnd(Floor floor, AppliedStatusCondition instance, ArrayList<DungeonEvent> events)
+	{}
+
+	public void onStart(Floor floor, AppliedStatusCondition instance, ArrayList<DungeonEvent> events)
+	{}
 
 	public void tick(Floor floor, AppliedStatusCondition instance, ArrayList<DungeonEvent> events)
 	{}

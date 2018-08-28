@@ -83,7 +83,7 @@ public class MoveSelectionEvent extends DungeonEvent implements Communicable
 		super(floor, user);
 		this.usedMove = new MoveUse(floor, move, user, direction);
 
-		if (this.usedMove.move.move() != MoveRegistry.ATTACK) this.messages
+		if (this.usedMove.move.move().hasUseMessage()) this.messages
 				.add(new Message("move.used").addReplacement("<pokemon>", user.getNickname()).addReplacement("<move>", this.usedMove.move.move().name()));
 	}
 

@@ -139,6 +139,7 @@
     <move id="45">
       <default sprites="none" delaytime="15" state="slice"/>
     </move>
+    <move id="50" clone="2"/>
     <move id="52">
       <default sprites="none" delaytime="15" state="slice"/>
     </move>
@@ -259,6 +260,9 @@
       <southwest x="40" y="0"/>
       <west width="32" x="32"/>
       <northwest backsprites="only" height="56" x="40" y="48"/>
+    </move>
+    <move id="-50">
+      <default sprites="none"/>
     </move>
   </moves>
   <movetargets>

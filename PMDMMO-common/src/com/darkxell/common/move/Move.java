@@ -10,6 +10,7 @@ import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.util.XMLUtils;
+import com.darkxell.common.util.language.Lang;
 import com.darkxell.common.util.language.Message;
 
 public class Move implements Comparable<Move>
@@ -163,6 +164,11 @@ public class Move implements Comparable<Move>
 	public Message description()
 	{
 		return new Message("move.info." + this.id);
+	}
+
+	public boolean hasUseMessage()
+	{
+		return Lang.containsKey("move." + this.id);
 	}
 
 	/** @return This Move's name. */

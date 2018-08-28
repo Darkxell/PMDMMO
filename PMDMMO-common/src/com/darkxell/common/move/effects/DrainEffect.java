@@ -7,6 +7,7 @@ import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.HealthRestoredEvent;
 import com.darkxell.common.move.MoveEffect;
 import com.darkxell.common.move.MoveEffectCalculator;
+import com.darkxell.common.move.MoveEvents;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
 public class DrainEffect extends MoveEffect
@@ -21,19 +22,19 @@ public class DrainEffect extends MoveEffect
 	}
 
 	@Override
-	protected void moveEffects(MoveUse usedMove, DungeonPokemon target, Floor floor, MoveEffectCalculator calculator, boolean missed)
+	public void additionalEffects(MoveUse usedMove, DungeonPokemon target, Floor floor, MoveEffectCalculator calculator, boolean missed, MoveEvents effects)
 	{
-		super.moveEffects(usedMove, target, floor, calculator, missed);
+		super.additionalEffects(usedMove, target, floor, calculator, missed, effects);
 		if (!missed)
 		{
 			DamageDealtEvent damage = null;
-			for (DungeonEvent e : this.currentEffects())
+			for (DungeonEvent e : effects.currentEffects())
 				if (e instanceof DamageDealtEvent)
 				{
 					damage = (DamageDealtEvent) e;
 					break;
 				}
-			if (damage != null) this.createEffect(new HealthRestoredEvent(floor, usedMove.user, damage.damage * this.percent / 100), usedMove, target, floor,
+			if (damage != null) effects.createEffect(new HealthRestoredEvent(floor, usedMove.user, damage.damage * this.percent / 100), usedMove, target, floor,
 					missed, true, usedMove.user);
 		}
 	}

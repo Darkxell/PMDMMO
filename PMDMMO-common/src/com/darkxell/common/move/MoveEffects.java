@@ -4,6 +4,8 @@ import java.util.Collection;
 import java.util.HashMap;
 
 import com.darkxell.common.move.effects.ApplyStatusConditionEffect;
+import com.darkxell.common.move.effects.CompoundEffect;
+import com.darkxell.common.move.effects.DoubleDamageEffect;
 import com.darkxell.common.move.effects.DrainEffect;
 import com.darkxell.common.move.effects.FixedDamageEffect;
 import com.darkxell.common.move.effects.RecoilEffect;
@@ -36,14 +38,21 @@ public final class MoveEffects
 	public static final MoveEffect Recoil_12percent5 = new RecoilEffect(92, 12.5);
 	public static final MoveEffect Inflict_sleepless = new ApplyStatusConditionEffect(102, StatusCondition.Sleepless, 100);
 	public static final MoveEffect WeatherHeal = new WeatherHealEffect(113);
+	public static final MoveEffect Double_damage = new DoubleDamageEffect(131);
 	public static final MoveEffect Lower_defense = new StatChangeEffect(139, Stat.Defense, -1, 100);
 	public static final MoveEffect Inflict_leechSeed = new ApplyStatusConditionEffect(143, StatusCondition.Leech_seed, 100);
-	public static final MoveEffect Raise_defense = new StatChangeEffect(172, Stat.Defense, 2, 100);
+	public static final MoveEffect Inflict_skullbash_Raise_defense;
+	public static final MoveEffect Raise_defense = new StatChangeEffect(172, Stat.Defense, 1, 100);
 	public static final MoveEffect Lower_evasion = new StatChangeEffect(179, Stat.Evasiveness, -1, 100);
 	public static final MoveEffect Inflict_protect = new ApplyStatusConditionEffect(192, StatusCondition.Protect, 100);
 	public static final MoveEffect Lower_accuracy_2s = new StatChangeEffect(203, Stat.Accuracy, -2, 100);
 	public static final MoveEffect Weather_rain = new WeatherChangeEffect(208, Weather.RAIN);
 	public static final MoveEffect Lower_speed_30 = new StatChangeEffect(225, Stat.Speed, -1, 30);
+
+	static
+	{
+		Inflict_skullbash_Raise_defense = new CompoundEffect(151, Raise_defense, new ApplyStatusConditionEffect(-1, StatusCondition.Skull_bash, 100));
+	}
 
 	/** @return The Effect with the input ID. */
 	public static MoveEffect find(int id)

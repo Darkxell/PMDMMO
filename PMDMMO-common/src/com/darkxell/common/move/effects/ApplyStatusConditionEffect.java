@@ -5,6 +5,7 @@ import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
 import com.darkxell.common.event.pokemon.StatusConditionCreatedEvent;
 import com.darkxell.common.move.MoveEffect;
 import com.darkxell.common.move.MoveEffectCalculator;
+import com.darkxell.common.move.MoveEvents;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.status.StatusCondition;
 
@@ -22,13 +23,13 @@ public class ApplyStatusConditionEffect extends MoveEffect
 	}
 
 	@Override
-	protected void moveEffects(MoveUse usedMove, DungeonPokemon target, Floor floor, MoveEffectCalculator calculator, boolean missed)
+	public void additionalEffects(MoveUse usedMove, DungeonPokemon target, Floor floor, MoveEffectCalculator calculator, boolean missed, MoveEvents effects)
 	{
-		super.moveEffects(usedMove, target, floor, calculator, missed);
+		super.additionalEffects(usedMove, target, floor, calculator, missed, effects);
 
 		if (!missed && floor.random.nextDouble() * 100 < this.probability)
-			this.createEffect(new StatusConditionCreatedEvent(floor, this.status.create(target, usedMove.user, floor.random)), usedMove, target, floor, missed,
-					usedMove.move.move().dealsDamage, target);
+			effects.createEffect(new StatusConditionCreatedEvent(floor, this.status.create(target, usedMove.user, floor.random)), usedMove, target, floor,
+					missed, usedMove.move.move().dealsDamage, target);
 	}
 
 }

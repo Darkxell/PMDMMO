@@ -28,6 +28,7 @@ public class StatusConditionEndedEvent extends DungeonEvent
 	{
 		if (this.condition.pokemon.removeStatusCondition(this.condition))
 		{
+			this.condition.onConditionEnd(floor, this.resultingEvents);
 			Message m = this.condition.endMessage();
 			if (m != null) this.messages.add(m);
 		}
