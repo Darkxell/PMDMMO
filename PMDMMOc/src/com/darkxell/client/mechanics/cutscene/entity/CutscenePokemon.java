@@ -28,14 +28,19 @@ public class CutscenePokemon extends CutsceneEntity
 		this(null, xml);
 	}
 
-	public CutscenePokemon(int id, double xpos, double ypos, Pokemon pokemon, PokemonSpriteState state, Direction facing, boolean animated)
+	public CutscenePokemon(int id, double xpos, double ypos, int pokemonid, PokemonSpriteState state, Direction facing, boolean animated)
 	{
 		super(id, xpos, ypos);
-		this.pokemonid = pokemon.species().id;
+		this.pokemonid = pokemonid;
 		this.currentState = state;
 		this.facing = facing;
 		this.animated = animated;
-		this.instanciated = pokemon;
+		this.instanciated = PokemonRegistry.find(pokemonid).generate(new Random(), 1);
+	}
+
+	public CutscenePokemon(int id, double xpos, double ypos, Pokemon pokemon, PokemonSpriteState state, Direction facing, boolean animated)
+	{
+		this(id, xpos, ypos, pokemon.species().id, state, facing, animated);
 	}
 
 	public CutscenePokemon(Pokemon pokemon)

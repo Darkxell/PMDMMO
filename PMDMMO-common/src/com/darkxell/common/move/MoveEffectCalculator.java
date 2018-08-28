@@ -37,7 +37,7 @@ public class MoveEffectCalculator
 		this.modificator.add(floor.currentWeather().weather);
 		for (AppliedStatusCondition s : this.move.user.activeStatusConditions())
 			this.modificator.add(s.condition);
-		for (AppliedStatusCondition s : this.target.activeStatusConditions())
+		if (target != null) for (AppliedStatusCondition s : this.target.activeStatusConditions())
 			this.modificator.add(s.condition);
 	}
 

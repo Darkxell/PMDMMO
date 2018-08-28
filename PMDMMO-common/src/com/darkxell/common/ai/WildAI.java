@@ -18,6 +18,12 @@ public class WildAI extends AI
 	}
 
 	@Override
+	public AIState defaultState()
+	{
+		return new AIStateExplore(this);
+	}
+
+	@Override
 	protected void update()
 	{
 		ArrayList<DungeonPokemon> enemies = AIUtils.visibleEnemies(this.floor, this.pokemon);

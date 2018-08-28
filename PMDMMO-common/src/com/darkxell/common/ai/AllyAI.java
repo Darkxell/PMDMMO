@@ -19,6 +19,12 @@ public class AllyAI extends AI
 	}
 
 	@Override
+	public AIState defaultState()
+	{
+		return new AIStateExplore(this, null);
+	}
+
+	@Override
 	protected void update()
 	{
 		if (AIUtils.isVisible(this.floor, this.pokemon, this.leader))

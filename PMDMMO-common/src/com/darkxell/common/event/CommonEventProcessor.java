@@ -3,7 +3,9 @@ package com.darkxell.common.event;
 import java.util.ArrayList;
 import java.util.Stack;
 
+import com.darkxell.common.ai.AI;
 import com.darkxell.common.ai.AIUtils;
+import com.darkxell.common.ai.states.AIStatePlayerControl;
 import com.darkxell.common.dungeon.AutoDungeonExploration;
 import com.darkxell.common.dungeon.DungeonExploration;
 import com.darkxell.common.dungeon.DungeonOutcome;
@@ -191,7 +193,11 @@ public class CommonEventProcessor
 			{
 				this.onTurnEnd();
 				return;
-			} else if (actor.isTeamLeader() && actor.canAct(this.dungeon.currentFloor()))
+			} 
+			
+			AI ai = this.dungeon.currentFloor().aiManager.getAI(actor);
+			
+			if (ai.currentState() instanceof AIStatePlayerControl && actor.canAct(this.dungeon.currentFloor()))
 			{
 				if (this.runners.contains(actor))
 				{

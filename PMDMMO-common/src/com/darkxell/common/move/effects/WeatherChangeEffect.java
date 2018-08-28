@@ -5,6 +5,7 @@ import com.darkxell.common.event.dungeon.weather.WeatherCreatedEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
 import com.darkxell.common.move.MoveEffect;
 import com.darkxell.common.move.MoveEffectCalculator;
+import com.darkxell.common.move.MoveEvents;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.weather.ActiveWeather;
 import com.darkxell.common.weather.Weather;
@@ -21,11 +22,11 @@ public class WeatherChangeEffect extends MoveEffect
 	}
 
 	@Override
-	protected void moveEffects(MoveUse usedMove, DungeonPokemon target, Floor floor, MoveEffectCalculator calculator, boolean missed)
+	public void additionalEffects(MoveUse usedMove, DungeonPokemon target, Floor floor, MoveEffectCalculator calculator, boolean missed, MoveEvents effects)
 	{
-		super.moveEffects(usedMove, target, floor, calculator, missed);
+		super.additionalEffects(usedMove, target, floor, calculator, missed, effects);
 
-		this.createEffect(new WeatherCreatedEvent(new ActiveWeather(this.weather, usedMove, 5, floor, 5)), usedMove, target, floor, missed, false, null);
+		effects.createEffect(new WeatherCreatedEvent(new ActiveWeather(this.weather, usedMove, 5, floor, 5)), usedMove, target, floor, missed, false, null);
 	}
 
 }

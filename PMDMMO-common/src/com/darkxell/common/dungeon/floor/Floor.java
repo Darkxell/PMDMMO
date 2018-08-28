@@ -218,6 +218,7 @@ public class Floor
 		Point spawn = this.teamSpawn;
 		this.tileAt(spawn.x, spawn.y).setPokemon(player.getDungeonLeader());
 		player.getDungeonLeader().setFacing(this.teamSpawnDirection);
+		this.aiManager.register(player.getDungeonLeader());
 
 		ArrayList<Tile> candidates = new ArrayList<Tile>();
 		Tile initial = player.getDungeonLeader().tile();

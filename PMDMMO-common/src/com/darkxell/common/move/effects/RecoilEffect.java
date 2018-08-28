@@ -6,6 +6,7 @@ import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.move.MoveEffect;
 import com.darkxell.common.move.MoveEffectCalculator;
+import com.darkxell.common.move.MoveEvents;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
 public class RecoilEffect extends MoveEffect
@@ -20,20 +21,20 @@ public class RecoilEffect extends MoveEffect
 	}
 
 	@Override
-	protected void moveEffects(MoveUse usedMove, DungeonPokemon target, Floor floor, MoveEffectCalculator calculator, boolean missed)
+	public void additionalEffects(MoveUse usedMove, DungeonPokemon target, Floor floor, MoveEffectCalculator calculator, boolean missed, MoveEvents effects)
 	{
-		super.moveEffects(usedMove, target, floor, calculator, missed);
+		super.additionalEffects(usedMove, target, floor, calculator, missed, effects);
 		if (!missed)
 		{
 			int damage = -1;
-			for (DungeonEvent e : this.currentEffects())
+			for (DungeonEvent e : effects.currentEffects())
 				if (e instanceof DamageDealtEvent)
 				{
 					DamageDealtEvent d = (DamageDealtEvent) e;
 					if (d.target == target && d.source == usedMove) damage = d.damage;
 				}
 			damage *= this.percentage / 100;
-			this.createEffect(new DamageDealtEvent(floor, usedMove.user, usedMove, damage), usedMove, target, floor, missed, true, usedMove.user);
+			effects.createEffect(new DamageDealtEvent(floor, usedMove.user, usedMove, damage), usedMove, target, floor, missed, true, usedMove.user);
 		}
 	}
 

@@ -24,7 +24,7 @@ public class Util
 		// player.addAlly(PokemonRegistry.find(255).generate(new Random(), 80));
 		player.getTeamLeader().setItem(new ItemStack(208));
 		player.getTeamLeader().setMove(0, new LearnedMove(705));
-		player.getTeamLeader().setMove(2, new LearnedMove(453));
+		player.getTeamLeader().setMove(2, new LearnedMove(50));
 		player.getTeamLeader().setMove(2, new LearnedMove(45));
 		player.getTeamLeader().setMove(3, new LearnedMove(806));
 
@@ -52,7 +52,7 @@ public class Util
 		try
 		{
 			player.getData().missionsids
-					.add(new Mission("E", 1, 1, 3, 6, 1, new MissionReward(55, new int[] { 1 }, new int[] { 1 }, 5, null), Mission.TYPE_RESCUEME).toString());
+					.add(new Mission("E", 1, 1, 3, 6, 1, new MissionReward(55, new int[] { 1 }, new int[] { 1 }, 5, null), Mission.TYPE_RESCUEHIM).toString());
 			player.getData().missionsids
 					.add(new Mission("A", 12, 14, 15, 71, 2, new MissionReward(70, new int[] { 1 }, new int[] { 1 }, 5, null), Mission.TYPE_DEFEAT).toString());
 			player.getData().missionsids

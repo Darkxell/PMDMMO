@@ -1,6 +1,7 @@
 package com.darkxell.client.state.dungeon;
 
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 
 import com.darkxell.client.launchable.GameSocketEndpoint;
 import com.darkxell.client.launchable.Persistance;
@@ -8,10 +9,13 @@ import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.PlayerLoadingState;
 import com.darkxell.client.state.PlayerLoadingState.PlayerLoadingEndListener;
 import com.darkxell.client.state.StateManager;
+import com.darkxell.client.state.TransitionState;
+import com.darkxell.client.state.freezone.cutscenes.MissionResultsState;
 import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.dungeon.DungeonOutcome;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.mission.DungeonMission;
+import com.darkxell.common.mission.Mission;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.zones.FreezoneInfo;
@@ -22,6 +26,20 @@ import com.eclipsesource.json.JsonObject;
 public class DungeonEndState extends AbstractState
 {
 
+	public static void finish()
+	{
+		TransitionState t = new TransitionState(Persistance.stateManager.getCurrentState(),
+				new PlayerLoadingState(Persistance.player.getData().id, new PlayerLoadingEndListener() {
+					@Override
+					public void onPlayerLoadingEnd(PlayerLoadingState state)
+					{
+						StateManager.setExploreState(FreezoneInfo.BASE, Direction.SOUTH, -1, -1);
+					}
+				}));
+		Persistance.stateManager.setState(t);
+	}
+
+	private ArrayList<Mission> completedMissions = new ArrayList<>();
 	public final DungeonOutcome outcome;
 
 	public DungeonEndState(DungeonOutcome outcome)
@@ -32,14 +50,19 @@ public class DungeonEndState extends AbstractState
 	public void onConfirmMessage(JsonObject message)
 	{
 		Persistance.isCommunicating = false;
-		Persistance.stateManager.setState(new PlayerLoadingState(Persistance.player.getData().id, new PlayerLoadingEndListener() {
-			@Override
-			public void onPlayerLoadingEnd(PlayerLoadingState state)
-			{
-				Persistance.player.resetDungeonTeam();
-				StateManager.setExploreState(FreezoneInfo.BASE, Direction.SOUTH, -1, -1);
-			}
-		}));
+		this.onFinish();
+	}
+
+	private void onFinish()
+	{
+		Persistance.player.resetDungeonTeam();
+		if (this.completedMissions.isEmpty()) finish();
+		else
+		{
+			Persistance.cutsceneState = new MissionResultsState(this.completedMissions);
+			Persistance.cutsceneState.cutscene.creation.create();
+			Persistance.stateManager.setState(Persistance.cutsceneState);
+		}
 	}
 
 	@Override
@@ -54,6 +77,9 @@ public class DungeonEndState extends AbstractState
 	public void onStart()
 	{
 		super.onStart();
+
+		for (DungeonMission m : Persistance.dungeon.activeMissions)
+			if (m.isCleared() && m.owner == Persistance.player) this.completedMissions.add(m.missionData);
 
 		if (Persistance.socketendpoint.connectionStatus() == GameSocketEndpoint.CONNECTED)
 		{
@@ -83,16 +109,12 @@ public class DungeonEndState extends AbstractState
 			json.add("items", array);
 
 			array = new JsonArray();
-			for (DungeonMission m : Persistance.dungeon.activeMissions)
-				if (m.isCleared() && m.owner == Persistance.player) array.add(m.missionData.toString());
+			for (Mission m : this.completedMissions)
+				array.add(m.toString());
 			json.add("completedmissions", array);
 
 			Persistance.socketendpoint.sendMessage(json.toString());
-		} else
-		{
-			Persistance.player.resetDungeonTeam();
-			StateManager.setExploreState(FreezoneInfo.BASE, Direction.SOUTH, -1, -1);
-		}
+		} else this.onFinish();
 	}
 
 	@Override

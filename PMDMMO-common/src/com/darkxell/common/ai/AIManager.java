@@ -28,6 +28,7 @@ public class AIManager
 		switch (pokemon.type)
 		{
 			case TEAM_MEMBER:
+				if (pokemon.isTeamLeader()) return new LeaderAI(this.floor, pokemon);
 				return new AllyAI(this.floor, pokemon, pokemon.player().getDungeonLeader());
 
 			case BOSS:
@@ -55,7 +56,7 @@ public class AIManager
 
 	public void register(DungeonPokemon pokemon, AI ai)
 	{
-		if (ai == null && !pokemon.isTeamLeader()) ai = this.aiFor(pokemon);
+		if (ai == null) ai = this.aiFor(pokemon);
 		if (ai != null) this.ais.put(pokemon, ai);
 	}
 

@@ -64,6 +64,16 @@ public class AppliedStatusCondition implements DungeonEventListener
 		return this.tick >= this.duration;
 	}
 
+	public void onConditionEnd(Floor floor, ArrayList<DungeonEvent> events)
+	{
+		this.condition.onEnd(floor, this, events);
+	}
+
+	public void onConditionStart(Floor floor, ArrayList<DungeonEvent> events)
+	{
+		this.condition.onStart(floor, this, events);
+	}
+
 	@Override
 	public void onPostEvent(Floor floor, DungeonEvent event, ArrayList<DungeonEvent> resultingEvents)
 	{

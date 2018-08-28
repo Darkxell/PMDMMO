@@ -1,6 +1,7 @@
 package com.darkxell.client.mechanics.cutscene.event;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.jdom2.Element;
 
@@ -23,36 +24,38 @@ public class DialogCutsceneEvent extends CutsceneEvent implements DialogEndListe
 	public static class CutsceneDialogScreen
 	{
 		public final int emotion;
+		public final Message message;
 		public final int pokemon;
-		public final String text;
-		public final boolean translate;
 
 		public CutsceneDialogScreen(Element xml)
 		{
-			this.text = xml.getText();
+			this.message = new Message(xml.getText(), XMLUtils.getAttribute(xml, "translate", true));
 			this.pokemon = XMLUtils.getAttribute(xml, "target", -1);
 			this.emotion = XMLUtils.getAttribute(xml, "emotion", -1);
-			this.translate = XMLUtils.getAttribute(xml, "translate", true);
+		}
+
+		public CutsceneDialogScreen(Message message, int emotion, CutsceneEntity entity)
+		{
+			this.message = message;
+			this.emotion = emotion;
+			this.pokemon = entity == null ? -1 : entity.id;
 		}
 
 		public CutsceneDialogScreen(String text, boolean translate, int emotion, CutsceneEntity entity)
 		{
-			this.text = text;
-			this.translate = translate;
-			this.emotion = emotion;
-			this.pokemon = entity == null ? -1 : entity.id;
+			this(new Message(text, translate), emotion, entity);
 		}
 
 		@Override
 		public String toString()
 		{
-			return new Message(this.text, this.translate).toString();
+			return this.message.toString();
 		}
 
 		public Element toXML()
 		{
-			Element root = new Element("dialogscreen").setText(this.text);
-			XMLUtils.setAttribute(root, "translate", this.translate, true);
+			Element root = new Element("dialogscreen").setText(this.message.id);
+			XMLUtils.setAttribute(root, "translate", this.message.shouldTranslate, true);
 			XMLUtils.setAttribute(root, "emotion", this.emotion, -1);
 			XMLUtils.setAttribute(root, "target", this.pokemon, -1);
 			return root;
@@ -61,7 +64,7 @@ public class DialogCutsceneEvent extends CutsceneEvent implements DialogEndListe
 
 	public final boolean isNarratorDialog;
 	private boolean isOver;
-	public ArrayList<CutsceneDialogScreen> screens;
+	public List<CutsceneDialogScreen> screens;
 
 	public DialogCutsceneEvent(Element xml, Cutscene cutscene)
 	{
@@ -73,7 +76,7 @@ public class DialogCutsceneEvent extends CutsceneEvent implements DialogEndListe
 		this.isOver = false;
 	}
 
-	public DialogCutsceneEvent(int id, boolean isNarrator, ArrayList<CutsceneDialogScreen> screens)
+	public DialogCutsceneEvent(int id, boolean isNarrator, List<CutsceneDialogScreen> screens)
 	{
 		super(id, CutsceneEventType.dialog);
 		this.isNarratorDialog = isNarrator;
@@ -104,9 +107,8 @@ public class DialogCutsceneEvent extends CutsceneEvent implements DialogEndListe
 			CutscenePokemon pokemon = null;
 			CutsceneEntity e = this.cutscene.player.getEntity(s.pokemon);
 			if (e != null && e instanceof CutscenePokemon) pokemon = (CutscenePokemon) e;
-			Message message = new Message(s.text, s.translate);
-			DialogScreen screen = pokemon == null ? new DialogScreen(message) : new PokemonDialogScreen(pokemon.toPokemon(), message);
-			if (this.isNarratorDialog) screen = new NarratorDialogScreen(message);
+			DialogScreen screen = pokemon == null ? new DialogScreen(s.message) : new PokemonDialogScreen(pokemon.toPokemon(), s.message);
+			if (this.isNarratorDialog) screen = new NarratorDialogScreen(s.message);
 			screens[index++] = screen;
 		}
 
@@ -117,7 +119,7 @@ public class DialogCutsceneEvent extends CutsceneEvent implements DialogEndListe
 	@Override
 	public String toString()
 	{
-		return this.displayID() + "Dialog: " + new Message(this.screens.get(0).text).toString() + "...";
+		return this.displayID() + "Dialog: " + this.screens.get(0).message.toString() + "...";
 	}
 
 	@Override
