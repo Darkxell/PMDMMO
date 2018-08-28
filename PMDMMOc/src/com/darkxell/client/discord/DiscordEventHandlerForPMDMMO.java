@@ -31,8 +31,8 @@ public class DiscordEventHandlerForPMDMMO {
 				// Sets the default discord presence for the game
 				Logger.i("Initializing Discord RPC.");
 				DiscordRPC.discordInitialize("463408543572426762", createHandler(), true);
-				DiscordRichPresence rich = new DiscordRichPresence.Builder(defaultName)
-						.setBigImage(defaultImageID, "").build();
+				DiscordRichPresence rich = new DiscordRichPresence.Builder(defaultName).setBigImage(defaultImageID, "")
+						.build();
 				DiscordRPC.discordUpdatePresence(rich);
 				while (isrunning && Launcher.isRunning) {
 					// As long as the RP thread and the game are running, update
@@ -87,7 +87,6 @@ public class DiscordEventHandlerForPMDMMO {
 	}
 
 	private static String smallimage = "badgeicon_6";
-	private static String smallimagetext = "Platinium team badge";
 
 	/**
 	 * Handles the discord rich presence api. This method is on update after
@@ -98,11 +97,17 @@ public class DiscordEventHandlerForPMDMMO {
 		if (Persistance.stateManager instanceof PrincipalMainState) {
 			PrincipalMainState pmst = (PrincipalMainState) Persistance.stateManager;
 			if (pmst.getCurrentState() instanceof FreezoneExploreState) {
+				String smallimagetext = "---";
+				if (Persistance.player != null && Persistance.player.getData() != null)
+					smallimagetext = "Points : " + Persistance.player.getData().points;
 				DiscordRichPresence.Builder rich = new DiscordRichPresence.Builder("Hanging around")
 						.setBigImage("squareicon", "").setSmallImage(smallimage, smallimagetext);
 				rich.setDetails(Persistance.currentmap.info.getName().toString());
 				DiscordRPC.discordUpdatePresence(rich.build());
 			} else if (pmst.getCurrentState() instanceof DungeonState) {
+				String smallimagetext = "---";
+				if (Persistance.player != null && Persistance.player.getData() != null)
+					smallimagetext = "Points : " + Persistance.player.getData().points;
 				DiscordRichPresence.Builder rich = new DiscordRichPresence.Builder("Exploring a dungeon")
 						.setBigImage("mapicon", "").setSmallImage(smallimage, smallimagetext);
 				rich.setDetails(Persistance.dungeon.dungeon().name().toString());
