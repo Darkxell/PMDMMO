@@ -201,7 +201,7 @@ public class DungeonExploration
 			Mission mission = m.missionData;
 			if (mission.getFloor() != floor.id) continue;
 			if (mission.getMissiontype() != Mission.TYPE_RESCUEHIM && mission.getMissiontype() != Mission.TYPE_RESCUEME) continue;
-			if (mission.getPokemonid1() != rescued.species().id) continue;
+			if (mission.getTargetPokemon() != rescued.species().id) continue;
 			return m;
 		}
 		return null;

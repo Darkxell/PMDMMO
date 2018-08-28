@@ -82,7 +82,7 @@ public class MissionDetailsState extends AbstractState {
 		m.addReplacement("<item>", ItemRegistry.find(mission.getItemid()).name());
 		TextRenderer.render(g, m, 5, 20);
 
-		g.drawImage(PokemonPortrait.portrait(PokemonRegistry.find(mission.getPokemonid1()), false),
+		g.drawImage(PokemonPortrait.portrait(PokemonRegistry.find(mission.getClientPokemon()), false),
 				basewidth - PokemonPortrait.PORTRAIT_SIZE - 20, 35, null);
 		switch (acceptstatus) {
 		case STATUS_CANACCEPT:

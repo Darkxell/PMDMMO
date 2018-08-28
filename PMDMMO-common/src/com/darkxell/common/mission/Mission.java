@@ -226,5 +226,24 @@ public class Mission {
     private static int r(Random r, int a, int b) {
         return r.nextInt(b - a) + a;
     }
+    
+    
+    // Behavior getters
+
+	/** @return <code>true</code> if the 2 Pokemon IDs are used for this Mission. */
+	public boolean has2Pokemon() {
+		return this.getMissiontype() == TYPE_DEFEAT || this.getMissiontype() == TYPE_RESCUEHIM || this.getMissiontype() == TYPE_ESCORT;
+	}
+
+	/** @return The ID of the Client Pokemon. */
+    public int getClientPokemon() {
+    	return this.getPokemonid1();
+    }
+
+	/** @return The ID of the Target Pokemon, i.e. the Pokemon that will be found in the Dungeon if it appears there. */
+	public int getTargetPokemon() {
+		if (this.has2Pokemon()) return this.getPokemonid2();
+		return this.getPokemonid1();
+	}
 
 }

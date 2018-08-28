@@ -9,6 +9,7 @@ import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.PlayerLoadingState;
 import com.darkxell.client.state.PlayerLoadingState.PlayerLoadingEndListener;
 import com.darkxell.client.state.StateManager;
+import com.darkxell.client.state.TransitionState;
 import com.darkxell.client.state.freezone.cutscenes.MissionResultsState;
 import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.dungeon.DungeonOutcome;
@@ -27,13 +28,15 @@ public class DungeonEndState extends AbstractState
 
 	public static void finish()
 	{
-		Persistance.stateManager.setState(new PlayerLoadingState(Persistance.player.getData().id, new PlayerLoadingEndListener() {
-			@Override
-			public void onPlayerLoadingEnd(PlayerLoadingState state)
-			{
-				StateManager.setExploreState(FreezoneInfo.BASE, Direction.SOUTH, -1, -1);
-			}
-		}));
+		TransitionState t = new TransitionState(Persistance.stateManager.getCurrentState(),
+				new PlayerLoadingState(Persistance.player.getData().id, new PlayerLoadingEndListener() {
+					@Override
+					public void onPlayerLoadingEnd(PlayerLoadingState state)
+					{
+						StateManager.setExploreState(FreezoneInfo.BASE, Direction.SOUTH, -1, -1);
+					}
+				}));
+		Persistance.stateManager.setState(t);
 	}
 
 	private ArrayList<Mission> completedMissions = new ArrayList<>();

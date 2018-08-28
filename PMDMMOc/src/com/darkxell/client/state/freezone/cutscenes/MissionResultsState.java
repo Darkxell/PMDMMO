@@ -64,23 +64,22 @@ public class MissionResultsState extends CutsceneState
 
 	private static Cutscene createCutscene(Mission mission)
 	{
-		boolean has2Pks = mission.getMissiontype() == Mission.TYPE_DEFEAT || mission.getMissiontype() == Mission.TYPE_ESCORT
-				|| mission.getMissiontype() == Mission.TYPE_RESCUEHIM;
+		boolean has2Pks = mission.has2Pokemon();
 
-		Pokemon pokemon1 = PokemonRegistry.find(mission.getPokemonid1()).generate(new Random(), 1);
-		Pokemon pokemon2 = has2Pks ? PokemonRegistry.find(mission.getPokemonid2()).generate(new Random(), 1) : null;
-		CutscenePokemon pk1Entity = new CutscenePokemon(3, has2Pks ? 35 : 37.5, 30, pokemon1, PokemonSpriteState.IDLE, Direction.SOUTH, false);
-		CutscenePokemon pk2Entity = has2Pks ? new CutscenePokemon(3, 40, 30, pokemon2, PokemonSpriteState.IDLE, Direction.SOUTH, false) : null;
+		Pokemon client = PokemonRegistry.find(mission.getClientPokemon()).generate(new Random(), 1);
+		Pokemon target = has2Pks ? PokemonRegistry.find(mission.getTargetPokemon()).generate(new Random(), 1) : null;
+		CutscenePokemon clientEntity = new CutscenePokemon(2, has2Pks ? 35 : 37.5, 30, client, PokemonSpriteState.IDLE, Direction.SOUTH, false);
+		CutscenePokemon targetEntity = has2Pks ? new CutscenePokemon(3, 40, 30, target, PokemonSpriteState.IDLE, Direction.SOUTH, false) : null;
 
 		ArrayList<CutsceneEntity> entities = new ArrayList<>();
 		entities.add(new CutscenePokemon(1, 37.5, 35, Persistance.player.getTeamLeader(), PokemonSpriteState.IDLE, Direction.NORTH, false));
-		entities.add(pk1Entity);
-		if (has2Pks) entities.add(pk2Entity);
+		entities.add(clientEntity);
+		if (has2Pks) entities.add(targetEntity);
 		CutsceneCreation creation = new CutsceneCreation(FreezoneInfo.OFFICE, true, 37.5, 32.5, entities);
 
-		CutsceneDialogScreen screen1 = new CutsceneDialogScreen(new Message("mission.thank." + mission.getMissiontype())
-				.addReplacement("<pokemon>", pokemon1.getNickname()).addReplacement("<item>", ItemRegistry.find(mission.getItemid()).name()), 0,
-				has2Pks ? pk2Entity : pk1Entity);
+		Message thank = new Message("mission.thank." + mission.getMissiontype()).addReplacement("<item>", ItemRegistry.find(mission.getItemid()).name());
+		if (has2Pks) thank.addReplacement("<pokemon>", target.getNickname());
+		CutsceneDialogScreen screen1 = new CutsceneDialogScreen(thank, 0, clientEntity);
 		ArrayList<CutsceneEvent> events = new ArrayList<>();
 		events.add(new DialogCutsceneEvent(1, false, Arrays.asList(screen1)));
 
