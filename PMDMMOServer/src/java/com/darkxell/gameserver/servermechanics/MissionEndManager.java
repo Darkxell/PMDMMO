@@ -28,6 +28,7 @@ public class MissionEndManager {
         DBPlayer player = endpoint.getPlayerDAO().find(si.serverid);
         player.moneyinbag += m.getRewards().getMoney();
         player.points += m.getRewards().getPoints();
+        endpoint.getPlayerDAO().update(player);
         //Gives the items to the player
         for (int i = 0; i < m.getRewards().getItems().length; i++) {
             GiveManager.giveItem(m.getRewards().getItems()[i], m.getRewards().getQuantities()[i], si, endpoint, false);
