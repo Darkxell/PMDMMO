@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import com.darkxell.common.move.effects.ApplyStatusConditionEffect;
 import com.darkxell.common.move.effects.CompoundEffect;
+import com.darkxell.common.move.effects.DestroyTrapEffect;
 import com.darkxell.common.move.effects.DoubleDamageEffect;
 import com.darkxell.common.move.effects.DrainEffect;
 import com.darkxell.common.move.effects.FixedDamageEffect;
@@ -47,6 +48,7 @@ public final class MoveEffects
 	public static final MoveEffect Inflict_protect = new ApplyStatusConditionEffect(192, StatusCondition.Protect, 100);
 	public static final MoveEffect Lower_accuracy_2s = new StatChangeEffect(203, Stat.Accuracy, -2, 100);
 	public static final MoveEffect Weather_rain = new WeatherChangeEffect(208, Weather.RAIN);
+	public static final MoveEffect Destroy_trap = new DestroyTrapEffect(213);
 	public static final MoveEffect Lower_speed_30 = new StatChangeEffect(225, Stat.Speed, -1, 30);
 
 	static

@@ -102,6 +102,7 @@ Here is a list of all Events. Will be updated with the game. Bold events are PAE
 | ExplorationStopEvent | Notifies the game that the Dungeon exploration is over. Stops the Dungeon engine. |                           |
 | **NextFloorEvent**   | Changes to the next floor.                                                        | Calls turn start events.  |
 | PlayerLosesEvent     | Called when a Player loses this Dungeon exploration.                              | ExplorationStopEvent      |
+| TrapDestroyedEvent   | Called when a Trap is destroyed.                                                  | |
 | TrapSteppedOnEvent   | Called when a Pokémon steps on a Trap.                                            | Calls the Trap's effects. |
 | WeatherDamageEvent   | Called when a weather condition deals damage to Pokémon on the floor.             | DamageDealtEvent          |
 | WeatherCleanedEvent  | Called when a weather condition fades away.                                       | WeatherChangedEvent       |

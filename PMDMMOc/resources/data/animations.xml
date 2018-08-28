@@ -158,6 +158,9 @@
     <move id="96">
       <default width="64" height="64" state="special" spriteduration="4" alsoplay="2">-1,-1,-1,-1,0,1,2,3,4,5,0,1,2,3</default>
     </move>
+    <move id="98">
+      <default sprites="none" delaytime="15" state="spin"/>
+    </move>
     <move id="101">
       <default width="32" height="24" spriteduration="2" state="special" y="15">0,1,2,3,4,5,6,7,8,8,7,6,5,4,3,2,1,0</default>
       <north backsprites="only" y="24"/>
@@ -274,6 +277,9 @@
     </movetarget>
     <movetarget id="52">
       <default width="48" height="40">0,1,2,3,4,5,6</default>
+    </movetarget>
+    <movetarget id="98">
+      <default width="56" height="80" spriteduration="1" y="60">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51</default>
     </movetarget>
     <movetarget id="304">
       <default y="52" spriteduration="3" width="40" height="64">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21</default>

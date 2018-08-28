@@ -43,6 +43,12 @@ public class MoveEffect implements AffectsPokemon
 	public void additionalEffects(MoveUse usedMove, DungeonPokemon target, Floor floor, MoveEffectCalculator calculator, boolean missed, MoveEvents effects)
 	{}
 
+	/** @return <code>true</code> if a Move with this Effect has an effect when it has no targets. */
+	protected boolean allowsNoTarget(Move move, DungeonPokemon user)
+	{
+		return false;
+	}
+
 	protected MoveEffectCalculator buildCalculator(MoveUse usedMove, DungeonPokemon target, Floor floor)
 	{
 		return new MoveEffectCalculator(usedMove, target, floor);
@@ -177,6 +183,7 @@ public class MoveEffect implements AffectsPokemon
 		if (!user.hasStatusCondition(StatusCondition.Confused)) this.filterTargets(floor, move, user, targets);
 		if (move.range == MoveRange.Room || move.range == MoveRange.Floor)
 			targets.sort((DungeonPokemon p1, DungeonPokemon p2) -> floor.dungeon.compare(p1, p2));
+		if (targets.isEmpty() && this.allowsNoTarget(move, user)) targets.add(null);
 
 		return targets.toArray(new DungeonPokemon[targets.size()]);
 	}
@@ -191,11 +198,18 @@ public class MoveEffect implements AffectsPokemon
 	 * @param effects - Resulting Events list. */
 	protected void mainEffects(MoveUse usedMove, DungeonPokemon target, Floor floor, MoveEffectCalculator calculator, boolean missed, MoveEvents effects)
 	{
-		if (missed) effects.createEffect(new MessageEvent(floor, new Message(target == null ? "move.miss.no_target" : "move.miss").addReplacement("<pokemon>",
-				target == null ? new Message("no one", false) : target.getNickname())), usedMove, target, floor, missed, true, null);
-		else if (usedMove.move.move().dealsDamage)
-			effects.createEffect(new DamageDealtEvent(floor, target, usedMove, calculator.compute(effects.currentEffects())), usedMove, target, floor, missed,
-					false, null);
+		if (target != null)
+		{
+			if (missed) effects
+					.createEffect(
+							new MessageEvent(floor,
+									new Message(target == null ? "move.miss.no_target" : "move.miss").addReplacement("<pokemon>",
+											target == null ? new Message("no one", false) : target.getNickname())),
+							usedMove, target, floor, missed, true, null);
+			else if (usedMove.move.move().dealsDamage)
+				effects.createEffect(new DamageDealtEvent(floor, target, usedMove, calculator.compute(effects.currentEffects())), usedMove, target, floor,
+						missed, false, null);
+		}
 
 		this.additionalEffects(usedMove, target, floor, calculator, missed, effects);
 	}
