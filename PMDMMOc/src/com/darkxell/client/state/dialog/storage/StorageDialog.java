@@ -239,7 +239,6 @@ public class StorageDialog extends ComplexDialog implements ItemSelectionListene
 		root.set("value", action);
 		root.set("items", itemids);
 		root.set("quantities", quantities);
-		System.out.println(root.toString());
 		Persistance.socketendpoint.sendMessage(root.toString());
 		Persistance.isCommunicating = true;
 	}

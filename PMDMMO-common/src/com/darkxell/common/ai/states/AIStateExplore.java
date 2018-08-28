@@ -85,7 +85,7 @@ public class AIStateExplore extends AIState
 	@Override
 	public Direction mayRotate()
 	{
-		if (this.ai.pokemon.tile() == this.currentDestination) return null;
+		if (this.ai.pokemon.tile() == this.currentDestination || this.currentDestination == null) return null;
 		return AIUtils.generalDirection(this.ai.pokemon, this.currentDestination);
 	}
 

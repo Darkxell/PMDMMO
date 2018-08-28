@@ -1,6 +1,5 @@
 package com.darkxell.common.ai;
 
-import com.darkxell.common.ai.states.AIStateTurnSkipper;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.action.TurnSkippedEvent;
@@ -46,8 +45,10 @@ public abstract class AI
 	{
 		this.floor = floor;
 		this.pokemon = pokemon;
-		this.state = new AIStateTurnSkipper(this);
+		this.state = this.defaultState();
 	}
+
+	public abstract AIState defaultState();
 
 	/** Called at the end of each turn. Allows the Pokemon to rotate.
 	 * 

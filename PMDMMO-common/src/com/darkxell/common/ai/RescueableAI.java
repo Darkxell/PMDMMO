@@ -11,11 +11,16 @@ public class RescueableAI extends AI
 	public RescueableAI(Floor floor, DungeonPokemon pokemon)
 	{
 		super(floor, pokemon);
-		this.state = new AIStateWanderAround(this);
 	}
 
 	@Override
 	protected void update()
 	{}
+
+	@Override
+	public AIState defaultState()
+	{
+		return new AIStateWanderAround(this);
+	}
 
 }

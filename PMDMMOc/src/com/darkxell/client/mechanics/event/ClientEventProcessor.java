@@ -278,7 +278,6 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	private void processExitEvent(DungeonExitEvent event)
 	{
 		if (event.player() == Persistance.player) Persistance.dungeonState.setCamera(null);
-		System.out.println(event.player().getDungeonLeader().tile());
 		Persistance.dungeonState.setSubstate(new DungeonExitAnimationState(Persistance.dungeonState, event.player().getDungeonTeam()));
 		this.setState(State.ANIMATING);
 	}

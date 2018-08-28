@@ -171,7 +171,7 @@ public class ActionSelectionState extends DungeonSubState
 	{
 		super.onMouseMove(x, y);
 		this.hoveredMove = -1;
-		for (byte i = 0; i < this.moveLocations.length; ++i)
+		if (this.moveLocations != null) for (byte i = 0; i < this.moveLocations.length; ++i)
 			if (this.moveLocations[i] != null && this.moveLocations[i].contains(x, y))
 			{
 				this.hoveredMove = i;

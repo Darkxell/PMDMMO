@@ -35,7 +35,7 @@ public class MoveSelectionEvent extends DungeonEvent implements Communicable
 			this.move = move;
 			this.user = user;
 			this.direction = direction;
-			this.experienceEvent = this.user.type == DungeonPokemonType.TEAM_MEMBER ? null : new ExperienceGeneratedEvent(floor, this.user.player());
+			this.experienceEvent = this.user.type == DungeonPokemonType.TEAM_MEMBER ? new ExperienceGeneratedEvent(floor, this.user.player()) : null;
 		}
 
 		@Override
