@@ -30,7 +30,7 @@ public class PlayerLoadingState extends AbstractState
 	private static final int TIMEOUT = 600;
 
 	private boolean base = false, inventory = false, leader = false;
-	private boolean hasSent;
+	private boolean hasSent = false;
 	public final PlayerLoadingEndListener listener;
 	public final long playerID;
 	private boolean[] team;

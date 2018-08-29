@@ -28,14 +28,20 @@ public class DungeonEndState extends AbstractState
 
 	public static void finish()
 	{
-		TransitionState t = new TransitionState(Persistance.stateManager.getCurrentState(),
-				new PlayerLoadingState(Persistance.player.getData().id, new PlayerLoadingEndListener() {
+		TransitionState t = new TransitionState(Persistance.stateManager.getCurrentState(), null) {
+			@Override
+			public void onTransitionHalf()
+			{
+				super.onTransitionHalf();
+				Persistance.stateManager.setState(new PlayerLoadingState(Persistance.player.getData().id, new PlayerLoadingEndListener() {
 					@Override
 					public void onPlayerLoadingEnd(PlayerLoadingState state)
 					{
 						StateManager.setExploreState(FreezoneInfo.BASE, Direction.SOUTH, -1, -1);
 					}
 				}));
+			}
+		};
 		Persistance.stateManager.setState(t);
 	}
 
