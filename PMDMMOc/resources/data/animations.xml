@@ -139,6 +139,9 @@
     <move id="31">
       <default width="64" height="64" state="special" spriteduration="3">0,1,2,3,4,5,6,7</default>
     </move>
+    <move id="40">
+      <default sprites="none" pkmnmovement="2tiles"></default>
+    </move>
     <move id="45">
       <default sprites="none" delaytime="15" state="slice"/>
     </move>

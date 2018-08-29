@@ -8,7 +8,7 @@ import org.jdom2.Element;
 
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.animation.SpritesetAnimation.BackSpriteUsage;
-import com.darkxell.client.mechanics.animation.movement.TackleAnimationMovement;
+import com.darkxell.client.mechanics.animation.movement.PokemonAnimationMovement;
 import com.darkxell.client.mechanics.animation.spritemovement.SpritesetAnimationMovement;
 import com.darkxell.client.resources.images.RegularSpriteSet;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
@@ -190,14 +190,16 @@ public final class Animations
 		a.soundDelay = XMLUtils.getAttribute(xml, "sounddelay", XMLUtils.getAttribute(defaultXml, "sounddelay", 0));
 		String state = XMLUtils.getAttribute(xml, "state", XMLUtils.getAttribute(defaultXml, "state", "null"));
 		a.state = state.equals("null") ? defaultState : state.equals("none") ? null : PokemonSpriteState.valueOf(state.toUpperCase());
-		if (a.state != null)
+
+		String movement = XMLUtils.getAttribute(xml, "pkmnmovement", XMLUtils.getAttribute(defaultXml, "pkmnmovement", null));
+		if (movement == null && a.state != null && a.state.hasDash) movement = "dash";
+
+		if (movement != null)
 		{
-			if (a.state.hasDash)
-			{
-				a.movement = new TackleAnimationMovement(a);
-				a.duration = Math.max(a.duration, a.movement.duration);
-			}
+			a.movement = PokemonAnimationMovement.create(a, movement);
+			a.duration = Math.max(a.duration, a.movement.duration);
 		}
+
 		a.stateDelay = XMLUtils.getAttribute(xml, "statedelay", XMLUtils.getAttribute(defaultXml, "statedelay", 0));
 		a.delayTime = XMLUtils.getAttribute(xml, "delaytime", XMLUtils.getAttribute(defaultXml, "delaytime", a.duration));
 		if (a.delayTime == 0) a.delayTime = 15;

@@ -8,14 +8,19 @@ public class TackleAnimationMovement extends PokemonAnimationMovement
 {
 	public static final int TOTAL = 30, CHARGE = TOTAL / 3, MOVEMENT = TOTAL / 6;
 
-	private final Tile location;
-	private TravelAnimation travel;
+	protected final Tile location;
+	protected TravelAnimation travel;
 
 	public TackleAnimationMovement(PokemonAnimation animation)
 	{
 		super(animation, TOTAL);
 		this.location = this.pokemon.tile();
-		this.travel = new TravelAnimation(this.location.location(), this.location.adjacentTile(this.pokemon.facing()).location());
+		this.travel = this.createTravel();
+	}
+
+	protected TravelAnimation createTravel()
+	{
+		return new TravelAnimation(this.location.location(), this.location.adjacentTile(this.pokemon.facing()).location());
 	}
 
 	@Override

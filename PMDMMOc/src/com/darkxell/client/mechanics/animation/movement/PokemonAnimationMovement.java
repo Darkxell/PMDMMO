@@ -7,6 +7,21 @@ import com.darkxell.common.pokemon.DungeonPokemon;
 public abstract class PokemonAnimationMovement
 {
 
+	public static PokemonAnimationMovement create(PokemonAnimation animation, String movementID)
+	{
+		switch (movementID)
+		{
+			case "dash":
+				return new TackleAnimationMovement(animation);
+
+			case "2tiles":
+				return new LongTackleAnimationMovement(animation);
+
+			default:
+				return null;
+		}
+	}
+
 	public final int duration;
 	public final PokemonAnimation parentAnimation;
 	public final DungeonPokemon pokemon;

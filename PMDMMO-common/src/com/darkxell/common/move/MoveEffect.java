@@ -54,40 +54,6 @@ public class MoveEffect implements AffectsPokemon
 		return new MoveEffectCalculator(usedMove, target, floor);
 	}
 
-	/** Removes all Pokemon this move is not supposed to target. */
-	protected void filterTargets(Floor floor, Move move, DungeonPokemon user, ArrayList<DungeonPokemon> targets)
-	{
-		switch (move.targets)
-		{
-			case All:
-				break;
-
-			case Allies:
-				targets.removeIf((DungeonPokemon p) -> p == user || !p.isAlliedWith(user));
-				break;
-
-			case Foes:
-				targets.removeIf((DungeonPokemon p) -> p == user || p.isAlliedWith(user));
-				break;
-
-			case Others:
-				targets.remove(user);
-				break;
-
-			case Team:
-				targets.removeIf((DungeonPokemon p) -> !p.isAlliedWith(user));
-				break;
-
-			case User:
-				targets.removeIf((DungeonPokemon p) -> p != user);
-				break;
-
-			case None:
-				targets.removeIf((DungeonPokemon p) -> p != null);
-				break;
-		}
-	}
-
 	/** @param move
 	 * @param user - The Pokemon using this Move.
 	 * @param floor - The Floor context.
@@ -133,7 +99,7 @@ public class MoveEffect implements AffectsPokemon
 				do
 				{
 					current = current.adjacentTile(user.facing());
-					if (current.getPokemon() != null) targets.add(current.getPokemon());
+					if (current.getPokemon() != null && move.targets.isValid(user, current.getPokemon())) targets.add(current.getPokemon());
 					++distance;
 					done = !targets.isEmpty() || distance > 10 || current.type() == TileType.WALL || current.type() == TileType.WALL_END;
 				} while (!done);
@@ -154,7 +120,7 @@ public class MoveEffect implements AffectsPokemon
 				break;
 
 			case Two_tiles:
-				if (front.getPokemon() != null) targets.add(front.getPokemon());
+				if (front.getPokemon() != null && move.targets.isValid(user, front.getPokemon())) targets.add(front.getPokemon());
 				else if (front.type() != TileType.WALL && front.type() != TileType.WALL_END)
 				{
 					Tile behind = front.adjacentTile(user.facing());
@@ -180,7 +146,7 @@ public class MoveEffect implements AffectsPokemon
 				}
 		}
 
-		if (!user.hasStatusCondition(StatusCondition.Confused)) this.filterTargets(floor, move, user, targets);
+		if (!user.hasStatusCondition(StatusCondition.Confused)) targets.removeIf(p -> !move.targets.isValid(user, p));
 		if (move.range == MoveRange.Room || move.range == MoveRange.Floor)
 			targets.sort((DungeonPokemon p1, DungeonPokemon p2) -> floor.dungeon.compare(p1, p2));
 		if (targets.isEmpty() && this.allowsNoTarget(move, user)) targets.add(null);
