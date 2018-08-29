@@ -15,9 +15,13 @@ import com.darkxell.client.resources.images.Sprites.Res_Map;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.StateManager;
 import com.darkxell.client.state.freezone.FreezoneExploreState;
+import com.darkxell.client.state.menu.components.MenuWindow;
+import com.darkxell.client.state.menu.components.TextWindow;
 import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.dungeon.data.Dungeon;
 import com.darkxell.common.dungeon.data.DungeonRegistry;
+import com.darkxell.common.mission.InvalidParammetersException;
+import com.darkxell.common.mission.Mission;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.language.Message;
@@ -29,8 +33,12 @@ public class DungeonSelectionMapState extends AbstractState
 
 	private int camerax = 0;
 	private int cameray = 0;
+	private ArrayList<String> currentMissions;
+	private Message currentTitle;
 	private int cursor = 0;
 	private ArrayList<Dungeon> dungeonslist;
+	private ArrayList<Mission> missions;
+	private MenuWindow missionsWindow;
 
 	public DungeonSelectionMapState()
 	{
@@ -51,6 +59,37 @@ public class DungeonSelectionMapState extends AbstractState
 			if (!this.dungeonslist.isEmpty()) this.camerax = this.dungeonslist.get(0).mapx;
 			this.cameray = this.dungeonslist.get(0).mapy;
 		}
+		this.missions = new ArrayList<>();
+		for (String m : Persistance.player.getMissions())
+			try
+			{
+				this.missions.add(new Mission(m));
+			} catch (InvalidParammetersException e)
+			{
+				e.printStackTrace();
+			}
+
+		this.onDungeonSelect();
+	}
+
+	private void onDungeonSelect()
+	{
+		this.currentTitle = new Message("mission.list.title").addReplacement("<dungeon>", this.dungeonslist.get(this.cursor).name());
+
+		ArrayList<Mission> current = new ArrayList<>(this.missions);
+		current.removeIf(m -> m.getDungeonid() != this.dungeonslist.get(this.cursor).id);
+		int maxWidth = 0;
+		this.currentMissions = new ArrayList<>();
+		for (Mission m : current)
+		{
+			String summary = m.summary();
+			this.currentMissions.add(summary);
+			maxWidth = Math.max(maxWidth, TextRenderer.width(summary));
+		}
+
+		this.missionsWindow = new MenuWindow(new Rectangle(10, 25, maxWidth + TextWindow.MARGIN_X * 2,
+				current.size() * (TextRenderer.height() + TextRenderer.lineSpacing()) + TextWindow.MARGIN_Y * 2));
+		this.missionsWindow.isOpaque = true;
 	}
 
 	public void onDungeonStart(int dungeon, long seed)
@@ -63,23 +102,28 @@ public class DungeonSelectionMapState extends AbstractState
 	@Override
 	public void onKeyPressed(Key key)
 	{
+		boolean cursorchanged = false;
 		switch (key)
 		{
 			case RIGHT:
 				if (cursor >= dungeonslist.size() - 1) cursor = 0;
 				else++cursor;
+				cursorchanged = true;
 				break;
 			case LEFT:
 				if (cursor <= 0) cursor = dungeonslist.size() - 1;
 				else--cursor;
+				cursorchanged = true;
 				break;
 			case UP:
 				if (cursor < dungeonslist.size() - 10) cursor += 10;
 				else cursor = 0;
+				cursorchanged = true;
 				break;
 			case DOWN:
 				if (cursor >= 10) cursor -= 10;
 				else cursor = (dungeonslist.size() - 1);
+				cursorchanged = true;
 				break;
 			case RUN:
 				Persistance.isCommunicating = false;
@@ -102,6 +146,8 @@ public class DungeonSelectionMapState extends AbstractState
 			default:
 				break;
 		}
+
+		if (cursorchanged) this.onDungeonSelect();
 	}
 
 	@Override
@@ -122,10 +168,6 @@ public class DungeonSelectionMapState extends AbstractState
 			g.drawImage(i == cursor ? Res_Map.PIN_BLUE.image() : Res_Map.PIN_YELLOW.image(), dungeonslist.get(i).mapx, dungeonslist.get(i).mapy, null);
 		// TRANSLATES THE GRAPHICS BACK
 		g.translate(-translateX, -translateY);
-		// DRAWS THE HUD OVER THE MAP
-		int textxpos = width - Math.max(TextRenderer.width(new Message("dungeonmap.select")), TextRenderer.width(new Message("dungeonmap.return"))) - 10;
-		TextRenderer.render(g, new Message("dungeonmap.select"), textxpos, 20);
-		TextRenderer.render(g, new Message("dungeonmap.return"), textxpos, 40);
 
 		int temp_width = width - 40;
 		int temp_height = temp_width * Sprites.Res_Hud.textwindow.image().getHeight() / Sprites.Res_Hud.textwindow.image().getWidth();
@@ -137,6 +179,22 @@ public class DungeonSelectionMapState extends AbstractState
 		TextRenderer.render(g, dungeonsmarker, box.x + box.width - 55, box.y + 10);
 
 		TextRenderer.render(g, dungeonslist.get(cursor).name(), box.x + 15, box.y + 10);
+
+		// DRAWS THE HUD OVER THE MAP
+		int textxpos = width - Math.max(TextRenderer.width(new Message("dungeonmap.select")), TextRenderer.width(new Message("dungeonmap.return"))) - 10;
+		TextRenderer.render(g, new Message("dungeonmap.select"), textxpos, box.y - 40);
+		TextRenderer.render(g, new Message("dungeonmap.return"), textxpos, box.y - 20);
+
+		if (!this.currentMissions.isEmpty())
+		{
+			this.missionsWindow.render(g, this.currentTitle, width, height);
+			int x = this.missionsWindow.inside().x + TextRenderer.lineSpacing(), y = this.missionsWindow.inside().y + TextRenderer.lineSpacing();
+			for (String mission : this.currentMissions)
+			{
+				TextRenderer.render(g, mission, x, y);
+				y += TextRenderer.height() + TextRenderer.lineSpacing();
+			}
+		}
 	}
 
 	@Override

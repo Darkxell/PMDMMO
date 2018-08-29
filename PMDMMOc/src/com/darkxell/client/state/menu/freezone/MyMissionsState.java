@@ -6,7 +6,6 @@ import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.layers.AbstractGraphiclayer;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
-import com.darkxell.common.dungeon.data.DungeonRegistry;
 import com.darkxell.common.mission.InvalidParammetersException;
 import com.darkxell.common.mission.Mission;
 import com.darkxell.common.util.Logger;
@@ -44,9 +43,7 @@ public class MyMissionsState extends OptionSelectionMenuState {
 		for (int i = 0; i < Persistance.player.getMissions().size(); i++) {
 			try {
 				Mission m = new Mission(Persistance.player.getMissions().get(i));
-				String summary = DungeonRegistry.find(m.getDungeonid()).name() + " "
-						+ new Message("mission.floor.short") + "<blue>" + m.getFloor() + "</color>" + " - "
-						+ m.getMissionFlavor().getObjectiveText().toString() + " (" + m.getDifficulty() + ")";
+				String summary = m.summary();
 				MenuOption opt = new MenuOption(summary);
 				tab.addOption(opt);
 				missions.put(opt, m);

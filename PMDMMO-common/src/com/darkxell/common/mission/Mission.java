@@ -3,6 +3,9 @@ package com.darkxell.common.mission;
 import java.util.ArrayList;
 import java.util.Random;
 
+import com.darkxell.common.dungeon.data.DungeonRegistry;
+import com.darkxell.common.util.language.Message;
+
 /**
  * Structure that contains all the informations for a mission. A mission object
  * is immutable.
@@ -244,6 +247,11 @@ public class Mission {
 	public int getTargetPokemon() {
 		if (this.has2Pokemon()) return this.getPokemonid2();
 		return this.getPokemonid1();
+	}
+
+	public String summary() {
+		return "<mission> " + DungeonRegistry.find(this.getDungeonid()).name() + " " + new Message("mission.floor.short") + "<blue>" + this.getFloor()
+				+ "</color>" + " - " + this.getMissionFlavor().getObjectiveText().toString() + " (" + this.getDifficulty() + ")";
 	}
 
 }

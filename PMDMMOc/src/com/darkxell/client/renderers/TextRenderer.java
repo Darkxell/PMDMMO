@@ -120,7 +120,7 @@ public class TextRenderer
 		tick("<tick>", 14, 4, 9),
 		star("<star>", 15, 4, 7),
 		glued("<glued>", 16, 4, 8),
-		mission("<mission>", 17, 4, 8),
+		mission("<mission>", 17, 4, 10),
 		mission_accepted("<mission-a>", 18, 4, 10),
 		news("<news>", 19, 4, 10),
 		story("<story>", 0, 5, 9),
