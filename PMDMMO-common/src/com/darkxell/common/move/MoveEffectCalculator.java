@@ -36,7 +36,7 @@ public class MoveEffectCalculator
 		if (target != null && target.getItem() != null) this.modificator.add(target.getItem().item());
 		this.modificator.add(floor.currentWeather().weather);
 		for (AppliedStatusCondition s : this.move.user.activeStatusConditions())
-			this.modificator.add(s.condition);
+			this.modificator.addUser(s.condition);
 		if (target != null) for (AppliedStatusCondition s : this.target.activeStatusConditions())
 			this.modificator.add(s.condition);
 	}

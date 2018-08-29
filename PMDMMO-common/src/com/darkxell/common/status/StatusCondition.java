@@ -10,6 +10,7 @@ import com.darkxell.common.event.DungeonEventListener;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageSource;
 import com.darkxell.common.event.stats.ExperienceGeneratedEvent;
 import com.darkxell.common.pokemon.AffectsPokemon;
+import com.darkxell.common.pokemon.BaseStats.Stat;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Pair;
 import com.darkxell.common.util.RandomUtil;
@@ -31,6 +32,7 @@ public class StatusCondition implements AffectsPokemon, DamageSource, DungeonEve
 	public static final StatusCondition Cringed = new CringedStatusCondition(25, 1, 1);
 
 	public static final StatusCondition Protect = new ImmuneStatusCondition(40, 2, 3);
+	public static final StatusCondition Light_screen = new ChangeAttackerStatStatusCondition(42, 11, 12, Stat.SpecialAttack, 0, .5);
 
 	public static final StatusCondition Skull_bash = new ChargedMoveStatusCondition(60, 1, 1, -50);
 

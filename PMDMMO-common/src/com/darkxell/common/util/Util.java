@@ -26,7 +26,7 @@ public class Util
 		player.getTeamLeader().setMove(0, new LearnedMove(705));
 		player.getTeamLeader().setMove(2, new LearnedMove(50));
 		player.getTeamLeader().setMove(2, new LearnedMove(45));
-		player.getTeamLeader().setMove(3, new LearnedMove(801));
+		player.getTeamLeader().setMove(3, new LearnedMove(806));
 
 		for (int i = 1; i < 5; ++i)
 			player.inventory().addItem(new ItemStack(i));
