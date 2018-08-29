@@ -36,6 +36,7 @@ public class DungeonendHandler extends MessageHandler {
     @Override
     public void handleMessage(JsonObject json, Session from, GameSessionHandler sessionshandler) {
         GameSessionInfo si = SessionsInfoHolder.getInfo(from.getId());
+        long starttime = System.currentTimeMillis();
         System.out.println(si.name + " finished a dungeon, processing...");
         //Gets the json values and creates the lookuptables
         com.eclipsesource.json.JsonObject jsonm = Json.parse(json.toString()).asObject();
@@ -130,6 +131,7 @@ public class DungeonendHandler extends MessageHandler {
         answer.add("action", "dungeonendconfirm");
         answer.add("outcome", jsonm.get("outcome"));
         sessionshandler.sendToSession(from, answer);
+        System.out.println("Finished processing dungeonend for " + si.name + " in " + ((System.currentTimeMillis()-starttime)/1000) + "seconds");
     }
 
     /**
