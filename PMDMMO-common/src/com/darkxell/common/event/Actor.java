@@ -91,7 +91,7 @@ public class Actor
 	@Override
 	public String toString()
 	{
-		return this.pokemon.toString();
+		return "(" + this.pokemon.toString() + "," + this.actionTick + ")";
 	}
 
 }

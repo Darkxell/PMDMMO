@@ -93,7 +93,7 @@ public class Move implements Comparable<Move>
 					return target != user;
 
 				case Team:
-					return target.isAlliedWith(user);
+					return target == user || target.isAlliedWith(user);
 
 				case User:
 					return target == user;

@@ -39,6 +39,7 @@ public final class MoveEffects
 	public static final MoveEffect Recoil_12percent5 = new RecoilEffect(92, 12.5);
 	public static final MoveEffect Inflict_sleepless = new ApplyStatusConditionEffect(102, StatusCondition.Sleepless, 100);
 	public static final MoveEffect WeatherHeal = new WeatherHealEffect(113);
+	public static final MoveEffect Raise_speed = new StatChangeEffect(121, Stat.Speed, 1, 100);
 	public static final MoveEffect Double_damage = new DoubleDamageEffect(131);
 	public static final MoveEffect Lower_defense = new StatChangeEffect(139, Stat.Defense, -1, 100);
 	public static final MoveEffect Inflict_leechSeed = new ApplyStatusConditionEffect(143, StatusCondition.Leech_seed, 100);
