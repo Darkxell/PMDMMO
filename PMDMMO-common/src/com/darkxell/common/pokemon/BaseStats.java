@@ -20,6 +20,8 @@ public class BaseStats implements Communicable
 		SpecialDefense(4),
 		Speed(7);
 
+		public final static int MAX_SPEED = 4;
+
 		public final int id;
 
 		private Stat(int id)
@@ -33,7 +35,6 @@ public class BaseStats implements Communicable
 
 	/** Attack. */
 	int attack;
-
 	/** Defense. */
 	int defense;
 	/** Health Points. */

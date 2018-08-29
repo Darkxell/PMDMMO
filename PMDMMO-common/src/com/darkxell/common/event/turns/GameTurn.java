@@ -1,13 +1,15 @@
-package com.darkxell.common.event;
+package com.darkxell.common.event.turns;
 
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
+import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.pokemon.BaseStats.Stat;
 
 public class GameTurn
 {
 	
-	public static final int SUB_TURNS = 4;
+	public static final int SUB_TURNS = Stat.MAX_SPEED;
 
 	/** Lists the Events that occur in this turn. */
 	private ArrayList<DungeonEvent> events = new ArrayList<DungeonEvent>();

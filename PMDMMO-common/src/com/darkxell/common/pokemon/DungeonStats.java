@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
-import com.darkxell.common.event.GameTurn;
 import com.darkxell.common.event.stats.SpeedChangedEvent;
+import com.darkxell.common.event.turns.GameTurn;
 import com.darkxell.common.pokemon.BaseStats.Stat;
 
 public class DungeonStats

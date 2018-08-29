@@ -57,7 +57,7 @@ public interface AffectsPokemon
 	 * 
 	 * @param stat - The Stat to modify.
 	 * @param value - The value of the Stat before this object applies its modifications.
-	 * @param move - The Move use context.
+	 * @param move - The Move use context. May be <code>null</code> if this calculation is not part of a move use.
 	 * @param target - The Pokemon the move was used on.
 	 * @param isUser - <code>true</code> if this Object belongs to the Move's user (if it's its ability or an item it holds).
 	 * @param events - The current Events being generated.
@@ -73,7 +73,7 @@ public interface AffectsPokemon
 	 * 
 	 * @param stat - The Stat to modify.
 	 * @param value - The value of the Stat before this object applies its modifications.
-	 * @param move - The Move use context.
+	 * @param move - The Move use context. May be <code>null</code> if this calculation is not part of a move use.
 	 * @param target - The Pokemon the move was used on.
 	 * @param isUser - <code>true</code> if this Object belongs to the Move's user (if it's its ability or an item it holds).
 	 * @param events - The current Events being generated.

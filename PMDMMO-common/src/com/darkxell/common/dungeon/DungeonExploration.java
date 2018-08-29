@@ -10,14 +10,15 @@ import com.darkxell.common.dungeon.data.DungeonRegistry;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.layout.Layout;
 import com.darkxell.common.dungeon.floor.layout.StaticLayout;
-import com.darkxell.common.event.Actor;
-import com.darkxell.common.event.Actor.Action;
 import com.darkxell.common.event.CommonEventProcessor;
 import com.darkxell.common.event.DungeonEvent;
-import com.darkxell.common.event.GameTurn;
 import com.darkxell.common.event.action.PokemonRotateEvent;
 import com.darkxell.common.event.action.TurnSkippedEvent;
 import com.darkxell.common.event.dungeon.MissionClearedEvent;
+import com.darkxell.common.event.turns.Actor;
+import com.darkxell.common.event.turns.Actor.Action;
+import com.darkxell.common.event.turns.GameTurn;
+import com.darkxell.common.event.turns.SpeedCalculator;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.mission.DungeonMission;
 import com.darkxell.common.mission.InvalidParammetersException;
@@ -127,15 +128,12 @@ public class DungeonExploration
 	public ArrayList<DungeonEvent> endSubTurn()
 	{
 		// Logger.i("Subturn end!");
-		for (Actor a : this.actors)
-		{
-			if (!a.hasSubTurnTriggered()) Logger.e("Subturn ended but " + a + " wasn't called!");
-			a.subTurnEnded();
-		}
+		/* for (Actor a : this.actors) { if (!a.hasSubTurnTriggered()) Logger.e("Subturn ended but " + a + " wasn't called!"); a.subTurnEnded(); } */
 
 		this.currentActor = -1;
-		this.nextActor();
 		++this.currentSubTurn;
+		for (Actor a : this.actors)
+			a.subTurnEnd();
 
 		ArrayList<DungeonEvent> events = new ArrayList<>();
 		boolean turnEnd = this.currentSubTurn == GameTurn.SUB_TURNS;
@@ -156,10 +154,9 @@ public class DungeonExploration
 			if (d != null && d != a.pokemon.facing()) events.add(new PokemonRotateEvent(this.currentFloor, a.pokemon, d));
 		}
 
-		for (Actor a : this.actors)
-			if (a.actionThisSubturn() != Action.NO_ACTION) a.onTurnEnd(this.currentFloor, events);
-
 		// Logger.i("Turn end --------------------------");
+		for (Actor a : this.actors)
+			a.pokemon.onTurnStart(this.currentFloor, events);
 		this.currentFloor.onTurnStart(events);
 		if (this.currentTurn != null) this.pastTurns.add(this.currentTurn);
 		this.currentTurn = new GameTurn(this.currentFloor);
@@ -339,21 +336,20 @@ public class DungeonExploration
 	{
 		if (this.currentActor == this.actors.size()) return;
 
-		// Make sure subturn() doesn't get called if actedThisSubturn() returns true
 		if (this.currentActor != -1)
 		{
-			boolean acts = this.actors.get(this.currentActor).actionThisSubturn() == Action.NO_ACTION;
-			if (!this.actors.get(this.currentActor).hasSubTurnTriggered()) acts = this.actors.get(this.currentActor).subTurn() && acts;
+			Actor a = this.actors.get(this.currentActor);
+			boolean acts = a.actionThisSubturn() == Action.NO_ACTION;
+			double speed = new SpeedCalculator(this.currentFloor, a.pokemon).compute();
+			if (speed >= 1)
+			{
+				a.resetSlowCounter();
+				acts &= this.currentSubTurn >= GameTurn.SUB_TURNS - speed;
+			} else acts &= a.slowActs(speed);
 			if (acts) return;
 		}
 		++this.currentActor;
 		this.nextActorIndex();
-	}
-
-	public void onSpeedChange(DungeonPokemon pokemon)
-	{
-		if (!this.actorMap.containsKey(pokemon)) return;
-		this.actorMap.get(pokemon).onSpeedChange();
 	}
 
 	public void registerActor(DungeonPokemon pokemon)

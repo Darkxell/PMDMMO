@@ -3,9 +3,9 @@ package com.darkxell.common.ai.states;
 import com.darkxell.common.ai.AI;
 import com.darkxell.common.ai.AI.AIState;
 import com.darkxell.common.event.DungeonEvent;
-import com.darkxell.common.event.GameTurn;
 import com.darkxell.common.event.action.TurnSkippedEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent;
+import com.darkxell.common.event.turns.GameTurn;
 import com.darkxell.common.pokemon.LearnedMove;
 import com.darkxell.common.util.Logger;
 

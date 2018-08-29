@@ -6,7 +6,7 @@ import com.darkxell.common.dungeon.TempIDRegistry.PokemonTempIDRegistry;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.EventCommunication;
-import com.darkxell.common.event.GameTurn;
+import com.darkxell.common.event.turns.GameTurn;
 import com.darkxell.common.player.ItemContainer;
 import com.darkxell.common.player.ItemContainer.ItemContainerType;
 import com.darkxell.common.player.Player;

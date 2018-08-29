@@ -8,7 +8,7 @@ import com.darkxell.common.dungeon.AutoDungeonExploration;
 import com.darkxell.common.dungeon.DungeonCommunication;
 import com.darkxell.common.event.CommonEventProcessor;
 import com.darkxell.common.event.DungeonEvent;
-import com.darkxell.common.event.GameTurn;
+import com.darkxell.common.event.turns.GameTurn;
 import com.darkxell.common.test.UTest;
 import com.darkxell.common.util.Communicable.JsonReadingException;
 import com.darkxell.common.util.Util;
