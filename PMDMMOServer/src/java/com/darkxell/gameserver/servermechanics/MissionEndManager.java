@@ -9,6 +9,7 @@ import com.darkxell.common.dbobject.DBPlayer;
 import com.darkxell.common.mission.Mission;
 import com.darkxell.gameserver.GameServer;
 import com.darkxell.gameserver.GameSessionInfo;
+import java.util.ArrayList;
 
 /**
  *
@@ -17,6 +18,13 @@ import com.darkxell.gameserver.GameSessionInfo;
 public class MissionEndManager {
 
     public static void manageMissionCompletion(GameSessionInfo si, GameServer endpoint, String missioncode) {
+        //Verifies if the mission exists and deletes the record
+        ArrayList<String> missionsserverside = endpoint.getMissions_DAO().findMissions(si.serverid);
+        if (!missionsserverside.contains(missioncode)) {
+            return;//Hacked mission, GTFO
+        }
+        endpoint.getMissions_DAO().delete(si.serverid, missioncode);
+        //Applies the rewards
         Mission m = null;
         try {
             m = new Mission(missioncode);
@@ -42,7 +50,6 @@ public class MissionEndManager {
             }
         } catch (Exception e) {
         }
-        endpoint.getMissions_DAO().delete(si.serverid, missioncode);
     }
 
 }
