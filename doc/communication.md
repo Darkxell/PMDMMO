@@ -8,13 +8,14 @@ Communication between the game server and the clients is based around the Websoc
 The websocket RFC is available here:
 https://tools.ietf.org/html/rfc6455
 
-The server is divided in two parts, each having their own TCP socket endpoint: a chat and a game information endpoint.
-It is the client's job to connect to both to send and be able to recieve the appropriate information.
-The endpoints are available at the following adresses:
-
-\[server ip or linked dns]:8080/PMDMMOServer/chat
+It is the client's job to connect to the endpoint to send and be able to recieve the appropriate information.
+The endpoint is available at the following adress:
 
 \[server ip or linked dns]:8080/PMDMMOServer/game
+
+Note:
+As of 30 Aug 2018, support for the chat endpoint has been fully removed.
+Any mùention of a chat endpoint is legacy and needs to be updated.
 
 # 2.1 - Required payload structure
 
@@ -42,13 +43,11 @@ For more informations about the login challenge, check "hashing norms.md".
 
 # 3 - List of client -> server payloads
 
-■ MESSAGE (This is a payload destined to the chat endpoint)
+■ CHATMESSAGE
 
-{"action":"message",
+{"action":"chatmessage",
 
 "tag":"DEV", // (Optionnal) The tag of the user sending the message 
-
-"sender":"Darkxell", // The name of the sender
 
 "message":"Message content", // the content of the message
 
@@ -61,7 +60,7 @@ For more informations about the login challenge, check "hashing norms.md".
 }
 
 This is the payload you should send to the server when you want to add a message to the chat.
-
+Note: this payload used to be adressed at the legacy chat endpoint. Chat endpoint is no longer supported for various reasons including security ones.
 
 ■ SALTRESET
 
@@ -101,6 +100,7 @@ This payload can be sent by the client to the server anytime. This will notify t
 
 This payload should be sent by any client who wants to use encryption.
 The server will now return payloads encrypted with the parsed key, and will be able to decrypt any message sync encrypted with it from the client who sent it.
+This payload "value" field has to be the needed json payload above as string encrypted asynchronously with the server public key. For more information, refer to "doc/hashing norms.md"
 
 ■ LOGIN
 
@@ -280,9 +280,9 @@ This payload is sent to the server to delete a mission from the player mission i
 
 # 4 - List of server -> client payloads
 
-■ MESSAGE (This is a payload from to the chat endpoint)
+■ CHATMESSAGE
 
-{"action":"message",
+{"action":"chatmessage",
 
 "tag":"DEV", // (Optionnal) The tag of the user sending the message
 

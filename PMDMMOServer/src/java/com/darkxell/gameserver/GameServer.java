@@ -13,6 +13,7 @@ import com.darkxell.common.trap.TrapRegistry;
 import com.darkxell.common.util.Logger;
 import com.darkxell.gameserver.messagehandlers.AcceptMissionHandler;
 import com.darkxell.gameserver.messagehandlers.BankactionHandler;
+import com.darkxell.gameserver.messagehandlers.ChatMessageHandler;
 import com.darkxell.gameserver.messagehandlers.CreateAccountHandler;
 import com.darkxell.gameserver.messagehandlers.DeleteMissionHandler;
 import com.darkxell.gameserver.messagehandlers.DungeonendHandler;
@@ -277,6 +278,14 @@ public class GameServer {
                             return;
                         }
                         InventoryRequestHandler hand = new InventoryRequestHandler(this);
+                        hand.handleMessage(jsonMessage, session, sessionHandler);
+                        break;
+                    }
+                    case "chatmessage": {
+                        if (!infos.isconnected) {
+                            return;
+                        }
+                        ChatMessageHandler hand = new ChatMessageHandler(this);
                         hand.handleMessage(jsonMessage, session, sessionHandler);
                         break;
                     }
