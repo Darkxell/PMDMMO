@@ -24,7 +24,7 @@ public class DungeonAccessibility{
     case 6://MOUNT THUNDER
     return (player.storyposition>=15)?ACCESSIBLE:LOCKED;
     case 7://MOUNT THUNDER PEAK
-    return (player.storyposition>=15)?ACCESSIBLE:LOCKED;
+    return (player.storyposition>=15)?NOMAP:LOCKED;
     case 8://GREAT CANYON
     return (player.storyposition>=15)?ACCESSIBLE:LOCKED;
     case 9://LAPIS CAVE
@@ -32,7 +32,7 @@ public class DungeonAccessibility{
     case 10://MOUNT BLAZE
     return (player.storyposition>=15)?ACCESSIBLE:LOCKED;
     case 11://MOUNT BLAZE PEAK
-    return (player.storyposition>=15)?ACCESSIBLE:LOCKED;
+    return (player.storyposition>=15)?NOMAP:LOCKED;
     case 12://FROSTY FOREST
     return (player.storyposition>=15)?ACCESSIBLE:LOCKED;
     case 13://FROSTY GROTTO
@@ -40,17 +40,17 @@ public class DungeonAccessibility{
     case 14://MOUNT FREEZE
     return (player.storyposition>=15)?ACCESSIBLE:LOCKED;
     case 15://MOUNT FREEZE PEAK
-    return (player.storyposition>=15)?ACCESSIBLE:LOCKED;
+    return (player.storyposition>=15)?NOMAP:LOCKED;
     case 16://MAGMA CAVERN
     return (player.storyposition>=15)?ACCESSIBLE:LOCKED;
     case 17://MAGMA CAVERN PIT
-    return (player.storyposition>=15)?ACCESSIBLE:LOCKED;
+    return (player.storyposition>=15)?NOMAP:LOCKED;
     case 18://SKY TOWER
     return (player.storyposition>=15)?ACCESSIBLE:LOCKED;
     case 19://SKY TOWER SUMMIT
-    return (player.storyposition>=15)?ACCESSIBLE:LOCKED;
+    return (player.storyposition>=15)?NOMAP:LOCKED;
     default:
-    return false;
+    return LOCKED;
     }
   }
 }
