@@ -125,6 +125,13 @@ public class PlayerLoadingState extends AbstractState
 	}
 
 	@Override
+	public void onStart()
+	{
+		super.onStart();
+		if (Persistance.socketendpoint.connectionStatus() != GameSocketEndpoint.CONNECTED) this.exit();
+	}
+
+	@Override
 	public void render(Graphics2D g, int width, int height)
 	{
 		g.setColor(Color.BLACK);
@@ -136,8 +143,7 @@ public class PlayerLoadingState extends AbstractState
 	@Override
 	public void update()
 	{
-		if (Persistance.socketendpoint.connectionStatus() != GameSocketEndpoint.CONNECTED) this.exit();
-		else if (this.hasSent)
+		if (this.hasSent)
 		{
 			++this.tick;
 			if (this.tick >= TIMEOUT) this.askForMore();
