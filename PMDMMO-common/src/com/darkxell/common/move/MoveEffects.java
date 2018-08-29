@@ -45,6 +45,7 @@ public final class MoveEffects
 	public static final MoveEffect Inflict_skullbash_Raise_defense;
 	public static final MoveEffect Raise_defense = new StatChangeEffect(172, Stat.Defense, 1, 100);
 	public static final MoveEffect Lower_evasion = new StatChangeEffect(179, Stat.Evasiveness, -1, 100);
+	public static final MoveEffect Raise_evasion = new StatChangeEffect(180, Stat.Evasiveness, 1, 100);
 	public static final MoveEffect Inflict_protect = new ApplyStatusConditionEffect(192, StatusCondition.Protect, 100);
 	public static final MoveEffect Lower_accuracy_2s = new StatChangeEffect(203, Stat.Accuracy, -2, 100);
 	public static final MoveEffect Weather_rain = new WeatherChangeEffect(208, Weather.RAIN);

@@ -16,7 +16,7 @@ public class Util
 
 	public static Player createDefaultPlayer()
 	{
-		Player player = new Player("Offline debug account name", PokemonRegistry.find(7).generate(new Random(), 10, 1));
+		Player player = new Player("Offline debug account name", PokemonRegistry.find(25).generate(new Random(), 10, 1));
 		player.setStoryPosition(1);
 		player.setMoneyInBag(100);
 		player.setMoneyInBank(456789);
