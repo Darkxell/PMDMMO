@@ -200,6 +200,7 @@ public final class Animations
 		}
 		a.stateDelay = XMLUtils.getAttribute(xml, "statedelay", XMLUtils.getAttribute(defaultXml, "statedelay", 0));
 		a.delayTime = XMLUtils.getAttribute(xml, "delaytime", XMLUtils.getAttribute(defaultXml, "delaytime", a.duration));
+		if (a.delayTime == 0) a.delayTime = 15;
 
 		if (XMLUtils.getAttribute(xml, "alsoplay") != null || XMLUtils.getAttribute(defaultXml, "alsoplay") != null)
 		{

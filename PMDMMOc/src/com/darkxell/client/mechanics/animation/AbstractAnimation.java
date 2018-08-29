@@ -9,7 +9,7 @@ public class AbstractAnimation
 
 	int delayTime = 0;
 	/** The total duration of this Animation. */
-	int duration;
+	int duration = 0;
 	private AnimationEndListener listener;
 	/** The number of times this animation plays. Usually 1, or -1 as until removed. */
 	public int plays = 1;
