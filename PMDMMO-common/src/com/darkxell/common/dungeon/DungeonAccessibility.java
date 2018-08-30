@@ -55,7 +55,7 @@ public class DungeonAccessibility
 			case 19:// SKY TOWER SUMMIT
 				return (player.storyposition >= 115) ? NOMAP : LOCKED;
 			case 34:// UPROAR FOREST
-				return (player.storyposition >= 67) ? NOMAP : LOCKED;
+				return (player.storyposition >= 67) ? ACCESSIBLE : LOCKED;
 			case 39:// ROCK PATH
 				return (player.storyposition >= 40) ? NOMAP : LOCKED;
 			case 40:// SNOW PATH
