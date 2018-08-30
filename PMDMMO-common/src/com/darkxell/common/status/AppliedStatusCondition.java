@@ -77,7 +77,6 @@ public class AppliedStatusCondition implements DungeonEventListener
 	@Override
 	public void onPostEvent(Floor floor, DungeonEvent event, ArrayList<DungeonEvent> resultingEvents)
 	{
-		if (event.actor() == this.pokemon) this.actedWhileApplied = true;
 		this.condition.onPostEvent(floor, event, resultingEvents);
 	}
 
@@ -85,6 +84,11 @@ public class AppliedStatusCondition implements DungeonEventListener
 	public void onPreEvent(Floor floor, DungeonEvent event, ArrayList<DungeonEvent> resultingEvents)
 	{
 		this.condition.onPreEvent(floor, event, resultingEvents);
+	}
+
+	public void setActedWhileApplied()
+	{
+		this.actedWhileApplied = true;
 	}
 
 	public Message startMessage()

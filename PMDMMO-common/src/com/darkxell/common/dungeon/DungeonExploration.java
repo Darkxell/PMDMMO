@@ -27,6 +27,7 @@ import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.DungeonPokemon.DungeonPokemonType;
 import com.darkxell.common.pokemon.Pokemon;
+import com.darkxell.common.status.AppliedStatusCondition;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.Logger;
 
@@ -346,6 +347,8 @@ public class DungeonExploration
 				a.resetSlowCounter();
 				acts &= this.currentSubTurn >= GameTurn.SUB_TURNS - speed;
 			} else acts &= a.slowActs(speed);
+			for (AppliedStatusCondition condition : a.pokemon.activeStatusConditions())
+				condition.setActedWhileApplied();
 			if (acts) return;
 		}
 		++this.currentActor;

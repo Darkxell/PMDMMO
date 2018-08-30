@@ -31,6 +31,7 @@ public final class MoveEffects
 	public static final MoveEffect Fixed_65 = new FixedDamageEffect(49, 65);
 	public static final MoveEffect Inflict_asleep = new ApplyStatusConditionEffect(52, StatusCondition.Asleep, 100);
 	public static final MoveEffect Inflict_poison = new ApplyStatusConditionEffect(58, StatusCondition.Poisoned, 100);
+	public static final MoveEffect Inflict_paralysis = new ApplyStatusConditionEffect(59, StatusCondition.Paralyzed, 100);
 	public static final MoveEffect Raise_spattack = new StatChangeEffect(76, Stat.SpecialAttack, 1, 100);
 	public static final MoveEffect Raise_defense_2s = new StatChangeEffect(79, Stat.Defense, 2, 100);
 	public static final MoveEffect Lower_speed = new StatChangeEffect(85, Stat.Speed, -1, 100);
