@@ -28,7 +28,7 @@ public class DrainEffect extends MoveEffect
 		if (!missed)
 		{
 			DamageDealtEvent damage = null;
-			for (DungeonEvent e : effects.currentEffects())
+			for (DungeonEvent e : effects.events)
 				if (e instanceof DamageDealtEvent)
 				{
 					damage = (DamageDealtEvent) e;

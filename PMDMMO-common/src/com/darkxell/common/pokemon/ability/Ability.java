@@ -22,6 +22,8 @@ public abstract class Ability implements AffectsPokemon, DungeonEventListener
 	public static final Ability TORRENT = new AbilityTypeBoost(3, PokemonType.Water);
 
 	public static final Ability CHLOROPHYLL = new AbilityDoubleAttacks(4, Weather.SUNNY);
+	public static final AbilityStatBoostWithAlly MINUS = new AbilityStatBoostWithAlly(9, Stat.SpecialAttack, 1.5);
+	public static final AbilityStatBoostWithAlly PLUS = new AbilityStatBoostWithAlly(10, Stat.SpecialAttack, 1.5);
 
 	public static final Ability LEVITATE = new AbilityNullifyType(16, PokemonType.Ground);
 	public static final Ability SOUNDPROOF = new AbilityNullifySound(19);
@@ -33,6 +35,12 @@ public abstract class Ability implements AffectsPokemon, DungeonEventListener
 	public static final Ability KEEN_EYE = new AbilityPreventsStatLoss(46, Stat.Accuracy);
 
 	public static final Ability SHIELD_DUST = new AbilityPreventAdditionalEffectsOnSelf(58);
+
+	static
+	{
+		MINUS.allyAbility = PLUS;
+		PLUS.allyAbility = MINUS;
+	}
 
 	/** @return The Ability with the input ID. */
 	public static Ability find(int id)

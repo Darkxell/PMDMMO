@@ -12,7 +12,7 @@ import com.darkxell.common.pokemon.ability.AbilityModifyMoveEffect;
 public class MoveEvents
 {
 
-	protected ArrayList<DungeonEvent> events = new ArrayList<>();
+	public final ArrayList<DungeonEvent> events = new ArrayList<>();
 
 	/** Creates a Move Effect.
 	 * 
@@ -33,11 +33,6 @@ public class MoveEvents
 			effect = ((AbilityModifyMoveEffect) target.ability()).modify(effect, usedMove, target, floor, missed, isAdditional, false, directedAt);
 
 		if (effect != null) this.events.add(effect);
-	}
-
-	public ArrayList<DungeonEvent> currentEffects()
-	{
-		return new ArrayList<>(this.events);
 	}
 
 }

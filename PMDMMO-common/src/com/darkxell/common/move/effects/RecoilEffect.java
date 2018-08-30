@@ -27,7 +27,7 @@ public class RecoilEffect extends MoveEffect
 		if (!missed)
 		{
 			int damage = -1;
-			for (DungeonEvent e : effects.currentEffects())
+			for (DungeonEvent e : effects.events)
 				if (e instanceof DamageDealtEvent)
 				{
 					DamageDealtEvent d = (DamageDealtEvent) e;
