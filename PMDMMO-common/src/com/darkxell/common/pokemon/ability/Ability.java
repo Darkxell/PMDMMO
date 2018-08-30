@@ -28,6 +28,7 @@ public abstract class Ability implements AffectsPokemon, DungeonEventListener
 	public static final Ability WONDER_GUARD = new AbilityNullifyNonSupEff(21);
 
 	public static final Ability POISON_POINT = new AbilityStatusOnHit(36, StatusCondition.Poisoned, 12);
+	public static final Ability STATIC = new AbilityStatusOnHit(39, StatusCondition.Paralyzed, 12);
 
 	public static final Ability KEEN_EYE = new AbilityPreventsStatLoss(46, Stat.Accuracy);
 
