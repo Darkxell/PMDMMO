@@ -171,7 +171,13 @@ public class DungeonExploration
 		if (event.actor() != null && this.actorMap.containsKey(event.actor()))
 		{
 			if (event instanceof TurnSkippedEvent) this.actorMap.get(event.actor()).skip();
-			else this.actorMap.get(event.actor()).act();
+			else
+			{
+				this.actorMap.get(event.actor()).act();
+				for (Actor a : this.actors)
+					if (a.actionThisSubturn() == Action.SKIPPED) a.unskip();
+				this.currentActor = 0;
+			}
 		}
 
 		for (DungeonMission mission : this.activeMissions)

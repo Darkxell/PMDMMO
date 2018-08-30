@@ -73,4 +73,9 @@ public class Actor
 		return this.pokemon.toString();
 	}
 
+	public void unskip()
+	{
+		this.actionThisSubturn = Action.NO_ACTION;
+	}
+
 }
