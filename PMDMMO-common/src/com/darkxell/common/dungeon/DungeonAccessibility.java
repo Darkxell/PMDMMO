@@ -41,19 +41,19 @@ public class DungeonAccessibility
 			case 12:// FROSTY FOREST
 				return (player.storyposition >= 50) ? ACCESSIBLE : LOCKED;
 			case 13:// FROSTY GROTTO
-				return (player.storyposition >= 100) ? ACCESSIBLE : LOCKED;
+				return (player.storyposition >= 51) ? ACCESSIBLE : LOCKED;
 			case 14:// MOUNT FREEZE
-				return (player.storyposition >= 100) ? ACCESSIBLE : LOCKED;
+				return (player.storyposition >= 52) ? ACCESSIBLE : LOCKED;
 			case 15:// MOUNT FREEZE PEAK
-				return (player.storyposition >= 100) ? NOMAP : LOCKED;
+				return (player.storyposition >= 53) ? NOMAP : LOCKED;
 			case 16:// MAGMA CAVERN
-				return (player.storyposition >= 100) ? ACCESSIBLE : LOCKED;
+				return (player.storyposition >= 95) ? ACCESSIBLE : LOCKED;
 			case 17:// MAGMA CAVERN PIT
 				return (player.storyposition >= 100) ? NOMAP : LOCKED;
 			case 18:// SKY TOWER
-				return (player.storyposition >= 100) ? ACCESSIBLE : LOCKED;
+				return (player.storyposition >= 111) ? ACCESSIBLE : LOCKED;
 			case 19:// SKY TOWER SUMMIT
-				return (player.storyposition >= 100) ? NOMAP : LOCKED;
+				return (player.storyposition >= 115) ? NOMAP : LOCKED;
 			default:
 				return LOCKED;
 		}
