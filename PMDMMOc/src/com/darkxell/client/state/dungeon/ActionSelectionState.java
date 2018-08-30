@@ -123,13 +123,22 @@ public class ActionSelectionState extends DungeonSubState
 		} else if (Persistance.player.getDungeonLeader().canAttack(Persistance.floor))
 		{
 			if (key == Key.MOVE_1 && leader.move(0) != null)
-				Persistance.eventProcessor().processEvent(new MoveSelectionEvent(Persistance.floor, leader.move(0), leader).setPAE());
-			else if (key == Key.MOVE_2 && leader.move(1) != null)
-				Persistance.eventProcessor().processEvent(new MoveSelectionEvent(Persistance.floor, leader.move(1), leader).setPAE());
-			else if (key == Key.MOVE_3 && leader.move(2) != null)
-				Persistance.eventProcessor().processEvent(new MoveSelectionEvent(Persistance.floor, leader.move(2), leader).setPAE());
-			else if (key == Key.MOVE_4 && leader.move(3) != null)
-				Persistance.eventProcessor().processEvent(new MoveSelectionEvent(Persistance.floor, leader.move(3), leader).setPAE());
+			{
+				if (leader.move(0).pp() == 0) this.parent.logger.showMessage(new Message("moves.no_pp").addReplacement("<move>", leader.move(0).move().name()));
+				else Persistance.eventProcessor().processEvent(new MoveSelectionEvent(Persistance.floor, leader.move(0), leader).setPAE());
+			} else if (key == Key.MOVE_2 && leader.move(1) != null)
+			{
+				if (leader.move(1).pp() == 0) this.parent.logger.showMessage(new Message("moves.no_pp").addReplacement("<move>", leader.move(1).move().name()));
+				else Persistance.eventProcessor().processEvent(new MoveSelectionEvent(Persistance.floor, leader.move(1), leader).setPAE());
+			} else if (key == Key.MOVE_3 && leader.move(2) != null)
+			{
+				if (leader.move(2).pp() == 0) this.parent.logger.showMessage(new Message("moves.no_pp").addReplacement("<move>", leader.move(2).move().name()));
+				else Persistance.eventProcessor().processEvent(new MoveSelectionEvent(Persistance.floor, leader.move(2), leader).setPAE());
+			} else if (key == Key.MOVE_4 && leader.move(3) != null)
+			{
+				if (leader.move(3).pp() == 0) this.parent.logger.showMessage(new Message("moves.no_pp").addReplacement("<move>", leader.move(3).move().name()));
+				else Persistance.eventProcessor().processEvent(new MoveSelectionEvent(Persistance.floor, leader.move(3), leader).setPAE());
+			}
 		}
 
 		if (key == Key.ATTACK && (!Key.RUN.isPressed() || Persistance.player.getDungeonLeader().isFamished()))

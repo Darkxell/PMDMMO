@@ -25,6 +25,12 @@ public class LearnedMove implements HasID
 	public LearnedMove(int moveid)
 	{
 		this(new DBLearnedmove(0, 4, moveid, 1, true, false, 0));
+		Move m = MoveRegistry.find(moveid);
+		if (m != null)
+		{
+			this.setMaxPP(m.pp);
+			this.setPP(m.pp);
+		}
 	}
 
 	public int getAddedLevel()
@@ -82,7 +88,7 @@ public class LearnedMove implements HasID
 	{
 		this.data = data;
 		this.move = MoveRegistry.find(this.data.moveid);
-		if (this.pp >= this.data.ppmax) this.pp = this.data.ppmax;
+		this.setPP(data.ppmax);
 	}
 
 	public void setEnabled(boolean isEnabled)

@@ -5,7 +5,6 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
 import com.darkxell.client.renderers.TextRenderer;
-import com.darkxell.client.resources.Palette;
 import com.darkxell.client.resources.images.Sprites;
 import com.darkxell.client.state.menu.AbstractMenuState.MenuOption;
 import com.darkxell.client.state.menu.dungeon.MovesMenuState;
@@ -25,17 +24,16 @@ public class MoveSelectionWindow extends OptionSelectionWindow
 	@Override
 	protected void drawOption(Graphics2D g, MenuOption option, int x, int y)
 	{
-		if (((MoveMenuOption) option).move.pp() == 0) TextRenderer.setColor(Palette.FONT_RED);
-		else TextRenderer.setColor(Palette.FONT_GREEN);
 		TextRenderer.render(g, option.name, x, y);
-		TextRenderer.render(g, ((MoveMenuOption) option).move.pp() + "/" + ((MoveMenuOption) option).move.maxPP(),
-				(int) (this.dimensions.getMaxX() - ppLength - MARGIN_X), y);
+		String pp = ((MoveMenuOption) option).move.pp() + "/" + ((MoveMenuOption) option).move.maxPP();
+		if (((MoveMenuOption) option).move.pp() == 0) pp = "<red>" + pp + "</color>";
+		TextRenderer.render(g, pp, (int) (this.dimensions.getMaxX() - ppLength - MARGIN_X), y);
 		TextRenderer.setColor(null);
 
 		if ((this.cursor > 9 || !this.menu.isMain()) && this.menu.currentOption() == option)
 			g.drawImage(this.menu.isMain() ? Sprites.Res_Hud.menuHud.selectionArrow() : Sprites.Res_Hud.menuHud.selectedArrow(),
-					x - Sprites.Res_Hud.menuHud.selectionArrow().getWidth() - 4, y + TextRenderer.height() / 2 - Sprites.Res_Hud.menuHud.selectedArrow().getHeight() / 2,
-					null);
+					x - Sprites.Res_Hud.menuHud.selectionArrow().getWidth() - 4,
+					y + TextRenderer.height() / 2 - Sprites.Res_Hud.menuHud.selectedArrow().getHeight() / 2, null);
 
 		y += TextRenderer.height() + TextRenderer.lineSpacing();
 	}
