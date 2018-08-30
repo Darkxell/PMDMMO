@@ -357,5 +357,6 @@
   <move id="1003" type="0" category="Status" pp="12" power="2" accuracy="125" critical="12" range="Floor" targets="Allies" effect="114" freeze="true" snatchable="true" />
   <move id="2000" type="19" category="Physical" pp="10" power="20" accuracy="88" critical="12" range="Front_row" damage="true" ginsengable="true" freeze="true" />
   <move id="2001" type="19" category="Physical" pp="7" power="10" range="Room" effect="136" freeze="true" />
+  <move id="2002" type="19" category="Physical" pp="1" power="30" accuracy="100" critical="12" effect="5" damage="true" freeze="true" />
   <move id="-50" type="0" category="Physical" pp="15" power="10" accuracy="125" effect="131" damage="true" critical="12" />
 </moves>

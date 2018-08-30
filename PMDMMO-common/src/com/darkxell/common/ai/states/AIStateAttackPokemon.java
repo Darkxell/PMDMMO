@@ -31,7 +31,7 @@ public class AIStateAttackPokemon extends AIStateFollowPokemon
 			for (int i = 0; i < this.ai.pokemon.moveCount(); ++i)
 				candidates.add(this.ai.pokemon.move(i));
 			candidates.removeIf(m -> m.pp() == 0);
-			// TODO insert Struggle
+			if (candidates.isEmpty()) candidates.add(new LearnedMove(MoveRegistry.STRUGGLE.id));
 			candidates.add(new LearnedMove(MoveRegistry.ATTACK.id));
 			LearnedMove move = RandomUtil.random(candidates, this.ai.floor.random);
 			return new MoveSelectionEvent(this.ai.floor, move, this.ai.pokemon, AIUtils.generalDirection(this.ai.pokemon, this.target));

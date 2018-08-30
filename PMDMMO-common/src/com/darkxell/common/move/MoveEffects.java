@@ -9,6 +9,7 @@ import com.darkxell.common.move.effects.DestroyTrapEffect;
 import com.darkxell.common.move.effects.DoubleDamageEffect;
 import com.darkxell.common.move.effects.DrainEffect;
 import com.darkxell.common.move.effects.FixedDamageEffect;
+import com.darkxell.common.move.effects.HPRecoilEffect;
 import com.darkxell.common.move.effects.RecoilEffect;
 import com.darkxell.common.move.effects.StatChangeEffect;
 import com.darkxell.common.move.effects.WeatherChangeEffect;
@@ -24,6 +25,7 @@ public final class MoveEffects
 
 	public static final MoveEffect Default = new MoveEffect(0);
 	public static final MoveEffect Basic_attack = new MoveEffect(1);
+	public static final MoveEffect HPRecoil_25 = new HPRecoilEffect(5, 25);
 	public static final MoveEffect Inflict_burn_10 = new ApplyStatusConditionEffect(7, StatusCondition.Burn, 10);
 	public static final MoveEffect Inflict_constricted_fire_10 = new ApplyStatusConditionEffect(15, StatusCondition.Constricted_fire, 10);
 	public static final MoveEffect Inflict_paralysis_15 = new ApplyStatusConditionEffect(35, StatusCondition.Paralyzed, 15);

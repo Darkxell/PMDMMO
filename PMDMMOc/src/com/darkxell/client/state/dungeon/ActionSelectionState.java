@@ -120,41 +120,60 @@ public class ActionSelectionState extends DungeonSubState
 				if (leader.tile().adjacentTile(d).getPokemon() != null && !leader.player().isAlly(leader.tile().adjacentTile(d).getPokemon())) break;
 			} while (d != leader.facing());
 			if (d != leader.facing()) Persistance.eventProcessor().processEvent(new PokemonRotateEvent(Persistance.floor, leader, d).setPAE());
-		} else if (Persistance.player.getDungeonLeader().canAttack(Persistance.floor))
-		{
-			if (key == Key.MOVE_1 && leader.move(0) != null)
-			{
-				if (leader.move(0).pp() == 0) this.parent.logger.showMessage(new Message("moves.no_pp").addReplacement("<move>", leader.move(0).move().name()));
-				else Persistance.eventProcessor().processEvent(new MoveSelectionEvent(Persistance.floor, leader.move(0), leader).setPAE());
-			} else if (key == Key.MOVE_2 && leader.move(1) != null)
-			{
-				if (leader.move(1).pp() == 0) this.parent.logger.showMessage(new Message("moves.no_pp").addReplacement("<move>", leader.move(1).move().name()));
-				else Persistance.eventProcessor().processEvent(new MoveSelectionEvent(Persistance.floor, leader.move(1), leader).setPAE());
-			} else if (key == Key.MOVE_3 && leader.move(2) != null)
-			{
-				if (leader.move(2).pp() == 0) this.parent.logger.showMessage(new Message("moves.no_pp").addReplacement("<move>", leader.move(2).move().name()));
-				else Persistance.eventProcessor().processEvent(new MoveSelectionEvent(Persistance.floor, leader.move(2), leader).setPAE());
-			} else if (key == Key.MOVE_4 && leader.move(3) != null)
-			{
-				if (leader.move(3).pp() == 0) this.parent.logger.showMessage(new Message("moves.no_pp").addReplacement("<move>", leader.move(3).move().name()));
-				else Persistance.eventProcessor().processEvent(new MoveSelectionEvent(Persistance.floor, leader.move(3), leader).setPAE());
-			}
 		}
 
-		if (key == Key.ATTACK && (!Key.RUN.isPressed() || Persistance.player.getDungeonLeader().isFamished()))
+		if (Persistance.player.getDungeonLeader().canAttack(Persistance.floor) && key == Key.MOVE_1 || key == Key.MOVE_2 || key == Key.MOVE_3
+				|| key == Key.MOVE_4 || key == Key.ATTACK)
 		{
-			DungeonPokemon facing = Persistance.player.getDungeonLeader().tile().adjacentTile(Persistance.player.getDungeonLeader().facing()).getPokemon();
-			if (facing != null && facing.type == DungeonPokemonType.RESCUEABLE)
+			boolean done = false;
+			if (key != Key.ATTACK && Persistance.player.getDungeonLeader().isStruggling())
 			{
-				DungeonMission m = Persistance.dungeon.findRescueMission(Persistance.floor, facing);
-				if (m != null && m.owner == Persistance.player)
+				Persistance.eventProcessor()
+						.processEvent(new MoveSelectionEvent(Persistance.floor, new LearnedMove(MoveRegistry.STRUGGLE.id), leader).setPAE());
+				done = true;
+			}
+
+			if (!done)
+			{
+				if (key == Key.MOVE_1 && leader.move(0) != null)
 				{
-					Persistance.eventProcessor().processEvent(new PokemonRescuedEvent(Persistance.floor, facing, Persistance.player).setPAE());
-					return;
+					if (leader.move(0).pp() == 0)
+						this.parent.logger.showMessage(new Message("moves.no_pp").addReplacement("<move>", leader.move(0).move().name()));
+					else Persistance.eventProcessor().processEvent(new MoveSelectionEvent(Persistance.floor, leader.move(0), leader).setPAE());
+				} else if (key == Key.MOVE_2 && leader.move(1) != null)
+				{
+					if (leader.move(1).pp() == 0)
+						this.parent.logger.showMessage(new Message("moves.no_pp").addReplacement("<move>", leader.move(1).move().name()));
+					else Persistance.eventProcessor().processEvent(new MoveSelectionEvent(Persistance.floor, leader.move(1), leader).setPAE());
+				} else if (key == Key.MOVE_3 && leader.move(2) != null)
+				{
+					if (leader.move(2).pp() == 0)
+						this.parent.logger.showMessage(new Message("moves.no_pp").addReplacement("<move>", leader.move(2).move().name()));
+					else Persistance.eventProcessor().processEvent(new MoveSelectionEvent(Persistance.floor, leader.move(2), leader).setPAE());
+				} else if (key == Key.MOVE_4 && leader.move(3) != null)
+				{
+					if (leader.move(3).pp() == 0)
+						this.parent.logger.showMessage(new Message("moves.no_pp").addReplacement("<move>", leader.move(3).move().name()));
+					else Persistance.eventProcessor().processEvent(new MoveSelectionEvent(Persistance.floor, leader.move(3), leader).setPAE());
+				}
+
+				if (key == Key.ATTACK && (!Key.RUN.isPressed() || Persistance.player.getDungeonLeader().isFamished()))
+				{
+					DungeonPokemon facing = Persistance.player.getDungeonLeader().tile().adjacentTile(Persistance.player.getDungeonLeader().facing())
+							.getPokemon();
+					if (facing != null && facing.type == DungeonPokemonType.RESCUEABLE)
+					{
+						DungeonMission m = Persistance.dungeon.findRescueMission(Persistance.floor, facing);
+						if (m != null && m.owner == Persistance.player)
+						{
+							Persistance.eventProcessor().processEvent(new PokemonRescuedEvent(Persistance.floor, facing, Persistance.player).setPAE());
+							return;
+						}
+					}
+					if (Persistance.player.getDungeonLeader().canAttack(Persistance.floor)) Persistance.eventProcessor().processEvent(
+							new MoveSelectionEvent(Persistance.floor, new LearnedMove(MoveRegistry.ATTACK.id), Persistance.player.getDungeonLeader()).setPAE());
 				}
 			}
-			if (Persistance.player.getDungeonLeader().canAttack(Persistance.floor)) Persistance.eventProcessor().processEvent(
-					new MoveSelectionEvent(Persistance.floor, new LearnedMove(MoveRegistry.ATTACK.id), Persistance.player.getDungeonLeader()).setPAE());
 		}
 	}
 

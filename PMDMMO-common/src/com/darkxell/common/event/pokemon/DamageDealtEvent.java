@@ -6,6 +6,7 @@ import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
 import com.darkxell.common.event.stats.ExperienceGeneratedEvent;
+import com.darkxell.common.move.effects.HPRecoilEffect;
 import com.darkxell.common.move.effects.RecoilEffect;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Message;
@@ -44,7 +45,8 @@ public class DamageDealtEvent extends DungeonEvent
 	{
 		String damageID = "move.damage_dealt"; // Default
 		if (this.source instanceof WeatherDamaging) damageID = "weather.damage_dealt"; // Weather damage
-		else if (this.source instanceof MoveUse && ((MoveUse) this.source).move.move().effect instanceof RecoilEffect
+		else if (this.source instanceof MoveUse
+				&& (((MoveUse) this.source).move.move().effect instanceof RecoilEffect || ((MoveUse) this.source).move.move().effect instanceof HPRecoilEffect)
 				&& ((MoveUse) this.source).user == this.target) // Recoil damage
 			damageID = "move.recoil";
 

@@ -12,7 +12,7 @@ import com.darkxell.common.util.XMLUtils;
 /** Holds all Moves. */
 public final class MoveRegistry
 {
-	public static Move ATTACK;
+	public static Move ATTACK, STRUGGLE;
 
 	private static HashMap<Integer, Move> moves = new HashMap<Integer, Move>();
 
@@ -41,6 +41,7 @@ public final class MoveRegistry
 		}
 
 		ATTACK = find(0);
+		STRUGGLE = find(2002);
 	}
 
 	/** Saves this Registry for the Client. */
@@ -48,7 +49,7 @@ public final class MoveRegistry
 	{
 		Element xml = new Element("moves");
 		for (Move move : moves.values())
-			if (move != ATTACK) xml.addContent(move.toXML());
+			xml.addContent(move.toXML());
 		XMLUtils.saveFile(new File("resources/data/moves.xml"), xml);
 	}
 

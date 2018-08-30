@@ -29,7 +29,7 @@ public class LearnedMove implements HasID
 		if (m != null)
 		{
 			this.setMaxPP(m.pp);
-			this.setPP(m.pp);
+			this.setPP(1);
 		}
 	}
 

@@ -309,6 +309,13 @@ public class DungeonPokemon implements ItemContainer
 		return this.getBelly() == 0;
 	}
 
+	public boolean isStruggling()
+	{
+		for (int i = 0; i < this.moveCount(); ++i)
+			if (this.move(i).pp() > 0) return false;
+		return true;
+	}
+
 	public boolean isTeamLeader()
 	{
 		return this.player() != null && this.player().getTeamLeader() == this.originalPokemon;
