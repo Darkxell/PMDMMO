@@ -243,6 +243,10 @@
     <move id="713">
       <default y="25" height="32" width="32" state="special" spriteduration="5">0,1,2,3,4,5,6,7,8,9</default>
     </move>
+    <move id="752" clone="moves/755"/>
+    <move id="755">
+      <default sprites="none" state="withdraw" delaytime="15" alsoplay="2"/>
+    </move>
     <move id="801">
       <default width="64" height="64" state="jump" spriteduration="3">0,1,2,3,4,5,6,7</default>
     </move>
@@ -325,6 +329,7 @@
     <movetarget id="710">
       <default spriteduration="3" width="32" height="64">0,1,2,3,4</default>
     </movetarget>
+    <movetarget id="752" clone="targets/755"/>
     <movetarget id="755">
       <default width="72" height="176" y="140">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16</default>
     </movetarget>

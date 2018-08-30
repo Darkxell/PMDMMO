@@ -95,13 +95,13 @@ public class AbstractPokemonRenderer extends AbstractRenderer
 					: Res_Dungeon.shadows.getSmall(this.sprite.getShadowColor());
 			g.drawImage(shadow, xPos - shadow.getWidth() / 2 + frame.shadowX, yPos + TILE_SIZE * 2 / 5 - shadow.getHeight() + frame.shadowY, null);
 
-			for (PokemonAnimation animation : this.animations)
-				animation.prerender(g, width, height);
+			for (int i = 0; i < this.animations.size(); ++i)
+				this.animations.get(i).prerender(g, width, height);
 
 			render(g, this.sprite, xPos, yPos);
 
-			for (PokemonAnimation animation : this.animations)
-				animation.postrender(g, width, height);
+			for (int i = 0; i < this.animations.size(); ++i)
+				this.animations.get(i).postrender(g, width, height);
 
 			if (this.alpha != 1) g.setComposite(c);
 		} else Logger.w("Tried to render null sprite.");
