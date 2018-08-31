@@ -22,6 +22,7 @@ public abstract class Ability implements AffectsPokemon, DungeonEventListener
 	public static final Ability TORRENT = new AbilityTypeBoost(3, PokemonType.Water);
 
 	public static final Ability CHLOROPHYLL = new AbilityDoubleAttacks(4, Weather.SUNNY);
+	public static final Ability GUTS = new AbilityStatBoostWhileAfflicted(6, Stat.Attack);
 	public static final AbilityStatBoostWithAlly MINUS = new AbilityStatBoostWithAlly(9, Stat.SpecialAttack, 1.5);
 	public static final AbilityStatBoostWithAlly PLUS = new AbilityStatBoostWithAlly(10, Stat.SpecialAttack, 1.5);
 
