@@ -8,6 +8,7 @@ import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.action.PokemonTravelEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent;
+import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.RandomUtil;
 
@@ -20,12 +21,14 @@ public class ConfusedStatusCondition extends StatusCondition
 	}
 
 	@Override
-	public void onPreEvent(Floor floor, DungeonEvent event, ArrayList<DungeonEvent> resultingEvents)
+	public void onPreEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned, ArrayList<DungeonEvent> resultingEvents)
 	{
-		super.onPreEvent(floor, event, resultingEvents);
-		if (event instanceof PokemonTravelEvent && ((PokemonTravelEvent) event).pokemon().hasStatusCondition(this) && !event.hasFlag("confused"))
+		super.onPreEvent(floor, event, concerned, resultingEvents);
+		if (event instanceof PokemonTravelEvent && ((PokemonTravelEvent) event).pokemon() == concerned
+				&& ((PokemonTravelEvent) event).pokemon().hasStatusCondition(this) && !event.hasFlag("confused"))
 			this.randomize(floor, ((PokemonTravelEvent) event), resultingEvents);
-		if (event instanceof MoveSelectionEvent && ((MoveSelectionEvent) event).usedMove().user.hasStatusCondition(this) && !event.hasFlag("confused"))
+		if (event instanceof MoveSelectionEvent && ((PokemonTravelEvent) event).pokemon() == concerned
+				&& ((MoveSelectionEvent) event).usedMove().user.hasStatusCondition(this) && !event.hasFlag("confused"))
 			this.randomize(floor, ((MoveSelectionEvent) event), resultingEvents);
 	}
 

@@ -36,6 +36,8 @@ public abstract class Ability implements AffectsPokemon, DungeonEventListener
 	public static final Ability KEEN_EYE = new AbilityPreventsStatLoss(46, Stat.Accuracy);
 
 	public static final Ability SHIELD_DUST = new AbilityPreventAdditionalEffectsOnSelf(58);
+	
+	public static final Ability RUNAWAY = new AbilityRunaway(72);
 
 	static
 	{

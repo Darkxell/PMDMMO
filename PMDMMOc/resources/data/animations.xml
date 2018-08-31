@@ -112,6 +112,9 @@
     <c id="225">
       <default width="16" height="32" x="0" y="32">0,1,2,3,4,4,4,4</default>
     </c>
+    <c id="226">
+      <default spriteduration="5" width="32" height="32" state="hurt">0,1,2,3,4,5,6</default>
+    </c>
     <c id="300">
       <default width="32" height="32">0,1,2,3,4,5,6,7,8,9</default>
     </c>

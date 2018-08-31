@@ -8,6 +8,7 @@ import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.TriggeredAbilityEvent;
 import com.darkxell.common.move.Move.MoveCategory;
+import com.darkxell.common.pokemon.DungeonPokemon;
 
 public abstract class AbilityOnHit extends Ability
 {
@@ -21,13 +22,13 @@ public abstract class AbilityOnHit extends Ability
 	}
 
 	@Override
-	public void onPostEvent(Floor floor, DungeonEvent event, ArrayList<DungeonEvent> resultingEvents)
+	public void onPostEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned, ArrayList<DungeonEvent> resultingEvents)
 	{
 		if (event instanceof DamageDealtEvent)
 		{
 			DamageDealtEvent d = (DamageDealtEvent) event;
-			if (d.target.ability() == this && d.source instanceof MoveUse && ((MoveUse) d.source).move.move().category == MoveCategory.Physical
-					&& floor.random.nextDouble() * 100 < this.probability)
+			if (d.target.ability() == this && d.target == concerned && d.source instanceof MoveUse
+					&& ((MoveUse) d.source).move.move().category == MoveCategory.Physical && floor.random.nextDouble() * 100 < this.probability)
 			{
 				resultingEvents.add(new TriggeredAbilityEvent(floor, d.target));
 				this.onHit(floor, d, (MoveUse) d.source, resultingEvents);

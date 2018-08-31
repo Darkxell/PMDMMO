@@ -6,6 +6,7 @@ import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.pokemon.TriggeredAbilityEvent;
+import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.weather.Weather;
 
 public class AbilityDoubleAttacks extends Ability
@@ -21,9 +22,9 @@ public class AbilityDoubleAttacks extends Ability
 	}
 
 	@Override
-	public void onPostEvent(Floor floor, DungeonEvent event, ArrayList<DungeonEvent> resultingEvents)
+	public void onPostEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned, ArrayList<DungeonEvent> resultingEvents)
 	{
-		super.onPostEvent(floor, event, resultingEvents);
+		super.onPostEvent(floor, event, concerned, resultingEvents);
 		if (event instanceof MoveSelectionEvent && !event.hasFlag("isdoubled"))
 		{
 			MoveSelectionEvent e = (MoveSelectionEvent) event;
@@ -33,7 +34,7 @@ public class AbilityDoubleAttacks extends Ability
 			for (Weather a : this.activators)
 				if (current == a)
 				{
-					active = e.usedMove().user.ability() == this;
+					active = e.usedMove().user.ability() == this && e.usedMove().user == concerned;
 					break;
 				}
 

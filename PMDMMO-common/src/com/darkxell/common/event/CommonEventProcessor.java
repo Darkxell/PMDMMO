@@ -82,9 +82,9 @@ public class CommonEventProcessor
 		ArrayList<DungeonEvent> resultingEvents = new ArrayList<>();
 		for (DungeonPokemon p : this.dungeon.currentFloor().listPokemon())
 		{
-			p.ability().onPostEvent(this.dungeon.currentFloor(), event, resultingEvents);
+			p.ability().onPostEvent(this.dungeon.currentFloor(), event, p, resultingEvents);
 			for (AppliedStatusCondition condition : p.activeStatusConditions())
-				condition.onPostEvent(this.dungeon.currentFloor(), event, resultingEvents);
+				condition.onPostEvent(this.dungeon.currentFloor(), event, p, resultingEvents);
 		}
 		this.addToPending(resultingEvents);
 	}
@@ -95,11 +95,11 @@ public class CommonEventProcessor
 		ArrayList<DungeonEvent> resultingEvents = new ArrayList<>();
 		for (DungeonPokemon p : this.dungeon.currentFloor().listPokemon())
 		{
-			p.ability().onPreEvent(this.dungeon.currentFloor(), event, resultingEvents);
+			p.ability().onPreEvent(this.dungeon.currentFloor(), event, p, resultingEvents);
 			if (event.isConsumed()) break;
 			for (AppliedStatusCondition condition : p.activeStatusConditions())
 			{
-				condition.onPreEvent(this.dungeon.currentFloor(), event, resultingEvents);
+				condition.onPreEvent(this.dungeon.currentFloor(), event, p, resultingEvents);
 				if (event.isConsumed()) break;
 			}
 		}
@@ -193,10 +193,10 @@ public class CommonEventProcessor
 			{
 				this.onTurnEnd();
 				return;
-			} 
-			
+			}
+
 			AI ai = this.dungeon.currentFloor().aiManager.getAI(actor);
-			
+
 			if (ai.currentState() instanceof AIStatePlayerControl && actor.canAct(this.dungeon.currentFloor()))
 			{
 				if (this.runners.contains(actor))

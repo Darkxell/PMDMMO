@@ -75,15 +75,15 @@ public class AppliedStatusCondition implements DungeonEventListener
 	}
 
 	@Override
-	public void onPostEvent(Floor floor, DungeonEvent event, ArrayList<DungeonEvent> resultingEvents)
+	public void onPostEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned, ArrayList<DungeonEvent> resultingEvents)
 	{
-		this.condition.onPostEvent(floor, event, resultingEvents);
+		this.condition.onPostEvent(floor, event, concerned, resultingEvents);
 	}
 
 	@Override
-	public void onPreEvent(Floor floor, DungeonEvent event, ArrayList<DungeonEvent> resultingEvents)
+	public void onPreEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned, ArrayList<DungeonEvent> resultingEvents)
 	{
-		this.condition.onPreEvent(floor, event, resultingEvents);
+		this.condition.onPreEvent(floor, event, concerned, resultingEvents);
 	}
 
 	public void setActedWhileApplied()
