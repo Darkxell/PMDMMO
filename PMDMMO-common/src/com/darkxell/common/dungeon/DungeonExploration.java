@@ -175,7 +175,7 @@ public class DungeonExploration
 			{
 				this.actorMap.get(event.actor()).act();
 				for (Actor a : this.actors)
-					if (a.actionThisSubturn() == Action.SKIPPED && !a.pokemon.isTeamLeader()) a.unskip();
+					if (a.actionThisSubturn() == Action.SKIPPED && !a.pokemon.isTeamLeader() && a.pokemon.isAlliedWith(event.actor())) a.unskip();
 				this.currentActor = 0;
 			}
 		}
