@@ -54,6 +54,7 @@ public final class MoveEffects
 	public static final MoveEffect Lower_evasion = new StatChangeEffect(179, Stat.Evasiveness, -1, 100);
 	public static final MoveEffect Raise_evasion = new StatChangeEffect(180, Stat.Evasiveness, 1, 100);
 	public static final MoveEffect Inflict_protect = new ApplyStatusConditionEffect(192, StatusCondition.Protect, 100);
+	public static final MoveEffect Inflict_charging = new ApplyStatusConditionEffect(198, StatusCondition.Charging, 100);
 	public static final MoveEffect Lower_accuracy_2s = new StatChangeEffect(203, Stat.Accuracy, -2, 100);
 	public static final MoveEffect Weather_rain = new WeatherChangeEffect(208, Weather.RAIN);
 	public static final MoveEffect Destroy_trap = new DestroyTrapEffect(213);
