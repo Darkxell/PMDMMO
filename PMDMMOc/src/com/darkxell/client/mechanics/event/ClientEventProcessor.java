@@ -70,7 +70,7 @@ import com.darkxell.common.player.Inventory;
 import com.darkxell.common.pokemon.BaseStats;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.Pokemon;
-import com.darkxell.common.status.StatusCondition;
+import com.darkxell.common.status.StatusConditions;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.language.Message;
 import com.darkxell.common.weather.Weather;
@@ -523,7 +523,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		if (event.actor() == Persistance.player.getDungeonLeader())
 		{
 			boolean pause = false;
-			if (event.actor().hasStatusCondition(StatusCondition.Asleep))
+			if (event.actor().hasStatusCondition(StatusConditions.Asleep))
 			{
 				Persistance.dungeonState.logger.showMessage(new Message("status.tick.sleep").addReplacement("<pokemon>", event.actor().getNickname()));
 				pause = true;
@@ -588,7 +588,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 			Persistance.dungeonState.setSubstate(s);
 			this.setState(State.ANIMATING);
 		}
-		if (event.condition.condition == StatusCondition.Asleep)
+		if (event.condition.condition == StatusConditions.Asleep)
 			Persistance.dungeonState.pokemonRenderer.getSprite(event.condition.pokemon).setDefaultState(PokemonSpriteState.SLEEP, true);
 	}
 
@@ -596,7 +596,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	{
 		Persistance.dungeonState.pokemonRenderer.getRenderer(event.condition.pokemon).removeAnimation(event.condition);
 		PokemonSprite sprite = Persistance.dungeonState.pokemonRenderer.getSprite(event.condition.pokemon);
-		if (!event.condition.pokemon.hasStatusCondition(StatusCondition.Asleep) && sprite.defaultState() == PokemonSpriteState.SLEEP)
+		if (!event.condition.pokemon.hasStatusCondition(StatusConditions.Asleep) && sprite.defaultState() == PokemonSpriteState.SLEEP)
 			sprite.setDefaultState(PokemonSpriteState.IDLE, false);
 	}
 

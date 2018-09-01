@@ -1,4 +1,4 @@
-package com.darkxell.common.status;
+package com.darkxell.common.status.conditions;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.pokemon.DungeonPokemon;

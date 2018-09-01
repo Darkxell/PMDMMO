@@ -1,4 +1,4 @@
-package com.darkxell.common.status;
+package com.darkxell.common.status.conditions;
 
 import java.util.ArrayList;
 
@@ -8,6 +8,8 @@ import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.ability.Ability;
+import com.darkxell.common.status.AppliedStatusCondition;
+import com.darkxell.common.status.StatusCondition;
 
 public class TerrifiedStatusCondition extends StatusCondition
 {

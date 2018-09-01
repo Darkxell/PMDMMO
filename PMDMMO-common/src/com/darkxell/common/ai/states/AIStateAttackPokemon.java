@@ -9,7 +9,7 @@ import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.LearnedMove;
-import com.darkxell.common.status.StatusCondition;
+import com.darkxell.common.status.StatusConditions;
 import com.darkxell.common.util.RandomUtil;
 
 /** State in which the Pokemon follows then attacks a Pokemon. */
@@ -23,7 +23,7 @@ public class AIStateAttackPokemon extends AIStateFollowPokemon
 
 	private boolean canUse(DungeonPokemon pokemon, LearnedMove move)
 	{
-		if (pokemon.hasStatusCondition(StatusCondition.Taunted) && !move.move().dealsDamage) return false;
+		if (pokemon.hasStatusCondition(StatusConditions.Taunted) && !move.move().dealsDamage) return false;
 		return move.pp() != 0;
 	}
 

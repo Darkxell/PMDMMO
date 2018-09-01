@@ -1,4 +1,4 @@
-package com.darkxell.common.status;
+package com.darkxell.common.status.conditions;
 
 import java.util.ArrayList;
 
@@ -8,6 +8,9 @@ import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.HealthRestoredEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.PokemonType;
+import com.darkxell.common.status.AppliedStatusCondition;
+import com.darkxell.common.status.StatusCondition;
+import com.darkxell.common.status.StatusConditions;
 import com.darkxell.common.util.Pair;
 import com.darkxell.common.util.language.Message;
 
@@ -31,7 +34,7 @@ public class StealsHpStatusCondition extends StatusCondition
 	{
 		Pair<Boolean, Message> sup = super.affects(pokemon);
 		if (!sup.first) return sup;
-		if (this == Leech_seed && pokemon.species().isType(PokemonType.Grass)) return new Pair<>(false, this.immune(pokemon));
+		if (this == StatusConditions.Leech_seed && pokemon.species().isType(PokemonType.Grass)) return new Pair<>(false, this.immune(pokemon));
 		return new Pair<>(true, null);
 	}
 

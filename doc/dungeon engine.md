@@ -95,19 +95,21 @@ Here is a list of all Events. Will be updated with the game. Bold events are PAE
 
 ## ■ Dungeon & Floor Events
 
-| Event name           | Description                                                                       | May trigger               |
-|----------------------|-----------------------------------------------------------------------------------|-------------------------- |
-| BossDefeatedevent    | Called when a Boss is defeated. EventProcessor then does what is required.        | ExplorationStopEvent      |
-| **DungeonExitEvent** | Exits the Dungeon.                                                                | ExplorationStopEvent      |
-| ExplorationStopEvent | Notifies the game that the Dungeon exploration is over. Stops the Dungeon engine. |                           |
-| **NextFloorEvent**   | Changes to the next floor.                                                        | Calls turn start events.  |
-| PlayerLosesEvent     | Called when a Player loses this Dungeon exploration.                              | ExplorationStopEvent      |
-| TrapDestroyedEvent   | Called when a Trap is destroyed.                                                  | |
-| TrapSteppedOnEvent   | Called when a Pokémon steps on a Trap.                                            | Calls the Trap's effects. |
-| WeatherDamageEvent   | Called when a weather condition deals damage to Pokémon on the floor.             | DamageDealtEvent          |
-| WeatherCleanedEvent  | Called when a weather condition fades away.                                       | WeatherChangedEvent       |
-| WeatherCreatedEvent  | Called when a weather condition is created.                                       | WeatherChangedEvent       |
-| WeatherChangedEvent  | Called when the main (active) weather condition changes.                          |                           |
+| Event name              | Description                                                                       | May trigger               |
+|-------------------------|-----------------------------------------------------------------------------------|-------------------------- |
+| BossDefeatedevent       | Called when a Boss is defeated. EventProcessor then does what is required.        | ExplorationStopEvent      |
+| **DungeonExitEvent**    | Exits the Dungeon.                                                                | ExplorationStopEvent      |
+| ExplorationStopEvent    | Notifies the game that the Dungeon exploration is over. Stops the Dungeon engine. |                           |
+| FloorStatusCreatedEvent | Called when a Floor Status is created.                                            | Calls status start events. |
+| FloorStatusEndedEvent   | Called when a Floor Status ends.                                                  | Calls status end events. |
+| **NextFloorEvent**      | Changes to the next floor.                                                        | Calls turn start events.  |
+| PlayerLosesEvent        | Called when a Player loses this Dungeon exploration.                              | ExplorationStopEvent      |
+| TrapDestroyedEvent      | Called when a Trap is destroyed.                                                  | |
+| TrapSteppedOnEvent      | Called when a Pokémon steps on a Trap.                                            | Calls the Trap's effects. |
+| WeatherDamageEvent      | Called when a weather condition deals damage to Pokémon on the floor.             | DamageDealtEvent          |
+| WeatherCleanedEvent     | Called when a weather condition fades away.                                       | WeatherChangedEvent       |
+| WeatherCreatedEvent     | Called when a weather condition is created.                                       | WeatherChangedEvent       |
+| WeatherChangedEvent     | Called when the main (active) weather condition changes.                          |                           |
 
 ## ■ Item related Events
 

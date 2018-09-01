@@ -1,4 +1,4 @@
-package com.darkxell.common.status;
+package com.darkxell.common.status.conditions;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,6 +9,7 @@ import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.action.PokemonTravelEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.status.StatusCondition;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.RandomUtil;
 

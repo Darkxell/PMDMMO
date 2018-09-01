@@ -1,4 +1,4 @@
-package com.darkxell.common.status;
+package com.darkxell.common.status.conditions;
 
 import java.util.ArrayList;
 
@@ -7,6 +7,9 @@ import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.PokemonType;
+import com.darkxell.common.status.AppliedStatusCondition;
+import com.darkxell.common.status.StatusCondition;
+import com.darkxell.common.status.StatusConditions;
 import com.darkxell.common.util.Pair;
 import com.darkxell.common.util.language.Message;
 
@@ -29,9 +32,9 @@ public class PeriodicDamageStatusCondition extends StatusCondition
 	{
 		Pair<Boolean, Message> sup = super.affects(pokemon);
 		if (!sup.first) return sup;
-		if ((this == Poisoned || this == Badly_poisoned) && pokemon.species().isType(PokemonType.Poison))
+		if ((this == StatusConditions.Poisoned || this == StatusConditions.Badly_poisoned) && pokemon.species().isType(PokemonType.Poison))
 			return new Pair<>(false, this.immune(pokemon));
-		if (this == Burn && pokemon.species().isType(PokemonType.Fire)) return new Pair<>(false, this.immune(pokemon));
+		if (this == StatusConditions.Burn && pokemon.species().isType(PokemonType.Fire)) return new Pair<>(false, this.immune(pokemon));
 		return new Pair<>(true, null);
 	}
 

@@ -8,7 +8,7 @@ import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
 import com.darkxell.common.event.pokemon.TriggeredAbilityEvent;
 import com.darkxell.common.pokemon.BaseStats.Stat;
 import com.darkxell.common.pokemon.DungeonPokemon;
-import com.darkxell.common.status.StatusCondition;
+import com.darkxell.common.status.StatusConditions;
 
 public class AbilityStatBoostWhileAfflicted extends Ability
 {
@@ -38,8 +38,8 @@ public class AbilityStatBoostWhileAfflicted extends Ability
 
 	private boolean isAfflicted(DungeonPokemon target)
 	{
-		return target.hasStatusCondition(StatusCondition.Poisoned) || target.hasStatusCondition(StatusCondition.Burn)
-				|| target.hasStatusCondition(StatusCondition.Paralyzed);
+		return target.hasStatusCondition(StatusConditions.Poisoned) || target.hasStatusCondition(StatusConditions.Burn)
+				|| target.hasStatusCondition(StatusConditions.Paralyzed);
 	}
 
 }

@@ -7,7 +7,7 @@ import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.StatusConditionCreatedEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
-import com.darkxell.common.status.StatusCondition;
+import com.darkxell.common.status.StatusConditions;
 
 public class AbilityRunaway extends Ability
 {
@@ -25,8 +25,8 @@ public class AbilityRunaway extends Ability
 		{
 			DungeonPokemon p = ((DamageDealtEvent) event).target;
 			if (p != concerned) return;
-			if (p.ability() == this && p.getHpPercentage() < 50 && !p.hasStatusCondition(StatusCondition.Terrified))
-				resultingEvents.add(new StatusConditionCreatedEvent(floor, StatusCondition.Terrified.create(p, this, floor.random)));
+			if (p.ability() == this && p.getHpPercentage() < 50 && !p.hasStatusCondition(StatusConditions.Terrified))
+				resultingEvents.add(new StatusConditionCreatedEvent(floor, StatusConditions.Terrified.create(p, this, floor.random)));
 		}
 	}
 

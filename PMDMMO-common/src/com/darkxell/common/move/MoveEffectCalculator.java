@@ -11,6 +11,7 @@ import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.DungeonStats;
 import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.pokemon.PropertyModificator;
+import com.darkxell.common.status.ActiveFloorStatus;
 import com.darkxell.common.status.AppliedStatusCondition;
 
 /** Object that computes various values when using a move, such as damage or accuracy. */
@@ -39,6 +40,8 @@ public class MoveEffectCalculator
 			this.modificator.addUser(s.condition);
 		if (target != null) for (AppliedStatusCondition s : this.target.activeStatusConditions())
 			this.modificator.add(s.condition);
+		for (ActiveFloorStatus status : floor.activeStatuses())
+			this.modificator.add(status.status);
 	}
 
 	protected double accuracyStat(ArrayList<DungeonEvent> events)

@@ -1,4 +1,4 @@
-package com.darkxell.common.status;
+package com.darkxell.common.status.conditions;
 
 import java.util.ArrayList;
 
@@ -7,6 +7,7 @@ import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.DungeonEvent.MessageEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.status.StatusCondition;
 import com.darkxell.common.util.language.Message;
 
 public class TauntedStatusCondition extends StatusCondition

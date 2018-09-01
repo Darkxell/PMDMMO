@@ -24,7 +24,7 @@ public class AppliedStatusCondition implements DungeonEventListener
 	public final DungeonPokemon pokemon;
 	public final Object source;
 	/** The number of turns this Condition has been in effect. */
-	int tick;
+	public int tick;
 
 	public AppliedStatusCondition(StatusCondition condition, DungeonPokemon pokemon, Object source, int duration)
 	{

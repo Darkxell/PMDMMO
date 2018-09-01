@@ -1,4 +1,6 @@
-package com.darkxell.common.status;
+package com.darkxell.common.status.conditions;
+
+import com.darkxell.common.status.StatusCondition;
 
 public class PreventsOtherStatusCondition extends StatusCondition
 {

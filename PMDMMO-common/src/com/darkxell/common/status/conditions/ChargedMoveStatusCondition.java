@@ -1,4 +1,4 @@
-package com.darkxell.common.status;
+package com.darkxell.common.status.conditions;
 
 import java.util.ArrayList;
 
@@ -6,6 +6,7 @@ import com.darkxell.common.ai.AI;
 import com.darkxell.common.ai.states.AIStateChargedAttack;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.status.AppliedStatusCondition;
 
 public class ChargedMoveStatusCondition extends ChangeAIStatusCondition
 {

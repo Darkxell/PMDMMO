@@ -6,6 +6,7 @@ import com.darkxell.common.move.Move;
 import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.ability.Ability;
 import com.darkxell.common.status.StatusCondition;
+import com.darkxell.common.status.StatusConditions;
 
 public class AnimationListItem extends CustomTreeItem implements Comparable<AnimationListItem>
 {
@@ -63,7 +64,7 @@ public class AnimationListItem extends CustomTreeItem implements Comparable<Anim
 				break;
 
 			case "statuses":
-				StatusCondition s = StatusCondition.find(this.id);
+				StatusCondition s = StatusConditions.find(this.id);
 				if (s != null) detail = s.name().toString();
 				break;
 

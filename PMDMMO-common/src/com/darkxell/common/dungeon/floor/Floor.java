@@ -25,6 +25,8 @@ import com.darkxell.common.mission.DungeonMission;
 import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.DungeonPokemon.DungeonPokemonType;
+import com.darkxell.common.status.ActiveFloorStatus;
+import com.darkxell.common.status.FloorStatus;
 import com.darkxell.common.trap.Trap;
 import com.darkxell.common.trap.TrapRegistry;
 import com.darkxell.common.util.Direction;
@@ -38,6 +40,7 @@ import com.darkxell.common.weather.Weather;
 public class Floor
 {
 
+	private final ArrayList<ActiveFloorStatus> activeFloorStatuses;
 	/** Stores all AI objects for Pokemon on this Floor. */
 	public final AIManager aiManager;
 	/** IDs of the Cutscenes to play when, respectively, entering this Floor and defeating the boss. */
@@ -76,8 +79,19 @@ public class Floor
 		this.layout = layout;
 		this.random = random;
 		this.isStatic = isStatic;
-		this.weatherCondition = new ArrayList<ActiveWeather>();
+		this.weatherCondition = new ArrayList<>();
+		this.activeFloorStatuses = new ArrayList<>();
 		this.aiManager = new AIManager(this);
+	}
+
+	public ActiveFloorStatus[] activeStatuses()
+	{
+		return this.activeFloorStatuses.toArray(new ActiveFloorStatus[this.activeFloorStatuses.size()]);
+	}
+
+	public void addFloorStatus(ActiveFloorStatus status)
+	{
+		this.activeFloorStatuses.add(status);
 	}
 
 	/** @param weather - The weather to add.
@@ -151,6 +165,13 @@ public class Floor
 		return this.tiles.length;
 	}
 
+	public boolean hasStatus(FloorStatus status)
+	{
+		for (ActiveFloorStatus s : this.activeFloorStatuses)
+			if (s.status == status) return true;
+		return false;
+	}
+
 	/** @return True if this Floor is done generating. */
 	public boolean isGenerated()
 	{
@@ -193,11 +214,15 @@ public class Floor
 	{
 		// events.add(new MessageEvent(this, new Message("New turn!", false)));
 
-		// For each existing Pokemon: has been moved to DungeonInstance to be able to trigger it at subturn end
+		// For each existing Pokemon: has been moved to DungeonInstance
 
 		// Weather
 		for (int w = this.weatherCondition.size() - 1; w >= 0; --w)
 			this.weatherCondition.get(w).update(events);
+
+		// Statuses
+		for (int s = 0; s < this.activeFloorStatuses.size(); ++s)
+			this.activeFloorStatuses.get(s).tick(this, events);
 
 		// Pokemon spawning
 		if (!this.isStatic && this.data.pokemonDensity() > this.countWildPokemon())
@@ -368,6 +393,11 @@ public class Floor
 	{
 		Pair<ArrayList<Integer>, ArrayList<Integer>> traps = this.dungeon.dungeon().traps(this.id);
 		return TrapRegistry.find(RandomUtil.weightedRandom(traps.first, traps.second, random));
+	}
+
+	public void removeFloorStatus(ActiveFloorStatus status)
+	{
+		this.activeFloorStatuses.remove(status);
 	}
 
 	/** @param weather - The weather to clean.

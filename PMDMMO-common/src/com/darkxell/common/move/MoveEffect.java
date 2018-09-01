@@ -17,7 +17,7 @@ import com.darkxell.common.move.Move.MoveRange;
 import com.darkxell.common.pokemon.AffectsPokemon;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.PokemonType;
-import com.darkxell.common.status.StatusCondition;
+import com.darkxell.common.status.StatusConditions;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.language.Message;
 
@@ -146,7 +146,7 @@ public class MoveEffect implements AffectsPokemon
 				}
 		}
 
-		if (!user.hasStatusCondition(StatusCondition.Confused)) targets.removeIf(p -> !move.targets.isValid(user, p));
+		if (!user.hasStatusCondition(StatusConditions.Confused)) targets.removeIf(p -> !move.targets.isValid(user, p));
 		if (move.range == MoveRange.Room || move.range == MoveRange.Floor)
 			targets.sort((DungeonPokemon p1, DungeonPokemon p2) -> floor.dungeon.compare(p1, p2));
 		if (targets.isEmpty() && this.allowsNoTarget(move, user)) targets.add(null);

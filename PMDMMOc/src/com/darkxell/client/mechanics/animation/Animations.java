@@ -21,6 +21,7 @@ import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.ability.Ability;
 import com.darkxell.common.status.StatusCondition;
+import com.darkxell.common.status.StatusConditions;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.XMLUtils;
 
@@ -102,7 +103,7 @@ public final class Animations
 				return getProjectileAnimation(target, anim, listener);
 
 			case "statuses":
-				return getStatusAnimation(target, StatusCondition.find(anim), listener);
+				return getStatusAnimation(target, StatusConditions.find(anim), listener);
 
 			case "targets":
 				return getMoveTargetAnimation(target, MoveRegistry.find(anim), listener);

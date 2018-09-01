@@ -13,6 +13,7 @@ import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.ability.Ability;
 import com.darkxell.common.status.AppliedStatusCondition;
 import com.darkxell.common.status.StatusCondition;
+import com.darkxell.common.status.StatusConditions;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.language.Message;
 
@@ -137,7 +138,7 @@ public class DungeonPokemon implements ItemContainer
 	/** @return True if this Pokemon can regenerate HP. */
 	public boolean canRegen()
 	{
-		return !this.hasStatusCondition(StatusCondition.Badly_poisoned) && !this.hasStatusCondition(StatusCondition.Poisoned);
+		return !this.hasStatusCondition(StatusConditions.Badly_poisoned) && !this.hasStatusCondition(StatusConditions.Poisoned);
 	}
 
 	@Override
