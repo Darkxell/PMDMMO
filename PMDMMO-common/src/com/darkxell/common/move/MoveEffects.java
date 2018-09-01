@@ -10,6 +10,7 @@ import com.darkxell.common.move.effects.DoubleDamageEffect;
 import com.darkxell.common.move.effects.DrainEffect;
 import com.darkxell.common.move.effects.FixedDamageEffect;
 import com.darkxell.common.move.effects.HPRecoilEffect;
+import com.darkxell.common.move.effects.MultipleAttacksEffect;
 import com.darkxell.common.move.effects.RecoilEffect;
 import com.darkxell.common.move.effects.StatChangeEffect;
 import com.darkxell.common.move.effects.WeatherChangeEffect;
@@ -61,6 +62,7 @@ public final class MoveEffects
 	public static final MoveEffect Weather_rain = new WeatherChangeEffect(208, Weather.RAIN);
 	public static final MoveEffect Destroy_trap = new DestroyTrapEffect(213);
 	public static final MoveEffect Lower_speed_30 = new StatChangeEffect(225, Stat.Speed, -1, 30);
+	public static final MoveEffect Attack_2to5 = new MultipleAttacksEffect(321, 2, 5);
 
 	static
 	{

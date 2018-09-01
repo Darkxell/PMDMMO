@@ -137,6 +137,9 @@
     <move id="14">
       <default sprites="none" delaytime="15" alsoplay="2"/>
     </move>
+    <move id="20">
+      <default sprites="none" state="multistrike"/>
+    </move>
     <move id="22" oriented="true">
       <default width="96" height="48" y="48" sound="move-growl" state="special">0,1,2,3,4,5,0,1,2,3,4,5</default>
       <north width="72" backsprites="only"/>
@@ -315,6 +318,9 @@
     </move>
   </moves>
   <movetargets>
+    <movetarget id="20">
+      <default width="64" height="32">0,1,2,3,4,5,6,7</default>
+    </movetarget>
     <movetarget id="45">
       <default y="25" spriteduration="3" width="40" height="40">0,1,2,3,4,5,6</default>
     </movetarget>

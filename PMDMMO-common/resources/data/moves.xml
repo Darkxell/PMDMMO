@@ -20,7 +20,7 @@
   <move id="17" type="0" category="Status" pp="22" power="2" accuracy="84" critical="12" effect="155" freeze="true" reflectable="true" />
   <move id="18" type="0" category="Status" pp="27" power="2" accuracy="125" critical="12" range="Self" targets="User" effect="10" freeze="true" snatchable="true" />
   <move id="19" type="0" category="Physical" pp="22" power="1" accuracy="70" critical="1" damage="true" ginsengable="true" freeze="true" />
-  <move id="20" type="0" category="Physical" pp="19" power="4" accuracy="78" critical="1" damage="true" ginsengable="true" freeze="true" />
+  <move id="20" type="0" category="Physical" pp="19" power="4" accuracy="78" critical="1" effect="321" damage="true" ginsengable="true" freeze="true" />
   <move id="21" type="0" category="Status" pp="22" power="2" accuracy="78" critical="12" effect="60" freeze="true" reflectable="true" />
   <move id="22" type="0" category="Status" pp="20" power="2" critical="12" range="Room" effect="86" freeze="true" reflectable="true" sound="true" />
   <move id="23" type="0" category="Status" pp="22" power="2" accuracy="125" critical="12" range="Self" targets="User" effect="76" freeze="true" snatchable="true" />

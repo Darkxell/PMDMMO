@@ -214,9 +214,20 @@ public class MoveEffect implements AffectsPokemon
 
 		DungeonPokemon[] pokemon = this.getTargets(m, move.user, floor);
 		for (int i = 0; i < pokemon.length; ++i)
-			events.add(new MoveUseEvent(floor, move, pokemon[i]));
+			this.useOn(move, pokemon[i], floor, events);
 
 		if (events.size() == 0 && this != MoveEffects.Basic_attack) events.add(new MessageEvent(floor, new Message("move.no_target")));
+	}
+
+	/** Creates the MoveUseEvent and adds it to the events list.
+	 * 
+	 * @param move - The Move use context.
+	 * @param target - The target Pokemon.
+	 * @param floor - The Floor context.
+	 * @param events - The event list to add the MoveUseEvent to. */
+	protected void useOn(MoveUse move, DungeonPokemon target, Floor floor, ArrayList<DungeonEvent> events)
+	{
+		events.add(new MoveUseEvent(floor, move, target));
 	}
 
 }

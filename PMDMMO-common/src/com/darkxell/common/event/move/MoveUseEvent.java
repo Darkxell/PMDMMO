@@ -25,6 +25,13 @@ public class MoveUseEvent extends DungeonEvent
 	}
 
 	@Override
+	public boolean isValid()
+	{
+		if (this.target != null) return !this.target.isFainted();
+		return super.isValid();
+	}
+
+	@Override
 	public String loggerMessage()
 	{
 		return this.target + " received the effect of " + this.usedMove.move.move().name();
