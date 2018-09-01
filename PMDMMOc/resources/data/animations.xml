@@ -160,6 +160,9 @@
     <move id="45">
       <default sprites="none" delaytime="15" state="slice"/>
     </move>
+    <move id="46">
+      <default sprites="none"/>
+    </move>
     <move id="50" clone="2"/>
     <move id="52">
       <default sprites="none" delaytime="15" state="slice"/>
@@ -364,6 +367,7 @@
     </movetarget>
   </movetargets>
   <projectiles>
+    <projectile id="1046" clone="projectiles/1666"/>
     <projectile id="1453">
       <default width="16" height="16" spriteduration="8">0,1</default>
     </projectile>

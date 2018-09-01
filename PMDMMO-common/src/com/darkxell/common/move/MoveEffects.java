@@ -41,6 +41,7 @@ public final class MoveEffects
 	public static final MoveEffect Raise_defense_2s = new StatChangeEffect(79, Stat.Defense, 2, 100);
 	public static final MoveEffect Lower_speed = new StatChangeEffect(85, Stat.Speed, -1, 100);
 	public static final MoveEffect Lower_attack = new StatChangeEffect(86, Stat.Attack, -1, 100);
+	public static final MoveEffect Lower_defense_2s = new StatChangeEffect(88, Stat.Defense, -2, 100);
 	public static final MoveEffect Drain_50percent = new DrainEffect(90, 50);
 	public static final MoveEffect Recoil_12percent5 = new RecoilEffect(92, 12.5);
 	public static final MoveEffect Inflict_sleepless = new ApplyStatusConditionEffect(102, StatusCondition.Sleepless, 100);
