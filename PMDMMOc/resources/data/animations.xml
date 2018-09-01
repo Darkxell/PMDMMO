@@ -312,6 +312,9 @@
       <west width="32" x="32"/>
       <northwest backsprites="only" height="56" x="40" y="48"/>
     </move>
+    <move id="954">
+      <default width="64" height="64" spriteduration="2" state="spin">0,1,2,3,3,3,3,3,3,2,1,0</default>
+    </move>
     <move id="2002" clone="0"/>
     <move id="-50">
       <default sprites="none" delaytime="15"/>
