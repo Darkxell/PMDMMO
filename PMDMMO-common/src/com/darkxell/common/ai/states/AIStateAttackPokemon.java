@@ -9,6 +9,7 @@ import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.LearnedMove;
+import com.darkxell.common.status.StatusCondition;
 import com.darkxell.common.util.RandomUtil;
 
 /** State in which the Pokemon follows then attacks a Pokemon. */
@@ -18,6 +19,12 @@ public class AIStateAttackPokemon extends AIStateFollowPokemon
 	public AIStateAttackPokemon(AI ai, DungeonPokemon target)
 	{
 		super(ai, target);
+	}
+
+	private boolean canUse(DungeonPokemon pokemon, LearnedMove move)
+	{
+		if (pokemon.hasStatusCondition(StatusCondition.Taunted) && !move.move().dealsDamage) return false;
+		return move.pp() != 0;
 	}
 
 	@Override
@@ -30,7 +37,7 @@ public class AIStateAttackPokemon extends AIStateFollowPokemon
 			ArrayList<LearnedMove> candidates = new ArrayList<>();
 			for (int i = 0; i < this.ai.pokemon.moveCount(); ++i)
 				candidates.add(this.ai.pokemon.move(i));
-			candidates.removeIf(m -> m.pp() == 0);
+			candidates.removeIf(m -> !this.canUse(this.ai.pokemon, m));
 			if (candidates.isEmpty()) candidates.add(new LearnedMove(MoveRegistry.STRUGGLE.id));
 			candidates.add(new LearnedMove(MoveRegistry.ATTACK.id));
 			LearnedMove move = RandomUtil.random(candidates, this.ai.floor.random);
