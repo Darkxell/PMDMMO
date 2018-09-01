@@ -25,8 +25,7 @@ public class WeatherCleanedEvent extends DungeonEvent
 	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{
-		WeatherChangedEvent e = this.floor.removeWeather(this.weather);
-		if (e != null) this.resultingEvents.add(e);
+		this.floor.removeWeather(this.weather, this.resultingEvents);
 		return super.processServer();
 	}
 

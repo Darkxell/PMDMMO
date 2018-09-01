@@ -381,6 +381,8 @@ public class DungeonPokemon implements ItemContainer
 
 		for (AppliedStatusCondition condition : this.statusConditions)
 			if (condition.actedWhileApplied()) condition.tick(floor, events);
+
+		this.ability().onTurnStart(floor, this, events);
 	}
 
 	public Player player()

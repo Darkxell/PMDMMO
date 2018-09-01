@@ -6,7 +6,7 @@ import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.dungeon.weather.WeatherCleanedEvent;
 
-public class ActiveWeather implements Comparable<ActiveWeather>
+public class ActiveWeather
 {
 
 	public static final int DEFAULT_DURATION = 20;
@@ -14,26 +14,18 @@ public class ActiveWeather implements Comparable<ActiveWeather>
 	/** -1 for infinite duration. */
 	public final int duration;
 	public final Floor floor;
-	public final int priority;
 	/** May be null for the Floor's prevailing weather. */
 	public final WeatherSource source;
-	protected int tick;
+	public int tick;
 	public final Weather weather;
 
-	public ActiveWeather(Weather weather, WeatherSource source, int priority, Floor floor, int duration)
+	public ActiveWeather(Weather weather, WeatherSource source, Floor floor, int duration)
 	{
 		this.weather = weather;
 		this.source = source;
-		this.priority = priority;
 		this.floor = floor;
 		this.tick = 0;
 		this.duration = duration;
-	}
-
-	@Override
-	public int compareTo(ActiveWeather o)
-	{
-		return -Integer.compare(this.priority, o.priority);
 	}
 
 	protected boolean isOver()

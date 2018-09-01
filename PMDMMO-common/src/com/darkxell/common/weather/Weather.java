@@ -44,6 +44,11 @@ public class Weather implements AffectsPokemon
 		_weatherRegistry.put(this.id, this);
 	}
 
+	public ActiveWeather create(Floor floor, WeatherSource source, int duration)
+	{
+		return new ActiveWeather(this, source, floor, duration);
+	}
+
 	public Message name()
 	{
 		return new Message("weather." + this.id);

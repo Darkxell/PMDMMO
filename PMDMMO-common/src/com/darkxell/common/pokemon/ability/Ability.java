@@ -40,6 +40,8 @@ public abstract class Ability implements AffectsPokemon, DungeonEventListener
 
 	public static final Ability SHIELD_DUST = new AbilityPreventAdditionalEffectsOnSelf(58);
 
+	public static final Ability CLOUD_NINE = new AbilitySetWeather(63, Weather.CLEAR, 36);
+
 	public static final Ability PICKUP = new AbilityFindsItemOnFloorStart(71, 100);
 	public static final Ability RUNAWAY = new AbilityRunaway(72);
 
@@ -86,6 +88,9 @@ public abstract class Ability implements AffectsPokemon, DungeonEventListener
 	}
 
 	public void onFloorStart(Floor floor, DungeonPokemon pokemon, ArrayList<DungeonEvent> events)
+	{}
+
+	public void onTurnStart(Floor floor, DungeonPokemon pokemon, ArrayList<DungeonEvent> events)
 	{}
 
 	public Message triggeredMessage(DungeonPokemon pokemon)

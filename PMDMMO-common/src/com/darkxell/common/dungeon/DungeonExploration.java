@@ -160,7 +160,7 @@ public class DungeonExploration
 			a.pokemon.onTurnStart(this.currentFloor, events);
 		this.currentFloor.onTurnStart(events);
 		if (this.currentTurn != null) this.pastTurns.add(this.currentTurn);
-		this.currentTurn = new GameTurn(this.currentFloor);
+		this.currentTurn = new GameTurn(this.currentTurn == null ? 0 : this.currentTurn.id + 1, this.currentFloor);
 		this.currentSubTurn = 0;
 	}
 
