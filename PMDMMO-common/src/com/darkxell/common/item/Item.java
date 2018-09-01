@@ -97,6 +97,7 @@ public class Item implements AffectsPokemon
 	}
 
 	public static final String XML_ROOT = "item";
+	public static final int POKEDOLLARS = 0;
 
 	/** This Item's Category. */
 	public final ItemCategory category;

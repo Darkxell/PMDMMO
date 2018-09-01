@@ -56,7 +56,7 @@ public abstract class Layout
 	{
 		for (Room r : this.floor.rooms)
 			for (Tile t : r.listTiles())
-					t.setType(TileType.GROUND);
+				t.setType(TileType.GROUND);
 	}
 
 	/** Generates a Floor.
@@ -88,27 +88,6 @@ public abstract class Layout
 	/** Creates the rooms. */
 	protected abstract void generateRooms();
 
-	/** @return The quantity of Pokedollars in a single stack. */
-	protected int getMoneyQuantity()
-	{
-		final int[] moneyTable = new int[] { 4, 6, 10, 14, 22, 26, 37, 38, 46, 58, 62, 74, 82, 86, 94, 106, 118, 122, 134, 142, 146, 158, 166, 178, 194, 202,
-				206, 214, 218, 226, 254, 262, 274, 278, 298, 302, 314, 326, 334, 346, 358, 362, 382, 386, 394, 398, 422, 454, 458, 466, 478, 482, 502, 514, 526,
-				538, 542, 554, 562, 566, 586, 614, 622, 626, 634, 662, 674, 694, 698, 706, 718, 734, 746, 758, 768, 778, 794, 802, 818, 838, 842, 862, 866, 878,
-				886, 898, 914, 922, 926, 934, 958, 974, 982, 998, 1000, 1100, 1300, 1500, 20000 };
-
-		int random = this.random.nextInt(99) + 1;
-		int value = 0;
-		int max = this.floor.data.baseMoney() * 40;
-
-		for (int i = 0; i < 200; ++i)
-		{
-			value = moneyTable[random - 1];
-			if (value <= max) return value;
-			else random /= 2;
-		}
-		return moneyTable[0];
-	}
-
 	/** Places buried Items. */
 	protected void placeBuriedItems()
 	{
@@ -122,7 +101,7 @@ public abstract class Layout
 			Tile tile = this.floor.randomEmptyTile(false, false, TileType.WALL, this.random);
 			Item item = this.floor.randomBuriedItem(this.random);
 			int quantity = 0;
-			if (item.effect() == ItemEffects.Pokedollars) quantity = this.getMoneyQuantity();
+			if (item.effect() == ItemEffects.Pokedollars) quantity = this.floor.getMoneyQuantity();
 			else if (item.isStackable) quantity = RandomUtil.nextGaussian(10, 7, this.random);
 
 			tile.setItem(new ItemStack(item.id).setQuantity(quantity));
@@ -142,7 +121,7 @@ public abstract class Layout
 			Tile tile = this.floor.randomEmptyTile(true, false, TileType.GROUND, this.random);
 			Item item = this.floor.randomItem(this.random);
 			int quantity = 0;
-			if (item.effect() == ItemEffects.Pokedollars) quantity = this.getMoneyQuantity();
+			if (item.effect() == ItemEffects.Pokedollars) quantity = this.floor.getMoneyQuantity();
 			else if (item.isStackable) quantity = RandomUtil.nextGaussian(10, 7, this.random);
 			if (quantity <= 0) quantity = 1;
 

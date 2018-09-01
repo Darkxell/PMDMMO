@@ -31,8 +31,8 @@ import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.Pair;
 import com.darkxell.common.util.RandomUtil;
-import com.darkxell.common.weather.Weather;
 import com.darkxell.common.weather.ActiveWeather;
+import com.darkxell.common.weather.Weather;
 
 /** Represents a generated Floor in a Dungeon. */
 public class Floor
@@ -138,6 +138,27 @@ public class Floor
 	public int getHeight()
 	{
 		return this.tiles[0].length;
+	}
+
+	/** @return A random quantity of Pokedollars for a single stack. */
+	public int getMoneyQuantity()
+	{
+		final int[] moneyTable = new int[] { 4, 6, 10, 14, 22, 26, 37, 38, 46, 58, 62, 74, 82, 86, 94, 106, 118, 122, 134, 142, 146, 158, 166, 178, 194, 202,
+				206, 214, 218, 226, 254, 262, 274, 278, 298, 302, 314, 326, 334, 346, 358, 362, 382, 386, 394, 398, 422, 454, 458, 466, 478, 482, 502, 514, 526,
+				538, 542, 554, 562, 566, 586, 614, 622, 626, 634, 662, 674, 694, 698, 706, 718, 734, 746, 758, 768, 778, 794, 802, 818, 838, 842, 862, 866, 878,
+				886, 898, 914, 922, 926, 934, 958, 974, 982, 998, 1000, 1100, 1300, 1500, 20000 };
+
+		int random = this.random.nextInt(99) + 1;
+		int value = 0;
+		int max = this.data.baseMoney() * 40;
+
+		for (int i = 0; i < 200; ++i)
+		{
+			value = moneyTable[random - 1];
+			if (value <= max) return value;
+			else random /= 2;
+		}
+		return moneyTable[0];
 	}
 
 	public int getWidth()
