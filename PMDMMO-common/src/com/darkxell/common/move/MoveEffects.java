@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import com.darkxell.common.move.effects.ApplyStatusConditionEffect;
 import com.darkxell.common.move.effects.CompoundEffect;
+import com.darkxell.common.move.effects.CopyStatChangesEffect;
 import com.darkxell.common.move.effects.CreateFloorStatusEffect;
 import com.darkxell.common.move.effects.DestroyTrapEffect;
 import com.darkxell.common.move.effects.DoubleDamageEffect;
@@ -68,6 +69,7 @@ public final class MoveEffects
 	public static final MoveEffect Destroy_trap = new DestroyTrapEffect(213);
 	public static final MoveEffect Drops_money_on_kill = new DropsMoneyOnKillEffect(218);
 	public static final MoveEffect Lower_speed_30 = new StatChangeEffect(225, Stat.Speed, -1, 30);
+	public static final MoveEffect Copy_stat_changes = new CopyStatChangesEffect(254);
 	public static final MoveEffect Attack_2to5 = new MultipleAttacksEffect(321, 2, 5);
 
 	static

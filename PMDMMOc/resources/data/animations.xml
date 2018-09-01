@@ -188,6 +188,7 @@
     <move id="96">
       <default width="64" height="64" state="special" spriteduration="4" alsoplay="2">-1,-1,-1,-1,0,1,2,3,4,5,0,1,2,3</default>
     </move>
+    <move id="97" clone="2"/>
     <move id="98">
       <default sprites="none" delaytime="15" state="spin"/>
     </move>
