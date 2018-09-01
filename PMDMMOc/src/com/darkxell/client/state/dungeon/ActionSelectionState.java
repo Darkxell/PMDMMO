@@ -185,7 +185,7 @@ public class ActionSelectionState extends DungeonSubState
 	public void onMouseClick(int x, int y)
 	{
 		super.onMouseClick(x, y);
-		for (byte i = 0; i < this.moveLocations.length; ++i)
+		if (this.moveLocations != null) for (byte i = 0; i < this.moveLocations.length; ++i)
 			if (this.moveLocations[i] != null && this.moveLocations[i].contains(x, y))
 			{
 				Persistance.eventProcessor().processEvent(
