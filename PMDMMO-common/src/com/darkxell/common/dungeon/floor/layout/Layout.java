@@ -119,13 +119,8 @@ public abstract class Layout
 		for (int i = 0; i < items; ++i)
 		{
 			Tile tile = this.floor.randomEmptyTile(true, false, TileType.GROUND, this.random);
-			Item item = this.floor.randomItem(this.random);
-			int quantity = 0;
-			if (item.effect() == ItemEffects.Pokedollars) quantity = this.floor.getMoneyQuantity();
-			else if (item.isStackable) quantity = RandomUtil.nextGaussian(10, 7, this.random);
-			if (quantity <= 0) quantity = 1;
-
-			tile.setItem(new ItemStack(item.id).setQuantity(quantity));
+			ItemStack item = this.floor.dungeon.dungeon().randomItem(this.random, this.floor.id, true);
+			tile.setItem(item);
 		}
 	}
 

@@ -347,6 +347,7 @@ public class DungeonPokemon implements ItemContainer
 	{
 		this.statusConditions.clear();
 		this.stats.onFloorStart(floor, events);
+		this.ability().onFloorStart(floor, this, events);
 		this.regenCounter = 0;
 	}
 

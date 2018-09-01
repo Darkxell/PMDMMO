@@ -5,7 +5,9 @@ import java.util.Random;
 
 import org.jdom2.Element;
 
+import com.darkxell.common.item.Item;
 import com.darkxell.common.item.ItemStack;
+import com.darkxell.common.util.RandomUtil;
 import com.darkxell.common.util.XMLUtils;
 
 /** A group of Items that can appear in a Dungeon. */
@@ -53,9 +55,17 @@ public class DungeonItemGroup
 		this.chances = chances;
 	}
 
-	public ItemStack generate(Random random)
+	ItemStack generate(Random random, boolean allowMoney)
 	{
-		return new ItemStack(this.items[random.nextInt(this.items.length)]);
+		ArrayList<Integer> ids = new ArrayList<>();
+		ArrayList<Integer> weights = new ArrayList<>();
+		for (int i = 0; i < this.items.length; ++i)
+			if (allowMoney || this.items[i] != Item.POKEDOLLARS)
+			{
+				ids.add(this.items[i]);
+				weights.add(this.chances[i]);
+			}
+		return new ItemStack(RandomUtil.weightedRandom(ids, weights, random));
 	}
 
 	public Element toXML()

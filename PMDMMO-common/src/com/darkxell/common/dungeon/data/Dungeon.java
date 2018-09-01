@@ -8,6 +8,8 @@ import java.util.function.Predicate;
 import org.jdom2.Element;
 
 import com.darkxell.common.dungeon.DungeonExploration;
+import com.darkxell.common.item.Item;
+import com.darkxell.common.item.ItemEffects;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.trap.TrapRegistry;
 import com.darkxell.common.util.Pair;
@@ -161,6 +163,27 @@ public class Dungeon implements Comparable<Dungeon>
 		return this.floorData.get(0);
 	}
 
+	/** @return A random quantity of Pokedollars for a single stack. */
+	public int getMoneyQuantity(Random random, int floor)
+	{
+		final int[] moneyTable = new int[] { 4, 6, 10, 14, 22, 26, 37, 38, 46, 58, 62, 74, 82, 86, 94, 106, 118, 122, 134, 142, 146, 158, 166, 178, 194, 202,
+				206, 214, 218, 226, 254, 262, 274, 278, 298, 302, 314, 326, 334, 346, 358, 362, 382, 386, 394, 398, 422, 454, 458, 466, 478, 482, 502, 514, 526,
+				538, 542, 554, 562, 566, 586, 614, 622, 626, 634, 662, 674, 694, 698, 706, 718, 734, 746, 758, 768, 778, 794, 802, 818, 838, 842, 862, 866, 878,
+				886, 898, 914, 922, 926, 934, 958, 974, 982, 998, 1000, 1100, 1300, 1500, 20000 };
+
+		int r = random.nextInt(99) + 1;
+		int value = 0;
+		int max = this.getData(floor).baseMoney() * 40;
+
+		for (int i = 0; i < 200; ++i)
+		{
+			value = moneyTable[r - 1];
+			if (value <= max) return value;
+			else r /= 2;
+		}
+		return moneyTable[0];
+	}
+
 	/** @return The items found on the input floor. Keys are Item IDs, Values are Item weights. */
 	public ArrayList<DungeonItemGroup> items(int floor)
 	{
@@ -198,8 +221,8 @@ public class Dungeon implements Comparable<Dungeon>
 		return RandomUtil.random(candidates, random);
 	}
 
-	/** @return A random Item for the input floor. */
-	public ItemStack randomItem(Random random, int floor)
+	/** @return A random Item for the input floor. May return <code>null</code> if there are no items on the floor, or if they don't meet requirements. */
+	public ItemStack randomItem(Random random, int floor, boolean allowMoney)
 	{
 		ArrayList<DungeonItemGroup> candidates = new ArrayList<DungeonItemGroup>();
 		candidates.addAll(this.items);
@@ -207,10 +230,19 @@ public class Dungeon implements Comparable<Dungeon>
 			@Override
 			public boolean test(DungeonItemGroup i)
 			{
+				if (!allowMoney && i.items.length == 1 && i.items[0] == Item.POKEDOLLARS) return true;
 				return !i.floors.contains(floor);
 			}
 		});
-		return candidates.get(random.nextInt(candidates.size())).generate(random);
+		if (candidates.size() == 0) return null;
+		ItemStack stack = candidates.get(random.nextInt(candidates.size())).generate(random, allowMoney);
+
+		int quantity = 0;
+		if (stack.item().effect() == ItemEffects.Pokedollars) quantity = this.getMoneyQuantity(random, floor);
+		else if (stack.item().isStackable) quantity = RandomUtil.nextGaussian(10, 7, random);
+		if (quantity <= 0) quantity = 1;
+
+		return stack;
 	}
 
 	@Override

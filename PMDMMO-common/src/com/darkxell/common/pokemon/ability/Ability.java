@@ -1,7 +1,10 @@
 package com.darkxell.common.pokemon.ability;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.darkxell.common.dungeon.floor.Floor;
+import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.DungeonEventListener;
 import com.darkxell.common.pokemon.AffectsPokemon;
 import com.darkxell.common.pokemon.BaseStats.Stat;
@@ -36,7 +39,8 @@ public abstract class Ability implements AffectsPokemon, DungeonEventListener
 	public static final Ability KEEN_EYE = new AbilityPreventsStatLoss(46, Stat.Accuracy);
 
 	public static final Ability SHIELD_DUST = new AbilityPreventAdditionalEffectsOnSelf(58);
-	
+
+	public static final Ability PICKUP = new AbilityFindsItemOnFloorStart(71, 100);
 	public static final Ability RUNAWAY = new AbilityRunaway(72);
 
 	static
@@ -80,6 +84,9 @@ public abstract class Ability implements AffectsPokemon, DungeonEventListener
 	{
 		return new Message("ability." + this.id);
 	}
+
+	public void onFloorStart(Floor floor, DungeonPokemon pokemon, ArrayList<DungeonEvent> events)
+	{}
 
 	public Message triggeredMessage(DungeonPokemon pokemon)
 	{
