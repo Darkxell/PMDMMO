@@ -10,7 +10,7 @@
   <move id="7" type="0" category="Status" pp="22" power="2" accuracy="125" critical="12" range="Self" targets="User" effect="248" freeze="true" />
   <move id="8" type="0" category="Physical" pp="10" power="10" accuracy="84" critical="12" range="Around" targets="Others" damage="true" ginsengable="true" freeze="true" />
   <move id="9" type="0" category="Status" pp="27" power="2" accuracy="125" critical="12" range="Self" targets="User" effect="78" freeze="true" snatchable="true" />
-  <move id="10" type="0" category="Status" pp="9" power="2" accuracy="78" critical="12" effect="46" freeze="true" />
+  <move id="10" type="0" category="Status" pp="9" power="2" accuracy="78" critical="12" effect="59" freeze="true" />
   <move id="11" type="0" category="Physical" pp="17" power="6" accuracy="90" critical="12" effect="41" damage="true" ginsengable="true" freeze="true" />
   <move id="12" type="0" category="Physical" pp="17" power="4" accuracy="70" critical="12" damage="true" freeze="true" ginsengable="true" />
   <move id="13" type="0" category="Status" pp="17" power="2" accuracy="125" critical="12" range="Self" targets="User" effect="180" freeze="true" snatchable="true" />
