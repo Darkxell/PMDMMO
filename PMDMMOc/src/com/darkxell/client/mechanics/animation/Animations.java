@@ -209,30 +209,63 @@ public final class Animations
 		{
 
 			ArrayList<AbstractAnimation> anims = new ArrayList<>();
+			ArrayList<Integer> delays = new ArrayList<>();
 			AbstractAnimation tmp;
 
 			String[] ids = XMLUtils.getAttribute(xml, "alsoplay", "").split(",");
-			for (String i : ids)
+			String[] ds = XMLUtils.getAttribute(xml, "alsoplaydelay", "").split(",");
+			if (ds.length < ids.length)
 			{
-				if (i.equals("")) continue;
-				tmp = getAnimation(target, i, null);
-				if (tmp != null && !anims.contains(tmp)) anims.add(tmp);
+				String[] dstmp = ds;
+				ds = new String[ids.length];
+				for (int i = 0; i < ds.length; ++i)
+					ds[i] = i < dstmp.length ? dstmp[i] : "";
+			}
+
+			for (int i = 0; i < ds.length; ++i)
+				if (ds[i].equals("")) ds[i] = "0";
+
+			for (int i = 0; i < ids.length; ++i)
+			{
+				if (ids[i].equals("")) continue;
+				tmp = getAnimation(target, ids[i], null);
+				if (tmp != null && !anims.contains(tmp))
+				{
+					anims.add(tmp);
+					delays.add(Integer.parseInt(ds[i]));
+				}
 			}
 
 			ids = XMLUtils.getAttribute(defaultXml, "alsoplay", "").split(",");
-			for (String i : ids)
+			ds = XMLUtils.getAttribute(defaultXml, "alsoplaydelay", "").split(",");
+			if (ds.length < ids.length)
 			{
-				if (i.equals("")) continue;
-				tmp = getAnimation(target, i, null);
-				if (tmp != null && !anims.contains(tmp)) anims.add(tmp);
+				String[] dstmp = ds;
+				ds = new String[ids.length];
+				for (int i = 0; i < ds.length; ++i)
+					ds[i] = i < dstmp.length ? dstmp[i] : "";
+			}
+
+			for (int i = 0; i < ds.length; ++i)
+				if (ds[i].equals("")) ds[i] = "0";
+
+			for (int i = 0; i < ids.length; ++i)
+			{
+				if (ids[i].equals("")) continue;
+				tmp = getAnimation(target, ids[i], null);
+				if (tmp != null && !anims.contains(tmp))
+				{
+					anims.add(tmp);
+					delays.add(Integer.parseInt(ds[i]));
+				}
 			}
 
 			if (!anims.isEmpty())
 			{
 				CompoundAnimation anim = new CompoundAnimation(target, listener);
-				anim.add(a);
-				for (AbstractAnimation an : anims)
-					anim.add(an);
+				anim.add(a, 0);
+				for (int i = 0; i < anims.size(); ++i)
+					anim.add(anims.get(i), delays.get(i));
 				a = anim;
 			}
 

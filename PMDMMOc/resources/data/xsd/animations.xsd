@@ -39,6 +39,7 @@
 							plays.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
+				<xs:attribute name="alsoplaydelay" type="intList" use="optional"/>
 				<xs:attribute name="loopsfrom" type="xs:positiveInteger" use="optional"/>
 				<xs:attribute name="overlay" type="posInt" use="optional"/>
 				<xs:attribute name="movement">
