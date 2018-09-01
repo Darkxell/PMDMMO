@@ -124,7 +124,7 @@ public class DungeonPokemon implements ItemContainer
 	public boolean canAttack(Floor floor)
 	{
 		for (AppliedStatusCondition instance : this.statusConditions)
-			if (instance.condition.preventsUsingMoves(this, floor)) return false;
+			if (instance.condition.preventsUsingMove(null, this, floor)) return false;
 		return true;
 	}
 
@@ -139,6 +139,13 @@ public class DungeonPokemon implements ItemContainer
 	public boolean canRegen()
 	{
 		return !this.hasStatusCondition(StatusConditions.Badly_poisoned) && !this.hasStatusCondition(StatusConditions.Poisoned);
+	}
+
+	public boolean canUse(LearnedMove move, Floor floor)
+	{
+		for (AppliedStatusCondition instance : this.statusConditions)
+			if (instance.condition.preventsUsingMove(move, this, floor)) return false;
+		return true;
 	}
 
 	@Override

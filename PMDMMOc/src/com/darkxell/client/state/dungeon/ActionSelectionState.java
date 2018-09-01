@@ -135,26 +135,18 @@ public class ActionSelectionState extends DungeonSubState
 
 			if (!done)
 			{
-				if (key == Key.MOVE_1 && leader.move(0) != null)
+				LearnedMove move = null;
+				if (key == Key.MOVE_1 && leader.move(0) != null) move = leader.move(0);
+				else if (key == Key.MOVE_2 && leader.move(1) != null) move = leader.move(1);
+				else if (key == Key.MOVE_3 && leader.move(2) != null) move = leader.move(2);
+				else if (key == Key.MOVE_4 && leader.move(3) != null) move = leader.move(3);
+
+				if (move != null)
 				{
-					if (leader.move(0).pp() == 0)
-						this.parent.logger.showMessage(new Message("moves.no_pp").addReplacement("<move>", leader.move(0).move().name()));
-					else Persistance.eventProcessor().processEvent(new MoveSelectionEvent(Persistance.floor, leader.move(0), leader).setPAE());
-				} else if (key == Key.MOVE_2 && leader.move(1) != null)
-				{
-					if (leader.move(1).pp() == 0)
-						this.parent.logger.showMessage(new Message("moves.no_pp").addReplacement("<move>", leader.move(1).move().name()));
-					else Persistance.eventProcessor().processEvent(new MoveSelectionEvent(Persistance.floor, leader.move(1), leader).setPAE());
-				} else if (key == Key.MOVE_3 && leader.move(2) != null)
-				{
-					if (leader.move(2).pp() == 0)
-						this.parent.logger.showMessage(new Message("moves.no_pp").addReplacement("<move>", leader.move(2).move().name()));
-					else Persistance.eventProcessor().processEvent(new MoveSelectionEvent(Persistance.floor, leader.move(2), leader).setPAE());
-				} else if (key == Key.MOVE_4 && leader.move(3) != null)
-				{
-					if (leader.move(3).pp() == 0)
-						this.parent.logger.showMessage(new Message("moves.no_pp").addReplacement("<move>", leader.move(3).move().name()));
-					else Persistance.eventProcessor().processEvent(new MoveSelectionEvent(Persistance.floor, leader.move(3), leader).setPAE());
+					if (move.pp() == 0) this.parent.logger.showMessage(new Message("moves.no_pp").addReplacement("<move>", move.move().name()));
+					else if (!leader.canUse(move, Persistance.floor))
+						this.parent.logger.showMessage(new Message("moves.cant_use").addReplacement("<move>", move.move().name()));
+					else Persistance.eventProcessor().processEvent(new MoveSelectionEvent(Persistance.floor, move, leader).setPAE());
 				}
 
 				if (key == Key.ATTACK && (!Key.RUN.isPressed() || Persistance.player.getDungeonLeader().isFamished()))

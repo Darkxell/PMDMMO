@@ -122,13 +122,14 @@ public interface AffectsPokemon
 		return false;
 	}
 
-	/** Called when a Pokemon tries to use a Move. Returns true if this object prevents the use of a Move.
+	/** Called when a Pokemon tries to use a Move. Returns true if this object prevents the use of that Move.
 	 * 
-	 * @param pokemon - The Pokemon trying to use a Move.
+	 * @param move - The Move being tested. May be <code>null</code> if this is in a more general sense (i.e. if the pokemon can use <i>any</i> move).
+	 * @param pokemon - The Pokemon trying to use the Move.
 	 * @param floor - The Floor context.
 	 * 
 	 * @return <code>true</code> if a Move can't be used, <code>false</code> else. */
-	public default boolean preventsUsingMoves(DungeonPokemon pokemon, Floor floor)
+	public default boolean preventsUsingMove(LearnedMove move, DungeonPokemon pokemon, Floor floor)
 	{
 		return false;
 	}

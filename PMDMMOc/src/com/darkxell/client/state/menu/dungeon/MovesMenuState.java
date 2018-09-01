@@ -183,10 +183,14 @@ public class MovesMenuState extends OptionSelectionMenuState
 
 		if (this.isMainSelected())
 		{
-			if (move.pp() > 0)
+
+			if (move != null)
 			{
 				Persistance.stateManager.setState(s);
-				Persistance.eventProcessor().processEvent(new MoveSelectionEvent(Persistance.floor, move, Persistance.player.getDungeonLeader()).setPAE());
+				if (move.pp() == 0) s.logger.showMessage(new Message("moves.no_pp").addReplacement("<move>", move.move().name()));
+				else if (!Persistance.player.getDungeonLeader().canUse(move, Persistance.floor))
+					s.logger.showMessage(new Message("moves.cant_use").addReplacement("<move>", move.move().name()));
+				else Persistance.eventProcessor().processEvent(new MoveSelectionEvent(Persistance.floor, move, Persistance.player.getDungeonLeader()).setPAE());
 			}
 		} else
 		{

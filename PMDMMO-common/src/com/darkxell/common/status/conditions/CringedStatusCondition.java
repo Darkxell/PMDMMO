@@ -2,6 +2,7 @@ package com.darkxell.common.status.conditions;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.pokemon.LearnedMove;
 import com.darkxell.common.status.StatusCondition;
 
 public class CringedStatusCondition extends StatusCondition
@@ -13,7 +14,7 @@ public class CringedStatusCondition extends StatusCondition
 	}
 	
 	@Override
-	public boolean preventsUsingMoves(DungeonPokemon pokemon, Floor floor)
+	public boolean preventsUsingMove(LearnedMove move, DungeonPokemon pokemon, Floor floor)
 	{
 		return true;
 	}
