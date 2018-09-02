@@ -100,7 +100,7 @@ public class MoveEffectCalculator
 	protected double computeEffectiveness()
 	{
 		double effectiveness = PokemonType.NORMALLY_EFFECTIVE;
-		if (this.target != null) move.move.move().type.effectivenessOn(target.species());
+		if (this.target != null) effectiveness = move.move.move().type.effectivenessOn(target.species());
 		effectiveness = this.modificator.applyEffectivenessModifications(effectiveness, move, target, floor);
 		return effectiveness;
 	}
