@@ -165,6 +165,14 @@ public class DungeonStats
 		}
 	}
 
+	public boolean hasAStatDown()
+	{
+		for (Stat s : Stat.values())
+			if (s != Stat.Speed && this.getStage(s) < 10) return true;
+			else if (s == Stat.Speed && this.getStage(s) < 1) return true;
+		return false;
+	}
+
 	public void onFloorStart(Floor floor, ArrayList<DungeonEvent> events)
 	{
 		int speed = this.getStage(Stat.Speed);

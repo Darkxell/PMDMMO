@@ -7,6 +7,7 @@ import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.animation.AbstractAnimation;
 import com.darkxell.client.mechanics.animation.AnimationEndListener;
 import com.darkxell.client.mechanics.animation.Animations;
+import com.darkxell.client.mechanics.animation.PokemonAnimation;
 import com.darkxell.client.mechanics.animation.misc.PokemonFaintAnimation;
 import com.darkxell.client.mechanics.animation.misc.RainAnimation;
 import com.darkxell.client.mechanics.animation.misc.SnowAnimation;
@@ -14,6 +15,7 @@ import com.darkxell.client.mechanics.animation.misc.TextAbovePokeAnimation;
 import com.darkxell.client.mechanics.cutscene.CutsceneManager;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.renderers.TextRenderer.FontMode;
+import com.darkxell.client.renderers.pokemon.DungeonPokemonRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
 import com.darkxell.client.resources.music.SoundManager;
@@ -544,6 +546,11 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	private void processSpeedEvent(SpeedChangedEvent event)
 	{
 		Persistance.dungeonState.pokemonRenderer.getRenderer(event.pokemon).sprite().updateTickingSpeed(event.pokemon);
+		if (!event.pokemon.stats.hasAStatDown())
+		{
+			DungeonPokemonRenderer renderer = Persistance.dungeonState.pokemonRenderer.getRenderer(event.pokemon);
+			if (renderer.hasAnimation(event.pokemon.stats)) renderer.removeAnimation(event.pokemon.stats);
+		}
 	}
 
 	private void processStairEvent(StairLandingEvent event)
@@ -555,8 +562,28 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	private void processStatEvent(StatChangedEvent event)
 	{
 		if (event.effectiveChange() == 0) return;
+
+		AnimationEndListener listener = this.currentAnimEnd;
+		if (event.effectiveChange() != 0) listener = new AnimationEndListener() {
+			@Override
+			public void onAnimationEnd(AbstractAnimation animation)
+			{
+				DungeonPokemonRenderer renderer = Persistance.dungeonState.pokemonRenderer.getRenderer(event.target);
+				boolean hasDown = event.target.stats.hasAStatDown();
+				if (hasDown && !renderer.hasAnimation(event.target.stats))
+				{
+					PokemonAnimation a = Animations.getCustomAnimation(event.target, 19, null);
+					a.plays = -1;
+					a.source = event.target.stats;
+					renderer.addAnimation(a);
+					a.start();
+				} else if (!hasDown && renderer.hasAnimation(event.target.stats)) renderer.removeAnimation(event.target.stats);
+				currentAnimEnd.onAnimationEnd(animation);
+			}
+		};
+
 		AnimationState s = new AnimationState(Persistance.dungeonState);
-		s.animation = Animations.getStatChangeAnimation(event, this.currentAnimEnd);
+		s.animation = Animations.getStatChangeAnimation(event, listener);
 		if (s.animation != null)
 		{
 			Persistance.dungeonState.setSubstate(s);

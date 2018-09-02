@@ -62,6 +62,14 @@ public class AbstractPokemonRenderer extends AbstractRenderer
 		this.animations.clear();
 	}
 
+	/** @return <code>true</code> if this Pokemon has an Animation with the input source. */
+	public boolean hasAnimation(Object source)
+	{
+		for (PokemonAnimation a : this.animations)
+			if (a.source == source) return true;
+		return false;
+	}
+
 	public void removeAnimation(Object source)
 	{
 		this.animations.removeIf(new Predicate<AbstractAnimation>() {
