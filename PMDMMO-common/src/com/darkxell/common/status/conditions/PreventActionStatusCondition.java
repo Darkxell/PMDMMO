@@ -5,10 +5,10 @@ import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.LearnedMove;
 import com.darkxell.common.status.StatusCondition;
 
-public class PreventsActionStatusCondition extends StatusCondition
+public class PreventActionStatusCondition extends StatusCondition
 {
 
-	public PreventsActionStatusCondition(int id, int durationMin, int durationMax)
+	public PreventActionStatusCondition(int id, int durationMin, int durationMax)
 	{
 		super(id, durationMin, durationMax);
 	}

@@ -4,7 +4,8 @@ import java.util.HashMap;
 
 import com.darkxell.common.pokemon.BaseStats.Stat;
 import com.darkxell.common.pokemon.PokemonType;
-import com.darkxell.common.status.conditions.BoostMoveType;
+import com.darkxell.common.status.conditions.BoostCritStatusCondition;
+import com.darkxell.common.status.conditions.BoostMoveTypeStatusCondition;
 import com.darkxell.common.status.conditions.ChangeAttackerStatStatusCondition;
 import com.darkxell.common.status.conditions.ChargedMoveStatusCondition;
 import com.darkxell.common.status.conditions.ConfusedStatusCondition;
@@ -13,8 +14,8 @@ import com.darkxell.common.status.conditions.CringedStatusCondition;
 import com.darkxell.common.status.conditions.ImmuneStatusCondition;
 import com.darkxell.common.status.conditions.ParalyzedStatusCondition;
 import com.darkxell.common.status.conditions.PeriodicDamageStatusCondition;
-import com.darkxell.common.status.conditions.PreventsActionStatusCondition;
-import com.darkxell.common.status.conditions.PreventsOtherStatusCondition;
+import com.darkxell.common.status.conditions.PreventActionStatusCondition;
+import com.darkxell.common.status.conditions.PreventOtherStatusCondition;
 import com.darkxell.common.status.conditions.StealsHpStatusCondition;
 import com.darkxell.common.status.conditions.TauntedStatusCondition;
 import com.darkxell.common.status.conditions.TerrifiedStatusCondition;
@@ -26,7 +27,7 @@ public final class StatusConditions
 	public static final StatusCondition Poisoned = new PeriodicDamageStatusCondition(0, -1, -1, 10, 4);
 	public static final StatusCondition Badly_poisoned = new PeriodicDamageStatusCondition(1, -1, -1, 2, 6);
 	public static final StatusCondition Burn = new PeriodicDamageStatusCondition(2, -1, -1, 20, 5);
-	public static final StatusCondition Asleep = new PreventsActionStatusCondition(3, 3, 6);
+	public static final StatusCondition Asleep = new PreventActionStatusCondition(3, 3, 6);
 	public static final StatusCondition Confused = new ConfusedStatusCondition(4, 7, 12);
 	public static final StatusCondition Paralyzed = new ParalyzedStatusCondition(5, 3, 3);
 
@@ -42,9 +43,10 @@ public final class StatusConditions
 
 	public static final StatusCondition Skull_bash = new ChargedMoveStatusCondition(60, 1, 1, -50);
 
-	public static final StatusCondition Charging = new BoostMoveType(70, 1, 1, PokemonType.Electric);
+	public static final StatusCondition Charging = new BoostMoveTypeStatusCondition(70, 1, 1, PokemonType.Electric);
+	public static final StatusCondition Focus_energy = new BoostCritStatusCondition(71, 3, 3, 80);
 
-	public static final StatusCondition Sleepless = new PreventsOtherStatusCondition(100, 11, 12, Asleep);
+	public static final StatusCondition Sleepless = new PreventOtherStatusCondition(100, 11, 12, Asleep);
 
 	/** @return The Status Condition with the input ID. */
 	public static StatusCondition find(int id)

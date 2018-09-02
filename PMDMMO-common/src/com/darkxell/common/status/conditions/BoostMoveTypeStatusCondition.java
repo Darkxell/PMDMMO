@@ -9,12 +9,12 @@ import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.status.StatusCondition;
 
-public class BoostMoveType extends StatusCondition
+public class BoostMoveTypeStatusCondition extends StatusCondition
 {
 
 	public final PokemonType type;
 
-	public BoostMoveType(int id, int durationMin, int durationMax, PokemonType type)
+	public BoostMoveTypeStatusCondition(int id, int durationMin, int durationMax, PokemonType type)
 	{
 		super(id, durationMin, durationMax);
 		this.type = type;

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.DungeonEvent.MessageEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
 import com.darkxell.common.move.Move.MoveCategory;
 import com.darkxell.common.pokemon.BaseStats.Stat;
@@ -13,6 +14,7 @@ import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.pokemon.PropertyModificator;
 import com.darkxell.common.status.ActiveFloorStatus;
 import com.darkxell.common.status.AppliedStatusCondition;
+import com.darkxell.common.util.language.Message;
 
 /** Object that computes various values when using a move, such as damage or accuracy. */
 public class MoveEffectCalculator
@@ -118,7 +120,11 @@ public class MoveEffectCalculator
 		double multiplier = 1;
 		multiplier *= this.effectiveness();
 		if (move.isStab()) multiplier *= 1.5;
-		if (critical) multiplier *= 1.5;
+		if (critical)
+		{
+			multiplier *= 1.5;
+			events.add(new MessageEvent(this.floor, new Message("move.critical")));
+		}
 
 		multiplier *= this.modificator.damageMultiplier(move, target, floor, events);
 		return multiplier;
