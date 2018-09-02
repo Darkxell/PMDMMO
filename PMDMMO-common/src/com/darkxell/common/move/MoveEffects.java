@@ -65,6 +65,7 @@ public final class MoveEffects
 	public static final MoveEffect Inflict_protect = new ApplyStatusConditionEffect(192, StatusConditions.Protect, 100);
 	public static final MoveEffect Inflict_taunted = new ApplyStatusConditionEffect(193, StatusConditions.Taunted, 100);
 	public static final MoveEffect Inflict_charging = new ApplyStatusConditionEffect(198, StatusConditions.Charging, 100);
+	public static final MoveEffect Multiply_target_weight = new MultiplyWeightEffect(200);
 	public static final MoveEffect Lower_accuracy_2s = new StatChangeEffect(203, Stat.Accuracy, -2, 100);
 	public static final MoveEffect Weather_rain = new WeatherChangeEffect(208, Weather.RAIN);
 	public static final MoveEffect Destroy_trap = new DestroyTrapEffect(213);

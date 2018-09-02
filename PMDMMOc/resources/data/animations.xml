@@ -212,6 +212,9 @@
     <move id="131">
       <default width="112" height="112" state="sing">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21</default>
     </move>
+    <move id="206">
+      <default sprites="none" delaytime="15" state="attack"/>
+    </move>
     <move id="304">
       <default sprites="none" delaytime="15" state="emit"/>
     </move>
