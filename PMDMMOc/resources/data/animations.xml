@@ -227,6 +227,7 @@
     <move id="206">
       <default sprites="none" delaytime="15" state="attack"/>
     </move>
+    <move id="208" clone="moves/209"/>
     <move id="209">
       <default sprites="none" delaytime="15" state="spin" alsoplay="2"/>
     </move>
@@ -384,6 +385,9 @@
     </movetarget>
     <movetarget id="205">
       <default width="11" height="16" spriteduration="8" movement="diagonal">0</default>
+    </movetarget>
+    <movetarget id="208">
+      <default width="72" height="56" spriteduration="2">0,1,2,3,4,5,6,7,8,9,10</default>
     </movetarget>
     <movetarget id="210">
       <default width="48" height="48" spriteduration="2">0,1,2,3,4,5</default>

@@ -17,6 +17,7 @@ import com.darkxell.common.move.effects.RecoilEffect;
 import com.darkxell.common.move.effects.ResetStatEffect;
 import com.darkxell.common.move.effects.StatChangeEffect;
 import com.darkxell.common.move.effects.StoredDamageEffect;
+import com.darkxell.common.move.effects.UserLevelDamageEffect;
 import com.darkxell.common.move.effects.WeatherChangeEffect;
 import com.darkxell.common.move.effects.WeatherHealEffect;
 import com.darkxell.common.pokemon.BaseStats.Stat;
@@ -52,11 +53,12 @@ public final class MoveEffects
 	public static final MoveEffect Lower_speed = new StatChangeEffect(85, Stat.Speed, -1, 100);
 	public static final MoveEffect Lower_attack = new StatChangeEffect(86, Stat.Attack, -1, 100);
 	public static final MoveEffect Lower_defense_2s = new StatChangeEffect(88, Stat.Defense, -2, 100);
+	public static final MoveEffect Fixed_userlevel = new UserLevelDamageEffect(89);
 	public static final MoveEffect Drain_50percent = new DrainEffect(90, 50);
 	public static final MoveEffect Recoil_12percent5 = new RecoilEffect(92, 12.5);
 	public static final MoveEffect Inflict_sleepless = new ApplyStatusConditionEffect(102, StatusConditions.Sleepless, 100);
 	public static final MoveEffect Inflict_lightscreen = new ApplyStatusConditionEffect(109, StatusConditions.Light_screen, 100);
-	public static final MoveEffect WeatherHeal = new WeatherHealEffect(113);
+	public static final MoveEffect Weather_heal = new WeatherHealEffect(113);
 	public static final MoveEffect Raise_speed = new StatChangeEffect(121, Stat.Speed, 1, 100);
 	public static final MoveEffect Inflict_bide = new ApplyStatusConditionEffect(123, StatusConditions.Bide, 100);
 	public static final MoveEffect Double_damage = new DoubleDamageEffect(131);
@@ -79,7 +81,7 @@ public final class MoveEffects
 	public static final MoveEffect Inflict_identified_Reset_evasion;
 	public static final MoveEffect Copy_stat_changes = new CopyStatChangesEffect(254);
 	public static final MoveEffect Attack_2to5 = new MultipleAttacksEffect(321, 2, 5);
-	public static final MoveEffect Bide_result = new StoredDamageEffect(322);
+	public static final MoveEffect Fixed_bide = new StoredDamageEffect(322);
 
 	static
 	{
