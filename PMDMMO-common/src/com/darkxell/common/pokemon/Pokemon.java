@@ -41,9 +41,6 @@ public class Pokemon implements ItemContainer, HasID
 		return ids;
 	}
 
-	/** This Pokemon's ability's ID. */
-	private Ability ability;
-
 	private DBPokemon data;
 
 	/** A reference to the Dungeon entity of this Pokemon if in a Dungeon. null else. */
@@ -87,7 +84,7 @@ public class Pokemon implements ItemContainer, HasID
 
 	public Ability ability()
 	{
-		return this.ability;
+		return Ability.find(this.abilityID());
 	}
 
 	public int abilityID()
@@ -322,7 +319,6 @@ public class Pokemon implements ItemContainer, HasID
 	public void setData(DBPokemon data)
 	{
 		this.data = data;
-		this.ability = Ability.find(this.abilityID());
 		this.item = null;
 		this.moves = new LearnedMove[4];
 		this.species = PokemonRegistry.find(this.data.specieid);

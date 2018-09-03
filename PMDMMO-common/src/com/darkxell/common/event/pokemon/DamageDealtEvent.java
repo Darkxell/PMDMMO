@@ -34,6 +34,13 @@ public class DamageDealtEvent extends DungeonEvent
 		this.damage = damage;
 	}
 
+	public boolean isRecoilDamage()
+	{
+		return this.source instanceof MoveUse
+				&& (((MoveUse) this.source).move.move().effect instanceof RecoilEffect || ((MoveUse) this.source).move.move().effect instanceof HPRecoilEffect)
+				&& ((MoveUse) this.source).user == this.target;
+	}
+
 	@Override
 	public String loggerMessage()
 	{
@@ -45,9 +52,7 @@ public class DamageDealtEvent extends DungeonEvent
 	{
 		String damageID = "move.damage_dealt"; // Default
 		if (this.source instanceof WeatherDamaging) damageID = "weather.damage_dealt"; // Weather damage
-		else if (this.source instanceof MoveUse
-				&& (((MoveUse) this.source).move.move().effect instanceof RecoilEffect || ((MoveUse) this.source).move.move().effect instanceof HPRecoilEffect)
-				&& ((MoveUse) this.source).user == this.target) // Recoil damage
+		else if (this.isRecoilDamage()) // Recoil damage
 			damageID = "move.recoil";
 
 		this.messages.add(new Message(damageID).addReplacement("<pokemon>", target.getNickname()).addReplacement("<amount>", Integer.toString(damage)));
