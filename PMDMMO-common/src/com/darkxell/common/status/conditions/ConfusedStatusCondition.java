@@ -28,7 +28,7 @@ public class ConfusedStatusCondition extends StatusCondition
 		if (event instanceof PokemonTravelEvent && ((PokemonTravelEvent) event).pokemon() == concerned
 				&& ((PokemonTravelEvent) event).pokemon().hasStatusCondition(this) && !event.hasFlag("confused"))
 			this.randomize(floor, ((PokemonTravelEvent) event), resultingEvents);
-		if (event instanceof MoveSelectionEvent && ((PokemonTravelEvent) event).pokemon() == concerned
+		if (event instanceof MoveSelectionEvent && ((MoveSelectionEvent) event).usedMove().user == concerned
 				&& ((MoveSelectionEvent) event).usedMove().user.hasStatusCondition(this) && !event.hasFlag("confused"))
 			this.randomize(floor, ((MoveSelectionEvent) event), resultingEvents);
 	}
