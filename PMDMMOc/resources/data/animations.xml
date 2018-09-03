@@ -237,6 +237,9 @@
     <move id="212">
       <default sprites="none" delaytime="15" state="strike"/>
     </move>
+    <move id="220">
+      <default width="46" height="14" x="46" state="rearup">-1,-1,-1,0,1,2,3,4,5,6,7</default>
+    </move>
     <move id="222">
       <default width="32" height="32" state="withdraw" spriteduration="2">0,1,2,3,4,0</default>
     </move>
@@ -394,6 +397,9 @@
     </movetarget>
     <movetarget id="212">
       <default width="64" height="56" spriteduration="2">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22</default>
+    </movetarget>
+    <movetarget id="220">
+      <default width="64" height="104" y="90" spriteduration="2">0,-1,1,-1,2,-1,2,-1,1,-1,0</default>
     </movetarget>
     <movetarget id="304">
       <default y="52" spriteduration="3" width="40" height="64">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21</default>
