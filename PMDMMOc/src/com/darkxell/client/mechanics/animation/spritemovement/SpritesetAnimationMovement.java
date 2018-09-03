@@ -12,6 +12,9 @@ public abstract class SpritesetAnimationMovement
 		{
 			case "1tilefacing":
 				return new FacingTileAnimationMovement(parent);
+				
+			case "diagonal":
+				return new DiagonalAnimationMovement(parent);
 
 			default:
 				return null;

@@ -47,6 +47,7 @@
 						<xs:restriction base="xs:string">
 							<xs:enumeration value="null"/>
 							<xs:enumeration value="1tilefacing"/>
+							<xs:enumeration value="diagonal"/>
 						</xs:restriction>
 					</xs:simpleType>
 				</xs:attribute>
