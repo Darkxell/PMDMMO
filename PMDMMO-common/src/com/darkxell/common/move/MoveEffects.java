@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.HashMap;
 
 import com.darkxell.common.move.effects.ApplyStatusConditionEffect;
+import com.darkxell.common.move.effects.CannotKOEffect;
 import com.darkxell.common.move.effects.CantMissEffect;
 import com.darkxell.common.move.effects.CompoundEffect;
 import com.darkxell.common.move.effects.CopyStatChangesEffect;
@@ -72,6 +73,7 @@ public final class MoveEffects
 	public static final MoveEffect Create_watersport = new CreateFloorStatusEffect(137, FloorStatuses.Reduce_fire);
 	public static final MoveEffect Lower_defense = new StatChangeEffect(139, Stat.Defense, -1, 100);
 	public static final MoveEffect Inflict_leechSeed = new ApplyStatusConditionEffect(143, StatusConditions.Leech_seed, 100);
+	public static final MoveEffect Cant_ko = new CannotKOEffect(161);
 	public static final MoveEffect Inflict_skullbash_Raise_defense;
 	public static final MoveEffect Raise_defense = new StatChangeEffect(172, Stat.Defense, 1, 100);
 	public static final MoveEffect Lower_evasion = new StatChangeEffect(179, Stat.Evasiveness, -1, 100);

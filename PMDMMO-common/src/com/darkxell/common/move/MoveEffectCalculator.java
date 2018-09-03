@@ -95,6 +95,8 @@ public class MoveEffectCalculator
 
 		// Damage randomness
 		damage *= (9 - floor.random.nextDouble() * 2) / 8;
+		
+		damage = this.modificator.applyDamageModifications(damage, this.move, this.target, this.floor, events);
 
 		return (int) Math.round(damage);
 	}

@@ -24,6 +24,21 @@ import com.darkxell.common.pokemon.BaseStats.Stat;
 public interface AffectsPokemon
 {
 
+	/** Called when a Pokemon uses a damaging move. Modifies the damage output.
+	 * 
+	 * @param damage - The damage to be dealt.
+	 * @param move - The Move use context.
+	 * @param target - The Pokemon the move was used on.
+	 * @param isUser - <code>true</code> if this Object belongs to the Move's user (if it's its ability or an item it holds).
+	 * @param events - The current Events being generated.
+	 * 
+	 * @return The new damage with modifications applied by this object. */
+	public default double applyDamageModifications(double damage, MoveUse move, DungeonPokemon target, boolean isUser, Floor floor,
+			ArrayList<DungeonEvent> events)
+	{
+		return damage;
+	}
+
 	/** Called when a Pokemon uses a damaging move. Modifies the critical hit rate.
 	 * 
 	 * @param critical - The critical hit rate before this object applies its modifications.
