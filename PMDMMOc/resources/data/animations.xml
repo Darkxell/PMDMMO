@@ -259,6 +259,7 @@
     <move id="352">
       <default sprites="none" delaytime="25" state="rumble"/>
     </move>
+    <move id="357" clone="moves/352"/>
     <move id="453">
       <default width="16" height="16" state="special">-1,-1,-1,-1,-1,-1,-1,-1,0,1,2,3,4,5,6,7,8,9,10</default>
       <north y="15" backsprites="only"/>
@@ -427,6 +428,7 @@
     <movetarget id="352">
       <default width="56" height="48" spriteduration="2">0,1,2,3,4,5</default>
     </movetarget>
+    <movetarget id="357" clone="352"/>
     <movetarget id="453">
       <default spriteduration="5" width="32" height="40">0,1,2,3,2,3,2,3,4,5,5,6,6</default>
     </movetarget>
@@ -477,6 +479,7 @@
     <projectile id="1352">
       <default width="16" height="16" spriteduration="2">0,1,2,3,4,5,6,7</default>
     </projectile>
+    <projectile id="1357" clone="projectiles/1352"/>
     <projectile id="1453">
       <default width="16" height="16" spriteduration="8">0,1</default>
     </projectile>
