@@ -227,6 +227,9 @@
     <move id="206">
       <default sprites="none" delaytime="15" state="attack"/>
     </move>
+    <move id="222">
+      <default width="32" height="32" state="withdraw" spriteduration="2">0,1,2,3,4,0</default>
+    </move>
     <move id="304">
       <default sprites="none" delaytime="15" state="emit"/>
     </move>
@@ -351,6 +354,9 @@
     </move>
     <move id="2002" clone="0"/>
     <move id="-50">
+      <default sprites="none" delaytime="15"/>
+    </move>
+    <move id="-222">
       <default sprites="none" delaytime="15"/>
     </move>
   </moves>

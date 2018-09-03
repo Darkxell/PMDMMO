@@ -20,6 +20,7 @@ public class AppliedStatusCondition implements DungeonEventListener
 	public final StatusCondition condition;
 	/** This Status Condition's duration. */
 	public final int duration;
+	private String flags = "";
 	/** The Pokemon this Status condition affects. */
 	public final DungeonPokemon pokemon;
 	public final Object source;
@@ -41,6 +42,15 @@ public class AppliedStatusCondition implements DungeonEventListener
 		return this.actedWhileApplied;
 	}
 
+	public void addFlag(String flag)
+	{
+		if (!this.hasFlag(flag))
+		{
+			if (!this.flags.equals("")) this.flags += "|";
+			this.flags += flag;
+		}
+	}
+
 	public Message endMessage()
 	{
 		String id = "status.end." + this.condition.id;
@@ -58,10 +68,21 @@ public class AppliedStatusCondition implements DungeonEventListener
 		return this.tick;
 	}
 
+	public boolean hasFlag(String flag)
+	{
+		return this.flags.contains(flag);
+	}
+
 	public boolean isOver()
 	{
 		if (this.duration == -1) return false;
 		return this.tick >= this.duration;
+	}
+
+	public String[] listFlags()
+	{
+		if (this.flags.equals("")) return new String[0];
+		return this.flags.split("\\|");
 	}
 
 	public void onConditionEnd(Floor floor, ArrayList<DungeonEvent> events)

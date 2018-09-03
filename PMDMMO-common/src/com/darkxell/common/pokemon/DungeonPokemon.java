@@ -247,6 +247,14 @@ public class DungeonPokemon implements ItemContainer
 		return this.usedPokemon.getNickname();
 	}
 
+	/** @return The instance of the input Status Condition, if this Pokemon is affected by it; <code>null</code> else. */
+	public AppliedStatusCondition getStatusCondition(StatusCondition condition)
+	{
+		for (AppliedStatusCondition c : this.statusConditions)
+			if (c.condition == condition) return c;
+		return null;
+	}
+
 	/** @return True if this Pokemon is affected by the input Status Condition. */
 	public boolean hasStatusCondition(StatusCondition condition)
 	{

@@ -68,6 +68,7 @@ import com.darkxell.common.event.stats.LevelupEvent;
 import com.darkxell.common.event.stats.SpeedChangedEvent;
 import com.darkxell.common.event.stats.StatChangedEvent;
 import com.darkxell.common.item.effects.FoodItemEffect;
+import com.darkxell.common.move.effects.StoredDamageEffect;
 import com.darkxell.common.player.Inventory;
 import com.darkxell.common.pokemon.BaseStats;
 import com.darkxell.common.pokemon.DungeonPokemon;
@@ -451,6 +452,10 @@ public final class ClientEventProcessor extends CommonEventProcessor
 			Persistance.dungeonState.setSubstate(s);
 			this.setState(State.ANIMATING);
 		}
+
+		PokemonSprite sprite = Persistance.dungeonState.pokemonRenderer.getSprite(event.usedMove().user);
+		if (event.usedMove().move.move().effect instanceof StoredDamageEffect && sprite.defaultState() == PokemonSpriteState.WITHDRAW)
+			sprite.setDefaultState(PokemonSpriteState.IDLE, false);
 	}
 
 	private void processMoveLearnedEvent(MoveLearnedEvent event)
@@ -528,6 +533,10 @@ public final class ClientEventProcessor extends CommonEventProcessor
 			if (event.actor().hasStatusCondition(StatusConditions.Asleep))
 			{
 				Persistance.dungeonState.logger.showMessage(new Message("status.tick.sleep").addReplacement("<pokemon>", event.actor().getNickname()));
+				pause = true;
+			} else if (event.actor().hasStatusCondition(StatusConditions.Bide))
+			{
+				Persistance.dungeonState.logger.showMessage(new Message("status.tick.bide").addReplacement("<pokemon>", event.actor().getNickname()));
 				pause = true;
 			}
 			if (pause)
@@ -617,6 +626,8 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		}
 		if (event.condition.condition == StatusConditions.Asleep)
 			Persistance.dungeonState.pokemonRenderer.getSprite(event.condition.pokemon).setDefaultState(PokemonSpriteState.SLEEP, true);
+		else if (event.condition.condition == StatusConditions.Bide)
+			Persistance.dungeonState.pokemonRenderer.getSprite(event.condition.pokemon).setDefaultState(PokemonSpriteState.WITHDRAW, true);
 	}
 
 	private void processStatusEvent(StatusConditionEndedEvent event)

@@ -18,6 +18,7 @@ import com.darkxell.common.status.conditions.PreventActionStatusCondition;
 import com.darkxell.common.status.conditions.PreventOtherStatusCondition;
 import com.darkxell.common.status.conditions.RemoveTypeImmunitiesStatusCondition;
 import com.darkxell.common.status.conditions.StealsHpStatusCondition;
+import com.darkxell.common.status.conditions.StoreDamageToDoubleStatusCondition;
 import com.darkxell.common.status.conditions.TauntedStatusCondition;
 import com.darkxell.common.status.conditions.TerrifiedStatusCondition;
 
@@ -43,6 +44,7 @@ public final class StatusConditions
 	public static final StatusCondition Light_screen = new ChangeAttackerStatStatusCondition(42, 11, 12, Stat.SpecialAttack, 0, .5);
 
 	public static final StatusCondition Skull_bash = new ChargedMoveStatusCondition(60, 1, 1, -50);
+	public static final StatusCondition Bide = new StoreDamageToDoubleStatusCondition(69, 4, 4, -222);
 
 	public static final StatusCondition Charging = new BoostMoveTypeStatusCondition(70, 1, 1, PokemonType.Electric);
 	public static final StatusCondition Focus_energy = new BoostCritStatusCondition(71, 3, 3, 80);
