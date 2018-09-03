@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.HashMap;
 
 import com.darkxell.common.move.effects.ApplyStatusConditionEffect;
+import com.darkxell.common.move.effects.CantMissEffect;
 import com.darkxell.common.move.effects.CompoundEffect;
 import com.darkxell.common.move.effects.CopyStatChangesEffect;
 import com.darkxell.common.move.effects.CreateFloorStatusEffect;
@@ -86,6 +87,7 @@ public final class MoveEffects
 	public static final MoveEffect Copy_stat_changes = new CopyStatChangesEffect(254);
 	public static final MoveEffect Attack_2to5 = new MultipleAttacksEffect(321, 2, 5);
 	public static final MoveEffect Fixed_bide = new StoredDamageEffect(322);
+	public static final MoveEffect Cant_miss = new CantMissEffect(323);
 
 	static
 	{
