@@ -43,6 +43,7 @@ public abstract class Ability implements AffectsPokemon, DungeonEventListener
 
 	public static final Ability CLOUD_NINE = new AbilitySetWeather(63, Weather.CLEAR, 36);
 
+	public static final Ability LIGHTNING_ROD = new AbilityPreventMoveUseType(70, PokemonType.Electric);
 	public static final Ability PICKUP = new AbilityFindsItemOnFloorStart(71, 100);
 	public static final Ability RUNAWAY = new AbilityRunaway(72);
 

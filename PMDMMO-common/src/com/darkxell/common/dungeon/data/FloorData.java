@@ -225,4 +225,11 @@ public class FloorData
 		return this.trapDensity;
 	}
 
+	public int visionDistance()
+	{
+		if (this.shadows == DENSE_SHADOW) return 1;
+		if (this.shadows == NO_SHADOW) return 2;
+		return 5;
+	}
+
 }

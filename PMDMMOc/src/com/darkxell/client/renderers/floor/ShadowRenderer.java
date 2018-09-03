@@ -96,10 +96,10 @@ public class ShadowRenderer extends AbstractRenderer
 			{
 				DungeonPokemonRenderer p = Persistance.dungeonState.pokemonRenderer.getRenderer(Persistance.dungeonState.getCameraPokemon());
 				Area a = new Area(screen);
-				if (shadows == FloorData.NORMAL_SHADOW)
-					a.subtract(new Area(new Ellipse2D.Double(p.x() - TILE_SIZE * 5 / 2, p.y() + -TILE_SIZE * 5 / 2, TILE_SIZE * 5, TILE_SIZE * 5)));
-				if (shadows == FloorData.DENSE_SHADOW)
-					a.subtract(new Area(new Ellipse2D.Double(p.x() - TILE_SIZE * 3 / 2, p.y() + -TILE_SIZE * 3 / 2, TILE_SIZE * 3, TILE_SIZE * 3)));
+				int vision = Persistance.dungeon.dungeon().getData(Persistance.floor.id).visionDistance();
+				int diameter = 1 + vision * 2;
+				a.subtract(new Area(
+						new Ellipse2D.Double(p.x() - TILE_SIZE * diameter / 2, p.y() + -TILE_SIZE * diameter / 2, TILE_SIZE * diameter, TILE_SIZE * diameter)));
 				this.gs.fill(a);
 			}
 			g.drawImage(this.shadowBuffer, 0, 0, null);
