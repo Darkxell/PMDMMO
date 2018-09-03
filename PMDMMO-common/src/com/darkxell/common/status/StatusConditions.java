@@ -6,6 +6,7 @@ import com.darkxell.common.pokemon.BaseStats.Stat;
 import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.status.conditions.BoostCritStatusCondition;
 import com.darkxell.common.status.conditions.BoostMoveTypeStatusCondition;
+import com.darkxell.common.status.conditions.BoostStatOnHitStatusCondition;
 import com.darkxell.common.status.conditions.ChangeAttackerStatStatusCondition;
 import com.darkxell.common.status.conditions.ChargedMoveStatusCondition;
 import com.darkxell.common.status.conditions.ConfusedStatusCondition;
@@ -48,6 +49,7 @@ public final class StatusConditions
 
 	public static final StatusCondition Charging = new BoostMoveTypeStatusCondition(70, 1, 1, PokemonType.Electric);
 	public static final StatusCondition Focus_energy = new BoostCritStatusCondition(71, 3, 3, 80);
+	public static final StatusCondition Enraged = new BoostStatOnHitStatusCondition(72, 5, 10, Stat.Attack);
 
 	public static final StatusCondition Identified = new RemoveTypeImmunitiesStatusCondition(90, -1, -1, PokemonType.Ghost);
 
