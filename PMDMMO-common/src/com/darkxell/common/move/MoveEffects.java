@@ -14,6 +14,7 @@ import com.darkxell.common.move.effects.DoubleDamageEffect;
 import com.darkxell.common.move.effects.DrainEffect;
 import com.darkxell.common.move.effects.DropItemEffect;
 import com.darkxell.common.move.effects.FixedDamageEffect;
+import com.darkxell.common.move.effects.HPDifferenceDamageEffect;
 import com.darkxell.common.move.effects.HPRecoilEffect;
 import com.darkxell.common.move.effects.MultipleAttacksEffect;
 import com.darkxell.common.move.effects.RandomAttacksEffect;
@@ -75,6 +76,7 @@ public final class MoveEffects
 	public static final MoveEffect Lower_defense = new StatChangeEffect(139, Stat.Defense, -1, 100);
 	public static final MoveEffect Inflict_leechSeed = new ApplyStatusConditionEffect(143, StatusConditions.Leech_seed, 100);
 	public static final MoveEffect Cant_ko = new CannotKOEffect(161);
+	public static final MoveEffect Fixed_difference_hp = new HPDifferenceDamageEffect(163);
 	public static final MoveEffect Inflict_skullbash_Raise_defense;
 	public static final MoveEffect Raise_defense = new StatChangeEffect(172, Stat.Defense, 1, 100);
 	public static final MoveEffect Lower_evasion = new StatChangeEffect(179, Stat.Evasiveness, -1, 100);
