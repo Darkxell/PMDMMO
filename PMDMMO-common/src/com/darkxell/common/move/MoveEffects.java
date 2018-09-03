@@ -14,6 +14,7 @@ import com.darkxell.common.move.effects.FixedDamageEffect;
 import com.darkxell.common.move.effects.HPRecoilEffect;
 import com.darkxell.common.move.effects.MultipleAttacksEffect;
 import com.darkxell.common.move.effects.RecoilEffect;
+import com.darkxell.common.move.effects.ResetStatEffect;
 import com.darkxell.common.move.effects.StatChangeEffect;
 import com.darkxell.common.move.effects.WeatherChangeEffect;
 import com.darkxell.common.move.effects.WeatherHealEffect;
@@ -72,12 +73,15 @@ public final class MoveEffects
 	public static final MoveEffect Destroy_trap = new DestroyTrapEffect(213);
 	public static final MoveEffect Drops_money_on_kill = new DropsMoneyOnKillEffect(218);
 	public static final MoveEffect Lower_speed_30 = new StatChangeEffect(225, Stat.Speed, -1, 30);
+	public static final MoveEffect Inflict_identified_Reset_evasion;
 	public static final MoveEffect Copy_stat_changes = new CopyStatChangesEffect(254);
 	public static final MoveEffect Attack_2to5 = new MultipleAttacksEffect(321, 2, 5);
 
 	static
 	{
 		Inflict_skullbash_Raise_defense = new CompoundEffect(151, Raise_defense, new ApplyStatusConditionEffect(-1, StatusConditions.Skull_bash, 100));
+		Inflict_identified_Reset_evasion = new CompoundEffect(231, new ResetStatEffect(-1, Stat.Evasiveness),
+				new ApplyStatusConditionEffect(-1, StatusConditions.Identified, 100));
 	}
 
 	/** @return The Effect with the input ID. */

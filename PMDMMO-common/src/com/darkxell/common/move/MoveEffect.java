@@ -188,7 +188,8 @@ public class MoveEffect implements AffectsPokemon
 		MoveEffectCalculator calculator = this.buildCalculator(usedMove, target, floor);
 		boolean missed = calculator.misses(events);
 		double effectiveness = calculator.effectiveness();
-		if (effectiveness == PokemonType.NO_EFFECT) events.add(new MessageEvent(floor, move.unaffectedMessage(target)));
+		if (effectiveness == PokemonType.NO_EFFECT && usedMove.move.move().category != MoveCategory.Status)
+			events.add(new MessageEvent(floor, move.unaffectedMessage(target)));
 		else
 		{
 			if (!missed && this != MoveEffects.Basic_attack && target != null)

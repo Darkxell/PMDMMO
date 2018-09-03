@@ -1,40 +1,35 @@
 package com.darkxell.common.move.effects;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.dungeon.floor.Tile;
-import com.darkxell.common.event.dungeon.TrapDestroyedEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
-import com.darkxell.common.move.Move;
+import com.darkxell.common.event.stats.StatChangedEvent;
 import com.darkxell.common.move.MoveEffect;
 import com.darkxell.common.move.MoveEffectCalculator;
 import com.darkxell.common.move.MoveEvents;
+import com.darkxell.common.pokemon.BaseStats.Stat;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
-public class DestroyTrapEffect extends MoveEffect
+public class ResetStatEffect extends MoveEffect
 {
 
-	public DestroyTrapEffect(int id)
+	public final Stat stat;
+
+	public ResetStatEffect(int id, Stat stat)
 	{
 		super(id);
+		this.stat = stat;
 	}
 
 	@Override
 	public void additionalEffects(MoveUse usedMove, DungeonPokemon target, Floor floor, MoveEffectCalculator calculator, boolean missed, MoveEvents effects)
 	{
 		super.additionalEffects(usedMove, target, floor, calculator, missed, effects);
-
 		if (!missed)
 		{
-			Tile t = usedMove.user.tile().adjacentTile(usedMove.user.facing());
-			if (t != null && t.trap != null) effects.createEffect(new TrapDestroyedEvent(floor, t), usedMove, target, floor, missed, true, null);
+			int stage = target.stats.getStage(this.stat);
+			if (stage > 10) effects.createEffect(new StatChangedEvent(floor, target, this.stat, 10 - stage), usedMove, target, floor, missed,
+					usedMove.move.move().dealsDamage, target);
 		}
-	}
-
-	@Override
-	protected boolean allowsNoTarget(Move move, DungeonPokemon user)
-	{
-		Tile t = user.tile().adjacentTile(user.facing());
-		return t.trap != null;
 	}
 
 }

@@ -118,6 +118,7 @@ public final class AIUtils
 			for (int y = pokemon.tile().y - shadow; y <= pokemon.tile().y + shadow; ++y)
 			{
 				Tile t = floor.tileAt(x, y);
+				if (t == null) continue;
 				distance = t.distance(pokemon.tile());
 				if (distance >= maxDistance && t.canWalkOn(pokemon, false) && isReachable(floor, pokemon, t))
 				{
@@ -301,6 +302,7 @@ public final class AIUtils
 			for (int y = pokemon.tile().y - visibility; y <= pokemon.tile().y + visibility; ++y)
 				visible.add(floor.tileAt(x, y));
 
+		visible.removeIf(t -> t == null);
 		visible.sort((Tile t1, Tile t2) -> {
 			return Double.compare(pokemon.tile().distance(t1), pokemon.tile().distance(t2));
 		});

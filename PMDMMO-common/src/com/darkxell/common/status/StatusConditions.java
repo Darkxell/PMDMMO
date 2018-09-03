@@ -16,6 +16,7 @@ import com.darkxell.common.status.conditions.ParalyzedStatusCondition;
 import com.darkxell.common.status.conditions.PeriodicDamageStatusCondition;
 import com.darkxell.common.status.conditions.PreventActionStatusCondition;
 import com.darkxell.common.status.conditions.PreventOtherStatusCondition;
+import com.darkxell.common.status.conditions.RemoveTypeImmunitiesStatusCondition;
 import com.darkxell.common.status.conditions.StealsHpStatusCondition;
 import com.darkxell.common.status.conditions.TauntedStatusCondition;
 import com.darkxell.common.status.conditions.TerrifiedStatusCondition;
@@ -46,6 +47,8 @@ public final class StatusConditions
 	public static final StatusCondition Charging = new BoostMoveTypeStatusCondition(70, 1, 1, PokemonType.Electric);
 	public static final StatusCondition Focus_energy = new BoostCritStatusCondition(71, 3, 3, 80);
 
+	public static final StatusCondition Identified = new RemoveTypeImmunitiesStatusCondition(90, -1, -1, PokemonType.Ghost);
+
 	public static final StatusCondition Sleepless = new PreventOtherStatusCondition(100, 11, 12, Asleep);
 
 	/** @return The Status Condition with the input ID. */
@@ -53,7 +56,7 @@ public final class StatusConditions
 	{
 		return _registry.get(id);
 	}
-	
+
 	private StatusConditions()
 	{}
 
