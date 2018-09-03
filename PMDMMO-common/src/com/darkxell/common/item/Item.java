@@ -18,6 +18,8 @@ public class Item implements AffectsPokemon
 	/** Possible actions to be executed on an Item. */
 	public static enum ItemAction
 	{
+		/** Item wasn't moved by a Pokemon. */
+		AUTO(12, "item.autoaction"),
 		/** Removing the Item as shortcut. */
 		DESELECT(7, "item.deselect"),
 		/** Moving the Item in the inventory. */

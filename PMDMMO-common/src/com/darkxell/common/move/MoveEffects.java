@@ -10,6 +10,7 @@ import com.darkxell.common.move.effects.CreateFloorStatusEffect;
 import com.darkxell.common.move.effects.DestroyTrapEffect;
 import com.darkxell.common.move.effects.DoubleDamageEffect;
 import com.darkxell.common.move.effects.DrainEffect;
+import com.darkxell.common.move.effects.DropItemEffect;
 import com.darkxell.common.move.effects.FixedDamageEffect;
 import com.darkxell.common.move.effects.HPRecoilEffect;
 import com.darkxell.common.move.effects.MultipleAttacksEffect;
@@ -71,6 +72,7 @@ public final class MoveEffects
 	public static final MoveEffect Raise_defense = new StatChangeEffect(172, Stat.Defense, 1, 100);
 	public static final MoveEffect Lower_evasion = new StatChangeEffect(179, Stat.Evasiveness, -1, 100);
 	public static final MoveEffect Raise_evasion = new StatChangeEffect(180, Stat.Evasiveness, 1, 100);
+	public static final MoveEffect Drop_item = new DropItemEffect(181);
 	public static final MoveEffect Inflict_protect = new ApplyStatusConditionEffect(192, StatusConditions.Protect, 100);
 	public static final MoveEffect Inflict_taunted = new ApplyStatusConditionEffect(193, StatusConditions.Taunted, 100);
 	public static final MoveEffect Inflict_charging = new ApplyStatusConditionEffect(198, StatusConditions.Charging, 100);

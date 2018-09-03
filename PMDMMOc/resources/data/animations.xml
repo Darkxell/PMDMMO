@@ -129,7 +129,7 @@
   </items>
   <moves>
     <move id="0">
-      <default sprites="none" delaytime="15" sound="move-basicattack"/>
+      <default sprites="none" delaytime="25" sound="move-basicattack"/>
     </move>
     <move id="1" oriented="true">
       <default state="special" width="96" height="96">-1,-1,-1,-1,-1,-1,-1,-1,0,1,2,3,4,5,6,7</default>
@@ -141,7 +141,7 @@
       <default sprites="none" delaytime="25" state="jump"/>
     </move>
     <move id="14">
-      <default sprites="none" delaytime="15" alsoplay="2"/>
+      <default sprites="none" delaytime="25" alsoplay="2"/>
     </move>
     <move id="18">
       <default width="64" height="64" y="50" spriteduration="2" backsprites="yes" state="charge">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15</default>
@@ -167,29 +167,29 @@
       <default width="64" height="64" state="special" spriteduration="3">0,1,2,3,4,5,6,7</default>
     </move>
     <move id="38">
-      <default sprites="none" delaytime="15"/>
+      <default sprites="none" delaytime="25"/>
     </move>
     <move id="40">
       <default sprites="none" pkmnmovement="2tiles"/>
     </move>
     <move id="45">
-      <default sprites="none" delaytime="15" state="slice"/>
+      <default sprites="none" delaytime="25" state="slice"/>
     </move>
     <move id="46">
       <default sprites="none"/>
     </move>
     <move id="50" clone="2"/>
     <move id="52">
-      <default sprites="none" delaytime="15" state="slice"/>
+      <default sprites="none" delaytime="25" state="slice"/>
     </move>
     <move id="53">
       <default width="32" height="32" state="special" spriteduration="3" movement="1tilefacing">0,1,2,3,4,5,6</default>
     </move>
     <move id="66">
-      <default sprites="none" delaytime="15" sound="move-tackle"/>
+      <default sprites="none" delaytime="25" sound="move-tackle"/>
     </move>
     <move id="67">
-      <default sprites="none" delaytime="15" state="tailwhip" sound="move-tailwhip"/>
+      <default sprites="none" delaytime="25" state="tailwhip" sound="move-tailwhip"/>
     </move>
     <move id="84">
       <default sprites="none" alsoplay="2" state="tailwhip"/>
@@ -199,7 +199,7 @@
     </move>
     <move id="97" clone="2"/>
     <move id="98">
-      <default sprites="none" delaytime="15" state="spin"/>
+      <default sprites="none" delaytime="25" state="spin"/>
     </move>
     <move id="101">
       <default width="32" height="24" spriteduration="2" state="special" y="15">0,1,2,3,4,5,6,7,8,8,7,6,5,4,3,2,1,0</default>
@@ -225,17 +225,17 @@
       <default sprites="none" delaytime="25" state="strike"/>
     </move>
     <move id="206">
-      <default sprites="none" delaytime="15" state="attack"/>
+      <default sprites="none" delaytime="25" state="attack"/>
     </move>
     <move id="208" clone="moves/209"/>
     <move id="209">
-      <default sprites="none" delaytime="15" state="spin" alsoplay="2"/>
+      <default sprites="none" delaytime="25" state="spin" alsoplay="2"/>
     </move>
     <move id="210">
-      <default sprites="none" delaytime="15" state="attack"/>
+      <default sprites="none" delaytime="25" state="attack"/>
     </move>
     <move id="212">
-      <default sprites="none" delaytime="15" state="strike"/>
+      <default sprites="none" delaytime="25" state="strike"/>
     </move>
     <move id="220">
       <default width="46" height="14" x="46" state="rearup">-1,-1,-1,0,1,2,3,4,5,6,7</default>
@@ -244,7 +244,7 @@
       <default width="32" height="32" state="withdraw" spriteduration="2">0,1,2,3,4,0</default>
     </move>
     <move id="304">
-      <default sprites="none" delaytime="15" state="emit"/>
+      <default sprites="none" delaytime="25" state="emit"/>
     </move>
     <move id="453">
       <default width="16" height="16" state="special">-1,-1,-1,-1,-1,-1,-1,-1,0,1,2,3,4,5,6,7,8,9,10</default>
@@ -294,10 +294,10 @@
       <default state="special" y="60" width="96" height="80" delaytime="40">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26</default>
     </move>
     <move id="706">
-      <default sprites="none" delaytime="15" state="emit"/>
+      <default sprites="none" delaytime="25" state="emit"/>
     </move>
     <move id="710">
-      <default sprites="none" delaytime="15"/>
+      <default sprites="none" delaytime="25"/>
     </move>
     <move id="713">
       <default y="25" height="32" width="32" state="special" spriteduration="5">0,1,2,3,4,5,6,7,8,9</default>
@@ -306,7 +306,7 @@
     <move id="752" clone="moves/755"/>
     <move id="754" clone="moves/755"/>
     <move id="755">
-      <default sprites="none" state="withdraw" delaytime="15" alsoplay="2"/>
+      <default sprites="none" state="withdraw" delaytime="25" alsoplay="2"/>
     </move>
     <move id="756">
       <default width="72" height="176" sprites="/targets/755" state="strike" y="140">12,13,14,15</default>
@@ -362,15 +362,18 @@
     <move id="954">
       <default width="64" height="64" spriteduration="2" state="spin">0,1,2,3,3,3,3,3,3,2,1,0</default>
     </move>
+    <move id="959">
+      <default sprites="none" state="chop" delaytime="25"/>
+    </move>
     <move id="962">
       <default width="16" height="16" x="16" y="32" state="special" spriteduration="3">0,1,2,3,3,3,4,4,3,3,4,4,3,3,2,1,0</default>
     </move>
     <move id="2002" clone="0"/>
     <move id="-50">
-      <default sprites="none" delaytime="15"/>
+      <default sprites="none" delaytime="25"/>
     </move>
     <move id="-222">
-      <default sprites="none" delaytime="15"/>
+      <default sprites="none" delaytime="25"/>
     </move>
   </moves>
   <movetargets>
@@ -441,6 +444,9 @@
     </movetarget>
     <movetarget id="901">
       <default width="32" height="64" y="45">0,1,2,3,4,5,6,7,8,9,10,11</default>
+    </movetarget>
+    <movetarget id="959">
+      <default width="48" height="56" spriteduration="2">0,1,2,3,4</default>
     </movetarget>
     <movetarget id="962">
       <default width="40" height="16" y="28" spriteduration="5">0,1,0,2,3,2</default>

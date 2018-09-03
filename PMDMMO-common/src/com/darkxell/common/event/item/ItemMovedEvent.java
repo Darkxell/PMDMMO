@@ -64,7 +64,7 @@ public class ItemMovedEvent extends DungeonEvent implements Communicable
 	@Override
 	public boolean isValid()
 	{
-		if (this.mover.type == DungeonPokemonType.RESCUEABLE) return false;
+		if (this.mover != null && this.mover.type == DungeonPokemonType.RESCUEABLE) return false;
 		return super.isValid();
 	}
 
@@ -77,7 +77,7 @@ public class ItemMovedEvent extends DungeonEvent implements Communicable
 	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{
-		String message = "This shouldn't happen...";
+		String message = null;
 		if (this.action == ItemAction.GIVE) message = "inventory.give";
 		else if (this.action == ItemAction.GET)
 		{
@@ -85,8 +85,10 @@ public class ItemMovedEvent extends DungeonEvent implements Communicable
 			else message = "ground.pickup";
 		} else if (this.action == ItemAction.PLACE) message = "ground.place";
 		else if (this.action == ItemAction.TAKE) message = "inventory.taken";
-		this.messages.add(
-				new Message(message).addReplacement("<pokemon>", mover.getNickname()).addReplacement("<item>", this.source.getItem(this.sourceIndex).name()));
+		else if (this.action == ItemAction.AUTO) message = "ground.place.auto";
+		if (message != null)
+			this.messages.add(new Message(message).addReplacement("<pokemon>", this.mover == null ? "null" : this.mover.getNickname().toString())
+					.addReplacement("<item>", this.source.getItem(this.sourceIndex).name()));
 
 		// TODO Put created Item somewhere else if there is no room in Container
 		ItemStack i = this.source.getItem(this.sourceIndex);

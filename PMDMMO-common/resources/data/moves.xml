@@ -347,7 +347,7 @@
   <move id="956" type="16" category="Physical" pp="20" power="2" critical="12" effect="120" damage="true" ginsengable="true" freeze="true" />
   <move id="957" type="16" category="Status" pp="22" power="2" critical="12" effect="65" freeze="true" reflectable="true" sound="true" />
   <move id="958" type="16" category="Status" pp="17" power="2" critical="12" effect="153" freeze="true" reflectable="true" sound="true" />
-  <move id="959" type="16" category="Physical" pp="22" power="4" critical="12" effect="181" freeze="true" />
+  <move id="959" type="16" category="Physical" pp="22" power="4" critical="12" effect="181" damage="true" ginsengable="true" freeze="true" />
   <move id="960" type="16" category="Status" pp="15" power="2" critical="12" range="Room" effect="111" freeze="true" />
   <move id="961" type="16" category="Status" pp="17" power="2" critical="12" range="Self" targets="User" effect="251" freeze="true" />
   <move id="962" type="16" category="Status" pp="20" power="2" critical="12" effect="193" freeze="true" />
