@@ -40,7 +40,9 @@ public final class MoveEffects
 	public static final MoveEffect Inflict_constricted_fire_10 = new ApplyStatusConditionEffect(15, StatusConditions.Constricted_fire, 10);
 	public static final MoveEffect Inflict_confused_10 = new ApplyStatusConditionEffect(28, StatusConditions.Confused, 10);
 	public static final MoveEffect Inflict_paralysis_15 = new ApplyStatusConditionEffect(35, StatusConditions.Paralyzed, 15);
+	public static final MoveEffect Inflict_cringed_10 = new ApplyStatusConditionEffect(36, StatusConditions.Cringed, 10);
 	public static final MoveEffect Inflict_cringed_20 = new ApplyStatusConditionEffect(37, StatusConditions.Cringed, 20);
+	public static final MoveEffect Inflict_cringed_25 = new ApplyStatusConditionEffect(38, StatusConditions.Cringed, 25);
 	public static final MoveEffect Inflict_confused_30 = new ApplyStatusConditionEffect(41, StatusConditions.Confused, 30);
 	public static final MoveEffect Inflict_cringed_35 = new ApplyStatusConditionEffect(47, StatusConditions.Cringed, 35);
 	public static final MoveEffect Fixed_65 = new FixedDamageEffect(49, 65);
@@ -88,6 +90,7 @@ public final class MoveEffects
 	public static final MoveEffect Attack_2to5 = new MultipleAttacksEffect(321, 2, 5);
 	public static final MoveEffect Fixed_bide = new StoredDamageEffect(322);
 	public static final MoveEffect Cant_miss = new CantMissEffect(323);
+	public static final MoveEffect Attack_2 = new MultipleAttacksEffect(324, 2, 2);
 
 	static
 	{

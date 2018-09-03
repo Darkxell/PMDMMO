@@ -163,6 +163,9 @@
     <move id="23">
       <default width="32" height="32" state="shock" sound="move-growth">0,1,2,3,4,5,6,7,8</default>
     </move>
+    <move id="26">
+      <default sprites="none" delaytime="25" state="attack"/>
+    </move>
     <move id="31">
       <default width="64" height="64" state="special" spriteduration="3">0,1,2,3,4,5,6,7</default>
     </move>
@@ -248,6 +251,12 @@
     </move>
     <move id="304">
       <default sprites="none" delaytime="25" state="emit"/>
+    </move>
+    <move id="351">
+      <default sprites="none" delaytime="25" state="strike"/>
+    </move>
+    <move id="352">
+      <default sprites="none" delaytime="25" state="rumble"/>
     </move>
     <move id="453">
       <default width="16" height="16" state="special">-1,-1,-1,-1,-1,-1,-1,-1,0,1,2,3,4,5,6,7,8,9,10</default>
@@ -410,6 +419,9 @@
     <movetarget id="304">
       <default y="52" spriteduration="3" width="40" height="64">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21</default>
     </movetarget>
+    <movetarget id="352">
+      <default width="56" height="48" spriteduration="2">0,1,2,3,4,5</default>
+    </movetarget>
     <movetarget id="453">
       <default spriteduration="5" width="32" height="40">0,1,2,3,2,3,2,3,4,5,5,6,6</default>
     </movetarget>
@@ -457,6 +469,9 @@
   </movetargets>
   <projectiles>
     <projectile id="1046" clone="projectiles/1666"/>
+    <projectile id="1352">
+      <default width="16" height="16" spriteduration="2">0,1,2,3,4,5,6,7</default>
+    </projectile>
     <projectile id="1453">
       <default width="16" height="16" spriteduration="8">0,1</default>
     </projectile>
