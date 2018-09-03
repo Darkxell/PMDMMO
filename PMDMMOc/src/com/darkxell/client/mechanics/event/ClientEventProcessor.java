@@ -444,13 +444,28 @@ public final class ClientEventProcessor extends CommonEventProcessor
 
 	private void processMoveEvent(MoveSelectionEvent event)
 	{
-		AnimationState s = new AnimationState(Persistance.dungeonState);
-		if (Animations.existsMoveAnimation(event.usedMove().move.move()))
-			s.animation = Animations.getMoveAnimation(event.usedMove().user, event.usedMove().move.move(), this.currentAnimEnd);
-		if (s.animation != null)
+		boolean playAnimationLater = Animations.movePlaysForEachTarget(event.usedMove().move.move());
+		if (playAnimationLater)
 		{
-			Persistance.dungeonState.setSubstate(s);
-			this.setState(State.ANIMATING);
+			playAnimationLater = false;
+			for (DungeonEvent e : event.getResultingEvents())
+				if (e instanceof MoveUseEvent)
+				{
+					playAnimationLater = true;
+					break;
+				}
+		}
+
+		if (!playAnimationLater)
+		{
+			AnimationState s = new AnimationState(Persistance.dungeonState);
+			if (Animations.existsMoveAnimation(event.usedMove().move.move()))
+				s.animation = Animations.getMoveAnimation(event.usedMove().user, event.usedMove().move.move(), this.currentAnimEnd);
+			if (s.animation != null)
+			{
+				Persistance.dungeonState.setSubstate(s);
+				this.setState(State.ANIMATING);
+			}
 		}
 
 		PokemonSprite sprite = Persistance.dungeonState.pokemonRenderer.getSprite(event.usedMove().user);
@@ -485,18 +500,24 @@ public final class ClientEventProcessor extends CommonEventProcessor
 			};
 		}
 
+		boolean targetAnim = false;
+
 		AnimationState s = new AnimationState(Persistance.dungeonState);
 		if (Animations.existsTargetAnimation(event.usedMove.move.move()))
 			s.animation = Animations.getMoveTargetAnimation(event.target, event.usedMove.move.move(), listener);
-		if (s.animation != null) listener = new AnimationEndListener() {
-			@Override
-			public void onAnimationEnd(AbstractAnimation animation)
-			{
-				Persistance.dungeonState.setSubstate(s);
-			}
-		};
+		if (s.animation != null)
+		{
+			listener = new AnimationEndListener() {
+				@Override
+				public void onAnimationEnd(AbstractAnimation animation)
+				{
+					Persistance.dungeonState.setSubstate(s);
+				}
+			};
+			targetAnim = true;
+		}
 
-		boolean started = false;
+		boolean projAnim = false;
 
 		ProjectileAnimationState proj = new ProjectileAnimationState(Persistance.dungeonState, event.usedMove.user.tile(),
 				event.target == null ? event.usedMove.user.tile() : event.target.tile());
@@ -504,14 +525,35 @@ public final class ClientEventProcessor extends CommonEventProcessor
 			proj.animation = Animations.getProjectileAnimation(event.usedMove.user, 1000 + event.usedMove.move.moveId(), listener);
 		if (proj.animation != null)
 		{
-			Persistance.dungeonState.setSubstate(proj);
-			this.setState(State.ANIMATING);
-			started = true;
+			listener = new AnimationEndListener() {
+				@Override
+				public void onAnimationEnd(AbstractAnimation animation)
+				{
+					Persistance.dungeonState.setSubstate(proj);
+				}
+			};
+			projAnim = true;
 		}
 
-		if (!started)
+		boolean moveAnim = false;
+
+		AnimationState move = new AnimationState(Persistance.dungeonState);
+		if (Animations.movePlaysForEachTarget(event.usedMove.move.move()) && Animations.existsMoveAnimation(event.usedMove.move.move()))
+			move.animation = Animations.getMoveAnimation(event.usedMove.user, event.usedMove.move.move(), listener);
+		if (move.animation != null)
 		{
-			if (s.animation != null)
+			Persistance.dungeonState.setSubstate(move);
+			this.setState(State.ANIMATING);
+			moveAnim = true;
+		}
+
+		if (!moveAnim)
+		{
+			if (projAnim)
+			{
+				Persistance.dungeonState.setSubstate(proj);
+				this.setState(State.ANIMATING);
+			} else if (targetAnim)
 			{
 				Persistance.dungeonState.setSubstate(s);
 				this.setState(State.ANIMATING);

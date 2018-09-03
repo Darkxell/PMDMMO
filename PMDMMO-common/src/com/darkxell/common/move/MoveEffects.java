@@ -16,6 +16,7 @@ import com.darkxell.common.move.effects.DropItemEffect;
 import com.darkxell.common.move.effects.FixedDamageEffect;
 import com.darkxell.common.move.effects.HPRecoilEffect;
 import com.darkxell.common.move.effects.MultipleAttacksEffect;
+import com.darkxell.common.move.effects.RandomAttacksEffect;
 import com.darkxell.common.move.effects.RecoilEffect;
 import com.darkxell.common.move.effects.ResetStatEffect;
 import com.darkxell.common.move.effects.StatChangeEffect;
@@ -94,6 +95,7 @@ public final class MoveEffects
 	public static final MoveEffect Fixed_bide = new StoredDamageEffect(322);
 	public static final MoveEffect Cant_miss = new CantMissEffect(323);
 	public static final MoveEffect Attack_2 = new MultipleAttacksEffect(324, 2, 2);
+	public static final MoveEffect Random_attacks_3 = new RandomAttacksEffect(325, 3);
 
 	static
 	{

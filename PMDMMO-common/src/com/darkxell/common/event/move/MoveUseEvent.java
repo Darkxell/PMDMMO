@@ -6,11 +6,13 @@ import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
 import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.language.Message;
 
 public class MoveUseEvent extends DungeonEvent
 {
 
+	public Direction direction;
 	private boolean missed = false;
 	/** The Targets of this Move. */
 	public final DungeonPokemon target;
@@ -22,6 +24,7 @@ public class MoveUseEvent extends DungeonEvent
 		super(floor);
 		this.usedMove = move;
 		this.target = target;
+		this.direction = null;
 	}
 
 	@Override
@@ -45,6 +48,7 @@ public class MoveUseEvent extends DungeonEvent
 	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{
+		if (this.direction != null) this.usedMove.user.setFacing(this.direction);
 		this.missed = this.usedMove.move.move().useOn(this.usedMove, this.target, this.floor, this.resultingEvents);
 		if (this.resultingEvents.size() == 0) this.resultingEvents.add(new MessageEvent(this.floor, new Message("move.no_effect")));
 		return super.processServer();

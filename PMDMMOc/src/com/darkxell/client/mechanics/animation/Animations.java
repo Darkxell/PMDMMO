@@ -401,6 +401,12 @@ public final class Animations
 			statuses.put(Integer.parseInt(move.getAttributeValue("id")), move);
 	}
 
+	public static boolean movePlaysForEachTarget(Move move)
+	{
+		Element e = moves.get(move.id);
+		return XMLUtils.getAttribute(e, "playsforeachtarget", true);
+	}
+
 	private Animations()
 	{}
 

@@ -54,6 +54,15 @@ public class MoveEffect implements AffectsPokemon
 		return new MoveEffectCalculator(usedMove, target, floor);
 	}
 
+	protected void createMoves(MoveUse move, Floor floor, ArrayList<DungeonEvent> events)
+	{
+		Move m = move.move.move();
+
+		DungeonPokemon[] pokemon = this.getTargets(m, move.user, floor);
+		for (int i = 0; i < pokemon.length; ++i)
+			this.useOn(move, pokemon[i], floor, events);
+	}
+
 	/** @param move
 	 * @param user - The Pokemon using this Move.
 	 * @param floor - The Floor context.
@@ -211,12 +220,7 @@ public class MoveEffect implements AffectsPokemon
 
 	public void prepareUse(MoveUse move, Floor floor, ArrayList<DungeonEvent> events)
 	{
-		Move m = move.move.move();
-
-		DungeonPokemon[] pokemon = this.getTargets(m, move.user, floor);
-		for (int i = 0; i < pokemon.length; ++i)
-			this.useOn(move, pokemon[i], floor, events);
-
+		this.createMoves(move, floor, events);
 		if (events.size() == 0 && this != MoveEffects.Basic_attack) events.add(new MessageEvent(floor, new Message("move.no_target")));
 	}
 
