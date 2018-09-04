@@ -192,6 +192,9 @@
     <move id="53">
       <default width="32" height="32" state="special" spriteduration="3" movement="1tilefacing">0,1,2,3,4,5,6</default>
     </move>
+    <move id="64">
+      <default sprites="none" alsoplay="2" state="sing" delaytime="15"/>
+    </move>
     <move id="66">
       <default sprites="none" delaytime="25" sound="move-tackle"/>
     </move>
@@ -504,6 +507,9 @@
   </movetargets>
   <projectiles>
     <projectile id="1046" clone="projectiles/1666"/>
+    <projectile id="1064">
+      <default width="16" height="16">0,1</default>
+    </projectile>
     <projectile id="1352">
       <default width="16" height="16" spriteduration="2">0,1,2,3,4,5,6,7</default>
     </projectile>
