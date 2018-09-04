@@ -42,6 +42,7 @@ public final class StatusConditions
 	public static final StatusCondition Taunted = new TauntedStatusCondition(27, true, 10, 11);
 
 	public static final StatusCondition Protect = new ImmuneStatusCondition(40, false, 2, 3);
+	public static final StatusCondition Reflect = new ChangeAttackerStatStatusCondition(41, false, 11, 12, Stat.Attack, 0, .5);
 	public static final StatusCondition Light_screen = new ChangeAttackerStatStatusCondition(42, false, 11, 12, Stat.SpecialAttack, 0, .5);
 
 	public static final StatusCondition Skull_bash = new ChargedMoveStatusCondition(60, false, 1, 1, -50);

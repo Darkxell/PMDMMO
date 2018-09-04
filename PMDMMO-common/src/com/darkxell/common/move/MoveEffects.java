@@ -71,6 +71,7 @@ public final class MoveEffects
 	public static final MoveEffect Drain_50percent = new DrainEffect(90, 50);
 	public static final MoveEffect Recoil_12percent5 = new RecoilEffect(92, 12.5);
 	public static final MoveEffect Inflict_sleepless = new ApplyStatusConditionEffect(102, StatusConditions.Sleepless, 100);
+	public static final MoveEffect Inflict_reflect = new ApplyStatusConditionEffect(105, StatusConditions.Reflect, 100);
 	public static final MoveEffect Inflict_lightscreen = new ApplyStatusConditionEffect(109, StatusConditions.Light_screen, 100);
 	public static final MoveEffect Weather_heal = new WeatherHealEffect(113);
 	public static final MoveEffect Steal_item = new StealItemEffect(120);
