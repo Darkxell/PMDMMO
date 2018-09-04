@@ -97,6 +97,7 @@ public final class MoveEffects
 	public static final MoveEffect Destroy_trap = new DestroyTrapEffect(213);
 	public static final MoveEffect Drops_money_on_kill = new DropsMoneyOnKillEffect(218);
 	public static final MoveEffect Raise_attack_Raise_spattack = new CompoundEffect(221, Raise_attack, Raise_spattack);
+	public static final MoveEffect Lower_attack_2s = new StatChangeEffect(224, Stat.Attack, -2, 100);
 	public static final MoveEffect Lower_speed_30 = new StatChangeEffect(225, Stat.Speed, -1, 30);
 	public static final MoveEffect Inflict_identified_Reset_evasion;
 	public static final MoveEffect Copy_stat_changes = new CopyStatChangesEffect(254);

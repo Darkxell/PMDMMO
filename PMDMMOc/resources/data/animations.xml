@@ -401,6 +401,9 @@
     <move id="962">
       <default width="16" height="16" x="16" y="32" state="special" spriteduration="3">0,1,2,3,3,3,4,4,3,3,4,4,3,3,2,1,0</default>
     </move>
+    <move id="1002">
+      <default sprites="/moves/110" width="48" height="32" state="tailwhip">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25</default>
+    </move>
     <move id="2002" clone="0"/>
     <move id="-50">
       <default sprites="none" delaytime="25"/>
