@@ -54,6 +54,8 @@ public class Move implements Comparable<Move>
 		Front_row,
 		/** The first Pokemon in the user's direction (up to ten tiles), cuts corners. */
 		Line,
+		/** A random ally. */
+		Random_ally,
 		/** All Pokemon in a room (or visible, if not in a room.) */
 		Room,
 		/** Only the user. */

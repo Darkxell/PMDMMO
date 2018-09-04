@@ -83,6 +83,9 @@
     <c id="26">
       <default sound="stat-accuracy_down" sprites="16" width="50" height="50" y="28" backsprites="yes">12,11,10,9,8,7,6,5,4,3,2,1,0</default>
     </c>
+    <c id="50">
+      <default spriteduration="5" width="32" height="32">0,1,2,3,4,5,6</default>
+    </c>
     <c id="100">
       <default width="11" height="16" x="5" y="13">0,0,0,0,0,0,1,2,3,4</default>
     </c>
@@ -197,6 +200,9 @@
     </move>
     <move id="69">
       <default sprites="/targets/220" width="64" height="104" y="90" spriteduration="2" state="attack">0,-1,1,-1,2,-1,2,-1,1,-1,0</default>
+    </move>
+    <move id="76">
+      <default sprites="none" state="sing" delaytime="25"/>
     </move>
     <move id="82" clone="moves/52"/>
     <move id="84">

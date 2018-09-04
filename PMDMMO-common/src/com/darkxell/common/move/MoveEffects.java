@@ -18,10 +18,12 @@ import com.darkxell.common.move.effects.HPDifferenceDamageEffect;
 import com.darkxell.common.move.effects.HPRecoilEffect;
 import com.darkxell.common.move.effects.MultipleAttacksEffect;
 import com.darkxell.common.move.effects.RandomAttacksEffect;
+import com.darkxell.common.move.effects.RandomStatChangeEffect;
 import com.darkxell.common.move.effects.RecoilEffect;
 import com.darkxell.common.move.effects.ResetStatEffect;
 import com.darkxell.common.move.effects.StatChangeEffect;
 import com.darkxell.common.move.effects.StoredDamageEffect;
+import com.darkxell.common.move.effects.SwitchWithUserEffect;
 import com.darkxell.common.move.effects.UserLevelDamageEffect;
 import com.darkxell.common.move.effects.WeatherChangeEffect;
 import com.darkxell.common.move.effects.WeatherHealEffect;
@@ -75,10 +77,11 @@ public final class MoveEffects
 	public static final MoveEffect Create_watersport = new CreateFloorStatusEffect(137, FloorStatuses.Reduce_fire);
 	public static final MoveEffect Lower_defense = new StatChangeEffect(139, Stat.Defense, -1, 100);
 	public static final MoveEffect Inflict_leechSeed = new ApplyStatusConditionEffect(143, StatusConditions.Leech_seed, 100);
+	public static final MoveEffect Inflict_skullbash_Raise_defense;
 	public static final MoveEffect Lower_accuracy = new StatChangeEffect(155, Stat.Accuracy, -1, 100);
 	public static final MoveEffect Cant_ko = new CannotKOEffect(161);
 	public static final MoveEffect Fixed_difference_hp = new HPDifferenceDamageEffect(163);
-	public static final MoveEffect Inflict_skullbash_Raise_defense;
+	public static final MoveEffect Switch_position_Raise_random;
 	public static final MoveEffect Raise_defense = new StatChangeEffect(172, Stat.Defense, 1, 100);
 	public static final MoveEffect Lower_evasion = new StatChangeEffect(179, Stat.Evasiveness, -1, 100);
 	public static final MoveEffect Raise_evasion = new StatChangeEffect(180, Stat.Evasiveness, 1, 100);
@@ -103,6 +106,7 @@ public final class MoveEffects
 
 	static
 	{
+		Switch_position_Raise_random = new CompoundEffect(164, new SwitchWithUserEffect(-1), new RandomStatChangeEffect(-1, 1, 100));
 		Inflict_skullbash_Raise_defense = new CompoundEffect(151, Raise_defense, new ApplyStatusConditionEffect(-1, StatusConditions.Skull_bash, 100));
 		Inflict_identified_Reset_evasion = new CompoundEffect(231, new ResetStatEffect(-1, Stat.Evasiveness),
 				new ApplyStatusConditionEffect(-1, StatusConditions.Identified, 100));

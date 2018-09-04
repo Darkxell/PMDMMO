@@ -16,9 +16,11 @@ import com.darkxell.common.move.Move.MoveCategory;
 import com.darkxell.common.move.Move.MoveRange;
 import com.darkxell.common.pokemon.AffectsPokemon;
 import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.pokemon.DungeonPokemon.DungeonPokemonType;
 import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.status.StatusConditions;
 import com.darkxell.common.util.Direction;
+import com.darkxell.common.util.RandomUtil;
 import com.darkxell.common.util.language.Message;
 
 public class MoveEffect implements AffectsPokemon
@@ -135,6 +137,12 @@ public class MoveEffect implements AffectsPokemon
 					Tile behind = front.adjacentTile(user.facing());
 					if (behind.getPokemon() != null) targets.add(behind.getPokemon());
 				}
+				break;
+
+			case Random_ally:
+				ArrayList<DungeonPokemon> candidates = new ArrayList<>(floor.listPokemon());
+				candidates.removeIf(p -> p == user || !user.isAlliedWith(p) || p.type == DungeonPokemonType.RESCUEABLE);
+				if (!candidates.isEmpty()) targets.add(RandomUtil.random(candidates, floor.random));
 				break;
 
 			case Front:

@@ -61,6 +61,7 @@ import com.darkxell.common.event.pokemon.HealthRestoredEvent;
 import com.darkxell.common.event.pokemon.PokemonRescuedEvent;
 import com.darkxell.common.event.pokemon.StatusConditionCreatedEvent;
 import com.darkxell.common.event.pokemon.StatusConditionEndedEvent;
+import com.darkxell.common.event.pokemon.SwitchedPokemonEvent;
 import com.darkxell.common.event.pokemon.TriggeredAbilityEvent;
 import com.darkxell.common.event.stats.BellyChangedEvent;
 import com.darkxell.common.event.stats.ExperienceGeneratedEvent;
@@ -160,6 +161,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		if (event instanceof PokemonRescuedEvent) this.processRescuedEvent((PokemonRescuedEvent) event);
 		if (event instanceof PokemonSpawnedEvent) this.processSpawnEvent((PokemonSpawnedEvent) event);
 		if (event instanceof PokemonTravelsEvent) this.processTravelEvent((PokemonTravelsEvent) event);
+		if (event instanceof SwitchedPokemonEvent) this.processSwitchEvent((SwitchedPokemonEvent) event);
 		if (event instanceof TurnSkippedEvent) this.processSkipEvent((TurnSkippedEvent) event);
 		if (event instanceof FaintedPokemonEvent) this.processFaintedEvent((FaintedPokemonEvent) event);
 
@@ -678,6 +680,22 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		PokemonSprite sprite = Persistance.dungeonState.pokemonRenderer.getSprite(event.condition.pokemon);
 		if (!event.condition.pokemon.hasStatusCondition(StatusConditions.Asleep) && sprite.defaultState() == PokemonSpriteState.SLEEP)
 			sprite.setDefaultState(PokemonSpriteState.IDLE, false);
+	}
+
+	private void processSwitchEvent(SwitchedPokemonEvent event)
+	{
+		DungeonPokemonRenderer r = Persistance.dungeonState.pokemonRenderer.getRenderer(event.switcher);
+		r.setXY(event.switcher.tile().x, event.switcher.tile().y);
+		r = Persistance.dungeonState.pokemonRenderer.getRenderer(event.target);
+		r.setXY(event.target.tile().x, event.target.tile().y);
+
+		AnimationState s = new AnimationState(Persistance.dungeonState);
+		s.animation = Animations.getCustomAnimation(event.target, Animations.TELEPORT, this.currentAnimEnd);
+		if (s.animation != null)
+		{
+			Persistance.dungeonState.setSubstate(s);
+			this.setState(State.ANIMATING);
+		}
 	}
 
 	private void processTravelEvent(PokemonTravelsEvent event)
