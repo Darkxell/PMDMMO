@@ -269,6 +269,9 @@
     <move id="352">
       <default sprites="none" delaytime="25" state="rumble"/>
     </move>
+    <move id="356">
+      <default sprites="none" delaytime="25" state="sing"/>
+    </move>
     <move id="357" clone="moves/352"/>
     <move id="453">
       <default width="16" height="16" state="special">-1,-1,-1,-1,-1,-1,-1,-1,0,1,2,3,4,5,6,7,8,9,10</default>
@@ -485,6 +488,9 @@
     <projectile id="1046" clone="projectiles/1666"/>
     <projectile id="1352">
       <default width="16" height="16" spriteduration="2">0,1,2,3,4,5,6,7</default>
+    </projectile>
+    <projectile id="1356">
+      <default width="32" height="32" loopsfrom="4">0,1,2,3,4,5,6,7</default>
     </projectile>
     <projectile id="1357" clone="projectiles/1352"/>
     <projectile id="1453">

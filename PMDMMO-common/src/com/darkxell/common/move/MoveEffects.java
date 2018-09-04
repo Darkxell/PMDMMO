@@ -75,6 +75,7 @@ public final class MoveEffects
 	public static final MoveEffect Create_watersport = new CreateFloorStatusEffect(137, FloorStatuses.Reduce_fire);
 	public static final MoveEffect Lower_defense = new StatChangeEffect(139, Stat.Defense, -1, 100);
 	public static final MoveEffect Inflict_leechSeed = new ApplyStatusConditionEffect(143, StatusConditions.Leech_seed, 100);
+	public static final MoveEffect Lower_accuracy = new StatChangeEffect(155, Stat.Accuracy, -1, 100);
 	public static final MoveEffect Cant_ko = new CannotKOEffect(161);
 	public static final MoveEffect Fixed_difference_hp = new HPDifferenceDamageEffect(163);
 	public static final MoveEffect Inflict_skullbash_Raise_defense;
