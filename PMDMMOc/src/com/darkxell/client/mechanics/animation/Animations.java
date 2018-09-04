@@ -405,7 +405,7 @@ public final class Animations
 	{
 		Element e = moves.get(move.id);
 		if (e == null) return false;
-		return XMLUtils.getAttribute(e, "playsforeachtarget", false);
+		return XMLUtils.getAttribute(e.getChild("default", e.getNamespace()), "playsforeachtarget", false);
 	}
 
 	private Animations()
