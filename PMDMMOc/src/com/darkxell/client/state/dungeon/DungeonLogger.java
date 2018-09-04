@@ -80,14 +80,16 @@ public class DungeonLogger
 
 		ArrayList<String> toReturn = new ArrayList<String>();
 		for (int i = 0; i < this.messages.size(); ++i)
-			if (this.messages.get(i) != null) toReturn.addAll(TextRenderer.splitLines(this.messages.get(i).toString(), w - 40));
+			if (this.messages.get(i) != null)
+			{
+				toReturn.addAll(TextRenderer.splitLines(this.messages.get(i).toString(), w - 40));
+				toReturn.add(null);
+			}
 
 		this.messages.clear();
-		for (int i = 0; i < toReturn.size(); ++i)
-		{
-			this.messages.add(new Message(toReturn.get(i), false));
-			if (i < toReturn.size() - 1) this.messages.add(null);
-		}
+		for (String m : toReturn)
+			if (m == null) this.messages.add(null);
+			else this.messages.add(new Message(m, false));
 
 		this.maxDisplayedMessages = this.isFullscreen ? this.messagesWindow.inside().height / (TextRenderer.height() + 5) : 3;
 		if (this.isFullscreen)
@@ -115,9 +117,9 @@ public class DungeonLogger
 			Message s = this.messages.get(i);
 			if (s == null)
 			{
-				g.setColor(Color.WHITE);
+				g.setColor(new Color(255, 255, 255, 128));
 				g.drawLine(0, y - 4, width, y - 4);
-				g.setColor(Color.BLACK);
+				g.setColor(new Color(0, 0, 0, 128));
 				g.drawLine(0, y - 3, width, y - 3);
 			} else
 			{

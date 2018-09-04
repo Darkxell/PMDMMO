@@ -2,7 +2,7 @@ package com.darkxell.common.status.conditions;
 
 import com.darkxell.common.status.StatusCondition;
 
-public class PreventOtherStatusCondition extends StatusCondition
+public class PreventOtherStatusCondition extends PreventStatusCondition
 {
 
 	private final StatusCondition[] prevented;
@@ -13,6 +13,7 @@ public class PreventOtherStatusCondition extends StatusCondition
 		this.prevented = prevented;
 	}
 
+	@Override
 	public boolean prevents(StatusCondition condition)
 	{
 		for (StatusCondition s : this.prevented)

@@ -221,6 +221,9 @@
     <move id="98">
       <default sprites="none" delaytime="25" state="spin"/>
     </move>
+    <move id="100">
+      <default width="64" height="64" y="48" backsprites="yes" state="swing">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17</default>
+    </move>
     <move id="101">
       <default width="32" height="24" spriteduration="2" state="special" y="15">0,1,2,3,4,5,6,7,8,8,7,6,5,4,3,2,1,0</default>
       <north backsprites="only" y="24"/>
@@ -610,6 +613,9 @@
     </status>
     <status id="100">
       <default spriteduration="7" width="8" height="8" y="25">0,1,2,3,4,5,6,7,6,5,4,3,2,1</default>
+    </status>
+    <status id="101">
+      <default spriteduration="4" width="16" height="16" y="24">0,1,2,3,4,5,6,7,8,9,10,11,12</default>
     </status>
   </statuses>
 </animations>

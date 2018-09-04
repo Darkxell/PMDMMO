@@ -16,6 +16,7 @@ import com.darkxell.common.status.conditions.ImmuneStatusCondition;
 import com.darkxell.common.status.conditions.ParalyzedStatusCondition;
 import com.darkxell.common.status.conditions.PeriodicDamageStatusCondition;
 import com.darkxell.common.status.conditions.PreventActionStatusCondition;
+import com.darkxell.common.status.conditions.PreventAilmentStatusCondition;
 import com.darkxell.common.status.conditions.PreventOtherStatusCondition;
 import com.darkxell.common.status.conditions.RemoveTypeImmunitiesStatusCondition;
 import com.darkxell.common.status.conditions.StealsHpStatusCondition;
@@ -55,6 +56,7 @@ public final class StatusConditions
 	public static final StatusCondition Identified = new RemoveTypeImmunitiesStatusCondition(90, true, -1, -1, PokemonType.Ghost);
 
 	public static final StatusCondition Sleepless = new PreventOtherStatusCondition(100, false, 11, 12, Asleep);
+	public static final StatusCondition Safeguard = new PreventAilmentStatusCondition(101, false, 11, 12);
 
 	/** @return The Status Condition with the input ID. */
 	public static StatusCondition find(int id)
