@@ -13,9 +13,9 @@ import com.darkxell.common.status.StatusCondition;
 public class ParalyzedStatusCondition extends StatusCondition
 {
 
-	public ParalyzedStatusCondition(int id, int durationMin, int durationMax)
+	public ParalyzedStatusCondition(int id, boolean isAilment, int durationMin, int durationMax)
 	{
-		super(id, durationMin, durationMax);
+		super(id, isAilment, durationMin, durationMax);
 	}
 
 	@Override

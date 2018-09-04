@@ -13,9 +13,9 @@ public class BoostCritStatusCondition extends StatusCondition
 
 	public final int critBoost;
 
-	public BoostCritStatusCondition(int id, int durationMin, int durationMax, int critBoost)
+	public BoostCritStatusCondition(int id, boolean isAilment, int durationMin, int durationMax, int critBoost)
 	{
-		super(id, durationMin, durationMax);
+		super(id, isAilment, durationMin, durationMax);
 		this.critBoost = critBoost;
 	}
 

@@ -16,9 +16,9 @@ import com.darkxell.common.util.RandomUtil;
 public class ConfusedStatusCondition extends StatusCondition
 {
 
-	public ConfusedStatusCondition(int id, int durationMin, int durationMax)
+	public ConfusedStatusCondition(int id, boolean isAilment, int durationMin, int durationMax)
 	{
-		super(id, durationMin, durationMax);
+		super(id, isAilment, durationMin, durationMax);
 	}
 
 	@Override

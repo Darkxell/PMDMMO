@@ -14,9 +14,9 @@ import com.darkxell.common.util.language.Message;
 public class TauntedStatusCondition extends StatusCondition
 {
 
-	public TauntedStatusCondition(int id, int durationMin, int durationMax)
+	public TauntedStatusCondition(int id, boolean isAilment, int durationMin, int durationMax)
 	{
-		super(id, durationMin, durationMax);
+		super(id, isAilment, durationMin, durationMax);
 	}
 
 	@Override

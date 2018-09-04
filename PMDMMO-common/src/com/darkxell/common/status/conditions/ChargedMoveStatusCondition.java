@@ -14,9 +14,9 @@ public class ChargedMoveStatusCondition extends ChangeAIStatusCondition
 
 	public final int moveID;
 
-	public ChargedMoveStatusCondition(int id, int durationMin, int durationMax, int moveID)
+	public ChargedMoveStatusCondition(int id, boolean isAilment, int durationMin, int durationMax, int moveID)
 	{
-		super(id, durationMin, durationMax);
+		super(id, isAilment, durationMin, durationMax);
 		this.moveID = moveID;
 	}
 

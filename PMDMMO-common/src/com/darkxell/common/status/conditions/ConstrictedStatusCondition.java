@@ -6,9 +6,9 @@ import com.darkxell.common.pokemon.DungeonPokemon;
 public class ConstrictedStatusCondition extends PeriodicDamageStatusCondition
 {
 
-	public ConstrictedStatusCondition(int id, int durationMin, int durationMax, int period, int damage)
+	public ConstrictedStatusCondition(int id, boolean isAilment, int durationMin, int durationMax, int period, int damage)
 	{
-		super(id, durationMin, durationMax, period, damage);
+		super(id, isAilment, durationMin, durationMax, period, damage);
 	}
 	
 	@Override

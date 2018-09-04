@@ -11,9 +11,9 @@ import com.darkxell.common.status.AppliedStatusCondition;
 public class StoreDamageToDoubleStatusCondition extends ChargedMoveStatusCondition
 {
 
-	public StoreDamageToDoubleStatusCondition(int id, int durationMin, int durationMax, int moveID)
+	public StoreDamageToDoubleStatusCondition(int id, boolean isAilment, int durationMin, int durationMax, int moveID)
 	{
-		super(id, durationMin, durationMax, moveID);
+		super(id, isAilment, durationMin, durationMax, moveID);
 	}
 
 	@Override

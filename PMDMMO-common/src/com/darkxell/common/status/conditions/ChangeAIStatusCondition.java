@@ -5,9 +5,9 @@ import com.darkxell.common.status.StatusCondition;
 public class ChangeAIStatusCondition extends StatusCondition
 {
 
-	public ChangeAIStatusCondition(int id, int durationMin, int durationMax)
+	public ChangeAIStatusCondition(int id, boolean isAilment, int durationMin, int durationMax)
 	{
-		super(id, durationMin, durationMax);
+		super(id, isAilment, durationMin, durationMax);
 	}
 
 }

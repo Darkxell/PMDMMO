@@ -7,9 +7,9 @@ public class PreventOtherStatusCondition extends StatusCondition
 
 	private final StatusCondition[] prevented;
 
-	public PreventOtherStatusCondition(int id, int durationMin, int durationMax, StatusCondition... prevented)
+	public PreventOtherStatusCondition(int id, boolean isAilment, int durationMin, int durationMax, StatusCondition... prevented)
 	{
-		super(id, durationMin, durationMax);
+		super(id, isAilment, durationMin, durationMax);
 		this.prevented = prevented;
 	}
 

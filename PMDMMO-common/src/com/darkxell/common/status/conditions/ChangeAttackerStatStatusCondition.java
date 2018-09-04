@@ -19,9 +19,9 @@ public class ChangeAttackerStatStatusCondition extends StatusCondition
 	/** The stat to modify. */
 	public final Stat stat;
 
-	public ChangeAttackerStatStatusCondition(int id, int durationMin, int durationMax, Stat stat, int stage, double multiply)
+	public ChangeAttackerStatStatusCondition(int id, boolean isAilment, int durationMin, int durationMax, Stat stat, int stage, double multiply)
 	{
-		super(id, durationMin, durationMax);
+		super(id, isAilment, durationMin, durationMax);
 		this.stat = stat;
 		this.stage = stage;
 		this.multiply = multiply;

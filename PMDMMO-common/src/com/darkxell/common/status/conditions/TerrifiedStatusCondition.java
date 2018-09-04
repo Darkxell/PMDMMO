@@ -14,9 +14,9 @@ import com.darkxell.common.status.StatusCondition;
 public class TerrifiedStatusCondition extends StatusCondition
 {
 
-	public TerrifiedStatusCondition(int id, int durationMin, int durationMax)
+	public TerrifiedStatusCondition(int id, boolean isAilment, int durationMin, int durationMax)
 	{
-		super(id, durationMin, durationMax);
+		super(id, isAilment, durationMin, durationMax);
 	}
 
 	@Override

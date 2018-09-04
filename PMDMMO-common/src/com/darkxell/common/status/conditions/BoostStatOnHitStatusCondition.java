@@ -15,9 +15,9 @@ public class BoostStatOnHitStatusCondition extends StatusCondition
 
 	public final Stat stat;
 
-	public BoostStatOnHitStatusCondition(int id, int durationMin, int durationMax, Stat stat)
+	public BoostStatOnHitStatusCondition(int id, boolean isAilment, int durationMin, int durationMax, Stat stat)
 	{
-		super(id, durationMin, durationMax);
+		super(id, isAilment, durationMin, durationMax);
 		this.stat = stat;
 	}
 

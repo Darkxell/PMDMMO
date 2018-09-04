@@ -8,9 +8,9 @@ import com.darkxell.common.status.StatusCondition;
 public class CringedStatusCondition extends StatusCondition
 {
 
-	public CringedStatusCondition(int id, int durationMin, int durationMax)
+	public CringedStatusCondition(int id, boolean isAilment, int durationMin, int durationMax)
 	{
-		super(id, durationMin, durationMax);
+		super(id, isAilment, durationMin, durationMax);
 	}
 	
 	@Override

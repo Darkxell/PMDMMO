@@ -18,9 +18,13 @@ import com.darkxell.common.util.language.Message;
 public class StatusCondition extends Status implements AffectsPokemon, DamageSource, DungeonEventListener
 {
 
-	public StatusCondition(int id, int durationMin, int durationMax)
+	/** <code>true</code> if this is an ailment, i.e. if this is an adverse effect on the Pokemon on which it's applied. */
+	public final boolean isAilment;
+
+	public StatusCondition(int id, boolean isAilment, int durationMin, int durationMax)
 	{
 		super(id, durationMin, durationMax);
+		this.isAilment = isAilment;
 		StatusConditions._registry.put(this.id, this);
 	}
 

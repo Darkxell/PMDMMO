@@ -9,6 +9,7 @@ import com.darkxell.common.move.effects.CantMissEffect;
 import com.darkxell.common.move.effects.CompoundEffect;
 import com.darkxell.common.move.effects.CopyStatChangesEffect;
 import com.darkxell.common.move.effects.CreateFloorStatusEffect;
+import com.darkxell.common.move.effects.CureAilmentsEffect;
 import com.darkxell.common.move.effects.DestroyTrapEffect;
 import com.darkxell.common.move.effects.DoubleDamageEffect;
 import com.darkxell.common.move.effects.DrainEffect;
@@ -79,6 +80,7 @@ public final class MoveEffects
 	public static final MoveEffect Create_watersport = new CreateFloorStatusEffect(137, FloorStatuses.Reduce_fire);
 	public static final MoveEffect Lower_defense = new StatChangeEffect(139, Stat.Defense, -1, 100);
 	public static final MoveEffect Inflict_leechSeed = new ApplyStatusConditionEffect(143, StatusConditions.Leech_seed, 100);
+	public static final MoveEffect Cure_status_ailments = new CureAilmentsEffect(145);
 	public static final MoveEffect Inflict_skullbash_Raise_defense;
 	public static final MoveEffect Lower_accuracy = new StatChangeEffect(155, Stat.Accuracy, -1, 100);
 	public static final MoveEffect Cant_ko = new CannotKOEffect(161);

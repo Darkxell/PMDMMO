@@ -12,9 +12,9 @@ import com.darkxell.common.pokemon.DungeonPokemon;
 public class ImmuneStatusCondition extends StatusCondition
 {
 
-	public ImmuneStatusCondition(int id, int durationMin, int durationMax)
+	public ImmuneStatusCondition(int id, boolean isAilment, int durationMin, int durationMax)
 	{
-		super(id, durationMin, durationMax);
+		super(id, isAilment, durationMin, durationMax);
 	}
 
 	@Override

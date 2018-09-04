@@ -22,9 +22,9 @@ public class StealsHpStatusCondition extends StatusCondition
 	/** Number of turns after which the HP is stolen. */
 	public final int turnCycle;
 
-	public StealsHpStatusCondition(int id, int durationMin, int durationMax, int turnCycle, int hp)
+	public StealsHpStatusCondition(int id, boolean isAilment, int durationMin, int durationMax, int turnCycle, int hp)
 	{
-		super(id, durationMin, durationMax);
+		super(id, isAilment, durationMin, durationMax);
 		this.turnCycle = turnCycle;
 		this.hp = hp;
 	}

@@ -404,7 +404,7 @@ public final class Animations
 	public static boolean movePlaysForEachTarget(Move move)
 	{
 		Element e = moves.get(move.id);
-		return XMLUtils.getAttribute(e, "playsforeachtarget", true);
+		return XMLUtils.getAttribute(e, "playsforeachtarget", false);
 	}
 
 	private Animations()

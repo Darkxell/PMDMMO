@@ -14,9 +14,9 @@ public class BoostMoveTypeStatusCondition extends StatusCondition
 
 	public final PokemonType type;
 
-	public BoostMoveTypeStatusCondition(int id, int durationMin, int durationMax, PokemonType type)
+	public BoostMoveTypeStatusCondition(int id, boolean isAilment, int durationMin, int durationMax, PokemonType type)
 	{
-		super(id, durationMin, durationMax);
+		super(id, isAilment, durationMin, durationMax);
 		this.type = type;
 	}
 

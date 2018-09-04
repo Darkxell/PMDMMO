@@ -8,9 +8,9 @@ import com.darkxell.common.status.StatusCondition;
 public class PreventActionStatusCondition extends StatusCondition
 {
 
-	public PreventActionStatusCondition(int id, int durationMin, int durationMax)
+	public PreventActionStatusCondition(int id, boolean isAilment, int durationMin, int durationMax)
 	{
-		super(id, durationMin, durationMax);
+		super(id, isAilment, durationMin, durationMax);
 	}
 
 	@Override

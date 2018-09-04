@@ -20,9 +20,9 @@ public class PeriodicDamageStatusCondition extends StatusCondition
 	/** The number of turns between each damage dealt. */
 	public final int period;
 
-	public PeriodicDamageStatusCondition(int id, int durationMin, int durationMax, int period, int damage)
+	public PeriodicDamageStatusCondition(int id, boolean isAilment, int durationMin, int durationMax, int period, int damage)
 	{
-		super(id, durationMin, durationMax);
+		super(id, isAilment, durationMin, durationMax);
 		this.period = period;
 		this.damage = damage;
 	}
