@@ -22,6 +22,7 @@ import com.darkxell.common.move.effects.RandomStatChangeEffect;
 import com.darkxell.common.move.effects.RecoilEffect;
 import com.darkxell.common.move.effects.ResetStatEffect;
 import com.darkxell.common.move.effects.StatChangeEffect;
+import com.darkxell.common.move.effects.StealItemEffect;
 import com.darkxell.common.move.effects.StoredDamageEffect;
 import com.darkxell.common.move.effects.SwitchWithUserEffect;
 import com.darkxell.common.move.effects.UserLevelDamageEffect;
@@ -71,6 +72,7 @@ public final class MoveEffects
 	public static final MoveEffect Inflict_sleepless = new ApplyStatusConditionEffect(102, StatusConditions.Sleepless, 100);
 	public static final MoveEffect Inflict_lightscreen = new ApplyStatusConditionEffect(109, StatusConditions.Light_screen, 100);
 	public static final MoveEffect Weather_heal = new WeatherHealEffect(113);
+	public static final MoveEffect Steal_item = new StealItemEffect(120);
 	public static final MoveEffect Raise_speed = new StatChangeEffect(121, Stat.Speed, 1, 100);
 	public static final MoveEffect Inflict_bide = new ApplyStatusConditionEffect(123, StatusConditions.Bide, 100);
 	public static final MoveEffect Double_damage = new DoubleDamageEffect(131);

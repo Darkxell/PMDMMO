@@ -33,7 +33,13 @@ public class ItemMovedEvent extends DungeonEvent implements Communicable
 	public ItemMovedEvent(Floor floor, ItemAction action, DungeonPokemon mover, ItemContainer source, int sourceIndex, ItemContainer destination,
 			int destinationIndex)
 	{
-		super(floor, mover);
+		this(floor, action, mover, source, sourceIndex, destination, destinationIndex, true);
+	}
+
+	public ItemMovedEvent(Floor floor, ItemAction action, DungeonPokemon mover, ItemContainer source, int sourceIndex, ItemContainer destination,
+			int destinationIndex, boolean isTurnAction)
+	{
+		super(floor, isTurnAction ? mover : null);
 		this.mover = mover;
 		this.action = action;
 		this.source = source;
@@ -65,6 +71,8 @@ public class ItemMovedEvent extends DungeonEvent implements Communicable
 	public boolean isValid()
 	{
 		if (this.mover != null && this.mover.type == DungeonPokemonType.RESCUEABLE) return false;
+		if (this.source instanceof DungeonPokemon && ((DungeonPokemon) this.source).isFainted()) return false;
+		if (this.destination instanceof DungeonPokemon && ((DungeonPokemon) this.destination).isFainted()) return false;
 		return super.isValid();
 	}
 
@@ -86,6 +94,7 @@ public class ItemMovedEvent extends DungeonEvent implements Communicable
 		} else if (this.action == ItemAction.PLACE) message = "ground.place";
 		else if (this.action == ItemAction.TAKE) message = "inventory.taken";
 		else if (this.action == ItemAction.AUTO) message = "ground.place.auto";
+		else if (this.action == ItemAction.STEAL) message = "inventory.steal";
 		if (message != null)
 			this.messages.add(new Message(message).addReplacement("<pokemon>", this.mover == null ? "null" : this.mover.getNickname().toString())
 					.addReplacement("<item>", this.source.getItem(this.sourceIndex).name()));

@@ -32,6 +32,8 @@ public class Item implements AffectsPokemon
 		PLACE(6, "item.place"),
 		/** Setting the Item as shortcut. */
 		SET(8, "item.set"),
+		/** Item is taken by a Pokemon from another. */
+		STEAL(12, "item.steal"),
 		/** Swapping the Item for another Item in the Inventory. */
 		SWAP(4, "item.swap"),
 		/** Swapping the Item for the Item on the ground. */
