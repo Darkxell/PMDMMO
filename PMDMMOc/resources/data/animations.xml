@@ -281,11 +281,16 @@
     <move id="555">
       <default width="32" height="156" y="143" state="swing" backsprites="yes">0,1,2,3,4,4,4,4,4,5</default>
     </move>
-    <move id="601" oriented="true">
-      <default width="64" height="64" state="special">0,1,2,3,4,5,6,7,8,9,10,11,12,13</default>
-      <north backsprites="only"/>
-      <northeast backsprites="only"/>
-      <northwest backsprites="only"/>
+    <move id="601">
+      <default width="16" height="16" state="special">0,1,2,3,4,5,6,7,8</default>
+      <north backsprites="only" y="26"/>
+      <northeast backsprites="only" x="-6" y="26"/>
+      <east x="-6"/>
+      <southeast x="-6" y="-6"/>
+      <south y="-6"/>
+      <southwest x="26" y="-6"/>
+      <west x="26"/>
+      <northwest backsprites="only" x="26" y="26"/>
     </move>
     <move id="605" clone="moves/901"/>
     <move id="651" clone="moves/901"/>
@@ -344,16 +349,8 @@
     <move id="804">
       <default sprites="none" alsoplay="2" alsoplaydelay="10" overlay="120" statedelay="8" state="swing"/>
     </move>
-    <move id="806" oriented="true">
-      <default state="shoot" width="32" height="32" overlay="120">-1,-1,-1,-1,-1,-1,0,1,2,3,4,5,6,7</default>
-      <north height="64" backsprites="yes"/>
-      <northeast width="64" height="64" backsprites="yes"/>
-      <east width="64"/>
-      <southeast width="64" height="64"/>
-      <south height="64"/>
-      <southwest width="64" height="64"/>
-      <west width="64"/>
-      <northwest width="64" height="64" backsprites="yes"/>
+    <move id="806">
+      <default state="shoot" width="32" height="32" overlay="120" delaytime="15">-1,-1,-1,-1,-1,-1,0,1,2,3,4,5</default>
     </move>
     <move id="808">
       <default width="32" height="156" y="143" state="swing" backsprites="yes">0,1,2,3,4,4,4,4,4,5</default>
@@ -512,6 +509,9 @@
       <west width="32" height="8"/>
       <northwest width="16"/>
     </projectile>
+    <projectile id="1601">
+      <default width="8" height="8" spriteduration="2">0,1</default>
+    </projectile>
     <projectile id="1666" oriented="true">
       <default width="24" height="32" loopsfrom="6" spriteduration="2">0,1,2,3,4,5,6,7,8,9,9,8,7,6</default>
       <north width="32"/>
@@ -521,6 +521,12 @@
     </projectile>
     <projectile id="1705">
       <default width="32" height="16" spriteduration="2">0,1,2,3,4,5,6,7</default>
+    </projectile>
+    <projectile id="1806" oriented="true">
+      <default width="16" height="16" loopsfrom="3">0,1,2,3</default>
+      <south sprites="/projectiles/1806-0"/>
+      <southwest sprites="/projectiles/1806-1"/>
+      <northwest sprites="/projectiles/1806-3"/>
     </projectile>
     <projectile id="1901">
       <default width="32" height="32">0,1,2,3,4,5</default>
