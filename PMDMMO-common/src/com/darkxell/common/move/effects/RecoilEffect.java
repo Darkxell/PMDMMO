@@ -21,9 +21,9 @@ public class RecoilEffect extends MoveEffect
 	}
 
 	@Override
-	public void additionalEffects(MoveUse usedMove, DungeonPokemon target, Floor floor, MoveEffectCalculator calculator, boolean missed, MoveEvents effects)
+	public void additionalEffects(MoveUse usedMove, DungeonPokemon target, String[] flags, Floor floor, MoveEffectCalculator calculator, boolean missed, MoveEvents effects)
 	{
-		super.additionalEffects(usedMove, target, floor, calculator, missed, effects);
+		super.additionalEffects(usedMove, target, flags, floor, calculator, missed, effects);
 		if (!missed)
 		{
 			int damage = -1;

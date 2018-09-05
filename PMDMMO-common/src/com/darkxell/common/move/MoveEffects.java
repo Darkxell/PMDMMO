@@ -18,6 +18,7 @@ import com.darkxell.common.move.effects.FixedDamageEffect;
 import com.darkxell.common.move.effects.HPDifferenceDamageEffect;
 import com.darkxell.common.move.effects.HPRecoilEffect;
 import com.darkxell.common.move.effects.MultipleAttacksEffect;
+import com.darkxell.common.move.effects.MultipleAttacksMissingStopsEffect;
 import com.darkxell.common.move.effects.RandomAttacksEffect;
 import com.darkxell.common.move.effects.RandomStatChangeEffect;
 import com.darkxell.common.move.effects.RecoilEffect;
@@ -77,6 +78,7 @@ public final class MoveEffects
 	public static final MoveEffect Inflict_reflect = new ApplyStatusConditionEffect(105, StatusConditions.Reflect, 100);
 	public static final MoveEffect Inflict_safeguard = new ApplyStatusConditionEffect(107, StatusConditions.Safeguard, 100);
 	public static final MoveEffect Inflict_lightscreen = new ApplyStatusConditionEffect(109, StatusConditions.Light_screen, 100);
+	public static final MoveEffect Attack_5_missingstops = new MultipleAttacksMissingStopsEffect(110, 5, 5);
 	public static final MoveEffect Weather_heal = new WeatherHealEffect(113);
 	public static final MoveEffect Steal_item = new StealItemEffect(120);
 	public static final MoveEffect Raise_speed = new StatChangeEffect(121, Stat.Speed, 1, 100);

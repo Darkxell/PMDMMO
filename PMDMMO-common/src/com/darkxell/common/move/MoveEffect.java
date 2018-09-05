@@ -38,11 +38,13 @@ public class MoveEffect implements AffectsPokemon
 	 * 
 	 * @param usedMove - The Move Use context.
 	 * @param target - The Pokemon targeted by the Move.
+	 * @param flags - The flags of the Event that triggered this use.
 	 * @param floor - The Floor context.
 	 * @param calculator - Object that helps with Damage computation.
 	 * @param missed - <code>true</code> if the Move missed.
 	 * @param effects - The events list. */
-	public void additionalEffects(MoveUse usedMove, DungeonPokemon target, Floor floor, MoveEffectCalculator calculator, boolean missed, MoveEvents effects)
+	public void additionalEffects(MoveUse usedMove, DungeonPokemon target, String[] flags, Floor floor, MoveEffectCalculator calculator, boolean missed,
+			MoveEvents effects)
 	{}
 
 	/** @return <code>true</code> if a Move with this Effect has an effect when it has no targets. */
@@ -175,11 +177,13 @@ public class MoveEffect implements AffectsPokemon
 	 * 
 	 * @param usedMove - The Move Use context.
 	 * @param target - The Pokemon targeted by the Move.
+	 * @param flags - The flags of the Event that triggered this use.
 	 * @param floor - The Floor context.
 	 * @param calculator - Object that helps with Damage computation.
 	 * @param missed - <code>true</code> if the Move missed.
 	 * @param effects - Resulting Events list. */
-	protected void mainEffects(MoveUse usedMove, DungeonPokemon target, Floor floor, MoveEffectCalculator calculator, boolean missed, MoveEvents effects)
+	protected void mainEffects(MoveUse usedMove, DungeonPokemon target, String[] flags, Floor floor, MoveEffectCalculator calculator, boolean missed,
+			MoveEvents effects)
 	{
 		if (target != null)
 		{
@@ -193,13 +197,13 @@ public class MoveEffect implements AffectsPokemon
 					usedMove, target, floor, missed, false, null);
 		}
 
-		this.additionalEffects(usedMove, target, floor, calculator, missed, effects);
+		this.additionalEffects(usedMove, target, flags, floor, calculator, missed, effects);
 	}
 
 	/** Main method called when a Pokemon uses a Move on a target.
 	 * 
 	 * @return <code>true</code> if the Move missed. */
-	public boolean mainUse(MoveUse usedMove, DungeonPokemon target, Floor floor, ArrayList<DungeonEvent> events)
+	public boolean mainUse(MoveUse usedMove, DungeonPokemon target, String[] flags, Floor floor, ArrayList<DungeonEvent> events)
 	{
 		Move move = usedMove.move.move();
 		MoveEffectCalculator calculator = this.buildCalculator(usedMove, target, floor);
@@ -220,7 +224,7 @@ public class MoveEffect implements AffectsPokemon
 			}
 
 			MoveEvents effects = new MoveEvents();
-			this.mainEffects(usedMove, target, floor, calculator, missed, effects);
+			this.mainEffects(usedMove, target, flags, floor, calculator, missed, effects);
 			events.addAll(effects.events);
 		}
 		return missed;

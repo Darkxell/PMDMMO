@@ -80,7 +80,7 @@ public abstract class DungeonEvent
 
 	public void addFlag(String flag)
 	{
-		if (!this.hasFlag(flag)) this.flags += "|" + flag;
+		if (!this.hasFlag(flag)) this.flags += (this.flags.equals("") ? "" : "|") + flag;
 	}
 
 	public void cloneFlags(DungeonEvent event)
@@ -93,6 +93,12 @@ public abstract class DungeonEvent
 	public void consume()
 	{
 		this.isConsumed = true;
+	}
+
+	public String[] flags()
+	{
+		if (this.flags.equals("")) return new String[0];
+		return this.flags.split(",");
 	}
 
 	/** @return The messages that were generated. */

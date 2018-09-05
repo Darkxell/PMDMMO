@@ -23,9 +23,9 @@ public class ApplyStatusConditionEffect extends MoveEffect
 	}
 
 	@Override
-	public void additionalEffects(MoveUse usedMove, DungeonPokemon target, Floor floor, MoveEffectCalculator calculator, boolean missed, MoveEvents effects)
+	public void additionalEffects(MoveUse usedMove, DungeonPokemon target, String[] flags, Floor floor, MoveEffectCalculator calculator, boolean missed, MoveEvents effects)
 	{
-		super.additionalEffects(usedMove, target, floor, calculator, missed, effects);
+		super.additionalEffects(usedMove, target, flags, floor, calculator, missed, effects);
 
 		if (!missed && floor.random.nextDouble() * 100 < this.probability)
 			effects.createEffect(new StatusConditionCreatedEvent(floor, this.status.create(target, usedMove.user, floor.random)), usedMove, target, floor,

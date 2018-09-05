@@ -22,9 +22,10 @@ public class SolarBeamEffect extends MoveEffect
 	}
 
 	@Override
-	protected void mainEffects(MoveUse usedMove, DungeonPokemon target, Floor floor, MoveEffectCalculator calculator, boolean missed, MoveEvents effects)
+	protected void mainEffects(MoveUse usedMove, DungeonPokemon target, String[] flags, Floor floor, MoveEffectCalculator calculator, boolean missed,
+			MoveEvents effects)
 	{
-		if (missed) super.mainEffects(usedMove, target, floor, calculator, missed, effects);
+		if (missed) super.mainEffects(usedMove, target, flags, floor, calculator, missed, effects);
 		else
 		{
 			if (floor.currentWeather().weather == Weather.SUNNY)
