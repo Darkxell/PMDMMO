@@ -16,6 +16,7 @@ import com.darkxell.common.move.effects.DrainEffect;
 import com.darkxell.common.move.effects.DropItemEffect;
 import com.darkxell.common.move.effects.FixedDamageEffect;
 import com.darkxell.common.move.effects.HPDifferenceDamageEffect;
+import com.darkxell.common.move.effects.HPMultiplierEffect;
 import com.darkxell.common.move.effects.HPRecoilEffect;
 import com.darkxell.common.move.effects.MultipleAttacksEffect;
 import com.darkxell.common.move.effects.MultipleAttacksMissingStopsEffect;
@@ -98,6 +99,7 @@ public final class MoveEffects
 	public static final MoveEffect Drop_item = new DropItemEffect(181);
 	public static final MoveEffect Inflict_protect = new ApplyStatusConditionEffect(192, StatusConditions.Protect, 100);
 	public static final MoveEffect Inflict_taunted = new ApplyStatusConditionEffect(193, StatusConditions.Taunted, 100);
+	public static final MoveEffect HP_multiplier = new HPMultiplierEffect(195);
 	public static final MoveEffect Inflict_charging = new ApplyStatusConditionEffect(198, StatusConditions.Charging, 100);
 	public static final MoveEffect Multiply_target_weight = new MultiplyWeightEffect(200);
 	public static final MoveEffect Lower_accuracy_2s = new StatChangeEffect(203, Stat.Accuracy, -2, 100);

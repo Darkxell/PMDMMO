@@ -214,8 +214,11 @@
       <default sprites="none" state="sing" delaytime="25"/>
     </move>
     <move id="82" clone="moves/52"/>
+    <move id="83">
+      <default sprites="none" alsoplay="2" state="spin" delaytime="15"/>
+    </move>
     <move id="84">
-      <default sprites="none" alsoplay="2" state="tailwhip"/>
+      <default sprites="none" alsoplay="2" state="tailwhip" delaytime="25"/>
     </move>
     <move id="96">
       <default width="64" height="64" state="special" spriteduration="4" alsoplay="2">-1,-1,-1,-1,0,1,2,3,4,5,0,1,2,3</default>

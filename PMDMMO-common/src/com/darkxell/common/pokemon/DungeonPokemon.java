@@ -221,9 +221,9 @@ public class DungeonPokemon implements ItemContainer
 	}
 
 	/** @return The percentage of HP left for this Pokemon. */
-	public int getHpPercentage()
+	public double getHpPercentage()
 	{
-		return (int) (this.getHp() * 100 / this.getMaxHP());
+		return this.getHp() * 100d / this.getMaxHP();
 	}
 
 	public ItemStack getItem()
