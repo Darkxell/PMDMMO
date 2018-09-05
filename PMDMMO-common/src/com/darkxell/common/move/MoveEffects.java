@@ -64,6 +64,7 @@ public final class MoveEffects
 	public static final MoveEffect Inflict_enraged = new ApplyStatusConditionEffect(73, StatusConditions.Enraged, 100);
 	public static final MoveEffect Raise_spattack = new StatChangeEffect(76, Stat.SpecialAttack, 1, 100);
 	public static final MoveEffect Raise_spdefense_2s = new StatChangeEffect(77, Stat.SpecialDefense, 2, 100);
+	public static final MoveEffect Raise_defense = new StatChangeEffect(78, Stat.Defense, 1, 100);
 	public static final MoveEffect Raise_defense_2s = new StatChangeEffect(79, Stat.Defense, 2, 100);
 	public static final MoveEffect Lower_speed = new StatChangeEffect(85, Stat.Speed, -1, 100);
 	public static final MoveEffect Lower_attack = new StatChangeEffect(86, Stat.Attack, -1, 100);
@@ -90,7 +91,6 @@ public final class MoveEffects
 	public static final MoveEffect Cant_ko = new CannotKOEffect(161);
 	public static final MoveEffect Fixed_difference_hp = new HPDifferenceDamageEffect(163);
 	public static final MoveEffect Switch_position_Raise_random;
-	public static final MoveEffect Raise_defense = new StatChangeEffect(172, Stat.Defense, 1, 100);
 	public static final MoveEffect Lower_evasion = new StatChangeEffect(179, Stat.Evasiveness, -1, 100);
 	public static final MoveEffect Raise_evasion = new StatChangeEffect(180, Stat.Evasiveness, 1, 100);
 	public static final MoveEffect Drop_item = new DropItemEffect(181);
