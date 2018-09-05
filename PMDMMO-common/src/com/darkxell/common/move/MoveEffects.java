@@ -53,6 +53,7 @@ public final class MoveEffects
 	public static final MoveEffect Inflict_cringed_10 = new ApplyStatusConditionEffect(36, StatusConditions.Cringed, 10);
 	public static final MoveEffect Inflict_cringed_20 = new ApplyStatusConditionEffect(37, StatusConditions.Cringed, 20);
 	public static final MoveEffect Inflict_cringed_25 = new ApplyStatusConditionEffect(38, StatusConditions.Cringed, 25);
+	public static final MoveEffect Inflict_cringed_40 = new ApplyStatusConditionEffect(40, StatusConditions.Cringed, 40);
 	public static final MoveEffect Inflict_confused_30 = new ApplyStatusConditionEffect(41, StatusConditions.Confused, 30);
 	public static final MoveEffect Inflict_cringed_35 = new ApplyStatusConditionEffect(47, StatusConditions.Cringed, 35);
 	public static final MoveEffect Fixed_65 = new FixedDamageEffect(49, 65);

@@ -418,7 +418,7 @@
       <northwest x="32" y="30" backsprites="only"/>
     </move>
     <move id="951" oriented="true">
-      <default width="40" height="48" spriteduration="4" state="swell">0,1,2,3,3</default>
+      <default width="40" height="48" spriteduration="4" state="attack">0,1,2,3,3</default>
       <north backsprites="only" width="32" y="48"/>
       <northeast x="0" backsprites="only" y="48"/>
       <east width="32" x="0"/>
@@ -427,6 +427,17 @@
       <southwest x="40" y="0"/>
       <west width="32" x="32"/>
       <northwest backsprites="only" height="56" x="40" y="48"/>
+    </move>
+    <move id="953" oriented="true">
+      <default width="40" height="48" spriteduration="4" state="attack">0,1,2,3,3,0,1,2,3,3</default>
+      <north sprites="/moves/951-0" backsprites="only" width="32" y="48"/>
+      <northeast sprites="/moves/951-1" x="0" backsprites="only" y="48"/>
+      <east sprites="/moves/951-2" width="32" x="0"/>
+      <southeast sprites="/moves/951-3" width="32" x="0" y="0"/>
+      <south sprites="/moves/951-4" width="32" y="0"/>
+      <southwest sprites="/moves/951-5" x="40" y="0"/>
+      <west sprites="/moves/951-6" width="32" x="32"/>
+      <northwest sprites="/moves/951-7" backsprites="only" height="56" x="40" y="48"/>
     </move>
     <move id="954">
       <default width="64" height="64" spriteduration="2" state="spin">0,1,2,3,3,3,3,3,3,2,1,0</default>
