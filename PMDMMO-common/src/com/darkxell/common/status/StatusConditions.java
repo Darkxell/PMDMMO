@@ -2,6 +2,7 @@ package com.darkxell.common.status;
 
 import java.util.HashMap;
 
+import com.darkxell.common.move.effects.SolarBeamEffect;
 import com.darkxell.common.pokemon.BaseStats.Stat;
 import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.status.conditions.BoostCritStatusCondition;
@@ -47,6 +48,7 @@ public final class StatusConditions
 	public static final StatusCondition Light_screen = new ChangeAttackerStatStatusCondition(42, false, 11, 12, Stat.SpecialAttack, 0, .5);
 
 	public static final StatusCondition Skull_bash = new ChargedMoveStatusCondition(60, false, 1, 1, -50);
+	public static final StatusCondition Solar_beam = new ChargedMoveStatusCondition(61, false, 1, 1, SolarBeamEffect.RESULTING_MOVE);
 	public static final StatusCondition Bide = new StoreDamageToDoubleStatusCondition(69, false, 4, 4, -222);
 
 	public static final StatusCondition Charging = new BoostMoveTypeStatusCondition(70, false, 1, 1, PokemonType.Electric);

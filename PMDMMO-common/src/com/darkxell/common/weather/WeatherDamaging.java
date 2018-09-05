@@ -23,7 +23,7 @@ public class WeatherDamaging extends Weather implements DamageSource
 	/** The number of ticks it takes for this Weather to deal damage. */
 	public final int period;
 
-	public WeatherDamaging(byte id, Color layer, int period, int damage, PokemonType... immunes)
+	public WeatherDamaging(int id, Color layer, int period, int damage, PokemonType... immunes)
 	{
 		super(id, layer);
 		this.period = period;

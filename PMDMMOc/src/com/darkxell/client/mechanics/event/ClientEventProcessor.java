@@ -69,12 +69,13 @@ import com.darkxell.common.event.stats.LevelupEvent;
 import com.darkxell.common.event.stats.SpeedChangedEvent;
 import com.darkxell.common.event.stats.StatChangedEvent;
 import com.darkxell.common.item.effects.FoodItemEffect;
-import com.darkxell.common.move.effects.StoredDamageEffect;
 import com.darkxell.common.player.Inventory;
 import com.darkxell.common.pokemon.BaseStats;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.status.StatusConditions;
+import com.darkxell.common.status.conditions.ChargedMoveStatusCondition;
+import com.darkxell.common.status.conditions.StoreDamageToDoubleStatusCondition;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.language.Message;
 import com.darkxell.common.weather.Weather;
@@ -471,8 +472,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		}
 
 		PokemonSprite sprite = Persistance.dungeonState.pokemonRenderer.getSprite(event.usedMove().user);
-		if (event.usedMove().move.move().effect instanceof StoredDamageEffect && sprite.defaultState() == PokemonSpriteState.WITHDRAW)
-			sprite.setDefaultState(PokemonSpriteState.IDLE, false);
+		if (sprite.defaultState() == PokemonSpriteState.WITHDRAW) sprite.setDefaultState(PokemonSpriteState.IDLE, false);
 	}
 
 	private void processMoveLearnedEvent(MoveLearnedEvent event)
@@ -523,8 +523,9 @@ public final class ClientEventProcessor extends CommonEventProcessor
 
 		ProjectileAnimationState proj = new ProjectileAnimationState(Persistance.dungeonState, event.usedMove.user.tile(),
 				event.target == null ? event.usedMove.user.tile() : event.target.tile());
-		if (Animations.existsProjectileAnimation(1000 + event.usedMove.move.moveId()))
-			proj.animation = Animations.getProjectileAnimation(event.usedMove.user, 1000 + event.usedMove.move.moveId(), listener);
+		int projid = event.usedMove.move.moveId();
+		if (projid >= 0) projid += 1000;
+		if (Animations.existsProjectileAnimation(projid)) proj.animation = Animations.getProjectileAnimation(event.usedMove.user, projid, listener);
 		if (proj.animation != null)
 		{
 			listener = new AnimationEndListener() {
@@ -670,7 +671,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		}
 		if (event.condition.condition == StatusConditions.Asleep)
 			Persistance.dungeonState.pokemonRenderer.getSprite(event.condition.pokemon).setDefaultState(PokemonSpriteState.SLEEP, true);
-		else if (event.condition.condition == StatusConditions.Bide)
+		else if (event.condition.condition instanceof StoreDamageToDoubleStatusCondition || event.condition.condition instanceof ChargedMoveStatusCondition)
 			Persistance.dungeonState.pokemonRenderer.getSprite(event.condition.pokemon).setDefaultState(PokemonSpriteState.WITHDRAW, true);
 	}
 

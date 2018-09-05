@@ -403,8 +403,15 @@ public final class Animations
 
 	public static boolean movePlaysForEachTarget(Move move)
 	{
+		if (move == null) return false;
 		Element e = moves.get(move.id);
 		if (e == null) return false;
+		String clone = XMLUtils.getAttribute(e, "clone", null);
+		if (clone != null)
+		{
+			if (clone.startsWith("moves/")) return movePlaysForEachTarget(MoveRegistry.find(Integer.parseInt(clone.substring("moves/".length()))));
+			return false;
+		}
 		return XMLUtils.getAttribute(e.getChild("default", e.getNamespace()), "playsforeachtarget", false);
 	}
 

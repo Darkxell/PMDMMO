@@ -211,7 +211,7 @@ public class MoveEffect implements AffectsPokemon
 		{
 			if (!missed && this != MoveEffects.Basic_attack && target != null)
 				target.receiveMove(usedMove.move.isLinked() ? DungeonPokemon.LINKED_MOVES : DungeonPokemon.MOVES);
-			if (!missed && move.category != MoveCategory.Status)
+			if (!missed && move.dealsDamage)
 			{
 				if (effectiveness >= PokemonType.SUPER_EFFECTIVE)
 					events.add(new MessageEvent(floor, new Message("move.effectiveness.super").addReplacement("<pokemon>", target.getNickname())));

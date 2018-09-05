@@ -353,7 +353,7 @@ public class DungeonExploration
 				a.resetSlowCounter();
 				acts &= this.currentSubTurn >= GameTurn.SUB_TURNS - speed;
 			} else acts &= a.slowActs(speed);
-			for (AppliedStatusCondition condition : a.pokemon.activeStatusConditions())
+			if (a.actionThisSubturn() != Action.ACTED) for (AppliedStatusCondition condition : a.pokemon.activeStatusConditions())
 				condition.setActedWhileApplied();
 			if (acts) return;
 		}

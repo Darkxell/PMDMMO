@@ -334,14 +334,13 @@ public class Dungeon implements Comparable<Dungeon>
 	{
 		Weather w = Weather.CLEAR;
 
-		for (Integer id : this.weather.keySet())
-			if (this.weather.get(id).contains(floor))
-			{
-				w = Weather.find(id);
-				if (w == null) w = Weather.CLEAR;
-				else return w;
-			}
+		ArrayList<Weather> candidates = new ArrayList<>();
 
-		return w;
+		for (Integer id : this.weather.keySet())
+			if (id == Weather.random) candidates.add(Weather.random(random));
+			else if (this.weather.get(id).contains(floor)) candidates.add(Weather.find(id));
+
+		if (candidates.isEmpty()) return w;
+		return RandomUtil.random(candidates, random);
 	}
 }

@@ -268,7 +268,7 @@
   <move id="704" type="11" category="Physical" pp="17" power="7" accuracy="87" critical="12" effect="100" damage="true" ginsengable="true" freeze="true" />
   <move id="705" type="11" category="Physical" pp="17" power="4" accuracy="84" critical="50" range="Line" effect="1" damage="true" ginsengable="true" freeze="true" />
   <move id="706" type="11" category="Status" pp="19" power="2" accuracy="78" critical="12" range="Around" effect="52" freeze="true" reflectable="true" />
-  <move id="707" type="11" category="Special" pp="9" power="24" critical="12" effect="97" range="Front_corners" freeze="true" damage="true" ginsengable="true" />
+  <move id="707" type="11" category="Special" pp="9" power="24" critical="12" effect="97" range="Self" targets="User" ginsengable="true" />
   <move id="708" type="11" category="Status" pp="19" power="2" critical="12" range="Room" effect="52" freeze="true" reflectable="true" />
   <move id="709" type="11" category="Status" pp="17" power="2" accuracy="78" critical="12" range="Around" effect="50" freeze="true" reflectable="true" />
   <move id="710" type="11" category="Physical" pp="15" power="8" accuracy="88" critical="12" damage="true" ginsengable="true" freeze="true" />
@@ -360,4 +360,5 @@
   <move id="2002" type="19" category="Physical" pp="1" power="30" accuracy="100" critical="12" effect="5" damage="true" freeze="true" />
   <move id="-50" type="0" category="Physical" pp="15" power="10" accuracy="125" effect="131" damage="true" critical="12" />
   <move id="-222" type="1" category="Physical" pp="15" power="1" accuracy="100" effect="322" damage="true" critical="12" freeze="true" />
+  <move id="-707" type="11" category="Special" pp="9" power="24" critical="12" effect="131" range="Front_corners" freeze="true" damage="true" ginsengable="true" />
 </moves>

@@ -52,16 +52,16 @@ public class MoveSelectionEvent extends DungeonEvent implements Communicable
 			return this.experienceEvent;
 		}
 
-		/** @return True if the Move's type is the same as one of the user's types. */
-		public boolean isStab()
-		{
-			return this.user.usedPokemon.species().type1 == this.move.move().type || this.user.usedPokemon.species().type2 == this.move.move().type;
-		}
-
 		@Override
 		public boolean isOver()
 		{
 			return true;
+		}
+
+		/** @return True if the Move's type is the same as one of the user's types. */
+		public boolean isStab()
+		{
+			return this.user.usedPokemon.species().type1 == this.move.move().type || this.user.usedPokemon.species().type2 == this.move.move().type;
 		}
 	}
 
@@ -75,12 +75,17 @@ public class MoveSelectionEvent extends DungeonEvent implements Communicable
 
 	public MoveSelectionEvent(Floor floor, LearnedMove move, DungeonPokemon user)
 	{
-		this(floor, move, user, user.facing());
+		this(floor, move, user, user.facing(), true);
 	}
 
 	public MoveSelectionEvent(Floor floor, LearnedMove move, DungeonPokemon user, Direction direction)
 	{
-		super(floor, user);
+		this(floor, move, user, direction, true);
+	}
+
+	public MoveSelectionEvent(Floor floor, LearnedMove move, DungeonPokemon user, Direction direction, boolean consumesTurn)
+	{
+		super(floor, consumesTurn ? user : null);
 		this.usedMove = new MoveUse(floor, move, user, direction);
 
 		if (this.usedMove.move.move().hasUseMessage()) this.messages

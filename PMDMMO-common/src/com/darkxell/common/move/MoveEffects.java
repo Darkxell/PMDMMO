@@ -22,6 +22,7 @@ import com.darkxell.common.move.effects.RandomAttacksEffect;
 import com.darkxell.common.move.effects.RandomStatChangeEffect;
 import com.darkxell.common.move.effects.RecoilEffect;
 import com.darkxell.common.move.effects.ResetStatEffect;
+import com.darkxell.common.move.effects.SolarBeamEffect;
 import com.darkxell.common.move.effects.StatChangeEffect;
 import com.darkxell.common.move.effects.StealItemEffect;
 import com.darkxell.common.move.effects.StoredDamageEffect;
@@ -70,6 +71,7 @@ public final class MoveEffects
 	public static final MoveEffect Fixed_userlevel = new UserLevelDamageEffect(89);
 	public static final MoveEffect Drain_50percent = new DrainEffect(90, 50);
 	public static final MoveEffect Recoil_12percent5 = new RecoilEffect(92, 12.5);
+	public static final MoveEffect Solarbeam = new SolarBeamEffect(97);
 	public static final MoveEffect Inflict_sleepless = new ApplyStatusConditionEffect(102, StatusConditions.Sleepless, 100);
 	public static final MoveEffect Inflict_reflect = new ApplyStatusConditionEffect(105, StatusConditions.Reflect, 100);
 	public static final MoveEffect Inflict_safeguard = new ApplyStatusConditionEffect(107, StatusConditions.Safeguard, 100);
