@@ -235,7 +235,7 @@
   <move id="603" type="9" category="Physical" pp="13" power="14" critical="12" effect="7" damage="true" ginsengable="true" />
   <move id="604" type="9" category="Special" pp="19" power="4" accuracy="73" critical="12" effect="15" damage="true" ginsengable="true" />
   <move id="605" type="9" category="Special" pp="12" power="18" accuracy="88" critical="12" range="Line" effect="7" damage="true" ginsengable="true" />
-  <move id="606" type="9" category="Physical" pp="11" power="12" accuracy="88" critical="12" range="Front_corners" effect="6" damage="true" ginsengable="true" />
+  <move id="606" type="9" category="Physical" pp="11" power="12" accuracy="88" critical="12" range="Front_corners" effect="7" damage="true" ginsengable="true" />
   <move id="607" type="9" category="Physical" pp="10" power="20" accuracy="88" critical="12" effect="33" damage="true" ginsengable="true" freeze="true" />
   <move id="608" type="9" category="Status" pp="12" power="2" accuracy="125" critical="12" range="Ambient" targets="None" effect="217" freeze="true" />
   <move id="609" type="9" category="Physical" pp="8" power="30" accuracy="84" critical="12" range="Around" effect="129" damage="true" ginsengable="true" sound="true" />
