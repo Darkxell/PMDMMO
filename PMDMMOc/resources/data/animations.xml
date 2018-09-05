@@ -358,6 +358,9 @@
     <move id="713">
       <default y="25" height="32" width="32" state="special" spriteduration="5">0,1,2,3,4,5,6,7,8,9</default>
     </move>
+    <move id="720">
+      <default width="96" height="80" state="special" delaytime="40" y="60">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26</default>
+    </move>
     <move id="751" clone="moves/755"/>
     <move id="752" clone="moves/755"/>
     <move id="754" clone="moves/755"/>
@@ -569,6 +572,9 @@
     </projectile>
     <projectile id="1705">
       <default width="32" height="16" spriteduration="2">0,1,2,3,4,5,6,7</default>
+    </projectile>
+    <projectile id="1720">
+      <default width="48" height="24">0,1,2,3,4,5,6,7,8</default>
     </projectile>
     <projectile id="1806" oriented="true">
       <default width="16" height="16" loopsfrom="3">0,1,2,3</default>
