@@ -15,6 +15,9 @@ public abstract class SpritesetAnimationMovement
 				
 			case "diagonal":
 				return new DiagonalAnimationMovement(parent);
+				
+			case "upanddown":
+				return new UpAndDownAnimationMovement(parent);
 
 			default:
 				return null;

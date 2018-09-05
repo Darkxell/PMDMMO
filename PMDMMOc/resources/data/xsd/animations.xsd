@@ -49,6 +49,7 @@
 							<xs:enumeration value="null"/>
 							<xs:enumeration value="1tilefacing"/>
 							<xs:enumeration value="diagonal"/>
+							<xs:enumeration value="upanddown"/>
 						</xs:restriction>
 					</xs:simpleType>
 				</xs:attribute>
