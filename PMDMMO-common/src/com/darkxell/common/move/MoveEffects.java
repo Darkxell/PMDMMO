@@ -24,6 +24,7 @@ import com.darkxell.common.move.effects.RandomAttacksEffect;
 import com.darkxell.common.move.effects.RandomStatChangeEffect;
 import com.darkxell.common.move.effects.RecoilEffect;
 import com.darkxell.common.move.effects.ResetStatEffect;
+import com.darkxell.common.move.effects.SelfStatChangeEffect;
 import com.darkxell.common.move.effects.SolarBeamEffect;
 import com.darkxell.common.move.effects.StatChangeEffect;
 import com.darkxell.common.move.effects.StealItemEffect;
@@ -61,6 +62,8 @@ public final class MoveEffects
 	public static final MoveEffect Inflict_asleep = new ApplyStatusConditionEffect(52, StatusConditions.Asleep, 100);
 	public static final MoveEffect Inflict_poison = new ApplyStatusConditionEffect(58, StatusConditions.Poisoned, 100);
 	public static final MoveEffect Inflict_paralysis = new ApplyStatusConditionEffect(59, StatusConditions.Paralyzed, 100);
+	public static final MoveEffect If_hits_lower_attack_defense = new CompoundEffect(62, new SelfStatChangeEffect(-1, Stat.Attack, -1, 100),
+			new SelfStatChangeEffect(-1, Stat.Defense, -1, 100));
 	public static final MoveEffect Inflict_confused = new ApplyStatusConditionEffect(64, StatusConditions.Confused, 100);
 	public static final MoveEffect Raise_attack_Raise_defense;
 	public static final MoveEffect Raise_attack = new StatChangeEffect(72, Stat.Attack, 1, 100);
