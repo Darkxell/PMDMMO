@@ -182,6 +182,9 @@
     <move id="38">
       <default sprites="none" delaytime="25"/>
     </move>
+    <move id="39">
+      <default sprites="none" delaytime="25" state="spin"/>
+    </move>
     <move id="40">
       <default sprites="none" pkmnmovement="2tiles"/>
     </move>
