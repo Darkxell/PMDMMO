@@ -21,16 +21,18 @@ public class MoveEffectCalculator
 {
 
 	private double effectiveness = -1;
+	public final String[] flags;
 	public final Floor floor;
 	public final PropertyModificator modificator = new PropertyModificator();
 	public final MoveUse move;
 	public final DungeonPokemon target;
 
-	public MoveEffectCalculator(MoveUse move, DungeonPokemon target, Floor floor)
+	public MoveEffectCalculator(MoveUse move, DungeonPokemon target, Floor floor, String[] flags)
 	{
 		this.move = move;
 		this.target = target;
 		this.floor = floor;
+		this.flags = flags;
 
 		this.modificator.add(this.move().effect);
 		this.modificator.addUser(this.user().ability());
@@ -95,7 +97,7 @@ public class MoveEffectCalculator
 
 		// Damage randomness
 		damage *= (9 - floor.random.nextDouble() * 2) / 8;
-		
+
 		damage = this.modificator.applyDamageModifications(damage, this.move, this.target, this.floor, events);
 
 		return (int) Math.round(damage);
@@ -128,7 +130,7 @@ public class MoveEffectCalculator
 			events.add(new MessageEvent(this.floor, new Message("move.critical")));
 		}
 
-		multiplier *= this.modificator.damageMultiplier(move, target, floor, events);
+		multiplier *= this.modificator.damageMultiplier(this.move, this.target, this.floor, this.flags, events);
 		return multiplier;
 	}
 

@@ -16,9 +16,9 @@ public class UserLevelDamageEffect extends MoveEffect
 	}
 	
 	@Override
-	protected MoveEffectCalculator buildCalculator(MoveUse usedMove, DungeonPokemon target, Floor floor)
+	protected MoveEffectCalculator buildCalculator(MoveUse usedMove, DungeonPokemon target, Floor floor, String[] flags)
 	{
-		return new UserLevelDamageCalculator(usedMove, target, floor);
+		return new UserLevelDamageCalculator(usedMove, target, floor, flags);
 	}
 
 }

@@ -73,11 +73,11 @@ public class PropertyModificator
 	}
 
 	/** Calls {@link AffectsPokemon#damageMultiplier} on each affecter. */
-	public double damageMultiplier(MoveUse move, DungeonPokemon target, Floor floor, ArrayList<DungeonEvent> events)
+	public double damageMultiplier(MoveUse move, DungeonPokemon target, Floor floor, String[] flags, ArrayList<DungeonEvent> events)
 	{
 		double multiplier = 1;
 		for (AffectsPokemon affecter : this.affecters)
-			multiplier *= affecter.damageMultiplier(move, target, this.users.contains(affecter), floor, events);
+			multiplier *= affecter.damageMultiplier(move, target, this.users.contains(affecter), floor, flags, events);
 		return multiplier;
 	}
 

@@ -11,9 +11,9 @@ import com.darkxell.common.pokemon.DungeonPokemon;
 public class UserLevelDamageCalculator extends MoveEffectCalculator
 {
 
-	public UserLevelDamageCalculator(MoveUse move, DungeonPokemon target, Floor floor)
+	public UserLevelDamageCalculator(MoveUse move, DungeonPokemon target, Floor floor, String[] flags)
 	{
-		super(move, target, floor);
+		super(move, target, floor, flags);
 	}
 
 	@Override

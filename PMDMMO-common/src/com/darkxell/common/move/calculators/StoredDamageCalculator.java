@@ -14,9 +14,9 @@ import com.darkxell.common.util.Logger;
 public class StoredDamageCalculator extends MoveEffectCalculator
 {
 
-	public StoredDamageCalculator(MoveUse move, DungeonPokemon target, Floor floor)
+	public StoredDamageCalculator(MoveUse move, DungeonPokemon target, Floor floor, String[] flags)
 	{
-		super(move, target, floor);
+		super(move, target, floor, flags);
 	}
 
 	@Override

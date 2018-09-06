@@ -17,7 +17,7 @@ public class DoubleDamageEffect extends MoveEffect
 	}
 
 	@Override
-	public double damageMultiplier(MoveUse move, DungeonPokemon target, boolean isUser, Floor floor, ArrayList<DungeonEvent> events)
+	public double damageMultiplier(MoveUse move, DungeonPokemon target, boolean isUser, Floor floor, String[] flags, ArrayList<DungeonEvent> events)
 	{
 		return 2;
 	}

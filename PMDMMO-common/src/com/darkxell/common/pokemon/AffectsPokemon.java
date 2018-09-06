@@ -24,21 +24,6 @@ import com.darkxell.common.pokemon.BaseStats.Stat;
 public interface AffectsPokemon
 {
 
-	/** Called when a Pokemon uses a damaging move. Modifies the damage output.
-	 * 
-	 * @param damage - The damage to be dealt.
-	 * @param move - The Move use context.
-	 * @param target - The Pokemon the move was used on.
-	 * @param isUser - <code>true</code> if this Object belongs to the Move's user (if it's its ability or an item it holds).
-	 * @param events - The current Events being generated.
-	 * 
-	 * @return The new damage with modifications applied by this object. */
-	public default double applyDamageModifications(double damage, MoveUse move, DungeonPokemon target, boolean isUser, Floor floor,
-			ArrayList<DungeonEvent> events)
-	{
-		return damage;
-	}
-
 	/** Called when a Pokemon uses a damaging move. Modifies the critical hit rate.
 	 * 
 	 * @param critical - The critical hit rate before this object applies its modifications.
@@ -52,6 +37,21 @@ public interface AffectsPokemon
 			ArrayList<DungeonEvent> events)
 	{
 		return critical;
+	}
+
+	/** Called when a Pokemon uses a damaging move. Modifies the damage output.
+	 * 
+	 * @param damage - The damage to be dealt.
+	 * @param move - The Move use context.
+	 * @param target - The Pokemon the move was used on.
+	 * @param isUser - <code>true</code> if this Object belongs to the Move's user (if it's its ability or an item it holds).
+	 * @param events - The current Events being generated.
+	 * 
+	 * @return The new damage with modifications applied by this object. */
+	public default double applyDamageModifications(double damage, MoveUse move, DungeonPokemon target, boolean isUser, Floor floor,
+			ArrayList<DungeonEvent> events)
+	{
+		return damage;
 	}
 
 	/** Called when a Pokemon uses a damaging move. Modifies the value of the input effectiveness.
@@ -106,10 +106,10 @@ public interface AffectsPokemon
 	 * @param target - The Pokemon the move was used on.
 	 * @param isUser - <code>true</code> if this Object belongs to the Move's user (if it's its ability or an item it holds).
 	 * @param floor - The Floor context.
+	 * @param flags - The flags stored in the Event that triggered this Move use.
 	 * @param events - The current Events being generated.
-	 * 
 	 * @return The multiplier to add to the final damage value (damage *= returned_multiplier). */
-	public default double damageMultiplier(MoveUse move, DungeonPokemon target, boolean isUser, Floor floor, ArrayList<DungeonEvent> events)
+	public default double damageMultiplier(MoveUse move, DungeonPokemon target, boolean isUser, Floor floor, String[] flags, ArrayList<DungeonEvent> events)
 	{
 		return 1;
 	}

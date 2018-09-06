@@ -19,9 +19,9 @@ public class FixedDamageEffect extends MoveEffect
 	}
 	
 	@Override
-	protected MoveEffectCalculator buildCalculator(MoveUse usedMove, DungeonPokemon target, Floor floor)
+	protected MoveEffectCalculator buildCalculator(MoveUse usedMove, DungeonPokemon target, Floor floor, String[] flags)
 	{
-		return new FixedDamageCalculator(usedMove, target, floor, 65);
+		return new FixedDamageCalculator(usedMove, target, floor, flags, 65);
 	}
 
 }

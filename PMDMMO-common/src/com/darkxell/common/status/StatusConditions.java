@@ -19,6 +19,7 @@ import com.darkxell.common.status.conditions.PeriodicDamageStatusCondition;
 import com.darkxell.common.status.conditions.PreventActionStatusCondition;
 import com.darkxell.common.status.conditions.PreventAilmentStatusCondition;
 import com.darkxell.common.status.conditions.PreventOtherStatusCondition;
+import com.darkxell.common.status.conditions.RedirectAttacksStatusCondition;
 import com.darkxell.common.status.conditions.RemoveTypeImmunitiesStatusCondition;
 import com.darkxell.common.status.conditions.StealsHpStatusCondition;
 import com.darkxell.common.status.conditions.StoreDamageToDoubleStatusCondition;
@@ -46,6 +47,7 @@ public final class StatusConditions
 	public static final StatusCondition Protect = new ImmuneStatusCondition(40, false, 2, 3);
 	public static final StatusCondition Reflect = new ChangeAttackerStatStatusCondition(41, false, 11, 12, Stat.Attack, 0, .5);
 	public static final StatusCondition Light_screen = new ChangeAttackerStatStatusCondition(42, false, 11, 12, Stat.SpecialAttack, 0, .5);
+	public static final StatusCondition Mirror_move = new RedirectAttacksStatusCondition(43, false, 2, 3, .5);
 
 	public static final StatusCondition Skull_bash = new ChargedMoveStatusCondition(60, false, 1, 1, -50);
 	public static final StatusCondition Solar_beam = new ChargedMoveStatusCondition(61, false, 1, 1, SolarBeamEffect.RESULTING_MOVE);

@@ -23,7 +23,7 @@ public class AbilityTypeBoost extends Ability
 	}
 
 	@Override
-	public double damageMultiplier(MoveUse move, DungeonPokemon target, boolean isUser, Floor floor, ArrayList<DungeonEvent> events)
+	public double damageMultiplier(MoveUse move, DungeonPokemon target, boolean isUser, Floor floor, String[] flags, ArrayList<DungeonEvent> events)
 	{
 		if (isUser && move.user.getHpPercentage() < 25 && move.move.move().type == this.type)
 		{

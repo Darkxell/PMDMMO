@@ -115,6 +115,7 @@ public final class MoveEffects
 	public static final MoveEffect Lower_attack_2s = new StatChangeEffect(224, Stat.Attack, -2, 100);
 	public static final MoveEffect Lower_speed_30 = new StatChangeEffect(225, Stat.Speed, -1, 30);
 	public static final MoveEffect Inflict_identified_Reset_evasion;
+	public static final MoveEffect Inflict_mirrormove = new ApplyStatusConditionEffect(245, StatusConditions.Mirror_move, 100);
 	public static final MoveEffect Copy_stat_changes = new CopyStatChangesEffect(254);
 	public static final MoveEffect Attack_2to5 = new MultipleAttacksEffect(321, 2, 5);
 	public static final MoveEffect Fixed_bide = new StoredDamageEffect(322);

@@ -22,9 +22,9 @@ public class StoredDamageEffect extends MoveEffect
 	}
 
 	@Override
-	protected MoveEffectCalculator buildCalculator(MoveUse usedMove, DungeonPokemon target, Floor floor)
+	protected MoveEffectCalculator buildCalculator(MoveUse usedMove, DungeonPokemon target, Floor floor, String[] flags)
 	{
-		return new StoredDamageCalculator(usedMove, target, floor);
+		return new StoredDamageCalculator(usedMove, target, floor, flags);
 	}
 
 	@Override

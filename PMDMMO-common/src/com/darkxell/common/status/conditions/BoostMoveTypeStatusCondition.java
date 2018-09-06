@@ -21,10 +21,10 @@ public class BoostMoveTypeStatusCondition extends StatusCondition
 	}
 
 	@Override
-	public double damageMultiplier(MoveUse move, DungeonPokemon target, boolean isUser, Floor floor, ArrayList<DungeonEvent> events)
+	public double damageMultiplier(MoveUse move, DungeonPokemon target, boolean isUser, Floor floor, String[] flags, ArrayList<DungeonEvent> events)
 	{
 		if (isUser && move.move.move().type == this.type) return 2;
-		return super.damageMultiplier(move, target, isUser, floor, events);
+		return super.damageMultiplier(move, target, isUser, floor, flags, events);
 	}
 
 }
