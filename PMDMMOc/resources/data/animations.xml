@@ -362,6 +362,7 @@
     <move id="702">
       <default spriteduration="1" state="special" width="16" height="16" movement="1tilefacing">0,1,0,1,0,1,0,1,0,1</default>
     </move>
+    <move id="703" clone="moves/701"/>
     <move id="705">
       <default state="special" y="60" width="96" height="80" delaytime="40">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26</default>
     </move>
@@ -374,6 +375,7 @@
     <move id="710">
       <default sprites="none" delaytime="25"/>
     </move>
+    <move id="712" clone="moves/701"/>
     <move id="713">
       <default y="25" height="32" width="32" state="sing" spriteduration="5">0,1,2,3,4,5,6,7,8,9</default>
     </move>

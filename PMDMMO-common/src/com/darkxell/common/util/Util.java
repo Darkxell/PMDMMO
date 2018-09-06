@@ -26,7 +26,7 @@ public class Util
 		player.getTeamLeader().setMove(0, new LearnedMove(352));
 		player.getTeamLeader().setMove(2, new LearnedMove(50));
 		player.getTeamLeader().setMove(2, new LearnedMove(404));
-		player.getTeamLeader().setMove(3, new LearnedMove(955));
+		player.getTeamLeader().setMove(3, new LearnedMove(806));
 		// player.getTeamLeader().getData().abilityid = 56;
 
 		for (int i = 1; i < 5; ++i)
