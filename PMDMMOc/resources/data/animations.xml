@@ -278,6 +278,7 @@
     <move id="210">
       <default sprites="none" delaytime="25" state="attack"/>
     </move>
+    <move id="211" clone="moves/10"/>
     <move id="212">
       <default sprites="none" delaytime="25" state="strike"/>
     </move>
