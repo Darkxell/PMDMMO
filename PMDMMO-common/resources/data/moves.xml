@@ -190,7 +190,7 @@
   <move id="356" type="4" category="Status" pp="22" power="2" critical="12" effect="155" range="Front_corners" freeze="true" reflectable="true" />
   <move id="357" type="4" category="Physical" pp="12" power="12" accuracy="70" critical="2" effect="321" range="Front_corners" damage="true" ginsengable="true" freeze="true" />
   <move id="358" type="4" category="Physical" pp="15" power="2" critical="12" range="Room" targets="Others" effect="150" damage="true" freeze="true" />
-  <move id="359" type="4" category="Special" pp="16" power="4" accuracy="84" critical="12" range="Front_corners" effect="154" damage="true" ginsengable="true" freeze="true" />
+  <move id="359" type="4" category="Special" pp="16" power="4" accuracy="84" critical="12" range="Front_corners" effect="155" damage="true" ginsengable="true" freeze="true" />
   <move id="360" type="4" category="Status" pp="22" power="2" accuracy="125" critical="12" range="Ambient" targets="None" effect="144" freeze="true" />
   <move id="361" type="4" category="Special" pp="13" power="12" accuracy="65" critical="12" range="Front_corners" effect="63" damage="true" ginsengable="true" freeze="true" />
   <move id="362" type="4" category="Status" pp="17" power="2" critical="12" range="Ambient" targets="None" effect="137" freeze="true" />

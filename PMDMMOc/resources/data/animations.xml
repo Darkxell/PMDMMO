@@ -311,6 +311,9 @@
       <default sprites="none" delaytime="25" state="sing"/>
     </move>
     <move id="357" clone="moves/352"/>
+    <move id="359">
+      <default sprites="none" delaytime="25" state="rumble"/>
+    </move>
     <move id="404">
       <default sprites="none" state="strike" delaytime="15" playsforeachtarget="true"/>
     </move>
@@ -582,6 +585,9 @@
       <default width="32" height="32" loopsfrom="4">0,1,2,3,4,5,6,7</default>
     </projectile>
     <projectile id="1357" clone="projectiles/1352"/>
+    <projectile id="1359">
+      <default width="32" height="32">0,1,2,3</default>
+    </projectile>
     <projectile id="1453">
       <default width="16" height="16" spriteduration="8">0,1</default>
     </projectile>
