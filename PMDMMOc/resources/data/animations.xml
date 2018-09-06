@@ -448,6 +448,9 @@
     <move id="954">
       <default width="64" height="64" spriteduration="2" state="spin">0,1,2,3,3,3,3,3,3,2,1,0</default>
     </move>
+    <move id="955">
+      <default sprites="none" state="spin" delaytime="25"/>
+    </move>
     <move id="959">
       <default sprites="none" state="chop" delaytime="25"/>
     </move>
@@ -549,6 +552,9 @@
     </movetarget>
     <movetarget id="901">
       <default width="32" height="64" y="45">0,1,2,3,4,5,6,7,8,9,10,11</default>
+    </movetarget>
+    <movetarget id="955">
+      <default width="32" height="32">0,1,2,-1,-1,0,1,2</default>
     </movetarget>
     <movetarget id="959">
       <default width="48" height="56" spriteduration="2">0,1,2,3,4</default>

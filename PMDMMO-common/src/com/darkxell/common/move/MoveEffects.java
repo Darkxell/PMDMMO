@@ -12,6 +12,7 @@ import com.darkxell.common.move.effects.CreateFloorStatusEffect;
 import com.darkxell.common.move.effects.CureAilmentsEffect;
 import com.darkxell.common.move.effects.DestroyTrapEffect;
 import com.darkxell.common.move.effects.DoubleDamageEffect;
+import com.darkxell.common.move.effects.DoubleIfTargetAilmentEffect;
 import com.darkxell.common.move.effects.DrainEffect;
 import com.darkxell.common.move.effects.DropItemEffect;
 import com.darkxell.common.move.effects.FixedDamageEffect;
@@ -120,6 +121,7 @@ public final class MoveEffects
 	public static final MoveEffect Cant_miss = new CantMissEffect(323);
 	public static final MoveEffect Attack_2 = new MultipleAttacksEffect(324, 2, 2);
 	public static final MoveEffect Random_attacks_3 = new RandomAttacksEffect(325, 3);
+	public static final MoveEffect Double_target_ailment = new DoubleIfTargetAilmentEffect(326);
 
 	static
 	{
