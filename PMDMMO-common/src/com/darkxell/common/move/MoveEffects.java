@@ -124,6 +124,7 @@ public final class MoveEffects
 	public static final MoveEffect Attack_2 = new MultipleAttacksEffect(324, 2, 2);
 	public static final MoveEffect Random_attacks_3 = new RandomAttacksEffect(325, 3);
 	public static final MoveEffect Double_target_ailment = new DoubleIfTargetAilmentEffect(326);
+	public static final MoveEffect Create_mudsport = new CreateFloorStatusEffect(327, FloorStatuses.Reduce_electric);
 
 	static
 	{

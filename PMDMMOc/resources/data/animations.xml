@@ -317,6 +317,9 @@
     <move id="359">
       <default sprites="none" delaytime="25" state="rumble"/>
     </move>
+    <move id="362">
+      <default width="184" height="256" state="rumble" y="236">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20</default>
+    </move>
     <move id="404">
       <default sprites="none" state="strike" delaytime="15" playsforeachtarget="true"/>
     </move>

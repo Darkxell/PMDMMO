@@ -193,7 +193,7 @@
   <move id="359" type="4" category="Special" pp="16" power="4" accuracy="84" critical="12" range="Front_corners" effect="155" damage="true" ginsengable="true" freeze="true" />
   <move id="360" type="4" category="Status" pp="22" power="2" accuracy="125" critical="12" range="Ambient" targets="None" effect="144" freeze="true" />
   <move id="361" type="4" category="Special" pp="13" power="12" accuracy="65" critical="12" range="Front_corners" effect="63" damage="true" ginsengable="true" freeze="true" />
-  <move id="362" type="4" category="Status" pp="17" power="2" critical="12" range="Ambient" targets="None" effect="137" freeze="true" />
+  <move id="362" type="4" category="Status" pp="17" power="2" critical="12" range="Ambient" targets="None" effect="327" freeze="true" />
   <move id="363" type="4" category="Physical" pp="17" power="4" accuracy="73" critical="12" effect="15" damage="true" ginsengable="true" freeze="true" />
   <move id="401" type="5" category="Physical" pp="13" power="14" accuracy="90" critical="12" effect="39" damage="true" ginsengable="true" freeze="true" />
   <move id="402" type="5" category="Physical" pp="16" power="5" accuracy="90" critical="12" damage="true" ginsengable="true" freeze="true" />
