@@ -51,7 +51,8 @@ public final class StatusConditions
 
 	public static final StatusCondition Skull_bash = new ChargedMoveStatusCondition(60, false, 1, 1, -50);
 	public static final StatusCondition Solar_beam = new ChargedMoveStatusCondition(61, false, 1, 1, SolarBeamEffect.RESULTING_MOVE);
-	public static final StatusCondition Bide = new StoreDamageToDoubleStatusCondition(69, false, 4, 4, -222);
+	public static final StatusCondition Bide = new StoreDamageToDoubleStatusCondition(68, false, 4, 4, -2);
+	public static final StatusCondition Revenge = new StoreDamageToDoubleStatusCondition(69, false, 4, 4, -222);
 
 	public static final StatusCondition Charging = new BoostMoveTypeStatusCondition(70, false, 1, 1, PokemonType.Electric);
 	public static final StatusCondition Focus_energy = new BoostCritStatusCondition(71, false, 3, 3, 80);

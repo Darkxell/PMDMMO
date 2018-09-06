@@ -88,13 +88,14 @@ public final class MoveEffects
 	public static final MoveEffect Weather_heal = new WeatherHealEffect(113);
 	public static final MoveEffect Steal_item = new StealItemEffect(120);
 	public static final MoveEffect Raise_speed = new StatChangeEffect(121, Stat.Speed, 1, 100);
-	public static final MoveEffect Inflict_bide = new ApplyStatusConditionEffect(123, StatusConditions.Bide, 100);
+	public static final MoveEffect Inflict_revenge = new ApplyStatusConditionEffect(123, StatusConditions.Revenge, 100);
 	public static final MoveEffect Double_damage = new DoubleDamageEffect(131);
 	public static final MoveEffect Create_watersport = new CreateFloorStatusEffect(137, FloorStatuses.Reduce_fire);
 	public static final MoveEffect Lower_defense = new StatChangeEffect(139, Stat.Defense, -1, 100);
 	public static final MoveEffect Inflict_leechSeed = new ApplyStatusConditionEffect(143, StatusConditions.Leech_seed, 100);
 	public static final MoveEffect Cure_status_ailments = new CureAilmentsEffect(145);
 	public static final MoveEffect Inflict_skullbash_Raise_defense;
+	public static final MoveEffect Inflict_bide = new ApplyStatusConditionEffect(154, StatusConditions.Bide, 100);
 	public static final MoveEffect Lower_accuracy = new StatChangeEffect(155, Stat.Accuracy, -1, 100);
 	public static final MoveEffect Cant_ko = new CannotKOEffect(161);
 	public static final MoveEffect Fixed_difference_hp = new HPDifferenceDamageEffect(163);
