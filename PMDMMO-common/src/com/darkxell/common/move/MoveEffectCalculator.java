@@ -7,6 +7,7 @@ import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.DungeonEvent.MessageEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
 import com.darkxell.common.move.Move.MoveCategory;
+import com.darkxell.common.move.effects.CompoundEffect;
 import com.darkxell.common.pokemon.BaseStats.Stat;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.DungeonStats;
@@ -34,7 +35,9 @@ public class MoveEffectCalculator
 		this.floor = floor;
 		this.flags = flags;
 
-		this.modificator.add(this.move().effect);
+		if (this.move().effect instanceof CompoundEffect) for (MoveEffect e : ((CompoundEffect) this.move().effect).effects)
+			this.modificator.add(e);
+		else this.modificator.add(this.move().effect);
 		this.modificator.addUser(this.user().ability());
 		if (target != null) this.modificator.add(target.ability());
 		if (this.user().getItem() != null) this.modificator.addUser(this.user().getItem().item());

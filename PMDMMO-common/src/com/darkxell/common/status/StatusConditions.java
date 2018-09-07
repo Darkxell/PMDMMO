@@ -30,6 +30,8 @@ public final class StatusConditions
 {
 	static final HashMap<Integer, StatusCondition> _registry = new HashMap<Integer, StatusCondition>();
 
+	// TODO: when Dive, check Whirlpool.
+
 	public static final StatusCondition Poisoned = new PeriodicDamageStatusCondition(0, true, -1, -1, 10, 4);
 	public static final StatusCondition Badly_poisoned = new PeriodicDamageStatusCondition(1, true, -1, -1, 2, 6);
 	public static final StatusCondition Burn = new PeriodicDamageStatusCondition(2, true, -1, -1, 20, 5);
@@ -40,6 +42,7 @@ public final class StatusConditions
 	public static final StatusCondition Leech_seed = new StealsHpStatusCondition(10, true, 11, 12, 2, 10);
 
 	public static final StatusCondition Constricted_fire = new ConstrictedStatusCondition(20, true, 4, 6, 2, 5);
+	public static final StatusCondition Constricted_water = new ConstrictedStatusCondition(21, true, 4, 6, 2, 5);
 	public static final StatusCondition Cringed = new CringedStatusCondition(25, true, 1, 1);
 	public static final StatusCondition Terrified = new TerrifiedStatusCondition(26, true, 9, 11);
 	public static final StatusCondition Taunted = new TauntedStatusCondition(27, true, 10, 11);

@@ -10,7 +10,7 @@ import com.darkxell.common.pokemon.DungeonPokemon;
 public class CompoundEffect extends MoveEffect
 {
 
-	private MoveEffect[] effects;
+	public final MoveEffect[] effects;
 
 	public CompoundEffect(int id, MoveEffect... effects)
 	{
