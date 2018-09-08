@@ -153,6 +153,9 @@
     <move id="10">
       <default width="64" height="64" state="special" spriteduration="3">0,1,2,3,4,5,6,7</default>
     </move>
+    <move id="12">
+      <default sprites="none" delaytime="25" state="attack" playsforeachtarget="true"/>
+    </move>
     <move id="13">
       <default sprites="none" delaytime="25" state="jump"/>
     </move>
