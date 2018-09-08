@@ -122,6 +122,9 @@
     <c id="226">
       <default spriteduration="5" width="32" height="32" state="hurt">0,1,2,3,4,5,6</default>
     </c>
+    <c id="228">
+      <default width="48" height="32" y="22">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25</default>
+    </c>
     <c id="300">
       <default width="32" height="32">0,1,2,3,4,5,6,7,8,9</default>
     </c>
@@ -218,6 +221,9 @@
     </move>
     <move id="69">
       <default sprites="/targets/220" width="64" height="104" y="90" spriteduration="2" state="attack" playsforeachtarget="true">0,-1,1,-1,2,-1,2,-1,1,-1,0</default>
+    </move>
+    <move id="75">
+      <default sprites="/228" width="48" height="32" state="tailwhip">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25</default>
     </move>
     <move id="76">
       <default sprites="none" state="sing" delaytime="25"/>
@@ -693,6 +699,9 @@
     </status>
     <status id="27">
       <default width="16" height="16" y="32" spriteduration="3">0,1,2,3,4,5,6,7</default>
+    </status>
+    <status id="28">
+      <default width="48" height="32" y="20">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1</default>
     </status>
     <status id="40">
       <default spriteduration="4" width="16" height="16" y="24">0,1,2,3,4,5,6,7,8,9,10,11,12</default>

@@ -200,6 +200,11 @@ public class DungeonPokemon implements ItemContainer
 		return this.facing;
 	}
 
+	public int gender()
+	{
+		return this.usedPokemon.gender();
+	}
+
 	public BaseStats getBaseStats()
 	{
 		return this.usedPokemon.getBaseStats();

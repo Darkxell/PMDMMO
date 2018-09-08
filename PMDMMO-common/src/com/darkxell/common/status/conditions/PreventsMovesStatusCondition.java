@@ -5,10 +5,10 @@ import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.LearnedMove;
 import com.darkxell.common.status.StatusCondition;
 
-public class CringedStatusCondition extends StatusCondition
+public class PreventsMovesStatusCondition extends StatusCondition
 {
 
-	public CringedStatusCondition(int id, boolean isAilment, int durationMin, int durationMax)
+	public PreventsMovesStatusCondition(int id, boolean isAilment, int durationMin, int durationMax)
 	{
 		super(id, isAilment, durationMin, durationMax);
 	}
