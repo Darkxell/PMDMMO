@@ -238,6 +238,9 @@
     <move id="84">
       <default sprites="none" alsoplay="2" state="tailwhip" delaytime="25"/>
     </move>
+    <move id="86">
+      <default width="88" height="72" state="rumble" alsoplay="2" y="60" spriteduration="4">-1,-1,-1,-1,-1,-1,-1,-1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20</default>
+    </move>
     <move id="96">
       <default width="64" height="64" state="special" spriteduration="4" alsoplay="2">-1,-1,-1,-1,0,1,2,3,4,5,0,1,2,3</default>
     </move>
