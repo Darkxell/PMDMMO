@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.HashMap;
 
 import com.darkxell.common.move.effects.ApplyStatusConditionEffect;
-import com.darkxell.common.move.effects.ApplyStatusOppositeGenderEffect;
 import com.darkxell.common.move.effects.CannotKOEffect;
 import com.darkxell.common.move.effects.CantMissEffect;
 import com.darkxell.common.move.effects.CompoundEffect;
@@ -59,7 +58,7 @@ public final class MoveEffects
 	public static final MoveEffect Inflict_cringed_25 = new ApplyStatusConditionEffect(38, StatusConditions.Cringed, 25);
 	public static final MoveEffect Inflict_cringed_40 = new ApplyStatusConditionEffect(40, StatusConditions.Cringed, 40);
 	public static final MoveEffect Inflict_confused_30 = new ApplyStatusConditionEffect(41, StatusConditions.Confused, 30);
-	public static final MoveEffect Inflict_infatuated_if_opposite_gender = new ApplyStatusOppositeGenderEffect(45, StatusConditions.Infatuated, 100);
+	public static final MoveEffect Inflict_infatuated = new ApplyStatusConditionEffect(45, StatusConditions.Infatuated, 100);
 	public static final MoveEffect Inflict_cringed_35 = new ApplyStatusConditionEffect(47, StatusConditions.Cringed, 35);
 	public static final MoveEffect Fixed_65 = new FixedDamageEffect(49, 65);
 	public static final MoveEffect Inflict_paralysis_10 = new ApplyStatusConditionEffect(51, StatusConditions.Paralyzed, 10);

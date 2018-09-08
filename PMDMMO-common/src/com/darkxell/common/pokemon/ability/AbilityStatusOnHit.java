@@ -7,6 +7,7 @@ import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.StatusConditionCreatedEvent;
+import com.darkxell.common.event.pokemon.TriggeredAbilityEvent;
 import com.darkxell.common.status.StatusCondition;
 
 public class AbilityStatusOnHit extends AbilityOnHit
@@ -21,9 +22,9 @@ public class AbilityStatusOnHit extends AbilityOnHit
 	}
 
 	@Override
-	protected void onHit(Floor floor, DamageDealtEvent event, MoveUse source, ArrayList<DungeonEvent> resultingEvents)
+	protected void onHit(Floor floor, DamageDealtEvent event, MoveUse source, TriggeredAbilityEvent abilityEvent, ArrayList<DungeonEvent> resultingEvents)
 	{
-		resultingEvents.add(new StatusConditionCreatedEvent(floor, this.condition.create(source.user, this, floor.random)));
+		resultingEvents.add(new StatusConditionCreatedEvent(floor, this.condition.create(source.user, abilityEvent.pokemon, floor.random)));
 	}
 
 }

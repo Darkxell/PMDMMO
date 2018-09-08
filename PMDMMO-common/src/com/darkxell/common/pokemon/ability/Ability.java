@@ -33,6 +33,7 @@ public abstract class Ability implements AffectsPokemon, DungeonEventListener
 	public static final Ability SOUNDPROOF = new AbilityNullifySound(19);
 	public static final Ability WONDER_GUARD = new AbilityNullifyNonSupEff(21);
 
+	public static final Ability CUTE_CHARM = new AbilityStatusOnHit(32, StatusConditions.Infatuated, 12);
 	public static final Ability POISON_POINT = new AbilityStatusOnHit(36, StatusConditions.Poisoned, 12);
 	public static final Ability STATIC = new AbilityStatusOnHit(39, StatusConditions.Paralyzed, 12);
 

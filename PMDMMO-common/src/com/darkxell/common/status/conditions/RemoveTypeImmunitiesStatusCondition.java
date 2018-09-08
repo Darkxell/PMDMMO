@@ -4,6 +4,7 @@ import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.PokemonType;
+import com.darkxell.common.status.AppliedStatusCondition;
 import com.darkxell.common.status.StatusCondition;
 import com.darkxell.common.util.Pair;
 import com.darkxell.common.util.language.Message;
@@ -20,11 +21,11 @@ public class RemoveTypeImmunitiesStatusCondition extends StatusCondition
 	}
 
 	@Override
-	public Pair<Boolean, Message> affects(DungeonPokemon pokemon)
+	public Pair<Boolean, Message> affects(AppliedStatusCondition condition, DungeonPokemon pokemon)
 	{
 		if (!pokemon.species().isType(this.type)) return new Pair<Boolean, Message>(false,
 				new Message("status.immune.isnttype").addReplacement("<pokemon>", pokemon.getNickname()).addReplacement("<type>", this.type.getName()));
-		return super.affects(pokemon);
+		return super.affects(condition, pokemon);
 	}
 
 	@Override

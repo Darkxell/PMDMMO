@@ -14,6 +14,7 @@ import com.darkxell.common.status.conditions.ConfusedStatusCondition;
 import com.darkxell.common.status.conditions.ConstrictedStatusCondition;
 import com.darkxell.common.status.conditions.PreventsMovesStatusCondition;
 import com.darkxell.common.status.conditions.ImmuneStatusCondition;
+import com.darkxell.common.status.conditions.InfatuatedStatusCondition;
 import com.darkxell.common.status.conditions.ParalyzedStatusCondition;
 import com.darkxell.common.status.conditions.PeriodicDamageStatusCondition;
 import com.darkxell.common.status.conditions.PreventActionStatusCondition;
@@ -46,7 +47,7 @@ public final class StatusConditions
 	public static final StatusCondition Cringed = new PreventsMovesStatusCondition(25, true, 1, 1);
 	public static final StatusCondition Terrified = new TerrifiedStatusCondition(26, true, 9, 11);
 	public static final StatusCondition Taunted = new TauntedStatusCondition(27, true, 10, 11);
-	public static final StatusCondition Infatuated = new PreventsMovesStatusCondition(28, true, 3, 4);
+	public static final StatusCondition Infatuated = new InfatuatedStatusCondition(28, true, 3, 4);
 
 	public static final StatusCondition Protect = new ImmuneStatusCondition(40, false, 2, 3);
 	public static final StatusCondition Reflect = new ChangeAttackerStatStatusCondition(41, false, 11, 12, Stat.Attack, 0, .5);
