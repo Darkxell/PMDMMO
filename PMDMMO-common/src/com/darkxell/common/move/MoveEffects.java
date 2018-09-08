@@ -22,6 +22,7 @@ import com.darkxell.common.move.effects.HPRecoilEffect;
 import com.darkxell.common.move.effects.MultipleAttacksEffect;
 import com.darkxell.common.move.effects.MultipleAttacksMissingStopsEffect;
 import com.darkxell.common.move.effects.RandomAttacksEffect;
+import com.darkxell.common.move.effects.RandomMoveEffect;
 import com.darkxell.common.move.effects.RandomStatChangeEffect;
 import com.darkxell.common.move.effects.RecoilEffect;
 import com.darkxell.common.move.effects.ResetStatEffect;
@@ -105,6 +106,7 @@ public final class MoveEffects
 	public static final MoveEffect Lower_evasion = new StatChangeEffect(179, Stat.Evasiveness, -1, 100);
 	public static final MoveEffect Raise_evasion = new StatChangeEffect(180, Stat.Evasiveness, 1, 100);
 	public static final MoveEffect Drop_item = new DropItemEffect(181);
+	public static final MoveEffect Use_random_move_on_floor = new RandomMoveEffect(187);
 	public static final MoveEffect Inflict_protect = new ApplyStatusConditionEffect(192, StatusConditions.Protect, 100);
 	public static final MoveEffect Inflict_taunted = new ApplyStatusConditionEffect(193, StatusConditions.Taunted, 100);
 	public static final MoveEffect HP_multiplier = new HPMultiplierEffect(195);
