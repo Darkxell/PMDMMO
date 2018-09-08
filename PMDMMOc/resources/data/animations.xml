@@ -197,6 +197,9 @@
     <move id="46">
       <default sprites="none"/>
     </move>
+    <move id="49">
+      <default width="88" height="48" state="tailwhip" y="40">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,-1,17</default>
+    </move>
     <move id="50" clone="2"/>
     <move id="52">
       <default sprites="none" delaytime="25" state="slice"/>
