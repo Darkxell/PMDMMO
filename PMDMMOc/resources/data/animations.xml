@@ -500,6 +500,9 @@
     <move id="1004">
       <default sprites="none" state="special" delaytime="25"/>
     </move>
+    <move id="1005">
+      <default sprites="none" state="attack" delaytime="25"/>
+    </move>
     <move id="2002" clone="0"/>
     <move id="-2">
       <default sprites="none" delaytime="25"/>
@@ -610,6 +613,9 @@
     </movetarget>
     <movetarget id="962">
       <default width="40" height="16" y="28" spriteduration="5">0,1,0,2,3,2</default>
+    </movetarget>
+    <movetarget id="1005">
+      <default width="48" height="40">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15</default>
     </movetarget>
   </movetargets>
   <projectiles>
