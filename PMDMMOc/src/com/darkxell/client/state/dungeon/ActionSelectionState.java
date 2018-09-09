@@ -233,14 +233,16 @@ public class ActionSelectionState extends DungeonSubState
 				for (int i = 0; i < 4; ++i)
 					if (leader.move(i) != null)
 					{
-						this.moveLocations[i] = new Rectangle(this.movesWindow.inside().x + 5 + i * mw - 1, y - 1,
-								TextRenderer.width(leader.move(i).move().name()) + 2, TextRenderer.height() + 2);
+						String name = "Unknown Move";
+						if (leader.move(i).move() != null) name = leader.move(i).move().name().toString();
+						this.moveLocations[i] = new Rectangle(this.movesWindow.inside().x + 5 + i * mw - 1, y - 1, TextRenderer.width(name) + 2,
+								TextRenderer.height() + 2);
 						if (i == this.hoveredMove)
 						{
 							g.setColor(Palette.MENU_HOVERED);
 							g.fillRect(this.moveLocations[i].x, this.moveLocations[i].y, this.moveLocations[i].width, this.moveLocations[i].height);
 						}
-						TextRenderer.render(g, Persistance.player.getDungeonLeader().move(i).move().name(), this.movesWindow.inside().x + 5 + i * mw, y);
+						TextRenderer.render(g, name, this.movesWindow.inside().x + 5 + i * mw, y);
 					} else this.moveLocations[i] = null;
 			}
 		}

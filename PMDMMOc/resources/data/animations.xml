@@ -182,6 +182,9 @@
     <move id="23">
       <default width="32" height="32" state="shock" sound="move-growth">0,1,2,3,4,5,6,7,8</default>
     </move>
+    <move id="25">
+      <default sprites="/moves/806" width="32" height="32" state="swell">0,1,2,3,4</default>
+    </move>
     <move id="26">
       <default sprites="none" delaytime="25" state="attack"/>
     </move>
@@ -354,6 +357,9 @@
       <southwest x="20" y="-5"/>
       <west x="20"/>
       <northwest x="20" y="15" backsprites="only"/>
+    </move>
+    <move id="552">
+      <default sprites="none" delaytime="25" state="slice"/>
     </move>
     <move id="555">
       <default width="32" height="156" y="143" state="swing" backsprites="yes">0,1,2,3,4,4,4,4,4,5</default>
@@ -565,6 +571,9 @@
     <movetarget id="404" clone="targets/208"/>
     <movetarget id="453">
       <default spriteduration="5" width="32" height="40">0,1,2,3,2,3,2,3,4,5,5,6,6</default>
+    </movetarget>
+    <movetarget id="552">
+      <default width="48" height="40">0,1,2,3,4,5,6,7,8,9,10</default>
     </movetarget>
     <movetarget id="601">
       <default y="32" spriteduration="3" width="16" height="32">0,1,2,3,4,5,6,7,8</default>

@@ -33,6 +33,7 @@ import com.darkxell.common.move.effects.StealItemEffect;
 import com.darkxell.common.move.effects.StoredDamageEffect;
 import com.darkxell.common.move.effects.SwitchWithUserEffect;
 import com.darkxell.common.move.effects.UserLevelDamageEffect;
+import com.darkxell.common.move.effects.UserStatChangeEffect;
 import com.darkxell.common.move.effects.WeatherChangeEffect;
 import com.darkxell.common.move.effects.WeatherHealEffect;
 import com.darkxell.common.pokemon.BaseStats.Stat;
@@ -52,6 +53,7 @@ public final class MoveEffects
 	public static final MoveEffect Inflict_focusenergy = new ApplyStatusConditionEffect(10, StatusConditions.Focus_energy, 100);
 	public static final MoveEffect Inflict_constricted_fire_10 = new ApplyStatusConditionEffect(15, StatusConditions.Constricted_fire, 10);
 	public static final MoveEffect Inflict_constricted_water_10 = new ApplyStatusConditionEffect(16, StatusConditions.Constricted_water, 10);
+	public static final MoveEffect Raise_user_attack_10 = new UserStatChangeEffect(22, Stat.Attack, 1, 10);
 	public static final MoveEffect Inflict_confused_10 = new ApplyStatusConditionEffect(28, StatusConditions.Confused, 10);
 	public static final MoveEffect Inflict_paralysis_15 = new ApplyStatusConditionEffect(35, StatusConditions.Paralyzed, 15);
 	public static final MoveEffect Inflict_cringed_10 = new ApplyStatusConditionEffect(36, StatusConditions.Cringed, 10);
