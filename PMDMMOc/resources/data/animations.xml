@@ -144,6 +144,9 @@
     <move id="2">
       <default state="charge" width="32" height="32">0,1,2,3,4,5,6,7,8</default>
     </move>
+    <move id="3">
+      <default sprites="none" state="attack" delaytime="25" alsoplay="2"/>
+    </move>
     <move id="4">
       <default sprites="none" state="attack" alsoplay="2" delaytime="25"/>
     </move>
@@ -227,6 +230,9 @@
     </move>
     <move id="69">
       <default sprites="/targets/220" width="64" height="104" y="90" spriteduration="2" state="attack" playsforeachtarget="true">0,-1,1,-1,2,-1,2,-1,1,-1,0</default>
+    </move>
+    <move id="72">
+      <default sprites="none" delaytime="25" state="uppercut"/>
     </move>
     <move id="75">
       <default sprites="/228" width="48" height="32" state="tailwhip">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25</default>
@@ -524,6 +530,9 @@
     </move>
   </moves>
   <movetargets>
+    <movetarget id="3">
+      <default width="48" height="64" y="44">0,1,2,3,4,5,6,7,8,9,10,11</default>
+    </movetarget>
     <movetarget id="20">
       <default width="64" height="32">0,1,2,3,4,5,6,7</default>
     </movetarget>
@@ -533,6 +542,9 @@
     </movetarget>
     <movetarget id="52">
       <default width="48" height="40">0,1,2,3,4,5,6</default>
+    </movetarget>
+    <movetarget id="72">
+      <default width="64" height="64">0,1,2,3,4,5,6,7,8,9,10</default>
     </movetarget>
     <movetarget id="82">
       <default width="62" height="40" spriteduration="2">0,1,2,3,4,5,6,7,8,9</default>
@@ -730,6 +742,9 @@
     </status>
     <status id="21">
       <default spriteduration="4" width="42" height="16" backsprites="yes">0,1,2</default>
+    </status>
+    <status id="22">
+      <default spriteduration="5" width="30" height="20" backsprites="yes" y="12">0</default>
     </status>
     <status id="27">
       <default width="16" height="16" y="32" spriteduration="3">0,1,2,3,4,5,6,7</default>
