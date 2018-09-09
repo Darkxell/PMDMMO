@@ -37,7 +37,8 @@ public abstract class Ability implements AffectsPokemon, DungeonEventListener
 	public static final Ability POISON_POINT = new AbilityStatusOnHit(36, StatusConditions.Poisoned, 12);
 	public static final Ability STATIC = new AbilityStatusOnHit(39, StatusConditions.Paralyzed, 12);
 
-	public static final Ability CLEAR_BODY = new AbilityPreventsAnyStatLossFromOthers(41);
+	public static final Ability CLEAR_BODY = new AbilityPreventsAnyStatLoss(41);
+	public static final Ability HYPER_CUTTER = new AbilityPreventsStatLoss(42, Stat.Attack);
 	public static final Ability KEEN_EYE = new AbilityPreventsStatLoss(46, Stat.Accuracy);
 
 	public static final Ability ROCK_HEAD = new AbilityPreventRecoilDamage(56);
