@@ -458,6 +458,9 @@
     <move id="808">
       <default width="32" height="156" y="143" state="swing" backsprites="yes">0,1,2,3,4,4,4,4,4,5</default>
     </move>
+    <move id="809">
+      <default sprites="none" state="rumble" delaytime="25" alsoplay="2" overlay="120"/>
+    </move>
     <move id="813">
       <default width="32" height="156" y="143" state="swing" backsprites="yes">0,1,2,3,4,4,4,4,4,5</default>
     </move>

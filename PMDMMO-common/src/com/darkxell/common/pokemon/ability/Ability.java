@@ -28,6 +28,7 @@ public abstract class Ability implements AffectsPokemon, DungeonEventListener
 	public static final Ability GUTS = new AbilityStatBoostWhileAfflicted(6, Stat.Attack);
 	public static final AbilityStatBoostWithAlly MINUS = new AbilityStatBoostWithAlly(9, Stat.SpecialAttack, 1.5);
 	public static final AbilityStatBoostWithAlly PLUS = new AbilityStatBoostWithAlly(10, Stat.SpecialAttack, 1.5);
+	public static final Ability PURE_POWER = new AbilityStatBoost(11, Stat.Attack, 1.5);
 
 	public static final Ability LEVITATE = new AbilityNullifyType(16, PokemonType.Ground);
 	public static final Ability SOUNDPROOF = new AbilityNullifySound(19);
