@@ -16,7 +16,7 @@ public class Util
 
 	public static Player createDefaultPlayer()
 	{
-		final int starter = 300;
+		final int starter = 304;
 		Player player = new Player("Offline debug account name", PokemonRegistry.find(starter).generate(new Random(), 10, 1));
 		player.setStoryPosition(500);
 		player.setMoneyInBag(100);
@@ -28,7 +28,7 @@ public class Util
 		player.getTeamLeader().setMove(2, new LearnedMove(50));
 		player.getTeamLeader().setMove(2, new LearnedMove(404));
 		player.getTeamLeader().setMove(3, new LearnedMove(806));
-		// player.getTeamLeader().getData().abilityid = 56;
+		player.getTeamLeader().getData().abilityid = 60;
 
 		for (int i = 1; i < 5; ++i)
 			player.inventory().addItem(new ItemStack(i));

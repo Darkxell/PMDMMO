@@ -41,6 +41,7 @@ public abstract class Ability implements AffectsPokemon, DungeonEventListener
 
 	public static final Ability ROCK_HEAD = new AbilityPreventRecoilDamage(56);
 	public static final Ability SHIELD_DUST = new AbilityPreventAdditionalEffectsOnSelf(58);
+	public static final Ability STURDY = new AbilityPreventOneShot(60);
 
 	public static final Ability CLOUD_NINE = new AbilitySetWeather(63, Weather.CLEAR, 36);
 

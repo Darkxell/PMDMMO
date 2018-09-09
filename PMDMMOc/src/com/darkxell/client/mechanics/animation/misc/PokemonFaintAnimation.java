@@ -19,7 +19,7 @@ public class PokemonFaintAnimation extends PokemonAnimation
 	public void onFinish()
 	{
 		this.renderer.sprite().setDefaultState(PokemonSpriteState.IDLE, true);
-		Persistance.dungeonState.pokemonRenderer.unregister(this.target);
+		if (this.target != Persistance.player.getDungeonLeader()) Persistance.dungeonState.pokemonRenderer.unregister(this.target);
 		super.onFinish();
 	}
 

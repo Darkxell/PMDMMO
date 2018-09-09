@@ -326,6 +326,7 @@ public final class TeamInfoRenderer
 			for (Pokemon pk : realTeam)
 				if (!(pk.getDungeonPokemon() != null && pk.getDungeonPokemon().isFainted())) team.add(pk);
 
+			if (team.size() == 0) return;
 			Rectangle[] preferredDimensions = getPreferredDimensions(team);
 			Rectangle[] split = findBestColumnSplit(team, preferredDimensions, width, height);
 
