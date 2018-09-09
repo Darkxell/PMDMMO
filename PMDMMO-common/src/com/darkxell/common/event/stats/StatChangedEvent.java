@@ -14,16 +14,18 @@ public class StatChangedEvent extends DungeonEvent
 			"stat.increase.3", };
 
 	private int effectiveChange = 0;
+	public final Object source;
 	public final int stage;
 	public final Stat stat;
 	public final DungeonPokemon target;
 
-	public StatChangedEvent(Floor floor, DungeonPokemon target, Stat stat, int stage)
+	public StatChangedEvent(Floor floor, DungeonPokemon target, Stat stat, int stage, Object source)
 	{
 		super(floor);
 		this.target = target;
 		this.stat = stat;
 		this.stage = stage;
+		this.source = source;
 	}
 
 	public int effectiveChange()
@@ -46,28 +48,22 @@ public class StatChangedEvent extends DungeonEvent
 	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{
-		boolean isAffected = this.target.ability().isPokemonAffected(this, this.target, this.resultingEvents)
-				&& (this.target.getItem() == null || this.target.getItem().item().isPokemonAffected(this, this.target, this.resultingEvents));
+		this.effectiveChange = this.target.stats.effectiveChange(this.stat, this.stage);
 
-		if (isAffected)
+		if (this.effectiveChange != 0)
 		{
-			this.effectiveChange = this.target.stats.effectiveChange(this.stat, this.stage);
-
-			if (this.effectiveChange != 0)
-			{
-				this.target.stats.addStage(this.stat, this.effectiveChange);
-				if (this.stat == Stat.Speed) this.resultingEvents.add(new SpeedChangedEvent(this.floor, this.target));
-			}
-
-			String messageID = MESSAGES[this.effectiveChange + 3];
-			if (this.effectiveChange == 0)
-			{
-				if (this.stage > 0) messageID = "stat.increase.fail";
-				else messageID = "stat.decrease.fail";
-			}
-			if (this.stat != Stat.Speed || this.effectiveChange == 0) this.messages.add(
-					new Message(messageID).addReplacement("<pokemon>", this.target.getNickname()).addReplacement("<stat>", new Message("stat." + this.stat)));
+			this.target.stats.addStage(this.stat, this.effectiveChange);
+			if (this.stat == Stat.Speed) this.resultingEvents.add(new SpeedChangedEvent(this.floor, this.target));
 		}
+
+		String messageID = MESSAGES[this.effectiveChange + 3];
+		if (this.effectiveChange == 0)
+		{
+			if (this.stage > 0) messageID = "stat.increase.fail";
+			else messageID = "stat.decrease.fail";
+		}
+		if (this.stat != Stat.Speed || this.effectiveChange == 0) this.messages
+				.add(new Message(messageID).addReplacement("<pokemon>", this.target.getNickname()).addReplacement("<stat>", new Message("stat." + this.stat)));
 
 		return super.processServer();
 	}

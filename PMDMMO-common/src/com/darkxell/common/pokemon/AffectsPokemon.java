@@ -114,18 +114,6 @@ public interface AffectsPokemon
 		return 1;
 	}
 
-	/** Called when an Event targets a Pokemon.
-	 * 
-	 * @param event - The Event targeting the Pokemon.
-	 * @param target - The Pokemon the event is targeting.
-	 * @param events - The current Events being generated.
-	 * 
-	 * @return <code>false</code> if the Event shouldn't affect the Pokemon. */
-	public default boolean isPokemonAffected(DungeonEvent event, DungeonPokemon target, ArrayList<DungeonEvent> events)
-	{
-		return true;
-	}
-
 	/** Called when a Pokemon tries to move. Returns true if this Pokemon can't move.
 	 * 
 	 * @param pokemon - The Pokemon trying to use a Move.

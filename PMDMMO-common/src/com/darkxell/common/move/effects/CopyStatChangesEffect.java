@@ -39,7 +39,7 @@ public class CopyStatChangesEffect extends MoveEffect
 						first = false;
 						effects.events.add(new MessageEvent(floor, new Message("stats.copied").addReplacement("<pokemon>", target.getNickname())));
 					}
-					effects.createEffect(new StatChangedEvent(floor, usedMove.user, stat, diff), usedMove, target, floor, missed, false, usedMove.user);
+					effects.createEffect(new StatChangedEvent(floor, usedMove.user, stat, diff, usedMove), usedMove, target, floor, missed, false, usedMove.user);
 				}
 			}
 			if (first) effects.events.add(new MessageEvent(floor, new Message("stats.copied.none").addReplacement("<pokemon>", target.getNickname())));

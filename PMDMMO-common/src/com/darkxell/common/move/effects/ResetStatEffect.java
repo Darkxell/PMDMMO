@@ -21,13 +21,14 @@ public class ResetStatEffect extends MoveEffect
 	}
 
 	@Override
-	public void additionalEffects(MoveUse usedMove, DungeonPokemon target, String[] flags, Floor floor, MoveEffectCalculator calculator, boolean missed, MoveEvents effects)
+	public void additionalEffects(MoveUse usedMove, DungeonPokemon target, String[] flags, Floor floor, MoveEffectCalculator calculator, boolean missed,
+			MoveEvents effects)
 	{
 		super.additionalEffects(usedMove, target, flags, floor, calculator, missed, effects);
 		if (!missed)
 		{
 			int stage = target.stats.getStage(this.stat);
-			if (stage > 10) effects.createEffect(new StatChangedEvent(floor, target, this.stat, 10 - stage), usedMove, target, floor, missed,
+			if (stage > 10) effects.createEffect(new StatChangedEvent(floor, target, this.stat, 10 - stage, usedMove), usedMove, target, floor, missed,
 					usedMove.move.move().dealsDamage, target);
 		}
 	}

@@ -4,20 +4,17 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
 import com.darkxell.common.event.pokemon.TriggeredAbilityEvent;
 import com.darkxell.common.event.stats.StatChangedEvent;
-import com.darkxell.common.pokemon.BaseStats.Stat;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
-public class AbilityPreventsStatLoss extends Ability
+public class AbilityPreventsAnyStatLossFromOthers extends Ability
 {
 
-	private final Stat[] protectedStats;
-
-	public AbilityPreventsStatLoss(int id, Stat... protectedStats)
+	public AbilityPreventsAnyStatLossFromOthers(int id)
 	{
 		super(id);
-		this.protectedStats = protectedStats;
 	}
 
 	@Override
@@ -27,12 +24,18 @@ public class AbilityPreventsStatLoss extends Ability
 		if (event instanceof StatChangedEvent)
 		{
 			StatChangedEvent e = (StatChangedEvent) event;
-			if (e.stage < 0) for (Stat s : this.protectedStats)
-				if (e.stat == s)
+			if (e.stage < 0)
+			{
+				if (e.source instanceof MoveUse)
 				{
-					event.consume();
-					resultingEvents.add(new TriggeredAbilityEvent(event.floor, concerned));
+					MoveUse u = (MoveUse) e.source;
+					if (u.user != concerned)
+					{
+						event.consume();
+						resultingEvents.add(new TriggeredAbilityEvent(floor, concerned));
+					}
 				}
+			}
 		}
 	}
 
