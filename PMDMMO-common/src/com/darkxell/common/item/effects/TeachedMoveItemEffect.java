@@ -17,6 +17,12 @@ public class TeachedMoveItemEffect extends ItemEffect
 		this.moveID = moveID;
 	}
 
+	@Override
+	public Message description(Item item)
+	{
+		return new Message("item.info.used_tm").addReplacement("<move>", this.move().name());
+	}
+
 	public Move move()
 	{
 		return MoveRegistry.find(this.moveID);

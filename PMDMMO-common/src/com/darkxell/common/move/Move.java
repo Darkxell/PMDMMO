@@ -19,7 +19,12 @@ public class Move implements Comparable<Move>
 	{
 		Physical,
 		Special,
-		Status
+		Status;
+
+		public Message getName()
+		{
+			return new Message("move.info.category." + this.name());
+		}
 	}
 
 	/** Move range.<br />
@@ -62,6 +67,14 @@ public class Move implements Comparable<Move>
 		Self,
 		/** The Pokemon on the Tile in front of the user, or if no Pokemon, the one on the second Tile in front. */
 		Two_tiles;
+
+		public Message getName(MoveTarget target)
+		{
+
+			String rangeID = "move.info.range." + this.name();
+			if (Lang.containsKey(rangeID + "." + target.name())) rangeID += "." + target.name();
+			return new Message(rangeID);
+		}
 	}
 
 	public static enum MoveTarget

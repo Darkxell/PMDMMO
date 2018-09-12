@@ -23,14 +23,11 @@ public class MoveInfoState extends InfoState
 		super(background, parent, new Message[] { move.name() }, new Message[] { move.description() });
 		this.move = move;
 
-		String rangeID = "move.info.range." + this.move.range.name();
-		if (Lang.containsKey(rangeID + "." + this.move.targets.name())) rangeID += "." + this.move.targets.name();
-
 		this.details1Message = new Message("move.info.details.0");
 		this.details1Message.addReplacement("<type>", this.move.type.getName());
-		this.details1Message.addReplacement("<category>", new Message("move.info.category." + this.move.category));
+		this.details1Message.addReplacement("<category>", this.move.category.getName());
 		this.details2Message = new Message("move.info.details.1");
-		this.details2Message.addReplacement("<range>", new Message(rangeID));
+		this.details2Message.addReplacement("<range>", this.move.range.getName(this.move.targets));
 		this.details2Message.addReplacement("<accuracy>", TextRenderer.alignNumber(this.move.accuracy, 3).addSuffix("%"));
 	}
 

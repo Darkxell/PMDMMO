@@ -21,6 +21,12 @@ public class TeachesMoveRenewableItemEffect extends ItemEffect
 	}
 
 	@Override
+	public Message description(Item item)
+	{
+		return new Message("item.info.hm").addReplacement("<move>", this.move().name());
+	}
+
+	@Override
 	public boolean isUsable()
 	{
 		return true;

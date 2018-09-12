@@ -100,8 +100,8 @@ public class Item implements AffectsPokemon
 		}
 	}
 
-	public static final String XML_ROOT = "item";
 	public static final int POKEDOLLARS = 0;
+	public static final String XML_ROOT = "item";
 
 	/** This Item's Category. */
 	public final ItemCategory category;
@@ -142,6 +142,11 @@ public class Item implements AffectsPokemon
 		this.effectID = effectID;
 		this.isStackable = stackable;
 		this.isRare = rare;
+	}
+
+	public Message description()
+	{
+		return this.effect().description(this);
 	}
 
 	public ItemEffect effect()

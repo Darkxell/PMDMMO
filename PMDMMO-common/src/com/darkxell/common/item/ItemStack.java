@@ -67,9 +67,9 @@ public class ItemStack implements Comparable<ItemStack>, HasID
 	}
 
 	/** @return The message describing this Item. */
-	public Message info()
+	public Message description()
 	{
-		return new Message("item.info." + this.itemid());
+		return this.item().description();
 	}
 
 	public Item item()

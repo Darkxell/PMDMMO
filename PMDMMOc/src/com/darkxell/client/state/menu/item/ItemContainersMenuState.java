@@ -32,6 +32,9 @@ import com.darkxell.common.event.item.ItemSelectionEvent;
 import com.darkxell.common.event.item.ItemSwappedEvent;
 import com.darkxell.common.item.Item.ItemAction;
 import com.darkxell.common.item.ItemStack;
+import com.darkxell.common.item.effects.TeachedMoveItemEffect;
+import com.darkxell.common.item.effects.TeachesMoveRenewableItemEffect;
+import com.darkxell.common.move.Move;
 import com.darkxell.common.player.Inventory;
 import com.darkxell.common.player.ItemContainer;
 import com.darkxell.common.pokemon.DungeonPokemon;
@@ -578,7 +581,27 @@ public class ItemContainersMenuState extends AbstractMenuState
 		else if (action == ItemAction.SWAP)
 			nextState = new ItemContainersMenuState(this, dungeonState, true, Persistance.player.inventory()).setOpaque(this.isOpaque);
 		else if (action == ItemAction.INFO)
-			nextState = new InfoState(this.background, this, new Message[] { i.item().name() }, new Message[] { i.info() }).setOpaque(this.isOpaque);
+		{
+			Message[] titles = new Message[] { i.item().name() };
+			Message[] content = new Message[] { i.description() };
+			Move m = null;
+			if (i.item().effect() instanceof TeachesMoveRenewableItemEffect) m = ((TeachesMoveRenewableItemEffect) i.item().effect()).move();
+			if (i.item().effect() instanceof TeachedMoveItemEffect) m = ((TeachedMoveItemEffect) i.item().effect()).move();
+
+			if (m != null)
+			{
+				Message moveDesc = m.description();
+				moveDesc.addSuffix(" <br>");
+				moveDesc.addSuffix(
+						new Message("move.info.details.0").addReplacement("<type>", m.type.getName()).addReplacement("<category>", m.category.getName()));
+				moveDesc.addSuffix(" <br>");
+				moveDesc.addSuffix(new Message("move.info.details.1").addReplacement("<range>", m.range.getName(m.targets)).addReplacement("<accuracy>",
+						TextRenderer.alignNumber(m.accuracy, 3).addSuffix("%")));
+				titles = new Message[] { i.item().name(), m.name() };
+				content = new Message[] { i.description(), moveDesc };
+			}
+			nextState = new InfoState(this.background, this, titles, content).setOpaque(this.isOpaque);
+		}
 
 		if (nextState == this) this.reloadContainers();
 		else if (nextState != null) Persistance.stateManager.setState(nextState);

@@ -7,6 +7,7 @@ import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.util.language.Message;
 
 /** An Item that teaches a move to a Pokemon when used, then turns into a Used TM. */
 public class TeachesMoveItemEffect extends TeachesMoveRenewableItemEffect
@@ -25,5 +26,11 @@ public class TeachesMoveItemEffect extends TeachesMoveRenewableItemEffect
 			if (pokemon.player().inventory().isFull()) pokemon.tile().setItem(new ItemStack(-1 * item.id));
 			else pokemon.player().inventory().addItem(new ItemStack(-1 * item.id));
 		}
+	}
+
+	@Override
+	public Message description(Item item)
+	{
+		return new Message("item.info.tm").addReplacement("<move>", this.move().name());
 	}
 }

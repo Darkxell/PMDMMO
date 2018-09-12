@@ -18,6 +18,11 @@ public class ItemEffect
 		ItemEffects.effects.put(this.id, this);
 	}
 
+	public Message description(Item item)
+	{
+		return new Message("item.info." + this.id).addReplacement("<item>", item.name());
+	}
+
 	/** The ID of the translation to use for the message to display when using this Item. */
 	protected String getUseEffectID()
 	{
