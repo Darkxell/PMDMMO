@@ -27,7 +27,8 @@ public class MoveInfoState extends InfoState
 		this.details1Message.addReplacement("<category>", this.move.category.getName());
 		this.details2Message = new Message("move.info.details.1");
 		this.details2Message.addReplacement("<range>", this.move.range.getName(this.move.targets));
-		this.details2Message.addReplacement("<accuracy>", TextRenderer.alignNumber(this.move.accuracy, 3).addSuffix("%"));
+		this.details2Message.addReplacement("<power>", TextRenderer.alignNumber(this.move.power, 3));
+		this.details2Message.addReplacement("<accuracy>", TextRenderer.alignNumber(this.move.accuracy, 3));
 	}
 
 	@Override
