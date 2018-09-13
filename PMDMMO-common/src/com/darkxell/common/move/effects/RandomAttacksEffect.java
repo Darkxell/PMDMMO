@@ -8,9 +8,11 @@ import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
 import com.darkxell.common.event.move.MoveUseEvent;
+import com.darkxell.common.move.Move;
 import com.darkxell.common.move.MoveEffect;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.RandomUtil;
+import com.darkxell.common.util.language.Message;
 
 public class RandomAttacksEffect extends MoveEffect
 {
@@ -34,6 +36,12 @@ public class RandomAttacksEffect extends MoveEffect
 			e.direction = d;
 			events.add(e);
 		}
+	}
+
+	@Override
+	public Message descriptionBase(Move move)
+	{
+		return new Message("move.info.random_attacks").addReplacement("<attacks>", String.valueOf(this.attacks));
 	}
 
 }

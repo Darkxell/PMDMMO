@@ -6,11 +6,13 @@ import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
 import com.darkxell.common.event.move.MoveUseEvent;
+import com.darkxell.common.move.Move;
 import com.darkxell.common.move.MoveEffect;
 import com.darkxell.common.move.MoveEffectCalculator;
 import com.darkxell.common.move.MoveEvents;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.RandomUtil;
+import com.darkxell.common.util.language.Message;
 
 public class MultipleAttacksEffect extends MoveEffect
 {
@@ -46,6 +48,19 @@ public class MultipleAttacksEffect extends MoveEffect
 			e.addFlag("attacksleft=" + attacksleft);
 			effects.createEffect(e, usedMove, target, floor, missed, false, null);
 		}
+	}
+
+	@Override
+	public Message description(Move move)
+	{
+		return new Message(this.descriptionID()).addReplacement("<min>", String.valueOf(this.attacksMin)).addReplacement("<max>",
+				String.valueOf(this.attacksMax));
+	}
+
+	protected String descriptionID()
+	{
+		if (this.attacksMin == this.attacksMax) return "move.info.multiple_attacks";
+		return "move.info.multiple_attacks_random";
 	}
 
 	protected boolean shouldContinue(int attacksleft, MoveUse usedMove, DungeonPokemon target, String[] flags, Floor floor, MoveEffectCalculator calculator,

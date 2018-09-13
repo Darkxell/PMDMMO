@@ -4,6 +4,7 @@ import org.jdom2.Element;
 
 import com.darkxell.common.util.Communicable;
 import com.darkxell.common.util.XMLUtils;
+import com.darkxell.common.util.language.Message;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonObject;
 
@@ -27,6 +28,11 @@ public class BaseStats implements Communicable
 		private Stat(int id)
 		{
 			this.id = id;
+		}
+
+		public Message getName()
+		{
+			return new Message("stat." + this.name());
 		}
 
 	}

@@ -35,7 +35,7 @@ public class Util
 		player.inventory().addItem(new ItemStack(86));
 		for (int i = 21; i < 28; ++i)
 			player.inventory().addItem(new ItemStack(i, i - 20));
-		player.inventory().addItem(new ItemStack(-250));
+		player.inventory().addItem(new ItemStack(223));
 
 		for (int id = 201; id <= 386; id += 3)
 		{

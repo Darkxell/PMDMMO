@@ -8,7 +8,6 @@ import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.menu.InfoState;
 import com.darkxell.client.state.menu.components.TextWindow;
 import com.darkxell.common.move.Move;
-import com.darkxell.common.util.language.Lang;
 import com.darkxell.common.util.language.Message;
 
 public class MoveInfoState extends InfoState

@@ -21,6 +21,7 @@ import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.status.StatusConditions;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.RandomUtil;
+import com.darkxell.common.util.language.Lang;
 import com.darkxell.common.util.language.Message;
 
 public class MoveEffect implements AffectsPokemon
@@ -65,6 +66,21 @@ public class MoveEffect implements AffectsPokemon
 		DungeonPokemon[] pokemon = this.getTargets(m, move.user, floor);
 		for (int i = 0; i < pokemon.length; ++i)
 			this.useOn(move, pokemon[i], floor, events);
+	}
+
+	public Message description(Move move)
+	{
+		Message m;
+		if (Lang.containsKey("move.info." + this.id)) m = new Message("move.info." + this.id);
+		else m = this.descriptionBase(move);
+		m.addReplacement("<move>", move.name());
+		if (move.dealsDamage) m.addPrefix(new Message("move.info.deals_damage").addSuffix(" <br>"));
+		return m;
+	}
+
+	public Message descriptionBase(Move move)
+	{
+		return new Message("move.info.default");
 	}
 
 	/** @param move

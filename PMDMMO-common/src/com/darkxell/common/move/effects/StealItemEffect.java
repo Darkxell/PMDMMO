@@ -18,13 +18,14 @@ public class StealItemEffect extends MoveEffect
 	}
 
 	@Override
-	public void additionalEffects(MoveUse usedMove, DungeonPokemon target, String[] flags, Floor floor, MoveEffectCalculator calculator, boolean missed, MoveEvents effects)
+	public void additionalEffects(MoveUse usedMove, DungeonPokemon target, String[] flags, Floor floor, MoveEffectCalculator calculator, boolean missed,
+			MoveEvents effects)
 	{
 		super.additionalEffects(usedMove, target, flags, floor, calculator, missed, effects);
 
 		if (!missed && target.getItem() != null && usedMove.user.getItem() == null)
-			effects.createEffect(new ItemMovedEvent(floor, ItemAction.STEAL, usedMove.user, target, 0, usedMove.user, 0, false), usedMove, target, floor, missed, true,
-					target);
+			effects.createEffect(new ItemMovedEvent(floor, ItemAction.STEAL, usedMove.user, target, 0, usedMove.user, 0, false), usedMove, target, floor,
+					missed, true, target);
 	}
 
 }

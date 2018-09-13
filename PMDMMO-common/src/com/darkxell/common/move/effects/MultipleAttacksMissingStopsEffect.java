@@ -15,6 +15,12 @@ public class MultipleAttacksMissingStopsEffect extends MultipleAttacksEffect
 	}
 
 	@Override
+	protected String descriptionID()
+	{
+		return super.descriptionID() + "_missingstops";
+	}
+
+	@Override
 	protected boolean shouldContinue(int attacksleft, MoveUse usedMove, DungeonPokemon target, String[] flags, Floor floor, MoveEffectCalculator calculator,
 			boolean missed, MoveEvents effects)
 	{

@@ -206,7 +206,7 @@ public class Move implements Comparable<Move>
 	/** @return This Move's description. */
 	public Message description()
 	{
-		return new Message("move.info." + this.id);
+		return this.effect.description(this);
 	}
 
 	public boolean hasUseMessage()

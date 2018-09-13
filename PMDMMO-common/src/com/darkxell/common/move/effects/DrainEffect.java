@@ -5,10 +5,12 @@ import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.HealthRestoredEvent;
+import com.darkxell.common.move.Move;
 import com.darkxell.common.move.MoveEffect;
 import com.darkxell.common.move.MoveEffectCalculator;
 import com.darkxell.common.move.MoveEvents;
 import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.util.language.Message;
 
 public class DrainEffect extends MoveEffect
 {
@@ -22,7 +24,8 @@ public class DrainEffect extends MoveEffect
 	}
 
 	@Override
-	public void additionalEffects(MoveUse usedMove, DungeonPokemon target, String[] flags, Floor floor, MoveEffectCalculator calculator, boolean missed, MoveEvents effects)
+	public void additionalEffects(MoveUse usedMove, DungeonPokemon target, String[] flags, Floor floor, MoveEffectCalculator calculator, boolean missed,
+			MoveEvents effects)
 	{
 		super.additionalEffects(usedMove, target, flags, floor, calculator, missed, effects);
 		if (!missed)
@@ -37,6 +40,12 @@ public class DrainEffect extends MoveEffect
 			if (damage != null) effects.createEffect(new HealthRestoredEvent(floor, usedMove.user, damage.damage * this.percent / 100), usedMove, target, floor,
 					missed, true, usedMove.user);
 		}
+	}
+
+	@Override
+	public Message descriptionBase(Move move)
+	{
+		return new Message("move.info.drain").addReplacement("<percent>", String.valueOf(this.percent));
 	}
 
 }
