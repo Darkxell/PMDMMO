@@ -209,6 +209,11 @@ public class Move implements Comparable<Move>
 		return this.effect.description(this);
 	}
 
+	public int displayedPower()
+	{
+		return this.power * 5;
+	}
+
 	public boolean hasUseMessage()
 	{
 		return Lang.containsKey("move." + this.id);
