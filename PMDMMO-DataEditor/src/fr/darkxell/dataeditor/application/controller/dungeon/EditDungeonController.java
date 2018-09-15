@@ -1,8 +1,15 @@
 package fr.darkxell.dataeditor.application.controller.dungeon;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import com.darkxell.common.dungeon.data.Dungeon;
 
+import fr.darkxell.dataeditor.application.util.DungeonCreationException;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 
 public class EditDungeonController
 {
@@ -28,14 +35,21 @@ public class EditDungeonController
 		this.setupFor(DungeonsTabController.instance.currentDungeon);
 	}
 
-	public Dungeon generateDungeon()
+	public Dungeon generateDungeon() throws DungeonCreationException
 	{
-		return DungeonsTabController.instance.defaultDungeon(DungeonsTabController.instance.currentDungeon.id);
+		return this.dungeonDataTabController.generateDungeon(new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(),
+				new ArrayList<>(), new HashMap<>());
 	}
 
 	public void saveChanges()
 	{
-		DungeonsTabController.instance.onEdited(this.generateDungeon());
+		try
+		{
+			DungeonsTabController.instance.onEdited(this.generateDungeon());
+		} catch (DungeonCreationException e)
+		{
+			new Alert(AlertType.ERROR, "There was an error while saving the Dungeon: " + e.getMessage() + ".", ButtonType.OK).showAndWait();
+		}
 	}
 
 	public void setupFor(Dungeon dungeon)

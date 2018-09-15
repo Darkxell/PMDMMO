@@ -1,25 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-	minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0"
-	xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.141"
-	fx:controller="fr.darkxell.dataeditor.application.controller.dungeon.EditDungeonDataController">
+<GridPane alignment="CENTER" hgap="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" vgap="10.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.darkxell.dataeditor.application.controller.dungeon.EditDungeonDataController">
 	<columnConstraints>
-		<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"
-			prefWidth="100.0" />
-		<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"
-			prefWidth="100.0" />
+		<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
+		<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
 	</columnConstraints>
 	<rowConstraints>
-		<RowConstraints minHeight="10.0" prefHeight="30.0"
-			vgrow="SOMETIMES" />
-		<RowConstraints minHeight="10.0" prefHeight="30.0"
-			vgrow="SOMETIMES" />
-		<RowConstraints minHeight="10.0" prefHeight="30.0"
-			vgrow="SOMETIMES" />
+		<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+		<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+		<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
 	</rowConstraints>
+   <children>
+      <Label text="Dungeon ID: " />
+      <Label text="Floor Count: " GridPane.rowIndex="1" />
+      <Label text="Map X: " GridPane.rowIndex="2" />
+      <Label text="Map Y: " GridPane.rowIndex="3" />
+      <Label text="Direction: " GridPane.rowIndex="6" />
+      <Label GridPane.rowIndex="7" />
+      <CheckBox fx:id="recruitsCheckbox" mnemonicParsing="false" text="Recruits Allowed" GridPane.columnSpan="2" GridPane.rowIndex="7" />
+      <Label text="Time limit (turns/floor): " GridPane.rowIndex="4" />
+      <Label text="Sticky Chance (%): " GridPane.rowIndex="5" />
+      <CheckBox fx:id="linkedCheckbox" mnemonicParsing="false" onAction="#onLinkedChecked" text="Linked to: " GridPane.rowIndex="8" />
+      <TextField fx:id="idTextfield" promptText="Dungeon ID" GridPane.columnIndex="1" />
+      <TextField fx:id="floorsTextfield" promptText="Floor Count" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <TextField fx:id="mapxTextfield" promptText="Map X" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <TextField fx:id="mapyTextfield" promptText="Map Y" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <TextField fx:id="limitTextfield" promptText="Time limit" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+      <TextField fx:id="stickyTextfield" promptText="Sticky Chance" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+      <ComboBox fx:id="linkedCombobox" prefWidth="150.0" promptText="Linked Dungeon" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+      <ComboBox fx:id="directionCombobox" prefWidth="150.0" promptText="Direction" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+      </children>
+   <padding>
+      <Insets left="5.0" right="5.0" />
+   </padding>
 </GridPane>

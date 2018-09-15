@@ -9,6 +9,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import com.darkxell.common.dungeon.data.Dungeon;
+import com.darkxell.common.dungeon.data.Dungeon.DungeonDirection;
 import com.darkxell.common.dungeon.data.DungeonRegistry;
 
 import fr.darkxell.dataeditor.application.controls.CustomListCell;
@@ -39,7 +40,7 @@ public class DungeonsTabController implements Initializable, ListCellParent<Dung
 
 	Dungeon defaultDungeon(int id)
 	{
-		return new Dungeon(id, 1, Dungeon.UP, 0, true, 2000, 0, -1, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(),
+		return new Dungeon(id, 1, DungeonDirection.UP, true, 2000, 0, -1, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(),
 				new ArrayList<>(), new ArrayList<>(), new HashMap<>(), 0, 0);
 	}
 
@@ -124,6 +125,7 @@ public class DungeonsTabController implements Initializable, ListCellParent<Dung
 			this.dungeonsList.getItems().remove(this.currentDungeon);
 			this.dungeonsList.getItems().add(dungeon);
 			this.dungeonsList.getItems().sort(Comparator.naturalOrder());
+			this.dungeonsList.getSelectionModel().select(dungeon);
 			this.onEdit(dungeon);
 		}
 	}

@@ -8,7 +8,7 @@ import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.TransitionState;
 import com.darkxell.client.state.freezone.CutsceneState;
 import com.darkxell.client.state.map.DungeonFloorMap;
-import com.darkxell.common.dungeon.data.Dungeon;
+import com.darkxell.common.dungeon.data.Dungeon.DungeonDirection;
 import com.darkxell.common.util.language.Message;
 
 public class NextFloorState extends TransitionState
@@ -16,8 +16,8 @@ public class NextFloorState extends TransitionState
 	private static Message createMessage(int floor)
 	{
 		return Persistance.dungeon.dungeon().name().addSuffix(new Message("<br>", false))
-				.addSuffix(new Message("stairs.floor." + (Persistance.dungeon.dungeon().direction == Dungeon.UP ? "up" : "down")).addReplacement("<floor>",
-						Integer.toString(floor)));
+				.addSuffix(new Message("stairs.floor." + (Persistance.dungeon.dungeon().direction == DungeonDirection.UP ? "up" : "down"))
+						.addReplacement("<floor>", Integer.toString(floor)));
 	}
 
 	public static void resumeExploration()

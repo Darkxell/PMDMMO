@@ -21,13 +21,30 @@ import com.darkxell.common.weather.Weather;
 /** Describes a Dungeon: floors, Pokemon, items... */
 public class Dungeon implements Comparable<Dungeon>
 {
-	public static final boolean UP = false, DOWN = true;
+
+	public static enum DungeonDirection
+	{
+		DOWN,
+		UP;
+
+		public static DungeonDirection find(boolean value)
+		{
+			if (value) return DOWN;
+			return UP;
+		}
+
+		public boolean value()
+		{
+			return this == DOWN;
+		}
+	}
+
 	public static final String XML_ROOT = "dungeon";
 
 	/** Lists the buried Items found in this Dungeon. If empty, use the standard list. */
 	private final ArrayList<DungeonItemGroup> buriedItems;
-	/** Whether this Dungeon goes up or down. See {@link Dungeon#UP} */
-	public final boolean direction;
+	/** Whether this Dungeon goes up or down. See {@link DungeonDirection} */
+	public final DungeonDirection direction;
 	/** The number of Floors in this Dungeon. */
 	public final int floorCount;
 	/** Describes this Dungeon's Floors' data. */
@@ -61,7 +78,7 @@ public class Dungeon implements Comparable<Dungeon>
 	{
 		this.id = Integer.parseInt(xml.getAttributeValue("id"));
 		this.floorCount = Integer.parseInt(xml.getAttributeValue("floors"));
-		this.direction = XMLUtils.getAttribute(xml, "down", false);
+		this.direction = DungeonDirection.find(XMLUtils.getAttribute(xml, "down", DungeonDirection.UP.value()));
 		this.recruitsAllowed = XMLUtils.getAttribute(xml, "recruits", true);
 		this.timeLimit = XMLUtils.getAttribute(xml, "limit", 2000);
 		this.linkedTo = XMLUtils.getAttribute(xml, "linked", -1);
@@ -116,7 +133,7 @@ public class Dungeon implements Comparable<Dungeon>
 			this.weather.put(Integer.parseInt(data.getAttributeValue("id")), new FloorSet(data.getChild(FloorSet.XML_ROOT, xml.getNamespace())));
 	}
 
-	public Dungeon(int id, int floorCount, boolean direction, double monsterHouseChance, boolean recruits, int timeLimit, int stickyChance, int linkedTo,
+	public Dungeon(int id, int floorCount, DungeonDirection direction, boolean recruits, int timeLimit, int stickyChance, int linkedTo,
 			ArrayList<DungeonEncounter> pokemon, ArrayList<DungeonItemGroup> items, ArrayList<DungeonItemGroup> shopItems,
 			ArrayList<DungeonItemGroup> buriedItems, ArrayList<DungeonTrapGroup> traps, ArrayList<FloorData> floorData, HashMap<Integer, FloorSet> weather,
 			int mapx, int mapy)
@@ -258,7 +275,7 @@ public class Dungeon implements Comparable<Dungeon>
 		root.setAttribute("floors", Integer.toString(this.floorCount));
 		root.setAttribute("mapx", Integer.toString(this.mapx));
 		root.setAttribute("mapy", Integer.toString(this.mapy));
-		XMLUtils.setAttribute(root, "down", this.direction, false);
+		XMLUtils.setAttribute(root, "down", this.direction.value(), DungeonDirection.UP.value());
 		XMLUtils.setAttribute(root, "recruits", this.recruitsAllowed, true);
 		XMLUtils.setAttribute(root, "limit", this.timeLimit, 2000);
 		XMLUtils.setAttribute(root, "sticky", this.stickyChance, 0);
