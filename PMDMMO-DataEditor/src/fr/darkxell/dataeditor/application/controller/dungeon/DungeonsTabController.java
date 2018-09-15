@@ -37,7 +37,7 @@ public class DungeonsTabController implements Initializable, ListCellParent<Dung
 	@FXML
 	private TitledPane editDungeonPane;
 
-	private Dungeon defaultDungeon(int id)
+	Dungeon defaultDungeon(int id)
 	{
 		return new Dungeon(id, 1, Dungeon.UP, 0, true, 2000, 0, -1, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(),
 				new ArrayList<>(), new ArrayList<>(), new HashMap<>(), 0, 0);
@@ -110,6 +110,22 @@ public class DungeonsTabController implements Initializable, ListCellParent<Dung
 		this.editDungeonPane.setVisible(true);
 		this.editDungeonPane.setText(this.currentDungeon.name().toString());
 		this.editDungeonController.setupFor(this.currentDungeon);
+	}
+
+	public void onEdited(Dungeon dungeon)
+	{
+		boolean idChanged = this.currentDungeon.id != dungeon.id;
+		if (idChanged && DungeonRegistry.find(dungeon.id) != null)
+			new Alert(AlertType.ERROR, "Cannot save: There is already another Dungeon with ID " + dungeon.id, ButtonType.OK).showAndWait();
+		else
+		{
+			DungeonRegistry.unregister(this.currentDungeon.id);
+			DungeonRegistry.register(dungeon);
+			this.dungeonsList.getItems().remove(this.currentDungeon);
+			this.dungeonsList.getItems().add(dungeon);
+			this.dungeonsList.getItems().sort(Comparator.naturalOrder());
+			this.onEdit(dungeon);
+		}
 	}
 
 	@Override
