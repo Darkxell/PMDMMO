@@ -206,7 +206,7 @@ public class FloorData
 		if (previous != null || this.naturePower != 0) XMLUtils.setAttribute(xml, "nature", this.naturePower, previous != null ? previous.naturePower : -1);
 		if (previous != null || this.secretPower != null)
 			XMLUtils.setAttribute(xml, "secret", this.secretPower, previous != null ? previous.secretPower : null);
-		if (previous != null || this.soundtrack != 0) XMLUtils.setAttribute(xml, "soundtrack", this.soundtrack, previous != null ? previous.soundtrack : null);
+		if (previous != null || this.soundtrack != 0) XMLUtils.setAttribute(xml, "soundtrack", this.soundtrack, previous != null ? previous.soundtrack : 0);
 		if (previous != null || this.shopChance != 0) XMLUtils.setAttribute(xml, "shop", this.shopChance, previous != null ? previous.shopChance : -1);
 		if (previous != null || this.monsterHouseChance != 0)
 			XMLUtils.setAttribute(xml, "mhouse", this.monsterHouseChance, previous != null ? previous.monsterHouseChance : -1);
