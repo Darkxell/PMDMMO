@@ -20,7 +20,7 @@ import com.darkxell.client.ui.Frame;
 
 import fr.darkxell.dataeditor.application.DataEditor;
 import fr.darkxell.dataeditor.application.controller.cutscene.event.EventController;
-import fr.darkxell.dataeditor.application.controls.CustomListCell;
+import fr.darkxell.dataeditor.application.controls.CustomList;
 import fr.darkxell.dataeditor.application.controls.CustomListCell.ListCellParent;
 import fr.darkxell.dataeditor.application.data.Cutscenes;
 import fr.darkxell.dataeditor.application.util.FXUtils;
@@ -64,9 +64,7 @@ public class EditCutsceneController implements Initializable, ListCellParent<Cut
 	public void initialize(URL location, ResourceBundle resources)
 	{
 		instance = this;
-		this.eventList.setCellFactory(param -> {
-			return new CustomListCell<>(this, "Cutscene Event").setCanRename(false);
-		});
+		CustomList.setup(this, this.eventList, "Cutscene Event", true, false, true, true, true);
 	}
 
 	public ArrayList<CutsceneEntity> listAvailableEntities(CutsceneEvent event)

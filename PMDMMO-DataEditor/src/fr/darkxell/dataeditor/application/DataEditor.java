@@ -18,6 +18,7 @@ import com.darkxell.common.trap.TrapRegistry;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.Util;
 import com.darkxell.common.util.language.Lang;
+import com.darkxell.common.weather.Weather;
 
 import fr.darkxell.dataeditor.application.data.Cutscenes;
 import javafx.application.Application;
@@ -50,6 +51,8 @@ public class DataEditor extends Application
 		SoundsHolder.load("../PMDMMOc/");
 		Persistance.soundmanager = new SoundManager();
 		Persistance.player = Util.createDefaultPlayer();
+
+		new Weather(-1, null);
 
 		new DiscordEventHandlerForPMDMMO("Developing game", "main_develop").start();
 

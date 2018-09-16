@@ -360,4 +360,10 @@ public class Dungeon implements Comparable<Dungeon>
 		if (candidates.isEmpty()) return w;
 		return RandomUtil.random(candidates, random);
 	}
+
+	@SuppressWarnings("unchecked")
+	public HashMap<Integer, FloorSet> weatherData()
+	{
+		return (HashMap<Integer, FloorSet>) this.weather.clone();
+	}
 }

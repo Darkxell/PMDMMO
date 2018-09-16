@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="10.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.darkxell.dataeditor.application.controller.dungeon.EditFloorsetController">
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+   <children>
+      <TitledPane collapsible="false" text="Parts">
+         <content>
+            <BorderPane>
+               <center>
+                  <VBox fx:id="partsBox" alignment="CENTER" prefHeight="175.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+               </center>
+               <bottom>
+                  <Button mnemonicParsing="false" onAction="#onNewPart" text="Add" BorderPane.alignment="CENTER" />
+               </bottom>
+            </BorderPane>
+         </content>
+      </TitledPane>
+      <TitledPane collapsible="false" text="Excepted">
+         <content>
+            <VBox>
+               <children>
+                  <ListView fx:id="exceptList" prefHeight="200.0" prefWidth="200.0" />
+               </children>
+            </VBox>
+         </content>
+      </TitledPane>
+   </children>
+</HBox>

@@ -13,7 +13,7 @@ import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
 import com.darkxell.common.zones.FreezoneInfo;
 
 import fr.darkxell.dataeditor.application.DataEditor;
-import fr.darkxell.dataeditor.application.controls.CustomListCell;
+import fr.darkxell.dataeditor.application.controls.CustomList;
 import fr.darkxell.dataeditor.application.controls.CustomListCell.ListCellParent;
 import fr.darkxell.dataeditor.application.util.FXUtils;
 import javafx.fxml.FXML;
@@ -36,9 +36,9 @@ public class CutsceneCreationController implements Initializable, ListCellParent
 	private TextField cameraXTextfield;
 	@FXML
 	private TextField cameraYTextfield;
-	private int entityEditing;
 	@FXML
 	public ListView<CutsceneEntity> entitiesList;
+	private int entityEditing;
 	@FXML
 	private ComboBox<String> fadingCombobox;
 	@FXML
@@ -76,9 +76,7 @@ public class CutsceneCreationController implements Initializable, ListCellParent
 		});
 		this.cameraYTextfield.setTextFormatter(formatter);
 
-		this.entitiesList.setCellFactory(param -> {
-			return new CustomListCell<>(this, "Cutscene Entity").setCanOrder(false);
-		});
+		CustomList.setup(this, this.entitiesList, "Cutscene Entity", true, true, true, true, false);
 	}
 
 	@Override

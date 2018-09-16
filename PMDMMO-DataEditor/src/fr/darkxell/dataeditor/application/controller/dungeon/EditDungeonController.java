@@ -1,7 +1,6 @@
 package fr.darkxell.dataeditor.application.controller.dungeon;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import com.darkxell.common.dungeon.data.Dungeon;
 
@@ -13,6 +12,7 @@ import javafx.scene.control.ButtonType;
 
 public class EditDungeonController
 {
+
 	@FXML
 	public EditDungeonBuriedItemsController dungeonBuriedItemsTabController;
 	@FXML
@@ -38,7 +38,7 @@ public class EditDungeonController
 	public Dungeon generateDungeon() throws DungeonCreationException
 	{
 		return this.dungeonDataTabController.generateDungeon(new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(),
-				new ArrayList<>(), new HashMap<>());
+				new ArrayList<>(), this.dungeonWeatherTabController.generate());
 	}
 
 	public void saveChanges()

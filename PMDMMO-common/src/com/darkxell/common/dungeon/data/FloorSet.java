@@ -1,6 +1,7 @@
 package com.darkxell.common.dungeon.data;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 
@@ -24,8 +25,8 @@ public class FloorSet
 		this.except = XMLUtils.readIntArrayAsList(xml.getChild("except", xml.getNamespace()));
 		for (Element part : xml.getChildren("part", xml.getNamespace()))
 		{
-			if (part.getAttribute("floor") != null) this.parts.put(Integer.parseInt(part.getAttributeValue("floor")),
-					Integer.parseInt(part.getAttributeValue("floor")));
+			if (part.getAttribute("floor") != null)
+				this.parts.put(Integer.parseInt(part.getAttributeValue("floor")), Integer.parseInt(part.getAttributeValue("floor")));
 			else this.parts.put(Integer.parseInt(part.getAttributeValue("start")), Integer.parseInt(part.getAttributeValue("end")));
 		}
 	}
@@ -64,6 +65,12 @@ public class FloorSet
 		return new FloorSet(p, e);
 	}
 
+	@SuppressWarnings("unchecked")
+	public ArrayList<Integer> except()
+	{
+		return (ArrayList<Integer>) this.except.clone();
+	}
+
 	/** @return The number of Floors in this Set. */
 	public int floorCount()
 	{
@@ -94,13 +101,26 @@ public class FloorSet
 		return array;
 	}
 
+	@SuppressWarnings("unchecked")
+	public HashMap<Integer, Integer> parts()
+	{
+		return (HashMap<Integer, Integer>) this.parts.clone();
+	}
+
+	public String toString()
+	{
+		int[] floors = this.list();
+		return Arrays.toString(floors);
+	}
+
 	public Element toXML()
 	{
 		Element root = new Element(XML_ROOT);
 		for (Integer start : this.parts.keySet())
 		{
 			if (start.intValue() == this.parts.get(start).intValue()) root.addContent(new Element("part").setAttribute("floor", Integer.toString(start)));
-			else root.addContent(new Element("part").setAttribute("start", Integer.toString(start)).setAttribute("end", Integer.toString(this.parts.get(start))));
+			else root.addContent(
+					new Element("part").setAttribute("start", Integer.toString(start)).setAttribute("end", Integer.toString(this.parts.get(start))));
 		}
 		if (this.except.size() != 0) root.addContent(XMLUtils.toXML("except", this.except));
 		return root;

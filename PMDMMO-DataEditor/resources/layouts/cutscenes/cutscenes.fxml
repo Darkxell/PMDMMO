@@ -18,7 +18,7 @@
 		</VBox>
 	</left>
 	<center>
-		<TitledPane fx:id="editCutscenePane" alignment="CENTER" animated="false" collapsible="false" text="Edit Cutscene" BorderPane.alignment="CENTER">
+		<TitledPane fx:id="editCutscenePane" alignment="CENTER" animated="false" collapsible="false" text="Edit Cutscene" BorderPane.alignment="CENTER" prefHeight="1000">
 			<content>
 				<ScrollPane fitToWidth="true">
 					<content>

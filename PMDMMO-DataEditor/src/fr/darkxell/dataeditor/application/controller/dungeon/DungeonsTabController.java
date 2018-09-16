@@ -12,7 +12,7 @@ import com.darkxell.common.dungeon.data.Dungeon;
 import com.darkxell.common.dungeon.data.Dungeon.DungeonDirection;
 import com.darkxell.common.dungeon.data.DungeonRegistry;
 
-import fr.darkxell.dataeditor.application.controls.CustomListCell;
+import fr.darkxell.dataeditor.application.controls.CustomList;
 import fr.darkxell.dataeditor.application.controls.CustomListCell.ListCellParent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -54,9 +54,7 @@ public class DungeonsTabController implements Initializable, ListCellParent<Dung
 	public void initialize(URL location, ResourceBundle resources)
 	{
 		instance = this;
-		this.dungeonsList.setCellFactory(param -> {
-			return new CustomListCell<>(DungeonsTabController.instance, "Dungeon").setCanOrder(false);
-		});
+		CustomList.setup(this, this.dungeonsList, "Dungeon", true, false, true, true, false);
 		this.dungeonsList.getItems().addAll(DungeonRegistry.list());
 		this.dungeonsList.getItems().sort(Comparator.naturalOrder());
 

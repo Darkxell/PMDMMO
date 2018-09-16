@@ -24,6 +24,8 @@ import javafx.scene.control.TextField;
 public class EditDungeonDataController implements Initializable
 {
 
+	public static EditDungeonDataController instance;
+
 	@FXML
 	public ComboBox<DungeonDirection> directionCombobox;
 	@FXML
@@ -44,6 +46,17 @@ public class EditDungeonDataController implements Initializable
 	public CheckBox recruitsCheckbox;
 	@FXML
 	public TextField stickyTextfield;
+
+	public int currentFloorCount()
+	{
+		int count = DungeonsTabController.instance.currentDungeon.floorCount;
+		try
+		{
+			count = Integer.parseInt(this.floorsTextfield.getText());
+		} catch (Exception e)
+		{}
+		return count;
+	}
 
 	public Dungeon generateDungeon(ArrayList<DungeonEncounter> pokemon, ArrayList<DungeonItemGroup> items, ArrayList<DungeonItemGroup> shopItems,
 			ArrayList<DungeonItemGroup> buriedItems, ArrayList<DungeonTrapGroup> traps, ArrayList<FloorData> floorData, HashMap<Integer, FloorSet> weather)
@@ -107,6 +120,7 @@ public class EditDungeonDataController implements Initializable
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
 	{
+		instance = this;
 		this.linkedCheckbox.selectedProperty().addListener((observable, oldValue, newValue) -> this.onLinkedChecked());
 		this.directionCombobox.getItems().addAll(DungeonDirection.values());
 		this.onLinkedChecked();

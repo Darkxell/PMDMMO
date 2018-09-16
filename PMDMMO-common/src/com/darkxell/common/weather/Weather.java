@@ -2,6 +2,7 @@ package com.darkxell.common.weather;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -12,7 +13,7 @@ import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.util.RandomUtil;
 import com.darkxell.common.util.language.Message;
 
-public class Weather implements AffectsPokemon
+public class Weather implements AffectsPokemon, Comparable<Weather>
 {
 
 	private static final HashMap<Integer, Weather> _weatherRegistry = new HashMap<Integer, Weather>();
@@ -38,16 +39,22 @@ public class Weather implements AffectsPokemon
 		ArrayList<Weather> w = new ArrayList<>(_weatherRegistry.values());
 		return RandomUtil.random(w, random);
 	}
-	public final int id;
 
+	public final int id;
 	/** The Color to fill the screen with as a Weather Layer. May be null if no Layer. */
 	public final Color layer;
 
-	Weather(int id, Color layer)
+	public Weather(int id, Color layer)
 	{
 		this.id = id;
 		this.layer = layer;
 		_weatherRegistry.put(this.id, this);
+	}
+
+	@Override
+	public int compareTo(Weather o)
+	{
+		return Integer.compare(this.id, o.id);
 	}
 
 	public ActiveWeather create(Floor floor, WeatherSource source, int duration)
@@ -55,9 +62,22 @@ public class Weather implements AffectsPokemon
 		return new ActiveWeather(this, source, floor, duration);
 	}
 
+	public static ArrayList<Weather> list()
+	{
+		ArrayList<Weather> list = new ArrayList<>(_weatherRegistry.values());
+		list.sort(Comparator.naturalOrder());
+		return list;
+	}
+
 	public Message name()
 	{
 		return new Message("weather." + this.id);
+	}
+
+	@Override
+	public String toString()
+	{
+		return this.name().toString();
 	}
 
 	/** Called whenever this Weather ticks. */
