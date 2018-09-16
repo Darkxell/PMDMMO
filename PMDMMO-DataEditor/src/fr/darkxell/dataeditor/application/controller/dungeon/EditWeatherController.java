@@ -33,6 +33,7 @@ public class EditWeatherController implements Initializable
 	public void initialize(URL location, ResourceBundle resources)
 	{
 		this.weatherCombobox.getItems().addAll(Weather.list());
+		this.weatherCombobox.getSelectionModel().select(0);
 	}
 
 	public void onSave()

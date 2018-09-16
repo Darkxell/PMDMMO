@@ -1,7 +1,21 @@
 package com.darkxell.common.util;
 
+import java.util.Comparator;
+
 public class Pair<F, S>
 {
+
+	public static final Comparator<Pair<Integer, Integer>> integerComparator = new Comparator<Pair<Integer, Integer>>() {
+
+		@Override
+		public int compare(Pair<Integer, Integer> o1, Pair<Integer, Integer> o2)
+		{
+			int first = Integer.compare(o1.first, o2.first);
+			if (first == 0) return Integer.compare(o1.second, o2.second);
+			return first;
+		}
+
+	};
 
 	public final F first;
 	public final S second;

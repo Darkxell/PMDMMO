@@ -14,7 +14,7 @@ public class EditDungeonController
 {
 
 	@FXML
-	public EditDungeonBuriedItemsController dungeonBuriedItemsTabController;
+	public EditDungeonItemsController dungeonBuriedItemsTabController;
 	@FXML
 	public EditDungeonDataController dungeonDataTabController;
 	@FXML
@@ -24,7 +24,7 @@ public class EditDungeonController
 	@FXML
 	public EditDungeonPokemonController dungeonPokemonTabController;
 	@FXML
-	public EditDungeonShopItemsController dungeonShopItemsTabController;
+	public EditDungeonItemsController dungeonShopItemsTabController;
 	@FXML
 	public EditDungeonTrapsController dungeonTrapsTabController;
 	@FXML
@@ -37,7 +37,7 @@ public class EditDungeonController
 
 	public Dungeon generateDungeon() throws DungeonCreationException
 	{
-		return this.dungeonDataTabController.generateDungeon(new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(),
+		return this.dungeonDataTabController.generateDungeon(this.dungeonPokemonTabController.generate(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(),
 				new ArrayList<>(), this.dungeonWeatherTabController.generate());
 	}
 

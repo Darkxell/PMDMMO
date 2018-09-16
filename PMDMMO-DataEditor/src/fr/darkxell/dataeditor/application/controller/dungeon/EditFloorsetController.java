@@ -123,11 +123,7 @@ public class EditFloorsetController implements Initializable, ListCellParent<Int
 
 	private void reloadParts()
 	{
-		this.partsList.sort((p1, p2) -> {
-			int first = Integer.compare(p1.first, p2.first);
-			if (first == 0) return Integer.compare(p1.second, p2.second);
-			return first;
-		});
+		this.partsList.sort(Pair.integerComparator);
 		this.partsBox.getChildren().clear();
 
 		for (Pair<Integer, Integer> part : this.partsList)

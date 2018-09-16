@@ -172,6 +172,11 @@ public class Dungeon implements Comparable<Dungeon>
 		return Integer.compare(this.id, o.id);
 	}
 
+	public ArrayList<DungeonEncounter> encountersData()
+	{
+		return new ArrayList<>(this.pokemon);
+	}
+
 	/** @return The Data of the input floor. */
 	public FloorData getData(int floor)
 	{

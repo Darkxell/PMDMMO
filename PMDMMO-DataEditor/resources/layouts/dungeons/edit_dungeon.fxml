@@ -55,7 +55,7 @@
 					<content>
 						<ScrollPane fitToWidth="true">
 							<content>
-								<fx:include fx:id="dungeonBuriedItemsTab" source="edit_dungeon_items_buried.fxml" />
+								<fx:include fx:id="dungeonBuriedItemsTab" source="edit_dungeon_items.fxml" />
 							</content>
 						</ScrollPane>
 					</content>
@@ -64,7 +64,7 @@
 					<content>
 						<ScrollPane fitToWidth="true">
 							<content>
-								<fx:include fx:id="dungeonShopItemsTab" source="edit_dungeon_items_shop.fxml" />
+								<fx:include fx:id="dungeonShopItemsTab" source="edit_dungeon_items.fxml" />
 							</content>
 						</ScrollPane>
 					</content>

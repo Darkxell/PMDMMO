@@ -1,16 +1,16 @@
 package com.darkxell.common.dungeon.data;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 
 import org.jdom2.Element;
 
+import com.darkxell.common.util.Pair;
 import com.darkxell.common.util.XMLUtils;
 
 /** Holds a set of Floors. */
-public class FloorSet
+public class FloorSet implements Comparable<FloorSet>
 {
 	public static final String XML_ROOT = "floors";
 
@@ -42,6 +42,18 @@ public class FloorSet
 		this.parts = new HashMap<Integer, Integer>();
 		this.parts.put(start, end);
 		this.except = new ArrayList<Integer>();
+	}
+
+	@Override
+	public int compareTo(FloorSet o)
+	{
+		int[] alls = this.list(), allo = o.list();
+		if (alls.length != 0 && allo.length != 0)
+		{
+			int first = Integer.compare(alls[0], allo[0]);
+			if (first != 0) return first;
+		}
+		return Integer.compare(alls.length, allo.length);
 	}
 
 	/** @return True if this Set contains the input floor. */
@@ -107,10 +119,35 @@ public class FloorSet
 		return (HashMap<Integer, Integer>) this.parts.clone();
 	}
 
+	public ArrayList<Pair<Integer, Integer>> partsAsArray()
+	{
+		ArrayList<Pair<Integer, Integer>> parts = new ArrayList<>();
+		for (Integer key : this.parts.keySet())
+			parts.add(new Pair<>(key, this.parts.get(key)));
+		parts.sort(Pair.integerComparator);
+		return parts;
+	}
+
 	public String toString()
 	{
-		int[] floors = this.list();
-		return Arrays.toString(floors);
+		String s = "";
+		int i = 0;
+		for (Pair<Integer, Integer> part : this.partsAsArray())
+		{
+			if (i != 0) s += ", ";
+			++i;
+			if (part.first == part.second) s += part.first;
+			else s += "[" + part.first + "-" + part.second + "]";
+		}
+
+		if (!this.except.isEmpty())
+		{
+			s += ", except ";
+			for (Integer e : this.except)
+				s += (this.except.get(0) == e ? "" : ",") + e;
+		}
+
+		return s;
 	}
 
 	public Element toXML()
