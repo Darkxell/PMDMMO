@@ -8,7 +8,7 @@ import com.darkxell.common.event.DungeonEvent.MessageEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Message;
 
-public abstract class Trap
+public abstract class Trap implements Comparable<Trap>
 {
 
 	public final int id;
@@ -17,6 +17,12 @@ public abstract class Trap
 	{
 		this.id = id;
 		TrapRegistry.traps.put(this.id, this);
+	}
+
+	@Override
+	public int compareTo(Trap o)
+	{
+		return Integer.compare(this.id, o.id);
 	}
 
 	public Message name()
@@ -29,6 +35,12 @@ public abstract class Trap
 	{
 		events.add(
 				new MessageEvent(floor, new Message("trap.stepped").addReplacement("<pokemon>", pokemon.getNickname()).addReplacement("<trap>", this.name())));
+	}
+
+	@Override
+	public String toString()
+	{
+		return this.name().toString();
 	}
 
 }

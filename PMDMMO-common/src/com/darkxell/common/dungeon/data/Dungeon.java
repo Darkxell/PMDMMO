@@ -349,6 +349,11 @@ public class Dungeon implements Comparable<Dungeon>
 		return new Pair<>(traps, weights);
 	}
 
+	public ArrayList<DungeonTrapGroup> trapsData()
+	{
+		return new ArrayList<>(this.traps);
+	}
+
 	/** @param floor - A Floor ID.
 	 * @param random - A Random Number Generator.
 	 * @return The prevailing Weather for the input Floor. */

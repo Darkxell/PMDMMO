@@ -37,8 +37,8 @@ public class EditDungeonController
 
 	public Dungeon generateDungeon() throws DungeonCreationException
 	{
-		return this.dungeonDataTabController.generateDungeon(this.dungeonPokemonTabController.generate(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(),
-				new ArrayList<>(), this.dungeonWeatherTabController.generate());
+		return this.dungeonDataTabController.generateDungeon(this.dungeonPokemonTabController.generate(), new ArrayList<>(), new ArrayList<>(),
+				new ArrayList<>(), this.dungeonTrapsTabController.generate(), new ArrayList<>(), this.dungeonWeatherTabController.generate());
 	}
 
 	public void saveChanges()
