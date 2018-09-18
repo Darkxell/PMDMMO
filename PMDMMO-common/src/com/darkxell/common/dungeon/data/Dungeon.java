@@ -293,8 +293,8 @@ public class Dungeon implements Comparable<Dungeon>
 		Element root = new Element(XML_ROOT);
 		root.setAttribute("id", Integer.toString(this.id));
 		root.setAttribute("floors", Integer.toString(this.floorCount));
-		root.setAttribute("mapx", Integer.toString(this.mapx));
-		root.setAttribute("mapy", Integer.toString(this.mapy));
+		XMLUtils.setAttribute(root, "mapx", this.mapx - 260, -260);
+		XMLUtils.setAttribute(root, "mapy", this.mapy - 140, -140);
 		XMLUtils.setAttribute(root, "down", this.direction.value(), DungeonDirection.UP.value());
 		XMLUtils.setAttribute(root, "recruits", this.recruitsAllowed, true);
 		XMLUtils.setAttribute(root, "limit", this.timeLimit, 2000);

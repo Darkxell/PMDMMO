@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dungeons>
-  <dungeon id="1" floors="4" mapx="1206" mapy="729" recruits="false" limit="1000">
+  <dungeon id="1" floors="4" mapx="166" mapy="169" recruits="false" limit="1000">
     <encounters>
       <pokemon id="16" level="1" weight="2">
         <floors>
@@ -52,7 +52,7 @@
       </d>
     </data>
   </dungeon>
-  <dungeon id="2" floors="5" mapx="1205" mapy="666" down="true" limit="1000">
+  <dungeon id="2" floors="5" mapx="165" mapy="106" down="true" limit="1000">
     <encounters>
       <pokemon id="19" level="3" weight="50">
         <floors>
@@ -131,7 +131,7 @@
       </d>
     </data>
   </dungeon>
-  <dungeon id="3" floors="9" mapx="1276" mapy="681" limit="1000">
+  <dungeon id="3" floors="9" mapx="236" mapy="121" limit="1000">
     <encounters>
       <pokemon id="304" level="6" weight="10">
         <floors>
@@ -242,7 +242,7 @@
       </d>
     </data>
   </dungeon>
-  <dungeon id="4" floors="13" mapx="1266" mapy="736" limit="1000">
+  <dungeon id="4" floors="13" mapx="226" mapy="176" limit="1000">
     <encounters>
       <pokemon id="192" level="8" weight="10">
         <floors>
@@ -378,7 +378,7 @@
       </d>
     </data>
   </dungeon>
-  <dungeon id="5" floors="9" mapx="1297" mapy="710" down="true" limit="1000">
+  <dungeon id="5" floors="9" mapx="257" mapy="150" down="true" limit="1000">
     <encounters>
       <pokemon id="193" level="10" weight="81">
         <floors>
@@ -501,7 +501,7 @@
       </d>
     </data>
   </dungeon>
-  <dungeon id="6" floors="10" mapx="1332" mapy="714" limit="1000" linked="7">
+  <dungeon id="6" floors="10" mapx="292" mapy="154" limit="1000" linked="7">
     <encounters>
       <pokemon id="32" level="12" weight="5">
         <floors>
@@ -626,7 +626,7 @@
       </d>
     </data>
   </dungeon>
-  <dungeon id="7" floors="3" mapx="780" mapy="420" limit="800">
+  <dungeon id="7" floors="3" limit="800">
     <encounters>
       <pokemon id="207" level="12">
         <floors>
@@ -690,7 +690,7 @@
       </d>
     </data>
   </dungeon>
-  <dungeon id="8" floors="12" mapx="1237" mapy="810" limit="1000">
+  <dungeon id="8" floors="12" mapx="197" mapy="250" limit="1000">
     <encounters>
       <pokemon id="128" level="15" weight="4">
         <floors>
@@ -819,7 +819,7 @@
       </d>
     </data>
   </dungeon>
-  <dungeon id="9" floors="14" mapx="1419" mapy="721" down="true" limit="1000">
+  <dungeon id="9" floors="14" mapx="379" mapy="161" down="true" limit="1000">
     <encounters>
       <pokemon id="33" level="15">
         <floors>
@@ -1002,7 +1002,7 @@
       </d>
     </data>
   </dungeon>
-  <dungeon id="10" floors="12" mapx="1422" mapy="681" limit="1000" linked="11">
+  <dungeon id="10" floors="12" mapx="382" mapy="121" limit="1000" linked="11">
     <encounters>
       <pokemon id="322" level="14" weight="8">
         <floors>
@@ -1127,7 +1127,7 @@
       </d>
     </data>
   </dungeon>
-  <dungeon id="11" floors="3" mapx="780" mapy="420" limit="800">
+  <dungeon id="11" floors="3" limit="800">
     <encounters>
       <pokemon id="22" level="17">
         <floors>
@@ -1168,7 +1168,7 @@
       </d>
     </data>
   </dungeon>
-  <dungeon id="12" floors="9" mapx="1451" mapy="667" limit="1000" linked="13">
+  <dungeon id="12" floors="9" mapx="411" mapy="107" limit="1000" linked="13">
     <encounters>
       <pokemon id="162" level="14" weight="10">
         <floors>
@@ -1297,7 +1297,7 @@
       </d>
     </data>
   </dungeon>
-  <dungeon id="13" floors="5" mapx="780" mapy="420" limit="800">
+  <dungeon id="13" floors="5" limit="800">
     <encounters>
       <pokemon id="111" level="16">
         <floors>
@@ -1352,7 +1352,7 @@
       </w>
     </weather>
   </dungeon>
-  <dungeon id="14" floors="15" mapx="1466" mapy="640" linked="15">
+  <dungeon id="14" floors="15" mapx="426" mapy="80" linked="15">
     <encounters>
       <pokemon id="288" level="20" weight="8">
         <floors>
@@ -1476,7 +1476,7 @@
       </w>
     </weather>
   </dungeon>
-  <dungeon id="15" floors="5" mapx="780" mapy="420" limit="800">
+  <dungeon id="15" floors="5" limit="800">
     <encounters>
       <pokemon id="362" level="20">
         <floors>
@@ -1525,7 +1525,7 @@
       </d>
     </data>
   </dungeon>
-  <dungeon id="16" floors="23" mapx="1476" mapy="705" down="true" linked="17">
+  <dungeon id="16" floors="23" mapx="436" mapy="145" down="true" linked="17">
     <encounters>
       <pokemon id="34" level="21" weight="4">
         <floors>
@@ -1732,7 +1732,7 @@
       </d>
     </data>
   </dungeon>
-  <dungeon id="17" floors="3" mapx="780" mapy="420" down="true" limit="600">
+  <dungeon id="17" floors="3" down="true" limit="600">
     <encounters>
       <pokemon id="208" level="25">
         <floors>
@@ -1767,7 +1767,7 @@
       </d>
     </data>
   </dungeon>
-  <dungeon id="18" floors="25" mapx="1399" mapy="582" linked="19">
+  <dungeon id="18" floors="25" mapx="359" mapy="22" linked="19">
     <encounters>
       <pokemon id="353" level="28" weight="8">
         <floors>
@@ -1924,7 +1924,7 @@
       </w>
     </weather>
   </dungeon>
-  <dungeon id="19" floors="9" mapx="780" mapy="420">
+  <dungeon id="19" floors="9">
     <encounters>
       <pokemon id="357" level="27">
         <floors>
@@ -2015,7 +2015,7 @@
       </w>
     </weather>
   </dungeon>
-  <dungeon id="20" floors="40" mapx="1167" mapy="793" down="true">
+  <dungeon id="20" floors="40" mapx="127" mapy="233" down="true">
     <encounters>
       <pokemon id="72" level="25" weight="10">
         <floors>
@@ -2327,7 +2327,7 @@
       </d>
     </data>
   </dungeon>
-  <dungeon id="21" floors="99" mapx="1163" mapy="698" down="true">
+  <dungeon id="21" floors="99" mapx="123" mapy="138" down="true">
     <encounters>
       <pokemon id="320" level="35" weight="100">
         <floors>
@@ -2873,7 +2873,7 @@
       </d>
     </data>
   </dungeon>
-  <dungeon id="22" floors="20" mapx="1378" mapy="660" down="true">
+  <dungeon id="22" floors="20" mapx="338" mapy="100" down="true">
     <encounters>
       <pokemon id="386" level="35">
         <floors>
@@ -2903,7 +2903,7 @@
       </d>
     </data>
   </dungeon>
-  <dungeon id="23" floors="99" mapx="1061" mapy="766" down="true">
+  <dungeon id="23" floors="99" mapx="21" mapy="206" down="true">
     <encounters>
       <pokemon id="128" level="34" weight="9">
         <floors>
@@ -3296,7 +3296,7 @@
       </w>
     </weather>
   </dungeon>
-  <dungeon id="24" floors="99" mapx="1066" mapy="834" down="true">
+  <dungeon id="24" floors="99" mapx="26" mapy="274" down="true">
     <encounters>
       <pokemon id="128" level="15" weight="99">
         <floors>
@@ -4022,7 +4022,7 @@
       </d>
     </data>
   </dungeon>
-  <dungeon id="25" floors="99" mapx="1438" mapy="817" down="true" sticky="5">
+  <dungeon id="25" floors="99" mapx="398" mapy="257" down="true" sticky="5">
     <encounters>
       <pokemon id="132" level="25" weight="25">
         <floors>
@@ -4366,7 +4366,7 @@
       </d>
     </data>
   </dungeon>
-  <dungeon id="26" floors="25" mapx="1193" mapy="601">
+  <dungeon id="26" floors="25" mapx="153" mapy="41">
     <encounters>
       <pokemon id="267" level="36">
         <floors>
@@ -4609,7 +4609,7 @@
       </w>
     </weather>
   </dungeon>
-  <dungeon id="27" floors="25" mapx="1228" mapy="618" down="true">
+  <dungeon id="27" floors="25" mapx="188" mapy="58" down="true">
     <encounters>
       <pokemon id="12" level="35">
         <floors>
@@ -4862,7 +4862,7 @@
       </w>
     </weather>
   </dungeon>
-  <dungeon id="28" floors="20" mapx="1465" mapy="780" down="true">
+  <dungeon id="28" floors="20" mapx="425" mapy="220" down="true">
     <encounters>
       <pokemon id="281" level="20" weight="533">
         <floors>
@@ -5147,7 +5147,7 @@
       </d>
     </data>
   </dungeon>
-  <dungeon id="29" floors="30" mapx="1098" mapy="642">
+  <dungeon id="29" floors="30" mapx="58" mapy="82">
     <encounters>
       <pokemon id="256" level="26" weight="100">
         <floors>
@@ -5335,7 +5335,7 @@
       </w>
     </weather>
   </dungeon>
-  <dungeon id="30" floors="30" mapx="1114" mapy="609">
+  <dungeon id="30" floors="30" mapx="74" mapy="49">
     <encounters>
       <pokemon id="135" level="25" weight="8">
         <floors>
@@ -5553,7 +5553,7 @@
       </w>
     </weather>
   </dungeon>
-  <dungeon id="31" floors="30" mapx="1061" mapy="649">
+  <dungeon id="31" floors="30" mapx="21" mapy="89">
     <encounters>
       <pokemon id="134" level="22" weight="12">
         <floors>
@@ -5778,7 +5778,7 @@
       </w>
     </weather>
   </dungeon>
-  <dungeon id="32" floors="40" mapx="1067" mapy="594">
+  <dungeon id="32" floors="40" mapx="27" mapy="34">
     <encounters>
       <pokemon id="259" level="28" weight="10">
         <floors>
@@ -5965,7 +5965,7 @@
       </w>
     </weather>
   </dungeon>
-  <dungeon id="33" floors="19" mapx="1321" mapy="777" down="true">
+  <dungeon id="33" floors="19" mapx="281" mapy="217" down="true">
     <encounters>
       <pokemon id="268" level="8" weight="10">
         <floors>
@@ -6073,7 +6073,7 @@
       </d>
     </data>
   </dungeon>
-  <dungeon id="34" floors="10" mapx="1309" mapy="666">
+  <dungeon id="34" floors="10" mapx="269" mapy="106">
     <encounters>
       <pokemon id="273" level="16" weight="4">
         <floors>
@@ -6174,7 +6174,7 @@
       </w>
     </weather>
   </dungeon>
-  <dungeon id="35" floors="15" mapx="1239" mapy="666">
+  <dungeon id="35" floors="15" mapx="199" mapy="106">
     <encounters>
       <pokemon id="261" level="20" weight="27">
         <floors>
@@ -6318,7 +6318,7 @@
       </w>
     </weather>
   </dungeon>
-  <dungeon id="36" floors="11" mapx="1312" mapy="828" down="true">
+  <dungeon id="36" floors="11" mapx="272" mapy="268" down="true">
     <encounters>
       <pokemon id="201" level="20">
         <floors>
@@ -6373,7 +6373,7 @@
       </d>
     </data>
   </dungeon>
-  <dungeon id="37" floors="99" mapx="1102" mapy="860">
+  <dungeon id="37" floors="99" mapx="62" mapy="300">
     <encounters>
       <pokemon id="1" level="1" weight="56">
         <floors>
@@ -7336,7 +7336,7 @@
       </d>
     </data>
   </dungeon>
-  <dungeon id="38" floors="99" mapx="1103" mapy="835" recruits="false" sticky="5">
+  <dungeon id="38" floors="99" mapx="63" mapy="275" recruits="false" sticky="5">
     <encounters>
       <pokemon id="261" level="3" weight="85">
         <floors>
@@ -8361,7 +8361,7 @@
       </w>
     </weather>
   </dungeon>
-  <dungeon id="39" floors="4" mapx="780" mapy="420" down="true" limit="1000">
+  <dungeon id="39" floors="4" down="true" limit="1000">
     <encounters>
       <pokemon id="18" level="16" weight="2">
         <floors>
@@ -8432,7 +8432,7 @@
       </d>
     </data>
   </dungeon>
-  <dungeon id="40" floors="4" mapx="780" mapy="420" down="true" limit="1000">
+  <dungeon id="40" floors="4" down="true" limit="1000">
     <encounters>
       <pokemon id="298" level="11">
         <floors>
@@ -8498,7 +8498,7 @@
       </d>
     </data>
   </dungeon>
-  <dungeon id="41" floors="20" mapx="1265" mapy="790">
+  <dungeon id="41" floors="20" mapx="225" mapy="230">
     <encounters>
       <pokemon id="27" level="30" weight="8">
         <floors>
@@ -8681,7 +8681,7 @@
       </w>
     </weather>
   </dungeon>
-  <dungeon id="42" floors="50" mapx="1203" mapy="842" down="true">
+  <dungeon id="42" floors="50" mapx="163" mapy="282" down="true">
     <encounters>
       <pokemon id="273" level="30" weight="2">
         <floors>
@@ -8883,7 +8883,7 @@
       </d>
     </data>
   </dungeon>
-  <dungeon id="43" floors="30" mapx="1475" mapy="828">
+  <dungeon id="43" floors="30" mapx="435" mapy="268">
     <encounters>
       <pokemon id="272" level="20" weight="5">
         <floors>
@@ -9139,7 +9139,7 @@
       </w>
     </weather>
   </dungeon>
-  <dungeon id="44" floors="15" mapx="1388" mapy="853" down="true" sticky="5">
+  <dungeon id="44" floors="15" mapx="348" mapy="293" down="true" sticky="5">
     <encounters>
       <pokemon id="292" level="5">
         <floors>
@@ -9279,7 +9279,7 @@
       </d>
     </data>
   </dungeon>
-  <dungeon id="45" floors="30" mapx="1097" mapy="718" down="true">
+  <dungeon id="45" floors="30" mapx="57" mapy="158" down="true">
     <encounters>
       <pokemon id="278" level="23" weight="8">
         <floors>
@@ -9452,7 +9452,7 @@
       </d>
     </data>
   </dungeon>
-  <dungeon id="46" floors="15" mapx="1236" mapy="787" down="true" limit="1000">
+  <dungeon id="46" floors="15" mapx="196" mapy="227" down="true" limit="1000">
     <encounters>
       <pokemon id="262" level="17" weight="10">
         <floors>
@@ -9669,7 +9669,7 @@
       </w>
     </weather>
   </dungeon>
-  <dungeon id="47" floors="20" mapx="1302" mapy="857">
+  <dungeon id="47" floors="20" mapx="262" mapy="297">
     <encounters>
       <pokemon id="267" level="36">
         <floors>
@@ -9895,7 +9895,7 @@
       </d>
     </data>
   </dungeon>
-  <dungeon id="48" floors="20" mapx="1370" mapy="817" down="true">
+  <dungeon id="48" floors="20" mapx="330" mapy="257" down="true">
     <encounters>
       <pokemon id="278" level="23" weight="2">
         <floors>
@@ -10032,7 +10032,7 @@
       </d>
     </data>
   </dungeon>
-  <dungeon id="49" floors="30" mapx="1144" mapy="634" down="true">
+  <dungeon id="49" floors="30" mapx="104" mapy="74" down="true">
     <encounters>
       <pokemon id="278" level="23" weight="8">
         <floors>
@@ -10230,7 +10230,7 @@
       </d>
     </data>
   </dungeon>
-  <dungeon id="50" floors="19" mapx="1401" mapy="769" down="true" sticky="5">
+  <dungeon id="50" floors="19" mapx="361" mapy="209" down="true" sticky="5">
     <encounters>
       <pokemon id="258" level="28" weight="15">
         <floors>
@@ -10358,7 +10358,7 @@
       </d>
     </data>
   </dungeon>
-  <dungeon id="51" floors="75" mapx="1304" mapy="588" down="true">
+  <dungeon id="51" floors="75" mapx="264" mapy="28" down="true">
     <encounters>
       <pokemon id="318" level="27" weight="8">
         <floors>
