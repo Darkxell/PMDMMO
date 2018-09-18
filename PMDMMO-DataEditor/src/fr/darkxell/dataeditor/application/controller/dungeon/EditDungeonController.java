@@ -1,16 +1,17 @@
 package fr.darkxell.dataeditor.application.controller.dungeon;
 
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 import com.darkxell.common.dungeon.data.Dungeon;
 
 import fr.darkxell.dataeditor.application.util.DungeonCreationException;
+import fr.darkxell.dataeditor.application.util.FXUtils;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonType;
+import javafx.fxml.Initializable;
 
-public class EditDungeonController
+public class EditDungeonController implements Initializable
 {
 
 	@FXML
@@ -37,8 +38,16 @@ public class EditDungeonController
 
 	public Dungeon generateDungeon() throws DungeonCreationException
 	{
-		return this.dungeonDataTabController.generateDungeon(this.dungeonPokemonTabController.generate(), new ArrayList<>(), new ArrayList<>(),
-				new ArrayList<>(), this.dungeonTrapsTabController.generate(), new ArrayList<>(), this.dungeonWeatherTabController.generate());
+		return this.dungeonDataTabController.generateDungeon(this.dungeonPokemonTabController.generate(), this.dungeonItemsTabController.generate(),
+				this.dungeonShopItemsTabController.generate(), this.dungeonBuriedItemsTabController.generate(), this.dungeonTrapsTabController.generate(),
+				new ArrayList<>(), this.dungeonWeatherTabController.generate());
+	}
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources)
+	{
+		this.dungeonBuriedItemsTabController.itemType = EditDungeonItemsController.BURIED;
+		this.dungeonShopItemsTabController.itemType = EditDungeonItemsController.SHOP;
 	}
 
 	public void saveChanges()
@@ -48,7 +57,7 @@ public class EditDungeonController
 			DungeonsTabController.instance.onEdited(this.generateDungeon());
 		} catch (DungeonCreationException e)
 		{
-			new Alert(AlertType.ERROR, "There was an error while saving the Dungeon: " + e.getMessage() + ".", ButtonType.OK).showAndWait();
+			FXUtils.showAlert("There was an error while saving the Dungeon: " + e.getMessage() + ".");
 		}
 	}
 

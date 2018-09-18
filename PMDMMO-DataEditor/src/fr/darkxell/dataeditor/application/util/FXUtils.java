@@ -12,6 +12,9 @@ import com.darkxell.client.resources.images.Res;
 import fr.darkxell.dataeditor.application.DataEditor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -33,6 +36,11 @@ public class FXUtils
 		}
 		if (!icons.containsKey(path)) icons.put(path, img);
 		return icons.get(path);
+	}
+
+	public static void showAlert(String message)
+	{
+		new Alert(AlertType.ERROR, message, ButtonType.OK).showAndWait();
 	}
 
 	public static Stage showPopup(Parent root, String title)

@@ -166,6 +166,11 @@ public class Dungeon implements Comparable<Dungeon>
 		return items;
 	}
 
+	public ArrayList<DungeonItemGroup> buriedItemsData()
+	{
+		return new ArrayList<>(this.buriedItems);
+	}
+
 	@Override
 	public int compareTo(Dungeon o)
 	{
@@ -214,6 +219,11 @@ public class Dungeon implements Comparable<Dungeon>
 			if (item.floors.contains(floor)) for (int i = 0; i < item.items.length; ++i)
 				items.add(item);
 		return items;
+	}
+
+	public ArrayList<DungeonItemGroup> itemsData()
+	{
+		return new ArrayList<>(this.items);
 	}
 
 	/** @return This Dungeon's name. */
@@ -265,6 +275,11 @@ public class Dungeon implements Comparable<Dungeon>
 		if (quantity <= 0) quantity = 1;
 
 		return stack;
+	}
+
+	public ArrayList<DungeonItemGroup> shopItemsData()
+	{
+		return new ArrayList<>(this.shopItems);
 	}
 
 	@Override

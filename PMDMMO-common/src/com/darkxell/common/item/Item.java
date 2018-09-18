@@ -13,7 +13,7 @@ import com.darkxell.common.util.XMLUtils;
 import com.darkxell.common.util.language.Message;
 
 /** Represents an Item type. */
-public class Item implements AffectsPokemon
+public class Item implements AffectsPokemon, Comparable<Item>
 {
 	/** Possible actions to be executed on an Item. */
 	public static enum ItemAction
@@ -142,6 +142,12 @@ public class Item implements AffectsPokemon
 		this.effectID = effectID;
 		this.isStackable = stackable;
 		this.isRare = rare;
+	}
+
+	@Override
+	public int compareTo(Item o)
+	{
+		return Integer.compare(this.id, o.id);
 	}
 
 	public Message description()

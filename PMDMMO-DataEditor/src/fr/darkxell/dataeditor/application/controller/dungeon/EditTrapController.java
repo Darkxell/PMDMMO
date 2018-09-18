@@ -11,12 +11,10 @@ import com.darkxell.common.trap.TrapRegistry;
 import fr.darkxell.dataeditor.application.data.DungeonTrapTableItem;
 import fr.darkxell.dataeditor.application.data.SingleTrapTableItem;
 import fr.darkxell.dataeditor.application.util.DungeonCreationException;
+import fr.darkxell.dataeditor.application.util.FXUtils;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
@@ -91,7 +89,7 @@ public class EditTrapController implements Initializable
 			EditDungeonTrapsController.instance.onTrapEdited(this.editing);
 		} catch (DungeonCreationException e)
 		{
-			new Alert(AlertType.ERROR, "There was an error while saving the Dungeon: " + e.getMessage() + ".", ButtonType.OK).showAndWait();
+			FXUtils.showAlert("There was an error while saving the Dungeon: " + e.getMessage() + ".");
 		}
 	}
 
@@ -104,7 +102,11 @@ public class EditTrapController implements Initializable
 	{
 		String input = cell.getNewValue();
 		if (input.matches("\\d+")) cell.getRowValue().weight = Integer.parseInt(input);
-		else new Alert(AlertType.ERROR, "Wrong Weight value: " + input + ". Must be an integer.", ButtonType.OK).showAndWait();
+		else
+		{
+			FXUtils.showAlert("Wrong Weight value: " + input + ". Must be an integer.");
+			this.trapsTable.refresh();
+		}
 	}
 
 	public void setupFor(DungeonTrapTableItem item)

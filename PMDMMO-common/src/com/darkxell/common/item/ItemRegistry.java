@@ -1,7 +1,9 @@
 package com.darkxell.common.item;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashMap;
 
 import org.jdom2.Element;
@@ -27,9 +29,11 @@ public final class ItemRegistry
 	}
 
 	/** @return All Items. */
-	public static Collection<Item> list()
+	public static ArrayList<Item> list()
 	{
-		return items.values();
+		ArrayList<Item> list = new ArrayList<>(items.values());
+		list.sort(Comparator.naturalOrder());
+		return list;
 	}
 
 	/** Loads this Registry for the Client. */

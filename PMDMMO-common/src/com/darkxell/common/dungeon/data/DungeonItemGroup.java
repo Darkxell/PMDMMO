@@ -6,6 +6,7 @@ import java.util.Random;
 import org.jdom2.Element;
 
 import com.darkxell.common.item.Item;
+import com.darkxell.common.item.ItemRegistry;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.util.RandomUtil;
 import com.darkxell.common.util.XMLUtils;
@@ -30,7 +31,6 @@ public class DungeonItemGroup
 	public final FloorSet floors;
 	/** The Item ID. */
 	public final int[] items;
-
 	/** This Item group's weight. */
 	public final int weight;
 
@@ -66,6 +66,14 @@ public class DungeonItemGroup
 				weights.add(this.chances[i]);
 			}
 		return new ItemStack(RandomUtil.weightedRandom(ids, weights, random));
+	}
+
+	public Item[] items()
+	{
+		Item[] it = new Item[this.items.length];
+		for (int i = 0; i < it.length; ++i)
+			it[i] = ItemRegistry.find(this.items[i]);
+		return it;
 	}
 
 	public Element toXML()
