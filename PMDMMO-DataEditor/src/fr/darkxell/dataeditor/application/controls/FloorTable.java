@@ -92,7 +92,10 @@ public class FloorTable
 		manager.floorColumn.setCellFactory(TextFieldTableCell.forTableColumn(new DefaultStringConverter()));
 		manager.valueColumn.setCellFactory(defaultItem.cellFactory());
 
-		manager.floorColumn.setPrefWidth(-1);
+		table.setPrefWidth(150);
+		manager.floorColumn.setMinWidth(50);
+		manager.floorColumn.setPrefWidth(50);
+		manager.floorColumn.setMaxWidth(50);
 		manager.valueColumn.setPrefWidth(-1);
 
 		manager.floorColumn.setOnEditCommit(event -> manager.onFloorEdited(event));

@@ -34,7 +34,8 @@ public class FloorTableString extends FloorTableItem<String, String>
 	@Override
 	public void onValueEdited(String newValue)
 	{
-		this.value = newValue;
+		if (newValue.equals("null")) this.value = null;
+		else this.value = newValue;
 	}
 
 }
