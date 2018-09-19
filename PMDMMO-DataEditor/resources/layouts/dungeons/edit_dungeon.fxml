@@ -8,12 +8,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" VBox.vgrow="ALWAYS"
-	xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="fr.darkxell.dataeditor.application.controller.dungeon.EditDungeonController">
+<VBox alignment="CENTER" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.darkxell.dataeditor.application.controller.dungeon.EditDungeonController">
 	<children>
-		<TabPane prefHeight="1000" maxHeight="1.7976931348623157E308"
-			tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
+		<TabPane maxHeight="1.7976931348623157E308" prefHeight="1000" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
 			<tabs>
 				<Tab text="Dungeon Data">
 					<content>
@@ -26,7 +23,7 @@
 				</Tab>
 				<Tab text="Floor Data">
 					<content>
-						<ScrollPane fitToWidth="true">
+						<ScrollPane>
 							<content>
 								<fx:include fx:id="dungeonFloorTab" source="edit_dungeon_floor.fxml" />
 							</content>
@@ -95,8 +92,7 @@
 			</VBox.margin>
 			<children>
 				<Button mnemonicParsing="false" onAction="#saveChanges" text="Save changes" />
-				<Button mnemonicParsing="false" onAction="#cancelChanges"
-					text="Cancel changes" />
+				<Button mnemonicParsing="false" onAction="#cancelChanges" text="Cancel changes" />
 			</children>
 			<opaqueInsets>
 				<Insets right="10.0" />
