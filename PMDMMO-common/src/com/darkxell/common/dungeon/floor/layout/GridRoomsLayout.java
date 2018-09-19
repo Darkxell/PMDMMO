@@ -9,7 +9,8 @@ import com.darkxell.common.dungeon.floor.room.SquareRoom;
 /** A Layout with random rooms in a grid-like pattern. */
 public class GridRoomsLayout extends Layout {
 
-	private static final int OFFSET = 5;
+	private int offsetx = 5;
+	private int offsety = 5;
 	private int gridwidth;
 	private int gridheight;
 	/** Maximum dimensions of rooms. Width and Height can be switched. */
@@ -39,9 +40,13 @@ public class GridRoomsLayout extends Layout {
 	 *            the maximum ammount of rooms randomely removed from the grid.
 	 *            If this ammount is equal or geater than
 	 *            <code>gridwidth*gridheight</code>, it will be set to 0.
+	 * @param offsetx
+	 *            the default offset size between two rooms on the x axis
+	 * @param offsety
+	 *            the default offset size between two rooms on the y axis
 	 */
 	public GridRoomsLayout(int id, int gridwidth, int gridheight, int minRoomWidth, int minRoomHeight, int maxRoomWidth,
-			int maxRoomHeight, int maximumremovedroomsammount) {
+			int maxRoomHeight, int maximumremovedroomsammount, int offsetx, int offsety) {
 		this.gridwidth = gridwidth;
 		this.gridheight = gridheight;
 		this.minRoomWidth = minRoomWidth;
@@ -50,19 +55,21 @@ public class GridRoomsLayout extends Layout {
 		this.maxRoomHeight = maxRoomHeight;
 		this.roomcenters = new Point[gridwidth][gridheight];
 		this.removedrooms = (maximumremovedroomsammount >= gridwidth * gridheight) ? 0 : maximumremovedroomsammount;
+		this.offsetx = offsetx;
+		this.offsety = offsety;
 	}
 
 	@Override
 	protected void generateLiquids() {
-
+		
 	}
 
 	@Override
 	protected void generateRooms() {
-		int gridCellWidth = this.maxRoomWidth + OFFSET;
-		int gridCellHeight = this.maxRoomHeight + OFFSET;
-		this.createDefaultTiles(2 + this.gridwidth * (this.maxRoomWidth + OFFSET),
-				2 + this.gridheight * (this.maxRoomHeight + OFFSET));
+		int gridCellWidth = this.maxRoomWidth + offsetx;
+		int gridCellHeight = this.maxRoomHeight + offsety;
+		this.createDefaultTiles(2 + this.gridwidth * (this.maxRoomWidth + offsetx),
+				2 + this.gridheight * (this.maxRoomHeight + offsety));
 
 		// Sets the centers.
 		for (int x = 0; x < this.gridwidth; x++)
