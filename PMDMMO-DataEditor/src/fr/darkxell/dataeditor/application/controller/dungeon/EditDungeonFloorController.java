@@ -25,11 +25,18 @@ import javafx.scene.control.TableView;
 public class EditDungeonFloorController implements Initializable
 {
 
-	private static <T, D> T lookup(TableView<FloorTableItem<T, D>> table, int floor)
+	private static <T, D> int findMax(TableView<FloorTableItem<T, D>> table, int max)
+	{
+		for (FloorTableItem<T, D> item : table.getItems())
+			if (item.floor > max) max = item.floor;
+		return max;
+	}
+
+	private static <T, D> T lookup(TableView<FloorTableItem<T, D>> table, int floor, T previous)
 	{
 		for (FloorTableItem<T, D> item : table.getItems())
 			if (item.floor == floor) return item.value;
-		return null;
+		return previous;
 	}
 
 	@FXML
@@ -68,6 +75,22 @@ public class EditDungeonFloorController implements Initializable
 	public ArrayList<FloorData> generate()
 	{
 		int max = 0;
+		max = findMax(this.difficultyTable, max);
+		max = findMax(this.moneyTable, max);
+		max = findMax(this.layoutTable, max);
+		max = findMax(this.terrainTable, max);
+		max = findMax(this.shadowsTable, max);
+		max = findMax(this.camouflageTable, max);
+		max = findMax(this.naturePowerTable, max);
+		max = findMax(this.secretPowerTable, max);
+		max = findMax(this.soundtrackTable, max);
+		max = findMax(this.shopTable, max);
+		max = findMax(this.monsterHouseTable, max);
+		max = findMax(this.itemTable, max);
+		max = findMax(this.pokemonTable, max);
+		max = findMax(this.trapTable, max);
+		max = findMax(this.buriedTable, max);
+		max = findMax(this.bossTable, max);
 
 		ArrayList<FloorData> data = new ArrayList<>();
 		int diffP = 0, moneyP = 0, layoutP = 0, terrainP = 0, shadowsP = 0, soundtrackP = 0, shopP = 0, monsterP = 0, itemP = 0, pokemonP = 0, trapP = 0,
@@ -83,22 +106,22 @@ public class EditDungeonFloorController implements Initializable
 
 		for (int floor = 1; floor <= max; ++floor)
 		{
-			diff = lookup(this.difficultyTable, floor);
-			money = lookup(this.moneyTable, floor);
-			layout = lookup(this.layoutTable, floor);
-			terrain = lookup(this.terrainTable, floor);
-			shadows = lookup(this.shadowsTable, floor);
-			camouflage = lookup(this.camouflageTable, floor);
-			nature = lookup(this.naturePowerTable, floor);
-			secret = lookup(this.secretPowerTable, floor);
-			soundtrack = lookup(this.soundtrackTable, floor);
-			shop = lookup(this.shopTable, floor);
-			monster = lookup(this.monsterHouseTable, floor);
-			item = lookup(this.itemTable, floor);
-			pokemon = lookup(this.pokemonTable, floor);
-			trap = lookup(this.trapTable, floor);
-			buried = lookup(this.buriedTable, floor);
-			boss = lookup(this.bossTable, floor);
+			diff = lookup(this.difficultyTable, floor, diffP);
+			money = lookup(this.moneyTable, floor, moneyP);
+			layout = lookup(this.layoutTable, floor, layoutP);
+			terrain = lookup(this.terrainTable, floor, terrainP);
+			shadows = lookup(this.shadowsTable, floor, shadowsP);
+			camouflage = lookup(this.camouflageTable, floor, camouflageP);
+			nature = lookup(this.naturePowerTable, floor, natureP);
+			secret = lookup(this.secretPowerTable, floor, secretP);
+			soundtrack = lookup(this.soundtrackTable, floor, soundtrackP);
+			shop = lookup(this.shopTable, floor, shopP);
+			monster = lookup(this.monsterHouseTable, floor, monsterP);
+			item = lookup(this.itemTable, floor, itemP);
+			pokemon = lookup(this.pokemonTable, floor, pokemonP);
+			trap = lookup(this.trapTable, floor, trapP);
+			buried = lookup(this.buriedTable, floor, buriedP);
+			boss = lookup(this.bossTable, floor, bossP);
 
 			hasChanged = diff != diffP;
 			hasChanged |= money != moneyP;
@@ -122,8 +145,8 @@ public class EditDungeonFloorController implements Initializable
 			{
 				if (startFloor != -1)
 				{
-					FloorData d = new FloorData(new FloorSet(startFloor, floor), diff, money, layout, terrain, (byte) shadows, camouflage, nature.id, secret,
-							soundtrack, (short) shop, (short) monster, (short) item, (short) pokemon, (short) trap, (short) buried, boss);
+					FloorData d = new FloorData(new FloorSet(startFloor, floor - 1), diffP, moneyP, layoutP, terrainP, (byte) shadowsP, camouflageP, natureP.id,
+							secretP, soundtrackP, (short) shopP, (short) monsterP, (short) itemP, (short) pokemonP, (short) trapP, (short) buriedP, bossP);
 					data.add(d);
 				}
 				startFloor = floor;
@@ -147,12 +170,9 @@ public class EditDungeonFloorController implements Initializable
 			bossP = boss;
 		}
 
-		if (startFloor != -1)
-		{
-			FloorData d = new FloorData(new FloorSet(startFloor, max), diff, money, layout, terrain, (byte) shadows, camouflage, nature.id, secret, soundtrack,
-					(short) shop, (short) monster, (short) item, (short) pokemon, (short) trap, (short) buried, boss);
-			data.add(d);
-		}
+		FloorData d = new FloorData(new FloorSet(startFloor == -1 ? 1 : startFloor, max), diff, money, layout, terrain, (byte) shadows, camouflage, nature.id,
+				secret, soundtrack, (short) shop, (short) monster, (short) item, (short) pokemon, (short) trap, (short) buried, boss);
+		data.add(d);
 
 		return data;
 	}

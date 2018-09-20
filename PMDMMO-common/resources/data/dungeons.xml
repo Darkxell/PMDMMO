@@ -7,9 +7,9 @@
           <part start="1" end="3" />
         </floors>
       </pokemon>
-      <pokemon id="102" level="1">
+      <pokemon id="191" level="1" weight="2">
         <floors>
-          <part floor="3" />
+          <part start="1" end="3" />
         </floors>
       </pokemon>
       <pokemon id="265" level="1" weight="2">
@@ -17,25 +17,25 @@
           <part start="1" end="3" />
         </floors>
       </pokemon>
-      <pokemon id="191" level="1" weight="2">
+      <pokemon id="102" level="1">
         <floors>
-          <part start="1" end="3" />
+          <part floor="3" />
         </floors>
       </pokemon>
     </encounters>
     <items>
       <group>
         <floors>
+          <part start="1" end="2" />
+        </floors>
+        <ids>0</ids>
+      </group>
+      <group>
+        <floors>
           <part floor="3" />
         </floors>
         <ids>7,11</ids>
         <chances>3,1</chances>
-      </group>
-      <group>
-        <floors>
-          <part start="1" end="2" />
-        </floors>
-        <ids>0</ids>
       </group>
     </items>
     <data>

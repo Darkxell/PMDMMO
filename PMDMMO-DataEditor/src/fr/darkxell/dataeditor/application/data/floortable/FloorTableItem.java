@@ -45,4 +45,10 @@ public abstract class FloorTableItem<T, D> implements Comparable<FloorTableItem<
 
 	public abstract void onValueEdited(D newValue);
 
+	@Override
+	public String toString()
+	{
+		return this.floor + ": " + this.value;
+	}
+
 }
