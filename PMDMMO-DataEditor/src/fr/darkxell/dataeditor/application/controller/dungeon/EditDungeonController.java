@@ -1,7 +1,6 @@
 package fr.darkxell.dataeditor.application.controller.dungeon;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import com.darkxell.common.dungeon.data.Dungeon;
@@ -40,7 +39,7 @@ public class EditDungeonController implements Initializable
 	{
 		return this.dungeonDataTabController.generateDungeon(this.dungeonPokemonTabController.generate(), this.dungeonItemsTabController.generate(),
 				this.dungeonShopItemsTabController.generate(), this.dungeonBuriedItemsTabController.generate(), this.dungeonTrapsTabController.generate(),
-				new ArrayList<>(), this.dungeonWeatherTabController.generate());
+				this.dungeonFloorTabController.generate(), this.dungeonWeatherTabController.generate());
 	}
 
 	@Override

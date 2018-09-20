@@ -1,11 +1,14 @@
 package fr.darkxell.dataeditor.application.controller.dungeon;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import com.darkxell.common.dungeon.data.Dungeon;
 import com.darkxell.common.dungeon.data.FloorData;
+import com.darkxell.common.dungeon.data.FloorSet;
 import com.darkxell.common.move.Move;
+import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.PokemonType;
 
 import fr.darkxell.dataeditor.application.controls.FloorTable;
@@ -21,6 +24,13 @@ import javafx.scene.control.TableView;
 
 public class EditDungeonFloorController implements Initializable
 {
+
+	private static <T, D> T lookup(TableView<FloorTableItem<T, D>> table, int floor)
+	{
+		for (FloorTableItem<T, D> item : table.getItems())
+			if (item.floor == floor) return item.value;
+		return null;
+	}
 
 	@FXML
 	public TableView<FloorTableItem<Boolean, String>> bossTable;
@@ -54,6 +64,98 @@ public class EditDungeonFloorController implements Initializable
 	public TableView<FloorTableItem<Integer, String>> terrainTable;
 	@FXML
 	public TableView<FloorTableItem<Integer, String>> trapTable;
+
+	public ArrayList<FloorData> generate()
+	{
+		int max = 0;
+
+		ArrayList<FloorData> data = new ArrayList<>();
+		int diffP = 0, moneyP = 0, layoutP = 0, terrainP = 0, shadowsP = 0, soundtrackP = 0, shopP = 0, monsterP = 0, itemP = 0, pokemonP = 0, trapP = 0,
+				buriedP = 0;
+		int diff = diffP, money = moneyP, layout = layoutP, terrain = terrainP, shadows = shadowsP, soundtrack = soundtrackP, shop = shopP, monster = monsterP,
+				item = itemP, pokemon = pokemonP, trap = trapP, buried = buriedP;
+		PokemonType camouflage = PokemonType.Unknown, camouflageP = PokemonType.Unknown;
+		Move nature = MoveRegistry.ATTACK, natureP = MoveRegistry.ATTACK;
+		String secret = null, secretP = null;
+		boolean boss = false, bossP = false;
+		boolean hasChanged;
+		int startFloor = -1;
+
+		for (int floor = 1; floor <= max; ++floor)
+		{
+			diff = lookup(this.difficultyTable, floor);
+			money = lookup(this.moneyTable, floor);
+			layout = lookup(this.layoutTable, floor);
+			terrain = lookup(this.terrainTable, floor);
+			shadows = lookup(this.shadowsTable, floor);
+			camouflage = lookup(this.camouflageTable, floor);
+			nature = lookup(this.naturePowerTable, floor);
+			secret = lookup(this.secretPowerTable, floor);
+			soundtrack = lookup(this.soundtrackTable, floor);
+			shop = lookup(this.shopTable, floor);
+			monster = lookup(this.monsterHouseTable, floor);
+			item = lookup(this.itemTable, floor);
+			pokemon = lookup(this.pokemonTable, floor);
+			trap = lookup(this.trapTable, floor);
+			buried = lookup(this.buriedTable, floor);
+			boss = lookup(this.bossTable, floor);
+
+			hasChanged = diff != diffP;
+			hasChanged |= money != moneyP;
+			hasChanged |= layout != layoutP;
+			hasChanged |= terrain != terrainP;
+			hasChanged |= shadows != shadowsP;
+			hasChanged |= camouflage != camouflageP;
+			hasChanged |= nature != natureP;
+			hasChanged |= (secret == null) != (secretP == null);
+			hasChanged |= secret != null && !secret.equals(secretP);
+			hasChanged |= soundtrack != soundtrackP;
+			hasChanged |= shop != shopP;
+			hasChanged |= monster != monsterP;
+			hasChanged |= item != itemP;
+			hasChanged |= pokemon != pokemonP;
+			hasChanged |= trap != trapP;
+			hasChanged |= buried != buriedP;
+			hasChanged |= boss != bossP;
+
+			if (hasChanged)
+			{
+				if (startFloor != -1)
+				{
+					FloorData d = new FloorData(new FloorSet(startFloor, floor), diff, money, layout, terrain, (byte) shadows, camouflage, nature.id, secret,
+							soundtrack, (short) shop, (short) monster, (short) item, (short) pokemon, (short) trap, (short) buried, boss);
+					data.add(d);
+				}
+				startFloor = floor;
+			}
+
+			diffP = diff;
+			moneyP = money;
+			layoutP = layout;
+			terrainP = terrain;
+			shadowsP = shadows;
+			camouflageP = camouflage;
+			natureP = nature;
+			secretP = secret;
+			soundtrackP = soundtrack;
+			shopP = shop;
+			monsterP = monster;
+			itemP = item;
+			pokemonP = pokemon;
+			trapP = trap;
+			buriedP = buried;
+			bossP = boss;
+		}
+
+		if (startFloor != -1)
+		{
+			FloorData d = new FloorData(new FloorSet(startFloor, max), diff, money, layout, terrain, (byte) shadows, camouflage, nature.id, secret, soundtrack,
+					(short) shop, (short) monster, (short) item, (short) pokemon, (short) trap, (short) buried, boss);
+			data.add(d);
+		}
+
+		return data;
+	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
