@@ -117,7 +117,7 @@
       </group>
     </items>
     <data>
-      <d difficulty="1" money="2" layout="2" terrain="1" camouflage="11" nature="709" secret="Poison" soundtrack="2" items="4" pokemon="4" traps="3">
+      <d difficulty="1" money="2" layout="3" terrain="1" camouflage="11" nature="709" secret="Poison" soundtrack="2" items="4" pokemon="4" traps="3">
         <floors>
           <part start="1" end="2" />
         </floors>
@@ -217,7 +217,7 @@
       </group>
     </items>
     <data>
-      <d difficulty="1" money="3" layout="2" terrain="2" camouflage="5" nature="401" secret="Confusion" soundtrack="3" items="3" pokemon="5" traps="3">
+      <d difficulty="1" money="3" layout="3" terrain="2" camouflage="5" nature="401" secret="Confusion" soundtrack="3" items="3" pokemon="5" traps="3">
         <floors>
           <part start="1" end="2" />
         </floors>
@@ -227,14 +227,19 @@
           <part start="3" end="5" />
         </floors>
       </d>
-      <d terrain="3">
+      <d layout="4" terrain="3">
         <floors>
           <part floor="6" />
         </floors>
       </d>
-      <d items="5" pokemon="7">
+      <d layout="6" items="5" pokemon="7">
         <floors>
-          <part start="7" end="8" />
+          <part floor="7" />
+        </floors>
+      </d>
+      <d layout="5">
+        <floors>
+          <part floor="8" />
         </floors>
       </d>
       <d layout="0" terrain="-1" bossfloor="true">
