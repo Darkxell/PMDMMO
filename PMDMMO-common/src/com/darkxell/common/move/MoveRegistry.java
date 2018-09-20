@@ -1,7 +1,8 @@
 package com.darkxell.common.move;
 
 import java.io.File;
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 
 import org.jdom2.Element;
@@ -23,9 +24,11 @@ public final class MoveRegistry
 	}
 
 	/** @return All Moves. */
-	public static Collection<Move> list()
+	public static ArrayList<Move> list()
 	{
-		return moves.values();
+		ArrayList<Move> list = new ArrayList<Move>(moves.values());
+		list.sort(Comparator.naturalOrder());
+		return list;
 	}
 
 	/** Loads this Registry for the Client. */

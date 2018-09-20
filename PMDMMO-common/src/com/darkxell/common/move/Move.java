@@ -233,6 +233,12 @@ public class Move implements Comparable<Move>
 		this.effect.prepareUse(move, floor, events);
 	}
 
+	@Override
+	public String toString()
+	{
+		return this.name().toString().replaceAll("<.*?>", "");
+	}
+
 	public Element toXML()
 	{
 		Element root = new Element("move");

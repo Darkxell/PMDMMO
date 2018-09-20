@@ -10,7 +10,7 @@ import com.darkxell.client.mechanics.cutscene.event.DialogCutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.event.DialogCutsceneEvent.CutsceneDialogScreen;
 
 import fr.darkxell.dataeditor.application.DataEditor;
-import fr.darkxell.dataeditor.application.controls.CustomListCell;
+import fr.darkxell.dataeditor.application.controls.CustomList;
 import fr.darkxell.dataeditor.application.controls.CustomListCell.ListCellParent;
 import fr.darkxell.dataeditor.application.util.FXUtils;
 import javafx.collections.ObservableList;
@@ -50,9 +50,7 @@ public class DialogEventController extends EventController implements ListCellPa
 	{
 		instance = this;
 		super.initialize(location, resources);
-		this.screenList.setCellFactory(param -> {
-			return new CustomListCell<>(this, "Dialog Screen").setCanRename(false);
-		});
+		CustomList.setup(this, this.screenList, "Dialog Screen", true, false, true, true, true);
 	}
 
 	public void onCreate()

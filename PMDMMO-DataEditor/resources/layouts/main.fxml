@@ -32,6 +32,9 @@
 				<Tab fx:id="animationsTab" text="Animation tester">
 					<fx:include fx:id="animationsTabPage" source="animations/animations.fxml" />
 				</Tab>
+				<Tab fx:id="dungeonsTab" text="Dungeons">
+					<fx:include fx:id="dungeonsTabPage" source="dungeons/dungeons.fxml" />
+				</Tab>
 			</tabs>
 		</TabPane>
 	</center>

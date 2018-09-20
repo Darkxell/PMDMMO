@@ -37,17 +37,32 @@ public final class DungeonRegistry
 		for (Element e : root.getChildren("dungeon", root.getNamespace()))
 		{
 			Dungeon dungeon = new Dungeon(e);
-			dungeons.put(dungeon.id, dungeon);
+			register(dungeon);
 		}
+	}
+
+	public static void register(Dungeon dungeon)
+	{
+		dungeons.put(dungeon.id, dungeon);
+	}
+
+	public static void save(File file)
+	{
+		Element xml = new Element("dungeons");
+		for (Dungeon dungeon : dungeons.values())
+			xml.addContent(dungeon.toXML());
+		XMLUtils.saveFile(file, xml);
 	}
 
 	/** Saves this Registry for the Client. */
 	public static void saveClient()
 	{
-		Element xml = new Element("dungeons");
-		for (Dungeon dungeon : dungeons.values())
-			xml.addContent(dungeon.toXML());
-		XMLUtils.saveFile(new File("resources/data/dungeons.xml"), xml);
+		save(new File("resources/data/dungeons.xml"));
+	}
+
+	public static void unregister(int id)
+	{
+		dungeons.remove(id);
 	}
 
 }

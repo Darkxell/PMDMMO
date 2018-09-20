@@ -2,6 +2,8 @@ package com.darkxell.common.dungeon.data;
 
 import org.jdom2.Element;
 
+import com.darkxell.common.trap.Trap;
+import com.darkxell.common.trap.TrapRegistry;
 import com.darkxell.common.util.XMLUtils;
 
 /** Describes how a Traps appear in a Dungeon. */
@@ -51,6 +53,14 @@ public class DungeonTrapGroup
 		if (chances) root.addContent(XMLUtils.toXML("chances", this.chances));
 
 		return root;
+	}
+
+	public Trap[] traps()
+	{
+		Trap[] traps = new Trap[this.ids.length];
+		for (int i = 0; i < traps.length; ++i)
+			traps[i] = TrapRegistry.find(this.ids[i]);
+		return traps;
 	}
 
 }

@@ -7,7 +7,7 @@ import java.util.ResourceBundle;
 
 import com.darkxell.client.mechanics.cutscene.Cutscene;
 
-import fr.darkxell.dataeditor.application.controls.CustomListCell;
+import fr.darkxell.dataeditor.application.controls.CustomList;
 import fr.darkxell.dataeditor.application.controls.CustomListCell.ListCellParent;
 import fr.darkxell.dataeditor.application.data.Cutscenes;
 import javafx.fxml.FXML;
@@ -44,9 +44,7 @@ public class CutscenesTabController implements Initializable, ListCellParent<Cut
 	public void initialize(URL location, ResourceBundle resources)
 	{
 		instance = this;
-		this.cutscenesList.setCellFactory(param -> {
-			return new CustomListCell<>(CutscenesTabController.instance, "Cutscene").setCanOrder(false);
-		});
+		CustomList.setup(this, this.cutscenesList, "Cutscene", true, true, true, true, false);
 		this.cutscenesList.getItems().addAll(Cutscenes.values());
 		this.cutscenesList.getItems().sort(Comparator.naturalOrder());
 

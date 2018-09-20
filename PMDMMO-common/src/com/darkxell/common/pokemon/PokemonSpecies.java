@@ -14,7 +14,7 @@ import com.darkxell.common.pokemon.ability.Ability;
 import com.darkxell.common.util.XMLUtils;
 import com.darkxell.common.util.language.Message;
 
-public class PokemonSpecies
+public class PokemonSpecies implements Comparable<PokemonSpecies>
 {
 	public static final double SHINY_CHANCE = 1d / 8192;
 	// public static final double SHINY_CHANCE = .5; // Used to test shiny Pokemon
@@ -115,6 +115,12 @@ public class PokemonSpecies
 	public BaseStats baseStatsIncrease(int level)
 	{
 		return this.baseStats.get(level);
+	}
+
+	@Override
+	public int compareTo(PokemonSpecies o)
+	{
+		return Integer.compare(this.id, o.id);
 	}
 
 	@SuppressWarnings("unchecked")

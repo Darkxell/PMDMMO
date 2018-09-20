@@ -8,7 +8,7 @@ import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.util.XMLUtils;
 
-public class FloorData
+public class FloorData implements Comparable<FloorData>
 {
 
 	public static final byte NO_SHADOW = 0, NORMAL_SHADOW = 1, DENSE_SHADOW = 2;
@@ -22,7 +22,7 @@ public class FloorData
 	private PokemonType camouflageType;
 	/** The Floor's difficulty. */
 	private int difficulty;
-	/** Describes which Floors this Data applies to. */
+	/** Describes which Floors this Data applies to. This should always be a continuous single set of floors [start - end]. */
 	private FloorSet floors;
 	/** True if this is a Boss Floor. */
 	private boolean isBossFloor = false;
@@ -92,6 +92,12 @@ public class FloorData
 		return this.camouflageType;
 	}
 
+	@Override
+	public int compareTo(FloorData o)
+	{
+		return this.floors.compareTo(o.floors);
+	}
+
 	/** @return A copy of this Data. */
 	public FloorData copy()
 	{
@@ -130,6 +136,11 @@ public class FloorData
 		return Layout.find(this.layout);
 	}
 
+	public int layoutID()
+	{
+		return this.layout;
+	}
+
 	public void load(Element xml)
 	{
 		this.floors = new FloorSet(xml.getChild(FloorSet.XML_ROOT, xml.getNamespace()));
@@ -159,6 +170,11 @@ public class FloorData
 	public Move naturePower()
 	{
 		return MoveRegistry.find(this.naturePower);
+	}
+
+	public int naturePowerID()
+	{
+		return this.naturePower;
 	}
 
 	public short pokemonDensity()
@@ -206,7 +222,7 @@ public class FloorData
 		if (previous != null || this.naturePower != 0) XMLUtils.setAttribute(xml, "nature", this.naturePower, previous != null ? previous.naturePower : -1);
 		if (previous != null || this.secretPower != null)
 			XMLUtils.setAttribute(xml, "secret", this.secretPower, previous != null ? previous.secretPower : null);
-		if (previous != null || this.soundtrack != 0) XMLUtils.setAttribute(xml, "soundtrack", this.soundtrack, previous != null ? previous.soundtrack : null);
+		if (previous != null || this.soundtrack != 0) XMLUtils.setAttribute(xml, "soundtrack", this.soundtrack, previous != null ? previous.soundtrack : 0);
 		if (previous != null || this.shopChance != 0) XMLUtils.setAttribute(xml, "shop", this.shopChance, previous != null ? previous.shopChance : -1);
 		if (previous != null || this.monsterHouseChance != 0)
 			XMLUtils.setAttribute(xml, "mhouse", this.monsterHouseChance, previous != null ? previous.monsterHouseChance : -1);
