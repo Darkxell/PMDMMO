@@ -91,7 +91,7 @@ public class ItemSelectionEvent extends DungeonEvent implements Communicable
 				if (stack.quantity() <= 0) this.source.deleteItem(this.sourceIndex);
 			}
 
-			this.resultingEvents.add(new ItemUseEvent(this.floor, this.item, user, this.target));
+			this.resultingEvents.add(new ItemUseEvent(this.floor, this.item, this.user, this.target));
 		}
 		return super.processServer();
 	}

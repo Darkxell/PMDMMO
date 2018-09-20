@@ -6,6 +6,7 @@ import static com.darkxell.common.item.effects.ThrowableItemEffect.ThrowableTraj
 import java.util.Collection;
 import java.util.HashMap;
 
+import com.darkxell.common.item.effects.CureStatusFoodItemEffect;
 import com.darkxell.common.item.effects.DrinkItemEffect;
 import com.darkxell.common.item.effects.ElixirItemEffect;
 import com.darkxell.common.item.effects.EscapeDungeonItemEffect;
@@ -16,6 +17,7 @@ import com.darkxell.common.item.effects.StatBoostDrinkItemEffect;
 import com.darkxell.common.item.effects.ThrowableItemEffect;
 import com.darkxell.common.pokemon.BaseStats.Stat;
 import com.darkxell.common.pokemon.PokemonType;
+import com.darkxell.common.status.StatusConditions;
 
 /** Holds all Move Effects. */
 public final class ItemEffects
@@ -34,7 +36,8 @@ public final class ItemEffects
 	public static final ItemEffect Heal_max_2_Food_5_0_0 = new HealFoodItemEffect(8, 5, 0, 0, 1000, 2);
 	public static final ItemEffect Cure_paralysis_Food_5_0_0 = new FoodItemEffect(9, 5, 0, 0);
 	public static final ItemEffect Cure_sleep_Food_5_0_0 = new FoodItemEffect(10, 5, 0, 0);
-	public static final ItemEffect Cure_poison_Food_5_0_0 = new FoodItemEffect(11, 5, 0, 0);
+	public static final ItemEffect Cure_poison_Food_5_0_0 = new CureStatusFoodItemEffect(11, 5, 0, 0, StatusConditions.Poisoned,
+			StatusConditions.Badly_poisoned);
 	public static final ItemEffect Cure_burn_Food_5_0_0 = new FoodItemEffect(12, 5, 0, 0);
 
 	public static final ItemEffect Thrown_arc_15 = new ThrowableItemEffect(21, 15, Arc);
