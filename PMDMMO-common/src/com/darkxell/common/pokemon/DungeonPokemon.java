@@ -6,7 +6,6 @@ import java.util.function.Predicate;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.event.DungeonEvent;
-import com.darkxell.common.event.pokemon.StatusConditionCreatedEvent;
 import com.darkxell.common.item.Item.ItemAction;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.player.ItemContainer;
@@ -371,7 +370,7 @@ public class DungeonPokemon implements ItemContainer
 		this.stats.onFloorStart(floor, events);
 		this.ability().onFloorStart(floor, this, events);
 		this.regenCounter = 0;
-		events.add(new StatusConditionCreatedEvent(floor, StatusConditions.Poisoned.create(this, floor, floor.random)));
+		// events.add(new StatusConditionCreatedEvent(floor, StatusConditions.Paralyzed.create(this, floor, floor.random)));
 	}
 
 	/** Called at the beginning of each turn. */

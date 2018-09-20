@@ -34,7 +34,7 @@ public final class ItemEffects
 
 	public static final ItemEffect Heal_100_0_Food_5_0_0 = new HealFoodItemEffect(7, 5, 0, 0, 100, 0);
 	public static final ItemEffect Heal_max_2_Food_5_0_0 = new HealFoodItemEffect(8, 5, 0, 0, 1000, 2);
-	public static final ItemEffect Cure_paralysis_Food_5_0_0 = new FoodItemEffect(9, 5, 0, 0);
+	public static final ItemEffect Cure_paralysis_Food_5_0_0 = new CureStatusFoodItemEffect(9, 5, 0, 0, StatusConditions.Paralyzed);
 	public static final ItemEffect Cure_sleep_Food_5_0_0 = new FoodItemEffect(10, 5, 0, 0);
 	public static final ItemEffect Cure_poison_Food_5_0_0 = new CureStatusFoodItemEffect(11, 5, 0, 0, StatusConditions.Poisoned,
 			StatusConditions.Badly_poisoned);
