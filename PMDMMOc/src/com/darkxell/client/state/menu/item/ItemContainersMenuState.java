@@ -543,7 +543,7 @@ public class ItemContainersMenuState extends AbstractMenuState
 		this.currentAction = action;
 		if (action == ItemAction.USE)
 		{
-			if (i.item().effect().isUsedOnTeamMember()) nextState = new TeamMenuState(this, dungeonState).setOpaque(this.isOpaque);
+			if (i.item().effect().isUsedOnTeamMember()) nextState = new TeamMenuState(this, dungeonState, this).setOpaque(this.isOpaque);
 			else Persistance.eventProcessor().processEvent(new ItemSelectionEvent(Persistance.floor, i.item(), user, null, container, index));
 		} else if (action == ItemAction.TRASH)
 		{

@@ -44,6 +44,12 @@ public class ItemEffect
 		return new Message("item.use");
 	}
 
+	/** @return True if the Item disappears after use. */
+	public boolean isConsummable()
+	{
+		return true;
+	}
+
 	public boolean isThrowable()
 	{
 		return true;

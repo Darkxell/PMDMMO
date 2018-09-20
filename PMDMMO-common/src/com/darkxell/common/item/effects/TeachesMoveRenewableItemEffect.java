@@ -27,6 +27,12 @@ public class TeachesMoveRenewableItemEffect extends ItemEffect
 	}
 
 	@Override
+	public boolean isConsummable()
+	{
+		return false;
+	}
+
+	@Override
 	public boolean isUsable()
 	{
 		return true;

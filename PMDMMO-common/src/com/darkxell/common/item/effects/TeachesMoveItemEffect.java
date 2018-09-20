@@ -19,6 +19,18 @@ public class TeachesMoveItemEffect extends TeachesMoveRenewableItemEffect
 	}
 
 	@Override
+	public Message description(Item item)
+	{
+		return new Message("item.info.tm").addReplacement("<move>", this.move().name());
+	}
+
+	@Override
+	public boolean isConsummable()
+	{
+		return true;
+	}
+
+	@Override
 	public void use(Floor floor, Item item, DungeonPokemon pokemon, DungeonPokemon target, ArrayList<DungeonEvent> events)
 	{
 		if (pokemon.player() != null)
@@ -26,11 +38,5 @@ public class TeachesMoveItemEffect extends TeachesMoveRenewableItemEffect
 			if (pokemon.player().inventory().isFull()) pokemon.tile().setItem(new ItemStack(-1 * item.id));
 			else pokemon.player().inventory().addItem(new ItemStack(-1 * item.id));
 		}
-	}
-
-	@Override
-	public Message description(Item item)
-	{
-		return new Message("item.info.tm").addReplacement("<move>", this.move().name());
 	}
 }
