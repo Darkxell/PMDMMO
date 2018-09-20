@@ -31,7 +31,7 @@ public final class DungeonRegistry
 	/** Loads this Registry for the Client. */
 	public static void load()
 	{
-		Logger.instance().debug("Loading Dungeons...");
+		Logger.i("Loading Dungeons...");
 
 		Element root = XMLUtils.read(PokemonRegistry.class.getResourceAsStream("/data/dungeons.xml"));
 		for (Element e : root.getChildren("dungeon", root.getNamespace()))
