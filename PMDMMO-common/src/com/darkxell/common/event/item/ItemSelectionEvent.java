@@ -81,12 +81,18 @@ public class ItemSelectionEvent extends DungeonEvent implements Communicable
 	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{
-		this.messages.add(this.item.effect().getUseEffectMessage(this));
-		ItemStack stack = this.source.getItem(this.sourceIndex);
-		stack.setQuantity(stack.quantity() - 1);
-		if (stack.quantity() <= 0) this.source.deleteItem(this.sourceIndex);
+		if (this.item.effect().isUsable())
+		{
+			this.messages.add(this.item.effect().getUseEffectMessage(this));
+			if (this.item.effect().isConsummable())
+			{
+				ItemStack stack = this.source.getItem(this.sourceIndex);
+				stack.setQuantity(stack.quantity() - 1);
+				if (stack.quantity() <= 0) this.source.deleteItem(this.sourceIndex);
+			}
 
-		this.resultingEvents.add(new ItemUseEvent(this.floor, this.item, user, this.target));
+			this.resultingEvents.add(new ItemUseEvent(this.floor, this.item, user, this.target));
+		}
 		return super.processServer();
 	}
 
