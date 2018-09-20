@@ -91,6 +91,7 @@ public class EditDungeonFloorController implements Initializable
 		max = findMax(this.trapTable, max);
 		max = findMax(this.buriedTable, max);
 		max = findMax(this.bossTable, max);
+		max = Math.max(max, EditDungeonDataController.instance.currentFloorCount());
 
 		ArrayList<FloorData> data = new ArrayList<>();
 		int diffP = 0, moneyP = 0, layoutP = 0, terrainP = 0, shadowsP = 0, soundtrackP = 0, shopP = 0, monsterP = 0, itemP = 0, pokemonP = 0, trapP = 0,
@@ -145,8 +146,9 @@ public class EditDungeonFloorController implements Initializable
 			{
 				if (startFloor != -1)
 				{
-					FloorData d = new FloorData(new FloorSet(startFloor, floor - 1), diffP, moneyP, layoutP, terrainP, (byte) shadowsP, camouflageP, natureP.id,
-							secretP, soundtrackP, (short) shopP, (short) monsterP, (short) itemP, (short) pokemonP, (short) trapP, (short) buriedP, bossP);
+					FloorData d = new FloorData(new FloorSet(startFloor, floor - 1), diffP, moneyP, layoutP, terrainP, (byte) shadowsP, camouflageP,
+							natureP == null ? 0 : natureP.id, secretP, soundtrackP, (short) shopP, (short) monsterP, (short) itemP, (short) pokemonP,
+							(short) trapP, (short) buriedP, bossP);
 					data.add(d);
 				}
 				startFloor = floor;
