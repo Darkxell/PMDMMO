@@ -334,7 +334,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	private void processItemEvent(ItemSelectionEvent event)
 	{
 		AnimationState a = new AnimationState(Persistance.dungeonState);
-		if (event.item().effect() instanceof FoodItemEffect)
+		if (event.item().effect() instanceof FoodItemEffect && !Animations.existsItemAnimation(event.item()))
 			a.animation = Animations.getCustomAnimation(event.target() == null ? event.user() : event.target(), 0, this.currentAnimEnd);
 		else a.animation = Animations.getItemAnimation(event.target() == null ? event.user() : event.target(), event.item(), this.currentAnimEnd);
 		if (a.animation != null)

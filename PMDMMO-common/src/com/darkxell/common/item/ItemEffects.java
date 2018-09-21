@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.HashMap;
 
 import com.darkxell.common.item.effects.CureStatusFoodItemEffect;
+import com.darkxell.common.item.effects.DealDamageFoodItemEffect;
 import com.darkxell.common.item.effects.DrinkItemEffect;
 import com.darkxell.common.item.effects.ElixirItemEffect;
 import com.darkxell.common.item.effects.EscapeDungeonItemEffect;
@@ -48,6 +49,7 @@ public final class ItemEffects
 	public static final ItemEffect Thrown_straight_1 = new ThrowableItemEffect(25, 10, Straight);
 	public static final ItemEffect Thrown_straight_2 = new ThrowableItemEffect(26, 20, Straight);
 
+	public static final ItemEffect Damage_45_Food_5_0_0 = new DealDamageFoodItemEffect(31, 5, 0, 0, 45);
 	public static final ItemEffect Food_5_0_0 = new FoodItemEffect(39, 5, 0, 0);
 	public static final ItemEffect Inflict_Asleep_Food_5_0_0 = new InflictStatusFoodItemEffect(42, 5, 0, 0, StatusConditions.Asleep);
 

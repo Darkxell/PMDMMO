@@ -8,6 +8,7 @@ import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
 import com.darkxell.common.event.stats.ExperienceGeneratedEvent;
 import com.darkxell.common.move.effects.HPRecoilEffect;
 import com.darkxell.common.move.effects.RecoilEffect;
+import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Message;
 import com.darkxell.common.weather.WeatherDamaging;
@@ -19,6 +20,22 @@ public class DamageDealtEvent extends DungeonEvent
 	{
 		/** @return The ExperienceGainedEvent to add experience to. */
 		public ExperienceGeneratedEvent getExperienceEvent();
+	}
+
+	public static class DefaultDamageSource implements DamageSource
+	{
+		public final ExperienceGeneratedEvent experienceEvent;
+
+		public DefaultDamageSource(Floor floor, Player player)
+		{
+			this.experienceEvent = player == null ? null : new ExperienceGeneratedEvent(floor, player);
+		}
+
+		@Override
+		public ExperienceGeneratedEvent getExperienceEvent()
+		{
+			return this.experienceEvent;
+		}
 	}
 
 	public final int damage;

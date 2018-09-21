@@ -59,6 +59,11 @@ public final class Animations
 		return registry.containsKey(id);
 	}
 
+	public static boolean existsItemAnimation(Item item)
+	{
+		return existsAnimation(item.id, items);
+	}
+
 	public static boolean existsMoveAnimation(Move move)
 	{
 		return existsAnimation(move.id, moves);

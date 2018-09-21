@@ -22,7 +22,7 @@
   <item id="26" category="THROWABLE" price="0" sell="5" effect="26" sprite="21" stackable="true"/>
   <item id="27" category="THROWABLE" price="0" sell="6" effect="26" sprite="22" stackable="true"/>
   <item id="28" category="THROWABLE" price="0" sell="4" effect="26" sprite="23" stackable="true"/>
-  <item id="31" category="SEEDS" price="30" sell="15" effect="39" sprite="56"/>
+  <item id="31" category="SEEDS" price="30" sell="15" effect="31" sprite="56"/>
   <item id="32" category="SEEDS" price="60" sell="30" effect="39" sprite="56"/>
   <item id="33" category="SEEDS" price="10" sell="5" effect="39" sprite="56"/>
   <item id="34" category="SEEDS" price="60" sell="20" effect="39" sprite="56"/>

@@ -134,6 +134,17 @@
       <default sprites="none" delaytime="15" state="rumble"/>
     </item>
     <item id="22" clone="items/21"/>
+    <item id="31">
+      <default width="56" height="56" alsoplay="0" spriteduration="4">-1,-1,-1,-1,-1,0,1,2,3,4,5,6,7</default>
+      <north y="52"/>
+      <northeast x="4" y="52"/>
+      <east x="4"/>
+      <southeast x="4" y="4"/>
+      <south y="4"/>
+      <southwest x="52" y="4"/>
+      <west x="52"/>
+      <northwest x="52" y="52"/>
+    </item>
     <item id="86">
       <default width="64" height="228" y="210" backsprites="only">0,0,1,1,2,2,3,3,4,4,3,3,5,4,-1,5,4,3,5,4,-1,5,4,3,5,2,1,0</default>
     </item>
