@@ -28,13 +28,14 @@ public class Util
 		player.getTeamLeader().setMove(1, new LearnedMove(1));
 		player.getTeamLeader().setMove(2, new LearnedMove(404));
 		player.getTeamLeader().setMove(3, new LearnedMove(809));
-		//player.getTeamLeader().getData().abilityid = 42;
+		// player.getTeamLeader().getData().abilityid = 42;
 
 		for (int i = 1; i < 13; ++i)
 			player.inventory().addItem(new ItemStack(i));
 		player.inventory().addItem(new ItemStack(86));
-		for (int i = 21; i < 28; ++i)
+		for (int i = 21; i < 22; ++i)
 			player.inventory().addItem(new ItemStack(i, 6));
+		player.inventory().addItem(new ItemStack(42));
 		player.inventory().addItem(new ItemStack(223));
 
 		for (int id = 201; id <= 386; id += 3)

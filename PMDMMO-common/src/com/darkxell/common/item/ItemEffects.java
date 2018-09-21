@@ -13,6 +13,7 @@ import com.darkxell.common.item.effects.EscapeDungeonItemEffect;
 import com.darkxell.common.item.effects.FoodItemEffect;
 import com.darkxell.common.item.effects.GummiItemEffect;
 import com.darkxell.common.item.effects.HealFoodItemEffect;
+import com.darkxell.common.item.effects.InflictStatusFoodItemEffect;
 import com.darkxell.common.item.effects.StatBoostDrinkItemEffect;
 import com.darkxell.common.item.effects.ThrowableItemEffect;
 import com.darkxell.common.pokemon.BaseStats.Stat;
@@ -48,6 +49,7 @@ public final class ItemEffects
 	public static final ItemEffect Thrown_straight_2 = new ThrowableItemEffect(26, 20, Straight);
 
 	public static final ItemEffect Food_5_0_0 = new FoodItemEffect(39, 5, 0, 0);
+	public static final ItemEffect Inflict_Asleep_Food_5_0_0 = new InflictStatusFoodItemEffect(42, 5, 0, 0, StatusConditions.Asleep);
 
 	public static final ItemEffect Gummi_Normal = new GummiItemEffect(61, 20, 0, 0, PokemonType.Normal);
 	public static final ItemEffect Gummi_Fighting = new GummiItemEffect(62, 20, 0, 0, PokemonType.Fighting);

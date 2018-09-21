@@ -33,7 +33,7 @@
   <item id="39" category="SEEDS" price="0" sell="1" effect="39" sprite="56"/>
   <item id="40" category="SEEDS" price="30" sell="15" effect="39" sprite="56"/>
   <item id="41" category="SEEDS" price="800" sell="150" effect="39" sprite="56"/>
-  <item id="42" category="SEEDS" price="70" sell="35" effect="39" sprite="56"/>
+  <item id="42" category="SEEDS" price="70" sell="35" effect="42" sprite="56"/>
   <item id="43" category="SEEDS" price="50" sell="25" effect="39" sprite="56"/>
   <item id="44" category="SEEDS" price="60" sell="30" effect="39" sprite="56"/>
   <item id="45" category="SEEDS" price="20" sell="10" effect="39" sprite="56"/>
