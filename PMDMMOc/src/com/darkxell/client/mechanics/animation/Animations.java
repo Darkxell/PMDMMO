@@ -12,6 +12,7 @@ import com.darkxell.client.mechanics.animation.movement.PokemonAnimationMovement
 import com.darkxell.client.mechanics.animation.spritemovement.SpritesetAnimationMovement;
 import com.darkxell.client.resources.images.RegularSpriteSet;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
+import com.darkxell.client.state.dungeon.ProjectileAnimationState.ProjectileMovement;
 import com.darkxell.common.event.stats.StatChangedEvent;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.ItemRegistry;
@@ -413,6 +414,20 @@ public final class Animations
 			return false;
 		}
 		return XMLUtils.getAttribute(e.getChild("default", e.getNamespace()), "playsforeachtarget", false);
+	}
+
+	public static ProjectileMovement projectileMovement(int id)
+	{
+		if (!existsProjectileAnimation(id)) return ProjectileMovement.STRAIGHT;
+		Element e = projectiles.get(id);
+		if (e == null) return ProjectileMovement.STRAIGHT;
+		String movement = XMLUtils.getAttribute(e.getChild("default", e.getNamespace()), "movement", "STRAIGHT");
+		if (movement != null) try
+		{
+			return ProjectileMovement.valueOf(movement.toUpperCase());
+		} catch (Exception e2)
+		{}
+		return ProjectileMovement.STRAIGHT;
 	}
 
 	private Animations()

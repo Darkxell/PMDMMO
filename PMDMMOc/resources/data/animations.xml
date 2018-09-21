@@ -130,6 +130,10 @@
     </c>
   </custom>
   <items>
+    <item id="21">
+      <default sprites="none" delaytime="15" state="rumble"/>
+    </item>
+    <item id="22" clone="items/21"/>
     <item id="86">
       <default width="64" height="228" y="210" backsprites="only">0,0,1,1,2,2,3,3,4,4,3,3,5,4,-1,5,4,3,5,4,-1,5,4,3,5,2,1,0</default>
     </item>
@@ -138,8 +142,8 @@
     <move id="0">
       <default sprites="none" delaytime="25" sound="move-basicattack"/>
     </move>
-    <move id="1" oriented="true">
-      <default state="special" width="96" height="96">-1,-1,-1,-1,-1,-1,-1,-1,0,1,2,3,4,5,6,7</default>
+    <move id="1">
+      <default state="special" delaytime="15" sprites="none"/>
     </move>
     <move id="2">
       <default state="charge" width="32" height="32">0,1,2,3,4,5,6,7,8</default>
@@ -643,6 +647,15 @@
     </movetarget>
   </movetargets>
   <projectiles>
+    <projectile id="21">
+      <default sprites="/../tilesets/items" spriteduration="5" width="16" height="16" movement="arc">16</default>
+    </projectile>
+    <projectile id="22">
+      <default sprites="/../tilesets/items" spriteduration="5" width="16" height="16" movement="arc">17</default>
+    </projectile>
+    <projectile id="1001">
+      <default spriteduration="5" width="16" height="16" movement="arc">0</default>
+    </projectile>
     <projectile id="1046" clone="projectiles/1666"/>
     <projectile id="1064">
       <default width="16" height="16">0,1</default>

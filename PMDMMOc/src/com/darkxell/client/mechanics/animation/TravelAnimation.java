@@ -8,7 +8,7 @@ import com.darkxell.common.dungeon.floor.Tile;
 public class TravelAnimation
 {
 
-	private Point2D current;
+	protected Point2D current;
 	public final Point2D origin, destination, distance;
 
 	public TravelAnimation(Point2D origin, Point2D destination)

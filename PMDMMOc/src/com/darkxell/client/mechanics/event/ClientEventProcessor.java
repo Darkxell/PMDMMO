@@ -51,6 +51,7 @@ import com.darkxell.common.event.item.ItemMovedEvent;
 import com.darkxell.common.event.item.ItemSelectionEvent;
 import com.darkxell.common.event.item.ItemSwappedEvent;
 import com.darkxell.common.event.item.MoneyCollectedEvent;
+import com.darkxell.common.event.item.ProjectileThrownEvent;
 import com.darkxell.common.event.move.MoveDiscoveredEvent;
 import com.darkxell.common.event.move.MoveLearnedEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent;
@@ -68,6 +69,7 @@ import com.darkxell.common.event.stats.ExperienceGeneratedEvent;
 import com.darkxell.common.event.stats.LevelupEvent;
 import com.darkxell.common.event.stats.SpeedChangedEvent;
 import com.darkxell.common.event.stats.StatChangedEvent;
+import com.darkxell.common.item.Item;
 import com.darkxell.common.item.effects.FoodItemEffect;
 import com.darkxell.common.player.Inventory;
 import com.darkxell.common.pokemon.BaseStats;
@@ -178,6 +180,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		if (event instanceof ItemMovedEvent) this.processItemMovedEvent((ItemMovedEvent) event);
 		if (event instanceof ItemSwappedEvent) this.processItemSwappedEvent((ItemSwappedEvent) event);
 		if (event instanceof MoneyCollectedEvent && Persistance.player.isAlly(((MoneyCollectedEvent) event).pokemon)) SoundManager.playSound("dungeon-money");
+		if (event instanceof ProjectileThrownEvent) this.processProjectileEvent((ProjectileThrownEvent) event);
 
 		if (event instanceof WeatherChangedEvent) this.processWeatherEvent((WeatherChangedEvent) event);
 		if (event instanceof StairLandingEvent) this.processStairEvent((StairLandingEvent) event);
@@ -562,6 +565,23 @@ public final class ClientEventProcessor extends CommonEventProcessor
 				Persistance.dungeonState.setSubstate(s);
 				this.setState(State.ANIMATING);
 			} else if (event.missed()) new TextAbovePokeAnimation(event.target, new Message("move.missed"), FontMode.DUNGEON).start();
+		}
+	}
+
+	private void processProjectileEvent(ProjectileThrownEvent event)
+	{
+		Item item = event.item;
+		if (Animations.existsProjectileAnimation(item.id) && event.target != null)
+		{
+			Tile destination = event.target == null ? event.thrower.tile().adjacentTile(event.thrower.facing()) : event.target.tile();
+			ProjectileAnimationState a = new ProjectileAnimationState(Persistance.dungeonState, event.thrower.tile(), destination);
+			a.movement = Animations.projectileMovement(item.id);
+			a.animation = Animations.getProjectileAnimation(event.thrower, item.id, this.currentAnimEnd);
+			if (a.animation != null)
+			{
+				Persistance.dungeonState.setSubstate(a);
+				this.setState(State.ANIMATING);
+			}
 		}
 	}
 

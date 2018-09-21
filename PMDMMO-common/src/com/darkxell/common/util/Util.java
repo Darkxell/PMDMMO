@@ -25,7 +25,7 @@ public class Util
 		// player.addAlly(PokemonRegistry.find(255).generate(new Random(), 80));
 		player.getTeamLeader().setItem(new ItemStack(208));
 		player.getTeamLeader().setMove(0, new LearnedMove(352));
-		player.getTeamLeader().setMove(2, new LearnedMove(50));
+		player.getTeamLeader().setMove(1, new LearnedMove(1));
 		player.getTeamLeader().setMove(2, new LearnedMove(404));
 		player.getTeamLeader().setMove(3, new LearnedMove(809));
 		//player.getTeamLeader().getData().abilityid = 42;
@@ -34,7 +34,7 @@ public class Util
 			player.inventory().addItem(new ItemStack(i));
 		player.inventory().addItem(new ItemStack(86));
 		for (int i = 21; i < 28; ++i)
-			player.inventory().addItem(new ItemStack(i, i - 20));
+			player.inventory().addItem(new ItemStack(i, 6));
 		player.inventory().addItem(new ItemStack(223));
 
 		for (int id = 201; id <= 386; id += 3)

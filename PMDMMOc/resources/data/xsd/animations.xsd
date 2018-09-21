@@ -50,6 +50,8 @@
 							<xs:enumeration value="1tilefacing"/>
 							<xs:enumeration value="diagonal"/>
 							<xs:enumeration value="upanddown"/>
+							<xs:enumeration value="arc"/>
+							<xs:enumeration value="straight"/>
 						</xs:restriction>
 					</xs:simpleType>
 				</xs:attribute>

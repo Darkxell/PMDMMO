@@ -42,10 +42,10 @@ public final class ItemEffects
 
 	public static final ItemEffect Thrown_arc_15 = new ThrowableItemEffect(21, 15, Arc);
 	public static final ItemEffect Thrown_arc_20 = new ThrowableItemEffect(22, 20, Arc);
-	public static final ItemEffect Thrown_straight_6 = new ThrowableItemEffect(23, 6, Straight);
-	public static final ItemEffect Thrown_straight_4 = new ThrowableItemEffect(24, 4, Straight);
-	public static final ItemEffect Thrown_straight_1 = new ThrowableItemEffect(25, 1, Straight);
-	public static final ItemEffect Thrown_straight_2 = new ThrowableItemEffect(26, 2, Straight);
+	public static final ItemEffect Thrown_straight_6 = new ThrowableItemEffect(23, 60, Straight);
+	public static final ItemEffect Thrown_straight_4 = new ThrowableItemEffect(24, 40, Straight);
+	public static final ItemEffect Thrown_straight_1 = new ThrowableItemEffect(25, 10, Straight);
+	public static final ItemEffect Thrown_straight_2 = new ThrowableItemEffect(26, 20, Straight);
 
 	public static final ItemEffect Food_5_0_0 = new FoodItemEffect(39, 5, 0, 0);
 
