@@ -17,6 +17,7 @@ import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.event.move.MoveEnabledEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.move.MoveSwitchedEvent;
+import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.LearnedMove;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.language.Message;
@@ -55,8 +56,15 @@ public class MovesMenuState extends OptionSelectionMenuState
 		for (Pokemon pokemon : this.pokemon)
 		{
 			MenuTab moves = new MenuTab(new Message("moves.title").addReplacement("<pokemon>", pokemon.getNickname()));
+			boolean isStruggling = true;
 			for (int i = 0; i < 4; ++i)
-				if (pokemon.move(i) != null) moves.addOption(new MoveMenuOption(pokemon.move(i), pokemon == Persistance.player.getTeamLeader()));
+				if (pokemon.move(i) != null)
+				{
+					if (pokemon.move(i).pp() > 0) isStruggling = false;
+					moves.addOption(new MoveMenuOption(pokemon.move(i), pokemon == Persistance.player.getTeamLeader()));
+				}
+			if (pokemon.player().getTeamLeader() == pokemon && isStruggling)
+				moves.addOption(new MoveMenuOption(new LearnedMove(MoveRegistry.STRUGGLE.id), pokemon == Persistance.player.getTeamLeader()));
 			this.tabs.add(moves);
 		}
 	}
@@ -83,8 +91,7 @@ public class MovesMenuState extends OptionSelectionMenuState
 	protected Rectangle mainWindowDimensions()
 	{
 		Rectangle r = super.mainWindowDimensions();
-		return new Rectangle(r.x, r.y, r.width + MoveSelectionWindow.ppLength,
-				r.height + (4 - this.currentTab().options().length) * (TextRenderer.height() + TextRenderer.lineSpacing()));
+		return new Rectangle(r.x, r.y, r.width + MoveSelectionWindow.ppLength, r.height);
 	}
 
 	@Override
@@ -183,7 +190,6 @@ public class MovesMenuState extends OptionSelectionMenuState
 
 		if (this.isMainSelected())
 		{
-
 			if (move != null)
 			{
 				Persistance.stateManager.setState(s);
@@ -206,6 +212,7 @@ public class MovesMenuState extends OptionSelectionMenuState
 	protected void onTabChanged(MenuTab tab)
 	{
 		super.onTabChanged(tab);
+		this.window = new MoveSelectionWindow(this, this.mainWindowDimensions());
 		this.windowInfo = null;
 	}
 
@@ -213,14 +220,14 @@ public class MovesMenuState extends OptionSelectionMenuState
 	public void render(Graphics2D g, int width, int height)
 	{
 		if (this.window == null) this.window = new MoveSelectionWindow(this, this.mainWindowDimensions());
-		super.render(g, width, height);
-
 		if (this.windowInfo == null)
 		{
 			Rectangle r = new Rectangle(this.window.dimensions.x, (int) (this.window.dimensions.getMaxY() + 20), width - 40,
 					MenuStateHudSpriteset.cornerSize.height * 2 + TextRenderer.height() * 4 + TextRenderer.lineSpacing() * 2);
 			this.windowInfo = new TextWindow(r, this.infoText(), false);
 		}
+		super.render(g, width, height);
+
 		this.windowInfo.render(g, null, width, height);
 	}
 

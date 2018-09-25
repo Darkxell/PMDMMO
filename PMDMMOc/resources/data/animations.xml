@@ -533,7 +533,7 @@
     <move id="1005">
       <default sprites="none" state="attack" delaytime="25"/>
     </move>
-    <move id="2002" clone="0"/>
+    <move id="2002" clone="moves/0"/>
     <move id="-2">
       <default sprites="none" delaytime="25"/>
     </move>

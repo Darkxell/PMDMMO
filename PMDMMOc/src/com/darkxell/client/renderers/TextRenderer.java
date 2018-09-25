@@ -181,6 +181,7 @@ public class TextRenderer
 		type_15("<type-15>", 15, 7, 11),
 		type_16("<type-16>", 16, 7, 11),
 		type_17("<type-17>", 17, 7, 11),
+		type_19("<type-19>", 19, 7, 11),
 		minusd("<-d>", 0, 8, 7),
 		num1d("<1d>", 1, 8, 7),
 		num2d("<2d>", 2, 8, 7),
