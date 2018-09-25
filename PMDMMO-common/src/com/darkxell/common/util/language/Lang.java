@@ -35,9 +35,14 @@ public class Lang
 		return selected;
 	}
 
-	public static void load()
+	public static void load(boolean forceLoad)
 	{
 		setLanguage(Language.ENGLISH);
+		if (forceLoad)
+		{
+			updateTranslations();
+			Keywords.updateKeywords();
+		}
 	}
 
 	public static void setLanguage(Language language)

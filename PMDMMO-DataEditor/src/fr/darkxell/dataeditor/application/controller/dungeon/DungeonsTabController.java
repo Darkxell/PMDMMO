@@ -29,7 +29,7 @@ public class DungeonsTabController implements Initializable, ListCellParent<Dung
 
 	public static DungeonsTabController instance;
 
-	/** Currently edited Cutscene. */
+	/** Currently edited Dungeon. */
 	public Dungeon currentDungeon;
 	@FXML
 	private ListView<Dungeon> dungeonsList;

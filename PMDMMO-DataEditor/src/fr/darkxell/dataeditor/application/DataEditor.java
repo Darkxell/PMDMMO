@@ -38,7 +38,7 @@ public class DataEditor extends Application
 		Launcher.isRunning = true;
 		ClientSettings.load();
 		Logger.loadClient();
-		Lang.load();
+		Lang.load(false);
 		SpriteFactory.load();
 		PokemonRegistry.load();
 		MoveRegistry.load();
