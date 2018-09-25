@@ -1,5 +1,13 @@
 package com.darkxell.common.item.effects;
 
+import java.util.ArrayList;
+
+import com.darkxell.common.dungeon.floor.Floor;
+import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.stats.PPRestoredEvent;
+import com.darkxell.common.item.Item;
+import com.darkxell.common.pokemon.DungeonPokemon;
+
 /** An Item that restores PP when eaten. */
 public class ElixirItemEffect extends DrinkItemEffect
 {
@@ -16,6 +24,13 @@ public class ElixirItemEffect extends DrinkItemEffect
 	public boolean isUsedOnTeamMember()
 	{
 		return true;
+	}
+
+	@Override
+	public void use(Floor floor, Item item, DungeonPokemon pokemon, DungeonPokemon target, ArrayList<DungeonEvent> events)
+	{
+		super.use(floor, item, pokemon, target, events);
+		events.add(new PPRestoredEvent(floor, target, this.pp));
 	}
 
 }

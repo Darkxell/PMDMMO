@@ -37,6 +37,7 @@ public class Util
 			player.inventory().addItem(new ItemStack(i, 6));
 		player.inventory().addItem(new ItemStack(31, 3));
 		player.inventory().addItem(new ItemStack(42, 3));
+		player.inventory().addItem(new ItemStack(152));
 		player.inventory().addItem(new ItemStack(223));
 
 		for (int id = 201; id <= 386; id += 3)
