@@ -360,6 +360,8 @@
   <move id="2000" type="19" category="Physical" pp="10" power="20" accuracy="88" critical="12" range="Front_row" damage="true" ginsengable="true" freeze="true" />
   <move id="2001" type="19" category="Physical" pp="7" power="10" range="Room" effect="136" freeze="true" />
   <move id="2002" type="19" category="Physical" pp="1" power="30" accuracy="100" critical="12" effect="5" damage="true" freeze="true" />
+  <move id="2500" type="19" category="Status" pp="1" power="0" accuracy="100" effect="0" />
+  <move id="2505" type="19" category="Status" pp="1" power="0" accuracy="100" effect="240" targets="User" range="Self" />
   <move id="-2" type="0" category="Physical" pp="15" power="2" accuracy="100" effect="322" damage="true" critical="12" freeze="true" />
   <move id="-50" type="0" category="Physical" pp="15" power="10" accuracy="125" effect="131" damage="true" critical="12" />
   <move id="-222" type="1" category="Physical" pp="15" power="1" accuracy="100" effect="322" damage="true" critical="12" freeze="true" />

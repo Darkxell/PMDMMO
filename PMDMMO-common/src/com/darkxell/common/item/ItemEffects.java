@@ -10,11 +10,11 @@ import com.darkxell.common.item.effects.CureStatusFoodItemEffect;
 import com.darkxell.common.item.effects.DealDamageFoodItemEffect;
 import com.darkxell.common.item.effects.DrinkItemEffect;
 import com.darkxell.common.item.effects.ElixirItemEffect;
-import com.darkxell.common.item.effects.EscapeDungeonItemEffect;
 import com.darkxell.common.item.effects.FoodItemEffect;
 import com.darkxell.common.item.effects.GummiItemEffect;
 import com.darkxell.common.item.effects.HealFoodItemEffect;
 import com.darkxell.common.item.effects.InflictStatusFoodItemEffect;
+import com.darkxell.common.item.effects.OrbItemEffect;
 import com.darkxell.common.item.effects.StatBoostDrinkItemEffect;
 import com.darkxell.common.item.effects.ThrowableItemEffect;
 import com.darkxell.common.pokemon.BaseStats.Stat;
@@ -72,8 +72,8 @@ public final class ItemEffects
 	public static final ItemEffect Gummi_Dark = new GummiItemEffect(77, 20, 0, 0, PokemonType.Dark);
 	public static final ItemEffect Gummi_Fairy = new GummiItemEffect(78, 20, 0, 0, PokemonType.Fairy);
 
-	public static final ItemEffect Orb_Default = new EscapeDungeonItemEffect(81);
-	public static final ItemEffect Orb_Escape = new EscapeDungeonItemEffect(86);
+	public static final ItemEffect Orb_Default = new OrbItemEffect(81, 2500);
+	public static final ItemEffect Orb_Escape = new OrbItemEffect(86, 2505);
 
 	public static final ItemEffect PP_10_Food_5_0_0 = new ElixirItemEffect(151, 5, 0, 0, 10);
 	public static final ItemEffect PP_max_Food_5_0_0 = new ElixirItemEffect(152, 5, 0, 0, 1000);

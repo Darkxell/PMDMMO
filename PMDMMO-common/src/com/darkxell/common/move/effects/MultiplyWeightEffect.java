@@ -1,10 +1,11 @@
-package com.darkxell.common.move;
+package com.darkxell.common.move.effects;
 
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
+import com.darkxell.common.move.MoveEffect;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
 public class MultiplyWeightEffect extends MoveEffect

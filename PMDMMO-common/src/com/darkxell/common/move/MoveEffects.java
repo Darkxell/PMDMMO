@@ -15,12 +15,15 @@ import com.darkxell.common.move.effects.DoubleDamageEffect;
 import com.darkxell.common.move.effects.DoubleIfTargetAilmentEffect;
 import com.darkxell.common.move.effects.DrainEffect;
 import com.darkxell.common.move.effects.DropItemEffect;
+import com.darkxell.common.move.effects.DropsMoneyOnKillEffect;
+import com.darkxell.common.move.effects.EscapeDungeonEffect;
 import com.darkxell.common.move.effects.FixedDamageEffect;
 import com.darkxell.common.move.effects.HPDifferenceDamageEffect;
 import com.darkxell.common.move.effects.HPMultiplierEffect;
 import com.darkxell.common.move.effects.HPRecoilEffect;
 import com.darkxell.common.move.effects.MultipleAttacksEffect;
 import com.darkxell.common.move.effects.MultipleAttacksMissingStopsEffect;
+import com.darkxell.common.move.effects.MultiplyWeightEffect;
 import com.darkxell.common.move.effects.RandomAttacksEffect;
 import com.darkxell.common.move.effects.RandomMoveEffect;
 import com.darkxell.common.move.effects.RandomStatChangeEffect;
@@ -46,7 +49,7 @@ public final class MoveEffects
 {
 	static final HashMap<Integer, MoveEffect> effects = new HashMap<Integer, MoveEffect>();
 
-	public static final MoveEffect Default = new MoveEffect(0);
+	public static final MoveEffect No_additional_effect = new MoveEffect(0);
 	public static final MoveEffect Basic_attack = new MoveEffect(1);
 	public static final MoveEffect HPRecoil_25 = new HPRecoilEffect(5, 25);
 	public static final MoveEffect Inflict_burn_10 = new ApplyStatusConditionEffect(7, StatusConditions.Burn, 10);
@@ -122,6 +125,7 @@ public final class MoveEffects
 	public static final MoveEffect Lower_attack_2s = new StatChangeEffect(224, Stat.Attack, -2, 100);
 	public static final MoveEffect Lower_speed_30 = new StatChangeEffect(225, Stat.Speed, -1, 30);
 	public static final MoveEffect Inflict_identified_Reset_evasion;
+	public static final MoveEffect Escape_dungeon = new EscapeDungeonEffect(240);
 	public static final MoveEffect Inflict_mirrormove = new ApplyStatusConditionEffect(245, StatusConditions.Mirror_move, 100);
 	public static final MoveEffect Copy_stat_changes = new CopyStatChangesEffect(254);
 	public static final MoveEffect Attack_2to5 = new MultipleAttacksEffect(321, 2, 5);
@@ -146,7 +150,7 @@ public final class MoveEffects
 	/** @return The Effect with the input ID. */
 	public static MoveEffect find(int id)
 	{
-		if (!effects.containsKey(id)) return Default;
+		if (!effects.containsKey(id)) return No_additional_effect;
 		return effects.get(id);
 	}
 
