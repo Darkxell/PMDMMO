@@ -3,15 +3,21 @@ package fr.darkxell.dataeditor.application.controller.item;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.darkxell.client.resources.images.Sprites;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.Item.ItemCategory;
 
 import fr.darkxell.dataeditor.application.util.FXUtils;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 
 public class EditItemController implements Initializable
 {
@@ -23,19 +29,21 @@ public class EditItemController implements Initializable
 	@FXML
 	public TextField idTextfield;
 	@FXML
+	public ImageView imageView;
+	@FXML
 	public TextField priceTextfield;
 	@FXML
 	public CheckBox rareCheckbox;
 	@FXML
 	public TextField sellTextfield;
 	@FXML
-	public TextField spriteTextfield;
+	public Spinner<Integer> spriteSpinner;
 	@FXML
 	public CheckBox stackableCheckbox;
 
 	private Item generate()
 	{
-		int id, price, sell, effectID, spriteID;
+		int id, price, sell, effectID;
 
 		if (this.idTextfield.getText().matches("\\d+")) id = Integer.parseInt(this.idTextfield.getText());
 		else
@@ -65,14 +73,7 @@ public class EditItemController implements Initializable
 			return null;
 		}
 
-		if (this.spriteTextfield.getText().matches("\\d+")) spriteID = Integer.parseInt(this.spriteTextfield.getText());
-		else
-		{
-			FXUtils.showAlert("Wrong sprite ID: " + this.spriteTextfield.getText());
-			return null;
-		}
-
-		return new Item(id, this.categoryCombobox.getValue(), price, sell, effectID, spriteID, this.stackableCheckbox.isSelected(),
+		return new Item(id, this.categoryCombobox.getValue(), price, sell, effectID, this.spriteSpinner.getValue(), this.stackableCheckbox.isSelected(),
 				this.rareCheckbox.isSelected());
 	}
 
@@ -81,6 +82,24 @@ public class EditItemController implements Initializable
 	{
 		this.categoryCombobox.getItems().addAll(ItemCategory.values());
 		this.categoryCombobox.getSelectionModel().select(0);
+
+		this.spriteSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 99, 0) {
+			@Override
+			public void decrement(int steps)
+			{
+				super.decrement(steps);
+				updateImage();
+			}
+
+			@Override
+			public void increment(int steps)
+			{
+				super.increment(steps);
+				updateImage();
+			}
+		});
+		this.spriteSpinner.getValueFactory().setWrapAround(true);
+		this.spriteSpinner.setEditable(true);
 	}
 
 	public void onCancelChanges()
@@ -101,9 +120,16 @@ public class EditItemController implements Initializable
 		this.priceTextfield.setText(String.valueOf(item.price));
 		this.sellTextfield.setText(String.valueOf(item.sell));
 		this.effectTextfield.setText(String.valueOf(item.effectID));
-		this.spriteTextfield.setText(String.valueOf(item.spriteID));
+		this.spriteSpinner.getValueFactory().setValue(item.spriteID);
 		this.stackableCheckbox.setSelected(item.isStackable);
 		this.rareCheckbox.setSelected(item.isRare);
+
+		this.updateImage();
+	}
+
+	private void updateImage()
+	{
+		this.imageView.setImage(SwingFXUtils.toFXImage(Sprites.Res_Dungeon.items.getImg(this.spriteSpinner.getValue()), new WritableImage(16, 16)));
 	}
 
 }
