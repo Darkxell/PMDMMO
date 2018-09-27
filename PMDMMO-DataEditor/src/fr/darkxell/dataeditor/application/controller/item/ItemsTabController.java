@@ -62,7 +62,7 @@ public class ItemsTabController implements Initializable, ListCellParent<ItemLis
 	public void initialize(URL location, ResourceBundle resources)
 	{
 		instance = this;
-		TreeItem<CustomTreeItem> root = new TreeItem<CustomTreeItem>(new TreeCategory("Animations"));
+		TreeItem<CustomTreeItem> root = new TreeItem<CustomTreeItem>(new TreeCategory("Items"));
 		root.setExpanded(true);
 		this.itemsTreeView.setRoot(root);
 		List<TreeItem<CustomTreeItem>> categories = this.itemsTreeView.getRoot().getChildren();
