@@ -8,6 +8,7 @@ import com.darkxell.common.util.language.Lang;
 import fr.darkxell.dataeditor.application.controller.animation.AnimationsTabController;
 import fr.darkxell.dataeditor.application.controller.cutscene.CutscenesTabController;
 import fr.darkxell.dataeditor.application.controller.dungeon.DungeonsTabController;
+import fr.darkxell.dataeditor.application.controller.item.ItemsTabController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -29,6 +30,10 @@ public class MainController implements Initializable, ChangeListener<Boolean>
 	private Tab dungeonsTab;
 	@FXML
 	private DungeonsTabController dungeonsTabPageController;
+	@FXML
+	private Tab itemsTab;
+	@FXML
+	private ItemsTabController itemsTabPageController;
 
 	@Override
 	public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue)
@@ -45,7 +50,7 @@ public class MainController implements Initializable, ChangeListener<Boolean>
 
 	public void onReloadLang()
 	{
-		Lang.load();
+		Lang.load(true);
 	}
 
 }

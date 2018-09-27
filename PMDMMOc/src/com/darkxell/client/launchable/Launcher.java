@@ -38,7 +38,7 @@ public class Launcher
 
 		ClientSettings.load();
 		Logger.loadClient();
-		Lang.load();
+		Lang.load(false);
 		if (!SpriteFactory.load())
 		{
 			isRunning = false;

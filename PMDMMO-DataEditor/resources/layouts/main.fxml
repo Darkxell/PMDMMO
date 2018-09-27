@@ -35,6 +35,9 @@
 				<Tab fx:id="dungeonsTab" text="Dungeons">
 					<fx:include fx:id="dungeonsTabPage" source="dungeons/dungeons.fxml" />
 				</Tab>
+				<Tab fx:id="itemsTab" text="Items">
+					<fx:include fx:id="itemsTabPage" source="items/items.fxml" />
+				</Tab>
 			</tabs>
 		</TabPane>
 	</center>

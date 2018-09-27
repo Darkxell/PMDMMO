@@ -44,7 +44,7 @@ public final class ItemRegistry
 		for (Element e : root.getChildren())
 		{
 			Item item = new Item(e);
-			items.put(item.id, item);
+			register(item);
 
 			String extra = XMLUtils.getAttribute(e, "extra", null);
 
@@ -58,7 +58,7 @@ public final class ItemRegistry
 					new TeachedMoveItemEffect(-effect, Integer.parseInt(data[1]));
 
 					Item used = new Item(-1 * item.id, ItemCategory.OTHERS, 0, 1, -effect, 95, false, false);
-					items.put(used.id, used);
+					register(used);
 
 				} else if (data[0].equals("hm")) new TeachesMoveRenewableItemEffect(effect, Integer.parseInt(data[1]));
 			}
@@ -66,13 +66,28 @@ public final class ItemRegistry
 		}
 	}
 
-	/** Saves this Registry for the Client. */
-	public static void saveClient()
+	public static void register(Item item)
+	{
+		items.put(item.id, item);
+	}
+
+	public static void save(File file)
 	{
 		Element xml = new Element("items");
 		for (Item item : items.values())
 			xml.addContent(item.toXML());
-		XMLUtils.saveFile(new File("resources/data/items.xml"), xml);
+		XMLUtils.saveFile(file, xml);
+	}
+
+	/** Saves this Registry for the Client. */
+	public static void saveClient()
+	{
+		save(new File("resources/data/items.xml"));
+	}
+
+	public static void unregister(int id)
+	{
+		items.remove(id);
 	}
 
 }
