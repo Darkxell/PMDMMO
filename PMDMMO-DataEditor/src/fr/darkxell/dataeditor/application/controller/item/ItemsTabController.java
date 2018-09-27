@@ -11,7 +11,6 @@ import com.darkxell.common.item.Item;
 import com.darkxell.common.item.Item.ItemCategory;
 import com.darkxell.common.item.ItemRegistry;
 
-import fr.darkxell.dataeditor.application.controller.dungeon.EditDungeonController;
 import fr.darkxell.dataeditor.application.controls.CustomListCell.ListCellParent;
 import fr.darkxell.dataeditor.application.data.ItemListItem;
 import fr.darkxell.dataeditor.application.util.CustomTreeItem;
@@ -37,9 +36,9 @@ public class ItemsTabController implements Initializable, ListCellParent<ItemLis
 
 	private TreeItem<CustomTreeItem>[] categories;
 	/** Currently edited Item. */
-	public Item currentItem;
+	public ItemListItem currentItem;
 	@FXML
-	public EditDungeonController editItemController;
+	public EditItemController editItemController;
 	@FXML
 	private TitledPane editItemPane;
 	private TreeItem<CustomTreeItem> equipable, throwable, food, berries, drinks, gummis, seeds, other_usables, orbs, tms, hms, evolutionary, others,
@@ -69,7 +68,7 @@ public class ItemsTabController implements Initializable, ListCellParent<ItemLis
 		List<TreeItem<CustomTreeItem>> categories = this.itemsTreeView.getRoot().getChildren();
 		categories.add(this.equipable = new TreeItem<CustomTreeItem>(new TreeCategory("Equipable")));
 		categories.add(this.throwable = new TreeItem<CustomTreeItem>(new TreeCategory("Throwable")));
-		categories.add(this.food = new TreeItem<CustomTreeItem>(new TreeCategory("Move Food")));
+		categories.add(this.food = new TreeItem<CustomTreeItem>(new TreeCategory("Food")));
 		categories.add(this.berries = new TreeItem<CustomTreeItem>(new TreeCategory("Berries")));
 		categories.add(this.drinks = new TreeItem<CustomTreeItem>(new TreeCategory("Drinks")));
 		categories.add(this.gummis = new TreeItem<CustomTreeItem>(new TreeCategory("Gummis")));
@@ -132,7 +131,7 @@ public class ItemsTabController implements Initializable, ListCellParent<ItemLis
 	@Override
 	public void onDelete(ItemListItem item)
 	{
-		if (item.item == this.currentItem)
+		if (item == this.currentItem)
 		{
 			this.currentItem = null;
 			this.editItemPane.setVisible(false);
@@ -151,22 +150,23 @@ public class ItemsTabController implements Initializable, ListCellParent<ItemLis
 	@Override
 	public void onEdit(ItemListItem item)
 	{
-		this.currentItem = item.item;
+		this.currentItem = item;
 		this.editItemPane.setVisible(true);
-		this.editItemPane.setText(this.currentItem.name().toString());
-		// this.editItemController.setupFor(this.currentItem);
+		this.editItemPane.setText(this.currentItem.item.name().toString());
+		this.editItemController.setupFor(this.currentItem.item);
 	}
 
 	public void onEdited(Item item)
 	{
-		boolean idChanged = this.currentItem.id != item.id;
-		if (idChanged && DungeonRegistry.find(item.id) != null)
-			new Alert(AlertType.ERROR, "Cannot save: There is already another Dungeon with ID " + item.id, ButtonType.OK).showAndWait();
+		boolean idChanged = this.currentItem.item.id != item.id;
+		if (idChanged && ItemRegistry.find(item.id) != null)
+			new Alert(AlertType.ERROR, "Cannot save: There is already another Item with ID " + item.id, ButtonType.OK).showAndWait();
 		else
 		{
-			ItemRegistry.unregister(this.currentItem.id);
+			ItemRegistry.unregister(this.currentItem.item.id);
 			ItemRegistry.register(item);
 			this.reloadList();
+			// this.onEdit((ItemListItem) this.itemsTreeView.getSelectionModel().getSelectedItem().getValue());
 			/* this.itemsList.getItems().remove(this.currentItem); this.itemsList.getItems().add(item); this.itemsList.getItems().sort(Comparator.naturalOrder()); this.itemsList.getSelectionModel().select(item); this.onEdit(item); */
 		}
 	}

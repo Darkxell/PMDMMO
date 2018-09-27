@@ -35,7 +35,7 @@
 			<content>
 				<ScrollPane fitToHeight="true" fitToWidth="true">
 					<content>
-						<fx:include fx:id="editItem" source="../dungeons/edit_dungeon.fxml" />
+						<fx:include fx:id="editItem" source="edit_item.fxml" />
 					</content>
 				</ScrollPane>
 			</content>
