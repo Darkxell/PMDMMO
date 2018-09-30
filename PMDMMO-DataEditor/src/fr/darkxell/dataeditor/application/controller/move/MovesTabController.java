@@ -80,6 +80,7 @@ public class MovesTabController implements Initializable, ListCellParent<MoveLis
 				if (click.getClickCount() == 2)
 				{
 					TreeItem<CustomTreeItem> move = movesTreeView.getSelectionModel().getSelectedItem();
+					if (move == null) return;
 					if (move.getValue() instanceof TreeCategory) move.setExpanded(!move.isExpanded());
 					else onEdit((MoveListItem) move.getValue());
 				}
