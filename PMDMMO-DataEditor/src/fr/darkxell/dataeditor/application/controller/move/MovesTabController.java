@@ -10,7 +10,6 @@ import com.darkxell.common.move.Move;
 import com.darkxell.common.move.Move.MoveCategory;
 import com.darkxell.common.move.Move.MoveRange;
 import com.darkxell.common.move.Move.MoveTarget;
-import com.darkxell.common.move.MoveEffects;
 import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.PokemonType;
 
@@ -49,7 +48,7 @@ public class MovesTabController implements Initializable, ListCellParent<MoveLis
 	Move defaultMove(int id)
 	{
 		return new Move(id, PokemonType.Normal, MoveCategory.Physical, 10, 10, 100, MoveRange.Front, MoveTarget.Foes, 12, true, true, false, false, true, true,
-				MoveEffects.No_additional_effect);
+				0);
 	}
 
 	@Override

@@ -53,9 +53,8 @@ public class DamageDealtEvent extends DungeonEvent
 
 	public boolean isRecoilDamage()
 	{
-		return this.source instanceof MoveUse
-				&& (((MoveUse) this.source).move.move().effect instanceof RecoilEffect || ((MoveUse) this.source).move.move().effect instanceof HPRecoilEffect)
-				&& ((MoveUse) this.source).user == this.target;
+		return this.source instanceof MoveUse && (((MoveUse) this.source).move.move().effect() instanceof RecoilEffect
+				|| ((MoveUse) this.source).move.move().effect() instanceof HPRecoilEffect) && ((MoveUse) this.source).user == this.target;
 	}
 
 	@Override

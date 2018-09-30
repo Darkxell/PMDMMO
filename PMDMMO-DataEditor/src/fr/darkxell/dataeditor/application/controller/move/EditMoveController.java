@@ -7,7 +7,6 @@ import com.darkxell.common.move.Move;
 import com.darkxell.common.move.Move.MoveCategory;
 import com.darkxell.common.move.Move.MoveRange;
 import com.darkxell.common.move.Move.MoveTarget;
-import com.darkxell.common.move.MoveEffects;
 import com.darkxell.common.pokemon.PokemonType;
 
 import fr.darkxell.dataeditor.application.util.FXUtils;
@@ -105,7 +104,7 @@ public class EditMoveController implements Initializable
 		return new Move(id, this.typeCombobox.getValue(), this.categoryCombobox.getValue(), pp, power, accuracy, this.rangeCombobox.getValue(),
 				this.targetCombobox.getValue(), critical, this.reflectableCheckbox.isSelected(), this.snatchableCheckbox.isSelected(),
 				this.soundCheckbox.isSelected(), this.freezeCheckbox.isSelected(), this.damageCheckbox.isSelected(), this.ginsengableCheckbox.isSelected(),
-				MoveEffects.find(effectID));
+				effectID);
 	}
 
 	@Override
@@ -145,7 +144,7 @@ public class EditMoveController implements Initializable
 		this.freezeCheckbox.setSelected(move.piercesFreeze);
 		this.damageCheckbox.setSelected(move.dealsDamage);
 		this.ginsengableCheckbox.setSelected(move.ginsengable);
-		this.effectTextfield.setText(String.valueOf(move.effect.id));
+		this.effectTextfield.setText(String.valueOf(move.effectID));
 	}
 
 }

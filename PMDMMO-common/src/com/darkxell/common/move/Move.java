@@ -132,7 +132,7 @@ public class Move implements Comparable<Move>
 	/** True if this move deals damage. */
 	public final boolean dealsDamage;
 	/** This move's effect. */
-	public final MoveEffect effect;
+	public final int effectID;
 	/** True if this move can be boosted by Ginseng. */
 	public final boolean ginsengable;
 	/** This move's ID. */
@@ -173,11 +173,11 @@ public class Move implements Comparable<Move>
 		this.piercesFreeze = XMLUtils.getAttribute(xml, "freeze", false);
 		this.dealsDamage = XMLUtils.getAttribute(xml, "damage", false);
 		this.ginsengable = XMLUtils.getAttribute(xml, "ginsengable", false);
-		this.effect = MoveEffects.find(XMLUtils.getAttribute(xml, "effect", 0));
+		this.effectID = XMLUtils.getAttribute(xml, "effect", 0);
 	}
 
 	public Move(int id, PokemonType type, MoveCategory category, int pp, int power, int accuracy, MoveRange range, MoveTarget targets, int critical,
-			boolean reflectable, boolean snatchable, boolean sound, boolean piercesFreeze, boolean dealsDamage, boolean ginsengable, MoveEffect effect)
+			boolean reflectable, boolean snatchable, boolean sound, boolean piercesFreeze, boolean dealsDamage, boolean ginsengable, int effectID)
 	{
 		this.id = id;
 		this.type = type;
@@ -194,7 +194,7 @@ public class Move implements Comparable<Move>
 		this.piercesFreeze = piercesFreeze;
 		this.dealsDamage = dealsDamage;
 		this.ginsengable = ginsengable;
-		this.effect = effect;
+		this.effectID = effectID;
 	}
 
 	@Override
@@ -206,12 +206,17 @@ public class Move implements Comparable<Move>
 	/** @return This Move's description. */
 	public Message description()
 	{
-		return this.effect.description(this);
+		return this.effect().description(this);
 	}
 
 	public int displayedPower()
 	{
 		return this.power * 5;
+	}
+
+	public MoveEffect effect()
+	{
+		return MoveEffects.find(this.effectID);
 	}
 
 	public boolean hasUseMessage()
@@ -230,7 +235,7 @@ public class Move implements Comparable<Move>
 	 * @return The Events created by this selection. Creates MoveUseEvents, distributing this Move on targets. */
 	public final void prepareUse(MoveUse move, Floor floor, ArrayList<DungeonEvent> events)
 	{
-		this.effect.prepareUse(move, floor, events);
+		this.effect().prepareUse(move, floor, events);
 	}
 
 	@Override
@@ -251,7 +256,7 @@ public class Move implements Comparable<Move>
 		XMLUtils.setAttribute(root, "critical", this.critical, 0);
 		XMLUtils.setAttribute(root, "range", this.range.name(), MoveRange.Front.name());
 		XMLUtils.setAttribute(root, "targets", this.targets.name(), MoveTarget.Foes.name());
-		XMLUtils.setAttribute(root, "effect", this.effect.id, 0);
+		XMLUtils.setAttribute(root, "effect", this.effectID, 0);
 		XMLUtils.setAttribute(root, "damage", this.dealsDamage, false);
 		XMLUtils.setAttribute(root, "ginsengable", this.ginsengable, false);
 		XMLUtils.setAttribute(root, "freeze", this.piercesFreeze, false);
@@ -276,6 +281,6 @@ public class Move implements Comparable<Move>
 	 * @return <code>true</code> if the Move missed. */
 	public boolean useOn(MoveUse usedMove, DungeonPokemon target, String[] flags, Floor floor, ArrayList<DungeonEvent> events)
 	{
-		return this.effect.mainUse(usedMove, target, flags, floor, events);
+		return this.effect().mainUse(usedMove, target, flags, floor, events);
 	}
 }

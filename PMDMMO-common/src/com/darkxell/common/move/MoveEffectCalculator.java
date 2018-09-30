@@ -35,9 +35,9 @@ public class MoveEffectCalculator
 		this.floor = floor;
 		this.flags = flags;
 
-		if (this.move().effect instanceof CompoundEffect) for (MoveEffect e : ((CompoundEffect) this.move().effect).effects)
+		if (this.move().effect() instanceof CompoundEffect) for (MoveEffect e : ((CompoundEffect) this.move().effect()).effects)
 			this.modificator.add(e);
-		else this.modificator.add(this.move().effect);
+		else this.modificator.add(this.move().effect());
 		this.modificator.addUser(this.user().ability());
 		if (target != null) this.modificator.add(target.ability());
 		if (this.user().getItem() != null) this.modificator.addUser(this.user().getItem().item());
