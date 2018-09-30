@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import com.darkxell.common.dungeon.data.DungeonRegistry;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.Item.ItemCategory;
 import com.darkxell.common.item.ItemRegistry;
@@ -28,7 +27,6 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.input.MouseEvent;
 
-@SuppressWarnings("unused")
 public class ItemsTabController implements Initializable, ListCellParent<ItemListItem>
 {
 
@@ -41,8 +39,6 @@ public class ItemsTabController implements Initializable, ListCellParent<ItemLis
 	public EditItemController editItemController;
 	@FXML
 	private TitledPane editItemPane;
-	private TreeItem<CustomTreeItem> equipable, throwable, food, berries, drinks, gummis, seeds, other_usables, orbs, tms, hms, evolutionary, others,
-			newcategory;
 	@FXML
 	private TreeView<CustomTreeItem> itemsTreeView;
 
@@ -66,19 +62,19 @@ public class ItemsTabController implements Initializable, ListCellParent<ItemLis
 		root.setExpanded(true);
 		this.itemsTreeView.setRoot(root);
 		List<TreeItem<CustomTreeItem>> categories = this.itemsTreeView.getRoot().getChildren();
-		categories.add(this.equipable = new TreeItem<CustomTreeItem>(new TreeCategory("Equipable")));
-		categories.add(this.throwable = new TreeItem<CustomTreeItem>(new TreeCategory("Throwable")));
-		categories.add(this.food = new TreeItem<CustomTreeItem>(new TreeCategory("Food")));
-		categories.add(this.berries = new TreeItem<CustomTreeItem>(new TreeCategory("Berries")));
-		categories.add(this.drinks = new TreeItem<CustomTreeItem>(new TreeCategory("Drinks")));
-		categories.add(this.gummis = new TreeItem<CustomTreeItem>(new TreeCategory("Gummis")));
-		categories.add(this.seeds = new TreeItem<CustomTreeItem>(new TreeCategory("Seeds")));
-		categories.add(this.other_usables = new TreeItem<CustomTreeItem>(new TreeCategory("Other Usables")));
-		categories.add(this.orbs = new TreeItem<CustomTreeItem>(new TreeCategory("Orbs")));
-		categories.add(this.tms = new TreeItem<CustomTreeItem>(new TreeCategory("TMs")));
-		categories.add(this.hms = new TreeItem<CustomTreeItem>(new TreeCategory("HMs")));
-		categories.add(this.evolutionary = new TreeItem<CustomTreeItem>(new TreeCategory("Evolutionary")));
-		categories.add(this.others = new TreeItem<CustomTreeItem>(new TreeCategory("Others")));
+		categories.add(new TreeItem<CustomTreeItem>(new TreeCategory("Equipable")));
+		categories.add(new TreeItem<CustomTreeItem>(new TreeCategory("Throwable")));
+		categories.add(new TreeItem<CustomTreeItem>(new TreeCategory("Food")));
+		categories.add(new TreeItem<CustomTreeItem>(new TreeCategory("Berries")));
+		categories.add(new TreeItem<CustomTreeItem>(new TreeCategory("Drinks")));
+		categories.add(new TreeItem<CustomTreeItem>(new TreeCategory("Gummis")));
+		categories.add(new TreeItem<CustomTreeItem>(new TreeCategory("Seeds")));
+		categories.add(new TreeItem<CustomTreeItem>(new TreeCategory("Other Usables")));
+		categories.add(new TreeItem<CustomTreeItem>(new TreeCategory("Orbs")));
+		categories.add(new TreeItem<CustomTreeItem>(new TreeCategory("TMs")));
+		categories.add(new TreeItem<CustomTreeItem>(new TreeCategory("HMs")));
+		categories.add(new TreeItem<CustomTreeItem>(new TreeCategory("Evolutionary")));
+		categories.add(new TreeItem<CustomTreeItem>(new TreeCategory("Others")));
 		this.categories = categories.toArray(new TreeItem[categories.size()]);
 
 		/* this.itemsList.setCellFactory(param -> { return new CustomListCell<>(AnimationsTabController.instance, "Animation").setCanOrder(false).setCanCreate(false).setCanDelete(false) .setCanRename(false); }); */

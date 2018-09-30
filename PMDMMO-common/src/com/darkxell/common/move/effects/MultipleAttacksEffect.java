@@ -77,7 +77,7 @@ public class MultipleAttacksEffect extends MoveEffect
 			if (e instanceof MoveUseEvent)
 			{
 				MoveUseEvent event = (MoveUseEvent) e;
-				if (event.usedMove.move.move().effect == this)
+				if (event.usedMove.move.move().effect() == this)
 				{
 					int attacks = RandomUtil.nextIntInBounds(this.attacksMin, this.attacksMax, floor.random);
 					event.addFlag("attacksleft=" + attacks);
