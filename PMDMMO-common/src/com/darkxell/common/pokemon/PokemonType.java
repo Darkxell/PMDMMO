@@ -8,25 +8,25 @@ import com.darkxell.common.util.language.Message;
 public enum PokemonType
 {
 
-	Bug(6, new Color(168, 184, 32)),
-	Dark(16, new Color(112, 88, 72)),
-	Dragon(15, new Color(112, 56, 248)),
-	Electric(12, new Color(248, 208, 48)),
-	Fairy(17, new Color(238, 153, 172)),
-	Fighting(1, new Color(192, 48, 40)),
-	Fire(9, new Color(240, 128, 48)),
-	Flying(2, new Color(168, 144, 240)),
-	Ghost(7, new Color(112, 88, 152)),
-	Grass(11, new Color(120, 200, 80)),
-	Ground(4, new Color(224, 192, 104)),
-	Ice(14, new Color(152, 216, 216)),
 	Normal(0, new Color(168, 168, 120)),
+	Fighting(1, new Color(192, 48, 40)),
+	Flying(2, new Color(168, 144, 240)),
 	Poison(3, new Color(160, 64, 160)),
-	Psychic(13, new Color(248, 88, 136)),
+	Ground(4, new Color(224, 192, 104)),
 	Rock(5, new Color(184, 160, 56)),
+	Bug(6, new Color(168, 184, 32)),
+	Ghost(7, new Color(112, 88, 152)),
 	Steel(8, new Color(184, 184, 208)),
-	Unknown(19, new Color(104, 160, 144)),
-	Water(10, new Color(104, 144, 240));
+	Fire(9, new Color(240, 128, 48)),
+	Water(10, new Color(104, 144, 240)),
+	Grass(11, new Color(120, 200, 80)),
+	Electric(12, new Color(248, 208, 48)),
+	Psychic(13, new Color(248, 88, 136)),
+	Ice(14, new Color(152, 216, 216)),
+	Dragon(15, new Color(112, 56, 248)),
+	Dark(16, new Color(112, 88, 72)),
+	Fairy(17, new Color(238, 153, 172)),
+	Unknown(19, new Color(104, 160, 144));
 
 	public static final double SUPER_EFFECTIVE = 1.4f, NORMALLY_EFFECTIVE = 1, NOT_VERY_EFFECTIVE = 0.7f, NO_EFFECT = 0;
 

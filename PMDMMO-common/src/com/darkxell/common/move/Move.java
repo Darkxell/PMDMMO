@@ -170,14 +170,14 @@ public class Move implements Comparable<Move>
 		this.reflectable = XMLUtils.getAttribute(xml, "reflectable", false);
 		this.snatchable = XMLUtils.getAttribute(xml, "snatchable", false);
 		this.sound = XMLUtils.getAttribute(xml, "sound", false);
-		this.piercesFreeze = XMLUtils.getAttribute(xml, "piercesFreeze", false);
+		this.piercesFreeze = XMLUtils.getAttribute(xml, "freeze", false);
 		this.dealsDamage = XMLUtils.getAttribute(xml, "damage", false);
 		this.ginsengable = XMLUtils.getAttribute(xml, "ginsengable", false);
 		this.effect = MoveEffects.find(XMLUtils.getAttribute(xml, "effect", 0));
 	}
 
 	public Move(int id, PokemonType type, MoveCategory category, int pp, int power, int accuracy, MoveRange range, MoveTarget targets, int critical,
-			boolean reflectable, boolean snatchable, boolean sound, boolean piercesFreeze, boolean tauntable, boolean ginsengable, MoveEffect effect)
+			boolean reflectable, boolean snatchable, boolean sound, boolean piercesFreeze, boolean dealsDamage, boolean ginsengable, MoveEffect effect)
 	{
 		this.id = id;
 		this.type = type;
@@ -192,7 +192,7 @@ public class Move implements Comparable<Move>
 		this.snatchable = snatchable;
 		this.sound = sound;
 		this.piercesFreeze = piercesFreeze;
-		this.dealsDamage = tauntable;
+		this.dealsDamage = dealsDamage;
 		this.ginsengable = ginsengable;
 		this.effect = effect;
 	}

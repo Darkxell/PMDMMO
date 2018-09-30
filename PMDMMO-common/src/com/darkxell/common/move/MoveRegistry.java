@@ -40,20 +40,35 @@ public final class MoveRegistry
 		for (Element e : root.getChildren())
 		{
 			Move move = new Move(e);
-			moves.put(move.id, move);
+			register(move);
 		}
 
 		ATTACK = find(0);
 		STRUGGLE = find(2002);
 	}
 
-	/** Saves this Registry for the Client. */
-	public static void saveClient()
+	public static void register(Move move)
+	{
+		moves.put(move.id, move);
+	}
+
+	public static void save(File file)
 	{
 		Element xml = new Element("moves");
 		for (Move move : moves.values())
 			xml.addContent(move.toXML());
-		XMLUtils.saveFile(new File("resources/data/moves.xml"), xml);
+		XMLUtils.saveFile(file, xml);
+	}
+
+	/** Saves this Registry for the Client. */
+	public static void saveClient()
+	{
+		save(new File("resources/data/moves.xml"));
+	}
+
+	public static void unregister(int id)
+	{
+		moves.remove(id);
 	}
 
 }

@@ -38,6 +38,9 @@
 				<Tab fx:id="itemsTab" text="Items">
 					<fx:include fx:id="itemsTabPage" source="items/items.fxml" />
 				</Tab>
+				<Tab fx:id="movesTab" text="Moves">
+					<fx:include fx:id="movesTabPage" source="moves/moves.fxml" />
+				</Tab>
 			</tabs>
 		</TabPane>
 	</center>
