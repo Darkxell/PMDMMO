@@ -60,6 +60,7 @@ import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.FaintedPokemonEvent;
 import com.darkxell.common.event.pokemon.HealthRestoredEvent;
 import com.darkxell.common.event.pokemon.PokemonRescuedEvent;
+import com.darkxell.common.event.pokemon.PokemonTeleportedEvent;
 import com.darkxell.common.event.pokemon.StatusConditionCreatedEvent;
 import com.darkxell.common.event.pokemon.StatusConditionEndedEvent;
 import com.darkxell.common.event.pokemon.SwitchedPokemonEvent;
@@ -164,6 +165,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		if (event instanceof PokemonRescuedEvent) this.processRescuedEvent((PokemonRescuedEvent) event);
 		if (event instanceof PokemonSpawnedEvent) this.processSpawnEvent((PokemonSpawnedEvent) event);
 		if (event instanceof PokemonTravelsEvent) this.processTravelEvent((PokemonTravelsEvent) event);
+		if (event instanceof PokemonTeleportedEvent) this.processTeleportEvent((PokemonTeleportedEvent) event);
 		if (event instanceof SwitchedPokemonEvent) this.processSwitchEvent((SwitchedPokemonEvent) event);
 		if (event instanceof TurnSkippedEvent) this.processSkipEvent((TurnSkippedEvent) event);
 		if (event instanceof FaintedPokemonEvent) this.processFaintedEvent((FaintedPokemonEvent) event);
@@ -718,6 +720,11 @@ public final class ClientEventProcessor extends CommonEventProcessor
 			Persistance.dungeonState.setSubstate(s);
 			this.setState(State.ANIMATING);
 		}
+	}
+
+	private void processTeleportEvent(PokemonTeleportedEvent event)
+	{
+		Persistance.dungeonState.pokemonRenderer.getRenderer(event.pokemon).setXY(event.destination.x, event.destination.y);
 	}
 
 	private void processTravelEvent(PokemonTravelsEvent event)

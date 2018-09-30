@@ -188,7 +188,6 @@ public class Item implements AffectsPokemon, Comparable<Item>
 		Element root = new Element(XML_ROOT);
 		root.setAttribute("id", Integer.toString(this.id));
 		XMLUtils.setAttribute(root, "category", this.category.name(), ItemCategory.OTHERS.name());
-		root.setAttribute("type", this.getClass().getName().substring(Item.class.getName().length()));
 		root.setAttribute("price", Integer.toString(this.price));
 		root.setAttribute("sell", Integer.toString(this.sell));
 		XMLUtils.setAttribute(root, "effect", this.effectID, -1);

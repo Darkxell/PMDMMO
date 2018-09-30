@@ -396,7 +396,7 @@ public class Floor
 		if (previous != next) events.add(new WeatherChangedEvent(this, previous, next));
 	}
 
-	public Room room(Tile tile)
+	public Room roomAt(Tile tile)
 	{
 		return this.roomAt(tile.x, tile.y);
 	}

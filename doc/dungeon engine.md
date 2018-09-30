@@ -159,6 +159,8 @@ Here is a list of all Events. Will be updated with the game. Bold events are PAE
 | DamageDealtEvent            | Called when a Pokémon takes damage.        | FaintedPokemonEvent       |
 | FaintedPokemonEvent         | Called when a Pokémon faints.              | BossDefeatedEvent         |
 | HealthRestoredEvent         | Called when a Pokémon's HP is healed.      | |
+| PokemonTeleportedEvent      | Called when a Pokémon is teleported.       | |
+| SwitchedPokemonEvent        | Called when two Pokémon are switched.      | |
 | IncreasedIQEvent            | Called when a Pokémon's IQ is raised.      | |
 | StatusConditionCreatedEvent | Called when a status condition is created. | |
 | StatusConditionEndedEvent   | Called when a status condition fades away. | |

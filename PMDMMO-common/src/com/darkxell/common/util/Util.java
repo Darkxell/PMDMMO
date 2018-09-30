@@ -38,6 +38,7 @@ public class Util
 		player.inventory().addItem(new ItemStack(42, 3));
 		player.inventory().addItem(new ItemStack(81));
 		player.inventory().addItem(new ItemStack(86));
+		player.inventory().addItem(new ItemStack(133));
 		player.inventory().addItem(new ItemStack(152));
 		player.inventory().addItem(new ItemStack(223));
 

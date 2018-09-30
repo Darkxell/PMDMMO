@@ -40,7 +40,7 @@ public class AIStateExplore extends AIState
 		ArrayList<Tile> candidates; // Finding candidate Tiles
 
 		// If in Room, candidates are exits
-		if (this.ai.pokemon.tile().isInRoom()) candidates = this.ai.floor.room(this.ai.pokemon.tile()).exits();
+		if (this.ai.pokemon.tile().isInRoom()) candidates = this.ai.floor.roomAt(this.ai.pokemon.tile()).exits();
 		else
 		{
 			// Else candidates are furthest visible Tiles

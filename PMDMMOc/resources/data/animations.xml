@@ -38,6 +38,9 @@
     <c id="4">
       <default width="32" height="156" y="143" backsprites="yes">0,1,2,3,4,4,4,4,4,5</default>
     </c>
+    <c id="5">
+      <default width="64" height="32" y="10" backsprites="only">0,1,2,3,4,5,6</default>
+    </c>
     <c id="10">
       <default sound="stat-attack_up" width="50" height="50" y="28" backsprites="yes">0,1,2,3,4,5,6,7,8,9,10,11,12</default>
     </c>
@@ -145,9 +148,8 @@
       <west x="52"/>
       <northwest x="52" y="52"/>
     </item>
-    <item id="86">
-      <default width="64" height="228" y="210" backsprites="only">0,0,1,1,2,2,3,3,4,4,3,3,5,4,-1,5,4,3,5,4,-1,5,4,3,5,2,1,0</default>
-    </item>
+    <item id="86" clone="2"/>
+    <item id="133" clone="items/86"/>
   </items>
   <moves>
     <move id="0">
@@ -534,6 +536,9 @@
       <default sprites="none" state="attack" delaytime="25"/>
     </move>
     <move id="2002" clone="moves/0"/>
+    <move id="2505">
+      <default width="64" height="228" y="210" backsprites="only">0,0,1,1,2,2,3,3,4,4,3,3,5,4,-1,5,4,3,5,4,-1,5,4,3,5,2,1,0</default>
+    </move>
     <move id="-2">
       <default sprites="none" delaytime="25"/>
     </move>
@@ -740,6 +745,9 @@
       <east width="16"/>
       <south width="32" sprites="/projectiles/2004-0"/>
       <west width="16"/>
+    </projectile>
+    <projectile id="3552">
+      <default width="8" height="8" spriteduration="3">0,1,2,3,4,5</default>
     </projectile>
     <projectile id="-707">
       <default width="24" height="24">0</default>

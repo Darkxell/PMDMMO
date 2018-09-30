@@ -35,6 +35,7 @@ import com.darkxell.common.move.effects.StatChangeEffect;
 import com.darkxell.common.move.effects.StealItemEffect;
 import com.darkxell.common.move.effects.StoredDamageEffect;
 import com.darkxell.common.move.effects.SwitchWithUserEffect;
+import com.darkxell.common.move.effects.TeleportToOtherRoomEffect;
 import com.darkxell.common.move.effects.UserLevelDamageEffect;
 import com.darkxell.common.move.effects.UserStatChangeEffect;
 import com.darkxell.common.move.effects.WeatherChangeEffect;
@@ -108,6 +109,7 @@ public final class MoveEffects
 	public static final MoveEffect Cant_ko = new CannotKOEffect(161);
 	public static final MoveEffect Fixed_difference_hp = new HPDifferenceDamageEffect(163);
 	public static final MoveEffect Switch_position_Raise_random;
+	public static final MoveEffect Teleport_other_room = new TeleportToOtherRoomEffect(168);
 	public static final MoveEffect Lower_evasion = new StatChangeEffect(179, Stat.Evasiveness, -1, 100);
 	public static final MoveEffect Raise_evasion = new StatChangeEffect(180, Stat.Evasiveness, 1, 100);
 	public static final MoveEffect Drop_item = new DropItemEffect(181);

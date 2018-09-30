@@ -64,15 +64,16 @@ public abstract class Room
 		return candidates.get(random.nextInt(candidates.size()));
 	}
 
-	/** @return A random tile in this Room matching the input Tile type. */
-	public Tile randomTile(Random random, TileType type)
+	/** @param empty - <code>true</code> if the tile should have no Pokemon.
+	 * @return A random tile in this Room matching the input Tile type. */
+	public Tile randomTile(Random random, TileType type, boolean empty)
 	{
 		ArrayList<Tile> candidates = this.listTiles();
 		candidates.removeIf(new Predicate<Tile>() {
 			@Override
 			public boolean test(Tile tile)
 			{
-				return tile.type() != type;
+				return tile.type() != type || (empty && tile.getPokemon() != null);
 			}
 		});
 		return candidates.get(random.nextInt(candidates.size()));

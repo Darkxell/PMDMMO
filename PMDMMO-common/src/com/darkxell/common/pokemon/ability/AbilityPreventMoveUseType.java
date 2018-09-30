@@ -33,7 +33,7 @@ public class AbilityPreventMoveUseType extends Ability
 				DungeonPokemon target = e.target;
 				DungeonPokemon self = concerned;
 				if (target == null) target = e.usedMove.user;
-				if (self.tile().isInRoom()) shouldPrevent = floor.room(self.tile()).contains(target.tile());
+				if (self.tile().isInRoom()) shouldPrevent = floor.roomAt(self.tile()).contains(target.tile());
 				else
 				{
 					shouldPrevent = Math.abs(target.tile().x - self.tile().x) <= floor.data.visionDistance();

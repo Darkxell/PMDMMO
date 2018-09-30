@@ -107,7 +107,7 @@
   <item id="130" category="ORBS" price="300" sell="150" effect="81" sprite="57" />
   <item id="131" category="ORBS" price="300" sell="150" effect="81" sprite="57" />
   <item id="132" category="ORBS" price="300" sell="150" effect="81" sprite="57" />
-  <item id="133" category="ORBS" price="300" sell="150" effect="81" sprite="57" />
+  <item id="133" category="ORBS" price="300" sell="150" effect="133" sprite="57" />
   <item id="151" category="DRINKS" price="25" sell="5" effect="151" sprite="58" />
   <item id="152" category="DRINKS" price="250" sell="100" effect="152" sprite="58" />
   <item id="153" category="DRINKS" price="5000" sell="5" effect="153" sprite="58" />

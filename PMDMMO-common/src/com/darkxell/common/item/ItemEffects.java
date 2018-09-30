@@ -74,6 +74,7 @@ public final class ItemEffects
 
 	public static final ItemEffect Orb_Default = new OrbItemEffect(81, 2500);
 	public static final ItemEffect Orb_Escape = new OrbItemEffect(86, 2505);
+	public static final ItemEffect Orb_Warp = new OrbItemEffect(133, 2552);
 
 	public static final ItemEffect PP_10_Food_5_0_0 = new ElixirItemEffect(151, 5, 0, 0, 10);
 	public static final ItemEffect PP_max_Food_5_0_0 = new ElixirItemEffect(152, 5, 0, 0, 1000);

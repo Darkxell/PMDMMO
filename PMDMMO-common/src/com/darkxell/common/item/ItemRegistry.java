@@ -75,7 +75,17 @@ public final class ItemRegistry
 	{
 		Element xml = new Element("items");
 		for (Item item : items.values())
-			xml.addContent(item.toXML());
+			if (!(item.effect() instanceof TeachedMoveItemEffect))
+			{
+				Element i = item.toXML();
+				if (item.effect() instanceof TeachesMoveRenewableItemEffect)
+				{
+					int move = ((TeachesMoveRenewableItemEffect) item.effect()).moveID;
+					if (item.effect() instanceof TeachesMoveItemEffect) i.setAttribute("extra", "tm:" + move);
+					else i.setAttribute("extra", "hm:" + move);
+				}
+				xml.addContent(i);
+			}
 		XMLUtils.saveFile(file, xml);
 	}
 

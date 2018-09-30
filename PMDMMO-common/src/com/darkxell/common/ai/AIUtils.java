@@ -241,8 +241,8 @@ public final class AIUtils
 		if (target.isFainted()) return false;
 		if (pokemon.tile().isInRoom())
 		{
-			if (target.tile().isInRoom()) return floor.room(pokemon.tile()) == floor.room(target.tile());
-			for (Tile t : floor.room(pokemon.tile()).outline())
+			if (target.tile().isInRoom()) return floor.roomAt(pokemon.tile()) == floor.roomAt(target.tile());
+			for (Tile t : floor.roomAt(pokemon.tile()).outline())
 				if (t == target.tile()) return true;
 		}
 
@@ -293,8 +293,8 @@ public final class AIUtils
 		ArrayList<Tile> visible = new ArrayList<>();
 		if (pokemon.tile().isInRoom())
 		{
-			visible.addAll(floor.room(pokemon.tile()).listTiles());
-			visible.addAll(floor.room(pokemon.tile()).outline());
+			visible.addAll(floor.roomAt(pokemon.tile()).listTiles());
+			visible.addAll(floor.roomAt(pokemon.tile()).outline());
 		}
 
 		int visibility = 3 - floor.data.shadows();
