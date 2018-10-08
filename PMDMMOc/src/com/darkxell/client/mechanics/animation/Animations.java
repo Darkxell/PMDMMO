@@ -426,7 +426,13 @@ public final class Animations
 		if (!existsProjectileAnimation(id)) return ProjectileMovement.STRAIGHT;
 		Element e = projectiles.get(id);
 		if (e == null) return ProjectileMovement.STRAIGHT;
-		String movement = XMLUtils.getAttribute(e.getChild("default", e.getNamespace()), "movement", "STRAIGHT");
+		String movement = null;
+		if (XMLUtils.getAttribute(e, "clone") != null)
+		{
+			if (XMLUtils.getAttribute(e, "clone", "").startsWith("projectiles/"))
+				return projectileMovement(Integer.parseInt(XMLUtils.getAttribute(e, "clone", "projectiles/4").substring("projectiles/".length())));
+			else return ProjectileMovement.STRAIGHT;
+		} else movement = XMLUtils.getAttribute(e.getChild("default", e.getNamespace()), "movement", "STRAIGHT");
 		if (movement != null) try
 		{
 			return ProjectileMovement.valueOf(movement.toUpperCase());

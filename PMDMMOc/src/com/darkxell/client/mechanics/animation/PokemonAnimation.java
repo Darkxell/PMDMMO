@@ -32,7 +32,6 @@ public class PokemonAnimation extends AbstractAnimation
 		super(duration, listener);
 		this.target = target;
 		this.renderer = this.target == null ? null : Persistance.dungeonState.pokemonRenderer.getRenderer(this.target);
-		if (this.renderer != null) this.renderer.addAnimation(this);
 	}
 
 	@Override
@@ -62,6 +61,7 @@ public class PokemonAnimation extends AbstractAnimation
 	public void start()
 	{
 		super.start();
+		if (this.renderer != null) this.renderer.addAnimation(this);
 		if (this.state != null && this.stateDelay == 0 && this.renderer != null) this.renderer.sprite().setState(this.state);
 		if (this.movement != null) this.movement.start();
 	}

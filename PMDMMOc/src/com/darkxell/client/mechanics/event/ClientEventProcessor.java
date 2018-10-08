@@ -30,6 +30,7 @@ import com.darkxell.client.state.dungeon.DungeonExitAnimationState;
 import com.darkxell.client.state.dungeon.NextFloorState;
 import com.darkxell.client.state.dungeon.PokemonTravelState;
 import com.darkxell.client.state.dungeon.ProjectileAnimationState;
+import com.darkxell.client.state.dungeon.ProjectileAnimationState.ProjectileMovement;
 import com.darkxell.client.state.menu.dungeon.MoveLearnMenuState;
 import com.darkxell.client.state.menu.dungeon.StairMenuState;
 import com.darkxell.common.dungeon.DungeonExploration;
@@ -79,6 +80,7 @@ import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.status.StatusConditions;
 import com.darkxell.common.status.conditions.ChargedMoveStatusCondition;
 import com.darkxell.common.status.conditions.StoreDamageToDoubleStatusCondition;
+import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.language.Message;
 import com.darkxell.common.weather.Weather;
@@ -454,27 +456,55 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	private void processMoveEvent(MoveSelectionEvent event)
 	{
 		boolean playAnimationLater = Animations.movePlaysForEachTarget(event.usedMove().move.move());
-		if (playAnimationLater)
-		{
-			playAnimationLater = false;
-			for (DungeonEvent e : event.getResultingEvents())
-				if (e instanceof MoveUseEvent)
-				{
-					playAnimationLater = true;
-					break;
-				}
-		}
+		boolean hasTarget = false;
+		for (DungeonEvent e : event.getResultingEvents())
+			if (e instanceof MoveUseEvent)
+			{
+				hasTarget = true;
+				break;
+			}
+		playAnimationLater &= hasTarget;
 
 		if (!playAnimationLater)
 		{
+			AnimationEndListener listener = this.currentAnimEnd;
+
+			int projid = event.usedMove().move.moveId();
+			if (projid >= 0) projid += 1000;
+			ProjectileMovement projMovement = Animations.projectileMovement(projid);
+			Tile tile = event.usedMove().user.tile();
+			Direction facing = event.usedMove().user.facing();
+			if (projMovement == ProjectileMovement.STRAIGHT) do
+				tile = tile.adjacentTile(facing);
+			while (tile.type() != TileType.WALL && tile.type() != TileType.WALL_END);
+			else tile = tile.adjacentTile(facing);
+			ProjectileAnimationState proj = new ProjectileAnimationState(Persistance.dungeonState, event.usedMove().user.tile(), tile);
+			if (Animations.existsProjectileAnimation(projid) && !hasTarget)
+			{
+				proj.animation = Animations.getProjectileAnimation(event.usedMove().user, projid, listener);
+				proj.movement = projMovement;
+				listener = new AnimationEndListener() {
+					@Override
+					public void onAnimationEnd(AbstractAnimation animation)
+					{
+						Persistance.dungeonState.setSubstate(proj);
+					}
+				};
+			}
+
 			AnimationState s = new AnimationState(Persistance.dungeonState);
 			if (Animations.existsMoveAnimation(event.usedMove().move.move()))
-				s.animation = Animations.getMoveAnimation(event.usedMove().user, event.usedMove().move.move(), this.currentAnimEnd);
+				s.animation = Animations.getMoveAnimation(event.usedMove().user, event.usedMove().move.move(), listener);
 			if (s.animation != null)
 			{
 				Persistance.dungeonState.setSubstate(s);
 				this.setState(State.ANIMATING);
+			} else if (proj.animation != null)
+			{
+				Persistance.dungeonState.setSubstate(proj);
+				this.setState(State.ANIMATING);
 			}
+
 		}
 
 		PokemonSprite sprite = Persistance.dungeonState.pokemonRenderer.getSprite(event.usedMove().user);
@@ -531,9 +561,10 @@ public final class ClientEventProcessor extends CommonEventProcessor
 				event.target == null ? event.usedMove.user.tile() : event.target.tile());
 		int projid = event.usedMove.move.moveId();
 		if (projid >= 0) projid += 1000;
-		if (Animations.existsProjectileAnimation(projid)) proj.animation = Animations.getProjectileAnimation(event.usedMove.user, projid, listener);
-		if (proj.animation != null)
+		if (Animations.existsProjectileAnimation(projid))
 		{
+			proj.animation = Animations.getProjectileAnimation(event.usedMove.user, projid, listener);
+			proj.movement = Animations.projectileMovement(projid);
 			listener = new AnimationEndListener() {
 				@Override
 				public void onAnimationEnd(AbstractAnimation animation)
@@ -652,7 +683,6 @@ public final class ClientEventProcessor extends CommonEventProcessor
 					PokemonAnimation a = Animations.getCustomAnimation(event.target, 19, null);
 					a.plays = -1;
 					a.source = event.target.stats;
-					renderer.addAnimation(a);
 					a.start();
 				} else if (!hasDown && renderer.hasAnimation(event.target.stats)) renderer.removeAnimation(event.target.stats);
 				currentAnimEnd.onAnimationEnd(animation);
