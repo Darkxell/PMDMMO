@@ -149,6 +149,7 @@
       <northwest x="52" y="52"/>
     </item>
     <item id="86" clone="2"/>
+    <item id="125" clone="items/86"/>
     <item id="133" clone="items/86"/>
   </items>
   <moves>
@@ -746,6 +747,7 @@
       <south width="32" sprites="/projectiles/2004-0"/>
       <west width="16"/>
     </projectile>
+    <projectile id="3544" clone="projectiles/3552"/>
     <projectile id="3552">
       <default width="8" height="8" spriteduration="3">0,1,2,3,4,5</default>
     </projectile>
