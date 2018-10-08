@@ -724,7 +724,22 @@ public final class ClientEventProcessor extends CommonEventProcessor
 
 	private void processTeleportEvent(PokemonTeleportedEvent event)
 	{
-		Persistance.dungeonState.pokemonRenderer.getRenderer(event.pokemon).setXY(event.destination.x, event.destination.y);
+		AnimationEndListener listener = new AnimationEndListener() {
+			@Override
+			public void onAnimationEnd(AbstractAnimation animation)
+			{
+				Persistance.dungeonState.pokemonRenderer.getRenderer(event.pokemon).setXY(event.destination.x, event.destination.y);
+				currentAnimEnd.onAnimationEnd(animation);
+			}
+		};
+
+		AnimationState s = new AnimationState(Persistance.dungeonState);
+		s.animation = Animations.getCustomAnimation(event.pokemon, Animations.TELEPORT, listener);
+		if (s.animation != null)
+		{
+			Persistance.dungeonState.setSubstate(s);
+			this.setState(State.ANIMATING);
+		}
 	}
 
 	private void processTravelEvent(PokemonTravelsEvent event)

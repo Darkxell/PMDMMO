@@ -81,7 +81,7 @@ public class InventoryWindow extends MenuWindow
 					BufferedImage sprite = Res_Dungeon.items.sprite(item);
 					g.drawImage(sprite, X + ITEM_OFFSET, Y + ITEM_OFFSET, null);
 
-					if (item.item().isStackable)
+					if (item.item().isStackable || item.quantity() != 1)
 					{
 						Message quantity = new Message(String.valueOf(item.quantity()), false);
 						int mWidth = TextRenderer.width(quantity);
