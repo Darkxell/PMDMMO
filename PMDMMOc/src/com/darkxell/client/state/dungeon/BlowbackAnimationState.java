@@ -9,7 +9,7 @@ import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteS
 import com.darkxell.common.event.pokemon.BlowbackPokemonEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
-public class PokemonBlowbackAnimationState extends AnimationState
+public class BlowbackAnimationState extends AnimationState
 {
 	public static final int DURATION_TILE = 6;
 
@@ -21,7 +21,7 @@ public class PokemonBlowbackAnimationState extends AnimationState
 	private int tick, duration;
 	private TravelAnimation travel;
 
-	public PokemonBlowbackAnimationState(DungeonState parent, BlowbackPokemonEvent event, AnimationEndListener listener)
+	public BlowbackAnimationState(DungeonState parent, BlowbackPokemonEvent event, AnimationEndListener listener)
 	{
 		super(parent);
 		this.event = event;
@@ -46,6 +46,7 @@ public class PokemonBlowbackAnimationState extends AnimationState
 	{
 		super.onStart();
 		this.renderer = Persistance.dungeonState.pokemonRenderer.getRenderer(this.pokemon);
+		this.renderer.sprite().setFacingDirection(this.event.direction.opposite());
 		this.renderer.sprite().setState(PokemonSpriteState.HURT);
 		this.renderer.sprite().setAnimated(false);
 	}

@@ -73,6 +73,7 @@ public final class ItemEffects
 	public static final ItemEffect Gummi_Fairy = new GummiItemEffect(78, 20, 0, 0, PokemonType.Fairy);
 
 	public static final ItemEffect Orb_Default = new OrbItemEffect(81, 2500);
+	public static final ItemEffect Orb_Blowback = new OrbItemEffect(82, 2501);
 	public static final ItemEffect Orb_Escape = new OrbItemEffect(86, 2505);
 	public static final ItemEffect Orb_Hurl = new OrbItemEffect(90, 2509);
 	public static final ItemEffect Orb_Petrify = new OrbItemEffect(102, 2521);

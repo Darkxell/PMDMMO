@@ -28,7 +28,7 @@ import com.darkxell.client.state.dungeon.AnimationState;
 import com.darkxell.client.state.dungeon.DelayState;
 import com.darkxell.client.state.dungeon.DungeonExitAnimationState;
 import com.darkxell.client.state.dungeon.NextFloorState;
-import com.darkxell.client.state.dungeon.PokemonBlowbackAnimationState;
+import com.darkxell.client.state.dungeon.BlowbackAnimationState;
 import com.darkxell.client.state.dungeon.PokemonTravelState;
 import com.darkxell.client.state.dungeon.ProjectileAnimationState;
 import com.darkxell.client.state.dungeon.ProjectileAnimationState.ProjectileMovement;
@@ -267,7 +267,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 
 	private void processBlowbackEvent(BlowbackPokemonEvent event)
 	{
-		Persistance.dungeonState.setSubstate(new PokemonBlowbackAnimationState(Persistance.dungeonState, event, this.currentAnimEnd));
+		Persistance.dungeonState.setSubstate(new BlowbackAnimationState(Persistance.dungeonState, event, this.currentAnimEnd));
 		this.setState(State.ANIMATING);
 	}
 

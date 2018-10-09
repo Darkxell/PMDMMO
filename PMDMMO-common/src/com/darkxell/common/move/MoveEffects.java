@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.HashMap;
 
 import com.darkxell.common.move.effects.ApplyStatusConditionEffect;
+import com.darkxell.common.move.effects.BlowbackRandomEffect;
 import com.darkxell.common.move.effects.CannotKOEffect;
 import com.darkxell.common.move.effects.CantMissEffect;
 import com.darkxell.common.move.effects.CompoundEffect;
@@ -75,6 +76,7 @@ public final class MoveEffects
 	public static final MoveEffect If_hits_lower_attack_defense = new CompoundEffect(62, new SelfStatChangeEffect(-1, Stat.Attack, -1, 100),
 			new SelfStatChangeEffect(-1, Stat.Defense, -1, 100));
 	public static final MoveEffect Inflict_confused = new ApplyStatusConditionEffect(64, StatusConditions.Confused, 100);
+	public static final MoveEffect Blowback_random = new BlowbackRandomEffect(66);
 	public static final MoveEffect Raise_attack_Raise_defense;
 	public static final MoveEffect Raise_attack = new StatChangeEffect(72, Stat.Attack, 1, 100);
 	public static final MoveEffect Inflict_enraged = new ApplyStatusConditionEffect(73, StatusConditions.Enraged, 100);
