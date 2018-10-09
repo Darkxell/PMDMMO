@@ -180,7 +180,7 @@ public class PokemonSprite
 		if (this.counter >= state.duration)
 		{
 			this.counter = 0;
-			if (this.resetToDefaultOnFinish && this.state != PokemonSpriteState.IDLE) this.setState(this.defaultState);
+			if (this.resetToDefaultOnFinish && this.state != PokemonSpriteState.IDLE) this.resetToDefaultState();
 		}
 	}
 
@@ -208,6 +208,11 @@ public class PokemonSprite
 	public boolean isAnimated()
 	{
 		return this.animated;
+	}
+
+	public void resetToDefaultState()
+	{
+		this.setState(this.defaultState);
 	}
 
 }

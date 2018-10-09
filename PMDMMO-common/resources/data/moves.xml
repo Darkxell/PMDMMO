@@ -347,6 +347,7 @@
   <move id="458" type="6" category="Special" pp="15" power="14" accuracy="84" critical="12" range="Line" effect="28" damage="true" ginsengable="true" freeze="true" />
   <move id="459" type="6" category="Special" pp="13" power="12" accuracy="95" critical="12" range="Room" effect="27" damage="true" ginsengable="true" freeze="true" />
   <move id="460" type="6" category="Status" pp="22" power="2" critical="12" range="Self" targets="User" effect="68" freeze="true" snatchable="true" />
+  <move id="2509" type="19" category="Status" pp="10" power="10" critical="12" targets="All" effect="331" reflectable="true" snatchable="true" />
   <move id="2000" type="19" category="Physical" pp="10" power="20" accuracy="88" critical="12" range="Front_row" damage="true" ginsengable="true" freeze="true" />
   <move id="2001" type="19" category="Physical" pp="7" power="10" critical="-1" range="Room" effect="136" freeze="true" />
   <move id="2002" type="19" category="Physical" pp="1" power="30" critical="12" effect="5" damage="true" freeze="true" />

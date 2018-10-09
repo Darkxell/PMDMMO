@@ -74,6 +74,7 @@ public final class ItemEffects
 
 	public static final ItemEffect Orb_Default = new OrbItemEffect(81, 2500);
 	public static final ItemEffect Orb_Escape = new OrbItemEffect(86, 2505);
+	public static final ItemEffect Orb_Hurl = new OrbItemEffect(90, 2509);
 	public static final ItemEffect Orb_Petrify = new OrbItemEffect(102, 2521);
 	public static final ItemEffect Orb_Switcher = new OrbItemEffect(125, 2544);
 	public static final ItemEffect Orb_Warp = new OrbItemEffect(133, 2552);

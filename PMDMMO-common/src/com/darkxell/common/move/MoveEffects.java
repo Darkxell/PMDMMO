@@ -141,6 +141,7 @@ public final class MoveEffects
 	public static final MoveEffect Lower_attack_10 = new StatChangeEffect(328, Stat.Attack, -1, 10);
 	public static final MoveEffect Inflict_constricted_10 = new ApplyStatusConditionEffect(329, StatusConditions.Constricted, 10);
 	public static final MoveEffect Switch_position = new SwitchWithUserEffect(330);
+	public static final MoveEffect Blowback = new BlowbackEffect(331);
 
 	static
 	{

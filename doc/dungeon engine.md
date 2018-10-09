@@ -156,6 +156,7 @@ Here is a list of all Events. Will be updated with the game. Bold events are PAE
 
 | Event name                  | Description                                | May trigger               |
 |-----------------------------|--------------------------------------------|-------------------------- |
+| BlowbackPokemonEvent        | Called when a Pokémon is blown back.       | DamageDealtEvent |
 | DamageDealtEvent            | Called when a Pokémon takes damage.        | FaintedPokemonEvent       |
 | FaintedPokemonEvent         | Called when a Pokémon faints.              | BossDefeatedEvent         |
 | HealthRestoredEvent         | Called when a Pokémon's HP is healed.      | |

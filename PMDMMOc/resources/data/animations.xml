@@ -150,6 +150,7 @@
       <northwest x="52" y="52"/>
     </item>
     <item id="86" clone="2"/>
+    <item id="90" clone="items/86"/>
     <item id="102" clone="items/86"/>
     <item id="125" clone="items/86"/>
     <item id="133" clone="items/86"/>
@@ -539,6 +540,9 @@
       <default sprites="none" state="attack" delaytime="25"/>
     </move>
     <move id="2002" clone="moves/0"/>
+    <move id="2509">
+      <default sprites="none" state="spin" delaytime="15"/>
+    </move>
     <move id="2505">
       <default width="64" height="228" y="210" backsprites="only">0,0,1,1,2,2,3,3,4,4,3,3,5,4,-1,5,4,3,5,4,-1,5,4,3,5,2,1,0</default>
     </move>

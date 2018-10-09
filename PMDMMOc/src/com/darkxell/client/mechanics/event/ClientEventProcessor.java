@@ -28,6 +28,7 @@ import com.darkxell.client.state.dungeon.AnimationState;
 import com.darkxell.client.state.dungeon.DelayState;
 import com.darkxell.client.state.dungeon.DungeonExitAnimationState;
 import com.darkxell.client.state.dungeon.NextFloorState;
+import com.darkxell.client.state.dungeon.PokemonBlowbackAnimationState;
 import com.darkxell.client.state.dungeon.PokemonTravelState;
 import com.darkxell.client.state.dungeon.ProjectileAnimationState;
 import com.darkxell.client.state.dungeon.ProjectileAnimationState.ProjectileMovement;
@@ -57,6 +58,7 @@ import com.darkxell.common.event.move.MoveDiscoveredEvent;
 import com.darkxell.common.event.move.MoveLearnedEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.move.MoveUseEvent;
+import com.darkxell.common.event.pokemon.BlowbackPokemonEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.FaintedPokemonEvent;
 import com.darkxell.common.event.pokemon.HealthRestoredEvent;
@@ -169,6 +171,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		if (event instanceof PokemonTravelsEvent) this.processTravelEvent((PokemonTravelsEvent) event);
 		if (event instanceof PokemonTeleportedEvent) this.processTeleportEvent((PokemonTeleportedEvent) event);
 		if (event instanceof SwitchedPokemonEvent) this.processSwitchEvent((SwitchedPokemonEvent) event);
+		if (event instanceof BlowbackPokemonEvent) this.processBlowbackEvent((BlowbackPokemonEvent) event);
 		if (event instanceof TurnSkippedEvent) this.processSkipEvent((TurnSkippedEvent) event);
 		if (event instanceof FaintedPokemonEvent) this.processFaintedEvent((FaintedPokemonEvent) event);
 
@@ -260,6 +263,12 @@ public final class ClientEventProcessor extends CommonEventProcessor
 				this.setState(State.ANIMATING);
 			} else s.animation.start();
 		}
+	}
+
+	private void processBlowbackEvent(BlowbackPokemonEvent event)
+	{
+		Persistance.dungeonState.setSubstate(new PokemonBlowbackAnimationState(Persistance.dungeonState, event, this.currentAnimEnd));
+		this.setState(State.ANIMATING);
 	}
 
 	@Override
