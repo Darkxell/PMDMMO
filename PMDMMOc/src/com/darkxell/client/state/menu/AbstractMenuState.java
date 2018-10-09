@@ -21,7 +21,7 @@ public abstract class AbstractMenuState extends AbstractState
 		/** True if this Option can be selected. */
 		public boolean isEnabled;
 		/** The name of this Option. */
-		public final Message name;
+		public Message name;
 
 		public MenuOption(Message name)
 		{

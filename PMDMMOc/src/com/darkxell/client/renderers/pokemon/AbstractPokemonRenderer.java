@@ -26,17 +26,6 @@ import com.darkxell.common.util.Logger;
 public class AbstractPokemonRenderer extends AbstractRenderer
 {
 
-	/** Renders a Pokemon at the input x, y (centered) coordinates. width and height are the dimensions of the draw area. */
-	public static void render(Graphics2D g, PokemonSprite sprite, int x, int y)
-	{
-		PokemonSpriteFrame frame = sprite.getCurrentFrame();
-		BufferedImage s = sprite.getCurrentSprite();
-
-		int xPos = x - s.getWidth() / 2 + frame.spriteX, yPos = y - s.getHeight() / 2 + frame.spriteY;
-
-		g.drawImage(s, (frame.isFlipped ? s.getWidth() : 0) + xPos, yPos, (frame.isFlipped ? -1 : 1) * s.getWidth(), s.getHeight(), null);
-	}
-
 	private float alpha = 1;
 	private final ArrayList<PokemonAnimation> animations = new ArrayList<PokemonAnimation>();
 	protected PokemonSprite sprite;
@@ -106,13 +95,25 @@ public class AbstractPokemonRenderer extends AbstractRenderer
 			for (int i = 0; i < this.animations.size(); ++i)
 				this.animations.get(i).prerender(g, width, height);
 
-			render(g, this.sprite, xPos, yPos);
+			this.render(g, this.sprite, xPos, yPos);
 
 			for (int i = 0; i < this.animations.size(); ++i)
 				this.animations.get(i).postrender(g, width, height);
 
 			if (this.alpha != 1) g.setComposite(c);
 		} else Logger.w("Tried to render null sprite.");
+	}
+
+	/** Renders a Pokemon at the input x, y (centered) coordinates. width and height are the dimensions of the draw area. */
+	public void render(Graphics2D g, PokemonSprite sprite, int x, int y)
+	{
+		// If you change those temp variables, check DungeonPokemonRenderer override
+		PokemonSpriteFrame frame = sprite.getCurrentFrame();
+		BufferedImage s = sprite.getCurrentSprite();
+
+		int xPos = x - s.getWidth() / 2 + frame.spriteX, yPos = y - s.getHeight() / 2 + frame.spriteY;
+
+		g.drawImage(s, (frame.isFlipped ? s.getWidth() : 0) + xPos, yPos, (frame.isFlipped ? -1 : 1) * s.getWidth(), s.getHeight(), null);
 	}
 
 	public void setAlpha(float alpha)

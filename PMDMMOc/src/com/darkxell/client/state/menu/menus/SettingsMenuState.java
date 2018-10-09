@@ -1,14 +1,16 @@
 package com.darkxell.client.state.menu.menus;
 
+import com.darkxell.client.launchable.ClientSettings;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.layers.AbstractGraphiclayer;
 import com.darkxell.client.state.menu.AbstractMenuState;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
+import com.darkxell.common.util.language.Message;
 
 public class SettingsMenuState extends OptionSelectionMenuState
 {
 
-	private MenuOption controls, back;
+	private MenuOption controls, hpBars, back;
 	public final AbstractMenuState parent;
 
 	public SettingsMenuState(AbstractMenuState parent, AbstractGraphiclayer background)
@@ -24,8 +26,11 @@ public class SettingsMenuState extends OptionSelectionMenuState
 	{
 		MenuTab tab = new MenuTab("menu.settings");
 		tab.addOption(this.controls = new MenuOption("menu.controls"));
+		tab.addOption(this.hpBars = new MenuOption("menu.settings.hp_bars.on"));
 		tab.addOption(this.back = new MenuOption("general.back"));
 		this.tabs.add(tab);
+
+		this.updateSettingValues();
 	}
 
 	@Override
@@ -38,7 +43,16 @@ public class SettingsMenuState extends OptionSelectionMenuState
 	protected void onOptionSelected(MenuOption option)
 	{
 		if (option == this.back) this.onExit();
-		else if (option == this.controls) Persistance.stateManager.setState(new ControlsMenuState(this, this.background).setOpaque(this.isOpaque));
+		else if (option == this.hpBars)
+		{
+			ClientSettings.setSetting(ClientSettings.HP_BARS, String.valueOf(!ClientSettings.getBooleanSetting(ClientSettings.HP_BARS)));
+			this.updateSettingValues();
+		} else if (option == this.controls) Persistance.stateManager.setState(new ControlsMenuState(this, this.background).setOpaque(this.isOpaque));
+	}
+
+	private void updateSettingValues()
+	{
+		this.hpBars.name = new Message("menu.settings.hp_bars." + (ClientSettings.getBooleanSetting(ClientSettings.HP_BARS) ? "on" : "off"));
 	}
 
 }
