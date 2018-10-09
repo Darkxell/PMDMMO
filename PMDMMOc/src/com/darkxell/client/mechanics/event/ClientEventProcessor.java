@@ -722,10 +722,12 @@ public final class ClientEventProcessor extends CommonEventProcessor
 			Persistance.dungeonState.setSubstate(s);
 			this.setState(State.ANIMATING);
 		}
-		if (event.condition.condition == StatusConditions.Asleep)
-			Persistance.dungeonState.pokemonRenderer.getSprite(event.condition.pokemon).setDefaultState(PokemonSpriteState.SLEEP, true);
+
+		PokemonSprite sprite = Persistance.dungeonState.pokemonRenderer.getSprite(event.condition.pokemon);
+		if (event.condition.condition == StatusConditions.Asleep) sprite.setDefaultState(PokemonSpriteState.SLEEP, true);
+		else if (event.condition.condition == StatusConditions.Petrified) sprite.setAnimated(false);
 		else if (event.condition.condition instanceof StoreDamageToDoubleStatusCondition || event.condition.condition instanceof ChargedMoveStatusCondition)
-			Persistance.dungeonState.pokemonRenderer.getSprite(event.condition.pokemon).setDefaultState(PokemonSpriteState.WITHDRAW, true);
+			sprite.setDefaultState(PokemonSpriteState.WITHDRAW, true);
 	}
 
 	private void processStatusEvent(StatusConditionEndedEvent event)
@@ -734,6 +736,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		PokemonSprite sprite = Persistance.dungeonState.pokemonRenderer.getSprite(event.condition.pokemon);
 		if (!event.condition.pokemon.hasStatusCondition(StatusConditions.Asleep) && sprite.defaultState() == PokemonSpriteState.SLEEP)
 			sprite.setDefaultState(PokemonSpriteState.IDLE, false);
+		if (!event.condition.pokemon.hasStatusCondition(StatusConditions.Petrified) && !sprite.isAnimated()) sprite.setAnimated(true);
 	}
 
 	private void processSwitchEvent(SwitchedPokemonEvent event)
