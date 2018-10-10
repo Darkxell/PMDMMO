@@ -14,7 +14,7 @@ public class ItemLandedEvent extends DungeonEvent
 	private Tile destination;
 	public final Item item;
 	private int[][] landingSpots = new int[][] { { -1, 0 }, { 0, -1 }, { 1, 0 }, { 0, 1 }, { -1, 1 }, { -1, -1 }, { 1, -1 }, { 1, 1 }, { -2, 0 }, { 0, -2 },
-			{ 2, 0 }, { 0, 2 }, { -2, 2 }, { -2, -2 }, { 2, -2 }, { 2, 2 }, };
+			{ 2, 0 }, { 0, 2 }, { -1, 2 }, { -2, 1 }, { -2, -1 }, { -1, -2 }, { 1, -2 }, { 2, -1 }, { 2, 1 }, { 1, 2 } };
 	private ItemStack placedItem;
 	public final Tile tile;
 
@@ -57,7 +57,11 @@ public class ItemLandedEvent extends DungeonEvent
 		{
 			this.destination.addItem(this.placedItem);
 			this.floor.dungeon.communication.itemIDs.register(this.placedItem, null);
-		} else this.placedItem = null;
+		} else
+		{
+			this.placedItem = null;
+			this.destination = this.tile;
+		}
 		return super.processServer();
 	}
 

@@ -53,6 +53,7 @@ import com.darkxell.common.event.item.ItemLandedEvent;
 import com.darkxell.common.event.item.ItemMovedEvent;
 import com.darkxell.common.event.item.ItemSelectionEvent;
 import com.darkxell.common.event.item.ItemSwappedEvent;
+import com.darkxell.common.event.item.ItemThrownEvent;
 import com.darkxell.common.event.item.MoneyCollectedEvent;
 import com.darkxell.common.event.item.ProjectileThrownEvent;
 import com.darkxell.common.event.move.MoveDiscoveredEvent;
@@ -188,6 +189,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		if (event instanceof ItemMovedEvent) this.processItemMovedEvent((ItemMovedEvent) event);
 		if (event instanceof ItemSwappedEvent) this.processItemSwappedEvent((ItemSwappedEvent) event);
 		if (event instanceof MoneyCollectedEvent && Persistance.player.isAlly(((MoneyCollectedEvent) event).pokemon)) SoundManager.playSound("dungeon-money");
+		if (event instanceof ItemThrownEvent) this.processItemThrownEvent((ItemThrownEvent) event);
 		if (event instanceof ProjectileThrownEvent) this.processProjectileEvent((ProjectileThrownEvent) event);
 		if (event instanceof ItemLandedEvent) this.processItemLandedEvent((ItemLandedEvent) event);
 
@@ -363,7 +365,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	{
 		if (event.tile != event.destination())
 		{
-			AnimationEndListener listener=new AnimationEndListener() {
+			AnimationEndListener listener = new AnimationEndListener() {
 				@Override
 				public void onAnimationEnd(AbstractAnimation animation)
 				{
@@ -371,7 +373,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 					currentAnimEnd.onAnimationEnd(animation);
 				}
 			};
-			
+
 			Persistance.dungeonState.itemRenderer.hidden.add(event.placedItem());
 			Item item = event.item;
 			ProjectileAnimationState a = new ProjectileAnimationState(Persistance.dungeonState, event.tile, event.destination());
@@ -401,6 +403,17 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	{
 		if (event.source() instanceof Tile) Persistance.dungeonState.floorVisibility.onItemremoved((Tile) event.source());
 		else if (event.destination() instanceof Tile) Persistance.dungeonState.floorVisibility.onItemremoved((Tile) event.destination());
+	}
+
+	private void processItemThrownEvent(ItemThrownEvent event)
+	{
+		AnimationState s = new AnimationState(Persistance.dungeonState);
+		s.animation = Animations.getCustomAnimation(event.thrower(), Animations.THROW, this.currentAnimEnd);
+		if (s.animation != null)
+		{
+			Persistance.dungeonState.setSubstate(s);
+			this.setState(State.ANIMATING);
+		}
 	}
 
 	private void processLevelupEvent(LevelupEvent event)

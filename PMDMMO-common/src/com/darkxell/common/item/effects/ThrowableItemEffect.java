@@ -101,20 +101,6 @@ public class ThrowableItemEffect extends ItemEffect
 		return candidates.size() == 0 ? pokemon.tile().adjacentTile(pokemon.facing()) : candidates.get(0).tile();
 	}
 
-	private Tile findDestinationStraight(Floor floor, Item item, DungeonPokemon pokemon)
-	{
-		Direction direction = pokemon.facing();
-		Tile current = pokemon.tile().adjacentTile(direction);
-
-		while (current.getPokemon() == null || pokemon.isAlliedWith(current.getPokemon()))
-		{
-			current = current.adjacentTile(direction);
-			if (current.isWall()) return current;
-		}
-
-		return current;
-	}
-
 	@Override
 	protected String getUseEffectID()
 	{

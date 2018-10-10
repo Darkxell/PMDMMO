@@ -34,7 +34,7 @@ public final class Animations
 
 	public static final int ATTACK_DOWN, DEFENSE_DOWN, SP_ATTACK_DOWN, SP_DEFENSE_DOWN, SPEED_DOWN, EVASION_DOWN, ACCURACY_DOWN;
 	public static final int ATTACK_UP = 10, DEFENSE_UP = 11, SP_ATTACK_UP = 12, SP_DEFENSE_UP = 13, SPEED_UP = 14, EVASION_UP = 15, ACCURACY_UP = 16;
-	public static final int HURT = 1, HEAL = 3, TELEPORT = 50;
+	public static final int HURT = 1, HEAL = 3, THROW = 6, TELEPORT = 50;
 	public static final int STAT_UP_TO_DOWN = 10;
 
 	static

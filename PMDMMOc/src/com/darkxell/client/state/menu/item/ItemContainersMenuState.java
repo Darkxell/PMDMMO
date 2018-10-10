@@ -30,6 +30,7 @@ import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.event.item.ItemMovedEvent;
 import com.darkxell.common.event.item.ItemSelectionEvent;
 import com.darkxell.common.event.item.ItemSwappedEvent;
+import com.darkxell.common.event.item.ItemThrownEvent;
 import com.darkxell.common.item.Item.ItemAction;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.item.effects.TeachedMoveItemEffect;
@@ -544,7 +545,7 @@ public class ItemContainersMenuState extends AbstractMenuState
 		if (action == ItemAction.USE)
 		{
 			if (i.item().effect().isUsedOnTeamMember()) nextState = new TeamMenuState(this, dungeonState, this).setOpaque(this.isOpaque);
-			else Persistance.eventProcessor().processEvent(new ItemSelectionEvent(Persistance.floor, i.item(), user, null, container, index));
+			else Persistance.eventProcessor().processEvent(new ItemSelectionEvent(Persistance.floor, i.item(), user, null, container, index).setPAE());
 		} else if (action == ItemAction.TRASH)
 		{
 			nextState = null;
@@ -556,10 +557,12 @@ public class ItemContainersMenuState extends AbstractMenuState
 			payload.add("item", i.getData().id);
 
 			Persistance.socketendpoint.sendMessage(payload.toString());
-		} else if (action == ItemAction.GET || action == ItemAction.TAKE)
+		} else if (action == ItemAction.THROW)
+			Persistance.eventProcessor().processEvent(new ItemThrownEvent(Persistance.floor, user, container, index).setPAE());
+		else if (action == ItemAction.GET || action == ItemAction.TAKE)
 		{
-			if (this.inDungeon && user.player().inventory().canAccept(i) != -1)
-				Persistance.eventProcessor().processEvent(new ItemMovedEvent(Persistance.floor, action, user, container, 0, user.player().inventory(), -1));
+			if (this.inDungeon && user.player().inventory().canAccept(i) != -1) Persistance.eventProcessor()
+					.processEvent(new ItemMovedEvent(Persistance.floor, action, user, container, 0, user.player().inventory(), -1).setPAE());
 			else if (action == ItemAction.TAKE)
 			{
 				nextState = null;
@@ -575,9 +578,9 @@ public class ItemContainersMenuState extends AbstractMenuState
 			}
 		} else if (action == ItemAction.GIVE) nextState = new TeamMenuState(this, this.background, this).setOpaque(this.isOpaque);
 		else if (action == ItemAction.PLACE)
-			Persistance.eventProcessor().processEvent(new ItemMovedEvent(Persistance.floor, action, user, container, index, user.tile(), 0));
+			Persistance.eventProcessor().processEvent(new ItemMovedEvent(Persistance.floor, action, user, container, index, user.tile(), 0).setPAE());
 		else if (action == ItemAction.SWITCH)
-			Persistance.eventProcessor().processEvent(new ItemSwappedEvent(Persistance.floor, action, user, container, index, user.tile(), 0));
+			Persistance.eventProcessor().processEvent(new ItemSwappedEvent(Persistance.floor, action, user, container, index, user.tile(), 0).setPAE());
 		else if (action == ItemAction.SWAP)
 			nextState = new ItemContainersMenuState(this, dungeonState, true, Persistance.player.inventory()).setOpaque(this.isOpaque);
 		else if (action == ItemAction.INFO)
@@ -692,9 +695,9 @@ public class ItemContainersMenuState extends AbstractMenuState
 				if (this.inDungeon)
 				{
 					if (pokemon.getItem() != null) Persistance.eventProcessor().processEvent(new ItemSwappedEvent(Persistance.floor, ItemAction.GIVE,
-							Persistance.player.getDungeonLeader(), Persistance.player.inventory(), this.itemIndex(), pokemon, 0));
+							Persistance.player.getDungeonLeader(), Persistance.player.inventory(), this.itemIndex(), pokemon, 0).setPAE());
 					else Persistance.eventProcessor().processEvent(new ItemMovedEvent(Persistance.floor, ItemAction.GIVE, Persistance.player.getDungeonLeader(),
-							Persistance.player.inventory(), this.itemIndex(), pokemon, 0));
+							Persistance.player.inventory(), this.itemIndex(), pokemon, 0).setPAE());
 				} else
 				{
 					nextState = null;
@@ -713,7 +716,7 @@ public class ItemContainersMenuState extends AbstractMenuState
 
 			case USE:
 				Persistance.eventProcessor()
-						.processEvent(new ItemSelectionEvent(Persistance.floor, i.item(), user, pokemon.getDungeonPokemon(), container, index));
+						.processEvent(new ItemSelectionEvent(Persistance.floor, i.item(), user, pokemon.getDungeonPokemon(), container, index).setPAE());
 				break;
 
 			default:
