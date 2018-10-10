@@ -119,6 +119,7 @@ Here is a list of all Events. Will be updated with the game. Bold events are PAE
 | ***ItemMovedEvent***     | Called when an Item is moved from anywhere to anywhere.                                 | |
 | ***ItemSelectionEvent*** | Called when an Item is selected to be used.                                             | ItemUseEvent |
 | ***ItemSwappedEvent***   | Called when an Item is swapped with another, from anywhere to anywhere.                 | |
+| ***ItemThrownEvent***    | Called when an Item is thrown.                                                          | ProjectileThrownEvent |
 | ItemUseEvent             | Called when an Item is used.                                                            | Calls the Item's effects. |
 | MoneyCollectedEvent      | Called when money is collected by a Player. May use a turn if intentionnally picked up. | |
 
