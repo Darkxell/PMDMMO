@@ -133,7 +133,7 @@ public class Inventory implements ItemContainer
 
 	public boolean isFull()
 	{
-		return this.items().size() == this.maxSize();
+		return this.items().size() >= this.maxSize();
 	}
 
 	public ArrayList<ItemStack> items()
@@ -168,7 +168,7 @@ public class Inventory implements ItemContainer
 	/** Removes the Item in the input slot and returns it. Returns null if index is out of bounds. */
 	public ItemStack remove(int slot)
 	{
-		if (slot < 0 || slot >= this.maxSize()) return null;
+		if (slot < 0 || slot >= this.size()) return null;
 		ItemStack i = this.items.get(slot);
 		this.data.content.remove(slot);
 		this.items.remove(slot);

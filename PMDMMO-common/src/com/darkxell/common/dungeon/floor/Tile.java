@@ -61,7 +61,8 @@ public class Tile implements ItemContainer, Comparable<Tile>
 	@Override
 	public void addItem(ItemStack item)
 	{
-		this.setItem(item);
+		if (this.item != null && this.item.itemid() == item.itemid() && this.item.item().isStackable) this.item.setQuantity(this.item.quantity() + item.quantity());
+		else this.setItem(item);
 	}
 
 	/** @return The Tile adjacent to this Tile in the input direction. See {@link DirectionSet#NORTH}. */
@@ -69,6 +70,11 @@ public class Tile implements ItemContainer, Comparable<Tile>
 	{
 		Point2D p = direction.move(this.x, this.y);
 		return this.floor.tileAt((int) p.getX(), (int) p.getY());
+	}
+
+	public Tile adjacentTile(int xOffset, int yOffset)
+	{
+		return this.floor.tileAt(this.x + xOffset, this.y + yOffset);
 	}
 
 	/** @return True if there are walls blocking the path in the input direction. */

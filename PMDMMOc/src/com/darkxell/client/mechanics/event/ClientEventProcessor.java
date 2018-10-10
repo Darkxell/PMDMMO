@@ -49,6 +49,7 @@ import com.darkxell.common.event.dungeon.ExplorationStopEvent;
 import com.darkxell.common.event.dungeon.MissionClearedEvent;
 import com.darkxell.common.event.dungeon.NextFloorEvent;
 import com.darkxell.common.event.dungeon.weather.WeatherChangedEvent;
+import com.darkxell.common.event.item.ItemLandedEvent;
 import com.darkxell.common.event.item.ItemMovedEvent;
 import com.darkxell.common.event.item.ItemSelectionEvent;
 import com.darkxell.common.event.item.ItemSwappedEvent;
@@ -188,6 +189,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		if (event instanceof ItemSwappedEvent) this.processItemSwappedEvent((ItemSwappedEvent) event);
 		if (event instanceof MoneyCollectedEvent && Persistance.player.isAlly(((MoneyCollectedEvent) event).pokemon)) SoundManager.playSound("dungeon-money");
 		if (event instanceof ProjectileThrownEvent) this.processProjectileEvent((ProjectileThrownEvent) event);
+		if (event instanceof ItemLandedEvent) this.processItemLandedEvent((ItemLandedEvent) event);
 
 		if (event instanceof WeatherChangedEvent) this.processWeatherEvent((WeatherChangedEvent) event);
 		if (event instanceof StairLandingEvent) this.processStairEvent((StairLandingEvent) event);
@@ -354,6 +356,32 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		{
 			Persistance.dungeonState.setSubstate(a);
 			this.setState(State.ANIMATING);
+		}
+	}
+
+	private void processItemLandedEvent(ItemLandedEvent event)
+	{
+		if (event.tile != event.destination())
+		{
+			AnimationEndListener listener=new AnimationEndListener() {
+				@Override
+				public void onAnimationEnd(AbstractAnimation animation)
+				{
+					Persistance.dungeonState.itemRenderer.hidden.remove(event.placedItem());
+					currentAnimEnd.onAnimationEnd(animation);
+				}
+			};
+			
+			Persistance.dungeonState.itemRenderer.hidden.add(event.placedItem());
+			Item item = event.item;
+			ProjectileAnimationState a = new ProjectileAnimationState(Persistance.dungeonState, event.tile, event.destination());
+			a.animation = Animations.getProjectileAnimationFromItem(null, item, listener);
+			a.movement = ProjectileMovement.ARC;
+			if (a.animation != null)
+			{
+				Persistance.dungeonState.setSubstate(a);
+				this.setState(State.ANIMATING);
+			}
 		}
 	}
 
