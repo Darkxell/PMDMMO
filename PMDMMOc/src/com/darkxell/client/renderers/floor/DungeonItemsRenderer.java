@@ -3,6 +3,7 @@ package com.darkxell.client.renderers.floor;
 import static com.darkxell.client.resources.images.tilesets.AbstractDungeonTileset.TILE_SIZE;
 
 import java.awt.Graphics2D;
+import java.util.HashSet;
 
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.AbstractRenderer;
@@ -13,12 +14,15 @@ import com.darkxell.client.resources.images.tilesets.AbstractDungeonTileset;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
+import com.darkxell.common.item.ItemStack;
 
 public class DungeonItemsRenderer extends AbstractRenderer
 {
 	private static final int ITEM_POS = (AbstractDungeonTileset.TILE_SIZE - ItemsSpriteset.ITEM_SIZE) / 2;
 
 	public final Floor floor;
+	/** Can be used to temporarily hide items (e.g. for animations.) */
+	public HashSet<ItemStack> hidden = new HashSet<>();
 
 	public DungeonItemsRenderer()
 	{
@@ -37,7 +41,7 @@ public class DungeonItemsRenderer extends AbstractRenderer
 				Tile tile = this.floor.tileAt(x, y);
 				if (tile != null)
 				{
-					if (tile.getItem() != null && tile.type() == TileType.GROUND)
+					if (tile.getItem() != null && !this.hidden.contains(tile.getItem()) && tile.type() != TileType.WALL)
 						g.drawImage(Res_Dungeon.items.sprite(tile.getItem()), tile.x * TILE_SIZE + ITEM_POS, tile.y * TILE_SIZE + ITEM_POS, null);
 				}
 			}

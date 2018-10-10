@@ -1,5 +1,6 @@
 package com.darkxell.client.mechanics.animation;
 
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -11,6 +12,7 @@ import com.darkxell.client.mechanics.animation.SpritesetAnimation.BackSpriteUsag
 import com.darkxell.client.mechanics.animation.movement.PokemonAnimationMovement;
 import com.darkxell.client.mechanics.animation.spritemovement.SpritesetAnimationMovement;
 import com.darkxell.client.resources.images.RegularSpriteSet;
+import com.darkxell.client.resources.images.Sprites;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
 import com.darkxell.client.state.dungeon.ProjectileAnimationState.ProjectileMovement;
 import com.darkxell.common.event.stats.StatChangedEvent;
@@ -312,6 +314,15 @@ public final class Animations
 	{
 		PokemonAnimation a = getAnimation(projectileID, projectiles, pokemon, listener);
 		if (a != null) a.plays = -1;
+		return a;
+	}
+
+	public static AbstractAnimation getProjectileAnimationFromItem(DungeonPokemon pokemon, Item item, AnimationEndListener listener)
+	{
+		BufferedImage sprite = Sprites.Res_Dungeon.items.sprite(item);
+		SpritesetAnimation a = new SpritesetAnimation(null, Sprites.Res_Dungeon.items, BackSpriteUsage.no, new int[] { item.spriteID }, 10,
+				sprite.getWidth() / 2, sprite.getHeight() / 2, listener);
+		a.plays = -1;
 		return a;
 	}
 

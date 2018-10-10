@@ -79,13 +79,13 @@ public class ThrowableItemEffect extends ItemEffect
 		return ItemCategory.THROWABLE;
 	}
 
-	public DungeonPokemon findTarget(Floor floor, Item item, DungeonPokemon pokemon)
+	public Tile findDestination(Floor floor, Item item, DungeonPokemon pokemon)
 	{
-		if (this.trajectory == ThrowableTrajectory.Straight) return this.findTargetStraight(floor, item, pokemon);
-		return this.findTargetArc(floor, item, pokemon);
+		if (this.trajectory == ThrowableTrajectory.Straight) return this.findDestinationStraight(floor, item, pokemon);
+		return this.findDestinationArc(floor, item, pokemon);
 	}
 
-	private DungeonPokemon findTargetArc(Floor floor, Item item, DungeonPokemon pokemon)
+	private Tile findDestinationArc(Floor floor, Item item, DungeonPokemon pokemon)
 	{
 		ArrayList<Tile> arcReachable = arcReachableTiles(floor, item, pokemon);
 		ArrayList<DungeonPokemon> candidates = new ArrayList<>();
@@ -99,10 +99,10 @@ public class ThrowableItemEffect extends ItemEffect
 				return Double.compare(d1, d2);
 			}
 		});
-		return candidates.size() == 0 ? null : candidates.get(0);
+		return candidates.size() == 0 ? pokemon.tile().adjacentTile(pokemon.facing()) : candidates.get(0).tile();
 	}
 
-	private DungeonPokemon findTargetStraight(Floor floor, Item item, DungeonPokemon pokemon)
+	private Tile findDestinationStraight(Floor floor, Item item, DungeonPokemon pokemon)
 	{
 		Direction direction = pokemon.facing();
 		Tile current = pokemon.tile().adjacentTile(direction);
@@ -110,10 +110,10 @@ public class ThrowableItemEffect extends ItemEffect
 		while (current.getPokemon() == null || pokemon.isAlliedWith(current.getPokemon()))
 		{
 			current = current.adjacentTile(direction);
-			if (current.type() == TileType.WALL || current.type() == TileType.WALL_END) return null;
+			if (current.type() == TileType.WALL || current.type() == TileType.WALL_END) return current;
 		}
 
-		return current.getPokemon();
+		return current;
 	}
 
 	@Override
@@ -145,8 +145,8 @@ public class ThrowableItemEffect extends ItemEffect
 	{
 		super.use(floor, item, pokemon, target, events);
 
-		target = this.findTarget(floor, item, pokemon);
-		events.add(new ProjectileThrownEvent(floor, item, pokemon, target));
+		Tile destination = this.findDestination(floor, item, pokemon);
+		events.add(new ProjectileThrownEvent(floor, item, pokemon, destination));
 	}
 
 }

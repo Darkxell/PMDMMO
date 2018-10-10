@@ -32,8 +32,8 @@ public class Util
 
 		for (int i = 1; i < 13; ++i)
 			player.inventory().addItem(new ItemStack(i));
-		for (int i = 21; i < 22; ++i)
-			player.inventory().addItem(new ItemStack(i, 6));
+		player.inventory().addItem(new ItemStack(21, 6));
+		player.inventory().addItem(new ItemStack(25, 6));
 		player.inventory().addItem(new ItemStack(31, 3));
 		player.inventory().addItem(new ItemStack(42, 3));
 		player.inventory().addItem(new ItemStack(81));

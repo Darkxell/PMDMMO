@@ -25,10 +25,10 @@ import com.darkxell.client.state.dialog.DialogScreen;
 import com.darkxell.client.state.dialog.DialogState;
 import com.darkxell.client.state.dialog.DialogState.DialogEndListener;
 import com.darkxell.client.state.dungeon.AnimationState;
+import com.darkxell.client.state.dungeon.BlowbackAnimationState;
 import com.darkxell.client.state.dungeon.DelayState;
 import com.darkxell.client.state.dungeon.DungeonExitAnimationState;
 import com.darkxell.client.state.dungeon.NextFloorState;
-import com.darkxell.client.state.dungeon.BlowbackAnimationState;
 import com.darkxell.client.state.dungeon.PokemonTravelState;
 import com.darkxell.client.state.dungeon.ProjectileAnimationState;
 import com.darkxell.client.state.dungeon.ProjectileAnimationState.ProjectileMovement;
@@ -612,18 +612,27 @@ public final class ClientEventProcessor extends CommonEventProcessor
 
 	private void processProjectileEvent(ProjectileThrownEvent event)
 	{
-		Item item = event.item;
-		if (Animations.existsProjectileAnimation(item.id) && event.target != null)
-		{
-			Tile destination = event.target == null ? event.thrower.tile().adjacentTile(event.thrower.facing()) : event.target.tile();
-			ProjectileAnimationState a = new ProjectileAnimationState(Persistance.dungeonState, event.thrower.tile(), destination);
-			a.movement = Animations.projectileMovement(item.id);
-			a.animation = Animations.getProjectileAnimation(event.thrower, item.id, this.currentAnimEnd);
-			if (a.animation != null)
+		AnimationEndListener listener = new AnimationEndListener() {
+			@Override
+			public void onAnimationEnd(AbstractAnimation animation)
 			{
-				Persistance.dungeonState.setSubstate(a);
-				this.setState(State.ANIMATING);
+				if (event.placedItem() != null) Persistance.dungeonState.itemRenderer.hidden.remove(event.placedItem());
+				currentAnimEnd.onAnimationEnd(animation);
 			}
+		};
+
+		Item item = event.item;
+		ProjectileAnimationState a = new ProjectileAnimationState(Persistance.dungeonState, event.thrower.tile(), event.destination);
+		if (Animations.existsProjectileAnimation(item.id))
+		{
+			a.movement = Animations.projectileMovement(item.id);
+			a.animation = Animations.getProjectileAnimation(event.thrower, item.id, listener);
+		} else a.animation = Animations.getProjectileAnimationFromItem(event.thrower, item, listener);
+		if (a.animation != null)
+		{
+			if (event.placedItem() != null) Persistance.dungeonState.itemRenderer.hidden.add(event.placedItem());
+			Persistance.dungeonState.setSubstate(a);
+			this.setState(State.ANIMATING);
 		}
 	}
 
