@@ -107,7 +107,7 @@ public class ThrowableItemEffect extends ItemEffect
 		Direction direction = pokemon.facing();
 		Tile current = pokemon.tile().adjacentTile(direction);
 
-		while (current.getPokemon() == null)
+		while (current.getPokemon() == null || pokemon.isAlliedWith(current.getPokemon()))
 		{
 			current = current.adjacentTile(direction);
 			if (current.type() == TileType.WALL || current.type() == TileType.WALL_END) return null;
