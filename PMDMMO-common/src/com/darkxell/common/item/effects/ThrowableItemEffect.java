@@ -6,7 +6,6 @@ import java.util.Stack;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
-import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.item.ItemSelectionEvent;
 import com.darkxell.common.event.item.ProjectileThrownEvent;
@@ -110,7 +109,7 @@ public class ThrowableItemEffect extends ItemEffect
 		while (current.getPokemon() == null || pokemon.isAlliedWith(current.getPokemon()))
 		{
 			current = current.adjacentTile(direction);
-			if (current.type() == TileType.WALL || current.type() == TileType.WALL_END) return current;
+			if (current.isWall()) return current;
 		}
 
 		return current;

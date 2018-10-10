@@ -130,7 +130,7 @@ public class MoveEffect implements AffectsPokemon
 					current = current.adjacentTile(user.facing());
 					if (current.getPokemon() != null && move.targets.isValid(user, current.getPokemon())) targets.add(current.getPokemon());
 					++distance;
-					done = !targets.isEmpty() || distance > 10 || current.type() == TileType.WALL || current.type() == TileType.WALL_END;
+					done = !targets.isEmpty() || distance > 10 || current.isWall();
 				} while (!done);
 				break;
 
@@ -173,9 +173,9 @@ public class MoveEffect implements AffectsPokemon
 					if (user.facing().isDiagonal() && move.range != MoveRange.Front_corners)
 					{
 						Tile t1 = user.tile().adjacentTile(user.facing().rotateClockwise());
-						if (t1.type() == TileType.WALL || t1.type() == TileType.WALL_END) valid = false;
+						if (t1.isWall()) valid = false;
 						t1 = user.tile().adjacentTile(user.facing().rotateCounterClockwise());
-						if (t1.type() == TileType.WALL || t1.type() == TileType.WALL_END) valid = false;
+						if (t1.isWall()) valid = false;
 					}
 					if (valid) targets.add(f);
 				}

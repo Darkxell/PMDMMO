@@ -251,8 +251,7 @@ public class Floor
 			@Override
 			public boolean test(Tile t)
 			{
-				return t.getPokemon() != null || t.type() == TileType.WALL || t.type() == TileType.WATER || t.type() == TileType.LAVA
-						|| t.type() == TileType.AIR;
+				return t.getPokemon() != null || t.isWall() || t.type() == TileType.WATER || t.type() == TileType.LAVA || t.type() == TileType.AIR;
 			}
 		});
 

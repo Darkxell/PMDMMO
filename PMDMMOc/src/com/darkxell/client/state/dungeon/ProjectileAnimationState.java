@@ -7,6 +7,7 @@ import com.darkxell.client.mechanics.animation.ArcAnimation;
 import com.darkxell.client.mechanics.animation.SpritesetAnimation;
 import com.darkxell.client.mechanics.animation.TravelAnimation;
 import com.darkxell.client.resources.images.tilesets.AbstractDungeonTileset;
+import com.darkxell.common.ai.AIUtils;
 import com.darkxell.common.dungeon.floor.Tile;
 
 public class ProjectileAnimationState extends AnimationState
@@ -21,6 +22,7 @@ public class ProjectileAnimationState extends AnimationState
 
 	private int duration;
 	public ProjectileMovement movement;
+	public boolean shouldBounce = false;
 	public final Tile start, end;
 	private int tick = 0;
 	private TravelAnimation travel;
@@ -63,8 +65,17 @@ public class ProjectileAnimationState extends AnimationState
 				this.travel.current().getY() * AbstractDungeonTileset.TILE_SIZE);
 		if (this.tick == this.duration)
 		{
-			Persistance.dungeonState.setDefaultState();
-			this.animation.stop();
+			if (this.shouldBounce)
+			{
+				this.shouldBounce = false;
+				this.travel = new ArcAnimation(this.end, this.end.adjacentTile(AIUtils.generalDirection(this.end, this.start)));
+				this.tick = 0;
+				this.duration = 15;
+			} else
+			{
+				Persistance.dungeonState.setDefaultState();
+				this.animation.stop();
+			}
 		}
 	}
 

@@ -59,7 +59,7 @@ public class BlowbackPokemonEvent extends DungeonEvent
 		this.wasHurt = count < max;
 		this.destination = count < max ? temp : current;
 		current.setPokemon(this.pokemon);
-		if (count < max && (temp.type() == TileType.WALL || temp.type() == TileType.WALL_END || temp.getPokemon() != null))
+		if (count < max && (temp.isWall() || temp.getPokemon() != null))
 		{
 			this.resultingEvents.add(new DamageDealtEvent(this.floor, this.pokemon, new DefaultDamageSource(this.floor, null), 5));
 			if (temp.getPokemon() != null)

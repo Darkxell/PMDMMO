@@ -63,7 +63,7 @@ public class AIStateExplore extends AIState
 		{
 			Tile delete = null;
 			for (Tile t : candidates)
-				if (t == this.ai.pokemon.tile() || AIUtils.generalDirection(this.ai.pokemon, t) == facing.opposite())
+				if (t == this.ai.pokemon.tile() || AIUtils.generalDirection(this.ai.pokemon.tile(), t) == facing.opposite())
 				{
 					delete = t;
 					break;
@@ -84,7 +84,7 @@ public class AIStateExplore extends AIState
 	public Direction mayRotate()
 	{
 		if (this.ai.pokemon.tile() == this.currentDestination || this.currentDestination == null) return null;
-		return AIUtils.generalDirection(this.ai.pokemon, this.currentDestination);
+		return AIUtils.generalDirection(this.ai.pokemon.tile(), this.currentDestination);
 	}
 
 	@Override

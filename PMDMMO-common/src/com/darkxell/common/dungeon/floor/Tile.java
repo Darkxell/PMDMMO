@@ -216,6 +216,11 @@ public class Tile implements ItemContainer, Comparable<Tile>
 		return this.floor.roomAt(this.x, this.y) != null;
 	}
 
+	public boolean isWall()
+	{
+		return this.type() == TileType.WALL || this.type() == TileType.WALL_END;
+	}
+
 	@Override
 	public ArrayList<ItemAction> legalItemActions(boolean inDungeon)
 	{
@@ -317,7 +322,7 @@ public class Tile implements ItemContainer, Comparable<Tile>
 	public Tile setType(TileType type)
 	{
 		this.type = type;
-		if (this.type == TileType.WALL || this.type == TileType.WALL_END)
+		if (this.isWall())
 		{
 			this.alternate = (byte) (Math.random() * 10);
 			if (this.alternate > 2) this.alternate = 0;

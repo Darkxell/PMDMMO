@@ -10,7 +10,6 @@ import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageSource;
 import com.darkxell.common.event.stats.ExperienceGeneratedEvent;
 import com.darkxell.common.item.Item;
-import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.item.effects.ThrowableItemEffect;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.DungeonPokemon.DungeonPokemonType;
@@ -23,7 +22,6 @@ public class ProjectileThrownEvent extends DungeonEvent implements DamageSource
 	public final Direction direction;
 	public final ExperienceGeneratedEvent experienceEvent;
 	public final Item item;
-	private ItemStack placedItem;
 	public final DungeonPokemon thrower;
 
 	public ProjectileThrownEvent(Floor floor, Item item, DungeonPokemon thrower, Tile destination)
@@ -33,7 +31,7 @@ public class ProjectileThrownEvent extends DungeonEvent implements DamageSource
 		this.thrower = thrower;
 		this.destination = destination;
 		this.experienceEvent = this.thrower.type == DungeonPokemonType.TEAM_MEMBER ? new ExperienceGeneratedEvent(this.floor, this.thrower.player()) : null;
-		this.direction = AIUtils.direction(this.thrower, this.destination);
+		this.direction = AIUtils.generalDirection(this.thrower.tile(), this.destination);
 	}
 
 	@Override
@@ -48,11 +46,6 @@ public class ProjectileThrownEvent extends DungeonEvent implements DamageSource
 		return this.thrower + " threw " + this.item + " (destination= " + this.destination + ").";
 	}
 
-	public ItemStack placedItem()
-	{
-		return this.placedItem;
-	}
-
 	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{
@@ -62,9 +55,10 @@ public class ProjectileThrownEvent extends DungeonEvent implements DamageSource
 			this.resultingEvents.add(this.experienceEvent);
 		} else
 		{
-			this.placedItem = new ItemStack(this.item.id);
-			this.destination.setItem(this.placedItem);
-			this.floor.dungeon.communication.itemIDs.register(this.placedItem, null);
+			Tile land = this.destination;
+			while (land.isWall())
+				land = land.adjacentTile(this.direction.opposite());
+			this.resultingEvents.add(new ItemLandedEvent(this.floor, this.item, land));
 		}
 		return super.processServer();
 	}

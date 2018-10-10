@@ -23,14 +23,14 @@ public final class AIUtils
 		ArrayList<Tile> tiles = adjacentTiles(floor, pokemon);
 		tiles.removeIf((Tile t) -> t.getPokemon() == null || pokemon.isAlliedWith(t.getPokemon()));
 		if (tiles.isEmpty()) return null;
-		return generalDirection(pokemon, RandomUtil.random(tiles, floor.random));
+		return generalDirection(pokemon.tile(), RandomUtil.random(tiles, floor.random));
 	}
 
 	/** @return The list of adjacent Tiles the input Pokemon can move to. */
 	public static ArrayList<Tile> adjacentReachableTiles(Floor floor, DungeonPokemon pokemon)
 	{
 		ArrayList<Tile> tiles = adjacentTiles(floor, pokemon);
-		tiles.removeIf((Tile tile) -> !tile.canMoveTo(pokemon, generalDirection(pokemon, tile), false));
+		tiles.removeIf((Tile tile) -> !tile.canMoveTo(pokemon, generalDirection(pokemon.tile(), tile), false));
 		return tiles;
 	}
 
@@ -65,7 +65,7 @@ public final class AIUtils
 	/** @return The direction to go to for the input Pokemon to reach the destination. May return null if there is no path. */
 	public static Direction direction(DungeonPokemon pokemon, Tile destination)
 	{
-		Direction direction = generalDirection(pokemon, destination);
+		Direction direction = generalDirection(pokemon.tile(), destination);
 		// If is adjacent and can move to, return.
 		if (pokemon.tile().adjacentTile(direction).canMoveTo(pokemon, direction, false)) return direction;
 
@@ -132,8 +132,8 @@ public final class AIUtils
 			return t.distance(pokemon.tile()) < maxD;
 		});
 
-		tiles.sort((Tile t1, Tile t2) -> Integer.compare(pokemon.facing().distance(generalDirection(pokemon, t1)),
-				pokemon.facing().distance(generalDirection(pokemon, t2))));
+		tiles.sort((Tile t1, Tile t2) -> Integer.compare(pokemon.facing().distance(generalDirection(pokemon.tile(), t1)),
+				pokemon.facing().distance(generalDirection(pokemon.tile(), t2))));
 
 		return tiles;
 	}
@@ -162,14 +162,14 @@ public final class AIUtils
 	/** @return The general direction the input Pokemon has to face to look at the target. */
 	public static Direction generalDirection(DungeonPokemon pokemon, DungeonPokemon target)
 	{
-		return generalDirection(pokemon, target.tile());
+		return generalDirection(pokemon.tile(), target.tile());
 	}
 
 	/** @return The general direction the input Pokemon has to face to look at the destination. */
-	public static Direction generalDirection(DungeonPokemon pokemon, Tile destination)
+	public static Direction generalDirection(Tile origin, Tile destination)
 	{
 		/* if (pokemon == null) System.out.println("pokemon"); if (target == null) System.out.println("target"); if (pokemon.tile() == null) System.out.println(pokemon); if (target.tile == null) System.out.println(target); */
-		double angle = Math.toDegrees(Math.atan2(destination.x - pokemon.tile().x, destination.y - pokemon.tile().y));
+		double angle = Math.toDegrees(Math.atan2(destination.x - origin.x, destination.y - origin.y));
 		// Make sure angle is in bounds [0;360[
 		while (angle < 0)
 			angle += 360;

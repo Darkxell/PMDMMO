@@ -612,25 +612,18 @@ public final class ClientEventProcessor extends CommonEventProcessor
 
 	private void processProjectileEvent(ProjectileThrownEvent event)
 	{
-		AnimationEndListener listener = new AnimationEndListener() {
-			@Override
-			public void onAnimationEnd(AbstractAnimation animation)
-			{
-				if (event.placedItem() != null) Persistance.dungeonState.itemRenderer.hidden.remove(event.placedItem());
-				currentAnimEnd.onAnimationEnd(animation);
-			}
-		};
-
 		Item item = event.item;
 		ProjectileAnimationState a = new ProjectileAnimationState(Persistance.dungeonState, event.thrower.tile(), event.destination);
 		if (Animations.existsProjectileAnimation(item.id))
 		{
 			a.movement = Animations.projectileMovement(item.id);
-			a.animation = Animations.getProjectileAnimation(event.thrower, item.id, listener);
-		} else a.animation = Animations.getProjectileAnimationFromItem(event.thrower, item, listener);
+			a.animation = Animations.getProjectileAnimation(event.thrower, item.id, this.currentAnimEnd);
+		} else a.animation = Animations.getProjectileAnimationFromItem(event.thrower, item, this.currentAnimEnd);
+
+		a.shouldBounce = event.destination.isWall();
+
 		if (a.animation != null)
 		{
-			if (event.placedItem() != null) Persistance.dungeonState.itemRenderer.hidden.add(event.placedItem());
 			Persistance.dungeonState.setSubstate(a);
 			this.setState(State.ANIMATING);
 		}
