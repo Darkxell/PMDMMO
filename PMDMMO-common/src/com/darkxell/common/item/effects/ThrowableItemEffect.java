@@ -90,7 +90,7 @@ public class ThrowableItemEffect extends ItemEffect
 		ArrayList<Tile> arcReachable = arcReachableTiles(floor, item, pokemon);
 		ArrayList<DungeonPokemon> candidates = new ArrayList<>();
 		for (Tile t : arcReachable)
-			if (t.getPokemon() != null) candidates.add(t.getPokemon());
+			if (t.getPokemon() != null && !pokemon.isAlliedWith(t.getPokemon())) candidates.add(t.getPokemon());
 		candidates.sort(new Comparator<DungeonPokemon>() {
 			@Override
 			public int compare(DungeonPokemon o1, DungeonPokemon o2)
