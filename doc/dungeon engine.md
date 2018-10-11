@@ -5,11 +5,12 @@ This document describes how the Dungeon engine works.
 ## Summary
 
 1. Event handler
-2. Turn order
-3. Pokémon AI
-4. Multiplayer communication
-5. Saving in a dungeon
-6. Event list
+2. Event listening
+3. Turn order
+4. Pokémon AI
+5. Multiplayer communication
+6. Saving in a dungeon
+7. Event list
 
 # Event handler
 
@@ -31,10 +32,11 @@ interactions.
 # Event listening
 
 Objects from the entire project may implement the *DungeonEventListener* interface.
-If so and if implemented properly, these Objects will have a method called after an 
-Event is processed. This allows for a multitude of complex mechanics. For now, only
-Abilities and Status Conditions implement this Interface, but more will be added if 
-necessary.
+If so and if implemented properly, these Objects will have a method called after and 
+before an Event is processed. This allows for a multitude of complex mechanics. 
+For now, only Abilities and Status Conditions implement this Interface, but more 
+will be added if necessary. While in the *preProcess()* method, an event may be 
+destroyed to prevent it from being processed by using its *consume()* method.
 
 Events can also have **flags**. These should have no impact on the behavior but should
 help comunication between other objects that manipulate Events (for example, to avoid
@@ -46,12 +48,20 @@ Due to movement speed affecting how many times a Pokémon may act in a turn,
 each turn is divided into **subturns**. There are 4 subturns in each turn 
 (equal to the maximum speedboost).
 
-Each Pokémon has an **Actor** object. This object has a **action tick** counter
-to time its actions, and a **action time** proportionnate to the Pokémon's speed.
-Every subturn, the action tick is incremented. Then if the action tick exceeds 
-the action time, the Pokémon may act. (This also supports speed debuffs, as a
-Pokémon with slower speed will have an action time of 8, resulting in an action
-every 2 turns.)
+Each Pokémon has an **Actor** object. This object remembers whether the 
+Pokémon has acted yet during the current subturn. If it doesn't, it gets
+an opportunity if its speed matches it (see table below). If a nonleader 
+Pokémon skips its turn, and another Pokémon of the same team acts after, 
+that Pokémon gets another chance to act. This allows, for example, team
+members to travel in a line properly.
+
+| Speed | Subturn 0 | Subturn 1 | Subturn 2 | Subturn 3 |
+| - | ---- | ---- | ---- | ---- |
+| 0.5 |    |      |      | Once every 2 turns |
+| 0 |      |      |      | Acts |
+| 1 |      |      | Acts | Acts |
+| 2 |      | Acts | Acts | Acts |
+| 3 | Acts | Acts | Acts | Acts |
 
 Actors are sorted by apparition. Whenever a Pokémon spawns, an Actor object is
 created for it and placed at the end of the Actor list. Players are an exception
