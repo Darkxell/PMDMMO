@@ -190,6 +190,8 @@ public class DungeonStats
 			e.displayMessages = false;
 			events.add(e);
 		}
+		for (Stat s : Stat.values())
+			if (s != Stat.Speed) this.setStage(s, Stat.DEFAULT_STAGE);
 	}
 
 	/** Called when the base stats change. */
@@ -220,6 +222,14 @@ public class DungeonStats
 		if (speed != newSpeed) events.add(new SpeedChangedEvent(floor, this.pokemon));
 	}
 
+	public void resetSpeed()
+	{
+		for (int i = 0; i < this.speedBuffs.length; ++i)
+			this.speedBuffs[i] = 0;
+		for (int i = 0; i < this.speedDebuffs.length; ++i)
+			this.speedDebuffs[i] = 0;
+	}
+
 	/** Called when the Pokemon steps on a Wonder Tile or changes Floor. */
 	public void resetStages()
 	{
@@ -229,23 +239,7 @@ public class DungeonStats
 
 	public void setStage(Stat stat, int stage)
 	{
-		if (stat == Stat.Speed)
-		{
-			if (stage > 0)
-			{
-				for (int i = 0; i < this.speedBuffs.length; ++i)
-					if (this.speedBuffs[i] == 0)
-					{
-						this.speedBuffs[i] = 15;
-						break;
-					}
-			} else for (int i = 0; i < this.speedDebuffs.length; ++i)
-				if (this.speedDebuffs[i] == 0)
-				{
-					this.speedDebuffs[i] = 15;
-					break;
-				}
-		} else
+		if (stat != Stat.Speed)
 		{
 			if (stage < 0) stage = 0;
 			else if (stage > 20) stage = 20;

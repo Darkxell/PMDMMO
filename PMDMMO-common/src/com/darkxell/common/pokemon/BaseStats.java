@@ -21,6 +21,7 @@ public class BaseStats implements Communicable
 		SpecialDefense(4),
 		Speed(7);
 
+		public final static int DEFAULT_STAGE = 10;
 		public final static int MAX_SPEED = 4;
 
 		public final int id;

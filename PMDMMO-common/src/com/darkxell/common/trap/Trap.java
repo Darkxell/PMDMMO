@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
-import com.darkxell.common.event.DungeonEvent.MessageEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Message;
 
@@ -30,12 +29,7 @@ public abstract class Trap implements Comparable<Trap>
 		return new Message("trap." + this.id);
 	}
 
-	/** Called when a Pokemon steps on this Trap. */
-	public void onPokemonStep(Floor floor, DungeonPokemon pokemon, ArrayList<DungeonEvent> events)
-	{
-		events.add(
-				new MessageEvent(floor, new Message("trap.stepped").addReplacement("<pokemon>", pokemon.getNickname()).addReplacement("<trap>", this.name())));
-	}
+	public abstract void onPokemonStep(Floor floor, DungeonPokemon pokemon, ArrayList<DungeonEvent> events);
 
 	@Override
 	public String toString()

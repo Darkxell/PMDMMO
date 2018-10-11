@@ -4,12 +4,16 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 
+import com.darkxell.common.dungeon.floor.Floor;
+import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.pokemon.DungeonPokemon;
+
 /** Holds all Traps. */
 public final class TrapRegistry
 {
 
 	static HashMap<Integer, Trap> traps = new HashMap<Integer, Trap>();
-	public static final Trap WONDER_TILE = new Trap(0) {};
+	public static final Trap WONDER_TILE = new WonderTileTrap(0);
 
 	/** @return The Trap with the input ID. */
 	public static Trap find(int id)
@@ -28,7 +32,11 @@ public final class TrapRegistry
 	public static void load()
 	{
 		for (int i = 1; i < 18; i++)
-			new Trap(i) {};
+			new Trap(i) {
+				@Override
+				public void onPokemonStep(Floor floor, DungeonPokemon pokemon, ArrayList<DungeonEvent> events)
+				{}
+			};
 	}
 
 }

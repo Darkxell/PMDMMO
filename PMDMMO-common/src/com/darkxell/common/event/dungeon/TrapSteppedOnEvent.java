@@ -7,6 +7,7 @@ import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.trap.Trap;
+import com.darkxell.common.util.language.Message;
 
 public class TrapSteppedOnEvent extends DungeonEvent
 {
@@ -33,6 +34,7 @@ public class TrapSteppedOnEvent extends DungeonEvent
 	public ArrayList<DungeonEvent> processServer()
 	{
 		this.tile.trapRevealed = true;
+		this.messages.add(new Message("trap.stepped").addReplacement("<pokemon>", pokemon.getNickname()).addReplacement("<trap>", this.trap.name()));
 		this.trap.onPokemonStep(this.floor, this.pokemon, this.resultingEvents);
 		return super.processServer();
 	}

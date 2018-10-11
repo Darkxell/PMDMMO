@@ -48,6 +48,7 @@ import com.darkxell.common.event.dungeon.DungeonExitEvent;
 import com.darkxell.common.event.dungeon.ExplorationStopEvent;
 import com.darkxell.common.event.dungeon.MissionClearedEvent;
 import com.darkxell.common.event.dungeon.NextFloorEvent;
+import com.darkxell.common.event.dungeon.TrapSteppedOnEvent;
 import com.darkxell.common.event.dungeon.weather.WeatherChangedEvent;
 import com.darkxell.common.event.item.ItemLandedEvent;
 import com.darkxell.common.event.item.ItemMovedEvent;
@@ -84,6 +85,7 @@ import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.status.StatusConditions;
 import com.darkxell.common.status.conditions.ChargedMoveStatusCondition;
 import com.darkxell.common.status.conditions.StoreDamageToDoubleStatusCondition;
+import com.darkxell.common.trap.TrapRegistry;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.language.Message;
@@ -194,6 +196,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		if (event instanceof ItemLandedEvent) this.processItemLandedEvent((ItemLandedEvent) event);
 
 		if (event instanceof WeatherChangedEvent) this.processWeatherEvent((WeatherChangedEvent) event);
+		if (event instanceof TrapSteppedOnEvent) this.processTrapEvent((TrapSteppedOnEvent) event);
 		if (event instanceof StairLandingEvent) this.processStairEvent((StairLandingEvent) event);
 		if (event instanceof NextFloorEvent) this.processFloorEvent((NextFloorEvent) event);
 		if (event instanceof MissionClearedEvent) this.processMissionEvent((MissionClearedEvent) event);
@@ -824,6 +827,15 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		{
 			Persistance.dungeonState.setSubstate(s);
 			this.setState(State.ANIMATING);
+		}
+	}
+
+	private void processTrapEvent(TrapSteppedOnEvent event)
+	{
+		if (event.trap == TrapRegistry.WONDER_TILE)
+		{
+			DungeonPokemonRenderer renderer = Persistance.dungeonState.pokemonRenderer.getRenderer(event.pokemon);
+			if (!event.pokemon.stats.hasAStatDown() && renderer.hasAnimation(event.pokemon.stats)) renderer.removeAnimation(event.pokemon.stats);
 		}
 	}
 
