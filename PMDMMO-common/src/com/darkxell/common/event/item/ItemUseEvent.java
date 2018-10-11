@@ -16,15 +16,23 @@ public class ItemUseEvent extends DungeonEvent
 	public final Item item;
 	/** The Pokemon that the Item was used on. null if there was no target. */
 	public final DungeonPokemon target;
+	/** <code>true</code> if the item is used because it was thrown to the target. */
+	public final boolean thrown;
 	/** The Pokemon that used the Item. */
 	public final DungeonPokemon user;
 
 	public ItemUseEvent(Floor floor, Item item, DungeonPokemon user, DungeonPokemon target)
 	{
+		this(floor, item, user, target, false);
+	}
+
+	public ItemUseEvent(Floor floor, Item item, DungeonPokemon user, DungeonPokemon target, boolean thrown)
+	{
 		super(floor);
 		this.item = item;
 		this.user = user;
 		this.target = target;
+		this.thrown = thrown;
 	}
 
 	@Override
@@ -36,7 +44,8 @@ public class ItemUseEvent extends DungeonEvent
 	@Override
 	public ArrayList<DungeonEvent> processServer()
 	{
-		this.item.use(this.floor, this.user, this.target, this.resultingEvents);
+		if (this.thrown) this.item.useThrown(this.floor, this.user, this.target, this.resultingEvents);
+		else this.item.use(this.floor, this.user, this.target, this.resultingEvents);
 		if (this.resultingEvents.size() == 0) this.resultingEvents.add(new MessageEvent(this.floor, new Message("item.no_effect")));
 		return super.processServer();
 	}

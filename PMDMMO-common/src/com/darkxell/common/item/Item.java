@@ -207,4 +207,14 @@ public class Item implements AffectsPokemon, Comparable<Item>
 		this.effect().use(floor, this, pokemon, target, events);
 	}
 
+	/** Called when this Item is used when caught.
+	 * 
+	 * @param floor - The current Floor.
+	 * @param pokemon - The Pokemon using the Item.
+	 * @param target - The Pokemon the Item is being used on. May be null if there is no target. */
+	public void useThrown(Floor floor, DungeonPokemon pokemon, DungeonPokemon target, ArrayList<DungeonEvent> events)
+	{
+		this.effect().useThrown(floor, this, pokemon, target, events);
+	}
+
 }

@@ -65,7 +65,7 @@ public class ProjectileThrownEvent extends DungeonEvent implements DamageSource
 				DungeonPokemon catcher = land.getPokemon();
 				if (this.item.effect().isUsableOnCatch())
 				{
-					this.resultingEvents.add(new ItemSelectionEvent(this.floor, this.item, catcher, catcher, null, 0, catcher.facing(), false));
+					this.resultingEvents.add(new ItemUseEvent(this.floor, this.item, thrower, catcher, true));
 					caught = true;
 				} else if (catcher.canAccept(i) != -1)
 				{

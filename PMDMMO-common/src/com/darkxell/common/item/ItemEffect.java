@@ -104,4 +104,15 @@ public class ItemEffect
 	public void use(Floor floor, Item item, DungeonPokemon pokemon, DungeonPokemon target, ArrayList<DungeonEvent> events)
 	{}
 
+	/** Called when an Item with this Effect is used when caught.
+	 * 
+	 * @param floor - The current Floor.
+	 * @param item - The used Item.
+	 * @param pokemon - The Pokemon that threw the Item.
+	 * @param target - The Pokemon the Item is being used on (the one that Item was thrown on). */
+	public void useThrown(Floor floor, Item item, DungeonPokemon pokemon, DungeonPokemon target, ArrayList<DungeonEvent> events)
+	{
+		this.use(floor, item, pokemon, target, events);
+	}
+
 }

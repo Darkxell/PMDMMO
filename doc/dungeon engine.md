@@ -122,7 +122,7 @@ Here is a list of all Events. Will be updated with the game. Bold events are PAE
 | ***ItemThrownEvent***    | Called when an Item is selected to be thrown.                                           | ProjectileThrownEvent |
 | ItemUseEvent             | Called when an Item is used.                                                            | Calls the Item's effects. |
 | MoneyCollectedEvent      | Called when money is collected by a Player. May use a turn if intentionnally picked up. | |
-| ProjectileThrownEvent    | Called when a Pokémon throws a Projectile to a Tile.                                    | DamageDealtEvent, ItemLandedEvent, ItemSelectionEvent |
+| ProjectileThrownEvent    | Called when a Pokémon throws a Projectile to a Tile.                                    | DamageDealtEvent, ItemLandedEvent, ItemUseEvent |
 
 ## ■  Move related Events
 
