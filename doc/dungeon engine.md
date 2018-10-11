@@ -119,9 +119,10 @@ Here is a list of all Events. Will be updated with the game. Bold events are PAE
 | ***ItemMovedEvent***     | Called when an Item is moved from anywhere to anywhere.                                 | |
 | ***ItemSelectionEvent*** | Called when an Item is selected to be used.                                             | ItemUseEvent |
 | ***ItemSwappedEvent***   | Called when an Item is swapped with another, from anywhere to anywhere.                 | |
-| ***ItemThrownEvent***    | Called when an Item is thrown.                                                          | ProjectileThrownEvent |
+| ***ItemThrownEvent***    | Called when an Item is selected to be thrown.                                           | ProjectileThrownEvent |
 | ItemUseEvent             | Called when an Item is used.                                                            | Calls the Item's effects. |
 | MoneyCollectedEvent      | Called when money is collected by a Player. May use a turn if intentionnally picked up. | |
+| ProjectileThrownEvent    | Called when a Pokémon throws a Projectile to a Tile.                                    | DamageDealtEvent, ItemLandedEvent, ItemSelectionEvent |
 
 ## ■  Move related Events
 
@@ -141,7 +142,6 @@ Here is a list of all Events. Will be updated with the game. Bold events are PAE
 | ExperienceGainedEvent | Called when a Pokémon gains experience. | LevelupEvent |
 | ExperienceGeneratedEvent | Called when a Move is used. Is then increased for each fainted Pokémon. | ExperienceGainedEvent |
 | LevelupEvent | Called when a Pokémon levels up. | MoveDiscoveredEvent |
-| ProjectileThrownEvent | Called when a Pokémon throws a Projectile to a Tile. | DamageDealtEvent, ItemLandedEvent |
 | SpeedChangedEvent | Called when a Pokémon has its effective speed changed. | |
 | StatChangedEvent | Called when a Pokémon has one of its stat stages changed. | SpeedChangeEvent |
 

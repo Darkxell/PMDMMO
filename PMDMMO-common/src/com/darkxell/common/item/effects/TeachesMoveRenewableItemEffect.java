@@ -39,6 +39,12 @@ public class TeachesMoveRenewableItemEffect extends ItemEffect
 	}
 
 	@Override
+	public boolean isUsableOnCatch()
+	{
+		return false;
+	}
+
+	@Override
 	public boolean isUsedOnTeamMember()
 	{
 		return true;

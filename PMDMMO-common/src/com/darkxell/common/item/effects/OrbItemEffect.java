@@ -29,6 +29,12 @@ public class OrbItemEffect extends ItemEffect
 	{
 		return true;
 	}
+	
+	@Override
+	public boolean isUsableOnCatch()
+	{
+		return false;
+	}
 
 	@Override
 	public Message name(Item item)

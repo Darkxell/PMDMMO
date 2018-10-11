@@ -10,10 +10,12 @@ import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageSource;
 import com.darkxell.common.event.stats.ExperienceGeneratedEvent;
 import com.darkxell.common.item.Item;
+import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.item.effects.ThrowableItemEffect;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.DungeonPokemon.DungeonPokemonType;
 import com.darkxell.common.util.Direction;
+import com.darkxell.common.util.language.Message;
 
 public class ProjectileThrownEvent extends DungeonEvent implements DamageSource
 {
@@ -56,9 +58,28 @@ public class ProjectileThrownEvent extends DungeonEvent implements DamageSource
 		} else
 		{
 			Tile land = this.destination;
-			while (land.isWall())
-				land = land.adjacentTile(this.direction.opposite());
-			this.resultingEvents.add(new ItemLandedEvent(this.floor, this.item, land));
+			boolean caught = false;
+			if (land.getPokemon() != null)
+			{
+				ItemStack i = new ItemStack(this.item.id);
+				DungeonPokemon catcher = land.getPokemon();
+				if (this.item.effect().isUsableOnCatch())
+				{
+					this.resultingEvents.add(new ItemSelectionEvent(this.floor, this.item, catcher, catcher, null, 0, catcher.facing(), false));
+					caught = true;
+				} else if (catcher.canAccept(i) != -1)
+				{
+					catcher.addItem(i);
+					this.messages.add(new Message("item.caught").addReplacement("<pokemon>", catcher.getNickname()).addReplacement("<item>", this.item.name()));
+					caught = true;
+				}
+			}
+			if (!caught)
+			{
+				while (land.isWall())
+					land = land.adjacentTile(this.direction.opposite());
+				this.resultingEvents.add(new ItemLandedEvent(this.floor, this.item, land));
+			}
 		}
 		return super.processServer();
 	}

@@ -26,12 +26,12 @@ public class ItemEffect
 	}
 
 	/** @return The Tile an Item will land at if it's thrown by the input Pokemon. */
-	public Tile findDestinationStraight(Floor floor, Item item, DungeonPokemon pokemon)
+	public Tile findDestinationStraight(Floor floor, Item item, DungeonPokemon pokemon, boolean targetsAllies)
 	{
 		Direction direction = pokemon.facing();
 		Tile current = pokemon.tile().adjacentTile(direction);
 
-		while (current.getPokemon() == null || pokemon.isAlliedWith(current.getPokemon()))
+		while (current.getPokemon() == null || (!targetsAllies && pokemon.isAlliedWith(current.getPokemon())))
 		{
 			current = current.adjacentTile(direction);
 			if (current.isWall()) return current;
@@ -76,6 +76,11 @@ public class ItemEffect
 	public boolean isUsable()
 	{
 		return false;
+	}
+
+	public boolean isUsableOnCatch()
+	{
+		return this.isUsable();
 	}
 
 	/** @return True if the user has to select a Team member as target for this Item. */

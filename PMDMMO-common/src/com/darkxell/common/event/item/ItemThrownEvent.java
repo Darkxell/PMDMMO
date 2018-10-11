@@ -50,7 +50,7 @@ public class ItemThrownEvent extends DungeonEvent implements Communicable
 			if (stack.quantity() <= 0) this.source.deleteItem(this.sourceIndex);
 
 			this.resultingEvents.add(new ProjectileThrownEvent(this.floor, this.item, this.thrower,
-					this.item.effect().findDestinationStraight(this.floor, this.item, this.thrower)));
+					this.item.effect().findDestinationStraight(this.floor, this.item, this.thrower, true)));
 		}
 		return super.processServer();
 	}

@@ -80,7 +80,7 @@ public class ThrowableItemEffect extends ItemEffect
 
 	public Tile findDestination(Floor floor, Item item, DungeonPokemon pokemon)
 	{
-		if (this.trajectory == ThrowableTrajectory.Straight) return this.findDestinationStraight(floor, item, pokemon);
+		if (this.trajectory == ThrowableTrajectory.Straight) return this.findDestinationStraight(floor, item, pokemon, false);
 		return this.findDestinationArc(floor, item, pokemon);
 	}
 
@@ -123,6 +123,12 @@ public class ThrowableItemEffect extends ItemEffect
 	public boolean isUsable()
 	{
 		return true;
+	}
+
+	@Override
+	public boolean isUsableOnCatch()
+	{
+		return false;
 	}
 
 	@Override

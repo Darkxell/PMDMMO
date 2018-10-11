@@ -79,7 +79,7 @@ public class DungeonEventTransferTest extends UTest
 
 		events.add(new ItemMovedEvent(floor, ItemAction.GET, this.pokemon, this.floor.tileAt(10, 12), 0, this.pokemon.player().inventory(), 1));
 		events.add(new ItemSwappedEvent(floor, ItemAction.SWAP, this.pokemon, this.floor.tileAt(10, 12), 0, this.pokemon.player().inventory(), 1));
-		events.add(new ItemSelectionEvent(floor, this.item1.item(), pokemon, pokemon, pokemon, 0, Direction.EAST));
+		events.add(new ItemSelectionEvent(floor, this.item1.item(), pokemon, pokemon, pokemon, 0, Direction.EAST, true));
 
 		events.add(new MoveEnabledEvent(floor, move1, false));
 		events.add(new MoveSwitchedEvent(floor, pokemon.originalPokemon, 0, 1));

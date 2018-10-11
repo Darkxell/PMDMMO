@@ -39,12 +39,13 @@ public class ItemSelectionEvent extends DungeonEvent implements Communicable
 
 	public ItemSelectionEvent(Floor floor, Item item, DungeonPokemon user, DungeonPokemon target, ItemContainer source, int sourceIndex)
 	{
-		this(floor, item, user, target, source, sourceIndex, user.facing());
+		this(floor, item, user, target, source, sourceIndex, user.facing(), true);
 	}
 
-	public ItemSelectionEvent(Floor floor, Item item, DungeonPokemon user, DungeonPokemon target, ItemContainer source, int sourceIndex, Direction direction)
+	public ItemSelectionEvent(Floor floor, Item item, DungeonPokemon user, DungeonPokemon target, ItemContainer source, int sourceIndex, Direction direction,
+			boolean consumesTurn)
 	{
-		super(floor, user);
+		super(floor, consumesTurn ? user : null);
 		this.item = item;
 		this.user = user;
 		this.target = target;
@@ -84,7 +85,7 @@ public class ItemSelectionEvent extends DungeonEvent implements Communicable
 		if (this.item.effect().isUsable())
 		{
 			this.messages.add(this.item.effect().getUseEffectMessage(this));
-			if (this.item.effect().isConsummable())
+			if (this.item.effect().isConsummable() && this.source != null)
 			{
 				ItemStack stack = this.source.getItem(this.sourceIndex);
 				stack.setQuantity(stack.quantity() - 1);
