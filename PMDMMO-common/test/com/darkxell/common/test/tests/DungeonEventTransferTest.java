@@ -35,28 +35,28 @@ import com.darkxell.common.util.Direction;
 
 public class DungeonEventTransferTest extends UTest
 {
+	private Player _player = new Player(new DBPlayer(69, "DaWae", "no U", 45, 99, 0, new ArrayList<>(), new ArrayList<>(), null, null, null, null, 0));
 	private Dungeon d = DungeonRegistry.find(4);
 	private DungeonExploration dungeon = d.newInstance(798654123);
 	private Floor floor;
-	private Inventory inventory = new Inventory(new DBInventory(77, 30, new ArrayList<>()));
+	private Inventory inventory = new Inventory(new DBInventory(77, 30, new ArrayList<>()), _player);
 	private ItemStack item1 = new ItemStack(new DBItemstack(43, 2, 1)), item2 = new ItemStack(new DBItemstack(44, 2, 1)),
 			item3 = new ItemStack(new DBItemstack(45, 10, 1));
 	private LearnedMove move1 = new LearnedMove(new DBLearnedmove(50, 0, 1, 5, true, false, 0)),
 			move2 = new LearnedMove(new DBLearnedmove(51, 1, 101, 5, true, false, 0));
-	private Player player = new Player(new DBPlayer(69, "DaWae", "no U", 45, 99, 0, new ArrayList<>(), new ArrayList<>(), null, null, null, null,0));
 	private DungeonPokemon pokemon = new DungeonPokemon(
 			new Pokemon(new DBPokemon(42, 6, 0, 1, Pokemon.GENDERLESS, "My poke", 5, 126894, 111, false, 1, 2, 3, 4, 5, null, new ArrayList<>())));
 
 	{
-		this.player.setInventory(this.inventory);
-		this.player.setLeaderPokemon(this.pokemon.originalPokemon);
+		this._player.setInventory(this.inventory);
+		this._player.setLeaderPokemon(this.pokemon.originalPokemon);
 		this.pokemon.setItem(this.item1);
 		this.pokemon.setMove(0, this.move1);
 		this.pokemon.setMove(1, this.move2);
 		this.inventory.addItem(this.item3);
 
 		this.dungeon.eventProcessor = new CommonEventProcessor(this.dungeon);
-		this.dungeon.addPlayer(this.player);
+		this.dungeon.addPlayer(this._player);
 		this.floor = this.dungeon.initiateExploration();
 		this.floor.summonPokemon(this.pokemon, 10, 12, new ArrayList<>());
 		this.floor.tileAt(10, 12).setItem(this.item2);

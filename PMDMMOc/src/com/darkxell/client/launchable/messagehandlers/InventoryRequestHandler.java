@@ -8,17 +8,18 @@ import com.darkxell.common.dbobject.DBInventory;
 import com.darkxell.common.dbobject.DBItemstack;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.player.Inventory;
+import com.darkxell.common.player.Player;
 import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
 
 public class InventoryRequestHandler extends MessageHandler
 {
 
-	public static Inventory readInventory(JsonObject message)
+	public static Inventory readInventory(JsonObject message, Player owner)
 	{
 		DBInventory dbi = new DBInventory();
 		dbi.read(message.get("object").asObject());
-		Inventory i = new Inventory(dbi);
+		Inventory i = new Inventory(dbi, owner);
 
 		if (message.get("items") != null && message.get("items").isArray())
 		{

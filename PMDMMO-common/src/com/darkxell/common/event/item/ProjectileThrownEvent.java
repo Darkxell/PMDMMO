@@ -78,7 +78,7 @@ public class ProjectileThrownEvent extends DungeonEvent implements DamageSource
 			{
 				while (land.isWall())
 					land = land.adjacentTile(this.direction.opposite());
-				this.resultingEvents.add(new ItemLandedEvent(this.floor, this.item, land));
+				this.resultingEvents.add(new ItemLandedEvent(this.floor, new ItemStack(this.item.id, 1), land));
 			}
 		}
 		return super.processServer();

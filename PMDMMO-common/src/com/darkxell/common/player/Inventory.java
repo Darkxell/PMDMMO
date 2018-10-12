@@ -16,22 +16,23 @@ public class Inventory implements ItemContainer
 	public static final int MAX_SIZE = 20;
 
 	private DBInventory data;
-
 	private ArrayList<ItemStack> items;
+	public final Player owner;
 
-	public Inventory()
+	public Inventory(Player owner)
 	{
-		this(MAX_SIZE);
+		this(MAX_SIZE, owner);
 	}
 
-	public Inventory(DBInventory data)
+	public Inventory(DBInventory data, Player owner)
 	{
+		this.owner = owner;
 		this.setData(data);
 	}
 
-	public Inventory(int maxSize)
+	public Inventory(int maxSize, Player owner)
 	{
-		this(new DBInventory(0, maxSize, new ArrayList<>()));
+		this(new DBInventory(0, maxSize, new ArrayList<>()), owner);
 	}
 
 	@Override

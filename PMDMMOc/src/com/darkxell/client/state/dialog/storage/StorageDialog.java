@@ -178,7 +178,7 @@ public class StorageDialog extends ComplexDialog implements ItemSelectionListene
 	public void onInventoryReceived(JsonObject message)
 	{
 		Persistance.isCommunicating = false;
-		Inventory i = InventoryRequestHandler.readInventory(message);
+		Inventory i = InventoryRequestHandler.readInventory(message, Persistance.player);
 		if (i.getData().id == Persistance.player.getData().toolboxinventory.id)
 		{
 			Persistance.player.setInventory(i);

@@ -75,7 +75,7 @@ public class PlayerLoadingState extends AbstractState
 
 	public void onInventoryReceived(JsonObject message)
 	{
-		Persistance.player.setInventory(InventoryRequestHandler.readInventory(message));
+		Persistance.player.setInventory(InventoryRequestHandler.readInventory(message, Persistance.player));
 		this.inventory = true;
 		this.checkFinished();
 	}

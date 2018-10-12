@@ -182,7 +182,7 @@ public class Player
 	{
 		this.data = data;
 		this.allies = new ArrayList<>();
-		this.inventory = new Inventory();
+		this.inventory = new Inventory(this);
 		this.pokemonInZones = new HashMap<>();
 		for (DatabaseIdentifier zone : this.data.pokemonsinzones)
 			this.pokemonInZones.put(zone.id, null);

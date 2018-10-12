@@ -372,15 +372,14 @@ public final class ClientEventProcessor extends CommonEventProcessor
 				@Override
 				public void onAnimationEnd(AbstractAnimation animation)
 				{
-					Persistance.dungeonState.itemRenderer.hidden.remove(event.placedItem());
+					Persistance.dungeonState.itemRenderer.hidden.remove(event.item);
 					currentAnimEnd.onAnimationEnd(animation);
 				}
 			};
 
-			Persistance.dungeonState.itemRenderer.hidden.add(event.placedItem());
-			Item item = event.item;
+			Persistance.dungeonState.itemRenderer.hidden.add(event.item);
 			ProjectileAnimationState a = new ProjectileAnimationState(Persistance.dungeonState, event.tile, event.destination());
-			a.animation = Animations.getProjectileAnimationFromItem(null, item, listener);
+			a.animation = Animations.getProjectileAnimationFromItem(null, event.item.item(), listener);
 			a.movement = ProjectileMovement.ARC;
 			if (a.animation != null)
 			{

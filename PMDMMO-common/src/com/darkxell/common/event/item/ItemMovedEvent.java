@@ -99,7 +99,6 @@ public class ItemMovedEvent extends DungeonEvent implements Communicable
 			this.messages.add(new Message(message).addReplacement("<pokemon>", this.mover == null ? "null" : this.mover.getNickname().toString())
 					.addReplacement("<item>", this.source.getItem(this.sourceIndex).name()));
 
-		// TODO Put created Item somewhere else if there is no room in Container
 		ItemStack i = this.source.getItem(this.sourceIndex);
 		this.source.deleteItem(this.sourceIndex);
 		if (this.destinationIndex >= this.destination.size() || this.destinationIndex == -1) this.destination.addItem(i);

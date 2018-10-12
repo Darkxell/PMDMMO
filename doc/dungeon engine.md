@@ -125,6 +125,7 @@ Here is a list of all Events. Will be updated with the game. Bold events are PAE
 
 | Event name               | Description                                                                             | May trigger               |
 |--------------------------|-----------------------------------------------------------------------------------------|-------------------------- |
+| ItemCreatedEvent         | Called when an Item is created by another effect.                                       | ItemLandedEvent |
 | ItemLandedEvent          | Called when an Item falls on the ground.                                                | |
 | ***ItemMovedEvent***     | Called when an Item is moved from anywhere to anywhere.                                 | |
 | ***ItemSelectionEvent*** | Called when an Item is selected to be used.                                             | ItemUseEvent |
