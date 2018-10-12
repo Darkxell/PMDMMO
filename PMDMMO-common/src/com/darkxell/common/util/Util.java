@@ -19,7 +19,7 @@ public class Util
 		final int starter = 4;
 		Player player = new Player("Offline debug account name", PokemonRegistry.find(starter).generate(new Random(), 10, 1));
 		player.setStoryPosition(500);
-		player.setMoneyInBag(100);
+		player.setMoneyInBag(69);
 		player.setMoneyInBank(456789);
 		player.addAlly(PokemonRegistry.find(starter).generate(new Random(), 80));
 		// player.addAlly(PokemonRegistry.find(255).generate(new Random(), 80));

@@ -1,6 +1,7 @@
 package com.darkxell.client.state.menu.dungeon;
 
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.util.ArrayList;
 
 import com.darkxell.client.launchable.Persistance;
@@ -8,10 +9,13 @@ import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.renderers.layers.AbstractGraphiclayer;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.dungeon.DungeonState;
+import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
+import com.darkxell.client.state.menu.components.MenuWindow;
 import com.darkxell.client.state.menu.item.ItemContainersMenuState;
 import com.darkxell.client.state.menu.menus.SettingsMenuState;
 import com.darkxell.client.state.menu.menus.TeamMenuState;
+import com.darkxell.common.dungeon.data.Dungeon.DungeonDirection;
 import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.player.ItemContainer;
 import com.darkxell.common.pokemon.Pokemon;
@@ -20,11 +24,15 @@ import com.darkxell.common.util.language.Message;
 public class DungeonMenuState extends OptionSelectionMenuState
 {
 
+	private Message floorMessage;
+	private MenuWindow infoWindow;
 	private MenuOption moves, items, team, settings, ground;
 
 	public DungeonMenuState(AbstractGraphiclayer background)
 	{
 		super(background);
+		this.floorMessage = new Message("stairs.floor." + (Persistance.dungeon.dungeon().direction == DungeonDirection.UP ? "up" : "down"))
+				.addReplacement("<floor>", Integer.toString(Persistance.dungeon.currentFloor().id));
 		this.createOptions();
 	}
 
@@ -75,6 +83,12 @@ public class DungeonMenuState extends OptionSelectionMenuState
 		return new TeamMenuState(this, Persistance.dungeonState);
 	}
 
+	private Rectangle infoWindowDimensions()
+	{
+		Rectangle main = this.mainWindowDimensions();
+		return new Rectangle((int) (main.getMaxX() + 10), main.y, PrincipalMainState.displayWidth - 16 * 2 - 10 - main.width, 122);
+	}
+
 	@Override
 	protected void onExit()
 	{
@@ -105,6 +119,23 @@ public class DungeonMenuState extends OptionSelectionMenuState
 	public void render(Graphics2D g, int width, int height)
 	{
 		super.render(g, width, height);
-		TextRenderer.render(g, "Belly: " + Persistance.player.getDungeonLeader().getBelly() + "/" + Persistance.player.getDungeonLeader().getBellySize(), 0, 0);
+
+		if (this.infoWindow == null) this.infoWindow = new MenuWindow(this.infoWindowDimensions());
+
+		this.infoWindow.render(g, null, width, height);
+		int x = this.infoWindow.inside().x + 5, y = this.infoWindow.inside().y + 5;
+		TextRenderer.render(g, Persistance.dungeon.dungeon().name().addPrefix("<yellow>").addSuffix("</color>"), x, y);
+		y += TextRenderer.lineSpacing() + TextRenderer.height();
+		TextRenderer.render(g, this.floorMessage, x, y);
+		y += 3 * (TextRenderer.lineSpacing() + TextRenderer.height());
+		TextRenderer.render(g,
+				new Message("menu.belly").addReplacement("<current>", String.valueOf(Math.round(Persistance.player.getDungeonLeader().getBelly())))
+						.addReplacement("<max>", String.valueOf(Persistance.player.getDungeonLeader().getBellySize())),
+				x, y);
+		y += TextRenderer.lineSpacing() + TextRenderer.height();
+		TextRenderer.render(g, new Message("menu.money").addReplacement("<money>", String.valueOf(Persistance.player.moneyInBag())), x, y);
+		y += TextRenderer.lineSpacing() + TextRenderer.height();
+		TextRenderer.render(g, new Message("menu.weather").addReplacement("<weather>", String.valueOf(Persistance.floor.currentWeather().weather.name())), x,
+				y);
 	}
 }
