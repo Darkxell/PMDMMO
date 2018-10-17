@@ -44,7 +44,7 @@ public class Frame extends JFrame implements WindowListener
 		this.setMinimumSize(new Dimension(650, 400));
 		// this.setResizable(false);
 		this.setLocationRelativeTo(null);
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setVisible(true);
 		this.addWindowListener(this);
 
