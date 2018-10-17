@@ -94,6 +94,7 @@ public class Launcher
 			ItemRegistry.saveClient();
 			DungeonRegistry.saveClient();
 		}
+		System.exit(0);
 	}
 
 	public static void setProcessingProfile(byte profile)
