@@ -273,6 +273,7 @@ public class Dungeon implements Comparable<Dungeon>
 		if (stack.item().effect() == ItemEffects.Pokedollars) quantity = this.getMoneyQuantity(random, floor);
 		else if (stack.item().isStackable) quantity = RandomUtil.nextGaussian(10, 7, random);
 		if (quantity <= 0) quantity = 1;
+		stack.setQuantity(quantity);
 
 		return stack;
 	}
