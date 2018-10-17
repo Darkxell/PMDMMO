@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cutscene name="startingwoods/blackstart">
+  <creation freezone="base" fading="false" />
+  <events>
+    <dialog isnarrator="true">
+      <dialogscreen>cutscene.startingwoods.blackstart.m1</dialogscreen>
+      <dialogscreen>cutscene.startingwoods.blackstart.m2</dialogscreen>
+      <dialogscreen>cutscene.startingwoods.blackstart.m3</dialogscreen>
+      <dialogscreen>cutscene.startingwoods.blackstart.m4</dialogscreen>
+      <dialogscreen>cutscene.startingwoods.blackstart.m5</dialogscreen>
+    </dialog>
+  </events>
+  <onfinish>
+    <playcutscene id="startingwoods/wakeup" />
+  </onfinish>
+</cutscene>

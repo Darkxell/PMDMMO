@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cutscene name="startingwoods/introduction">
+  <creation freezone="startforest" camerax="20.0" cameray="15.0" fading="false">
+    <pokemon cutsceneid="1" xpos="20.0" ypos="15.0" facing="EAST">
+      <pokemonid>4</pokemonid>
+    </pokemon>
+    <pokemon cutsceneid="2" xpos="23.0" ypos="15.0" facing="WEST">
+      <pokemonid>4</pokemonid>
+    </pokemon>
+  </creation>
+  <events>
+    <rotate target="1" distance="2" />
+    <wait />
+    <rotate target="1" distance="-4" />
+    <wait />
+    <rotate target="1" distance="2" />
+    <wait />
+    <dialog>
+      <dialogscreen>cutscene.startingwoods.introduction.m1</dialogscreen>
+    </dialog>
+    <dialog>
+      <dialogscreen target="2">cutscene.startingwoods.introduction.m2</dialogscreen>
+    </dialog>
+  </events>
+  <onfinish>
+    <loadfreezone id="base" />
+  </onfinish>
+</cutscene>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cutscene name="startingwoods/wakeup">
+  <creation freezone="startforest" fading="false" />
+  <events>
+    <dialog>
+      <dialogscreen translate="false">&lt;speech&gt;:&lt;dots&gt;</dialogscreen>
+      <dialogscreen translate="false">&lt;speech&gt;:&lt;dots&gt;&lt;dots&gt;</dialogscreen>
+      <dialogscreen translate="false">&lt;speech&gt;:&lt;dots&gt;&lt;dots&gt;&lt;dots&gt;</dialogscreen>
+      <dialogscreen>cutscene.startingwoods.wakeup.m1</dialogscreen>
+      <dialogscreen>cutscene.startingwoods.wakeup.m2</dialogscreen>
+    </dialog>
+  </events>
+  <onfinish>
+    <loadfreezone id="base" />
+  </onfinish>
+</cutscene>
