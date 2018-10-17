@@ -1,6 +1,5 @@
 package fr.darkxell.dataeditor.application;
 
-import com.darkxell.client.discord.DiscordEventHandlerForPMDMMO;
 import com.darkxell.client.launchable.ClientSettings;
 import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.launchable.Persistance;
@@ -54,7 +53,7 @@ public class DataEditor extends Application
 
 		new Weather(-1, null);
 
-		new DiscordEventHandlerForPMDMMO("Developing game", "main_develop").start();
+		// new DiscordEventHandlerForPMDMMO("Developing game", "main_develop").start();
 
 		Cutscenes.load();
 
