@@ -24,6 +24,7 @@ public class DialogCutsceneEvent extends CutsceneEvent implements DialogEndListe
 	public static class CutsceneDialogScreen
 	{
 		public final int emotion;
+		boolean hasReplacements = false;
 		public final Message message;
 		public final int pokemon;
 
@@ -44,6 +45,23 @@ public class DialogCutsceneEvent extends CutsceneEvent implements DialogEndListe
 		public CutsceneDialogScreen(String text, boolean translate, int emotion, CutsceneEntity entity)
 		{
 			this(new Message(text, translate), emotion, entity);
+		}
+
+		void addReplacements(CutscenePokemon speaker)
+		{
+			this.hasReplacements = true;
+			this.message.addReplacement("<player-name>", Persistance.player.getTeamLeader().getNickname());
+			this.message.addReplacement("<player-type>", Persistance.player.getTeamLeader().species().formName());
+			if (Persistance.player.allies.size() >= 1)
+			{
+				this.message.addReplacement("<partner-name>", Persistance.player.getMember(1).getNickname());
+				this.message.addReplacement("<partner-type>", Persistance.player.getMember(1).species().formName());
+			}
+			if (speaker != null)
+			{
+				this.message.addReplacement("<speaker-name>", speaker.toPokemon().getNickname());
+				this.message.addReplacement("<speaker-type>", speaker.toPokemon().species().formName());
+			}
 		}
 
 		@Override
@@ -107,6 +125,7 @@ public class DialogCutsceneEvent extends CutsceneEvent implements DialogEndListe
 			CutscenePokemon pokemon = null;
 			CutsceneEntity e = this.cutscene.player.getEntity(s.pokemon);
 			if (e != null && e instanceof CutscenePokemon) pokemon = (CutscenePokemon) e;
+			if (!s.hasReplacements) s.addReplacements(pokemon);
 			DialogScreen screen = pokemon == null ? new DialogScreen(s.message) : new PokemonDialogScreen(pokemon.toPokemon(), s.message);
 			if (this.isNarratorDialog) screen = new NarratorDialogScreen(s.message);
 			screens[index++] = screen;
