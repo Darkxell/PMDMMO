@@ -11,26 +11,29 @@ import com.darkxell.common.util.XMLUtils;
 public class RotateCutsceneEvent extends CutsceneEvent
 {
 
+	public static final int DEFAULT_SPEED = 10;
+
 	private int currentDistance;
 	public final int distance;
-	public final boolean instantly;
 	private CutscenePokemon pokemon;
+	public final int speed;
 	public final int target;
+	private int tick;
 
 	public RotateCutsceneEvent(Element xml, Cutscene cutscene)
 	{
 		super(xml, CutsceneEventType.rotate, cutscene);
 		this.target = XMLUtils.getAttribute(xml, "target", -1);
-		this.instantly = XMLUtils.getAttribute(xml, "instantly", false);
 		this.distance = XMLUtils.getAttribute(xml, "distance", 0);
+		this.speed = XMLUtils.getAttribute(xml, "speed", DEFAULT_SPEED);
 	}
 
-	public RotateCutsceneEvent(int id, CutsceneEntity entity, int distance, boolean instantly)
+	public RotateCutsceneEvent(int id, CutsceneEntity entity, int distance, int speed)
 	{
 		super(id, CutsceneEventType.rotate);
 		this.target = entity == null ? -1 : entity.id;
 		this.distance = distance;
-		this.instantly = instantly;
+		this.speed = speed;
 	}
 
 	@Override
@@ -47,9 +50,9 @@ public class RotateCutsceneEvent extends CutsceneEvent
 		if (entity != null && entity instanceof CutscenePokemon)
 		{
 			this.pokemon = (CutscenePokemon) entity;
-			this.currentDistance = 0;
+			this.currentDistance = this.tick = 0;
 
-			if (this.instantly)
+			if (this.rotatesInstantly())
 			{
 				this.currentDistance = this.distance;
 				for (int i = 0; i < Math.abs(this.distance); ++i)
@@ -57,6 +60,11 @@ public class RotateCutsceneEvent extends CutsceneEvent
 					else this.pokemon.facing = this.pokemon.facing.rotateCounterClockwise();
 			}
 		} else this.currentDistance = this.distance;
+	}
+
+	private boolean rotatesInstantly()
+	{
+		return this.speed == 0;
 	}
 
 	@Override
@@ -71,7 +79,7 @@ public class RotateCutsceneEvent extends CutsceneEvent
 		Element root = super.toXML();
 		root.setAttribute("target", String.valueOf(this.target));
 		root.setAttribute("distance", String.valueOf(this.distance));
-		XMLUtils.setAttribute(root, "instantly", this.instantly, false);
+		XMLUtils.setAttribute(root, "speed", this.speed, DEFAULT_SPEED);
 		return root;
 	}
 
@@ -81,10 +89,15 @@ public class RotateCutsceneEvent extends CutsceneEvent
 		super.update();
 		if (!this.isOver())
 		{
-			if (this.distance > 0) this.pokemon.facing = this.pokemon.facing.rotateClockwise();
-			else this.pokemon.facing = this.pokemon.facing.rotateCounterClockwise();
+			++this.tick;
+			if (this.tick >= this.speed)
+			{
+				if (this.distance > 0) this.pokemon.facing = this.pokemon.facing.rotateClockwise();
+				else this.pokemon.facing = this.pokemon.facing.rotateCounterClockwise();
+				++this.currentDistance;
+				this.tick = 0;
+			}
 		}
-		++this.currentDistance;
 	}
 
 }
