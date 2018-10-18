@@ -50,6 +50,7 @@ public class DialogCutsceneEvent extends CutsceneEvent implements DialogEndListe
 		void addReplacements(CutscenePokemon speaker)
 		{
 			this.hasReplacements = true;
+			this.message.addReplacement("<account-name>", Persistance.player.name());
 			this.message.addReplacement("<player-name>", Persistance.player.getTeamLeader().getNickname());
 			this.message.addReplacement("<player-type>", Persistance.player.getTeamLeader().species().formName());
 			if (Persistance.player.allies.size() >= 1)
