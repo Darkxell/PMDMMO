@@ -9,7 +9,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.ListView;
-import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputDialog;
 
@@ -18,7 +17,7 @@ public class CustomList
 
 	private static class CustomListMenuHandler<T>
 	{
-		private MenuItem edit, rename, delete, create, up, down, top, bottom;
+		private MenuItem edit, rename, delete, create, top, bottom;
 		private ListView<T> list;
 
 		public CustomListMenuHandler(ListView<T> list)
@@ -34,10 +33,7 @@ public class CustomList
 			this.edit = new MenuItem("Edit");
 			this.rename = new MenuItem("Rename");
 			this.delete = new MenuItem("Delete");
-			Menu o = new Menu("Order");
-			this.up = new MenuItem("Move up");
 			this.top = new MenuItem("Move to top");
-			this.down = new MenuItem("Move down");
 			this.bottom = new MenuItem("Move to bottom");
 
 			if (create)
@@ -77,25 +73,14 @@ public class CustomList
 				this.top.setOnAction(e -> {
 					this.move(parent, list, list.getSelectionModel().getSelectedItem(), -list.getSelectionModel().getSelectedIndex());
 				});
-				this.up.setOnAction(e -> {
-					this.move(parent, list, list.getSelectionModel().getSelectedItem(), -1);
-				});
-				this.down.setOnAction(e -> {
-					this.move(parent, list, list.getSelectionModel().getSelectedItem(), 2);
-				});
 				this.bottom.setOnAction(e -> {
 					this.move(parent, list, list.getSelectionModel().getSelectedItem(), list.getItems().size() - list.getSelectionModel().getSelectedIndex());
 				});
 				this.top.setDisable(true);
-				this.up.setDisable(true);
-				this.down.setDisable(true);
 				this.bottom.setDisable(true);
 
-				o.getItems().add(top);
-				o.getItems().add(up);
-				o.getItems().add(down);
-				o.getItems().add(bottom);
-				menu.getItems().add(o);
+				menu.getItems().add(top);
+				menu.getItems().add(bottom);
 			}
 
 			if (delete)
@@ -134,9 +119,7 @@ public class CustomList
 			this.rename.setDisable(isNull);
 			this.delete.setDisable(isNull);
 			this.create.setDisable(isNull);
-			this.up.setDisable(isNull || index.intValue() == 0);
 			this.top.setDisable(isNull || index.intValue() == 0);
-			this.down.setDisable(isNull || index.intValue() == this.list.getItems().size() - 1);
 			this.bottom.setDisable(isNull || index.intValue() == this.list.getItems().size() - 1);
 		}
 	}
@@ -144,7 +127,7 @@ public class CustomList
 	public static <T> void setup(ListCellParent<T> parent, ListView<T> list, String typeName, boolean edit, boolean rename, boolean delete, boolean create,
 			boolean order)
 	{
-		list.setCellFactory(param -> new CustomListCell<T>(parent));
+		list.setCellFactory(param -> new CustomListCell<T>(parent, order));
 		list.setContextMenu(new CustomListMenuHandler<T>(list).createMenu(parent, typeName, edit, rename, delete, create, order));
 	}
 
