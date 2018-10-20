@@ -12,15 +12,18 @@ import com.darkxell.client.mechanics.freezones.entities.StorageEntity;
 import com.darkxell.client.mechanics.freezones.entities.WatersparklesEntity;
 import com.darkxell.client.state.dialog.DialogScreen;
 import com.darkxell.client.state.dialog.PokemonDialogScreen;
+import com.darkxell.client.state.dialog.PokemonDialogScreen.DialogPortraitLocation;
 import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.DoubleRectangle;
 import com.darkxell.common.util.language.Message;
 import com.darkxell.common.zones.FreezoneInfo;
 
-public class PokemonSquareFreezone extends FreezoneMap {
+public class PokemonSquareFreezone extends FreezoneMap
+{
 
-	public PokemonSquareFreezone() {
+	public PokemonSquareFreezone()
+	{
 		super("/freezones/square.xml", 4, 40, FreezoneInfo.SQUARE);
 		this.freezonebgm = "town.mp3";
 		this.triggerzones.add(new WarpZone(63, 40, FreezoneInfo.BASE, new DoubleRectangle(0, 38, 2, 5)));
@@ -81,25 +84,25 @@ public class PokemonSquareFreezone extends FreezoneMap {
 		this.addEntity(new PokemonFreezoneEntity(97.5, 33, 40)); // Wigglytuff
 		this.addEntity(new PokemonFreezoneEntity(41.5, 61, 115)); // Kangaskhan
 		this.addEntity(new PokemonFreezoneEntity(82.5, 60, 316)); // Gulpin
-		
+
 		// Add interactible shopkeepers
 		this.addEntity(new BankEntity(82.5, 35));
 		this.addEntity(new StorageEntity(41.5, 63));
 
 		// Add the interactible pokemons
 		DialogScreen[] s = new DialogScreen[2];
-		s[0] = new PokemonDialogScreen(PokemonRegistry.find(6).generate(new Random(), 0),
-				new Message("dialog.place.charizard.1"));
-		s[1] = new PokemonDialogScreen(PokemonRegistry.find(6).generate(new Random(), 0),
-				new Message("dialog.place.charizard.2"));
+		s[0] = new PokemonDialogScreen(PokemonRegistry.find(6).generate(new Random(), 0), new Message("dialog.place.charizard.1"),
+				DialogPortraitLocation.BOTTOM_RIGHT);
+		s[1] = new PokemonDialogScreen(PokemonRegistry.find(6).generate(new Random(), 0), new Message("dialog.place.charizard.2"),
+				DialogPortraitLocation.BOTTOM_RIGHT);
 		this.addEntity(new PokemonFreezoneEntity(57, 33, 6, Direction.EAST, s));
-		this.addEntity(new PokemonFreezoneEntity(61, 33, 248, Direction.WEST, new PokemonDialogScreen(
-				PokemonRegistry.find(248).generate(new Random(), 0), new Message("dialog.place.tyranitar"))));
+		this.addEntity(new PokemonFreezoneEntity(61, 33, 248, Direction.WEST, new PokemonDialogScreen(PokemonRegistry.find(248).generate(new Random(), 0),
+				new Message("dialog.place.tyranitar"), DialogPortraitLocation.BOTTOM_RIGHT)));
 		s = new DialogScreen[2];
-		s[0] = new PokemonDialogScreen(PokemonRegistry.find(275).generate(new Random(), 0),
-				new Message("dialog.place.shiftry.1"));
-		s[1] = new PokemonDialogScreen(PokemonRegistry.find(275).generate(new Random(), 0),
-				new Message("dialog.place.shiftry.2"));
+		s[0] = new PokemonDialogScreen(PokemonRegistry.find(275).generate(new Random(), 0), new Message("dialog.place.shiftry.1"),
+				DialogPortraitLocation.BOTTOM_RIGHT);
+		s[1] = new PokemonDialogScreen(PokemonRegistry.find(275).generate(new Random(), 0), new Message("dialog.place.shiftry.2"),
+				DialogPortraitLocation.BOTTOM_RIGHT);
 		this.addEntity(new PokemonFreezoneEntity(69, 35, 275, Direction.SOUTHWEST, s));
 
 	}

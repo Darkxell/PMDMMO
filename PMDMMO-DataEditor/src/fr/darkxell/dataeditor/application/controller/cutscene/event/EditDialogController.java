@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 
 import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
 import com.darkxell.client.mechanics.cutscene.event.DialogCutsceneEvent.CutsceneDialogScreen;
+import com.darkxell.client.state.dialog.PokemonDialogScreen.DialogPortraitLocation;
 
 import fr.darkxell.dataeditor.application.controller.cutscene.EditCutsceneController;
 import javafx.fxml.FXML;
@@ -15,12 +16,17 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 public class EditDialogController implements Initializable
 {
 
 	private ArrayList<CutsceneEntity> allEntities = new ArrayList<>();
+	@FXML
+	private ComboBox<DialogPortraitLocation> portraitCombobox;
+	@FXML
+	private Label portraitLabel;
 	@FXML
 	private CheckBox targetCheckbox;
 	@FXML
@@ -34,7 +40,7 @@ public class EditDialogController implements Initializable
 	{
 		CutsceneEntity target = this.targetCheckbox.isSelected() ? this.targetCombobox.getSelectionModel().getSelectedItem() : null;
 		if (target != null && target.id == -1) new Alert(AlertType.WARNING, "Your target needs an ID to work properly.", ButtonType.OK);
-		return new CutsceneDialogScreen(this.textTextfield.getText(), this.translatedCheckbox.isSelected(), -1, target);
+		return new CutsceneDialogScreen(this.textTextfield.getText(), this.translatedCheckbox.isSelected(), -1, target, this.portraitCombobox.getValue());
 	}
 
 	@Override
@@ -43,10 +49,15 @@ public class EditDialogController implements Initializable
 		this.allEntities.addAll(EditCutsceneController.instance.listAvailableEntities(EditCutsceneController.editing));
 		this.targetCheckbox.selectedProperty().addListener((obs, oldValue, newValue) -> {
 			this.targetCombobox.setDisable(!newValue);
+			this.portraitLabel.setDisable(!newValue);
+			this.portraitCombobox.setDisable(!newValue);
 		});
 		this.targetCombobox.getItems().addAll(this.allEntities);
 		this.targetCombobox.getSelectionModel().select(0);
 		this.targetCombobox.setDisable(true);
+
+		this.portraitCombobox.getItems().addAll(DialogPortraitLocation.values());
+		this.portraitCombobox.getSelectionModel().select(DialogPortraitLocation.BOTTOM_LEFT);
 	}
 
 	public void onCancel()
@@ -71,6 +82,7 @@ public class EditDialogController implements Initializable
 				this.targetCombobox.getSelectionModel().select(e);
 				break;
 			}
+		if (screen.portraitLocation != null) this.portraitCombobox.getSelectionModel().select(screen.portraitLocation);
 	}
 
 }

@@ -16,6 +16,7 @@ import com.darkxell.client.mechanics.cutscene.entity.CutscenePokemon;
 import com.darkxell.client.mechanics.cutscene.event.DialogCutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.event.DialogCutsceneEvent.CutsceneDialogScreen;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
+import com.darkxell.client.state.dialog.PokemonDialogScreen.DialogPortraitLocation;
 import com.darkxell.client.state.dungeon.DungeonEndState;
 import com.darkxell.client.state.freezone.CutsceneState;
 import com.darkxell.common.item.ItemRegistry;
@@ -79,19 +80,19 @@ public class MissionResultsState extends CutsceneState
 
 		Message thank = new Message("mission.thank." + mission.getMissiontype()).addReplacement("<item>", ItemRegistry.find(mission.getItemid()).name());
 		if (has2Pks) thank.addReplacement("<pokemon>", target.getNickname());
-		CutsceneDialogScreen screen1 = new CutsceneDialogScreen(thank, 0, clientEntity);
+		CutsceneDialogScreen screen1 = new CutsceneDialogScreen(thank, 0, clientEntity, DialogPortraitLocation.BOTTOM_RIGHT);
 
 		ArrayList<CutsceneDialogScreen> screens = new ArrayList<>();
 		screens.add(screen1);
 
 		MissionReward rewards = mission.getRewards();
-		if (rewards.getMoney() > 0)
-			screens.add(new CutsceneDialogScreen(new Message("mission.reward.money").addReplacement("<money>", String.valueOf(rewards.getMoney())), 0, null));
+		if (rewards.getMoney() > 0) screens.add(
+				new CutsceneDialogScreen(new Message("mission.reward.money").addReplacement("<money>", String.valueOf(rewards.getMoney())), 0, null, null));
 		for (int i = 0; i < rewards.getItems().length; ++i)
 			screens.add(new CutsceneDialogScreen(new Message("mission.reward.item").addReplacement("<item>", ItemRegistry.find(rewards.getItems()[i]).name())
-					.addReplacement("<quantity>", String.valueOf(rewards.getQuantities()[i])), 0, null));
-		if (rewards.getPoints() > 0) screens
-				.add(new CutsceneDialogScreen(new Message("mission.reward.points").addReplacement("<points>", String.valueOf(rewards.getPoints())), 0, null));
+					.addReplacement("<quantity>", String.valueOf(rewards.getQuantities()[i])), 0, null, null));
+		if (rewards.getPoints() > 0) screens.add(
+				new CutsceneDialogScreen(new Message("mission.reward.points").addReplacement("<points>", String.valueOf(rewards.getPoints())), 0, null, null));
 
 		ArrayList<CutsceneEvent> events = new ArrayList<>();
 		events.add(new DialogCutsceneEvent(1, false, screens));
