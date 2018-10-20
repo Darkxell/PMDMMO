@@ -18,12 +18,14 @@
     <dialog>
       <dialogscreen>cutscene.startingwoods.introduction.m1</dialogscreen>
     </dialog>
+    <wait />
     <dialog>
       <dialogscreen target="1">cutscene.startingwoods.introduction.m2</dialogscreen>
       <dialogscreen>cutscene.startingwoods.introduction.m3</dialogscreen>
       <dialogscreen target="2">cutscene.startingwoods.introduction.m4</dialogscreen>
       <dialogscreen target="2">cutscene.startingwoods.introduction.m5</dialogscreen>
     </dialog>
+    <wait />
     <dialog>
       <dialogscreen target="2">cutscene.startingwoods.introduction.m6</dialogscreen>
       <dialogscreen target="2">cutscene.startingwoods.introduction.m7</dialogscreen>
