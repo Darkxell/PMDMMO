@@ -23,7 +23,7 @@ public class PokemonDialogScreen extends DialogScreen
 	/** Shortcut constructor if using an instanciated Pokemon. */
 	public PokemonDialogScreen(Pokemon pokemon, Message message)
 	{
-		this(pokemon == null ? null : pokemon.species(), message, pokemon == null ? null : pokemon.isShiny(), pokemon == null ? null : pokemon.getNickname());
+		this(pokemon == null ? null : pokemon.species(), message, pokemon == null ? false : pokemon.isShiny(), pokemon == null ? null : pokemon.getNickname());
 	}
 
 	public PokemonDialogScreen(PokemonSpecies pokemon, Message message)

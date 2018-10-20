@@ -12,7 +12,6 @@ import com.darkxell.client.mechanics.cutscene.event.RotateCutsceneEvent;
 
 import fr.darkxell.dataeditor.application.controller.cutscene.EditCutsceneController;
 import javafx.fxml.FXML;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
@@ -23,7 +22,7 @@ public class RotateEventController extends EventController
 	@FXML
 	private TextField distanceTextfield;
 	@FXML
-	private CheckBox instantlyCheckbox;
+	private TextField speedTextfield;
 	@FXML
 	private ComboBox<CutsceneEntity> targetCombobox;
 
@@ -31,7 +30,7 @@ public class RotateEventController extends EventController
 	public CutsceneEvent generateEvent()
 	{
 		return new RotateCutsceneEvent(this.id(), this.targetCombobox.getSelectionModel().getSelectedItem(),
-				Double.valueOf(this.distanceTextfield.getText()).intValue(), this.instantlyCheckbox.isSelected());
+				Double.valueOf(this.distanceTextfield.getText()).intValue(), Double.valueOf(this.distanceTextfield.getText()).intValue());
 	}
 
 	@Override
@@ -47,6 +46,13 @@ public class RotateEventController extends EventController
 			return pattern.matcher(change.getControlNewText()).matches() ? change : null;
 		});
 		this.distanceTextfield.setTextFormatter(formatter);
+
+		Pattern pattern2 = Pattern.compile("-?\\d*");
+		TextFormatter<String> formatter2 = new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
+			return pattern2.matcher(change.getControlNewText()).matches() ? change : null;
+		});
+		this.speedTextfield.setTextFormatter(formatter2);
+		this.speedTextfield.setText(String.valueOf(RotateCutsceneEvent.DEFAULT_SPEED));
 	}
 
 	@Override
@@ -59,7 +65,7 @@ public class RotateEventController extends EventController
 				this.targetCombobox.getSelectionModel().select(e);
 				break;
 			}
-		this.instantlyCheckbox.setSelected(((RotateCutsceneEvent) event).instantly);
+		this.speedTextfield.setText(String.valueOf(((RotateCutsceneEvent) event).speed));
 		this.distanceTextfield.setText(String.valueOf(((RotateCutsceneEvent) event).distance));
 	}
 

@@ -62,8 +62,9 @@ public class EditEntityController implements Initializable
 		{
 			Pokemon p;
 			if (this.modeCombobox.getSelectionModel().getSelectedIndex() == 1)
+			{
 				p = Persistance.player.getMember(Double.valueOf(this.memberTextfield.getText()).intValue());
-			else p = this.speciesCombobox.getSelectionModel().getSelectedItem().generate(new Random(), 1);
+			} else p = this.speciesCombobox.getSelectionModel().getSelectedItem().generate(new Random(), 1);
 			e = new CutscenePokemon(Double.valueOf(this.idTextfield.getText()).intValue(), Double.valueOf(this.xposTextfield.getText()),
 					Double.valueOf(this.yposTextfield.getText()), p, this.stateCombobox.getSelectionModel().getSelectedItem(),
 					this.facingCombobox.getSelectionModel().getSelectedItem(), this.animatedCheckbox.isSelected());
