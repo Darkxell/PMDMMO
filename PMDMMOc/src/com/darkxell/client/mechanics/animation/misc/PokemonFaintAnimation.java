@@ -3,23 +3,24 @@ package com.darkxell.client.mechanics.animation.misc;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.animation.AnimationEndListener;
 import com.darkxell.client.mechanics.animation.PokemonAnimation;
+import com.darkxell.client.renderers.pokemon.AbstractPokemonRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
-import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.pokemon.Pokemon;
 
 public class PokemonFaintAnimation extends PokemonAnimation
 {
 	public static final int DURATION = 30;
 
-	public PokemonFaintAnimation(DungeonPokemon target, AnimationEndListener listener)
+	public PokemonFaintAnimation(Pokemon target, AbstractPokemonRenderer renderer, AnimationEndListener listener)
 	{
-		super(target, DURATION, listener);
+		super(target, renderer, DURATION, listener);
 	}
 
 	@Override
 	public void onFinish()
 	{
 		this.renderer.sprite().setDefaultState(PokemonSpriteState.IDLE, true);
-		if (this.target != Persistance.player.getDungeonLeader()) Persistance.dungeonState.pokemonRenderer.unregister(this.target);
+		if (this.target != Persistance.player.getTeamLeader()) Persistance.dungeonState.pokemonRenderer.unregister(this.target.getDungeonPokemon());
 		super.onFinish();
 	}
 

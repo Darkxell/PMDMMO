@@ -3,8 +3,9 @@ package com.darkxell.client.mechanics.animation;
 import java.awt.Graphics2D;
 
 import com.darkxell.client.mechanics.animation.spritemovement.SpritesetAnimationMovement;
+import com.darkxell.client.renderers.pokemon.AbstractPokemonRenderer;
 import com.darkxell.client.resources.images.RegularSpriteSet;
-import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.pokemon.Pokemon;
 
 public class SpritesetAnimation extends PokemonAnimation
 {
@@ -33,10 +34,10 @@ public class SpritesetAnimation extends PokemonAnimation
 	/** Describes how the Sprites may move. May be null for no Movement. */
 	SpritesetAnimationMovement spritesetMovement;
 
-	public SpritesetAnimation(DungeonPokemon target, RegularSpriteSet spriteset, BackSpriteUsage backSpriteUsage, int[] sprites, int spriteDuration,
-			int gravityX, int gravityY, AnimationEndListener listener)
+	public SpritesetAnimation(Pokemon target, AbstractPokemonRenderer renderer, RegularSpriteSet spriteset, BackSpriteUsage backSpriteUsage, int[] sprites,
+			int spriteDuration, int gravityX, int gravityY, AnimationEndListener listener)
 	{
-		super(target, sprites.length * spriteDuration, listener);
+		super(target, renderer, sprites.length * spriteDuration, listener);
 		this.spriteset = spriteset;
 		this.backSpriteUsage = backSpriteUsage;
 		this.sprites = sprites;

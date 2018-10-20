@@ -1,14 +1,11 @@
 package com.darkxell.client.mechanics.animation;
 
-import static com.darkxell.client.resources.images.tilesets.AbstractDungeonTileset.TILE_SIZE;
-
 import java.awt.Graphics2D;
 
-import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.animation.movement.PokemonAnimationMovement;
 import com.darkxell.client.renderers.pokemon.AbstractPokemonRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
-import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.pokemon.Pokemon;
 
 /** An animation that is displayed on a Pokemon. */
 public class PokemonAnimation extends AbstractAnimation
@@ -23,15 +20,15 @@ public class PokemonAnimation extends AbstractAnimation
 	/** The number of ticks to wait before setting the state. */
 	int stateDelay = 0;
 	/** The Pokemon to draw. */
-	public final DungeonPokemon target;
+	public final Pokemon target;
 	/** Coordinates of the center of the Pokemon. */
 	protected double x, y;
 
-	public PokemonAnimation(DungeonPokemon target, int duration, AnimationEndListener listener)
+	public PokemonAnimation(Pokemon target, AbstractPokemonRenderer renderer, int duration, AnimationEndListener listener)
 	{
 		super(duration, listener);
 		this.target = target;
-		this.renderer = this.target == null ? null : Persistance.dungeonState.pokemonRenderer.getRenderer(this.target);
+		this.renderer = renderer;
 	}
 
 	@Override
@@ -73,8 +70,8 @@ public class PokemonAnimation extends AbstractAnimation
 		if (this.state != null && this.tick() == this.stateDelay) this.renderer.sprite().setState(this.state);
 		if (this.renderer != null)
 		{
-			this.x = this.renderer.x() + TILE_SIZE / 2;
-			this.y = this.renderer.y() + TILE_SIZE / 2;
+			this.x = this.renderer.drawX();
+			this.y = this.renderer.drawY();
 		}
 		if (this.movement != null) this.movement.update();
 	}

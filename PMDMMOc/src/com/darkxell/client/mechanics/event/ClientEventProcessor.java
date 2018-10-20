@@ -300,7 +300,8 @@ public final class ClientEventProcessor extends CommonEventProcessor
 				Persistance.dungeonState.setSubstate(s);
 				this.setState(State.ANIMATING);
 			}
-			if (event.damage != 0) new TextAbovePokeAnimation(event.target, new Message("-" + event.damage, false), FontMode.DAMAGE).start();
+			if (event.damage != 0) new TextAbovePokeAnimation(event.target.usedPokemon, Persistance.dungeonState.pokemonRenderer.getRenderer(event.target),
+					new Message("-" + event.damage, false), FontMode.DAMAGE).start();
 		}
 	}
 
@@ -314,7 +315,8 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	private void processExperienceEvent(ExperienceGeneratedEvent event)
 	{
 		if (event.experience != 0 && event.player == Persistance.player) for (DungeonPokemon p : event.player.getDungeonTeam())
-			if (!p.isFainted()) new TextAbovePokeAnimation(p, new Message("+" + event.experience, false), FontMode.EXPERIENCE).start();
+			if (!p.isFainted()) new TextAbovePokeAnimation(p.usedPokemon, Persistance.dungeonState.pokemonRenderer.getRenderer(p),
+					new Message("+" + event.experience, false), FontMode.EXPERIENCE).start();
 	}
 
 	private void processExplorationStopEvent(ExplorationStopEvent event)
@@ -326,7 +328,8 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	private void processFaintedEvent(FaintedPokemonEvent event)
 	{
 		AnimationState s = new AnimationState(Persistance.dungeonState);
-		s.animation = new PokemonFaintAnimation(event.pokemon, this.currentAnimEnd);
+		s.animation = new PokemonFaintAnimation(event.pokemon.usedPokemon, Persistance.dungeonState.pokemonRenderer.getRenderer(event.pokemon),
+				this.currentAnimEnd);
 		Persistance.dungeonState.setSubstate(s);
 		this.setState(State.ANIMATING);
 	}
@@ -348,7 +351,8 @@ public final class ClientEventProcessor extends CommonEventProcessor
 			Persistance.dungeonState.setSubstate(s);
 			this.setState(State.ANIMATING);
 		}
-		new TextAbovePokeAnimation(event.target, new Message("+" + event.effectiveHeal(), false), FontMode.DAMAGE).start();
+		new TextAbovePokeAnimation(event.target.usedPokemon, Persistance.dungeonState.pokemonRenderer.getRenderer(event.target),
+				new Message("+" + event.effectiveHeal(), false), FontMode.DAMAGE).start();
 	}
 
 	private void processItemEvent(ItemSelectionEvent event)
@@ -584,7 +588,8 @@ public final class ClientEventProcessor extends CommonEventProcessor
 				@Override
 				public void onAnimationEnd(AbstractAnimation animation)
 				{
-					new TextAbovePokeAnimation(event.target, new Message("move.missed"), FontMode.DUNGEON).start();
+					new TextAbovePokeAnimation(event.target.usedPokemon, Persistance.dungeonState.pokemonRenderer.getRenderer(event.target),
+							new Message("move.missed"), FontMode.DUNGEON).start();
 					currentAnimEnd.onAnimationEnd(animation);
 				}
 			};
@@ -649,7 +654,8 @@ public final class ClientEventProcessor extends CommonEventProcessor
 			{
 				Persistance.dungeonState.setSubstate(s);
 				this.setState(State.ANIMATING);
-			} else if (event.missed()) new TextAbovePokeAnimation(event.target, new Message("move.missed"), FontMode.DUNGEON).start();
+			} else if (event.missed()) new TextAbovePokeAnimation(event.target.usedPokemon, Persistance.dungeonState.pokemonRenderer.getRenderer(event.target),
+					new Message("move.missed"), FontMode.DUNGEON).start();
 		}
 	}
 

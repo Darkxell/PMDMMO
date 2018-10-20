@@ -7,7 +7,8 @@ import java.awt.Graphics2D;
 import com.darkxell.client.mechanics.animation.PokemonAnimation;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.renderers.TextRenderer.FontMode;
-import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.client.renderers.pokemon.AbstractPokemonRenderer;
+import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.language.Message;
 
 public class TextAbovePokeAnimation extends PokemonAnimation
@@ -18,9 +19,9 @@ public class TextAbovePokeAnimation extends PokemonAnimation
 	public final FontMode fontMode;
 	public final Message text;
 
-	public TextAbovePokeAnimation(DungeonPokemon target, Message text, FontMode fontMode)
+	public TextAbovePokeAnimation(Pokemon target, AbstractPokemonRenderer renderer, Message text, FontMode fontMode)
 	{
-		super(target, DURATION, null);
+		super(target, renderer, DURATION, null);
 		this.text = text;
 		this.fontMode = fontMode;
 	}

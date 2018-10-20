@@ -30,7 +30,7 @@ public abstract class PokemonAnimationMovement
 	public PokemonAnimationMovement(PokemonAnimation animation, int duration)
 	{
 		this.parentAnimation = animation;
-		this.pokemon = this.parentAnimation.target;
+		this.pokemon = this.parentAnimation.target.getDungeonPokemon();
 		this.renderer = this.parentAnimation.renderer;
 		this.duration = duration;
 	}

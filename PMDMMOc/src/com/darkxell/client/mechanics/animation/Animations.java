@@ -11,6 +11,8 @@ import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.animation.SpritesetAnimation.BackSpriteUsage;
 import com.darkxell.client.mechanics.animation.movement.PokemonAnimationMovement;
 import com.darkxell.client.mechanics.animation.spritemovement.SpritesetAnimationMovement;
+import com.darkxell.client.mechanics.cutscene.entity.CutscenePokemon;
+import com.darkxell.client.renderers.pokemon.AbstractPokemonRenderer;
 import com.darkxell.client.resources.images.RegularSpriteSet;
 import com.darkxell.client.resources.images.Sprites;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
@@ -136,6 +138,7 @@ public final class Animations
 		}
 		Element xml = registry.get(id);
 		Element defaultXml = xml.getChild("default", xml.getNamespace());
+		AbstractPokemonRenderer renderer = target == null ? null : Persistance.dungeonState.pokemonRenderer.getRenderer(target);
 
 		String clone = XMLUtils.getAttribute(xml, "clone", null);
 		if (clone != null) return getAnimation(target, clone, listener);
@@ -147,7 +150,7 @@ public final class Animations
 
 		PokemonAnimation a;
 		String sprites = XMLUtils.getAttribute(xml, "sprites", XMLUtils.getAttribute(defaultXml, "sprites", "default"));
-		if (sprites.equals("none")) a = new PokemonAnimation(target, 0, listener);
+		if (sprites.equals("none")) a = new PokemonAnimation(target.usedPokemon, renderer, 0, listener);
 		else
 		{
 			if (sprites.equals("default")) sprites = String.valueOf(id) + (oriented ? ("-" + target.facing().index()) : "");
@@ -186,7 +189,8 @@ public final class Animations
 					spriteOrder[i] = i;
 			}
 
-			a = new SpritesetAnimation(target, spriteset, backsprites, spriteOrder, spriteDuration, x, y, listener);
+			a = new SpritesetAnimation(target == null ? null : target.usedPokemon, renderer, spriteset, backsprites, spriteOrder, spriteDuration, x, y,
+					listener);
 
 			String movement = XMLUtils.getAttribute(xml, "movement", XMLUtils.getAttribute(defaultXml, "movement", "null"));
 			((SpritesetAnimation) a).spritesetMovement = SpritesetAnimationMovement.create(movement, (SpritesetAnimation) a);
@@ -270,7 +274,7 @@ public final class Animations
 
 			if (!anims.isEmpty())
 			{
-				CompoundAnimation anim = new CompoundAnimation(target, listener);
+				CompoundAnimation anim = new CompoundAnimation(target.usedPokemon, renderer, listener);
 				anim.add(a, 0);
 				for (int i = 0; i < anims.size(); ++i)
 					anim.add(anims.get(i), delays.get(i));
@@ -293,6 +297,68 @@ public final class Animations
 	public static PokemonAnimation getCustomAnimation(DungeonPokemon target, int id, AnimationEndListener listener)
 	{
 		return getAnimation(id, custom, target, listener);
+	}
+
+	public static PokemonAnimation getCutsceneAnimation(int id, CutscenePokemon target, AnimationEndListener listener)
+	{
+		if (!custom.containsKey(id))
+		{
+			Logger.w("Animation not found: " + id);
+			return null;
+		}
+		Element xml = custom.get(id);
+		xml = xml.getChild("default", xml.getNamespace());
+
+		PokemonAnimation a;
+		String sprites = XMLUtils.getAttribute(xml, "sprites", XMLUtils.getAttribute(xml, "sprites", "default"));
+		if (sprites.equals("none")) a = new PokemonAnimation(target.toPokemon(),
+				(AbstractPokemonRenderer) Persistance.currentmap.cutsceneEntityRenderers.getRenderer(target), 0, listener);
+		else
+		{
+			if (sprites.equals("default")) sprites = String.valueOf(id);
+			if (!sprites.contains("/")) sprites = "/" + sprites;
+			sprites = "/animations" + sprites;
+
+			if (xml.getAttribute("width") == null || xml.getAttribute("height") == null)
+			{
+				Logger.e("Missing dimension for animation " + id + "!");
+				return null;
+			}
+			int width = XMLUtils.getAttribute(xml, "width", 0);
+			int height = XMLUtils.getAttribute(xml, "height", 0);
+
+			BackSpriteUsage backsprites = BackSpriteUsage.valueOf(XMLUtils.getAttribute(xml, "backsprites", XMLUtils.getAttribute(xml, "backsprites", "no")));
+			RegularSpriteSet spriteset = new RegularSpriteSet(sprites + ".png", width, height, -1, -1);
+			int x = XMLUtils.getAttribute(xml, "x", width / 2);
+			int y = XMLUtils.getAttribute(xml, "y", height / 2);
+			int spriteDuration = XMLUtils.getAttribute(xml, "spriteduration", 2);
+			int[] spriteOrder = XMLUtils.readIntArray(xml);
+			if (spriteOrder.length == 0 && spriteset.isLoaded())
+			{
+				spriteOrder = new int[backsprites == BackSpriteUsage.yes ? spriteset.spriteCount() / 2 : spriteset.spriteCount()];
+				for (int i = 0; i < spriteOrder.length; ++i)
+					spriteOrder[i] = i;
+			}
+
+			a = new SpritesetAnimation(target.toPokemon(), (AbstractPokemonRenderer) Persistance.currentmap.cutsceneEntityRenderers.getRenderer(target),
+					spriteset, backsprites, spriteOrder, spriteDuration, x, y, listener);
+
+			String movement = XMLUtils.getAttribute(xml, "movement", "null");
+			((SpritesetAnimation) a).spritesetMovement = SpritesetAnimationMovement.create(movement, (SpritesetAnimation) a);
+
+			((SpritesetAnimation) a).loopsFrom = XMLUtils.getAttribute(xml, "loopsfrom", 0);
+		}
+
+		a.sound = XMLUtils.getAttribute(xml, "sound", "null");
+		if (a.sound.equals("null")) a.sound = null;
+		a.soundDelay = XMLUtils.getAttribute(xml, "sounddelay", 0);
+		String state = XMLUtils.getAttribute(xml, "state", "null");
+		a.state = state.equals("null") || state.equals("none") ? null : PokemonSpriteState.valueOf(state.toUpperCase());
+		a.stateDelay = XMLUtils.getAttribute(xml, "statedelay", 0);
+		a.delayTime = XMLUtils.getAttribute(xml, "delaytime", a.duration);
+		if (a.delayTime == 0) a.delayTime = 15;
+
+		return a;
 	}
 
 	public static PokemonAnimation getItemAnimation(DungeonPokemon target, Item i, AnimationEndListener listener)
@@ -320,7 +386,7 @@ public final class Animations
 	public static AbstractAnimation getProjectileAnimationFromItem(DungeonPokemon pokemon, Item item, AnimationEndListener listener)
 	{
 		BufferedImage sprite = Sprites.Res_Dungeon.items.sprite(item);
-		SpritesetAnimation a = new SpritesetAnimation(null, Sprites.Res_Dungeon.items, BackSpriteUsage.no, new int[] { item.spriteID }, 10,
+		SpritesetAnimation a = new SpritesetAnimation(null, null, Sprites.Res_Dungeon.items, BackSpriteUsage.no, new int[] { item.spriteID }, 10,
 				sprite.getWidth() / 2, sprite.getHeight() / 2, listener);
 		a.plays = -1;
 		return a;

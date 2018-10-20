@@ -31,7 +31,7 @@
     <setstate target="45" state="ROTATE" />
     <move xpos="4.0" speed="6.0" target="45" />
     <camera xpos="4.0" speed="2.0" />
-    <animate animation="my_anim" target="45" />
+    <animate animation="10" target="45" />
     <rotate target="45" distance="-2" instantly="true" />
   </events>
   <onfinish>

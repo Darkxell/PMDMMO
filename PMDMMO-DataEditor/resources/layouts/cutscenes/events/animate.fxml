@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
@@ -32,9 +31,9 @@
             <ComboBox fx:id="targetCombobox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Label text="Event ID:" />
             <TextField fx:id="idTextfield" promptText="Event ID" GridPane.columnIndex="1" />
-            <CheckBox fx:id="targetCheckbox" mnemonicParsing="false" text="Target:" GridPane.rowIndex="3" />
             <Label text="Animation ID:" GridPane.rowIndex="2" />
             <TextField fx:id="animationTextfield" promptText="Animation ID" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label text="Target:" GridPane.rowIndex="3" />
          </children>
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

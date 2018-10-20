@@ -3,7 +3,8 @@ package com.darkxell.client.mechanics.animation;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
-import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.client.renderers.pokemon.AbstractPokemonRenderer;
+import com.darkxell.common.pokemon.Pokemon;
 
 public class CompoundAnimation extends PokemonAnimation
 {
@@ -11,9 +12,9 @@ public class CompoundAnimation extends PokemonAnimation
 	private ArrayList<Integer> componentDelays = new ArrayList<>();
 	private ArrayList<AbstractAnimation> components = new ArrayList<>();
 
-	public CompoundAnimation(DungeonPokemon target, AnimationEndListener listener)
+	public CompoundAnimation(Pokemon target, AbstractPokemonRenderer renderer, AnimationEndListener listener)
 	{
-		super(target, 0, listener);
+		super(target, renderer, 0, listener);
 	}
 
 	public CompoundAnimation add(AbstractAnimation a, Integer delay)
