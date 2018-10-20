@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cutscene name="startingwoods/wakeup">
-  <creation freezone="startforest" fading="false" />
+  <creation freezone="startforest" cameray="-100.0" fading="false" />
   <events>
     <dialog>
       <dialogscreen translate="false">&lt;speech&gt;:&lt;dots&gt;</dialogscreen>
