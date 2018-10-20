@@ -3,6 +3,7 @@ package com.darkxell.client.mechanics.animation.movement;
 import com.darkxell.client.mechanics.animation.PokemonAnimation;
 import com.darkxell.client.mechanics.animation.TravelAnimation;
 import com.darkxell.common.dungeon.floor.Tile;
+import com.darkxell.common.pokemon.DungeonPokemon;
 
 public class TackleAnimationMovement extends PokemonAnimationMovement
 {
@@ -11,9 +12,9 @@ public class TackleAnimationMovement extends PokemonAnimationMovement
 	protected final Tile location;
 	protected TravelAnimation travel;
 
-	public TackleAnimationMovement(PokemonAnimation animation)
+	public TackleAnimationMovement(PokemonAnimation animation, DungeonPokemon pokemon)
 	{
-		super(animation, TOTAL);
+		super(animation, pokemon, TOTAL);
 		this.location = this.pokemon.tile();
 		this.travel = this.createTravel();
 	}

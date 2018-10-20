@@ -7,15 +7,15 @@ import com.darkxell.common.pokemon.DungeonPokemon;
 public abstract class PokemonAnimationMovement
 {
 
-	public static PokemonAnimationMovement create(PokemonAnimation animation, String movementID)
+	public static PokemonAnimationMovement create(PokemonAnimation animation, DungeonPokemon pokemon, String movementID)
 	{
 		switch (movementID)
 		{
 			case "dash":
-				return new TackleAnimationMovement(animation);
+				return new TackleAnimationMovement(animation, pokemon);
 
 			case "2tiles":
-				return new LongTackleAnimationMovement(animation);
+				return new LongTackleAnimationMovement(animation, pokemon);
 
 			default:
 				return null;
@@ -27,10 +27,10 @@ public abstract class PokemonAnimationMovement
 	public final DungeonPokemon pokemon;
 	public final AbstractPokemonRenderer renderer;
 
-	public PokemonAnimationMovement(PokemonAnimation animation, int duration)
+	public PokemonAnimationMovement(PokemonAnimation animation, DungeonPokemon pokemon, int duration)
 	{
 		this.parentAnimation = animation;
-		this.pokemon = this.parentAnimation.target.getDungeonPokemon();
+		this.pokemon = pokemon;
 		this.renderer = this.parentAnimation.renderer;
 		this.duration = duration;
 	}

@@ -5,7 +5,6 @@ import java.awt.Graphics2D;
 import com.darkxell.client.mechanics.animation.movement.PokemonAnimationMovement;
 import com.darkxell.client.renderers.pokemon.AbstractPokemonRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
-import com.darkxell.common.pokemon.Pokemon;
 
 /** An animation that is displayed on a Pokemon. */
 public class PokemonAnimation extends AbstractAnimation
@@ -19,15 +18,12 @@ public class PokemonAnimation extends AbstractAnimation
 	PokemonSpriteState state;
 	/** The number of ticks to wait before setting the state. */
 	int stateDelay = 0;
-	/** The Pokemon to draw. */
-	public final Pokemon target;
 	/** Coordinates of the center of the Pokemon. */
 	protected double x, y;
 
-	public PokemonAnimation(Pokemon target, AbstractPokemonRenderer renderer, int duration, AnimationEndListener listener)
+	public PokemonAnimation(AbstractPokemonRenderer renderer, int duration, AnimationEndListener listener)
 	{
 		super(duration, listener);
-		this.target = target;
 		this.renderer = renderer;
 	}
 
@@ -51,7 +47,7 @@ public class PokemonAnimation extends AbstractAnimation
 	@Deprecated
 	public void render(Graphics2D g, int width, int height)
 	{
-		if (this.target == null) this.postrender(g, width, height);
+		if (this.renderer == null) this.postrender(g, width, height);
 	}
 
 	@Override

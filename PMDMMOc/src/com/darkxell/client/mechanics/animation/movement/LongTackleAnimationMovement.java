@@ -2,13 +2,14 @@ package com.darkxell.client.mechanics.animation.movement;
 
 import com.darkxell.client.mechanics.animation.PokemonAnimation;
 import com.darkxell.client.mechanics.animation.TravelAnimation;
+import com.darkxell.common.pokemon.DungeonPokemon;
 
 public class LongTackleAnimationMovement extends TackleAnimationMovement
 {
 
-	public LongTackleAnimationMovement(PokemonAnimation animation)
+	public LongTackleAnimationMovement(PokemonAnimation animation, DungeonPokemon pokemon)
 	{
-		super(animation);
+		super(animation, pokemon);
 	}
 
 	@Override

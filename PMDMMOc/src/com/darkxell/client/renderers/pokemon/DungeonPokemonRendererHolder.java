@@ -48,6 +48,13 @@ public class DungeonPokemonRendererHolder extends EntityRendererHolder<DungeonPo
 	{}
 
 	/** Deletes the Renderer of the input Pokemon. */
+	public void unregister(AbstractPokemonRenderer renderer)
+	{
+		Persistance.dungeonRenderer.removeRenderer(renderer);
+		super.unregister(renderer);
+	}
+
+	/** Deletes the Renderer of the input Pokemon. */
 	public void unregister(DungeonPokemon entity)
 	{
 		Persistance.dungeonRenderer.removeRenderer(this.getRenderer(entity));

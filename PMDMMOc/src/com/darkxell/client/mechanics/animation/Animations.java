@@ -150,7 +150,7 @@ public final class Animations
 
 		PokemonAnimation a;
 		String sprites = XMLUtils.getAttribute(xml, "sprites", XMLUtils.getAttribute(defaultXml, "sprites", "default"));
-		if (sprites.equals("none")) a = new PokemonAnimation(target.usedPokemon, renderer, 0, listener);
+		if (sprites.equals("none")) a = new PokemonAnimation(renderer, 0, listener);
 		else
 		{
 			if (sprites.equals("default")) sprites = String.valueOf(id) + (oriented ? ("-" + target.facing().index()) : "");
@@ -189,8 +189,7 @@ public final class Animations
 					spriteOrder[i] = i;
 			}
 
-			a = new SpritesetAnimation(target == null ? null : target.usedPokemon, renderer, spriteset, backsprites, spriteOrder, spriteDuration, x, y,
-					listener);
+			a = new SpritesetAnimation(renderer, spriteset, backsprites, spriteOrder, spriteDuration, x, y, listener);
 
 			String movement = XMLUtils.getAttribute(xml, "movement", XMLUtils.getAttribute(defaultXml, "movement", "null"));
 			((SpritesetAnimation) a).spritesetMovement = SpritesetAnimationMovement.create(movement, (SpritesetAnimation) a);
@@ -209,7 +208,7 @@ public final class Animations
 
 		if (movement != null)
 		{
-			a.movement = PokemonAnimationMovement.create(a, movement);
+			a.movement = PokemonAnimationMovement.create(a, target, movement);
 			a.duration = Math.max(a.duration, a.movement.duration);
 		}
 
@@ -274,7 +273,7 @@ public final class Animations
 
 			if (!anims.isEmpty())
 			{
-				CompoundAnimation anim = new CompoundAnimation(target.usedPokemon, renderer, listener);
+				CompoundAnimation anim = new CompoundAnimation(renderer, listener);
 				anim.add(a, 0);
 				for (int i = 0; i < anims.size(); ++i)
 					anim.add(anims.get(i), delays.get(i));
@@ -311,8 +310,8 @@ public final class Animations
 
 		PokemonAnimation a;
 		String sprites = XMLUtils.getAttribute(xml, "sprites", XMLUtils.getAttribute(xml, "sprites", "default"));
-		if (sprites.equals("none")) a = new PokemonAnimation(target.toPokemon(),
-				(AbstractPokemonRenderer) Persistance.currentmap.cutsceneEntityRenderers.getRenderer(target), 0, listener);
+		if (sprites.equals("none"))
+			a = new PokemonAnimation((AbstractPokemonRenderer) Persistance.currentmap.cutsceneEntityRenderers.getRenderer(target), 0, listener);
 		else
 		{
 			if (sprites.equals("default")) sprites = String.valueOf(id);
@@ -340,8 +339,8 @@ public final class Animations
 					spriteOrder[i] = i;
 			}
 
-			a = new SpritesetAnimation(target.toPokemon(), (AbstractPokemonRenderer) Persistance.currentmap.cutsceneEntityRenderers.getRenderer(target),
-					spriteset, backsprites, spriteOrder, spriteDuration, x, y, listener);
+			a = new SpritesetAnimation((AbstractPokemonRenderer) Persistance.currentmap.cutsceneEntityRenderers.getRenderer(target), spriteset, backsprites,
+					spriteOrder, spriteDuration, x, y, listener);
 
 			String movement = XMLUtils.getAttribute(xml, "movement", "null");
 			((SpritesetAnimation) a).spritesetMovement = SpritesetAnimationMovement.create(movement, (SpritesetAnimation) a);
@@ -386,7 +385,7 @@ public final class Animations
 	public static AbstractAnimation getProjectileAnimationFromItem(DungeonPokemon pokemon, Item item, AnimationEndListener listener)
 	{
 		BufferedImage sprite = Sprites.Res_Dungeon.items.sprite(item);
-		SpritesetAnimation a = new SpritesetAnimation(null, null, Sprites.Res_Dungeon.items, BackSpriteUsage.no, new int[] { item.spriteID }, 10,
+		SpritesetAnimation a = new SpritesetAnimation(null, Sprites.Res_Dungeon.items, BackSpriteUsage.no, new int[] { item.spriteID }, 10,
 				sprite.getWidth() / 2, sprite.getHeight() / 2, listener);
 		a.plays = -1;
 		return a;

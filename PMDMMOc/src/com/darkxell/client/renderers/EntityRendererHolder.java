@@ -68,6 +68,19 @@ public class EntityRendererHolder<T> extends AbstractRenderer
 	{}
 
 	/** Deletes the Renderer of the input object. */
+	public void unregister(AbstractRenderer renderer)
+	{
+		T toremove = null;
+		for (T object : this.renderers.keySet())
+			if (this.renderers.get(object) == renderer)
+			{
+				toremove = object;
+				break;
+			}
+		if (toremove != null) this.unregister(toremove);
+	}
+
+	/** Deletes the Renderer of the input object. */
 	public void unregister(T object)
 	{
 		if (!this.renderers.containsKey(object)) return;
