@@ -28,6 +28,13 @@ public class PokemonAnimation extends AbstractAnimation
 	}
 
 	@Override
+	protected AnimationData chooseData()
+	{
+		if (this.renderer != null) return super.chooseData().getVariant(this.renderer.sprite().getFacingDirection());
+		return super.chooseData();
+	}
+
+	@Override
 	public void onFinish()
 	{
 		if (this.movement != null) this.movement.onFinish();

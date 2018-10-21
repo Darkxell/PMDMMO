@@ -9,7 +9,6 @@ import org.jdom2.Element;
 
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.animation.SpritesetAnimation.BackSpriteUsage;
-import com.darkxell.client.mechanics.animation.movement.PokemonAnimationMovement;
 import com.darkxell.client.mechanics.animation.spritemovement.SpritesetAnimationMovement;
 import com.darkxell.client.mechanics.cutscene.entity.CutscenePokemon;
 import com.darkxell.client.renderers.pokemon.AbstractPokemonRenderer;
@@ -140,13 +139,9 @@ public final class Animations
 		Element defaultXml = xml.getChild("default", xml.getNamespace());
 		AbstractPokemonRenderer renderer = target == null ? null : Persistance.dungeonState.pokemonRenderer.getRenderer(target);
 
-		String clone = XMLUtils.getAttribute(xml, "clone", null);
-		if (clone != null) return getAnimation(target, clone, listener);
-
-		boolean oriented = XMLUtils.getAttribute(xml, "oriented", false);
-		if (target != null && xml.getChild(target.facing().name().toLowerCase(), xml.getNamespace()) != null)
-			xml = xml.getChild(target.facing().name().toLowerCase(), xml.getNamespace());
-		else xml = defaultXml;
+		/* String clone = XMLUtils.getAttribute(xml, "clone", null); if (clone != null) return getAnimation(target, clone, listener); */
+		/* boolean oriented = XMLUtils.getAttribute(xml, "oriented", false); if (target != null && xml.getChild(target.facing().name().toLowerCase(), xml.getNamespace()) != null) xml = xml.getChild(target.facing().name().toLowerCase(), xml.getNamespace()); else xml = defaultXml; */
+		// TODO: for each oriented, use custom sprite path
 
 		PokemonAnimation a;
 		String sprites = XMLUtils.getAttribute(xml, "sprites", XMLUtils.getAttribute(defaultXml, "sprites", "default"));
@@ -197,98 +192,40 @@ public final class Animations
 			((SpritesetAnimation) a).loopsFrom = XMLUtils.getAttribute(xml, "loopsfrom", XMLUtils.getAttribute(defaultXml, "loopsfrom", 0));
 		}
 
-		a.sound = XMLUtils.getAttribute(xml, "sound", XMLUtils.getAttribute(defaultXml, "sound", "null"));
-		if (a.sound.equals("null")) a.sound = null;
-		a.soundDelay = XMLUtils.getAttribute(xml, "sounddelay", XMLUtils.getAttribute(defaultXml, "sounddelay", 0));
-		String state = XMLUtils.getAttribute(xml, "state", XMLUtils.getAttribute(defaultXml, "state", "null"));
-		a.state = state.equals("null") ? defaultState : state.equals("none") ? null : PokemonSpriteState.valueOf(state.toUpperCase());
+		// a.sound = XMLUtils.getAttribute(xml, "sound", XMLUtils.getAttribute(defaultXml, "sound", "null"));
+		// if (a.sound.equals("null")) a.sound = null;
+		// a.soundDelay = XMLUtils.getAttribute(xml, "sounddelay", XMLUtils.getAttribute(defaultXml, "sounddelay", 0));
+		// String state = XMLUtils.getAttribute(xml, "state", XMLUtils.getAttribute(defaultXml, "state", "null"));
+		// a.state = state.equals("null") ? defaultState : state.equals("none") ? null : PokemonSpriteState.valueOf(state.toUpperCase());
 
-		String movement = XMLUtils.getAttribute(xml, "pkmnmovement", XMLUtils.getAttribute(defaultXml, "pkmnmovement", null));
-		if (movement == null && a.state != null && a.state.hasDash) movement = "dash";
+		/* String movement = XMLUtils.getAttribute(xml, "pkmnmovement", XMLUtils.getAttribute(defaultXml, "pkmnmovement", null)); if (movement == null && a.state != null && a.state.hasDash) movement = "dash";
+		 * 
+		 * if (movement != null) { a.movement = PokemonAnimationMovement.create(a, target, movement); a.duration = Math.max(a.duration, a.movement.duration); } */
 
-		if (movement != null)
-		{
-			a.movement = PokemonAnimationMovement.create(a, target, movement);
-			a.duration = Math.max(a.duration, a.movement.duration);
-		}
+		// a.stateDelay = XMLUtils.getAttribute(xml, "statedelay", XMLUtils.getAttribute(defaultXml, "statedelay", 0));
+		// a.delayTime = XMLUtils.getAttribute(xml, "delaytime", XMLUtils.getAttribute(defaultXml, "delaytime", a.duration));
+		// if (a.delayTime == 0) a.delayTime = 15;
 
-		a.stateDelay = XMLUtils.getAttribute(xml, "statedelay", XMLUtils.getAttribute(defaultXml, "statedelay", 0));
-		a.delayTime = XMLUtils.getAttribute(xml, "delaytime", XMLUtils.getAttribute(defaultXml, "delaytime", a.duration));
-		if (a.delayTime == 0) a.delayTime = 15;
+		/* if (XMLUtils.getAttribute(xml, "alsoplay") != null || XMLUtils.getAttribute(defaultXml, "alsoplay") != null) { ArrayList<AbstractAnimation> anims = new ArrayList<>(); ArrayList<Integer> delays = new ArrayList<>(); AbstractAnimation tmp;
+		 * 
+		 * String[] ids = XMLUtils.getAttribute(xml, "alsoplay", "").split(","); String[] ds = XMLUtils.getAttribute(xml, "alsoplaydelay", "").split(","); if (ds.length < ids.length) { String[] dstmp = ds; ds = new String[ids.length]; for (int i = 0; i < ds.length; ++i) ds[i] = i < dstmp.length ?
+		 * dstmp[i] : ""; }
+		 * 
+		 * for (int i = 0; i < ds.length; ++i) if (ds[i].equals("")) ds[i] = "0";
+		 * 
+		 * for (int i = 0; i < ids.length; ++i) { if (ids[i].equals("")) continue; tmp = getAnimation(target, ids[i], null); if (tmp != null && !anims.contains(tmp)) { anims.add(tmp); delays.add(Integer.parseInt(ds[i])); } }
+		 * 
+		 * ids = XMLUtils.getAttribute(defaultXml, "alsoplay", "").split(","); ds = XMLUtils.getAttribute(defaultXml, "alsoplaydelay", "").split(","); if (ds.length < ids.length) { String[] dstmp = ds; ds = new String[ids.length]; for (int i = 0; i < ds.length; ++i) ds[i] = i < dstmp.length ?
+		 * dstmp[i] : ""; }
+		 * 
+		 * for (int i = 0; i < ds.length; ++i) if (ds[i].equals("")) ds[i] = "0";
+		 * 
+		 * for (int i = 0; i < ids.length; ++i) { if (ids[i].equals("")) continue; tmp = getAnimation(target, ids[i], null); if (tmp != null && !anims.contains(tmp)) { anims.add(tmp); delays.add(Integer.parseInt(ds[i])); } }
+		 * 
+		 * if (!anims.isEmpty()) { CompoundAnimation anim = new CompoundAnimation(renderer, listener); anim.add(a, 0); for (int i = 0; i < anims.size(); ++i) anim.add(anims.get(i), delays.get(i)); a = anim; } } */
 
-		if (XMLUtils.getAttribute(xml, "alsoplay") != null || XMLUtils.getAttribute(defaultXml, "alsoplay") != null)
-		{
-
-			ArrayList<AbstractAnimation> anims = new ArrayList<>();
-			ArrayList<Integer> delays = new ArrayList<>();
-			AbstractAnimation tmp;
-
-			String[] ids = XMLUtils.getAttribute(xml, "alsoplay", "").split(",");
-			String[] ds = XMLUtils.getAttribute(xml, "alsoplaydelay", "").split(",");
-			if (ds.length < ids.length)
-			{
-				String[] dstmp = ds;
-				ds = new String[ids.length];
-				for (int i = 0; i < ds.length; ++i)
-					ds[i] = i < dstmp.length ? dstmp[i] : "";
-			}
-
-			for (int i = 0; i < ds.length; ++i)
-				if (ds[i].equals("")) ds[i] = "0";
-
-			for (int i = 0; i < ids.length; ++i)
-			{
-				if (ids[i].equals("")) continue;
-				tmp = getAnimation(target, ids[i], null);
-				if (tmp != null && !anims.contains(tmp))
-				{
-					anims.add(tmp);
-					delays.add(Integer.parseInt(ds[i]));
-				}
-			}
-
-			ids = XMLUtils.getAttribute(defaultXml, "alsoplay", "").split(",");
-			ds = XMLUtils.getAttribute(defaultXml, "alsoplaydelay", "").split(",");
-			if (ds.length < ids.length)
-			{
-				String[] dstmp = ds;
-				ds = new String[ids.length];
-				for (int i = 0; i < ds.length; ++i)
-					ds[i] = i < dstmp.length ? dstmp[i] : "";
-			}
-
-			for (int i = 0; i < ds.length; ++i)
-				if (ds[i].equals("")) ds[i] = "0";
-
-			for (int i = 0; i < ids.length; ++i)
-			{
-				if (ids[i].equals("")) continue;
-				tmp = getAnimation(target, ids[i], null);
-				if (tmp != null && !anims.contains(tmp))
-				{
-					anims.add(tmp);
-					delays.add(Integer.parseInt(ds[i]));
-				}
-			}
-
-			if (!anims.isEmpty())
-			{
-				CompoundAnimation anim = new CompoundAnimation(renderer, listener);
-				anim.add(a, 0);
-				for (int i = 0; i < anims.size(); ++i)
-					anim.add(anims.get(i), delays.get(i));
-				a = anim;
-			}
-
-		}
-
-		if (XMLUtils.getAttribute(xml, "overlay") != null || XMLUtils.getAttribute(defaultXml, "overlay") != null)
-		{
-			OverlayAnimation overlay = new OverlayAnimation(XMLUtils.getAttribute(xml, "overlay", XMLUtils.getAttribute(defaultXml, "overlay", 0)), a,
-					listener);
-			Persistance.dungeonState.staticAnimationsRenderer.add(overlay);
-			overlay.start();
-		}
+		/* if (XMLUtils.getAttribute(xml, "overlay") != null || XMLUtils.getAttribute(defaultXml, "overlay") != null) { OverlayAnimation overlay = new OverlayAnimation(XMLUtils.getAttribute(xml, "overlay", XMLUtils.getAttribute(defaultXml, "overlay", 0)), a, listener);
+		 * Persistance.dungeonState.staticAnimationsRenderer.add(overlay); overlay.start(); } */
 
 		return a;
 	}

@@ -1,4 +1,4 @@
-package com.darkxell.client.mechanics.animation;
+package com.darkxell.client.mechanics.animation.travel;
 
 import java.awt.geom.Point2D;
 

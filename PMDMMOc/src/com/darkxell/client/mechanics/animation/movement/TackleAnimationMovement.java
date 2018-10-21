@@ -1,7 +1,7 @@
 package com.darkxell.client.mechanics.animation.movement;
 
 import com.darkxell.client.mechanics.animation.PokemonAnimation;
-import com.darkxell.client.mechanics.animation.TravelAnimation;
+import com.darkxell.client.mechanics.animation.travel.TravelAnimation;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.pokemon.DungeonPokemon;
 

@@ -7,30 +7,38 @@ import com.darkxell.client.resources.music.SoundManager;
 public class AbstractAnimation
 {
 
-	int delayTime = 0;
+	private final AnimationData data;
 	/** The total duration of this Animation. */
 	int duration = 0;
 	private AnimationEndListener listener;
 	/** The number of times this animation plays. Usually 1, or -1 as until removed. */
 	public int plays = 1;
-	/** The ID of the sound to play when this Animation is played. */
-	protected String sound = null;
-	/** The number of ticks to wait before playing the sound. */
-	int soundDelay = 0;
 	/** Used to remove this animation when this Source is dropped. */
 	public Object source;
 	private int tick = 0;
+	private AnimationData usedData;
 
-	public AbstractAnimation(int duration, AnimationEndListener listener)
+	public AbstractAnimation(AnimationData data, int duration, AnimationEndListener listener)
 	{
-		this.delayTime = this.duration = duration;
+		this.data = data;
+		this.duration = duration;
 		this.listener = listener;
+	}
+
+	protected AnimationData chooseData()
+	{
+		return this.data;
 	}
 
 	/** @return From 0 to 1, how far this Animation is. */
 	public float completion()
 	{
 		return this.tick * 1f / (this.duration * Math.abs(this.plays));
+	}
+
+	public AnimationData data()
+	{
+		return this.usedData;
 	}
 
 	public int duration()
@@ -42,7 +50,7 @@ public class AbstractAnimation
 	public boolean isDelayOver()
 	{
 		if (this.plays == -1) return false;
-		return this.tick == (this.delayTime - 1) * Math.abs(this.plays);
+		return this.tick == (this.data().delayTime - 1) * Math.abs(this.plays);
 	}
 
 	/** @return True if this Animation has ended. */
@@ -55,7 +63,7 @@ public class AbstractAnimation
 	/** @return True if this Animation should pause the game logic. */
 	public boolean needsPause()
 	{
-		return this.delayTime > 0;
+		return this.data().delayTime > 0;
 	}
 
 	private void onDelayFinished()
@@ -79,6 +87,7 @@ public class AbstractAnimation
 	public void start()
 	{
 		AnimationTicker.instance.register(this);
+		this.usedData = this.chooseData();
 	}
 
 	public void stop()
@@ -95,7 +104,7 @@ public class AbstractAnimation
 
 	public void update()
 	{
-		if (this.sound != null && this.tick == this.soundDelay) SoundManager.playSound(this.sound);
+		if (this.data().sound != null && this.tick == this.data().soundDelay) SoundManager.playSound(this.data().sound);
 		if (!this.isOver()) ++this.tick;
 		// Can't use else: needs to increase and finish on same tick.
 		if (this.isDelayOver()) this.onDelayFinished();

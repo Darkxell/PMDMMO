@@ -3,7 +3,7 @@ package com.darkxell.client.mechanics.animation.spritemovement;
 import java.awt.geom.Point2D;
 
 import com.darkxell.client.mechanics.animation.SpritesetAnimation;
-import com.darkxell.client.mechanics.animation.TravelAnimation;
+import com.darkxell.client.mechanics.animation.travel.TravelAnimation;
 import com.darkxell.client.resources.images.tilesets.AbstractDungeonTileset;
 
 public class DiagonalAnimationMovement extends SpritesetAnimationMovement

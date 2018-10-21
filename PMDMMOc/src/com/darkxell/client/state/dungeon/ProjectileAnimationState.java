@@ -3,9 +3,9 @@ package com.darkxell.client.state.dungeon;
 import java.awt.Graphics2D;
 
 import com.darkxell.client.launchable.Persistance;
-import com.darkxell.client.mechanics.animation.ArcAnimation;
 import com.darkxell.client.mechanics.animation.SpritesetAnimation;
-import com.darkxell.client.mechanics.animation.TravelAnimation;
+import com.darkxell.client.mechanics.animation.travel.ArcAnimation;
+import com.darkxell.client.mechanics.animation.travel.TravelAnimation;
 import com.darkxell.client.resources.images.tilesets.AbstractDungeonTileset;
 import com.darkxell.common.ai.AIUtils;
 import com.darkxell.common.dungeon.floor.Tile;
