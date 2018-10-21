@@ -143,54 +143,25 @@ public final class Animations
 		/* boolean oriented = XMLUtils.getAttribute(xml, "oriented", false); if (target != null && xml.getChild(target.facing().name().toLowerCase(), xml.getNamespace()) != null) xml = xml.getChild(target.facing().name().toLowerCase(), xml.getNamespace()); else xml = defaultXml; */
 		// TODO: for each oriented, use custom sprite path
 
-		PokemonAnimation a;
-		String sprites = XMLUtils.getAttribute(xml, "sprites", XMLUtils.getAttribute(defaultXml, "sprites", "default"));
-		if (sprites.equals("none")) a = new PokemonAnimation(renderer, 0, listener);
-		else
-		{
-			if (sprites.equals("default")) sprites = String.valueOf(id) + (oriented ? ("-" + target.facing().index()) : "");
-			if (!sprites.contains("/"))
-			{
-				if (registry == abilities) sprites = "/items/" + sprites;
-				else if (registry == items) sprites = "/items/" + sprites;
-				else if (registry == moves) sprites = "/moves/" + sprites;
-				else if (registry == moveTargets) sprites = "/targets/" + sprites;
-				else if (registry == projectiles) sprites = "/projectiles/" + sprites;
-				else if (registry == statuses) sprites = "/status/" + sprites;
-				else sprites = "/" + sprites;
-			}
-			sprites = "/animations" + sprites;
-
-			if ((xml.getAttribute("width") == null && defaultXml.getAttribute("width") == null)
-					|| xml.getAttribute("height") == null && defaultXml.getAttribute("height") == null)
-			{
-				Logger.e("Missing dimension for animation " + id + "!");
-				return null;
-			}
-			int width = XMLUtils.getAttribute(xml, "width", XMLUtils.getAttribute(defaultXml, "width", 0));
-			int height = XMLUtils.getAttribute(xml, "height", XMLUtils.getAttribute(defaultXml, "height", 0));
-
-			BackSpriteUsage backsprites = BackSpriteUsage.valueOf(XMLUtils.getAttribute(xml, "backsprites", XMLUtils.getAttribute(xml, "backsprites", "no")));
-			RegularSpriteSet spriteset = new RegularSpriteSet(sprites + ".png", width, height, -1, -1);
-			int x = XMLUtils.getAttribute(xml, "x", XMLUtils.getAttribute(defaultXml, "x", width / 2));
-			int y = XMLUtils.getAttribute(xml, "y", XMLUtils.getAttribute(defaultXml, "y", height / 2));
-			int spriteDuration = XMLUtils.getAttribute(xml, "spriteduration", XMLUtils.getAttribute(defaultXml, "spriteduration", 2));
-			int[] spriteOrder = XMLUtils.readIntArray(xml);
-			if (spriteOrder.length == 0) spriteOrder = XMLUtils.readIntArray(defaultXml);
-			if (spriteOrder.length == 0 && spriteset.isLoaded())
-			{
-				spriteOrder = new int[backsprites == BackSpriteUsage.yes ? spriteset.spriteCount() / 2 : spriteset.spriteCount()];
-				for (int i = 0; i < spriteOrder.length; ++i)
-					spriteOrder[i] = i;
-			}
-
-			a = new SpritesetAnimation(renderer, spriteset, backsprites, spriteOrder, spriteDuration, x, y, listener);
-
-			String movement = XMLUtils.getAttribute(xml, "movement", XMLUtils.getAttribute(defaultXml, "movement", "null"));
-			((SpritesetAnimation) a).spritesetMovement = SpritesetAnimationMovement.create(movement, (SpritesetAnimation) a);
-
-			((SpritesetAnimation) a).loopsFrom = XMLUtils.getAttribute(xml, "loopsfrom", XMLUtils.getAttribute(defaultXml, "loopsfrom", 0));
-		}
+		PokemonAnimation a = null;
+		// String sprites = XMLUtils.getAttribute(xml, "sprites", XMLUtils.getAttribute(defaultXml, "sprites", "default"));
+		/* if (sprites.equals("none")) a = new PokemonAnimation(renderer, 0, listener); else { if (sprites.equals("default")) sprites = String.valueOf(id) + (oriented ? ("-" + target.facing().index()) : ""); if (!sprites.contains("/")) { if (registry == abilities) sprites = "/items/" + sprites; else
+		 * if (registry == items) sprites = "/items/" + sprites; else if (registry == moves) sprites = "/moves/" + sprites; else if (registry == moveTargets) sprites = "/targets/" + sprites; else if (registry == projectiles) sprites = "/projectiles/" + sprites; else if (registry == statuses) sprites
+		 * = "/status/" + sprites; else sprites = "/" + sprites; } sprites = "/animations" + sprites;
+		 * 
+		 * if ((xml.getAttribute("width") == null && defaultXml.getAttribute("width") == null) || xml.getAttribute("height") == null && defaultXml.getAttribute("height") == null) { Logger.e("Missing dimension for animation " + id + "!"); return null; } int width = XMLUtils.getAttribute(xml, "width",
+		 * XMLUtils.getAttribute(defaultXml, "width", 0)); int height = XMLUtils.getAttribute(xml, "height", XMLUtils.getAttribute(defaultXml, "height", 0));
+		 * 
+		 * BackSpriteUsage backsprites = BackSpriteUsage.valueOf(XMLUtils.getAttribute(xml, "backsprites", XMLUtils.getAttribute(xml, "backsprites", "no"))); RegularSpriteSet spriteset = new RegularSpriteSet(sprites + ".png", width, height, -1, -1); int x = XMLUtils.getAttribute(xml, "x",
+		 * XMLUtils.getAttribute(defaultXml, "x", width / 2)); int y = XMLUtils.getAttribute(xml, "y", XMLUtils.getAttribute(defaultXml, "y", height / 2)); int spriteDuration = XMLUtils.getAttribute(xml, "spriteduration", XMLUtils.getAttribute(defaultXml, "spriteduration", 2)); int[] spriteOrder =
+		 * XMLUtils.readIntArray(xml); if (spriteOrder.length == 0) spriteOrder = XMLUtils.readIntArray(defaultXml); if (spriteOrder.length == 0 && spriteset.isLoaded()) { spriteOrder = new int[backsprites == BackSpriteUsage.yes ? spriteset.spriteCount() / 2 : spriteset.spriteCount()]; for (int i =
+		 * 0; i < spriteOrder.length; ++i) spriteOrder[i] = i; }
+		 * 
+		 * a = new SpritesetAnimation(renderer, spriteset, backsprites, spriteOrder, spriteDuration, x, y, listener);
+		 * 
+		 * String movement = XMLUtils.getAttribute(xml, "movement", XMLUtils.getAttribute(defaultXml, "movement", "null")); ((SpritesetAnimation) a).spritesetMovement = SpritesetAnimationMovement.create(movement, (SpritesetAnimation) a);
+		 * 
+		 * ((SpritesetAnimation) a).loopsFrom = XMLUtils.getAttribute(xml, "loopsfrom", XMLUtils.getAttribute(defaultXml, "loopsfrom", 0)); } */
 
 		// a.sound = XMLUtils.getAttribute(xml, "sound", XMLUtils.getAttribute(defaultXml, "sound", "null"));
 		// if (a.sound.equals("null")) a.sound = null;

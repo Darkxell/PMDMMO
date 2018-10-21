@@ -8,6 +8,7 @@ public class AbstractAnimation
 {
 
 	private final AnimationData data;
+	int delayTime = 0;
 	/** The total duration of this Animation. */
 	int duration = 0;
 	private AnimationEndListener listener;
@@ -50,7 +51,7 @@ public class AbstractAnimation
 	public boolean isDelayOver()
 	{
 		if (this.plays == -1) return false;
-		return this.tick == (this.data().delayTime - 1) * Math.abs(this.plays);
+		return this.tick == (this.delayTime - 1) * Math.abs(this.plays);
 	}
 
 	/** @return True if this Animation has ended. */
@@ -63,7 +64,7 @@ public class AbstractAnimation
 	/** @return True if this Animation should pause the game logic. */
 	public boolean needsPause()
 	{
-		return this.data().delayTime > 0;
+		return this.delayTime > 0;
 	}
 
 	private void onDelayFinished()
