@@ -10,6 +10,7 @@ import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.Sprites;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.mainstates.PrincipalMainState;
+import com.darkxell.client.ui.MainUiUtility;
 import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.util.Callbackable;
 import com.darkxell.common.util.language.Message;
@@ -25,6 +26,9 @@ public class TextinputState extends AbstractState {
 	private String messageid = "ui.textinput.prompt";
 	private String content = "";
 
+	private boolean isinvalidationmode = false;
+	private boolean validationstate = false;
+
 	public TextinputState(AbstractState parent) {
 		super();
 		this.parent = parent;
@@ -37,13 +41,23 @@ public class TextinputState extends AbstractState {
 
 	@Override
 	public void onKeyPressed(Key key) {
-		if (key.keyValue() == KeyEvent.VK_BACK_SPACE && content.length() > 0) {
+		if (key.keyValue() == KeyEvent.VK_BACK_SPACE && content.length() > 0 && !isinvalidationmode) {
 			content = content.substring(0, content.length() - 1);
-		}
-		else if (key.keyValue() == KeyEvent.VK_ENTER && content.length() > 0) {
-			((PrincipalMainState) Persistance.stateManager).setState(parent);
-			if(parent instanceof Callbackable)
-				((Callbackable) parent).callback(content);
+		} else if (key.keyValue() == KeyEvent.VK_ENTER && content.length() > 0 && !isinvalidationmode) {
+
+			isinvalidationmode = true;
+
+		} else if (isinvalidationmode && key == Key.ATTACK) {
+			if (validationstate) {
+				((PrincipalMainState) Persistance.stateManager).setState(parent);
+				if (parent instanceof Callbackable)
+					((Callbackable) parent).callback(content);
+			} else {
+				counter = 0;
+				isinvalidationmode = false;
+			}
+		} else if (isinvalidationmode && (key == Key.DOWN || key == Key.UP)) {
+			validationstate = !validationstate;
 		}
 	}
 
@@ -54,9 +68,11 @@ public class TextinputState extends AbstractState {
 
 	@Override
 	public void onKeyTyped(KeyEvent e) {
-		char typed = e.getKeyChar();
-		if (counter >= 15 && isCharAllowed(typed)) {
-			content += typed;
+		if (!isinvalidationmode) {
+			char typed = e.getKeyChar();
+			if (counter >= 15 && isCharAllowed(typed)) {
+				content += typed;
+			}
 		}
 	}
 
@@ -64,6 +80,7 @@ public class TextinputState extends AbstractState {
 	public void render(Graphics2D g, int width, int height) {
 		parent.render(g, width, height);
 
+		// Draws the text box.
 		int temp_width = width - 40;
 		int temp_height = temp_width * Sprites.Res_Hud.textwindow.image().getHeight()
 				/ Sprites.Res_Hud.textwindow.image().getWidth();
@@ -79,6 +96,18 @@ public class TextinputState extends AbstractState {
 		if (currentflicker > 0) {
 			g.setColor(Color.WHITE);
 			g.drawLine(xtemp, height / 2 + 3, xtemp, height / 2 + 14);
+		}
+
+		// Draws the confirmation box if needed.
+		if (isinvalidationmode) {
+			MainUiUtility.drawBoxOutline(g, width - 150, height / 2 + temp_height - 15, 110, 50);
+			g.setColor(new Color(32, 72, 104));
+			g.fillRect(width - 150, height / 2 + temp_height - 15, 110, 50);
+			TextRenderer.render(g, new Message("ui.textinput.validate"), width - 140, height / 2 + temp_height - 10);
+			TextRenderer.render(g, new Message("ui.no"), width - 130, height / 2 + temp_height + 3);
+			TextRenderer.render(g, new Message("ui.yes"), width - 130, height / 2 + temp_height + 16);
+			g.drawImage(Sprites.Res_Hud.menuHud.tabRight(), width - 140,
+					height / 2 + temp_height + 4 + (validationstate ? 13 : 0), null);
 		}
 
 	}
