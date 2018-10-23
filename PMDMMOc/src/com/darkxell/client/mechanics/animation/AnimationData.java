@@ -28,6 +28,7 @@ public class AnimationData
 	int id;
 	int loopsFrom = 0;
 	int overlay = -1;
+	public boolean playsForEachTarget = false;
 	String pokemonMovement = null;
 	PokemonSpriteState pokemonState = null;
 	int pokemonStateDelay = 0;
@@ -182,6 +183,7 @@ public class AnimationData
 		this.sound = XMLUtils.getAttribute(xml, "sound", defaultData.sound);
 		if (this.sound != null && this.sound.equals("null")) this.sound = null;
 		this.soundDelay = XMLUtils.getAttribute(xml, "sounddelay", defaultData.soundDelay);
+		this.playsForEachTarget = XMLUtils.getAttribute(xml, "playsforeachtarget", defaultData.playsForEachTarget);
 
 		String state = XMLUtils.getAttribute(xml, "state", "null");
 		this.pokemonState = state.equals("null") ? defaultData.pokemonState : state.equals("none") ? null : PokemonSpriteState.valueOf(state.toUpperCase());
@@ -258,6 +260,7 @@ public class AnimationData
 		XMLUtils.setAttribute(self, "delaytime", this.delayTime, defaultData.delayTime);
 		XMLUtils.setAttribute(self, "sound", this.sound, defaultData.sound);
 		XMLUtils.setAttribute(self, "sounddelay", this.soundDelay, defaultData.soundDelay);
+		XMLUtils.setAttribute(self, "playsforeachtarget", this.playsForEachTarget, defaultData.playsForEachTarget);
 
 		if (this.pokemonState != null) XMLUtils.setAttribute(self, "state", this.pokemonState.name(), defaultData.pokemonState.name());
 		XMLUtils.setAttribute(self, "statedelay", this.pokemonStateDelay, defaultData.pokemonStateDelay);

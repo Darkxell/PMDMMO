@@ -27,7 +27,7 @@ import com.darkxell.common.util.XMLUtils;
 
 public final class Animations
 {
-	private static final HashMap<Integer, Element> abilities, custom, items, moves, moveTargets, projectiles, statuses;
+	private static final HashMap<Integer, AnimationData> abilities, custom, items, moves, moveTargets, projectiles, statuses;
 
 	public static final int ATTACK_DOWN, DEFENSE_DOWN, SP_ATTACK_DOWN, SP_DEFENSE_DOWN, SPEED_DOWN, EVASION_DOWN, ACCURACY_DOWN;
 	public static final int ATTACK_UP = 10, DEFENSE_UP = 11, SP_ATTACK_UP = 12, SP_DEFENSE_UP = 13, SPEED_UP = 14, EVASION_UP = 15, ACCURACY_UP = 16;
@@ -53,7 +53,7 @@ public final class Animations
 		statuses = new HashMap<>();
 	}
 
-	private static boolean existsAnimation(int id, HashMap<Integer, Element> registry)
+	private static boolean existsAnimation(int id, HashMap<Integer, AnimationData> registry)
 	{
 		return registry.containsKey(id);
 	}
@@ -118,7 +118,7 @@ public final class Animations
 		}
 	}
 
-	public static PokemonAnimation getAnimation(int id, HashMap<Integer, Element> registry, DungeonPokemon target, AnimationEndListener listener)
+	public static PokemonAnimation getAnimation(int id, HashMap<Integer, AnimationData> registry, DungeonPokemon target, AnimationEndListener listener)
 	{
 		if (!registry.containsKey(id))
 		{
@@ -126,13 +126,7 @@ public final class Animations
 			return null;
 		}
 		AbstractPokemonRenderer renderer = target == null ? null : Persistance.dungeonState.pokemonRenderer.getRenderer(target);
-		String spritesPrefix = "";
-		if (registry == items) spritesPrefix = "items/";
-		else if (registry == moves) spritesPrefix = "moves/";
-		else if (registry == moveTargets) spritesPrefix = "targets/";
-		else if (registry == projectiles) spritesPrefix = "projectiles/";
-		else if (registry == statuses) spritesPrefix = "status/";
-		return new AnimationData(id, spritesPrefix, registry.get(id)).createAnimation(target, null, renderer, listener);
+		return registry.get(id).createAnimation(target, null, renderer, listener);
 	}
 
 	public static PokemonAnimation getCustomAnimation(DungeonPokemon target, int id, AnimationEndListener listener)
@@ -148,7 +142,7 @@ public final class Animations
 			return null;
 		}
 		AbstractPokemonRenderer renderer = target == null ? null : (AbstractPokemonRenderer) Persistance.currentmap.cutsceneEntityRenderers.getRenderer(target);
-		return new AnimationData(id, "", custom.get(id)).createAnimation(null, target, renderer, listener);
+		return custom.get(id).createAnimation(null, target, renderer, listener);
 	}
 
 	public static PokemonAnimation getItemAnimation(DungeonPokemon target, Item i, AnimationEndListener listener)
@@ -264,47 +258,66 @@ public final class Animations
 
 		Element xml = XMLUtils.read(Animations.class.getResourceAsStream("/data/animations.xml"));
 		for (Element a : xml.getChild("abilities", xml.getNamespace()).getChildren("a", xml.getNamespace()))
-			abilities.put(Integer.parseInt(a.getAttributeValue("id")), a);
+		{
+			int id = Integer.parseInt(a.getAttributeValue("id"));
+			abilities.put(id, new AnimationData(id, "abilities/", a));
+		}
 		for (Element c : xml.getChild("custom", xml.getNamespace()).getChildren("c", xml.getNamespace()))
-			custom.put(Integer.parseInt(c.getAttributeValue("id")), c);
+		{
+			int id = Integer.parseInt(c.getAttributeValue("id"));
+			custom.put(id, new AnimationData(id, "", c));
+		}
 		for (Element item : xml.getChild("items", xml.getNamespace()).getChildren("item", xml.getNamespace()))
-			items.put(Integer.parseInt(item.getAttributeValue("id")), item);
+		{
+			int id = Integer.parseInt(item.getAttributeValue("id"));
+			items.put(id, new AnimationData(id, "items/", item));
+		}
 		for (Element move : xml.getChild("moves", xml.getNamespace()).getChildren("move", xml.getNamespace()))
-			moves.put(Integer.parseInt(move.getAttributeValue("id")), move);
+		{
+			int id = Integer.parseInt(move.getAttributeValue("id"));
+			moves.put(id, new AnimationData(id, "moves/", move));
+		}
 		for (Element move : xml.getChild("movetargets", xml.getNamespace()).getChildren("movetarget", xml.getNamespace()))
-			moveTargets.put(Integer.parseInt(move.getAttributeValue("id")), move);
+		{
+			int id = Integer.parseInt(move.getAttributeValue("id"));
+			moveTargets.put(id, new AnimationData(id, "targets/", move));
+		}
 		for (Element move : xml.getChild("projectiles", xml.getNamespace()).getChildren("projectile", xml.getNamespace()))
-			projectiles.put(Integer.parseInt(move.getAttributeValue("id")), move);
-		for (Element move : xml.getChild("statuses", xml.getNamespace()).getChildren("status", xml.getNamespace()))
-			statuses.put(Integer.parseInt(move.getAttributeValue("id")), move);
+		{
+			int id = Integer.parseInt(move.getAttributeValue("id"));
+			projectiles.put(id, new AnimationData(id, "projectiles/", move));
+		}
+		for (Element status : xml.getChild("statuses", xml.getNamespace()).getChildren("status", xml.getNamespace()))
+		{
+			int id = Integer.parseInt(status.getAttributeValue("id"));
+			statuses.put(id, new AnimationData(id, "statuses/", status));
+		}
 	}
 
 	public static boolean movePlaysForEachTarget(Move move)
 	{
 		if (move == null) return false;
-		Element e = moves.get(move.id);
-		if (e == null) return false;
-		String clone = XMLUtils.getAttribute(e, "clone", null);
-		if (clone != null)
+		AnimationData data = moves.get(move.id);
+		if (data == null) return false;
+		if (data.clones != null)
 		{
-			if (clone.startsWith("moves/")) return movePlaysForEachTarget(MoveRegistry.find(Integer.parseInt(clone.substring("moves/".length()))));
+			if (data.clones.startsWith("moves/")) return movePlaysForEachTarget(MoveRegistry.find(Integer.parseInt(data.clones.substring("moves/".length()))));
 			return false;
 		}
-		return XMLUtils.getAttribute(e.getChild("default", e.getNamespace()), "playsforeachtarget", false);
+		return data.playsForEachTarget;
 	}
 
 	public static ProjectileMovement projectileMovement(int id)
 	{
 		if (!existsProjectileAnimation(id)) return ProjectileMovement.STRAIGHT;
-		Element e = projectiles.get(id);
-		if (e == null) return ProjectileMovement.STRAIGHT;
+		AnimationData data = projectiles.get(id);
+		if (data == null) return ProjectileMovement.STRAIGHT;
 		String movement = null;
-		if (XMLUtils.getAttribute(e, "clone") != null)
+		if (data.clones != null)
 		{
-			if (XMLUtils.getAttribute(e, "clone", "").startsWith("projectiles/"))
-				return projectileMovement(Integer.parseInt(XMLUtils.getAttribute(e, "clone", "projectiles/4").substring("projectiles/".length())));
+			if (data.clones.startsWith("projectiles/")) return projectileMovement(Integer.parseInt(data.clones.substring("projectiles/".length())));
 			else return ProjectileMovement.STRAIGHT;
-		} else movement = XMLUtils.getAttribute(e.getChild("default", e.getNamespace()), "movement", "STRAIGHT");
+		} else movement = data.animationMovement;
 		if (movement != null) try
 		{
 			return ProjectileMovement.valueOf(movement.toUpperCase());
