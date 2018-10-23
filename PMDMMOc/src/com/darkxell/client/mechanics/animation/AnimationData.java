@@ -8,10 +8,12 @@ import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.animation.SpritesetAnimation.BackSpriteUsage;
 import com.darkxell.client.mechanics.animation.movement.PokemonAnimationMovement;
 import com.darkxell.client.mechanics.animation.spritemovement.SpritesetAnimationMovement;
+import com.darkxell.client.mechanics.cutscene.entity.CutscenePokemon;
 import com.darkxell.client.renderers.pokemon.AbstractPokemonRenderer;
 import com.darkxell.client.resources.images.RegularSpriteSet;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
 import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.XMLUtils;
 
@@ -53,7 +55,7 @@ public class AnimationData
 	public AnimationData(int id, String spritesPrefix, Element xml)
 	{
 		this.id = id;
-		this.sprites = "/animations/" + this.id;
+		this.sprites = "" + this.id;
 		this.spritesPrefix = spritesPrefix;
 		this.clones = XMLUtils.getAttribute(xml, "clone", null);
 		if (this.clones == null && xml.getChild("default", xml.getNamespace()) != null)
@@ -73,9 +75,14 @@ public class AnimationData
 		}
 	}
 
-	public PokemonAnimation createAnimation(DungeonPokemon target, AbstractPokemonRenderer renderer, AnimationEndListener listener)
+	public PokemonAnimation createAnimation(Pokemon target, DungeonPokemon dungeon, CutscenePokemon cutscene, AbstractPokemonRenderer renderer,
+			AnimationEndListener listener)
 	{
-		if (this.clones != null) return Animations.getAnimation(target, this.clones, listener);
+		if (this.clones != null)
+		{
+			if (dungeon != null) return Animations.getAnimation(dungeon, this.clones, listener);
+			else return Animations.getCutsceneAnimation(Integer.parseInt(this.clones), cutscene, listener);
+		}
 
 		PokemonAnimation a = null;
 		if (this.sprites.equals("none"))
@@ -86,6 +93,7 @@ public class AnimationData
 		{
 			String actualSprites = this.sprites;
 			if (!this.sprites.contains("/")) actualSprites = this.spritesPrefix + this.sprites;
+			else actualSprites = "/" + actualSprites;
 			actualSprites = "/animations" + actualSprites;
 
 			RegularSpriteSet spriteset = new RegularSpriteSet(actualSprites + ".png", this.width, this.height, -1, -1);
@@ -104,15 +112,15 @@ public class AnimationData
 
 		if (a.delayTime <= 0) a.delayTime = 15;
 
-		if (this.pokemonMovement != null)
+		if (this.pokemonMovement != null && dungeon != null)
 		{
 			String movement = this.pokemonMovement;
 			if (movement == null && this.pokemonState != null && this.pokemonState.hasDash) movement = "dash";
-			a.movement = PokemonAnimationMovement.create(a, target, movement);
+			a.movement = PokemonAnimationMovement.create(a, dungeon, movement);
 			a.duration = Math.max(a.duration, a.movement.duration);
 		}
 
-		if (this.alsoPlay.length > 0)
+		if (this.alsoPlay.length > 0 && dungeon != null)
 		{
 			ArrayList<AbstractAnimation> anims = new ArrayList<>();
 			ArrayList<Integer> delays = new ArrayList<>();
@@ -121,7 +129,7 @@ public class AnimationData
 			for (int i = 0; i < this.alsoPlay.length; ++i)
 			{
 				if (this.alsoPlay[i].equals("")) continue;
-				tmp = Animations.getAnimation(target, this.alsoPlay[i], null);
+				tmp = Animations.getAnimation(dungeon, this.alsoPlay[i], null);
 				if (tmp != null && !anims.contains(tmp))
 				{
 					anims.add(tmp);
