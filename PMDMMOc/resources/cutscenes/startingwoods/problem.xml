@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cutscene name="startingwoods/problem">
+  <creation freezone="startforest" camerax="35.0" cameray="23.0" fading="false">
+    <pokemon cutsceneid="1" xpos="35.0" ypos="23.0" facing="EAST">
+      <teammember>0</teammember>
+    </pokemon>
+    <pokemon cutsceneid="2" xpos="38.0" ypos="23.0" facing="WEST">
+      <teammember>1</teammember>
+    </pokemon>
+  </creation>
+  <events />
+  <onfinish>
+    <loadfreezone id="base" />
+  </onfinish>
+</cutscene>
