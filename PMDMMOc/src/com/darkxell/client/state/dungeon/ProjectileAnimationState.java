@@ -38,7 +38,7 @@ public class ProjectileAnimationState extends AnimationState
 	public void onStart()
 	{
 		super.onStart();
-		this.travel = new TravelAnimation(start, end);
+		this.travel = new TravelAnimation(this.start, this.end);
 		this.duration = (int) Math.floor(this.travel.distance() / speed);
 
 		if (this.movement == ProjectileMovement.ARC)
