@@ -22,7 +22,7 @@ public class AbstractAnimation
 	public AbstractAnimation(AnimationData data, int duration, AnimationEndListener listener)
 	{
 		this.data = this.usedData = data;
-		this.duration = duration;
+		this.delayTime = this.duration = duration;
 		this.listener = listener;
 	}
 
