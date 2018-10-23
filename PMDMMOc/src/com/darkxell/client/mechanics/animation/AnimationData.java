@@ -52,20 +52,23 @@ public class AnimationData
 
 	public AnimationData(int id, String spritesPrefix, Element xml)
 	{
-		// TODO clone should be here
 		this.id = id;
 		this.sprites = "/animations/" + this.id;
 		this.spritesPrefix = spritesPrefix;
-		this.load(xml, this);
-		if (this.xOffset == -1) this.xOffset = this.width / 2;
-		if (this.yOffset == -1) this.yOffset = this.height / 2;
-		for (Direction d : Direction.directions)
+		this.clones = XMLUtils.getAttribute(xml, "clone", null);
+		if (this.clones == null && xml.getChild("default", xml.getNamespace()) != null)
 		{
-			if (xml.getChild(d.name().toLowerCase(), xml.getNamespace()) != null)
+			this.load(xml.getChild("default", xml.getNamespace()), this);
+			if (this.xOffset == -1) this.xOffset = this.width / 2;
+			if (this.yOffset == -1) this.yOffset = this.height / 2;
+			for (Direction d : Direction.directions)
 			{
-				this.variants[d.index()] = new AnimationData(this.id);
-				this.variants[d.index()].load(xml.getChild(d.name().toLowerCase(), xml.getNamespace()), this);
-				this.variants[d.index()].spritesPrefix = this.spritesPrefix;
+				if (xml.getChild(d.name().toLowerCase(), xml.getNamespace()) != null)
+				{
+					this.variants[d.index()] = new AnimationData(this.id);
+					this.variants[d.index()].load(xml.getChild(d.name().toLowerCase(), xml.getNamespace()), this);
+					this.variants[d.index()].spritesPrefix = this.spritesPrefix;
+				}
 			}
 		}
 	}
@@ -206,6 +209,12 @@ public class AnimationData
 
 	public void toXML(Element root)
 	{
+		root.setAttribute("id", String.valueOf(this.id));
+		if (this.clones != null)
+		{
+			root.setAttribute("clone", this.clones);
+			return;
+		}
 		Element self = new Element("default");
 		this.toXML(root, self, new AnimationData(this.id), false);
 		root.addContent(self);
