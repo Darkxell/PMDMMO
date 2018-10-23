@@ -32,10 +32,10 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 
-public class EditAnimationController implements Initializable
+public class TestAnimationController implements Initializable
 {
 	private static Floor floor;
-	public static EditAnimationController instance;
+	public static TestAnimationController instance;
 	public static DungeonState state;
 	private static DungeonPokemon tester;
 	public static AnimationPreviewThread thread;

@@ -38,8 +38,8 @@ public class MainController implements Initializable, ChangeListener<Boolean>
 	@Override
 	public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue)
 	{
-		if (newValue) this.animationsTabPageController.editAnimationController.reload();
-		else this.animationsTabPageController.editAnimationController.exitTab();
+		if (newValue) this.animationsTabPageController.testAnimationController.reload();
+		else this.animationsTabPageController.testAnimationController.exitTab();
 	}
 
 	@Override

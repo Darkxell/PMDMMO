@@ -113,6 +113,7 @@ public class AnimationData
 		if (this.pokemonMovement != null && dungeon != null)
 		{
 			// TODO add state for each animation, defaultState was deleted
+			// TODO add sprite path for each direction, oriented was deleted
 			String movement = this.pokemonMovement;
 			if (movement == null && this.pokemonState != null && this.pokemonState.hasDash) movement = "dash";
 			a.movement = PokemonAnimationMovement.create(a, dungeon, movement);

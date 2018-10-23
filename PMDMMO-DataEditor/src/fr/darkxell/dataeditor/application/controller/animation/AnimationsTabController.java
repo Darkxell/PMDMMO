@@ -38,7 +38,9 @@ public class AnimationsTabController implements Initializable, ListCellParent<An
 	@FXML
 	public TreeView<CustomTreeItem> animationsTreeView;
 	@FXML
-	public EditAnimationController editAnimationController;
+	public TestAnimationController testAnimationController;
+	@FXML
+	public TestAnimationController testAnimation2Controller;
 
 	@FXML
 	private TitledPane editAnimationPane;
@@ -94,7 +96,7 @@ public class AnimationsTabController implements Initializable, ListCellParent<An
 	public void onEdit(AnimationListItem item)
 	{
 		AnimationListItem selected = item;
-		this.editAnimationController.setAnimation(selected);
+		this.testAnimationController.setAnimation(selected);
 
 		this.editAnimationPane.setText("Animation: " + selected);
 	}
