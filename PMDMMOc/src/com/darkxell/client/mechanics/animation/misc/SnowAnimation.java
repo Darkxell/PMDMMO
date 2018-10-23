@@ -5,6 +5,7 @@ import java.awt.Composite;
 import java.awt.Graphics2D;
 
 import com.darkxell.client.mechanics.animation.AbstractAnimation;
+import com.darkxell.client.mechanics.animation.AnimationData;
 import com.darkxell.client.mechanics.animation.AnimationEndListener;
 import com.darkxell.client.mechanics.animation.Animations;
 import com.darkxell.client.mechanics.animation.OverlayAnimation;
@@ -19,8 +20,8 @@ public class SnowAnimation extends AbstractAnimation
 
 	public SnowAnimation(AnimationEndListener listener)
 	{
-		super(DURATION, listener);
-		this.sound = "weather-snow";
+		super(new AnimationData(-1), DURATION, listener);
+		this.data().sound = "weather-snow";
 	}
 
 	@Override

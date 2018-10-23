@@ -20,9 +20,10 @@ public class AnimationData
 	String[] alsoPlay = new String[0];
 	int[] alsoPlayDelay = new int[0];
 	String animationMovement = null;
-	BackSpriteUsage backSprites = BackSpriteUsage.no;
+	public BackSpriteUsage backSpriteUsage = BackSpriteUsage.no;
 	String clones = null;
 	private int delayTime = -1;
+	public int gravityX = -1, gravityY = -1;
 	int id;
 	int loopsFrom = 0;
 	int overlay = -1;
@@ -30,10 +31,10 @@ public class AnimationData
 	PokemonSpriteState pokemonState = null;
 	int pokemonStateDelay = 0;
 	/** The ID of the sound to play when this Animation is played. */
-	protected String sound = null;
+	public String sound = null;
 	/** The number of ticks to wait before playing the sound. */
 	int soundDelay = 0;
-	int spriteDuration = 2;
+	public int spriteDuration = 2;
 	int[] spriteOrder = null;
 	String sprites = null;
 	private String spritesPrefix;
@@ -41,7 +42,6 @@ public class AnimationData
 	AnimationData[] variants = new AnimationData[Direction.values().length];
 	/** Dimensions of a single sprite on the spritesheet, if any. */
 	int width = 0, height = 0;
-	int xOffset = -1, yOffset = -1;
 
 	public AnimationData(int id)
 	{
@@ -59,8 +59,8 @@ public class AnimationData
 		if (this.clones == null && xml.getChild("default", xml.getNamespace()) != null)
 		{
 			this.load(xml.getChild("default", xml.getNamespace()), this);
-			if (this.xOffset == -1) this.xOffset = this.width / 2;
-			if (this.yOffset == -1) this.yOffset = this.height / 2;
+			if (this.gravityX == -1) this.gravityX = this.width / 2;
+			if (this.gravityY == -1) this.gravityY = this.height / 2;
 			for (Direction d : Direction.directions)
 			{
 				if (xml.getChild(d.name().toLowerCase(), xml.getNamespace()) != null)
@@ -80,7 +80,7 @@ public class AnimationData
 		PokemonAnimation a = null;
 		if (this.sprites.equals("none"))
 		{
-			a = new PokemonAnimation(renderer, 0, listener);
+			a = new PokemonAnimation(this, renderer, 0, listener);
 			a.delayTime = this.delayTime;
 		} else
 		{
@@ -92,13 +92,12 @@ public class AnimationData
 			int[] order = this.spriteOrder.clone();
 			if (order.length == 0 && spriteset.isLoaded())
 			{
-				order = new int[this.backSprites == BackSpriteUsage.yes ? spriteset.spriteCount() / 2 : spriteset.spriteCount()];
+				order = new int[this.backSpriteUsage == BackSpriteUsage.yes ? spriteset.spriteCount() / 2 : spriteset.spriteCount()];
 				for (int i = 0; i < order.length; ++i)
 					order[i] = i;
 			}
-			a = new SpritesetAnimation(renderer, spriteset, this.backSprites, order, this.spriteDuration, this.xOffset, this.yOffset, listener);
+			a = new SpritesetAnimation(this, renderer, spriteset, order, listener);
 			((SpritesetAnimation) a).spritesetMovement = SpritesetAnimationMovement.create(this.animationMovement, (SpritesetAnimation) a);
-			((SpritesetAnimation) a).loopsFrom = this.loopsFrom;
 			if (this.delayTime <= 0) a.delayTime = this.spriteDuration * order.length;
 			else a.delayTime = this.delayTime;
 		}
@@ -132,7 +131,7 @@ public class AnimationData
 
 			if (!anims.isEmpty())
 			{
-				CompoundAnimation anim = new CompoundAnimation(renderer, listener);
+				CompoundAnimation anim = new CompoundAnimation(this, renderer, listener);
 				anim.add(a, 0);
 				for (int i = 0; i < anims.size(); ++i)
 					anim.add(anims.get(i), delays.get(i));
@@ -142,7 +141,7 @@ public class AnimationData
 
 		if (this.overlay != -1)
 		{
-			OverlayAnimation overlay = new OverlayAnimation(this.overlay, a, listener);
+			OverlayAnimation overlay = new OverlayAnimation(this, this.overlay, a, listener);
 			Persistance.dungeonState.staticAnimationsRenderer.add(overlay);
 			overlay.start();
 		}
@@ -163,10 +162,10 @@ public class AnimationData
 		{
 			this.width = XMLUtils.getAttribute(xml, "width", defaultData.width);
 			this.height = XMLUtils.getAttribute(xml, "height", defaultData.height);
-			this.xOffset = XMLUtils.getAttribute(xml, "x", defaultData.xOffset);
-			this.yOffset = XMLUtils.getAttribute(xml, "y", defaultData.yOffset);
+			this.gravityX = XMLUtils.getAttribute(xml, "x", defaultData.gravityX);
+			this.gravityY = XMLUtils.getAttribute(xml, "y", defaultData.gravityY);
 			this.spriteDuration = XMLUtils.getAttribute(xml, "spriteduration", defaultData.spriteDuration);
-			this.backSprites = BackSpriteUsage.valueOf(XMLUtils.getAttribute(xml, "backsprites", defaultData.backSprites.name()));
+			this.backSpriteUsage = BackSpriteUsage.valueOf(XMLUtils.getAttribute(xml, "backsprites", defaultData.backSpriteUsage.name()));
 			this.spriteOrder = XMLUtils.readIntArray(xml);
 			this.animationMovement = XMLUtils.getAttribute(xml, "movement", defaultData.animationMovement);
 			this.loopsFrom = XMLUtils.getAttribute(xml, "loopsfrom", defaultData.loopsFrom);
@@ -238,12 +237,12 @@ public class AnimationData
 		{
 			XMLUtils.setAttribute(self, "width", this.width, defaultData.width);
 			XMLUtils.setAttribute(self, "height", this.height, defaultData.height);
-			if (defaultData.xOffset == -1 && !isVariant) defaultData.xOffset = this.width / 2;
-			if (defaultData.yOffset == -1 && !isVariant) defaultData.yOffset = this.height / 2;
-			XMLUtils.setAttribute(self, "x", this.xOffset, defaultData.xOffset);
-			XMLUtils.setAttribute(self, "y", this.yOffset, defaultData.yOffset);
+			if (defaultData.gravityX == -1 && !isVariant) defaultData.gravityX = this.width / 2;
+			if (defaultData.gravityY == -1 && !isVariant) defaultData.gravityY = this.height / 2;
+			XMLUtils.setAttribute(self, "x", this.gravityX, defaultData.gravityX);
+			XMLUtils.setAttribute(self, "y", this.gravityY, defaultData.gravityY);
 			XMLUtils.setAttribute(self, "spriteduration", this.spriteDuration, defaultData.spriteDuration);
-			XMLUtils.setAttribute(self, "backsprites", this.backSprites.name(), defaultData.backSprites.name());
+			XMLUtils.setAttribute(self, "backsprites", this.backSpriteUsage.name(), defaultData.backSpriteUsage.name());
 			self.setText(XMLUtils.toXML("", this.spriteOrder).getText());
 			XMLUtils.setAttribute(self, "movement", this.animationMovement, defaultData.animationMovement);
 			XMLUtils.setAttribute(self, "loopsfrom", this.loopsFrom, defaultData.loopsFrom);

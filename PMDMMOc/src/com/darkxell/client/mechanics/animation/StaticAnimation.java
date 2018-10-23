@@ -39,7 +39,7 @@ public class StaticAnimation extends AbstractAnimation
 	/** @param sprites - Describes which sprites to display and for how long. */
 	public StaticAnimation(AnimationEndListener listener, RegularSpriteSet spriteset, Point location, int[][] sprites)
 	{
-		super(computeDuration(sprites), listener);
+		super(new AnimationData(-1), computeDuration(sprites), listener);
 		this.spriteset = spriteset;
 		this.location = location;
 		this.sprites = sprites;

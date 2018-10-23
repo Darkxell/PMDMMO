@@ -4,7 +4,6 @@ import java.awt.Graphics2D;
 
 import com.darkxell.client.mechanics.animation.movement.PokemonAnimationMovement;
 import com.darkxell.client.renderers.pokemon.AbstractPokemonRenderer;
-import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
 
 /** An animation that is displayed on a Pokemon. */
 public class PokemonAnimation extends AbstractAnimation
@@ -14,16 +13,12 @@ public class PokemonAnimation extends AbstractAnimation
 	PokemonAnimationMovement movement;
 	/** A reference to the Pokemon's renderer. */
 	public final AbstractPokemonRenderer renderer;
-	/** The state to give to the Pokemon. null if shouldn't be changed. */
-	PokemonSpriteState state;
-	/** The number of ticks to wait before setting the state. */
-	int stateDelay = 0;
 	/** Coordinates of the center of the Pokemon. */
 	protected double x, y;
 
-	public PokemonAnimation(AbstractPokemonRenderer renderer, int duration, AnimationEndListener listener)
+	public PokemonAnimation(AnimationData data, AbstractPokemonRenderer renderer, int duration, AnimationEndListener listener)
 	{
-		super(duration, listener);
+		super(data, duration, listener);
 		this.renderer = renderer;
 	}
 
@@ -62,7 +57,8 @@ public class PokemonAnimation extends AbstractAnimation
 	{
 		super.start();
 		if (this.renderer != null) this.renderer.addAnimation(this);
-		if (this.state != null && this.stateDelay == 0 && this.renderer != null) this.renderer.sprite().setState(this.state);
+		if (this.data().pokemonState != null && this.data().pokemonStateDelay == 0 && this.renderer != null)
+			this.renderer.sprite().setState(this.data().pokemonState);
 		if (this.movement != null) this.movement.start();
 	}
 
@@ -70,7 +66,7 @@ public class PokemonAnimation extends AbstractAnimation
 	public void update()
 	{
 		super.update();
-		if (this.state != null && this.tick() == this.stateDelay) this.renderer.sprite().setState(this.state);
+		if (this.data().pokemonState != null && this.tick() == this.data().pokemonStateDelay) this.renderer.sprite().setState(this.data().pokemonState);
 		if (this.renderer != null)
 		{
 			this.x = this.renderer.drawX();

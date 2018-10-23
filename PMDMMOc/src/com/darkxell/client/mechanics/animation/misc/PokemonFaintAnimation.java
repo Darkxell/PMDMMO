@@ -1,6 +1,7 @@
 package com.darkxell.client.mechanics.animation.misc;
 
 import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.mechanics.animation.AnimationData;
 import com.darkxell.client.mechanics.animation.AnimationEndListener;
 import com.darkxell.client.mechanics.animation.PokemonAnimation;
 import com.darkxell.client.renderers.pokemon.AbstractPokemonRenderer;
@@ -12,7 +13,7 @@ public class PokemonFaintAnimation extends PokemonAnimation
 
 	public PokemonFaintAnimation(AbstractPokemonRenderer renderer, AnimationEndListener listener)
 	{
-		super(renderer, DURATION, listener);
+		super(new AnimationData(-1), renderer, DURATION, listener);
 	}
 
 	@Override

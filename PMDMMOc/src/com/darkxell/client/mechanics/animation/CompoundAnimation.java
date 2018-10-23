@@ -11,9 +11,9 @@ public class CompoundAnimation extends PokemonAnimation
 	private ArrayList<Integer> componentDelays = new ArrayList<>();
 	private ArrayList<AbstractAnimation> components = new ArrayList<>();
 
-	public CompoundAnimation(AbstractPokemonRenderer renderer, AnimationEndListener listener)
+	public CompoundAnimation(AnimationData data, AbstractPokemonRenderer renderer, AnimationEndListener listener)
 	{
-		super(renderer, 0, listener);
+		super(data, renderer, 0, listener);
 	}
 
 	public CompoundAnimation add(AbstractAnimation a, Integer delay)

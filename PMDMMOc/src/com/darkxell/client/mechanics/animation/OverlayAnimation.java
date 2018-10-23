@@ -13,9 +13,9 @@ public class OverlayAnimation extends AbstractAnimation
 	private AbstractAnimation listened;
 	private SpritesetAnimation[] sprites;
 
-	public OverlayAnimation(int id, AbstractAnimation listened, AnimationEndListener listener)
+	public OverlayAnimation(AnimationData data, int id, AbstractAnimation listened, AnimationEndListener listener)
 	{
-		super(-1, listener);
+		super(data, -1, listener);
 		this.id = id;
 		this.listened = listened;
 	}

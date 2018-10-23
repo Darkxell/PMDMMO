@@ -4,6 +4,7 @@ import java.awt.AlphaComposite;
 import java.awt.Composite;
 import java.awt.Graphics2D;
 
+import com.darkxell.client.mechanics.animation.AnimationData;
 import com.darkxell.client.mechanics.animation.PokemonAnimation;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.renderers.TextRenderer.FontMode;
@@ -20,7 +21,7 @@ public class TextAbovePokeAnimation extends PokemonAnimation
 
 	public TextAbovePokeAnimation(AbstractPokemonRenderer renderer, Message text, FontMode fontMode)
 	{
-		super(renderer, DURATION, null);
+		super(new AnimationData(-1), renderer, DURATION, null);
 		this.text = text;
 		this.fontMode = fontMode;
 	}
