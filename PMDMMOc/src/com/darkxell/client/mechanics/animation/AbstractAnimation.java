@@ -7,7 +7,7 @@ import com.darkxell.client.resources.music.SoundManager;
 public class AbstractAnimation
 {
 
-	private final AnimationData data;
+	protected final AnimationData data;
 	int delayTime = 0;
 	/** The total duration of this Animation. */
 	int duration = 0;
@@ -21,7 +21,7 @@ public class AbstractAnimation
 
 	public AbstractAnimation(AnimationData data, int duration, AnimationEndListener listener)
 	{
-		this.data = data;
+		this.data = this.usedData = data;
 		this.duration = duration;
 		this.listener = listener;
 	}

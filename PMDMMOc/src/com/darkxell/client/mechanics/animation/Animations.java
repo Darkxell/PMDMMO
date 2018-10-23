@@ -140,7 +140,7 @@ public final class Animations
 		else if (registry == moveTargets) spritesPrefix = "targets/";
 		else if (registry == projectiles) spritesPrefix = "projectiles/";
 		else if (registry == statuses) spritesPrefix = "status/";
-		return new AnimationData(id, spritesPrefix, registry.get(id)).createAnimation(target.usedPokemon, target, null, renderer, listener);
+		return new AnimationData(id, spritesPrefix, registry.get(id)).createAnimation(target, null, renderer, listener);
 	}
 
 	public static PokemonAnimation getCustomAnimation(DungeonPokemon target, int id, AnimationEndListener listener)
@@ -156,7 +156,7 @@ public final class Animations
 			return null;
 		}
 		AbstractPokemonRenderer renderer = target == null ? null : (AbstractPokemonRenderer) Persistance.currentmap.cutsceneEntityRenderers.getRenderer(target);
-		return new AnimationData(id, "", custom.get(id)).createAnimation(target.toPokemon(), null, target, renderer, listener);
+		return new AnimationData(id, "", custom.get(id)).createAnimation(null, target, renderer, listener);
 
 		/* if (!custom.containsKey(id)) { Logger.w("Animation not found: " + id); return null; } Element xml = custom.get(id); xml = xml.getChild("default", xml.getNamespace());
 		 * 

@@ -13,7 +13,6 @@ import com.darkxell.client.renderers.pokemon.AbstractPokemonRenderer;
 import com.darkxell.client.resources.images.RegularSpriteSet;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
 import com.darkxell.common.pokemon.DungeonPokemon;
-import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.XMLUtils;
 
@@ -70,13 +69,12 @@ public class AnimationData
 					this.variants[d.index()] = new AnimationData(this.id);
 					this.variants[d.index()].load(xml.getChild(d.name().toLowerCase(), xml.getNamespace()), this);
 					this.variants[d.index()].spritesPrefix = this.spritesPrefix;
-				}
+				} else this.variants[d.index()] = this;
 			}
 		}
 	}
 
-	public PokemonAnimation createAnimation(Pokemon target, DungeonPokemon dungeon, CutscenePokemon cutscene, AbstractPokemonRenderer renderer,
-			AnimationEndListener listener)
+	public PokemonAnimation createAnimation(DungeonPokemon dungeon, CutscenePokemon cutscene, AbstractPokemonRenderer renderer, AnimationEndListener listener)
 	{
 		if (this.clones != null)
 		{
@@ -85,7 +83,7 @@ public class AnimationData
 		}
 
 		PokemonAnimation a = null;
-		if (this.sprites.equals("none"))
+		if (this.sprites == null)
 		{
 			a = new PokemonAnimation(this, renderer, 0, listener);
 			a.delayTime = this.delayTime;
@@ -227,6 +225,7 @@ public class AnimationData
 		root.addContent(self);
 		for (Direction d : Direction.directions)
 		{
+			if (this.variants[d.index()] == this) continue;
 			Element variant = new Element(d.getName().toLowerCase());
 			this.variants[d.index()].toXML(root, variant, this, true);
 
