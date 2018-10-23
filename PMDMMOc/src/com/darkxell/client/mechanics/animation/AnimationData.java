@@ -90,8 +90,7 @@ public class AnimationData
 		} else
 		{
 			String actualSprites = this.sprites;
-			if (!this.sprites.contains("/")) actualSprites = this.spritesPrefix + this.sprites;
-			else actualSprites = "/" + actualSprites;
+			if (!this.sprites.contains("/")) actualSprites = this.spritesPrefix + "/" + this.sprites;
 			actualSprites = "/animations" + actualSprites;
 
 			RegularSpriteSet spriteset = new RegularSpriteSet(actualSprites + ".png", this.width, this.height, -1, -1);

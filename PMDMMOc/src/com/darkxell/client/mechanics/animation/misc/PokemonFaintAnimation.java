@@ -23,7 +23,7 @@ public class PokemonFaintAnimation extends PokemonAnimation
 		Persistance.dungeonState.pokemonRenderer.unregister(this.renderer);
 		super.onFinish();
 	}
-
+	
 	@Override
 	public void start()
 	{
