@@ -165,6 +165,7 @@ public class EditCutsceneController implements Initializable, ListCellParent<Cut
 				this.cutsceneEndController.getEnd(), new ArrayList<>(this.eventList.getItems()));
 		CutscenesTabController.instance.currentCutscene = c;
 		Cutscenes.update(c);
+		CutscenesTabController.instance.reloadCutsceneList();
 	}
 
 	public void setupFor(Cutscene cutscene)

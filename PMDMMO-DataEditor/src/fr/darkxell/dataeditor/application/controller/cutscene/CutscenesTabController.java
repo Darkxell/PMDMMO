@@ -27,6 +27,7 @@ public class CutscenesTabController implements Initializable, ListCellParent<Cut
 
 	/** Currently edited Cutscene. */
 	public Cutscene currentCutscene;
+
 	@FXML
 	private ListView<Cutscene> cutscenesList;
 	@FXML
@@ -45,8 +46,7 @@ public class CutscenesTabController implements Initializable, ListCellParent<Cut
 	{
 		instance = this;
 		CustomList.setup(this, this.cutscenesList, "Cutscene", true, true, true, true, false);
-		this.cutscenesList.getItems().addAll(Cutscenes.values());
-		this.cutscenesList.getItems().sort(Comparator.naturalOrder());
+		this.reloadCutsceneList();
 
 		this.editCutscenePane.setVisible(false);
 	}
@@ -114,6 +114,13 @@ public class CutscenesTabController implements Initializable, ListCellParent<Cut
 			if (cutscene == null) this.cutscenesList.getItems().add(c);
 			this.cutscenesList.getItems().sort(Comparator.naturalOrder());
 		}
+	}
+
+	public void reloadCutsceneList()
+	{
+		this.cutscenesList.getItems().clear();
+		this.cutscenesList.getItems().addAll(Cutscenes.values());
+		this.cutscenesList.getItems().sort(Comparator.naturalOrder());
 	}
 
 }
