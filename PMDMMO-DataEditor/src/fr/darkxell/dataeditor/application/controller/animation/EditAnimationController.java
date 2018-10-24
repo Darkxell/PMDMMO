@@ -2,6 +2,8 @@ package fr.darkxell.dataeditor.application.controller.animation;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.function.UnaryOperator;
+import java.util.regex.Pattern;
 
 import com.darkxell.client.mechanics.animation.SpritesetAnimation.BackSpriteUsage;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
@@ -12,6 +14,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.control.ToggleGroup;
 
 public class EditAnimationController implements Initializable
@@ -82,6 +85,41 @@ public class EditAnimationController implements Initializable
 		this.animMovementCombobox.getSelectionModel().select(0);
 
 		this.stateCombobox.setDisable(true);
+
+		Pattern pattern = Pattern.compile("\\d*");
+		this.delayTextfield.setTextFormatter(new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
+			return pattern.matcher(change.getControlNewText()).matches() ? change : null;
+		}));
+		this.loopTextfield.setTextFormatter(new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
+			return pattern.matcher(change.getControlNewText()).matches() ? change : null;
+		}));
+		this.soundDelayTextfield.setTextFormatter(new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
+			return pattern.matcher(change.getControlNewText()).matches() ? change : null;
+		}));
+		this.spriteDurationTextfield.setTextFormatter(new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
+			return pattern.matcher(change.getControlNewText()).matches() ? change : null;
+		}));
+		this.stateDelayTextfield.setTextFormatter(new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
+			return pattern.matcher(change.getControlNewText()).matches() ? change : null;
+		}));
+		this.widthTextfield.setTextFormatter(new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
+			return pattern.matcher(change.getControlNewText()).matches() ? change : null;
+		}));
+		this.heightTextfield.setTextFormatter(new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
+			return pattern.matcher(change.getControlNewText()).matches() ? change : null;
+		}));
+		this.xTextfield.setTextFormatter(new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
+			return pattern.matcher(change.getControlNewText()).matches() ? change : null;
+		}));
+		this.yTextfield.setTextFormatter(new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
+			return pattern.matcher(change.getControlNewText()).matches() ? change : null;
+		}));
+
+		Pattern p2 = Pattern.compile("(\\d+,)*(\\d+)?");
+		TextFormatter<String> formatter2 = new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
+			return p2.matcher(change.getControlNewText()).matches() ? change : null;
+		});
+		this.alsoplayDelayTextfield.setTextFormatter(formatter2);
 	}
 
 	public void onCancelChanges()
