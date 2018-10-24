@@ -23,10 +23,22 @@ import com.darkxell.common.pokemon.ability.Ability;
 import com.darkxell.common.status.StatusCondition;
 import com.darkxell.common.status.StatusConditions;
 import com.darkxell.common.util.Logger;
+import com.darkxell.common.util.Pair;
 import com.darkxell.common.util.XMLUtils;
 
 public final class Animations
 {
+	public static enum AnimationGroup
+	{
+		Abilities,
+		Custom,
+		Items,
+		Moves,
+		MoveTargets,
+		Projectiles,
+		Statuses;
+	}
+
 	private static final HashMap<Integer, AnimationData> abilities, custom, items, moves, moveTargets, projectiles, statuses;
 
 	public static final int ATTACK_DOWN, DEFENSE_DOWN, SP_ATTACK_DOWN, SP_DEFENSE_DOWN, SPEED_DOWN, EVASION_DOWN, ACCURACY_DOWN;
@@ -56,6 +68,18 @@ public final class Animations
 	private static boolean existsAnimation(int id, HashMap<Integer, AnimationData> registry)
 	{
 		return registry.containsKey(id);
+	}
+
+	public static boolean existsAnimation(Pair<Integer, AnimationGroup> id)
+	{
+		if (id == null) return false;
+		return registry(id.second).containsKey(id.first);
+	}
+
+	public static boolean existsAnimation(String id)
+	{
+		Pair<Integer, AnimationGroup> split = splitID(id);
+		return existsAnimation(split);
 	}
 
 	public static boolean existsItemAnimation(Item item)
@@ -324,6 +348,94 @@ public final class Animations
 		} catch (Exception e2)
 		{}
 		return ProjectileMovement.STRAIGHT;
+	}
+
+	public static void register(AnimationData animation, AnimationGroup group)
+	{
+		if (!existsAnimation(animation.id, registry(group))) registry(group).put(animation.id, animation);
+	}
+
+	private static HashMap<Integer, AnimationData> registry(AnimationGroup group)
+	{
+		switch (group)
+		{
+			case Abilities:
+				return abilities;
+
+			case Custom:
+				return custom;
+
+			case Items:
+				return items;
+
+			case Moves:
+				return moves;
+
+			case MoveTargets:
+				return moveTargets;
+
+			case Projectiles:
+				return projectiles;
+
+			case Statuses:
+				return statuses;
+		}
+		return null;
+	}
+
+	public static Pair<Integer, AnimationGroup> splitID(String id)
+	{
+		while (id.startsWith("/"))
+			id = id.substring(0);
+		if (!id.contains("/"))
+		{
+			if (!id.matches("\\d+")) return null;
+			return new Pair<>(Integer.parseInt(id), AnimationGroup.Custom);
+		}
+		String group = id.substring(0, id.indexOf("/"));
+		int anim = Integer.parseInt(id.substring(id.indexOf("/") + 1, id.length()));
+		switch (group)
+		{
+			case "custom":
+				return new Pair<>(anim, AnimationGroup.Custom);
+
+			case "ability":
+			case "abilities":
+				return new Pair<>(anim, AnimationGroup.Abilities);
+
+			case "item":
+			case "items":
+				return new Pair<>(anim, AnimationGroup.Items);
+
+			case "move":
+			case "moves":
+				return new Pair<>(anim, AnimationGroup.Moves);
+
+			case "projectile":
+			case "projectiles":
+				return new Pair<>(anim, AnimationGroup.Projectiles);
+
+			case "status":
+			case "statuses":
+			case "statuscondition":
+			case "statusconditions":
+				return new Pair<>(anim, AnimationGroup.Statuses);
+
+			case "target":
+			case "targets":
+			case "movetarget":
+			case "movetargets":
+				return new Pair<>(anim, AnimationGroup.MoveTargets);
+
+			default:
+				break;
+		}
+		return null;
+	}
+
+	public static void unregister(int id, AnimationGroup group)
+	{
+		if (existsAnimation(id, registry(group))) registry(group).remove(id);
 	}
 
 	private Animations()

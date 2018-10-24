@@ -3,9 +3,13 @@ package fr.darkxell.dataeditor.application.controller.animation;
 import java.net.URL;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
+import com.darkxell.client.mechanics.animation.AnimationData;
 import com.darkxell.client.mechanics.animation.Animations;
+import com.darkxell.client.mechanics.animation.Animations.AnimationGroup;
+import com.darkxell.common.util.Pair;
 
 import fr.darkxell.dataeditor.application.controls.CustomListCell.ListCellParent;
 import fr.darkxell.dataeditor.application.util.AnimationListItem;
@@ -15,6 +19,10 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
@@ -38,12 +46,44 @@ public class AnimationsTabController implements Initializable, ListCellParent<An
 	@FXML
 	public TreeView<CustomTreeItem> animationsTreeView;
 	@FXML
-	public TestAnimationController testAnimationController;
+	private TitledPane editAnimationPane;
+	private AnimationListItem editing;
 	@FXML
 	public TestAnimationController testAnimation2Controller;
 
 	@FXML
-	private TitledPane editAnimationPane;
+	public TestAnimationController testAnimationController;
+
+	private TreeItem<CustomTreeItem> category(AnimationGroup group)
+	{
+		switch (group)
+		{
+			case Abilities:
+				return abilities;
+
+			case Custom:
+				return custom;
+
+			case Items:
+				return items;
+
+			case Moves:
+				return moves;
+
+			case Projectiles:
+				return projectiles;
+
+			case Statuses:
+				return statuses;
+
+			case MoveTargets:
+				return targets;
+
+			default:
+				break;
+		}
+		return null;
+	}
 
 	@Override
 	public Node graphicFor(AnimationListItem item)
@@ -84,9 +124,56 @@ public class AnimationsTabController implements Initializable, ListCellParent<An
 		this.reloadList();
 	}
 
+	public void onCreate()
+	{
+		TextInputDialog dialog = new TextInputDialog("");
+		dialog.setTitle("New Animation");
+		dialog.setHeaderText(null);
+		dialog.setContentText("Type in the ID of the new Animation (can be preceded by items/, moves/, etc. for its catagory).");
+		Optional<String> name = dialog.showAndWait();
+		if (name.isPresent())
+		{
+			Pair<Integer, AnimationGroup> id = Animations.splitID(name.get());
+			if (id != null)
+			{
+				if (Animations.existsAnimation(id))
+					new Alert(AlertType.ERROR, "There is already an Animation with ID " + name.get(), ButtonType.OK).showAndWait();
+				else
+				{
+					Animations.register(new AnimationData(id.first), id.second);
+					this.reloadList();
+				}
+			} else new Alert(AlertType.ERROR, "Wrong ID: " + name.get(), ButtonType.OK).showAndWait();
+		}
+	}
+
 	@Override
 	public void onCreate(AnimationListItem nullItem)
 	{}
+
+	public void onDelete()
+	{
+		TreeItem<CustomTreeItem> selected = this.animationsTreeView.getSelectionModel().getSelectedItem();
+		if (selected == null) return;
+		if (selected.getValue() instanceof AnimationListItem)
+		{
+			AnimationListItem anim = (AnimationListItem) selected.getValue();
+			Alert alert = new Alert(AlertType.CONFIRMATION);
+			alert.setHeaderText("Delete Animation");
+			alert.setContentText("Are you sure you want to delete animation '" + anim.group + "/" + anim.id + "'?");
+			Optional<ButtonType> result = alert.showAndWait();
+			if (result.get() == ButtonType.OK)
+			{
+				if (anim == this.editing)
+				{
+					this.editing = null;
+					this.editAnimationPane.setVisible(false);
+				}
+				Animations.unregister(anim.id, anim.group);
+				this.reloadList();
+			}
+		}
+	}
 
 	@Override
 	public void onDelete(AnimationListItem item)
@@ -97,7 +184,7 @@ public class AnimationsTabController implements Initializable, ListCellParent<An
 	{
 		AnimationListItem selected = item;
 		this.testAnimationController.setAnimation(selected);
-
+		this.editing = selected;
 		this.editAnimationPane.setText("Animation: " + selected);
 	}
 
@@ -107,6 +194,9 @@ public class AnimationsTabController implements Initializable, ListCellParent<An
 
 	@Override
 	public void onRename(AnimationListItem item, String name)
+	{}
+
+	public void onSaveAll()
 	{}
 
 	public void reloadList()
@@ -123,39 +213,7 @@ public class AnimationsTabController implements Initializable, ListCellParent<An
 		for (String anim : anims)
 		{
 			AnimationListItem item = AnimationListItem.create(anim);
-			switch (item.folder)
-			{
-				case "abilities":
-					this.abilities.getChildren().add(new TreeItem<CustomTreeItem>(item));
-					break;
-
-				case "custom":
-					this.custom.getChildren().add(new TreeItem<CustomTreeItem>(item));
-					break;
-
-				case "items":
-					this.items.getChildren().add(new TreeItem<CustomTreeItem>(item));
-					break;
-
-				case "moves":
-					this.moves.getChildren().add(new TreeItem<CustomTreeItem>(item));
-					break;
-
-				case "projectiles":
-					this.projectiles.getChildren().add(new TreeItem<CustomTreeItem>(item));
-					break;
-
-				case "statuses":
-					this.statuses.getChildren().add(new TreeItem<CustomTreeItem>(item));
-					break;
-
-				case "targets":
-					this.targets.getChildren().add(new TreeItem<CustomTreeItem>(item));
-					break;
-
-				default:
-					break;
-			}
+			if (item != null) this.category(item.group).getChildren().add(new TreeItem<CustomTreeItem>(item));
 		}
 
 		this.abilities.getChildren().sort(sorter);

@@ -81,7 +81,7 @@ public class TestAnimationController implements Initializable
 	{
 		try
 		{
-			return Animations.getAnimation(tester, this.animation.folder + "/" + this.animation.id, thread);
+			return Animations.getAnimation(tester, this.animation.group + "/" + this.animation.id, thread);
 		} catch (Exception e)
 		{
 			JOptionPane.showMessageDialog(null, e.getMessage(), "Error while creating animation", JOptionPane.ERROR_MESSAGE);

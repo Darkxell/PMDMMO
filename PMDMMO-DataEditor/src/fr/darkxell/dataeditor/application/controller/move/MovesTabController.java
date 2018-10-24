@@ -116,20 +116,27 @@ public class MovesTabController implements Initializable, ListCellParent<MoveLis
 					MoveRegistry.register(i);
 					this.reloadList();
 				}
-			} else new Alert(AlertType.ERROR, "Wrong ID: " + name.get(), ButtonType.OK);
+			} else new Alert(AlertType.ERROR, "Wrong ID: " + name.get(), ButtonType.OK).showAndWait();
 		}
 	}
 
 	@Override
 	public void onDelete(MoveListItem move)
 	{
-		if (move == this.currentMove)
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setHeaderText("Delete Animation");
+		alert.setContentText("Are you sure you want to delete move '" + move.move.name() + "'?");
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == ButtonType.OK)
 		{
-			this.currentMove = null;
-			this.editMovePane.setVisible(false);
+			if (move == this.currentMove)
+			{
+				this.currentMove = null;
+				this.editMovePane.setVisible(false);
+			}
+			MoveRegistry.unregister(move.move.id);
+			this.reloadList();
 		}
-		MoveRegistry.unregister(move.move.id);
-		this.reloadList();
 	}
 
 	public void onDeleteMove()

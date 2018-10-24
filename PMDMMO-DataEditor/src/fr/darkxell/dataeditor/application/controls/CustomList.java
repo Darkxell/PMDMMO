@@ -87,7 +87,7 @@ public class CustomList
 			{
 				this.delete.setOnAction(e -> {
 					Alert alert = new Alert(AlertType.CONFIRMATION);
-					alert.setHeaderText("Delete Cutscene");
+					alert.setHeaderText("Delete " + typeName);
 					alert.setContentText("Are you sure you want to delete " + typeName + " '" + list.getSelectionModel().getSelectedItem() + "'?");
 					Optional<ButtonType> result = alert.showAndWait();
 					if (result.get() == ButtonType.OK) parent.onDelete(list.getSelectionModel().getSelectedItem());
