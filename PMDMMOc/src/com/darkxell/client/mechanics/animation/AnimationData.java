@@ -1,6 +1,7 @@
 package com.darkxell.client.mechanics.animation;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.jdom2.Element;
 
@@ -16,7 +17,7 @@ import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.XMLUtils;
 
-public class AnimationData
+public class AnimationData implements Comparable<AnimationData>
 {
 	String[] alsoPlay = new String[0];
 	int[] alsoPlayDelay = new int[0];
@@ -73,6 +74,12 @@ public class AnimationData
 				} else this.variants[d.index()] = this;
 			}
 		}
+	}
+
+	@Override
+	public int compareTo(AnimationData o)
+	{
+		return Integer.compare(this.id, o.id);
 	}
 
 	public PokemonAnimation createAnimation(DungeonPokemon dungeon, CutscenePokemon cutscene, AbstractPokemonRenderer renderer, AnimationEndListener listener)
@@ -166,18 +173,15 @@ public class AnimationData
 	{
 		this.sprites = XMLUtils.getAttribute(xml, "sprites", defaultData.sprites);
 		if (this.sprites != null && this.sprites.equals("none")) this.sprites = null;
-		if (this.sprites != null)
-		{
-			this.width = XMLUtils.getAttribute(xml, "width", defaultData.width);
-			this.height = XMLUtils.getAttribute(xml, "height", defaultData.height);
-			this.gravityX = XMLUtils.getAttribute(xml, "x", defaultData.gravityX);
-			this.gravityY = XMLUtils.getAttribute(xml, "y", defaultData.gravityY);
-			this.spriteDuration = XMLUtils.getAttribute(xml, "spriteduration", defaultData.spriteDuration);
-			this.backSpriteUsage = BackSpriteUsage.valueOf(XMLUtils.getAttribute(xml, "backsprites", defaultData.backSpriteUsage.name()));
-			this.spriteOrder = XMLUtils.readIntArray(xml);
-			this.animationMovement = XMLUtils.getAttribute(xml, "movement", defaultData.animationMovement);
-			this.loopsFrom = XMLUtils.getAttribute(xml, "loopsfrom", defaultData.loopsFrom);
-		}
+		this.width = XMLUtils.getAttribute(xml, "width", defaultData.width);
+		this.height = XMLUtils.getAttribute(xml, "height", defaultData.height);
+		this.gravityX = XMLUtils.getAttribute(xml, "x", defaultData.gravityX);
+		this.gravityY = XMLUtils.getAttribute(xml, "y", defaultData.gravityY);
+		this.spriteDuration = XMLUtils.getAttribute(xml, "spriteduration", defaultData.spriteDuration);
+		this.backSpriteUsage = BackSpriteUsage.valueOf(XMLUtils.getAttribute(xml, "backsprites", defaultData.backSpriteUsage.name()));
+		this.spriteOrder = XMLUtils.readIntArray(xml);
+		this.animationMovement = XMLUtils.getAttribute(xml, "movement", defaultData.animationMovement);
+		this.loopsFrom = XMLUtils.getAttribute(xml, "loopsfrom", defaultData.loopsFrom);
 
 		this.delayTime = XMLUtils.getAttribute(xml, "delaytime", defaultData.delayTime);
 
@@ -241,35 +245,33 @@ public class AnimationData
 
 	private void toXML(Element root, Element self, AnimationData defaultData, boolean isVariant)
 	{
-		if (defaultData.sprites == null && !isVariant) defaultData.sprites = "/animations/" + this.id;
+		if (defaultData.sprites == null && !isVariant) defaultData.sprites = "" + this.id;
 		XMLUtils.setAttribute(self, "sprites", this.sprites == null ? "none" : this.sprites, defaultData.sprites);
-		if (this.sprites != null)
-		{
-			XMLUtils.setAttribute(self, "width", this.width, defaultData.width);
-			XMLUtils.setAttribute(self, "height", this.height, defaultData.height);
-			if (defaultData.gravityX == -1 && !isVariant) defaultData.gravityX = this.width / 2;
-			if (defaultData.gravityY == -1 && !isVariant) defaultData.gravityY = this.height / 2;
-			XMLUtils.setAttribute(self, "x", this.gravityX, defaultData.gravityX);
-			XMLUtils.setAttribute(self, "y", this.gravityY, defaultData.gravityY);
-			XMLUtils.setAttribute(self, "spriteduration", this.spriteDuration, defaultData.spriteDuration);
-			XMLUtils.setAttribute(self, "backsprites", this.backSpriteUsage.name(), defaultData.backSpriteUsage.name());
-			self.setText(XMLUtils.toXML("", this.spriteOrder).getText());
-			XMLUtils.setAttribute(self, "movement", this.animationMovement, defaultData.animationMovement);
-			XMLUtils.setAttribute(self, "loopsfrom", this.loopsFrom, defaultData.loopsFrom);
-		}
+		XMLUtils.setAttribute(self, "width", this.width, defaultData.width);
+		XMLUtils.setAttribute(self, "height", this.height, defaultData.height);
+		if (defaultData.gravityX == -1 && !isVariant) defaultData.gravityX = this.width / 2;
+		if (defaultData.gravityY == -1 && !isVariant) defaultData.gravityY = this.height / 2;
+		XMLUtils.setAttribute(self, "x", this.gravityX, defaultData.gravityX);
+		XMLUtils.setAttribute(self, "y", this.gravityY, defaultData.gravityY);
+		XMLUtils.setAttribute(self, "spriteduration", this.spriteDuration, defaultData.spriteDuration);
+		XMLUtils.setAttribute(self, "backsprites", this.backSpriteUsage.name(), defaultData.backSpriteUsage.name());
+		self.setText(XMLUtils.toXML("order", this.spriteOrder).getText());
+		XMLUtils.setAttribute(self, "movement", this.animationMovement, defaultData.animationMovement);
+		XMLUtils.setAttribute(self, "loopsfrom", this.loopsFrom, defaultData.loopsFrom);
 
 		XMLUtils.setAttribute(self, "delaytime", this.delayTime, defaultData.delayTime);
 		XMLUtils.setAttribute(self, "sound", this.sound, defaultData.sound);
 		XMLUtils.setAttribute(self, "sounddelay", this.soundDelay, defaultData.soundDelay);
 		XMLUtils.setAttribute(self, "playsforeachtarget", this.playsForEachTarget, defaultData.playsForEachTarget);
 
-		if (this.pokemonState != null) XMLUtils.setAttribute(self, "state", this.pokemonState.name(), defaultData.pokemonState.name());
+		if (this.pokemonState != null)
+			XMLUtils.setAttribute(self, "state", this.pokemonState.name(), defaultData.pokemonState == null ? null : defaultData.pokemonState.name());
 		XMLUtils.setAttribute(self, "statedelay", this.pokemonStateDelay, defaultData.pokemonStateDelay);
 		XMLUtils.setAttribute(self, "pkmnmovement", this.pokemonMovement, defaultData.pokemonMovement);
 
 		if (this.alsoPlay.length > 0)
 		{
-			if (!this.alsoPlay.equals(defaultData.alsoPlay))
+			if (!Arrays.equals(this.alsoPlay, defaultData.alsoPlay))
 			{
 				String alsoPlay = "";
 				for (int i = 0; i < this.alsoPlay.length; ++i)
@@ -279,7 +281,7 @@ public class AnimationData
 				}
 				self.setAttribute("alsoplay", alsoPlay);
 			}
-			boolean shouldStoreDelay = !this.alsoPlayDelay.equals(defaultData.alsoPlayDelay);
+			boolean shouldStoreDelay = !Arrays.equals(this.alsoPlayDelay, defaultData.alsoPlayDelay);
 			if (shouldStoreDelay)
 			{
 				shouldStoreDelay = false;
@@ -290,7 +292,7 @@ public class AnimationData
 						break;
 					}
 			}
-			if (shouldStoreDelay) self.setAttribute("alsoplaydelay", XMLUtils.toXML("", this.alsoPlayDelay).getText());
+			if (shouldStoreDelay) self.setAttribute("alsoplaydelay", XMLUtils.toXML("delay", this.alsoPlayDelay).getText());
 		}
 
 		XMLUtils.setAttribute(self, "overlay", this.overlay, defaultData.overlay);

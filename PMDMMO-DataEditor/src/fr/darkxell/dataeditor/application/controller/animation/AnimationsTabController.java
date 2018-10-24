@@ -1,5 +1,6 @@
 package fr.darkxell.dataeditor.application.controller.animation;
 
+import java.io.File;
 import java.net.URL;
 import java.util.Comparator;
 import java.util.List;
@@ -197,7 +198,9 @@ public class AnimationsTabController implements Initializable, ListCellParent<An
 	{}
 
 	public void onSaveAll()
-	{}
+	{
+		Animations.save(new File("../PMDMMOc/resources/data/animations.xml"));
+	}
 
 	public void reloadList()
 	{

@@ -1,39 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<animations xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="pmdmmo"
-  xsi:schemaLocation="pmdmmo xsd/animations.xsd">
+<animations>
   <abilities>
     <a id="0">
-      <default sprites="/10" sound="stat-defense" width="50" height="50" y="28" backsprites="yes">0,1,2,3,4,5,6,7,8,9,10,11,12</default>
+      <default sprites="/10" width="50" height="50" y="28" backsprites="yes" sound="stat-defense">0,1,2,3,4,5,6,7,8,9,10,11,12</default>
     </a>
     <a id="1">
-      <default sprites="/11" sound="stat-defense" width="50" height="50" y="28" backsprites="yes">0,1,2,3,4,5,6,7,8,9,10,11,12</default>
+      <default sprites="/11" width="50" height="50" y="28" backsprites="yes" sound="stat-defense">0,1,2,3,4,5,6,7,8,9,10,11,12</default>
     </a>
     <a id="2">
-      <default sprites="/13" sound="stat-defense" width="50" height="50" y="28" backsprites="yes">0,1,2,3,4,5,6,7,8,9,10,11,12</default>
+      <default sprites="/13" width="50" height="50" y="28" backsprites="yes" sound="stat-defense">0,1,2,3,4,5,6,7,8,9,10,11,12</default>
     </a>
     <a id="3">
-      <default sprites="/14" sound="stat-defense" width="50" height="50" y="28" backsprites="yes">0,1,2,3,4,5,6,7,8,9,10,11,12</default>
+      <default sprites="/14" width="50" height="50" y="28" backsprites="yes" sound="stat-defense">0,1,2,3,4,5,6,7,8,9,10,11,12</default>
     </a>
     <a id="9">
-      <default sprites="/12" sound="stat-defense" width="50" height="50" y="28" backsprites="yes">0,1,2,3,4,5,6,7,8,9,10,11,12</default>
+      <default sprites="/12" width="50" height="50" y="28" backsprites="yes" sound="stat-defense">0,1,2,3,4,5,6,7,8,9,10,11,12</default>
     </a>
     <a id="10">
-      <default sprites="/12" sound="stat-defense" width="50" height="50" y="28" backsprites="yes">0,1,2,3,4,5,6,7,8,9,10,11,12</default>
+      <default sprites="/12" width="50" height="50" y="28" backsprites="yes" sound="stat-defense">0,1,2,3,4,5,6,7,8,9,10,11,12</default>
     </a>
-    <a id="70" clone="targets/755"/>
+    <a id="70" clone="targets/755" />
   </abilities>
   <custom>
     <c id="0">
       <default width="16" height="16">0,1,2,3,4,5,6,7,8</default>
     </c>
     <c id="1">
-      <default state="hurt" sound="dungeon-hurt" spriteduration="3" width="32" height="32">0,1,2,3</default>
+      <default width="32" height="32" spriteduration="3" sound="dungeon-hurt" state="HURT">0,1,2,3</default>
     </c>
     <c id="2">
-      <default state="none" sound="item-orb" width="64" height="32" spriteduration="2">0,1,2,3,4,5,6</default>
+      <default width="64" height="32" sound="item-orb">0,1,2,3,4,5,6</default>
     </c>
     <c id="3">
-      <default sound="dungeon-heal" spriteduration="3" width="64" height="96" y="71" backsprites="yes">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22</default>
+      <default width="64" height="96" y="71" spriteduration="3" backsprites="yes" sound="dungeon-heal">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22</default>
     </c>
     <c id="4">
       <default width="32" height="156" y="143" backsprites="yes">0,1,2,3,4,4,4,4,4,5</default>
@@ -42,525 +41,517 @@
       <default width="64" height="32" y="10" backsprites="only">0,1,2,3,4,5,6</default>
     </c>
     <c id="6">
-      <default sprites="none" state="highjump" delaytime="10"/>
+      <default sprites="none" delaytime="10" state="HIGHJUMP" />
     </c>
     <c id="10">
-      <default sound="stat-attack_up" width="50" height="50" y="28" backsprites="yes">0,1,2,3,4,5,6,7,8,9,10,11,12</default>
+      <default width="50" height="50" y="28" backsprites="yes" sound="stat-attack_up">0,1,2,3,4,5,6,7,8,9,10,11,12</default>
     </c>
     <c id="11">
-      <default sound="stat-defense_up" width="50" height="50" y="28" backsprites="yes">0,1,2,3,4,5,6,7,8,9,10,11,12</default>
+      <default width="50" height="50" y="28" backsprites="yes" sound="stat-defense_up">0,1,2,3,4,5,6,7,8,9,10,11,12</default>
     </c>
     <c id="12">
-      <default sound="stat-spattack_up" width="50" height="50" y="28" backsprites="yes">0,1,2,3,4,5,6,7,8,9,10,11,12</default>
+      <default width="50" height="50" y="28" backsprites="yes" sound="stat-spattack_up">0,1,2,3,4,5,6,7,8,9,10,11,12</default>
     </c>
     <c id="13">
-      <default sound="stat-spdefense_up" width="50" height="50" y="28" backsprites="yes">0,1,2,3,4,5,6,7,8,9,10,11,12</default>
+      <default width="50" height="50" y="28" backsprites="yes" sound="stat-spdefense_up">0,1,2,3,4,5,6,7,8,9,10,11,12</default>
     </c>
     <c id="14">
-      <default sound="stat-speed_up" width="50" height="50" y="28" backsprites="yes">0,1,2,3,4,5,6,7,8,9,10,11,12</default>
+      <default width="50" height="50" y="28" backsprites="yes" sound="stat-speed_up">0,1,2,3,4,5,6,7,8,9,10,11,12</default>
     </c>
     <c id="15">
-      <default sound="stat-evasion_up" width="50" height="50" y="28" backsprites="yes">0,1,2,3,4,5,6,7,8,9,10,11,12</default>
+      <default width="50" height="50" y="28" backsprites="yes" sound="stat-evasion_up">0,1,2,3,4,5,6,7,8,9,10,11,12</default>
     </c>
     <c id="16">
-      <default sound="stat-accuracy_up" width="50" height="50" y="28" backsprites="yes">0,1,2,3,4,5,6,7,8,9,10,11,12</default>
+      <default width="50" height="50" y="28" backsprites="yes" sound="stat-accuracy_up">0,1,2,3,4,5,6,7,8,9,10,11,12</default>
     </c>
     <c id="19">
       <default width="16" height="16" y="30" spriteduration="3">0,1,2,3,4,5,6,7,8,9,0,0,0,0,0</default>
     </c>
     <c id="20">
-      <default sound="stat-attack_down" sprites="10" width="50" height="50" y="28" backsprites="yes">12,11,10,9,8,7,6,5,4,3,2,1,0</default>
+      <default sprites="10" width="50" height="50" y="28" backsprites="yes" sound="stat-attack_down">12,11,10,9,8,7,6,5,4,3,2,1,0</default>
     </c>
     <c id="21">
-      <default sound="stat-defense_down" sprites="11" width="50" height="50" y="28" backsprites="yes">12,11,10,9,8,7,6,5,4,3,2,1,0</default>
+      <default sprites="11" width="50" height="50" y="28" backsprites="yes" sound="stat-defense_down">12,11,10,9,8,7,6,5,4,3,2,1,0</default>
     </c>
     <c id="22">
-      <default sound="stat-spattack_down" sprites="12" width="50" height="50" y="28" backsprites="yes">12,11,10,9,8,7,6,5,4,3,2,1,0</default>
+      <default sprites="12" width="50" height="50" y="28" backsprites="yes" sound="stat-spattack_down">12,11,10,9,8,7,6,5,4,3,2,1,0</default>
     </c>
     <c id="23">
-      <default sound="stat-spdefense_down" sprites="13" width="50" height="50" y="28" backsprites="yes">12,11,10,9,8,7,6,5,4,3,2,1,0</default>
+      <default sprites="13" width="50" height="50" y="28" backsprites="yes" sound="stat-spdefense_down">12,11,10,9,8,7,6,5,4,3,2,1,0</default>
     </c>
     <c id="24">
-      <default sound="stat-speed_down" sprites="14" width="50" height="50" y="28" backsprites="yes">12,11,10,9,8,7,6,5,4,3,2,1,0</default>
+      <default sprites="14" width="50" height="50" y="28" backsprites="yes" sound="stat-speed_down">12,11,10,9,8,7,6,5,4,3,2,1,0</default>
     </c>
     <c id="25">
-      <default sound="stat-evasion_down" sprites="15" width="50" height="50" y="28" backsprites="yes">12,11,10,9,8,7,6,5,4,3,2,1,0</default>
+      <default sprites="15" width="50" height="50" y="28" backsprites="yes" sound="stat-evasion_down">12,11,10,9,8,7,6,5,4,3,2,1,0</default>
     </c>
     <c id="26">
-      <default sound="stat-accuracy_down" sprites="16" width="50" height="50" y="28" backsprites="yes">12,11,10,9,8,7,6,5,4,3,2,1,0</default>
+      <default sprites="16" width="50" height="50" y="28" backsprites="yes" sound="stat-accuracy_down">12,11,10,9,8,7,6,5,4,3,2,1,0</default>
     </c>
     <c id="50">
-      <default spriteduration="5" width="32" height="32">0,1,2,3,4,5,6</default>
+      <default width="32" height="32" spriteduration="5">0,1,2,3,4,5,6</default>
     </c>
     <c id="100">
-      <default width="11" height="16" x="5" y="13">0,0,0,0,0,0,1,2,3,4</default>
+      <default width="11" height="16" y="13">0,0,0,0,0,0,1,2,3,4</default>
     </c>
     <c id="101">
-      <default spriteduration="1" width="170" height="118" x="0" y="0" sound="weather-sunny">0,-1,1,-1,2,-1,3,-1,4,-1,5,-1,6,-1,7,-1,8,-1,9,-1,10,-1,11,-1,12,-1</default>
+      <default width="170" height="118" x="0" y="0" spriteduration="1" sound="weather-sunny">0,-1,1,-1,2,-1,3,-1,4,-1,5,-1,6,-1,7,-1,8,-1,9,-1,10,-1,11,-1,12,-1</default>
     </c>
     <c id="102">
       <default width="32" height="32" x="0" y="0">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15</default>
     </c>
     <c id="103">
-      <default spriteduration="5" width="21" height="13">0,1,0,1,0,1,0,1,0,1,2,3</default>
+      <default width="21" height="13" spriteduration="5">0,1,0,1,0,1,0,1,0,1,2,3</default>
     </c>
     <c id="120">
-      <default spriteduration="5" width="32" height="32">0,1,2,3,4,5,6,7</default>
+      <default width="32" height="32" spriteduration="5">0,1,2,3,4,5,6,7</default>
     </c>
     <c id="200">
-      <default x="20" y="28" width="42" height="36">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24</default>
+      <default width="42" height="36" x="20" y="28">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24</default>
     </c>
     <c id="201">
-      <default x="20" y="28" width="42" height="36">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24</default>
+      <default width="42" height="36" x="20" y="28">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24</default>
     </c>
     <c id="202">
-      <default y="56" width="64" height="64">0,1,2,3,4,5,6,7</default>
+      <default width="64" height="64" y="56">0,1,2,3,4,5,6,7</default>
     </c>
     <c id="203">
-      <default spriteduration="5" width="32" height="32" state="hurt">0,1,2,3,4,5,6</default>
+      <default width="32" height="32" spriteduration="5" state="HURT">0,1,2,3,4,5,6</default>
     </c>
     <c id="205">
-      <default spriteduration="3" width="64" height="64">0,1,2,3</default>
+      <default width="64" height="64" spriteduration="3">0,1,2,3</default>
     </c>
     <c id="225">
       <default width="16" height="32" x="0" y="32">0,1,2,3,4,4,4,4</default>
     </c>
     <c id="226">
-      <default spriteduration="5" width="32" height="32" state="hurt">0,1,2,3,4,5,6</default>
+      <default width="32" height="32" spriteduration="5" state="HURT">0,1,2,3,4,5,6</default>
     </c>
     <c id="228">
       <default width="48" height="32" y="22">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25</default>
     </c>
-    <c id="229" clone="205"/>
+    <c id="229" clone="205" />
     <c id="300">
       <default width="32" height="32">0,1,2,3,4,5,6,7,8,9</default>
     </c>
   </custom>
   <items>
     <item id="21">
-      <default sprites="none" delaytime="15" state="rumble"/>
+      <default sprites="none" delaytime="15" state="RUMBLE" />
     </item>
-    <item id="22" clone="items/21"/>
+    <item id="22" clone="items/21" />
     <item id="31">
-      <default width="56" height="56" alsoplay="0" spriteduration="4">-1,-1,-1,-1,-1,0,1,2,3,4,5,6,7</default>
-      <north y="52"/>
-      <northeast x="4" y="52"/>
-      <east x="4"/>
-      <southeast x="4" y="4"/>
-      <south y="4"/>
-      <southwest x="52" y="4"/>
-      <west x="52"/>
-      <northwest x="52" y="52"/>
+      <default width="56" height="56" spriteduration="4" alsoplay="0">-1,-1,-1,-1,-1,0,1,2,3,4,5,6,7</default>
+      <north y="52" />
+      <northeast x="4" y="52" />
+      <east x="4" />
+      <southeast x="4" y="4" />
+      <south y="4" />
+      <west x="52" />
+      <northwest x="52" y="52" />
     </item>
-    <item id="82" clone="2"/>
-    <item id="86" clone="items/82"/>
-    <item id="90" clone="items/82"/>
-    <item id="102" clone="items/82"/>
-    <item id="125" clone="items/82"/>
-    <item id="133" clone="items/82"/>
+    <item id="82" clone="2" />
+    <item id="86" clone="items/82" />
+    <item id="90" clone="items/82" />
+    <item id="102" clone="items/82" />
+    <item id="125" clone="items/82" />
+    <item id="133" clone="items/82" />
   </items>
   <moves>
+    <move id="-707">
+      <default width="64" height="32" spriteduration="4" backsprites="only" state="EMIT">0,1,2,3,3,3,3,2,1,0</default>
+    </move>
+    <move id="-222">
+      <default sprites="none" delaytime="25" />
+    </move>
+    <move id="-50">
+      <default sprites="none" delaytime="25" />
+    </move>
+    <move id="-2">
+      <default sprites="none" delaytime="25" />
+    </move>
     <move id="0">
-      <default sprites="none" delaytime="25" sound="move-basicattack"/>
+      <default sprites="none" delaytime="25" sound="move-basicattack" />
     </move>
     <move id="1">
-      <default state="special" delaytime="15" sprites="none"/>
+      <default sprites="none" delaytime="15" state="SPECIAL" />
     </move>
     <move id="2">
-      <default state="charge" width="32" height="32">0,1,2,3,4,5,6,7,8</default>
+      <default width="32" height="32" state="CHARGE">0,1,2,3,4,5,6,7,8</default>
     </move>
     <move id="3">
-      <default sprites="none" state="attack" delaytime="25" alsoplay="2"/>
+      <default sprites="none" delaytime="25" state="ATTACK" alsoplay="2" />
     </move>
     <move id="4">
-      <default sprites="none" state="attack" alsoplay="2" delaytime="25"/>
+      <default sprites="none" delaytime="25" state="ATTACK" alsoplay="2" />
     </move>
     <move id="9">
-      <default width="32" height="32" state="withdraw">0,1,2,3,4,5,6,-1,7,8,9,10,11,12,13</default>
+      <default width="32" height="32" state="WITHDRAW">0,1,2,3,4,5,6,-1,7,8,9,10,11,12,13</default>
     </move>
     <move id="10">
-      <default width="64" height="64" state="special" spriteduration="3">0,1,2,3,4,5,6,7</default>
+      <default width="64" height="64" spriteduration="3" state="SPECIAL">0,1,2,3,4,5,6,7</default>
     </move>
     <move id="12">
-      <default sprites="none" delaytime="25" state="attack" playsforeachtarget="true"/>
+      <default sprites="none" delaytime="25" playsforeachtarget="true" state="ATTACK" />
     </move>
     <move id="13">
-      <default sprites="none" delaytime="25" state="jump"/>
+      <default sprites="none" delaytime="25" state="JUMP" />
     </move>
     <move id="14">
-      <default sprites="none" delaytime="25" alsoplay="2"/>
+      <default sprites="none" delaytime="25" alsoplay="2" />
     </move>
     <move id="18">
-      <default width="64" height="64" y="50" spriteduration="2" backsprites="yes" state="charge">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15</default>
+      <default width="64" height="64" y="50" backsprites="yes" state="CHARGE">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15</default>
     </move>
     <move id="20">
-      <default sprites="none" state="multistrike" playsforeachtarget="true"/>
+      <default sprites="none" playsforeachtarget="true" state="MULTISTRIKE" />
     </move>
-    <move id="22" oriented="true">
-      <default width="96" height="48" y="48" sound="move-growl" state="special">0,1,2,3,4,5,0,1,2,3,4,5</default>
-      <north width="72" backsprites="only"/>
-      <northeast x="40" backsprites="only"/>
-      <east x="40" height="72"/>
-      <southeast x="40" y="0"/>
-      <south width="72" y="0"/>
-      <southwest x="56" y="0"/>
-      <west x="56" height="72"/>
-      <northwest x="56" backsprites="only"/>
+    <move id="22">
+      <default width="96" height="48" y="48" sound="move-growl" state="SPECIAL">0,1,2,3,4,5,0,1,2,3,4,5</default>
+      <north width="72" backsprites="only" />
+      <northeast x="40" backsprites="only" />
+      <east height="72" x="40" />
+      <southeast x="40" y="0" />
+      <south width="72" y="0" />
+      <west height="72" x="56" />
+      <northwest x="56" backsprites="only" />
     </move>
     <move id="23">
-      <default width="32" height="32" state="shock" sound="move-growth">0,1,2,3,4,5,6,7,8</default>
+      <default width="32" height="32" sound="move-growth" state="SHOCK">0,1,2,3,4,5,6,7,8</default>
     </move>
     <move id="25">
-      <default sprites="/moves/806" width="32" height="32" state="swell">0,1,2,3,4</default>
+      <default sprites="/moves/806" width="32" height="32" state="SWELL">0,1,2,3,4</default>
     </move>
     <move id="26">
-      <default sprites="none" delaytime="25" state="attack"/>
+      <default sprites="none" delaytime="25" state="ATTACK" />
     </move>
     <move id="31">
-      <default width="64" height="64" state="special" spriteduration="3">0,1,2,3,4,5,6,7</default>
+      <default width="64" height="64" spriteduration="3" state="SPECIAL">0,1,2,3,4,5,6,7</default>
     </move>
     <move id="38">
-      <default sprites="none" delaytime="25"/>
+      <default sprites="none" delaytime="25" />
     </move>
     <move id="39">
-      <default sprites="none" delaytime="25" state="spin"/>
+      <default sprites="none" delaytime="25" state="SPIN" />
     </move>
     <move id="40">
-      <default sprites="none" pkmnmovement="2tiles"/>
+      <default sprites="none" pkmnmovement="2tiles" />
     </move>
     <move id="45">
-      <default sprites="none" delaytime="25" state="slice"/>
+      <default sprites="none" delaytime="25" state="SLICE" />
     </move>
     <move id="46">
-      <default sprites="none"/>
+      <default sprites="none" />
     </move>
     <move id="49">
-      <default width="88" height="48" state="tailwhip" y="40">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,-1,17</default>
+      <default width="88" height="48" y="40" state="TAILWHIP">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,-1,17</default>
     </move>
-    <move id="50" clone="2"/>
+    <move id="50" clone="2" />
     <move id="52">
-      <default sprites="none" delaytime="25" state="slice"/>
+      <default sprites="none" delaytime="25" state="SLICE" />
     </move>
     <move id="53">
-      <default width="32" height="32" state="special" spriteduration="3" movement="1tilefacing">0,1,2,3,4,5,6</default>
+      <default width="32" height="32" spriteduration="3" movement="1tilefacing" state="SPECIAL">0,1,2,3,4,5,6</default>
     </move>
     <move id="64">
-      <default sprites="none" alsoplay="2" state="sing" delaytime="15"/>
+      <default sprites="none" delaytime="15" state="SING" alsoplay="2" />
     </move>
     <move id="66">
-      <default sprites="none" delaytime="25" sound="move-tackle"/>
+      <default sprites="none" delaytime="25" sound="move-tackle" />
     </move>
     <move id="67">
-      <default sprites="none" delaytime="25" state="tailwhip" sound="move-tailwhip"/>
+      <default sprites="none" delaytime="25" sound="move-tailwhip" state="TAILWHIP" />
     </move>
     <move id="69">
-      <default sprites="/targets/220" width="64" height="104" y="90" spriteduration="2" state="attack" playsforeachtarget="true">0,-1,1,-1,2,-1,2,-1,1,-1,0</default>
+      <default sprites="/targets/220" width="64" height="104" y="90" playsforeachtarget="true" state="ATTACK">0,-1,1,-1,2,-1,2,-1,1,-1,0</default>
     </move>
     <move id="72">
-      <default sprites="none" delaytime="25" state="uppercut"/>
+      <default sprites="none" delaytime="25" state="UPPERCUT" />
     </move>
     <move id="75">
-      <default sprites="/228" width="48" height="32" state="tailwhip">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25</default>
+      <default sprites="/228" width="48" height="32" state="TAILWHIP">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25</default>
     </move>
     <move id="76">
-      <default sprites="none" state="sing" delaytime="25"/>
+      <default sprites="none" delaytime="25" state="SING" />
     </move>
-    <move id="82" clone="moves/52"/>
+    <move id="82" clone="moves/52" />
     <move id="83">
-      <default sprites="none" alsoplay="2" state="spin" delaytime="15"/>
+      <default sprites="none" delaytime="15" state="SPIN" alsoplay="2" />
     </move>
     <move id="84">
-      <default sprites="none" alsoplay="2" state="tailwhip" delaytime="25"/>
+      <default sprites="none" delaytime="25" state="TAILWHIP" alsoplay="2" />
     </move>
     <move id="86">
-      <default width="88" height="72" state="rumble" alsoplay="2" y="60" spriteduration="4">-1,-1,-1,-1,-1,-1,-1,-1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20</default>
+      <default width="88" height="72" y="60" spriteduration="4" state="RUMBLE" alsoplay="2">-1,-1,-1,-1,-1,-1,-1,-1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20</default>
     </move>
     <move id="96">
-      <default width="64" height="64" state="special" spriteduration="4" alsoplay="2">-1,-1,-1,-1,0,1,2,3,4,5,0,1,2,3</default>
+      <default width="64" height="64" spriteduration="4" state="SPECIAL" alsoplay="2">-1,-1,-1,-1,0,1,2,3,4,5,0,1,2,3</default>
     </move>
-    <move id="97" clone="2"/>
+    <move id="97" clone="2" />
     <move id="98">
-      <default sprites="none" delaytime="25" state="spin"/>
+      <default sprites="none" delaytime="25" state="SPIN" />
     </move>
     <move id="100">
-      <default width="64" height="64" y="48" backsprites="yes" state="swing">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17</default>
+      <default width="64" height="64" y="48" backsprites="yes" state="SWING">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17</default>
     </move>
     <move id="101">
-      <default width="32" height="24" spriteduration="2" state="special" y="15">0,1,2,3,4,5,6,7,8,8,7,6,5,4,3,2,1,0</default>
-      <north backsprites="only" y="24"/>
-      <northeast backsprites="only" x="10" y="24"/>
-      <east x="10"/>
-      <southeast x="10" y="8"/>
-      <south y="8"/>
-      <southwest x="22" y="8"/>
-      <west x="22"/>
-      <northwest backsprites="only" x="22" y="24"/>
+      <default width="32" height="24" y="15" state="SPECIAL">0,1,2,3,4,5,6,7,8,8,7,6,5,4,3,2,1,0</default>
+      <north y="24" backsprites="only" />
+      <northeast x="10" y="24" backsprites="only" />
+      <east x="10" />
+      <southeast x="10" y="8" />
+      <south y="8" />
+      <west x="22" />
+      <northwest x="22" y="24" backsprites="only" />
     </move>
     <move id="106">
-      <default width="96" height="96" state="special" spriteduration="5">0,1,2,3,4,5,6,7,8,9,10,11,12,13</default>
+      <default width="96" height="96" spriteduration="5" state="SPECIAL">0,1,2,3,4,5,6,7,8,9,10,11,12,13</default>
     </move>
     <move id="107">
-      <default width="32" height="32" state="idle" y="30" spriteduration="4">0,1,2,3,4,5</default>
+      <default width="32" height="32" y="30" spriteduration="4" state="IDLE">0,1,2,3,4,5</default>
     </move>
     <move id="110">
-      <default width="48" height="32" state="attack">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25</default>
+      <default width="48" height="32" state="ATTACK">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25</default>
     </move>
     <move id="112">
-      <default width="64" height="32" y="32" state="attack" spriteduration="2">0,1,2,3,-1,0,1,2,3</default>
+      <default width="64" height="32" y="32" state="ATTACK">0,1,2,3,-1,0,1,2,3</default>
     </move>
     <move id="114">
-      <default sprites="none"/>
+      <default sprites="none" />
     </move>
     <move id="116">
-      <default width="72" height="64" alsoplay="2" state="sing">-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19</default>
+      <default width="72" height="64" state="SING" alsoplay="2">-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19</default>
     </move>
     <move id="122">
-      <default sprites="/moves/601" width="16" height="16" state="special">0,1,2,3,4,5,6,7,8</default>
+      <default sprites="/moves/601" width="16" height="16" state="SPECIAL">0,1,2,3,4,5,6,7,8</default>
     </move>
     <move id="131">
-      <default width="112" height="112" state="sing">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21</default>
+      <default width="112" height="112" state="SING">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21</default>
     </move>
     <move id="205">
-      <default sprites="none" delaytime="25" state="strike"/>
+      <default sprites="none" delaytime="25" state="STRIKE" />
     </move>
     <move id="206">
-      <default sprites="none" delaytime="25" state="attack"/>
+      <default sprites="none" delaytime="25" state="ATTACK" />
     </move>
-    <move id="208" clone="moves/209"/>
+    <move id="208" clone="moves/209" />
     <move id="209">
-      <default sprites="none" delaytime="25" state="spin" alsoplay="2"/>
+      <default sprites="none" delaytime="25" state="SPIN" alsoplay="2" />
     </move>
     <move id="210">
-      <default sprites="none" delaytime="25" state="attack"/>
+      <default sprites="none" delaytime="25" state="ATTACK" />
     </move>
-    <move id="211" clone="moves/10"/>
+    <move id="211" clone="moves/10" />
     <move id="212">
-      <default sprites="none" delaytime="25" state="strike"/>
+      <default sprites="none" delaytime="25" state="STRIKE" />
     </move>
     <move id="217">
-      <default sprites="none" delaytime="25" state="spin"/>
+      <default sprites="none" delaytime="25" state="SPIN" />
     </move>
     <move id="220">
-      <default width="46" height="14" x="46" state="rearup">-1,-1,-1,0,1,2,3,4,5,6,7</default>
+      <default width="46" height="14" x="46" state="REARUP">-1,-1,-1,0,1,2,3,4,5,6,7</default>
     </move>
     <move id="222">
-      <default width="32" height="32" state="withdraw" spriteduration="2">0,1,2,3,4,0</default>
+      <default width="32" height="32" state="WITHDRAW">0,1,2,3,4,0</default>
     </move>
     <move id="224">
-      <default width="64" height="56" state="strike" spriteduration="1">0,-1,1,-1,2,-1,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</default>
+      <default width="64" height="56" spriteduration="1" state="STRIKE">0,-1,1,-1,2,-1,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</default>
     </move>
-    <move id="254" clone="moves/555"/>
+    <move id="254" clone="moves/555" />
     <move id="255">
-      <default sprites="none" state="attack" delaytime="15"/>
+      <default sprites="none" delaytime="15" state="ATTACK" />
     </move>
     <move id="304">
-      <default sprites="none" delaytime="25" state="emit"/>
+      <default sprites="none" delaytime="25" state="EMIT" />
     </move>
     <move id="351">
-      <default sprites="none" delaytime="25" state="strike"/>
+      <default sprites="none" delaytime="25" state="STRIKE" />
     </move>
     <move id="352">
-      <default sprites="none" delaytime="25" state="rumble" playsforeachtarget="true"/>
+      <default sprites="none" delaytime="25" playsforeachtarget="true" state="RUMBLE" />
     </move>
     <move id="356">
-      <default sprites="none" delaytime="25" state="sing"/>
+      <default sprites="none" delaytime="25" state="SING" />
     </move>
-    <move id="357" clone="moves/352"/>
+    <move id="357" clone="moves/352" />
     <move id="359">
-      <default sprites="none" delaytime="25" state="rumble"/>
+      <default sprites="none" delaytime="25" state="RUMBLE" />
     </move>
     <move id="362">
-      <default width="184" height="256" state="rumble" y="236">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20</default>
+      <default width="184" height="256" y="236" state="RUMBLE">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20</default>
     </move>
     <move id="402">
-      <default sprites="none" delaytime="25" alsoplay="2" state="rumble"/>
+      <default sprites="none" delaytime="25" state="RUMBLE" alsoplay="2" />
     </move>
     <move id="404">
-      <default sprites="none" state="strike" delaytime="15" playsforeachtarget="true"/>
+      <default sprites="none" delaytime="15" playsforeachtarget="true" state="STRIKE" />
     </move>
     <move id="453">
-      <default width="16" height="16" state="special">-1,-1,-1,-1,-1,-1,-1,-1,0,1,2,3,4,5,6,7,8,9,10</default>
-      <north y="15" backsprites="only"/>
-      <northeast x="-5" y="15" backsprites="only"/>
-      <east x="-5"/>
-      <southeast x="-5" y="-5"/>
-      <south y="-5"/>
-      <southwest x="20" y="-5"/>
-      <west x="20"/>
-      <northwest x="20" y="15" backsprites="only"/>
+      <default width="16" height="16" state="SPECIAL">-1,-1,-1,-1,-1,-1,-1,-1,0,1,2,3,4,5,6,7,8,9,10</default>
+      <north y="15" backsprites="only" />
+      <northeast x="-5" y="15" backsprites="only" />
+      <east x="-5" />
+      <southeast x="-5" y="-5" />
+      <south y="-5" />
+      <west x="20" />
+      <northwest x="20" y="15" backsprites="only" />
     </move>
     <move id="552">
-      <default sprites="none" delaytime="25" state="slice"/>
+      <default sprites="none" delaytime="25" state="SLICE" />
     </move>
     <move id="555">
-      <default width="32" height="156" y="143" state="swing" backsprites="yes">0,1,2,3,4,4,4,4,4,5</default>
+      <default width="32" height="156" y="143" backsprites="yes" state="SWING">0,1,2,3,4,4,4,4,4,5</default>
     </move>
     <move id="601">
-      <default width="16" height="16" state="special">0,1,2,3,4,5,6,7,8</default>
-      <north backsprites="only" y="26"/>
-      <northeast backsprites="only" x="-6" y="26"/>
-      <east x="-6"/>
-      <southeast x="-6" y="-6"/>
-      <south y="-6"/>
-      <southwest x="26" y="-6"/>
-      <west x="26"/>
-      <northwest backsprites="only" x="26" y="26"/>
+      <default width="16" height="16" state="SPECIAL">0,1,2,3,4,5,6,7,8</default>
+      <north y="26" backsprites="only" />
+      <northeast x="-6" y="26" backsprites="only" />
+      <east x="-6" />
+      <southeast x="-6" y="-6" />
+      <south y="-6" />
+      <west x="26" />
+      <northwest x="26" y="26" backsprites="only" />
     </move>
-    <move id="605" clone="moves/901"/>
+    <move id="605" clone="moves/901" />
     <move id="606">
-      <default width="40" height="40" state="swing">0,1,2,3,4,5,6,7</default>
+      <default width="40" height="40" state="SWING">0,1,2,3,4,5,6,7</default>
     </move>
-    <move id="651" clone="moves/901"/>
-    <move id="655" clone="moves/901"/>
-    <move id="658" clone="moves/901"/>
+    <move id="651" clone="moves/901" />
+    <move id="655" clone="moves/901" />
+    <move id="658" clone="moves/901" />
     <move id="659">
-      <default sprites="none" state="swing" delaytime="20"/>
+      <default sprites="none" delaytime="20" state="SWING" />
     </move>
     <move id="661">
-      <default sprites="none" state="swing" delaytime="20" alsoplay="2"/>
+      <default sprites="none" delaytime="20" state="SWING" alsoplay="2" />
     </move>
-    <move id="666" clone="moves/901"/>
+    <move id="666" clone="moves/901" />
     <move id="667">
-      <default width="128" height="120" spriteduration="2" state="rumble">-1,0,1,2,3,4,5,6,7,8,9,10</default>
+      <default width="128" height="120" state="RUMBLE">-1,0,1,2,3,4,5,6,7,8,9,10</default>
     </move>
-    <move id="701" oriented="true">
-      <default spriteduration="2" state="none" statedelay="36" width="96" height="96" sound="move-absorb" sounddelay="36" alsoplay="2">-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,1,2,3,4,5,6,7,8,9,10,11,12</default>
-      <north width="64"/>
-      <east height="64"/>
-      <south width="64"/>
-      <west height="64"/>
+    <move id="701">
+      <default width="96" height="96" sound="move-absorb" sounddelay="36" statedelay="36" alsoplay="2">-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,1,2,3,4,5,6,7,8,9,10,11,12</default>
+      <north width="64" />
+      <east height="64" />
+      <south width="64" />
+      <west height="64" />
     </move>
     <move id="702">
-      <default spriteduration="1" state="special" width="16" height="16" movement="1tilefacing">0,1,0,1,0,1,0,1,0,1</default>
+      <default width="16" height="16" spriteduration="1" movement="1tilefacing" state="SPECIAL">0,1,0,1,0,1,0,1,0,1</default>
     </move>
-    <move id="703" clone="moves/701"/>
+    <move id="703" clone="moves/701" />
     <move id="705">
-      <default state="special" y="60" width="96" height="80" delaytime="40">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26</default>
+      <default width="96" height="80" y="60" delaytime="40" state="SPECIAL">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26</default>
     </move>
     <move id="706">
-      <default sprites="none" delaytime="25" state="emit"/>
+      <default sprites="none" delaytime="25" state="EMIT" />
     </move>
     <move id="707">
-      <default width="64" height="64" state="charge" alsoplay="2" spriteduration="4">-1,-1,-1,-1,-1,-1,-1,-1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17</default>
+      <default width="64" height="64" spriteduration="4" state="CHARGE" alsoplay="2">-1,-1,-1,-1,-1,-1,-1,-1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17</default>
     </move>
     <move id="710">
-      <default sprites="none" delaytime="25"/>
+      <default sprites="none" delaytime="25" />
     </move>
-    <move id="712" clone="moves/701"/>
+    <move id="712" clone="moves/701" />
     <move id="713">
-      <default y="25" height="32" width="32" state="sing" spriteduration="5">0,1,2,3,4,5,6,7,8,9</default>
+      <default width="32" height="32" y="25" spriteduration="5" state="SING">0,1,2,3,4,5,6,7,8,9</default>
     </move>
     <move id="714">
-      <default width="48" height="32" state="special" movement="upanddown">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25</default>
+      <default width="48" height="32" movement="upanddown" state="SPECIAL">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25</default>
     </move>
     <move id="720">
-      <default width="96" height="80" state="special" delaytime="40" y="60">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26</default>
+      <default width="96" height="80" y="60" delaytime="40" state="SPECIAL">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26</default>
     </move>
-    <move id="751" clone="moves/755"/>
-    <move id="752" clone="moves/755"/>
-    <move id="754" clone="moves/755"/>
+    <move id="751" clone="moves/755" />
+    <move id="752" clone="moves/755" />
+    <move id="754" clone="moves/755" />
     <move id="755">
-      <default sprites="none" state="withdraw" delaytime="25" alsoplay="2"/>
+      <default sprites="none" delaytime="25" state="WITHDRAW" alsoplay="2" />
     </move>
     <move id="756">
-      <default width="72" height="176" sprites="/targets/755" state="strike" y="140">12,13,14,15</default>
+      <default sprites="/targets/755" width="72" height="176" y="140" state="STRIKE">12,13,14,15</default>
     </move>
     <move id="758">
-      <default width="80" height="72" state="charge">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21</default>
+      <default width="80" height="72" state="CHARGE">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21</default>
     </move>
     <move id="801">
-      <default width="64" height="64" state="jump" spriteduration="3">0,1,2,3,4,5,6,7</default>
+      <default width="64" height="64" spriteduration="3" state="JUMP">0,1,2,3,4,5,6,7</default>
     </move>
     <move id="802">
-      <default width="16" height="16" spriteduration="4" y="30" state="tailwhip">0,1,2,3,4,5,6,7,8,9</default>
+      <default width="16" height="16" y="30" spriteduration="4" state="TAILWHIP">0,1,2,3,4,5,6,7,8,9</default>
     </move>
     <move id="804">
-      <default sprites="none" alsoplay="2" alsoplaydelay="10" overlay="120" statedelay="8" state="swing"/>
+      <default sprites="none" state="SWING" statedelay="8" alsoplay="2" alsoplaydelay="10" overlay="120" />
     </move>
     <move id="806">
-      <default state="shoot" width="32" height="32" overlay="120" delaytime="15">-1,-1,-1,-1,-1,-1,0,1,2,3,4,5</default>
+      <default width="32" height="32" delaytime="15" state="SHOOT" overlay="120">-1,-1,-1,-1,-1,-1,0,1,2,3,4,5</default>
     </move>
     <move id="808">
-      <default width="32" height="156" y="143" state="swing" backsprites="yes">0,1,2,3,4,4,4,4,4,5</default>
+      <default width="32" height="156" y="143" backsprites="yes" state="SWING">0,1,2,3,4,4,4,4,4,5</default>
     </move>
     <move id="809">
-      <default sprites="none" state="rumble" delaytime="25" alsoplay="2" overlay="120"/>
+      <default sprites="none" delaytime="25" state="RUMBLE" alsoplay="2" overlay="120" />
     </move>
     <move id="813">
-      <default width="32" height="156" y="143" state="swing" backsprites="yes">0,1,2,3,4,4,4,4,4,5</default>
+      <default width="32" height="156" y="143" backsprites="yes" state="SWING">0,1,2,3,4,4,4,4,4,5</default>
     </move>
     <move id="901">
       <default width="32" height="30" spriteduration="4">0,1,2,3,4</default>
-      <north y="30" backsprites="only"/>
-      <northeast x="0" y="30" backsprites="only"/>
-      <east x="0" y="20"/>
-      <southeast x="0" y="5"/>
-      <south y="5"/>
-      <southwest x="32" y="5"/>
-      <west x="32" y="20"/>
-      <northwest x="32" y="30" backsprites="only"/>
+      <north y="30" backsprites="only" />
+      <northeast x="0" y="30" backsprites="only" />
+      <east x="0" y="20" />
+      <southeast x="0" y="5" />
+      <south y="5" />
+      <west x="32" y="20" />
+      <northwest x="32" y="30" backsprites="only" />
     </move>
-    <move id="951" oriented="true">
-      <default width="40" height="48" spriteduration="4" state="attack">0,1,2,3,3</default>
-      <north backsprites="only" width="32" y="48"/>
-      <northeast x="0" backsprites="only" y="48"/>
-      <east width="32" x="0"/>
-      <southeast width="32" x="0" y="0"/>
-      <south width="32" y="0"/>
-      <southwest x="40" y="0"/>
-      <west width="32" x="32"/>
-      <northwest backsprites="only" height="56" x="40" y="48"/>
+    <move id="951">
+      <default width="40" height="48" spriteduration="4" state="ATTACK">0,1,2,3,3</default>
+      <north width="32" y="48" backsprites="only" />
+      <northeast x="0" y="48" backsprites="only" />
+      <east width="32" x="0" />
+      <southeast width="32" x="0" y="0" />
+      <south width="32" y="0" />
+      <west width="32" x="32" />
+      <northwest height="56" x="40" y="48" backsprites="only" />
     </move>
-    <move id="953" oriented="true">
-      <default width="40" height="48" spriteduration="4" state="attack">0,1,2,3,3,0,1,2,3,3</default>
-      <north sprites="/moves/951-0" backsprites="only" width="32" y="48"/>
-      <northeast sprites="/moves/951-1" x="0" backsprites="only" y="48"/>
-      <east sprites="/moves/951-2" width="32" x="0"/>
-      <southeast sprites="/moves/951-3" width="32" x="0" y="0"/>
-      <south sprites="/moves/951-4" width="32" y="0"/>
-      <southwest sprites="/moves/951-5" x="40" y="0"/>
-      <west sprites="/moves/951-6" width="32" x="32"/>
-      <northwest sprites="/moves/951-7" backsprites="only" height="56" x="40" y="48"/>
+    <move id="953">
+      <default width="40" height="48" spriteduration="4" state="ATTACK">0,1,2,3,3,0,1,2,3,3</default>
+      <north sprites="/moves/951-0" width="32" y="48" backsprites="only" />
+      <northeast sprites="/moves/951-1" x="0" y="48" backsprites="only" />
+      <east sprites="/moves/951-2" width="32" x="0" />
+      <southeast sprites="/moves/951-3" width="32" x="0" y="0" />
+      <south sprites="/moves/951-4" width="32" y="0" />
+      <west sprites="/moves/951-6" width="32" x="32" />
+      <northwest sprites="/moves/951-7" height="56" x="40" y="48" backsprites="only" />
     </move>
     <move id="954">
-      <default width="64" height="64" spriteduration="2" state="spin">0,1,2,3,3,3,3,3,3,2,1,0</default>
+      <default width="64" height="64" state="SPIN">0,1,2,3,3,3,3,3,3,2,1,0</default>
     </move>
     <move id="955">
-      <default sprites="none" state="spin" delaytime="25"/>
+      <default sprites="none" delaytime="25" state="SPIN" />
     </move>
     <move id="959">
-      <default sprites="none" state="chop" delaytime="25"/>
+      <default sprites="none" delaytime="25" state="CHOP" />
     </move>
     <move id="962">
-      <default width="16" height="16" x="16" y="32" state="special" spriteduration="3">0,1,2,3,3,3,4,4,3,3,4,4,3,3,2,1,0</default>
+      <default width="16" height="16" x="16" y="32" spriteduration="3" state="SPECIAL">0,1,2,3,3,3,4,4,3,3,4,4,3,3,2,1,0</default>
     </move>
     <move id="1002">
-      <default sprites="/moves/110" width="48" height="32" state="tailwhip">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25</default>
+      <default sprites="/moves/110" width="48" height="32" state="TAILWHIP">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25</default>
     </move>
     <move id="1004">
-      <default sprites="none" state="special" delaytime="25"/>
+      <default sprites="none" delaytime="25" state="SPECIAL" />
     </move>
     <move id="1005">
-      <default sprites="none" state="attack" delaytime="25"/>
+      <default sprites="none" delaytime="25" state="ATTACK" />
     </move>
-    <move id="2002" clone="moves/0"/>
-    <move id="2509">
-      <default sprites="none" state="spin" delaytime="15"/>
-    </move>
+    <move id="2002" clone="moves/0" />
     <move id="2505">
       <default width="64" height="228" y="210" backsprites="only">0,0,1,1,2,2,3,3,4,4,3,3,5,4,-1,5,4,3,5,4,-1,5,4,3,5,2,1,0</default>
     </move>
-    <move id="-2">
-      <default sprites="none" delaytime="25"/>
-    </move>
-    <move id="-50">
-      <default sprites="none" delaytime="25"/>
-    </move>
-    <move id="-222">
-      <default sprites="none" delaytime="25"/>
-    </move>
-    <move id="-707">
-      <default width="64" height="32" spriteduration="4" state="emit" backsprites="only">0,1,2,3,3,3,3,2,1,0</default>
+    <move id="2509">
+      <default sprites="none" delaytime="15" state="SPIN" />
     </move>
   </moves>
   <movetargets>
@@ -570,9 +561,9 @@
     <movetarget id="20">
       <default width="64" height="32">0,1,2,3,4,5,6,7</default>
     </movetarget>
-    <movetarget id="41" clone="targets/220"/>
+    <movetarget id="41" clone="targets/220" />
     <movetarget id="45">
-      <default y="25" spriteduration="3" width="40" height="40">0,1,2,3,4,5,6</default>
+      <default width="40" height="40" y="25" spriteduration="3">0,1,2,3,4,5,6</default>
     </movetarget>
     <movetarget id="52">
       <default width="48" height="40">0,1,2,3,4,5,6</default>
@@ -581,10 +572,10 @@
       <default width="64" height="64">0,1,2,3,4,5,6,7,8,9,10</default>
     </movetarget>
     <movetarget id="82">
-      <default width="62" height="40" spriteduration="2">0,1,2,3,4,5,6,7,8,9</default>
+      <default width="62" height="40">0,1,2,3,4,5,6,7,8,9</default>
     </movetarget>
     <movetarget id="98">
-      <default width="56" height="80" spriteduration="1" y="60">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51</default>
+      <default width="56" height="80" y="60" spriteduration="1">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51</default>
     </movetarget>
     <movetarget id="122">
       <default sprites="/moves/23" width="32" height="32">8,7,6,5,4,3,2,1,0</default>
@@ -593,69 +584,69 @@
       <default width="11" height="16" spriteduration="8" movement="diagonal">0</default>
     </movetarget>
     <movetarget id="208">
-      <default width="72" height="56" spriteduration="2">0,1,2,3,4,5,6,7,8,9,10</default>
+      <default width="72" height="56">0,1,2,3,4,5,6,7,8,9,10</default>
     </movetarget>
     <movetarget id="210">
-      <default width="48" height="48" spriteduration="2">0,1,2,3,4,5</default>
+      <default width="48" height="48">0,1,2,3,4,5</default>
     </movetarget>
     <movetarget id="212">
-      <default width="64" height="56" spriteduration="2">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22</default>
+      <default width="64" height="56">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22</default>
     </movetarget>
     <movetarget id="220">
-      <default width="64" height="104" y="90" spriteduration="2">0,-1,1,-1,2,-1,2,-1,1,-1,0</default>
+      <default width="64" height="104" y="90">0,-1,1,-1,2,-1,2,-1,1,-1,0</default>
     </movetarget>
     <movetarget id="304">
-      <default y="52" spriteduration="3" width="40" height="64">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21</default>
+      <default width="40" height="64" y="52" spriteduration="3">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21</default>
     </movetarget>
     <movetarget id="352">
-      <default width="56" height="48" spriteduration="2">0,1,2,3,4,5</default>
+      <default width="56" height="48">0,1,2,3,4,5</default>
     </movetarget>
-    <movetarget id="357" clone="targets/352"/>
+    <movetarget id="357" clone="targets/352" />
     <movetarget id="402">
       <default width="80" height="135" y="120" spriteduration="1">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,-1,44</default>
     </movetarget>
-    <movetarget id="404" clone="targets/208"/>
+    <movetarget id="404" clone="targets/208" />
     <movetarget id="453">
-      <default spriteduration="5" width="32" height="40">0,1,2,3,2,3,2,3,4,5,5,6,6</default>
+      <default width="32" height="40" spriteduration="5">0,1,2,3,2,3,2,3,4,5,5,6,6</default>
     </movetarget>
     <movetarget id="552">
       <default width="48" height="40">0,1,2,3,4,5,6,7,8,9,10</default>
     </movetarget>
     <movetarget id="601">
-      <default y="32" spriteduration="3" width="16" height="32">0,1,2,3,4,5,6,7,8</default>
+      <default width="16" height="32" y="32" spriteduration="3">0,1,2,3,4,5,6,7,8</default>
     </movetarget>
     <movetarget id="604">
-      <default y="75" width="72" height="88" spriteduration="1">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56</default>
+      <default width="72" height="88" y="75" spriteduration="1">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56</default>
     </movetarget>
-    <movetarget id="605" clone="targets/901"/>
-    <movetarget id="606" clone="targets/901"/>
+    <movetarget id="605" clone="targets/901" />
+    <movetarget id="606" clone="targets/901" />
     <movetarget id="651">
       <default width="56" height="40" spriteduration="4">0,1,2,3,4,5</default>
     </movetarget>
-    <movetarget id="655" clone="targets/658"/>
+    <movetarget id="655" clone="targets/658" />
     <movetarget id="658">
       <default width="72" height="64">0,1,2,3,4,5,6,7,8</default>
     </movetarget>
     <movetarget id="662">
-      <default y="75" width="72" height="88" spriteduration="1">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56</default>
-    </movetarget>
-    <movetarget id="706">
-      <default y="52" spriteduration="3" width="40" height="64">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21</default>
+      <default width="72" height="88" y="75" spriteduration="1">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56</default>
     </movetarget>
     <movetarget id="702">
-      <default y="-4" spriteduration="5" width="40" height="8">0,2,3,2,3,2,3,1</default>
+      <default width="40" height="8" y="-4" spriteduration="5">0,2,3,2,3,2,3,1</default>
+    </movetarget>
+    <movetarget id="706">
+      <default width="40" height="64" y="52" spriteduration="3">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21</default>
     </movetarget>
     <movetarget id="710">
-      <default spriteduration="3" width="32" height="64">0,1,2,3,4</default>
+      <default width="32" height="64" spriteduration="3">0,1,2,3,4</default>
     </movetarget>
-    <movetarget id="751" clone="targets/755"/>
-    <movetarget id="752" clone="targets/755"/>
-    <movetarget id="754" clone="targets/755"/>
+    <movetarget id="751" clone="targets/755" />
+    <movetarget id="752" clone="targets/755" />
+    <movetarget id="754" clone="targets/755" />
     <movetarget id="755">
       <default width="72" height="176" y="140">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16</default>
     </movetarget>
     <movetarget id="756">
-      <default width="72" height="176" sprites="/targets/755" y="140">12,13,14,15</default>
+      <default sprites="/targets/755" width="72" height="176" y="140">12,13,14,15</default>
     </movetarget>
     <movetarget id="901">
       <default width="32" height="64" y="45">0,1,2,3,4,5,6,7,8,9,10,11</default>
@@ -664,7 +655,7 @@
       <default width="32" height="32">0,1,2,-1,-1,0,1,2</default>
     </movetarget>
     <movetarget id="959">
-      <default width="48" height="56" spriteduration="2">0,1,2,3,4</default>
+      <default width="48" height="56">0,1,2,3,4</default>
     </movetarget>
     <movetarget id="962">
       <default width="40" height="16" y="28" spriteduration="5">0,1,0,2,3,2</default>
@@ -674,125 +665,125 @@
     </movetarget>
   </movetargets>
   <projectiles>
+    <projectile id="-707">
+      <default width="24" height="24">0</default>
+    </projectile>
     <projectile id="21">
-      <default sprites="/../tilesets/items" spriteduration="5" width="16" height="16" movement="arc">16</default>
+      <default sprites="/../tilesets/items" width="16" height="16" spriteduration="5" movement="arc">16</default>
     </projectile>
     <projectile id="22">
-      <default sprites="/../tilesets/items" spriteduration="5" width="16" height="16" movement="arc">17</default>
+      <default sprites="/../tilesets/items" width="16" height="16" spriteduration="5" movement="arc">17</default>
     </projectile>
     <projectile id="1001">
-      <default spriteduration="5" width="16" height="16" movement="arc">0</default>
+      <default width="16" height="16" spriteduration="5" movement="arc">0</default>
     </projectile>
-    <projectile id="1046" clone="projectiles/1666"/>
+    <projectile id="1046" clone="projectiles/1666" />
     <projectile id="1064">
       <default width="16" height="16">0,1</default>
     </projectile>
     <projectile id="1352">
-      <default width="16" height="16" spriteduration="2">0,1,2,3,4,5,6,7</default>
+      <default width="16" height="16">0,1,2,3,4,5,6,7</default>
     </projectile>
     <projectile id="1356">
       <default width="32" height="32" loopsfrom="4">0,1,2,3,4,5,6,7</default>
     </projectile>
-    <projectile id="1357" clone="projectiles/1352"/>
+    <projectile id="1357" clone="projectiles/1352" />
     <projectile id="1359">
       <default width="32" height="32">0,1,2,3</default>
     </projectile>
     <projectile id="1453">
       <default width="16" height="16" spriteduration="8">0,1</default>
     </projectile>
-    <projectile id="1605" clone="projectiles/1901"/>
-    <projectile id="1651">
-      <default width="32" height="32" loopsfrom="7" spriteduration="2">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17</default>
-    </projectile>
-    <projectile id="1655" oriented="true">
-      <default width="32" height="32" spriteduration="5">0,1</default>
-      <north width="32" height="16"/>
-      <east width="16"/>
-      <south sprites="/projectiles/1655-0" width="32" height="16"/>
-      <southwest sprites="/projectiles/1655-1"/>
-      <west sprites="/projectiles/1655-2" width="16"/>
-      <northwest sprites="/projectiles/1655-3"/>
-    </projectile>
-    <projectile id="1658" oriented="true">
-      <default width="24" height="16" spriteduration="4">0,1</default>
-      <north width="8" height="24"/>
-      <northeast width="16"/>
-      <east width="32" height="8"/>
-      <south width="8" height="24"/>
-      <west width="32" height="8"/>
-      <northwest width="16"/>
-    </projectile>
     <projectile id="1601">
-      <default width="8" height="8" spriteduration="2">0,1</default>
+      <default width="8" height="8">0,1</default>
     </projectile>
+    <projectile id="1605" clone="projectiles/1901" />
     <projectile id="1606">
       <default width="40" height="40">0,1,2,3,4,5</default>
     </projectile>
-    <projectile id="1666" oriented="true">
-      <default width="24" height="32" loopsfrom="6" spriteduration="2">0,1,2,3,4,5,6,7,8,9,9,8,7,6</default>
-      <north width="32"/>
-      <east width="16"/>
-      <south width="32" sprites="/projectiles/1666-0"/>
-      <west width="16"/>
+    <projectile id="1651">
+      <default width="32" height="32" loopsfrom="7">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17</default>
+    </projectile>
+    <projectile id="1655">
+      <default width="32" height="32" spriteduration="5">0,1</default>
+      <north height="16" />
+      <east width="16" />
+      <southeast sprites="/projectiles/1655-1" />
+      <south sprites="/projectiles/1655-0" height="16" />
+      <west sprites="/projectiles/1655-2" width="16" />
+      <northwest sprites="/projectiles/1655-3" />
+    </projectile>
+    <projectile id="1658">
+      <default width="24" height="16" spriteduration="4">0,1</default>
+      <north width="8" height="24" />
+      <northeast width="16" />
+      <east width="32" height="8" />
+      <south width="8" height="24" />
+      <west width="32" height="8" />
+      <northwest width="16" />
+    </projectile>
+    <projectile id="1666">
+      <default width="24" height="32" loopsfrom="6">0,1,2,3,4,5,6,7,8,9,9,8,7,6</default>
+      <north width="32" />
+      <east width="16" />
+      <south sprites="/projectiles/1666-0" width="32" />
+      <west width="16" />
     </projectile>
     <projectile id="1705">
-      <default width="32" height="16" spriteduration="2">0,1,2,3,4,5,6,7</default>
+      <default width="32" height="16">0,1,2,3,4,5,6,7</default>
     </projectile>
     <projectile id="1720">
       <default width="48" height="24">0,1,2,3,4,5,6,7,8</default>
     </projectile>
-    <projectile id="1806" oriented="true">
+    <projectile id="1806">
       <default width="16" height="16" loopsfrom="3">0,1,2,3</default>
-      <south sprites="/projectiles/1806-0"/>
-      <southwest sprites="/projectiles/1806-1"/>
-      <northwest sprites="/projectiles/1806-3"/>
+      <southeast sprites="/projectiles/1806-1" />
+      <south sprites="/projectiles/1806-0" />
+      <northwest sprites="/projectiles/1806-3" />
     </projectile>
     <projectile id="1901">
       <default width="32" height="32">0,1,2,3,4,5</default>
     </projectile>
-    <projectile id="2004" oriented="true">
-      <default width="24" height="32" loopsfrom="6" spriteduration="2">0,1,2,3,4,5,6,7,8,9,9,8,7,6</default>
-      <north width="32"/>
-      <east width="16"/>
-      <south width="32" sprites="/projectiles/2004-0"/>
-      <west width="16"/>
+    <projectile id="2004">
+      <default width="24" height="32" loopsfrom="6">0,1,2,3,4,5,6,7,8,9,9,8,7,6</default>
+      <north width="32" />
+      <east width="16" />
+      <south sprites="/projectiles/2004-0" width="32" />
+      <west width="16" />
     </projectile>
     <projectile id="3501">
       <default width="8" height="8" spriteduration="3">0,1,2,3,4,5</default>
     </projectile>
-    <projectile id="3544" clone="projectiles/3501"/>
-    <projectile id="3552" clone="projectiles/3501"/>
-    <projectile id="-707">
-      <default width="24" height="24">0</default>
-    </projectile>
+    <projectile id="3544" clone="projectiles/3501" />
+    <projectile id="3552" clone="projectiles/3501" />
   </projectiles>
   <statuses>
     <status id="0">
-      <default spriteduration="5" width="16" height="16" y="25" state="hurt">6,5,6,5,6,5,4,3,2,1,0,1,2,3,4</default>
+      <default width="16" height="16" y="25" spriteduration="5" state="HURT">6,5,6,5,6,5,4,3,2,1,0,1,2,3,4</default>
     </status>
     <status id="1">
-      <default spriteduration="5" width="16" height="16" y="25" state="hurt">6,5,6,5,6,5,4,3,2,1,0,1,2,3,4</default>
+      <default width="16" height="16" y="25" spriteduration="5" state="HURT">6,5,6,5,6,5,4,3,2,1,0,1,2,3,4</default>
     </status>
     <status id="2">
-      <default spriteduration="5" width="16" height="20" y="25">0,1,2,3,4,5,6,7</default>
+      <default width="16" height="20" y="25" spriteduration="5">0,1,2,3,4,5,6,7</default>
     </status>
     <status id="3">
-      <default spriteduration="5" width="16" height="16" x="0" y="20">0,1,2,3,4,5,6,7,8,9</default>
+      <default width="16" height="16" x="0" y="20" spriteduration="5">0,1,2,3,4,5,6,7,8,9</default>
     </status>
     <status id="4">
-      <default spriteduration="5" width="32" height="16" y="20">0,1,2,3,4</default>
+      <default width="32" height="16" y="20" spriteduration="5">0,1,2,3,4</default>
     </status>
     <status id="5">
-      <default spriteduration="3" width="48" height="48">0,1,2,-1,-1,-1,3,4,5,-1,-1,-1,6,7,8,-1,-1,-1</default>
+      <default width="48" height="48" spriteduration="3">0,1,2,-1,-1,-1,3,4,5,-1,-1,-1,6,7,8,-1,-1,-1</default>
     </status>
     <status id="20">
-      <default spriteduration="4" width="42" height="16" backsprites="yes">0,1,2,3,4,5,6,7,8</default>
+      <default width="42" height="16" spriteduration="4" backsprites="yes">0,1,2,3,4,5,6,7,8</default>
     </status>
     <status id="21">
-      <default spriteduration="4" width="42" height="16" backsprites="yes">0,1,2</default>
+      <default width="42" height="16" spriteduration="4" backsprites="yes">0,1,2</default>
     </status>
     <status id="22">
-      <default spriteduration="5" width="30" height="20" backsprites="yes" y="12">0</default>
+      <default width="30" height="20" y="12" spriteduration="5" backsprites="yes">0</default>
     </status>
     <status id="27">
       <default width="16" height="16" y="32" spriteduration="3">0,1,2,3,4,5,6,7</default>
@@ -801,25 +792,25 @@
       <default width="48" height="32" y="20">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1</default>
     </status>
     <status id="40">
-      <default spriteduration="4" width="16" height="16" y="24">0,1,2,3,4,5,6,7,8,9,10,11,12</default>
+      <default width="16" height="16" y="24" spriteduration="4">0,1,2,3,4,5,6,7,8,9,10,11,12</default>
     </status>
     <status id="41">
-      <default spriteduration="4" width="16" height="16" y="24">0,1,2,3,4,5,6,7,8,9,10,11,12</default>
+      <default width="16" height="16" y="24" spriteduration="4">0,1,2,3,4,5,6,7,8,9,10,11,12</default>
     </status>
     <status id="42">
-      <default spriteduration="4" width="16" height="16" y="24">0,1,2,3,4,5,6,7,8,9,10,11,12</default>
+      <default width="16" height="16" y="24" spriteduration="4">0,1,2,3,4,5,6,7,8,9,10,11,12</default>
     </status>
     <status id="43">
-      <default spriteduration="4" width="16" height="16" y="24">0,1,2,3,4,5,6,7,8,9,10,11,12</default>
+      <default width="16" height="16" y="24" spriteduration="4">0,1,2,3,4,5,6,7,8,9,10,11,12</default>
     </status>
     <status id="71">
       <default width="16" height="16" y="28" spriteduration="3">0,1,2,3,5,6,7,6,5,4,3,2,1</default>
     </status>
     <status id="100">
-      <default spriteduration="7" width="8" height="8" y="25">0,1,2,3,4,5,6,7,6,5,4,3,2,1</default>
+      <default width="8" height="8" y="25" spriteduration="7">0,1,2,3,4,5,6,7,6,5,4,3,2,1</default>
     </status>
     <status id="101">
-      <default spriteduration="4" width="16" height="16" y="24">0,1,2,3,4,5,6,7,8,9,10,11,12</default>
+      <default width="16" height="16" y="24" spriteduration="4">0,1,2,3,4,5,6,7,8,9,10,11,12</default>
     </status>
   </statuses>
 </animations>

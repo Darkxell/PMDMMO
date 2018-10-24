@@ -1,6 +1,7 @@
 package com.darkxell.client.mechanics.animation;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -381,6 +382,35 @@ public final class Animations
 				return statuses;
 		}
 		return null;
+	}
+
+	private static void save(Element root, HashMap<Integer, AnimationData> registry, String registryName, String itemName)
+	{
+		ArrayList<AnimationData> anims = new ArrayList<>(registry.values());
+		anims.sort(Comparator.naturalOrder());
+
+		Element xml = new Element(registryName);
+		for (AnimationData anim : anims)
+		{
+			Element a = new Element(itemName);
+			anim.toXML(a);
+			xml.addContent(a);
+		}
+
+		root.addContent(xml);
+	}
+
+	public static void save(File file)
+	{
+		Element root = new Element("animations");
+		save(root, abilities, "abilities", "a");
+		save(root, custom, "custom", "c");
+		save(root, items, "items", "item");
+		save(root, moves, "moves", "move");
+		save(root, moveTargets, "movetargets", "movetarget");
+		save(root, projectiles, "projectiles", "projectile");
+		save(root, statuses, "statuses", "status");
+		XMLUtils.saveFile(file, root);
 	}
 
 	public static Pair<Integer, AnimationGroup> splitID(String id)
