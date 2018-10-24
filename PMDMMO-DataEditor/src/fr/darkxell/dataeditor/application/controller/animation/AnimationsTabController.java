@@ -45,11 +45,10 @@ public class AnimationsTabController implements Initializable
 	@FXML
 	public TreeView<CustomTreeItem> animationsTreeView;
 	@FXML
-	private TitledPane editAnimationPane;
-	private AnimationListItem editing;
+	public EditAnimationController editAnimationController;
 	@FXML
-	public TestAnimationController testAnimation2Controller;
-
+	private TitledPane editAnimationPane;
+	AnimationListItem editing;
 	@FXML
 	public TestAnimationController testAnimationController;
 
@@ -168,10 +167,10 @@ public class AnimationsTabController implements Initializable
 
 	public void onEdit(AnimationListItem item)
 	{
-		AnimationListItem selected = item;
-		this.testAnimationController.setAnimation(selected);
-		this.editing = selected;
-		this.editAnimationPane.setText("Animation: " + selected);
+		this.editing = item;
+		this.testAnimationController.setAnimation(item);
+		this.editAnimationController.setupFor(item);
+		this.editAnimationPane.setText("Animation: " + item);
 		this.editAnimationPane.setVisible(true);
 	}
 

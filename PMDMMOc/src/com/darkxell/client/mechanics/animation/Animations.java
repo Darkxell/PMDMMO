@@ -170,6 +170,11 @@ public final class Animations
 		return custom.get(id).createAnimation(null, target, renderer, listener);
 	}
 
+	public static AnimationData getData(int id, AnimationGroup group)
+	{
+		return registry(group).get(id);
+	}
+
 	public static PokemonAnimation getItemAnimation(DungeonPokemon target, Item i, AnimationEndListener listener)
 	{
 		return getAnimation(i.id, items, target, listener);
