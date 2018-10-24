@@ -12,14 +12,12 @@ import com.darkxell.client.mechanics.animation.Animations;
 import com.darkxell.client.mechanics.animation.Animations.AnimationGroup;
 import com.darkxell.common.util.Pair;
 
-import fr.darkxell.dataeditor.application.controls.CustomListCell.ListCellParent;
 import fr.darkxell.dataeditor.application.util.AnimationListItem;
 import fr.darkxell.dataeditor.application.util.CustomTreeItem;
 import fr.darkxell.dataeditor.application.util.TreeCategory;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
@@ -29,7 +27,7 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.input.MouseEvent;
 
-public class AnimationsTabController implements Initializable, ListCellParent<AnimationListItem>
+public class AnimationsTabController implements Initializable
 {
 
 	public static AnimationsTabController instance;
@@ -87,12 +85,6 @@ public class AnimationsTabController implements Initializable, ListCellParent<An
 	}
 
 	@Override
-	public Node graphicFor(AnimationListItem item)
-	{
-		return null;
-	}
-
-	@Override
 	public void initialize(URL location, ResourceBundle resources)
 	{
 		instance = this;
@@ -122,6 +114,8 @@ public class AnimationsTabController implements Initializable, ListCellParent<An
 			}
 		});
 
+		this.editAnimationPane.setVisible(false);
+
 		this.reloadList();
 	}
 
@@ -148,10 +142,6 @@ public class AnimationsTabController implements Initializable, ListCellParent<An
 		}
 	}
 
-	@Override
-	public void onCreate(AnimationListItem nullItem)
-	{}
-
 	public void onDelete()
 	{
 		TreeItem<CustomTreeItem> selected = this.animationsTreeView.getSelectionModel().getSelectedItem();
@@ -176,26 +166,14 @@ public class AnimationsTabController implements Initializable, ListCellParent<An
 		}
 	}
 
-	@Override
-	public void onDelete(AnimationListItem item)
-	{}
-
-	@Override
 	public void onEdit(AnimationListItem item)
 	{
 		AnimationListItem selected = item;
 		this.testAnimationController.setAnimation(selected);
 		this.editing = selected;
 		this.editAnimationPane.setText("Animation: " + selected);
+		this.editAnimationPane.setVisible(true);
 	}
-
-	@Override
-	public void onMove(AnimationListItem item, int newIndex)
-	{}
-
-	@Override
-	public void onRename(AnimationListItem item, String name)
-	{}
 
 	public void onSaveAll()
 	{
