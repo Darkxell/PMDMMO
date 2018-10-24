@@ -8,7 +8,44 @@
       <teammember>1</teammember>
     </pokemon>
   </creation>
-  <events />
+  <events>
+    <dialog>
+      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.startingwoods.problem.m1</dialogscreen>
+    </dialog>
+    <wait />
+    <move ypos="22.4" speed="0.1" target="2" />
+    <delay ticks="15" />
+    <wait />
+    <move ypos="23.0" speed="0.1" target="2" />
+    <wait />
+    <dialog>
+      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.startingwoods.problem.m1-2</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="1" distance="2" />
+    <delay ticks="80" />
+    <rotate target="1" distance="-2" />
+    <wait />
+    <dialog>
+      <dialogscreen>cutscene.startingwoods.problem.m2</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="1" distance="4" />
+    <wait />
+    <dialog>
+      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.startingwoods.problem.m3</dialogscreen>
+    </dialog>
+    <wait />
+    <spawnpokemon cutsceneid="10" xpos="2.0" ypos="21.0" facing="EAST">
+      <pokemonid>12</pokemonid>
+    </spawnpokemon>
+    <wait />
+    <move xpos="35.0" speed="0.5" target="10" />
+    <wait />
+    <dialog>
+      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.startingwoods.problem.m3-5</dialogscreen>
+    </dialog>
+  </events>
   <onfinish>
     <loadfreezone id="base" />
   </onfinish>
