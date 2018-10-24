@@ -19,29 +19,47 @@ import com.darkxell.common.util.XMLUtils;
 
 public class AnimationData implements Comparable<AnimationData>
 {
+	/** List of animation IDs to play with this Animation. */
 	String[] alsoPlay = new String[0];
+	/** For each other animation to play, the number of ticks to wait before starting it. */
 	int[] alsoPlayDelay = new int[0];
+	/** The name of the movement of the animation. <code>null</code> if no movement. */
 	String animationMovement = null;
+	/** Whether to display sprites in front of or behind the Pokemon if any. */
 	public BackSpriteUsage backSpriteUsage = BackSpriteUsage.no;
+	/** If not <code>null</code>, this Animation is an exact copy of the Animation with this ID. */
 	String clones = null;
+	/** The time to wait for this Animation to play. */
 	private int delayTime = -1;
+	/** The x and y offset to apply to the sprites. -1 defaults to the center of the sprite. */
 	public int gravityX = -1, gravityY = -1;
+	/** The ID of this Animation. */
 	int id;
+	/** If this Animation plays several times, the index in the order of the sprites to start at in the restarts. */
 	int loopsFrom = 0;
+	/** If not -1, the ID of the animation to play as an overlay. */
 	int overlay = -1;
+	/** If true and this is a Move Animation, this Animation plays for each target hit by the Move. */
 	public boolean playsForEachTarget = false;
+	/** The movement applied to the Pokemon, if any. */
 	String pokemonMovement = null;
+	/** The state applied to the Pokemon, if any. */
 	PokemonSpriteState pokemonState = null;
+	/** The delay before applying the Pokemon State. */
 	int pokemonStateDelay = 0;
 	/** The ID of the sound to play when this Animation is played. */
 	public String sound = null;
 	/** The number of ticks to wait before playing the sound. */
 	int soundDelay = 0;
+	/** The duration of each sprite. */
 	public int spriteDuration = 2;
+	/** The order of the sprites in the sprite set. */
 	int[] spriteOrder = null;
+	/** The ID of the sprites. <code>null</code> if no sprites. */
 	String sprites = null;
+	/** A prefix to apply to the sprites path. Does not apply if the sprites ID contains '/' */
 	private String spritesPrefix;
-	/** Variants depending on the orientation of the Pokémon, if any. */
+	/** Variants depending on the orientation of the Pokemon, if any. */
 	AnimationData[] variants = new AnimationData[Direction.values().length];
 	/** Dimensions of a single sprite on the spritesheet, if any. */
 	int width = 0, height = 0;
