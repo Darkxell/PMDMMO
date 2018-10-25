@@ -32,6 +32,8 @@ public class EditAnimationController implements Initializable
 	@FXML
 	public ComboBox<BackSpriteUsage> backspritesCombobox;
 	@FXML
+	public TextField clonesTextfield;
+	@FXML
 	public TextField delayTextfield;
 	@FXML
 	public TextField loopTextfield;
@@ -165,6 +167,7 @@ public class EditAnimationController implements Initializable
 		this.animMovementCombobox.getSelectionModel().select(0);
 		if (data.animationMovement != null) this.animMovementCombobox.setValue(data.animationMovement);
 		this.backspritesCombobox.setValue(data.backSpriteUsage);
+		if (data.clones != null) this.clonesTextfield.setText(data.clones);
 		this.delayTextfield.setText(String.valueOf(data.delayTime));
 		this.loopTextfield.setText(String.valueOf(data.loopsFrom));
 		if (data.spriteOrder == null) this.orderTextfield.setText("");
