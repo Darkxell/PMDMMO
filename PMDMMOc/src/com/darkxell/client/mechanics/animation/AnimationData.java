@@ -60,7 +60,7 @@ public class AnimationData implements Comparable<AnimationData>
 	/** A prefix to apply to the sprites path. Does not apply if the sprites ID contains '/' */
 	private String spritesPrefix;
 	/** Variants depending on the orientation of the Pokemon, if any. */
-	AnimationData[] variants = new AnimationData[Direction.values().length];
+	public AnimationData[] variants = new AnimationData[Direction.values().length];
 	/** Dimensions of a single sprite on the spritesheet, if any. */
 	public int width = 0, height = 0;
 
@@ -273,7 +273,7 @@ public class AnimationData implements Comparable<AnimationData>
 		XMLUtils.setAttribute(self, "y", this.gravityY, defaultData.gravityY);
 		XMLUtils.setAttribute(self, "spriteduration", this.spriteDuration, defaultData.spriteDuration);
 		XMLUtils.setAttribute(self, "backsprites", this.backSpriteUsage.name(), defaultData.backSpriteUsage.name());
-		self.setText(XMLUtils.toXML("order", this.spriteOrder).getText());
+		if (this.spriteOrder != null) self.setText(XMLUtils.toXML("order", this.spriteOrder).getText());
 		XMLUtils.setAttribute(self, "movement", this.animationMovement, defaultData.animationMovement);
 		XMLUtils.setAttribute(self, "loopsfrom", this.loopsFrom, defaultData.loopsFrom);
 
