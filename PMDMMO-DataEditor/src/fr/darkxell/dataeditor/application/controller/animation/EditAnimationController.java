@@ -214,6 +214,11 @@ public class EditAnimationController implements Initializable
 		this.setupFor(AnimationsTabController.instance.editing);
 	}
 
+	public void onChangeID()
+	{
+		AnimationsTabController.instance.onChangeID();
+	}
+
 	public void onSave()
 	{
 		AnimationData anim = this.generate(AnimationsTabController.instance.editing.id);

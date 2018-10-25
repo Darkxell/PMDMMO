@@ -118,6 +118,35 @@ public class AnimationsTabController implements Initializable
 		this.reloadList();
 	}
 
+	public void onChangeID()
+	{
+		int previousID = this.editing.id;
+		AnimationGroup group = this.editing.group;
+
+		TextInputDialog dialog = new TextInputDialog("");
+		dialog.setTitle("Edit Animation ID");
+		dialog.setHeaderText(null);
+		dialog.setContentText("Type in the new ID of the Animation (can be preceded by items/, moves/, etc. for its catagory).");
+		Optional<String> name = dialog.showAndWait();
+		if (name.isPresent())
+		{
+			Pair<Integer, AnimationGroup> id = Animations.splitID(name.get());
+			if (id != null)
+			{
+				if (Animations.existsAnimation(id))
+					new Alert(AlertType.ERROR, "There is already an Animation with ID " + name.get(), ButtonType.OK).showAndWait();
+				else
+				{
+					AnimationData get = Animations.getData(previousID, group);
+					get.id = id.first;
+					Animations.unregister(previousID, group);
+					Animations.register(get, id.second);
+					this.reloadList();
+				}
+			} else new Alert(AlertType.ERROR, "Wrong ID: " + name.get(), ButtonType.OK).showAndWait();
+		}
+	}
+
 	public void onCreate()
 	{
 		TextInputDialog dialog = new TextInputDialog("");
