@@ -311,31 +311,32 @@ public class EditAnimationController implements Initializable
 		return data;
 	}
 
-	private void updateVariant(AnimationData anim, AnimationData previous, AnimationData variant)
+	private void updateVariant(AnimationData anim, AnimationData previous, AnimationData variant, AnimationData previousVariant)
 	{
-		if (Arrays.equals(variant.alsoPlay, previous.alsoPlay)) variant.alsoPlay = anim.alsoPlay;
-		if (Arrays.equals(variant.alsoPlayDelay, previous.alsoPlayDelay)) variant.alsoPlayDelay = anim.alsoPlayDelay;
-		if ((variant.animationMovement == null && previous.animationMovement == null) || (variant.animationMovement.equals(previous.animationMovement)))
+		if (Arrays.equals(previousVariant.alsoPlay, previous.alsoPlay)) variant.alsoPlay = anim.alsoPlay;
+		if (Arrays.equals(previousVariant.alsoPlayDelay, previous.alsoPlayDelay)) variant.alsoPlayDelay = anim.alsoPlayDelay;
+		if ((previousVariant.animationMovement == null && previous.animationMovement == null)
+				|| (previousVariant.animationMovement.equals(previous.animationMovement)))
 			variant.animationMovement = anim.animationMovement;
-		if (variant.backSpriteUsage == previous.backSpriteUsage) variant.backSpriteUsage = anim.backSpriteUsage;
-		if ((variant.clones == null && previous.clones == null) || (variant.clones.equals(previous.clones))) variant.clones = anim.clones;
-		if (variant.delayTime == previous.delayTime) variant.delayTime = anim.delayTime;
-		if (variant.loopsFrom == previous.loopsFrom) variant.loopsFrom = anim.loopsFrom;
-		if (Arrays.equals(variant.spriteOrder, previous.spriteOrder)) variant.spriteOrder = anim.spriteOrder;
-		if (variant.overlay == previous.overlay) variant.overlay = anim.overlay;
-		if (variant.playsForEachTarget == previous.playsForEachTarget) variant.playsForEachTarget = anim.playsForEachTarget;
-		if ((variant.pokemonMovement == null && previous.pokemonMovement == null) || (variant.pokemonMovement.equals(previous.pokemonMovement)))
+		if (previousVariant.backSpriteUsage == previous.backSpriteUsage) variant.backSpriteUsage = anim.backSpriteUsage;
+		if ((previousVariant.clones == null && previous.clones == null) || (previousVariant.clones.equals(previous.clones))) variant.clones = anim.clones;
+		if (previousVariant.delayTime == previous.delayTime) variant.delayTime = anim.delayTime;
+		if (previousVariant.loopsFrom == previous.loopsFrom) variant.loopsFrom = anim.loopsFrom;
+		if (Arrays.equals(previousVariant.spriteOrder, previous.spriteOrder)) variant.spriteOrder = anim.spriteOrder;
+		if (previousVariant.overlay == previous.overlay) variant.overlay = anim.overlay;
+		if (previousVariant.playsForEachTarget == previous.playsForEachTarget) variant.playsForEachTarget = anim.playsForEachTarget;
+		if ((previousVariant.pokemonMovement == null && previous.pokemonMovement == null) || (previousVariant.pokemonMovement.equals(previous.pokemonMovement)))
 			variant.pokemonMovement = anim.pokemonMovement;
-		if ((variant.sound == null && previous.sound == null) || (variant.sound.equals(previous.sound))) variant.sound = anim.sound;
-		if (variant.soundDelay == previous.soundDelay) variant.soundDelay = anim.soundDelay;
-		if (variant.spriteDuration == previous.spriteDuration) variant.spriteDuration = anim.spriteDuration;
-		if ((variant.sprites == null && previous.sprites == null) || (variant.sprites.equals(previous.sprites))) variant.sprites = anim.sprites;
-		if (variant.pokemonState == previous.pokemonState) variant.pokemonState = anim.pokemonState;
-		if (variant.pokemonStateDelay == previous.pokemonStateDelay) variant.pokemonStateDelay = anim.pokemonStateDelay;
-		if (variant.width == previous.width) variant.width = anim.width;
-		if (variant.height == previous.height) variant.height = anim.height;
-		if (variant.gravityX == previous.gravityX) variant.gravityX = anim.gravityX;
-		if (variant.gravityY == previous.gravityY) variant.gravityY = anim.gravityY;
+		if ((previousVariant.sound == null && previous.sound == null) || (previousVariant.sound.equals(previous.sound))) variant.sound = anim.sound;
+		if (previousVariant.soundDelay == previous.soundDelay) variant.soundDelay = anim.soundDelay;
+		if (previousVariant.spriteDuration == previous.spriteDuration) variant.spriteDuration = anim.spriteDuration;
+		if ((previousVariant.sprites == null && previous.sprites == null) || (previousVariant.sprites.equals(previous.sprites))) variant.sprites = anim.sprites;
+		if (previousVariant.pokemonState == previous.pokemonState) variant.pokemonState = anim.pokemonState;
+		if (previousVariant.pokemonStateDelay == previous.pokemonStateDelay) variant.pokemonStateDelay = anim.pokemonStateDelay;
+		if (previousVariant.width == previous.width) variant.width = anim.width;
+		if (previousVariant.height == previous.height) variant.height = anim.height;
+		if (previousVariant.gravityX == previous.gravityX) variant.gravityX = anim.gravityX;
+		if (previousVariant.gravityY == previous.gravityY) variant.gravityY = anim.gravityY;
 	}
 
 	private void updateVariants(AnimationData anim)
@@ -344,10 +345,7 @@ public class EditAnimationController implements Initializable
 		AnimationData previous = Animations.getData(anim.id, group);
 
 		for (int i = 0; i < previous.variants.length; ++i)
-		{
-			anim.variants[i] = previous.variants[i];
-			this.updateVariant(anim, previous, anim.variants[i]); // TODO this doesn't work yet :/
-		}
+			this.updateVariant(anim, previous, anim.variants[i], previous.variants[i]);
 	}
 
 }

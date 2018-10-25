@@ -64,11 +64,38 @@ public class AnimationData implements Comparable<AnimationData>
 	/** Dimensions of a single sprite on the spritesheet, if any. */
 	public int width = 0, height = 0;
 
+	public AnimationData(AnimationData data)
+	{
+		this.alsoPlay = data.alsoPlay;
+		this.alsoPlayDelay = data.alsoPlayDelay;
+		this.animationMovement = data.animationMovement;
+		this.backSpriteUsage = data.backSpriteUsage;
+		this.clones = data.clones;
+		this.delayTime = data.delayTime;
+		this.gravityX = data.gravityX;
+		this.gravityY = data.gravityY;
+		this.id = data.id;
+		this.loopsFrom = data.loopsFrom;
+		this.overlay = data.overlay;
+		this.playsForEachTarget = data.playsForEachTarget;
+		this.pokemonMovement = data.pokemonMovement;
+		this.pokemonState = data.pokemonState;
+		this.pokemonStateDelay = data.pokemonStateDelay;
+		this.sound = data.sound;
+		this.soundDelay = data.soundDelay;
+		this.spriteDuration = data.spriteDuration;
+		this.spriteOrder = data.spriteOrder;
+		this.sprites = data.sprites;
+		this.spritesPrefix = data.spritesPrefix;
+		this.width = data.width;
+		this.height = data.height;
+	}
+
 	public AnimationData(int id)
 	{
 		this.id = id;
 		for (int i = 0; i < this.variants.length; ++i)
-			this.variants[i] = this;
+			this.variants[i] = new AnimationData(this);
 	}
 
 	public AnimationData(int id, String spritesPrefix, Element xml)
@@ -89,7 +116,7 @@ public class AnimationData implements Comparable<AnimationData>
 					this.variants[d.index()] = new AnimationData(this.id);
 					this.variants[d.index()].load(xml.getChild(d.name().toLowerCase(), xml.getNamespace()), this);
 					this.variants[d.index()].spritesPrefix = this.spritesPrefix;
-				} else this.variants[d.index()] = this;
+				} else this.variants[d.index()] = new AnimationData(this);
 			}
 		}
 	}
@@ -264,7 +291,7 @@ public class AnimationData implements Comparable<AnimationData>
 	private void toXML(Element root, Element self, AnimationData defaultData, boolean isVariant)
 	{
 		if (defaultData.sprites == null && !isVariant) defaultData.sprites = "" + this.id;
-		XMLUtils.setAttribute(self, "sprites", this.sprites == null ? "none" : this.sprites, defaultData.sprites);
+		XMLUtils.setAttribute(self, "sprites", this.sprites == null ? "none" : this.sprites, defaultData.sprites == null ? "none" : defaultData.sprites);
 		XMLUtils.setAttribute(self, "width", this.width, defaultData.width);
 		XMLUtils.setAttribute(self, "height", this.height, defaultData.height);
 		if (defaultData.gravityX == -1 && !isVariant) defaultData.gravityX = this.width / 2;
