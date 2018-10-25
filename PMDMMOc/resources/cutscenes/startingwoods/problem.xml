@@ -36,14 +36,62 @@
       <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.startingwoods.problem.m3</dialogscreen>
     </dialog>
     <wait />
-    <spawnpokemon cutsceneid="10" xpos="2.0" ypos="21.0" facing="EAST">
+    <spawnpokemon cutsceneid="10" xpos="2.0" ypos="25.0" facing="EAST">
       <pokemonid>12</pokemonid>
     </spawnpokemon>
     <wait />
-    <move xpos="35.0" speed="0.5" target="10" />
+    <move xpos="10.0" speed="0.2" target="10" />
+    <wait />
+    <move xpos="14.0" ypos="21.0" speed="0.2" target="10" />
+    <wait />
+    <move xpos="18.0" speed="0.2" target="10" />
+    <wait />
+    <move xpos="23.0" ypos="20.0" speed="0.2" target="10" />
+    <wait />
+    <move xpos="29.0" speed="0.2" target="10" />
+    <wait />
+    <move xpos="33.0" ypos="16.0" speed="0.2" target="10" />
+    <wait />
+    <move xpos="36.5" ypos="20.0" speed="0.2" target="10" />
+    <rotate target="10" distance="2" />
+    <wait />
+    <rotate target="1" distance="2" />
+    <rotate target="2" distance="2" />
     <wait />
     <dialog>
       <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.startingwoods.problem.m3-5</dialogscreen>
+    </dialog>
+    <move ypos="19.5" speed="0.3" target="10" />
+    <wait />
+    <move ypos="20.0" speed="0.3" target="10" />
+    <wait />
+    <move ypos="19.5" speed="0.3" target="10" />
+    <wait />
+    <move ypos="20.0" speed="0.3" target="10" />
+    <wait />
+    <dialog>
+      <dialogscreen target="10" portrait-location="TOP_LEFT">cutscene.startingwoods.problem.m4</dialogscreen>
+    </dialog>
+    <wait />
+    <dialog>
+      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.startingwoods.problem.m5</dialogscreen>
+      <dialogscreen target="10" portrait-location="TOP_LEFT">cutscene.startingwoods.problem.m6</dialogscreen>
+      <dialogscreen target="10" portrait-location="TOP_LEFT">cutscene.startingwoods.problem.m7</dialogscreen>
+      <dialogscreen target="10" portrait-location="TOP_LEFT">cutscene.startingwoods.problem.m8</dialogscreen>
+      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.startingwoods.problem.m9</dialogscreen>
+      <dialogscreen target="10" portrait-location="TOP_LEFT">cutscene.startingwoods.problem.m10</dialogscreen>
+      <dialogscreen target="10" portrait-location="TOP_LEFT">cutscene.startingwoods.problem.m11</dialogscreen>
+      <dialogscreen target="10" portrait-location="TOP_LEFT">cutscene.startingwoods.problem.m12</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="10" distance="2" />
+    <delay ticks="60" />
+    <wait />
+    <rotate target="1" distance="2" />
+    <rotate target="2" distance="-2" />
+    <wait />
+    <dialog>
+      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.startingwoods.problem.m13</dialogscreen>
     </dialog>
   </events>
   <onfinish>
