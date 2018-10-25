@@ -174,6 +174,14 @@ public class AnimationsTabController implements Initializable
 		this.editAnimationPane.setVisible(true);
 	}
 
+	public void onEdited(AnimationData anim)
+	{
+		AnimationGroup group = this.editing.group;
+		Animations.unregister(anim.id, group);
+		Animations.register(anim, group);
+		this.reloadList();
+	}
+
 	public void onSaveAll()
 	{
 		Animations.save(new File("../PMDMMOc/resources/data/animations.xml"));
