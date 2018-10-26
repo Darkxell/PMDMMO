@@ -1,5 +1,6 @@
 package fr.darkxell.dataeditor.application.controller.animation;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.ResourceBundle;
@@ -11,20 +12,28 @@ import com.darkxell.client.mechanics.animation.Animations;
 import com.darkxell.client.mechanics.animation.Animations.AnimationGroup;
 import com.darkxell.client.mechanics.animation.SpritesetAnimation.BackSpriteUsage;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
+import com.darkxell.common.util.Direction;
 
+import fr.darkxell.dataeditor.application.DataEditor;
 import fr.darkxell.dataeditor.application.util.AnimationListItem;
 import fr.darkxell.dataeditor.application.util.FXUtils;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.control.ToggleGroup;
+import javafx.stage.Stage;
 
 public class EditAnimationController implements Initializable
 {
+
+	public static EditAnimationController instance;
+	public static Stage variantPopup;
 
 	@FXML
 	public TextField alsoplayDelayTextfield;
@@ -72,6 +81,8 @@ public class EditAnimationController implements Initializable
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
 	{
+		instance = this;
+
 		ToggleGroup spritesGroup = new ToggleGroup();
 		this.noSpritesRadio.setToggleGroup(spritesGroup);
 		this.defaultSpritesRadio.setToggleGroup(spritesGroup);
@@ -144,6 +155,40 @@ public class EditAnimationController implements Initializable
 	public void onChangeID()
 	{
 		AnimationsTabController.instance.onChangeID();
+	}
+
+	public void onEditVariant()
+	{
+		FXMLLoader loader = new FXMLLoader(DataEditor.class.getResource("/layouts/animations/select_variant.fxml"));
+		try
+		{
+			Parent root = loader.load();
+			variantPopup = FXUtils.showPopup(root, "Choose variant to edit");
+		} catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
+
+	public void onEditVariant(Direction direction)
+	{
+		try
+		{
+			FXMLLoader loader = new FXMLLoader(DataEditor.class.getResource("/layouts/animations/edit_variant.fxml"));
+			Parent root = loader.load();
+			if (AnimationsTabController.instance.editing != null)
+			{
+				AnimationData data = Animations.getData(AnimationsTabController.instance.editing.id, AnimationsTabController.instance.editing.group);
+				EditVariantController controller = loader.getController();
+				controller.data = data;
+				controller.variant = direction;
+				controller.setup(data.getVariant(direction));
+				variantPopup = FXUtils.showPopup(root, "Edit Variant: " + direction);
+			}
+		} catch (IOException e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 	public void onSave()
