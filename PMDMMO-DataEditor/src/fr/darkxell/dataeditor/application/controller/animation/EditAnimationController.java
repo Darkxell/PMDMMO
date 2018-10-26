@@ -208,9 +208,8 @@ public class EditAnimationController implements Initializable
 		this.stateCombobox.setDisable(!this.stateCheckbox.isSelected());
 	}
 
-	public void setupFor(AnimationListItem item)
+	protected void setupFor(AnimationData data)
 	{
-		AnimationData data = Animations.getData(item.id, item.group);
 		String apdelay = "";
 		for (int i = 0; i < data.alsoPlayDelay.length; ++i)
 		{
@@ -269,7 +268,12 @@ public class EditAnimationController implements Initializable
 			this.customSpritesRadio.setSelected(true);
 			this.spritesTextfield.setText(data.sprites);
 		}
+	}
 
+	public void setupFor(AnimationListItem item)
+	{
+		AnimationData data = Animations.getData(item.id, item.group);
+		this.setupFor(data);
 	}
 
 	private AnimationData update(AnimationData data)
