@@ -183,6 +183,14 @@ public class EditVariantController extends EditAnimationController
 		this.pokemonMovementCombobox.setDisable(!this.pokemonMovementCheckbox.isSelected());
 	}
 
+	@Override
+	public void onSave()
+	{
+		AnimationData variant = this.data.getVariant(this.variant);
+		this.update(variant);
+		EditAnimationController.variantPopup.close();
+	}
+
 	public void onSoundDelayOverride()
 	{
 		this.soundDelayTextfield.setDisable(!this.soundDelayCheckbox.isSelected());
@@ -278,6 +286,37 @@ public class EditVariantController extends EditAnimationController
 		this.stateCheckbox.setSelected(variant.pokemonState != this.data.pokemonState);
 		this.noStateRadio.setSelected(variant.pokemonState == null);
 		this.hasStateRadio.setSelected(variant.pokemonState != null);
+	}
+
+	@Override
+	protected AnimationData update(AnimationData variant)
+	{
+		super.update(variant);
+
+		if (!this.alsoplayCheckbox.isSelected()) variant.alsoPlay = this.data.alsoPlay.clone();
+		if (!this.alsoplayDelayCheckbox.isSelected()) variant.alsoPlayDelay = this.data.alsoPlayDelay.clone();
+		if (!this.animMovementCheckbox.isSelected()) variant.animationMovement = this.data.animationMovement;
+		if (!this.backspritesCheckbox.isSelected()) variant.backSpriteUsage = this.data.backSpriteUsage;
+		if (!this.clonesCheckbox.isSelected()) variant.clones = this.data.clones;
+		if (!this.delayCheckbox.isSelected()) variant.delayTime = this.data.delayTime;
+		if (!this.loopCheckbox.isSelected()) variant.loopsFrom = this.data.loopsFrom;
+		if (!this.stateCheckbox.isSelected()) variant.pokemonState = this.noStateRadio.isSelected() ? null : this.data.pokemonState;
+		if (!this.orderCheckbox.isSelected()) variant.spriteOrder = this.data.spriteOrder.clone();
+		if (!this.overlayCheckbox.isSelected()) variant.overlay = this.data.overlay;
+		if (!this.playforeachtargetCheckbox.isSelected()) variant.playsForEachTarget = this.data.playsForEachTarget;
+		else variant.playsForEachTarget = this.playsforeachtargetValueCheckbox.isSelected();
+		if (!this.pokemonMovementCheckbox.isSelected()) variant.pokemonMovement = this.data.pokemonMovement;
+		if (!this.soundCheckbox.isSelected()) variant.sound = this.data.sound;
+		if (!this.soundDelayCheckbox.isSelected()) variant.soundDelay = this.data.soundDelay;
+		if (!this.spriteDurationCheckbox.isSelected()) variant.spriteDuration = this.data.spriteDuration;
+		if (!this.spritesCheckbox.isSelected()) variant.sprites = this.data.sprites;
+		if (!this.stateDelayCheckbox.isSelected()) variant.pokemonStateDelay = this.data.pokemonStateDelay;
+		if (!this.widthCheckbox.isSelected()) variant.width = this.data.width;
+		if (!this.heightCheckbox.isSelected()) variant.height = this.data.height;
+		if (!this.xCheckbox.isSelected()) variant.gravityX = this.data.gravityX;
+		if (!this.yCheckbox.isSelected()) variant.gravityY = this.data.gravityY;
+
+		return variant;
 	}
 
 }

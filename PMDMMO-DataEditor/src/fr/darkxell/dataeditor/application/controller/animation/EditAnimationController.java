@@ -278,7 +278,7 @@ public class EditAnimationController implements Initializable
 		this.setupFor(data);
 	}
 
-	private AnimationData update(AnimationData data)
+	protected AnimationData update(AnimationData data)
 	{
 		String in = this.alsoplayTextfield.getText();
 		if (!in.equals(""))
@@ -310,10 +310,14 @@ public class EditAnimationController implements Initializable
 		}
 
 		if (!this.animMovementCombobox.getValue().equals("none")) data.animationMovement = this.animMovementCombobox.getValue();
+		else data.animationMovement = null;
 		data.backSpriteUsage = this.backspritesCombobox.getValue();
 		if (!this.clonesTextfield.getText().equals("")) data.clones = this.clonesTextfield.getText();
+		else data.clones = null;
 		if (!this.delayTextfield.getText().equals("")) data.delayTime = Integer.parseInt(this.delayTextfield.getText());
+		else data.delayTime = 0;
 		if (!this.loopTextfield.getText().equals("")) data.loopsFrom = Integer.parseInt(this.loopTextfield.getText());
+		else data.loopsFrom = 0;
 
 		in = this.orderTextfield.getText();
 		if (!in.equals(""))
