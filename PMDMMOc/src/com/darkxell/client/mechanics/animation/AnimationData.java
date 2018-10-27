@@ -104,20 +104,22 @@ public class AnimationData implements Comparable<AnimationData>
 		this.sprites = "" + this.id;
 		this.spritesPrefix = spritesPrefix;
 		this.clones = XMLUtils.getAttribute(xml, "clone", null);
-		for (Direction d : Direction.directions)
-			this.variants[d.index()] = new AnimationData(this);
 		if (this.clones == null && xml.getChild("default", xml.getNamespace()) != null)
 		{
 			this.load(xml.getChild("default", xml.getNamespace()), this);
 			if (this.gravityX == -1) this.gravityX = this.width / 2;
 			if (this.gravityY == -1) this.gravityY = this.height / 2;
 			for (Direction d : Direction.directions)
+			{
+				this.variants[d.index()] = new AnimationData(this);
 				if (xml.getChild(d.name().toLowerCase(), xml.getNamespace()) != null)
 				{
 					this.variants[d.index()].load(xml.getChild(d.name().toLowerCase(), xml.getNamespace()), this);
 					this.variants[d.index()].spritesPrefix = this.spritesPrefix;
 				}
-		}
+			}
+		} else for (Direction d : Direction.directions)
+			this.variants[d.index()] = new AnimationData(this);
 	}
 
 	@Override
@@ -281,7 +283,7 @@ public class AnimationData implements Comparable<AnimationData>
 			Element variant = new Element(d.getName().toLowerCase());
 			this.variants[d.index()].toXML(root, variant, this, true);
 
-			boolean hasDifference = !self.getText().equals(variant.getText());
+			boolean hasDifference = !variant.getText().equals("") && !self.getText().equals(variant.getText());
 			hasDifference |= !variant.getAttributes().isEmpty();
 
 			if (hasDifference) root.addContent(variant);
@@ -300,7 +302,8 @@ public class AnimationData implements Comparable<AnimationData>
 		XMLUtils.setAttribute(self, "y", this.gravityY, defaultData.gravityY);
 		XMLUtils.setAttribute(self, "spriteduration", this.spriteDuration, defaultData.spriteDuration);
 		XMLUtils.setAttribute(self, "backsprites", this.backSpriteUsage.name(), defaultData.backSpriteUsage.name());
-		if (this.spriteOrder != null) self.setText(XMLUtils.toXML("order", this.spriteOrder).getText());
+		if (this.spriteOrder != null && !Arrays.equals(this.spriteOrder, defaultData.spriteOrder))
+			self.setText(XMLUtils.toXML("order", this.spriteOrder).getText());
 		XMLUtils.setAttribute(self, "movement", this.animationMovement, defaultData.animationMovement);
 		XMLUtils.setAttribute(self, "loopsfrom", this.loopsFrom, defaultData.loopsFrom);
 
