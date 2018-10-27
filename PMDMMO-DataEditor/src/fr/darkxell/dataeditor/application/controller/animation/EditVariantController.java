@@ -65,6 +65,8 @@ public class EditVariantController extends EditAnimationController
 		this.hasStateRadio.setToggleGroup(group);
 		this.noStateRadio.setToggleGroup(group);
 
+		group.selectedToggleProperty().addListener((o, ov, nv) -> onStateChange());
+
 		this.alsoplayTextfield.setDisable(true);
 		this.alsoplayDelayTextfield.setDisable(true);
 		this.animMovementCombobox.setDisable(true);
@@ -91,6 +93,28 @@ public class EditVariantController extends EditAnimationController
 		this.widthTextfield.setDisable(true);
 		this.xTextfield.setDisable(true);
 		this.yTextfield.setDisable(true);
+
+		this.alsoplayDelayCheckbox.selectedProperty().addListener((o, ov, nv) -> onAlsoplayDelayOverride());
+		this.alsoplayCheckbox.selectedProperty().addListener((o, ov, nv) -> onAlsoplayOverride());
+		this.animMovementCheckbox.selectedProperty().addListener((o, ov, nv) -> onAnimMovementOverride());
+		this.backspritesCheckbox.selectedProperty().addListener((o, ov, nv) -> onBackspritesOverride());
+		this.clonesCheckbox.selectedProperty().addListener((o, ov, nv) -> onClonesOverride());
+		this.delayCheckbox.selectedProperty().addListener((o, ov, nv) -> onDelayOverride());
+		this.loopCheckbox.selectedProperty().addListener((o, ov, nv) -> onLoopOverride());
+		this.stateCheckbox.selectedProperty().addListener((o, ov, nv) -> onStateOverride());
+		this.orderCheckbox.selectedProperty().addListener((o, ov, nv) -> onOrderOverride());
+		this.overlayCheckbox.selectedProperty().addListener((o, ov, nv) -> onOverlayOverride());
+		this.playforeachtargetCheckbox.selectedProperty().addListener((o, ov, nv) -> onPlaysforeachOverride());
+		this.pokemonMovementCheckbox.selectedProperty().addListener((o, ov, nv) -> onPokemonMovementOverride());
+		this.soundCheckbox.selectedProperty().addListener((o, ov, nv) -> onSoundOverride());
+		this.soundDelayCheckbox.selectedProperty().addListener((o, ov, nv) -> onSoundDelayOverride());
+		this.spriteDurationCheckbox.selectedProperty().addListener((o, ov, nv) -> onSpriteDurationOverride());
+		this.spritesCheckbox.selectedProperty().addListener((o, ov, nv) -> onSpritesOverride());
+		this.stateDelayCheckbox.selectedProperty().addListener((o, ov, nv) -> onStateDelayOverride());
+		this.widthCheckbox.selectedProperty().addListener((o, ov, nv) -> onWidthOverride());
+		this.heightCheckbox.selectedProperty().addListener((o, ov, nv) -> onHeightOverride());
+		this.xCheckbox.selectedProperty().addListener((o, ov, nv) -> onXOverride());
+		this.yCheckbox.selectedProperty().addListener((o, ov, nv) -> onYOverride());
 	}
 
 	public void onAlsoplayDelayOverride()
@@ -111,6 +135,12 @@ public class EditVariantController extends EditAnimationController
 	public void onBackspritesOverride()
 	{
 		this.backspritesCombobox.setDisable(!this.backspritesCheckbox.isSelected());
+	}
+
+	@Override
+	public void onCancelChanges()
+	{
+		EditAnimationController.variantPopup.close();
 	}
 
 	public void onClonesOverride()
@@ -168,10 +198,16 @@ public class EditVariantController extends EditAnimationController
 		this.spriteDurationTextfield.setDisable(!this.spriteDurationCheckbox.isSelected());
 	}
 
+	@Override
+	public void onSpritesChange()
+	{
+		this.spritesTextfield.setDisable(!this.customSpritesRadio.isSelected() || !this.spritesCheckbox.isSelected());
+	}
+
 	public void onSpritesOverride()
 	{
 		boolean sprites = !this.spritesCheckbox.isSelected();
-		this.spritesTextfield.setDisable(sprites);
+		this.spritesTextfield.setDisable(sprites || !this.customSpritesRadio.isSelected());
 		this.customSpritesRadio.setDisable(sprites);
 		this.defaultSpritesRadio.setDisable(sprites);
 		this.noSpritesRadio.setDisable(sprites);
@@ -180,7 +216,7 @@ public class EditVariantController extends EditAnimationController
 	@Override
 	public void onStateChange()
 	{
-		this.stateCombobox.setDisable(this.noStateRadio.isSelected());
+		this.stateCombobox.setDisable(this.noStateRadio.isSelected() || !this.stateCheckbox.isSelected());
 	}
 
 	public void onStateDelayOverride()
@@ -190,9 +226,9 @@ public class EditVariantController extends EditAnimationController
 
 	public void onStateOverride()
 	{
-		this.stateCombobox.setDisable(!this.stateCheckbox.isSelected());
 		this.noStateRadio.setDisable(!this.stateCheckbox.isSelected());
 		this.hasStateRadio.setDisable(!this.stateCheckbox.isSelected());
+		this.onStateChange();
 	}
 
 	public void onWidthOverride()
@@ -215,19 +251,21 @@ public class EditVariantController extends EditAnimationController
 		this.setupFor(variant);
 		this.alsoplayCheckbox.setSelected(!Arrays.equals(variant.alsoPlay, this.data.alsoPlay));
 		this.alsoplayDelayCheckbox.setSelected(!Arrays.equals(variant.alsoPlayDelay, this.data.alsoPlayDelay));
-		this.animMovementCheckbox.setSelected(
-				!((variant.animationMovement == null && this.data.animationMovement == null) || variant.animationMovement.equals(this.data.animationMovement)));
+		this.animMovementCheckbox.setSelected(!((variant.animationMovement == null && this.data.animationMovement == null)
+				|| (variant.animationMovement != null && variant.animationMovement.equals(this.data.animationMovement))));
 		this.backspritesCheckbox.setSelected(variant.backSpriteUsage != this.data.backSpriteUsage);
-		this.clonesCheckbox.setSelected(!((variant.clones == null && this.data.clones == null) || variant.clones.equals(this.data.clones)));
+		this.clonesCheckbox
+				.setSelected(!((variant.clones == null && this.data.clones == null) || (variant.clones != null && variant.clones.equals(this.data.clones))));
 		this.delayCheckbox.setSelected(variant.delayTime != this.data.delayTime);
 		this.loopCheckbox.setSelected(variant.loopsFrom != this.data.loopsFrom);
 		this.orderCheckbox.setSelected(!Arrays.equals(variant.spriteOrder, this.data.spriteOrder));
 		this.overlayCheckbox.setSelected(variant.overlay != this.data.overlay);
 		this.playforeachtargetCheckbox.setSelected(variant.playsForEachTarget != this.data.playsForEachTarget);
 		this.playsforeachtargetValueCheckbox.setSelected(variant.playsForEachTarget);
-		this.pokemonMovementCheckbox.setSelected(
-				!((variant.pokemonMovement == null && this.data.pokemonMovement == null) || variant.pokemonMovement.equals(this.data.pokemonMovement)));
-		this.soundCheckbox.setSelected(!((variant.sound == null && this.data.sound == null) || variant.sound.equals(this.data.sound)));
+		this.pokemonMovementCheckbox.setSelected(!((variant.pokemonMovement == null && this.data.pokemonMovement == null)
+				|| (variant.pokemonMovement != null && variant.pokemonMovement.equals(this.data.pokemonMovement))));
+		this.soundCheckbox
+				.setSelected(!((variant.sound == null && this.data.sound == null) || (variant.sound != null && variant.sound.equals(this.data.sound))));
 		this.soundDelayCheckbox.setSelected(variant.soundDelay != this.data.soundDelay);
 		this.spriteDurationCheckbox.setSelected(variant.spriteDuration != this.data.spriteDuration);
 		this.widthCheckbox.setSelected(variant.width != this.data.width);
@@ -235,7 +273,7 @@ public class EditVariantController extends EditAnimationController
 		this.xCheckbox.setSelected(variant.gravityX != this.data.gravityX);
 		this.yCheckbox.setSelected(variant.gravityY != this.data.gravityY);
 		this.spritesCheckbox.setSelected(
-				!((variant.pokemonMovement == null && this.data.pokemonMovement == null) || variant.pokemonMovement.equals(this.data.pokemonMovement)));
+				!((variant.sprites == null && this.data.sprites == null) || (variant.sprites != null && variant.sprites.equals(this.data.sprites))));
 
 		this.stateCheckbox.setSelected(variant.pokemonState != this.data.pokemonState);
 		this.noStateRadio.setSelected(variant.pokemonState == null);

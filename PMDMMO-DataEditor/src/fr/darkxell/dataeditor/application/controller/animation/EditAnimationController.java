@@ -88,6 +88,8 @@ public class EditAnimationController implements Initializable
 		this.defaultSpritesRadio.setToggleGroup(spritesGroup);
 		this.customSpritesRadio.setToggleGroup(spritesGroup);
 
+		spritesGroup.selectedToggleProperty().addListener((o, ov, nv) -> onSpritesChange());
+
 		this.noSpritesRadio.setSelected(true);
 		this.spritesTextfield.setDisable(true);
 

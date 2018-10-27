@@ -104,20 +104,19 @@ public class AnimationData implements Comparable<AnimationData>
 		this.sprites = "" + this.id;
 		this.spritesPrefix = spritesPrefix;
 		this.clones = XMLUtils.getAttribute(xml, "clone", null);
+		for (Direction d : Direction.directions)
+			this.variants[d.index()] = new AnimationData(this);
 		if (this.clones == null && xml.getChild("default", xml.getNamespace()) != null)
 		{
 			this.load(xml.getChild("default", xml.getNamespace()), this);
 			if (this.gravityX == -1) this.gravityX = this.width / 2;
 			if (this.gravityY == -1) this.gravityY = this.height / 2;
 			for (Direction d : Direction.directions)
-			{
 				if (xml.getChild(d.name().toLowerCase(), xml.getNamespace()) != null)
 				{
-					this.variants[d.index()] = new AnimationData(this.id);
 					this.variants[d.index()].load(xml.getChild(d.name().toLowerCase(), xml.getNamespace()), this);
 					this.variants[d.index()].spritesPrefix = this.spritesPrefix;
-				} else this.variants[d.index()] = new AnimationData(this);
-			}
+				}
 		}
 	}
 
@@ -225,6 +224,7 @@ public class AnimationData implements Comparable<AnimationData>
 		this.spriteDuration = XMLUtils.getAttribute(xml, "spriteduration", defaultData.spriteDuration);
 		this.backSpriteUsage = BackSpriteUsage.valueOf(XMLUtils.getAttribute(xml, "backsprites", defaultData.backSpriteUsage.name()));
 		this.spriteOrder = XMLUtils.readIntArray(xml);
+		if (this.spriteOrder.length == 0) this.spriteOrder = defaultData.spriteOrder.clone();
 		this.animationMovement = XMLUtils.getAttribute(xml, "movement", defaultData.animationMovement);
 		this.loopsFrom = XMLUtils.getAttribute(xml, "loopsfrom", defaultData.loopsFrom);
 

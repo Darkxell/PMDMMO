@@ -65,13 +65,13 @@
          <children>
             <HBox alignment="CENTER" spacing="5.0">
                <children>
-                  <RadioButton fx:id="noSpritesRadio" mnemonicParsing="false" onAction="#onSpritesChange" text="No Sprites" />
-                  <RadioButton fx:id="defaultSpritesRadio" mnemonicParsing="false" onAction="#onSpritesChange" text="Default path" />
+                  <RadioButton fx:id="noSpritesRadio" mnemonicParsing="false" text="No Sprites" />
+                  <RadioButton fx:id="defaultSpritesRadio" mnemonicParsing="false" text="Default path" />
                </children>
             </HBox>
             <HBox alignment="CENTER" spacing="5.0">
                <children>
-                  <RadioButton fx:id="customSpritesRadio" mnemonicParsing="false" onAction="#onSpritesChange" text="Custom Path" />
+                  <RadioButton fx:id="customSpritesRadio" mnemonicParsing="false" text="Custom Path" />
                   <TextField fx:id="spritesTextfield" promptText="(start with /)" />
                </children>
             </HBox>
