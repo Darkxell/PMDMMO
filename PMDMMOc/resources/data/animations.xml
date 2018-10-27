@@ -705,7 +705,7 @@
       <default width="32" height="32" loopsfrom="7">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17</default>
     </projectile>
     <projectile id="1655">
-      <default width="32" height="32" spriteduration="5" delaytime="0">0,1</default>
+      <default width="32" height="32" spriteduration="5">0,1</default>
       <north sprites="/projectiles/1655-0" height="16" />
       <northeast sprites="/projectiles/1655-1" />
       <east sprites="/projectiles/1655-2" width="16" />
@@ -717,19 +717,25 @@
     </projectile>
     <projectile id="1658">
       <default width="24" height="16" spriteduration="4">0,1</default>
-      <north width="8" height="24" />
-      <northeast width="16" />
-      <east width="32" height="8" />
-      <south width="8" height="24" />
-      <west width="32" height="8" />
-      <northwest width="16" />
+      <north sprites="/projectiles/1658-0" width="8" height="24" />
+      <northeast sprites="/projectiles/1658-1" width="16" />
+      <east sprites="/projectiles/1658-2" width="32" height="8" />
+      <southeast sprites="/projectiles/1658-3" />
+      <south sprites="/projectiles/1658-4" width="8" height="24" />
+      <southwest sprites="/projectiles/1658-5" />
+      <west sprites="/projectiles/1658-6" width="32" height="8" />
+      <northwest sprites="/projectiles/1658-7" width="16" />
     </projectile>
     <projectile id="1666">
       <default width="24" height="32" loopsfrom="6">0,1,2,3,4,5,6,7,8,9,9,8,7,6</default>
-      <north width="32" />
-      <east width="16" />
+      <north sprites="/projectiles/1666-0" width="32" />
+      <northeast sprites="/projectiles/1666-1" />
+      <east sprites="/projectiles/1666-2" width="16" />
+      <southeast sprites="/projectiles/1666-3" />
       <south sprites="/projectiles/1666-0" width="32" />
-      <west width="16" />
+      <southwest sprites="/projectiles/1666-5" />
+      <west sprites="/projectiles/1666-6" width="16" />
+      <northwest sprites="/projectiles/1666-7" />
     </projectile>
     <projectile id="1705">
       <default width="32" height="16">0,1,2,3,4,5,6,7</default>
@@ -739,8 +745,13 @@
     </projectile>
     <projectile id="1806">
       <default width="16" height="16" loopsfrom="3">0,1,2,3</default>
-      <southeast sprites="/projectiles/1806-1" />
+      <north sprites="/projectiles/1806-0" />
+      <northeast sprites="/projectiles/1806-1" />
+      <east sprites="/projectiles/1806-2" />
+      <southeast sprites="/projectiles/1806-3" />
       <south sprites="/projectiles/1806-0" />
+      <southwest sprites="/projectiles/1806-1" />
+      <west sprites="/projectiles/1806-6" />
       <northwest sprites="/projectiles/1806-3" />
     </projectile>
     <projectile id="1901">
@@ -748,10 +759,14 @@
     </projectile>
     <projectile id="2004">
       <default width="24" height="32" loopsfrom="6">0,1,2,3,4,5,6,7,8,9,9,8,7,6</default>
-      <north width="32" />
-      <east width="16" />
+      <north sprites="/projectiles/2004-0" width="32" />
+      <northeast sprites="/projectiles/2004-1" />
+      <east sprites="/projectiles/2004-2" width="16" />
+      <southeast sprites="/projectiles/2004-3" />
       <south sprites="/projectiles/2004-0" width="32" />
-      <west width="16" />
+      <southwest sprites="/projectiles/2004-5" />
+      <west sprites="/projectiles/2004-6" width="16" />
+      <northwest sprites="/projectiles/2004-7" />
     </projectile>
     <projectile id="3501">
       <default width="8" height="8" spriteduration="3">0,1,2,3,4,5</default>
