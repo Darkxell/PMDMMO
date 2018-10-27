@@ -208,13 +208,14 @@
     </move>
     <move id="22">
       <default width="96" height="48" y="48" sound="move-growl" state="SPECIAL">0,1,2,3,4,5,0,1,2,3,4,5</default>
-      <north width="72" backsprites="only" />
-      <northeast x="40" backsprites="only" />
-      <east height="72" x="40" />
-      <southeast x="40" y="0" />
-      <south width="72" y="0" />
-      <west height="72" x="56" />
-      <northwest x="56" backsprites="only" />
+      <north sprites="/moves/22-0" width="72" backsprites="only" />
+      <northeast sprites="/moves/22-1" x="40" backsprites="only" />
+      <east sprites="/moves/22-2" height="72" x="40" />
+      <southeast sprites="/moves/22-3" x="40" y="0" />
+      <south sprites="/moves/22-4" width="72" y="0" />
+      <southwest sprites="/moves/22-5" />
+      <west sprites="/moves/22-6" height="72" x="56" />
+      <northwest sprites="/moves/22-7" x="56" backsprites="only" />
     </move>
     <move id="23">
       <default width="32" height="32" sound="move-growth" state="SHOCK">0,1,2,3,4,5,6,7,8</default>
@@ -431,10 +432,14 @@
     </move>
     <move id="701">
       <default width="96" height="96" sound="move-absorb" sounddelay="36" statedelay="36" alsoplay="2">-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,1,2,3,4,5,6,7,8,9,10,11,12</default>
-      <north width="64" />
-      <east height="64" />
-      <south width="64" />
-      <west height="64" />
+      <north sprites="/moves/701-0" width="64" />
+      <northeast sprites="/moves/701-1" />
+      <east sprites="/moves/701-2" height="64" />
+      <southeast sprites="/moves/701-3" />
+      <south sprites="/moves/701-4" width="64" />
+      <southwest sprites="/moves/701-5" />
+      <west sprites="/moves/701-6" height="64" />
+      <northwest sprites="/moves/701-7" />
     </move>
     <move id="702">
       <default width="16" height="16" spriteduration="1" movement="1tilefacing" state="SPECIAL">0,1,0,1,0,1,0,1,0,1</default>
@@ -507,13 +512,14 @@
     </move>
     <move id="951">
       <default width="40" height="48" spriteduration="4" state="ATTACK">0,1,2,3,3</default>
-      <north width="32" y="48" backsprites="only" />
-      <northeast x="0" y="48" backsprites="only" />
-      <east width="32" x="0" />
-      <southeast width="32" x="0" y="0" />
-      <south width="32" y="0" />
-      <west width="32" x="32" />
-      <northwest height="56" x="40" y="48" backsprites="only" />
+      <north sprites="/moves/951-0" width="32" y="48" backsprites="only" />
+      <northeast sprites="/moves/951-1" x="0" y="48" backsprites="only" />
+      <east sprites="/moves/951-2" width="32" x="0" />
+      <southeast sprites="/moves/951-3" width="32" x="0" y="0" />
+      <south sprites="/moves/951-4" width="32" y="0" />
+      <southwest sprites="/moves/951-5" />
+      <west sprites="/moves/951-6" width="32" x="32" />
+      <northwest sprites="/moves/951-7" height="56" x="40" y="48" backsprites="only" />
     </move>
     <move id="953">
       <default width="40" height="48" spriteduration="4" state="ATTACK">0,1,2,3,3,0,1,2,3,3</default>
