@@ -55,7 +55,7 @@
       <CheckBox fx:id="delayCheckbox" onAction="#onDelayOverride" text="Override Delay Time:" GridPane.rowIndex="11" />
       <CheckBox fx:id="soundCheckbox" onAction="#onSoundOverride" text="Override Sound:" GridPane.rowIndex="12" />
       <CheckBox fx:id="soundDelayCheckbox" onAction="#onSoundDelayOverride" text="Override Sound delay:" GridPane.rowIndex="13" />
-      <CheckBox fx:id="stateCheckbox" onAction="#onStateDelayOverride" text="Override Pokémon State delay:" GridPane.rowIndex="15" />
+      <CheckBox fx:id="stateDelayCheckbox" onAction="#onStateDelayOverride" text="Override Pokémon State delay:" GridPane.rowIndex="15" />
       <CheckBox fx:id="pokemonMovementCheckbox" onAction="#onPokemonMovementOverride" text="Override Pokémon movement:" GridPane.rowIndex="16" />
       <CheckBox fx:id="alsoplayCheckbox" onAction="#onAlsoplayOverride" text="Override Also play:" GridPane.rowIndex="17" />
       <CheckBox fx:id="alsoplayDelayCheckbox" onAction="#onAlsoplayDelayOverride" text="Override Delays for also-played:" GridPane.rowIndex="18" />
@@ -120,7 +120,7 @@
       <CheckBox fx:id="clonesCheckbox" onAction="#onClonesOverride" text="Override Clones (overrides everything):" />
       <TextField fx:id="clonesTextfield" promptText="(doesn't clone)" GridPane.columnIndex="1" />
       <ComboBox fx:id="pokemonMovementCombobox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="16" />
-      <CheckBox fx:id="playsforeachtargetCheckbox" mnemonicParsing="false" text="Plays for each target" GridPane.columnIndex="1" GridPane.rowIndex="20" />
+      <CheckBox fx:id="playsforeachtargetValueCheckbox" mnemonicParsing="false" text="Plays for each target" GridPane.columnIndex="1" GridPane.rowIndex="20" />
    </children>
    <padding>
       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
