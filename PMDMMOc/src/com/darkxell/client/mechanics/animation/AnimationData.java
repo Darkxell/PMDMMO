@@ -30,7 +30,7 @@ public class AnimationData implements Comparable<AnimationData>
 	/** If not <code>null</code>, this Animation is an exact copy of the Animation with this ID. */
 	public String clones = null;
 	/** The time to wait for this Animation to play. */
-	public int delayTime = -1;
+	public int delayTime = 0;
 	/** The x and y offset to apply to the sprites. -1 defaults to the center of the sprite. */
 	public int gravityX = -1, gravityY = -1;
 	/** The ID of this Animation. */

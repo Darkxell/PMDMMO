@@ -705,11 +705,13 @@
       <default width="32" height="32" loopsfrom="7">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17</default>
     </projectile>
     <projectile id="1655">
-      <default width="32" height="32" spriteduration="5">0,1</default>
-      <north height="16" />
-      <east width="16" />
-      <southeast sprites="/projectiles/1655-1" />
+      <default width="32" height="32" spriteduration="5" delaytime="0">0,1</default>
+      <north sprites="/projectiles/1655-0" height="16" />
+      <northeast sprites="/projectiles/1655-1" />
+      <east sprites="/projectiles/1655-2" width="16" />
+      <southeast sprites="/projectiles/1655-3" />
       <south sprites="/projectiles/1655-0" height="16" />
+      <southwest sprites="/projectiles/1655-1" />
       <west sprites="/projectiles/1655-2" width="16" />
       <northwest sprites="/projectiles/1655-3" />
     </projectile>
