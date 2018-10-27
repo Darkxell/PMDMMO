@@ -115,7 +115,7 @@ public final class Animations
 		if (!id.contains("/")) return getCustomAnimation(target, Integer.parseInt(id), listener);
 		String group = id.substring(0, id.indexOf("/"));
 		int anim = Integer.parseInt(id.substring(id.indexOf("/") + 1, id.length()));
-		switch (group)
+		switch (group.toLowerCase())
 		{
 			case "custom":
 				return getCustomAnimation(target, anim, listener);
@@ -135,6 +135,7 @@ public final class Animations
 			case "statuses":
 				return getStatusAnimation(target, StatusConditions.find(anim), listener);
 
+			case "movetargets":
 			case "targets":
 				return getMoveTargetAnimation(target, MoveRegistry.find(anim), listener);
 
