@@ -162,16 +162,16 @@
       <default width="64" height="32" spriteduration="4" backsprites="only" state="EMIT">0,1,2,3,3,3,3,2,1,0</default>
     </move>
     <move id="-222">
-      <default sprites="none" delaytime="25" />
+      <default sprites="none" delaytime="25" state="ATTACK" />
     </move>
     <move id="-50">
-      <default sprites="none" delaytime="25" />
+      <default sprites="none" delaytime="25" state="ATTACK" />
     </move>
     <move id="-2">
-      <default sprites="none" delaytime="25" />
+      <default sprites="none" delaytime="25" state="ATTACK" />
     </move>
     <move id="0">
-      <default sprites="none" delaytime="25" sound="move-basicattack" />
+      <default sprites="none" delaytime="25" sound="move-basicattack" state="ATTACK" />
     </move>
     <move id="1">
       <default sprites="none" delaytime="15" state="SPECIAL" />
@@ -198,7 +198,7 @@
       <default sprites="none" delaytime="25" state="JUMP" />
     </move>
     <move id="14">
-      <default sprites="none" delaytime="25" alsoplay="2" />
+      <default sprites="none" delaytime="25" state="ATTACK" alsoplay="2" />
     </move>
     <move id="18">
       <default width="64" height="64" y="50" backsprites="yes" state="CHARGE">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15</default>
@@ -230,19 +230,19 @@
       <default width="64" height="64" spriteduration="3" state="SPECIAL">0,1,2,3,4,5,6,7</default>
     </move>
     <move id="38">
-      <default sprites="none" delaytime="25" />
+      <default sprites="none" delaytime="25" state="ATTACK" />
     </move>
     <move id="39">
       <default sprites="none" delaytime="25" state="SPIN" />
     </move>
     <move id="40">
-      <default sprites="none" pkmnmovement="2tiles" />
+      <default sprites="none" state="ATTACK" pkmnmovement="2tiles" />
     </move>
     <move id="45">
       <default sprites="none" delaytime="25" state="SLICE" />
     </move>
     <move id="46">
-      <default sprites="none" />
+      <default sprites="none" state="SPECIAL" />
     </move>
     <move id="49">
       <default width="88" height="48" y="40" state="TAILWHIP">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,-1,17</default>
@@ -258,7 +258,7 @@
       <default sprites="none" delaytime="15" state="SING" alsoplay="2" />
     </move>
     <move id="66">
-      <default sprites="none" delaytime="25" sound="move-tackle" />
+      <default sprites="none" delaytime="25" sound="move-tackle" state="ATTACK" />
     </move>
     <move id="67">
       <default sprites="none" delaytime="25" sound="move-tailwhip" state="TAILWHIP" />
@@ -318,7 +318,7 @@
       <default width="64" height="32" y="32" state="ATTACK">0,1,2,3,-1,0,1,2,3</default>
     </move>
     <move id="114">
-      <default sprites="none" />
+      <default sprites="none" state="ATTACK" />
     </move>
     <move id="116">
       <default width="72" height="64" state="SING" alsoplay="2">-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19</default>
@@ -431,7 +431,7 @@
       <default width="128" height="120" state="RUMBLE">-1,0,1,2,3,4,5,6,7,8,9,10</default>
     </move>
     <move id="701">
-      <default width="96" height="96" sound="move-absorb" sounddelay="36" statedelay="36" alsoplay="2">-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,1,2,3,4,5,6,7,8,9,10,11,12</default>
+      <default width="96" height="96" sound="move-absorb" sounddelay="36" state="SPECIAL" statedelay="36" alsoplay="2">-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,1,2,3,4,5,6,7,8,9,10,11,12</default>
       <north sprites="/moves/701-0" width="64" />
       <northeast sprites="/moves/701-1" />
       <east sprites="/moves/701-2" height="64" />
@@ -455,7 +455,7 @@
       <default width="64" height="64" spriteduration="4" state="CHARGE" alsoplay="2">-1,-1,-1,-1,-1,-1,-1,-1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17</default>
     </move>
     <move id="710">
-      <default sprites="none" delaytime="25" />
+      <default sprites="none" delaytime="25" state="ATTACK" />
     </move>
     <move id="712" clone="moves/701" />
     <move id="713">
@@ -501,7 +501,7 @@
       <default width="32" height="156" y="143" backsprites="yes" state="SWING">0,1,2,3,4,4,4,4,4,5</default>
     </move>
     <move id="901">
-      <default width="32" height="30" spriteduration="4">0,1,2,3,4</default>
+      <default width="32" height="30" spriteduration="4" state="SPECIAL">0,1,2,3,4</default>
       <north y="30" backsprites="only" />
       <northeast x="0" y="30" backsprites="only" />
       <east x="0" y="20" />

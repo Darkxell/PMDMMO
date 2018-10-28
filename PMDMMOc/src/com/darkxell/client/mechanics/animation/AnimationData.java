@@ -171,7 +171,6 @@ public class AnimationData implements Comparable<AnimationData>
 
 		if (this.pokemonMovement != null && dungeon != null)
 		{
-			// TODO add state for each animation, defaultState was deleted
 			String movement = this.pokemonMovement;
 			if (movement == null && this.pokemonState != null && this.pokemonState.hasDash) movement = "dash";
 			a.movement = PokemonAnimationMovement.create(a, dungeon, movement);
