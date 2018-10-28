@@ -108,6 +108,7 @@ public class EditAnimationController implements Initializable
 		this.stateCombobox.setDisable(true);
 
 		Pattern pattern = Pattern.compile("\\d*");
+		Pattern pattern3 = Pattern.compile("-?\\d*");
 		this.delayTextfield.setTextFormatter(new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
 			return pattern.matcher(change.getControlNewText()).matches() ? change : null;
 		}));
@@ -133,10 +134,10 @@ public class EditAnimationController implements Initializable
 			return pattern.matcher(change.getControlNewText()).matches() ? change : null;
 		}));
 		this.xTextfield.setTextFormatter(new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
-			return pattern.matcher(change.getControlNewText()).matches() ? change : null;
+			return pattern3.matcher(change.getControlNewText()).matches() ? change : null;
 		}));
 		this.yTextfield.setTextFormatter(new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
-			return pattern.matcher(change.getControlNewText()).matches() ? change : null;
+			return pattern3.matcher(change.getControlNewText()).matches() ? change : null;
 		}));
 
 		Pattern p2 = Pattern.compile("(\\d+,)*(\\d+)?");
