@@ -23,7 +23,7 @@ public class FacingTileAnimationMovement extends SpritesetAnimationMovement
 	{
 		super.start();
 		Direction d = this.parentAnimation.renderer.sprite().getFacingDirection();
-		if (d == Direction.NORTH || d == Direction.NORTHEAST || d == Direction.NORTHWEST) this.parentAnimation.data().backSpriteUsage = BackSpriteUsage.only;
+		if (d == Direction.NORTH || d == Direction.NORTHEAST || d == Direction.NORTHWEST) this.parentAnimation.data.backSpriteUsage = BackSpriteUsage.only;
 
 		Point2D origin = new Point2D.Double(0, 0);
 		this.travel = new TravelAnimation(origin, d.move(origin));

@@ -104,6 +104,7 @@ public class EditAnimationController implements Initializable
 		this.animMovementCombobox.getItems().addAll("none", "1tilefacing", "diagonal", "upanddown", "straight (projectile)", "arc (projectile)");
 		this.animMovementCombobox.getSelectionModel().select(0);
 
+		this.stateCheckbox.selectedProperty().addListener((v, nv, ov) -> this.onStateChange());
 		this.stateCombobox.setDisable(true);
 
 		Pattern pattern = Pattern.compile("\\d*");
@@ -232,8 +233,10 @@ public class EditAnimationController implements Initializable
 		this.alsoplayTextfield.setText(ap);
 		this.animMovementCombobox.getSelectionModel().select(0);
 		if (data.animationMovement != null) this.animMovementCombobox.setValue(data.animationMovement);
+		else this.animMovementCombobox.setValue("none");
 		this.backspritesCombobox.setValue(data.backSpriteUsage);
 		if (data.clones != null) this.clonesTextfield.setText(data.clones);
+		else this.clonesTextfield.setText("");
 		this.delayTextfield.setText(String.valueOf(data.delayTime));
 		this.loopTextfield.setText(String.valueOf(data.loopsFrom));
 		if (data.spriteOrder == null) this.orderTextfield.setText("");
@@ -250,8 +253,10 @@ public class EditAnimationController implements Initializable
 		this.playforeachtargetCheckbox.setSelected(data.playsForEachTarget);
 		this.pokemonMovementCombobox.getSelectionModel().select(0);
 		if (data.pokemonMovement != null) this.pokemonMovementCombobox.setValue(data.pokemonMovement);
+		else this.pokemonMovementCombobox.setValue("none");
 		this.soundDelayTextfield.setText(String.valueOf(data.soundDelay));
 		if (data.sound != null) this.soundTextfield.setText(data.sound);
+		else this.soundTextfield.setText("");
 		this.spriteDurationTextfield.setText(String.valueOf(data.spriteDuration));
 		this.stateCheckbox.setSelected(data.pokemonState != null);
 		if (data.pokemonState != null) this.stateCombobox.setValue(data.pokemonState);

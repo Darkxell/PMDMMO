@@ -22,7 +22,7 @@ public class RainAnimation extends AbstractAnimation
 	public RainAnimation(int spritesetID, String sound, AnimationEndListener listener)
 	{
 		super(new AnimationData(-1), DURATION, listener);
-		this.data().sound = sound;
+		this.data.sound = sound;
 		this.spritesetID = spritesetID;
 		this.drops = new HashMap<SpritesetAnimation, Boolean>();
 	}
@@ -43,7 +43,7 @@ public class RainAnimation extends AbstractAnimation
 			if (!this.drops.get(animation))
 			{
 				animation.setXY(Math.random() * width - animation.spriteset.spriteWidth,
-						Math.random() * height - animation.spriteset.spriteHeight * animation.data().spriteDuration);
+						Math.random() * height - animation.spriteset.spriteHeight * animation.data.spriteDuration);
 				this.drops.put(animation, true);
 			}
 			animation.postrender(g, width, height);

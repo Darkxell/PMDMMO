@@ -21,7 +21,7 @@ public class SnowAnimation extends AbstractAnimation
 	public SnowAnimation(AnimationEndListener listener)
 	{
 		super(new AnimationData(-1), DURATION, listener);
-		this.data().sound = "weather-snow";
+		this.data.sound = "weather-snow";
 	}
 
 	@Override

@@ -52,8 +52,8 @@ public abstract class SpritesetAnimationMovement
 	/** Changes Spriteset gravity to match the input coordinates (Spriteset will be centered around these coords.) */
 	protected void setSpriteLocation(int x, int y)
 	{
-		this.parentAnimation.data().gravityX = this.parentAnimation.spriteset.spriteWidth / 2 - x;
-		this.parentAnimation.data().gravityY = this.parentAnimation.spriteset.spriteHeight / 2 - y;
+		this.parentAnimation.data.gravityX = this.parentAnimation.spriteset.spriteWidth / 2 - x;
+		this.parentAnimation.data.gravityY = this.parentAnimation.spriteset.spriteHeight / 2 - y;
 	}
 
 	public void start()

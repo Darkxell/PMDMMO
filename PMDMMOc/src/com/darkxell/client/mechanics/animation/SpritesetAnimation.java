@@ -34,10 +34,10 @@ public class SpritesetAnimation extends PokemonAnimation
 	private void draw(Graphics2D g, boolean back)
 	{
 		int index = this.index();
-		if (index != -1 && back && this.data().backSpriteUsage == BackSpriteUsage.yes) index += this.spriteset.spriteCount() / 2;
+		if (index != -1 && back && this.data.backSpriteUsage == BackSpriteUsage.yes) index += this.spriteset.spriteCount() / 2;
 
-		if (index != -1 && ((back && this.data().backSpriteUsage != BackSpriteUsage.no) || (!back && this.data().backSpriteUsage != BackSpriteUsage.only)))
-			g.drawImage(this.spriteset.getImg(index), (int) this.x - this.data().gravityX, (int) (this.y - this.data().gravityY), null);
+		if (index != -1 && ((back && this.data.backSpriteUsage != BackSpriteUsage.no) || (!back && this.data.backSpriteUsage != BackSpriteUsage.only)))
+			g.drawImage(this.spriteset.getImg(index), (int) this.x - this.data.gravityX, (int) (this.y - this.data.gravityY), null);
 	}
 
 	public double getX()
@@ -53,9 +53,9 @@ public class SpritesetAnimation extends PokemonAnimation
 	public int index()
 	{
 		if (this.sprites.length == 0) return -1;
-		int i = this.tick() / this.data().spriteDuration;
+		int i = this.tick() / this.data.spriteDuration;
 		while (i >= this.sprites.length && this.plays != 1)
-			i -= this.sprites.length - this.data().loopsFrom;
+			i -= this.sprites.length - this.data.loopsFrom;
 		if (i >= this.sprites.length) return -1;
 		return this.sprites[i];
 	}

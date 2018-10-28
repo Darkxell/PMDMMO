@@ -193,7 +193,6 @@ public final class Animations
 
 	public static PokemonAnimation getProjectileAnimation(DungeonPokemon pokemon, int projectileID, AnimationEndListener listener)
 	{
-		// TODO this is broken if oriented
 		PokemonAnimation a = getAnimation(projectileID, projectiles, pokemon, listener);
 		if (a != null) a.plays = -1;
 		return a;
@@ -249,7 +248,6 @@ public final class Animations
 
 	public static PokemonAnimation getStatusAnimation(DungeonPokemon target, StatusCondition s, AnimationEndListener listener)
 	{
-		// TODO this is broken
 		PokemonAnimation a = getAnimation(s.id, statuses, target, listener);
 		if (a != null) a.plays = -1;
 		return a;

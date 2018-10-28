@@ -136,6 +136,12 @@ public class AnimationData implements Comparable<AnimationData>
 			else return Animations.getCutsceneAnimation(Integer.parseInt(this.clones), cutscene, listener);
 		}
 
+		if (renderer != null)
+		{
+			Direction d = renderer.sprite().getFacingDirection();
+			if (this.getVariant(d) != null) return this.getVariant(d).createAnimation(dungeon, cutscene, renderer, listener);
+		}
+
 		PokemonAnimation a;
 		if (this.sprites == null)
 		{

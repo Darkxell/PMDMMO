@@ -23,13 +23,6 @@ public class PokemonAnimation extends AbstractAnimation
 	}
 
 	@Override
-	protected AnimationData chooseData()
-	{
-		if (this.renderer != null) return this.data.getVariant(this.renderer.sprite().getFacingDirection());
-		return this.data;
-	}
-
-	@Override
 	public void onFinish()
 	{
 		if (this.movement != null) this.movement.onFinish();
@@ -57,8 +50,8 @@ public class PokemonAnimation extends AbstractAnimation
 	{
 		super.start();
 		if (this.renderer != null) this.renderer.addAnimation(this);
-		if (this.data().pokemonState != null && this.data().pokemonStateDelay == 0 && this.renderer != null)
-			this.renderer.sprite().setState(this.data().pokemonState);
+		if (this.data.pokemonState != null && this.data.pokemonStateDelay == 0 && this.renderer != null)
+			this.renderer.sprite().setState(this.data.pokemonState);
 		if (this.movement != null) this.movement.start();
 	}
 
@@ -66,7 +59,7 @@ public class PokemonAnimation extends AbstractAnimation
 	public void update()
 	{
 		super.update();
-		if (this.data().pokemonState != null && this.tick() == this.data().pokemonStateDelay) this.renderer.sprite().setState(this.data().pokemonState);
+		if (this.data.pokemonState != null && this.tick() == this.data.pokemonStateDelay) this.renderer.sprite().setState(this.data.pokemonState);
 		if (this.renderer != null)
 		{
 			this.x = this.renderer.drawX();

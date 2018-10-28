@@ -110,7 +110,7 @@
       <ComboBox fx:id="stateCombobox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="14" />
       <ComboBox fx:id="pokemonMovementCombobox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="16" />
       <CheckBox fx:id="playforeachtargetCheckbox" mnemonicParsing="false" text="Plays for each Move target" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="20" GridPane.valignment="CENTER" />
-      <CheckBox fx:id="stateCheckbox" mnemonicParsing="false" onAction="#onStateChange" text="Pokémon State:" GridPane.rowIndex="14" />
+      <CheckBox fx:id="stateCheckbox" mnemonicParsing="false" text="Pokémon State:" GridPane.rowIndex="14" />
       <Label text="Clones (overrides everything):" />
       <TextField fx:id="clonesTextfield" promptText="(doesn't clone)" GridPane.columnIndex="1" />
    </children>
