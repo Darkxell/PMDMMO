@@ -3,7 +3,7 @@ package com.darkxell.client.state.dungeon;
 import java.awt.Graphics2D;
 
 import com.darkxell.client.launchable.Persistance;
-import com.darkxell.client.mechanics.animation.TravelAnimation;
+import com.darkxell.client.mechanics.animation.travel.TravelAnimation;
 import com.darkxell.client.renderers.pokemon.DungeonPokemonRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;

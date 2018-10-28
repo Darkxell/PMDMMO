@@ -5,7 +5,7 @@ import java.awt.Point;
 import org.jdom2.Element;
 
 import com.darkxell.client.launchable.Persistance;
-import com.darkxell.client.mechanics.animation.TravelAnimation;
+import com.darkxell.client.mechanics.animation.travel.TravelAnimation;
 import com.darkxell.client.mechanics.cutscene.Cutscene;
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
 import com.darkxell.common.util.XMLUtils;

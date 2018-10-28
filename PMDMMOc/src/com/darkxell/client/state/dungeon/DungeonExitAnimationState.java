@@ -6,7 +6,7 @@ import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.animation.Animations;
 import com.darkxell.client.mechanics.animation.PokemonAnimation;
 import com.darkxell.client.mechanics.animation.SpritesetAnimation;
-import com.darkxell.client.mechanics.animation.TravelAnimation;
+import com.darkxell.client.mechanics.animation.travel.TravelAnimation;
 import com.darkxell.client.renderers.pokemon.DungeonPokemonRenderer;
 import com.darkxell.client.resources.images.tilesets.AbstractDungeonTileset;
 import com.darkxell.common.dungeon.floor.Tile;
@@ -53,7 +53,7 @@ public class DungeonExitAnimationState extends AnimationState
 		this.travel.update(this.tick % singleDuration / singleDuration);
 		this.animTravel.update(this.tick % singleDuration / singleDuration);
 		this.currentRenderer.setXY(this.travel.current().getX() - .5, this.travel.current().getY() - .5);
-		if (this.currentAnimation != null) this.currentAnimation.gravityY = (int) (this.animTravel.current().getY());
+		if (this.currentAnimation != null) this.currentAnimation.data.gravityY = (int) (this.animTravel.current().getY());
 		if (this.tick % singleDuration >= (singleDuration - tileFadeDuration))
 			this.currentRenderer.setAlpha((float) ((tileFadeDuration - (this.tick % singleDuration - (singleDuration - tileFadeDuration))) / tileFadeDuration));
 		if (this.tick % singleDuration == 0)
@@ -79,7 +79,7 @@ public class DungeonExitAnimationState extends AnimationState
 			this.currentAnimation = ((SpritesetAnimation) a);
 			this.currentRenderer.addAnimation(this.currentAnimation);
 			this.currentAnimation.start();
-			this.gy = this.currentAnimation.gravityY;
+			this.gy = this.currentAnimation.data.gravityY;
 			this.animTravel = new TravelAnimation(new Point2D.Double(0, this.gy),
 					new Point2D.Double(0, this.gy - tileUpCount * AbstractDungeonTileset.TILE_SIZE));
 		}

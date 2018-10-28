@@ -7,24 +7,27 @@ import com.darkxell.client.resources.music.SoundManager;
 public class AbstractAnimation
 {
 
+	public final AnimationData data;
 	int delayTime = 0;
 	/** The total duration of this Animation. */
 	int duration = 0;
 	private AnimationEndListener listener;
 	/** The number of times this animation plays. Usually 1, or -1 as until removed. */
 	public int plays = 1;
-	/** The ID of the sound to play when this Animation is played. */
-	protected String sound = null;
-	/** The number of ticks to wait before playing the sound. */
-	int soundDelay = 0;
 	/** Used to remove this animation when this Source is dropped. */
 	public Object source;
 	private int tick = 0;
 
-	public AbstractAnimation(int duration, AnimationEndListener listener)
+	public AbstractAnimation(AnimationData data, int duration, AnimationEndListener listener)
 	{
+		this.data = data;
 		this.delayTime = this.duration = duration;
 		this.listener = listener;
+	}
+
+	protected AnimationData chooseData()
+	{
+		return this.data;
 	}
 
 	/** @return From 0 to 1, how far this Animation is. */
@@ -95,7 +98,7 @@ public class AbstractAnimation
 
 	public void update()
 	{
-		if (this.sound != null && this.tick == this.soundDelay) SoundManager.playSound(this.sound);
+		if (this.data.sound != null && this.tick == this.data.soundDelay) SoundManager.playSound(this.data.sound);
 		if (!this.isOver()) ++this.tick;
 		// Can't use else: needs to increase and finish on same tick.
 		if (this.isDelayOver()) this.onDelayFinished();

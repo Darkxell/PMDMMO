@@ -16,12 +16,11 @@ public class Util
 
 	public static Player createDefaultPlayer()
 	{
-		final int starter = 4;
-		Player player = new Player("Offline debug account name", PokemonRegistry.find(starter).generate(new Random(), 10, 1));
+		Player player = new Player("Offline debug account name", PokemonRegistry.find(4).generate(new Random(), 10, 1));
 		player.setStoryPosition(500);
 		player.setMoneyInBag(69);
 		player.setMoneyInBank(456789);
-		player.addAlly(PokemonRegistry.find(starter).generate(new Random(), 80));
+		player.addAlly(PokemonRegistry.find(258).generate(new Random(), 80));
 		// player.addAlly(PokemonRegistry.find(255).generate(new Random(), 80));
 		player.getTeamLeader().setItem(new ItemStack(208));
 		player.getTeamLeader().setMove(0, new LearnedMove(352));

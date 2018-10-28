@@ -8,7 +8,7 @@ import com.darkxell.client.mechanics.animation.AbstractAnimation;
 import com.darkxell.client.mechanics.animation.AnimationEndListener;
 import com.darkxell.client.state.mainstates.PrincipalMainState;
 
-import fr.darkxell.dataeditor.application.controller.animation.EditAnimationController;
+import fr.darkxell.dataeditor.application.controller.animation.TestAnimationController;
 import javafx.embed.swing.SwingFXUtils;
 
 public class AnimationPreviewThread extends UpdaterAndRenderer implements AnimationEndListener
@@ -20,18 +20,18 @@ public class AnimationPreviewThread extends UpdaterAndRenderer implements Animat
 	public void onAnimationEnd(AbstractAnimation animation)
 	{
 		this.cooldown = 50;
-		EditAnimationController.instance.updateProgressBar(true);
+		TestAnimationController.instance.updateProgressBar(true);
 	}
 
 	@Override
 	protected void tickUpdate()
 	{
-		EditAnimationController.state.update();
+		TestAnimationController.state.update();
 		if (this.cooldown > 0)
 		{
 			--this.cooldown;
-			if (this.cooldown == 0) EditAnimationController.instance.playAnimation(false);
-		} else EditAnimationController.instance.updateProgressBar(false);
+			if (this.cooldown == 0) TestAnimationController.instance.playAnimation(false);
+		} else TestAnimationController.instance.updateProgressBar(false);
 
 		int width = PrincipalMainState.displayWidth, height = PrincipalMainState.displayHeight;
 		image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
@@ -39,13 +39,13 @@ public class AnimationPreviewThread extends UpdaterAndRenderer implements Animat
 		// g.scale(16, 16);
 		// g.translate(-width * 3.5 / 8, -height * 3.5 / 8);
 
-		EditAnimationController.state.render(g, width, height);
+		TestAnimationController.state.render(g, width, height);
 
 		// g.translate(width * 3.5 / 8, height * 3.5 / 8);
 		// g.scale(1. / 16, 1. / 16);
 		g.dispose();
 
-		EditAnimationController.instance.imageView.setImage(SwingFXUtils.toFXImage(image, null));
+		TestAnimationController.instance.imageView.setImage(SwingFXUtils.toFXImage(image, null));
 	}
 
 }

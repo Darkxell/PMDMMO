@@ -31,7 +31,7 @@ public enum Direction
 	/** List of all Directions. */
 	public static final Direction[] directions = { NORTH, NORTHEAST, EAST, SOUTHEAST, SOUTH, SOUTHWEST, WEST, NORTHWEST };
 	/** Names of the Directions. */
-	private static final String[] names = new String[] { "North", "Northeast", "East", "Southeast", "South", "Southeast", "West", "Northwest" };
+	private static final String[] names = new String[] { "North", "Northeast", "East", "Southeast", "South", "Southwest", "West", "Northwest" };
 
 	/** @return A random Direction. */
 	public static Direction randomDirection(Random random)

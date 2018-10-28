@@ -2,8 +2,8 @@ package com.darkxell.client.state.dungeon;
 
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.animation.AnimationEndListener;
-import com.darkxell.client.mechanics.animation.ArcAnimation;
-import com.darkxell.client.mechanics.animation.TravelAnimation;
+import com.darkxell.client.mechanics.animation.travel.ArcAnimation;
+import com.darkxell.client.mechanics.animation.travel.TravelAnimation;
 import com.darkxell.client.renderers.pokemon.DungeonPokemonRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
 import com.darkxell.common.event.pokemon.BlowbackPokemonEvent;

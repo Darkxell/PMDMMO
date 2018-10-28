@@ -4,7 +4,7 @@ import java.awt.geom.Point2D;
 
 import com.darkxell.client.mechanics.animation.SpritesetAnimation;
 import com.darkxell.client.mechanics.animation.SpritesetAnimation.BackSpriteUsage;
-import com.darkxell.client.mechanics.animation.TravelAnimation;
+import com.darkxell.client.mechanics.animation.travel.TravelAnimation;
 import com.darkxell.client.resources.images.tilesets.AbstractDungeonTileset;
 import com.darkxell.common.util.Direction;
 
@@ -23,7 +23,7 @@ public class FacingTileAnimationMovement extends SpritesetAnimationMovement
 	{
 		super.start();
 		Direction d = this.parentAnimation.renderer.sprite().getFacingDirection();
-		if (d == Direction.NORTH || d == Direction.NORTHEAST || d == Direction.NORTHWEST) this.parentAnimation.backSpriteUsage = BackSpriteUsage.only;
+		if (d == Direction.NORTH || d == Direction.NORTHEAST || d == Direction.NORTHWEST) this.parentAnimation.data.backSpriteUsage = BackSpriteUsage.only;
 
 		Point2D origin = new Point2D.Double(0, 0);
 		this.travel = new TravelAnimation(origin, d.move(origin));
