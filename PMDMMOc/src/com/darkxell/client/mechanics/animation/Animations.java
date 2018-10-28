@@ -193,6 +193,7 @@ public final class Animations
 
 	public static PokemonAnimation getProjectileAnimation(DungeonPokemon pokemon, int projectileID, AnimationEndListener listener)
 	{
+		// TODO this is broken if oriented
 		PokemonAnimation a = getAnimation(projectileID, projectiles, pokemon, listener);
 		if (a != null) a.plays = -1;
 		return a;
@@ -248,6 +249,7 @@ public final class Animations
 
 	public static PokemonAnimation getStatusAnimation(DungeonPokemon target, StatusCondition s, AnimationEndListener listener)
 	{
+		// TODO this is broken
 		PokemonAnimation a = getAnimation(s.id, statuses, target, listener);
 		if (a != null) a.plays = -1;
 		return a;
@@ -321,7 +323,7 @@ public final class Animations
 		for (Element status : xml.getChild("statuses", xml.getNamespace()).getChildren("status", xml.getNamespace()))
 		{
 			int id = Integer.parseInt(status.getAttributeValue("id"));
-			statuses.put(id, new AnimationData(id, "statuses/", status));
+			statuses.put(id, new AnimationData(id, "status/", status));
 		}
 	}
 

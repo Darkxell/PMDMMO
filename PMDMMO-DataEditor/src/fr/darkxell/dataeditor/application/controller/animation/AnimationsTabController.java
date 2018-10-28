@@ -83,6 +83,14 @@ public class AnimationsTabController implements Initializable
 		return null;
 	}
 
+	private AnimationListItem findListItem(int id, AnimationGroup group)
+	{
+		TreeItem<CustomTreeItem> category = this.category(group);
+		for (TreeItem<CustomTreeItem> item : category.getChildren())
+			if (item.getValue() instanceof AnimationListItem && ((AnimationListItem) item.getValue()).id == id) return (AnimationListItem) item.getValue();
+		return null;
+	}
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
 	{
@@ -196,6 +204,7 @@ public class AnimationsTabController implements Initializable
 
 	public void onEdit(AnimationListItem item)
 	{
+		if (item == null) return;
 		this.editing = item;
 		this.testAnimationController.setAnimation(item);
 		this.editAnimationController.setupFor(item);
@@ -209,6 +218,7 @@ public class AnimationsTabController implements Initializable
 		Animations.unregister(anim.id, group);
 		Animations.register(anim, group);
 		this.reloadList();
+		this.onEdit(this.findListItem(anim.id, group));
 	}
 
 	public void onSaveAll()

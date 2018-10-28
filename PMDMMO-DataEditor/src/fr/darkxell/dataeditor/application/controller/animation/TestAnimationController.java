@@ -100,9 +100,6 @@ public class TestAnimationController implements Initializable
 
 	public void onReload()
 	{
-		Animations.loadData();
-		AnimationsTabController.instance.reloadList();
-
 		this.setAnimation(this.animation);
 	}
 
