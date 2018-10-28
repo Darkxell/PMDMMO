@@ -30,7 +30,7 @@ public class RotateEventController extends EventController
 	public CutsceneEvent generateEvent()
 	{
 		return new RotateCutsceneEvent(this.id(), this.targetCombobox.getSelectionModel().getSelectedItem(),
-				Double.valueOf(this.distanceTextfield.getText()).intValue(), Double.valueOf(this.distanceTextfield.getText()).intValue());
+				Double.valueOf(this.distanceTextfield.getText()).intValue(), Double.valueOf(this.speedTextfield.getText()).intValue());
 	}
 
 	@Override

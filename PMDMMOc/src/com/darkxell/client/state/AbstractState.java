@@ -1,6 +1,7 @@
 package com.darkxell.client.state;
 
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
 
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.layers.AbstractGraphiclayer;
@@ -34,6 +35,12 @@ public abstract class AbstractState extends AbstractGraphiclayer {
 	 * @see Keys#KEY_UP
 	 */
 	public abstract void onKeyReleased(Key key);
+
+	/**
+	 * Called when the user types a char by the principalmainstate.
+	 */
+	public void onKeyTyped(KeyEvent e) {
+	}
 
 	/**
 	 * Called when the user clicks.

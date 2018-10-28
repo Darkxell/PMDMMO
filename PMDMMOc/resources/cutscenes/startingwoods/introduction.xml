@@ -9,18 +9,22 @@
     </pokemon>
   </creation>
   <events>
-    <rotate target="1" distance="2" />
-    <wait />
-    <rotate target="1" distance="-4" />
-    <wait />
-    <rotate target="1" distance="2" />
+    <rotate target="1" distance="2" speed="12" />
     <wait />
     <dialog>
       <dialogscreen>cutscene.startingwoods.introduction.m1</dialogscreen>
+      <dialogscreen target="1">cutscene.startingwoods.introduction.m2</dialogscreen>
     </dialog>
     <wait />
+    <rotate target="1" distance="-2" />
+    <wait />
+    <rotate target="1" distance="4" speed="5" />
+    <wait />
+    <delay ticks="15" />
+    <rotate target="1" distance="-4" speed="5" />
+    <wait />
+    <delay ticks="30" />
     <dialog>
-      <dialogscreen target="1">cutscene.startingwoods.introduction.m2</dialogscreen>
       <dialogscreen>cutscene.startingwoods.introduction.m3</dialogscreen>
       <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.startingwoods.introduction.m4</dialogscreen>
       <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.startingwoods.introduction.m5</dialogscreen>

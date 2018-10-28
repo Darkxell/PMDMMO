@@ -72,9 +72,11 @@ public class PrincipalMainState extends StateManager
 	}
 
 	@Override
-	public void onKeyTyped(KeyEvent e)
-	{
-		if (isChatFocused) Persistance.chatbox.textfield.onKeyTyped(e);
+	public void onKeyTyped(KeyEvent e) {
+		if (isChatFocused)
+			Persistance.chatbox.textfield.onKeyTyped(e);
+		if (isGameFocused)
+		this.currentState.onKeyTyped(e);
 	}
 
 	@Override
