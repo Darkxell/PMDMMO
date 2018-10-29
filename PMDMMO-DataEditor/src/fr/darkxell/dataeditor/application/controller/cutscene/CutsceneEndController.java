@@ -60,6 +60,8 @@ public class CutsceneEndController implements Initializable, ChangeListener<Cuts
 	@FXML
 	private TextField freezoneYTextfield;
 	@FXML
+	private TextField functionTextfield;
+	@FXML
 	private ComboBox<CutsceneEndMode> modeCombobox;
 
 	@Override
@@ -74,20 +76,22 @@ public class CutsceneEndController implements Initializable, ChangeListener<Cuts
 
 	public CutsceneEnd getEnd()
 	{
+		String function = this.functionTextfield.getText();
+		if (function.equals("")) function = null;
 		switch (this.modeCombobox.getSelectionModel().getSelectedItem())
 		{
 			case CUTSCENE:
-				return new PlayCutsceneCutsceneEnd(this.cutsceneCombobox.getSelectionModel().getSelectedItem().name);
+				return new PlayCutsceneCutsceneEnd(this.cutsceneCombobox.getSelectionModel().getSelectedItem().name, function);
 
 			case DUNGEON:
-				return new EnterDungeonCutsceneEnd(this.dungeonCombobox.getSelectionModel().getSelectedItem().id);
+				return new EnterDungeonCutsceneEnd(this.dungeonCombobox.getSelectionModel().getSelectedItem().id, function);
 
 			case FREEZONE:
 				return new LoadFreezoneCutsceneEnd(this.freezoneCombobox.getValue(), Integer.parseInt(this.freezoneXTextfield.getText()),
-						Integer.parseInt(this.freezoneYTextfield.getText()));
+						Integer.parseInt(this.freezoneYTextfield.getText()), function);
 
 			case EXPLORE:
-				return new ResumeExplorationCutsceneEnd();
+				return new ResumeExplorationCutsceneEnd(function);
 		}
 		return null;
 	}
@@ -104,6 +108,11 @@ public class CutsceneEndController implements Initializable, ChangeListener<Cuts
 			return pattern.matcher(change.getControlNewText()).matches() ? change : null;
 		});
 		this.freezoneYTextfield.setTextFormatter(formatter);
+		Pattern pattern2 = Pattern.compile("\\w*");
+		TextFormatter<String> formatter2 = new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
+			return pattern2.matcher(change.getControlNewText()).matches() ? change : null;
+		});
+		this.functionTextfield.setTextFormatter(formatter2);
 
 		this.cutsceneCombobox.getItems().addAll(Cutscenes.values());
 		this.dungeonCombobox.getItems().addAll(DungeonRegistry.list());
@@ -139,6 +148,8 @@ public class CutsceneEndController implements Initializable, ChangeListener<Cuts
 			this.modeCombobox.getSelectionModel().select(CutsceneEndMode.FREEZONE);
 		}
 		if (end instanceof ResumeExplorationCutsceneEnd) this.modeCombobox.getSelectionModel().select(CutsceneEndMode.EXPLORE);
+		if (end.function() != null) this.functionTextfield.setText(end.function());
+		else this.functionTextfield.setText("");
 	}
 
 }

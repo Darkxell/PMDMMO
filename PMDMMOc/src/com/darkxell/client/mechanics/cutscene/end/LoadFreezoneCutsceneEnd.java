@@ -14,25 +14,25 @@ public class LoadFreezoneCutsceneEnd extends CutsceneEnd
 	public final FreezoneInfo freezone;
 	public final int xPos, yPos;
 
-	public LoadFreezoneCutsceneEnd(Cutscene cutscene)
-	{
-		super(cutscene);
-		this.freezone = FreezoneInfo.BASE;
-		this.xPos = -1;
-		this.yPos = -1;
-	}
-
 	public LoadFreezoneCutsceneEnd(Cutscene cutscene, Element xml)
 	{
-		super(cutscene);
+		super(cutscene, xml);
 		this.freezone = FreezoneInfo.find(xml.getAttributeValue("id"));
 		this.xPos = XMLUtils.getAttribute(xml, "xpos", -1);
 		this.yPos = XMLUtils.getAttribute(xml, "ypos", -1);
 	}
 
-	public LoadFreezoneCutsceneEnd(FreezoneInfo freezone, int x, int y)
+	public LoadFreezoneCutsceneEnd(Cutscene cutscene, String function)
 	{
-		super(null);
+		super(cutscene, function);
+		this.freezone = FreezoneInfo.BASE;
+		this.xPos = -1;
+		this.yPos = -1;
+	}
+
+	public LoadFreezoneCutsceneEnd(FreezoneInfo freezone, int x, int y, String function)
+	{
+		super(null, function);
 		this.freezone = freezone;
 		this.xPos = x;
 		this.yPos = y;
@@ -48,10 +48,16 @@ public class LoadFreezoneCutsceneEnd extends CutsceneEnd
 	@Override
 	public Element toXML()
 	{
-		Element root = new Element("loadfreezone").setAttribute("id", this.freezone.id);
+		Element root = super.toXML().setAttribute("id", this.freezone.id);
 		XMLUtils.setAttribute(root, "xpos", this.xPos, -1);
 		XMLUtils.setAttribute(root, "ypos", this.yPos, -1);
 		return root;
+	}
+
+	@Override
+	protected String xmlName()
+	{
+		return "loadfreezone";
 	}
 
 }

@@ -83,7 +83,7 @@ public class CutscenePlayer
 			} else event.update();
 		}
 
-		if (this.playingEvents.isEmpty() && this.pendingEvents.isEmpty()) this.cutscene.onFinish.onCutsceneEnd();
+		if (this.playingEvents.isEmpty() && this.pendingEvents.isEmpty()) this.cutscene.onCutsceneEnd();
 	}
 
 }

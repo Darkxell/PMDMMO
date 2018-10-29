@@ -14,13 +14,13 @@ public class PlayCutsceneCutsceneEnd extends CutsceneEnd
 
 	public PlayCutsceneCutsceneEnd(Cutscene cutscene, Element xml)
 	{
-		super(cutscene);
+		super(cutscene, xml);
 		this.cutsceneID = XMLUtils.getAttribute(xml, "id", null);
 	}
 
-	public PlayCutsceneCutsceneEnd(String cutsceneID)
+	public PlayCutsceneCutsceneEnd(String cutsceneID, String function)
 	{
-		super(null);
+		super(null, function);
 		this.cutsceneID = cutsceneID;
 	}
 
@@ -34,7 +34,13 @@ public class PlayCutsceneCutsceneEnd extends CutsceneEnd
 	@Override
 	public Element toXML()
 	{
-		return new Element("playcutscene").setAttribute("id", this.cutsceneID);
+		return super.toXML().setAttribute("id", this.cutsceneID);
+	}
+	
+	@Override
+	protected String xmlName()
+	{
+		return "playcutscene";
 	}
 
 }
