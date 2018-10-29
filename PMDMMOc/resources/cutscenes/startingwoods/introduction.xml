@@ -42,6 +42,6 @@
     </dialog>
   </events>
   <onfinish>
-    <loadfreezone id="base" />
+    <loadfreezone id="startforest" xpos="35" ypos="23" />
   </onfinish>
 </cutscene>

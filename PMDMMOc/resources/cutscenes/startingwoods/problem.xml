@@ -95,6 +95,6 @@
     </dialog>
   </events>
   <onfinish>
-    <loadfreezone id="base" />
+    <enterdungeon id="1" />
   </onfinish>
 </cutscene>

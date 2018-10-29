@@ -11,6 +11,6 @@
     </dialog>
   </events>
   <onfinish>
-    <loadfreezone id="base" />
+    <playcutscene id="startingwoods/introduction" />
   </onfinish>
 </cutscene>
