@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import org.jdom2.Element;
-
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.cutscene.Cutscene;
 import com.darkxell.client.mechanics.cutscene.Cutscene.CutsceneEnd;
@@ -38,7 +36,7 @@ public class MissionResultsState extends CutsceneState
 
 		public NextMissionCutsceneEnd(Cutscene cutscene, MissionResultsState state)
 		{
-			super(cutscene);
+			super(cutscene, (String) null);
 			this.state = state;
 		}
 
@@ -56,9 +54,9 @@ public class MissionResultsState extends CutsceneState
 		}
 
 		@Override
-		public Element toXML()
+		protected String xmlName()
 		{
-			return new Element("nextmissionresults");
+			return "nextmissionresults";
 		}
 
 	}

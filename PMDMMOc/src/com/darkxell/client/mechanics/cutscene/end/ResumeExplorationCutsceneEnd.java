@@ -10,14 +10,14 @@ import com.darkxell.client.state.dungeon.NextFloorState;
 public class ResumeExplorationCutsceneEnd extends CutsceneEnd
 {
 
-	public ResumeExplorationCutsceneEnd()
+	public ResumeExplorationCutsceneEnd(Cutscene cutscene, Element xml)
 	{
-		this(null);
+		super(cutscene, xml);
 	}
 
-	public ResumeExplorationCutsceneEnd(Cutscene cutscene)
+	public ResumeExplorationCutsceneEnd(String function)
 	{
-		super(cutscene);
+		super(null, function);
 	}
 
 	@Override
@@ -30,9 +30,9 @@ public class ResumeExplorationCutsceneEnd extends CutsceneEnd
 	}
 
 	@Override
-	public Element toXML()
+	protected String xmlName()
 	{
-		return new Element("resumeexploration");
+		return "resumeexploration";
 	}
 
 }

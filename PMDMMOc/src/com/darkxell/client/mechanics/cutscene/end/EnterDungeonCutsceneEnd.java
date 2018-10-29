@@ -15,15 +15,15 @@ public class EnterDungeonCutsceneEnd extends CutsceneEnd
 
 	public final int dungeonID;
 
-	public EnterDungeonCutsceneEnd(int dungeonID)
+	public EnterDungeonCutsceneEnd(int dungeonID, String function)
 	{
-		super(null);
+		super(null, function);
 		this.dungeonID = dungeonID;
 	}
 
 	public EnterDungeonCutsceneEnd(Cutscene cutscene, Element xml)
 	{
-		super(cutscene);
+		super(cutscene, xml);
 		this.dungeonID = XMLUtils.getAttribute(xml, "id", 1);
 	}
 
@@ -34,11 +34,17 @@ public class EnterDungeonCutsceneEnd extends CutsceneEnd
 		// TODO ask server for dungeon start & seed!
 		StateManager.setDungeonState(Persistance.cutsceneState, this.dungeonID, new Random().nextLong());
 	}
+	
+	@Override
+	protected String xmlName()
+	{
+		return "enterdungeon";
+	}
 
 	@Override
 	public Element toXML()
 	{
-		return new Element("enterdungeon").setAttribute("id", String.valueOf(this.dungeonID));
+		return super.toXML().setAttribute("id", String.valueOf(this.dungeonID));
 	}
 
 }
