@@ -259,7 +259,7 @@ This payload is sent when the client wants to be notified shortly about all the 
 
 ■ ACCEPTMISSION
 
-{"action":"acceptmission"
+{"action":"acceptmission",
 
 "mission":"missioncode"
 
@@ -270,13 +270,26 @@ Note that the server might ignore this payload if the player has already accepte
 
 ■ DELETEMISSION
 
-{"action":"deletemission"
+{"action":"deletemission",
 
 "mission":"missioncode"
 
 }
 
 This payload is sent to the server to delete a mission from the player mission inventory.
+
+■ NICKNAME
+
+{"action":"nickname",
+
+"pokemonid":id,
+
+"nickname":"newnickname"
+
+}
+
+This payload can be sent by any connected client and will change the nickname of the parsed pokemon to the parsed name.
+Note that this will only occur if the connected player owns the pokemon.
 
 # 4 - List of server -> client payloads
 

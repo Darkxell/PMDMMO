@@ -37,6 +37,7 @@ import com.darkxell.gameserver.messagehandlers.InventoryRequestHandler;
 import com.darkxell.gameserver.messagehandlers.ItemActionHandler;
 import com.darkxell.gameserver.messagehandlers.LoginHandler;
 import com.darkxell.gameserver.messagehandlers.MonsterRequestHandler;
+import com.darkxell.gameserver.messagehandlers.NicknameHandler;
 import com.darkxell.gameserver.messagehandlers.ObjectrequestHandler;
 import com.darkxell.gameserver.messagehandlers.PublicKeyRequestHandler;
 import com.darkxell.gameserver.messagehandlers.SaltResetHandler;
@@ -347,6 +348,14 @@ public class GameServer {
                             return;
                         }
                         DeleteMissionHandler hand = new DeleteMissionHandler(this);
+                        hand.handleMessage(jsonMessage, session, sessionHandler);
+                        break;
+                    }
+                    case "nickname": {
+                        if (!infos.isconnected) {
+                            return;
+                        }
+                        NicknameHandler hand = new NicknameHandler(this);
                         hand.handleMessage(jsonMessage, session, sessionHandler);
                         break;
                     }
