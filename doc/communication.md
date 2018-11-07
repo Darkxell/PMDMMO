@@ -291,6 +291,18 @@ This payload is sent to the server to delete a mission from the player mission i
 This payload can be sent by any connected client and will change the nickname of the parsed pokemon to the parsed name.
 Note that this will only occur if the connected player owns the pokemon.
 
+■ STORYADVANCE
+
+{"action":"storyadvance",
+
+"target":id
+
+}
+
+This payload can be sent by a client to change it's serverside storyposition to the desired value.
+Note that this only works for a very limited ammount of values, and only if the account already is in a specific storyposition.
+StorypositionAdvanceHandler.java in the server project contains the list of positions reachable.
+
 # 4 - List of server -> client payloads
 
 ■ CHATMESSAGE

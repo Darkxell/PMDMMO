@@ -44,6 +44,7 @@ import com.darkxell.gameserver.messagehandlers.SaltResetHandler;
 import com.darkxell.gameserver.messagehandlers.SetEncryptionKeyHandler;
 import com.darkxell.gameserver.messagehandlers.TestResultHandler;
 import com.darkxell.gameserver.messagehandlers.StorageactionHandler;
+import com.darkxell.gameserver.messagehandlers.StorypositionAdvanceHandler;
 import com.darkxell.model.ejb.Holdeditem_DAO;
 import com.darkxell.model.ejb.InventoryDAO;
 import com.darkxell.model.ejb.Inventorycontains_DAO;
@@ -356,6 +357,14 @@ public class GameServer {
                             return;
                         }
                         NicknameHandler hand = new NicknameHandler(this);
+                        hand.handleMessage(jsonMessage, session, sessionHandler);
+                        break;
+                    }
+                    case "storyadvance": {
+                        if (!infos.isconnected) {
+                            return;
+                        }
+                        StorypositionAdvanceHandler hand = new StorypositionAdvanceHandler(this);
                         hand.handleMessage(jsonMessage, session, sessionHandler);
                         break;
                     }
