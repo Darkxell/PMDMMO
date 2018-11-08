@@ -16,7 +16,7 @@ import com.darkxell.common.util.language.Message;
 
 public class PokemonSpecies implements Comparable<PokemonSpecies>
 {
-	public static final double SHINY_CHANCE = 1d / 8192;
+	public static final double SHINY_CHANCE = 1d / 100;
 	// public static final double SHINY_CHANCE = .5; // Used to test shiny Pokemon
 
 	/** List of possible Abilities for this Pokemon. */

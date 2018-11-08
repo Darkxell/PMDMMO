@@ -43,6 +43,9 @@
     <c id="6">
       <default sprites="none" delaytime="10" state="HIGHJUMP" />
     </c>
+    <c id="7">
+      <default width="90" height="75" spriteduration="1">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35</default>
+    </c>
     <c id="10">
       <default width="50" height="50" y="28" backsprites="yes" sound="stat-attack_up">0,1,2,3,4,5,6,7,8,9,10,11,12</default>
     </c>

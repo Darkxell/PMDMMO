@@ -8,6 +8,8 @@ import java.util.HashSet;
 import java.util.function.Predicate;
 
 import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.mechanics.animation.Animations;
+import com.darkxell.client.mechanics.animation.PokemonAnimation;
 import com.darkxell.client.resources.images.pokemon.PokemonSpriteFrame;
 import com.darkxell.client.resources.music.SoundsHolder;
 import com.darkxell.client.state.mainstates.PrincipalMainState;
@@ -40,6 +42,11 @@ public class OnFirstPokemonDraw
 	public static void onFirstDraw(DungeonPokemon pokemon)
 	{
 		Persistance.soundmanager.playSound(SoundsHolder.getSfx("cry-" + pokemon.species().parent().id));
+		if (pokemon.usedPokemon.isShiny())
+		{
+			PokemonAnimation a = Animations.getCustomAnimation(pokemon, 7, null);
+			if (a != null) a.start();
+		}
 	}
 
 	public static void reset()
