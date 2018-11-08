@@ -12,6 +12,7 @@ import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.event.ClientEventProcessor;
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
 import com.darkxell.client.mechanics.freezones.Freezones;
+import com.darkxell.client.renderers.pokemon.OnFirstPokemonDraw;
 import com.darkxell.client.resources.images.SpriteLoader;
 import com.darkxell.client.state.dungeon.DungeonEndState;
 import com.darkxell.client.state.dungeon.NextFloorState;
@@ -118,6 +119,7 @@ public abstract class StateManager {
 	 *            - Seed to use for RNG in the Dungeon.
 	 */
 	public static void setDungeonState(AbstractState fadeOutState, int dungeonID, long seed) {
+		OnFirstPokemonDraw.newDungeon();
 		Persistance.dungeon = DungeonRegistry.find(dungeonID).newInstance(seed);
 		Persistance.dungeon.eventProcessor = new ClientEventProcessor(Persistance.dungeon);
 		Persistance.dungeon.addPlayer(Persistance.player);

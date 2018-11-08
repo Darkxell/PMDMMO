@@ -16,6 +16,7 @@ import com.darkxell.client.mechanics.cutscene.CutsceneManager;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.renderers.TextRenderer.FontMode;
 import com.darkxell.client.renderers.pokemon.DungeonPokemonRenderer;
+import com.darkxell.client.renderers.pokemon.OnFirstPokemonDraw;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
 import com.darkxell.client.resources.music.SoundManager;
@@ -35,6 +36,7 @@ import com.darkxell.client.state.dungeon.ProjectileAnimationState.ProjectileMove
 import com.darkxell.client.state.menu.dungeon.MoveLearnMenuState;
 import com.darkxell.client.state.menu.dungeon.StairMenuState;
 import com.darkxell.common.dungeon.DungeonExploration;
+import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.event.CommonEventProcessor;
@@ -215,6 +217,13 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	}
 
 	@Override
+	public void onFloorStart(Floor floor)
+	{
+		super.onFloorStart(floor);
+		OnFirstPokemonDraw.reset();
+	}
+
+	@Override
 	public void onTurnEnd()
 	{
 		if (!this.travels.isEmpty()) this.animateDelayed();
@@ -225,6 +234,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 				this.addToPending(new StairLandingEvent());
 				this.landedOnStairs = false;
 			}
+			OnFirstPokemonDraw.update();
 			Logger.event("Turn ended ---------------");
 			super.onTurnEnd();
 		}

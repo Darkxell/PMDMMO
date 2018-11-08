@@ -3,15 +3,12 @@ package com.darkxell.client.state;
 import java.awt.Graphics2D;
 
 import com.darkxell.client.launchable.Persistance;
-import com.darkxell.client.mechanics.cutscene.Cutscene;
 import com.darkxell.client.mechanics.cutscene.CutsceneManager;
 import com.darkxell.client.mechanics.freezones.zones.BaseFreezone;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.renderers.layers.BackgroundSeaLayer;
 import com.darkxell.client.resources.images.Sprites;
 import com.darkxell.client.resources.music.SoundsHolder;
-import com.darkxell.client.state.freezone.CutsceneState;
-import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.Logger;

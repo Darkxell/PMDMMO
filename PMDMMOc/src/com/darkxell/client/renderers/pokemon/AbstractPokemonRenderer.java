@@ -112,7 +112,6 @@ public class AbstractPokemonRenderer extends AbstractRenderer
 		BufferedImage s = sprite.getCurrentSprite();
 
 		int xPos = x - s.getWidth() / 2 + frame.spriteX, yPos = y - s.getHeight() / 2 + frame.spriteY;
-
 		g.drawImage(s, (frame.isFlipped ? s.getWidth() : 0) + xPos, yPos, (frame.isFlipped ? -1 : 1) * s.getWidth(), s.getHeight(), null);
 	}
 

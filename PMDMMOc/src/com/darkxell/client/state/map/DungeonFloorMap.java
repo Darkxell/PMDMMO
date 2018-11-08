@@ -47,9 +47,12 @@ public class DungeonFloorMap extends AbstractDisplayMap
 				&& Persistance.player.getDungeonLeader().tile() != null)
 		{
 			DungeonPokemonRenderer renderer = Persistance.dungeonState.pokemonRenderer.getRenderer(Persistance.player.getDungeonLeader());
-			this.x = (int) (renderer.x() * TILE_SIZE / AbstractDungeonTileset.TILE_SIZE - width / 2);
-			this.y = (int) (renderer.y() * TILE_SIZE / AbstractDungeonTileset.TILE_SIZE - height / 2);
-			this.defaultLocationSet = true;
+			if (renderer != null)
+			{
+				this.x = (int) (renderer.x() * TILE_SIZE / AbstractDungeonTileset.TILE_SIZE - width / 2);
+				this.y = (int) (renderer.y() * TILE_SIZE / AbstractDungeonTileset.TILE_SIZE - height / 2);
+				this.defaultLocationSet = true;
+			}
 		}
 
 		g.translate(-this.x, -this.y);

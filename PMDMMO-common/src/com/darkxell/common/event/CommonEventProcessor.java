@@ -10,6 +10,7 @@ import com.darkxell.common.dungeon.AutoDungeonExploration;
 import com.darkxell.common.dungeon.DungeonExploration;
 import com.darkxell.common.dungeon.DungeonOutcome;
 import com.darkxell.common.dungeon.DungeonOutcome.Outcome;
+import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.action.PokemonRotateEvent;
 import com.darkxell.common.event.action.PokemonSpawnedEvent;
 import com.darkxell.common.event.action.PokemonTravelEvent;
@@ -125,6 +126,9 @@ public class CommonEventProcessor
 	{
 		return this.pending.size() != 0;
 	}
+
+	public void onFloorStart(Floor floor)
+	{}
 
 	public void onTurnEnd()
 	{

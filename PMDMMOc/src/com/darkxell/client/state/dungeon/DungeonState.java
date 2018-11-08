@@ -202,8 +202,8 @@ public class DungeonState extends AbstractState
 			}
 		} else
 		{
-			x = (int) (r.x() + TILE_SIZE / 2 - width / 2);
-			y = (int) (r.y() + TILE_SIZE / 2 - height / 2);
+			x = (int) (r.drawX() - width / 2);
+			y = (int) (r.drawY() - height / 2);
 		}
 
 		if (Persistance.floor.data.hasCustomTileset())

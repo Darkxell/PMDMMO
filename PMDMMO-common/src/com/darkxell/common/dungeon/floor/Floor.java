@@ -187,6 +187,7 @@ public class Floor
 	/** Called when a this Floor starts. */
 	public void onFloorStart(ArrayList<DungeonEvent> events)
 	{
+		this.dungeon.eventProcessor.onFloorStart(this);
 		Weather w = this.dungeon.dungeon().weather(this.id, this.random);
 		events.add(new PersistantWeatherChangedEvent(this, new ActiveWeather(w, null, this, -1)));
 		for (DungeonPokemon pokemon : this.listPokemon())
