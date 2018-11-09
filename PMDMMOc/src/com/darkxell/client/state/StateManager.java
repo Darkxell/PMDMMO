@@ -14,6 +14,7 @@ import com.darkxell.client.mechanics.freezones.FreezoneMap;
 import com.darkxell.client.mechanics.freezones.Freezones;
 import com.darkxell.client.renderers.pokemon.OnFirstPokemonDraw;
 import com.darkxell.client.resources.images.SpriteLoader;
+import com.darkxell.client.state.dungeon.AskServerForDungeonSeedState;
 import com.darkxell.client.state.dungeon.DungeonEndState;
 import com.darkxell.client.state.dungeon.NextFloorState;
 import com.darkxell.client.state.freezone.FreezoneExploreState;
@@ -126,6 +127,14 @@ public abstract class StateManager {
 		SpriteLoader.loadDungeon(Persistance.dungeon);
 		Persistance.floor = Persistance.dungeon.initiateExploration();
 		Persistance.stateManager.setState(new NextFloorState(fadeOutState, 1));
+	}
+
+	/**
+	 * Will set to a transition state asking the server for a seed.
+	 */
+	public static void setDungeonState(AbstractState fadeOutState, int dungeonID)
+	{
+		Persistance.stateManager.setState(new AskServerForDungeonSeedState(dungeonID));
 	}
 
 	public static void onDungeonEnd(DungeonOutcome outcome) {

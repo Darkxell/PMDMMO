@@ -26,8 +26,6 @@ import com.darkxell.common.mission.Mission;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.language.Message;
-import com.eclipsesource.json.Json;
-import com.eclipsesource.json.JsonObject;
 
 public class DungeonSelectionMapState extends AbstractState {
 
@@ -139,11 +137,8 @@ public class DungeonSelectionMapState extends AbstractState {
 			// Sending dungeonstart to server
 			int dungeon = this.dungeonslist.get(this.cursor).id;
 			if (Persistance.socketendpoint.connectionStatus() == GameSocketEndpoint.CONNECTED) {
-				JsonObject root = Json.object();
-				root.add("action", "dungeonstart");
-				root.add("dungeon", dungeon);
-				Persistance.isCommunicating = true;
-				Persistance.socketendpoint.sendMessage(root.toString());
+				Persistance.isCommunicating=true;
+				Persistance.socketendpoint.requestDungeonSeed(dungeon);
 			} else
 				this.onDungeonStart(dungeon, new Random().nextLong());
 			break;
