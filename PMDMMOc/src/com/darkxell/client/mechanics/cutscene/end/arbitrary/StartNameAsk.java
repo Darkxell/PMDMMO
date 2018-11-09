@@ -18,7 +18,7 @@ public class StartNameAsk implements Callbackable {
 		Persistance.socketendpoint.sendMessage(mess.toString());
 		// Changes the nickname locally
 		Persistance.player.getTeamLeader().setNickname(s);
-		CutsceneManager.playCutscene("startingwoods/problem");
+		CutsceneManager.playCutscene("startingwoods/problem", false);
 	}
 
 	public static void startNameAsk() {
