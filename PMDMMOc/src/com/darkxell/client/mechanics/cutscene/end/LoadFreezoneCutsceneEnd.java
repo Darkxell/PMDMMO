@@ -22,17 +22,17 @@ public class LoadFreezoneCutsceneEnd extends CutsceneEnd
 		this.yPos = XMLUtils.getAttribute(xml, "ypos", -1);
 	}
 
-	public LoadFreezoneCutsceneEnd(Cutscene cutscene, String function)
+	public LoadFreezoneCutsceneEnd(Cutscene cutscene, String function, boolean fadesOut)
 	{
-		super(cutscene, function);
+		super(cutscene, function, fadesOut);
 		this.freezone = FreezoneInfo.BASE;
 		this.xPos = -1;
 		this.yPos = -1;
 	}
 
-	public LoadFreezoneCutsceneEnd(FreezoneInfo freezone, int x, int y, String function)
+	public LoadFreezoneCutsceneEnd(FreezoneInfo freezone, int x, int y, String function, boolean fadesOut)
 	{
-		super(null, function);
+		super(null, function, fadesOut);
 		this.freezone = freezone;
 		this.xPos = x;
 		this.yPos = y;
@@ -42,7 +42,7 @@ public class LoadFreezoneCutsceneEnd extends CutsceneEnd
 	public void onCutsceneEnd()
 	{
 		super.onCutsceneEnd();
-		StateManager.setExploreState(this.freezone, null, this.xPos, this.yPos);
+		StateManager.setExploreState(this.freezone, null, this.xPos, this.yPos, this.fadesOut);
 	}
 
 	@Override

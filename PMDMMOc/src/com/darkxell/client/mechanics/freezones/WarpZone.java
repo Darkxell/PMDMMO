@@ -46,7 +46,7 @@ public class WarpZone extends TriggerZone {
 	@Override
 	public void onEnter()
 	{
-		StateManager.setExploreState(this.destination, this.direction, this.toX, this.toY);
+		StateManager.setExploreState(this.destination, this.direction, this.toX, this.toY, true);
 	}
 
 }

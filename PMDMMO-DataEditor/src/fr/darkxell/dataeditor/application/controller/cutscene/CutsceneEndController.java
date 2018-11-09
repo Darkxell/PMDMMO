@@ -21,6 +21,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
@@ -54,6 +55,8 @@ public class CutsceneEndController implements Initializable, ChangeListener<Cuts
 	@FXML
 	private ComboBox<Dungeon> dungeonCombobox;
 	@FXML
+	private CheckBox fadingCheckbox;
+	@FXML
 	private ComboBox<FreezoneInfo> freezoneCombobox;
 	@FXML
 	private TextField freezoneXTextfield;
@@ -81,17 +84,18 @@ public class CutsceneEndController implements Initializable, ChangeListener<Cuts
 		switch (this.modeCombobox.getSelectionModel().getSelectedItem())
 		{
 			case CUTSCENE:
-				return new PlayCutsceneCutsceneEnd(this.cutsceneCombobox.getSelectionModel().getSelectedItem().name, function);
+				return new PlayCutsceneCutsceneEnd(this.cutsceneCombobox.getSelectionModel().getSelectedItem().name, function,
+						this.fadingCheckbox.isSelected());
 
 			case DUNGEON:
-				return new EnterDungeonCutsceneEnd(this.dungeonCombobox.getSelectionModel().getSelectedItem().id, function);
+				return new EnterDungeonCutsceneEnd(this.dungeonCombobox.getSelectionModel().getSelectedItem().id, function, this.fadingCheckbox.isSelected());
 
 			case FREEZONE:
 				return new LoadFreezoneCutsceneEnd(this.freezoneCombobox.getValue(), Integer.parseInt(this.freezoneXTextfield.getText()),
-						Integer.parseInt(this.freezoneYTextfield.getText()), function);
+						Integer.parseInt(this.freezoneYTextfield.getText()), function, this.fadingCheckbox.isSelected());
 
 			case EXPLORE:
-				return new ResumeExplorationCutsceneEnd(function);
+				return new ResumeExplorationCutsceneEnd(function, this.fadingCheckbox.isSelected());
 		}
 		return null;
 	}
@@ -150,6 +154,8 @@ public class CutsceneEndController implements Initializable, ChangeListener<Cuts
 		if (end instanceof ResumeExplorationCutsceneEnd) this.modeCombobox.getSelectionModel().select(CutsceneEndMode.EXPLORE);
 		if (end.function() != null) this.functionTextfield.setText(end.function());
 		else this.functionTextfield.setText("");
+		
+		this.fadingCheckbox.setSelected(end.fadesOut());
 	}
 
 }

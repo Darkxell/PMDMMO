@@ -18,9 +18,9 @@ public class PlayCutsceneCutsceneEnd extends CutsceneEnd
 		this.cutsceneID = XMLUtils.getAttribute(xml, "id", null);
 	}
 
-	public PlayCutsceneCutsceneEnd(String cutsceneID, String function)
+	public PlayCutsceneCutsceneEnd(String cutsceneID, String function, boolean fadesOut)
 	{
-		super(null, function);
+		super(null, function, fadesOut);
 		this.cutsceneID = cutsceneID;
 	}
 
@@ -28,7 +28,7 @@ public class PlayCutsceneCutsceneEnd extends CutsceneEnd
 	public void onCutsceneEnd()
 	{
 		super.onCutsceneEnd();
-		if (this.cutsceneID != null) CutsceneManager.playCutscene(this.cutsceneID);
+		if (this.cutsceneID != null) CutsceneManager.playCutscene(this.cutsceneID, this.fadesOut);
 	}
 
 	@Override

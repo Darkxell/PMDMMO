@@ -34,9 +34,9 @@ public class MissionResultsState extends CutsceneState
 
 		private MissionResultsState state;
 
-		public NextMissionCutsceneEnd(Cutscene cutscene, MissionResultsState state)
+		public NextMissionCutsceneEnd(Cutscene cutscene, MissionResultsState state, boolean fadesOut)
 		{
-			super(cutscene, (String) null);
+			super(cutscene, (String) null, fadesOut);
 			this.state = state;
 		}
 
@@ -104,7 +104,7 @@ public class MissionResultsState extends CutsceneState
 	{
 		super(createCutscene(missions.get(0)));
 		this.missions = missions;
-		this.cutscene.onFinish = new NextMissionCutsceneEnd(this.cutscene, this);
+		this.cutscene.onFinish = new NextMissionCutsceneEnd(this.cutscene, this, true);
 	}
 
 }

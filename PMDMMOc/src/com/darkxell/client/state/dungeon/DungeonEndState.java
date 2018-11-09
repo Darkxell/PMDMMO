@@ -37,7 +37,7 @@ public class DungeonEndState extends AbstractState
 					@Override
 					public void onPlayerLoadingEnd(PlayerLoadingState state)
 					{
-						StateManager.setExploreState(FreezoneInfo.BASE, Direction.SOUTH, -1, -1);
+						StateManager.setExploreState(FreezoneInfo.BASE, Direction.SOUTH, -1, -1, true);
 					}
 				}));
 			}

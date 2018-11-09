@@ -64,7 +64,7 @@ public class FriendAreaSelectionMapState extends AbstractState
 				movingdown = true;
 				break;
 			case RUN:
-				StateManager.setExploreState(FreezoneInfo.BASE, Direction.EAST, 4, 42);
+				StateManager.setExploreState(FreezoneInfo.BASE, Direction.EAST, 4, 42, true);
 				break;
 			case ATTACK:
 				LocalMapLocation[] points = LocalMapLocation.values();
@@ -73,7 +73,7 @@ public class FriendAreaSelectionMapState extends AbstractState
 					{
 						if (points[i] == LocalMapLocation.BASE)
 						{
-							StateManager.setExploreState(FreezoneInfo.BASE, Direction.EAST, 4, 42);
+							StateManager.setExploreState(FreezoneInfo.BASE, Direction.EAST, 4, 42, true);
 							break;
 						}
 						ArrayList<FreezoneInfo> dests = new ArrayList<>(5);

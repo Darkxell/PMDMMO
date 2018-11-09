@@ -22,9 +22,9 @@ public class EnterDungeonCutsceneEnd extends CutsceneEnd
 		this.dungeonID = XMLUtils.getAttribute(xml, "id", 1);
 	}
 
-	public EnterDungeonCutsceneEnd(int dungeonID, String function)
+	public EnterDungeonCutsceneEnd(int dungeonID, String function, boolean fadesOut)
 	{
-		super(null, function);
+		super(null, function, fadesOut);
 		this.dungeonID = dungeonID;
 	}
 

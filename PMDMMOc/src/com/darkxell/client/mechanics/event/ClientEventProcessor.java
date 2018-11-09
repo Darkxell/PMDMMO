@@ -294,7 +294,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		super.processBossDefeatedEvent(event);
 		if (Persistance.floor.cutsceneOut != null)
 		{
-			CutsceneManager.playCutscene(Persistance.floor.cutsceneOut);
+			CutsceneManager.playCutscene(Persistance.floor.cutsceneOut, false);
 			this.setState(State.ANIMATING);
 		}
 	}

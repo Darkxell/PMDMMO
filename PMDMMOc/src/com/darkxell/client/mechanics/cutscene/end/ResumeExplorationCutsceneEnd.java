@@ -15,9 +15,9 @@ public class ResumeExplorationCutsceneEnd extends CutsceneEnd
 		super(cutscene, xml);
 	}
 
-	public ResumeExplorationCutsceneEnd(String function)
+	public ResumeExplorationCutsceneEnd(String function, boolean fadesOut)
 	{
-		super(null, function);
+		super(null, function, fadesOut);
 	}
 
 	@Override

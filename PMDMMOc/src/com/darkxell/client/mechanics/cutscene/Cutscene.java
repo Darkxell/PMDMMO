@@ -33,16 +33,23 @@ public class Cutscene implements Comparable<Cutscene>
 
 		String arbitraryFunction;
 		Cutscene cutscene;
+		protected boolean fadesOut;
 
 		public CutsceneEnd(Cutscene cutscene, Element xml)
 		{
-			this(cutscene, XMLUtils.getAttribute(xml, "function", null));
+			this(cutscene, XMLUtils.getAttribute(xml, "function", null), XMLUtils.getAttribute(xml, "fadesOut", true));
 		}
 
-		public CutsceneEnd(Cutscene cutscene, String function)
+		public CutsceneEnd(Cutscene cutscene, String function, boolean fadesOut)
 		{
 			this.cutscene = cutscene;
 			this.arbitraryFunction = function;
+			this.fadesOut = fadesOut;
+		}
+
+		public boolean fadesOut()
+		{
+			return this.fadesOut;
 		}
 
 		public String function()
@@ -80,7 +87,7 @@ public class Cutscene implements Comparable<Cutscene>
 	{
 		this.name = name;
 		this.creation = creation != null ? creation : new CutsceneCreation(this);
-		this.onFinish = end != null ? end : new LoadFreezoneCutsceneEnd(this, (String) null);
+		this.onFinish = end != null ? end : new LoadFreezoneCutsceneEnd(this, (String) null, false);
 		this.events = events;
 		this.player = new CutscenePlayer(this);
 

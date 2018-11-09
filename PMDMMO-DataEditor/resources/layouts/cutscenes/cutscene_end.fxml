@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
@@ -48,5 +49,10 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </VBox.margin>
       </HBox>
+      <CheckBox fx:id="fadingCheckbox" mnemonicParsing="false" text="Fades out">
+         <VBox.margin>
+            <Insets bottom="5.0" />
+         </VBox.margin>
+      </CheckBox>
    </children>
 </VBox>

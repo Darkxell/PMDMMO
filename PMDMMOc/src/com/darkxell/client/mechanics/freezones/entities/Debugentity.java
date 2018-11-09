@@ -22,7 +22,7 @@ public class Debugentity extends FreezoneEntity
 		// Do your debug shit here.
 		// TRIGGERED politeness police!!! --Cubi
 		// ((PrincipalMainState) Persistance.stateManager).setState(new TextinputState(((PrincipalMainState) Persistance.stateManager).getCurrentState()));
-		CutsceneManager.playCutscene("startingwoods/problem");
+		CutsceneManager.playCutscene("startingwoods/problem", false);
 	}
 
 	@Override

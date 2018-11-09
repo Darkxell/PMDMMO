@@ -61,16 +61,16 @@ public class OpenningState extends AbstractState {
 		Logger.i("Triggered the OpeningState launch method with storyposition : " + storyposition);
 		switch (storyposition) {
 		default:
-			StateManager.setExploreState(new BaseFreezone(), Direction.SOUTH, -1, -1);
+			StateManager.setExploreState(new BaseFreezone(), Direction.SOUTH, -1, -1, true);
 			break;
 		case 0:
 			Logger.e("Openning state could not determine what to do, storyposition is 0.");
 			Logger.w("Moved the player to base freezone.");
-			StateManager.setExploreState(new BaseFreezone(), Direction.SOUTH, -1, -1);
+			StateManager.setExploreState(new BaseFreezone(), Direction.SOUTH, -1, -1, true);
 			break;
 		case 1:
 			// Starter selected, ready to play awakening cutscene
-			CutsceneManager.playCutscene("startingwoods/blackstart");
+			CutsceneManager.playCutscene("startingwoods/blackstart", true);
 			break;
 		case 2:
 			// TODO:Tiny Woods failed, ready to play cutscene
