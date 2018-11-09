@@ -271,5 +271,12 @@ public class GameSocketEndpoint {
 		message.add("type", objectType);
 		this.sendMessage(message.toString());
 	}
+	
+	public void requestDungeonSeed(int dungeonID) {
+		JsonObject message = Json.object();
+		message.add("action", "dungeonstart");
+		message.add("dungeon", dungeonID);
+		this.sendMessage(message.toString());
+	}
 
 }

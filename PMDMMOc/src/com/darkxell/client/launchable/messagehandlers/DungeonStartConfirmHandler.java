@@ -2,6 +2,7 @@ package com.darkxell.client.launchable.messagehandlers;
 
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.state.AbstractState;
+import com.darkxell.client.state.dungeon.AskServerForDungeonSeedState;
 import com.darkxell.client.state.menu.freezone.DungeonSelectionMapState;
 import com.darkxell.common.util.Logger;
 import com.eclipsesource.json.JsonObject;
@@ -34,7 +35,12 @@ public class DungeonStartConfirmHandler extends MessageHandler
 		}
 
 		AbstractState state = Persistance.stateManager.getCurrentState();
-		if (state != null && state instanceof DungeonSelectionMapState) ((DungeonSelectionMapState) state).onDungeonStart(dungeon, seed);
+		if (state != null)
+		{
+			if (state instanceof DungeonSelectionMapState) ((DungeonSelectionMapState) state).onDungeonStart(dungeon, seed);
+			if (state instanceof AskServerForDungeonSeedState) ((AskServerForDungeonSeedState) state).onSeedReceived(dungeon, seed);
+		}
+
 	}
 
 }

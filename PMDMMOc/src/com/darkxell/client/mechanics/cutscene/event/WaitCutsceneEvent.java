@@ -1,6 +1,7 @@
 package com.darkxell.client.mechanics.cutscene.event;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import org.jdom2.Element;
 
@@ -12,6 +13,7 @@ public class WaitCutsceneEvent extends CutsceneEvent
 
 	public final boolean all;
 	public ArrayList<CutsceneEvent> events;
+	private HashSet<CutsceneEvent> remaining = new HashSet<>();
 
 	public WaitCutsceneEvent(Element xml, Cutscene cutscene)
 	{
@@ -39,9 +41,20 @@ public class WaitCutsceneEvent extends CutsceneEvent
 	@Override
 	public boolean isOver()
 	{
-		for (CutsceneEvent event : this.events)
-			if (!event.isOver()) return false;
+		HashSet<CutsceneEvent> ended = new HashSet<>();
+		for (CutsceneEvent event : this.remaining)
+			if (event.isOver()) ended.add(event);
+			else return false;
+		this.remaining.removeAll(ended);
 		return true;
+	}
+
+	@Override
+	public void onStart()
+	{
+		super.onStart();
+		this.remaining.clear();
+		this.remaining.addAll(this.events);
 	}
 
 	@Override
