@@ -95,6 +95,6 @@
     </dialog>
   </events>
   <onfinish>
-    <enterdungeon id="1" />
+    <enterdungeon function="enterwoods" id="1" />
   </onfinish>
 </cutscene>
