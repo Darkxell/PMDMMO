@@ -29,6 +29,8 @@ public class TextinputState extends AbstractState {
 	private boolean isinvalidationmode = false;
 	private boolean validationstate = false;
 
+	private Callbackable addedcallback = null;
+
 	public TextinputState(AbstractState parent) {
 		super();
 		this.parent = parent;
@@ -37,6 +39,11 @@ public class TextinputState extends AbstractState {
 	public TextinputState(AbstractState parent, String messageid) {
 		this(parent);
 		this.messageid = messageid;
+	}
+
+	public TextinputState(AbstractState parent, String messageid, Callbackable additionnalcallback) {
+		this(parent, messageid);
+		this.addedcallback = additionnalcallback;
 	}
 
 	@Override
@@ -52,6 +59,8 @@ public class TextinputState extends AbstractState {
 				((PrincipalMainState) Persistance.stateManager).setState(parent);
 				if (parent instanceof Callbackable)
 					((Callbackable) parent).callback(content);
+				if (addedcallback != null)
+					addedcallback.callback(content);
 			} else {
 				counter = 0;
 				isinvalidationmode = false;
@@ -63,7 +72,6 @@ public class TextinputState extends AbstractState {
 
 	@Override
 	public void onKeyReleased(Key key) {
-
 	}
 
 	@Override
