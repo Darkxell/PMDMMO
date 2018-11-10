@@ -4,13 +4,11 @@ import java.util.ArrayList;
 
 import org.jdom2.Element;
 
-import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.cutscene.end.ArbitraryCutsceneEnds;
 import com.darkxell.client.mechanics.cutscene.end.EnterDungeonCutsceneEnd;
 import com.darkxell.client.mechanics.cutscene.end.LoadFreezoneCutsceneEnd;
 import com.darkxell.client.mechanics.cutscene.end.PlayCutsceneCutsceneEnd;
 import com.darkxell.client.mechanics.cutscene.end.ResumeExplorationCutsceneEnd;
-import com.darkxell.client.mechanics.freezones.entities.FreezoneCamera;
 import com.darkxell.common.util.XMLUtils;
 
 public class Cutscene implements Comparable<Cutscene>
@@ -58,9 +56,7 @@ public class Cutscene implements Comparable<Cutscene>
 		}
 
 		public void onCutsceneEnd()
-		{
-			Persistance.freezoneCamera = new FreezoneCamera(Persistance.currentplayer);
-		}
+		{}
 
 		public Element toXML()
 		{

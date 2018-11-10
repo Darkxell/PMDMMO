@@ -14,6 +14,7 @@ public class CutscenePlayer
 
 	public final Cutscene cutscene;
 	private final ArrayList<CutsceneEntity> entities;
+	public double mapAlpha = 1;
 	private final LinkedList<CutsceneEvent> pendingEvents;
 	private final ArrayList<CutsceneEvent> playingEvents;
 

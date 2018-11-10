@@ -7,6 +7,7 @@ import com.darkxell.client.mechanics.cutscene.event.CameraCutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.event.DelayCutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.event.DespawnCutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.event.DialogCutsceneEvent;
+import com.darkxell.client.mechanics.cutscene.event.DrawMapCutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.event.MoveCutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.event.MusicCutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.event.RotateCutsceneEvent;
@@ -28,6 +29,7 @@ public abstract class CutsceneEvent
 		delay("Wait X ticks"),
 		despawn("Despawn Entity"),
 		dialog("Show Dialog"),
+		drawmap("Draw Map"),
 		move("Move Entity"),
 		music("Change soundtrack"),
 		rotate("Rotate Entity"),
@@ -64,6 +66,9 @@ public abstract class CutsceneEvent
 
 			case "dialog":
 				return new DialogCutsceneEvent(xml, cutscene);
+
+			case "drawmap":
+				return new DrawMapCutsceneEvent(xml, cutscene);
 
 			case "move":
 				return new MoveCutsceneEvent(xml, cutscene);
