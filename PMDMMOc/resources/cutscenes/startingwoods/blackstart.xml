@@ -11,6 +11,6 @@
     </dialog>
   </events>
   <onfinish>
-    <playcutscene id="startingwoods/wakeup" />
+    <playcutscene fadesout="false" id="startingwoods/wakeup" />
   </onfinish>
 </cutscene>
