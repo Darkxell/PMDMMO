@@ -1,7 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cutscene name="startingwoods/tinywoodsfailed">
-  <creation freezone="base" />
-  <events />
+  <creation freezone="startforest" fading="false" drawmap="false">
+    <pokemon cutsceneid="0" facing="NORTH">
+      <teammember>0</teammember>
+      <animated>false</animated>
+    </pokemon>
+    <pokemon cutsceneid="1" facing="NORTH">
+      <teammember>1</teammember>
+      <animated>false</animated>
+    </pokemon>
+    <pokemon cutsceneid="2">
+      <pokemonid>12</pokemonid>
+      <animated>false</animated>
+    </pokemon>
+  </creation>
+  <events>
+    <dialog>
+      <dialogscreen target="2" portrait-location="TOP_LEFT">cutscene.startingwoods.tinywoods.failed.m1</dialogscreen>
+    </dialog>
+    <drawmap />
+  </events>
   <onfinish>
     <loadfreezone fadesout="false" id="base" />
   </onfinish>

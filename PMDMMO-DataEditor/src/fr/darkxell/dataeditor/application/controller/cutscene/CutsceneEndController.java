@@ -128,6 +128,7 @@ public class CutsceneEndController implements Initializable, ChangeListener<Cuts
 		this.dungeonCombobox.getSelectionModel().select(0);
 		this.cutsceneCombobox.getSelectionModel().select(0);
 		this.freezoneCombobox.getSelectionModel().select(0);
+		this.fadingCheckbox.setSelected(true);
 	}
 
 	public void setupFor(Cutscene cutscene)

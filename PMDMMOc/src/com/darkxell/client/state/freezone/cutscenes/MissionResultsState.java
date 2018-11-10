@@ -74,7 +74,7 @@ public class MissionResultsState extends CutsceneState
 		entities.add(new CutscenePokemon(1, 37.5, 35, Persistance.player.getTeamLeader(), PokemonSpriteState.IDLE, Direction.NORTH, false));
 		entities.add(clientEntity);
 		if (has2Pks) entities.add(targetEntity);
-		CutsceneCreation creation = new CutsceneCreation(FreezoneInfo.OFFICE, true, 37.5, 32.5, entities);
+		CutsceneCreation creation = new CutsceneCreation(FreezoneInfo.OFFICE, true, true, 37.5, 32.5, entities);
 
 		Message thank = new Message("mission.thank." + mission.getMissiontype()).addReplacement("<item>", ItemRegistry.find(mission.getItemid()).name());
 		if (has2Pks) thank.addReplacement("<pokemon>", target.getNickname());

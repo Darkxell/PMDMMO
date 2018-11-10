@@ -17,6 +17,7 @@ public class CutsceneCreation
 
 	public final double camerax, cameray;
 	Cutscene cutscene;
+	public final boolean drawMap;
 	private final ArrayList<CutsceneEntity> entities;
 	public final boolean fading;
 	public final FreezoneInfo freezone;
@@ -26,7 +27,7 @@ public class CutsceneCreation
 		this.cutscene = cutscene;
 		this.freezone = FreezoneInfo.BASE;
 		this.camerax = this.cameray = -1;
-		this.fading = true;
+		this.fading = this.drawMap = true;
 		this.entities = new ArrayList<>();
 	}
 
@@ -35,6 +36,7 @@ public class CutsceneCreation
 		this.cutscene = cutscene;
 		this.freezone = FreezoneInfo.find(xml.getAttributeValue("freezone"));
 		this.fading = XMLUtils.getAttribute(xml, "fade", true);
+		this.drawMap = XMLUtils.getAttribute(xml, "drawmap", true);
 		this.camerax = XMLUtils.getAttribute(xml, "camerax", -1.);
 		this.cameray = XMLUtils.getAttribute(xml, "cameray", -1.);
 		this.entities = new ArrayList<>();
@@ -44,10 +46,11 @@ public class CutsceneCreation
 			this.entities.add(new CutsceneEntity(entity));
 	}
 
-	public CutsceneCreation(FreezoneInfo freezone, boolean fading, double camerax, double cameray, ArrayList<CutsceneEntity> entities)
+	public CutsceneCreation(FreezoneInfo freezone, boolean fading, boolean drawMap, double camerax, double cameray, ArrayList<CutsceneEntity> entities)
 	{
 		this.freezone = freezone;
 		this.fading = fading;
+		this.drawMap = drawMap;
 		this.camerax = camerax;
 		this.cameray = cameray;
 		this.entities = entities;
@@ -59,6 +62,7 @@ public class CutsceneCreation
 		Persistance.freezoneCamera = new FreezoneCamera(null);
 		if (this.camerax != -1) Persistance.freezoneCamera.x = this.camerax;
 		if (this.cameray != -1) Persistance.freezoneCamera.y = this.cameray;
+		this.cutscene.player.mapAlpha = this.drawMap ? 1 : 0;
 		for (CutsceneEntity entity : this.entities)
 			this.cutscene.player.createEntity(entity);
 	}
@@ -75,6 +79,7 @@ public class CutsceneCreation
 		XMLUtils.setAttribute(root, "camerax", this.camerax, -1.);
 		XMLUtils.setAttribute(root, "cameray", this.cameray, -1.);
 		XMLUtils.setAttribute(root, "fading", this.fading, true);
+		XMLUtils.setAttribute(root, "drawmap", this.drawMap, true);
 		for (CutsceneEntity entity : this.entities)
 			root.addContent(entity.toXML());
 		return root;

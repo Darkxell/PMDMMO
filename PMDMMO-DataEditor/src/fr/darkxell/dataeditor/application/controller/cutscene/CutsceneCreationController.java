@@ -21,6 +21,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -37,6 +38,8 @@ public class CutsceneCreationController implements Initializable, ListCellParent
 	@FXML
 	private TextField cameraYTextfield;
 	@FXML
+	private CheckBox drawMapCheckbox;
+	@FXML
 	public ListView<CutsceneEntity> entitiesList;
 	private int entityEditing;
 	@FXML
@@ -47,7 +50,7 @@ public class CutsceneCreationController implements Initializable, ListCellParent
 	public CutsceneCreation getCreation()
 	{
 		return new CutsceneCreation(this.freezoneCombobox.getValue(), this.fadingCombobox.getSelectionModel().getSelectedIndex() == 0,
-				Double.parseDouble(this.cameraXTextfield.getText()), Double.parseDouble(this.cameraYTextfield.getText()),
+				this.drawMapCheckbox.isSelected(), Double.parseDouble(this.cameraXTextfield.getText()), Double.parseDouble(this.cameraYTextfield.getText()),
 				new ArrayList<>(this.entitiesList.getItems()));
 	}
 
@@ -77,6 +80,7 @@ public class CutsceneCreationController implements Initializable, ListCellParent
 		this.cameraYTextfield.setTextFormatter(formatter);
 
 		CustomList.setup(this, this.entitiesList, "Cutscene Entity", true, true, true, true, false);
+		this.drawMapCheckbox.setSelected(true);
 	}
 
 	@Override
@@ -137,6 +141,7 @@ public class CutsceneCreationController implements Initializable, ListCellParent
 		this.cameraXTextfield.setText(String.valueOf(creation.camerax));
 		this.cameraYTextfield.setText(String.valueOf(creation.cameray));
 		this.fadingCombobox.getSelectionModel().select(creation.fading ? 1 : 0);
+		this.drawMapCheckbox.setSelected(creation.drawMap);
 		this.entitiesList.getItems().clear();
 		this.entitiesList.getItems().addAll(creation.entities());
 	}
