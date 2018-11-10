@@ -48,12 +48,20 @@ public class DrawMapCutsceneEvent extends CutsceneEvent
 	}
 
 	@Override
+	public Element toXML()
+	{
+		Element e = super.toXML();
+		XMLUtils.setAttribute(e, "draw", this.shouldDraw, true);
+		return e;
+	}
+
+	@Override
 	public void update()
 	{
 		super.update();
 		++this.tick;
 		double alpha = this.tick * 1. / NarratorDialogScreen.FADETIME;
-		if (this.shouldDraw) alpha = 1 - alpha;
+		if (!this.shouldDraw) alpha = (NarratorDialogScreen.FADETIME - this.tick) * 1. / NarratorDialogScreen.FADETIME;
 		this.cutscene.player.mapAlpha = alpha;
 	}
 

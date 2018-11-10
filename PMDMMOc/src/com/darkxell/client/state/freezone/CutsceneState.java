@@ -23,7 +23,7 @@ public class CutsceneState extends AbstractFreezoneState
 
 		if (this.cutscene.player.mapAlpha != 1)
 		{
-			g.setColor(new Color(0, 0, 0, (int) (this.cutscene.player.mapAlpha * 255)));
+			g.setColor(new Color(0, 0, 0, (int) ((1 - this.cutscene.player.mapAlpha) * 255)));
 			g.fillRect(0, 0, width, height);
 		}
 	}

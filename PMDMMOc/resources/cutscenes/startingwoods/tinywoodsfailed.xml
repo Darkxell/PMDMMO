@@ -1,26 +1,90 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cutscene name="startingwoods/tinywoodsfailed">
-  <creation freezone="startforest" fading="false" drawmap="false">
-    <pokemon cutsceneid="0" facing="NORTH">
-      <teammember>0</teammember>
-      <animated>false</animated>
-    </pokemon>
-    <pokemon cutsceneid="1" facing="NORTH">
-      <teammember>1</teammember>
-      <animated>false</animated>
-    </pokemon>
-    <pokemon cutsceneid="2">
+  <creation freezone="startforest" camerax="35.0" cameray="23.0" fading="false" drawmap="false">
+    <pokemon cutsceneid="10" xpos="36.5" ypos="20.0">
       <pokemonid>12</pokemonid>
+    </pokemon>
+    <pokemon cutsceneid="1" xpos="35.0" ypos="23.0">
+      <teammember>0</teammember>
+      <state>SLEEP</state>
+      <animated>false</animated>
+    </pokemon>
+    <pokemon cutsceneid="2" xpos="38.0" ypos="23.0">
+      <teammember>1</teammember>
+      <state>SLEEP</state>
       <animated>false</animated>
     </pokemon>
   </creation>
   <events>
     <dialog>
-      <dialogscreen target="2" portrait-location="TOP_LEFT">cutscene.startingwoods.tinywoods.failed.m1</dialogscreen>
+      <dialogscreen target="10" portrait-location="TOP_LEFT">cutscene.startingwoods.tinywoods.failed.m1</dialogscreen>
     </dialog>
     <drawmap />
+    <wait />
+    <delay ticks="30" />
+    <setstate target="1" state="IDLE" />
+    <setstate target="2" state="IDLE" />
+    <delay ticks="30" />
+    <rotate target="1" distance="2" speed="5" />
+    <rotate target="2" distance="-2" speed="5" />
+    <wait />
+    <delay ticks="20" />
+    <rotate target="1" distance="-4" speed="5" />
+    <rotate target="2" distance="4" speed="5" />
+    <delay ticks="20" />
+    <dialog>
+      <dialogscreen target="10" portrait-location="TOP_LEFT">cutscene.startingwoods.tinywoods.failed.m2</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="1" distance="-2" speed="5" />
+    <rotate target="2" distance="2" speed="5" />
+    <wait />
+    <dialog>
+      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.startingwoods.tinywoods.failed.m3</dialogscreen>
+      <dialogscreen target="10" portrait-location="TOP_LEFT">cutscene.startingwoods.tinywoods.failed.m4</dialogscreen>
+      <dialogscreen target="10" portrait-location="TOP_LEFT">cutscene.startingwoods.tinywoods.failed.m5</dialogscreen>
+      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.startingwoods.tinywoods.failed.m6</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="1" distance="2" speed="5" />
+    <rotate target="2" distance="-2" speed="5" />
+    <delay ticks="20" />
+    <dialog>
+      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.startingwoods.tinywoods.failed.m7</dialogscreen>
+      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.startingwoods.tinywoods.failed.m8</dialogscreen>
+    </dialog>
+    <wait />
+    <dialog>
+      <dialogscreen target="10" portrait-location="TOP_LEFT">cutscene.startingwoods.tinywoods.failed.m9</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="1" distance="-2" speed="5" />
+    <rotate target="2" distance="2" speed="5" />
+    <delay ticks="20" />
+    <dialog>
+      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.startingwoods.tinywoods.failed.m10</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="1" distance="2" speed="5" />
+    <rotate target="2" distance="-2" speed="5" />
+    <delay ticks="20" />
+    <dialog>
+      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.startingwoods.tinywoods.failed.m11</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="1" distance="4" speed="0" />
+    <setstate target="1" state="MOVE" />
+    <setstate target="2" state="MOVE" />
+    <setanimated target="1" animated="true" />
+    <setanimated target="2" animated="true" />
+    <move xpos="-5.0" speed="0.4" target="1" />
+    <move xpos="-2.0" speed="0.4" target="2" />
+    <delay ticks="10" />
+    <rotate target="10" distance="2" speed="20" />
+    <delay ticks="20" />
+    <drawmap draw="false" />
   </events>
   <onfinish>
-    <loadfreezone fadesout="false" id="base" />
+    <enterdungeon fadesout="false" id="1" />
   </onfinish>
 </cutscene>
