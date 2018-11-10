@@ -14,6 +14,7 @@ import com.darkxell.client.resources.Palette;
 import com.darkxell.client.resources.images.pokemon.PokemonPortrait;
 import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.Pokemon;
+import com.darkxell.common.util.Pair;
 import com.darkxell.common.util.language.Message;
 
 /** Draws Team info. */
@@ -306,36 +307,46 @@ public final class TeamInfoRenderer
 		return Math.max(TextRenderer.width(line1), TextRenderer.width(line2));
 	}
 
-	public static void render(Graphics2D g, int width, int height)
+	public static Pair<Integer, Integer> render(Graphics2D g, int width, int height)
 	{
-		g.clearRect(0, 0, width, height);
-		g.setColor(new Color(0, 120, 180));
-		g.fillRect(0, 0, width, height);
-		g.setColor(Palette.TRANSPARENT_GRAY);
-		g.fillRect(0, 0, width, TITLE_HEIGHT);
 
 		Player p = Persistance.player;
 
 		if (p == null || p.getTeamLeader() == null)
 		{
-			TextRenderer.render(g, loading, width / 2 - TextRenderer.width(loading) / 2, height / 2 - TextRenderer.height() / 2);
+			TextRenderer.render(g, loading, width / 2 - TextRenderer.width(loading) / 2, height / 5 - TextRenderer.height() / 2);
+			g.setColor(new Color(0, 120, 180));
+			g.fillRect(0, 0, width, height / 4);
+			return new Pair<>(width, height / 4);
 		} else
 		{
+			g.setColor(new Color(0, 120, 180));
+			g.fillRect(0, 0, width, TITLE_HEIGHT);
+			g.setColor(Palette.TRANSPARENT_GRAY);
+			g.fillRect(0, 0, width, TITLE_HEIGHT);
 			Pokemon[] realTeam = p.getTeam();
 			ArrayList<Pokemon> team = new ArrayList<Pokemon>();
 			for (Pokemon pk : realTeam)
 				if (!(pk.getDungeonPokemon() != null && pk.getDungeonPokemon().isFainted())) team.add(pk);
 
-			if (team.size() == 0) return;
+			if (team.size() == 0) return new Pair<>(0, 0);
 			Rectangle[] preferredDimensions = getPreferredDimensions(team);
 			Rectangle[] split = findBestColumnSplit(team, preferredDimensions, width, height);
 
 			Message title = new Message("team.title").addReplacement("<player>", p.name());
 			TextRenderer.render(g, title, width / 2 - TextRenderer.width(title) / 2, TITLE_HEIGHT / 2 - TextRenderer.height() / 2);
 
+			int maxX = 0, maxY = 0;
+			for (int i = 0; i < team.size(); ++i)
+			{
+				maxX = (int) Math.max(maxX, split[i].getMaxX());
+				maxY = (int) Math.max(maxY, split[i].getMaxY());
+			}
+			g.setColor(new Color(0, 120, 180));
+			g.fillRect(0, TITLE_HEIGHT, maxX, maxY - TITLE_HEIGHT);
 			for (int i = 0; i < team.size(); ++i)
 				drawMember(g, width, height, team.get(i), split[i]);
-
+			return new Pair<>(maxX, maxY);
 		}
 	}
 

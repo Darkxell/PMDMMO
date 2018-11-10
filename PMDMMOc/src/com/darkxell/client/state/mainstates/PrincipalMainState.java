@@ -20,6 +20,7 @@ import com.darkxell.client.state.TransitionState;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.client.ui.MainUiUtility;
+import com.darkxell.common.util.Pair;
 import com.darkxell.common.util.language.Message;
 
 /** The principal state of the game. Displays the game screen, minimap, chat window and pokemons informations. */
@@ -72,11 +73,10 @@ public class PrincipalMainState extends StateManager
 	}
 
 	@Override
-	public void onKeyTyped(KeyEvent e) {
-		if (isChatFocused)
-			Persistance.chatbox.textfield.onKeyTyped(e);
-		if (isGameFocused)
-		this.currentState.onKeyTyped(e);
+	public void onKeyTyped(KeyEvent e)
+	{
+		if (isChatFocused) Persistance.chatbox.textfield.onKeyTyped(e);
+		if (isGameFocused) this.currentState.onKeyTyped(e);
 	}
 
 	@Override
@@ -164,7 +164,6 @@ public class PrincipalMainState extends StateManager
 		MainUiUtility.drawBackground(g, width, height, backgroundID);
 
 		// Draw the outlines
-		MainUiUtility.drawBoxOutline(g, gamex, mapy, teamwidth, mapsize);
 		MainUiUtility.drawBoxOutline(g, gamex, gamey, gamewidth, gameheight);
 		MainUiUtility.drawBoxOutline(g, mapx, mapy, mapsize, mapsize);
 		MainUiUtility.drawBoxOutline(g, chatx, chaty, chatwidth, chatheight);
@@ -211,9 +210,10 @@ public class PrincipalMainState extends StateManager
 		g.translate(gamex, mapy);
 		clp = g.getClip();
 		g.setClip(new Rectangle(0, 0, teamwidth, mapsize));
-		TeamInfoRenderer.render(g, teamwidth, mapsize);
+		Pair<Integer, Integer> size = TeamInfoRenderer.render(g, teamwidth, mapsize);
 		g.setClip(clp);
 		g.translate(-gamex, -mapy);
+		if (size.first != 0 && size.second != 0) MainUiUtility.drawBoxOutline(g, gamex, mapy, size.first + 1, size.second + 1);
 	}
 
 	@Override
