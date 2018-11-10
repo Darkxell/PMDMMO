@@ -14,7 +14,7 @@ public class StartNameAsk implements Callbackable {
 	public void callback(String s) {
 		// Sends the nickname payload to the server.
 		JsonObject mess = Json.object().add("action", "nickname")
-				.add("pokemon", Persistance.player.getData().mainpokemon.id).add("nickname", s);
+				.add("pokemonid", Persistance.player.getData().mainpokemon.id).add("nickname", s);
 		Persistance.socketendpoint.sendMessage(mess.toString());
 		// Changes the nickname locally
 		Persistance.player.getTeamLeader().setNickname(s);
