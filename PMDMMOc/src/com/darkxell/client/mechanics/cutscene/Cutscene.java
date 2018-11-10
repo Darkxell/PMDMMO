@@ -37,7 +37,7 @@ public class Cutscene implements Comparable<Cutscene>
 
 		public CutsceneEnd(Cutscene cutscene, Element xml)
 		{
-			this(cutscene, XMLUtils.getAttribute(xml, "function", null), XMLUtils.getAttribute(xml, "fadesOut", true));
+			this(cutscene, XMLUtils.getAttribute(xml, "function", null), XMLUtils.getAttribute(xml, "fadesout", true));
 		}
 
 		public CutsceneEnd(Cutscene cutscene, String function, boolean fadesOut)
@@ -66,6 +66,7 @@ public class Cutscene implements Comparable<Cutscene>
 		{
 			Element xml = new Element(this.xmlName());
 			if (this.arbitraryFunction != null) xml.setAttribute("function", this.arbitraryFunction);
+			XMLUtils.setAttribute(xml, "fadesout", this.fadesOut, true);
 			return xml;
 		}
 
