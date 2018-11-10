@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cutscene name="startingwoods/solve">
+  <creation freezone="startforest" camerax="35.0" cameray="23.0" fading="false">
+    <pokemon cutsceneid="10" xpos="38.0" ypos="20.0">
+      <pokemonid>12</pokemonid>
+    </pokemon>
+    <pokemon cutsceneid="11" xpos="35.0" ypos="20.0">
+      <pokemonid>10</pokemonid>
+      <animated>false</animated>
+    </pokemon>
+    <pokemon cutsceneid="1" xpos="35.0" ypos="23.0" facing="NORTH">
+      <teammember>0</teammember>
+      <animated>false</animated>
+    </pokemon>
+    <pokemon cutsceneid="2" xpos="38.0" ypos="23.0" facing="NORTH">
+      <teammember>1</teammember>
+      <animated>false</animated>
+    </pokemon>
+  </creation>
+  <events>
+    <dialog>
+      <dialogscreen target="10" portrait-location="TOP_RIGHT">cutscene.startingwoods.solve.m1</dialogscreen>
+      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.startingwoods.solve.m2</dialogscreen>
+      <dialogscreen target="10" portrait-location="TOP_RIGHT">cutscene.startingwoods.solve.m3</dialogscreen>
+      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.startingwoods.solve.m4</dialogscreen>
+      <dialogscreen target="11" portrait-location="TOP_LEFT">cutscene.startingwoods.solve.m5</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="2" distance="-1" />
+    <wait />
+    <dialog>
+      <dialogscreen target="1">cutscene.startingwoods.solve.m6</dialogscreen>
+      <dialogscreen target="1">cutscene.startingwoods.solve.m7</dialogscreen>
+      <dialogscreen target="1">cutscene.startingwoods.solve.m8</dialogscreen>
+      <dialogscreen target="1">cutscene.startingwoods.solve.m9</dialogscreen>
+    </dialog>
+    <wait />
+    <dialog>
+      <dialogscreen target="11" portrait-location="TOP_LEFT">cutscene.startingwoods.solve.m10</dialogscreen>
+      <dialogscreen target="10" portrait-location="TOP_RIGHT">cutscene.startingwoods.solve.m11</dialogscreen>
+    </dialog>
+    <wait />
+    <move ypos="21.5" speed="0.1" target="10" />
+    <wait />
+    <dialog>
+      <dialogscreen>cutscene.startingwoods.solve.m12</dialogscreen>
+    </dialog>
+    <wait />
+    <dialog>
+      <dialogscreen>cutscene.startingwoods.solve.m13</dialogscreen>
+    </dialog>
+    <wait />
+    <dialog>
+      <dialogscreen>cutscene.startingwoods.solve.m14</dialogscreen>
+    </dialog>
+    <wait />
+    <move ypos="20.0" speed="0.1" target="10" />
+    <wait />
+    <dialog>
+      <dialogscreen target="10" portrait-location="TOP_RIGHT">cutscene.startingwoods.solve.m15</dialogscreen>
+    </dialog>
+    <wait />
+    <setanimated target="11" animated="true" />
+    <rotate target="11" distance="-2" speed="1" />
+    <rotate target="10" distance="-2" speed="1" />
+    <move xpos="78.0" speed="0.2" target="10" />
+    <move xpos="75.0" speed="0.2" target="11" />
+    <wait />
+    <rotate target="1" distance="2" />
+    <rotate target="2" distance="-1" />
+    <wait />
+    <dialog>
+      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.startingwoods.solve.m16</dialogscreen>
+      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.startingwoods.solve.m17</dialogscreen>
+      <dialogscreen target="1">cutscene.startingwoods.solve.m18</dialogscreen>
+      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.startingwoods.solve.m19</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="2" distance="4" />
+    <setanimated target="2" animated="true" />
+    <wait />
+    <setanimated target="1" animated="true" />
+    <setstate target="1" state="MOVE" />
+    <setstate target="2" state="MOVE" />
+    <move xpos="78.0" speed="0.2" target="2" />
+    <move xpos="75.0" speed="0.2" target="1" />
+  </events>
+  <onfinish>
+    <loadfreezone id="base" />
+  </onfinish>
+</cutscene>
