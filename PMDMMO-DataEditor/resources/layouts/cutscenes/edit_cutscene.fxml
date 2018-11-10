@@ -25,15 +25,15 @@
             <Insets left="10.0" right="10.0" top="10.0" />
          </VBox.margin>
       </TitledPane>
-      <TitledPane alignment="CENTER" text="Events">
+      <TitledPane alignment="CENTER" text="Events" VBox.vgrow="ALWAYS">
          <VBox.margin>
             <Insets left="10.0" right="10.0" top="10.0" />
          </VBox.margin>
          <content>
             <VBox alignment="CENTER">
                <children>
-                  <ListView fx:id="eventList" prefHeight="200.0" prefWidth="200.0" />
-                  <Button mnemonicParsing="false" onAction="#onCreateEvent" text="Create Event">
+                  <ListView fx:id="eventList" VBox.vgrow="ALWAYS" />
+                  <Button mnemonicParsing="false" onAction="#onCreateEvent" text="Create Event" VBox.vgrow="NEVER">
                      <VBox.margin>
                         <Insets top="5.0" />
                      </VBox.margin>
