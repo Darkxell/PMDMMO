@@ -73,7 +73,8 @@ public class OpenningState extends AbstractState {
 			CutsceneManager.playCutscene("startingwoods/blackstart", true);
 			break;
 		case 2:
-			// TODO:Tiny Woods failed, ready to play cutscene
+			// Tiny Woods failed, ready to play cutscene
+			CutsceneManager.playCutscene("startingwoods/tinywoodsfailed", true);
 			break;
 		case 5:
 			// TODO:Rescue team created after saving caterpie, recieved mail

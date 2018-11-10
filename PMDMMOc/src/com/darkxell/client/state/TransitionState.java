@@ -14,7 +14,7 @@ public class TransitionState extends AbstractState
 	public static final int FADEIN = NarratorDialogScreen.FADETIME, STAY = 10, TEXT = 60, FADEOUT = FADEIN;
 
 	private AbstractState current;
-	public final int fadeIn, stay, text, fadeOut, stayEnd, textStart, textFade, duration;
+	public int fadeIn, stay, text, fadeOut, stayEnd, textStart, textFade, duration;
 	public final Message message;
 	public AbstractState previous, next;
 	private int tick, alpha;
@@ -90,8 +90,8 @@ public class TransitionState extends AbstractState
 		if (this.tick >= this.duration) Persistance.stateManager.setState(this.next);
 
 		this.alpha = 0;
-		if (this.tick < this.fadeIn) this.alpha = this.tick * 255 / this.fadeIn;
-		else if (this.tick > this.stayEnd) this.alpha = (this.duration - this.tick) * 255 / this.fadeOut;
+		if (this.tick < this.fadeIn) this.alpha = this.fadeIn == 0 ? 0 : this.tick * 255 / this.fadeIn;
+		else if (this.tick > this.stayEnd) this.alpha = this.fadeOut == 0 ? 0 : (this.duration - this.tick) * 255 / this.fadeOut;
 		else if (this.tick >= this.textFade && this.tick <= this.stayEnd) this.alpha = (this.tick - this.textFade) * 255 / this.text;
 
 		if (this.current != null) this.current.update();

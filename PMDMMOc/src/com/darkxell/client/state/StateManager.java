@@ -12,6 +12,7 @@ import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.event.ClientEventProcessor;
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
 import com.darkxell.client.mechanics.freezones.Freezones;
+import com.darkxell.client.mechanics.freezones.entities.FreezoneCamera;
 import com.darkxell.client.renderers.pokemon.OnFirstPokemonDraw;
 import com.darkxell.client.resources.images.SpriteLoader;
 import com.darkxell.client.state.dungeon.AskServerForDungeonSeedState;
@@ -86,6 +87,7 @@ public abstract class StateManager
 			{
 				super.onTransitionHalf();
 				((FreezoneExploreState) next).musicset = false;
+				Persistance.freezoneCamera = new FreezoneCamera(Persistance.currentplayer);
 				Persistance.currentmap = map;
 				Persistance.freezoneCamera.x = Persistance.currentplayer.x = xPos == -1 ? map.defaultX() : xPos;
 				Persistance.freezoneCamera.y = Persistance.currentplayer.y = yPos == -1 ? map.defaultY() : yPos;
@@ -93,7 +95,11 @@ public abstract class StateManager
 				if (direction != null) Persistance.currentplayer.renderer().sprite().setFacingDirection(direction);
 			}
 		});
-		else Persistance.stateManager.setState(next);
+		else
+		{
+			Persistance.freezoneCamera = new FreezoneCamera(Persistance.currentplayer);
+			Persistance.stateManager.setState(next);
+		}
 	}
 
 	/** @param fadeOutState - State to fade out of.
@@ -113,7 +119,9 @@ public abstract class StateManager
 	/** Will set to a transition state asking the server for a seed. */
 	public static void setDungeonState(AbstractState fadeOutState, int dungeonID)
 	{
-		Persistance.stateManager.setState(new AskServerForDungeonSeedState(dungeonID));
+		TransitionState s = new TransitionState(fadeOutState, new AskServerForDungeonSeedState(dungeonID));
+		s.fadeOut = 0;
+		Persistance.stateManager.setState(s);
 	}
 
 	public static void onDungeonEnd(DungeonOutcome outcome)

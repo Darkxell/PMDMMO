@@ -12,7 +12,7 @@ public class AskServerForDungeonSeedState extends AbstractState
 {
 
 	public final int dungeonID;
-	private int tick = 0;
+	private int tick;
 
 	public AskServerForDungeonSeedState(int dungeonID)
 	{
@@ -40,12 +40,15 @@ public class AskServerForDungeonSeedState extends AbstractState
 	@Override
 	public void update()
 	{
-		if (this.tick <= 0)
+		if (this.isMain())
 		{
-			Persistance.isCommunicating = true;
-			Persistance.socketendpoint.requestDungeonSeed(this.dungeonID);
-			this.tick = PlayerLoadingState.TIMEOUT;
-		} else--this.tick;
+			if (this.tick == 0)
+			{
+				Persistance.isCommunicating = true;
+				Persistance.socketendpoint.requestDungeonSeed(this.dungeonID);
+				this.tick = PlayerLoadingState.TIMEOUT;
+			} else--this.tick;
+		}
 	}
 
 }
