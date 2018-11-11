@@ -75,9 +75,9 @@ public class DialogCutsceneEvent extends CutsceneEvent implements DialogEndListe
 			return this.message.toString();
 		}
 
-		public Element toXML()
+		public Element toXML(String elementName)
 		{
-			Element root = new Element("dialogscreen").setText(this.message.id);
+			Element root = new Element(elementName).setText(this.message.id);
 			XMLUtils.setAttribute(root, "translate", this.message.shouldTranslate, true);
 			XMLUtils.setAttribute(root, "emotion", this.emotion, -1);
 			XMLUtils.setAttribute(root, "target", this.pokemon, -1);
@@ -158,7 +158,7 @@ public class DialogCutsceneEvent extends CutsceneEvent implements DialogEndListe
 		Element root = super.toXML();
 		XMLUtils.setAttribute(root, "isnarrator", this.isNarratorDialog, false);
 		for (CutsceneDialogScreen screen : this.screens)
-			root.addContent(screen.toXML());
+			root.addContent(screen.toXML("dialogscreen"));
 		return root;
 	}
 

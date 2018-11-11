@@ -21,19 +21,19 @@ public class OptionDialogCutsceneEvent extends CutsceneEvent implements DialogEn
 
 	private int chosen = -1;
 	private boolean isOver;
-	private Message[] options;
-	private CutsceneDialogScreen question;
+	public final Message[] options;
+	public final CutsceneDialogScreen question;
 
 	public OptionDialogCutsceneEvent(Element xml, Cutscene cutscene)
 	{
 		super(xml, CutsceneEventType.option, cutscene);
 		if (xml.getChild("question", xml.getNamespace()) == null)
-			this.question = new CutsceneDialogScreen(new Message("ERROR"), 0, null, DialogPortraitLocation.TOP_LEFT);
+			this.question = new CutsceneDialogScreen(new Message("ERROR", false), 0, null, DialogPortraitLocation.TOP_LEFT);
 		else this.question = new CutsceneDialogScreen(xml.getChild("question", xml.getNamespace()));
 		this.options = new Message[xml.getChildren("option", xml.getNamespace()).size()];
 		int i = 0;
 		for (Element option : xml.getChildren("option", xml.getNamespace()))
-			this.options[i] = new Message(XMLUtils.getAttribute(option, "value", "option" + i), XMLUtils.getAttribute(option, "translate", true));
+			this.options[i++] = new Message(XMLUtils.getAttribute(option, "value", "option" + i), XMLUtils.getAttribute(option, "translate", true));
 	}
 
 	public OptionDialogCutsceneEvent(int id, CutsceneDialogScreen question, Message... options)
@@ -89,7 +89,7 @@ public class OptionDialogCutsceneEvent extends CutsceneEvent implements DialogEn
 	public Element toXML()
 	{
 		Element root = super.toXML();
-		root.addContent(this.question.toXML());
+		root.addContent(this.question.toXML("question"));
 		for (Message option : this.options)
 		{
 			Element o = new Element("option").setAttribute("value", option.id);

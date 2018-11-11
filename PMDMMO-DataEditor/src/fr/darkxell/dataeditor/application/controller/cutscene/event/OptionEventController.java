@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.event.OptionDialogCutsceneEvent;
+import com.darkxell.common.util.language.Message;
 
 import fr.darkxell.dataeditor.application.data.DialogOptionTableItem;
 import fr.darkxell.dataeditor.application.util.FXUtils;
@@ -32,7 +33,10 @@ public class OptionEventController extends EventController
 	@Override
 	public CutsceneEvent generateEvent()
 	{
-		return new OptionDialogCutsceneEvent(this.id(), null);
+		Message[] options = new Message[this.optionsTable.getItems().size()];
+		for (int i = 0; i < options.length; ++i)
+			options[i] = this.optionsTable.getItems().get(i).toMessage();
+		return new OptionDialogCutsceneEvent(this.id(), this.editDialogController.getScreen(), options);
 	}
 
 	@Override
@@ -124,6 +128,10 @@ public class OptionEventController extends EventController
 	{
 		super.setup(event);
 		this.optionsTable.getItems().clear();
+
+		this.editDialogController.setup(((OptionDialogCutsceneEvent) event).question);
+		for (Message m : ((OptionDialogCutsceneEvent) event).options)
+			this.optionsTable.getItems().add(new DialogOptionTableItem(m.id, m.shouldTranslate));
 	}
 
 }

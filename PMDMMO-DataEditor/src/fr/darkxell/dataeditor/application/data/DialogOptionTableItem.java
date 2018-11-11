@@ -1,5 +1,7 @@
 package fr.darkxell.dataeditor.application.data;
 
+import com.darkxell.common.util.language.Message;
+
 public class DialogOptionTableItem
 {
 
@@ -20,6 +22,11 @@ public class DialogOptionTableItem
 	public String getTranslate()
 	{
 		return String.valueOf(this.translate);
+	}
+
+	public Message toMessage()
+	{
+		return new Message(this.message, this.translate);
 	}
 
 }

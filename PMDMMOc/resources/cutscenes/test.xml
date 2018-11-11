@@ -29,6 +29,11 @@
     <dialog isnarrator="true">
       <dialogscreen translate="false" target="1">I AM AMAZING</dialogscreen>
     </dialog>
+    <option>
+      <question target="2">pokemon.44</question>
+      <option value="item.33" />
+      <option value="NO U" translate="false" />
+    </option>
   </events>
   <onfinish>
     <loadfreezone id="base" />
