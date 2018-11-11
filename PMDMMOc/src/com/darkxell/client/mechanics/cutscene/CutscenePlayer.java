@@ -27,6 +27,12 @@ public class CutscenePlayer
 		this.pendingEvents = new LinkedList<>(cutscene.events);
 	}
 
+	public void addEvents(CutsceneEvent[] results)
+	{
+		for (int i = results.length - 1; i >= 0; --i)
+			this.pendingEvents.addFirst(results[i]);
+	}
+
 	public void createEntity(CutsceneEntity entity)
 	{
 		this.entities.add(entity);

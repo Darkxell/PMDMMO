@@ -31,7 +31,7 @@ public class SetAnimatedEventController extends EventController
 	public void initialize(URL location, ResourceBundle resources)
 	{
 		super.initialize(location, resources);
-		this.targetCombobox.getItems().addAll(EditCutsceneController.instance.listAvailableEntities(EditCutsceneController.editing));
+		this.targetCombobox.getItems().addAll(EditCutsceneController.instance.listAvailableEntities(EditCutsceneController.instance.listManager.editing));
 		this.targetCombobox.getItems().removeIf(e -> !(e instanceof CutscenePokemon));
 		if (!this.targetCombobox.getItems().isEmpty()) this.targetCombobox.getSelectionModel().select(0);
 	}

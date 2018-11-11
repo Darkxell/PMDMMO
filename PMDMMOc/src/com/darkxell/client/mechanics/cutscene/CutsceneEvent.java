@@ -10,6 +10,8 @@ import com.darkxell.client.mechanics.cutscene.event.DialogCutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.event.DrawMapCutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.event.MoveCutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.event.MusicCutsceneEvent;
+import com.darkxell.client.mechanics.cutscene.event.OptionDialogCutsceneEvent;
+import com.darkxell.client.mechanics.cutscene.event.OptionResultCutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.event.RotateCutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.event.SetAnimatedCutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.event.SetStateCutsceneEvent;
@@ -32,6 +34,8 @@ public abstract class CutsceneEvent
 		drawmap("Draw Map"),
 		move("Move Entity"),
 		music("Change soundtrack"),
+		option("Select option"),
+		optionresult("Trigger events by option result"),
 		rotate("Rotate Entity"),
 		setanimated("Animate Pokemon"),
 		setstate("Set Pokemon State"),
@@ -47,67 +51,73 @@ public abstract class CutsceneEvent
 		}
 	}
 
-	public static CutsceneEvent create(Element xml, Cutscene cutscene)
+	public static CutsceneEvent create(Element xml, CutsceneContext context)
 	{
 		// Remember to add to Editor aswell (SelectEventTypeController#CutsceneEventType).
 		switch (xml.getName())
 		{
 			case "animate":
-				return new AnimateCutsceneEvent(xml, cutscene);
+				return new AnimateCutsceneEvent(xml, context);
 
 			case "camera":
-				return new CameraCutsceneEvent(xml, cutscene);
+				return new CameraCutsceneEvent(xml, context);
 
 			case "delay":
-				return new DelayCutsceneEvent(xml, cutscene);
+				return new DelayCutsceneEvent(xml, context);
 
 			case "despawn":
-				return new DespawnCutsceneEvent(xml, cutscene);
+				return new DespawnCutsceneEvent(xml, context);
 
 			case "dialog":
-				return new DialogCutsceneEvent(xml, cutscene);
+				return new DialogCutsceneEvent(xml, context);
 
 			case "drawmap":
-				return new DrawMapCutsceneEvent(xml, cutscene);
+				return new DrawMapCutsceneEvent(xml, context);
 
 			case "move":
-				return new MoveCutsceneEvent(xml, cutscene);
+				return new MoveCutsceneEvent(xml, context);
 
 			case "music":
-				return new MusicCutsceneEvent(xml, cutscene);
+				return new MusicCutsceneEvent(xml, context);
+
+			case "option":
+				return new OptionDialogCutsceneEvent(xml, context);
+
+			case "optionresult":
+				return new OptionResultCutsceneEvent(xml, context);
 
 			case "rotate":
-				return new RotateCutsceneEvent(xml, cutscene);
+				return new RotateCutsceneEvent(xml, context);
 
 			case "setstate":
-				return new SetStateCutsceneEvent(xml, cutscene);
+				return new SetStateCutsceneEvent(xml, context);
 
 			case "setanimated":
-				return new SetAnimatedCutsceneEvent(xml, cutscene);
+				return new SetAnimatedCutsceneEvent(xml, context);
 
 			case "sound":
-				return new SoundCutsceneEvent(xml, cutscene);
+				return new SoundCutsceneEvent(xml, context);
 
 			case "spawn":
 			case "spawnpokemon":
-				return new SpawnCutsceneEvent(xml, cutscene);
+				return new SpawnCutsceneEvent(xml, context);
 
 			case "wait":
-				return new WaitCutsceneEvent(xml, cutscene);
+				return new WaitCutsceneEvent(xml, context);
 
 			default:
 				return null;
 		}
 	}
 
-	protected Cutscene cutscene;
+	protected CutsceneContext context;
 	public int id;
 	public final CutsceneEventType type;
 
-	public CutsceneEvent(Element xml, CutsceneEventType type, Cutscene cutscene)
+	public CutsceneEvent(Element xml, CutsceneEventType type, CutsceneContext context)
 	{
 		this.id = XMLUtils.getAttribute(xml, "eventid", -1);
-		this.cutscene = cutscene;
+		this.context = context;
 		this.type = type;
 	}
 
@@ -115,7 +125,7 @@ public abstract class CutsceneEvent
 	{
 		this.id = id;
 		this.type = type;
-		this.cutscene = null;
+		this.context = null;
 	}
 
 	public String displayID()

@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent.CutsceneEventType;
 
+import fr.darkxell.dataeditor.application.controller.cutscene.event.EventController.EventEditionListener;
 import fr.darkxell.dataeditor.application.util.FXUtils;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
@@ -19,6 +20,7 @@ public class SelectEventTypeController implements Initializable
 
 	@FXML
 	public ListView<CutsceneEventType> eventList;
+	public EventEditionListener listener;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
@@ -44,13 +46,12 @@ public class SelectEventTypeController implements Initializable
 
 	public void onCancel()
 	{
-		EditCutsceneController.selectEventTypePopup.close();
+		this.listener.onEventTypeCancel();
 	}
 
 	private void onSelect(CutsceneEventType type)
 	{
-		EditCutsceneController.selectEventTypePopup.close();
-		EditCutsceneController.instance.onCreate(null, type);
+		this.listener.onEventTypeSelect(type);
 	}
 
 }

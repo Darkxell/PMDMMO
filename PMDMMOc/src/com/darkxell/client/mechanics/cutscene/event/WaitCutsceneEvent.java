@@ -5,7 +5,7 @@ import java.util.HashSet;
 
 import org.jdom2.Element;
 
-import com.darkxell.client.mechanics.cutscene.Cutscene;
+import com.darkxell.client.mechanics.cutscene.CutsceneContext;
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
 
 public class WaitCutsceneEvent extends CutsceneEvent
@@ -15,20 +15,20 @@ public class WaitCutsceneEvent extends CutsceneEvent
 	public ArrayList<CutsceneEvent> events;
 	private HashSet<CutsceneEvent> remaining = new HashSet<>();
 
-	public WaitCutsceneEvent(Element xml, Cutscene cutscene)
+	public WaitCutsceneEvent(Element xml, CutsceneContext context)
 	{
-		super(xml, CutsceneEventType.wait, cutscene);
+		super(xml, CutsceneEventType.wait, context);
 		this.events = new ArrayList<>();
 		for (Element event : xml.getChildren("event", xml.getNamespace()))
 			try
 			{
 				int id = Integer.parseInt(event.getText());
-				CutsceneEvent e = this.cutscene.getEvent(id);
+				CutsceneEvent e = this.context.getEvent(id);
 				if (e != null) this.events.add(e);
 			} catch (Exception e)
 			{}
 		this.all = this.events.isEmpty();
-		if (this.events.isEmpty()) this.events.addAll(this.cutscene.events);
+		if (this.events.isEmpty()) this.events.addAll(this.context.availableEvents());
 	}
 
 	public WaitCutsceneEvent(int id, boolean all, ArrayList<CutsceneEvent> events)

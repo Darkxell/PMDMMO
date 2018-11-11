@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -23,6 +24,10 @@ public class EditDialogController implements Initializable
 {
 
 	private ArrayList<CutsceneEntity> allEntities = new ArrayList<>();
+	@FXML
+	public Button cancelButton;
+	@FXML
+	public Button okButton;
 	@FXML
 	private ComboBox<DialogPortraitLocation> portraitCombobox;
 	@FXML
@@ -46,7 +51,7 @@ public class EditDialogController implements Initializable
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
 	{
-		this.allEntities.addAll(EditCutsceneController.instance.listAvailableEntities(EditCutsceneController.editing));
+		this.allEntities.addAll(EditCutsceneController.instance.listAvailableEntities(EditCutsceneController.instance.listManager.editing));
 		this.targetCheckbox.selectedProperty().addListener((obs, oldValue, newValue) -> {
 			this.targetCombobox.setDisable(!newValue);
 			this.portraitLabel.setDisable(!newValue);

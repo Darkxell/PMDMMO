@@ -9,6 +9,7 @@ import com.darkxell.client.state.dialog.DialogScreen;
 import com.darkxell.client.state.dialog.DialogState;
 import com.darkxell.client.state.dialog.OptionDialogScreen;
 import com.darkxell.client.state.dialog.PokemonDialogScreen;
+import com.darkxell.client.state.dialog.PokemonDialogScreen.DialogPortraitLocation;
 import com.darkxell.client.state.menu.components.IntegerSelectionState;
 import com.darkxell.client.state.menu.components.IntegerSelectionState.IntegerSelectionListener;
 import com.darkxell.client.state.menu.item.ItemContainersMenuState;
@@ -45,8 +46,8 @@ public class StorageDialog extends ComplexDialog implements ItemSelectionListene
 	private DialogState actionSelection(boolean isFirst)
 	{
 		this.quantity = -1;
-		return this
-				.newDialog(new OptionDialogScreen(this.shopkeeper, new Message("dialog.storage." + (isFirst ? "intro" : "intro2")),
+		return this.newDialog(
+				new OptionDialogScreen(this.shopkeeper, new Message("dialog.storage." + (isFirst ? "intro" : "intro2")), DialogPortraitLocation.BOTTOM_LEFT,
 						new Message("dialog.storage.deposit"), new Message("dialog.storage.withdraw"), new Message("dialog.storage.exit")).setID(ACTION))
 				.setOpaque(true);
 	}

@@ -29,6 +29,19 @@
     <dialog isnarrator="true">
       <dialogscreen translate="false" target="1">I AM AMAZING</dialogscreen>
     </dialog>
+    <wait />
+    <option eventid="10">
+      <question target="2">pokemon.44</question>
+      <option value="item.33" />
+      <option value="NO U" translate="false" />
+    </option>
+    <wait />
+    <optionresult option="0" dialog="10">
+      <rotate target="0" distance="8" />
+      <wait />
+    </optionresult>
+    <camera xpos="100.0" />
+    <wait />
   </events>
   <onfinish>
     <loadfreezone id="base" />

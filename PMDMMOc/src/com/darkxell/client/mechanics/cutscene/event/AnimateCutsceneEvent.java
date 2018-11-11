@@ -4,7 +4,7 @@ import org.jdom2.Element;
 
 import com.darkxell.client.mechanics.animation.Animations;
 import com.darkxell.client.mechanics.animation.PokemonAnimation;
-import com.darkxell.client.mechanics.cutscene.Cutscene;
+import com.darkxell.client.mechanics.cutscene.CutsceneContext;
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
 import com.darkxell.client.mechanics.cutscene.entity.CutscenePokemon;
@@ -18,9 +18,9 @@ public class AnimateCutsceneEvent extends CutsceneEvent
 	private boolean couldntLoad = false;
 	public final int target;
 
-	public AnimateCutsceneEvent(Element xml, Cutscene cutscene)
+	public AnimateCutsceneEvent(Element xml, CutsceneContext context)
 	{
-		super(xml, CutsceneEventType.animate, cutscene);
+		super(xml, CutsceneEventType.animate, context);
 		this.target = XMLUtils.getAttribute(xml, "target", -1);
 		this.animationID = XMLUtils.getAttribute(xml, "animation", 0);
 	}
@@ -44,7 +44,7 @@ public class AnimateCutsceneEvent extends CutsceneEvent
 	public void onStart()
 	{
 		super.onStart();
-		CutsceneEntity entity = this.cutscene.player.getEntity(this.target);
+		CutsceneEntity entity = this.context.parent().player.getEntity(this.target);
 		if (entity != null && entity instanceof CutscenePokemon)
 		{
 			this.animation = Animations.getCutsceneAnimation(this.animationID, (CutscenePokemon) entity, null);

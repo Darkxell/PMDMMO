@@ -3,13 +3,13 @@ package fr.darkxell.dataeditor.application.controller.cutscene.event;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.event.WaitCutsceneEvent;
 
 import fr.darkxell.dataeditor.application.controller.cutscene.EditCutsceneController;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -28,7 +28,7 @@ public class WaitEventController extends EventController
 		{
 			super.updateItem(item, empty);
 			this.setText(empty ? null : item.toString());
-			this.setGraphic(empty ? null : EditCutsceneController.instance.graphicFor(item));
+			this.setGraphic(empty ? null : EditCutsceneController.instance.listManager.graphicFor(item));
 		};
 	};
 
@@ -97,10 +97,6 @@ public class WaitEventController extends EventController
 			this.removeButton.setDisable(newValue);
 		});
 
-		ObservableList<CutsceneEvent> events = EditCutsceneController.instance.eventList.getItems();
-		this.allEvents.addAll(events);
-		if (EditCutsceneController.editing != null) this.allEvents.removeIf(e -> events.indexOf(e) >= events.indexOf(EditCutsceneController.editing));
-		this.existingEventsList.getItems().addAll(this.allEvents);
 		this.existingEventsList.setCellFactory(param -> {
 			return new EventListCell();
 		});
@@ -126,6 +122,13 @@ public class WaitEventController extends EventController
 	public void setup(CutsceneEvent event)
 	{
 		super.setup(event);
+		this.allEvents.clear();
+
+		List<CutsceneEvent> events = this.listener.availableEvents();
+		this.allEvents.addAll(events);
+		if (this.listener.listManager().editing != null) this.allEvents.removeIf(e -> events.indexOf(e) >= events.indexOf(this.listener.listManager().editing));
+		this.existingEventsList.getItems().addAll(this.allEvents);
+
 		this.allCheckbox.setSelected(((WaitCutsceneEvent) event).all);
 		if (!this.allCheckbox.isSelected()) for (CutsceneEvent e : ((WaitCutsceneEvent) event).events)
 			this.add(e);

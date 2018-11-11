@@ -2,7 +2,7 @@ package com.darkxell.client.mechanics.cutscene.event;
 
 import org.jdom2.Element;
 
-import com.darkxell.client.mechanics.cutscene.Cutscene;
+import com.darkxell.client.mechanics.cutscene.CutsceneContext;
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
 import com.darkxell.client.state.dialog.NarratorDialogScreen;
 import com.darkxell.common.util.XMLUtils;
@@ -13,9 +13,9 @@ public class DrawMapCutsceneEvent extends CutsceneEvent
 	public boolean shouldDraw;
 	private int tick;
 
-	public DrawMapCutsceneEvent(Element xml, Cutscene cutscene)
+	public DrawMapCutsceneEvent(Element xml, CutsceneContext context)
 	{
-		super(xml, CutsceneEventType.drawmap, cutscene);
+		super(xml, CutsceneEventType.drawmap, context);
 		this.shouldDraw = XMLUtils.getAttribute(xml, "draw", true);
 	}
 
@@ -36,7 +36,7 @@ public class DrawMapCutsceneEvent extends CutsceneEvent
 	{
 		super.onStart();
 		this.tick = 0;
-		if ((this.shouldDraw && this.cutscene.player.mapAlpha == 1) || (!this.shouldDraw && this.cutscene.player.mapAlpha == 0))
+		if ((this.shouldDraw && this.context.parent().player.mapAlpha == 1) || (!this.shouldDraw && this.context.parent().player.mapAlpha == 0))
 			this.tick = NarratorDialogScreen.FADETIME;
 	}
 
@@ -62,7 +62,7 @@ public class DrawMapCutsceneEvent extends CutsceneEvent
 		++this.tick;
 		double alpha = this.tick * 1. / NarratorDialogScreen.FADETIME;
 		if (!this.shouldDraw) alpha = (NarratorDialogScreen.FADETIME - this.tick) * 1. / NarratorDialogScreen.FADETIME;
-		this.cutscene.player.mapAlpha = alpha;
+		this.context.parent().player.mapAlpha = alpha;
 	}
 
 }

@@ -5,7 +5,7 @@ import java.awt.Point;
 import org.jdom2.Element;
 
 import com.darkxell.client.mechanics.animation.travel.TravelAnimation;
-import com.darkxell.client.mechanics.cutscene.Cutscene;
+import com.darkxell.client.mechanics.cutscene.CutsceneContext;
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
 import com.darkxell.common.util.XMLUtils;
@@ -21,9 +21,9 @@ public class MoveCutsceneEvent extends CutsceneEvent
 	protected TravelAnimation travel;
 	public final double xPos, yPos;
 
-	public MoveCutsceneEvent(Element xml, Cutscene cutscene)
+	public MoveCutsceneEvent(Element xml, CutsceneContext context)
 	{
-		super(xml, CutsceneEventType.move, cutscene);
+		super(xml, CutsceneEventType.move, context);
 		this.xPos = XMLUtils.getAttribute(xml, "xpos", UNSPECIFIED);
 		this.yPos = XMLUtils.getAttribute(xml, "ypos", UNSPECIFIED);
 		this.speed = XMLUtils.getAttribute(xml, "speed", 1.);
@@ -60,7 +60,7 @@ public class MoveCutsceneEvent extends CutsceneEvent
 	public void onStart()
 	{
 		super.onStart();
-		this.entity = this.cutscene.player.getEntity(this.target);
+		this.entity = this.context.parent().player.getEntity(this.target);
 		if (this.entity != null)
 		{
 			double startX = this.entity.xPos, startY = this.entity.yPos;

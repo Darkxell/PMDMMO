@@ -2,7 +2,7 @@ package com.darkxell.client.mechanics.cutscene.event;
 
 import org.jdom2.Element;
 
-import com.darkxell.client.mechanics.cutscene.Cutscene;
+import com.darkxell.client.mechanics.cutscene.CutsceneContext;
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
 import com.darkxell.client.mechanics.cutscene.entity.CutscenePokemon;
@@ -20,9 +20,9 @@ public class RotateCutsceneEvent extends CutsceneEvent
 	public final int target;
 	private int tick;
 
-	public RotateCutsceneEvent(Element xml, Cutscene cutscene)
+	public RotateCutsceneEvent(Element xml, CutsceneContext context)
 	{
-		super(xml, CutsceneEventType.rotate, cutscene);
+		super(xml, CutsceneEventType.rotate, context);
 		this.target = XMLUtils.getAttribute(xml, "target", -1);
 		this.distance = XMLUtils.getAttribute(xml, "distance", 0);
 		this.speed = XMLUtils.getAttribute(xml, "speed", DEFAULT_SPEED);
@@ -46,7 +46,7 @@ public class RotateCutsceneEvent extends CutsceneEvent
 	public void onStart()
 	{
 		super.onStart();
-		CutsceneEntity entity = this.cutscene.player.getEntity(this.target);
+		CutsceneEntity entity = this.context.parent().player.getEntity(this.target);
 		if (entity != null && entity instanceof CutscenePokemon)
 		{
 			this.pokemon = (CutscenePokemon) entity;

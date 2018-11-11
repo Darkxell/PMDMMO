@@ -1,8 +1,8 @@
 package fr.darkxell.dataeditor.application.controller.cutscene;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import com.darkxell.client.launchable.Launcher;
@@ -13,36 +13,22 @@ import com.darkxell.client.mechanics.cutscene.CutsceneEvent.CutsceneEventType;
 import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
 import com.darkxell.client.mechanics.cutscene.event.DespawnCutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.event.SpawnCutsceneEvent;
-import com.darkxell.client.mechanics.cutscene.event.WaitCutsceneEvent;
 import com.darkxell.client.state.freezone.CutsceneState;
 import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.client.ui.Frame;
 
-import fr.darkxell.dataeditor.application.DataEditor;
-import fr.darkxell.dataeditor.application.controller.cutscene.event.EventController;
-import fr.darkxell.dataeditor.application.controls.CustomList;
-import fr.darkxell.dataeditor.application.controls.CustomListCell.ListCellParent;
+import fr.darkxell.dataeditor.application.controller.cutscene.event.EventController.EventEditionListener;
+import fr.darkxell.dataeditor.application.controller.cutscene.event.EventList;
 import fr.darkxell.dataeditor.application.data.Cutscenes;
-import fr.darkxell.dataeditor.application.util.FXUtils;
 import javafx.collections.ObservableList;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.ListView;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.stage.Stage;
 
-public class EditCutsceneController implements Initializable, ListCellParent<CutsceneEvent>
+public class EditCutsceneController implements Initializable, EventEditionListener
 {
 
-	public static Stage editEventPopup;
-	public static CutsceneEvent editing;
 	public static EditCutsceneController instance;
-	public static Stage selectEventTypePopup;
 
 	@FXML
 	public CutsceneCreationController cutsceneCreationController;
@@ -50,21 +36,19 @@ public class EditCutsceneController implements Initializable, ListCellParent<Cut
 	private CutsceneEndController cutsceneEndController;
 	@FXML
 	public ListView<CutsceneEvent> eventList;
+	public EventList listManager;
 
 	@Override
-	public Node graphicFor(CutsceneEvent item)
+	public List<CutsceneEvent> availableEvents()
 	{
-		if (item == null) return null;
-		Image fxImage = SwingFXUtils.toFXImage(FXUtils.getIcon("/icons/events/" + item.type.name() + ".png"), null);
-		ImageView imageView = new ImageView(fxImage);
-		return imageView;
+		return this.eventList.getItems();
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
 	{
 		instance = this;
-		CustomList.setup(this, this.eventList, "Cutscene Event", true, false, true, true, true);
+		(this.listManager = new EventList()).setup(this, this.eventList);
 	}
 
 	public ArrayList<CutsceneEntity> listAvailableEntities(CutsceneEvent event)
@@ -82,82 +66,47 @@ public class EditCutsceneController implements Initializable, ListCellParent<Cut
 	}
 
 	@Override
-	public void onCreate(CutsceneEvent event)
+	public EventList listManager()
 	{
-		if (event != null) this.onCreate(event, event.type);
-		else try
-		{
-			FXMLLoader loader = new FXMLLoader(DataEditor.class.getResource("/layouts/cutscenes/select_event_type.fxml"));
-			Parent root = loader.load();
-			selectEventTypePopup = FXUtils.showPopup(root, "New Event");
-		} catch (IOException e)
-		{
-			e.printStackTrace();
-		}
-	}
-
-	public void onCreate(CutsceneEvent event, CutsceneEventType type)
-	{
-		editing = event;
-		try
-		{
-			FXMLLoader loader = new FXMLLoader(DataEditor.class.getResource("/layouts/cutscenes/events/" + type.name() + ".fxml"));
-			Parent root = loader.load();
-			if (event != null)
-			{
-				EventController controller = loader.getController();
-				controller.setup(event);
-			}
-			editEventPopup = FXUtils.showPopup(root, (event == null ? "New" : "Edit") + " Event");
-		} catch (IOException e)
-		{
-			e.printStackTrace();
-		}
+		return this.listManager;
 	}
 
 	public void onCreateEvent()
 	{
-		this.onCreate(null);
+		this.listManager.onCreate(null);
 	}
 
 	@Override
-	public void onDelete(CutsceneEvent item)
+	public void onEditCancel()
 	{
-		this.eventList.getItems().remove(item);
+		this.listManager.editEventPopup.close();
 	}
 
 	@Override
-	public void onEdit(CutsceneEvent item)
-	{
-		this.onCreate(item);
-	}
-
 	public void onEditConfirm(CutsceneEvent event)
 	{
 		ObservableList<CutsceneEvent> events = this.eventList.getItems();
-		if (editing == null) events.add(event);
+		if (this.listManager.editing == null) events.add(event);
 		else
 		{
-			int index = events.indexOf(editing);
+			int index = events.indexOf(this.listManager.editing);
 			events.remove(index);
 			events.add(index, event);
 		}
 	}
 
 	@Override
-	public void onMove(CutsceneEvent item, int newIndex)
+	public void onEventTypeCancel()
 	{
-		if (item instanceof WaitCutsceneEvent)
-			((WaitCutsceneEvent) item).events.removeIf(e -> this.eventList.getItems().indexOf(e) >= this.eventList.getItems().indexOf(item));
-		ObservableList<CutsceneEvent> ev = this.eventList.getItems();
-		ArrayList<CutsceneEvent> e = new ArrayList<>(ev);
-		ev.clear(); // Refreshing display
-		ev.addAll(e);
+		this.listManager.selectEventTypePopup.close();
 	}
 
 	@Override
-	public void onRename(CutsceneEvent item, String name)
-	{}
+	public void onEventTypeSelect(CutsceneEventType type)
+	{
+		this.listManager.selectEventTypePopup.close();
+		this.listManager.onCreate(null, type);
+	}
 
 	public void saveChanges()
 	{
