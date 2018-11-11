@@ -1,6 +1,7 @@
 package com.darkxell.client.state.dialog;
 
-import java.awt.Color;
+import java.awt.AlphaComposite;
+import java.awt.Composite;
 import java.awt.Graphics2D;
 import java.util.List;
 
@@ -15,6 +16,7 @@ public class NarratorDialogScreen extends DialogScreen
 
 	private int fadeTick = 0;
 	private boolean fadingOut = false;
+	public boolean forceBlackBackground = true;
 
 	public NarratorDialogScreen(Message message)
 	{
@@ -26,8 +28,13 @@ public class NarratorDialogScreen extends DialogScreen
 	{
 		if (this.lines.isEmpty()) this.reformLines(width * 3 / 4);
 
-		g.setColor(Color.BLACK);
-		g.fillRect(0, 0, width, height);
+		Composite previousComp = g.getComposite();
+		if (this.fadeTick < FADETIME)
+		{
+			double alpha = this.fadeTick == 0 ? 0 : this.fadeTick * 1. / FADETIME;
+			AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) alpha);
+			g.setComposite(ac);
+		}
 
 		int y = height / 2 - TextRenderer.height() * this.lines.size() - TextRenderer.lineSpacing() * (this.lines.size() - 1);
 		for (int i = 0; i < this.lines.size(); ++i)
@@ -41,12 +48,8 @@ public class NarratorDialogScreen extends DialogScreen
 		if (this.state == DialogScreenState.PAUSED && this.arrowtick > 9 && this.parentState.isMain())
 			g.drawImage(arrow, width / 2 - arrow.getWidth() / 2, y + TextRenderer.lineSpacing(), null);
 
-		if (this.fadeTick < FADETIME)
-		{
-			double alpha = 255 - (this.fadeTick * 1. / FADETIME) * 255;
-			g.setColor(new Color(0, 0, 0, (int) alpha));
-			g.fillRect(0, 0, width, height);
-		}
+		if (this.fadeTick < FADETIME) g.setComposite(previousComp);
+
 	}
 
 	@Override
@@ -59,7 +62,7 @@ public class NarratorDialogScreen extends DialogScreen
 	@Override
 	public boolean shouldRenderBackground()
 	{
-		return false;
+		return !this.forceBlackBackground;
 	}
 
 	@Override
@@ -74,6 +77,7 @@ public class NarratorDialogScreen extends DialogScreen
 				this.fadeTick = FADETIME;
 			} else if (this.fadingOut && this.fadeTick <= 0)
 			{
+				this.state = DialogScreenState.PAUSED;
 				this.fadingOut = false;
 				this.parentState.nextMessage();
 			}

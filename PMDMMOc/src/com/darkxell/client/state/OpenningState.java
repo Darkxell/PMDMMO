@@ -70,7 +70,7 @@ public class OpenningState extends AbstractState {
 			break;
 		case 1:
 			// Starter selected, ready to play awakening cutscene
-			CutsceneManager.playCutscene("startingwoods/blackstart", true);
+			CutsceneManager.playCutscene("startingwoods/introduction", true);
 			break;
 		case 2:
 			// Tiny Woods failed, ready to play cutscene

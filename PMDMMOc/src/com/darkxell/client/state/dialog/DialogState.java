@@ -1,5 +1,6 @@
 package com.darkxell.client.state.dialog;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ public class DialogState extends AbstractState
 		public void onDialogEnd(DialogState dialog);
 	}
 
+	private double backgroundAlpha = 1, targetAlpha = 1;
 	/** The State to draw in this State's background. */
 	public final AbstractGraphiclayer backgroundState;
 	/** The current screen. */
@@ -39,6 +41,7 @@ public class DialogState extends AbstractState
 
 		for (DialogScreen screen : this.screens)
 			screen.parentState = this;
+		if (this.screens.length != 0 && !this.screens[0].shouldRenderBackground()) this.backgroundAlpha = this.targetAlpha = 0;
 	}
 
 	public DialogState(AbstractGraphiclayer backgroundState, DialogScreen... elements)
@@ -75,7 +78,7 @@ public class DialogState extends AbstractState
 		return null;
 	}
 
-	/** @return Alls screens with the input ID. */
+	/** @return All screens with the input ID. */
 	public ArrayList<DialogScreen> getScreens(int id)
 	{
 		ArrayList<DialogScreen> screens = new ArrayList<>();
@@ -89,16 +92,12 @@ public class DialogState extends AbstractState
 	{
 		if (this.currentScreen().requestNextMessage())
 		{
-			if (this.currentScreen == this.screens.length - 1)
-			{
-				if (this.listener == null && this.backgroundState != null && this.backgroundState instanceof AbstractState)
-					Persistance.stateManager.setState((AbstractState) this.backgroundState);
-				else if (this.listener != null) this.listener.onDialogEnd(this);
-			} else
-			{
-				++this.currentScreen;
-				this.currentScreen().onStart();
-			}
+			if (this.backgroundState != null && this.currentScreen < this.screens.length - 1
+					&& this.currentScreen().shouldRenderBackground() != this.nextScreen().shouldRenderBackground())
+				this.targetAlpha = 1 - this.backgroundAlpha;
+			else if (this.backgroundState != null && this.currentScreen == this.screens.length - 1 && !this.currentScreen().shouldRenderBackground())
+				this.targetAlpha = 1 - this.backgroundAlpha;
+			else this.proceedToNextMessage();
 		}
 	}
 
@@ -132,10 +131,32 @@ public class DialogState extends AbstractState
 		this.currentScreen().onStart();
 	}
 
+	private void proceedToNextMessage()
+	{
+		if (this.currentScreen == this.screens.length - 1)
+		{
+			if (this.listener == null && this.backgroundState != null && this.backgroundState instanceof AbstractState)
+				Persistance.stateManager.setState((AbstractState) this.backgroundState);
+			else if (this.listener != null) this.listener.onDialogEnd(this);
+		} else
+		{
+			++this.currentScreen;
+			this.currentScreen().onStart();
+		}
+	}
+
 	@Override
 	public void render(Graphics2D g, int width, int height)
 	{
-		if (this.backgroundState != null && this.currentScreen().shouldRenderBackground()) this.backgroundState.render(g, width, height);
+		if (this.backgroundState != null)
+		{
+			if (this.backgroundAlpha != 0 && this.backgroundAlpha != 1)
+			{
+				this.backgroundState.render(g, width, height);
+				g.setColor(new Color(0, 0, 0, (int) ((1 - this.backgroundAlpha) * 255)));
+				g.fillRect(0, 0, width, height);
+			} else if (this.currentScreen().shouldRenderBackground()) this.backgroundState.render(g, width, height);
+		}
 
 		if (this.dialogBox == null)
 		{
@@ -159,5 +180,27 @@ public class DialogState extends AbstractState
 	{
 		this.currentScreen().update();
 		if (this.backgroundState != null) this.backgroundState.update();
+
+		if (this.backgroundAlpha != this.targetAlpha)
+		{
+			double change = 1. / NarratorDialogScreen.FADETIME;
+			if (this.backgroundAlpha < this.targetAlpha)
+			{
+				this.backgroundAlpha += change;
+				if (this.backgroundAlpha > this.targetAlpha)
+				{
+					this.backgroundAlpha = this.targetAlpha;
+					this.proceedToNextMessage();
+				}
+			} else if (this.backgroundAlpha > this.targetAlpha)
+			{
+				this.backgroundAlpha += change;
+				if (this.backgroundAlpha < this.targetAlpha)
+				{
+					this.backgroundAlpha = this.targetAlpha;
+					this.proceedToNextMessage();
+				}
+			}
+		}
 	}
 }

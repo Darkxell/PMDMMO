@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cutscene name="startingwoods/introduction">
-  <creation freezone="startforest" camerax="35.0" cameray="23.0" fading="false">
+  <creation freezone="startforest" camerax="35.0" cameray="23.0" fading="false" drawmap="false">
     <pokemon cutsceneid="1" xpos="35.0" ypos="23.0" facing="EAST">
       <teammember>0</teammember>
     </pokemon>
@@ -9,6 +9,16 @@
     </pokemon>
   </creation>
   <events>
+    <dialog isnarrator="true">
+      <dialogscreen>cutscene.startingwoods.blackstart.m1</dialogscreen>
+      <dialogscreen>cutscene.startingwoods.blackstart.m2</dialogscreen>
+      <dialogscreen>cutscene.startingwoods.blackstart.m3</dialogscreen>
+      <dialogscreen>cutscene.startingwoods.blackstart.m4</dialogscreen>
+      <dialogscreen>cutscene.startingwoods.blackstart.m5</dialogscreen>
+    </dialog>
+	<wait />
+	<drawmap />
+    <delay ticks="30" />
     <rotate target="1" distance="2" speed="12" />
     <wait />
     <dialog>

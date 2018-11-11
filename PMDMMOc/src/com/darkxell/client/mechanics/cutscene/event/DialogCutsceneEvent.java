@@ -133,7 +133,11 @@ public class DialogCutsceneEvent extends CutsceneEvent implements DialogEndListe
 			if (e != null && e instanceof CutscenePokemon) pokemon = (CutscenePokemon) e;
 			if (!s.hasReplacements) s.addReplacements(pokemon);
 			DialogScreen screen = pokemon == null ? new DialogScreen(s.message) : new PokemonDialogScreen(pokemon.toPokemon(), s.message, s.portraitLocation);
-			if (this.isNarratorDialog) screen = new NarratorDialogScreen(s.message);
+			if (this.isNarratorDialog)
+			{
+				screen = new NarratorDialogScreen(s.message);
+				((NarratorDialogScreen) screen).forceBlackBackground = false;
+			}
 			screens[index++] = screen;
 		}
 
