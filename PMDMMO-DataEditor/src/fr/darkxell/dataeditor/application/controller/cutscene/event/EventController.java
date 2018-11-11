@@ -6,8 +6,8 @@ import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
+import com.darkxell.client.mechanics.cutscene.CutsceneEvent.CutsceneEventType;
 
-import fr.darkxell.dataeditor.application.controller.cutscene.EditCutsceneController;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
@@ -18,7 +18,13 @@ public abstract class EventController implements Initializable
 
 	public static interface EventEditionListener
 	{
+		public void onEditCancel();
+
 		public void onEditConfirm(CutsceneEvent e);
+
+		public void onEventTypeCancel();
+
+		public void onEventTypeSelect(CutsceneEventType type);
 	}
 
 	@FXML
@@ -45,7 +51,7 @@ public abstract class EventController implements Initializable
 
 	public void onCancel()
 	{
-		EditCutsceneController.instance.listManager.editEventPopup.close();
+		this.listener.onEditCancel();
 	}
 
 	public void onOk()

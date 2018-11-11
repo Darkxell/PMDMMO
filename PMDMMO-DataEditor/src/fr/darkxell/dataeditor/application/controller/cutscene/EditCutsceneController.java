@@ -8,6 +8,7 @@ import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.cutscene.Cutscene;
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
+import com.darkxell.client.mechanics.cutscene.CutsceneEvent.CutsceneEventType;
 import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
 import com.darkxell.client.mechanics.cutscene.event.DespawnCutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.event.SpawnCutsceneEvent;
@@ -63,6 +64,12 @@ public class EditCutsceneController implements Initializable, EventEditionListen
 	}
 
 	@Override
+	public void onEditCancel()
+	{
+		this.listManager.editEventPopup.close();
+	}
+
+	@Override
 	public void onEditConfirm(CutsceneEvent event)
 	{
 		ObservableList<CutsceneEvent> events = this.eventList.getItems();
@@ -73,6 +80,19 @@ public class EditCutsceneController implements Initializable, EventEditionListen
 			events.remove(index);
 			events.add(index, event);
 		}
+	}
+
+	@Override
+	public void onEventTypeCancel()
+	{
+		this.listManager.selectEventTypePopup.close();
+	}
+
+	@Override
+	public void onEventTypeSelect(CutsceneEventType type)
+	{
+		this.listManager.selectEventTypePopup.close();
+		this.listManager.onCreate(null, type);
 	}
 
 	public void saveChanges()

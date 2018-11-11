@@ -11,18 +11,21 @@ import com.darkxell.client.mechanics.cutscene.CutsceneEvent.CutsceneEventType;
 import com.darkxell.client.mechanics.cutscene.event.OptionResultCutsceneEvent;
 
 import fr.darkxell.dataeditor.application.controller.cutscene.EditCutsceneController;
+import fr.darkxell.dataeditor.application.controller.cutscene.event.EventController.EventEditionListener;
 import fr.darkxell.dataeditor.application.util.FXUtils;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 
-public class OptionResultEventController extends EventController
+public class OptionResultEventController extends EventController implements EventEditionListener
 {
 
 	@FXML
 	private ListView<CutsceneEvent> eventList;
+	private EventList listManager;
 	@FXML
 	private TextField optionTextfield;
 	@FXML
@@ -45,6 +48,8 @@ public class OptionResultEventController extends EventController
 	{
 		super.initialize(location, resources);
 
+		(this.listManager = new EventList()).setup(this, this.eventList);
+
 		Pattern pattern = Pattern.compile("\\d*");
 		TextFormatter<String> formatter = new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
 			return pattern.matcher(change.getControlNewText()).matches() ? change : null;
@@ -54,6 +59,38 @@ public class OptionResultEventController extends EventController
 		ArrayList<CutsceneEvent> events = new ArrayList<>(EditCutsceneController.instance.eventList.getItems());
 		events.removeIf(e -> e.type != CutsceneEventType.option);
 		this.targetCombobox.getItems().addAll(events);
+	}
+
+	@Override
+	public void onEditCancel()
+	{
+		this.listManager.editEventPopup.close();
+	}
+
+	@Override
+	public void onEditConfirm(CutsceneEvent event)
+	{
+		ObservableList<CutsceneEvent> events = this.eventList.getItems();
+		if (this.listManager.editing == null) events.add(event);
+		else
+		{
+			int index = events.indexOf(this.listManager.editing);
+			events.remove(index);
+			events.add(index, event);
+		}
+	}
+
+	@Override
+	public void onEventTypeCancel()
+	{
+		this.listManager.selectEventTypePopup.close();
+	}
+
+	@Override
+	public void onEventTypeSelect(CutsceneEventType type)
+	{
+		this.listManager.selectEventTypePopup.close();
+		this.listManager.onCreate(null, type);
 	}
 
 	@Override

@@ -8,6 +8,7 @@ import com.darkxell.client.mechanics.cutscene.CutsceneEvent.CutsceneEventType;
 import com.darkxell.client.mechanics.cutscene.event.WaitCutsceneEvent;
 
 import fr.darkxell.dataeditor.application.DataEditor;
+import fr.darkxell.dataeditor.application.controller.cutscene.SelectEventTypeController;
 import fr.darkxell.dataeditor.application.controller.cutscene.event.EventController.EventEditionListener;
 import fr.darkxell.dataeditor.application.controls.CustomList;
 import fr.darkxell.dataeditor.application.controls.CustomListCell.ListCellParent;
@@ -24,11 +25,11 @@ import javafx.stage.Stage;
 
 public class EventList implements ListCellParent<CutsceneEvent>
 {
-	public Stage selectEventTypePopup;
 	public Stage editEventPopup;
 	public CutsceneEvent editing;
 	private ListView<CutsceneEvent> eventList;
 	private EventEditionListener listener;
+	public Stage selectEventTypePopup;
 
 	@Override
 	public Node graphicFor(CutsceneEvent item)
@@ -47,6 +48,8 @@ public class EventList implements ListCellParent<CutsceneEvent>
 		{
 			FXMLLoader loader = new FXMLLoader(DataEditor.class.getResource("/layouts/cutscenes/select_event_type.fxml"));
 			Parent root = loader.load();
+			SelectEventTypeController controller = loader.getController();
+			controller.listener = this.listener;
 			this.selectEventTypePopup = FXUtils.showPopup(root, "New Event");
 		} catch (IOException e)
 		{
@@ -61,12 +64,9 @@ public class EventList implements ListCellParent<CutsceneEvent>
 		{
 			FXMLLoader loader = new FXMLLoader(DataEditor.class.getResource("/layouts/cutscenes/events/" + type.name() + ".fxml"));
 			Parent root = loader.load();
-			if (event != null)
-			{
-				EventController controller = loader.getController();
-				controller.listener = this.listener;
-				controller.setup(event);
-			}
+			EventController controller = loader.getController();
+			controller.listener = this.listener;
+			if (event != null) controller.setup(event);
 			this.editEventPopup = FXUtils.showPopup(root, (event == null ? "New" : "Edit") + " Event");
 		} catch (IOException e)
 		{
