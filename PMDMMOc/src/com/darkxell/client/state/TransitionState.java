@@ -15,25 +15,25 @@ public class TransitionState extends AbstractState
 
 	private AbstractState current;
 	public int fadeIn, stay, text, fadeOut, stayEnd, textStart, textFade, duration;
-	public final Message message;
+	public final Message[] messages;
 	public AbstractState previous, next;
 	private int tick, alpha;
 
 	public TransitionState(AbstractState previous, AbstractState next)
 	{
-		this(previous, next, null);
+		this(previous, next, new Message[0]);
 	}
 
-	public TransitionState(AbstractState previous, AbstractState next, Message message)
+	public TransitionState(AbstractState previous, AbstractState next, Message message[])
 	{
 		this(previous, next, message, FADEIN, STAY, TEXT, FADEOUT);
 	}
 
-	public TransitionState(AbstractState previous, AbstractState next, Message message, int fadeIn, int stay, int text, int fadeOut)
+	public TransitionState(AbstractState previous, AbstractState next, Message[] message, int fadeIn, int stay, int text, int fadeOut)
 	{
 		this.previous = previous;
 		this.next = next;
-		this.message = message;
+		this.messages = message;
 		this.fadeIn = fadeIn;
 		this.stay = stay;
 		this.text = text;
@@ -69,8 +69,14 @@ public class TransitionState extends AbstractState
 	public void render(Graphics2D g, int width, int height)
 	{
 		if (this.current != null) this.current.render(g, width, height);
-		if (this.message != null && this.tick >= this.textStart && this.tick <= this.stayEnd)
-			TextRenderer.render(g, this.message, width / 2 - TextRenderer.width(this.message) / 2, height / 2 - TextRenderer.height());
+
+		int y = height / 2 - (TextRenderer.height() + TextRenderer.lineSpacing()) * this.messages.length / 2;
+		if (this.tick >= this.textStart && this.tick <= this.stayEnd) for (Message m : this.messages)
+		{
+			TextRenderer.render(g, m, width / 2 - TextRenderer.width(m) / 2, y);
+			y += TextRenderer.height() + TextRenderer.lineSpacing();
+		}
+
 		g.setColor(new Color(0, 0, 0, this.alpha));
 		g.fillRect(0, 0, width, height);
 	}
@@ -83,7 +89,7 @@ public class TransitionState extends AbstractState
 		else if (this.tick == this.textStart)
 		{
 			this.onTransitionHalf();
-			if (this.message == null) this.tick += this.text + this.stay;
+			if (this.messages == null) this.tick += this.text + this.stay;
 		}
 		if (this.tick == this.stayEnd) this.current = this.next;
 
