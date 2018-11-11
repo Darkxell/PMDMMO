@@ -28,7 +28,7 @@ public class WaitEventController extends EventController
 		{
 			super.updateItem(item, empty);
 			this.setText(empty ? null : item.toString());
-			this.setGraphic(empty ? null : EditCutsceneController.instance.graphicFor(item));
+			this.setGraphic(empty ? null : EditCutsceneController.instance.listManager.graphicFor(item));
 		};
 	};
 
@@ -99,7 +99,8 @@ public class WaitEventController extends EventController
 
 		ObservableList<CutsceneEvent> events = EditCutsceneController.instance.eventList.getItems();
 		this.allEvents.addAll(events);
-		if (EditCutsceneController.editing != null) this.allEvents.removeIf(e -> events.indexOf(e) >= events.indexOf(EditCutsceneController.editing));
+		if (EditCutsceneController.instance.listManager.editing != null)
+			this.allEvents.removeIf(e -> events.indexOf(e) >= events.indexOf(EditCutsceneController.instance.listManager.editing));
 		this.existingEventsList.getItems().addAll(this.allEvents);
 		this.existingEventsList.setCellFactory(param -> {
 			return new EventListCell();

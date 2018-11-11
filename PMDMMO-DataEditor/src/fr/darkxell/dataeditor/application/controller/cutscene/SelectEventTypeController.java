@@ -44,13 +44,13 @@ public class SelectEventTypeController implements Initializable
 
 	public void onCancel()
 	{
-		EditCutsceneController.selectEventTypePopup.close();
+		EditCutsceneController.instance.listManager.selectEventTypePopup.close();
 	}
 
 	private void onSelect(CutsceneEventType type)
 	{
-		EditCutsceneController.selectEventTypePopup.close();
-		EditCutsceneController.instance.onCreate(null, type);
+		EditCutsceneController.instance.listManager.selectEventTypePopup.close();
+		EditCutsceneController.instance.listManager.onCreate(null, type);
 	}
 
 }

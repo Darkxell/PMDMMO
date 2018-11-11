@@ -16,8 +16,14 @@ import javafx.scene.control.TextFormatter;
 public abstract class EventController implements Initializable
 {
 
+	public static interface EventEditionListener
+	{
+		public void onEditConfirm(CutsceneEvent e);
+	}
+
 	@FXML
 	protected TextField idTextfield;
+	public EventEditionListener listener;
 
 	public abstract CutsceneEvent generateEvent();
 
@@ -39,14 +45,14 @@ public abstract class EventController implements Initializable
 
 	public void onCancel()
 	{
-		EditCutsceneController.editEventPopup.close();
+		EditCutsceneController.instance.listManager.editEventPopup.close();
 	}
 
 	public void onOk()
 	{
 		this.onCancel();
 		CutsceneEvent e = this.generateEvent();
-		EditCutsceneController.instance.onEditConfirm(e);
+		this.listener.onEditConfirm(e);
 	}
 
 	public void setup(CutsceneEvent event)
