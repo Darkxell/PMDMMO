@@ -16,6 +16,7 @@ import com.darkxell.gameserver.GameSessionHandler;
 import com.darkxell.gameserver.GameSessionInfo;
 import com.darkxell.gameserver.MessageHandler;
 import com.darkxell.gameserver.SessionsInfoHolder;
+import com.darkxell.gameserver.servermechanics.GiveManager;
 import com.darkxell.gameserver.servermechanics.MissionEndManager;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonValue;
@@ -194,18 +195,27 @@ public class DungeonendHandler extends MessageHandler {
     private void manageStoryposition(boolean success, GameSessionInfo si) {
         DBPlayer player = endpoint.getPlayerDAO().find(si.serverid);
         boolean needcommit = false;
+        boolean give = false;
         int newstoryposition = 0;
         switch (si.currentdungeon) {
             case 1:
                 if (player.storyposition == 2 && success) {
                     newstoryposition = 3;
+                    needcommit = true;
+                    give = true;
                 }
-                needcommit = true;
                 break;
         }
+        System.out.println(si.name + " with storypos:" + player.storyposition
+                + " triggered manageStoryposition at the end of a dungeon (success:" + success + "). Set to : " + newstoryposition);
         if (needcommit) {
             player.storyposition = newstoryposition;
             endpoint.getPlayerDAO().update(player);
+        }
+        if(give){
+            GiveManager.giveItem(7, 1, si, endpoint, false);
+            GiveManager.giveItem(11, 1, si, endpoint, false);
+            GiveManager.giveItem(12, 1, si, endpoint, false);
         }
     }
 
