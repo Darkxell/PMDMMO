@@ -52,13 +52,13 @@ public class DungeonExitAnimationState extends AnimationState
 		++this.tick;
 		this.travel.update(this.tick % singleDuration / singleDuration);
 		this.animTravel.update(this.tick % singleDuration / singleDuration);
-		this.currentRenderer.setXY(this.travel.current().getX() - .5, this.travel.current().getY() - .5);
+		if (this.currentRenderer != null) this.currentRenderer.setXY(this.travel.current().getX() - .5, this.travel.current().getY() - .5);
 		if (this.currentAnimation != null) this.currentAnimation.data.gravityY = (int) (this.animTravel.current().getY());
-		if (this.tick % singleDuration >= (singleDuration - tileFadeDuration))
+		if (this.tick % singleDuration >= (singleDuration - tileFadeDuration)) if (this.currentRenderer != null)
 			this.currentRenderer.setAlpha((float) ((tileFadeDuration - (this.tick % singleDuration - (singleDuration - tileFadeDuration))) / tileFadeDuration));
 		if (this.tick % singleDuration == 0)
 		{
-			this.currentRenderer.setAlpha(0);
+			if (this.currentRenderer != null) this.currentRenderer.setAlpha(0);
 			++this.currentExiter;
 			this.updateExiter();
 			if (this.tick == this.duration)
