@@ -13,7 +13,8 @@ public enum FreezoneInfo
 	STARTFOREST(LocalMapLocation.STARTFOREST, "startforest"),
 	LUMINOUSCAVE(LocalMapLocation.LUMINOUSCAVE, "lumiouscave"),
 	OFFICEINSIDE(LocalMapLocation.OFFICE, "officeinside"),
-	
+	THUNDERWAVE_ENTRANCE(LocalMapLocation.THUNDERWAVE, "thunderwave"),
+
 	DUNGEON_MT_STEEL_TOP(LocalMapLocation.DUNGEON_MT_STEEL_TOP, "mt_steel_top"),
 
 	FRIEND_AGEDCHAMBER1(LocalMapLocation.ZONE_RUINS, "agedchamber1"),
