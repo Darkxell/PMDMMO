@@ -6,6 +6,7 @@ import com.darkxell.common.util.language.Message;
 public enum LocalMapLocation {
 
 	BASE(340, 160, new Message("zone.base"), true),
+	BASEINSIDE(340, 150, new Message("zone.base"), false),
 	SQUARE(355, 165, new Message("zone.square"), false),
 	DOJO(353, 180, new Message("zone.dojo"), false),
 	POND(350, 147, new Message("zone.wpond"), false),

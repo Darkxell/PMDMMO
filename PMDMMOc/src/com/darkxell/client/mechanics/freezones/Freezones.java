@@ -3,6 +3,7 @@ package com.darkxell.client.mechanics.freezones;
 import com.darkxell.client.mechanics.freezones.cutscenemaps.MtSteelTopFreezone;
 import com.darkxell.client.mechanics.freezones.cutscenemaps.ThunderwaveEntranceFreezone;
 import com.darkxell.client.mechanics.freezones.zones.BaseFreezone;
+import com.darkxell.client.mechanics.freezones.zones.BaseInsideFreezone;
 import com.darkxell.client.mechanics.freezones.zones.DojoFreezone;
 import com.darkxell.client.mechanics.freezones.zones.ForestFreezone;
 import com.darkxell.client.mechanics.freezones.zones.LumiousCaveFreezone;
@@ -77,6 +78,10 @@ public class Freezones {
 		switch (freezone) {
 		case BASE:
 			map = new BaseFreezone();
+			break;
+			
+		case BASEINSIDE:
+			map = new BaseInsideFreezone();
 			break;
 
 		case SQUARE:

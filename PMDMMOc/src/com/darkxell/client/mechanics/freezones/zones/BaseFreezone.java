@@ -18,6 +18,7 @@ public class BaseFreezone extends FreezoneMap {
 		super("/freezones/base.xml", 35, 28, FreezoneInfo.BASE);
 		this.freezonebgm = "base.mp3";
 		this.triggerzones.add(new WarpZone(4, 40, FreezoneInfo.SQUARE, new DoubleRectangle(66, 34, 2, 11)));
+		this.triggerzones.add(new WarpZone(22, 30, FreezoneInfo.BASEINSIDE, new DoubleRectangle(32, 20, 3, 2)));
 		this.triggerzones.add(new TriggerZone(new DoubleRectangle(0, 38, 2, 8)) {
 			@Override
 			public void onEnter()

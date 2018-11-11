@@ -6,6 +6,7 @@ public enum FreezoneInfo
 {
 
 	BASE(LocalMapLocation.BASE, "base"),
+	BASEINSIDE(LocalMapLocation.BASEINSIDE, "baseinside"),
 	SQUARE(LocalMapLocation.SQUARE, "square"),
 	DOJO(LocalMapLocation.DOJO, "dojo"),
 	POND(LocalMapLocation.POND, "wpond"),
