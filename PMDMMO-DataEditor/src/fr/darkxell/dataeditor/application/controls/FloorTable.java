@@ -81,28 +81,28 @@ public class FloorTable
 	public static <T, D> FloorTableManager<T, D> setup(TableView<FloorTableItem<T, D>> table, String objectName, FloorTableItem<T, D> defaultItem)
 	{
 		table.setEditable(true);
-
+	
 		FloorTableManager<T, D> manager = new FloorTableManager<>(table);
 		table.getColumns().add(manager.floorColumn = new TableColumn<FloorTableItem<T, D>, String>("Floor"));
 		table.getColumns().add(manager.valueColumn = new TableColumn<FloorTableItem<T, D>, D>(objectName));
-
+	
 		manager.floorColumn.setCellValueFactory(new PropertyValueFactory<>("floor"));
 		manager.valueColumn.setCellValueFactory(new PropertyValueFactory<>("value"));
-
+	
 		manager.floorColumn.setCellFactory(TextFieldTableCell.forTableColumn(new DefaultStringConverter()));
 		manager.valueColumn.setCellFactory(defaultItem.cellFactory());
-
+	
 		table.setPrefWidth(150);
 		manager.floorColumn.setMinWidth(50);
 		manager.floorColumn.setPrefWidth(50);
 		manager.floorColumn.setMaxWidth(50);
 		manager.valueColumn.setPrefWidth(-1);
-
+	
 		manager.floorColumn.setOnEditCommit(event -> manager.onFloorEdited(event));
 		manager.valueColumn.setOnEditCommit(event -> manager.onValueEdited(event));
-
+	
 		table.setContextMenu(createContextMenu(table, objectName, defaultItem, manager));
-
+	
 		return manager;
 	}
 

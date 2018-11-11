@@ -17,7 +17,7 @@ public class BankDialogScreen extends OptionDialogScreen
 
 	public BankDialogScreen(PokemonSpecies species, long bagmoney, long bankmoney, Message message, Message... options)
 	{
-		super(species, message, options);
+		super(species, message, DialogPortraitLocation.BOTTOM_LEFT, options);
 		this.bag = bagmoney;
 		this.bank = bankmoney;
 	}

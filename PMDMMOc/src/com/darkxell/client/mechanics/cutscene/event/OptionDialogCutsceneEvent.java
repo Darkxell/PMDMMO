@@ -59,7 +59,6 @@ public class OptionDialogCutsceneEvent extends CutsceneEvent implements DialogEn
 	{
 		this.isOver = true;
 		this.chosen = ((OptionDialogScreen) dialog.getScreen(1)).chosenIndex();
-		System.out.println(this.chosen);
 		Persistance.stateManager.setState(Persistance.cutsceneState);
 	}
 
