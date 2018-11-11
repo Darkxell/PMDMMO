@@ -12,8 +12,9 @@ public enum LocalMapLocation {
 	OFFICE(372, 160, new Message("zone.office"), false),
 	STARTFOREST(320, 150, new Message("zone.startforest"), false),
 	LUMINOUSCAVE(355, 137, new Message("zone.lumiouscave"), false),
-	
-	DUNGEON_MT_STEEL_TOP(-1, -1, new Message("zone.dungeon.mt_steel_top", false), false),
+
+	DUNGEON_MT_STEEL_TOP(-1, -1, new Message("zone.dungeon.mt_steel_top", true), false),
+	THUNDERWAVE(-1, -1, new Message("zone.dungeon.thunderwave_cave", true), false),
 
 	ZONE_PLAINS(350, 119, new Message("zone.plains"), true),
 	ZONE_CAVERN(355, 70, new Message("zone.cavern"), true),

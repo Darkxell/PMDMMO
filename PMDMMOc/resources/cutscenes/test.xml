@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cutscene name="test">
-  <creation freezone="base" camerax="40.0" cameray="30.0" fading="false">
+  <creation freezone="thunderwave" camerax="26.0" cameray="20.0" fading="false">
     <pokemon cutsceneid="0" xpos="28.0" ypos="35.0">
       <teammember>0</teammember>
     </pokemon>
@@ -21,7 +21,7 @@
     <wait />
     <move ypos="35.0" speed="45.0" target="1" />
     <delay ticks="40" />
-    <rotate target="0" distance="-2" instantly="true" />
+    <rotate target="0" distance="-2" />
     <delay ticks="40" />
     <despawn target="1" />
     <camera xpos="5.0" />

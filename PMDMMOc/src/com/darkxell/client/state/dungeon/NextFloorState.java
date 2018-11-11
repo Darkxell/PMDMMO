@@ -13,11 +13,13 @@ import com.darkxell.common.util.language.Message;
 
 public class NextFloorState extends TransitionState
 {
-	private static Message createMessage(int floor)
+	private static Message[] createMessage(int floor)
 	{
-		return Persistance.dungeon.dungeon().name().addSuffix(new Message("<br>", false))
-				.addSuffix(new Message("stairs.floor." + (Persistance.dungeon.dungeon().direction == DungeonDirection.UP ? "up" : "down"))
-						.addReplacement("<floor>", Integer.toString(floor)));
+		Message[] m = new Message[2];
+		m[0] = Persistance.dungeon.dungeon().name();
+		m[1] = new Message("stairs.floor." + (Persistance.dungeon.dungeon().direction == DungeonDirection.UP ? "up" : "down")).addReplacement("<floor>",
+				Integer.toString(floor));
+		return m;
 	}
 
 	public static void resumeExploration()
