@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
+import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageType;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DefaultDamageSource;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.pokemon.DungeonPokemon;
@@ -30,7 +31,7 @@ public class DealDamageFoodItemEffect extends FoodItemEffect
 		if (damageTarget != null)
 		{
 			DefaultDamageSource s = new DefaultDamageSource(floor, target.player());
-			events.add(new DamageDealtEvent(floor, damageTarget, s, this.damage));
+			events.add(new DamageDealtEvent(floor, damageTarget, s, DamageType.ITEM, this.damage));
 			if (s.experienceEvent != null) events.add(s.experienceEvent);
 		}
 	}
@@ -42,7 +43,7 @@ public class DealDamageFoodItemEffect extends FoodItemEffect
 		if (damageTarget != null)
 		{
 			DefaultDamageSource s = new DefaultDamageSource(floor, pokemon.player());
-			events.add(new DamageDealtEvent(floor, damageTarget, s, this.thrownDamage));
+			events.add(new DamageDealtEvent(floor, damageTarget, s, DamageType.ITEM, this.thrownDamage));
 			if (s.experienceEvent != null) events.add(s.experienceEvent);
 		}
 	}

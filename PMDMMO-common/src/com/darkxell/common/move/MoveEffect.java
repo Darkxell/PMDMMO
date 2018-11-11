@@ -12,6 +12,7 @@ import com.darkxell.common.event.DungeonEvent.MessageEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
+import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageType;
 import com.darkxell.common.move.Move.MoveCategory;
 import com.darkxell.common.move.Move.MoveRange;
 import com.darkxell.common.pokemon.AffectsPokemon;
@@ -209,7 +210,7 @@ public class MoveEffect implements AffectsPokemon
 									new Message(target == null ? "move.miss.no_target" : "move.miss").addReplacement("<pokemon>",
 											target == null ? new Message("no one", false) : target.getNickname())),
 							usedMove, target, floor, missed, true, null);
-			else if (usedMove.move.move().dealsDamage) effects.createEffect(new DamageDealtEvent(floor, target, usedMove, calculator.compute(effects.events)),
+			else if (usedMove.move.move().dealsDamage) effects.createEffect(new DamageDealtEvent(floor, target, usedMove, DamageType.MOVE, calculator.compute(effects.events)),
 					usedMove, target, floor, missed, false, null);
 		}
 

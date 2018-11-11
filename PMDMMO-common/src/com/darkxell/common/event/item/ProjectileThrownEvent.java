@@ -8,6 +8,7 @@ import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageSource;
+import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageType;
 import com.darkxell.common.event.stats.ExperienceGeneratedEvent;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.ItemStack;
@@ -53,7 +54,8 @@ public class ProjectileThrownEvent extends DungeonEvent implements DamageSource
 	{
 		if (this.item.effect() instanceof ThrowableItemEffect && this.destination.getPokemon() != null)
 		{
-			this.resultingEvents.add(new DamageDealtEvent(this.floor, this.destination.getPokemon(), this, ((ThrowableItemEffect) this.item.effect()).damage));
+			this.resultingEvents.add(
+					new DamageDealtEvent(this.floor, this.destination.getPokemon(), this, DamageType.ITEM, ((ThrowableItemEffect) this.item.effect()).damage));
 			this.resultingEvents.add(this.experienceEvent);
 		} else
 		{

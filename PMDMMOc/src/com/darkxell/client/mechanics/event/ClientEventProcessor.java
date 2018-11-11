@@ -65,6 +65,7 @@ import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.event.pokemon.BlowbackPokemonEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
+import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageType;
 import com.darkxell.common.event.pokemon.FaintedPokemonEvent;
 import com.darkxell.common.event.pokemon.HealthRestoredEvent;
 import com.darkxell.common.event.pokemon.PokemonRescuedEvent;
@@ -73,7 +74,6 @@ import com.darkxell.common.event.pokemon.StatusConditionCreatedEvent;
 import com.darkxell.common.event.pokemon.StatusConditionEndedEvent;
 import com.darkxell.common.event.pokemon.SwitchedPokemonEvent;
 import com.darkxell.common.event.pokemon.TriggeredAbilityEvent;
-import com.darkxell.common.event.stats.BellyChangedEvent;
 import com.darkxell.common.event.stats.ExperienceGeneratedEvent;
 import com.darkxell.common.event.stats.LevelupEvent;
 import com.darkxell.common.event.stats.SpeedChangedEvent;
@@ -301,7 +301,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 
 	private void processDamageEvent(DamageDealtEvent event)
 	{
-		if (!(event.source instanceof BellyChangedEvent))
+		if (event.damageType != DamageType.HUNGER)
 		{
 			AnimationState s = new AnimationState(Persistance.dungeonState);
 			s.animation = Animations.getCustomAnimation(event.target, Animations.HURT, this.currentAnimEnd);

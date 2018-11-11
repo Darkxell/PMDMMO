@@ -4,6 +4,7 @@ import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
+import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageType;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.move.MoveEffect;
 import com.darkxell.common.move.MoveEffectCalculator;
@@ -37,7 +38,7 @@ public class RecoilEffect extends MoveEffect
 					if (d.target == target && d.source == usedMove) damage = d.damage;
 				}
 			damage *= this.percentage / 100;
-			effects.createEffect(new DamageDealtEvent(floor, usedMove.user, usedMove, damage), usedMove, target, floor, missed, true, usedMove.user);
+			effects.createEffect(new DamageDealtEvent(floor, usedMove.user, usedMove, DamageType.RECOIL, damage), usedMove, target, floor, missed, true, usedMove.user);
 		}
 	}
 

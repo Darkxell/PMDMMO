@@ -6,6 +6,7 @@ import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageSource;
+import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageType;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Message;
 
@@ -52,7 +53,7 @@ public class BellyChangedEvent extends DungeonEvent implements DamageSource
 
 		if (previous >= 15 && now < 15) this.messages.add(new Message("belly.hungry"));
 		else if (previous >= 7 && now < 7) this.messages.add(new Message("belly.hungry.very"));
-		else if (previous == 0 && now == 0 && this.quantity < 0) this.resultingEvents.add(new DamageDealtEvent(this.floor, this.pokemon, this, 1));
+		else if (previous == 0 && now == 0 && this.quantity < 0) this.resultingEvents.add(new DamageDealtEvent(this.floor, this.pokemon, this, DamageType.HUNGER, 1));
 
 		return super.processServer();
 	}

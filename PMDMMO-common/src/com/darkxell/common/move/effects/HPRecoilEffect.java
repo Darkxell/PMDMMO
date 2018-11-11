@@ -3,6 +3,7 @@ package com.darkxell.common.move.effects;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
+import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageType;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.move.MoveEffect;
 import com.darkxell.common.move.MoveEffectCalculator;
@@ -30,7 +31,7 @@ public class HPRecoilEffect extends MoveEffect
 		{
 			int damage = usedMove.user.getMaxHP();
 			damage *= this.percent / 100;
-			effects.createEffect(new DamageDealtEvent(floor, usedMove.user, usedMove, damage), usedMove, target, floor, missed, true, usedMove.user);
+			effects.createEffect(new DamageDealtEvent(floor, usedMove.user, usedMove, DamageType.RECOIL, damage), usedMove, target, floor, missed, true, usedMove.user);
 		}
 	}
 

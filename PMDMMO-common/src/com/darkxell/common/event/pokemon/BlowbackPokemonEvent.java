@@ -6,6 +6,7 @@ import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageType;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DefaultDamageSource;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Direction;
@@ -61,9 +62,9 @@ public class BlowbackPokemonEvent extends DungeonEvent
 		current.setPokemon(this.pokemon);
 		if (count < max && (temp.isWall() || temp.getPokemon() != null))
 		{
-			this.resultingEvents.add(new DamageDealtEvent(this.floor, this.pokemon, new DefaultDamageSource(this.floor, null), 5));
-			if (temp.getPokemon() != null)
-				this.resultingEvents.add(new DamageDealtEvent(this.floor, temp.getPokemon(), new DefaultDamageSource(this.floor, null), 5));
+			this.resultingEvents.add(new DamageDealtEvent(this.floor, this.pokemon, new DefaultDamageSource(this.floor, null), DamageType.COLLISION, 5));
+			if (temp.getPokemon() != null) this.resultingEvents
+					.add(new DamageDealtEvent(this.floor, temp.getPokemon(), new DefaultDamageSource(this.floor, null), DamageType.COLLISION, 5));
 		}
 
 		return super.processServer();

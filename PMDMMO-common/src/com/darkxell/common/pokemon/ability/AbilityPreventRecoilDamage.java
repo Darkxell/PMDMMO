@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
+import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageType;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
 public class AbilityPreventRecoilDamage extends Ability
@@ -22,7 +23,7 @@ public class AbilityPreventRecoilDamage extends Ability
 		if (event instanceof DamageDealtEvent)
 		{
 			DamageDealtEvent e = (DamageDealtEvent) event;
-			if (e.isRecoilDamage() && e.target.ability() == this) e.consume();
+			if (e.damageType == DamageType.RECOIL && e.target.ability() == this) e.consume();
 		}
 	}
 
