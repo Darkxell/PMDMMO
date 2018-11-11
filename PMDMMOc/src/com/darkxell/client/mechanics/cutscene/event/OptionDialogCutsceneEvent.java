@@ -3,7 +3,7 @@ package com.darkxell.client.mechanics.cutscene.event;
 import org.jdom2.Element;
 
 import com.darkxell.client.launchable.Persistance;
-import com.darkxell.client.mechanics.cutscene.Cutscene;
+import com.darkxell.client.mechanics.cutscene.CutsceneContext;
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
 import com.darkxell.client.mechanics.cutscene.entity.CutscenePokemon;
@@ -24,9 +24,9 @@ public class OptionDialogCutsceneEvent extends CutsceneEvent implements DialogEn
 	public final Message[] options;
 	public final CutsceneDialogScreen question;
 
-	public OptionDialogCutsceneEvent(Element xml, Cutscene cutscene)
+	public OptionDialogCutsceneEvent(Element xml, CutsceneContext context)
 	{
-		super(xml, CutsceneEventType.option, cutscene);
+		super(xml, CutsceneEventType.option, context);
 		if (xml.getChild("question", xml.getNamespace()) == null)
 			this.question = new CutsceneDialogScreen(new Message("ERROR", false), 0, null, DialogPortraitLocation.TOP_LEFT);
 		else this.question = new CutsceneDialogScreen(xml.getChild("question", xml.getNamespace()));
@@ -68,7 +68,7 @@ public class OptionDialogCutsceneEvent extends CutsceneEvent implements DialogEn
 		super.onStart();
 		this.isOver = false;
 		CutscenePokemon pokemon = null;
-		CutsceneEntity e = this.cutscene.player.getEntity(this.question.pokemon);
+		CutsceneEntity e = this.context.parent().player.getEntity(this.question.pokemon);
 		if (e != null && e instanceof CutscenePokemon) pokemon = (CutscenePokemon) e;
 		if (!this.question.hasReplacements) this.question.addReplacements(pokemon);
 		Pokemon instance = pokemon == null ? null : pokemon.toPokemon();

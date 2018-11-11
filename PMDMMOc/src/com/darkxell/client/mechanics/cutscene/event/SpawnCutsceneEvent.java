@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 
-import com.darkxell.client.mechanics.cutscene.Cutscene;
+import com.darkxell.client.mechanics.cutscene.CutsceneContext;
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
 import com.darkxell.client.mechanics.cutscene.entity.CutscenePokemon;
@@ -15,9 +15,9 @@ public class SpawnCutsceneEvent extends CutsceneEvent
 
 	public final CutsceneEntity entity;
 
-	public SpawnCutsceneEvent(Element xml, Cutscene cutscene)
+	public SpawnCutsceneEvent(Element xml, CutsceneContext context)
 	{
-		super(xml, CutsceneEventType.spawn, cutscene);
+		super(xml, CutsceneEventType.spawn, context);
 		if (xml.getName().equals("spawnpokemon")) this.entity = new CutscenePokemon(xml);
 		else this.entity = new CutsceneEntity(xml);
 	}
@@ -32,7 +32,7 @@ public class SpawnCutsceneEvent extends CutsceneEvent
 	public void onStart()
 	{
 		super.onStart();
-		this.cutscene.player.createEntity(this.entity);
+		this.context.parent().player.createEntity(this.entity);
 	}
 
 	@Override

@@ -2,6 +2,7 @@ package fr.darkxell.dataeditor.application.controller.cutscene.event;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
@@ -32,6 +33,14 @@ public class OptionResultEventController extends EventController implements Even
 	private ComboBox<CutsceneEvent> targetCombobox;
 
 	@Override
+	public List<CutsceneEvent> availableEvents()
+	{
+		ArrayList<CutsceneEvent> events = new ArrayList<>(this.listener.availableEvents());
+		events.addAll(this.eventList.getItems());
+		return events;
+	}
+
+	@Override
 	public CutsceneEvent generateEvent()
 	{
 		if (this.optionTextfield.getText().equals(""))
@@ -39,6 +48,8 @@ public class OptionResultEventController extends EventController implements Even
 			FXUtils.showAlert("Type in option lazyguy");
 			return null;
 		}
+		if (this.targetCombobox.getValue().id == -1)
+			FXUtils.showAlert("Warning: your target option selection event doesn't have and ID. Don't forget to add one!");
 		return new OptionResultCutsceneEvent(this.id(), Integer.parseInt(this.optionTextfield.getText()), this.targetCombobox.getValue(),
 				this.eventList.getItems().toArray(new CutsceneEvent[this.eventList.getItems().size()]));
 	}

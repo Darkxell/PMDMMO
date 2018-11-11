@@ -1,6 +1,7 @@
 package fr.darkxell.dataeditor.application.controller.cutscene.event;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
@@ -25,6 +26,8 @@ public abstract class EventController implements Initializable
 		public void onEventTypeCancel();
 
 		public void onEventTypeSelect(CutsceneEventType type);
+
+		public List<CutsceneEvent> availableEvents();
 	}
 
 	@FXML

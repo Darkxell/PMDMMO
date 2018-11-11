@@ -2,6 +2,7 @@ package fr.darkxell.dataeditor.application.controller.cutscene;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import com.darkxell.client.launchable.Launcher;
@@ -36,6 +37,12 @@ public class EditCutsceneController implements Initializable, EventEditionListen
 	@FXML
 	public ListView<CutsceneEvent> eventList;
 	public EventList listManager;
+
+	@Override
+	public List<CutsceneEvent> availableEvents()
+	{
+		return this.eventList.getItems();
+	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources)

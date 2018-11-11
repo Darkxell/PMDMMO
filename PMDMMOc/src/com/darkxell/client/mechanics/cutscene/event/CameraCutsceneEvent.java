@@ -6,7 +6,7 @@ import org.jdom2.Element;
 
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.animation.travel.TravelAnimation;
-import com.darkxell.client.mechanics.cutscene.Cutscene;
+import com.darkxell.client.mechanics.cutscene.CutsceneContext;
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
 import com.darkxell.common.util.XMLUtils;
 
@@ -19,9 +19,9 @@ public class CameraCutsceneEvent extends CutsceneEvent
 	protected TravelAnimation travel;
 	public final double xPos, yPos;
 
-	public CameraCutsceneEvent(Element xml, Cutscene cutscene)
+	public CameraCutsceneEvent(Element xml, CutsceneContext context)
 	{
-		super(xml, CutsceneEventType.camera, cutscene);
+		super(xml, CutsceneEventType.camera, context);
 		this.xPos = XMLUtils.getAttribute(xml, "xpos", UNSPECIFIED);
 		this.yPos = XMLUtils.getAttribute(xml, "ypos", UNSPECIFIED);
 		this.speed = XMLUtils.getAttribute(xml, "speed", 1.);

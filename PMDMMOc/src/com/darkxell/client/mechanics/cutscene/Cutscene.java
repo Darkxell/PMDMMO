@@ -1,6 +1,7 @@
 package com.darkxell.client.mechanics.cutscene;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.jdom2.Element;
 
@@ -11,7 +12,7 @@ import com.darkxell.client.mechanics.cutscene.end.PlayCutsceneCutsceneEnd;
 import com.darkxell.client.mechanics.cutscene.end.ResumeExplorationCutsceneEnd;
 import com.darkxell.common.util.XMLUtils;
 
-public class Cutscene implements Comparable<Cutscene>
+public class Cutscene implements Comparable<Cutscene>, CutsceneContext
 {
 
 	public static abstract class CutsceneEnd
@@ -91,7 +92,7 @@ public class Cutscene implements Comparable<Cutscene>
 		this.creation.cutscene = this;
 		this.onFinish.cutscene = this;
 		for (CutsceneEvent e : this.events)
-			e.cutscene = this;
+			e.context = this;
 	}
 
 	public Cutscene(String name, Element xml)
@@ -112,22 +113,27 @@ public class Cutscene implements Comparable<Cutscene>
 	}
 
 	@Override
+	public List<CutsceneEvent> availableEvents()
+	{
+		return new ArrayList<>(this.events);
+	}
+
+	@Override
 	public int compareTo(Cutscene o)
 	{
 		return this.name.compareTo(o.name);
-	}
-
-	public CutsceneEvent getEvent(int id)
-	{
-		for (CutsceneEvent e : this.events)
-			if (e.id == id) return e;
-		return null;
 	}
 
 	public void onCutsceneEnd()
 	{
 		this.onFinish.onCutsceneEnd();
 		if (this.onFinish.arbitraryFunction != null) ArbitraryCutsceneEnds.execute(this.onFinish.arbitraryFunction, this);
+	}
+
+	@Override
+	public Cutscene parent()
+	{
+		return this;
 	}
 
 	@Override

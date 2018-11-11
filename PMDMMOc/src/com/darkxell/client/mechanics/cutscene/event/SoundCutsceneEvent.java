@@ -2,7 +2,7 @@ package com.darkxell.client.mechanics.cutscene.event;
 
 import org.jdom2.Element;
 
-import com.darkxell.client.mechanics.cutscene.Cutscene;
+import com.darkxell.client.mechanics.cutscene.CutsceneContext;
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
 import com.darkxell.client.resources.music.SoundManager;
 import com.darkxell.common.util.XMLUtils;
@@ -13,9 +13,9 @@ public class SoundCutsceneEvent extends CutsceneEvent
 	public final boolean playOverMusic;
 	public final String soundID;
 
-	public SoundCutsceneEvent(Element xml, Cutscene cutscene)
+	public SoundCutsceneEvent(Element xml, CutsceneContext context)
 	{
-		super(xml, CutsceneEventType.sound, cutscene);
+		super(xml, CutsceneEventType.sound, context);
 		this.soundID = XMLUtils.getAttribute(xml, "sound", null);
 		this.playOverMusic = XMLUtils.getAttribute(xml, "overmusic", false);
 	}

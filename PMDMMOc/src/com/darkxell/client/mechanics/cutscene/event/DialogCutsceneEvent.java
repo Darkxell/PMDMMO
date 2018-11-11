@@ -6,7 +6,7 @@ import java.util.List;
 import org.jdom2.Element;
 
 import com.darkxell.client.launchable.Persistance;
-import com.darkxell.client.mechanics.cutscene.Cutscene;
+import com.darkxell.client.mechanics.cutscene.CutsceneContext;
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
 import com.darkxell.client.mechanics.cutscene.entity.CutscenePokemon;
@@ -90,9 +90,9 @@ public class DialogCutsceneEvent extends CutsceneEvent implements DialogEndListe
 	private boolean isOver;
 	public List<CutsceneDialogScreen> screens;
 
-	public DialogCutsceneEvent(Element xml, Cutscene cutscene)
+	public DialogCutsceneEvent(Element xml, CutsceneContext context)
 	{
-		super(xml, CutsceneEventType.dialog, cutscene);
+		super(xml, CutsceneEventType.dialog, context);
 		this.isNarratorDialog = XMLUtils.getAttribute(xml, "isnarrator", false);
 		this.screens = new ArrayList<>();
 		for (Element screen : xml.getChildren("dialogscreen", xml.getNamespace()))
@@ -130,7 +130,7 @@ public class DialogCutsceneEvent extends CutsceneEvent implements DialogEndListe
 		for (CutsceneDialogScreen s : this.screens)
 		{
 			CutscenePokemon pokemon = null;
-			CutsceneEntity e = this.cutscene.player.getEntity(s.pokemon);
+			CutsceneEntity e = this.context.parent().player.getEntity(s.pokemon);
 			if (e != null && e instanceof CutscenePokemon) pokemon = (CutscenePokemon) e;
 			if (!s.hasReplacements) s.addReplacements(pokemon);
 			DialogScreen screen = pokemon == null ? new DialogScreen(s.message) : new PokemonDialogScreen(pokemon.toPokemon(), s.message, s.portraitLocation);
