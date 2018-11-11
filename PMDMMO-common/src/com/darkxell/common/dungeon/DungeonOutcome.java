@@ -68,6 +68,11 @@ public class DungeonOutcome implements Communicable
 		return this.outcome;
 	}
 
+	public boolean isSuccess()
+	{
+		return this.outcome == Outcome.ESCAPED || this.outcome == Outcome.MISSON_COMPLETE || this.outcome == Outcome.DUNGEON_CLEARED;
+	}
+
 	public Move koMove()
 	{
 		return MoveRegistry.find(this.moveID);
