@@ -29,6 +29,7 @@
     <dialog isnarrator="true">
       <dialogscreen translate="false" target="1">I AM AMAZING</dialogscreen>
     </dialog>
+    <wait />
     <option>
       <question target="2">pokemon.44</question>
       <option value="item.33" />

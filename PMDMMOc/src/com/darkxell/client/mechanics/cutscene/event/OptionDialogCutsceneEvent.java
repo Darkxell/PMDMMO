@@ -20,7 +20,7 @@ public class OptionDialogCutsceneEvent extends CutsceneEvent implements DialogEn
 {
 
 	private int chosen = -1;
-	private boolean isOver;
+	private boolean isOver = false;
 	public final Message[] options;
 	public final CutsceneDialogScreen question;
 
