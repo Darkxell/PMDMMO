@@ -36,7 +36,10 @@ public class OptionResultEventController extends EventController implements Even
 	public List<CutsceneEvent> availableEvents()
 	{
 		ArrayList<CutsceneEvent> events = new ArrayList<>(this.listener.availableEvents());
-		events.addAll(this.eventList.getItems());
+		int i = events.indexOf(this.listener.listManager().editing);
+		if (i == -1) i = 0;
+		for (CutsceneEvent e : this.eventList.getItems())
+			events.add(i++, e);
 		return events;
 	}
 
@@ -70,6 +73,12 @@ public class OptionResultEventController extends EventController implements Even
 		ArrayList<CutsceneEvent> events = new ArrayList<>(EditCutsceneController.instance.eventList.getItems());
 		events.removeIf(e -> e.type != CutsceneEventType.option);
 		this.targetCombobox.getItems().addAll(events);
+	}
+
+	@Override
+	public EventList listManager()
+	{
+		return this.listManager;
 	}
 
 	@Override

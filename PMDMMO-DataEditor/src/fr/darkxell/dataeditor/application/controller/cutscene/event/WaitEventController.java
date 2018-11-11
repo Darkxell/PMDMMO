@@ -126,8 +126,7 @@ public class WaitEventController extends EventController
 
 		List<CutsceneEvent> events = this.listener.availableEvents();
 		this.allEvents.addAll(events);
-		if (EditCutsceneController.instance.listManager.editing != null)
-			this.allEvents.removeIf(e -> events.indexOf(e) >= events.indexOf(EditCutsceneController.instance.listManager.editing));
+		if (this.listener.listManager().editing != null) this.allEvents.removeIf(e -> events.indexOf(e) >= events.indexOf(this.listener.listManager().editing));
 		this.existingEventsList.getItems().addAll(this.allEvents);
 
 		this.allCheckbox.setSelected(((WaitCutsceneEvent) event).all);

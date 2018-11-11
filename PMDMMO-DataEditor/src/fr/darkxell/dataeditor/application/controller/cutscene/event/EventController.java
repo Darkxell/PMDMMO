@@ -19,6 +19,10 @@ public abstract class EventController implements Initializable
 
 	public static interface EventEditionListener
 	{
+		public List<CutsceneEvent> availableEvents();
+
+		public EventList listManager();
+
 		public void onEditCancel();
 
 		public void onEditConfirm(CutsceneEvent e);
@@ -26,8 +30,6 @@ public abstract class EventController implements Initializable
 		public void onEventTypeCancel();
 
 		public void onEventTypeSelect(CutsceneEventType type);
-
-		public List<CutsceneEvent> availableEvents();
 	}
 
 	@FXML

@@ -65,6 +65,12 @@ public class EditCutsceneController implements Initializable, EventEditionListen
 		return entities;
 	}
 
+	@Override
+	public EventList listManager()
+	{
+		return this.listManager;
+	}
+
 	public void onCreateEvent()
 	{
 		this.listManager.onCreate(null);
