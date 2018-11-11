@@ -80,6 +80,10 @@ public class OpenningState extends AbstractState {
 			// Tiny Woods completed, ready to play cutscene
 			CutsceneManager.playCutscene("startingwoods/solve", true);
 			break;
+		case 4:
+			// TODO:Formed a rescue team. Is waking up in base, and is having
+			// recalls of yesterday.
+			break;
 		case 5:
 			// TODO:Rescue team created after saving caterpie, recieved mail
 			// from magneti and went to thunderwave cave

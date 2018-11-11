@@ -1,8 +1,93 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cutscene name="base/creation">
-  <creation freezone="base" />
-  <events />
+  <creation freezone="base" camerax="35.0" cameray="30.0" fading="false" drawmap="false">
+    <pokemon cutsceneid="1" xpos="32.0" ypos="45.0" facing="NORTH">
+      <teammember>0</teammember>
+      <state>MOVE</state>
+    </pokemon>
+    <pokemon cutsceneid="2" xpos="35.0" ypos="45.0" facing="NORTH">
+      <teammember>1</teammember>
+      <state>MOVE</state>
+    </pokemon>
+  </creation>
+  <events>
+    <drawmap />
+    <move ypos="35.0" speed="0.1" target="1" />
+    <move ypos="35.0" speed="0.1" target="2" />
+    <wait />
+    <rotate target="1" distance="2" />
+    <rotate target="2" distance="-2" />
+    <setanimated target="1" animated="false" />
+    <setanimated target="2" animated="false" />
+    <setstate target="1" state="IDLE" />
+    <setstate target="2" state="IDLE" />
+    <wait />
+    <delay ticks="20" />
+    <dialog>
+      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.base.create.m1</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="2" distance="2" />
+    <wait />
+    <delay ticks="50" />
+    <wait />
+    <rotate target="1" distance="-2" />
+    <camera ypos="20.0" speed="0.2" />
+    <wait />
+    <delay ticks="120" />
+    <wait />
+    <camera ypos="30.0" speed="0.5" />
+    <wait />
+    <dialog>
+      <dialogscreen target="1">cutscene.base.create.m2</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="2" distance="-2" />
+    <wait />
+    <dialog>
+      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.base.create.m3</dialogscreen>
+      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.base.create.m4</dialogscreen>
+      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.base.create.m5</dialogscreen>
+    </dialog>
+    <wait />
+    <setstate target="2" state="MOVE" />
+    <setanimated target="2" animated="true" />
+    <rotate target="2" distance="1" />
+    <wait />
+    <move xpos="33.0" ypos="31.0" speed="0.1" target="2" />
+    <wait />
+    <rotate target="2" distance="-1" />
+    <setstate target="2" state="IDLE" />
+    <setanimated target="2" animated="false" />
+    <wait />
+    <dialog>
+      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.base.create.m6</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="2" distance="-2" />
+    <delay ticks="50" />
+    <wait />
+    <dialog>
+      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.base.create.m7</dialogscreen>
+      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.base.create.m8</dialogscreen>
+    </dialog>
+    <wait />
+    <dialog>
+      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.base.create.m11</dialogscreen>
+      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.base.create.m12</dialogscreen>
+      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.base.create.m13</dialogscreen>
+    </dialog>
+    <wait />
+    <drawmap draw="false" />
+    <wait />
+    <dialog isnarrator="true">
+      <dialogscreen>cutscene.base.create.m14</dialogscreen>
+      <dialogscreen>cutscene.base.create.m15</dialogscreen>
+      <dialogscreen>cutscene.base.create.m16</dialogscreen>
+    </dialog>
+    <wait />
+  </events>
   <onfinish>
-    <loadfreezone fadesout="false" id="base" />
+    <loadfreezone function="openingstate" fadesout="false" id="base" />
   </onfinish>
 </cutscene>
