@@ -11,6 +11,7 @@ import com.darkxell.client.mechanics.cutscene.event.DrawMapCutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.event.MoveCutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.event.MusicCutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.event.OptionDialogCutsceneEvent;
+import com.darkxell.client.mechanics.cutscene.event.OptionResultCutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.event.RotateCutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.event.SetAnimatedCutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.event.SetStateCutsceneEvent;
@@ -34,6 +35,7 @@ public abstract class CutsceneEvent
 		move("Move Entity"),
 		music("Change soundtrack"),
 		option("Select option"),
+		optionresult("Trigger events by option result"),
 		rotate("Rotate Entity"),
 		setanimated("Animate Pokemon"),
 		setstate("Set Pokemon State"),
@@ -80,6 +82,9 @@ public abstract class CutsceneEvent
 
 			case "option":
 				return new OptionDialogCutsceneEvent(xml, cutscene);
+
+			case "optionresult":
+				return new OptionResultCutsceneEvent(xml, cutscene);
 
 			case "rotate":
 				return new RotateCutsceneEvent(xml, cutscene);
