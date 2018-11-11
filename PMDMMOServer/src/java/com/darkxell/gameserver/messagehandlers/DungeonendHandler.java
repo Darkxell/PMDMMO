@@ -28,11 +28,11 @@ import javax.websocket.Session;
  * @author Darkxell
  */
 public class DungeonendHandler extends MessageHandler {
-    
+
     public DungeonendHandler(GameServer endpoint) {
         super(endpoint);
     }
-    
+
     @Override
     public void handleMessage(JsonObject json, Session from, GameSessionHandler sessionshandler) {
         GameSessionInfo si = SessionsInfoHolder.getInfo(from.getId());
@@ -41,6 +41,7 @@ public class DungeonendHandler extends MessageHandler {
         //Gets the json values and creates the lookuptables
         com.eclipsesource.json.JsonObject jsonm = Json.parse(json.toString()).asObject();
         com.eclipsesource.json.JsonObject outcome = jsonm.get("outcome").asObject();
+        boolean successcheck = jsonm.getBoolean("success", false);
         com.eclipsesource.json.JsonObject player = jsonm.get("player").asObject();
         com.eclipsesource.json.JsonObject inventory = jsonm.get("inventory").asObject();
         com.eclipsesource.json.JsonArray missionscomplete = jsonm.get("completedmissions").asArray();
@@ -123,6 +124,8 @@ public class DungeonendHandler extends MessageHandler {
         for (JsonValue jsonValue : missionscomplete) {
             MissionEndManager.manageMissionCompletion(si, endpoint, jsonValue.asString());
         }
+        // Manage the player's storyposition
+        manageStoryposition(successcheck, si);
         //Resets the gamesessioninfo to be in a freezone
         si.currentdungeon = -1;
         si.currentdoing = GameSessionInfo.current_freezone;
@@ -131,7 +134,7 @@ public class DungeonendHandler extends MessageHandler {
         answer.add("action", "dungeonendconfirm");
         answer.add("outcome", jsonm.get("outcome"));
         sessionshandler.sendToSession(from, answer);
-        System.out.println("Finished processing dungeonend for " + si.name + " in " + ((System.currentTimeMillis()-starttime)/1000) + "seconds");
+        System.out.println("Finished processing dungeonend for " + si.name + " in " + ((System.currentTimeMillis() - starttime) / 1000) + "seconds");
     }
 
     /**
@@ -184,5 +187,26 @@ public class DungeonendHandler extends MessageHandler {
         }
         return pokemon.id;
     }
-    
+
+    /**
+     * Manages the storyposition of the player when he ends a dungeon.
+     */
+    private void manageStoryposition(boolean success, GameSessionInfo si) {
+        DBPlayer player = endpoint.getPlayerDAO().find(si.serverid);
+        boolean needcommit = false;
+        int newstoryposition = 0;
+        switch (si.currentdungeon) {
+            case 1:
+                if (player.storyposition == 2 && success) {
+                    newstoryposition = 3;
+                }
+                needcommit = true;
+                break;
+        }
+        if (needcommit) {
+            player.storyposition = newstoryposition;
+            endpoint.getPlayerDAO().update(player);
+        }
+    }
+
 }

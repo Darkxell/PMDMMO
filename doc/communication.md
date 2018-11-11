@@ -235,6 +235,8 @@ This payload is sent when the player starts a dungeon exploration.
 
 "outcome":{OUTCOME_JSON_VALUE},
 
+"success":true/false // quick boolean to know if the dungeon is completed or failed.
+
 "player":{PLAYER_JSON_VALUE},
 
 "inventory":{INV_JSON_VALUE},
