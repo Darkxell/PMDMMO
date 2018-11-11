@@ -24,7 +24,7 @@ public class OptionResultCutsceneEvent extends CutsceneEvent
 			this.results[i++] = CutsceneEvent.create(e, cutscene);
 	}
 
-	public OptionResultCutsceneEvent(int id, int option, CutsceneEvent target, CutsceneEvent[] results)
+	public OptionResultCutsceneEvent(int id, int option, CutsceneEvent target, CutsceneEvent... results)
 	{
 		super(id, CutsceneEventType.optionresult);
 		this.option = option;
