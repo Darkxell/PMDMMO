@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.state.dialog.DialogState.DialogEndListener;
 import com.darkxell.client.state.menu.OptionState;
-import com.darkxell.common.pokemon.PokemonSpecies;
+import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.language.Message;
 
 public class OptionDialogScreen extends PokemonDialogScreen
@@ -18,12 +18,12 @@ public class OptionDialogScreen extends PokemonDialogScreen
 
 	public OptionDialogScreen(Message message, Message... options)
 	{
-		this(null, message, options);
+		this(null, message, DialogPortraitLocation.BOTTOM_LEFT, options);
 	}
 
-	public OptionDialogScreen(PokemonSpecies species, Message message, Message... options)
+	public OptionDialogScreen(Pokemon pokemon, Message message, DialogPortraitLocation dialogLocation, Message... options)
 	{
-		super(species, message);
+		super(pokemon, message, dialogLocation);
 
 		for (Message m : options)
 		{

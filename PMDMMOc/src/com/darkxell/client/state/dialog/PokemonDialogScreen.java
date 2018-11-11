@@ -46,7 +46,7 @@ public class PokemonDialogScreen extends DialogScreen
 	/** The Pokemon species talking. null if not a Pokemon. */
 	public final PokemonSpecies pokemon;
 	/** Where to draw the portrait, if any. May be <code>null</code> and has no effect if pokemon is null. */
-	public final DialogPortraitLocation portraitLocation;
+	public DialogPortraitLocation portraitLocation;
 	/** True if the talking Pokemon is shiny. Has no effect if pokemon is null. */
 	public final boolean shiny;
 	/** If not null, the name of the speaker to appear in front of the text. */

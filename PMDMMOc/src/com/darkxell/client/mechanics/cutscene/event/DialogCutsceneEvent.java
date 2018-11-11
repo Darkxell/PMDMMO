@@ -126,6 +126,7 @@ public class DialogCutsceneEvent extends CutsceneEvent implements DialogEndListe
 		super.onStart();
 		DialogScreen[] screens = new DialogScreen[this.screens.size()];
 		int index = 0;
+		this.isOver = false;
 		for (CutsceneDialogScreen s : this.screens)
 		{
 			CutscenePokemon pokemon = null;
