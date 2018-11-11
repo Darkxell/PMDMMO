@@ -32,6 +32,7 @@ public class NarratorDialogScreen extends DialogScreen
 		if (this.fadeTick < FADETIME)
 		{
 			double alpha = this.fadeTick == 0 ? 0 : this.fadeTick * 1. / FADETIME;
+			alpha = Math.max(alpha, 0);
 			AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) alpha);
 			g.setComposite(ac);
 		}

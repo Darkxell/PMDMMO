@@ -73,6 +73,12 @@ public class DungeonExitAnimationState extends AnimationState
 	{
 		if (this.currentExiter >= this.exiters.length) return;
 		this.currentRenderer = Persistance.dungeonState.pokemonRenderer.getRenderer(this.exiters[this.currentExiter]);
+		if (this.currentRenderer == null)
+		{
+			++this.currentExiter;
+			this.updateExiter();
+			return;
+		}
 		PokemonAnimation a = Animations.getCustomAnimation(this.exiters[this.currentExiter], 4, null);
 		if (a != null)
 		{

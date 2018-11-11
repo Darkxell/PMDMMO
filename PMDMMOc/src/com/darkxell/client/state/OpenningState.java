@@ -76,6 +76,10 @@ public class OpenningState extends AbstractState {
 			// Tiny Woods failed, ready to play cutscene
 			CutsceneManager.playCutscene("startingwoods/tinywoodsfailed", true);
 			break;
+		case 3:
+			// Tiny Woods completed, ready to play cutscene
+			CutsceneManager.playCutscene("startingwoods/solve", true);
+			break;
 		case 5:
 			// TODO:Rescue team created after saving caterpie, recieved mail
 			// from magneti and went to thunderwave cave
