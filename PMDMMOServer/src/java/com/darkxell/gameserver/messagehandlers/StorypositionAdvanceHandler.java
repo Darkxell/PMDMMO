@@ -38,11 +38,16 @@ public class StorypositionAdvanceHandler extends MessageHandler {
                         acceptcommit = true;
                     }
                     break;
-                    //TODO: add the possible modifications here
+                case 4:
+                    if (player.storyposition == 3) {
+                        acceptcommit = true;
+                    }
+                    break;
+                //TODO: add the possible modifications here
             }
         }
         // Commits the modification if it was allowed.
-        if(acceptcommit){
+        if (acceptcommit) {
             player.storyposition = targetposition;
             endpoint.getPlayerDAO().update(player);
         }

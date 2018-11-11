@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cutscene name="base/wakeup1">
+  <creation freezone="baseinside" camerax="23.0" cameray="20.0" fading="false" drawmap="false">
+    <pokemon cutsceneid="1" xpos="23.0" ypos="13.0" facing="EAST">
+      <teammember>0</teammember>
+      <state>SLEEP</state>
+    </pokemon>
+  </creation>
+  <events>
+    <dialog isnarrator="true">
+      <dialogscreen>cutscene.base.wakeup1.m1</dialogscreen>
+    </dialog>
+    <wait />
+    <drawmap />
+    <delay ticks="120" />
+    <wait />
+    <setstate target="1" state="IDLE" />
+    <setanimated target="1" animated="false" />
+    <rotate target="1" distance="2" speed="5" />
+    <delay ticks="100" />
+    <wait />
+    <rotate target="1" distance="-2" speed="5" />
+    <delay ticks="50" />
+    <wait />
+    <rotate target="1" distance="4" speed="3" />
+    <delay ticks="60" />
+    <wait />
+    <rotate target="1" distance="-2" speed="5" />
+    <wait />
+    <dialog>
+      <dialogscreen target="1">cutscene.base.wakeup1.m2</dialogscreen>
+      <dialogscreen target="1">cutscene.base.wakeup1.m3</dialogscreen>
+    </dialog>
+    <wait />
+    <dialog>
+      <dialogscreen target="1">cutscene.base.wakeup1.m4</dialogscreen>
+      <dialogscreen target="1">cutscene.base.wakeup1.m5</dialogscreen>
+      <dialogscreen target="1">cutscene.base.wakeup1.m6</dialogscreen>
+    </dialog>
+  </events>
+  <onfinish>
+    <loadfreezone fadesout="false" id="baseinside" xpos="23" ypos="13" />
+  </onfinish>
+</cutscene>

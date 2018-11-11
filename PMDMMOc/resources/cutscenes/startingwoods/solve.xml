@@ -86,6 +86,6 @@
     <move xpos="75.0" speed="0.2" target="1" />
   </events>
   <onfinish>
-    <loadfreezone id="base" />
+    <playcutscene id="base/creation" />
   </onfinish>
 </cutscene>

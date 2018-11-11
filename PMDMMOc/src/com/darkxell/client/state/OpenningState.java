@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.cutscene.CutsceneManager;
 import com.darkxell.client.mechanics.freezones.zones.BaseFreezone;
+import com.darkxell.client.mechanics.freezones.zones.BaseInsideFreezone;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.renderers.layers.BackgroundSeaLayer;
 import com.darkxell.client.resources.images.Sprites;
@@ -61,7 +62,7 @@ public class OpenningState extends AbstractState {
 		Logger.i("Triggered the OpeningState launch method with storyposition : " + storyposition);
 		switch (storyposition) {
 		default:
-			StateManager.setExploreState(new BaseFreezone(), Direction.SOUTH, -1, -1, true);
+			StateManager.setExploreState(new BaseInsideFreezone(), Direction.SOUTH, -1, -1, true);
 			break;
 		case 0:
 			Logger.e("Openning state could not determine what to do, storyposition is 0.");
@@ -79,6 +80,10 @@ public class OpenningState extends AbstractState {
 		case 3:
 			// Tiny Woods completed, ready to play cutscene
 			CutsceneManager.playCutscene("startingwoods/solve", true);
+			break;
+		case 4:
+			// TODO:Formed a rescue team. Is waking up in base, and is having recalls of yesterday.
+			CutsceneManager.playCutscene("base/wakeup1", true);
 			break;
 		case 5:
 			// TODO:Rescue team created after saving caterpie, recieved mail
