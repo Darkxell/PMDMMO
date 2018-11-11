@@ -82,8 +82,8 @@ public class OpenningState extends AbstractState {
 			CutsceneManager.playCutscene("startingwoods/solve", true);
 			break;
 		case 4:
-			// TODO:Formed a rescue team. Is waking up in base, and is having
-			// recalls of yesterday.
+			// TODO:Formed a rescue team. Is waking up in base, and is having recalls of yesterday.
+			CutsceneManager.playCutscene("base/wakeup1", true);
 			break;
 		case 5:
 			// TODO:Rescue team created after saving caterpie, recieved mail
