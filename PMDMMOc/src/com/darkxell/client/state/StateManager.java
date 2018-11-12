@@ -97,7 +97,13 @@ public abstract class StateManager
 		});
 		else
 		{
+			((FreezoneExploreState) next).musicset = false;
 			Persistance.freezoneCamera = new FreezoneCamera(Persistance.currentplayer);
+			Persistance.currentmap = map;
+			Persistance.freezoneCamera.x = Persistance.currentplayer.x = xPos == -1 ? map.defaultX() : xPos;
+			Persistance.freezoneCamera.y = Persistance.currentplayer.y = yPos == -1 ? map.defaultY() : yPos;
+			Persistance.displaymap = LocalMap.instance;
+			if (direction != null) Persistance.currentplayer.renderer().sprite().setFacingDirection(direction);
 			Persistance.stateManager.setState(next);
 		}
 	}

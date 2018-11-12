@@ -39,6 +39,6 @@
     </dialog>
   </events>
   <onfinish>
-    <loadfreezone fadesout="false" id="baseinside" xpos="23" ypos="13" />
+    <loadfreezone fadesout="false" id="baseinside" facing="SOUTH" />
   </onfinish>
 </cutscene>

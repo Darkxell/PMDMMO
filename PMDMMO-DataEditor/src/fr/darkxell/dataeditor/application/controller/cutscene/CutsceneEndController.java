@@ -13,6 +13,7 @@ import com.darkxell.client.mechanics.cutscene.end.PlayCutsceneCutsceneEnd;
 import com.darkxell.client.mechanics.cutscene.end.ResumeExplorationCutsceneEnd;
 import com.darkxell.common.dungeon.data.Dungeon;
 import com.darkxell.common.dungeon.data.DungeonRegistry;
+import com.darkxell.common.util.Direction;
 import com.darkxell.common.zones.FreezoneInfo;
 
 import fr.darkxell.dataeditor.application.controller.cutscene.CutsceneEndController.CutsceneEndMode;
@@ -53,7 +54,11 @@ public class CutsceneEndController implements Initializable, ChangeListener<Cuts
 	@FXML
 	private ComboBox<Cutscene> cutsceneCombobox;
 	@FXML
+	private ComboBox<Direction> directionCombobox;
+	@FXML
 	private ComboBox<Dungeon> dungeonCombobox;
+	@FXML
+	private CheckBox facingCheckbox;
 	@FXML
 	private CheckBox fadingCheckbox;
 	@FXML
@@ -92,7 +97,8 @@ public class CutsceneEndController implements Initializable, ChangeListener<Cuts
 
 			case FREEZONE:
 				return new LoadFreezoneCutsceneEnd(this.freezoneCombobox.getValue(), Integer.parseInt(this.freezoneXTextfield.getText()),
-						Integer.parseInt(this.freezoneYTextfield.getText()), function, this.fadingCheckbox.isSelected());
+						Integer.parseInt(this.freezoneYTextfield.getText()), this.facingCheckbox.isSelected() ? this.directionCombobox.getValue() : null,
+						function, this.fadingCheckbox.isSelected());
 
 			case EXPLORE:
 				return new ResumeExplorationCutsceneEnd(function, this.fadingCheckbox.isSelected());
@@ -118,16 +124,20 @@ public class CutsceneEndController implements Initializable, ChangeListener<Cuts
 		});
 		this.functionTextfield.setTextFormatter(formatter2);
 
+		this.facingCheckbox.selectedProperty().addListener((x, oldValue, newValue) -> this.directionCombobox.setDisable(!newValue));
+
 		this.cutsceneCombobox.getItems().addAll(Cutscenes.values());
 		this.dungeonCombobox.getItems().addAll(DungeonRegistry.list());
 		this.modeCombobox.getItems().addAll(CutsceneEndMode.values());
 		this.freezoneCombobox.getItems().addAll(FreezoneInfo.values());
+		this.directionCombobox.getItems().addAll(Direction.directions);
 
 		this.modeCombobox.getSelectionModel().selectedItemProperty().addListener(this);
 		this.modeCombobox.getSelectionModel().select(0);
 		this.dungeonCombobox.getSelectionModel().select(0);
 		this.cutsceneCombobox.getSelectionModel().select(0);
 		this.freezoneCombobox.getSelectionModel().select(0);
+		this.directionCombobox.setValue(Direction.SOUTH);
 		this.fadingCheckbox.setSelected(true);
 	}
 
@@ -151,11 +161,13 @@ public class CutsceneEndController implements Initializable, ChangeListener<Cuts
 			this.freezoneXTextfield.setText(String.valueOf(e.xPos));
 			this.freezoneYTextfield.setText(String.valueOf(e.yPos));
 			this.modeCombobox.getSelectionModel().select(CutsceneEndMode.FREEZONE);
+			this.facingCheckbox.setSelected(e.direction != null);
+			if (e.direction != null) this.directionCombobox.setValue(e.direction);
 		}
 		if (end instanceof ResumeExplorationCutsceneEnd) this.modeCombobox.getSelectionModel().select(CutsceneEndMode.EXPLORE);
 		if (end.function() != null) this.functionTextfield.setText(end.function());
 		else this.functionTextfield.setText("");
-		
+
 		this.fadingCheckbox.setSelected(end.fadesOut());
 	}
 
