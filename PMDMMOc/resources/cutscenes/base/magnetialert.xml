@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cutscene name="base/magnetialert">
+  <creation freezone="base" camerax="30.0" cameray="30.0">
+    <pokemon cutsceneid="1" xpos="34.0" ypos="25.0">
+      <teammember>0</teammember>
+      <animated>false</animated>
+    </pokemon>
+    <pokemon cutsceneid="2" xpos="34.0" ypos="28.0" facing="SOUTHWEST">
+      <teammember>1</teammember>
+      <state>SLEEP</state>
+    </pokemon>
+    <pokemon cutsceneid="10" xpos="60.0" ypos="17.0" facing="WEST">
+      <pokemonid>279</pokemonid>
+    </pokemon>
+  </creation>
+  <events>
+    <delay ticks="60" />
+    <wait />
+    <setanimated target="2" animated="false" />
+    <setstate target="2" state="IDLE" />
+    <rotate target="2" distance="-1" />
+    <delay ticks="20" />
+    <dialog>
+      <dialogscreen target="2">cutscene.base.magnetialert.m1</dialogscreen>
+    </dialog>
+  </events>
+  <onfinish>
+    <loadfreezone fadesout="false" id="base" />
+  </onfinish>
+</cutscene>
