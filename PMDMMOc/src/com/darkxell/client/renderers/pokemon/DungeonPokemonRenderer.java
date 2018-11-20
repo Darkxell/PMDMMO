@@ -10,14 +10,15 @@ import com.darkxell.client.launchable.ClientSettings;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
+import com.darkxell.client.state.dungeon.NextFloorState;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
 /** Renders a Pokemon. This Renderer's Coordinates' units are Tiles. */
 public class DungeonPokemonRenderer extends AbstractPokemonRenderer
 {
-	int tick = 0;
-
 	public final DungeonPokemon pokemon;
+
+	int tick = 0;
 
 	public DungeonPokemonRenderer(DungeonPokemon pokemon)
 	{
@@ -72,7 +73,8 @@ public class DungeonPokemonRenderer extends AbstractPokemonRenderer
 	public void update()
 	{
 		super.update();
-		if (this.pokemon.facing() != this.sprite.getFacingDirection()) this.sprite.setFacingDirection(this.pokemon.facing());
+		if (!(Persistance.stateManager.getCurrentState() instanceof NextFloorState) && this.pokemon.facing() != this.sprite.getFacingDirection())
+			this.sprite.setFacingDirection(this.pokemon.facing());
 	}
 
 	@Override

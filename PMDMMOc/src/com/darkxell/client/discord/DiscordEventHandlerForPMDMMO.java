@@ -3,7 +3,7 @@ package com.darkxell.client.discord;
 import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.state.dungeon.DungeonState;
-import com.darkxell.client.state.freezone.FreezoneExploreState;
+import com.darkxell.client.state.freezone.AbstractFreezoneState;
 import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.common.util.Logger;
 
@@ -96,7 +96,7 @@ public class DiscordEventHandlerForPMDMMO {
 		// Updates discord if cooldown is done
 		if (Persistance.stateManager instanceof PrincipalMainState) {
 			PrincipalMainState pmst = (PrincipalMainState) Persistance.stateManager;
-			if (pmst.getCurrentState() instanceof FreezoneExploreState) {
+			if (pmst.getCurrentState() instanceof AbstractFreezoneState) {
 				String smallimagetext = "---";
 				if (Persistance.player != null && Persistance.player.getData() != null)
 					smallimagetext = "Points : " + Persistance.player.getData().points;
