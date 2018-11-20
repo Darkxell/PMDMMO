@@ -22,7 +22,7 @@ public class PokemonPortrait extends RegularSpriteSet
 		Disappointed,
 		Happy,
 		Ill,
-		Joy_crying,
+		Joy,
 		Laughing,
 		Normal,
 		Relieved,
@@ -32,11 +32,11 @@ public class PokemonPortrait extends RegularSpriteSet
 	}
 
 	private static final HashMap<PortraitEmotion, PokemonPortrait> alternateEmotions = new HashMap<>();
-	private static final PokemonPortrait alternates = new PokemonPortrait("/pokemons/portraits/portraits-forms.png", 20),
-			alternateShinies = new PokemonPortrait("/pokemons/portraits/portraits-forms-shiny.png", 20);
+	private static final PokemonPortrait alternates = new PokemonPortrait("/pokemons/portraits/forms/normal.png", 20),
+			alternateShinies = new PokemonPortrait("/pokemons/portraits/portraits/forms-shiny/normal.png", 20);
 	private static final HashMap<PortraitEmotion, PokemonPortrait> alternateShinyEmotions = new HashMap<>();
-	private static final PokemonPortrait normal = new PokemonPortrait("/pokemons/portraits/portraits.png", 100),
-			shinies = new PokemonPortrait("/pokemons/portraits/portraits-shiny.png", 100);
+	private static final PokemonPortrait normal = new PokemonPortrait("/pokemons/portraits/normal/normal.png", 100),
+			shinies = new PokemonPortrait("/pokemons/portraits/shiny/normal.png", 100);
 	private static final HashMap<PortraitEmotion, PokemonPortrait> normalEmotions = new HashMap<>();
 	public static final int PORTRAIT_SIZE = 40;
 	private static final HashMap<PortraitEmotion, PokemonPortrait> shinyEmotions = new HashMap<>();
@@ -44,12 +44,14 @@ public class PokemonPortrait extends RegularSpriteSet
 	static
 	{
 		for (PortraitEmotion emotion : PortraitEmotion.values())
-		{
-			alternateEmotions.put(emotion, new PokemonPortrait("/pokemons/portraits/portraits-forms-" + emotion.name().toLowerCase() + ".png", 20));
-			alternateShinyEmotions.put(emotion, new PokemonPortrait("/pokemons/portraits/portraits-forms-shiny-" + emotion.name().toLowerCase() + ".png", 20));
-			normalEmotions.put(emotion, new PokemonPortrait("/pokemons/portraits/portraits-" + emotion + ".png", 100));
-			shinyEmotions.put(emotion, new PokemonPortrait("/pokemons/portraits/portraits-shiny-" + emotion + ".png", 100));
-		}
+			if (emotion != PortraitEmotion.Normal)
+			{
+				alternateEmotions.put(emotion, new PokemonPortrait("/pokemons/portraits/forms/" + emotion.name().toLowerCase() + ".png", 20));
+				alternateShinyEmotions.put(emotion,
+						new PokemonPortrait("/pokemons/portraits/portraits/forms-shiny/" + emotion.name().toLowerCase() + ".png", 20));
+				normalEmotions.put(emotion, new PokemonPortrait("/pokemons/portraits/normal/" + emotion + ".png", 100));
+				shinyEmotions.put(emotion, new PokemonPortrait("/pokemons/portraits/shiny/" + emotion + ".png", 100));
+			}
 	}
 
 	/** Draws the portrait of the input Pokemon at the input topright location. */
@@ -103,7 +105,7 @@ public class PokemonPortrait extends RegularSpriteSet
 		else if (pokemon.id >= 10000) sheet = alternates;
 		else if (shiny) sheet = shinies;
 
-		if (emotion != null) sheet = getEmotionSheet(sheet, emotion);
+		if (emotion != null && emotion != PortraitEmotion.Normal) sheet = getEmotionSheet(sheet, emotion);
 
 		return sheet.getImg(pokemon.id - (alternative ? 10001 : 1));
 	}
