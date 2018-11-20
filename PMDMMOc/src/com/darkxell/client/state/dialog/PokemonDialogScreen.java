@@ -6,6 +6,7 @@ import java.awt.Rectangle;
 import com.darkxell.client.resources.images.Sprite;
 import com.darkxell.client.resources.images.Sprites;
 import com.darkxell.client.resources.images.pokemon.PokemonPortrait;
+import com.darkxell.client.resources.images.pokemon.PokemonPortrait.PortraitEmotion;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.util.language.Message;
@@ -42,7 +43,7 @@ public class PokemonDialogScreen extends DialogScreen
 	}
 
 	/** The emotion of the Pokemon. Unused for now. */
-	public short emotion;
+	public PortraitEmotion emotion;
 	/** The Pokemon species talking. null if not a Pokemon. */
 	public final PokemonSpecies pokemon;
 	/** Where to draw the portrait, if any. May be <code>null</code> and has no effect if pokemon is null. */
@@ -89,7 +90,7 @@ public class PokemonDialogScreen extends DialogScreen
 		{
 			Rectangle dialogBox = this.parentState.dialogBox();
 			Point2D portraitL = this.portraitLocation.locate(dialogBox, Sprites.Res_Hud.portrait);
-			PokemonPortrait.drawPortrait(g, this.pokemon, this.shiny, (int) portraitL.x, (int) portraitL.y);
+			PokemonPortrait.drawPortrait(g, this.pokemon, this.emotion, this.shiny, (int) portraitL.x, (int) portraitL.y);
 		}
 	}
 
