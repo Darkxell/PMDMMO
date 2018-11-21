@@ -1,6 +1,7 @@
 package com.darkxell.client.mechanics.freezones.zones;
 
 import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.mechanics.cutscene.CutsceneManager;
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
 import com.darkxell.client.mechanics.freezones.TriggerZone;
 import com.darkxell.client.mechanics.freezones.WarpZone;
@@ -55,6 +56,16 @@ public class BaseFreezone extends FreezoneMap {
 		this.addEntity(new FlagEntity(24.4, 10));
 		
 		this.addEntity(new Debugentity(50, 34));
+		
+		this.triggerzones.add(new TriggerZone(new DoubleRectangle(32, 25, 4, 4)) {
+			@Override
+			public void onEnter()
+			{
+				if(Persistance.player.getData().storyposition == 4) {
+					CutsceneManager.playCutscene("base/magnetialert", false);
+				}
+			}
+		});
 	}
 
 }

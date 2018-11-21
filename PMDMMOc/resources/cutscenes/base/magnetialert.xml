@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cutscene name="base/magnetialert">
+  <creation freezone="base" camerax="30.0" cameray="30.0" fading="false">
+    <pokemon cutsceneid="1" xpos="34.0" ypos="25.0">
+      <teammember>0</teammember>
+      <animated>false</animated>
+    </pokemon>
+    <pokemon cutsceneid="2" xpos="34.0" ypos="28.0" facing="SOUTHWEST">
+      <teammember>1</teammember>
+      <state>SLEEP</state>
+    </pokemon>
+    <pokemon cutsceneid="10" xpos="60.0" ypos="17.0" facing="WEST">
+      <pokemonid>279</pokemonid>
+    </pokemon>
+  </creation>
+  <events>
+    <delay ticks="60" />
+    <wait />
+    <setanimated target="2" animated="false" />
+    <setstate target="2" state="IDLE" />
+    <rotate target="2" distance="-1" />
+    <delay ticks="20" />
+    <dialog>
+      <dialogscreen target="2">cutscene.base.magnetialert.m1</dialogscreen>
+    </dialog>
+    <rotate target="2" distance="-2" />
+    <delay ticks="40" />
+    <rotate target="2" distance="4" />
+    <delay ticks="60" />
+    <rotate target="2" distance="-2" />
+    <delay ticks="30" />
+    <rotate target="2" distance="-4" speed="15" />
+    <wait />
+    <dialog>
+      <dialogscreen target="2">cutscene.base.magnetialert.m2</dialogscreen>
+      <dialogscreen target="2">cutscene.base.magnetialert.m3</dialogscreen>
+      <dialogscreen target="2">cutscene.base.magnetialert.m4</dialogscreen>
+      <dialogscreen target="2">cutscene.base.magnetialert.m5</dialogscreen>
+      <dialogscreen target="2">cutscene.base.magnetialert.m6</dialogscreen>
+    </dialog>
+    <wait />
+    <dialog>
+      <dialogscreen target="2">cutscene.base.magnetialert.m7</dialogscreen>
+    </dialog>
+    <wait />
+    <setanimated target="2" animated="true" />
+    <setstate target="2" state="MOVE" />
+    <rotate target="2" distance="4" speed="2" />
+    <move ypos="32.0" speed="0.1" target="2" />
+    <wait />
+    <setanimated target="1" animated="true" />
+    <setstate target="1" state="MOVE" />
+    <move ypos="29.0" speed="0.1" target="1" />
+    <rotate target="2" distance="2" />
+    <move xpos="31.0" speed="0.1" target="2" />
+    <wait />
+    <rotate target="2" distance="2" />
+    <setanimated target="1" animated="false" />
+    <setstate target="1" state="IDLE" />
+    <setanimated target="2" animated="false" />
+    <setstate target="2" state="IDLE" />
+    <rotate target="1" distance="1" />
+    <wait />
+    <dialog>
+      <dialogscreen>cutscene.base.magnetialert.m8</dialogscreen>
+      <dialogscreen>cutscene.base.magnetialert.m9</dialogscreen>
+    </dialog>
+    <wait />
+    <dialog>
+      <dialogscreen target="2">cutscene.base.magnetialert.m10</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="2" distance="1" />
+    <delay ticks="20" />
+    <dialog>
+      <dialogscreen target="2">cutscene.base.magnetialert.m11</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="2" distance="-1" />
+    <delay ticks="20" />
+    <wait />
+    <dialog>
+      <dialogscreen>cutscene.base.magnetialert.m12</dialogscreen>
+    </dialog>
+    <rotate target="2" distance="1" />
+    <delay ticks="20" />
+    <dialog>
+      <dialogscreen target="2">cutscene.base.magnetialert.m13</dialogscreen>
+      <dialogscreen target="2">cutscene.base.magnetialert.m14</dialogscreen>
+      <dialogscreen target="2">cutscene.base.magnetialert.m15</dialogscreen>
+      <dialogscreen target="2">cutscene.base.magnetialert.m16</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="2" distance="-1" />
+    <delay ticks="20" />
+    <dialog>
+      <dialogscreen target="2">cutscene.base.magnetialert.m17</dialogscreen>
+      <dialogscreen>cutscene.base.magnetialert.m18</dialogscreen>
+      <dialogscreen target="2">cutscene.base.magnetialert.m19</dialogscreen>
+    </dialog>
+    <wait />
+    <setanimated target="2" animated="true" />
+    <rotate target="2" distance="2" speed="3" />
+    <setstate target="2" state="MOVE" />
+    <move xpos="34.0" speed="0.1" target="2" />
+    <wait />
+    <rotate target="2" distance="-2" speed="5" />
+    <wait />
+    <move xpos="34.0" speed="0.1" target="2" />
+    <wait />
+    <rotate target="2" distance="-2" speed="5" />
+    <setanimated target="2" animated="false" />
+    <setstate target="2" state="IDLE" />
+    <rotate target="1" distance="-1" />
+    <wait />
+    <dialog>
+      <dialogscreen target="2">cutscene.base.magnetialert.m21</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="1" distance="-2" speed="2" />
+    <rotate target="2" distance="4" speed="2" />
+    <dialog>
+      <dialogscreen>cutscene.base.magnetialert.m22</dialogscreen>
+    </dialog>
+    <move xpos="30.5" speed="0.13" target="10" />
+    <delay ticks="50" />
+    <rotate target="1" distance="3" speed="40" />
+    <rotate target="2" distance="-4" speed="40" />
+    <wait />
+    <delay ticks="30" />
+    <rotate target="10" distance="-2" />
+    <delay ticks="30" />
+    <move ypos="28.0" speed="0.1" target="10" />
+    <wait />
+    <setanimated target="10" animated="false" />
+    <setstate target="10" state="IDLE" />
+    <dialog>
+      <dialogscreen>cutscene.base.magnetialert.m23</dialogscreen>
+    </dialog>
+    <wait />
+    <delay ticks="30" />
+    <dialog>
+      <dialogscreen target="2">cutscene.base.magnetialert.m24</dialogscreen>
+    </dialog>
+    <wait />
+    <setstate target="10" state="MOVE" />
+    <setanimated target="10" animated="true" />
+    <move ypos="17.0" speed="0.1" target="10" />
+    <wait />
+    <rotate target="10" distance="2" />
+    <delay ticks="30" />
+    <move xpos="0.0" speed="0.13" target="10" />
+    <wait />
+    <setanimated target="2" animated="true" />
+    <setanimated target="1" animated="true" />
+    <rotate target="1" distance="-3" speed="2" />
+    <setstate target="1" state="MOVE" />
+    <wait />
+    <move xpos="36.0" speed="0.1" target="1" />
+    <wait />
+    <rotate target="1" distance="2" speed="2" />
+    <wait />
+    <move ypos="33.0" speed="0.1" target="1" />
+    <wait />
+    <rotate target="1" distance="2" speed="3" />
+    <wait />
+    <move xpos="31.0" speed="0.1" target="1" />
+    <wait />
+    <rotate target="1" distance="2" speed="4" />
+    <setstate target="1" state="IDLE" />
+    <setanimated target="1" animated="false" />
+    <setanimated target="2" animated="false" />
+    <wait />
+    <dialog>
+      <dialogscreen>cutscene.base.magnetialert.m25</dialogscreen>
+      <dialogscreen target="2">cutscene.base.magnetialert.m26</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="1" distance="1" speed="2" />
+    <wait />
+    <dialog>
+      <dialogscreen>cutscene.base.magnetialert.m27</dialogscreen>
+      <dialogscreen>cutscene.base.magnetialert.m28</dialogscreen>
+    </dialog>
+    <wait />
+    <dialog>
+      <dialogscreen target="2">cutscene.base.magnetialert.m29</dialogscreen>
+    </dialog>
+  </events>
+  <onfinish>
+    <loadfreezone fadesout="false" id="base" />
+  </onfinish>
+</cutscene>
