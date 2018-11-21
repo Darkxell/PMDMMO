@@ -1,6 +1,6 @@
 package com.darkxell.client.resources.music;
 
-import com.darkxell.client.resources.images.Res;
+import com.darkxell.client.resources.Res;
 import com.darkxell.common.util.Logger;
 
 public class SoundsHolder

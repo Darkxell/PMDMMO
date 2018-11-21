@@ -20,10 +20,10 @@
   <events>
     <dialog>
       <dialogscreen target="10" portrait-location="TOP_RIGHT">cutscene.startingwoods.solve.m1</dialogscreen>
-      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.startingwoods.solve.m2</dialogscreen>
+      <dialogscreen emotion="Happy" target="2" portrait-location="BOTTOM_RIGHT">cutscene.startingwoods.solve.m2</dialogscreen>
       <dialogscreen target="10" portrait-location="TOP_RIGHT">cutscene.startingwoods.solve.m3</dialogscreen>
       <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.startingwoods.solve.m4</dialogscreen>
-      <dialogscreen target="11" portrait-location="TOP_LEFT">cutscene.startingwoods.solve.m5</dialogscreen>
+      <dialogscreen emotion="Amazed" target="11" portrait-location="TOP_LEFT">cutscene.startingwoods.solve.m5</dialogscreen>
     </dialog>
     <wait />
     <rotate target="2" distance="-1" />

@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import org.jdom2.Element;
 
-import com.darkxell.client.resources.images.Res;
+import com.darkxell.client.resources.Res;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.util.XMLUtils;

@@ -1,10 +1,6 @@
 package com.darkxell.client.state.menu.components;
 
-import static com.darkxell.client.state.menu.item.ItemContainersMenuState.ITEM_OFFSET;
-import static com.darkxell.client.state.menu.item.ItemContainersMenuState.ITEM_SLOT;
-import static com.darkxell.client.state.menu.item.ItemContainersMenuState.LIST_ITEM_HEIGHT;
-import static com.darkxell.client.state.menu.item.ItemContainersMenuState.LIST_ITEM_WIDTH;
-import static com.darkxell.client.state.menu.item.ItemContainersMenuState.LIST_OFFSET;
+import static com.darkxell.client.state.menu.item.ItemContainersMenuState.*;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;

@@ -6,6 +6,7 @@ import java.awt.Rectangle;
 import com.darkxell.client.resources.images.Sprite;
 import com.darkxell.client.resources.images.Sprites;
 import com.darkxell.client.resources.images.pokemon.PokemonPortrait;
+import com.darkxell.client.resources.images.pokemon.PokemonPortrait.PortraitEmotion;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.util.language.Message;
@@ -42,7 +43,7 @@ public class PokemonDialogScreen extends DialogScreen
 	}
 
 	/** The emotion of the Pokemon. Unused for now. */
-	public short emotion;
+	public PortraitEmotion emotion;
 	/** The Pokemon species talking. null if not a Pokemon. */
 	public final PokemonSpecies pokemon;
 	/** Where to draw the portrait, if any. May be <code>null</code> and has no effect if pokemon is null. */
@@ -55,8 +56,13 @@ public class PokemonDialogScreen extends DialogScreen
 	/** Shortcut constructor if using an instanciated Pokemon. */
 	public PokemonDialogScreen(Pokemon pokemon, Message message, DialogPortraitLocation portraitLocation)
 	{
-		this(pokemon == null ? null : pokemon.species(), message, pokemon == null ? false : pokemon.isShiny(), pokemon == null ? null : pokemon.getNickname(),
-				portraitLocation);
+		this(pokemon, message, PortraitEmotion.Normal, portraitLocation);
+	}
+
+	public PokemonDialogScreen(Pokemon pokemon, Message message, PortraitEmotion emotion, DialogPortraitLocation portraitLocation)
+	{
+		this(pokemon == null ? null : pokemon.species(), message, emotion, pokemon == null ? false : pokemon.isShiny(),
+				pokemon == null ? null : pokemon.getNickname(), portraitLocation);
 	}
 
 	public PokemonDialogScreen(PokemonSpecies pokemon, Message message)
@@ -64,20 +70,22 @@ public class PokemonDialogScreen extends DialogScreen
 		this(pokemon, message, pokemon == null ? null : pokemon.speciesName());
 	}
 
-	public PokemonDialogScreen(PokemonSpecies pokemon, Message message, boolean shiny, Message speakerName, DialogPortraitLocation portraitLocation)
+	public PokemonDialogScreen(PokemonSpecies pokemon, Message message, Message speakerName)
+	{
+		this(pokemon, message, PortraitEmotion.Normal, false, speakerName, DialogPortraitLocation.BOTTOM_LEFT);
+	}
+
+	public PokemonDialogScreen(PokemonSpecies pokemon, Message message, PortraitEmotion emotion, boolean shiny, Message speakerName,
+			DialogPortraitLocation portraitLocation)
 	{
 		super(message);
 		this.pokemon = pokemon;
 		this.speakerName = speakerName;
+		this.emotion = emotion;
 		this.shiny = shiny;
 		this.portraitLocation = portraitLocation;
 
 		if (this.speakerName != null) this.message.addPrefix(new Message(": ", false)).addPrefix(this.speakerName);
-	}
-
-	public PokemonDialogScreen(PokemonSpecies pokemon, Message message, Message speakerName)
-	{
-		this(pokemon, message, false, speakerName, DialogPortraitLocation.BOTTOM_LEFT);
 	}
 
 	@Override
@@ -89,7 +97,7 @@ public class PokemonDialogScreen extends DialogScreen
 		{
 			Rectangle dialogBox = this.parentState.dialogBox();
 			Point2D portraitL = this.portraitLocation.locate(dialogBox, Sprites.Res_Hud.portrait);
-			PokemonPortrait.drawPortrait(g, this.pokemon, this.shiny, (int) portraitL.x, (int) portraitL.y);
+			PokemonPortrait.drawPortrait(g, this.pokemon, this.emotion, this.shiny, (int) portraitL.x, (int) portraitL.y);
 		}
 	}
 

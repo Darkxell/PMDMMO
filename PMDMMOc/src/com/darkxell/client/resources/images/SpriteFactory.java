@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 import com.darkxell.client.launchable.Launcher;
+import com.darkxell.client.resources.Res;
 import com.darkxell.common.util.Logger;
 
 /** Calls that loads Images in a separate Thread for fluidity, and handles missing sprites without errors. */

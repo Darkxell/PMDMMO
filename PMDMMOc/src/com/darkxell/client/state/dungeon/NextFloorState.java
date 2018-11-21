@@ -3,12 +3,14 @@ package com.darkxell.client.state.dungeon;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.cutscene.Cutscene;
 import com.darkxell.client.mechanics.cutscene.CutsceneManager;
+import com.darkxell.client.renderers.pokemon.DungeonPokemonRenderer;
 import com.darkxell.client.resources.music.SoundsHolder;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.TransitionState;
 import com.darkxell.client.state.freezone.CutsceneState;
 import com.darkxell.client.state.map.DungeonFloorMap;
 import com.darkxell.common.dungeon.data.Dungeon.DungeonDirection;
+import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Message;
 
 public class NextFloorState extends TransitionState
@@ -48,6 +50,11 @@ public class NextFloorState extends TransitionState
 	{
 		super.onTransitionHalf();
 		Persistance.floor = Persistance.dungeon.currentFloor();
+		if (Persistance.dungeonState != null) for (DungeonPokemon p : Persistance.player.getDungeonTeam())
+		{
+			DungeonPokemonRenderer r = Persistance.dungeonState.pokemonRenderer.getRenderer(p);
+			if (r != null) r.sprite().setFacingDirection(Persistance.floor.teamSpawnDirection);
+		}
 
 		this.next = Persistance.dungeonState = new DungeonState();
 		if (Persistance.floor.cutsceneIn != null)

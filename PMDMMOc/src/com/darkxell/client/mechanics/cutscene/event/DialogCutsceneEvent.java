@@ -10,6 +10,7 @@ import com.darkxell.client.mechanics.cutscene.CutsceneContext;
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
 import com.darkxell.client.mechanics.cutscene.entity.CutscenePokemon;
+import com.darkxell.client.resources.images.pokemon.PokemonPortrait.PortraitEmotion;
 import com.darkxell.client.state.dialog.DialogScreen;
 import com.darkxell.client.state.dialog.DialogState;
 import com.darkxell.client.state.dialog.DialogState.DialogEndListener;
@@ -24,7 +25,7 @@ public class DialogCutsceneEvent extends CutsceneEvent implements DialogEndListe
 
 	public static class CutsceneDialogScreen
 	{
-		public final int emotion;
+		public final PortraitEmotion emotion;
 		boolean hasReplacements = false;
 		public final Message message;
 		public final int pokemon;
@@ -34,11 +35,20 @@ public class DialogCutsceneEvent extends CutsceneEvent implements DialogEndListe
 		{
 			this.message = new Message(xml.getText(), XMLUtils.getAttribute(xml, "translate", true));
 			this.pokemon = XMLUtils.getAttribute(xml, "target", -1);
-			this.emotion = XMLUtils.getAttribute(xml, "emotion", -1);
+			String emot = XMLUtils.getAttribute(xml, "emotion", PortraitEmotion.Normal.name());
+			PortraitEmotion e;
+			try
+			{
+				e = PortraitEmotion.valueOf(emot);
+			} catch (Exception e2)
+			{
+				e = PortraitEmotion.Normal;
+			}
+			this.emotion = e;
 			this.portraitLocation = DialogPortraitLocation.valueOf(XMLUtils.getAttribute(xml, "portrait-location", DialogPortraitLocation.BOTTOM_LEFT.name()));
 		}
 
-		public CutsceneDialogScreen(Message message, int emotion, CutsceneEntity entity, DialogPortraitLocation portraitLocation)
+		public CutsceneDialogScreen(Message message, PortraitEmotion emotion, CutsceneEntity entity, DialogPortraitLocation portraitLocation)
 		{
 			this.message = message;
 			this.emotion = emotion;
@@ -46,7 +56,7 @@ public class DialogCutsceneEvent extends CutsceneEvent implements DialogEndListe
 			this.portraitLocation = portraitLocation;
 		}
 
-		public CutsceneDialogScreen(String text, boolean translate, int emotion, CutsceneEntity entity, DialogPortraitLocation portraitLocation)
+		public CutsceneDialogScreen(String text, boolean translate, PortraitEmotion emotion, CutsceneEntity entity, DialogPortraitLocation portraitLocation)
 		{
 			this(new Message(text, translate), emotion, entity, portraitLocation);
 		}
@@ -79,7 +89,7 @@ public class DialogCutsceneEvent extends CutsceneEvent implements DialogEndListe
 		{
 			Element root = new Element(elementName).setText(this.message.id);
 			XMLUtils.setAttribute(root, "translate", this.message.shouldTranslate, true);
-			XMLUtils.setAttribute(root, "emotion", this.emotion, -1);
+			XMLUtils.setAttribute(root, "emotion", this.emotion.name(), PortraitEmotion.Normal.name());
 			XMLUtils.setAttribute(root, "target", this.pokemon, -1);
 			XMLUtils.setAttribute(root, "portrait-location", this.portraitLocation.name(), DialogPortraitLocation.BOTTOM_LEFT.name());
 			return root;
@@ -133,7 +143,8 @@ public class DialogCutsceneEvent extends CutsceneEvent implements DialogEndListe
 			CutsceneEntity e = this.context.parent().player.getEntity(s.pokemon);
 			if (e != null && e instanceof CutscenePokemon) pokemon = (CutscenePokemon) e;
 			if (!s.hasReplacements) s.addReplacements(pokemon);
-			DialogScreen screen = pokemon == null ? new DialogScreen(s.message) : new PokemonDialogScreen(pokemon.toPokemon(), s.message, s.portraitLocation);
+			DialogScreen screen = pokemon == null ? new DialogScreen(s.message)
+					: new PokemonDialogScreen(pokemon.toPokemon(), s.message, s.emotion, s.portraitLocation);
 			if (this.isNarratorDialog)
 			{
 				screen = new NarratorDialogScreen(s.message);
