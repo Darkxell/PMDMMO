@@ -22,8 +22,7 @@ public class BaseFreezone extends FreezoneMap {
 		this.triggerzones.add(new WarpZone(22, 30, FreezoneInfo.BASEINSIDE, new DoubleRectangle(32, 20, 3, 2)));
 		this.triggerzones.add(new TriggerZone(new DoubleRectangle(0, 38, 2, 8)) {
 			@Override
-			public void onEnter()
-			{
+			public void onEnter() {
 				Persistance.stateManager.setState(new FriendSelectionState(Persistance.stateManager.getCurrentState()));
 			}
 		});
@@ -34,8 +33,8 @@ public class BaseFreezone extends FreezoneMap {
 			}
 		});
 		/*
-		 * this.triggerzones.add(new WarpZone(0, 0, new DoubleRectangle(0, 38, 2,
-		 * 8)) {
+		 * this.triggerzones.add(new WarpZone(0, 0, new DoubleRectangle(0, 38,
+		 * 2, 8)) {
 		 * 
 		 * @Override public FreezoneMap getDestination() {
 		 * CutsceneManager.playCutscene("test"); return null; } });
@@ -54,15 +53,18 @@ public class BaseFreezone extends FreezoneMap {
 		this.addEntity(new AnimatedFlowerEntity(42.5, 59, false));
 
 		this.addEntity(new FlagEntity(24.4, 10));
-		
+
 		this.addEntity(new Debugentity(50, 34));
-		
+
 		this.triggerzones.add(new TriggerZone(new DoubleRectangle(32, 25, 4, 4)) {
 			@Override
-			public void onEnter()
-			{
-				if(Persistance.player.getData().storyposition == 4) {
+			public void onEnter() {
+				if (Persistance.player.getData().storyposition == 4) {
 					CutsceneManager.playCutscene("base/magnetialert", false);
+					Persistance.player.setStoryPosition(5);
+					// Note that at this point, the client is offsync with the
+					// server, as the server storypos is 4. both will be 5 at
+					// the end of the cutscene.
 				}
 			}
 		});

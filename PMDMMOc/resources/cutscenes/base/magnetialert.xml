@@ -188,6 +188,6 @@
     </dialog>
   </events>
   <onfinish>
-    <loadfreezone fadesout="false" id="base" />
+    <playcutscene function="magnemiteaccept" id="magnetientrance" />
   </onfinish>
 </cutscene>

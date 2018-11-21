@@ -25,6 +25,10 @@ public class ArbitraryCutsceneEnds {
 			mess = Json.object().add("action", "storyadvance").add("target", 2);
 			Persistance.socketendpoint.sendMessage(mess.toString());
 			break;
+		case "magnemiteaccept":
+			mess = Json.object().add("action", "storyadvance").add("target", 5);
+			Persistance.socketendpoint.sendMessage(mess.toString());
+			break;
 		case "openingstate":
 			mess = Json.object().add("action", "storyadvance").add("target", 4);
 			Persistance.socketendpoint.sendMessage(mess.toString());

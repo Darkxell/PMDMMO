@@ -43,6 +43,11 @@ public class StorypositionAdvanceHandler extends MessageHandler {
                         acceptcommit = true;
                     }
                     break;
+                case 5:
+                    if (player.storyposition == 3 || player.storyposition == 4) {
+                        acceptcommit = true;
+                    }
+                    break;
                 //TODO: add the possible modifications here
             }
         }

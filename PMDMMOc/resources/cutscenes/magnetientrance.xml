@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cutscene name="magnetientrance">
+  <creation freezone="thunderwave" camerax="26.0" cameray="20.0">
+    <pokemon cutsceneid="1" xpos="23.0" ypos="40.0" facing="NORTH">
+      <teammember>0</teammember>
+      <state>MOVE</state>
+    </pokemon>
+    <pokemon cutsceneid="10" xpos="23.0" ypos="15.0" facing="NORTH">
+      <pokemonid>81</pokemonid>
+    </pokemon>
+    <pokemon cutsceneid="2" xpos="28.0" ypos="40.0" facing="NORTH">
+      <teammember>1</teammember>
+      <state>MOVE</state>
+    </pokemon>
+    <pokemon cutsceneid="11" xpos="28.0" ypos="15.0" facing="NORTH">
+      <pokemonid>81</pokemonid>
+    </pokemon>
+  </creation>
+  <events>
+    <move ypos="20.0" speed="0.2" target="1" />
+    <move ypos="20.0" speed="0.2" target="2" />
+    <wait />
+    <setanimated target="1" animated="false" />
+    <setanimated target="2" animated="false" />
+    <rotate target="10" distance="4" speed="4" />
+    <rotate target="11" distance="-4" speed="4" />
+    <setstate target="1" state="IDLE" />
+    <setstate target="2" state="IDLE" />
+    <delay ticks="60" />
+    <dialog>
+      <dialogscreen target="10">cutscene.base.magnetientrence</dialogscreen>
+    </dialog>
+    <wait />
+    <move xpos="21.0" speed="0.05" target="10" />
+    <move xpos="30.0" speed="0.05" target="11" />
+    <wait />
+    <setanimated target="1" animated="true" />
+    <setanimated target="2" animated="true" />
+    <setstate target="2" state="MOVE" />
+    <setstate target="1" state="MOVE" />
+    <move xpos="25.0" ypos="8.0" speed="0.1" target="1" />
+    <delay ticks="80" />
+    <move xpos="26.0" ypos="8.0" speed="0.1" target="2" />
+  </events>
+  <onfinish>
+    <enterdungeon id="2" />
+  </onfinish>
+</cutscene>
