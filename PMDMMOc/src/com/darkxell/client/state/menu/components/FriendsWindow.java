@@ -1,13 +1,6 @@
 package com.darkxell.client.state.menu.components;
 
-import static com.darkxell.client.state.menu.freezone.FriendSelectionState.FRIEND_OFFSET;
-import static com.darkxell.client.state.menu.freezone.FriendSelectionState.FRIEND_SIZE;
-import static com.darkxell.client.state.menu.freezone.FriendSelectionState.FRIEND_SLOT_HEIGHT;
-import static com.darkxell.client.state.menu.freezone.FriendSelectionState.FRIEND_SLOT_WIDTH;
-import static com.darkxell.client.state.menu.freezone.FriendSelectionState.GOTOMAP_HEIGHT;
-import static com.darkxell.client.state.menu.freezone.FriendSelectionState.LIST_FRIEND_HEIGHT;
-import static com.darkxell.client.state.menu.freezone.FriendSelectionState.LIST_FRIEND_WIDTH;
-import static com.darkxell.client.state.menu.freezone.FriendSelectionState.LIST_OFFSET;
+import static com.darkxell.client.state.menu.freezone.FriendSelectionState.*;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;

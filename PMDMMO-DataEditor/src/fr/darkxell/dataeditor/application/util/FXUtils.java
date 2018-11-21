@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
-import com.darkxell.client.resources.images.Res;
+import com.darkxell.client.resources.Res;
 
 import fr.darkxell.dataeditor.application.DataEditor;
 import javafx.scene.Parent;

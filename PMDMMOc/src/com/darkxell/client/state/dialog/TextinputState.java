@@ -10,8 +10,8 @@ import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.Sprites;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.mainstates.PrincipalMainState;
-import com.darkxell.client.ui.MainUiUtility;
 import com.darkxell.client.ui.Keys.Key;
+import com.darkxell.client.ui.MainUiUtility;
 import com.darkxell.common.util.Callbackable;
 import com.darkxell.common.util.language.Message;
 

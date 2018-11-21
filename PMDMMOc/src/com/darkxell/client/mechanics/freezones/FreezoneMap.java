@@ -13,7 +13,7 @@ import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
 import com.darkxell.client.mechanics.freezones.entities.OtherPlayerEntity;
 import com.darkxell.client.renderers.EntityRendererHolder;
-import com.darkxell.client.resources.images.Res;
+import com.darkxell.client.resources.Res;
 import com.darkxell.client.resources.images.tilesets.AbstractFreezoneTileset;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.zones.FreezoneInfo;
