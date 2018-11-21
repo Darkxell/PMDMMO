@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 
 import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
 import com.darkxell.client.mechanics.cutscene.event.DialogCutsceneEvent.CutsceneDialogScreen;
+import com.darkxell.client.resources.images.pokemon.PokemonPortrait.PortraitEmotion;
 import com.darkxell.client.state.dialog.PokemonDialogScreen.DialogPortraitLocation;
 
 import fr.darkxell.dataeditor.application.controller.cutscene.EditCutsceneController;
@@ -27,6 +28,8 @@ public class EditDialogController implements Initializable
 	@FXML
 	public Button cancelButton;
 	@FXML
+	private ComboBox<PortraitEmotion> emotionCombobox;
+	@FXML
 	public Button okButton;
 	@FXML
 	private ComboBox<DialogPortraitLocation> portraitCombobox;
@@ -45,7 +48,8 @@ public class EditDialogController implements Initializable
 	{
 		CutsceneEntity target = this.targetCheckbox.isSelected() ? this.targetCombobox.getSelectionModel().getSelectedItem() : null;
 		if (target != null && target.id == -1) new Alert(AlertType.WARNING, "Your target needs an ID to work properly.", ButtonType.OK);
-		return new CutsceneDialogScreen(this.textTextfield.getText(), this.translatedCheckbox.isSelected(), -1, target, this.portraitCombobox.getValue());
+		return new CutsceneDialogScreen(this.textTextfield.getText(), this.translatedCheckbox.isSelected(), this.emotionCombobox.getValue(), target,
+				this.portraitCombobox.getValue());
 	}
 
 	@Override
@@ -63,6 +67,9 @@ public class EditDialogController implements Initializable
 
 		this.portraitCombobox.getItems().addAll(DialogPortraitLocation.values());
 		this.portraitCombobox.getSelectionModel().select(DialogPortraitLocation.BOTTOM_LEFT);
+
+		this.emotionCombobox.getItems().addAll(PortraitEmotion.values());
+		this.emotionCombobox.setValue(PortraitEmotion.Normal);
 	}
 
 	public void onCancel()
@@ -88,6 +95,7 @@ public class EditDialogController implements Initializable
 				break;
 			}
 		if (screen.portraitLocation != null) this.portraitCombobox.getSelectionModel().select(screen.portraitLocation);
+		this.emotionCombobox.setValue(screen.emotion);
 	}
 
 }

@@ -8,6 +8,7 @@ import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
 import com.darkxell.client.mechanics.cutscene.entity.CutscenePokemon;
 import com.darkxell.client.mechanics.cutscene.event.DialogCutsceneEvent.CutsceneDialogScreen;
+import com.darkxell.client.resources.images.pokemon.PokemonPortrait.PortraitEmotion;
 import com.darkxell.client.state.dialog.DialogState;
 import com.darkxell.client.state.dialog.DialogState.DialogEndListener;
 import com.darkxell.client.state.dialog.OptionDialogScreen;
@@ -28,7 +29,7 @@ public class OptionDialogCutsceneEvent extends CutsceneEvent implements DialogEn
 	{
 		super(xml, CutsceneEventType.option, context);
 		if (xml.getChild("question", xml.getNamespace()) == null)
-			this.question = new CutsceneDialogScreen(new Message("ERROR", false), 0, null, DialogPortraitLocation.TOP_LEFT);
+			this.question = new CutsceneDialogScreen(new Message("ERROR", false), PortraitEmotion.Normal, null, DialogPortraitLocation.TOP_LEFT);
 		else this.question = new CutsceneDialogScreen(xml.getChild("question", xml.getNamespace()));
 		this.options = new Message[xml.getChildren("option", xml.getNamespace()).size()];
 		int i = 0;
