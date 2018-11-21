@@ -86,8 +86,7 @@ public class OpenningState extends AbstractState {
 			CutsceneManager.playCutscene("base/wakeup1", true);
 			break;
 		case 5:
-			// TODO:Rescue team created after saving caterpie, recieved mail
-			// from magneti and went to thunderwave cave
+			CutsceneManager.playCutscene("magnetientrance", true);
 			break;
 		case 38:
 			// TODO:Had the fugitive cutscene. Spawns in front of your house
