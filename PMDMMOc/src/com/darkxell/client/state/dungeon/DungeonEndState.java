@@ -63,6 +63,10 @@ public class DungeonEndState extends AbstractState
 				// Tiny Woods completed, ready to play cutscene
 				CutsceneManager.playCutscene("startingwoods/solve", true);
 				break;
+			case 5:
+				// Thunderwave Cave failed, restart
+				CutsceneManager.playCutscene("magnetientrance", true);
+				break;
 		}
 	}
 
