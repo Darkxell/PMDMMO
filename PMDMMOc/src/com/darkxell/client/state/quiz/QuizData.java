@@ -1,6 +1,7 @@
 package com.darkxell.client.state.quiz;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
@@ -91,6 +92,22 @@ public class QuizData
 			remainingGroups.remove(chosen);
 			this.askedQuestions[question] = group.questions[r.nextInt(group.questions.length)];
 		}
+	}
+
+	public PokemonSpecies[] starters()
+	{
+		ArrayList<PokemonSpecies> starters = new ArrayList<>();
+
+		for (int[] s : this.starters)
+			for (int id : s)
+			{
+				PokemonSpecies p = PokemonRegistry.find(id);
+				if (!starters.contains(p)) starters.add(p);
+			}
+
+		starters.sort(Comparator.naturalOrder());
+
+		return starters.toArray(new PokemonSpecies[starters.size()]);
 	}
 
 	public PokemonSpecies[] validPartners(int choice)

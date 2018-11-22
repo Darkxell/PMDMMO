@@ -24,7 +24,7 @@ import com.eclipsesource.json.JsonObject;
 
 public class PersonalityQuizDialog extends ComplexDialog
 {
-	public static final int GENDER = 0, NATURE_DESC = 1, STARTER = 2, PARTNER = 3, FINAL_DIALOG = 4, END = 5;
+	public static final int GENDER = 0, NATURE_DESC = 1, STARTER = 2, STARTER_CUSTOM = 3, PARTNER = 4, FINAL_DIALOG = 5, END = 6;
 	private static final int startDialogScreens = 7, endDialogScreens = 3;
 
 	private DialogState currentDialog;
@@ -67,7 +67,7 @@ public class PersonalityQuizDialog extends ComplexDialog
 	@Override
 	public ComplexDialogAction nextAction(DialogState previous)
 	{
-		if (this.currentQuestion == this.questions.length + 4) return ComplexDialogAction.PAUSE;
+		if (this.currentQuestion == this.questions.length + FINAL_DIALOG) return ComplexDialogAction.PAUSE;
 		else return ComplexDialogAction.NEW_DIALOG;
 	}
 
@@ -81,7 +81,8 @@ public class PersonalityQuizDialog extends ComplexDialog
 			for (int i = 0; i < endDialogScreens; ++i)
 				screens[i] = new DialogScreen(new Message("quiz.end." + i));
 			this.currentDialog = this.newDialog(screens);
-		} else if (this.currentQuestion == this.questions.length + PARTNER) this.currentDialog = this.newDialog(new PartnerChoiceScreen(this));
+		} else if (this.currentQuestion == this.questions.length + PARTNER) this.currentDialog = this.newDialog(new StarterChoiceScreen(this, true));
+		else if (this.currentQuestion == this.questions.length + STARTER_CUSTOM) this.currentDialog = this.newDialog(new StarterChoiceScreen(this, false));
 		else if (this.currentQuestion == this.questions.length + STARTER) this.currentDialog = this
 				.newDialog(new StarterScreen(new Message("quiz.starter").addReplacement("<pokemon>", this.starter.getNickname()), this.starter));
 		else if (this.currentQuestion == this.questions.length + NATURE_DESC) this.currentDialog = this.newDialog(this.finalNature.description());
@@ -105,22 +106,30 @@ public class PersonalityQuizDialog extends ComplexDialog
 				this.currentNature[answer.natures[i].id] += answer.points[i];
 		}
 
-		if (!this.isPaused()) ++this.currentQuestion;
+		++this.currentQuestion;
 
 		if (this.currentQuestion == this.questions.length)
 		{
 			this.finalNature = Nature.Brave;
 			for (int i = 0; i < this.currentNature.length; ++i)
 				if (this.currentNature[this.finalNature.id] < this.currentNature[i]) this.finalNature = Nature.get(i);
-		} else if (this.currentQuestion == this.questions.length + 1)
+		} else if (this.currentQuestion == this.questions.length + NATURE_DESC)
 		{
 			this.gender = ((OptionDialogScreen) screen).chosenIndex() == 0 ? QuizGender.Boy : QuizGender.Girl;
 			int starterID = this.quizData.starters[this.finalNature.id][this.gender == QuizGender.Boy ? 0 : 1];
 			this.starter = PokemonRegistry.find(starterID).generate(new Random(), 5);
-		} else if (this.currentQuestion == this.questions.length + 4)
+		} else if (this.currentQuestion == this.questions.length + STARTER_CUSTOM)
 		{
 			int index = ((OptionDialogScreen) screen).chosenIndex();
-			this.partner = this.partners()[index].generate(new Random(), 5);
+			if (index == 0) ++this.currentQuestion;
+		} else if (this.currentQuestion == this.questions.length + PARTNER)
+		{
+			int index = ((OptionDialogScreen) screen).chosenIndex();
+			this.starter = this.partners(false)[index].generate(new Random(), 5);
+		} else if (this.currentQuestion == this.questions.length + FINAL_DIALOG)
+		{
+			int index = ((OptionDialogScreen) screen).chosenIndex();
+			this.partner = this.partners(true)[index].generate(new Random(), 5);
 			this.sendTestResults(this.starter.species().id, this.partner.species().id, this.starter.gender(), this.partner.gender());
 		}
 	}
@@ -136,14 +145,15 @@ public class PersonalityQuizDialog extends ComplexDialog
 		Persistance.stateManager.setState(new PlayerLoadingState(Persistance.player.getData().id, new PlayerLoadingEndListener() {}));
 	}
 
-	public PokemonSpecies[] partners()
+	public PokemonSpecies[] partners(boolean limitChoices)
 	{
+		if (!limitChoices) return this.quizData.starters();
 		return this.quizData.validPartners(this.starter.species().id);
 	}
 
-	public Message[] partnersAsOptions()
+	public Message[] partnersAsOptions(boolean limitChoices)
 	{
-		PokemonSpecies[] partners = this.partners();
+		PokemonSpecies[] partners = this.partners(limitChoices);
 		Message[] options = new Message[partners.length];
 		for (int i = 0; i < options.length; ++i)
 			options[i] = partners[i].speciesName();

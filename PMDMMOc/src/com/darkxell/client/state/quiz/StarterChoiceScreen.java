@@ -12,13 +12,13 @@ import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.util.language.Message;
 
-public class PartnerChoiceScreen extends OptionDialogScreen
+public class StarterChoiceScreen extends OptionDialogScreen
 {
 
 	static class PartnerOptionState extends OptionState
 	{
 
-		public PartnerOptionState(DialogState parent, PartnerChoiceScreen screen, boolean isOpaque)
+		public PartnerOptionState(DialogState parent, StarterChoiceScreen screen, boolean isOpaque)
 		{
 			super(parent, screen, isOpaque);
 		}
@@ -27,7 +27,7 @@ public class PartnerChoiceScreen extends OptionDialogScreen
 		protected Rectangle mainWindowDimensions()
 		{
 			Rectangle r = super.mainWindowDimensions();
-			return new Rectangle((int) ((DialogState) this.background).dialogBox().getMinX(), r.y, r.width, r.height);
+			return new Rectangle((int) ((DialogState) this.background).dialogBox().getMinX(), Math.max(r.y, 10), r.width, r.height);
 		}
 
 	}
@@ -35,13 +35,19 @@ public class PartnerChoiceScreen extends OptionDialogScreen
 	private OptionState currentOptionState;
 	private final Pokemon[] partners;
 
-	public PartnerChoiceScreen(PersonalityQuizDialog parent)
+	public StarterChoiceScreen(PersonalityQuizDialog parent, boolean limitChoices)
 	{
-		super(new Message("quiz.choose_partner"), parent.partnersAsOptions());
-		PokemonSpecies[] s = parent.partners();
+		super(new Message(limitChoices ? "quiz.choose_partner" : "quiz.choose_starter"), parent.partnersAsOptions(limitChoices));
+		PokemonSpecies[] s = parent.partners(limitChoices);
 		this.partners = new Pokemon[s.length];
 		for (int i = 0; i < this.partners.length; ++i)
-			this.partners[i] = s[i].generate(new Random(), 1);
+			this.partners[i] = s[i].generate(new Random(), 1, 0);
+	}
+
+	@Override
+	public boolean dialogBoxVisible()
+	{
+		return !this.showingOptions;
 	}
 
 	@Override

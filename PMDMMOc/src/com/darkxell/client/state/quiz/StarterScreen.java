@@ -3,18 +3,18 @@ package com.darkxell.client.state.quiz;
 import java.awt.Graphics2D;
 
 import com.darkxell.client.resources.images.pokemon.PokemonPortrait;
-import com.darkxell.client.state.dialog.DialogScreen;
+import com.darkxell.client.state.dialog.OptionDialogScreen;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.language.Message;
 
-public class StarterScreen extends DialogScreen
+public class StarterScreen extends OptionDialogScreen
 {
 
 	public final Pokemon pokemon;
 
 	public StarterScreen(Message message, Pokemon pokemon)
 	{
-		super(message);
+		super(message, new Message("ui.yes"), new Message("ui.no"));
 		this.pokemon = pokemon;
 	}
 

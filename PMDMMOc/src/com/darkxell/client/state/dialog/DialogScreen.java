@@ -66,6 +66,11 @@ public class DialogScreen
 		return length;
 	}
 
+	public boolean dialogBoxVisible()
+	{
+		return true;
+	}
+
 	private void nextLine()
 	{
 		++this.currentLine;
@@ -117,25 +122,28 @@ public class DialogScreen
 
 		if (this.lines.isEmpty()) this.reformLines(inside.width);
 
-		g.drawImage(this.isOpaque ? Sprites.Res_Hud.textwindow.image() : Sprites.Res_Hud.textwindow_transparent.image(), dialogBox.x, dialogBox.y,
-				dialogBox.width, dialogBox.height, null);
-		Shape c = g.getClip();
-		g.setClip(inside);
-		int length = 0;
-		for (int i = 0; i < this.lines.size() && length < this.cursor; ++i)
+		if (this.dialogBoxVisible())
 		{
-			int count = Math.min(this.cursor - length, this.lines.get(i).size());
-			List<PMDChar> line = this.lines.get(i).subList(0, count);
-			int x = inside.x;
-			if (this.isCentered) x += inside.getWidth() / 2 - TextRenderer.width(line) / 2;
+			g.drawImage(this.isOpaque ? Sprites.Res_Hud.textwindow.image() : Sprites.Res_Hud.textwindow_transparent.image(), dialogBox.x, dialogBox.y,
+					dialogBox.width, dialogBox.height, null);
+			Shape c = g.getClip();
+			g.setClip(inside);
+			int length = 0;
+			for (int i = 0; i < this.lines.size() && length < this.cursor; ++i)
+			{
+				int count = Math.min(this.cursor - length, this.lines.get(i).size());
+				List<PMDChar> line = this.lines.get(i).subList(0, count);
+				int x = inside.x;
+				if (this.isCentered) x += inside.getWidth() / 2 - TextRenderer.width(line) / 2;
 
-			TextRenderer.render(g, line, x, inside.y - this.offset + i * (TextRenderer.height() + TextRenderer.lineSpacing()));
-			length += count;
+				TextRenderer.render(g, line, x, inside.y - this.offset + i * (TextRenderer.height() + TextRenderer.lineSpacing()));
+				length += count;
+			}
+			g.setClip(c);
+
+			if (this.state == DialogScreenState.PAUSED && this.arrowtick > 9 && this.parentState.isMain())
+				g.drawImage(arrow, dialogBox.x + dialogBox.width / 2 - arrow.getWidth() / 2, (int) (dialogBox.getMaxY() - arrow.getHeight() * 3 / 4), null);
 		}
-		g.setClip(c);
-
-		if (this.state == DialogScreenState.PAUSED && this.arrowtick > 9 && this.parentState.isMain())
-			g.drawImage(arrow, dialogBox.x + dialogBox.width / 2 - arrow.getWidth() / 2, (int) (dialogBox.getMaxY() - arrow.getHeight() * 3 / 4), null);
 	}
 
 	protected void requestNextLine()
