@@ -15,6 +15,7 @@ public enum FreezoneInfo
 	LUMINOUSCAVE(LocalMapLocation.LUMINOUSCAVE, "lumiouscave"),
 	OFFICEINSIDE(LocalMapLocation.OFFICE, "officeinside"),
 	THUNDERWAVE_ENTRANCE(LocalMapLocation.THUNDERWAVE, "thunderwave"),
+	TINYWOODS_CLEAR(LocalMapLocation.TINYWOODS, "tinywoods"),
 
 	DUNGEON_MT_STEEL_TOP(LocalMapLocation.DUNGEON_MT_STEEL_TOP, "mt_steel_top"),
 

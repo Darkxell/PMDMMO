@@ -2,6 +2,7 @@ package com.darkxell.client.mechanics.freezones;
 
 import com.darkxell.client.mechanics.freezones.cutscenemaps.MtSteelTopFreezone;
 import com.darkxell.client.mechanics.freezones.cutscenemaps.ThunderwaveEntranceFreezone;
+import com.darkxell.client.mechanics.freezones.cutscenemaps.TinywoodsClearFreezone;
 import com.darkxell.client.mechanics.freezones.zones.BaseFreezone;
 import com.darkxell.client.mechanics.freezones.zones.BaseInsideFreezone;
 import com.darkxell.client.mechanics.freezones.zones.DojoFreezone;
@@ -76,10 +77,6 @@ public class Freezones {
 	public static FreezoneMap loadMap(FreezoneInfo freezone) {
 		FreezoneMap map;
 		switch (freezone) {
-		case BASE:
-			map = new BaseFreezone();
-			break;
-			
 		case BASEINSIDE:
 			map = new BaseInsideFreezone();
 			break;
@@ -114,6 +111,10 @@ public class Freezones {
 			
 		case THUNDERWAVE_ENTRANCE:
 			map = new ThunderwaveEntranceFreezone();
+			break;
+			
+		case TINYWOODS_CLEAR:
+			map = new TinywoodsClearFreezone();
 			break;
 			
 		case DUNGEON_MT_STEEL_TOP:
@@ -348,8 +349,9 @@ public class Freezones {
 			map = new WildPlainsFreezone();
 			break;
 
+		case BASE:
 		default:
-			map = null;
+			map = new BaseFreezone();
 		}
 		return map;
 	}

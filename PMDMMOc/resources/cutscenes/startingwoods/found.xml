@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cutscene name="startingwoods/found">
+  <creation freezone="tinywoods" camerax="27.0" cameray="20.0" fading="false">
+    <pokemon cutsceneid="10" xpos="27.0" ypos="16.0" facing="NORTH">
+      <pokemonid>10</pokemonid>
+      <animated>false</animated>
+    </pokemon>
+    <pokemon cutsceneid="1" xpos="25.5" ypos="42.0" facing="NORTH">
+      <teammember>0</teammember>
+      <state>MOVE</state>
+    </pokemon>
+    <pokemon cutsceneid="2" xpos="28.5" ypos="42.0" facing="NORTH">
+      <teammember>1</teammember>
+      <state>MOVE</state>
+    </pokemon>
+  </creation>
+  <events>
+    <dialog>
+      <dialogscreen emotion="Crying" target="10" portrait-location="TOP_RIGHT">cutscene.startingwoods.found.m1</dialogscreen>
+      <dialogscreen emotion="Crying" target="10" portrait-location="TOP_RIGHT">cutscene.startingwoods.found.m2</dialogscreen>
+    </dialog>
+    <wait />
+    <move ypos="22.0" speed="0.2" target="1" />
+    <move ypos="22.0" speed="0.2" target="2" />
+    <wait />
+    <dialog>
+      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.startingwoods.found.m3</dialogscreen>
+    </dialog>
+    <setstate target="1" state="IDLE" />
+    <setstate target="2" state="IDLE" />
+    <setanimated target="1" animated="false" />
+    <setanimated target="2" animated="false" />
+    <wait />
+    <rotate target="10" distance="4" speed="5" />
+    <wait />
+    <dialog>
+      <dialogscreen emotion="Crying" target="10" portrait-location="TOP_RIGHT">cutscene.startingwoods.found.m4</dialogscreen>
+      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.startingwoods.found.m5</dialogscreen>
+    </dialog>
+    <wait />
+    <move ypos="15.0" speed="0.6" target="10" />
+    <delay ticks="2" />
+    <move ypos="16.0" speed="0.6" target="10" />
+    <wait />
+    <dialog>
+      <dialogscreen target="10" portrait-location="TOP_RIGHT">cutscene.startingwoods.found.m6</dialogscreen>
+    </dialog>
+  </events>
+  <onfinish>
+    <playcutscene id="startingwoods/solve" />
+  </onfinish>
+</cutscene>

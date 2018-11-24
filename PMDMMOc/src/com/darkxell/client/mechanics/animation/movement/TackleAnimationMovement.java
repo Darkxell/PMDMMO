@@ -28,7 +28,7 @@ public class TackleAnimationMovement extends PokemonAnimationMovement
 	public void onFinish()
 	{
 		super.onFinish();
-		this.renderer.setXY(this.location.x, this.location.y);
+		if (this.renderer != null) this.renderer.setXY(this.location.x, this.location.y);
 	}
 
 	@Override

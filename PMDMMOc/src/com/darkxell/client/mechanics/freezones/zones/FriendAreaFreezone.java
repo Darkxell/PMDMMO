@@ -9,7 +9,7 @@ public class FriendAreaFreezone extends FreezoneMap
 
 	public FriendAreaFreezone(int defaultX, int defaultY, FreezoneInfo info)
 	{
-		super("/freezones/" + info.id + ".xml", defaultX, defaultY, info);
+		super("/freezones/friend/" + info.id + ".xml", defaultX, defaultY, info);
 
 		this.triggerzones.add(new FreezoneMapTriggerZone(this.getInfo(), new DoubleRectangle(0, 0, this.mapWidth, 1)));
 		this.triggerzones.add(new FreezoneMapTriggerZone(this.getInfo(), new DoubleRectangle(0, 0, 1, this.mapHeight)));

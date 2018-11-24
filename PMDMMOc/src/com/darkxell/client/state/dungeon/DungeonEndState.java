@@ -5,11 +5,10 @@ import java.util.ArrayList;
 
 import com.darkxell.client.launchable.GameSocketEndpoint;
 import com.darkxell.client.launchable.Persistance;
-import com.darkxell.client.mechanics.cutscene.CutsceneManager;
+import com.darkxell.client.launchable.StoryPositionSetup;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.PlayerLoadingState;
 import com.darkxell.client.state.PlayerLoadingState.PlayerLoadingEndListener;
-import com.darkxell.client.state.StateManager;
 import com.darkxell.client.state.TransitionState;
 import com.darkxell.client.state.freezone.cutscenes.MissionResultsState;
 import com.darkxell.client.ui.Keys.Key;
@@ -18,9 +17,6 @@ import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.mission.DungeonMission;
 import com.darkxell.common.mission.Mission;
 import com.darkxell.common.pokemon.Pokemon;
-import com.darkxell.common.util.Direction;
-import com.darkxell.common.util.Logger;
-import com.darkxell.common.zones.FreezoneInfo;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
@@ -39,35 +35,12 @@ public class DungeonEndState extends AbstractState
 					@Override
 					public void onPlayerLoadingEnd(PlayerLoadingState state)
 					{
-						DungeonEndState.setupGameAfterDungeonEnd(Persistance.player.storyPosition());
+						StoryPositionSetup.trigger(Persistance.player.storyPosition(), false);
 					}
 				}));
 			}
 		};
 		Persistance.stateManager.setState(t);
-	}
-
-	protected static void setupGameAfterDungeonEnd(int storyposition)
-	{
-		Logger.i("Triggered the OpeningState launch method with storyposition : " + storyposition);
-		switch (storyposition)
-		{
-			default:
-				StateManager.setExploreState(FreezoneInfo.BASE, Direction.SOUTH, -1, -1, true);
-				break;
-			case 2:
-				// Tiny Woods failed, ready to play cutscene
-				CutsceneManager.playCutscene("startingwoods/tinywoodsfailed", true);
-				break;
-			case 3:
-				// Tiny Woods completed, ready to play cutscene
-				CutsceneManager.playCutscene("startingwoods/solve", true);
-				break;
-			case 5:
-				// Thunderwave Cave failed, restart
-				CutsceneManager.playCutscene("magnetientrance", true);
-				break;
-		}
 	}
 
 	private ArrayList<Mission> completedMissions = new ArrayList<>();

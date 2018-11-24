@@ -15,6 +15,7 @@ public enum LocalMapLocation {
 	LUMINOUSCAVE(355, 137, new Message("zone.lumiouscave"), false),
 
 	DUNGEON_MT_STEEL_TOP(-1, -1, new Message("zone.dungeon.mt_steel_top", true), false),
+	TINYWOODS(-1, -1, new Message("zone.dungeon.tiny_woods", true), false),
 	THUNDERWAVE(-1, -1, new Message("zone.dungeon.thunderwave_cave", true), false),
 
 	ZONE_PLAINS(350, 119, new Message("zone.plains"), true),

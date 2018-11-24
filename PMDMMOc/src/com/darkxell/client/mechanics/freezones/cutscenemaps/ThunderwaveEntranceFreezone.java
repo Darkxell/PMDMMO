@@ -8,7 +8,7 @@ public class ThunderwaveEntranceFreezone extends CutsceneFreezoneMap
 
 	public ThunderwaveEntranceFreezone()
 	{
-		super("thunderwave-entrance", FreezoneInfo.THUNDERWAVE_ENTRANCE, 416, 320);
+		super("cutscenes/thunderwave-entrance", FreezoneInfo.THUNDERWAVE_ENTRANCE, 416, 320);
 	}
 
 }
