@@ -1,6 +1,7 @@
 package com.darkxell.client.mechanics.freezones;
 
 import com.darkxell.client.mechanics.freezones.cutscenemaps.MtSteelTopFreezone;
+import com.darkxell.client.mechanics.freezones.cutscenemaps.ThunderwaveClearFreezone;
 import com.darkxell.client.mechanics.freezones.cutscenemaps.ThunderwaveEntranceFreezone;
 import com.darkxell.client.mechanics.freezones.cutscenemaps.TinywoodsClearFreezone;
 import com.darkxell.client.mechanics.freezones.zones.BaseFreezone;
@@ -12,63 +13,7 @@ import com.darkxell.client.mechanics.freezones.zones.OfficeFreezone;
 import com.darkxell.client.mechanics.freezones.zones.OfficeinsideFreezone;
 import com.darkxell.client.mechanics.freezones.zones.PokemonSquareFreezone;
 import com.darkxell.client.mechanics.freezones.zones.PondFreezone;
-import com.darkxell.client.mechanics.freezones.zones.friend.AgedChamber1Freezone;
-import com.darkxell.client.mechanics.freezones.zones.friend.AgedChamber2Freezone;
-import com.darkxell.client.mechanics.freezones.zones.friend.AncientRelicFreezone;
-import com.darkxell.client.mechanics.freezones.zones.friend.BeauPlainsFreezone;
-import com.darkxell.client.mechanics.freezones.zones.friend.BoulderCaveFreezone;
-import com.darkxell.client.mechanics.freezones.zones.friend.BountifulSeaFreezone;
-import com.darkxell.client.mechanics.freezones.zones.friend.CraterFreezone;
-import com.darkxell.client.mechanics.freezones.zones.friend.CrypticCaveFreezone;
-import com.darkxell.client.mechanics.freezones.zones.friend.DarknessRidgeFreezone;
-import com.darkxell.client.mechanics.freezones.zones.friend.DecrepitLabFreezone;
-import com.darkxell.client.mechanics.freezones.zones.friend.DeepseaCurrentFreezone;
-import com.darkxell.client.mechanics.freezones.zones.friend.DeepseaFloorFreezone;
-import com.darkxell.client.mechanics.freezones.zones.friend.DragonCaveFreezone;
-import com.darkxell.client.mechanics.freezones.zones.friend.EchoCaveFreezone;
-import com.darkxell.client.mechanics.freezones.zones.friend.EnclosedIslandFreezone;
-import com.darkxell.client.mechanics.freezones.zones.friend.EnergeticForestFreezone;
-import com.darkxell.client.mechanics.freezones.zones.friend.FinalIslandFreezone;
-import com.darkxell.client.mechanics.freezones.zones.friend.FlyawayForestFreezone;
-import com.darkxell.client.mechanics.freezones.zones.friend.FrigidCavernFreezone;
-import com.darkxell.client.mechanics.freezones.zones.friend.FurnaceDesertFreezone;
-import com.darkxell.client.mechanics.freezones.zones.friend.HealingForestFreezone;
-import com.darkxell.client.mechanics.freezones.zones.friend.IceFloeBeachFreezone;
-import com.darkxell.client.mechanics.freezones.zones.friend.JungleFreezone;
-import com.darkxell.client.mechanics.freezones.zones.friend.LegendaryIslandFreezone;
-import com.darkxell.client.mechanics.freezones.zones.friend.MagneticQuarryFreezone;
-import com.darkxell.client.mechanics.freezones.zones.friend.MistRiseForestFreezone;
-import com.darkxell.client.mechanics.freezones.zones.friend.MtCleftFreezone;
-import com.darkxell.client.mechanics.freezones.zones.friend.MtDeepgreenFreezone;
-import com.darkxell.client.mechanics.freezones.zones.friend.MtDisciplineFreezone;
-import com.darkxell.client.mechanics.freezones.zones.friend.MtMoonviewFreezone;
-import com.darkxell.client.mechanics.freezones.zones.friend.MushroomForestFreezone;
-import com.darkxell.client.mechanics.freezones.zones.friend.MysticLakeFreezone;
-import com.darkxell.client.mechanics.freezones.zones.friend.OvergrownForestFreezone;
-import com.darkxell.client.mechanics.freezones.zones.friend.PeanutSwampFreezone;
-import com.darkxell.client.mechanics.freezones.zones.friend.PoisonSwampFreezone;
-import com.darkxell.client.mechanics.freezones.zones.friend.PowerPlantFreezone;
-import com.darkxell.client.mechanics.freezones.zones.friend.RainbowPeakFreezone;
-import com.darkxell.client.mechanics.freezones.zones.friend.RavagedFieldFreezone;
-import com.darkxell.client.mechanics.freezones.zones.friend.RubadubRiverFreezone;
-import com.darkxell.client.mechanics.freezones.zones.friend.SacredFieldFreezone;
-import com.darkxell.client.mechanics.freezones.zones.friend.SafariFreezone;
-import com.darkxell.client.mechanics.freezones.zones.friend.ScorchedPlainsFreezone;
-import com.darkxell.client.mechanics.freezones.zones.friend.SeafloorCaveFreezone;
-import com.darkxell.client.mechanics.freezones.zones.friend.SecretiveForestFreezone;
-import com.darkxell.client.mechanics.freezones.zones.friend.SereneSeaFreezone;
-import com.darkxell.client.mechanics.freezones.zones.friend.ShallowBeachFreezone;
-import com.darkxell.client.mechanics.freezones.zones.friend.SkyBluePlainsFreezone;
-import com.darkxell.client.mechanics.freezones.zones.friend.SouthernIslandFreezone;
-import com.darkxell.client.mechanics.freezones.zones.friend.StratosLookoutFreezone;
-import com.darkxell.client.mechanics.freezones.zones.friend.TadpolePondFreezone;
-import com.darkxell.client.mechanics.freezones.zones.friend.ThunderMeadowFreezone;
-import com.darkxell.client.mechanics.freezones.zones.friend.TransformForestFreezone;
-import com.darkxell.client.mechanics.freezones.zones.friend.TreasureSeaFreezone;
-import com.darkxell.client.mechanics.freezones.zones.friend.TurtleshellPondFreezone;
-import com.darkxell.client.mechanics.freezones.zones.friend.VolcanicPitFreezone;
-import com.darkxell.client.mechanics.freezones.zones.friend.WaterfallLakeFreezone;
-import com.darkxell.client.mechanics.freezones.zones.friend.WildPlainsFreezone;
+import com.darkxell.client.mechanics.freezones.zones.friend.*;
 import com.darkxell.common.zones.FreezoneInfo;
 
 public class Freezones {
@@ -111,6 +56,10 @@ public class Freezones {
 			
 		case THUNDERWAVE_ENTRANCE:
 			map = new ThunderwaveEntranceFreezone();
+			break;
+			
+		case THUNDERWAVE_CLEAR:
+			map = new ThunderwaveClearFreezone();
 			break;
 			
 		case TINYWOODS_CLEAR:

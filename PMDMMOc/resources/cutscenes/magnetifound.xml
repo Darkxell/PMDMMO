@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cutscene name="magnetifound">
+  <creation freezone="thunderwave_clear" camerax="27.0" cameray="20.0" fading="false">
+    <pokemon cutsceneid="10" xpos="26.5" ypos="16.0" facing="SOUTHWEST">
+      <pokemonid>81</pokemonid>
+    </pokemon>
+    <pokemon cutsceneid="11" xpos="27.5" ypos="16.0" facing="SOUTHEAST">
+      <pokemonid>81</pokemonid>
+    </pokemon>
+    <pokemon cutsceneid="1" xpos="25.5" ypos="42.0" facing="NORTH">
+      <teammember>0</teammember>
+      <state>MOVE</state>
+    </pokemon>
+    <pokemon cutsceneid="2" xpos="28.5" ypos="42.0" facing="NORTH">
+      <teammember>1</teammember>
+      <state>MOVE</state>
+    </pokemon>
+  </creation>
+  <events>
+    <move ypos="22.0" speed="0.2" target="1" />
+    <move ypos="22.0" speed="0.2" target="2" />
+    <wait />
+    <setanimated target="1" animated="false" />
+    <setanimated target="2" animated="false" />
+    <setstate target="1" state="IDLE" />
+    <setstate target="2" state="IDLE" />
+    <dialog>
+      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.magnetifound</dialogscreen>
+    </dialog>
+    <wait />
+  </events>
+  <onfinish>
+    <loadfreezone fadesout="false" id="base" />
+  </onfinish>
+</cutscene>

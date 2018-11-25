@@ -89,7 +89,7 @@ public class EditCutsceneController implements Initializable, EventEditionListen
 		if (this.listManager.editing == null)
 		{
 			int index = this.eventList.getSelectionModel().getSelectedIndex();
-			if (index == events.size() - 1) events.add(event);
+			if (index == events.size() - 1 || index == -1) events.add(event);
 			else events.add(index + 1, event);
 		} else
 		{
@@ -97,6 +97,8 @@ public class EditCutsceneController implements Initializable, EventEditionListen
 			events.remove(index);
 			events.add(index, event);
 		}
+		
+		this.eventList.getSelectionModel().select(event);
 	}
 
 	@Override
