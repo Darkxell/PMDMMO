@@ -23,6 +23,21 @@ public abstract class AbstractRenderer implements Comparable<AbstractRenderer>
 		this.z = z;
 	}
 
+	public final double baseX()
+	{
+		return this.x;
+	}
+
+	public final double baseY()
+	{
+		return this.y;
+	}
+
+	public final double baseZ()
+	{
+		return this.z;
+	}
+
 	@Override
 	public int compareTo(AbstractRenderer o)
 	{

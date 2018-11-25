@@ -1,5 +1,6 @@
 package com.darkxell.client.renderers.pokemon;
 
+import com.darkxell.client.mechanics.animation.PokemonAnimation;
 import com.darkxell.client.mechanics.cutscene.entity.CutscenePokemon;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 
@@ -15,6 +16,13 @@ public class CutscenePokemonRenderer extends AbstractPokemonRenderer
 		this.entity = entity;
 	}
 
+	private boolean hasMovementAnimation()
+	{
+		for (PokemonAnimation a : this.animations())
+			if (a.movement != null) return true;
+		return false;
+	}
+
 	@Override
 	public boolean shouldRender(int width, int height)
 	{
@@ -24,7 +32,7 @@ public class CutscenePokemonRenderer extends AbstractPokemonRenderer
 	@Override
 	public void update()
 	{
-		this.setXY(this.entity.xPos, this.entity.yPos);
+		if (!this.hasMovementAnimation()) this.setXY(this.entity.xPos, this.entity.yPos);
 		this.sprite.setFacingDirection(this.entity.facing);
 		if (this.entity.currentState != this.sprite.getState()) this.sprite.setState(this.entity.currentState, true);
 		this.sprite.setAnimated(this.entity.animated);

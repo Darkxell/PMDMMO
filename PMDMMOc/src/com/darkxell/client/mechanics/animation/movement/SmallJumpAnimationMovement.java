@@ -5,20 +5,16 @@ import java.awt.geom.Point2D;
 import com.darkxell.client.mechanics.animation.PokemonAnimation;
 import com.darkxell.client.mechanics.animation.travel.TravelAnimation;
 import com.darkxell.client.resources.images.tilesets.AbstractDungeonTileset;
-import com.darkxell.common.dungeon.floor.Tile;
-import com.darkxell.common.pokemon.DungeonPokemon;
 
 public class SmallJumpAnimationMovement extends PokemonAnimationMovement
 {
 	public static final int TOTAL = 10, PAUSE = 2, MOVEMENT = 4;
 
-	protected final Tile location;
 	protected TravelAnimation travel;
 
-	public SmallJumpAnimationMovement(PokemonAnimation animation, DungeonPokemon pokemon)
+	public SmallJumpAnimationMovement(PokemonAnimation animation)
 	{
-		super(animation, pokemon, TOTAL);
-		this.location = this.pokemon.tile();
+		super(animation, TOTAL);
 		this.travel = this.createTravel();
 	}
 

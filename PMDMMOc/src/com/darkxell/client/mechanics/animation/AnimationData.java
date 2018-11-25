@@ -169,11 +169,11 @@ public class AnimationData implements Comparable<AnimationData>
 
 		if (a.delayTime <= 0) a.delayTime = 15;
 
-		if (this.pokemonMovement != null && dungeon != null)
+		if (this.pokemonMovement != null)
 		{
 			String movement = this.pokemonMovement;
 			if (movement == null && this.pokemonState != null && this.pokemonState.hasDash) movement = "dash";
-			a.movement = PokemonAnimationMovement.create(a, dungeon, movement);
+			a.movement = PokemonAnimationMovement.create(a, movement);
 			a.duration = Math.max(a.duration, a.movement.duration);
 		}
 

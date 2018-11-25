@@ -10,7 +10,7 @@ public class PokemonAnimation extends AbstractAnimation
 {
 
 	/** Describes the movement of the Pokemon during this Animation. May be null if the Pokemon doesn't move. */
-	PokemonAnimationMovement movement;
+	public PokemonAnimationMovement movement;
 	/** A reference to the Pokemon's renderer. */
 	public final AbstractPokemonRenderer renderer;
 	/** Coordinates of the center of the Pokemon. */

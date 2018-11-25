@@ -123,6 +123,13 @@ public enum Direction
 		return this.move(origin.getX(), origin.getY());
 	}
 
+	public Point2D move(Point2D origin, int distance)
+	{
+		for (int i = 0; i < distance; ++i)
+			origin = this.move(origin);
+		return origin;
+	}
+
 	/** @return The Direction opposite to this Direction. */
 	public Direction opposite()
 	{

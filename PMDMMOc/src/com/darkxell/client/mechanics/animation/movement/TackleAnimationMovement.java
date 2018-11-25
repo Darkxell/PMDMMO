@@ -1,34 +1,34 @@
 package com.darkxell.client.mechanics.animation.movement;
 
+import java.awt.geom.Point2D;
+
 import com.darkxell.client.mechanics.animation.PokemonAnimation;
 import com.darkxell.client.mechanics.animation.travel.TravelAnimation;
-import com.darkxell.common.dungeon.floor.Tile;
-import com.darkxell.common.pokemon.DungeonPokemon;
 
 public class TackleAnimationMovement extends PokemonAnimationMovement
 {
 	public static final int TOTAL = 30, CHARGE = TOTAL / 3, MOVEMENT = TOTAL / 6;
 
-	protected final Tile location;
+	protected final Point2D location;
 	protected TravelAnimation travel;
 
-	public TackleAnimationMovement(PokemonAnimation animation, DungeonPokemon pokemon)
+	public TackleAnimationMovement(PokemonAnimation animation)
 	{
-		super(animation, pokemon, TOTAL);
-		this.location = this.pokemon.tile();
+		super(animation, TOTAL);
+		this.location = new Point2D.Double(this.renderer.baseX(), this.renderer.baseY());
 		this.travel = this.createTravel();
 	}
 
 	protected TravelAnimation createTravel()
 	{
-		return new TravelAnimation(this.location.location(), this.location.adjacentTile(this.pokemon.facing()).location());
+		return new TravelAnimation(this.location, this.renderer.sprite().getFacingDirection().move(this.location));
 	}
 
 	@Override
 	public void onFinish()
 	{
 		super.onFinish();
-		if (this.renderer != null) this.renderer.setXY(this.location.x, this.location.y);
+		if (this.renderer != null) this.renderer.setXY(this.location.getX(), this.location.getY());
 	}
 
 	@Override

@@ -46,6 +46,11 @@ public class AbstractPokemonRenderer extends AbstractRenderer
 		this.animations.add(animation);
 	}
 
+	protected PokemonAnimation[] animations()
+	{
+		return this.animations.toArray(new PokemonAnimation[this.animations.size()]);
+	}
+
 	public void clearAnimations()
 	{
 		this.animations.clear();

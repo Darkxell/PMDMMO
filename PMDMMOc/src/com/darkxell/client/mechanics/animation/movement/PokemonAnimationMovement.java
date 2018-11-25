@@ -2,23 +2,22 @@ package com.darkxell.client.mechanics.animation.movement;
 
 import com.darkxell.client.mechanics.animation.PokemonAnimation;
 import com.darkxell.client.renderers.pokemon.AbstractPokemonRenderer;
-import com.darkxell.common.pokemon.DungeonPokemon;
 
 public abstract class PokemonAnimationMovement
 {
 
-	public static PokemonAnimationMovement create(PokemonAnimation animation, DungeonPokemon pokemon, String movementID)
+	public static PokemonAnimationMovement create(PokemonAnimation animation, String movementID)
 	{
 		switch (movementID)
 		{
 			case "dash":
-				return new TackleAnimationMovement(animation, pokemon);
+				return new TackleAnimationMovement(animation);
 
 			case "2tiles":
-				return new LongTackleAnimationMovement(animation, pokemon);
+				return new LongTackleAnimationMovement(animation);
 
 			case "smalljump":
-				return new SmallJumpAnimationMovement(animation, pokemon);
+				return new SmallJumpAnimationMovement(animation);
 
 			default:
 				return null;
@@ -27,13 +26,11 @@ public abstract class PokemonAnimationMovement
 
 	public final int duration;
 	public final PokemonAnimation parentAnimation;
-	public final DungeonPokemon pokemon;
 	public final AbstractPokemonRenderer renderer;
 
-	public PokemonAnimationMovement(PokemonAnimation animation, DungeonPokemon pokemon, int duration)
+	public PokemonAnimationMovement(PokemonAnimation animation, int duration)
 	{
 		this.parentAnimation = animation;
-		this.pokemon = pokemon;
 		this.renderer = this.parentAnimation.renderer;
 		this.duration = duration;
 	}
