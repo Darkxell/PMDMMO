@@ -39,11 +39,12 @@
     <rotate target="1" distance="-2" speed="5" />
     <rotate target="2" distance="2" speed="5" />
     <wait />
+    <animate animation="152" target="2" />
     <dialog>
-      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.startingwoods.tinywoods.failed.m3</dialogscreen>
+      <dialogscreen emotion="Thoughtful" target="2" portrait-location="BOTTOM_RIGHT">cutscene.startingwoods.tinywoods.failed.m3</dialogscreen>
       <dialogscreen target="10" portrait-location="TOP_LEFT">cutscene.startingwoods.tinywoods.failed.m4</dialogscreen>
       <dialogscreen target="10" portrait-location="TOP_LEFT">cutscene.startingwoods.tinywoods.failed.m5</dialogscreen>
-      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.startingwoods.tinywoods.failed.m6</dialogscreen>
+      <dialogscreen emotion="Thoughtful" target="2" portrait-location="BOTTOM_RIGHT">cutscene.startingwoods.tinywoods.failed.m6</dialogscreen>
     </dialog>
     <wait />
     <rotate target="1" distance="2" speed="5" />
@@ -54,6 +55,7 @@
       <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.startingwoods.tinywoods.failed.m8</dialogscreen>
     </dialog>
     <wait />
+    <animate animation="151" target="10" />
     <dialog>
       <dialogscreen target="10" portrait-location="TOP_LEFT">cutscene.startingwoods.tinywoods.failed.m9</dialogscreen>
     </dialog>
@@ -61,6 +63,7 @@
     <rotate target="1" distance="-2" speed="5" />
     <rotate target="2" distance="2" speed="5" />
     <delay ticks="20" />
+    <animate animation="153" target="2" />
     <dialog>
       <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.startingwoods.tinywoods.failed.m10</dialogscreen>
     </dialog>

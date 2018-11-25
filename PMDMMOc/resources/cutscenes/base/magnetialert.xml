@@ -20,8 +20,9 @@
     <setstate target="2" state="IDLE" />
     <rotate target="2" distance="-1" />
     <delay ticks="20" />
+    <animate animation="151" target="2" />
     <dialog>
-      <dialogscreen target="2">cutscene.base.magnetialert.m1</dialogscreen>
+      <dialogscreen emotion="Shocked" target="2">cutscene.base.magnetialert.m1</dialogscreen>
     </dialog>
     <rotate target="2" distance="-2" />
     <delay ticks="40" />
@@ -31,12 +32,13 @@
     <delay ticks="30" />
     <rotate target="2" distance="-4" speed="15" />
     <wait />
+    <animate animation="155" target="2" />
     <dialog>
-      <dialogscreen target="2">cutscene.base.magnetialert.m2</dialogscreen>
+      <dialogscreen emotion="Happy" target="2">cutscene.base.magnetialert.m2</dialogscreen>
       <dialogscreen target="2">cutscene.base.magnetialert.m3</dialogscreen>
       <dialogscreen target="2">cutscene.base.magnetialert.m4</dialogscreen>
       <dialogscreen target="2">cutscene.base.magnetialert.m5</dialogscreen>
-      <dialogscreen target="2">cutscene.base.magnetialert.m6</dialogscreen>
+      <dialogscreen emotion="Sad" target="2">cutscene.base.magnetialert.m6</dialogscreen>
     </dialog>
     <wait />
     <dialog>
@@ -66,14 +68,15 @@
       <dialogscreen>cutscene.base.magnetialert.m9</dialogscreen>
     </dialog>
     <wait />
+    <animate animation="153" target="2" />
     <dialog>
-      <dialogscreen target="2">cutscene.base.magnetialert.m10</dialogscreen>
+      <dialogscreen emotion="Amazed" target="2">cutscene.base.magnetialert.m10</dialogscreen>
     </dialog>
     <wait />
     <rotate target="2" distance="1" />
     <delay ticks="20" />
     <dialog>
-      <dialogscreen target="2">cutscene.base.magnetialert.m11</dialogscreen>
+      <dialogscreen emotion="Happy" target="2">cutscene.base.magnetialert.m11</dialogscreen>
     </dialog>
     <wait />
     <rotate target="2" distance="-1" />
@@ -84,8 +87,9 @@
     </dialog>
     <rotate target="2" distance="1" />
     <delay ticks="20" />
+    <animate animation="150" target="2" />
     <dialog>
-      <dialogscreen target="2">cutscene.base.magnetialert.m13</dialogscreen>
+      <dialogscreen emotion="Amazed" target="2">cutscene.base.magnetialert.m13</dialogscreen>
       <dialogscreen target="2">cutscene.base.magnetialert.m14</dialogscreen>
       <dialogscreen target="2">cutscene.base.magnetialert.m15</dialogscreen>
       <dialogscreen target="2">cutscene.base.magnetialert.m16</dialogscreen>
@@ -96,7 +100,7 @@
     <dialog>
       <dialogscreen target="2">cutscene.base.magnetialert.m17</dialogscreen>
       <dialogscreen>cutscene.base.magnetialert.m18</dialogscreen>
-      <dialogscreen target="2">cutscene.base.magnetialert.m19</dialogscreen>
+      <dialogscreen emotion="Sad" target="2">cutscene.base.magnetialert.m19</dialogscreen>
     </dialog>
     <wait />
     <setanimated target="2" animated="true" />
@@ -173,7 +177,7 @@
     <wait />
     <dialog>
       <dialogscreen>cutscene.base.magnetialert.m25</dialogscreen>
-      <dialogscreen target="2">cutscene.base.magnetialert.m26</dialogscreen>
+      <dialogscreen emotion="Amazed" target="2">cutscene.base.magnetialert.m26</dialogscreen>
     </dialog>
     <wait />
     <rotate target="1" distance="1" speed="2" />
@@ -184,7 +188,7 @@
     </dialog>
     <wait />
     <dialog>
-      <dialogscreen target="2">cutscene.base.magnetialert.m29</dialogscreen>
+      <dialogscreen emotion="Happy" target="2">cutscene.base.magnetialert.m29</dialogscreen>
     </dialog>
   </events>
   <onfinish>

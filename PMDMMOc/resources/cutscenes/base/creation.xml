@@ -34,20 +34,23 @@
     <rotate target="1" distance="-2" />
     <camera ypos="20.0" speed="0.2" />
     <wait />
+    <animate animation="151" target="1" />
     <delay ticks="120" />
     <wait />
     <camera ypos="30.0" speed="0.5" />
     <wait />
+    <animate animation="150" target="1" />
+    <animate animation="155" target="1" />
     <dialog>
-      <dialogscreen target="1">cutscene.base.create.m2</dialogscreen>
+      <dialogscreen emotion="Happy" target="1">cutscene.base.create.m2</dialogscreen>
     </dialog>
     <wait />
     <rotate target="2" distance="-2" />
     <wait />
     <dialog>
-      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.base.create.m3</dialogscreen>
-      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.base.create.m4</dialogscreen>
-      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.base.create.m5</dialogscreen>
+      <dialogscreen emotion="Happy" target="2" portrait-location="BOTTOM_RIGHT">cutscene.base.create.m3</dialogscreen>
+      <dialogscreen emotion="Happy" target="2" portrait-location="BOTTOM_RIGHT">cutscene.base.create.m4</dialogscreen>
+      <dialogscreen emotion="Happy" target="2" portrait-location="BOTTOM_RIGHT">cutscene.base.create.m5</dialogscreen>
     </dialog>
     <wait />
     <setstate target="2" state="MOVE" />
@@ -71,11 +74,14 @@
       <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.base.create.m7</dialogscreen>
       <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.base.create.m8</dialogscreen>
     </dialog>
+    <animate animation="150" target="2" />
+    <delay ticks="20" />
+    <animate animation="150" target="2" />
     <wait />
     <dialog>
-      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.base.create.m11</dialogscreen>
+      <dialogscreen emotion="Happy" target="2" portrait-location="BOTTOM_RIGHT">cutscene.base.create.m11</dialogscreen>
       <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.base.create.m12</dialogscreen>
-      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.base.create.m13</dialogscreen>
+      <dialogscreen emotion="Happy" target="2" portrait-location="BOTTOM_RIGHT">cutscene.base.create.m13</dialogscreen>
     </dialog>
     <wait />
     <drawmap draw="false" />

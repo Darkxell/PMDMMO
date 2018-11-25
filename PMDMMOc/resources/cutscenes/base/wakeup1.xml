@@ -33,7 +33,7 @@
     </dialog>
     <wait />
     <dialog>
-      <dialogscreen target="1">cutscene.base.wakeup1.m4</dialogscreen>
+      <dialogscreen emotion="Thoughtful" target="1">cutscene.base.wakeup1.m4</dialogscreen>
       <dialogscreen target="1">cutscene.base.wakeup1.m5</dialogscreen>
       <dialogscreen target="1">cutscene.base.wakeup1.m6</dialogscreen>
     </dialog>

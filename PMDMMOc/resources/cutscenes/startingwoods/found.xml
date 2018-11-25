@@ -15,6 +15,7 @@
     </pokemon>
   </creation>
   <events>
+    <animate animation="157" target="10" />
     <dialog>
       <dialogscreen emotion="Crying" target="10" portrait-location="TOP_RIGHT">cutscene.startingwoods.found.m1</dialogscreen>
       <dialogscreen emotion="Crying" target="10" portrait-location="TOP_RIGHT">cutscene.startingwoods.found.m2</dialogscreen>

@@ -28,11 +28,13 @@
     <wait />
     <rotate target="2" distance="-1" />
     <wait />
+    <animate animation="154" target="1" />
+    <animate animation="154" target="2" />
     <dialog>
-      <dialogscreen target="1">cutscene.startingwoods.solve.m6</dialogscreen>
-      <dialogscreen target="1">cutscene.startingwoods.solve.m7</dialogscreen>
-      <dialogscreen target="1">cutscene.startingwoods.solve.m8</dialogscreen>
-      <dialogscreen target="1">cutscene.startingwoods.solve.m9</dialogscreen>
+      <dialogscreen emotion="Thoughtful" target="1">cutscene.startingwoods.solve.m6</dialogscreen>
+      <dialogscreen emotion="Thoughtful" target="1">cutscene.startingwoods.solve.m7</dialogscreen>
+      <dialogscreen emotion="Happy" target="1">cutscene.startingwoods.solve.m8</dialogscreen>
+      <dialogscreen emotion="Happy" target="1">cutscene.startingwoods.solve.m9</dialogscreen>
     </dialog>
     <wait />
     <dialog>
@@ -70,9 +72,9 @@
     <rotate target="2" distance="-1" />
     <wait />
     <dialog>
-      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.startingwoods.solve.m16</dialogscreen>
+      <dialogscreen emotion="Happy" target="2" portrait-location="BOTTOM_RIGHT">cutscene.startingwoods.solve.m16</dialogscreen>
       <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.startingwoods.solve.m17</dialogscreen>
-      <dialogscreen target="1">cutscene.startingwoods.solve.m18</dialogscreen>
+      <dialogscreen emotion="Thoughtful" target="1">cutscene.startingwoods.solve.m18</dialogscreen>
       <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.startingwoods.solve.m19</dialogscreen>
     </dialog>
     <wait />

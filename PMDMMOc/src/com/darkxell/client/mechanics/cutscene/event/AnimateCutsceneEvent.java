@@ -11,6 +11,7 @@ import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
 import com.darkxell.client.mechanics.cutscene.entity.CutscenePokemon;
 import com.darkxell.client.renderers.pokemon.CutscenePokemonRenderer;
 import com.darkxell.common.util.XMLUtils;
+import com.darkxell.common.util.language.Lang;
 
 public class AnimateCutsceneEvent extends CutsceneEvent
 {
@@ -63,7 +64,9 @@ public class AnimateCutsceneEvent extends CutsceneEvent
 	@Override
 	public String toString()
 	{
-		return this.displayID() + "Play animation " + this.animationID + " on (" + this.target + ")";
+		String animName = this.animationID + "";
+		if (Lang.containsKey("animation.custom." + this.animationID)) animName += "-" + Lang.translate("animation.custom." + this.animationID);
+		return this.displayID() + "Play animation " + animName + " on (" + this.target + ")";
 	}
 
 	@Override

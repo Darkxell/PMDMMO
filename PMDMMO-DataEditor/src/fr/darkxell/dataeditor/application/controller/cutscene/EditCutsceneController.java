@@ -86,8 +86,12 @@ public class EditCutsceneController implements Initializable, EventEditionListen
 	public void onEditConfirm(CutsceneEvent event)
 	{
 		ObservableList<CutsceneEvent> events = this.eventList.getItems();
-		if (this.listManager.editing == null) events.add(event);
-		else
+		if (this.listManager.editing == null)
+		{
+			int index = this.eventList.getSelectionModel().getSelectedIndex();
+			if (index == events.size() - 1) events.add(event);
+			else events.add(index + 1, event);
+		} else
 		{
 			int index = events.indexOf(this.listManager.editing);
 			events.remove(index);
