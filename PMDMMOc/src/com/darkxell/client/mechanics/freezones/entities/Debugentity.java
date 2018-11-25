@@ -3,9 +3,8 @@ package com.darkxell.client.mechanics.freezones.entities;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.mechanics.cutscene.CutsceneManager;
 import com.darkxell.client.mechanics.freezones.FreezoneEntity;
-import com.darkxell.client.state.quiz.PersonalityQuizDialog;
 import com.darkxell.common.util.Logger;
 
 public class Debugentity extends FreezoneEntity
@@ -23,8 +22,8 @@ public class Debugentity extends FreezoneEntity
 		// Do your debug shit here.
 		// TRIGGERED politeness police!!! --Cubi
 		// ((PrincipalMainState) Persistance.stateManager).setState(new TextinputState(((PrincipalMainState) Persistance.stateManager).getCurrentState()));
-		// CutsceneManager.playCutscene("base/wakeup1", true);
-		Persistance.stateManager.setState(new PersonalityQuizDialog().getLoadingState());
+		CutsceneManager.playCutscene("startingwoods/found", true);
+		// Persistance.stateManager.setState(new PersonalityQuizDialog().getLoadingState());
 	}
 
 	@Override

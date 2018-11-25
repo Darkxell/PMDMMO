@@ -2,12 +2,14 @@ package com.darkxell.client.mechanics.cutscene.event;
 
 import org.jdom2.Element;
 
+import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.animation.Animations;
 import com.darkxell.client.mechanics.animation.PokemonAnimation;
 import com.darkxell.client.mechanics.cutscene.CutsceneContext;
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
 import com.darkxell.client.mechanics.cutscene.entity.CutscenePokemon;
+import com.darkxell.client.renderers.pokemon.CutscenePokemonRenderer;
 import com.darkxell.common.util.XMLUtils;
 
 public class AnimateCutsceneEvent extends CutsceneEvent
@@ -49,7 +51,16 @@ public class AnimateCutsceneEvent extends CutsceneEvent
 		{
 			this.animation = Animations.getCutsceneAnimation(this.animationID, (CutscenePokemon) entity, null);
 			if (this.animation == null) this.couldntLoad = true;
-			else this.animation.start();
+			else
+			{
+				CutscenePokemonRenderer r = (CutscenePokemonRenderer) Persistance.currentmap.cutsceneEntityRenderers.getRenderer(entity);
+				if (r == null) this.couldntLoad = true;
+				else
+				{
+					r.addAnimation(this.animation);
+					this.animation.start();
+				}
+			}
 		} else this.couldntLoad = true;
 	}
 

@@ -38,9 +38,7 @@
       <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.startingwoods.found.m5</dialogscreen>
     </dialog>
     <wait />
-    <move ypos="15.0" speed="0.6" target="10" />
-    <delay ticks="2" />
-    <move ypos="16.0" speed="0.6" target="10" />
+    <animate animation="150" target="10" />
     <wait />
     <dialog>
       <dialogscreen target="10" portrait-location="TOP_RIGHT">cutscene.startingwoods.found.m6</dialogscreen>

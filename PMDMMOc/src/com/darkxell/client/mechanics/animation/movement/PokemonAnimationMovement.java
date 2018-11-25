@@ -17,6 +17,9 @@ public abstract class PokemonAnimationMovement
 			case "2tiles":
 				return new LongTackleAnimationMovement(animation, pokemon);
 
+			case "smalljump":
+				return new SmallJumpAnimationMovement(animation, pokemon);
+
 			default:
 				return null;
 		}

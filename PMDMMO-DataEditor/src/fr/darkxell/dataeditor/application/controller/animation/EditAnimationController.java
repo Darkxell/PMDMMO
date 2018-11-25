@@ -98,7 +98,7 @@ public class EditAnimationController implements Initializable
 		this.stateCombobox.getItems().addAll(PokemonSpriteState.values());
 		this.stateCombobox.getSelectionModel().select(0);
 
-		this.pokemonMovementCombobox.getItems().addAll("none", "dash", "2tiles");
+		this.pokemonMovementCombobox.getItems().addAll("none", "dash", "2tiles", "smalljump");
 		this.pokemonMovementCombobox.getSelectionModel().select(0);
 
 		this.animMovementCombobox.getItems().addAll("none", "1tilefacing", "diagonal", "upanddown", "straight (projectile)", "arc (projectile)");

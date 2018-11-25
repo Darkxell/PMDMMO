@@ -92,6 +92,7 @@ public class PokemonSprite
 	private byte shadowColor = NEUTRAL_SHADOW;
 	private PokemonSpriteState state = PokemonSpriteState.IDLE;
 	private float tickSpeed = 1;
+	private int xOffset = 0, yOffset = 0;
 
 	public PokemonSprite(PokemonSpriteset pointer)
 	{
@@ -213,6 +214,32 @@ public class PokemonSprite
 	public void resetToDefaultState()
 	{
 		this.setState(this.defaultState);
+	}
+
+	public int xOffset()
+	{
+		return xOffset;
+	}
+
+	public void setXOffset(int xOffset)
+	{
+		this.xOffset = xOffset;
+	}
+
+	public int yOffset()
+	{
+		return yOffset;
+	}
+
+	public void setYOffset(int yOffset)
+	{
+		this.yOffset = yOffset;
+	}
+
+	public void setXYOffset(int x, int y)
+	{
+		this.xOffset = x;
+		this.yOffset = y;
 	}
 
 }
