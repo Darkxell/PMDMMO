@@ -13,16 +13,15 @@
       <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.startingwoods.problem.m1</dialogscreen>
     </dialog>
     <wait />
-    <move ypos="22.4" speed="0.1" target="2" />
-    <delay ticks="15" />
+    <animate animation="150" target="2" />
     <wait />
-    <move ypos="23.0" speed="0.1" target="2" />
-    <wait />
+    <animate animation="155" target="2" />
     <dialog>
-      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.startingwoods.problem.m1-2</dialogscreen>
+      <dialogscreen emotion="Laughing" target="2" portrait-location="BOTTOM_RIGHT">cutscene.startingwoods.problem.m1-2</dialogscreen>
     </dialog>
     <wait />
     <rotate target="1" distance="2" />
+    <animate animation="154" target="1" />
     <delay ticks="80" />
     <rotate target="1" distance="-2" />
     <wait />
@@ -30,6 +29,8 @@
       <dialogscreen>cutscene.startingwoods.problem.m2</dialogscreen>
     </dialog>
     <wait />
+    <animate animation="153" target="1" />
+    <animate animation="153" target="2" />
     <rotate target="1" distance="4" />
     <wait />
     <dialog>
@@ -61,24 +62,21 @@
     <dialog>
       <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.startingwoods.problem.m3-5</dialogscreen>
     </dialog>
-    <move ypos="19.5" speed="0.3" target="10" />
     <wait />
-    <move ypos="20.0" speed="0.3" target="10" />
+    <animate animation="150" target="10" />
     <wait />
-    <move ypos="19.5" speed="0.3" target="10" />
-    <wait />
-    <move ypos="20.0" speed="0.3" target="10" />
-    <wait />
+    <animate animation="150" target="10" />
     <dialog>
       <dialogscreen target="10" portrait-location="TOP_LEFT">cutscene.startingwoods.problem.m4</dialogscreen>
     </dialog>
     <wait />
+    <animate animation="151" target="2" />
     <dialog>
-      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.startingwoods.problem.m5</dialogscreen>
+      <dialogscreen emotion="Shocked" target="2" portrait-location="BOTTOM_RIGHT">cutscene.startingwoods.problem.m5</dialogscreen>
       <dialogscreen target="10" portrait-location="TOP_LEFT">cutscene.startingwoods.problem.m6</dialogscreen>
       <dialogscreen target="10" portrait-location="TOP_LEFT">cutscene.startingwoods.problem.m7</dialogscreen>
       <dialogscreen target="10" portrait-location="TOP_LEFT">cutscene.startingwoods.problem.m8</dialogscreen>
-      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.startingwoods.problem.m9</dialogscreen>
+      <dialogscreen emotion="Shocked" target="2" portrait-location="BOTTOM_RIGHT">cutscene.startingwoods.problem.m9</dialogscreen>
       <dialogscreen target="10" portrait-location="TOP_LEFT">cutscene.startingwoods.problem.m10</dialogscreen>
       <dialogscreen target="10" portrait-location="TOP_LEFT">cutscene.startingwoods.problem.m11</dialogscreen>
       <dialogscreen target="10" portrait-location="TOP_LEFT">cutscene.startingwoods.problem.m12</dialogscreen>

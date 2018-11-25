@@ -55,11 +55,7 @@ public class AnimateCutsceneEvent extends CutsceneEvent
 			{
 				CutscenePokemonRenderer r = (CutscenePokemonRenderer) Persistance.currentmap.cutsceneEntityRenderers.getRenderer(entity);
 				if (r == null) this.couldntLoad = true;
-				else
-				{
-					r.addAnimation(this.animation);
-					this.animation.start();
-				}
+				else this.animation.start();
 			}
 		} else this.couldntLoad = true;
 	}
