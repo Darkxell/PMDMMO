@@ -30,6 +30,6 @@
     <wait />
   </events>
   <onfinish>
-    <loadfreezone fadesout="false" id="base" />
+    <playcutscene id="magnetisaved" />
   </onfinish>
 </cutscene>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cutscene name="magnetisaved">
+  <creation freezone="thunderwave" camerax="26.0" cameray="20.0" fading="false">
+    <pokemon cutsceneid="1" xpos="23.0" ypos="20.0" facing="NORTH">
+      <teammember>0</teammember>
+      <animated>false</animated>
+    </pokemon>
+    <pokemon cutsceneid="2" xpos="28.0" ypos="20.0" facing="NORTH">
+      <teammember>1</teammember>
+      <animated>false</animated>
+    </pokemon>
+    <pokemon cutsceneid="10" xpos="23.0" ypos="15.0">
+      <pokemonid>81</pokemonid>
+    </pokemon>
+    <pokemon cutsceneid="11" xpos="28.0" ypos="15.0">
+      <pokemonid>81</pokemonid>
+    </pokemon>
+    <pokemon cutsceneid="12" xpos="19.0" ypos="18.0">
+      <pokemonid>81</pokemonid>
+    </pokemon>
+    <pokemon cutsceneid="13" xpos="32.0" ypos="19.0">
+      <pokemonid>81</pokemonid>
+    </pokemon>
+  </creation>
+  <events>
+    <rotate target="2" distance="-1" />
+    <rotate target="10" distance="16" speed="4" />
+    <rotate target="11" distance="2" />
+    <rotate target="13" distance="2" />
+    <wait />
+    <dialog>
+      <dialogscreen emotion="Laughing" target="10" portrait-location="TOP_LEFT">cutscene.magnetisave.m1</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="12" distance="8" speed="4" />
+    <wait />
+    <dialog>
+      <dialogscreen emotion="Laughing" target="12">cutscene.magnetisave.m2</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="10" distance="8" speed="4" />
+    <wait />
+    <dialog>
+      <dialogscreen emotion="Laughing" target="10" portrait-location="TOP_LEFT">cutscene.magnetisave.m2</dialogscreen>
+    </dialog>
+    <wait />
+    <dialog>
+      <dialogscreen emotion="Laughing" target="13" portrait-location="BOTTOM_RIGHT">cutscene.magnetisave.m3</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="12" distance="-1" />
+    <rotate target="11" distance="-2" speed="5" />
+    <rotate target="13" distance="-1" />
+    <wait />
+    <dialog>
+      <dialogscreen target="11" portrait-location="TOP_RIGHT">cutscene.magnetisave.m4</dialogscreen>
+      <dialogscreen>cutscene.magnetisave.m5</dialogscreen>
+      <dialogscreen>cutscene.magnetisave.m6</dialogscreen>
+      <dialogscreen>cutscene.magnetisave.m7</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="12" distance="1" speed="5" />
+    <rotate target="13" distance="-1" speed="5" />
+    <rotate target="1" distance="4" />
+    <rotate target="2" distance="-3" />
+    <move ypos="45.0" speed="0.2" target="10" />
+    <move ypos="45.0" speed="0.2" target="11" />
+    <move ypos="45.0" speed="0.2" target="12" />
+    <move ypos="45.0" speed="0.2" target="13" />
+  </events>
+  <onfinish>
+    <loadfreezone id="base" />
+  </onfinish>
+</cutscene>

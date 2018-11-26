@@ -206,9 +206,10 @@ public class DungeonendHandler extends MessageHandler {
                 }
                 break;
         }
-        System.out.println(si.name + " with storypos:" + player.storyposition
-                + " triggered manageStoryposition at the end of a dungeon (success:" + success + "). Set to : " + newstoryposition);
+        
         if (needcommit) {
+            System.out.println(si.name + " with storypos:" + player.storyposition
+                + " triggered manageStoryposition at the end of a dungeon (success:" + success + "). Set to : " + newstoryposition);
             player.storyposition = newstoryposition;
             endpoint.getPlayerDAO().update(player);
         }
