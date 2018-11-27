@@ -69,6 +69,6 @@
     <move ypos="45.0" speed="0.2" target="13" />
   </events>
   <onfinish>
-    <loadfreezone id="base" />
+    <playcutscene id="base/magnetiend" />
   </onfinish>
 </cutscene>

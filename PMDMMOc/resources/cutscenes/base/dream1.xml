@@ -24,6 +24,6 @@
     </dialog>
   </events>
   <onfinish>
-    <loadfreezone fadesout="false" id="baseinside" />
+    <loadfreezone function="magnemiteend" id="baseinside" />
   </onfinish>
 </cutscene>

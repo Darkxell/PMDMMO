@@ -26,6 +26,6 @@
     <rotate target="2" distance="1" speed="2" />
   </events>
   <onfinish>
-    <loadfreezone id="base" />
+    <playcutscene id="base/predream" />
   </onfinish>
 </cutscene>

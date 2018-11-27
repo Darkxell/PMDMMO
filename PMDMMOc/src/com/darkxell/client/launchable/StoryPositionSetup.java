@@ -1,7 +1,7 @@
 package com.darkxell.client.launchable;
 
 import com.darkxell.client.mechanics.cutscene.CutsceneManager;
-import com.darkxell.client.mechanics.freezones.zones.BaseFreezone;
+import com.darkxell.client.mechanics.freezones.zones.BaseInsideFreezone;
 import com.darkxell.client.state.StateManager;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.Logger;
@@ -40,6 +40,10 @@ public class StoryPositionSetup
 				// Thunderwave Cave failed, restart
 				CutsceneManager.playCutscene("magnetientrance", true);
 				break;
+			case 6:
+				// Thunderwave Cave failed, restart
+				CutsceneManager.playCutscene("magnetifound", true);
+				break;
 			case 38:
 				// TODO:Had the fugitive cutscene. Spawns in front of your house early in the morning before fuging to prepare.
 				break;
@@ -75,10 +79,10 @@ public class StoryPositionSetup
 
 		if (isAbnormal)
 		{
-			Logger.e("Game could not determine how to setup from " + (fromOpeningState ? "Opening state" : "Dungeon end state") + ", storyposition is "
+			Logger.i("Game could not determine special setup from " + (fromOpeningState ? "Opening state" : "Dungeon end state") + ", storyposition is "
 					+ storyposition + ".");
-			Logger.w("Moved the player to base freezone.");
-			StateManager.setExploreState(new BaseFreezone(), Direction.SOUTH, -1, -1, true);
+			Logger.i("Moved the player to base freezone.");
+			StateManager.setExploreState(new BaseInsideFreezone(), Direction.SOUTH, -1, -1, true);
 		}
 
 	}
