@@ -34,7 +34,7 @@ public class HealFoodItemEffect extends FoodItemEffect
 	public void use(Floor floor, Item item, DungeonPokemon pokemon, DungeonPokemon target, ArrayList<DungeonEvent> events)
 	{
 		super.use(floor, item, pokemon, target, events);
-		if (pokemon.getBelly() < pokemon.getBellySize()) events.add(new HealthRestoredEvent(floor, target, this.hp));
+		events.add(new HealthRestoredEvent(floor, target, this.hp));
 	}
 
 }

@@ -6,17 +6,7 @@ import static com.darkxell.common.item.effects.ThrowableItemEffect.ThrowableTraj
 import java.util.Collection;
 import java.util.HashMap;
 
-import com.darkxell.common.item.effects.CureStatusFoodItemEffect;
-import com.darkxell.common.item.effects.DealDamageFoodItemEffect;
-import com.darkxell.common.item.effects.DrinkItemEffect;
-import com.darkxell.common.item.effects.ElixirItemEffect;
-import com.darkxell.common.item.effects.FoodItemEffect;
-import com.darkxell.common.item.effects.GummiItemEffect;
-import com.darkxell.common.item.effects.HealFoodItemEffect;
-import com.darkxell.common.item.effects.InflictStatusFoodItemEffect;
-import com.darkxell.common.item.effects.OrbItemEffect;
-import com.darkxell.common.item.effects.StatBoostDrinkItemEffect;
-import com.darkxell.common.item.effects.ThrowableItemEffect;
+import com.darkxell.common.item.effects.*;
 import com.darkxell.common.pokemon.BaseStats.Stat;
 import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.status.StatusConditions;
@@ -51,6 +41,7 @@ public final class ItemEffects
 
 	public static final ItemEffect Damage_45_Food_5_0_0 = new DealDamageFoodItemEffect(31, 5, 0, 0, 45, 25);
 	public static final ItemEffect Food_5_0_0 = new FoodItemEffect(39, 5, 0, 0);
+	public static final ItemEffect Revive_Food_5_0_0 = new ReviverFoodItemEffect(41, 5, 0, 0);
 	public static final ItemEffect Inflict_Asleep_Food_5_0_0 = new InflictStatusFoodItemEffect(42, 5, 0, 0, StatusConditions.Asleep);
 
 	public static final ItemEffect Gummi_Normal = new GummiItemEffect(61, 20, 0, 0, PokemonType.Normal);

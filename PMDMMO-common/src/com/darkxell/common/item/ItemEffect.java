@@ -6,6 +6,7 @@ import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.item.ItemSelectionEvent;
+import com.darkxell.common.player.ItemContainer;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.language.Message;
@@ -94,6 +95,32 @@ public class ItemEffect
 	{
 		return new Message("item." + item.id);
 	}
+
+	/** Method called just after an Event is processed.
+	 * 
+	 * @param floor - The Floor context.
+	 * @param event - The processed Event.
+	 * @param concerned - A reference to a Pokemon for various uses. It is the owner this is an Item, a Status Condition or an Ability.
+	 * @param resultingEvents - List to store any created Events. They will be added to the list of pending Events.
+	 * @param item - The Item with this effect.
+	 * @param container - The object containing the Item with this effect.
+	 * @param containerIndex - The index of the Item in the container. */
+	public void onPostEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned, ArrayList<DungeonEvent> resultingEvents, ItemStack item,
+			ItemContainer container, int containerIndex)
+	{}
+
+	/** Method called just before an Event is processed.
+	 * 
+	 * @param floor - The Floor context.
+	 * @param event - The processed Event.
+	 * @param concerned - A reference to a Pokemon for various uses. It is the owner this is an Item, a Status Condition or an Ability.
+	 * @param resultingEvents - List to store any created Events. They will be added to the list of pending Events.
+	 * @param item - The Item with this effect.
+	 * @param container - The object containing the Item with this effect.
+	 * @param containerIndex - The index of the Item in the container. */
+	public void onPreEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned, ArrayList<DungeonEvent> resultingEvents, ItemStack item,
+			ItemContainer container, int containerIndex)
+	{}
 
 	/** Called when an Item with this Effect is used.
 	 * 

@@ -63,17 +63,8 @@ import com.darkxell.common.event.move.MoveDiscoveredEvent;
 import com.darkxell.common.event.move.MoveLearnedEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.move.MoveUseEvent;
-import com.darkxell.common.event.pokemon.BlowbackPokemonEvent;
-import com.darkxell.common.event.pokemon.DamageDealtEvent;
+import com.darkxell.common.event.pokemon.*;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageType;
-import com.darkxell.common.event.pokemon.FaintedPokemonEvent;
-import com.darkxell.common.event.pokemon.HealthRestoredEvent;
-import com.darkxell.common.event.pokemon.PokemonRescuedEvent;
-import com.darkxell.common.event.pokemon.PokemonTeleportedEvent;
-import com.darkxell.common.event.pokemon.StatusConditionCreatedEvent;
-import com.darkxell.common.event.pokemon.StatusConditionEndedEvent;
-import com.darkxell.common.event.pokemon.SwitchedPokemonEvent;
-import com.darkxell.common.event.pokemon.TriggeredAbilityEvent;
 import com.darkxell.common.event.stats.ExperienceGeneratedEvent;
 import com.darkxell.common.event.stats.LevelupEvent;
 import com.darkxell.common.event.stats.SpeedChangedEvent;
@@ -180,6 +171,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		if (event instanceof BlowbackPokemonEvent) this.processBlowbackEvent((BlowbackPokemonEvent) event);
 		if (event instanceof TurnSkippedEvent) this.processSkipEvent((TurnSkippedEvent) event);
 		if (event instanceof FaintedPokemonEvent) this.processFaintedEvent((FaintedPokemonEvent) event);
+		if (event instanceof RevivedPokemonEvent) this.processRevivedEvent((RevivedPokemonEvent) event);
 
 		if (event instanceof StatChangedEvent) this.processStatEvent((StatChangedEvent) event);
 		if (event instanceof SpeedChangedEvent) this.processSpeedEvent((SpeedChangedEvent) event);
@@ -692,6 +684,17 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	{
 		Persistance.dungeonState.setSubstate(new DungeonExitAnimationState(Persistance.dungeonState, event.rescued()));
 		this.setState(State.ANIMATING);
+	}
+
+	private void processRevivedEvent(RevivedPokemonEvent event)
+	{
+		AnimationState s = new AnimationState(Persistance.dungeonState);
+		s.animation = Animations.getCustomAnimation(event.pokemon, Animations.REVIVE, this.currentAnimEnd);
+		if (s.animation != null)
+		{
+			Persistance.dungeonState.setSubstate(s);
+			this.setState(State.ANIMATING);
+		}
 	}
 
 	private void processSkipEvent(TurnSkippedEvent event)

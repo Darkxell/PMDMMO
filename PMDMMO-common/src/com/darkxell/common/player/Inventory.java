@@ -5,12 +5,16 @@ import java.util.Comparator;
 
 import com.darkxell.common.dbobject.DBInventory;
 import com.darkxell.common.dbobject.DatabaseIdentifier;
+import com.darkxell.common.dungeon.floor.Floor;
+import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.DungeonEventListener;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.Item.ItemAction;
 import com.darkxell.common.item.ItemStack;
+import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Message;
 
-public class Inventory implements ItemContainer
+public class Inventory implements ItemContainer, DungeonEventListener
 {
 
 	public static final int MAX_SIZE = 20;
@@ -18,11 +22,6 @@ public class Inventory implements ItemContainer
 	private DBInventory data;
 	private ArrayList<ItemStack> items;
 	public final Player owner;
-
-	public Inventory(Player owner)
-	{
-		this(MAX_SIZE, owner);
-	}
 
 	public Inventory(DBInventory data, Player owner)
 	{
@@ -33,6 +32,11 @@ public class Inventory implements ItemContainer
 	public Inventory(int maxSize, Player owner)
 	{
 		this(new DBInventory(0, maxSize, new ArrayList<>()), owner);
+	}
+
+	public Inventory(Player owner)
+	{
+		this(MAX_SIZE, owner);
 	}
 
 	@Override
@@ -164,6 +168,24 @@ public class Inventory implements ItemContainer
 	public int maxSize()
 	{
 		return this.data.maxsize;
+	}
+
+	@Override
+	public void onPostEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned, ArrayList<DungeonEvent> resultingEvents)
+	{
+		DungeonEventListener.super.onPostEvent(floor, event, concerned, resultingEvents);
+
+		for (int i = 0; i < this.size(); ++i)
+			if (!event.isConsumed()) this.getItem(i).item().effect().onPostEvent(floor, event, concerned, resultingEvents, this.getItem(i), this, i);
+	}
+
+	@Override
+	public void onPreEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned, ArrayList<DungeonEvent> resultingEvents)
+	{
+		DungeonEventListener.super.onPreEvent(floor, event, concerned, resultingEvents);
+
+		for (int i = 0; i < this.size(); ++i)
+			if (!event.isConsumed()) this.getItem(i).item().effect().onPreEvent(floor, event, concerned, resultingEvents, this.getItem(i), this, i);
 	}
 
 	/** Removes the Item in the input slot and returns it. Returns null if index is out of bounds. */

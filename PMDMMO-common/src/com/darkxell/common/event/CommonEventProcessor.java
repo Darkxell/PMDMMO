@@ -20,6 +20,7 @@ import com.darkxell.common.event.dungeon.DungeonExitEvent;
 import com.darkxell.common.event.dungeon.ExplorationStopEvent;
 import com.darkxell.common.event.dungeon.MissionClearedEvent;
 import com.darkxell.common.event.stats.BellyChangedEvent;
+import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.status.AppliedStatusCondition;
 
@@ -83,10 +84,14 @@ public class CommonEventProcessor
 		ArrayList<DungeonEvent> resultingEvents = new ArrayList<>();
 		for (DungeonPokemon p : this.dungeon.currentFloor().listPokemon())
 		{
+			p.onPostEvent(this.dungeon.currentFloor(), event, p, resultingEvents);
 			p.ability().onPostEvent(this.dungeon.currentFloor(), event, p, resultingEvents);
 			for (AppliedStatusCondition condition : p.activeStatusConditions())
 				condition.onPostEvent(this.dungeon.currentFloor(), event, p, resultingEvents);
 		}
+
+		for (Player player : this.dungeon.exploringPlayers())
+			player.inventory().onPostEvent(this.dungeon.currentFloor(), event, null, resultingEvents);
 		this.addToPending(resultingEvents);
 	}
 
@@ -96,6 +101,8 @@ public class CommonEventProcessor
 		ArrayList<DungeonEvent> resultingEvents = new ArrayList<>();
 		for (DungeonPokemon p : this.dungeon.currentFloor().listPokemon())
 		{
+			p.onPreEvent(this.dungeon.currentFloor(), event, p, resultingEvents);
+			if (event.isConsumed()) break;
 			p.ability().onPreEvent(this.dungeon.currentFloor(), event, p, resultingEvents);
 			if (event.isConsumed()) break;
 			for (AppliedStatusCondition condition : p.activeStatusConditions())
@@ -104,6 +111,9 @@ public class CommonEventProcessor
 				if (event.isConsumed()) break;
 			}
 		}
+
+		for (Player player : this.dungeon.exploringPlayers())
+			if (!event.isConsumed()) player.inventory().onPreEvent(this.dungeon.currentFloor(), event, null, resultingEvents);
 		this.addToPending(resultingEvents);
 	}
 

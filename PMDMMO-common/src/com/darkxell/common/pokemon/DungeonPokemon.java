@@ -6,6 +6,7 @@ import java.util.function.Predicate;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.DungeonEventListener;
 import com.darkxell.common.item.Item.ItemAction;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.player.ItemContainer;
@@ -18,7 +19,7 @@ import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.language.Message;
 
 /** Represents a Pokemon in a Dungeon. */
-public class DungeonPokemon implements ItemContainer
+public class DungeonPokemon implements ItemContainer, DungeonEventListener
 {
 	public static enum DungeonPokemonType
 	{
@@ -373,6 +374,22 @@ public class DungeonPokemon implements ItemContainer
 		// events.add(new StatusConditionCreatedEvent(floor, StatusConditions.Paralyzed.create(this, floor, floor.random)));
 	}
 
+	@Override
+	public void onPostEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned, ArrayList<DungeonEvent> resultingEvents)
+	{
+		DungeonEventListener.super.onPostEvent(floor, event, concerned, resultingEvents);
+
+		if (this.getItem() != null) this.getItem().item().effect().onPostEvent(floor, event, concerned, resultingEvents, this.getItem(), this, 0);
+	}
+
+	@Override
+	public void onPreEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned, ArrayList<DungeonEvent> resultingEvents)
+	{
+		DungeonEventListener.super.onPreEvent(floor, event, concerned, resultingEvents);
+
+		if (this.getItem() != null) this.getItem().item().effect().onPreEvent(floor, event, concerned, resultingEvents, this.getItem(), this, 0);
+	}
+
 	/** Called at the beginning of each turn. */
 	public void onTurnStart(Floor floor, ArrayList<DungeonEvent> events)
 	{
@@ -424,6 +441,17 @@ public class DungeonPokemon implements ItemContainer
 				return t.condition == condition;
 			}
 		});
+	}
+
+	public void revive()
+	{
+		this.setHP(this.getMaxHP());
+		for (int m = 0; m < this.moveCount(); ++m)
+			this.move(m).setPP(this.move(m).maxPP());
+		this.stats.resetSpeed();
+		this.stats.resetStages();
+		this.statusConditions.clear();
+		this.belly = this.getBellySize();
 	}
 
 	/** Changes the direction this Pokemon is facing. */
