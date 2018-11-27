@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cutscene name="base/magnetiend">
+  <creation freezone="base" camerax="35.0" cameray="35.0" fading="false">
+    <pokemon cutsceneid="1" xpos="32.0" ypos="38.0" facing="EAST">
+      <teammember>0</teammember>
+      <animated>false</animated>
+    </pokemon>
+    <pokemon cutsceneid="2" xpos="35.0" ypos="38.0" facing="WEST">
+      <teammember>1</teammember>
+      <animated>false</animated>
+    </pokemon>
+  </creation>
+  <events>
+    <dialog>
+      <dialogscreen emotion="Happy" target="2" portrait-location="BOTTOM_RIGHT">cutscene.base.magnetiend.m1</dialogscreen>
+      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.base.magnetiend.m2</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="2" distance="-1" speed="2" />
+    <rotate target="1" distance="4" />
+    <setstate target="2" state="MOVE" />
+    <setanimated target="2" animated="true" />
+    <move xpos="32.0" ypos="41.0" speed="0.2" target="2" />
+    <delay ticks="20" />
+    <move xpos="0.0" speed="0.2" target="2" />
+    <rotate target="2" distance="1" speed="2" />
+  </events>
+  <onfinish>
+    <loadfreezone id="base" />
+  </onfinish>
+</cutscene>

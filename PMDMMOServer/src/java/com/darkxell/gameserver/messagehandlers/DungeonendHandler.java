@@ -195,14 +195,21 @@ public class DungeonendHandler extends MessageHandler {
     private void manageStoryposition(boolean success, GameSessionInfo si) {
         DBPlayer player = endpoint.getPlayerDAO().find(si.serverid);
         boolean needcommit = false;
-        boolean give = false;
+        byte give = 0;
         int newstoryposition = 0;
         switch (si.currentdungeon) {
-            case 1:
+            case 1: // Tiny woods
                 if (player.storyposition == 2 && success) {
                     newstoryposition = 3;
                     needcommit = true;
-                    give = true;
+                    give = 1;
+                }
+                break;
+                case 2: // Thunderwave cave
+                if (player.storyposition == 5 && success) {
+                    newstoryposition = 6;
+                    needcommit = true;
+                    give = 2;
                 }
                 break;
         }
@@ -213,10 +220,16 @@ public class DungeonendHandler extends MessageHandler {
             player.storyposition = newstoryposition;
             endpoint.getPlayerDAO().update(player);
         }
-        if(give){
+        if(give == 1){
             GiveManager.giveItem(7, 1, si, endpoint, false);
             GiveManager.giveItem(11, 1, si, endpoint, false);
             GiveManager.giveItem(12, 1, si, endpoint, false);
+        }else if(give == 2){
+            GiveManager.giveItem(41, 1, si, endpoint, false);
+            GiveManager.giveItem(12, 1, si, endpoint, false);
+            DBPlayer tempp = endpoint.getPlayerDAO().find(si.serverid);
+            tempp.moneyinbag += 500;
+            endpoint.getPlayerDAO().update(tempp); 
         }
     }
 
