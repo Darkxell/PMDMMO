@@ -8,6 +8,7 @@ import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
 import com.darkxell.client.mechanics.freezones.FreezoneTile;
 import com.darkxell.client.mechanics.freezones.zones.BaseFreezone;
+import com.darkxell.client.mechanics.freezones.zones.DreamFreezone;
 import com.darkxell.client.mechanics.freezones.zones.OfficeFreezone;
 import com.darkxell.client.renderers.AbstractRenderer;
 import com.darkxell.client.resources.music.SoundsHolder;
@@ -36,6 +37,7 @@ public class AbstractFreezoneState extends AbstractState
 		Persistance.freezoneCamera.renderwidth = width;
 		// Draws the sea background if needed.
 		if (map instanceof OfficeFreezone) ((OfficeFreezone) map).background.render(g, width, height);
+		if (map instanceof DreamFreezone) ((DreamFreezone) map).background.render(g, width, height);
 		// Draws the surroundings.
 		if (map != null)
 		{
@@ -102,6 +104,7 @@ public class AbstractFreezoneState extends AbstractState
 	{
 		// Updates the freezoneBackground if needeed
 		if (Persistance.currentmap instanceof OfficeFreezone) ((OfficeFreezone) Persistance.currentmap).background.update();
+		if (Persistance.currentmap instanceof DreamFreezone) ((DreamFreezone) Persistance.currentmap).background.update();
 		// CREATES AND UPDATES THE MAP
 		if (Persistance.currentmap == null) Persistance.currentmap = new BaseFreezone();
 		else Persistance.currentmap.update();

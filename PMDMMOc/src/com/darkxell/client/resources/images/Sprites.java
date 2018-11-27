@@ -7,6 +7,7 @@ import com.darkxell.client.resources.images.hud.ItemsSpriteset;
 import com.darkxell.client.resources.images.hud.MenuStateHudSpriteset;
 import com.darkxell.client.resources.images.layers.LSDSpriteSet;
 import com.darkxell.client.resources.images.layers.SeaSpriteSet;
+import com.darkxell.client.resources.images.layers.WetDreamSpriteSet;
 import com.darkxell.client.resources.images.pokemon.ShadowSpriteSet;
 import com.darkxell.client.resources.images.tilesets.CommonDungeonTileset;
 import com.darkxell.client.resources.images.tilesets.DungeonMapTileset;
@@ -85,6 +86,7 @@ public final class Sprites
 	{
 		public static final LSDSpriteSet LSD = new LSDSpriteSet();
 		public static final SeaSpriteSet Sea = new SeaSpriteSet();
+		public static final WetDreamSpriteSet Dream = new WetDreamSpriteSet();
 
 		static void load()
 		{}

@@ -7,6 +7,7 @@ import com.darkxell.client.mechanics.freezones.cutscenemaps.TinywoodsClearFreezo
 import com.darkxell.client.mechanics.freezones.zones.BaseFreezone;
 import com.darkxell.client.mechanics.freezones.zones.BaseInsideFreezone;
 import com.darkxell.client.mechanics.freezones.zones.DojoFreezone;
+import com.darkxell.client.mechanics.freezones.zones.DreamFreezone;
 import com.darkxell.client.mechanics.freezones.zones.ForestFreezone;
 import com.darkxell.client.mechanics.freezones.zones.LumiousCaveFreezone;
 import com.darkxell.client.mechanics.freezones.zones.OfficeFreezone;
@@ -26,6 +27,10 @@ public class Freezones {
 			map = new BaseInsideFreezone();
 			break;
 
+		case DREAM:
+			map = new DreamFreezone();
+			break;
+			
 		case SQUARE:
 			map = new PokemonSquareFreezone();
 			break;
@@ -299,8 +304,11 @@ public class Freezones {
 			break;
 
 		case BASE:
-		default:
 			map = new BaseFreezone();
+			break;
+			
+		default:
+			map = new BaseInsideFreezone();
 		}
 		return map;
 	}
