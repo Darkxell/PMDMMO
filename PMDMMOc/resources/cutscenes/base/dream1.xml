@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cutscene name="base/dream1">
+  <creation freezone="dream" camerax="15.0" cameray="15.0" fading="false">
+    <pokemon cutsceneid="1" xpos="15.0" ypos="15.0" facing="SOUTHWEST">
+      <teammember>0</teammember>
+      <state>SLEEP</state>
+    </pokemon>
+  </creation>
+  <events>
+    <dialog>
+      <dialogscreen target="1">cutscene.base.dream1.m1</dialogscreen>
+      <dialogscreen target="1">cutscene.base.dream1.m2</dialogscreen>
+      <dialogscreen target="1">cutscene.base.dream1.m3</dialogscreen>
+      <dialogscreen target="1">cutscene.base.dream1.m4</dialogscreen>
+    </dialog>
+    <wait />
+    <delay ticks="100" />
+    <dialog>
+      <dialogscreen target="1">cutscene.base.dream1.m5</dialogscreen>
+      <dialogscreen target="1">cutscene.base.dream1.m6</dialogscreen>
+      <dialogscreen target="1">cutscene.base.dream1.m7</dialogscreen>
+      <dialogscreen emotion="Thoughtful" target="1">cutscene.base.dream1.m8</dialogscreen>
+      <dialogscreen emotion="Thoughtful" target="1">cutscene.base.dream1.m9</dialogscreen>
+    </dialog>
+  </events>
+  <onfinish>
+    <loadfreezone fadesout="false" id="baseinside" />
+  </onfinish>
+</cutscene>

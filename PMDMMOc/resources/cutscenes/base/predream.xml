@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cutscene name="base/predream">
+  <creation freezone="baseinside" camerax="23.0" cameray="20.0" fading="false">
+    <pokemon cutsceneid="1" xpos="23.0" ypos="13.0" facing="SOUTHWEST">
+      <teammember>0</teammember>
+      <state>SLEEP</state>
+    </pokemon>
+  </creation>
+  <events>
+    <delay ticks="20" />
+    <wait />
+  </events>
+  <onfinish>
+    <playcutscene id="base/dream1" />
+  </onfinish>
+</cutscene>
