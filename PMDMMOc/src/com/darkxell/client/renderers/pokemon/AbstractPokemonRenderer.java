@@ -5,6 +5,7 @@ import static com.darkxell.client.resources.images.tilesets.AbstractDungeonTiles
 import java.awt.AlphaComposite;
 import java.awt.Composite;
 import java.awt.Graphics2D;
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.function.Predicate;
@@ -117,6 +118,14 @@ public class AbstractPokemonRenderer extends AbstractRenderer
 		BufferedImage s = sprite.getCurrentSprite();
 
 		int xPos = x - s.getWidth() / 2 + frame.spriteX + this.sprite.xOffset(), yPos = y - s.getHeight() / 2 + frame.spriteY + this.sprite.yOffset();
+		if (sprite.getState().hasDash)
+		{
+			Point2D direction = sprite.getFacingDirection().move(0, 0);
+			double dash = sprite.dashOffset();
+			direction.setLocation(direction.getX() * TILE_SIZE * dash, direction.getY() * TILE_SIZE * dash);
+			xPos += direction.getX();
+			yPos += direction.getY();
+		}
 		g.drawImage(s, (frame.isFlipped ? s.getWidth() : 0) + xPos, yPos, (frame.isFlipped ? -1 : 1) * s.getWidth(), s.getHeight(), null);
 	}
 

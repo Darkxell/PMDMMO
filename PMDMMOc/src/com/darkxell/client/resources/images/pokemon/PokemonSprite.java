@@ -242,4 +242,9 @@ public class PokemonSprite
 		this.yOffset = y;
 	}
 
+	public double dashOffset()
+	{
+		return this.pointer.getSequence(this.state, this.getFacingDirection()).dashOffset((int) this.counter);
+	}
+
 }

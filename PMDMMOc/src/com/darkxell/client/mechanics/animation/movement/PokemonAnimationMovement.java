@@ -10,9 +10,6 @@ public abstract class PokemonAnimationMovement
 	{
 		switch (movementID)
 		{
-			case "dash":
-				return new TackleAnimationMovement(animation);
-
 			case "2tiles":
 				return new LongTackleAnimationMovement(animation);
 
