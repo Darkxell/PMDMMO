@@ -16,7 +16,7 @@ public class PokemonSpriteSequence
 		this.rushPoint = XMLUtils.getAttribute(xml, "rush", 0);
 		this.hitPoint = XMLUtils.getAttribute(xml, "hit", 0);
 		this.returnPoint = XMLUtils.getAttribute(xml, "return", 0);
-		
+
 		this.frames = new PokemonSpriteFrame[xml.getChildren().size()];
 		int i = 0;
 		for (Element e : xml.getChildren())
@@ -25,6 +25,19 @@ public class PokemonSpriteSequence
 			++i;
 		}
 		this.duration = this.totalDuration();
+	}
+
+	public double dashOffset(int tick)
+	{
+		if (tick <= this.rushPoint || tick >= this.returnPoint) return 0;
+		if (tick == this.hitPoint) return 1;
+		if (tick <= this.hitPoint) return (tick - this.rushPoint) * 1. / (this.hitPoint - this.rushPoint);
+		return 1 - ((tick - this.hitPoint) * 1. / (this.returnPoint - this.hitPoint));
+	}
+
+	public PokemonSpriteFrame getFrame(int tick)
+	{
+		return this.frames[this.getFrameIndex(tick)];
 	}
 
 	private int getFrameIndex(int tick)
@@ -36,11 +49,6 @@ public class PokemonSpriteSequence
 			tick -= this.frames[i].duration;
 		}
 		return i;
-	}
-
-	public PokemonSpriteFrame getFrame(int tick)
-	{
-		return this.frames[this.getFrameIndex(tick)];
 	}
 
 	private int totalDuration()
