@@ -5,6 +5,8 @@ import java.util.HashMap;
 import org.jdom2.Element;
 
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
+import com.darkxell.common.pokemon.PokemonRegistry;
+import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.util.Direction;
 
 import javafx.util.Pair;
@@ -15,8 +17,8 @@ public class PokemonSpritesetData
 	public final boolean hasBigShadow;
 	public final int id;
 	final HashMap<Integer, PokemonSpriteSequence> sequences = new HashMap<>();
-	final HashMap<Pair<PokemonSpriteState, Direction>, Integer> states = new HashMap<>();
 	public final int spriteWidth, spriteHeight;
+	final HashMap<Pair<PokemonSpriteState, Direction>, Integer> states = new HashMap<>();
 
 	public PokemonSpritesetData(int id, Element xml)
 	{
@@ -37,6 +39,15 @@ public class PokemonSpritesetData
 
 		for (Element e : xml.getChild("AnimSequenceTable").getChildren())
 			this.sequences.put(Integer.parseInt(e.getAttributeValue("id")), new PokemonSpriteSequence(this, e));
+	}
+
+	@Override
+	public String toString()
+	{
+		String value = this.id + "- ";
+		PokemonSpecies species = PokemonRegistry.find(this.id);
+		if (species != null) value += species;
+		return value;
 	}
 
 }

@@ -46,7 +46,7 @@ public class DataEditor extends Application
 		TrapRegistry.load();
 		DungeonRegistry.load();
 		SpriteLoader.loadCommon();
-		PokemonSpritesets.loadData();
+		PokemonSpritesets.loadData("../PMDMMOc/resources/pokemons/data");
 		PokemonPortrait.load();
 		Animations.loadData();
 		SoundsHolder.load("../PMDMMOc/");

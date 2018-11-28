@@ -1,5 +1,9 @@
 package com.darkxell.client.resources.images.pokemon;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.Collection;
 import java.util.HashMap;
 
 import org.jdom2.Element;
@@ -7,6 +11,7 @@ import org.jdom2.Element;
 import com.darkxell.client.resources.Res;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.PokemonSpecies;
+import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.XMLUtils;
 
 public final class PokemonSpritesets
@@ -45,11 +50,40 @@ public final class PokemonSpritesets
 		return (shiny ? -1 : 1) * species.id;
 	}
 
+	public static Collection<PokemonSpritesetData> listSpritesetData()
+	{
+		return data.values();
+	}
+
 	/** Reads the sprites data file. */
 	public static void loadData()
 	{
-		/* loadSpritesetData(0); Logger.d("Loading Pokemon sprite data..."); for (PokemonSpecies s : PokemonRegistry.list()) loadSpritesetData(s.id); */
 		loadSpriteset(0);
+	}
+
+	public static void loadData(String externalPath)
+	{
+		loadData();
+		File folder = new File(externalPath);
+		if (!folder.exists()) try
+		{
+			folder.mkdirs();
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+
+		for (File data : folder.listFiles())
+		{
+			try
+			{
+				Integer id = Integer.parseInt(data.getName().replaceAll("\\.xml", ""));
+				loadSpritesetData(id, id, externalPath + "/" + id);
+			} catch (Exception e)
+			{
+				Logger.w("Unconventional sprite data file, skipped: " + data.getName());
+			}
+		}
 	}
 
 	/** Loads the Spritesheet for the Pokemon with the input ID. */
@@ -88,14 +122,28 @@ public final class PokemonSpritesets
 	{
 		int effectiveID = Math.abs(id);
 		if (data.containsKey(effectiveID)) return;
-		Element xml = XMLUtils.read(PokemonSpritesets.class.getResourceAsStream("/pokemons/data/" + effectiveID + ".xml"));
+		loadSpritesetData(id, effectiveID, "/pokemons/data/" + effectiveID);
+	}
+
+	private static void loadSpritesetData(int id, int dataID, String path)
+	{
+		Element xml;
+		if (path.startsWith("/")) xml = XMLUtils.read(PokemonSpritesets.class.getResourceAsStream(path + ".xml"));
+		else try
+		{
+			xml = XMLUtils.read(new FileInputStream(new File(path + ".xml")));
+		} catch (FileNotFoundException e)
+		{
+			e.printStackTrace();
+			xml = null;
+		}
 		if (xml == null)
 		{
 			data.put(id, data.get(0));
 			return;
 		}
 
-		data.put(id, new PokemonSpritesetData(effectiveID, xml));
+		data.put(id, new PokemonSpritesetData(dataID, xml));
 	}
 
 	private PokemonSpritesets()

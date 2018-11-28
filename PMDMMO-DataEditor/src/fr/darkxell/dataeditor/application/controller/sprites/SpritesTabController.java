@@ -1,11 +1,17 @@
 package fr.darkxell.dataeditor.application.controller.sprites;
 
-import fr.darkxell.dataeditor.application.util.CustomTreeItem;
-import javafx.fxml.FXML;
-import javafx.scene.control.TitledPane;
-import javafx.scene.control.TreeView;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class SpritesTabController
+import com.darkxell.client.resources.images.pokemon.PokemonSpritesetData;
+import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
+
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TitledPane;
+
+public class SpritesTabController implements Initializable
 {
 
 	@FXML
@@ -15,9 +21,18 @@ public class SpritesTabController
 	@FXML
 	private TitledPane spritePreviewPane;
 	@FXML
-	public TreeView<CustomTreeItem> spritesTreeView;
+	public ListView<PokemonSpritesetData> spritesList;
 	@FXML
 	public SpritePreviewController testSpriteController;
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources)
+	{
+		this.editSpritePane.setVisible(false);
+		this.spritePreviewPane.setVisible(false);
+		
+		this.spritesList.getItems().addAll(PokemonSpritesets.listSpritesetData());
+	}
 
 	public void onCreate()
 	{}
