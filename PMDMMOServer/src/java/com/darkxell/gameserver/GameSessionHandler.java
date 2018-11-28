@@ -75,4 +75,13 @@ public class GameSessionHandler {
         }
     }
 
+    public void sendToSession(String sessionID, com.eclipsesource.json.JsonObject whisperobject) {
+        Session[] clone = sessions.toArray(new Session[sessions.size()]);
+        for (int i = 0; i < clone.length; i++) {
+            if (clone[i].getId().equals(sessionID)) {
+                this.sendToSession(clone[i], whisperobject);
+            }
+        }
+    }
+
 }
