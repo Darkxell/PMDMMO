@@ -53,6 +53,14 @@ public class LoginHandler extends MessageHandler {
                         .build();
                 sessionshandler.sendToSession(from, value);
                 return;
+            } else if (player.isbanned) {
+                System.out.println("Could not connect a player because he is banned.");
+                JsonObject value = javax.json.Json.createObjectBuilder()
+                        .add("action", "logininfo")
+                        .add("value", "ui.login.banned")
+                        .build();
+                sessionshandler.sendToSession(from, value);
+                return;
             }
             try {
                 String serversidehashtester = sha256(player.passhash + si.salt + HASHSALTTYPE_LOGIN);
