@@ -158,7 +158,8 @@ public class ChatMessageHandler extends MessageHandler {
                         break;
                 }
                 if (sendfeedback) {
-
+                errorobject.add("message", feedbackMessage);
+                sessionshandler.sendToSession(from, errorobject);
                 }
             } else {
                 //Error message if the user is not op
