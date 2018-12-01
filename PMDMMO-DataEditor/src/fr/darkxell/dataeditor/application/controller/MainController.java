@@ -48,14 +48,22 @@ public class MainController implements Initializable, ChangeListener<Boolean>
 	@Override
 	public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue)
 	{
-		if (newValue) this.animationsTabPageController.testAnimationController.reload();
-		else this.animationsTabPageController.testAnimationController.exitTab();
+		if (observable == this.animationsTab.selectedProperty())
+		{
+			if (newValue) this.animationsTabPageController.testAnimationController.reload();
+			else this.animationsTabPageController.testAnimationController.exitTab();
+		} else
+		{
+			if (newValue) this.pkspritesTabPageController.testSpriteController.reload();
+			else this.pkspritesTabPageController.testSpriteController.exitTab();
+		}
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
 	{
 		this.animationsTab.selectedProperty().addListener(this);
+		this.pkspritesTab.selectedProperty().addListener(this);
 	}
 
 	public void onReloadLang()

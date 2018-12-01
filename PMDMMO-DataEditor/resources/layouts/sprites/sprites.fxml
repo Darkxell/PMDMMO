@@ -34,7 +34,7 @@
 	<right>
 		<TitledPane fx:id="spritePreviewPane" alignment="CENTER" animated="false" collapsible="false" contentDisplay="CENTER" text="Sprite preview" BorderPane.alignment="CENTER">
 			<content>
-				<fx:include fx:id="testSprite" source="test_sprite.fxml" />
+				<fx:include fx:id="testSprite" source="../animations/test_animation.fxml" />
 			</content>
 		</TitledPane>
 	</right>

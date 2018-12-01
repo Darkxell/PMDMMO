@@ -6,8 +6,11 @@ import java.util.ResourceBundle;
 
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesetData;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
+import com.darkxell.common.pokemon.PokemonRegistry;
+import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.util.XMLUtils;
 
+import fr.darkxell.dataeditor.application.controller.animation.TestAnimationController;
 import fr.darkxell.dataeditor.application.controls.CustomList;
 import fr.darkxell.dataeditor.application.controls.CustomListCell.ListCellParent;
 import fr.darkxell.dataeditor.application.data.PokemonSpritesetManager;
@@ -35,7 +38,7 @@ public class SpritesTabController implements Initializable, ListCellParent<Pokem
 	@FXML
 	public ListView<PokemonSpritesetData> spritesList;
 	@FXML
-	public SpritePreviewController testSpriteController;
+	public TestAnimationController testSpriteController;
 
 	@Override
 	public Node graphicFor(PokemonSpritesetData item)
@@ -48,6 +51,7 @@ public class SpritesTabController implements Initializable, ListCellParent<Pokem
 	{
 		this.editSpritePane.setVisible(false);
 		this.spritePreviewPane.setVisible(false);
+		this.testSpriteController.pokemonCombobox.setDisable(true);
 
 		this.reloadList();
 		CustomList.setup(this, this.spritesList, "Pokemon Sprite", true, false, true, true, false);
@@ -111,7 +115,8 @@ public class SpritesTabController implements Initializable, ListCellParent<Pokem
 		this.spritePreviewPane.setVisible(true);
 
 		this.editSpriteController.setupFor(item);
-		this.testSpriteController.setupFor(item);
+		PokemonSpecies s = PokemonRegistry.find(item.id);
+		if (s != null) this.testSpriteController.pokemonCombobox.getSelectionModel().select(s);
 	}
 
 	@Override

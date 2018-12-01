@@ -24,6 +24,11 @@ public class UpdaterAndRenderer implements Runnable
 		return this.ups;
 	}
 
+	protected boolean keepRunning()
+	{
+		return Launcher.isRunning && Launcher.getProcessingProfile() == Launcher.PROFILE_SYNCHRONIZED;
+	}
+
 	@Override
 	public void run()
 	{
@@ -45,7 +50,7 @@ public class UpdaterAndRenderer implements Runnable
 			e1.printStackTrace();
 		}
 
-		while (Launcher.isRunning && Launcher.getProcessingProfile() == Launcher.PROFILE_SYNCHRONIZED)
+		while (this.keepRunning())
 		{
 			this.update();
 
