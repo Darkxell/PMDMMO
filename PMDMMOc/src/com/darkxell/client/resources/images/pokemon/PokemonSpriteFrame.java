@@ -31,4 +31,17 @@ public class PokemonSpriteFrame
 		this.isFlipped = XMLUtils.getAttribute(xml, "flip", false);
 	}
 
+	public Element toXML()
+	{
+		Element root = new Element("AnimFrame");
+		XMLUtils.setAttribute(root, "sprite", this.frameID, 0);
+		XMLUtils.setAttribute(root, "duration", this.duration, 0);
+		XMLUtils.setAttribute(root, "spritex", this.spriteX, 0);
+		XMLUtils.setAttribute(root, "spritey", this.spriteY, 0);
+		XMLUtils.setAttribute(root, "shadowx", this.shadowX, 0);
+		XMLUtils.setAttribute(root, "shadowy", this.shadowY, 0);
+		XMLUtils.setAttribute(root, "flip", this.isFlipped, false);
+		return root;
+	}
+
 }

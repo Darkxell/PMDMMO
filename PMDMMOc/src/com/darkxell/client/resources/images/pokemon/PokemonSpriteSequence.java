@@ -9,10 +9,12 @@ public class PokemonSpriteSequence
 
 	public final int duration;
 	final PokemonSpriteFrame[] frames;
+	public final int id;
 	public final int rushPoint, hitPoint, returnPoint;
 
 	public PokemonSpriteSequence(PokemonSpritesetData pokemonSpritesetData, Element xml)
 	{
+		this.id = XMLUtils.getAttribute(xml, "id", -1);
 		this.rushPoint = XMLUtils.getAttribute(xml, "rush", 0);
 		this.hitPoint = XMLUtils.getAttribute(xml, "hit", 0);
 		this.returnPoint = XMLUtils.getAttribute(xml, "return", 0);
@@ -57,6 +59,20 @@ public class PokemonSpriteSequence
 		for (PokemonSpriteFrame f : this.frames)
 			d += f.duration;
 		return d;
+	}
+
+	public Element toXML()
+	{
+		Element root = new Element("AnimSequence");
+		XMLUtils.setAttribute(root, "id", this.id, -1);
+		XMLUtils.setAttribute(root, "rush", this.rushPoint, 0);
+		XMLUtils.setAttribute(root, "hit", this.hitPoint, 0);
+		XMLUtils.setAttribute(root, "return", this.returnPoint, 0);
+
+		for (PokemonSpriteFrame frame : this.frames)
+			root.addContent(frame.toXML());
+
+		return root;
 	}
 
 }

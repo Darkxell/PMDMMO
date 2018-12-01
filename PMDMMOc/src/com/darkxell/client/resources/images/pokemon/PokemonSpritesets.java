@@ -22,6 +22,11 @@ public final class PokemonSpritesets
 	/** Stores the loaded Spritesheets. */
 	private static final HashMap<Integer, PokemonSpriteset> spritesets = new HashMap<Integer, PokemonSpriteset>();
 
+	public static boolean dataExists(Integer id)
+	{
+		return data.containsKey(id) && data.get(id).id == id;
+	}
+
 	/** Disposes of the Spritesheet for the Pokemon with the input ID. */
 	public static void disposeSpriteset(int id)
 	{
@@ -87,7 +92,7 @@ public final class PokemonSpritesets
 	}
 
 	/** Loads the Spritesheet for the Pokemon with the input ID. */
-	private static void loadSpriteset(int id)
+	public static void loadSpriteset(int id)
 	{
 		String filename = Math.abs(id) + "";
 		int effectiveID = Math.abs(id);
@@ -97,8 +102,6 @@ public final class PokemonSpritesets
 			spritesets.put(id, spritesets.get(0));
 			return;
 		}
-
-		if (spritesets.containsKey(id)) return;
 
 		if (!data.containsKey(effectiveID)) loadSpritesetData(effectiveID);
 
@@ -118,10 +121,9 @@ public final class PokemonSpritesets
 	}
 
 	/** Loads the animations data for the Pokemon with the input ID. */
-	private static void loadSpritesetData(int id)
+	public static void loadSpritesetData(int id)
 	{
 		int effectiveID = Math.abs(id);
-		if (data.containsKey(effectiveID)) return;
 		loadSpritesetData(id, effectiveID, "/pokemons/data/" + effectiveID);
 	}
 
@@ -146,7 +148,19 @@ public final class PokemonSpritesets
 		data.put(id, new PokemonSpritesetData(dataID, xml));
 	}
 
+	public static void remove(PokemonSpritesetData item)
+	{
+		data.entrySet().removeIf(entry -> entry.getValue() == item);
+		spritesets.entrySet().removeIf(entry -> entry.getValue().data == item);
+	}
+
 	private PokemonSpritesets()
 	{}
+
+	public static PokemonSpritesetData getData(int id)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

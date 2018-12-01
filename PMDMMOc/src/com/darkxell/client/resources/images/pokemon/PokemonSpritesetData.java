@@ -41,6 +41,13 @@ public class PokemonSpritesetData
 			this.sequences.put(Integer.parseInt(e.getAttributeValue("id")), new PokemonSpriteSequence(this, e));
 	}
 
+	public PokemonSpritesetData(Integer id)
+	{
+		this.id = id;
+		this.spriteWidth = this.spriteHeight = 16;
+		this.hasBigShadow = false;
+	}
+
 	@Override
 	public String toString()
 	{
@@ -48,6 +55,34 @@ public class PokemonSpritesetData
 		PokemonSpecies species = PokemonRegistry.find(this.id);
 		if (species != null) value += species;
 		return value;
+	}
+
+	public Element toXML()
+	{
+		Element root = new Element("AnimData");
+		if (this.spriteWidth != 0) root.addContent(new Element("FrameWidth").setText(String.valueOf(this.spriteWidth)));
+		if (this.spriteHeight != 0) root.addContent(new Element("FrameHeight").setText(String.valueOf(this.spriteHeight)));
+
+		Element grouptable = new Element("AnimGroupTable");
+		for (PokemonSpriteState state : PokemonSpriteState.values())
+		{
+			Element s = new Element("AnimGroup").setAttribute("state", state.name().toLowerCase());
+			for (Direction d : Direction.directions)
+			{
+				Integer sequence = this.states.getOrDefault(new Pair<>(state, d), -1);
+				if (sequence != -1)
+					s.addContent(new Element("AnimSequenceIndex").setAttribute("sequence", String.valueOf(sequence)).setAttribute("direction", d.getName()));
+			}
+			grouptable.addContent(s);
+		}
+		root.addContent(grouptable);
+
+		Element sequencetable = new Element("AnimSequenceTable");
+		for (PokemonSpriteSequence s : this.sequences.values())
+			sequencetable.addContent(s.toXML());
+		root.addContent(sequencetable);
+
+		return root;
 	}
 
 }
