@@ -105,7 +105,7 @@ public class PlayerDAO {
             if (result.first()) {
                 toreturn = new DBPlayer(id, result.getString("name"), result.getString("passhash"),
                         result.getLong("moneyinbank"), result.getLong("moneyinbag"), result.getInt("storyposition"),
-                        null, null, null, null, null, null, result.getInt("points"), toreturn.isop, toreturn.isbanned);
+                        null, null, null, null, null, null, result.getInt("points"), result.getBoolean("isop"), result.getBoolean("isbanned"));
             }
             cn.close();
             completefind(toreturn);
@@ -129,7 +129,7 @@ public class PlayerDAO {
             if (result.next()) {
                 toreturn = new DBPlayer(result.getLong("id"), result.getString("name"), result.getString("passhash"),
                         result.getLong("moneyinbank"), result.getLong("moneyinbag"), result.getInt("storyposition"),
-                        null, null, null, null, null, null, result.getInt("points"), toreturn.isop, toreturn.isbanned);
+                        null, null, null, null, null, null, result.getInt("points"), result.getBoolean("isop"), result.getBoolean("isbanned"));
             }
             cn.close();
             if (toreturn != null) {

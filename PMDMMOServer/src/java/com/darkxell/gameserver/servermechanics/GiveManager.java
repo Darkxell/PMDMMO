@@ -19,8 +19,12 @@ import java.util.ArrayList;
 public class GiveManager {
 
     public static void giveItem(int itemID, int quantity, GameSessionInfo si, GameServer endpoint, boolean directstorage) {
-        DBInventory storage = endpoint.getInventoryDAO().find(endpoint.getPlayerStorage_DAO().findInventoryID(si.serverid));
-        DBInventory toolbox = endpoint.getInventoryDAO().find(endpoint.getToolbox_DAO().findInventoryID(si.serverid));
+        giveItem(itemID, quantity, si.serverid, endpoint, directstorage);
+    }
+    
+    public static void giveItem(int itemID, int quantity, long serverid, GameServer endpoint, boolean directstorage) {
+        DBInventory storage = endpoint.getInventoryDAO().find(endpoint.getPlayerStorage_DAO().findInventoryID(serverid));
+        DBInventory toolbox = endpoint.getInventoryDAO().find(endpoint.getToolbox_DAO().findInventoryID(serverid));
         //Puts as many items as it can in the toolbox
         if (!directstorage) {
             ArrayList<Long> itemsintoolbox = endpoint.getInventoryContains_DAO().findStacksID(toolbox.id);
