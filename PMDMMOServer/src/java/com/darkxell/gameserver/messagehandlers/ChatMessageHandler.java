@@ -158,9 +158,17 @@ public class ChatMessageHandler extends MessageHandler {
                         break;
                 }
                 if (sendfeedback) {
-                    errorobject.add("message", feedbackMessage);
-                    sessionshandler.sendToSession(from, errorobject);
+
                 }
+            } else {
+                //Error message if the user is not op
+                com.eclipsesource.json.JsonObject errorobject = new com.eclipsesource.json.JsonObject();
+                errorobject.add("action", "chatmessage");
+                errorobject.add("messagecolor", "#CD1000");
+                errorobject.add("sendercolor", "#CD1000");
+                errorobject.add("sender", "Error");
+                errorobject.add("message", "You do not have required permissions to execute this. Contact an administrator if you think this is a mistake.");
+                sessionshandler.sendToSession(from, errorobject);
             }
         }
     }
