@@ -24,13 +24,15 @@ public class DBPlayer implements Communicable
 	public DatabaseIdentifier toolboxinventory = new DatabaseIdentifier(0);
 	public ArrayList<String> missionsids = new ArrayList<>();
 	public int points = 0;
+	public boolean isop = false;
+	public boolean isbanned = false;
 
 	public DBPlayer()
 	{}
 
 	public DBPlayer(long id, String name, String passhash, long moneyinbank, long moneyinbag, int storyposition, ArrayList<DatabaseIdentifier> pokemonsinzones,
 			ArrayList<DatabaseIdentifier> pokemonsinparty, DatabaseIdentifier mainpokemon, DatabaseIdentifier toolboxinventory,
-			DatabaseIdentifier storageinventory, ArrayList<String> missionsids,int points)
+			DatabaseIdentifier storageinventory, ArrayList<String> missionsids,int points,boolean isop,boolean isbanned)
 	{
 		this.id = id;
 		if (name != null) this.name = name;
@@ -45,6 +47,8 @@ public class DBPlayer implements Communicable
 		if (storageinventory != null) this.storageinventory = storageinventory;
 		if (missionsids != null) this.missionsids = missionsids;
 		this.points = points;
+		this.isop = isop;
+		this.isbanned = isbanned;
 	}
 
 	@Override
@@ -64,6 +68,8 @@ public class DBPlayer implements Communicable
 		if (!this.storageinventory.equals(o.storageinventory)) return false;
 		if (!this.missionsids.equals(o.missionsids)) return false;
 		if (this.points != o.points) return false;
+		if (this.isop != o.isop) return false;
+		if (this.isbanned != o.isbanned) return false;
 		return true;
 	}
 
@@ -108,6 +114,8 @@ public class DBPlayer implements Communicable
 				if (id.isString()) this.missionsids.add(id.asString());
 		}
 		this.points = value.getInt("points", this.points);
+		this.isop = value.getBoolean("isop", false);
+		this.isbanned = value.getBoolean("isbanned", false);
 	}
 
 	@Override
@@ -148,6 +156,8 @@ public class DBPlayer implements Communicable
 		}
 
 		root.add("points", this.points);
+		root.add("isop", this.isop);
+		root.add("isbanned", this.isbanned);
 		return root;
 	}
 
