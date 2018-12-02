@@ -1,5 +1,6 @@
 package com.darkxell.client.resources.images.pokemon;
 
+import java.util.Collection;
 import java.util.HashMap;
 
 import org.jdom2.Element;
@@ -46,6 +47,11 @@ public class PokemonSpritesetData
 		this.id = id;
 		this.spriteWidth = this.spriteHeight = 16;
 		this.hasBigShadow = false;
+	}
+
+	public Collection<PokemonSpriteSequence> sequences()
+	{
+		return this.sequences.values();
 	}
 
 	@Override

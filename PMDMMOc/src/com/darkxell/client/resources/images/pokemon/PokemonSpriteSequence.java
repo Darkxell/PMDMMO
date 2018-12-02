@@ -1,5 +1,8 @@
 package com.darkxell.client.resources.images.pokemon;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import org.jdom2.Element;
 
 import com.darkxell.common.util.XMLUtils;
@@ -37,6 +40,11 @@ public class PokemonSpriteSequence
 		return 1 - ((tick - this.hitPoint) * 1. / (this.returnPoint - this.hitPoint));
 	}
 
+	public Collection<PokemonSpriteFrame> frames()
+	{
+		return Arrays.asList(this.frames);
+	}
+
 	public PokemonSpriteFrame getFrame(int tick)
 	{
 		return this.frames[this.getFrameIndex(tick)];
@@ -51,6 +59,12 @@ public class PokemonSpriteSequence
 			tick -= this.frames[i].duration;
 		}
 		return i;
+	}
+
+	@Override
+	public String toString()
+	{
+		return String.valueOf(this.id);
 	}
 
 	private int totalDuration()

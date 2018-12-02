@@ -154,8 +154,9 @@ public class TestAnimationController implements Initializable
 
 	public void updateProgressBar(boolean shouldBeFull)
 	{
-		if (shouldBeFull) this.progressBar.setProgress(1);
-		else if (this.current == null || this.current.duration() == -1) this.progressBar.setProgress(0);
+		if (this.current == null) this.progressBar.setProgress(0);
+		else if (shouldBeFull) this.progressBar.setProgress(1);
+		else if (this.current.duration() == -1) this.progressBar.setProgress(0);
 		else this.progressBar.setProgress(Math.min(1, this.current.tick() * 1. / this.current.duration()));
 	}
 

@@ -9,6 +9,7 @@ import java.util.HashMap;
 import org.jdom2.Element;
 
 import com.darkxell.client.resources.Res;
+import com.darkxell.client.resources.images.RegularSpriteSet;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.util.Logger;
@@ -31,6 +32,12 @@ public final class PokemonSpritesets
 	public static void disposeSpriteset(int id)
 	{
 		spritesets.remove(id);
+	}
+
+	public static PokemonSpritesetData getData(int id)
+	{
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	/** Returns the Spritesheet for the Pokemon with the input ID. Loads it if not loaded. */
@@ -148,6 +155,11 @@ public final class PokemonSpritesets
 		data.put(id, new PokemonSpritesetData(dataID, xml));
 	}
 
+	public static RegularSpriteSet loadTestSpriteset(int id, int spriteWidth, int spriteHeight)
+	{
+		return new RegularSpriteSet("/pokemons/" + id + ".png", spriteWidth, spriteHeight, -1, -1);
+	}
+
 	public static void remove(PokemonSpritesetData item)
 	{
 		data.entrySet().removeIf(entry -> entry.getValue() == item);
@@ -156,11 +168,5 @@ public final class PokemonSpritesets
 
 	private PokemonSpritesets()
 	{}
-
-	public static PokemonSpritesetData getData(int id)
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }
