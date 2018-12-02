@@ -24,7 +24,7 @@
       <VBox alignment="CENTER" BorderPane.alignment="CENTER">
          <children>
             <Button mnemonicParsing="false" onAction="#onReload" text="Reload" />
-            <ImageView fx:id="imageView" fitHeight="384" fitWidth="512" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="imageView" fitHeight="288" fitWidth="384" pickOnBounds="true" preserveRatio="true" />
             <ProgressBar fx:id="progressBar" prefWidth="400.0" progress="0.0" />
             <Label text="This is a preview of this Animation. Click 'Reload' to reload." />
          </children>

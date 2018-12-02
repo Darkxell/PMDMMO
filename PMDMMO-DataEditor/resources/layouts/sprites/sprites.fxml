@@ -25,17 +25,35 @@
 		</VBox>
 	</left>
 	<center>
-		<TitledPane fx:id="editSpritePane" alignment="CENTER" animated="false" collapsible="false" contentDisplay="CENTER" text="Sprite data" BorderPane.alignment="CENTER">
-			<content>
-				<fx:include fx:id="editSprite" source="edit_sprite.fxml" />
-			</content>
-		</TitledPane>
+		<VBox fx:id="databox1" alignment="CENTER" styleClass="panel" BorderPane.alignment="CENTER">
+			<children>
+				<TitledPane alignment="CENTER" animated="false" contentDisplay="CENTER" text="Sequence Table" BorderPane.alignment="CENTER">
+					<content>
+						<fx:include fx:id="sequenceTable" source="edit_table.fxml" />
+					</content>
+				</TitledPane>
+            <TitledPane animated="false" text="Sequences">
+					<content>
+						<fx:include fx:id="sequences" source="edit_sequences.fxml" />
+					</content>
+				</TitledPane>
+			</children>
+		</VBox>
 	</center>
 	<right>
-		<TitledPane fx:id="spritePreviewPane" alignment="CENTER" animated="false" collapsible="false" contentDisplay="CENTER" text="Sprite preview" BorderPane.alignment="CENTER">
-			<content>
-				<fx:include fx:id="testSprite" source="../animations/test_animation.fxml" />
-			</content>
-		</TitledPane>
+		<VBox fx:id="databox2" alignment="CENTER" styleClass="panel" BorderPane.alignment="CENTER">
+			<children>
+	            <TitledPane animated="false" text="General">
+					<content>
+						<fx:include fx:id="generalData" source="edit_general.fxml" />
+					</content>
+				</TitledPane>
+				<TitledPane alignment="CENTER" animated="false" contentDisplay="CENTER" text="Sprite preview" BorderPane.alignment="CENTER">
+					<content>
+						<fx:include fx:id="testSprite" source="../animations/test_animation.fxml" />
+					</content>
+				</TitledPane>
+			</children>
+		</VBox>
 	</right>
 </BorderPane>

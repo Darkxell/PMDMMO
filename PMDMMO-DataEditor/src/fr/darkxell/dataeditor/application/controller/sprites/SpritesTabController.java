@@ -23,18 +23,22 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextInputDialog;
-import javafx.scene.control.TitledPane;
+import javafx.scene.layout.VBox;
 
 public class SpritesTabController implements Initializable, ListCellParent<PokemonSpritesetData>
 {
 	public PokemonSpritesetData currentSprite;
 
 	@FXML
-	public EditSpriteController editSpriteController;
+	private VBox databox1;
 	@FXML
-	private TitledPane editSpritePane;
+	private VBox databox2;
 	@FXML
-	private TitledPane spritePreviewPane;
+	public EditGeneralController generalDataController;
+	@FXML
+	public EditSequencesController sequencesController;
+	@FXML
+	public EditTableController sequenceTableController;
 	@FXML
 	public ListView<PokemonSpritesetData> spritesList;
 	@FXML
@@ -49,8 +53,12 @@ public class SpritesTabController implements Initializable, ListCellParent<Pokem
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
 	{
-		this.editSpritePane.setVisible(false);
-		this.spritePreviewPane.setVisible(false);
+		this.generalDataController.parent = this;
+		this.sequenceTableController.parent = this;
+		this.sequencesController.parent = this;
+
+		this.databox1.setVisible(false);
+		this.databox2.setVisible(false);
 		this.testSpriteController.pokemonCombobox.setDisable(true);
 
 		this.reloadList();
@@ -100,8 +108,8 @@ public class SpritesTabController implements Initializable, ListCellParent<Pokem
 		if (item == this.currentSprite)
 		{
 			this.currentSprite = null;
-			this.editSpritePane.setVisible(false);
-			this.spritePreviewPane.setVisible(false);
+			this.databox1.setVisible(false);
+			this.databox2.setVisible(false);
 		}
 		PokemonSpritesetManager.remove(item);
 		this.reloadList();
@@ -111,10 +119,12 @@ public class SpritesTabController implements Initializable, ListCellParent<Pokem
 	public void onEdit(PokemonSpritesetData item)
 	{
 		this.currentSprite = item;
-		this.editSpritePane.setVisible(true);
-		this.spritePreviewPane.setVisible(true);
+		this.databox1.setVisible(true);
+		this.databox2.setVisible(true);
 
-		this.editSpriteController.setupFor(item);
+		this.generalDataController.setupFor(item);
+		this.sequenceTableController.setupFor(item);
+		this.sequencesController.setupFor(item);
 		PokemonSpecies s = PokemonRegistry.find(item.id);
 		if (s != null) this.testSpriteController.pokemonCombobox.getSelectionModel().select(s);
 	}
