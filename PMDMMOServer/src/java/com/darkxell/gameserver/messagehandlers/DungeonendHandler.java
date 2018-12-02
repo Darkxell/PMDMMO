@@ -11,6 +11,8 @@ import com.darkxell.common.dbobject.DBLearnedmove;
 import com.darkxell.common.dbobject.DBPlayer;
 import com.darkxell.common.dbobject.DBPokemon;
 import com.darkxell.common.dbobject.DatabaseIdentifier;
+import com.darkxell.common.dungeon.DungeonOutcome;
+import com.darkxell.common.dungeon.DungeonOutcome.Outcome;
 import com.darkxell.gameserver.GameServer;
 import com.darkxell.gameserver.GameSessionHandler;
 import com.darkxell.gameserver.GameSessionInfo;
@@ -126,7 +128,14 @@ public class DungeonendHandler extends MessageHandler {
             MissionEndManager.manageMissionCompletion(si, endpoint, jsonValue.asString());
         }
         // Manage the player's storyposition
-        manageStoryposition(successcheck, si);
+        try {
+            DungeonOutcome o = new DungeonOutcome();
+            o.read(outcome);
+            manageStoryposition(o.getOutcome() == Outcome.DUNGEON_CLEARED, si);
+        } catch (Exception e) {
+            System.err.println("Could not determine dungeon outcome for storyposition.");
+        }
+
         //Resets the gamesessioninfo to be in a freezone
         si.currentdungeon = -1;
         si.currentdoing = GameSessionInfo.current_freezone;
@@ -205,7 +214,7 @@ public class DungeonendHandler extends MessageHandler {
                     give = 1;
                 }
                 break;
-                case 2: // Thunderwave cave
+            case 2: // Thunderwave cave
                 if (player.storyposition == 5 && success) {
                     newstoryposition = 6;
                     needcommit = true;
@@ -213,23 +222,23 @@ public class DungeonendHandler extends MessageHandler {
                 }
                 break;
         }
-        
+
         if (needcommit) {
             System.out.println(si.name + " with storypos:" + player.storyposition
-                + " triggered manageStoryposition at the end of a dungeon (success:" + success + "). Set to : " + newstoryposition);
+                    + " triggered manageStoryposition at the end of a dungeon (success:" + success + "). Set to : " + newstoryposition);
             player.storyposition = newstoryposition;
             endpoint.getPlayerDAO().update(player);
         }
-        if(give == 1){
+        if (give == 1) {
             GiveManager.giveItem(7, 1, si, endpoint, false);
             GiveManager.giveItem(11, 1, si, endpoint, false);
             GiveManager.giveItem(12, 1, si, endpoint, false);
-        }else if(give == 2){
+        } else if (give == 2) {
             GiveManager.giveItem(41, 1, si, endpoint, false);
             GiveManager.giveItem(12, 1, si, endpoint, false);
             DBPlayer tempp = endpoint.getPlayerDAO().find(si.serverid);
             tempp.moneyinbag += 500;
-            endpoint.getPlayerDAO().update(tempp); 
+            endpoint.getPlayerDAO().update(tempp);
         }
     }
 
