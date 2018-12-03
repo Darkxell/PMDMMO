@@ -23,6 +23,7 @@ public class AccountCreationState extends StateManager {
 	private CustomTextfield login = new CustomTextfield();
 	private CustomTextfield password = new CustomTextfield().setObfuscated();
 	private CustomTextfield confirm = new CustomTextfield().setObfuscated();
+	private CustomTextfield deploykey = new CustomTextfield();
 	/**
 	 * The width of the non responsive square containing the login componnents.
 	 * I'm lazy.
@@ -46,6 +47,7 @@ public class AccountCreationState extends StateManager {
 		login.onKeyPressed(e);
 		password.onKeyPressed(e);
 		confirm.onKeyPressed(e);
+		deploykey.onKeyPressed(e);
 	}
 
 	@Override
@@ -58,6 +60,7 @@ public class AccountCreationState extends StateManager {
 		login.onKeyTyped(e);
 		password.onKeyTyped(e);
 		confirm.onKeyTyped(e);
+		deploykey.onKeyTyped(e);
 	}
 
 	@Override
@@ -87,14 +90,22 @@ public class AccountCreationState extends StateManager {
 			this.login.setSelection(true);
 			this.password.setSelection(false);
 			this.confirm.setSelection(false);
+			this.deploykey.setSelection(false);
 		} else if (textfield_pass.isInside(new Position(mouseX - offsetx, mouseY - offsety))) {
 			this.login.setSelection(false);
 			this.password.setSelection(true);
 			this.confirm.setSelection(false);
+			this.deploykey.setSelection(false);
 		} else if (textfield_confirm.isInside(new Position(mouseX - offsetx, mouseY - offsety))) {
 			this.login.setSelection(false);
 			this.password.setSelection(false);
 			this.confirm.setSelection(true);
+			this.deploykey.setSelection(false);
+		} else if (textfield_deploykey.isInside(new Position(mouseX - offsetx, mouseY - offsety))) {
+			this.login.setSelection(false);
+			this.password.setSelection(false);
+			this.confirm.setSelection(false);
+			this.deploykey.setSelection(true);
 		} else {
 			this.login.setSelection(false);
 			this.password.setSelection(false);
@@ -113,10 +124,11 @@ public class AccountCreationState extends StateManager {
 
 	}
 
-	private DoubleRectangle textfield_login = new DoubleRectangle(155, 157, 257, 32);
-	private DoubleRectangle textfield_pass = new DoubleRectangle(155, 203, 257, 32);
-	private DoubleRectangle textfield_confirm = new DoubleRectangle(155, 249, 257, 32);
-	private DoubleRectangle button_create = new DoubleRectangle(211, 301, 128, 38);
+	private DoubleRectangle textfield_login = new DoubleRectangle(155, 130, 257, 32);
+	private DoubleRectangle textfield_pass = new DoubleRectangle(155, 176, 257, 32);
+	private DoubleRectangle textfield_confirm = new DoubleRectangle(155, 222, 257, 32);
+	private DoubleRectangle textfield_deploykey = new DoubleRectangle(155, 268, 257, 32);
+	private DoubleRectangle button_create = new DoubleRectangle(211, 311, 128, 38);
 	private DoubleRectangle button_back = new DoubleRectangle(33, 150, 82, 27);
 
 	@Override
@@ -145,6 +157,10 @@ public class AccountCreationState extends StateManager {
 		g.translate(textfield_confirm.x + 10, textfield_confirm.y);
 		this.confirm.render(g, (int) textfield_confirm.width - 20, (int) textfield_confirm.height - 15);
 		g.translate(-textfield_confirm.x - 10, -textfield_confirm.y);
+		
+		g.translate(textfield_deploykey.x + 10, textfield_deploykey.y);
+		this.deploykey.render(g, (int) textfield_deploykey.width - 20, (int) textfield_deploykey.height - 15);
+		g.translate(-textfield_deploykey.x - 10, -textfield_deploykey.y);
 
 		Color buttoncolor = new Color(124, 163, 255), selectedbuttoncolor = new Color(183, 222, 255);
 		g.setColor((button_create.isInside(new Position(relativemousex, relativemousey))) ? selectedbuttoncolor
@@ -168,10 +184,12 @@ public class AccountCreationState extends StateManager {
 		this.login.update();
 		this.password.update();
 		this.confirm.update();
+		this.deploykey.update();
 		if (firstupdate) {
 			firstupdate = false;
 			this.password.setSelection(false);
 			this.confirm.setSelection(false);
+			this.deploykey.setSelection(false);
 		}
 	}
 
@@ -188,9 +206,9 @@ public class AccountCreationState extends StateManager {
 			// the user's local storage.
 			String localhash = Encryption.clientHash(this.password.getContent(), this.login.getContent(),
 					Encryption.HASHSALTTYPE_CLIENT);
-			JsonObject mess = new JsonObject().add("action", "createaccount").add("name", this.login.getContent()).add(
-					"passhash",
-					Encryption.clientHash(localhash, this.login.getContent(), Encryption.HASHSALTTYPE_SERVER));
+			JsonObject mess = new JsonObject().add("action", "createaccount").add("name", this.login.getContent())
+					.add("deploykey", this.deploykey.getContent()).add("passhash",
+							Encryption.clientHash(localhash, this.login.getContent(), Encryption.HASHSALTTYPE_SERVER));
 			message = mess.toString();
 			Persistance.socketendpoint.sendMessage(message);
 		} catch (Exception e) {
@@ -204,7 +222,7 @@ public class AccountCreationState extends StateManager {
 	/** Method called when recieving a logininfo payload. */
 	public void servercall(String id) {
 		switch (id) {
-		case "ui.login.nametaken":
+		default:
 			errormessage = new Message(id).toString();
 			assessmessage = "";
 			break;
