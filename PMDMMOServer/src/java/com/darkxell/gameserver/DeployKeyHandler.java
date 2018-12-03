@@ -20,6 +20,7 @@ public class DeployKeyHandler {
     public static String generateKey(GameServer server) {
         DBDeployKey key = new DBDeployKey();
         key.keyvalue = getNewKey();
+        key.timestamp = System.currentTimeMillis();
         if (server.getDeployKeyDAO().create(key)) {
             return key.keyvalue;
         } else {

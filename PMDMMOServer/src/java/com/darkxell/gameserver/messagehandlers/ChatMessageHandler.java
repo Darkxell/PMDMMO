@@ -6,6 +6,7 @@
 package com.darkxell.gameserver.messagehandlers;
 
 import com.darkxell.common.dbobject.DBPlayer;
+import com.darkxell.gameserver.DeployKeyHandler;
 import com.darkxell.gameserver.GameServer;
 import com.darkxell.gameserver.GameSessionHandler;
 import com.darkxell.gameserver.GameSessionInfo;
@@ -147,7 +148,9 @@ public class ChatMessageHandler extends MessageHandler {
                         sendfeedback = true;
                         break;
                     case "/deploykey"://Manages the DEPLOYKEY command
-
+                        String key = DeployKeyHandler.generateKey(endpoint);
+                        feedbackMessage = "A new deploy key has been generated: " + key;
+                        sendfeedback = true;
                         break;
                     case "/help":// Help utility
                         feedbackMessage = "Help message needs to be coded. Available commands are: /info /give /setstoryposition /ban /deploykey /help";
