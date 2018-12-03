@@ -15,6 +15,13 @@ import com.darkxell.utility.RandomString;
 public class DeployKeyHandler {
 
     /**
+     * Global deploykey mode switch. Might wanna put this elsewhere
+     * later.<br><br>When deploykeymode is true, account creation payload will
+     * require a deploykey to be included.
+     */
+    public static final boolean DEPLOYKEYMODE = false;
+
+    /**
      * Generates a deployment key and returns it.
      */
     public static String generateKey(GameServer server) {
@@ -42,10 +49,11 @@ public class DeployKeyHandler {
     }
 
     public static boolean keyExists(String key, GameServer server) {
-        return server.getDeployKeyDAO().find(key) != null;
+        DBDeployKey k = server.getDeployKeyDAO().find(key);
+        return k != null && !k.isused;
     }
 
-    public static boolean useKey(String key, int playerid, GameServer server) {
+    public static boolean useKey(String key, long playerid, GameServer server) {
         DBDeployKey ke = server.getDeployKeyDAO().find(key);
         if (ke == null) {
             return false;
