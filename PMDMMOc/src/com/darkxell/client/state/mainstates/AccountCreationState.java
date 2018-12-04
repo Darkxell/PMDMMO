@@ -1,6 +1,7 @@
 package com.darkxell.client.state.mainstates;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 
@@ -8,6 +9,7 @@ import com.darkxell.client.launchable.GameSocketEndpoint;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.launchable.crypto.Encryption;
 import com.darkxell.client.mechanics.chat.CustomTextfield;
+import com.darkxell.client.resources.Res;
 import com.darkxell.client.resources.images.Sprites;
 import com.darkxell.client.state.StateManager;
 import com.darkxell.client.ui.Keys.Key;
@@ -125,27 +127,56 @@ public class AccountCreationState extends StateManager {
 	}
 
 	private DoubleRectangle textfield_login = new DoubleRectangle(155, 130, 257, 32);
-	private DoubleRectangle textfield_pass = new DoubleRectangle(155, 176, 257, 32);
-	private DoubleRectangle textfield_confirm = new DoubleRectangle(155, 222, 257, 32);
-	private DoubleRectangle textfield_deploykey = new DoubleRectangle(155, 268, 257, 32);
+	private DoubleRectangle textfield_pass = new DoubleRectangle(155, 176, textfield_login.width / 2 - 10, 32);
+	private DoubleRectangle textfield_confirm = new DoubleRectangle(165 + textfield_login.width / 2, 176,
+			textfield_login.width / 2 - 10, 32);
+	private DoubleRectangle textfield_deploykey = new DoubleRectangle(155, 222, 257, 32);
 	private DoubleRectangle button_create = new DoubleRectangle(211, 311, 128, 38);
 	private DoubleRectangle button_back = new DoubleRectangle(33, 150, 82, 27);
 
 	@Override
 	public void render(Graphics2D g, int width, int height) {
+		Graphics2D gcopy = (Graphics2D) g.create();
 		MainUiUtility.drawBackground(g, width, height, (byte) 2);
 		offsetx = width / 2 - squarewidth / 2;
 		offsety = height / 2 - squareheight / 2;
 		int relativemousex = mouseX - offsetx, relativemousey = mouseY - offsety;
 		g.translate(offsetx, offsety);
+		gcopy.translate(offsetx, offsety);
 		// DRAWS THE ACCOUNT CREATION FACILITIES
 		g.drawImage(Sprites.Res_Hud.createaccountframe.image(), 0, 0, null);
 
-		g.setColor(Color.RED);
-		g.drawString(errormessage, 155, 143);
-		g.setColor(new Color(4, 142, 52));
-		g.drawString(assessmessage, 185, 355);
+		gcopy.setColor(Color.BLACK);
+		gcopy.setFont(Res.getFont().deriveFont(26f).deriveFont(Font.BOLD));
+		gcopy.drawString("Create an account", 195, 112);
+		gcopy.setColor(new Color(242, 145, 0));
+		gcopy.drawString("Create an account", 197, 113);
 
+		gcopy.setColor(Color.RED);
+		gcopy.setFont(Res.getFont().deriveFont(22f));
+		gcopy.drawString(errormessage, 80, 295);
+		gcopy.setColor(new Color(4, 142, 52));
+		gcopy.drawString(assessmessage, 185, 355);
+
+		// Draws the textfield backgrounds
+		g.setColor(new Color(66, 122, 255));
+		g.fillRect((int) textfield_login.x, (int) textfield_login.y, (int) textfield_login.width,
+				(int) textfield_login.height);
+		g.fillRect((int) textfield_pass.x, (int) textfield_pass.y, (int) textfield_pass.width,
+				(int) textfield_pass.height);
+		g.fillRect((int) textfield_confirm.x, (int) textfield_confirm.y, (int) textfield_confirm.width,
+				(int) textfield_confirm.height);
+		g.fillRect((int) textfield_deploykey.x, (int) textfield_deploykey.y, (int) textfield_deploykey.width,
+				(int) textfield_deploykey.height);
+
+		gcopy.setColor(new Color(242, 145, 0));
+		gcopy.setFont(Res.getFont().deriveFont(20f).deriveFont(Font.BOLD));
+		gcopy.drawString("Name", (int) textfield_login.x, (int) textfield_login.y);
+		gcopy.drawString("Password", (int) textfield_pass.x, (int) textfield_pass.y);
+		gcopy.drawString("Confirm", (int) textfield_confirm.x, (int) textfield_confirm.y);
+		gcopy.drawString("Deploy Key", (int) textfield_deploykey.x, (int) textfield_deploykey.y);
+
+		// Draws the textfields elements
 		g.translate(textfield_login.x + 10, textfield_login.y);
 		this.login.render(g, (int) textfield_login.width - 20, (int) textfield_login.height - 15);
 		g.translate(-textfield_login.x - 10, -textfield_login.y);
@@ -157,25 +188,28 @@ public class AccountCreationState extends StateManager {
 		g.translate(textfield_confirm.x + 10, textfield_confirm.y);
 		this.confirm.render(g, (int) textfield_confirm.width - 20, (int) textfield_confirm.height - 15);
 		g.translate(-textfield_confirm.x - 10, -textfield_confirm.y);
-		
+
 		g.translate(textfield_deploykey.x + 10, textfield_deploykey.y);
 		this.deploykey.render(g, (int) textfield_deploykey.width - 20, (int) textfield_deploykey.height - 15);
 		g.translate(-textfield_deploykey.x - 10, -textfield_deploykey.y);
 
+		// Draws the buttons
+		gcopy.setFont(Res.getFont().deriveFont(24f).deriveFont(Font.BOLD));
 		Color buttoncolor = new Color(124, 163, 255), selectedbuttoncolor = new Color(183, 222, 255);
-		g.setColor((button_create.isInside(new Position(relativemousex, relativemousey))) ? selectedbuttoncolor
+		gcopy.setColor((button_create.isInside(new Position(relativemousex, relativemousey))) ? selectedbuttoncolor
 				: buttoncolor);
-		g.fillRect((int) button_create.x, (int) button_create.y, (int) button_create.width, (int) button_create.height);
-		g.setColor(Color.BLACK);
-		g.drawString("CREATE ACCOUNT", (int) button_create.x + 8, (int) button_create.y + 25);
+		gcopy.fillRect((int) button_create.x, (int) button_create.y, (int) button_create.width, (int) button_create.height);
+		gcopy.setColor(new Color(30,15,210));
+		gcopy.drawString("Create account", (int) button_create.x + 6, (int) button_create.y + 25);
 
-		g.setColor((button_back.isInside(new Position(relativemousex, relativemousey))) ? selectedbuttoncolor
+		gcopy.setColor((button_back.isInside(new Position(relativemousex, relativemousey))) ? selectedbuttoncolor
 				: buttoncolor);
-		g.fillRect((int) button_back.x, (int) button_back.y, (int) button_back.width, (int) button_back.height);
-		g.setColor(Color.BLACK);
-		g.drawString("BACK", (int) button_back.x + 10, (int) button_back.y + 15);
+		gcopy.fillRect((int) button_back.x, (int) button_back.y, (int) button_back.width, (int) button_back.height);
+		gcopy.setColor(new Color(30,15,210));
+		gcopy.drawString("Back", (int) button_back.x + 10, (int) button_back.y + 18);
 
 		// REVERT GRAPHICS
+		gcopy.dispose();
 		g.translate(-offsetx, -offsety);
 	}
 
