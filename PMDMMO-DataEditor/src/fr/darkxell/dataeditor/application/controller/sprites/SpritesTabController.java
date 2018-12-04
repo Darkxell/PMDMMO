@@ -1,14 +1,18 @@
 package fr.darkxell.dataeditor.application.controller.sprites;
 
 import java.net.URL;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
+import com.darkxell.client.resources.images.pokemon.PokemonSpriteSequence;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesetData;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
 import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.pokemon.PokemonSpecies;
+import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.XMLUtils;
 
 import fr.darkxell.dataeditor.application.controller.animation.TestAnimationController;
@@ -25,6 +29,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.VBox;
+import javafx.util.Pair;
 
 public class SpritesTabController implements Initializable, ListCellParent<PokemonSpritesetData>
 {
@@ -44,6 +49,16 @@ public class SpritesTabController implements Initializable, ListCellParent<Pokem
 	public ListView<PokemonSpritesetData> spritesList;
 	@FXML
 	public TestAnimationController testSpriteController;
+
+	private PokemonSpritesetData generateData()
+	{
+		HashMap<Pair<PokemonSpriteState, Direction>, Integer> states = this.sequenceTableController.generateTable();
+		HashSet<Integer> existing = new HashSet<>(states.values());
+		HashMap<Integer, PokemonSpriteSequence> sequences = this.sequencesController.generateSequences(existing);
+
+		return new PokemonSpritesetData(this.currentSprite.id, this.generalDataController.bigShadowCheckbox.isSelected(),
+				this.generalDataController.spriteset.spriteWidth, this.generalDataController.spriteset.spriteHeight, states, sequences);
+	}
 
 	@Override
 	public Node graphicFor(PokemonSpritesetData item)
@@ -147,6 +162,18 @@ public class SpritesTabController implements Initializable, ListCellParent<Pokem
 	@Override
 	public void onRename(PokemonSpritesetData item, String name)
 	{}
+
+	public void onSaveChanges()
+	{
+		PokemonSpritesetData data = this.generateData();
+		if (data == null) return;
+		XMLUtils.saveFile(FileManager.create(FileManager.filePaths.get(FileManager.POKEMON_SPRITES) + "/" + data.id + ".xml"), data.toXML());
+		PokemonSpritesets.loadSpritesetData(data.id);
+		this.reloadList();
+		data = PokemonSpritesets.getData(data.id);
+		this.spritesList.getSelectionModel().select(data);
+		this.onEdit(data);
+	}
 
 	private void reloadList()
 	{

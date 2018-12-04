@@ -11,7 +11,7 @@
 <GridPane hgap="5.0" vgap="10.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.darkxell.dataeditor.application.controller.sprites.EditGeneralController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+    <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
   </columnConstraints>
   <rowConstraints>
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -25,6 +25,7 @@
       <TextField fx:id="widthTextfield" promptText="(16)" GridPane.columnIndex="1" />
       <TextField fx:id="heightTextfield" promptText="(16)" GridPane.columnIndex="1" GridPane.rowIndex="1" />
       <CheckBox fx:id="bigShadowCheckbox" mnemonicParsing="false" text="Big Shadow" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-      <Button mnemonicParsing="false" onAction="#onSaveChanges" text="Save Changes" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+      <Button mnemonicParsing="false" onAction="#onSaveChanges" text="Save Changes" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+      <Button mnemonicParsing="false" onAction="#onCancelChanges" text="Cancel" GridPane.columnIndex="1" GridPane.rowIndex="3" />
    </children>
 </GridPane>

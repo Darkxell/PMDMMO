@@ -64,6 +64,23 @@ public class EditTableController implements Initializable
 		this.onExistingSequencesChanged(existing);
 	}
 
+	public HashMap<Pair<PokemonSpriteState, Direction>, Integer> generateTable()
+	{
+		HashMap<Pair<PokemonSpriteState, Direction>, Integer> states = new HashMap<>();
+		for (SpriteTableItem i : this.table.getItems())
+		{
+			if (i.north != -1) states.put(new Pair<>(i.state, Direction.NORTH), i.north);
+			if (i.northeast != -1) states.put(new Pair<>(i.state, Direction.NORTHEAST), i.northeast);
+			if (i.east != -1) states.put(new Pair<>(i.state, Direction.EAST), i.east);
+			if (i.southeast != -1) states.put(new Pair<>(i.state, Direction.SOUTHEAST), i.southeast);
+			if (i.south != -1) states.put(new Pair<>(i.state, Direction.SOUTH), i.south);
+			if (i.southwest != -1) states.put(new Pair<>(i.state, Direction.SOUTHWEST), i.southwest);
+			if (i.west != -1) states.put(new Pair<>(i.state, Direction.WEST), i.west);
+			if (i.northwest != -1) states.put(new Pair<>(i.state, Direction.NORTHWEST), i.northwest);
+		}
+		return states;
+	}
+
 	private SpriteTableItem getSpriteItem(PokemonSpriteState state)
 	{
 		for (SpriteTableItem i : this.table.getItems())

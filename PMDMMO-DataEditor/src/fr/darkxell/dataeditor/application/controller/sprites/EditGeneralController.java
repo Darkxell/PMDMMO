@@ -54,7 +54,12 @@ public class EditGeneralController implements Initializable
 
 	public void onSaveChanges()
 	{
+		this.parent.onSaveChanges();
+	}
 
+	public void onCancelChanges()
+	{
+		this.parent.onEdit(this.parent.currentSprite);
 	}
 
 	public void setupFor(PokemonSpritesetData item)

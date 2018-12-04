@@ -55,6 +55,13 @@ public class EditSequencesController implements Initializable, ListCellParent<Po
 
 	private HashMap<Integer, PokemonSpriteSequence> sequences = new HashMap<>();
 
+	public HashMap<Integer, PokemonSpriteSequence> generateSequences(HashSet<Integer> existing)
+	{
+		HashMap<Integer, PokemonSpriteSequence> sequences = new HashMap<>(this.sequences);
+		sequences.entrySet().removeIf(entry -> !existing.contains(entry.getKey()));
+		return sequences;
+	}
+
 	private PokemonSpriteSequence getSequence(int id)
 	{
 		return this.sequences.get(id);

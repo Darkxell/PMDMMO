@@ -36,8 +36,7 @@ public final class PokemonSpritesets
 
 	public static PokemonSpritesetData getData(int id)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return data.get(id);
 	}
 
 	/** Returns the Spritesheet for the Pokemon with the input ID. Loads it if not loaded. */
