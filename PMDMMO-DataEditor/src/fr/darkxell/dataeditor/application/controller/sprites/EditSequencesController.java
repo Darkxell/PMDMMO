@@ -1,8 +1,12 @@
 package fr.darkxell.dataeditor.application.controller.sprites;
 
 import java.net.URL;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.ResourceBundle;
+import java.util.function.UnaryOperator;
+import java.util.regex.Pattern;
 
 import com.darkxell.client.resources.images.RegularSpriteSet;
 import com.darkxell.client.resources.images.pokemon.PokemonSpriteFrame;
@@ -18,6 +22,7 @@ import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
@@ -34,9 +39,16 @@ public class EditSequencesController implements Initializable, ListCellParent<Po
 	@FXML
 	public TextField rushTextfield;
 	@FXML
-	public ComboBox<PokemonSpriteSequence> sequenceCombobox;
+	public ComboBox<Integer> sequenceCombobox;
 	@FXML
 	public GridPane sequenceProperties;
+
+	private HashMap<Integer, PokemonSpriteSequence> sequences = new HashMap<>();
+
+	private PokemonSpriteSequence getSequence(int id)
+	{
+		return this.sequences.get(id);
+	}
 
 	@Override
 	public Node graphicFor(PokemonSpriteFrame item)
@@ -52,6 +64,17 @@ public class EditSequencesController implements Initializable, ListCellParent<Po
 	public void initialize(URL location, ResourceBundle resources)
 	{
 		this.sequenceProperties.setDisable(true);
+
+		Pattern p = Pattern.compile("\\d*");
+		this.rushTextfield.setTextFormatter(new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
+			return p.matcher(change.getControlNewText()).matches() ? change : null;
+		}));
+		this.hitTextfield.setTextFormatter(new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
+			return p.matcher(change.getControlNewText()).matches() ? change : null;
+		}));
+		this.returnTextfield.setTextFormatter(new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
+			return p.matcher(change.getControlNewText()).matches() ? change : null;
+		}));
 
 		this.sequenceCombobox.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> this.onSequenceChanged(oldValue, newValue));
@@ -87,8 +110,13 @@ public class EditSequencesController implements Initializable, ListCellParent<Po
 
 	public void onExistingSequencesChanged(HashSet<Integer> existing)
 	{
-		// TODO Auto-generated method stub
-
+		for (Integer id : existing)
+			if (id != -1 && !this.sequences.containsKey(id))
+			{
+				this.sequences.put(id, new PokemonSpriteSequence(id));
+				this.sequenceCombobox.getItems().add(id);
+				this.sequenceCombobox.getItems().sort(Comparator.naturalOrder());
+			}
 	}
 
 	@Override
@@ -99,16 +127,17 @@ public class EditSequencesController implements Initializable, ListCellParent<Po
 	public void onRename(PokemonSpriteFrame item, String name)
 	{}
 
-	private void onSequenceChanged(PokemonSpriteSequence oldValue, PokemonSpriteSequence newValue)
+	private void onSequenceChanged(Integer oldValue, Integer newValue)
 	{
 		if (oldValue != null) this.saveSequence(oldValue);
 		this.framesList.getItems().clear();
 		if (newValue != null)
 		{
-			this.rushTextfield.setText(String.valueOf(newValue.rushPoint));
-			this.hitTextfield.setText(String.valueOf(newValue.hitPoint));
-			this.returnTextfield.setText(String.valueOf(newValue.returnPoint));
-			this.framesList.getItems().addAll(newValue.frames());
+			PokemonSpriteSequence s = this.getSequence(newValue);
+			this.rushTextfield.setText(String.valueOf(s.rushPoint));
+			this.hitTextfield.setText(String.valueOf(s.hitPoint));
+			this.returnTextfield.setText(String.valueOf(s.returnPoint));
+			this.framesList.getItems().addAll(s.frames());
 		}
 	}
 
@@ -122,10 +151,19 @@ public class EditSequencesController implements Initializable, ListCellParent<Po
 		return Math.max(30, spriteset.get(item.frameID).image().getHeight());
 	}
 
-	private void saveSequence(PokemonSpriteSequence old)
+	private void saveSequence(Integer oldValue)
 	{
-		// TODO Auto-generated method stub
+		int rush, hit, ret;
 
+		if (this.rushTextfield.getText().equals("")) rush = 0;
+		else rush = Integer.parseInt(this.rushTextfield.getText());
+		if (this.hitTextfield.getText().equals("")) hit = 0;
+		else hit = Integer.parseInt(this.hitTextfield.getText());
+		if (this.returnTextfield.getText().equals("")) ret = 0;
+		else ret = Integer.parseInt(this.returnTextfield.getText());
+
+		PokemonSpriteSequence s = new PokemonSpriteSequence(oldValue, rush, hit, ret, this.framesList.getItems());
+		this.sequences.put(oldValue, s);
 	}
 
 	public void setupFor(PokemonSpritesetData item)
@@ -133,7 +171,11 @@ public class EditSequencesController implements Initializable, ListCellParent<Po
 		this.sequenceProperties.setDisable(item == null);
 
 		this.sequenceCombobox.getItems().clear();
-		this.sequenceCombobox.getItems().addAll(item.sequences());
+		for (PokemonSpriteSequence s : item.sequences())
+		{
+			this.sequences.put(s.id, s);
+			this.sequenceCombobox.getItems().addAll(s.id);
+		}
 	}
 
 }

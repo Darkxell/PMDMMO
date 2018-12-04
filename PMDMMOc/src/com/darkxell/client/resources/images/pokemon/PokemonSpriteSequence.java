@@ -7,13 +7,31 @@ import org.jdom2.Element;
 
 import com.darkxell.common.util.XMLUtils;
 
-public class PokemonSpriteSequence
+public class PokemonSpriteSequence implements Comparable<PokemonSpriteSequence>
 {
 
 	public final int duration;
 	final PokemonSpriteFrame[] frames;
 	public final int id;
 	public final int rushPoint, hitPoint, returnPoint;
+
+	public PokemonSpriteSequence(Integer id)
+	{
+		this.id = id;
+		this.duration = 0;
+		this.frames = new PokemonSpriteFrame[0];
+		this.rushPoint = this.hitPoint = this.returnPoint = 0;
+	}
+
+	public PokemonSpriteSequence(Integer id, int rush, int hit, int ret, Collection<PokemonSpriteFrame> frames)
+	{
+		this.id = id;
+		this.rushPoint = rush;
+		this.hitPoint = hit;
+		this.returnPoint = ret;
+		this.frames = frames.toArray(new PokemonSpriteFrame[frames.size()]);
+		this.duration = this.totalDuration();
+	}
 
 	public PokemonSpriteSequence(PokemonSpritesetData pokemonSpritesetData, Element xml)
 	{
@@ -30,6 +48,12 @@ public class PokemonSpriteSequence
 			++i;
 		}
 		this.duration = this.totalDuration();
+	}
+
+	@Override
+	public int compareTo(PokemonSpriteSequence o)
+	{
+		return Integer.compare(this.id, o.id);
 	}
 
 	public double dashOffset(int tick)

@@ -106,6 +106,24 @@ public class EditTableController implements Initializable
 			cell.getRowValue().east = -1;
 			this.table.refresh();
 		}
+		this.onExistingSequencesChanged();
+	}
+
+	private void onExistingSequencesChanged()
+	{
+		HashSet<Integer> existing = new HashSet<>();
+		for (SpriteTableItem it : this.table.getItems())
+		{
+			existing.add(it.north);
+			existing.add(it.northeast);
+			existing.add(it.east);
+			existing.add(it.southeast);
+			existing.add(it.south);
+			existing.add(it.southwest);
+			existing.add(it.west);
+			existing.add(it.northwest);
+		}
+		this.onExistingSequencesChanged(existing);
 	}
 
 	private void onExistingSequencesChanged(HashSet<Integer> existing)
@@ -122,6 +140,7 @@ public class EditTableController implements Initializable
 			cell.getRowValue().northeast = -1;
 			this.table.refresh();
 		}
+		this.onExistingSequencesChanged();
 	}
 
 	public void onNorthEdited(CellEditEvent<SpriteTableItem, String> cell)
@@ -133,6 +152,7 @@ public class EditTableController implements Initializable
 			cell.getRowValue().north = -1;
 			this.table.refresh();
 		}
+		this.onExistingSequencesChanged();
 	}
 
 	public void onNorthwestEdited(CellEditEvent<SpriteTableItem, String> cell)
@@ -144,6 +164,7 @@ public class EditTableController implements Initializable
 			cell.getRowValue().northwest = -1;
 			this.table.refresh();
 		}
+		this.onExistingSequencesChanged();
 	}
 
 	public void onSoutheastEdited(CellEditEvent<SpriteTableItem, String> cell)
@@ -155,6 +176,7 @@ public class EditTableController implements Initializable
 			cell.getRowValue().southeast = -1;
 			this.table.refresh();
 		}
+		this.onExistingSequencesChanged();
 	}
 
 	public void onSouthEdited(CellEditEvent<SpriteTableItem, String> cell)
@@ -166,6 +188,7 @@ public class EditTableController implements Initializable
 			cell.getRowValue().south = -1;
 			this.table.refresh();
 		}
+		this.onExistingSequencesChanged();
 	}
 
 	public void onSouthwestEdited(CellEditEvent<SpriteTableItem, String> cell)
@@ -177,6 +200,7 @@ public class EditTableController implements Initializable
 			cell.getRowValue().southwest = -1;
 			this.table.refresh();
 		}
+		this.onExistingSequencesChanged();
 	}
 
 	public void onWestEdited(CellEditEvent<SpriteTableItem, String> cell)
@@ -188,6 +212,7 @@ public class EditTableController implements Initializable
 			cell.getRowValue().west = -1;
 			this.table.refresh();
 		}
+		this.onExistingSequencesChanged();
 	}
 
 	public void setupFor(PokemonSpritesetData item)
