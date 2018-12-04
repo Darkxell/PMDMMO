@@ -1,5 +1,6 @@
 package fr.darkxell.dataeditor.application.controller.sprites;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -13,22 +14,31 @@ import com.darkxell.client.resources.images.pokemon.PokemonSpriteFrame;
 import com.darkxell.client.resources.images.pokemon.PokemonSpriteSequence;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesetData;
 
+import fr.darkxell.dataeditor.application.DataEditor;
 import fr.darkxell.dataeditor.application.controls.CustomList;
 import fr.darkxell.dataeditor.application.controls.CustomListCell.ListCellParent;
+import fr.darkxell.dataeditor.application.util.FXUtils;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
 public class EditSequencesController implements Initializable, ListCellParent<PokemonSpriteFrame>
 {
 
+	public static EditSequencesController instance;
+	public static Stage popup;
+
+	private int editing;
 	@FXML
 	public ListView<PokemonSpriteFrame> framesList;
 	@FXML
@@ -63,6 +73,8 @@ public class EditSequencesController implements Initializable, ListCellParent<Po
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
 	{
+		instance = this;
+
 		this.sequenceProperties.setDisable(true);
 
 		Pattern p = Pattern.compile("\\d*");
@@ -104,8 +116,19 @@ public class EditSequencesController implements Initializable, ListCellParent<Po
 	@Override
 	public void onEdit(PokemonSpriteFrame item)
 	{
-		// TODO Auto-generated method stub
-
+		this.editing = this.framesList.getItems().indexOf(item);
+		try
+		{
+			FXMLLoader loader = new FXMLLoader(DataEditor.class.getResource("/layouts/sprites/edit_frame.fxml"));
+			Parent root = loader.load();
+			EditFrameController controller = loader.getController();
+			controller.setSpriteset(this.parent.generalDataController.spriteset);
+			controller.setup(item);
+			popup = FXUtils.showPopup(root, "Edit Frame");
+		} catch (IOException e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 	public void onExistingSequencesChanged(HashSet<Integer> existing)
@@ -117,6 +140,11 @@ public class EditSequencesController implements Initializable, ListCellParent<Po
 				this.sequenceCombobox.getItems().add(id);
 				this.sequenceCombobox.getItems().sort(Comparator.naturalOrder());
 			}
+	}
+
+	public void onFrameEdited(PokemonSpriteFrame frame)
+	{
+		if (this.editing != -1) this.framesList.getItems().set(this.editing, frame);
 	}
 
 	@Override

@@ -38,6 +38,18 @@ public class PokemonSpriteFrame
 		this.isFlipped = XMLUtils.getAttribute(xml, "flip", false);
 	}
 
+	public PokemonSpriteFrame(PokemonSpritesetData spriteset, int frameID, int duration, int spriteX, int spriteY, int shadowX, int shadowY, boolean isFlipped)
+	{
+		this.spriteset = spriteset;
+		this.frameID = frameID;
+		this.duration = duration;
+		this.spriteX = spriteX;
+		this.spriteY = spriteY;
+		this.shadowX = shadowX;
+		this.shadowY = shadowY;
+		this.isFlipped = isFlipped;
+	}
+
 	@Override
 	public String toString()
 	{
