@@ -30,7 +30,7 @@
          </children>
       </VBox>
    </center>
-   <right>
+   <bottom>
       <GridPane alignment="CENTER" BorderPane.alignment="CENTER">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" />
@@ -51,6 +51,9 @@
             <Label text="Pokémon State :" GridPane.rowIndex="2" />
             <ComboBox fx:id="stateCombobox" onAction="#onPropertiesChanged" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
+         <BorderPane.margin>
+            <Insets top="10.0" />
+         </BorderPane.margin>
       </GridPane>
-   </right>
+   </bottom>
 </BorderPane>

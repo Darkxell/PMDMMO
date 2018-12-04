@@ -1,6 +1,7 @@
 package fr.darkxell.dataeditor.application.controller.sprites;
 
 import java.net.URL;
+import java.util.HashSet;
 import java.util.ResourceBundle;
 
 import com.darkxell.client.resources.images.RegularSpriteSet;
@@ -72,8 +73,19 @@ public class EditSequencesController implements Initializable, ListCellParent<Po
 		this.framesList.getItems().remove(item);
 	}
 
+	public void onDimensionsChanged()
+	{
+		this.framesList.refresh();
+	}
+
 	@Override
 	public void onEdit(PokemonSpriteFrame item)
+	{
+		// TODO Auto-generated method stub
+
+	}
+
+	public void onExistingSequencesChanged(HashSet<Integer> existing)
 	{
 		// TODO Auto-generated method stub
 
@@ -107,7 +119,7 @@ public class EditSequencesController implements Initializable, ListCellParent<Po
 		RegularSpriteSet spriteset = this.parent.generalDataController.spriteset;
 		if (spriteset == null) return 30;
 		if (spriteset.get(item.frameID) == null) return 30;
-		return spriteset.get(item.frameID).image().getHeight();
+		return Math.max(30, spriteset.get(item.frameID).image().getHeight());
 	}
 
 	private void saveSequence(PokemonSpriteSequence old)

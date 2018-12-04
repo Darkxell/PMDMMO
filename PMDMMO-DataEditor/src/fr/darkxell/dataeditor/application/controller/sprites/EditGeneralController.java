@@ -49,6 +49,7 @@ public class EditGeneralController implements Initializable
 		if (!this.widthTextfield.getText().equals("")) width = Integer.parseInt(this.widthTextfield.getText());
 		if (!this.heightTextfield.getText().equals("")) height = Integer.parseInt(this.heightTextfield.getText());
 		this.spriteset = PokemonSpritesets.loadTestSpriteset(this.spritesetid, width, height);
+		this.parent.onDimensionsChanged();
 	}
 
 	public void onSaveChanges()

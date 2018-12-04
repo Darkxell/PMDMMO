@@ -32,7 +32,7 @@
 						<fx:include fx:id="sequenceTable" source="edit_table.fxml" />
 					</content>
 				</TitledPane>
-            <TitledPane animated="false" text="Sequences">
+            <TitledPane animated="false" text="Sequences" VBox.vgrow="ALWAYS">
 					<content>
 						<fx:include fx:id="sequences" source="edit_sequences.fxml" />
 					</content>

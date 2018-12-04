@@ -49,6 +49,12 @@ public class PokemonSpritesetData
 		this.hasBigShadow = false;
 	}
 
+	@SuppressWarnings("unchecked")
+	public HashMap<Pair<PokemonSpriteState, Direction>, Integer> sequenceMapper()
+	{
+		return (HashMap<Pair<PokemonSpriteState, Direction>, Integer>) this.states.clone();
+	}
+
 	public Collection<PokemonSpriteSequence> sequences()
 	{
 		return this.sequences.values();

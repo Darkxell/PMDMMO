@@ -1,6 +1,7 @@
 package fr.darkxell.dataeditor.application.controller.sprites;
 
 import java.net.URL;
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -115,6 +116,11 @@ public class SpritesTabController implements Initializable, ListCellParent<Pokem
 		this.reloadList();
 	}
 
+	public void onDimensionsChanged()
+	{
+		this.sequencesController.onDimensionsChanged();
+	}
+
 	@Override
 	public void onEdit(PokemonSpritesetData item)
 	{
@@ -127,6 +133,11 @@ public class SpritesTabController implements Initializable, ListCellParent<Pokem
 		this.sequencesController.setupFor(item);
 		PokemonSpecies s = PokemonRegistry.find(item.id);
 		if (s != null) this.testSpriteController.pokemonCombobox.getSelectionModel().select(s);
+	}
+
+	public void onExistingSequencesChanged(HashSet<Integer> existing)
+	{
+		this.sequencesController.onExistingSequencesChanged(existing);
 	}
 
 	@Override
