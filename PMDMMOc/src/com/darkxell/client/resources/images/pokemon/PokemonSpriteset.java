@@ -17,14 +17,16 @@ public class PokemonSpriteset extends RegularSpriteSet
 		this.data = data;
 	}
 
-	public PokemonSpriteSequence getSequence(PokemonSpriteState state, Direction direction)
-	{
-		return this.data.sequences.get(this.data.states.get(new Pair<>(state, direction)));
-	}
-
 	public PokemonSpriteFrame getFrame(PokemonSpriteState state, Direction direction, int tick)
 	{
 		return this.getSequence(state, direction).getFrame(tick);
+	}
+
+	public PokemonSpriteSequence getSequence(PokemonSpriteState state, Direction direction)
+	{
+		Integer index = this.data.states.get(new Pair<>(state, direction));
+		if (index == null) index = this.data.states.get(new Pair<>(PokemonSpriteState.IDLE, direction));
+		return this.data.sequences.get(index);
 	}
 
 }

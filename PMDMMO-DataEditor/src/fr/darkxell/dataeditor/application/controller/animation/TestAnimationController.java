@@ -35,14 +35,10 @@ import javafx.scene.image.ImageView;
 public class TestAnimationController implements Initializable
 {
 	private static Floor floor;
-	public static TestAnimationController instance;
 	public static DungeonState state;
-	private static DungeonPokemon tester;
-	public static AnimationPreviewThread thread;
 
 	private AnimationListItem animation;
 	private PokemonAnimation current;
-
 	@FXML
 	public ComboBox<Direction> directionCombobox;
 	@FXML
@@ -55,15 +51,19 @@ public class TestAnimationController implements Initializable
 	public CheckBox shinyCheckbox;
 	@FXML
 	public ComboBox<PokemonSpriteState> stateCombobox;
+	private DungeonPokemon tester;
+	public AnimationPreviewThread thread;
 
 	public void exitTab()
 	{
-		Launcher.setProcessingProfile(Launcher.PROFILE_UNDEFINED);
+		this.thread.exit();
 	}
 
 	private DungeonPokemon generateTester()
 	{
-		DungeonPokemon pokemon = new DungeonPokemon(this.pokemonCombobox.getValue().generate(new Random(), 1, this.shinyCheckbox.isSelected() ? 1 : 0));
+		PokemonSpecies s = this.pokemonCombobox.getValue();
+		if (s == null) s = PokemonRegistry.find(1);
+		DungeonPokemon pokemon = new DungeonPokemon(s.generate(new Random(), 1, this.shinyCheckbox.isSelected() ? 1 : 0));
 		floor.summonPokemon(pokemon, floor.getWidth() / 2, floor.getHeight() / 2, new ArrayList<>());
 		pokemon.setFacing(this.directionCombobox.getValue());
 		state.pokemonRenderer.register(pokemon);
@@ -74,7 +74,14 @@ public class TestAnimationController implements Initializable
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
 	{
-		instance = this;
+
+		this.pokemonCombobox.getItems().addAll(PokemonRegistry.list());
+		this.stateCombobox.getItems().addAll(PokemonSpriteState.values());
+		this.directionCombobox.getItems().addAll(Direction.directions);
+
+		this.pokemonCombobox.getSelectionModel().select(1);
+		this.stateCombobox.setValue(PokemonSpriteState.IDLE);
+		this.directionCombobox.setValue(Direction.SOUTH);
 	}
 
 	private PokemonAnimation loadAnimation()
@@ -123,11 +130,10 @@ public class TestAnimationController implements Initializable
 		floor = Persistance.floor = new Floor(1, Layout.find(Layout.LAYOUT_SINGLEROOM),
 				Persistance.dungeon = DungeonRegistry.find(1).newInstance(new Random().nextLong()), new Random(), false);
 		floor.generate();
-
-		tester = new DungeonPokemon(PokemonRegistry.find(1).generate(new Random(), 5));
-		floor.summonPokemon(tester, floor.getWidth() / 2, floor.getHeight() / 2, new ArrayList<>());
-
 		state = Persistance.dungeonState = new DungeonState();
+
+		tester = this.generateTester();
+
 		state.setCamera(tester);
 		Persistance.stateManager = new PrincipalMainState();
 		// Persistance.stateManager.setState(state);
@@ -135,15 +141,7 @@ public class TestAnimationController implements Initializable
 		Launcher.isRunning = true;
 		Launcher.setProcessingProfile(Launcher.PROFILE_SYNCHRONIZED);
 
-		new Thread(thread = new AnimationPreviewThread()).start();
-
-		this.pokemonCombobox.getItems().addAll(PokemonRegistry.list());
-		this.stateCombobox.getItems().addAll(PokemonSpriteState.values());
-		this.directionCombobox.getItems().addAll(Direction.directions);
-
-		this.pokemonCombobox.setValue(tester.species());
-		this.stateCombobox.setValue(PokemonSpriteState.IDLE);
-		this.directionCombobox.setValue(Direction.SOUTH);
+		new Thread(this.thread = new AnimationPreviewThread(this)).start();
 	}
 
 	public void setAnimation(AnimationListItem animation)
@@ -156,8 +154,9 @@ public class TestAnimationController implements Initializable
 
 	public void updateProgressBar(boolean shouldBeFull)
 	{
-		if (shouldBeFull) this.progressBar.setProgress(1);
-		else if (this.current == null || this.current.duration() == -1) this.progressBar.setProgress(0);
+		if (this.current == null) this.progressBar.setProgress(0);
+		else if (shouldBeFull) this.progressBar.setProgress(1);
+		else if (this.current.duration() == -1) this.progressBar.setProgress(0);
 		else this.progressBar.setProgress(Math.min(1, this.current.tick() * 1. / this.current.duration()));
 	}
 

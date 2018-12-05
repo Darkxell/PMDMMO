@@ -9,6 +9,8 @@ import fr.darkxell.dataeditor.application.controller.animation.AnimationsTabCont
 import fr.darkxell.dataeditor.application.controller.cutscene.CutscenesTabController;
 import fr.darkxell.dataeditor.application.controller.dungeon.DungeonsTabController;
 import fr.darkxell.dataeditor.application.controller.item.ItemsTabController;
+import fr.darkxell.dataeditor.application.controller.move.MovesTabController;
+import fr.darkxell.dataeditor.application.controller.sprites.SpritesTabController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -34,18 +36,34 @@ public class MainController implements Initializable, ChangeListener<Boolean>
 	private Tab itemsTab;
 	@FXML
 	private ItemsTabController itemsTabPageController;
+	@FXML
+	private Tab movesTab;
+	@FXML
+	private MovesTabController movesTabPageController;
+	@FXML
+	private Tab pkspritesTab;
+	@FXML
+	private SpritesTabController pkspritesTabPageController;
 
 	@Override
 	public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue)
 	{
-		if (newValue) this.animationsTabPageController.testAnimationController.reload();
-		else this.animationsTabPageController.testAnimationController.exitTab();
+		if (observable == this.animationsTab.selectedProperty())
+		{
+			if (newValue) this.animationsTabPageController.testAnimationController.reload();
+			else this.animationsTabPageController.testAnimationController.exitTab();
+		} else
+		{
+			if (newValue) this.pkspritesTabPageController.testSpriteController.reload();
+			else this.pkspritesTabPageController.testSpriteController.exitTab();
+		}
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
 	{
 		this.animationsTab.selectedProperty().addListener(this);
+		this.pkspritesTab.selectedProperty().addListener(this);
 	}
 
 	public void onReloadLang()

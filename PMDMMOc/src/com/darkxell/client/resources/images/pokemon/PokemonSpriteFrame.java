@@ -19,6 +19,13 @@ public class PokemonSpriteFrame
 	/** Offset to apply to the sprite. */
 	public final int spriteX, spriteY;
 
+	public PokemonSpriteFrame()
+	{
+		this.spriteset = null;
+		this.frameID = this.duration = this.spriteX = this.spriteY = this.shadowX = this.shadowY = 0;
+		this.isFlipped = false;
+	}
+
 	public PokemonSpriteFrame(PokemonSpritesetData pokemonSpriteset, Element xml)
 	{
 		this.spriteset = pokemonSpriteset;
@@ -29,6 +36,41 @@ public class PokemonSpriteFrame
 		this.shadowX = XMLUtils.getAttribute(xml, "shadowx", 0);
 		this.shadowY = XMLUtils.getAttribute(xml, "shadowy", 0);
 		this.isFlipped = XMLUtils.getAttribute(xml, "flip", false);
+	}
+
+	public PokemonSpriteFrame(PokemonSpritesetData spriteset, int frameID, int duration, int spriteX, int spriteY, int shadowX, int shadowY, boolean isFlipped)
+	{
+		this.spriteset = spriteset;
+		this.frameID = frameID;
+		this.duration = duration;
+		this.spriteX = spriteX;
+		this.spriteY = spriteY;
+		this.shadowX = shadowX;
+		this.shadowY = shadowY;
+		this.isFlipped = isFlipped;
+	}
+
+	@Override
+	public String toString()
+	{
+		String s = this.frameID + " for " + this.duration + " ticks";
+		if (this.spriteX != 0) s += ", X=" + this.spriteX;
+		if (this.spriteY != 0) s += ", Y=" + this.spriteY;
+		if (this.isFlipped) s += ", flipped";
+		return s;
+	}
+
+	public Element toXML()
+	{
+		Element root = new Element("AnimFrame");
+		XMLUtils.setAttribute(root, "sprite", this.frameID, 0);
+		XMLUtils.setAttribute(root, "duration", this.duration, 0);
+		XMLUtils.setAttribute(root, "spritex", this.spriteX, 0);
+		XMLUtils.setAttribute(root, "spritey", this.spriteY, 0);
+		XMLUtils.setAttribute(root, "shadowx", this.shadowX, 0);
+		XMLUtils.setAttribute(root, "shadowy", this.shadowY, 0);
+		XMLUtils.setAttribute(root, "flip", this.isFlipped, false);
+		return root;
 	}
 
 }
