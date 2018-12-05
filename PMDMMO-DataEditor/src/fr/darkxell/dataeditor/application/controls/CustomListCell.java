@@ -26,6 +26,11 @@ public class CustomListCell<T> extends ListCell<T>
 
 		void onRename(T item, String name);
 
+		default double prefWidth(T item)
+		{
+			return ListCell.USE_COMPUTED_SIZE;
+		}
+
 	}
 
 	public final ListCellParent<T> parent;
@@ -97,6 +102,7 @@ public class CustomListCell<T> extends ListCell<T>
 		super.updateItem(item, empty);
 		this.setText(empty ? "" : item.toString());
 		this.setGraphic(this.parent.graphicFor(item));
+		this.setPrefHeight(this.parent.prefWidth(item));
 	}
 
 }

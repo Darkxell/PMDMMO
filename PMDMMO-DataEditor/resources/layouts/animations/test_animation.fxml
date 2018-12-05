@@ -13,7 +13,6 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-
 <BorderPane xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.darkxell.dataeditor.application.controller.animation.TestAnimationController">
    <opaqueInsets>
       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -25,13 +24,13 @@
       <VBox alignment="CENTER" BorderPane.alignment="CENTER">
          <children>
             <Button mnemonicParsing="false" onAction="#onReload" text="Reload" />
-            <ImageView fx:id="imageView" fitHeight="576.0" fitWidth="768.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="imageView" fitHeight="288" fitWidth="384" pickOnBounds="true" preserveRatio="true" />
             <ProgressBar fx:id="progressBar" prefWidth="400.0" progress="0.0" />
             <Label text="This is a preview of this Animation. Click 'Reload' to reload." />
          </children>
       </VBox>
    </center>
-   <right>
+   <bottom>
       <GridPane alignment="CENTER" BorderPane.alignment="CENTER">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" />
@@ -52,6 +51,9 @@
             <Label text="Pokémon State :" GridPane.rowIndex="2" />
             <ComboBox fx:id="stateCombobox" onAction="#onPropertiesChanged" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
+         <BorderPane.margin>
+            <Insets top="10.0" />
+         </BorderPane.margin>
       </GridPane>
-   </right>
+   </bottom>
 </BorderPane>

@@ -10,12 +10,13 @@ public class FileManager
 
 	public static final HashMap<String, String> filePaths = new HashMap<>();
 
-	public static final String LANG = "lang", CUTSCENES = "cutscenes";
+	public static final String LANG = "lang", CUTSCENES = "cutscenes", POKEMON_SPRITES = "sprites";
 
 	static
 	{
-		filePaths.put(LANG, "../PMDMMOc/resources/lang/");
-		filePaths.put(CUTSCENES, "../PMDMMOc/resources/cutscenes/");
+		filePaths.put(LANG, "../PMDMMOc/resources/lang");
+		filePaths.put(CUTSCENES, "../PMDMMOc/resources/cutscenes");
+		filePaths.put(POKEMON_SPRITES, "../PMDMMOc/resources/pokemons/data");
 	}
 
 	public static File create(String path)

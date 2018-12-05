@@ -3,7 +3,9 @@ package com.darkxell.client.launchable;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 
+import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.SpriteFactory;
+import com.darkxell.common.util.Util;
 
 /** Experimental class that combines the updater and the renderer to synchronize updates and graphical prints. */
 public class UpdaterAndRenderer implements Runnable
@@ -22,6 +24,11 @@ public class UpdaterAndRenderer implements Runnable
 	public int currentUPS()
 	{
 		return this.ups;
+	}
+
+	protected boolean keepRunning()
+	{
+		return Launcher.isRunning && Launcher.getProcessingProfile() == Launcher.PROFILE_SYNCHRONIZED;
 	}
 
 	@Override
@@ -45,7 +52,7 @@ public class UpdaterAndRenderer implements Runnable
 			e1.printStackTrace();
 		}
 
-		while (Launcher.isRunning && Launcher.getProcessingProfile() == Launcher.PROFILE_SYNCHRONIZED)
+		while (this.keepRunning())
 		{
 			this.update();
 
@@ -71,6 +78,7 @@ public class UpdaterAndRenderer implements Runnable
 		g.clearRect(0, 0, width, height);
 
 		Persistance.stateManager.render(g, width, height);
+		TextRenderer.render(g, "V " + Util.GAME_VERSION, 5, 5);
 
 		g.dispose();
 		bf.show();

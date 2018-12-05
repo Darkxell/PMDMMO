@@ -56,13 +56,15 @@ public class PokemonPortrait extends RegularSpriteSet
 
 	public static void drawPortrait(Graphics2D g, Pokemon pokemon, PortraitEmotion emotion, int x, int y)
 	{
-		drawPortrait(g, pokemon.species(), emotion, pokemon.isShiny(), x, y);
+		drawPortrait(g, pokemon.species(), emotion, pokemon.isShiny(), x, y, false);
 	}
 
 	/** Draws the portrait of the input Pokemon at the input topright location. */
-	public static void drawPortrait(Graphics2D g, PokemonSpecies pokemon, PortraitEmotion emotion, boolean shiny, int x, int y)
+	public static void drawPortrait(Graphics2D g, PokemonSpecies pokemon, PortraitEmotion emotion, boolean shiny, int x, int y, boolean flip)
 	{
-		g.drawImage(PokemonPortrait.portrait(pokemon, emotion, shiny), x + 4, y + 4, null);
+		BufferedImage portrait = PokemonPortrait.portrait(pokemon, emotion, shiny);
+		if (flip) g.drawImage(portrait, x + 4 + portrait.getWidth(), y + 4, -portrait.getWidth(), portrait.getHeight(), null);
+		else g.drawImage(portrait, x + 4, y + 4, null);
 		g.drawImage(Sprites.Res_Hud.portrait.image(), x, y, null);
 	}
 

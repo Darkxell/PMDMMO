@@ -4,16 +4,7 @@ import com.darkxell.client.mechanics.freezones.cutscenemaps.MtSteelTopFreezone;
 import com.darkxell.client.mechanics.freezones.cutscenemaps.ThunderwaveClearFreezone;
 import com.darkxell.client.mechanics.freezones.cutscenemaps.ThunderwaveEntranceFreezone;
 import com.darkxell.client.mechanics.freezones.cutscenemaps.TinywoodsClearFreezone;
-import com.darkxell.client.mechanics.freezones.zones.BaseFreezone;
-import com.darkxell.client.mechanics.freezones.zones.BaseInsideFreezone;
-import com.darkxell.client.mechanics.freezones.zones.DojoFreezone;
-import com.darkxell.client.mechanics.freezones.zones.DreamFreezone;
-import com.darkxell.client.mechanics.freezones.zones.ForestFreezone;
-import com.darkxell.client.mechanics.freezones.zones.LumiousCaveFreezone;
-import com.darkxell.client.mechanics.freezones.zones.OfficeFreezone;
-import com.darkxell.client.mechanics.freezones.zones.OfficeinsideFreezone;
-import com.darkxell.client.mechanics.freezones.zones.PokemonSquareFreezone;
-import com.darkxell.client.mechanics.freezones.zones.PondFreezone;
+import com.darkxell.client.mechanics.freezones.zones.*;
 import com.darkxell.client.mechanics.freezones.zones.friend.*;
 import com.darkxell.common.zones.FreezoneInfo;
 

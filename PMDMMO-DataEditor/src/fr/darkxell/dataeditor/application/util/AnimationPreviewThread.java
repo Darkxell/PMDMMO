@@ -13,14 +13,32 @@ import javafx.embed.swing.SwingFXUtils;
 
 public class AnimationPreviewThread extends UpdaterAndRenderer implements AnimationEndListener
 {
+	public TestAnimationController controller;
 	public int cooldown = 50;
 	private BufferedImage image;
+	private boolean shouldStop = false;
+
+	public AnimationPreviewThread(TestAnimationController controller)
+	{
+		this.controller = controller;
+	}
+
+	public void exit()
+	{
+		this.shouldStop = true;
+	}
+
+	@Override
+	protected boolean keepRunning()
+	{
+		return super.keepRunning() && !this.shouldStop;
+	}
 
 	@Override
 	public void onAnimationEnd(AbstractAnimation animation)
 	{
 		this.cooldown = 50;
-		TestAnimationController.instance.updateProgressBar(true);
+		this.controller.updateProgressBar(true);
 	}
 
 	@Override
@@ -30,10 +48,10 @@ public class AnimationPreviewThread extends UpdaterAndRenderer implements Animat
 		if (this.cooldown > 0)
 		{
 			--this.cooldown;
-			if (this.cooldown == 0) TestAnimationController.instance.playAnimation(false);
-		} else TestAnimationController.instance.updateProgressBar(false);
+			if (this.cooldown == 0) this.controller.playAnimation(false);
+		} else this.controller.updateProgressBar(false);
 
-		int width = PrincipalMainState.displayWidth, height = PrincipalMainState.displayHeight;
+		int width = PrincipalMainState.displayWidth / 2, height = PrincipalMainState.displayHeight / 2;
 		image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		Graphics2D g = (Graphics2D) image.getGraphics();
 		// g.scale(16, 16);
@@ -45,7 +63,7 @@ public class AnimationPreviewThread extends UpdaterAndRenderer implements Animat
 		// g.scale(1. / 16, 1. / 16);
 		g.dispose();
 
-		TestAnimationController.instance.imageView.setImage(SwingFXUtils.toFXImage(image, null));
+		this.controller.imageView.setImage(SwingFXUtils.toFXImage(image, null));
 	}
 
 }

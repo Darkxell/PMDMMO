@@ -16,10 +16,17 @@ public class PokemonDialogScreen extends DialogScreen
 {
 	public static enum DialogPortraitLocation
 	{
-		BOTTOM_LEFT,
-		BOTTOM_RIGHT,
-		TOP_LEFT,
-		TOP_RIGHT;
+		BOTTOM_LEFT(true),
+		BOTTOM_RIGHT(false),
+		TOP_LEFT(true),
+		TOP_RIGHT(false);
+
+		public final boolean flip;
+
+		private DialogPortraitLocation(boolean flip)
+		{
+			this.flip = flip;
+		}
 
 		public Point2D locate(Rectangle dialogBox, Sprite portrait)
 		{
@@ -97,7 +104,7 @@ public class PokemonDialogScreen extends DialogScreen
 		{
 			Rectangle dialogBox = this.parentState.dialogBox();
 			Point2D portraitL = this.portraitLocation.locate(dialogBox, Sprites.Res_Hud.portrait);
-			PokemonPortrait.drawPortrait(g, this.pokemon, this.emotion, this.shiny, (int) portraitL.x, (int) portraitL.y);
+			PokemonPortrait.drawPortrait(g, this.pokemon, this.emotion, this.shiny, (int) portraitL.x, (int) portraitL.y, this.portraitLocation.flip);
 		}
 	}
 

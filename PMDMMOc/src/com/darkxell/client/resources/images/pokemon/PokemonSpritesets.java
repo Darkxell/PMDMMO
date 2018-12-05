@@ -1,12 +1,18 @@
 package com.darkxell.client.resources.images.pokemon;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.Collection;
 import java.util.HashMap;
 
 import org.jdom2.Element;
 
 import com.darkxell.client.resources.Res;
+import com.darkxell.client.resources.images.RegularSpriteSet;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.PokemonSpecies;
+import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.XMLUtils;
 
 public final class PokemonSpritesets
@@ -17,10 +23,20 @@ public final class PokemonSpritesets
 	/** Stores the loaded Spritesheets. */
 	private static final HashMap<Integer, PokemonSpriteset> spritesets = new HashMap<Integer, PokemonSpriteset>();
 
+	public static boolean dataExists(Integer id)
+	{
+		return data.containsKey(id) && data.get(id).id == id;
+	}
+
 	/** Disposes of the Spritesheet for the Pokemon with the input ID. */
 	public static void disposeSpriteset(int id)
 	{
 		spritesets.remove(id);
+	}
+
+	public static PokemonSpritesetData getData(int id)
+	{
+		return data.get(id);
 	}
 
 	/** Returns the Spritesheet for the Pokemon with the input ID. Loads it if not loaded. */
@@ -45,15 +61,44 @@ public final class PokemonSpritesets
 		return (shiny ? -1 : 1) * species.id;
 	}
 
+	public static Collection<PokemonSpritesetData> listSpritesetData()
+	{
+		return data.values();
+	}
+
 	/** Reads the sprites data file. */
 	public static void loadData()
 	{
-		/* loadSpritesetData(0); Logger.d("Loading Pokemon sprite data..."); for (PokemonSpecies s : PokemonRegistry.list()) loadSpritesetData(s.id); */
 		loadSpriteset(0);
 	}
 
+	public static void loadData(String externalPath)
+	{
+		loadData();
+		File folder = new File(externalPath);
+		if (!folder.exists()) try
+		{
+			folder.mkdirs();
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+
+		for (File data : folder.listFiles())
+		{
+			try
+			{
+				Integer id = Integer.parseInt(data.getName().replaceAll("\\.xml", ""));
+				loadSpritesetData(id, id, externalPath + "/" + id);
+			} catch (Exception e)
+			{
+				Logger.w("Unconventional sprite data file, skipped: " + data.getName());
+			}
+		}
+	}
+
 	/** Loads the Spritesheet for the Pokemon with the input ID. */
-	private static void loadSpriteset(int id)
+	public static void loadSpriteset(int id)
 	{
 		String filename = Math.abs(id) + "";
 		int effectiveID = Math.abs(id);
@@ -63,8 +108,6 @@ public final class PokemonSpritesets
 			spritesets.put(id, spritesets.get(0));
 			return;
 		}
-
-		if (spritesets.containsKey(id)) return;
 
 		if (!data.containsKey(effectiveID)) loadSpritesetData(effectiveID);
 
@@ -84,18 +127,42 @@ public final class PokemonSpritesets
 	}
 
 	/** Loads the animations data for the Pokemon with the input ID. */
-	private static void loadSpritesetData(int id)
+	public static void loadSpritesetData(int id)
 	{
 		int effectiveID = Math.abs(id);
-		if (data.containsKey(effectiveID)) return;
-		Element xml = XMLUtils.read(PokemonSpritesets.class.getResourceAsStream("/pokemons/data/" + effectiveID + ".xml"));
+		loadSpritesetData(id, effectiveID, "/pokemons/data/" + effectiveID);
+	}
+
+	private static void loadSpritesetData(int id, int dataID, String path)
+	{
+		Element xml;
+		if (path.startsWith("/")) xml = XMLUtils.read(PokemonSpritesets.class.getResourceAsStream(path + ".xml"));
+		else try
+		{
+			xml = XMLUtils.read(new FileInputStream(new File(path + ".xml")));
+		} catch (FileNotFoundException e)
+		{
+			e.printStackTrace();
+			xml = null;
+		}
 		if (xml == null)
 		{
 			data.put(id, data.get(0));
 			return;
 		}
 
-		data.put(id, new PokemonSpritesetData(effectiveID, xml));
+		data.put(id, new PokemonSpritesetData(dataID, xml));
+	}
+
+	public static RegularSpriteSet loadTestSpriteset(int id, int spriteWidth, int spriteHeight)
+	{
+		return new RegularSpriteSet("/pokemons/" + id + ".png", spriteWidth, spriteHeight, -1, -1);
+	}
+
+	public static void remove(PokemonSpritesetData item)
+	{
+		data.entrySet().removeIf(entry -> entry.getValue() == item);
+		spritesets.entrySet().removeIf(entry -> entry.getValue().data == item);
 	}
 
 	private PokemonSpritesets()

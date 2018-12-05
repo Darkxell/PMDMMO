@@ -31,6 +31,7 @@ public class PokemonSprite
 		MOVE(1),
 		MULTISCRATCH(11, true),
 		MULTISTRIKE(12, true),
+		OTHER(42),
 		REARUP(34),
 		RICOCHET(14, true),
 		ROTATE(38),
