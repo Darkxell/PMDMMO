@@ -2,22 +2,7 @@ package com.darkxell.client.mechanics.cutscene;
 
 import org.jdom2.Element;
 
-import com.darkxell.client.mechanics.cutscene.event.AnimateCutsceneEvent;
-import com.darkxell.client.mechanics.cutscene.event.CameraCutsceneEvent;
-import com.darkxell.client.mechanics.cutscene.event.DelayCutsceneEvent;
-import com.darkxell.client.mechanics.cutscene.event.DespawnCutsceneEvent;
-import com.darkxell.client.mechanics.cutscene.event.DialogCutsceneEvent;
-import com.darkxell.client.mechanics.cutscene.event.DrawMapCutsceneEvent;
-import com.darkxell.client.mechanics.cutscene.event.MoveCutsceneEvent;
-import com.darkxell.client.mechanics.cutscene.event.MusicCutsceneEvent;
-import com.darkxell.client.mechanics.cutscene.event.OptionDialogCutsceneEvent;
-import com.darkxell.client.mechanics.cutscene.event.OptionResultCutsceneEvent;
-import com.darkxell.client.mechanics.cutscene.event.RotateCutsceneEvent;
-import com.darkxell.client.mechanics.cutscene.event.SetAnimatedCutsceneEvent;
-import com.darkxell.client.mechanics.cutscene.event.SetStateCutsceneEvent;
-import com.darkxell.client.mechanics.cutscene.event.SoundCutsceneEvent;
-import com.darkxell.client.mechanics.cutscene.event.SpawnCutsceneEvent;
-import com.darkxell.client.mechanics.cutscene.event.WaitCutsceneEvent;
+import com.darkxell.client.mechanics.cutscene.event.*;
 import com.darkxell.common.util.XMLUtils;
 
 public abstract class CutsceneEvent

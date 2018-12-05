@@ -14,6 +14,8 @@ import com.darkxell.common.pokemon.PokemonRegistry;
 public class Util
 {
 
+	public static final String GAME_VERSION = "alpha-0.1";
+
 	public static Player createDefaultPlayer()
 	{
 		Player player = new Player("Offline debug account name", PokemonRegistry.find(4).generate(new Random(), 10, 1));
