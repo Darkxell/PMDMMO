@@ -189,7 +189,7 @@ public class DungeonPokemon implements ItemContainer, DungeonEventListener
 	public int experienceGained()
 	{
 		int base = this.usedPokemon.species().baseXP;
-		base += Math.floor(base * (this.originalPokemon.level() - 1) / 10) + base;
+		base += Math.floor(base * (this.originalPokemon.level() - 1) / 10);
 		if (this.attacksReceived == REGULAR_ATTACKS) base = (int) (base * 0.5);
 		else if (this.attacksReceived == LINKED_MOVES) base = (int) (base * 1.5);
 		return base;
