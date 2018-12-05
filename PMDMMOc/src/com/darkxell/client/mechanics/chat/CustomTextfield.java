@@ -1,7 +1,6 @@
 package com.darkxell.client.mechanics.chat;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -111,7 +110,7 @@ public class CustomTextfield {
 	public void setSelection(boolean a) {
 		this.unselected = !a;
 	}
-	
+
 	public boolean isSelected() {
 		return !this.unselected;
 	}
@@ -133,7 +132,7 @@ public class CustomTextfield {
 	 * List of all the untypable characters. Trying to type one of them will
 	 * result in the event being ignored.
 	 */
-	private static char[] untypables = new char[] {'\b','\t','\n','\f','\r',(char)0x7f};
+	private static char[] untypables = new char[] { '\b', '\t', '\n', '\f', '\r', (char) 0x7f };
 
 	/**
 	 * Should be called by a state that uses this textfield upon recieving a

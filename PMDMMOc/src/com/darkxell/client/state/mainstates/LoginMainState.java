@@ -1,6 +1,7 @@
 package com.darkxell.client.state.mainstates;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 
@@ -9,6 +10,7 @@ import com.darkxell.client.launchable.GameSocketEndpoint;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.launchable.crypto.Encryption;
 import com.darkxell.client.mechanics.chat.CustomTextfield;
+import com.darkxell.client.resources.Res;
 import com.darkxell.client.resources.images.Sprites;
 import com.darkxell.client.state.OpenningState;
 import com.darkxell.client.state.PlayerLoadingState;
@@ -28,6 +30,8 @@ import com.darkxell.common.util.language.Message;
 import com.eclipsesource.json.JsonObject;
 
 public class LoginMainState extends StateManager {
+
+	private static final boolean DEBUGALLOWED = true;
 
 	private CustomTextfield login = new CustomTextfield();
 	private CustomTextfield password = new CustomTextfield().setObfuscated();
@@ -95,6 +99,7 @@ public class LoginMainState extends StateManager {
 		password.onKeyTyped(e);
 	}
 
+	@SuppressWarnings("unused")
 	@Override
 	public void onMouseClick(int x, int y) {
 		// Button clicks
@@ -104,7 +109,7 @@ public class LoginMainState extends StateManager {
 		} else if (button_login.isInside(new Position(mouseX - offsetx, mouseY - offsety))) {
 			if (Persistance.socketendpoint.connectionStatus() == GameSocketEndpoint.CONNECTED)
 				launchOnlineSend();
-		} else if (button_offline.isInside(new Position(mouseX - offsetx, mouseY - offsety))) {
+		} else if (button_offline.isInside(new Position(mouseX - offsetx, mouseY - offsety)) && DEBUGALLOWED) {
 			launchOffline();
 		}
 		// Textfield focus
@@ -139,13 +144,37 @@ public class LoginMainState extends StateManager {
 
 	@Override
 	public void render(Graphics2D g, int width, int height) {
+		Graphics2D gcopy = (Graphics2D) g.create();
 		MainUiUtility.drawBackground(g, width, height, (byte) 1);
 		offsetx = width / 2 - squarewidth / 2;
 		offsety = height / 2 - squareheight / 2;
 		int relativemousex = mouseX - offsetx, relativemousey = mouseY - offsety;
 		g.translate(offsetx, offsety);
+		gcopy.translate(offsetx, offsety);
 		// DRAWS THE LOGIN FACILITIES
 		g.drawImage(Sprites.Res_Hud.loginframe.image(), 0, 0, null);
+
+		gcopy.setColor(Color.BLACK);
+		gcopy.setFont(Res.getFont().deriveFont(26f).deriveFont(Font.BOLD));
+		gcopy.drawString("Log in with your account", 36, 131);
+		gcopy.drawString("Create account", 334, 131);
+		gcopy.setColor(new Color(242, 145, 0));
+		gcopy.drawString("Log in with your account", 38, 132);
+		gcopy.drawString("Create account", 336, 132);
+
+		// Draws the textfield backgrounds
+		g.setColor(new Color(66, 122, 255));
+		g.fillRect((int) textfield_login.x, (int) textfield_login.y, (int) textfield_login.width,
+				(int) textfield_login.height);
+		g.fillRect((int) textfield_pass.x, (int) textfield_pass.y, (int) textfield_pass.width,
+				(int) textfield_pass.height);
+
+		gcopy.setColor(new Color(242, 145, 0));
+		gcopy.setFont(Res.getFont().deriveFont(20f).deriveFont(Font.BOLD));
+		gcopy.drawString("Login", (int) textfield_login.x, (int) textfield_login.y);
+		gcopy.drawString("Password", (int) textfield_pass.x, (int) textfield_pass.y);
+
+		// Draws the textfields
 
 		g.translate(textfield_login.x + 10, textfield_login.y);
 		this.login.render(g, (int) textfield_login.width - 20, (int) textfield_login.height - 15);
@@ -168,24 +197,29 @@ public class LoginMainState extends StateManager {
 		g.drawString(message, 39, 276);
 		g.setColor(messcolor);
 		g.drawString(message, 40, 275);
-		g.setColor(Color.BLACK);
-		g.drawString("LOGIN", (int) button_login.x + 25, (int) button_login.y + 20);
+		// Displays the buttons
+		gcopy.setFont(Res.getFont().deriveFont(24f).deriveFont(Font.BOLD));
+		gcopy.setColor(new Color(30, 15, 210));
+		gcopy.drawString("LOGIN", (int) button_login.x + 25, (int) button_login.y + 20);
 		g.setColor((button_createaccount.isInside(new Position(relativemousex, relativemousey))) ? selectedbuttoncolor
 				: buttoncolor);
 		if (Persistance.socketendpoint.connectionStatus() != GameSocketEndpoint.CONNECTED)
 			g.setColor(new Color(120, 120, 180));
 		g.fillRect((int) button_createaccount.x, (int) button_createaccount.y, (int) button_createaccount.width,
 				(int) button_createaccount.height);
-		g.setColor(Color.BLACK);
-		g.drawString("CREATE ACCOUNT", (int) button_createaccount.x + 15, (int) button_createaccount.y + 20);
+		gcopy.setColor(new Color(30, 15, 210));
+		gcopy.drawString("Create account", (int) button_createaccount.x + 15, (int) button_createaccount.y + 20);
 		g.setColor((button_offline.isInside(new Position(relativemousex, relativemousey))) ? selectedbuttoncolor
 				: buttoncolor);
+		if (!DEBUGALLOWED)
+			g.setColor(new Color(120, 120, 180));
 		g.fillRect((int) button_offline.x, (int) button_offline.y, (int) button_offline.width,
 				(int) button_offline.height);
-		g.setColor(Color.BLACK);
-		g.drawString("Offline debug", (int) button_offline.x + 5, (int) button_offline.y + 14);
+		gcopy.setColor(new Color(30, 15, 210));
+		gcopy.drawString("Debug", (int) button_offline.x + 5, (int) button_offline.y + 14);
 
 		// REVERT GRAPHICS
+		gcopy.dispose();
 		g.translate(-offsetx, -offsety);
 	}
 
