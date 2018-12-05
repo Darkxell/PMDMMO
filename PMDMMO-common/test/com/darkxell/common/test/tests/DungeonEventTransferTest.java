@@ -35,7 +35,7 @@ import com.darkxell.common.util.Direction;
 
 public class DungeonEventTransferTest extends UTest
 {
-	private Player _player = new Player(new DBPlayer(69, "DaWae", "no U", 45, 99, 0, new ArrayList<>(), new ArrayList<>(), null, null, null, null, 0));
+	private Player _player = new Player(new DBPlayer(69, "DaWae", "no U", 45, 99, 0, new ArrayList<>(), new ArrayList<>(), null, null, null, null, 0,false,false));
 	private Dungeon d = DungeonRegistry.find(4);
 	private DungeonExploration dungeon = d.newInstance(798654123);
 	private Floor floor;

@@ -45,6 +45,7 @@ import com.darkxell.gameserver.messagehandlers.SetEncryptionKeyHandler;
 import com.darkxell.gameserver.messagehandlers.TestResultHandler;
 import com.darkxell.gameserver.messagehandlers.StorageactionHandler;
 import com.darkxell.gameserver.messagehandlers.StorypositionAdvanceHandler;
+import com.darkxell.model.ejb.DeployKeyDAO;
 import com.darkxell.model.ejb.Holdeditem_DAO;
 import com.darkxell.model.ejb.InventoryDAO;
 import com.darkxell.model.ejb.Inventorycontains_DAO;
@@ -101,6 +102,8 @@ public class GameServer {
     private Toolbox_DAO toolbox_DAO;
     @EJB
     private Missions_DAO missions_DAO;
+    @EJB
+    private DeployKeyDAO deployKeyDAO;
 
     /**
      * Called when a client opens a websocket connection with the server.
@@ -184,6 +187,9 @@ public class GameServer {
             }
             if (this.missions_DAO == null) {
                 this.missions_DAO = new Missions_DAO();
+            }
+            if (this.deployKeyDAO == null) {
+                this.deployKeyDAO = new DeployKeyDAO();
             }
             Logger.loadServer();
             PokemonRegistry.load();
@@ -428,6 +434,10 @@ public class GameServer {
 
     public Missions_DAO getMissions_DAO() {
         return this.missions_DAO;
+    }
+    
+     public DeployKeyDAO getDeployKeyDAO() {
+        return this.deployKeyDAO;
     }
 
 }

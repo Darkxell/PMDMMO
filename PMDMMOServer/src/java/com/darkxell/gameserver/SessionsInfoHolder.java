@@ -14,10 +14,27 @@ public class SessionsInfoHolder {
     /**
      * Gets the infos for the wanted session.
      *
-     * @return the sessionInfo for the session, null if the session doesn't exist.
+     * @return the sessionInfo for the session, null if the session doesn't
+     * exist.
      */
     public static GameSessionInfo getInfo(String sessionID) {
         return infos.get(sessionID);
+    }
+
+    /**
+     * Gets the sessionID of a given playername in the infos map. Note that if
+     * two sessions share the same name value (typical "notloggedyet"), the
+     * first one encountered will be returned.
+     *
+     * @return the sessionID for the parsed name, null if the session doesn't
+     * exist, meaning the player doesn't exist or isn't logged in.
+     */
+    public static String getSessionID(String playername) {
+        HashMap<String, GameSessionInfo> clone = (HashMap<String, GameSessionInfo>) infos.clone();
+        for (String key : clone.keySet()) {
+            if(clone.get(key).name.equals(playername))return key;
+        }
+        return null;
     }
 
     /**

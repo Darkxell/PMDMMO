@@ -77,9 +77,13 @@ Trying to authentificate without reseting the salt will not be taken into accoun
 
 "passhash":"h4guz8eph5u", // The hashed password
 
+"deploykey":"value" // the deploykey used if the server requires one to create an account
+
 }
 
 This payload must by a client to create a new account. This will create a new account entry in the database.
+The account will not be created if the server is in deploykey only mode and a valid key isn't provided.
+Note that if the server doesn't need a key for account creation at the moment he recieves this payload, the key won't be consumed, even if it is valid.
 
 ■ PUBLICKEYREQUEST
 
