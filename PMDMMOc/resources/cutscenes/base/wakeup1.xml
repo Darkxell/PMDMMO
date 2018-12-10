@@ -8,7 +8,7 @@
   </creation>
   <events>
     <dialog isnarrator="true">
-      <dialogscreen>cutscene.base.wakeup1.m1</dialogscreen>
+      <dialogscreen>cutscene.narrator.nextmorning</dialogscreen>
     </dialog>
     <wait />
     <drawmap />

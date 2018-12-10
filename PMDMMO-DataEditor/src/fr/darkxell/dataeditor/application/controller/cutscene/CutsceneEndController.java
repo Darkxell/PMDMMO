@@ -1,6 +1,7 @@
 package fr.darkxell.dataeditor.application.controller.cutscene;
 
 import java.net.URL;
+import java.util.Comparator;
 import java.util.ResourceBundle;
 import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
@@ -126,7 +127,6 @@ public class CutsceneEndController implements Initializable, ChangeListener<Cuts
 
 		this.facingCheckbox.selectedProperty().addListener((x, oldValue, newValue) -> this.directionCombobox.setDisable(!newValue));
 
-		this.cutsceneCombobox.getItems().addAll(Cutscenes.values());
 		this.dungeonCombobox.getItems().addAll(DungeonRegistry.list());
 		this.modeCombobox.getItems().addAll(CutsceneEndMode.values());
 		this.freezoneCombobox.getItems().addAll(FreezoneInfo.values());
@@ -135,7 +135,6 @@ public class CutsceneEndController implements Initializable, ChangeListener<Cuts
 		this.modeCombobox.getSelectionModel().selectedItemProperty().addListener(this);
 		this.modeCombobox.getSelectionModel().select(0);
 		this.dungeonCombobox.getSelectionModel().select(0);
-		this.cutsceneCombobox.getSelectionModel().select(0);
 		this.freezoneCombobox.getSelectionModel().select(0);
 		this.directionCombobox.setValue(Direction.SOUTH);
 		this.fadingCheckbox.setSelected(true);
@@ -143,6 +142,11 @@ public class CutsceneEndController implements Initializable, ChangeListener<Cuts
 
 	public void setupFor(Cutscene cutscene)
 	{
+		this.cutsceneCombobox.getItems().clear();
+		this.cutsceneCombobox.getItems().addAll(Cutscenes.values());
+		this.cutsceneCombobox.getItems().sort(Comparator.naturalOrder());
+		this.cutsceneCombobox.getSelectionModel().select(0);
+
 		CutsceneEnd end = cutscene.onFinish;
 		if (end instanceof PlayCutsceneCutsceneEnd)
 		{

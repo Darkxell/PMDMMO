@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cutscene name="skarmory/dream">
+  <creation freezone="dream" camerax="15.0" cameray="15.0" fading="false">
+    <pokemon cutsceneid="0" xpos="15.0" ypos="15.0">
+      <teammember>0</teammember>
+      <state>SLEEP</state>
+    </pokemon>
+  </creation>
+  <events>
+    <dialog>
+      <dialogscreen target="0">cutscene.skarmory.dream.m1</dialogscreen>
+      <dialogscreen target="0">cutscene.skarmory.dream.m2</dialogscreen>
+    </dialog>
+    <wait />
+    <delay ticks="40" />
+    <dialog>
+      <dialogscreen target="0">cutscene.skarmory.dream.m3</dialogscreen>
+      <dialogscreen target="0">cutscene.skarmory.dream.m4</dialogscreen>
+      <dialogscreen target="0">cutscene.skarmory.dream.m5</dialogscreen>
+    </dialog>
+    <wait />
+    <dialog>
+      <dialogscreen target="0">cutscene.skarmory.dream.m6</dialogscreen>
+    </dialog>
+    <wait />
+    <dialog>
+      <dialogscreen target="0">cutscene.skarmory.dream.m7</dialogscreen>
+      <dialogscreen target="0">cutscene.skarmory.dream.m8</dialogscreen>
+      <dialogscreen target="0">cutscene.skarmory.dream.m9</dialogscreen>
+      <dialogscreen target="0">cutscene.skarmory.dream.m10</dialogscreen>
+    </dialog>
+    <wait />
+    <drawmap draw="false" />
+    <wait />
+    <dialog isnarrator="true">
+      <dialogscreen>cutscene.narrator.nextmorning</dialogscreen>
+    </dialog>
+  </events>
+  <onfinish>
+    <playcutscene function="magnemiteend" id="skarmory/wakeup" />
+  </onfinish>
+</cutscene>
