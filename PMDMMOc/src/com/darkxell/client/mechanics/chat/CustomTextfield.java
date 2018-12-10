@@ -5,7 +5,11 @@ import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.Shape;
+import java.awt.Toolkit;
+import java.awt.datatransfer.DataFlavor;
 import java.awt.event.KeyEvent;
+
+import com.darkxell.common.util.Logger;
 
 public class CustomTextfield {
 
@@ -110,7 +114,7 @@ public class CustomTextfield {
 	public void setSelection(boolean a) {
 		this.unselected = !a;
 	}
-	
+
 	public boolean isSelected() {
 		return !this.unselected;
 	}
@@ -126,19 +130,23 @@ public class CustomTextfield {
 			this.pressRight();
 		if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE && !unselected)
 			this.pressDelete();
+		if (e.getKeyCode() == KeyEvent.VK_V && e.isControlDown() && !unselected)
+			this.pasteClipboard();
 	}
 
 	/**
 	 * List of all the untypable characters. Trying to type one of them will
 	 * result in the event being ignored.
 	 */
-	private static char[] untypables = new char[] {'\b','\t','\n','\f','\r',(char)0x7f};
+	private static char[] untypables = new char[] { '\b', '\t', '\n', '\f', '\r', (char) 0x7f };
 
 	/**
 	 * Should be called by a state that uses this textfield upon recieving a
 	 * KeyTyped event.
 	 */
 	public void onKeyTyped(KeyEvent e) {
+		if (e.isControlDown())
+			return;
 		for (int i = 0; i < untypables.length; ++i)
 			if (e.getKeyChar() == untypables[i])
 				return;
@@ -173,5 +181,17 @@ public class CustomTextfield {
 		for (int i = 0; i < str.length(); ++i)
 			toreturn += "*";
 		return toreturn;
+	}
+
+	/** Adds the content of your clipboard before the cursor. */
+	private void pasteClipboard() {
+		try {
+			String data = (String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
+			this.charsbefore += data;
+		} catch (Exception e) {
+			e.printStackTrace();
+			Logger.e("Could not add clipboard to a textfield.");
+		}
+
 	}
 }
