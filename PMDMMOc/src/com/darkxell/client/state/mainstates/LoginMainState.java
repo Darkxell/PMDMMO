@@ -99,7 +99,6 @@ public class LoginMainState extends StateManager {
 		password.onKeyTyped(e);
 	}
 
-	@SuppressWarnings("unused")
 	@Override
 	public void onMouseClick(int x, int y) {
 		// Button clicks

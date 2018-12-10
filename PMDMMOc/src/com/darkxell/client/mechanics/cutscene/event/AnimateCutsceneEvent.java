@@ -15,10 +15,17 @@ import com.darkxell.common.util.language.Lang;
 
 public class AnimateCutsceneEvent extends CutsceneEvent
 {
+	public static enum AnimateCutsceneEventMode
+	{
+		PLAY,
+		START,
+		STOP
+	}
 
 	private PokemonAnimation animation;
 	public final int animationID;
 	private boolean couldntLoad = false;
+	public final AnimateCutsceneEventMode mode;
 	public final int target;
 
 	public AnimateCutsceneEvent(Element xml, CutsceneContext context)
@@ -26,19 +33,21 @@ public class AnimateCutsceneEvent extends CutsceneEvent
 		super(xml, CutsceneEventType.animate, context);
 		this.target = XMLUtils.getAttribute(xml, "target", -1);
 		this.animationID = XMLUtils.getAttribute(xml, "animation", 0);
+		this.mode = AnimateCutsceneEventMode.valueOf(XMLUtils.getAttribute(xml, "mode", AnimateCutsceneEventMode.PLAY.name()));
 	}
 
-	public AnimateCutsceneEvent(int id, int animation, CutsceneEntity target)
+	public AnimateCutsceneEvent(int id, int animation, AnimateCutsceneEventMode mode, CutsceneEntity target)
 	{
 		super(id, CutsceneEventType.animate);
 		this.animationID = animation;
 		this.target = target == null ? -1 : target.id;
+		this.mode = mode;
 	}
 
 	@Override
 	public boolean isOver()
 	{
-		if (this.couldntLoad) return true;
+		if (this.couldntLoad || this.mode != AnimateCutsceneEventMode.PLAY) return true;
 		if (this.animation == null) return false;
 		return this.animation.isDelayOver();
 	}
@@ -56,7 +65,19 @@ public class AnimateCutsceneEvent extends CutsceneEvent
 			{
 				CutscenePokemonRenderer r = (CutscenePokemonRenderer) Persistance.currentmap.cutsceneEntityRenderers.getRenderer(entity);
 				if (r == null) this.couldntLoad = true;
-				else this.animation.start();
+				else
+				{
+					if (this.mode == AnimateCutsceneEventMode.STOP) r.removeAnimation(this.animation.data);
+					else
+					{
+						if (this.mode == AnimateCutsceneEventMode.START)
+						{
+							this.animation.source = this.animation.data;
+							this.animation.plays = -1;
+						}
+						this.animation.start();
+					}
+				}
 			}
 		} else this.couldntLoad = true;
 	}
@@ -66,7 +87,10 @@ public class AnimateCutsceneEvent extends CutsceneEvent
 	{
 		String animName = this.animationID + "";
 		if (Lang.containsKey("animation.custom." + this.animationID)) animName += "-" + Lang.translate("animation.custom." + this.animationID);
-		return this.displayID() + "Play animation " + animName + " on (" + this.target + ")";
+		String mode = "Play";
+		if (this.mode == AnimateCutsceneEventMode.START) mode = "Start";
+		if (this.mode == AnimateCutsceneEventMode.STOP) mode = "Stop";
+		return this.displayID() + mode + " animation " + animName + " on (" + this.target + ")";
 	}
 
 	@Override
@@ -75,6 +99,7 @@ public class AnimateCutsceneEvent extends CutsceneEvent
 		Element root = super.toXML();
 		root.setAttribute("animation", String.valueOf(this.animationID));
 		XMLUtils.setAttribute(root, "target", this.target, -1);
+		XMLUtils.setAttribute(root, "mode", this.mode.name(), AnimateCutsceneEventMode.PLAY.name());
 		return root;
 	}
 

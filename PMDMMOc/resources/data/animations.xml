@@ -126,7 +126,7 @@
       <default width="5" height="20" x="-7" y="12" spriteduration="4">0,1,2,3,4,5,6,7,8,9</default>
     </c>
     <c id="155">
-      <default width="52" height="16" y="25" spriteduration="4">0,1,2,1,0,1,2,1,0,1,2</default>
+      <default width="52" height="16" y="25" spriteduration="6">0,1,2,1,0,1,2,1,0,1,2</default>
     </c>
     <c id="156">
       <default width="46" height="12" y="25" spriteduration="7">0,1,0,1,0,1,0,1</default>
