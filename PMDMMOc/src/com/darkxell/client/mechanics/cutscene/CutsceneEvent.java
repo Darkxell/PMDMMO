@@ -5,11 +5,9 @@ import org.jdom2.Element;
 import com.darkxell.client.mechanics.cutscene.event.*;
 import com.darkxell.common.util.XMLUtils;
 
-public abstract class CutsceneEvent
-{
+public abstract class CutsceneEvent {
 
-	public static enum CutsceneEventType
-	{
+	public static enum CutsceneEventType {
 		// Don't forget to also modify EditCutsceneController#onCreate().
 		animate("Play animation"),
 		camera("Move camera"),
@@ -17,6 +15,7 @@ public abstract class CutsceneEvent
 		despawn("Despawn Entity"),
 		dialog("Show Dialog"),
 		drawmap("Draw Map"),
+		function("Call function"),
 		move("Move Entity"),
 		music("Change soundtrack"),
 		option("Select option"),
@@ -30,17 +29,14 @@ public abstract class CutsceneEvent
 
 		public final String description;
 
-		private CutsceneEventType(String name)
-		{
+		private CutsceneEventType(String name) {
 			this.description = name;
 		}
 	}
 
-	public static CutsceneEvent create(Element xml, CutsceneContext context)
-	{
+	public static CutsceneEvent create(Element xml, CutsceneContext context) {
 		// Remember to add to Editor aswell (SelectEventTypeController#CutsceneEventType).
-		switch (xml.getName())
-		{
+		switch (xml.getName()) {
 			case "animate":
 				return new AnimateCutsceneEvent(xml, context);
 
@@ -58,6 +54,9 @@ public abstract class CutsceneEvent
 
 			case "drawmap":
 				return new DrawMapCutsceneEvent(xml, context);
+
+			case "function":
+				return new FunctionCutsceneEvent(xml, context);
 
 			case "move":
 				return new MoveCutsceneEvent(xml, context);
@@ -99,44 +98,36 @@ public abstract class CutsceneEvent
 	public int id;
 	public final CutsceneEventType type;
 
-	public CutsceneEvent(Element xml, CutsceneEventType type, CutsceneContext context)
-	{
+	public CutsceneEvent(Element xml, CutsceneEventType type, CutsceneContext context) {
 		this.id = XMLUtils.getAttribute(xml, "eventid", -1);
 		this.context = context;
 		this.type = type;
 	}
 
-	public CutsceneEvent(int id, CutsceneEventType type)
-	{
+	public CutsceneEvent(int id, CutsceneEventType type) {
 		this.id = id;
 		this.type = type;
 		this.context = null;
 	}
 
-	public String displayID()
-	{
+	public String displayID() {
 		return this.id == -1 ? "" : "(" + this.id + ") ";
 	}
 
-	public boolean isOver()
-	{
+	public boolean isOver() {
 		return true;
 	}
 
-	public void onFinish()
-	{}
+	public void onFinish() {}
 
-	public void onStart()
-	{}
+	public void onStart() {}
 
-	public Element toXML()
-	{
+	public Element toXML() {
 		Element root = new Element(this.type.name());
 		XMLUtils.setAttribute(root, "eventid", this.id, -1);
 		return root;
 	}
 
-	public void update()
-	{}
+	public void update() {}
 
 }

@@ -41,8 +41,8 @@ public class AbstractFreezoneState extends AbstractState
 		// Draws the surroundings.
 		if (map != null)
 		{
-			int translateX = (int) (-Persistance.freezoneCamera.x * 8 + (width / 2));
-			int translateY = (int) (-Persistance.freezoneCamera.y * 8 + (height / 2));
+			int translateX = (int) (-Persistance.freezoneCamera.finalX() * 8 + (width / 2));
+			int translateY = (int) (-Persistance.freezoneCamera.finalY() * 8 + (height / 2));
 
 			g.translate(translateX, translateY);
 			// Draws the map

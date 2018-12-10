@@ -19,12 +19,14 @@
       <dialogscreen target="0">cutscene.skarmory.dream.m5</dialogscreen>
     </dialog>
     <wait />
+    <function function="earthquake(1)" />
     <dialog>
       <dialogscreen target="0">cutscene.skarmory.dream.m6</dialogscreen>
     </dialog>
     <wait />
+    <function function="earthquake(2)" />
     <dialog>
-      <dialogscreen target="0">cutscene.skarmory.dream.m7</dialogscreen>
+      <dialogscreen emotion="Shocked" target="0">cutscene.skarmory.dream.m7</dialogscreen>
       <dialogscreen target="0">cutscene.skarmory.dream.m8</dialogscreen>
       <dialogscreen target="0">cutscene.skarmory.dream.m9</dialogscreen>
       <dialogscreen target="0">cutscene.skarmory.dream.m10</dialogscreen>
@@ -32,6 +34,7 @@
     <wait />
     <drawmap draw="false" />
     <wait />
+    <function function="earthquake(0)" />
     <dialog isnarrator="true">
       <dialogscreen>cutscene.narrator.nextmorning</dialogscreen>
     </dialog>

@@ -9,8 +9,7 @@ import com.darkxell.client.mechanics.cutscene.event.DelayCutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.event.WaitCutsceneEvent;
 import com.darkxell.client.renderers.AbstractRenderer;
 
-public class CutscenePlayer
-{
+public class CutscenePlayer {
 
 	public final Cutscene cutscene;
 	private final ArrayList<CutsceneEntity> entities;
@@ -18,8 +17,7 @@ public class CutscenePlayer
 	private final LinkedList<CutsceneEvent> pendingEvents;
 	private final ArrayList<CutsceneEvent> playingEvents;
 
-	public CutscenePlayer(Cutscene cutscene)
-	{
+	public CutscenePlayer(Cutscene cutscene) {
 		this.cutscene = cutscene;
 
 		this.entities = new ArrayList<>();
@@ -27,24 +25,20 @@ public class CutscenePlayer
 		this.pendingEvents = new LinkedList<>(cutscene.events);
 	}
 
-	public void addEvents(CutsceneEvent[] results)
-	{
+	public void addEvents(CutsceneEvent[] results) {
 		for (int i = results.length - 1; i >= 0; --i)
 			this.pendingEvents.addFirst(results[i]);
 	}
 
-	public void createEntity(CutsceneEntity entity)
-	{
+	public void createEntity(CutsceneEntity entity) {
 		this.entities.add(entity);
-		if (Persistance.cutsceneState != null)
-		{
+		if (Persistance.cutsceneState != null) {
 			AbstractRenderer renderer = entity.createRenderer();
 			if (renderer != null) Persistance.currentmap.cutsceneEntityRenderers.register(entity, renderer);
 		}
 	}
 
-	public CutsceneEntity getEntity(int id)
-	{
+	public CutsceneEntity getEntity(int id) {
 		if (id == -1) return null;
 		for (CutsceneEntity e : this.entities)
 			if (e.id == id) return e;
@@ -52,39 +46,32 @@ public class CutscenePlayer
 	}
 
 	/** @return True if a playing event is causing later events to wait before being played. */
-	private boolean hasPausingEvent()
-	{
+	private boolean hasPausingEvent() {
 		for (CutsceneEvent e : this.playingEvents)
 			if ((e instanceof DelayCutsceneEvent || e instanceof WaitCutsceneEvent) && !e.isOver()) return true;
 		return false;
 	}
 
-	public void removeEntity(CutsceneEntity entity)
-	{
-		if (this.entities.contains(entity))
-		{
+	public void removeEntity(CutsceneEntity entity) {
+		if (this.entities.contains(entity)) {
 			this.entities.remove(entity);
 			if (Persistance.cutsceneState != null) Persistance.currentmap.cutsceneEntityRenderers.unregister(entity);
 		}
 	}
 
-	private void startEvent(CutsceneEvent event)
-	{
+	private void startEvent(CutsceneEvent event) {
 		event.onStart();
 		if (event.isOver()) event.onFinish();
 		else this.playingEvents.add(event);
 	}
 
-	public void update()
-	{
+	public void update() {
 		while (!this.hasPausingEvent() && !this.pendingEvents.isEmpty())
 			this.startEvent(this.pendingEvents.removeFirst());
 
-		for (int i = 0; i < this.playingEvents.size(); ++i)
-		{
+		for (int i = 0; i < this.playingEvents.size(); ++i) {
 			CutsceneEvent event = this.playingEvents.get(i);
-			if (event.isOver())
-			{
+			if (event.isOver()) {
 				this.playingEvents.remove(i--);
 				event.onFinish();
 			} else event.update();
