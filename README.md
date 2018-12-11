@@ -1,10 +1,14 @@
 # PMDMMO
 
-This project is inspired by the mystery dungeon series. Our goal is to create a multiplayer dungeon exploring game heavely inspired by the series.
-As this is still a new project, there is yet to be a demo or an alpha.
-More information will be available very soon.
+This project is inspired by the [Pokémon Mystery Dungeon] series. Our goal is
+to create a multiplayer dungeon exploring game heavily inspired by the series.
 
-If you are interested by joining the developpement of this project, feel free to contact us via github.
+As this is still a new project, there is yet to be a demo or an alpha. More
+information will be available very soon.
 
-We have a discord server where we are available:
-https://discord.gg/KegXRG8
+If you are interested by joining the developpement of this project, feel free to
+contact us via GitHub.
+
+Discord: https://discord.gg/KegXRG8
+
+[Pokémon Mystery Dungeon]: https://en.wikipedia.org/wiki/Pok%C3%A9mon_Mystery_Dungeon
