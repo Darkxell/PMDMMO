@@ -18,11 +18,12 @@ import java.util.ArrayList;
  */
 public class GiveManager {
 
-    public static void giveItem(int itemID, int quantity, GameSessionInfo si, GameServer endpoint, boolean directstorage) {
-        giveItem(itemID, quantity, si.serverid, endpoint, directstorage);
+    public static boolean giveItem(int itemID, int quantity, GameSessionInfo si, GameServer endpoint, boolean directstorage) {
+        return giveItem(itemID, quantity, si.serverid, endpoint, directstorage);
     }
     
-    public static void giveItem(int itemID, int quantity, long serverid, GameServer endpoint, boolean directstorage) {
+    public static boolean giveItem(int itemID, int quantity, long serverid, GameServer endpoint, boolean directstorage) {
+        boolean full = false;
         DBInventory storage = endpoint.getInventoryDAO().find(endpoint.getPlayerStorage_DAO().findInventoryID(serverid));
         DBInventory toolbox = endpoint.getInventoryDAO().find(endpoint.getToolbox_DAO().findInventoryID(serverid));
         //Puts as many items as it can in the toolbox
@@ -37,15 +38,8 @@ public class GiveManager {
                     if (stack.itemid == itemID) {
                         stack.quantity += quantity;
                         endpoint.getItemstackDAO().update(stack);
-                        return;
+                        return false;
                     }
-                }
-                //If cannot be stacked but can be fully put in toolbox
-                if (space >= 1) {
-                    DBItemstack toput = new DBItemstack(0, itemID, quantity);
-                    long createdid = endpoint.getItemstackDAO().create(toput);
-                    endpoint.getInventoryContains_DAO().create(createdid, toolbox.id);
-                    return;
                 }
             }
             //Puts what it can in the toolbox
@@ -56,6 +50,7 @@ public class GiveManager {
                 quantity--;
                 space--;
             }
+            if(space==0)full = true;
         }
         //Puts what's left to put in the storage
         ArrayList<Long> itemsinstorage = endpoint.getInventoryContains_DAO().findStacksID(storage.id);
@@ -64,12 +59,13 @@ public class GiveManager {
             if (stack.itemid == itemID) {
                 stack.quantity += quantity;
                 endpoint.getItemstackDAO().update(stack);
-                return;
+                return directstorage?false:full;
             }
         }
         DBItemstack toput = new DBItemstack(0, itemID, quantity);
         long createdid = endpoint.getItemstackDAO().create(toput);
         endpoint.getInventoryContains_DAO().create(createdid, storage.id);
+        return directstorage?false:full;
     }
 
 }
