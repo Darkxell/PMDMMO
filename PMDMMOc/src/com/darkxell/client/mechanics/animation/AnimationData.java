@@ -17,8 +17,7 @@ import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.XMLUtils;
 
-public class AnimationData implements Comparable<AnimationData>
-{
+public class AnimationData implements Comparable<AnimationData> {
 	/** List of animation IDs to play with this Animation. */
 	public String[] alsoPlay = new String[0];
 	/** For each other animation to play, the number of ticks to wait before starting it. */
@@ -64,8 +63,7 @@ public class AnimationData implements Comparable<AnimationData>
 	/** Dimensions of a single sprite on the spritesheet, if any. */
 	public int width = 0, height = 0;
 
-	public AnimationData(AnimationData data)
-	{
+	public AnimationData(AnimationData data) {
 		this.alsoPlay = data.alsoPlay;
 		this.alsoPlayDelay = data.alsoPlayDelay;
 		this.animationMovement = data.animationMovement;
@@ -91,29 +89,24 @@ public class AnimationData implements Comparable<AnimationData>
 		this.height = data.height;
 	}
 
-	public AnimationData(int id)
-	{
+	public AnimationData(int id) {
 		this.id = id;
 		for (int i = 0; i < this.variants.length; ++i)
 			this.variants[i] = new AnimationData(this);
 	}
 
-	public AnimationData(int id, String spritesPrefix, Element xml)
-	{
+	public AnimationData(int id, String spritesPrefix, Element xml) {
 		this.id = id;
 		this.sprites = "" + this.id;
 		this.spritesPrefix = spritesPrefix;
 		this.clones = XMLUtils.getAttribute(xml, "clone", null);
-		if (this.clones == null && xml.getChild("default", xml.getNamespace()) != null)
-		{
+		if (this.clones == null && xml.getChild("default", xml.getNamespace()) != null) {
 			this.load(xml.getChild("default", xml.getNamespace()), this);
 			if (this.gravityX == -1) this.gravityX = this.width / 2;
 			if (this.gravityY == -1) this.gravityY = this.height / 2;
-			for (Direction d : Direction.directions)
-			{
+			for (Direction d : Direction.directions) {
 				this.variants[d.index()] = new AnimationData(this);
-				if (xml.getChild(d.name().toLowerCase(), xml.getNamespace()) != null)
-				{
+				if (xml.getChild(d.name().toLowerCase(), xml.getNamespace()) != null) {
 					this.variants[d.index()].load(xml.getChild(d.name().toLowerCase(), xml.getNamespace()), this);
 					this.variants[d.index()].spritesPrefix = this.spritesPrefix;
 				}
@@ -123,79 +116,70 @@ public class AnimationData implements Comparable<AnimationData>
 	}
 
 	@Override
-	public int compareTo(AnimationData o)
-	{
+	public int compareTo(AnimationData o) {
 		return Integer.compare(this.id, o.id);
 	}
 
-	public PokemonAnimation createAnimation(DungeonPokemon dungeon, CutscenePokemon cutscene, AbstractPokemonRenderer renderer, AnimationEndListener listener)
-	{
-		if (this.clones != null)
-		{
+	public PokemonAnimation createAnimation(DungeonPokemon dungeon, CutscenePokemon cutscene,
+			AbstractPokemonRenderer renderer, AnimationEndListener listener) {
+		if (this.clones != null) {
 			if (dungeon != null) return Animations.getAnimation(dungeon, this.clones, listener);
 			else return Animations.getCutsceneAnimation(Integer.parseInt(this.clones), cutscene, listener);
 		}
 
-		if (renderer != null)
-		{
+		if (renderer != null) {
 			Direction d = renderer.sprite().getFacingDirection();
-			if (this.getVariant(d) != null) return this.getVariant(d).createAnimation(dungeon, cutscene, renderer, listener);
+			if (this.getVariant(d) != null)
+				return this.getVariant(d).createAnimation(dungeon, cutscene, renderer, listener);
 		}
 
 		PokemonAnimation a;
-		if (this.sprites == null)
-		{
+		if (this.sprites == null) {
 			a = new PokemonAnimation(this, renderer, 0, listener);
 			a.delayTime = this.delayTime;
-		} else
-		{
+		} else {
 			String actualSprites = this.sprites;
 			if (!this.sprites.contains("/")) actualSprites = "/" + this.spritesPrefix + this.sprites;
 			actualSprites = "/animations" + actualSprites;
 
 			RegularSpriteSet spriteset = new RegularSpriteSet(actualSprites + ".png", this.width, this.height, -1, -1);
 			int[] order = this.spriteOrder.clone();
-			if (order.length == 0 && spriteset.isLoaded())
-			{
-				order = new int[this.backSpriteUsage == BackSpriteUsage.yes ? spriteset.spriteCount() / 2 : spriteset.spriteCount()];
+			if (order.length == 0 && spriteset.isLoaded()) {
+				order = new int[this.backSpriteUsage == BackSpriteUsage.yes ? spriteset.spriteCount() / 2
+						: spriteset.spriteCount()];
 				for (int i = 0; i < order.length; ++i)
 					order[i] = i;
 			}
 			a = new SpritesetAnimation(this, renderer, spriteset, order, listener);
-			((SpritesetAnimation) a).spritesetMovement = SpritesetAnimationMovement.create(this.animationMovement, (SpritesetAnimation) a);
+			((SpritesetAnimation) a).spritesetMovement = SpritesetAnimationMovement.create(this.animationMovement,
+					(SpritesetAnimation) a);
 			if (this.delayTime <= 0) a.delayTime = this.spriteDuration * order.length;
 			else a.delayTime = this.delayTime;
 		}
 
 		if (a.delayTime <= 0) a.delayTime = 15;
 
-		if (this.pokemonMovement != null)
-		{
+		if (this.pokemonMovement != null) {
 			String movement = this.pokemonMovement;
-			if (movement == null && this.pokemonState != null && this.pokemonState.hasDash) movement = "dash";
 			a.movement = PokemonAnimationMovement.create(a, movement);
-			a.duration = Math.max(a.duration, a.movement.duration);
+			if (a.movement != null) a.duration = Math.max(a.duration, a.movement.duration);
 		}
 
-		if (this.alsoPlay.length > 0 && dungeon != null)
-		{
+		if (this.alsoPlay.length > 0 && dungeon != null) {
 			ArrayList<AbstractAnimation> anims = new ArrayList<>();
 			ArrayList<Integer> delays = new ArrayList<>();
 			AbstractAnimation tmp;
 
-			for (int i = 0; i < this.alsoPlay.length; ++i)
-			{
+			for (int i = 0; i < this.alsoPlay.length; ++i) {
 				if (this.alsoPlay[i].equals("")) continue;
 				tmp = Animations.getAnimation(dungeon, this.alsoPlay[i], null);
-				if (tmp != null && !anims.contains(tmp))
-				{
+				if (tmp != null && !anims.contains(tmp)) {
 					anims.add(tmp);
 					delays.add(this.alsoPlayDelay[i]);
 				}
 			}
 
-			if (!anims.isEmpty())
-			{
+			if (!anims.isEmpty()) {
 				CompoundAnimation anim = new CompoundAnimation(this, renderer, listener);
 				anim.add(a, 0);
 				for (int i = 0; i < anims.size(); ++i)
@@ -204,8 +188,7 @@ public class AnimationData implements Comparable<AnimationData>
 			}
 		}
 
-		if (this.overlay != -1)
-		{
+		if (this.overlay != -1) {
 			OverlayAnimation overlay = new OverlayAnimation(this, this.overlay, a, listener);
 			Persistance.dungeonState.staticAnimationsRenderer.add(overlay);
 			overlay.start();
@@ -214,13 +197,11 @@ public class AnimationData implements Comparable<AnimationData>
 		return a;
 	}
 
-	public AnimationData getVariant(Direction direction)
-	{
+	public AnimationData getVariant(Direction direction) {
 		return this.variants[direction.index()];
 	}
 
-	private void load(Element xml, AnimationData defaultData)
-	{
+	private void load(Element xml, AnimationData defaultData) {
 		this.sprites = XMLUtils.getAttribute(xml, "sprites", defaultData.sprites);
 		if (this.sprites != null && this.sprites.equals("none")) this.sprites = null;
 		this.width = XMLUtils.getAttribute(xml, "width", defaultData.width);
@@ -228,7 +209,8 @@ public class AnimationData implements Comparable<AnimationData>
 		this.gravityX = XMLUtils.getAttribute(xml, "x", defaultData.gravityX);
 		this.gravityY = XMLUtils.getAttribute(xml, "y", defaultData.gravityY);
 		this.spriteDuration = XMLUtils.getAttribute(xml, "spriteduration", defaultData.spriteDuration);
-		this.backSpriteUsage = BackSpriteUsage.valueOf(XMLUtils.getAttribute(xml, "backsprites", defaultData.backSpriteUsage.name()));
+		this.backSpriteUsage = BackSpriteUsage
+				.valueOf(XMLUtils.getAttribute(xml, "backsprites", defaultData.backSpriteUsage.name()));
 		this.spriteOrder = XMLUtils.readIntArray(xml);
 		if (this.spriteOrder.length == 0) this.spriteOrder = defaultData.spriteOrder.clone();
 		this.animationMovement = XMLUtils.getAttribute(xml, "movement", defaultData.animationMovement);
@@ -242,17 +224,16 @@ public class AnimationData implements Comparable<AnimationData>
 		this.playsForEachTarget = XMLUtils.getAttribute(xml, "playsforeachtarget", defaultData.playsForEachTarget);
 
 		String state = XMLUtils.getAttribute(xml, "state", "null");
-		this.pokemonState = state.equals("null") ? defaultData.pokemonState : state.equals("none") ? null : PokemonSpriteState.valueOf(state.toUpperCase());
+		this.pokemonState = state.equals("null") ? defaultData.pokemonState
+				: state.equals("none") ? null : PokemonSpriteState.valueOf(state.toUpperCase());
 		this.pokemonStateDelay = XMLUtils.getAttribute(xml, "statedelay", defaultData.pokemonStateDelay);
 		this.pokemonMovement = XMLUtils.getAttribute(xml, "pkmnmovement", defaultData.pokemonMovement);
 
-		if (XMLUtils.getAttribute(xml, "alsoplay") != null)
-		{
+		if (XMLUtils.getAttribute(xml, "alsoplay") != null) {
 			this.alsoPlay = XMLUtils.getAttribute(xml, "alsoplay", "").split(",");
 			this.alsoPlayDelay = new int[this.alsoPlay.length];
 			String[] ds = XMLUtils.getAttribute(xml, "alsoplaydelay", "").split(",");
-			if (ds.length < this.alsoPlay.length)
-			{
+			if (ds.length < this.alsoPlay.length) {
 				String[] dstmp = ds;
 				ds = new String[this.alsoPlay.length];
 				for (int i = 0; i < ds.length; ++i)
@@ -261,8 +242,7 @@ public class AnimationData implements Comparable<AnimationData>
 
 			for (int i = 0; i < ds.length; ++i)
 				if (!ds[i].equals("")) this.alsoPlayDelay[i] = Integer.parseInt(ds[i]);
-		} else
-		{
+		} else {
 			this.alsoPlay = defaultData.alsoPlay.clone();
 			this.alsoPlayDelay = defaultData.alsoPlayDelay.clone();
 		}
@@ -270,19 +250,16 @@ public class AnimationData implements Comparable<AnimationData>
 		this.overlay = XMLUtils.getAttribute(xml, "overlay", defaultData.overlay);
 	}
 
-	public void toXML(Element root)
-	{
+	public void toXML(Element root) {
 		root.setAttribute("id", String.valueOf(this.id));
-		if (this.clones != null)
-		{
+		if (this.clones != null) {
 			root.setAttribute("clone", this.clones);
 			return;
 		}
 		Element self = new Element("default");
 		this.toXML(root, self, new AnimationData(this.id), false);
 		root.addContent(self);
-		for (Direction d : Direction.directions)
-		{
+		for (Direction d : Direction.directions) {
 			if (this.variants[d.index()] == this) continue;
 			Element variant = new Element(d.getName().toLowerCase());
 			this.variants[d.index()].toXML(root, variant, this, true);
@@ -294,10 +271,10 @@ public class AnimationData implements Comparable<AnimationData>
 		}
 	}
 
-	private void toXML(Element root, Element self, AnimationData defaultData, boolean isVariant)
-	{
+	private void toXML(Element root, Element self, AnimationData defaultData, boolean isVariant) {
 		if (defaultData.sprites == null && !isVariant) defaultData.sprites = "" + this.id;
-		XMLUtils.setAttribute(self, "sprites", this.sprites == null ? "none" : this.sprites, defaultData.sprites == null ? "none" : defaultData.sprites);
+		XMLUtils.setAttribute(self, "sprites", this.sprites == null ? "none" : this.sprites,
+				defaultData.sprites == null ? "none" : defaultData.sprites);
 		XMLUtils.setAttribute(self, "width", this.width, defaultData.width);
 		XMLUtils.setAttribute(self, "height", this.height, defaultData.height);
 		if (defaultData.gravityX == -1 && !isVariant) defaultData.gravityX = this.width / 2;
@@ -316,35 +293,31 @@ public class AnimationData implements Comparable<AnimationData>
 		XMLUtils.setAttribute(self, "sounddelay", this.soundDelay, defaultData.soundDelay);
 		XMLUtils.setAttribute(self, "playsforeachtarget", this.playsForEachTarget, defaultData.playsForEachTarget);
 
-		if (this.pokemonState != null)
-			XMLUtils.setAttribute(self, "state", this.pokemonState.name(), defaultData.pokemonState == null ? null : defaultData.pokemonState.name());
+		if (this.pokemonState != null) XMLUtils.setAttribute(self, "state", this.pokemonState.name(),
+				defaultData.pokemonState == null ? null : defaultData.pokemonState.name());
 		XMLUtils.setAttribute(self, "statedelay", this.pokemonStateDelay, defaultData.pokemonStateDelay);
 		XMLUtils.setAttribute(self, "pkmnmovement", this.pokemonMovement, defaultData.pokemonMovement);
 
-		if (this.alsoPlay.length > 0)
-		{
-			if (!Arrays.equals(this.alsoPlay, defaultData.alsoPlay))
-			{
+		if (this.alsoPlay.length > 0) {
+			if (!Arrays.equals(this.alsoPlay, defaultData.alsoPlay)) {
 				String alsoPlay = "";
-				for (int i = 0; i < this.alsoPlay.length; ++i)
-				{
+				for (int i = 0; i < this.alsoPlay.length; ++i) {
 					if (i != 0) alsoPlay += ",";
 					alsoPlay += this.alsoPlay[i];
 				}
 				self.setAttribute("alsoplay", alsoPlay);
 			}
 			boolean shouldStoreDelay = !Arrays.equals(this.alsoPlayDelay, defaultData.alsoPlayDelay);
-			if (shouldStoreDelay)
-			{
+			if (shouldStoreDelay) {
 				shouldStoreDelay = false;
 				for (int d : this.alsoPlayDelay)
-					if (d != 0)
-					{
+					if (d != 0) {
 						shouldStoreDelay = true;
 						break;
 					}
 			}
-			if (shouldStoreDelay) self.setAttribute("alsoplaydelay", XMLUtils.toXML("delay", this.alsoPlayDelay).getText());
+			if (shouldStoreDelay)
+				self.setAttribute("alsoplaydelay", XMLUtils.toXML("delay", this.alsoPlayDelay).getText());
 		}
 
 		XMLUtils.setAttribute(self, "overlay", this.overlay, defaultData.overlay);

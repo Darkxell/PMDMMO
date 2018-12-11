@@ -2,14 +2,12 @@ package com.darkxell.client.mechanics.animation.movement;
 
 import com.darkxell.client.mechanics.animation.PokemonAnimation;
 import com.darkxell.client.renderers.pokemon.AbstractPokemonRenderer;
+import com.darkxell.common.util.Logger;
 
-public abstract class PokemonAnimationMovement
-{
+public abstract class PokemonAnimationMovement {
 
-	public static PokemonAnimationMovement create(PokemonAnimation animation, String movementID)
-	{
-		switch (movementID)
-		{
+	public static PokemonAnimationMovement create(PokemonAnimation animation, String movementID) {
+		switch (movementID) {
 			case "2tiles":
 				return new LongTackleAnimationMovement(animation);
 
@@ -17,6 +15,7 @@ public abstract class PokemonAnimationMovement
 				return new SmallJumpAnimationMovement(animation);
 
 			default:
+				Logger.w("Unknown Pokemon animation movement ID: " + movementID);
 				return null;
 		}
 	}
@@ -25,26 +24,21 @@ public abstract class PokemonAnimationMovement
 	public final PokemonAnimation parentAnimation;
 	public final AbstractPokemonRenderer renderer;
 
-	public PokemonAnimationMovement(PokemonAnimation animation, int duration)
-	{
+	public PokemonAnimationMovement(PokemonAnimation animation, int duration) {
 		this.parentAnimation = animation;
 		this.renderer = this.parentAnimation.renderer;
 		this.duration = duration;
 	}
 
-	public boolean isOver()
-	{
+	public boolean isOver() {
 		return this.parentAnimation.isOver();
 	}
 
-	public void onFinish()
-	{}
+	public void onFinish() {}
 
-	public void start()
-	{}
+	public void start() {}
 
-	public int tick()
-	{
+	public int tick() {
 		return this.parentAnimation.tick();
 	}
 
