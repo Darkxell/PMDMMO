@@ -75,7 +75,7 @@ example:
 ```
 
 This payload is sent by the server to any client who sent a valid
-[`FREEZONEPOSITION`](./server.md#freezoneposition) payload to the server. Note
+[`FREEZONEPOSITION`](./client.md#freezoneposition) payload to the server. Note
 that this payload is sent each time you notify the server of your movement for
 every other player.
 
@@ -135,7 +135,7 @@ example:
 ```
 
 This simple payload is sent by the server in response to a
-[`SETENCRYPTIONKEY`](./server.md#setencryptionkey) from the client to
+[`SETENCRYPTIONKEY`](./client.md#setencryptionkey) from the client to
 acknowledge the receipt of the key. This will usually be the first encrypted
 payload of the client/server communication.
 

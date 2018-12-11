@@ -241,7 +241,7 @@ example:
 
 This payload notifies the server that the client would need information about a
 specific object knowing it's id. The server will typically respond with a
-[`OBJECTREQUEST`](./server.md#objecterequest) payload containing the item too.
+[`OBJECTREQUEST`](./server.md#objectrequest) payload containing the item too.
 
 ### `REQUESTINVENTORY`
 
