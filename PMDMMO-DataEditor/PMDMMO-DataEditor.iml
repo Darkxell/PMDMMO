@@ -19,7 +19,6 @@
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
-    <orderEntry type="library" name="org.eclipse.fx.ide.jdt.core.JAVAFX_CONTAINER" level="application" />
     <orderEntry type="module" module-name="PMDMMO-common" />
     <orderEntry type="module" module-name="PMDMMOc" />
     <orderEntry type="module-library">
