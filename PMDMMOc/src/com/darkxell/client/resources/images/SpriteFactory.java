@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.CountDownLatch;
+import java.util.function.BiConsumer;
 
 import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.resources.Res;
@@ -228,35 +229,27 @@ public class SpriteFactory implements Runnable {
     }
 
     /**
-     * Notify sub-sprites waiting on {@code path} with resulting {@code img}.
+     * Notify listeners to a specific request queue.
      *
-     * @see #notifySubSprites(String, BufferedImage)
+     * @param path Path to notify
+     * @param img Retrieved image.
+     * @param requesterMap Queue map, keyed on resource path.
+     * @param callback What to do with image.
+     * @param <T> Type of sprite (see {@link Sprite} and {@link SpriteFactory})
      */
-    private void notifyImage(String path, BufferedImage img) {
-        synchronized (this.requesters) {
-            ArrayList<Sprite> requesters = this.requesters.remove(path);
-            if (requesters == null) {
-                return;
-            }
-            for (Sprite s : requesters) {
-                s.loaded(img);
-            }
-        }
-    }
+    private <T> void notify(String path,
+                            BufferedImage img,
+                            Map<String, List<T>> requesterMap,
+                            BiConsumer<T, BufferedImage> callback) {
+        List<T> requesters = requesterMap.remove(path);
 
-    /**
-     * Notify sub-sprites waiting on {@code path} with resulting {@code img}.
-     *
-     * @see #notifyImage(String, BufferedImage)
-     */
-    private void notifySubSprites(String path, BufferedImage img) {
-        synchronized (this.subsprites) {
-            ArrayList<SubSprite> subSprites = this.subsprites.remove(path);
-            if (subSprites == null) {
-                return;
-            }
-            for (SubSprite s : subSprites) {
-                s.sprite.loaded(Res.createimage(img, s.x, s.y, s.w, s.h));
+        if (requesters == null) {
+            return;
+        }
+
+        synchronized (requesters) {
+            for (T s : requesters) {
+                callback.accept(s, img);
             }
         }
     }
