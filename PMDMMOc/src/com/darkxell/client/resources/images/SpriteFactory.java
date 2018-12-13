@@ -261,7 +261,7 @@ public class SpriteFactory implements Runnable {
     public void run() {
         while (Launcher.isRunning) {
             try {
-                if (this.requested.size() == 0) {
+                if (this.requested.isEmpty()) {
                     this.signalLoadComplete();
                     Thread.sleep(100);
                 } else {
