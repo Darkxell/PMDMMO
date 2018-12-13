@@ -29,7 +29,7 @@ public class ChatBox {
 
 	/**
 	 * Creates a new chatBox instance. Note that this instance will create it's
-	 * own thread and connection to the server when created.
+	 * own thread when created.
 	 */
 	public ChatBox() {
 		this.textfield = new CustomTextfield();
@@ -53,7 +53,7 @@ public class ChatBox {
 
 	private int boxwidth = 0;
 	private int boxheight = 0;
-	private int footerheight = 0;
+	private int footerheight = 35;
 	private int headerheight = 0;
 
 	public void render(Graphics2D g, int width, int height, boolean chatFocus) {
@@ -64,12 +64,12 @@ public class ChatBox {
 		headerheight = ChatResources.HEADER.getHeight() * width / ChatResources.HEADER.getWidth();
 		g.drawImage(ChatResources.HEADER, 0, 0, width, headerheight, null);
 		// Draw the footer
-		footerheight = ChatResources.FOOTER.image().getHeight() * width / ChatResources.FOOTER.image().getWidth();
 		g.drawImage(
 				ChatResources.getFooter(selectedcategory == CHAT_GENERAL ? ChatResources.ICON_CHANNEL_GLOBAL.image()
 						: selectedcategory == CHAT_GUILD ? ChatResources.ICON_CHANNEL_GUILD.image()
-								: selectedcategory == CHAT_WHISPER ? ChatResources.ICON_CHANNEL_PRIVATE.image() : null),
+								: selectedcategory == CHAT_WHISPER ? ChatResources.ICON_CHANNEL_PRIVATE.image() : null,footerheight,width),
 				0, height - footerheight, width, footerheight, null);
+		//Draws the footer shadow and content
 		g.setColor(Color.WHITE);
 		g.translate(width / 6, (height - footerheight) + (footerheight / 4));
 		this.textfield.render(g, width / 3 * 2, footerheight / 2);
