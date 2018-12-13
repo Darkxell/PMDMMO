@@ -49,20 +49,20 @@ public class ChatResources {
 
 	private static BufferedImage buffer;
 	private static Graphics2D buffergraphics;
+	private static int lastheight = 0, lastwidth = 0;
 
 	public static BufferedImage getFooter(BufferedImage dest, int height, int width) {
-		if (buffer == null) {
+		if (buffer == null || lastwidth != width || lastheight != height) {
 			buffer = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 			buffergraphics = buffer.createGraphics();
 		}
 		buffergraphics.clearRect(0, 0, buffer.getWidth(), buffer.getHeight());
 		buffergraphics.drawImage(FOOTER_LEFT.image(), 0, 0, null);
 		for (int i = FOOTER_LEFT.image().getWidth(); i < width; i += FOOTER_CENTER.image().getWidth())
-			buffergraphics.drawImage(FOOTER_LEFT.image(), i, 0, null);
+			buffergraphics.drawImage(FOOTER_CENTER.image(), i, 0, null);
 		buffergraphics.drawImage(FOOTER_RIGHT.image(), width - FOOTER_RIGHT.image().getWidth(), 0, null);
-		// buffergraphics.drawImage(dest, 0, 3, null);
-		// No clue why that was there...
-		buffergraphics.drawImage(ICON_SEND.image(), 177, 3, null);
+		buffergraphics.drawImage(dest, 0, 3, null);
+		buffergraphics.drawImage(ICON_SEND.image(), width - ICON_SEND.image().getWidth() - 3, 3, null);
 		return buffer;
 	}
 
