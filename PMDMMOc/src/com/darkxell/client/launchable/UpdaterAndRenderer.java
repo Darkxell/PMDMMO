@@ -15,6 +15,11 @@ import com.darkxell.common.util.Util;
  */
 public class UpdaterAndRenderer implements Runnable {
     /**
+     * Nanoseconds per second.
+     */
+    public static final long NS_PER_S = (long) 1e9;
+
+    /**
      * Target updates per second.
      *
      * @see #UPDATE_NS
@@ -26,15 +31,52 @@ public class UpdaterAndRenderer implements Runnable {
      *
      * @see #TARGET_UPS
      */
-    private static final double UPDATE_NS = 1e9 / TARGET_UPS;
+    private static final double UPDATE_NS = NS_PER_S / TARGET_UPS;
 
-    private long startTime, currentTime, timer;
-    private int updatesCurrentSecond;
-    private double updateTime;
-    private int ups = 0;
+    /**
+     * Timestamp of the launch time of this thread.
+     *
+     * @see System#nanoTime()
+     */
+    private long startTime;
 
+    /**
+     * Timestamp of when the previous tick began.
+     *
+     * @see System#nanoTime()
+     */
+    private long lastTime;
+
+    /**
+     * Duration (in ns) of when the UPS measurement interval began.
+     */
+    private long intervalDuration;
+
+    /**
+     * How many "frames behind" the thread is. In other words, in order to meet a target UPS measure of
+     * {@link #TARGET_UPS}, we would have to immediately render this amount of frames.
+     */
+    private double framesMissing;
+
+    /**
+     * The last interval's average UPS. If the update thread is consistently slow for whatever reason, this may not be
+     * reflective of the actual UPS.
+     */
+    private double currentUPS;
+
+    /**
+     * How many updates have been performed since the last UPS calculation. This measure will be divided by
+     * {@link #intervalDuration} to yield {@link #currentUPS} after at least 1 second.
+     */
+    private int nextUPSUpdates;
+
+    /**
+     * Get the current UPS to the nearest whole number.
+     *
+     * @return Updates per second in the last update cycle.
+     */
     public int currentUPS() {
-        return this.ups;
+        return (int) this.currentUPS;
     }
 
     protected boolean keepRunning() {
@@ -43,13 +85,12 @@ public class UpdaterAndRenderer implements Runnable {
 
     @Override
     public void run() {
-        // Preparing FPS handling
         this.startTime = System.nanoTime();
-        this.currentTime = this.startTime;
-        this.updateTime = 0;
-        this.timer = 0;
-        this.updatesCurrentSecond = 0;
-        this.ups = 0;
+        this.lastTime = this.startTime;
+        this.framesMissing = 0;
+        this.intervalDuration = 0;
+        this.nextUPSUpdates = 0;
+        this.currentUPS = 0;
 
         try {
             while (SpriteFactory.instance().hasLoadingSprites()) {
@@ -90,24 +131,29 @@ public class UpdaterAndRenderer implements Runnable {
     }
 
     private void update() {
-        // Calculate elapsed time
-        long elapsedTime = System.nanoTime() - this.currentTime;
-        this.timer += elapsedTime;
-        this.currentTime += elapsedTime;
-        this.updateTime += elapsedTime / this.UPDATE_NS;
+        long now = System.nanoTime();
+        long elapsedTime = now - this.lastTime;
+        this.lastTime = now;
 
-        // If a tick has passed, update until there is no delayed update
-        while (this.updateTime >= 1) {
+        this.intervalDuration += elapsedTime;
+        this.framesMissing += elapsedTime / UPDATE_NS;
+
+        int catchUpFrames = (int) this.framesMissing;
+
+        // perform catchUpFrames ticks, but at least once per update.
+        this.tickUpdate();
+        for (int i = 0; i < catchUpFrames - 1; i++) {
             this.tickUpdate();
-
-            ++this.updatesCurrentSecond;
-            --this.updateTime;
         }
 
-        if (this.timer >= 1000000000) {
-            this.ups = this.updatesCurrentSecond;
-            this.timer = 0;
-            this.updatesCurrentSecond = 0;
+        this.nextUPSUpdates += catchUpFrames;
+        this.framesMissing -= catchUpFrames; // leave decimal part
+
+        // gather metrics over past second and reset
+        if (this.intervalDuration >= NS_PER_S) {
+            this.currentUPS = (double) this.nextUPSUpdates * NS_PER_S / this.intervalDuration;
+            this.intervalDuration = 0;
+            this.nextUPSUpdates = 0;
         }
     }
 }
