@@ -87,19 +87,6 @@ public abstract class GameLoop implements Runnable {
         return Launcher.isRunning && Launcher.getProcessingProfile() == getProcessingProfile();
     }
 
-    /**
-     * Wait for SpriteFactory to finish loading sprites.
-     *
-     * @see SpriteFactory#getLoadQueueLatch()
-     */
-    private void waitInitialization() {
-        try {
-            SpriteFactory.instance().getLoadQueueLatch().await();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
     @Override
     public void run() {
         this.lastTime = System.nanoTime();
@@ -109,7 +96,7 @@ public abstract class GameLoop implements Runnable {
         this.nextUPSUpdates = 0;
         this.currentUPS = 0;
 
-        this.waitInitialization();
+        SpriteFactory.waitQueueDone();
 
         while (this.keepRunning()) {
             this.update();
