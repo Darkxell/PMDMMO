@@ -51,6 +51,7 @@ public class ChatBox {
 		this.thread.start();
 	}
 
+	@SuppressWarnings("unused")
 	private int boxwidth = 0;
 	private int boxheight = 0;
 	private int footerheight = 35;
@@ -64,16 +65,16 @@ public class ChatBox {
 		headerheight = ChatResources.HEADER.getHeight() * width / ChatResources.HEADER.getWidth();
 		g.drawImage(ChatResources.HEADER, 0, 0, width, headerheight, null);
 		// Draw the footer
-		g.drawImage(
-				ChatResources.getFooter(selectedcategory == CHAT_GENERAL ? ChatResources.ICON_CHANNEL_GLOBAL.image()
+		g.drawImage(ChatResources.getFooter(
+				selectedcategory == CHAT_GENERAL ? ChatResources.ICON_CHANNEL_GLOBAL.image()
 						: selectedcategory == CHAT_GUILD ? ChatResources.ICON_CHANNEL_GUILD.image()
-								: selectedcategory == CHAT_WHISPER ? ChatResources.ICON_CHANNEL_PRIVATE.image() : null,footerheight,width),
-				0, height - footerheight, width, footerheight, null);
-		//Draws the footer shadow and content
+								: selectedcategory == CHAT_WHISPER ? ChatResources.ICON_CHANNEL_PRIVATE.image() : null,
+				footerheight, width), 0, height - footerheight, width, footerheight, null);
+		// Draws the footer shadow and content
 		g.setColor(Color.WHITE);
-		g.translate(width / 6, (height - footerheight) + (footerheight / 4));
-		this.textfield.render(g, width / 3 * 2, footerheight / 2);
-		g.translate(-width / 6, -(height - footerheight) - (footerheight / 4));
+		g.translate(35, (height - footerheight) + (footerheight / 4));
+		this.textfield.render(g, width - 70, footerheight / 2);
+		g.translate(-35, -(height - footerheight) - (footerheight / 4));
 		if (!chatFocus) {
 			g.setColor(new Color(0, 0, 0, 150));
 			g.fillRect(0, height - footerheight, width, footerheight);
@@ -126,7 +127,8 @@ public class ChatBox {
 			g.setColor(Palette.TRANSPARENT_GRAY);
 			g.fillRect(0, headerheight, width, 30);
 			g.setColor(Color.RED);
-			if (Persistance.socketendpoint == null || Persistance.socketendpoint.connectionStatus() == GameSocketEndpoint.CONNECTING)
+			if (Persistance.socketendpoint == null
+					|| Persistance.socketendpoint.connectionStatus() == GameSocketEndpoint.CONNECTING)
 				g.drawString(new Message("chat.connecting").toString(), 10, headerheight + 20);
 			else if (Persistance.socketendpoint.connectionStatus() == GameSocketEndpoint.FAILED)
 				g.drawString(new Message("chat.confailed").toString(), 10, headerheight + 20);
@@ -159,12 +161,14 @@ public class ChatBox {
 	}
 
 	public void onClick(int x, int y) {
-		if (y > boxheight - footerheight && x < boxwidth / 6) {
+		if (y > boxheight - footerheight && x < footerheight)
 			if (selectedcategory == CHAT_WHISPER)
 				selectedcategory = CHAT_GENERAL;
 			else
 				++selectedcategory;
-		}
+		else if (y > boxheight - footerheight && x > boxwidth - footerheight)
+			send();
+
 	}
 
 }
