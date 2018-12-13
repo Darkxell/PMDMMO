@@ -89,11 +89,9 @@ public abstract class GameLoop implements Runnable {
 
     private void waitInitialization() {
         try {
-            while (SpriteFactory.instance().hasLoadingSprites()) {
-                Thread.currentThread().sleep(5);
-            }
-        } catch (InterruptedException e1) {
-            e1.printStackTrace();
+            SpriteFactory.instance().getLoadingLatch().await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 

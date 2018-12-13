@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.concurrent.CountDownLatch;
 
 import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.resources.Res;
@@ -72,6 +73,8 @@ public class SpriteFactory implements Runnable {
      * Maps Images -> SubSprites that need that Image.
      */
     private HashMap<String, ArrayList<SubSprite>> subsprites = new HashMap<>();
+
+    private CountDownLatch isLoadedLatch = new CountDownLatch(1);
 
     private SpriteFactory() {
     }
@@ -144,8 +147,8 @@ public class SpriteFactory implements Runnable {
     /**
      * @return <code>true</code> if the factory is currently loading sprites.
      */
-    public boolean hasLoadingSprites() {
-        return !this.requested.isEmpty();
+    public CountDownLatch getLoadingLatch() {
+        return this.isLoadedLatch;
     }
 
     /**
@@ -214,6 +217,7 @@ public class SpriteFactory implements Runnable {
         while (Launcher.isRunning) {
             if (this.requested.size() == 0) {
                 sleepTime = noload;
+                this.isLoadedLatch.countDown();
             } else {
                 String path = this.requested.getFirst();
 
