@@ -20,7 +20,7 @@ public class EditControlState extends AbstractState
 {
 
 	public static final int SECONDS = 5;
-	public static final int TICKMAX = UpdaterAndRenderer.targetUPS * SECONDS;
+	public static final int TICKMAX = UpdaterAndRenderer.TARGET_UPS * SECONDS;
 
 	private AbstractGraphiclayer background;
 	public final Key key;
@@ -58,7 +58,7 @@ public class EditControlState extends AbstractState
 		if (this.background != null) this.background.render(g, width, height);
 		this.window.render(g, null, width, height);
 
-		int secondsLeft = (TICKMAX - this.tick) / UpdaterAndRenderer.targetUPS;
+		int secondsLeft = (TICKMAX - this.tick) / UpdaterAndRenderer.TARGET_UPS;
 		Message main = new Message("key.edit.main").addReplacement("<key>", this.key.getName());
 		Message left = new Message("key.edit.timer").addReplacement("<seconds>", String.valueOf(secondsLeft));
 

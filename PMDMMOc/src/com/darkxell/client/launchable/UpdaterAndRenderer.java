@@ -14,15 +14,24 @@ import com.darkxell.common.util.Util;
  * @see com.darkxell.client.launchable.Renderer
  */
 public class UpdaterAndRenderer implements Runnable {
-    public static final int targetUPS = 60;
+    /**
+     * Target updates per second.
+     *
+     * @see #UPDATE_NS
+     */
+    public static final int TARGET_UPS = 60;
+
+    /**
+     * Target nanoseconds per update.
+     *
+     * @see #TARGET_UPS
+     */
+    private static final double UPDATE_NS = 1e9 / TARGET_UPS;
 
     private long startTime, currentTime, timer;
     private int updatesCurrentSecond;
-    private double updateTime, timePerUpdate;
+    private double updateTime;
     private int ups = 0;
-
-    public UpdaterAndRenderer() {
-    }
 
     public int currentUPS() {
         return this.ups;
@@ -39,7 +48,6 @@ public class UpdaterAndRenderer implements Runnable {
         this.currentTime = this.startTime;
         this.updateTime = 0;
         this.timer = 0;
-        this.timePerUpdate = 1000000000 / targetUPS;
         this.updatesCurrentSecond = 0;
         this.ups = 0;
 
@@ -86,7 +94,7 @@ public class UpdaterAndRenderer implements Runnable {
         long elapsedTime = System.nanoTime() - this.currentTime;
         this.timer += elapsedTime;
         this.currentTime += elapsedTime;
-        this.updateTime += elapsedTime / this.timePerUpdate;
+        this.updateTime += elapsedTime / this.UPDATE_NS;
 
         // If a tick has passed, update until there is no delayed update
         while (this.updateTime >= 1) {
