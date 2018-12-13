@@ -53,6 +53,14 @@ public class SpriteFactory implements Runnable {
         new Thread(instance).start();
     }
 
+    public static void waitQueueDone() {
+        try {
+            instance.getLoadQueueLatch().await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * Field for notifying threads on load completion.
      */
@@ -143,7 +151,7 @@ public class SpriteFactory implements Runnable {
      * signaled before discarding.
      * @see CountDownLatch
      */
-    public synchronized CountDownLatch getLoadQueueLatch() {
+    private synchronized CountDownLatch getLoadQueueLatch() {
         if (this.loadQueueDone == null) {
             this.loadQueueDone = new CountDownLatch(1);
         }
