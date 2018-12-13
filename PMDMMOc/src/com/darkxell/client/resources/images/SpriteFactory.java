@@ -3,8 +3,11 @@ package com.darkxell.client.resources.images;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.CountDownLatch;
 
 import com.darkxell.client.launchable.Launcher;
@@ -74,22 +77,22 @@ public class SpriteFactory implements Runnable {
     /**
      * Loaded images.
      */
-    private final HashMap<String, BufferedImage> loaded = new HashMap<>();
+    private final Map<String, BufferedImage> loaded = new ConcurrentHashMap<>();
 
     /**
      * Queue of paths to load.
      */
-    private final LinkedList<String> requested = new LinkedList<>();
+    private final ConcurrentLinkedQueue<String> requested = new ConcurrentLinkedQueue<>();
 
     /**
      * Queues of sprites waiting for an image keyed on resource path.
      */
-    private final HashMap<String, ArrayList<Sprite>> requesters = new HashMap<>();
+    private final Map<String, List<Sprite>> requesters = new ConcurrentHashMap<>();
 
     /**
      * Queues of sub-sprites waiting for an image keyed on resource path.
      */
-    private final HashMap<String, ArrayList<SubSprite>> subsprites = new HashMap<>();
+    private final Map<String, List<SubSprite>> subsprites = new ConcurrentHashMap<>();
 
     private SpriteFactory() {
     }
@@ -165,6 +168,26 @@ public class SpriteFactory implements Runnable {
         return this.loaded.containsKey(image) && !this.requested.contains(image);
     }
 
+
+    /**
+     * Add requester to a queue in a thread-safe manner.
+     *
+     * @param requester   Listener to add.
+     * @param path        Path to listen to.
+     * @param listenerMap Listener queue to add in.
+     * @param <T>         Listener type.
+     */
+    private <T> void addRequester(T requester, String path, Map<String, List<T>> listenerMap) {
+        if (!listenerMap.containsKey(path)) {
+            listenerMap.put(path, Collections.synchronizedList(new ArrayList<>()));
+        }
+
+        List<T> listeners = listenerMap.get(path);
+        synchronized (listeners) {
+            listeners.add(requester);
+        }
+    }
+
     /**
      * Attempt to load an image through the resource cache. Queue path on miss.
      *
@@ -176,10 +199,7 @@ public class SpriteFactory implements Runnable {
         }
 
         if (requester != null) {
-            if (!this.requesters.containsKey(path)) {
-                this.requesters.put(path, new ArrayList<>());
-            }
-            this.requesters.get(path).add(requester);
+            this.addRequester(requester, path, this.requesters);
         }
 
         if (!this.requested.contains(path)) {
@@ -245,16 +265,14 @@ public class SpriteFactory implements Runnable {
      * Load next image in path.
      */
     private void loadNext() {
-        String path = this.requested.getFirst();
+        String path = this.requested.poll();
 
         BufferedImage img = Res.getBase(path);
         if (img != null) {
             this.loaded.put(path, img);
-            this.notifyImage(path, img);
-            this.notifySubSprites(path, img);
+            this.notify(path, img, this.requesters, (s, i) -> s.loaded(img));
+            this.notify(path, img, this.subsprites, (s, i) -> s.sprite.loaded(Res.createimage(i, s.x, s.y, s.w, s.h)));
         }
-
-        this.requested.removeFirst();
     }
 
     @Override
@@ -291,10 +309,7 @@ public class SpriteFactory implements Runnable {
             sub.loaded(Res.createimage(this.get(source.path), x, y, width, height));
         } else {
             sub.loaded(this.getDefault(width, height));
-            if (!this.subsprites.containsKey(source.path)) {
-                this.subsprites.put(source.path, new ArrayList<>());
-            }
-            this.subsprites.get(source.path).add(new SubSprite(sub, x, y, width, height));
+            this.addRequester(new SubSprite(sub, x, y, width, height), source.path, this.subsprites);
         }
         return sub;
     }
