@@ -8,7 +8,10 @@ import com.darkxell.client.resources.images.SpriteFactory;
 import com.darkxell.common.util.Util;
 
 /**
- * Experimental class that combines the updater and the renderer to synchronize updates and graphical prints.
+ * (EXPERIMENTAL) A combined updater and renderer to avoid synchronization issues between game ticks and render events.
+ *
+ * @see com.darkxell.client.launchable.Updater
+ * @see com.darkxell.client.launchable.Renderer
  */
 public class UpdaterAndRenderer implements Runnable {
     public static final int targetUPS = 60;
