@@ -148,9 +148,8 @@ public abstract class GameLoop implements Runnable {
 
         int catchUpFrames = (int) this.framesMissing;
 
-        // perform catchUpFrames ticks, but at least once per update.
-        this.tick();
-        for (int i = 0; i < catchUpFrames - 1; i++) {
+        // perform catchUpFrames ticks
+        for (int i = 0; i < catchUpFrames; i++) {
             this.tick();
         }
 
