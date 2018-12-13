@@ -166,6 +166,30 @@ public class SpriteFactory implements Runnable {
     }
 
     /**
+     * Attempt to load an image through the resource cache. Queue path on miss.
+     *
+     * @return Was there was a cache hit?
+     */
+    private boolean attemptLoad(Sprite requester, String path) {
+        if (!Res.exists(path)) {
+            return false;
+        }
+
+        if (requester != null) {
+            if (!this.requesters.containsKey(path)) {
+                this.requesters.put(path, new ArrayList<>());
+            }
+            this.requesters.get(path).add(requester);
+        }
+
+        if (!this.requested.contains(path)) {
+            this.requested.add(path);
+        }
+
+        return this.loaded.containsKey(path);
+    }
+
+    /**
      * Queues an path to be loaded.
      *
      * @param requester Sprite that needs this path. This sprite will be notified when the load finishes.
@@ -175,25 +199,9 @@ public class SpriteFactory implements Runnable {
      * @return Cached or default path, to be replaced upon callback.
      */
     public BufferedImage load(Sprite requester, String path, int width, int height) {
-        if (!this.isResourceLoaded(path)) {
-            if (Res.exists(path)) {
-                if (requester != null) {
-                    if (!this.requesters.containsKey(path)) {
-                        this.requesters.put(path, new ArrayList<>());
-                    }
-                    this.requesters.get(path).add(requester);
-                }
-
-                if (!this.loaded.containsKey(path)) {
-                    this.loaded.put(path, this.getDefault(width, height));
-                }
-
-                if (!this.requested.contains(path)) {
-                    this.requested.add(path);
-                }
-            } else {
-                this.loaded.put(path, this.getDefault(width, height));
-            }
+        if (!this.isResourceLoaded(path) && !this.attemptLoad(requester, path)) {
+            // place interim image while it's loading
+            this.loaded.put(path, this.getDefault(width, height));
         }
 
         return this.get(path);
