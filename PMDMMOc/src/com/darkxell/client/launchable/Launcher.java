@@ -116,6 +116,8 @@ public class Launcher {
                 new Thread(updater = new Updater()).start();
                 new Thread(renderer = new Renderer()).start();
                 break;
+            case PROFILE_UNDEFINED:
+            	break;
         }
     }
 
