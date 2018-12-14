@@ -1,10 +1,6 @@
 package com.darkxell.common.util;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.ArrayList;
 
 import org.jdom2.Attribute;
@@ -161,13 +157,19 @@ public final class XMLUtils
 		try
 		{
 			if (!file.exists()) file.createNewFile();
-			XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
-			FileOutputStream s = new FileOutputStream(file);
-			outputter.output(new Document(element), s);
-			s.close();
-		} catch (FileNotFoundException e)
+			saveFile(new FileOutputStream(file), element);
+		} catch (IOException e)
 		{
 			e.printStackTrace();
+		}
+	}
+
+	public static void saveFile(OutputStream ostream, Element element) {
+		try
+		{
+			XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
+			outputter.output(new Document(element), ostream);
+			ostream.close();
 		} catch (IOException e)
 		{
 			e.printStackTrace();
