@@ -36,13 +36,6 @@ public abstract class GameLoop implements Runnable {
     private static final double UPDATE_NS = NS_PER_S / TARGET_UPS;
 
     /**
-     * Timestamp of the launch time of this thread.
-     *
-     * @see System#nanoTime()
-     */
-    private long startTime;
-
-    /**
      * Timestamp of when the previous tick began.
      *
      * @see System#nanoTime()
@@ -106,8 +99,7 @@ public abstract class GameLoop implements Runnable {
 
     @Override
     public void run() {
-        this.startTime = System.nanoTime();
-        this.lastTime = this.startTime;
+        this.lastTime = System.nanoTime();
         this.framesMissing = 0;
         this.intervalDuration = 0;
         this.nextSleepDuration = (long) 2e6; // 2 ms
