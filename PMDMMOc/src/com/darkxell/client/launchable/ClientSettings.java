@@ -58,10 +58,7 @@ public class ClientSettings {
          * User login name.
          */
         LOGIN("login", "Unknown user"),
-        HP_BARS("hp_bars", "true");
-
-        private String key;
-        private String defaultValue;
+        HP_BARS("hp_bars", true);
 
         private static final HashMap<String, Setting> values = new HashMap<>();
 
@@ -70,6 +67,9 @@ public class ClientSettings {
                 values.put(k.key, k);
             }
         }
+
+        public final String key;
+        public final String defaultValue;
 
         Setting(String key, String defaultValue) {
             this.key = key;
@@ -80,8 +80,8 @@ public class ClientSettings {
             this(key, Integer.toString(defaultValue));
         }
 
-        public static Setting getByKey(String name) {
-            return values.get(name);
+        Setting(String key, boolean defaultValue) {
+            this(key, Boolean.toString(defaultValue));
         }
     }
 
