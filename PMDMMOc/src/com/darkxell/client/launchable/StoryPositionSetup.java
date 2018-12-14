@@ -44,10 +44,6 @@ public class StoryPositionSetup
 				// Thunderwave Cave failed, restart
 				CutsceneManager.playCutscene("magnetifound", true);
 				break;
-			case 8:
-				// Formed a rescue team. Is waking up in base, and is having recalls of yesterday.
-				CutsceneManager.playCutscene("base/predream", true);
-				break;
 			case 38:
 				// TODO:Had the fugitive cutscene. Spawns in front of your house early in the morning before fuging to prepare.
 				break;

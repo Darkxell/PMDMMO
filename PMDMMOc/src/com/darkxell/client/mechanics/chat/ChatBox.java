@@ -51,7 +51,6 @@ public class ChatBox {
 		this.thread.start();
 	}
 
-	@SuppressWarnings("unused")
 	private int boxwidth = 0;
 	private int boxheight = 0;
 	private int footerheight = 35;

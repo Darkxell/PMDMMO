@@ -92,7 +92,7 @@ public abstract class FreezoneMap
 				if (t.sprite == null) t.sprite = defaulttileset.getDefault();
 		} catch (Exception e)
 		{
-			Logger.e("Could not build freezonemap from XML file : " + e);
+			Logger.e("Could not build freezonemap from XML file : " + e + " / path : " + xmlfilepath);
 			e.printStackTrace();
 		}
 	}
