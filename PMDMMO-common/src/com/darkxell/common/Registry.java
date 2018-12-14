@@ -63,7 +63,7 @@ public abstract class Registry<T extends Registrable<T>> {
     }
 
     public T find(int id) {
-        if (!cache.containsKey(id)) {
+        if (cache.containsKey(id)) {
             return cache.get(id);
         }
         Logger.e("Invalid ID " + id + " for registry " + this.name);
