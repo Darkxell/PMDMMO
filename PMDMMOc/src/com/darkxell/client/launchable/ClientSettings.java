@@ -58,7 +58,7 @@ public class ClientSettings {
         HP_BARS("hp_bars", "true");
 
         private String key;
-        private String value;
+        private String defaultValue;
 
         private static final HashMap<String, Setting> values = new HashMap<>();
 
@@ -68,13 +68,13 @@ public class ClientSettings {
             }
         }
 
-        Setting(String key, String value) {
+        Setting(String key, String defaultValue) {
             this.key = key;
-            this.value = value;
+            this.defaultValue = defaultValue;
         }
 
-        Setting(String key, int value) {
-            this(key, Integer.toString(value));
+        Setting(String key, int defaultValue) {
+            this(key, Integer.toString(defaultValue));
         }
 
         public static Setting getByKey(String name) {
@@ -85,6 +85,24 @@ public class ClientSettings {
     private static final String PROPERTIES_PATH = "settings.properties";
     private static Properties settings;
 
+    private static String getSetting(String setting) {
+        return settings.getProperty(setting);
+    }
+
+    private static void setSetting(String setting, String value) {
+        settings.put(setting, value);
+    }
+
+    public static String getSetting(Setting setting) {
+        if (setting == null) {
+            return null;
+        }
+        if (!settings.containsKey(setting)) {
+            resetSetting(setting);
+        }
+        return getSetting(setting.key);
+    }
+
     public static boolean getBooleanSetting(Setting setting) {
         if (setting == null) {
             return false;
@@ -94,18 +112,22 @@ public class ClientSettings {
         return Boolean.parseBoolean(value);
     }
 
-    private static String getSetting(String setting) {
-        if (!settings.containsKey(setting)) {
-            resetSetting(setting);
+    public static void setSetting(Setting setting, String value) {
+        if (setting != null && value != null) {
+            setSetting(setting.key, value);
         }
-        return settings.getProperty(setting);
     }
 
-    public static String getSetting(Setting setting) {
-        if (setting == null) {
-            return null;
+    public static void setSetting(Setting setting, boolean value) {
+        if (setting != null) {
+            settings.put(setting.key, String.valueOf(value));
         }
-        return getSetting(setting.key);
+    }
+
+    public static void resetSetting(Setting setting) {
+        if (setting != null) {
+            settings.put(setting.key, setting.defaultValue);
+        }
     }
 
     public static void load() {
@@ -120,40 +142,11 @@ public class ClientSettings {
         }
     }
 
-    /**
-     * Resets the input setting to its default value.
-     */
-    private static void resetSetting(String setting) {
-        settings.put(setting, Setting.getByKey(setting).value);
-    }
-
-    public static void resetSetting(Setting setting) {
-        if (setting != null) {
-            settings.put(setting, setting.value);
-        }
-    }
-
     public static void save() {
         try {
             settings.store(new FileOutputStream(new File(PROPERTIES_PATH)), null);
         } catch (IOException e) {
             Logger.e("Could not save to settings.properties: " + e);
-        }
-    }
-
-    public static void setSetting(Setting setting, boolean value) {
-        if (setting != null) {
-            settings.put(setting.key, String.valueOf(value));
-        }
-    }
-
-    private static void setSetting(String setting, String value) {
-        settings.put(setting, value);
-    }
-
-    public static void setSetting(Setting setting, String value) {
-        if (setting != null && value != null) {
-            setSetting(setting.key, value);
         }
     }
 }
