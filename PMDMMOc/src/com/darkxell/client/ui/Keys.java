@@ -14,6 +14,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Consumer;
 
 import static com.darkxell.client.launchable.ClientSettings.Setting.*;
 
@@ -167,24 +168,31 @@ public class Keys implements KeyListener {
         }
     }
 
-    @Override
-    public void keyPressed(KeyEvent e) {
+    /**
+     * Flip key and fire event if the key's new state is different.
+     *
+     * @param e Key event from a {@link #keyPressed(KeyEvent) press} or {@link #keyReleased(KeyEvent) release} event.
+     * @param newState New state.
+     * @param cb Statement to execute, if necessary.
+     */
+    private void process(KeyEvent e, boolean newState, Consumer<Key> cb) {
         Key key = Key.getKeyFromID(e.getKeyCode());
-        if (!key.isPressed()) {
+        if (key.isPressed != newState) {
             if (key != Key.UNKNOWN) {
-                key.willPress = true;
+                key.willPress = !key.willPress;
             }
-            Persistence.stateManager.onKeyPressed(e, key);
+            cb.accept(key);
         }
     }
 
     @Override
+    public void keyPressed(KeyEvent e) {
+        this.process(e, true, k -> Persistence.stateManager.onKeyPressed(e, k));
+    }
+
+    @Override
     public void keyReleased(KeyEvent e) {
-        Key key = Key.getKeyFromID(e.getKeyCode());
-        if (key != Key.UNKNOWN) {
-            key.willPress = false;
-        }
-        Persistence.stateManager.onKeyReleased(e, key);
+        this.process(e, false, k -> Persistence.stateManager.onKeyReleased(e, k));
     }
 
 }
