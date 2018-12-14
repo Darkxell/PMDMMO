@@ -32,8 +32,8 @@ public final class MoveRegistry extends Registry<Move> {
         return moves;
     }
 
-    MoveRegistry(URL registryURL, String name) throws IOException {
-        super(registryURL, name);
+    MoveRegistry(URL registryURL) throws IOException {
+        super(registryURL, "Moves");
 
         ATTACK = this.find(0);
         STRUGGLE = this.find(2002);
