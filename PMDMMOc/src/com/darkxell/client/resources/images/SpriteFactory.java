@@ -131,6 +131,8 @@ public class SpriteFactory implements Runnable {
     }
 
     /**
+     * Get a placeholder image of a certain width and height.
+     *
      * @return A default image with the input dimensions.
      */
     public BufferedImage getDefault(int width, int height) {
@@ -141,14 +143,8 @@ public class SpriteFactory implements Runnable {
         BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB_PRE);
         Graphics2D g = img.createGraphics();
 
-        int cols = width / this.defaultImg.getWidth();
-        int lines = height / this.defaultImg.getHeight();
-
-        for (int x = 0; x <= cols; ++x) {
-            for (int y = 0; y <= lines; ++y) {
-                g.drawImage(this.defaultImg, x, y, null);
-            }
-        }
+        g.setPaint(new TexturePaint(this.defaultImg, new Rectangle()));
+        g.fillRect(0, 0, this.defaultImg.getWidth(), this.defaultImg.getHeight());
 
         return img;
     }
