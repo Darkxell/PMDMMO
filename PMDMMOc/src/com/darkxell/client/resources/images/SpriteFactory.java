@@ -238,7 +238,7 @@ public class SpriteFactory implements Runnable {
      * @param img Retrieved image.
      * @param requesterMap Queue map, keyed on resource path.
      * @param callback What to do with image.
-     * @param <T> Type of sprite (see {@link Sprite} and {@link SpriteFactory})
+     * @param <T> Type of sprite (see {@link Sprite} and {@link SubSprite})
      */
     private <T> void notify(String path,
                             BufferedImage img,
