@@ -87,7 +87,7 @@ public class ClientSettings {
 
     public static boolean getBooleanSetting(Setting setting) {
         String value = getSetting(setting);
-        return value != null && value.equals("true");
+        return Boolean.parseBoolean(value);
     }
 
     public static String getSetting(String setting) {
