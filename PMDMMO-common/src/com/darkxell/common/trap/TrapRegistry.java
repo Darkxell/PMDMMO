@@ -39,7 +39,7 @@ public final class TrapRegistry extends Registry<Trap> {
         return traps;
     }
 
-    TrapRegistry(String name) {
-        super(generatePlaceholderDocument(), name);
+    public TrapRegistry() {
+        super(generatePlaceholderDocument(), "Traps");
     }
 }

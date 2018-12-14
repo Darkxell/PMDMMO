@@ -39,8 +39,8 @@ public final class PokemonRegistry extends Registry<PokemonSpecies> {
         return speciesMap;
     }
 
-    PokemonRegistry(URL registryURL, String name) throws IOException {
-        super(registryURL, name, 0);
+    PokemonRegistry(URL registryURL) throws IOException {
+        super(registryURL, "Species", 0);
         this.registerForms();
     }
 

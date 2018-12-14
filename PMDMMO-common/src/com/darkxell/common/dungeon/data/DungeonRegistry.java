@@ -30,7 +30,7 @@ public final class DungeonRegistry extends Registry<Dungeon> {
         return dungeons;
     }
 
-    DungeonRegistry(URL registryURL, String name) throws IOException {
-        super(registryURL, name);
+    DungeonRegistry(URL registryURL) throws IOException {
+        super(registryURL, "Dungeons");
     }
 }

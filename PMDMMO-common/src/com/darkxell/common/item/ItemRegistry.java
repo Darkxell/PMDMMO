@@ -62,7 +62,7 @@ public final class ItemRegistry extends Registry<Item> {
         return items;
     }
 
-    public ItemRegistry(URL registryURL, String name) throws IOException {
-        super(registryURL, name);
+    public ItemRegistry(URL registryURL) throws IOException {
+        super(registryURL, "Items");
     }
 }
