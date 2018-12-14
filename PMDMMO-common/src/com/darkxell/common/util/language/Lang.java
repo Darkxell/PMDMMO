@@ -18,11 +18,16 @@ public class Lang {
         }
     }
 
-    private static Properties dictionnary = new Properties();
+    private static Properties dictionary = new Properties();
     private static Language selected;
 
+    private static void forceLoad() {
+        updateTranslations();
+        Keywords.updateKeywords();
+    }
+
     public static boolean containsKey(String id) {
-        return dictionnary.containsKey(id);
+        return dictionary.containsKey(id);
     }
 
     public static Language getLanguage() {
@@ -32,8 +37,7 @@ public class Lang {
     public static void load(boolean forceLoad) {
         setLanguage(Language.ENGLISH);
         if (forceLoad) {
-            updateTranslations();
-            Keywords.updateKeywords();
+            forceLoad();
         }
     }
 
@@ -43,13 +47,12 @@ public class Lang {
         }
         Logger.instance().info("Language set to " + language.name + ".");
         selected = language;
-        updateTranslations();
-        Keywords.updateKeywords();
+        forceLoad();
     }
 
     public static String translate(String id) {
-        if (dictionnary.containsKey(id)) {
-            return dictionnary.getProperty(id);
+        if (dictionary.containsKey(id)) {
+            return dictionary.getProperty(id);
         }
         return id;
     }
@@ -58,14 +61,12 @@ public class Lang {
      * Reloads the translations after switching language.
      */
     private static void updateTranslations() {
-        dictionnary.clear();
+        dictionary.clear();
         try {
             InputStream stream = Lang.class.getResourceAsStream("/lang/" + selected.id + ".properties");
             if (stream != null) {
-                dictionnary.load(stream);
+                dictionary.load(stream);
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
