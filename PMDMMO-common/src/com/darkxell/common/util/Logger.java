@@ -11,13 +11,36 @@ import java.util.Date;
 import com.darkxell.common.util.language.Message;
 
 public class Logger {
+    public enum LogLevel {
+        NOTSET(0),
+        EVENT(5),
+        DEBUG(10),
+        INFO(20),
+        WARNING(30),
+        ERROR(40);
+
+        public final int severity;
+
+        /**
+         * Shortcuts to log level. Severity levels and a couple names taken from the
+         * <a href="https://docs.python.org/3/library/logging.html#levels">Python logging module</a>.
+         */
+        LogLevel(int severity) {
+            this.severity = severity;
+        }
+    }
+
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
     /**
-     * Booleans describing whether logging of each type should be effective.
+     * At which severity should the logger start outputting to {@code stdout}.
      */
-    public static final boolean error = true, info = true, debug = true, warning = true, events = false;
-    public static final String ERROR = "ERROR", INFO = "INFO", DEBUG = "DEBUG", WARNING = "WARNING", EVENTS = "EVENTS";
+    public static final int STDOUT_SEVERITY = 10;
+
+    /**
+     * At which severity should the logger start outputting to {@code stderr}.
+     */
+    public static final int STDERR_SEVERITY = 40;
 
     private static Logger instance;
 
@@ -29,28 +52,28 @@ public class Logger {
      * Logs a message at the debug level.
      */
     public static void d(String m) {
-        instance().debug(m);
+        instance.debug(m);
     }
 
     /**
      * Logs a message at the info level.
      */
     public static void i(String m) {
-        instance().info(m);
+        instance.info(m);
     }
 
     /**
      * Logs a message at the warning level.
      */
     public static void w(String m) {
-        instance().warning(m);
+        instance.warning(m);
     }
 
     /**
      * Logs a message at the error level.
      */
     public static void e(String m) {
-        instance().error(m);
+        instance.error(m);
     }
 
     /**
@@ -58,7 +81,7 @@ public class Logger {
      */
     public static void event(String m) {
         if (m != null) {
-            instance().log(m.replaceAll("<(\\/color|red|green|blue|yellow)>", ""), EVENTS);
+            instance.log(m.replaceAll("<(\\/color|red|green|blue|yellow)>", ""), LogLevel.EVENT);
         }
     }
 
@@ -89,52 +112,52 @@ public class Logger {
     }
 
     public String debug(Message message) {
-        return this.log(message, DEBUG);
+        return this.log(message, LogLevel.DEBUG);
     }
 
     public String debug(String message) {
-        return this.log(message, DEBUG);
+        return this.log(message, LogLevel.DEBUG);
     }
 
     public String info(Message message) {
-        return this.log(message, INFO);
+        return this.log(message, LogLevel.INFO);
     }
 
     public String info(String message) {
-        return this.log(message, INFO);
+        return this.log(message, LogLevel.INFO);
     }
 
     public String warning(Message message) {
-        return this.log(message, WARNING);
+        return this.log(message, LogLevel.WARNING);
     }
 
     public String warning(String message) {
-        return this.log(message, WARNING);
+        return this.log(message, LogLevel.WARNING);
     }
 
     public String error(Message message) {
-        return this.log(message, ERROR);
+        return this.log(message, LogLevel.ERROR);
     }
 
     public String error(String message) {
-        return this.log(message, ERROR);
+        return this.log(message, LogLevel.ERROR);
     }
 
-    public String log(Message message, String messageType) {
+    public String log(Message message, LogLevel messageType) {
         return this.log(message.toString(), messageType);
     }
 
-    public String log(String message, String messageType) {
-        message = "[" + this.date() + " | " + this.source + "] " + messageType + ": " + message;
+    public String log(String message, LogLevel level) {
+        message = "[" + this.date() + " | " + this.source + "] " + level.name() + ": " + message;
 
-        if ((messageType.equals(DEBUG) && debug) || (messageType.equals(ERROR) && error) || (messageType.equals(
-                INFO) && info) || (messageType.equals(WARNING) && warning) || (messageType.equals(EVENTS) && events)) {
+        if (level.severity >= Math.min(STDOUT_SEVERITY, STDERR_SEVERITY)) {
             this.log.add(message);
-            if (messageType == ERROR) {
-                System.err.println(message);
-            } else {
-                System.out.println(message);
-            }
+        }
+
+        if (level.severity >= STDERR_SEVERITY) {
+            System.err.println(message);
+        } else if (level.severity >= STDOUT_SEVERITY) {
+            System.out.println(message);
         }
 
         return message;
