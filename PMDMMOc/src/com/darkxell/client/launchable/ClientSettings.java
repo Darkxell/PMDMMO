@@ -20,12 +20,6 @@ public class ClientSettings {
         KEY_LEFT("key.left", KeyEvent.VK_LEFT),
         KEY_RIGHT("key.right", KeyEvent.VK_RIGHT),
 
-        KEY_ATTACK("key.attack", KeyEvent.VK_D),
-        KEY_ROTATE("key.rotate", KeyEvent.VK_S),
-        KEY_RUN("key.run", KeyEvent.VK_SHIFT),
-        KEY_DIAGONAL("key.diagonal", KeyEvent.VK_R),
-        KEY_MENU("key.menu", KeyEvent.VK_ESCAPE),
-
         /**
          * Attack keys.
          */
@@ -34,17 +28,26 @@ public class ClientSettings {
         KEY_MOVE_3("key.move3", KeyEvent.VK_3),
         KEY_MOVE_4("key.move4", KeyEvent.VK_4),
 
-        KEY_ITEM_1("key.item1", KeyEvent.VK_5),
-        KEY_ITEM_2("key.item2", KeyEvent.VK_6),
-        KEY_INVENTORY("key.inventory", KeyEvent.VK_I),
+        /**
+         * Free roam camera keys.
+         */
         KEY_MAP_UP("key.map.up", KeyEvent.VK_NUMPAD8),
         KEY_MAP_DOWN("key.map.down", KeyEvent.VK_NUMPAD2),
         KEY_MAP_LEFT("key.map.left", KeyEvent.VK_NUMPAD4),
         KEY_MAP_RIGHT("key.map.right", KeyEvent.VK_NUMPAD6),
         KEY_MAP_RESET("key.map.reset", KeyEvent.VK_NUMPAD5),
-        KEY_PARTY("key.party", KeyEvent.VK_PAGE_UP),
+
+        KEY_ATTACK("key.attack", KeyEvent.VK_D),
+        KEY_DIAGONAL("key.diagonal", KeyEvent.VK_R),
+        KEY_MENU("key.menu", KeyEvent.VK_ESCAPE),
+        KEY_INVENTORY("key.inventory", KeyEvent.VK_I),
+        KEY_ITEM_1("key.item1", KeyEvent.VK_5),
+        KEY_ITEM_2("key.item2", KeyEvent.VK_6),
         KEY_PAGE_LEFT("key.page.left", KeyEvent.VK_PAGE_DOWN),
         KEY_PAGE_RIGHT("key.page.right", KeyEvent.VK_P),
+        KEY_PARTY("key.party", KeyEvent.VK_PAGE_UP),
+        KEY_ROTATE("key.rotate", KeyEvent.VK_S),
+        KEY_RUN("key.run", KeyEvent.VK_SHIFT),
 
         /**
          * Server address - will be prefixed with {@code ws://}.
