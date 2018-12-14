@@ -57,7 +57,7 @@ public class Logger {
      */
     public static void event(String m) {
         if (m != null) {
-            instance().log(m.replaceAll("<\\/color|<red>|<green>|<blue>|<yellow>", ""), EVENTS);
+            instance().log(m.replaceAll("<(\\/color|red|green|blue|yellow)>", ""), EVENTS);
         }
     }
 
