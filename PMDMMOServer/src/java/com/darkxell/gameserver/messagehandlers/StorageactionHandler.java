@@ -72,6 +72,7 @@ public class StorageactionHandler extends MessageHandler {
                     items_quantities[i] = sourceitemstack.quantity;
                 }
                 if (sourceitemstack.quantity == items_quantities[i]) {
+                    endpoint.getInventoryContains_DAO().delete(sourceitemstack.id, dbi_from.id);
                     endpoint.getItemstackDAO().delete(sourceitemstack);
                 } else {
                     sourceitemstack.quantity -= items_quantities[i];
