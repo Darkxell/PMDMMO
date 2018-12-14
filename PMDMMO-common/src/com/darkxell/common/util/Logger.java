@@ -11,7 +11,8 @@ import java.util.Date;
 import com.darkxell.common.util.language.Message;
 
 public class Logger {
-    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+
     /**
      * Booleans describing whether logging of each type should be effective.
      */
@@ -25,35 +26,35 @@ public class Logger {
     }
 
     /**
-     * Gets the logger instance and prints a debug message.
+     * Logs a message at the debug level.
      */
     public static void d(String m) {
         instance().debug(m);
     }
 
     /**
-     * Gets the logger instance and prints an info message.
+     * Logs a message at the info level.
      */
     public static void i(String m) {
         instance().info(m);
     }
 
     /**
-     * Gets the logger instance and prints a warning message.
+     * Logs a message at the warning level.
      */
     public static void w(String m) {
         instance().warning(m);
     }
 
     /**
-     * Gets the logger instance and prints an error message.
+     * Logs a message at the error level.
      */
     public static void e(String m) {
         instance().error(m);
     }
 
     /**
-     * Gets the logger instance and prints an event message.
+     * Logs a message from an event.
      */
     public static void event(String m) {
         if (m != null) {
@@ -85,10 +86,10 @@ public class Logger {
     }
 
     /**
-     * @return The current date with format: yyyy/MM/dd HH:mm:ss
+     * @return The current date with the format of {@link #DATE_FORMAT}.
      */
     public String date() {
-        return dateFormat.format(new Date());
+        return DATE_FORMAT.format(new Date());
     }
 
     public String debug(Message message) {
@@ -143,6 +144,9 @@ public class Logger {
         return message;
     }
 
+    /**
+     * Flush log to file.
+     */
     public void saveClient() {
         if (!this.saveOnExit) {
             return;
