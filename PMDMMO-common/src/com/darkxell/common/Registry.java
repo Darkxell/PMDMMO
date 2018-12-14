@@ -26,9 +26,18 @@ public abstract class Registry<T extends Registrable<T>> {
      */
     private final URL originalURL;
 
+    /**
+     * What item should be retrieved if there are no matches.
+     */
+    private final T defaultIndex;
+
     protected HashMap<Integer, T> cache;
 
     public Registry(URL registryURL, String name) throws IOException {
+        this(registryURL, name, null);
+    }
+
+    public Registry(URL registryURL, String name, Integer defaultIndex) throws IOException {
         Logger.d("Loading " + name + "...");
 
         this.name = name;
@@ -36,6 +45,8 @@ public abstract class Registry<T extends Registrable<T>> {
 
         Element root = XMLUtils.read(registryURL.openStream());
         this.cache = this.deserializeDom(root);
+
+        this.defaultIndex = defaultIndex == null ? null : this.cache.get(defaultIndex);
     }
 
     /**
@@ -49,6 +60,7 @@ public abstract class Registry<T extends Registrable<T>> {
         this.name = name;
         this.originalURL = null;
         this.cache = this.deserializeDom(defaultDocument);
+        this.defaultIndex = null;
     }
 
     protected abstract Element serializeDom(HashMap<Integer, T> registryCache);
@@ -67,7 +79,7 @@ public abstract class Registry<T extends Registrable<T>> {
             return cache.get(id);
         }
         Logger.e("Invalid ID " + id + " for registry " + this.name);
-        return null;
+        return this.defaultIndex;
     }
 
     /**
