@@ -20,11 +20,29 @@ public class Logger {
 
     private static Logger instance;
 
+    public static Logger instance() {
+        return instance;
+    }
+
     /**
      * Gets the logger instance and prints a debug message.
      */
     public static void d(String m) {
         instance().debug(m);
+    }
+
+    /**
+     * Gets the logger instance and prints an info message.
+     */
+    public static void i(String m) {
+        instance().info(m);
+    }
+
+    /**
+     * Gets the logger instance and prints a warning message.
+     */
+    public static void w(String m) {
+        instance().warning(m);
     }
 
     /**
@@ -39,19 +57,8 @@ public class Logger {
      */
     public static void event(String m) {
         if (m != null) {
-            instance().log(m.replaceAll("<\\/color>|<red>|<green>|<blue>|<yellow>", ""), EVENTS);
+            instance().log(m.replaceAll("<\\/color|<red>|<green>|<blue>|<yellow>", ""), EVENTS);
         }
-    }
-
-    /**
-     * Gets the logger instance and prints an info message.
-     */
-    public static void i(String m) {
-        instance().info(m);
-    }
-
-    public static Logger instance() {
-        return instance;
     }
 
     public static void loadClient() {
@@ -60,13 +67,6 @@ public class Logger {
 
     public static void loadServer() {
         instance = new Logger("SERVER");
-    }
-
-    /**
-     * Gets the logger instance and prints a warning message.
-     */
-    public static void w(String m) {
-        instance().warning(m);
     }
 
     private ArrayList<String> log;
@@ -99,20 +99,28 @@ public class Logger {
         return this.log(message, DEBUG);
     }
 
-    public String error(Message message) {
-        return this.log(message, ERROR);
-    }
-
-    public String error(String message) {
-        return this.log(message, ERROR);
-    }
-
     public String info(Message message) {
         return this.log(message, INFO);
     }
 
     public String info(String message) {
         return this.log(message, INFO);
+    }
+
+    public String warning(Message message) {
+        return this.log(message, WARNING);
+    }
+
+    public String warning(String message) {
+        return this.log(message, WARNING);
+    }
+
+    public String error(Message message) {
+        return this.log(message, ERROR);
+    }
+
+    public String error(String message) {
+        return this.log(message, ERROR);
     }
 
     public String log(Message message, String messageType) {
@@ -150,13 +158,5 @@ public class Logger {
             this.error(e.getMessage());
             e.printStackTrace();
         }
-    }
-
-    public String warning(Message message) {
-        return this.log(message, WARNING);
-    }
-
-    public String warning(String message) {
-        return this.log(message, WARNING);
     }
 }
