@@ -86,11 +86,15 @@ public class ClientSettings {
     private static Properties settings;
 
     public static boolean getBooleanSetting(Setting setting) {
+        if (setting == null) {
+            return false;
+        }
+
         String value = getSetting(setting);
         return Boolean.parseBoolean(value);
     }
 
-    public static String getSetting(String setting) {
+    private static String getSetting(String setting) {
         if (!settings.containsKey(setting)) {
             resetSetting(setting);
         }
@@ -98,6 +102,9 @@ public class ClientSettings {
     }
 
     public static String getSetting(Setting setting) {
+        if (setting == null) {
+            return null;
+        }
         return getSetting(setting.key);
     }
 
@@ -116,12 +123,14 @@ public class ClientSettings {
     /**
      * Resets the input setting to its default value.
      */
-    public static void resetSetting(String setting) {
+    private static void resetSetting(String setting) {
         settings.put(setting, Setting.getByKey(setting).value);
     }
 
     public static void resetSetting(Setting setting) {
-        settings.put(setting, setting.value);
+        if (setting != null) {
+            settings.put(setting, setting.value);
+        }
     }
 
     public static void save() {
@@ -132,15 +141,19 @@ public class ClientSettings {
         }
     }
 
-    public static void setBooleanSetting(Setting setting, boolean value) {
-        settings.put(setting.key, String.valueOf(value));
+    public static void setSetting(Setting setting, boolean value) {
+        if (setting != null) {
+            settings.put(setting.key, String.valueOf(value));
+        }
     }
 
-    public static void setSetting(String setting, String value) {
+    private static void setSetting(String setting, String value) {
         settings.put(setting, value);
     }
 
     public static void setSetting(Setting setting, String value) {
-        setSetting(setting.key, value);
+        if (setting != null && value != null) {
+            setSetting(setting.key, value);
+        }
     }
 }

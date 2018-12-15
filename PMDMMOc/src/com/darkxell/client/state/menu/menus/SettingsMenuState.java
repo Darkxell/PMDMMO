@@ -46,7 +46,7 @@ public class SettingsMenuState extends OptionSelectionMenuState
 		if (option == this.back) this.onExit();
 		else if (option == this.hpBars)
 		{
-			ClientSettings.setBooleanSetting(Setting.HP_BARS, !ClientSettings.getBooleanSetting(Setting.HP_BARS));
+			ClientSettings.setSetting(Setting.HP_BARS, !ClientSettings.getBooleanSetting(Setting.HP_BARS));
 			this.updateSettingValues();
 		} else if (option == this.controls) Persistance.stateManager.setState(new ControlsMenuState(this, this.background).setOpaque(this.isOpaque));
 	}

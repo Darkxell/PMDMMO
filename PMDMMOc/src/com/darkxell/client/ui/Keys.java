@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import com.darkxell.client.launchable.ClientSettings;
+import com.darkxell.client.launchable.ClientSettings.Setting;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.common.util.Logger;
@@ -65,7 +66,7 @@ public class Keys implements KeyListener {
 
 		public void setValue(int value) {
 			this.value = value;
-			ClientSettings.setSetting("key." + this.nameID, String.valueOf(this.value));
+			ClientSettings.setSetting(Setting.getByKey("key." + this.nameID), String.valueOf(this.value));
 		}
 	}
 
@@ -113,7 +114,7 @@ public class Keys implements KeyListener {
 	public Keys() {
 		for (Key key : Key.values())
 			if (key != Key.UNKNOWN) {
-				String s = "key." + key.nameID;
+				Setting s = Setting.getByKey("key." + key.nameID);
 				try {
 					key.value = Integer.parseInt(ClientSettings.getSetting(s));
 				} catch (Exception e) {
