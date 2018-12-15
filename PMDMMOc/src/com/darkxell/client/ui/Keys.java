@@ -10,48 +10,97 @@ import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.language.Message;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.Arrays;
+import java.util.List;
+
+import static com.darkxell.client.launchable.ClientSettings.Setting.*;
+
 public class Keys implements KeyListener {
-	public enum Key {
-		ATTACK("attack"),
-		DIAGONAL("diagonal"),
-		DOWN("down"),
-		INVENTORY("inventory"),
-		ITEM_1("item1"),
-		ITEM_2("item2"),
-		LEFT("left"),
-		MAP_DOWN("map.down"),
-		MAP_LEFT("map.left"),
-		MAP_RESET("map.reset"),
-		MAP_RIGHT("map.right"),
-		MAP_UP("map.up"),
-		MENU("menu"),
-		MOVE_1("move1"),
-		MOVE_2("move2"),
-		MOVE_3("move3"),
-		MOVE_4("move4"),
-		PAGE_LEFT("page.left"),
-		PAGE_RIGHT("page.right"),
-		PARTY("party"),
-		RIGHT("right"),
-		ROTATE("rotate"),
-		RUN("run"),
-		UNKNOWN("unknown"),
-		UP("up");
+    public enum Key {
+        /**
+         * Movement direction keys.
+         */
+        UP(KEY_UP),
+        DOWN(KEY_DOWN),
+        LEFT(KEY_LEFT),
+        RIGHT(KEY_RIGHT),
 
-		boolean isPressed;
-		public final String nameID;
-		int value;
-		boolean wasPressed;
-		boolean willPress;
+        /**
+         * Attack keys.
+         */
+        MOVE_1(KEY_MOVE_1),
+        MOVE_2(KEY_MOVE_2),
+        MOVE_3(KEY_MOVE_3),
+        MOVE_4(KEY_MOVE_4),
 
-		Key(String nameID)
-		{
-			this.nameID = nameID;
-		}
+        /**
+         * Free roam camera keys.
+         */
+        MAP_UP(KEY_MAP_UP),
+        MAP_DOWN(KEY_MAP_DOWN),
+        MAP_LEFT(KEY_MAP_LEFT),
+        MAP_RIGHT(KEY_MAP_RIGHT),
+        MAP_RESET(KEY_MAP_RESET),
 
-		public Message getName() {
-			return new Message("key." + this.nameID);
-		}
+        ATTACK(KEY_ATTACK),
+        DIAGONAL(KEY_DIAGONAL),
+        INVENTORY(KEY_INVENTORY),
+        ITEM_1(KEY_ITEM_1),
+        ITEM_2(KEY_ITEM_2),
+        MENU(KEY_MENU),
+        PAGE_LEFT(KEY_PAGE_LEFT),
+        PAGE_RIGHT(KEY_PAGE_RIGHT),
+        PARTY(KEY_PARTY),
+        ROTATE(KEY_ROTATE),
+        RUN(KEY_RUN),
+
+        UNKNOWN(null);
+
+        public final Setting setting;
+        int value;
+
+        boolean isPressed;
+        boolean wasPressed;
+        boolean willPress;
+
+        public static Key getKeyFromID(int keyID) {
+            for (Key key : Key.values()) {
+                if (key.value == keyID) {
+                    return key;
+                }
+            }
+            Key.UNKNOWN.value = keyID;
+            return Key.UNKNOWN;
+        }
+
+        Key(Setting setting) {
+            this.isPressed = false;
+            this.wasPressed = false;
+            this.willPress = false;
+
+            if (setting == null) {
+                this.setting = null;
+                return;
+            }
+
+            this.setting = setting;
+            String rawValue = ClientSettings.getSetting(setting);
+
+            try {
+                this.value = Integer.parseInt(rawValue);
+            } catch (NumberFormatException e) {
+                Logger.e("Key " + setting.key + " has invalid value " + rawValue + ".");
+                Logger.i("Using default of " + setting.defaultValue + " instead.");
+
+                ClientSettings.resetSetting(setting);
+            }
+        }
+
+        public Message getName() {
+            return new Message(this.setting == null ? "unknown key" : this.setting.key);
+        }
 
 		public boolean isPressed() {
 			if (Persistance.stateManager instanceof PrincipalMainState
@@ -64,11 +113,13 @@ public class Keys implements KeyListener {
 			return this.value;
 		}
 
-		public void setValue(int value) {
-			this.value = value;
-			ClientSettings.setSetting(Setting.getByKey("key." + this.nameID), String.valueOf(this.value));
-		}
-	}
+        public void setValue(int value) {
+            this.value = value;
+            if (this.setting != null) {
+                ClientSettings.setSetting(this.setting, String.valueOf(this.value));
+            }
+        }
+    }
 
     /**
      * TODO: delegate run event detection to dungeon state. somehow.
@@ -109,56 +160,31 @@ public class Keys implements KeyListener {
         return true;
     }
 
-	/** @param keyID - The ID of the pressed key. See {@link KeyEvent}
-	 * @return The {@link Keys#UP Key} that was pressed. -1 if doesn't match a key for this game. */
-	public static Key getKeyFromID(int keyID) {
-		for (Key key : Key.values())
-			if (key.value == keyID) return key;
-		Key.UNKNOWN.value = keyID;
-		return Key.UNKNOWN;
-	}
+    public static void update() {
+        for (Key key : Key.values()) {
+            key.wasPressed = key.isPressed;
+            key.isPressed = key.willPress;
+        }
+    }
 
-	public static void update() {
-		for (Key key : Key.values()) {
-			key.wasPressed = key.isPressed;
-			key.isPressed = key.willPress;
-		}
-	}
+    @Override
+    public void keyPressed(KeyEvent e) {
+        Key key = Key.getKeyFromID(e.getKeyCode());
+        if (!key.isPressed()) {
+            if (key != Key.UNKNOWN) {
+                key.willPress = true;
+            }
+            Persistence.stateManager.onKeyPressed(e, key);
+        }
+    }
 
-	public Keys() {
-		for (Key key : Key.values())
-			if (key != Key.UNKNOWN) {
-				Setting s = Setting.getByKey("key." + key.nameID);
-				String rawKey = ClientSettings.getSetting(s);
-				try {
-					key.value = Integer.parseInt(rawKey);
-				} catch (NumberFormatException e) {
-					Logger.e("Invalid key ID: " + rawKey);
-					ClientSettings.resetSetting(s);
-					key.value = Integer.parseInt(ClientSettings.getSetting(s));
-				}
-			}
-	}
-
-	@Override
-	public void keyPressed(KeyEvent e) {
-		Key key = getKeyFromID(e.getKeyCode());
-		if (!key.isPressed()) {
-			if (key != Key.UNKNOWN) key.willPress = true;
-			Persistance.stateManager.onKeyPressed(e, key);
-		}
-	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		Key key = getKeyFromID(e.getKeyCode());
-		if (key != Key.UNKNOWN) key.willPress = false;
-		Persistance.stateManager.onKeyReleased(e, key);
-	}
-
-	@Override
-	public void keyTyped(KeyEvent e) {
-		Persistance.stateManager.onKeyTyped(e);
-	}
+    @Override
+    public void keyReleased(KeyEvent e) {
+        Key key = Key.getKeyFromID(e.getKeyCode());
+        if (key != Key.UNKNOWN) {
+            key.willPress = false;
+        }
+        Persistence.stateManager.onKeyReleased(e, key);
+    }
 
 }
