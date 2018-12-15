@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cutscene name="base/squareopening">
+  <creation freezone="base" camerax="30.0" cameray="30.0" fading="false">
+    <pokemon cutsceneid="1" xpos="34.0" ypos="27.0">
+      <teammember>0</teammember>
+      <animated>false</animated>
+    </pokemon>
+    <pokemon cutsceneid="2" xpos="34.0" ypos="40.0" facing="NORTH">
+      <teammember>1</teammember>
+      <state>MOVE</state>
+    </pokemon>
+  </creation>
+  <events>
+    <move ypos="35.0" speed="0.1" target="2" />
+    <wait />
+    <setanimated target="2" animated="false" />
+    <setstate target="2" state="IDLE" />
+    <dialog>
+      <dialogscreen emotion="Happy" target="2" portrait-location="BOTTOM_RIGHT">cutscene.basesquareopen.m1</dialogscreen>
+    </dialog>
+    <wait />
+    <move ypos="34.5" target="2" />
+    <wait />
+    <move ypos="35.0" target="2" />
+    <wait />
+    <dialog>
+      <dialogscreen emotion="Amazed" target="2" portrait-location="BOTTOM_RIGHT">cutscene.basesquareopen.m2</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="2" distance="-1" speed="1" />
+    <move xpos="31.0" ypos="33.0" speed="0.1" target="2" />
+    <setanimated target="2" animated="true" />
+    <setstate target="2" state="MOVE" />
+    <wait />
+    <rotate target="2" distance="1" speed="1" />
+    <setstate target="2" state="IDLE" />
+    <setanimated target="2" animated="false" />
+    <wait />
+    <dialog>
+      <dialogscreen emotion="Amazed" target="2" portrait-location="BOTTOM_RIGHT">cutscene.basesquareopen.m3</dialogscreen>
+      <dialogscreen emotion="Shocked" target="2" portrait-location="BOTTOM_RIGHT">cutscene.basesquareopen.m4</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="2" distance="2" speed="2" />
+    <setanimated target="2" animated="true" />
+    <setstate target="2" state="MOVE" />
+    <setanimated target="1" animated="true" />
+    <setstate target="1" state="MOVE" />
+    <move ypos="30.0" speed="0.1" target="1" />
+    <move xpos="34.0" speed="0.1" target="2" />
+    <wait />
+    <rotate target="2" distance="-2" speed="1" />
+    <setstate target="2" state="IDLE" />
+    <setanimated target="2" animated="false" />
+    <setanimated target="1" animated="false" />
+    <setstate target="1" state="IDLE" />
+    <wait />
+    <dialog>
+      <dialogscreen emotion="Sad" target="2" portrait-location="BOTTOM_RIGHT">cutscene.basesquareopen.m5</dialogscreen>
+      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.basesquareopen.m6</dialogscreen>
+    </dialog>
+    <wait />
+    <setanimated target="1" animated="true" />
+    <setanimated target="2" animated="true" />
+    <setstate target="1" state="MOVE" />
+    <setstate target="2" state="MOVE" />
+    <move xpos="40.0" ypos="40.0" speed="0.2" target="1" />
+    <rotate target="1" distance="-1" speed="2" />
+    <rotate target="2" distance="3" speed="2" />
+    <move xpos="43.0" ypos="39.0" speed="0.2" target="2" />
+    <wait />
+    <rotate target="1" distance="-1" speed="2" />
+    <rotate target="2" distance="-1" speed="2" />
+    <move xpos="60.0" speed="0.2" target="1" />
+    <move xpos="62.0" speed="0.2" target="2" />
+  </events>
+  <onfinish>
+    <playcutscene id="squaretutorial" />
+  </onfinish>
+</cutscene>

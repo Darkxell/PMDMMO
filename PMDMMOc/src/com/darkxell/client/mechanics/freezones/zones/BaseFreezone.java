@@ -65,6 +65,9 @@ public class BaseFreezone extends FreezoneMap {
 					// Note that at this point, the client is offsync with the
 					// server, as the server storypos is 4. both will be 5 at
 					// the end of the cutscene.
+				} else if(Persistance.player.getData().storyposition == 8) {
+					CutsceneManager.playCutscene("base/squareopening", false);
+					Persistance.player.setStoryPosition(10);
 				}
 			}
 		});
