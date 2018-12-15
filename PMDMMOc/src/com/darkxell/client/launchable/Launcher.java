@@ -72,12 +72,14 @@ public class Launcher
 
 	public static int getFps()
 	{
-		return (processingprofile == PROFILE_SYNCHRONIZED) ? updaterandrenderer.ticksPerSecond() : renderer.ticksPerSecond();
+		GameLoop loop = (processingprofile == PROFILE_SYNCHRONIZED) ? updaterandrenderer : renderer;
+		return loop == null ? 0 : loop.ticksPerSecond();
 	}
 
 	public static int getUps()
 	{
-		return (processingprofile == PROFILE_SYNCHRONIZED) ? updaterandrenderer.ticksPerSecond() : updater.ticksPerSecond();
+		GameLoop loop = (processingprofile == PROFILE_SYNCHRONIZED) ? updaterandrenderer : updater;
+		return loop == null ? 0 : loop.ticksPerSecond();
 	}
 
 	public static void stopGame()
