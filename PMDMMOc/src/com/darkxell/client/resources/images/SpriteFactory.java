@@ -1,6 +1,6 @@
 package com.darkxell.client.resources.images;
 
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.*;
