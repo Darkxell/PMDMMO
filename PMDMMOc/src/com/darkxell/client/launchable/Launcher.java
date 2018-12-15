@@ -41,26 +41,29 @@ public class Launcher {
 	public static void main(String[] args) {
         isRunning = true;
 
-        ClientSettings.load();
-        Logger.loadClient();
-        Lang.load(false);
-        if (!SpriteFactory.load()) {
-            isRunning = false;
-            JOptionPane.showMessageDialog(null, new Message("error.loading.sprite_factory"), new Message("error").toString(), JOptionPane.ERROR_MESSAGE);
-            System.exit(0);
-        }
-        PokemonRegistry.load();
-        MoveRegistry.load();
-        ItemRegistry.load();
-        TrapRegistry.load();
-        DungeonRegistry.load();
-        SpriteLoader.loadCommon();
-        PokemonSpritesets.loadData();
-        PokemonPortrait.load();
-        Animations.loadData();
-        SoundsHolder.load(".");
-        Persistance.soundmanager = new SoundManager();
-        Logger.instance().info("Lang & Data loaded.");
+		ClientSettings.load();
+		Logger.loadClient();
+		Lang.load(false);
+		try {
+			SpriteFactory.load();
+		} catch (AssertionError e) {
+			Launcher.stopGame();
+			isRunning = false;
+			JOptionPane.showMessageDialog(null, new Message("error.loading.sprite_factory"), new Message("error").toString(), JOptionPane.ERROR_MESSAGE);
+			System.exit(1);
+		}
+		PokemonRegistry.load();
+		MoveRegistry.load();
+		ItemRegistry.load();
+		TrapRegistry.load();
+		DungeonRegistry.load();
+		SpriteLoader.loadCommon();
+		PokemonSpritesets.loadData();
+		PokemonPortrait.load();
+		Animations.loadData();
+		SoundsHolder.load(".");
+		Persistance.soundmanager = new SoundManager();
+		Logger.instance().info("Lang & Data loaded.");
 
         DiscordEventHandlerForPMDMMO deh = new DiscordEventHandlerForPMDMMO("In logging screen", "main_big");
         deh.start();
