@@ -12,7 +12,17 @@ public abstract class GameLoop implements Runnable {
     public static final long NS_PER_S = (long) 1e9;
 
     /**
-     * Target updates per second.
+     * Nanoseconds per millisecond.
+     */
+    public static final long NS_PER_MS = (long) (NS_PER_S / 1e3);
+
+    /**
+     * How much the sleep interval should change by, if necessary (ns).
+     */
+    public static final long SLEEP_DIFF_INTERVAL_NS = (long) 5e4;
+
+    /**
+     * Target updates per second (Hz).
      *
      * @see #UPDATE_NS
      */
@@ -43,6 +53,11 @@ public abstract class GameLoop implements Runnable {
      * Duration (in ns) of when the UPS measurement interval began.
      */
     private long intervalDuration;
+
+    /**
+     * How long the next sleep duration should be (in ns) to avoid unnecessary wakeups.
+     */
+    private long nextSleepDuration;
 
     /**
      * How many "frames behind" the thread is. In other words, in order to meet a target UPS measure of
@@ -95,6 +110,7 @@ public abstract class GameLoop implements Runnable {
         this.lastTime = this.startTime;
         this.framesMissing = 0;
         this.intervalDuration = 0;
+        this.nextSleepDuration = (long) 2e6; // 2 ms
         this.nextUPSUpdates = 0;
         this.currentUPS = 0;
 
@@ -104,7 +120,12 @@ public abstract class GameLoop implements Runnable {
             this.update();
 
             try {
-                Thread.sleep(2);
+                long sleepMs = this.nextSleepDuration / NS_PER_MS;
+                // in extreme cases, we may end up never explicitly sleeping, although this is not a problem as threads
+                // that hog CPU time are preempted anyways.
+                if (sleepMs >= 0) {
+                    Thread.sleep(sleepMs);
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -112,6 +133,18 @@ public abstract class GameLoop implements Runnable {
     }
 
     abstract protected void tick();
+
+    /**
+     * Adjust length of sleep, accounting for possible negative values.
+     *
+     * @param multiple How much time to adjust, in terms of {@link #SLEEP_DIFF_INTERVAL_NS}.
+     */
+    private void adjustSleep(int multiple) {
+        this.nextSleepDuration += (long) multiple * SLEEP_DIFF_INTERVAL_NS;
+
+        // never sleep for negative time.
+        this.nextSleepDuration = Math.max(this.nextSleepDuration, 0);
+    }
 
     private void update() {
         long now = System.nanoTime();
@@ -128,6 +161,14 @@ public abstract class GameLoop implements Runnable {
         for (int i = 0; i < catchUpFrames - 1; i++) {
             this.tick();
         }
+
+        // if we performed 0 ticks this update, we were too quick, so we lengthen our sleep time.
+        // otherwise, always try to stay as close to 1 tick per update as possible.
+
+        // this algorithm often yields update frequencies a tiny fraction of a hertz slower than the target rate, but
+        // it is usually on the order of mHz to cHz. and in any case, it prevents us from having to wake up the update
+        // thread for no reason.
+        this.adjustSleep(catchUpFrames == 0 ? 1 : -1);
 
         this.nextUPSUpdates += catchUpFrames;
         this.framesMissing -= catchUpFrames; // leave decimal part
