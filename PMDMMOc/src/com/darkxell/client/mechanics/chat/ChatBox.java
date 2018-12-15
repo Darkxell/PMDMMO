@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 import com.darkxell.client.launchable.ClientSettings;
+import com.darkxell.client.launchable.ClientSettings.Setting;
 import com.darkxell.client.launchable.GameSocketEndpoint;
 import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.launchable.Persistance;
@@ -145,7 +146,7 @@ public class ChatBox {
 		if (Persistance.socketendpoint != null
 				&& Persistance.socketendpoint.connectionStatus() == GameSocketEndpoint.CONNECTED) {
 			JsonObject mess = new JsonObject().add("action", "chatmessage").add("tag", "DEV")
-					.add("sender", ClientSettings.getSetting(ClientSettings.LOGIN))
+					.add("sender", ClientSettings.getSetting(Setting.LOGIN))
 					.add("message", this.textfield.getContent()).add("tagcolor", Palette.getHexaFromClor(Color.RED))
 					.add("messagecolor", Palette.getHexaFromClor(Color.WHITE))
 					.add("sendercolor", Palette.getHexaFromClor(Palette.CHAT_GLOBAL));

@@ -1,6 +1,7 @@
 package com.darkxell.client.state.menu.menus;
 
 import com.darkxell.client.launchable.ClientSettings;
+import com.darkxell.client.launchable.ClientSettings.Setting;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.layers.AbstractGraphiclayer;
 import com.darkxell.client.state.menu.AbstractMenuState;
@@ -45,14 +46,15 @@ public class SettingsMenuState extends OptionSelectionMenuState
 		if (option == this.back) this.onExit();
 		else if (option == this.hpBars)
 		{
-			ClientSettings.setSetting(ClientSettings.HP_BARS, String.valueOf(!ClientSettings.getBooleanSetting(ClientSettings.HP_BARS)));
+			ClientSettings.setBooleanSetting(Setting.HP_BARS, !ClientSettings.getBooleanSetting(Setting.HP_BARS));
 			this.updateSettingValues();
 		} else if (option == this.controls) Persistance.stateManager.setState(new ControlsMenuState(this, this.background).setOpaque(this.isOpaque));
 	}
 
 	private void updateSettingValues()
 	{
-		this.hpBars.name = new Message("menu.settings.hp_bars." + (ClientSettings.getBooleanSetting(ClientSettings.HP_BARS) ? "on" : "off"));
+		this.hpBars.name = new Message("menu.settings.hp_bars." + (ClientSettings.getBooleanSetting(Setting.HP_BARS) ? "on"
+				: "off"));
 	}
 
 }
