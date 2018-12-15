@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.dungeon.FloorStatusEndedEvent;
-import com.darkxell.common.util.language.Lang;
+import com.darkxell.common.util.language.Localization;
 import com.darkxell.common.util.language.Message;
 
 public class ActiveFloorStatus
@@ -28,7 +28,7 @@ public class ActiveFloorStatus
 	public Message endMessage()
 	{
 		String id = "status.floor.end." + this.status.id;
-		if (!Lang.containsKey(id)) return null;
+		if (!Localization.containsKey(id)) return null;
 		return new Message(id);
 	}
 
@@ -61,7 +61,7 @@ public class ActiveFloorStatus
 	public Message startMessage()
 	{
 		String id = "status.floor.start." + this.status.id;
-		if (!Lang.containsKey(id)) return null;
+		if (!Localization.containsKey(id)) return null;
 		return new Message(id);
 	}
 

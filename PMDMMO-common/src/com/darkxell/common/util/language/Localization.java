@@ -5,7 +5,7 @@ import java.util.Properties;
 
 import com.darkxell.common.util.Logger;
 
-public class Lang {
+public class Localization {
     public enum Language {
         ENGLISH("en", "English");
 
@@ -63,7 +63,7 @@ public class Lang {
     private static void updateTranslations() {
         dictionary.clear();
         try {
-            InputStream stream = Lang.class.getResourceAsStream("/lang/" + selected.id + ".properties");
+            InputStream stream = Localization.class.getResourceAsStream("/lang/" + selected.id + ".properties");
             if (stream != null) {
                 dictionary.load(stream);
             }

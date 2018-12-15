@@ -17,7 +17,7 @@ import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.trap.TrapRegistry;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.Util;
-import com.darkxell.common.util.language.Lang;
+import com.darkxell.common.util.language.Localization;
 import com.darkxell.common.weather.Weather;
 
 import fr.darkxell.dataeditor.application.data.Cutscenes;
@@ -38,7 +38,7 @@ public class DataEditor extends Application
 		Launcher.isRunning = true;
 		ClientSettings.load();
 		Logger.load("DATA EDITOR");
-		Lang.load(false);
+		Localization.load(false);
 		SpriteFactory.load();
 		PokemonRegistry.load();
 		MoveRegistry.load();

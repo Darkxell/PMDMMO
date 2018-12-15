@@ -11,7 +11,7 @@ import com.darkxell.common.pokemon.BaseStats.Stat;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.status.StatusConditions;
-import com.darkxell.common.util.language.Lang;
+import com.darkxell.common.util.language.Localization;
 import com.darkxell.common.util.language.Message;
 import com.darkxell.common.weather.Weather;
 
@@ -86,7 +86,7 @@ public abstract class Ability implements AffectsPokemon, DungeonEventListener
 
 	public boolean hasTriggeredMessage()
 	{
-		return Lang.containsKey("ability.trigger." + this.id);
+		return Localization.containsKey("ability.trigger." + this.id);
 	}
 
 	public Message name()

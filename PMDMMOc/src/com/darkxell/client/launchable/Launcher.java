@@ -20,7 +20,7 @@ import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.trap.TrapRegistry;
 import com.darkxell.common.util.Logger;
-import com.darkxell.common.util.language.Lang;
+import com.darkxell.common.util.language.Localization;
 import com.darkxell.common.util.language.Message;
 
 import static com.darkxell.client.launchable.render.RenderProfile.*;
@@ -43,11 +43,10 @@ public class Launcher {
 
 		ClientSettings.load();
 		Logger.load("CLIENT");
-		Lang.load(false);
+		Localization.load(false);
 		try {
 			SpriteFactory.load();
 		} catch (AssertionError e) {
-			Launcher.stopGame();
 			isRunning = false;
 			JOptionPane.showMessageDialog(null, new Message("error.loading.sprite_factory"), new Message("error").toString(), JOptionPane.ERROR_MESSAGE);
 			System.exit(1);

@@ -10,7 +10,7 @@ import com.darkxell.common.pokemon.ability.Ability;
 import com.darkxell.common.status.StatusCondition;
 import com.darkxell.common.status.StatusConditions;
 import com.darkxell.common.util.Pair;
-import com.darkxell.common.util.language.Lang;
+import com.darkxell.common.util.language.Localization;
 
 public class AnimationListItem extends CustomTreeItem implements Comparable<AnimationListItem>
 {
@@ -79,7 +79,7 @@ public class AnimationListItem extends CustomTreeItem implements Comparable<Anim
 				break;
 
 			default:
-				if (Lang.containsKey("animation.custom." + this.id)) detail = Lang.translate("animation.custom." + this.id);
+				if (Localization.containsKey("animation.custom." + this.id)) detail = Localization.translate("animation.custom." + this.id);
 				break;
 		}
 		if (detail == null) return "";
