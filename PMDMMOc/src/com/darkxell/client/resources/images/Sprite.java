@@ -45,7 +45,7 @@ public class Sprite
 	/** @return <code>true</code> if this Sprite is loaded. */
 	public boolean isLoaded()
 	{
-		return SpriteFactory.instance().isLoaded(this.path);
+		return SpriteFactory.instance().isResourceLoaded(this.path);
 	}
 
 	/** This method is called when the SpriteFactory loads this Sprite. If overriding this method, the parent should always be called to set the base image.<br>
