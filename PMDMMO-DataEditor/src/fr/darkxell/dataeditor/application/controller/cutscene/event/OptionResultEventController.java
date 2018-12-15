@@ -21,8 +21,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 
-public class OptionResultEventController extends EventController implements EventEditionListener
-{
+public class OptionResultEventController extends EventController implements EventEditionListener {
 
 	@FXML
 	private ListView<CutsceneEvent> eventList;
@@ -33,8 +32,7 @@ public class OptionResultEventController extends EventController implements Even
 	private ComboBox<CutsceneEvent> targetCombobox;
 
 	@Override
-	public List<CutsceneEvent> availableEvents()
-	{
+	public List<CutsceneEvent> availableEvents() {
 		ArrayList<CutsceneEvent> events = new ArrayList<>(this.listener.availableEvents());
 		int i = events.indexOf(this.listener.listManager().editing);
 		if (i == -1) i = 0;
@@ -44,22 +42,20 @@ public class OptionResultEventController extends EventController implements Even
 	}
 
 	@Override
-	public CutsceneEvent generateEvent()
-	{
-		if (this.optionTextfield.getText().equals(""))
-		{
+	public CutsceneEvent generateEvent() {
+		if (this.optionTextfield.getText().equals("")) {
 			FXUtils.showAlert("Type in option lazyguy");
 			return null;
 		}
-		if (this.targetCombobox.getValue().id == -1)
-			FXUtils.showAlert("Warning: your target option selection event doesn't have and ID. Don't forget to add one!");
-		return new OptionResultCutsceneEvent(this.id(), Integer.parseInt(this.optionTextfield.getText()), this.targetCombobox.getValue(),
+		if (this.targetCombobox.getValue().id == -1) FXUtils
+				.showAlert("Warning: your target option selection event doesn't have and ID. Don't forget to add one!");
+		return new OptionResultCutsceneEvent(this.id(), Integer.parseInt(this.optionTextfield.getText()),
+				this.targetCombobox.getValue(),
 				this.eventList.getItems().toArray(new CutsceneEvent[this.eventList.getItems().size()]));
 	}
 
 	@Override
-	public void initialize(URL location, ResourceBundle resources)
-	{
+	public void initialize(URL location, ResourceBundle resources) {
 		super.initialize(location, resources);
 
 		(this.listManager = new EventList()).setup(this, this.eventList);
@@ -76,24 +72,21 @@ public class OptionResultEventController extends EventController implements Even
 	}
 
 	@Override
-	public EventList listManager()
-	{
+	public EventList listManager() {
 		return this.listManager;
 	}
 
 	@Override
-	public void onEditCancel()
-	{
+	public void onEditCancel() {
 		this.listManager.editEventPopup.close();
 	}
 
 	@Override
-	public void onEditConfirm(CutsceneEvent event)
-	{
+	public void onEditConfirm(CutsceneEvent event) {
+		if (event == null) return;
 		ObservableList<CutsceneEvent> events = this.eventList.getItems();
 		if (this.listManager.editing == null) events.add(event);
-		else
-		{
+		else {
 			int index = events.indexOf(this.listManager.editing);
 			events.remove(index);
 			events.add(index, event);
@@ -101,21 +94,18 @@ public class OptionResultEventController extends EventController implements Even
 	}
 
 	@Override
-	public void onEventTypeCancel()
-	{
+	public void onEventTypeCancel() {
 		this.listManager.selectEventTypePopup.close();
 	}
 
 	@Override
-	public void onEventTypeSelect(CutsceneEventType type)
-	{
+	public void onEventTypeSelect(CutsceneEventType type) {
 		this.listManager.selectEventTypePopup.close();
 		this.listManager.onCreate(null, type);
 	}
 
 	@Override
-	public void setup(CutsceneEvent event)
-	{
+	public void setup(CutsceneEvent event) {
 		super.setup(event);
 
 		this.targetCombobox.setValue(((OptionResultCutsceneEvent) event).target);

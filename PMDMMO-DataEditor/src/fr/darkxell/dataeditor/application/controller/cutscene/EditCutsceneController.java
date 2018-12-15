@@ -25,8 +25,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
 
-public class EditCutsceneController implements Initializable, EventEditionListener
-{
+public class EditCutsceneController implements Initializable, EventEditionListener {
 
 	public static EditCutsceneController instance;
 
@@ -39,102 +38,91 @@ public class EditCutsceneController implements Initializable, EventEditionListen
 	public EventList listManager;
 
 	@Override
-	public List<CutsceneEvent> availableEvents()
-	{
+	public List<CutsceneEvent> availableEvents() {
 		return this.eventList.getItems();
 	}
 
 	@Override
-	public void initialize(URL location, ResourceBundle resources)
-	{
+	public void initialize(URL location, ResourceBundle resources) {
 		instance = this;
 		(this.listManager = new EventList()).setup(this, this.eventList);
 	}
 
-	public ArrayList<CutsceneEntity> listAvailableEntities(CutsceneEvent event)
-	{
+	public ArrayList<CutsceneEntity> listAvailableEntities(CutsceneEvent event) {
 		ArrayList<CutsceneEntity> entities = new ArrayList<>();
 		for (CutsceneEntity entity : this.cutsceneCreationController.entitiesList.getItems())
 			entities.add(entity);
-		for (CutsceneEvent e : this.eventList.getItems())
-		{
+		for (CutsceneEvent e : this.eventList.getItems()) {
 			if (e == event) break;
 			if (e instanceof SpawnCutsceneEvent) entities.add(((SpawnCutsceneEvent) e).entity);
-			if (e instanceof DespawnCutsceneEvent) entities.removeIf(ent -> ent.id == ((DespawnCutsceneEvent) e).target);
+			if (e instanceof DespawnCutsceneEvent)
+				entities.removeIf(ent -> ent.id == ((DespawnCutsceneEvent) e).target);
 		}
 		return entities;
 	}
 
 	@Override
-	public EventList listManager()
-	{
+	public EventList listManager() {
 		return this.listManager;
 	}
 
-	public void onCreateEvent()
-	{
+	public void onCreateEvent() {
 		this.listManager.onCreate(null);
 	}
 
 	@Override
-	public void onEditCancel()
-	{
+	public void onEditCancel() {
 		this.listManager.editEventPopup.close();
 	}
 
 	@Override
-	public void onEditConfirm(CutsceneEvent event)
-	{
+	public void onEditConfirm(CutsceneEvent event) {
+		if (event == null) return;
 		ObservableList<CutsceneEvent> events = this.eventList.getItems();
-		if (this.listManager.editing == null)
-		{
+		if (this.listManager.editing == null) {
 			int index = this.eventList.getSelectionModel().getSelectedIndex();
 			if (index == events.size() - 1 || index == -1) events.add(event);
 			else events.add(index + 1, event);
-		} else
-		{
+		} else {
 			int index = events.indexOf(this.listManager.editing);
 			events.remove(index);
 			events.add(index, event);
 		}
-		
+
 		this.eventList.getSelectionModel().select(event);
 	}
 
 	@Override
-	public void onEventTypeCancel()
-	{
+	public void onEventTypeCancel() {
 		this.listManager.selectEventTypePopup.close();
 	}
 
 	@Override
-	public void onEventTypeSelect(CutsceneEventType type)
-	{
+	public void onEventTypeSelect(CutsceneEventType type) {
 		this.listManager.selectEventTypePopup.close();
 		this.listManager.onCreate(null, type);
 	}
 
-	public void saveChanges()
-	{
-		Cutscene c = new Cutscene(CutscenesTabController.instance.currentCutscene.name, this.cutsceneCreationController.getCreation(),
-				this.cutsceneEndController.getEnd(), new ArrayList<>(this.eventList.getItems()));
+	public void saveChanges() {
+		Cutscene c = new Cutscene(CutscenesTabController.instance.currentCutscene.name,
+				this.cutsceneCreationController.getCreation(), this.cutsceneEndController.getEnd(),
+				new ArrayList<>(this.eventList.getItems()));
 		CutscenesTabController.instance.currentCutscene = c;
 		Cutscenes.update(c);
 		CutscenesTabController.instance.reloadCutsceneList();
 	}
 
-	public void setupFor(Cutscene cutscene)
-	{
+	public void setupFor(Cutscene cutscene) {
 		this.cutsceneCreationController.setupFor(cutscene);
 		this.cutsceneEndController.setupFor(cutscene);
 		this.eventList.getItems().clear();
 		this.eventList.getItems().addAll(cutscene.events);
 	}
 
-	public void test()
-	{
-		Cutscene temp = new Cutscene(CutscenesTabController.instance.currentCutscene.name, this.cutsceneCreationController.getCreation(),
-				this.cutsceneEndController.getEnd(), new ArrayList<>(this.eventList.getItems()));
+	public void test() {
+		Cutscene temp = new Cutscene(CutscenesTabController.instance.currentCutscene.name,
+				this.cutsceneCreationController.getCreation(), this.cutsceneEndController.getEnd(),
+				new ArrayList<>(this.eventList.getItems()));
 		Cutscene test = new Cutscene("test", temp.toXML());
 		test.onFinish = new CloseTesterCutsceneEnd(test);
 
