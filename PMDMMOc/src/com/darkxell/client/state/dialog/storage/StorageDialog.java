@@ -86,7 +86,8 @@ public class StorageDialog extends ComplexDialog
 					return ComplexDialogAction.NEW_DIALOG;
 				}
 			}
-		} else if (previous.currentScreen().id == INVENTORYEMPTY || previous.currentScreen().id == STORAGEEMPTY)
+		} else if (previous.currentScreen().id == INVENTORYEMPTY || previous.currentScreen().id == STORAGEEMPTY
+				|| previous.currentScreen().id == INVENTORYFULL)
 			return ComplexDialogAction.NEW_DIALOG;
 		return ComplexDialogAction.PAUSE;
 	}
@@ -113,6 +114,10 @@ public class StorageDialog extends ComplexDialog
 			this.dialogToShow = 0;
 			return this.newDialog(new PokemonDialogScreen(this.shopkeeper, new Message("dialog.storage.storageempty"))
 					.setID(INVENTORYEMPTY)).setOpaque(true);
+		} else if (this.dialogToShow == INVENTORYFULL) {
+			this.dialogToShow = 0;
+			return this.newDialog(new PokemonDialogScreen(this.shopkeeper, new Message("dialog.storage.inventoryfull"))
+					.setID(INVENTORYFULL)).setOpaque(true);
 		}
 		return this.actionSelection(false);
 	}
@@ -120,12 +125,7 @@ public class StorageDialog extends ComplexDialog
 	public void onConfirmReceived(JsonObject message) {
 		this.result = message.getString("result", null);
 		this.dialogToShow = CONFIRM;
-		if (this.result.equals("ok"))
-			Persistance.socketendpoint.requestInventory(Persistance.player.getData().toolboxinventory.id);
-		else {
-			Persistance.isCommunicating = false;
-			this.unpause();
-		}
+		Persistance.socketendpoint.requestInventory(Persistance.player.getData().toolboxinventory.id);
 	}
 
 	@Override
