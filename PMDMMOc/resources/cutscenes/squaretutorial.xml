@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cutscene name="squaretutorial">
+  <creation freezone="square" camerax="26.0" cameray="41.0" fading="false">
+    <pokemon cutsceneid="0" xpos="3.0" ypos="42.0" facing="EAST">
+      <teammember>0</teammember>
+      <state>MOVE</state>
+    </pokemon>
+    <pokemon cutsceneid="1" xpos="3.0" ypos="39.5" facing="EAST">
+      <teammember>1</teammember>
+      <state>MOVE</state>
+    </pokemon>
+  </creation>
+  <events>
+    <move xpos="11.0" speed="0.15" target="0" />
+    <move xpos="12.5" speed="0.15" target="1" />
+    <wait />
+    <rotate target="1" distance="2" speed="3" />
+    <setanimated target="1" animated="false" />
+    <setanimated target="0" animated="false" />
+    <setstate target="1" state="IDLE" />
+    <setstate target="0" state="IDLE" />
+    <wait />
+    <dialog>
+      <dialogscreen target="1">cutscene.squaretutorial.m1</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="1" distance="-2" speed="4" />
+    <camera xpos="37.0" ypos="31.0" speed="0.4" />
+    <wait />
+    <dialog>
+      <dialogscreen target="1">cutscene.squaretutorial.m2</dialogscreen>
+    </dialog>
+    <wait />
+    <camera xpos="82.0" ypos="36.0" speed="0.4" />
+    <wait />
+    <dialog>
+      <dialogscreen target="1">cutscene.squaretutorial.m3</dialogscreen>
+    </dialog>
+    <wait />
+    <camera xpos="82.0" ypos="64.0" speed="0.4" />
+    <wait />
+    <dialog>
+      <dialogscreen target="1">cutscene.squaretutorial.m4</dialogscreen>
+    </dialog>
+    <wait />
+    <camera xpos="41.0" ypos="66.0" speed="0.4" />
+    <wait />
+    <dialog>
+      <dialogscreen target="1">cutscene.squaretutorial.m5</dialogscreen>
+    </dialog>
+    <wait />
+    <camera xpos="26.0" ypos="41.0" speed="0.5" />
+    <wait />
+    <dialog>
+      <dialogscreen target="1">cutscene.squaretutorial.m6</dialogscreen>
+    </dialog>
+  </events>
+  <onfinish>
+    <loadfreezone fadesout="false" id="square" xpos="11" ypos="42" facing="EAST" />
+  </onfinish>
+</cutscene>
