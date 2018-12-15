@@ -38,6 +38,19 @@ public abstract class Registry<T extends Registrable<T>> {
         this.cache = this.deserializeDom(root);
     }
 
+    /**
+     * Dummy constructor for {@link com.darkxell.common.trap.TrapRegistry TrapRegistry}.
+     *
+     * TODO: remove once TrapRegistry is implemented.
+     */
+    public Registry(Element defaultDocument, String name) {
+        Logger.d("Loading " + name + "...");
+
+        this.name = name;
+        this.originalURL = null;
+        this.cache = this.deserializeDom(defaultDocument);
+    }
+
     protected abstract Element serializeDom(HashMap<Integer, T> registryCache);
     protected abstract HashMap<Integer, T> deserializeDom(Element root);
 
@@ -76,6 +89,10 @@ public abstract class Registry<T extends Registrable<T>> {
      * @throws IOException If the original URL was read-only (e.g. is a web connection).
      */
     public void save() throws IOException {
+        // TODO: remove null check when trap registry is complete because this.originalURL cannot be null otherwise
+        if (this.originalURL == null) {
+            return;
+        }
         OutputStream urlStream = this.originalURL.openConnection().getOutputStream();
         XMLUtils.saveFile(urlStream, this.serializeDom(this.cache));
     }
