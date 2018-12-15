@@ -1,14 +1,13 @@
 package com.darkxell.common.trap;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-
 import com.darkxell.common.Registry;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import org.jdom2.Element;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Holds all Traps.

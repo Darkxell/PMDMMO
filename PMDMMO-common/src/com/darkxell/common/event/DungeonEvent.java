@@ -1,13 +1,13 @@
 package com.darkxell.common.event;
 
-import java.util.ArrayList;
-
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Communicable;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.language.Message;
+
+import java.util.ArrayList;
 
 public abstract class DungeonEvent
 {

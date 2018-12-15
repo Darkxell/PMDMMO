@@ -1,9 +1,9 @@
 package com.darkxell.common.item.effects;
 
+import com.darkxell.common.Registries;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.ItemEffect;
 import com.darkxell.common.move.Move;
-import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.util.language.Message;
 
 public class TeachedMoveItemEffect extends ItemEffect
@@ -25,7 +25,7 @@ public class TeachedMoveItemEffect extends ItemEffect
 
 	public Move move()
 	{
-		return MoveRegistry.find(this.moveID);
+		return Registries.moves().find(this.moveID);
 	}
 
 	@Override

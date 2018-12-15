@@ -10,7 +10,7 @@ import com.darkxell.client.resources.images.pokemon.PokemonPortrait;
 import com.darkxell.client.resources.images.pokemon.PokemonPortrait.PortraitEmotion;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.ui.Keys.Key;
-import com.darkxell.common.dungeon.data.DungeonRegistry;
+import com.darkxell.common.Registries;
 import com.darkxell.common.item.ItemRegistry;
 import com.darkxell.common.mission.Mission;
 import com.darkxell.common.pokemon.PokemonRegistry;
@@ -67,6 +67,9 @@ public class MissionDetailsState extends AbstractState {
 
 	@Override
 	public void render(Graphics2D g, int width, int height) {
+		PokemonRegistry species = Registries.species();
+		ItemRegistry items = Registries.items();
+
 		this.exploresource.render(g, width, height);
 		g.drawImage(billboard.image(), 0, 0, null);
 
@@ -75,15 +78,15 @@ public class MissionDetailsState extends AbstractState {
 		g.translate(offsetx, offsety);
 		// Draw the infos
 		Message m = new Message(mission.getMissionFlavor().line1id);
-		m.addReplacement("<pokemon>", PokemonRegistry.find(mission.getPokemonid2()).speciesName());
-		m.addReplacement("<item>", ItemRegistry.find(mission.getItemid()).name());
+		m.addReplacement("<pokemon>", species.find(mission.getPokemonid2()).speciesName());
+		m.addReplacement("<item>", items.find(mission.getItemid()).name());
 		TextRenderer.render(g, m, 5, 5);
 		m = new Message(mission.getMissionFlavor().line2id);
-		m.addReplacement("<pokemon>", PokemonRegistry.find(mission.getPokemonid2()).speciesName());
-		m.addReplacement("<item>", ItemRegistry.find(mission.getItemid()).name());
+		m.addReplacement("<pokemon>", species.find(mission.getPokemonid2()).speciesName());
+		m.addReplacement("<item>", items.find(mission.getItemid()).name());
 		TextRenderer.render(g, m, 5, 20);
 
-		g.drawImage(PokemonPortrait.portrait(PokemonRegistry.find(mission.getClientPokemon()), PortraitEmotion.Normal, false),
+		g.drawImage(PokemonPortrait.portrait(species.find(mission.getClientPokemon()), PortraitEmotion.Normal, false),
 				basewidth - PokemonPortrait.PORTRAIT_SIZE - 20, 35, null);
 		switch (acceptstatus) {
 		case STATUS_CANACCEPT:
@@ -108,9 +111,9 @@ public class MissionDetailsState extends AbstractState {
 		TextRenderer.render(g, new Message("mission.info.difficulty"), 5, 105);
 		TextRenderer.render(g, new Message("mission.info.reward"), 5, 120);
 		TextRenderer.setColor(Color.YELLOW);
-		TextRenderer.render(g, PokemonRegistry.find(mission.getPokemonid1()).speciesName(), 70, 60);
+		TextRenderer.render(g, species.find(mission.getPokemonid1()).speciesName(), 70, 60);
 		TextRenderer.render(g, mission.getMissionFlavor().getObjectiveText(), 70, 75);
-		TextRenderer.render(g, "<yellow>" + DungeonRegistry.find(mission.getDungeonid()).name() + "</color>  "
+		TextRenderer.render(g, "<yellow>" + Registries.dungeons().find(mission.getDungeonid()).name() + "</color>  "
 				+ new Message("mission.floor") + " <blue>" + mission.getFloor() + "</color>", 70, 90);
 		TextRenderer.render(g, mission.getDifficulty(), 70, 105);
 		// Draws the rewards
@@ -132,7 +135,7 @@ public class MissionDetailsState extends AbstractState {
 		for (int i = 0; i < mission.getRewards().getItems().length && i < 3; i++) {
 			TextRenderer.render(g,
 					mission.getRewards().getQuantities()[i] + "x <blue>"
-							+ ItemRegistry.find(mission.getRewards().getItems()[i]).name() + "</color>",
+							+ items.find(mission.getRewards().getItems()[i]).name() + "</color>",
 					40, rewardsoffsety);
 			rewardsoffsety += 15;
 		}

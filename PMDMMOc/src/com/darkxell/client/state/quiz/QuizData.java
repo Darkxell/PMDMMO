@@ -7,6 +7,7 @@ import java.util.Random;
 
 import org.jdom2.Element;
 
+import com.darkxell.common.Registries;
 import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.util.Logger;
@@ -101,7 +102,7 @@ public class QuizData
 		for (int[] s : this.starters)
 			for (int id : s)
 			{
-				PokemonSpecies p = PokemonRegistry.find(id);
+				PokemonSpecies p = Registries.species().find(id);
 				if (!starters.contains(p)) starters.add(p);
 			}
 
@@ -114,7 +115,7 @@ public class QuizData
 	{
 		ArrayList<PokemonSpecies> partners = new ArrayList<>();
 		for (PartnerChoice partner : this.partners)
-			if (partner.isValid(choice)) partners.add(PokemonRegistry.find(partner.id));
+			if (partner.isValid(choice)) partners.add(Registries.species().find(partner.id));
 		return partners.toArray(new PokemonSpecies[partners.size()]);
 	}
 

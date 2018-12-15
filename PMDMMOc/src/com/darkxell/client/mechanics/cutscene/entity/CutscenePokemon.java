@@ -10,8 +10,8 @@ import com.darkxell.client.renderers.pokemon.CutscenePokemonRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
+import com.darkxell.common.Registries;
 import com.darkxell.common.pokemon.Pokemon;
-import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.XMLUtils;
 
@@ -30,7 +30,7 @@ public class CutscenePokemon extends CutsceneEntity
 
 	public CutscenePokemon(int id, double xpos, double ypos, int pokemonid, PokemonSpriteState state, Direction facing, boolean animated)
 	{
-		this(id, xpos, ypos, PokemonRegistry.find(pokemonid).generate(new Random(), 1), state, facing, animated);
+		this(id, xpos, ypos, Registries.species().find(pokemonid).generate(new Random(), 1), state, facing, animated);
 	}
 
 	public CutscenePokemon(int id, double xpos, double ypos, Pokemon pokemon, PokemonSpriteState state, Direction facing, boolean animated)
@@ -49,7 +49,7 @@ public class CutscenePokemon extends CutsceneEntity
 		this.currentState = PokemonSpriteState.IDLE;
 		this.facing = Direction.SOUTH;
 		this.animated = true;
-		this.instanciated = pokemon != null ? pokemon : PokemonRegistry.find(this.pokemonid).generate(new Random(), 1);
+		this.instanciated = pokemon != null ? pokemon : Registries.species().find(this.pokemonid).generate(new Random(), 1);
 	}
 
 	/** @param pokemon - Force the use of an already created Pokemon. */
@@ -85,7 +85,7 @@ public class CutscenePokemon extends CutsceneEntity
 		}
 		this.animated = xml.getChild("animated") == null || !xml.getChildText("animated").equals("false");
 
-		this.instanciated = pokemon != null ? pokemon : PokemonRegistry.find(this.pokemonid).generate(new Random(), 1);
+		this.instanciated = pokemon != null ? pokemon : Registries.species().find(this.pokemonid).generate(new Random(), 1);
 	}
 
 	@Override

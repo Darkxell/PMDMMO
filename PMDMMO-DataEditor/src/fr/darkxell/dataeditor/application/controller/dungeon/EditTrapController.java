@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import com.darkxell.common.Registries;
 import com.darkxell.common.dungeon.data.DungeonTrapGroup;
 import com.darkxell.common.trap.Trap;
 import com.darkxell.common.trap.TrapRegistry;
@@ -57,7 +58,7 @@ public class EditTrapController implements Initializable
 		this.trapColumn.setCellValueFactory(new PropertyValueFactory<>("trap"));
 		this.weightColumn.setCellValueFactory(new PropertyValueFactory<>("weight"));
 
-		ArrayList<Trap> traps = TrapRegistry.list();
+		ArrayList<Trap> traps = Registries.traps().toList();
 		Trap[] t = new Trap[traps.size()];
 		for (int i = 0; i < t.length; ++i)
 			t[i] = traps.get(i);
@@ -116,7 +117,8 @@ public class EditTrapController implements Initializable
 		if (item != null)
 		{
 			for (int i = 0; i < item.trapGroup.ids.length; ++i)
-				this.trapsTable.getItems().add(new SingleTrapTableItem(TrapRegistry.find(item.trapGroup.ids[i]), item.trapGroup.chances[i]));
+				this.trapsTable.getItems().add(new SingleTrapTableItem(Registries.traps().find(item.trapGroup.ids[i]),
+						item.trapGroup.chances[i]));
 			this.floorsetController.setupFor(item.getFloors());
 		}
 	}

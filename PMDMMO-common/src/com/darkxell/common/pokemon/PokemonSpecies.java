@@ -1,19 +1,18 @@
 package com.darkxell.common.pokemon;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
-
 import com.darkxell.common.Registrable;
-import org.jdom2.Element;
-
+import com.darkxell.common.Registries;
 import com.darkxell.common.dungeon.floor.TileType.Mobility;
 import com.darkxell.common.move.Move;
-import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.BaseStats.Stat;
 import com.darkxell.common.pokemon.ability.Ability;
 import com.darkxell.common.util.XMLUtils;
 import com.darkxell.common.util.language.Message;
+import org.jdom2.Element;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Random;
 
 public class PokemonSpecies implements Registrable<PokemonSpecies>
 {
@@ -269,7 +268,7 @@ public class PokemonSpecies implements Registrable<PokemonSpecies>
 				@SuppressWarnings("unchecked")
 				ArrayList<Integer> moves = (ArrayList<Integer>) this.learnset.get(level).clone();
 				moves.removeAll(learnedMoves);
-				if (moves.size() != 0 && MoveRegistry.find(moves.get(0)) != null) return moves.get(0);
+				if (moves.size() != 0 && Registries.moves().find(moves.get(0)) != null) return moves.get(0);
 			}
 			--level;
 		}
@@ -281,13 +280,13 @@ public class PokemonSpecies implements Registrable<PokemonSpecies>
 	{
 		ArrayList<Move> moves = new ArrayList<Move>();
 		if (this.learnset.containsKey(level)) for (Integer id : this.learnset.get(level))
-			moves.add(MoveRegistry.find(id));
+			moves.add(Registries.moves().find(id));
 		return moves;
 	}
 
 	public PokemonSpecies parent()
 	{
-		PokemonSpecies parent = PokemonRegistry.parentSpecies(this);
+		PokemonSpecies parent = Registries.species().parentSpecies(this);
 		return parent == null ? this : parent;
 	}
 

@@ -6,7 +6,7 @@ import java.util.HashMap;
 import org.jdom2.Element;
 
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
-import com.darkxell.common.pokemon.PokemonRegistry;
+import com.darkxell.common.Registries;
 import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.XMLUtils;
@@ -81,7 +81,7 @@ public class PokemonSpritesetData
 	public String toString()
 	{
 		String value = this.id + "- ";
-		PokemonSpecies species = PokemonRegistry.find(this.id);
+		PokemonSpecies species = Registries.species().find(this.id);
 		if (species != null) value += species;
 		return value;
 	}

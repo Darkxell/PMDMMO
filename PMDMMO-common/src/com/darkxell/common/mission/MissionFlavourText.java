@@ -1,10 +1,11 @@
 package com.darkxell.common.mission;
 
-import java.util.Random;
-
+import com.darkxell.common.Registries;
 import com.darkxell.common.item.ItemRegistry;
 import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.util.language.Message;
+
+import java.util.Random;
 
 public class MissionFlavourText {
 
@@ -76,10 +77,12 @@ public class MissionFlavourText {
 	}
 
 	public Message getObjectiveText() {
+		PokemonRegistry species = Registries.species();
+		ItemRegistry items = Registries.items();
 		return new Message("mission.objective." + this.source.getMissiontype())
-				.addReplacement("<p1>", PokemonRegistry.find(source.getPokemonid1()).speciesName())
-				.addReplacement("<p2>", PokemonRegistry.find(source.getPokemonid2()).speciesName())
-				.addReplacement("<i>", ItemRegistry.find(source.getItemid()).name());
+				.addReplacement("<p1>", species.find(source.getPokemonid1()).speciesName())
+				.addReplacement("<p2>", species.find(source.getPokemonid2()).speciesName())
+				.addReplacement("<i>", items.find(source.getItemid()).name());
 	}
 
 }

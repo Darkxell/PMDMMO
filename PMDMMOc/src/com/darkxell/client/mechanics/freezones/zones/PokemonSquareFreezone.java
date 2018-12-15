@@ -13,6 +13,7 @@ import com.darkxell.client.mechanics.freezones.entities.WatersparklesEntity;
 import com.darkxell.client.state.dialog.DialogScreen;
 import com.darkxell.client.state.dialog.PokemonDialogScreen;
 import com.darkxell.client.state.dialog.PokemonDialogScreen.DialogPortraitLocation;
+import com.darkxell.common.Registries;
 import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.DoubleRectangle;
@@ -89,19 +90,22 @@ public class PokemonSquareFreezone extends FreezoneMap
 		this.addEntity(new BankEntity(82.5, 35));
 		this.addEntity(new StorageEntity(41.5, 63));
 
+		PokemonRegistry species = Registries.species();
+
 		// Add the interactible pokemons
 		DialogScreen[] s = new DialogScreen[2];
-		s[0] = new PokemonDialogScreen(PokemonRegistry.find(6).generate(new Random(), 0), new Message("dialog.place.charizard.1"),
+		s[0] = new PokemonDialogScreen(species.find(6).generate(new Random(), 0), new Message("dialog.place.charizard.1"),
 				DialogPortraitLocation.BOTTOM_RIGHT);
-		s[1] = new PokemonDialogScreen(PokemonRegistry.find(6).generate(new Random(), 0), new Message("dialog.place.charizard.2"),
+		s[1] = new PokemonDialogScreen(species.find(6).generate(new Random(), 0), new Message("dialog.place.charizard.2"),
 				DialogPortraitLocation.BOTTOM_RIGHT);
 		this.addEntity(new PokemonFreezoneEntity(57, 33, 6, Direction.EAST, s));
-		this.addEntity(new PokemonFreezoneEntity(61, 33, 248, Direction.WEST, new PokemonDialogScreen(PokemonRegistry.find(248).generate(new Random(), 0),
+		this.addEntity(new PokemonFreezoneEntity(61, 33, 248, Direction.WEST,
+				new PokemonDialogScreen(species.find(248).generate(new Random(), 0),
 				new Message("dialog.place.tyranitar"), DialogPortraitLocation.BOTTOM_RIGHT)));
 		s = new DialogScreen[2];
-		s[0] = new PokemonDialogScreen(PokemonRegistry.find(275).generate(new Random(), 0), new Message("dialog.place.shiftry.1"),
+		s[0] = new PokemonDialogScreen(species.find(275).generate(new Random(), 0), new Message("dialog.place.shiftry.1"),
 				DialogPortraitLocation.BOTTOM_RIGHT);
-		s[1] = new PokemonDialogScreen(PokemonRegistry.find(275).generate(new Random(), 0), new Message("dialog.place.shiftry.2"),
+		s[1] = new PokemonDialogScreen(species.find(275).generate(new Random(), 0), new Message("dialog.place.shiftry.2"),
 				DialogPortraitLocation.BOTTOM_RIGHT);
 		this.addEntity(new PokemonFreezoneEntity(69, 35, 275, Direction.SOUTHWEST, s));
 

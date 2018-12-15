@@ -1,17 +1,16 @@
 package com.darkxell.common.ai;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Stack;
-
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.RandomUtil;
-
 import javafx.util.Pair;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Stack;
 
 /** Contains various static methods used in AI computations. */
 public final class AIUtils
@@ -50,7 +49,7 @@ public final class AIUtils
 	{
 		angle = 360 - angle; // Trigonometric to clockwise
 		angle += 180; // So that 0=south => 0=north
-		angle += 22.5; // So that 23 goes to 45, meaning 23° will be Northeast.
+		angle += 22.5; // So that 23 goes to 45, meaning 23ï¿½ will be Northeast.
 		while (angle >= 360) // Go back to range [0;360[
 			angle -= 360;
 		return Direction.directions[((int) (angle / 45)) % Direction.directions.length];

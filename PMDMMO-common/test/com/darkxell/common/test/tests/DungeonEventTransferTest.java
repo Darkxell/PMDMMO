@@ -2,6 +2,7 @@ package com.darkxell.common.test.tests;
 
 import java.util.ArrayList;
 
+import com.darkxell.common.Registries;
 import com.darkxell.common.dbobject.DBInventory;
 import com.darkxell.common.dbobject.DBItemstack;
 import com.darkxell.common.dbobject.DBLearnedmove;
@@ -36,7 +37,7 @@ import com.darkxell.common.util.Direction;
 public class DungeonEventTransferTest extends UTest
 {
 	private Player _player = new Player(new DBPlayer(69, "DaWae", "no U", 45, 99, 0, new ArrayList<>(), new ArrayList<>(), null, null, null, null, 0,false,false));
-	private Dungeon d = DungeonRegistry.find(4);
+	private Dungeon d = Registries.dungeons().find(4);
 	private DungeonExploration dungeon = d.newInstance(798654123);
 	private Floor floor;
 	private Inventory inventory = new Inventory(new DBInventory(77, 30, new ArrayList<>()), _player);

@@ -10,6 +10,7 @@ import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteS
 import com.darkxell.client.resources.images.pokemon.PokemonSpriteSequence;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesetData;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
+import com.darkxell.common.Registries;
 import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.util.Direction;
@@ -146,7 +147,7 @@ public class SpritesTabController implements Initializable, ListCellParent<Pokem
 		this.generalDataController.setupFor(item);
 		this.sequenceTableController.setupFor(item);
 		this.sequencesController.setupFor(item);
-		PokemonSpecies s = PokemonRegistry.find(item.id);
+		PokemonSpecies s = Registries.species().find(item.id);
 		if (s != null) this.testSpriteController.pokemonCombobox.getSelectionModel().select(s);
 	}
 

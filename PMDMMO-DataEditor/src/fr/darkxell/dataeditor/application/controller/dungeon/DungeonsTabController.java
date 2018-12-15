@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import com.darkxell.common.Registries;
 import com.darkxell.common.dungeon.data.Dungeon;
 import com.darkxell.common.dungeon.data.Dungeon.DungeonDirection;
 import com.darkxell.common.dungeon.data.DungeonRegistry;
@@ -55,7 +56,7 @@ public class DungeonsTabController implements Initializable, ListCellParent<Dung
 	{
 		instance = this;
 		CustomList.setup(this, this.dungeonsList, "Dungeon", true, false, true, true, false);
-		this.dungeonsList.getItems().addAll(DungeonRegistry.list());
+		this.dungeonsList.getItems().addAll(Registries.dungeons().toList());
 		this.dungeonsList.getItems().sort(Comparator.naturalOrder());
 
 		this.editDungeonPane.setVisible(false);
@@ -79,10 +80,11 @@ public class DungeonsTabController implements Initializable, ListCellParent<Dung
 			if (name.get().matches("\\d+"))
 			{
 				Dungeon d = this.defaultDungeon(Integer.parseInt(name.get()));
-				if (DungeonRegistry.find(d.id) != null) new Alert(AlertType.ERROR, "There is already a Dungeon with ID " + d.id, ButtonType.OK).showAndWait();
+				DungeonRegistry dungeons = Registries.dungeons();
+				if (dungeons.find(d.id) != null) new Alert(AlertType.ERROR, "There is already a Dungeon with ID " + d.id, ButtonType.OK).showAndWait();
 				else
 				{
-					DungeonRegistry.register(d);
+					dungeons.register(d);
 					this.dungeonsList.getItems().add(d);
 					this.dungeonsList.getItems().sort(Comparator.naturalOrder());
 				}
@@ -99,7 +101,7 @@ public class DungeonsTabController implements Initializable, ListCellParent<Dung
 			this.editDungeonPane.setVisible(false);
 		}
 		this.dungeonsList.getItems().remove(item);
-		DungeonRegistry.unregister(item.id);
+		Registries.dungeons().unregister(item.id);
 	}
 
 	@Override
@@ -113,13 +115,14 @@ public class DungeonsTabController implements Initializable, ListCellParent<Dung
 
 	public void onEdited(Dungeon dungeon)
 	{
+		DungeonRegistry dungeons = Registries.dungeons();
 		boolean idChanged = this.currentDungeon.id != dungeon.id;
-		if (idChanged && DungeonRegistry.find(dungeon.id) != null)
+		if (idChanged && dungeons.find(dungeon.id) != null)
 			new Alert(AlertType.ERROR, "Cannot save: There is already another Dungeon with ID " + dungeon.id, ButtonType.OK).showAndWait();
 		else
 		{
-			DungeonRegistry.unregister(this.currentDungeon.id);
-			DungeonRegistry.register(dungeon);
+			dungeons.unregister(this.currentDungeon.id);
+			dungeons.register(dungeon);
 			this.dungeonsList.getItems().remove(this.currentDungeon);
 			this.dungeonsList.getItems().add(dungeon);
 			this.dungeonsList.getItems().sort(Comparator.naturalOrder());
@@ -138,7 +141,7 @@ public class DungeonsTabController implements Initializable, ListCellParent<Dung
 
 	public void onSaveAllDungeons()
 	{
-		DungeonRegistry.save(new File("../PMDMMO-common/resources/data/dungeons.xml"));
+		Registries.dungeons().save(new File("../PMDMMO-common/resources/data/dungeons.xml"));
 	}
 
 }

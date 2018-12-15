@@ -1,12 +1,12 @@
 package com.darkxell.common.ai;
 
-import java.util.ArrayList;
-
 import com.darkxell.common.ai.states.AIStateAttackPokemon;
 import com.darkxell.common.ai.states.AIStateExplore;
 import com.darkxell.common.ai.states.AIStateFollowPokemon;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.pokemon.DungeonPokemon;
+
+import java.util.ArrayList;
 
 /** AI for wild Pokemon. */
 public class WildAI extends AI
