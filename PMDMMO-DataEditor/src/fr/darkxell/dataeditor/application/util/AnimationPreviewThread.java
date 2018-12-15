@@ -42,7 +42,7 @@ public class AnimationPreviewThread extends UpdaterAndRenderer implements Animat
 	}
 
 	@Override
-	protected void tickUpdate()
+	protected void tick()
 	{
 		TestAnimationController.state.update();
 		if (this.cooldown > 0)
