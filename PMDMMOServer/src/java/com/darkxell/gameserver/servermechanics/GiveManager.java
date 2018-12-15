@@ -51,6 +51,12 @@ public class GiveManager {
                         return false;
                     }
                 }
+                if (space >= 1) {
+                    DBItemstack stack = new DBItemstack(0, itemID, quantity);
+                    long newid = endpoint.getItemstackDAO().create(stack);
+                    endpoint.getInventoryContains_DAO().create(newid, toolbox.id);
+                    return false;
+                }
             }
             //Puts what it can in the toolbox
             while (space > 0 && quantity > 0) {
@@ -60,7 +66,7 @@ public class GiveManager {
                 quantity--;
                 space--;
             }
-            if (space == 0 && quantity >= 0) {
+            if (space == 0 && quantity > 0) {
                 full = true;
             }
         }

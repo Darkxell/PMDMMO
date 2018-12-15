@@ -11,6 +11,6 @@
     <wait />
   </events>
   <onfinish>
-    <playcutscene id="base/dream1" />
+    <loadfreezone function="predream" id="baseinside" xpos="20" ypos="20" />
   </onfinish>
 </cutscene>
