@@ -57,6 +57,9 @@ public class SpriteFactory implements Runnable {
         new Thread(instance).start();
     }
 
+    /**
+     * Wait for the loading queue to empty before proceeding.
+     */
     public static void waitQueueDone() {
         try {
             instance.getLoadQueueLatch().await();
