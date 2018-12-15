@@ -150,7 +150,7 @@ public class DialogState extends AbstractState
 	{
 		if (this.backgroundState != null)
 		{
-			if (this.backgroundAlpha != 0 && this.backgroundAlpha != 1)
+			if (this.backgroundAlpha > 0 && this.backgroundAlpha < 1)
 			{
 				this.backgroundState.render(g, width, height);
 				g.setColor(new Color(0, 0, 0, (int) ((1 - this.backgroundAlpha) * 255)));
