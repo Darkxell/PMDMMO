@@ -42,7 +42,7 @@ public class Launcher {
         isRunning = true;
 
 		ClientSettings.load();
-		Logger.loadClient();
+		Logger.load("CLIENT");
 		Lang.load(false);
 		try {
 			SpriteFactory.load();

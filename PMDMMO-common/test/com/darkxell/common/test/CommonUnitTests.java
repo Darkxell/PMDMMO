@@ -14,7 +14,7 @@ public class CommonUnitTests
 
 	public static void executeTests()
 	{
-		Logger.loadServer();
+		Logger.load("SERVER");
 		Lang.load(false);
 		PokemonRegistry.load();
 		DungeonRegistry.load();

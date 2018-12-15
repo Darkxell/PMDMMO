@@ -61,12 +61,8 @@ public class Logger {
         }
     }
 
-    public static void loadClient() {
-        instance = new Logger("CLIENT");
-    }
-
-    public static void loadServer() {
-        instance = new Logger("SERVER");
+    public static void load(String source) {
+        instance = new Logger(source);
     }
 
     private ArrayList<String> log;
