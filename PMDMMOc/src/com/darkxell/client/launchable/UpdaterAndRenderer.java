@@ -7,106 +7,96 @@ import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.SpriteFactory;
 import com.darkxell.common.util.Util;
 
-/** Experimental class that combines the updater and the renderer to synchronize updates and graphical prints. */
-public class UpdaterAndRenderer implements Runnable
-{
+/**
+ * Experimental class that combines the updater and the renderer to synchronize updates and graphical prints.
+ */
+public class UpdaterAndRenderer implements Runnable {
+    public static final int targetUPS = 60;
 
-	public static final int targetUPS = 60;
+    private long startTime, currentTime, timer;
+    private int updatesCurrentSecond;
+    private double updateTime, timePerUpdate;
+    private int ups = 0;
 
-	private long startTime, currentTime, timer;
-	private int updatesCurrentSecond;
-	private double updateTime, timePerUpdate;
-	private int ups = 0;
+    public UpdaterAndRenderer() {
+    }
 
-	public UpdaterAndRenderer()
-	{}
+    public int currentUPS() {
+        return this.ups;
+    }
 
-	public int currentUPS()
-	{
-		return this.ups;
-	}
+    protected boolean keepRunning() {
+        return Launcher.isRunning && Launcher.getProcessingProfile() == Launcher.PROFILE_SYNCHRONIZED;
+    }
 
-	protected boolean keepRunning()
-	{
-		return Launcher.isRunning && Launcher.getProcessingProfile() == Launcher.PROFILE_SYNCHRONIZED;
-	}
+    @Override
+    public void run() {
+        // Preparing FPS handling
+        this.startTime = System.nanoTime();
+        this.currentTime = this.startTime;
+        this.updateTime = 0;
+        this.timer = 0;
+        this.timePerUpdate = 1000000000 / targetUPS;
+        this.updatesCurrentSecond = 0;
+        this.ups = 0;
 
-	@Override
-	public void run()
-	{
-		// Preparing FPS handling
-		this.startTime = System.nanoTime();
-		this.currentTime = this.startTime;
-		this.updateTime = 0;
-		this.timer = 0;
-		this.timePerUpdate = 1000000000 / targetUPS;
-		this.updatesCurrentSecond = 0;
-		this.ups = 0;
+        try {
+            while (SpriteFactory.instance().hasLoadingSprites()) {
+                Thread.sleep(5);
+            }
+        } catch (InterruptedException e1) {
+            e1.printStackTrace();
+        }
 
-		try
-		{
-			while (SpriteFactory.instance().hasLoadingSprites())
-				Thread.sleep(5);
-		} catch (InterruptedException e1)
-		{
-			e1.printStackTrace();
-		}
+        while (this.keepRunning()) {
+            this.update();
 
-		while (this.keepRunning())
-		{
-			this.update();
+            try {
+                Thread.sleep(2);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
-			try
-			{
-				Thread.sleep(2);
-			} catch (InterruptedException e)
-			{
-				e.printStackTrace();
-			}
-		}
-	}
+    protected void tickUpdate() {
+        Persistance.stateManager.update();
 
-	protected void tickUpdate()
-	{
-		Persistance.stateManager.update();
+        if (Persistance.frame == null || !Persistance.frame.isVisible()) {
+            return;
+        }
 
-		if (Persistance.frame == null || !Persistance.frame.isVisible()) return;
+        BufferStrategy bf = Persistance.frame.canvas.getBufferStrategy();
+        Graphics2D g = (Graphics2D) bf.getDrawGraphics();
+        int width = Persistance.frame.canvas.getWidth(), height = Persistance.frame.canvas.getHeight();
+        g.clearRect(0, 0, width, height);
 
-		BufferStrategy bf = Persistance.frame.canvas.getBufferStrategy();
-		Graphics2D g = (Graphics2D) bf.getDrawGraphics();
-		int width = Persistance.frame.canvas.getWidth(), height = Persistance.frame.canvas.getHeight();
-		g.clearRect(0, 0, width, height);
+        Persistance.stateManager.render(g, width, height);
+        TextRenderer.render(g, "V " + Util.GAME_VERSION, 5, 5);
 
-		Persistance.stateManager.render(g, width, height);
-		TextRenderer.render(g, "V " + Util.GAME_VERSION, 5, 5);
+        g.dispose();
+        bf.show();
+    }
 
-		g.dispose();
-		bf.show();
-	}
+    private void update() {
+        // Calculate elapsed time
+        long elapsedTime = System.nanoTime() - this.currentTime;
+        this.timer += elapsedTime;
+        this.currentTime += elapsedTime;
+        this.updateTime += elapsedTime / this.timePerUpdate;
 
-	private void update()
-	{
-		// Calculate elapsed time
-		long elapsedTime = System.nanoTime() - this.currentTime;
-		this.timer += elapsedTime;
-		this.currentTime += elapsedTime;
-		this.updateTime += elapsedTime / this.timePerUpdate;
+        // If a tick has passed, update until there is no delayed update
+        while (this.updateTime >= 1) {
+            this.tickUpdate();
 
-		// If a tick has passed, update until there is no delayed update
-		while (this.updateTime >= 1)
-		{
-			this.tickUpdate();
+            ++this.updatesCurrentSecond;
+            --this.updateTime;
+        }
 
-			++this.updatesCurrentSecond;
-			--this.updateTime;
-		}
-
-		if (this.timer >= 1000000000)
-		{
-			this.ups = this.updatesCurrentSecond;
-			this.timer = 0;
-			this.updatesCurrentSecond = 0;
-		}
-	}
-
+        if (this.timer >= 1000000000) {
+            this.ups = this.updatesCurrentSecond;
+            this.timer = 0;
+            this.updatesCurrentSecond = 0;
+        }
+    }
 }
