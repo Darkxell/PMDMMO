@@ -1,5 +1,6 @@
-package com.darkxell.client.launchable;
+package com.darkxell.client.launchable.render;
 
+import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.resources.images.SpriteFactory;
 
 public abstract class GameLoop implements Runnable {
