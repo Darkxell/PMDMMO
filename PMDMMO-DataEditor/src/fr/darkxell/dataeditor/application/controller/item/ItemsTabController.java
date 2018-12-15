@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import com.darkxell.common.Registries;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.Item.ItemCategory;
 import com.darkxell.common.item.ItemRegistry;
@@ -113,11 +114,12 @@ public class ItemsTabController implements Initializable, ListCellParent<ItemLis
 		{
 			if (name.get().matches("\\d+"))
 			{
+				ItemRegistry items = Registries.items();
 				Item i = this.defaultItem(Integer.parseInt(name.get()));
-				if (ItemRegistry.find(i.id) != null) new Alert(AlertType.ERROR, "There is already an Item with ID " + i.id, ButtonType.OK).showAndWait();
+				if (items.find(i.id) != null) new Alert(AlertType.ERROR, "There is already an Item with ID " + i.id, ButtonType.OK).showAndWait();
 				else
 				{
-					ItemRegistry.register(i);
+					items.register(i);
 					this.reloadList();
 				}
 			} else new Alert(AlertType.ERROR, "Wrong ID: " + name.get(), ButtonType.OK);
@@ -132,7 +134,7 @@ public class ItemsTabController implements Initializable, ListCellParent<ItemLis
 			this.currentItem = null;
 			this.editItemPane.setVisible(false);
 		}
-		ItemRegistry.unregister(item.item.id);
+		Registries.items().unregister(item.item.id);
 		this.reloadList();
 	}
 
@@ -154,13 +156,14 @@ public class ItemsTabController implements Initializable, ListCellParent<ItemLis
 
 	public void onEdited(Item item)
 	{
+		ItemRegistry items = Registries.items();
 		boolean idChanged = this.currentItem.item.id != item.id;
-		if (idChanged && ItemRegistry.find(item.id) != null)
+		if (idChanged && items.find(item.id) != null)
 			new Alert(AlertType.ERROR, "Cannot save: There is already another Item with ID " + item.id, ButtonType.OK).showAndWait();
 		else
 		{
-			ItemRegistry.unregister(this.currentItem.item.id);
-			ItemRegistry.register(item);
+			items.unregister(this.currentItem.item.id);
+			items.register(item);
 			this.reloadList();
 			// this.onEdit((ItemListItem) this.itemsTreeView.getSelectionModel().getSelectedItem().getValue());
 			/* this.itemsList.getItems().remove(this.currentItem); this.itemsList.getItems().add(item); this.itemsList.getItems().sort(Comparator.naturalOrder()); this.itemsList.getSelectionModel().select(item); this.onEdit(item); */
@@ -177,14 +180,14 @@ public class ItemsTabController implements Initializable, ListCellParent<ItemLis
 
 	public void onSaveAllItems()
 	{
-		ItemRegistry.save(new File("../PMDMMO-common/resources/data/items.xml"));
+		Registries.items().save(new File("../PMDMMO-common/resources/data/items.xml"));
 	}
 
 	private void reloadList()
 	{
 		for (TreeItem<CustomTreeItem> item : this.categories)
 			item.getChildren().clear();
-		for (Item i : ItemRegistry.list())
+		for (Item i : Registries.items().toList())
 			this.categories[i.category.order].getChildren().add(new TreeItem<>(new ItemListItem(i)));
 	}
 

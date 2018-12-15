@@ -18,6 +18,7 @@ import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteS
 import com.darkxell.client.state.dialog.PokemonDialogScreen.DialogPortraitLocation;
 import com.darkxell.client.state.dungeon.DungeonEndState;
 import com.darkxell.client.state.freezone.CutsceneState;
+import com.darkxell.common.Registries;
 import com.darkxell.common.item.ItemRegistry;
 import com.darkxell.common.mission.Mission;
 import com.darkxell.common.mission.MissionReward;
@@ -66,8 +67,11 @@ public class MissionResultsState extends CutsceneState
 	{
 		boolean has2Pks = mission.has2Pokemon();
 
-		Pokemon client = PokemonRegistry.find(mission.getClientPokemon()).generate(new Random(), 1);
-		Pokemon target = has2Pks ? PokemonRegistry.find(mission.getTargetPokemon()).generate(new Random(), 1) : null;
+		PokemonRegistry species = Registries.species();
+		ItemRegistry items = Registries.items();
+
+		Pokemon client = species.find(mission.getClientPokemon()).generate(new Random(), 1);
+		Pokemon target = has2Pks ? species.find(mission.getTargetPokemon()).generate(new Random(), 1) : null;
 		CutscenePokemon clientEntity = new CutscenePokemon(2, has2Pks ? 35 : 37.5, 30, client, PokemonSpriteState.IDLE, Direction.SOUTH, false);
 		CutscenePokemon targetEntity = has2Pks ? new CutscenePokemon(3, 40, 30, target, PokemonSpriteState.IDLE, Direction.SOUTH, false) : null;
 
@@ -77,7 +81,7 @@ public class MissionResultsState extends CutsceneState
 		if (has2Pks) entities.add(targetEntity);
 		CutsceneCreation creation = new CutsceneCreation(FreezoneInfo.OFFICE, true, true, 37.5, 32.5, entities);
 
-		Message thank = new Message("mission.thank." + mission.getMissiontype()).addReplacement("<item>", ItemRegistry.find(mission.getItemid()).name());
+		Message thank = new Message("mission.thank." + mission.getMissiontype()).addReplacement("<item>", items.find(mission.getItemid()).name());
 		if (has2Pks) thank.addReplacement("<pokemon>", target.getNickname());
 		CutsceneDialogScreen screen1 = new CutsceneDialogScreen(thank, PortraitEmotion.Normal, clientEntity, DialogPortraitLocation.BOTTOM_RIGHT);
 
@@ -89,7 +93,7 @@ public class MissionResultsState extends CutsceneState
 			screens.add(new CutsceneDialogScreen(new Message("mission.reward.money").addReplacement("<money>", String.valueOf(rewards.getMoney())),
 					PortraitEmotion.Normal, null, null));
 		for (int i = 0; i < rewards.getItems().length; ++i)
-			screens.add(new CutsceneDialogScreen(new Message("mission.reward.item").addReplacement("<item>", ItemRegistry.find(rewards.getItems()[i]).name())
+			screens.add(new CutsceneDialogScreen(new Message("mission.reward.item").addReplacement("<item>", items.find(rewards.getItems()[i]).name())
 					.addReplacement("<quantity>", String.valueOf(rewards.getQuantities()[i])), PortraitEmotion.Normal, null, null));
 		if (rewards.getPoints() > 0)
 			screens.add(new CutsceneDialogScreen(new Message("mission.reward.points").addReplacement("<points>", String.valueOf(rewards.getPoints())),

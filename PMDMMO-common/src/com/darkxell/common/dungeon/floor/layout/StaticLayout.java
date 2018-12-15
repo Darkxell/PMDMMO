@@ -1,12 +1,6 @@
 package com.darkxell.common.dungeon.floor.layout;
 
-import java.awt.Point;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-import org.jdom2.Element;
-
+import com.darkxell.common.Registries;
 import com.darkxell.common.ai.AI;
 import com.darkxell.common.ai.SkipTurnsAI;
 import com.darkxell.common.dbobject.DBLearnedmove;
@@ -19,17 +13,18 @@ import com.darkxell.common.dungeon.floor.room.Room;
 import com.darkxell.common.dungeon.floor.room.SquareRoom;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.ItemStack;
-import com.darkxell.common.pokemon.BaseStats;
-import com.darkxell.common.pokemon.DungeonPokemon;
-import com.darkxell.common.pokemon.LearnedMove;
-import com.darkxell.common.pokemon.Pokemon;
-import com.darkxell.common.pokemon.PokemonRegistry;
-import com.darkxell.common.pokemon.PokemonSpecies;
+import com.darkxell.common.pokemon.*;
 import com.darkxell.common.pokemon.DungeonPokemon.DungeonPokemonType;
 import com.darkxell.common.trap.TrapRegistry;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.XMLUtils;
+import org.jdom2.Element;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class StaticLayout extends Layout
 {
@@ -43,7 +38,7 @@ public class StaticLayout extends Layout
 		db.specieid = Integer.parseInt(xml.getAttributeValue("id"));
 		db.nickname = xml.getAttributeValue("nickname");
 		db.level = Integer.parseInt(xml.getAttributeValue("level"));
-		PokemonSpecies species = PokemonRegistry.find(db.specieid);
+		PokemonSpecies species = Registries.species().find(db.specieid);
 		BaseStats defaultStats = species.statsForLevel(db.level);
 		db.stat_atk = XMLUtils.getAttribute(xml, "atk", defaultStats.getAttack());
 		db.stat_def = XMLUtils.getAttribute(xml, "def", defaultStats.getAttack());
@@ -166,7 +161,7 @@ public class StaticLayout extends Layout
 			for (Element trap : this.xml.getChild("traps", xml.getNamespace()).getChildren("trap", xml.getNamespace()))
 			{
 			Tile t = this.floor.tiles[Integer.parseInt(trap.getAttributeValue("x"))][Integer.parseInt(trap.getAttributeValue("y"))];
-			t.trap = TrapRegistry.find(Integer.parseInt(trap.getAttributeValue("id")));
+			t.trap = Registries.traps().find(Integer.parseInt(trap.getAttributeValue("id")));
 			if (t.trap == TrapRegistry.WONDER_TILE) t.trapRevealed = true;
 			}
 	}

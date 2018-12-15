@@ -1,5 +1,6 @@
 package fr.darkxell.dataeditor.application.data;
 
+import com.darkxell.common.Registries;
 import com.darkxell.common.dungeon.data.DungeonEncounter;
 import com.darkxell.common.dungeon.data.FloorSet;
 import com.darkxell.common.pokemon.PokemonRegistry;
@@ -39,7 +40,7 @@ public class DungeonEncounterTableItem implements Comparable<DungeonEncounterTab
 
 	public PokemonSpecies getPokemon()
 	{
-		return PokemonRegistry.find(this.encounter.id);
+		return Registries.species().find(this.encounter.id);
 	}
 
 	public int getWeight()

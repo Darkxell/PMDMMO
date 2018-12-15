@@ -1,5 +1,7 @@
 package com.darkxell.common.util;
 
+import com.darkxell.common.util.language.Message;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;

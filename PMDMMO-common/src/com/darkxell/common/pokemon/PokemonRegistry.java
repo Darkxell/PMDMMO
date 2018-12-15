@@ -1,12 +1,13 @@
 package com.darkxell.common.pokemon;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.HashMap;
-import java.util.List;
-
 import com.darkxell.common.Registry;
 import org.jdom2.Element;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Holds all Pokemon species.
@@ -30,7 +31,7 @@ public final class PokemonRegistry extends Registry<PokemonSpecies> {
     }
 
     protected HashMap<Integer, PokemonSpecies> deserializeDom(Element root) {
-        List<Element> speciesElements = root.getChildren("dungeon", root.getNamespace());
+        List<Element> speciesElements = root.getChildren("pokemon", root.getNamespace());
         HashMap<Integer, PokemonSpecies> speciesMap = new HashMap<>(speciesElements.size());
         for (Element e : speciesElements) {
             PokemonSpecies species = new PokemonSpecies(e);
@@ -39,7 +40,7 @@ public final class PokemonRegistry extends Registry<PokemonSpecies> {
         return speciesMap;
     }
 
-    PokemonRegistry(URL registryURL) throws IOException {
+    public PokemonRegistry(URL registryURL) throws IOException {
         super(registryURL, "Species", 0);
         this.registerForms();
     }
@@ -48,7 +49,7 @@ public final class PokemonRegistry extends Registry<PokemonSpecies> {
      * Generate forms from current main-form species.
      */
     private void registerForms() {
-        for (PokemonSpecies s : this.cache.values()) {
+        for (PokemonSpecies s : new ArrayList<>(this.cache.values())) {
             for (PokemonSpecies form : s.forms()) {
                 this.cache.put(form.id, form);
                 this.forms.put(form.id, s.id);

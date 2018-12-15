@@ -14,8 +14,8 @@ import com.darkxell.client.state.dialog.DialogState;
 import com.darkxell.client.state.dialog.NarratorDialogScreen;
 import com.darkxell.client.state.dialog.OptionDialogScreen;
 import com.darkxell.client.state.quiz.QuizData.QuizGender;
+import com.darkxell.common.Registries;
 import com.darkxell.common.pokemon.Pokemon;
-import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.language.Message;
@@ -117,7 +117,7 @@ public class PersonalityQuizDialog extends ComplexDialog
 		{
 			this.gender = ((OptionDialogScreen) screen).chosenIndex() == 0 ? QuizGender.Boy : QuizGender.Girl;
 			int starterID = this.quizData.starters[this.finalNature.id][this.gender == QuizGender.Boy ? 0 : 1];
-			this.starter = PokemonRegistry.find(starterID).generate(new Random(), 5);
+			this.starter = Registries.species().find(starterID).generate(new Random(), 5);
 		} else if (this.currentQuestion == this.questions.length + STARTER_CUSTOM)
 		{
 			int index = ((OptionDialogScreen) screen).chosenIndex();

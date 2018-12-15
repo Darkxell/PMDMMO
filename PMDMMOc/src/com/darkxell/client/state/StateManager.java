@@ -21,8 +21,8 @@ import com.darkxell.client.state.dungeon.NextFloorState;
 import com.darkxell.client.state.freezone.FreezoneExploreState;
 import com.darkxell.client.state.map.LocalMap;
 import com.darkxell.client.ui.Keys.Key;
+import com.darkxell.common.Registries;
 import com.darkxell.common.dungeon.DungeonOutcome;
-import com.darkxell.common.dungeon.data.DungeonRegistry;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.zones.FreezoneInfo;
@@ -114,7 +114,7 @@ public abstract class StateManager
 	public static void setDungeonState(AbstractState fadeOutState, int dungeonID, long seed)
 	{
 		OnFirstPokemonDraw.newDungeon();
-		Persistance.dungeon = DungeonRegistry.find(dungeonID).newInstance(seed);
+		Persistance.dungeon = Registries.dungeons().find(dungeonID).newInstance(seed);
 		Persistance.dungeon.eventProcessor = new ClientEventProcessor(Persistance.dungeon);
 		Persistance.dungeon.addPlayer(Persistance.player);
 		SpriteLoader.loadDungeon(Persistance.dungeon);

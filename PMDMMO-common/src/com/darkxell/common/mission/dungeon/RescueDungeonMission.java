@@ -1,7 +1,6 @@
 package com.darkxell.common.mission.dungeon;
 
-import java.util.ArrayList;
-
+import com.darkxell.common.Registries;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
@@ -11,8 +10,9 @@ import com.darkxell.common.mission.Mission;
 import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.DungeonPokemon.DungeonPokemonType;
-import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.util.language.Message;
+
+import java.util.ArrayList;
 
 public class RescueDungeonMission extends DungeonMission
 {
@@ -41,7 +41,8 @@ public class RescueDungeonMission extends DungeonMission
 	{
 		super.onTargetFloorStart(floor, events);
 
-		this.rescueme = new DungeonPokemon(PokemonRegistry.find(this.missionData.getTargetPokemon()).generate(floor.random, 1));
+		this.rescueme =
+				new DungeonPokemon(Registries.species().find(this.missionData.getTargetPokemon()).generate(floor.random, 1));
 		this.rescueme.type = DungeonPokemonType.RESCUEABLE;
 		Tile spawn = floor.randomEmptyTile(true, true, TileType.GROUND, floor.random);
 		floor.summonPokemon(this.rescueme, spawn.x, spawn.y, events);

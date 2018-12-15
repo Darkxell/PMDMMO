@@ -2,6 +2,7 @@ package fr.darkxell.dataeditor.application.util;
 
 import com.darkxell.client.mechanics.animation.Animations;
 import com.darkxell.client.mechanics.animation.Animations.AnimationGroup;
+import com.darkxell.common.Registries;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.ItemRegistry;
 import com.darkxell.common.move.Move;
@@ -50,12 +51,12 @@ public class AnimationListItem extends CustomTreeItem implements Comparable<Anim
 				break;
 
 			case Items:
-				Item i = ItemRegistry.find(this.id);
+				Item i = Registries.items().find(this.id);
 				if (i != null) detail = i.name().toString();
 				break;
 
 			case Moves:
-				Move m = MoveRegistry.find(this.id);
+				Move m = Registries.moves().find(this.id);
 				if (m != null) detail = m.name().toString();
 				break;
 
@@ -63,7 +64,7 @@ public class AnimationListItem extends CustomTreeItem implements Comparable<Anim
 				detail = Integer.toString(this.id);
 				if (this.id >= 1000)
 				{
-					Move mp = MoveRegistry.find(this.id - 1000);
+					Move mp = Registries.moves().find(this.id - 1000);
 					if (mp != null) detail = mp.name().toString() + " projectile";
 				}
 				break;
@@ -74,7 +75,7 @@ public class AnimationListItem extends CustomTreeItem implements Comparable<Anim
 				break;
 
 			case MoveTargets:
-				Move m2 = MoveRegistry.find(this.id);
+				Move m2 = Registries.moves().find(this.id);
 				if (m2 != null) detail = m2.name().toString() + " target";
 				break;
 

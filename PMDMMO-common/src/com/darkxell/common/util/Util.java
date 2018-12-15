@@ -1,7 +1,6 @@
 package com.darkxell.common.util;
 
-import java.util.Random;
-
+import com.darkxell.common.Registries;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.mission.InvalidParammetersException;
 import com.darkxell.common.mission.Mission;
@@ -11,6 +10,8 @@ import com.darkxell.common.pokemon.LearnedMove;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.PokemonRegistry;
 
+import java.util.Random;
+
 public class Util
 {
 
@@ -18,11 +19,13 @@ public class Util
 
 	public static Player createDefaultPlayer()
 	{
-		Player player = new Player("Offline debug account name", PokemonRegistry.find(4).generate(new Random(), 10, 1));
+		PokemonRegistry species = Registries.species();
+
+		Player player = new Player("Offline debug account name", species.find(4).generate(new Random(), 10, 1));
 		player.setStoryPosition(500);
 		player.setMoneyInBag(69);
 		player.setMoneyInBank(456789);
-		player.addAlly(PokemonRegistry.find(258).generate(new Random(), 80));
+		player.addAlly(species.find(258).generate(new Random(), 80));
 		// player.addAlly(PokemonRegistry.find(255).generate(new Random(), 80));
 		player.getTeamLeader().setItem(new ItemStack(208));
 		player.getTeamLeader().setMove(0, new LearnedMove(352));
@@ -49,14 +52,14 @@ public class Util
 
 		for (int id = 201; id <= 386; id += 3)
 		{
-			Pokemon p = PokemonRegistry.find(id).generate(new Random(), 1);
+			Pokemon p = species.find(id).generate(new Random(), 1);
 			p.getData().id = id;
 			player.addPokemonInZone(p);
 		}
 
 		for (int id = 10001; id <= 10033; id += 2)
 		{
-			Pokemon p = PokemonRegistry.find(id).generate(new Random(), 1);
+			Pokemon p = species.find(id).generate(new Random(), 1);
 			p.getData().id = id;
 			player.addPokemonInZone(p);
 		}

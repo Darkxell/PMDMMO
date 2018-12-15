@@ -15,9 +15,9 @@ import com.darkxell.client.state.menu.components.IntegerSelectionState.IntegerSe
 import com.darkxell.client.state.menu.item.ItemContainersMenuState;
 import com.darkxell.client.state.menu.item.ItemSelectionListener;
 import com.darkxell.client.state.menu.item.MultipleItemsSelectionListener;
+import com.darkxell.common.Registries;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.player.Inventory;
-import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.util.language.Message;
 import com.eclipsesource.json.Json;
@@ -40,7 +40,7 @@ public class StorageDialog extends ComplexDialog
 
 	public StorageDialog(AbstractGraphiclayer background) {
 		super(background);
-		this.shopkeeper = PokemonRegistry.find(115);
+		this.shopkeeper = Registries.species().find(115);
 	}
 
 	private DialogState actionSelection(boolean isFirst) {

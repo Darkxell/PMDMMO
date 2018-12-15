@@ -1,10 +1,6 @@
 package com.darkxell.common.dungeon.floor;
 
-import java.awt.Point;
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.function.Predicate;
-
+import com.darkxell.common.Registries;
 import com.darkxell.common.ai.AI;
 import com.darkxell.common.ai.AIManager;
 import com.darkxell.common.dungeon.DungeonExploration;
@@ -18,7 +14,6 @@ import com.darkxell.common.event.action.PokemonSpawnedEvent;
 import com.darkxell.common.event.dungeon.weather.PersistantWeatherChangedEvent;
 import com.darkxell.common.event.dungeon.weather.WeatherChangedEvent;
 import com.darkxell.common.item.Item;
-import com.darkxell.common.item.ItemRegistry;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.mission.DungeonMission;
 import com.darkxell.common.player.Player;
@@ -27,13 +22,17 @@ import com.darkxell.common.pokemon.DungeonPokemon.DungeonPokemonType;
 import com.darkxell.common.status.ActiveFloorStatus;
 import com.darkxell.common.status.FloorStatus;
 import com.darkxell.common.trap.Trap;
-import com.darkxell.common.trap.TrapRegistry;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.Pair;
 import com.darkxell.common.util.RandomUtil;
 import com.darkxell.common.weather.ActiveWeather;
 import com.darkxell.common.weather.Weather;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.function.Predicate;
 
 /** Represents a generated Floor in a Dungeon. */
 public class Floor
@@ -359,7 +358,7 @@ public class Floor
 			ids.add(itemGroup.items[i]);
 			chances.add(itemGroup.chances[i]);
 		}
-		return ItemRegistry.find(RandomUtil.weightedRandom(ids, chances, random));
+		return Registries.items().find(RandomUtil.weightedRandom(ids, chances, random));
 	}
 
 	public Item randomItem(Random random)
@@ -378,7 +377,7 @@ public class Floor
 	public Trap randomTrap(Random random)
 	{
 		Pair<ArrayList<Integer>, ArrayList<Integer>> traps = this.dungeon.dungeon().traps(this.id);
-		return TrapRegistry.find(RandomUtil.weightedRandom(traps.first, traps.second, random));
+		return Registries.traps().find(RandomUtil.weightedRandom(traps.first, traps.second, random));
 	}
 
 	public void removeFloorStatus(ActiveFloorStatus status)

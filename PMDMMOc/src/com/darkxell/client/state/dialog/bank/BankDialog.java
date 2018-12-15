@@ -7,6 +7,7 @@ import com.darkxell.client.state.dialog.DialogScreen;
 import com.darkxell.client.state.dialog.DialogState;
 import com.darkxell.client.state.dialog.OptionDialogScreen;
 import com.darkxell.client.state.dialog.PokemonDialogScreen;
+import com.darkxell.common.Registries;
 import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.util.language.Message;
@@ -23,7 +24,7 @@ public class BankDialog extends ComplexDialog
 	public BankDialog(AbstractState background)
 	{
 		super(background);
-		this.shopkeeper = PokemonRegistry.find(53);
+		this.shopkeeper = Registries.species().find(53);
 		this.options = new Message[] { new Message("dialog.bank.deposit"), new Message("dialog.bank.withdraw"), new Message("dialog.bank.exit") };
 	}
 

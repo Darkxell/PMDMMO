@@ -1,12 +1,12 @@
 package com.darkxell.common.move;
 
+import com.darkxell.common.Registry;
+import org.jdom2.Element;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
-
-import com.darkxell.common.Registry;
-import org.jdom2.Element;
 
 /**
  * Holds all Moves.
@@ -32,7 +32,7 @@ public final class MoveRegistry extends Registry<Move> {
         return moves;
     }
 
-    MoveRegistry(URL registryURL) throws IOException {
+    public MoveRegistry(URL registryURL) throws IOException {
         super(registryURL, "Moves");
 
         ATTACK = this.find(0);

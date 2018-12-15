@@ -1,12 +1,12 @@
 package com.darkxell.common.item;
 
-import org.jdom2.Element;
-
+import com.darkxell.common.Registries;
 import com.darkxell.common.dbobject.DBItemstack;
 import com.darkxell.common.dungeon.TempIDRegistry.HasID;
 import com.darkxell.common.util.XMLUtils;
 import com.darkxell.common.util.language.Lang;
 import com.darkxell.common.util.language.Message;
+import org.jdom2.Element;
 
 public class ItemStack implements Comparable<ItemStack>, HasID
 {
@@ -99,7 +99,7 @@ public class ItemStack implements Comparable<ItemStack>, HasID
 	public void setData(DBItemstack data)
 	{
 		this.data = data;
-		this.item = ItemRegistry.find(this.data.itemid);
+		this.item = Registries.items().find(this.data.itemid);
 	}
 
 	@Override

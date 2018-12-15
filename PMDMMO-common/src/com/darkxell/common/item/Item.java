@@ -1,17 +1,16 @@
 package com.darkxell.common.item;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-
 import com.darkxell.common.Registrable;
-import org.jdom2.Element;
-
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.pokemon.AffectsPokemon;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.XMLUtils;
 import com.darkxell.common.util.language.Message;
+import org.jdom2.Element;
+
+import java.util.ArrayList;
+import java.util.Comparator;
 
 /** Represents an Item type. */
 public class Item implements AffectsPokemon, Registrable<Item>

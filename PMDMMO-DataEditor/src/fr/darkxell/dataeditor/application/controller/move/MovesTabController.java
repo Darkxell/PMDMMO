@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import com.darkxell.common.Registries;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.move.Move.MoveCategory;
 import com.darkxell.common.move.Move.MoveRange;
@@ -109,11 +110,12 @@ public class MovesTabController implements Initializable, ListCellParent<MoveLis
 		{
 			if (name.get().matches("\\d+"))
 			{
+				MoveRegistry moves = Registries.moves();
 				Move i = this.defaultMove(Integer.parseInt(name.get()));
-				if (MoveRegistry.find(i.id) != null) new Alert(AlertType.ERROR, "There is already an Move with ID " + i.id, ButtonType.OK).showAndWait();
+				if (moves.find(i.id) != null) new Alert(AlertType.ERROR, "There is already an Move with ID " + i.id, ButtonType.OK).showAndWait();
 				else
 				{
-					MoveRegistry.register(i);
+					moves.register(i);
 					this.reloadList();
 				}
 			} else new Alert(AlertType.ERROR, "Wrong ID: " + name.get(), ButtonType.OK).showAndWait();
@@ -134,7 +136,7 @@ public class MovesTabController implements Initializable, ListCellParent<MoveLis
 				this.currentMove = null;
 				this.editMovePane.setVisible(false);
 			}
-			MoveRegistry.unregister(move.move.id);
+			Registries.moves().unregister(move.move.id);
 			this.reloadList();
 		}
 	}
@@ -158,12 +160,13 @@ public class MovesTabController implements Initializable, ListCellParent<MoveLis
 	public void onEdited(Move move)
 	{
 		boolean idChanged = this.currentMove.move.id != move.id;
-		if (idChanged && MoveRegistry.find(move.id) != null)
+		MoveRegistry moves = Registries.moves();
+		if (idChanged && moves.find(move.id) != null)
 			new Alert(AlertType.ERROR, "Cannot save: There is already another Move with ID " + move.id, ButtonType.OK).showAndWait();
 		else
 		{
-			MoveRegistry.unregister(this.currentMove.move.id);
-			MoveRegistry.register(move);
+			moves.unregister(this.currentMove.move.id);
+			moves.register(move);
 			this.reloadList();
 			// this.onEdit((MoveListMove) this.movesTreeView.getSelectionModel().getSelectedMove().getValue());
 			/* this.movesList.getMoves().remove(this.currentMove); this.movesList.getMoves().add(move); this.movesList.getMoves().sort(Comparator.naturalOrder()); this.movesList.getSelectionModel().select(move); this.onEdit(move); */
@@ -180,14 +183,14 @@ public class MovesTabController implements Initializable, ListCellParent<MoveLis
 
 	public void onSaveAllMoves()
 	{
-		MoveRegistry.save(new File("../PMDMMO-common/resources/data/moves.xml"));
+		Registries.moves().save(new File("../PMDMMO-common/resources/data/moves.xml"));
 	}
 
 	private void reloadList()
 	{
 		for (TreeItem<CustomTreeItem> move : this.categories)
 			move.getChildren().clear();
-		for (Move i : MoveRegistry.list())
+		for (Move i : Registries.moves().toList())
 		{
 			TreeItem<CustomTreeItem> tree;
 			if (i.id <= 0) tree = this.categories[this.categories.length - 1];

@@ -1,5 +1,6 @@
 package com.darkxell.common.test;
 
+import com.darkxell.common.Registries;
 import com.darkxell.common.dungeon.data.DungeonRegistry;
 import com.darkxell.common.item.ItemRegistry;
 import com.darkxell.common.move.MoveRegistry;
@@ -16,10 +17,7 @@ public class CommonUnitTests
 	{
 		Logger.loadServer();
 		Lang.load(false);
-		PokemonRegistry.load();
-		DungeonRegistry.load();
-		ItemRegistry.load();
-		MoveRegistry.load();
+		Registries.load();
 
 		new DBObjecttransferTest().execute();
 		// new DungeonEventTransferTest().execute();

@@ -1,12 +1,12 @@
 package com.darkxell.common.dungeon.data;
 
+import com.darkxell.common.Registry;
+import org.jdom2.Element;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
-
-import com.darkxell.common.Registry;
-import org.jdom2.Element;
 
 /**
  * Holds all Dungeons.
@@ -30,7 +30,7 @@ public final class DungeonRegistry extends Registry<Dungeon> {
         return dungeons;
     }
 
-    DungeonRegistry(URL registryURL) throws IOException {
+    public DungeonRegistry(URL registryURL) throws IOException {
         super(registryURL, "Dungeons");
     }
 }
