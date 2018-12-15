@@ -1,6 +1,6 @@
 package com.darkxell.client.launchable.render;
 
-import com.darkxell.client.launchable.Persistence;
+import com.darkxell.client.launchable.Persistance;
 
 import static com.darkxell.client.launchable.render.RenderProfile.*;
 
@@ -11,6 +11,6 @@ public class Updater extends GameLoop {
 
     @Override
     protected void tick() {
-			Persistance.stateManager.update();
+	    Persistance.stateManager.update();
     }
 }

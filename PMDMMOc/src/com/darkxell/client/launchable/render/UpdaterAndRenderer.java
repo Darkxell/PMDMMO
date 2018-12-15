@@ -3,7 +3,7 @@ package com.darkxell.client.launchable.render;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 
-import com.darkxell.client.launchable.Persistence;
+import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.common.util.Util;
 
