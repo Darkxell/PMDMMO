@@ -1,17 +1,18 @@
-package com.darkxell.client.launchable;
+package com.darkxell.client.launchable.render;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 
+import com.darkxell.client.launchable.Launcher;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.renderers.TextRenderer;
-import com.darkxell.client.resources.images.SpriteFactory;
 import com.darkxell.common.util.Util;
 
 /**
  * (EXPERIMENTAL) A combined updater and renderer to avoid synchronization issues between game ticks and render events.
  *
- * @see com.darkxell.client.launchable.Updater
- * @see com.darkxell.client.launchable.Renderer
+ * @see Updater
+ * @see Renderer
  */
 public class UpdaterAndRenderer extends GameLoop {
     protected byte getProcessingProfile() {

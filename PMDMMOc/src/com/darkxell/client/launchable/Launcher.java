@@ -3,6 +3,12 @@ package com.darkxell.client.launchable;
 import javax.swing.JOptionPane;
 
 import com.darkxell.client.discord.DiscordEventHandlerForPMDMMO;
+import com.darkxell.client.launchable.ClientSettings;
+import com.darkxell.client.launchable.Persistence;
+import com.darkxell.client.launchable.render.GameLoop;
+import com.darkxell.client.launchable.render.Renderer;
+import com.darkxell.client.launchable.render.Updater;
+import com.darkxell.client.launchable.render.UpdaterAndRenderer;
 import com.darkxell.client.mechanics.animation.Animations;
 import com.darkxell.client.resources.images.SpriteFactory;
 import com.darkxell.client.resources.images.SpriteLoader;
