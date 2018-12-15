@@ -2,13 +2,8 @@ package com.darkxell.client.resources.images;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.CountDownLatch;
+import java.util.*;
 import java.util.function.BiConsumer;
 
 import com.darkxell.client.launchable.Launcher;
@@ -44,7 +39,7 @@ public class SpriteFactory implements Runnable {
      * Loads a singleton. Should be called when launching the game, before creating any object inheriting from the
      * {@link Sprite} class.
      *
-     * @throws AssertionError Could not load the default resource. In this case,
+     * @throws AssertionError Could not load the default resource. In this case, the program should quit.
      */
     public static void load() {
         instance = new SpriteFactory();
@@ -61,60 +56,43 @@ public class SpriteFactory implements Runnable {
      * Wait for the loading queue to empty before proceeding.
      */
     public static void waitQueueDone() {
-        try {
-            instance.getLoadQueueLatch().await();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        while (!instance.requested.isEmpty()) {
+            try {
+                Thread.sleep(5);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    /**
-     * Field for notifying threads on load completion.
-     */
-    private CountDownLatch loadQueueDone;
+    public static Sprite getDefaultSprite(int width, int height) {
+        return new Sprite(instance.getDefault(width, height));
+    }
 
-    /**
-     * Default image to render if a path is not in {@link #loaded}.
-     */
     private BufferedImage defaultImg;
 
     /**
      * Loaded images.
      */
-    private final Map<String, BufferedImage> loaded = new ConcurrentHashMap<>();
+    private final Map<String, BufferedImage> loaded = new HashMap<>();
 
     /**
      * Queue of paths to load.
      */
-    private final ConcurrentLinkedQueue<String> requested = new ConcurrentLinkedQueue<>();
+    private LinkedList<String> requested = new LinkedList<>();
 
     /**
      * Queues of sprites waiting for an image keyed on resource path.
      */
-    private final Map<String, List<Sprite>> requesters = new ConcurrentHashMap<>();
+    private HashMap<String, ArrayList<Sprite>> requesters = new HashMap<>();
 
     /**
      * Queues of sub-sprites waiting for an image keyed on resource path.
      */
-    private final Map<String, List<SubSprite>> subsprites = new ConcurrentHashMap<>();
-
-    private SpriteFactory() {
-    }
+    private HashMap<String, ArrayList<SubSprite>> subsprites = new HashMap<>();
 
     /**
-     * Signals waiting threads (if any) that all sprites have been loaded.
-     *
-     * @see CountDownLatch
-     */
-    private synchronized void signalLoadComplete() {
-        if (this.loadQueueDone != null) {
-            this.loadQueueDone.countDown();
-            this.loadQueueDone = null;
-        }
-    }
-
-    /**
-     * Removes references to the input image.
+     * Removes references to the input image. May be called when that Image isn't necessary anymore and may be unloaded.
      *
      * @param image - The image to dispose of.
      */
@@ -126,16 +104,14 @@ public class SpriteFactory implements Runnable {
      * @param image - A path to an image.
      * @return The image if it's loaded, a default image else.
      */
-    public BufferedImage get(String image) {
+    BufferedImage get(String image) {
         return this.loaded.get(image);
     }
 
     /**
-     * Get a placeholder image of a certain width and height.
-     *
      * @return A default image with the input dimensions.
      */
-    public BufferedImage getDefault(int width, int height) {
+    BufferedImage getDefault(int width, int height) {
         if (width <= 0 || height <= 0) {
             return this.defaultImg;
         }
@@ -150,24 +126,11 @@ public class SpriteFactory implements Runnable {
     }
 
     /**
-     * @return The latch that signals if all sprites are loaded. The returned latch will always eventually be
-     * signaled before discarding.
-     * @see CountDownLatch
-     */
-    private synchronized CountDownLatch getLoadQueueLatch() {
-        if (this.loadQueueDone == null) {
-            this.loadQueueDone = new CountDownLatch(1);
-        }
-        return this.loadQueueDone;
-    }
-
-    /**
      * @return Has this image been loaded?
      */
-    public boolean isResourceLoaded(String image) {
+    boolean isResourceLoaded(String image) {
         return this.loaded.containsKey(image) && !this.requested.contains(image);
     }
-
 
     /**
      * Add requester to a queue in a thread-safe manner.
@@ -177,15 +140,13 @@ public class SpriteFactory implements Runnable {
      * @param listenerMap Listener queue to add in.
      * @param <T>         Listener type.
      */
-    private <T> void addRequester(T requester, String path, Map<String, List<T>> listenerMap) {
+    private <T> void addRequester(T requester, String path, Map<String, ArrayList<T>> listenerMap) {
         if (!listenerMap.containsKey(path)) {
-            listenerMap.put(path, Collections.synchronizedList(new ArrayList<>()));
+            listenerMap.put(path, new ArrayList<>());
         }
 
         List<T> listeners = listenerMap.get(path);
-        synchronized (listeners) {
-            listeners.add(requester);
-        }
+        listeners.add(requester);
     }
 
     /**
@@ -238,7 +199,7 @@ public class SpriteFactory implements Runnable {
      */
     private <T> void notify(String path,
                             BufferedImage img,
-                            Map<String, List<T>> requesterMap,
+                            Map<String, ArrayList<T>> requesterMap,
                             BiConsumer<T, BufferedImage> callback) {
         List<T> requesters = requesterMap.remove(path);
 
@@ -246,10 +207,8 @@ public class SpriteFactory implements Runnable {
             return;
         }
 
-        synchronized (requesters) {
-            for (T s : requesters) {
-                callback.accept(s, img);
-            }
+        for (T s : new ArrayList<>(requesters)) {
+            callback.accept(s, img);
         }
     }
 
@@ -257,14 +216,17 @@ public class SpriteFactory implements Runnable {
      * Load next image in path.
      */
     private void loadNext() {
-        String path = this.requested.poll();
+        String path = this.requested.getFirst();
 
         BufferedImage img = Res.getBase(path);
         if (img != null) {
             this.loaded.put(path, img);
-            this.notify(path, img, this.requesters, (s, i) -> s.loaded(img));
-            this.notify(path, img, this.subsprites, (s, i) -> s.sprite.loaded(Res.createimage(i, s.x, s.y, s.w, s.h)));
         }
+
+        this.requested.removeFirst();
+
+        this.notify(path, img, this.requesters, (s, i) -> s.loaded(img));
+        this.notify(path, img, this.subsprites, (s, i) -> s.sprite.loaded(Res.createimage(i, s.x, s.y, s.w, s.h)));
     }
 
     @Override
@@ -272,7 +234,6 @@ public class SpriteFactory implements Runnable {
         while (Launcher.isRunning) {
             try {
                 if (this.requested.isEmpty()) {
-                    this.signalLoadComplete();
                     Thread.sleep(100);
                 } else {
                     this.loadNext();
