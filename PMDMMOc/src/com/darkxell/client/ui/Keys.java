@@ -5,14 +5,13 @@ import java.awt.event.KeyListener;
 
 import com.darkxell.client.launchable.ClientSettings;
 import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.language.Message;
 
-public class Keys implements KeyListener
-{
+public class Keys implements KeyListener {
 
-	public static enum Key
-	{
+	public static enum Key {
 		ATTACK("attack"),
 		DIAGONAL("diagonal"),
 		DOWN("down"),
@@ -45,28 +44,26 @@ public class Keys implements KeyListener
 		boolean wasPressed;
 		boolean willPress;
 
-		private Key(String nameID)
-		{
+		private Key(String nameID) {
 			this.nameID = nameID;
 		}
 
-		public Message getName()
-		{
+		public Message getName() {
 			return new Message("key." + this.nameID);
 		}
 
-		public boolean isPressed()
-		{
+		public boolean isPressed() {
+			if (Persistance.stateManager instanceof PrincipalMainState
+					&& ((PrincipalMainState) Persistance.stateManager).isChatFocused())
+				return false;
 			return this.isPressed;
 		}
 
-		public int keyValue()
-		{
+		public int keyValue() {
 			return this.value;
 		}
 
-		public void setValue(int value)
-		{
+		public void setValue(int value) {
 			this.value = value;
 			ClientSettings.setSetting("key." + this.nameID, String.valueOf(this.value));
 		}
@@ -78,21 +75,17 @@ public class Keys implements KeyListener
 	 * 
 	 * @param canRun - True if the RUN key should be checked.
 	 * @param keys - The keys to check. */
-	public static boolean directionPressed(boolean canRun, Key... keys)
-	{
+	public static boolean directionPressed(boolean canRun, Key... keys) {
 		boolean running = Key.RUN.isPressed() && canRun;
-		for (Key key : keys)
-		{
+		for (Key key : keys) {
 			if (!key.isPressed()) return false;
 			if (running && key.wasPressed) return false;
 		}
 
-		if (!running) for (Key key : new Key[] { Key.UP, Key.DOWN, Key.LEFT, Key.RIGHT })
-		{
+		if (!running) for (Key key : new Key[] { Key.UP, Key.DOWN, Key.LEFT, Key.RIGHT }) {
 			boolean checking = false;
 			for (Key check : keys)
-				if (key == check)
-				{
+				if (key == check) {
 					checking = true;
 					break;
 				}
@@ -103,34 +96,27 @@ public class Keys implements KeyListener
 
 	/** @param keyID - The ID of the pressed key. See {@link KeyEvent}
 	 * @return The {@link Keys#UP Key} that was pressed. -1 if doesn't match a key for this game. */
-	public static Key getKeyFromID(int keyID)
-	{
+	public static Key getKeyFromID(int keyID) {
 		for (Key key : Key.values())
 			if (key.value == keyID) return key;
 		Key.UNKNOWN.value = keyID;
 		return Key.UNKNOWN;
 	}
 
-	public static void update()
-	{
-		for (Key key : Key.values())
-		{
+	public static void update() {
+		for (Key key : Key.values()) {
 			key.wasPressed = key.isPressed;
 			key.isPressed = key.willPress;
 		}
 	}
 
-	public Keys()
-	{
+	public Keys() {
 		for (Key key : Key.values())
-			if (key != Key.UNKNOWN)
-			{
+			if (key != Key.UNKNOWN) {
 				String s = "key." + key.nameID;
-				try
-				{
+				try {
 					key.value = Integer.parseInt(ClientSettings.getSetting(s));
-				} catch (Exception e)
-				{
+				} catch (Exception e) {
 					Logger.e("Invalid key ID: " + ClientSettings.getSetting(s));
 					ClientSettings.resetSetting(s);
 					key.value = Integer.parseInt(ClientSettings.getSetting(s));
@@ -139,27 +125,23 @@ public class Keys implements KeyListener
 	}
 
 	@Override
-	public void keyPressed(KeyEvent e)
-	{
+	public void keyPressed(KeyEvent e) {
 		Key key = getKeyFromID(e.getKeyCode());
-		if (!key.isPressed())
-		{
+		if (!key.isPressed()) {
 			if (key != Key.UNKNOWN) key.willPress = true;
 			Persistance.stateManager.onKeyPressed(e, key);
 		}
 	}
 
 	@Override
-	public void keyReleased(KeyEvent e)
-	{
+	public void keyReleased(KeyEvent e) {
 		Key key = getKeyFromID(e.getKeyCode());
 		if (key != Key.UNKNOWN) key.willPress = false;
 		Persistance.stateManager.onKeyReleased(e, key);
 	}
 
 	@Override
-	public void keyTyped(KeyEvent e)
-	{
+	public void keyTyped(KeyEvent e) {
 		Persistance.stateManager.onKeyTyped(e);
 	}
 
