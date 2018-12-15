@@ -1,74 +1,41 @@
 package com.darkxell.common.move;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Comparator;
+import java.io.IOException;
+import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 
+import com.darkxell.common.Registry;
 import org.jdom2.Element;
 
-import com.darkxell.common.util.Logger;
-import com.darkxell.common.util.XMLUtils;
+/**
+ * Holds all Moves.
+ */
+public final class MoveRegistry extends Registry<Move> {
+    public static Move ATTACK, STRUGGLE;
 
-/** Holds all Moves. */
-public final class MoveRegistry
-{
-	public static Move ATTACK, STRUGGLE;
+    protected Element serializeDom(HashMap<Integer, Move> dungeons) {
+        Element xml = new Element("dungeons");
+        for (Move move : dungeons.values()) {
+            xml.addContent(move.toXML());
+        }
+        return xml;
+    }
 
-	private static HashMap<Integer, Move> moves = new HashMap<Integer, Move>();
+    protected HashMap<Integer, Move> deserializeDom(Element root) {
+        List<Element> moveElements = root.getChildren("move", root.getNamespace());
+        HashMap<Integer, Move> moves = new HashMap<>(moveElements.size());
+        for (Element e : moveElements) {
+            Move move = new Move(e);
+            moves.put(move.id, move);
+        }
+        return moves;
+    }
 
-	/** @return The Moves with the input ID. */
-	public static Move find(int id)
-	{
-		return moves.get(id);
-	}
+    MoveRegistry(URL registryURL, String name) throws IOException {
+        super(registryURL, name);
 
-	/** @return All Moves. */
-	public static ArrayList<Move> list()
-	{
-		ArrayList<Move> list = new ArrayList<Move>(moves.values());
-		list.sort(Comparator.naturalOrder());
-		return list;
-	}
-
-	/** Loads this Registry for the Client. */
-	public static void load()
-	{
-		Logger.instance().debug("Loading Moves...");
-
-		Element root = XMLUtils.read(MoveRegistry.class.getResourceAsStream("/data/moves.xml"));
-		for (Element e : root.getChildren())
-		{
-			Move move = new Move(e);
-			register(move);
-		}
-
-		ATTACK = find(0);
-		STRUGGLE = find(2002);
-	}
-
-	public static void register(Move move)
-	{
-		moves.put(move.id, move);
-	}
-
-	public static void save(File file)
-	{
-		Element xml = new Element("moves");
-		for (Move move : moves.values())
-			xml.addContent(move.toXML());
-		XMLUtils.saveFile(file, xml);
-	}
-
-	/** Saves this Registry for the Client. */
-	public static void saveClient()
-	{
-		save(new File("resources/data/moves.xml"));
-	}
-
-	public static void unregister(int id)
-	{
-		moves.remove(id);
-	}
-
+        ATTACK = this.find(0);
+        STRUGGLE = this.find(2002);
+    }
 }
