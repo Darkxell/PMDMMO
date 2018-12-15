@@ -70,30 +70,44 @@ public class Keys implements KeyListener {
 		}
 	}
 
-	/** Checks if the input directional keys are pressed. <br />
-	 * If the RUN key is pressed, will check if they were'nt pressed the last tick.<br />
-	 * Else, will check if they're the only directional keys pressed.
-	 *
-	 * @param canRun - True if the RUN key should be checked.
-	 * @param keys - The keys to check. */
-	public static boolean directionPressed(boolean canRun, Key... keys) {
-		boolean running = Key.RUN.isPressed() && canRun;
-		for (Key key : keys) {
-			if (!key.isPressed()) return false;
-			if (running && key.wasPressed) return false;
-		}
+    /**
+     * TODO: delegate run event detection to dungeon state. somehow.
+     * @return If a run event should take place.
+     */
+    private static boolean runDirection(Key[] targetKeys) {
+        for (Key key: targetKeys) {
+            if (key.wasPressed) {
+                return false;
+            }
+        }
+        return true;
+    }
 
-		if (!running) for (Key key : new Key[] { Key.UP, Key.DOWN, Key.LEFT, Key.RIGHT }) {
-			boolean checking = false;
-			for (Key check : keys)
-				if (key == check) {
-					checking = true;
-					break;
-				}
-			if (!checking && key.isPressed()) return false;
-		}
-		return true;
-	}
+    /**
+     * Checks if a set of keys corresponding to a direction is currently activated.
+     * <p/>
+     * If the {@link Key#RUN RUN} key is pressed, check that the key was not already pressed - this will only return
+     * true once per run cycle (i.e. press run, release run).
+     *
+     * @param canRun     - True if the RUN key should be checked.
+     * @param targetKeys - List of keys that correspond to a "direction".
+     */
+    public static boolean directionPressed(boolean canRun, Key... targetKeys) {
+        if (Key.RUN.isPressed && canRun) {
+            runDirection(targetKeys);
+        }
+
+        // check that the key combination matches the pressed list exactly
+        List<Key> targetKeyList = Arrays.asList(targetKeys);
+
+        for (Key key : new Key[]{Key.UP, Key.DOWN, Key.LEFT, Key.RIGHT}) {
+            if (targetKeyList.contains(key) != key.isPressed) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 
 	/** @param keyID - The ID of the pressed key. See {@link KeyEvent}
 	 * @return The {@link Keys#UP Key} that was pressed. -1 if doesn't match a key for this game. */
