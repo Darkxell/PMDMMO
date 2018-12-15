@@ -1,72 +1,70 @@
 package com.darkxell.common.pokemon;
 
-import java.io.File;
-import java.util.Collection;
+import java.io.IOException;
+import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 
+import com.darkxell.common.Registry;
 import org.jdom2.Element;
 
-import com.darkxell.common.util.Logger;
-import com.darkxell.common.util.XMLUtils;
+/**
+ * Holds all Pokemon species.
+ */
+public final class PokemonRegistry extends Registry<PokemonSpecies> {
+    /**
+     * Quick-lookup map of forms to main species ids.
+     */
+    private HashMap<Integer, Integer> forms = new HashMap<>();
 
-/** Holds all Pokemon species. */
-public final class PokemonRegistry
-{
+    protected Element serializeDom(HashMap<Integer, PokemonSpecies> speciesList) {
+        Element xml = new Element("pokemon");
+        // did you know the plural of species is species? incredible innit
+        for (PokemonSpecies species : speciesList.values()) {
+            // only serialize main-form species
+            if (species.formID == 0) {
+                xml.addContent(species.toXML());
+            }
+        }
+        return xml;
+    }
 
-	private static HashMap<Integer, Integer> forms = new HashMap<>();
-	private static HashMap<Integer, PokemonSpecies> pokemon = new HashMap<>();
+    protected HashMap<Integer, PokemonSpecies> deserializeDom(Element root) {
+        List<Element> speciesElements = root.getChildren("dungeon", root.getNamespace());
+        HashMap<Integer, PokemonSpecies> speciesMap = new HashMap<>(speciesElements.size());
+        for (Element e : speciesElements) {
+            PokemonSpecies species = new PokemonSpecies(e);
+            speciesMap.put(species.getID(), species);
+        }
+        return speciesMap;
+    }
 
-	/** @return The Pokemon species with the input ID. */
-	public static PokemonSpecies find(int id)
-	{
-		if (!pokemon.containsKey(id)) return pokemon.get(0);
-		return pokemon.get(id);
-	}
+    PokemonRegistry(URL registryURL, String name) throws IOException {
+        super(registryURL, name, 0);
+        this.registerForms();
+    }
 
-	/** @return All Pokemon species. */
-	public static Collection<PokemonSpecies> list()
-	{
-		return pokemon.values();
-	}
+    /**
+     * Generate forms from current main-form species.
+     */
+    private void registerForms() {
+        for (PokemonSpecies s : this.cache.values()) {
+            for (PokemonSpecies form : s.forms()) {
+                this.cache.put(form.id, form);
+                this.forms.put(form.id, s.id);
+            }
+        }
+    }
 
-	/** Loads this Registry for the Client. */
-	public static void load()
-	{
-		Logger.instance().debug("Loading Pokemon...");
-		Element root = XMLUtils.read(PokemonRegistry.class.getResourceAsStream("/data/pokemon.xml"));
-
-		for (Element e : root.getChildren("pokemon", root.getNamespace()))
-			try
-			{
-				PokemonSpecies species = new PokemonSpecies(e);
-				pokemon.put(species.id, species);
-				for (PokemonSpecies form : species.forms())
-				{
-					pokemon.put(form.id, form);
-					forms.put(form.id, species.id);
-				}
-			} catch (Exception e1)
-			{
-				e1.printStackTrace();
-			}
-	}
-
-	/** The parent species of the input species form (e.g., will return Unown A for Unown Q).
-	 * 
-	 * @return <code>null</code> if the input species is not a form. */
-	public static PokemonSpecies parentSpecies(PokemonSpecies form)
-	{
-		if (!forms.containsKey(form.id)) return null;
-		return find(forms.get(form.id));
-	}
-
-	/** Saves this Registry for the Client. */
-	public static void saveClient()
-	{
-		Element species = new Element("species");
-		for (PokemonSpecies pk : pokemon.values())
-			if (pk.formID == 0) species.addContent(pk.toXML());
-		XMLUtils.saveFile(new File("resources/data/pokemon.xml"), species);
-	}
-
+    /**
+     * Maps forms to species, if any.
+     *
+     * @return Main form of the species, if it is multi-form.
+     */
+    public PokemonSpecies parentSpecies(PokemonSpecies form) {
+        if (!forms.containsKey(form.id)) {
+            return null;
+        }
+        return find(forms.get(form.id));
+    }
 }
