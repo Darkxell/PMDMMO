@@ -1,15 +1,16 @@
 package com.darkxell.client.launchable.render;
 
-import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.launchable.Persistence;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 
+import static com.darkxell.client.launchable.render.RenderProfile.*;
+
 public class Renderer extends GameLoop {
-	protected byte getProcessingProfile() {
-		return Launcher.PROFILE_UNCAPPED;
-	}
+    protected RenderProfile getProcessingProfile() {
+        return PROFILE_UNCAPPED;
+    }
 
 	@Override
 	protected void tick() {
@@ -20,7 +21,7 @@ public class Renderer extends GameLoop {
 
 		Persistance.stateManager.render(g, width, height);
 
-		g.dispose();
-		bf.show();
-	}
+        g.dispose();
+        bf.show();
+    }
 }
