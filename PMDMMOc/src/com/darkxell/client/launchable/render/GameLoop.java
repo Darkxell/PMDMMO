@@ -29,7 +29,7 @@ public abstract class GameLoop implements Runnable {
     public static final int TARGET_UPS = 60;
 
     /**
-     * Target nanoseconds per update.
+     * Target nanoseconds per update (ns).
      *
      * @see #TARGET_UPS
      */
@@ -83,6 +83,11 @@ public abstract class GameLoop implements Runnable {
         return (int) this.currentUPS;
     }
 
+    /**
+     * Run while the game is running and the running profile matches this class's profile implementation.
+     *
+     * @return If the loop should continue.
+     */
     protected boolean keepRunning() {
         return Launcher.isRunning && Launcher.getProcessingProfile() == getProcessingProfile();
     }
@@ -114,6 +119,9 @@ public abstract class GameLoop implements Runnable {
         }
     }
 
+    /**
+     * One tick of the game loop.
+     */
     abstract protected void tick();
 
     /**
