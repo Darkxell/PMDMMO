@@ -1,140 +1,146 @@
 package com.darkxell.client.launchable;
 
+import com.darkxell.common.util.Logger;
+
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Properties;
 
-import com.darkxell.common.util.Logger;
+public class ClientSettings {
+    public enum Setting {
+        /**
+         * Movement direction keys.
+         */
+        KEY_UP("key.up", KeyEvent.VK_UP),
+        KEY_DOWN("key.down", KeyEvent.VK_DOWN),
+        KEY_LEFT("key.left", KeyEvent.VK_LEFT),
+        KEY_RIGHT("key.right", KeyEvent.VK_RIGHT),
 
-public class ClientSettings
-{
-	public static final String KEY_UP = "key.up", KEY_DOWN = "key.down", KEY_LEFT = "key.left", KEY_RIGHT = "key.right", KEY_ATTACK = "key.attack",
-			KEY_ROTATE = "key.rotate", KEY_RUN = "key.run", KEY_DIAGONAL = "key.diagonal", KEY_MENU = "key.menu", KEY_MOVE_1 = "key.move1",
-			KEY_MOVE_2 = "key.move2", KEY_MOVE_3 = "key.move3", KEY_MOVE_4 = "key.move4", KEY_ITEM_1 = "key.item1", KEY_ITEM_2 = "key.item2",
-			KEY_INVENTORY = "key.inventory", KEY_MAP_UP = "key.map.up", KEY_MAP_DOWN = "key.map.down", KEY_MAP_LEFT = "key.map.left",
-			KEY_MAP_RIGHT = "key.map.right", KEY_MAP_RESET = "key.map.reset", KEY_PARTY = "key.party", KEY_PAGE_LEFT = "key.page.left",
-			KEY_PAGE_RIGHT = "key.page.right", SERVER_ADDRESS = "server.address", LOGIN = "login", HP_BARS = "hp_bars";
+        KEY_ATTACK("key.attack", KeyEvent.VK_D),
+        KEY_ROTATE("key.rotate", KeyEvent.VK_S),
+        KEY_RUN("key.run", KeyEvent.VK_SHIFT),
+        KEY_DIAGONAL("key.diagonal", KeyEvent.VK_R),
+        KEY_MENU("key.menu", KeyEvent.VK_ESCAPE),
 
-	private static Properties settings;
+        /**
+         * Attack keys.
+         */
+        KEY_MOVE_1("key.move1", KeyEvent.VK_1),
+        KEY_MOVE_2("key.move2", KeyEvent.VK_2),
+        KEY_MOVE_3("key.move3", KeyEvent.VK_3),
+        KEY_MOVE_4("key.move4", KeyEvent.VK_4),
 
-	public static String defaultSetting(String setting)
-	{
-		switch (setting)
-		{
-			case KEY_UP:
-				return Integer.toString(KeyEvent.VK_UP);
-			case KEY_DOWN:
-				return Integer.toString(KeyEvent.VK_DOWN);
-			case KEY_LEFT:
-				return Integer.toString(KeyEvent.VK_LEFT);
-			case KEY_RIGHT:
-				return Integer.toString(KeyEvent.VK_RIGHT);
-			case KEY_ATTACK:
-				return Integer.toString(KeyEvent.VK_D);
-			case KEY_ROTATE:
-				return Integer.toString(KeyEvent.VK_S);
-			case KEY_RUN:
-				return Integer.toString(KeyEvent.VK_SHIFT);
-			case KEY_DIAGONAL:
-				return Integer.toString(KeyEvent.VK_R);
-			case KEY_MENU:
-				return Integer.toString(KeyEvent.VK_ESCAPE);
-			case KEY_MOVE_1:
-				return Integer.toString(KeyEvent.VK_1);
-			case KEY_MOVE_2:
-				return Integer.toString(KeyEvent.VK_2);
-			case KEY_MOVE_3:
-				return Integer.toString(KeyEvent.VK_3);
-			case KEY_MOVE_4:
-				return Integer.toString(KeyEvent.VK_4);
-			case KEY_ITEM_1:
-				return Integer.toString(KeyEvent.VK_5);
-			case KEY_ITEM_2:
-				return Integer.toString(KeyEvent.VK_6);
-			case KEY_INVENTORY:
-				return Integer.toString(KeyEvent.VK_I);
-			case KEY_MAP_UP:
-				return Integer.toString(KeyEvent.VK_NUMPAD8);
-			case KEY_MAP_DOWN:
-				return Integer.toString(KeyEvent.VK_NUMPAD2);
-			case KEY_MAP_LEFT:
-				return Integer.toString(KeyEvent.VK_NUMPAD4);
-			case KEY_MAP_RIGHT:
-				return Integer.toString(KeyEvent.VK_NUMPAD6);
-			case KEY_MAP_RESET:
-				return Integer.toString(KeyEvent.VK_NUMPAD5);
-			case KEY_PAGE_LEFT:
-				return Integer.toString(KeyEvent.VK_PAGE_UP);
-			case KEY_PAGE_RIGHT:
-				return Integer.toString(KeyEvent.VK_PAGE_DOWN);
-			case KEY_PARTY:
-				return Integer.toString(KeyEvent.VK_P);
-			case SERVER_ADDRESS:
-				return "localhost:8080/PMDMMOServer/";
-			case LOGIN:
-				return "Unknown user";
-			case HP_BARS:
-				return "true";
-			default:
-				return null;
-		}
-	}
+        KEY_ITEM_1("key.item1", KeyEvent.VK_5),
+        KEY_ITEM_2("key.item2", KeyEvent.VK_6),
+        KEY_INVENTORY("key.inventory", KeyEvent.VK_I),
+        KEY_MAP_UP("key.map.up", KeyEvent.VK_NUMPAD8),
+        KEY_MAP_DOWN("key.map.down", KeyEvent.VK_NUMPAD2),
+        KEY_MAP_LEFT("key.map.left", KeyEvent.VK_NUMPAD4),
+        KEY_MAP_RIGHT("key.map.right", KeyEvent.VK_NUMPAD6),
+        KEY_MAP_RESET("key.map.reset", KeyEvent.VK_NUMPAD5),
+        KEY_PARTY("key.party", KeyEvent.VK_PAGE_UP),
+        KEY_PAGE_LEFT("key.page.left", KeyEvent.VK_PAGE_DOWN),
+        KEY_PAGE_RIGHT("key.page.right", KeyEvent.VK_P),
 
-	public static boolean getBooleanSetting(String setting)
-	{
-		String value = getSetting(setting);
-		return value != null && value.equals("true");
-	}
+        /**
+         * Server address - will be prefixed with {@code ws://}.
+         */
+        SERVER_ADDRESS("server.address", "localhost:8080/PMDMMOServer/"),
 
-	public static String getSetting(String setting)
-	{
-		if (!settings.containsKey(setting)) resetSetting(setting);
-		return settings.getProperty(setting);
-	}
+        /**
+         * User login name.
+         */
+        LOGIN("login", "Unknown user"),
+        HP_BARS("hp_bars", "true");
 
-	public static void load()
-	{
-		settings = new Properties();
-		File f = new File("settings.properties");
-		if (f.exists()) try
-		{
-			settings.load(new FileInputStream(f));
-		} catch (FileNotFoundException e)
-		{
-			Logger.e("Could not find settings.properties : " + e);
-		} catch (IOException e)
-		{
-			Logger.e("Could not open settings.properties : " + e);
-		}
-	}
+        private String key;
+        private String value;
 
-	/** Resets the input setting to its default value. */
-	public static void resetSetting(String setting)
-	{
-		settings.put(setting, defaultSetting(setting));
-	}
+        private static final HashMap<String, Setting> values = new HashMap<>();
 
-	public static void save()
-	{
-		try
-		{
-			settings.store(new FileOutputStream(new File("settings.properties")), null);
-		} catch (FileNotFoundException e)
-		{
-			Logger.e("Could not find settings.properties : " + e);
-		} catch (IOException e)
-		{
-			Logger.e("Could not open settings.properties : " + e);
-		}
-	}
+        static {
+            for (Setting k : Setting.values()) {
+                values.put(k.key, k);
+            }
+        }
 
-	public static void setSetting(String setting, String value)
-	{
-		settings.put(setting, value);
-	}
+        Setting(String key, String value) {
+            this.key = key;
+            this.value = value;
+        }
 
+        Setting(String key, int value) {
+            this(key, Integer.toString(value));
+        }
+
+        public static Setting getByKey(String name) {
+            return values.get(name);
+        }
+    }
+
+    private static final String PROPERTIES_PATH = "settings.properties";
+    private static Properties settings;
+
+    public static boolean getBooleanSetting(Setting setting) {
+        String value = getSetting(setting);
+        return value != null && value.equals("true");
+    }
+
+    public static String getSetting(String setting) {
+        if (!settings.containsKey(setting)) {
+            resetSetting(setting);
+        }
+        return settings.getProperty(setting);
+    }
+
+    public static String getSetting(Setting setting) {
+        return getSetting(setting.key);
+    }
+
+    public static void load() {
+        settings = new Properties();
+        File f = new File(PROPERTIES_PATH);
+        if (f.exists()) {
+            try {
+                settings.load(new FileInputStream(f));
+            } catch (IOException e) {
+                Logger.e("Could not load from settings.properties: " + e);
+            }
+        }
+    }
+
+    /**
+     * Resets the input setting to its default value.
+     */
+    public static void resetSetting(String setting) {
+        settings.put(setting, Setting.getByKey(setting).value);
+    }
+
+    public static void resetSetting(Setting setting) {
+        settings.put(setting, setting.value);
+    }
+
+    public static void save() {
+        try {
+            settings.store(new FileOutputStream(new File(PROPERTIES_PATH)), null);
+        } catch (IOException e) {
+            Logger.e("Could not save to settings.properties: " + e);
+        }
+    }
+
+    public static void setBooleanSetting(Setting setting, boolean value) {
+        settings.put(setting.key, String.valueOf(value));
+    }
+
+    public static void setSetting(String setting, String value) {
+        settings.put(setting, value);
+    }
+
+    public static void setSetting(Setting setting, String value) {
+        setSetting(setting.key, value);
+    }
 }
