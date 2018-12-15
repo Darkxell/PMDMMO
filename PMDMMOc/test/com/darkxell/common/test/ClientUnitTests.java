@@ -10,6 +10,8 @@ import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.client.ui.Frame;
 import com.darkxell.common.test.tests.DungeonReplayTest;
 
+import static com.darkxell.client.launchable.render.RenderProfile.PROFILE_SYNCHRONIZED;
+
 public class ClientUnitTests
 {
 
@@ -28,7 +30,7 @@ public class ClientUnitTests
 		Persistance.frame.canvas.requestFocus();
 		Persistance.stateManager = new PrincipalMainState();
 
-		Launcher.setProcessingProfile(Launcher.PROFILE_SYNCHRONIZED);
+		Launcher.setProcessingProfile(PROFILE_SYNCHRONIZED);
 
 		new DungeonReplayTest().execute();
 	}

@@ -3,6 +3,8 @@ package com.darkxell.client.launchable.render;
 import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.resources.images.SpriteFactory;
 
+import static com.darkxell.client.launchable.render.RenderProfile.*;
+
 public abstract class GameLoop implements Runnable {
     /**
      * Nanoseconds per second.
@@ -60,8 +62,8 @@ public abstract class GameLoop implements Runnable {
      */
     private int nextUPSUpdates;
 
-    protected byte getProcessingProfile() {
-        return Launcher.PROFILE_UNDEFINED;
+    protected RenderProfile getProcessingProfile() {
+        return PROFILE_UNDEFINED;
     }
 
     /**
