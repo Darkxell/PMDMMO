@@ -3,7 +3,7 @@ package fr.darkxell.dataeditor.application.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import com.darkxell.common.util.language.Lang;
+import com.darkxell.common.util.language.Localization;
 
 import fr.darkxell.dataeditor.application.controller.animation.AnimationsTabController;
 import fr.darkxell.dataeditor.application.controller.cutscene.CutscenesTabController;
@@ -68,7 +68,7 @@ public class MainController implements Initializable, ChangeListener<Boolean>
 
 	public void onReloadLang()
 	{
-		Lang.load(true);
+		Localization.load(true);
 	}
 
 }

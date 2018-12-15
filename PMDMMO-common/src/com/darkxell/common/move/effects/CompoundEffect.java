@@ -7,7 +7,7 @@ import com.darkxell.common.move.MoveEffect;
 import com.darkxell.common.move.MoveEffectCalculator;
 import com.darkxell.common.move.MoveEvents;
 import com.darkxell.common.pokemon.DungeonPokemon;
-import com.darkxell.common.util.language.Lang;
+import com.darkxell.common.util.language.Localization;
 import com.darkxell.common.util.language.Message;
 
 public class CompoundEffect extends MoveEffect
@@ -35,7 +35,7 @@ public class CompoundEffect extends MoveEffect
 	public Message description(Move move)
 	{
 		Message m = super.description(move);
-		if (Lang.containsKey("move.info." + this.id)) return m;
+		if (Localization.containsKey("move.info." + this.id)) return m;
 		for (MoveEffect e : this.effects)
 		{
 			Message em = e.descriptionBase(move);
