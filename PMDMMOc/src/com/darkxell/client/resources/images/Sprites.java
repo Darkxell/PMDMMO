@@ -29,8 +29,7 @@ public final class Sprites
 		{}
 	}
 
-	public static class Res_Frame
-	{
+	public static class Res_Frame {
 		public static final Sprite BG1 = new Sprite("/hud/framebackgrounds/1.jpg");
 		public static final Sprite BG2 = new Sprite("/hud/framebackgrounds/2.jpg");
 		public static final Sprite BG3 = new Sprite("/hud/framebackgrounds/3.png");
@@ -39,10 +38,10 @@ public final class Sprites
 		public static final Sprite BG6 = new Sprite("/hud/framebackgrounds/6.png");
 		public static final Sprite BG7 = new Sprite("/hud/framebackgrounds/7.jpg");
 		public static final Sprite box_E, box_N, box_NE, box_NW, box_S, box_SE, box_SW, box_W;
+		// why is this here?
 		public static final Sprite ICON = new FrameIconSprite("/hud/framebackgrounds/icon.png");
 
-		static
-		{
+		static {
 			Sprite source = new Sprite("/hud/boxcorners.png");
 
 			box_E = SpriteFactory.instance().subSprite(source, 8, 3, 7, 1);
@@ -56,8 +55,8 @@ public final class Sprites
 			box_W = SpriteFactory.instance().subSprite(source, 0, 3, 7, 1);
 		}
 
-		static void load()
-		{}
+		static void load() {
+		}
 	}
 
 	public static class Res_FreezoneEntities
