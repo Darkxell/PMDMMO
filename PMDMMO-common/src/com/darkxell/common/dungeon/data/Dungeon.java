@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Random;
 import java.util.function.Predicate;
 
+import com.darkxell.common.Registrable;
 import org.jdom2.Element;
 
 import com.darkxell.common.dungeon.DungeonExploration;
@@ -19,7 +20,7 @@ import com.darkxell.common.util.language.Message;
 import com.darkxell.common.weather.Weather;
 
 /** Describes a Dungeon: floors, Pokemon, items... */
-public class Dungeon implements Comparable<Dungeon>
+public class Dungeon implements Registrable<Dungeon>
 {
 
 	public static enum DungeonDirection
@@ -131,6 +132,10 @@ public class Dungeon implements Comparable<Dungeon>
 		if (xml.getChild("weather", xml.getNamespace()) != null)
 			for (Element data : xml.getChild("weather", xml.getNamespace()).getChildren("w", xml.getNamespace()))
 			this.weather.put(Integer.parseInt(data.getAttributeValue("id")), new FloorSet(data.getChild(FloorSet.XML_ROOT, xml.getNamespace())));
+	}
+
+	public int getID() {
+		return this.id;
 	}
 
 	public Dungeon(int id, int floorCount, DungeonDirection direction, boolean recruits, int timeLimit, int stickyChance, int linkedTo,
