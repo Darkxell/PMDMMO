@@ -53,7 +53,7 @@ public class ArbitraryCutsceneEnds
 				{
 					case 4:
 						CutsceneManager.playCutscene("base/dream1", true);
-					case 8:
+					case 10:
 						CutsceneManager.playCutscene("skarmory/dream", true);
 				}
 			default:
