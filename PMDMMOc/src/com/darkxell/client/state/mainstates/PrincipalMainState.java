@@ -245,5 +245,9 @@ public class PrincipalMainState extends StateManager
 		this.currentState = state;
 		this.currentState.onStart();
 	}
+	
+	public boolean isChatFocused() {
+		return this.isChatFocused;
+	}
 
 }
