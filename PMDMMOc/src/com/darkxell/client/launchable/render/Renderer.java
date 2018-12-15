@@ -1,6 +1,6 @@
 package com.darkxell.client.launchable.render;
 
-import com.darkxell.client.launchable.Persistence;
+import com.darkxell.client.launchable.Persistance;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
