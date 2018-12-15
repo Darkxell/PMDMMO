@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+import com.darkxell.common.Registrable;
 import org.jdom2.Element;
 
 import com.darkxell.common.dungeon.floor.TileType.Mobility;
@@ -14,7 +15,7 @@ import com.darkxell.common.pokemon.ability.Ability;
 import com.darkxell.common.util.XMLUtils;
 import com.darkxell.common.util.language.Message;
 
-public class PokemonSpecies implements Comparable<PokemonSpecies>
+public class PokemonSpecies implements Registrable<PokemonSpecies>
 {
 	public static final double SHINY_CHANCE = 1d / 100;
 	// public static final double SHINY_CHANCE = .5; // Used to test shiny Pokemon
@@ -110,6 +111,10 @@ public class PokemonSpecies implements Comparable<PokemonSpecies>
 		this.evolutions = evolutions;
 		this.forms = forms;
 		this.friendAreaID = friendAreaID;
+	}
+
+	public int getID() {
+		return this.id;
 	}
 
 	public BaseStats baseStatsIncrease(int level)
