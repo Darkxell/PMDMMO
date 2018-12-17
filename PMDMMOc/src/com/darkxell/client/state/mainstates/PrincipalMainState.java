@@ -61,6 +61,7 @@ public class PrincipalMainState extends StateManager
 		if (this.currentState != null && isGameFocused) this.currentState.onKeyPressed(key);
 		if (e.getKeyCode() == KeyEvent.VK_ENTER && isChatFocused) Persistance.chatbox.send();
 		if (isChatFocused) Persistance.chatbox.textfield.onKeyPressed(e);
+		if (isChatFocused && e.getKeyCode() == KeyEvent.VK_UP) Persistance.chatbox.up();
 		if (e.getKeyCode() == KeyEvent.VK_F12 && e.isShiftDown()) Persistance.debugdisplaymode = !Persistance.debugdisplaymode;
 		if (e.getKeyCode() == KeyEvent.VK_F11 && e.isShiftDown()) Persistance.debugwiresharkmode = !Persistance.debugwiresharkmode;
 		if (e.getKeyCode() == KeyEvent.VK_F10 && e.isShiftDown()) Persistance.debugcommunicationmode = !Persistance.debugcommunicationmode;

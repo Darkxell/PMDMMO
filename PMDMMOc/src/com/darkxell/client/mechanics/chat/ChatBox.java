@@ -139,14 +139,17 @@ public class ChatBox {
 			this.textfield.update();
 	}
 
+	public String lastsent = "";
+
 	public void send() {
 		if (this.textfield.getContent().equals(""))
 			return;
+		this.lastsent = this.textfield.getContent();
 		if (Persistance.socketendpoint != null
 				&& Persistance.socketendpoint.connectionStatus() == GameSocketEndpoint.CONNECTED) {
 			JsonObject mess = new JsonObject().add("action", "chatmessage").add("tag", "DEV")
-					.add("sender", ClientSettings.getSetting(ClientSettings.LOGIN))
-					.add("message", this.textfield.getContent()).add("tagcolor", Palette.getHexaFromClor(Color.RED))
+					.add("sender", ClientSettings.getSetting(ClientSettings.LOGIN)).add("message", this.lastsent)
+					.add("tagcolor", Palette.getHexaFromClor(Color.RED))
 					.add("messagecolor", Palette.getHexaFromClor(Color.WHITE))
 					.add("sendercolor", Palette.getHexaFromClor(Palette.CHAT_GLOBAL));
 			Persistance.socketendpoint.sendMessage(mess.toString());
@@ -159,6 +162,11 @@ public class ChatBox {
 		}
 	}
 
+	public void up() {
+		this.textfield.clear();
+		this.textfield.insertString(lastsent);
+	}
+
 	public void onClick(int x, int y) {
 		if (y > boxheight - footerheight && x < footerheight)
 			if (selectedcategory == CHAT_WHISPER)
@@ -167,7 +175,6 @@ public class ChatBox {
 				++selectedcategory;
 		else if (y > boxheight - footerheight && x > boxwidth - footerheight)
 			send();
-
 	}
 
 }
