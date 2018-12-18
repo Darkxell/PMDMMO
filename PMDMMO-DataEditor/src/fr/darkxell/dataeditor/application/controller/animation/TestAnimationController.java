@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 
 import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.launchable.Persistence;
+import com.darkxell.client.launchable.render.RenderProfile;
 import com.darkxell.client.mechanics.animation.Animations;
 import com.darkxell.client.mechanics.animation.PokemonAnimation;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
@@ -140,7 +141,7 @@ public class TestAnimationController implements Initializable
 		// Persistance.stateManager.setState(state);
 
 		Launcher.isRunning = true;
-		Launcher.setProcessingProfile(Launcher.PROFILE_SYNCHRONIZED);
+		Launcher.setProcessingProfile(RenderProfile.PROFILE_SYNCHRONIZED);
 
 		new Thread(this.thread = new AnimationPreviewThread(this)).start();
 	}

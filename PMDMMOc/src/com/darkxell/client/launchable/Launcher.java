@@ -3,6 +3,7 @@ package com.darkxell.client.launchable;
 import javax.swing.JOptionPane;
 
 import com.darkxell.client.discord.DiscordEventHandlerForPMDMMO;
+import com.darkxell.client.launchable.render.*;
 import com.darkxell.client.mechanics.animation.Animations;
 import com.darkxell.client.resources.images.SpriteFactory;
 import com.darkxell.client.resources.images.SpriteLoader;
@@ -20,69 +21,73 @@ import com.darkxell.common.util.language.Message;
 
 import java.io.IOException;
 
-/** Launching class of the client */
-public class Launcher
-{
+import static com.darkxell.client.launchable.render.RenderProfile.*;
 
-	/** Set to false to stop the game. */
-	public static boolean isRunning;
-	private static Renderer renderer;
-	private static UpdaterAndRenderer updaterandrenderer;
-	private static Updater updater;
+/**
+ * Launching class of the client
+ */
+public class Launcher {
+    /**
+     * Is the game running? If set to false, the game should start cleaning up resources and exit automatically by
+     * the next game tick.
+     */
+    public static boolean isRunning;
+    private static RenderProfile processingProfile = PROFILE_UNDEFINED;
+    private static GameLoop renderer;
+    private static GameLoop updater;
 
-	public static void main(String[] args)
-	{
-		isRunning = true;
+	public static void main(String[] args) {
+        isRunning = true;
 
-		ClientSettings.load();
+        ClientSettings.load();
 		Logger.load("CLIENT");
 		Localization.load(false);
-		if (!SpriteFactory.load())
-		{
-			isRunning = false;
-			JOptionPane.showMessageDialog(null, new Message("error.loading.sprite_factory"), new Message("error").toString(), JOptionPane.ERROR_MESSAGE);
-			System.exit(0);
-		}
+        if (!SpriteFactory.load()) {
+            isRunning = false;
+            JOptionPane.showMessageDialog(null, new Message("error.loading.sprite_factory"), new Message("error").toString(), JOptionPane.ERROR_MESSAGE);
+            System.exit(0);
+        }
 		Registries.load();
-		SpriteLoader.loadCommon();
-		PokemonSpritesets.loadData();
-		PokemonPortrait.load();
-		Animations.loadData();
-		SoundsHolder.load(".");
-		Persistence.soundmanager = new SoundManager();
-		Logger.instance().info("Lang & Data loaded.");
+        SpriteLoader.loadCommon();
+        PokemonSpritesets.loadData();
+        PokemonPortrait.load();
+        Animations.loadData();
+        SoundsHolder.load(".");
+        Persistence.soundmanager = new SoundManager();
+        Logger.instance().info("Lang & Data loaded.");
 
-		DiscordEventHandlerForPMDMMO deh = new DiscordEventHandlerForPMDMMO("In logging screen", "main_big");
-		deh.start();
+        DiscordEventHandlerForPMDMMO deh = new DiscordEventHandlerForPMDMMO("In logging screen", "main_big");
+        deh.start();
 
 		Persistence.frame = new Frame();
 		Persistence.frame.setIconImage(Res_Frame.ICON.image());
 		Persistence.frame.canvas.requestFocus();
 		Persistence.stateManager = new LoginMainState();
 
-		setProcessingProfile(PROFILE_SYNCHRONIZED);
+        setProcessingProfile(PROFILE_SYNCHRONIZED);
+    }
 
-	}
+    private static int getTicksPerSecond(GameLoop l) {
+        return l == null ? 0 : l.ticksPerSecond();
+    }
 
-	public static int getFps()
-	{
-		return (processingprofile == PROFILE_SYNCHRONIZED) ? updaterandrenderer.currentUPS() : renderer.currentFPS();
-	}
+    public static int getFps() {
+        return getTicksPerSecond(renderer);
+    }
 
-	public static int getUps()
-	{
-		return (processingprofile == PROFILE_SYNCHRONIZED) ? updaterandrenderer.currentUPS() : updater.currentUPS();
-	}
+    public static int getUps() {
+        return getTicksPerSecond(updater);
+    }
 
-	public static void stopGame()
-	{
-		processingprofile = PROFILE_UNDEFINED;
+    public static void stopGame() {
+        processingProfile = PROFILE_UNDEFINED;
 		isRunning = false;
 		Logger.instance().saveClient();
-		if (Persistence.isUnitTesting) return;
+        if (Persistence.isUnitTesting) {
+            return;
+        }
 		ClientSettings.save();
-		if (Persistence.saveDataOnExit)
-		{
+        if (Persistence.saveDataOnExit) {
 			try {
 				Registries.save();
 			} catch (IOException e) {
@@ -93,32 +98,26 @@ public class Launcher
 		System.exit(0);
 	}
 
-	public static void setProcessingProfile(byte profile)
-	{
-		if (processingprofile == profile) return;
-		processingprofile = profile;
-		switch (profile)
-		{
-			case PROFILE_SYNCHRONIZED:
-				new Thread(updaterandrenderer = new UpdaterAndRenderer()).start();
-				Logger.i("Processing profile switched: PROFILE_SYNCHRONIZED");
-				break;
-			case PROFILE_UNCAPPED:
-				new Thread(updater = new Updater()).start();
-				new Thread(renderer = new Renderer()).start();
-				Logger.instance().debug("Processing profile switched: PROFILE_UNCAPPED");
-				break;
-		}
-	}
+    public static void setProcessingProfile(RenderProfile profile) {
+        if (processingProfile == profile) {
+            return;
+        }
 
-	public static byte getProcessingProfile()
-	{
-		return processingprofile;
-	}
+        Logger.i("Processing profile switched: " + profile.name());
+        switch (processingProfile = profile) {
+            case PROFILE_SYNCHRONIZED:
+                new Thread(updater = renderer = new UpdaterAndRenderer()).start();
+                break;
+            case PROFILE_UNCAPPED:
+                new Thread(updater = new Updater()).start();
+                new Thread(renderer = new Renderer()).start();
+                break;
+            case PROFILE_UNDEFINED:
+            	break;
+        }
+    }
 
-	public static final byte PROFILE_SYNCHRONIZED = 0;
-	public static final byte PROFILE_UNCAPPED = 1;
-	public static final byte PROFILE_UNDEFINED = 99;
-	private static byte processingprofile = PROFILE_UNDEFINED;
-
+    public static RenderProfile getProcessingProfile() {
+        return processingProfile;
+    }
 }

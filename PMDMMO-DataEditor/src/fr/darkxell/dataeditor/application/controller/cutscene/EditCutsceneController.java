@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 
 import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.launchable.Persistence;
+import com.darkxell.client.launchable.render.RenderProfile;
 import com.darkxell.client.mechanics.cutscene.Cutscene;
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent.CutsceneEventType;
@@ -134,7 +135,7 @@ public class EditCutsceneController implements Initializable, EventEditionListen
 		Persistence.stateManager.setState(Persistence.cutsceneState);
 
 		Launcher.isRunning = true;
-		Launcher.setProcessingProfile(Launcher.PROFILE_SYNCHRONIZED);
+		Launcher.setProcessingProfile(RenderProfile.PROFILE_SYNCHRONIZED);
 	}
 
 }
