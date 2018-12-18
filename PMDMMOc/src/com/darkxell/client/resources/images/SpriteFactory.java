@@ -64,6 +64,10 @@ public class SpriteFactory implements Runnable
 	/** Maps Images -> SubSprites that need that Image. */
 	private HashMap<String, ArrayList<SubSprite>> subsprites = new HashMap<>();
 
+    public static Sprite getDefaultSprite(int width, int height) {
+        return new Sprite(instance.getDefault(width, height));
+    }
+
 	private SpriteFactory()
 	{}
 
