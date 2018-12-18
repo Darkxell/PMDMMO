@@ -177,14 +177,14 @@ public class Mission {
         ArrayList<Mission> list = new ArrayList<>(10);
         int dungeonammount = 0;
         Random r = new Random();
-        for (int id = 0; id < 100; id++) {
-            switch (id) {
+        for (int dungeonid = 0; dungeonid < 100; dungeonid++) {
+            switch (dungeonid) {
                 case 1: // Tiny woods
                     dungeonammount = r(r, 2, 3);
                     for (int i = 0; i < dungeonammount; i++) {
                         try {
                             MissionReward rewards = new MissionReward(r(r, 20, 30), null, null, 5, null);
-                            Mission mission = new Mission("E", id, r(r, 2, 3), r(r, 1, 376), r(r, 1, 376), 1, rewards,
+                            Mission mission = new Mission("E", dungeonid, r(r, 2, 3), r(r, 1, 376), r(r, 1, 376), 1, rewards,
                                     r(r, 1, 2));
                             list.add(mission);
                         } catch (InvalidParammetersException e) {
@@ -197,7 +197,7 @@ public class Mission {
                     for (int i = 0; i < dungeonammount; i++) {
                         try {
                             MissionReward rewards = new MissionReward(r(r, 30, 120), null, null, 5, null);
-                            Mission mission = new Mission("E", id, r(r, 2, 4), r(r, 1, 376), r(r, 1, 376), 1, rewards,
+                            Mission mission = new Mission("E", dungeonid, r(r, 2, 4), r(r, 1, 376), r(r, 1, 376), 1, rewards,
                                     r(r, 1, 2));
                             list.add(mission);
                         } catch (InvalidParammetersException e) {
@@ -210,7 +210,7 @@ public class Mission {
                     for (int i = 0; i < dungeonammount; i++) {
                         try {
                             MissionReward rewards = new MissionReward(r(r, 150, 400), null, null, 10, null);
-                            Mission mission = new Mission("D", id, r(r, 4, 7), r(r, 1, 376), r(r, 1, 376), 1, rewards,
+                            Mission mission = new Mission("D", dungeonid, r(r, 4, 7), r(r, 1, 376), r(r, 1, 376), 1, rewards,
                                     r(r, 1, 2));
                             list.add(mission);
                         } catch (InvalidParammetersException e) {
