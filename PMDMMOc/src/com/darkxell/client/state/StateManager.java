@@ -8,7 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import com.darkxell.client.launchable.Launcher;
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.event.ClientEventProcessor;
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
 import com.darkxell.client.mechanics.freezones.Freezones;
@@ -78,33 +78,33 @@ public abstract class StateManager
 	public static void setExploreState(FreezoneMap map, Direction direction, int xPos, int yPos, boolean fading)
 	{
 		AbstractState next;
-		if (Persistance.stateManager.getCurrentState() instanceof FreezoneExploreState) next = Persistance.stateManager.getCurrentState();
+		if (Persistence.stateManager.getCurrentState() instanceof FreezoneExploreState) next = Persistence.stateManager.getCurrentState();
 		else next = new FreezoneExploreState();
 
-		if (fading) Persistance.stateManager.setState(new TransitionState(Persistance.stateManager.getCurrentState(), next) {
+		if (fading) Persistence.stateManager.setState(new TransitionState(Persistence.stateManager.getCurrentState(), next) {
 			@Override
 			public void onTransitionHalf()
 			{
 				super.onTransitionHalf();
 				((FreezoneExploreState) next).musicset = false;
-				Persistance.freezoneCamera = new FreezoneCamera(Persistance.currentplayer);
-				Persistance.currentmap = map;
-				Persistance.freezoneCamera.x = Persistance.currentplayer.x = xPos == -1 ? map.defaultX() : xPos;
-				Persistance.freezoneCamera.y = Persistance.currentplayer.y = yPos == -1 ? map.defaultY() : yPos;
-				Persistance.displaymap = LocalMap.instance;
-				if (direction != null) Persistance.currentplayer.renderer().sprite().setFacingDirection(direction);
+				Persistence.freezoneCamera = new FreezoneCamera(Persistence.currentplayer);
+				Persistence.currentmap = map;
+				Persistence.freezoneCamera.x = Persistence.currentplayer.x = xPos == -1 ? map.defaultX() : xPos;
+				Persistence.freezoneCamera.y = Persistence.currentplayer.y = yPos == -1 ? map.defaultY() : yPos;
+				Persistence.displaymap = LocalMap.instance;
+				if (direction != null) Persistence.currentplayer.renderer().sprite().setFacingDirection(direction);
 			}
 		});
 		else
 		{
 			((FreezoneExploreState) next).musicset = false;
-			Persistance.freezoneCamera = new FreezoneCamera(Persistance.currentplayer);
-			Persistance.currentmap = map;
-			Persistance.freezoneCamera.x = Persistance.currentplayer.x = xPos == -1 ? map.defaultX() : xPos;
-			Persistance.freezoneCamera.y = Persistance.currentplayer.y = yPos == -1 ? map.defaultY() : yPos;
-			Persistance.displaymap = LocalMap.instance;
-			if (direction != null) Persistance.currentplayer.renderer().sprite().setFacingDirection(direction);
-			Persistance.stateManager.setState(next);
+			Persistence.freezoneCamera = new FreezoneCamera(Persistence.currentplayer);
+			Persistence.currentmap = map;
+			Persistence.freezoneCamera.x = Persistence.currentplayer.x = xPos == -1 ? map.defaultX() : xPos;
+			Persistence.freezoneCamera.y = Persistence.currentplayer.y = yPos == -1 ? map.defaultY() : yPos;
+			Persistence.displaymap = LocalMap.instance;
+			if (direction != null) Persistence.currentplayer.renderer().sprite().setFacingDirection(direction);
+			Persistence.stateManager.setState(next);
 		}
 	}
 
@@ -114,12 +114,12 @@ public abstract class StateManager
 	public static void setDungeonState(AbstractState fadeOutState, int dungeonID, long seed)
 	{
 		OnFirstPokemonDraw.newDungeon();
-		Persistance.dungeon = DungeonRegistry.find(dungeonID).newInstance(seed);
-		Persistance.dungeon.eventProcessor = new ClientEventProcessor(Persistance.dungeon);
-		Persistance.dungeon.addPlayer(Persistance.player);
-		SpriteLoader.loadDungeon(Persistance.dungeon);
-		Persistance.floor = Persistance.dungeon.initiateExploration();
-		Persistance.stateManager.setState(new NextFloorState(fadeOutState, 1));
+		Persistence.dungeon = DungeonRegistry.find(dungeonID).newInstance(seed);
+		Persistence.dungeon.eventProcessor = new ClientEventProcessor(Persistence.dungeon);
+		Persistence.dungeon.addPlayer(Persistence.player);
+		SpriteLoader.loadDungeon(Persistence.dungeon);
+		Persistence.floor = Persistence.dungeon.initiateExploration();
+		Persistence.stateManager.setState(new NextFloorState(fadeOutState, 1));
 	}
 
 	/** Will set to a transition state asking the server for a seed. */
@@ -127,19 +127,19 @@ public abstract class StateManager
 	{
 		TransitionState s = new TransitionState(fadeOutState, new AskServerForDungeonSeedState(dungeonID));
 		s.fadeOut = 0;
-		Persistance.stateManager.setState(s);
+		Persistence.stateManager.setState(s);
 	}
 
 	public static void onDungeonEnd(DungeonOutcome outcome)
 	{
-		if (Persistance.isUnitTesting) Launcher.stopGame();
-		if (Persistance.saveDungeonExplorations)
+		if (Persistence.isUnitTesting) Launcher.stopGame();
+		if (Persistence.saveDungeonExplorations)
 		{
-			JsonObject o = Persistance.dungeon.communication.explorationSummary(true);
+			JsonObject o = Persistence.dungeon.communication.explorationSummary(true);
 			try
 			{
 				BufferedWriter fw = new BufferedWriter(
-						new FileWriter(new File("dungeon-" + Persistance.dungeon.id + "-" + Persistance.dungeon.seed + ".json")));
+						new FileWriter(new File("dungeon-" + Persistence.dungeon.id + "-" + Persistence.dungeon.seed + ".json")));
 				fw.write(o.toString(PrettyPrint.indentWithTabs()));
 				fw.close();
 			} catch (IOException e)
@@ -150,12 +150,12 @@ public abstract class StateManager
 
 		DungeonEndState state = new DungeonEndState(outcome);
 
-		Persistance.stateManager.setState(new TransitionState(Persistance.dungeonState, state) {
+		Persistence.stateManager.setState(new TransitionState(Persistence.dungeonState, state) {
 			@Override
 			public void onTransitionHalf()
 			{
 				super.onTransitionHalf();
-				Persistance.displaymap = null;
+				Persistence.displaymap = null;
 			}
 		});
 	}

@@ -2,7 +2,7 @@ package com.darkxell.client.mechanics.cutscene.event;
 
 import org.jdom2.Element;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.animation.Animations;
 import com.darkxell.client.mechanics.animation.PokemonAnimation;
 import com.darkxell.client.mechanics.cutscene.CutsceneContext;
@@ -11,7 +11,7 @@ import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
 import com.darkxell.client.mechanics.cutscene.entity.CutscenePokemon;
 import com.darkxell.client.renderers.pokemon.CutscenePokemonRenderer;
 import com.darkxell.common.util.XMLUtils;
-import com.darkxell.common.util.language.Lang;
+import com.darkxell.common.util.language.Localization;
 
 public class AnimateCutsceneEvent extends CutsceneEvent
 {
@@ -63,7 +63,7 @@ public class AnimateCutsceneEvent extends CutsceneEvent
 			if (this.animation == null) this.couldntLoad = true;
 			else
 			{
-				CutscenePokemonRenderer r = (CutscenePokemonRenderer) Persistance.currentmap.cutsceneEntityRenderers.getRenderer(entity);
+				CutscenePokemonRenderer r = (CutscenePokemonRenderer) Persistence.currentmap.cutsceneEntityRenderers.getRenderer(entity);
 				if (r == null) this.couldntLoad = true;
 				else
 				{
@@ -86,7 +86,7 @@ public class AnimateCutsceneEvent extends CutsceneEvent
 	public String toString()
 	{
 		String animName = this.animationID + "";
-		if (Lang.containsKey("animation.custom." + this.animationID)) animName += "-" + Lang.translate("animation.custom." + this.animationID);
+		if (Localization.containsKey("animation.custom." + this.animationID)) animName += "-" + Localization.translate("animation.custom." + this.animationID);
 		String mode = "Play";
 		if (this.mode == AnimateCutsceneEventMode.START) mode = "Start";
 		if (this.mode == AnimateCutsceneEventMode.STOP) mode = "Stop";

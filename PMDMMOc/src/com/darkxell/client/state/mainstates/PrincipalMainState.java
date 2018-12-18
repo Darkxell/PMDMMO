@@ -9,7 +9,7 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.animation.AnimationTicker;
 import com.darkxell.client.renderers.TeamInfoRenderer;
 import com.darkxell.client.renderers.TextRenderer;
@@ -59,11 +59,12 @@ public class PrincipalMainState extends StateManager
 	public void onKeyPressed(KeyEvent e, Key key)
 	{
 		if (this.currentState != null && isGameFocused) this.currentState.onKeyPressed(key);
-		if (e.getKeyCode() == KeyEvent.VK_ENTER && isChatFocused) Persistance.chatbox.send();
-		if (isChatFocused) Persistance.chatbox.textfield.onKeyPressed(e);
-		if (e.getKeyCode() == KeyEvent.VK_F12 && e.isShiftDown()) Persistance.debugdisplaymode = !Persistance.debugdisplaymode;
-		if (e.getKeyCode() == KeyEvent.VK_F11 && e.isShiftDown()) Persistance.debugwiresharkmode = !Persistance.debugwiresharkmode;
-		if (e.getKeyCode() == KeyEvent.VK_F10 && e.isShiftDown()) Persistance.debugcommunicationmode = !Persistance.debugcommunicationmode;
+		if (e.getKeyCode() == KeyEvent.VK_ENTER && isChatFocused) Persistence.chatbox.send();
+		if (isChatFocused) Persistence.chatbox.textfield.onKeyPressed(e);
+		if (isChatFocused && e.getKeyCode() == KeyEvent.VK_UP) Persistence.chatbox.up();
+		if (e.getKeyCode() == KeyEvent.VK_F12 && e.isShiftDown()) Persistence.debugdisplaymode = !Persistence.debugdisplaymode;
+		if (e.getKeyCode() == KeyEvent.VK_F11 && e.isShiftDown()) Persistence.debugwiresharkmode = !Persistence.debugwiresharkmode;
+		if (e.getKeyCode() == KeyEvent.VK_F10 && e.isShiftDown()) Persistence.debugcommunicationmode = !Persistence.debugcommunicationmode;
 	}
 
 	@Override
@@ -75,7 +76,7 @@ public class PrincipalMainState extends StateManager
 	@Override
 	public void onKeyTyped(KeyEvent e)
 	{
-		if (isChatFocused) Persistance.chatbox.textfield.onKeyTyped(e);
+		if (isChatFocused) Persistence.chatbox.textfield.onKeyTyped(e);
 		if (isGameFocused) this.currentState.onKeyTyped(e);
 	}
 
@@ -95,7 +96,7 @@ public class PrincipalMainState extends StateManager
 		{
 			isChatFocused = true;
 			isGameFocused = false;
-			Persistance.chatbox.onClick(x - chatx, y - chaty);
+			Persistence.chatbox.onClick(x - chatx, y - chaty);
 		}
 	}
 
@@ -147,18 +148,19 @@ public class PrincipalMainState extends StateManager
 		g2.dispose();
 
 		// Calculates various values to draw the components to the window
-		gamewidth = (int) (0.6 * height * displayWidth / displayHeight <= 0.6 * width ? 0.6 * height * displayWidth / displayHeight : 0.6 * width);
+		double kappa = 0.68 * height * displayWidth / displayHeight;
+		gamewidth = (int) (kappa <= 0.68 * width ? kappa : 0.68 * width);
 		gameheight = gamewidth * displayHeight / displayWidth;
-		gamex = (int) (width * 0.35);
-		gamey = (int) (height * 0.35);
+		gamex = (int) (width * 0.30);
+		gamey = (int) (height * 0.30);
 		mapsize = (int) (gamewidth / 2 >= height * 0.25 ? height * 0.25 : gamewidth / 2);
 		mapx = (int) (width * 0.95) - mapsize < gamex + gamewidth - mapsize ? (int) (width * 0.95) - mapsize : gamex + gamewidth - mapsize;
-		mapy = (int) (height * 0.05);
-		chatwidth = (int) (width * 0.25);
-		chatheight = (int) (height * 0.9);
-		chatx = (int) (width * 0.05);
-		chaty = (int) (height * 0.05);
-		teamwidth = (int) (gamewidth - mapsize - width * 0.05);
+		mapy = (int) (height * 0.02);
+		chatwidth = (int) (width * 0.225);
+		chatheight = (int) (height * 0.96);
+		chatx = (int) (width * 0.02);
+		chaty = (int) (height * 0.02);
+		teamwidth = (int) (mapx - gamex - 40);
 
 		// Draws the background
 		MainUiUtility.drawBackground(g, width, height, backgroundID);
@@ -170,7 +172,7 @@ public class PrincipalMainState extends StateManager
 
 		// draws the game inside
 		g.drawImage(internalBuffer, gamex, gamey, gamewidth, gameheight, null);
-		if (Persistance.isCommunicating)
+		if (Persistence.isCommunicating)
 		{
 			g.setColor(Palette.TRANSPARENT_GRAY);
 			Message m = new Message("general.loading");
@@ -184,7 +186,7 @@ public class PrincipalMainState extends StateManager
 		g.translate(chatx, chaty);
 		Shape clp = g.getClip();
 		g.setClip(new Rectangle(0, 0, chatwidth, chatheight));
-		Persistance.chatbox.render(g, chatwidth, chatheight, isChatFocused);
+		Persistence.chatbox.render(g, chatwidth, chatheight, isChatFocused);
 		g.setClip(clp);
 		g.translate(-chatx, -chaty);
 
@@ -192,14 +194,14 @@ public class PrincipalMainState extends StateManager
 		g.translate(mapx, mapy);
 		clp = g.getClip();
 		g.setClip(new Rectangle(0, 0, mapsize, mapsize));
-		if (Persistance.displaymap == null)
+		if (Persistence.displaymap == null)
 		{
 			g.setColor(Color.BLACK);
 			g.fillRect(0, 0, mapsize, mapsize);
-		} else Persistance.displaymap.render(g, mapsize, mapsize);
-		if (Persistance.stateManager.getCurrentState() instanceof TransitionState)
+		} else Persistence.displaymap.render(g, mapsize, mapsize);
+		if (Persistence.stateManager.getCurrentState() instanceof TransitionState)
 		{
-			int alpha = ((TransitionState) Persistance.stateManager.getCurrentState()).minimapFading();
+			int alpha = ((TransitionState) Persistence.stateManager.getCurrentState()).minimapFading();
 			g.setColor(new Color(0, 0, 0, alpha));
 			g.fillRect(0, 0, mapsize, mapsize);
 		}
@@ -221,7 +223,7 @@ public class PrincipalMainState extends StateManager
 	{
 		AnimationTicker.instance.update(); // Update animations before to able post-update modifications.
 		if (this.currentState != null) this.currentState.update();
-		if (Persistance.displaymap != null) Persistance.displaymap.update();
+		if (Persistence.displaymap != null) Persistence.displaymap.update();
 		Keys.update();
 	}
 

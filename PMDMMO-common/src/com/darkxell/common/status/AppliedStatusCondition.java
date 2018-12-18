@@ -7,7 +7,7 @@ import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.DungeonEventListener;
 import com.darkxell.common.event.pokemon.StatusConditionEndedEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
-import com.darkxell.common.util.language.Lang;
+import com.darkxell.common.util.language.Localization;
 import com.darkxell.common.util.language.Message;
 
 public class AppliedStatusCondition implements DungeonEventListener
@@ -54,7 +54,7 @@ public class AppliedStatusCondition implements DungeonEventListener
 	public Message endMessage()
 	{
 		String id = "status.end." + this.condition.id;
-		if (!Lang.containsKey(id)) return null;
+		if (!Localization.containsKey(id)) return null;
 		return new Message(id).addReplacement("<pokemon>", this.pokemon.getNickname());
 	}
 
@@ -115,7 +115,7 @@ public class AppliedStatusCondition implements DungeonEventListener
 	public Message startMessage()
 	{
 		String id = "status.start." + this.condition.id;
-		if (!Lang.containsKey(id)) return null;
+		if (!Localization.containsKey(id)) return null;
 		return new Message(id).addReplacement("<pokemon>", this.pokemon.getNickname());
 	}
 

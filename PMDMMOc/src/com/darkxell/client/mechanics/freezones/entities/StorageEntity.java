@@ -1,6 +1,6 @@
 package com.darkxell.client.mechanics.freezones.entities;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.freezones.FreezoneEntity;
 import com.darkxell.client.state.dialog.storage.StorageDialog;
 
@@ -15,7 +15,7 @@ public class StorageEntity extends FreezoneEntity
 	@Override
 	public void onInteract()
 	{
-		new StorageDialog(Persistance.stateManager.getCurrentState()).start();
+		new StorageDialog(Persistence.stateManager.getCurrentState()).start();
 	}
 
 	@Override

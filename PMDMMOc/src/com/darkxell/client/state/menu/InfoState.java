@@ -5,7 +5,7 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Stack;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.renderers.layers.AbstractGraphiclayer;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.menu.components.TextWindow;
@@ -80,7 +80,7 @@ public class InfoState extends AbstractMenuState
 	@Override
 	protected void onExit()
 	{
-		Persistance.stateManager.setState(this.parent);
+		Persistence.stateManager.setState(this.parent);
 	}
 
 	@Override

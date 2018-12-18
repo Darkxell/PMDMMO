@@ -24,7 +24,7 @@ public class Debugentity extends FreezoneEntity
 		// ((PrincipalMainState) Persistance.stateManager).setState(new TextinputState(((PrincipalMainState) Persistance.stateManager).getCurrentState()));
 		//CutsceneManager.playCutscene("startingwoods/found", true);
 		// Persistance.stateManager.setState(new PersonalityQuizDialog().getLoadingState());
-		CutsceneManager.playCutscene("base/squareopening", false);
+		CutsceneManager.playCutscene("skarmory/request", true);
 	}
 
 	@Override

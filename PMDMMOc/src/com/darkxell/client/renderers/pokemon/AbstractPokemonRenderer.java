@@ -10,7 +10,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.function.Predicate;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.animation.AbstractAnimation;
 import com.darkxell.client.mechanics.animation.PokemonAnimation;
 import com.darkxell.client.renderers.AbstractRenderer;
@@ -137,8 +137,8 @@ public class AbstractPokemonRenderer extends AbstractRenderer
 	@Override
 	public boolean shouldRender(int width, int height)
 	{
-		double screenX = Persistance.dungeonState.pokemonRenderer.x();
-		double screenY = Persistance.dungeonState.pokemonRenderer.y();
+		double screenX = Persistence.dungeonState.pokemonRenderer.x();
+		double screenY = Persistence.dungeonState.pokemonRenderer.y();
 		return this.x() + AbstractDungeonTileset.TILE_SIZE >= screenX - 1 && this.x() <= screenX + width + 1
 				&& this.y() + AbstractDungeonTileset.TILE_SIZE >= screenY - 1 && this.y() <= screenY + height + 1;
 	}

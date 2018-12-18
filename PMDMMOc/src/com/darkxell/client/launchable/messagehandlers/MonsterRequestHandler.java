@@ -1,6 +1,6 @@
 package com.darkxell.client.launchable.messagehandlers;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.PlayerLoadingState;
 import com.darkxell.client.state.menu.freezone.FriendSelectionState;
@@ -51,7 +51,7 @@ public class MonsterRequestHandler extends MessageHandler
 	@Override
 	public void handleMessage(JsonObject message)
 	{
-		AbstractState state = Persistance.stateManager.getCurrentState();
+		AbstractState state = Persistence.stateManager.getCurrentState();
 		if (state != null)
 		{
 			if (state instanceof PlayerLoadingState) ((PlayerLoadingState) state).onMonsterReceived(message);

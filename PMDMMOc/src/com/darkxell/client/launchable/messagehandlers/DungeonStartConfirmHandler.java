@@ -1,6 +1,6 @@
 package com.darkxell.client.launchable.messagehandlers;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.dungeon.AskServerForDungeonSeedState;
 import com.darkxell.client.state.menu.freezone.DungeonSelectionMapState;
@@ -34,7 +34,7 @@ public class DungeonStartConfirmHandler extends MessageHandler
 			Logger.e("Message has invalid seed! " + message.get("seed"));
 		}
 
-		AbstractState state = Persistance.stateManager.getCurrentState();
+		AbstractState state = Persistence.stateManager.getCurrentState();
 		if (state != null)
 		{
 			if (state instanceof DungeonSelectionMapState) ((DungeonSelectionMapState) state).onDungeonStart(dungeon, seed);

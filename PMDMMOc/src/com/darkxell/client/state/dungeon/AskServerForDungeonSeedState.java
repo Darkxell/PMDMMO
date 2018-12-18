@@ -2,7 +2,7 @@ package com.darkxell.client.state.dungeon;
 
 import java.awt.Graphics2D;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.PlayerLoadingState;
 import com.darkxell.client.state.StateManager;
@@ -29,7 +29,7 @@ public class AskServerForDungeonSeedState extends AbstractState
 
 	public void onSeedReceived(int dungeon, long seed)
 	{
-		Persistance.isCommunicating = false;
+		Persistence.isCommunicating = false;
 		StateManager.setDungeonState(null, this.dungeonID, seed);
 	}
 
@@ -44,8 +44,8 @@ public class AskServerForDungeonSeedState extends AbstractState
 		{
 			if (this.tick == 0)
 			{
-				Persistance.isCommunicating = true;
-				Persistance.socketendpoint.requestDungeonSeed(this.dungeonID);
+				Persistence.isCommunicating = true;
+				Persistence.socketendpoint.requestDungeonSeed(this.dungeonID);
 				this.tick = PlayerLoadingState.TIMEOUT;
 			} else--this.tick;
 		}

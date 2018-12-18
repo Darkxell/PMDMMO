@@ -15,8 +15,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 
-public class EditGeneralController implements Initializable
-{
+public class EditGeneralController implements Initializable {
 
 	@FXML
 	public CheckBox bigShadowCheckbox;
@@ -29,8 +28,7 @@ public class EditGeneralController implements Initializable
 	public TextField widthTextfield;
 
 	@Override
-	public void initialize(URL location, ResourceBundle resources)
-	{
+	public void initialize(URL location, ResourceBundle resources) {
 		Pattern p = Pattern.compile("\\d*");
 		this.heightTextfield.setTextFormatter(new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
 			return p.matcher(change.getControlNewText()).matches() ? change : null;
@@ -43,8 +41,11 @@ public class EditGeneralController implements Initializable
 		this.widthTextfield.textProperty().addListener((observable, oldValue, newValue) -> this.onDimensionsChanged());
 	}
 
-	private void onDimensionsChanged()
-	{
+	public void onCancelChanges() {
+		this.parent.onEdit(this.parent.currentSprite);
+	}
+
+	private void onDimensionsChanged() {
 		int width = 16, height = 16;
 		if (!this.widthTextfield.getText().equals("")) width = Integer.parseInt(this.widthTextfield.getText());
 		if (!this.heightTextfield.getText().equals("")) height = Integer.parseInt(this.heightTextfield.getText());
@@ -52,18 +53,13 @@ public class EditGeneralController implements Initializable
 		this.parent.onDimensionsChanged();
 	}
 
-	public void onSaveChanges()
-	{
+	public void onSaveChanges() {
+		if (this.parent.sequencesController.sequenceCombobox.getValue() != null)
+			this.parent.sequencesController.saveSequence(this.parent.sequencesController.sequenceCombobox.getValue());
 		this.parent.onSaveChanges();
 	}
 
-	public void onCancelChanges()
-	{
-		this.parent.onEdit(this.parent.currentSprite);
-	}
-
-	public void setupFor(PokemonSpritesetData item)
-	{
+	public void setupFor(PokemonSpritesetData item) {
 		this.spritesetid = item.id;
 		this.widthTextfield.setText("");
 		this.heightTextfield.setText("");

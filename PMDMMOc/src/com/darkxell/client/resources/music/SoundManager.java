@@ -8,7 +8,7 @@ import javax.sound.sampled.Line;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.Mixer;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.common.util.Logger;
 
 import javazoom.jl.player.Player;
@@ -233,14 +233,14 @@ public class SoundManager implements Runnable {
 	{
 		Song s = SoundsHolder.getSfx(sound);
 		if (s == null) Logger.e("Unknown sound ID: " + sound);
-		else Persistance.soundmanager.playSound(s);
+		else Persistence.soundmanager.playSound(s);
 	}
 
 	public static void playSoundOverMusic(String sound)
 	{
 		Song s = SoundsHolder.getSfx(sound);
 		if (s == null) Logger.e("Unknown sound ID: " + sound);
-		else Persistance.soundmanager.playSoundOverMusic(s);
+		else Persistence.soundmanager.playSoundOverMusic(s);
 	}
 
 }

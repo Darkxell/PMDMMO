@@ -1,6 +1,6 @@
 package com.darkxell.client.mechanics.freezones.entities;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.freezones.FreezoneEntity;
 import com.darkxell.client.state.menu.freezone.MissionBoardSelectionState;
 
@@ -13,7 +13,7 @@ public class MissionBillboardEntity extends FreezoneEntity {
 
 	@Override
 	public void onInteract() {
-		Persistance.stateManager.setState(new MissionBoardSelectionState(Persistance.stateManager.getCurrentState()));
+		Persistence.stateManager.setState(new MissionBoardSelectionState(Persistence.stateManager.getCurrentState()));
 	}
 
 	@Override

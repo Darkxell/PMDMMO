@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import com.darkxell.client.launchable.Launcher;
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.cutscene.Cutscene;
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent.CutsceneEventType;
@@ -126,12 +126,12 @@ public class EditCutsceneController implements Initializable, EventEditionListen
 		Cutscene test = new Cutscene("test", temp.toXML());
 		test.onFinish = new CloseTesterCutsceneEnd(test);
 
-		Persistance.frame = new Frame();
-		Persistance.frame.canvas.requestFocus();
-		Persistance.stateManager = new PrincipalMainState();
-		Persistance.cutsceneState = new CutsceneState(test);
+		Persistence.frame = new Frame();
+		Persistence.frame.canvas.requestFocus();
+		Persistence.stateManager = new PrincipalMainState();
+		Persistence.cutsceneState = new CutsceneState(test);
 		test.creation.create();
-		Persistance.stateManager.setState(Persistance.cutsceneState);
+		Persistence.stateManager.setState(Persistence.cutsceneState);
 
 		Launcher.isRunning = true;
 		Launcher.setProcessingProfile(Launcher.PROFILE_SYNCHRONIZED);

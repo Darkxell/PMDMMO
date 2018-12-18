@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 import com.darkxell.client.launchable.GameSocketEndpoint;
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.launchable.StoryPositionSetup;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.PlayerLoadingState;
@@ -26,21 +26,21 @@ public class DungeonEndState extends AbstractState
 
 	public static void finish()
 	{
-		TransitionState t = new TransitionState(Persistance.stateManager.getCurrentState(), null) {
+		TransitionState t = new TransitionState(Persistence.stateManager.getCurrentState(), null) {
 			@Override
 			public void onTransitionHalf()
 			{
 				super.onTransitionHalf();
-				Persistance.stateManager.setState(new PlayerLoadingState(Persistance.player.getData().id, new PlayerLoadingEndListener() {
+				Persistence.stateManager.setState(new PlayerLoadingState(Persistence.player.getData().id, new PlayerLoadingEndListener() {
 					@Override
 					public void onPlayerLoadingEnd(PlayerLoadingState state)
 					{
-						StoryPositionSetup.trigger(Persistance.player.storyPosition(), false);
+						StoryPositionSetup.trigger(Persistence.player.storyPosition(), false);
 					}
 				}));
 			}
 		};
-		Persistance.stateManager.setState(t);
+		Persistence.stateManager.setState(t);
 	}
 
 	private ArrayList<Mission> completedMissions = new ArrayList<>();
@@ -53,19 +53,19 @@ public class DungeonEndState extends AbstractState
 
 	public void onConfirmMessage(JsonObject message)
 	{
-		Persistance.isCommunicating = false;
+		Persistence.isCommunicating = false;
 		this.onFinish();
 	}
 
 	private void onFinish()
 	{
-		Persistance.player.resetDungeonTeam();
+		Persistence.player.resetDungeonTeam();
 		if (this.completedMissions.isEmpty()) finish();
 		else
 		{
-			Persistance.cutsceneState = new MissionResultsState(this.completedMissions);
-			Persistance.cutsceneState.cutscene.creation.create();
-			Persistance.stateManager.setState(Persistance.cutsceneState);
+			Persistence.cutsceneState = new MissionResultsState(this.completedMissions);
+			Persistence.cutsceneState.cutscene.creation.create();
+			Persistence.stateManager.setState(Persistence.cutsceneState);
 		}
 	}
 
@@ -82,34 +82,34 @@ public class DungeonEndState extends AbstractState
 	{
 		super.onStart();
 
-		for (DungeonMission m : Persistance.dungeon.activeMissions)
-			if (m.isCleared() && m.owner == Persistance.player) this.completedMissions.add(m.missionData);
+		for (DungeonMission m : Persistence.dungeon.activeMissions)
+			if (m.isCleared() && m.owner == Persistence.player) this.completedMissions.add(m.missionData);
 
-		if (Persistance.socketendpoint.connectionStatus() == GameSocketEndpoint.CONNECTED)
+		if (Persistence.socketendpoint.connectionStatus() == GameSocketEndpoint.CONNECTED)
 		{
-			Persistance.isCommunicating = true;
+			Persistence.isCommunicating = true;
 			JsonObject json = Json.object();
 			json.add("action", "dungeonend");
 			json.add("outcome", this.outcome.toJson());
 			json.add("success", this.outcome.isSuccess());
-			json.add("player", Persistance.player.getData().toJson());
-			json.add("inventory", Persistance.player.inventory().getData().toJson());
+			json.add("player", Persistence.player.getData().toJson());
+			json.add("inventory", Persistence.player.inventory().getData().toJson());
 
 			JsonArray array = new JsonArray();
-			for (Pokemon pokemon : Persistance.player.getTeam())
+			for (Pokemon pokemon : Persistence.player.getTeam())
 				array.add(pokemon.getData().toJson());
 			json.add("team", array);
 
 			array = new JsonArray();
-			for (Pokemon pokemon : Persistance.player.getTeam())
+			for (Pokemon pokemon : Persistence.player.getTeam())
 				for (int m = 0; m < pokemon.moveCount(); ++m)
 					array.add(pokemon.move(m).getData().toJson());
 			json.add("moves", array);
 
 			array = new JsonArray();
-			for (Pokemon pokemon : Persistance.player.getTeam())
+			for (Pokemon pokemon : Persistence.player.getTeam())
 				if (pokemon.getItem() != null) array.add(pokemon.getItem().getData().toJson());
-			for (ItemStack item : Persistance.player.inventory().items())
+			for (ItemStack item : Persistence.player.inventory().items())
 				array.add(item.getData().toJson());
 			json.add("items", array);
 
@@ -118,7 +118,7 @@ public class DungeonEndState extends AbstractState
 				array.add(m.toString());
 			json.add("completedmissions", array);
 
-			Persistance.socketendpoint.sendMessage(json.toString());
+			Persistence.socketendpoint.sendMessage(json.toString());
 		} else this.onFinish();
 	}
 

@@ -1,6 +1,6 @@
 package com.darkxell.client.mechanics.freezones.zones;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.cutscene.CutsceneManager;
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
 import com.darkxell.client.mechanics.freezones.TriggerZone;
@@ -23,13 +23,13 @@ public class BaseFreezone extends FreezoneMap {
 		this.triggerzones.add(new TriggerZone(new DoubleRectangle(0, 38, 2, 8)) {
 			@Override
 			public void onEnter() {
-				Persistance.stateManager.setState(new FriendSelectionState(Persistance.stateManager.getCurrentState()));
+				Persistence.stateManager.setState(new FriendSelectionState(Persistence.stateManager.getCurrentState()));
 			}
 		});
 		this.triggerzones.add(new TriggerZone(new DoubleRectangle(29, 63, 9, 2)) {
 			@Override
 			public void onEnter() {
-				Persistance.stateManager.setState(new DungeonSelectionMapState());
+				Persistence.stateManager.setState(new DungeonSelectionMapState());
 			}
 		});
 		/*
@@ -59,15 +59,15 @@ public class BaseFreezone extends FreezoneMap {
 		this.triggerzones.add(new TriggerZone(new DoubleRectangle(32, 25, 4, 4)) {
 			@Override
 			public void onEnter() {
-				if (Persistance.player.getData().storyposition == 4) {
+				if (Persistence.player.getData().storyposition == 4) {
 					CutsceneManager.playCutscene("base/magnetialert", false);
-					Persistance.player.setStoryPosition(5);
+					Persistence.player.setStoryPosition(5);
 					// Note that at this point, the client is offsync with the
 					// server, as the server storypos is 4. both will be 5 at
 					// the end of the cutscene.
-				} else if(Persistance.player.getData().storyposition == 8) {
+				} else if(Persistence.player.getData().storyposition == 8) {
 					CutsceneManager.playCutscene("base/squareopening", false);
-					Persistance.player.setStoryPosition(10);
+					Persistence.player.setStoryPosition(10);
 				}
 			}
 		});

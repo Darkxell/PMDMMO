@@ -3,7 +3,7 @@ package com.darkxell.client.mechanics.cutscene;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
 import com.darkxell.client.mechanics.cutscene.event.DelayCutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.event.WaitCutsceneEvent;
@@ -32,9 +32,9 @@ public class CutscenePlayer {
 
 	public void createEntity(CutsceneEntity entity) {
 		this.entities.add(entity);
-		if (Persistance.cutsceneState != null) {
+		if (Persistence.cutsceneState != null) {
 			AbstractRenderer renderer = entity.createRenderer();
-			if (renderer != null) Persistance.currentmap.cutsceneEntityRenderers.register(entity, renderer);
+			if (renderer != null) Persistence.currentmap.cutsceneEntityRenderers.register(entity, renderer);
 		}
 	}
 
@@ -55,7 +55,7 @@ public class CutscenePlayer {
 	public void removeEntity(CutsceneEntity entity) {
 		if (this.entities.contains(entity)) {
 			this.entities.remove(entity);
-			if (Persistance.cutsceneState != null) Persistance.currentmap.cutsceneEntityRenderers.unregister(entity);
+			if (Persistence.cutsceneState != null) Persistence.currentmap.cutsceneEntityRenderers.unregister(entity);
 		}
 	}
 

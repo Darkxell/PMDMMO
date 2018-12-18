@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.jdom2.Element;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.cutscene.CutsceneContext;
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
@@ -64,13 +64,13 @@ public class DialogCutsceneEvent extends CutsceneEvent implements DialogEndListe
 		void addReplacements(CutscenePokemon speaker)
 		{
 			this.hasReplacements = true;
-			this.message.addReplacement("<account-name>", Persistance.player.name());
-			this.message.addReplacement("<player-name>", Persistance.player.getTeamLeader().getNickname());
-			this.message.addReplacement("<player-type>", Persistance.player.getTeamLeader().species().formName());
-			if (Persistance.player.allies.size() >= 1)
+			this.message.addReplacement("<account-name>", Persistence.player.name());
+			this.message.addReplacement("<player-name>", Persistence.player.getTeamLeader().getNickname());
+			this.message.addReplacement("<player-type>", Persistence.player.getTeamLeader().species().formName());
+			if (Persistence.player.allies.size() >= 1)
 			{
-				this.message.addReplacement("<partner-name>", Persistance.player.getMember(1).getNickname());
-				this.message.addReplacement("<partner-type>", Persistance.player.getMember(1).species().formName());
+				this.message.addReplacement("<partner-name>", Persistence.player.getMember(1).getNickname());
+				this.message.addReplacement("<partner-type>", Persistence.player.getMember(1).species().formName());
 			}
 			if (speaker != null)
 			{
@@ -126,7 +126,7 @@ public class DialogCutsceneEvent extends CutsceneEvent implements DialogEndListe
 	@Override
 	public void onDialogEnd(DialogState dialog)
 	{
-		Persistance.stateManager.setState(Persistance.cutsceneState);
+		Persistence.stateManager.setState(Persistence.cutsceneState);
 		this.isOver = true;
 	}
 
@@ -153,8 +153,8 @@ public class DialogCutsceneEvent extends CutsceneEvent implements DialogEndListe
 			screens[index++] = screen;
 		}
 
-		DialogState state = new DialogState(Persistance.cutsceneState, this, screens);
-		Persistance.stateManager.setState(state);
+		DialogState state = new DialogState(Persistence.cutsceneState, this, screens);
+		Persistence.stateManager.setState(state);
 	}
 
 	@Override

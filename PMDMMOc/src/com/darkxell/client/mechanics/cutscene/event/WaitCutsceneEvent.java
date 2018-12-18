@@ -13,7 +13,7 @@ public class WaitCutsceneEvent extends CutsceneEvent
 
 	public final boolean all;
 	public ArrayList<CutsceneEvent> events;
-	private HashSet<CutsceneEvent> remaining = new HashSet<>();
+	public HashSet<CutsceneEvent> remaining = new HashSet<>();
 
 	public WaitCutsceneEvent(Element xml, CutsceneContext context)
 	{
@@ -44,9 +44,8 @@ public class WaitCutsceneEvent extends CutsceneEvent
 		HashSet<CutsceneEvent> ended = new HashSet<>();
 		for (CutsceneEvent event : this.remaining)
 			if (event.isOver()) ended.add(event);
-			else return false;
 		this.remaining.removeAll(ended);
-		return true;
+		return this.remaining.isEmpty();
 	}
 
 	@Override

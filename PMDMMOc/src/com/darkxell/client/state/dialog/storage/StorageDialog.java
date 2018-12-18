@@ -1,6 +1,6 @@
 package com.darkxell.client.state.dialog.storage;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.launchable.messagehandlers.InventoryRequestHandler;
 import com.darkxell.client.renderers.layers.AbstractGraphiclayer;
 import com.darkxell.client.state.AbstractState;
@@ -80,7 +80,7 @@ public class StorageDialog extends ComplexDialog
 		else if (previous.currentScreen().id == ACTION) {
 			if (this.selectedAction == EXIT) return ComplexDialogAction.TERMINATE;
 			else if (this.selectedAction == DEPOSIT) {
-				Inventory i = Persistance.player.inventory();
+				Inventory i = Persistence.player.inventory();
 				if (i.size() == 0) {
 					this.dialogToShow = INVENTORYEMPTY;
 					return ComplexDialogAction.NEW_DIALOG;
@@ -125,26 +125,26 @@ public class StorageDialog extends ComplexDialog
 	public void onConfirmReceived(JsonObject message) {
 		this.result = message.getString("result", null);
 		this.dialogToShow = CONFIRM;
-		Persistance.socketendpoint.requestInventory(Persistance.player.getData().toolboxinventory.id);
+		Persistence.socketendpoint.requestInventory(Persistence.player.getData().toolboxinventory.id);
 	}
 
 	@Override
 	protected void onDialogFinished(DialogState dialog) {
 		DialogScreen screen = dialog.currentScreen();
 		if (screen.id == QUANTITY)
-			Persistance.stateManager.setState(new IntegerSelectionState(dialog, dialog, this, 1l, this.max, 1l));
+			Persistence.stateManager.setState(new IntegerSelectionState(dialog, dialog, this, 1l, this.max, 1l));
 		else if (screen.id == ACTION) {
 			this.selectedAction = ((OptionDialogScreen) screen).chosenIndex();
 			if (this.selectedAction == DEPOSIT) {
-				Inventory i = Persistance.player.inventory();
+				Inventory i = Persistence.player.inventory();
 				if (i.size() == 0) return;
 				ItemContainersMenuState s = new ItemContainersMenuState(dialog, this.background, this, false, i);
 				s.setMultipleSelectionListener(this);
 				s.isOpaque = true;
-				Persistance.stateManager.setState(s);
+				Persistence.stateManager.setState(s);
 			} else if (this.selectedAction == WITHDRAW) {
-				Persistance.isCommunicating = true;
-				Persistance.socketendpoint.requestInventory(Persistance.player.getData().storageinventory.id);
+				Persistence.isCommunicating = true;
+				Persistence.socketendpoint.requestInventory(Persistence.player.getData().storageinventory.id);
 			}
 		}
 	}
@@ -164,25 +164,25 @@ public class StorageDialog extends ComplexDialog
 	}
 
 	public void onInventoryReceived(JsonObject message) {
-		Persistance.isCommunicating = false;
-		Inventory i = InventoryRequestHandler.readInventory(message, Persistance.player);
-		if (i.getData().id == Persistance.player.getData().toolboxinventory.id) {
-			Persistance.player.setInventory(i);
+		Persistence.isCommunicating = false;
+		Inventory i = InventoryRequestHandler.readInventory(message, Persistence.player);
+		if (i.getData().id == Persistence.player.getData().toolboxinventory.id) {
+			Persistence.player.setInventory(i);
 			this.unpause();
-		} else if (i.getData().id == Persistance.player.getData().storageinventory.id) {
+		} else if (i.getData().id == Persistence.player.getData().storageinventory.id) {
 			if (i.size() == 0) {
 				this.dialogToShow = STORAGEEMPTY;
 				this.unpause();
-			} else if (Persistance.player.inventory().maxSize() == Persistance.player.inventory().size()) {
+			} else if (Persistence.player.inventory().maxSize() == Persistence.player.inventory().size()) {
 				this.dialogToShow = INVENTORYFULL;
 				this.unpause();
 			} else {
-				Persistance.player.setStorage(i);
+				Persistence.player.setStorage(i);
 				ItemContainersMenuState s = new ItemContainersMenuState(null, this.background, this, false, i);
 				s.isOpaque = true;
 				s.setMultipleSelectionListener(this);
-				s.multipleMax = Persistance.player.inventory().maxSize() - Persistance.player.inventory().size();
-				Persistance.stateManager.setState(s);
+				s.multipleMax = Persistence.player.inventory().maxSize() - Persistence.player.inventory().size();
+				Persistence.stateManager.setState(s);
 			}
 		}
 	}
@@ -197,7 +197,7 @@ public class StorageDialog extends ComplexDialog
 			ItemStack i = this.selection[0];
 			this.max = i.quantity();
 			if (this.selectedAction == WITHDRAW && !i.item().isStackable) this.max = Math.min(this.max,
-					Persistance.player.inventory().maxSize() - Persistance.player.inventory().size());
+					Persistence.player.inventory().maxSize() - Persistence.player.inventory().size());
 			if ((i.item().isStackable || this.selectedAction == WITHDRAW) && this.max != 1) {
 				this.dialogToShow = QUANTITY;
 				this.unpause();
@@ -222,8 +222,8 @@ public class StorageDialog extends ComplexDialog
 		root.set("value", action);
 		root.set("items", itemids);
 		root.set("quantities", quantities);
-		Persistance.socketendpoint.sendMessage(root.toString());
-		Persistance.isCommunicating = true;
+		Persistence.socketendpoint.sendMessage(root.toString());
+		Persistence.isCommunicating = true;
 	}
 
 }

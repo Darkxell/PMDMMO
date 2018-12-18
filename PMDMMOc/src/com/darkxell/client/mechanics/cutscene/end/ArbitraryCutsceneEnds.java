@@ -1,6 +1,6 @@
 package com.darkxell.client.mechanics.cutscene.end;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.cutscene.Cutscene;
 import com.darkxell.client.mechanics.cutscene.CutsceneManager;
 import com.darkxell.client.mechanics.cutscene.end.arbitrary.StartNameAsk;
@@ -28,28 +28,28 @@ public class ArbitraryCutsceneEnds
 				break;
 			case "enterwoods":
 				mess = Json.object().add("action", "storyadvance").add("target", 2);
-				Persistance.socketendpoint.sendMessage(mess.toString());
+				Persistence.socketendpoint.sendMessage(mess.toString());
 				break;
 			case "magnemiteaccept":
 				mess = Json.object().add("action", "storyadvance").add("target", 5);
-				Persistance.socketendpoint.sendMessage(mess.toString());
+				Persistence.socketendpoint.sendMessage(mess.toString());
 				break;
 			case "magnemiteend":
 				mess = Json.object().add("action", "storyadvance").add("target", 8);
-				Persistance.socketendpoint.sendMessage(mess.toString());
-				Persistance.player.setStoryPosition(8);
+				Persistence.socketendpoint.sendMessage(mess.toString());
+				Persistence.player.setStoryPosition(8);
 				break;
 			case "openingstate":
 				mess = Json.object().add("action", "storyadvance").add("target", 4);
-				Persistance.socketendpoint.sendMessage(mess.toString());
-				Persistance.player.setStoryPosition(4);
-				if (Persistance.stateManager instanceof PrincipalMainState)
+				Persistence.socketendpoint.sendMessage(mess.toString());
+				Persistence.player.setStoryPosition(4);
+				if (Persistence.stateManager instanceof PrincipalMainState)
 				{
-					((PrincipalMainState) Persistance.stateManager).setState(new OpenningState());
+					((PrincipalMainState) Persistence.stateManager).setState(new OpenningState());
 				}
 				break;
 			case "predream":
-				switch (Persistance.player.storyPosition())
+				switch (Persistence.player.storyPosition())
 				{
 					case 4:
 						CutsceneManager.playCutscene("base/dream1", true);

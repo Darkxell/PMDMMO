@@ -1,6 +1,6 @@
 package com.darkxell.client.mechanics.freezones.entities;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.freezones.FreezoneEntity;
 import com.darkxell.client.state.dialog.DialogScreen;
 import com.darkxell.client.state.dialog.DialogState;
@@ -21,7 +21,7 @@ public class SignSoulEntity extends FreezoneEntity {
 
 	@Override
 	public void onInteract() {
-		Persistance.stateManager.setState(new DialogState(Persistance.stateManager.getCurrentState(),
+		Persistence.stateManager.setState(new DialogState(Persistence.stateManager.getCurrentState(),
 				new DialogScreen(this.mess).setInstant().setCentered()));
 	}
 

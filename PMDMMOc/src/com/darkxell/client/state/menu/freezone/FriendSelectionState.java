@@ -7,7 +7,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.launchable.messagehandlers.MonsterRequestHandler;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.hud.MenuStateHudSpriteset;
@@ -59,8 +59,8 @@ public class FriendSelectionState extends AbstractMenuState
 	public FriendSelectionState(AbstractState backgroundState)
 	{
 		super(backgroundState);
-		this.loadingPokemon = new ArrayList<>(Persistance.player.pokemonInZones.keySet());
-		this.loadingPokemon.removeIf(l -> Persistance.player.pokemonInZones.get(l) != null);
+		this.loadingPokemon = new ArrayList<>(Persistence.player.pokemonInZones.keySet());
+		this.loadingPokemon.removeIf(l -> Persistence.player.pokemonInZones.get(l) != null);
 		this.startLoadingCount = this.loadingPokemon.size();
 		if (this.isLoaded()) this.createOptions();
 		else this.askNextPokemon();
@@ -69,18 +69,18 @@ public class FriendSelectionState extends AbstractMenuState
 	private void askNextPokemon()
 	{
 		this.comtick = 0;
-		Persistance.socketendpoint.requestMonster(this.loadingPokemon.get(0));
-		Persistance.isCommunicating = true;
+		Persistence.socketendpoint.requestMonster(this.loadingPokemon.get(0));
+		Persistence.isCommunicating = true;
 	}
 
 	@Override
 	protected void createOptions()
 	{
 		this.window = null;
-		ArrayList<DatabaseIdentifier> mons = Persistance.player.getData().pokemonsinzones;
+		ArrayList<DatabaseIdentifier> mons = Persistence.player.getData().pokemonsinzones;
 		mons.sort((o1, o2) -> {
-			PokemonSpecies s1 = Persistance.player.pokemonInZones.get(o1.id).species();
-			PokemonSpecies s2 = Persistance.player.pokemonInZones.get(o2.id).species();
+			PokemonSpecies s1 = Persistence.player.pokemonInZones.get(o1.id).species();
+			PokemonSpecies s2 = Persistence.player.pokemonInZones.get(o2.id).species();
 			PokemonSpecies p1 = s1.parent(), p2 = s2.parent();
 			if (p1.id == p2.id) return Integer.compare(s1.formID, s2.formID);
 			return Integer.compare(p1.id, p2.id);
@@ -98,7 +98,7 @@ public class FriendSelectionState extends AbstractMenuState
 			} else
 			{
 				long id = mons.get(index++).id;
-				option = new FriendMenuOption(Persistance.player.pokemonInZones.get(id));
+				option = new FriendMenuOption(Persistence.player.pokemonInZones.get(id));
 			}
 			current.addOption(option);
 			++indexInTab;
@@ -141,9 +141,9 @@ public class FriendSelectionState extends AbstractMenuState
 	@Override
 	protected void onExit()
 	{
-		Persistance.currentplayer.x += 1;
-		Persistance.currentplayer.renderer().sprite().setFacingDirection(Direction.EAST);
-		Persistance.stateManager.setState(new FreezoneExploreState());
+		Persistence.currentplayer.x += 1;
+		Persistence.currentplayer.renderer().sprite().setFacingDirection(Direction.EAST);
+		Persistence.stateManager.setState(new FreezoneExploreState());
 	}
 
 	@Override
@@ -233,19 +233,19 @@ public class FriendSelectionState extends AbstractMenuState
 	@Override
 	protected void onOptionSelected(MenuOption option)
 	{
-		if (option == this.mapOption) Persistance.stateManager.setState(new FriendAreaSelectionMapState());
+		if (option == this.mapOption) Persistence.stateManager.setState(new FriendAreaSelectionMapState());
 		else
 		{
 			FriendMenuOption o = (FriendMenuOption) option;
-			Persistance.stateManager.setState(new FriendSelectionOptionState(this, o.pokemon));
+			Persistence.stateManager.setState(new FriendSelectionOptionState(this, o.pokemon));
 		}
 	}
 
 	public void onPokemonReceived(JsonObject message)
 	{
-		Persistance.isCommunicating = false;
+		Persistence.isCommunicating = false;
 		Pokemon p = MonsterRequestHandler.readMonster(message);
-		Persistance.player.addPokemonInZone(p);
+		Persistence.player.addPokemonInZone(p);
 		this.loadingPokemon.remove(p.id());
 		if (this.isLoaded()) this.createOptions();
 		else this.askNextPokemon();

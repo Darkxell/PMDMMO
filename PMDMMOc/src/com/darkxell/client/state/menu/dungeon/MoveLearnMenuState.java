@@ -3,7 +3,7 @@ package com.darkxell.client.state.menu.dungeon;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.state.dialog.ConfirmDialogScreen;
 import com.darkxell.client.state.dialog.DialogState;
@@ -30,7 +30,7 @@ public class MoveLearnMenuState extends MovesMenuState implements DialogEndListe
 		this.move = new LearnedMove(move.id);
 		this.canOrder = false;
 
-		this.tabs.get(0).addOption(new MoveMenuOption(this.move, this.pokemon == Persistance.player.getTeamLeader()));
+		this.tabs.get(0).addOption(new MoveMenuOption(this.move, this.pokemon == Persistence.player.getTeamLeader()));
 	}
 
 	protected Message infoText()
@@ -52,11 +52,11 @@ public class MoveLearnMenuState extends MovesMenuState implements DialogEndListe
 	{
 		if (((ConfirmDialogScreen) dialog.getScreen(1)).hasConfirmed())
 		{
-			Persistance.stateManager.setState(Persistance.dungeonState);
+			Persistence.stateManager.setState(Persistence.dungeonState);
 			if (this.optionIndex() < 4)
-				Persistance.eventProcessor().processEvent(new MoveLearnedEvent(Persistance.floor, this.pokemon, this.move.move(), this.optionIndex()));
-			else Persistance.eventProcessor().processPending();
-		} else Persistance.stateManager.setState(this);
+				Persistence.eventProcessor().processEvent(new MoveLearnedEvent(Persistence.floor, this.pokemon, this.move.move(), this.optionIndex()));
+			else Persistence.eventProcessor().processPending();
+		} else Persistence.stateManager.setState(this);
 	}
 
 	@Override
@@ -72,7 +72,7 @@ public class MoveLearnMenuState extends MovesMenuState implements DialogEndListe
 				new Message("moves.forget").addReplacement("<pokemon>", this.pokemon.getNickname()).addReplacement("<move>", o.move.move().name()));
 		confirm.id = 1;
 		DialogState dialog = new DialogState(this.background, this, confirm);
-		Persistance.stateManager.setState(dialog);
+		Persistence.stateManager.setState(dialog);
 	}
 
 }

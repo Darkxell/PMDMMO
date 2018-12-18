@@ -3,7 +3,7 @@ package com.darkxell.client.mechanics.event;
 import java.util.ArrayList;
 import java.util.Stack;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.animation.AbstractAnimation;
 import com.darkxell.client.mechanics.animation.AnimationEndListener;
 import com.darkxell.client.mechanics.animation.Animations;
@@ -93,7 +93,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		@Override
 		public void onAnimationEnd(AbstractAnimation animation)
 		{
-			Persistance.eventProcessor().animateDelayed();
+			Persistence.eventProcessor().animateDelayed();
 		}
 	};
 	/** Pending events to process. */
@@ -101,7 +101,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		@Override
 		public void onAnimationEnd(AbstractAnimation animation)
 		{
-			Persistance.eventProcessor().processPending();
+			Persistence.eventProcessor().processPending();
 		}
 	};
 
@@ -109,8 +109,8 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		@Override
 		public void onDialogEnd(DialogState dialog)
 		{
-			Persistance.stateManager.setState(Persistance.dungeonState);
-			Persistance.eventProcessor().processPending();
+			Persistence.stateManager.setState(Persistence.dungeonState);
+			Persistence.eventProcessor().processPending();
 		}
 	};
 
@@ -151,9 +151,9 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	{
 		if (this.delayedWithTravels.contains(event)) return;
 
-		if (event instanceof MessageEvent && ((MessageEvent) event).target != null) event.displayMessages = ((MessageEvent) event).target == Persistance.player;
+		if (event instanceof MessageEvent && ((MessageEvent) event).target != null) event.displayMessages = ((MessageEvent) event).target == Persistence.player;
 
-		if (event.displayMessages) Persistance.dungeonState.logger.showMessages(event.getMessages());
+		if (event.displayMessages) Persistence.dungeonState.logger.showMessages(event.getMessages());
 		Logger.event(event.loggerMessage());
 
 		if (event instanceof MoveSelectionEvent) this.processMoveEvent((MoveSelectionEvent) event);
@@ -184,7 +184,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		if (event instanceof ItemSelectionEvent) this.processItemEvent((ItemSelectionEvent) event);
 		if (event instanceof ItemMovedEvent) this.processItemMovedEvent((ItemMovedEvent) event);
 		if (event instanceof ItemSwappedEvent) this.processItemSwappedEvent((ItemSwappedEvent) event);
-		if (event instanceof MoneyCollectedEvent && Persistance.player.isAlly(((MoneyCollectedEvent) event).pokemon)) SoundManager.playSound("dungeon-money");
+		if (event instanceof MoneyCollectedEvent && Persistence.player.isAlly(((MoneyCollectedEvent) event).pokemon)) SoundManager.playSound("dungeon-money");
 		if (event instanceof ItemThrownEvent) this.processItemThrownEvent((ItemThrownEvent) event);
 		if (event instanceof ProjectileThrownEvent) this.processProjectileEvent((ProjectileThrownEvent) event);
 		if (event instanceof ItemLandedEvent) this.processItemLandedEvent((ItemLandedEvent) event);
@@ -239,7 +239,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		if (this.lastAction != null && this.shouldDelay(event))
 		{
 			this.addToPending(event);
-			Persistance.dungeonState.setSubstate(new DelayState(Persistance.dungeonState, 40));
+			Persistence.dungeonState.setSubstate(new DelayState(Persistence.dungeonState, 40));
 			this.setState(State.ANIMATING);
 			this.lastAction = null;
 			return false;
@@ -262,13 +262,13 @@ public final class ClientEventProcessor extends CommonEventProcessor
 
 	private void processAbilityEvent(TriggeredAbilityEvent event)
 	{
-		AnimationState s = new AnimationState(Persistance.dungeonState);
+		AnimationState s = new AnimationState(Persistence.dungeonState);
 		s.animation = Animations.getAbilityAnimation(event.pokemon, event.ability, this.currentAnimEnd);
 		if (s.animation != null)
 		{
 			if (s.animation.needsPause())
 			{
-				Persistance.dungeonState.setSubstate(s);
+				Persistence.dungeonState.setSubstate(s);
 				this.setState(State.ANIMATING);
 			} else s.animation.start();
 		}
@@ -276,7 +276,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 
 	private void processBlowbackEvent(BlowbackPokemonEvent event)
 	{
-		Persistance.dungeonState.setSubstate(new BlowbackAnimationState(Persistance.dungeonState, event, this.currentAnimEnd));
+		Persistence.dungeonState.setSubstate(new BlowbackAnimationState(Persistence.dungeonState, event, this.currentAnimEnd));
 		this.setState(State.ANIMATING);
 	}
 
@@ -284,9 +284,9 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	protected void processBossDefeatedEvent(BossDefeatedEvent event)
 	{
 		super.processBossDefeatedEvent(event);
-		if (Persistance.floor.cutsceneOut != null)
+		if (Persistence.floor.cutsceneOut != null)
 		{
-			CutsceneManager.playCutscene(Persistance.floor.cutsceneOut, false);
+			CutsceneManager.playCutscene(Persistence.floor.cutsceneOut, false);
 			this.setState(State.ANIMATING);
 		}
 	}
@@ -295,43 +295,43 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	{
 		if (event.damageType != DamageType.HUNGER)
 		{
-			AnimationState s = new AnimationState(Persistance.dungeonState);
+			AnimationState s = new AnimationState(Persistence.dungeonState);
 			s.animation = Animations.getCustomAnimation(event.target, Animations.HURT, this.currentAnimEnd);
 			if (s.animation != null)
 			{
-				Persistance.dungeonState.setSubstate(s);
+				Persistence.dungeonState.setSubstate(s);
 				this.setState(State.ANIMATING);
 			}
-			if (event.damage != 0) new TextAbovePokeAnimation(Persistance.dungeonState.pokemonRenderer.getRenderer(event.target),
+			if (event.damage != 0) new TextAbovePokeAnimation(Persistence.dungeonState.pokemonRenderer.getRenderer(event.target),
 					new Message("-" + event.damage, false), FontMode.DAMAGE).start();
 		}
 	}
 
 	private void processExitEvent(DungeonExitEvent event)
 	{
-		if (event.player() == Persistance.player) Persistance.dungeonState.setCamera(null);
-		Persistance.dungeonState.setSubstate(new DungeonExitAnimationState(Persistance.dungeonState, event.player().getDungeonTeam()));
+		if (event.player() == Persistence.player) Persistence.dungeonState.setCamera(null);
+		Persistence.dungeonState.setSubstate(new DungeonExitAnimationState(Persistence.dungeonState, event.player().getDungeonTeam()));
 		this.setState(State.ANIMATING);
 	}
 
 	private void processExperienceEvent(ExperienceGeneratedEvent event)
 	{
-		if (event.experience != 0 && event.player == Persistance.player) for (DungeonPokemon p : event.player.getDungeonTeam())
-			if (!p.isFainted()) new TextAbovePokeAnimation(Persistance.dungeonState.pokemonRenderer.getRenderer(p), new Message("+" + event.experience, false),
+		if (event.experience != 0 && event.player == Persistence.player) for (DungeonPokemon p : event.player.getDungeonTeam())
+			if (!p.isFainted()) new TextAbovePokeAnimation(Persistence.dungeonState.pokemonRenderer.getRenderer(p), new Message("+" + event.experience, false),
 					FontMode.EXPERIENCE).start();
 	}
 
 	private void processExplorationStopEvent(ExplorationStopEvent event)
 	{
 		StateManager.onDungeonEnd(event.outcome);
-		Persistance.soundmanager.setBackgroundMusic(null);
+		Persistence.soundmanager.setBackgroundMusic(null);
 	}
 
 	private void processFaintedEvent(FaintedPokemonEvent event)
 	{
-		AnimationState s = new AnimationState(Persistance.dungeonState);
-		s.animation = new PokemonFaintAnimation(Persistance.dungeonState.pokemonRenderer.getRenderer(event.pokemon), this.currentAnimEnd);
-		Persistance.dungeonState.setSubstate(s);
+		AnimationState s = new AnimationState(Persistence.dungeonState);
+		s.animation = new PokemonFaintAnimation(Persistence.dungeonState.pokemonRenderer.getRenderer(event.pokemon), this.currentAnimEnd);
+		Persistence.dungeonState.setSubstate(s);
 		this.setState(State.ANIMATING);
 	}
 
@@ -339,32 +339,32 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	{
 		this.setState(State.ANIMATING);
 		this.delayedWithTravels.clear();
-		Persistance.stateManager.setState(new NextFloorState(Persistance.dungeonState, event.floor.id + 1));
+		Persistence.stateManager.setState(new NextFloorState(Persistence.dungeonState, event.floor.id + 1));
 	}
 
 	private void processHealEvent(HealthRestoredEvent event)
 	{
 		if (event.effectiveHeal() <= 0) return;
-		AnimationState s = new AnimationState(Persistance.dungeonState);
+		AnimationState s = new AnimationState(Persistence.dungeonState);
 		s.animation = Animations.getCustomAnimation(event.target, Animations.HEAL, this.currentAnimEnd);
 		if (s.animation != null)
 		{
-			Persistance.dungeonState.setSubstate(s);
+			Persistence.dungeonState.setSubstate(s);
 			this.setState(State.ANIMATING);
 		}
-		new TextAbovePokeAnimation(Persistance.dungeonState.pokemonRenderer.getRenderer(event.target), new Message("+" + event.effectiveHeal(), false),
+		new TextAbovePokeAnimation(Persistence.dungeonState.pokemonRenderer.getRenderer(event.target), new Message("+" + event.effectiveHeal(), false),
 				FontMode.DAMAGE).start();
 	}
 
 	private void processItemEvent(ItemSelectionEvent event)
 	{
-		AnimationState a = new AnimationState(Persistance.dungeonState);
+		AnimationState a = new AnimationState(Persistence.dungeonState);
 		if (event.item().effect() instanceof FoodItemEffect && !Animations.existsItemAnimation(event.item()))
 			a.animation = Animations.getCustomAnimation(event.target() == null ? event.user() : event.target(), 0, this.currentAnimEnd);
 		else a.animation = Animations.getItemAnimation(event.target() == null ? event.user() : event.target(), event.item(), this.currentAnimEnd);
 		if (a.animation != null)
 		{
-			Persistance.dungeonState.setSubstate(a);
+			Persistence.dungeonState.setSubstate(a);
 			this.setState(State.ANIMATING);
 		}
 	}
@@ -377,18 +377,18 @@ public final class ClientEventProcessor extends CommonEventProcessor
 				@Override
 				public void onAnimationEnd(AbstractAnimation animation)
 				{
-					Persistance.dungeonState.itemRenderer.hidden.remove(event.item);
+					Persistence.dungeonState.itemRenderer.hidden.remove(event.item);
 					currentAnimEnd.onAnimationEnd(animation);
 				}
 			};
 
-			Persistance.dungeonState.itemRenderer.hidden.add(event.item);
-			ProjectileAnimationState a = new ProjectileAnimationState(Persistance.dungeonState, event.tile, event.destination());
+			Persistence.dungeonState.itemRenderer.hidden.add(event.item);
+			ProjectileAnimationState a = new ProjectileAnimationState(Persistence.dungeonState, event.tile, event.destination());
 			a.animation = Animations.getProjectileAnimationFromItem(null, event.item.item(), listener);
 			a.movement = ProjectileMovement.ARC;
 			if (a.animation != null)
 			{
-				Persistance.dungeonState.setSubstate(a);
+				Persistence.dungeonState.setSubstate(a);
 				this.setState(State.ANIMATING);
 			}
 		}
@@ -399,26 +399,26 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		if (event.source() instanceof Tile)
 		{
 			boolean ally = true;
-			if (event.destination() instanceof Pokemon) ally = Persistance.player.isAlly((Pokemon) event.destination());
-			else if (event.destination() instanceof Inventory) ally = Persistance.player.inventory() == (Inventory) event.destination();
+			if (event.destination() instanceof Pokemon) ally = Persistence.player.isAlly((Pokemon) event.destination());
+			else if (event.destination() instanceof Inventory) ally = Persistence.player.inventory() == (Inventory) event.destination();
 			SoundManager.playSound(ally ? "dungeon-item" : "dungeon-enemygrab");
-			Persistance.dungeonState.floorVisibility.onItemremoved((Tile) event.source());
+			Persistence.dungeonState.floorVisibility.onItemremoved((Tile) event.source());
 		}
 	}
 
 	private void processItemSwappedEvent(ItemSwappedEvent event)
 	{
-		if (event.source() instanceof Tile) Persistance.dungeonState.floorVisibility.onItemremoved((Tile) event.source());
-		else if (event.destination() instanceof Tile) Persistance.dungeonState.floorVisibility.onItemremoved((Tile) event.destination());
+		if (event.source() instanceof Tile) Persistence.dungeonState.floorVisibility.onItemremoved((Tile) event.source());
+		else if (event.destination() instanceof Tile) Persistence.dungeonState.floorVisibility.onItemremoved((Tile) event.destination());
 	}
 
 	private void processItemThrownEvent(ItemThrownEvent event)
 	{
-		AnimationState s = new AnimationState(Persistance.dungeonState);
+		AnimationState s = new AnimationState(Persistence.dungeonState);
 		s.animation = Animations.getCustomAnimation(event.thrower(), Animations.THROW, this.currentAnimEnd);
 		if (s.animation != null)
 		{
-			Persistance.dungeonState.setSubstate(s);
+			Persistence.dungeonState.setSubstate(s);
 			this.setState(State.ANIMATING);
 		}
 	}
@@ -426,7 +426,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	private void processLevelupEvent(LevelupEvent event)
 	{
 		Pokemon pokemon = event.pokemon;
-		if (Persistance.player.isAlly(pokemon))
+		if (Persistence.player.isAlly(pokemon))
 		{
 			this.setState(State.ANIMATING);
 			boolean firstLevel = this.levelupStats == null;
@@ -457,27 +457,27 @@ public final class ClientEventProcessor extends CommonEventProcessor
 				}
 			}
 
-			DialogState state = new DialogState(Persistance.dungeonState, processEventsOnDialogEnd, screens.toArray(new DialogScreen[screens.size()]));
+			DialogState state = new DialogState(Persistence.dungeonState, processEventsOnDialogEnd, screens.toArray(new DialogScreen[screens.size()]));
 
 			if (firstLevel)
 			{
 				SoundManager.playSoundOverMusic("game-levelup");
-				Persistance.dungeonState.setSubstate(new DelayState(Persistance.dungeonState, 60, (DelayState s) -> Persistance.stateManager.setState(state)));
-			} else Persistance.stateManager.setState(state);
+				Persistence.dungeonState.setSubstate(new DelayState(Persistence.dungeonState, 60, (DelayState s) -> Persistence.stateManager.setState(state)));
+			} else Persistence.stateManager.setState(state);
 		}
 	}
 
 	private void processMissionEvent(MissionClearedEvent event)
 	{
-		if (event.mission.owner == Persistance.player)
+		if (event.mission.owner == Persistence.player)
 		{
 			DialogEndListener listener = new DialogEndListener() {
 
 				@Override
 				public void onDialogEnd(DialogState dialog)
 				{
-					Persistance.stateManager.setState(Persistance.dungeonState);
-					if (((ConfirmDialogScreen) dialog.getScreen(1)).hasConfirmed()) processEvent(new DungeonExitEvent(Persistance.floor, Persistance.player));
+					Persistence.stateManager.setState(Persistence.dungeonState);
+					if (((ConfirmDialogScreen) dialog.getScreen(1)).hasConfirmed()) processEvent(new DungeonExitEvent(Persistence.floor, Persistence.player));
 					else processPending();
 				}
 			};
@@ -485,8 +485,8 @@ public final class ClientEventProcessor extends CommonEventProcessor
 			DialogScreen screen = new DialogScreen(event.mission.clearedMessage());
 			ConfirmDialogScreen confirm = new ConfirmDialogScreen(new Message("mission.cleared.exitoption"));
 			confirm.id = 1;
-			DialogState dialog = new DialogState(Persistance.dungeonState, listener, screen, confirm);
-			Persistance.stateManager.setState(dialog);
+			DialogState dialog = new DialogState(Persistence.dungeonState, listener, screen, confirm);
+			Persistence.stateManager.setState(dialog);
 			this.setState(State.ANIMATING);
 		}
 	}
@@ -501,11 +501,11 @@ public final class ClientEventProcessor extends CommonEventProcessor
 				@Override
 				public void onDialogEnd(DialogState dialog)
 				{
-					Persistance.stateManager.setState(new MoveLearnMenuState(Persistance.dungeonState, event.pokemon, event.move));
+					Persistence.stateManager.setState(new MoveLearnMenuState(Persistence.dungeonState, event.pokemon, event.move));
 				}
 			};
 
-			Persistance.stateManager.setState(new DialogState(Persistance.dungeonState, listener, new DialogScreen(
+			Persistence.stateManager.setState(new DialogState(Persistence.dungeonState, listener, new DialogScreen(
 					new Message("moves.learned.full").addReplacement("<pokemon>", event.pokemon.getNickname()).addReplacement("<move>", event.move.name()))));
 		}
 	}
@@ -535,7 +535,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 				tile = tile.adjacentTile(facing);
 			while (tile.type() != TileType.WALL && tile.type() != TileType.WALL_END);
 			else tile = tile.adjacentTile(facing);
-			ProjectileAnimationState proj = new ProjectileAnimationState(Persistance.dungeonState, event.usedMove().user.tile(), tile);
+			ProjectileAnimationState proj = new ProjectileAnimationState(Persistence.dungeonState, event.usedMove().user.tile(), tile);
 			if (Animations.existsProjectileAnimation(projid) && !hasTarget)
 			{
 				proj.animation = Animations.getProjectileAnimation(event.usedMove().user, projid, listener);
@@ -544,37 +544,37 @@ public final class ClientEventProcessor extends CommonEventProcessor
 					@Override
 					public void onAnimationEnd(AbstractAnimation animation)
 					{
-						Persistance.dungeonState.setSubstate(proj);
+						Persistence.dungeonState.setSubstate(proj);
 					}
 				};
 			}
 
-			AnimationState s = new AnimationState(Persistance.dungeonState);
+			AnimationState s = new AnimationState(Persistence.dungeonState);
 			if (Animations.existsMoveAnimation(event.usedMove().move.move()))
 				s.animation = Animations.getMoveAnimation(event.usedMove().user, event.usedMove().move.move(), listener);
 			if (s.animation != null)
 			{
-				Persistance.dungeonState.setSubstate(s);
+				Persistence.dungeonState.setSubstate(s);
 				this.setState(State.ANIMATING);
 			} else if (proj.animation != null)
 			{
-				Persistance.dungeonState.setSubstate(proj);
+				Persistence.dungeonState.setSubstate(proj);
 				this.setState(State.ANIMATING);
 			}
 
 		}
 
-		PokemonSprite sprite = Persistance.dungeonState.pokemonRenderer.getSprite(event.usedMove().user);
+		PokemonSprite sprite = Persistence.dungeonState.pokemonRenderer.getSprite(event.usedMove().user);
 		if (sprite.defaultState() == PokemonSpriteState.WITHDRAW) sprite.setDefaultState(PokemonSpriteState.IDLE, false);
 	}
 
 	private void processMoveLearnedEvent(MoveLearnedEvent event)
 	{
-		if (Persistance.player.isAlly(event.pokemon))
+		if (Persistence.player.isAlly(event.pokemon))
 		{
 			this.setState(State.ANIMATING);
 			SoundManager.playSound("game-movelearned");
-			Persistance.stateManager.setState(new DialogState(Persistance.dungeonState, ClientEventProcessor.processEventsOnDialogEnd, new DialogScreen(
+			Persistence.stateManager.setState(new DialogState(Persistence.dungeonState, ClientEventProcessor.processEventsOnDialogEnd, new DialogScreen(
 					new Message("moves.learned").addReplacement("<pokemon>", event.pokemon.getNickname()).addReplacement("<move>", event.move.name()))));
 		}
 	}
@@ -589,7 +589,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 				@Override
 				public void onAnimationEnd(AbstractAnimation animation)
 				{
-					new TextAbovePokeAnimation(Persistance.dungeonState.pokemonRenderer.getRenderer(event.target), new Message("move.missed"), FontMode.DUNGEON)
+					new TextAbovePokeAnimation(Persistence.dungeonState.pokemonRenderer.getRenderer(event.target), new Message("move.missed"), FontMode.DUNGEON)
 							.start();
 					currentAnimEnd.onAnimationEnd(animation);
 				}
@@ -598,7 +598,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 
 		boolean targetAnim = false;
 
-		AnimationState s = new AnimationState(Persistance.dungeonState);
+		AnimationState s = new AnimationState(Persistence.dungeonState);
 		if (Animations.existsTargetAnimation(event.usedMove.move.move()))
 			s.animation = Animations.getMoveTargetAnimation(event.target, event.usedMove.move.move(), listener);
 		if (s.animation != null)
@@ -607,7 +607,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 				@Override
 				public void onAnimationEnd(AbstractAnimation animation)
 				{
-					Persistance.dungeonState.setSubstate(s);
+					Persistence.dungeonState.setSubstate(s);
 				}
 			};
 			targetAnim = true;
@@ -615,7 +615,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 
 		boolean projAnim = false;
 
-		ProjectileAnimationState proj = new ProjectileAnimationState(Persistance.dungeonState, event.usedMove.user.tile(),
+		ProjectileAnimationState proj = new ProjectileAnimationState(Persistence.dungeonState, event.usedMove.user.tile(),
 				event.target == null ? event.usedMove.user.tile() : event.target.tile());
 		int projid = event.usedMove.move.moveId();
 		if (projid >= 0) projid += 1000;
@@ -627,7 +627,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 				@Override
 				public void onAnimationEnd(AbstractAnimation animation)
 				{
-					Persistance.dungeonState.setSubstate(proj);
+					Persistence.dungeonState.setSubstate(proj);
 				}
 			};
 			projAnim = true;
@@ -635,12 +635,12 @@ public final class ClientEventProcessor extends CommonEventProcessor
 
 		boolean moveAnim = false;
 
-		AnimationState move = new AnimationState(Persistance.dungeonState);
+		AnimationState move = new AnimationState(Persistence.dungeonState);
 		if (Animations.movePlaysForEachTarget(event.usedMove.move.move()) && Animations.existsMoveAnimation(event.usedMove.move.move()))
 			move.animation = Animations.getMoveAnimation(event.usedMove.user, event.usedMove.move.move(), listener);
 		if (move.animation != null)
 		{
-			Persistance.dungeonState.setSubstate(move);
+			Persistence.dungeonState.setSubstate(move);
 			this.setState(State.ANIMATING);
 			moveAnim = true;
 		}
@@ -649,14 +649,14 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		{
 			if (projAnim)
 			{
-				Persistance.dungeonState.setSubstate(proj);
+				Persistence.dungeonState.setSubstate(proj);
 				this.setState(State.ANIMATING);
 			} else if (targetAnim)
 			{
-				Persistance.dungeonState.setSubstate(s);
+				Persistence.dungeonState.setSubstate(s);
 				this.setState(State.ANIMATING);
 			} else if (event.missed())
-				new TextAbovePokeAnimation(Persistance.dungeonState.pokemonRenderer.getRenderer(event.target), new Message("move.missed"), FontMode.DUNGEON)
+				new TextAbovePokeAnimation(Persistence.dungeonState.pokemonRenderer.getRenderer(event.target), new Message("move.missed"), FontMode.DUNGEON)
 						.start();
 		}
 	}
@@ -664,7 +664,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	private void processProjectileEvent(ProjectileThrownEvent event)
 	{
 		Item item = event.item;
-		ProjectileAnimationState a = new ProjectileAnimationState(Persistance.dungeonState, event.thrower.tile(), event.destination);
+		ProjectileAnimationState a = new ProjectileAnimationState(Persistence.dungeonState, event.thrower.tile(), event.destination);
 		if (Animations.existsProjectileAnimation(item.id))
 		{
 			a.movement = Animations.projectileMovement(item.id);
@@ -675,45 +675,45 @@ public final class ClientEventProcessor extends CommonEventProcessor
 
 		if (a.animation != null)
 		{
-			Persistance.dungeonState.setSubstate(a);
+			Persistence.dungeonState.setSubstate(a);
 			this.setState(State.ANIMATING);
 		}
 	}
 
 	private void processRescuedEvent(PokemonRescuedEvent event)
 	{
-		Persistance.dungeonState.setSubstate(new DungeonExitAnimationState(Persistance.dungeonState, event.rescued()));
+		Persistence.dungeonState.setSubstate(new DungeonExitAnimationState(Persistence.dungeonState, event.rescued()));
 		this.setState(State.ANIMATING);
 	}
 
 	private void processRevivedEvent(RevivedPokemonEvent event)
 	{
-		AnimationState s = new AnimationState(Persistance.dungeonState);
+		AnimationState s = new AnimationState(Persistence.dungeonState);
 		s.animation = Animations.getCustomAnimation(event.pokemon, Animations.REVIVE, this.currentAnimEnd);
 		if (s.animation != null)
 		{
-			Persistance.dungeonState.setSubstate(s);
+			Persistence.dungeonState.setSubstate(s);
 			this.setState(State.ANIMATING);
 		}
 	}
 
 	private void processSkipEvent(TurnSkippedEvent event)
 	{
-		if (event.actor() == Persistance.player.getDungeonLeader())
+		if (event.actor() == Persistence.player.getDungeonLeader())
 		{
 			boolean pause = false;
 			if (event.actor().hasStatusCondition(StatusConditions.Asleep))
 			{
-				Persistance.dungeonState.logger.showMessage(new Message("status.tick.sleep").addReplacement("<pokemon>", event.actor().getNickname()));
+				Persistence.dungeonState.logger.showMessage(new Message("status.tick.sleep").addReplacement("<pokemon>", event.actor().getNickname()));
 				pause = true;
 			} else if (event.actor().hasStatusCondition(StatusConditions.Bide))
 			{
-				Persistance.dungeonState.logger.showMessage(new Message("status.tick.bide").addReplacement("<pokemon>", event.actor().getNickname()));
+				Persistence.dungeonState.logger.showMessage(new Message("status.tick.bide").addReplacement("<pokemon>", event.actor().getNickname()));
 				pause = true;
 			}
 			if (pause)
 			{
-				Persistance.dungeonState.setSubstate(new DelayState(Persistance.dungeonState, 40));
+				Persistence.dungeonState.setSubstate(new DelayState(Persistence.dungeonState, 40));
 				this.setState(State.ANIMATING);
 			}
 		}
@@ -721,15 +721,15 @@ public final class ClientEventProcessor extends CommonEventProcessor
 
 	private void processSpawnEvent(PokemonSpawnedEvent event)
 	{
-		Persistance.dungeonState.pokemonRenderer.register(event.spawned);
+		Persistence.dungeonState.pokemonRenderer.register(event.spawned);
 	}
 
 	private void processSpeedEvent(SpeedChangedEvent event)
 	{
-		Persistance.dungeonState.pokemonRenderer.getRenderer(event.pokemon).sprite().updateTickingSpeed(event.pokemon);
+		Persistence.dungeonState.pokemonRenderer.getRenderer(event.pokemon).sprite().updateTickingSpeed(event.pokemon);
 		if (!event.pokemon.stats.hasAStatDown())
 		{
-			DungeonPokemonRenderer renderer = Persistance.dungeonState.pokemonRenderer.getRenderer(event.pokemon);
+			DungeonPokemonRenderer renderer = Persistence.dungeonState.pokemonRenderer.getRenderer(event.pokemon);
 			if (renderer.hasAnimation(event.pokemon.stats)) renderer.removeAnimation(event.pokemon.stats);
 		}
 	}
@@ -737,7 +737,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	private void processStairEvent(StairLandingEvent event)
 	{
 		this.setState(State.ANIMATING);
-		Persistance.stateManager.setState(new StairMenuState());
+		Persistence.stateManager.setState(new StairMenuState());
 	}
 
 	private void processStatEvent(StatChangedEvent event)
@@ -749,7 +749,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 			@Override
 			public void onAnimationEnd(AbstractAnimation animation)
 			{
-				DungeonPokemonRenderer renderer = Persistance.dungeonState.pokemonRenderer.getRenderer(event.target);
+				DungeonPokemonRenderer renderer = Persistence.dungeonState.pokemonRenderer.getRenderer(event.target);
 				boolean hasDown = event.target.stats.hasAStatDown();
 				if (hasDown && !renderer.hasAnimation(event.target.stats))
 				{
@@ -762,11 +762,11 @@ public final class ClientEventProcessor extends CommonEventProcessor
 			}
 		};
 
-		AnimationState s = new AnimationState(Persistance.dungeonState);
+		AnimationState s = new AnimationState(Persistence.dungeonState);
 		s.animation = Animations.getStatChangeAnimation(event, listener);
 		if (s.animation != null)
 		{
-			Persistance.dungeonState.setSubstate(s);
+			Persistence.dungeonState.setSubstate(s);
 			this.setState(State.ANIMATING);
 		}
 	}
@@ -774,7 +774,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	private void processStatusEvent(StatusConditionCreatedEvent event)
 	{
 		if (!event.succeeded()) return;
-		AnimationState s = new AnimationState(Persistance.dungeonState);
+		AnimationState s = new AnimationState(Persistence.dungeonState);
 		AnimationEndListener end = new AnimationEndListener() {
 			@Override
 			public void onAnimationEnd(AbstractAnimation animation)
@@ -792,11 +792,11 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		if (s.animation == null) end.onAnimationEnd(null);
 		else
 		{
-			Persistance.dungeonState.setSubstate(s);
+			Persistence.dungeonState.setSubstate(s);
 			this.setState(State.ANIMATING);
 		}
 
-		PokemonSprite sprite = Persistance.dungeonState.pokemonRenderer.getSprite(event.condition.pokemon);
+		PokemonSprite sprite = Persistence.dungeonState.pokemonRenderer.getSprite(event.condition.pokemon);
 		if (event.condition.condition == StatusConditions.Asleep) sprite.setDefaultState(PokemonSpriteState.SLEEP, true);
 		else if (event.condition.condition == StatusConditions.Petrified) sprite.setAnimated(false);
 		else if (event.condition.condition instanceof StoreDamageToDoubleStatusCondition || event.condition.condition instanceof ChargedMoveStatusCondition)
@@ -805,8 +805,8 @@ public final class ClientEventProcessor extends CommonEventProcessor
 
 	private void processStatusEvent(StatusConditionEndedEvent event)
 	{
-		Persistance.dungeonState.pokemonRenderer.getRenderer(event.condition.pokemon).removeAnimation(event.condition);
-		PokemonSprite sprite = Persistance.dungeonState.pokemonRenderer.getSprite(event.condition.pokemon);
+		Persistence.dungeonState.pokemonRenderer.getRenderer(event.condition.pokemon).removeAnimation(event.condition);
+		PokemonSprite sprite = Persistence.dungeonState.pokemonRenderer.getSprite(event.condition.pokemon);
 		if (!event.condition.pokemon.hasStatusCondition(StatusConditions.Asleep) && sprite.defaultState() == PokemonSpriteState.SLEEP)
 			sprite.setDefaultState(PokemonSpriteState.IDLE, false);
 		if (!event.condition.pokemon.hasStatusCondition(StatusConditions.Petrified) && !sprite.isAnimated()) sprite.setAnimated(true);
@@ -814,16 +814,16 @@ public final class ClientEventProcessor extends CommonEventProcessor
 
 	private void processSwitchEvent(SwitchedPokemonEvent event)
 	{
-		DungeonPokemonRenderer r = Persistance.dungeonState.pokemonRenderer.getRenderer(event.switcher);
+		DungeonPokemonRenderer r = Persistence.dungeonState.pokemonRenderer.getRenderer(event.switcher);
 		r.setXY(event.switcher.tile().x, event.switcher.tile().y);
-		r = Persistance.dungeonState.pokemonRenderer.getRenderer(event.target);
+		r = Persistence.dungeonState.pokemonRenderer.getRenderer(event.target);
 		r.setXY(event.target.tile().x, event.target.tile().y);
 
-		AnimationState s = new AnimationState(Persistance.dungeonState);
+		AnimationState s = new AnimationState(Persistence.dungeonState);
 		s.animation = Animations.getCustomAnimation(event.target, Animations.TELEPORT, this.currentAnimEnd);
 		if (s.animation != null)
 		{
-			Persistance.dungeonState.setSubstate(s);
+			Persistence.dungeonState.setSubstate(s);
 			this.setState(State.ANIMATING);
 		}
 	}
@@ -834,16 +834,16 @@ public final class ClientEventProcessor extends CommonEventProcessor
 			@Override
 			public void onAnimationEnd(AbstractAnimation animation)
 			{
-				Persistance.dungeonState.pokemonRenderer.getRenderer(event.pokemon).setXY(event.destination.x, event.destination.y);
+				Persistence.dungeonState.pokemonRenderer.getRenderer(event.pokemon).setXY(event.destination.x, event.destination.y);
 				currentAnimEnd.onAnimationEnd(animation);
 			}
 		};
 
-		AnimationState s = new AnimationState(Persistance.dungeonState);
+		AnimationState s = new AnimationState(Persistence.dungeonState);
 		s.animation = Animations.getCustomAnimation(event.pokemon, Animations.TELEPORT, listener);
 		if (s.animation != null)
 		{
-			Persistance.dungeonState.setSubstate(s);
+			Persistence.dungeonState.setSubstate(s);
 			this.setState(State.ANIMATING);
 		}
 	}
@@ -852,7 +852,7 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	{
 		if (event.trap == TrapRegistry.WONDER_TILE)
 		{
-			DungeonPokemonRenderer renderer = Persistance.dungeonState.pokemonRenderer.getRenderer(event.pokemon);
+			DungeonPokemonRenderer renderer = Persistence.dungeonState.pokemonRenderer.getRenderer(event.pokemon);
 			if (!event.pokemon.stats.hasAStatDown() && renderer.hasAnimation(event.pokemon.stats)) renderer.removeAnimation(event.pokemon.stats);
 		}
 	}
@@ -860,25 +860,25 @@ public final class ClientEventProcessor extends CommonEventProcessor
 	private void processTravelEvent(PokemonTravelsEvent event)
 	{
 		this.setState(State.ANIMATING);
-		Persistance.dungeonState.setSubstate(new PokemonTravelState(Persistance.dungeonState, event.travels()));
+		Persistence.dungeonState.setSubstate(new PokemonTravelState(Persistence.dungeonState, event.travels()));
 		for (PokemonTravelEvent e : event.travels())
 		{
-			if (e.pokemon() == Persistance.player.getDungeonLeader() && e.destination().type() == TileType.STAIR) this.landedOnStairs = true;
-			if (e.pokemon() == Persistance.dungeonState.getCameraPokemon()) Persistance.dungeonState.floorVisibility.onCameraMoved();
+			if (e.pokemon() == Persistence.player.getDungeonLeader() && e.destination().type() == TileType.STAIR) this.landedOnStairs = true;
+			if (e.pokemon() == Persistence.dungeonState.getCameraPokemon()) Persistence.dungeonState.floorVisibility.onCameraMoved();
 		}
 	}
 
 	private void processWeatherEvent(WeatherChangedEvent event)
 	{
-		AnimationState a = new AnimationState(Persistance.dungeonState);
+		AnimationState a = new AnimationState(Persistence.dungeonState);
 		if (event.next.weather == Weather.RAIN) a.animation = new RainAnimation(100, "weather-rain", this.currentAnimEnd);
 		else if (event.next.weather == Weather.SNOW) a.animation = new SnowAnimation(this.currentAnimEnd);
 		else if (event.next.weather == Weather.HAIL) a.animation = new RainAnimation(103, "weather-hail", this.currentAnimEnd);
 		else if (event.next.weather == Weather.SUNNY) a.animation = Animations.getCustomAnimation(null, 101, this.currentAnimEnd);
 		if (a.animation != null)
 		{
-			Persistance.dungeonState.staticAnimationsRenderer.add(a.animation);
-			Persistance.dungeonState.setSubstate(a);
+			Persistence.dungeonState.staticAnimationsRenderer.add(a.animation);
+			Persistence.dungeonState.setSubstate(a);
 			this.setState(State.ANIMATING);
 		}
 	}
@@ -890,8 +890,8 @@ public final class ClientEventProcessor extends CommonEventProcessor
 		if (state == State.AWATING_INPUT)
 		{
 			this.lastAction = null; // Don't delay if game was already waiting for a Player's action.
-			if (this.dungeon.getActor() == Persistance.player.getDungeonLeader())
-				Persistance.dungeonState.setSubstate(Persistance.dungeonState.actionSelectionState);
+			if (this.dungeon.getActor() == Persistence.player.getDungeonLeader())
+				Persistence.dungeonState.setSubstate(Persistence.dungeonState.actionSelectionState);
 		}
 	}
 

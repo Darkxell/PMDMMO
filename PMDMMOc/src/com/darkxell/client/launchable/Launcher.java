@@ -19,7 +19,7 @@ import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.trap.TrapRegistry;
 import com.darkxell.common.util.Logger;
-import com.darkxell.common.util.language.Lang;
+import com.darkxell.common.util.language.Localization;
 import com.darkxell.common.util.language.Message;
 
 /** Launching class of the client */
@@ -38,7 +38,7 @@ public class Launcher
 
 		ClientSettings.load();
 		Logger.load("CLIENT");
-		Lang.load(false);
+		Localization.load(false);
 		if (!SpriteFactory.load())
 		{
 			isRunning = false;
@@ -55,16 +55,16 @@ public class Launcher
 		PokemonPortrait.load();
 		Animations.loadData();
 		SoundsHolder.load(".");
-		Persistance.soundmanager = new SoundManager();
+		Persistence.soundmanager = new SoundManager();
 		Logger.instance().info("Lang & Data loaded.");
 
 		DiscordEventHandlerForPMDMMO deh = new DiscordEventHandlerForPMDMMO("In logging screen", "main_big");
 		deh.start();
 
-		Persistance.frame = new Frame();
-		Persistance.frame.setIconImage(Res_Frame.ICON.image());
-		Persistance.frame.canvas.requestFocus();
-		Persistance.stateManager = new LoginMainState();
+		Persistence.frame = new Frame();
+		Persistence.frame.setIconImage(Res_Frame.ICON.image());
+		Persistence.frame.canvas.requestFocus();
+		Persistence.stateManager = new LoginMainState();
 
 		setProcessingProfile(PROFILE_SYNCHRONIZED);
 
@@ -85,9 +85,9 @@ public class Launcher
 		processingprofile = PROFILE_UNDEFINED;
 		isRunning = false;
 		Logger.instance().saveClient();
-		if (Persistance.isUnitTesting) return;
+		if (Persistence.isUnitTesting) return;
 		ClientSettings.save();
-		if (Persistance.saveDataOnExit)
+		if (Persistence.saveDataOnExit)
 		{
 			PokemonRegistry.saveClient();
 			MoveRegistry.saveClient();

@@ -2,7 +2,7 @@ package com.darkxell.client.state;
 
 import java.awt.Graphics2D;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.launchable.StoryPositionSetup;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.renderers.layers.BackgroundSeaLayer;
@@ -20,7 +20,7 @@ public class OpenningState extends AbstractState
 	@Override
 	public void onKeyPressed(Key key)
 	{
-		if (key == Key.ATTACK) StoryPositionSetup.trigger(Persistance.player.getData().storyposition, true);
+		if (key == Key.ATTACK) StoryPositionSetup.trigger(Persistence.player.getData().storyposition, true);
 	}
 
 	@Override
@@ -46,7 +46,7 @@ public class OpenningState extends AbstractState
 		if (!ismusicset)
 		{
 			ismusicset = true;
-			Persistance.soundmanager.setBackgroundMusic(SoundsHolder.getSong("intro.mp3"));
+			Persistence.soundmanager.setBackgroundMusic(SoundsHolder.getSong("intro.mp3"));
 		}
 
 		background.update();

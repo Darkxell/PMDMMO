@@ -8,7 +8,7 @@ import java.util.Random;
 import java.util.function.Predicate;
 
 import com.darkxell.client.launchable.GameSocketEndpoint;
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.Sprites;
 import com.darkxell.client.resources.images.Sprites.Res_Map;
@@ -47,7 +47,7 @@ public class DungeonSelectionMapState extends AbstractState {
 
 			@Override
 			public boolean test(Dungeon d) {
-				return DungeonAccessibility.isAvailable(Persistance.player.getData(),
+				return DungeonAccessibility.isAvailable(Persistence.player.getData(),
 						d.id) != DungeonAccessibility.ACCESSIBLE;
 			}
 		});
@@ -58,7 +58,7 @@ public class DungeonSelectionMapState extends AbstractState {
 			this.cameray = this.dungeonslist.get(0).mapy;
 		}
 		this.missions = new ArrayList<>();
-		for (String m : Persistance.player.getMissions())
+		for (String m : Persistence.player.getMissions())
 			try {
 				this.missions.add(new Mission(m));
 			} catch (InvalidParammetersException e) {
@@ -88,7 +88,7 @@ public class DungeonSelectionMapState extends AbstractState {
 	}
 
 	public void onDungeonStart(int dungeon, long seed) {
-		Persistance.isCommunicating = false;
+		Persistence.isCommunicating = false;
 		if (dungeon != this.dungeonslist.get(this.cursor).id)
 			Logger.w("Received dungeon ID to start is different than selected; starting cancelled");
 		else
@@ -128,17 +128,17 @@ public class DungeonSelectionMapState extends AbstractState {
 			cursorchanged = true;
 			break;
 		case RUN:
-			Persistance.isCommunicating = false;
-			Persistance.currentplayer.y -= 1;
-			Persistance.currentplayer.renderer().sprite().setFacingDirection(Direction.NORTH);
-			Persistance.stateManager.setState(new FreezoneExploreState());
+			Persistence.isCommunicating = false;
+			Persistence.currentplayer.y -= 1;
+			Persistence.currentplayer.renderer().sprite().setFacingDirection(Direction.NORTH);
+			Persistence.stateManager.setState(new FreezoneExploreState());
 			break;
 		case ATTACK:
 			// Sending dungeonstart to server
 			int dungeon = this.dungeonslist.get(this.cursor).id;
-			if (Persistance.socketendpoint.connectionStatus() == GameSocketEndpoint.CONNECTED) {
-				Persistance.isCommunicating=true;
-				Persistance.socketendpoint.requestDungeonSeed(dungeon);
+			if (Persistence.socketendpoint.connectionStatus() == GameSocketEndpoint.CONNECTED) {
+				Persistence.isCommunicating=true;
+				Persistence.socketendpoint.requestDungeonSeed(dungeon);
 			} else
 				this.onDungeonStart(dungeon, new Random().nextLong());
 			break;

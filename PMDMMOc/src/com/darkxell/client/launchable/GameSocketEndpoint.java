@@ -103,12 +103,12 @@ public class GameSocketEndpoint {
 	@OnMessage
 	public void onMessage(String message) {
 		try {
-			if (Persistance.debugwiresharkmode)
+			if (Persistence.debugwiresharkmode)
 				Logger.d("MESSAGE RECIEVED : " + message);
 			JsonValue obj = Json.parse(message);
 			if (obj.asObject().getInt("encrypted", 0) == 1)
 				obj = Json.parse(Encryption.syncDecrypt(message));
-			if (Persistance.debugcommunicationmode)
+			if (Persistence.debugcommunicationmode)
 				Logger.d("MESSAGE RECIEVED : " + obj.toString());
 			String actionstring = obj.asObject().getString("action", "");
 			switch (actionstring) {
@@ -206,13 +206,13 @@ public class GameSocketEndpoint {
 	 */
 	public void sendMessage(String message) {
 		try {
-			if (Persistance.debugcommunicationmode)
+			if (Persistence.debugcommunicationmode)
 				Logger.d("SENDING MESSAGE  : " + message);
 			if (Safe.serverhaskey)
 				message = Encryption.syncEncrypt(message);
 			if (this.userSession != null) {
 				this.userSession.getAsyncRemote().sendText(message);
-				if (Persistance.debugwiresharkmode)
+				if (Persistence.debugwiresharkmode)
 					Logger.d("MESSAGE SENT     : " + message);
 			} else {
 				Logger.w("Could not sent message to server socket : session is null");

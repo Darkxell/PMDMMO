@@ -5,7 +5,7 @@ import java.util.Random;
 import org.jdom2.Element;
 
 import com.darkxell.client.launchable.GameSocketEndpoint;
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.cutscene.Cutscene;
 import com.darkxell.client.mechanics.cutscene.Cutscene.CutsceneEnd;
 import com.darkxell.client.state.AbstractState;
@@ -34,8 +34,8 @@ public class EnterDungeonCutsceneEnd extends CutsceneEnd
 	{
 		super.onCutsceneEnd();
 		AbstractState fadesOut = null;
-		if (this.fadesOut) fadesOut = Persistance.cutsceneState;
-		if (Persistance.socketendpoint.connectionStatus() == GameSocketEndpoint.CONNECTED) StateManager.setDungeonState(fadesOut, this.dungeonID);
+		if (this.fadesOut) fadesOut = Persistence.cutsceneState;
+		if (Persistence.socketendpoint.connectionStatus() == GameSocketEndpoint.CONNECTED) StateManager.setDungeonState(fadesOut, this.dungeonID);
 		else StateManager.setDungeonState(fadesOut, this.dungeonID, new Random().nextLong());
 	}
 

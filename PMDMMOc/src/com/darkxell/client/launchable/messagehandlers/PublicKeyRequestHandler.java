@@ -12,7 +12,7 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.launchable.crypto.Encryption;
 import com.darkxell.client.launchable.crypto.RandomString;
 import com.darkxell.client.launchable.crypto.Safe;
@@ -50,7 +50,7 @@ public class PublicKeyRequestHandler extends MessageHandler {
 			String encryptedinternal = Encryption
 					.bytesToHexString(Encryption.encryptRSAPK1(internal.toString().getBytes(), Safe.serverPublicKey));
 			jsontosend.add("value", encryptedinternal);
-			Persistance.socketendpoint.sendMessage(jsontosend.toString());
+			Persistence.socketendpoint.sendMessage(jsontosend.toString());
 			Logger.i("Sent secure sync key to server, waiting server response to use encrypted payloads.");
 		} catch (NoSuchAlgorithmException e) {
 			Logger.e("Wrong encryption algorithm, could not load server public key for encryption.");

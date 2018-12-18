@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.Sprites;
 import com.darkxell.client.resources.images.Sprites.Res_Map;
@@ -81,7 +81,7 @@ public class FriendAreaSelectionMapState extends AbstractState
 						for (int j = 0; j < allinfos.length; j++)
 							if (allinfos[j].maplocation == points[i]) dests.add(allinfos[j]);
 						SoundManager.playSound("ui-select");
-						Persistance.stateManager.setState(new FriendmapSelectionState(this, dests, points[i].displayname));
+						Persistence.stateManager.setState(new FriendmapSelectionState(this, dests, points[i].displayname));
 						break;
 					}
 				break;
@@ -176,7 +176,7 @@ public class FriendAreaSelectionMapState extends AbstractState
 		if (setmusic)
 		{
 			setmusic = false;
-			Persistance.soundmanager.setBackgroundMusic(SoundsHolder.getSong("town.mp3"));
+			Persistence.soundmanager.setBackgroundMusic(SoundsHolder.getSong("town.mp3"));
 		}
 		// Cursor
 		float cursorspeed = 1.8f;

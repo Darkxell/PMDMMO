@@ -2,7 +2,7 @@ package com.darkxell.client.state.menu.freezone;
 
 import java.awt.Rectangle;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.state.StateManager;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.client.state.menu.menus.TeamMenuState;
@@ -47,14 +47,14 @@ public class FriendSelectionOptionState extends OptionSelectionMenuState
 	@Override
 	protected void onExit()
 	{
-		Persistance.stateManager.setState(this.parent);
+		Persistence.stateManager.setState(this.parent);
 	}
 
 	@Override
 	protected void onOptionSelected(MenuOption option)
 	{
 		if (option == this.visit) StateManager.setExploreState(FreezoneInfo.find(this.pokemon.species().friendAreaID), null, -1, -1, true);
-		else if (option == this.summary) Persistance.stateManager.setState(TeamMenuState.createSummaryState(this.parent.background, this, this.pokemon));
+		else if (option == this.summary) Persistence.stateManager.setState(TeamMenuState.createSummaryState(this.parent.background, this, this.pokemon));
 		else if (option == this.exit) this.onExit();
 	}
 

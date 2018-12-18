@@ -6,7 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 
 import com.darkxell.client.launchable.GameSocketEndpoint;
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.launchable.crypto.Encryption;
 import com.darkxell.client.mechanics.chat.CustomTextfield;
 import com.darkxell.client.resources.Res;
@@ -75,8 +75,8 @@ public class AccountCreationState extends StateManager {
 				this.errormessage = new Message("ui.login.passtooshort").toString();
 			} else if (!password.getContent().equals(confirm.getContent())) {
 				this.errormessage = new Message("ui.login.passconfirmerror").toString();
-			} else if (Persistance.socketendpoint == null
-					|| Persistance.socketendpoint.connectionStatus() != GameSocketEndpoint.CONNECTED) {
+			} else if (Persistence.socketendpoint == null
+					|| Persistence.socketendpoint.connectionStatus() != GameSocketEndpoint.CONNECTED) {
 				this.errormessage = new Message("ui.login.noconnection").toString();
 			} else {
 				// Sends the account creation payload to the server
@@ -85,7 +85,7 @@ public class AccountCreationState extends StateManager {
 				this.errormessage = "";
 			}
 		} else if (button_back.isInside(new Position(mouseX - offsetx, mouseY - offsety))) {
-			Persistance.stateManager = new LoginMainState();
+			Persistence.stateManager = new LoginMainState();
 		}
 		// Textfield focus
 		if (textfield_login.isInside(new Position(mouseX - offsetx, mouseY - offsety))) {
@@ -244,7 +244,7 @@ public class AccountCreationState extends StateManager {
 					.add("deploykey", this.deploykey.getContent()).add("passhash",
 							Encryption.clientHash(localhash, this.login.getContent(), Encryption.HASHSALTTYPE_SERVER));
 			message = mess.toString();
-			Persistance.socketendpoint.sendMessage(message);
+			Persistence.socketendpoint.sendMessage(message);
 		} catch (Exception e) {
 			Logger.e(
 					"Could not send the create account information payload because... HOLY SHIT THIS SHOULD NOT BE HAPPENING");
@@ -263,7 +263,7 @@ public class AccountCreationState extends StateManager {
 		case "ui.login.accountcreated":
 			errormessage = "";
 			assessmessage = new Message(id).toString();
-			Persistance.stateManager = new AccountCreatedMainState(password.getContent(), login.getContent());
+			Persistence.stateManager = new AccountCreatedMainState(password.getContent(), login.getContent());
 			break;
 		}
 	}

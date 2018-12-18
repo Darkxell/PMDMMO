@@ -2,7 +2,7 @@ package fr.darkxell.dataeditor.application;
 
 import com.darkxell.client.launchable.ClientSettings;
 import com.darkxell.client.launchable.Launcher;
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.animation.Animations;
 import com.darkxell.client.resources.images.SpriteFactory;
 import com.darkxell.client.resources.images.SpriteLoader;
@@ -17,7 +17,7 @@ import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.trap.TrapRegistry;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.Util;
-import com.darkxell.common.util.language.Lang;
+import com.darkxell.common.util.language.Localization;
 import com.darkxell.common.weather.Weather;
 
 import fr.darkxell.dataeditor.application.data.Cutscenes;
@@ -38,7 +38,7 @@ public class DataEditor extends Application
 		Launcher.isRunning = true;
 		ClientSettings.load();
 		Logger.load("DATA EDITOR");
-		Lang.load(false);
+		Localization.load(false);
 		SpriteFactory.load();
 		PokemonRegistry.load();
 		MoveRegistry.load();
@@ -50,8 +50,8 @@ public class DataEditor extends Application
 		PokemonPortrait.load();
 		Animations.loadData();
 		SoundsHolder.load("../PMDMMOc/");
-		Persistance.soundmanager = new SoundManager();
-		Persistance.player = Util.createDefaultPlayer();
+		Persistence.soundmanager = new SoundManager();
+		Persistence.player = Util.createDefaultPlayer();
 
 		new Weather(-1, null);
 

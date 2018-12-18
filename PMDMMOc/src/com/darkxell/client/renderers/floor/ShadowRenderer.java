@@ -9,7 +9,7 @@ import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.renderers.AbstractRenderer;
 import com.darkxell.client.renderers.MasterDungeonRenderer;
 import com.darkxell.client.renderers.pokemon.DungeonPokemonRenderer;
@@ -31,7 +31,7 @@ public class ShadowRenderer extends AbstractRenderer
 	public ShadowRenderer()
 	{
 		super(0, 0, MasterDungeonRenderer.LAYER_SHADOWS);
-		this.floor = Persistance.floor;
+		this.floor = Persistence.floor;
 		this.shadowBuffer = new BufferedImage(this.floor.getWidth() * TILE_SIZE, this.floor.getHeight() * TILE_SIZE, BufferedImage.TYPE_INT_ARGB_PRE);
 		this.gs = this.shadowBuffer.createGraphics();
 		this.gs.setBackground(VISIBLE);
@@ -81,10 +81,10 @@ public class ShadowRenderer extends AbstractRenderer
 	{
 		Rectangle screen = new Rectangle((int) this.x(), (int) this.y(), width, height);
 
-		int shadows = Persistance.dungeon.dungeon().getData(Persistance.floor.id).shadows();
+		int shadows = Persistence.dungeon.dungeon().getData(Persistence.floor.id).shadows();
 		if (shadows != FloorData.NO_SHADOW)
 		{
-			Tile t = Persistance.dungeonState.getCameraPokemon().tile();
+			Tile t = Persistence.dungeonState.getCameraPokemon().tile();
 			Room r = t == null ? null : this.floor.roomAt(t.x, t.y);
 
 			this.gs.clearRect(screen.x, screen.y, screen.width, screen.height);
@@ -94,9 +94,9 @@ public class ShadowRenderer extends AbstractRenderer
 				this.gs.fill(area);
 			} else
 			{
-				DungeonPokemonRenderer p = Persistance.dungeonState.pokemonRenderer.getRenderer(Persistance.dungeonState.getCameraPokemon());
+				DungeonPokemonRenderer p = Persistence.dungeonState.pokemonRenderer.getRenderer(Persistence.dungeonState.getCameraPokemon());
 				Area a = new Area(screen);
-				int vision = Persistance.dungeon.dungeon().getData(Persistance.floor.id).visionDistance();
+				int vision = Persistence.dungeon.dungeon().getData(Persistence.floor.id).visionDistance();
 				int diameter = 1 + vision * 2;
 				a.subtract(new Area(
 						new Ellipse2D.Double(p.x() - TILE_SIZE * diameter / 2, p.y() + -TILE_SIZE * diameter / 2, TILE_SIZE * diameter, TILE_SIZE * diameter)));

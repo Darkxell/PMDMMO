@@ -15,29 +15,9 @@ public abstract class MainUiUtility {
 
 	public static void drawBackground(Graphics2D g, int fwidth, int fheight, byte backgroundID) {
 		BufferedImage img;
-		switch (backgroundID) {
-		case 2:
-			img = Res_Frame.BG2.image();
-			break;
-		case 3:
-			img = Res_Frame.BG3.image();
-			break;
-		case 4:
-			img = Res_Frame.BG4.image();
-			break;
-		case 5:
-			img = Res_Frame.BG5.image();
-			break;
-		case 6:
-			img = Res_Frame.BG6.image();
-			break;
-		case 7:
-			img = Res_Frame.BG7.image();
-			break;
-		default:
-			img = Res_Frame.BG1.image();
-			break;
-		}
+
+		img = Res_Frame.getBackground(backgroundID);
+
 		if ((float) (fwidth) / (float) (fheight) < (float) (img.getWidth()) / (float) (img.getHeight())) {
 			int drawwidth = fheight * img.getWidth() / img.getHeight();
 			g.drawImage(img, 0, 0, drawwidth, fheight, null);

@@ -2,7 +2,7 @@ package com.darkxell.client.state.quiz;
 
 import java.util.Random;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.renderers.layers.BackgroundLsdLayer;
 import com.darkxell.client.resources.music.SoundsHolder;
 import com.darkxell.client.state.AbstractState;
@@ -50,7 +50,7 @@ public class PersonalityQuizDialog extends ComplexDialog
 	@Override
 	public DialogState firstState()
 	{
-		Persistance.soundmanager.setBackgroundMusic(SoundsHolder.getSong("personality-test.mp3"));
+		Persistence.soundmanager.setBackgroundMusic(SoundsHolder.getSong("personality-test.mp3"));
 		DialogScreen[] screens = new DialogScreen[startDialogScreens];
 		for (int i = 0; i < startDialogScreens; ++i)
 			screens[i] = new NarratorDialogScreen(new Message("quiz.start_dialog." + i));
@@ -142,7 +142,7 @@ public class PersonalityQuizDialog extends ComplexDialog
 
 	public void onResultConfirmed()
 	{
-		Persistance.stateManager.setState(new PlayerLoadingState(Persistance.player.getData().id, new PlayerLoadingEndListener() {}));
+		Persistence.stateManager.setState(new PlayerLoadingState(Persistence.player.getData().id, new PlayerLoadingEndListener() {}));
 	}
 
 	public PokemonSpecies[] partners(boolean limitChoices)
@@ -163,7 +163,7 @@ public class PersonalityQuizDialog extends ComplexDialog
 	private void sendTestResults(int id1, int id2, int gender1, int gender2)
 	{
 		JsonObject tosend = Json.object().add("action", "testresult").add("mainid", id1).add("offid", id2).add("maingender", gender1).add("offgender", gender2);
-		Persistance.socketendpoint.sendMessage(tosend.toString());
+		Persistence.socketendpoint.sendMessage(tosend.toString());
 		Logger.i("Chosen pokemons " + id1 + " and " + id2 + ", sending to server.");
 	}
 

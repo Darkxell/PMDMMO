@@ -1,6 +1,6 @@
 package com.darkxell.client.launchable.messagehandlers;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.eclipsesource.json.JsonObject;
 
 public class ItemActionHandler extends MessageHandler
@@ -14,8 +14,8 @@ public class ItemActionHandler extends MessageHandler
 	@Override
 	public void handleMessage(JsonObject message)
 	{
-		if (Persistance.stateManager.getCurrentState() instanceof ItemActionMessageHandler)
-			((ItemActionMessageHandler) Persistance.stateManager.getCurrentState()).handleMessage(message);
+		if (Persistence.stateManager.getCurrentState() instanceof ItemActionMessageHandler)
+			((ItemActionMessageHandler) Persistence.stateManager.getCurrentState()).handleMessage(message);
 	}
 
 }

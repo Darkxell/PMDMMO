@@ -7,7 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
 import com.darkxell.client.launchable.ClientSettings;
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
 import com.darkxell.client.state.dungeon.NextFloorState;
@@ -65,7 +65,7 @@ public class DungeonPokemonRenderer extends AbstractPokemonRenderer
 	@Override
 	public boolean shouldRender(int width, int height)
 	{
-		if (!Persistance.dungeonState.floorVisibility.isVisible(this.pokemon)) return false;
+		if (!Persistence.dungeonState.floorVisibility.isVisible(this.pokemon)) return false;
 		return super.shouldRender(width, height);
 	}
 
@@ -73,7 +73,7 @@ public class DungeonPokemonRenderer extends AbstractPokemonRenderer
 	public void update()
 	{
 		super.update();
-		if (!(Persistance.stateManager.getCurrentState() instanceof NextFloorState) && this.pokemon.facing() != this.sprite.getFacingDirection())
+		if (!(Persistence.stateManager.getCurrentState() instanceof NextFloorState) && this.pokemon.facing() != this.sprite.getFacingDirection())
 			this.sprite.setFacingDirection(this.pokemon.facing());
 	}
 

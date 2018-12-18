@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cutscene name="skarmory/request">
+  <creation freezone="baseinside" camerax="23.0" cameray="20.0" fading="false" drawmap="false">
+    <pokemon cutsceneid="1" xpos="23.0" ypos="13.0">
+      <teammember>0</teammember>
+      <state>SLEEP</state>
+    </pokemon>
+  </creation>
+  <events>
+    <dialog isnarrator="true">
+      <dialogscreen>cutscene.narrator.nextmorning</dialogscreen>
+    </dialog>
+    <wait />
+    <drawmap />
+    <wait />
+    <delay ticks="20" />
+    <dialog>
+      <dialogscreen>cutscene.skarmory.request.m1</dialogscreen>
+    </dialog>
+    <wait />
+    <setstate target="1" state="IDLE" />
+    <setanimated target="1" animated="false" />
+    <delay ticks="30" />
+    <rotate target="1" distance="2" />
+    <wait />
+    <delay ticks="10" />
+    <rotate target="1" distance="-4" />
+    <wait />
+    <delay ticks="10" />
+    <rotate target="1" distance="2" />
+    <wait />
+    <delay ticks="30" />
+    <animate animation="152" target="1" />
+    <wait />
+    <delay ticks="20" />
+    <dialog>
+      <dialogscreen>cutscene.skarmory.request.m2</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="1" distance="4" />
+    <wait />
+    <delay ticks="10" />
+    <rotate target="1" distance="6" />
+    <wait />
+    <delay ticks="10" />
+    <rotate target="1" distance="-4" />
+    <wait />
+    <delay ticks="10" />
+    <rotate target="1" distance="2" />
+    <wait />
+    <delay ticks="20" />
+    <dialog>
+      <dialogscreen>cutscene.skarmory.request.m3</dialogscreen>
+    </dialog>
+    <wait />
+    <spawnpokemon cutsceneid="2" xpos="23.0" ypos="17.0">
+      <pokemonid>51</pokemonid>
+      <animated>false</animated>
+    </spawnpokemon>
+    <animate animation="158" target="2" />
+    <setstate target="1" state="HURT" />
+    <setanimated target="1" animated="true" />
+    <delay ticks="10" />
+    <setstate target="1" state="IDLE" />
+    <setanimated target="1" animated="false" />
+    <wait />
+    <delay ticks="10" />
+    <rotate target="2" distance="4" />
+    <wait />
+    <delay ticks="10" />
+    <dialog>
+      <dialogscreen>cutscene.skarmory.request.m4</dialogscreen>
+      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.skarmory.request.m5</dialogscreen>
+      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.skarmory.request.m6</dialogscreen>
+      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.skarmory.request.m7</dialogscreen>
+      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.skarmory.request.m8</dialogscreen>
+      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.skarmory.request.m9</dialogscreen>
+      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.skarmory.request.m10</dialogscreen>
+      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.skarmory.request.m11</dialogscreen>
+      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.skarmory.request.m12</dialogscreen>
+    </dialog>
+    <wait />
+    <animate animation="158" target="2" />
+    <delay ticks="5" />
+    <despawn target="2" />
+    <wait />
+    <delay ticks="10" />
+    <dialog>
+      <dialogscreen target="1">cutscene.skarmory.request.m13</dialogscreen>
+      <dialogscreen target="1">cutscene.skarmory.request.m14</dialogscreen>
+      <dialogscreen target="1">cutscene.skarmory.request.m15</dialogscreen>
+    </dialog>
+    <wait />
+  </events>
+  <onfinish>
+    <loadfreezone fadesout="false" id="baseinside" facing="SOUTH" />
+  </onfinish>
+</cutscene>

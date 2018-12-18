@@ -24,7 +24,7 @@ import com.darkxell.common.player.Player;
  * This class contains various static references to objects being used very
  * often.
  */
-public abstract class Persistance {
+public abstract class Persistence {
 
 	// APPLICATION RELATED OBJECTS
 	public static Frame frame;
