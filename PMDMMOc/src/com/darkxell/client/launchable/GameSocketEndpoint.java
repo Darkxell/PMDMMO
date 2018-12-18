@@ -12,6 +12,7 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.WebSocketContainer;
 
+import com.darkxell.client.launchable.ClientSettings.Setting;
 import com.darkxell.client.launchable.crypto.Encryption;
 import com.darkxell.client.launchable.crypto.Safe;
 import com.darkxell.client.launchable.messagehandlers.*;
@@ -33,9 +34,9 @@ public class GameSocketEndpoint {
 
 	public GameSocketEndpoint() {
 		try {
-			this.endpointURI = new URI("ws://" + ClientSettings.getSetting(ClientSettings.SERVER_ADDRESS) + "game");
+			this.endpointURI = new URI("ws://" + ClientSettings.getSetting(Setting.SERVER_ADDRESS) + "game");
 		} catch (URISyntaxException e) {
-			Logger.e("Could not create a valid URI to: ws://" + ClientSettings.getSetting(ClientSettings.SERVER_ADDRESS)
+			Logger.e("Could not create a valid URI to: ws://" + ClientSettings.getSetting(Setting.SERVER_ADDRESS)
 					+ "game");
 		}
 		thr = new Thread(new Runnable() {
