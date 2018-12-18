@@ -186,7 +186,7 @@ public class EditSequencesController implements Initializable, ListCellParent<Po
 		return Math.max(30, spriteset.get(item.frameID).image().getHeight());
 	}
 
-	private void saveSequence(Integer oldValue)
+	public void saveSequence(Integer oldValue)
 	{
 		int rush, hit, ret;
 

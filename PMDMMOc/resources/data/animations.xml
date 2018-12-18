@@ -117,7 +117,7 @@
       <default width="24" height="24" x="24" y="24">0,-1,1,-1,1,-1,1</default>
     </c>
     <c id="152">
-      <default width="16" height="16" x="24" y="24" spriteduration="5">0,1,2,3,4,5,6,7,8,9</default>
+      <default width="16" height="16" x="0" y="24" spriteduration="5">0,1,2,3,4,5,6,7,8,9</default>
     </c>
     <c id="153">
       <default width="8" height="40" x="15" y="40">0,2,4,6,8,9,9,9,9,9,9</default>
