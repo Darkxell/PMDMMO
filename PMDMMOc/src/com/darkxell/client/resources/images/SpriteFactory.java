@@ -8,6 +8,7 @@ import java.util.function.BiConsumer;
 
 import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.resources.Res;
+import com.darkxell.common.util.Logger;
 
 /**
  * Sprite loader that runs in the background and gracefully handles resource errors.
@@ -219,7 +220,15 @@ public class SpriteFactory implements Runnable {
      * Load next image in path.
      */
     private void loadNext() {
-        String path = this.requested.getFirst();
+        String path;
+
+        try {
+            path = this.requested.getFirst();
+        } catch (NoSuchElementException e) {
+            // rare race condition; in case it happens, just ignore it.
+            Logger.w("SpriteFactory queue could not read first element.");
+            return;
+        }
 
         BufferedImage img = Res.getBase(path);
         if (img != null) {
