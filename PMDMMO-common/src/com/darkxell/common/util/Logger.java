@@ -10,157 +10,176 @@ import java.util.Date;
 
 import com.darkxell.common.util.language.Message;
 
-public class Logger
-{
-	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-	/** Booleans describing whether logging of each type should be effective. */
-	public static final boolean error = true, info = true, debug = true, warning = true, events = false;
-	public static final String ERROR = "ERROR", INFO = "INFO", DEBUG = "DEBUG", WARNING = "WARNING", EVENTS = "EVENTS";
+public class Logger {
+    public enum LogLevel {
+        NOTSET(0),
+        EVENT(5),
+        DEBUG(10),
+        INFO(20),
+        WARNING(30),
+        ERROR(40);
 
-	private static Logger instance;
+        public final int severity;
 
-	/** Gets the logger instance and prints a debug message. */
-	public static void d(String m)
-	{
-		instance().debug(m);
-	}
+        /**
+         * Shortcuts to log level. Severity levels and a couple names taken from the
+         * <a href="https://docs.python.org/3/library/logging.html#levels">Python logging module</a>.
+         */
+        LogLevel(int severity) {
+            this.severity = severity;
+        }
+    }
 
-	/** Gets the logger instance and prints an error message. */
-	public static void e(String m)
-	{
-		instance().error(m);
-	}
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
-	/** Gets the logger instance and prints an event message. */
-	public static void event(String m)
-	{
-		if (m != null) instance().log(m.replaceAll("<\\/color>|<red>|<green>|<blue>|<yellow>", ""), EVENTS);
-	}
+    /**
+     * At which severity should the logger start outputting to {@code stdout}.
+     */
+    public static final int STDOUT_SEVERITY = 10;
 
-	/** Gets the logger instance and prints an info message. */
-	public static void i(String m)
-	{
-		instance().info(m);
-	}
+    /**
+     * At which severity should the logger start outputting to {@code stderr}.
+     */
+    public static final int STDERR_SEVERITY = 40;
 
-	public static Logger instance()
-	{
-		return instance;
-	}
+    private static Logger instance;
 
-	public static void loadClient()
-	{
-		instance = new Logger("CLIENT");
-	}
+    public static Logger instance() {
+        return instance;
+    }
 
-	public static void loadServer()
-	{
-		instance = new Logger("SERVER");
-	}
+    /**
+     * Logs a message at the debug level.
+     */
+    public static void d(String m) {
+        instance.debug(m);
+    }
 
-	/** Gets the logger instance and prints a warning message. */
-	public static void w(String m)
-	{
-		instance().warning(m);
-	}
+    /**
+     * Logs a message at the info level.
+     */
+    public static void i(String m) {
+        instance.info(m);
+    }
 
-	private ArrayList<String> log;
+    /**
+     * Logs a message at the warning level.
+     */
+    public static void w(String m) {
+        instance.warning(m);
+    }
 
-	public boolean saveOnExit = false;
+    /**
+     * Logs a message at the error level.
+     */
+    public static void e(String m) {
+        instance.error(m);
+    }
 
-	public final String source;
+    /**
+     * Logs a message from an event.
+     */
+    public static void event(String m) {
+        if (m != null) {
+            instance.log(m.replaceAll("<(\\/color|red|green|blue|yellow)>", ""), LogLevel.EVENT);
+        }
+    }
 
-	private Date start;
+    public static void load(String source) {
+        instance = new Logger(source);
+    }
 
-	private Logger(String source)
-	{
-		this.source = source;
-		this.log = new ArrayList<String>();
-		this.start = new Date();
-		this.info("New instance: " + this.date());
-	}
+    private ArrayList<String> log;
 
-	/** @return The current date with format: yyyy/MM/dd HH:mm:ss */
-	public String date()
-	{
-		return dateFormat.format(new Date());
-	}
+    public boolean saveOnExit = false;
 
-	public String debug(Message message)
-	{
-		return this.log(message, DEBUG);
-	}
+    public final String source;
 
-	public String debug(String message)
-	{
-		return this.log(message, DEBUG);
-	}
+    private Date start;
 
-	public String error(Message message)
-	{
-		return this.log(message, ERROR);
-	}
+    private Logger(String source) {
+        this.source = source;
+        this.log = new ArrayList<String>();
+        this.start = new Date();
+        this.info("New instance: " + this.date());
+    }
 
-	public String error(String message)
-	{
-		return this.log(message, ERROR);
-	}
+    /**
+     * @return The current date with the format of {@link #DATE_FORMAT}.
+     */
+    public String date() {
+        return DATE_FORMAT.format(new Date());
+    }
 
-	public String info(Message message)
-	{
-		return this.log(message, INFO);
-	}
+    public String debug(Message message) {
+        return this.log(message, LogLevel.DEBUG);
+    }
 
-	public String info(String message)
-	{
-		return this.log(message, INFO);
-	}
+    public String debug(String message) {
+        return this.log(message, LogLevel.DEBUG);
+    }
 
-	public String log(Message message, String messageType)
-	{
-		return this.log(message.toString(), messageType);
-	}
+    public String info(Message message) {
+        return this.log(message, LogLevel.INFO);
+    }
 
-	public String log(String message, String messageType)
-	{
-		message = "[" + this.date() + " | " + this.source + "] " + messageType + ": " + message;
+    public String info(String message) {
+        return this.log(message, LogLevel.INFO);
+    }
 
-		if ((messageType.equals(DEBUG) && debug) || (messageType.equals(ERROR) && error) || (messageType.equals(INFO) && info)
-				|| (messageType.equals(WARNING) && warning) || (messageType.equals(EVENTS) && events))
-		{
-			this.log.add(message);
-			if (messageType == ERROR) System.err.println(message);
-			else System.out.println(message);
-		}
+    public String warning(Message message) {
+        return this.log(message, LogLevel.WARNING);
+    }
 
-		return message;
-	}
+    public String warning(String message) {
+        return this.log(message, LogLevel.WARNING);
+    }
 
-	public void saveClient()
-	{
-		if (!this.saveOnExit) return;
-		File f = new File("resources/log" + new SimpleDateFormat("yyyy-MM-dd HH.mm").format(this.start) + ".txt");
-		try
-		{
-			BufferedWriter writer = new BufferedWriter(new FileWriter(f));
-			for (String line : this.log)
-				writer.write(line + "\n");
-			writer.close();
-		} catch (IOException e)
-		{
-			this.error(e.getMessage());
-			e.printStackTrace();
-		}
-	}
+    public String error(Message message) {
+        return this.log(message, LogLevel.ERROR);
+    }
 
-	public String warning(Message message)
-	{
-		return this.log(message, WARNING);
-	}
+    public String error(String message) {
+        return this.log(message, LogLevel.ERROR);
+    }
 
-	public String warning(String message)
-	{
-		return this.log(message, WARNING);
-	}
+    public String log(Message message, LogLevel messageType) {
+        return this.log(message.toString(), messageType);
+    }
 
+    public String log(String message, LogLevel level) {
+        message = "[" + this.date() + " | " + this.source + "] " + level.name() + ": " + message;
+
+        if (level.severity >= Math.min(STDOUT_SEVERITY, STDERR_SEVERITY)) {
+            this.log.add(message);
+        }
+
+        if (level.severity >= STDERR_SEVERITY) {
+            System.err.println(message);
+        } else if (level.severity >= STDOUT_SEVERITY) {
+            System.out.println(message);
+        }
+
+        return message;
+    }
+
+    /**
+     * Flush log to file.
+     */
+    public void saveClient() {
+        if (!this.saveOnExit) {
+            return;
+        }
+        File f = new File("resources/log" + new SimpleDateFormat("yyyy-MM-dd HH.mm").format(this.start) + ".txt");
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(f));
+            for (String line : this.log) {
+                writer.write(line + "\n");
+            }
+            writer.close();
+        } catch (IOException e) {
+            this.error(e.getMessage());
+            e.printStackTrace();
+        }
+    }
 }
