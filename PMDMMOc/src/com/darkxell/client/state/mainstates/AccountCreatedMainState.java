@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.Sprites;
 import com.darkxell.client.state.StateManager;
@@ -55,7 +55,7 @@ public class AccountCreatedMainState extends StateManager {
 	public void onMouseClick(int x, int y) {
 		// Button clicks
 		if (button_proceed.isInside(new Position(mouseX - offsetx, mouseY - offsety))) {
-			Persistance.stateManager = new LoginMainState("You may now log in", login, pass);
+			Persistence.stateManager = new LoginMainState("You may now log in", login, pass);
 		}
 	}
 

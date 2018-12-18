@@ -2,7 +2,7 @@ package com.darkxell.common.test;
 
 import com.darkxell.client.launchable.ClientSettings;
 import com.darkxell.client.launchable.Launcher;
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.animation.Animations;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
 import com.darkxell.client.resources.music.SoundManager;
@@ -21,12 +21,12 @@ public class ClientUnitTests
 		ClientSettings.load();
 		PokemonSpritesets.loadData();
 		Animations.loadData();
-		Persistance.soundmanager = new SoundManager();
-		Persistance.isUnitTesting = true;
+		Persistence.soundmanager = new SoundManager();
+		Persistence.isUnitTesting = true;
 
-		Persistance.frame = new Frame();
-		Persistance.frame.canvas.requestFocus();
-		Persistance.stateManager = new PrincipalMainState();
+		Persistence.frame = new Frame();
+		Persistence.frame.canvas.requestFocus();
+		Persistence.stateManager = new PrincipalMainState();
 
 		Launcher.setProcessingProfile(Launcher.PROFILE_SYNCHRONIZED);
 

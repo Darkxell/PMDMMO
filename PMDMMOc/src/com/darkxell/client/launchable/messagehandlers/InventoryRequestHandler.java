@@ -1,6 +1,6 @@
 package com.darkxell.client.launchable.messagehandlers;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.PlayerLoadingState;
 import com.darkxell.client.state.dialog.storage.StorageDialog;
@@ -38,10 +38,10 @@ public class InventoryRequestHandler extends MessageHandler
 	@Override
 	public void handleMessage(JsonObject message)
 	{
-		AbstractState state = Persistance.stateManager.getCurrentState();
+		AbstractState state = Persistence.stateManager.getCurrentState();
 		if (state != null && state instanceof PlayerLoadingState) ((PlayerLoadingState) state).onInventoryReceived(message);
-		else if (Persistance.currentDialog != null && Persistance.currentDialog instanceof StorageDialog)
-			((StorageDialog) Persistance.currentDialog).onInventoryReceived(message);
+		else if (Persistence.currentDialog != null && Persistence.currentDialog instanceof StorageDialog)
+			((StorageDialog) Persistence.currentDialog).onInventoryReceived(message);
 	}
 
 }

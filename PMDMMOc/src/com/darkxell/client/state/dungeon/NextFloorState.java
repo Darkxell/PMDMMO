@@ -1,6 +1,6 @@
 package com.darkxell.client.state.dungeon;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.cutscene.Cutscene;
 import com.darkxell.client.mechanics.cutscene.CutsceneManager;
 import com.darkxell.client.renderers.pokemon.DungeonPokemonRenderer;
@@ -18,19 +18,19 @@ public class NextFloorState extends TransitionState
 	private static Message[] createMessage(int floor)
 	{
 		Message[] m = new Message[2];
-		m[0] = Persistance.dungeon.dungeon().name();
-		m[1] = new Message("stairs.floor." + (Persistance.dungeon.dungeon().direction == DungeonDirection.UP ? "up" : "down")).addReplacement("<floor>",
+		m[0] = Persistence.dungeon.dungeon().name();
+		m[1] = new Message("stairs.floor." + (Persistence.dungeon.dungeon().direction == DungeonDirection.UP ? "up" : "down")).addReplacement("<floor>",
 				Integer.toString(floor));
 		return m;
 	}
 
 	public static void resumeExploration()
 	{
-		Persistance.displaymap = new DungeonFloorMap();
-		Persistance.dungeonState.floorVisibility.onCameraMoved();
-		String ost = "dungeon-" + Persistance.floor.data.soundtrack() + ".mp3";
-		if (Persistance.floor.data.isBossFloor()) ost = "boss.mp3";
-		Persistance.soundmanager.setBackgroundMusic(SoundsHolder.getSong(ost));
+		Persistence.displaymap = new DungeonFloorMap();
+		Persistence.dungeonState.floorVisibility.onCameraMoved();
+		String ost = "dungeon-" + Persistence.floor.data.soundtrack() + ".mp3";
+		if (Persistence.floor.data.isBossFloor()) ost = "boss.mp3";
+		Persistence.soundmanager.setBackgroundMusic(SoundsHolder.getSong(ost));
 	}
 
 	public NextFloorState(AbstractState previous, int floor)
@@ -42,25 +42,25 @@ public class NextFloorState extends TransitionState
 	public void onEnd()
 	{
 		super.onEnd();
-		Persistance.eventProcessor().processPending();
+		Persistence.eventProcessor().processPending();
 	}
 
 	@Override
 	public void onTransitionHalf()
 	{
 		super.onTransitionHalf();
-		Persistance.floor = Persistance.dungeon.currentFloor();
-		if (Persistance.dungeonState != null) for (DungeonPokemon p : Persistance.player.getDungeonTeam())
+		Persistence.floor = Persistence.dungeon.currentFloor();
+		if (Persistence.dungeonState != null) for (DungeonPokemon p : Persistence.player.getDungeonTeam())
 		{
-			DungeonPokemonRenderer r = Persistance.dungeonState.pokemonRenderer.getRenderer(p);
-			if (r != null) r.sprite().setFacingDirection(Persistance.floor.teamSpawnDirection);
+			DungeonPokemonRenderer r = Persistence.dungeonState.pokemonRenderer.getRenderer(p);
+			if (r != null) r.sprite().setFacingDirection(Persistence.floor.teamSpawnDirection);
 		}
 
-		this.next = Persistance.dungeonState = new DungeonState();
-		if (Persistance.floor.cutsceneIn != null)
+		this.next = Persistence.dungeonState = new DungeonState();
+		if (Persistence.floor.cutsceneIn != null)
 		{
-			Cutscene c = CutsceneManager.loadCutscene(Persistance.floor.cutsceneIn);
-			this.next = Persistance.cutsceneState = new CutsceneState(c);
+			Cutscene c = CutsceneManager.loadCutscene(Persistence.floor.cutsceneIn);
+			this.next = Persistence.cutsceneState = new CutsceneState(c);
 			c.creation.create();
 		} else resumeExploration();
 	}

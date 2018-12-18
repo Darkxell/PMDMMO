@@ -3,7 +3,7 @@ package com.darkxell.client.state.dialog;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.renderers.layers.AbstractGraphiclayer;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.dialog.DialogState.DialogEndListener;
@@ -92,7 +92,7 @@ public abstract class ComplexDialog implements DialogEndListener
 	private void moveToNextDialog(DialogState previous)
 	{
 		DialogState next = this.nextState(previous);
-		if (next != null) Persistance.stateManager.setState(next);
+		if (next != null) Persistence.stateManager.setState(next);
 	}
 
 	/** Utility methods for creating DialogStates.
@@ -124,8 +124,8 @@ public abstract class ComplexDialog implements DialogEndListener
 				this.moveToNextDialog(dialog);
 				break;
 			case TERMINATE:
-				Persistance.currentDialog = null;
-				Persistance.stateManager.setState(this.onFinish(dialog));
+				Persistence.currentDialog = null;
+				Persistence.stateManager.setState(this.onFinish(dialog));
 				break;
 			case PAUSE:
 				this.isPaused = true;
@@ -146,9 +146,9 @@ public abstract class ComplexDialog implements DialogEndListener
 	/** Starts this Dialog. */
 	public void start()
 	{
-		Persistance.currentDialog = this;
+		Persistence.currentDialog = this;
 		DialogState first = this.firstState();
-		if (first != null) Persistance.stateManager.setState(first);
+		if (first != null) Persistence.stateManager.setState(first);
 	}
 
 	public void unpause()

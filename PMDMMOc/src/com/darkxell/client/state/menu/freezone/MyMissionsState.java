@@ -2,7 +2,7 @@ package com.darkxell.client.state.menu.freezone;
 
 import java.util.HashMap;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.renderers.layers.AbstractGraphiclayer;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
@@ -40,16 +40,16 @@ public class MyMissionsState extends OptionSelectionMenuState {
 	private MenuTab generateTab() {
 		MenuTab tab = new MenuTab(new Message("mission.job.list"));
 		missions.clear();
-		for (int i = 0; i < Persistance.player.getMissions().size(); i++) {
+		for (int i = 0; i < Persistence.player.getMissions().size(); i++) {
 			try {
-				Mission m = new Mission(Persistance.player.getMissions().get(i));
+				Mission m = new Mission(Persistence.player.getMissions().get(i));
 				String summary = m.summary();
 				MenuOption opt = new MenuOption(summary);
 				tab.addOption(opt);
 				missions.put(opt, m);
 			} catch (InvalidParammetersException e) {
 				Logger.e("Couldn't add the following mission to mymissionsstate : "
-						+ Persistance.player.getMissions().get(i));
+						+ Persistence.player.getMissions().get(i));
 			}
 		}
 		tab.addOption(this.exit = new MenuOption("general.back"));
@@ -68,7 +68,7 @@ public class MyMissionsState extends OptionSelectionMenuState {
 
 	@Override
 	protected void onExit() {
-		Persistance.stateManager.setState(callback);
+		Persistence.stateManager.setState(callback);
 	}
 
 	@Override
@@ -76,7 +76,7 @@ public class MyMissionsState extends OptionSelectionMenuState {
 		if (option == exit) {
 			this.onExit();
 		} else {
-			Persistance.stateManager.setState(new MyMissionsChoiceState(this, this.missions.get(option)));
+			Persistence.stateManager.setState(new MyMissionsChoiceState(this, this.missions.get(option)));
 		}
 	}
 

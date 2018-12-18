@@ -1,7 +1,7 @@
 package com.darkxell.client.discord;
 
 import com.darkxell.client.launchable.Launcher;
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.state.dungeon.DungeonState;
 import com.darkxell.client.state.freezone.AbstractFreezoneState;
 import com.darkxell.client.state.mainstates.PrincipalMainState;
@@ -94,23 +94,23 @@ public class DiscordEventHandlerForPMDMMO {
 	 */
 	private void handleDiscordRP() {
 		// Updates discord if cooldown is done
-		if (Persistance.stateManager instanceof PrincipalMainState) {
-			PrincipalMainState pmst = (PrincipalMainState) Persistance.stateManager;
+		if (Persistence.stateManager instanceof PrincipalMainState) {
+			PrincipalMainState pmst = (PrincipalMainState) Persistence.stateManager;
 			if (pmst.getCurrentState() instanceof AbstractFreezoneState) {
 				String smallimagetext = "---";
-				if (Persistance.player != null && Persistance.player.getData() != null)
-					smallimagetext = "Points : " + Persistance.player.getData().points;
+				if (Persistence.player != null && Persistence.player.getData() != null)
+					smallimagetext = "Points : " + Persistence.player.getData().points;
 				DiscordRichPresence.Builder rich = new DiscordRichPresence.Builder("Hanging around")
 						.setBigImage("squareicon", "").setSmallImage(smallimage, smallimagetext);
-				rich.setDetails(Persistance.currentmap.info.getName().toString());
+				rich.setDetails(Persistence.currentmap.info.getName().toString());
 				DiscordRPC.discordUpdatePresence(rich.build());
 			} else if (pmst.getCurrentState() instanceof DungeonState) {
 				String smallimagetext = "---";
-				if (Persistance.player != null && Persistance.player.getData() != null)
-					smallimagetext = "Points : " + Persistance.player.getData().points;
+				if (Persistence.player != null && Persistence.player.getData() != null)
+					smallimagetext = "Points : " + Persistence.player.getData().points;
 				DiscordRichPresence.Builder rich = new DiscordRichPresence.Builder("Exploring a dungeon")
 						.setBigImage("mapicon", "").setSmallImage(smallimage, smallimagetext);
-				rich.setDetails(Persistance.dungeon.dungeon().name().toString());
+				rich.setDetails(Persistence.dungeon.dungeon().name().toString());
 				DiscordRPC.discordUpdatePresence(rich.build());
 			}
 		}

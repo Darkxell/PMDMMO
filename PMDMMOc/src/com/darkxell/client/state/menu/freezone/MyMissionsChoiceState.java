@@ -2,7 +2,7 @@ package com.darkxell.client.state.menu.freezone;
 
 import java.awt.Rectangle;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.renderers.layers.AbstractGraphiclayer;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.mainstates.PrincipalMainState;
@@ -37,21 +37,21 @@ public class MyMissionsChoiceState extends OptionSelectionMenuState {
 
 	@Override
 	protected void onExit() {
-		Persistance.stateManager.setState((AbstractState) this.background);
+		Persistence.stateManager.setState((AbstractState) this.background);
 	}
 
 	@Override
 	protected void onOptionSelected(MenuOption option) {
 		if (option == check) {
-			Persistance.stateManager
+			Persistence.stateManager
 					.setState(new MissionDetailsState((AbstractState) this.background, this.missioncontent, this));
 		} else if (option == delete) {
 			Logger.i("Deleting mission : " + missioncontent);
 			JsonObject message = Json.object();
 			message.add("action", "deletemission");
 			message.add("mission", missioncontent.toString());
-			Persistance.socketendpoint.sendMessage(message.toString());
-			if (Persistance.player.getMissions().remove(missioncontent.toString())) {
+			Persistence.socketendpoint.sendMessage(message.toString());
+			if (Persistence.player.getMissions().remove(missioncontent.toString())) {
 				if (this.background instanceof MyMissionsState)
 					((MyMissionsState) this.background).refresh();
 				this.onExit();

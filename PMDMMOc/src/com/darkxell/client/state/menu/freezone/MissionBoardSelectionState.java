@@ -1,6 +1,6 @@
 package com.darkxell.client.state.menu.freezone;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
 
@@ -29,7 +29,7 @@ public class MissionBoardSelectionState extends OptionSelectionMenuState {
 
 	@Override
 	protected void onExit() {
-		Persistance.stateManager.setState(parent);
+		Persistence.stateManager.setState(parent);
 	}
 
 	@Override
@@ -37,9 +37,9 @@ public class MissionBoardSelectionState extends OptionSelectionMenuState {
 		if (option == exit)
 			this.onExit();
 		else if (option == board)
-			Persistance.stateManager.setState(new MissionBoardState(parent));
+			Persistence.stateManager.setState(new MissionBoardState(parent));
 		else if (option == mission)
-			Persistance.stateManager.setState(new MyMissionsState(parent, this));
+			Persistence.stateManager.setState(new MyMissionsState(parent, this));
 	}
 
 }

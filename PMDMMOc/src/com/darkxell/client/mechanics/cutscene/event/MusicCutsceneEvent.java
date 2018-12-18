@@ -2,7 +2,7 @@ package com.darkxell.client.mechanics.cutscene.event;
 
 import org.jdom2.Element;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.cutscene.CutsceneContext;
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
 import com.darkxell.client.resources.music.SoundsHolder;
@@ -29,7 +29,7 @@ public class MusicCutsceneEvent extends CutsceneEvent
 	public void onStart()
 	{
 		super.onStart();
-		if (this.soundtrackID != null) Persistance.soundmanager.setBackgroundMusic(SoundsHolder.getSong(this.soundtrackID));
+		if (this.soundtrackID != null) Persistence.soundmanager.setBackgroundMusic(SoundsHolder.getSong(this.soundtrackID));
 	}
 
 	@Override

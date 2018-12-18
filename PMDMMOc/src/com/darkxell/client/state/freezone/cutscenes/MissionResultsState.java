@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.cutscene.Cutscene;
 import com.darkxell.client.mechanics.cutscene.Cutscene.CutsceneEnd;
 import com.darkxell.client.mechanics.cutscene.CutsceneCreation;
@@ -48,9 +48,9 @@ public class MissionResultsState extends CutsceneState
 			if (this.state.missions.size() <= 1) DungeonEndState.finish();
 			else
 			{
-				Persistance.cutsceneState = new MissionResultsState(this.state.missions.subList(1, this.state.missions.size()));
-				Persistance.cutsceneState.cutscene.creation.create();
-				Persistance.stateManager.setState(Persistance.cutsceneState);
+				Persistence.cutsceneState = new MissionResultsState(this.state.missions.subList(1, this.state.missions.size()));
+				Persistence.cutsceneState.cutscene.creation.create();
+				Persistence.stateManager.setState(Persistence.cutsceneState);
 			}
 		}
 
@@ -72,7 +72,7 @@ public class MissionResultsState extends CutsceneState
 		CutscenePokemon targetEntity = has2Pks ? new CutscenePokemon(3, 40, 30, target, PokemonSpriteState.IDLE, Direction.SOUTH, false) : null;
 
 		ArrayList<CutsceneEntity> entities = new ArrayList<>();
-		entities.add(new CutscenePokemon(1, 37.5, 35, Persistance.player.getTeamLeader(), PokemonSpriteState.IDLE, Direction.NORTH, false));
+		entities.add(new CutscenePokemon(1, 37.5, 35, Persistence.player.getTeamLeader(), PokemonSpriteState.IDLE, Direction.NORTH, false));
 		entities.add(clientEntity);
 		if (has2Pks) entities.add(targetEntity);
 		CutsceneCreation creation = new CutsceneCreation(FreezoneInfo.OFFICE, true, true, 37.5, 32.5, entities);

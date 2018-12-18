@@ -2,7 +2,7 @@ package com.darkxell.client.state.menu.freezone;
 
 import java.util.ArrayList;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.dialog.DialogScreen;
 import com.darkxell.client.state.dialog.DialogState;
@@ -40,7 +40,7 @@ public class FreezoneMenuState extends OptionSelectionMenuState
 	@Override
 	protected void onExit()
 	{
-		Persistance.stateManager.setState((AbstractState) this.background);
+		Persistence.stateManager.setState((AbstractState) this.background);
 	}
 
 	@Override
@@ -49,8 +49,8 @@ public class FreezoneMenuState extends OptionSelectionMenuState
 		if (option == this.items)
 		{
 			ArrayList<ItemContainer> containers = new ArrayList<ItemContainer>();
-			containers.add(Persistance.player.inventory());
-			for (Pokemon pokemon : Persistance.player.getTeam())
+			containers.add(Persistence.player.inventory());
+			for (Pokemon pokemon : Persistence.player.getTeam())
 				containers.add(pokemon);
 
 			boolean found = false;
@@ -69,17 +69,17 @@ public class FreezoneMenuState extends OptionSelectionMenuState
 					@Override
 					public void onDialogEnd(DialogState dialog)
 					{
-						Persistance.stateManager.setState(thismenu);
+						Persistence.stateManager.setState(thismenu);
 					}
 				};
-				Persistance.stateManager.setState(new DialogState(this.background, listener, new DialogScreen(new Message("inventory.empty"))));
+				Persistence.stateManager.setState(new DialogState(this.background, listener, new DialogScreen(new Message("inventory.empty"))));
 			} else
 			{
 				ItemContainersMenuState s = new ItemContainersMenuState(this, this.background, false, containers.toArray(new ItemContainer[containers.size()]));
 				s.isOpaque = this.isOpaque;
-				Persistance.stateManager.setState(s);
+				Persistence.stateManager.setState(s);
 			}
-		} else if (option == this.team) Persistance.stateManager.setState(new TeamMenuState(this, this.background).setOpaque(this.isOpaque));
-		else if (option == this.settings) Persistance.stateManager.setState(new SettingsMenuState(this, this.background).setOpaque(this.isOpaque));
+		} else if (option == this.team) Persistence.stateManager.setState(new TeamMenuState(this, this.background).setOpaque(this.isOpaque));
+		else if (option == this.settings) Persistence.stateManager.setState(new SettingsMenuState(this, this.background).setOpaque(this.isOpaque));
 	}
 }

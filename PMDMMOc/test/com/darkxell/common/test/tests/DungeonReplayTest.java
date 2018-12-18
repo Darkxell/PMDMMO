@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.event.ClientEventProcessor;
 import com.darkxell.client.state.dungeon.NextFloorState;
 import com.darkxell.common.dungeon.AutoDungeonExploration;
@@ -68,16 +68,16 @@ public class DungeonReplayTest extends UTest
 	@Override
 	protected int test()
 	{
-		Persistance.player = Util.createDefaultPlayer();
+		Persistence.player = Util.createDefaultPlayer();
 		AutoDungeonExploration dungeon = this.createDungeon();
 		if (dungeon == null) return 1;
-		Persistance.dungeon = dungeon;
+		Persistence.dungeon = dungeon;
 
 		dungeon.eventProcessor = new ClientEventProcessor(dungeon);
-		dungeon.addPlayer(Persistance.player);
+		dungeon.addPlayer(Persistence.player);
 		((ClientEventProcessor) dungeon.eventProcessor).setState(State.STOPPED);
-		Persistance.floor = dungeon.initiateExploration();
-		Persistance.stateManager.setState(new NextFloorState(null, 1));
+		Persistence.floor = dungeon.initiateExploration();
+		Persistence.stateManager.setState(new NextFloorState(null, 1));
 		((ClientEventProcessor) dungeon.eventProcessor).setState(State.PROCESSING);
 
 		return TEST_SUCCESSFUL;

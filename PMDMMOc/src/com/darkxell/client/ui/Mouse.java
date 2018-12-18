@@ -4,7 +4,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 
 public class Mouse implements MouseListener, MouseMotionListener {
 
@@ -36,7 +36,7 @@ public class Mouse implements MouseListener, MouseMotionListener {
 	public void mouseDragged(MouseEvent e) {
 		x = e.getX();
 		y = e.getY();
-		Persistance.stateManager.onMouseMove(x, y);
+		Persistence.stateManager.onMouseMove(x, y);
 	}
 
 	@Override
@@ -53,8 +53,8 @@ public class Mouse implements MouseListener, MouseMotionListener {
 	public void mouseMoved(MouseEvent e) {
 		x = e.getX();
 		y = e.getY();
-		if (Persistance.stateManager != null)
-			Persistance.stateManager.onMouseMove(x, y);
+		if (Persistence.stateManager != null)
+			Persistence.stateManager.onMouseMove(x, y);
 	}
 
 	@Override
@@ -68,11 +68,11 @@ public class Mouse implements MouseListener, MouseMotionListener {
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		if (isClicking && e.getButton() == MouseEvent.BUTTON1) {
-			Persistance.stateManager.onMouseClick(x, y);
+			Persistence.stateManager.onMouseClick(x, y);
 			isClicking = false;
 		}
 		if (isRightClicking && e.getButton() == MouseEvent.BUTTON3) {
-			Persistance.stateManager.onMouseRightClick(x, y);
+			Persistence.stateManager.onMouseRightClick(x, y);
 			isRightClicking = false;
 		}
 	}

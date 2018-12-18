@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.function.Predicate;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.animation.Animations;
 import com.darkxell.client.mechanics.animation.PokemonAnimation;
 import com.darkxell.client.resources.images.pokemon.PokemonSpriteFrame;
@@ -22,10 +22,10 @@ public class OnFirstPokemonDraw
 
 	public static boolean isNotVisible(DungeonPokemon pokemon)
 	{
-		DungeonPokemonRenderer renderer = Persistance.dungeonState.pokemonRenderer.getRenderer(pokemon);
+		DungeonPokemonRenderer renderer = Persistence.dungeonState.pokemonRenderer.getRenderer(pokemon);
 		PokemonSpriteFrame frame = renderer.sprite.getCurrentFrame();
 		BufferedImage sprite = renderer.sprite.getCurrentSprite();
-		Point camera = Persistance.dungeonState.camera();
+		Point camera = Persistence.dungeonState.camera();
 
 		Rectangle screen = new Rectangle(camera.x, camera.y, PrincipalMainState.displayWidth, PrincipalMainState.displayHeight);
 		Rectangle spriteDim = new Rectangle((int) (renderer.drawX() - sprite.getWidth() / 2 + frame.spriteX),
@@ -41,7 +41,7 @@ public class OnFirstPokemonDraw
 
 	public static void onFirstDraw(DungeonPokemon pokemon)
 	{
-		Persistance.soundmanager.playSound(SoundsHolder.getSfx("cry-" + pokemon.species().parent().id));
+		Persistence.soundmanager.playSound(SoundsHolder.getSfx("cry-" + pokemon.species().parent().id));
 		if (pokemon.usedPokemon.isShiny())
 		{
 			PokemonAnimation a = Animations.getCustomAnimation(pokemon, 7, null);
@@ -55,14 +55,14 @@ public class OnFirstPokemonDraw
 			@Override
 			public boolean test(DungeonPokemon t)
 			{
-				return !Persistance.player.isAlly(t);
+				return !Persistence.player.isAlly(t);
 			}
 		});
 	}
 
 	public static void update()
 	{
-		ArrayList<DungeonPokemon> pokemons = Persistance.floor.listPokemon();
+		ArrayList<DungeonPokemon> pokemons = Persistence.floor.listPokemon();
 		pokemons.removeAll(seen);
 		pokemons.removeIf(OnFirstPokemonDraw::isNotVisible);
 

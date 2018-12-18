@@ -1,6 +1,6 @@
 package com.darkxell.client.state.dungeon;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.animation.AnimationEndListener;
 import com.darkxell.client.mechanics.animation.travel.ArcAnimation;
 import com.darkxell.client.mechanics.animation.travel.TravelAnimation;
@@ -45,7 +45,7 @@ public class BlowbackAnimationState extends AnimationState
 	public void onStart()
 	{
 		super.onStart();
-		this.renderer = Persistance.dungeonState.pokemonRenderer.getRenderer(this.pokemon);
+		this.renderer = Persistence.dungeonState.pokemonRenderer.getRenderer(this.pokemon);
 		this.renderer.sprite().setFacingDirection(this.event.direction.opposite());
 		this.renderer.sprite().setState(PokemonSpriteState.HURT);
 		this.renderer.sprite().setAnimated(false);
@@ -68,7 +68,7 @@ public class BlowbackAnimationState extends AnimationState
 				this.shouldBounce = false;
 			} else
 			{
-				Persistance.dungeonState.setDefaultState();
+				Persistence.dungeonState.setDefaultState();
 				this.listener.onAnimationEnd(this.animation);
 			}
 		}

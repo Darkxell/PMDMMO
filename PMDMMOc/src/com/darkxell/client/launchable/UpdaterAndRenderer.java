@@ -68,16 +68,16 @@ public class UpdaterAndRenderer implements Runnable
 
 	protected void tickUpdate()
 	{
-		Persistance.stateManager.update();
+		Persistence.stateManager.update();
 
-		if (Persistance.frame == null || !Persistance.frame.isVisible()) return;
+		if (Persistence.frame == null || !Persistence.frame.isVisible()) return;
 
-		BufferStrategy bf = Persistance.frame.canvas.getBufferStrategy();
+		BufferStrategy bf = Persistence.frame.canvas.getBufferStrategy();
 		Graphics2D g = (Graphics2D) bf.getDrawGraphics();
-		int width = Persistance.frame.canvas.getWidth(), height = Persistance.frame.canvas.getHeight();
+		int width = Persistence.frame.canvas.getWidth(), height = Persistence.frame.canvas.getHeight();
 		g.clearRect(0, 0, width, height);
 
-		Persistance.stateManager.render(g, width, height);
+		Persistence.stateManager.render(g, width, height);
 		TextRenderer.render(g, "V " + Util.GAME_VERSION, 5, 5);
 
 		g.dispose();

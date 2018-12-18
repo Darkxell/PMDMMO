@@ -2,7 +2,7 @@ package com.darkxell.client.renderers.pokemon;
 
 import java.awt.Graphics2D;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.renderers.AbstractRenderer;
 import com.darkxell.client.renderers.EntityRendererHolder;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
@@ -30,7 +30,7 @@ public class DungeonPokemonRendererHolder extends EntityRendererHolder<DungeonPo
 		DungeonPokemonRenderer r = this.register(pokemon, new DungeonPokemonRenderer(pokemon));
 		if (pokemon.type.isAlliedWith(DungeonPokemonType.TEAM_MEMBER))
 		{
-			if (pokemon.player() == null || pokemon.player() == Persistance.player) r.sprite.setShadowColor(PokemonSprite.ALLY_SHADOW);
+			if (pokemon.player() == null || pokemon.player() == Persistence.player) r.sprite.setShadowColor(PokemonSprite.ALLY_SHADOW);
 			else r.sprite.setShadowColor(PokemonSprite.PLAYER_SHADOW);
 		} else r.sprite.setShadowColor(PokemonSprite.ENEMY_SHADOW);
 		return r;
@@ -39,7 +39,7 @@ public class DungeonPokemonRendererHolder extends EntityRendererHolder<DungeonPo
 	@Override
 	public DungeonPokemonRenderer register(DungeonPokemon entity, AbstractRenderer renderer)
 	{
-		if (!this.renderers.containsKey(entity)) Persistance.dungeonRenderer.addRenderer(renderer);
+		if (!this.renderers.containsKey(entity)) Persistence.dungeonRenderer.addRenderer(renderer);
 		return (DungeonPokemonRenderer) super.register(entity, renderer);
 	}
 
@@ -50,14 +50,14 @@ public class DungeonPokemonRendererHolder extends EntityRendererHolder<DungeonPo
 	/** Deletes the Renderer of the input Pokemon. */
 	public void unregister(AbstractPokemonRenderer renderer)
 	{
-		Persistance.dungeonRenderer.removeRenderer(renderer);
+		Persistence.dungeonRenderer.removeRenderer(renderer);
 		super.unregister(renderer);
 	}
 
 	/** Deletes the Renderer of the input Pokemon. */
 	public void unregister(DungeonPokemon entity)
 	{
-		Persistance.dungeonRenderer.removeRenderer(this.getRenderer(entity));
+		Persistence.dungeonRenderer.removeRenderer(this.getRenderer(entity));
 		super.unregister(entity);
 	}
 

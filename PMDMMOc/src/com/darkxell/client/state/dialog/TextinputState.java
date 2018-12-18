@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.Sprites;
 import com.darkxell.client.state.AbstractState;
@@ -56,7 +56,7 @@ public class TextinputState extends AbstractState {
 
 		} else if (isinvalidationmode && key == Key.ATTACK) {
 			if (validationstate) {
-				((PrincipalMainState) Persistance.stateManager).setState(parent);
+				((PrincipalMainState) Persistence.stateManager).setState(parent);
 				if (parent instanceof Callbackable)
 					((Callbackable) parent).callback(content);
 				if (addedcallback != null)

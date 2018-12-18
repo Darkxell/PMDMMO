@@ -1,6 +1,6 @@
 package com.darkxell.client.state.dialog.bank;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.dialog.ComplexDialog;
 import com.darkxell.client.state.dialog.DialogScreen;
@@ -29,7 +29,7 @@ public class BankDialog extends ComplexDialog
 
 	private DialogState actionSelection(boolean isFirst)
 	{
-		long bag = Persistance.player.getData().moneyinbag, bank = Persistance.player.getData().moneyinbank;
+		long bag = Persistence.player.getData().moneyinbag, bank = Persistence.player.getData().moneyinbank;
 		return this.newDialog(new BankDialogScreen(this.shopkeeper, bag, bank, new Message(isFirst ? "dialog.bank.intro" : "dialog.bank.intro2")
 				.addReplacement("<bag>", Long.toString(bag)).addReplacement("<bank>", Long.toString(bank)), this.options)).setOpaque(true);
 	}
@@ -60,7 +60,7 @@ public class BankDialog extends ComplexDialog
 		else if (screen instanceof OptionDialogScreen)
 		{
 			int option = ((OptionDialogScreen) screen).chosenIndex();
-			long bag = Persistance.player.getData().moneyinbag, bank = Persistance.player.getData().moneyinbank;
+			long bag = Persistence.player.getData().moneyinbag, bank = Persistence.player.getData().moneyinbank;
 			return this.newDialog(new BankAmountDialogScreen(shopkeeper, bag, bank, option == DEPOSIT)).setOpaque(true);
 		}
 		return null;
@@ -68,11 +68,11 @@ public class BankDialog extends ComplexDialog
 
 	public void onConfirmReceived(long bag, long bank)
 	{
-		if (!Persistance.isCommunicating) return;
-		Persistance.isCommunicating = false;
-		Persistance.player.setMoneyInBag(bag);
-		Persistance.player.setMoneyInBank(bank);
-		Persistance.stateManager
+		if (!Persistence.isCommunicating) return;
+		Persistence.isCommunicating = false;
+		Persistence.player.setMoneyInBag(bag);
+		Persistence.player.setMoneyInBank(bank);
+		Persistence.stateManager
 				.setState(this.newDialog(new PokemonDialogScreen(this.shopkeeper, new Message("dialog.bank.confirm")).setID(CONFIRM_DIALOG)).setOpaque(true));
 	}
 
@@ -88,7 +88,7 @@ public class BankDialog extends ComplexDialog
 
 	public void onSelectionCancel()
 	{
-		Persistance.stateManager.setState(this.actionSelection(false));
+		Persistence.stateManager.setState(this.actionSelection(false));
 	}
 
 }

@@ -9,7 +9,7 @@ import java.util.List;
 
 import org.jdom2.input.SAXBuilder;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
 import com.darkxell.client.mechanics.freezones.entities.OtherPlayerEntity;
 import com.darkxell.client.renderers.EntityRendererHolder;
@@ -120,7 +120,7 @@ public abstract class FreezoneMap
 
 	public void update()
 	{
-		Persistance.currentplayer.update();
+		Persistence.currentplayer.update();
 		for (int i = 0; i < entities.size(); i++)
 			entities.get(i).update();
 		if (flushcounter >= 120)
@@ -147,7 +147,7 @@ public abstract class FreezoneMap
 	public void updateOtherPlayers(JsonValue data)
 	{
 		String dataname = data.asObject().getString("name", "");
-		if (Persistance.player.name().equals(dataname)) return;
+		if (Persistence.player.name().equals(dataname)) return;
 		double pfx = data.asObject().getDouble("posfx", 0d);
 		double pfy = data.asObject().getDouble("posfy", 0d);
 		int spriteID = Integer.parseInt(data.asObject().getString("currentpokemon", "0"));

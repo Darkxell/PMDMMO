@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.state.dialog.DialogScreen;
 import com.darkxell.client.state.menu.components.MenuWindow;
@@ -173,7 +173,7 @@ public class DungeonLogger
 	/** Shows a message to the player. */
 	public void showMessage(Message message)
 	{
-		message.addReplacement("<player>", Persistance.player.getTeamLeader().getNickname());
+		message.addReplacement("<player>", Persistence.player.getTeamLeader().getNickname());
 		this.log.add(message);
 		this.messages.add(message);
 		if (this.log.size() > 40) this.log.poll();

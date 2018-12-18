@@ -2,7 +2,7 @@ package com.darkxell.client.mechanics.freezones;
 
 import java.util.ArrayList;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.renderers.pokemon.AbstractPokemonRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
@@ -46,27 +46,27 @@ public class FreezonePlayer
 	/** Returns false if the player would collide in a solid tile/tileentity if it were at the wanted location, true otherwise. */
 	public boolean canBeAt(double x, double y)
 	{
-		if (Persistance.currentmap == null) return true;
+		if (Persistence.currentmap == null) return true;
 		DoubleRectangle hbx = getHitboxAt(x, y);
-		ArrayList<FreezoneEntity> entities = Persistance.currentmap.entities();
+		ArrayList<FreezoneEntity> entities = Persistence.currentmap.entities();
 		for (int i = 0; i < entities.size(); i++)
 		{
 			FreezoneEntity ety = entities.get(i);
 			if (ety.isSolid && ety.getHitbox(ety.posX, ety.posY).intersects(this.getHitboxAt(x, y))) return false;
 		}
 
-		if (Persistance.currentmap.getTileTypeAt(hbx.x, hbx.y) == FreezoneTile.TYPE_SOLID) return false;
-		if (Persistance.currentmap.getTileTypeAt(hbx.x, hbx.y + hbx.height) == FreezoneTile.TYPE_SOLID) return false;
-		if (Persistance.currentmap.getTileTypeAt(hbx.x + hbx.width, hbx.y) == FreezoneTile.TYPE_SOLID) return false;
-		if (Persistance.currentmap.getTileTypeAt(hbx.x + hbx.width, hbx.y + hbx.height) == FreezoneTile.TYPE_SOLID) return false;
+		if (Persistence.currentmap.getTileTypeAt(hbx.x, hbx.y) == FreezoneTile.TYPE_SOLID) return false;
+		if (Persistence.currentmap.getTileTypeAt(hbx.x, hbx.y + hbx.height) == FreezoneTile.TYPE_SOLID) return false;
+		if (Persistence.currentmap.getTileTypeAt(hbx.x + hbx.width, hbx.y) == FreezoneTile.TYPE_SOLID) return false;
+		if (Persistence.currentmap.getTileTypeAt(hbx.x + hbx.width, hbx.y + hbx.height) == FreezoneTile.TYPE_SOLID) return false;
 		return true;
 	}
 
 	/** Returns true if the player can interact with something in it's current position. */
 	public boolean canInteract()
 	{
-		if (Persistance.currentmap == null) return false;
-		ArrayList<FreezoneEntity> entities = Persistance.currentmap.entities();
+		if (Persistence.currentmap == null) return false;
+		ArrayList<FreezoneEntity> entities = Persistence.currentmap.entities();
 		for (int i = 0; i < entities.size(); ++i)
 		{
 			FreezoneEntity et = entities.get(i);
@@ -130,8 +130,8 @@ public class FreezonePlayer
 	/** Returns the first entity found the player can interact with. */
 	public FreezoneEntity getInteractionTarget()
 	{
-		if (Persistance.currentmap == null) return null;
-		ArrayList<FreezoneEntity> entities = Persistance.currentmap.entities();
+		if (Persistence.currentmap == null) return null;
+		ArrayList<FreezoneEntity> entities = Persistence.currentmap.entities();
 		for (int i = 0; i < entities.size(); i++)
 		{
 			FreezoneEntity et = entities.get(i);
@@ -225,7 +225,7 @@ public class FreezonePlayer
 
 	public void setPlayer(Player player)
 	{
-		Persistance.player = player;
+		Persistence.player = player;
 		if (player != null) this.updateSprite();
 	}
 
@@ -236,7 +236,7 @@ public class FreezonePlayer
 
 	public void update()
 	{
-		if (Persistance.player != null && Persistance.player.getTeamLeader().species().id != this.playersprite.pointer.data.id) this.updateSprite();
+		if (Persistence.player != null && Persistence.player.getTeamLeader().species().id != this.playersprite.pointer.data.id) this.updateSprite();
 		this.renderer.update();
 		this.renderer.setXY(this.x * 8, this.y * 8);
 		double truemovespeed = isSprinting ? MOVESPEED * 2 : MOVESPEED;
@@ -248,7 +248,7 @@ public class FreezonePlayer
 
 	private void updateSprite()
 	{
-		PokemonSprite sprite = new PokemonSprite(PokemonSpritesets.getSpriteset(Persistance.player.getTeamLeader()));
+		PokemonSprite sprite = new PokemonSprite(PokemonSpritesets.getSpriteset(Persistence.player.getTeamLeader()));
 		sprite.copyState(this.playersprite);
 		this.playersprite = sprite;
 		this.renderer = new AbstractPokemonRenderer(this.playersprite);

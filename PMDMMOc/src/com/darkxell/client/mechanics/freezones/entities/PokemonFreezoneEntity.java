@@ -1,6 +1,6 @@
 package com.darkxell.client.mechanics.freezones.entities;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.freezones.FreezoneEntity;
 import com.darkxell.client.renderers.AbstractRenderer;
 import com.darkxell.client.renderers.pokemon.FreezonePokemonRenderer;
@@ -50,7 +50,7 @@ public class PokemonFreezoneEntity extends FreezoneEntity
 	@Override
 	public void onInteract()
 	{
-		Persistance.stateManager.setState(new DialogState(Persistance.stateManager.getCurrentState(), null, this.dialogs).setOpaque(true));
+		Persistence.stateManager.setState(new DialogState(Persistence.stateManager.getCurrentState(), null, this.dialogs).setOpaque(true));
 	}
 
 	@Override

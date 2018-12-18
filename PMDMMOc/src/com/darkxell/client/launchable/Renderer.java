@@ -21,12 +21,12 @@ public class Renderer implements Runnable {
 	}
 
 	private void render() {
-		BufferStrategy bf = Persistance.frame.canvas.getBufferStrategy();
+		BufferStrategy bf = Persistence.frame.canvas.getBufferStrategy();
 		Graphics2D g = (Graphics2D) bf.getDrawGraphics();
-		int width = Persistance.frame.canvas.getWidth(), height = Persistance.frame.canvas.getHeight();
+		int width = Persistence.frame.canvas.getWidth(), height = Persistence.frame.canvas.getHeight();
 		g.clearRect(0, 0, width, height);
 
-		Persistance.stateManager.render(g, width, height);
+		Persistence.stateManager.render(g, width, height);
 
 		g.dispose();
 		bf.show();

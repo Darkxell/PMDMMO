@@ -3,7 +3,7 @@ package com.darkxell.client.state.menu.freezone;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.state.StateManager;
 import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
@@ -46,7 +46,7 @@ public class FriendmapSelectionState extends OptionSelectionMenuState {
 
 	@Override
 	protected void onExit() {
-		Persistance.stateManager.setState(this.parent);
+		Persistence.stateManager.setState(this.parent);
 	}
 
 	@Override

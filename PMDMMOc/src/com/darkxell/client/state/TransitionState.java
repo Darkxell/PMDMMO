@@ -3,7 +3,7 @@ package com.darkxell.client.state;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.state.dialog.NarratorDialogScreen;
 import com.darkxell.client.ui.Keys.Key;
@@ -93,7 +93,7 @@ public class TransitionState extends AbstractState
 		}
 		if (this.tick == this.stayEnd) this.current = this.next;
 
-		if (this.tick >= this.duration) Persistance.stateManager.setState(this.next);
+		if (this.tick >= this.duration) Persistence.stateManager.setState(this.next);
 
 		this.alpha = 0;
 		if (this.tick < this.fadeIn) this.alpha = this.fadeIn == 0 ? 0 : this.tick * 255 / this.fadeIn;

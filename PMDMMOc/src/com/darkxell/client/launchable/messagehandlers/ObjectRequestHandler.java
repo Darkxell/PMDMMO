@@ -1,6 +1,6 @@
 package com.darkxell.client.launchable.messagehandlers;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.PlayerLoadingState;
 import com.darkxell.common.util.Logger;
@@ -28,7 +28,7 @@ public class ObjectRequestHandler extends MessageHandler
 		switch (type)
 		{
 			case "dbplayer":
-				AbstractState state = Persistance.stateManager.getCurrentState();
+				AbstractState state = Persistence.stateManager.getCurrentState();
 				if (state != null && state instanceof PlayerLoadingState) ((PlayerLoadingState) state).onPlayerReceived(message.get("object").asObject());
 				break;
 

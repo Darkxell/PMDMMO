@@ -5,7 +5,7 @@ import static com.darkxell.client.resources.images.tilesets.AbstractDungeonTiles
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.renderers.AbstractRenderer;
 import com.darkxell.client.renderers.MasterDungeonRenderer;
 import com.darkxell.client.resources.images.Sprites.Res_Dungeon;
@@ -25,7 +25,7 @@ public class FloorRenderer extends AbstractRenderer
 	public FloorRenderer()
 	{
 		super(0, 0, MasterDungeonRenderer.LAYER_TILES);
-		this.floor = Persistance.floor;
+		this.floor = Persistence.floor;
 		this.tileset = RegularFloorDungeonTileset.load(this.floor);
 	}
 

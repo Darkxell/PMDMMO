@@ -3,7 +3,7 @@ package com.darkxell.client.state.menu.menus;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.launchable.UpdaterAndRenderer;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.renderers.layers.AbstractGraphiclayer;
@@ -87,7 +87,7 @@ public class EditControlState extends AbstractState
 		if (this.tick >= TICKMAX)
 		{
 			SoundManager.playSound("ui-back");
-			Persistance.stateManager.setState(this.parent);
+			Persistence.stateManager.setState(this.parent);
 		}
 	}
 
