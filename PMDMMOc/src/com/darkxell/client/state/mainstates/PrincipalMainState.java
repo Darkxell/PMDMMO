@@ -148,18 +148,19 @@ public class PrincipalMainState extends StateManager
 		g2.dispose();
 
 		// Calculates various values to draw the components to the window
-		gamewidth = (int) (0.6 * height * displayWidth / displayHeight <= 0.6 * width ? 0.6 * height * displayWidth / displayHeight : 0.6 * width);
+		double kappa = 0.68 * height * displayWidth / displayHeight;
+		gamewidth = (int) (kappa <= 0.68 * width ? kappa : 0.68 * width);
 		gameheight = gamewidth * displayHeight / displayWidth;
-		gamex = (int) (width * 0.35);
-		gamey = (int) (height * 0.35);
+		gamex = (int) (width * 0.30);
+		gamey = (int) (height * 0.30);
 		mapsize = (int) (gamewidth / 2 >= height * 0.25 ? height * 0.25 : gamewidth / 2);
 		mapx = (int) (width * 0.95) - mapsize < gamex + gamewidth - mapsize ? (int) (width * 0.95) - mapsize : gamex + gamewidth - mapsize;
-		mapy = (int) (height * 0.05);
-		chatwidth = (int) (width * 0.25);
-		chatheight = (int) (height * 0.9);
-		chatx = (int) (width * 0.05);
-		chaty = (int) (height * 0.05);
-		teamwidth = (int) (gamewidth - mapsize - width * 0.05);
+		mapy = (int) (height * 0.02);
+		chatwidth = (int) (width * 0.225);
+		chatheight = (int) (height * 0.96);
+		chatx = (int) (width * 0.02);
+		chaty = (int) (height * 0.02);
+		teamwidth = (int) (mapx - gamex - 40);
 
 		// Draws the background
 		MainUiUtility.drawBackground(g, width, height, backgroundID);
