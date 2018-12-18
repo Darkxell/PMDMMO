@@ -11,7 +11,7 @@ import com.darkxell.common.util.XMLUtils;
 public class RotateCutsceneEvent extends CutsceneEvent
 {
 
-	public static final int DEFAULT_SPEED = 10;
+	public static final int DEFAULT_SPEED = 5;
 
 	private int currentDistance;
 	public final int distance;
