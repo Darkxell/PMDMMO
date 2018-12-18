@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
+import com.darkxell.common.Registries;
 import com.darkxell.common.dungeon.data.Dungeon;
 import com.darkxell.common.dungeon.data.Dungeon.DungeonDirection;
 import com.darkxell.common.dungeon.data.DungeonEncounter;
@@ -142,11 +143,13 @@ public class EditDungeonDataController implements Initializable
 		this.recruitsCheckbox.setSelected(dungeon.recruitsAllowed);
 		this.directionCombobox.setValue(dungeon.direction);
 
+		DungeonRegistry dungeons = Registries.dungeons();
+
 		this.linkedCheckbox.setSelected(dungeon.linkedTo != -1);
 		this.linkedCombobox.getItems().clear();
-		this.linkedCombobox.getItems().addAll(DungeonRegistry.list());
+		this.linkedCombobox.getItems().addAll(dungeons.toList());
 		this.linkedCombobox.getItems().remove(DungeonsTabController.instance.currentDungeon);
-		if (this.linkedCheckbox.isSelected()) this.linkedCombobox.setValue(DungeonRegistry.find(dungeon.linkedTo));
+		if (this.linkedCheckbox.isSelected()) this.linkedCombobox.setValue(dungeons.find(dungeon.linkedTo));
 	}
 
 }

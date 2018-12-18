@@ -12,6 +12,7 @@ import com.darkxell.client.mechanics.cutscene.end.EnterDungeonCutsceneEnd;
 import com.darkxell.client.mechanics.cutscene.end.LoadFreezoneCutsceneEnd;
 import com.darkxell.client.mechanics.cutscene.end.PlayCutsceneCutsceneEnd;
 import com.darkxell.client.mechanics.cutscene.end.ResumeExplorationCutsceneEnd;
+import com.darkxell.common.Registries;
 import com.darkxell.common.dungeon.data.Dungeon;
 import com.darkxell.common.dungeon.data.DungeonRegistry;
 import com.darkxell.common.util.Direction;
@@ -127,7 +128,7 @@ public class CutsceneEndController implements Initializable, ChangeListener<Cuts
 
 		this.facingCheckbox.selectedProperty().addListener((x, oldValue, newValue) -> this.directionCombobox.setDisable(!newValue));
 
-		this.dungeonCombobox.getItems().addAll(DungeonRegistry.list());
+		this.dungeonCombobox.getItems().addAll(Registries.dungeons().toList());
 		this.modeCombobox.getItems().addAll(CutsceneEndMode.values());
 		this.freezoneCombobox.getItems().addAll(FreezoneInfo.values());
 		this.directionCombobox.getItems().addAll(Direction.directions);
@@ -155,7 +156,7 @@ public class CutsceneEndController implements Initializable, ChangeListener<Cuts
 		}
 		if (end instanceof EnterDungeonCutsceneEnd)
 		{
-			this.dungeonCombobox.getSelectionModel().select(DungeonRegistry.find(((EnterDungeonCutsceneEnd) end).dungeonID));
+			this.dungeonCombobox.getSelectionModel().select(Registries.dungeons().find(((EnterDungeonCutsceneEnd) end).dungeonID));
 			this.modeCombobox.getSelectionModel().select(CutsceneEndMode.DUNGEON);
 		}
 		if (end instanceof LoadFreezoneCutsceneEnd)

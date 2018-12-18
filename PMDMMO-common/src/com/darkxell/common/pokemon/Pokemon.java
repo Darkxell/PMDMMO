@@ -1,9 +1,6 @@
 package com.darkxell.common.pokemon;
 
-import java.util.ArrayList;
-
-import org.jdom2.Element;
-
+import com.darkxell.common.Registries;
 import com.darkxell.common.dbobject.DBPokemon;
 import com.darkxell.common.dbobject.DatabaseIdentifier;
 import com.darkxell.common.dungeon.TempIDRegistry.HasID;
@@ -20,6 +17,9 @@ import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.ability.Ability;
 import com.darkxell.common.util.XMLUtils;
 import com.darkxell.common.util.language.Message;
+import org.jdom2.Element;
+
+import java.util.ArrayList;
 
 public class Pokemon implements ItemContainer, HasID
 {
@@ -321,7 +321,7 @@ public class Pokemon implements ItemContainer, HasID
 		this.data = data;
 		this.item = null;
 		this.moves = new LearnedMove[4];
-		this.species = PokemonRegistry.find(this.data.specieid);
+		this.species = Registries.species().find(this.data.specieid);
 		this.stats = new BaseStats(this, this.data.stat_atk, this.data.stat_def, this.data.stat_hp, this.data.stat_speatk, this.data.stat_spedef, 1);
 	}
 

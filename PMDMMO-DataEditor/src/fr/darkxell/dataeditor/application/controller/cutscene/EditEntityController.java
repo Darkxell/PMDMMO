@@ -10,6 +10,7 @@ import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
 import com.darkxell.client.mechanics.cutscene.entity.CutscenePokemon;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
+import com.darkxell.common.Registries;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.pokemon.PokemonSpecies;
@@ -93,7 +94,7 @@ public class EditEntityController implements Initializable
 		});
 		this.modeCombobox.getSelectionModel().select(0);
 
-		this.speciesCombobox.getItems().addAll(PokemonRegistry.list());
+		this.speciesCombobox.getItems().addAll(Registries.species().toList());
 		this.speciesCombobox.getSelectionModel().select(1);
 
 		this.stateCombobox.getItems().addAll(PokemonSpriteState.values());
@@ -153,7 +154,7 @@ public class EditEntityController implements Initializable
 			} else
 			{
 				this.modeCombobox.getSelectionModel().select(0);
-				this.speciesCombobox.getSelectionModel().select(PokemonRegistry.find(pokemon.pokemonid));
+				this.speciesCombobox.getSelectionModel().select(Registries.species().find(pokemon.pokemonid));
 			}
 		}
 	}

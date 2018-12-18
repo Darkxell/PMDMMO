@@ -1,12 +1,11 @@
 package com.darkxell.common.pokemon;
 
-import org.jdom2.Element;
-
+import com.darkxell.common.Registries;
 import com.darkxell.common.dbobject.DBLearnedmove;
 import com.darkxell.common.dungeon.TempIDRegistry.HasID;
 import com.darkxell.common.move.Move;
-import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.util.XMLUtils;
+import org.jdom2.Element;
 
 public class LearnedMove implements HasID
 {
@@ -25,7 +24,7 @@ public class LearnedMove implements HasID
 	public LearnedMove(int moveid)
 	{
 		this(new DBLearnedmove(0, 4, moveid, 1, true, false, 0));
-		Move m = MoveRegistry.find(moveid);
+		Move m = Registries.moves().find(moveid);
 		if (m != null)
 		{
 			this.setMaxPP(m.pp);
@@ -87,7 +86,7 @@ public class LearnedMove implements HasID
 	public void setData(DBLearnedmove data)
 	{
 		this.data = data;
-		this.move = MoveRegistry.find(this.data.moveid);
+		this.move = Registries.moves().find(this.data.moveid);
 		this.setPP(data.ppmax);
 	}
 

@@ -10,6 +10,7 @@ import com.darkxell.client.resources.images.Sprites.Res_Hud;
 import com.darkxell.client.resources.images.Sprites.Res_Map;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
 import com.darkxell.client.resources.images.tilesets.FloorDungeonTileset;
+import com.darkxell.common.Registries;
 import com.darkxell.common.dungeon.DungeonExploration;
 import com.darkxell.common.dungeon.data.Dungeon;
 import com.darkxell.common.dungeon.data.DungeonEncounter;
@@ -45,10 +46,11 @@ public final class SpriteLoader
 	private static void loadFloor(Dungeon dungeon, int floor)
 	{
 		add(FloorDungeonTileset.getTilesetPath(dungeon, floor));
+		PokemonRegistry species = Registries.species();
 		for (DungeonEncounter e : dungeon.pokemon(floor))
 		{
-			PokemonSpritesets.loadSpriteset(PokemonRegistry.find(e.id), false);
-			PokemonSpritesets.loadSpriteset(PokemonRegistry.find(e.id), true);
+			PokemonSpritesets.loadSpriteset(species.find(e.id), false);
+			PokemonSpritesets.loadSpriteset(species.find(e.id), true);
 		}
 	}
 

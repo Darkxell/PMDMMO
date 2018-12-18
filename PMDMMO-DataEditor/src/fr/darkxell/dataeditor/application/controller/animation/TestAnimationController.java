@@ -15,6 +15,7 @@ import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteS
 import com.darkxell.client.state.dungeon.AnimationState;
 import com.darkxell.client.state.dungeon.DungeonState;
 import com.darkxell.client.state.mainstates.PrincipalMainState;
+import com.darkxell.common.Registries;
 import com.darkxell.common.dungeon.data.DungeonRegistry;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.layout.Layout;
@@ -62,7 +63,7 @@ public class TestAnimationController implements Initializable
 	private DungeonPokemon generateTester()
 	{
 		PokemonSpecies s = this.pokemonCombobox.getValue();
-		if (s == null) s = PokemonRegistry.find(1);
+		if (s == null) s = Registries.species().find(1);
 		DungeonPokemon pokemon = new DungeonPokemon(s.generate(new Random(), 1, this.shinyCheckbox.isSelected() ? 1 : 0));
 		floor.summonPokemon(pokemon, floor.getWidth() / 2, floor.getHeight() / 2, new ArrayList<>());
 		pokemon.setFacing(this.directionCombobox.getValue());
@@ -75,7 +76,7 @@ public class TestAnimationController implements Initializable
 	public void initialize(URL location, ResourceBundle resources)
 	{
 
-		this.pokemonCombobox.getItems().addAll(PokemonRegistry.list());
+		this.pokemonCombobox.getItems().addAll(Registries.species().toList());
 		this.stateCombobox.getItems().addAll(PokemonSpriteState.values());
 		this.directionCombobox.getItems().addAll(Direction.directions);
 
@@ -128,7 +129,7 @@ public class TestAnimationController implements Initializable
 	public void reload()
 	{
 		floor = Persistence.floor = new Floor(1, Layout.find(Layout.LAYOUT_SINGLEROOM),
-				Persistence.dungeon = DungeonRegistry.find(1).newInstance(new Random().nextLong()), new Random(), false);
+				Persistence.dungeon = Registries.dungeons().find(1).newInstance(new Random().nextLong()), new Random(), false);
 		floor.generate();
 		state = Persistence.dungeonState = new DungeonState();
 

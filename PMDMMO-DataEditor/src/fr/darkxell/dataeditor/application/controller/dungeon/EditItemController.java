@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import com.darkxell.common.Registries;
 import com.darkxell.common.dungeon.data.DungeonItemGroup;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.ItemRegistry;
@@ -70,7 +71,7 @@ public class EditItemController implements Initializable
 		this.itemColumn.setCellValueFactory(new PropertyValueFactory<>("item"));
 		this.weightColumn.setCellValueFactory(new PropertyValueFactory<>("weight"));
 
-		ArrayList<Item> items = ItemRegistry.list();
+		ArrayList<Item> items = Registries.items().toList();
 		Item[] t = new Item[items.size()];
 		for (int i = 0; i < t.length; ++i)
 			t[i] = items.get(i);
@@ -80,7 +81,7 @@ public class EditItemController implements Initializable
 
 	public void onAdd()
 	{
-		this.itemsTable.getItems().add(new SingleItemTableItem(ItemRegistry.find(Item.POKEDOLLARS), 1));
+		this.itemsTable.getItems().add(new SingleItemTableItem(Registries.items().find(Item.POKEDOLLARS), 1));
 	}
 
 	public void onItemEdited(CellEditEvent<SingleItemTableItem, Item> cell)
@@ -130,7 +131,8 @@ public class EditItemController implements Initializable
 		{
 			this.weightTextfield.setText(String.valueOf(item.getWeight()));
 			for (int i = 0; i < item.itemGroup.items.length; ++i)
-				this.itemsTable.getItems().add(new SingleItemTableItem(ItemRegistry.find(item.itemGroup.items[i]), item.itemGroup.chances[i]));
+				this.itemsTable.getItems().add(new SingleItemTableItem(Registries.items().find(item.itemGroup.items[i]),
+						item.itemGroup.chances[i]));
 			this.floorsetController.setupFor(item.getFloors());
 		}
 	}

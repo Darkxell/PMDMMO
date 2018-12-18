@@ -1,68 +1,36 @@
 package com.darkxell.common.dungeon.data;
 
-import java.io.File;
-import java.util.Collection;
-import java.util.HashMap;
-
+import com.darkxell.common.Registry;
 import org.jdom2.Element;
 
-import com.darkxell.common.pokemon.PokemonRegistry;
-import com.darkxell.common.util.Logger;
-import com.darkxell.common.util.XMLUtils;
+import java.io.IOException;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.List;
 
-/** Holds all Dungeons. */
-public final class DungeonRegistry
-{
+/**
+ * Holds all Dungeons.
+ */
+public final class DungeonRegistry extends Registry<Dungeon> {
+    protected Element serializeDom(HashMap<Integer, Dungeon> dungeons) {
+        Element xml = new Element("dungeons");
+        for (Dungeon dungeon : dungeons.values()) {
+            xml.addContent(dungeon.toXML());
+        }
+        return xml;
+    }
 
-	private static HashMap<Integer, Dungeon> dungeons = new HashMap<Integer, Dungeon>();
+    protected HashMap<Integer, Dungeon> deserializeDom(Element root) {
+        List<Element> dungeonElements = root.getChildren("dungeon", root.getNamespace());
+        HashMap<Integer, Dungeon> dungeons = new HashMap<>(dungeonElements.size());
+        for (Element e : dungeonElements) {
+            Dungeon dungeon = new Dungeon(e);
+            dungeons.put(dungeon.id, dungeon);
+        }
+        return dungeons;
+    }
 
-	/** @return The Dungeon with the input ID. */
-	public static Dungeon find(int id)
-	{
-		return dungeons.get(id);
-	}
-
-	/** @return All Dungeons. */
-	public static Collection<Dungeon> list()
-	{
-		return dungeons.values();
-	}
-
-	/** Loads this Registry for the Client. */
-	public static void load()
-	{
-		Logger.i("Loading Dungeons...");
-
-		Element root = XMLUtils.read(PokemonRegistry.class.getResourceAsStream("/data/dungeons.xml"));
-		for (Element e : root.getChildren("dungeon", root.getNamespace()))
-		{
-			Dungeon dungeon = new Dungeon(e);
-			register(dungeon);
-		}
-	}
-
-	public static void register(Dungeon dungeon)
-	{
-		dungeons.put(dungeon.id, dungeon);
-	}
-
-	public static void save(File file)
-	{
-		Element xml = new Element("dungeons");
-		for (Dungeon dungeon : dungeons.values())
-			xml.addContent(dungeon.toXML());
-		XMLUtils.saveFile(file, xml);
-	}
-
-	/** Saves this Registry for the Client. */
-	public static void saveClient()
-	{
-		save(new File("resources/data/dungeons.xml"));
-	}
-
-	public static void unregister(int id)
-	{
-		dungeons.remove(id);
-	}
-
+    public DungeonRegistry(URL registryURL) throws IOException {
+        super(registryURL, "Dungeons");
+    }
 }

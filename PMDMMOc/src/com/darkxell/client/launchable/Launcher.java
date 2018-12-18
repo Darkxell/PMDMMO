@@ -13,14 +13,12 @@ import com.darkxell.client.resources.music.SoundManager;
 import com.darkxell.client.resources.music.SoundsHolder;
 import com.darkxell.client.state.mainstates.LoginMainState;
 import com.darkxell.client.ui.Frame;
-import com.darkxell.common.dungeon.data.DungeonRegistry;
-import com.darkxell.common.item.ItemRegistry;
-import com.darkxell.common.move.MoveRegistry;
-import com.darkxell.common.pokemon.PokemonRegistry;
-import com.darkxell.common.trap.TrapRegistry;
+import com.darkxell.common.Registries;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.language.Localization;
 import com.darkxell.common.util.language.Message;
+
+import java.io.IOException;
 
 /** Launching class of the client */
 public class Launcher
@@ -45,11 +43,7 @@ public class Launcher
 			JOptionPane.showMessageDialog(null, new Message("error.loading.sprite_factory"), new Message("error").toString(), JOptionPane.ERROR_MESSAGE);
 			System.exit(0);
 		}
-		PokemonRegistry.load();
-		MoveRegistry.load();
-		ItemRegistry.load();
-		TrapRegistry.load();
-		DungeonRegistry.load();
+		Registries.load();
 		SpriteLoader.loadCommon();
 		PokemonSpritesets.loadData();
 		PokemonPortrait.load();
@@ -89,10 +83,12 @@ public class Launcher
 		ClientSettings.save();
 		if (Persistence.saveDataOnExit)
 		{
-			PokemonRegistry.saveClient();
-			MoveRegistry.saveClient();
-			ItemRegistry.saveClient();
-			DungeonRegistry.saveClient();
+			try {
+				Registries.save();
+			} catch (IOException e) {
+				Logger.e("Could not save registries: " + e);
+				e.printStackTrace();
+			}
 		}
 		System.exit(0);
 	}

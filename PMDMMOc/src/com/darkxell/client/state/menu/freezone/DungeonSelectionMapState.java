@@ -18,9 +18,9 @@ import com.darkxell.client.state.freezone.FreezoneExploreState;
 import com.darkxell.client.state.menu.components.MenuWindow;
 import com.darkxell.client.state.menu.components.TextWindow;
 import com.darkxell.client.ui.Keys.Key;
+import com.darkxell.common.Registries;
 import com.darkxell.common.dungeon.DungeonAccessibility;
 import com.darkxell.common.dungeon.data.Dungeon;
-import com.darkxell.common.dungeon.data.DungeonRegistry;
 import com.darkxell.common.mission.InvalidParammetersException;
 import com.darkxell.common.mission.Mission;
 import com.darkxell.common.util.Direction;
@@ -41,7 +41,7 @@ public class DungeonSelectionMapState extends AbstractState {
 	public DungeonSelectionMapState() {
 		super();
 		ArrayList<Dungeon> dungeons = new ArrayList<Dungeon>();
-		dungeons.addAll(DungeonRegistry.list());
+		dungeons.addAll(Registries.dungeons().toList());
 		dungeons.sort(Comparator.naturalOrder());
 		dungeons.removeIf(new Predicate<Dungeon>() {
 

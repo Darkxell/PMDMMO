@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.Comparator;
 import java.util.ResourceBundle;
 
+import com.darkxell.common.Registries;
 import com.darkxell.common.dungeon.data.DungeonEncounter;
 import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.pokemon.PokemonSpecies;
@@ -44,7 +45,7 @@ public class EditEncounterController implements Initializable
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
 	{
-		this.pokemonCombobox.getItems().addAll(PokemonRegistry.list());
+		this.pokemonCombobox.getItems().addAll(Registries.species().toList());
 		this.pokemonCombobox.getItems().sort(Comparator.naturalOrder());
 		this.pokemonCombobox.getSelectionModel().select(0);
 	}

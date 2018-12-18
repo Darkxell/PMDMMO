@@ -1,5 +1,6 @@
 package fr.darkxell.dataeditor.application.data.floortable;
 
+import com.darkxell.common.Registries;
 import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.PokemonType;
 
@@ -13,7 +14,7 @@ public abstract class FloorTableItem<T, D> implements Comparable<FloorTableItem<
 {
 	public static final FloorTableBoolean defaultBoolean = new FloorTableBoolean(1, false);
 	public static final FloorTableInteger defaultInteger = new FloorTableInteger(1, 1);
-	public static final FloorTableMove defaultMove = new FloorTableMove(1, MoveRegistry.find(1));
+	public static final FloorTableMove defaultMove = new FloorTableMove(1, Registries.moves().find(1));
 	public static final FloorTablePokemonType defaultPokemonType = new FloorTablePokemonType(1, PokemonType.Unknown);
 	public static final FloorTableString defaultString = new FloorTableString(1, "");
 

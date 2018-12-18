@@ -1,19 +1,19 @@
 package com.darkxell.common.item;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-
-import org.jdom2.Element;
-
+import com.darkxell.common.Registrable;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.pokemon.AffectsPokemon;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.XMLUtils;
 import com.darkxell.common.util.language.Message;
+import org.jdom2.Element;
+
+import java.util.ArrayList;
+import java.util.Comparator;
 
 /** Represents an Item type. */
-public class Item implements AffectsPokemon, Comparable<Item>
+public class Item implements AffectsPokemon, Registrable<Item>
 {
 	/** Possible actions to be executed on an Item. */
 	public static enum ItemAction
@@ -142,6 +142,10 @@ public class Item implements AffectsPokemon, Comparable<Item>
 		this.effectID = effectID;
 		this.isStackable = stackable;
 		this.isRare = rare;
+	}
+
+	public int getID() {
+		return this.id;
 	}
 
 	@Override

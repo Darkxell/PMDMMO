@@ -10,11 +10,9 @@ import com.darkxell.client.resources.images.Sprite;
 import com.darkxell.client.resources.images.Sprites.Res_Hud;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.ui.Keys.Key;
-import com.darkxell.common.dungeon.data.DungeonRegistry;
-import com.darkxell.common.item.ItemRegistry;
+import com.darkxell.common.Registries;
 import com.darkxell.common.mission.InvalidParammetersException;
 import com.darkxell.common.mission.Mission;
-import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.language.Message;
 import com.eclipsesource.json.Json;
@@ -124,14 +122,14 @@ public class MissionBoardState extends AbstractState {
 		g.fillRect(0, 0, width, height);
 		// 1st line
 		Message m = new Message(mission.getMissionFlavor().summaryid);
-		m.addReplacement("<pokemon>", PokemonRegistry.find(mission.getPokemonid2()).speciesName());
-		m.addReplacement("<item>", ItemRegistry.find(mission.getItemid()).name());
+		m.addReplacement("<pokemon>", Registries.species().find(mission.getPokemonid2()).speciesName());
+		m.addReplacement("<item>", Registries.items().find(mission.getItemid()).name());
 		TextRenderer.render(g, m, 5, 5);
 		TextRenderer.render(g, mission.getDifficulty(), width - 10, 5);
 		// 2nd line
-		int dungeontextlength = TextRenderer.width(DungeonRegistry.find(mission.getDungeonid()).name());
+		int dungeontextlength = TextRenderer.width(Registries.dungeons().find(mission.getDungeonid()).name());
 		TextRenderer.setColor(Color.YELLOW);
-		TextRenderer.render(g, DungeonRegistry.find(mission.getDungeonid()).name(), 5, 15);
+		TextRenderer.render(g, Registries.dungeons().find(mission.getDungeonid()).name(), 5, 15);
 		TextRenderer.render(g, new Message("mission.floor") + " <blue>" + mission.getFloor() + "</color>",
 				15 + dungeontextlength, 15);
 	}

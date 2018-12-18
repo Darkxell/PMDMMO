@@ -14,9 +14,9 @@ import com.darkxell.client.mechanics.cutscene.entity.CutscenePokemon;
 import com.darkxell.client.renderers.pokemon.AbstractPokemonRenderer;
 import com.darkxell.client.resources.images.Sprites;
 import com.darkxell.client.state.dungeon.ProjectileAnimationState.ProjectileMovement;
+import com.darkxell.common.Registries;
 import com.darkxell.common.event.stats.StatChangedEvent;
 import com.darkxell.common.item.Item;
-import com.darkxell.common.item.ItemRegistry;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.DungeonPokemon;
@@ -115,6 +115,9 @@ public final class Animations
 		if (!id.contains("/")) return getCustomAnimation(target, Integer.parseInt(id), listener);
 		String group = id.substring(0, id.indexOf("/"));
 		int anim = Integer.parseInt(id.substring(id.indexOf("/") + 1, id.length()));
+
+		MoveRegistry moves = Registries.moves();
+
 		switch (group.toLowerCase())
 		{
 			case "custom":
@@ -124,10 +127,10 @@ public final class Animations
 				return getAbilityAnimation(target, Ability.find(anim), listener);
 
 			case "items":
-				return getItemAnimation(target, ItemRegistry.find(anim), listener);
+				return getItemAnimation(target, Registries.items().find(anim), listener);
 
 			case "moves":
-				return getMoveAnimation(target, MoveRegistry.find(anim), listener);
+				return getMoveAnimation(target, moves.find(anim), listener);
 
 			case "projectiles":
 				return getProjectileAnimation(target, anim, listener);
@@ -137,7 +140,7 @@ public final class Animations
 
 			case "movetargets":
 			case "targets":
-				return getMoveTargetAnimation(target, MoveRegistry.find(anim), listener);
+				return getMoveTargetAnimation(target, moves.find(anim), listener);
 
 			default:
 				return null;
@@ -332,7 +335,7 @@ public final class Animations
 		if (data == null) return false;
 		if (data.clones != null)
 		{
-			if (data.clones.startsWith("moves/")) return movePlaysForEachTarget(MoveRegistry.find(Integer.parseInt(data.clones.substring("moves/".length()))));
+			if (data.clones.startsWith("moves/")) return movePlaysForEachTarget(Registries.moves().find(Integer.parseInt(data.clones.substring("moves/".length()))));
 			return false;
 		}
 		return data.playsForEachTarget;

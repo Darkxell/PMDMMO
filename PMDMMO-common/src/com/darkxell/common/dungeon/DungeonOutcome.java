@@ -1,9 +1,8 @@
 package com.darkxell.common.dungeon;
 
+import com.darkxell.common.Registries;
 import com.darkxell.common.dungeon.data.Dungeon;
-import com.darkxell.common.dungeon.data.DungeonRegistry;
 import com.darkxell.common.move.Move;
-import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.util.Communicable;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonObject;
@@ -50,7 +49,7 @@ public class DungeonOutcome implements Communicable
 
 	public Dungeon dungeon()
 	{
-		return DungeonRegistry.find(this.dungeonID);
+		return Registries.dungeons().find(this.dungeonID);
 	}
 
 	public int getDungeonID()
@@ -75,7 +74,7 @@ public class DungeonOutcome implements Communicable
 
 	public Move koMove()
 	{
-		return MoveRegistry.find(this.moveID);
+		return Registries.moves().find(this.moveID);
 	}
 
 	@Override

@@ -1,12 +1,12 @@
 package com.darkxell.common.ai;
 
-import java.util.HashMap;
-
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.action.TurnSkippedEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Logger;
+
+import java.util.HashMap;
 
 /** Class holding AI objects for Pokemon in a Dungeon. */
 public class AIManager

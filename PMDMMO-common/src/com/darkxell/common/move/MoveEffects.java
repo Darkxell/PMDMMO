@@ -1,50 +1,13 @@
 package com.darkxell.common.move;
 
-import java.util.Collection;
-import java.util.HashMap;
-
-import com.darkxell.common.move.effects.ApplyStatusConditionEffect;
-import com.darkxell.common.move.effects.BlowbackRandomEffect;
-import com.darkxell.common.move.effects.CannotKOEffect;
-import com.darkxell.common.move.effects.CantMissEffect;
-import com.darkxell.common.move.effects.CompoundEffect;
-import com.darkxell.common.move.effects.CopyStatChangesEffect;
-import com.darkxell.common.move.effects.CreateFloorStatusEffect;
-import com.darkxell.common.move.effects.CureAilmentsEffect;
-import com.darkxell.common.move.effects.DestroyTrapEffect;
-import com.darkxell.common.move.effects.DoubleDamageEffect;
-import com.darkxell.common.move.effects.DoubleIfTargetAilmentEffect;
-import com.darkxell.common.move.effects.DrainEffect;
-import com.darkxell.common.move.effects.DropItemEffect;
-import com.darkxell.common.move.effects.DropsMoneyOnKillEffect;
-import com.darkxell.common.move.effects.EscapeDungeonEffect;
-import com.darkxell.common.move.effects.FixedDamageEffect;
-import com.darkxell.common.move.effects.HPDifferenceDamageEffect;
-import com.darkxell.common.move.effects.HPMultiplierEffect;
-import com.darkxell.common.move.effects.HPRecoilEffect;
-import com.darkxell.common.move.effects.MultipleAttacksEffect;
-import com.darkxell.common.move.effects.MultipleAttacksMissingStopsEffect;
-import com.darkxell.common.move.effects.MultiplyWeightEffect;
-import com.darkxell.common.move.effects.RandomAttacksEffect;
-import com.darkxell.common.move.effects.RandomMoveEffect;
-import com.darkxell.common.move.effects.RandomStatChangeEffect;
-import com.darkxell.common.move.effects.RecoilEffect;
-import com.darkxell.common.move.effects.ResetStatEffect;
-import com.darkxell.common.move.effects.SelfStatChangeEffect;
-import com.darkxell.common.move.effects.SolarBeamEffect;
-import com.darkxell.common.move.effects.StatChangeEffect;
-import com.darkxell.common.move.effects.StealItemEffect;
-import com.darkxell.common.move.effects.StoredDamageEffect;
-import com.darkxell.common.move.effects.SwitchWithUserEffect;
-import com.darkxell.common.move.effects.TeleportToOtherRoomEffect;
-import com.darkxell.common.move.effects.UserLevelDamageEffect;
-import com.darkxell.common.move.effects.UserStatChangeEffect;
-import com.darkxell.common.move.effects.WeatherChangeEffect;
-import com.darkxell.common.move.effects.WeatherHealEffect;
+import com.darkxell.common.move.effects.*;
 import com.darkxell.common.pokemon.BaseStats.Stat;
 import com.darkxell.common.status.FloorStatuses;
 import com.darkxell.common.status.StatusConditions;
 import com.darkxell.common.weather.Weather;
+
+import java.util.Collection;
+import java.util.HashMap;
 
 /** Holds all Move Effects. */
 public final class MoveEffects

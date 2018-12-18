@@ -1,9 +1,9 @@
 package com.darkxell.common.move;
 
+import com.darkxell.common.Registrable;
 import java.util.ArrayList;
 
 import com.darkxell.common.util.language.Localization;
-import org.jdom2.Element;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
@@ -12,8 +12,11 @@ import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.util.XMLUtils;
 import com.darkxell.common.util.language.Message;
+import org.jdom2.Element;
 
-public class Move implements Comparable<Move>
+import java.util.ArrayList;
+
+public class Move implements Registrable<Move>
 {
 	public static enum MoveCategory
 	{
@@ -174,6 +177,10 @@ public class Move implements Comparable<Move>
 		this.dealsDamage = XMLUtils.getAttribute(xml, "damage", false);
 		this.ginsengable = XMLUtils.getAttribute(xml, "ginsengable", false);
 		this.effectID = XMLUtils.getAttribute(xml, "effect", 0);
+	}
+
+	public int getID() {
+		return id;
 	}
 
 	public Move(int id, PokemonType type, MoveCategory category, int pp, int power, int accuracy, MoveRange range, MoveTarget targets, int critical,

@@ -2,6 +2,7 @@ package fr.darkxell.dataeditor.application.data.floortable;
 
 import java.util.ArrayList;
 
+import com.darkxell.common.Registries;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.move.MoveRegistry;
 
@@ -22,7 +23,7 @@ public class FloorTableMove extends FloorTableItem<Move, Move>
 	@Override
 	public Callback<TableColumn<FloorTableItem<Move, Move>, Move>, TableCell<FloorTableItem<Move, Move>, Move>> cellFactory()
 	{
-		ArrayList<Move> moves = MoveRegistry.list();
+		ArrayList<Move> moves = Registries.moves().toList();
 		moves.removeIf(move -> move.id < 0);
 		return ComboBoxTableCell.forTableColumn(FXCollections.observableList(moves));
 	}
