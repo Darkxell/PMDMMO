@@ -203,7 +203,16 @@
       <AnimSequenceIndex sequence="39" direction="West" />
       <AnimSequenceIndex sequence="38" direction="NorthWest" />
     </AnimGroup>
-    <AnimGroup state="other" />
+    <AnimGroup state="other">
+      <AnimSequenceIndex sequence="25" direction="North" />
+      <AnimSequenceIndex sequence="25" direction="NorthEast" />
+      <AnimSequenceIndex sequence="25" direction="East" />
+      <AnimSequenceIndex sequence="25" direction="SouthEast" />
+      <AnimSequenceIndex sequence="25" direction="South" />
+      <AnimSequenceIndex sequence="25" direction="SouthWest" />
+      <AnimSequenceIndex sequence="25" direction="West" />
+      <AnimSequenceIndex sequence="25" direction="NorthWest" />
+    </AnimGroup>
     <AnimGroup state="rearup">
       <AnimSequenceIndex sequence="53" direction="North" />
       <AnimSequenceIndex sequence="52" direction="NorthEast" />
@@ -533,6 +542,9 @@
     <AnimSequence id="24" hit="28" return="28">
       <AnimFrame sprite="32" duration="12" />
       <AnimFrame sprite="40" duration="16" />
+    </AnimSequence>
+    <AnimSequence id="25">
+      <AnimFrame sprite="99" duration="10" shadowy="1000" />
     </AnimSequence>
     <AnimSequence id="33" rush="8" hit="10" return="14">
       <AnimFrame sprite="50" duration="2" spritey="-2" shadowy="-2" />

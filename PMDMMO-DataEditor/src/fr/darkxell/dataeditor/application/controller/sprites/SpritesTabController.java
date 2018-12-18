@@ -148,7 +148,11 @@ public class SpritesTabController implements Initializable, ListCellParent<Pokem
 		this.sequenceTableController.setupFor(item);
 		this.sequencesController.setupFor(item);
 		PokemonSpecies s = Registries.species().find(item.id);
-		if (s != null) this.testSpriteController.pokemonCombobox.getSelectionModel().select(s);
+		if (s != null) {
+			this.testSpriteController.pokemonCombobox.getSelectionModel().select(0);
+			this.testSpriteController.pokemonCombobox.getSelectionModel().select(1);
+			this.testSpriteController.pokemonCombobox.getSelectionModel().select(s);
+		}
 	}
 
 	public void onExistingSequencesChanged(HashSet<Integer> existing)
@@ -169,9 +173,8 @@ public class SpritesTabController implements Initializable, ListCellParent<Pokem
 		PokemonSpritesetData data = this.generateData();
 		if (data == null) return;
 		XMLUtils.saveFile(FileManager.create(FileManager.filePaths.get(FileManager.POKEMON_SPRITES) + "/" + data.id + ".xml"), data.toXML());
-		PokemonSpritesets.loadSpritesetData(data.id);
+		PokemonSpritesets.setSpritesetData(data.id, data);
 		this.reloadList();
-		data = PokemonSpritesets.getData(data.id);
 		this.spritesList.getSelectionModel().select(data);
 		this.onEdit(data);
 	}
