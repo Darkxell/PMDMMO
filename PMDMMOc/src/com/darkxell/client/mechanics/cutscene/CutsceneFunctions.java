@@ -1,6 +1,6 @@
 package com.darkxell.client.mechanics.cutscene;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.cutscene.event.FunctionCutsceneEvent;
 import com.darkxell.common.util.Logger;
 
@@ -28,7 +28,7 @@ public class CutsceneFunctions {
 	}
 
 	private static void earthquake(Cutscene parent, int strength) {
-		Persistance.freezoneCamera.setShaking(strength);
+		Persistence.freezoneCamera.setShaking(strength);
 	}
 
 }

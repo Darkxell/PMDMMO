@@ -1,6 +1,6 @@
 package com.darkxell.client.mechanics.freezones.zones;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.freezones.TriggerZone;
 import com.darkxell.client.state.TransitionState;
 import com.darkxell.client.state.menu.freezone.FriendAreaSelectionMapState;
@@ -23,7 +23,7 @@ public class FreezoneMapTriggerZone extends TriggerZone
 	{
 		FriendAreaSelectionMapState state = new FriendAreaSelectionMapState();
 		state.lockOn(this.zone.maplocation);
-		Persistance.stateManager.setState(new TransitionState(Persistance.stateManager.getCurrentState(), state));
+		Persistence.stateManager.setState(new TransitionState(Persistence.stateManager.getCurrentState(), state));
 	}
 
 }

@@ -2,7 +2,7 @@ package com.darkxell.client.state.dungeon;
 
 import java.awt.geom.Point2D;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.animation.Animations;
 import com.darkxell.client.mechanics.animation.PokemonAnimation;
 import com.darkxell.client.mechanics.animation.SpritesetAnimation;
@@ -63,8 +63,8 @@ public class DungeonExitAnimationState extends AnimationState
 			this.updateExiter();
 			if (this.tick == this.duration)
 			{
-				Persistance.dungeonState.setDefaultState();
-				Persistance.eventProcessor().processPending();
+				Persistence.dungeonState.setDefaultState();
+				Persistence.eventProcessor().processPending();
 			}
 		}
 	}
@@ -72,7 +72,7 @@ public class DungeonExitAnimationState extends AnimationState
 	private void updateExiter()
 	{
 		if (this.currentExiter >= this.exiters.length) return;
-		this.currentRenderer = Persistance.dungeonState.pokemonRenderer.getRenderer(this.exiters[this.currentExiter]);
+		this.currentRenderer = Persistence.dungeonState.pokemonRenderer.getRenderer(this.exiters[this.currentExiter]);
 		if (this.currentRenderer == null)
 		{
 			++this.currentExiter;
@@ -90,7 +90,7 @@ public class DungeonExitAnimationState extends AnimationState
 					new Point2D.Double(0, this.gy - tileUpCount * AbstractDungeonTileset.TILE_SIZE));
 		}
 		Tile start = this.exiters[this.currentExiter].tile();
-		this.travel = new TravelAnimation(start, Persistance.floor.tileAt(start.x, start.y - tileUpCount));
+		this.travel = new TravelAnimation(start, Persistence.floor.tileAt(start.x, start.y - tileUpCount));
 	}
 
 }

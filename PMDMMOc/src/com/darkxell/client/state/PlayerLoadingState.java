@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 import com.darkxell.client.launchable.GameSocketEndpoint;
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.launchable.messagehandlers.InventoryRequestHandler;
 import com.darkxell.client.launchable.messagehandlers.MonsterRequestHandler;
 import com.darkxell.client.renderers.TextRenderer;
@@ -23,7 +23,7 @@ public class PlayerLoadingState extends AbstractState
 	{
 		public default void onPlayerLoadingEnd(PlayerLoadingState state)
 		{
-			Persistance.stateManager.setState(new OpenningState());
+			Persistence.stateManager.setState(new OpenningState());
 		}
 	}
 
@@ -61,21 +61,21 @@ public class PlayerLoadingState extends AbstractState
 
 	private void exit()
 	{
-		if (this.listener == null) Persistance.stateManager.setState(new OpenningState());
+		if (this.listener == null) Persistence.stateManager.setState(new OpenningState());
 		else this.listener.onPlayerLoadingEnd(this);
 	}
 
 	private void finish()
 	{
-		Persistance.player.clearAllies();
+		Persistence.player.clearAllies();
 		for (Pokemon p : this.teamtmp)
-			Persistance.player.addAlly(p);
+			Persistence.player.addAlly(p);
 		this.exit();
 	}
 
 	public void onInventoryReceived(JsonObject message)
 	{
-		Persistance.player.setInventory(InventoryRequestHandler.readInventory(message, Persistance.player));
+		Persistence.player.setInventory(InventoryRequestHandler.readInventory(message, Persistence.player));
 		this.inventory = true;
 		this.checkFinished();
 	}
@@ -91,13 +91,13 @@ public class PlayerLoadingState extends AbstractState
 	public void onMonsterReceived(JsonObject message)
 	{
 		Pokemon p = MonsterRequestHandler.readMonster(message);
-		if (p.id() == Persistance.player.getData().mainpokemon.id)
+		if (p.id() == Persistence.player.getData().mainpokemon.id)
 		{
-			Persistance.player.setLeaderPokemon(p);
+			Persistence.player.setLeaderPokemon(p);
 			this.leader = true;
 		} else
 		{
-			ArrayList<DatabaseIdentifier> team = Persistance.player.getData().pokemonsinparty;
+			ArrayList<DatabaseIdentifier> team = Persistence.player.getData().pokemonsinparty;
 			for (int i = 0; i < team.size(); ++i)
 				if (p.id() == team.get(i).id)
 				{
@@ -113,13 +113,13 @@ public class PlayerLoadingState extends AbstractState
 	{
 		DBPlayer playerdata = new DBPlayer();
 		playerdata.read(player);
-		Persistance.player = new Player(playerdata);
+		Persistence.player = new Player(playerdata);
 		this.base = true;
 
-		this.team = new boolean[Persistance.player.getData().pokemonsinparty.size()];
-		this.teamtmp = new Pokemon[Persistance.player.getData().pokemonsinparty.size()];
-		if (Persistance.player.getData().toolboxinventory == null) this.inventory = true;
-		if (Persistance.player.getData().mainpokemon == null) this.leader = true;
+		this.team = new boolean[Persistence.player.getData().pokemonsinparty.size()];
+		this.teamtmp = new Pokemon[Persistence.player.getData().pokemonsinparty.size()];
+		if (Persistence.player.getData().toolboxinventory == null) this.inventory = true;
+		if (Persistence.player.getData().mainpokemon == null) this.leader = true;
 
 		this.askForMore();
 	}
@@ -128,7 +128,7 @@ public class PlayerLoadingState extends AbstractState
 	public void onStart()
 	{
 		super.onStart();
-		if (Persistance.socketendpoint.connectionStatus() != GameSocketEndpoint.CONNECTED) this.exit();
+		if (Persistence.socketendpoint.connectionStatus() != GameSocketEndpoint.CONNECTED) this.exit();
 	}
 
 	@Override
@@ -149,13 +149,13 @@ public class PlayerLoadingState extends AbstractState
 			if (this.tick >= TIMEOUT) this.askForMore();
 		} else
 		{
-			if (!this.base) Persistance.socketendpoint.requestObject("DBPlayer", this.playerID);
+			if (!this.base) Persistence.socketendpoint.requestObject("DBPlayer", this.playerID);
 			else
 			{
-				if (!this.inventory) Persistance.socketendpoint.requestInventory(Persistance.player.getData().toolboxinventory.id);
-				if (!this.leader) Persistance.socketendpoint.requestMonster(Persistance.player.getData().mainpokemon.id);
+				if (!this.inventory) Persistence.socketendpoint.requestInventory(Persistence.player.getData().toolboxinventory.id);
+				if (!this.leader) Persistence.socketendpoint.requestMonster(Persistence.player.getData().mainpokemon.id);
 				for (int i = 0; i < this.team.length; ++i)
-					if (!this.team[i]) Persistance.socketendpoint.requestMonster(Persistance.player.getData().pokemonsinparty.get(i).id);
+					if (!this.team[i]) Persistence.socketendpoint.requestMonster(Persistence.player.getData().pokemonsinparty.get(i).id);
 			}
 			this.hasSent = true;
 		}

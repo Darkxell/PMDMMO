@@ -2,7 +2,7 @@ package com.darkxell.client.renderers.floor;
 
 import java.util.HashSet;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.common.dungeon.data.FloorData;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
@@ -22,7 +22,7 @@ public class FloorVisibility
 
 	public FloorVisibility()
 	{
-		this.floor = Persistance.floor;
+		this.floor = Persistence.floor;
 	}
 
 	public boolean hasVisibleItem(Tile tile)
@@ -34,12 +34,12 @@ public class FloorVisibility
 	public boolean isMapVisible(DungeonPokemon pokemon)
 	{
 		if (this.isXrayOn()) return true;
-		return pokemon.player() == Persistance.player || this.currentlyVisible.contains(pokemon.tile());
+		return pokemon.player() == Persistence.player || this.currentlyVisible.contains(pokemon.tile());
 	}
 
 	public boolean isVisible(DungeonPokemon pokemon)
 	{
-		if (Persistance.floor.data.shadows() == FloorData.NO_SHADOW) return true;
+		if (Persistence.floor.data.shadows() == FloorData.NO_SHADOW) return true;
 		return this.isMapVisible(pokemon);
 	}
 
@@ -50,14 +50,14 @@ public class FloorVisibility
 
 	public boolean isXrayOn()
 	{
-		ItemStack item = Persistance.player.getDungeonLeader().getItem();
+		ItemStack item = Persistence.player.getDungeonLeader().getItem();
 		return item != null && item.item().effect() == ItemEffects.XRaySpecs;
 	}
 
 	public void onCameraMoved()
 	{
-		if (Persistance.dungeonState == null) return;
-		DungeonPokemon camera = Persistance.dungeonState.getCameraPokemon();
+		if (Persistence.dungeonState == null) return;
+		DungeonPokemon camera = Persistence.dungeonState.getCameraPokemon();
 		if (camera == null) return;
 		this.currentlyVisible.clear();
 

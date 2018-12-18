@@ -2,7 +2,7 @@ package fr.darkxell.dataeditor.application;
 
 import com.darkxell.client.launchable.ClientSettings;
 import com.darkxell.client.launchable.Launcher;
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.animation.Animations;
 import com.darkxell.client.resources.images.SpriteFactory;
 import com.darkxell.client.resources.images.SpriteLoader;
@@ -47,8 +47,8 @@ public class DataEditor extends Application
 		PokemonPortrait.load();
 		Animations.loadData();
 		SoundsHolder.load("../PMDMMOc/");
-		Persistance.soundmanager = new SoundManager();
-		Persistance.player = Util.createDefaultPlayer();
+		Persistence.soundmanager = new SoundManager();
+		Persistence.player = Util.createDefaultPlayer();
 
 		new Weather(-1, null);
 

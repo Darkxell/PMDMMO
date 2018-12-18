@@ -4,7 +4,7 @@ import java.awt.Point;
 
 import org.jdom2.Element;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.animation.travel.TravelAnimation;
 import com.darkxell.client.mechanics.cutscene.CutsceneContext;
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
@@ -45,10 +45,10 @@ public class CameraCutsceneEvent extends CutsceneEvent
 	public void onFinish()
 	{
 		super.onFinish();
-		if (Persistance.freezoneCamera != null)
+		if (Persistence.freezoneCamera != null)
 		{
-			Persistance.freezoneCamera.x = this.travel.destination.getX();
-			Persistance.freezoneCamera.y = this.travel.destination.getY();
+			Persistence.freezoneCamera.x = this.travel.destination.getX();
+			Persistence.freezoneCamera.y = this.travel.destination.getY();
 		}
 	}
 
@@ -56,9 +56,9 @@ public class CameraCutsceneEvent extends CutsceneEvent
 	public void onStart()
 	{
 		super.onStart();
-		if (Persistance.freezoneCamera != null)
+		if (Persistence.freezoneCamera != null)
 		{
-			double startX = Persistance.freezoneCamera.x, startY = Persistance.freezoneCamera.y;
+			double startX = Persistence.freezoneCamera.x, startY = Persistence.freezoneCamera.y;
 			double destX = this.xPos == UNSPECIFIED ? startX : this.xPos, destY = this.yPos == UNSPECIFIED ? startY : this.yPos;
 			this.travel = new TravelAnimation(new Point.Double(startX, startY), new Point.Double(destX, destY));
 			this.duration = (int) Math.floor(this.travel.distance.distance(new Point(0, 0)) / this.speed);
@@ -91,10 +91,10 @@ public class CameraCutsceneEvent extends CutsceneEvent
 			++this.tick;
 			this.travel.update(this.tick * 1d / this.duration);
 		}
-		if (Persistance.freezoneCamera != null)
+		if (Persistence.freezoneCamera != null)
 		{
-			Persistance.freezoneCamera.x = this.travel.current().getX();
-			Persistance.freezoneCamera.y = this.travel.current().getY();
+			Persistence.freezoneCamera.x = this.travel.current().getX();
+			Persistence.freezoneCamera.y = this.travel.current().getY();
 		}
 	}
 

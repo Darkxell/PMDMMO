@@ -6,7 +6,7 @@ import java.util.ResourceBundle;
 import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
 import com.darkxell.client.mechanics.cutscene.entity.CutscenePokemon;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
@@ -64,7 +64,7 @@ public class EditEntityController implements Initializable
 			Pokemon p;
 			if (this.modeCombobox.getSelectionModel().getSelectedIndex() == 1)
 			{
-				p = Persistance.player.getMember(Double.valueOf(this.memberTextfield.getText()).intValue());
+				p = Persistence.player.getMember(Double.valueOf(this.memberTextfield.getText()).intValue());
 			} else p = this.speciesCombobox.getSelectionModel().getSelectedItem().generate(new Random(), 1);
 			e = new CutscenePokemon(Double.valueOf(this.idTextfield.getText()).intValue(), Double.valueOf(this.xposTextfield.getText()),
 					Double.valueOf(this.yposTextfield.getText()), p, this.stateCombobox.getSelectionModel().getSelectedItem(),
@@ -147,10 +147,10 @@ public class EditEntityController implements Initializable
 			this.animatedCheckbox.setSelected(pokemon.animated);
 			this.facingCombobox.getSelectionModel().select(pokemon.facing);
 			this.stateCombobox.getSelectionModel().select(pokemon.currentState);
-			if (Persistance.player.isAlly(pokemon.instanciated))
+			if (Persistence.player.isAlly(pokemon.instanciated))
 			{
 				this.modeCombobox.getSelectionModel().select(1);
-				this.memberTextfield.setText(Integer.toString(Persistance.player.positionInTeam(pokemon.instanciated)));
+				this.memberTextfield.setText(Integer.toString(Persistence.player.positionInTeam(pokemon.instanciated)));
 			} else
 			{
 				this.modeCombobox.getSelectionModel().select(0);

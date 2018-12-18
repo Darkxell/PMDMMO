@@ -4,7 +4,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import com.darkxell.client.launchable.ClientSettings;
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.language.Message;
@@ -53,8 +53,8 @@ public class Keys implements KeyListener {
 		}
 
 		public boolean isPressed() {
-			if (Persistance.stateManager instanceof PrincipalMainState
-					&& ((PrincipalMainState) Persistance.stateManager).isChatFocused())
+			if (Persistence.stateManager instanceof PrincipalMainState
+					&& ((PrincipalMainState) Persistence.stateManager).isChatFocused())
 				return false;
 			return this.isPressed;
 		}
@@ -129,7 +129,7 @@ public class Keys implements KeyListener {
 		Key key = getKeyFromID(e.getKeyCode());
 		if (!key.isPressed()) {
 			if (key != Key.UNKNOWN) key.willPress = true;
-			Persistance.stateManager.onKeyPressed(e, key);
+			Persistence.stateManager.onKeyPressed(e, key);
 		}
 	}
 
@@ -137,12 +137,12 @@ public class Keys implements KeyListener {
 	public void keyReleased(KeyEvent e) {
 		Key key = getKeyFromID(e.getKeyCode());
 		if (key != Key.UNKNOWN) key.willPress = false;
-		Persistance.stateManager.onKeyReleased(e, key);
+		Persistence.stateManager.onKeyReleased(e, key);
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		Persistance.stateManager.onKeyTyped(e);
+		Persistence.stateManager.onKeyTyped(e);
 	}
 
 }

@@ -5,7 +5,7 @@ import static com.darkxell.client.resources.images.tilesets.AbstractDungeonTiles
 import java.awt.Graphics2D;
 import java.util.HashSet;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.renderers.AbstractRenderer;
 import com.darkxell.client.renderers.MasterDungeonRenderer;
 import com.darkxell.client.resources.images.Sprites.Res_Dungeon;
@@ -23,7 +23,7 @@ public class GridRenderer extends AbstractRenderer
 	public GridRenderer()
 	{
 		super(0, 0, MasterDungeonRenderer.LAYER_GRID);
-		this.floor = Persistance.floor;
+		this.floor = Persistence.floor;
 	}
 
 	@Override
@@ -31,7 +31,7 @@ public class GridRenderer extends AbstractRenderer
 	{
 		int xStart = (int) (this.x() / TILE_SIZE), yStart = (int) (this.y() / TILE_SIZE);
 
-		DungeonPokemon player = Persistance.player.getDungeonLeader();
+		DungeonPokemon player = Persistence.player.getDungeonLeader();
 
 		HashSet<Tile> faced = new HashSet<Tile>();
 		Tile tile = player.tile();
@@ -53,7 +53,7 @@ public class GridRenderer extends AbstractRenderer
 	@Override
 	public boolean shouldRender(int width, int height)
 	{
-		return Persistance.dungeonState.isMain() && Persistance.dungeonState.actionSelectionState.isMain() && Key.ROTATE.isPressed();
+		return Persistence.dungeonState.isMain() && Persistence.dungeonState.actionSelectionState.isMain() && Key.ROTATE.isPressed();
 	}
 
 }

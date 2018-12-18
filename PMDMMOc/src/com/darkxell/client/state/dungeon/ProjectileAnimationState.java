@@ -2,7 +2,7 @@ package com.darkxell.client.state.dungeon;
 
 import java.awt.Graphics2D;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.animation.SpritesetAnimation;
 import com.darkxell.client.mechanics.animation.travel.ArcAnimation;
 import com.darkxell.client.mechanics.animation.travel.TravelAnimation;
@@ -73,7 +73,7 @@ public class ProjectileAnimationState extends AnimationState
 				this.duration = 15;
 			} else
 			{
-				Persistance.dungeonState.setDefaultState();
+				Persistence.dungeonState.setDefaultState();
 				this.animation.stop();
 			}
 		}

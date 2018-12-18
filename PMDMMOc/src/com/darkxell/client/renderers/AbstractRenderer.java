@@ -2,7 +2,7 @@ package com.darkxell.client.renderers;
 
 import java.awt.Graphics2D;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 
 public abstract class AbstractRenderer implements Comparable<AbstractRenderer>
 {
@@ -58,7 +58,7 @@ public abstract class AbstractRenderer implements Comparable<AbstractRenderer>
 
 	private void onUpdate()
 	{
-		if (Persistance.dungeonState != null && Persistance.dungeonRenderer != null) Persistance.dungeonRenderer.onObjectUpdated();
+		if (Persistence.dungeonState != null && Persistence.dungeonRenderer != null) Persistence.dungeonRenderer.onObjectUpdated();
 	}
 
 	/** Draws this Renderer's Object.

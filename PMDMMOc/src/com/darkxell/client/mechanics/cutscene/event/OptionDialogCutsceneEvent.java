@@ -2,7 +2,7 @@ package com.darkxell.client.mechanics.cutscene.event;
 
 import org.jdom2.Element;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.cutscene.CutsceneContext;
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
@@ -60,7 +60,7 @@ public class OptionDialogCutsceneEvent extends CutsceneEvent implements DialogEn
 	{
 		this.isOver = true;
 		this.chosen = ((OptionDialogScreen) dialog.getScreen(1)).chosenIndex();
-		Persistance.stateManager.setState(Persistance.cutsceneState);
+		Persistence.stateManager.setState(Persistence.cutsceneState);
 	}
 
 	@Override
@@ -76,8 +76,8 @@ public class OptionDialogCutsceneEvent extends CutsceneEvent implements DialogEn
 
 		OptionDialogScreen screen = new OptionDialogScreen(instance, this.question.message, this.question.portraitLocation, this.options);
 		screen.id = 1;
-		DialogState state = new DialogState(Persistance.cutsceneState, this, screen);
-		Persistance.stateManager.setState(state);
+		DialogState state = new DialogState(Persistence.cutsceneState, this, screen);
+		Persistence.stateManager.setState(state);
 	}
 
 	@Override

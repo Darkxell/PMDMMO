@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 import org.jdom2.Element;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.animation.SpritesetAnimation.BackSpriteUsage;
 import com.darkxell.client.mechanics.cutscene.entity.CutscenePokemon;
 import com.darkxell.client.renderers.pokemon.AbstractPokemonRenderer;
@@ -154,7 +154,7 @@ public final class Animations
 			Logger.w("Animation not found: " + id);
 			return null;
 		}
-		AbstractPokemonRenderer renderer = target == null ? null : Persistance.dungeonState.pokemonRenderer.getRenderer(target);
+		AbstractPokemonRenderer renderer = target == null ? null : Persistence.dungeonState.pokemonRenderer.getRenderer(target);
 		return registry.get(id).createAnimation(target, null, renderer, listener);
 	}
 
@@ -170,7 +170,7 @@ public final class Animations
 			Logger.w("Animation not found: " + id);
 			return null;
 		}
-		AbstractPokemonRenderer renderer = target == null ? null : (AbstractPokemonRenderer) Persistance.currentmap.cutsceneEntityRenderers.getRenderer(target);
+		AbstractPokemonRenderer renderer = target == null ? null : (AbstractPokemonRenderer) Persistence.currentmap.cutsceneEntityRenderers.getRenderer(target);
 		return custom.get(id).createAnimation(null, target, renderer, listener);
 	}
 

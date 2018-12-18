@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import com.darkxell.client.launchable.ClientSettings;
 import com.darkxell.client.launchable.GameSocketEndpoint;
 import com.darkxell.client.launchable.Launcher;
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.resources.Palette;
 import com.darkxell.client.resources.images.hud.ChatResources;
 import com.darkxell.common.util.Logger;
@@ -121,15 +121,15 @@ public class ChatBox {
 			}
 		}
 		// Displays the errorinfo rectangle at the top
-		if (Persistance.socketendpoint == null
-				|| Persistance.socketendpoint.connectionStatus() != GameSocketEndpoint.CONNECTED) {
+		if (Persistence.socketendpoint == null
+				|| Persistence.socketendpoint.connectionStatus() != GameSocketEndpoint.CONNECTED) {
 			g.setColor(Palette.TRANSPARENT_GRAY);
 			g.fillRect(0, headerheight, width, 30);
 			g.setColor(Color.RED);
-			if (Persistance.socketendpoint == null
-					|| Persistance.socketendpoint.connectionStatus() == GameSocketEndpoint.CONNECTING)
+			if (Persistence.socketendpoint == null
+					|| Persistence.socketendpoint.connectionStatus() == GameSocketEndpoint.CONNECTING)
 				g.drawString(new Message("chat.connecting").toString(), 10, headerheight + 20);
-			else if (Persistance.socketendpoint.connectionStatus() == GameSocketEndpoint.FAILED)
+			else if (Persistence.socketendpoint.connectionStatus() == GameSocketEndpoint.FAILED)
 				g.drawString(new Message("chat.confailed").toString(), 10, headerheight + 20);
 		}
 	}
@@ -145,14 +145,14 @@ public class ChatBox {
 		if (this.textfield.getContent().equals(""))
 			return;
 		this.lastsent = this.textfield.getContent();
-		if (Persistance.socketendpoint != null
-				&& Persistance.socketendpoint.connectionStatus() == GameSocketEndpoint.CONNECTED) {
+		if (Persistence.socketendpoint != null
+				&& Persistence.socketendpoint.connectionStatus() == GameSocketEndpoint.CONNECTED) {
 			JsonObject mess = new JsonObject().add("action", "chatmessage").add("tag", "DEV")
 					.add("sender", ClientSettings.getSetting(ClientSettings.LOGIN)).add("message", this.lastsent)
 					.add("tagcolor", Palette.getHexaFromClor(Color.RED))
 					.add("messagecolor", Palette.getHexaFromClor(Color.WHITE))
 					.add("sendercolor", Palette.getHexaFromClor(Palette.CHAT_GLOBAL));
-			Persistance.socketendpoint.sendMessage(mess.toString());
+			Persistence.socketendpoint.sendMessage(mess.toString());
 			this.textfield.clear();
 		} else {
 			messages.add(new ChatMessage("Error", "Message not sent: no active connection to the game server.",

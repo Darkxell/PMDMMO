@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.renderers.layers.AbstractGraphiclayer;
 import com.darkxell.client.state.AbstractState;
@@ -31,18 +31,18 @@ public class DungeonMenuState extends OptionSelectionMenuState
 	public DungeonMenuState(AbstractGraphiclayer background)
 	{
 		super(background);
-		this.floorMessage = new Message("stairs.floor." + (Persistance.dungeon.dungeon().direction == DungeonDirection.UP ? "up" : "down"))
-				.addReplacement("<floor>", Integer.toString(Persistance.dungeon.currentFloor().id));
+		this.floorMessage = new Message("stairs.floor." + (Persistence.dungeon.dungeon().direction == DungeonDirection.UP ? "up" : "down"))
+				.addReplacement("<floor>", Integer.toString(Persistence.dungeon.currentFloor().id));
 		this.createOptions();
 	}
 
 	public ItemContainersMenuState createInventoryState()
 	{
-		DungeonState s = Persistance.dungeonState;
+		DungeonState s = Persistence.dungeonState;
 		ArrayList<ItemContainer> containers = new ArrayList<ItemContainer>();
-		containers.add(Persistance.player.inventory());
-		containers.add(Persistance.player.getDungeonLeader().tile());
-		for (Pokemon pokemon : Persistance.player.getTeam())
+		containers.add(Persistence.player.inventory());
+		containers.add(Persistence.player.getDungeonLeader().tile());
+		for (Pokemon pokemon : Persistence.player.getTeam())
 			containers.add(pokemon);
 
 		boolean found = false;
@@ -80,7 +80,7 @@ public class DungeonMenuState extends OptionSelectionMenuState
 
 	public TeamMenuState createPartyState()
 	{
-		return new TeamMenuState(this, Persistance.dungeonState);
+		return new TeamMenuState(this, Persistence.dungeonState);
 	}
 
 	private Rectangle infoWindowDimensions()
@@ -92,25 +92,25 @@ public class DungeonMenuState extends OptionSelectionMenuState
 	@Override
 	protected void onExit()
 	{
-		Persistance.stateManager.setState((AbstractState) this.background);
+		Persistence.stateManager.setState((AbstractState) this.background);
 	}
 
 	@Override
 	protected void onOptionSelected(MenuOption option)
 	{
-		DungeonState s = Persistance.dungeonState;
-		if (option == this.moves) Persistance.stateManager.setState(new MovesMenuState(s, Persistance.player.getTeam()));
-		else if (option == this.items) Persistance.stateManager.setState(this.createInventoryState());
-		else if (option == this.team) Persistance.stateManager.setState(this.createPartyState());
-		else if (option == this.settings) Persistance.stateManager.setState(new SettingsMenuState(this, this.background));
+		DungeonState s = Persistence.dungeonState;
+		if (option == this.moves) Persistence.stateManager.setState(new MovesMenuState(s, Persistence.player.getTeam()));
+		else if (option == this.items) Persistence.stateManager.setState(this.createInventoryState());
+		else if (option == this.team) Persistence.stateManager.setState(this.createPartyState());
+		else if (option == this.settings) Persistence.stateManager.setState(new SettingsMenuState(this, this.background));
 		else if (option == this.ground)
 		{
 			this.onExit();
-			if (Persistance.player.getDungeonLeader().tile().type() == TileType.STAIR) Persistance.stateManager.setState(new StairMenuState());
-			else if (Persistance.player.getDungeonLeader().tile().getItem() == null) s.logger.showMessage(new Message("ground.empty"));
+			if (Persistence.player.getDungeonLeader().tile().type() == TileType.STAIR) Persistence.stateManager.setState(new StairMenuState());
+			else if (Persistence.player.getDungeonLeader().tile().getItem() == null) s.logger.showMessage(new Message("ground.empty"));
 			else
 			{
-				Persistance.stateManager.setState(new ItemContainersMenuState(this, s, true, Persistance.player.getDungeonLeader().tile()));
+				Persistence.stateManager.setState(new ItemContainersMenuState(this, s, true, Persistence.player.getDungeonLeader().tile()));
 			}
 		}
 	}
@@ -124,18 +124,18 @@ public class DungeonMenuState extends OptionSelectionMenuState
 
 		this.infoWindow.render(g, null, width, height);
 		int x = this.infoWindow.inside().x + 5, y = this.infoWindow.inside().y + 5;
-		TextRenderer.render(g, Persistance.dungeon.dungeon().name().addPrefix("<yellow>").addSuffix("</color>"), x, y);
+		TextRenderer.render(g, Persistence.dungeon.dungeon().name().addPrefix("<yellow>").addSuffix("</color>"), x, y);
 		y += TextRenderer.lineSpacing() + TextRenderer.height();
 		TextRenderer.render(g, this.floorMessage, x, y);
 		y += 3 * (TextRenderer.lineSpacing() + TextRenderer.height());
 		TextRenderer.render(g,
-				new Message("menu.belly").addReplacement("<current>", String.valueOf(Math.round(Persistance.player.getDungeonLeader().getBelly())))
-						.addReplacement("<max>", String.valueOf(Persistance.player.getDungeonLeader().getBellySize())),
+				new Message("menu.belly").addReplacement("<current>", String.valueOf(Math.round(Persistence.player.getDungeonLeader().getBelly())))
+						.addReplacement("<max>", String.valueOf(Persistence.player.getDungeonLeader().getBellySize())),
 				x, y);
 		y += TextRenderer.lineSpacing() + TextRenderer.height();
-		TextRenderer.render(g, new Message("menu.money").addReplacement("<money>", String.valueOf(Persistance.player.moneyInBag())), x, y);
+		TextRenderer.render(g, new Message("menu.money").addReplacement("<money>", String.valueOf(Persistence.player.moneyInBag())), x, y);
 		y += TextRenderer.lineSpacing() + TextRenderer.height();
-		TextRenderer.render(g, new Message("menu.weather").addReplacement("<weather>", String.valueOf(Persistance.floor.currentWeather().weather.name())), x,
+		TextRenderer.render(g, new Message("menu.weather").addReplacement("<weather>", String.valueOf(Persistence.floor.currentWeather().weather.name())), x,
 				y);
 	}
 }

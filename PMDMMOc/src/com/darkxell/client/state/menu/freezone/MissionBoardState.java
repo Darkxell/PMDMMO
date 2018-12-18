@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.Sprite;
 import com.darkxell.client.resources.images.Sprites.Res_Hud;
@@ -36,11 +36,11 @@ public class MissionBoardState extends AbstractState {
 	public void onKeyPressed(Key key) {
 		switch (key) {
 		case RUN:
-			Persistance.stateManager.setState(new MissionBoardSelectionState(this.exploresource));
+			Persistence.stateManager.setState(new MissionBoardSelectionState(this.exploresource));
 			break;
 		case ATTACK:
 			if (this.missions.size() > 0)
-				Persistance.stateManager.setState(
+				Persistence.stateManager.setState(
 						new MissionDetailsState(this.exploresource, this.missions.get(selectedmissionpos), this));
 			break;
 		case UP:
@@ -113,7 +113,7 @@ public class MissionBoardState extends AbstractState {
 			requesttimer = 240;
 			JsonObject message = Json.object();
 			message.add("action", "getmissions");
-			Persistance.socketendpoint.sendMessage(message.toString());
+			Persistence.socketendpoint.sendMessage(message.toString());
 		}
 	}
 

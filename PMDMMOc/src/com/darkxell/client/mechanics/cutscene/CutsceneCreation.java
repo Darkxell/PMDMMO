@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import org.jdom2.Element;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
 import com.darkxell.client.mechanics.cutscene.entity.CutscenePokemon;
 import com.darkxell.client.mechanics.freezones.Freezones;
@@ -58,10 +58,10 @@ public class CutsceneCreation
 
 	public void create()
 	{
-		Persistance.currentmap = Freezones.loadMap(this.freezone);
-		Persistance.freezoneCamera = new FreezoneCamera(null);
-		if (this.camerax != -1) Persistance.freezoneCamera.x = this.camerax;
-		if (this.cameray != -1) Persistance.freezoneCamera.y = this.cameray;
+		Persistence.currentmap = Freezones.loadMap(this.freezone);
+		Persistence.freezoneCamera = new FreezoneCamera(null);
+		if (this.camerax != -1) Persistence.freezoneCamera.x = this.camerax;
+		if (this.cameray != -1) Persistence.freezoneCamera.y = this.cameray;
 		this.cutscene.player.mapAlpha = this.drawMap ? 1 : 0;
 		for (CutsceneEntity entity : this.entities)
 			this.cutscene.player.createEntity(entity);

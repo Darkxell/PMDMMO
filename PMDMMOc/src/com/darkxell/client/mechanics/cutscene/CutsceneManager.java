@@ -2,7 +2,7 @@ package com.darkxell.client.mechanics.cutscene;
 
 import java.io.InputStream;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.resources.Res;
 import com.darkxell.client.state.TransitionState;
 import com.darkxell.client.state.freezone.CutsceneState;
@@ -22,9 +22,9 @@ public class CutsceneManager
 	{
 		Cutscene c = loadCutscene(id);
 		if (c == null) return;
-		Persistance.cutsceneState = new CutsceneState(c);
+		Persistence.cutsceneState = new CutsceneState(c);
 
-		if (fading) Persistance.stateManager.setState(new TransitionState(Persistance.stateManager.getCurrentState(), Persistance.cutsceneState) {
+		if (fading) Persistence.stateManager.setState(new TransitionState(Persistence.stateManager.getCurrentState(), Persistence.cutsceneState) {
 			@Override
 			public void onTransitionHalf()
 			{
@@ -35,7 +35,7 @@ public class CutsceneManager
 		else
 		{
 			c.creation.create();
-			Persistance.stateManager.setState(Persistance.cutsceneState);
+			Persistence.stateManager.setState(Persistence.cutsceneState);
 		}
 	}
 

@@ -6,7 +6,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.renderers.MasterDungeonRenderer;
 import com.darkxell.client.renderers.floor.DungeonItemsRenderer;
 import com.darkxell.client.renderers.floor.FloorRenderer;
@@ -95,22 +95,22 @@ public class DungeonState extends AbstractState
 
 	public DungeonState()
 	{
-		this.cameraPokemon = Persistance.player.getDungeonLeader();
-		Persistance.dungeonRenderer = new MasterDungeonRenderer();
+		this.cameraPokemon = Persistence.player.getDungeonLeader();
+		Persistence.dungeonRenderer = new MasterDungeonRenderer();
 		this.floorRenderer = new FloorRenderer();
 		this.gridRenderer = new GridRenderer();
 		this.itemRenderer = new DungeonItemsRenderer();
 		this.pokemonRenderer = new DungeonPokemonRendererHolder();
-		for (DungeonPokemon pokemon : Persistance.floor.listPokemon())
+		for (DungeonPokemon pokemon : Persistence.floor.listPokemon())
 			this.pokemonRenderer.register(pokemon);
 		this.shadowRenderer = new ShadowRenderer();
 		this.staticAnimationsRenderer = new StaticAnimationsRenderer();
 
-		Persistance.dungeonRenderer.addRenderer(this.floorRenderer);
-		Persistance.dungeonRenderer.addRenderer(this.gridRenderer);
-		Persistance.dungeonRenderer.addRenderer(this.itemRenderer);
-		Persistance.dungeonRenderer.addRenderer(this.shadowRenderer);
-		Persistance.dungeonRenderer.addRenderer(this.staticAnimationsRenderer);
+		Persistence.dungeonRenderer.addRenderer(this.floorRenderer);
+		Persistence.dungeonRenderer.addRenderer(this.gridRenderer);
+		Persistence.dungeonRenderer.addRenderer(this.itemRenderer);
+		Persistence.dungeonRenderer.addRenderer(this.shadowRenderer);
+		Persistence.dungeonRenderer.addRenderer(this.staticAnimationsRenderer);
 
 		this.logger = new DungeonLogger(this);
 		this.currentSubstate = this.actionSelectionState = new ActionSelectionState(this);
@@ -187,14 +187,14 @@ public class DungeonState extends AbstractState
 	@Override
 	public void render(Graphics2D g, int width, int height)
 	{
-		DungeonPokemonRenderer r = Persistance.dungeonState.pokemonRenderer.getRenderer(this.cameraPokemon);
+		DungeonPokemonRenderer r = Persistence.dungeonState.pokemonRenderer.getRenderer(this.cameraPokemon);
 		int x = 0, y = 0;
 		if (r == null)
 		{
 			if (this.lastKnownCameraTile == null)
 			{
-				x = Persistance.floor.getWidth() * TILE_SIZE / 2 - width / 2;
-				y = Persistance.floor.getHeight() * TILE_SIZE / 2 - height / 2;
+				x = Persistence.floor.getWidth() * TILE_SIZE / 2 - width / 2;
+				y = Persistence.floor.getHeight() * TILE_SIZE / 2 - height / 2;
 			} else
 			{
 				x = (int) (this.lastKnownCameraTile.x * TILE_SIZE + TILE_SIZE / 2 - width / 2);
@@ -206,10 +206,10 @@ public class DungeonState extends AbstractState
 			y = (int) (r.drawY() - height / 2);
 		}
 
-		if (Persistance.floor.data.hasCustomTileset())
+		if (Persistence.floor.data.hasCustomTileset())
 		{
-			if (x + width > Persistance.floor.getWidth() * TILE_SIZE) x = Persistance.floor.getWidth() * TILE_SIZE - width;
-			if (y + height > Persistance.floor.getHeight() * TILE_SIZE) y = Persistance.floor.getHeight() * TILE_SIZE - height;
+			if (x + width > Persistence.floor.getWidth() * TILE_SIZE) x = Persistence.floor.getWidth() * TILE_SIZE - width;
+			if (y + height > Persistence.floor.getHeight() * TILE_SIZE) y = Persistence.floor.getHeight() * TILE_SIZE - height;
 
 			if (x < 0) x = 0;
 			if (y < 0) y = 0;
@@ -227,12 +227,12 @@ public class DungeonState extends AbstractState
 		}
 
 		g.translate(-x, -y);
-		Persistance.dungeonRenderer.render(g, width, height);
+		Persistence.dungeonRenderer.render(g, width, height);
 		this.currentSubstate.prerender(g, width, height);
 		g.translate(x, y);
 		this.currentSubstate.render(g, width, height);
 
-		Color weather = Persistance.floor.currentWeather().weather.layer;
+		Color weather = Persistence.floor.currentWeather().weather.layer;
 		if (weather != null)
 		{
 			g.setColor(weather);
@@ -266,7 +266,7 @@ public class DungeonState extends AbstractState
 	@Override
 	public void update()
 	{
-		Persistance.dungeonRenderer.update();
+		Persistence.dungeonRenderer.update();
 		if (this.cameraPokemon != null && this.cameraPokemon.tile() != null) this.lastKnownCameraTile = this.cameraPokemon.tile();
 		// this.pokemonRenderer.update(); Don't because the renderers are updated in MasterDungeonRenderer
 		if (this.isMain()) this.logger.update();

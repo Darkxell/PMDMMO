@@ -6,7 +6,7 @@ import java.awt.Rectangle;
 import java.awt.Shape;
 import java.util.ArrayList;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.launchable.messagehandlers.ItemActionHandler.ItemActionMessageHandler;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
@@ -61,7 +61,7 @@ public class ItemActionSelectionState extends OptionSelectionMenuState implement
 	@Override
 	protected void onExit()
 	{
-		Persistance.stateManager.setState((AbstractState) this.background);
+		Persistence.stateManager.setState((AbstractState) this.background);
 	}
 
 	@Override

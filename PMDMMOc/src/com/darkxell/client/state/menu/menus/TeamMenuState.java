@@ -1,6 +1,6 @@
 package com.darkxell.client.state.menu.menus;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.launchable.messagehandlers.ItemActionHandler.ItemActionMessageHandler;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.renderers.layers.AbstractGraphiclayer;
@@ -73,7 +73,7 @@ public class TeamMenuState extends OptionSelectionMenuState implements ItemActio
 	public TeamMenuState(AbstractState parent, AbstractGraphiclayer background, TeamMemberSelectionListener listener)
 	{
 		super(background);
-		this.pokemon = Persistance.player.getTeam();
+		this.pokemon = Persistence.player.getTeam();
 		this.parent = parent;
 		this.listener = listener;
 
@@ -98,7 +98,7 @@ public class TeamMenuState extends OptionSelectionMenuState implements ItemActio
 	@Override
 	protected void onExit()
 	{
-		Persistance.stateManager.setState(this.parent);
+		Persistence.stateManager.setState(this.parent);
 	}
 
 	@Override
@@ -106,7 +106,7 @@ public class TeamMenuState extends OptionSelectionMenuState implements ItemActio
 	{
 		Pokemon p = this.pokemon[this.optionIndex()];
 		DungeonPokemon dp = p.getDungeonPokemon();
-		if (this.listener == null) Persistance.stateManager.setState(createSummaryState(this.background, this, dp, p));
+		if (this.listener == null) Persistence.stateManager.setState(createSummaryState(this.background, this, dp, p));
 		else this.listener.teamMemberSelected(p);
 	}
 

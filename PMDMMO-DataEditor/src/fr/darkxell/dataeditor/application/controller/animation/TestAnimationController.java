@@ -8,8 +8,8 @@ import java.util.ResourceBundle;
 import javax.swing.JOptionPane;
 
 import com.darkxell.client.launchable.Launcher;
-import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.launchable.render.RenderProfile;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.animation.Animations;
 import com.darkxell.client.mechanics.animation.PokemonAnimation;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
@@ -101,7 +101,7 @@ public class TestAnimationController implements Initializable
 
 	public void onPropertiesChanged()
 	{
-		Persistance.dungeonState.pokemonRenderer.getRenderer(tester).removeAnimation(this.current);
+		Persistence.dungeonState.pokemonRenderer.getRenderer(tester).removeAnimation(this.current);
 		state.pokemonRenderer.unregister(tester);
 		tester = this.generateTester();
 		if (this.current != null) this.playAnimation(true);
@@ -119,25 +119,30 @@ public class TestAnimationController implements Initializable
 		if (this.current != null)
 		{
 			this.current.stop();
-			if (Persistance.dungeonState.pokemonRenderer.getRenderer(tester) != null)
-				Persistance.dungeonState.pokemonRenderer.getRenderer(tester).removeAnimation(this.current);
+			if (Persistence.dungeonState.pokemonRenderer.getRenderer(tester) != null)
+				Persistence.dungeonState.pokemonRenderer.getRenderer(tester).removeAnimation(this.current);
 		}
-		AnimationState s = new AnimationState(Persistance.dungeonState);
+		AnimationState s = new AnimationState(Persistence.dungeonState);
 		s.animation = this.current = this.loadAnimation();
 		if (s.animation != null) state.setSubstate(s);
 	}
 
 	public void reload()
 	{
+<<<<<<< HEAD
 		floor = Persistance.floor = new Floor(1, Layout.find(Layout.LAYOUT_SINGLEROOM),
 				Persistance.dungeon = Registries.dungeons().find(1).newInstance(new Random().nextLong()), new Random(), false);
+=======
+		floor = Persistence.floor = new Floor(1, Layout.find(Layout.LAYOUT_SINGLEROOM),
+				Persistence.dungeon = DungeonRegistry.find(1).newInstance(new Random().nextLong()), new Random(), false);
+>>>>>>> bf4af816... PersistAnce refractor from chicken's branch
 		floor.generate();
-		state = Persistance.dungeonState = new DungeonState();
+		state = Persistence.dungeonState = new DungeonState();
 
 		tester = this.generateTester();
 
 		state.setCamera(tester);
-		Persistance.stateManager = new PrincipalMainState();
+		Persistence.stateManager = new PrincipalMainState();
 		// Persistance.stateManager.setState(state);
 
 		Launcher.isRunning = true;

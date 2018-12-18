@@ -1,6 +1,6 @@
 package com.darkxell.client.mechanics.cutscene.end.arbitrary;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.cutscene.CutsceneManager;
 import com.darkxell.client.state.dialog.TextinputState;
 import com.darkxell.client.state.mainstates.PrincipalMainState;
@@ -14,16 +14,16 @@ public class StartNameAsk implements Callbackable {
 	public void callback(String s) {
 		// Sends the nickname payload to the server.
 		JsonObject mess = Json.object().add("action", "nickname")
-				.add("pokemonid", Persistance.player.getData().mainpokemon.id).add("nickname", s);
-		Persistance.socketendpoint.sendMessage(mess.toString());
+				.add("pokemonid", Persistence.player.getData().mainpokemon.id).add("nickname", s);
+		Persistence.socketendpoint.sendMessage(mess.toString());
 		// Changes the nickname locally
-		Persistance.player.getTeamLeader().setNickname(s);
+		Persistence.player.getTeamLeader().setNickname(s);
 		CutsceneManager.playCutscene("startingwoods/problem", false);
 	}
 
 	public static void startNameAsk() {
-		((PrincipalMainState) Persistance.stateManager)
-				.setState(new TextinputState(((PrincipalMainState) Persistance.stateManager).getCurrentState(),
+		((PrincipalMainState) Persistence.stateManager)
+				.setState(new TextinputState(((PrincipalMainState) Persistence.stateManager).getCurrentState(),
 						"ui.textinput.name", new StartNameAsk()));
 	}
 

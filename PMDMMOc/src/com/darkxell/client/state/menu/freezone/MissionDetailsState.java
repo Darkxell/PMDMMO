@@ -3,7 +3,7 @@ package com.darkxell.client.state.menu.freezone;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.Sprite;
 import com.darkxell.client.resources.images.pokemon.PokemonPortrait;
@@ -34,8 +34,8 @@ public class MissionDetailsState extends AbstractState {
 		this.exploresource = exploresource;
 		this.previousstate = previousstate;
 		this.mission = content;
-		for (int i = 0; i < Persistance.player.getMissions().size(); i++) 
-            if (Persistance.player.getMissions().get(i).toString().equals(content.toString())) {
+		for (int i = 0; i < Persistence.player.getMissions().size(); i++) 
+            if (Persistence.player.getMissions().get(i).toString().equals(content.toString())) {
                 acceptstatus = STATUS_ACCEPTED;
                 break;
             }
@@ -45,7 +45,7 @@ public class MissionDetailsState extends AbstractState {
 	public void onKeyPressed(Key key) {
 		switch (key) {
 		case RUN:
-			Persistance.stateManager.setState(previousstate);
+			Persistence.stateManager.setState(previousstate);
 			break;
 		case ATTACK:
 			if (acceptstatus == STATUS_CANACCEPT) {
@@ -53,7 +53,7 @@ public class MissionDetailsState extends AbstractState {
 				JsonObject value = new JsonObject();
 				value.add("action", "acceptmission");
 				value.add("mission", this.mission.toString());
-				Persistance.socketendpoint.sendMessage(value.toString());
+				Persistence.socketendpoint.sendMessage(value.toString());
 			}
 			break;
 		default:

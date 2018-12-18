@@ -3,7 +3,7 @@ package com.darkxell.client.state;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.renderers.layers.AbstractGraphiclayer;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.client.ui.Keys.Key;
@@ -15,7 +15,7 @@ public abstract class AbstractState extends AbstractGraphiclayer {
 	 *         {@link StateManager#getCurrentState()} returns this State).
 	 */
 	public boolean isMain() {
-		return this == Persistance.stateManager.getCurrentState();
+		return this == Persistence.stateManager.getCurrentState();
 	}
 
 	/** Called when this State is ended. */

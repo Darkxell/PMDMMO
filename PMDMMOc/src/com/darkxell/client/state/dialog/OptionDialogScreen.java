@@ -3,7 +3,7 @@ package com.darkxell.client.state.dialog;
 import java.util.ArrayList;
 import java.util.Random;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.state.dialog.DialogState.DialogEndListener;
 import com.darkxell.client.state.menu.OptionState;
 import com.darkxell.common.pokemon.Pokemon;
@@ -84,7 +84,7 @@ public class OptionDialogScreen extends PokemonDialogScreen
 		if (!this.showingOptions)
 		{
 			this.showingOptions = true;
-			Persistance.stateManager.setState(this.getOptionSelectionState());
+			Persistence.stateManager.setState(this.getOptionSelectionState());
 			return false;
 		} else return super.requestNextMessage();
 	}

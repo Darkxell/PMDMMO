@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
 import com.darkxell.client.launchable.GameSocketEndpoint;
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.state.dialog.PokemonDialogScreen;
 import com.darkxell.client.state.menu.components.IntegerSelectionState;
@@ -36,23 +36,23 @@ public class BankAmountDialogScreen extends PokemonDialogScreen implements Integ
 	{
 		if (selection == -1)
 		{
-			((BankDialog) Persistance.currentDialog).onSelectionCancel();
+			((BankDialog) Persistence.currentDialog).onSelectionCancel();
 			return;
 		}
 
 		if (!this.depositing) selection *= -1;
-		Persistance.isCommunicating = true;
+		Persistence.isCommunicating = true;
 
-		if (Persistance.socketendpoint.connectionStatus() != GameSocketEndpoint.CONNECTED)
+		if (Persistence.socketendpoint.connectionStatus() != GameSocketEndpoint.CONNECTED)
 		{
-			long bag = Persistance.player.moneyInBag() - selection, bank = Persistance.player.moneyInBank() + selection;
-			((BankDialog) Persistance.currentDialog).onConfirmReceived(bag, bank);
+			long bag = Persistence.player.moneyInBag() - selection, bank = Persistence.player.moneyInBank() + selection;
+			((BankDialog) Persistence.currentDialog).onConfirmReceived(bag, bank);
 		} else
 		{
 			JsonObject root = Json.object();
 			root.add("action", "bankaction");
 			root.add("money", selection);
-			Persistance.socketendpoint.sendMessage(root.toString());
+			Persistence.socketendpoint.sendMessage(root.toString());
 		}
 	}
 
@@ -79,7 +79,7 @@ public class BankAmountDialogScreen extends PokemonDialogScreen implements Integ
 		{
 			this.showingOptions = true;
 			long start = this.depositing ? this.bag : this.bank, min = 0;
-			Persistance.stateManager.setState(new IntegerSelectionState(this.parentState, this.parentState, this, min, start, start));
+			Persistence.stateManager.setState(new IntegerSelectionState(this.parentState, this.parentState, this, min, start, start));
 			return false;
 		} else return super.requestNextMessage();
 	}

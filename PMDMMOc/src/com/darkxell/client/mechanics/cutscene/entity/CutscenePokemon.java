@@ -4,7 +4,7 @@ import java.util.Random;
 
 import org.jdom2.Element;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.renderers.AbstractRenderer;
 import com.darkxell.client.renderers.pokemon.CutscenePokemonRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
@@ -61,7 +61,7 @@ public class CutscenePokemon extends CutsceneEntity
 			if (pokemon != null) this.pokemonid = pokemon.species().id;
 			else if (xml.getChild("teammember", xml.getNamespace()) != null)
 			{
-				pokemon = this.instanciated = Persistance.player.getMember(Integer.parseInt(xml.getChildText("teammember", xml.getNamespace())));
+				pokemon = this.instanciated = Persistence.player.getMember(Integer.parseInt(xml.getChildText("teammember", xml.getNamespace())));
 				this.pokemonid = pokemon.species().id;
 			} else this.pokemonid = Integer.parseInt(xml.getChildText("pokemonid", xml.getNamespace()));
 		} catch (Exception e)
@@ -116,8 +116,8 @@ public class CutscenePokemon extends CutsceneEntity
 		Element root = super.toXML();
 		root.setName("pokemon");
 		if (this.facing != Direction.SOUTH) root.setAttribute("facing", this.facing.name());
-		if (Persistance.player.isAlly(this.instanciated))
-			root.addContent(new Element("teammember").setText(String.valueOf(Persistance.player.positionInTeam(this.instanciated))));
+		if (Persistence.player.isAlly(this.instanciated))
+			root.addContent(new Element("teammember").setText(String.valueOf(Persistence.player.positionInTeam(this.instanciated))));
 		else root.addContent(new Element("pokemonid").setText(String.valueOf(this.pokemonid)));
 		if (this.currentState != PokemonSpriteState.IDLE) root.addContent(new Element("state").setText(this.currentState.name()));
 		if (!this.animated) root.addContent(new Element("animated").setText("false"));

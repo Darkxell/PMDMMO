@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.renderers.layers.AbstractGraphiclayer;
 import com.darkxell.client.resources.images.Sprites;
 import com.darkxell.client.state.AbstractState;
@@ -136,7 +136,7 @@ public class DialogState extends AbstractState
 		if (this.currentScreen == this.screens.length - 1)
 		{
 			if (this.listener == null && this.backgroundState != null && this.backgroundState instanceof AbstractState)
-				Persistance.stateManager.setState((AbstractState) this.backgroundState);
+				Persistence.stateManager.setState((AbstractState) this.backgroundState);
 			else if (this.listener != null) this.listener.onDialogEnd(this);
 		} else
 		{

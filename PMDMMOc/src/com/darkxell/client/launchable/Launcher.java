@@ -54,7 +54,7 @@ public class Launcher {
 		PokemonPortrait.load();
 		Animations.loadData();
 		SoundsHolder.load(".");
-		Persistance.soundmanager = new SoundManager();
+		Persistence.soundmanager = new SoundManager();
 		Logger.instance().info("Lang & Data loaded.");
 
 <<<<<<< HEAD
@@ -124,10 +124,10 @@ public class Launcher {
 		DiscordEventHandlerForPMDMMO deh = new DiscordEventHandlerForPMDMMO("In logging screen", "main_big");
 		deh.start();
 
-		Persistance.frame = new Frame();
-		Persistance.frame.setIconImage(Res_Frame.ICON.image());
-		Persistance.frame.canvas.requestFocus();
-		Persistance.stateManager = new LoginMainState();
+		Persistence.frame = new Frame();
+		Persistence.frame.setIconImage(Res_Frame.ICON.image());
+		Persistence.frame.canvas.requestFocus();
+		Persistence.stateManager = new LoginMainState();
 
 		setProcessingProfile(PROFILE_SYNCHRONIZED);
 
@@ -148,9 +148,9 @@ public class Launcher {
 		processingprofile = PROFILE_UNDEFINED;
 		isRunning = false;
 		Logger.instance().saveClient();
-		if (Persistance.isUnitTesting) return;
+		if (Persistence.isUnitTesting) return;
 		ClientSettings.save();
-		if (Persistance.saveDataOnExit)
+		if (Persistence.saveDataOnExit)
 		{
 			try {
 				Registries.save();

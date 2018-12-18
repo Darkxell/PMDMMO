@@ -8,7 +8,7 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.renderers.TextRenderer.PMDChar;
 import com.darkxell.client.resources.Palette;
 import com.darkxell.client.resources.images.pokemon.PokemonPortrait;
@@ -310,7 +310,7 @@ public final class TeamInfoRenderer
 	public static Pair<Integer, Integer> render(Graphics2D g, int width, int height)
 	{
 
-		Player p = Persistance.player;
+		Player p = Persistence.player;
 
 		if (p == null || p.getTeamLeader() == null)
 		{

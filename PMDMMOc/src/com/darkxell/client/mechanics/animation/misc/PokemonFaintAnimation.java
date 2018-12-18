@@ -1,6 +1,6 @@
 package com.darkxell.client.mechanics.animation.misc;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.animation.AnimationData;
 import com.darkxell.client.mechanics.animation.AnimationEndListener;
 import com.darkxell.client.mechanics.animation.PokemonAnimation;
@@ -20,7 +20,7 @@ public class PokemonFaintAnimation extends PokemonAnimation
 	public void onFinish()
 	{
 		this.renderer.sprite().setDefaultState(PokemonSpriteState.IDLE, true);
-		Persistance.dungeonState.pokemonRenderer.unregister(this.renderer);
+		Persistence.dungeonState.pokemonRenderer.unregister(this.renderer);
 		super.onFinish();
 	}
 	

@@ -2,7 +2,7 @@ package com.darkxell.client.state.menu.menus;
 
 import java.awt.Rectangle;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.renderers.layers.AbstractGraphiclayer;
 import com.darkxell.client.state.dialog.DialogState;
 import com.darkxell.client.state.dialog.DialogState.DialogEndListener;
@@ -89,15 +89,15 @@ public class ControlsMenuState extends OptionSelectionMenuState implements Dialo
 		int selection = ((OptionDialogScreen) dialog.getScreen(1)).chosenIndex();
 		if (selection == 0)
 		{
-			Persistance.stateManager.setState(this.parent);
+			Persistence.stateManager.setState(this.parent);
 			for (MenuTab tab : this.tabs())
 				for (MenuOption option : tab.options())
 				{
 					ControlMenuOption o = (ControlMenuOption) option;
 					o.key.setValue(o.newValue);
 				}
-		} else if (selection == 1) Persistance.stateManager.setState(this.parent);
-		else if (selection == 2) Persistance.stateManager.setState(this);
+		} else if (selection == 1) Persistence.stateManager.setState(this.parent);
+		else if (selection == 2) Persistence.stateManager.setState(this);
 	}
 
 	@Override
@@ -107,19 +107,19 @@ public class ControlsMenuState extends OptionSelectionMenuState implements Dialo
 		confirm.id = 1;
 		DialogState dialog = new DialogState(this.background, this, confirm);
 		dialog.setOpaque(this.isOpaque);
-		Persistance.stateManager.setState(dialog);
+		Persistence.stateManager.setState(dialog);
 	}
 
 	public void onKeyValueSelected(ControlMenuOption option, int value)
 	{
 		option.newValue = value;
-		Persistance.stateManager.setState(this);
+		Persistence.stateManager.setState(this);
 	}
 
 	@Override
 	protected void onOptionSelected(MenuOption option)
 	{
-		Persistance.stateManager.setState(new EditControlState(this.background, this, (ControlMenuOption) option).setOpaque(this.isOpaque));
+		Persistence.stateManager.setState(new EditControlState(this.background, this, (ControlMenuOption) option).setOpaque(this.isOpaque));
 	}
 
 }

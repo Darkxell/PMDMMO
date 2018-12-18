@@ -5,7 +5,7 @@ import java.util.Arrays;
 
 import org.jdom2.Element;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.animation.SpritesetAnimation.BackSpriteUsage;
 import com.darkxell.client.mechanics.animation.movement.PokemonAnimationMovement;
 import com.darkxell.client.mechanics.animation.spritemovement.SpritesetAnimationMovement;
@@ -190,7 +190,7 @@ public class AnimationData implements Comparable<AnimationData> {
 
 		if (this.overlay != -1) {
 			OverlayAnimation overlay = new OverlayAnimation(this, this.overlay, a, listener);
-			Persistance.dungeonState.staticAnimationsRenderer.add(overlay);
+			Persistence.dungeonState.staticAnimationsRenderer.add(overlay);
 			overlay.start();
 		}
 

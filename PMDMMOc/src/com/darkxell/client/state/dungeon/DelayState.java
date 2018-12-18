@@ -2,7 +2,7 @@ package com.darkxell.client.state.dungeon;
 
 import java.awt.Graphics2D;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.event.ClientEventProcessor;
 import com.darkxell.client.state.dungeon.DungeonState.DungeonSubState;
 import com.darkxell.client.ui.Keys.Key;
@@ -21,7 +21,7 @@ public class DelayState extends DungeonSubState
 		public void onDelayElapsed(DelayState state)
 		{
 			state.parent.setSubstate(state.parent.actionSelectionState);
-			Persistance.eventProcessor().processPending();
+			Persistence.eventProcessor().processPending();
 		}
 	};
 

@@ -2,7 +2,7 @@ package com.darkxell.client.mechanics.cutscene.event;
 
 import org.jdom2.Element;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.animation.Animations;
 import com.darkxell.client.mechanics.animation.PokemonAnimation;
 import com.darkxell.client.mechanics.cutscene.CutsceneContext;
@@ -63,7 +63,7 @@ public class AnimateCutsceneEvent extends CutsceneEvent
 			if (this.animation == null) this.couldntLoad = true;
 			else
 			{
-				CutscenePokemonRenderer r = (CutscenePokemonRenderer) Persistance.currentmap.cutsceneEntityRenderers.getRenderer(entity);
+				CutscenePokemonRenderer r = (CutscenePokemonRenderer) Persistence.currentmap.cutsceneEntityRenderers.getRenderer(entity);
 				if (r == null) this.couldntLoad = true;
 				else
 				{

@@ -3,7 +3,7 @@ package com.darkxell.client.state.map;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.Palette;
 import com.darkxell.client.resources.images.Sprites.Res_Map;
@@ -42,8 +42,8 @@ public class LocalMap extends AbstractDisplayMap {
 
 	@Override
 	public void update() {
-		if (Persistance.currentmap != null && Persistance.currentmap.getInfo().maplocation != currentlocation)
-			currentlocation = Persistance.currentmap.getInfo().maplocation;
+		if (Persistence.currentmap != null && Persistence.currentmap.getInfo().maplocation != currentlocation)
+			currentlocation = Persistence.currentmap.getInfo().maplocation;
 	}
 
 }

@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.JFrame;
 
 import com.darkxell.client.launchable.Launcher;
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.resources.images.Sprite;
 
 /** Main frame for the client. */
@@ -27,7 +27,7 @@ public class Frame extends JFrame implements WindowListener
 		protected void loaded(BufferedImage img)
 		{
 			super.loaded(img);
-			if (Persistance.frame != null) Persistance.frame.setIconImage(this.image());
+			if (Persistence.frame != null) Persistence.frame.setIconImage(this.image());
 		}
 
 	}
