@@ -2,6 +2,7 @@ package com.darkxell.common.move;
 
 import java.util.ArrayList;
 
+import com.darkxell.common.util.language.Localization;
 import org.jdom2.Element;
 
 import com.darkxell.common.dungeon.floor.Floor;
@@ -10,7 +11,6 @@ import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.util.XMLUtils;
-import com.darkxell.common.util.language.Lang;
 import com.darkxell.common.util.language.Message;
 
 public class Move implements Comparable<Move>
@@ -72,7 +72,7 @@ public class Move implements Comparable<Move>
 		{
 
 			String rangeID = "move.info.range." + this.name();
-			if (Lang.containsKey(rangeID + "." + target.name())) rangeID += "." + target.name();
+			if (Localization.containsKey(rangeID + "." + target.name())) rangeID += "." + target.name();
 			return new Message(rangeID);
 		}
 	}
@@ -221,7 +221,7 @@ public class Move implements Comparable<Move>
 
 	public boolean hasUseMessage()
 	{
-		return Lang.containsKey("move." + this.id);
+		return Localization.containsKey("move." + this.id);
 	}
 
 	/** @return This Move's name. */

@@ -75,7 +75,7 @@ public class Keywords
 		try
 		{
 			Properties data = new Properties();
-			InputStream stream = Lang.class.getResourceAsStream("/lang/" + Lang.getLanguage().id + "_keywords.properties");
+			InputStream stream = Localization.class.getResourceAsStream("/lang/" + Localization.getLanguage().id + "_keywords.properties");
 			if (stream == null) return;
 			data.load(stream);
 

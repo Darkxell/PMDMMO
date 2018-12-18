@@ -7,7 +7,7 @@ import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.test.tests.DBObjecttransferTest;
 import com.darkxell.common.test.tests.MissionCompressionTest;
 import com.darkxell.common.util.Logger;
-import com.darkxell.common.util.language.Lang;
+import com.darkxell.common.util.language.Localization;
 
 public class CommonUnitTests
 {
@@ -15,7 +15,7 @@ public class CommonUnitTests
 	public static void executeTests()
 	{
 		Logger.loadServer();
-		Lang.load(false);
+		Localization.load(false);
 		PokemonRegistry.load();
 		DungeonRegistry.load();
 		ItemRegistry.load();

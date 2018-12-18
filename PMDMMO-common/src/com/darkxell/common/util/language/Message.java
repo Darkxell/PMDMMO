@@ -106,13 +106,13 @@ public class Message
 	@Override
 	public String toString()
 	{
-		if (!Lang.getLanguage().id.equals(this.lastLang)) this.update();
+		if (!Localization.getLanguage().id.equals(this.lastLang)) this.update();
 		return this.value;
 	}
 
 	private void update()
 	{
-		this.value = this.shouldTranslate ? Lang.translate(this.id) : this.id;
+		this.value = this.shouldTranslate ? Localization.translate(this.id) : this.id;
 
 		for (String pattern : this.replacements.keySet())
 			this.value = this.value.replaceAll(pattern, this.replacements.get(pattern).toString());
@@ -123,7 +123,7 @@ public class Message
 		for (Message suffix : this.suffixes)
 			this.value += suffix.toString();
 
-		this.lastLang = Lang.getLanguage().id;
+		this.lastLang = Localization.getLanguage().id;
 
 		this.colorKeywords();
 	}

@@ -11,7 +11,7 @@ import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
 import com.darkxell.client.mechanics.cutscene.entity.CutscenePokemon;
 import com.darkxell.client.renderers.pokemon.CutscenePokemonRenderer;
 import com.darkxell.common.util.XMLUtils;
-import com.darkxell.common.util.language.Lang;
+import com.darkxell.common.util.language.Localization;
 
 public class AnimateCutsceneEvent extends CutsceneEvent
 {
@@ -86,7 +86,7 @@ public class AnimateCutsceneEvent extends CutsceneEvent
 	public String toString()
 	{
 		String animName = this.animationID + "";
-		if (Lang.containsKey("animation.custom." + this.animationID)) animName += "-" + Lang.translate("animation.custom." + this.animationID);
+		if (Localization.containsKey("animation.custom." + this.animationID)) animName += "-" + Localization.translate("animation.custom." + this.animationID);
 		String mode = "Play";
 		if (this.mode == AnimateCutsceneEventMode.START) mode = "Start";
 		if (this.mode == AnimateCutsceneEventMode.STOP) mode = "Stop";

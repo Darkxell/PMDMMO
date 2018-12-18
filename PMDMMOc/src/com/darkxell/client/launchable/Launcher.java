@@ -19,7 +19,7 @@ import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.trap.TrapRegistry;
 import com.darkxell.common.util.Logger;
-import com.darkxell.common.util.language.Lang;
+import com.darkxell.common.util.language.Localization;
 import com.darkxell.common.util.language.Message;
 
 /** Launching class of the client */
@@ -38,7 +38,7 @@ public class Launcher
 
 		ClientSettings.load();
 		Logger.loadClient();
-		Lang.load(false);
+		Localization.load(false);
 		if (!SpriteFactory.load())
 		{
 			isRunning = false;
