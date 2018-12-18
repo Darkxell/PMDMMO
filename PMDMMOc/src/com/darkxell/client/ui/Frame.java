@@ -40,8 +40,8 @@ public class Frame extends JFrame implements WindowListener
 	{
 		super();
 		this.setTitle("Pokemon Mystery Dungeon: Online Rescue Team");
-		this.setSize(1000, 800);
-		this.setMinimumSize(new Dimension(650, 400));
+		this.setSize(1300, 950);
+		this.setMinimumSize(new Dimension(650, 450));
 		// this.setResizable(false);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
