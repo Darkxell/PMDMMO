@@ -42,11 +42,14 @@ public class Launcher {
         ClientSettings.load();
 		Logger.load("CLIENT");
 		Localization.load(false);
-        if (!SpriteFactory.load()) {
-            isRunning = false;
-            JOptionPane.showMessageDialog(null, new Message("error.loading.sprite_factory"), new Message("error").toString(), JOptionPane.ERROR_MESSAGE);
-            System.exit(0);
-        }
+		try {
+			SpriteFactory.load();
+		} catch (AssertionError e) {
+			Launcher.stopGame();
+			isRunning = false;
+			JOptionPane.showMessageDialog(null, new Message("error.loading.sprite_factory"), new Message("error").toString(), JOptionPane.ERROR_MESSAGE);
+			System.exit(1);
+		}
 		Registries.load();
         SpriteLoader.loadCommon();
         PokemonSpritesets.loadData();

@@ -1,242 +1,272 @@
 package com.darkxell.client.resources.images;
 
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.List;
+import java.util.*;
+import java.util.function.BiConsumer;
 
 import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.resources.Res;
-import com.darkxell.common.util.Logger;
 
-/** Calls that loads Images in a separate Thread for fluidity, and handles missing sprites without errors. */
-public class SpriteFactory implements Runnable
-{
+/**
+ * Sprite loader that runs in the background and gracefully handles resource errors.
+ */
+public class SpriteFactory implements Runnable {
+    private static class SubSprite {
+        private Sprite sprite;
+        private int x, y, w, h;
 
-	private static class SubSprite
-	{
-		private Sprite sprite;
-		private int x, y, w, h;
+        SubSprite(Sprite sprite, int x, int y, int w, int h) {
+            this.sprite = sprite;
+            this.x = x;
+            this.y = y;
+            this.w = w;
+            this.h = h;
+        }
+    }
 
-		SubSprite(Sprite sprite, int x, int y, int w, int h)
-		{
-			this.sprite = sprite;
-			this.x = x;
-			this.y = y;
-			this.w = w;
-			this.h = h;
-		}
-	}
+    private static SpriteFactory instance;
 
-	private static SpriteFactory instance;
+    /**
+     * @return The factory's instance.
+     */
+    public static SpriteFactory instance() {
+        return instance;
+    }
 
-	/** @return The factory's instance. */
-	public static SpriteFactory instance()
-	{
-		return instance;
-	}
+    /**
+     * Loads a singleton. Should be called when launching the game, before creating any object inheriting from the
+     * {@link Sprite} class.
+     *
+     * @throws AssertionError Could not load the default resource. In this case, the program should quit.
+     */
+    public static void load() {
+        instance = new SpriteFactory();
 
-	/** Loads the SpriteFactory. Should be called when launching the game, before creating any object inheriting from the {@link Sprite} class.
-	 * 
-	 * @return <code>true</code> if it loaded properly. If <code>false</code>, game should close immediately as it won't be playable. */
-	public static boolean load()
-	{
-		instance = new SpriteFactory();
-		instance.defaultImg = Res.getBase("/missing.png");
-		if (instance.defaultImg == null)
-		{
-			Logger.e("Fatal error: No default image found!");
-			Launcher.stopGame();
-			return false;
-		}
-		new Thread(instance).start();
-		return true;
-	}
+        instance.defaultImg = Res.getBase("/missing.png");
+        if (instance.defaultImg == null) {
+            throw new AssertionError("No default image found!");
+        }
 
-	private BufferedImage defaultImg;
-	/** Maps paths -> images. If not loaded, this maps to default images that can be displayed without errors. */
-	private HashMap<String, BufferedImage> loaded = new HashMap<>();
-	/** Images awaiting for loading. */
-	private LinkedList<String> requested = new LinkedList<>();
-	/** Maps Images -> Sprites that need that Image. */
-	private HashMap<String, ArrayList<Sprite>> requesters = new HashMap<>();
-	/** Maps Images -> SubSprites that need that Image. */
-	private HashMap<String, ArrayList<SubSprite>> subsprites = new HashMap<>();
+        new Thread(instance).start();
+    }
 
     public static Sprite getDefaultSprite(int width, int height) {
         return new Sprite(instance.getDefault(width, height));
     }
 
-	private SpriteFactory()
-	{}
+    /**
+     * Wait for the loading queue to empty before proceeding.
+     */
+    public static void waitQueueDone() {
+        while (!instance.requested.isEmpty()) {
+            try {
+                Thread.sleep(5);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
-	/** Removes references to the input image. May be called when that Image isn't necessary anymore and may be unloaded.
-	 * 
-	 * @param image - The image to dispose of. */
-	public void dispose(String image)
-	{
-		this.loaded.remove(image);
-	}
+    private SpriteFactory() {
+    }
 
-	/** @param image - A path to an image.
-	 * @return The image if it's loaded, a default image else. */
-	BufferedImage get(String image)
-	{
-		return this.loaded.get(image);
-	}
+    private BufferedImage defaultImg;
 
-	/** @return A default image with the input dimensions. */
-	BufferedImage getDefault(int width, int height)
-	{
-		if (width <= 0 || height <= 0) return this.defaultImg;
+    /**
+     * Loaded images.
+     */
+    private final Map<String, BufferedImage> loaded = new HashMap<>();
 
-		BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB_PRE);
-		Graphics2D g = img.createGraphics();
+    /**
+     * Queue of paths to load.
+     */
+    private LinkedList<String> requested = new LinkedList<>();
 
-		int cols = width / this.defaultImg.getWidth();
-		int lines = height / this.defaultImg.getHeight();
+    /**
+     * Queues of sprites waiting for an image keyed on resource path.
+     */
+    private HashMap<String, ArrayList<Sprite>> requesters = new HashMap<>();
 
-		for (int x = 0; x <= cols; ++x)
-			for (int y = 0; y <= lines; ++y)
-				g.drawImage(this.defaultImg, x, y, null);
+    /**
+     * Queues of sub-sprites waiting for an image keyed on resource path.
+     */
+    private HashMap<String, ArrayList<SubSprite>> subsprites = new HashMap<>();
 
-		return img;
-	}
+    /**
+     * Removes references to the input image. May be called when that Image isn't necessary anymore and may be unloaded.
+     *
+     * @param image - The image to dispose of.
+     */
+    public void dispose(String image) {
+        this.loaded.remove(image);
+    }
 
-	/** Shortcut to quickly get an Image. Will register the Image to be loaded if it's not already.
-	 * 
-	 * @param image - The path to the Image.
-	 * @return The Image with the input path if it's loaded, a default image else. */
-	public BufferedImage getQuick(String image)
-	{
-		return this.getQuick(image, -1, -1);
-	}
+    /**
+     * @param image - A path to an image.
+     * @return The image if it's loaded, a default image else.
+     */
+    BufferedImage get(String image) {
+        return this.loaded.get(image);
+    }
 
-	/** Shortcut to quickly get an Image. Will register the Image to be loaded if it's not already.
-	 * 
-	 * @param image - The path to the Image.
-	 * @param width - The width of the Image.
-	 * @param height - The height of the Image. May be -1 if the dimensions are unknown or don't matter. These dimensions are used only to create a default Image with dimensions matching the desired Image, <b>the loaded Image will not have its dimensions set to these input dimensions.</b>
-	 * @return The Image with the input path if it's loaded, a default image else. */
-	public BufferedImage getQuick(String image, int width, int height)
-	{
-		return this.load(null, image, width, height);
-	}
+    /**
+     * @return A default image with the input dimensions.
+     */
+    BufferedImage getDefault(int width, int height) {
+        if (width <= 0 || height <= 0) {
+            return this.defaultImg;
+        }
 
-	/** @return <code>true</code> if the factory is currently loading sprites. */
-	public boolean hasLoadingSprites()
-	{
-		return !this.requested.isEmpty();
-	}
+        BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB_PRE);
+        Graphics2D g = img.createGraphics();
 
-	/** @return <code>true</code> If the input Image has been loaded and is ready for use. */
-	boolean isLoaded(String image)
-	{
-		return this.loaded.containsKey(image) && !this.requested.contains(image);
-	}
+        g.setPaint(new TexturePaint(this.defaultImg, new Rectangle()));
+        g.fillRect(0, 0, this.defaultImg.getWidth(), this.defaultImg.getHeight());
 
-	/** Registers the input Image to be loaded.
-	 * 
-	 * @param requester - The Sprite that needs this Image. This Sprite will be called when the Image is loaded and will have the new loaded Image set. May be null if this method needs to be called to pre-load images.
-	 * @param image - The path to the Image to load.
-	 * @param width - The width of the Image.
-	 * @param height - The height of the Image. May be -1 if the dimensions are unknown or don't matter. These dimensions are used only to create a default Image with dimensions matching the desired Image, <b>the loaded Image will not have its dimensions set to these input dimensions.</b>
-	 * @return The image if it was already loaded, or a default image that can already be used else. */
-	BufferedImage load(Sprite requester, String image, int width, int height)
-	{
-		if (!this.isLoaded(image))
-		{
-			if (!Res.exists(image)) this.loaded.put(image, this.getDefault(width, height));
-			else
-			{
-				if (requester != null)
-				{
-					if (!this.requesters.containsKey(image)) this.requesters.put(image, new ArrayList<>());
-					this.requesters.get(image).add(requester);
-				}
-				if (!this.loaded.containsKey(image)) 
-					this.loaded.put(image, this.getDefault(width, height));
-                if (!this.requested.contains(image)) 
-                	this.requested.add(image);
-			}
-		}
+        return img;
+    }
 
-		return this.get(image);
-	}
+    /**
+     * @return Has this image been loaded?
+     */
+    boolean isResourceLoaded(String image) {
+        return this.loaded.containsKey(image) && !this.requested.contains(image);
+    }
 
-	/** Registers the input Image to be loaded.
-	 * 
-	 * @param image - The path to the Image to load.
-	 * @param width - The width of the Image.
-	 * @param height - The height of the Image. May be -1 if the dimensions are unknown or don't matter. These dimensions are used only to create a default Image with dimensions matching the desired Image, <b>the loaded Image will not have its dimensions set to these input dimensions.</b>
-	 * @return The image if it was already loaded, or a default image that can already be used else. */
-	BufferedImage load(String image, int width, int height)
-	{
-		return this.load(null, image, width, height);
-	}
+    /**
+     * Add requester to a queue in a thread-safe manner.
+     *
+     * @param requester   Listener to add.
+     * @param path        Path to listen to.
+     * @param listenerMap Listener queue to add in.
+     * @param <T>         Listener type.
+     */
+    private <T> void addRequester(T requester, String path, Map<String, ArrayList<T>> listenerMap) {
+        if (!listenerMap.containsKey(path)) {
+            listenerMap.put(path, new ArrayList<>());
+        }
 
-	@Override
-	public void run()
-	{
-		// /!\ WARNING: All methods called here must be thread-safe. /!\
+        List<T> listeners = listenerMap.get(path);
+        listeners.add(requester);
+    }
 
-		final int loaded = 1, noload = 100;
-		int sleepTime;
-		while (Launcher.isRunning)
-		{
-			if (this.requested.size() == 0) sleepTime = noload;
-			else
-			{
-				String path = this.requested.getFirst();
+    /**
+     * Attempt to load an image through the resource cache. Queue path on miss.
+     *
+     * @return Was there was a cache hit?
+     */
+    private boolean attemptLoad(Sprite requester, String path) {
+        if (!Res.exists(path)) {
+            return false;
+        }
 
-                BufferedImage img = Res.getBase(path);
-                if (img != null) this.loaded.put(path, img);
-                this.requested.removeFirst();
-                ArrayList<Sprite> requesters = new ArrayList<>(); // Put into new ArrayList to be thread-safe.
-                if (this.requesters.containsKey(path)) requesters.addAll(this.requesters.remove(path));
-                if (img != null) for (int s = 0; s < requesters.size(); ++s)
-                    requesters.get(s).loaded(img);
-                if (this.subsprites.containsKey(path))
-                {
-                    ArrayList<SubSprite> subsprites = new ArrayList<>(); // Put into new ArrayList to be thread-safe.
-                    if (this.subsprites.containsKey(path)) subsprites.addAll(this.subsprites.remove(path));
-                    if (img != null) for (int s = 0; s < subsprites.size(); ++s)
-                    {
-                        SubSprite sub = subsprites.get(s);
-                        sub.sprite.loaded(Res.createimage(img, sub.x, sub.y, sub.w, sub.h));
-                    }
+        if (requester != null) {
+            this.addRequester(requester, path, this.requesters);
+        }
+
+        if (!this.requested.contains(path)) {
+            this.requested.add(path);
+        }
+
+        return this.loaded.containsKey(path);
+    }
+
+    /**
+     * Queues an path to be loaded.
+     *
+     * @param requester Sprite that needs this path. This sprite will be notified when the load finishes.
+     * @param path      The path to the path, relative to current working directory.
+     * @param width     Image width. May be -1 if dimensions are unknown.
+     * @param height    Image height. May be -1 if dimensions are unknown.
+     * @return Cached or default path, to be replaced upon callback.
+     */
+    public BufferedImage load(Sprite requester, String path, int width, int height) {
+        if (!this.isResourceLoaded(path) && !this.attemptLoad(requester, path)) {
+            // place interim image while it's loading
+            this.loaded.put(path, this.getDefault(width, height));
+        }
+
+        return this.get(path);
+    }
+
+    /**
+     * Notify listeners to a specific request queue.
+     *
+     * @param path         Path to notify
+     * @param img          Retrieved image.
+     * @param requesterMap Queue map, keyed on resource path.
+     * @param callback     What to do with image.
+     * @param <T>          Type of sprite (see {@link Sprite} and {@link SubSprite})
+     */
+    private <T> void notify(String path,
+                            BufferedImage img,
+                            Map<String, ArrayList<T>> requesterMap,
+                            BiConsumer<T, BufferedImage> callback) {
+        List<T> requesters = requesterMap.remove(path);
+
+        if (requesters == null) {
+            return;
+        }
+
+        for (T s : new ArrayList<>(requesters)) {
+            callback.accept(s, img);
+        }
+    }
+
+    /**
+     * Load next image in path.
+     */
+    private void loadNext() {
+        String path = this.requested.getFirst();
+
+        BufferedImage img = Res.getBase(path);
+        if (img != null) {
+            this.loaded.put(path, img);
+        }
+
+        this.requested.removeFirst();
+
+        this.notify(path, img, this.requesters, (s, i) -> s.loaded(img));
+        this.notify(path, img, this.subsprites, (s, i) -> s.sprite.loaded(Res.createimage(i, s.x, s.y, s.w, s.h)));
+    }
+
+    @Override
+    public void run() {
+        while (Launcher.isRunning) {
+            try {
+                if (this.requested.isEmpty()) {
+                    Thread.sleep(100);
+                } else {
+                    this.loadNext();
+                    Thread.sleep(1);
                 }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
-                sleepTime = loaded;
-			}
-
-			try
-			{
-				Thread.sleep(sleepTime);
-			} catch (InterruptedException e)
-			{
-				e.printStackTrace();
-			}
-		}
-	}
-
-	/** Creates a Sprite that's a subimage of the Image of another Sprite. The created Sprite will have a default image until the target Sprite is loaded.
-	 * 
-	 * @param source - The source Sprite to get a subimage of.
-	 * @param x <b>y width height</b> - The part of the Image to get.
-	 * @return The created subsprite. */
-	public Sprite subSprite(Sprite source, int x, int y, int width, int height)
-	{
-		Sprite sub = new Sprite(source.path, width, height, false);
-		if (this.isLoaded(source.path)) sub.loaded(Res.createimage(this.get(source.path), x, y, width, height));
-		else
-		{
-			sub.loaded(this.getDefault(width, height));
-			if (!this.subsprites.containsKey(source.path)) this.subsprites.put(source.path, new ArrayList<>());
-			this.subsprites.get(source.path).add(new SubSprite(sub, x, y, width, height));
-		}
-		return sub;
-	}
-
+    /**
+     * Creates a Sprite as a sub-image of the Image of another Sprite. The created Sprite will have a default image
+     * until the target Sprite is loaded.
+     *
+     * @param source The source Sprite.
+     * @param x      Tile x-coordinate.
+     * @param y      Tile y-coordinate.
+     * @param width  Tile width.
+     * @param height Tile height.
+     * @return A placeholder sub-sprite or cached sub-sprite.
+     */
+    public Sprite subSprite(Sprite source, int x, int y, int width, int height) {
+        Sprite sub = new Sprite(source.path, width, height, false);
+        if (this.isResourceLoaded(source.path)) {
+            sub.loaded(Res.createimage(this.get(source.path), x, y, width, height));
+        } else {
+            sub.loaded(this.getDefault(width, height));
+            this.addRequester(new SubSprite(sub, x, y, width, height), source.path, this.subsprites);
+        }
+        return sub;
+    }
 }
