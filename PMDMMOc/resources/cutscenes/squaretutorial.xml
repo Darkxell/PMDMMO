@@ -56,6 +56,6 @@
     </dialog>
   </events>
   <onfinish>
-    <loadfreezone fadesout="false" id="square" xpos="11" ypos="42" facing="EAST" />
+    <loadfreezone function="squaretutorial" fadesout="false" id="square" xpos="11" ypos="42" facing="EAST" />
   </onfinish>
 </cutscene>

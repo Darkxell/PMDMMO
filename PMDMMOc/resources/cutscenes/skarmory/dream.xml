@@ -40,6 +40,6 @@
     </dialog>
   </events>
   <onfinish>
-    <playcutscene function="magnemiteend" id="skarmory/wakeup" />
+    <playcutscene id="skarmory/request" />
   </onfinish>
 </cutscene>
