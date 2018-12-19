@@ -10,8 +10,6 @@ import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.language.Message;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
@@ -59,20 +57,21 @@ public class Keys implements KeyListener {
 
         UNKNOWN(null);
 
-        public final Setting setting;
-        int value;
+        private boolean isPressed;
+        private boolean wasPressed;
+        private boolean willPress;
 
-        boolean isPressed;
-        boolean wasPressed;
-        boolean willPress;
+        private int lastAssigned;
+
+        public final Setting setting;
 
         public static Key getKeyFromID(int keyID) {
             for (Key key : Key.values()) {
-                if (key.value == keyID) {
+                if (key.keyValue() == keyID) {
                     return key;
                 }
             }
-            Key.UNKNOWN.value = keyID;
+            Key.UNKNOWN.lastAssigned = keyID;
             return Key.UNKNOWN;
         }
 
@@ -80,23 +79,8 @@ public class Keys implements KeyListener {
             this.isPressed = false;
             this.wasPressed = false;
             this.willPress = false;
-
-            if (setting == null) {
-                this.setting = null;
-                return;
-            }
-
+            this.lastAssigned = -1;
             this.setting = setting;
-            String rawValue = ClientSettings.getSetting(setting);
-
-            try {
-                this.value = Integer.parseInt(rawValue);
-            } catch (NumberFormatException e) {
-                Logger.e("Key " + setting.key + " has invalid value " + rawValue + ".");
-                Logger.i("Using default of " + setting.defaultValue + " instead.");
-
-                ClientSettings.resetSetting(setting);
-            }
         }
 
         public Message getName() {
@@ -111,13 +95,33 @@ public class Keys implements KeyListener {
 		}
 
 		public int keyValue() {
-			return this.value;
+            if (this.setting == null) {
+                return this.lastAssigned;
+            }
+
+            String rawValue = ClientSettings.getSetting(this.setting);
+
+            try {
+                return Integer.parseInt(rawValue);
+            } catch (NumberFormatException e) {
+                String name = this.getName().toString();
+
+                // guaranteed to return a valid int since the default value is created from an int
+                // if not, just let it fail
+                int defaultKeybind = Integer.parseInt(this.setting.defaultValue);
+                ClientSettings.resetSetting(setting);
+
+                Logger.e("Invalid value for " + name + ": " + rawValue);
+                Logger.w("Using default value of " + defaultKeybind + " for key " + name);
+
+                return defaultKeybind;
+            }
 		}
 
         public void setValue(int value) {
-            this.value = value;
+            System.out.println("tried to set " + this.getName() + " with " + value);
             if (this.setting != null) {
-                ClientSettings.setSetting(this.setting, String.valueOf(this.value));
+                ClientSettings.setSetting(this.setting, String.valueOf(value));
             }
         }
     }
@@ -146,7 +150,7 @@ public class Keys implements KeyListener {
      */
     public static boolean directionPressed(boolean canRun, Key... targetKeys) {
         if (Key.RUN.isPressed && canRun) {
-            runDirection(targetKeys);
+            return runDirection(targetKeys);
         }
 
         // check that the key combination matches the pressed list exactly
