@@ -15,8 +15,6 @@ import java.util.Random;
 public class Util
 {
 
-	public static final String GAME_VERSION = "alpha-0.1";
-
 	public static Player createDefaultPlayer()
 	{
 		PokemonRegistry species = Registries.species();

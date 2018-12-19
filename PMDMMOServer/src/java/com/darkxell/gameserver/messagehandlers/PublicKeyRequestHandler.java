@@ -8,9 +8,7 @@ package com.darkxell.gameserver.messagehandlers;
 import com.darkxell.gameserver.GameServer;
 import com.darkxell.gameserver.GameServerSafe;
 import com.darkxell.gameserver.GameSessionHandler;
-import com.darkxell.gameserver.GameSessionInfo;
 import com.darkxell.gameserver.MessageHandler;
-import com.darkxell.gameserver.SessionsInfoHolder;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.websocket.Session;
@@ -30,6 +28,7 @@ public class PublicKeyRequestHandler extends MessageHandler{
         JsonObject value = Json.createObjectBuilder()
                 .add("action", "publickeyrequest")
                 .add("keybytes", GameServerSafe.getPublicKeyHexString())
+                .add("version", GameServer.VERSION)
                 .build();
         sessionshandler.sendToSession(from, value);
     }

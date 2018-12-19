@@ -12,6 +12,7 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 
+import com.darkxell.client.launchable.GameSocketEndpoint;
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.launchable.crypto.Encryption;
 import com.darkxell.client.launchable.crypto.RandomString;
@@ -24,6 +25,7 @@ public class PublicKeyRequestHandler extends MessageHandler {
 
 	@Override
 	public void handleMessage(JsonObject message) {
+		GameSocketEndpoint.SERVERVERSION = message.getString("version", "UNKNOWN");
 		String hexkey = message.getString("keybytes", "");
 		if (hexkey.equals("")) {
 			Logger.e("Could not load the server's public key to set up encryption.");

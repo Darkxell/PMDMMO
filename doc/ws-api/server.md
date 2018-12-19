@@ -105,13 +105,15 @@ sync in with the server upon logging in.
 | ---------- | ------------- | ---------------------------- |
 | `action`   | `login`       |                              |
 | `keybytes` | hex string    | public key of current server |
+| `version`  | String        | Current server version       |
 
 example:
 
 ```json
 {
     "action": "publickeyrequest",
-    "keybytes": "3082012...2300D06"
+    "keybytes": "3082012...2300D06",
+	"version": "1.0"
 }
 ```
 

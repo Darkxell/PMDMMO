@@ -34,7 +34,7 @@ public class UpdaterAndRenderer extends GameLoop {
         g.clearRect(0, 0, width, height);
 
         Persistence.stateManager.render(g, width, height);
-        TextRenderer.render(g, "V " + Util.GAME_VERSION, 5, 5);
+        TextRenderer.render(g, "V " + Persistence.VERSION, 5, 5);
 
         g.dispose();
         bf.show();
