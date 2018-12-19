@@ -28,7 +28,7 @@ public class CutsceneFunctions {
 	}
 
 	private static void earthquake(Cutscene parent, int strength) {
-		Persistence.freezoneCamera.setShaking(strength);
+		Persistence.freezoneCamera.setShakeIntensity(strength);
 	}
 
 }

@@ -3,108 +3,152 @@ package com.darkxell.client.mechanics.freezones.entities;
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.freezones.FreezonePlayer;
 
-/** The camera "entity". This behaves pretty much exactly like an entity, but is not rendered and doesn't update as the others do. This entity will follow the player as much as it can, but will avoid showing out of bounds areas if the player is too close to walls. Also this entity, like tha player,
- * is not dependennt to a map and will follow the player through warpzone by being persistant. */
+/**
+ * Pseudo-entity that corresponds to the camera position.
+ * <p>
+ * This entity will attempt to track the player, but will avoid showing positions that are out-of-bounds. This entity
+ * is persistent across all freezone maps.
+ */
 public class FreezoneCamera {
+    private static final int SHAKE_TICK_FRAMES = 5;
+    private static final int TILESIZE = 8;
 
-	private static final int SHAKETIME = 5;
-	private static final int TILESIZE = 8;
-	public int renderheight = Integer.MAX_VALUE;
-	public int renderwidth = Integer.MAX_VALUE;
-	private int shakeTimer = 0;
-	private int shakeX = 0, shakeY = 0;
-	private int shaking = 0;
-	private FreezonePlayer target;
-	public double x = 0;
-	public double y = 0;
+    public int renderHeight = -1;
+    public int renderWidth = -1;
 
-	/** Creates a new Freezonecamera following the wanted player. (Don't go and create multiple players just for the sake of adding multiple cameras tho...) */
-	public FreezoneCamera(FreezonePlayer tofollow) {
-		this.target = tofollow;
-		if (tofollow != null) {
-			this.x = tofollow.x;
-			this.y = tofollow.y;
-		}
-	}
+    private int shakeTimer = 0;
+    private int shakeStep = 0;
+    private int shakeX = 0;
+    private int shakeY = 0;
+    private int shakeIntensity = 0;
 
-	public double finalX() {
-		return this.x + this.shakeX;
-	}
+    private FreezonePlayer target;
+    private double x = 0;
+    private double y = 0;
 
-	public double finalY() {
-		return this.y + this.shakeY;
-	}
+    public FreezoneCamera(FreezonePlayer targetPlayer) {
+        this.target = targetPlayer;
+        if (targetPlayer != null) {
+            this.x = targetPlayer.x;
+            this.y = targetPlayer.y;
+        }
+    }
 
-	private boolean isXposOOB(double x) {
-		return (x < (renderwidth / 2) / TILESIZE + 0.3)
-				|| (x > Persistence.currentmap.mapWidth - ((renderwidth / 2) / TILESIZE) - 0.3);
-	}
+    public double getX() {
+        return x;
+    }
 
-	private boolean isYposOOB(double y) {
-		return (y < (renderheight / 2) / TILESIZE + 0.3)
-				|| (y > Persistence.currentmap.mapHeight - ((renderheight / 2) / TILESIZE) - 0.3);
-	}
+    public void setX(double x) {
+        this.x = x;
+    }
 
-	private void onShakeTick() {
-		if (this.shakeX == 0 && this.shakeY == 0) {
-			this.shakeX = this.shakeY = this.shaking;
-		} else if (this.shakeX > 0 && this.shakeY > 0) {
-			this.shakeX = -this.shaking;
-			this.shakeY = this.shaking;
-		} else if (this.shakeX < 0 && this.shakeY > 0) {
-			this.shakeX = -this.shaking;
-			this.shakeY = -this.shaking;
-		} else if (this.shakeX < 0 && this.shakeY < 0) {
-			this.shakeX = this.shaking;
-			this.shakeY = -this.shaking;
-		} else if (this.shakeX > 0 && this.shakeY < 0) {
-			this.shakeX = this.shakeY = 0;
-		}
-	}
+    public double getY() {
+        return y;
+    }
 
-	public void setShaking(int strength) {
-		this.shaking = strength;
-		if (this.shaking == 0) this.shakeX = this.shakeY = this.shakeTimer = 0;
-	}
+    public void setY(double y) {
+        this.y = y;
+    }
 
-	public void update() {
-		// Shake
-		if (this.shaking != 0) {
-			++this.shakeTimer;
-			if (this.shakeTimer >= SHAKETIME) {
-				this.shakeTimer = 0;
-				this.onShakeTick();
-			}
-		}
+    public double finalX() {
+        return this.x + this.shakeX;
+    }
 
-		if (target == null) return;
-		boolean isXFarFromPlayer = x > target.x + 4 || x < target.x - 4;
-		boolean isYFarFromPlayer = y > target.y + 4 || y < target.y - 4;
-		double cameraspeed = isXFarFromPlayer ? 0.4d : 0.2d;
-		// X POSITIONING
-		if (Persistence.currentmap.mapWidth * TILESIZE <= renderwidth) {
-			this.x = ((double) Persistence.currentmap.mapWidth) / 2;
-		} else {
-			double newx = (x > target.x + 1) ? x - cameraspeed : (x < target.x - 1) ? x + cameraspeed : x;
-			if (isXposOOB(newx)) {
-				if (isXposOOB(x)) {
-					if (x <= (renderwidth / 2) / TILESIZE + 0.3) x = (renderwidth / 2) / TILESIZE + 0.3;
-					else x = Persistence.currentmap.mapWidth - ((renderwidth / 2) / TILESIZE) - 0.3;
-				}
-			} else x = newx;
-		}
-		cameraspeed = isYFarFromPlayer ? 0.4d : 0.2d;
-		// Y POSITIONING
-		if (Persistence.currentmap.mapHeight * TILESIZE <= renderheight) {
-			this.y = ((double) Persistence.currentmap.mapHeight) / 2;
-		} else {
-			double newy = (y > target.y + 1) ? y - cameraspeed : (y < target.y - 1) ? y + cameraspeed : y;
-			if (isYposOOB(newy)) {
-				if (isYposOOB(y)) {
-					if (y <= (renderheight / 2) / TILESIZE + 0.3) y = (renderheight / 2) / TILESIZE + 0.3;
-					else y = Persistence.currentmap.mapHeight - ((renderheight / 2) / TILESIZE) - 0.3;
-				}
-			} else y = newy;
-		}
-	}
+    public double finalY() {
+        return this.y + this.shakeY;
+    }
+
+    public void setShakeIntensity(int strength) {
+        this.shakeIntensity = strength;
+        if (this.shakeIntensity == 0) {
+            this.shakeX = this.shakeY = this.shakeTimer = 0;
+        }
+    }
+
+    private void advanceShakeAnimation() {
+        switch (this.shakeStep) {
+            case 0:
+                this.shakeX = this.shakeY = this.shakeIntensity;
+                break;
+            case 1:
+                this.shakeX = -this.shakeIntensity;
+                this.shakeY = this.shakeIntensity;
+                break;
+            case 2:
+                this.shakeX = -this.shakeIntensity;
+                this.shakeY = -this.shakeIntensity;
+                break;
+            case 3:
+                this.shakeX = this.shakeIntensity;
+                this.shakeY = -this.shakeIntensity;
+            case 4:
+                this.shakeX = this.shakeY = 0;
+            default:
+                this.shakeStep = 0;
+                return;
+        }
+
+        this.shakeStep++;
+    }
+
+    private void updateShake() {
+        if (this.shakeIntensity == 0) {
+            return;
+        }
+
+        this.shakeTimer++;
+
+        if (this.shakeTimer % SHAKE_TICK_FRAMES == 0) {
+            this.advanceShakeAnimation();
+        }
+    }
+
+    private boolean isValidTile(double tile, double renderTiles, double mapTiles) {
+        double least = (renderTiles / 2) + 0.3;
+        double most = mapTiles - (renderTiles / 2) - 0.3;
+        return tile >= least && tile <= most;
+    }
+
+    private double calculateAxisPos(double val, double targetVal, double mapTiles, double maxTiles) {
+        // if the map can be fit entirely on the screen, just place the map in the center
+        if (mapTiles <= maxTiles) {
+            return mapTiles / 2;
+        }
+
+        boolean isFar = Math.abs(val - targetVal) > 4;
+        double deltaVal = isFar ? 0.4d : 0.2d;
+
+        double newVal = val;
+        if (val > targetVal + 1) {
+            newVal -= deltaVal;
+        } else if (val < targetVal - 1) {
+            newVal += deltaVal;
+        }
+
+        if (isValidTile(newVal, maxTiles, mapTiles)) {
+            return newVal;
+        }
+
+        if (isValidTile(val, maxTiles, mapTiles)) {
+            return val;
+        }
+
+        // as a last resort, clamp to map boundary (with a slight buffer)
+        double minPos = maxTiles / 2 + 0.3;
+        double maxPos = mapTiles - maxTiles / 2 - 0.3;
+        return Math.max(minPos, Math.min(maxPos, val));
+    }
+
+    public void update() {
+        updateShake();
+
+        if (target == null) {
+            return;
+        }
+
+        this.x = this.calculateAxisPos(this.x, this.target.x, Persistence.currentmap.mapWidth,
+                (double) this.renderWidth / TILESIZE);
+        this.y = this.calculateAxisPos(this.y, this.target.y, Persistence.currentmap.mapHeight,
+                (double) this.renderHeight / TILESIZE);
+    }
 }

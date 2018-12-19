@@ -89,8 +89,8 @@ public abstract class StateManager
 				((FreezoneExploreState) next).musicset = false;
 				Persistence.freezoneCamera = new FreezoneCamera(Persistence.currentplayer);
 				Persistence.currentmap = map;
-				Persistence.freezoneCamera.x = Persistence.currentplayer.x = xPos == -1 ? map.defaultX() : xPos;
-				Persistence.freezoneCamera.y = Persistence.currentplayer.y = yPos == -1 ? map.defaultY() : yPos;
+				Persistence.freezoneCamera.setX(Persistence.currentplayer.x = xPos == -1 ? map.defaultX() : xPos);
+				Persistence.freezoneCamera.setY(Persistence.currentplayer.y = yPos == -1 ? map.defaultY() : yPos);
 				Persistence.displaymap = LocalMap.instance;
 				if (direction != null) Persistence.currentplayer.renderer().sprite().setFacingDirection(direction);
 			}
@@ -100,8 +100,8 @@ public abstract class StateManager
 			((FreezoneExploreState) next).musicset = false;
 			Persistence.freezoneCamera = new FreezoneCamera(Persistence.currentplayer);
 			Persistence.currentmap = map;
-			Persistence.freezoneCamera.x = Persistence.currentplayer.x = xPos == -1 ? map.defaultX() : xPos;
-			Persistence.freezoneCamera.y = Persistence.currentplayer.y = yPos == -1 ? map.defaultY() : yPos;
+			Persistence.freezoneCamera.setX(Persistence.currentplayer.x = xPos == -1 ? map.defaultX() : xPos);
+			Persistence.freezoneCamera.setY(Persistence.currentplayer.y = yPos == -1 ? map.defaultY() : yPos);
 			Persistence.displaymap = LocalMap.instance;
 			if (direction != null) Persistence.currentplayer.renderer().sprite().setFacingDirection(direction);
 			Persistence.stateManager.setState(next);

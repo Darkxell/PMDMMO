@@ -33,8 +33,8 @@ public class AbstractFreezoneState extends AbstractState
 	public void render(Graphics2D g, int width, int height)
 	{
 		FreezoneMap map = Persistence.currentmap;
-		Persistence.freezoneCamera.renderheight = height;
-		Persistence.freezoneCamera.renderwidth = width;
+		Persistence.freezoneCamera.renderHeight = height;
+		Persistence.freezoneCamera.renderWidth = width;
 		// Draws the sea background if needed.
 		if (map instanceof OfficeFreezone) ((OfficeFreezone) map).background.render(g, width, height);
 		if (map instanceof DreamFreezone) ((DreamFreezone) map).background.render(g, width, height);
@@ -92,7 +92,8 @@ public class AbstractFreezoneState extends AbstractState
 					g.fillRect((int) (dbrct.x * 8), (int) (dbrct.y * 8), (int) (dbrct.width * 8), (int) (dbrct.height * 8));
 				}
 				g.setColor(new Color(240, 55, 54, 150));
-				g.fillRect((int) (Persistence.freezoneCamera.x * 8), (int) (Persistence.freezoneCamera.y * 8), 4, 4);
+				g.fillRect((int) (Persistence.freezoneCamera.getX() * 8), (int) (Persistence.freezoneCamera.getY() * 8), 4
+						, 4);
 			}
 
 			g.translate(-translateX, -translateY);
