@@ -32,13 +32,6 @@ public class BaseFreezone extends FreezoneMap {
 				Persistence.stateManager.setState(new DungeonSelectionMapState());
 			}
 		});
-		/*
-		 * this.triggerzones.add(new WarpZone(0, 0, new DoubleRectangle(0, 38,
-		 * 2, 8)) {
-		 * 
-		 * @Override public FreezoneMap getDestination() {
-		 * CutsceneManager.playCutscene("test"); return null; } });
-		 */
 		this.addEntity(new AnimatedFlowerEntity(17.5, 16, true));
 		this.addEntity(new AnimatedFlowerEntity(33.5, 8, true));
 		this.addEntity(new AnimatedFlowerEntity(54.5, 18, true));
