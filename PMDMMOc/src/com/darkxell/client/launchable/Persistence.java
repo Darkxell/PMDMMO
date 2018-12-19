@@ -26,6 +26,8 @@ import com.darkxell.common.player.Player;
  */
 public abstract class Persistence {
 
+	public static final String VERSION = "0.1.0-INDEV.1";
+	
 	// APPLICATION RELATED OBJECTS
 	public static Frame frame;
 	public static StateManager stateManager;

@@ -6,11 +6,6 @@
 package com.darkxell.gameserver;
 
 import com.darkxell.common.Registries;
-import com.darkxell.common.dungeon.data.DungeonRegistry;
-import com.darkxell.common.item.ItemRegistry;
-import com.darkxell.common.move.MoveRegistry;
-import com.darkxell.common.pokemon.PokemonRegistry;
-import com.darkxell.common.trap.TrapRegistry;
 import com.darkxell.common.util.Logger;
 import com.darkxell.gameserver.messagehandlers.AcceptMissionHandler;
 import com.darkxell.gameserver.messagehandlers.BankactionHandler;
@@ -69,6 +64,8 @@ import javax.ejb.EJB;
 @ServerEndpoint("/game")
 public class GameServer {
 
+    public static final String VERSION = "0.1.0-INDEV.1";
+    
     @Inject
     private GameSessionHandler sessionHandler;
 

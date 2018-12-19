@@ -33,8 +33,9 @@ public class UpdaterAndRenderer extends GameLoop {
         int width = Persistance.frame.canvas.getWidth(), height = Persistance.frame.canvas.getHeight();
         g.clearRect(0, 0, width, height);
 
-        Persistance.stateManager.render(g, width, height);
-        TextRenderer.render(g, "V " + Util.GAME_VERSION, 5, 5);
+
+        Persistence.stateManager.render(g, width, height);
+        TextRenderer.render(g, "V " + Persistence.VERSION, 5, 5);
 
         g.dispose();
         bf.show();

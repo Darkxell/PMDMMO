@@ -1,7 +1,7 @@
 package com.darkxell.client.launchable.render;
 
-import com.darkxell.client.launchable.Persistance;
-
+import com.darkxell.client.launchable.Persistence;
+import com.darkxell.client.renderers.TextRenderer;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 
@@ -19,8 +19,9 @@ public class Renderer extends GameLoop {
 		int width = Persistance.frame.canvas.getWidth(), height = Persistance.frame.canvas.getHeight();
 		g.clearRect(0, 0, width, height);
 
-		Persistance.stateManager.render(g, width, height);
-
+		Persistence.stateManager.render(g, width, height);
+		TextRenderer.render(g, "V " + Persistence.VERSION, 5, 5);
+		
         g.dispose();
         bf.show();
     }

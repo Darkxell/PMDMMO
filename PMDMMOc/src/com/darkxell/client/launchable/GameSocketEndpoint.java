@@ -25,7 +25,8 @@ import com.eclipsesource.json.JsonValue;
 public class GameSocketEndpoint {
 
 	public static final byte CONNECTING = 0, CONNECTED = 1, FAILED = 2;
-
+	public static String SERVERVERSION = "UNKNOWN";
+	
 	Session userSession = null;
 	private URI endpointURI;
 	private byte connectionStatus = CONNECTING;

@@ -44,6 +44,9 @@ public class StoryPositionSetup
 				// magnemite saved, didn't have the dream yet.
 				CutsceneManager.playCutscene("magnetifound", true);
 				break;
+			case 10:
+				// TODO: dugtrio and dream with points condition
+				break;
 			case 38:
 				// TODO:Had the fugitive cutscene. Spawns in front of your house early in the morning before fuging to prepare.
 				break;

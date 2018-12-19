@@ -99,14 +99,23 @@ public class LoginMainState extends StateManager {
 		password.onKeyTyped(e);
 	}
 
+	/**
+	 * Predicate that returns true if the client and server can communicate and
+	 * have the same payload definitions.
+	 */
+	private boolean isConnectionDone() {
+		return Persistence.socketendpoint.connectionStatus() == GameSocketEndpoint.CONNECTED
+				&& Persistence.VERSION.equals(GameSocketEndpoint.SERVERVERSION);
+	}
+
 	@Override
 	public void onMouseClick(int x, int y) {
 		// Button clicks
 		if (button_createaccount.isInside(new Position(mouseX - offsetx, mouseY - offsety))) {
-			if (Persistence.socketendpoint.connectionStatus() == GameSocketEndpoint.CONNECTED)
+			if (isConnectionDone())
 				Persistence.stateManager = new AccountCreationState();
 		} else if (button_login.isInside(new Position(mouseX - offsetx, mouseY - offsety))) {
-			if (Persistence.socketendpoint.connectionStatus() == GameSocketEndpoint.CONNECTED)
+			if (isConnectionDone())
 				launchOnlineSend();
 		} else if (button_offline.isInside(new Position(mouseX - offsetx, mouseY - offsety)) && DEBUGALLOWED) {
 			launchOffline();
@@ -183,26 +192,33 @@ public class LoginMainState extends StateManager {
 		this.password.render(g, (int) textfield_pass.width - 20, (int) textfield_pass.height - 15);
 		g.translate(-textfield_pass.x - 10, -textfield_pass.y);
 
+		// Displays the buttons
+		
 		Color buttoncolor = new Color(124, 163, 255), selectedbuttoncolor = new Color(183, 222, 255);
 		g.setColor((button_login.isInside(new Position(relativemousex, relativemousey))) ? selectedbuttoncolor
 				: buttoncolor);
-		if (Persistence.socketendpoint.connectionStatus() != GameSocketEndpoint.CONNECTED) {
-			g.setColor(Color.RED);
-			g.drawString("Not connected to servers", (int) button_login.x - 10, (int) button_login.y + 60);
+		if (!isConnectionDone())
 			g.setColor(new Color(120, 120, 180));
-		}
 		g.fillRect((int) button_login.x, (int) button_login.y, (int) button_login.width, (int) button_login.height);
 		g.setColor(Color.DARK_GRAY);
 		g.drawString(message, 39, 276);
 		g.setColor(messcolor);
 		g.drawString(message, 40, 275);
-		// Displays the buttons
+		
+		if (Persistence.socketendpoint.connectionStatus() != GameSocketEndpoint.CONNECTED) {
+			g.setColor(Color.RED);
+			g.drawString("Not connected to servers", (int) button_login.x - 10, (int) button_login.y + 60);
+		} else if(!Persistence.VERSION.equals(GameSocketEndpoint.SERVERVERSION)) {
+			g.setColor(Color.RED);
+			g.drawString("Server version mismatch", (int) button_login.x - 10, (int) button_login.y + 60);
+		}
+		
 		gcopy.setFont(Res.getFont().deriveFont(24f).deriveFont(Font.BOLD));
 		gcopy.setColor(new Color(30, 15, 210));
 		gcopy.drawString("LOGIN", (int) button_login.x + 25, (int) button_login.y + 20);
 		g.setColor((button_createaccount.isInside(new Position(relativemousex, relativemousey))) ? selectedbuttoncolor
 				: buttoncolor);
-		if (Persistence.socketendpoint.connectionStatus() != GameSocketEndpoint.CONNECTED)
+		if (!isConnectionDone())
 			g.setColor(new Color(120, 120, 180));
 		g.fillRect((int) button_createaccount.x, (int) button_createaccount.y, (int) button_createaccount.width,
 				(int) button_createaccount.height);
