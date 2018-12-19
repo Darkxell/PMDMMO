@@ -92,7 +92,8 @@ public class ClientSettings
 
 	public static String getSetting(String setting)
 	{
-		if (!settings.containsKey(setting)) resetSetting(setting);
+		if (!settings.containsKey(setting))
+			resetSetting(setting); //could be setting.key here. Check commit 94c8003e7931e5072a5f411a21b5cb51047d93f3
 		return settings.getProperty(setting);
 	}
 
