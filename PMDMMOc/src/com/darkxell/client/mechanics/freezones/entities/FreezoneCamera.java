@@ -75,10 +75,10 @@ public class FreezoneCamera {
         if (this.shaking == 0) this.shakeX = this.shakeY = this.shakeTimer = 0;
     }
 
-    private boolean isTileOOB(double tile, double renderTiles, double mapTiles) {
-        boolean below = tile < (renderTiles / 2) + 0.3;
-        boolean above = tile > mapTiles - (renderTiles / 2) - 0.3;
-        return below || above;
+    private boolean isValidTile(double tile, double renderTiles, double mapTiles) {
+        double least = (renderTiles / 2) + 0.3;
+        double most = mapTiles - (renderTiles / 2) - 0.3;
+        return tile >= least && tile <= most;
     }
 
     private double calculateAxisPos(double val, double targetVal, double mapTiles, double maxTiles) {
@@ -97,16 +97,15 @@ public class FreezoneCamera {
             newVal += deltaVal;
         }
 
-        if (!isTileOOB(newVal, maxTiles, mapTiles)) {
+        if (isValidTile(newVal, maxTiles, mapTiles)) {
             return newVal;
         }
 
-        if (!isTileOOB(val, maxTiles, mapTiles)) {
+        if (isValidTile(val, maxTiles, mapTiles)) {
             return val;
         }
 
         // as a last resort, clamp to map boundary (with a slight buffer)
-
         double minPos = maxTiles / 2 + 0.3;
         double maxPos = mapTiles - maxTiles / 2 - 0.3;
         return Math.max(minPos, Math.min(maxPos, val));
