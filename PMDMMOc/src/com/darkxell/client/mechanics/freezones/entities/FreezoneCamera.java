@@ -9,8 +9,8 @@ public class FreezoneCamera {
 
 	private static final int SHAKETIME = 5;
 	private static final int TILESIZE = 8;
-	public int renderheight = Integer.MAX_VALUE;
-	public int renderwidth = Integer.MAX_VALUE;
+    public int renderheight = -1;
+    public int renderwidth = -1;
 	private int shakeTimer = 0;
 	private int shakeX = 0, shakeY = 0;
 	private int shaking = 0;
