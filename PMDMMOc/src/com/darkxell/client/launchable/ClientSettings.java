@@ -89,10 +89,16 @@ public class ClientSettings {
     private static Properties settings;
 
     private static String getSetting(String setting) {
+        if (settings == null) {
+            load();
+        }
         return settings.getProperty(setting);
     }
 
     private static void setSetting(String setting, String value) {
+        if (settings == null) {
+            load();
+        }
         settings.put(setting, value);
     }
 
@@ -110,27 +116,20 @@ public class ClientSettings {
         if (setting == null) {
             return false;
         }
-
         String value = getSetting(setting);
         return Boolean.parseBoolean(value);
     }
 
     public static void setSetting(Setting setting, String value) {
-        if (setting != null && value != null) {
-            setSetting(setting.key, value);
-        }
+        setSetting(setting.key, String.valueOf(value));
     }
 
     public static void setSetting(Setting setting, boolean value) {
-        if (setting != null) {
-            settings.put(setting.key, String.valueOf(value));
-        }
+        setSetting(setting.key, String.valueOf(value));
     }
 
     public static void resetSetting(Setting setting) {
-        if (setting != null) {
-            settings.put(setting.key, setting.defaultValue);
-        }
+        setSetting(setting.key, setting.defaultValue);
     }
 
     public static void load() {
