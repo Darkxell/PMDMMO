@@ -1,5 +1,9 @@
 package com.darkxell.common.move;
 
+import java.util.ArrayList;
+
+import org.jdom2.Element;
+
 import com.darkxell.common.Registrable;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
@@ -7,10 +11,8 @@ import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.util.XMLUtils;
+import com.darkxell.common.util.language.Localization;
 import com.darkxell.common.util.language.Message;
-import org.jdom2.Element;
-
-import java.util.ArrayList;
 
 public class Move implements Registrable<Move>
 {

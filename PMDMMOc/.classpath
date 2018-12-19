@@ -20,6 +20,6 @@
 	</classpathentry>
 	<classpathentry exported="true" kind="lib" path="jar/minimal-json-0.9.4.jar"/>
 	<classpathentry exported="true" kind="lib" path="jar/discord-rpc.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.8.0_181"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
