@@ -212,7 +212,9 @@ public class SpriteFactory implements Runnable {
         }
 
         for (T s : new ArrayList<>(requesters)) {
-            callback.accept(s, img);
+            if (s != null) {
+                callback.accept(s, img);
+            }
         }
     }
 
