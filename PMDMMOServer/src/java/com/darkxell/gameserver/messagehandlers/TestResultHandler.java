@@ -5,9 +5,9 @@
  */
 package com.darkxell.gameserver.messagehandlers;
 
+import com.darkxell.common.Registries;
 import com.darkxell.common.dbobject.DBPlayer;
 import com.darkxell.common.pokemon.Pokemon;
-import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.gameserver.GameServer;
 import com.darkxell.gameserver.GameSessionHandler;
@@ -44,9 +44,9 @@ public class TestResultHandler extends MessageHandler {
             return;
         }
 
-        PokemonSpecies espece = PokemonRegistry.find(mainid);
+        PokemonSpecies espece = Registries.species().find(mainid);
         Pokemon main = espece.generate(new Random(), 5);
-        espece = PokemonRegistry.find(offid);
+        espece = Registries.species().find(offid);
         Pokemon off = espece.generate(new Random(), 5);
 
         // Creates the main pokemon in db

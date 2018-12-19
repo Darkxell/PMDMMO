@@ -5,6 +5,7 @@
  */
 package com.darkxell.gameserver.servermechanics;
 
+import com.darkxell.common.Registries;
 import com.darkxell.common.dbobject.DBInventory;
 import com.darkxell.common.dbobject.DBItemstack;
 import com.darkxell.common.item.ItemRegistry;
@@ -42,7 +43,7 @@ public class GiveManager {
             int space = toolbox.maxsize - itemsintoolbox.size();
 
             //If the item is stackable, tries to stack it
-            if (ItemRegistry.find(itemID).isStackable) {
+            if (Registries.items().find(itemID).isStackable) {
                 for (Long stackid : itemsintoolbox) {
                     DBItemstack stack = endpoint.getItemstackDAO().find(stackid);
                     if (stack.itemid == itemID) {
