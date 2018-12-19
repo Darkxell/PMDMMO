@@ -5,6 +5,7 @@
  */
 package com.darkxell.gameserver;
 
+import com.darkxell.common.Registries;
 import com.darkxell.common.dungeon.data.DungeonRegistry;
 import com.darkxell.common.item.ItemRegistry;
 import com.darkxell.common.move.MoveRegistry;
@@ -191,13 +192,8 @@ public class GameServer {
             if (this.deployKeyDAO == null) {
                 this.deployKeyDAO = new DeployKeyDAO();
             }
-            Logger.loadServer();
-            PokemonRegistry.load();
-            //Lang.load();
-            MoveRegistry.load();
-            ItemRegistry.load();
-            TrapRegistry.load();
-            DungeonRegistry.load();
+            Logger.load("SERVER");
+            Registries.load();
             System.out.println("DAOs and Registries loaded.");
             daoset = true;
         }
