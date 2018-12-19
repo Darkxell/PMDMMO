@@ -5,18 +5,23 @@ import com.darkxell.client.mechanics.freezones.FreezonePlayer;
 
 /**
  * Pseudo-entity that corresponds to the camera position.
- *
+ * <p>
  * This entity will attempt to track the player, but will avoid showing positions that are out-of-bounds. This entity
  * is persistent across all freezone maps.
  */
 public class FreezoneCamera {
-    private static final int SHAKETIME = 5;
+    private static final int SHAKE_TICK_FRAMES = 5;
     private static final int TILESIZE = 8;
+
     public int renderheight = -1;
     public int renderwidth = -1;
+
     private int shakeTimer = 0;
-    private int shakeX = 0, shakeY = 0;
-    private int shaking = 0;
+    private int shakeStep = 0;
+    private int shakeX = 0;
+    private int shakeY = 0;
+    private int shakeIntensity = 0;
+
     private FreezonePlayer target;
     private double x = 0;
     private double y = 0;
@@ -53,26 +58,49 @@ public class FreezoneCamera {
         return this.y + this.shakeY;
     }
 
-    private void onShakeTick() {
-        if (this.shakeX == 0 && this.shakeY == 0) {
-            this.shakeX = this.shakeY = this.shaking;
-        } else if (this.shakeX > 0 && this.shakeY > 0) {
-            this.shakeX = -this.shaking;
-            this.shakeY = this.shaking;
-        } else if (this.shakeX < 0 && this.shakeY > 0) {
-            this.shakeX = -this.shaking;
-            this.shakeY = -this.shaking;
-        } else if (this.shakeX < 0 && this.shakeY < 0) {
-            this.shakeX = this.shaking;
-            this.shakeY = -this.shaking;
-        } else if (this.shakeX > 0 && this.shakeY < 0) {
-            this.shakeX = this.shakeY = 0;
+    public void setShakeIntensity(int strength) {
+        this.shakeIntensity = strength;
+        if (this.shakeIntensity == 0) {
+            this.shakeX = this.shakeY = this.shakeTimer = 0;
         }
     }
 
-    public void setShaking(int strength) {
-        this.shaking = strength;
-        if (this.shaking == 0) this.shakeX = this.shakeY = this.shakeTimer = 0;
+    private void advanceShakeAnimation() {
+        switch (this.shakeStep) {
+            case 0:
+                this.shakeX = this.shakeY = this.shakeIntensity;
+                break;
+            case 1:
+                this.shakeX = -this.shakeIntensity;
+                this.shakeY = this.shakeIntensity;
+                break;
+            case 2:
+                this.shakeX = -this.shakeIntensity;
+                this.shakeY = -this.shakeIntensity;
+                break;
+            case 3:
+                this.shakeX = this.shakeIntensity;
+                this.shakeY = -this.shakeIntensity;
+            case 4:
+                this.shakeX = this.shakeY = 0;
+            default:
+                this.shakeStep = 0;
+                return;
+        }
+
+        this.shakeStep++;
+    }
+
+    private void updateShake() {
+        if (this.shakeIntensity == 0) {
+            return;
+        }
+
+        this.shakeTimer++;
+
+        if (this.shakeTimer % SHAKE_TICK_FRAMES == 0) {
+            this.advanceShakeAnimation();
+        }
     }
 
     private boolean isValidTile(double tile, double renderTiles, double mapTiles) {
@@ -112,22 +140,15 @@ public class FreezoneCamera {
     }
 
     public void update() {
-        // Shake
-        if (this.shaking != 0) {
-            ++this.shakeTimer;
-            if (this.shakeTimer >= SHAKETIME) {
-                this.shakeTimer = 0;
-                this.onShakeTick();
-            }
-        }
+        updateShake();
 
         if (target == null) {
             return;
         }
 
         this.x = this.calculateAxisPos(this.x, this.target.x, Persistence.currentmap.mapWidth,
-                this.renderwidth / TILESIZE);
+                (double) this.renderwidth / TILESIZE);
         this.y = this.calculateAxisPos(this.y, this.target.y, Persistence.currentmap.mapHeight,
-                this.renderheight / TILESIZE);
+                (double) this.renderheight / TILESIZE);
     }
 }
