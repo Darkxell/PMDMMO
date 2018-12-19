@@ -3,8 +3,12 @@ package com.darkxell.client.mechanics.freezones.entities;
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.freezones.FreezonePlayer;
 
-/** The camera "entity". This behaves pretty much exactly like an entity, but is not rendered and doesn't update as the others do. This entity will follow the player as much as it can, but will avoid showing out of bounds areas if the player is too close to walls. Also this entity, like tha player,
- * is not dependennt to a map and will follow the player through warpzone by being persistant. */
+/**
+ * Pseudo-entity that corresponds to the camera position.
+ *
+ * This entity will attempt to track the player, but will avoid showing positions that are out-of-bounds. This entity
+ * is persistent across all freezone maps.
+ */
 public class FreezoneCamera {
 
 	private static final int SHAKETIME = 5;
@@ -19,17 +23,18 @@ public class FreezoneCamera {
 	public double y = 0;
 
 	/** Creates a new Freezonecamera following the wanted player. (Don't go and create multiple players just for the sake of adding multiple cameras tho...) */
-	public FreezoneCamera(FreezonePlayer tofollow) {
-		this.target = tofollow;
-		if (tofollow != null) {
-			this.x = tofollow.x;
-			this.y = tofollow.y;
-		}
-	}
+    public FreezoneCamera(FreezonePlayer targetPlayer) {
+        this.target = targetPlayer;
+        if (targetPlayer != null) {
+            this.x = targetPlayer.x;
+            this.y = targetPlayer.y;
+        }
+    }
 
-	public double finalX() {
-		return this.x + this.shakeX;
-	}
+    public double finalX() {
+        return this.x + this.shakeX;
+    }
+
 
 	public double finalY() {
 		return this.y + this.shakeY;
