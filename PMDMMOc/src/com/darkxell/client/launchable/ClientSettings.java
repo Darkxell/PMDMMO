@@ -100,7 +100,7 @@ public class ClientSettings {
         if (setting == null) {
             return null;
         }
-        if (!settings.containsKey(setting)) {
+        if (!settings.containsKey(setting.key)) {
             resetSetting(setting);
         }
         return getSetting(setting.key);
