@@ -1,11 +1,12 @@
 package com.darkxell.client.launchable.render;
 
-import com.darkxell.client.launchable.Persistence;
-import com.darkxell.client.renderers.TextRenderer;
+import static com.darkxell.client.launchable.render.RenderProfile.PROFILE_UNCAPPED;
+
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 
-import static com.darkxell.client.launchable.render.RenderProfile.*;
+import com.darkxell.client.launchable.Persistence;
+import com.darkxell.client.renderers.TextRenderer;
 
 public class Renderer extends GameLoop {
     protected RenderProfile getProcessingProfile() {
@@ -14,9 +15,9 @@ public class Renderer extends GameLoop {
 
 	@Override
 	protected void tick() {
-		BufferStrategy bf = Persistance.frame.canvas.getBufferStrategy();
+		BufferStrategy bf = Persistence.frame.canvas.getBufferStrategy();
 		Graphics2D g = (Graphics2D) bf.getDrawGraphics();
-		int width = Persistance.frame.canvas.getWidth(), height = Persistance.frame.canvas.getHeight();
+		int width = Persistence.frame.canvas.getWidth(), height = Persistence.frame.canvas.getHeight();
 		g.clearRect(0, 0, width, height);
 
 		Persistence.stateManager.render(g, width, height);

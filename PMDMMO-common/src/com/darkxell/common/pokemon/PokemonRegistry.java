@@ -1,13 +1,14 @@
 package com.darkxell.common.pokemon;
 
-import com.darkxell.common.Registry;
-import org.jdom2.Element;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import org.jdom2.Element;
+
+import com.darkxell.common.Registry;
 
 /**
  * Holds all Pokemon species.

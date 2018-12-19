@@ -1,5 +1,8 @@
 package com.darkxell.common.event;
 
+import java.util.ArrayList;
+import java.util.Stack;
+
 import com.darkxell.common.ai.AI;
 import com.darkxell.common.ai.AIUtils;
 import com.darkxell.common.ai.states.AIStatePlayerControl;
@@ -20,9 +23,6 @@ import com.darkxell.common.event.stats.BellyChangedEvent;
 import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.status.AppliedStatusCondition;
-
-import java.util.ArrayList;
-import java.util.Stack;
 
 /** Processes game logic events. */
 public class CommonEventProcessor

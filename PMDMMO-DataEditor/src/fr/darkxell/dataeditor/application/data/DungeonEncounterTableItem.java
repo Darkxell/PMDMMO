@@ -3,7 +3,6 @@ package fr.darkxell.dataeditor.application.data;
 import com.darkxell.common.Registries;
 import com.darkxell.common.dungeon.data.DungeonEncounter;
 import com.darkxell.common.dungeon.data.FloorSet;
-import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.pokemon.PokemonSpecies;
 
 public class DungeonEncounterTableItem implements Comparable<DungeonEncounterTableItem>

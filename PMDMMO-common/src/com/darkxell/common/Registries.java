@@ -1,13 +1,13 @@
 package com.darkxell.common;
 
+import java.io.IOException;
+import java.net.URL;
+
 import com.darkxell.common.dungeon.data.DungeonRegistry;
 import com.darkxell.common.item.ItemRegistry;
 import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.trap.TrapRegistry;
-
-import java.io.IOException;
-import java.net.URL;
 
 public class Registries {
     private static Registries instance;
@@ -63,10 +63,10 @@ public class Registries {
     private TrapRegistry traps;
 
     private Registries() throws IOException {
-        this.species = new PokemonRegistry(this.getResource("/data/pokemon.xml"));
-        this.dungeons = new DungeonRegistry(this.getResource("/data/dungeons.xml"));
-        this.items = new ItemRegistry(this.getResource("/data/items.xml"));
-        this.moves = new MoveRegistry(this.getResource("/data/moves.xml"));
+        this.species = new PokemonRegistry(getResource("/data/pokemon.xml"));
+        this.dungeons = new DungeonRegistry(getResource("/data/dungeons.xml"));
+        this.items = new ItemRegistry(getResource("/data/items.xml"));
+        this.moves = new MoveRegistry(getResource("/data/moves.xml"));
         this.traps = new TrapRegistry();
     }
 }

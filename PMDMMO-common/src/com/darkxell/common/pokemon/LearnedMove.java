@@ -1,11 +1,12 @@
 package com.darkxell.common.pokemon;
 
+import org.jdom2.Element;
+
 import com.darkxell.common.Registries;
 import com.darkxell.common.dbobject.DBLearnedmove;
 import com.darkxell.common.dungeon.TempIDRegistry.HasID;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.util.XMLUtils;
-import org.jdom2.Element;
 
 public class LearnedMove implements HasID
 {

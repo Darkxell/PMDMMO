@@ -10,7 +10,6 @@ import com.darkxell.common.dbobject.DBPlayer;
 import com.darkxell.common.dbobject.DBPokemon;
 import com.darkxell.common.dungeon.DungeonExploration;
 import com.darkxell.common.dungeon.data.Dungeon;
-import com.darkxell.common.dungeon.data.DungeonRegistry;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.CommonEventProcessor;
 import com.darkxell.common.event.DungeonEvent;

@@ -6,7 +6,6 @@ import java.util.ResourceBundle;
 
 import com.darkxell.common.Registries;
 import com.darkxell.common.dungeon.data.DungeonEncounter;
-import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.pokemon.PokemonSpecies;
 
 import fr.darkxell.dataeditor.application.data.DungeonEncounterTableItem;

@@ -1,13 +1,13 @@
 package com.darkxell.common.move;
 
+import java.util.Collection;
+import java.util.HashMap;
+
 import com.darkxell.common.move.effects.*;
 import com.darkxell.common.pokemon.BaseStats.Stat;
 import com.darkxell.common.status.FloorStatuses;
 import com.darkxell.common.status.StatusConditions;
 import com.darkxell.common.weather.Weather;
-
-import java.util.Collection;
-import java.util.HashMap;
 
 /** Holds all Move Effects. */
 public final class MoveEffects

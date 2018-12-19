@@ -5,9 +5,9 @@ import java.util.HashMap;
 import java.util.Random;
 import java.util.function.Predicate;
 
-import com.darkxell.common.Registrable;
 import org.jdom2.Element;
 
+import com.darkxell.common.Registrable;
 import com.darkxell.common.dungeon.DungeonExploration;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.ItemEffects;

@@ -1,9 +1,9 @@
 package com.darkxell.common.event;
 
+import java.util.ArrayList;
+
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.pokemon.DungeonPokemon;
-
-import java.util.ArrayList;
 
 public interface DungeonEventListener
 {

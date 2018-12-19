@@ -17,11 +17,9 @@ import com.darkxell.client.state.dungeon.AnimationState;
 import com.darkxell.client.state.dungeon.DungeonState;
 import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.common.Registries;
-import com.darkxell.common.dungeon.data.DungeonRegistry;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.layout.Layout;
 import com.darkxell.common.pokemon.DungeonPokemon;
-import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.util.Direction;
 
@@ -129,13 +127,8 @@ public class TestAnimationController implements Initializable
 
 	public void reload()
 	{
-<<<<<<< HEAD
-		floor = Persistance.floor = new Floor(1, Layout.find(Layout.LAYOUT_SINGLEROOM),
-				Persistance.dungeon = Registries.dungeons().find(1).newInstance(new Random().nextLong()), new Random(), false);
-=======
 		floor = Persistence.floor = new Floor(1, Layout.find(Layout.LAYOUT_SINGLEROOM),
-				Persistence.dungeon = DungeonRegistry.find(1).newInstance(new Random().nextLong()), new Random(), false);
->>>>>>> bf4af816... PersistAnce refractor from chicken's branch
+				Persistence.dungeon = Registries.dungeons().find(1).newInstance(new Random().nextLong()), new Random(), false);
 		floor.generate();
 		state = Persistence.dungeonState = new DungeonState();
 

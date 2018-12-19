@@ -1,15 +1,15 @@
 package com.darkxell.common.item;
 
-import com.darkxell.common.item.effects.*;
-import com.darkxell.common.pokemon.BaseStats.Stat;
-import com.darkxell.common.pokemon.PokemonType;
-import com.darkxell.common.status.StatusConditions;
+import static com.darkxell.common.item.effects.ThrowableItemEffect.ThrowableTrajectory.Arc;
+import static com.darkxell.common.item.effects.ThrowableItemEffect.ThrowableTrajectory.Straight;
 
 import java.util.Collection;
 import java.util.HashMap;
 
-import static com.darkxell.common.item.effects.ThrowableItemEffect.ThrowableTrajectory.Arc;
-import static com.darkxell.common.item.effects.ThrowableItemEffect.ThrowableTrajectory.Straight;
+import com.darkxell.common.item.effects.*;
+import com.darkxell.common.pokemon.BaseStats.Stat;
+import com.darkxell.common.pokemon.PokemonType;
+import com.darkxell.common.status.StatusConditions;
 
 /** Holds all Move Effects. */
 public final class ItemEffects

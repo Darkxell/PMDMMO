@@ -1,14 +1,15 @@
 package com.darkxell.common.dungeon.data;
 
+import java.util.ArrayList;
+import java.util.Random;
+
+import org.jdom2.Element;
+
 import com.darkxell.common.Registries;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.util.RandomUtil;
 import com.darkxell.common.util.XMLUtils;
-import org.jdom2.Element;
-
-import java.util.ArrayList;
-import java.util.Random;
 
 /** A group of Items that can appear in a Dungeon. */
 public class DungeonItemGroup

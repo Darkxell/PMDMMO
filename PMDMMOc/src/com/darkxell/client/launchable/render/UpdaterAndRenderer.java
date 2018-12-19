@@ -1,13 +1,12 @@
 package com.darkxell.client.launchable.render;
 
+import static com.darkxell.client.launchable.render.RenderProfile.PROFILE_SYNCHRONIZED;
+
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 
-import com.darkxell.client.launchable.Persistance;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.renderers.TextRenderer;
-import com.darkxell.common.util.Util;
-
-import static com.darkxell.client.launchable.render.RenderProfile.*;
 
 /**
  * (EXPERIMENTAL) A combined updater and renderer to avoid synchronization issues between game ticks and render events.
@@ -22,15 +21,15 @@ public class UpdaterAndRenderer extends GameLoop {
 
     @Override
     protected void tick() {
-        Persistance.stateManager.update();
+        Persistence.stateManager.update();
 
-        if (Persistance.frame == null || !Persistance.frame.isVisible()) {
+        if (Persistence.frame == null || !Persistence.frame.isVisible()) {
             return;
         }
 
-        BufferStrategy bf = Persistance.frame.canvas.getBufferStrategy();
+        BufferStrategy bf = Persistence.frame.canvas.getBufferStrategy();
         Graphics2D g = (Graphics2D) bf.getDrawGraphics();
-        int width = Persistance.frame.canvas.getWidth(), height = Persistance.frame.canvas.getHeight();
+        int width = Persistence.frame.canvas.getWidth(), height = Persistence.frame.canvas.getHeight();
         g.clearRect(0, 0, width, height);
 
 

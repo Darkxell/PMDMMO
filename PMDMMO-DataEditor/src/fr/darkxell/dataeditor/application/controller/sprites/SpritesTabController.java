@@ -11,7 +11,6 @@ import com.darkxell.client.resources.images.pokemon.PokemonSpriteSequence;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesetData;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
 import com.darkxell.common.Registries;
-import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.XMLUtils;

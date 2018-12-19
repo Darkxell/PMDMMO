@@ -1,11 +1,12 @@
 package com.darkxell.common.dungeon.data;
 
+import org.jdom2.Element;
+
 import com.darkxell.common.Registries;
 import com.darkxell.common.dungeon.floor.layout.Layout;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.util.XMLUtils;
-import org.jdom2.Element;
 
 public class FloorData implements Comparable<FloorData>
 {

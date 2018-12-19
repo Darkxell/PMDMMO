@@ -1,9 +1,5 @@
 package com.darkxell.common;
 
-import com.darkxell.common.util.Logger;
-import com.darkxell.common.util.XMLUtils;
-import org.jdom2.Element;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -11,6 +7,11 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
+
+import org.jdom2.Element;
+
+import com.darkxell.common.util.Logger;
+import com.darkxell.common.util.XMLUtils;
 
 /**
  * Base class for all registries.

@@ -1,12 +1,12 @@
 package com.darkxell.common.trap;
 
+import java.util.ArrayList;
+
 import com.darkxell.common.Registrable;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Message;
-
-import java.util.ArrayList;
 
 public abstract class Trap implements Registrable<Trap> {
     public final int id;

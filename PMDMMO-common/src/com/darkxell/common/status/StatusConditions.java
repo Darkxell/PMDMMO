@@ -5,28 +5,7 @@ import java.util.HashMap;
 import com.darkxell.common.move.effects.SolarBeamEffect;
 import com.darkxell.common.pokemon.BaseStats.Stat;
 import com.darkxell.common.pokemon.PokemonType;
-import com.darkxell.common.status.conditions.BoostCritStatusCondition;
-import com.darkxell.common.status.conditions.BoostMoveTypeStatusCondition;
-import com.darkxell.common.status.conditions.BoostStatOnHitStatusCondition;
-import com.darkxell.common.status.conditions.ChangeAttackerStatStatusCondition;
-import com.darkxell.common.status.conditions.ChargedMoveStatusCondition;
-import com.darkxell.common.status.conditions.ConfusedStatusCondition;
-import com.darkxell.common.status.conditions.ConstrictedStatusCondition;
-import com.darkxell.common.status.conditions.PreventsMovesStatusCondition;
-import com.darkxell.common.status.conditions.ImmuneStatusCondition;
-import com.darkxell.common.status.conditions.InfatuatedStatusCondition;
-import com.darkxell.common.status.conditions.ParalyzedStatusCondition;
-import com.darkxell.common.status.conditions.PeriodicDamageStatusCondition;
-import com.darkxell.common.status.conditions.PetrifiedStatusCondition;
-import com.darkxell.common.status.conditions.PreventActionStatusCondition;
-import com.darkxell.common.status.conditions.PreventAilmentStatusCondition;
-import com.darkxell.common.status.conditions.PreventOtherStatusCondition;
-import com.darkxell.common.status.conditions.RedirectAttacksStatusCondition;
-import com.darkxell.common.status.conditions.RemoveTypeImmunitiesStatusCondition;
-import com.darkxell.common.status.conditions.StealsHpStatusCondition;
-import com.darkxell.common.status.conditions.StoreDamageToDoubleStatusCondition;
-import com.darkxell.common.status.conditions.TauntedStatusCondition;
-import com.darkxell.common.status.conditions.TerrifiedStatusCondition;
+import com.darkxell.common.status.conditions.*;
 
 public final class StatusConditions
 {

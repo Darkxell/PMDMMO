@@ -14,7 +14,6 @@ import com.darkxell.client.mechanics.cutscene.end.PlayCutsceneCutsceneEnd;
 import com.darkxell.client.mechanics.cutscene.end.ResumeExplorationCutsceneEnd;
 import com.darkxell.common.Registries;
 import com.darkxell.common.dungeon.data.Dungeon;
-import com.darkxell.common.dungeon.data.DungeonRegistry;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.zones.FreezoneInfo;
 

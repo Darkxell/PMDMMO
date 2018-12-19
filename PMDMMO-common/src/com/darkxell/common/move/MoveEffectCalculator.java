@@ -1,5 +1,7 @@
 package com.darkxell.common.move;
 
+import java.util.ArrayList;
+
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.DungeonEvent.MessageEvent;
@@ -14,8 +16,6 @@ import com.darkxell.common.pokemon.PropertyModificator;
 import com.darkxell.common.status.ActiveFloorStatus;
 import com.darkxell.common.status.AppliedStatusCondition;
 import com.darkxell.common.util.language.Message;
-
-import java.util.ArrayList;
 
 /** Object that computes various values when using a move, such as damage or accuracy. */
 public class MoveEffectCalculator

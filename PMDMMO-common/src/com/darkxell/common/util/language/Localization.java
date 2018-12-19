@@ -1,6 +1,7 @@
 package com.darkxell.common.util.language;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 import com.darkxell.common.util.Logger;

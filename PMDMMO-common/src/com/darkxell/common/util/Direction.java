@@ -1,10 +1,10 @@
 package com.darkxell.common.util;
 
-import javafx.util.Pair;
-
 import java.awt.geom.Point2D;
 import java.util.Comparator;
 import java.util.Random;
+
+import javafx.util.Pair;
 
 /** Directions used in Dungeons. */
 public enum Direction
