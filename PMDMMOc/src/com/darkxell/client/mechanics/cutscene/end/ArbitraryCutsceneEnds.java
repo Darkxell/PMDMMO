@@ -10,11 +10,9 @@ import com.darkxell.common.util.Logger;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonObject;
 
-public class ArbitraryCutsceneEnds
-{
+public class ArbitraryCutsceneEnds {
 
-	private static void defaultFunction(String function, Cutscene cutscene)
-	{
+	private static void defaultFunction(String function, Cutscene cutscene) {
 		Logger.w("Tried to execute function '" + function + "' but wouldn't find it :(");
 	}
 
@@ -56,6 +54,16 @@ public class ArbitraryCutsceneEnds
 					case 10:
 						CutsceneManager.playCutscene("skarmory/dream", true);
 				}
+			case "squaretutorial":
+				mess = Json.object().add("action", "storyadvance").add("target", 10);
+				Persistence.socketendpoint.sendMessage(mess.toString());
+				Persistence.player.setStoryPosition(10);
+				break;
+			case "dugrequest":
+				mess = Json.object().add("action", "storyadvance").add("target", 11);
+				Persistence.socketendpoint.sendMessage(mess.toString());
+				Persistence.player.setStoryPosition(11);
+				break;
 			default:
 				defaultFunction(function, cutscene);
 				break;

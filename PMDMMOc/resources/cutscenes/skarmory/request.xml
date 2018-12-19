@@ -93,6 +93,6 @@
     <wait />
   </events>
   <onfinish>
-    <loadfreezone fadesout="false" id="baseinside" facing="SOUTH" />
+    <loadfreezone function="dugrequest" fadesout="false" id="baseinside" facing="SOUTH" />
   </onfinish>
 </cutscene>
