@@ -1,7 +1,5 @@
 package com.darkxell.client.launchable;
 
-import com.darkxell.common.util.Logger;
-
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileInputStream;
@@ -9,6 +7,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Properties;
+
+import com.darkxell.common.util.Logger;
 
 public class ClientSettings {
     public enum Setting {

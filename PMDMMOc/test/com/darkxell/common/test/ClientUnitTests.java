@@ -1,5 +1,7 @@
 package com.darkxell.common.test;
 
+import static com.darkxell.client.launchable.render.RenderProfile.PROFILE_SYNCHRONIZED;
+
 import com.darkxell.client.launchable.ClientSettings;
 import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.launchable.Persistence;
@@ -9,8 +11,6 @@ import com.darkxell.client.resources.music.SoundManager;
 import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.client.ui.Frame;
 import com.darkxell.common.test.tests.DungeonReplayTest;
-
-import static com.darkxell.client.launchable.render.RenderProfile.PROFILE_SYNCHRONIZED;
 
 public class ClientUnitTests
 {

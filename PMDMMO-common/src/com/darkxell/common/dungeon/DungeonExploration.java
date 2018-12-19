@@ -1,5 +1,9 @@
 package com.darkxell.common.dungeon;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Random;
+
 import com.darkxell.common.Registries;
 import com.darkxell.common.ai.AI;
 import com.darkxell.common.dungeon.data.Dungeon;
@@ -26,10 +30,6 @@ import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.status.AppliedStatusCondition;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.Logger;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
 
 /** Represents the behavior at the Dungeon-level while in an exploration (Floor management, Players, AI, seeds, turns & events memory...). */
 public class DungeonExploration

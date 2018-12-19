@@ -1,9 +1,15 @@
 package com.darkxell.client.resources.images;
 
-import java.awt.*;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.TexturePaint;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.*;
+import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.function.BiConsumer;
 
 import com.darkxell.client.launchable.Launcher;

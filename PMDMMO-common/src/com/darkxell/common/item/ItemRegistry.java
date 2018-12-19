@@ -1,17 +1,18 @@
 package com.darkxell.common.item;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.List;
+
+import org.jdom2.Element;
+
 import com.darkxell.common.Registry;
 import com.darkxell.common.item.Item.ItemCategory;
 import com.darkxell.common.item.effects.TeachedMoveItemEffect;
 import com.darkxell.common.item.effects.TeachesMoveItemEffect;
 import com.darkxell.common.item.effects.TeachesMoveRenewableItemEffect;
 import com.darkxell.common.util.XMLUtils;
-import org.jdom2.Element;
-
-import java.io.IOException;
-import java.net.URL;
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * Holds all Items.

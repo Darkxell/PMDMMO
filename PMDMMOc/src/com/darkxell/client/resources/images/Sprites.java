@@ -1,5 +1,10 @@
 package com.darkxell.client.resources.images;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.net.URISyntaxException;
+import java.util.Arrays;
+
 import com.darkxell.client.resources.Res;
 import com.darkxell.client.resources.images.entities.WaterSparklesSpriteSet;
 import com.darkxell.client.resources.images.hud.DungeonHudSpriteset;
@@ -14,11 +19,6 @@ import com.darkxell.client.resources.images.tilesets.CommonDungeonTileset;
 import com.darkxell.client.resources.images.tilesets.DungeonMapTileset;
 import com.darkxell.client.ui.Frame.FrameIconSprite;
 import com.darkxell.common.util.Logger;
-
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.net.URISyntaxException;
-import java.util.Arrays;
 
 /** Class that holds Sprites & SpriteSets used in the whole project. */
 public final class Sprites

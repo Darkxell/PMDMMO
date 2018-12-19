@@ -1,10 +1,6 @@
 package com.darkxell.common.dungeon.floor;
 
-import static com.darkxell.common.dungeon.floor.TileType.AIR;
-import static com.darkxell.common.dungeon.floor.TileType.LAVA;
-import static com.darkxell.common.dungeon.floor.TileType.STAIR;
-import static com.darkxell.common.dungeon.floor.TileType.WARP_ZONE;
-import static com.darkxell.common.dungeon.floor.TileType.WATER;
+import static com.darkxell.common.dungeon.floor.TileType.*;
 
 import java.awt.Point;
 import java.awt.geom.Point2D;

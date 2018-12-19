@@ -1,16 +1,17 @@
 package com.darkxell.common.ai;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Stack;
+
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.RandomUtil;
-import javafx.util.Pair;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Stack;
+import javafx.util.Pair;
 
 /** Contains various static methods used in AI computations. */
 public final class AIUtils

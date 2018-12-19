@@ -1,10 +1,10 @@
 package com.darkxell.common.mission;
 
-import com.darkxell.common.Registries;
-import com.darkxell.common.util.language.Message;
-
 import java.util.ArrayList;
 import java.util.Random;
+
+import com.darkxell.common.Registries;
+import com.darkxell.common.util.language.Message;
 
 /**
  * Structure that contains all the informations for a mission. A mission object

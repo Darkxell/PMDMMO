@@ -1,9 +1,10 @@
 package com.darkxell.common.dungeon.data;
 
+import org.jdom2.Element;
+
 import com.darkxell.common.Registries;
 import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.util.XMLUtils;
-import org.jdom2.Element;
 
 /** Describes how a Pokemon appears in a Dungeon. */
 public class DungeonEncounter

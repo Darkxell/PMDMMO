@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import com.darkxell.common.Registries;
 import com.darkxell.common.move.Move;
-import com.darkxell.common.move.MoveRegistry;
 
 import javafx.collections.FXCollections;
 import javafx.scene.control.TableCell;

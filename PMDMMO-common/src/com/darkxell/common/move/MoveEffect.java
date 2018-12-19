@@ -1,5 +1,7 @@
 package com.darkxell.common.move;
 
+import java.util.ArrayList;
+
 import com.darkxell.common.ai.AIUtils;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
@@ -22,8 +24,6 @@ import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.RandomUtil;
 import com.darkxell.common.util.language.Localization;
 import com.darkxell.common.util.language.Message;
-
-import java.util.ArrayList;
 
 public class MoveEffect implements AffectsPokemon
 {

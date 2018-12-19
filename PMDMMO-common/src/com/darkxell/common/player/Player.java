@@ -1,12 +1,12 @@
 package com.darkxell.common.player;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import com.darkxell.common.dbobject.DBPlayer;
 import com.darkxell.common.dbobject.DatabaseIdentifier;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.Pokemon;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Player
 {

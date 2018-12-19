@@ -1,8 +1,8 @@
 package com.darkxell.client.launchable.render;
 
-import com.darkxell.client.launchable.Persistence;
+import static com.darkxell.client.launchable.render.RenderProfile.PROFILE_UNCAPPED;
 
-import static com.darkxell.client.launchable.render.RenderProfile.*;
+import com.darkxell.client.launchable.Persistence;
 
 public class Updater extends GameLoop {
     protected RenderProfile getProcessingProfile() {

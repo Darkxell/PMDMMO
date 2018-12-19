@@ -1,9 +1,18 @@
 package com.darkxell.client.launchable;
 
+import static com.darkxell.client.launchable.render.RenderProfile.PROFILE_SYNCHRONIZED;
+import static com.darkxell.client.launchable.render.RenderProfile.PROFILE_UNDEFINED;
+
+import java.io.IOException;
+
 import javax.swing.JOptionPane;
 
 import com.darkxell.client.discord.DiscordEventHandlerForPMDMMO;
-import com.darkxell.client.launchable.render.*;
+import com.darkxell.client.launchable.render.GameLoop;
+import com.darkxell.client.launchable.render.RenderProfile;
+import com.darkxell.client.launchable.render.Renderer;
+import com.darkxell.client.launchable.render.Updater;
+import com.darkxell.client.launchable.render.UpdaterAndRenderer;
 import com.darkxell.client.mechanics.animation.Animations;
 import com.darkxell.client.resources.images.SpriteFactory;
 import com.darkxell.client.resources.images.SpriteLoader;
@@ -18,10 +27,6 @@ import com.darkxell.common.Registries;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.language.Localization;
 import com.darkxell.common.util.language.Message;
-
-import java.io.IOException;
-
-import static com.darkxell.client.launchable.render.RenderProfile.*;
 
 /**
  * Launching class of the client

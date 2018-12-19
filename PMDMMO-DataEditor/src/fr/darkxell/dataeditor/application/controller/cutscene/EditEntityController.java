@@ -12,7 +12,6 @@ import com.darkxell.client.mechanics.cutscene.entity.CutscenePokemon;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
 import com.darkxell.common.Registries;
 import com.darkxell.common.pokemon.Pokemon;
-import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.util.Direction;
 

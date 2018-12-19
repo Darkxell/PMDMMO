@@ -1,12 +1,13 @@
 package com.darkxell.common.move;
 
-import com.darkxell.common.Registry;
-import org.jdom2.Element;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
+
+import org.jdom2.Element;
+
+import com.darkxell.common.Registry;
 
 /**
  * Holds all Moves.

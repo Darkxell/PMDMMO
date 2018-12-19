@@ -1,13 +1,12 @@
 package com.darkxell.client.launchable.render;
 
+import static com.darkxell.client.launchable.render.RenderProfile.PROFILE_SYNCHRONIZED;
+
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.renderers.TextRenderer;
-import com.darkxell.common.util.Util;
-
-import static com.darkxell.client.launchable.render.RenderProfile.*;
 
 /**
  * (EXPERIMENTAL) A combined updater and renderer to avoid synchronization issues between game ticks and render events.

@@ -1,11 +1,11 @@
 package com.darkxell.common.mission;
 
+import java.util.Random;
+
 import com.darkxell.common.Registries;
 import com.darkxell.common.item.ItemRegistry;
 import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.util.language.Message;
-
-import java.util.Random;
 
 public class MissionFlavourText {
 

@@ -1,5 +1,7 @@
 package com.darkxell.common.mission.dungeon;
 
+import java.util.ArrayList;
+
 import com.darkxell.common.Registries;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
@@ -11,8 +13,6 @@ import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.DungeonPokemon.DungeonPokemonType;
 import com.darkxell.common.util.language.Message;
-
-import java.util.ArrayList;
 
 public class RescueDungeonMission extends DungeonMission
 {

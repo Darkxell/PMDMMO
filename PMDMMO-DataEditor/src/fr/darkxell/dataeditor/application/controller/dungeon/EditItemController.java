@@ -7,7 +7,6 @@ import java.util.ResourceBundle;
 import com.darkxell.common.Registries;
 import com.darkxell.common.dungeon.data.DungeonItemGroup;
 import com.darkxell.common.item.Item;
-import com.darkxell.common.item.ItemRegistry;
 
 import fr.darkxell.dataeditor.application.data.DungeonItemTableItem;
 import fr.darkxell.dataeditor.application.data.SingleItemTableItem;

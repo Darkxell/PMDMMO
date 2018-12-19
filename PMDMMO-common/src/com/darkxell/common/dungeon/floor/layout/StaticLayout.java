@@ -1,5 +1,12 @@
 package com.darkxell.common.dungeon.floor.layout;
 
+import java.awt.Point;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+import org.jdom2.Element;
+
 import com.darkxell.common.Registries;
 import com.darkxell.common.ai.AI;
 import com.darkxell.common.ai.SkipTurnsAI;
@@ -13,18 +20,16 @@ import com.darkxell.common.dungeon.floor.room.Room;
 import com.darkxell.common.dungeon.floor.room.SquareRoom;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.ItemStack;
-import com.darkxell.common.pokemon.*;
+import com.darkxell.common.pokemon.BaseStats;
+import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.DungeonPokemon.DungeonPokemonType;
+import com.darkxell.common.pokemon.LearnedMove;
+import com.darkxell.common.pokemon.Pokemon;
+import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.trap.TrapRegistry;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.XMLUtils;
-import org.jdom2.Element;
-
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 public class StaticLayout extends Layout
 {

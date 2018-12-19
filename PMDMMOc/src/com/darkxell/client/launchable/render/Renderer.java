@@ -1,12 +1,12 @@
 package com.darkxell.client.launchable.render;
 
-import com.darkxell.client.launchable.Persistence;
-import com.darkxell.client.renderers.TextRenderer;
+import static com.darkxell.client.launchable.render.RenderProfile.PROFILE_UNCAPPED;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 
-import static com.darkxell.client.launchable.render.RenderProfile.*;
+import com.darkxell.client.launchable.Persistence;
+import com.darkxell.client.renderers.TextRenderer;
 
 public class Renderer extends GameLoop {
     protected RenderProfile getProcessingProfile() {

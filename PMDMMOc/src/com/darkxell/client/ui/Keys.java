@@ -1,7 +1,12 @@
 package com.darkxell.client.ui;
 
+import static com.darkxell.client.launchable.ClientSettings.Setting.*;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Consumer;
 
 import com.darkxell.client.launchable.ClientSettings;
 import com.darkxell.client.launchable.ClientSettings.Setting;
@@ -9,12 +14,6 @@ import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.language.Message;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.function.Consumer;
-
-import static com.darkxell.client.launchable.ClientSettings.Setting.*;
 
 public class Keys implements KeyListener {
     public enum Key {

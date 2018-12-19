@@ -1,13 +1,13 @@
 package com.darkxell.common.item;
 
-import com.darkxell.common.Registries;
-import com.darkxell.common.util.language.Localization;
+import org.jdom2.Element;
 
+import com.darkxell.common.Registries;
 import com.darkxell.common.dbobject.DBItemstack;
 import com.darkxell.common.dungeon.TempIDRegistry.HasID;
 import com.darkxell.common.util.XMLUtils;
+import com.darkxell.common.util.language.Localization;
 import com.darkxell.common.util.language.Message;
-import org.jdom2.Element;
 
 public class ItemStack implements Comparable<ItemStack>, HasID
 {

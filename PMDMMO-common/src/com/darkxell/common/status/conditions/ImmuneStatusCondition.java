@@ -6,8 +6,8 @@ import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
 import com.darkxell.common.pokemon.BaseStats.Stat;
-import com.darkxell.common.status.StatusCondition;
 import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.status.StatusCondition;
 
 public class ImmuneStatusCondition extends StatusCondition
 {

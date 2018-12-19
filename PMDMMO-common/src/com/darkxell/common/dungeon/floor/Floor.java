@@ -1,5 +1,10 @@
 package com.darkxell.common.dungeon.floor;
 
+import java.awt.Point;
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.function.Predicate;
+
 import com.darkxell.common.Registries;
 import com.darkxell.common.ai.AI;
 import com.darkxell.common.ai.AIManager;
@@ -28,11 +33,6 @@ import com.darkxell.common.util.Pair;
 import com.darkxell.common.util.RandomUtil;
 import com.darkxell.common.weather.ActiveWeather;
 import com.darkxell.common.weather.Weather;
-
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.function.Predicate;
 
 /** Represents a generated Floor in a Dungeon. */
 public class Floor

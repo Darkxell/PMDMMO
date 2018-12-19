@@ -1,8 +1,8 @@
 package com.darkxell.common.util;
 
-import java.util.ArrayList;
-
 import static com.darkxell.common.util.Direction.*;
+
+import java.util.ArrayList;
 
 public class DirectionSet
 {
