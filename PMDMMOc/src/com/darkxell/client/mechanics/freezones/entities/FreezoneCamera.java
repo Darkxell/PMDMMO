@@ -26,6 +26,14 @@ public class FreezoneCamera {
     private double x = 0;
     private double y = 0;
 
+    public FreezoneCamera(FreezonePlayer targetPlayer) {
+        this.target = targetPlayer;
+        if (targetPlayer != null) {
+            this.x = targetPlayer.x;
+            this.y = targetPlayer.y;
+        }
+    }
+
     public double getX() {
         return x;
     }
@@ -40,14 +48,6 @@ public class FreezoneCamera {
 
     public void setY(double y) {
         this.y = y;
-    }
-
-    public FreezoneCamera(FreezonePlayer targetPlayer) {
-        this.target = targetPlayer;
-        if (targetPlayer != null) {
-            this.x = targetPlayer.x;
-            this.y = targetPlayer.y;
-        }
     }
 
     public double finalX() {
