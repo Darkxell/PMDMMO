@@ -32,22 +32,12 @@ public class FreezoneCamera {
 	}
 
 	public double finalY() {
-		return this.y + this.shakeY;
-	}
+        return this.y + this.shakeY;
+    }
 
-	private boolean isXposOOB(double x) {
-		return (x < (renderwidth / 2) / TILESIZE + 0.3)
-				|| (x > Persistence.currentmap.mapWidth - ((renderwidth / 2) / TILESIZE) - 0.3);
-	}
-
-	private boolean isYposOOB(double y) {
-		return (y < (renderheight / 2) / TILESIZE + 0.3)
-				|| (y > Persistence.currentmap.mapHeight - ((renderheight / 2) / TILESIZE) - 0.3);
-	}
-
-	private void onShakeTick() {
-		if (this.shakeX == 0 && this.shakeY == 0) {
-			this.shakeX = this.shakeY = this.shaking;
+    private void onShakeTick() {
+        if (this.shakeX == 0 && this.shakeY == 0) {
+            this.shakeX = this.shakeY = this.shaking;
 		} else if (this.shakeX > 0 && this.shakeY > 0) {
 			this.shakeX = -this.shaking;
 			this.shakeY = this.shaking;
@@ -62,9 +52,46 @@ public class FreezoneCamera {
 		}
 	}
 
-	public void setShaking(int strength) {
-		this.shaking = strength;
-		if (this.shaking == 0) this.shakeX = this.shakeY = this.shakeTimer = 0;
+    public void setShaking(int strength) {
+        this.shaking = strength;
+        if (this.shaking == 0) this.shakeX = this.shakeY = this.shakeTimer = 0;
+    }
+
+    private boolean isTileOOB(double tile, double renderTiles, double mapTiles) {
+        boolean below = tile < (renderTiles / 2) + 0.3;
+        boolean above = tile > mapTiles - (renderTiles / 2) - 0.3;
+        return below || above;
+    }
+
+    private double calculateAxisPos(double val, double targetVal, double mapTiles, double maxTiles) {
+        // if the map can be fit entirely on the screen, just place the map in the center
+        if (mapTiles <= maxTiles) {
+            return mapTiles / 2;
+        }
+
+        boolean isFar = Math.abs(val - targetVal) > 4;
+        double deltaVal = isFar ? 0.4d : 0.2d;
+
+        double newVal = val;
+        if (val > targetVal + 1) {
+            newVal -= deltaVal;
+        } else if (val < targetVal - 1) {
+            newVal += deltaVal;
+        }
+
+        if (!isTileOOB(newVal, maxTiles, mapTiles)) {
+            return newVal;
+        }
+
+        if (!isTileOOB(val, maxTiles, mapTiles)) {
+            return val;
+        }
+
+        // as a last resort, clamp to map boundary (with a slight buffer)
+
+        double minPos = maxTiles / 2 + 0.3;
+        double maxPos = mapTiles - maxTiles / 2 - 0.3;
+        return Math.max(minPos, Math.min(maxPos, val));
 	}
 
 	public void update() {
@@ -74,37 +101,16 @@ public class FreezoneCamera {
 			if (this.shakeTimer >= SHAKETIME) {
 				this.shakeTimer = 0;
 				this.onShakeTick();
-			}
-		}
+            }
+        }
 
-		if (target == null) return;
-		boolean isXFarFromPlayer = x > target.x + 4 || x < target.x - 4;
-		boolean isYFarFromPlayer = y > target.y + 4 || y < target.y - 4;
-		double cameraspeed = isXFarFromPlayer ? 0.4d : 0.2d;
-		// X POSITIONING
-		if (Persistence.currentmap.mapWidth * TILESIZE <= renderwidth) {
-			this.x = ((double) Persistence.currentmap.mapWidth) / 2;
-		} else {
-			double newx = (x > target.x + 1) ? x - cameraspeed : (x < target.x - 1) ? x + cameraspeed : x;
-			if (isXposOOB(newx)) {
-				if (isXposOOB(x)) {
-					if (x <= (renderwidth / 2) / TILESIZE + 0.3) x = (renderwidth / 2) / TILESIZE + 0.3;
-					else x = Persistence.currentmap.mapWidth - ((renderwidth / 2) / TILESIZE) - 0.3;
-				}
-			} else x = newx;
-		}
-		cameraspeed = isYFarFromPlayer ? 0.4d : 0.2d;
-		// Y POSITIONING
-		if (Persistence.currentmap.mapHeight * TILESIZE <= renderheight) {
-			this.y = ((double) Persistence.currentmap.mapHeight) / 2;
-		} else {
-			double newy = (y > target.y + 1) ? y - cameraspeed : (y < target.y - 1) ? y + cameraspeed : y;
-			if (isYposOOB(newy)) {
-				if (isYposOOB(y)) {
-					if (y <= (renderheight / 2) / TILESIZE + 0.3) y = (renderheight / 2) / TILESIZE + 0.3;
-					else y = Persistence.currentmap.mapHeight - ((renderheight / 2) / TILESIZE) - 0.3;
-				}
-			} else y = newy;
-		}
-	}
+        if (target == null) {
+            return;
+        }
+
+        this.x = this.calculateAxisPos(this.x, this.target.x, Persistence.currentmap.mapWidth,
+                this.renderwidth / TILESIZE);
+        this.y = this.calculateAxisPos(this.y, this.target.y, Persistence.currentmap.mapHeight,
+                this.renderheight / TILESIZE);
+    }
 }
