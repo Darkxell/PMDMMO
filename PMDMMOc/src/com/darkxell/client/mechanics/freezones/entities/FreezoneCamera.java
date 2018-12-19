@@ -15,8 +15,24 @@ public class FreezoneCamera {
 	private int shakeX = 0, shakeY = 0;
 	private int shaking = 0;
 	private FreezonePlayer target;
-	public double x = 0;
-	public double y = 0;
+    private double x = 0;
+    private double y = 0;
+
+    public double getX() {
+        return x;
+    }
+
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public void setY(double y) {
+        this.y = y;
+    }
 
 	/** Creates a new Freezonecamera following the wanted player. (Don't go and create multiple players just for the sake of adding multiple cameras tho...) */
 	public FreezoneCamera(FreezonePlayer tofollow) {
