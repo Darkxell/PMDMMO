@@ -13,8 +13,8 @@ public class FreezoneCamera {
     private static final int SHAKE_TICK_FRAMES = 5;
     private static final int TILESIZE = 8;
 
-    public int renderheight = -1;
-    public int renderwidth = -1;
+    public int renderHeight = -1;
+    public int renderWidth = -1;
 
     private int shakeTimer = 0;
     private int shakeStep = 0;
@@ -147,8 +147,8 @@ public class FreezoneCamera {
         }
 
         this.x = this.calculateAxisPos(this.x, this.target.x, Persistence.currentmap.mapWidth,
-                (double) this.renderwidth / TILESIZE);
+                (double) this.renderWidth / TILESIZE);
         this.y = this.calculateAxisPos(this.y, this.target.y, Persistence.currentmap.mapHeight,
-                (double) this.renderheight / TILESIZE);
+                (double) this.renderHeight / TILESIZE);
     }
 }
