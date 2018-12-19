@@ -60,8 +60,8 @@ public class CutsceneCreation
 	{
 		Persistence.currentmap = Freezones.loadMap(this.freezone);
 		Persistence.freezoneCamera = new FreezoneCamera(null);
-		if (this.camerax != -1) Persistence.freezoneCamera.x = this.camerax;
-		if (this.cameray != -1) Persistence.freezoneCamera.y = this.cameray;
+		if (this.camerax != -1) Persistence.freezoneCamera.setX(this.camerax);
+		if (this.cameray != -1) Persistence.freezoneCamera.setY(this.cameray);
 		this.cutscene.player.mapAlpha = this.drawMap ? 1 : 0;
 		for (CutsceneEntity entity : this.entities)
 			this.cutscene.player.createEntity(entity);

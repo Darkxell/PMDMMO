@@ -92,7 +92,8 @@ public class AbstractFreezoneState extends AbstractState
 					g.fillRect((int) (dbrct.x * 8), (int) (dbrct.y * 8), (int) (dbrct.width * 8), (int) (dbrct.height * 8));
 				}
 				g.setColor(new Color(240, 55, 54, 150));
-				g.fillRect((int) (Persistence.freezoneCamera.x * 8), (int) (Persistence.freezoneCamera.y * 8), 4, 4);
+				g.fillRect((int) (Persistence.freezoneCamera.getX() * 8), (int) (Persistence.freezoneCamera.getY() * 8), 4
+						, 4);
 			}
 
 			g.translate(-translateX, -translateY);

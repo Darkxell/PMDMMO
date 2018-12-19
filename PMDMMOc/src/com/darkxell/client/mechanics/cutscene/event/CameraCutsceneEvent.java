@@ -47,8 +47,8 @@ public class CameraCutsceneEvent extends CutsceneEvent
 		super.onFinish();
 		if (Persistence.freezoneCamera != null)
 		{
-			Persistence.freezoneCamera.x = this.travel.destination.getX();
-			Persistence.freezoneCamera.y = this.travel.destination.getY();
+			Persistence.freezoneCamera.setX(this.travel.destination.getX());
+			Persistence.freezoneCamera.setY(this.travel.destination.getY());
 		}
 	}
 
@@ -58,7 +58,7 @@ public class CameraCutsceneEvent extends CutsceneEvent
 		super.onStart();
 		if (Persistence.freezoneCamera != null)
 		{
-			double startX = Persistence.freezoneCamera.x, startY = Persistence.freezoneCamera.y;
+			double startX = Persistence.freezoneCamera.getX(), startY = Persistence.freezoneCamera.getY();
 			double destX = this.xPos == UNSPECIFIED ? startX : this.xPos, destY = this.yPos == UNSPECIFIED ? startY : this.yPos;
 			this.travel = new TravelAnimation(new Point.Double(startX, startY), new Point.Double(destX, destY));
 			this.duration = (int) Math.floor(this.travel.distance.distance(new Point(0, 0)) / this.speed);
@@ -93,9 +93,8 @@ public class CameraCutsceneEvent extends CutsceneEvent
 		}
 		if (Persistence.freezoneCamera != null)
 		{
-			Persistence.freezoneCamera.x = this.travel.current().getX();
-			Persistence.freezoneCamera.y = this.travel.current().getY();
+			Persistence.freezoneCamera.setX(this.travel.current().getX());
+			Persistence.freezoneCamera.setY(this.travel.current().getY());
 		}
 	}
-
 }
