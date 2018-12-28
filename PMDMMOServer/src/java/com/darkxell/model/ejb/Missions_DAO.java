@@ -71,7 +71,7 @@ public class Missions_DAO {
                     );
 
             while (result.next()) {
-                toreturn.add(result.getString("inventoryid"));
+                toreturn.add(result.getString("missionid"));
             }
             cn.close();
         } catch (SQLException e) {
