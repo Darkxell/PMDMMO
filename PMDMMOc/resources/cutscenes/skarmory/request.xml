@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cutscene name="skarmory/request">
-  <creation freezone="baseinside" camerax="23.0" cameray="20.0" fading="false" drawmap="false">
+  <creation freezone="baseinside" camerax="23.0" cameray="18.0" fading="false" drawmap="false">
     <pokemon cutsceneid="1" xpos="23.0" ypos="13.0">
       <teammember>0</teammember>
       <state>SLEEP</state>
