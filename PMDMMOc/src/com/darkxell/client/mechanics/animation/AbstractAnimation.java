@@ -40,13 +40,13 @@ public class AbstractAnimation {
 	/** @return True if this Animation's delay has ended and thus other game logic and animations may begin. */
 	public boolean isDelayOver() {
 		if (this.plays == -1) return false;
-		return this.tick >= (this.delayTime - 1) * Math.abs(this.plays);
+		return this.tick == (this.delayTime - 1) * Math.abs(this.plays);
 	}
 
 	/** @return True if this Animation has ended. */
 	public boolean isOver() {
 		if (this.plays == -1) return false;
-		return this.tick >= (this.duration - 1) * Math.abs(this.plays);
+		return this.tick == (this.duration - 1) * Math.abs(this.plays);
 	}
 
 	/** @return True if this Animation should pause the game logic. */
