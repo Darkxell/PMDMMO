@@ -1,7 +1,6 @@
 package com.darkxell.client.mechanics.freezones.zones;
 
 import com.darkxell.client.launchable.Persistence;
-import com.darkxell.client.mechanics.cutscene.CutsceneManager;
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
 import com.darkxell.client.mechanics.freezones.TriggerZone;
 import com.darkxell.client.mechanics.freezones.WarpZone;
@@ -48,22 +47,6 @@ public class BaseFreezone extends FreezoneMap {
 		this.addEntity(new FlagEntity(24.4, 10));
 
 		this.addEntity(new Debugentity(50, 34));
-
-		this.triggerzones.add(new TriggerZone(new DoubleRectangle(32, 25, 4, 4)) {
-			@Override
-			public void onEnter() {
-				if (Persistence.player.getData().storyposition == 4) {
-					CutsceneManager.playCutscene("base/magnetialert", false);
-					Persistence.player.setStoryPosition(5);
-					// Note that at this point, the client is offsync with the
-					// server, as the server storypos is 4. both will be 5 at
-					// the end of the cutscene.
-				} else if(Persistence.player.getData().storyposition == 8) {
-					CutsceneManager.playCutscene("base/squareopening", false);
-					Persistence.player.setStoryPosition(10);
-				}
-			}
-		});
 	}
 
 }
