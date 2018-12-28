@@ -126,7 +126,7 @@ public class GameServer {
         }
         GameSessionInfo si = SessionsInfoHolder.getInfo(session.getId());
 
-        System.out.println((si == null ? "Unknown" : si.name) + " just disconnected.");
+        System.out.println((si == null ? "null_si (this is a bug)" : si.name) + " just disconnected.");
         //Removes the session info and the game session info
         sessionHandler.removeSession(session);
         if (SessionsInfoHolder.infoExists(session.getId())) {
