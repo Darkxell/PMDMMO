@@ -1,6 +1,6 @@
 package com.darkxell.common.ai;
 
-import com.darkxell.common.ai.states.AIStateWanderAround;
+import com.darkxell.common.ai.states.AIStateWanderAroundInRoom;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
@@ -20,7 +20,7 @@ public class RescueableAI extends AI
 	@Override
 	public AIState defaultState()
 	{
-		return new AIStateWanderAround(this);
+		return new AIStateWanderAroundInRoom(this);
 	}
 
 }
