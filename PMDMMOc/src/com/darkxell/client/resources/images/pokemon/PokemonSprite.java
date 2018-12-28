@@ -98,6 +98,7 @@ public class PokemonSprite
 	public PokemonSprite(PokemonSpriteset pointer)
 	{
 		this.pointer = pointer;
+		if (this.pointer == null) new Exception().printStackTrace();
 	}
 
 	public PokemonSpriteFrame getCurrentFrame()

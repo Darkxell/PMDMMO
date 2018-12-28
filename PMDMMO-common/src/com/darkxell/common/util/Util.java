@@ -65,7 +65,7 @@ public class Util
 		try
 		{
 			player.getData().missionsids
-					.add(new Mission("E", 1, 2, 3, 6, 1, new MissionReward(55, new int[] { 1 }, new int[] { 1 }, 5, null), Mission.TYPE_RESCUEHIM).toString());
+					.add(new Mission("E", 1, 2, 3, 200, 1, new MissionReward(55, new int[] { 1 }, new int[] { 1 }, 5, null), Mission.TYPE_RESCUEHIM).toString());
 			player.getData().missionsids
 					.add(new Mission("A", 12, 14, 15, 71, 2, new MissionReward(70, new int[] { 1 }, new int[] { 1 }, 5, null), Mission.TYPE_DEFEAT).toString());
 			player.getData().missionsids

@@ -1,6 +1,7 @@
 package com.darkxell.client.mechanics.freezones;
 
 import com.darkxell.client.mechanics.freezones.cutscenemaps.MtSteelTopFreezone;
+import com.darkxell.client.mechanics.freezones.cutscenemaps.MtsteelEntranceFreezone;
 import com.darkxell.client.mechanics.freezones.cutscenemaps.ThunderwaveClearFreezone;
 import com.darkxell.client.mechanics.freezones.cutscenemaps.ThunderwaveEntranceFreezone;
 import com.darkxell.client.mechanics.freezones.cutscenemaps.TinywoodsClearFreezone;
@@ -48,6 +49,10 @@ public class Freezones {
 
 		case LUMINOUSCAVE:
 			map = new LumiousCaveFreezone();
+			break;
+			
+		case MTSTEEL_ENTRANCE:
+			map = new MtsteelEntranceFreezone();
 			break;
 			
 		case THUNDERWAVE_ENTRANCE:
