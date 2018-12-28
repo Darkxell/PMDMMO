@@ -6,7 +6,7 @@
       <animated>false</animated>
     </pokemon>
     <pokemon cutsceneid="2" xpos="37.5" ypos="35.0" facing="NORTH">
-      <pokemonid>7</pokemonid>
+      <teammember>0</teammember>
       <animated>false</animated>
     </pokemon>
   </creation>
@@ -18,6 +18,6 @@
     <animate animation="10" target="2" />
   </events>
   <onfinish>
-    <loadfreezone id="base" />
+    <loadfreezone fadesout="false" id="office" />
   </onfinish>
 </cutscene>

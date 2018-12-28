@@ -5,6 +5,7 @@ import java.util.LinkedList;
 
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
+import com.darkxell.client.mechanics.cutscene.entity.CutscenePokemon;
 import com.darkxell.client.mechanics.cutscene.event.DelayCutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.event.WaitCutsceneEvent;
 import com.darkxell.client.renderers.AbstractRenderer;
@@ -42,6 +43,13 @@ public class CutscenePlayer {
 		if (id == -1) return null;
 		for (CutsceneEntity e : this.entities)
 			if (e.id == id) return e;
+		return null;
+	}
+
+	public CutscenePokemon getPlayerEntity() {
+		for (CutsceneEntity e : this.entities)
+			if (e instanceof CutscenePokemon && ((CutscenePokemon) e).instanciated == Persistence.player.leaderPokemon)
+				return (CutscenePokemon) e;
 		return null;
 	}
 

@@ -31,7 +31,7 @@ public class Cutscene implements Comparable<Cutscene>, CutsceneContext
 		}
 
 		String arbitraryFunction;
-		Cutscene cutscene;
+		protected Cutscene cutscene;
 		protected boolean fadesOut;
 
 		public CutsceneEnd(Cutscene cutscene, Element xml)
