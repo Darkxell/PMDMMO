@@ -47,7 +47,7 @@ public class LoadFreezoneCutsceneEnd extends CutsceneEnd {
 	@Override
 	public void onCutsceneEnd() {
 		super.onCutsceneEnd();
-		int camX = (int) Persistence.freezoneCamera.getX(), camY = (int) Persistence.freezoneCamera.getY();
+		int camX = (int) Persistence.freezoneCamera.x, camY = (int) Persistence.freezoneCamera.y;
 		int x = this.xPos, y = this.yPos;
 		if (this.cutscene.creation.freezone != this.freezone) {
 			camX = this.xPos - PrincipalMainState.displayWidth / 8 / 2;
@@ -60,8 +60,8 @@ public class LoadFreezoneCutsceneEnd extends CutsceneEnd {
 			}
 		}
 		StateManager.setExploreState(this.freezone, this.direction, x, y, this.fadesOut);
-		Persistence.freezoneCamera.setX(camX);
-		Persistence.freezoneCamera.setY(camY);
+		Persistence.freezoneCamera.x = camX;
+		Persistence.freezoneCamera.y = camY;
 	}
 
 	@Override
