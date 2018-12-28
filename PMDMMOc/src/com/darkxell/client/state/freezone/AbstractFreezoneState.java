@@ -3,6 +3,7 @@ package com.darkxell.client.state.freezone;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
@@ -71,6 +72,7 @@ public class AbstractFreezoneState extends AbstractState
 				// System.out.println(map.cutsceneEntityRenderers.listRenderers());
 				entities.addAll(map.cutsceneEntityRenderers.listRenderers());
 			} else entities.add(Persistence.currentplayer.renderer());
+			entities.sort(Comparator.naturalOrder());
 			for (AbstractRenderer entity : entities)
 				entity.render(g, width, height);
 
