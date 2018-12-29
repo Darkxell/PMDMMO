@@ -51,6 +51,6 @@
     <move ypos="24.0" speed="0.2" target="2" />
   </events>
   <onfinish>
-    <loadfreezone fadesout="false" id="base" facing="SOUTH" />
+    <loadfreezone function="dugrequest" fadesout="false" id="base" facing="SOUTH" />
   </onfinish>
 </cutscene>

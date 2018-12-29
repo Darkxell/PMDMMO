@@ -5,7 +5,6 @@ import com.darkxell.client.mechanics.freezones.FreezoneMap;
 import com.darkxell.client.mechanics.freezones.TriggerZone;
 import com.darkxell.client.mechanics.freezones.WarpZone;
 import com.darkxell.client.mechanics.freezones.entities.AnimatedFlowerEntity;
-import com.darkxell.client.mechanics.freezones.entities.Debugentity;
 import com.darkxell.client.mechanics.freezones.entities.FlagEntity;
 import com.darkxell.client.state.menu.freezone.DungeonSelectionMapState;
 import com.darkxell.client.state.menu.freezone.FriendSelectionState;
@@ -46,7 +45,7 @@ public class BaseFreezone extends FreezoneMap {
 
 		this.addEntity(new FlagEntity(24.4, 10));
 
-		this.addEntity(new Debugentity(50, 34));
+		// this.addEntity(new Debugentity(50, 34));
 	}
 
 }

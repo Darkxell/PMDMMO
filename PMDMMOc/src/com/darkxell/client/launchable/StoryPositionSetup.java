@@ -47,7 +47,7 @@ public class StoryPositionSetup {
 			CutsceneManager.playCutscene("magnetifound", true);
 			break;
 		case 10:
-			// TODO: dugtrio and dream with points condition
+			// dugtrio and dream with points condition
 			if (Persistence.player.getData().points >= 10)
 				CutsceneManager.playCutscene("base/predream", true);
 			else
