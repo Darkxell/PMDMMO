@@ -26,9 +26,13 @@ public class BaseInsideFreezone extends FreezoneMap {
 				} else if (Persistence.player.getData().storyposition == 8) {
 					CutsceneManager.playCutscene("base/squareopening", true);
 					Persistence.player.setStoryPosition(10);
-				} else StateManager.setExploreState(FreezoneInfo.BASE, Direction.SOUTH, 35, 28, true);
+				} else if (Persistence.player.getData().storyposition == 10 && Persistence.player.points() >= 10)
+					CutsceneManager.playCutscene("skarmory/team", true);
+				else StateManager.setExploreState(FreezoneInfo.BASE, Direction.SOUTH, 35, 28, true);
 			}
 		});
+
+		this.noAlly = true;
 	}
 
 }

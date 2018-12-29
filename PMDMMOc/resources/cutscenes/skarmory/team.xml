@@ -47,8 +47,10 @@
     <dialog>
       <dialogscreen target="2">cutscene.skarmory.team.m6</dialogscreen>
     </dialog>
+    <wait />
+    <move ypos="24.0" speed="0.2" target="2" />
   </events>
   <onfinish>
-    <loadfreezone fadesout="false" id="base" />
+    <loadfreezone fadesout="false" id="base" facing="SOUTH" />
   </onfinish>
 </cutscene>
