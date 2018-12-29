@@ -253,5 +253,9 @@ public class FreezonePlayer
 		this.playersprite = sprite;
 		this.renderer = new AbstractPokemonRenderer(this.playersprite);
 	}
+	
+	public boolean isSprinting() {
+		return this.isSprinting;
+	}
 
 }

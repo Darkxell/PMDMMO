@@ -148,6 +148,11 @@ public class Player
 		return this.data.name;
 	}
 
+	public int points()
+	{
+		return this.data.points;
+	}
+
 	public int positionInTeam(Pokemon pokemon)
 	{
 		if (pokemon == this.getTeamLeader()) return 0;
@@ -213,6 +218,11 @@ public class Player
 	public void setMoneyInBank(long moneyInBank)
 	{
 		this.data.moneyinbank = moneyInBank;
+	}
+
+	public void setPoints(int points)
+	{
+		this.data.points = points;
 	}
 
 	public void setStorage(Inventory storage)

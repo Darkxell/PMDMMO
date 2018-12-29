@@ -54,6 +54,8 @@
     <dialog>
       <dialogscreen target="1">cutscene.squaretutorial.m6</dialogscreen>
     </dialog>
+    <wait />
+    <move xpos="11.0" ypos="42.0" speed="0.2" target="1" />
   </events>
   <onfinish>
     <loadfreezone function="squaretutorial" fadesout="false" id="square" xpos="11" ypos="42" facing="EAST" />

@@ -12,14 +12,12 @@ import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.event.ClientEventProcessor;
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
 import com.darkxell.client.mechanics.freezones.Freezones;
-import com.darkxell.client.mechanics.freezones.entities.FreezoneCamera;
 import com.darkxell.client.renderers.pokemon.OnFirstPokemonDraw;
 import com.darkxell.client.resources.images.SpriteLoader;
 import com.darkxell.client.state.dungeon.AskServerForDungeonSeedState;
 import com.darkxell.client.state.dungeon.DungeonEndState;
 import com.darkxell.client.state.dungeon.NextFloorState;
 import com.darkxell.client.state.freezone.FreezoneExploreState;
-import com.darkxell.client.state.map.LocalMap;
 import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.Registries;
 import com.darkxell.common.dungeon.DungeonOutcome;
@@ -86,24 +84,12 @@ public abstract class StateManager
 			public void onTransitionHalf()
 			{
 				super.onTransitionHalf();
-				((FreezoneExploreState) next).musicset = false;
-				Persistence.freezoneCamera = new FreezoneCamera(Persistence.currentplayer);
-				Persistence.currentmap = map;
-				Persistence.freezoneCamera.x = Persistence.currentplayer.x = xPos == -1 ? map.defaultX() : xPos;
-				Persistence.freezoneCamera.y = Persistence.currentplayer.y = yPos == -1 ? map.defaultY() : yPos;
-				Persistence.displaymap = LocalMap.instance;
-				if (direction != null) Persistence.currentplayer.renderer().sprite().setFacingDirection(direction);
+				((FreezoneExploreState) next).initiate(map, direction, xPos, yPos);
 			}
 		});
 		else
 		{
-			((FreezoneExploreState) next).musicset = false;
-			Persistence.freezoneCamera = new FreezoneCamera(Persistence.currentplayer);
-			Persistence.currentmap = map;
-			Persistence.freezoneCamera.x = Persistence.currentplayer.x = xPos == -1 ? map.defaultX() : xPos;
-			Persistence.freezoneCamera.y = Persistence.currentplayer.y = yPos == -1 ? map.defaultY() : yPos;
-			Persistence.displaymap = LocalMap.instance;
-			if (direction != null) Persistence.currentplayer.renderer().sprite().setFacingDirection(direction);
+			((FreezoneExploreState) next).initiate(map, direction, xPos, yPos);
 			Persistence.stateManager.setState(next);
 		}
 	}
