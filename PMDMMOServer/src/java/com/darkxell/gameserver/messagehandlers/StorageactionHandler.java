@@ -8,8 +8,6 @@ package com.darkxell.gameserver.messagehandlers;
 import com.darkxell.common.dbobject.DBInventory;
 import com.darkxell.common.dbobject.DBItemstack;
 import com.darkxell.common.dbobject.DBPlayer;
-import com.darkxell.common.dbobject.DatabaseIdentifier;
-import com.darkxell.common.item.ItemRegistry;
 import com.darkxell.gameserver.GameServer;
 import com.darkxell.gameserver.GameSessionHandler;
 import com.darkxell.gameserver.GameSessionInfo;

@@ -35,9 +35,6 @@
     <drawmap draw="false" />
     <wait />
     <function function="earthquake(0)" />
-    <dialog isnarrator="true">
-      <dialogscreen>cutscene.narrator.nextmorning</dialogscreen>
-    </dialog>
   </events>
   <onfinish>
     <playcutscene id="skarmory/request" />

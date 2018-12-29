@@ -20,15 +20,14 @@ public class BaseInsideFreezone extends FreezoneMap {
 				if (Persistence.player.getData().storyposition == 4) {
 					CutsceneManager.playCutscene("base/magnetialert", true);
 					Persistence.player.setStoryPosition(5);
-					// Note that at this point, the client is offsync with the
-					// server, as the server storypos is 4. both will be 5 at
-					// the end of the cutscene.
 				} else if (Persistence.player.getData().storyposition == 8) {
 					CutsceneManager.playCutscene("base/squareopening", true);
 					Persistence.player.setStoryPosition(10);
-				} else if (Persistence.player.getData().storyposition == 11)
+				} else if (Persistence.player.getData().storyposition == 10
+						&& Persistence.player.getData().points >= 10) {
 					CutsceneManager.playCutscene("skarmory/team", true);
-				else StateManager.setExploreState(FreezoneInfo.BASE, Direction.SOUTH, 35, 28, true);
+				} else
+					StateManager.setExploreState(FreezoneInfo.BASE, Direction.SOUTH, 35, 28, true);
 			}
 		});
 
