@@ -9,6 +9,7 @@ import java.util.function.Predicate;
 
 import com.darkxell.client.launchable.GameSocketEndpoint;
 import com.darkxell.client.launchable.Persistence;
+import com.darkxell.client.mechanics.cutscene.CutsceneManager;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.Sprites;
 import com.darkxell.client.resources.images.Sprites.Res_Map;
@@ -135,12 +136,7 @@ public class DungeonSelectionMapState extends AbstractState {
 			break;
 		case ATTACK:
 			// Sending dungeonstart to server
-			int dungeon = this.dungeonslist.get(this.cursor).id;
-			if (Persistence.socketendpoint.connectionStatus() == GameSocketEndpoint.CONNECTED) {
-				Persistence.isCommunicating=true;
-				Persistence.socketendpoint.requestDungeonSeed(dungeon);
-			} else
-				this.onDungeonStart(dungeon, new Random().nextLong());
+			launchDungeon();
 			break;
 		default:
 			break;
@@ -148,6 +144,25 @@ public class DungeonSelectionMapState extends AbstractState {
 
 		if (cursorchanged)
 			this.onDungeonSelect();
+	}
+
+	private void launchDungeon() {
+		int dungeon = this.dungeonslist.get(this.cursor).id;
+		// Determines if there is a cutscene before the dungeon and plays it
+		switch (dungeon) {
+		case 3:
+			if (Persistence.player.getData().storyposition == 11)
+				CutsceneManager.playCutscene("skarmory/enter", true);
+			return;
+		}
+		// Enters the dungeon if there is no cutscene.
+		if (Persistence.socketendpoint.connectionStatus() == GameSocketEndpoint.CONNECTED) {
+			Persistence.isCommunicating = true;
+			Persistence.socketendpoint.requestDungeonSeed(dungeon);
+		} else {
+			Logger.w("Entered a dungeon without server connection.");
+			this.onDungeonStart(dungeon, new Random().nextLong());
+		}
 	}
 
 	@Override
