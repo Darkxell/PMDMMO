@@ -35,8 +35,7 @@ import com.darkxell.common.weather.ActiveWeather;
 import com.darkxell.common.weather.Weather;
 
 /** Represents a generated Floor in a Dungeon. */
-public class Floor
-{
+public class Floor {
 
 	private final ArrayList<ActiveFloorStatus> activeFloorStatuses;
 	/** Stores all AI objects for Pokemon on this Floor. */
@@ -45,6 +44,8 @@ public class Floor
 	private ActiveWeather currentWeather;
 	/** IDs of the Cutscenes to play when, respectively, entering this Floor and defeating the boss. */
 	public String cutsceneIn, cutsceneOut;
+	/** Storypos required to play cutsceneIn and cutsceneOut. */
+	public int cutsceneStorypos;
 	/** This Floor's data. */
 	public final FloorData data;
 	/** This Floor's Dungeon. */
@@ -71,8 +72,7 @@ public class Floor
 	/** This Floor's tiles. null before generating. Note that this array must NOT be modified. It is only public because the generation algorithm uses this array to generate the floor. */
 	public Tile[][] tiles;
 
-	public Floor(int id, Layout layout, DungeonExploration dungeon, Random random, boolean isStatic)
-	{
+	public Floor(int id, Layout layout, DungeonExploration dungeon, Random random, boolean isStatic) {
 		this.id = id;
 		this.dungeon = dungeon;
 		this.data = this.dungeon.dungeon().getData(this.id);
@@ -84,49 +84,44 @@ public class Floor
 		this.persistantWeather = Weather.CLEAR.create(this, null, -1);
 	}
 
-	public ActiveFloorStatus[] activeStatuses()
-	{
+	public ActiveFloorStatus[] activeStatuses() {
 		return this.activeFloorStatuses.toArray(new ActiveFloorStatus[this.activeFloorStatuses.size()]);
 	}
 
-	public void addFloorStatus(ActiveFloorStatus status)
-	{
+	public void addFloorStatus(ActiveFloorStatus status) {
 		this.activeFloorStatuses.add(status);
 	}
 
 	/** @return True if the input Tile connects to a path outside a Room (considering that Tile is in a Room, which is not tested in this method). */
-	public boolean connectsToPath(Tile tile)
-	{
+	public boolean connectsToPath(Tile tile) {
 		for (Direction direction : Direction.cardinal)
-			if (!tile.adjacentTile(direction).isInRoom() && tile.adjacentTile(direction).type() == TileType.GROUND) return true;
+			if (!tile.adjacentTile(direction).isInRoom() && tile.adjacentTile(direction).type() == TileType.GROUND)
+				return true;
 		return false;
 	}
 
-	private int countWildPokemon()
-	{
+	private int countWildPokemon() {
 		int count = 0;
 		for (DungeonPokemon p : this.listPokemon())
 			if (p.isEnemy()) ++count;
 		return count;
 	}
 
-	public ActiveWeather currentWeather()
-	{
+	public ActiveWeather currentWeather() {
 		if (this.currentWeather != null) return this.currentWeather;
 		return this.persistantWeather;
 	}
 
 	/** Clears unnecessary data of this Floor. */
-	public void dispose()
-	{
+	public void dispose() {
 		for (Tile[] row : this.tiles)
 			for (Tile tile : row)
-				if (tile.getPokemon() != null && tile.getPokemon().type != DungeonPokemonType.TEAM_MEMBER) tile.getPokemon().dispose();
+				if (tile.getPokemon() != null && tile.getPokemon().type != DungeonPokemonType.TEAM_MEMBER)
+					tile.getPokemon().dispose();
 	}
 
 	/** Generates this Floor. */
-	public void generate()
-	{
+	public void generate() {
 		this.layout.generate(this);
 		isGenerating = false;
 		for (Tile[] row : this.tiles)
@@ -134,38 +129,32 @@ public class Floor
 				t.updateNeighbors();
 	}
 
-	public int getHeight()
-	{
+	public int getHeight() {
 		return this.tiles[0].length;
 	}
 
 	/** @return A random quantity of Pokedollars for a single stack. */
-	public int getMoneyQuantity()
-	{
+	public int getMoneyQuantity() {
 		return this.dungeon.dungeon().getMoneyQuantity(this.random, this.id);
 	}
 
-	public int getWidth()
-	{
+	public int getWidth() {
 		return this.tiles.length;
 	}
 
-	public boolean hasStatus(FloorStatus status)
-	{
+	public boolean hasStatus(FloorStatus status) {
 		for (ActiveFloorStatus s : this.activeFloorStatuses)
 			if (s.status == status) return true;
 		return false;
 	}
 
 	/** @return True if this Floor is done generating. */
-	public boolean isGenerated()
-	{
+	public boolean isGenerated() {
 		return !isGenerating;
 	}
 
 	/** @return A list of all Items laying on the ground of this Floor. */
-	public ArrayList<ItemStack> listItemsOnFloor()
-	{
+	public ArrayList<ItemStack> listItemsOnFloor() {
 		ArrayList<ItemStack> items = new ArrayList<>();
 		for (Tile[] row : this.tiles)
 			for (Tile t : row)
@@ -174,8 +163,7 @@ public class Floor
 	}
 
 	/** @return A list of all Pokemon on this Floor. */
-	public ArrayList<DungeonPokemon> listPokemon()
-	{
+	public ArrayList<DungeonPokemon> listPokemon() {
 		ArrayList<DungeonPokemon> pokemon = new ArrayList<DungeonPokemon>();
 		if (this.tiles != null) for (Tile[] row : this.tiles)
 			for (Tile t : row)
@@ -184,8 +172,7 @@ public class Floor
 	}
 
 	/** Called when a this Floor starts. */
-	public void onFloorStart(ArrayList<DungeonEvent> events)
-	{
+	public void onFloorStart(ArrayList<DungeonEvent> events) {
 		this.dungeon.eventProcessor.onFloorStart(this);
 		Weather w = this.dungeon.dungeon().weather(this.id, this.random);
 		events.add(new PersistantWeatherChangedEvent(this, new ActiveWeather(w, null, this, -1)));
@@ -196,8 +183,7 @@ public class Floor
 	}
 
 	/** Called when a new turn starts. */
-	public void onTurnStart(ArrayList<DungeonEvent> events)
-	{
+	public void onTurnStart(ArrayList<DungeonEvent> events) {
 		// events.add(new MessageEvent(this, new Message("New turn!", false)));
 
 		// For each existing Pokemon: has been moved to DungeonInstance
@@ -211,17 +197,13 @@ public class Floor
 			this.activeFloorStatuses.get(s).tick(this, events);
 
 		// Pokemon spawning
-		if (!this.isStatic && this.data.pokemonDensity() > this.countWildPokemon())
-		{
-			if (this.nextSpawn <= 0)
-			{
+		if (!this.isStatic && this.data.pokemonDensity() > this.countWildPokemon()) {
+			if (this.nextSpawn <= 0) {
 				DungeonEncounter s = this.dungeon.dungeon().randomEncounter(this.random, this.id);
-				if (s != null)
-				{
+				if (s != null) {
 					DungeonPokemon wild = new DungeonPokemon(s.pokemon().generate(this.random, s.level));
 					Tile tile = this.randomEmptyTile(true, true, this.random);
-					if (tile != null)
-					{
+					if (tile != null) {
 						events.add(new PokemonSpawnedEvent(this, wild, tile));
 						this.nextSpawn = RandomUtil.nextIntInBounds(50, 100, this.random) / this.data.pokemonDensity();
 					}
@@ -230,8 +212,7 @@ public class Floor
 		}
 	}
 
-	private void placePlayer(Player player)
-	{
+	private void placePlayer(Player player) {
 		Point spawn = this.teamSpawn;
 		this.tileAt(spawn.x, spawn.y).setPokemon(player.getDungeonLeader());
 		player.getDungeonLeader().setFacing(this.teamSpawnDirection);
@@ -249,19 +230,17 @@ public class Floor
 		candidates.add(initial.adjacentTile(Direction.SOUTHEAST));
 		candidates.removeIf(new Predicate<Tile>() {
 			@Override
-			public boolean test(Tile t)
-			{
-				return t.getPokemon() != null || t.isWall() || t.type() == TileType.WATER || t.type() == TileType.LAVA || t.type() == TileType.AIR;
+			public boolean test(Tile t) {
+				return t.getPokemon() != null || t.isWall() || t.type() == TileType.WATER || t.type() == TileType.LAVA
+						|| t.type() == TileType.AIR;
 			}
 		});
 
 		DungeonPokemon[] team = player.getDungeonTeam();
 
-		for (int i = team.length - 1; i > 0; --i)
-		{
+		for (int i = team.length - 1; i > 0; --i) {
 			if (team[i].isFainted()) continue;
-			if (candidates.size() == 0)
-			{
+			if (candidates.size() == 0) {
 				Logger.e("Could not find a spawn location for ally " + team[i].getNickname() + "!");
 				continue;
 			}
@@ -272,14 +251,12 @@ public class Floor
 		}
 	}
 
-	public void placePlayers(ArrayList<Player> players)
-	{
+	public void placePlayers(ArrayList<Player> players) {
 		for (Player player : players)
 			this.placePlayer(player);
 	}
 
-	public Item randomBuriedItem(Random random)
-	{
+	public Item randomBuriedItem(Random random) {
 		ArrayList<DungeonItemGroup> items = this.dungeon.dungeon().buriedItems(this.id);
 		return randomItem(items, random);
 	}
@@ -287,8 +264,7 @@ public class Floor
 	/** @param inRoom - True if the Tile should be in a Room (will also avoid tiles adjacent to corridors in rooms).
 	 * @param awayFromPlayers - True if the Tile should be far away from players (to avoid spawning a Pokemon close to a player for example).
 	 * @return A Random Tile in this floor. */
-	public Tile randomEmptyTile(boolean inRoom, boolean awayFromPlayers, Random random)
-	{
+	public Tile randomEmptyTile(boolean inRoom, boolean awayFromPlayers, Random random) {
 		return this.randomEmptyTile(inRoom, awayFromPlayers, null, random);
 	}
 
@@ -296,13 +272,11 @@ public class Floor
 	 * @param awayFromPlayers - True if the Tile should be far away from players (to avoid spawning a Pokemon close to a player for example).
 	 * @param type - A Type that the Tile has to match. null for any type.
 	 * @return A Random Tile in this floor. */
-	public Tile randomEmptyTile(boolean inRoom, boolean awayFromPlayers, TileType type, Random random)
-	{
+	public Tile randomEmptyTile(boolean inRoom, boolean awayFromPlayers, TileType type, Random random) {
 		ArrayList<Tile> candidates = new ArrayList<Tile>();
 		if (inRoom) for (Room room : this.rooms)
 			candidates.addAll(room.listTiles());
-		else
-		{
+		else {
 			for (Tile[] row : this.tiles)
 				for (Tile tile : row)
 					candidates.add(tile);
@@ -310,30 +284,26 @@ public class Floor
 
 		if (type != null) candidates.removeIf(new Predicate<Tile>() {
 			@Override
-			public boolean test(Tile t)
-			{
+			public boolean test(Tile t) {
 				return t.type() != type;
 			}
 		});
 
 		candidates.removeIf(new Predicate<Tile>() {
 			@Override
-			public boolean test(Tile t)
-			{
+			public boolean test(Tile t) {
 				return !t.isEmpty();
 			}
 		});
 
 		if (inRoom) candidates.removeIf(new Predicate<Tile>() {
 			@Override
-			public boolean test(Tile t)
-			{
+			public boolean test(Tile t) {
 				return connectsToPath(t);
 			}
 		});
 
-		if (awayFromPlayers)
-		{
+		if (awayFromPlayers) {
 			ArrayList<DungeonPokemon> players = new ArrayList<DungeonPokemon>(this.listPokemon());
 			players.removeIf((DungeonPokemon p) -> {
 				return !p.isTeamLeader();
@@ -348,68 +318,58 @@ public class Floor
 		return RandomUtil.random(candidates, random);
 	}
 
-	public Item randomItem(ArrayList<DungeonItemGroup> items, Random random)
-	{
+	public Item randomItem(ArrayList<DungeonItemGroup> items, Random random) {
 		DungeonItemGroup itemGroup = RandomUtil.weightedRandom(items, DungeonItemGroup.weights(items), random);
 		ArrayList<Integer> ids = new ArrayList<Integer>();
 		ArrayList<Integer> chances = new ArrayList<Integer>();
-		for (int i = 0; i < itemGroup.items.length; ++i)
-		{
+		for (int i = 0; i < itemGroup.items.length; ++i) {
 			ids.add(itemGroup.items[i]);
 			chances.add(itemGroup.chances[i]);
 		}
 		return Registries.items().find(RandomUtil.weightedRandom(ids, chances, random));
 	}
 
-	public Item randomItem(Random random)
-	{
+	public Item randomItem(Random random) {
 		ArrayList<DungeonItemGroup> items = this.dungeon.dungeon().items(this.id);
 		return randomItem(items, random);
 	}
 
 	/** @return A random Room in this Floor. */
-	public Room randomRoom(Random random)
-	{
+	public Room randomRoom(Random random) {
 		return this.rooms[random.nextInt(this.rooms.length)];
 	}
 
 	/** @return A Random Trap in this Floor. */
-	public Trap randomTrap(Random random)
-	{
+	public Trap randomTrap(Random random) {
 		Pair<ArrayList<Integer>, ArrayList<Integer>> traps = this.dungeon.dungeon().traps(this.id);
 		return Registries.traps().find(RandomUtil.weightedRandom(traps.first, traps.second, random));
 	}
 
-	public void removeFloorStatus(ActiveFloorStatus status)
-	{
+	public void removeFloorStatus(ActiveFloorStatus status) {
 		this.activeFloorStatuses.remove(status);
 	}
 
 	/** @param weather - The weather to clean.
 	 * @return The Weather Changed Event if the Weather changes. */
-	public void removeWeather(ActiveWeather weather, ArrayList<DungeonEvent> events)
-	{
+	public void removeWeather(ActiveWeather weather, ArrayList<DungeonEvent> events) {
 		ActiveWeather previous = this.currentWeather();
 		if (this.currentWeather == weather) this.currentWeather = null;
 		ActiveWeather next = this.currentWeather();
 		if (previous != next) events.add(new WeatherChangedEvent(this, previous, next));
 	}
 
-	public Room roomAt(Tile tile)
-	{
+	public Room roomAt(Tile tile) {
 		return this.roomAt(tile.x, tile.y);
 	}
 
 	/** @return The room at the input X, Y coordinates. null if not in a Room. */
-	public Room roomAt(int x, int y)
-	{
+	public Room roomAt(int x, int y) {
 		for (Room room : this.rooms)
 			if (room.contains(x, y)) return room;
 		return null;
 	}
 
-	public void setPersistantWeather(ActiveWeather weather, ArrayList<DungeonEvent> events)
-	{
+	public void setPersistantWeather(ActiveWeather weather, ArrayList<DungeonEvent> events) {
 		ActiveWeather previous = this.currentWeather();
 		this.persistantWeather = weather;
 		ActiveWeather next = this.currentWeather();
@@ -417,33 +377,30 @@ public class Floor
 	}
 
 	/** Overrides all of the floor's tiles. */
-	public void setTiles(Tile[][] tiles)
-	{
+	public void setTiles(Tile[][] tiles) {
 		this.tiles = tiles;
 	}
 
 	/** @param weather - The weather to add.
 	 * @return The Weather Changed Event if the Weather changes. */
-	public void setWeather(ActiveWeather weather, ArrayList<DungeonEvent> events)
-	{
+	public void setWeather(ActiveWeather weather, ArrayList<DungeonEvent> events) {
 		ActiveWeather previous = this.currentWeather();
 		this.currentWeather = weather;
 		ActiveWeather next = this.currentWeather();
 		if (previous.weather != next.weather) events.add(new WeatherChangedEvent(this, previous, next));
 	}
 
-	public void summonPokemon(DungeonPokemon pokemon, int x, int y, ArrayList<DungeonEvent> events)
-	{
+	public void summonPokemon(DungeonPokemon pokemon, int x, int y, ArrayList<DungeonEvent> events) {
 		this.summonPokemon(pokemon, x, y, events, null);
 	}
 
-	public void summonPokemon(DungeonPokemon pokemon, int x, int y, ArrayList<DungeonEvent> events, AI ai)
-	{
-		if (!(this.tiles == null || x < 0 || x >= this.tiles.length || y < 0 || y >= this.tiles[x].length)) this.tileAt(x, y).setPokemon(pokemon);
-		if (!this.dungeon.isGeneratingFloor())
-		{
+	public void summonPokemon(DungeonPokemon pokemon, int x, int y, ArrayList<DungeonEvent> events, AI ai) {
+		if (!(this.tiles == null || x < 0 || x >= this.tiles.length || y < 0 || y >= this.tiles[x].length))
+			this.tileAt(x, y).setPokemon(pokemon);
+		if (!this.dungeon.isGeneratingFloor()) {
 			this.dungeon.registerActor(pokemon);
-			this.dungeon.communication.pokemonIDs.register(pokemon.originalPokemon, this.dungeon.communication.itemIDs, this.dungeon.communication.moveIDs);
+			this.dungeon.communication.pokemonIDs.register(pokemon.originalPokemon, this.dungeon.communication.itemIDs,
+					this.dungeon.communication.moveIDs);
 		}
 		if (!pokemon.isTeamLeader()) this.aiManager.register(pokemon, ai);
 
@@ -451,20 +408,16 @@ public class Floor
 	}
 
 	/** @return The tile at the input X, Y coordinates. */
-	public Tile tileAt(int x, int y)
-	{
+	public Tile tileAt(int x, int y) {
 		if (this.tiles == null || x < 0 || x >= this.tiles.length || y < 0 || y >= this.tiles[x].length) return null;
 		return this.tiles[x][y];
 	}
 
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		String s = "";
-		for (int y = 0; y < this.getHeight(); ++y)
-		{
-			for (int x = 0; x < this.getWidth(); ++x)
-			{
+		for (int y = 0; y < this.getHeight(); ++y) {
+			for (int x = 0; x < this.getWidth(); ++x) {
 				Tile t = this.tileAt(x, y);
 				s += t != null ? t.type().c : "?";
 			}
@@ -473,14 +426,12 @@ public class Floor
 		return s;
 	}
 
-	public int turnCount()
-	{
+	public int turnCount() {
 		if (this.dungeon.currentTurn() == null) return 0;
 		return this.dungeon.currentTurn().id;
 	}
 
-	public void unsummonPokemon(DungeonPokemon pokemon)
-	{
+	public void unsummonPokemon(DungeonPokemon pokemon) {
 		this.dungeon.unregisterActor(pokemon);
 		if (!pokemon.isTeamLeader()) this.aiManager.unregister(pokemon);
 		pokemon.tile().removePokemon(pokemon);

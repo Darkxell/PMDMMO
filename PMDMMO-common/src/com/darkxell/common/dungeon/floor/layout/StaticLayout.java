@@ -31,12 +31,11 @@ import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.XMLUtils;
 
-public class StaticLayout extends Layout
-{
+public class StaticLayout extends Layout {
 
-	private static Pokemon readPokemon(Element xml, Random r)
-	{
-		ItemStack item = xml.getChild(ItemStack.XML_ROOT) == null ? null : new ItemStack(xml.getChild(ItemStack.XML_ROOT));
+	private static Pokemon readPokemon(Element xml, Random r) {
+		ItemStack item = xml.getChild(ItemStack.XML_ROOT) == null ? null
+				: new ItemStack(xml.getChild(ItemStack.XML_ROOT));
 
 		DBPokemon db = new DBPokemon();
 		db.id = XMLUtils.getAttribute(xml, "pk-id", 0);
@@ -58,8 +57,7 @@ public class StaticLayout extends Layout
 
 		LearnedMove[] moves = new LearnedMove[4];
 		ArrayList<Integer> learned = new ArrayList<>();
-		for (Element move : xml.getChildren("move"))
-		{
+		for (Element move : xml.getChildren("move")) {
 			DBLearnedmove dbl = new DBLearnedmove();
 			dbl.addedlevel = XMLUtils.getAttribute(move, "addedlevel", 0);
 			dbl.isenabled = XMLUtils.getAttribute(move, "enabled", true);
@@ -72,8 +70,7 @@ public class StaticLayout extends Layout
 		}
 
 		for (int i = 0; i < moves.length; ++i)
-			if (moves[i] == null)
-			{
+			if (moves[i] == null) {
 				int id = species.latestMove(db.level, learned);
 				if (id == -1) break;
 				moves[i] = new LearnedMove(id);
@@ -92,45 +89,40 @@ public class StaticLayout extends Layout
 	private Element xml;
 
 	@Override
-	public void generate(Floor floor)
-	{
-		this.xml = XMLUtils.read(StaticLayout.class.getResourceAsStream("/data/floors/" + floor.dungeon.id + "-" + floor.id + ".xml"));
+	public void generate(Floor floor) {
+		this.xml = XMLUtils.read(
+				StaticLayout.class.getResourceAsStream("/data/floors/" + floor.dungeon.id + "-" + floor.id + ".xml"));
 		super.generate(floor);
 		this.floor.cutsceneIn = this.xml.getChildText("cutscenein", this.xml.getNamespace());
 		this.floor.cutsceneOut = this.xml.getChildText("cutsceneout", this.xml.getNamespace());
+		String pos = this.xml.getChildText("cutscenestorypos", this.xml.getNamespace());
+		this.floor.cutsceneStorypos = pos == null || !pos.matches("\\d+") ? -1 : Integer.parseInt(pos);
 	}
 
 	@Override
-	protected void generateLiquids()
-	{}
+	protected void generateLiquids() {}
 
 	@Override
-	protected void generatePaths()
-	{}
+	protected void generatePaths() {}
 
 	@Override
-	protected void generateRooms()
-	{
+	protected void generateRooms() {
 		// ROOMS
 		List<Element> rooms = this.xml.getChild("rooms", xml.getNamespace()).getChildren();
 		this.floor.rooms = new Room[rooms.size()];
-		for (int i = 0; i < this.floor.rooms.length; ++i)
-		{
+		for (int i = 0; i < this.floor.rooms.length; ++i) {
 			if (rooms.get(i).getName().equals("complex")) this.floor.rooms[i] = new ComplexRoom(floor, rooms.get(i));
 			else this.floor.rooms[i] = new SquareRoom(this.floor, rooms.get(i));
 		}
 
 		// TILES
 		List<Element> rows = xml.getChild("tiles", xml.getNamespace()).getChildren("row", xml.getNamespace());
-		for (int y = 0; y < rows.size(); ++y)
-		{
+		for (int y = 0; y < rows.size(); ++y) {
 			String data = rows.get(y).getText();
 			if (this.floor.tiles == null) this.floor.tiles = new Tile[data.length()][rows.size()];
-			for (int x = 0; x < data.length(); x++)
-			{
+			for (int x = 0; x < data.length(); x++) {
 				Tile t = new Tile(this.floor, x, y, TileType.find(data.charAt(x)));
-				if (t.type() == null)
-				{
+				if (t.type() == null) {
 					Logger.e("Invalid tile type: " + data.charAt(x));
 					t.setType(TileType.GROUND);
 				}
@@ -140,50 +132,46 @@ public class StaticLayout extends Layout
 	}
 
 	@Override
-	protected void placeItems()
-	{
-		if (this.xml.getChild("items", xml.getNamespace()) != null)
-			for (Element item : this.xml.getChild("items", xml.getNamespace()).getChildren(Item.XML_ROOT, xml.getNamespace()))
-			this.floor.tiles[Integer.parseInt(item.getAttributeValue("x"))][Integer.parseInt(item.getAttributeValue("y"))].setItem(new ItemStack(item));
+	protected void placeItems() {
+		if (this.xml.getChild("items", xml.getNamespace()) != null) for (Element item : this.xml
+				.getChild("items", xml.getNamespace()).getChildren(Item.XML_ROOT, xml.getNamespace()))
+			this.floor.tiles[Integer.parseInt(item.getAttributeValue("x"))][Integer
+					.parseInt(item.getAttributeValue("y"))].setItem(new ItemStack(item));
 	}
 
 	@Override
-	protected void placeStairs()
-	{}
+	protected void placeStairs() {}
 
 	@Override
-	protected void placeTeam()
-	{
+	protected void placeTeam() {
 		Element spawn = this.xml.getChild("spawn", xml.getNamespace());
-		this.floor.teamSpawn = new Point(Integer.parseInt(spawn.getAttributeValue("x")), Integer.parseInt(spawn.getAttributeValue("y")));
-		this.floor.teamSpawnDirection = Direction.valueOf(XMLUtils.getAttribute(spawn, "facing", Direction.NORTH.name()).toUpperCase());
+		this.floor.teamSpawn = new Point(Integer.parseInt(spawn.getAttributeValue("x")),
+				Integer.parseInt(spawn.getAttributeValue("y")));
+		this.floor.teamSpawnDirection = Direction
+				.valueOf(XMLUtils.getAttribute(spawn, "facing", Direction.NORTH.name()).toUpperCase());
 	}
 
 	@Override
-	protected void placeTraps()
-	{
-		if (this.xml.getChild("traps", xml.getNamespace()) != null)
-			for (Element trap : this.xml.getChild("traps", xml.getNamespace()).getChildren("trap", xml.getNamespace()))
-			{
-			Tile t = this.floor.tiles[Integer.parseInt(trap.getAttributeValue("x"))][Integer.parseInt(trap.getAttributeValue("y"))];
+	protected void placeTraps() {
+		if (this.xml.getChild("traps", xml.getNamespace()) != null) for (Element trap : this.xml
+				.getChild("traps", xml.getNamespace()).getChildren("trap", xml.getNamespace())) {
+			Tile t = this.floor.tiles[Integer.parseInt(trap.getAttributeValue("x"))][Integer
+					.parseInt(trap.getAttributeValue("y"))];
 			t.trap = Registries.traps().find(Integer.parseInt(trap.getAttributeValue("id")));
 			if (t.trap == TrapRegistry.WONDER_TILE) t.trapRevealed = true;
-			}
+		}
 	}
 
 	@Override
-	protected void summonPokemon()
-	{
-		if (this.xml.getChild("pokemons", xml.getNamespace()) != null)
-		{
-			for (Element pokemon : this.xml.getChild("pokemons", xml.getNamespace()).getChildren(Pokemon.XML_ROOT, xml.getNamespace()))
-			{
+	protected void summonPokemon() {
+		if (this.xml.getChild("pokemons", xml.getNamespace()) != null) {
+			for (Element pokemon : this.xml.getChild("pokemons", xml.getNamespace()).getChildren(Pokemon.XML_ROOT,
+					xml.getNamespace())) {
 				DungeonPokemon p = new DungeonPokemon(readPokemon(pokemon, this.floor.random));
 				if (pokemon.getChild("boss", xml.getNamespace()) != null) p.type = DungeonPokemonType.BOSS;
 				AI ai = null;
 				String ainame = pokemon.getChildText("ai", xml.getNamespace());
-				if (ainame != null) switch (ainame)
-				{
+				if (ainame != null) switch (ainame) {
 					case "skipper":
 						ai = new SkipTurnsAI(this.floor, p);
 						break;
@@ -191,8 +179,8 @@ public class StaticLayout extends Layout
 					default:
 						break;
 				}
-				this.floor.summonPokemon(p, Integer.parseInt(pokemon.getAttributeValue("x")), Integer.parseInt(pokemon.getAttributeValue("y")),
-						new ArrayList<>(), ai);
+				this.floor.summonPokemon(p, Integer.parseInt(pokemon.getAttributeValue("x")),
+						Integer.parseInt(pokemon.getAttributeValue("y")), new ArrayList<>(), ai);
 			}
 		}
 	}
