@@ -26,6 +26,7 @@ public class Util
 		player.addAlly(species.find(258).generate(new Random(), 80));
 		// player.addAlly(PokemonRegistry.find(255).generate(new Random(), 80));
 		player.getTeamLeader().setItem(new ItemStack(208));
+		player.allies.get(0).setItem(new ItemStack(1));
 		player.getTeamLeader().setMove(0, new LearnedMove(352));
 		player.getTeamLeader().setMove(1, new LearnedMove(1));
 		player.getTeamLeader().setMove(2, new LearnedMove(404));

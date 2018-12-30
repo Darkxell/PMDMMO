@@ -6,14 +6,12 @@ import java.awt.image.BufferedImage;
 import com.darkxell.client.resources.images.SpriteSet;
 import com.darkxell.common.util.Direction;
 
-public class MenuStateHudSpriteset extends SpriteSet
-{
+public class MenuStateHudSpriteset extends SpriteSet {
 
 	public static final Dimension cornerNameSize = new Dimension(14, 10);
 	public static final Dimension cornerSize = new Dimension(16, 10);
 
-	public MenuStateHudSpriteset()
-	{
+	public MenuStateHudSpriteset() {
 		super("/hud/menu_hud.png", 32, 64);
 
 		this.createSprite("arrow_select", 0, 0, 10, 16);
@@ -29,37 +27,40 @@ public class MenuStateHudSpriteset extends SpriteSet
 		this.createSprite("name_corner_sw", 0, 46, cornerNameSize.width, cornerNameSize.height);
 		this.createSprite("name_corner_se", 18, 46, cornerNameSize.width, cornerNameSize.height);
 		this.createSprite("next_window", 0, 56, 11, 7);
+		this.createSprite("page_left", 11, 56, 12, 8);
+		this.createSprite("page_right", 20, 56, 12, 8);
 	}
 
-	public BufferedImage nextWindowArrow()
-	{
+	public BufferedImage nextWindowArrow() {
 		return this.getImg("next_window");
 	}
 
-	public BufferedImage selectedArrow()
-	{
+	public BufferedImage pageLeft() {
+		return this.getImg("page_left");
+	}
+
+	public BufferedImage pageRight() {
+		return this.getImg("page_right");
+	}
+
+	public BufferedImage selectedArrow() {
 		return this.getImg("arrow_selected");
 	}
 
-	public BufferedImage selectionArrow()
-	{
+	public BufferedImage selectionArrow() {
 		return this.getImg("arrow_select");
 	}
 
-	public BufferedImage tabLeft()
-	{
+	public BufferedImage tabLeft() {
 		return this.getImg("tab_left");
 	}
 
-	public BufferedImage tabRight()
-	{
+	public BufferedImage tabRight() {
 		return this.getImg("tab_right");
 	}
 
-	public BufferedImage windowCorner(Direction direction)
-	{
-		switch (direction)
-		{
+	public BufferedImage windowCorner(Direction direction) {
+		switch (direction) {
 			case NORTHEAST:
 				return this.getImg("corner_ne");
 			case SOUTHEAST:
@@ -71,10 +72,8 @@ public class MenuStateHudSpriteset extends SpriteSet
 		}
 	}
 
-	public BufferedImage windowNameCorner(Direction direction)
-	{
-		switch (direction)
-		{
+	public BufferedImage windowNameCorner(Direction direction) {
+		switch (direction) {
 			case NORTHEAST:
 				return this.getImg("name_corner_ne");
 			case SOUTHEAST:
