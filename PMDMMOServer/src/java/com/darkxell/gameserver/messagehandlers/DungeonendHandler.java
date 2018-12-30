@@ -221,6 +221,13 @@ public class DungeonendHandler extends MessageHandler {
                     give = 2;
                 }
                 break;
+            case 3: // Mt steel
+                if (player.storyposition == 11 && success) {
+                    newstoryposition = 12;
+                    needcommit = true;
+                    give = 3;
+                }
+                break;
         }
 
         if (needcommit) {
@@ -229,16 +236,31 @@ public class DungeonendHandler extends MessageHandler {
             player.storyposition = newstoryposition;
             endpoint.getPlayerDAO().update(player);
         }
-        if (give == 1) {
-            GiveManager.giveItem(7, 1, si, endpoint, false);
-            GiveManager.giveItem(11, 1, si, endpoint, false);
-            GiveManager.giveItem(12, 1, si, endpoint, false);
-        } else if (give == 2) {
-            GiveManager.giveItem(41, 1, si, endpoint, false);
-            GiveManager.giveItem(12, 1, si, endpoint, false);
-            DBPlayer tempp = endpoint.getPlayerDAO().find(si.serverid);
-            tempp.moneyinbag += 500;
-            endpoint.getPlayerDAO().update(tempp);
+        switch (give) {
+            case 1:
+                GiveManager.giveItem(7, 1, si, endpoint, false);
+                GiveManager.giveItem(11, 1, si, endpoint, false);
+                GiveManager.giveItem(12, 1, si, endpoint, false);
+                break;
+            case 2: {
+                GiveManager.giveItem(41, 1, si, endpoint, false);
+                GiveManager.giveItem(12, 1, si, endpoint, false);
+                DBPlayer tempp = endpoint.getPlayerDAO().find(si.serverid);
+                tempp.moneyinbag += 500;
+                endpoint.getPlayerDAO().update(tempp);
+                break;
+            }
+            case 3: {
+                //Not giving gensing because reasons                    
+                //GiveManager.giveItem(157, 1, si, endpoint, false);
+                GiveManager.giveItem(177, 1, si, endpoint, false);
+                DBPlayer tempp = endpoint.getPlayerDAO().find(si.serverid);
+                tempp.moneyinbag += 500;
+                endpoint.getPlayerDAO().update(tempp);
+                break;
+            }
+            default:
+                break;
         }
     }
 
