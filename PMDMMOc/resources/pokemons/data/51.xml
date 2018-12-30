@@ -544,7 +544,7 @@
       <AnimFrame sprite="40" duration="16" />
     </AnimSequence>
     <AnimSequence id="25">
-      <AnimFrame sprite="99" duration="10" shadowy="1000" />
+      <AnimFrame sprite="99" duration="30" shadowy="1000" />
     </AnimSequence>
     <AnimSequence id="33" rush="8" hit="10" return="14">
       <AnimFrame sprite="50" duration="2" spritey="-2" shadowy="-2" />
