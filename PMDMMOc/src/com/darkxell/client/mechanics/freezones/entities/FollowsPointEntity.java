@@ -14,7 +14,7 @@ public class FollowsPointEntity extends FreezoneEntity {
 	protected double destinationX;
 	protected double destinationY;
 	protected double moveDistance = 0.5, sprintDistance = 5;
-	private PokemonSprite sprite;
+	protected PokemonSprite sprite;
 
 	public FollowsPointEntity(double x, double y, PokemonSprite sprite) {
 		super(false, true, x, y);
