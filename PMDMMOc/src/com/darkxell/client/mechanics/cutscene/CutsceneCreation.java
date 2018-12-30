@@ -20,7 +20,7 @@ public class CutsceneCreation
 	public final boolean drawMap;
 	private final ArrayList<CutsceneEntity> entities;
 	public final boolean fading;
-	public final FreezoneInfo freezone;
+	public FreezoneInfo freezone;
 
 	public CutsceneCreation(Cutscene cutscene)
 	{

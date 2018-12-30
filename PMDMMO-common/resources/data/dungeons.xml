@@ -237,7 +237,7 @@
           <part floor="8" />
         </floors>
       </d>
-      <d layout="0" terrain="-1" bossfloor="true">
+      <d layout="0" terrain="-1" bossfloor="11">
         <floors>
           <part floor="9" />
         </floors>

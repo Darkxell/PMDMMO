@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cutscene name="bosses/after_defeat">
+  <creation freezone="mt_steel_top" camerax="28.5" cameray="20.0" fading="false">
+    <pokemon cutsceneid="1" xpos="28.5" ypos="25.0" facing="NORTH">
+      <teammember>0</teammember>
+      <animated>false</animated>
+    </pokemon>
+    <pokemon cutsceneid="2" xpos="25.5" ypos="25.0" facing="NORTH">
+      <teammember>1</teammember>
+      <animated>false</animated>
+    </pokemon>
+  </creation>
+  <events>
+    <dialog>
+      <dialogscreen>cutscene.boss.after_defeat.m1</dialogscreen>
+      <dialogscreen>cutscene.boss.after_defeat.m2</dialogscreen>
+      <dialogscreen>cutscene.boss.after_defeat.m3</dialogscreen>
+    </dialog>
+  </events>
+  <onfinish>
+    <resumeexploration />
+  </onfinish>
+</cutscene>

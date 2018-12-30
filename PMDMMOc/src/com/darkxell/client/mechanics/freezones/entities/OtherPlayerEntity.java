@@ -10,7 +10,6 @@ public class OtherPlayerEntity extends FollowsPointEntity {
 	/** The nano timestamp of the last update. */
 	public long lastupdate;
 	public final String name;
-	private PokemonSprite sprite;
 	private int spriteID;
 
 	public OtherPlayerEntity(double x, double y, int spriteID, String name, long timestamp) {

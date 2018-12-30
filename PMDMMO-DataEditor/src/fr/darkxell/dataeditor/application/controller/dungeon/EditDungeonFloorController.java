@@ -12,7 +12,6 @@ import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.PokemonType;
 
 import fr.darkxell.dataeditor.application.controls.FloorTable;
-import fr.darkxell.dataeditor.application.data.floortable.FloorTableBoolean;
 import fr.darkxell.dataeditor.application.data.floortable.FloorTableInteger;
 import fr.darkxell.dataeditor.application.data.floortable.FloorTableItem;
 import fr.darkxell.dataeditor.application.data.floortable.FloorTableMove;
@@ -22,25 +21,22 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableView;
 
-public class EditDungeonFloorController implements Initializable
-{
+public class EditDungeonFloorController implements Initializable {
 
-	private static <T, D> int findMax(TableView<FloorTableItem<T, D>> table, int max)
-	{
+	private static <T, D> int findMax(TableView<FloorTableItem<T, D>> table, int max) {
 		for (FloorTableItem<T, D> item : table.getItems())
 			if (item.floor > max) max = item.floor;
 		return max;
 	}
 
-	private static <T, D> T lookup(TableView<FloorTableItem<T, D>> table, int floor, T previous)
-	{
+	private static <T, D> T lookup(TableView<FloorTableItem<T, D>> table, int floor, T previous) {
 		for (FloorTableItem<T, D> item : table.getItems())
 			if (item.floor == floor) return item.value;
 		return previous;
 	}
 
 	@FXML
-	public TableView<FloorTableItem<Boolean, String>> bossTable;
+	public TableView<FloorTableItem<Integer, String>> bossTable;
 	@FXML
 	public TableView<FloorTableItem<Integer, String>> buriedTable;
 	@FXML
@@ -72,8 +68,7 @@ public class EditDungeonFloorController implements Initializable
 	@FXML
 	public TableView<FloorTableItem<Integer, String>> trapTable;
 
-	public ArrayList<FloorData> generate()
-	{
+	public ArrayList<FloorData> generate() {
 		int max = 0;
 		max = findMax(this.difficultyTable, max);
 		max = findMax(this.moneyTable, max);
@@ -94,19 +89,18 @@ public class EditDungeonFloorController implements Initializable
 		max = Math.max(max, EditDungeonDataController.instance.currentFloorCount());
 
 		ArrayList<FloorData> data = new ArrayList<>();
-		int diffP = 0, moneyP = 0, layoutP = 0, terrainP = 0, shadowsP = 0, soundtrackP = 0, shopP = 0, monsterP = 0, itemP = 0, pokemonP = 0, trapP = 0,
-				buriedP = 0;
-		int diff = diffP, money = moneyP, layout = layoutP, terrain = terrainP, shadows = shadowsP, soundtrack = soundtrackP, shop = shopP, monster = monsterP,
-				item = itemP, pokemon = pokemonP, trap = trapP, buried = buriedP;
+		int diffP = 0, moneyP = 0, layoutP = 0, terrainP = 0, shadowsP = 0, soundtrackP = 0, shopP = 0, monsterP = 0,
+				itemP = 0, pokemonP = 0, trapP = 0, buriedP = 0, bossP = -1;
+		int diff = diffP, money = moneyP, layout = layoutP, terrain = terrainP, shadows = shadowsP,
+				soundtrack = soundtrackP, shop = shopP, monster = monsterP, item = itemP, pokemon = pokemonP,
+				trap = trapP, buried = buriedP, boss = bossP;
 		PokemonType camouflage = PokemonType.Unknown, camouflageP = PokemonType.Unknown;
 		Move nature = MoveRegistry.ATTACK, natureP = MoveRegistry.ATTACK;
 		String secret = null, secretP = null;
-		boolean boss = false, bossP = false;
 		boolean hasChanged;
 		int startFloor = -1;
 
-		for (int floor = 1; floor <= max; ++floor)
-		{
+		for (int floor = 1; floor <= max; ++floor) {
 			diff = lookup(this.difficultyTable, floor, diffP);
 			money = lookup(this.moneyTable, floor, moneyP);
 			layout = lookup(this.layoutTable, floor, layoutP);
@@ -142,13 +136,12 @@ public class EditDungeonFloorController implements Initializable
 			hasChanged |= buried != buriedP;
 			hasChanged |= boss != bossP;
 
-			if (hasChanged)
-			{
-				if (startFloor != -1)
-				{
-					FloorData d = new FloorData(new FloorSet(startFloor, floor - 1), diffP, moneyP, layoutP, terrainP, (byte) shadowsP, camouflageP,
-							natureP == null ? 0 : natureP.id, secretP, soundtrackP, (short) shopP, (short) monsterP, (short) itemP, (short) pokemonP,
-							(short) trapP, (short) buriedP, bossP);
+			if (hasChanged) {
+				if (startFloor != -1) {
+					FloorData d = new FloorData(new FloorSet(startFloor, floor - 1), diffP, moneyP, layoutP, terrainP,
+							(byte) shadowsP, camouflageP, natureP == null ? 0 : natureP.id, secretP, soundtrackP,
+							(short) shopP, (short) monsterP, (short) itemP, (short) pokemonP, (short) trapP,
+							(short) buriedP, bossP);
 					data.add(d);
 				}
 				startFloor = floor;
@@ -172,16 +165,16 @@ public class EditDungeonFloorController implements Initializable
 			bossP = boss;
 		}
 
-		FloorData d = new FloorData(new FloorSet(startFloor == -1 ? 1 : startFloor, max), diff, money, layout, terrain, (byte) shadows, camouflage, nature.id,
-				secret, soundtrack, (short) shop, (short) monster, (short) item, (short) pokemon, (short) trap, (short) buried, boss);
+		FloorData d = new FloorData(new FloorSet(startFloor == -1 ? 1 : startFloor, max), diff, money, layout, terrain,
+				(byte) shadows, camouflage, nature.id, secret, soundtrack, (short) shop, (short) monster, (short) item,
+				(short) pokemon, (short) trap, (short) buried, boss);
 		data.add(d);
 
 		return data;
 	}
 
 	@Override
-	public void initialize(URL location, ResourceBundle resources)
-	{
+	public void initialize(URL location, ResourceBundle resources) {
 		FloorTable.setup(this.difficultyTable, "Difficulty", FloorTableItem.defaultInteger);
 		FloorTable.setup(this.moneyTable, "Base Money", FloorTableItem.defaultInteger);
 		FloorTable.setup(this.layoutTable, "Layout", FloorTableItem.defaultInteger);
@@ -197,11 +190,10 @@ public class EditDungeonFloorController implements Initializable
 		FloorTable.setup(this.pokemonTable, "Pokemon", FloorTableItem.defaultInteger);
 		FloorTable.setup(this.trapTable, "Traps", FloorTableItem.defaultInteger);
 		FloorTable.setup(this.buriedTable, "Buried Items", FloorTableItem.defaultInteger);
-		FloorTable.setup(this.bossTable, "Boss?", FloorTableItem.defaultBoolean);
+		FloorTable.setup(this.bossTable, "Boss Storypos", FloorTableItem.defaultInteger);
 	}
 
-	public void setupFor(Dungeon dungeon)
-	{
+	public void setupFor(Dungeon dungeon) {
 		this.difficultyTable.getItems().clear();
 		this.moneyTable.getItems().clear();
 		this.layoutTable.getItems().clear();
@@ -219,11 +211,9 @@ public class EditDungeonFloorController implements Initializable
 		this.bossTable.getItems().clear();
 
 		FloorData previous = null;
-		for (int floor = 1; floor <= dungeon.floorCount; ++floor)
-		{
+		for (int floor = 1; floor <= dungeon.floorCount; ++floor) {
 			FloorData current = dungeon.getData(floor);
-			if (previous != current)
-			{
+			if (previous != current) {
 				if (previous == null || previous.difficulty() != current.difficulty())
 					this.difficultyTable.getItems().add(new FloorTableInteger(floor, current.difficulty()));
 				if (previous == null || previous.baseMoney() != current.baseMoney())
@@ -238,7 +228,8 @@ public class EditDungeonFloorController implements Initializable
 					this.camouflageTable.getItems().add(new FloorTablePokemonType(floor, current.camouflageType()));
 				if (previous == null || previous.naturePowerID() != current.naturePowerID())
 					this.naturePowerTable.getItems().add(new FloorTableMove(floor, current.naturePower()));
-				if (previous == null || (previous.secretPower() != null && !previous.secretPower().equals(current.secretPower()))
+				if (previous == null
+						|| (previous.secretPower() != null && !previous.secretPower().equals(current.secretPower()))
 						|| (current.secretPower() != null && !current.secretPower().equals(previous.secretPower())))
 					this.secretPowerTable.getItems().add(new FloorTableString(floor, current.secretPower()));
 				if (previous == null || previous.soundtrack() != current.soundtrack())
@@ -246,15 +237,16 @@ public class EditDungeonFloorController implements Initializable
 				if (previous == null || previous.shopChance() != current.shopChance())
 					this.shopTable.getItems().add(new FloorTableInteger(floor, (int) current.shopChance()));
 				if (previous == null || previous.monsterHouseChance() != current.monsterHouseChance())
-					this.monsterHouseTable.getItems().add(new FloorTableInteger(floor, (int) current.monsterHouseChance()));
+					this.monsterHouseTable.getItems()
+							.add(new FloorTableInteger(floor, (int) current.monsterHouseChance()));
 				if (previous == null || previous.itemDensity() != current.itemDensity())
 					this.itemTable.getItems().add(new FloorTableInteger(floor, (int) current.itemDensity()));
 				if (previous == null || previous.pokemonDensity() != current.pokemonDensity())
 					this.pokemonTable.getItems().add(new FloorTableInteger(floor, (int) current.pokemonDensity()));
 				if (previous == null || previous.trapDensity() != current.trapDensity())
 					this.trapTable.getItems().add(new FloorTableInteger(floor, (int) current.trapDensity()));
-				if (previous == null || previous.isBossFloor() != current.isBossFloor())
-					this.bossTable.getItems().add(new FloorTableBoolean(floor, current.isBossFloor()));
+				if (previous == null || previous.bossFloor() != current.bossFloor())
+					this.bossTable.getItems().add(new FloorTableInteger(floor, current.bossFloor()));
 			}
 			previous = current;
 		}
