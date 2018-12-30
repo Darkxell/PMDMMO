@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cutscene name="skarmory/enter">
+  <creation freezone="mtsteel" camerax="26.0" cameray="20.0" fading="false">
+    <pokemon cutsceneid="1" xpos="24.0" ypos="30.0" facing="NORTH">
+      <teammember>0</teammember>
+      <state>MOVE</state>
+    </pokemon>
+    <pokemon cutsceneid="2" xpos="28.0" ypos="30.0" facing="NORTH">
+      <teammember>1</teammember>
+      <state>MOVE</state>
+    </pokemon>
+  </creation>
+  <events>
+    <move ypos="20.0" speed="0.1" target="1" />
+    <move ypos="20.0" speed="0.1" target="2" />
+    <wait />
+    <setanimated target="1" animated="false" />
+    <setanimated target="2" animated="false" />
+    <setstate target="1" state="IDLE" />
+    <setstate target="2" state="IDLE" />
+    <wait />
+    <dialog>
+      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.skarmory.enter.m1</dialogscreen>
+      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.skarmory.enter.m2</dialogscreen>
+      <dialogscreen>cutscene.skarmory.enter.m3</dialogscreen>
+    </dialog>
+    <wait />
+    <spawnpokemon cutsceneid="10" xpos="26.0" ypos="17.0">
+      <pokemonid>51</pokemonid>
+      <animated>false</animated>
+    </spawnpokemon>
+    <wait />
+    <animate animation="158" target="10" />
+    <animate animation="151" target="1" />
+    <animate animation="150" target="2" />
+    <wait />
+    <rotate target="1" distance="1" speed="1" />
+    <rotate target="2" distance="-1" speed="1" />
+    <wait />
+    <dialog>
+      <dialogscreen target="10" portrait-location="TOP_RIGHT">cutscene.skarmory.enter.m4</dialogscreen>
+    </dialog>
+    <wait />
+    <despawn target="10" />
+    <animate animation="154" target="1" />
+    <animate animation="154" target="2" />
+    <wait />
+    <rotate target="1" distance="1" speed="1" />
+    <rotate target="2" distance="-1" speed="1" />
+    <wait />
+    <dialog>
+      <dialogscreen emotion="Thoughtful" target="2" portrait-location="BOTTOM_RIGHT">cutscene.skarmory.enter.m5</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="1" distance="-2" speed="2" />
+    <rotate target="2" distance="2" speed="2" />
+    <move ypos="15.0" speed="0.1" target="1" />
+    <move ypos="15.0" speed="0.1" target="2" />
+    <setanimated target="1" animated="true" />
+    <setanimated target="2" animated="true" />
+    <setstate target="1" state="MOVE" />
+    <setstate target="2" state="MOVE" />
+  </events>
+  <onfinish>
+    <enterdungeon id="3" />
+  </onfinish>
+</cutscene>
