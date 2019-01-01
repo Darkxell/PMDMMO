@@ -121,7 +121,7 @@
   <item id="174" category="EQUIPABLE" price="5000" sell="1500" sprite="59" />
   <item id="175" category="EQUIPABLE" price="1000" sell="1500" sprite="59" />
   <item id="176" category="EQUIPABLE" price="0" sell="550" sprite="59" />
-  <item id="177" category="EQUIPABLE" price="1200" sell="500" sprite="59" />
+  <item id="177" category="EQUIPABLE" price="1200" sell="500" effect="177" sprite="59" />
   <item id="178" category="EQUIPABLE" price="0" sell="750" sprite="59" />
   <item id="179" category="EQUIPABLE" price="0" sell="1500" sprite="59" />
   <item id="180" category="EQUIPABLE" price="0" sell="1500" sprite="59" />
