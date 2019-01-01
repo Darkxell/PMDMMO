@@ -216,7 +216,7 @@ public class DungeonExploration
 	{
 		this.isGeneratingFloor = true;
 		if (this.currentFloor != null) this.currentFloor.dispose();
-		this.currentFloor = this.createFloor(this.currentFloor == null ? 1 : this.currentFloor.id + 1);// Change 'floorCount' back to '1'
+		this.currentFloor = this.createFloor(this.currentFloor == null ? this.dungeon().floorCount : this.currentFloor.id + 1);// Change 'floorCount' back to '1'
 		this.currentFloor.generate();
 		this.currentFloor.placePlayers(this.exploringPlayers);
 
