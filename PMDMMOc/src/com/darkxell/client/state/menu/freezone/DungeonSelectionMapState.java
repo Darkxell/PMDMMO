@@ -54,8 +54,7 @@ public class DungeonSelectionMapState extends AbstractState {
 		});
 		this.dungeonslist = dungeons;
 		{
-			if (!this.dungeonslist.isEmpty())
-				this.camerax = this.dungeonslist.get(0).mapx;
+			if (!this.dungeonslist.isEmpty()) this.camerax = this.dungeonslist.get(0).mapx;
 			this.cameray = this.dungeonslist.get(0).mapy;
 		}
 		this.missions = new ArrayList<>();
@@ -92,68 +91,59 @@ public class DungeonSelectionMapState extends AbstractState {
 		Persistence.isCommunicating = false;
 		if (dungeon != this.dungeonslist.get(this.cursor).id)
 			Logger.w("Received dungeon ID to start is different than selected; starting cancelled");
-		else
-			StateManager.setDungeonState(this, dungeon, seed);
+		else StateManager.setDungeonState(this, dungeon, seed);
 	}
 
 	@Override
 	public void onKeyPressed(Key key) {
 		boolean cursorchanged = false;
 		switch (key) {
-		case RIGHT:
-			if (cursor >= dungeonslist.size() - 1)
-				cursor = 0;
-			else
-				++cursor;
-			cursorchanged = true;
-			break;
-		case LEFT:
-			if (cursor <= 0)
-				cursor = dungeonslist.size() - 1;
-			else
-				--cursor;
-			cursorchanged = true;
-			break;
-		case UP:
-			if (cursor < dungeonslist.size() - 10)
-				cursor += 10;
-			else
-				cursor = 0;
-			cursorchanged = true;
-			break;
-		case DOWN:
-			if (cursor >= 10)
-				cursor -= 10;
-			else
-				cursor = (dungeonslist.size() - 1);
-			cursorchanged = true;
-			break;
-		case RUN:
-			Persistence.isCommunicating = false;
-			Persistence.currentplayer.y -= 1;
-			Persistence.currentplayer.renderer().sprite().setFacingDirection(Direction.NORTH);
-			Persistence.stateManager.setState(new FreezoneExploreState());
-			break;
-		case ATTACK:
-			// Sending dungeonstart to server
-			launchDungeon();
-			break;
-		default:
-			break;
+			case RIGHT:
+				if (cursor >= dungeonslist.size() - 1) cursor = 0;
+				else++cursor;
+				cursorchanged = true;
+				break;
+			case LEFT:
+				if (cursor <= 0) cursor = dungeonslist.size() - 1;
+				else--cursor;
+				cursorchanged = true;
+				break;
+			case UP:
+				if (cursor < dungeonslist.size() - 10) cursor += 10;
+				else cursor = 0;
+				cursorchanged = true;
+				break;
+			case DOWN:
+				if (cursor >= 10) cursor -= 10;
+				else cursor = (dungeonslist.size() - 1);
+				cursorchanged = true;
+				break;
+			case RUN:
+				Persistence.isCommunicating = false;
+				Persistence.currentplayer.y -= 1;
+				Persistence.currentplayer.renderer().sprite().setFacingDirection(Direction.NORTH);
+				Persistence.stateManager.setState(new FreezoneExploreState());
+				break;
+			case ATTACK:
+				// Sending dungeonstart to server
+				launchDungeon();
+				break;
+			default:
+				break;
 		}
 
-		if (cursorchanged)
-			this.onDungeonSelect();
+		if (cursorchanged) this.onDungeonSelect();
 	}
 
 	private void launchDungeon() {
 		int dungeon = this.dungeonslist.get(this.cursor).id;
 		// Determines if there is a cutscene before the dungeon and plays it
 		switch (dungeon) {
-		case 3:
-			if (Persistence.player.getData().storyposition == 11)
-				CutsceneManager.playCutscene("skarmory/enter", true);
-			return;
+			case 3:
+				if (Persistence.player.getData().storyposition == 11) {
+					CutsceneManager.playCutscene("skarmory/enter", true);
+					return;
+				}
 		}
 		// Enters the dungeon if there is no cutscene.
 		if (Persistence.socketendpoint.connectionStatus() == GameSocketEndpoint.CONNECTED) {
@@ -166,8 +156,7 @@ public class DungeonSelectionMapState extends AbstractState {
 	}
 
 	@Override
-	public void onKeyReleased(Key key) {
-	}
+	public void onKeyReleased(Key key) {}
 
 	@Override
 	public void render(Graphics2D g, int width, int height) {
@@ -215,14 +204,10 @@ public class DungeonSelectionMapState extends AbstractState {
 
 	@Override
 	public void update() {
-		if (camerax < dungeonslist.get(cursor).mapx - 6)
-			camerax += 5;
-		else if (camerax > dungeonslist.get(cursor).mapx + 6)
-			camerax -= 5;
-		if (cameray < dungeonslist.get(cursor).mapy - 6)
-			cameray += 5;
-		else if (cameray > dungeonslist.get(cursor).mapy + 6)
-			cameray -= 5;
+		if (camerax < dungeonslist.get(cursor).mapx - 6) camerax += 5;
+		else if (camerax > dungeonslist.get(cursor).mapx + 6) camerax -= 5;
+		if (cameray < dungeonslist.get(cursor).mapy - 6) cameray += 5;
+		else if (cameray > dungeonslist.get(cursor).mapy + 6) cameray -= 5;
 	}
 
 }
