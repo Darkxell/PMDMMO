@@ -36,6 +36,7 @@ public final class TrapRegistry extends Registry<Trap> {
                 }
             });
         }
+        traps.put(WONDER_TILE.id, WONDER_TILE);
         return traps;
     }
 
