@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cutscene name="skarmory/after">
+  <creation freezone="base" />
+  <events />
+  <onfinish>
+    <loadfreezone fadesout="false" id="base" />
+  </onfinish>
+</cutscene>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cutscene name="skarmory/solve">
+  <creation freezone="mt_steel_top" camerax="30.0" cameray="20.0" fading="false">
+    <pokemon cutsceneid="1" xpos="27.0" ypos="22.0" facing="NORTH">
+      <teammember>0</teammember>
+      <animated>false</animated>
+    </pokemon>
+    <pokemon cutsceneid="2" xpos="30.0" ypos="22.0" facing="NORTH">
+      <teammember>1</teammember>
+      <animated>false</animated>
+    </pokemon>
+    <pokemon cutsceneid="10" xpos="28.5" ypos="6.0">
+      <pokemonid>50</pokemonid>
+      <animated>false</animated>
+    </pokemon>
+    <pokemon cutsceneid="11" xpos="28.5" ypos="16.0">
+      <pokemonid>227</pokemonid>
+      <animated>false</animated>
+    </pokemon>
+  </creation>
+  <events>
+    <dialog>
+      <dialogscreen target="11" portrait-location="TOP_RIGHT">cutscene.postskarmory.m1</dialogscreen>
+    </dialog>
+    <wait />
+    <setanimated target="11" animated="true" />
+    <setstate target="11" state="HURT" />
+    <move ypos="15.0" speed="0.1" target="11" />
+    <wait />
+    <setstate target="11" state="MOVE" />
+    <move ypos="0.0" speed="0.4" target="11" />
+    <delay ticks="120" />
+    <setanimated target="1" animated="true" />
+    <move ypos="17.5" speed="0.15" target="1" />
+    <setstate target="1" state="MOVE" />
+    <delay ticks="15" />
+    <setanimated target="2" animated="true" />
+    <move ypos="17.5" speed="0.15" target="2" />
+    <setstate target="2" state="MOVE" />
+    <wait />
+    <setstate target="1" state="IDLE" />
+    <setstate target="2" state="IDLE" />
+    <setanimated target="1" animated="false" />
+    <setanimated target="2" animated="false" />
+    <wait />
+    <dialog>
+      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.postskarmory.m2</dialogscreen>
+      <dialogscreen emotion="Awkward" target="10" portrait-location="TOP_LEFT">cutscene.postskarmory.m3</dialogscreen>
+      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.postskarmory.m4</dialogscreen>
+    </dialog>
+    <wait />
+    <setanimated target="2" animated="true" />
+    <setstate target="2" state="MOVE" />
+    <move xpos="29.0" ypos="16.0" speed="0.05" target="2" />
+    <wait />
+    <setanimated target="2" animated="false" />
+    <setstate target="2" state="IDLE" />
+    <delay ticks="30" />
+    <move ypos="17.0" speed="0.05" target="2" />
+    <wait />
+    <dialog>
+      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.postskarmory.m5</dialogscreen>
+    </dialog>
+    <wait />
+    <setanimated target="2" animated="true" />
+    <setstate target="2" state="MOVE" />
+    <move ypos="16.0" speed="0.1" target="2" />
+    <delay ticks="30" />
+    <animate animation="151" target="2" />
+    <setanimated target="2" animated="false" />
+    <setstate target="2" state="IDLE" />
+    <wait />
+    <dialog>
+      <dialogscreen emotion="Shocked" target="2" portrait-location="BOTTOM_RIGHT">cutscene.postskarmory.m6</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="2" distance="-3" />
+    <wait />
+    <dialog>
+      <dialogscreen emotion="Thoughtful" target="2" portrait-location="BOTTOM_RIGHT">cutscene.postskarmory.m7</dialogscreen>
+    </dialog>
+    <wait />
+    <spawnpokemon cutsceneid="20" xpos="27.0" ypos="-1.0">
+      <pokemonid>81</pokemonid>
+    </spawnpokemon>
+    <spawnpokemon cutsceneid="21" xpos="30.0" ypos="-1.0">
+      <pokemonid>81</pokemonid>
+    </spawnpokemon>
+    <wait />
+    <move ypos="12.0" speed="0.3" target="20" />
+    <move ypos="12.0" speed="0.3" target="21" />
+    <wait />
+    <dialog>
+      <dialogscreen>cutscene.postskarmory.m8</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="2" distance="3" />
+    <animate animation="153" target="2" />
+    <wait />
+    <dialog>
+      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.postskarmory.m9</dialogscreen>
+      <dialogscreen target="20" portrait-location="TOP_LEFT">cutscene.postskarmory.m10</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="20" distance="4" />
+    <rotate target="21" distance="-4" />
+    <move xpos="26.0" ypos="8.0" speed="0.15" target="20" />
+    <move xpos="31.0" ypos="8.0" speed="0.15" target="21" />
+    <wait />
+    <rotate target="20" distance="1" />
+    <rotate target="21" distance="-1" />
+    <wait />
+    <dialog>
+      <dialogscreen target="20" portrait-location="TOP_LEFT">cutscene.postskarmory.m11</dialogscreen>
+      <dialogscreen target="21" portrait-location="TOP_RIGHT">cutscene.postskarmory.m12</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="20" distance="-1" />
+    <rotate target="21" distance="1" />
+    <move ypos="6.0" speed="0.02" target="20" />
+    <move ypos="6.0" speed="0.02" target="21" />
+  </events>
+  <onfinish>
+    <playcutscene id="skarmory/after" />
+  </onfinish>
+</cutscene>
