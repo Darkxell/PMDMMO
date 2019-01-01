@@ -80,7 +80,7 @@ public class BaseStats implements Communicable
 	public void add(BaseStats stats)
 	{
 		this.attack += stats.attack;
-		this.attack += stats.defense;
+		this.defense += stats.defense;
 		this.health += stats.health;
 		this.specialAttack += stats.specialAttack;
 		this.specialDefense += stats.specialDefense;
