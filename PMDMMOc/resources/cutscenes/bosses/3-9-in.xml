@@ -70,6 +70,7 @@
       <dialogscreen emotion="Determined" target="2">cutscene.3-9-in.m15</dialogscreen>
     </dialog>
     <wait />
+    <camera ypos="22.8" speed="0.1" />
     <rotate target="1" distance="2" />
     <rotate target="2" distance="-2" />
     <wait />
