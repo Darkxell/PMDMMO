@@ -53,6 +53,10 @@ public class StoryPositionSetup {
 			else
 				isAbnormal = true;
 			break;
+		case 12:
+			// Mt steel cutscenes
+			CutsceneManager.playCutscene("skarmory/solve", true);
+			break;
 		case 38:
 			// TODO:Had the fugitive cutscene. Spawns in front of your house
 			// early in the morning before fuging to prepare.

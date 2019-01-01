@@ -54,6 +54,9 @@ public class ArbitraryCutsceneEnds {
 		case "dugrequest":
 			stryAdvance(11);
 			break;
+		case "skarmoryend":
+			stryAdvance(13);
+			break;
 		default:
 			defaultFunction(function, cutscene);
 			break;
