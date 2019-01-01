@@ -38,7 +38,7 @@ public class ThrowableItemEffect extends ItemEffect
 
 	private ArrayList<Tile> arcReachableTiles(Floor floor, Item item, DungeonPokemon pokemon)
 	{
-		final int maxDist = 6;
+		final int maxDist = 8;
 		Direction d = pokemon.facing(), left = d.rotateCounterClockwise(), right = d.rotateClockwise();
 		ArrayList<Tile> toreturn = new ArrayList<>();
 		Stack<Tile> toprocess = new Stack<>();

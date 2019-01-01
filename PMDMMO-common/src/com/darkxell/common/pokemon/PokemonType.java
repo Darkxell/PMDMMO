@@ -5,8 +5,7 @@ import java.awt.Color;
 import com.darkxell.common.util.language.Message;
 
 /** Pokemon types. */
-public enum PokemonType
-{
+public enum PokemonType {
 
 	Normal(0, new Color(168, 168, 120)),
 	Fighting(1, new Color(192, 48, 40)),
@@ -28,10 +27,9 @@ public enum PokemonType
 	Fairy(17, new Color(238, 153, 172)),
 	Unknown(19, new Color(104, 160, 144));
 
-	public static final double SUPER_EFFECTIVE = 1.4f, NORMALLY_EFFECTIVE = 1, NOT_VERY_EFFECTIVE = 0.7f, NO_EFFECT = 0;
+	public static final double SUPER_EFFECTIVE = 1.4, NORMALLY_EFFECTIVE = 1., NOT_VERY_EFFECTIVE = .7, NO_EFFECT = 0.;
 
-	static
-	{
+	static {
 		Normal.setEffectivenessOn(Ghost, NO_EFFECT);
 		Normal.setEffectivenessOn(Rock, NOT_VERY_EFFECTIVE);
 		Normal.setEffectivenessOn(Steel, NOT_VERY_EFFECTIVE);
@@ -172,8 +170,7 @@ public enum PokemonType
 	}
 
 	/** @return The Pokemon type with the input ID. null if ID doesn't match a type. */
-	public static PokemonType find(int typeID)
-	{
+	public static PokemonType find(int typeID) {
 		for (PokemonType type : values())
 			if (type.id == typeID) return type;
 		return null;
@@ -183,44 +180,37 @@ public enum PokemonType
 	private final double[] effectiveness;
 	public final int id;
 
-	private PokemonType(int id, Color color)
-	{
+	private PokemonType(int id, Color color) {
 		this.id = id;
 		this.color = color;
-		this.effectiveness = new double[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+		this.effectiveness = new double[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, };
 	}
 
-	public double effectivenessOn(PokemonSpecies species)
-	{
+	public double effectivenessOn(PokemonSpecies species) {
 		if (species.type2 == null) return this.effectivenessOn(species.type1);
 		return this.effectivenessOn(species.type1, species.type2);
 	}
 
 	/** @return The effectiveness of this type on a single-type. */
-	public double effectivenessOn(PokemonType type)
-	{
+	public double effectivenessOn(PokemonType type) {
 		return this.effectiveness[type.id];
 	}
 
 	/** @return The effectiveness of this type on a dual-type. */
-	public double effectivenessOn(PokemonType type1, PokemonType type2)
-	{
+	public double effectivenessOn(PokemonType type1, PokemonType type2) {
 		return this.effectiveness[type1.id] * this.effectiveness[type2.id];
 	}
 
-	public Message getName()
-	{
+	public Message getName() {
 		return new Message("type." + this.id).addPrefix(this.symbol() + " ");
 	}
 
 	/** Sets the effectiveness of this type on the input type. */
-	private void setEffectivenessOn(PokemonType type, double effectiveness)
-	{
+	private void setEffectivenessOn(PokemonType type, double effectiveness) {
 		this.effectiveness[type.id] = effectiveness;
 	}
 
-	public String symbol()
-	{
+	public String symbol() {
 		return "<type-" + this.id + ">";
 	}
 
