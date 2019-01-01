@@ -1,8 +1,215 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cutscene name="skarmory/after">
-  <creation freezone="base" />
-  <events />
+  <creation freezone="base" camerax="32.0" cameray="42.0" fading="false">
+    <pokemon cutsceneid="1" xpos="32.0" ypos="40.0" facing="NORTH">
+      <teammember>0</teammember>
+      <animated>false</animated>
+    </pokemon>
+    <pokemon cutsceneid="2" xpos="37.0" ypos="40.0" facing="NORTH">
+      <teammember>1</teammember>
+      <animated>false</animated>
+    </pokemon>
+    <pokemon cutsceneid="10" xpos="32.0" ypos="35.0">
+      <pokemonid>50</pokemonid>
+    </pokemon>
+    <pokemon cutsceneid="20" xpos="34.0" ypos="33.0">
+      <pokemonid>81</pokemonid>
+    </pokemon>
+    <pokemon cutsceneid="21" xpos="37.0" ypos="35.0">
+      <pokemonid>81</pokemonid>
+    </pokemon>
+  </creation>
+  <events>
+    <dialog>
+      <dialogscreen target="10" portrait-location="TOP_LEFT">cutscene.postskarmory.m13</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="2" distance="-1" />
+    <rotate target="20" distance="1" />
+    <rotate target="21" distance="2" />
+    <wait />
+    <dialog>
+      <dialogscreen target="10" portrait-location="TOP_LEFT">cutscene.postskarmory.m14</dialogscreen>
+    </dialog>
+    <wait />
+    <animate animation="154" target="1" />
+    <animate animation="154" target="2" />
+    <animate animation="154" target="20" />
+    <animate animation="154" target="21" />
+    <wait />
+    <dialog>
+      <dialogscreen emotion="Thoughtful" target="2" portrait-location="BOTTOM_RIGHT">cutscene.postskarmory.m15</dialogscreen>
+      <dialogscreen target="20" portrait-location="TOP_RIGHT">cutscene.postskarmory.m16</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="10" distance="-1" />
+    <wait />
+    <dialog>
+      <dialogscreen emotion="Happy" target="2" portrait-location="BOTTOM_RIGHT">cutscene.postskarmory.m17</dialogscreen>
+      <dialogscreen target="10" portrait-location="TOP_LEFT">cutscene.postskarmory.m18</dialogscreen>
+      <dialogscreen>cutscene.postskarmory.m19</dialogscreen>
+    </dialog>
+    <wait />
+    <animate animation="152" target="1" />
+    <delay ticks="15" />
+    <animate animation="152" target="21" />
+    <delay ticks="15" />
+    <animate animation="152" target="2" />
+    <animate animation="152" target="20" />
+    <wait />
+    <dialog>
+      <dialogscreen emotion="Thoughtful" target="2" portrait-location="BOTTOM_RIGHT">cutscene.postskarmory.m20</dialogscreen>
+      <dialogscreen>cutscene.postskarmory.m22</dialogscreen>
+    </dialog>
+    <wait />
+    <spawnpokemon cutsceneid="11" xpos="34.5" ypos="37.5">
+      <pokemonid>51</pokemonid>
+    </spawnpokemon>
+    <animate animation="158" target="11" />
+    <wait />
+    <animate animation="151" target="1" />
+    <animate animation="151" target="2" />
+    <animate animation="151" target="20" />
+    <animate animation="151" target="21" />
+    <rotate target="1" distance="1" />
+    <rotate target="21" distance="-1" />
+    <rotate target="20" distance="-1" />
+    <wait />
+    <dialog>
+      <dialogscreen target="11">cutscene.postskarmory.m23</dialogscreen>
+    </dialog>
+    <wait />
+    <animate animation="156" target="10" />
+    <dialog>
+      <dialogscreen target="10" portrait-location="TOP_LEFT">cutscene.postskarmory.m24</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="11" distance="3" />
+    <wait />
+    <dialog>
+      <dialogscreen target="11" portrait-location="BOTTOM_RIGHT">cutscene.postskarmory.m25</dialogscreen>
+      <dialogscreen target="10" portrait-location="TOP_LEFT">cutscene.postskarmory.m26</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="21" distance="-1" />
+    <rotate target="10" distance="1" />
+    <rotate target="11" distance="-3" />
+    <wait />
+    <dialog>
+      <dialogscreen target="11" portrait-location="TOP_RIGHT">cutscene.postskarmory.m27</dialogscreen>
+      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.postskarmory.m28</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="10" distance="-2" />
+    <rotate target="21" distance="1" />
+    <rotate target="2" distance="1" />
+    <rotate target="11" distance="-3" />
+    <wait />
+    <dialog>
+      <dialogscreen target="11">cutscene.postskarmory.m29</dialogscreen>
+      <dialogscreen target="21" portrait-location="TOP_RIGHT">cutscene.postskarmory.m30</dialogscreen>
+      <dialogscreen target="11">cutscene.postskarmory.m31</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="11" distance="4" />
+    <rotate target="10" distance="2" />
+    <wait />
+    <dialog>
+      <dialogscreen target="11" portrait-location="TOP_RIGHT">cutscene.postskarmory.m32</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="11" distance="-2" />
+    <wait />
+    <dialog>
+      <dialogscreen target="10" portrait-location="TOP_LEFT">cutscene.postskarmory.m33</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="11" distance="1" />
+    <wait />
+    <dialog>
+      <dialogscreen target="11" portrait-location="TOP_LEFT">cutscene.postskarmory.m34</dialogscreen>
+    </dialog>
+    <wait />
+    <despawn target="10" />
+    <despawn target="11" />
+    <wait />
+    <dialog>
+      <dialogscreen>cutscene.postskarmory.m35</dialogscreen>
+      <dialogscreen>cutscene.postskarmory.m36</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="1" distance="-1" />
+    <rotate target="21" distance="-1" />
+    <wait />
+    <dialog>
+      <dialogscreen target="20" portrait-location="TOP_RIGHT">cutscene.postskarmory.m38</dialogscreen>
+    </dialog>
+    <wait />
+    <animate animation="153" target="2" />
+    <wait />
+    <dialog>
+      <dialogscreen emotion="Shocked" target="2" portrait-location="BOTTOM_RIGHT">cutscene.postskarmory.m39</dialogscreen>
+    </dialog>
+    <wait />
+    <animate animation="153" target="20" />
+    <animate animation="153" target="21" />
+    <wait />
+    <dialog>
+      <dialogscreen target="20" portrait-location="TOP_LEFT">cutscene.postskarmory.m40</dialogscreen>
+      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.postskarmory.m41</dialogscreen>
+      <dialogscreen target="20" portrait-location="TOP_LEFT">cutscene.postskarmory.m42</dialogscreen>
+      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.postskarmory.m43</dialogscreen>
+    </dialog>
+    <wait />
+    <option eventid="20">
+      <question target="2" portrait-location="BOTTOM_RIGHT">cutscene.postskarmory.m44</question>
+      <option value="cutscene.postskarmory.c1" />
+      <option value="cutscene.postskarmory.c2" />
+    </option>
+    <wait />
+    <optionresult option="1" dialog="20">
+      <dialog>
+        <dialogscreen translate="false">[WIP]</dialogscreen>
+      </dialog>
+      <wait />
+    </optionresult>
+    <wait />
+    <dialog>
+      <dialogscreen emotion="Happy" target="2" portrait-location="BOTTOM_RIGHT">cutscene.postskarmory.m45</dialogscreen>
+    </dialog>
+    <wait />
+    <animate animation="155" target="20" />
+    <animate animation="155" target="21" />
+    <dialog>
+      <dialogscreen emotion="Amazed" target="20" portrait-location="TOP_LEFT">cutscene.postskarmory.m46</dialogscreen>
+      <dialogscreen target="21" portrait-location="TOP_RIGHT">cutscene.postskarmory.m47</dialogscreen>
+      <dialogscreen emotion="Thoughtful" target="2" portrait-location="BOTTOM_RIGHT">cutscene.postskarmory.m48</dialogscreen>
+      <dialogscreen target="20" portrait-location="TOP_LEFT">cutscene.postskarmory.m49</dialogscreen>
+    </dialog>
+    <wait />
+    <move ypos="65.0" speed="0.2" target="20" />
+    <move xpos="35.0" ypos="65.0" speed="0.2" target="21" />
+    <rotate target="1" distance="4" speed="15" />
+    <rotate target="2" distance="-4" speed="15" />
+    <wait />
+    <dialog>
+      <dialogscreen emotion="Sad" target="2" portrait-location="BOTTOM_RIGHT">cutscene.postskarmory.m50</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="1" distance="-2" />
+    <rotate target="2" distance="2" />
+    <wait />
+    <dialog>
+      <dialogscreen emotion="Thoughtful" target="2" portrait-location="BOTTOM_RIGHT">cutscene.postskarmory.m51</dialogscreen>
+    </dialog>
+    <wait />
+    <animate animation="153" target="2" />
+    <wait />
+    <dialog>
+      <dialogscreen target="2" portrait-location="BOTTOM_RIGHT">cutscene.postskarmory.m52</dialogscreen>
+    </dialog>
+  </events>
   <onfinish>
-    <loadfreezone fadesout="false" id="base" />
+    <loadfreezone function="skarmoryend" id="baseinside" />
   </onfinish>
 </cutscene>
