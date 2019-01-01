@@ -12,8 +12,7 @@ import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.status.StatusConditions;
 
 /** Holds all Move Effects. */
-public final class ItemEffects
-{
+public final class ItemEffects {
 	static final HashMap<Integer, ItemEffect> effects = new HashMap<Integer, ItemEffect>();
 
 	public static final ItemEffect Default = new ItemEffect(-1);
@@ -26,10 +25,11 @@ public final class ItemEffects
 
 	public static final ItemEffect Heal_100_0_Food_5_0_0 = new HealFoodItemEffect(7, 5, 0, 0, 100, 0);
 	public static final ItemEffect Heal_max_2_Food_5_0_0 = new HealFoodItemEffect(8, 5, 0, 0, 1000, 2);
-	public static final ItemEffect Cure_paralysis_Food_5_0_0 = new CureStatusFoodItemEffect(9, 5, 0, 0, StatusConditions.Paralyzed);
+	public static final ItemEffect Cure_paralysis_Food_5_0_0 = new CureStatusFoodItemEffect(9, 5, 0, 0,
+			StatusConditions.Paralyzed);
 	public static final ItemEffect Cure_sleep_Food_5_0_0 = new FoodItemEffect(10, 5, 0, 0);
-	public static final ItemEffect Cure_poison_Food_5_0_0 = new CureStatusFoodItemEffect(11, 5, 0, 0, StatusConditions.Poisoned,
-			StatusConditions.Badly_poisoned);
+	public static final ItemEffect Cure_poison_Food_5_0_0 = new CureStatusFoodItemEffect(11, 5, 0, 0,
+			StatusConditions.Poisoned, StatusConditions.Badly_poisoned);
 	public static final ItemEffect Cure_burn_Food_5_0_0 = new FoodItemEffect(12, 5, 0, 0);
 
 	public static final ItemEffect Thrown_arc_15 = new ThrowableItemEffect(21, 15, Arc);
@@ -42,7 +42,8 @@ public final class ItemEffects
 	public static final ItemEffect Damage_45_Food_5_0_0 = new DealDamageFoodItemEffect(31, 5, 0, 0, 45, 25);
 	public static final ItemEffect Food_5_0_0 = new FoodItemEffect(39, 5, 0, 0);
 	public static final ItemEffect Revive_Food_5_0_0 = new ReviverFoodItemEffect(41, 5, 0, 0);
-	public static final ItemEffect Inflict_Asleep_Food_5_0_0 = new InflictStatusFoodItemEffect(42, 5, 0, 0, StatusConditions.Asleep);
+	public static final ItemEffect Inflict_Asleep_Food_5_0_0 = new InflictStatusFoodItemEffect(42, 5, 0, 0,
+			StatusConditions.Asleep);
 
 	public static final ItemEffect Gummi_Normal = new GummiItemEffect(61, 20, 0, 0, PokemonType.Normal);
 	public static final ItemEffect Gummi_Fighting = new GummiItemEffect(62, 20, 0, 0, PokemonType.Fighting);
@@ -76,22 +77,25 @@ public final class ItemEffects
 
 	public static final ItemEffect Boost_Attack_Drink_5_0_0 = new StatBoostDrinkItemEffect(153, 5, 0, 0, Stat.Attack);
 	public static final ItemEffect Boost_Defense_Drink_5_0_0 = new StatBoostDrinkItemEffect(154, 5, 0, 0, Stat.Defense);
-	public static final ItemEffect Boost_Sp_Attack_Drink_5_0_0 = new StatBoostDrinkItemEffect(155, 5, 0, 0, Stat.SpecialAttack);
-	public static final ItemEffect Boost_Sp_Defense_Drink_5_0_0 = new StatBoostDrinkItemEffect(156, 5, 0, 0, Stat.SpecialDefense);
+	public static final ItemEffect Boost_Sp_Attack_Drink_5_0_0 = new StatBoostDrinkItemEffect(155, 5, 0, 0,
+			Stat.SpecialAttack);
+	public static final ItemEffect Boost_Sp_Defense_Drink_5_0_0 = new StatBoostDrinkItemEffect(156, 5, 0, 0,
+			Stat.SpecialDefense);
 	public static final ItemEffect Drink_5_0_0 = new DrinkItemEffect(157, 5, 0, 0);
+
+	public static final ItemEffect Prevent_Poison_Equip = new PreventStatusEquipableItemEffect(177,
+			StatusConditions.Poisoned, StatusConditions.Badly_poisoned);
 
 	public static final ItemEffect XRaySpecs = new ItemEffect(208);
 
 	/** @return The Effect with the input ID. */
-	public static ItemEffect find(int id)
-	{
+	public static ItemEffect find(int id) {
 		if (!effects.containsKey(id)) return Default;
 		return effects.get(id);
 	}
 
 	/** @return All Effects. */
-	public static Collection<ItemEffect> list()
-	{
+	public static Collection<ItemEffect> list() {
 		return effects.values();
 	}
 
