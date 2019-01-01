@@ -582,7 +582,7 @@ public class ItemContainersMenuState extends AbstractMenuState
 		else if (action == ItemAction.SWITCH)
 			Persistence.eventProcessor().processEvent(new ItemSwappedEvent(Persistence.floor, action, user, container, index, user.tile(), 0).setPAE());
 		else if (action == ItemAction.SWAP)
-			nextState = new ItemContainersMenuState(this, dungeonState, true, Persistence.player.inventory()).setOpaque(this.isOpaque);
+			nextState = new ItemContainersMenuState(this, dungeonState, this, true, Persistence.player.inventory()).setOpaque(this.isOpaque);
 		else if (action == ItemAction.INFO)
 		{
 			Message[] titles = new Message[] { i.item().name() };
