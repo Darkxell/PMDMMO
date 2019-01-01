@@ -146,7 +146,7 @@ public class DungeonPokemon implements ItemContainer, DungeonEventListener
 	{
 		for (AppliedStatusCondition instance : this.statusConditions)
 			if (instance.condition.preventsUsingMove(move, this, floor)) return false;
-		return true;
+		return move.isEnabled();
 	}
 
 	@Override
