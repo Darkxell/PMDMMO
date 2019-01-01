@@ -13,61 +13,66 @@
       <pokemonid>50</pokemonid>
       <animated>false</animated>
     </pokemon>
-    <pokemon cutsceneid="4" xpos="25.5" ypos="-5.0">
+    <pokemon cutsceneid="4" xpos="28.5" ypos="-5.0">
       <pokemonid>227</pokemonid>
-      <state>ATTACK</state>
-      <animated>false</animated>
+      <state>MOVE</state>
     </pokemon>
   </creation>
   <events>
+    <animate animation="153" target="1" />
     <dialog>
-      <dialogscreen target="2">cutscene.3-9-in.m0</dialogscreen>
-      <dialogscreen target="3">cutscene.3-9-in.m1</dialogscreen>
+      <dialogscreen emotion="Shocked" target="2">cutscene.3-9-in.m0</dialogscreen>
+      <dialogscreen emotion="Thoughtful" target="2">cutscene.3-9-in.m1</dialogscreen>
     </dialog>
     <wait />
-    <setstate target="2" state="MOVE" />
-    <setanimated target="2" animated="true" />
-    <move ypos="17.5" speed="0.15" target="2" />
-    <wait />
-    <setanimated target="2" animated="false" />
-    <rotate target="2" distance="1" />
+    <delay ticks="20" />
+    <setstate target="3" state="CHARGE" />
+    <delay ticks="20" />
     <dialog>
-      <dialogscreen target="2">cutscene.3-9-in.m2</dialogscreen>
-      <dialogscreen target="2">cutscene.3-9-in.m3</dialogscreen>
+      <dialogscreen target="3" portrait-location="BOTTOM_RIGHT">cutscene.3-9-in.m2</dialogscreen>
     </dialog>
     <wait />
-    <move ypos="17.0" target="4" />
+    <move ypos="20.0" speed="0.5" target="4" />
+    <delay ticks="45" />
+    <move ypos="19.0" speed="0.1" target="4" />
     <wait />
-    <setstate target="2" state="HURT" />
-    <move xpos="20.0" ypos="30.0" target="2" />
+    <move ypos="20.0" speed="0.1" target="4" />
     <setstate target="4" state="IDLE" />
-    <wait />
-    <setstate target="2" state="IDLE" />
-    <dialog>
-      <dialogscreen target="4">cutscene.3-9-in.m4</dialogscreen>
-    </dialog>
-    <wait />
-    <move xpos="25.5" ypos="25.0" speed="0.5" target="2" />
-    <rotate target="2" distance="-1" />
-    <wait />
-    <dialog>
-      <dialogscreen target="2">cutscene.3-9-in.m5</dialogscreen>
-    </dialog>
-    <wait />
-    <rotate target="4" distance="-1" />
-    <setanimated target="4" animated="true" />
-    <setstate target="4" state="MOVE" />
-    <move xpos="28.5" ypos="19.0" speed="0.2" target="4" />
-    <wait />
-    <rotate target="4" distance="1" />
     <setanimated target="4" animated="false" />
-    <setstate target="4" state="IDLE" />
+    <wait />
     <dialog>
-      <dialogscreen target="4">cutscene.3-9-in.m6</dialogscreen>
-      <dialogscreen target="4">cutscene.3-9-in.m7</dialogscreen>
+      <dialogscreen target="4" portrait-location="BOTTOM_RIGHT">cutscene.3-9-in.m3</dialogscreen>
+      <dialogscreen emotion="Angry" target="2">cutscene.3-9-in.m4</dialogscreen>
+      <dialogscreen emotion="Angry" target="2">cutscene.3-9-in.m5</dialogscreen>
+      <dialogscreen target="4" portrait-location="BOTTOM_RIGHT">cutscene.3-9-in.m6</dialogscreen>
+      <dialogscreen target="4" portrait-location="BOTTOM_RIGHT">cutscene.3-9-in.m7</dialogscreen>
+      <dialogscreen target="4" portrait-location="BOTTOM_RIGHT">cutscene.3-9-in.m8</dialogscreen>
+      <dialogscreen target="2">cutscene.3-9-in.m9</dialogscreen>
+      <dialogscreen emotion="Thoughtful" target="2">cutscene.3-9-in.m10</dialogscreen>
+      <dialogscreen target="2">cutscene.3-9-in.m11</dialogscreen>
+    </dialog>
+    <wait />
+    <setstate target="4" state="SWELL" />
+    <setanimated target="4" animated="true" />
+    <delay ticks="30" />
+    <setstate target="4" state="IDLE" />
+    <setanimated target="4" animated="false" />
+    <dialog>
+      <dialogscreen target="4" portrait-location="BOTTOM_RIGHT">cutscene.3-9-in.m12</dialogscreen>
+      <dialogscreen target="4" portrait-location="BOTTOM_RIGHT">cutscene.3-9-in.m13</dialogscreen>
+    </dialog>
+    <wait />
+    <rotate target="1" distance="-2" />
+    <rotate target="2" distance="2" />
+    <wait />
+    <dialog>
+      <dialogscreen emotion="Thoughtful" target="2">cutscene.3-9-in.m14</dialogscreen>
+      <dialogscreen emotion="Determined" target="2">cutscene.3-9-in.m15</dialogscreen>
     </dialog>
     <wait />
     <camera ypos="22.8" speed="0.1" />
+    <rotate target="1" distance="2" />
+    <rotate target="2" distance="-2" />
     <wait />
   </events>
   <onfinish>
