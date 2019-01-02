@@ -29,7 +29,6 @@ public class StorypositionAdvanceHandler extends MessageHandler {
         GameSessionInfo si = SessionsInfoHolder.getInfo(from.getId());
         DBPlayer player = endpoint.getPlayerDAO().find(si.serverid);
         int targetposition = json.getInt("target", 0);
-        System.out.println("Story advance: " + si.name + " to " + targetposition);
         // Checks if this modification is allowed.
         boolean acceptcommit = false;
         if (targetposition != 0) {
@@ -76,6 +75,7 @@ public class StorypositionAdvanceHandler extends MessageHandler {
         if (acceptcommit) {
             player.storyposition = targetposition;
             endpoint.getPlayerDAO().update(player);
+            System.out.println("Story advance: " + si.name + " to " + targetposition);
         }
     }
 
