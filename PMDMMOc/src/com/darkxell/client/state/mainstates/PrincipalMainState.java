@@ -17,7 +17,6 @@ import com.darkxell.client.resources.Palette;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.StateManager;
 import com.darkxell.client.state.TransitionState;
-import com.darkxell.client.ui.Keys;
 import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.client.ui.MainUiUtility;
 import com.darkxell.common.util.Pair;
@@ -224,7 +223,6 @@ public class PrincipalMainState extends StateManager
 		AnimationTicker.instance.update(); // Update animations before to able post-update modifications.
 		if (this.currentState != null) this.currentState.update();
 		if (Persistence.displaymap != null) Persistence.displaymap.update();
-		Keys.update();
 	}
 
 	// GETTERS,SETTERS AND UTILITY
