@@ -7,6 +7,7 @@ import java.awt.image.BufferStrategy;
 
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.renderers.TextRenderer;
+import com.darkxell.client.ui.Keys;
 
 /**
  * (EXPERIMENTAL) A combined updater and renderer to avoid synchronization issues between game ticks and render events.
@@ -22,6 +23,7 @@ public class UpdaterAndRenderer extends GameLoop {
     @Override
     protected void tick() {
         Persistence.stateManager.update();
+		Keys.update();
 
         if (Persistence.frame == null || !Persistence.frame.isVisible()) {
             return;
