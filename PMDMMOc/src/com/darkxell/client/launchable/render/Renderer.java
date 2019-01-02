@@ -9,9 +9,9 @@ import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.renderers.TextRenderer;
 
 public class Renderer extends GameLoop {
-    protected RenderProfile getProcessingProfile() {
-        return PROFILE_UNCAPPED;
-    }
+	protected RenderProfile getProcessingProfile() {
+		return PROFILE_UNCAPPED;
+	}
 
 	@Override
 	protected void tick() {
@@ -21,9 +21,21 @@ public class Renderer extends GameLoop {
 		g.clearRect(0, 0, width, height);
 
 		Persistence.stateManager.render(g, width, height);
-		TextRenderer.render(g, "V " + Persistence.VERSION, 5, 5);
-		
-        g.dispose();
-        bf.show();
-    }
+		displayVersionWatermark(g);
+
+		g.dispose();
+		bf.show();
+	}
+
+	static void displayVersionWatermark(Graphics2D g) {
+		String text = "V " + Persistence.VERSION;
+		if (Persistence.debugdisplaymode) {
+			text += " / storyposition:";
+			if (Persistence.player == null || Persistence.player.getData() == null)
+				text += "null";
+			else
+				text += Persistence.player.getData().storyposition;
+		}
+		TextRenderer.render(g, text, 5, 5);
+	}
 }
