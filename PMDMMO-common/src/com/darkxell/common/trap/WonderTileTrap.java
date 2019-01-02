@@ -24,7 +24,7 @@ public class WonderTileTrap extends Trap
 			if (s != Stat.Speed)
 			{
 				int stage = pokemon.stats.getStage(s);
-				if (stage < 0) pokemon.stats.setStage(s, Stat.DEFAULT_STAGE);
+				if (stage < Stat.DEFAULT_STAGE) pokemon.stats.setStage(s, Stat.DEFAULT_STAGE);
 			}
 
 		if (pokemon.stats.getMoveSpeed() < 1) pokemon.stats.resetSpeed();
