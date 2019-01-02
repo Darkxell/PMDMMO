@@ -58,7 +58,7 @@ public class FoodItemEffect extends ItemEffect
 	public void use(Floor floor, Item item, DungeonPokemon pokemon, DungeonPokemon target, ArrayList<DungeonEvent> events)
 	{
 		int increase = this.belly;
-		if (target.getBelly() < target.getBellySize()) events.add(new BellyChangedEvent(floor, target, this.belly));
+		if (target.getBelly() < target.getBellySize()) events.add(new BellyChangedEvent(floor, target, this.food));
 		else increase += this.bellyIfFull;
 
 		if (increase != 0) events.add(new BellySizeChangedEvent(floor, target, increase));
