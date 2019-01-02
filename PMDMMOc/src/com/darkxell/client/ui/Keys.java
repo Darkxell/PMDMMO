@@ -108,17 +108,15 @@ public class Keys implements KeyListener {
 		}
 
 		public void setValue(int value) {
-			System.out.println("tried to set " + this.getName() + " with " + value);
+			Logger.w("tried to set key " + this.getName() + " with " + value
+					+ ". Instead use the ClientSettings object.");
 			if (this.setting != null) {
 				ClientSettings.setSetting(this.setting, String.valueOf(value));
 			}
 		}
 	}
 
-	/* TODO: delegate run event detection to dungeon state. somehow.
-	 * 
-	 * @return If a run event should take place. private static boolean runDirection(Key[] targetKeys) { for (Key key : targetKeys) { if (!key.wasPressed) { return true; } } return false; } */
-
+	/** @return If a run event should take place. private static boolean runDirection(Key[] targetKeys) { for (Key key : targetKeys) { if (!key.wasPressed) { return true; } } return false; } */
 	private static boolean shouldSkipRun(Key[] targetKeys) {
 		for (Key key : targetKeys) {
 			if (key.wasPressed) { return true; }

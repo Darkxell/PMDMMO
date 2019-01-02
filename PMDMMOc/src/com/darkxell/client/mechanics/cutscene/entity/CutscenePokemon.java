@@ -30,7 +30,7 @@ public class CutscenePokemon extends CutsceneEntity
 
 	public CutscenePokemon(int id, double xpos, double ypos, int pokemonid, PokemonSpriteState state, Direction facing, boolean animated)
 	{
-		this(id, xpos, ypos, Registries.species().find(pokemonid).generate(new Random(), 1), state, facing, animated);
+		this(id, xpos, ypos, Registries.species().find(pokemonid).generate(new Random(), 1, 0), state, facing, animated);
 	}
 
 	public CutscenePokemon(int id, double xpos, double ypos, Pokemon pokemon, PokemonSpriteState state, Direction facing, boolean animated)

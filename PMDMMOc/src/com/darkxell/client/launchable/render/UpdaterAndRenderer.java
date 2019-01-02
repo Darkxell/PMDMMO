@@ -6,6 +6,8 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 
 import com.darkxell.client.launchable.Persistence;
+import com.darkxell.client.ui.Keys;
+
 
 /**
  * (EXPERIMENTAL) A combined updater and renderer to avoid synchronization
@@ -19,9 +21,10 @@ public class UpdaterAndRenderer extends GameLoop {
 		return PROFILE_SYNCHRONIZED;
 	}
 
-	@Override
-	protected void tick() {
-		Persistence.stateManager.update();
+    @Override
+    protected void tick() {
+        Persistence.stateManager.update();
+		Keys.update();
 
 		if (Persistence.frame == null || !Persistence.frame.isVisible()) {
 			return;
