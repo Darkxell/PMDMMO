@@ -14,12 +14,10 @@ import com.darkxell.common.util.RandomUtil;
 import javafx.util.Pair;
 
 /** Contains various static methods used in AI computations. */
-public final class AIUtils
-{
+public final class AIUtils {
 
 	/** @return The direction to face to look at an adjacent enemy. May be null if there are no adjacent enemies. */
-	public static Direction adjacentEnemyDirection(Floor floor, DungeonPokemon pokemon)
-	{
+	public static Direction adjacentEnemyDirection(Floor floor, DungeonPokemon pokemon) {
 		ArrayList<Tile> tiles = adjacentTiles(floor, pokemon);
 		tiles.removeIf((Tile t) -> t.getPokemon() == null || pokemon.isAlliedWith(t.getPokemon()));
 		if (tiles.isEmpty()) return null;
@@ -27,16 +25,14 @@ public final class AIUtils
 	}
 
 	/** @return The list of adjacent Tiles the input Pokemon can move to. */
-	public static ArrayList<Tile> adjacentReachableTiles(Floor floor, DungeonPokemon pokemon)
-	{
+	public static ArrayList<Tile> adjacentReachableTiles(Floor floor, DungeonPokemon pokemon) {
 		ArrayList<Tile> tiles = adjacentTiles(floor, pokemon);
 		tiles.removeIf((Tile tile) -> !tile.canMoveTo(pokemon, generalDirection(pokemon.tile(), tile), false));
 		return tiles;
 	}
 
 	/** @return The list of adjacent Tiles for the input Pokemon. */
-	public static ArrayList<Tile> adjacentTiles(Floor floor, DungeonPokemon pokemon)
-	{
+	public static ArrayList<Tile> adjacentTiles(Floor floor, DungeonPokemon pokemon) {
 		ArrayList<Tile> tiles = new ArrayList<>();
 		Tile t = pokemon.tile();
 		for (Direction d : Direction.directions)
@@ -46,8 +42,7 @@ public final class AIUtils
 
 	/** @param angle - An angle in degrees.
 	 * @return The direction closest to the input angle (0 = North). */
-	public static Direction closestDirection(double angle)
-	{
+	public static Direction closestDirection(double angle) {
 		angle = 360 - angle; // Trigonometric to clockwise
 		angle += 180; // So that 0=south => 0=north
 		angle += 22.5; // So that 23 goes to 45, meaning 23� will be Northeast.
@@ -57,21 +52,18 @@ public final class AIUtils
 	}
 
 	/** @return The direction to go to for the input Pokemon to reach the target. May return null if there is no path. */
-	public static Direction direction(DungeonPokemon pokemon, DungeonPokemon target)
-	{
+	public static Direction direction(DungeonPokemon pokemon, DungeonPokemon target) {
 		return direction(pokemon, target.tile());
 	}
 
 	/** @return The direction to go to for the input Pokemon to reach the destination. May return null if there is no path. */
-	public static Direction direction(DungeonPokemon pokemon, Tile destination)
-	{
+	public static Direction direction(DungeonPokemon pokemon, Tile destination) {
 		Direction direction = generalDirection(pokemon.tile(), destination);
 		// If is adjacent and can move to, return.
 		if (pokemon.tile().adjacentTile(direction).canMoveTo(pokemon, direction, false)) return direction;
 
 		// Else, if diagonal, try closest cardinal directions.
-		if (direction.isDiagonal())
-		{
+		if (direction.isDiagonal()) {
 			Direction cardinal = generalCardinalDirection(pokemon, destination);
 			if (pokemon.tile().adjacentTile(cardinal).canMoveTo(pokemon, cardinal, false)) return cardinal;
 
@@ -80,8 +72,7 @@ public final class AIUtils
 			if (cardinal == split.getKey()) other = split.getValue();
 			else other = split.getKey();
 			if (pokemon.tile().adjacentTile(other).canMoveTo(pokemon, other, false)) return other;
-		} else
-		{ // Else try to minimize distance by choosing increasingly further distances.
+		} else { // Else try to minimize distance by choosing increasingly further distances.
 			int distance = pokemon.tile().maxHorizontalDistance(destination);
 			Direction testing = direction.rotateClockwise();
 			if (pokemon.tile().adjacentTile(testing).maxHorizontalDistance(destination) < distance
@@ -109,19 +100,16 @@ public final class AIUtils
 	}
 
 	/** @return The farthest Tiles that can be seen and walked on by the input Pokemon, sorted by closeness from the Pokemon's facing direction. This method considers the Pokemon is not in a Room. */
-	public static ArrayList<Tile> furthestWalkableTiles(Floor floor, DungeonPokemon pokemon)
-	{
+	public static ArrayList<Tile> furthestWalkableTiles(Floor floor, DungeonPokemon pokemon) {
 		int shadow = 3 - floor.data.shadows();
 		double maxDistance = 0, distance;
 		ArrayList<Tile> tiles = new ArrayList<>();
 		for (int x = pokemon.tile().x - shadow; x <= pokemon.tile().x + shadow; ++x)
-			for (int y = pokemon.tile().y - shadow; y <= pokemon.tile().y + shadow; ++y)
-			{
+			for (int y = pokemon.tile().y - shadow; y <= pokemon.tile().y + shadow; ++y) {
 				Tile t = floor.tileAt(x, y);
 				if (t == null) continue;
 				distance = t.distance(pokemon.tile());
-				if (distance >= maxDistance && t.canWalkOn(pokemon, false) && isReachable(floor, pokemon, t))
-				{
+				if (distance >= maxDistance && t.canWalkOn(pokemon, false) && isReachable(floor, pokemon, t)) {
 					maxDistance = distance;
 					tiles.add(t);
 				}
@@ -132,21 +120,20 @@ public final class AIUtils
 			return t.distance(pokemon.tile()) < maxD;
 		});
 
-		tiles.sort((Tile t1, Tile t2) -> Integer.compare(pokemon.facing().distance(generalDirection(pokemon.tile(), t1)),
-				pokemon.facing().distance(generalDirection(pokemon.tile(), t2))));
+		tiles.sort(
+				(Tile t1, Tile t2) -> Integer.compare(pokemon.facing().distance(generalDirection(pokemon.tile(), t1)),
+						pokemon.facing().distance(generalDirection(pokemon.tile(), t2))));
 
 		return tiles;
 	}
 
 	/** @return The general cardinal direction the input Pokemon has to face to look at the target. */
-	public static Direction generalCardinalDirection(DungeonPokemon pokemon, DungeonPokemon target)
-	{
+	public static Direction generalCardinalDirection(DungeonPokemon pokemon, DungeonPokemon target) {
 		return generalCardinalDirection(pokemon, target.tile());
 	}
 
 	/** @return The general cardinal direction the input Pokemon has to face to look at the destination. */
-	public static Direction generalCardinalDirection(DungeonPokemon pokemon, Tile destination)
-	{
+	public static Direction generalCardinalDirection(DungeonPokemon pokemon, Tile destination) {
 		double angle = Math.toDegrees(Math.atan2(destination.x - pokemon.tile().x, destination.y - pokemon.tile().y));
 		// Make sure angle is in bounds [0;360[
 		while (angle < 0)
@@ -160,14 +147,12 @@ public final class AIUtils
 	}
 
 	/** @return The general direction the input Pokemon has to face to look at the target. */
-	public static Direction generalDirection(DungeonPokemon pokemon, DungeonPokemon target)
-	{
+	public static Direction generalDirection(DungeonPokemon pokemon, DungeonPokemon target) {
 		return generalDirection(pokemon.tile(), target.tile());
 	}
 
 	/** @return The general direction the input Pokemon has to face to look at the destination. */
-	public static Direction generalDirection(Tile origin, Tile destination)
-	{
+	public static Direction generalDirection(Tile origin, Tile destination) {
 		/* if (pokemon == null) System.out.println("pokemon"); if (target == null) System.out.println("target"); if (pokemon.tile() == null) System.out.println(pokemon); if (target.tile == null) System.out.println(target); */
 		double angle = Math.toDegrees(Math.atan2(destination.x - origin.x, destination.y - origin.y));
 		// Make sure angle is in bounds [0;360[
@@ -179,15 +164,13 @@ public final class AIUtils
 	}
 
 	/** @return True if the input Pokemon is just one tile away from the target. If they're diagonally disposed, also checks if there is a wall blocking their interaction. */
-	public static boolean isAdjacentTo(DungeonPokemon pokemon, DungeonPokemon target)
-	{
+	public static boolean isAdjacentTo(DungeonPokemon pokemon, DungeonPokemon target) {
 		return isAdjacentTo(pokemon, target, true);
 	}
 
 	/** @param checkBlockingWalls - If true and the Pokemon are diagonally disposed, also checks if there is a wall blocking their interaction.
 	 * @return <code>true</code> if the input Pokemon is one tile away from the target. */
-	public static boolean isAdjacentTo(DungeonPokemon pokemon, DungeonPokemon target, boolean checkBlockingWalls)
-	{
+	public static boolean isAdjacentTo(DungeonPokemon pokemon, DungeonPokemon target, boolean checkBlockingWalls) {
 		Direction direction = generalDirection(pokemon, target);
 		if (pokemon.tile().adjacentTile(direction).getPokemon() != target) return false; // Adjacent test
 		else if (!checkBlockingWalls) return true;
@@ -197,8 +180,7 @@ public final class AIUtils
 	/** @param pokemon - The moving Pokemon.
 	 * @param tile - The tile to reach.
 	 * @return <code>true</code> if the input Pokemon is able to reach the input Tile. */
-	public static boolean isReachable(Floor floor, DungeonPokemon pokemon, Tile tile)
-	{
+	public static boolean isReachable(Floor floor, DungeonPokemon pokemon, Tile tile) {
 		if (pokemon.tile() == tile) return true;
 
 		ArrayList<Tile> visible = new ArrayList<>(visibleTiles(floor, pokemon));
@@ -206,22 +188,19 @@ public final class AIUtils
 		HashSet<Tile> treated = new HashSet<>();
 		accessible.add(pokemon.tile());
 
-		while (!accessible.isEmpty())
-		{
+		while (!accessible.isEmpty()) {
 			Tile t = accessible.pop();
-			for (Direction direction : Direction.directions)
-			{
+			for (Direction direction : Direction.directions) {
 				Tile a = t.adjacentTile(direction);
-				if (!treated.contains(a) && visible.contains(a) && a.canWalkOn(pokemon, false))
-				{
+				if (!treated.contains(a) && visible.contains(a) && a.canWalkOn(pokemon, false)) {
 					boolean ok = true;
-					if (direction.isDiagonal())
-					{
+					if (direction.isDiagonal()) {
 						Pair<Direction, Direction> others = direction.splitDiagonal();
-						if (!t.adjacentTile(others.getKey()).canCross(pokemon) || !t.adjacentTile(others.getValue()).canCross(pokemon)) ok = false;
+						if (!t.adjacentTile(others.getKey()).canCross(pokemon)
+								|| !t.adjacentTile(others.getValue()).canCross(pokemon))
+							ok = false;
 					}
-					if (ok)
-					{
+					if (ok) {
 						if (a == tile) return true;
 						accessible.push(a);
 						treated.add(a);
@@ -236,11 +215,9 @@ public final class AIUtils
 	/** @param pokemon - The moving Pokemon.
 	 * @param target - The target to reach.
 	 * @return <code>true</code> if the input Pokemon is able to see the input target. */
-	public static boolean isVisible(Floor floor, DungeonPokemon pokemon, DungeonPokemon target)
-	{
+	public static boolean isVisible(Floor floor, DungeonPokemon pokemon, DungeonPokemon target) {
 		if (target.isFainted()) return false;
-		if (pokemon.tile().isInRoom())
-		{
+		if (pokemon.tile().isInRoom()) {
 			if (target.tile().isInRoom()) return floor.roomAt(pokemon.tile()) == floor.roomAt(target.tile());
 			for (Tile t : floor.roomAt(pokemon.tile()).outline())
 				if (t == target.tile()) return true;
@@ -251,22 +228,22 @@ public final class AIUtils
 	}
 
 	/** @return <code>true</code> if the input Pokemon should stop running. */
-	public static boolean shouldStopRunning(DungeonPokemon pokemon)
-	{
+	public static boolean shouldStopRunning(DungeonPokemon pokemon) {
 		Tile tile = pokemon.tile();
 		Tile previous = tile.adjacentTile(pokemon.facing().opposite());
 
-		if (!pokemon.tryMoveTo(pokemon.facing(), false)) return true;
-		if (tile.isInRoom() && !previous.isInRoom()) return true;
-		if (tile.isInRoom() && !tile.adjacentTile(pokemon.facing()).isInRoom()) return true;
-		if (tile.type() == TileType.STAIR || tile.trapRevealed || tile.getItem() != null) return true;
+		if (!pokemon.tryMoveTo(pokemon.facing(), false)) return true; // Can't move
+		if (tile.isInRoom() && !previous.isInRoom()) return true; // Entered room
+		if (tile.isInRoom() && !tile.adjacentTile(pokemon.facing()).isInRoom()) return true; // In front of room
+		if (tile.type() == TileType.STAIR || tile.trapRevealed || tile.getItem() != null) return true; // Is on special tile
 		int origin = 0, destination = 0;
 		Direction facing = pokemon.facing();
 
-		for (Direction dir : facing.isDiagonal() ? new Direction[] { facing, facing.rotateClockwise(), facing.rotateCounterClockwise() }
-				: new Direction[] { facing, facing.rotateClockwise(), facing.rotateCounterClockwise(), facing.rotateClockwise().rotateClockwise(),
-						facing.rotateCounterClockwise(), facing.rotateCounterClockwise() })
-		{
+		for (Direction dir : facing.isDiagonal()
+				? new Direction[] { facing, facing.rotateClockwise(), facing.rotateCounterClockwise() }
+				: new Direction[] { facing, facing.rotateClockwise(), facing.rotateCounterClockwise(),
+						facing.rotateClockwise().rotateClockwise(), facing.rotateCounterClockwise(),
+						facing.rotateCounterClockwise().rotateCounterClockwise() }) {
 			Tile o = previous.adjacentTile(dir);
 			Tile d = tile.adjacentTile(dir);
 			if (!(dir.isDiagonal() && !o.isInRoom()) && o.type().canWalkOn(pokemon)) ++origin;
@@ -278,8 +255,7 @@ public final class AIUtils
 	}
 
 	/** @return The list of enemy Pokemon the input Pokemon can see, sorted by distance to the Pokemon. */
-	public static ArrayList<DungeonPokemon> visibleEnemies(Floor floor, DungeonPokemon pokemon)
-	{
+	public static ArrayList<DungeonPokemon> visibleEnemies(Floor floor, DungeonPokemon pokemon) {
 		ArrayList<DungeonPokemon> visible = new ArrayList<>();
 		ArrayList<Tile> tiles = visibleTiles(floor, pokemon);
 		for (Tile t : tiles)
@@ -288,11 +264,9 @@ public final class AIUtils
 	}
 
 	/** @return The list of Tiles the input Pokemon can see, sorted by distance to the Pokemon. */
-	public static ArrayList<Tile> visibleTiles(Floor floor, DungeonPokemon pokemon)
-	{
+	public static ArrayList<Tile> visibleTiles(Floor floor, DungeonPokemon pokemon) {
 		ArrayList<Tile> visible = new ArrayList<>();
-		if (pokemon.tile().isInRoom())
-		{
+		if (pokemon.tile().isInRoom()) {
 			visible.addAll(floor.roomAt(pokemon.tile()).listTiles());
 			visible.addAll(floor.roomAt(pokemon.tile()).outline());
 		}
@@ -309,7 +283,6 @@ public final class AIUtils
 		return visible;
 	}
 
-	private AIUtils()
-	{}
+	private AIUtils() {}
 
 }
