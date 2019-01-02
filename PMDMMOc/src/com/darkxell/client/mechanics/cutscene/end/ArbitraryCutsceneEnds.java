@@ -43,11 +43,15 @@ public class ArbitraryCutsceneEnds {
 			break;
 		case "predream":
 			switch (Persistence.player.storyPosition()) {
+			case 6:
 			case 4:
 				CutsceneManager.playCutscene("base/dream1", true);
+				break;
 			case 10:
 				CutsceneManager.playCutscene("skarmory/dream", true);
+				break;
 			}
+			break;
 		case "squaretutorial":
 			stryAdvance(10);
 			break;

@@ -6,36 +6,36 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 
 import com.darkxell.client.launchable.Persistence;
-import com.darkxell.client.renderers.TextRenderer;
 
 /**
- * (EXPERIMENTAL) A combined updater and renderer to avoid synchronization issues between game ticks and render events.
+ * (EXPERIMENTAL) A combined updater and renderer to avoid synchronization
+ * issues between game ticks and render events.
  *
  * @see Updater
  * @see Renderer
  */
 public class UpdaterAndRenderer extends GameLoop {
-    protected RenderProfile getProcessingProfile() {
-        return PROFILE_SYNCHRONIZED;
-    }
+	protected RenderProfile getProcessingProfile() {
+		return PROFILE_SYNCHRONIZED;
+	}
 
-    @Override
-    protected void tick() {
-        Persistence.stateManager.update();
+	@Override
+	protected void tick() {
+		Persistence.stateManager.update();
 
-        if (Persistence.frame == null || !Persistence.frame.isVisible()) {
-            return;
-        }
+		if (Persistence.frame == null || !Persistence.frame.isVisible()) {
+			return;
+		}
 
-        BufferStrategy bf = Persistence.frame.canvas.getBufferStrategy();
-        Graphics2D g = (Graphics2D) bf.getDrawGraphics();
-        int width = Persistence.frame.canvas.getWidth(), height = Persistence.frame.canvas.getHeight();
-        g.clearRect(0, 0, width, height);
+		BufferStrategy bf = Persistence.frame.canvas.getBufferStrategy();
+		Graphics2D g = (Graphics2D) bf.getDrawGraphics();
+		int width = Persistence.frame.canvas.getWidth(), height = Persistence.frame.canvas.getHeight();
+		g.clearRect(0, 0, width, height);
 
-        Persistence.stateManager.render(g, width, height);
-        TextRenderer.render(g, "V " + Persistence.VERSION, 5, 5);
+		Persistence.stateManager.render(g, width, height);
+		Renderer.displayVersionWatermark(g);
 
-        g.dispose();
-        bf.show();
-    }
+		g.dispose();
+		bf.show();
+	}
 }
