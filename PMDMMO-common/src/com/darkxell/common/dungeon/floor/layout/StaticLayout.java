@@ -167,8 +167,12 @@ public class StaticLayout extends Layout {
 		if (this.xml.getChild("pokemons", xml.getNamespace()) != null) {
 			for (Element pokemon : this.xml.getChild("pokemons", xml.getNamespace()).getChildren(Pokemon.XML_ROOT,
 					xml.getNamespace())) {
-				DungeonPokemon p = new DungeonPokemon(readPokemon(pokemon, this.floor.random));
-				if (pokemon.getChild("boss", xml.getNamespace()) != null) p.type = DungeonPokemonType.BOSS;
+				boolean isBoss = pokemon.getChild("boss", xml.getNamespace()) != null;
+				Pokemon created = readPokemon(pokemon, this.floor.random);
+				if (isBoss)
+					created.getBaseStats().add(new BaseStats(created, 0, 0, created.stats().getHealth() * 3, 0, 0, 0));
+				DungeonPokemon p = new DungeonPokemon(created);
+				if (isBoss) p.type = DungeonPokemonType.BOSS;
 				AI ai = null;
 				String ainame = pokemon.getChildText("ai", xml.getNamespace());
 				if (ainame != null) switch (ainame) {
