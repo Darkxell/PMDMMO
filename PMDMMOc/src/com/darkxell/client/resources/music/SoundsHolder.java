@@ -14,25 +14,25 @@ public class SoundsHolder
 
 	private static Song[] getSoundtracks()
 	{
-		String[] all = Res.getResourceFiles("/music/");
+		String[] all = Res.getResourceFiles("music");
 		soundtrackNames = new String[all.length];
 		for (int i = 0; i < all.length; i++)
-			soundtrackNames[i] = all[i];
+			soundtrackNames[i] = all[i].substring("/music/".length());
 		Song[] ts = new Song[all.length];
 		for (int i = 0; i < all.length; i++)
-			ts[i] = new Song(externalResourcesPath + "/resources/music/" + all[i]);
+			ts[i] = new Song(externalResourcesPath + "/resources" + all[i]);
 		return ts;
 	}
 
 	private static Song[] getSfx()
 	{
-		String[] all = Res.getResourceFiles("/sound/");
+		String[] all = Res.getResourceFiles("sound");
 		sfxNames = new String[all.length];
 		for (int i = 0; i < all.length; i++)
-			sfxNames[i] = all[i].substring(0, all[i].length() - 4);
+			sfxNames[i] = all[i].substring("/sound/".length(), all[i].length() - 4);
 		Song[] ts = new Song[all.length];
 		for (int i = 0; i < all.length; i++)
-			ts[i] = new Song(externalResourcesPath + "/resources/sound/" + all[i]);
+			ts[i] = new Song(externalResourcesPath + "/resources" + all[i]);
 		return ts;
 	}
 
