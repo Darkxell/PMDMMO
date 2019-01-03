@@ -16,9 +16,7 @@ import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.resources.Res;
 import com.darkxell.common.util.Logger;
 
-/**
- * Sprite loader that runs in the background and gracefully handles resource errors.
- */
+/** Sprite loader that runs in the background and gracefully handles resource errors. */
 public class SpriteFactory implements Runnable {
     private static class SubSprite {
         private Sprite sprite;
