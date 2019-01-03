@@ -37,30 +37,34 @@ public class LoginMainState extends StateManager {
 	private CustomTextfield login = new CustomTextfield();
 	private CustomTextfield password = new CustomTextfield().setObfuscated();
 	private String localsalt = "";
-	/**
-	 * The width of the non responsive square containing the login componnents.
-	 * I'm lazy.
-	 */
+	/** The width of the non responsive square containing the login componnents. I'm lazy. */
 	private static final int squarewidth = 500;
-	/**
-	 * The height of the non responsive square containing the login componnents.
-	 * I'm still lazy.
-	 */
+	/** The height of the non responsive square containing the login componnents. I'm still lazy. */
 	private static final int squareheight = 350;
 	private int mouseX = 1;
 	private int mouseY = 1;
 	private int offsetx = 100;
 	private int offsety = 20;
 
+	private final Message usernameLabel, passwordLabel, loginButton, debugButton, loginTitle, createAccount,
+			notConnected;
+
 	/** A message displayed above the login button. */
-	private String message = "";
+	private Message message = new Message("", false);
 	private Color messcolor = new Color(4, 142, 52);
 
 	public LoginMainState() {
 		super();
+		this.usernameLabel = new Message("ui.username");
+		this.passwordLabel = new Message("ui.password");
+		this.loginButton = new Message("ui.login");
+		this.debugButton = new Message("ui.login.debug");
+		this.loginTitle = new Message("ui.login.title");
+		this.createAccount = new Message("ui.login.create_account");
+		this.notConnected = new Message("ui.login.not_connected");
 	}
 
-	public LoginMainState(String message, String prefilledname, String prefilledpass) {
+	public LoginMainState(Message message, String prefilledname, String prefilledpass) {
 		this();
 		if (prefilledname != null) {
 			login.clear();
@@ -78,8 +82,7 @@ public class LoginMainState extends StateManager {
 		login.onKeyPressed(e);
 		password.onKeyPressed(e);
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-			if (Persistence.socketendpoint.connectionStatus() == GameSocketEndpoint.CONNECTED)
-				launchOnlineSend();
+			if (Persistence.socketendpoint.connectionStatus() == GameSocketEndpoint.CONNECTED) launchOnlineSend();
 		} else if (e.getKeyCode() == KeyEvent.VK_UP && this.password.isSelected()) {
 			this.login.setSelection(true);
 			this.password.setSelection(false);
@@ -100,10 +103,7 @@ public class LoginMainState extends StateManager {
 		password.onKeyTyped(e);
 	}
 
-	/**
-	 * Predicate that returns true if the client and server can communicate and
-	 * have the same payload definitions.
-	 */
+	/** Predicate that returns true if the client and server can communicate and have the same payload definitions. */
 	private boolean isConnectionDone() {
 		return Persistence.socketendpoint.connectionStatus() == GameSocketEndpoint.CONNECTED
 				&& Persistence.VERSION.equals(GameSocketEndpoint.SERVERVERSION);
@@ -113,11 +113,9 @@ public class LoginMainState extends StateManager {
 	public void onMouseClick(int x, int y) {
 		// Button clicks
 		if (button_createaccount.isInside(new Position(mouseX - offsetx, mouseY - offsety))) {
-			if (isConnectionDone())
-				Persistence.stateManager = new AccountCreationState();
+			if (isConnectionDone()) Persistence.stateManager = new AccountCreationState();
 		} else if (button_login.isInside(new Position(mouseX - offsetx, mouseY - offsety))) {
-			if (isConnectionDone())
-				launchOnlineSend();
+			if (isConnectionDone()) launchOnlineSend();
 		} else if (button_offline.isInside(new Position(mouseX - offsetx, mouseY - offsety)) && DEBUGALLOWED) {
 			launchOffline();
 		}
@@ -165,11 +163,11 @@ public class LoginMainState extends StateManager {
 
 		gcopy.setColor(Color.BLACK);
 		gcopy.setFont(Res.getFont().deriveFont(26f).deriveFont(Font.BOLD));
-		gcopy.drawString("Log in with your account", 36, 131);
-		gcopy.drawString("Create account", 334, 131);
+		gcopy.drawString(this.loginTitle.toString(), 36, 131);
+		gcopy.drawString(this.createAccount.toString(), 334, 131);
 		gcopy.setColor(new Color(242, 145, 0));
-		gcopy.drawString("Log in with your account", 38, 132);
-		gcopy.drawString("Create account", 336, 132);
+		gcopy.drawString(this.loginTitle.toString(), 38, 132);
+		gcopy.drawString(this.createAccount.toString(), 336, 132);
 
 		// Draws the textfield backgrounds
 		g.setColor(new Color(66, 122, 255));
@@ -180,8 +178,8 @@ public class LoginMainState extends StateManager {
 
 		gcopy.setColor(new Color(242, 145, 0));
 		gcopy.setFont(Res.getFont().deriveFont(20f).deriveFont(Font.BOLD));
-		gcopy.drawString("Login", (int) textfield_login.x, (int) textfield_login.y);
-		gcopy.drawString("Password", (int) textfield_pass.x, (int) textfield_pass.y);
+		gcopy.drawString(this.usernameLabel.toString(), (int) textfield_login.x, (int) textfield_login.y);
+		gcopy.drawString(this.passwordLabel.toString(), (int) textfield_pass.x, (int) textfield_pass.y);
 
 		// Draws the textfields
 
@@ -194,45 +192,44 @@ public class LoginMainState extends StateManager {
 		g.translate(-textfield_pass.x - 10, -textfield_pass.y);
 
 		// Displays the buttons
-		
+
 		Color buttoncolor = new Color(124, 163, 255), selectedbuttoncolor = new Color(183, 222, 255);
 		g.setColor((button_login.isInside(new Position(relativemousex, relativemousey))) ? selectedbuttoncolor
 				: buttoncolor);
-		if (!isConnectionDone())
-			g.setColor(new Color(120, 120, 180));
+		if (!isConnectionDone()) g.setColor(new Color(120, 120, 180));
 		g.fillRect((int) button_login.x, (int) button_login.y, (int) button_login.width, (int) button_login.height);
 		g.setColor(Color.DARK_GRAY);
-		g.drawString(message, 39, 276);
+		g.drawString(this.message.toString(), 39, 276);
 		g.setColor(messcolor);
-		g.drawString(message, 40, 275);
-		
+		g.drawString(this.message.toString(), 40, 275);
+
 		if (Persistence.socketendpoint.connectionStatus() != GameSocketEndpoint.CONNECTED) {
 			g.setColor(Color.RED);
-			g.drawString("Not connected to servers", (int) button_login.x - 10, (int) button_login.y + 60);
-		} else if(!Persistence.VERSION.equals(GameSocketEndpoint.SERVERVERSION)) {
+			g.drawString(this.notConnected.toString(), (int) button_login.x - 10, (int) button_login.y + 60);
+		} else if (!Persistence.VERSION.equals(GameSocketEndpoint.SERVERVERSION)) {
 			g.setColor(Color.RED);
-			g.drawString("Server version mismatch", (int) button_login.x - 10, (int) button_login.y + 60);
+			Message version = new Message("ui.login.version_mismatch").addReplacement("<version>",
+					GameSocketEndpoint.SERVERVERSION);
+			g.drawString(version.toString(), (int) button_login.x - 10, (int) button_login.y + 60);
 		}
-		
+
 		gcopy.setFont(Res.getFont().deriveFont(24f).deriveFont(Font.BOLD));
 		gcopy.setColor(new Color(30, 15, 210));
-		gcopy.drawString("LOGIN", (int) button_login.x + 25, (int) button_login.y + 20);
+		gcopy.drawString(this.loginButton.toString(), (int) button_login.x + 25, (int) button_login.y + 20);
 		g.setColor((button_createaccount.isInside(new Position(relativemousex, relativemousey))) ? selectedbuttoncolor
 				: buttoncolor);
-		if (!isConnectionDone())
-			g.setColor(new Color(120, 120, 180));
+		if (!isConnectionDone()) g.setColor(new Color(120, 120, 180));
 		g.fillRect((int) button_createaccount.x, (int) button_createaccount.y, (int) button_createaccount.width,
 				(int) button_createaccount.height);
 		gcopy.setColor(new Color(30, 15, 210));
 		gcopy.drawString("Create account", (int) button_createaccount.x + 15, (int) button_createaccount.y + 20);
 		g.setColor((button_offline.isInside(new Position(relativemousex, relativemousey))) ? selectedbuttoncolor
 				: buttoncolor);
-		if (!DEBUGALLOWED)
-			g.setColor(new Color(120, 120, 180));
+		if (!DEBUGALLOWED) g.setColor(new Color(120, 120, 180));
 		g.fillRect((int) button_offline.x, (int) button_offline.y, (int) button_offline.width,
 				(int) button_offline.height);
 		gcopy.setColor(new Color(30, 15, 210));
-		gcopy.drawString("Debug", (int) button_offline.x + 5, (int) button_offline.y + 14);
+		gcopy.drawString(this.debugButton.toString(), (int) button_offline.x + 5, (int) button_offline.y + 14);
 
 		// REVERT GRAPHICS
 		gcopy.dispose();
@@ -247,8 +244,7 @@ public class LoginMainState extends StateManager {
 			firstupdate = false;
 			this.password.setSelection(false);
 			this.sendSaltReset();
-			if (this.login.getContent().equals(""))
-				this.login.insertString(ClientSettings.getSetting(Setting.LOGIN));
+			if (this.login.getContent().equals("")) this.login.insertString(ClientSettings.getSetting(Setting.LOGIN));
 		}
 	}
 
@@ -288,10 +284,7 @@ public class LoginMainState extends StateManager {
 		Logger.i("Sent login infos to the server, awaiting response...");
 	}
 
-	/**
-	 * Called when the server responds positively to the login attempt made by
-	 * <code>launchOnlineSend()</code>
-	 */
+	/** Called when the server responds positively to the login attempt made by <code>launchOnlineSend()</code> */
 	public void launchOnlineOnRecieve(JsonObject pl) {
 		Logger.i("Recieved connection informations, player is connected to the server.");
 		DBPlayer playerdata = new DBPlayer();
@@ -300,10 +293,8 @@ public class LoginMainState extends StateManager {
 		Persistence.stateManager = new PrincipalMainState();
 		if (Persistence.player.storyPosition() == 0)
 			Persistence.stateManager.setState(new TransitionState(null, new PersonalityQuizDialog().getLoadingState()));
-		else
-			Persistence.stateManager
-					.setState(new PlayerLoadingState(Persistence.player.getData().id, new PlayerLoadingEndListener() {
-					}));
+		else Persistence.stateManager
+				.setState(new PlayerLoadingState(Persistence.player.getData().id, new PlayerLoadingEndListener() {}));
 		((PrincipalMainState) Persistence.stateManager).randomizeBackground();
 	}
 
@@ -327,7 +318,7 @@ public class LoginMainState extends StateManager {
 				|| id.equals("ui.login.salterror")) {
 			sendSaltReset();
 			this.messcolor = Color.RED;
-			this.message = new Message(id).toString();
+			this.message = new Message(id);
 		}
 	}
 

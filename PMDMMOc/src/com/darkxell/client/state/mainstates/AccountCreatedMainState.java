@@ -21,41 +21,39 @@ public class AccountCreatedMainState extends StateManager {
 		super();
 		pass = p;
 		login = l;
+		this.welcomeM = new Message("ui.login.welcome").addReplacement("<name>", this.login);
+		this.textM = new Message("ui.login.accountcreated");
+		this.proceedM = new Message("ui.login.proceed");
 	}
 
 	private String login = "";
 	private String pass = "";
 
-	/**
-	 * The width of the non responsive square containing the login componnents.
-	 */
+	/** The width of the non responsive square containing the login componnents. */
 	private static final int squarewidth = 500;
-	/**
-	 * The height of the non responsive square containing the login componnents.
-	 */
+	/** The height of the non responsive square containing the login componnents. */
 	private static final int squareheight = 350;
 	private int mouseX = 1;
 	private int mouseY = 1;
 	private int offsetx = 100;
 	private int offsety = 20;
 
-	@Override
-	public void onKeyPressed(KeyEvent e, Key key) {
-	}
+	private final Message welcomeM, textM, proceedM;
 
 	@Override
-	public void onKeyReleased(KeyEvent e, Key key) {
-	}
+	public void onKeyPressed(KeyEvent e, Key key) {}
 
 	@Override
-	public void onKeyTyped(KeyEvent e) {
-	}
+	public void onKeyReleased(KeyEvent e, Key key) {}
+
+	@Override
+	public void onKeyTyped(KeyEvent e) {}
 
 	@Override
 	public void onMouseClick(int x, int y) {
 		// Button clicks
 		if (button_proceed.isInside(new Position(mouseX - offsetx, mouseY - offsety))) {
-			Persistence.stateManager = new LoginMainState("You may now log in", login, pass);
+			Persistence.stateManager = new LoginMainState(new Message("ui.login.after_creation"), login, pass);
 		}
 	}
 
@@ -83,8 +81,8 @@ public class AccountCreatedMainState extends StateManager {
 		g.drawImage(Sprites.Res_Hud.proceedaccountframe.image(), 0, 0, null);
 
 		g.setColor(Color.BLACK);
-		TextRenderer.render(g, "Welcome, " + login + "!", 30, 150);
-		ArrayList<String> lines = TextRenderer.splitLines(new Message("ui.login.accountcreated").toString(), 480);
+		TextRenderer.render(g, this.welcomeM.toString(), 30, 150);
+		ArrayList<String> lines = TextRenderer.splitLines(this.textM.toString(), 480);
 		for (int i = 0; i < lines.size(); ++i)
 			TextRenderer.render(g, lines.get(i), 30, 170 + (20 * i));
 
@@ -94,14 +92,13 @@ public class AccountCreatedMainState extends StateManager {
 		g.fillRect((int) button_proceed.x, (int) button_proceed.y, (int) button_proceed.width,
 				(int) button_proceed.height);
 		g.setColor(Color.BLACK);
-		g.drawString("PROCEED", (int) button_proceed.x + 8, (int) button_proceed.y + 25);
+		g.drawString(this.proceedM.toString(), (int) button_proceed.x + 8, (int) button_proceed.y + 25);
 
 		// REVERT GRAPHICS
 		g.translate(-offsetx, -offsety);
 	}
 
 	@Override
-	public void update() {
-	}
+	public void update() {}
 
 }

@@ -26,15 +26,9 @@ public class AccountCreationState extends StateManager {
 	private CustomTextfield password = new CustomTextfield().setObfuscated();
 	private CustomTextfield confirm = new CustomTextfield().setObfuscated();
 	private CustomTextfield deploykey = new CustomTextfield();
-	/**
-	 * The width of the non responsive square containing the login componnents.
-	 * I'm lazy.
-	 */
+	/** The width of the non responsive square containing the login componnents. I'm lazy. */
 	private static final int squarewidth = 500;
-	/**
-	 * The height of the non responsive square containing the login componnents.
-	 * I'm still lazy.
-	 */
+	/** The height of the non responsive square containing the login componnents. I'm still lazy. */
 	private static final int squareheight = 350;
 	private int mouseX = 1;
 	private int mouseY = 1;
@@ -43,6 +37,18 @@ public class AccountCreationState extends StateManager {
 
 	private String errormessage = "";
 	private String assessmessage = "";
+
+	private final Message titleM, usernameM, passwordM, confirmM, deployM, createM, backM;
+
+	public AccountCreationState() {
+		this.titleM = new Message("ui.create_account");
+		this.usernameM = new Message("ui.username");
+		this.passwordM = new Message("ui.password");
+		this.confirmM = new Message("ui.create_account.confirm");
+		this.deployM = new Message("ui.create_account.deploy");
+		this.createM = new Message("ui.login.create_account");
+		this.backM = new Message("general.back");
+	}
 
 	@Override
 	public void onKeyPressed(KeyEvent e, Key key) {
@@ -148,9 +154,9 @@ public class AccountCreationState extends StateManager {
 
 		gcopy.setColor(Color.BLACK);
 		gcopy.setFont(Res.getFont().deriveFont(26f).deriveFont(Font.BOLD));
-		gcopy.drawString("Create an account", 195, 112);
+		gcopy.drawString(this.titleM.toString(), 195, 112);
 		gcopy.setColor(new Color(242, 145, 0));
-		gcopy.drawString("Create an account", 197, 113);
+		gcopy.drawString(this.titleM.toString(), 197, 113);
 
 		gcopy.setColor(Color.RED);
 		gcopy.setFont(Res.getFont().deriveFont(22f));
@@ -171,10 +177,10 @@ public class AccountCreationState extends StateManager {
 
 		gcopy.setColor(new Color(242, 145, 0));
 		gcopy.setFont(Res.getFont().deriveFont(20f).deriveFont(Font.BOLD));
-		gcopy.drawString("Name", (int) textfield_login.x, (int) textfield_login.y);
-		gcopy.drawString("Password", (int) textfield_pass.x, (int) textfield_pass.y);
-		gcopy.drawString("Confirm", (int) textfield_confirm.x, (int) textfield_confirm.y);
-		gcopy.drawString("Deploy Key", (int) textfield_deploykey.x, (int) textfield_deploykey.y);
+		gcopy.drawString(this.usernameM.toString(), (int) textfield_login.x, (int) textfield_login.y);
+		gcopy.drawString(this.passwordM.toString(), (int) textfield_pass.x, (int) textfield_pass.y);
+		gcopy.drawString(this.confirmM.toString(), (int) textfield_confirm.x, (int) textfield_confirm.y);
+		gcopy.drawString(this.deployM.toString(), (int) textfield_deploykey.x, (int) textfield_deploykey.y);
 
 		// Draws the textfields elements
 		g.translate(textfield_login.x + 10, textfield_login.y);
@@ -198,15 +204,16 @@ public class AccountCreationState extends StateManager {
 		Color buttoncolor = new Color(124, 163, 255), selectedbuttoncolor = new Color(183, 222, 255);
 		gcopy.setColor((button_create.isInside(new Position(relativemousex, relativemousey))) ? selectedbuttoncolor
 				: buttoncolor);
-		gcopy.fillRect((int) button_create.x, (int) button_create.y, (int) button_create.width, (int) button_create.height);
-		gcopy.setColor(new Color(30,15,210));
-		gcopy.drawString("Create account", (int) button_create.x + 6, (int) button_create.y + 25);
+		gcopy.fillRect((int) button_create.x, (int) button_create.y, (int) button_create.width,
+				(int) button_create.height);
+		gcopy.setColor(new Color(30, 15, 210));
+		gcopy.drawString(this.createM.toString(), (int) button_create.x + 6, (int) button_create.y + 25);
 
 		gcopy.setColor((button_back.isInside(new Position(relativemousex, relativemousey))) ? selectedbuttoncolor
 				: buttoncolor);
 		gcopy.fillRect((int) button_back.x, (int) button_back.y, (int) button_back.width, (int) button_back.height);
-		gcopy.setColor(new Color(30,15,210));
-		gcopy.drawString("Back", (int) button_back.x + 10, (int) button_back.y + 18);
+		gcopy.setColor(new Color(30, 15, 210));
+		gcopy.drawString(this.backM.toString(), (int) button_back.x + 10, (int) button_back.y + 18);
 
 		// REVERT GRAPHICS
 		gcopy.dispose();
@@ -229,9 +236,7 @@ public class AccountCreationState extends StateManager {
 
 	private boolean firstupdate = true;
 
-	/**
-	 * Sends the account creation payload to the server after proper encryption.
-	 */
+	/** Sends the account creation payload to the server after proper encryption. */
 	private void sendAccountcreationMessage() {
 		try {
 			String message = "";
@@ -256,15 +261,15 @@ public class AccountCreationState extends StateManager {
 	/** Method called when recieving a logininfo payload. */
 	public void servercall(String id) {
 		switch (id) {
-		default:
-			errormessage = new Message(id).toString();
-			assessmessage = "";
-			break;
-		case "ui.login.accountcreated":
-			errormessage = "";
-			assessmessage = new Message(id).toString();
-			Persistence.stateManager = new AccountCreatedMainState(password.getContent(), login.getContent());
-			break;
+			default:
+				errormessage = new Message(id).toString();
+				assessmessage = "";
+				break;
+			case "ui.login.accountcreated":
+				errormessage = "";
+				assessmessage = new Message(id).toString();
+				Persistence.stateManager = new AccountCreatedMainState(password.getContent(), login.getContent());
+				break;
 		}
 	}
 
