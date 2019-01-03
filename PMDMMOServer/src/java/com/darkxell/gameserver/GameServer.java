@@ -64,7 +64,7 @@ import javax.ejb.EJB;
 @ServerEndpoint("/game")
 public class GameServer {
 
-    public static final String VERSION = "0.1.0-INDEV.1";
+    public static final String VERSION = "0.1.0-alpha.1";
     
     @Inject
     private GameSessionHandler sessionHandler;
