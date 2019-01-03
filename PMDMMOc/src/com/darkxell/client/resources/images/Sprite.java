@@ -8,6 +8,7 @@ public class Sprite
 
 	private BufferedImage image;
 	public final String path;
+	public boolean loaded = false;
 
 	public Sprite(BufferedImage image)
 	{
@@ -45,7 +46,8 @@ public class Sprite
 	/** @return <code>true</code> if this Sprite is loaded. */
 	public boolean isLoaded()
 	{
-		return SpriteFactory.instance().isResourceLoaded(this.path);
+		return this.loaded;
+		//return SpriteFactory.instance().isResourceLoaded(this.path);
 	}
 
 	/** This method is called when the SpriteFactory loads this Sprite. If overriding this method, the parent should always be called to set the base image.<br>
@@ -54,6 +56,7 @@ public class Sprite
 	 * @param img - The Image after loading. */
 	protected void loaded(BufferedImage img)
 	{
+		this.loaded=true;
 		this.image = img;
 	}
 
