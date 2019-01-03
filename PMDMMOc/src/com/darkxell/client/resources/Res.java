@@ -78,7 +78,7 @@ public class Res {
 	public static Font getFont() {
 		if (mysterydungeonfont == null) {
 			try {
-				mysterydungeonfont = Font.createFont(Font.TRUETYPE_FONT, new File("resources/mysterydungeon.ttf"));
+				mysterydungeonfont = Font.createFont(Font.TRUETYPE_FONT, Res.get("/mysterydungeon.ttf"));
 			} catch (Exception e) {
 				Logger.e("Could not load mystery dungeon font!");
 				e.printStackTrace();
