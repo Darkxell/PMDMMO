@@ -39,7 +39,7 @@ public class DataEditor extends Application {
 		PokemonSpritesets.loadData("../PMDMMOc/resources/pokemons/data");
 		PokemonPortrait.load();
 		Animations.loadData();
-		SoundsHolder.load("../PMDMMOc/");
+		SoundsHolder.load("../PMDMMOc/resources");
 		Persistence.soundmanager = new SoundManager();
 		Persistence.player = Util.createDefaultPlayer();
 

@@ -9,6 +9,7 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.Mixer;
 
 import com.darkxell.client.launchable.Persistence;
+import com.darkxell.client.resources.Res;
 import com.darkxell.common.util.Logger;
 
 import javazoom.jl.player.Player;
@@ -107,7 +108,7 @@ public class SoundManager implements Runnable {
 			} catch (Exception e) {
 			}
 			try {
-				this.currentplayer = new PausablePlayer(new FileInputStream(song.getfilepath()));
+				this.currentplayer = new PausablePlayer(Res.get(song.getfilepath()));
 			} catch (Exception e) {
 				if (song != null) {
 					System.err.println("Erreur lors de l'ouverture du fichier son.");
@@ -148,7 +149,7 @@ public class SoundManager implements Runnable {
 			@Override
 			public void run() {
 				try {
-					new Player(new FileInputStream(sound.getfilepath())).play();
+					new Player(Res.get(sound.getfilepath())).play();
 				} catch (Exception e) {
 					System.err.println("Sound couldn't be played.");
 					e.printStackTrace();

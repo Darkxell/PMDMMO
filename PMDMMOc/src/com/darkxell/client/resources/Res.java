@@ -20,6 +20,13 @@ import com.darkxell.common.util.Logger;
 public class Res {
 
 	private static final int MAXMESSAGES = 5;
+	private static final File jarFile;
+	public static final boolean RUNNING_IN_IDE;
+	static {
+		jarFile = new File(
+				Res.class.getProtectionDomain().getCodeSource().getLocation().getPath().replaceAll("%20", " "));
+		RUNNING_IN_IDE = !jarFile.isFile();
+	}
 
 	private static int messagecounter = 0;
 
@@ -84,11 +91,9 @@ public class Res {
 	/** @param path - Shouldn't start or end with / */
 	public static String[] getResourceFiles(String path) {
 
-		final File jarFile = new File(
-				Res.class.getProtectionDomain().getCodeSource().getLocation().getPath().replaceAll("%20", " "));
 		ArrayList<String> files = new ArrayList<>();
 
-		if (jarFile.isFile()) { // Run with JAR file
+		if (!RUNNING_IN_IDE) { // Run with JAR file
 			JarFile jar;
 			try {
 				jar = new JarFile(jarFile);

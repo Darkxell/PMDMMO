@@ -14,6 +14,7 @@ import com.darkxell.client.launchable.render.Renderer;
 import com.darkxell.client.launchable.render.Updater;
 import com.darkxell.client.launchable.render.UpdaterAndRenderer;
 import com.darkxell.client.mechanics.animation.Animations;
+import com.darkxell.client.resources.Res;
 import com.darkxell.client.resources.images.SpriteFactory;
 import com.darkxell.client.resources.images.SpriteLoader;
 import com.darkxell.client.resources.images.Sprites.Res_Frame;
@@ -60,7 +61,7 @@ public class Launcher {
         PokemonSpritesets.loadData();
         PokemonPortrait.load();
         Animations.loadData();
-        SoundsHolder.load(".");
+        SoundsHolder.load("");
         Persistence.soundmanager = new SoundManager();
         Logger.instance().info("Lang & Data loaded.");
 
@@ -90,6 +91,7 @@ public class Launcher {
     public static void stopGame() {
         processingProfile = PROFILE_UNDEFINED;
 		isRunning = false;
+		Logger.instance().saveOnExit = !Res.RUNNING_IN_IDE;
 		Logger.instance().saveClient();
         if (Persistence.isUnitTesting) {
             return;
