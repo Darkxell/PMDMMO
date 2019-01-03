@@ -32,7 +32,7 @@ import com.eclipsesource.json.JsonObject;
 
 public class LoginMainState extends StateManager {
 
-	private static final boolean DEBUGALLOWED = true;
+	private static final boolean DEBUGALLOWED = false;
 
 	private CustomTextfield login = new CustomTextfield();
 	private CustomTextfield password = new CustomTextfield().setObfuscated();
