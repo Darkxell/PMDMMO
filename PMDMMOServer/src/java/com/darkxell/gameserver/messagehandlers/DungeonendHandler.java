@@ -148,12 +148,17 @@ public class DungeonendHandler extends MessageHandler {
     }
 
     /**
-     * Updates a pokemon that exists. This will set it's item to the correct
+     * Updates a pokemon that exists. This will set its item to the correct
      * value (creating it if it's not in database)
      *
      * @return the ID of the pokemon
      */
     private long updatePokemon(HashMap<Long, DBItemstack> lookuptable_items, HashMap<Long, DBLearnedmove> lookuptable_moves, DBPokemon pokemon) {
+        // Checks that the new pokemon is valid
+        if(pokemon.learnedmoves.size()>=5){
+            System.out.println("Did NOT update a pokemon because it had more than 4 moves.");
+            return pokemon.id;
+        }
         //Creates the pokemon if it doesn't exist yet
         if (pokemon.id <= -1) {
             pokemon.id = endpoint.getPokemonDAO().create(pokemon);
@@ -185,6 +190,18 @@ public class DungeonendHandler extends MessageHandler {
                 } else {
                     endpoint.getLearnedmoveDAO().update(lookuptable_moves.get(mov.id));
                 }
+            }
+        }
+        for (int i = 0; i < pokemon_original.learnedmoves.size(); ++i) {
+            boolean stillcontains = false;
+            for (int j = 0; j < pokemon.learnedmoves.size(); ++j) {
+                if (pokemon.learnedmoves.get(j).id == pokemon_original.learnedmoves.get(i).id) {
+                    stillcontains = true;
+                }
+            }
+            if (!stillcontains) {
+                endpoint.getLearnedmoveDAO().delete(pokemon_original.learnedmoves.get(i));
+                endpoint.getLearnedmove_DAO().delete(pokemon_original.id, pokemon_original.learnedmoves.get(i).id);
             }
         }
         if (pokemon.learnedmoves != null) {

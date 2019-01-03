@@ -7,6 +7,7 @@ package com.darkxell.model.ejb;
 
 
 import com.darkxell.common.dbobject.DBLearnedmove;
+import com.darkxell.common.dbobject.DatabaseIdentifier;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -75,6 +76,21 @@ public class LearnedmoveDAO {
                     ResultSet.CONCUR_UPDATABLE
             ).executeUpdate(
                     "DELETE FROM learnedmove WHERE id = " + move.id
+            );
+            cn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void delete(DatabaseIdentifier dbid) {
+        try {
+            Connection cn = ds.getConnection();
+            cn.createStatement(
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE
+            ).executeUpdate(
+                    "DELETE FROM learnedmove WHERE id = " + dbid.id
             );
             cn.close();
         } catch (SQLException e) {
