@@ -91,7 +91,7 @@ public class Logger {
 
     private ArrayList<String> log;
 
-    public boolean saveOnExit = false;
+    public boolean saveOnExit = true;
 
     public final String source;
 
@@ -167,6 +167,7 @@ public class Logger {
         if (!this.saveOnExit) {
             return;
         }
+        new File("resources").mkdirs();
         File f = new File("resources/log" + new SimpleDateFormat("yyyy-MM-dd HH.mm").format(this.start) + ".txt");
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(f));
