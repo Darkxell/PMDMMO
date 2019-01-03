@@ -40,7 +40,7 @@ public class FaintedPokemonEvent extends DungeonEvent
 		if (this.pokemon.getItem() != null) this.pokemon.tile().setItem(this.pokemon.getItem());
 		if (this.damage.getExperienceEvent() != null) this.damage.getExperienceEvent().experience += this.pokemon.experienceGained();
 		this.floor.unsummonPokemon(this.pokemon);
-		if (this.pokemon.isTeamLeader())
+		if (this.pokemon.type == DungeonPokemonType.TEAM_MEMBER)
 		{
 			int moveID = -1;
 			if (this.damage != null && this.damage instanceof MoveUse) moveID = ((MoveUse) this.damage).move.moveId();
