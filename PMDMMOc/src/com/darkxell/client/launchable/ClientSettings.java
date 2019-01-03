@@ -43,9 +43,9 @@ public class ClientSettings {
         KEY_INVENTORY("key.inventory", KeyEvent.VK_I),
         KEY_ITEM_1("key.item1", KeyEvent.VK_5),
         KEY_ITEM_2("key.item2", KeyEvent.VK_6),
-        KEY_PAGE_LEFT("key.page.left", KeyEvent.VK_PAGE_DOWN),
-        KEY_PAGE_RIGHT("key.page.right", KeyEvent.VK_P),
-        KEY_PARTY("key.party", KeyEvent.VK_PAGE_UP),
+        KEY_PAGE_LEFT("key.page.left", KeyEvent.VK_PAGE_UP),
+        KEY_PAGE_RIGHT("key.page.right", KeyEvent.VK_PAGE_DOWN),
+        KEY_PARTY("key.party", KeyEvent.VK_P),
         KEY_ROTATE("key.rotate", KeyEvent.VK_S),
         KEY_RUN("key.run", KeyEvent.VK_SHIFT),
 
