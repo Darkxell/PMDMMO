@@ -52,6 +52,7 @@ import com.darkxell.model.ejb.Missions_DAO;
 import com.darkxell.model.ejb.PlayerDAO;
 import com.darkxell.model.ejb.Playerstorage_DAO;
 import com.darkxell.model.ejb.PokemonDAO;
+import com.darkxell.model.ejb.TablesCreator;
 import com.darkxell.model.ejb.Teammember_DAO;
 import com.darkxell.model.ejb.Toolbox_DAO;
 import javax.ejb.EJB;
@@ -65,7 +66,7 @@ import javax.ejb.EJB;
 public class GameServer {
 
     public static final String VERSION = "0.1.0-alpha.1";
-    
+
     @Inject
     private GameSessionHandler sessionHandler;
 
@@ -76,6 +77,8 @@ public class GameServer {
      */
     private boolean daoset = false;
 
+    @EJB
+    private TablesCreator tablesCreator;
     @EJB
     private PlayerDAO playerDAO;
     @EJB
@@ -189,10 +192,20 @@ public class GameServer {
             if (this.deployKeyDAO == null) {
                 this.deployKeyDAO = new DeployKeyDAO();
             }
+            if (this.tablesCreator == null) {
+                this.tablesCreator = new TablesCreator();
+            }
             Logger.load("SERVER");
             Registries.load();
             System.out.println("DAOs and Registries loaded.");
             daoset = true;
+        }
+        if (!this.tablesCreator.tablesExist()) {
+            if (this.tablesCreator.createTables()) {
+                Logger.i("Created all tables.");
+            } else {
+                Logger.e("Tables could not be created.");
+            }
         }
         if (!SessionsInfoHolder.infoExists(session.getId())) {
             SessionsInfoHolder.createDefaultInfo(session.getId());
@@ -428,8 +441,8 @@ public class GameServer {
     public Missions_DAO getMissions_DAO() {
         return this.missions_DAO;
     }
-    
-     public DeployKeyDAO getDeployKeyDAO() {
+
+    public DeployKeyDAO getDeployKeyDAO() {
         return this.deployKeyDAO;
     }
 
