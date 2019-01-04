@@ -59,7 +59,7 @@ public class PlayerDAO {
                 prepare.setString(4, player.passhash);
                 prepare.setLong(5, newid);
                 prepare.setLong(6, player.storyposition);
-                // Hardcoded false op and banned to preven an eventual exploit
+                // Hardcoded false op and banned to prevent an eventual exploit
                 prepare.setBoolean(7, false);
                 prepare.setBoolean(8, false);
                 prepare.executeUpdate();
