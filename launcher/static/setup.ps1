@@ -19,7 +19,4 @@ if (!$java_info -or ($java_info.Version.Major -lt 8)) {
 # TODO: install data files
 # exit 5 # "could not get game data"
 
-Write-Host "Successfully installed!"
-
 Start-Process 'D:\git\PMDMMO\out\artifacts\PMDMMOc_jar\PMDMMOc.jar'
-    -NoNewWindow

@@ -48,23 +48,22 @@ void touch_dir(QString path) {
     }
 }
 
-void flush_logs(QProcess *process) {
-    auto sep = QDir::separator();
-    QString logs_path = process->workingDirectory() + sep + LOGS_PATH;
-    touch_dir(logs_path);
+void write_logs(QString dir, QString path, QByteArray output, QString ext) {
+    if (output.trimmed().isEmpty()) return;
 
-    QString log_name = logs_path + sep + create_log_name();
-
-    QFile log(log_name + ".log");
-    QFile err(log_name + ".err");
-
+    touch_dir(dir);
+    QFile log(dir + "/" + path + ext);
     if (log.open(QIODevice::WriteOnly)) {
-        log.write(process->readAllStandardOutput());
+        log.write(output);
     }
+}
 
-    if (err.open(QIODevice::WriteOnly)) {
-        log.write(process->readAllStandardError());
-    }
+void flush_logs(QProcess *process) {
+    QString logs_path = process->workingDirectory() + "/" + LOGS_PATH;
+    QString log_name = create_log_name();
+
+    write_logs(logs_path, log_name, process->readAllStandardOutput(), ".log");
+    write_logs(logs_path, log_name, process->readAllStandardError(), ".err");
 }
 
 /**
