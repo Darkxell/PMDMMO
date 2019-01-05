@@ -94,7 +94,7 @@ int exec_setup(QString work_path, QString script_path) {
     return status;
 }
 
-bool attempt_load() {
+int attempt_load() {
     QString data_path = QStandardPaths::standardLocations(
         QStandardPaths::AppDataLocation)[0];
     QString script_path = copy_tmp(SETUP_SCRIPT);
@@ -103,11 +103,21 @@ bool attempt_load() {
 
     int status = exec_setup(data_path, script_path);
     QFile::remove(script_path);
-    return status == QProcess::NormalExit;
-        }
+    return status;
+}
+
+/**
+ * @brief code_to_reason Convert code to reason.
+ * @param code Code returned from script.
+ * @return Message explaining error.
+ */
+QString code_to_reason(int code) {
+    switch(code) {
+    case 1:
+        return "JRE 1.8 or higher must be available.";
+    default:
+        return "Unknown error.";
     }
-    QFile::remove(script_path);
-    return success;
 }
 
 /**
@@ -126,9 +136,12 @@ int main(int argc, char *argv[]) {
 
     splash.show();
 
-    if (!attempt_load()) {
+    int status = attempt_load();
+    if (status != QProcess::NormalExit) {
         // TODO: error box message instead of crash
-        qFatal("Error setting up. Check error logs for details.");
+        QString reason = code_to_reason(status);
+        QString message = "Error setting up:\n" + reason;
+        qFatal(message.toStdString().c_str());
     }
 
     splash.finish(nullptr);
