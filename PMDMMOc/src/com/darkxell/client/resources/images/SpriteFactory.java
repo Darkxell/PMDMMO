@@ -4,13 +4,10 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.TexturePaint;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
-import java.util.function.BiConsumer;
 
 import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.resources.Res;
@@ -18,20 +15,12 @@ import com.darkxell.common.util.Logger;
 
 /** Sprite loader that runs in the background and gracefully handles resource errors. */
 public class SpriteFactory implements Runnable {
-	private static class SubSprite {
-		private Sprite sprite;
-		private int x, y, w, h;
-
-		SubSprite(Sprite sprite, int x, int y, int w, int h) {
-			this.sprite = sprite;
-			this.x = x;
-			this.y = y;
-			this.w = w;
-			this.h = h;
-		}
-	}
 
 	private static SpriteFactory instance;
+
+	public static Sprite getDefaultSprite(int width, int height) {
+		return new Sprite(instance.getDefault(width, height));
+	}
 
 	/** @return The factory's instance. */
 	public static SpriteFactory instance() {
@@ -50,13 +39,9 @@ public class SpriteFactory implements Runnable {
 		new Thread(instance).start();
 	}
 
-	public static Sprite getDefaultSprite(int width, int height) {
-		return new Sprite(instance.getDefault(width, height));
-	}
-
 	/** Wait for the loading queue to empty before proceeding. */
 	public static void waitQueueDone() {
-		while (!instance.requested.isEmpty()) {
+		while (!instance.toLoad.isEmpty()) {
 			try {
 				Thread.sleep(5);
 			} catch (InterruptedException e) {
@@ -65,33 +50,38 @@ public class SpriteFactory implements Runnable {
 		}
 	}
 
-	private SpriteFactory() {}
-
 	private BufferedImage defaultImg;
 
 	/** Loaded images. */
-	private final Map<String, BufferedImage> loaded = new HashMap<>();
+	private final Map<String, BufferedImage> images = new HashMap<>();
+	private final LinkedList<String> toLoad = new LinkedList<>();
 
-	/** Queue of paths to load. */
-	private LinkedList<String> requested = new LinkedList<>();
+	private SpriteFactory() {}
 
-	/** Queues of sprites waiting for an image keyed on resource path. */
-	private HashMap<String, ArrayList<Sprite>> requesters = new HashMap<>();
+	/** Attempt to load an image through the resource cache. Queue path on miss.
+	 *
+	 * @return Was there was a cache hit? */
+	private boolean attemptLoad(String path) {
+		if (!Res.exists(path)) { return false; }
 
-	/** Queues of sub-sprites waiting for an image keyed on resource path. */
-	private HashMap<String, ArrayList<SubSprite>> subsprites = new HashMap<>();
+		if (!this.toLoad.contains(path)) {
+			this.toLoad.add(path);
+		}
+
+		return this.images.containsKey(path);
+	}
 
 	/** Removes references to the input image. May be called when that Image isn't necessary anymore and may be unloaded.
 	 *
 	 * @param image - The image to dispose of. */
 	public void dispose(String image) {
-		this.loaded.remove(image);
+		this.images.remove(image);
 	}
 
 	/** @param image - A path to an image.
 	 * @return The image if it's loaded, a default image else. */
 	BufferedImage get(String image) {
-		return this.loaded.get(image);
+		return this.images.get(image);
 	}
 
 	/** @return A default image with the input dimensions. */
@@ -109,39 +99,7 @@ public class SpriteFactory implements Runnable {
 
 	/** @return Has this image been loaded? */
 	boolean isResourceLoaded(String image) {
-		return this.loaded.containsKey(image) && !this.requested.contains(image);
-	}
-
-	/** Add requester to a queue in a thread-safe manner.
-	 *
-	 * @param requester Listener to add.
-	 * @param path Path to listen to.
-	 * @param listenerMap Listener queue to add in.
-	 * @param <T> Listener type. */
-	private <T> void addRequester(T requester, String path, Map<String, ArrayList<T>> listenerMap) {
-		if (!listenerMap.containsKey(path)) {
-			listenerMap.put(path, new ArrayList<>());
-		}
-
-		List<T> listeners = listenerMap.get(path);
-		listeners.add(requester);
-	}
-
-	/** Attempt to load an image through the resource cache. Queue path on miss.
-	 *
-	 * @return Was there was a cache hit? */
-	private boolean attemptLoad(Sprite requester, String path) {
-		if (!Res.exists(path)) { return false; }
-
-		if (requester != null) {
-			this.addRequester(requester, path, this.requesters);
-		}
-
-		if (!this.requested.contains(path)) {
-			this.requested.add(path);
-		}
-
-		return this.loaded.containsKey(path);
+		return this.images.containsKey(image) && !this.toLoad.contains(image);
 	}
 
 	/** Queues an path to be loaded.
@@ -151,31 +109,13 @@ public class SpriteFactory implements Runnable {
 	 * @param width Image width. May be -1 if dimensions are unknown.
 	 * @param height Image height. May be -1 if dimensions are unknown.
 	 * @return Cached or default path, to be replaced upon callback. */
-	public BufferedImage load(Sprite requester, String path, int width, int height) {
-		if (!this.isResourceLoaded(path) && !this.attemptLoad(requester, path)) {
+	public BufferedImage load(String path, int width, int height) {
+		if (!this.isResourceLoaded(path) && !this.attemptLoad(path)) {
 			// place interim image while it's loading
-			this.loaded.put(path, this.getDefault(width, height));
+			this.images.put(path, this.getDefault(width, height));
 		}
 
 		return this.get(path);
-	}
-
-	/** Notify listeners to a specific request queue.
-	 *
-	 * @param path Path to notify
-	 * @param img Retrieved image.
-	 * @param requesterMap Queue map, keyed on resource path.
-	 * @param callback What to do with image.
-	 * @param <T> Type of sprite (see {@link Sprite} and {@link SubSprite}) */
-	private <T> void notify(String path, BufferedImage img, Map<String, ArrayList<T>> requesterMap,
-			BiConsumer<T, BufferedImage> callback) {
-		if (!requesterMap.containsKey(path)) return;
-
-		while (!requesterMap.get(path).isEmpty()) {
-			T s = requesterMap.get(path).remove(0);
-			if (s != null) callback.accept(s, img);
-		}
-		requesterMap.remove(path);
 	}
 
 	/** Load next image in path. */
@@ -183,7 +123,7 @@ public class SpriteFactory implements Runnable {
 		String path;
 
 		try {
-			path = this.requested.getFirst();
+			path = this.toLoad.getFirst();
 		} catch (NoSuchElementException e) {
 			// rare race condition; in case it happens, just ignore it.
 			Logger.w("SpriteFactory queue could not read first element.");
@@ -192,20 +132,17 @@ public class SpriteFactory implements Runnable {
 
 		BufferedImage img = Res.getBase(path);
 		if (img != null) {
-			this.loaded.put(path, img);
+			this.images.put(path, img);
 		}
 
-		this.requested.removeFirst();
-
-		this.notify(path, img, this.requesters, (s, i) -> s.loaded(img));
-		this.notify(path, img, this.subsprites, (s, i) -> s.sprite.loaded(Res.createimage(i, s.x, s.y, s.w, s.h)));
+		this.toLoad.removeFirst();
 	}
 
 	@Override
 	public void run() {
 		while (Launcher.isRunning) {
 			try {
-				if (this.requested.isEmpty()) {
+				if (this.toLoad.isEmpty()) {
 					Thread.sleep(100);
 				} else {
 					this.loadNext();
@@ -215,24 +152,5 @@ public class SpriteFactory implements Runnable {
 				e.printStackTrace();
 			}
 		}
-	}
-
-	/** Creates a Sprite as a sub-image of the Image of another Sprite. The created Sprite will have a default image until the target Sprite is loaded.
-	 *
-	 * @param source The source Sprite.
-	 * @param x Tile x-coordinate.
-	 * @param y Tile y-coordinate.
-	 * @param width Tile width.
-	 * @param height Tile height.
-	 * @return A placeholder sub-sprite or cached sub-sprite. */
-	public Sprite subSprite(Sprite source, int x, int y, int width, int height) {
-		Sprite sub = new Sprite(source.path, width, height, false);
-		if (this.isResourceLoaded(source.path)) {
-			sub.loaded(Res.createimage(this.get(source.path), x, y, width, height));
-		} else {
-			sub.loaded(this.getDefault(width, height));
-			this.addRequester(new SubSprite(sub, x, y, width, height), source.path, this.subsprites);
-		}
-		return sub;
 	}
 }
