@@ -148,10 +148,10 @@ public class ChatBox {
 		this.lastsent = this.textfield.getContent();
 		if (Persistence.socketendpoint != null
 				&& Persistence.socketendpoint.connectionStatus() == GameSocketEndpoint.CONNECTED) {
-			JsonObject mess = new JsonObject().add("action", "chatmessage").add("tag", "DEV")
+			JsonObject mess = new JsonObject().add("action", "chatmessage").add("tag", "alpha")
 					.add("sender", ClientSettings.getSetting(Setting.LOGIN))
 					.add("message", this.lastsent)
-					.add("tagcolor", Palette.getHexaFromClor(Color.RED))
+					.add("tagcolor", "#1CFF00")
 					.add("messagecolor", Palette.getHexaFromClor(Color.WHITE))
 					.add("sendercolor", Palette.getHexaFromClor(Palette.CHAT_GLOBAL));
 			Persistence.socketendpoint.sendMessage(mess.toString());
