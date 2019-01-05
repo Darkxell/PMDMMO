@@ -14,7 +14,6 @@ import com.darkxell.client.resources.images.layers.WetDreamSpriteSet;
 import com.darkxell.client.resources.images.pokemon.ShadowSpriteSet;
 import com.darkxell.client.resources.images.tilesets.CommonDungeonTileset;
 import com.darkxell.client.resources.images.tilesets.DungeonMapTileset;
-import com.darkxell.client.ui.Frame.FrameIconSprite;
 
 /** Class that holds Sprites & SpriteSets used in the whole project. */
 public final class Sprites {
@@ -31,8 +30,6 @@ public final class Sprites {
 
 	public static class Res_Frame {
 		public static final Sprite box_E, box_N, box_NE, box_NW, box_S, box_SE, box_SW, box_W;
-		// why is this here? it isn't being used.
-		public static final Sprite ICON = new FrameIconSprite("/hud/framebackgrounds/icon.png");
 
 		/** Target file path of the background images. */
 		public static final String BACKGROUNDS_DIRECTORY = "hud/framebackgrounds";
@@ -56,21 +53,19 @@ public final class Sprites {
 				BACKGROUNDS = new Sprite[backgroundPaths.length];
 				for (int i = 0; i < BACKGROUNDS.length; ++i)
 					BACKGROUNDS[i] = new Sprite(backgroundPaths[i]);
-			} else BACKGROUNDS = new Sprite[] { SpriteFactory.getDefaultSprite(20, 20) };
+			} else BACKGROUNDS = new Sprite[] { new Sprite("", 20, 20) };
 			/* BACKGROUNDS = Arrays.stream(backgroundPaths).sorted() .map(f -> new Sprite(BACKGROUNDS_DIRECTORY + '/' + f.getName())).toArray(Sprite[]::new); */
 
-			Sprite source = new Sprite("/hud/boxcorners.png");
+			box_N = new SubSprite("/hud/boxcorners.png", 7, 0, 1, 3);
+			box_S = new SubSprite("/hud/boxcorners.png", 7, 4, 1, 3);
 
-			box_N = SpriteFactory.instance().subSprite(source, 7, 0, 1, 3);
-			box_S = SpriteFactory.instance().subSprite(source, 7, 4, 1, 3);
+			box_E = new SubSprite("/hud/boxcorners.png", 8, 3, 7, 1);
+			box_W = new SubSprite("/hud/boxcorners.png", 0, 3, 7, 1);
 
-			box_E = SpriteFactory.instance().subSprite(source, 8, 3, 7, 1);
-			box_W = SpriteFactory.instance().subSprite(source, 0, 3, 7, 1);
-
-			box_NE = SpriteFactory.instance().subSprite(source, 8, 0, 7, 3);
-			box_NW = SpriteFactory.instance().subSprite(source, 0, 0, 7, 3);
-			box_SE = SpriteFactory.instance().subSprite(source, 8, 4, 7, 3);
-			box_SW = SpriteFactory.instance().subSprite(source, 0, 4, 7, 3);
+			box_NE = new SubSprite("/hud/boxcorners.png", 8, 0, 7, 3);
+			box_NW = new SubSprite("/hud/boxcorners.png", 0, 0, 7, 3);
+			box_SE = new SubSprite("/hud/boxcorners.png", 8, 4, 7, 3);
+			box_SW = new SubSprite("/hud/boxcorners.png", 0, 4, 7, 3);
 		}
 
 		public static BufferedImage getBackground(int id) {
@@ -94,10 +89,9 @@ public final class Sprites {
 				32, 32, 192, 32);
 
 		static {
-			Sprite cristal = new Sprite("/freezones/entities/cristal.png");
-			cristal_red = SpriteFactory.instance().subSprite(cristal, 1, 54, 56, 81);
-			cristal_yellow = SpriteFactory.instance().subSprite(cristal, 58, 54, 56, 81);
-			cristal_lightray = SpriteFactory.instance().subSprite(cristal, 115, 1, 48, 134);
+			cristal_red = new SubSprite("/freezones/entities/cristal.png", 1, 54, 56, 81);
+			cristal_yellow = new SubSprite("/freezones/entities/cristal.png", 58, 54, 56, 81);
+			cristal_lightray = new SubSprite("/freezones/entities/cristal.png", 115, 1, 48, 134);
 		}
 
 		static void load() {}

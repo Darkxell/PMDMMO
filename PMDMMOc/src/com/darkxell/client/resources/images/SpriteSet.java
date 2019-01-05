@@ -7,7 +7,7 @@ import java.util.HashMap;
 public class SpriteSet extends Sprite
 {
 
-	private HashMap<String, Sprite> sprites = new HashMap<>();
+	private HashMap<String, SubSprite> sprites = new HashMap<>();
 
 	public SpriteSet(String path)
 	{
@@ -19,6 +19,11 @@ public class SpriteSet extends Sprite
 		super(path, width, height);
 	}
 
+	public SpriteSet(String path, int width, int height, boolean doLoad)
+	{
+		super(path, width, height, doLoad);
+	}
+
 	/** Registers a Sprite in this Spriteset.
 	 * 
 	 * @param id - The ID of the Sprite.
@@ -26,7 +31,7 @@ public class SpriteSet extends Sprite
 	 * @return The created Sprite. */
 	public Sprite createSprite(String id, int x, int y, int width, int height)
 	{
-		this.sprites.put(id, SpriteFactory.instance().subSprite(this, x, y, width, height));
+		this.sprites.put(id, new SubSprite(this.path, x, y, width, height));
 		return this.sprites.get(id);
 	}
 
@@ -47,8 +52,9 @@ public class SpriteSet extends Sprite
 
 	/** @param id - The ID of one of this Spriteset's Sprites.
 	 * @return The Sprite with the input ID. */
-	public Sprite get(String id)
+	public SubSprite get(String id)
 	{
+		this.checkIfLoaded();
 		return this.sprites.get(id);
 	}
 
@@ -56,7 +62,7 @@ public class SpriteSet extends Sprite
 	 * @return The Image of the Sprite with the input ID. */
 	public BufferedImage getImg(String id)
 	{
-		Sprite s = this.get(id);
+		SubSprite s = this.get(id);
 		if (s == null) return null;
 		return s.image();
 	}
