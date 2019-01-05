@@ -58,12 +58,12 @@ void write_logs(QString dir, QString path, QByteArray output, QString ext) {
     }
 }
 
-void flush_logs(QProcess *process) {
-    QString logs_path = process->workingDirectory() + "/" + LOGS_PATH;
+void flush_logs(QProcess &process) {
+    QString logs_path = process.workingDirectory() + "/" + LOGS_PATH;
     QString log_name = create_log_name();
 
-    write_logs(logs_path, log_name, process->readAllStandardOutput(), ".log");
-    write_logs(logs_path, log_name, process->readAllStandardError(), ".err");
+    write_logs(logs_path, log_name, process.readAllStandardOutput(), ".log");
+    write_logs(logs_path, log_name, process.readAllStandardError(), ".err");
 }
 
 /**
@@ -88,7 +88,7 @@ int exec_setup(QString work_path, QString script_path) {
 
     process.waitForFinished(-1);
     int status = process.exitCode();
-    flush_logs(&process);
+    flush_logs(process);
     return status;
 }
 
