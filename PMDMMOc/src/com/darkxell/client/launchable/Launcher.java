@@ -40,6 +40,7 @@ public class Launcher {
     private static RenderProfile processingProfile = PROFILE_UNDEFINED;
     private static GameLoop renderer;
     private static GameLoop updater;
+    private static DiscordEventHandlerForPMDMMO deh;
 
 	public static void main(String[] args) {
         isRunning = true;
@@ -64,7 +65,7 @@ public class Launcher {
         Persistence.soundmanager = new SoundManager();
         Logger.instance().info("Lang & Data loaded.");
 
-        DiscordEventHandlerForPMDMMO deh = new DiscordEventHandlerForPMDMMO("In logging screen", "main_big");
+        deh = new DiscordEventHandlerForPMDMMO("In logging screen", "main_big");
         deh.start();
 
 		Persistence.frame = new Frame();
@@ -104,6 +105,7 @@ public class Launcher {
 				e.printStackTrace();
 			}
 		}
+        deh.stop();
 		System.exit(0);
 	}
 
