@@ -115,9 +115,11 @@ int attempt_load() {
 QString code_to_reason(int code) {
     switch(code) {
     case 1:
+        return "Something is wrong with the script.";
+    case 2:
         return "JRE 1.8 or higher must be available.";
     default:
-        return "Unknown error.";
+        return "Unknown error" + QString::number(code) + ".";
     }
 }
 
