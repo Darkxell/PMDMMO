@@ -14,11 +14,11 @@ public class RegularSpriteSet extends SpriteSet {
 	}
 
 	public RegularSpriteSet(String path, int spriteWidth, int spriteHeight, int width, int height) {
-		super(path, width, height);
+		super(path, width, height, false);
 		this.spriteWidth = spriteWidth;
 		this.spriteHeight = spriteHeight;
 		this.defaultSprite = new SubSprite(this.path, 0, 0, spriteWidth, spriteHeight);
-		if (this.isLoaded() || (width != -1 && height != -1)) this.onLoad();
+		this.checkIfLoaded();
 	}
 
 	/** @return The number of columns in this SpriteSet. May return -1 if it isn't loaded yet. */
@@ -59,7 +59,8 @@ public class RegularSpriteSet extends SpriteSet {
 		return x + "," + y;
 	}
 
-	private void onLoad() {
+	@Override
+	protected void onLoad() {
 		this.columns = this.image().getWidth() / this.spriteWidth;
 		this.rows = this.image().getHeight() / this.spriteHeight;
 		if (this.columns == 0) this.columns = 1;

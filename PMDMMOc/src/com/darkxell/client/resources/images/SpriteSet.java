@@ -19,6 +19,11 @@ public class SpriteSet extends Sprite
 		super(path, width, height);
 	}
 
+	public SpriteSet(String path, int width, int height, boolean doLoad)
+	{
+		super(path, width, height, doLoad);
+	}
+
 	/** Registers a Sprite in this Spriteset.
 	 * 
 	 * @param id - The ID of the Sprite.
@@ -47,8 +52,9 @@ public class SpriteSet extends Sprite
 
 	/** @param id - The ID of one of this Spriteset's Sprites.
 	 * @return The Sprite with the input ID. */
-	public Sprite get(String id)
+	public SubSprite get(String id)
 	{
+		this.checkIfLoaded();
 		return this.sprites.get(id);
 	}
 
@@ -56,7 +62,7 @@ public class SpriteSet extends Sprite
 	 * @return The Image of the Sprite with the input ID. */
 	public BufferedImage getImg(String id)
 	{
-		Sprite s = this.get(id);
+		SubSprite s = this.get(id);
 		if (s == null) return null;
 		return s.image();
 	}

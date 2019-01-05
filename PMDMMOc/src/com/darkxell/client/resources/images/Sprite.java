@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 /** Holds an Image. Allows proper loading using the SpriteFactory. */
 public class Sprite {
 
+	protected boolean loaded = false;
 	public final String path;
 
 	public Sprite(String path) {
@@ -17,7 +18,15 @@ public class Sprite {
 
 	Sprite(String path, int width, int height, boolean doLoad) {
 		this.path = path;
-		if (doLoad) SpriteFactory.instance().load(this.path, width, height);
+		SpriteFactory.instance().load(this.path, width, height);
+		if (doLoad) this.checkIfLoaded();
+	}
+
+	protected void checkIfLoaded() {
+		if (!this.loaded && SpriteFactory.instance().isResourceLoaded(this.path)) {
+			this.loaded = true;
+			this.onLoad();
+		}
 	}
 
 	public void dispose() {
@@ -26,6 +35,7 @@ public class Sprite {
 
 	/** @return The Image held in this Sprite. */
 	public BufferedImage image() {
+		this.checkIfLoaded();
 		return SpriteFactory.instance().get(this.path);
 	}
 
@@ -33,5 +43,7 @@ public class Sprite {
 	public boolean isLoaded() {
 		return SpriteFactory.instance().isResourceLoaded(this.path);
 	}
+
+	protected void onLoad() {}
 
 }
