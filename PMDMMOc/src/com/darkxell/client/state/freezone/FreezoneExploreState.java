@@ -37,7 +37,7 @@ public class FreezoneExploreState extends AbstractFreezoneState {
 		Persistence.displaymap = LocalMap.instance;
 		if (direction != null) Persistence.currentplayer.renderer().sprite().setFacingDirection(direction);
 
-		if (!map.noAlly && !Persistence.player.allies.isEmpty()) {
+		if (!map.playerOnly && !Persistence.player.allies.isEmpty()) {
 			AllyEntity ae = new AllyEntity(Persistence.currentplayer.x, Persistence.currentplayer.y,
 					Persistence.player.allies.get(0), Persistence.currentplayer);
 			Persistence.currentmap.addEntity(ae);
@@ -96,27 +96,30 @@ public class FreezoneExploreState extends AbstractFreezoneState {
 	public void update() {
 		if (Persistence.currentmap == null) Persistence.currentmap = new BaseFreezone();
 		super.update();
-		// Sends the serverync message if it's time to do so
-		if (serversynccooldown > 15 && serversynccooldown != -1)
-			if (Persistence.socketendpoint.connectionStatus() != GameSocketEndpoint.CONNECTED) {
-			serversynccooldown = -1;
-			Logger.w(
-					"Game socket endpoint is not connected, server sync has been deactivated for this FreezoneExploreState.");
-			} else {
-			serversynccooldown = 0;
-			try {
-			String message = "";
-			JsonObject mess = new JsonObject().add("action", "freezoneposition")
-					.add("posfx", Persistence.currentplayer.x).add("posfy", Persistence.currentplayer.y)
-					.add("currentpokemon", Persistence.currentplayer.renderer().sprite().pointer.data.id + "")
-					.add("freezoneid", Persistence.currentmap.getInfo().id);
-			message = mess.toString();
-			Persistence.socketendpoint.sendMessage(message);
-			} catch (Exception e) {
-			Logger.w("Could not send freezone information message to the server.");
-			}
-			}
-		else if (serversynccooldown != -1) ++serversynccooldown;
+
+		if (!Persistence.currentmap.playerOnly) {
+			// Sends the serverync message if it's time to do so
+			if (serversynccooldown > 15 && serversynccooldown != -1)
+				if (Persistence.socketendpoint.connectionStatus() != GameSocketEndpoint.CONNECTED) {
+				serversynccooldown = -1;
+				Logger.w(
+						"Game socket endpoint is not connected, server sync has been deactivated for this FreezoneExploreState.");
+				} else {
+				serversynccooldown = 0;
+				try {
+				String message = "";
+				JsonObject mess = new JsonObject().add("action", "freezoneposition")
+						.add("posfx", Persistence.currentplayer.x).add("posfy", Persistence.currentplayer.y)
+						.add("currentpokemon", Persistence.currentplayer.renderer().sprite().pointer.data.id + "")
+						.add("freezoneid", Persistence.currentmap.getInfo().id);
+				message = mess.toString();
+				Persistence.socketendpoint.sendMessage(message);
+				} catch (Exception e) {
+				Logger.w("Could not send freezone information message to the server.");
+				}
+				}
+			else if (serversynccooldown != -1) ++serversynccooldown;
+		}
 
 		if (this.isMain()) for (int i = 0; i < Persistence.currentmap.triggerzones.size(); i++)
 			if (Persistence.currentmap.triggerzones.get(i).hitbox.intersects(

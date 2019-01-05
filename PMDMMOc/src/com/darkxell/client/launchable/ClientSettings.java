@@ -37,7 +37,7 @@ public class ClientSettings {
         KEY_MAP_RIGHT("key.map.right", KeyEvent.VK_NUMPAD6),
         KEY_MAP_RESET("key.map.reset", KeyEvent.VK_NUMPAD5),
 
-        KEY_ATTACK("key.attack", KeyEvent.VK_D),
+        KEY_ATTACK("key.attack", KeyEvent.VK_ENTER),
         KEY_DIAGONAL("key.diagonal", KeyEvent.VK_R),
         KEY_MENU("key.menu", KeyEvent.VK_ESCAPE),
         KEY_INVENTORY("key.inventory", KeyEvent.VK_I),
