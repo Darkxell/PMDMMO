@@ -68,14 +68,11 @@ void flush_logs(QProcess *process) {
 
 /**
  * @brief exec_setup Execute shell script.
- * @return If the script was successful (or at least unsuccessful in a known
- * way).
+ * @return Return code from script.
  */
-bool exec_setup(QString work_path, QString script_path) {
+int exec_setup(QString work_path, QString script_path) {
     QProcess process;
     process.setProcessChannelMode(QProcess::MergedChannels);
-
-    touch_dir(work_path);
     process.setWorkingDirectory(work_path);
 
 #ifdef IS_WIN
@@ -90,23 +87,23 @@ bool exec_setup(QString work_path, QString script_path) {
 #endif
 
     process.waitForFinished(-1);
-    bool success = process.exitCode() == QProcess::NormalExit;
-    if (!success) {
+    int status = process.exitCode();
+    if (status != QProcess::NormalExit) {
         flush_logs(&process);
     }
-    return success;
+    return status;
 }
 
 bool attempt_load() {
-    QStringList data_paths = QStandardPaths::standardLocations(
-        QStandardPaths::AppDataLocation);
-
+    QString data_path = QStandardPaths::standardLocations(
+        QStandardPaths::AppDataLocation)[0];
     QString script_path = copy_tmp(SETUP_SCRIPT);
-    bool success = false;
-    for (QString data_path : data_paths) {
-        if (exec_setup(data_path, script_path)) {
-            success = true;
-            break;
+
+    touch_dir(data_path);
+
+    int status = exec_setup(data_path, script_path);
+    QFile::remove(script_path);
+    return status == QProcess::NormalExit;
         }
     }
     QFile::remove(script_path);
