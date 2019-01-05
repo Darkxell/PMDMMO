@@ -8,10 +8,8 @@ import com.darkxell.common.util.language.Message;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonObject;
 
-public class BaseStats implements Communicable
-{
-	public static enum Stat
-	{
+public class BaseStats implements Communicable {
+	public static enum Stat {
 		Accuracy(6),
 		Attack(0),
 		Defense(1),
@@ -26,13 +24,11 @@ public class BaseStats implements Communicable
 
 		public final int id;
 
-		private Stat(int id)
-		{
+		private Stat(int id) {
 			this.id = id;
 		}
 
-		public Message getName()
-		{
+		public Message getName() {
 			return new Message("stat." + this.name());
 		}
 
@@ -54,8 +50,8 @@ public class BaseStats implements Communicable
 	/** Special Defense. */
 	int specialDefense;
 
-	public BaseStats(Pokemon pokemon, int attack, int defense, int health, int specialAttack, int specialDefense, int moveSpeed)
-	{
+	public BaseStats(Pokemon pokemon, int attack, int defense, int health, int specialAttack, int specialDefense,
+			int moveSpeed) {
 		this.pokemon = pokemon;
 		this.attack = attack;
 		this.defense = defense;
@@ -65,8 +61,7 @@ public class BaseStats implements Communicable
 		this.moveSpeed = moveSpeed;
 	}
 
-	public BaseStats(Pokemon pokemon, int[] stat)
-	{
+	public BaseStats(Pokemon pokemon, int[] stat) {
 		this.pokemon = pokemon;
 		this.attack = stat[Stat.Attack.id];
 		this.defense = stat[Stat.Defense.id];
@@ -77,8 +72,7 @@ public class BaseStats implements Communicable
 	}
 
 	/** Adds the input stats to these stats. */
-	public void add(BaseStats stats)
-	{
+	public void add(BaseStats stats) {
 		this.attack += stats.attack;
 		this.defense += stats.defense;
 		this.health += stats.health;
@@ -89,46 +83,45 @@ public class BaseStats implements Communicable
 	}
 
 	@Override
-	public boolean equals(Object obj)
-	{
-		if (!(obj instanceof BaseStats)) return false;
-		BaseStats s = (BaseStats) obj;
-		return this.attack == s.attack && this.defense == s.defense && this.health == s.health && this.moveSpeed == s.moveSpeed
-				&& this.specialAttack == s.specialAttack && this.specialDefense == s.specialDefense;
+	public BaseStats clone() {
+		return new BaseStats(this.pokemon, this.attack, this.defense, this.health, this.specialAttack,
+				this.specialDefense, this.moveSpeed);
 	}
 
-	public int getAttack()
-	{
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof BaseStats)) return false;
+		BaseStats s = (BaseStats) obj;
+		return this.attack == s.attack && this.defense == s.defense && this.health == s.health
+				&& this.moveSpeed == s.moveSpeed && this.specialAttack == s.specialAttack
+				&& this.specialDefense == s.specialDefense;
+	}
+
+	public int getAttack() {
 		return this.attack;
 	}
 
-	public int getDefense()
-	{
+	public int getDefense() {
 		return this.defense;
 	}
 
-	public int getHealth()
-	{
+	public int getHealth() {
 		return this.health;
 	}
 
-	public int getMoveSpeed()
-	{
+	public int getMoveSpeed() {
 		return this.moveSpeed;
 	}
 
-	public int getSpecialAttack()
-	{
+	public int getSpecialAttack() {
 		return this.specialAttack;
 	}
 
-	public int getSpecialDefense()
-	{
+	public int getSpecialDefense() {
 		return this.specialDefense;
 	}
 
-	private void onStatsChange()
-	{
+	private void onStatsChange() {
 		if (this.pokemon == null) return;
 		this.pokemon.getData().stat_atk = this.attack;
 		this.pokemon.getData().stat_def = this.defense;
@@ -138,8 +131,7 @@ public class BaseStats implements Communicable
 	}
 
 	@Override
-	public void read(JsonObject value)
-	{
+	public void read(JsonObject value) {
 		this.attack = value.getInt("atk", 0);
 		this.defense = value.getInt("def", 0);
 		this.health = value.getInt("hea", 0);
@@ -149,8 +141,7 @@ public class BaseStats implements Communicable
 	}
 
 	@Override
-	public JsonObject toJson()
-	{
+	public JsonObject toJson() {
 		JsonObject root = Json.object();
 		root.add("atk", this.attack);
 		root.add("def", this.defense);
@@ -161,8 +152,7 @@ public class BaseStats implements Communicable
 		return root;
 	}
 
-	public Element toXML()
-	{
+	public Element toXML() {
 		Element root = new Element("stats");
 		XMLUtils.setAttribute(root, "atk", this.attack, 0);
 		XMLUtils.setAttribute(root, "def", this.defense, 0);
