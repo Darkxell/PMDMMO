@@ -314,7 +314,7 @@ public class PokemonSpecies implements Registrable<PokemonSpecies>
 	/** @return Regular stats for a Pokemon at the input level. */
 	public BaseStats statsForLevel(int level)
 	{
-		BaseStats stats = this.baseStats.get(0);
+		BaseStats stats = this.baseStats.get(0).clone();
 		for (int lvl = 1; lvl < level; ++lvl)
 			stats.add(this.baseStats.get(lvl));
 		return stats;
