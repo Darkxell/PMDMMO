@@ -13,6 +13,7 @@
 #include <QApplication>
 #include <QDateTime>
 #include <QDir>
+#include <QErrorMessage>
 #include <QFile>
 #include <QProcess>
 #include <QSplashScreen>
@@ -138,10 +139,10 @@ int main(int argc, char *argv[]) {
 
     int status = attempt_load();
     if (status != QProcess::NormalExit) {
-        // TODO: error box message instead of crash
-        QString reason = code_to_reason(status);
-        QString message = "Error setting up:\n" + reason;
-        qFatal(message.toStdString().c_str());
+        QErrorMessage error(&splash);
+        error.showMessage("<p>Error setting up:</p>"
+                          "<p>" + code_to_reason(status) + "</p>");
+        error.exec();
     }
 
     splash.finish(nullptr);
