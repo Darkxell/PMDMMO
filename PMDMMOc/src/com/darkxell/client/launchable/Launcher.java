@@ -33,14 +33,15 @@ import com.darkxell.common.util.language.Message;
  * Launching class of the client
  */
 public class Launcher {
-	/**
-	 * Is the game running? If set to false, the game should start cleaning up
-	 * resources and exit automatically by the next game tick.
-	 */
-	public static boolean isRunning;
-	private static RenderProfile processingProfile = PROFILE_UNDEFINED;
-	private static GameLoop renderer;
-	private static GameLoop updater;
+    /**
+     * Is the game running? If set to false, the game should start cleaning up resources and exit automatically by
+     * the next game tick.
+     */
+    public static boolean isRunning;
+    private static RenderProfile processingProfile = PROFILE_UNDEFINED;
+    private static GameLoop renderer;
+    private static GameLoop updater;
+    private static DiscordEventHandlerForPMDMMO deh;
 
 	public static void main(String[] args) {
 		isRunning = true;
@@ -66,8 +67,8 @@ public class Launcher {
         Persistence.soundmanager = new SoundManager();
         Logger.instance().info("Lang & Data loaded.");
 
-		DiscordEventHandlerForPMDMMO deh = new DiscordEventHandlerForPMDMMO("In logging screen", "main_big");
-		deh.start();
+        deh = new DiscordEventHandlerForPMDMMO("In logging screen", "main_big");
+        deh.start();
 
 		Persistence.frame = new Frame();
 		Persistence.frame.setIconImage(Res_Frame.ICON.image());
@@ -109,6 +110,7 @@ public class Launcher {
 				e.printStackTrace();
 			}
 		}
+        deh.stop();
 		System.exit(0);
 	}
 
