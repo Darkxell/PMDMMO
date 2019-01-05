@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 public class RegularSpriteSet extends SpriteSet {
 
 	private int columns = -1, rows = -1;
-	private BufferedImage defaultSprite;
+	private SubSprite defaultSprite;
 	public final int spriteWidth, spriteHeight;
 
 	public RegularSpriteSet(String path, int spriteSize, int width, int height) {
@@ -17,7 +17,7 @@ public class RegularSpriteSet extends SpriteSet {
 		super(path, width, height);
 		this.spriteWidth = spriteWidth;
 		this.spriteHeight = spriteHeight;
-		this.defaultSprite = SpriteFactory.instance().getDefault(spriteWidth, spriteHeight);
+		this.defaultSprite = new SubSprite(this.path, 0, 0, spriteWidth, spriteHeight);
 		if (this.isLoaded() || (width != -1 && height != -1)) this.onLoad();
 	}
 
@@ -37,21 +37,21 @@ public class RegularSpriteSet extends SpriteSet {
 		return this.get(this.id(x, y));
 	}
 
-	public BufferedImage getDefault() {
+	public SubSprite getDefault() {
 		return this.defaultSprite;
 	}
 
 	/** @return The Image of the Sprite at the input position, where pos = x + y * cols. */
 	public BufferedImage getImg(int pos) {
 		Sprite s = this.get(pos);
-		if (s == null) return this.defaultSprite;
+		if (s == null) return this.defaultSprite.image();
 		return s.image();
 	}
 
 	/** @return The Image of the Sprite at the input x, y coordinates. */
 	public BufferedImage getImg(int x, int y) {
 		Sprite s = this.get(x, y);
-		if (s == null) return this.defaultSprite;
+		if (s == null) return this.defaultSprite.image();
 		return s.image();
 	}
 

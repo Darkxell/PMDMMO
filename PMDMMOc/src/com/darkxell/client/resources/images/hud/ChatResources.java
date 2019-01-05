@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 
 import com.darkxell.client.mechanics.chat.ChatBox;
 import com.darkxell.client.resources.images.Sprite;
-import com.darkxell.client.resources.images.SpriteFactory;
+import com.darkxell.client.resources.images.SubSprite;
 
 public class ChatResources {
 
@@ -18,14 +18,13 @@ public class ChatResources {
 	public static final Sprite ICON_CHANNEL_GLOBAL, ICON_CHANNEL_GUILD, ICON_CHANNEL_PRIVATE, ICON_SEND;
 
 	static {
-		Sprite ICONSBASE = new Sprite("/hud/chat/icons.png");
-		ICON_CHANNEL_GLOBAL = SpriteFactory.instance().subSprite(ICONSBASE, 0, 0, 32, 32);
-		ICON_CHANNEL_GUILD = SpriteFactory.instance().subSprite(ICONSBASE, 32, 0, 32, 32);
-		ICON_CHANNEL_PRIVATE = SpriteFactory.instance().subSprite(ICONSBASE, 64, 0, 32, 32);
-		ICON_SEND = SpriteFactory.instance().subSprite(ICONSBASE, 96, 0, 32, 32);
-		FOOTER_LEFT = SpriteFactory.instance().subSprite(FOOTER, 0, 0, 43, 35);
-		FOOTER_RIGHT = SpriteFactory.instance().subSprite(FOOTER, 171, 0, 39, 35);
-		FOOTER_CENTER = SpriteFactory.instance().subSprite(FOOTER, 43, 0, 125, 35);
+		ICON_CHANNEL_GLOBAL = new SubSprite("/hud/chat/icons.png", 0, 0, 32, 32);
+		ICON_CHANNEL_GUILD = new SubSprite("/hud/chat/icons.png", 32, 0, 32, 32);
+		ICON_CHANNEL_PRIVATE = new SubSprite("/hud/chat/icons.png", 64, 0, 32, 32);
+		ICON_SEND = new SubSprite("/hud/chat/icons.png", 96, 0, 32, 32);
+		FOOTER_LEFT = new SubSprite("/hud/chat/chatfooter.png", 0, 0, 43, 35);
+		FOOTER_RIGHT = new SubSprite("/hud/chat/chatfooter.png", 171, 0, 39, 35);
+		FOOTER_CENTER = new SubSprite("/hud/chat/chatfooter.png", 43, 0, 125, 35);
 	}
 
 	private static BufferedImage createHeader(boolean general, boolean guild, boolean whisper) {

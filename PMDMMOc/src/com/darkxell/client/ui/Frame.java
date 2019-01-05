@@ -4,33 +4,14 @@ import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 
 import com.darkxell.client.launchable.Launcher;
-import com.darkxell.client.launchable.Persistence;
-import com.darkxell.client.resources.images.Sprite;
 
 /** Main frame for the client. */
 public class Frame extends JFrame implements WindowListener
 {
-	public static class FrameIconSprite extends Sprite
-	{
-
-		public FrameIconSprite(String path)
-		{
-			super(path);
-		}
-
-		@Override
-		protected void loaded(BufferedImage img)
-		{
-			super.loaded(img);
-			if (Persistence.frame != null) Persistence.frame.setIconImage(this.image());
-		}
-
-	}
 
 	private static final long serialVersionUID = -6197661374941529294L;
 

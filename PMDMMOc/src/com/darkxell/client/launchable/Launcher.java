@@ -17,7 +17,6 @@ import com.darkxell.client.mechanics.animation.Animations;
 import com.darkxell.client.resources.Res;
 import com.darkxell.client.resources.images.SpriteFactory;
 import com.darkxell.client.resources.images.SpriteLoader;
-import com.darkxell.client.resources.images.Sprites.Res_Frame;
 import com.darkxell.client.resources.images.pokemon.PokemonPortrait;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
 import com.darkxell.client.resources.music.SoundManager;
@@ -69,7 +68,7 @@ public class Launcher {
         deh.start();
 
 		Persistence.frame = new Frame();
-		Persistence.frame.setIconImage(Res_Frame.ICON.image());
+		Persistence.frame.setIconImage(Res.getBase("/hud/framebackgrounds/icon.png"));
 		Persistence.frame.canvas.requestFocus();
 		Persistence.stateManager = new LoginMainState();
 
