@@ -19,7 +19,7 @@ public class DeployKeyHandler {
      * later.<br><br>When deploykeymode is true, account creation payload will
      * require a deploykey to be included.
      */
-    public static final boolean DEPLOYKEYMODE = true;
+    public static final boolean DEPLOYKEYMODE = false;
 
     /**
      * Generates a deployment key and returns it.
