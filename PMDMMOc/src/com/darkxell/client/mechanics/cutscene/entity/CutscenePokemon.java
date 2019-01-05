@@ -49,7 +49,7 @@ public class CutscenePokemon extends CutsceneEntity
 		this.currentState = PokemonSpriteState.IDLE;
 		this.facing = Direction.SOUTH;
 		this.animated = true;
-		this.instanciated = pokemon != null ? pokemon : Registries.species().find(this.pokemonid).generate(new Random(), 1);
+		this.instanciated = pokemon != null ? pokemon : Registries.species().find(this.pokemonid).generate(new Random(), 1, 0);
 	}
 
 	/** @param pokemon - Force the use of an already created Pokemon. */
