@@ -18,6 +18,7 @@ public class RegularSpriteSet extends SpriteSet {
 		this.spriteWidth = spriteWidth;
 		this.spriteHeight = spriteHeight;
 		this.defaultSprite = new SubSprite(this.path, 0, 0, spriteWidth, spriteHeight);
+		if (width != -1 && height != -1) this.onLoad();
 		this.checkIfLoaded();
 	}
 
