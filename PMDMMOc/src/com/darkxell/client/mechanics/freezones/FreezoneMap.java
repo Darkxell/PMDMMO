@@ -27,8 +27,8 @@ public abstract class FreezoneMap {
 	public int mapWidth;
 	/** The height of the map, in tiles. */
 	public int mapHeight;
-	/** True if there shouldn't be an ally entity. */
-	public boolean noAlly = false;
+	/** True if there shouldn't be an ally entity or other player entities. */
+	public boolean playerOnly = false;
 
 	public String freezonebgm = "";
 

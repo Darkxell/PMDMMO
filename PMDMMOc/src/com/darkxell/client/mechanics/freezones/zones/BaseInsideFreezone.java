@@ -31,7 +31,7 @@ public class BaseInsideFreezone extends FreezoneMap {
 			}
 		});
 
-		this.noAlly = true;
+		this.playerOnly = true;
 	}
 
 }
