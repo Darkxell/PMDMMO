@@ -7,7 +7,7 @@ import java.util.HashMap;
 public class SpriteSet extends Sprite
 {
 
-	private HashMap<String, Sprite> sprites = new HashMap<>();
+	private HashMap<String, SubSprite> sprites = new HashMap<>();
 
 	public SpriteSet(String path)
 	{
@@ -26,7 +26,7 @@ public class SpriteSet extends Sprite
 	 * @return The created Sprite. */
 	public Sprite createSprite(String id, int x, int y, int width, int height)
 	{
-		this.sprites.put(id, SpriteFactory.instance().subSprite(this, x, y, width, height));
+		this.sprites.put(id, new SubSprite(this.path, x, y, width, height));
 		return this.sprites.get(id);
 	}
 

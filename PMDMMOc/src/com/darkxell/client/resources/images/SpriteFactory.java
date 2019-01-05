@@ -18,10 +18,6 @@ public class SpriteFactory implements Runnable {
 
 	private static SpriteFactory instance;
 
-	public static Sprite getDefaultSprite(int width, int height) {
-		return new Sprite(instance.getDefault(width, height));
-	}
-
 	/** @return The factory's instance. */
 	public static SpriteFactory instance() {
 		return instance;
@@ -54,6 +50,8 @@ public class SpriteFactory implements Runnable {
 
 	/** Loaded images. */
 	private final Map<String, BufferedImage> images = new HashMap<>();
+	/** Split subimages. */
+	private final Map<String, BufferedImage> subimages = new HashMap<>();
 	private final LinkedList<String> toLoad = new LinkedList<>();
 
 	private SpriteFactory() {}
@@ -95,6 +93,16 @@ public class SpriteFactory implements Runnable {
 		g.fillRect(0, 0, this.defaultImg.getWidth(), this.defaultImg.getHeight());
 
 		return img;
+	}
+
+	BufferedImage getSubimage(String image, int x, int y, int width, int height) {
+		String id = image + "|" + x + "|" + y + "|" + width + "|" + height;
+		if (!this.subimages.containsKey(id)) {
+			if (!this.isResourceLoaded(image)) return this.getDefault(width, height);
+			else this.subimages.put(id, this.get(image).getSubimage(x, y, width, height));
+		}
+
+		return this.subimages.get(id);
 	}
 
 	/** @return Has this image been loaded? */

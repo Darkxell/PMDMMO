@@ -56,7 +56,7 @@ public final class Sprites {
 				BACKGROUNDS = new Sprite[backgroundPaths.length];
 				for (int i = 0; i < BACKGROUNDS.length; ++i)
 					BACKGROUNDS[i] = new Sprite(backgroundPaths[i]);
-			} else BACKGROUNDS = new Sprite[] { SpriteFactory.getDefaultSprite(20, 20) };
+			} else BACKGROUNDS = new Sprite[] { new Sprite("", 20, 20) };
 			/* BACKGROUNDS = Arrays.stream(backgroundPaths).sorted() .map(f -> new Sprite(BACKGROUNDS_DIRECTORY + '/' + f.getName())).toArray(Sprite[]::new); */
 
 			Sprite source = new Sprite("/hud/boxcorners.png");
