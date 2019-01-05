@@ -89,9 +89,7 @@ int exec_setup(QString work_path, QString script_path) {
 
     process.waitForFinished(-1);
     int status = process.exitCode();
-    if (status != QProcess::NormalExit) {
-        flush_logs(&process);
-    }
+    flush_logs(&process);
     return status;
 }
 
