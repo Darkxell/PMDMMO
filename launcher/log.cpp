@@ -4,8 +4,6 @@
 #include <QProcess>
 #include <QString>
 
-#include <QDebug>
-
 #include "log.h"
 
 #include "constants.h"
@@ -44,7 +42,6 @@ QString create_rotated_path(QFileInfo &file) {
 }
 
 void rotate_logs(QString logs_path, int steps) {
-    qInfo() << steps;
     QDir logs_dir(logs_path);
     QFileInfoList logs = logs_dir.entryInfoList(QDir::Files, QDir::Time);
 
