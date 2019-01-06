@@ -8,7 +8,7 @@ constexpr auto SetupScript = ":/static/setup.ps1";
 constexpr auto SetupScript = ":/static/setup.sh";
 #endif
 
-constexpr auto PlaceholderImage = ":/static/placeholder.png";
+constexpr auto PlaceholderImage = ":/static/splash.png";
 
 constexpr auto LogsDir = "logs";
 constexpr auto LogPrefix = "setup";

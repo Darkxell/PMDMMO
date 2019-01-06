@@ -1,7 +1,7 @@
 <RCC>
     <qresource prefix="/">
-        <file>static/placeholder.png</file>
         <file>static/setup.ps1</file>
         <file>static/setup.sh</file>
+        <file>static/splash.png</file>
     </qresource>
 </RCC>
