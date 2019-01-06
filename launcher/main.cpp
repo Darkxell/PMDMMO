@@ -19,10 +19,11 @@ int exec_setup(QString work_path, QString script_path) {
     process.setWorkingDirectory(work_path);
 
 #ifdef Q_OS_WIN
-    process.start(
-        "powershell.exe",
-        QStringList() << "-NonInteractive" << "-NoLogo" << "-NoProfile"
-            << "-File" << script_path
+    process.start("powershell.exe",
+                  QStringList() << "-NonInteractive"
+                    << "-NoLogo"
+                    << "-NoProfile"
+                    << "-File" << script_path
     );
 #else
     // TODO: test on macos and linux (at least ubuntu)
@@ -34,6 +35,7 @@ int exec_setup(QString work_path, QString script_path) {
                       SIGNAL(finished(int, QProcess::ExitStatus)),
                       &q, SLOT(quit()));
     q.exec();
+    // TODO: add incremental output reads
     int status = process.exitCode();
     flush_logs(process);
     return status;
