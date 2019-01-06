@@ -1,70 +1,13 @@
-#if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
-#define IS_WIN
-#endif
-
-#define LOGS_PATH "logs"
-
-#ifdef IS_WIN
-#define SETUP_SCRIPT ":/static/setup.ps1"
-#else
-#define SETUP_SCRIPT ":/static/setup.sh"
-#endif
-
 #include <QApplication>
-#include <QDateTime>
-#include <QDir>
 #include <QErrorMessage>
 #include <QFile>
-#include <QProcess>
 #include <QSplashScreen>
 #include <QStandardPaths>
-#include <QTemporaryFile>
 
-QString copy_tmp(QString resource) {
-    QFile file(resource);
-    QTemporaryFile *tmp = QTemporaryFile::createNativeFile(file);
-    QString tmp_name = tmp->fileName();
+#include "constants.h"
 
-#ifdef IS_WIN
-    // powershell only works if the extension is ps1
-    // because of course it does
-    tmp_name += ".ps1";
-    tmp->rename(tmp_name);
-#endif
-
-    return tmp_name;
-}
-
-QString create_log_name() {
-    QDateTime now = QDateTime::currentDateTime();
-    QString timestamp = now.toString("yyyy-MM-dd-hh-mm-ss.zzz");
-    return "setup-" + timestamp;
-}
-
-void touch_dir(QString path) {
-    QDir dir(path);
-    if (!dir.exists()) {
-        dir.mkpath(".");
-    }
-}
-
-void write_logs(QString dir, QString path, QByteArray output, QString ext) {
-    if (output.trimmed().isEmpty()) return;
-
-    touch_dir(dir);
-    QFile log(dir + "/" + path + ext);
-    if (log.open(QIODevice::WriteOnly)) {
-        log.write(output);
-    }
-}
-
-void flush_logs(QProcess &process) {
-    QString logs_path = process.workingDirectory() + "/" + LOGS_PATH;
-    QString log_name = create_log_name();
-
-    write_logs(logs_path, log_name, process.readAllStandardOutput(), ".log");
-    write_logs(logs_path, log_name, process.readAllStandardError(), ".err");
-}
+#include "log.h"
+#include "util.h"
 
 /**
  * @brief exec_setup Execute shell script.
@@ -75,16 +18,16 @@ int exec_setup(QString work_path, QString script_path) {
     process.setProcessChannelMode(QProcess::MergedChannels);
     process.setWorkingDirectory(work_path);
 
-#ifdef IS_WIN
-    process.start(
-        "powershell.exe",
-        QStringList() << "-NonInteractive" << "-NoLogo" << "-NoProfile"
-            << "-File" << script_path
-    );
-#else
-    // TODO: test on macos and linux (at least ubuntu)
-    process.start("/bin/sh", QStringList() << script_path);
-#endif
+    if (Constants::IsWindows) {
+        process.start(
+            "powershell.exe",
+            QStringList() << "-NonInteractive" << "-NoLogo" << "-NoProfile"
+                << "-File" << script_path
+        );
+    } else {
+        // TODO: test on macos and linux (at least ubuntu)
+        process.start("/bin/sh", QStringList() << script_path);
+    }
 
     process.waitForFinished(-1);
     int status = process.exitCode();
@@ -95,29 +38,13 @@ int exec_setup(QString work_path, QString script_path) {
 int attempt_load() {
     QString data_path = QStandardPaths::standardLocations(
         QStandardPaths::AppDataLocation)[0];
-    QString script_path = copy_tmp(SETUP_SCRIPT);
+    QString script_path = copy_tmp(Constants::SetupScript);
 
     touch_dir(data_path);
 
     int status = exec_setup(data_path, script_path);
     QFile::remove(script_path);
     return status;
-}
-
-/**
- * @brief code_to_reason Convert code to reason.
- * @param code Code returned from script.
- * @return Message explaining error.
- */
-QString code_to_reason(int code) {
-    switch(code) {
-    case 1:
-        return "Something is wrong with the script.";
-    case 2:
-        return "JRE 1.8 or higher must be available.";
-    default:
-        return "Unknown error" + QString::number(code) + ".";
-    }
 }
 
 /**
@@ -131,7 +58,7 @@ int main(int argc, char *argv[]) {
     // be shown, but we don't actually use any qt stuff here.
     QApplication dummy_app(argc, argv);
 
-    QPixmap image(":/static/placeholder.png");
+    QPixmap image(Constants::PlaceholderImage);
     QSplashScreen splash(image);
 
     splash.show();
