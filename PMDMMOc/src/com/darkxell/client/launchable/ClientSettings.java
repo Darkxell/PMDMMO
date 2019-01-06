@@ -17,7 +17,7 @@ public class ClientSettings
 			KEY_MOVE_2 = "key.move2", KEY_MOVE_3 = "key.move3", KEY_MOVE_4 = "key.move4", KEY_ITEM_1 = "key.item1", KEY_ITEM_2 = "key.item2",
 			KEY_INVENTORY = "key.inventory", KEY_MAP_UP = "key.map.up", KEY_MAP_DOWN = "key.map.down", KEY_MAP_LEFT = "key.map.left",
 			KEY_MAP_RIGHT = "key.map.right", KEY_MAP_RESET = "key.map.reset", KEY_PARTY = "key.party", KEY_PAGE_LEFT = "key.page.left",
-			KEY_PAGE_RIGHT = "key.page.right", SERVER_ADDRESS = "server.address", LOGIN = "login", HP_BARS = "hp_bars";
+			KEY_PAGE_RIGHT = "key.page.right", SERVER_ADDRESS = "server.address", LOGIN = "login", HP_BARS = "hp_bars", LANGUAGE = "lang";
 
 	private static Properties settings;
 
@@ -79,6 +79,8 @@ public class ClientSettings
 				return "Unknown user";
 			case HP_BARS:
 				return "true";
+			case LANGUAGE:
+				return "null";
 			default:
 				return null;
 		}

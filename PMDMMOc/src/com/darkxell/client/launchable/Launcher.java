@@ -17,38 +17,37 @@ import com.darkxell.client.mechanics.animation.Animations;
 import com.darkxell.client.resources.Res;
 import com.darkxell.client.resources.images.SpriteFactory;
 import com.darkxell.client.resources.images.SpriteLoader;
-import com.darkxell.client.resources.images.Sprites.Res_Frame;
 import com.darkxell.client.resources.images.pokemon.PokemonPortrait;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
-import com.darkxell.client.resources.music.SoundManager;
 import com.darkxell.client.resources.music.SoundsHolder;
-import com.darkxell.client.state.mainstates.LoginMainState;
+import com.darkxell.client.state.mainstates.LoadingMainState;
 import com.darkxell.client.ui.Frame;
 import com.darkxell.common.Registries;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.language.Localization;
 import com.darkxell.common.util.language.Message;
 
-/**
- * Launching class of the client
- */
+/** Launching class of the client */
 public class Launcher {
-    /**
-     * Is the game running? If set to false, the game should start cleaning up resources and exit automatically by
-     * the next game tick.
-     */
-    public static boolean isRunning;
-    private static RenderProfile processingProfile = PROFILE_UNDEFINED;
-    private static GameLoop renderer;
-    private static GameLoop updater;
-    private static DiscordEventHandlerForPMDMMO deh;
+	/** Is the game running? If set to false, the game should start cleaning up resources and exit automatically by the next game tick. */
+	public static boolean isRunning;
+	private static RenderProfile processingProfile = PROFILE_UNDEFINED;
+	private static GameLoop renderer;
+	private static GameLoop updater;
+	private static DiscordEventHandlerForPMDMMO deh;
 
 	public static void main(String[] args) {
 		isRunning = true;
-
 		ClientSettings.load();
 		Logger.load("CLIENT");
+
+		Persistence.frame = new Frame();
+		Persistence.frame.setIconImage(Res.getBase("/hud/framebackgrounds/icon.png"));
+		Persistence.frame.canvas.requestFocus();
+		Persistence.stateManager = new LoadingMainState();
+
 		Localization.load(false);
+		ClientSettings.load();
 		try {
 			SpriteFactory.load();
 		} catch (AssertionError e) {
@@ -57,25 +56,22 @@ public class Launcher {
 					new Message("error").toString(), JOptionPane.ERROR_MESSAGE);
 			System.exit(1);
 		}
-		
-		Registries.load();
-        SpriteLoader.loadCommon();
-        PokemonSpritesets.loadData();
-        PokemonPortrait.load();
-        Animations.loadData();
-        SoundsHolder.load("");
-        Persistence.soundmanager = new SoundManager();
-        Logger.instance().info("Lang & Data loaded.");
-
-        deh = new DiscordEventHandlerForPMDMMO("In logging screen", "main_big");
-        deh.start();
-
-		Persistence.frame = new Frame();
-		Persistence.frame.setIconImage(Res_Frame.ICON.image());
-		Persistence.frame.canvas.requestFocus();
-		Persistence.stateManager = new LoginMainState();
 
 		setProcessingProfile(PROFILE_SYNCHRONIZED);
+		
+		Registries.load();
+		SpriteLoader.loadCommon();
+		PokemonSpritesets.loadData();
+		PokemonPortrait.load();
+		Animations.loadData();
+		SoundsHolder.load("");
+		Logger.instance().info("Lang & Data loaded.");
+
+		deh = new DiscordEventHandlerForPMDMMO("In logging screen", "main_big");
+		deh.start();
+		
+		Persistence.setDefaultValues();
+		((LoadingMainState) Persistence.stateManager).onLoadingFinished();
 	}
 
 	private static int getTicksPerSecond(GameLoop l) {
@@ -95,9 +91,7 @@ public class Launcher {
 		isRunning = false;
 		Logger.instance().saveOnExit = !Res.RUNNING_IN_IDE;
 		Logger.instance().saveClient();
-		if (Persistence.isUnitTesting) {
-			return;
-		}
+		if (Persistence.isUnitTesting) { return; }
 		ClientSettings.save();
 		if (Persistence.saveDataOnExit) {
 			try {
@@ -110,26 +104,24 @@ public class Launcher {
 				e.printStackTrace();
 			}
 		}
-        deh.stop();
+		if (deh != null) deh.stop();
 		System.exit(0);
 	}
 
 	public static void setProcessingProfile(RenderProfile profile) {
-		if (processingProfile == profile) {
-			return;
-		}
+		if (processingProfile == profile) { return; }
 
 		Logger.i("Processing profile switched: " + profile.name());
 		switch (processingProfile = profile) {
-		case PROFILE_SYNCHRONIZED:
-			new Thread(updater = renderer = new UpdaterAndRenderer()).start();
-			break;
-		case PROFILE_UNCAPPED:
-			new Thread(updater = new Updater()).start();
-			new Thread(renderer = new Renderer()).start();
-			break;
-		case PROFILE_UNDEFINED:
-			break;
+			case PROFILE_SYNCHRONIZED:
+				new Thread(updater = renderer = new UpdaterAndRenderer()).start();
+				break;
+			case PROFILE_UNCAPPED:
+				new Thread(updater = new Updater()).start();
+				new Thread(renderer = new Renderer()).start();
+				break;
+			case PROFILE_UNDEFINED:
+				break;
 		}
 	}
 
