@@ -21,6 +21,8 @@ constexpr auto PlaceholderImage = ":/static/placeholder.png";
 constexpr auto LogsDir = "logs";
 constexpr auto LogPrefix = "setup";
 constexpr auto LogTimestamp = "yyyy-MM-dd-hh-mm-ss.zzz";
+constexpr auto LogMaxSize = 1024 * 1024; // 1 MiB
+constexpr auto LogMax = 100;
 }
 
 #endif // CONSTANTS_H
