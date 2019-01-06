@@ -167,7 +167,7 @@ public class Logger {
         if (!this.saveOnExit) {
             return;
         }
-        new File("resources").mkdirs();
+        new File("resources/logs").mkdirs();
         File f = new File("resources/logs/log-" + new SimpleDateFormat("yyyy-MM-dd_HH.mm").format(this.start) + ".txt");
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(f));
