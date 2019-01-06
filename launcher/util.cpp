@@ -38,8 +38,10 @@ QString code_to_reason(int code) {
     case 1:
         return "Something is wrong with the script.";
     case 2:
+        return "No JRE available.";
+    case 3:
         return "JRE 1.8 or higher must be available.";
     default:
-        return "Unknown error" + QString::number(code) + ".";
+        return "Unknown error " + QString::number(code) + ".";
     }
 }

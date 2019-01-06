@@ -1,22 +1,29 @@
-function Download-File {
-    param(
-        [String] $url,
-        [String] $path
-    )
-
+function Download-Jar {
+    # TODO: set up dynamic installation and patches
+    $url = "https://s3-us-west-1.amazonaws.com/xsduan/alpha0.1.0h-10.zip"
+    $zip = [guid]::NewGuid().Guid + ".zip"
     $client = New-Object System.Net.WebClient
-    $client.DownloadFile($url, $path)
+    $client.DownloadFile($url, $zip)
+    Expand-Archive -Path $zip -DestinationPath "."
+    Remove-Item $zip
 }
 
 $java_info = Get-Command java -errorAction SilentlyContinue
-if (!$java_info -or ($java_info.Version.Major -lt 8)) {
-    exit 2 # "jre not installed"
+if (!$java_info) {
+    exit 2 # jre not installed
 }
 
-# exit 3 # "could not connect to server"
-# TODO: install (& verify?) jar
-# exit 4 # "could not verify download"
-# TODO: install data files
-# exit 5 # "could not get game data"
+$min = New-Object -TypeName System.Version -ArgumentList "8.0.1810.0"
+if ($java_info.Version -lt $min) {
+    exit 3 # jre must be >=1.8
+}
 
-Start-Process 'D:\git\PMDMMO\out\artifacts\PMDMMOc_jar\PMDMMOc.jar'
+# TODO: standardize archive format
+$path = "test.jar"
+if (!(Test-Path $path)) {
+    # TODO: verification
+    Write-Host "Could not find executable, installing."
+    Download-Jar
+}
+
+Start-Process $path
