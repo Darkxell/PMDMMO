@@ -7,14 +7,12 @@ import com.darkxell.client.state.menu.AbstractMenuState;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.common.util.language.Message;
 
-public class SettingsMenuState extends OptionSelectionMenuState
-{
+public class SettingsMenuState extends OptionSelectionMenuState {
 
-	private MenuOption controls, hpBars, back;
+	private MenuOption controls, hpBars, language, back;
 	public final AbstractMenuState parent;
 
-	public SettingsMenuState(AbstractMenuState parent, AbstractGraphiclayer background)
-	{
+	public SettingsMenuState(AbstractMenuState parent, AbstractGraphiclayer background) {
 		super(background);
 		this.parent = parent;
 
@@ -22,11 +20,11 @@ public class SettingsMenuState extends OptionSelectionMenuState
 	}
 
 	@Override
-	protected void createOptions()
-	{
+	protected void createOptions() {
 		MenuTab tab = new MenuTab("menu.settings");
 		tab.addOption(this.controls = new MenuOption("menu.controls"));
 		tab.addOption(this.hpBars = new MenuOption("menu.settings.hp_bars.on"));
+		tab.addOption(this.language = new MenuOption("menu.language"));
 		tab.addOption(this.back = new MenuOption("general.back"));
 		this.tabs.add(tab);
 
@@ -34,20 +32,21 @@ public class SettingsMenuState extends OptionSelectionMenuState
 	}
 
 	@Override
-	protected void onExit()
-	{
+	protected void onExit() {
 		Persistence.stateManager.setState(this.parent);
 	}
 
 	@Override
-	protected void onOptionSelected(MenuOption option)
-	{
+	protected void onOptionSelected(MenuOption option) {
 		if (option == this.back) this.onExit();
 		else if (option == this.hpBars)
 		{
 			ClientSettings.setSetting(ClientSettings.HP_BARS, String.valueOf(!ClientSettings.getBooleanSetting(ClientSettings.HP_BARS)));
 			this.updateSettingValues();
-		} else if (option == this.controls) Persistence.stateManager.setState(new ControlsMenuState(this, this.background).setOpaque(this.isOpaque));
+		} else if (option == this.controls)
+			Persistence.stateManager.setState(new ControlsMenuState(this, this.background).setOpaque(this.isOpaque));
+		else if (option == this.language)
+			Persistence.stateManager.setState(new LanguageSelectionMenuState(this, this.background, this.isOpaque));
 	}
 
 	private void updateSettingValues()
