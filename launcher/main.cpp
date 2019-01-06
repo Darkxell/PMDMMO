@@ -29,7 +29,11 @@ int exec_setup(QString work_path, QString script_path) {
     process.start("/bin/sh", QStringList() << script_path);
 #endif
 
-    process.waitForFinished(-1);
+    QEventLoop q;
+    QProcess::connect(&process,
+                      SIGNAL(finished(int, QProcess::ExitStatus)),
+                      &q, SLOT(quit()));
+    q.exec();
     int status = process.exitCode();
     flush_logs(process);
     return status;
