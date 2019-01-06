@@ -28,13 +28,13 @@ public class Song {
 			baseFileFormat = new MpegAudioFileReader().getAudioFileFormat(Res.get(path));
 			@SuppressWarnings("rawtypes")
 			Map properties = baseFileFormat.properties();
-			//long duration = (long) properties.get("duration");
-			//this.length = (int) duration / 1000;
+			// long duration = (long) properties.get("duration");
+			// this.length = (int) duration / 1000;
 			this.author = (String) properties.get("author");
 			this.name = (String) properties.get("title");
 		} catch (Exception e) {
-			Logger.e("Could not read song '" + path + "' properties properly : " + e);
-			e.printStackTrace();
+			Logger.w("Could not read song '" + path + "' properties properly : " + e);
+			// e.printStackTrace();
 		}
 		File tempfile = new File(path);
 		this.displayname = tempfile.getName();
