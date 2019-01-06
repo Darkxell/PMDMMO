@@ -18,16 +18,16 @@ int exec_setup(QString work_path, QString script_path) {
     process.setProcessChannelMode(QProcess::MergedChannels);
     process.setWorkingDirectory(work_path);
 
-    if (Constants::IsWindows) {
-        process.start(
-            "powershell.exe",
-            QStringList() << "-NonInteractive" << "-NoLogo" << "-NoProfile"
-                << "-File" << script_path
-        );
-    } else {
-        // TODO: test on macos and linux (at least ubuntu)
-        process.start("/bin/sh", QStringList() << script_path);
-    }
+#ifdef Q_OS_WIN
+    process.start(
+        "powershell.exe",
+        QStringList() << "-NonInteractive" << "-NoLogo" << "-NoProfile"
+            << "-File" << script_path
+    );
+#else
+    // TODO: test on macos and linux (at least ubuntu)
+    process.start("/bin/sh", QStringList() << script_path);
+#endif
 
     process.waitForFinished(-1);
     int status = process.exitCode();

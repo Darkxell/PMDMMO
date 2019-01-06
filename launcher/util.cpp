@@ -11,12 +11,12 @@ QString copy_tmp(QString resource) {
     QTemporaryFile *tmp = QTemporaryFile::createNativeFile(file);
     QString tmp_name = tmp->fileName();
 
-    if (Constants::IsWindows) {
+#ifdef Q_OS_WIN
         // powershell only works if the extension is ps1
         // because of course it does
         tmp_name += ".ps1";
         tmp->rename(tmp_name);
-    }
+#endif
 
     return tmp_name;
 }

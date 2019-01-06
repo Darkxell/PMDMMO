@@ -1,18 +1,10 @@
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
-#if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
-#define IS_WIN
-#endif
-
 namespace Constants {
-#ifdef IS_WIN
-constexpr bool IsWindows = true;
-
+#ifdef Q_OS_WIN
 constexpr auto SetupScript = ":/static/setup.ps1";
 #else
-constexpr bool IsWindows = false;
-
 constexpr auto SetupScript = ":/static/setup.sh";
 #endif
 
