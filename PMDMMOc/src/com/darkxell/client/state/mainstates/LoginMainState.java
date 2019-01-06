@@ -222,7 +222,8 @@ public class LoginMainState extends StateManager {
 		g.fillRect((int) button_createaccount.x, (int) button_createaccount.y, (int) button_createaccount.width,
 				(int) button_createaccount.height);
 		gcopy.setColor(new Color(30, 15, 210));
-		gcopy.drawString("Create account", (int) button_createaccount.x + 15, (int) button_createaccount.y + 20);
+		gcopy.drawString(this.createAccount.toString(), (int) button_createaccount.x + 15,
+				(int) button_createaccount.y + 20);
 		g.setColor((button_offline.isInside(new Position(relativemousex, relativemousey))) ? selectedbuttoncolor
 				: buttoncolor);
 		if (!DEBUGALLOWED) g.setColor(new Color(120, 120, 180));
