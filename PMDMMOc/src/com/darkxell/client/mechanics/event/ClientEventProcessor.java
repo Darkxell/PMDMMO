@@ -367,7 +367,8 @@ public final class ClientEventProcessor extends CommonEventProcessor {
 	private void processItemMovedEvent(ItemMovedEvent event) {
 		if (event.source() instanceof Tile) {
 			boolean ally = true;
-			if (event.destination() instanceof Pokemon) ally = Persistence.player.isAlly((Pokemon) event.destination());
+			if (event.destination() instanceof DungeonPokemon)
+				ally = Persistence.player.isAlly((DungeonPokemon) event.destination());
 			else if (event.destination() instanceof Inventory)
 				ally = Persistence.player.inventory() == (Inventory) event.destination();
 			SoundManager.playSound(ally ? "dungeon-item" : "dungeon-enemygrab");
