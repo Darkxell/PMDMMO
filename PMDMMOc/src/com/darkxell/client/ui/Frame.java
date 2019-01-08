@@ -3,6 +3,7 @@ package com.darkxell.client.ui;
 import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.event.WindowEvent;
+import java.awt.event.WindowFocusListener;
 import java.awt.event.WindowListener;
 import java.awt.image.BufferedImage;
 
@@ -13,8 +14,8 @@ import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.resources.images.Sprite;
 
 /** Main frame for the client. */
-public class Frame extends JFrame implements WindowListener
-{
+public class Frame extends JFrame implements WindowListener, WindowFocusListener {
+	
 	public static class FrameIconSprite extends Sprite
 	{
 
@@ -36,8 +37,7 @@ public class Frame extends JFrame implements WindowListener
 
 	public Canvas canvas;
 
-	public Frame()
-	{
+	public Frame() {
 		super();
 		this.setTitle("Pokemon Mystery Dungeon: Online Rescue Team");
 		this.setSize(1300, 950);
@@ -47,6 +47,7 @@ public class Frame extends JFrame implements WindowListener
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setVisible(true);
 		this.addWindowListener(this);
+		this.addWindowFocusListener(this);
 
 		this.canvas = new Canvas();
 		this.add(this.canvas);
@@ -59,33 +60,34 @@ public class Frame extends JFrame implements WindowListener
 	}
 
 	@Override
-	public void windowActivated(WindowEvent e)
-	{}
+	public void windowActivated(WindowEvent e) {}
 
 	@Override
-	public void windowClosed(WindowEvent e)
-	{}
+	public void windowClosed(WindowEvent e) {}
 
 	@Override
-	public void windowClosing(WindowEvent e)
-	{
+	public void windowClosing(WindowEvent e) {
 		Launcher.stopGame();
 	}
 
 	@Override
-	public void windowDeactivated(WindowEvent e)
-	{}
+	public void windowDeactivated(WindowEvent e) {}
 
 	@Override
-	public void windowDeiconified(WindowEvent e)
-	{}
+	public void windowDeiconified(WindowEvent e) {}
 
 	@Override
-	public void windowIconified(WindowEvent e)
-	{}
+	public void windowIconified(WindowEvent e) {}
 
 	@Override
-	public void windowOpened(WindowEvent e)
-	{}
+	public void windowOpened(WindowEvent e) {}
+
+	@Override
+	public void windowGainedFocus(WindowEvent e) {}
+
+	@Override
+	public void windowLostFocus(WindowEvent e) {
+		Keys.onLostFocus();
+	}
 
 }

@@ -144,4 +144,12 @@ public class Keys implements KeyListener {
 		Persistence.stateManager.onKeyTyped(e);
 	}
 
+	public static void onLostFocus() {
+		for (Key key : Key.values()) {
+			if (key != Key.UNKNOWN)
+				key.willPress = false;
+			Persistence.stateManager.onKeyReleased(null, key);
+		}
+	}
+
 }
