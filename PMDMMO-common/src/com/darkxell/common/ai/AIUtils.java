@@ -7,7 +7,9 @@ import java.util.Stack;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
+import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.pokemon.LearnedMove;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.RandomUtil;
 
@@ -38,6 +40,21 @@ public final class AIUtils {
 		for (Direction d : Direction.directions)
 			tiles.add(t.adjacentTile(d));
 		return tiles;
+	}
+
+	private static boolean canUse(DungeonPokemon pokemon, LearnedMove move, Floor floor) {
+		if (!pokemon.canUse(move, floor)) return false;
+		return move.pp() != 0;
+	}
+
+	public static LearnedMove chooseMove(AI ai) {
+		ArrayList<LearnedMove> candidates = new ArrayList<>();
+		for (int i = 0; i < ai.pokemon.moveCount(); ++i)
+			candidates.add(ai.pokemon.move(i));
+		candidates.removeIf(m -> !canUse(ai.pokemon, m, ai.floor));
+		if (candidates.isEmpty()) candidates.add(new LearnedMove(MoveRegistry.STRUGGLE.id));
+		candidates.add(new LearnedMove(MoveRegistry.ATTACK.id));
+		return RandomUtil.random(candidates, ai.floor.random);
 	}
 
 	/** @param angle - An angle in degrees.
