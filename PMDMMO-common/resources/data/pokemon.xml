@@ -2011,7 +2011,7 @@
     <abilities>4</abilities>
     <tms>308,87,608,808,96,85,707,99,811,13,813,309,113,814,75,956,16,17,65,97,805,105,103,61,123,119,59</tms>
     <learnset>
-      <level l="1">1,130,806</level>
+      <level l="1">1,130</level>
       <level l="7">813</level>
       <level l="11">702</level>
       <level l="43">707</level>
