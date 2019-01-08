@@ -30,8 +30,8 @@ public class DataEditor extends Application {
 
 	public static void main(String[] args) {
 		Launcher.isRunning = true;
-		ClientSettings.load();
 		Logger.load("DATA EDITOR");
+		ClientSettings.load();
 		Localization.load(false);
 		SpriteFactory.load();
 		Registries.load();
