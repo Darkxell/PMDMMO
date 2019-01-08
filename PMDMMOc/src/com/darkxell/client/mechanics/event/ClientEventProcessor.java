@@ -477,6 +477,10 @@ public final class ClientEventProcessor extends CommonEventProcessor {
 	}
 
 	private void processMoveEvent(MoveSelectionEvent event) {
+		PokemonSprite sprite = Persistence.dungeonState.pokemonRenderer.getRenderer(event.usedMove().user).sprite();
+		if (event.usedMove().direction != sprite.getFacingDirection())
+			sprite.setFacingDirection(event.usedMove().direction);
+
 		boolean playAnimationLater = Animations.movePlaysForEachTarget(event.usedMove().move.move());
 		boolean hasTarget = false;
 		for (DungeonEvent e : event.getResultingEvents())
@@ -524,7 +528,6 @@ public final class ClientEventProcessor extends CommonEventProcessor {
 
 		}
 
-		PokemonSprite sprite = Persistence.dungeonState.pokemonRenderer.getSprite(event.usedMove().user);
 		if (sprite.defaultState() == PokemonSpriteState.WITHDRAW)
 			sprite.setDefaultState(PokemonSpriteState.IDLE, false);
 	}
