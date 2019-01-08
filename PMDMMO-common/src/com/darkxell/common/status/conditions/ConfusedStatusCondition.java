@@ -1,7 +1,6 @@
 package com.darkxell.common.status.conditions;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import com.darkxell.common.dungeon.floor.Floor;
@@ -13,17 +12,15 @@ import com.darkxell.common.status.StatusCondition;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.RandomUtil;
 
-public class ConfusedStatusCondition extends StatusCondition
-{
+public class ConfusedStatusCondition extends StatusCondition {
 
-	public ConfusedStatusCondition(int id, boolean isAilment, int durationMin, int durationMax)
-	{
+	public ConfusedStatusCondition(int id, boolean isAilment, int durationMin, int durationMax) {
 		super(id, isAilment, durationMin, durationMax);
 	}
 
 	@Override
-	public void onPreEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned, ArrayList<DungeonEvent> resultingEvents)
-	{
+	public void onPreEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned,
+			ArrayList<DungeonEvent> resultingEvents) {
 		super.onPreEvent(floor, event, concerned, resultingEvents);
 		if (event instanceof PokemonTravelEvent && ((PokemonTravelEvent) event).pokemon() == concerned
 				&& ((PokemonTravelEvent) event).pokemon().hasStatusCondition(this) && !event.hasFlag("confused"))
@@ -33,8 +30,7 @@ public class ConfusedStatusCondition extends StatusCondition
 			this.randomize(floor, ((MoveSelectionEvent) event), resultingEvents);
 	}
 
-	private void randomize(Floor floor, MoveSelectionEvent event, ArrayList<DungeonEvent> resultingEvents)
-	{
+	private void randomize(Floor floor, MoveSelectionEvent event, ArrayList<DungeonEvent> resultingEvents) {
 		event.consume();
 		Direction direction = Direction.randomDirection(floor.random);
 		MoveSelectionEvent e = new MoveSelectionEvent(floor, event.usedMove().move, event.usedMove().user, direction);
@@ -43,15 +39,14 @@ public class ConfusedStatusCondition extends StatusCondition
 		resultingEvents.add(e);
 	}
 
-	private void randomize(Floor floor, PokemonTravelEvent event, ArrayList<DungeonEvent> resultingEvents)
-	{
+	private void randomize(Floor floor, PokemonTravelEvent event, ArrayList<DungeonEvent> resultingEvents) {
 		event.consume();
-		List<Direction> candidates = Arrays.asList(Direction.directions);
-		for (int i = 0; i < candidates.size(); ++i)
-		{
+		List<Direction> candidates = new ArrayList<>();
+		for (Direction d : Direction.directions)
+			candidates.add(d);
+		for (int i = 0; i < candidates.size(); ++i) {
 			Direction d = candidates.get(i);
-			if (!event.pokemon().tile().adjacentTile(d).canMoveTo(event.pokemon(), d, false))
-			{
+			if (!event.pokemon().tile().adjacentTile(d).canMoveTo(event.pokemon(), d, false)) {
 				candidates.remove(i);
 				--i;
 			}
