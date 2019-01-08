@@ -138,7 +138,7 @@ public class Keys implements KeyListener {
 	 * @param canRun - True if the RUN key should be checked.
 	 * @param targetKeys - List of keys that correspond to a "direction". */
 	public static boolean directionPressed(boolean canRun, Key... targetKeys) {
-		if (Key.RUN.isPressed && canRun) {
+		if (Key.RUN.isPressed() && canRun) {
 			if (shouldSkipRun(targetKeys)) return false;
 			// return runDirection(targetKeys);
 		}
@@ -147,7 +147,7 @@ public class Keys implements KeyListener {
 		List<Key> targetKeyList = Arrays.asList(targetKeys);
 
 		for (Key key : new Key[] { Key.UP, Key.DOWN, Key.LEFT, Key.RIGHT }) {
-			if (targetKeyList.contains(key) != key.isPressed) { return false; }
+			if (targetKeyList.contains(key) != key.isPressed()) { return false; }
 		}
 
 		return true;
