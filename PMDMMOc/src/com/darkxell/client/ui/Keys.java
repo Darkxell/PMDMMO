@@ -116,6 +116,13 @@ public class Keys implements KeyListener {
 		}
 	}
 
+	public static void onLostFocus() {
+		for (Key key : Key.values()) {
+			key.willPress = false;
+			Persistence.stateManager.onKeyReleased(null, key);
+		}
+	}
+
 	/** @return If a run event should take place. private static boolean runDirection(Key[] targetKeys) { for (Key key : targetKeys) { if (!key.wasPressed) { return true; } } return false; } */
 	private static boolean shouldSkipRun(Key[] targetKeys) {
 		for (Key key : targetKeys) {
