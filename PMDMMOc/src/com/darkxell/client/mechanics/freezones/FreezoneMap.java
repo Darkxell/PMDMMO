@@ -1,14 +1,5 @@
 package com.darkxell.client.mechanics.freezones;
 
-import static com.darkxell.client.resources.images.tilesets.AbstractFreezoneTileset.TILE_SIZE;
-
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import org.jdom2.input.SAXBuilder;
-
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
 import com.darkxell.client.mechanics.freezones.entities.OtherPlayerEntity;
@@ -18,6 +9,14 @@ import com.darkxell.client.resources.images.tilesets.AbstractFreezoneTileset;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.zones.FreezoneInfo;
 import com.eclipsesource.json.JsonValue;
+import org.jdom2.input.SAXBuilder;
+
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import static com.darkxell.client.resources.images.tilesets.AbstractFreezoneTileset.TILE_SIZE;
 
 /** A tiled map of a freezone. Freezones are the areas where you can move freely and don't have to fight. */
 public abstract class FreezoneMap {
@@ -55,23 +54,25 @@ public abstract class FreezoneMap {
 	protected void loadFreezoneData(String xmlfilepath) {
 		InputStream is = Res.get(xmlfilepath);
 		SAXBuilder builder = new SAXBuilder();
-		org.jdom2.Element rootelement;
+		org.jdom2.Element rootElement;
 		try {
-			rootelement = builder.build(is).getRootElement();
-			this.mapWidth = Integer.parseInt(rootelement.getChild("width").getText()) / TILE_SIZE;
-			this.mapHeight = Integer.parseInt(rootelement.getChild("height").getText()) / TILE_SIZE;
-			List<org.jdom2.Element> tiles = rootelement.getChild("tiles").getChildren();
+			rootElement = builder.build(is).getRootElement();
+			this.mapWidth = Integer.parseInt(rootElement.getChild("width").getText()) / TILE_SIZE;
+			this.mapHeight = Integer.parseInt(rootElement.getChild("height").getText()) / TILE_SIZE;
+			List<org.jdom2.Element> tiles = rootElement.getChild("tiles").getChildren();
 			this.tiles = new FreezoneTile[mapWidth * mapHeight];
-			for (int i = 0; i < this.tiles.length; i++)
+			for (int i = 0; i < this.tiles.length; i++) {
 				this.tiles[i] = new FreezoneTile(FreezoneTile.TYPE_WALKABLE, null);
+			}
 
 			HashMap<String, AbstractFreezoneTileset> tilesets = new HashMap<>();
 			AbstractFreezoneTileset defaulttileset = null;
 			for (org.jdom2.Element element : tiles) {
-				int refferingTileID = (mapWidth * (Integer.parseInt(element.getAttributeValue("y")) / TILE_SIZE))
-						+ (Integer.parseInt(element.getAttributeValue("x")) / TILE_SIZE);
+				int referringTileID = (mapWidth * (Integer.parseInt(
+						element.getAttributeValue("y")) / TILE_SIZE)) + (Integer.parseInt(
+						element.getAttributeValue("x")) / TILE_SIZE);
 				if (element.getAttributeValue("bgName").equals("terrain")) {
-					this.tiles[refferingTileID].type = element.getAttributeValue("xo").equals("0")
+					this.tiles[referringTileID].type = element.getAttributeValue("xo").equals("0")
 							? FreezoneTile.TYPE_SOLID
 							: FreezoneTile.TYPE_WALKABLE;
 				} else {
@@ -79,15 +80,20 @@ public abstract class FreezoneMap {
 					if (!tilesets.containsKey(tileset)) {
 						tilesets.put(tileset, AbstractFreezoneTileset.getTileSet(tileset, this.mapWidth * TILE_SIZE,
 								this.mapHeight * TILE_SIZE));
-						if (defaulttileset == null) defaulttileset = tilesets.get(tileset);
+						if (defaulttileset == null) {
+							defaulttileset = tilesets.get(tileset);
+						}
 					}
-					this.tiles[refferingTileID].sprite = tilesets.get(tileset).get(
-							Integer.parseInt(element.getAttributeValue("xo")) / TILE_SIZE,
-							Integer.parseInt(element.getAttributeValue("yo")) / TILE_SIZE);
+					this.tiles[referringTileID].sprite = tilesets.get(tileset)
+							.get(Integer.parseInt(element.getAttributeValue("xo")) / TILE_SIZE,
+									Integer.parseInt(element.getAttributeValue("yo")) / TILE_SIZE);
 				}
 			}
-			for (FreezoneTile t : this.tiles)
-				if (t.sprite == null) t.sprite = defaulttileset.getDefault();
+			for (FreezoneTile t : this.tiles) {
+				if (t.sprite == null) {
+					t.sprite = defaulttileset.getDefault();
+				}
+			}
 		} catch (Exception e) {
 			Logger.e("Could not build freezonemap from XML file : " + e + " / path : " + xmlfilepath);
 			e.printStackTrace();
