@@ -310,7 +310,7 @@ public class Floor {
 			});
 			candidates.removeIf((Tile t) -> {
 				for (DungeonPokemon player : players)
-					if (Math.abs(t.x - player.tile().x) < 10 && Math.abs(t.y - player.tile().y) < 7) return true;
+					if (Math.abs(t.x - player.tile().x) < 12 && Math.abs(t.y - player.tile().y) < 10) return true;
 				return false;
 			});
 		}
