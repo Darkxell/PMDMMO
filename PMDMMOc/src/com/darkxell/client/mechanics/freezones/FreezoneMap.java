@@ -9,6 +9,7 @@ import com.darkxell.client.resources.images.tilesets.AbstractFreezoneTileset;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.zones.FreezoneInfo;
 import com.eclipsesource.json.JsonValue;
+import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 
@@ -20,161 +21,191 @@ import java.util.List;
 
 import static com.darkxell.client.resources.images.tilesets.AbstractFreezoneTileset.TILE_SIZE;
 
-/** A tiled map of a freezone. Freezones are the areas where you can move freely and don't have to fight. */
+/**
+ * A tiled map of a freezone. Freezones are the areas where you can move freely and don't have to fight.
+ */
 public abstract class FreezoneMap {
 
-	public FreezoneTile[] tiles;
-	/** The width of the map, in tiles. */
-	public int mapWidth;
-	/** The height of the map, in tiles. */
-	public int mapHeight;
-	/** True if there shouldn't be an ally entity or other player entities. */
-	public boolean playerOnly = false;
+    public FreezoneTile[] tiles;
+    /**
+     * The width of the map, in tiles.
+     */
+    public int mapWidth;
+    /**
+     * The height of the map, in tiles.
+     */
+    public int mapHeight;
+    /**
+     * True if there shouldn't be an ally entity or other player entities.
+     */
+    public boolean playerOnly = false;
 
-	public String freezonebgm = "";
+    public String freezonebgm = "";
 
-	public final FreezoneInfo info;
-	public final int defaultX, defaultY;
+    public final FreezoneInfo info;
+    public final int defaultX, defaultY;
 
-	/** List the entities in this map. Note that the player isn't actually an entity. */
-	private ArrayList<FreezoneEntity> entities = new ArrayList<>();
+    /**
+     * List the entities in this map. Note that the player isn't actually an entity.
+     */
+    private ArrayList<FreezoneEntity> entities = new ArrayList<>();
 
-	public ArrayList<TriggerZone> triggerzones = new ArrayList<>();
+    public ArrayList<TriggerZone> triggerzones = new ArrayList<>();
 
-	public final EntityRendererHolder<FreezoneEntity> entityRenderers = new EntityRendererHolder<>();
-	public final EntityRendererHolder<CutsceneEntity> cutsceneEntityRenderers = new EntityRendererHolder<>();
+    public final EntityRendererHolder<FreezoneEntity> entityRenderers = new EntityRendererHolder<>();
+    public final EntityRendererHolder<CutsceneEntity> cutsceneEntityRenderers = new EntityRendererHolder<>();
 
-	public FreezoneMap(String xmlfilepath, int defaultX, int defaultY, FreezoneInfo info) {
-		try{
-			this.loadFreezoneData(xmlfilepath);
-		} catch (Exception e) {
-			Logger.e("Could not build freezonemap from XML file : " + e + " / path : " + xmlfilepath);
-			e.printStackTrace();
-		}
+    public FreezoneMap(String xmlfilepath, int defaultX, int defaultY, FreezoneInfo info) {
+        try {
+            this.loadFreezoneData(xmlfilepath);
+        } catch (Exception e) {
+            Logger.e("Could not build freezonemap from XML file : " + e + " / path : " + xmlfilepath);
+            e.printStackTrace();
+        }
 
-		this.defaultX = defaultX;
-		this.defaultY = defaultY;
-		this.info = info;
-	}
+        this.defaultX = defaultX;
+        this.defaultY = defaultY;
+        this.info = info;
+    }
 
-	protected void loadFreezoneData(String xmlfilepath) throws IOException, JDOMException {
-		InputStream is = Res.get(xmlfilepath);
-		SAXBuilder builder = new SAXBuilder();
-		org.jdom2.Element rootElement;
-		rootElement = builder.build(is).getRootElement();
-		this.mapWidth = Integer.parseInt(rootElement.getChild("width").getText()) / TILE_SIZE;
-		this.mapHeight = Integer.parseInt(rootElement.getChild("height").getText()) / TILE_SIZE;
-		List<org.jdom2.Element> tiles = rootElement.getChild("tiles").getChildren();
-		this.tiles = new FreezoneTile[mapWidth * mapHeight];
-		for (int i = 0; i < this.tiles.length; i++) {
-			this.tiles[i] = new FreezoneTile(FreezoneTile.TYPE_WALKABLE, null);
-		}
+    protected void loadFreezoneData(String xmlfilepath) throws IOException, JDOMException {
+        InputStream is = Res.get(xmlfilepath);
+        SAXBuilder builder = new SAXBuilder();
+        Element rootElement;
 
-		HashMap<String, AbstractFreezoneTileset> tilesets = new HashMap<>();
-		AbstractFreezoneTileset defaulttileset = null;
-		for (org.jdom2.Element element : tiles) {
-			int referringTileID = (mapWidth * (Integer.parseInt(
-					element.getAttributeValue("y")) / TILE_SIZE)) + (Integer.parseInt(
-					element.getAttributeValue("x")) / TILE_SIZE);
-			if (element.getAttributeValue("bgName").equals("terrain")) {
-				this.tiles[referringTileID].type = element.getAttributeValue("xo").equals("0")
-						? FreezoneTile.TYPE_SOLID
-						: FreezoneTile.TYPE_WALKABLE;
-			} else {
-				String tileset = element.getAttributeValue("bgName");
-				if (!tilesets.containsKey(tileset)) {
-					tilesets.put(tileset, AbstractFreezoneTileset.getTileSet(tileset, this.mapWidth * TILE_SIZE,
-							this.mapHeight * TILE_SIZE));
-					if (defaulttileset == null) {
-						defaulttileset = tilesets.get(tileset);
-					}
-				}
-				this.tiles[referringTileID].sprite = tilesets.get(tileset)
-						.get(Integer.parseInt(element.getAttributeValue("xo")) / TILE_SIZE,
-								Integer.parseInt(element.getAttributeValue("yo")) / TILE_SIZE);
-			}
-		}
-		for (FreezoneTile t : this.tiles) {
-			if (t.sprite == null) {
-				t.sprite = defaulttileset.getDefault();
-			}
-		}
-	}
+        rootElement = builder.build(is).getRootElement();
+        this.mapWidth = Integer.parseInt(rootElement.getChild("width").getText()) / TILE_SIZE;
+        this.mapHeight = Integer.parseInt(rootElement.getChild("height").getText()) / TILE_SIZE;
+        List<org.jdom2.Element> tiles = rootElement.getChild("tiles").getChildren();
+        this.tiles = new FreezoneTile[mapWidth * mapHeight];
+        for (int i = 0; i < this.tiles.length; i++) {
+            this.tiles[i] = new FreezoneTile(FreezoneTile.TYPE_WALKABLE, null);
+        }
 
-	public void addEntity(FreezoneEntity entity) {
-		this.entities.add(entity);
-		this.entityRenderers.register(entity, entity.createRenderer());
-	}
+        HashMap<String, AbstractFreezoneTileset> tilesets = new HashMap<>();
+        AbstractFreezoneTileset defaulttileset = null;
+        for (org.jdom2.Element element : tiles) {
+            int referringTileID = (mapWidth * (Integer.parseInt(element.getAttributeValue("y")) / TILE_SIZE)) + (Integer
+                    .parseInt(element.getAttributeValue("x")) / TILE_SIZE);
+            if (element.getAttributeValue("bgName").equals("terrain")) {
+                this.tiles[referringTileID].type = element.getAttributeValue("xo").equals("0")
+                        ? FreezoneTile.TYPE_SOLID
+                        : FreezoneTile.TYPE_WALKABLE;
+            } else {
+                String tileset = element.getAttributeValue("bgName");
+                if (!tilesets.containsKey(tileset)) {
+                    tilesets.put(tileset, AbstractFreezoneTileset.getTileSet(tileset, this.mapWidth * TILE_SIZE,
+                            this.mapHeight * TILE_SIZE));
+                    if (defaulttileset == null) {
+                        defaulttileset = tilesets.get(tileset);
+                    }
+                }
+                this.tiles[referringTileID].sprite = tilesets.get(tileset)
+                        .get(Integer.parseInt(element.getAttributeValue("xo")) / TILE_SIZE,
+                                Integer.parseInt(element.getAttributeValue("yo")) / TILE_SIZE);
+            }
+        }
 
-	@SuppressWarnings("unchecked")
-	public ArrayList<FreezoneEntity> entities() {
-		return (ArrayList<FreezoneEntity>) this.entities.clone();
-	}
+        for (FreezoneTile t : this.tiles) {
+            if (t.sprite == null) {
+                t.sprite = defaulttileset.getDefault();
+            }
+        }
+    }
 
-	public void removeEntity(FreezoneEntity entity) {
-		this.entityRenderers.unregister(entity);
-		entities.remove(entity);
-	}
+    public void addEntity(FreezoneEntity entity) {
+        this.entities.add(entity);
+        this.entityRenderers.register(entity, entity.createRenderer());
+    }
 
-	private int flushcounter = 0;
-	private static final long FLUSHTIMEOUT = 1000000000;
+    @SuppressWarnings("unchecked")
+    public ArrayList<FreezoneEntity> entities() {
+        return (ArrayList<FreezoneEntity>) this.entities.clone();
+    }
 
-	public void update() {
-		Persistence.currentplayer.update();
-		for (int i = 0; i < entities.size(); i++)
-			entities.get(i).update();
-		if (flushcounter >= 120) {
-			flushcounter = 0;
-			long ct = System.nanoTime();
-			for (int i = 0; i < entities.size(); ++i)
-				if (entities.get(i) instanceof OtherPlayerEntity
-						&& ((OtherPlayerEntity) entities.get(i)).lastupdate < ct - FLUSHTIMEOUT) {
-					this.removeEntity(entities.get(i));
-					--i;
-				}
-		} else++flushcounter;
-	}
+    public void removeEntity(FreezoneEntity entity) {
+        this.entityRenderers.unregister(entity);
+        entities.remove(entity);
+    }
 
-	public byte getTileTypeAt(double x, double y) {
-		int calc = mapWidth * (int) y + (int) x;
-		if (calc >= this.tiles.length || calc < 0) return FreezoneTile.TYPE_WALKABLE;
-		return this.tiles[calc].type;
-	}
+    private int flushcounter = 0;
+    private static final long FLUSHTIMEOUT = 1000000000;
 
-	/** Update the OtherPlayer entity destinations and last update timestamp according to the parsed json values for the specified entity. */
-	public void updateOtherPlayers(JsonValue data) {
-		String dataname = data.asObject().getString("name", "");
-		if (Persistence.player.name().equals(dataname)) return;
-		double pfx = data.asObject().getDouble("posfx", 0d);
-		double pfy = data.asObject().getDouble("posfy", 0d);
-		int spriteID = Integer.parseInt(data.asObject().getString("currentpokemon", "0"));
-		boolean found = false;
-		if (!dataname.equals("")) {
-			for (int i = 0; i < entities.size(); i++)
-				if (entities.get(i) instanceof OtherPlayerEntity
-						&& ((OtherPlayerEntity) entities.get(i)).name.equals(dataname)) {
-					OtherPlayerEntity etty = (OtherPlayerEntity) entities.get(i);
-					etty.applyServerUpdate(pfx, pfy, spriteID);
-					found = true;
-					break;
-				}
-			if (!found) this.addEntity(new OtherPlayerEntity(pfx, pfy, spriteID, dataname, System.nanoTime()));
-		}
-	}
+    public void update() {
+        Persistence.currentplayer.update();
+        for (int i = 0; i < entities.size(); i++) {
+            entities.get(i).update();
+        }
+        if (flushcounter >= 120) {
+            flushcounter = 0;
+            long ct = System.nanoTime();
+            for (int i = 0; i < entities.size(); ++i) {
+                if (entities.get(i) instanceof OtherPlayerEntity && ((OtherPlayerEntity) entities.get(
+                        i)).lastupdate < ct - FLUSHTIMEOUT) {
+                    this.removeEntity(entities.get(i));
+                    --i;
+                }
+            }
+        } else {
+            ++flushcounter;
+        }
+    }
 
-	/** Returns the additionnal informations not related to this instance about this freezone. */
-	public FreezoneInfo getInfo() {
-		return this.info;
-	}
+    public byte getTileTypeAt(double x, double y) {
+        int calc = mapWidth * (int) y + (int) x;
+        if (calc >= this.tiles.length || calc < 0) {
+            return FreezoneTile.TYPE_WALKABLE;
+        }
+        return this.tiles[calc].type;
+    }
 
-	/** @return Default X position for a Player in this Map. */
-	public int defaultX() {
-		return this.defaultX;
-	}
+    /**
+     * Update the OtherPlayer entity destinations and last update timestamp according to the parsed json values for
+     * the specified entity.
+     */
+    public void updateOtherPlayers(JsonValue data) {
+        String dataname = data.asObject().getString("name", "");
+        if (Persistence.player.name().equals(dataname)) {
+            return;
+        }
+        double pfx = data.asObject().getDouble("posfx", 0d);
+        double pfy = data.asObject().getDouble("posfy", 0d);
+        int spriteID = Integer.parseInt(data.asObject().getString("currentpokemon", "0"));
+        boolean found = false;
+        if (!dataname.equals("")) {
+            for (int i = 0; i < entities.size(); i++) {
+                if (entities.get(i) instanceof OtherPlayerEntity && ((OtherPlayerEntity) entities.get(i)).name.equals(
+                        dataname)) {
+                    OtherPlayerEntity etty = (OtherPlayerEntity) entities.get(i);
+                    etty.applyServerUpdate(pfx, pfy, spriteID);
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                this.addEntity(new OtherPlayerEntity(pfx, pfy, spriteID, dataname, System.nanoTime()));
+            }
+        }
+    }
 
-	/** @return Default Y position for a Player in this Map. */
-	public int defaultY() {
-		return this.defaultY;
-	}
+    /**
+     * Returns the additionnal informations not related to this instance about this freezone.
+     */
+    public FreezoneInfo getInfo() {
+        return this.info;
+    }
 
+    /**
+     * @return Default X position for a Player in this Map.
+     */
+    public int defaultX() {
+        return this.defaultX;
+    }
+
+    /**
+     * @return Default Y position for a Player in this Map.
+     */
+    public int defaultY() {
+        return this.defaultY;
+    }
 }
