@@ -9,8 +9,10 @@ import com.darkxell.client.resources.images.tilesets.AbstractFreezoneTileset;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.zones.FreezoneInfo;
 import com.eclipsesource.json.JsonValue;
+import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,60 +45,59 @@ public abstract class FreezoneMap {
 	public final EntityRendererHolder<CutsceneEntity> cutsceneEntityRenderers = new EntityRendererHolder<>();
 
 	public FreezoneMap(String xmlfilepath, int defaultX, int defaultY, FreezoneInfo info) {
-
-		this.loadFreezoneData(xmlfilepath);
+		try{
+			this.loadFreezoneData(xmlfilepath);
+		} catch (Exception e) {
+			Logger.e("Could not build freezonemap from XML file : " + e + " / path : " + xmlfilepath);
+			e.printStackTrace();
+		}
 
 		this.defaultX = defaultX;
 		this.defaultY = defaultY;
 		this.info = info;
 	}
 
-	protected void loadFreezoneData(String xmlfilepath) {
+	protected void loadFreezoneData(String xmlfilepath) throws IOException, JDOMException {
 		InputStream is = Res.get(xmlfilepath);
 		SAXBuilder builder = new SAXBuilder();
 		org.jdom2.Element rootElement;
-		try {
-			rootElement = builder.build(is).getRootElement();
-			this.mapWidth = Integer.parseInt(rootElement.getChild("width").getText()) / TILE_SIZE;
-			this.mapHeight = Integer.parseInt(rootElement.getChild("height").getText()) / TILE_SIZE;
-			List<org.jdom2.Element> tiles = rootElement.getChild("tiles").getChildren();
-			this.tiles = new FreezoneTile[mapWidth * mapHeight];
-			for (int i = 0; i < this.tiles.length; i++) {
-				this.tiles[i] = new FreezoneTile(FreezoneTile.TYPE_WALKABLE, null);
-			}
+		rootElement = builder.build(is).getRootElement();
+		this.mapWidth = Integer.parseInt(rootElement.getChild("width").getText()) / TILE_SIZE;
+		this.mapHeight = Integer.parseInt(rootElement.getChild("height").getText()) / TILE_SIZE;
+		List<org.jdom2.Element> tiles = rootElement.getChild("tiles").getChildren();
+		this.tiles = new FreezoneTile[mapWidth * mapHeight];
+		for (int i = 0; i < this.tiles.length; i++) {
+			this.tiles[i] = new FreezoneTile(FreezoneTile.TYPE_WALKABLE, null);
+		}
 
-			HashMap<String, AbstractFreezoneTileset> tilesets = new HashMap<>();
-			AbstractFreezoneTileset defaulttileset = null;
-			for (org.jdom2.Element element : tiles) {
-				int referringTileID = (mapWidth * (Integer.parseInt(
-						element.getAttributeValue("y")) / TILE_SIZE)) + (Integer.parseInt(
-						element.getAttributeValue("x")) / TILE_SIZE);
-				if (element.getAttributeValue("bgName").equals("terrain")) {
-					this.tiles[referringTileID].type = element.getAttributeValue("xo").equals("0")
-							? FreezoneTile.TYPE_SOLID
-							: FreezoneTile.TYPE_WALKABLE;
-				} else {
-					String tileset = element.getAttributeValue("bgName");
-					if (!tilesets.containsKey(tileset)) {
-						tilesets.put(tileset, AbstractFreezoneTileset.getTileSet(tileset, this.mapWidth * TILE_SIZE,
-								this.mapHeight * TILE_SIZE));
-						if (defaulttileset == null) {
-							defaulttileset = tilesets.get(tileset);
-						}
+		HashMap<String, AbstractFreezoneTileset> tilesets = new HashMap<>();
+		AbstractFreezoneTileset defaulttileset = null;
+		for (org.jdom2.Element element : tiles) {
+			int referringTileID = (mapWidth * (Integer.parseInt(
+					element.getAttributeValue("y")) / TILE_SIZE)) + (Integer.parseInt(
+					element.getAttributeValue("x")) / TILE_SIZE);
+			if (element.getAttributeValue("bgName").equals("terrain")) {
+				this.tiles[referringTileID].type = element.getAttributeValue("xo").equals("0")
+						? FreezoneTile.TYPE_SOLID
+						: FreezoneTile.TYPE_WALKABLE;
+			} else {
+				String tileset = element.getAttributeValue("bgName");
+				if (!tilesets.containsKey(tileset)) {
+					tilesets.put(tileset, AbstractFreezoneTileset.getTileSet(tileset, this.mapWidth * TILE_SIZE,
+							this.mapHeight * TILE_SIZE));
+					if (defaulttileset == null) {
+						defaulttileset = tilesets.get(tileset);
 					}
-					this.tiles[referringTileID].sprite = tilesets.get(tileset)
-							.get(Integer.parseInt(element.getAttributeValue("xo")) / TILE_SIZE,
-									Integer.parseInt(element.getAttributeValue("yo")) / TILE_SIZE);
 				}
+				this.tiles[referringTileID].sprite = tilesets.get(tileset)
+						.get(Integer.parseInt(element.getAttributeValue("xo")) / TILE_SIZE,
+								Integer.parseInt(element.getAttributeValue("yo")) / TILE_SIZE);
 			}
-			for (FreezoneTile t : this.tiles) {
-				if (t.sprite == null) {
-					t.sprite = defaulttileset.getDefault();
-				}
+		}
+		for (FreezoneTile t : this.tiles) {
+			if (t.sprite == null) {
+				t.sprite = defaulttileset.getDefault();
 			}
-		} catch (Exception e) {
-			Logger.e("Could not build freezonemap from XML file : " + e + " / path : " + xmlfilepath);
-			e.printStackTrace();
 		}
 	}
 
