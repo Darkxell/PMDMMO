@@ -295,6 +295,7 @@
       <west x="38" />
       <northwest x="38" y="38" backsprites="only" />
     </move>
+    <move id="58" clone="moves/0" />
     <move id="64">
       <default sprites="none" delaytime="15" state="SING" alsoplay="2" />
     </move>
@@ -510,7 +511,7 @@
       <southwest y="31" />
     </move>
     <move id="717">
-      <default sprites="none" x="-1" y="-1" delaytime="15" state="SPECIAL" />
+      <default sprites="none" delaytime="15" state="SPECIAL" />
     </move>
     <move id="720">
       <default width="96" height="80" y="60" delaytime="40" state="SPECIAL">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26</default>
@@ -623,6 +624,9 @@
     </movetarget>
     <movetarget id="52">
       <default width="48" height="40">0,1,2,3,4,5,6</default>
+    </movetarget>
+    <movetarget id="58">
+      <default width="16" height="40" y="35" delaytime="15">0,1,2,3,4,5,6,6,6</default>
     </movetarget>
     <movetarget id="72">
       <default width="64" height="64">0,1,2,3,4,5,6,7,8,9,10</default>
