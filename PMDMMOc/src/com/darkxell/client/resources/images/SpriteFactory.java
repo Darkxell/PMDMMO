@@ -99,7 +99,12 @@ public class SpriteFactory implements Runnable {
 		String id = image + "|" + x + "|" + y + "|" + width + "|" + height;
 		if (!this.subimages.containsKey(id)) {
 			if (!this.isResourceLoaded(image)) return this.getDefault(width, height);
-			else this.subimages.put(id, this.get(image).getSubimage(x, y, width, height));
+			else {
+				BufferedImage i = this.get(image);
+				if (i.getWidth() >= x + width && i.getHeight() >= y + height)
+					this.subimages.put(id, i.getSubimage(x, y, width, height));
+				else return this.getDefault(width, height);
+			}
 		}
 
 		return this.subimages.get(id);
