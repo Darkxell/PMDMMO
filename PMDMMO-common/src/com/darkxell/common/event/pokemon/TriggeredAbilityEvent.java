@@ -11,7 +11,7 @@ public class TriggeredAbilityEvent extends DungeonEvent {
 
 	public final Ability ability;
 	/** An ID referencing a message for the triggered ability different than the default one. */
-	public final int messageID;
+	public int messageID;
 	public final DungeonPokemon pokemon;
 
 	public TriggeredAbilityEvent(Floor floor, DungeonPokemon pokemon) {
