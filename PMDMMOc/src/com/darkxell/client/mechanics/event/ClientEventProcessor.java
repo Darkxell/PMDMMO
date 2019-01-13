@@ -71,6 +71,7 @@ import com.darkxell.common.event.stats.SpeedChangedEvent;
 import com.darkxell.common.event.stats.StatChangedEvent;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.effects.FoodItemEffect;
+import com.darkxell.common.move.Move.MoveRange;
 import com.darkxell.common.player.Inventory;
 import com.darkxell.common.pokemon.BaseStats;
 import com.darkxell.common.pokemon.DungeonPokemon;
@@ -499,9 +500,10 @@ public final class ClientEventProcessor extends CommonEventProcessor {
 			ProjectileMovement projMovement = Animations.projectileMovement(projid);
 			Tile tile = event.usedMove().user.tile();
 			Direction facing = event.usedMove().user.facing();
-			if (projMovement == ProjectileMovement.STRAIGHT) do
+			if (projMovement == ProjectileMovement.STRAIGHT && (event.usedMove().move.move().range == MoveRange.Line))
+				do
 				tile = tile.adjacentTile(facing);
-			while (tile.type() != TileType.WALL && tile.type() != TileType.WALL_END);
+				while (tile.type() != TileType.WALL && tile.type() != TileType.WALL_END);
 			else tile = tile.adjacentTile(facing);
 			ProjectileAnimationState proj = new ProjectileAnimationState(Persistence.dungeonState,
 					event.usedMove().user.tile(), tile);
