@@ -15,8 +15,7 @@ import com.darkxell.common.util.language.Localization;
 import com.darkxell.common.util.language.Message;
 import com.darkxell.common.weather.Weather;
 
-public abstract class Ability implements AffectsPokemon, DungeonEventListener
-{
+public abstract class Ability implements AffectsPokemon, DungeonEventListener {
 	private static final HashMap<Integer, Ability> abilities = new HashMap<Integer, Ability>();
 
 	public static final Ability BLAZE = new AbilityTypeBoost(0, PokemonType.Fire);
@@ -41,6 +40,8 @@ public abstract class Ability implements AffectsPokemon, DungeonEventListener
 	public static final Ability CLEAR_BODY = new AbilityPreventsAnyStatLoss(41);
 	public static final Ability HYPER_CUTTER = new AbilityPreventsStatLoss(42, Stat.Attack);
 	public static final Ability KEEN_EYE = new AbilityPreventsStatLoss(46, Stat.Accuracy);
+	public static final Ability OBLIVIOUS = new AbilityPreventStatus(49, StatusConditions.Infatuated,
+			StatusConditions.Taunted);
 
 	public static final Ability ROCK_HEAD = new AbilityPreventRecoilDamage(56);
 	public static final Ability SHIELD_DUST = new AbilityPreventAdditionalEffectsOnSelf(58);
@@ -52,15 +53,13 @@ public abstract class Ability implements AffectsPokemon, DungeonEventListener
 	public static final Ability PICKUP = new AbilityFindsItemOnFloorStart(71, 100);
 	public static final Ability RUNAWAY = new AbilityRunaway(72);
 
-	static
-	{
+	static {
 		MINUS.allyAbility = PLUS;
 		PLUS.allyAbility = MINUS;
 	}
 
 	/** @return The Ability with the input ID. */
-	public static Ability find(int id)
-	{
+	public static Ability find(int id) {
 		if (!abilities.containsKey(id)) return OVERGROW;
 		return abilities.get(id);
 	}
@@ -68,14 +67,12 @@ public abstract class Ability implements AffectsPokemon, DungeonEventListener
 	/** This Ability's ID. */
 	public final int id;
 
-	public Ability(int id)
-	{
+	public Ability(int id) {
 		this.id = id;
 		abilities.put(this.id, this);
 	}
 
-	public Message description()
-	{
+	public Message description() {
 		Message d = this.name();
 		d.addPrefix("<red>");
 		d.addSuffix("</color>");
@@ -84,25 +81,21 @@ public abstract class Ability implements AffectsPokemon, DungeonEventListener
 		return d;
 	}
 
-	public boolean hasTriggeredMessage()
-	{
+	public boolean hasTriggeredMessage() {
 		return Localization.containsKey("ability.trigger." + this.id);
 	}
 
-	public Message name()
-	{
+	public Message name() {
 		return new Message("ability." + this.id);
 	}
 
-	public void onFloorStart(Floor floor, DungeonPokemon pokemon, ArrayList<DungeonEvent> events)
-	{}
+	public void onFloorStart(Floor floor, DungeonPokemon pokemon, ArrayList<DungeonEvent> events) {}
 
-	public void onTurnStart(Floor floor, DungeonPokemon pokemon, ArrayList<DungeonEvent> events)
-	{}
+	public void onTurnStart(Floor floor, DungeonPokemon pokemon, ArrayList<DungeonEvent> events) {}
 
-	public Message triggeredMessage(DungeonPokemon pokemon)
-	{
-		return new Message("ability.trigger." + this.id).addReplacement("<pokemon>", pokemon.getNickname());
+	public Message triggeredMessage(DungeonPokemon pokemon, int messageID) {
+		return new Message("ability.trigger." + this.id + (messageID == 0 ? "" : ("." + messageID)))
+				.addReplacement("<pokemon>", pokemon.getNickname());
 	}
 
 }
