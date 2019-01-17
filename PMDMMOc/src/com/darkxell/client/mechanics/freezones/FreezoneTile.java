@@ -7,10 +7,10 @@ import com.darkxell.client.resources.images.Sprite;
  * move freely and don't have to fight.
  */
 public class FreezoneTile {
-
-	public byte type = 1;
 	public static final byte TYPE_SOLID = 0;
 	public static final byte TYPE_WALKABLE = 1;
+
+	public byte type;
 	public Sprite sprite;
 
 	public FreezoneTile(byte type, Sprite sprite) {
@@ -18,4 +18,7 @@ public class FreezoneTile {
 		this.sprite = sprite;
 	}
 
+	public FreezoneTile() {
+		this(TYPE_WALKABLE, null);
+	}
 }

@@ -2,6 +2,7 @@ package com.darkxell.client.mechanics.freezones.entities;
 
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.freezones.FreezonePlayer;
+import com.darkxell.client.mechanics.freezones.FreezoneTerrain;
 
 /**
  * Pseudo-entity that corresponds to the camera position.
@@ -146,9 +147,10 @@ public class FreezoneCamera {
             return;
         }
 
-        this.x = this.calculateAxisPos(this.x, this.target.x, Persistence.currentmap.mapWidth,
+        FreezoneTerrain terrain = Persistence.currentmap.getTerrain();
+        this.x = this.calculateAxisPos(this.x, this.target.x, terrain.getWidth(),
                 (double) this.renderWidth / TILESIZE);
-        this.y = this.calculateAxisPos(this.y, this.target.y, Persistence.currentmap.mapHeight,
+        this.y = this.calculateAxisPos(this.y, this.target.y, terrain.getHeight(),
                 (double) this.renderHeight / TILESIZE);
     }
 }
