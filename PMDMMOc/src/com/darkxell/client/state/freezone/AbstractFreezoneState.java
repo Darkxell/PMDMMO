@@ -1,12 +1,8 @@
 package com.darkxell.client.state.freezone;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.util.ArrayList;
-import java.util.Comparator;
-
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
+import com.darkxell.client.mechanics.freezones.FreezoneTerrain;
 import com.darkxell.client.mechanics.freezones.FreezoneTile;
 import com.darkxell.client.mechanics.freezones.zones.BaseFreezone;
 import com.darkxell.client.mechanics.freezones.zones.DreamFreezone;
@@ -16,6 +12,10 @@ import com.darkxell.client.resources.music.SoundsHolder;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.util.DoubleRectangle;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Comparator;
 
 public class AbstractFreezoneState extends AbstractState {
 
@@ -41,18 +41,17 @@ public class AbstractFreezoneState extends AbstractState {
 			int translateY = (int) (-Persistence.freezoneCamera.finalY() * 8 + (height / 2));
 
 			g.translate(translateX, translateY);
+
 			// Draws the map
-			for (int i = 0; i < map.mapHeight; i++) {
-				for (int j = 0; j < map.mapWidth; j++) {
-					int tileid = (i * map.mapWidth) + j;
-					// if (!map.tiles[tileid].sprite.isLoaded()) System.out.println("wat");
-					if (map.tiles[tileid].sprite != null)
-						g.drawImage(map.tiles[tileid].sprite.image(), 8 * j, 8 * i, null);
-					if (Persistence.debugdisplaymode) if (map.tiles[tileid].type == FreezoneTile.TYPE_SOLID) {
+			FreezoneTerrain terrain = map.getTerrain();
+			for (int i = 0; i < terrain.getHeight(); i++) {
+				for (int j = 0; j < terrain.getWidth(); j++) {
+					FreezoneTile tile = terrain.get(j, i);
+					if (tile.sprite != null) {
+						g.drawImage(tile.sprite.image(), 8 * j, 8 * i, null);
+					}
+					if (Persistence.debugdisplaymode && tile.type == FreezoneTile.TYPE_SOLID) {
 						g.setColor(new Color(150, 20, 20, 100));
-						g.fillRect(8 * j, 8 * i, 8, 8);
-					} else if (map.tiles[tileid].type == FreezoneTile.TYPE_SOLID) {
-						g.setColor(new Color(20, 150, 20, 100));
 						g.fillRect(8 * j, 8 * i, 8, 8);
 					}
 				}

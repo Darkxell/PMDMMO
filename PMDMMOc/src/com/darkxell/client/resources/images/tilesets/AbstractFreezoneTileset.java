@@ -14,9 +14,12 @@ public class AbstractFreezoneTileset extends RegularSpriteSet
 		return new AbstractFreezoneTileset(path, width, height);
 	}
 
-	/** Gets The wanted existing instance of a tileset using a string ID. This string ID is usually used in the maps .xml files. */
-	public static AbstractFreezoneTileset getTileSet(String code, int width, int height)
-	{
+	/**
+	 * Retrieves a tileset from the {@code /tilesets/*.png} folder.
+	 *
+	 * The name should usually correspond to the terrain file, though this is not guaranteed.
+	 */
+	public static AbstractFreezoneTileset getTileSet(String code, int width, int height) {
 		return getTileset("/tilesets/" + code + ".png", width, height);
 	}
 

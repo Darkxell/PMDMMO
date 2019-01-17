@@ -55,10 +55,12 @@ public class FreezonePlayer
 			if (ety.isSolid && ety.getHitbox(ety.posX, ety.posY).intersects(this.getHitboxAt(x, y))) return false;
 		}
 
-		if (Persistence.currentmap.getTileTypeAt(hbx.x, hbx.y) == FreezoneTile.TYPE_SOLID) return false;
-		if (Persistence.currentmap.getTileTypeAt(hbx.x, hbx.y + hbx.height) == FreezoneTile.TYPE_SOLID) return false;
-		if (Persistence.currentmap.getTileTypeAt(hbx.x + hbx.width, hbx.y) == FreezoneTile.TYPE_SOLID) return false;
-		if (Persistence.currentmap.getTileTypeAt(hbx.x + hbx.width, hbx.y + hbx.height) == FreezoneTile.TYPE_SOLID) return false;
+		FreezoneTerrain currentTerrain = Persistence.currentmap.getTerrain();
+		if (currentTerrain.get(hbx.x, hbx.y).type == FreezoneTile.TYPE_SOLID) return false;
+		if (currentTerrain.get(hbx.x, hbx.y + hbx.height).type == FreezoneTile.TYPE_SOLID) return false;
+		if (currentTerrain.get(hbx.x + hbx.width, hbx.y).type == FreezoneTile.TYPE_SOLID) return false;
+		if (currentTerrain.get(hbx.x + hbx.width, hbx.y + hbx.height).type == FreezoneTile.TYPE_SOLID) return false;
+
 		return true;
 	}
 
