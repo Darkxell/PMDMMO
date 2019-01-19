@@ -6,6 +6,7 @@ import com.darkxell.client.mechanics.freezones.entities.OtherPlayerEntity;
 import com.darkxell.client.renderers.EntityRendererHolder;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.zones.FreezoneInfo;
+import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
 
 import java.util.ArrayList;
@@ -68,9 +69,11 @@ public abstract class FreezoneMap {
 
     public void update() {
         Persistence.currentplayer.update();
+
         for (int i = 0; i < entities.size(); i++) {
             entities.get(i).update();
         }
+
         if (flushcounter >= 120) {
             flushcounter = 0;
             long ct = System.nanoTime();
@@ -87,36 +90,33 @@ public abstract class FreezoneMap {
     }
 
     /**
-     * Update the OtherPlayer entity destinations and last update timestamp according to the parsed json values for
-     * the specified entity.
+     * Update another player's info from packet data (JSON).
      */
     public void updateOtherPlayers(JsonValue data) {
-        String dataname = data.asObject().getString("name", "");
-        if (Persistence.player.name().equals(dataname)) {
+        JsonObject obj = data.asObject();
+        String name = obj.getString("name", "");
+
+        if (name.equals("") || Persistence.player.name().equals(name)) {
             return;
         }
-        double pfx = data.asObject().getDouble("posfx", 0d);
-        double pfy = data.asObject().getDouble("posfy", 0d);
-        int spriteID = Integer.parseInt(data.asObject().getString("currentpokemon", "0"));
-        boolean found = false;
-        if (!dataname.equals("")) {
-            for (int i = 0; i < entities.size(); i++) {
-                if (entities.get(i) instanceof OtherPlayerEntity && ((OtherPlayerEntity) entities.get(i)).name.equals(
-                        dataname)) {
-                    OtherPlayerEntity etty = (OtherPlayerEntity) entities.get(i);
-                    etty.applyServerUpdate(pfx, pfy, spriteID);
-                    found = true;
-                    break;
-                }
-            }
-            if (!found) {
-                this.addEntity(new OtherPlayerEntity(pfx, pfy, spriteID, dataname, System.nanoTime()));
+
+        double pfx = obj.getDouble("posfx", 0d);
+        double pfy = obj.getDouble("posfy", 0d);
+        int spriteID = Integer.parseInt(obj.getString("currentpokemon", "0"));
+        for (int i = 0; i < entities.size(); i++) {
+            boolean isPlayer = entities.get(i) instanceof OtherPlayerEntity;
+            OtherPlayerEntity entity = (OtherPlayerEntity) entities.get(i);
+            if (isPlayer && entity.name.equals(name)) {
+                entity.applyServerUpdate(pfx, pfy, spriteID);
+                return;
             }
         }
+
+        this.addEntity(new OtherPlayerEntity(pfx, pfy, spriteID, name, System.nanoTime()));
     }
 
     /**
-     * Returns the additionnal informations not related to this instance about this freezone.
+     * Return current freezone metadata.
      */
     public FreezoneInfo getInfo() {
         return this.info;
