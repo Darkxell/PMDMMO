@@ -1,7 +1,5 @@
 package com.darkxell.client.mechanics.freezones;
 
-import java.util.ArrayList;
-
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.renderers.pokemon.AbstractPokemonRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
@@ -12,6 +10,8 @@ import com.darkxell.common.player.Player;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.DoubleRectangle;
 import com.darkxell.common.util.Logger;
+
+import java.util.ArrayList;
 
 public class FreezonePlayer
 {
@@ -43,25 +43,24 @@ public class FreezonePlayer
 		this.y = y;
 	}
 
-	/** Returns false if the player would collide in a solid tile/tileentity if it were at the wanted location, true otherwise. */
-	public boolean canBeAt(double x, double y)
-	{
-		if (Persistence.currentmap == null) return true;
-		DoubleRectangle hbx = getHitboxAt(x, y);
+	/**
+	 * Returns false if the player would collide in a solid tile/tile entity if it were at the wanted location, true
+	 * otherwise.
+	 */
+	public boolean canBeAt(double x, double y) {
+		if (Persistence.currentmap == null) {
+			return true;
+		}
 		ArrayList<FreezoneEntity> entities = Persistence.currentmap.entities();
-		for (int i = 0; i < entities.size(); i++)
-		{
+		for (int i = 0; i < entities.size(); i++) {
 			FreezoneEntity ety = entities.get(i);
-			if (ety.isSolid && ety.getHitbox(ety.posX, ety.posY).intersects(this.getHitboxAt(x, y))) return false;
+			if (ety.isSolid && ety.getHitbox(ety.posX, ety.posY).intersects(this.getHitboxAt(x, y))) {
+				return false;
+			}
 		}
 
-		FreezoneTerrain currentTerrain = Persistence.currentmap.getTerrain();
-		if (currentTerrain.get(hbx.x, hbx.y).type == FreezoneTile.TYPE_SOLID) return false;
-		if (currentTerrain.get(hbx.x, hbx.y + hbx.height).type == FreezoneTile.TYPE_SOLID) return false;
-		if (currentTerrain.get(hbx.x + hbx.width, hbx.y).type == FreezoneTile.TYPE_SOLID) return false;
-		if (currentTerrain.get(hbx.x + hbx.width, hbx.y + hbx.height).type == FreezoneTile.TYPE_SOLID) return false;
-
-		return true;
+		DoubleRectangle hbx = getHitboxAt(x, y);
+		return !Persistence.currentmap.getTerrain().hasCollision(hbx);
 	}
 
 	/** Returns true if the player can interact with something in it's current position. */

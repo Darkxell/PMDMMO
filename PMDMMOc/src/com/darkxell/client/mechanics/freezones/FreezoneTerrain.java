@@ -2,6 +2,8 @@ package com.darkxell.client.mechanics.freezones;
 
 import com.darkxell.client.resources.Res;
 import com.darkxell.client.resources.images.tilesets.AbstractFreezoneTileset;
+import com.darkxell.common.util.DoubleRectangle;
+import com.darkxell.common.util.Position;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
@@ -146,6 +148,20 @@ public class FreezoneTerrain {
      */
     public FreezoneTile get(double x, double y) {
         return this.get((int) x, (int) y);
+    }
+
+    /**
+     * Collision detection.
+     *
+     * @return Does the box overlap with any solid blocks in this terrain?
+     */
+    public boolean hasCollision(DoubleRectangle box) {
+        for (Position pos : box.getCorners()) {
+            if (this.get(pos.x, pos.y).type == FreezoneTile.TYPE_SOLID) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public int getWidth() {
