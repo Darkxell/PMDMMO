@@ -171,7 +171,7 @@ public class Move implements Registrable<Move>
 		this.reflectable = XMLUtils.getAttribute(xml, "reflectable", false);
 		this.snatchable = XMLUtils.getAttribute(xml, "snatchable", false);
 		this.sound = XMLUtils.getAttribute(xml, "sound", false);
-		this.piercesFreeze = XMLUtils.getAttribute(xml, "freeze", false);
+		this.piercesFreeze = !XMLUtils.getAttribute(xml, "freeze", false);
 		this.dealsDamage = XMLUtils.getAttribute(xml, "damage", false);
 		this.ginsengable = XMLUtils.getAttribute(xml, "ginsengable", false);
 		this.effectID = XMLUtils.getAttribute(xml, "effect", 0);
@@ -264,7 +264,7 @@ public class Move implements Registrable<Move>
 		XMLUtils.setAttribute(root, "effect", this.effectID, 0);
 		XMLUtils.setAttribute(root, "damage", this.dealsDamage, false);
 		XMLUtils.setAttribute(root, "ginsengable", this.ginsengable, false);
-		XMLUtils.setAttribute(root, "freeze", this.piercesFreeze, false);
+		XMLUtils.setAttribute(root, "freeze", !this.piercesFreeze, false);
 		XMLUtils.setAttribute(root, "reflectable", this.reflectable, false);
 		XMLUtils.setAttribute(root, "snatchable", this.snatchable, false);
 		XMLUtils.setAttribute(root, "sound", this.sound, false);
