@@ -661,6 +661,10 @@ public final class ClientEventProcessor extends CommonEventProcessor {
 				Persistence.dungeonState.logger.showMessage(
 						new Message("status.tick.bide").addReplacement("<pokemon>", event.actor().getNickname()));
 				pause = true;
+			} else if (event.actor().hasStatusCondition(StatusConditions.Frozen)) {
+				Persistence.dungeonState.logger.showMessage(
+						new Message("status.tick.frozen").addReplacement("<pokemon>", event.actor().getNickname()));
+				pause = true;
 			}
 			if (pause) {
 				Persistence.dungeonState.setSubstate(new DelayState(Persistence.dungeonState, 40));
@@ -739,6 +743,7 @@ public final class ClientEventProcessor extends CommonEventProcessor {
 		PokemonSprite sprite = Persistence.dungeonState.pokemonRenderer.getSprite(event.condition.pokemon);
 		if (event.condition.condition == StatusConditions.Asleep)
 			sprite.setDefaultState(PokemonSpriteState.SLEEP, true);
+		else if (event.condition.condition == StatusConditions.Frozen) sprite.setAnimated(false);
 		else if (event.condition.condition == StatusConditions.Petrified) sprite.setAnimated(false);
 		else if (event.condition.condition instanceof StoreDamageToDoubleStatusCondition
 				|| event.condition.condition instanceof ChargedMoveStatusCondition)
@@ -751,7 +756,9 @@ public final class ClientEventProcessor extends CommonEventProcessor {
 		if (!event.condition.pokemon.hasStatusCondition(StatusConditions.Asleep)
 				&& sprite.defaultState() == PokemonSpriteState.SLEEP)
 			sprite.setDefaultState(PokemonSpriteState.IDLE, false);
-		if (!event.condition.pokemon.hasStatusCondition(StatusConditions.Petrified) && !sprite.isAnimated())
+		if (!event.condition.pokemon.hasStatusCondition(StatusConditions.Frozen) && !sprite.isAnimated())
+			sprite.setAnimated(true);
+		else if (!event.condition.pokemon.hasStatusCondition(StatusConditions.Petrified) && !sprite.isAnimated())
 			sprite.setAnimated(true);
 	}
 
