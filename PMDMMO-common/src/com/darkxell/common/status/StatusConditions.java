@@ -45,7 +45,7 @@ public final class StatusConditions
 	public static final StatusCondition Focus_energy = new BoostCritStatusCondition(71, false, 3, 3, 80);
 	public static final StatusCondition Enraged = new BoostStatOnHitStatusCondition(72, false, 5, 10, Stat.Attack);
 
-	public static final StatusCondition Identified = new RemoveTypeImmunitiesStatusCondition(90, true, -1, -1, PokemonType.Ghost);
+	public static final StatusCondition Identified = new IdentifiedStatusCondition(90);
 
 	public static final StatusCondition Sleepless = new PreventOtherStatusCondition(100, false, 11, 12, Asleep);
 	public static final StatusCondition Safeguard = new PreventAilmentStatusCondition(101, false, 11, 12);
