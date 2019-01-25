@@ -171,6 +171,8 @@ public class MoveEffectCalculator
 		evasion = this.modificator.applyStatModifications(ev, evasion, move, target, floor, events);
 		if (evasion < 0) evasion = 0;
 		if (evasion > 999) evasion = 999;
+		
+		// Reminder : Great evasion value actually means the monster is LESS likely to evade.
 
 		return evasion;
 	}

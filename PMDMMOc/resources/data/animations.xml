@@ -365,6 +365,9 @@
     <move id="116">
       <default width="72" height="64" state="SING" alsoplay="2">-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19</default>
     </move>
+    <move id="120">
+      <default sprites="/moves/801" width="64" height="64" spriteduration="3" state="RUMBLE">0,1,2,3,4,5,6,7</default>
+    </move>
     <move id="122">
       <default sprites="/moves/601" width="16" height="16" state="SPECIAL">0,1,2,3,4,5,6,7,8</default>
     </move>
