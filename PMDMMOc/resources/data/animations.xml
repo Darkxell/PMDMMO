@@ -516,6 +516,9 @@
     <move id="717">
       <default sprites="none" delaytime="15" state="SPECIAL" />
     </move>
+    <move id="718">
+      <default width="64" height="32" state="CHARGE">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18</default>
+    </move>
     <move id="720">
       <default width="96" height="80" y="60" delaytime="40" state="SPECIAL">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26</default>
     </move>
@@ -865,6 +868,9 @@
     </status>
     <status id="6">
       <default width="32" height="32" y="20" spriteduration="6">0,1,2,3,4,5</default>
+    </status>
+    <status id="11">
+      <default width="64" height="32">0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,3,4,5,6,7,8,9,10</default>
     </status>
     <status id="20">
       <default width="42" height="16" spriteduration="4" backsprites="yes">0,1,2,3,4,5,6,7,8</default>

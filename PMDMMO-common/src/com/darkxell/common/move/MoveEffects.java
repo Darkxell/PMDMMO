@@ -69,6 +69,7 @@ public final class MoveEffects
 	public static final MoveEffect Double_damage = new DoubleDamageEffect(131);
 	public static final MoveEffect Create_watersport = new CreateFloorStatusEffect(137, FloorStatuses.Reduce_fire);
 	public static final MoveEffect Lower_defense = new StatChangeEffect(139, Stat.Defense, -1, 100);
+	public static final MoveEffect Inflict_ingrained = new ApplyStatusConditionEffect(141, StatusConditions.Ingrained, 100);
 	public static final MoveEffect Inflict_leechSeed = new ApplyStatusConditionEffect(143, StatusConditions.Leech_seed, 100);
 	public static final MoveEffect Cure_status_ailments = new CureAilmentsEffect(145);
 	public static final MoveEffect Inflict_skullbash_Raise_defense;
