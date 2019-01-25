@@ -648,6 +648,10 @@ public final class ClientEventProcessor extends CommonEventProcessor {
 			Persistence.dungeonState.setSubstate(s);
 			this.setState(State.ANIMATING);
 		}
+
+		PokemonSprite sprite = Persistence.dungeonState.pokemonRenderer.getSprite(event.pokemon);
+		if (sprite.defaultState() == PokemonSpriteState.SLEEP) sprite.setDefaultState(PokemonSpriteState.IDLE, false);
+		if (!sprite.isAnimated()) sprite.setAnimated(true);
 	}
 
 	private void processSkipEvent(TurnSkippedEvent event) {
