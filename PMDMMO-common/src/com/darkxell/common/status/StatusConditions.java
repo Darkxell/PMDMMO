@@ -22,6 +22,7 @@ public final class StatusConditions
 	public static final StatusCondition Frozen = new FrozenStatusCondition(6, true, 4, 5);
 
 	public static final StatusCondition Leech_seed = new StealsHpStatusCondition(10, true, 11, 12, 2, 10);
+	public static final StatusCondition Ingrained = new IngrainStatusCondition(11, false, 3, 3, 15, 1);
 
 	public static final StatusCondition Constricted_fire = new ConstrictedStatusCondition(20, true, 4, 6, 2, 5);
 	public static final StatusCondition Constricted_water = new ConstrictedStatusCondition(21, true, 4, 6, 2, 5);
