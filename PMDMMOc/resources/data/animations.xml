@@ -19,6 +19,7 @@
     <a id="10">
       <default sprites="/12" width="50" height="50" y="28" backsprites="yes" sound="stat-defense">0,1,2,3,4,5,6,7,8,9,10,11,12</default>
     </a>
+    <a id="28" clone="0" />
     <a id="70" clone="targets/755" />
   </abilities>
   <custom>

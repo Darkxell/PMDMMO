@@ -230,8 +230,9 @@ public class DungeonPokemon implements ItemContainer, DungeonEventListener {
 		return null;
 	}
 
-	/** @return True if this Pokemon is affected by the input Status Condition. */
+	/** @return True if this Pokemon is affected by the input Status Condition. If input condition is null, checks if it has any Status Condition. */
 	public boolean hasStatusCondition(StatusCondition condition) {
+		if (condition == null) return !this.statusConditions.isEmpty();
 		for (AppliedStatusCondition c : this.statusConditions)
 			if (c.condition == condition) return true;
 		return false;
