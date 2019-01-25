@@ -92,7 +92,7 @@ public final class MoveEffects
 	public static final MoveEffect Raise_attack_Raise_spattack = new CompoundEffect(221, Raise_attack, Raise_spattack);
 	public static final MoveEffect Lower_attack_2s = new StatChangeEffect(224, Stat.Attack, -2, 100);
 	public static final MoveEffect Lower_speed_30 = new StatChangeEffect(225, Stat.Speed, -1, 30);
-	public static final MoveEffect Inflict_identified_Reset_evasion;
+	public static final MoveEffect Inflict_identified_Reset_evasion = new ApplyStatusConditionEffect(231, StatusConditions.Identified, 100);
 	public static final MoveEffect Escape_dungeon = new EscapeDungeonEffect(240);
 	public static final MoveEffect Inflict_mirrormove = new ApplyStatusConditionEffect(245, StatusConditions.Mirror_move, 100);
 	public static final MoveEffect Copy_stat_changes = new CopyStatChangesEffect(254);
@@ -113,8 +113,6 @@ public final class MoveEffects
 		Raise_attack_Raise_defense = new CompoundEffect(71, Raise_attack, Raise_defense);
 		Inflict_skullbash_Raise_defense = new CompoundEffect(151, Raise_defense, new ApplyStatusConditionEffect(-1, StatusConditions.Skull_bash, 100));
 		Switch_position_Raise_random = new CompoundEffect(164, Switch_position, new RandomStatChangeEffect(-1, 1, 100));
-		Inflict_identified_Reset_evasion = new CompoundEffect(231, new ResetStatEffect(-1, Stat.Evasiveness),
-				new ApplyStatusConditionEffect(-1, StatusConditions.Identified, 100));
 	}
 
 	/** @return The Effect with the input ID. */
