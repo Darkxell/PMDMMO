@@ -17,9 +17,10 @@ public class AbilityStatBoostWhileAfflicted extends AbilityStatBoost {
 	@Override
 	protected boolean shouldBoost(Stat stat, double value, MoveUse move, DungeonPokemon target, boolean isUser,
 			Floor floor, ArrayList<DungeonEvent> events) {
-		if (!super.shouldBoost(stat, value, move, target, isUser, floor, events))
-			return false;
-		return target.hasStatusCondition(StatusConditions.Poisoned) || target.hasStatusCondition(StatusConditions.Burn)
+		if (!super.shouldBoost(stat, value, move, target, isUser, floor, events)) return false;
+		return target.hasStatusCondition(StatusConditions.Poisoned)
+				|| target.hasStatusCondition(StatusConditions.Badly_poisoned)
+				|| target.hasStatusCondition(StatusConditions.Burn)
 				|| target.hasStatusCondition(StatusConditions.Paralyzed);
 	}
 

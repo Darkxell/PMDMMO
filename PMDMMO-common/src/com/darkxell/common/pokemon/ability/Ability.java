@@ -32,6 +32,8 @@ public abstract class Ability implements AffectsPokemon, DungeonEventListener {
 	public static final Ability LEVITATE = new AbilityNullifyType(16, PokemonType.Ground);
 	public static final Ability SOUNDPROOF = new AbilityNullifySound(19);
 	public static final Ability WONDER_GUARD = new AbilityNullifyNonSupEff(21);
+	
+	public static final Ability SHED_SKIN = new AbilityClearStatusAilmentOnTurnEnd(28, 50);
 
 	public static final Ability CUTE_CHARM = new AbilityStatusOnHit(32, StatusConditions.Infatuated, 12);
 	public static final Ability EFFECT_SPORE = new AbilityEffectSpore(33);
@@ -51,7 +53,7 @@ public abstract class Ability implements AffectsPokemon, DungeonEventListener {
 	public static final Ability CLOUD_NINE = new AbilitySetWeather(63, Weather.CLEAR, 36);
 
 	public static final Ability LIGHTNING_ROD = new AbilityPreventMoveUseType(70, PokemonType.Electric);
-	public static final Ability PICKUP = new AbilityFindsItemOnFloorStart(71, 100);
+	public static final Ability PICKUP = new AbilityFindsItemOnFloorStart(71, 12);
 	public static final Ability RUNAWAY = new AbilityRunaway(72);
 
 	static {
