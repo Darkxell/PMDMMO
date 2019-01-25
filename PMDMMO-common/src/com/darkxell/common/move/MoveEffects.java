@@ -13,11 +13,14 @@ import com.darkxell.common.weather.Weather;
 public final class MoveEffects
 {
 	static final HashMap<Integer, MoveEffect> effects = new HashMap<Integer, MoveEffect>();
+	
+	// When Scald, check Frozen
 
 	public static final MoveEffect No_additional_effect = new MoveEffect(0);
 	public static final MoveEffect Basic_attack = new MoveEffect(1);
 	public static final MoveEffect HPRecoil_25 = new HPRecoilEffect(5, 25);
 	public static final MoveEffect Inflict_burn_10 = new ApplyStatusConditionEffect(7, StatusConditions.Burn, 10);
+	public static final MoveEffect Inflict_frozen_10 = new ApplyStatusConditionEffect(8, StatusConditions.Frozen, 10);
 	public static final MoveEffect Inflict_focusenergy = new ApplyStatusConditionEffect(10, StatusConditions.Focus_energy, 100);
 	public static final MoveEffect Inflict_constricted_fire_10 = new ApplyStatusConditionEffect(15, StatusConditions.Constricted_fire, 10);
 	public static final MoveEffect Inflict_constricted_water_10 = new ApplyStatusConditionEffect(16, StatusConditions.Constricted_water, 10);
