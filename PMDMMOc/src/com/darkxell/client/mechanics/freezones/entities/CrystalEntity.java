@@ -13,8 +13,7 @@ class CrystalEntity extends FreezoneEntity {
     private float light = 2f;
     private boolean lightDirection = false;
 
-    CrystalEntity() {
-        super();
+    {
         this.isSolid = true;
         this.canInteract = true;
     }

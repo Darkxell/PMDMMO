@@ -3,6 +3,7 @@ package com.darkxell.client.mechanics.freezones;
 import com.darkxell.client.mechanics.freezones.entities.renderers.DefaultFreezoneEntityRenderer;
 import com.darkxell.client.renderers.AbstractRenderer;
 import com.darkxell.common.util.DoubleRectangle;
+import com.darkxell.common.util.XMLObject;
 import com.darkxell.common.util.XMLUtils;
 import org.jdom2.Element;
 
@@ -13,7 +14,7 @@ import java.awt.*;
  *
  * <p>The player does not extend this class.</p>
  */
-public class FreezoneEntity {
+public class FreezoneEntity extends XMLObject {
     /**
      * The X position of the entity.
      */
@@ -34,27 +35,11 @@ public class FreezoneEntity {
      */
     protected boolean canInteract;
 
-    private boolean initialized = false;
-
-    /**
-     * "No-op" constructor. If {@link #posX}, {@link #posY}, {@link #isSolid}, or {@link #canInteract} requires a
-     * different default value, override this constructor.
-     */
-    public FreezoneEntity() {
+    {
         this.posX = -1;
         this.posY = -1;
         this.isSolid = false;
         this.canInteract = false;
-    }
-
-
-    public void initialize(Element el) {
-        if (initialized) {
-            return;
-        }
-
-        this.onInitialize(el);
-        this.initialized = true;
     }
 
     /**

@@ -16,8 +16,7 @@ import org.jdom2.Element;
  */
 public class FreezoneEntityFactory {
     private static class InteractiveEntity extends FreezoneEntity {
-        InteractiveEntity() {
-            super();
+        {
             this.canInteract = true;
         }
     }
