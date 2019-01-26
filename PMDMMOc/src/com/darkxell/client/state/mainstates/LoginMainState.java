@@ -13,7 +13,7 @@ import com.darkxell.client.launchable.crypto.Encryption;
 import com.darkxell.client.mechanics.chat.CustomTextfield;
 import com.darkxell.client.resources.Res;
 import com.darkxell.client.resources.images.Sprites;
-import com.darkxell.client.state.OpenningState;
+import com.darkxell.client.state.OpeningState;
 import com.darkxell.client.state.PlayerLoadingState;
 import com.darkxell.client.state.PlayerLoadingState.PlayerLoadingEndListener;
 import com.darkxell.client.state.StateManager;
@@ -309,7 +309,7 @@ public class LoginMainState extends StateManager {
 		Persistence.stateManager = new PrincipalMainState();
 		// ((PrincipalMainState) Persistance.stateManager).setState(new
 		// PersonalityQuizState());
-		((PrincipalMainState) Persistence.stateManager).setState(new OpenningState());
+		((PrincipalMainState) Persistence.stateManager).setState(new OpeningState());
 		((PrincipalMainState) Persistence.stateManager).randomizeBackground();
 	}
 

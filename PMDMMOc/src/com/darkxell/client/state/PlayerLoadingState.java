@@ -18,7 +18,7 @@ import com.eclipsesource.json.JsonObject;
 public class PlayerLoadingState extends AbstractState {
 	public static interface PlayerLoadingEndListener {
 		public default void onPlayerLoadingEnd(PlayerLoadingState state) {
-			Persistence.stateManager.setState(new OpenningState());
+			Persistence.stateManager.setState(new OpeningState());
 		}
 	}
 
@@ -52,7 +52,7 @@ public class PlayerLoadingState extends AbstractState {
 
 	private void exit() {
 		Persistence.isCommunicating = false;
-		if (this.listener == null) Persistence.stateManager.setState(new OpenningState());
+		if (this.listener == null) Persistence.stateManager.setState(new OpeningState());
 		else this.listener.onPlayerLoadingEnd(this);
 	}
 
