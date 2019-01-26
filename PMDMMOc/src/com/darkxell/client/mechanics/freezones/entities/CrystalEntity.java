@@ -6,7 +6,7 @@ import com.darkxell.client.resources.images.Sprites.Res_FreezoneEntities;
 import java.awt.*;
 import java.awt.image.RescaleOp;
 
-public class CrystalEntity extends FreezoneEntity {
+class CrystalEntity extends FreezoneEntity {
     private float color = 0.25f;
     private boolean colorDirection = false;
 

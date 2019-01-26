@@ -8,7 +8,7 @@ import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.XMLUtils;
 import org.jdom2.Element;
 
-public class PokemonFreezoneEntity extends DialogEntity {
+class PokemonFreezoneEntity extends DialogEntity {
 	private PokemonSprite sprite;
 
 	public PokemonFreezoneEntity() {

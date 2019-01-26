@@ -119,7 +119,7 @@ public class MenuWindow
 			g.fillRect(nameInside.x - cornerName.width + 10, nameInside.y, 2, nameInside.height);
 			g.fillRect((int) nameInside.getMaxX() + cornerName.width - 12, nameInside.y, 2, nameInside.height);
 
-			TextRenderer.render(g, name, nameInside.x + 4, nameInside.y + font * 1 / 5);
+			TextRenderer.render(g, name, nameInside.x + 4, nameInside.y + font / 5);
 		}
 
 	}

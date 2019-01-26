@@ -10,7 +10,7 @@ import org.jdom2.Element;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DialogEntity extends FreezoneEntity {
+class DialogEntity extends FreezoneEntity {
     private DialogScreen[] dialogs;
 
     /**

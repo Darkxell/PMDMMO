@@ -12,7 +12,7 @@ import org.jdom2.Element;
  * Describes a sign. Note that this entity doesn't have a graphical display and can be walked through. On interact,
  * it will open a simple dialog box.
  */
-public class SignEntity extends FreezoneEntity {
+class SignEntity extends FreezoneEntity {
     private Message mess;
 
     @Override
