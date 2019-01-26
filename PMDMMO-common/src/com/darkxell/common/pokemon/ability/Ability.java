@@ -35,6 +35,7 @@ public abstract class Ability implements AffectsPokemon, DungeonEventListener {
 	
 	public static final Ability SHED_SKIN = new AbilityClearStatusAilmentOnTurnEnd(28, 50);
 
+	public static final Ability WATER_ABSORB = new AbilityAbsorbDamage(30, PokemonType.Water);
 	public static final Ability CUTE_CHARM = new AbilityStatusOnHit(32, StatusConditions.Infatuated, 12);
 	public static final Ability EFFECT_SPORE = new AbilityEffectSpore(33);
 	public static final Ability POISON_POINT = new AbilityStatusOnHit(36, StatusConditions.Poisoned, 12);
