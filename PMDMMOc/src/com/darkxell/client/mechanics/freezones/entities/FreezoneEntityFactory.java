@@ -58,7 +58,7 @@ public class FreezoneEntityFactory {
             case "dialog":
                 return new DialogEntity();
             case "mission":
-                return new FreezoneEntity() {
+                return new InteractiveEntity() {
                     @Override
                     public void onInteract() {
                         AbstractState state = Persistence.stateManager.getCurrentState();
