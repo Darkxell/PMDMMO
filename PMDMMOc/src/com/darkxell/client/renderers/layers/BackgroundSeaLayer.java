@@ -8,6 +8,8 @@ import org.jdom2.Element;
 
 public class BackgroundSeaLayer extends AbstractGraphicLayer
 {
+	private static final int initialUpcamera = 2000;
+
 	private int cloudsposition = 0;
 	private int counter_clouds = 0;
 	private int counter_horizon = 0;
@@ -17,10 +19,20 @@ public class BackgroundSeaLayer extends AbstractGraphicLayer
 	private int upcamera = 0;
 	private int wavesstate = 0;
 
+	BackgroundSeaLayer() {
+	}
+
+	public BackgroundSeaLayer(boolean rising) {
+		if (!rising) {
+			this.upcamera = initialUpcamera;
+		}
+		this.initialized = true;
+	}
+
 	@Override
 	protected void onInitialize(Element el) {
 		if (el.getAttribute("rising") == null) {
-			this.upcamera = 2000;
+			this.upcamera = initialUpcamera;
 		}
 	}
 
