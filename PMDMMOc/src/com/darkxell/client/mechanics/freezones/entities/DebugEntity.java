@@ -6,7 +6,7 @@ import com.darkxell.common.util.Logger;
 
 import java.awt.*;
 
-public class Debugentity extends FreezoneEntity {
+public class DebugEntity extends FreezoneEntity {
     {
         this.canInteract = true;
     }
