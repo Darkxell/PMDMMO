@@ -4,7 +4,7 @@ import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.cutscene.Cutscene;
 import com.darkxell.client.mechanics.cutscene.CutsceneManager;
 import com.darkxell.client.mechanics.cutscene.end.arbitrary.StartNameAsk;
-import com.darkxell.client.state.OpenningState;
+import com.darkxell.client.state.OpeningState;
 import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.common.util.Logger;
 import com.eclipsesource.json.Json;
@@ -38,7 +38,7 @@ public class ArbitraryCutsceneEnds {
 			Persistence.socketendpoint.sendMessage(mess.toString());
 			Persistence.player.setStoryPosition(4);
 			if (Persistence.stateManager instanceof PrincipalMainState) {
-				((PrincipalMainState) Persistence.stateManager).setState(new OpenningState());
+				((PrincipalMainState) Persistence.stateManager).setState(new OpeningState());
 			}
 			break;
 		case "predream":

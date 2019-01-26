@@ -14,7 +14,7 @@ import com.darkxell.client.resources.music.SoundsHolder;
 import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.util.language.Message;
 
-public class OpenningState extends AbstractState {
+public class OpeningState extends AbstractState {
 
 	private BackgroundSeaLayer background = new BackgroundSeaLayer(true);
 	private boolean ismusicset = false;
