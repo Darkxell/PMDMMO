@@ -297,6 +297,9 @@
       <northwest x="38" y="38" backsprites="only" />
     </move>
     <move id="58" clone="moves/0" />
+    <move id="63">
+      <default sprites="/moves/806" width="32" height="32" delaytime="15" state="SHOOT">-1,-1,-1,-1,-1,-1,0,1,2,3,4,5</default>
+    </move>
     <move id="64">
       <default sprites="none" delaytime="15" state="SING" alsoplay="2" />
     </move>
@@ -749,6 +752,7 @@
       <default width="16" height="16" spriteduration="5" movement="arc">0</default>
     </projectile>
     <projectile id="1046" clone="projectiles/1666" />
+    <projectile id="1063" clone="projectiles/1806" />
     <projectile id="1064">
       <default width="16" height="16">0,1</default>
     </projectile>
