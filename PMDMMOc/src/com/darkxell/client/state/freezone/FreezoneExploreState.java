@@ -123,7 +123,7 @@ public class FreezoneExploreState extends AbstractFreezoneState {
 		}
 
 		if (this.isMain()) for (int i = 0; i < Persistence.currentmap.triggerzones.size(); i++)
-			if (Persistence.currentmap.triggerzones.get(i).hitbox.intersects(
+			if (Persistence.currentmap.triggerzones.get(i).getHitbox().intersects(
 					Persistence.currentplayer.getHitboxAt(Persistence.currentplayer.x, Persistence.currentplayer.y))) {
 				Persistence.currentmap.triggerzones.get(i).onEnter();
 				break;

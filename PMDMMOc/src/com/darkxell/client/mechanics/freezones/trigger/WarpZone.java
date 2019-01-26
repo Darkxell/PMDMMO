@@ -3,7 +3,9 @@ package com.darkxell.client.mechanics.freezones.trigger;
 import com.darkxell.client.state.StateManager;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.DoubleRectangle;
+import com.darkxell.common.util.XMLUtils;
 import com.darkxell.common.zones.FreezoneInfo;
+import org.jdom2.Element;
 
 /**
  * A zone that teleports a player to a position on any map.
@@ -15,25 +17,24 @@ public class WarpZone extends TriggerZone {
     public FreezoneInfo destination;
     public Direction direction;
 
-    public WarpZone(int x, int y, FreezoneInfo destination, DoubleRectangle hitbox) {
-        this(x, y, destination, null, hitbox);
+    @Override
+    protected void onInitialize(Element el) {
+        super.onInitialize(el);
+
+        int direction = XMLUtils.getAttribute(el, "direction", 4);
+
+        this.toX = XMLUtils.getAttribute(el, "destx", -1);
+        this.toY = XMLUtils.getAttribute(el, "desty", -1);
+        this.direction = Direction.directions[direction];
+        this.destination = this.getDestination(el);
     }
 
-    /**
-     * A zone that teleports a player to a position on any map.
-     *
-     * @param x         Destination x position. (-1 replaced with default)
-     * @param y         Destination y position. (-1 replaced with default)
-     * @param hitbox    Hitbox of the warpzone in the current map.
-     * @param direction New direction to face upon entering the new Freezone. (null for current direction)
-     */
-    public WarpZone(int x, int y, FreezoneInfo destination, Direction direction, DoubleRectangle hitbox) {
-        super(hitbox);
-
-        this.toX = x;
-        this.toY = y;
-        this.destination = destination;
-        this.direction = direction;
+    private FreezoneInfo getDestination(Element el) {
+        String destination = el.getAttributeValue("dest");
+        if (destination == null) {
+            throw new IllegalArgumentException("There is no destination for this warp zone.");
+        }
+        return FreezoneInfo.find(destination);
     }
 
     @Override
