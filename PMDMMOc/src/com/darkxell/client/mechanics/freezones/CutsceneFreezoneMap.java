@@ -3,9 +3,8 @@ package com.darkxell.client.mechanics.freezones;
 import com.darkxell.common.zones.FreezoneInfo;
 
 public class CutsceneFreezoneMap extends FreezoneMap {
-    public CutsceneFreezoneMap(String tilesetPath, FreezoneInfo info) {
-        super(tilesetPath, 0, 0, info);
-
+    public CutsceneFreezoneMap(String xmlPath, FreezoneInfo info) {
+        super(xmlPath, info);
         this.clearWalkable();
     }
 

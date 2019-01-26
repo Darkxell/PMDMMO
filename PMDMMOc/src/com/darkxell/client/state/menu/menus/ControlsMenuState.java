@@ -3,7 +3,7 @@ package com.darkxell.client.state.menu.menus;
 import java.awt.Rectangle;
 
 import com.darkxell.client.launchable.Persistence;
-import com.darkxell.client.renderers.layers.AbstractGraphiclayer;
+import com.darkxell.client.renderers.layers.AbstractGraphicLayer;
 import com.darkxell.client.state.dialog.DialogState;
 import com.darkxell.client.state.dialog.DialogState.DialogEndListener;
 import com.darkxell.client.state.dialog.OptionDialogScreen;
@@ -44,7 +44,7 @@ public class ControlsMenuState extends OptionSelectionMenuState implements Dialo
 
 	public final AbstractMenuState parent;
 
-	public ControlsMenuState(AbstractMenuState parent, AbstractGraphiclayer background)
+	public ControlsMenuState(AbstractMenuState parent, AbstractGraphicLayer background)
 	{
 		super(background);
 		this.parent = parent;

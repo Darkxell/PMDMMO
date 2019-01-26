@@ -47,6 +47,10 @@ public class DoubleRectangle {
         }
     }
 
+    public DoubleRectangle(DoubleRectangle other) {
+        this(other.x, other.y, other.width, other.height);
+    }
+
     /**
      * Does this rectangle overlap the other?
      */

@@ -4,39 +4,32 @@ import com.darkxell.client.renderers.AbstractRenderer;
 import com.darkxell.client.renderers.pokemon.FreezonePokemonRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
-import com.darkxell.client.state.dialog.DialogScreen;
 import com.darkxell.common.util.Direction;
+import com.darkxell.common.util.XMLUtils;
+import org.jdom2.Element;
 
 public class PokemonFreezoneEntity extends DialogEntity {
+	private PokemonSprite sprite;
 
-	/** The intelligent sprite of the pokemon. */
-	protected PokemonSprite pkmnsprite;
-
-	public PokemonFreezoneEntity(double x, double y, int spriteid) {
-		this(x, y, new PokemonSprite(PokemonSpritesets.getSpriteset(spriteid)));
+	public PokemonFreezoneEntity() {
+		super();
+		this.isSolid = true;
 	}
 
-	public PokemonFreezoneEntity(double x, double y, int spriteid, Direction facing) {
-		this(x, y, new PokemonSprite(PokemonSpritesets.getSpriteset(spriteid)));
-	}
+	@Override
+	protected void onInitialize(Element el) {
+		super.onInitialize(el);
 
-	public PokemonFreezoneEntity(double x, double y, int spriteid, Direction facing, DialogScreen... dialogs) {
-		this(x, y, new PokemonSprite(PokemonSpritesets.getSpriteset(spriteid)), facing, dialogs);
-	}
+		int id = XMLUtils.getAttribute(el, "id", 1);
+		int directionID = XMLUtils.getAttribute(el, "direction", 0);
 
-	public PokemonFreezoneEntity(double x, double y, PokemonSprite sprite) {
-		this(x, y, sprite, Direction.SOUTH, null);
-	}
-
-	public PokemonFreezoneEntity(double x, double y, PokemonSprite sprite, Direction facing, DialogScreen[] dialogs) {
-		super(true, x, y, dialogs);
-		this.pkmnsprite = sprite;
-		this.pkmnsprite.setFacingDirection(facing);
+		this.sprite = new PokemonSprite(PokemonSpritesets.getSpriteset(id));
+		this.sprite.setFacingDirection(Direction.directions[directionID]);
 	}
 
 	@Override
 	public AbstractRenderer createRenderer() {
-		return new FreezonePokemonRenderer(this, this.pkmnsprite);
+		return new FreezonePokemonRenderer(this, this.sprite);
 	}
 
 }

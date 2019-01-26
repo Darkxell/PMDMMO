@@ -4,11 +4,11 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 
 import com.darkxell.client.launchable.Persistence;
-import com.darkxell.client.renderers.layers.AbstractGraphiclayer;
+import com.darkxell.client.renderers.layers.AbstractGraphicLayer;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.client.ui.Keys.Key;
 
-public abstract class AbstractState extends AbstractGraphiclayer {
+public abstract class AbstractState extends AbstractGraphicLayer {
 
 	/**
 	 * @return True if this State is currently the Main State (i.e.

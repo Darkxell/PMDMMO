@@ -2,30 +2,72 @@ package com.darkxell.client.mechanics.freezones;
 
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
+import com.darkxell.client.mechanics.freezones.entities.FreezoneEntityFactory;
 import com.darkxell.client.mechanics.freezones.entities.OtherPlayerEntity;
+import com.darkxell.client.mechanics.freezones.trigger.TriggerZone;
+import com.darkxell.client.mechanics.freezones.trigger.TriggerZoneFactory;
 import com.darkxell.client.renderers.EntityRendererHolder;
+import com.darkxell.client.renderers.layers.AbstractGraphicLayer;
+import com.darkxell.client.renderers.layers.BackgroundLayerFactory;
+import com.darkxell.client.resources.Res;
 import com.darkxell.common.util.Logger;
+import com.darkxell.common.util.XMLUtils;
 import com.darkxell.common.zones.FreezoneInfo;
 import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
+import org.jdom2.Attribute;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * A tiled map of a freezone. Freezones are the areas where you can move freely and don't have to fight.
+ * Areas where you can move freely and don't have to fight.
+ *
+ * <h3>XML Format</h3>
+ *
+ * <ul>
+ * <li>Player only ({@code playeronly} attribute on root)</li>
+ * <li>Default spawn position ({@code <default x="int" y="int" />})</li>
+ * <li>Terrain ({@code <terrain />}, source either with tag as root or sourced, see {@link FreezoneTerrain})</li>
+ * <li>Background music ({@code <bgm source="resource abspath" />})</li>
+ * <li>Background, if any ({@code <background type="" />})</li>
+ * <li>Triggers ({@code <triggers />}, see {@link TriggerZoneFactory})</li>
+ * <li>Entities ({@code <entities />}, see {@link FreezoneEntityFactory})</li>
+ * <li>Extends ({@code <extends source="resource abspath" />}</li>
+ * </ul>
+ *
+ * <h3>Extends behavior</h3>
+ *
+ * <p>When there is an {@code <extends />} element in a file, the freezone will load that file first, and then
+ * continue to load the current file, overwriting it.</p>
+ *
+ * <p>Here is how each of the properties are extended:</p>
+ *
+ * <ul>
+ * <li>Attributes on the root are always overwritten.</li>
+ * <li>Only the root terrain and background is loaded.</li>
+ * <li>Default position, background music, and other such properties that may be added in the future are overwritten
+ * if the elements are present.</li>
+ * </ul>
+ * <p>
+ * TODO: Pre-loading neighbors, reducing load times, etc.
  */
-public abstract class FreezoneMap {
+public class FreezoneMap {
     protected FreezoneTerrain terrain;
+    private AbstractGraphicLayer background;
 
     /**
-     * True if there shouldn't be an ally entity or other player entities.
+     * Should any players present be hidden?
      */
     public boolean playerOnly = false;
 
     public String freezonebgm = "";
 
     public final FreezoneInfo info;
-    public final int defaultX, defaultY;
+    private int defaultX, defaultY;
 
     /**
      * List the entities in this map. Note that the player isn't actually an entity.
@@ -36,17 +78,98 @@ public abstract class FreezoneMap {
     public final EntityRendererHolder<FreezoneEntity> entityRenderers = new EntityRendererHolder<>();
     public final EntityRendererHolder<CutsceneEntity> cutsceneEntityRenderers = new EntityRendererHolder<>();
 
-    public FreezoneMap(String xmlPath, int defaultX, int defaultY, FreezoneInfo info) {
+    public FreezoneMap(String xmlPath, FreezoneInfo info) {
+        this.info = info;
+
         try {
-            this.terrain = new FreezoneTerrain(xmlPath);
+            this.load(xmlPath, true);
         } catch (Exception e) {
             Logger.e("Could not build freezone map from XML: " + e + " (path: " + xmlPath + ")");
             e.printStackTrace();
         }
+    }
 
-        this.defaultX = defaultX;
-        this.defaultY = defaultY;
-        this.info = info;
+    private String loadExtensionPath(Element root) {
+        Element extendEl = root.getChild("extends");
+
+        if (extendEl == null) {
+            return null;
+        }
+
+        return root.getAttributeValue("source");
+    }
+
+    private void loadProperties(Element root) {
+        // flag attributes (similar to html5 boolean attributes)
+        // these attributes are always overwritten in child freezones, for clarity.
+        this.playerOnly = root.getAttribute("playeronly") != null;
+
+        // default positions
+        Element defaultPosEl = root.getChild("default");
+        if (defaultPosEl != null) {
+            this.defaultX = XMLUtils.getAttribute(defaultPosEl, "x", 0);
+            this.defaultY = XMLUtils.getAttribute(defaultPosEl, "y", 0);
+        }
+
+        // bgm
+        Element bgmEl = root.getChild("bgm");
+        if (bgmEl != null) {
+            this.freezonebgm = XMLUtils.getAttribute(bgmEl, "source", "town.mp3");
+        }
+
+        // add to triggers
+        Element triggers = root.getChild("triggers");
+        if (triggers != null) {
+            for (Element triggerEl : triggers.getChildren("trigger")) {
+                this.triggerzones.add(TriggerZoneFactory.getZone(triggerEl));
+            }
+        }
+
+        // add to entities
+        Element entities = root.getChild("entities");
+        if (entities != null) {
+            for (Element entityEl : entities.getChildren("entity")) {
+                this.addEntity(FreezoneEntityFactory.getEntity(entityEl));
+            }
+        }
+    }
+
+    private void loadTerrain(Element root) throws IOException, JDOMException {
+        Element bgLayerEl = root.getChild("background");
+        if (bgLayerEl != null) {
+            this.background = BackgroundLayerFactory.getLayer(bgLayerEl);
+        }
+
+        Element terrainEl = root.getChild("terrain");
+        if (terrainEl != null) {
+            Attribute terrainSource = terrainEl.getAttribute("source");
+            if (terrainSource == null) {
+                this.terrain = new FreezoneTerrain(terrainEl);
+            } else {
+                this.terrain = new FreezoneTerrain(terrainSource.getValue());
+            }
+        }
+    }
+
+    /**
+     * Load freezone file from resource path.
+     *
+     * @param xmlPath Resource path to XML file.
+     * @param isRoot  Is this call the root terrain file?
+     */
+    private void load(String xmlPath, boolean isRoot) throws IOException, JDOMException {
+        SAXBuilder builder = new SAXBuilder();
+        Element root = builder.build(Res.get(xmlPath)).getRootElement();
+
+        String extendsPath = this.loadExtensionPath(root);
+        if (extendsPath != null) {
+            this.load(extendsPath, false);
+        }
+
+        this.loadProperties(root);
+        if (isRoot) {
+            this.loadTerrain(root);
+        }
     }
 
     public void addEntity(FreezoneEntity entity) {
@@ -78,8 +201,8 @@ public abstract class FreezoneMap {
             flushcounter = 0;
             long ct = System.nanoTime();
             for (int i = 0; i < entities.size(); ++i) {
-                if (entities.get(i) instanceof OtherPlayerEntity && ((OtherPlayerEntity) entities.get(
-                        i)).lastupdate < ct - FLUSHTIMEOUT) {
+                if (entities.get(i) instanceof OtherPlayerEntity &&
+                        ((OtherPlayerEntity) entities.get(i)).lastupdate < ct - FLUSHTIMEOUT) {
                     this.removeEntity(entities.get(i));
                     --i;
                 }
@@ -138,5 +261,9 @@ public abstract class FreezoneMap {
 
     public FreezoneTerrain getTerrain() {
         return this.terrain;
+    }
+
+    public AbstractGraphicLayer getBackground() {
+        return this.background;
     }
 }

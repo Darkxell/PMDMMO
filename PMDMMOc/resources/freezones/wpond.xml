@@ -1,0 +1,15 @@
+<zone>
+    <default x="29" y="60"/>
+    <bgm source="pond.mp3"/>
+    <terrain source="/freezones/terrain/pond.xml"/>
+    <entities>
+        <entity type="flower" x="14" y="25" color="false"/>
+        <entity type="flower" x="43" y="25" color="true"/>
+        <entity type="flower" x="17" y="35" color="true"/>
+        <entity type="flower" x="40" y="36" color="false"/>
+    </entities>
+    <triggers>
+        <trigger dest="square" destx="64" desty="4" x="25" y="62" width="7" height="2"/>
+        <trigger dest="lumiouscave" destx="29" desty="34" x="10" y="18" width="3" height="3"/>
+    </triggers>
+</zone>

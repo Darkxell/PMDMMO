@@ -1,11 +1,5 @@
 package com.darkxell.common.pokemon;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
-
-import org.jdom2.Element;
-
 import com.darkxell.common.Registrable;
 import com.darkxell.common.Registries;
 import com.darkxell.common.dungeon.floor.TileType.Mobility;
@@ -14,6 +8,11 @@ import com.darkxell.common.pokemon.BaseStats.Stat;
 import com.darkxell.common.pokemon.ability.Ability;
 import com.darkxell.common.util.XMLUtils;
 import com.darkxell.common.util.language.Message;
+import org.jdom2.Element;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Random;
 
 public class PokemonSpecies implements Registrable<PokemonSpecies>
 {
@@ -224,6 +223,10 @@ public class PokemonSpecies implements Registrable<PokemonSpecies>
 	public Pokemon generate(Random random, int level)
 	{
 		return this.generate(random, level, SHINY_CHANCE);
+	}
+
+	public Pokemon generate(int level) {
+		return this.generate(new Random(), level);
 	}
 
 	/** Generates a Pokemon of this species.

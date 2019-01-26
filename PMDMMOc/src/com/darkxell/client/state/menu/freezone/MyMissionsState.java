@@ -3,7 +3,7 @@ package com.darkxell.client.state.menu.freezone;
 import java.util.HashMap;
 
 import com.darkxell.client.launchable.Persistence;
-import com.darkxell.client.renderers.layers.AbstractGraphiclayer;
+import com.darkxell.client.renderers.layers.AbstractGraphicLayer;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.common.mission.InvalidParammetersException;
@@ -21,7 +21,7 @@ public class MyMissionsState extends OptionSelectionMenuState {
 	 * @param parent
 	 *            the parent state that will come back if you exit this state
 	 */
-	public MyMissionsState(AbstractGraphiclayer backgroundState, AbstractState parent) {
+	public MyMissionsState(AbstractGraphicLayer backgroundState, AbstractState parent) {
 		super(backgroundState);
 		this.createOptions();
 		this.callback = parent;

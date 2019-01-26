@@ -1,64 +1,110 @@
 package com.darkxell.client.mechanics.freezones;
 
-import java.awt.Graphics2D;
-
 import com.darkxell.client.mechanics.freezones.entities.renderers.DefaultFreezoneEntityRenderer;
 import com.darkxell.client.renderers.AbstractRenderer;
 import com.darkxell.common.util.DoubleRectangle;
+import com.darkxell.common.util.XMLUtils;
+import org.jdom2.Element;
+
+import java.awt.*;
 
 /**
- * Describes an entity in a freezone. Note that the player does not extends this
- * class.
+ * Null behavior entity. Should not ever be used as is on purpose, though nothing should break from using it like that.
+ *
+ * <p>The player does not extend this class.</p>
  */
-public abstract class FreezoneEntity {
+public class FreezoneEntity {
+    /**
+     * The X position of the entity.
+     */
+    public double posX;
 
-	/** Is true if this entity is solid, meaning you can't go through it. */
-	public boolean isSolid;
-	/** Is true if you can interact with this entity */
-	public boolean canInteract;
-	/** The X position of the entity. */
-	public double posX;
-	/** the Y position of the entity. */
-	public double posY;
+    /**
+     * the Y position of the entity.
+     */
+    public double posY;
 
-	public FreezoneEntity(boolean isSolid, boolean canInteract, double x, double y) {
-		this.isSolid = isSolid;
-		this.canInteract = canInteract;
-		this.posX = x;
-		this.posY = y;
-	}
+    /**
+     * Is this entity solid?
+     */
+    protected boolean isSolid;
 
-	/**
-	 * Called when the pplayers interact with this entity. Note that this might
-	 * be called even if this entity has the <code>canInteract</code> tag set to
-	 * false. Note that this method will be called from the KeyEvent thread.
-	 */
-	public abstract void onInteract();
+    /**
+     * Is this entity interactive?
+     */
+    protected boolean canInteract;
 
-	/**
-	 * Prints this entity on the drawable graphics provided. graphics transition
-	 * should have already been applied before calling this method. This will
-	 * use a 8px/unit position ratio. <br/>
-	 * This methods needs to be implemented if this freezoneentity has the
-	 * default renderer. More complicated entities might need a renderer to be
-	 * able to draw itself.
-	 */
-	public void print(Graphics2D g) {
-	}
+    private boolean initialized = false;
 
-	/** Updates this entity */
-	public abstract void update();
+    /**
+     * "No-op" constructor. If {@link #posX}, {@link #posY}, {@link #isSolid}, or {@link #canInteract} requires a
+     * different default value, override this constructor.
+     */
+    public FreezoneEntity() {
+        this.posX = -1;
+        this.posY = -1;
+        this.isSolid = false;
+        this.canInteract = false;
+    }
 
-	/**
-	 * Returns the hitbox of this entity at the wanted position. This should be
-	 * overrided in a lot of cases, as it will return the default sized hitbox.
-	 */
-	public DoubleRectangle getHitbox(double x, double y) {
-		return new DoubleRectangle(x - 0.9, y - 0.9, 1.8, 1.7);
-	}
 
-	public AbstractRenderer createRenderer() {
-		return new DefaultFreezoneEntityRenderer(this);
-	}
+    public void initialize(Element el) {
+        if (initialized) {
+            return;
+        }
 
+        this.onInitialize(el);
+        this.initialized = true;
+    }
+
+    /**
+     * Custom initialization behavior.
+     *
+     * <p>By default, it will attempt to extract the {@code x} and {@code y}, {@code solid} and {@code interactive}
+     * properties from the attributes on the root element. A missing attribute will assume a default value.</p>
+     *
+     * <p>Subclasses will, obviously, always have the option to not parse these values and/or parse these values in a
+     * different way, although this approach should be used sparingly and <em>must always be clearly documented</em>
+     * to avoid unwelcome surprises to the designer.</p>
+     */
+    protected void onInitialize(Element el) {
+        this.posX = XMLUtils.getAttribute(el, "x", this.posX);
+        this.posY = XMLUtils.getAttribute(el, "y", this.posY);
+
+        this.isSolid = XMLUtils.getAttribute(el, "solid", this.isSolid);
+        this.canInteract = XMLUtils.getAttribute(el, "interactive", this.canInteract);
+    }
+
+    /**
+     * Called when the players interact with this entity.
+     *
+     * <p>Note that this might be called even if this entity has the {@code canInteract} tag set to false. This method
+     * will be called from the KeyEvent thread.</p>
+     */
+    public void onInteract() {
+    }
+
+    /**
+     * Prints this entity on the drawable graphics provided. graphics transition should have already been applied
+     * before calling this method. This will use a 8px/unit position ratio.
+     *
+     * <p>This method needs to be implemented if this freezone entity has the default renderer. Alternatively,
+     * supply your own renderer by overriding {@link #createRenderer()}.</p>
+     */
+    public void print(Graphics2D g) {
+    }
+
+    public void update() {
+    }
+
+    /**
+     * Returns the hitbox of this entity at the wanted position. This returns the default hitbox size.
+     */
+    public DoubleRectangle getHitbox(double x, double y) {
+        return new DoubleRectangle(x - 0.9, y - 0.9, 1.8, 1.7);
+    }
+
+    public AbstractRenderer createRenderer() {
+        return new DefaultFreezoneEntityRenderer(this);
+    }
 }

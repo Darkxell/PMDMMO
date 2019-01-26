@@ -8,7 +8,7 @@ import java.util.Random;
 
 import com.darkxell.client.resources.images.Sprites.Res_GraphicalLayers;
 
-public class BackgroundLsdLayer extends AbstractGraphiclayer
+public class BackgroundLsdLayer extends AbstractGraphicLayer
 {
 
 	private float counter_1 = 0;

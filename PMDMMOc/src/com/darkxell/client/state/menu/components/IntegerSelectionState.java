@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
 import com.darkxell.client.renderers.TextRenderer;
-import com.darkxell.client.renderers.layers.AbstractGraphiclayer;
+import com.darkxell.client.renderers.layers.AbstractGraphicLayer;
 import com.darkxell.client.resources.images.Sprites;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.dialog.DialogState;
@@ -20,7 +20,7 @@ public class IntegerSelectionState extends AbstractState
 		public void onIntegerSelected(long selection);
 	}
 
-	public final AbstractGraphiclayer background;
+	public final AbstractGraphicLayer background;
 	private long current;
 	private int currentLogLocation, textx;
 	private Message currentM;
@@ -30,7 +30,7 @@ public class IntegerSelectionState extends AbstractState
 	public final DialogState parent;
 	private MenuWindow window;
 
-	public IntegerSelectionState(AbstractGraphiclayer background, DialogState parent, IntegerSelectionListener listener, long min, long max, long start)
+	public IntegerSelectionState(AbstractGraphicLayer background, DialogState parent, IntegerSelectionListener listener, long min, long max, long start)
 	{
 		this.background = background;
 		this.parent = parent;
