@@ -29,6 +29,8 @@ public class FreezoneEntityFactory {
 
     private static FreezoneEntity createEntity(String type) {
         switch (type == null ? "null" : type) {
+            case "debug":
+                return new DebugEntity();
             case "flower":
                 return new AnimatedFlowerEntity();
             case "flag":
