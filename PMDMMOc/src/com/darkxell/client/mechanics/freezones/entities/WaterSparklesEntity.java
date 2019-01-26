@@ -7,7 +7,7 @@ import org.jdom2.Element;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class WaterSparklesEntity extends FreezoneEntity {
+class WaterSparklesEntity extends FreezoneEntity {
     private String type;
     private byte state = 0;
     private byte counter = 0;

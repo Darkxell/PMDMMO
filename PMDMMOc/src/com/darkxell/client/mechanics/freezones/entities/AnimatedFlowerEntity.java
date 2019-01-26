@@ -9,7 +9,7 @@ import org.jdom2.Element;
 
 import java.awt.*;
 
-public class AnimatedFlowerEntity extends FreezoneEntity {
+class AnimatedFlowerEntity extends FreezoneEntity {
     private RegularSpriteSet spriteSet;
     private byte state;
     private byte counter = 0;

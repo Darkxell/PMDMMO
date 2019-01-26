@@ -5,7 +5,7 @@ import com.darkxell.client.resources.images.Sprites.Res_FreezoneEntities;
 
 import java.awt.*;
 
-public class FlagEntity extends FreezoneEntity {
+class FlagEntity extends FreezoneEntity {
     private byte state = 0;
     private byte counter = 0;
 
