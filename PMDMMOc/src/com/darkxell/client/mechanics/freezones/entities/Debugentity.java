@@ -7,10 +7,10 @@ import com.darkxell.client.mechanics.cutscene.CutsceneManager;
 import com.darkxell.client.mechanics.freezones.FreezoneEntity;
 import com.darkxell.common.util.Logger;
 
-public class Debugentity extends FreezoneEntity
+public class DebugEntity extends FreezoneEntity
 {
 
-	public Debugentity(double x, double y)
+	public DebugEntity(double x, double y)
 	{
 		super(false, true, x, y);
 	}
