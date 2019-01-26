@@ -7,8 +7,7 @@ import com.darkxell.common.util.Logger;
 import java.awt.*;
 
 public class Debugentity extends FreezoneEntity {
-    public Debugentity(double x, double y) {
-        super();
+    {
         this.canInteract = true;
     }
 

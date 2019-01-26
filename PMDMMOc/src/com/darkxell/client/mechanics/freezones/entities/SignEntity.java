@@ -28,8 +28,4 @@ class SignEntity extends FreezoneEntity {
                 new DialogScreen(this.mess).setInstant().setCentered());
         Persistence.stateManager.setState(messageBox);
     }
-
-    @Override
-    public void update() {
-    }
 }

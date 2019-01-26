@@ -11,9 +11,6 @@ import org.jdom2.Element;
 
 /**
  * A Pokemon entity that follows a point.
- *
- * This is the only entity that can be created dynamically, so the initialization happens in the constructor rather
- * than in {@link #onInitialize(Element)}.
  */
 public class FollowsPointEntity extends FreezoneEntity {
     protected double destinationX;
@@ -21,10 +18,13 @@ public class FollowsPointEntity extends FreezoneEntity {
     protected double moveDistance = 0.5, sprintDistance = 5;
     protected PokemonSprite sprite;
 
+    {
+        this.canInteract = true;
+    }
+
     public FollowsPointEntity(double x, double y, PokemonSprite sprite) {
         this.posX = x;
         this.posY = y;
-        this.canInteract = true;
 
         this.sprite = sprite;
         this.destinationX = x;

@@ -11,8 +11,7 @@ import org.jdom2.Element;
 class PokemonFreezoneEntity extends DialogEntity {
 	private PokemonSprite sprite;
 
-	public PokemonFreezoneEntity() {
-		super();
+	{
 		this.isSolid = true;
 	}
 
