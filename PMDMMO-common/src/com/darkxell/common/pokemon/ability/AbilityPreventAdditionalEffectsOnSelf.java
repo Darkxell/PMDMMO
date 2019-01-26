@@ -17,7 +17,7 @@ public class AbilityPreventAdditionalEffectsOnSelf extends AbilityModifyMoveEffe
 	public DungeonEvent modify(DungeonEvent effect, MoveUse usedMove, DungeonPokemon target, Floor floor, boolean missed, boolean isAdditional, boolean amIUser,
 			DungeonPokemon directedAt)
 	{
-		if (isAdditional && !amIUser && target == directedAt) return null;
+		if (isAdditional && !amIUser && target == directedAt) return null; // If this changes, check AbilityAbsorbDamage
 		return effect;
 	}
 
