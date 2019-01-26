@@ -1,14 +1,14 @@
 package com.darkxell.common.pokemon;
 
+import com.darkxell.common.Registry;
+import org.jdom2.Element;
+
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import org.jdom2.Element;
-
-import com.darkxell.common.Registry;
 
 /**
  * Holds all Pokemon species.
@@ -50,6 +50,7 @@ public final class PokemonRegistry extends Registry<PokemonSpecies> {
      * Generate forms from current main-form species.
      */
     private void registerForms() {
+        // copy cache values to avoid concurrent access errors
         for (PokemonSpecies s : new ArrayList<>(this.cache.values())) {
             for (PokemonSpecies form : s.forms()) {
                 this.cache.put(form.id, form);

@@ -1,0 +1,8 @@
+<zone>
+    <default x="35" y="22"/>
+    <bgm source="base.mp3"/>
+    <terrain source="/freezones/terrain/forest.xml"/>
+    <triggers>
+        <trigger dest="base" destx="6" desty="41" x="62" y="17" width="2" height="10"/>
+    </triggers>
+</zone>

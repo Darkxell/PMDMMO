@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 
 import com.darkxell.client.resources.images.Sprites.Res_GraphicalLayers;
 
-public class BackgroundSeaLayer extends AbstractGraphiclayer
+public class BackgroundSeaLayer extends AbstractGraphicLayer
 {
 
 	private int cloudsposition = 0;

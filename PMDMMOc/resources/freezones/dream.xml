@@ -1,0 +1,6 @@
+<zone>
+    <default x="15" y="27"/>
+    <bgm source="base.mp3"/>
+    <background type="wet"/>
+    <terrain source="/freezones/terrain/void.xml"/>
+</zone>

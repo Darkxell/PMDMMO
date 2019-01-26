@@ -4,14 +4,14 @@ import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
 import com.darkxell.client.mechanics.freezones.FreezoneTerrain;
 import com.darkxell.client.mechanics.freezones.FreezoneTile;
-import com.darkxell.client.mechanics.freezones.zones.BaseFreezone;
-import com.darkxell.client.mechanics.freezones.zones.DreamFreezone;
-import com.darkxell.client.mechanics.freezones.zones.OfficeFreezone;
+import com.darkxell.client.mechanics.freezones.Freezones;
 import com.darkxell.client.renderers.AbstractRenderer;
+import com.darkxell.client.renderers.layers.AbstractGraphicLayer;
 import com.darkxell.client.resources.music.SoundsHolder;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.util.DoubleRectangle;
+import com.darkxell.common.zones.FreezoneInfo;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -33,8 +33,10 @@ public class AbstractFreezoneState extends AbstractState {
 		Persistence.freezoneCamera.renderHeight = height;
 		Persistence.freezoneCamera.renderWidth = width;
 		// Draws the sea background if needed.
-		if (map instanceof OfficeFreezone) ((OfficeFreezone) map).background.render(g, width, height);
-		if (map instanceof DreamFreezone) ((DreamFreezone) map).background.render(g, width, height);
+		AbstractGraphicLayer background = Persistence.currentmap.getBackground();
+		if (background != null) {
+			background.render(g, width, height);
+		}
 		// Draws the surroundings.
 		if (map != null) {
 			int translateX = (int) (-Persistence.freezoneCamera.finalX() * 8 + (width / 2));
@@ -96,12 +98,12 @@ public class AbstractFreezoneState extends AbstractState {
 	@Override
 	public void update() {
 		// Updates the freezoneBackground if needeed
-		if (Persistence.currentmap instanceof OfficeFreezone)
-			((OfficeFreezone) Persistence.currentmap).background.update();
-		if (Persistence.currentmap instanceof DreamFreezone)
-			((DreamFreezone) Persistence.currentmap).background.update();
+		AbstractGraphicLayer background = Persistence.currentmap.getBackground();
+		if (background != null) {
+			background.update();
+		}
 		// CREATES AND UPDATES THE MAP
-		if (Persistence.currentmap == null) Persistence.currentmap = new BaseFreezone();
+		if (Persistence.currentmap == null) Persistence.currentmap = Freezones.loadMap(FreezoneInfo.BASE);
 		else Persistence.currentmap.update();
 		// UPDATES THE CAMERA
 		if (Persistence.freezoneCamera != null) Persistence.freezoneCamera.update();

@@ -1,0 +1,11 @@
+<zone>
+    <default x="35" y="22"/>
+    <bgm source="pond.mp3"/>
+    <terrain source="/freezones/terrain/lcave.xml"/>
+    <entities>
+        <entity type="crystal" x="30.3" y="26.3"/>
+    </entities>
+    <triggers>
+        <trigger dest="wpond" destx="29" desty="15" x="28" y="38" width="4" height="2"/>
+    </triggers>
+</zone>

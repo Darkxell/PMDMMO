@@ -1,16 +1,15 @@
 package com.darkxell.client.launchable;
 
+import com.darkxell.common.util.Logger;
+import com.darkxell.common.util.language.Localization;
+import com.darkxell.common.util.language.Localization.Language;
+
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Properties;
-
-import com.darkxell.common.util.Logger;
-import com.darkxell.common.util.language.Localization;
-import com.darkxell.common.util.language.Localization.Language;
 
 public class ClientSettings {
 	public enum Setting {
@@ -53,14 +52,6 @@ public class ClientSettings {
 		HP_BARS("hp_bars", true),
 
 		LANGUAGE("lang", "null");
-
-		private static final HashMap<String, Setting> values = new HashMap<>();
-
-		static {
-			for (Setting k : Setting.values()) {
-				values.put(k.key, k);
-			}
-		}
 
 		public final String key;
 		public final String defaultValue;

@@ -7,9 +7,9 @@ import com.darkxell.client.launchable.GameSocketEndpoint;
 import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
+import com.darkxell.client.mechanics.freezones.Freezones;
 import com.darkxell.client.mechanics.freezones.entities.AllyEntity;
 import com.darkxell.client.mechanics.freezones.entities.FreezoneCamera;
-import com.darkxell.client.mechanics.freezones.zones.BaseFreezone;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.images.Sprites;
 import com.darkxell.client.state.map.LocalMap;
@@ -18,6 +18,7 @@ import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.language.Message;
+import com.darkxell.common.zones.FreezoneInfo;
 import com.eclipsesource.json.JsonObject;
 
 public class FreezoneExploreState extends AbstractFreezoneState {
@@ -94,7 +95,7 @@ public class FreezoneExploreState extends AbstractFreezoneState {
 
 	@Override
 	public void update() {
-		if (Persistence.currentmap == null) Persistence.currentmap = new BaseFreezone();
+		if (Persistence.currentmap == null) Persistence.currentmap = Freezones.loadMap(FreezoneInfo.BASE);
 		super.update();
 
 		if (!Persistence.currentmap.playerOnly) {

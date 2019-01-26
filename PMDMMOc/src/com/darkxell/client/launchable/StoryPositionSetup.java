@@ -1,10 +1,11 @@
 package com.darkxell.client.launchable;
 
 import com.darkxell.client.mechanics.cutscene.CutsceneManager;
-import com.darkxell.client.mechanics.freezones.zones.BaseInsideFreezone;
+import com.darkxell.client.mechanics.freezones.Freezones;
 import com.darkxell.client.state.StateManager;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.Logger;
+import com.darkxell.common.zones.FreezoneInfo;
 
 public class StoryPositionSetup {
 
@@ -99,7 +100,7 @@ public class StoryPositionSetup {
 					+ (fromOpeningState ? "Opening state" : "Dungeon end state") + ", storyposition is " + storyposition
 					+ ".");
 			Logger.i("Moved the player to base freezone.");
-			StateManager.setExploreState(new BaseInsideFreezone(), Direction.SOUTH, -1, -1, true);
+			StateManager.setExploreState(Freezones.loadMap(FreezoneInfo.BASEINSIDE), Direction.SOUTH, -1, -1, true);
 		}
 
 	}

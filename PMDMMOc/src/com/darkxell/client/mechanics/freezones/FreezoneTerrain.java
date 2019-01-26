@@ -39,6 +39,10 @@ public class FreezoneTerrain {
         this.load(root);
     }
 
+    public FreezoneTerrain(Element root) {
+        this.load(root);
+    }
+
     /**
      * Get an XML element's child text as an integer.
      */

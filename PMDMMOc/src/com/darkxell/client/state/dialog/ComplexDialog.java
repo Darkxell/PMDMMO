@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 import com.darkxell.client.launchable.Persistence;
-import com.darkxell.client.renderers.layers.AbstractGraphiclayer;
+import com.darkxell.client.renderers.layers.AbstractGraphicLayer;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.dialog.DialogState.DialogEndListener;
 import com.darkxell.client.ui.Keys.Key;
@@ -23,7 +23,7 @@ public abstract class ComplexDialog implements DialogEndListener
 	public static class DialogLoadingState extends AbstractState
 	{
 
-		public final AbstractGraphiclayer background;
+		public final AbstractGraphicLayer background;
 		public final ComplexDialog dialog;
 
 		public DialogLoadingState(ComplexDialog dialog)
@@ -31,7 +31,7 @@ public abstract class ComplexDialog implements DialogEndListener
 			this(dialog, dialog.background);
 		}
 
-		public DialogLoadingState(ComplexDialog dialog, AbstractGraphiclayer background)
+		public DialogLoadingState(ComplexDialog dialog, AbstractGraphicLayer background)
 		{
 			this.dialog = dialog;
 			this.background = background;
@@ -66,11 +66,11 @@ public abstract class ComplexDialog implements DialogEndListener
 
 	}
 
-	public final AbstractGraphiclayer background;
+	public final AbstractGraphicLayer background;
 	private boolean isPaused = false;
 	protected final ArrayList<DialogState> previousStates = new ArrayList<>();
 
-	public ComplexDialog(AbstractGraphiclayer background)
+	public ComplexDialog(AbstractGraphicLayer background)
 	{
 		this.background = background;
 	}
