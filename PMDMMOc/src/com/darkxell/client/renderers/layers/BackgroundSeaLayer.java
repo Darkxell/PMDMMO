@@ -4,10 +4,10 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import com.darkxell.client.resources.images.Sprites.Res_GraphicalLayers;
+import org.jdom2.Element;
 
 public class BackgroundSeaLayer extends AbstractGraphicLayer
 {
-
 	private int cloudsposition = 0;
 	private int counter_clouds = 0;
 	private int counter_horizon = 0;
@@ -17,9 +17,11 @@ public class BackgroundSeaLayer extends AbstractGraphicLayer
 	private int upcamera = 0;
 	private int wavesstate = 0;
 
-	public BackgroundSeaLayer(boolean rising)
-	{
-		if (!rising) upcamera = 2000;
+	@Override
+	protected void onInitialize(Element el) {
+		if (el.getAttribute("rising") == null) {
+			this.upcamera = 2000;
+		}
 	}
 
 	@Override
