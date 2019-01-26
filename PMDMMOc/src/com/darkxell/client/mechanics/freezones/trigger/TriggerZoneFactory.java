@@ -71,25 +71,25 @@ import java.util.Map;
  */
 public class TriggerZoneFactory {
     public static TriggerZone getZone(Element el) {
-        String type = el.getAttributeValue("type");
-        DoubleRectangle hitbox = getHitbox(el);
-        return createTriggerZone(type, hitbox, el);
+        return getZone(null, el);
     }
 
-    /**
-     * Trigger zone creator with the ability to supply top-level properties.
-     *
-     * @param type   Type of trigger zone to create.
-     * @param hitbox Hitbox of the trigger zone.
-     * @param el     Remaining properties.
-     * @return New trigger zone.
-     */
-    private static TriggerZone createTriggerZone(String type, DoubleRectangle hitbox, Element el) {
+    static TriggerZone getZone(TriggerZone context, Element el) {
+        String type = el.getAttributeValue("type");
+        TriggerZone trigger = createTriggerZone(type);
+        if (context != null) {
+            trigger.setContext(context);
+        }
+        trigger.initialize(el);
+        return trigger;
+    }
+
+    private static TriggerZone createTriggerZone(String type) {
         switch (type == null ? "warp" : type) {
             case "multi":
-                return createMultiZone(hitbox, el);
+                return new MultiTriggerZone();
             case "friend":
-                return new TriggerZone(hitbox) {
+                return new TriggerZone() {
                     @Override
                     public void onEnter() {
                         AbstractState state = Persistence.stateManager.getCurrentState();
@@ -97,81 +97,17 @@ public class TriggerZoneFactory {
                     }
                 };
             case "dungeon":
-                return new TriggerZone(hitbox) {
+                return new TriggerZone() {
                     @Override
                     public void onEnter() {
                         Persistence.stateManager.setState(new DungeonSelectionMapState());
                     }
                 };
             case "story":
-                return createStoryZone(hitbox, el);
+                return new StoryConditionTriggerZone();
             case "warp":
             default:
-                int x = XMLUtils.getAttribute(el, "destx", -1);
-                int y = XMLUtils.getAttribute(el, "desty", -1);
-                int direction = XMLUtils.getAttribute(el, "direction", 4);
-                FreezoneInfo destination = getDestination(el);
-                return new WarpZone(x, y, destination, Direction.directions[direction], hitbox);
+                return new WarpZone();
         }
-    }
-
-    private static DoubleRectangle getHitbox(Element el) {
-        return inheritHitbox(null, el);
-    }
-
-    private static DoubleRectangle inheritHitbox(DoubleRectangle parent, Element el) {
-        DoubleRectangle target;
-        if (parent == null) {
-            target = new DoubleRectangle(0, 0, 0, 0);
-        } else {
-            target = new DoubleRectangle(parent);
-        }
-
-        target.x = XMLUtils.getAttribute(el, "x", target.x);
-        target.y = XMLUtils.getAttribute(el, "y", target.y);
-        target.width = XMLUtils.getAttribute(el, "width", target.width);
-        target.height = XMLUtils.getAttribute(el, "height", target.height);
-        return target;
-    }
-
-    private static FreezoneInfo getDestination(Element el) {
-        String destination = el.getAttributeValue("dest");
-        if (destination == null) {
-            throw new IllegalArgumentException("There is no destination for this warp zone.");
-        }
-        return FreezoneInfo.find(destination);
-    }
-
-    private static TriggerZone createMultiZone(DoubleRectangle hitbox, Element el) {
-        boolean fallthrough = XMLUtils.getAttribute(el, "fallthrough", false);
-        List<TriggerZone> childZones = new ArrayList<>();
-        for (Element triggerEl : el.getChildren("trigger")) {
-            childZones.add(createTriggerZone(triggerEl.getAttributeValue("type"), inheritHitbox(hitbox, triggerEl), triggerEl));
-        }
-
-        return new MultiTriggerZone(hitbox, childZones.toArray(new TriggerZone[0]), fallthrough);
-    }
-
-    private static Map<String, String> getPropertyElement(Element el) {
-        Map<String, String> properties = new HashMap<>();
-
-        if (el != null) {
-            for (Element propertyEl : el.getChildren("property")) {
-                String variable = propertyEl.getAttributeValue("key");
-                String value = propertyEl.getAttributeValue("val");
-                if (variable != null && value != null) {
-                    properties.put(variable, value);
-                }
-            }
-        }
-        return properties;
-    }
-
-    private static TriggerZone createStoryZone(DoubleRectangle hitbox, Element el) {
-        Map<String, String> conditions = getPropertyElement(el.getChild("if"));
-        Map<String, String> postConditions = getPropertyElement(el.getChild("then"));
-        String cutscene = el.getAttributeValue("cutscene");
-
-        return new StoryConditionTriggerZone(hitbox, conditions, postConditions, cutscene);
     }
 }

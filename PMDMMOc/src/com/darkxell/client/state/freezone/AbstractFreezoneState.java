@@ -82,7 +82,7 @@ public class AbstractFreezoneState extends AbstractState {
 				// draws the warpzones and camera position if debugmode
 				for (int i = 0; i < map.triggerzones.size(); i++) {
 					g.setColor(new Color(255, 255, 255, 130));
-					dbrct = map.triggerzones.get(i).hitbox;
+					dbrct = map.triggerzones.get(i).getHitbox();
 					g.fillRect((int) (dbrct.x * 8), (int) (dbrct.y * 8), (int) (dbrct.width * 8),
 							(int) (dbrct.height * 8));
 				}

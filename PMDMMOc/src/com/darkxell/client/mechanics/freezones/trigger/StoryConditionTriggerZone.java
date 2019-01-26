@@ -4,7 +4,9 @@ import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.cutscene.CutsceneManager;
 import com.darkxell.common.dbobject.DBPlayer;
 import com.darkxell.common.util.DoubleRectangle;
+import org.jdom2.Element;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -18,15 +20,28 @@ public class StoryConditionTriggerZone extends TriggerZone {
     private Map<String, String> postConditions;
     private String cutscene;
 
-    StoryConditionTriggerZone(DoubleRectangle hitbox,
-                              Map<String, String> conditions,
-                              Map<String, String> postConditions,
-                              String cutscene) {
-        super(hitbox);
+    @Override
+    protected void onInitialize(Element el) {
+        super.onInitialize(el);
 
-        this.conditions = conditions;
-        this.postConditions = postConditions;
-        this.cutscene = cutscene;
+        this.conditions = getPropertyElement(el.getChild("if"));
+        this.postConditions = getPropertyElement(el.getChild("then"));
+        this.cutscene = el.getAttributeValue("cutscene");
+    }
+
+    private Map<String, String> getPropertyElement(Element el) {
+        Map<String, String> properties = new HashMap<>();
+
+        if (el != null) {
+            for (Element propertyEl : el.getChildren("property")) {
+                String variable = propertyEl.getAttributeValue("key");
+                String value = propertyEl.getAttributeValue("val");
+                if (variable != null && value != null) {
+                    properties.put(variable, value);
+                }
+            }
+        }
+        return properties;
     }
 
     /**

@@ -20,7 +20,7 @@ public abstract class XMLObject {
     /**
      * Has the initialization method already been called?
      */
-    private boolean initialized;
+    protected boolean initialized;
 
     /**
      * No-op constructor. Initialize instead with {@link #initialize(Element)}.

@@ -1,6 +1,11 @@
 package com.darkxell.client.mechanics.freezones.trigger;
 
 import com.darkxell.common.util.DoubleRectangle;
+import com.darkxell.common.util.XMLUtils;
+import org.jdom2.Element;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Trigger zone that is able to skip past inactive trigger zones.
@@ -16,11 +21,21 @@ public class MultiTriggerZone extends TriggerZone {
      */
     private boolean fallthrough;
 
-    public MultiTriggerZone(DoubleRectangle hitbox, TriggerZone[] childZones, boolean fallthrough) {
-        super(hitbox);
+    @Override
+    protected void onInitialize(Element el) {
+        super.onInitialize(el);
 
-        this.childZones = childZones;
-        this.fallthrough = fallthrough;
+        this.fallthrough = XMLUtils.getAttribute(el, "fallthrough", false);
+        this.childZones = this.getTriggerZones(el);
+    }
+
+    private TriggerZone[] getTriggerZones(Element el) {
+        List<TriggerZone> childZones = new ArrayList<>();
+        for (Element triggerEl : el.getChildren("trigger")) {
+            childZones.add(TriggerZoneFactory.getZone(this, triggerEl));
+        }
+
+        return childZones.toArray(new TriggerZone[0]);
     }
 
     @Override

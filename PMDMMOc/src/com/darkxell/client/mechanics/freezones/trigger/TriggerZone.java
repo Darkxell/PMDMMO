@@ -1,21 +1,45 @@
 package com.darkxell.client.mechanics.freezones.trigger;
 
 import com.darkxell.common.util.DoubleRectangle;
+import com.darkxell.common.util.XMLObject;
+import com.darkxell.common.util.XMLUtils;
+import org.jdom2.Element;
 
 /**
  * A zone on the map on which behavior can be applied once entered, e.g. warp zones, cutscene activation, or script
  * triggers.
  */
-public abstract class TriggerZone {
-    public DoubleRectangle hitbox;
+public abstract class TriggerZone extends XMLObject {
+    private DoubleRectangle hitbox;
+
+    @Override
+    protected void onInitialize(Element el) {
+        if (this.hitbox == null) {
+            this.hitbox = new DoubleRectangle(0, 0, 0, 0);
+        }
+
+        this.hitbox.x = XMLUtils.getAttribute(el, "x", this.hitbox.x);
+        this.hitbox.y = XMLUtils.getAttribute(el, "y", this.hitbox.y);
+        this.hitbox.width = XMLUtils.getAttribute(el, "width", this.hitbox.width);
+        this.hitbox.height = XMLUtils.getAttribute(el, "height", this.hitbox.height);
+    }
+
+    public DoubleRectangle getHitbox() {
+        return hitbox;
+    }
 
     /**
-     * Creates a new trigger zone. A base trigger zone object has no set behavior.
+     * Set other trigger zone as context.
      *
-     * @param hitbox the hitbox of the trigger zone in the current map.
+     * <p>Currently only copies the hitbox.</p>
+     *
+     * @param context What other zone to inherit properties from.
      */
-    public TriggerZone(DoubleRectangle hitbox) {
-        this.hitbox = hitbox;
+    public void setContext(TriggerZone context) {
+        if (this.initialized) {
+            throw new IllegalStateException("Cannot set trigger zone context after initialization");
+        }
+        this.hitbox = context.getHitbox();
     }
 
     /**
