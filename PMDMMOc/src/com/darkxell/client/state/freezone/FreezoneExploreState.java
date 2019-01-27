@@ -10,7 +10,7 @@ import com.darkxell.client.mechanics.freezones.FreezoneMap;
 import com.darkxell.client.mechanics.freezones.Freezones;
 import com.darkxell.client.mechanics.freezones.entities.AllyEntity;
 import com.darkxell.client.mechanics.freezones.entities.FreezoneCamera;
-import com.darkxell.client.renderers.TextRenderer;
+import com.darkxell.client.graphics.TextRenderer;
 import com.darkxell.client.resources.images.Sprites;
 import com.darkxell.client.state.map.LocalMap;
 import com.darkxell.client.state.menu.freezone.FreezoneMenuState;

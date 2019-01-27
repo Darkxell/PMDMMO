@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import com.darkxell.client.launchable.Persistence;
-import com.darkxell.client.renderers.pokemon.DungeonPokemonRenderer;
+import com.darkxell.client.graphics.pokemon.DungeonPokemonRenderer;
 import com.darkxell.client.resources.images.Sprites.Res_Dungeon;
 import com.darkxell.client.resources.images.tilesets.AbstractDungeonTileset;
 import com.darkxell.client.resources.images.tilesets.DungeonMapTileset;

@@ -1,6 +1,6 @@
 package com.darkxell.client.state.dialog.bank;
 
-import com.darkxell.client.renderers.TextRenderer;
+import com.darkxell.client.graphics.TextRenderer;
 import com.darkxell.client.state.dialog.OptionDialogScreen;
 import com.darkxell.client.state.menu.components.OptionSelectionWindow;
 import com.darkxell.common.pokemon.PokemonSpecies;

@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import com.darkxell.client.launchable.Persistence;
-import com.darkxell.client.renderers.TextRenderer;
+import com.darkxell.client.graphics.TextRenderer;
 import com.darkxell.client.resources.Palette;
 import com.darkxell.client.resources.images.Sprites.Res_Map;
 import com.darkxell.common.zones.LocalMapLocation;

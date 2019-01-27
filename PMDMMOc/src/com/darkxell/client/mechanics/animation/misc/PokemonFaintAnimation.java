@@ -4,7 +4,7 @@ import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.animation.AnimationData;
 import com.darkxell.client.mechanics.animation.AnimationEndListener;
 import com.darkxell.client.mechanics.animation.PokemonAnimation;
-import com.darkxell.client.renderers.pokemon.AbstractPokemonRenderer;
+import com.darkxell.client.graphics.pokemon.AbstractPokemonRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
 
 public class PokemonFaintAnimation extends PokemonAnimation

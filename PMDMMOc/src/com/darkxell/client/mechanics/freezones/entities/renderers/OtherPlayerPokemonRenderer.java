@@ -3,8 +3,8 @@ package com.darkxell.client.mechanics.freezones.entities.renderers;
 import java.awt.Graphics2D;
 
 import com.darkxell.client.mechanics.freezones.entities.OtherPlayerEntity;
-import com.darkxell.client.renderers.TextRenderer;
-import com.darkxell.client.renderers.pokemon.FreezonePokemonRenderer;
+import com.darkxell.client.graphics.TextRenderer;
+import com.darkxell.client.graphics.pokemon.FreezonePokemonRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSpriteFrame;
 

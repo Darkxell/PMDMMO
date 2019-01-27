@@ -5,8 +5,8 @@ import java.awt.Rectangle;
 
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.launchable.render.UpdaterAndRenderer;
-import com.darkxell.client.renderers.TextRenderer;
-import com.darkxell.client.renderers.layers.AbstractGraphicLayer;
+import com.darkxell.client.graphics.TextRenderer;
+import com.darkxell.client.graphics.layers.AbstractGraphicLayer;
 import com.darkxell.client.resources.Palette;
 import com.darkxell.client.resources.music.SoundManager;
 import com.darkxell.client.state.AbstractState;

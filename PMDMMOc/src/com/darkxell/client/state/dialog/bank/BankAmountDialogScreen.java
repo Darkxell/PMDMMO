@@ -2,7 +2,7 @@ package com.darkxell.client.state.dialog.bank;
 
 import com.darkxell.client.launchable.GameSocketEndpoint;
 import com.darkxell.client.launchable.Persistence;
-import com.darkxell.client.renderers.TextRenderer;
+import com.darkxell.client.graphics.TextRenderer;
 import com.darkxell.client.state.dialog.PokemonDialogScreen;
 import com.darkxell.client.state.menu.components.IntegerSelectionState;
 import com.darkxell.client.state.menu.components.IntegerSelectionState.IntegerSelectionListener;

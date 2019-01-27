@@ -1,4 +1,4 @@
-package com.darkxell.client.renderers;
+package com.darkxell.client.graphics;
 
 import static com.darkxell.client.resources.images.pokemon.PokemonPortrait.PORTRAIT_SIZE;
 
@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import com.darkxell.client.launchable.Persistence;
-import com.darkxell.client.renderers.TextRenderer.PMDChar;
+import com.darkxell.client.graphics.TextRenderer.PMDChar;
 import com.darkxell.client.resources.Palette;
 import com.darkxell.client.resources.images.pokemon.PokemonPortrait;
 import com.darkxell.common.player.Player;

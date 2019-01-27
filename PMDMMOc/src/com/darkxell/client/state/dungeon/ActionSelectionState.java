@@ -8,7 +8,7 @@ import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 
 import com.darkxell.client.launchable.Persistence;
-import com.darkxell.client.renderers.TextRenderer;
+import com.darkxell.client.graphics.TextRenderer;
 import com.darkxell.client.resources.Palette;
 import com.darkxell.client.resources.images.Sprites.Res_Dungeon;
 import com.darkxell.client.state.dungeon.DungeonState.DungeonSubState;

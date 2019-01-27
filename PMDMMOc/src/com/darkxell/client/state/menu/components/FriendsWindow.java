@@ -6,7 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
-import com.darkxell.client.renderers.TextRenderer;
+import com.darkxell.client.graphics.TextRenderer;
 import com.darkxell.client.resources.Palette;
 import com.darkxell.client.resources.images.pokemon.PokemonPortrait;
 import com.darkxell.client.state.menu.freezone.FriendSelectionState;

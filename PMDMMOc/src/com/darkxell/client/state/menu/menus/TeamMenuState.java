@@ -2,8 +2,8 @@ package com.darkxell.client.state.menu.menus;
 
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.launchable.messagehandlers.ItemActionHandler.ItemActionMessageHandler;
-import com.darkxell.client.renderers.TextRenderer;
-import com.darkxell.client.renderers.layers.AbstractGraphicLayer;
+import com.darkxell.client.graphics.TextRenderer;
+import com.darkxell.client.graphics.layers.AbstractGraphicLayer;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.menu.InfoState;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;

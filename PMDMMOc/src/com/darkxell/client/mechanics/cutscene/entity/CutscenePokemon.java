@@ -5,8 +5,8 @@ import java.util.Random;
 import org.jdom2.Element;
 
 import com.darkxell.client.launchable.Persistence;
-import com.darkxell.client.renderers.AbstractRenderer;
-import com.darkxell.client.renderers.pokemon.CutscenePokemonRenderer;
+import com.darkxell.client.graphics.AbstractRenderer;
+import com.darkxell.client.graphics.pokemon.CutscenePokemonRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;

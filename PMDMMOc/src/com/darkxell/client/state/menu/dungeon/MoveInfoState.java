@@ -3,7 +3,7 @@ package com.darkxell.client.state.menu.dungeon;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
-import com.darkxell.client.renderers.TextRenderer;
+import com.darkxell.client.graphics.TextRenderer;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.menu.InfoState;
 import com.darkxell.client.state.menu.components.TextWindow;

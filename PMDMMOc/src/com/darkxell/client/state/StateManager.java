@@ -12,7 +12,7 @@ import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.event.ClientEventProcessor;
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
 import com.darkxell.client.mechanics.freezones.Freezones;
-import com.darkxell.client.renderers.pokemon.OnFirstPokemonDraw;
+import com.darkxell.client.graphics.pokemon.OnFirstPokemonDraw;
 import com.darkxell.client.resources.images.SpriteLoader;
 import com.darkxell.client.state.dungeon.AskServerForDungeonSeedState;
 import com.darkxell.client.state.dungeon.DungeonEndState;

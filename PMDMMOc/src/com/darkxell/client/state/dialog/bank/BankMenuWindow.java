@@ -3,7 +3,7 @@ package com.darkxell.client.state.dialog.bank;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
-import com.darkxell.client.renderers.TextRenderer;
+import com.darkxell.client.graphics.TextRenderer;
 import com.darkxell.client.state.menu.components.MenuWindow;
 import com.darkxell.client.state.menu.components.OptionSelectionWindow;
 import com.darkxell.common.util.language.Message;

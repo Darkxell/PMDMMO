@@ -1,7 +1,7 @@
 package com.darkxell.client.state.dialog;
 
-import com.darkxell.client.renderers.TextRenderer;
-import com.darkxell.client.renderers.TextRenderer.PMDChar;
+import com.darkxell.client.graphics.TextRenderer;
+import com.darkxell.client.graphics.TextRenderer.PMDChar;
 import com.darkxell.client.resources.images.Sprites;
 import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.util.language.Message;

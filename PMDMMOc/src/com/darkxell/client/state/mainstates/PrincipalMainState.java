@@ -11,8 +11,8 @@ import java.util.Random;
 
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.animation.AnimationTicker;
-import com.darkxell.client.renderers.TeamInfoRenderer;
-import com.darkxell.client.renderers.TextRenderer;
+import com.darkxell.client.graphics.TeamInfoRenderer;
+import com.darkxell.client.graphics.TextRenderer;
 import com.darkxell.client.resources.Palette;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.StateManager;

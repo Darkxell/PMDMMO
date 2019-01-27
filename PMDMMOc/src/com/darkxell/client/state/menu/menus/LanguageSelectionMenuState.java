@@ -5,7 +5,7 @@ import java.awt.Rectangle;
 import com.darkxell.client.launchable.ClientSettings;
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.launchable.ClientSettings.Setting;
-import com.darkxell.client.renderers.layers.AbstractGraphicLayer;
+import com.darkxell.client.graphics.layers.AbstractGraphicLayer;
 import com.darkxell.client.state.menu.AbstractMenuState;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.common.util.Logger;

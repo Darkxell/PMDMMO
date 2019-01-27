@@ -1,7 +1,7 @@
 package com.darkxell.client.mechanics.freezones;
 
 import com.darkxell.client.launchable.Persistence;
-import com.darkxell.client.renderers.pokemon.AbstractPokemonRenderer;
+import com.darkxell.client.graphics.pokemon.AbstractPokemonRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;

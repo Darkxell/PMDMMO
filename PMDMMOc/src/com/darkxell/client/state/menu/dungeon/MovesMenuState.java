@@ -5,7 +5,7 @@ import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 
 import com.darkxell.client.launchable.Persistence;
-import com.darkxell.client.renderers.TextRenderer;
+import com.darkxell.client.graphics.TextRenderer;
 import com.darkxell.client.resources.images.hud.MenuStateHudSpriteset;
 import com.darkxell.client.resources.music.SoundManager;
 import com.darkxell.client.state.dungeon.DungeonState;

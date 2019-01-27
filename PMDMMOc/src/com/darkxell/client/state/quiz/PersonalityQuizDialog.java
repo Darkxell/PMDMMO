@@ -3,7 +3,7 @@ package com.darkxell.client.state.quiz;
 import java.util.Random;
 
 import com.darkxell.client.launchable.Persistence;
-import com.darkxell.client.renderers.layers.BackgroundLsdLayer;
+import com.darkxell.client.graphics.layers.BackgroundLsdLayer;
 import com.darkxell.client.resources.music.SoundsHolder;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.PlayerLoadingState;

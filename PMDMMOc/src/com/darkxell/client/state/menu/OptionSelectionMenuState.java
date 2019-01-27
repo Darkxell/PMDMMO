@@ -2,7 +2,7 @@ package com.darkxell.client.state.menu;
 
 import java.awt.Graphics2D;
 
-import com.darkxell.client.renderers.layers.AbstractGraphicLayer;
+import com.darkxell.client.graphics.layers.AbstractGraphicLayer;
 import com.darkxell.client.state.menu.components.OptionSelectionWindow;
 
 public abstract class OptionSelectionMenuState extends AbstractMenuState {

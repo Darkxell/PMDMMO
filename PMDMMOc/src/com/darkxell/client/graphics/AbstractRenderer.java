@@ -1,4 +1,4 @@
-package com.darkxell.client.renderers;
+package com.darkxell.client.graphics;
 
 import java.awt.Graphics2D;
 

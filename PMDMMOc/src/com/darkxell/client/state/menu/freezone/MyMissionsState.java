@@ -3,7 +3,7 @@ package com.darkxell.client.state.menu.freezone;
 import java.util.HashMap;
 
 import com.darkxell.client.launchable.Persistence;
-import com.darkxell.client.renderers.layers.AbstractGraphicLayer;
+import com.darkxell.client.graphics.layers.AbstractGraphicLayer;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.common.mission.InvalidParammetersException;
