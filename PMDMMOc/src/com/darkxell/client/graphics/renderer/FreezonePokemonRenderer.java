@@ -1,6 +1,6 @@
 package com.darkxell.client.graphics.renderer;
 
-import com.darkxell.client.mechanics.freezones.entities.FreezoneEntity;
+import com.darkxell.client.mechanics.freezone.entity.FreezoneEntity;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 
 /** Renders a Pokemon. This Renderer's Coordinates' units are Tiles. */

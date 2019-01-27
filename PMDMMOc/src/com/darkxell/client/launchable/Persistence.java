@@ -2,9 +2,9 @@ package com.darkxell.client.launchable;
 
 import com.darkxell.client.mechanics.chat.ChatBox;
 import com.darkxell.client.mechanics.event.ClientEventProcessor;
-import com.darkxell.client.mechanics.freezones.FreezoneMap;
-import com.darkxell.client.mechanics.freezones.FreezonePlayer;
-import com.darkxell.client.mechanics.freezones.FreezoneCamera;
+import com.darkxell.client.mechanics.freezone.FreezoneMap;
+import com.darkxell.client.mechanics.freezone.FreezonePlayer;
+import com.darkxell.client.mechanics.freezone.FreezoneCamera;
 import com.darkxell.client.graphics.MasterDungeonRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;

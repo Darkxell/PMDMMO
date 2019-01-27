@@ -1,10 +1,10 @@
 package com.darkxell.client.state.freezone;
 
 import com.darkxell.client.launchable.Persistence;
-import com.darkxell.client.mechanics.freezones.FreezoneMap;
-import com.darkxell.client.mechanics.freezones.FreezoneTerrain;
-import com.darkxell.client.mechanics.freezones.FreezoneTile;
-import com.darkxell.client.mechanics.freezones.Freezones;
+import com.darkxell.client.mechanics.freezone.FreezoneMap;
+import com.darkxell.client.mechanics.freezone.FreezoneTerrain;
+import com.darkxell.client.mechanics.freezone.FreezoneTile;
+import com.darkxell.client.mechanics.freezone.Freezones;
 import com.darkxell.client.graphics.AbstractRenderer;
 import com.darkxell.client.graphics.layers.AbstractGraphicLayer;
 import com.darkxell.client.resources.music.SoundsHolder;

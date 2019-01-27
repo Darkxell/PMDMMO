@@ -7,8 +7,8 @@ import org.jdom2.Element;
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
 import com.darkxell.client.mechanics.cutscene.entity.CutscenePokemon;
-import com.darkxell.client.mechanics.freezones.Freezones;
-import com.darkxell.client.mechanics.freezones.FreezoneCamera;
+import com.darkxell.client.mechanics.freezone.Freezones;
+import com.darkxell.client.mechanics.freezone.FreezoneCamera;
 import com.darkxell.common.util.XMLUtils;
 import com.darkxell.common.zones.FreezoneInfo;
 
