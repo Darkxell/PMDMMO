@@ -3,7 +3,7 @@ package com.darkxell.client.state.menu.menus;
 import com.darkxell.client.launchable.ClientSettings;
 import com.darkxell.client.launchable.ClientSettings.Setting;
 import com.darkxell.client.launchable.Persistence;
-import com.darkxell.client.graphics.layers.AbstractGraphicLayer;
+import com.darkxell.client.graphics.AbstractGraphicsLayer;
 import com.darkxell.client.state.menu.AbstractMenuState;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.common.util.language.Message;
@@ -13,7 +13,7 @@ public class SettingsMenuState extends OptionSelectionMenuState {
 	private MenuOption controls, hpBars, language, back;
 	public final AbstractMenuState parent;
 
-	public SettingsMenuState(AbstractMenuState parent, AbstractGraphicLayer background) {
+	public SettingsMenuState(AbstractMenuState parent, AbstractGraphicsLayer background) {
 		super(background);
 		this.parent = parent;
 

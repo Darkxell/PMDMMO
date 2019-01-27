@@ -3,7 +3,7 @@ package com.darkxell.client.state.menu.menus;
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.launchable.messagehandlers.ItemActionHandler.ItemActionMessageHandler;
 import com.darkxell.client.graphics.TextRenderer;
-import com.darkxell.client.graphics.layers.AbstractGraphicLayer;
+import com.darkxell.client.graphics.AbstractGraphicsLayer;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.menu.InfoState;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
@@ -20,7 +20,7 @@ public class TeamMenuState extends OptionSelectionMenuState implements ItemActio
 		public void teamMemberSelected(Pokemon pokemon);
 	}
 
-	public static InfoState createSummaryState(AbstractGraphicLayer background, AbstractState parent, DungeonPokemon dungeon, Pokemon pokemon)
+	public static InfoState createSummaryState(AbstractGraphicsLayer background, AbstractState parent, DungeonPokemon dungeon, Pokemon pokemon)
 	{
 		Message stats = new Message("summary.stats.content");
 		stats.addReplacement("<level>", TextRenderer.alignNumber(pokemon.level(), 7));
@@ -56,7 +56,7 @@ public class TeamMenuState extends OptionSelectionMenuState implements ItemActio
 				new Message[] { stats, features, info });
 	}
 
-	public static InfoState createSummaryState(AbstractGraphicLayer background, AbstractState parent, Pokemon pokemon)
+	public static InfoState createSummaryState(AbstractGraphicsLayer background, AbstractState parent, Pokemon pokemon)
 	{
 		return createSummaryState(background, parent, null, pokemon);
 	}
@@ -65,12 +65,12 @@ public class TeamMenuState extends OptionSelectionMenuState implements ItemActio
 	private final AbstractState parent;
 	private Pokemon[] pokemon;
 
-	public TeamMenuState(AbstractState parent, AbstractGraphicLayer background)
+	public TeamMenuState(AbstractState parent, AbstractGraphicsLayer background)
 	{
 		this(parent, background, null);
 	}
 
-	public TeamMenuState(AbstractState parent, AbstractGraphicLayer background, TeamMemberSelectionListener listener)
+	public TeamMenuState(AbstractState parent, AbstractGraphicsLayer background, TeamMemberSelectionListener listener)
 	{
 		super(background);
 		this.pokemon = Persistence.player.getTeam();

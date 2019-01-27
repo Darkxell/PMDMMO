@@ -3,37 +3,39 @@ package com.darkxell.client.mechanics.freezone.entity;
 import com.darkxell.client.graphics.renderer.DefaultFreezoneEntityRenderer;
 import com.darkxell.client.graphics.AbstractRenderer;
 import com.darkxell.common.util.DoubleRectangle;
-import com.darkxell.common.util.XMLObject;
+import com.darkxell.common.util.XMLImmutableObject;
 import com.darkxell.common.util.XMLUtils;
 import org.jdom2.Element;
 
 import java.awt.*;
 
 /**
- * Null behavior entity. Should not ever be used as is on purpose, though nothing should break from using it like that.
+ * Null behavior entity.
+ *
+ * <p>Should not ever be used as is on purpose, though nothing should break from using it like that.</p>
  *
  * <p>The player does not extend this class.</p>
  */
-public class FreezoneEntity extends XMLObject {
+public class FreezoneEntity extends XMLImmutableObject {
     /**
      * The X position of the entity.
      */
-    protected double posX;
+    double posX;
 
     /**
      * the Y position of the entity.
      */
-    protected double posY;
+    double posY;
 
     /**
      * Is this entity solid?
      */
-    protected boolean solid;
+    boolean solid;
 
     /**
      * Is this entity interactive?
      */
-    protected boolean interactive;
+    boolean interactive;
 
     {
         this.posX = -1;
@@ -52,7 +54,7 @@ public class FreezoneEntity extends XMLObject {
      * different way, although this approach should be used sparingly and <em>must always be clearly documented</em>
      * to avoid unwelcome surprises to the designer.</p>
      */
-    protected void onInitialize(Element el) {
+    protected void deserialize(Element el) {
         this.posX = XMLUtils.getAttribute(el, "x", this.posX);
         this.posY = XMLUtils.getAttribute(el, "y", this.posY);
 
@@ -65,6 +67,8 @@ public class FreezoneEntity extends XMLObject {
      *
      * <p>Note that this might be called even if this entity has the {@code interactive} tag set to false. This method
      * will be called from the KeyEvent thread.</p>
+     *
+     * <p>The default implementation has no behavior.</p>
      */
     public void onInteract() {
     }
@@ -75,10 +79,15 @@ public class FreezoneEntity extends XMLObject {
      *
      * <p>This method needs to be implemented if this freezone entity has the default renderer. Alternatively,
      * supply your own renderer by overriding {@link #createRenderer()}.</p>
+     *
+     * <p>The default implementation has no behavior.</p>
      */
     public void print(Graphics2D g) {
     }
 
+    /**
+     * <p>The default implementation has no behavior.</p>
+     */
     public void update() {
     }
 

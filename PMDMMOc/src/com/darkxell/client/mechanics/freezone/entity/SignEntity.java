@@ -15,8 +15,8 @@ class SignEntity extends FreezoneEntity {
     private Message mess;
 
     @Override
-    protected void onInitialize(Element el) {
-        super.onInitialize(el);
+    protected void deserialize(Element el) {
+        super.deserialize(el);
 
         this.mess = new Message(XMLUtils.getAttribute(el, "id", "nothing"));
     }

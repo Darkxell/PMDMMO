@@ -6,7 +6,7 @@ import java.awt.Rectangle;
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.launchable.render.UpdaterAndRenderer;
 import com.darkxell.client.graphics.TextRenderer;
-import com.darkxell.client.graphics.layers.AbstractGraphicLayer;
+import com.darkxell.client.graphics.AbstractGraphicsLayer;
 import com.darkxell.client.resources.Palette;
 import com.darkxell.client.resources.music.SoundManager;
 import com.darkxell.client.state.AbstractState;
@@ -22,7 +22,7 @@ public class EditControlState extends AbstractState
 	public static final int SECONDS = 5;
 	public static final int TICKMAX = UpdaterAndRenderer.TARGET_UPS * SECONDS;
 
-	private AbstractGraphicLayer background;
+	private AbstractGraphicsLayer background;
 	public final Key key;
 	private ControlMenuOption option;
 	private ControlsMenuState parent;
@@ -30,7 +30,7 @@ public class EditControlState extends AbstractState
 	private int tick = 0;
 	private MenuWindow window;
 
-	public EditControlState(AbstractGraphicLayer background, ControlsMenuState parent, ControlMenuOption option)
+	public EditControlState(AbstractGraphicsLayer background, ControlsMenuState parent, ControlMenuOption option)
 	{
 		this.background = background;
 		this.parent = parent;

@@ -2,7 +2,7 @@ package com.darkxell.client.state.dialog.storage;
 
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.launchable.messagehandlers.InventoryRequestHandler;
-import com.darkxell.client.graphics.layers.AbstractGraphicLayer;
+import com.darkxell.client.graphics.AbstractGraphicsLayer;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.dialog.ComplexDialog;
 import com.darkxell.client.state.dialog.DialogScreen;
@@ -38,7 +38,7 @@ public class StorageDialog extends ComplexDialog
 	private ItemStack[] selection;
 	private PokemonSpecies shopkeeper;
 
-	public StorageDialog(AbstractGraphicLayer background) {
+	public StorageDialog(AbstractGraphicsLayer background) {
 		super(background);
 		this.shopkeeper = Registries.species().find(115);
 	}

@@ -20,8 +20,8 @@ public class StoryConditionTriggerZone extends TriggerZone {
     private String cutscene;
 
     @Override
-    protected void onInitialize(Element el) {
-        super.onInitialize(el);
+    protected void deserialize(Element el) {
+        super.deserialize(el);
 
         this.conditions = getPropertyElement(el.getChild("if"));
         this.postConditions = getPropertyElement(el.getChild("then"));

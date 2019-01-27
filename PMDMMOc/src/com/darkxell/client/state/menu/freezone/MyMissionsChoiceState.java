@@ -3,7 +3,7 @@ package com.darkxell.client.state.menu.freezone;
 import java.awt.Rectangle;
 
 import com.darkxell.client.launchable.Persistence;
-import com.darkxell.client.graphics.layers.AbstractGraphicLayer;
+import com.darkxell.client.graphics.AbstractGraphicsLayer;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
@@ -14,7 +14,7 @@ import com.eclipsesource.json.JsonObject;
 
 public class MyMissionsChoiceState extends OptionSelectionMenuState {
 
-	public MyMissionsChoiceState(AbstractGraphicLayer backgroundState, Mission mission) {
+	public MyMissionsChoiceState(AbstractGraphicsLayer backgroundState, Mission mission) {
 		super(backgroundState, true);
 		this.createOptions();
 		this.missioncontent = mission;

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.launchable.messagehandlers.ItemActionHandler.ItemActionMessageHandler;
 import com.darkxell.client.graphics.TextRenderer;
-import com.darkxell.client.graphics.layers.AbstractGraphicLayer;
+import com.darkxell.client.graphics.AbstractGraphicsLayer;
 import com.darkxell.client.resources.images.hud.MenuStateHudSpriteset;
 import com.darkxell.client.resources.music.SoundManager;
 import com.darkxell.client.state.AbstractState;
@@ -81,12 +81,12 @@ public class ItemContainersMenuState extends AbstractMenuState
 	private final AbstractState parent;
 	private InventoryWindow window;
 
-	public ItemContainersMenuState(AbstractState parent, AbstractGraphicLayer background, boolean inDungeon, ItemContainer... containers)
+	public ItemContainersMenuState(AbstractState parent, AbstractGraphicsLayer background, boolean inDungeon, ItemContainer... containers)
 	{
 		this(parent, background, null, inDungeon, containers);
 	}
 
-	public ItemContainersMenuState(AbstractState parent, AbstractGraphicLayer background, ItemSelectionListener listener, boolean inDungeon,
+	public ItemContainersMenuState(AbstractState parent, AbstractGraphicsLayer background, ItemSelectionListener listener, boolean inDungeon,
                                    ItemContainer... containers)
 	{
 		super(background);

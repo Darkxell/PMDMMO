@@ -14,8 +14,8 @@ class AnimatedFlowerEntity extends FreezoneEntity {
     private byte counter = 0;
 
     @Override
-    protected void onInitialize(Element el) {
-        super.onInitialize(el);
+    protected void deserialize(Element el) {
+        super.deserialize(el);
 
         boolean color = XMLUtils.getAttribute(el, "color", false);
         this.spriteSet = color ? Res_FreezoneEntities.YellowFlower : Res_FreezoneEntities.RedFlower;

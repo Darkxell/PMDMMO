@@ -16,8 +16,8 @@ class PokemonFreezoneEntity extends DialogEntity {
 	}
 
 	@Override
-	protected void onInitialize(Element el) {
-		super.onInitialize(el);
+	protected void deserialize(Element el) {
+		super.deserialize(el);
 
 		int id = XMLUtils.getAttribute(el, "id", 1);
 		int directionID = XMLUtils.getAttribute(el, "direction", 0);

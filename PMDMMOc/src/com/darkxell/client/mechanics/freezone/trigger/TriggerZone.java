@@ -1,7 +1,7 @@
 package com.darkxell.client.mechanics.freezone.trigger;
 
 import com.darkxell.common.util.DoubleRectangle;
-import com.darkxell.common.util.XMLObject;
+import com.darkxell.common.util.XMLImmutableObject;
 import com.darkxell.common.util.XMLUtils;
 import org.jdom2.Element;
 
@@ -9,11 +9,11 @@ import org.jdom2.Element;
  * A zone on the map on which behavior can be applied once entered, e.g. warp zones, cutscene activation, or script
  * triggers.
  */
-public abstract class TriggerZone extends XMLObject {
+public abstract class TriggerZone extends XMLImmutableObject {
     private DoubleRectangle hitbox;
 
     @Override
-    protected void onInitialize(Element el) {
+    protected void deserialize(Element el) {
         if (this.hitbox == null) {
             this.hitbox = new DoubleRectangle(0, 0, 0, 0);
         }
