@@ -11,7 +11,7 @@ public class AllyEntity extends FollowsPointEntity {
 
 	public AllyEntity(double x, double y, Pokemon pokemon, FreezonePlayer playerToFollow) {
 		super(x, y, new PokemonSprite(PokemonSpritesets.getSpriteset(pokemon)));
-		this.canInteract = false;
+		this.interactive = false;
 		this.playerToFollow = playerToFollow;
 		this.moveDistance = 2;
 		this.sprite().setShadowColor(PokemonSprite.ALLY_SHADOW);

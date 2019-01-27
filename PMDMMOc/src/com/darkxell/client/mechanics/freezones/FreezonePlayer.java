@@ -2,6 +2,7 @@ package com.darkxell.client.mechanics.freezones;
 
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.graphics.renderer.AbstractPokemonRenderer;
+import com.darkxell.client.mechanics.freezones.entities.FreezoneEntity;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
@@ -56,7 +57,7 @@ public class FreezonePlayer {
         ArrayList<FreezoneEntity> entities = Persistence.currentmap.entities();
         for (int i = 0; i < entities.size(); i++) {
             FreezoneEntity ety = entities.get(i);
-            if (ety.isSolid && ety.getHitbox(ety.posX, ety.posY).intersects(this.getHitboxAt(x, y))) {
+            if (ety.isSolid() && ety.getHitbox(ety.getX(), ety.getY()).intersects(this.getHitboxAt(x, y))) {
                 return false;
             }
         }
@@ -73,7 +74,7 @@ public class FreezonePlayer {
             return false;
         }
         for (FreezoneEntity et : Persistence.currentmap.entities()) {
-            if (et.canInteract && et.getHitbox(et.posX, et.posY).intersects(this.getInteractionBox())) {
+            if (et.isInteractive() && et.getHitbox(et.getX(), et.getY()).intersects(this.getInteractionBox())) {
                 return true;
             }
         }
@@ -160,7 +161,7 @@ public class FreezonePlayer {
         ArrayList<FreezoneEntity> entities = Persistence.currentmap.entities();
         for (int i = 0; i < entities.size(); i++) {
             FreezoneEntity et = entities.get(i);
-            if (et.canInteract && et.getHitbox(et.posX, et.posY).intersects(this.getInteractionBox())) {
+            if (et.isInteractive() && et.getHitbox(et.getX(), et.getY()).intersects(this.getInteractionBox())) {
                 return et;
             }
         }

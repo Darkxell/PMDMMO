@@ -1,6 +1,5 @@
 package com.darkxell.client.mechanics.freezones.entities;
 
-import com.darkxell.client.mechanics.freezones.FreezoneEntity;
 import com.darkxell.client.resources.images.Sprites.Res_FreezoneEntities;
 
 import java.awt.*;

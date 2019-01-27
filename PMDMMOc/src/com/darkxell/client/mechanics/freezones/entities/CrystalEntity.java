@@ -1,6 +1,5 @@
 package com.darkxell.client.mechanics.freezones.entities;
 
-import com.darkxell.client.mechanics.freezones.FreezoneEntity;
 import com.darkxell.client.resources.images.Sprites.Res_FreezoneEntities;
 
 import java.awt.*;
@@ -14,8 +13,8 @@ class CrystalEntity extends FreezoneEntity {
     private boolean lightDirection = false;
 
     {
-        this.isSolid = true;
-        this.canInteract = true;
+        this.solid = true;
+        this.interactive = true;
     }
 
     @Override

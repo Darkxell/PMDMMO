@@ -1,6 +1,5 @@
 package com.darkxell.client.mechanics.freezones.entities;
 
-import com.darkxell.client.mechanics.freezones.FreezoneEntity;
 import com.darkxell.client.mechanics.freezones.FreezonePlayer;
 import com.darkxell.client.graphics.AbstractRenderer;
 import com.darkxell.client.graphics.renderer.FreezonePokemonRenderer;
@@ -18,7 +17,7 @@ public class FollowsPointEntity extends FreezoneEntity {
     protected PokemonSprite sprite;
 
     {
-        this.canInteract = true;
+        this.interactive = true;
     }
 
     public FollowsPointEntity(double x, double y, PokemonSprite sprite) {

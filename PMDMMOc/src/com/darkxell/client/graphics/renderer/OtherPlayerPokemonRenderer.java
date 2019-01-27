@@ -1,4 +1,4 @@
-package com.darkxell.client.mechanics.freezones.entities.renderers;
+package com.darkxell.client.graphics.renderer;
 
 import java.awt.Graphics2D;
 
