@@ -6,7 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 
 import com.darkxell.client.launchable.Persistence;
-import com.darkxell.client.renderers.TextRenderer;
+import com.darkxell.client.graphics.TextRenderer;
 
 public class Renderer extends GameLoop {
 	protected RenderProfile getProcessingProfile() {

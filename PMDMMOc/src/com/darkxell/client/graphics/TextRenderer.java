@@ -1,4 +1,4 @@
-package com.darkxell.client.renderers;
+package com.darkxell.client.graphics;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -108,7 +108,7 @@ public class TextRenderer
 		slash("/", 2, 4, 5),
 		poke1("<poke1>", 3, 4, 8),
 		poke2("<poke2>", 4, 4, 7),
-		e_accent("é", 5, 4, 7),
+		e_accent("ï¿½", 5, 4, 7),
 		tilde("~", 6, 4, 6),
 		sharp("#", 7, 4, 9),
 		music("<music>", 8, 4, 8),

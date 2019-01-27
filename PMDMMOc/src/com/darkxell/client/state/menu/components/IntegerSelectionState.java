@@ -3,8 +3,8 @@ package com.darkxell.client.state.menu.components;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
-import com.darkxell.client.renderers.TextRenderer;
-import com.darkxell.client.renderers.layers.AbstractGraphicLayer;
+import com.darkxell.client.graphics.TextRenderer;
+import com.darkxell.client.graphics.layers.AbstractGraphicLayer;
 import com.darkxell.client.resources.images.Sprites;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.dialog.DialogState;

@@ -10,7 +10,7 @@ import java.util.function.Predicate;
 import com.darkxell.client.launchable.GameSocketEndpoint;
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.cutscene.CutsceneManager;
-import com.darkxell.client.renderers.TextRenderer;
+import com.darkxell.client.graphics.TextRenderer;
 import com.darkxell.client.resources.images.Sprites;
 import com.darkxell.client.resources.images.Sprites.Res_Map;
 import com.darkxell.client.state.AbstractState;

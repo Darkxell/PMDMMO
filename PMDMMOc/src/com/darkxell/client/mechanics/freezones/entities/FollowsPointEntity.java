@@ -2,12 +2,11 @@ package com.darkxell.client.mechanics.freezones.entities;
 
 import com.darkxell.client.mechanics.freezones.FreezoneEntity;
 import com.darkxell.client.mechanics.freezones.FreezonePlayer;
-import com.darkxell.client.renderers.AbstractRenderer;
-import com.darkxell.client.renderers.pokemon.FreezonePokemonRenderer;
+import com.darkxell.client.graphics.AbstractRenderer;
+import com.darkxell.client.graphics.pokemon.FreezonePokemonRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
 import com.darkxell.common.util.Direction;
-import org.jdom2.Element;
 
 /**
  * A Pokemon entity that follows a point.

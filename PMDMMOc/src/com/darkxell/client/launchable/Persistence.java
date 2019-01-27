@@ -5,7 +5,7 @@ import com.darkxell.client.mechanics.event.ClientEventProcessor;
 import com.darkxell.client.mechanics.freezones.FreezoneMap;
 import com.darkxell.client.mechanics.freezones.FreezonePlayer;
 import com.darkxell.client.mechanics.freezones.entities.FreezoneCamera;
-import com.darkxell.client.renderers.MasterDungeonRenderer;
+import com.darkxell.client.graphics.MasterDungeonRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
 import com.darkxell.client.resources.music.SoundManager;

@@ -6,7 +6,7 @@ import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 
 import com.darkxell.client.launchable.Persistence;
-import com.darkxell.client.renderers.TextRenderer;
+import com.darkxell.client.graphics.TextRenderer;
 import com.darkxell.client.resources.images.Sprites;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.mainstates.PrincipalMainState;
@@ -21,8 +21,8 @@ public class TextinputState extends AbstractState {
 	/** Lists of chars allowed in the textfield. */
 	private static final char[] ALLOWEDCHARS = new char[] { 'a', 'z', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'q', 's',
 			'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'w', 'x', 'c', 'v', 'b', 'n', 'A', 'Z', 'E', 'R', 'T', 'Y', 'U',
-			'I', 'O', 'P', 'Q', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'W', 'X', 'C', 'V', 'B', 'N', 'é', 'è',
-			'ç', 'ù', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' };
+			'I', 'O', 'P', 'Q', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'W', 'X', 'C', 'V', 'B', 'N', 'ï¿½', 'ï¿½',
+			'ï¿½', 'ï¿½', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' };
 	private String messageid = "ui.textinput.prompt";
 	private String content = "";
 

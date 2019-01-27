@@ -2,7 +2,7 @@ package com.darkxell.client.mechanics.cutscene.entity;
 
 import org.jdom2.Element;
 
-import com.darkxell.client.renderers.AbstractRenderer;
+import com.darkxell.client.graphics.AbstractRenderer;
 import com.darkxell.common.util.XMLUtils;
 
 public class CutsceneEntity

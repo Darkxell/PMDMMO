@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 import com.darkxell.client.launchable.Persistence;
-import com.darkxell.client.renderers.TextRenderer;
+import com.darkxell.client.graphics.TextRenderer;
 import com.darkxell.client.state.dialog.DialogScreen;
 import com.darkxell.client.state.menu.components.MenuWindow;
 import com.darkxell.common.util.language.Message;

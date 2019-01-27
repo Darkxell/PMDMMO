@@ -8,7 +8,7 @@ import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
 import com.darkxell.client.mechanics.cutscene.entity.CutscenePokemon;
 import com.darkxell.client.mechanics.cutscene.event.DelayCutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.event.WaitCutsceneEvent;
-import com.darkxell.client.renderers.AbstractRenderer;
+import com.darkxell.client.graphics.AbstractRenderer;
 
 public class CutscenePlayer {
 

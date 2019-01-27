@@ -7,7 +7,7 @@ import java.awt.event.KeyEvent;
 import com.darkxell.client.launchable.ClientSettings;
 import com.darkxell.client.launchable.ClientSettings.Setting;
 import com.darkxell.client.launchable.Persistence;
-import com.darkxell.client.renderers.TextRenderer;
+import com.darkxell.client.graphics.TextRenderer;
 import com.darkxell.client.state.StateManager;
 import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.util.language.Localization.Language;

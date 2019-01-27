@@ -1,7 +1,7 @@
 package com.darkxell.client.mechanics.freezones.entities;
 
 import com.darkxell.client.mechanics.freezones.entities.renderers.OtherPlayerPokemonRenderer;
-import com.darkxell.client.renderers.AbstractRenderer;
+import com.darkxell.client.graphics.AbstractRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
 

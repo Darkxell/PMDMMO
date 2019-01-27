@@ -1,11 +1,11 @@
-package com.darkxell.client.renderers;
+package com.darkxell.client.graphics;
 
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 
-import com.darkxell.client.renderers.pokemon.AbstractPokemonRenderer;
+import com.darkxell.client.graphics.pokemon.AbstractPokemonRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 
 /** Maps objects to their renderers for complex states to render.

@@ -3,7 +3,7 @@ package com.darkxell.client.mechanics.animation;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
-import com.darkxell.client.renderers.pokemon.AbstractPokemonRenderer;
+import com.darkxell.client.graphics.pokemon.AbstractPokemonRenderer;
 
 public class CompoundAnimation extends PokemonAnimation
 {

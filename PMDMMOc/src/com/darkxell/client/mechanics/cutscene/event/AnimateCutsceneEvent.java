@@ -11,7 +11,7 @@ import com.darkxell.client.mechanics.cutscene.CutsceneContext;
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
 import com.darkxell.client.mechanics.cutscene.entity.CutscenePokemon;
-import com.darkxell.client.renderers.pokemon.CutscenePokemonRenderer;
+import com.darkxell.client.graphics.pokemon.CutscenePokemonRenderer;
 import com.darkxell.common.util.XMLUtils;
 import com.darkxell.common.util.language.Localization;
 

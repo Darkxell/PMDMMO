@@ -2,7 +2,7 @@ package com.darkxell.client.resources.images.hud;
 
 import java.awt.image.BufferedImage;
 
-import com.darkxell.client.renderers.TextRenderer.PMDChar;
+import com.darkxell.client.graphics.TextRenderer.PMDChar;
 import com.darkxell.client.resources.images.Sprite;
 import com.darkxell.client.resources.images.SpriteSet;
 
