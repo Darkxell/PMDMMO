@@ -1,4 +1,4 @@
-package com.darkxell.client.mechanics.freezones.entities;
+package com.darkxell.client.mechanics.freezones;
 
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.freezones.FreezonePlayer;

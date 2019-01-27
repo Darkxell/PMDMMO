@@ -1,14 +1,13 @@
 package com.darkxell.client.mechanics.freezones.entities;
 
 import com.darkxell.client.mechanics.cutscene.CutsceneManager;
-import com.darkxell.client.mechanics.freezones.FreezoneEntity;
 import com.darkxell.common.util.Logger;
 
 import java.awt.*;
 
 public class DebugEntity extends FreezoneEntity {
     {
-        this.canInteract = true;
+        this.interactive = true;
     }
 
     @Override

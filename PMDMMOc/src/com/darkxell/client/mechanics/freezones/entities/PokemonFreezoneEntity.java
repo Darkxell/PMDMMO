@@ -12,7 +12,7 @@ class PokemonFreezoneEntity extends DialogEntity {
 	private PokemonSprite sprite;
 
 	{
-		this.isSolid = true;
+		this.solid = true;
 	}
 
 	@Override

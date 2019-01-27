@@ -1,7 +1,6 @@
 package com.darkxell.client.mechanics.freezones.entities;
 
 import com.darkxell.client.launchable.Persistence;
-import com.darkxell.client.mechanics.freezones.FreezoneEntity;
 import com.darkxell.client.state.dialog.DialogScreen;
 import com.darkxell.client.state.dialog.DialogScreenFactory;
 import com.darkxell.client.state.dialog.DialogState;
@@ -25,7 +24,7 @@ class DialogEntity extends FreezoneEntity {
             dialogs.add(DialogScreenFactory.getScreen(dialogEl));
         }
         this.dialogs = dialogs.toArray(new DialogScreen[0]);
-        this.canInteract = this.dialogs.length > 0;
+        this.interactive = this.dialogs.length > 0;
     }
 
     @Override

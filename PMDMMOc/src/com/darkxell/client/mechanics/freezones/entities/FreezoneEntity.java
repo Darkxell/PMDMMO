@@ -1,6 +1,6 @@
-package com.darkxell.client.mechanics.freezones;
+package com.darkxell.client.mechanics.freezones.entities;
 
-import com.darkxell.client.mechanics.freezones.entities.renderers.DefaultFreezoneEntityRenderer;
+import com.darkxell.client.graphics.renderer.DefaultFreezoneEntityRenderer;
 import com.darkxell.client.graphics.AbstractRenderer;
 import com.darkxell.common.util.DoubleRectangle;
 import com.darkxell.common.util.XMLObject;
@@ -18,28 +18,28 @@ public class FreezoneEntity extends XMLObject {
     /**
      * The X position of the entity.
      */
-    public double posX;
+    protected double posX;
 
     /**
      * the Y position of the entity.
      */
-    public double posY;
+    protected double posY;
 
     /**
      * Is this entity solid?
      */
-    protected boolean isSolid;
+    protected boolean solid;
 
     /**
      * Is this entity interactive?
      */
-    protected boolean canInteract;
+    protected boolean interactive;
 
     {
         this.posX = -1;
         this.posY = -1;
-        this.isSolid = false;
-        this.canInteract = false;
+        this.solid = false;
+        this.interactive = false;
     }
 
     /**
@@ -56,14 +56,14 @@ public class FreezoneEntity extends XMLObject {
         this.posX = XMLUtils.getAttribute(el, "x", this.posX);
         this.posY = XMLUtils.getAttribute(el, "y", this.posY);
 
-        this.isSolid = XMLUtils.getAttribute(el, "solid", this.isSolid);
-        this.canInteract = XMLUtils.getAttribute(el, "interactive", this.canInteract);
+        this.solid = XMLUtils.getAttribute(el, "solid", this.solid);
+        this.interactive = XMLUtils.getAttribute(el, "interactive", this.interactive);
     }
 
     /**
      * Called when the players interact with this entity.
      *
-     * <p>Note that this might be called even if this entity has the {@code canInteract} tag set to false. This method
+     * <p>Note that this might be called even if this entity has the {@code interactive} tag set to false. This method
      * will be called from the KeyEvent thread.</p>
      */
     public void onInteract() {
@@ -91,5 +91,21 @@ public class FreezoneEntity extends XMLObject {
 
     public AbstractRenderer createRenderer() {
         return new DefaultFreezoneEntityRenderer(this);
+    }
+
+    public double getX() {
+        return this.posX;
+    }
+
+    public double getY() {
+        return this.posY;
+    }
+
+    public boolean isSolid() {
+        return this.solid;
+    }
+
+    public boolean isInteractive() {
+        return this.interactive;
     }
 }

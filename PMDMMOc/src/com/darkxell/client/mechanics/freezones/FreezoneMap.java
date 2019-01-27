@@ -2,6 +2,7 @@ package com.darkxell.client.mechanics.freezones;
 
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
+import com.darkxell.client.mechanics.freezones.entities.FreezoneEntity;
 import com.darkxell.client.mechanics.freezones.entities.FreezoneEntityFactory;
 import com.darkxell.client.mechanics.freezones.entities.OtherPlayerEntity;
 import com.darkxell.client.mechanics.freezones.trigger.TriggerZone;

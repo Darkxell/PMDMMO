@@ -1,7 +1,6 @@
 package com.darkxell.client.mechanics.freezones.entities;
 
 import com.darkxell.client.launchable.Persistence;
-import com.darkxell.client.mechanics.freezones.FreezoneEntity;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.dialog.bank.BankDialog;
 import com.darkxell.client.state.dialog.storage.StorageDialog;
@@ -17,7 +16,7 @@ import org.jdom2.Element;
 public class FreezoneEntityFactory {
     private static class InteractiveEntity extends FreezoneEntity {
         {
-            this.canInteract = true;
+            this.interactive = true;
         }
     }
 
