@@ -116,7 +116,7 @@ public class MoveEffect implements AffectsPokemon
 						}
 
 			case Around:
-				for (Direction d : Direction.directions)
+				for (Direction d : Direction.DIRECTIONS)
 					if (t.adjacentTile(d).getPokemon() != null) targets.add(t.adjacentTile(d).getPokemon());
 				break;
 

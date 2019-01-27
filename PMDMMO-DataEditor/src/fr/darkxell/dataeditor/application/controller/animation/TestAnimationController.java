@@ -77,7 +77,7 @@ public class TestAnimationController implements Initializable
 
 		this.pokemonCombobox.getItems().addAll(Registries.species().toList());
 		this.stateCombobox.getItems().addAll(PokemonSpriteState.values());
-		this.directionCombobox.getItems().addAll(Direction.directions);
+		this.directionCombobox.getItems().addAll(Direction.DIRECTIONS);
 
 		this.pokemonCombobox.getSelectionModel().select(1);
 		this.stateCombobox.setValue(PokemonSpriteState.IDLE);

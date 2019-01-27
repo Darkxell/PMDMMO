@@ -31,7 +31,7 @@ import org.jdom2.Element;
  * <li>Destination coordinates ({@code destx} and {@code desty}) - Where on the destination map to warp to. If left
  * off, this will spawn the player at the default x and y positions.</li>
  * <li>Destination coordinates ({@code direction} - Which direction to face initially. Direction numbers
- * correspond to the indices of {@link Direction#directions}.</li>
+ * correspond to the indices of {@link Direction#DIRECTIONS}.</li>
  * </ul>
  *
  * <h4>Dungeon and friend zone selection zones (types {@code dungeon} and {@code friend})</h4>

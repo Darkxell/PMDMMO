@@ -23,7 +23,7 @@ class PokemonFreezoneEntity extends DialogEntity {
 		int directionID = XMLUtils.getAttribute(el, "direction", 0);
 
 		this.sprite = new PokemonSprite(PokemonSpritesets.getSpriteset(id));
-		this.sprite.setFacingDirection(Direction.directions[directionID]);
+		this.sprite.setFacingDirection(Direction.DIRECTIONS.get(directionID));
 	}
 
 	@Override

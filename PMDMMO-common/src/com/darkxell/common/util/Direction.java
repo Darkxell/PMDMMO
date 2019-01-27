@@ -3,142 +3,97 @@ package com.darkxell.common.util;
 import javafx.util.Pair;
 
 import java.awt.geom.Point2D;
-import java.util.Comparator;
-import java.util.Random;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Directions used in Dungeons.
  */
 public enum Direction {
-    EAST((short) 4),
-    NORTH((short) 1),
-    NORTHEAST((short) 2),
-    NORTHWEST((short) 128),
-    SOUTH((short) 16),
-    SOUTHEAST((short) 8),
-    SOUTHWEST((short) 32),
-    WEST((short) 64);
+    // cardinal directions
+    EAST(2),
+    NORTH(0),
+    SOUTH(4),
+    WEST(6),
 
-    /**
-     * List of orthogonal Directions.
-     */
-    public static final Direction[] cardinal = {NORTH, EAST, SOUTH, WEST};
+    // primary intermediate directions
+    NORTHEAST(1, NORTH, EAST),
+    NORTHWEST(7, NORTH, WEST),
+    SOUTHEAST(3, SOUTH, EAST),
+    SOUTHWEST(5, SOUTH, WEST);
+
     public static final Comparator<Direction> COMPARATOR = Comparator.comparingInt(d -> d.value);
 
     /**
-     * List of all Directions.
+     * List of all directions in clockwise order.
      */
-    public static final Direction[] directions = {NORTH, NORTHEAST, EAST, SOUTHEAST, SOUTH, SOUTHWEST, WEST, NORTHWEST};
+    public static final List<Direction> DIRECTIONS = Collections.unmodifiableList(
+            Arrays.stream(Direction.values()).sorted(COMPARATOR).collect(Collectors.toList()));
+
     /**
-     * Names of the Directions.
+     * List of orthogonal directions, in clockwise order.
      */
-    private static final String[] names = new String[]{"North",
-            "NorthEast",
-            "East",
-            "SouthEast",
-            "South",
-            "SouthWest",
-            "West",
-            "NorthWest"};
+    public static final List<Direction> CARDINAL = Collections.unmodifiableList(
+            DIRECTIONS.stream().filter(d -> d.cardinal).collect(Collectors.toList()));
 
     /**
      * @return A random Direction.
      */
     public static Direction randomDirection(Random random) {
-        return directions[random.nextInt(8)];
-    }
-
-    public final short value;
-
-    Direction(short value) {
-        this.value = value;
+        return DIRECTIONS.get(random.nextInt(8));
     }
 
     /**
-     * @return True if this Direction equals the input Direction or if this is a diagonal Direction made with the
-     * input Direction.
+     * Order in clockwise rotation.
+     */
+    public final int value;
+
+    /**
+     * Is it one of {@link #NORTH}, {@link #SOUTH}, {@link #EAST}, or {@link #WEST}?
+     */
+    public final boolean cardinal;
+
+    private Direction[] parents;
+
+    /**
+     * @param value   Ordinal values.
+     * @param parents Which directions that this direction is composed of (e.g. Northeast has North and East).
+     */
+    Direction(int value, Direction... parents) {
+        this.value = value;
+        this.parents = parents;
+        this.cardinal = this.parents.length == 0;
+    }
+
+    /**
+     * @return Does this direction contain another direction? (e.g. Northwest contains North, West)
      */
     public boolean contains(Direction direction) {
         if (direction == this) {
             return true;
         }
-        if (direction == WEST && (this == NORTHWEST || this == SOUTHWEST)) {
-            return true;
-        }
-        if (direction == EAST && (this == NORTHEAST || this == SOUTHEAST)) {
-            return true;
-        }
-        if (direction == NORTH && (this == NORTHEAST || this == NORTHWEST)) {
-            return true;
-        }
-        if (direction == SOUTH && (this == SOUTHEAST || this == SOUTHWEST)) {
-            return true;
-        }
-        return false;
+        return Arrays.asList(this.parents).contains(direction);
     }
 
     /**
      * @return How many times this direction needs to rotate (in any way) to match the input Direction.
      */
     public int distance(Direction direction) {
-        return Math.abs(distanceSigned(direction));
+        return Math.abs(this.value - direction.value);
     }
 
     /**
-     * @return How many times this direction needs to rotate (in any way) to match the input Direction. Negative is
-     * counterclockwise, positive is clockwise.
+     * @return This Direction's name in lowercase.
      */
-    public int distanceSigned(Direction direction) {
-        if (this == direction) {
-            return 0;
-        }
-        int d = 1;
-        while (d < 4) {
-            Direction o = direction;
-            for (int i = 0; i < d; ++i) {
-                o = o.rotateClockwise();
-            }
-            if (o == direction) {
-                return d;
-            }
-
-            o = direction;
-            for (int i = 0; i < d; ++i) {
-                o = o.rotateCounterClockwise();
-            }
-            if (o == direction) {
-                return -d;
-            }
-
-            ++d;
-        }
-        return 4;
-    }
-
-    /**
-     * @return This Direction's name.
-     */
-    public String getName() {
-        return names[this.index()];
-    }
-
-    /**
-     * @return This Direction's index in the Directions array.
-     */
-    public int index() {
-        for (int i = 0; i < directions.length; ++i) {
-            if (directions[i] == this) {
-                return i;
-            }
-        }
-        return 0;
+    public String lowercaseName() {
+        return this.name().toLowerCase();
     }
 
     /**
      * @return True if this Direction is diagonal.
      */
     public boolean isDiagonal() {
-        return this == NORTHEAST || this == SOUTHEAST || this == SOUTHWEST || this == NORTHWEST;
+        return !this.cardinal;
     }
 
     /**
@@ -146,15 +101,15 @@ public enum Direction {
      */
     public Point2D move(double x, double y) {
         if (this.contains(WEST)) {
-            --x;
+            x--;
         } else if (this.contains(EAST)) {
-            ++x;
+            x++;
         }
 
         if (this.contains(NORTH)) {
-            --y;
+            y--;
         } else if (this.contains(SOUTH)) {
-            ++y;
+            y++;
         }
 
         return new Point2D.Double(x, y);
@@ -167,63 +122,48 @@ public enum Direction {
         return this.move(origin.getX(), origin.getY());
     }
 
-    public Point2D move(Point2D origin, int distance) {
-        for (int i = 0; i < distance; ++i) {
-            origin = this.move(origin);
-        }
-        return origin;
+    /**
+     * Rotate number of steps clockwise.
+     *
+     * @param steps Steps to take. Must be positive.
+     * @return New direction.
+     */
+    private Direction rotateSteps(int steps) {
+        return DIRECTIONS.get((this.value + steps) % DIRECTIONS.size());
     }
 
     /**
      * @return The Direction opposite to this Direction.
      */
     public Direction opposite() {
-        int i = this.index();
-        i += 4;
-        if (i > 7) {
-            i -= 8;
-        }
-        return directions[i];
+        return this.rotateSteps(DIRECTIONS.size() / 2);
     }
 
     /**
-     * @return The Direction corresponding to this Direction rotated 45� clockwise.
+     * @return The Direction corresponding to this Direction rotated 45 degrees.
      */
     public Direction rotateClockwise() {
-        int i = this.index();
-        i += 1;
-        if (i > 7) {
-            i = 0;
-        }
-        return directions[i];
+        return this.rotateSteps(1);
     }
 
     /**
-     * @return The Direction corresponding to this Direction rotated -45� clockwise.
+     * @return The Direction corresponding to this Direction rotated -45 degrees.
      */
     public Direction rotateCounterClockwise() {
-        int i = this.index();
-        i -= 1;
-        if (i < 0) {
-            i = 7;
-        }
-        return directions[i];
+        return this.rotateSteps(DIRECTIONS.size() - 1);
     }
 
     /**
      * @return The pair of Directions forming this diagonal Direction.
+     * @throws UnsupportedOperationException If the direction is not a primary intermediate direction.
      */
     public Pair<Direction, Direction> splitDiagonal() {
-        switch (this) {
-            case SOUTHEAST:
-                return new Pair<Direction, Direction>(SOUTH, EAST);
-            case SOUTHWEST:
-                return new Pair<Direction, Direction>(SOUTH, WEST);
-            case NORTHWEST:
-                return new Pair<Direction, Direction>(NORTH, WEST);
-            default:
-                return new Pair<Direction, Direction>(NORTH, EAST);
+        if (this.cardinal) {
+            throw new UnsupportedOperationException("Cannot split a cardinal direction");
+        } else if (this.parents.length != 2) {
+            throw new UnsupportedOperationException("Cannot split a non-primary intermediate direction");
         }
-    }
 
+        return new Pair<>(this.parents[0], this.parents[1]);
+    }
 }

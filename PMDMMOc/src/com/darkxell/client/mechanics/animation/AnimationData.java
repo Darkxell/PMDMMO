@@ -104,15 +104,15 @@ public class AnimationData implements Comparable<AnimationData> {
 			this.load(xml.getChild("default", xml.getNamespace()), this);
 			if (this.gravityX == -1) this.gravityX = this.width / 2;
 			if (this.gravityY == -1) this.gravityY = this.height / 2;
-			for (Direction d : Direction.directions) {
-				this.variants[d.index()] = new AnimationData(this);
+			for (Direction d : Direction.DIRECTIONS) {
+				this.variants[d.value] = new AnimationData(this);
 				if (xml.getChild(d.name().toLowerCase(), xml.getNamespace()) != null) {
-					this.variants[d.index()].load(xml.getChild(d.name().toLowerCase(), xml.getNamespace()), this);
-					this.variants[d.index()].spritesPrefix = this.spritesPrefix;
+					this.variants[d.value].load(xml.getChild(d.name().toLowerCase(), xml.getNamespace()), this);
+					this.variants[d.value].spritesPrefix = this.spritesPrefix;
 				}
 			}
-		} else for (Direction d : Direction.directions)
-			this.variants[d.index()] = new AnimationData(this);
+		} else for (Direction d : Direction.DIRECTIONS)
+			this.variants[d.value] = new AnimationData(this);
 	}
 
 	@Override
@@ -198,7 +198,7 @@ public class AnimationData implements Comparable<AnimationData> {
 	}
 
 	public AnimationData getVariant(Direction direction) {
-		return this.variants[direction.index()];
+		return this.variants[direction.value];
 	}
 
 	private void load(Element xml, AnimationData defaultData) {
@@ -259,10 +259,10 @@ public class AnimationData implements Comparable<AnimationData> {
 		Element self = new Element("default");
 		this.toXML(root, self, new AnimationData(this.id), false);
 		root.addContent(self);
-		for (Direction d : Direction.directions) {
-			if (this.variants[d.index()] == this) continue;
-			Element variant = new Element(d.getName().toLowerCase());
-			this.variants[d.index()].toXML(root, variant, this, true);
+		for (Direction d : Direction.DIRECTIONS) {
+			if (this.variants[d.value] == this) continue;
+			Element variant = new Element(d.lowercaseName());
+			this.variants[d.value].toXML(root, variant, this, true);
 
 			boolean hasDifference = !variant.getText().equals("") && !self.getText().equals(variant.getText());
 			hasDifference |= !variant.getAttributes().isEmpty();

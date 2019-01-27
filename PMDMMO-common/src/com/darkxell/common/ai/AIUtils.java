@@ -37,7 +37,7 @@ public final class AIUtils {
 	public static ArrayList<Tile> adjacentTiles(Floor floor, DungeonPokemon pokemon) {
 		ArrayList<Tile> tiles = new ArrayList<>();
 		Tile t = pokemon.tile();
-		for (Direction d : Direction.directions)
+		for (Direction d : Direction.DIRECTIONS)
 			tiles.add(t.adjacentTile(d));
 		return tiles;
 	}
@@ -65,7 +65,7 @@ public final class AIUtils {
 		angle += 22.5; // So that 23 goes to 45, meaning 23� will be Northeast.
 		while (angle >= 360) // Go back to range [0;360[
 			angle -= 360;
-		return Direction.directions[((int) (angle / 45)) % Direction.directions.length];
+		return Direction.DIRECTIONS.get(((int) (angle / 45)) % Direction.DIRECTIONS.size());
 	}
 
 	/** @return The direction to go to for the input Pokemon to reach the target. May return null if there is no path. */
@@ -207,7 +207,7 @@ public final class AIUtils {
 
 		while (!accessible.isEmpty()) {
 			Tile t = accessible.pop();
-			for (Direction direction : Direction.directions) {
+			for (Direction direction : Direction.DIRECTIONS) {
 				Tile a = t.adjacentTile(direction);
 				if (!treated.contains(a) && visible.contains(a) && a.canWalkOn(pokemon, false)) {
 					boolean ok = true;

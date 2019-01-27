@@ -130,7 +130,7 @@ public class CutsceneEndController implements Initializable, ChangeListener<Cuts
 		this.dungeonCombobox.getItems().addAll(Registries.dungeons().toList());
 		this.modeCombobox.getItems().addAll(CutsceneEndMode.values());
 		this.freezoneCombobox.getItems().addAll(FreezoneInfo.values());
-		this.directionCombobox.getItems().addAll(Direction.directions);
+		this.directionCombobox.getItems().addAll(Direction.DIRECTIONS);
 
 		this.modeCombobox.getSelectionModel().selectedItemProperty().addListener(this);
 		this.modeCombobox.getSelectionModel().select(0);

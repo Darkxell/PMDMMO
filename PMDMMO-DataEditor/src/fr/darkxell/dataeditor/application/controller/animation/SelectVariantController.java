@@ -18,7 +18,7 @@ public class SelectVariantController implements Initializable
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
 	{
-		this.directionList.getItems().addAll(Direction.directions);
+		this.directionList.getItems().addAll(Direction.DIRECTIONS);
 		this.directionList.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue) -> {
 			this.onSelect(newValue);
 		});
