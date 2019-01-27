@@ -21,8 +21,8 @@ public class MultiTriggerZone extends TriggerZone {
     private boolean fallthrough;
 
     @Override
-    protected void onInitialize(Element el) {
-        super.onInitialize(el);
+    protected void deserialize(Element el) {
+        super.deserialize(el);
 
         this.fallthrough = XMLUtils.getAttribute(el, "fallthrough", false);
         this.childZones = this.getTriggerZones(el);

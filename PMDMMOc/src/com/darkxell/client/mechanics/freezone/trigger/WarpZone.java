@@ -17,8 +17,8 @@ public class WarpZone extends TriggerZone {
     public Direction direction;
 
     @Override
-    protected void onInitialize(Element el) {
-        super.onInitialize(el);
+    protected void deserialize(Element el) {
+        super.deserialize(el);
 
         int direction = XMLUtils.getAttribute(el, "direction", 4);
 

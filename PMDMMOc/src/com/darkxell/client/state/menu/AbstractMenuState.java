@@ -5,7 +5,7 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 
 import com.darkxell.client.graphics.TextRenderer;
-import com.darkxell.client.graphics.layers.AbstractGraphicLayer;
+import com.darkxell.client.graphics.AbstractGraphicsLayer;
 import com.darkxell.client.resources.images.hud.MenuStateHudSpriteset;
 import com.darkxell.client.resources.music.SoundManager;
 import com.darkxell.client.state.AbstractState;
@@ -89,14 +89,14 @@ public abstract class AbstractMenuState extends AbstractState
 	}
 
 	/** The state to draw behind this menu State. */
-	public final AbstractGraphicLayer background;
+	public final AbstractGraphicsLayer background;
 	protected int selection = 0;
 	/** The currently selected option. */
 	protected int tab = 0;
 	/** The tabs of this Menu. */
 	protected ArrayList<MenuTab> tabs;
 
-	public AbstractMenuState(AbstractGraphicLayer background)
+	public AbstractMenuState(AbstractGraphicsLayer background)
 	{
 		this.background = background;
 		this.tabs = new ArrayList<MenuTab>();

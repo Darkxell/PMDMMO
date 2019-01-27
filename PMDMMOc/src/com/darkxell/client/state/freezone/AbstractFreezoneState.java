@@ -6,7 +6,7 @@ import com.darkxell.client.mechanics.freezone.FreezoneTerrain;
 import com.darkxell.client.mechanics.freezone.FreezoneTile;
 import com.darkxell.client.mechanics.freezone.Freezones;
 import com.darkxell.client.graphics.AbstractRenderer;
-import com.darkxell.client.graphics.layers.AbstractGraphicLayer;
+import com.darkxell.client.graphics.AbstractGraphicsLayer;
 import com.darkxell.client.resources.music.SoundsHolder;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.ui.Keys.Key;
@@ -33,7 +33,7 @@ public class AbstractFreezoneState extends AbstractState {
 		Persistence.freezoneCamera.renderHeight = height;
 		Persistence.freezoneCamera.renderWidth = width;
 		// Draws the sea background if needed.
-		AbstractGraphicLayer background = Persistence.currentmap.getBackground();
+		AbstractGraphicsLayer background = Persistence.currentmap.getBackground();
 		if (background != null) {
 			background.render(g, width, height);
 		}
@@ -98,7 +98,7 @@ public class AbstractFreezoneState extends AbstractState {
 	@Override
 	public void update() {
 		// Updates the freezoneBackground if needeed
-		AbstractGraphicLayer background = Persistence.currentmap.getBackground();
+		AbstractGraphicsLayer background = Persistence.currentmap.getBackground();
 		if (background != null) {
 			background.update();
 		}

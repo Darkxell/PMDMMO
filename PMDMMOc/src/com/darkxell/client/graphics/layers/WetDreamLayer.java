@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 
 import com.darkxell.client.resources.images.Sprites.Res_GraphicalLayers;
 
-public class WetDreamLayer extends AbstractGraphicLayer {
+public class WetDreamLayer extends BackgroundLayer {
 
 	private static final Color BG = new Color(247, 247, 181);
 

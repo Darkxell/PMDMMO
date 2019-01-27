@@ -3,12 +3,11 @@ package com.darkxell.client.state;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 
+import com.darkxell.client.graphics.AbstractGraphicsLayer;
 import com.darkxell.client.launchable.Persistence;
-import com.darkxell.client.graphics.layers.AbstractGraphicLayer;
-import com.darkxell.client.ui.Keys;
 import com.darkxell.client.ui.Keys.Key;
 
-public abstract class AbstractState extends AbstractGraphicLayer {
+public abstract class AbstractState implements AbstractGraphicsLayer {
 
 	/**
 	 * @return True if this State is currently the Main State (i.e.
@@ -24,15 +23,15 @@ public abstract class AbstractState extends AbstractGraphicLayer {
 
 	/**
 	 * Called when the user presses a key.
-	 * 
-	 * @see Keys#KEY_UP
+	 *
+	 * @see Key#UP
 	 */
 	public abstract void onKeyPressed(Key key);
 
 	/**
 	 * Called when the user releases a key.
-	 * 
-	 * @see Keys#KEY_UP
+	 *
+	 * @see Key#UP
 	 */
 	public abstract void onKeyReleased(Key key);
 

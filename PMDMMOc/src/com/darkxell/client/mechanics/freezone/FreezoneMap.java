@@ -8,7 +8,7 @@ import com.darkxell.client.mechanics.freezone.entity.OtherPlayerEntity;
 import com.darkxell.client.mechanics.freezone.trigger.TriggerZone;
 import com.darkxell.client.mechanics.freezone.trigger.TriggerZoneFactory;
 import com.darkxell.client.graphics.EntityRendererHolder;
-import com.darkxell.client.graphics.layers.AbstractGraphicLayer;
+import com.darkxell.client.graphics.AbstractGraphicsLayer;
 import com.darkxell.client.graphics.layers.BackgroundLayerFactory;
 import com.darkxell.client.resources.Res;
 import com.darkxell.common.util.Logger;
@@ -58,7 +58,7 @@ import java.util.ArrayList;
  */
 public class FreezoneMap {
     protected FreezoneTerrain terrain;
-    private AbstractGraphicLayer background;
+    private AbstractGraphicsLayer background;
 
     /**
      * Should any players present be hidden?
@@ -264,7 +264,7 @@ public class FreezoneMap {
         return this.terrain;
     }
 
-    public AbstractGraphicLayer getBackground() {
+    public AbstractGraphicsLayer getBackground() {
         return this.background;
     }
 }

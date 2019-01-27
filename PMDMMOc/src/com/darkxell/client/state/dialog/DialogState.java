@@ -6,7 +6,7 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 
 import com.darkxell.client.launchable.Persistence;
-import com.darkxell.client.graphics.layers.AbstractGraphicLayer;
+import com.darkxell.client.graphics.AbstractGraphicsLayer;
 import com.darkxell.client.resources.images.Sprites;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.mainstates.PrincipalMainState;
@@ -22,7 +22,7 @@ public class DialogState extends AbstractState {
 
 	private double backgroundAlpha = 1, targetAlpha = 1;
 	/** The State to draw in this State's background. */
-	public final AbstractGraphicLayer backgroundState;
+	public final AbstractGraphicsLayer backgroundState;
 	/** The current screen. */
 	protected int currentScreen;
 	private Rectangle dialogBox;
@@ -31,7 +31,7 @@ public class DialogState extends AbstractState {
 	/** The screens to show. */
 	protected final DialogScreen[] screens;
 
-	public DialogState(AbstractGraphicLayer backgroundState, DialogEndListener listener, DialogScreen... screens) {
+	public DialogState(AbstractGraphicsLayer backgroundState, DialogEndListener listener, DialogScreen... screens) {
 		this.listener = listener;
 		this.screens = screens;
 		this.backgroundState = backgroundState;
@@ -51,7 +51,7 @@ public class DialogState extends AbstractState {
 		}
 	}
 
-	public DialogState(AbstractGraphicLayer backgroundState, DialogScreen... elements) {
+	public DialogState(AbstractGraphicsLayer backgroundState, DialogScreen... elements) {
 		this(backgroundState, null, elements);
 	}
 

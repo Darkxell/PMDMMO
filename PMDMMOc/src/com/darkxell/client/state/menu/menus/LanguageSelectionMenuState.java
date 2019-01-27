@@ -5,7 +5,7 @@ import java.awt.Rectangle;
 import com.darkxell.client.launchable.ClientSettings;
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.launchable.ClientSettings.Setting;
-import com.darkxell.client.graphics.layers.AbstractGraphicLayer;
+import com.darkxell.client.graphics.AbstractGraphicsLayer;
 import com.darkxell.client.state.menu.AbstractMenuState;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.common.util.Logger;
@@ -23,7 +23,7 @@ public class LanguageSelectionMenuState extends OptionSelectionMenuState {
 	public LanguageSelectionListener listener = null;
 	private AbstractMenuState parent;
 
-	public LanguageSelectionMenuState(AbstractMenuState parent, AbstractGraphicLayer backgroundState,
+	public LanguageSelectionMenuState(AbstractMenuState parent, AbstractGraphicsLayer backgroundState,
 			boolean isOpaque) {
 		super(backgroundState, isOpaque);
 		this.parent = parent;

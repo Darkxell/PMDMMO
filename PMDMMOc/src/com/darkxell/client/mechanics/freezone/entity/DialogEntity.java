@@ -16,8 +16,8 @@ class DialogEntity extends FreezoneEntity {
      * Note: the supplied interactivity attribute is ignored, and depends on if dialogs are present.
      */
     @Override
-    protected void onInitialize(Element el) {
-        super.onInitialize(el);
+    protected void deserialize(Element el) {
+        super.deserialize(el);
 
         List<DialogScreen> dialogs = new ArrayList<>();
         for (Element dialogEl : el.getChildren("dialog")) {

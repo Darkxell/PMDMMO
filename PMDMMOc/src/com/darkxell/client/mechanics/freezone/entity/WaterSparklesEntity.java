@@ -13,8 +13,8 @@ class WaterSparklesEntity extends FreezoneEntity {
 
 
     @Override
-    protected void onInitialize(Element el) {
-        super.onInitialize(el);
+    protected void deserialize(Element el) {
+        super.deserialize(el);
 
         this.type = el.getAttributeValue("sprite");
     }

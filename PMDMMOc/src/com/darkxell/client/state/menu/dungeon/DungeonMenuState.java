@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.graphics.TextRenderer;
-import com.darkxell.client.graphics.layers.AbstractGraphicLayer;
+import com.darkxell.client.graphics.AbstractGraphicsLayer;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.dungeon.DungeonState;
 import com.darkxell.client.state.mainstates.PrincipalMainState;
@@ -28,7 +28,7 @@ public class DungeonMenuState extends OptionSelectionMenuState
 	private MenuWindow infoWindow;
 	private MenuOption moves, items, team, settings, ground;
 
-	public DungeonMenuState(AbstractGraphicLayer background)
+	public DungeonMenuState(AbstractGraphicsLayer background)
 	{
 		super(background);
 		this.floorMessage = new Message("stairs.floor." + (Persistence.dungeon.dungeon().direction == DungeonDirection.UP ? "up" : "down"))

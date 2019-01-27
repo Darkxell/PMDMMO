@@ -4,11 +4,14 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import com.darkxell.client.resources.images.Sprites.Res_GraphicalLayers;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.jdom2.Element;
 
-public class BackgroundSeaLayer extends AbstractGraphicLayer
+public class BackgroundSeaLayer extends BackgroundLayer
 {
 	private static final int initialUpcamera = 2000;
+
+	private boolean rising;
 
 	private int cloudsposition = 0;
 	private int counter_clouds = 0;
@@ -23,6 +26,7 @@ public class BackgroundSeaLayer extends AbstractGraphicLayer
 	}
 
 	public BackgroundSeaLayer(boolean rising) {
+		this.rising = rising;
 		if (!rising) {
 			this.upcamera = initialUpcamera;
 		}
@@ -30,10 +34,20 @@ public class BackgroundSeaLayer extends AbstractGraphicLayer
 	}
 
 	@Override
-	protected void onInitialize(Element el) {
+	protected void deserialize(Element el) {
 		if (el.getAttribute("rising") == null) {
 			this.upcamera = initialUpcamera;
 		}
+	}
+
+	@Override
+	public Element serialize() {
+		Element serialization = super.serialize();
+		if (serialization == null) {
+			serialization = new Element(TAG_NAME);
+			serialization.setAttribute("rising", Boolean.toString(this.rising));
+		}
+		return serialization;
 	}
 
 	@Override
