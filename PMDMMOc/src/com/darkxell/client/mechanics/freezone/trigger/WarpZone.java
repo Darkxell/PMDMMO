@@ -24,7 +24,7 @@ public class WarpZone extends TriggerZone {
 
         this.toX = XMLUtils.getAttribute(el, "destx", -1);
         this.toY = XMLUtils.getAttribute(el, "desty", -1);
-        this.direction = Direction.directions[direction];
+        this.direction = Direction.DIRECTIONS.get(direction);
         this.destination = this.getDestination(el);
     }
 

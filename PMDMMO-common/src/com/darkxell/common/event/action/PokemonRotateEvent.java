@@ -42,7 +42,7 @@ public class PokemonRotateEvent extends DungeonEvent implements Communicable
 	@Override
 	public String loggerMessage()
 	{
-		return this.pokemon + " rotated to face " + this.direction.getName();
+		return this.pokemon + " rotated to face " + this.direction.lowercaseName();
 	}
 
 	@Override

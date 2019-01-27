@@ -281,7 +281,7 @@ public class Tile implements ItemContainer, Comparable<Tile>
 		if (this.floor.isGenerated())
 		{
 			this.updateNeighbors();
-			for (Direction direction : Direction.directions)
+			for (Direction direction : Direction.DIRECTIONS)
 			{
 				Tile t = this.adjacentTile(direction);
 				if (t != null) t.onNeighborTypeChange(direction.opposite());
@@ -360,7 +360,7 @@ public class Tile implements ItemContainer, Comparable<Tile>
 	public void updateNeighbors()
 	{
 		this.neighbors.clear();
-		for (Direction direction : Direction.directions)
+		for (Direction direction : Direction.DIRECTIONS)
 		{
 			Tile t = this.adjacentTile(direction);
 			if (t == null || t.type.connectsTo(this.type)) this.neighbors.add(direction);

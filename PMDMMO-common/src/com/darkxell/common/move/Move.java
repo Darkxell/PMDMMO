@@ -48,7 +48,7 @@ public class Move implements Registrable<Move>
 		Ambient,
 		/** All Pokemon adjacent to the user. */
 		Around,
-		/** All Pokemon up to two Tiles around the user in all directions. */
+		/** All Pokemon up to two Tiles around the user in all DIRECTIONS. */
 		Around2,
 		/** All Pokemon on the Floor. */
 		Floor,

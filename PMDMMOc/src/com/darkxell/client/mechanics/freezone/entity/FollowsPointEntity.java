@@ -6,6 +6,7 @@ import com.darkxell.client.graphics.renderer.FreezonePokemonRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
 import com.darkxell.common.util.Direction;
+import org.jdom2.Element;
 
 /**
  * A Pokemon entity that follows a point.
@@ -29,6 +30,24 @@ public class FollowsPointEntity extends FreezoneEntity {
         this.destinationY = y;
     }
 
+    /**
+     * Stub method. This class cannot be deserialized.
+     * @throws UnsupportedOperationException
+     */
+    @Override
+    protected void deserialize(Element el) {
+        throw new UnsupportedOperationException("This class must be created dynamically.");
+    }
+
+    /**
+     * Stub method. This class cannot be serialized.
+     * @throws UnsupportedOperationException
+     */
+    @Override
+    public Element serialize() {
+        throw new UnsupportedOperationException("This class cannot be serialized.");
+    }
+
     @Override
     public AbstractRenderer createRenderer() {
         return new FreezonePokemonRenderer(this, this.sprite);
@@ -49,6 +68,7 @@ public class FollowsPointEntity extends FreezoneEntity {
                 destinationY < posY - this.sprintDistance) {
             movespeed *= 2;
         }
+
         // Moves the pokemon accordingly
         if (destinationX > posX + this.moveDistance) {
             posX += movespeed;

@@ -99,7 +99,7 @@ public class EditEntityController implements Initializable
 		this.stateCombobox.getItems().addAll(PokemonSpriteState.values());
 		this.stateCombobox.getSelectionModel().select(0);
 
-		this.facingCombobox.getItems().addAll(Direction.directions);
+		this.facingCombobox.getItems().addAll(Direction.DIRECTIONS);
 		this.facingCombobox.getSelectionModel().select(0);
 
 		Pattern pattern = Pattern.compile("-?\\d*(\\.\\d*)?");

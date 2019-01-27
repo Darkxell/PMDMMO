@@ -19,7 +19,7 @@ public class AIStateRunaway extends AIState
 	private static int score(Tile tile)
 	{
 		int score = 0;
-		for (Direction d : Direction.directions)
+		for (Direction d : Direction.DIRECTIONS)
 			if (tile.adjacentTile(d).getPokemon() != null) ++score;
 		return score;
 	}
