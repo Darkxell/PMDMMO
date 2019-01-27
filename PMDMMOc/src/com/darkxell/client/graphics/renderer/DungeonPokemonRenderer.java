@@ -1,4 +1,4 @@
-package com.darkxell.client.renderers.pokemon;
+package com.darkxell.client.graphics.renderer;
 
 import static com.darkxell.client.resources.images.tilesets.AbstractDungeonTileset.TILE_SIZE;
 

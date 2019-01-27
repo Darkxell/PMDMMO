@@ -4,7 +4,7 @@ import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.animation.AnimationEndListener;
 import com.darkxell.client.mechanics.animation.travel.ArcAnimation;
 import com.darkxell.client.mechanics.animation.travel.TravelAnimation;
-import com.darkxell.client.graphics.pokemon.DungeonPokemonRenderer;
+import com.darkxell.client.graphics.renderer.DungeonPokemonRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
 import com.darkxell.common.event.pokemon.BlowbackPokemonEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;

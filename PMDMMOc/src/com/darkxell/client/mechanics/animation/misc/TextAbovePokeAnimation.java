@@ -8,7 +8,7 @@ import com.darkxell.client.mechanics.animation.AnimationData;
 import com.darkxell.client.mechanics.animation.PokemonAnimation;
 import com.darkxell.client.graphics.TextRenderer;
 import com.darkxell.client.graphics.TextRenderer.FontMode;
-import com.darkxell.client.graphics.pokemon.AbstractPokemonRenderer;
+import com.darkxell.client.graphics.renderer.AbstractPokemonRenderer;
 import com.darkxell.common.util.language.Message;
 
 public class TextAbovePokeAnimation extends PokemonAnimation

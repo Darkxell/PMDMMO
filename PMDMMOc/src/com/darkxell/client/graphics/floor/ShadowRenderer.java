@@ -1,4 +1,4 @@
-package com.darkxell.client.renderers.floor;
+package com.darkxell.client.graphics.floor;
 
 import static com.darkxell.client.resources.images.tilesets.AbstractDungeonTileset.TILE_SIZE;
 
@@ -10,9 +10,9 @@ import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 
 import com.darkxell.client.launchable.Persistence;
-import com.darkxell.client.renderers.AbstractRenderer;
-import com.darkxell.client.renderers.MasterDungeonRenderer;
-import com.darkxell.client.renderers.pokemon.DungeonPokemonRenderer;
+import com.darkxell.client.graphics.AbstractRenderer;
+import com.darkxell.client.graphics.MasterDungeonRenderer;
+import com.darkxell.client.graphics.renderer.DungeonPokemonRenderer;
 import com.darkxell.common.dungeon.data.FloorData;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;

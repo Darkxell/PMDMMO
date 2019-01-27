@@ -1,4 +1,4 @@
-package com.darkxell.client.renderers.pokemon;
+package com.darkxell.client.graphics.renderer;
 
 import com.darkxell.client.mechanics.animation.PokemonAnimation;
 import com.darkxell.client.mechanics.cutscene.entity.CutscenePokemon;

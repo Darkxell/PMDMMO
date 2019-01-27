@@ -1,4 +1,4 @@
-package com.darkxell.client.renderers.pokemon;
+package com.darkxell.client.graphics.renderer;
 
 import java.awt.Point;
 import java.awt.Rectangle;

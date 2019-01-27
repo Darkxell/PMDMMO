@@ -3,7 +3,7 @@ package com.darkxell.client.mechanics.animation;
 import java.awt.Graphics2D;
 
 import com.darkxell.client.mechanics.animation.spritemovement.SpritesetAnimationMovement;
-import com.darkxell.client.graphics.pokemon.AbstractPokemonRenderer;
+import com.darkxell.client.graphics.renderer.AbstractPokemonRenderer;
 import com.darkxell.client.resources.images.RegularSpriteSet;
 
 public class SpritesetAnimation extends PokemonAnimation
