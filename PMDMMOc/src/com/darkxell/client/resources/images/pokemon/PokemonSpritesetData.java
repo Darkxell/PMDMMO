@@ -97,11 +97,11 @@ public class PokemonSpritesetData
 		for (PokemonSpriteState state : PokemonSpriteState.values())
 		{
 			Element s = new Element("AnimGroup").setAttribute("state", state.name().toLowerCase());
-			for (Direction d : Direction.directions)
+			for (Direction d : Direction.DIRECTIONS)
 			{
 				Integer sequence = this.states.getOrDefault(new Pair<>(state, d), -1);
 				if (sequence != -1)
-					s.addContent(new Element("AnimSequenceIndex").setAttribute("sequence", String.valueOf(sequence)).setAttribute("direction", d.getName()));
+					s.addContent(new Element("AnimSequenceIndex").setAttribute("sequence", String.valueOf(sequence)).setAttribute("direction", d.lowercaseName()));
 			}
 			grouptable.addContent(s);
 		}

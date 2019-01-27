@@ -66,13 +66,13 @@ public class FloorVisibility
 		if (r == null)
 		{
 			this.visit(t);
-			for (Direction direction : Direction.directions)
+			for (Direction direction : Direction.DIRECTIONS)
 				this.visit(t.adjacentTile(direction));
 
 			if (this.floor.dungeon.dungeon().getData(this.floor.id).shadows() != FloorData.DENSE_SHADOW)
 				for (Tile corner : new Tile[] { t.adjacentTile(Direction.NORTHWEST), t.adjacentTile(Direction.SOUTHWEST), t.adjacentTile(Direction.SOUTHEAST),
 						t.adjacentTile(Direction.NORTHEAST) })
-				for (Direction direction : Direction.directions)
+				for (Direction direction : Direction.DIRECTIONS)
 				this.visit(corner.adjacentTile(direction));
 		} else
 		{

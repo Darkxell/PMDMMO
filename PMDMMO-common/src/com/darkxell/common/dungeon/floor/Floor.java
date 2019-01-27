@@ -94,7 +94,7 @@ public class Floor {
 
 	/** @return True if the input Tile connects to a path outside a Room (considering that Tile is in a Room, which is not tested in this method). */
 	public boolean connectsToPath(Tile tile) {
-		for (Direction direction : Direction.cardinal)
+		for (Direction direction : Direction.CARDINAL)
 			if (!tile.adjacentTile(direction).isInRoom() && tile.adjacentTile(direction).type() == TileType.GROUND)
 				return true;
 		return false;

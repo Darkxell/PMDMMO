@@ -42,7 +42,7 @@ public class ConfusedStatusCondition extends StatusCondition {
 	private void randomize(Floor floor, PokemonTravelEvent event, ArrayList<DungeonEvent> resultingEvents) {
 		event.consume();
 		List<Direction> candidates = new ArrayList<>();
-		for (Direction d : Direction.directions)
+		for (Direction d : Direction.DIRECTIONS)
 			candidates.add(d);
 		for (int i = 0; i < candidates.size(); ++i) {
 			Direction d = candidates.get(i);

@@ -25,7 +25,7 @@ public class AIStateWanderAroundInRoom extends AIState {
 	@Override
 	public DungeonEvent takeAction() {
 		ArrayList<Direction> directions = new ArrayList<>();
-		for (Direction d : Direction.directions)
+		for (Direction d : Direction.DIRECTIONS)
 			directions.add(d);
 		while (!directions.isEmpty()) {
 			Direction d = RandomUtil.random(directions, this.ai.floor.random);
