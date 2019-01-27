@@ -1,4 +1,4 @@
-package com.darkxell.client.renderers.floor;
+package com.darkxell.client.graphics.floor;
 
 import java.util.HashSet;
 

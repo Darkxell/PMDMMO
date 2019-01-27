@@ -1,4 +1,4 @@
-package com.darkxell.client.renderers.pokemon;
+package com.darkxell.client.graphics.renderer;
 
 import static com.darkxell.client.resources.images.tilesets.AbstractDungeonTileset.TILE_SIZE;
 
@@ -13,8 +13,8 @@ import java.util.function.Predicate;
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.animation.AbstractAnimation;
 import com.darkxell.client.mechanics.animation.PokemonAnimation;
-import com.darkxell.client.renderers.AbstractRenderer;
-import com.darkxell.client.renderers.MasterDungeonRenderer;
+import com.darkxell.client.graphics.AbstractRenderer;
+import com.darkxell.client.graphics.MasterDungeonRenderer;
 import com.darkxell.client.resources.images.Sprites.Res_Dungeon;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSpriteFrame;

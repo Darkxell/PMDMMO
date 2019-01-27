@@ -1,4 +1,4 @@
-package com.darkxell.client.renderers.floor;
+package com.darkxell.client.graphics.floor;
 
 import static com.darkxell.client.resources.images.tilesets.AbstractDungeonTileset.TILE_SIZE;
 
@@ -6,8 +6,8 @@ import java.awt.Graphics2D;
 import java.util.HashSet;
 
 import com.darkxell.client.launchable.Persistence;
-import com.darkxell.client.renderers.AbstractRenderer;
-import com.darkxell.client.renderers.MasterDungeonRenderer;
+import com.darkxell.client.graphics.AbstractRenderer;
+import com.darkxell.client.graphics.MasterDungeonRenderer;
 import com.darkxell.client.resources.images.Sprites.Res_Dungeon;
 import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.dungeon.floor.Floor;

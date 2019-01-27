@@ -11,7 +11,7 @@ import org.jdom2.Element;
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.animation.SpritesetAnimation.BackSpriteUsage;
 import com.darkxell.client.mechanics.cutscene.entity.CutscenePokemon;
-import com.darkxell.client.graphics.pokemon.AbstractPokemonRenderer;
+import com.darkxell.client.graphics.renderer.AbstractPokemonRenderer;
 import com.darkxell.client.resources.images.Sprites;
 import com.darkxell.client.state.dungeon.ProjectileAnimationState.ProjectileMovement;
 import com.darkxell.common.Registries;

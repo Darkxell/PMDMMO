@@ -1,7 +1,7 @@
 package com.darkxell.client.mechanics.animation.movement;
 
 import com.darkxell.client.mechanics.animation.PokemonAnimation;
-import com.darkxell.client.graphics.pokemon.AbstractPokemonRenderer;
+import com.darkxell.client.graphics.renderer.AbstractPokemonRenderer;
 import com.darkxell.common.util.Logger;
 
 public abstract class PokemonAnimationMovement {

@@ -1,4 +1,4 @@
-package com.darkxell.client.renderers.layers;
+package com.darkxell.client.graphics.layers;
 
 import com.darkxell.common.util.XMLObject;
 import org.jdom2.Element;

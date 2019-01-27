@@ -3,7 +3,7 @@ package com.darkxell.client.mechanics.freezones.entities;
 import com.darkxell.client.mechanics.freezones.FreezoneEntity;
 import com.darkxell.client.mechanics.freezones.FreezonePlayer;
 import com.darkxell.client.graphics.AbstractRenderer;
-import com.darkxell.client.graphics.pokemon.FreezonePokemonRenderer;
+import com.darkxell.client.graphics.renderer.FreezonePokemonRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
 import com.darkxell.common.util.Direction;
