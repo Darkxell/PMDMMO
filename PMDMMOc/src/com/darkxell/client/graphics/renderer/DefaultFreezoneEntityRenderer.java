@@ -1,7 +1,7 @@
 package com.darkxell.client.graphics.renderer;
 
 import com.darkxell.client.launchable.Persistence;
-import com.darkxell.client.mechanics.freezones.entities.FreezoneEntity;
+import com.darkxell.client.mechanics.freezone.entity.FreezoneEntity;
 import com.darkxell.client.graphics.AbstractRenderer;
 import com.darkxell.common.util.DoubleRectangle;
 

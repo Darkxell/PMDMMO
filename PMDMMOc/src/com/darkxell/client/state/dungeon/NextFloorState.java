@@ -3,7 +3,7 @@ package com.darkxell.client.state.dungeon;
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.cutscene.Cutscene;
 import com.darkxell.client.mechanics.cutscene.CutsceneManager;
-import com.darkxell.client.mechanics.freezones.Freezones;
+import com.darkxell.client.mechanics.freezone.Freezones;
 import com.darkxell.client.resources.music.SoundsHolder;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.TransitionState;

@@ -1,7 +1,7 @@
 package com.darkxell.client.launchable;
 
 import com.darkxell.client.mechanics.cutscene.CutsceneManager;
-import com.darkxell.client.mechanics.freezones.Freezones;
+import com.darkxell.client.mechanics.freezone.Freezones;
 import com.darkxell.client.state.StateManager;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.Logger;
