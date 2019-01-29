@@ -18,8 +18,8 @@
         <entity type="flag" x="24.4" y="10" />
     </entities>
     <triggers>
-        <trigger dest="square" destx="4" desty="40" x="66" y="34" width="2" height="11"/>
-        <trigger dest="baseinside" destx="22" desty="30" x="32" y="20" width="3" height="2"/>
+        <trigger dest="square" destx="4" desty="40" x="66" y="34" width="2" height="11" direction="2"/>
+        <trigger dest="baseinside" destx="22" desty="30" x="32" y="20" width="3" height="2" direction="0"/>
         <trigger type="friend" x="0" y="38" width="2" height="8"/>
         <trigger type="dungeon" x="29" y="63" width="9" height="2"/>
     </triggers>
