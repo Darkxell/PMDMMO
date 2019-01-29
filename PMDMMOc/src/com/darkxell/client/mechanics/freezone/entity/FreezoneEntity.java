@@ -28,6 +28,16 @@ public class FreezoneEntity extends XMLImmutableObject {
     double posY;
 
     /**
+     * The width of the entity's hitbox.
+     */
+    double width;
+
+    /**
+     * The height of the entity's hitbox.
+     */
+    double height;
+
+    /**
      * Is this entity solid?
      */
     boolean solid;
@@ -40,6 +50,8 @@ public class FreezoneEntity extends XMLImmutableObject {
     {
         this.posX = -1;
         this.posY = -1;
+        this.width = 1.8;
+        this.height = 1.7;
         this.solid = false;
         this.interactive = false;
     }
@@ -92,10 +104,12 @@ public class FreezoneEntity extends XMLImmutableObject {
     }
 
     /**
-     * Returns the hitbox of this entity at the wanted position. This returns the default hitbox size.
+     * Returns the hitbox of this entity at the wanted position.
+     *
+     * <p>To change the dimensions of the box, change {@link #width} and {@link #height}.</p>
      */
     public DoubleRectangle getHitbox(double x, double y) {
-        return new DoubleRectangle(x - 0.9, y - 0.9, 1.8, 1.7);
+        return new DoubleRectangle(x, y, this.width, this.height, true);
     }
 
     public AbstractRenderer createRenderer() {
