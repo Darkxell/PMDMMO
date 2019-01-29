@@ -3,9 +3,9 @@
     <bgm source="friendarea-wilds.mp3"/>
     <terrain source="/freezones/terrain/friend/mtdiscipline.xml"/>
     <triggers>
-        <trigger type="friend" x="0" y="0" width="59" height="1"/>
-        <trigger type="friend" x="0" y="0" width="1" height="41"/>
-        <trigger type="friend" x="0" y="41" width="59" height="1"/>
-        <trigger type="friend" x="59" y="0" width="1" height="41"/>
+        <trigger type="friendmap" x="0" y="0" width="59" height="1"/>
+        <trigger type="friendmap" x="0" y="0" width="1" height="41"/>
+        <trigger type="friendmap" x="0" y="41" width="59" height="1"/>
+        <trigger type="friendmap" x="59" y="0" width="1" height="41"/>
     </triggers>
 </zone>

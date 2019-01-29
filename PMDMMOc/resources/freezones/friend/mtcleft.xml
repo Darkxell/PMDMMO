@@ -3,9 +3,9 @@
     <bgm source="friendarea-field.mp3"/>
     <terrain source="/freezones/terrain/friend/mtcleft.xml"/>
     <triggers>
-        <trigger type="friend" x="0" y="0" width="60" height="1"/>
-        <trigger type="friend" x="0" y="0" width="1" height="42"/>
-        <trigger type="friend" x="0" y="42" width="60" height="1"/>
-        <trigger type="friend" x="60" y="0" width="1" height="42"/>
+        <trigger type="friendmap" x="0" y="0" width="60" height="1"/>
+        <trigger type="friendmap" x="0" y="0" width="1" height="42"/>
+        <trigger type="friendmap" x="0" y="42" width="60" height="1"/>
+        <trigger type="friendmap" x="60" y="0" width="1" height="42"/>
     </triggers>
 </zone>

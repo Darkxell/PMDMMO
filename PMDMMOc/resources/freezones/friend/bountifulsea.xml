@@ -3,9 +3,9 @@
     <bgm source="friendarea-oceanic.mp3"/>
     <terrain source="/freezones/terrain/friend/bountifulsea.xml"/>
     <triggers>
-        <trigger type="friend" x="0" y="0" width="57" height="1"/>
-        <trigger type="friend" x="0" y="0" width="1" height="30"/>
-        <trigger type="friend" x="0" y="30" width="57" height="1"/>
-        <trigger type="friend" x="57" y="0" width="1" height="30"/>
+        <trigger type="friendmap" x="0" y="0" width="57" height="1"/>
+        <trigger type="friendmap" x="0" y="0" width="1" height="30"/>
+        <trigger type="friendmap" x="0" y="30" width="57" height="1"/>
+        <trigger type="friendmap" x="57" y="0" width="1" height="30"/>
     </triggers>
 </zone>

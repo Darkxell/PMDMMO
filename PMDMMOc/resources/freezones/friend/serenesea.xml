@@ -3,9 +3,9 @@
     <bgm source="friendarea-oceanic.mp3"/>
     <terrain source="/freezones/terrain/friend/serenesea.xml"/>
     <triggers>
-        <trigger type="friend" x="0" y="0" width="66" height="1"/>
-        <trigger type="friend" x="0" y="0" width="1" height="45"/>
-        <trigger type="friend" x="0" y="45" width="66" height="1"/>
-        <trigger type="friend" x="66" y="0" width="1" height="45"/>
+        <trigger type="friendmap" x="0" y="0" width="66" height="1"/>
+        <trigger type="friendmap" x="0" y="0" width="1" height="45"/>
+        <trigger type="friendmap" x="0" y="45" width="66" height="1"/>
+        <trigger type="friendmap" x="66" y="0" width="1" height="45"/>
     </triggers>
 </zone>
