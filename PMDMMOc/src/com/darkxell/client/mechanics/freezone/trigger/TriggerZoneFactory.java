@@ -1,13 +1,16 @@
 package com.darkxell.client.mechanics.freezone.trigger;
 
+import org.jdom2.Element;
+
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.state.AbstractState;
+import com.darkxell.client.state.TransitionState;
 import com.darkxell.client.state.menu.freezone.DungeonSelectionMapState;
+import com.darkxell.client.state.menu.freezone.FriendAreaSelectionMapState;
 import com.darkxell.client.state.menu.freezone.FriendSelectionState;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.DoubleRectangle;
 import com.darkxell.common.zones.FreezoneInfo;
-import org.jdom2.Element;
 
 /**
  * Trigger zone deserialization utility class.
@@ -89,6 +92,16 @@ public class TriggerZoneFactory {
                         Persistence.stateManager.setState(new FriendSelectionState(state));
                     }
                 };
+            case "friendmap":
+                return new TriggerZone() {
+					@Override
+					public void onEnter() {
+						FriendAreaSelectionMapState state = new FriendAreaSelectionMapState();
+						if (Persistence.currentmap != null) state.lockOn(Persistence.currentmap.info.maplocation);
+						Persistence.stateManager
+								.setState(new TransitionState(Persistence.stateManager.getCurrentState(), state));
+					}
+				};
             case "dungeon":
                 return new TriggerZone() {
                     @Override

@@ -3,9 +3,9 @@
     <bgm source="friendarea-seafloorcave.mp3"/>
     <terrain source="/freezones/terrain/friend/seafloorcave.xml"/>
     <triggers>
-        <trigger type="friend" x="0" y="0" width="45" height="1"/>
-        <trigger type="friend" x="0" y="0" width="1" height="42"/>
-        <trigger type="friend" x="0" y="42" width="45" height="1"/>
-        <trigger type="friend" x="45" y="0" width="1" height="42"/>
+        <trigger type="friendmap" x="0" y="0" width="45" height="1"/>
+        <trigger type="friendmap" x="0" y="0" width="1" height="42"/>
+        <trigger type="friendmap" x="0" y="42" width="45" height="1"/>
+        <trigger type="friendmap" x="45" y="0" width="1" height="42"/>
     </triggers>
 </zone>

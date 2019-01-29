@@ -3,9 +3,9 @@
     <bgm source="friendarea-pond.mp3"/>
     <terrain source="/freezones/terrain/friend/shallowbeach.xml"/>
     <triggers>
-        <trigger type="friend" x="0" y="0" width="69" height="1"/>
-        <trigger type="friend" x="0" y="0" width="1" height="36"/>
-        <trigger type="friend" x="0" y="36" width="69" height="1"/>
-        <trigger type="friend" x="69" y="0" width="1" height="36"/>
+        <trigger type="friendmap" x="0" y="0" width="69" height="1"/>
+        <trigger type="friendmap" x="0" y="0" width="1" height="36"/>
+        <trigger type="friendmap" x="0" y="36" width="69" height="1"/>
+        <trigger type="friendmap" x="69" y="0" width="1" height="36"/>
     </triggers>
 </zone>

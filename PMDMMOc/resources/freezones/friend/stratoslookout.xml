@@ -3,9 +3,9 @@
     <bgm source="friendarea-stratoslookout.mp3"/>
     <terrain source="/freezones/terrain/friend/stratoslookout.xml"/>
     <triggers>
-        <trigger type="friend" x="0" y="0" width="40" height="1"/>
-        <trigger type="friend" x="0" y="0" width="1" height="39"/>
-        <trigger type="friend" x="0" y="39" width="40" height="1"/>
-        <trigger type="friend" x="40" y="0" width="1" height="39"/>
+        <trigger type="friendmap" x="0" y="0" width="40" height="1"/>
+        <trigger type="friendmap" x="0" y="0" width="1" height="39"/>
+        <trigger type="friendmap" x="0" y="39" width="40" height="1"/>
+        <trigger type="friendmap" x="40" y="0" width="1" height="39"/>
     </triggers>
 </zone>

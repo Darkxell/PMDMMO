@@ -3,9 +3,9 @@
     <bgm source="friendarea-steppe.mp3"/>
     <terrain source="/freezones/terrain/friend/mtdeepgreen.xml"/>
     <triggers>
-        <trigger type="friend" x="0" y="0" width="63" height="1"/>
-        <trigger type="friend" x="0" y="0" width="1" height="42"/>
-        <trigger type="friend" x="0" y="42" width="63" height="1"/>
-        <trigger type="friend" x="63" y="0" width="1" height="42"/>
+        <trigger type="friendmap" x="0" y="0" width="63" height="1"/>
+        <trigger type="friendmap" x="0" y="0" width="1" height="42"/>
+        <trigger type="friendmap" x="0" y="42" width="63" height="1"/>
+        <trigger type="friendmap" x="63" y="0" width="1" height="42"/>
     </triggers>
 </zone>
