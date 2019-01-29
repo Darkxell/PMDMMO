@@ -10,7 +10,7 @@ import java.util.HashMap;
 import org.jdom2.Element;
 
 import com.darkxell.client.mechanics.cutscene.Cutscene;
-import com.darkxell.common.util.XMLUtils;
+import com.darkxell.common.util.xml.XMLUtils;
 
 import fr.darkxell.dataeditor.application.util.FileManager;
 

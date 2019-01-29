@@ -8,7 +8,7 @@ import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.animation.travel.TravelAnimation;
 import com.darkxell.client.mechanics.cutscene.CutsceneContext;
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
-import com.darkxell.common.util.XMLUtils;
+import com.darkxell.common.util.xml.XMLUtils;
 
 public class CameraCutsceneEvent extends CutsceneEvent
 {

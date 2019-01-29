@@ -6,7 +6,7 @@ import com.darkxell.common.Registries;
 import com.darkxell.common.dungeon.floor.layout.Layout;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.pokemon.PokemonType;
-import com.darkxell.common.util.XMLUtils;
+import com.darkxell.common.util.xml.XMLUtils;
 
 public class FloorData implements Comparable<FloorData> {
 

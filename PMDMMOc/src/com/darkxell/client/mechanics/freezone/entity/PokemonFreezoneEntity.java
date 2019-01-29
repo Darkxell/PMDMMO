@@ -5,7 +5,7 @@ import com.darkxell.client.graphics.renderer.FreezonePokemonRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
 import com.darkxell.common.util.Direction;
-import com.darkxell.common.util.XMLUtils;
+import com.darkxell.common.util.xml.XMLUtils;
 import org.jdom2.Element;
 
 class PokemonFreezoneEntity extends DialogEntity {

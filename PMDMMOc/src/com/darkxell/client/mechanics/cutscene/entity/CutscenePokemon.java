@@ -13,7 +13,7 @@ import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
 import com.darkxell.common.Registries;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.Direction;
-import com.darkxell.common.util.XMLUtils;
+import com.darkxell.common.util.xml.XMLUtils;
 
 public class CutscenePokemon extends CutsceneEntity
 {

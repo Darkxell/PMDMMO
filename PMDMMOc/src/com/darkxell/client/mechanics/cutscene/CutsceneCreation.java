@@ -9,7 +9,7 @@ import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
 import com.darkxell.client.mechanics.cutscene.entity.CutscenePokemon;
 import com.darkxell.client.mechanics.freezone.Freezones;
 import com.darkxell.client.mechanics.freezone.FreezoneCamera;
-import com.darkxell.common.util.XMLUtils;
+import com.darkxell.common.util.xml.XMLUtils;
 import com.darkxell.common.zones.FreezoneInfo;
 
 public class CutsceneCreation

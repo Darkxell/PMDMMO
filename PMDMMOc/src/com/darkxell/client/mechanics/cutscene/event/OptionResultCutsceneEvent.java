@@ -8,7 +8,7 @@ import org.jdom2.Element;
 import com.darkxell.client.mechanics.cutscene.Cutscene;
 import com.darkxell.client.mechanics.cutscene.CutsceneContext;
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
-import com.darkxell.common.util.XMLUtils;
+import com.darkxell.common.util.xml.XMLUtils;
 
 public class OptionResultCutsceneEvent extends CutsceneEvent implements CutsceneContext
 {

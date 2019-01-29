@@ -1,10 +1,8 @@
 package com.darkxell.client.graphics.layers;
 
 import com.darkxell.client.graphics.AbstractGraphicsLayer;
-import com.darkxell.common.util.XMLObject;
+import com.darkxell.common.util.xml.XMLObject;
 import org.jdom2.Element;
-
-import java.awt.*;
 
 /**
  * This object describes an animated background or foreground. This asset is

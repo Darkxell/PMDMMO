@@ -4,7 +4,7 @@ import org.jdom2.Element;
 
 import com.darkxell.common.Registries;
 import com.darkxell.common.trap.Trap;
-import com.darkxell.common.util.XMLUtils;
+import com.darkxell.common.util.xml.XMLUtils;
 
 /** Describes how a Traps appear in a Dungeon. */
 public class DungeonTrapGroup

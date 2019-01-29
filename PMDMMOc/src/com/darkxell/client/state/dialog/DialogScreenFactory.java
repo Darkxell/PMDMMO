@@ -6,7 +6,7 @@ import com.darkxell.client.state.dialog.PokemonDialogScreen.DialogPortraitLocati
 import com.darkxell.common.Registries;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.PokemonSpecies;
-import com.darkxell.common.util.XMLUtils;
+import com.darkxell.common.util.xml.XMLUtils;
 import com.darkxell.common.util.language.Message;
 import org.jdom2.Element;
 

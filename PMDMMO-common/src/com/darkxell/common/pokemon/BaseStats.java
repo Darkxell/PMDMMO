@@ -3,7 +3,7 @@ package com.darkxell.common.pokemon;
 import org.jdom2.Element;
 
 import com.darkxell.common.util.Communicable;
-import com.darkxell.common.util.XMLUtils;
+import com.darkxell.common.util.xml.XMLUtils;
 import com.darkxell.common.util.language.Message;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonObject;

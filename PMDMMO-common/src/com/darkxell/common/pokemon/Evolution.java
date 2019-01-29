@@ -2,7 +2,7 @@ package com.darkxell.common.pokemon;
 
 import org.jdom2.Element;
 
-import com.darkxell.common.util.XMLUtils;
+import com.darkxell.common.util.xml.XMLUtils;
 
 public class Evolution
 {

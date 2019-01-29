@@ -13,7 +13,7 @@ import com.darkxell.client.resources.images.RegularSpriteSet;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.util.Logger;
-import com.darkxell.common.util.XMLUtils;
+import com.darkxell.common.util.xml.XMLUtils;
 
 public final class PokemonSpritesets {
 

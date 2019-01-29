@@ -3,7 +3,7 @@ package com.darkxell.client.mechanics.freezone.entity;
 import com.darkxell.client.resources.images.RegularSpriteSet;
 import com.darkxell.client.resources.images.Sprites.Res_FreezoneEntities;
 import com.darkxell.client.resources.images.tilesets.AbstractFreezoneTileset;
-import com.darkxell.common.util.XMLUtils;
+import com.darkxell.common.util.xml.XMLUtils;
 import org.jdom2.Element;
 
 import java.awt.*;

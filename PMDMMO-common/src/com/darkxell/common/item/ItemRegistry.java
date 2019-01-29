@@ -12,7 +12,7 @@ import com.darkxell.common.item.Item.ItemCategory;
 import com.darkxell.common.item.effects.TeachedMoveItemEffect;
 import com.darkxell.common.item.effects.TeachesMoveItemEffect;
 import com.darkxell.common.item.effects.TeachesMoveRenewableItemEffect;
-import com.darkxell.common.util.XMLUtils;
+import com.darkxell.common.util.xml.XMLUtils;
 
 /**
  * Holds all Items.

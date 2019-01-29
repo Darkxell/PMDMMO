@@ -1,6 +1,6 @@
 package com.darkxell.client.mechanics.freezone.trigger;
 
-import com.darkxell.common.util.XMLUtils;
+import com.darkxell.common.util.xml.XMLUtils;
 import org.jdom2.Element;
 
 import java.util.ArrayList;

@@ -11,7 +11,7 @@ import java.util.HashMap;
 import org.jdom2.Element;
 
 import com.darkxell.common.util.Logger;
-import com.darkxell.common.util.XMLUtils;
+import com.darkxell.common.util.xml.XMLUtils;
 
 /**
  * Base class for all registries.
