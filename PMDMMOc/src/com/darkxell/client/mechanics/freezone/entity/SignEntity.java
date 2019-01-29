@@ -14,6 +14,10 @@ import org.jdom2.Element;
 class SignEntity extends FreezoneEntity {
     private Message mess;
 
+    {
+        this.interactive = true;
+    }
+
     @Override
     protected void deserialize(Element el) {
         super.deserialize(el);
