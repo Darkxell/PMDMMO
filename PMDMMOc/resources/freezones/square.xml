@@ -97,9 +97,9 @@
         </entity>
     </entities>
     <triggers>
-        <trigger dest="base" destx="63" desty="40" x="0" y="38" width="2" height="5"/>
+        <trigger dest="base" destx="63" desty="40" x="0" y="38" width="2" height="5" direction="6"/>
         <trigger dest="dojo" x="63" y="87" width="9" height="2"/>
-        <trigger dest="wpond" x="61" y="0" width="8" height="2"/>
-        <trigger dest="office" x="118" y="38" width="38" height="5"/>
+        <trigger dest="wpond" x="61" y="0" width="8" height="2" direction="0"/>
+        <trigger dest="office" x="118" y="38" width="38" height="5" direction="2"/>
     </triggers>
 </zone>

@@ -18,7 +18,7 @@
         <entity type="mission" x="37.5" y="27"/>
     </entities>
     <triggers>
-        <trigger dest="square" destx="116" desty="40" x="0" y="25" width="2" height="9"/>
-        <trigger dest="officeinside" destx="23" desty="34" x="48" y="22" width="3" height="2"/>
+        <trigger dest="square" destx="116" desty="40" x="0" y="25" width="2" height="9" direction="6"/>
+        <trigger dest="officeinside" destx="23" desty="34" x="48" y="22" width="3" height="2" direction="0"/>
     </triggers>
 </zone>

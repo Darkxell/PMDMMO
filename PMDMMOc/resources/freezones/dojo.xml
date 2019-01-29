@@ -23,6 +23,6 @@
         <entity type="flower" x="68" y="40" color="true"/>
     </entities>
     <triggers>
-        <trigger dest="square" destx="67" desty="85" x="39" y="0" width="9" height="2"/>
+        <trigger dest="square" destx="67" desty="85" x="39" y="0" width="9" height="2" direction="0"/>
     </triggers>
 </zone>
