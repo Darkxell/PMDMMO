@@ -7,7 +7,7 @@ import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
 import com.darkxell.client.mechanics.cutscene.entity.CutscenePokemon;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
-import com.darkxell.common.util.XMLUtils;
+import com.darkxell.common.util.xml.XMLUtils;
 
 public class SetStateCutsceneEvent extends CutsceneEvent
 {

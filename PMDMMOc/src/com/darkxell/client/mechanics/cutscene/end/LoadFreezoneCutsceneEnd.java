@@ -9,7 +9,7 @@ import com.darkxell.client.mechanics.cutscene.entity.CutscenePokemon;
 import com.darkxell.client.state.StateManager;
 import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.common.util.Direction;
-import com.darkxell.common.util.XMLUtils;
+import com.darkxell.common.util.xml.XMLUtils;
 import com.darkxell.common.zones.FreezoneInfo;
 
 public class LoadFreezoneCutsceneEnd extends CutsceneEnd {

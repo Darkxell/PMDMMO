@@ -2,7 +2,7 @@ package com.darkxell.client.mechanics.freezone.trigger;
 
 import com.darkxell.client.state.StateManager;
 import com.darkxell.common.util.Direction;
-import com.darkxell.common.util.XMLUtils;
+import com.darkxell.common.util.xml.XMLUtils;
 import com.darkxell.common.zones.FreezoneInfo;
 import org.jdom2.Element;
 

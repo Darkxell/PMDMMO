@@ -3,7 +3,7 @@ package com.darkxell.client.mechanics.cutscene;
 import org.jdom2.Element;
 
 import com.darkxell.client.mechanics.cutscene.event.*;
-import com.darkxell.common.util.XMLUtils;
+import com.darkxell.common.util.xml.XMLUtils;
 
 public abstract class CutsceneEvent {
 

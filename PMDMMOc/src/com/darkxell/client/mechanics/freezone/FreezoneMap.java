@@ -12,7 +12,7 @@ import com.darkxell.client.graphics.AbstractGraphicsLayer;
 import com.darkxell.client.graphics.layers.BackgroundLayerFactory;
 import com.darkxell.client.resources.Res;
 import com.darkxell.common.util.Logger;
-import com.darkxell.common.util.XMLUtils;
+import com.darkxell.common.util.xml.XMLUtils;
 import com.darkxell.common.zones.FreezoneInfo;
 import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;

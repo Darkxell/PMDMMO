@@ -25,7 +25,7 @@ import com.darkxell.common.status.StatusCondition;
 import com.darkxell.common.status.StatusConditions;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.Pair;
-import com.darkxell.common.util.XMLUtils;
+import com.darkxell.common.util.xml.XMLUtils;
 
 public final class Animations
 {

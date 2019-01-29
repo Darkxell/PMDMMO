@@ -4,7 +4,7 @@ import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.resources.Res;
 import com.darkxell.client.state.TransitionState;
 import com.darkxell.client.state.freezone.CutsceneState;
-import com.darkxell.common.util.XMLUtils;
+import com.darkxell.common.util.xml.XMLUtils;
 
 import java.io.InputStream;
 

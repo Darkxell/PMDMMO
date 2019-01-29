@@ -10,7 +10,7 @@ import org.jdom2.Element;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
-import com.darkxell.common.util.XMLUtils;
+import com.darkxell.common.util.xml.XMLUtils;
 
 /** Represents a Room in a Floor. */
 public abstract class Room

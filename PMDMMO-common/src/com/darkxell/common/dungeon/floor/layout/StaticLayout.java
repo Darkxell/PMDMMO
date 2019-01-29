@@ -29,7 +29,7 @@ import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.trap.TrapRegistry;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.Logger;
-import com.darkxell.common.util.XMLUtils;
+import com.darkxell.common.util.xml.XMLUtils;
 
 public class StaticLayout extends Layout {
 

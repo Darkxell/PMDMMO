@@ -19,7 +19,7 @@ import com.darkxell.common.move.Move;
 import com.darkxell.common.player.ItemContainer;
 import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.ability.Ability;
-import com.darkxell.common.util.XMLUtils;
+import com.darkxell.common.util.xml.XMLUtils;
 import com.darkxell.common.util.language.Message;
 
 public class Pokemon implements ItemContainer, HasID

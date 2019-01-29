@@ -12,7 +12,7 @@ import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
 import com.darkxell.client.mechanics.cutscene.entity.CutscenePokemon;
 import com.darkxell.client.graphics.renderer.CutscenePokemonRenderer;
-import com.darkxell.common.util.XMLUtils;
+import com.darkxell.common.util.xml.XMLUtils;
 import com.darkxell.common.util.language.Localization;
 
 public class AnimateCutsceneEvent extends CutsceneEvent implements AnimationEndListener {

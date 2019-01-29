@@ -1,4 +1,4 @@
-package com.darkxell.common.util;
+package com.darkxell.common.util.xml;
 
 import org.jdom2.Attribute;
 import org.jdom2.Document;

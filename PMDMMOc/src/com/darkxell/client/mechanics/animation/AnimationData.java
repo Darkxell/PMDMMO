@@ -15,7 +15,7 @@ import com.darkxell.client.resources.images.RegularSpriteSet;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Direction;
-import com.darkxell.common.util.XMLUtils;
+import com.darkxell.common.util.xml.XMLUtils;
 
 public class AnimationData implements Comparable<AnimationData> {
 	/** List of animation IDs to play with this Animation. */

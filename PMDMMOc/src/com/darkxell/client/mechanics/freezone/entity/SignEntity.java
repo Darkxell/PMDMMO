@@ -3,7 +3,7 @@ package com.darkxell.client.mechanics.freezone.entity;
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.state.dialog.DialogScreen;
 import com.darkxell.client.state.dialog.DialogState;
-import com.darkxell.common.util.XMLUtils;
+import com.darkxell.common.util.xml.XMLUtils;
 import com.darkxell.common.util.language.Message;
 import org.jdom2.Element;
 

@@ -7,7 +7,7 @@ import java.util.HashMap;
 import org.jdom2.Element;
 
 import com.darkxell.common.util.Pair;
-import com.darkxell.common.util.XMLUtils;
+import com.darkxell.common.util.xml.XMLUtils;
 
 /** Holds a set of Floors. */
 public class FloorSet implements Comparable<FloorSet>

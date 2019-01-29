@@ -6,7 +6,7 @@ import com.darkxell.common.dungeon.floor.TileType.Mobility;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.pokemon.BaseStats.Stat;
 import com.darkxell.common.pokemon.ability.Ability;
-import com.darkxell.common.util.XMLUtils;
+import com.darkxell.common.util.xml.XMLUtils;
 import com.darkxell.common.util.language.Message;
 import org.jdom2.Element;
 

@@ -6,7 +6,7 @@ import com.darkxell.common.Registries;
 import com.darkxell.common.dbobject.DBLearnedmove;
 import com.darkxell.common.dungeon.TempIDRegistry.HasID;
 import com.darkxell.common.move.Move;
-import com.darkxell.common.util.XMLUtils;
+import com.darkxell.common.util.xml.XMLUtils;
 
 public class LearnedMove implements HasID
 {

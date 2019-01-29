@@ -15,7 +15,7 @@ import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.trap.TrapRegistry;
 import com.darkxell.common.util.Pair;
 import com.darkxell.common.util.RandomUtil;
-import com.darkxell.common.util.XMLUtils;
+import com.darkxell.common.util.xml.XMLUtils;
 import com.darkxell.common.util.language.Message;
 import com.darkxell.common.weather.Weather;
 

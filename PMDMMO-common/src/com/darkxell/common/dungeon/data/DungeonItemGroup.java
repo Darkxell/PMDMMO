@@ -9,7 +9,7 @@ import com.darkxell.common.Registries;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.util.RandomUtil;
-import com.darkxell.common.util.XMLUtils;
+import com.darkxell.common.util.xml.XMLUtils;
 
 /** A group of Items that can appear in a Dungeon. */
 public class DungeonItemGroup

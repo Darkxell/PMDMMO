@@ -14,7 +14,7 @@ import com.darkxell.client.state.dialog.DialogState.DialogEndListener;
 import com.darkxell.client.state.dialog.OptionDialogScreen;
 import com.darkxell.client.state.dialog.PokemonDialogScreen.DialogPortraitLocation;
 import com.darkxell.common.pokemon.Pokemon;
-import com.darkxell.common.util.XMLUtils;
+import com.darkxell.common.util.xml.XMLUtils;
 import com.darkxell.common.util.language.Message;
 
 public class OptionDialogCutsceneEvent extends CutsceneEvent implements DialogEndListener

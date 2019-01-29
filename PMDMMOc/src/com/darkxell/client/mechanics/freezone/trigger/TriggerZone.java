@@ -1,8 +1,8 @@
 package com.darkxell.client.mechanics.freezone.trigger;
 
 import com.darkxell.common.util.DoubleRectangle;
-import com.darkxell.common.util.XMLImmutableObject;
-import com.darkxell.common.util.XMLUtils;
+import com.darkxell.common.util.xml.XMLImmutableObject;
+import com.darkxell.common.util.xml.XMLUtils;
 import org.jdom2.Element;
 
 /**

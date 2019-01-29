@@ -10,7 +10,7 @@ import com.darkxell.client.mechanics.cutscene.end.EnterDungeonCutsceneEnd;
 import com.darkxell.client.mechanics.cutscene.end.LoadFreezoneCutsceneEnd;
 import com.darkxell.client.mechanics.cutscene.end.PlayCutsceneCutsceneEnd;
 import com.darkxell.client.mechanics.cutscene.end.ResumeExplorationCutsceneEnd;
-import com.darkxell.common.util.XMLUtils;
+import com.darkxell.common.util.xml.XMLUtils;
 
 public class Cutscene implements Comparable<Cutscene>, CutsceneContext
 {
