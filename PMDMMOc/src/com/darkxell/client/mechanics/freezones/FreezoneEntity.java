@@ -20,12 +20,23 @@ public abstract class FreezoneEntity {
 	public double posX;
 	/** the Y position of the entity. */
 	public double posY;
+	  /**
+     * The width of the entity's hitbox.
+     */
+    public double width;
+
+    /**
+     * The height of the entity's hitbox.
+     */
+    public double height;
 
 	public FreezoneEntity(boolean isSolid, boolean canInteract, double x, double y) {
 		this.isSolid = isSolid;
 		this.canInteract = canInteract;
 		this.posX = x;
 		this.posY = y;
+		this.width = 1.8;
+        this.height = 1.7;
 	}
 
 	/**
@@ -54,7 +65,8 @@ public abstract class FreezoneEntity {
 	 * overrided in a lot of cases, as it will return the default sized hitbox.
 	 */
 	public DoubleRectangle getHitbox(double x, double y) {
-		return new DoubleRectangle(x - 0.9, y - 0.9, 1.8, 1.7);
+		// Uses doublerectangle centering
+		return new DoubleRectangle(x, y, this.width, this.height, true);
 	}
 
 	public AbstractRenderer createRenderer() {
