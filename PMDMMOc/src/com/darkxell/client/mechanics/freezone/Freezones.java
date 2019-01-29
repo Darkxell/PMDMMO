@@ -20,7 +20,7 @@ public class Freezones {
     /**
      * Creates a new instance of the desired freezone map.
      */
-    public static FreezoneMap loadMap(FreezoneInfo freezone) {
+	public static FreezoneMap loadMap(FreezoneInfo freezone) {
         switch (freezone) {
             case MTSTEEL_ENTRANCE:
                 return new MtsteelEntranceFreezone();
@@ -92,8 +92,8 @@ public class Freezones {
                 return new FreezoneMap("/freezones/friend/" + freezone.id + ".xml", freezone);
             case BASEINSIDE:
                 return new FreezoneMap("/freezones/base_normal.xml", freezone);
+            default:
+                return new FreezoneMap("/freezones/" + freezone.id + ".xml", freezone);
         }
-
-        return new FreezoneMap("/freezones/" + freezone.id + ".xml", freezone);
     }
 }

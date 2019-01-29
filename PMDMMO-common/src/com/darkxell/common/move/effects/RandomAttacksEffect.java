@@ -1,8 +1,6 @@
 package com.darkxell.common.move.effects;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;

@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import com.darkxell.client.resources.images.Sprites.Res_GraphicalLayers;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.jdom2.Element;
 
 public class BackgroundSeaLayer extends BackgroundLayer
