@@ -30,7 +30,8 @@ public class AbilityPreventStatus extends Ability {
 			for (int i = 0; i < this.conditions.length; ++i)
 				if (e.condition.condition == this.conditions[i]) {
 					e.consume();
-					resultingEvents.add(new TriggeredAbilityEvent(floor, concerned, i + 1));
+					resultingEvents
+							.add(new TriggeredAbilityEvent(floor, concerned, this.conditions.length > 1 ? i + 1 : 0));
 				}
 		}
 	}
