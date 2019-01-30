@@ -99,8 +99,7 @@ public class EditAnimationController implements Initializable {
 		this.pokemonMovementCombobox.getItems().addAll("none", "dash", "2tiles", "smalljump");
 		this.pokemonMovementCombobox.getSelectionModel().select(0);
 
-		this.animMovementCombobox.getItems().addAll("none", "1tilefacing", "diagonal", "upanddown",
-				"straight (projectile)", "arc (projectile)");
+		this.animMovementCombobox.getItems().addAll("none", "1tilefacing", "diagonal", "upanddown", "straight", "arc");
 		this.animMovementCombobox.getSelectionModel().select(0);
 
 		this.stateCheckbox.selectedProperty().addListener((v, nv, ov) -> this.onStateChange());
