@@ -9,36 +9,32 @@ import com.darkxell.common.util.Communicable;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.language.Message;
 
-public abstract class DungeonEvent
-{
+public abstract class DungeonEvent {
 
 	/** Event that only displays a message. */
-	public static class MessageEvent extends DungeonEvent
-	{
+	public static class MessageEvent extends DungeonEvent {
 
 		/** If not null, will only be displayed for this Player. */
 		public final Player target;
 
-		public MessageEvent(Floor floor, Message message)
-		{
+		public MessageEvent(Floor floor, Message message) {
 			this(floor, message, null);
 		}
 
-		public MessageEvent(Floor floor, Message message, Player target)
-		{
+		public MessageEvent(Floor floor, Message message, Player target) {
 			super(floor);
 			this.target = target;
 			this.messages.add(message);
 		}
 
 		@Override
-		public String loggerMessage()
-		{
+		public String loggerMessage() {
 			return "Showing message: " + this.messages.get(0);
 		}
 	}
 
-	public static final byte PRIORITY_DEFAULT = 0, PRIORITY_AFTER_MOVE = 1, PRIORITY_ACTION_END = 2, PRIORITY_TURN_END = 3;
+	public static final byte PRIORITY_DEFAULT = 0, PRIORITY_AFTER_MOVE = 1, PRIORITY_ACTION_END = 2,
+			PRIORITY_TURN_END = 3;
 
 	/** The Pokemon that performed the action triggering this Event. This action will consume its turn. May be null if no performer or if this Event doesn't consume the actor's turn. */
 	protected DungeonPokemon actor;
@@ -59,13 +55,11 @@ public abstract class DungeonEvent
 	/** The events that resulted from this Event. */
 	protected ArrayList<DungeonEvent> resultingEvents;
 
-	public DungeonEvent(Floor floor)
-	{
+	public DungeonEvent(Floor floor) {
 		this(floor, null);
 	}
 
-	public DungeonEvent(Floor floor, DungeonPokemon actor)
-	{
+	public DungeonEvent(Floor floor, DungeonPokemon actor) {
 		this.floor = floor;
 		this.setActor(actor);
 		this.priority = PRIORITY_DEFAULT;
@@ -73,62 +67,56 @@ public abstract class DungeonEvent
 		this.resultingEvents = new ArrayList<DungeonEvent>();
 	}
 
-	public DungeonPokemon actor()
-	{
+	public DungeonPokemon actor() {
 		return this.actor;
 	}
 
-	public void addFlag(String flag)
-	{
+	public void addFlag(String flag) {
 		if (!this.hasFlag(flag)) this.flags += (this.flags.equals("") ? "" : "|") + flag;
 	}
 
-	public void cloneFlags(DungeonEvent event)
-	{
+	public void cloneFlags(DungeonEvent event) {
 		for (String flag : event.flags.split("|"))
 			this.addFlag(flag);
 	}
 
 	/** Sets {@link DungeonEvent#isConsumed} to true. */
-	public void consume()
-	{
+	public void consume() {
 		this.isConsumed = true;
 	}
 
-	public String[] flags()
-	{
+	public String[] flags() {
 		if (this.flags.equals("")) return new String[0];
 		return this.flags.split(",");
 	}
 
 	/** @return The messages that were generated. */
-	public Message[] getMessages()
-	{
+	public Message[] getMessages() {
 		return this.messages.toArray(new Message[this.messages.size()]);
 	}
 
 	/** @return The events that resulted from this Event. */
-	public DungeonEvent[] getResultingEvents()
-	{
+	public DungeonEvent[] getResultingEvents() {
 		return this.resultingEvents.toArray(new DungeonEvent[this.resultingEvents.size()]);
 	}
 
-	public boolean hasFlag(String flag)
-	{
+	public boolean hasFlag(String flag) {
 		return this.flags.contains(flag);
 	}
 
+	/** @return True if this Event represents the turn Action of the actor Pokemon. */
+	public boolean isAction() {
+		return this.actor != null;
+	}
+
 	/** @return {@link DungeonEvent#isConsumed}. */
-	public boolean isConsumed()
-	{
+	public boolean isConsumed() {
 		return this.isConsumed;
 	}
 
 	/** @return True if this Event is a PAE. */
-	public boolean isPAE()
-	{
-		if (this.isPAE && !(this instanceof Communicable))
-		{
+	public boolean isPAE() {
+		if (this.isPAE && !(this instanceof Communicable)) {
 			Logger.e("PAE event doesn't implement Communicable!");
 			return false;
 		}
@@ -136,8 +124,7 @@ public abstract class DungeonEvent
 	}
 
 	/** @return True if this Event should occur. This needs to be checked when called in case other Events on the stack triggered actions that cancel this Event, such as fainting a Pokemon which is this Event's target. */
-	public boolean isValid()
-	{
+	public boolean isValid() {
 		return true;
 	}
 
@@ -146,25 +133,21 @@ public abstract class DungeonEvent
 	/** Processes this Event server-side.
 	 * 
 	 * @return The list of resulting Events. */
-	public ArrayList<DungeonEvent> processServer()
-	{
+	public ArrayList<DungeonEvent> processServer() {
 		return this.resultingEvents;
 	}
 
-	protected void setActor(DungeonPokemon actor)
-	{
+	protected void setActor(DungeonPokemon actor) {
 		this.actor = actor;
 	}
 
 	/** Defines this Event as a PAE. Make sure this Event implements Communicable and has a (Floor) Constructor. */
-	public DungeonEvent setPAE()
-	{
+	public DungeonEvent setPAE() {
 		this.isPAE = true;
 		return this;
 	}
 
-	public DungeonEvent setPriority(byte priority)
-	{
+	public DungeonEvent setPriority(byte priority) {
 		this.priority = priority;
 		return this;
 	}
