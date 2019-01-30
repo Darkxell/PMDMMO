@@ -7,6 +7,7 @@ import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.DungeonEventListener;
+import com.darkxell.common.item.Item;
 import com.darkxell.common.item.Item.ItemAction;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.player.ItemContainer;
@@ -109,7 +110,7 @@ public class DungeonPokemon implements ItemContainer, DungeonEventListener {
 
 	/** @return <code>false</code> if this Pokemon has no other choice but to skip their turn. */
 	public boolean canAct(Floor floor) {
-		return this.canAttack(floor) || this.canMove(floor);
+		return this.canAttack(floor) || this.canMove(floor); // TODO Add (hasItem() && canUseItem(getItem())) when Item use AI is done
 	}
 
 	public boolean canAttack(Floor floor) {
@@ -129,6 +130,12 @@ public class DungeonPokemon implements ItemContainer, DungeonEventListener {
 		if (this.type != DungeonPokemonType.TEAM_MEMBER) return false;
 		return !this.hasStatusCondition(StatusConditions.Badly_poisoned)
 				&& !this.hasStatusCondition(StatusConditions.Poisoned);
+	}
+
+	public boolean canUse(Item item, Floor floor) {
+		for (AppliedStatusCondition instance : this.statusConditions)
+			if (instance.condition.preventsUsingItem(item, this, floor)) return false;
+		return true;
 	}
 
 	public boolean canUse(LearnedMove move, Floor floor) {

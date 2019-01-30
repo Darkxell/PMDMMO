@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
+import com.darkxell.common.item.Item;
 import com.darkxell.common.pokemon.BaseStats.Stat;
 
 /** Any game object that may modify stats or behavior of a Pokemon should implement this interface, for consistency.<br>
@@ -21,8 +22,7 @@ import com.darkxell.common.pokemon.BaseStats.Stat;
  * <li>Damage multiplier</li>
  * </ul>
  */
-public interface AffectsPokemon
-{
+public interface AffectsPokemon {
 
 	/** Called when a Pokemon uses a damaging move. Modifies the critical hit rate.
 	 * 
@@ -33,9 +33,8 @@ public interface AffectsPokemon
 	 * @param events - The current Events being generated.
 	 * 
 	 * @return The new critical hit rate with modifications applied by this object. */
-	public default int applyCriticalRateModifications(int critical, MoveUse move, DungeonPokemon target, boolean isUser, Floor floor,
-			ArrayList<DungeonEvent> events)
-	{
+	public default int applyCriticalRateModifications(int critical, MoveUse move, DungeonPokemon target, boolean isUser,
+			Floor floor, ArrayList<DungeonEvent> events) {
 		return critical;
 	}
 
@@ -48,9 +47,8 @@ public interface AffectsPokemon
 	 * @param events - The current Events being generated.
 	 * 
 	 * @return The new damage with modifications applied by this object. */
-	public default double applyDamageModifications(double damage, MoveUse move, DungeonPokemon target, boolean isUser, Floor floor,
-			ArrayList<DungeonEvent> events)
-	{
+	public default double applyDamageModifications(double damage, MoveUse move, DungeonPokemon target, boolean isUser,
+			Floor floor, ArrayList<DungeonEvent> events) {
 		return damage;
 	}
 
@@ -63,8 +61,8 @@ public interface AffectsPokemon
 	 * @param isUser - <code>true</code> if this Object belongs to the Move's user (if it's its ability or an item it holds).
 	 * 
 	 * @return The new value of the effectiveness with modifications applied by this object. */
-	public default double applyEffectivenessModifications(double effectiveness, MoveUse move, DungeonPokemon target, boolean isUser, Floor floor)
-	{
+	public default double applyEffectivenessModifications(double effectiveness, MoveUse move, DungeonPokemon target,
+			boolean isUser, Floor floor) {
 		return effectiveness;
 	}
 
@@ -78,9 +76,8 @@ public interface AffectsPokemon
 	 * @param events - The current Events being generated.
 	 * 
 	 * @return The new value of the Stat with modifications applied by this object. */
-	public default double applyStatModifications(Stat stat, double value, MoveUse move, DungeonPokemon target, boolean isUser, Floor floor,
-			ArrayList<DungeonEvent> events)
-	{
+	public default double applyStatModifications(Stat stat, double value, MoveUse move, DungeonPokemon target,
+			boolean isUser, Floor floor, ArrayList<DungeonEvent> events) {
 		return value;
 	}
 
@@ -94,9 +91,8 @@ public interface AffectsPokemon
 	 * @param events - The current Events being generated.
 	 * 
 	 * @return The new stage of the Stat with modifications applied by this object. */
-	public default int applyStatStageModifications(Stat stat, int stage, MoveUse move, DungeonPokemon target, boolean isUser, Floor floor,
-			ArrayList<DungeonEvent> events)
-	{
+	public default int applyStatStageModifications(Stat stat, int stage, MoveUse move, DungeonPokemon target,
+			boolean isUser, Floor floor, ArrayList<DungeonEvent> events) {
 		return stage;
 	}
 
@@ -109,8 +105,8 @@ public interface AffectsPokemon
 	 * @param flags - The flags stored in the Event that triggered this Move use.
 	 * @param events - The current Events being generated.
 	 * @return The multiplier to add to the final damage value (damage *= returned_multiplier). */
-	public default double damageMultiplier(MoveUse move, DungeonPokemon target, boolean isUser, Floor floor, String[] flags, ArrayList<DungeonEvent> events)
-	{
+	public default double damageMultiplier(MoveUse move, DungeonPokemon target, boolean isUser, Floor floor,
+			String[] flags, ArrayList<DungeonEvent> events) {
 		return 1;
 	}
 
@@ -120,8 +116,18 @@ public interface AffectsPokemon
 	 * @param floor - The Floor context.
 	 * 
 	 * @return <code>true</code> if the Pokemon can't move, <code>false</code> else. */
-	public default boolean preventsMoving(DungeonPokemon pokemon, Floor floor)
-	{
+	public default boolean preventsMoving(DungeonPokemon pokemon, Floor floor) {
+		return false;
+	}
+
+	/** Called when a Pokemon tries to use an Item. Returns true if this object prevents the use of that Item.
+	 * 
+	 * @param item - The Item being tested. May be <code>null</code> if this is in a more general sense (i.e. if the pokemon can use <i>any</i> item).
+	 * @param pokemon - The Pokemon trying to use the Move.
+	 * @param floor - The Floor context.
+	 * 
+	 * @return <code>true</code> if a Move can't be used, <code>false</code> else. */
+	public default boolean preventsUsingItem(Item item, DungeonPokemon pokemon, Floor floor) {
 		return false;
 	}
 
@@ -132,8 +138,7 @@ public interface AffectsPokemon
 	 * @param floor - The Floor context.
 	 * 
 	 * @return <code>true</code> if a Move can't be used, <code>false</code> else. */
-	public default boolean preventsUsingMove(LearnedMove move, DungeonPokemon pokemon, Floor floor)
-	{
+	public default boolean preventsUsingMove(LearnedMove move, DungeonPokemon pokemon, Floor floor) {
 		return false;
 	}
 
