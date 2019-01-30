@@ -57,6 +57,7 @@ public abstract class Ability implements AffectsPokemon, DungeonEventListener {
 	public static final Ability LIGHTNING_ROD = new AbilityPreventMoveUseType(70, PokemonType.Electric);
 	public static final Ability PICKUP = new AbilityFindsItemOnFloorStart(71, 12);
 	public static final Ability RUNAWAY = new AbilityRunaway(72);
+	public static final AbilityTruant TRUANT = new AbilityTruant(75);
 
 	static {
 		MINUS.allyAbility = PLUS;
