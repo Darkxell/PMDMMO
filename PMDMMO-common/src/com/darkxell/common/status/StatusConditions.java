@@ -34,6 +34,8 @@ public final class StatusConditions
 	public static final StatusCondition Taunted = new TauntedStatusCondition(27, true, 10, 11);
 	public static final StatusCondition Infatuated = new InfatuatedStatusCondition(28, true, 3, 4);
 	public static final StatusCondition Petrified = new PetrifiedStatusCondition(29, true, 15, 15);
+	public static final StatusCondition Wrapped = new WrappedStatusCondition(30, true, 4, 5, 2, 6);
+	public static final StatusCondition Wrapping = new WrappingStatusCondition(31, true, 6, 6);// 6 So that it is always Wrapped that finishes first
 
 	public static final StatusCondition Protect = new ImmuneStatusCondition(40, false, 2, 3);
 	public static final StatusCondition Reflect = new ChangeAttackerStatStatusCondition(41, false, 11, 12, Stat.Attack, 0, .5);

@@ -120,6 +120,12 @@ public class Floor {
 					tile.getPokemon().dispose();
 	}
 
+	public DungeonPokemon findPokemon(long id) {
+		for (DungeonPokemon p : this.listPokemon())
+			if (p.id() == id) return p;
+		return null;
+	}
+
 	/** Generates this Floor. */
 	public void generate() {
 		this.layout.generate(this);
@@ -358,15 +364,15 @@ public class Floor {
 		if (previous != next) events.add(new WeatherChangedEvent(this, previous, next));
 	}
 
-	public Room roomAt(Tile tile) {
-		return this.roomAt(tile.x, tile.y);
-	}
-
 	/** @return The room at the input X, Y coordinates. null if not in a Room. */
 	public Room roomAt(int x, int y) {
 		for (Room room : this.rooms)
 			if (room.contains(x, y)) return room;
 		return null;
+	}
+
+	public Room roomAt(Tile tile) {
+		return this.roomAt(tile.x, tile.y);
 	}
 
 	public void setPersistantWeather(ActiveWeather weather, ArrayList<DungeonEvent> events) {

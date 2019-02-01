@@ -8,6 +8,7 @@ import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.menu.InfoState;
 import com.darkxell.client.state.menu.components.TextWindow;
 import com.darkxell.common.move.Move;
+import com.darkxell.common.move.Move.MoveCategory;
 import com.darkxell.common.util.language.Message;
 
 public class MoveInfoState extends InfoState
@@ -27,7 +28,9 @@ public class MoveInfoState extends InfoState
 		this.details1Message.addReplacement("<category>", this.move.category.getName());
 		this.details2Message = new Message("move.info.details.1");
 		this.details2Message.addReplacement("<range>", this.move.range.getName(this.move.targets));
-		this.details2Message.addReplacement("<power>", TextRenderer.alignNumber(this.move.displayedPower(), 3));
+		this.details2Message.addReplacement("<power>",
+				this.move.category == MoveCategory.Status ? new Message(" --", false)
+						: TextRenderer.alignNumber(this.move.displayedPower(), 3));
 		this.details2Message.addReplacement("<accuracy>", TextRenderer.alignNumber(this.move.accuracy, 3));
 	}
 
