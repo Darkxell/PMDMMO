@@ -381,6 +381,9 @@
     <move id="131">
       <default width="112" height="112" state="SING">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21</default>
     </move>
+    <move id="134">
+      <default sprites="none" delaytime="15" state="SPECIAL" alsoplay="2" />
+    </move>
     <move id="205">
       <default sprites="none" delaytime="25" state="STRIKE" />
     </move>
@@ -900,6 +903,9 @@
     </status>
     <status id="11">
       <default width="64" height="32">0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,3,4,5,6,7,8,9,10</default>
+    </status>
+    <status id="12">
+      <default width="32" height="32" x="24" y="24">0,1,2,3,4,5,6,7,8,9,10,11,12,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1</default>
     </status>
     <status id="20">
       <default width="42" height="16" spriteduration="4" backsprites="yes">0,1,2,3,4,5,6,7,8</default>

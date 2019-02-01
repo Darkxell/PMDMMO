@@ -7,6 +7,7 @@ import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageType;
 import com.darkxell.common.event.pokemon.HealthRestoredEvent;
+import com.darkxell.common.event.pokemon.StatusConditionEndedEvent.StatusConditionEndReason;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.status.AppliedStatusCondition;
@@ -43,7 +44,8 @@ public class StealsHpStatusCondition extends StatusCondition
 	public void tick(Floor floor, AppliedStatusCondition instance, ArrayList<DungeonEvent> events)
 	{
 		super.tick(floor, instance, events);
-		if (!(instance.source instanceof DungeonPokemon) || ((DungeonPokemon) instance.source).isFainted()) instance.finish(floor, events);
+		if (!(instance.source instanceof DungeonPokemon) || ((DungeonPokemon) instance.source).isFainted())
+			instance.finish(floor, StatusConditionEndReason.CANT_CONTINUE, events);
 		else if (instance.tick % this.turnCycle == 0)
 		{
 			events.add(new DamageDealtEvent(floor, instance.pokemon, this, DamageType.CONDITION, this.hp));

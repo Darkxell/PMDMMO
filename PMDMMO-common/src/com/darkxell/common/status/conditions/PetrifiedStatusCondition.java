@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.move.MoveUseEvent;
-import com.darkxell.common.event.pokemon.StatusConditionEndedEvent;
+import com.darkxell.common.event.pokemon.StatusConditionEndedEvent.StatusConditionEndReason;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
 public class PetrifiedStatusCondition extends PreventActionStatusCondition
@@ -22,7 +22,7 @@ public class PetrifiedStatusCondition extends PreventActionStatusCondition
 		super.onPostEvent(floor, event, concerned, resultingEvents);
 
 		if (event instanceof MoveUseEvent && ((MoveUseEvent) event).target == concerned)
-			resultingEvents.add(new StatusConditionEndedEvent(floor, concerned.getStatusCondition(this)));
+			concerned.getStatusCondition(this).finish(floor, StatusConditionEndReason.BROKEN, resultingEvents);
 	}
 
 }

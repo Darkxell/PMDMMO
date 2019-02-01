@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
-import com.darkxell.common.event.pokemon.StatusConditionEndedEvent;
+import com.darkxell.common.event.pokemon.StatusConditionEndedEvent.StatusConditionEndReason;
 import com.darkxell.common.event.pokemon.TriggeredAbilityEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.status.AppliedStatusCondition;
@@ -27,7 +27,7 @@ public class AbilityClearStatusAilmentOnTurnEnd extends Ability {
 			if (triggers) {
 				events.add(new TriggeredAbilityEvent(floor, pokemon));
 				for (AppliedStatusCondition condition : pokemon.activeStatusConditions())
-					events.add(new StatusConditionEndedEvent(floor, condition));
+					condition.finish(floor, StatusConditionEndReason.HEALED, events);
 			}
 		}
 
