@@ -94,6 +94,7 @@ public final class MoveEffects
 	public static final MoveEffect Multiply_target_weight = new MultiplyWeightEffect(200);
 	public static final MoveEffect Lower_accuracy_2s = new StatChangeEffect(203, Stat.Accuracy, -2, 100);
 	public static final MoveEffect Weather_rain = new WeatherChangeEffect(208, Weather.RAIN);
+	public static final MoveEffect Zeroes_pp = new SetPPtoZeroEffect(209);
 	public static final MoveEffect Destroy_trap = new DestroyTrapEffect(213);
 	public static final MoveEffect Inflict_encore = new ApplyStatusConditionEffect(215, StatusConditions.Encore, 100);
 	public static final MoveEffect Drops_money_on_kill = new DropsMoneyOnKillEffect(218);
