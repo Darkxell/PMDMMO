@@ -24,6 +24,7 @@ public final class MoveEffects
 	public static final MoveEffect Inflict_focusenergy = new ApplyStatusConditionEffect(10, StatusConditions.Focus_energy, 100);
 	public static final MoveEffect Inflict_constricted_fire_10 = new ApplyStatusConditionEffect(15, StatusConditions.Constricted_fire, 10);
 	public static final MoveEffect Inflict_constricted_water_10 = new ApplyStatusConditionEffect(16, StatusConditions.Constricted_water, 10);
+	public static final MoveEffect Inflict_poisoned_18 = new ApplyStatusConditionEffect(19, StatusConditions.Poisoned, 18);
 	public static final MoveEffect Raise_user_attack_10 = new UserStatChangeEffect(22, Stat.Attack, 1, 10);
 	public static final MoveEffect Inflict_confused_10 = new ApplyStatusConditionEffect(28, StatusConditions.Confused, 10);
 	public static final MoveEffect Inflict_paralysis_15 = new ApplyStatusConditionEffect(35, StatusConditions.Paralyzed, 15);
