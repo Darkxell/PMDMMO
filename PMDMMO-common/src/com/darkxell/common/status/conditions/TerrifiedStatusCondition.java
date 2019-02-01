@@ -6,6 +6,7 @@ import com.darkxell.common.ai.AI;
 import com.darkxell.common.ai.states.AIStateRunaway;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.pokemon.StatusConditionEndedEvent.StatusConditionEndReason;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.ability.Ability;
 import com.darkxell.common.status.AppliedStatusCondition;
@@ -20,9 +21,9 @@ public class TerrifiedStatusCondition extends StatusCondition
 	}
 
 	@Override
-	public void onEnd(Floor floor, AppliedStatusCondition instance, ArrayList<DungeonEvent> events)
+	public void onEnd(Floor floor, AppliedStatusCondition instance, StatusConditionEndReason reason, ArrayList<DungeonEvent> events)
 	{
-		super.onEnd(floor, instance, events);
+		super.onEnd(floor, instance, reason, events);
 		floor.aiManager.getAI(instance.pokemon).setSuperState(null);
 	}
 

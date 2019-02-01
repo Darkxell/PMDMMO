@@ -37,6 +37,7 @@ public final class MoveEffects
 	public static final MoveEffect Fixed_65 = new FixedDamageEffect(49, 65);
 	public static final MoveEffect Inflict_paralysis_10 = new ApplyStatusConditionEffect(51, StatusConditions.Paralyzed, 10);
 	public static final MoveEffect Inflict_asleep = new ApplyStatusConditionEffect(52, StatusConditions.Asleep, 100);
+	public static final MoveEffect Cant_miss_Inflict_yawning;
 	public static final MoveEffect Inflict_poison = new ApplyStatusConditionEffect(58, StatusConditions.Poisoned, 100);
 	public static final MoveEffect Inflict_paralysis = new ApplyStatusConditionEffect(59, StatusConditions.Paralyzed, 100);
 	public static final MoveEffect If_hits_lower_attack_defense = new CompoundEffect(62, new SelfStatChangeEffect(-1, Stat.Attack, -1, 100),
@@ -114,6 +115,7 @@ public final class MoveEffects
 
 	static
 	{
+		Cant_miss_Inflict_yawning = new CompoundEffect(53, Cant_miss, new ApplyStatusConditionEffect(-1, StatusConditions.Yawning, 100));
 		Raise_attack_Raise_defense = new CompoundEffect(71, Raise_attack, Raise_defense);
 		Inflict_skullbash_Raise_defense = new CompoundEffect(151, Raise_defense, new ApplyStatusConditionEffect(-1, StatusConditions.Skull_bash, 100));
 		Switch_position_Raise_random = new CompoundEffect(164, Switch_position, new RandomStatChangeEffect(-1, 1, 100));
