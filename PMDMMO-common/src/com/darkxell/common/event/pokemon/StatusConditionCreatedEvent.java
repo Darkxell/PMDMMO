@@ -29,7 +29,7 @@ public class StatusConditionCreatedEvent extends DungeonEvent {
 
 	@Override
 	public ArrayList<DungeonEvent> processServer() {
-		Pair<Boolean, Message> affects = this.condition.condition.affects(this.condition, this.condition.pokemon);
+		Pair<Boolean, Message> affects = this.condition.condition.affects(this.floor, this.condition, this.condition.pokemon);
 		this.succeeded = affects.first;
 		if (affects.second != null) this.messages.add(affects.second);
 		if (this.succeeded) {

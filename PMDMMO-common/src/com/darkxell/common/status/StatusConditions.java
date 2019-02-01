@@ -50,6 +50,7 @@ public final class StatusConditions
 	public static final StatusCondition Enraged = new BoostStatOnHitStatusCondition(72, false, 5, 10, Stat.Attack);
 
 	public static final StatusCondition Identified = new IdentifiedStatusCondition(90);
+	public static final StatusCondition Encore = new ForceLastMoveStatusCondition(91, true, 11, 11);
 
 	public static final StatusCondition Sleepless = new PreventOtherStatusCondition(100, false, 11, 12, Asleep);
 	public static final StatusCondition Safeguard = new PreventAilmentStatusCondition(101, false, 11, 12);
