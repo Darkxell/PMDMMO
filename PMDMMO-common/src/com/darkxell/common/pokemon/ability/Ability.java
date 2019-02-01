@@ -6,6 +6,7 @@ import java.util.HashMap;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.DungeonEventListener;
+import com.darkxell.common.move.Move.MoveCategory;
 import com.darkxell.common.pokemon.AffectsPokemon;
 import com.darkxell.common.pokemon.BaseStats.Stat;
 import com.darkxell.common.pokemon.DungeonPokemon;
@@ -29,6 +30,7 @@ public abstract class Ability implements AffectsPokemon, DungeonEventListener {
 	public static final AbilityStatBoostWithAlly PLUS = new AbilityStatBoostWithAlly(10, Stat.SpecialAttack, 1.5);
 	public static final Ability PURE_POWER = new AbilityStatBoost(11, Stat.Attack, 1.5);
 
+	public static final Ability INTIMIDATE = new AbilityMultiplyIncomingDamage(15, MoveCategory.Physical, .8);
 	public static final Ability LEVITATE = new AbilityNullifyType(16, PokemonType.Ground);
 	public static final Ability SOUNDPROOF = new AbilityNullifySound(19);
 	public static final Ability WONDER_GUARD = new AbilityNullifyNonSupEff(21);
