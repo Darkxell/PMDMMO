@@ -58,6 +58,7 @@ public final class MoveEffects
 	public static final MoveEffect Drain_50percent = new DrainEffect(90, 50);
 	public static final MoveEffect Recoil_12percent5 = new RecoilEffect(92, 12.5);
 	public static final MoveEffect Solarbeam = new SolarBeamEffect(97);
+	public static final MoveEffect Wrap = new WrapStatusConditionEffect(101);
 	public static final MoveEffect Inflict_sleepless = new ApplyStatusConditionEffect(102, StatusConditions.Sleepless, 100);
 	public static final MoveEffect Inflict_reflect = new ApplyStatusConditionEffect(105, StatusConditions.Reflect, 100);
 	public static final MoveEffect Inflict_safeguard = new ApplyStatusConditionEffect(107, StatusConditions.Safeguard, 100);
