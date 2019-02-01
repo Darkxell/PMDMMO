@@ -24,7 +24,7 @@ public class InflictStatusFoodItemEffect extends FoodItemEffect
 	public void use(Floor floor, Item item, DungeonPokemon pokemon, DungeonPokemon target, ArrayList<DungeonEvent> events)
 	{
 		super.use(floor, item, pokemon, target, events);
-		events.add(new StatusConditionCreatedEvent(floor, this.status.create(target, item, floor.random)));
+		events.add(new StatusConditionCreatedEvent(floor, this.status.create(floor, target, item, floor.random)));
 	}
 
 }

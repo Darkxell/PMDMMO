@@ -24,7 +24,7 @@ public class AbilityTruant extends Ability {
 		super.onPostEvent(floor, event, concerned, resultingEvents);
 
 		if (this.shouldTruant(floor, event, concerned, false)) resultingEvents.add(
-				new StatusConditionCreatedEvent(floor, StatusConditions.Paused.create(concerned, this, floor.random)));
+				new StatusConditionCreatedEvent(floor, StatusConditions.Paused.create(floor, concerned, this, floor.random)));
 	}
 
 	/** @param prevent - If true, method will check as before the event triggers, else as after it does. */

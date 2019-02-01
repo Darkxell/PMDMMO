@@ -1,5 +1,6 @@
 package com.darkxell.common.status.conditions;
 
+import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.Pokemon;
@@ -16,7 +17,7 @@ public class InfatuatedStatusCondition extends PreventsMovesStatusCondition
 	}
 
 	@Override
-	public Pair<Boolean, Message> affects(AppliedStatusCondition condition, DungeonPokemon pokemon)
+	public Pair<Boolean, Message> affects(Floor floor, AppliedStatusCondition condition, DungeonPokemon pokemon)
 	{
 		if (pokemon.gender() == Pokemon.GENDERLESS)
 		{
@@ -34,7 +35,7 @@ public class InfatuatedStatusCondition extends PreventsMovesStatusCondition
 					source.getNickname());
 			return new Pair<Boolean, Message>(false, m);
 		}
-		return super.affects(condition, pokemon);
+		return super.affects(floor, condition, pokemon);
 	}
 
 }

@@ -32,9 +32,9 @@ public class StealsHpStatusCondition extends StatusCondition
 	}
 
 	@Override
-	public Pair<Boolean, Message> affects(AppliedStatusCondition condition, DungeonPokemon pokemon)
+	public Pair<Boolean, Message> affects(Floor floor, AppliedStatusCondition condition, DungeonPokemon pokemon)
 	{
-		Pair<Boolean, Message> sup = super.affects(condition, pokemon);
+		Pair<Boolean, Message> sup = super.affects(floor, condition, pokemon);
 		if (!sup.first) return sup;
 		if (this == StatusConditions.Leech_seed && pokemon.species().isType(PokemonType.Grass)) return new Pair<>(false, this.immune(pokemon));
 		return new Pair<>(true, null);

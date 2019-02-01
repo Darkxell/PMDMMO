@@ -29,9 +29,9 @@ public class PeriodicDamageStatusCondition extends StatusCondition
 	}
 
 	@Override
-	public Pair<Boolean, Message> affects(AppliedStatusCondition condition, DungeonPokemon pokemon)
+	public Pair<Boolean, Message> affects(Floor floor, AppliedStatusCondition condition, DungeonPokemon pokemon)
 	{
-		Pair<Boolean, Message> sup = super.affects(condition, pokemon);
+		Pair<Boolean, Message> sup = super.affects(floor, condition, pokemon);
 		if (!sup.first) return sup;
 		if ((this == StatusConditions.Poisoned || this == StatusConditions.Badly_poisoned) && pokemon.species().isType(PokemonType.Poison))
 			return new Pair<>(false, this.immune(pokemon));
