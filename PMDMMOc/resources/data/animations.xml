@@ -319,7 +319,7 @@
       <default sprites="none" delaytime="25" state="UPPERCUT" />
     </move>
     <move id="74">
-      <default sprites="none" x="-1" y="-1" delaytime="15" state="RUMBLE" alsoplay="2" />
+      <default sprites="none" delaytime="15" state="RUMBLE" alsoplay="2" />
     </move>
     <move id="75">
       <default sprites="/228" width="48" height="32" state="TAILWHIP">0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25</default>
@@ -426,6 +426,7 @@
     <move id="304">
       <default sprites="none" delaytime="25" state="EMIT" />
     </move>
+    <move id="305" clone="moves/655" />
     <move id="351">
       <default sprites="none" delaytime="25" state="STRIKE" />
     </move>
@@ -783,6 +784,16 @@
     <projectile id="1063" clone="projectiles/1806" />
     <projectile id="1064">
       <default width="16" height="16">0,1</default>
+    </projectile>
+    <projectile id="1305">
+      <default sprites="/projectiles/1305-0" width="8" height="16" x="-1" y="-1">0</default>
+      <northeast sprites="/projectiles/1305-1" width="16" />
+      <east sprites="/projectiles/1305-2" width="24" height="8" />
+      <southeast sprites="/projectiles/1305-3" width="16" />
+      <south sprites="/projectiles/1305-4" />
+      <southwest sprites="/projectiles/1305-5" width="16" />
+      <west sprites="/projectiles/1305-6" width="24" height="8" />
+      <northwest sprites="/projectiles/1305-7" width="16" />
     </projectile>
     <projectile id="1352">
       <default width="16" height="16">0,1,2,3,4,5,6,7</default>
