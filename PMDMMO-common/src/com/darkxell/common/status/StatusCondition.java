@@ -7,6 +7,7 @@ import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.DungeonEventListener;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageSource;
+import com.darkxell.common.event.pokemon.StatusConditionEndedEvent.StatusConditionEndReason;
 import com.darkxell.common.event.stats.ExperienceGeneratedEvent;
 import com.darkxell.common.pokemon.AffectsPokemon;
 import com.darkxell.common.pokemon.DungeonPokemon;
@@ -62,7 +63,7 @@ public class StatusCondition extends Status implements AffectsPokemon, DamageSou
 		return new Message("status." + this.id);
 	}
 
-	public void onEnd(Floor floor, AppliedStatusCondition instance, ArrayList<DungeonEvent> events)
+	public void onEnd(Floor floor, AppliedStatusCondition instance, StatusConditionEndReason reason, ArrayList<DungeonEvent> events)
 	{}
 
 	public void onStart(Floor floor, AppliedStatusCondition instance, ArrayList<DungeonEvent> events)

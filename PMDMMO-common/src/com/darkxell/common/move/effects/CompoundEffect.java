@@ -22,6 +22,16 @@ public class CompoundEffect extends MoveEffect
 	}
 
 	@Override
+	public MoveEffectCalculator buildCalculator(MoveUse usedMove, DungeonPokemon target, Floor floor, String[] flags) {
+		MoveEffectCalculator calculator = super.buildCalculator(usedMove, target, floor, flags);
+		for (MoveEffect effect : this.effects) {
+			MoveEffectCalculator c = effect.buildCalculator(usedMove, target, floor, flags);
+			if (c != null) calculator = c;
+		}
+		return calculator;
+	}
+
+	@Override
 	public void additionalEffects(MoveUse usedMove, DungeonPokemon target, String[] flags, Floor floor, MoveEffectCalculator calculator, boolean missed,
 			MoveEvents effects)
 	{

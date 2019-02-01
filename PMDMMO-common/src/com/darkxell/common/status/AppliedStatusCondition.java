@@ -6,6 +6,7 @@ import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.DungeonEventListener;
 import com.darkxell.common.event.pokemon.StatusConditionEndedEvent;
+import com.darkxell.common.event.pokemon.StatusConditionEndedEvent.StatusConditionEndReason;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Localization;
 import com.darkxell.common.util.language.Message;
@@ -58,9 +59,9 @@ public class AppliedStatusCondition implements DungeonEventListener
 		return new Message(id).addReplacement("<pokemon>", this.pokemon.getNickname());
 	}
 
-	public void finish(Floor floor, ArrayList<DungeonEvent> events)
+	public void finish(Floor floor, StatusConditionEndReason reason, ArrayList<DungeonEvent> events)
 	{
-		events.add(new StatusConditionEndedEvent(floor, this));
+		events.add(new StatusConditionEndedEvent(floor, this, reason));
 	}
 
 	public int getTurns()
@@ -85,9 +86,9 @@ public class AppliedStatusCondition implements DungeonEventListener
 		return this.flags.split("\\|");
 	}
 
-	public void onConditionEnd(Floor floor, ArrayList<DungeonEvent> events)
+	public void onConditionEnd(Floor floor, StatusConditionEndReason reason, ArrayList<DungeonEvent> events)
 	{
-		this.condition.onEnd(floor, this, events);
+		this.condition.onEnd(floor, this, reason, events);
 	}
 
 	public void onConditionStart(Floor floor, ArrayList<DungeonEvent> events)
@@ -124,7 +125,7 @@ public class AppliedStatusCondition implements DungeonEventListener
 		if (!this.isOver()) this.condition.tick(floor, this, events);
 		++this.tick;
 		this.actedWhileApplied = false;
-		if (this.isOver()) this.finish(floor, events);
+		if (this.isOver()) this.finish(floor, StatusConditionEndReason.FINISHED, events);
 	}
 
 }

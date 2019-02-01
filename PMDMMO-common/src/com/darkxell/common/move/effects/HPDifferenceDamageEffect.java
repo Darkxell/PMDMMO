@@ -16,7 +16,7 @@ public class HPDifferenceDamageEffect extends MoveEffect
 	}
 	
 	@Override
-	protected MoveEffectCalculator buildCalculator(MoveUse usedMove, DungeonPokemon target, Floor floor, String[] flags)
+	public MoveEffectCalculator buildCalculator(MoveUse usedMove, DungeonPokemon target, Floor floor, String[] flags)
 	{
 		return new HPDifferenceCalculator(usedMove, target, floor, flags);
 	}

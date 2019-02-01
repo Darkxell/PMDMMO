@@ -55,9 +55,16 @@ public class MoveEffect implements AffectsPokemon
 		return false;
 	}
 
-	protected MoveEffectCalculator buildCalculator(MoveUse usedMove, DungeonPokemon target, Floor floor, String[] flags)
+	/** Creates a custom MoveEffectCalculator object. If the effect doesn't need a custom one, should return null by default.
+	 * 
+	 * @param usedMove - The Move that was used.
+	 * @param target - The target of the Move.
+	 * @param floor - The Floor context.
+	 * @param flags - The flags of the Move Event.
+	 * @return The built MoveEffectCalculator, or null. */
+	public MoveEffectCalculator buildCalculator(MoveUse usedMove, DungeonPokemon target, Floor floor, String[] flags)
 	{
-		return new MoveEffectCalculator(usedMove, target, floor, flags);
+		return null;
 	}
 
 	protected void createMoves(MoveUse move, Floor floor, ArrayList<DungeonEvent> events)
@@ -224,6 +231,7 @@ public class MoveEffect implements AffectsPokemon
 	{
 		Move move = usedMove.move.move();
 		MoveEffectCalculator calculator = this.buildCalculator(usedMove, target, floor, flags);
+		if (calculator == null) calculator = new MoveEffectCalculator(usedMove, target, floor, flags);
 		boolean missed = calculator.misses(events);
 		double effectiveness = calculator.effectiveness();
 		if (effectiveness == PokemonType.NO_EFFECT && usedMove.move.move().category != MoveCategory.Status)
