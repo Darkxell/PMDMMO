@@ -324,6 +324,12 @@ public class DungeonPokemon implements ItemContainer, DungeonEventListener {
 		return this.usedPokemon.moveCount();
 	}
 
+	public int moveIndex(LearnedMove move) {
+		for (int m = 0; m < this.moveCount(); ++m)
+			if (this.move(m) == move) return m;
+		return -1;
+	}
+
 	/** Called when this Pokemon enters a new Floor or when it spawns. */
 	public void onFloorStart(Floor floor, ArrayList<DungeonEvent> events) {
 		this.statusConditions.clear();
