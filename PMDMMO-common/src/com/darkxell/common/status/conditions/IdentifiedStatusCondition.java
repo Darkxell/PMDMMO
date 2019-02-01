@@ -19,8 +19,8 @@ public class IdentifiedStatusCondition extends RemoveTypeImmunitiesStatusConditi
 	}
 
 	@Override
-	public Pair<Boolean, Message> affects(AppliedStatusCondition condition, DungeonPokemon pokemon) {
-		Pair<Boolean, Message> p = super.affects(condition, pokemon);
+	public Pair<Boolean, Message> affects(Floor floor, AppliedStatusCondition condition, DungeonPokemon pokemon) {
+		Pair<Boolean, Message> p = super.affects(floor, condition, pokemon);
 		return new Pair<>(true, p.second);
 	}
 

@@ -21,11 +21,11 @@ public class RemoveTypeImmunitiesStatusCondition extends StatusCondition
 	}
 
 	@Override
-	public Pair<Boolean, Message> affects(AppliedStatusCondition condition, DungeonPokemon pokemon)
+	public Pair<Boolean, Message> affects(Floor floor, AppliedStatusCondition condition, DungeonPokemon pokemon)
 	{
 		if (!pokemon.species().isType(this.type)) return new Pair<Boolean, Message>(false,
 				new Message("status.immune.isnttype").addReplacement("<pokemon>", pokemon.getNickname()).addReplacement("<type>", this.type.getName()));
-		return super.affects(condition, pokemon);
+		return super.affects(floor, condition, pokemon);
 	}
 
 	@Override

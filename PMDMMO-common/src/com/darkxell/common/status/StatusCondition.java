@@ -31,7 +31,7 @@ public class StatusCondition extends Status implements AffectsPokemon, DamageSou
 
 	/** @return - True if this Status Condition affects the input Pokemon.<br>
 	 *         - A Message to display if this Condition doesn't affect the Pokemon. May be <code>null</code> if there is no necessary message. */
-	public Pair<Boolean, Message> affects(AppliedStatusCondition condition, DungeonPokemon pokemon)
+	public Pair<Boolean, Message> affects(Floor floor, AppliedStatusCondition condition, DungeonPokemon pokemon)
 	{
 		if (pokemon.hasStatusCondition(this)) return new Pair<>(false,
 				new Message("status.already").addReplacement("<pokemon>", pokemon.getNickname()).addReplacement("<condition>", this.name()));
@@ -42,7 +42,7 @@ public class StatusCondition extends Status implements AffectsPokemon, DamageSou
 		return new Pair<>(true, null);
 	}
 
-	public AppliedStatusCondition create(DungeonPokemon target, Object source, Random random)
+	public AppliedStatusCondition create(Floor floor, DungeonPokemon target, Object source, Random random)
 	{
 		return new AppliedStatusCondition(this, target, source, RandomUtil.nextIntInBounds(this.durationMin, this.durationMax, random));
 	}

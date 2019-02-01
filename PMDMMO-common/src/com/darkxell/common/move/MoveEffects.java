@@ -93,6 +93,7 @@ public final class MoveEffects
 	public static final MoveEffect Lower_accuracy_2s = new StatChangeEffect(203, Stat.Accuracy, -2, 100);
 	public static final MoveEffect Weather_rain = new WeatherChangeEffect(208, Weather.RAIN);
 	public static final MoveEffect Destroy_trap = new DestroyTrapEffect(213);
+	public static final MoveEffect Inflict_encore = new ApplyStatusConditionEffect(215, StatusConditions.Encore, 100);
 	public static final MoveEffect Drops_money_on_kill = new DropsMoneyOnKillEffect(218);
 	public static final MoveEffect Raise_attack_Raise_spattack = new CompoundEffect(221, Raise_attack, Raise_spattack);
 	public static final MoveEffect Lower_attack_2s = new StatChangeEffect(224, Stat.Attack, -2, 100);
