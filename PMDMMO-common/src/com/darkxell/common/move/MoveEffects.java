@@ -1,10 +1,17 @@
 package com.darkxell.common.move;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
+import com.darkxell.common.dungeon.floor.Floor;
+import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
 import com.darkxell.common.move.effects.*;
+import com.darkxell.common.move.effects.ConditionalEffect.EffectCondition;
 import com.darkxell.common.pokemon.BaseStats.Stat;
+import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.status.FloorStatuses;
 import com.darkxell.common.status.StatusConditions;
 import com.darkxell.common.weather.Weather;
@@ -69,6 +76,13 @@ public final class MoveEffects
 	public static final MoveEffect Steal_item = new StealItemEffect(120);
 	public static final MoveEffect Raise_speed = new StatChangeEffect(121, Stat.Speed, 1, 100);
 	public static final MoveEffect Inflict_revenge = new ApplyStatusConditionEffect(123, StatusConditions.Revenge, 100);
+	public static final MoveEffect Ifghost_504_505 = new ConditionalEffect(127, -504, -505, new EffectCondition() {
+		@Override
+		public boolean isMet(MoveUse usedMove, DungeonPokemon target, String[] flags, Floor floor,
+				ArrayList<DungeonEvent> events) {
+			return usedMove.user.species().isType(PokemonType.Ghost);
+		}
+	});
 	public static final MoveEffect Double_damage = new DoubleDamageEffect(131);
 	public static final MoveEffect Create_watersport = new CreateFloorStatusEffect(137, FloorStatuses.Reduce_fire);
 	public static final MoveEffect Lower_defense = new StatChangeEffect(139, Stat.Defense, -1, 100);
@@ -116,6 +130,8 @@ public final class MoveEffects
 	public static final MoveEffect Inflict_constricted_10 = new ApplyStatusConditionEffect(329, StatusConditions.Constricted, 10);
 	public static final MoveEffect Switch_position = new SwitchWithUserEffect(330);
 	public static final MoveEffect Blowback = new BlowbackEffect(331);
+	public static final MoveEffect Inflict_curse_Lose_user25;
+	public static final MoveEffect Raise_attack_defense_Lower_speed;
 
 	static
 	{
@@ -123,6 +139,10 @@ public final class MoveEffects
 		Raise_attack_Raise_defense = new CompoundEffect(71, Raise_attack, Raise_defense);
 		Inflict_skullbash_Raise_defense = new CompoundEffect(151, Raise_defense, new ApplyStatusConditionEffect(-1, StatusConditions.Skull_bash, 100));
 		Switch_position_Raise_random = new CompoundEffect(164, Switch_position, new RandomStatChangeEffect(-1, 1, 100));
+		Inflict_curse_Lose_user25 = new CompoundEffect(332, new UserPercentDamageEffect(-1, .25),
+				new ApplyStatusConditionEffect(-1, StatusConditions.Cursed, 100));
+		Raise_attack_defense_Lower_speed = new CompoundEffect(333, new StatChangeEffect(-1, Stat.Attack, 1, 100),
+				new StatChangeEffect(-1, Stat.Defense, 1, 100), new StatChangeEffect(-1, Stat.Speed, -1, 100));
 	}
 
 	/** @return The Effect with the input ID. */

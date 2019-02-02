@@ -16,7 +16,7 @@ public final class MoveRegistry extends Registry<Move> {
     public static Move ATTACK, STRUGGLE;
 
     protected Element serializeDom(HashMap<Integer, Move> dungeons) {
-        Element xml = new Element("dungeons");
+        Element xml = new Element("moves");
         for (Move move : dungeons.values()) {
             xml.addContent(move.toXML());
         }

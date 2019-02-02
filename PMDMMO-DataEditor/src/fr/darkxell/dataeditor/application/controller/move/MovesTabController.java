@@ -108,7 +108,7 @@ public class MovesTabController implements Initializable, ListCellParent<MoveLis
 		Optional<String> name = dialog.showAndWait();
 		if (name.isPresent())
 		{
-			if (name.get().matches("\\d+"))
+			if (name.get().matches("-?\\d+"))
 			{
 				MoveRegistry moves = Registries.moves();
 				Move i = this.defaultMove(Integer.parseInt(name.get()));

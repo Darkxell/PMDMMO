@@ -59,7 +59,7 @@ public class EditMoveController implements Initializable
 	{
 		int id, pp, power, accuracy, critical, effectID;
 
-		if (this.idTextfield.getText().matches("\\d+")) id = Integer.parseInt(this.idTextfield.getText());
+		if (this.idTextfield.getText().matches("-?\\d+")) id = Integer.parseInt(this.idTextfield.getText());
 		else
 		{
 			FXUtils.showAlert("Wrong ID: " + this.idTextfield.getText());

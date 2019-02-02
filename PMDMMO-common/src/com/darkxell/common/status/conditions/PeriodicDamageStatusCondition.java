@@ -17,11 +17,11 @@ import com.darkxell.common.util.language.Message;
 public class PeriodicDamageStatusCondition extends StatusCondition
 {
 	/** The damage this Status Condition deals. */
-	public final int damage;
+	public final double damage;
 	/** The number of turns between each damage dealt. */
 	public final int period;
 
-	public PeriodicDamageStatusCondition(int id, boolean isAilment, int durationMin, int durationMax, int period, int damage)
+	public PeriodicDamageStatusCondition(int id, boolean isAilment, int durationMin, int durationMax, int period, double damage)
 	{
 		super(id, isAilment, durationMin, durationMax);
 		this.period = period;
@@ -39,10 +39,15 @@ public class PeriodicDamageStatusCondition extends StatusCondition
 		return new Pair<>(true, null);
 	}
 
+	protected int damageDealt(Floor floor, AppliedStatusCondition instance, ArrayList<DungeonEvent> events) {
+		return (int) this.damage;
+	}
+
 	@Override
 	public void tick(Floor floor, AppliedStatusCondition instance, ArrayList<DungeonEvent> events)
 	{
-		if (instance.tick % this.period == 0) events.add(new DamageDealtEvent(floor, instance.pokemon, this, DamageType.CONDITION, this.damage));
+		if (instance.tick % this.period == 0)
+			events.add(new DamageDealtEvent(floor, instance.pokemon, this, DamageType.CONDITION, this.damageDealt(floor, instance, events)));
 	}
 
 }

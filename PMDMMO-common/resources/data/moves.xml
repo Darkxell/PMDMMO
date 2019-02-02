@@ -362,8 +362,10 @@
   <move id="501" type="7" category="Status" pp="13" power="2" critical="12" effect="64" freeze="true" reflectable="true" />
   <move id="502" type="7" category="Physical" pp="22" power="4" critical="12" effect="35" damage="true" ginsengable="true" freeze="true" sound="true" />
   <move id="503" type="7" category="Special" pp="17" power="2" critical="12" range="Around" effect="89" damage="true" freeze="true" />
-  <move id="504" type="0" category="Status" pp="17" power="2" accuracy="125" critical="12" range="Ambient" targets="None" effect="127" freeze="true" />
+  <move id="-504" type="7" category="Status" pp="10" power="10" accuracy="125" critical="12" effect="332" freeze="true" reflectable="true" snatchable="true" />
   <move id="2552" type="19" category="Status" pp="1" critical="12" range="Line" targets="All" effect="168" reflectable="true" snatchable="true" />
+  <move id="-505" type="7" category="Status" pp="10" power="10" critical="12" range="Self" targets="User" effect="333" freeze="true" reflectable="true" snatchable="true" />
+  <move id="504" type="7" category="Status" pp="17" power="2" accuracy="125" critical="12" range="Self" targets="User" effect="127" freeze="true" />
   <move id="505" type="7" category="Status" pp="12" power="2" accuracy="125" critical="12" range="Front_corners" effect="214" freeze="true" />
   <move id="506" type="7" category="Status" pp="15" power="4" critical="12" effect="134" freeze="true" />
   <move id="507" type="7" category="Special" pp="10" power="16" accuracy="88" critical="12" range="Line" effect="40" damage="true" ginsengable="true" freeze="true" />
