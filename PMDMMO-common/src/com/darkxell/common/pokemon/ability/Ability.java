@@ -45,7 +45,7 @@ public abstract class Ability implements AffectsPokemon, DungeonEventListener {
 
 	public static final Ability CLEAR_BODY = new AbilityPreventsAnyStatLoss(41);
 	public static final Ability HYPER_CUTTER = new AbilityPreventsStatLoss(42, Stat.Attack);
-	public static final Ability INSOMNIA = new AbilityPreventStatus(45, StatusConditions.Asleep);
+	public static final Ability INSOMNIA = new AbilityPreventStatus(45, StatusConditions.Asleep, StatusConditions.Yawning);
 	public static final Ability KEEN_EYE = new AbilityPreventsStatLoss(46, Stat.Accuracy);
 	public static final Ability OBLIVIOUS = new AbilityPreventStatus(49, StatusConditions.Infatuated,
 			StatusConditions.Taunted);
