@@ -1,17 +1,18 @@
 package com.darkxell.client.mechanics.freezone;
 
-import com.darkxell.client.resources.Res;
-import com.darkxell.client.resources.images.tilesets.AbstractFreezoneTileset;
-import com.darkxell.common.util.DoubleRectangle;
-import com.darkxell.common.util.Position;
-import org.jdom2.Element;
-import org.jdom2.JDOMException;
-import org.jdom2.input.SAXBuilder;
+import static com.darkxell.client.resources.images.tilesets.AbstractFreezoneTileset.TILE_SIZE;
 
 import java.io.IOException;
 import java.util.HashMap;
 
-import static com.darkxell.client.resources.images.tilesets.AbstractFreezoneTileset.TILE_SIZE;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
+
+import com.darkxell.client.resources.Res;
+import com.darkxell.client.resources.images.tilesets.AbstractFreezoneTileset;
+import com.darkxell.common.util.DoubleRectangle;
+import com.darkxell.common.util.Position;
 
 public class FreezoneTerrain {
     private FreezoneTile[] tiles;
@@ -59,9 +60,8 @@ public class FreezoneTerrain {
 
     private void initTiles() {
         this.tiles = new FreezoneTile[this.width * this.height];
-        for (int i = 0; i < this.tiles.length; i++) {
+        for (int i = 0; i < this.tiles.length; i++)
             this.tiles[i] = new FreezoneTile();
-        }
         this.defaultTile = new FreezoneTile();
     }
 
@@ -82,9 +82,8 @@ public class FreezoneTerrain {
      * @see AbstractFreezoneTileset#getTileSet(String, int, int)
      */
     private AbstractFreezoneTileset getTileset(String key) {
-        if (this.tilesets.containsKey(key)) {
+        if (this.tilesets.containsKey(key))
             return this.tilesets.get(key);
-        }
         AbstractFreezoneTileset tileset = AbstractFreezoneTileset.getTileSet(key, this.width * TILE_SIZE,
                 this.height * TILE_SIZE);
         this.tilesets.put(key, tileset);
@@ -106,9 +105,8 @@ public class FreezoneTerrain {
                 refTile.type = solid ? FreezoneTile.TYPE_SOLID : FreezoneTile.TYPE_WALKABLE;
             } else {
                 AbstractFreezoneTileset refTileset = this.getTileset(bgName);
-                if (defaultTileset == null) {
+                if (defaultTileset == null)
                     defaultTileset = refTileset;
-                }
 
                 int xo = this.tagIntAttr(el, "xo") / TILE_SIZE;
                 int yo = this.tagIntAttr(el, "yo") / TILE_SIZE;
@@ -116,23 +114,20 @@ public class FreezoneTerrain {
             }
         }
 
-        for (FreezoneTile t : this.tiles) {
-            if (t.sprite == null) {
+        for (FreezoneTile t : this.tiles)
+            if (t.sprite == null)
                 t.sprite = defaultTileset.getDefault();
-            }
-        }
     }
 
     /**
      * Get tile based on tile offset. See {@link #get(int, int)} for the conversion direction.
      *
-     * @param offset Direct access index.
-     * @return Tile, or default tile if tile index is out of bounds.
+     * @param  offset Direct access index.
+     * @return        Tile, or default tile if tile index is out of bounds.
      */
     public FreezoneTile get(int offset) {
-        if (offset >= this.tiles.length || offset < 0) {
+        if (offset >= this.tiles.length || offset < 0)
             return this.defaultTile;
-        }
         return this.tiles[offset];
     }
 
@@ -160,11 +155,9 @@ public class FreezoneTerrain {
      * @return Does the box overlap with any solid blocks in this terrain?
      */
     public boolean hasCollision(DoubleRectangle box) {
-        for (Position pos : box.getCorners()) {
-            if (this.get(pos.x, pos.y).type == FreezoneTile.TYPE_SOLID) {
+        for (Position pos : box.getCorners())
+            if (this.get(pos.x, pos.y).type == FreezoneTile.TYPE_SOLID)
                 return true;
-            }
-        }
         return false;
     }
 

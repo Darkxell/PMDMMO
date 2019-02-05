@@ -1,12 +1,13 @@
 package com.darkxell.client.mechanics.freezone.entity;
 
-import com.darkxell.client.mechanics.freezone.FreezonePlayer;
+import org.jdom2.Element;
+
 import com.darkxell.client.graphics.AbstractRenderer;
 import com.darkxell.client.graphics.renderer.FreezonePokemonRenderer;
+import com.darkxell.client.mechanics.freezone.FreezonePlayer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
 import com.darkxell.common.util.Direction;
-import org.jdom2.Element;
 
 /**
  * A Pokemon entity that follows a point.
@@ -32,6 +33,7 @@ public class FollowsPointEntity extends FreezoneEntity {
 
     /**
      * Stub method. This class cannot be deserialized.
+     * 
      * @throws UnsupportedOperationException
      */
     @Override
@@ -41,6 +43,7 @@ public class FollowsPointEntity extends FreezoneEntity {
 
     /**
      * Stub method. This class cannot be serialized.
+     * 
      * @throws UnsupportedOperationException
      */
     @Override
@@ -62,12 +65,9 @@ public class FollowsPointEntity extends FreezoneEntity {
         // Calculates the movespeed of the entity
         double movespeed = FreezonePlayer.MOVESPEED;
         boolean up = false, right = false, down = false, left = false;
-        if (destinationX > posX + this.sprintDistance ||
-                destinationX < posX - this.sprintDistance ||
-                destinationY > posY + this.sprintDistance ||
-                destinationY < posY - this.sprintDistance) {
+        if (destinationX > posX + this.sprintDistance || destinationX < posX - this.sprintDistance
+                || destinationY > posY + this.sprintDistance || destinationY < posY - this.sprintDistance)
             movespeed *= 2;
-        }
 
         // Moves the pokemon accordingly
         if (destinationX > posX + this.moveDistance) {
@@ -85,28 +85,26 @@ public class FollowsPointEntity extends FreezoneEntity {
             up = true;
         }
         // Sets the rotation of the pokemonSprite used
-        if (up && right) {
+        if (up && right)
             this.sprite.setFacingDirection(Direction.NORTHEAST);
-        } else if (right && down) {
+        else if (right && down)
             this.sprite.setFacingDirection(Direction.SOUTHEAST);
-        } else if (down && left) {
+        else if (down && left)
             this.sprite.setFacingDirection(Direction.SOUTHWEST);
-        } else if (left && up) {
+        else if (left && up)
             this.sprite.setFacingDirection(Direction.NORTHWEST);
-        } else if (up) {
+        else if (up)
             this.sprite.setFacingDirection(Direction.NORTH);
-        } else if (right) {
+        else if (right)
             this.sprite.setFacingDirection(Direction.EAST);
-        } else if (down) {
+        else if (down)
             this.sprite.setFacingDirection(Direction.SOUTH);
-        } else if (left) {
+        else if (left)
             this.sprite.setFacingDirection(Direction.WEST);
-        }
         // Sets the running/idle state
-        if (up || right || down || left) {
+        if (up || right || down || left)
             this.sprite.setState(PokemonSpriteState.MOVE);
-        } else {
+        else
             this.sprite.setState(PokemonSpriteState.IDLE);
-        }
     }
 }

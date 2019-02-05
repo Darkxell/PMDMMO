@@ -3,158 +3,159 @@ package com.darkxell.client.state.dialog;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
-import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.graphics.AbstractGraphicsLayer;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.dialog.DialogState.DialogEndListener;
 import com.darkxell.client.ui.Keys.Key;
 
 /** Generic class for complex dialog states. */
-public abstract class ComplexDialog implements DialogEndListener
-{
+public abstract class ComplexDialog implements DialogEndListener {
 
-	public static enum ComplexDialogAction
-	{
-		NEW_DIALOG,
-		PAUSE,
-		TERMINATE;
-	}
+    public static enum ComplexDialogAction {
+        NEW_DIALOG,
+        PAUSE,
+        TERMINATE;
+    }
 
-	public static class DialogLoadingState extends AbstractState
-	{
+    public static class DialogLoadingState extends AbstractState {
 
-		public final AbstractGraphicsLayer background;
-		public final ComplexDialog dialog;
+        public final AbstractGraphicsLayer background;
+        public final ComplexDialog dialog;
 
-		public DialogLoadingState(ComplexDialog dialog)
-		{
-			this(dialog, dialog.background);
-		}
+        public DialogLoadingState(ComplexDialog dialog) {
+            this(dialog, dialog.background);
+        }
 
-		public DialogLoadingState(ComplexDialog dialog, AbstractGraphicsLayer background)
-		{
-			this.dialog = dialog;
-			this.background = background;
-		}
+        public DialogLoadingState(ComplexDialog dialog, AbstractGraphicsLayer background) {
+            this.dialog = dialog;
+            this.background = background;
+        }
 
-		@Override
-		public void onKeyPressed(Key key)
-		{}
+        @Override
+        public void onKeyPressed(Key key) {
+        }
 
-		@Override
-		public void onKeyReleased(Key key)
-		{}
+        @Override
+        public void onKeyReleased(Key key) {
+        }
 
-		@Override
-		public void onStart()
-		{
-			super.onStart();
-			this.dialog.start();
-		}
+        @Override
+        public void onStart() {
+            super.onStart();
+            this.dialog.start();
+        }
 
-		@Override
-		public void render(Graphics2D g, int width, int height)
-		{
-			if (this.background != null) this.background.render(g, width, height);
-		}
+        @Override
+        public void render(Graphics2D g, int width, int height) {
+            if (this.background != null)
+                this.background.render(g, width, height);
+        }
 
-		@Override
-		public void update()
-		{
-			if (this.background != null) this.background.update();
-		}
+        @Override
+        public void update() {
+            if (this.background != null)
+                this.background.update();
+        }
 
-	}
+    }
 
-	public final AbstractGraphicsLayer background;
-	private boolean isPaused = false;
-	protected final ArrayList<DialogState> previousStates = new ArrayList<>();
+    public final AbstractGraphicsLayer background;
+    private boolean isPaused = false;
+    protected final ArrayList<DialogState> previousStates = new ArrayList<>();
 
-	public ComplexDialog(AbstractGraphicsLayer background)
-	{
-		this.background = background;
-	}
+    public ComplexDialog(AbstractGraphicsLayer background) {
+        this.background = background;
+    }
 
-	/** @return The first Dialog state to display. Should set a DialogEndListener equal to <code>this</code>. */
-	public abstract DialogState firstState();
+    /** @return The first Dialog state to display. Should set a DialogEndListener equal to <code>this</code>. */
+    public abstract DialogState firstState();
 
-	/** @return A Loading state for this Dialog. Use for transition states. That state calls this Complex Dialog's start() method when it loads. */
-	public DialogLoadingState getLoadingState()
-	{
-		return new DialogLoadingState(this);
-	}
+    /**
+     * @return A Loading state for this Dialog. Use for transition states. That state calls this Complex Dialog's
+     *         start() method when it loads.
+     */
+    public DialogLoadingState getLoadingState() {
+        return new DialogLoadingState(this);
+    }
 
-	public boolean isPaused()
-	{
-		return this.isPaused;
-	}
+    public boolean isPaused() {
+        return this.isPaused;
+    }
 
-	private void moveToNextDialog(DialogState previous)
-	{
-		DialogState next = this.nextState(previous);
-		if (next != null) Persistence.stateManager.setState(next);
-	}
+    private void moveToNextDialog(DialogState previous) {
+        DialogState next = this.nextState(previous);
+        if (next != null)
+            Persistence.stateManager.setState(next);
+    }
 
-	/** Utility methods for creating DialogStates.
-	 * 
-	 * @param screens - The Screens of the State.
-	 * @return A new Dialog State. */
-	protected DialogState newDialog(DialogScreen... screens)
-	{
-		return new DialogState(this.background, this, screens);
-	}
+    /**
+     * Utility methods for creating DialogStates.
+     * 
+     * @param  screens - The Screens of the State.
+     * @return         A new Dialog State.
+     */
+    protected DialogState newDialog(DialogScreen... screens) {
+        return new DialogState(this.background, this, screens);
+    }
 
-	/** @param previous - The last Dialog state that was displayed.
-	 * @return The next action to be done. */
-	public abstract ComplexDialogAction nextAction(DialogState previous);
+    /**
+     * @param  previous - The last Dialog state that was displayed.
+     * @return          The next action to be done.
+     */
+    public abstract ComplexDialogAction nextAction(DialogState previous);
 
-	/** @param previous - The last Dialog state that was displayed.
-	 * @return The next Dialog state to display. Should set a DialogEndListener equal to <code>this</code>. */
-	public abstract DialogState nextState(DialogState previous);
+    /**
+     * @param  previous - The last Dialog state that was displayed.
+     * @return          The next Dialog state to display. Should set a DialogEndListener equal to <code>this</code>.
+     */
+    public abstract DialogState nextState(DialogState previous);
 
-	@Override
-	public final void onDialogEnd(DialogState dialog)
-	{
-		if (!this.previousStates.contains(dialog)) this.previousStates.add(dialog);
-		this.onDialogFinished(dialog);
-		ComplexDialogAction action = this.nextAction(dialog);
-		switch (action)
-		{
-			case NEW_DIALOG:
-				this.moveToNextDialog(dialog);
-				break;
-			case TERMINATE:
-				Persistence.currentDialog = null;
-				Persistence.stateManager.setState(this.onFinish(dialog));
-				break;
-			case PAUSE:
-				this.isPaused = true;
-				break;
-		}
-	}
+    @Override
+    public final void onDialogEnd(DialogState dialog) {
+        if (!this.previousStates.contains(dialog))
+            this.previousStates.add(dialog);
+        this.onDialogFinished(dialog);
+        ComplexDialogAction action = this.nextAction(dialog);
+        switch (action) {
+        case NEW_DIALOG:
+            this.moveToNextDialog(dialog);
+            break;
+        case TERMINATE:
+            Persistence.currentDialog = null;
+            Persistence.stateManager.setState(this.onFinish(dialog));
+            break;
+        case PAUSE:
+            this.isPaused = true;
+            break;
+        }
+    }
 
-	/** Called when a Dialog State finishes.
-	 * 
-	 * @param dialog - The Dialog state that just finished. */
-	protected abstract void onDialogFinished(DialogState dialog);
+    /**
+     * Called when a Dialog State finishes.
+     * 
+     * @param dialog - The Dialog state that just finished.
+     */
+    protected abstract void onDialogFinished(DialogState dialog);
 
-	/** Called when the last state has been displayed.
-	 * 
-	 * @return The next state to set at the end of this Dialog. */
-	public abstract AbstractState onFinish(DialogState lastState);
+    /**
+     * Called when the last state has been displayed.
+     * 
+     * @return The next state to set at the end of this Dialog.
+     */
+    public abstract AbstractState onFinish(DialogState lastState);
 
-	/** Starts this Dialog. */
-	public void start()
-	{
-		Persistence.currentDialog = this;
-		DialogState first = this.firstState();
-		if (first != null) Persistence.stateManager.setState(first);
-	}
+    /** Starts this Dialog. */
+    public void start() {
+        Persistence.currentDialog = this;
+        DialogState first = this.firstState();
+        if (first != null)
+            Persistence.stateManager.setState(first);
+    }
 
-	public void unpause()
-	{
-		this.moveToNextDialog(this.previousStates.get(this.previousStates.size() - 1));
-		this.isPaused = false;
-	}
+    public void unpause() {
+        this.moveToNextDialog(this.previousStates.get(this.previousStates.size() - 1));
+        this.isPaused = false;
+    }
 
 }

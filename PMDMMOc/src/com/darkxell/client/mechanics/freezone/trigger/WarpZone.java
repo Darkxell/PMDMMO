@@ -1,10 +1,11 @@
 package com.darkxell.client.mechanics.freezone.trigger;
 
+import org.jdom2.Element;
+
 import com.darkxell.client.state.StateManager;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.xml.XMLUtils;
 import com.darkxell.common.zones.FreezoneInfo;
-import org.jdom2.Element;
 
 /**
  * A zone that teleports a player to a position on any map.
@@ -30,9 +31,8 @@ public class WarpZone extends TriggerZone {
 
     private FreezoneInfo getDestination(Element el) {
         String destination = el.getAttributeValue("dest");
-        if (destination == null) {
+        if (destination == null)
             throw new IllegalArgumentException("There is no destination for this warp zone.");
-        }
         return FreezoneInfo.find(destination);
     }
 

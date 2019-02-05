@@ -1,22 +1,20 @@
 package com.darkxell.client.state.dialog.bank;
 
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+
 import com.darkxell.client.graphics.TextRenderer;
 import com.darkxell.client.state.dialog.OptionDialogScreen;
-import com.darkxell.client.state.menu.components.OptionSelectionWindow;
+import com.darkxell.client.state.menu.components.MenuWindow;
 import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.util.language.Message;
-
-import java.awt.*;
 
 public class BankDialogScreen extends OptionDialogScreen {
     public final long bag, bank;
     private BankMenuWindow summaryWindow;
 
-    public BankDialogScreen(PokemonSpecies species,
-                            long bagmoney,
-                            long bankmoney,
-                            Message message,
-                            Message... options) {
+    public BankDialogScreen(PokemonSpecies species, long bagmoney, long bankmoney, Message message,
+            Message... options) {
         super(species, message, DialogPortraitLocation.BOTTOM_LEFT, options);
         this.bag = bagmoney;
         this.bank = bankmoney;
@@ -28,8 +26,9 @@ public class BankDialogScreen extends OptionDialogScreen {
         if (this.showingOptions) {
             if (this.summaryWindow == null) {
                 Rectangle dialog = this.parentState.dialogBox();
-                this.summaryWindow = new BankMenuWindow(new Rectangle(dialog.x, 20, dialog.width,
-                        TextRenderer.height() + OptionSelectionWindow.MARGIN_Y * 2), this.bag, this.bank);
+                this.summaryWindow = new BankMenuWindow(
+                        new Rectangle(dialog.x, 20, dialog.width, TextRenderer.height() + MenuWindow.MARGIN_Y * 2),
+                        this.bag, this.bank);
             }
             this.summaryWindow.render(g, null, width, height);
         }

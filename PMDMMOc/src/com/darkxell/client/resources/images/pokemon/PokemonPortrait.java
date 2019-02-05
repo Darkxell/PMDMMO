@@ -1,16 +1,16 @@
 package com.darkxell.client.resources.images.pokemon;
 
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import com.darkxell.client.resources.Res;
 import com.darkxell.client.resources.images.RegularSpriteSet;
 import com.darkxell.client.resources.images.Sprites;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.util.Logger;
-
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public class PokemonPortrait extends RegularSpriteSet {
     public enum PortraitEmotion {
@@ -34,9 +34,8 @@ public class PokemonPortrait extends RegularSpriteSet {
         private static final HashMap<Integer, PortraitEmotion> lookup = new HashMap<>();
 
         static {
-            for (PortraitEmotion k : PortraitEmotion.values()) {
+            for (PortraitEmotion k : PortraitEmotion.values())
                 lookup.put(k.index, k);
-            }
         }
 
         public static PortraitEmotion getByIndex(int i) {
@@ -50,13 +49,13 @@ public class PokemonPortrait extends RegularSpriteSet {
         }
     }
 
-    private static final PokemonPortrait alternates = new PokemonPortrait("/pokemons/portraits/forms.png",
-            20), alternateShinies = new PokemonPortrait("/pokemons/portraits/portraits/forms-shiny.png", 20);
+    private static final PokemonPortrait alternates = new PokemonPortrait("/pokemons/portraits/forms.png", 20),
+            alternateShinies = new PokemonPortrait("/pokemons/portraits/portraits/forms-shiny.png", 20);
     private static final ArrayList<Integer> emotionPokemons = new ArrayList<>();
     private static final RegularSpriteSet emotions = new RegularSpriteSet("/pokemons/portraits/normal-emotions.png", 40,
             600, 1800), shinyEmotions = new RegularSpriteSet("/pokemons/portraits/shiny-emotions.png", 40, 600, 1800);
-    private static final PokemonPortrait normal = new PokemonPortrait("/pokemons/portraits/normal.png",
-            100), shinies = new PokemonPortrait("/pokemons/portraits/shiny.png", 100);
+    private static final PokemonPortrait normal = new PokemonPortrait("/pokemons/portraits/normal.png", 100),
+            shinies = new PokemonPortrait("/pokemons/portraits/shiny.png", 100);
     public static final int PORTRAIT_SIZE = 40;
 
     /**
@@ -73,55 +72,41 @@ public class PokemonPortrait extends RegularSpriteSet {
     /**
      * Draws the portrait of the input Pokemon at the input topright location.
      */
-    public static void drawPortrait(Graphics2D g,
-                                    PokemonSpecies pokemon,
-                                    PortraitEmotion emotion,
-                                    boolean shiny,
-                                    int x,
-                                    int y,
-                                    boolean flip) {
+    public static void drawPortrait(Graphics2D g, PokemonSpecies pokemon, PortraitEmotion emotion, boolean shiny, int x,
+            int y, boolean flip) {
         BufferedImage portrait = PokemonPortrait.portrait(pokemon, emotion, shiny);
-        if (flip) {
+        if (flip)
             g.drawImage(portrait, x + 4 + portrait.getWidth(), y + 4, -portrait.getWidth(), portrait.getHeight(), null);
-        } else {
+        else
             g.drawImage(portrait, x + 4, y + 4, null);
-        }
         g.drawImage(Sprites.Res_Hud.portrait.image(), x, y, null);
     }
 
     private static RegularSpriteSet getEmotionSheet(RegularSpriteSet sheet, PortraitEmotion emotion) {
-        if (sheet == normal || sheet == alternates) {
+        if (sheet == normal || sheet == alternates)
             return emotions;
-        }
-        if (sheet == shinies || sheet == alternateShinies) {
+        if (sheet == shinies || sheet == alternateShinies)
             return shinyEmotions;
-        }
         return sheet;
     }
 
-    private static int getSheetIndex(PokemonSpecies pokemon,
-                                     boolean shiny,
-                                     PortraitEmotion emotion,
-                                     boolean alternative,
-                                     RegularSpriteSet sheet) {
-        if (sheet == emotions || sheet == shinyEmotions) {
+    private static int getSheetIndex(PokemonSpecies pokemon, boolean shiny, PortraitEmotion emotion,
+            boolean alternative, RegularSpriteSet sheet) {
+        if (sheet == emotions || sheet == shinyEmotions)
             return emotionPokemons.indexOf(pokemon.id) * (PortraitEmotion.values().length - 1) + emotion.index;
-        }
         return pokemon.id - (alternative ? 10001 : 1);
     }
 
     public static void load() {
         String[] data = Res.readFile("/pokemons/portraits/have_emotions.txt");
-        if (data != null) {
-            for (String line : data) {
+        if (data != null)
+            for (String line : data)
                 try {
                     emotionPokemons.add(Integer.parseInt(line));
                 } catch (NumberFormatException e) {
                     Logger.e("Loading portraits encountered error: " + e);
                     e.printStackTrace();
                 }
-            }
-        }
     }
 
     /**
@@ -144,17 +129,15 @@ public class PokemonPortrait extends RegularSpriteSet {
     public static BufferedImage portrait(PokemonSpecies pokemon, PortraitEmotion emotion, boolean shiny) {
         RegularSpriteSet sheet = normal;
         boolean alternative = pokemon.id >= 10000;
-        if (shiny && pokemon.id >= 10000) {
+        if (shiny && pokemon.id >= 10000)
             sheet = alternateShinies;
-        } else if (pokemon.id >= 10000) {
+        else if (pokemon.id >= 10000)
             sheet = alternates;
-        } else if (shiny) {
+        else if (shiny)
             sheet = shinies;
-        }
 
-        if (emotion != null && emotion != PortraitEmotion.Normal && emotionPokemons.contains(pokemon.id)) {
+        if (emotion != null && emotion != PortraitEmotion.Normal && emotionPokemons.contains(pokemon.id))
             sheet = getEmotionSheet(sheet, emotion);
-        }
 
         return sheet.getImg(getSheetIndex(pokemon, shiny, emotion, alternative, sheet));
     }

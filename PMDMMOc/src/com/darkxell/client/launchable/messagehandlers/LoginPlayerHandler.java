@@ -6,11 +6,11 @@ import com.eclipsesource.json.JsonObject;
 
 public class LoginPlayerHandler extends MessageHandler {
 
-	@Override
-	public void handleMessage(JsonObject message) {
-		JsonObject pl = message.get("player").asObject();
-		if (Persistence.stateManager instanceof LoginMainState)
-			((LoginMainState) Persistence.stateManager).launchOnlineOnRecieve(pl);
-	}
+    @Override
+    public void handleMessage(JsonObject message) {
+        JsonObject pl = message.get("player").asObject();
+        if (Persistence.stateManager instanceof LoginMainState)
+            ((LoginMainState) Persistence.stateManager).launchOnlineOnRecieve(pl);
+    }
 
 }

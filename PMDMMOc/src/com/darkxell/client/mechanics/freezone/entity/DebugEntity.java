@@ -1,9 +1,10 @@
 package com.darkxell.client.mechanics.freezone.entity;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
+
 import com.darkxell.client.mechanics.cutscene.CutsceneManager;
 import com.darkxell.common.util.Logger;
-
-import java.awt.*;
 
 class DebugEntity extends FreezoneEntity {
     {

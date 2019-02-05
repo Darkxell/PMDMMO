@@ -12,36 +12,31 @@ import com.darkxell.common.player.Player;
 import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
 
-public class InventoryRequestHandler extends MessageHandler
-{
+public class InventoryRequestHandler extends MessageHandler {
 
-	public static Inventory readInventory(JsonObject message, Player owner)
-	{
-		DBInventory dbi = new DBInventory();
-		dbi.read(message.get("object").asObject());
-		Inventory i = new Inventory(dbi, owner);
+    public static Inventory readInventory(JsonObject message, Player owner) {
+        DBInventory dbi = new DBInventory();
+        dbi.read(message.get("object").asObject());
+        Inventory i = new Inventory(dbi, owner);
 
-		if (message.get("items") != null && message.get("items").isArray())
-		{
-			for (JsonValue it : message.get("items").asArray())
-				if (it.isObject())
-				{
-					DBItemstack item = new DBItemstack();
-					item.read(it.asObject());
-					i.addReadItem(new ItemStack(item));
-				}
-		}
+        if (message.get("items") != null && message.get("items").isArray())
+            for (JsonValue it : message.get("items").asArray())
+                if (it.isObject()) {
+                    DBItemstack item = new DBItemstack();
+                    item.read(it.asObject());
+                    i.addReadItem(new ItemStack(item));
+                }
 
-		return i;
-	}
+        return i;
+    }
 
-	@Override
-	public void handleMessage(JsonObject message)
-	{
-		AbstractState state = Persistence.stateManager.getCurrentState();
-		if (state != null && state instanceof PlayerLoadingState) ((PlayerLoadingState) state).onInventoryReceived(message);
-		else if (Persistence.currentDialog != null && Persistence.currentDialog instanceof StorageDialog)
-			((StorageDialog) Persistence.currentDialog).onInventoryReceived(message);
-	}
+    @Override
+    public void handleMessage(JsonObject message) {
+        AbstractState state = Persistence.stateManager.getCurrentState();
+        if (state != null && state instanceof PlayerLoadingState)
+            ((PlayerLoadingState) state).onInventoryReceived(message);
+        else if (Persistence.currentDialog != null && Persistence.currentDialog instanceof StorageDialog)
+            ((StorageDialog) Persistence.currentDialog).onInventoryReceived(message);
+    }
 
 }

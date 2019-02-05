@@ -1,5 +1,16 @@
 package com.darkxell.client.mechanics.freezone;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
+import org.jdom2.Attribute;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
+
+import com.darkxell.client.graphics.AbstractGraphicsLayer;
+import com.darkxell.client.graphics.EntityRendererHolder;
+import com.darkxell.client.graphics.layers.BackgroundLayerFactory;
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
 import com.darkxell.client.mechanics.freezone.entity.FreezoneEntity;
@@ -7,22 +18,12 @@ import com.darkxell.client.mechanics.freezone.entity.FreezoneEntityFactory;
 import com.darkxell.client.mechanics.freezone.entity.OtherPlayerEntity;
 import com.darkxell.client.mechanics.freezone.trigger.TriggerZone;
 import com.darkxell.client.mechanics.freezone.trigger.TriggerZoneFactory;
-import com.darkxell.client.graphics.EntityRendererHolder;
-import com.darkxell.client.graphics.AbstractGraphicsLayer;
-import com.darkxell.client.graphics.layers.BackgroundLayerFactory;
 import com.darkxell.client.resources.Res;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.xml.XMLUtils;
 import com.darkxell.common.zones.FreezoneInfo;
 import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
-import org.jdom2.Attribute;
-import org.jdom2.Element;
-import org.jdom2.JDOMException;
-import org.jdom2.input.SAXBuilder;
-
-import java.io.IOException;
-import java.util.ArrayList;
 
 /**
  * Areas where you can move freely and don't have to fight.
@@ -42,16 +43,20 @@ import java.util.ArrayList;
  *
  * <h3>Extends behavior</h3>
  *
- * <p>When there is an {@code <extends />} element in a file, the freezone will load that file first, and then
- * continue to load the current file, overwriting it.</p>
+ * <p>
+ * When there is an {@code <extends />} element in a file, the freezone will load that file first, and then continue to
+ * load the current file, overwriting it.
+ * </p>
  *
- * <p>Here is how each of the properties are extended:</p>
+ * <p>
+ * Here is how each of the properties are extended:
+ * </p>
  *
  * <ul>
  * <li>Attributes on the root are always overwritten.</li>
  * <li>Only the root terrain and background is loaded.</li>
- * <li>Default position, background music, and other such properties that may be added in the future are overwritten
- * if the elements are present.</li>
+ * <li>Default position, background music, and other such properties that may be added in the future are overwritten if
+ * the elements are present.</li>
  * </ul>
  * <p>
  * TODO: Pre-loading neighbors, reducing load times, etc.
@@ -93,9 +98,8 @@ public class FreezoneMap {
     private String loadExtensionPath(Element root) {
         Element extendEl = root.getChild("extends");
 
-        if (extendEl == null) {
+        if (extendEl == null)
             return null;
-        }
 
         return root.getAttributeValue("source");
     }
@@ -114,41 +118,34 @@ public class FreezoneMap {
 
         // bgm
         Element bgmEl = root.getChild("bgm");
-        if (bgmEl != null) {
+        if (bgmEl != null)
             this.freezonebgm = XMLUtils.getAttribute(bgmEl, "source", "town.mp3");
-        }
 
         // add to triggers
         Element triggers = root.getChild("triggers");
-        if (triggers != null) {
-            for (Element triggerEl : triggers.getChildren("trigger")) {
+        if (triggers != null)
+            for (Element triggerEl : triggers.getChildren("trigger"))
                 this.triggerzones.add(TriggerZoneFactory.getZone(triggerEl));
-            }
-        }
 
         // add to entities
         Element entities = root.getChild("entities");
-        if (entities != null) {
-            for (Element entityEl : entities.getChildren("entity")) {
+        if (entities != null)
+            for (Element entityEl : entities.getChildren("entity"))
                 this.addEntity(FreezoneEntityFactory.getEntity(entityEl));
-            }
-        }
     }
 
     private void loadTerrain(Element root) throws IOException, JDOMException {
         Element bgLayerEl = root.getChild("background");
-        if (bgLayerEl != null) {
+        if (bgLayerEl != null)
             this.background = BackgroundLayerFactory.getLayer(bgLayerEl);
-        }
 
         Element terrainEl = root.getChild("terrain");
         if (terrainEl != null) {
             Attribute terrainSource = terrainEl.getAttribute("source");
-            if (terrainSource == null) {
+            if (terrainSource == null)
                 this.terrain = new FreezoneTerrain(terrainEl);
-            } else {
+            else
                 this.terrain = new FreezoneTerrain(terrainSource.getValue());
-            }
         }
     }
 
@@ -163,14 +160,12 @@ public class FreezoneMap {
         Element root = builder.build(Res.get(xmlPath)).getRootElement();
 
         String extendsPath = this.loadExtensionPath(root);
-        if (extendsPath != null) {
+        if (extendsPath != null)
             this.load(extendsPath, false);
-        }
 
         this.loadProperties(root);
-        if (isRoot) {
+        if (isRoot)
             this.loadTerrain(root);
-        }
     }
 
     public void addEntity(FreezoneEntity entity) {
@@ -194,23 +189,20 @@ public class FreezoneMap {
     public void update() {
         Persistence.currentplayer.update();
 
-        for (int i = 0; i < entities.size(); i++) {
+        for (int i = 0; i < entities.size(); i++)
             entities.get(i).update();
-        }
 
         if (flushcounter >= 120) {
             flushcounter = 0;
             long ct = System.nanoTime();
-            for (int i = 0; i < entities.size(); ++i) {
-                if (entities.get(i) instanceof OtherPlayerEntity &&
-                        ((OtherPlayerEntity) entities.get(i)).lastupdate < ct - FLUSHTIMEOUT) {
+            for (int i = 0; i < entities.size(); ++i)
+                if (entities.get(i) instanceof OtherPlayerEntity
+                        && ((OtherPlayerEntity) entities.get(i)).lastupdate < ct - FLUSHTIMEOUT) {
                     this.removeEntity(entities.get(i));
                     --i;
                 }
-            }
-        } else {
+        } else
             ++flushcounter;
-        }
     }
 
     /**
@@ -220,9 +212,8 @@ public class FreezoneMap {
         JsonObject obj = data.asObject();
         String name = obj.getString("name", "");
 
-        if (name.equals("") || Persistence.player.name().equals(name)) {
+        if (name.equals("") || Persistence.player.name().equals(name))
             return;
-        }
 
         double pfx = obj.getDouble("posfx", 0d);
         double pfy = obj.getDouble("posfy", 0d);

@@ -3,8 +3,8 @@ package com.darkxell.client.state.menu.dungeon;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 
-import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.graphics.TextRenderer;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.state.dialog.ConfirmDialogScreen;
 import com.darkxell.client.state.dialog.DialogState;
 import com.darkxell.client.state.dialog.DialogState.DialogEndListener;
@@ -17,62 +17,60 @@ import com.darkxell.common.pokemon.LearnedMove;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.language.Message;
 
-public class MoveLearnMenuState extends MovesMenuState implements DialogEndListener
-{
+public class MoveLearnMenuState extends MovesMenuState implements DialogEndListener {
 
-	public final LearnedMove move;
-	public final Pokemon pokemon;
+    public final LearnedMove move;
+    public final Pokemon pokemon;
 
-	public MoveLearnMenuState(DungeonState parent, Pokemon pokemon, Move move)
-	{
-		super(parent, pokemon);
-		this.pokemon = pokemon;
-		this.move = new LearnedMove(move.id);
-		this.canOrder = false;
+    public MoveLearnMenuState(DungeonState parent, Pokemon pokemon, Move move) {
+        super(parent, pokemon);
+        this.pokemon = pokemon;
+        this.move = new LearnedMove(move.id);
+        this.canOrder = false;
 
-		this.tabs.get(0).addOption(new MoveMenuOption(this.move, this.pokemon == Persistence.player.getTeamLeader()));
-	}
+        this.tabs.get(0).addOption(new MoveMenuOption(this.move, this.pokemon == Persistence.player.getTeamLeader()));
+    }
 
-	protected Message infoText()
-	{
-		return new Message("moves.info.learn").addReplacement("<key-ok>", KeyEvent.getKeyText(Key.ATTACK.keyValue()))
-				.addReplacement("<key-info>", KeyEvent.getKeyText(Key.ROTATE.keyValue()))
-				.addReplacement("<key-shift>", KeyEvent.getKeyText(Key.DIAGONAL.keyValue()));
-	}
+    protected Message infoText() {
+        return new Message("moves.info.learn").addReplacement("<key-ok>", KeyEvent.getKeyText(Key.ATTACK.keyValue()))
+                .addReplacement("<key-info>", KeyEvent.getKeyText(Key.ROTATE.keyValue()))
+                .addReplacement("<key-shift>", KeyEvent.getKeyText(Key.DIAGONAL.keyValue()));
+    }
 
-	@Override
-	protected Rectangle mainWindowDimensions()
-	{
-		Rectangle r = super.mainWindowDimensions();
-		return new Rectangle(r.x, r.y, r.width + MoveSelectionWindow.ppLength, r.height + (TextRenderer.height() + TextRenderer.lineSpacing()));
-	}
+    @Override
+    protected Rectangle mainWindowDimensions() {
+        Rectangle r = super.mainWindowDimensions();
+        return new Rectangle(r.x, r.y, r.width + MoveSelectionWindow.ppLength,
+                r.height + (TextRenderer.height() + TextRenderer.lineSpacing()));
+    }
 
-	@Override
-	public void onDialogEnd(DialogState dialog)
-	{
-		if (((ConfirmDialogScreen) dialog.getScreen(1)).hasConfirmed())
-		{
-			Persistence.stateManager.setState(Persistence.dungeonState);
-			if (this.optionIndex() < 4)
-				Persistence.eventProcessor().processEvent(new MoveLearnedEvent(Persistence.floor, this.pokemon, this.move.move(), this.optionIndex()));
-			else Persistence.eventProcessor().processPending();
-		} else Persistence.stateManager.setState(this);
-	}
+    @Override
+    public void onDialogEnd(DialogState dialog) {
+        if (((ConfirmDialogScreen) dialog.getScreen(1)).hasConfirmed()) {
+            Persistence.stateManager.setState(Persistence.dungeonState);
+            if (this.optionIndex() < 4)
+                Persistence.eventProcessor().processEvent(
+                        new MoveLearnedEvent(Persistence.floor, this.pokemon, this.move.move(), this.optionIndex()));
+            else
+                Persistence.eventProcessor().processPending();
+        } else
+            Persistence.stateManager.setState(this);
+    }
 
-	@Override
-	protected void onExit()
-	{}
+    @Override
+    protected void onExit() {
+    }
 
-	@Override
-	protected void onOptionSelected(MenuOption option)
-	{
-		MoveMenuOption o = (MoveMenuOption) option;
+    @Override
+    protected void onOptionSelected(MenuOption option) {
+        MoveMenuOption o = (MoveMenuOption) option;
 
-		ConfirmDialogScreen confirm = new ConfirmDialogScreen(
-				new Message("moves.forget").addReplacement("<pokemon>", this.pokemon.getNickname()).addReplacement("<move>", o.move.move().name()));
-		confirm.id = 1;
-		DialogState dialog = new DialogState(this.background, this, confirm);
-		Persistence.stateManager.setState(dialog);
-	}
+        ConfirmDialogScreen confirm = new ConfirmDialogScreen(
+                new Message("moves.forget").addReplacement("<pokemon>", this.pokemon.getNickname())
+                        .addReplacement("<move>", o.move.move().name()));
+        confirm.id = 1;
+        DialogState dialog = new DialogState(this.background, this, confirm);
+        Persistence.stateManager.setState(dialog);
+    }
 
 }

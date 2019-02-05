@@ -7,17 +7,17 @@ import com.eclipsesource.json.JsonObject;
 
 public class AcceptMissionHandler extends MessageHandler {
 
-	@Override
-	public void handleMessage(JsonObject message) {
-		String missioncode = message.getString("mission", "");
-		int accepted = message.getInt("accepted", 0);
-		if (accepted == 1) {
-			Persistence.player.getMissions().add(missioncode);
-			if (Persistence.stateManager.getCurrentState() instanceof MissionDetailsState)
-				((MissionDetailsState) Persistence.stateManager.getCurrentState()).notifyMissionAcceptResponse(true);
-			Logger.i("Accepted mission : " + missioncode);
-		} else if (Persistence.stateManager.getCurrentState() instanceof MissionDetailsState)
-			((MissionDetailsState) Persistence.stateManager.getCurrentState()).notifyMissionAcceptResponse(false);
-	}
+    @Override
+    public void handleMessage(JsonObject message) {
+        String missioncode = message.getString("mission", "");
+        int accepted = message.getInt("accepted", 0);
+        if (accepted == 1) {
+            Persistence.player.getMissions().add(missioncode);
+            if (Persistence.stateManager.getCurrentState() instanceof MissionDetailsState)
+                ((MissionDetailsState) Persistence.stateManager.getCurrentState()).notifyMissionAcceptResponse(true);
+            Logger.i("Accepted mission : " + missioncode);
+        } else if (Persistence.stateManager.getCurrentState() instanceof MissionDetailsState)
+            ((MissionDetailsState) Persistence.stateManager.getCurrentState()).notifyMissionAcceptResponse(false);
+    }
 
 }

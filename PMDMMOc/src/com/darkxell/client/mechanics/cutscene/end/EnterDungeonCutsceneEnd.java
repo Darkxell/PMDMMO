@@ -12,43 +12,40 @@ import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.StateManager;
 import com.darkxell.common.util.xml.XMLUtils;
 
-public class EnterDungeonCutsceneEnd extends CutsceneEnd
-{
+public class EnterDungeonCutsceneEnd extends CutsceneEnd {
 
-	public final int dungeonID;
+    public final int dungeonID;
 
-	public EnterDungeonCutsceneEnd(Cutscene cutscene, Element xml)
-	{
-		super(cutscene, xml);
-		this.dungeonID = XMLUtils.getAttribute(xml, "id", 1);
-	}
+    public EnterDungeonCutsceneEnd(Cutscene cutscene, Element xml) {
+        super(cutscene, xml);
+        this.dungeonID = XMLUtils.getAttribute(xml, "id", 1);
+    }
 
-	public EnterDungeonCutsceneEnd(int dungeonID, String function, boolean fadesOut)
-	{
-		super(null, function, fadesOut);
-		this.dungeonID = dungeonID;
-	}
+    public EnterDungeonCutsceneEnd(int dungeonID, String function, boolean fadesOut) {
+        super(null, function, fadesOut);
+        this.dungeonID = dungeonID;
+    }
 
-	@Override
-	public void onCutsceneEnd()
-	{
-		super.onCutsceneEnd();
-		AbstractState fadesOut = null;
-		if (this.fadesOut) fadesOut = Persistence.cutsceneState;
-		if (Persistence.socketendpoint.connectionStatus() == GameSocketEndpoint.CONNECTED) StateManager.setDungeonState(fadesOut, this.dungeonID);
-		else StateManager.setDungeonState(fadesOut, this.dungeonID, new Random().nextLong());
-	}
+    @Override
+    public void onCutsceneEnd() {
+        super.onCutsceneEnd();
+        AbstractState fadesOut = null;
+        if (this.fadesOut)
+            fadesOut = Persistence.cutsceneState;
+        if (Persistence.socketendpoint.connectionStatus() == GameSocketEndpoint.CONNECTED)
+            StateManager.setDungeonState(fadesOut, this.dungeonID);
+        else
+            StateManager.setDungeonState(fadesOut, this.dungeonID, new Random().nextLong());
+    }
 
-	@Override
-	public Element toXML()
-	{
-		return super.toXML().setAttribute("id", String.valueOf(this.dungeonID));
-	}
+    @Override
+    public Element toXML() {
+        return super.toXML().setAttribute("id", String.valueOf(this.dungeonID));
+    }
 
-	@Override
-	protected String xmlName()
-	{
-		return "enterdungeon";
-	}
+    @Override
+    protected String xmlName() {
+        return "enterdungeon";
+    }
 
 }
