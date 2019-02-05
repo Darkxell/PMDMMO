@@ -15,36 +15,36 @@ import com.darkxell.common.util.language.Message;
 
 public class PreventStatusEquipableItemEffect extends ItemEffect {
 
-	private final StatusCondition[] conditions;
+    private final StatusCondition[] conditions;
 
-	public PreventStatusEquipableItemEffect(int id, StatusCondition... conditions) {
-		super(id);
-		this.conditions = conditions;
-	}
+    public PreventStatusEquipableItemEffect(int id, StatusCondition... conditions) {
+        super(id);
+        this.conditions = conditions;
+    }
 
-	@Override
-	public void onPreEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned,
-			ArrayList<DungeonEvent> resultingEvents, ItemStack item, ItemContainer container, int containerIndex) {
-		super.onPreEvent(floor, event, concerned, resultingEvents, item, container, containerIndex);
+    @Override
+    public void onPreEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned,
+            ArrayList<DungeonEvent> resultingEvents, ItemStack item, ItemContainer container, int containerIndex) {
+        super.onPreEvent(floor, event, concerned, resultingEvents, item, container, containerIndex);
 
-		if (event instanceof StatusConditionCreatedEvent) {
-			StatusConditionCreatedEvent e = (StatusConditionCreatedEvent) event;
-			boolean shouldPrevent = e.condition.pokemon == concerned && concerned.getItem() != null
-					&& concerned.getItem().item().effect() == this;
-			for (StatusCondition c : this.conditions)
-				if (e.condition.condition == c) {
-					shouldPrevent &= true;
-					break;
-				}
+        if (event instanceof StatusConditionCreatedEvent) {
+            StatusConditionCreatedEvent e = (StatusConditionCreatedEvent) event;
+            boolean shouldPrevent = e.condition.pokemon == concerned && concerned.getItem() != null
+                    && concerned.getItem().item().effect() == this;
+            for (StatusCondition c : this.conditions)
+                if (e.condition.condition == c) {
+                    shouldPrevent &= true;
+                    break;
+                }
 
-			if (shouldPrevent) {
-				e.consume();
-				resultingEvents.add(new MessageEvent(floor,
-						new Message("status.prevented.item").addReplacement("<pokemon>", concerned.getNickname())
-								.addReplacement("<item>", concerned.getItem().name())
-								.addReplacement("<condition>", e.condition.condition.name())));
-			}
-		}
-	}
+            if (shouldPrevent) {
+                e.consume();
+                resultingEvents.add(new MessageEvent(floor,
+                        new Message("status.prevented.item").addReplacement("<pokemon>", concerned.getNickname())
+                                .addReplacement("<item>", concerned.getItem().name())
+                                .addReplacement("<condition>", e.condition.condition.name())));
+            }
+        }
+    }
 
 }

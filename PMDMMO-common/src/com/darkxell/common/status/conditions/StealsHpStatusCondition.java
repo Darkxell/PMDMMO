@@ -16,41 +16,38 @@ import com.darkxell.common.status.StatusConditions;
 import com.darkxell.common.util.Pair;
 import com.darkxell.common.util.language.Message;
 
-public class StealsHpStatusCondition extends StatusCondition
-{
+public class StealsHpStatusCondition extends StatusCondition {
 
-	/** Amount of HP stolen. */
-	public final int hp;
-	/** Number of turns after which the HP is stolen. */
-	public final int turnCycle;
+    /** Amount of HP stolen. */
+    public final int hp;
+    /** Number of turns after which the HP is stolen. */
+    public final int turnCycle;
 
-	public StealsHpStatusCondition(int id, boolean isAilment, int durationMin, int durationMax, int turnCycle, int hp)
-	{
-		super(id, isAilment, durationMin, durationMax);
-		this.turnCycle = turnCycle;
-		this.hp = hp;
-	}
+    public StealsHpStatusCondition(int id, boolean isAilment, int durationMin, int durationMax, int turnCycle, int hp) {
+        super(id, isAilment, durationMin, durationMax);
+        this.turnCycle = turnCycle;
+        this.hp = hp;
+    }
 
-	@Override
-	public Pair<Boolean, Message> affects(Floor floor, AppliedStatusCondition condition, DungeonPokemon pokemon)
-	{
-		Pair<Boolean, Message> sup = super.affects(floor, condition, pokemon);
-		if (!sup.first) return sup;
-		if (this == StatusConditions.Leech_seed && pokemon.species().isType(PokemonType.Grass)) return new Pair<>(false, this.immune(pokemon));
-		return new Pair<>(true, null);
-	}
+    @Override
+    public Pair<Boolean, Message> affects(Floor floor, AppliedStatusCondition condition, DungeonPokemon pokemon) {
+        Pair<Boolean, Message> sup = super.affects(floor, condition, pokemon);
+        if (!sup.first)
+            return sup;
+        if (this == StatusConditions.Leech_seed && pokemon.species().isType(PokemonType.Grass))
+            return new Pair<>(false, this.immune(pokemon));
+        return new Pair<>(true, null);
+    }
 
-	@Override
-	public void tick(Floor floor, AppliedStatusCondition instance, ArrayList<DungeonEvent> events)
-	{
-		super.tick(floor, instance, events);
-		if (!(instance.source instanceof DungeonPokemon) || ((DungeonPokemon) instance.source).isFainted())
-			instance.finish(floor, StatusConditionEndReason.CANT_CONTINUE, events);
-		else if (instance.tick % this.turnCycle == 0)
-		{
-			events.add(new DamageDealtEvent(floor, instance.pokemon, this, DamageType.CONDITION, this.hp));
-			events.add(new HealthRestoredEvent(floor, (DungeonPokemon) instance.source, this.hp));
-		}
-	}
+    @Override
+    public void tick(Floor floor, AppliedStatusCondition instance, ArrayList<DungeonEvent> events) {
+        super.tick(floor, instance, events);
+        if (!(instance.source instanceof DungeonPokemon) || ((DungeonPokemon) instance.source).isFainted())
+            instance.finish(floor, StatusConditionEndReason.CANT_CONTINUE, events);
+        else if (instance.tick % this.turnCycle == 0) {
+            events.add(new DamageDealtEvent(floor, instance.pokemon, this, DamageType.CONDITION, this.hp));
+            events.add(new HealthRestoredEvent(floor, (DungeonPokemon) instance.source, this.hp));
+        }
+    }
 
 }

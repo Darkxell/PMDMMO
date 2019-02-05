@@ -1,13 +1,14 @@
 package com.darkxell.common.pokemon;
 
-import com.darkxell.common.Registry;
-import org.jdom2.Element;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import org.jdom2.Element;
+
+import com.darkxell.common.Registry;
 
 /**
  * Holds all Pokemon species.
@@ -21,12 +22,10 @@ public final class PokemonRegistry extends Registry<PokemonSpecies> {
     protected Element serializeDom(HashMap<Integer, PokemonSpecies> speciesList) {
         Element xml = new Element("pokemon");
         // did you know the plural of species is species? incredible innit
-        for (PokemonSpecies species : speciesList.values()) {
+        for (PokemonSpecies species : speciesList.values())
             // only serialize main-form species
-            if (species.formID == 0) {
+            if (species.formID == 0)
                 xml.addContent(species.toXML());
-            }
-        }
         return xml;
     }
 
@@ -50,12 +49,11 @@ public final class PokemonRegistry extends Registry<PokemonSpecies> {
      */
     private void registerForms() {
         // copy cache values to avoid concurrent access errors
-        for (PokemonSpecies s : new ArrayList<>(this.cache.values())) {
+        for (PokemonSpecies s : new ArrayList<>(this.cache.values()))
             for (PokemonSpecies form : s.forms()) {
                 this.cache.put(form.id, form);
                 this.forms.put(form.id, s.id);
             }
-        }
     }
 
     /**
@@ -64,9 +62,8 @@ public final class PokemonRegistry extends Registry<PokemonSpecies> {
      * @return Main form of the species, if it is multi-form.
      */
     public PokemonSpecies parentSpecies(PokemonSpecies form) {
-        if (!forms.containsKey(form.id)) {
+        if (!forms.containsKey(form.id))
             return null;
-        }
         return find(forms.get(form.id));
     }
 }

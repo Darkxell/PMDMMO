@@ -7,32 +7,28 @@ import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
-public class PokemonSpawnedEvent extends DungeonEvent
-{
+public class PokemonSpawnedEvent extends DungeonEvent {
 
-	/** The spawned Pokemon. */
-	public final DungeonPokemon spawned;
-	/** The Tile to spawn the Pokemon on. */
-	public final Tile tile;
+    /** The spawned Pokemon. */
+    public final DungeonPokemon spawned;
+    /** The Tile to spawn the Pokemon on. */
+    public final Tile tile;
 
-	public PokemonSpawnedEvent(Floor floor, DungeonPokemon spawned, Tile tile)
-	{
-		super(floor, null);
-		this.spawned = spawned;
-		this.tile = tile;
-	}
+    public PokemonSpawnedEvent(Floor floor, DungeonPokemon spawned, Tile tile) {
+        super(floor, null);
+        this.spawned = spawned;
+        this.tile = tile;
+    }
 
-	@Override
-	public String loggerMessage()
-	{
-		return this.spawned + " spawned at " + this.tile.x + "," + this.tile.y;
-	}
+    @Override
+    public String loggerMessage() {
+        return this.spawned + " spawned at " + this.tile.x + "," + this.tile.y;
+    }
 
-	@Override
-	public ArrayList<DungeonEvent> processServer()
-	{
-		this.floor.summonPokemon(this.spawned, this.tile.x, this.tile.y, this.resultingEvents);
-		return super.processServer();
-	}
+    @Override
+    public ArrayList<DungeonEvent> processServer() {
+        this.floor.summonPokemon(this.spawned, this.tile.x, this.tile.y, this.resultingEvents);
+        return super.processServer();
+    }
 
 }

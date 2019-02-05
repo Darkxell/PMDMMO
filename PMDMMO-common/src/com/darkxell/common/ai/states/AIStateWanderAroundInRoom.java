@@ -13,33 +13,33 @@ import com.darkxell.common.util.RandomUtil;
 /** State in which the Pokemon goes on a random Direction each turn. */
 public class AIStateWanderAroundInRoom extends AIState {
 
-	public AIStateWanderAroundInRoom(AI ai) {
-		super(ai);
-	}
+    public AIStateWanderAroundInRoom(AI ai) {
+        super(ai);
+    }
 
-	@Override
-	public Direction mayRotate() {
-		return null;
-	}
+    @Override
+    public Direction mayRotate() {
+        return null;
+    }
 
-	@Override
-	public DungeonEvent takeAction() {
-		ArrayList<Direction> directions = new ArrayList<>();
-		for (Direction d : Direction.DIRECTIONS)
-			directions.add(d);
-		while (!directions.isEmpty()) {
-			Direction d = RandomUtil.random(directions, this.ai.floor.random);
-			directions.remove(d);
-			if (this.ai.pokemon.tile().adjacentTile(d).isInRoom()
-					&& this.ai.pokemon.tile().adjacentTile(d).canMoveTo(this.ai.pokemon, d, false))
-				return new PokemonTravelEvent(this.ai.floor, this.ai.pokemon, d);
-		}
-		return new TurnSkippedEvent(this.ai.floor, this.ai.pokemon);
-	}
+    @Override
+    public DungeonEvent takeAction() {
+        ArrayList<Direction> directions = new ArrayList<>();
+        for (Direction d : Direction.DIRECTIONS)
+            directions.add(d);
+        while (!directions.isEmpty()) {
+            Direction d = RandomUtil.random(directions, this.ai.floor.random);
+            directions.remove(d);
+            if (this.ai.pokemon.tile().adjacentTile(d).isInRoom()
+                    && this.ai.pokemon.tile().adjacentTile(d).canMoveTo(this.ai.pokemon, d, false))
+                return new PokemonTravelEvent(this.ai.floor, this.ai.pokemon, d);
+        }
+        return new TurnSkippedEvent(this.ai.floor, this.ai.pokemon);
+    }
 
-	@Override
-	public String toString() {
-		return "Wanders around";
-	}
+    @Override
+    public String toString() {
+        return "Wanders around";
+    }
 
 }

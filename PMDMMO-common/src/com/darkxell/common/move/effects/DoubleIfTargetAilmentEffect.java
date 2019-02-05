@@ -9,20 +9,19 @@ import com.darkxell.common.move.MoveEffect;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.status.AppliedStatusCondition;
 
-public class DoubleIfTargetAilmentEffect extends MoveEffect
-{
+public class DoubleIfTargetAilmentEffect extends MoveEffect {
 
-	public DoubleIfTargetAilmentEffect(int id)
-	{
-		super(id);
-	}
+    public DoubleIfTargetAilmentEffect(int id) {
+        super(id);
+    }
 
-	@Override
-	public double damageMultiplier(MoveUse move, DungeonPokemon target, boolean isUser, Floor floor, String[] flags, ArrayList<DungeonEvent> events)
-	{
-		for (AppliedStatusCondition s : target.activeStatusConditions())
-			if (s.condition.isAilment) return 2;
-		return super.damageMultiplier(move, target, isUser, floor, flags, events);
-	}
+    @Override
+    public double damageMultiplier(MoveUse move, DungeonPokemon target, boolean isUser, Floor floor, String[] flags,
+            ArrayList<DungeonEvent> events) {
+        for (AppliedStatusCondition s : target.activeStatusConditions())
+            if (s.condition.isAilment)
+                return 2;
+        return super.damageMultiplier(move, target, isUser, floor, flags, events);
+    }
 
 }

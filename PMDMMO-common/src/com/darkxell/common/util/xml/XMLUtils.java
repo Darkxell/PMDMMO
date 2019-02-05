@@ -1,5 +1,12 @@
 package com.darkxell.common.util.xml;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
+
 import org.jdom2.Attribute;
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -7,9 +14,6 @@ import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
-
-import java.io.*;
-import java.util.ArrayList;
 
 /**
  * Utility methods for XML.
@@ -66,7 +70,7 @@ public final class XMLUtils {
     }
 
     public static Element read(InputStream input) {
-        if (input != null) {
+        if (input != null)
             try {
                 return new SAXBuilder().build(input).getRootElement();
             } catch (JDOMException e) {
@@ -74,7 +78,6 @@ public final class XMLUtils {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
         return null;
     }
 
@@ -85,9 +88,8 @@ public final class XMLUtils {
     public static int[] readIntArray(Element element) {
         ArrayList<Integer> list = readIntArrayAsList(element);
         int[] array = new int[list.size()];
-        for (int i = 0; i < array.length; ++i) {
+        for (int i = 0; i < array.length; ++i)
             array[i] = list.get(i);
-        }
         return array;
     }
 
@@ -99,11 +101,9 @@ public final class XMLUtils {
         ArrayList<Integer> array = new ArrayList<Integer>();
         if (element != null) {
             String value = element.getText();
-            if (value != null && !value.equals("")) {
-                for (String floor : value.split(",")) {
+            if (value != null && !value.equals(""))
+                for (String floor : value.split(","))
                     array.add(Integer.parseInt(floor));
-                }
-            }
         }
         return array;
     }
@@ -118,9 +118,8 @@ public final class XMLUtils {
         for (int i = 0; i < array.length; ++i) {
             String[] cells = rows[i].split(",");
             array[i] = new int[cells.length];
-            for (int j = 0; j < cells.length; ++j) {
+            for (int j = 0; j < cells.length; ++j)
                 array[i][j] = Integer.parseInt(cells[j]);
-            }
         }
         return array;
     }
@@ -128,9 +127,8 @@ public final class XMLUtils {
     public static short[] readShortArray(String value) {
         String[] values = value.split(",");
         short[] array = new short[values.length];
-        for (int i = 0; i < array.length; ++i) {
+        for (int i = 0; i < array.length; ++i)
             array[i] = Short.parseShort(values[i]);
-        }
         return array;
     }
 
@@ -139,9 +137,8 @@ public final class XMLUtils {
      */
     public static void saveFile(File file, Element element) {
         try {
-            if (!file.exists()) {
+            if (!file.exists())
                 file.createNewFile();
-            }
             saveFile(new FileOutputStream(file), element);
         } catch (IOException e) {
             e.printStackTrace();
@@ -159,68 +156,57 @@ public final class XMLUtils {
     }
 
     public static void setAttribute(Element element, String id, boolean value, boolean defaultValue) {
-        if (value != defaultValue) {
+        if (value != defaultValue)
             element.setAttribute(id, Boolean.toString(value));
-        }
     }
 
     public static void setAttribute(Element element, String id, byte value, byte defaultValue) {
-        if (value != defaultValue) {
+        if (value != defaultValue)
             element.setAttribute(id, Byte.toString(value));
-        }
     }
 
     public static void setAttribute(Element element, String id, char value, char defaultValue) {
-        if (value != defaultValue) {
+        if (value != defaultValue)
             element.setAttribute(id, Character.toString(value));
-        }
     }
 
     public static void setAttribute(Element element, String id, double value, double defaultValue) {
-        if (value != defaultValue) {
+        if (value != defaultValue)
             element.setAttribute(id, Double.toString(value));
-        }
     }
 
     public static void setAttribute(Element element, String id, float value, float defaultValue) {
-        if (value != defaultValue) {
+        if (value != defaultValue)
             element.setAttribute(id, Float.toString(value));
-        }
     }
 
     public static void setAttribute(Element element, String id, int value, int defaultValue) {
-        if (value != defaultValue) {
+        if (value != defaultValue)
             element.setAttribute(id, Integer.toString(value));
-        }
     }
 
     public static void setAttribute(Element element, String id, long value, long defaultValue) {
-        if (value != defaultValue) {
+        if (value != defaultValue)
             element.setAttribute(id, Long.toString(value));
-        }
     }
 
     public static void setAttribute(Element element, String id, short value, short defaultValue) {
-        if (value != defaultValue) {
+        if (value != defaultValue)
             element.setAttribute(id, Short.toString(value));
-        }
     }
 
     public static void setAttribute(Element element, String id, String value, String defaultValue) {
-        if (value != null && !value.equals(defaultValue)) {
+        if (value != null && !value.equals(defaultValue))
             element.setAttribute(id, value);
-        }
     }
 
     public static String toXML(short[] array) {
         String value = "";
-        for (short floor : array) {
-            if (value.equals("")) {
+        for (short floor : array)
+            if (value.equals(""))
                 value += floor;
-            } else {
+            else
                 value += "," + floor;
-            }
-        }
         return value;
     }
 
@@ -232,13 +218,11 @@ public final class XMLUtils {
      */
     public static Element toXML(String id, int[] array) {
         String value = "";
-        for (int floor : array) {
-            if (value.equals("")) {
+        for (int floor : array)
+            if (value.equals(""))
                 value += floor;
-            } else {
+            else
                 value += "," + floor;
-            }
-        }
         return new Element(id).setText(value);
     }
 
@@ -251,16 +235,13 @@ public final class XMLUtils {
     public static Element toXML(String id, int[][] array) {
         String value = "";
         for (int[] row : array) {
-            if (!value.equals("")) {
+            if (!value.equals(""))
                 value += ";";
-            }
-            for (int cell : row) {
-                if (value.equals("") || value.endsWith(";")) {
+            for (int cell : row)
+                if (value.equals("") || value.endsWith(";"))
                     value += cell;
-                } else {
+                else
                     value += "," + cell;
-                }
-            }
         }
         return new Element(id).setText(value);
     }
@@ -273,13 +254,11 @@ public final class XMLUtils {
      */
     public static Element toXML(String id, Iterable<Integer> array) {
         String value = "";
-        for (Integer floor : array) {
-            if (value.equals("")) {
+        for (Integer floor : array)
+            if (value.equals(""))
                 value += floor;
-            } else {
+            else
                 value += "," + floor;
-            }
-        }
         return new Element(id).setText(value);
     }
 }

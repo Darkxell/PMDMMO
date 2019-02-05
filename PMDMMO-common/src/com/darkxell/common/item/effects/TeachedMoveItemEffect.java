@@ -6,32 +6,27 @@ import com.darkxell.common.item.ItemEffect;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.util.language.Message;
 
-public class TeachedMoveItemEffect extends ItemEffect
-{
+public class TeachedMoveItemEffect extends ItemEffect {
 
-	public final int moveID;
+    public final int moveID;
 
-	public TeachedMoveItemEffect(int id, int moveID)
-	{
-		super(id);
-		this.moveID = moveID;
-	}
+    public TeachedMoveItemEffect(int id, int moveID) {
+        super(id);
+        this.moveID = moveID;
+    }
 
-	@Override
-	public Message description(Item item)
-	{
-		return new Message("item.info.used_tm").addReplacement("<move>", this.move().name());
-	}
+    @Override
+    public Message description(Item item) {
+        return new Message("item.info.used_tm").addReplacement("<move>", this.move().name());
+    }
 
-	public Move move()
-	{
-		return Registries.moves().find(this.moveID);
-	}
+    public Move move() {
+        return Registries.moves().find(this.moveID);
+    }
 
-	@Override
-	public Message name(Item item)
-	{
-		return new Message("move." + this.moveID).addPrefix("<tmu>");
-	}
+    @Override
+    public Message name(Item item) {
+        return new Message("move." + this.moveID).addPrefix("<tmu>");
+    }
 
 }

@@ -9,81 +9,77 @@ import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Logger;
 
 /** Class holding AI objects for Pokemon in a Dungeon. */
-public class AIManager
-{
+public class AIManager {
 
-	/** Dungeon Pokemon -> Its AI. */
-	private final HashMap<DungeonPokemon, AI> ais;
-	final Floor floor;
+    /** Dungeon Pokemon -> Its AI. */
+    private final HashMap<DungeonPokemon, AI> ais;
+    final Floor floor;
 
-	public AIManager(Floor floor)
-	{
-		this.floor = floor;
-		this.ais = new HashMap<>();
-	}
+    public AIManager(Floor floor) {
+        this.floor = floor;
+        this.ais = new HashMap<>();
+    }
 
-	/** @return The AI the input Pokemon should have. */
-	private AI aiFor(DungeonPokemon pokemon)
-	{
-		switch (pokemon.type)
-		{
-			case TEAM_MEMBER:
-				if (pokemon.isTeamLeader()) return new LeaderAI(this.floor, pokemon);
-				return new AllyAI(this.floor, pokemon, pokemon.player().getDungeonLeader());
+    /** @return The AI the input Pokemon should have. */
+    private AI aiFor(DungeonPokemon pokemon) {
+        switch (pokemon.type) {
+        case TEAM_MEMBER:
+            if (pokemon.isTeamLeader())
+                return new LeaderAI(this.floor, pokemon);
+            return new AllyAI(this.floor, pokemon, pokemon.player().getDungeonLeader());
 
-			case BOSS:
-			case MINIBOSS:
-			case WILD:
-				return new WildAI(this.floor, pokemon);
+        case BOSS:
+        case MINIBOSS:
+        case WILD:
+            return new WildAI(this.floor, pokemon);
 
-			case RESCUEABLE:
-				return new RescueableAI(this.floor, pokemon);
+        case RESCUEABLE:
+            return new RescueableAI(this.floor, pokemon);
 
-			default:
-				return new SkipTurnsAI(this.floor, pokemon);
-		}
-	}
+        default:
+            return new SkipTurnsAI(this.floor, pokemon);
+        }
+    }
 
-	public AI getAI(DungeonPokemon pokemon)
-	{
-		return this.ais.get(pokemon);
-	}
+    public AI getAI(DungeonPokemon pokemon) {
+        return this.ais.get(pokemon);
+    }
 
-	public void register(DungeonPokemon pokemon)
-	{
-		this.register(pokemon, null);
-	}
+    public void register(DungeonPokemon pokemon) {
+        this.register(pokemon, null);
+    }
 
-	public void register(DungeonPokemon pokemon, AI ai)
-	{
-		if (ai == null) ai = this.aiFor(pokemon);
-		if (ai != null) this.ais.put(pokemon, ai);
-	}
+    public void register(DungeonPokemon pokemon, AI ai) {
+        if (ai == null)
+            ai = this.aiFor(pokemon);
+        if (ai != null)
+            this.ais.put(pokemon, ai);
+    }
 
-	/** Calls the AI of the input Pokemon to determine its action.
-	 * 
-	 * @param pokemon - The acting Pokemon.
-	 * @return A DungeonEvent describing that Pokemon's action. */
-	public DungeonEvent takeAction(DungeonPokemon pokemon)
-	{
-		if (pokemon == null) return null;
-		if (!pokemon.canAct(this.floor)) return new TurnSkippedEvent(this.floor, pokemon);
-		if (!this.ais.containsKey(pokemon))
-		{
-			Logger.e("Tried to call " + pokemon + "'s AI even though it has none.");
-			return null;
-		}
-		return this.ais.get(pokemon).takeAction();
-	}
+    /**
+     * Calls the AI of the input Pokemon to determine its action.
+     * 
+     * @param  pokemon - The acting Pokemon.
+     * @return         A DungeonEvent describing that Pokemon's action.
+     */
+    public DungeonEvent takeAction(DungeonPokemon pokemon) {
+        if (pokemon == null)
+            return null;
+        if (!pokemon.canAct(this.floor))
+            return new TurnSkippedEvent(this.floor, pokemon);
+        if (!this.ais.containsKey(pokemon)) {
+            Logger.e("Tried to call " + pokemon + "'s AI even though it has none.");
+            return null;
+        }
+        return this.ais.get(pokemon).takeAction();
+    }
 
-	public void unregister(DungeonPokemon pokemon)
-	{
-		if (!this.ais.containsKey(pokemon))
-		{
-			Logger.e(pokemon + " already has no AI: can't unregister!");
-			return;
-		}
-		this.ais.remove(pokemon);
-	}
+    public void unregister(DungeonPokemon pokemon) {
+        if (!this.ais.containsKey(pokemon)) {
+            Logger.e(pokemon + " already has no AI: can't unregister!");
+            return;
+        }
+        this.ais.remove(pokemon);
+    }
 
 }

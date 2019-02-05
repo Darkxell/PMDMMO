@@ -32,11 +32,11 @@ public class DBDeployKey implements Communicable {
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof DBDeployKey)) {
+        if (!(obj instanceof DBDeployKey))
             return false;
-        }
         DBDeployKey o = (DBDeployKey) obj;
-        return this.keyvalue.equals(o.keyvalue) && this.timestamp == o.timestamp && this.isused == o.isused && this.playerid == o.playerid;
+        return this.keyvalue.equals(o.keyvalue) && this.timestamp == o.timestamp && this.isused == o.isused
+                && this.playerid == o.playerid;
     }
 
     @Override

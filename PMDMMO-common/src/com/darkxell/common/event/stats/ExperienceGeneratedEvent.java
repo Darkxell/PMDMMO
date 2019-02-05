@@ -7,34 +7,31 @@ import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.Pokemon;
 
-public class ExperienceGeneratedEvent extends DungeonEvent
-{
+public class ExperienceGeneratedEvent extends DungeonEvent {
 
-	/** The experience gained. */
-	public int experience;
-	/** The Player whose Pokemon will gain experience. */
-	public final Player player;
+    /** The experience gained. */
+    public int experience;
+    /** The Player whose Pokemon will gain experience. */
+    public final Player player;
 
-	public ExperienceGeneratedEvent(Floor floor, Player player)
-	{
-		super(floor);
-		this.player = player;
-		this.experience = 0;
-		this.priority = PRIORITY_AFTER_MOVE;
-	}
+    public ExperienceGeneratedEvent(Floor floor, Player player) {
+        super(floor);
+        this.player = player;
+        this.experience = 0;
+        this.priority = PRIORITY_AFTER_MOVE;
+    }
 
-	@Override
-	public String loggerMessage()
-	{
-		return null;
-	}
+    @Override
+    public String loggerMessage() {
+        return null;
+    }
 
-	@Override
-	public ArrayList<DungeonEvent> processServer()
-	{
-		if (this.experience > 0) for (Pokemon member : this.player.getTeam())
-			this.resultingEvents.add(new ExperienceGainedEvent(this.floor, member, this.experience));
-		return super.processServer();
-	}
+    @Override
+    public ArrayList<DungeonEvent> processServer() {
+        if (this.experience > 0)
+            for (Pokemon member : this.player.getTeam())
+                this.resultingEvents.add(new ExperienceGainedEvent(this.floor, member, this.experience));
+        return super.processServer();
+    }
 
 }

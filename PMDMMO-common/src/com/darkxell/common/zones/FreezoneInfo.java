@@ -1,8 +1,8 @@
 package com.darkxell.common.zones;
 
-import com.darkxell.common.util.language.Message;
-
 import java.util.HashMap;
+
+import com.darkxell.common.util.language.Message;
 
 public enum FreezoneInfo {
     BASE(LocalMapLocation.BASE, "base"),
@@ -83,9 +83,8 @@ public enum FreezoneInfo {
     private static HashMap<String, FreezoneInfo> lookup = new HashMap<>();
 
     static {
-        for (FreezoneInfo f : FreezoneInfo.values()) {
+        for (FreezoneInfo f : FreezoneInfo.values())
             lookup.put(f.id, f);
-        }
     }
 
     public static FreezoneInfo find(String id) {

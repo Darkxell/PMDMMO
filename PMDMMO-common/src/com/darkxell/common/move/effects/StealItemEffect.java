@@ -9,23 +9,21 @@ import com.darkxell.common.move.MoveEffectCalculator;
 import com.darkxell.common.move.MoveEvents;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
-public class StealItemEffect extends MoveEffect
-{
+public class StealItemEffect extends MoveEffect {
 
-	public StealItemEffect(int id)
-	{
-		super(id);
-	}
+    public StealItemEffect(int id) {
+        super(id);
+    }
 
-	@Override
-	public void additionalEffects(MoveUse usedMove, DungeonPokemon target, String[] flags, Floor floor, MoveEffectCalculator calculator, boolean missed,
-			MoveEvents effects)
-	{
-		super.additionalEffects(usedMove, target, flags, floor, calculator, missed, effects);
+    @Override
+    public void additionalEffects(MoveUse usedMove, DungeonPokemon target, String[] flags, Floor floor,
+            MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
+        super.additionalEffects(usedMove, target, flags, floor, calculator, missed, effects);
 
-		if (!missed && target.getItem() != null && usedMove.user.getItem() == null)
-			effects.createEffect(new ItemMovedEvent(floor, ItemAction.STEAL, usedMove.user, target, 0, usedMove.user, 0, false), usedMove, target, floor,
-					missed, true, target);
-	}
+        if (!missed && target.getItem() != null && usedMove.user.getItem() == null)
+            effects.createEffect(
+                    new ItemMovedEvent(floor, ItemAction.STEAL, usedMove.user, target, 0, usedMove.user, 0, false),
+                    usedMove, target, floor, missed, true, target);
+    }
 
 }
