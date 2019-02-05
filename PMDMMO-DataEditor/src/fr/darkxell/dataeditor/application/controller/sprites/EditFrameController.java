@@ -18,120 +18,123 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.image.ImageView;
 
-public class EditFrameController implements Initializable
-{
+public class EditFrameController implements Initializable {
 
-	@FXML
-	private TextField durationTextfield;
-	@FXML
-	private CheckBox flippedCheckbox;
-	@FXML
-	private ImageView frameImage;
-	@FXML
-	private Spinner<Integer> frameSpinner;
-	public RegularSpriteSet spriteset;
-	@FXML
-	private TextField sxTextfield;
-	@FXML
-	private TextField syTextfield;
-	@FXML
-	private TextField xTextfield;
-	@FXML
-	private TextField yTextfield;
+    @FXML
+    private TextField durationTextfield;
+    @FXML
+    private CheckBox flippedCheckbox;
+    @FXML
+    private ImageView frameImage;
+    @FXML
+    private Spinner<Integer> frameSpinner;
+    public RegularSpriteSet spriteset;
+    @FXML
+    private TextField sxTextfield;
+    @FXML
+    private TextField syTextfield;
+    @FXML
+    private TextField xTextfield;
+    @FXML
+    private TextField yTextfield;
 
-	private PokemonSpriteFrame generateFrame()
-	{
-		int duration, x, y, sx, sy;
+    private PokemonSpriteFrame generateFrame() {
+        int duration, x, y, sx, sy;
 
-		if (this.durationTextfield.getText().matches("-?")) duration = 2;
-		else duration = Integer.parseInt(this.durationTextfield.getText());
+        if (this.durationTextfield.getText().matches("-?"))
+            duration = 2;
+        else
+            duration = Integer.parseInt(this.durationTextfield.getText());
 
-		if (this.xTextfield.getText().matches("-?")) x = 0;
-		else x = Integer.parseInt(this.xTextfield.getText());
+        if (this.xTextfield.getText().matches("-?"))
+            x = 0;
+        else
+            x = Integer.parseInt(this.xTextfield.getText());
 
-		if (this.yTextfield.getText().matches("-?")) y = 0;
-		else y = Integer.parseInt(this.yTextfield.getText());
+        if (this.yTextfield.getText().matches("-?"))
+            y = 0;
+        else
+            y = Integer.parseInt(this.yTextfield.getText());
 
-		if (this.sxTextfield.getText().matches("-?")) sx = 0;
-		else sx = Integer.parseInt(this.sxTextfield.getText());
+        if (this.sxTextfield.getText().matches("-?"))
+            sx = 0;
+        else
+            sx = Integer.parseInt(this.sxTextfield.getText());
 
-		if (this.syTextfield.getText().matches("-?")) sy = 0;
-		else sy = Integer.parseInt(this.syTextfield.getText());
+        if (this.syTextfield.getText().matches("-?"))
+            sy = 0;
+        else
+            sy = Integer.parseInt(this.syTextfield.getText());
 
-		return new PokemonSpriteFrame(null, this.frameSpinner.getValue(), duration, x, y, sx, sy, this.flippedCheckbox.isSelected());
-	}
+        return new PokemonSpriteFrame(null, this.frameSpinner.getValue(), duration, x, y, sx, sy,
+                this.flippedCheckbox.isSelected());
+    }
 
-	@Override
-	public void initialize(URL location, ResourceBundle resources)
-	{
-		Pattern p = Pattern.compile("-?\\d*");
-		this.durationTextfield.setTextFormatter(new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
-			return p.matcher(change.getControlNewText()).matches() ? change : null;
-		}));
-		this.xTextfield.setTextFormatter(new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
-			return p.matcher(change.getControlNewText()).matches() ? change : null;
-		}));
-		this.yTextfield.setTextFormatter(new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
-			return p.matcher(change.getControlNewText()).matches() ? change : null;
-		}));
-		this.sxTextfield.setTextFormatter(new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
-			return p.matcher(change.getControlNewText()).matches() ? change : null;
-		}));
-		this.syTextfield.setTextFormatter(new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
-			return p.matcher(change.getControlNewText()).matches() ? change : null;
-		}));
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        Pattern p = Pattern.compile("-?\\d*");
+        this.durationTextfield.setTextFormatter(new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
+            return p.matcher(change.getControlNewText()).matches() ? change : null;
+        }));
+        this.xTextfield.setTextFormatter(new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
+            return p.matcher(change.getControlNewText()).matches() ? change : null;
+        }));
+        this.yTextfield.setTextFormatter(new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
+            return p.matcher(change.getControlNewText()).matches() ? change : null;
+        }));
+        this.sxTextfield.setTextFormatter(new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
+            return p.matcher(change.getControlNewText()).matches() ? change : null;
+        }));
+        this.syTextfield.setTextFormatter(new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
+            return p.matcher(change.getControlNewText()).matches() ? change : null;
+        }));
 
-		this.frameSpinner.setEditable(true);
-	}
+        this.frameSpinner.setEditable(true);
+    }
 
-	public void onCancel()
-	{
-		EditSequencesController.popup.close();
-	}
+    public void onCancel() {
+        EditSequencesController.popup.close();
+    }
 
-	public void onSave()
-	{
-		PokemonSpriteFrame f = this.generateFrame();
-		EditSequencesController.instance.onFrameEdited(f);
-		this.onCancel();
-	}
+    public void onSave() {
+        PokemonSpriteFrame f = this.generateFrame();
+        EditSequencesController.instance.onFrameEdited(f);
+        this.onCancel();
+    }
 
-	public void setSpriteset(RegularSpriteSet spriteset)
-	{
-		this.spriteset = spriteset;
-		this.frameSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, this.spriteset.rows() * this.spriteset.columns() - 1, 0) {
-			@Override
-			public void decrement(int steps)
-			{
-				super.decrement(steps);
-				updateImage();
-			}
+    public void setSpriteset(RegularSpriteSet spriteset) {
+        this.spriteset = spriteset;
+        this.frameSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0,
+                this.spriteset.rows() * this.spriteset.columns() - 1, 0) {
+            @Override
+            public void decrement(int steps) {
+                super.decrement(steps);
+                updateImage();
+            }
 
-			@Override
-			public void increment(int steps)
-			{
-				super.increment(steps);
-				updateImage();
-			}
-		});
-		this.frameSpinner.getValueFactory().setWrapAround(true);
-	}
+            @Override
+            public void increment(int steps) {
+                super.increment(steps);
+                updateImage();
+            }
+        });
+        this.frameSpinner.getValueFactory().setWrapAround(true);
+    }
 
-	public void setup(PokemonSpriteFrame item)
-	{
-		this.frameSpinner.getValueFactory().setValue(item.frameID);
-		this.durationTextfield.setText(String.valueOf(item.duration));
-		this.xTextfield.setText(String.valueOf(item.spriteX));
-		this.yTextfield.setText(String.valueOf(item.spriteY));
-		this.sxTextfield.setText(String.valueOf(item.shadowX));
-		this.syTextfield.setText(String.valueOf(item.shadowY));
-		this.flippedCheckbox.setSelected(item.isFlipped);
-		this.updateImage();
-	}
+    public void setup(PokemonSpriteFrame item) {
+        this.frameSpinner.getValueFactory().setValue(item.frameID);
+        this.durationTextfield.setText(String.valueOf(item.duration));
+        this.xTextfield.setText(String.valueOf(item.spriteX));
+        this.yTextfield.setText(String.valueOf(item.spriteY));
+        this.sxTextfield.setText(String.valueOf(item.shadowX));
+        this.syTextfield.setText(String.valueOf(item.shadowY));
+        this.flippedCheckbox.setSelected(item.isFlipped);
+        this.updateImage();
+    }
 
-	private void updateImage()
-	{
-		this.frameImage.setImage(SwingFXUtils.toFXImage(this.spriteset.get(this.frameSpinner.getValue()).image(), null));
-	}
+    private void updateImage() {
+        this.frameImage
+                .setImage(SwingFXUtils.toFXImage(this.spriteset.get(this.frameSpinner.getValue()).image(), null));
+    }
 
 }

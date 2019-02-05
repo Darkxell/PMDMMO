@@ -13,40 +13,38 @@ import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 
-public class SetAnimatedEventController extends EventController
-{
+public class SetAnimatedEventController extends EventController {
 
-	@FXML
-	private CheckBox animatedCheckbox;
-	@FXML
-	private ComboBox<CutsceneEntity> targetCombobox;
+    @FXML
+    private CheckBox animatedCheckbox;
+    @FXML
+    private ComboBox<CutsceneEntity> targetCombobox;
 
-	@Override
-	public CutsceneEvent generateEvent()
-	{
-		return new SetAnimatedCutsceneEvent(this.id(), this.targetCombobox.getSelectionModel().getSelectedItem(), this.animatedCheckbox.isSelected());
-	}
+    @Override
+    public CutsceneEvent generateEvent() {
+        return new SetAnimatedCutsceneEvent(this.id(), this.targetCombobox.getSelectionModel().getSelectedItem(),
+                this.animatedCheckbox.isSelected());
+    }
 
-	@Override
-	public void initialize(URL location, ResourceBundle resources)
-	{
-		super.initialize(location, resources);
-		this.targetCombobox.getItems().addAll(EditCutsceneController.instance.listAvailableEntities(EditCutsceneController.instance.listManager.editing));
-		this.targetCombobox.getItems().removeIf(e -> !(e instanceof CutscenePokemon));
-		if (!this.targetCombobox.getItems().isEmpty()) this.targetCombobox.getSelectionModel().select(0);
-	}
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        super.initialize(location, resources);
+        this.targetCombobox.getItems().addAll(EditCutsceneController.instance
+                .listAvailableEntities(EditCutsceneController.instance.listManager.editing));
+        this.targetCombobox.getItems().removeIf(e -> !(e instanceof CutscenePokemon));
+        if (!this.targetCombobox.getItems().isEmpty())
+            this.targetCombobox.getSelectionModel().select(0);
+    }
 
-	@Override
-	public void setup(CutsceneEvent event)
-	{
-		super.setup(event);
-		for (CutsceneEntity e : this.targetCombobox.getItems())
-			if (e.id == ((SetAnimatedCutsceneEvent) event).target)
-			{
-				this.targetCombobox.getSelectionModel().select(e);
-				break;
-			}
-		this.animatedCheckbox.setSelected(((SetAnimatedCutsceneEvent) event).animated);
-	}
+    @Override
+    public void setup(CutsceneEvent event) {
+        super.setup(event);
+        for (CutsceneEntity e : this.targetCombobox.getItems())
+            if (e.id == ((SetAnimatedCutsceneEvent) event).target) {
+                this.targetCombobox.getSelectionModel().select(e);
+                break;
+            }
+        this.animatedCheckbox.setSelected(((SetAnimatedCutsceneEvent) event).animated);
+    }
 
 }

@@ -8,19 +8,21 @@ import javafx.scene.control.TextField;
 
 public class FunctionEventController extends EventController {
 
-	@FXML
-	private TextField functionTextfield;
+    @FXML
+    private TextField functionTextfield;
 
-	@Override
-	public CutsceneEvent generateEvent() {
-		return new FunctionCutsceneEvent(this.id(), this.functionTextfield.getText());
-	}
+    @Override
+    public CutsceneEvent generateEvent() {
+        return new FunctionCutsceneEvent(this.id(), this.functionTextfield.getText());
+    }
 
-	@Override
-	public void setup(CutsceneEvent event) {
-		super.setup(event);
-		if (((FunctionCutsceneEvent) event).functionID == null) this.functionTextfield.setText("");
-		else this.functionTextfield.setText(((FunctionCutsceneEvent) event).functionID);
-	}
+    @Override
+    public void setup(CutsceneEvent event) {
+        super.setup(event);
+        if (((FunctionCutsceneEvent) event).functionID == null)
+            this.functionTextfield.setText("");
+        else
+            this.functionTextfield.setText(((FunctionCutsceneEvent) event).functionID);
+    }
 
 }

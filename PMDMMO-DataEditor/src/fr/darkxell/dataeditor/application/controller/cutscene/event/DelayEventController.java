@@ -12,34 +12,30 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 
-public class DelayEventController extends EventController
-{
+public class DelayEventController extends EventController {
 
-	@FXML
-	private TextField delayTextfield;
+    @FXML
+    private TextField delayTextfield;
 
-	@Override
-	public CutsceneEvent generateEvent()
-	{
-		return new DelayCutsceneEvent(this.id(), Integer.parseInt(this.delayTextfield.getText()));
-	}
+    @Override
+    public CutsceneEvent generateEvent() {
+        return new DelayCutsceneEvent(this.id(), Integer.parseInt(this.delayTextfield.getText()));
+    }
 
-	@Override
-	public void initialize(URL location, ResourceBundle resources)
-	{
-		super.initialize(location, resources);
-		Pattern pattern = Pattern.compile("\\d*");
-		TextFormatter<String> formatter = new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
-			return pattern.matcher(change.getControlNewText()).matches() ? change : null;
-		});
-		this.delayTextfield.setTextFormatter(formatter);
-	}
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        super.initialize(location, resources);
+        Pattern pattern = Pattern.compile("\\d*");
+        TextFormatter<String> formatter = new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
+            return pattern.matcher(change.getControlNewText()).matches() ? change : null;
+        });
+        this.delayTextfield.setTextFormatter(formatter);
+    }
 
-	@Override
-	public void setup(CutsceneEvent event)
-	{
-		super.setup(event);
-		this.delayTextfield.setText(String.valueOf(((DelayCutsceneEvent) event).duration));
-	}
+    @Override
+    public void setup(CutsceneEvent event) {
+        super.setup(event);
+        this.delayTextfield.setText(String.valueOf(((DelayCutsceneEvent) event).duration));
+    }
 
 }
