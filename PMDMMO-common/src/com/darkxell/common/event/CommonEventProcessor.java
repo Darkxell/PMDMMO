@@ -26,7 +26,7 @@ import com.darkxell.common.status.AppliedStatusCondition;
 
 /** Processes game logic events. */
 public class CommonEventProcessor {
-    public static enum State {
+    public enum State {
         /** Playing animations. (should only be active client-side.) */
         ANIMATING,
         /** Waiting for a Player to decide on an action. */
@@ -44,7 +44,7 @@ public class CommonEventProcessor {
 
     public final DungeonExploration dungeon;
     /** Pending events to process. */
-    protected final Stack<DungeonEvent> pending = new Stack<DungeonEvent>();
+    protected final Stack<DungeonEvent> pending = new Stack<>();
     /** Lists the Players currently running. */
     private ArrayList<DungeonPokemon> runners = new ArrayList<>();
     /** While processing an event, setting this to false will stop processing the pending events. */
@@ -140,7 +140,7 @@ public class CommonEventProcessor {
 
     /**
      * Called just before processing an event.
-     * 
+     *
      * @return false if the event should not be processed.
      */
     protected boolean preProcess(DungeonEvent event) {

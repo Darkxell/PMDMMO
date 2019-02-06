@@ -2,6 +2,7 @@ package com.darkxell.common.dungeon.floor;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 import com.darkxell.common.Registries;
@@ -87,7 +88,7 @@ public class Floor {
     }
 
     public ActiveFloorStatus[] activeStatuses() {
-        return this.activeFloorStatuses.toArray(new ActiveFloorStatus[this.activeFloorStatuses.size()]);
+        return this.activeFloorStatuses.toArray(new ActiveFloorStatus[0]);
     }
 
     public void addFloorStatus(ActiveFloorStatus status) {
@@ -180,7 +181,7 @@ public class Floor {
 
     /** @return A list of all Pokemon on this Floor. */
     public ArrayList<DungeonPokemon> listPokemon() {
-        ArrayList<DungeonPokemon> pokemon = new ArrayList<DungeonPokemon>();
+        ArrayList<DungeonPokemon> pokemon = new ArrayList<>();
         if (this.tiles != null)
             for (Tile[] row : this.tiles)
                 for (Tile t : row)
@@ -213,8 +214,8 @@ public class Floor {
         this.persistantWeather.update(events);
 
         // Statuses
-        for (int s = 0; s < this.activeFloorStatuses.size(); ++s)
-            this.activeFloorStatuses.get(s).tick(this, events);
+        for (ActiveFloorStatus activeFloorStatus : this.activeFloorStatuses)
+            activeFloorStatus.tick(this, events);
 
         // Pokemon spawning
         if (!this.isStatic && this.data.pokemonDensity() > this.countWildPokemon())
@@ -238,7 +239,7 @@ public class Floor {
         player.getDungeonLeader().setFacing(this.teamSpawnDirection);
         this.aiManager.register(player.getDungeonLeader());
 
-        ArrayList<Tile> candidates = new ArrayList<Tile>();
+        ArrayList<Tile> candidates = new ArrayList<>();
         Tile initial = player.getDungeonLeader().tile();
         candidates.add(initial.adjacentTile(Direction.WEST));
         candidates.add(initial.adjacentTile(Direction.EAST));
@@ -297,14 +298,13 @@ public class Floor {
      * @return                 A Random Tile in this floor.
      */
     public Tile randomEmptyTile(boolean inRoom, boolean awayFromPlayers, TileType type, Random random) {
-        ArrayList<Tile> candidates = new ArrayList<Tile>();
+        ArrayList<Tile> candidates = new ArrayList<>();
         if (inRoom)
             for (Room room : this.rooms)
                 candidates.addAll(room.listTiles());
         else
             for (Tile[] row : this.tiles)
-                for (Tile tile : row)
-                    candidates.add(tile);
+                candidates.addAll(Arrays.asList(row));
 
         if (type != null)
             candidates.removeIf(t -> t.type() != type);
@@ -312,10 +312,10 @@ public class Floor {
         candidates.removeIf(t -> !t.isEmpty());
 
         if (inRoom)
-            candidates.removeIf(t -> connectsToPath(t));
+            candidates.removeIf(this::connectsToPath);
 
         if (awayFromPlayers) {
-            ArrayList<DungeonPokemon> players = new ArrayList<DungeonPokemon>(this.listPokemon());
+            ArrayList<DungeonPokemon> players = new ArrayList<>(this.listPokemon());
             players.removeIf((DungeonPokemon p) -> {
                 return !p.isTeamLeader();
             });
@@ -332,8 +332,8 @@ public class Floor {
 
     public Item randomItem(ArrayList<DungeonItemGroup> items, Random random) {
         DungeonItemGroup itemGroup = RandomUtil.weightedRandom(items, DungeonItemGroup.weights(items), random);
-        ArrayList<Integer> ids = new ArrayList<Integer>();
-        ArrayList<Integer> chances = new ArrayList<Integer>();
+        ArrayList<Integer> ids = new ArrayList<>();
+        ArrayList<Integer> chances = new ArrayList<>();
         for (int i = 0; i < itemGroup.items.length; ++i) {
             ids.add(itemGroup.items[i]);
             chances.add(itemGroup.chances[i]);

@@ -26,7 +26,7 @@ public class AbilityAbsorbDamage extends AbilityPreventAdditionalEffectsOnSelf {
         DungeonEvent toreturn = super.modify(effect, usedMove, target, floor, missed, isAdditional, amIUser,
                 directedAt);
         if (toreturn == null && usedMove.move.move().type == this.type)
-            return toreturn;
+            return null;
         return effect;
     }
 

@@ -30,7 +30,7 @@ public enum Nature {
     /** The number of lines this Nature's description has. */
     public final int textLines;
 
-    private Nature(int id, int textLines) {
+    Nature(int id, int textLines) {
         this.id = id;
         this.textLines = textLines;
     }

@@ -3,7 +3,6 @@ package fr.darkxell.dataeditor.application.controller.cutscene;
 import java.net.URL;
 import java.util.Comparator;
 import java.util.ResourceBundle;
-import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 
 import com.darkxell.client.mechanics.cutscene.Cutscene;
@@ -30,7 +29,7 @@ import javafx.scene.control.TextFormatter;
 
 public class CutsceneEndController implements Initializable, ChangeListener<CutsceneEndMode> {
 
-    public static enum CutsceneEndMode {
+    public enum CutsceneEndMode {
         CUTSCENE("Play Cutscene"),
         DUNGEON("Enter Dungeon"),
         EXPLORE("Resume Dungeon Exploration"),
@@ -38,7 +37,7 @@ public class CutsceneEndController implements Initializable, ChangeListener<Cuts
 
         public final String name;
 
-        private CutsceneEndMode(String name) {
+        CutsceneEndMode(String name) {
             this.name = name;
         }
 
@@ -108,16 +107,16 @@ public class CutsceneEndController implements Initializable, ChangeListener<Cuts
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Pattern pattern = Pattern.compile("-?\\d*");
-        TextFormatter<String> formatter = new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
+        TextFormatter<String> formatter = new TextFormatter<>(change -> {
             return pattern.matcher(change.getControlNewText()).matches() ? change : null;
         });
         this.freezoneXTextfield.setTextFormatter(formatter);
-        formatter = new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
+        formatter = new TextFormatter<>(change -> {
             return pattern.matcher(change.getControlNewText()).matches() ? change : null;
         });
         this.freezoneYTextfield.setTextFormatter(formatter);
         Pattern pattern2 = Pattern.compile("\\w*");
-        TextFormatter<String> formatter2 = new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
+        TextFormatter<String> formatter2 = new TextFormatter<>(change -> {
             return pattern2.matcher(change.getControlNewText()).matches() ? change : null;
         });
         this.functionTextfield.setTextFormatter(formatter2);

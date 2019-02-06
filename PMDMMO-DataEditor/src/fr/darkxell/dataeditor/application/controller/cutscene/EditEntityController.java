@@ -3,7 +3,6 @@ package fr.darkxell.dataeditor.application.controller.cutscene;
 import java.net.URL;
 import java.util.Random;
 import java.util.ResourceBundle;
-import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 
 import com.darkxell.client.launchable.Persistence;
@@ -99,20 +98,20 @@ public class EditEntityController implements Initializable {
         this.facingCombobox.getSelectionModel().select(0);
 
         Pattern pattern = Pattern.compile("-?\\d*(\\.\\d*)?");
-        TextFormatter<String> formatter = new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
+        TextFormatter<String> formatter = new TextFormatter<>(change -> {
             return pattern.matcher(change.getControlNewText()).matches() ? change : null;
         });
         this.xposTextfield.setTextFormatter(formatter);
-        formatter = new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
+        formatter = new TextFormatter<>(change -> {
             return pattern.matcher(change.getControlNewText()).matches() ? change : null;
         });
         this.yposTextfield.setTextFormatter(formatter);
-        formatter = new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
+        formatter = new TextFormatter<>(change -> {
             return Pattern.compile("-?\\d*").matcher(change.getControlNewText()).matches() ? change : null;
         });
         this.idTextfield.setTextFormatter(formatter);
-        formatter = new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
-            return Pattern.compile("(0|1|2|3)?").matcher(change.getControlNewText()).matches() ? change : null;
+        formatter = new TextFormatter<>(change -> {
+            return Pattern.compile("([0123])?").matcher(change.getControlNewText()).matches() ? change : null;
         });
         this.memberTextfield.setTextFormatter(formatter);
     }

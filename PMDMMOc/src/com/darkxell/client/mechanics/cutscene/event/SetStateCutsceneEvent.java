@@ -20,7 +20,7 @@ public class SetStateCutsceneEvent extends CutsceneEvent {
         PokemonSpriteState s = null;
         try {
             s = PokemonSpriteState.valueOf(XMLUtils.getAttribute(xml, "state", null));
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
         this.state = s;
     }
@@ -35,7 +35,7 @@ public class SetStateCutsceneEvent extends CutsceneEvent {
     public void onStart() {
         super.onStart();
         CutsceneEntity entity = this.context.parent().player.getEntity(this.target);
-        if (entity != null && entity instanceof CutscenePokemon)
+        if (entity instanceof CutscenePokemon)
             ((CutscenePokemon) entity).currentState = this.state;
     }
 

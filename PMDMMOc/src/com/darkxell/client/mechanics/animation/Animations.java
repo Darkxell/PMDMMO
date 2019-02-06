@@ -28,14 +28,14 @@ import com.darkxell.common.util.Pair;
 import com.darkxell.common.util.xml.XMLUtils;
 
 public final class Animations {
-    public static enum AnimationGroup {
+    public enum AnimationGroup {
         Abilities,
         Custom,
         Items,
         Moves,
         MoveTargets,
         Projectiles,
-        Statuses;
+        Statuses
     }
 
     private static final HashMap<Integer, AnimationData> abilities, custom, items, moves, moveTargets, projectiles,
@@ -103,12 +103,10 @@ public final class Animations {
     }
 
     public static PokemonAnimation getAnimation(DungeonPokemon target, String id, AnimationEndListener listener) {
-        while (id.startsWith("/"))
-            id = id.substring(0);
         if (!id.contains("/"))
             return getCustomAnimation(target, Integer.parseInt(id), listener);
         String group = id.substring(0, id.indexOf("/"));
-        int anim = Integer.parseInt(id.substring(id.indexOf("/") + 1, id.length()));
+        int anim = Integer.parseInt(id.substring(id.indexOf("/") + 1));
 
         MoveRegistry moves = Registries.moves();
 
@@ -266,7 +264,7 @@ public final class Animations {
 
         anims.sort(Comparator.naturalOrder());
 
-        return anims.toArray(new String[anims.size()]);
+        return anims.toArray(new String[0]);
     }
 
     public static void loadData() {
@@ -343,7 +341,7 @@ public final class Animations {
         if (movement != null)
             try {
                 return ProjectileMovement.valueOf(movement.toUpperCase());
-            } catch (Exception e2) {
+            } catch (Exception ignored) {
             }
         return ProjectileMovement.STRAIGHT;
     }
@@ -407,15 +405,13 @@ public final class Animations {
     }
 
     public static Pair<Integer, AnimationGroup> splitID(String id) {
-        while (id.startsWith("/"))
-            id = id.substring(0);
         if (!id.contains("/")) {
             if (!id.matches("\\d+"))
                 return null;
             return new Pair<>(Integer.parseInt(id), AnimationGroup.Custom);
         }
         String group = id.substring(0, id.indexOf("/"));
-        int anim = Integer.parseInt(id.substring(id.indexOf("/") + 1, id.length()));
+        int anim = Integer.parseInt(id.substring(id.indexOf("/") + 1));
         switch (group) {
         case "custom":
             return new Pair<>(anim, AnimationGroup.Custom);

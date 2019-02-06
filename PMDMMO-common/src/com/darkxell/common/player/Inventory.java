@@ -131,7 +131,7 @@ public class Inventory implements ItemContainer, DungeonEventListener {
 
     @Override
     public ArrayList<ItemAction> legalItemActions(boolean inDungeon) {
-        ArrayList<ItemAction> actions = new ArrayList<ItemAction>();
+        ArrayList<ItemAction> actions = new ArrayList<>();
         actions.add(ItemAction.GIVE);
         if (inDungeon) {
             actions.add(ItemAction.SWITCH);
@@ -143,7 +143,7 @@ public class Inventory implements ItemContainer, DungeonEventListener {
 
     /** @return The list of Items in this Inventory. */
     public ItemStack[] list() {
-        return this.items.toArray(new ItemStack[this.items.size()]);
+        return this.items.toArray(new ItemStack[0]);
     }
 
     public int maxSize() {

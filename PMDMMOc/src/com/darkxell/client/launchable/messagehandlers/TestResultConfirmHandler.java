@@ -10,7 +10,7 @@ public class TestResultConfirmHandler extends MessageHandler {
     @Override
     public void handleMessage(JsonObject message) {
         ComplexDialog dialog = Persistence.currentDialog;
-        if (dialog != null && dialog instanceof PersonalityQuizDialog)
+        if (dialog instanceof PersonalityQuizDialog)
             ((PersonalityQuizDialog) dialog).onResultConfirmed();
     }
 

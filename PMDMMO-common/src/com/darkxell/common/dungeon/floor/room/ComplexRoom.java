@@ -47,7 +47,7 @@ public class ComplexRoom extends Room {
         HashSet<Tile> outline = new HashSet<>();
         for (SquareRoom r : this.parts)
             outline.addAll(r.outline());
-        outline.removeIf(t -> this.contains(t));
+        outline.removeIf(this::contains);
         return outline;
     }
 

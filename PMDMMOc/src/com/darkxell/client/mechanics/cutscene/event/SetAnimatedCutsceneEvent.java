@@ -29,7 +29,7 @@ public class SetAnimatedCutsceneEvent extends CutsceneEvent {
     public void onStart() {
         super.onStart();
         CutsceneEntity entity = this.context.parent().player.getEntity(this.target);
-        if (entity != null && entity instanceof CutscenePokemon)
+        if (entity instanceof CutscenePokemon)
             ((CutscenePokemon) entity).animated = this.animated;
     }
 

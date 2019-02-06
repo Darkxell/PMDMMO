@@ -91,8 +91,7 @@ public class DungeonEventTransferTest extends UTest {
 
     @Override
     protected int test() {
-        ArrayList<DungeonEvent> toTest = new ArrayList<>(), returned = new ArrayList<>();
-        toTest.addAll(this.generateEvents());
+        ArrayList<DungeonEvent> toTest = new ArrayList<>(this.generateEvents()), returned = new ArrayList<>();
         boolean[] success = new boolean[toTest.size()];
         int failureCount = 0;
 

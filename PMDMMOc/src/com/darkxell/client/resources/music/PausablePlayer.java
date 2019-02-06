@@ -57,11 +57,11 @@ public class PausablePlayer {
     }
 
     /** Starts playback (resumes if paused) */
-    public void play() throws JavaLayerException {
+    public void play() {
         synchronized (playerLock) {
             switch (playerStatus) {
             case NOTSTARTED:
-                final Runnable r = () -> playInternal();
+                final Runnable r = this::playInternal;
                 final Thread t = new Thread(r);
                 t.setDaemon(true);
                 t.setPriority(Thread.MAX_PRIORITY);

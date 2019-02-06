@@ -9,7 +9,6 @@ import com.darkxell.client.graphics.TextRenderer;
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.resources.images.Sprites;
 import com.darkxell.client.state.AbstractState;
-import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.client.ui.MainUiUtility;
 import com.darkxell.common.util.Callbackable;
@@ -54,7 +53,7 @@ public class TextinputState extends AbstractState {
             isinvalidationmode = true;
         else if (isinvalidationmode && key == Key.ATTACK) {
             if (validationstate) {
-                ((PrincipalMainState) Persistence.stateManager).setState(parent);
+                Persistence.stateManager.setState(parent);
                 if (parent instanceof Callbackable)
                     ((Callbackable) parent).callback(content);
                 if (addedcallback != null)

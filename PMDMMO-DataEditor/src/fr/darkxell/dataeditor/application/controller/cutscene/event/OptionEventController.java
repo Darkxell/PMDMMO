@@ -52,8 +52,8 @@ public class OptionEventController extends EventController {
         this.optionColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         this.translateColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-        this.optionColumn.setOnEditCommit(event -> this.onOptionEdited(event));
-        this.translateColumn.setOnEditCommit(event -> this.onTranslateEdited(event));
+        this.optionColumn.setOnEditCommit(this::onOptionEdited);
+        this.translateColumn.setOnEditCommit(this::onTranslateEdited);
 
         ContextMenu menu = new ContextMenu();
         final MenuItem add, remove, up, down;

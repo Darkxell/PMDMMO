@@ -65,7 +65,7 @@ public class OptionDialogScreen extends PokemonDialogScreen {
     }
 
     public Message[] options() {
-        return this.options.toArray(new Message[this.options.size()]);
+        return this.options.toArray(new Message[0]);
     }
 
     @Override

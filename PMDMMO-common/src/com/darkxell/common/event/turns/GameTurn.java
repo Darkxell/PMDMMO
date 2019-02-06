@@ -11,7 +11,7 @@ public class GameTurn {
     public static final int SUB_TURNS = Stat.MAX_SPEED;
 
     /** Lists the Events that occur in this turn. */
-    private ArrayList<DungeonEvent> events = new ArrayList<DungeonEvent>();
+    private ArrayList<DungeonEvent> events = new ArrayList<>();
     /** The Floor this Turn occurs in. */
     public final Floor floor;
     public final int id;
@@ -28,7 +28,7 @@ public class GameTurn {
 
     /** @return The list of Events that happened during this Turn. */
     public DungeonEvent[] events() {
-        return this.events.toArray(new DungeonEvent[this.events.size()]);
+        return this.events.toArray(new DungeonEvent[0]);
     }
 
 }

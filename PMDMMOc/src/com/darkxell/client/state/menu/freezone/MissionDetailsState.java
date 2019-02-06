@@ -35,7 +35,7 @@ public class MissionDetailsState extends AbstractState {
         this.previousstate = previousstate;
         this.mission = content;
         for (int i = 0; i < Persistence.player.getMissions().size(); i++)
-            if (Persistence.player.getMissions().get(i).toString().equals(content.toString())) {
+            if (Persistence.player.getMissions().get(i).equals(content.toString())) {
                 acceptstatus = STATUS_ACCEPTED;
                 break;
             }

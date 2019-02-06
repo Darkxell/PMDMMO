@@ -36,8 +36,7 @@ public class NarratorDialogScreen extends DialogScreen {
 
         int y = height / 2 - TextRenderer.height() * this.lines.size()
                 - TextRenderer.lineSpacing() * (this.lines.size() - 1);
-        for (int i = 0; i < this.lines.size(); ++i) {
-            List<PMDChar> line = this.lines.get(i);
+        for (List<PMDChar> line : this.lines) {
             int x = width / 2 - TextRenderer.width(line) / 2;
             TextRenderer.render(g, line, x, y);
             y += TextRenderer.height() + TextRenderer.lineSpacing();

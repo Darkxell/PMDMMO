@@ -29,7 +29,7 @@ public class AIStateRunaway extends AIState {
 
     @Override
     public DungeonEvent takeAction() {
-        Comparator<Tile> sorter = (o1, o2) -> Integer.compare(score(o1), score(o2));
+        Comparator<Tile> sorter = Comparator.comparingInt(AIStateRunaway::score);
         ArrayList<Tile> candidates = AIUtils.adjacentReachableTiles(this.ai.floor, this.ai.pokemon);
         if (candidates.size() == 0)
             return new TurnSkippedEvent(this.ai.floor, this.ai.pokemon);

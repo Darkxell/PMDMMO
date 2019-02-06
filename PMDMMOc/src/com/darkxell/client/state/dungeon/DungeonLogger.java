@@ -39,8 +39,8 @@ public class DungeonLogger {
 
     public DungeonLogger(DungeonState parent) {
         this.parent = parent;
-        this.log = new LinkedList<Message>();
-        this.messages = new LinkedList<Message>();
+        this.log = new LinkedList<>();
+        this.messages = new LinkedList<>();
     }
 
     public int displayedMessages() {
@@ -63,7 +63,7 @@ public class DungeonLogger {
 
     /** @return The last 40 messages that were displayed to the Player. */
     public Message[] log() {
-        return this.log.toArray(new Message[this.log.size()]);
+        return this.log.toArray(new Message[0]);
     }
 
     private void reloadMessages(int width, int height) {
@@ -72,10 +72,10 @@ public class DungeonLogger {
         int y = this.isFullscreen ? 20 : height - h - 5;
         this.messagesWindow = new MenuWindow(new Rectangle((width - w) / 2, y, w, h));
 
-        ArrayList<String> toReturn = new ArrayList<String>();
-        for (int i = 0; i < this.messages.size(); ++i)
-            if (this.messages.get(i) != null) {
-                toReturn.addAll(TextRenderer.splitLines(this.messages.get(i).toString(), w - 40));
+        ArrayList<String> toReturn = new ArrayList<>();
+        for (Message message : this.messages)
+            if (message != null) {
+                toReturn.addAll(TextRenderer.splitLines(message.toString(), w - 40));
                 toReturn.add(null);
             }
 
@@ -112,8 +112,7 @@ public class DungeonLogger {
         g.setClip(this.messagesWindow.inside());
 
         int y = this.messagesWindow.dimensions.y + MenuWindow.MARGIN_Y + this.messageOffset;
-        for (int i = 0; i < this.messages.size(); ++i) {
-            Message s = this.messages.get(i);
+        for (Message s : this.messages)
             if (s == null) {
                 g.setColor(new Color(255, 255, 255, 128));
                 g.drawLine(0, y - 4, width, y - 4);
@@ -123,7 +122,6 @@ public class DungeonLogger {
                 TextRenderer.render(g, s, this.messagesWindow.dimensions.x + 20, y);
                 y += TextRenderer.height() + 5;
             }
-        }
         g.setClip(clip);
 
         if (this.isFullscreen && this.arrowtick < DialogScreen.ARROW_TICK_LENGTH / 2) {

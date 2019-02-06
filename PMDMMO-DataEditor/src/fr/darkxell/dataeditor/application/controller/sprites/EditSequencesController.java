@@ -6,7 +6,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.ResourceBundle;
-import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 
 import com.darkxell.client.resources.images.RegularSpriteSet;
@@ -83,13 +82,13 @@ public class EditSequencesController implements Initializable, ListCellParent<Po
         this.sequenceProperties.setDisable(true);
 
         Pattern p = Pattern.compile("\\d*");
-        this.rushTextfield.setTextFormatter(new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
+        this.rushTextfield.setTextFormatter(new TextFormatter<>(change -> {
             return p.matcher(change.getControlNewText()).matches() ? change : null;
         }));
-        this.hitTextfield.setTextFormatter(new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
+        this.hitTextfield.setTextFormatter(new TextFormatter<>(change -> {
             return p.matcher(change.getControlNewText()).matches() ? change : null;
         }));
-        this.returnTextfield.setTextFormatter(new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
+        this.returnTextfield.setTextFormatter(new TextFormatter<>(change -> {
             return p.matcher(change.getControlNewText()).matches() ? change : null;
         }));
 

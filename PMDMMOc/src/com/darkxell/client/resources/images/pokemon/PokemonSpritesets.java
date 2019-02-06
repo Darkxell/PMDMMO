@@ -18,9 +18,9 @@ import com.darkxell.common.util.xml.XMLUtils;
 public final class PokemonSpritesets {
 
     /** Stores the loaded Spriteset data. */
-    private static final HashMap<Integer, PokemonSpritesetData> data = new HashMap<Integer, PokemonSpritesetData>();
+    private static final HashMap<Integer, PokemonSpritesetData> data = new HashMap<>();
     /** Stores the loaded Spritesheets. */
-    private static final HashMap<Integer, PokemonSpriteset> spritesets = new HashMap<Integer, PokemonSpriteset>();
+    private static final HashMap<Integer, PokemonSpriteset> spritesets = new HashMap<>();
 
     public static boolean dataExists(Integer id) {
         return data.containsKey(id) && data.get(id).id == id;
@@ -75,7 +75,7 @@ public final class PokemonSpritesets {
 
         for (File data : folder.listFiles())
             try {
-                Integer id = Integer.parseInt(data.getName().replaceAll("\\.xml", ""));
+                int id = Integer.parseInt(data.getName().replaceAll("\\.xml", ""));
                 loadSpritesetData(id, id, externalPath + "/" + id);
             } catch (Exception e) {
                 Logger.w("Unconventional sprite data file, skipped: " + data.getName());

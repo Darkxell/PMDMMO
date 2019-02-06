@@ -23,7 +23,7 @@ public class WaitCutsceneEvent extends CutsceneEvent {
                 CutsceneEvent e = this.context.getEvent(id);
                 if (e != null)
                     this.events.add(e);
-            } catch (Exception e) {
+            } catch (Exception ignored) {
             }
         this.all = this.events.isEmpty();
         if (this.events.isEmpty())

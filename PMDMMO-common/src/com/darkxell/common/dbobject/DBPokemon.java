@@ -71,7 +71,7 @@ public class DBPokemon implements Communicable {
             return false;
         if (this.gender != o.gender)
             return false;
-        if (this.nickname != o.nickname)
+        if (!this.nickname.equals(o.nickname))
             return false;
         if (this.level != o.level)
             return false;

@@ -2,7 +2,6 @@ package fr.darkxell.dataeditor.application.controller.sprites;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 
 import com.darkxell.client.resources.images.RegularSpriteSet;
@@ -30,10 +29,10 @@ public class EditGeneralController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Pattern p = Pattern.compile("\\d*");
-        this.heightTextfield.setTextFormatter(new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
+        this.heightTextfield.setTextFormatter(new TextFormatter<>(change -> {
             return p.matcher(change.getControlNewText()).matches() ? change : null;
         }));
-        this.widthTextfield.setTextFormatter(new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
+        this.widthTextfield.setTextFormatter(new TextFormatter<>(change -> {
             return p.matcher(change.getControlNewText()).matches() ? change : null;
         }));
 

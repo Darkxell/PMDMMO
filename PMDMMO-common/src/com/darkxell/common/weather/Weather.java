@@ -15,7 +15,7 @@ import com.darkxell.common.util.language.Message;
 
 public class Weather implements AffectsPokemon, Comparable<Weather> {
 
-    private static final HashMap<Integer, Weather> _weatherRegistry = new HashMap<Integer, Weather>();
+    private static final HashMap<Integer, Weather> _weatherRegistry = new HashMap<>();
     public static final byte random = -1;
 
     public static final Weather CLEAR = new Weather(0, null);
@@ -75,7 +75,7 @@ public class Weather implements AffectsPokemon, Comparable<Weather> {
 
     /** Called whenever this Weather ticks. */
     public ArrayList<DungeonEvent> weatherTick(Floor floor, int tick) {
-        return new ArrayList<DungeonEvent>();
+        return new ArrayList<>();
     }
 
 }

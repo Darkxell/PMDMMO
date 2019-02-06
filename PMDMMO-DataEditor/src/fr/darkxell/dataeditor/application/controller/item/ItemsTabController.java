@@ -53,24 +53,24 @@ public class ItemsTabController implements Initializable, ListCellParent<ItemLis
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         instance = this;
-        TreeItem<CustomTreeItem> root = new TreeItem<CustomTreeItem>(new TreeCategory("Items"));
+        TreeItem<CustomTreeItem> root = new TreeItem<>(new TreeCategory("Items"));
         root.setExpanded(true);
         this.itemsTreeView.setRoot(root);
         List<TreeItem<CustomTreeItem>> categories = this.itemsTreeView.getRoot().getChildren();
-        categories.add(new TreeItem<CustomTreeItem>(new TreeCategory("Equipable")));
-        categories.add(new TreeItem<CustomTreeItem>(new TreeCategory("Throwable")));
-        categories.add(new TreeItem<CustomTreeItem>(new TreeCategory("Food")));
-        categories.add(new TreeItem<CustomTreeItem>(new TreeCategory("Berries")));
-        categories.add(new TreeItem<CustomTreeItem>(new TreeCategory("Drinks")));
-        categories.add(new TreeItem<CustomTreeItem>(new TreeCategory("Gummis")));
-        categories.add(new TreeItem<CustomTreeItem>(new TreeCategory("Seeds")));
-        categories.add(new TreeItem<CustomTreeItem>(new TreeCategory("Other Usables")));
-        categories.add(new TreeItem<CustomTreeItem>(new TreeCategory("Orbs")));
-        categories.add(new TreeItem<CustomTreeItem>(new TreeCategory("TMs")));
-        categories.add(new TreeItem<CustomTreeItem>(new TreeCategory("HMs")));
-        categories.add(new TreeItem<CustomTreeItem>(new TreeCategory("Evolutionary")));
-        categories.add(new TreeItem<CustomTreeItem>(new TreeCategory("Others")));
-        this.categories = categories.toArray(new TreeItem[categories.size()]);
+        categories.add(new TreeItem<>(new TreeCategory("Equipable")));
+        categories.add(new TreeItem<>(new TreeCategory("Throwable")));
+        categories.add(new TreeItem<>(new TreeCategory("Food")));
+        categories.add(new TreeItem<>(new TreeCategory("Berries")));
+        categories.add(new TreeItem<>(new TreeCategory("Drinks")));
+        categories.add(new TreeItem<>(new TreeCategory("Gummis")));
+        categories.add(new TreeItem<>(new TreeCategory("Seeds")));
+        categories.add(new TreeItem<>(new TreeCategory("Other Usables")));
+        categories.add(new TreeItem<>(new TreeCategory("Orbs")));
+        categories.add(new TreeItem<>(new TreeCategory("TMs")));
+        categories.add(new TreeItem<>(new TreeCategory("HMs")));
+        categories.add(new TreeItem<>(new TreeCategory("Evolutionary")));
+        categories.add(new TreeItem<>(new TreeCategory("Others")));
+        this.categories = categories.toArray(new TreeItem[0]);
 
         /*
          * this.itemsList.setCellFactory(param -> { return new CustomListCell<>(AnimationsTabController.instance,

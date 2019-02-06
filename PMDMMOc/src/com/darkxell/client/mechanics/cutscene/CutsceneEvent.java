@@ -23,7 +23,7 @@ import com.darkxell.common.util.xml.XMLUtils;
 
 public abstract class CutsceneEvent {
 
-    public static enum CutsceneEventType {
+    public enum CutsceneEventType {
         // Don't forget to also modify EditCutsceneController#onCreate().
         animate("Play animation"),
         camera("Move camera"),
@@ -45,7 +45,7 @@ public abstract class CutsceneEvent {
 
         public final String description;
 
-        private CutsceneEventType(String name) {
+        CutsceneEventType(String name) {
             this.description = name;
         }
     }

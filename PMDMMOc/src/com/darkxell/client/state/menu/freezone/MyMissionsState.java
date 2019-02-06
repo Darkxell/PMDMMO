@@ -15,7 +15,7 @@ public class MyMissionsState extends OptionSelectionMenuState {
 
     /**
      * Creates a new MyMissionsState.
-     * 
+     *
      * @param backgroundState the background used to draw what's behind the menu
      * @param parent          the parent state that will come back if you exit this state
      */

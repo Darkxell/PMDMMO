@@ -66,7 +66,7 @@ public class CutsceneCreation {
     }
 
     public CutsceneEntity[] entities() {
-        return this.entities.toArray(new CutsceneEntity[this.entities.size()]);
+        return this.entities.toArray(new CutsceneEntity[0]);
     }
 
     public Element toXML() {

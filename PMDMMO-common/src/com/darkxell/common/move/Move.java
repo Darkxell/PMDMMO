@@ -15,7 +15,7 @@ import com.darkxell.common.util.language.Message;
 import com.darkxell.common.util.xml.XMLUtils;
 
 public class Move implements Registrable<Move> {
-    public static enum MoveCategory {
+    public enum MoveCategory {
         Physical,
         Special,
         Status;
@@ -41,7 +41,7 @@ public class Move implements Registrable<Move> {
      * <li>AMBIENT = 9 ; Does not target any Pokemon.</li>
      * </ul>
      */
-    public static enum MoveRange {
+    public enum MoveRange {
         /** Does not target any Pokemon. */
         Ambient,
         /** All Pokemon adjacent to the user. */
@@ -76,7 +76,7 @@ public class Move implements Registrable<Move> {
         }
     }
 
-    public static enum MoveTarget {
+    public enum MoveTarget {
         /** Any Pokemon. */
         All,
         /** The user's allies. */
@@ -265,7 +265,7 @@ public class Move implements Registrable<Move> {
 
     /**
      * Applies this Move's effects to a Pokemon.
-     * 
+     *
      * @param  usedMove - The Move instance that was selected.
      * @param  target   - The Pokemon the Move is being used on.
      * @param  flags    - The flags of the Event that triggered this use.

@@ -38,7 +38,7 @@ public class SquareRoom extends Room {
 
     /** @return All tiles in this Room. */
     public ArrayList<Tile> listTiles() {
-        ArrayList<Tile> tiles = new ArrayList<Tile>();
+        ArrayList<Tile> tiles = new ArrayList<>();
         for (int y = this.y; y < this.y + this.height; ++y)
             for (int x = this.x; x < this.x + this.width; ++x)
                 tiles.add(this.floor.tileAt(x, y));

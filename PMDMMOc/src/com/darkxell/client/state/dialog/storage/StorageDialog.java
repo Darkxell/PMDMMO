@@ -137,7 +137,7 @@ public class StorageDialog extends ComplexDialog
     protected void onDialogFinished(DialogState dialog) {
         DialogScreen screen = dialog.currentScreen();
         if (screen.id == QUANTITY)
-            Persistence.stateManager.setState(new IntegerSelectionState(dialog, dialog, this, 1l, this.max, 1l));
+            Persistence.stateManager.setState(new IntegerSelectionState(dialog, dialog, this, 1L, this.max, 1L));
         else if (screen.id == ACTION) {
             this.selectedAction = ((OptionDialogScreen) screen).chosenIndex();
             if (this.selectedAction == DEPOSIT) {

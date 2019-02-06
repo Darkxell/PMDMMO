@@ -13,7 +13,7 @@ public abstract class AbilityModifyMoveEffect extends Ability {
 
     /**
      * Called when a Move produces an Effect. This method may modify the Event produced by the Effect and return it.
-     * 
+     *
      * @param  effect       - The Effect created by the Move.
      * @param  usedMove     - The Move Use context.
      * @param  target       - The Pokemon targeted by the Move.

@@ -127,7 +127,7 @@ public class DialogCutsceneEvent extends CutsceneEvent implements DialogEndListe
         for (CutsceneDialogScreen s : this.screens) {
             CutscenePokemon pokemon = null;
             CutsceneEntity e = this.context.parent().player.getEntity(s.pokemon);
-            if (e != null && e instanceof CutscenePokemon)
+            if (e instanceof CutscenePokemon)
                 pokemon = (CutscenePokemon) e;
             if (!s.hasReplacements)
                 s.addReplacements(pokemon);

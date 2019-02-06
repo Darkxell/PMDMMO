@@ -38,7 +38,7 @@ public class ArbitraryCutsceneEnds {
             Persistence.socketendpoint.sendMessage(mess.toString());
             Persistence.player.setStoryPosition(4);
             if (Persistence.stateManager instanceof PrincipalMainState)
-                ((PrincipalMainState) Persistence.stateManager).setState(new OpeningState());
+                Persistence.stateManager.setState(new OpeningState());
             break;
         case "predream":
             switch (Persistence.player.storyPosition()) {

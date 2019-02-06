@@ -46,7 +46,7 @@ public class SoundManager implements Runnable {
         while (!iskilled) {
             try {
                 Thread.sleep(100);
-            } catch (InterruptedException e1) {
+            } catch (InterruptedException ignored) {
             }
             try {
                 if (this.soundPlayer != null) {
@@ -67,16 +67,14 @@ public class SoundManager implements Runnable {
                     if (!ischanging && !iskilled)
                         this.currentplayer.play();
                 }
-            } catch (Exception e) {
+            } catch (Exception ignored) {
             }
         }
     }
 
     /** Sets the background music to the selected song. Setting the song to null will basically cancel the plays. */
     public void setBackgroundMusic(Song song) {
-        if (this.currentsong == song)
-            return;
-        else
+        if (this.currentsong != song)
             forceBackgroundMusic(song);
     }
 
@@ -90,7 +88,7 @@ public class SoundManager implements Runnable {
             this.currentsong = song;
             try {
                 this.currentplayer.close();
-            } catch (Exception e) {
+            } catch (Exception ignored) {
             }
             try {
                 this.currentplayer = new PausablePlayer(Res.get(song.getfilepath()));
@@ -144,7 +142,7 @@ public class SoundManager implements Runnable {
             this.soundOverSong = sound;
             try {
                 this.currentplayer.pause();
-            } catch (Exception e) {
+            } catch (Exception ignored) {
             }
             try {
                 this.soundPlayer = new Player(new FileInputStream(this.soundOverSong.getfilepath()));
@@ -170,7 +168,7 @@ public class SoundManager implements Runnable {
     /**
      * Sets the Volume of all the Lines of all the Mixers to the <code>volume</code> value.<br/>
      * If you are unaware about audio, this basically sets your application volume to the desired value.
-     * 
+     *
      * @param volume The volume of your app, a float with 0 <= volume <= 1
      */
     public static void setApplicationVolume(float volume) {

@@ -51,7 +51,7 @@ public abstract class DungeonMission {
 
     /**
      * This method is only called when current Floor is the target Floor of this Mission.
-     * 
+     *
      * @param  event - An occuring DungeonEvent.
      * @return       <code>true</code> If the input Event clears this Mission.
      */

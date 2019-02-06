@@ -52,7 +52,7 @@ public abstract class Persistence {
     public static Player player;
 
     public static ClientEventProcessor eventProcessor() {
-        return dungeon == null ? null : (ClientEventProcessor) dungeon.eventProcessor;
+        return (ClientEventProcessor) dungeon.eventProcessor;
     }
 
     /**

@@ -3,7 +3,6 @@ package com.darkxell.client.mechanics.cutscene.end.arbitrary;
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.cutscene.CutsceneManager;
 import com.darkxell.client.state.dialog.TextinputState;
-import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.common.util.Callbackable;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonObject;
@@ -22,9 +21,8 @@ public class StartNameAsk implements Callbackable {
     }
 
     public static void startNameAsk() {
-        ((PrincipalMainState) Persistence.stateManager)
-                .setState(new TextinputState(((PrincipalMainState) Persistence.stateManager).getCurrentState(),
-                        "ui.textinput.name", new StartNameAsk()));
+        Persistence.stateManager.setState(new TextinputState(Persistence.stateManager.getCurrentState(),
+                "ui.textinput.name", new StartNameAsk()));
     }
 
 }

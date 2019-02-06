@@ -77,7 +77,7 @@ public class Cutscene implements Comparable<Cutscene>, CutsceneContext {
     public Cutscene(String name, CutsceneCreation creation, CutsceneEnd end, ArrayList<CutsceneEvent> events) {
         this.name = name;
         this.creation = creation != null ? creation : new CutsceneCreation(this);
-        this.onFinish = end != null ? end : new LoadFreezoneCutsceneEnd(this, (String) null, false);
+        this.onFinish = end != null ? end : new LoadFreezoneCutsceneEnd(this, null, false);
         this.events = events;
         this.player = new CutscenePlayer(this);
 

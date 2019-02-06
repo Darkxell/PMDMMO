@@ -53,7 +53,7 @@ import com.darkxell.common.weather.Weather;
 
 /** Holds all Move Effects. */
 public final class MoveEffects {
-    static final HashMap<Integer, MoveEffect> effects = new HashMap<Integer, MoveEffect>();
+    static final HashMap<Integer, MoveEffect> effects = new HashMap<>();
 
     // When Scald, check Frozen
 

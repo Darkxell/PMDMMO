@@ -81,7 +81,7 @@ public class Logger {
      */
     public static void event(String m) {
         if (m != null)
-            instance.log(m.replaceAll("<(\\/color|red|green|blue|yellow)>", ""), LogLevel.EVENT);
+            instance.log(m.replaceAll("<(/color|red|green|blue|yellow)>", ""), LogLevel.EVENT);
     }
 
     public static void load(String source) {
@@ -98,7 +98,7 @@ public class Logger {
 
     private Logger(String source) {
         this.source = source;
-        this.log = new ArrayList<String>();
+        this.log = new ArrayList<>();
         this.start = new Date();
         this.info("New instance: " + this.date());
     }

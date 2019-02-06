@@ -1,6 +1,5 @@
 package com.darkxell.common.util.language;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -15,10 +14,10 @@ import com.darkxell.common.util.Logger;
 public class Keywords {
 
     /** Comparator for Keywords. */
-    public static final Comparator<String> comparator = (o1, o2) -> o1.toLowerCase().compareTo(o2.toLowerCase());
+    public static final Comparator<String> comparator = Comparator.comparing(String::toLowerCase);
 
     /** Matches a Keyword's possible values with its ID. */
-    private static final HashMap<String, String> dictionnary = new HashMap<String, String>();
+    private static final HashMap<String, String> dictionnary = new HashMap<>();
 
     /**
      * @param  text - A Text to analyze.
@@ -30,10 +29,10 @@ public class Keywords {
         text = text.replaceAll("( [0-9]* )|(<.*?>)", "");
         text = text.replaceAll("(?!-)\\p{Punct}", "");
         while (text.contains("  "))
-            text = text.replaceAll("  ", " ");
+            text = text.replaceAll(" {2}", " ");
 
         // Finding Keywords
-        ArrayList<String> keywords = new ArrayList<String>();
+        ArrayList<String> keywords = new ArrayList<>();
         for (String keyword : dictionnary.keySet())
             if (text.contains(keyword.toLowerCase()))
                 keywords.add(keyword);
@@ -42,13 +41,13 @@ public class Keywords {
     }
 
     /** @return The Keyword matching the input Keyword value. null if matches no Keyword. */
-    public static final String getKeyword(String keywordValue) {
+    public static String getKeyword(String keywordValue) {
         return dictionnary.get(keywordValue);
     }
 
     /** @return The Keyword matching the input Keyword value. null if matches no Keyword. */
-    public static final ArrayList<String> getKeywords(Collection<String> keywordValues) {
-        ArrayList<String> keywords = new ArrayList<String>();
+    public static ArrayList<String> getKeywords(Collection<String> keywordValues) {
+        ArrayList<String> keywords = new ArrayList<>();
         for (String value : keywordValues)
             if (isKeyword(value))
                 keywords.add(getKeyword(value));
@@ -82,9 +81,6 @@ public class Keywords {
                     Logger.e("Keywords.updateKeywords(): Wrong format for keyword: " + key);
                 }
             }
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

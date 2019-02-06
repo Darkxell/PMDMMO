@@ -78,8 +78,8 @@ public class FloorTable {
         table.setEditable(true);
 
         FloorTableManager<T, D> manager = new FloorTableManager<>(table);
-        table.getColumns().add(manager.floorColumn = new TableColumn<FloorTableItem<T, D>, String>("Floor"));
-        table.getColumns().add(manager.valueColumn = new TableColumn<FloorTableItem<T, D>, D>(objectName));
+        table.getColumns().add(manager.floorColumn = new TableColumn<>("Floor"));
+        table.getColumns().add(manager.valueColumn = new TableColumn<>(objectName));
 
         manager.floorColumn.setCellValueFactory(new PropertyValueFactory<>("floor"));
         manager.valueColumn.setCellValueFactory(new PropertyValueFactory<>("value"));
@@ -93,8 +93,8 @@ public class FloorTable {
         manager.floorColumn.setMaxWidth(50);
         manager.valueColumn.setPrefWidth(-1);
 
-        manager.floorColumn.setOnEditCommit(event -> manager.onFloorEdited(event));
-        manager.valueColumn.setOnEditCommit(event -> manager.onValueEdited(event));
+        manager.floorColumn.setOnEditCommit(manager::onFloorEdited);
+        manager.valueColumn.setOnEditCommit(manager::onValueEdited);
 
         table.setContextMenu(createContextMenu(table, objectName, defaultItem, manager));
 

@@ -223,7 +223,7 @@ public class Tile implements ItemContainer, Comparable<Tile> {
 
     @Override
     public ArrayList<ItemAction> legalItemActions(boolean inDungeon) {
-        ArrayList<ItemAction> actions = new ArrayList<ItemAction>();
+        ArrayList<ItemAction> actions = new ArrayList<>();
         actions.add(ItemAction.GET);
         actions.add(ItemAction.SWAP);
         return actions;
@@ -240,7 +240,7 @@ public class Tile implements ItemContainer, Comparable<Tile> {
 
     /**
      * Called when an adjacent tile has its type changed.
-     * 
+     *
      * @param direction - The direction of the Tile. See {@link DirectionSet#NORTH}.
      */
     private void onNeighborTypeChange(Direction direction) {
@@ -253,7 +253,7 @@ public class Tile implements ItemContainer, Comparable<Tile> {
 
     /**
      * Called when a Pokemon steps on this Tile.
-     * 
+     *
      * @param pokemon - The Pokemon stepping.
      * @param running - True if the Pokemon is running.
      */

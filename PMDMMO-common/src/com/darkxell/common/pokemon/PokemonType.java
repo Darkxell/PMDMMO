@@ -181,7 +181,7 @@ public enum PokemonType {
     private final double[] effectiveness;
     public final int id;
 
-    private PokemonType(int id, Color color) {
+    PokemonType(int id, Color color) {
         this.id = id;
         this.color = color;
         this.effectiveness = new double[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, };

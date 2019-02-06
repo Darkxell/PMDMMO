@@ -25,7 +25,7 @@ import com.darkxell.common.util.Logger;
 public class AbstractPokemonRenderer extends AbstractRenderer {
 
     private float alpha = 1;
-    private final ArrayList<PokemonAnimation> animations = new ArrayList<PokemonAnimation>();
+    private final ArrayList<PokemonAnimation> animations = new ArrayList<>();
     protected PokemonSprite sprite;
 
     public AbstractPokemonRenderer(Pokemon pokemon) {
@@ -42,7 +42,7 @@ public class AbstractPokemonRenderer extends AbstractRenderer {
     }
 
     protected PokemonAnimation[] animations() {
-        return this.animations.toArray(new PokemonAnimation[this.animations.size()]);
+        return this.animations.toArray(new PokemonAnimation[0]);
     }
 
     public void clearAnimations() {
@@ -83,13 +83,13 @@ public class AbstractPokemonRenderer extends AbstractRenderer {
             g.drawImage(shadow, xPos - shadow.getWidth() / 2 + frame.shadowX,
                     yPos + TILE_SIZE * 2 / 5 - shadow.getHeight() + frame.shadowY, null);
 
-            for (int i = 0; i < this.animations.size(); ++i)
-                this.animations.get(i).prerender(g, width, height);
+            for (PokemonAnimation animation : this.animations)
+                animation.prerender(g, width, height);
 
             this.render(g, this.sprite, xPos, yPos);
 
-            for (int i = 0; i < this.animations.size(); ++i)
-                this.animations.get(i).postrender(g, width, height);
+            for (PokemonAnimation animation : this.animations)
+                animation.postrender(g, width, height);
 
             if (this.alpha != 1)
                 g.setComposite(c);

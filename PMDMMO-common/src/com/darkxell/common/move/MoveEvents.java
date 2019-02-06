@@ -15,7 +15,7 @@ public class MoveEvents {
 
     /**
      * Creates a Move Effect.
-     * 
+     *
      * @param effect       - The created Effect.
      * @param usedMove     - The Move Use context.
      * @param target       - The Pokemon targeted by the Move.

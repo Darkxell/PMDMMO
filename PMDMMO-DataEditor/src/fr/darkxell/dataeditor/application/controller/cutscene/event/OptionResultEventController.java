@@ -4,7 +4,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
@@ -52,8 +51,7 @@ public class OptionResultEventController extends EventController implements Even
             FXUtils.showAlert(
                     "Warning: your target option selection event doesn't have and ID. Don't forget to add one!");
         return new OptionResultCutsceneEvent(this.id(), Integer.parseInt(this.optionTextfield.getText()),
-                this.targetCombobox.getValue(),
-                this.eventList.getItems().toArray(new CutsceneEvent[this.eventList.getItems().size()]));
+                this.targetCombobox.getValue(), this.eventList.getItems().toArray(new CutsceneEvent[0]));
     }
 
     @Override
@@ -63,7 +61,7 @@ public class OptionResultEventController extends EventController implements Even
         (this.listManager = new EventList()).setup(this, this.eventList);
 
         Pattern pattern = Pattern.compile("\\d*");
-        TextFormatter<String> formatter = new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
+        TextFormatter<String> formatter = new TextFormatter<>(change -> {
             return pattern.matcher(change.getControlNewText()).matches() ? change : null;
         });
         this.optionTextfield.setTextFormatter(formatter);

@@ -11,9 +11,9 @@ import com.darkxell.common.ai.AIUtils;
 import com.darkxell.common.dungeon.floor.Tile;
 
 public class ProjectileAnimationState extends AnimationState {
-    public static enum ProjectileMovement {
+    public enum ProjectileMovement {
         ARC,
-        STRAIGHT;
+        STRAIGHT
     }
 
     public static final double speed = 0.2;

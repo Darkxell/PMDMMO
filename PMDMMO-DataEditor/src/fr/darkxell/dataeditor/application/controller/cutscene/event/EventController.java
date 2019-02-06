@@ -3,7 +3,6 @@ package fr.darkxell.dataeditor.application.controller.cutscene.event;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
@@ -43,7 +42,7 @@ public abstract class EventController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Pattern pattern = Pattern.compile("-?\\d*");
-        TextFormatter<String> formatter = new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
+        TextFormatter<String> formatter = new TextFormatter<>(change -> {
             return pattern.matcher(change.getControlNewText()).matches() ? change : null;
         });
         this.idTextfield.setTextFormatter(formatter);

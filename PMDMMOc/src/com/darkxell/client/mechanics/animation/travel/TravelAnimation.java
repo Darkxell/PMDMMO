@@ -33,7 +33,7 @@ public class TravelAnimation {
 
     /**
      * Updates this Animation.
-     * 
+     *
      * @param completion- The completion of this Animation, between 0 and 1.
      */
     public void update(double completion) {

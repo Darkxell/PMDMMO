@@ -39,8 +39,7 @@ public class DungeonSelectionMapState extends AbstractState {
 
     public DungeonSelectionMapState() {
         super();
-        ArrayList<Dungeon> dungeons = new ArrayList<Dungeon>();
-        dungeons.addAll(Registries.dungeons().toList());
+        ArrayList<Dungeon> dungeons = new ArrayList<>(Registries.dungeons().toList());
         dungeons.sort(Comparator.naturalOrder());
         dungeons.removeIf(d -> DungeonAccessibility.isAvailable(Persistence.player.getData(),
                 d.id) != DungeonAccessibility.ACCESSIBLE);

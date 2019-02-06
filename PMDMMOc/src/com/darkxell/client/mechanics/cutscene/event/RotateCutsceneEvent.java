@@ -42,7 +42,7 @@ public class RotateCutsceneEvent extends CutsceneEvent {
     public void onStart() {
         super.onStart();
         CutsceneEntity entity = this.context.parent().player.getEntity(this.target);
-        if (entity != null && entity instanceof CutscenePokemon) {
+        if (entity instanceof CutscenePokemon) {
             this.pokemon = (CutscenePokemon) entity;
             this.currentDistance = this.tick = 0;
 

@@ -1,6 +1,7 @@
 package com.darkxell.common.item;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import org.jdom2.Element;
 
@@ -15,7 +16,7 @@ import com.darkxell.common.util.xml.XMLUtils;
 /** Represents an Item type. */
 public class Item implements AffectsPokemon, Registrable<Item> {
     /** Possible actions to be executed on an Item. */
-    public static enum ItemAction {
+    public enum ItemAction {
         /** Item wasn't moved by a Pokemon. */
         AUTO(12, "item.autoaction"),
         /** Removing the Item as shortcut. */
@@ -46,13 +47,13 @@ public class Item implements AffectsPokemon, Registrable<Item> {
         USE(1, "item.use");
 
         public static void sort(ArrayList<ItemAction> actions) {
-            actions.sort((o1, o2) -> Integer.compare(o1.order, o2.order));
+            actions.sort(Comparator.comparingInt(o -> o.order));
         }
 
         public final String name;
         public final int order;
 
-        private ItemAction(int order, String name) {
+        ItemAction(int order, String name) {
             this.order = order;
             this.name = name;
         }
@@ -65,7 +66,7 @@ public class Item implements AffectsPokemon, Registrable<Item> {
 
     }
 
-    public static enum ItemCategory {
+    public enum ItemCategory {
         BERRIES(3),
         DRINKS(4),
         EQUIPABLE(0),
@@ -82,7 +83,7 @@ public class Item implements AffectsPokemon, Registrable<Item> {
 
         public final int order;
 
-        private ItemCategory(int order) {
+        ItemCategory(int order) {
             this.order = order;
         }
     }
@@ -149,7 +150,7 @@ public class Item implements AffectsPokemon, Registrable<Item> {
     }
 
     public ArrayList<ItemAction> getLegalActions(boolean inDungeon) {
-        ArrayList<ItemAction> actions = new ArrayList<Item.ItemAction>();
+        ArrayList<ItemAction> actions = new ArrayList<>();
         if (inDungeon) {
             if (this.effect().isUsable())
                 actions.add(ItemAction.USE);
@@ -184,7 +185,7 @@ public class Item implements AffectsPokemon, Registrable<Item> {
 
     /**
      * Called when this Item is used.
-     * 
+     *
      * @param floor   - The current Floor.
      * @param pokemon - The Pokemon using the Item.
      * @param target  - The Pokemon the Item is being used on. May be null if there is no target.
@@ -195,7 +196,7 @@ public class Item implements AffectsPokemon, Registrable<Item> {
 
     /**
      * Called when this Item is used when caught.
-     * 
+     *
      * @param floor   - The current Floor.
      * @param pokemon - The Pokemon using the Item.
      * @param target  - The Pokemon the Item is being used on. May be null if there is no target.

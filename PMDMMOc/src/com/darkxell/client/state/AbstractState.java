@@ -43,7 +43,7 @@ public abstract class AbstractState implements AbstractGraphicsLayer {
 
     /**
      * Called when the user clicks.
-     * 
+     *
      * @param x, y - The mouse position.
      */
     public void onMouseClick(int x, int y) {
@@ -51,7 +51,7 @@ public abstract class AbstractState implements AbstractGraphicsLayer {
 
     /**
      * Called when the user moves their mouse.
-     * 
+     *
      * @param x, y - The mouse position.
      */
     public void onMouseMove(int x, int y) {
@@ -59,7 +59,7 @@ public abstract class AbstractState implements AbstractGraphicsLayer {
 
     /**
      * Called when the user right clicks.
-     * 
+     *
      * @param x, y - The mouse position.
      */
     public void onMouseRightClick(int x, int y) {
@@ -71,7 +71,7 @@ public abstract class AbstractState implements AbstractGraphicsLayer {
 
     /**
      * Renders the state.
-     * 
+     *
      * @param   width, height - Dimensions of the canvas.
      * @param g - Graphics to draw with.
      */

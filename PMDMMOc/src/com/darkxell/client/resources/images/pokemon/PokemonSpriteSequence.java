@@ -26,7 +26,7 @@ public class PokemonSpriteSequence implements Comparable<PokemonSpriteSequence> 
         this.rushPoint = rush;
         this.hitPoint = hit;
         this.returnPoint = ret;
-        this.frames = frames.toArray(new PokemonSpriteFrame[frames.size()]);
+        this.frames = frames.toArray(new PokemonSpriteFrame[0]);
         this.duration = this.totalDuration();
     }
 

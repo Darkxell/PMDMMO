@@ -38,7 +38,7 @@ public class MoveEffect implements AffectsPokemon {
     /**
      * This method creates the additional effects (if any) of this Move. Effects should be added to the input MoveEvents
      * list.
-     * 
+     *
      * @param usedMove   - The Move Use context.
      * @param target     - The Pokemon targeted by the Move.
      * @param flags      - The flags of the Event that triggered this use.
@@ -59,7 +59,7 @@ public class MoveEffect implements AffectsPokemon {
     /**
      * Creates a custom MoveEffectCalculator object. If the effect doesn't need a custom one, should return null by
      * default.
-     * 
+     *
      * @param  usedMove - The Move that was used.
      * @param  target   - The target of the Move.
      * @param  floor    - The Floor context.
@@ -101,7 +101,7 @@ public class MoveEffect implements AffectsPokemon {
      * @return       The Pokemon affected by this Move.
      */
     public DungeonPokemon[] getTargets(Move move, DungeonPokemon user, Floor floor) {
-        ArrayList<DungeonPokemon> targets = new ArrayList<DungeonPokemon>();
+        ArrayList<DungeonPokemon> targets = new ArrayList<>();
         Tile t = user.tile(), front = t.adjacentTile(user.facing());
 
         switch (move.range) {
@@ -203,17 +203,17 @@ public class MoveEffect implements AffectsPokemon {
         if (!user.hasStatusCondition(StatusConditions.Confused))
             targets.removeIf(p -> !move.targets.isValid(user, p));
         if (move.range == MoveRange.Room || move.range == MoveRange.Floor)
-            targets.sort((DungeonPokemon p1, DungeonPokemon p2) -> floor.dungeon.compare(p1, p2));
+            targets.sort(floor.dungeon::compare);
         if (targets.isEmpty() && this.allowsNoTarget(move, user))
             targets.add(null);
 
-        return targets.toArray(new DungeonPokemon[targets.size()]);
+        return targets.toArray(new DungeonPokemon[0]);
     }
 
     /**
      * This method creates the main effects of this Move. This method shouldn't be overridden unless you want to change
      * the basics of how Moves work. Effects should be added to the input MoveEvents list.
-     * 
+     *
      * @param usedMove   - The Move Use context.
      * @param target     - The Pokemon targeted by the Move.
      * @param flags      - The flags of the Event that triggered this use.
@@ -239,7 +239,7 @@ public class MoveEffect implements AffectsPokemon {
 
     /**
      * Main method called when a Pokemon uses a Move on a target.
-     * 
+     *
      * @return <code>true</code> if the Move missed.
      */
     public boolean mainUse(MoveUse usedMove, DungeonPokemon target, String[] flags, Floor floor,
@@ -278,7 +278,7 @@ public class MoveEffect implements AffectsPokemon {
 
     /**
      * Creates the MoveUseEvent and adds it to the events list.
-     * 
+     *
      * @param move   - The Move use context.
      * @param target - The target Pokemon.
      * @param floor  - The Floor context.

@@ -243,7 +243,7 @@ public class Pokemon implements ItemContainer, HasID {
 
     @Override
     public ArrayList<ItemAction> legalItemActions(boolean inDungeon) {
-        ArrayList<ItemAction> actions = new ArrayList<ItemAction>();
+        ArrayList<ItemAction> actions = new ArrayList<>();
         actions.add(ItemAction.TAKE);
         return actions;
     }

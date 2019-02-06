@@ -88,7 +88,7 @@ public class ItemEffect {
 
     /**
      * Method called just after an Event is processed.
-     * 
+     *
      * @param floor           - The Floor context.
      * @param event           - The processed Event.
      * @param concerned       - A reference to a Pokemon for various uses. It is the owner this is an Item, a Status
@@ -104,7 +104,7 @@ public class ItemEffect {
 
     /**
      * Method called just before an Event is processed.
-     * 
+     *
      * @param floor           - The Floor context.
      * @param event           - The processed Event.
      * @param concerned       - A reference to a Pokemon for various uses. It is the owner this is an Item, a Status
@@ -120,7 +120,7 @@ public class ItemEffect {
 
     /**
      * Called when an Item with this Effect is used.
-     * 
+     *
      * @param floor   - The current Floor.
      * @param item    - The used Item.
      * @param pokemon - The Pokemon using the Item.
@@ -132,7 +132,7 @@ public class ItemEffect {
 
     /**
      * Called when an Item with this Effect is used when caught.
-     * 
+     *
      * @param floor   - The current Floor.
      * @param item    - The used Item.
      * @param pokemon - The Pokemon that threw the Item.

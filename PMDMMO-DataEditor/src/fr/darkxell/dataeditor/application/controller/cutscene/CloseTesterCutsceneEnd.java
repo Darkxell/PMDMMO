@@ -9,7 +9,7 @@ import com.darkxell.client.mechanics.cutscene.Cutscene.CutsceneEnd;
 public class CloseTesterCutsceneEnd extends CutsceneEnd {
 
     public CloseTesterCutsceneEnd(Cutscene c) {
-        super(c, (String) null, false);
+        super(c, null, false);
     }
 
     @Override

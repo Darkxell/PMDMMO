@@ -68,7 +68,7 @@ public class EditItemController implements Initializable {
         Item[] t = new Item[items.size()];
         for (int i = 0; i < t.length; ++i)
             t[i] = items.get(i);
-        this.itemColumn.setCellFactory(ComboBoxTableCell.<SingleItemTableItem, Item>forTableColumn(t));
+        this.itemColumn.setCellFactory(ComboBoxTableCell.forTableColumn(t));
         this.weightColumn.setCellFactory(TextFieldTableCell.forTableColumn());
     }
 

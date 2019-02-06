@@ -54,10 +54,10 @@ public class PokemonSpecies implements Registrable<PokemonSpecies> {
         this.abilities = XMLUtils.readIntArrayAsList(xml.getChild("abilities", xml.getNamespace()));
         this.mobility = xml.getAttribute("mobility") == null ? this.defaultMobility()
                 : Mobility.valueOf(xml.getAttributeValue("mobility"));
-        this.baseStats = new ArrayList<BaseStats>();
-        this.learnset = new HashMap<Integer, ArrayList<Integer>>();
+        this.baseStats = new ArrayList<>();
+        this.learnset = new HashMap<>();
         this.tms = XMLUtils.readIntArrayAsList(xml.getChild("tms", xml.getNamespace()));
-        this.evolutions = new ArrayList<Evolution>();
+        this.evolutions = new ArrayList<>();
 
         if (xml.getChild("statline", xml.getNamespace()) != null) {
             int[][] statline = XMLUtils.readIntMatrix(xml.getChild("statline", xml.getNamespace()));
@@ -85,7 +85,7 @@ public class PokemonSpecies implements Registrable<PokemonSpecies> {
             for (Element level : xml.getChild("learnset", xml.getNamespace()).getChildren())
                 this.learnset.put(Integer.parseInt(level.getAttributeValue("l")), XMLUtils.readIntArrayAsList(level));
 
-        this.forms = new ArrayList<PokemonSpecies>();
+        this.forms = new ArrayList<>();
         for (Element form : xml.getChildren("form", xml.getNamespace()))
             this.forms.add(createForm(form));
 
@@ -145,11 +145,11 @@ public class PokemonSpecies implements Registrable<PokemonSpecies> {
         ArrayList<Integer> abilities = xml.getChild("abilities", xml.getNamespace()) == null
                 ? (ArrayList<Integer>) this.abilities.clone()
                 : XMLUtils.readIntArrayAsList(xml.getChild("abilities", xml.getNamespace()));
-        ArrayList<BaseStats> baseStats = new ArrayList<BaseStats>();
-        HashMap<Integer, ArrayList<Integer>> learnset = new HashMap<Integer, ArrayList<Integer>>();
+        ArrayList<BaseStats> baseStats = new ArrayList<>();
+        HashMap<Integer, ArrayList<Integer>> learnset = new HashMap<>();
         ArrayList<Integer> tms = xml.getChild("tms", xml.getNamespace()) == null ? (ArrayList<Integer>) this.tms.clone()
                 : XMLUtils.readIntArrayAsList(xml.getChild("tms", xml.getNamespace()));
-        ArrayList<Evolution> evolutions = new ArrayList<Evolution>();
+        ArrayList<Evolution> evolutions = new ArrayList<>();
 
         if (xml.getChild("statline", xml.getNamespace()) == null)
             baseStats = (ArrayList<BaseStats>) this.baseStats.clone();
@@ -206,7 +206,7 @@ public class PokemonSpecies implements Registrable<PokemonSpecies> {
     }
 
     public Evolution[] evolutions() {
-        return this.evolutions.toArray(new Evolution[this.evolutions.size()]);
+        return this.evolutions.toArray(new Evolution[0]);
     }
 
     /** @return The amount of experience needed to level up from the input level. */
@@ -228,7 +228,7 @@ public class PokemonSpecies implements Registrable<PokemonSpecies> {
 
     /**
      * Generates a Pokemon of this species.
-     * 
+     *
      * @param level - The level of the Pokemon to generate.
      */
     public Pokemon generate(Random random, int level) {
@@ -241,12 +241,12 @@ public class PokemonSpecies implements Registrable<PokemonSpecies> {
 
     /**
      * Generates a Pokemon of this species.
-     * 
+     *
      * @param level       - The level of the Pokemon to generate.
      * @param shinyChance - The chance for the generated Pokemon to be a shiny (0 to 1).
      */
     public Pokemon generate(Random random, int level, double shinyChance) {
-        ArrayList<Integer> moves = new ArrayList<Integer>();
+        ArrayList<Integer> moves = new ArrayList<>();
 
         int m1 = this.latestMove(level, moves);
         moves.add(m1);
@@ -291,7 +291,7 @@ public class PokemonSpecies implements Registrable<PokemonSpecies> {
 
     /** @return The list of learned moves at the input level. */
     public ArrayList<Move> learnedMoves(int level) {
-        ArrayList<Move> moves = new ArrayList<Move>();
+        ArrayList<Move> moves = new ArrayList<>();
         if (this.learnset.containsKey(level))
             for (Integer id : this.learnset.get(level))
                 moves.add(Registries.moves().find(id));

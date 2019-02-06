@@ -214,9 +214,7 @@ public class DialogScreen {
      * @return True if the current message should be followed with a switching animation.
      */
     protected boolean switchAnimation() {
-        if (this.parentState.nextScreen() == null)
-            return false;
-        return true;
+        return this.parentState.nextScreen() != null;
     }
 
     public void update() {

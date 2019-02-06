@@ -26,8 +26,8 @@ public class WaitEventController extends EventController {
             super.updateItem(item, empty);
             this.setText(empty ? null : item.toString());
             this.setGraphic(empty ? null : EditCutsceneController.instance.listManager.graphicFor(item));
-        };
-    };
+        }
+    }
 
     @FXML
     private Button addButton;
@@ -40,8 +40,7 @@ public class WaitEventController extends EventController {
     private ListView<CutsceneEvent> existingEventsList;
     @FXML
     private Button removeButton;
-    private Comparator<CutsceneEvent> sorter = (o1, o2) -> Integer.compare(allEvents.indexOf(o1),
-            allEvents.indexOf(o2));
+    private Comparator<CutsceneEvent> sorter = Comparator.comparingInt(o -> allEvents.indexOf(o));
 
     private void add(CutsceneEvent event) {
         this.existingEventsList.getItems().remove(event);

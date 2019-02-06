@@ -1,7 +1,9 @@
 package com.darkxell.common.ai;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Stack;
 
 import com.darkxell.common.dungeon.floor.Floor;
@@ -156,9 +158,7 @@ public final class AIUtils {
             return t.distance(pokemon.tile()) < maxD;
         });
 
-        tiles.sort(
-                (Tile t1, Tile t2) -> Integer.compare(pokemon.facing().distance(generalDirection(pokemon.tile(), t1)),
-                        pokemon.facing().distance(generalDirection(pokemon.tile(), t2))));
+        tiles.sort(Comparator.comparingInt((Tile t) -> pokemon.facing().distance(generalDirection(pokemon.tile(), t))));
 
         return tiles;
     }
@@ -343,10 +343,8 @@ public final class AIUtils {
             for (int y = pokemon.tile().y - visibility; y <= pokemon.tile().y + visibility; ++y)
                 visible.add(floor.tileAt(x, y));
 
-        visible.removeIf(t -> t == null);
-        visible.sort((Tile t1, Tile t2) -> {
-            return Double.compare(pokemon.tile().distance(t1), pokemon.tile().distance(t2));
-        });
+        visible.removeIf(Objects::isNull);
+        visible.sort(Comparator.comparingDouble((Tile t) -> pokemon.tile().distance(t)));
         return visible;
     }
 

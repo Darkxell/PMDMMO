@@ -3,6 +3,7 @@ package com.darkxell.client.state.menu;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Stack;
 
 import com.darkxell.client.graphics.AbstractGraphicsLayer;
@@ -17,11 +18,10 @@ import com.darkxell.common.util.language.Message;
 public class InfoState extends AbstractMenuState {
 
     private static ArrayList<String> getKeywords(Message[] infos) {
-        ArrayList<String> keywords = new ArrayList<String>();
-        Stack<Message> toProcess = new Stack<Message>();
+        ArrayList<String> keywords = new ArrayList<>();
+        Stack<Message> toProcess = new Stack<>();
 
-        for (Message info : infos)
-            toProcess.add(info);
+        toProcess.addAll(Arrays.asList(infos));
 
         while (!toProcess.isEmpty()) {
             Message m = toProcess.pop();
@@ -49,8 +49,8 @@ public class InfoState extends AbstractMenuState {
         if (titles.length != infos.length)
             Logger.e("InfoState(): titles and infos have different sizes!");
 
-        ArrayList<Message> t = new ArrayList<Message>();
-        ArrayList<Message> i = new ArrayList<Message>();
+        ArrayList<Message> t = new ArrayList<>();
+        ArrayList<Message> i = new ArrayList<>();
 
         for (int j = 0; j < infos.length; ++j) {
             t.add(titles[j]);
@@ -63,8 +63,8 @@ public class InfoState extends AbstractMenuState {
             i.add(new Message(Keywords.getKeyword(keyword)).findKeywords());
         }
 
-        this.titles = t.toArray(new Message[t.size()]);
-        this.infos = i.toArray(new Message[i.size()]);
+        this.titles = t.toArray(new Message[0]);
+        this.infos = i.toArray(new Message[0]);
     }
 
     @Override

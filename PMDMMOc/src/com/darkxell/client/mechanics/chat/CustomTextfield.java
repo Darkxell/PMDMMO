@@ -90,7 +90,7 @@ public class CustomTextfield {
         if (!charsafter.equals("")) {
             char swich = charsafter.charAt(0);
             charsbefore = charsbefore + swich;
-            charsafter = charsafter.substring(1, charsafter.length());
+            charsafter = charsafter.substring(1);
         }
     }
 
@@ -157,7 +157,7 @@ public class CustomTextfield {
      * Obfuscated textfields still store their information without encription in memory but will not display their exact
      * value when rendered using render(Graphics2D g, int width, int height).<br/>
      * Note that an obfuscated textfield cannot be unobfuscated.
-     * 
+     *
      * @return This object.
      */
     public CustomTextfield setObfuscated() {

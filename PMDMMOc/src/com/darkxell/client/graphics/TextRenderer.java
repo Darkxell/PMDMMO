@@ -9,6 +9,7 @@ import java.awt.image.RGBImageFilter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import com.darkxell.client.resources.Palette;
 import com.darkxell.client.resources.images.Sprites;
@@ -17,7 +18,7 @@ import com.darkxell.common.util.language.Message;
 
 public class TextRenderer {
 
-    public static enum PMDChar {
+    public enum PMDChar {
         new_line("<br>", 0, 0, 1),
         tabulation("<tab>", 0, 0, 1),
         space(" ", 0, 0, 4),
@@ -260,7 +261,7 @@ public class TextRenderer {
         /** Width of the sprite. */
         public final int width;
 
-        private PMDChar(String value, int x, int y, int width) {
+        PMDChar(String value, int x, int y, int width) {
             this.value = value;
             this.xPos = x;
             this.yPos = y;
@@ -277,12 +278,12 @@ public class TextRenderer {
 
     }
 
-    public static enum FontMode {
+    public enum FontMode {
         NORMAL,
         EXPERIENCE,
         DAMAGE,
         HEAL,
-        DUNGEON;
+        DUNGEON
     }
 
     private static Color color, previous;
@@ -373,7 +374,7 @@ public class TextRenderer {
     }
 
     private static ArrayList<PMDChar> applyFontMode(ArrayList<PMDChar> chars, FontMode font) {
-        ArrayList<PMDChar> toreturn = new ArrayList<TextRenderer.PMDChar>();
+        ArrayList<PMDChar> toreturn = new ArrayList<>();
         HashMap<PMDChar, PMDChar> fontmap = null;
         switch (font) {
         case DAMAGE:
@@ -396,19 +397,17 @@ public class TextRenderer {
         default:
             break;
         }
-        if (fontmap != null)
-            for (PMDChar c : chars)
-                if (fontmap.containsKey(c))
-                    toreturn.add(fontmap.get(c));
-                else
-                    toreturn.add(c);
-        else
+
+        if (fontmap == null)
             toreturn.addAll(chars);
+        else
+            for (PMDChar c : chars)
+                toreturn.add(fontmap.getOrDefault(c, c));
         return toreturn;
     }
 
     public static ArrayList<PMDChar> decode(String text) {
-        ArrayList<PMDChar> chars = new ArrayList<TextRenderer.PMDChar>();
+        ArrayList<PMDChar> chars = new ArrayList<>();
         if (text == null)
             return chars;
         int c = 0;
@@ -427,7 +426,7 @@ public class TextRenderer {
             ++c;
         }
 
-        chars.removeIf(ch -> ch == null);
+        chars.removeIf(Objects::isNull);
         return chars;
     }
 

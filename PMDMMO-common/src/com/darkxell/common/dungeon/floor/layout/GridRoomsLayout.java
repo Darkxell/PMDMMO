@@ -21,7 +21,7 @@ public class GridRoomsLayout extends Layout {
     private int removedrooms;
 
     /**
-     * 
+     *
      * @param id                         the id of this layout.
      * @param gridwidth                  the witdh of the rooms grid
      * @param gridheight                 the height of the rooms grid

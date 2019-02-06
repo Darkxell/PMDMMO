@@ -21,7 +21,7 @@ import com.darkxell.common.weather.Weather;
 /** Describes a Dungeon: floors, Pokemon, items... */
 public class Dungeon implements Registrable<Dungeon> {
 
-    public static enum DungeonDirection {
+    public enum DungeonDirection {
         DOWN,
         UP;
 
@@ -82,29 +82,29 @@ public class Dungeon implements Registrable<Dungeon> {
         this.mapx = XMLUtils.getAttribute(xml, "mapx", -260) + 260;
         this.mapy = XMLUtils.getAttribute(xml, "mapy", -140) + 140;
 
-        this.pokemon = new ArrayList<DungeonEncounter>();
+        this.pokemon = new ArrayList<>();
         for (Element pokemon : xml.getChild("encounters", xml.getNamespace()).getChildren(DungeonEncounter.XML_ROOT,
                 xml.getNamespace()))
             this.pokemon.add(new DungeonEncounter(pokemon));
 
-        this.items = new ArrayList<DungeonItemGroup>();
+        this.items = new ArrayList<>();
         for (Element item : xml.getChild("items", xml.getNamespace()).getChildren(DungeonItemGroup.XML_ROOT,
                 xml.getNamespace()))
             this.items.add(new DungeonItemGroup(item));
 
-        this.shopItems = new ArrayList<DungeonItemGroup>();
+        this.shopItems = new ArrayList<>();
         if (xml.getChild("shops", xml.getNamespace()) != null)
             for (Element item : xml.getChild("shops", xml.getNamespace()).getChildren(DungeonItemGroup.XML_ROOT,
                     xml.getNamespace()))
                 this.shopItems.add(new DungeonItemGroup(item));
 
-        this.buriedItems = new ArrayList<DungeonItemGroup>();
+        this.buriedItems = new ArrayList<>();
         if (xml.getChild("buried", xml.getNamespace()) != null)
             for (Element item : xml.getChild("buried", xml.getNamespace()).getChildren(DungeonItemGroup.XML_ROOT,
                     xml.getNamespace()))
                 this.buriedItems.add(new DungeonItemGroup(item));
 
-        this.traps = new ArrayList<DungeonTrapGroup>();
+        this.traps = new ArrayList<>();
         if (xml.getChild("traps", xml.getNamespace()) == null)
             this.traps.add(new DungeonTrapGroup(new int[] { TrapRegistry.WONDER_TILE.id }, new int[] { 100 },
                     new FloorSet(1, this.floorCount)));
@@ -113,7 +113,7 @@ public class Dungeon implements Registrable<Dungeon> {
                     xml.getNamespace()))
                 this.traps.add(new DungeonTrapGroup(trap));
 
-        this.floorData = new ArrayList<FloorData>();
+        this.floorData = new ArrayList<>();
         for (Element data : xml.getChild("data", xml.getNamespace()).getChildren(FloorData.XML_ROOT,
                 xml.getNamespace())) {
             FloorData d = null;
@@ -126,7 +126,7 @@ public class Dungeon implements Registrable<Dungeon> {
             this.floorData.add(d);
         }
 
-        this.weather = new HashMap<Integer, FloorSet>();
+        this.weather = new HashMap<>();
         if (xml.getChild("weather", xml.getNamespace()) != null)
             for (Element data : xml.getChild("weather", xml.getNamespace()).getChildren("w", xml.getNamespace()))
                 this.weather.put(Integer.parseInt(data.getAttributeValue("id")),
@@ -238,7 +238,7 @@ public class Dungeon implements Registrable<Dungeon> {
     }
 
     public ArrayList<DungeonEncounter> pokemon(int floor) {
-        ArrayList<DungeonEncounter> encounters = new ArrayList<DungeonEncounter>(this.pokemon);
+        ArrayList<DungeonEncounter> encounters = new ArrayList<>(this.pokemon);
         encounters.removeIf((DungeonEncounter candidate) -> {
             return !candidate.floors.contains(floor);
         });
@@ -255,8 +255,7 @@ public class Dungeon implements Registrable<Dungeon> {
      *         they don't meet requirements.
      */
     public ItemStack randomItem(Random random, int floor, boolean allowMoney) {
-        ArrayList<DungeonItemGroup> candidates = new ArrayList<DungeonItemGroup>();
-        candidates.addAll(this.items);
+        ArrayList<DungeonItemGroup> candidates = new ArrayList<>(this.items);
         candidates.removeIf(i -> {
             if (!allowMoney && i.items.length == 1 && i.items[0] == Item.POKEDOLLARS)
                 return true;

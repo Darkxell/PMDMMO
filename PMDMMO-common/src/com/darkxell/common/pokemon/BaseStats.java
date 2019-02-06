@@ -9,7 +9,7 @@ import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonObject;
 
 public class BaseStats implements Communicable {
-    public static enum Stat {
+    public enum Stat {
         Accuracy(6),
         Attack(0),
         Defense(1),
@@ -24,7 +24,7 @@ public class BaseStats implements Communicable {
 
         public final int id;
 
-        private Stat(int id) {
+        Stat(int id) {
             this.id = id;
         }
 

@@ -9,7 +9,7 @@ public class BankActionConfirmHandler extends MessageHandler {
 
     @Override
     public void handleMessage(JsonObject message) {
-        if (Persistence.currentDialog != null && Persistence.currentDialog instanceof BankDialog)
+        if (Persistence.currentDialog instanceof BankDialog)
             try {
                 long bag = message.getLong("moneyinbag", 0);
                 long bank = message.getLong("moneyinbank", 0);

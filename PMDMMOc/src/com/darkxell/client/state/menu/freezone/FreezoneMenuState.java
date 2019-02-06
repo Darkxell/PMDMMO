@@ -1,6 +1,7 @@
 package com.darkxell.client.state.menu.freezone;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.state.AbstractState;
@@ -12,7 +13,6 @@ import com.darkxell.client.state.menu.item.ItemContainersMenuState;
 import com.darkxell.client.state.menu.menus.SettingsMenuState;
 import com.darkxell.client.state.menu.menus.TeamMenuState;
 import com.darkxell.common.player.ItemContainer;
-import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.language.Message;
 
 public class FreezoneMenuState extends OptionSelectionMenuState {
@@ -42,10 +42,9 @@ public class FreezoneMenuState extends OptionSelectionMenuState {
     @Override
     protected void onOptionSelected(MenuOption option) {
         if (option == this.items) {
-            ArrayList<ItemContainer> containers = new ArrayList<ItemContainer>();
+            ArrayList<ItemContainer> containers = new ArrayList<>();
             containers.add(Persistence.player.inventory());
-            for (Pokemon pokemon : Persistence.player.getTeam())
-                containers.add(pokemon);
+            containers.addAll(Arrays.asList(Persistence.player.getTeam()));
 
             boolean found = false;
             for (ItemContainer container : containers)
@@ -62,7 +61,7 @@ public class FreezoneMenuState extends OptionSelectionMenuState {
                         new DialogState(this.background, listener, new DialogScreen(new Message("inventory.empty"))));
             } else {
                 ItemContainersMenuState s = new ItemContainersMenuState(this, this.background, false,
-                        containers.toArray(new ItemContainer[containers.size()]));
+                        containers.toArray(new ItemContainer[0]));
                 s.isOpaque = this.isOpaque;
                 Persistence.stateManager.setState(s);
             }

@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 
 import com.darkxell.client.mechanics.cutscene.Cutscene;
@@ -67,11 +66,11 @@ public class CutsceneCreationController implements Initializable, ListCellParent
         this.freezoneCombobox.getSelectionModel().select(0);
 
         Pattern pattern = Pattern.compile("-?\\d*(\\.\\d*)?");
-        TextFormatter<String> formatter = new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
+        TextFormatter<String> formatter = new TextFormatter<>(change -> {
             return pattern.matcher(change.getControlNewText()).matches() ? change : null;
         });
         this.cameraXTextfield.setTextFormatter(formatter);
-        formatter = new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
+        formatter = new TextFormatter<>(change -> {
             return pattern.matcher(change.getControlNewText()).matches() ? change : null;
         });
         this.cameraYTextfield.setTextFormatter(formatter);

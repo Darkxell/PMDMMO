@@ -16,7 +16,7 @@ import com.darkxell.common.util.language.Localization;
 import com.darkxell.common.util.xml.XMLUtils;
 
 public class AnimateCutsceneEvent extends CutsceneEvent implements AnimationEndListener {
-    public static enum AnimateCutsceneEventMode {
+    public enum AnimateCutsceneEventMode {
         PLAY,
         START,
         STOP
@@ -63,7 +63,7 @@ public class AnimateCutsceneEvent extends CutsceneEvent implements AnimationEndL
         super.onStart();
         this.animationFinished = false;
         CutsceneEntity entity = this.context.parent().player.getEntity(this.target);
-        if (entity != null && entity instanceof CutscenePokemon) {
+        if (entity instanceof CutscenePokemon) {
             this.animation = Animations.getCutsceneAnimation(this.animationID, (CutscenePokemon) entity,
                     this.mode == AnimateCutsceneEventMode.PLAY ? this : null);
             if (this.animation == null)

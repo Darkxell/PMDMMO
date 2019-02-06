@@ -66,7 +66,7 @@ public class OptionDialogCutsceneEvent extends CutsceneEvent implements DialogEn
         this.isOver = false;
         CutscenePokemon pokemon = null;
         CutsceneEntity e = this.context.parent().player.getEntity(this.question.pokemon);
-        if (e != null && e instanceof CutscenePokemon)
+        if (e instanceof CutscenePokemon)
             pokemon = (CutscenePokemon) e;
         if (!this.question.hasReplacements)
             this.question.addReplacements(pokemon);

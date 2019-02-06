@@ -45,7 +45,7 @@ public abstract class AbstractMenuState extends AbstractState {
 
         public MenuTab(Message name) {
             this.name = name;
-            this.options = new ArrayList<AbstractMenuState.MenuOption>();
+            this.options = new ArrayList<>();
         }
 
         public MenuTab(String nameID) {
@@ -62,7 +62,7 @@ public abstract class AbstractMenuState extends AbstractState {
         }
 
         public MenuOption[] options() {
-            return this.options.toArray(new MenuOption[this.options.size()]);
+            return this.options.toArray(new MenuOption[0]);
         }
 
         public int width() {
@@ -85,7 +85,7 @@ public abstract class AbstractMenuState extends AbstractState {
 
     public AbstractMenuState(AbstractGraphicsLayer background) {
         this.background = background;
-        this.tabs = new ArrayList<MenuTab>();
+        this.tabs = new ArrayList<>();
     }
 
     /** Creates this Menu's options. */
@@ -137,7 +137,7 @@ public abstract class AbstractMenuState extends AbstractState {
                 SoundManager.playSound("ui-select");
             }
 
-            if (key == Key.LEFT || key == Key.RIGHT || key == Key.PAGE_RIGHT || key == Key.PAGE_RIGHT) {
+            if (key == Key.LEFT || key == Key.RIGHT || key == Key.PAGE_RIGHT) {
                 if (this.selection >= this.currentTab().options.size())
                     this.selection = this.currentTab().options.size() - 1;
                 this.onTabChanged(this.currentTab());
@@ -185,7 +185,7 @@ public abstract class AbstractMenuState extends AbstractState {
     }
 
     public MenuTab[] tabs() {
-        return this.tabs.toArray(new MenuTab[this.tabs.size()]);
+        return this.tabs.toArray(new MenuTab[0]);
     }
 
     @Override

@@ -57,16 +57,16 @@ public class MovesTabController implements Initializable, ListCellParent<MoveLis
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         instance = this;
-        TreeItem<CustomTreeItem> root = new TreeItem<CustomTreeItem>(new TreeCategory("Moves"));
+        TreeItem<CustomTreeItem> root = new TreeItem<>(new TreeCategory("Moves"));
         root.setExpanded(true);
         this.movesTreeView.setRoot(root);
         List<TreeItem<CustomTreeItem>> categories = this.movesTreeView.getRoot().getChildren();
         for (PokemonType type : PokemonType.values())
-            categories.add(new TreeItem<CustomTreeItem>(
+            categories.add(new TreeItem<>(
                     new TreeCategory(type.getName().toString().replaceAll("<.*?>", "") + "-type Moves")));
-        categories.add(new TreeItem<CustomTreeItem>(new TreeCategory("Orb Moves")));
-        categories.add(new TreeItem<CustomTreeItem>(new TreeCategory("Hidden Moves")));
-        this.categories = categories.toArray(new TreeItem[categories.size()]);
+        categories.add(new TreeItem<>(new TreeCategory("Orb Moves")));
+        categories.add(new TreeItem<>(new TreeCategory("Hidden Moves")));
+        this.categories = categories.toArray(new TreeItem[0]);
 
         /*
          * this.movesList.setCellFactory(param -> { return new CustomListCell<>(AnimationsTabController.instance,
@@ -124,7 +124,7 @@ public class MovesTabController implements Initializable, ListCellParent<MoveLis
         alert.setHeaderText("Delete Animation");
         alert.setContentText("Are you sure you want to delete move '" + move.move.name() + "'?");
         Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK) {
+        if (result.isPresent() && result.get() == ButtonType.OK) {
             if (move == this.currentMove) {
                 this.currentMove = null;
                 this.editMovePane.setVisible(false);

@@ -35,7 +35,7 @@ public class MissionResultsState extends CutsceneState {
         private MissionResultsState state;
 
         public NextMissionCutsceneEnd(Cutscene cutscene, MissionResultsState state, boolean fadesOut) {
-            super(cutscene, (String) null, fadesOut);
+            super(cutscene, null, fadesOut);
             this.state = state;
         }
 

@@ -8,7 +8,7 @@ import com.darkxell.common.util.Direction;
 
 public class PokemonSprite {
 
-    public static enum PokemonSpriteState {
+    public enum PokemonSpriteState {
         APPEAL(22),
         ATTACK(2, true),
         BITE(15, true),
@@ -58,11 +58,11 @@ public class PokemonSprite {
         public final boolean hasDash;
         public final int id;
 
-        private PokemonSpriteState(int id) {
+        PokemonSpriteState(int id) {
             this(id, false);
         }
 
-        private PokemonSpriteState(int id, boolean hasDash) {
+        PokemonSpriteState(int id, boolean hasDash) {
             this.id = id;
             this.hasDash = hasDash;
         }
@@ -149,7 +149,7 @@ public class PokemonSprite {
     /**
      * Changes the state of this Sprite to the wanted one. If the parsed state is already the state used by the pokemon
      * sprite, this does nothing.
-     * 
+     *
      * @param playOnLoop - true if the state should play on loop until notified to stop. Defaults to false (i.e. only
      *                   plays once).
      */

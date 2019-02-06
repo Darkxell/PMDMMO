@@ -14,10 +14,10 @@ import com.darkxell.common.util.Direction;
 
 public class FloorVisibility {
 
-    private HashSet<Tile> currentlyVisible = new HashSet<Tile>();
+    private HashSet<Tile> currentlyVisible = new HashSet<>();
     public final Floor floor;
-    private HashSet<Tile> itemTiles = new HashSet<Tile>();
-    private HashSet<Tile> seenTiles = new HashSet<Tile>();
+    private HashSet<Tile> itemTiles = new HashSet<>();
+    private HashSet<Tile> seenTiles = new HashSet<>();
 
     public FloorVisibility() {
         this.floor = Persistence.floor;

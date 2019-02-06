@@ -24,7 +24,7 @@ public class ObjectRequestHandler extends MessageHandler {
         switch (type) {
         case "dbplayer":
             AbstractState state = Persistence.stateManager.getCurrentState();
-            if (state != null && state instanceof PlayerLoadingState)
+            if (state instanceof PlayerLoadingState)
                 ((PlayerLoadingState) state).onPlayerReceived(message.get("object").asObject());
             break;
 

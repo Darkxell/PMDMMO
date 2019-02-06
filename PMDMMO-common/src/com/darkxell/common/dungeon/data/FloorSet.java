@@ -19,7 +19,7 @@ public class FloorSet implements Comparable<FloorSet> {
     private HashMap<Integer, Integer> parts;
 
     public FloorSet(Element xml) {
-        this.parts = new HashMap<Integer, Integer>();
+        this.parts = new HashMap<>();
         this.except = XMLUtils.readIntArrayAsList(xml.getChild("except", xml.getNamespace()));
         for (Element part : xml.getChildren("part", xml.getNamespace()))
             if (part.getAttribute("floor") != null)
@@ -36,9 +36,9 @@ public class FloorSet implements Comparable<FloorSet> {
     }
 
     public FloorSet(int start, int end) {
-        this.parts = new HashMap<Integer, Integer>();
+        this.parts = new HashMap<>();
         this.parts.put(start, end);
-        this.except = new ArrayList<Integer>();
+        this.except = new ArrayList<>();
     }
 
     @Override
@@ -62,12 +62,11 @@ public class FloorSet implements Comparable<FloorSet> {
 
     /** @return A copy of this Floor set. */
     public FloorSet copy() {
-        HashMap<Integer, Integer> p = new HashMap<Integer, Integer>();
+        HashMap<Integer, Integer> p = new HashMap<>();
         for (Integer start : this.parts.keySet())
             p.put(start, this.parts.get(start));
 
-        ArrayList<Integer> e = new ArrayList<Integer>();
-        e.addAll(this.except);
+        ArrayList<Integer> e = new ArrayList<>(this.except);
 
         return new FloorSet(p, e);
     }
@@ -87,7 +86,7 @@ public class FloorSet implements Comparable<FloorSet> {
 
     /** @return The list of Floors this Set holds. */
     public int[] list() {
-        ArrayList<Integer> floors = new ArrayList<Integer>();
+        ArrayList<Integer> floors = new ArrayList<>();
         for (Integer start : this.parts.keySet()) {
             int floor = start;
             do {
@@ -124,7 +123,7 @@ public class FloorSet implements Comparable<FloorSet> {
             if (i != 0)
                 s += ", ";
             ++i;
-            if (part.first == part.second)
+            if (part.first.equals(part.second))
                 s += part.first;
             else
                 s += "[" + part.first + "-" + part.second + "]";
@@ -133,7 +132,7 @@ public class FloorSet implements Comparable<FloorSet> {
         if (!this.except.isEmpty()) {
             s += ", except ";
             for (Integer e : this.except)
-                s += (this.except.get(0) == e ? "" : ",") + e;
+                s += (this.except.get(0).equals(e) ? "" : ",") + e;
         }
 
         return s;

@@ -117,7 +117,7 @@ public class DungeonExploration {
 
     /**
      * Ends the current Turn.
-     * 
+     *
      * @return The Events created for the start of the new turn.
      */
     public ArrayList<DungeonEvent> endSubTurn() {
@@ -274,7 +274,7 @@ public class DungeonExploration {
     /**
      * Starts the current exploration. Creates the first floor and starts the Event Processor.<br>
      * /!\ Make sure the Event Processor has been initialized if you want a custom one. /!\
-     * 
+     *
      * @return The generated Floor.
      */
     public Floor initiateExploration() {
@@ -325,8 +325,7 @@ public class DungeonExploration {
     }
 
     public ArrayList<GameTurn> listTurns() {
-        ArrayList<GameTurn> turns = new ArrayList<>();
-        turns.addAll(this.pastTurns);
+        ArrayList<GameTurn> turns = new ArrayList<>(this.pastTurns);
         turns.add(this.currentTurn);
         return turns;
     }
@@ -372,7 +371,7 @@ public class DungeonExploration {
     /**
      * Removes the input Player from this Dungeon. Called when that Player exits the Dungeon by winning, escaping or
      * losing.
-     * 
+     *
      * @return true if there are no exploring players left.
      */
     public boolean removePlayer(Player player) {

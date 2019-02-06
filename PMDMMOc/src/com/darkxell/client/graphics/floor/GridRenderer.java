@@ -30,7 +30,7 @@ public class GridRenderer extends AbstractRenderer {
 
         DungeonPokemon player = Persistence.player.getDungeonLeader();
 
-        HashSet<Tile> faced = new HashSet<Tile>();
+        HashSet<Tile> faced = new HashSet<>();
         Tile tile = player.tile();
         do {
             faced.add(tile);

@@ -39,8 +39,7 @@ public class EntityRendererHolder<T> extends AbstractRenderer {
     /** @return The Sprite of the input object if it's a Pokemon. */
     public PokemonSprite getSprite(T pokemon) {
         AbstractRenderer renderer = this.getRenderer(pokemon);
-        return renderer == null || !(renderer instanceof AbstractPokemonRenderer) ? null
-                : ((AbstractPokemonRenderer) renderer).sprite();
+        return !(renderer instanceof AbstractPokemonRenderer) ? null : ((AbstractPokemonRenderer) renderer).sprite();
     }
 
     /** @return The list of all renderers to call on render, in drawing order. */

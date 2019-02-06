@@ -88,7 +88,6 @@ import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.status.StatusConditions;
 import com.darkxell.common.status.conditions.ChargedMoveStatusCondition;
-import com.darkxell.common.status.conditions.StoreDamageToDoubleStatusCondition;
 import com.darkxell.common.trap.TrapRegistry;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.Logger;
@@ -413,7 +412,7 @@ public final class ClientEventProcessor extends CommonEventProcessor {
             if (event.destination() instanceof DungeonPokemon)
                 ally = Persistence.player.isAlly((DungeonPokemon) event.destination());
             else if (event.destination() instanceof Inventory)
-                ally = Persistence.player.inventory() == (Inventory) event.destination();
+                ally = Persistence.player.inventory() == event.destination();
             SoundManager.playSound(ally ? "dungeon-item" : "dungeon-enemygrab");
             Persistence.dungeonState.floorVisibility.onItemremoved((Tile) event.source());
         }
@@ -446,7 +445,7 @@ public final class ClientEventProcessor extends CommonEventProcessor {
             else
                 this.levelupStats.add(pokemon.species().baseStatsIncrease(pokemon.level() - 1));
 
-            ArrayList<DialogScreen> screens = new ArrayList<DialogScreen>();
+            ArrayList<DialogScreen> screens = new ArrayList<>();
             screens.add(new DialogScreen(new Message("xp.levelup").addReplacement("<pokemon>", pokemon.getNickname())
                     .addReplacement("<level>", Integer.toString(pokemon.level()))));
 
@@ -470,7 +469,7 @@ public final class ClientEventProcessor extends CommonEventProcessor {
             }
 
             DialogState state = new DialogState(Persistence.dungeonState, processEventsOnDialogEnd,
-                    screens.toArray(new DialogScreen[screens.size()]));
+                    screens.toArray(new DialogScreen[0]));
 
             if (firstLevel) {
                 SoundManager.playSoundOverMusic("game-levelup");
@@ -775,8 +774,7 @@ public final class ClientEventProcessor extends CommonEventProcessor {
             sprite.setAnimated(false);
         else if (event.condition.condition == StatusConditions.Petrified)
             sprite.setAnimated(false);
-        else if (event.condition.condition instanceof StoreDamageToDoubleStatusCondition
-                || event.condition.condition instanceof ChargedMoveStatusCondition)
+        else if (event.condition.condition instanceof ChargedMoveStatusCondition)
             sprite.setDefaultState(PokemonSpriteState.WITHDRAW, true);
     }
 
@@ -875,7 +873,7 @@ public final class ClientEventProcessor extends CommonEventProcessor {
         if (event.actor() == null)
             return false;
         return (event instanceof MoveSelectionEvent) || (event instanceof ItemSelectionEvent)
-                || (event instanceof ItemSwappedEvent) || (event instanceof ItemMovedEvent);
+                || (event instanceof ItemMovedEvent);
     }
 
     @Override

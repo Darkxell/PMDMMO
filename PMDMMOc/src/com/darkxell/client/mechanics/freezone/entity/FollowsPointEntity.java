@@ -33,7 +33,7 @@ public class FollowsPointEntity extends FreezoneEntity {
 
     /**
      * Stub method. This class cannot be deserialized.
-     * 
+     *
      * @throws UnsupportedOperationException
      */
     @Override
@@ -43,7 +43,7 @@ public class FollowsPointEntity extends FreezoneEntity {
 
     /**
      * Stub method. This class cannot be serialized.
-     * 
+     *
      * @throws UnsupportedOperationException
      */
     @Override

@@ -4,10 +4,10 @@ import com.darkxell.common.pokemon.DungeonPokemon;
 
 public class Actor {
 
-    public static enum Action {
+    public enum Action {
         ACTED,
         NO_ACTION,
-        SKIPPED;
+        SKIPPED
     }
 
     private Action actionThisSubturn;

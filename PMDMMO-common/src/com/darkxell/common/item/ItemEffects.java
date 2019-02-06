@@ -25,7 +25,7 @@ import com.darkxell.common.status.StatusConditions;
 
 /** Holds all Move Effects. */
 public final class ItemEffects {
-    static final HashMap<Integer, ItemEffect> effects = new HashMap<Integer, ItemEffect>();
+    static final HashMap<Integer, ItemEffect> effects = new HashMap<>();
 
     public static final ItemEffect Default = new ItemEffect(-1);
     public static final ItemEffect Pokedollars = new ItemEffect(0);

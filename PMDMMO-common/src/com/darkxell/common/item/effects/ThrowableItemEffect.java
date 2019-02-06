@@ -16,7 +16,7 @@ import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.language.Message;
 
 public class ThrowableItemEffect extends ItemEffect {
-    public static enum ThrowableTrajectory {
+    public enum ThrowableTrajectory {
         Arc,
         Straight
     }
@@ -35,12 +35,11 @@ public class ThrowableItemEffect extends ItemEffect {
     private ArrayList<Tile> arcReachableTiles(Floor floor, Item item, DungeonPokemon pokemon) {
         final int maxDist = 8;
         Direction d = pokemon.facing(), left = d.rotateCounterClockwise(), right = d.rotateClockwise();
-        ArrayList<Tile> toreturn = new ArrayList<>();
         Stack<Tile> toprocess = new Stack<>();
         toprocess.add(pokemon.tile().adjacentTile(d));
         toprocess.add(pokemon.tile().adjacentTile(left));
         toprocess.add(pokemon.tile().adjacentTile(right));
-        toreturn.addAll(toprocess);
+        ArrayList<Tile> toreturn = new ArrayList<>(toprocess);
 
         while (!toprocess.isEmpty()) {
             Tile current = toprocess.pop();

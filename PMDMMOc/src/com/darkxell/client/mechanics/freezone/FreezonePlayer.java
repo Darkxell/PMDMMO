@@ -54,11 +54,9 @@ public class FreezonePlayer {
         if (Persistence.currentmap == null)
             return true;
         ArrayList<FreezoneEntity> entities = Persistence.currentmap.entities();
-        for (int i = 0; i < entities.size(); i++) {
-            FreezoneEntity ety = entities.get(i);
+        for (FreezoneEntity ety : entities)
             if (ety.isSolid() && ety.getHitbox(ety.getX(), ety.getY()).intersects(this.getHitboxAt(x, y)))
                 return false;
-        }
 
         DoubleRectangle hbx = getHitboxAt(x, y);
         return !Persistence.currentmap.getTerrain().hasCollision(hbx);
@@ -146,11 +144,9 @@ public class FreezonePlayer {
         if (Persistence.currentmap == null)
             return null;
         ArrayList<FreezoneEntity> entities = Persistence.currentmap.entities();
-        for (int i = 0; i < entities.size(); i++) {
-            FreezoneEntity et = entities.get(i);
+        for (FreezoneEntity et : entities)
             if (et.isInteractive() && et.getHitbox(et.getX(), et.getY()).intersects(this.getInteractionBox()))
                 return et;
-        }
         return null;
     }
 

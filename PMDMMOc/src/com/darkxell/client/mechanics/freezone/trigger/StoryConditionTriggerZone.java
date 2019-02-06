@@ -134,7 +134,6 @@ public class StoryConditionTriggerZone extends TriggerZone {
             return;
         case "moneyinbank":
             player.moneyinbank = value;
-            return;
         }
     }
 

@@ -57,7 +57,7 @@ public class GameSocketEndpoint {
             Logger.e("Could not create a valid URI to: ws://" + ClientSettings.getSetting(Setting.SERVER_ADDRESS)
                     + "game");
         }
-        thr = new Thread(() -> connect());
+        thr = new Thread(this::connect);
         thr.start();
     }
 
@@ -92,7 +92,7 @@ public class GameSocketEndpoint {
 
     /**
      * Callback hook for Connection close events.
-     * 
+     *
      * @param userSession the userSession which is getting closed.
      * @param reason      the reason for connection close
      */

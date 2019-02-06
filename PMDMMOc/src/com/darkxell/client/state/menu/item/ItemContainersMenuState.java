@@ -91,8 +91,8 @@ public class ItemContainersMenuState extends AbstractMenuState
         this.listener = listener;
         this.inDungeon = inDungeon;
 
-        ArrayList<ItemContainer> c = new ArrayList<ItemContainer>();
-        ArrayList<Integer> of = new ArrayList<Integer>();
+        ArrayList<ItemContainer> c = new ArrayList<>();
+        ArrayList<Integer> of = new ArrayList<>();
         for (ItemContainer container : containers) {
             int s = container.size();
             int o = 0;
@@ -159,10 +159,9 @@ public class ItemContainersMenuState extends AbstractMenuState
         Persistence.isCommunicating = false;
         String result = message.getString("value", null);
 
-        if (result == null) {
+        if (result == null)
             Logger.e("Invalid itemaction result: " + result);
-            return;
-        } else if (result.equals("givesuccess"))
+        else if (result.equals("givesuccess"))
             this.itemgiveSuccess(message.getLong("item", -1), message.getLong("pokemon", -1));
         else if (result.equals("takesuccess"))
             this.itemTakeSuccess(message.getLong("item", -1), message.getLong("pokemon", -1));
@@ -558,7 +557,7 @@ public class ItemContainersMenuState extends AbstractMenuState
 
     private void reloadContainers() {
         boolean found = false;
-        ArrayList<ItemContainer> containers = new ArrayList<ItemContainer>();
+        ArrayList<ItemContainer> containers = new ArrayList<>();
         for (ItemContainer c : this.containers) {
             if (!containers.contains(c))
                 containers.add(c);
@@ -567,7 +566,7 @@ public class ItemContainersMenuState extends AbstractMenuState
         }
         if (found)
             Persistence.stateManager.setState(new ItemContainersMenuState(this.parent, this.background, this.inDungeon,
-                    containers.toArray(new ItemContainer[containers.size()])).setOpaque(this.isOpaque));
+                    containers.toArray(new ItemContainer[0])).setOpaque(this.isOpaque));
         else
             Persistence.stateManager.setState(this.parent);
     }

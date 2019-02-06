@@ -6,7 +6,7 @@ public final class AnimationTicker {
 
     public static final AnimationTicker instance = new AnimationTicker();
 
-    private ArrayList<AbstractAnimation> animations = new ArrayList<AbstractAnimation>();
+    private ArrayList<AbstractAnimation> animations = new ArrayList<>();
 
     private AnimationTicker() {
     }
@@ -20,8 +20,8 @@ public final class AnimationTicker {
     }
 
     public void update() {
-        for (int i = 0; i < this.animations.size(); ++i)
-            this.animations.get(i).update();
+        for (AbstractAnimation animation : this.animations)
+            animation.update();
     }
 
 }

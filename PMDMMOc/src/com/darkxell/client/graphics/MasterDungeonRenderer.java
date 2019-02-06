@@ -13,7 +13,7 @@ public class MasterDungeonRenderer {
     public static final int LAYER_TILES = 0, LAYER_GRID = 2, LAYER_ITEMS = 10, LAYER_POKEMON = 15, LAYER_SHADOWS = 25,
             LAYER_STATIC_ANIMATIONS = 29, LAYER_LOGGER = 30;
 
-    private final ArrayList<AbstractRenderer> renderers = new ArrayList<AbstractRenderer>();
+    private final ArrayList<AbstractRenderer> renderers = new ArrayList<>();
     private boolean updateRequired;
 
     public void addRenderer(AbstractRenderer renderer) {
@@ -39,9 +39,9 @@ public class MasterDungeonRenderer {
             this.updateRequired = false;
         }
 
-        for (int i = 0; i < this.renderers.size(); ++i)
-            if (this.renderers.get(i).shouldRender(width, height))
-                this.renderers.get(i).render(g, width, height);
+        for (AbstractRenderer renderer : this.renderers)
+            if (renderer.shouldRender(width, height))
+                renderer.render(g, width, height);
     }
 
     public void update() {

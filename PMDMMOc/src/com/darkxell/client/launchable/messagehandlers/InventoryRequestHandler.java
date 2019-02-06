@@ -33,9 +33,9 @@ public class InventoryRequestHandler extends MessageHandler {
     @Override
     public void handleMessage(JsonObject message) {
         AbstractState state = Persistence.stateManager.getCurrentState();
-        if (state != null && state instanceof PlayerLoadingState)
+        if (state instanceof PlayerLoadingState)
             ((PlayerLoadingState) state).onInventoryReceived(message);
-        else if (Persistence.currentDialog != null && Persistence.currentDialog instanceof StorageDialog)
+        else if (Persistence.currentDialog instanceof StorageDialog)
             ((StorageDialog) Persistence.currentDialog).onInventoryReceived(message);
     }
 

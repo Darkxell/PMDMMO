@@ -58,7 +58,7 @@ public abstract class AbstractRenderer implements Comparable<AbstractRenderer> {
 
     /**
      * Draws this Renderer's Object.
-     * 
+     *
      * @param g      - The Graphics context.
      * @param width  - Width of the screen.
      * @param height - Height of the screen.

@@ -9,11 +9,11 @@ import com.darkxell.common.util.language.Message;
 /** Represents an object that can store Items. */
 public interface ItemContainer {
 
-    public static enum ItemContainerType {
+    public enum ItemContainerType {
         DUNGEON_POKEMON,
         INVENTORY,
         POKEMON,
-        TILE;
+        TILE
     }
 
     /** Adds an Item to this Container. */

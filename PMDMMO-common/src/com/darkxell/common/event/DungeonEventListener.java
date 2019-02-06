@@ -9,7 +9,7 @@ public interface DungeonEventListener {
 
     /**
      * Method called just after an Event is processed.
-     * 
+     *
      * @param floor           - The Floor context.
      * @param event           - The processed Event.
      * @param concerned       - A reference to a Pokemon for various uses. It is the owner this is an Item, a Status
@@ -22,7 +22,7 @@ public interface DungeonEventListener {
 
     /**
      * Method called just before an Event is processed.
-     * 
+     *
      * @param floor           - The Floor context.
      * @param event           - The processed Event.
      * @param concerned       - A reference to a Pokemon for various uses. It is the owner this is an Item, a Status

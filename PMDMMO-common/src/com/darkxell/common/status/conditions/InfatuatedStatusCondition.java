@@ -18,7 +18,7 @@ public class InfatuatedStatusCondition extends PreventsMovesStatusCondition {
     public Pair<Boolean, Message> affects(Floor floor, AppliedStatusCondition condition, DungeonPokemon pokemon) {
         if (pokemon.gender() == Pokemon.GENDERLESS) {
             Message m = new Message("status.immune.genderless").addReplacement("<pokemon>", pokemon.getNickname());
-            return new Pair<Boolean, Message>(false, m);
+            return new Pair<>(false, m);
         }
 
         DungeonPokemon source = null;
@@ -30,7 +30,7 @@ public class InfatuatedStatusCondition extends PreventsMovesStatusCondition {
         if (source != null && source.gender() == pokemon.gender()) {
             Message m = new Message("status.immune.same_gender").addReplacement("<pokemon>", pokemon.getNickname())
                     .addReplacement("<user>", source.getNickname());
-            return new Pair<Boolean, Message>(false, m);
+            return new Pair<>(false, m);
         }
         return super.affects(floor, condition, pokemon);
     }

@@ -50,9 +50,7 @@ public class EditCutsceneController implements Initializable, EventEditionListen
     }
 
     public ArrayList<CutsceneEntity> listAvailableEntities(CutsceneEvent event) {
-        ArrayList<CutsceneEntity> entities = new ArrayList<>();
-        for (CutsceneEntity entity : this.cutsceneCreationController.entitiesList.getItems())
-            entities.add(entity);
+        ArrayList<CutsceneEntity> entities = new ArrayList<>(this.cutsceneCreationController.entitiesList.getItems());
         for (CutsceneEvent e : this.eventList.getItems()) {
             if (e == event)
                 break;

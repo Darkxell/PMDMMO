@@ -21,7 +21,7 @@ public abstract class AbilityOnHit extends Ability {
 
     /**
      * Called when a Pokemon uses a damaging, physical move on a Pokemon with this ability, and this abtility triggers.
-     * 
+     *
      * @param floor           - The Floor context.
      * @param event           - The triggering Event.
      * @param source          - The Move that was used.

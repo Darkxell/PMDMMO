@@ -232,10 +232,8 @@ public class FriendAreaSelectionMapState extends AbstractState {
 
     /** Predicate that returns true if the cursor is near the parsed point on the map. */
     private boolean isnearpoint(LocalMapLocation point) {
-        if (point.showsonfriendsmap && point.x > cursorx - thresholddistance && point.x < cursorx + thresholddistance
-                && point.y > cursory - thresholddistance && point.y < cursory + thresholddistance)
-            return true;
-        return false;
+        return point.showsonfriendsmap && Math.abs(point.x - cursorx) < thresholddistance
+                && Math.abs(point.y - cursory) < thresholddistance;
     }
 
     /**

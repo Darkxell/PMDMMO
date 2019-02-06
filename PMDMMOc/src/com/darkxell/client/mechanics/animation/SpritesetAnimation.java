@@ -8,13 +8,13 @@ import com.darkxell.client.resources.images.RegularSpriteSet;
 
 public class SpritesetAnimation extends PokemonAnimation {
 
-    public static enum BackSpriteUsage {
+    public enum BackSpriteUsage {
         /** The sprites should be drawn behind the Pokemon. */
         no,
         /** The sprites should be drawn above the Pokemon. */
         only,
         /** There are sprites behind and above the Pokemon. */
-        yes;
+        yes
     }
 
     public final int[] sprites;

@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import org.jdom2.Attribute;
 import org.jdom2.Document;
@@ -73,9 +76,7 @@ public final class XMLUtils {
         if (input != null)
             try {
                 return new SAXBuilder().build(input).getRootElement();
-            } catch (JDOMException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
+            } catch (IOException | JDOMException e) {
                 e.printStackTrace();
             }
         return null;
@@ -98,7 +99,7 @@ public final class XMLUtils {
      * e.g. 1,2,4,5,-1
      */
     public static ArrayList<Integer> readIntArrayAsList(Element element) {
-        ArrayList<Integer> array = new ArrayList<Integer>();
+        ArrayList<Integer> array = new ArrayList<>();
         if (element != null) {
             String value = element.getText();
             if (value != null && !value.equals(""))
@@ -201,13 +202,17 @@ public final class XMLUtils {
     }
 
     public static String toXML(short[] array) {
-        String value = "";
-        for (short floor : array)
-            if (value.equals(""))
-                value += floor;
-            else
-                value += "," + floor;
-        return value;
+        StringBuilder builder = new StringBuilder();
+        for (short val : array) {
+            if (builder.length() != 0)
+                builder.append(",");
+            builder.append(val);
+        }
+        return builder.toString();
+    }
+
+    private static String joinArray(int[] array) {
+        return IntStream.of(array).mapToObj(Integer::toString).collect(Collectors.joining(","));
     }
 
     /**
@@ -217,13 +222,7 @@ public final class XMLUtils {
      * @param id - The Element name.
      */
     public static Element toXML(String id, int[] array) {
-        String value = "";
-        for (int floor : array)
-            if (value.equals(""))
-                value += floor;
-            else
-                value += "," + floor;
-        return new Element(id).setText(value);
+        return new Element(id).setText(joinArray(array));
     }
 
     /**
@@ -233,16 +232,7 @@ public final class XMLUtils {
      * @param id - The Element name.
      */
     public static Element toXML(String id, int[][] array) {
-        String value = "";
-        for (int[] row : array) {
-            if (!value.equals(""))
-                value += ";";
-            for (int cell : row)
-                if (value.equals("") || value.endsWith(";"))
-                    value += cell;
-                else
-                    value += "," + cell;
-        }
+        String value = Stream.of(array).map(XMLUtils::joinArray).collect(Collectors.joining(";"));
         return new Element(id).setText(value);
     }
 
@@ -253,12 +243,12 @@ public final class XMLUtils {
      * @param id - The Element name.
      */
     public static Element toXML(String id, Iterable<Integer> array) {
-        String value = "";
-        for (Integer floor : array)
-            if (value.equals(""))
-                value += floor;
-            else
-                value += "," + floor;
-        return new Element(id).setText(value);
+        StringBuilder builder = new StringBuilder();
+        for (int val : array) {
+            if (builder.length() != 0)
+                builder.append(",");
+            builder.append(val);
+        }
+        return new Element(id).setText(builder.toString());
     }
 }

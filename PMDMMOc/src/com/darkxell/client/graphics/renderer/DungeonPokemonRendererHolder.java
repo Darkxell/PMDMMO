@@ -1,7 +1,5 @@
 package com.darkxell.client.graphics.renderer;
 
-import java.awt.Graphics2D;
-
 import com.darkxell.client.graphics.AbstractRenderer;
 import com.darkxell.client.graphics.EntityRendererHolder;
 import com.darkxell.client.launchable.Persistence;
@@ -39,10 +37,6 @@ public class DungeonPokemonRendererHolder extends EntityRendererHolder<DungeonPo
         if (!this.renderers.containsKey(entity))
             Persistence.dungeonRenderer.addRenderer(renderer);
         return (DungeonPokemonRenderer) super.register(entity, renderer);
-    }
-
-    @Override
-    public void render(Graphics2D g, int width, int height) {
     }
 
     /** Deletes the Renderer of the input Pokemon. */

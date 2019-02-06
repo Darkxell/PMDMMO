@@ -3,6 +3,7 @@ package com.darkxell.client.state.menu.dungeon;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import com.darkxell.client.graphics.AbstractGraphicsLayer;
 import com.darkxell.client.graphics.TextRenderer;
@@ -18,7 +19,6 @@ import com.darkxell.client.state.menu.menus.TeamMenuState;
 import com.darkxell.common.dungeon.data.Dungeon.DungeonDirection;
 import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.player.ItemContainer;
-import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.language.Message;
 
 public class DungeonMenuState extends OptionSelectionMenuState {
@@ -37,11 +37,10 @@ public class DungeonMenuState extends OptionSelectionMenuState {
 
     public ItemContainersMenuState createInventoryState() {
         DungeonState s = Persistence.dungeonState;
-        ArrayList<ItemContainer> containers = new ArrayList<ItemContainer>();
+        ArrayList<ItemContainer> containers = new ArrayList<>();
         containers.add(Persistence.player.inventory());
         containers.add(Persistence.player.getDungeonLeader().tile());
-        for (Pokemon pokemon : Persistence.player.getTeam())
-            containers.add(pokemon);
+        containers.addAll(Arrays.asList(Persistence.player.getTeam()));
 
         boolean found = false;
         for (ItemContainer container : containers)
@@ -56,7 +55,7 @@ public class DungeonMenuState extends OptionSelectionMenuState {
             return null;
         } else {
             ItemContainersMenuState i = new ItemContainersMenuState(this, s, true,
-                    containers.toArray(new ItemContainer[containers.size()]));
+                    containers.toArray(new ItemContainer[0]));
             i.isOpaque = this.isOpaque;
             return i;
         }

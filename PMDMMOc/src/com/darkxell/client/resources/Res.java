@@ -128,7 +128,7 @@ public class Res {
                     // never happens
                 }
         }
-        return files.toArray(new String[files.size()]);
+        return files.toArray(new String[0]);
 
         /*
          * List<String> filenames = new ArrayList<>(); try { InputStream in = Res.class.getResourceAsStream(path);
@@ -140,7 +140,7 @@ public class Res {
 
     /**
      * Basically the same a s a getspriterow command, but the sprite doesn't have to be a square.
-     * 
+     *
      * @see <code>getSpriteRow()</code>
      */
     public static BufferedImage[] getSpriteRectRow(BufferedImage sheet, int x, int y, int width, int height,
@@ -154,7 +154,7 @@ public class Res {
     /**
      * Gets multiple player sprites next to each other in the specified BufferImage sheet file and returns them inside
      * an array.
-     * 
+     *
      * @param x              the X position of the sprite in the player.png file.
      * @param y              the Y position of the sprite in the player.png file.
      * @param size           the size of the sprite. The sprite is a square, and the x/y coordinates are its top left

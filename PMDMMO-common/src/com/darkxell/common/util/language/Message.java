@@ -12,14 +12,14 @@ public class Message {
     /** ID of the message. */
     public final String id;
     /** Keyword values contained in this Message. */
-    private ArrayList<String> keywords = new ArrayList<String>();
+    private ArrayList<String> keywords = new ArrayList<>();
     /**
      * ID of the last language this message was translated with. Used to update the translation when the user changes
      * the Language.
      */
     private String lastLang = null;
-    private ArrayList<Message> prefixes = new ArrayList<Message>(), suffixes = new ArrayList<Message>();
-    private HashMap<String, Message> replacements = new HashMap<String, Message>();
+    private ArrayList<Message> prefixes = new ArrayList<>(), suffixes = new ArrayList<>();
+    private HashMap<String, Message> replacements = new HashMap<>();
     /** False if this Message's ID shouldn't be translated. */
     public final boolean shouldTranslate;
     /** Translated value of this Message. Used to avoid translating every time this Message is used. */
@@ -48,7 +48,7 @@ public class Message {
 
     /**
      * Adds a replacement to this Message.
-     * 
+     *
      * @param pattern - The pattern to replace.
      * @param message - The message to replace with.
      */
@@ -59,7 +59,7 @@ public class Message {
 
     /**
      * Adds a replacement to this Message.
-     * 
+     *
      * @param pattern - The pattern to replace.
      * @param message - The message to replace with.
      */
@@ -84,7 +84,7 @@ public class Message {
             int index = this.value.toLowerCase().indexOf(keyword.toLowerCase());
             this.value = this.value.substring(0, index) + "<green>"
                     + this.value.substring(index, index + keyword.length()) + "</color>"
-                    + this.value.substring(index + keyword.length(), this.value.length());
+                    + this.value.substring(index + keyword.length());
         }
     }
 
@@ -97,7 +97,7 @@ public class Message {
     }
 
     public String[] getKeywords() {
-        return this.keywords.toArray(new String[this.keywords.size()]);
+        return this.keywords.toArray(new String[0]);
     }
 
     /** @return The translated value of this Message. */

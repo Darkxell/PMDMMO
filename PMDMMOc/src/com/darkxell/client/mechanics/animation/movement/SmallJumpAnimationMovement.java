@@ -30,11 +30,9 @@ public class SmallJumpAnimationMovement extends PokemonAnimationMovement {
     @Override
     public void update() {
         float completion = this.tick();
-        if (this.tick() <= MOVEMENT)
-            /* Nothing */;
-        else if (this.tick() >= PAUSE + MOVEMENT && this.tick() <= TOTAL)
+        if (this.tick() >= PAUSE + MOVEMENT && this.tick() <= TOTAL)
             completion = TOTAL - completion;
-        else
+        else if (this.tick() > MOVEMENT)
             completion = -1;
 
         if (completion != -1 && !this.isOver()) {

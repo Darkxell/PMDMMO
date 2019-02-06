@@ -15,14 +15,14 @@ public class DamageDealtEvent extends DungeonEvent {
         public ExperienceGeneratedEvent getExperienceEvent();
     }
 
-    public static enum DamageType {
+    public enum DamageType {
         COLLISION,
         CONDITION,
         HUNGER,
         ITEM,
         MOVE,
         RECOIL,
-        WEATHER;
+        WEATHER
     }
 
     public static class DefaultDamageSource implements DamageSource {

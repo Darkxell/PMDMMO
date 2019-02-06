@@ -22,7 +22,7 @@ public class RainAnimation extends AbstractAnimation {
         super(new AnimationData(-1), DURATION, listener);
         this.data.sound = sound;
         this.spritesetID = spritesetID;
-        this.drops = new HashMap<SpritesetAnimation, Boolean>();
+        this.drops = new HashMap<>();
     }
 
     private void createDrop() {
@@ -51,7 +51,7 @@ public class RainAnimation extends AbstractAnimation {
         if (this.tick() < DURATION - this.dropDuration)
             this.createDrop();
 
-        ArrayList<SpritesetAnimation> toremove = new ArrayList<SpritesetAnimation>();
+        ArrayList<SpritesetAnimation> toremove = new ArrayList<>();
         for (SpritesetAnimation animation : this.drops.keySet())
             if (this.drops.get(animation)) {
                 if (animation.isOver())

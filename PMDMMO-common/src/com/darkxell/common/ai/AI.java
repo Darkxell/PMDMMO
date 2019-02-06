@@ -24,7 +24,7 @@ public abstract class AI {
 
         /**
          * Called at the end of each turn so that a Pokemon may rotate.
-         * 
+         *
          * @return <code>null</code> if no rotation, else the new direction to face.
          */
         public Direction mayRotate() {
@@ -63,7 +63,7 @@ public abstract class AI {
 
     /**
      * Called at the end of each turn. Allows the Pokemon to rotate.
-     * 
+     *
      * @return The Direction to rotate to.
      */
     public Direction mayRotate() {

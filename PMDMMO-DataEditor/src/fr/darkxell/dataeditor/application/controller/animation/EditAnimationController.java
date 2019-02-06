@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.ResourceBundle;
-import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 
 import com.darkxell.client.mechanics.animation.AnimationData;
@@ -107,45 +106,43 @@ public class EditAnimationController implements Initializable {
 
         Pattern pattern = Pattern.compile("\\d*");
         Pattern pattern3 = Pattern.compile("-?\\d*");
-        this.delayTextfield.setTextFormatter(new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
+        this.delayTextfield.setTextFormatter(new TextFormatter<>(change -> {
             return pattern.matcher(change.getControlNewText()).matches() ? change : null;
         }));
-        this.loopTextfield.setTextFormatter(new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
+        this.loopTextfield.setTextFormatter(new TextFormatter<>(change -> {
             return pattern.matcher(change.getControlNewText()).matches() ? change : null;
         }));
-        this.overlayTextfield.setTextFormatter(new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
+        this.overlayTextfield.setTextFormatter(new TextFormatter<>(change -> {
             return pattern.matcher(change.getControlNewText()).matches() ? change : null;
         }));
-        this.soundDelayTextfield.setTextFormatter(new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
+        this.soundDelayTextfield.setTextFormatter(new TextFormatter<>(change -> {
             return pattern.matcher(change.getControlNewText()).matches() ? change : null;
         }));
-        this.spriteDurationTextfield
-                .setTextFormatter(new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
-                    return pattern.matcher(change.getControlNewText()).matches() ? change : null;
-                }));
-        this.stateDelayTextfield.setTextFormatter(new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
+        this.spriteDurationTextfield.setTextFormatter(new TextFormatter<>(change -> {
             return pattern.matcher(change.getControlNewText()).matches() ? change : null;
         }));
-        this.widthTextfield.setTextFormatter(new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
+        this.stateDelayTextfield.setTextFormatter(new TextFormatter<>(change -> {
             return pattern.matcher(change.getControlNewText()).matches() ? change : null;
         }));
-        this.heightTextfield.setTextFormatter(new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
+        this.widthTextfield.setTextFormatter(new TextFormatter<>(change -> {
             return pattern.matcher(change.getControlNewText()).matches() ? change : null;
         }));
-        this.xTextfield.setTextFormatter(new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
+        this.heightTextfield.setTextFormatter(new TextFormatter<>(change -> {
+            return pattern.matcher(change.getControlNewText()).matches() ? change : null;
+        }));
+        this.xTextfield.setTextFormatter(new TextFormatter<>(change -> {
             return pattern3.matcher(change.getControlNewText()).matches() ? change : null;
         }));
-        this.yTextfield.setTextFormatter(new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
+        this.yTextfield.setTextFormatter(new TextFormatter<>(change -> {
             return pattern3.matcher(change.getControlNewText()).matches() ? change : null;
         }));
 
         Pattern p2 = Pattern.compile("(\\d+,)*(\\d+)?");
-        this.alsoplayDelayTextfield
-                .setTextFormatter(new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
-                    return p2.matcher(change.getControlNewText()).matches() ? change : null;
-                }));
+        this.alsoplayDelayTextfield.setTextFormatter(new TextFormatter<>(change -> {
+            return p2.matcher(change.getControlNewText()).matches() ? change : null;
+        }));
         Pattern p3 = Pattern.compile("(-?\\d+,)*(-?\\d+)?");
-        this.orderTextfield.setTextFormatter(new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
+        this.orderTextfield.setTextFormatter(new TextFormatter<>(change -> {
             return p3.matcher(change.getControlNewText()).matches() ? change : null;
         }));
     }

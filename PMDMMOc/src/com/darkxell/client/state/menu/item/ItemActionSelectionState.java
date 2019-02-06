@@ -24,7 +24,7 @@ public class ItemActionSelectionState extends OptionSelectionMenuState implement
         super(backgroundState);
         this.actionSource = actionSource;
         this.actions = actions;
-        this.options = new ArrayList<MenuOption>();
+        this.options = new ArrayList<>();
 
         ItemAction.sort(this.actions);
         this.createOptions();

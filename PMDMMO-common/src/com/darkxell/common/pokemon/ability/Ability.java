@@ -17,7 +17,7 @@ import com.darkxell.common.util.language.Message;
 import com.darkxell.common.weather.Weather;
 
 public abstract class Ability implements AffectsPokemon, DungeonEventListener {
-    private static final HashMap<Integer, Ability> abilities = new HashMap<Integer, Ability>();
+    private static final HashMap<Integer, Ability> abilities = new HashMap<>();
 
     public static final Ability BLAZE = new AbilityTypeBoost(0, PokemonType.Fire);
     public static final Ability OVERGROW = new AbilityTypeBoost(1, PokemonType.Grass);

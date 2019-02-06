@@ -74,7 +74,7 @@ public abstract class UTest {
      * <br/>
      * <b>Note:</b> To log messages to the console from this method, the log() method should be used to ensure correct
      * warning level.
-     * 
+     *
      * @return 0 if the test want fine, an error code otherwise.
      */
     protected abstract int test();

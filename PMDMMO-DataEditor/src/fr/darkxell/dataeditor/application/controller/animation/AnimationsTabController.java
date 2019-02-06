@@ -85,17 +85,17 @@ public class AnimationsTabController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         instance = this;
-        TreeItem<CustomTreeItem> root = new TreeItem<CustomTreeItem>(new TreeCategory("Animations"));
+        TreeItem<CustomTreeItem> root = new TreeItem<>(new TreeCategory("Animations"));
         root.setExpanded(true);
         this.animationsTreeView.setRoot(root);
         List<TreeItem<CustomTreeItem>> categories = this.animationsTreeView.getRoot().getChildren();
-        categories.add(this.abilities = new TreeItem<CustomTreeItem>(new TreeCategory("Abilities")));
-        categories.add(this.moves = new TreeItem<CustomTreeItem>(new TreeCategory("Moves")));
-        categories.add(this.targets = new TreeItem<CustomTreeItem>(new TreeCategory("Move Targets")));
-        categories.add(this.projectiles = new TreeItem<CustomTreeItem>(new TreeCategory("Projectiles")));
-        categories.add(this.items = new TreeItem<CustomTreeItem>(new TreeCategory("Items")));
-        categories.add(this.statuses = new TreeItem<CustomTreeItem>(new TreeCategory("Status Conditions")));
-        categories.add(this.custom = new TreeItem<CustomTreeItem>(new TreeCategory("Other")));
+        categories.add(this.abilities = new TreeItem<>(new TreeCategory("Abilities")));
+        categories.add(this.moves = new TreeItem<>(new TreeCategory("Moves")));
+        categories.add(this.targets = new TreeItem<>(new TreeCategory("Move Targets")));
+        categories.add(this.projectiles = new TreeItem<>(new TreeCategory("Projectiles")));
+        categories.add(this.items = new TreeItem<>(new TreeCategory("Items")));
+        categories.add(this.statuses = new TreeItem<>(new TreeCategory("Status Conditions")));
+        categories.add(this.custom = new TreeItem<>(new TreeCategory("Other")));
 
         /*
          * this.animationsTreeView.setCellFactory(param -> { return new
@@ -177,7 +177,7 @@ public class AnimationsTabController implements Initializable {
             alert.setHeaderText("Delete Animation");
             alert.setContentText("Are you sure you want to delete animation '" + anim.group + "/" + anim.id + "'?");
             Optional<ButtonType> result = alert.showAndWait();
-            if (result.get() == ButtonType.OK) {
+            if (result.isPresent() && result.get() == ButtonType.OK) {
                 if (anim == this.editing) {
                     this.editing = null;
                     this.editAnimationPane.setVisible(false);
@@ -223,7 +223,7 @@ public class AnimationsTabController implements Initializable {
         for (String anim : anims) {
             AnimationListItem item = AnimationListItem.create(anim);
             if (item != null)
-                this.category(item.group).getChildren().add(new TreeItem<CustomTreeItem>(item));
+                this.category(item.group).getChildren().add(new TreeItem<>(item));
         }
 
         this.abilities.getChildren().sort(sorter);

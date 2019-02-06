@@ -58,7 +58,7 @@ public class AIManager {
 
     /**
      * Calls the AI of the input Pokemon to determine its action.
-     * 
+     *
      * @param  pokemon - The acting Pokemon.
      * @return         A DungeonEvent describing that Pokemon's action.
      */

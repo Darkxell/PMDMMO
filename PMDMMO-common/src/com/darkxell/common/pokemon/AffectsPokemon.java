@@ -29,14 +29,14 @@ public interface AffectsPokemon {
 
     /**
      * Called when a Pokemon uses a damaging move. Modifies the critical hit rate.
-     * 
+     *
      * @param  critical - The critical hit rate before this object applies its modifications.
      * @param  move     - The Move use context.
      * @param  target   - The Pokemon the move was used on.
      * @param  isUser   - <code>true</code> if this Object belongs to the Move's user (if it's its ability or an item it
      *                  holds).
      * @param  events   - The current Events being generated.
-     * 
+     *
      * @return          The new critical hit rate with modifications applied by this object.
      */
     public default int applyCriticalRateModifications(int critical, MoveUse move, DungeonPokemon target, boolean isUser,
@@ -46,14 +46,14 @@ public interface AffectsPokemon {
 
     /**
      * Called when a Pokemon uses a damaging move. Modifies the damage output.
-     * 
+     *
      * @param  damage - The damage to be dealt.
      * @param  move   - The Move use context.
      * @param  target - The Pokemon the move was used on.
      * @param  isUser - <code>true</code> if this Object belongs to the Move's user (if it's its ability or an item it
      *                holds).
      * @param  events - The current Events being generated.
-     * 
+     *
      * @return        The new damage with modifications applied by this object.
      */
     public default double applyDamageModifications(double damage, MoveUse move, DungeonPokemon target, boolean isUser,
@@ -63,14 +63,14 @@ public interface AffectsPokemon {
 
     /**
      * Called when a Pokemon uses a damaging move. Modifies the value of the input effectiveness.
-     * 
+     *
      * @param  effectiveness - The effectiveness to modify.
      * @param  value         - The value of the Stat before this object applies its modifications.
      * @param  move          - The Move use context.
      * @param  target        - The Pokemon the move was used on.
      * @param  isUser        - <code>true</code> if this Object belongs to the Move's user (if it's its ability or an
      *                       item it holds).
-     * 
+     *
      * @return               The new value of the effectiveness with modifications applied by this object.
      */
     public default double applyEffectivenessModifications(double effectiveness, MoveUse move, DungeonPokemon target,
@@ -81,7 +81,7 @@ public interface AffectsPokemon {
     /**
      * Called when a Pokemon uses a damaging move. Modifies the value of the input Stat. (If attack or accuracy, it's
      * for the user; if defense or evasion, it's for the target.)
-     * 
+     *
      * @param  stat   - The Stat to modify.
      * @param  value  - The value of the Stat before this object applies its modifications.
      * @param  move   - The Move use context. May be <code>null</code> if this calculation is not part of a move use.
@@ -89,7 +89,7 @@ public interface AffectsPokemon {
      * @param  isUser - <code>true</code> if this Object belongs to the Move's user (if it's its ability or an item it
      *                holds).
      * @param  events - The current Events being generated.
-     * 
+     *
      * @return        The new value of the Stat with modifications applied by this object.
      */
     public default double applyStatModifications(Stat stat, double value, MoveUse move, DungeonPokemon target,
@@ -100,7 +100,7 @@ public interface AffectsPokemon {
     /**
      * Called when a Pokemon uses a damaging move. Modifies the stage of the input Stat. (If attack or accuracy, it's
      * for the user; if defense or evasion, it's for the target.)
-     * 
+     *
      * @param  stat   - The Stat to modify.
      * @param  value  - The value of the Stat before this object applies its modifications.
      * @param  move   - The Move use context. May be <code>null</code> if this calculation is not part of a move use.
@@ -108,7 +108,7 @@ public interface AffectsPokemon {
      * @param  isUser - <code>true</code> if this Object belongs to the Move's user (if it's its ability or an item it
      *                holds).
      * @param  events - The current Events being generated.
-     * 
+     *
      * @return        The new stage of the Stat with modifications applied by this object.
      */
     public default int applyStatStageModifications(Stat stat, int stage, MoveUse move, DungeonPokemon target,
@@ -118,7 +118,7 @@ public interface AffectsPokemon {
 
     /**
      * Called when a Pokemon uses a damaging move. Returns a damage multiplier to add to the final damage value.
-     * 
+     *
      * @param  move   - The Move use context.
      * @param  target - The Pokemon the move was used on.
      * @param  isUser - <code>true</code> if this Object belongs to the Move's user (if it's its ability or an item it
@@ -135,10 +135,10 @@ public interface AffectsPokemon {
 
     /**
      * Called when a Pokemon tries to move. Returns true if this Pokemon can't move.
-     * 
+     *
      * @param  pokemon - The Pokemon trying to use a Move.
      * @param  floor   - The Floor context.
-     * 
+     *
      * @return         <code>true</code> if the Pokemon can't move, <code>false</code> else.
      */
     public default boolean preventsMoving(DungeonPokemon pokemon, Floor floor) {
@@ -147,12 +147,12 @@ public interface AffectsPokemon {
 
     /**
      * Called when a Pokemon tries to use an Item. Returns true if this object prevents the use of that Item.
-     * 
+     *
      * @param  item    - The Item being tested. May be <code>null</code> if this is in a more general sense (i.e. if the
      *                 pokemon can use <i>any</i> item).
      * @param  pokemon - The Pokemon trying to use the Move.
      * @param  floor   - The Floor context.
-     * 
+     *
      * @return         <code>true</code> if a Move can't be used, <code>false</code> else.
      */
     public default boolean preventsUsingItem(Item item, DungeonPokemon pokemon, Floor floor) {
@@ -161,12 +161,12 @@ public interface AffectsPokemon {
 
     /**
      * Called when a Pokemon tries to use a Move. Returns true if this object prevents the use of that Move.
-     * 
+     *
      * @param  move    - The Move being tested. May be <code>null</code> if this is in a more general sense (i.e. if the
      *                 pokemon can use <i>any</i> move).
      * @param  pokemon - The Pokemon trying to use the Move.
      * @param  floor   - The Floor context.
-     * 
+     *
      * @return         <code>true</code> if a Move can't be used, <code>false</code> else.
      */
     public default boolean preventsUsingMove(LearnedMove move, DungeonPokemon pokemon, Floor floor) {

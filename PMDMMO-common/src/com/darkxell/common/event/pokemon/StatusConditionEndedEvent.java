@@ -8,7 +8,7 @@ import com.darkxell.common.status.AppliedStatusCondition;
 import com.darkxell.common.util.language.Message;
 
 public class StatusConditionEndedEvent extends DungeonEvent {
-    public static enum StatusConditionEndReason {
+    public enum StatusConditionEndReason {
         /** If it was stopped by another effect. */
         BROKEN,
         /** If the status condition cannot continue (for example, if a target doesn't exist anymore). */
@@ -18,7 +18,7 @@ public class StatusConditionEndedEvent extends DungeonEvent {
         /** If it was healed. */
         HEALED,
         /** If it was prevented. */
-        PREVENTED;
+        PREVENTED
     }
 
     public final AppliedStatusCondition condition;

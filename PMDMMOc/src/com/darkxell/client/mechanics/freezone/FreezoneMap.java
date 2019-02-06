@@ -189,8 +189,8 @@ public class FreezoneMap {
     public void update() {
         Persistence.currentplayer.update();
 
-        for (int i = 0; i < entities.size(); i++)
-            entities.get(i).update();
+        for (FreezoneEntity entity : entities)
+            entity.update();
 
         if (flushcounter >= 120) {
             flushcounter = 0;
@@ -218,11 +218,14 @@ public class FreezoneMap {
         double pfx = obj.getDouble("posfx", 0d);
         double pfy = obj.getDouble("posfy", 0d);
         int spriteID = Integer.parseInt(obj.getString("currentpokemon", "0"));
-        for (int i = 0; i < entities.size(); i++) {
-            boolean isPlayer = entities.get(i) instanceof OtherPlayerEntity;
-            OtherPlayerEntity entity = (OtherPlayerEntity) entities.get(i);
-            if (isPlayer && entity.name.equals(name)) {
-                entity.applyServerUpdate(pfx, pfy, spriteID);
+        for (FreezoneEntity entity : entities) {
+            if (!(entity instanceof OtherPlayerEntity))
+                break;
+
+            OtherPlayerEntity player = (OtherPlayerEntity) entity;
+
+            if (player.name.equals(name)) {
+                player.applyServerUpdate(pfx, pfy, spriteID);
                 return;
             }
         }

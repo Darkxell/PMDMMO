@@ -35,7 +35,7 @@ public class DiscordEventHandlerForPMDMMO {
                 // discord.
                 try {
                     Thread.sleep(DRPCOOLDOWN);
-                } catch (InterruptedException e1) {
+                } catch (InterruptedException ignored) {
                 }
                 handleDiscordRP();
             }

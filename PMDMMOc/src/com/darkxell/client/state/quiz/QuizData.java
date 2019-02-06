@@ -16,13 +16,13 @@ import com.darkxell.common.util.xml.XMLUtils;
 
 public class QuizData {
 
-    public static enum QuizGender {
+    public enum QuizGender {
         Boy(0),
         Girl(1);
 
         public final int id;
 
-        private QuizGender(int id) {
+        QuizGender(int id) {
             this.id = id;
         }
 
@@ -102,7 +102,7 @@ public class QuizData {
 
         starters.sort(Comparator.naturalOrder());
 
-        return starters.toArray(new PokemonSpecies[starters.size()]);
+        return starters.toArray(new PokemonSpecies[0]);
     }
 
     public PokemonSpecies[] validPartners(int choice) {
@@ -110,7 +110,7 @@ public class QuizData {
         for (PartnerChoice partner : this.partners)
             if (partner.isValid(choice))
                 partners.add(Registries.species().find(partner.id));
-        return partners.toArray(new PokemonSpecies[partners.size()]);
+        return partners.toArray(new PokemonSpecies[0]);
     }
 
 }

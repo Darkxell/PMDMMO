@@ -2,7 +2,6 @@ package fr.darkxell.dataeditor.application.controller.sprites;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 
 import com.darkxell.client.resources.images.RegularSpriteSet;
@@ -73,19 +72,19 @@ public class EditFrameController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Pattern p = Pattern.compile("-?\\d*");
-        this.durationTextfield.setTextFormatter(new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
+        this.durationTextfield.setTextFormatter(new TextFormatter<>(change -> {
             return p.matcher(change.getControlNewText()).matches() ? change : null;
         }));
-        this.xTextfield.setTextFormatter(new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
+        this.xTextfield.setTextFormatter(new TextFormatter<>(change -> {
             return p.matcher(change.getControlNewText()).matches() ? change : null;
         }));
-        this.yTextfield.setTextFormatter(new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
+        this.yTextfield.setTextFormatter(new TextFormatter<>(change -> {
             return p.matcher(change.getControlNewText()).matches() ? change : null;
         }));
-        this.sxTextfield.setTextFormatter(new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
+        this.sxTextfield.setTextFormatter(new TextFormatter<>(change -> {
             return p.matcher(change.getControlNewText()).matches() ? change : null;
         }));
-        this.syTextfield.setTextFormatter(new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
+        this.syTextfield.setTextFormatter(new TextFormatter<>(change -> {
             return p.matcher(change.getControlNewText()).matches() ? change : null;
         }));
 

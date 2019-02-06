@@ -72,8 +72,8 @@ public abstract class DungeonEvent {
         this.floor = floor;
         this.setActor(actor);
         this.priority = PRIORITY_DEFAULT;
-        this.messages = new ArrayList<Message>();
-        this.resultingEvents = new ArrayList<DungeonEvent>();
+        this.messages = new ArrayList<>();
+        this.resultingEvents = new ArrayList<>();
     }
 
     public DungeonPokemon actor() {
@@ -86,7 +86,7 @@ public abstract class DungeonEvent {
     }
 
     public void cloneFlags(DungeonEvent event) {
-        for (String flag : event.flags.split("|"))
+        for (String flag : event.flags.split(""))
             this.addFlag(flag);
     }
 
@@ -103,12 +103,12 @@ public abstract class DungeonEvent {
 
     /** @return The messages that were generated. */
     public Message[] getMessages() {
-        return this.messages.toArray(new Message[this.messages.size()]);
+        return this.messages.toArray(new Message[0]);
     }
 
     /** @return The events that resulted from this Event. */
     public DungeonEvent[] getResultingEvents() {
-        return this.resultingEvents.toArray(new DungeonEvent[this.resultingEvents.size()]);
+        return this.resultingEvents.toArray(new DungeonEvent[0]);
     }
 
     public boolean hasFlag(String flag) {
@@ -146,7 +146,7 @@ public abstract class DungeonEvent {
 
     /**
      * Processes this Event server-side.
-     * 
+     *
      * @return The list of resulting Events.
      */
     public ArrayList<DungeonEvent> processServer() {

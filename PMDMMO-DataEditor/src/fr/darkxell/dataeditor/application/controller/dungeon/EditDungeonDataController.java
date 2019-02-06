@@ -51,7 +51,7 @@ public class EditDungeonDataController implements Initializable {
         int count = DungeonsTabController.instance.currentDungeon.floorCount;
         try {
             count = Integer.parseInt(this.floorsTextfield.getText());
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
         return count;
     }

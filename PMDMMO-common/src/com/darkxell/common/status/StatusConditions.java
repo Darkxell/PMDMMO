@@ -37,7 +37,7 @@ import com.darkxell.common.status.conditions.WrappedStatusCondition;
 import com.darkxell.common.status.conditions.WrappingStatusCondition;
 
 public final class StatusConditions {
-    static final HashMap<Integer, StatusCondition> _registry = new HashMap<Integer, StatusCondition>();
+    static final HashMap<Integer, StatusCondition> _registry = new HashMap<>();
 
     // TODO: when Dive, check Whirlpool.
 

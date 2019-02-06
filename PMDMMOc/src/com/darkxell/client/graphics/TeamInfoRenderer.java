@@ -340,7 +340,7 @@ public final class TeamInfoRenderer {
             g.setColor(Palette.TRANSPARENT_GRAY);
             g.fillRect(0, 0, width, TITLE_HEIGHT);
             Pokemon[] realTeam = p.getTeam();
-            ArrayList<Pokemon> team = new ArrayList<Pokemon>();
+            ArrayList<Pokemon> team = new ArrayList<>();
             for (Pokemon pk : realTeam)
                 if (!(pk.getDungeonPokemon() != null && pk.getDungeonPokemon().isFainted()))
                     team.add(pk);

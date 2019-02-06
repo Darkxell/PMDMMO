@@ -1,6 +1,7 @@
 package com.darkxell.common.move.effects;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
@@ -27,8 +28,7 @@ public class TeleportToOtherRoomEffect extends MoveEffect {
 
         Room current = floor.roomAt(usedMove.user.tile());
         ArrayList<Room> rooms = new ArrayList<>();
-        for (Room room : floor.rooms)
-            rooms.add(room);
+        Collections.addAll(rooms, floor.rooms);
         if (current != null && rooms.size() >= 1)
             rooms.remove(current);
 

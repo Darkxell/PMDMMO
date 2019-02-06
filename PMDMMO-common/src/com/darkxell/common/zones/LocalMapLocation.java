@@ -52,7 +52,7 @@ public enum LocalMapLocation {
     public final Message displayname;
     public final boolean showsonfriendsmap;
 
-    private LocalMapLocation(int x, int y, Message name, boolean showonfriendsmap) {
+    LocalMapLocation(int x, int y, Message name, boolean showonfriendsmap) {
         this.x = x;
         this.y = y;
         this.displayname = name;

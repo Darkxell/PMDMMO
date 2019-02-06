@@ -32,10 +32,8 @@ public class PreventStatusEquipableItemEffect extends ItemEffect {
             boolean shouldPrevent = e.condition.pokemon == concerned && concerned.getItem() != null
                     && concerned.getItem().item().effect() == this;
             for (StatusCondition c : this.conditions)
-                if (e.condition.condition == c) {
-                    shouldPrevent &= true;
+                if (e.condition.condition == c)
                     break;
-                }
 
             if (shouldPrevent) {
                 e.consume();

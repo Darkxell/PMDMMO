@@ -100,7 +100,7 @@ public class EditFloorsetController implements Initializable, ListCellParent<Int
 
     public void onRemovePart(Pair<Integer, Integer> part) {
         if (this.partsList.contains(part)) {
-            this.partsList.remove(this.partsList.indexOf(part));// Not sure if remove(Object) removes all instances
+            this.partsList.remove(part);
             this.reloadParts();
         }
     }

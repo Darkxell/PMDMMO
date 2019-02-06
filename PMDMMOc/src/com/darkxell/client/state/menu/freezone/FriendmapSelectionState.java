@@ -38,8 +38,8 @@ public class FriendmapSelectionState extends OptionSelectionMenuState {
     @Override
     protected void createOptions() {
         MenuTab tab = new MenuTab(title);
-        for (int i = 0; i < destinations.size(); i++)
-            tab.addOption(new MenuZoneOption(destinations.get(i)));
+        for (FreezoneInfo destination : destinations)
+            tab.addOption(new MenuZoneOption(destination));
         tab.addOption(this.exit = new MenuOption("general.back"));
         this.tabs.add(tab);
     }

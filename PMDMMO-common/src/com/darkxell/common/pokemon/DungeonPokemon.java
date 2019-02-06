@@ -20,7 +20,7 @@ import com.darkxell.common.util.language.Message;
 
 /** Represents a Pokemon in a Dungeon. */
 public class DungeonPokemon implements ItemContainer, DungeonEventListener {
-    public static enum DungeonPokemonType {
+    public enum DungeonPokemonType {
         BOSS,
         MINIBOSS,
         RESCUEABLE,
@@ -83,7 +83,7 @@ public class DungeonPokemon implements ItemContainer, DungeonEventListener {
         this.stats = new DungeonStats(this);
         this.belly = this.bellySize = DEFAULT_BELLY_SIZE;
         this.hp = this.stats.getHealth();
-        this.statusConditions = new ArrayList<AppliedStatusCondition>();
+        this.statusConditions = new ArrayList<>();
         this.type = pokemon.player() == null ? DungeonPokemonType.WILD : DungeonPokemonType.TEAM_MEMBER;
         pokemon.dungeonPokemon = this;
     }

@@ -11,7 +11,7 @@ public class PokemonTravelsEvent extends DungeonEvent {
 
     public PokemonTravelsEvent(Floor floor, ArrayList<PokemonTravelEvent> travels) {
         super(floor);
-        this.events = travels.toArray(new PokemonTravelEvent[travels.size()]);
+        this.events = travels.toArray(new PokemonTravelEvent[0]);
     }
 
     @Override

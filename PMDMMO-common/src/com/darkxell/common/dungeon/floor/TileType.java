@@ -15,12 +15,12 @@ public enum TileType {
     WARP_ZONE(7, 'x'),
     WATER(3, 'w');
 
-    public static enum Mobility {
+    public enum Mobility {
         Fire,
         Flying,
         Ghost,
         Normal,
-        Water;
+        Water
     }
 
     @SuppressWarnings("unchecked")
@@ -55,7 +55,7 @@ public enum TileType {
     public final char c;
     public final int id;
 
-    private TileType(int id, char c) {
+    TileType(int id, char c) {
         this.id = id;
         this.c = c;
     }

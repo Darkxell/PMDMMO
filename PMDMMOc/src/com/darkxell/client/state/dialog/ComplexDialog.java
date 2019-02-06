@@ -12,10 +12,10 @@ import com.darkxell.client.ui.Keys.Key;
 /** Generic class for complex dialog states. */
 public abstract class ComplexDialog implements DialogEndListener {
 
-    public static enum ComplexDialogAction {
+    public enum ComplexDialogAction {
         NEW_DIALOG,
         PAUSE,
-        TERMINATE;
+        TERMINATE
     }
 
     public static class DialogLoadingState extends AbstractState {
@@ -91,7 +91,7 @@ public abstract class ComplexDialog implements DialogEndListener {
 
     /**
      * Utility methods for creating DialogStates.
-     * 
+     *
      * @param  screens - The Screens of the State.
      * @return         A new Dialog State.
      */
@@ -133,14 +133,14 @@ public abstract class ComplexDialog implements DialogEndListener {
 
     /**
      * Called when a Dialog State finishes.
-     * 
+     *
      * @param dialog - The Dialog state that just finished.
      */
     protected abstract void onDialogFinished(DialogState dialog);
 
     /**
      * Called when the last state has been displayed.
-     * 
+     *
      * @return The next state to set at the end of this Dialog.
      */
     public abstract AbstractState onFinish(DialogState lastState);

@@ -10,7 +10,7 @@ import com.eclipsesource.json.JsonObject;
 /** Object sent by server to client to describe the outcome of a dungeon exploration. */
 public class DungeonOutcome implements Communicable {
 
-    public static enum Outcome {
+    public enum Outcome {
         /** Team was sent back to base because they couldn't protect a client. */
         CLIENT_KO,
         /** Team has reached and completed the final floor of the Dungeon. */
@@ -20,7 +20,7 @@ public class DungeonOutcome implements Communicable {
         /** Team was KO'ed. */
         KO,
         /** Team has chosen to leave the Dungeon after completing a mission. */
-        MISSON_COMPLETE;
+        MISSON_COMPLETE
     }
 
     /** ID of the Dungeon the exploration ended in. */

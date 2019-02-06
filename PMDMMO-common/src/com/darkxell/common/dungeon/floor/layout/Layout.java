@@ -71,7 +71,7 @@ public abstract class Layout {
 
     /**
      * Generates a Floor.
-     * 
+     *
      * @param  floor - The Floor to build.
      * @return       The generated Tiles and Rooms.
      */

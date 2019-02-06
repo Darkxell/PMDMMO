@@ -317,7 +317,7 @@ public class LoginMainState extends StateManager {
         Persistence.stateManager = new PrincipalMainState();
         // ((PrincipalMainState) Persistance.stateManager).setState(new
         // PersonalityQuizState());
-        ((PrincipalMainState) Persistence.stateManager).setState(new OpeningState());
+        Persistence.stateManager.setState(new OpeningState());
         ((PrincipalMainState) Persistence.stateManager).randomizeBackground();
     }
 

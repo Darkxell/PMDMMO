@@ -88,7 +88,7 @@ public class CustomList {
                     alert.setContentText("Are you sure you want to delete " + typeName + " '"
                             + list.getSelectionModel().getSelectedItem() + "'?");
                     Optional<ButtonType> result = alert.showAndWait();
-                    if (result.get() == ButtonType.OK)
+                    if (result.isPresent() && result.get() == ButtonType.OK)
                         parent.onDelete(list.getSelectionModel().getSelectedItem());
                 });
                 this.delete.setDisable(true);
@@ -124,9 +124,9 @@ public class CustomList {
 
     public static <T> void setup(ListCellParent<T> parent, ListView<T> list, String typeName, boolean edit,
             boolean rename, boolean delete, boolean create, boolean order) {
-        list.setCellFactory(param -> new CustomListCell<T>(parent, order));
+        list.setCellFactory(param -> new CustomListCell<>(parent, order));
         list.setContextMenu(
-                new CustomListMenuHandler<T>(list).createMenu(parent, typeName, edit, rename, delete, create, order));
+                new CustomListMenuHandler<>(list).createMenu(parent, typeName, edit, rename, delete, create, order));
     }
 
 }

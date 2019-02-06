@@ -22,7 +22,7 @@ public class TransitionState extends AbstractState {
         this(previous, next, new Message[0]);
     }
 
-    public TransitionState(AbstractState previous, AbstractState next, Message message[]) {
+    public TransitionState(AbstractState previous, AbstractState next, Message[] message) {
         this(previous, next, message, FADEIN, STAY, TEXT, FADEOUT);
     }
 

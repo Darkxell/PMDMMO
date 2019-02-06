@@ -39,7 +39,7 @@ public class EditTrapController implements Initializable {
     @FXML
     public TableColumn<SingleTrapTableItem, String> weightColumn;
 
-    private DungeonTrapGroup generate() throws DungeonCreationException {
+    private DungeonTrapGroup generate() {
         ObservableList<SingleTrapTableItem> list = this.trapsTable.getItems();
         int[] ids = new int[list.size()], chances = new int[list.size()];
         for (int i = 0; i < ids.length; ++i) {
@@ -58,7 +58,7 @@ public class EditTrapController implements Initializable {
         Trap[] t = new Trap[traps.size()];
         for (int i = 0; i < t.length; ++i)
             t[i] = traps.get(i);
-        this.trapColumn.setCellFactory(ComboBoxTableCell.<SingleTrapTableItem, Trap>forTableColumn(t));
+        this.trapColumn.setCellFactory(ComboBoxTableCell.forTableColumn(t));
         this.weightColumn.setCellFactory(TextFieldTableCell.forTableColumn());
     }
 
