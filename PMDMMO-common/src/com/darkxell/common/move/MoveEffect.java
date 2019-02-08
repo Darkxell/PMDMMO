@@ -26,6 +26,8 @@ import com.darkxell.common.util.language.Localization;
 import com.darkxell.common.util.language.Message;
 
 public class MoveEffect implements AffectsPokemon {
+    
+    public static final String DEFAULT_DESCRIPTION_ID = "move.info.default";
 
     public final int id;
 
@@ -91,7 +93,7 @@ public class MoveEffect implements AffectsPokemon {
     }
 
     public Message descriptionBase(Move move) {
-        return new Message("move.info.default");
+        return new Message(DEFAULT_DESCRIPTION_ID);
     }
 
     /**
