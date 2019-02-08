@@ -1,12 +1,13 @@
 package com.darkxell.client.mechanics.freezone.entity;
 
+import java.awt.Graphics2D;
+
+import org.jdom2.Element;
+
 import com.darkxell.client.resources.images.RegularSpriteSet;
 import com.darkxell.client.resources.images.Sprites.Res_FreezoneEntities;
 import com.darkxell.client.resources.images.tilesets.AbstractFreezoneTileset;
 import com.darkxell.common.util.xml.XMLUtils;
-import org.jdom2.Element;
-
-import java.awt.*;
 
 class AnimatedFlowerEntity extends FreezoneEntity {
     private RegularSpriteSet spriteSet;
@@ -31,8 +32,7 @@ class AnimatedFlowerEntity extends FreezoneEntity {
     @Override
     public void update() {
         this.counter = (byte) ((this.counter + 1) % 10);
-        if (this.counter == 0) {
+        if (this.counter == 0)
             this.state = (byte) ((this.state + 1) % 5);
-        }
     }
 }

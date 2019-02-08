@@ -13,28 +13,28 @@ import com.darkxell.common.util.language.Message;
 
 public class UserPercentDamageEffect extends MoveEffect {
 
-	public final double percent;
+    public final double percent;
 
-	public UserPercentDamageEffect(int id, double percent) {
-		super(id);
-		this.percent = percent;
-	}
+    public UserPercentDamageEffect(int id, double percent) {
+        super(id);
+        this.percent = percent;
+    }
 
-	@Override
-	protected void mainEffects(MoveUse usedMove, DungeonPokemon target, String[] flags, Floor floor,
-			MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
-		super.mainEffects(usedMove, target, flags, floor, calculator, missed, effects);
+    @Override
+    protected void mainEffects(MoveUse usedMove, DungeonPokemon target, String[] flags, Floor floor,
+            MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
+        super.mainEffects(usedMove, target, flags, floor, calculator, missed, effects);
 
-		effects.createEffect(
-				new DamageDealtEvent(floor, usedMove.user, usedMove, DamageType.MOVE,
-						(int) (usedMove.user.getMaxHP() * this.percent)),
-				usedMove, target, floor, missed, false, usedMove.user);
-	}
+        effects.createEffect(
+                new DamageDealtEvent(floor, usedMove.user, usedMove, DamageType.MOVE,
+                        (int) (usedMove.user.getMaxHP() * this.percent)),
+                usedMove, target, floor, missed, false, usedMove.user);
+    }
 
-	@Override
-	public Message descriptionBase(Move move) {
-		String id = "move.info.damage_user_percent";
-		return new Message(id).addReplacement("<percent>", String.valueOf(this.percent * 100));
-	}
+    @Override
+    public Message descriptionBase(Move move) {
+        String id = "move.info.damage_user_percent";
+        return new Message(id).addReplacement("<percent>", String.valueOf(this.percent * 100));
+    }
 
 }

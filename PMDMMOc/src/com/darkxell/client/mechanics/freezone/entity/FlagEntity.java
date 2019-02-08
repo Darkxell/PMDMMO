@@ -1,8 +1,8 @@
 package com.darkxell.client.mechanics.freezone.entity;
 
-import com.darkxell.client.resources.images.Sprites.Res_FreezoneEntities;
+import java.awt.Graphics2D;
 
-import java.awt.*;
+import com.darkxell.client.resources.images.Sprites.Res_FreezoneEntities;
 
 class FlagEntity extends FreezoneEntity {
     private byte state = 0;
@@ -16,8 +16,7 @@ class FlagEntity extends FreezoneEntity {
     @Override
     public void update() {
         this.counter = (byte) ((this.counter + 1) % 10);
-        if (this.counter == 0) {
+        if (this.counter == 0)
             this.state = (byte) ((this.state + 1) % 5);
-        }
     }
 }

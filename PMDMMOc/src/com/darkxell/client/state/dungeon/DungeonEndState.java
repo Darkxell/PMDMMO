@@ -21,113 +21,108 @@ import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
 
-public class DungeonEndState extends AbstractState
-{
+public class DungeonEndState extends AbstractState {
 
-	public static void finish()
-	{
-		TransitionState t = new TransitionState(Persistence.stateManager.getCurrentState(), null) {
-			@Override
-			public void onTransitionHalf()
-			{
-				super.onTransitionHalf();
-				Persistence.stateManager.setState(new PlayerLoadingState(Persistence.player.getData().id, new PlayerLoadingEndListener() {
-					@Override
-					public void onPlayerLoadingEnd(PlayerLoadingState state)
-					{
-						StoryPositionSetup.trigger(Persistence.player.storyPosition(), false);
-					}
-				}));
-			}
-		};
-		Persistence.stateManager.setState(t);
-	}
+    public static void finish() {
+        TransitionState t = new TransitionState(Persistence.stateManager.getCurrentState(), null) {
+            @Override
+            public void onTransitionHalf() {
+                super.onTransitionHalf();
+                Persistence.stateManager.setState(
+                        new PlayerLoadingState(Persistence.player.getData().id, new PlayerLoadingEndListener() {
+                            @Override
+                            public void onPlayerLoadingEnd(PlayerLoadingState state) {
+                                StoryPositionSetup.trigger(Persistence.player.storyPosition(), false);
+                            }
+                        }));
+            }
+        };
+        Persistence.stateManager.setState(t);
+    }
 
-	private ArrayList<Mission> completedMissions = new ArrayList<>();
-	public final DungeonOutcome outcome;
+    private ArrayList<Mission> completedMissions = new ArrayList<>();
+    public final DungeonOutcome outcome;
 
-	public DungeonEndState(DungeonOutcome outcome)
-	{
-		this.outcome = outcome;
-	}
+    public DungeonEndState(DungeonOutcome outcome) {
+        this.outcome = outcome;
+    }
 
-	public void onConfirmMessage(JsonObject message)
-	{
-		Persistence.isCommunicating = false;
-		this.onFinish();
-	}
+    public void onConfirmMessage(JsonObject message) {
+        Persistence.isCommunicating = false;
+        this.onFinish();
+    }
 
-	private void onFinish()
-	{
-		Persistence.player.resetDungeonTeam();
-		if (this.completedMissions.isEmpty()) finish();
-		else
-		{
-			Persistence.cutsceneState = new MissionResultsState(this.completedMissions);
-			Persistence.cutsceneState.cutscene.creation.create();
-			Persistence.stateManager.setState(Persistence.cutsceneState);
-		}
-	}
+    private void onFinish() {
+        Persistence.player.resetDungeonTeam();
+        if (this.completedMissions.isEmpty())
+            finish();
+        else {
+            Persistence.cutsceneState = new MissionResultsState(this.completedMissions);
+            Persistence.cutsceneState.cutscene.creation.create();
+            Persistence.stateManager.setState(Persistence.cutsceneState);
+        }
+    }
 
-	@Override
-	public void onKeyPressed(Key key)
-	{}
+    @Override
+    public void onKeyPressed(Key key) {
+    }
 
-	@Override
-	public void onKeyReleased(Key key)
-	{}
+    @Override
+    public void onKeyReleased(Key key) {
+    }
 
-	@Override
-	public void onStart()
-	{
-		super.onStart();
+    @Override
+    public void onStart() {
+        super.onStart();
 
-		for (DungeonMission m : Persistence.dungeon.activeMissions)
-			if (m.isCleared() && m.owner == Persistence.player) this.completedMissions.add(m.missionData);
+        for (DungeonMission m : Persistence.dungeon.activeMissions)
+            if (m.isCleared() && m.owner == Persistence.player)
+                this.completedMissions.add(m.missionData);
 
-		if (Persistence.socketendpoint.connectionStatus() == GameSocketEndpoint.CONNECTED)
-		{
-			Persistence.isCommunicating = true;
-			JsonObject json = Json.object();
-			json.add("action", "dungeonend");
-			json.add("outcome", this.outcome.toJson());
-			json.add("success", this.outcome.isSuccess());
-			json.add("player", Persistence.player.getData().toJson());
-			json.add("inventory", Persistence.player.inventory().getData().toJson());
+        if (Persistence.socketendpoint.connectionStatus() == GameSocketEndpoint.CONNECTED) {
+            Persistence.isCommunicating = true;
+            JsonObject json = Json.object();
+            json.add("action", "dungeonend");
+            json.add("outcome", this.outcome.toJson());
+            json.add("success", this.outcome.isSuccess());
+            json.add("player", Persistence.player.getData().toJson());
+            json.add("inventory", Persistence.player.inventory().getData().toJson());
 
-			JsonArray array = new JsonArray();
-			for (Pokemon pokemon : Persistence.player.getTeam())
-				array.add(pokemon.getData().toJson());
-			json.add("team", array);
+            JsonArray array = new JsonArray();
+            for (Pokemon pokemon : Persistence.player.getTeam())
+                array.add(pokemon.getData().toJson());
+            json.add("team", array);
 
-			array = new JsonArray();
-			for (Pokemon pokemon : Persistence.player.getTeam())
-				for (int m = 0; m < pokemon.moveCount(); ++m)
-					array.add(pokemon.move(m).getData().toJson());
-			json.add("moves", array);
+            array = new JsonArray();
+            for (Pokemon pokemon : Persistence.player.getTeam())
+                for (int m = 0; m < pokemon.moveCount(); ++m)
+                    array.add(pokemon.move(m).getData().toJson());
+            json.add("moves", array);
 
-			array = new JsonArray();
-			for (Pokemon pokemon : Persistence.player.getTeam())
-				if (pokemon.getItem() != null) array.add(pokemon.getItem().getData().toJson());
-			for (ItemStack item : Persistence.player.inventory().items())
-				array.add(item.getData().toJson());
-			json.add("items", array);
+            array = new JsonArray();
+            for (Pokemon pokemon : Persistence.player.getTeam())
+                if (pokemon.getItem() != null)
+                    array.add(pokemon.getItem().getData().toJson());
+            for (ItemStack item : Persistence.player.inventory().items())
+                array.add(item.getData().toJson());
+            json.add("items", array);
 
-			array = new JsonArray();
-			for (Mission m : this.completedMissions)
-				array.add(m.toString());
-			json.add("completedmissions", array);
+            array = new JsonArray();
+            for (Mission m : this.completedMissions)
+                array.add(m.toString());
+            json.add("completedmissions", array);
 
-			Persistence.socketendpoint.sendMessage(json.toString());
-		} else this.onFinish();
-	}
+            Persistence.socketendpoint.sendMessage(json.toString());
+        } else
+            this.onFinish();
+    }
 
-	@Override
-	public void render(Graphics2D g, int width, int height)
-	{}
+    @Override
+    public void render(Graphics2D g, int width, int height) {
+    }
 
-	@Override
-	public void update()
-	{}
+    @Override
+    public void update() {
+    }
 
 }

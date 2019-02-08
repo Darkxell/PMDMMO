@@ -1,12 +1,13 @@
 package com.darkxell.client.mechanics.freezone.trigger;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.jdom2.Element;
+
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.cutscene.CutsceneManager;
 import com.darkxell.common.dbobject.DBPlayer;
-import org.jdom2.Element;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Conditional trigger zone that only plays when a certain story condition is reached.
@@ -31,22 +32,22 @@ public class StoryConditionTriggerZone extends TriggerZone {
     private Map<String, String> getPropertyElement(Element el) {
         Map<String, String> properties = new HashMap<>();
 
-        if (el != null) {
+        if (el != null)
             for (Element propertyEl : el.getChildren("property")) {
                 String variable = propertyEl.getAttributeValue("key");
                 String value = propertyEl.getAttributeValue("val");
-                if (variable != null && value != null) {
+                if (variable != null && value != null)
                     properties.put(variable, value);
-                }
             }
-        }
         return properties;
     }
 
     /**
      * Evaluate conditions of {@code long} type variables.
      *
-     * <p>Currently, they are:</p>
+     * <p>
+     * Currently, they are:
+     * </p>
      *
      * <ul>
      * <li>{@code moneyinbag} - Money currently held.</li>
@@ -56,14 +57,14 @@ public class StoryConditionTriggerZone extends TriggerZone {
     private boolean evaluateConditionType(DBPlayer player, String variable, long value) {
         long current;
         switch (variable) {
-            case "moneyinbag":
-                current = player.moneyinbag;
-                break;
-            case "moneyinbank":
-                current = player.moneyinbank;
-                break;
-            default:
-                throw new IllegalArgumentException("Unknown long condition " + variable + ".");
+        case "moneyinbag":
+            current = player.moneyinbag;
+            break;
+        case "moneyinbank":
+            current = player.moneyinbank;
+            break;
+        default:
+            throw new IllegalArgumentException("Unknown long condition " + variable + ".");
         }
 
         return current == value;
@@ -72,7 +73,9 @@ public class StoryConditionTriggerZone extends TriggerZone {
     /**
      * Evaluate conditions of {@code int} type variables.
      *
-     * <p>Currently, they are:</p>
+     * <p>
+     * Currently, they are:
+     * </p>
      *
      * <ul>
      * <li>{@code storyposition} - Current story position.</li>
@@ -82,14 +85,14 @@ public class StoryConditionTriggerZone extends TriggerZone {
     private boolean evaluateConditionType(DBPlayer player, String variable, int value) {
         long current;
         switch (variable) {
-            case "storyposition":
-                current = player.storyposition;
-                break;
-            case "points":
-                current = player.points;
-                break;
-            default:
-                throw new IllegalArgumentException("Unknown int condition " + variable + ".");
+        case "storyposition":
+            current = player.storyposition;
+            break;
+        case "points":
+            current = player.points;
+            break;
+        default:
+            throw new IllegalArgumentException("Unknown int condition " + variable + ".");
         }
 
         return current == value;
@@ -102,12 +105,12 @@ public class StoryConditionTriggerZone extends TriggerZone {
     private boolean evaluateCondition(DBPlayer player, String variable, String value) {
         // Hopefully eventually we can just look these up in a hash map but until then we have to do this gross stuff.
         switch (variable) {
-            case "moneyinbag":
-            case "moneyinbank":
-                return evaluateConditionType(player, variable, Long.parseLong(value));
-            case "storyposition":
-            case "points":
-                return evaluateConditionType(player, variable, Integer.parseInt(value));
+        case "moneyinbag":
+        case "moneyinbank":
+            return evaluateConditionType(player, variable, Long.parseLong(value));
+        case "storyposition":
+        case "points":
+            return evaluateConditionType(player, variable, Integer.parseInt(value));
         }
         throw new IllegalArgumentException("Unknown condition " + variable + ".");
     }
@@ -115,7 +118,9 @@ public class StoryConditionTriggerZone extends TriggerZone {
     /**
      * Set conditions of {@code long} type variables.
      *
-     * <p>Currently, they are:</p>
+     * <p>
+     * Currently, they are:
+     * </p>
      *
      * <ul>
      * <li>{@code moneyinbag} - Money currently held.</li>
@@ -124,19 +129,20 @@ public class StoryConditionTriggerZone extends TriggerZone {
      */
     private void setConditionType(DBPlayer player, String variable, long value) {
         switch (variable) {
-            case "moneyinbag":
-                player.moneyinbag = value;
-                return;
-            case "moneyinbank":
-                player.moneyinbank = value;
-                return;
+        case "moneyinbag":
+            player.moneyinbag = value;
+            return;
+        case "moneyinbank":
+            player.moneyinbank = value;
         }
     }
 
     /**
      * Set conditions of {@code int} type variables.
      *
-     * <p>Currently, they are:</p>
+     * <p>
+     * Currently, they are:
+     * </p>
      *
      * <ul>
      * <li>{@code storyposition} - Current story position.</li>
@@ -145,11 +151,11 @@ public class StoryConditionTriggerZone extends TriggerZone {
      */
     private void setConditionType(DBPlayer player, String variable, int value) {
         switch (variable) {
-            case "storyposition":
-                player.storyposition = value;
-                return;
-            case "points":
-                player.points = value;
+        case "storyposition":
+            player.storyposition = value;
+            return;
+        case "points":
+            player.points = value;
         }
     }
 
@@ -159,23 +165,21 @@ public class StoryConditionTriggerZone extends TriggerZone {
     private void setCondition(DBPlayer player, String variable, String value) {
         // Hopefully eventually we can just look these up in a hash map but until then we have to do this gross stuff.
         switch (variable) {
-            case "moneyinbag":
-            case "moneyinbank":
-                setConditionType(player, variable, Long.parseLong(value));
-                return;
-            case "storyposition":
-            case "points":
-                setConditionType(player, variable, Integer.parseInt(value));
+        case "moneyinbag":
+        case "moneyinbank":
+            setConditionType(player, variable, Long.parseLong(value));
+            return;
+        case "storyposition":
+        case "points":
+            setConditionType(player, variable, Integer.parseInt(value));
         }
     }
 
     public boolean isActive() {
         DBPlayer player = Persistence.player.getData();
-        for (Map.Entry<String, String> condition : this.conditions.entrySet()) {
-            if (evaluateCondition(player, condition.getKey(), condition.getValue())) {
+        for (Map.Entry<String, String> condition : this.conditions.entrySet())
+            if (evaluateCondition(player, condition.getKey(), condition.getValue()))
                 return true;
-            }
-        }
         return false;
     }
 
@@ -183,8 +187,7 @@ public class StoryConditionTriggerZone extends TriggerZone {
         CutsceneManager.playCutscene(this.cutscene);
 
         DBPlayer player = Persistence.player.getData();
-        for (Map.Entry<String, String> condition : this.postConditions.entrySet()) {
+        for (Map.Entry<String, String> condition : this.postConditions.entrySet())
             this.setCondition(player, condition.getKey(), condition.getValue());
-        }
     }
 }

@@ -19,161 +19,161 @@ import com.darkxell.common.weather.WeatherSource;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonObject;
 
-public class MoveSelectionEvent extends DungeonEvent implements Communicable
-{
+public class MoveSelectionEvent extends DungeonEvent implements Communicable {
 
-	public static class MoveUse implements DamageSource, WeatherSource
-	{
-		public final Direction direction;
-		/** The experience event resulting from this move's use. */
-		private final ExperienceGeneratedEvent experienceEvent;
-		public final LearnedMove move;
-		public final DungeonPokemon user;
+    public static class MoveUse implements DamageSource, WeatherSource {
+        public final Direction direction;
+        /** The experience event resulting from this move's use. */
+        private final ExperienceGeneratedEvent experienceEvent;
+        public final LearnedMove move;
+        public final DungeonPokemon user;
 
-		public MoveUse(Floor floor, LearnedMove move, DungeonPokemon user, Direction direction)
-		{
-			this.move = move;
-			this.user = user;
-			this.direction = direction;
-			this.experienceEvent = this.user.type == DungeonPokemonType.TEAM_MEMBER ? new ExperienceGeneratedEvent(floor, this.user.player()) : null;
-		}
+        public MoveUse(Floor floor, LearnedMove move, DungeonPokemon user, Direction direction) {
+            this.move = move;
+            this.user = user;
+            this.direction = direction;
+            this.experienceEvent = this.user.type == DungeonPokemonType.TEAM_MEMBER
+                    ? new ExperienceGeneratedEvent(floor, this.user.player())
+                    : null;
+        }
 
-		@Override
-		public boolean equals(Object obj)
-		{
-			if (!(obj instanceof MoveUse)) return false;
-			MoveUse o = (MoveUse) obj;
-			return this.direction == o.direction && this.move == o.move && this.user.id() == o.user.id();
-		}
+        @Override
+        public boolean equals(Object obj) {
+            if (!(obj instanceof MoveUse))
+                return false;
+            MoveUse o = (MoveUse) obj;
+            return this.direction == o.direction && this.move == o.move && this.user.id() == o.user.id();
+        }
 
-		@Override
-		public ExperienceGeneratedEvent getExperienceEvent()
-		{
-			return this.experienceEvent;
-		}
+        @Override
+        public ExperienceGeneratedEvent getExperienceEvent() {
+            return this.experienceEvent;
+        }
 
-		@Override
-		public boolean isOver()
-		{
-			return true;
-		}
+        @Override
+        public boolean isOver() {
+            return true;
+        }
 
-		/** @return True if the Move's type is the same as one of the user's types. */
-		public boolean isStab()
-		{
-			return this.user.usedPokemon.species().type1 == this.move.move().type || this.user.usedPokemon.species().type2 == this.move.move().type;
-		}
-	}
+        /** @return True if the Move's type is the same as one of the user's types. */
+        public boolean isStab() {
+            return this.user.usedPokemon.species().type1 == this.move.move().type
+                    || this.user.usedPokemon.species().type2 == this.move.move().type;
+        }
+    }
 
-	private boolean consumesPP = true;
-	private MoveUse usedMove;
+    private boolean consumesPP = true;
+    private MoveUse usedMove;
 
-	public MoveSelectionEvent(Floor floor)
-	{
-		super(floor);
-	}
+    public MoveSelectionEvent(Floor floor) {
+        super(floor);
+    }
 
-	public MoveSelectionEvent(Floor floor, LearnedMove move, DungeonPokemon user)
-	{
-		this(floor, move, user, user.facing(), true);
-	}
+    public MoveSelectionEvent(Floor floor, LearnedMove move, DungeonPokemon user) {
+        this(floor, move, user, user.facing(), true);
+    }
 
-	public MoveSelectionEvent(Floor floor, LearnedMove move, DungeonPokemon user, Direction direction)
-	{
-		this(floor, move, user, direction, true);
-	}
+    public MoveSelectionEvent(Floor floor, LearnedMove move, DungeonPokemon user, Direction direction) {
+        this(floor, move, user, direction, true);
+    }
 
-	public MoveSelectionEvent(Floor floor, LearnedMove move, DungeonPokemon user, Direction direction, boolean consumesTurn)
-	{
-		super(floor, consumesTurn ? user : null);
-		this.usedMove = new MoveUse(floor, move, user, direction);
+    public MoveSelectionEvent(Floor floor, LearnedMove move, DungeonPokemon user, Direction direction,
+            boolean consumesTurn) {
+        super(floor, consumesTurn ? user : null);
+        this.usedMove = new MoveUse(floor, move, user, direction);
 
-		if (this.usedMove.move.move().hasUseMessage()) this.messages
-				.add(new Message("move.used").addReplacement("<pokemon>", user.getNickname()).addReplacement("<move>", this.usedMove.move.move().name()));
-	}
+        if (this.usedMove.move.move().hasUseMessage())
+            this.messages.add(new Message("move.used").addReplacement("<pokemon>", user.getNickname())
+                    .addReplacement("<move>", this.usedMove.move.move().name()));
+    }
 
-	@Override
-	public boolean equals(Object obj)
-	{
-		if (!(obj instanceof MoveSelectionEvent)) return false;
-		MoveSelectionEvent o = (MoveSelectionEvent) obj;
-		if (!this.usedMove.equals(o.usedMove)) return false;
-		return true;
-	}
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof MoveSelectionEvent))
+            return false;
+        MoveSelectionEvent o = (MoveSelectionEvent) obj;
+        if (!this.usedMove.equals(o.usedMove))
+            return false;
+        return true;
+    }
 
-	@Override
-	public String loggerMessage()
-	{
-		return this.usedMove.user + " used " + this.usedMove.move.move().name();
-	}
+    @Override
+    public String loggerMessage() {
+        return this.usedMove.user + " used " + this.usedMove.move.move().name();
+    }
 
-	@Override
-	public ArrayList<DungeonEvent> processServer()
-	{
-		// Rotate
-		if (this.usedMove.direction != this.usedMove.user.facing()) this.usedMove.user.setFacing(this.usedMove.direction);
+    @Override
+    public ArrayList<DungeonEvent> processServer() {
+        // Rotate
+        if (this.usedMove.direction != this.usedMove.user.facing())
+            this.usedMove.user.setFacing(this.usedMove.direction);
 
-		// Use PP
-		if (this.consumesPP) this.usedMove.move.setPP(this.usedMove.move.pp() - 1);
+        // Use PP
+        if (this.consumesPP)
+            this.usedMove.move.setPP(this.usedMove.move.pp() - 1);
 
-		// Use Move
-		this.usedMove.move.move().prepareUse(this.usedMove, this.floor, this.resultingEvents);
+        // Use Move
+        this.usedMove.move.move().prepareUse(this.usedMove, this.floor, this.resultingEvents);
 
-		this.resultingEvents.add(this.usedMove.getExperienceEvent());
+        this.resultingEvents.add(this.usedMove.getExperienceEvent());
 
-		// Use belly
-		if (this.usedMove.user.isTeamLeader()) this.resultingEvents
-				.add(new BellyChangedEvent(this.floor, this.usedMove.user, -(this.usedMove.move.isLinked() ? .9 : .1) * this.usedMove.user.energyMultiplier()));
+        // Use belly
+        if (this.usedMove.user.isTeamLeader())
+            this.resultingEvents.add(new BellyChangedEvent(this.floor, this.usedMove.user,
+                    -(this.usedMove.move.isLinked() ? .9 : .1) * this.usedMove.user.energyMultiplier()));
 
-		if (this.usedMove.move.isLinked())
-			this.resultingEvents.add(new MoveSelectionEvent(this.floor, this.usedMove.user.move(this.usedMove.move.getData().slot + 1), this.usedMove.user));
+        if (this.usedMove.move.isLinked())
+            this.resultingEvents.add(new MoveSelectionEvent(this.floor,
+                    this.usedMove.user.move(this.usedMove.move.getData().slot + 1), this.usedMove.user));
 
-		return super.processServer();
-	}
+        return super.processServer();
+    }
 
-	@Override
-	public void read(JsonObject value) throws JsonReadingException
-	{
-		if (value.get("pokemon") == null) throw new JsonReadingException("No value for Pokemon ID!");
-		if (value.get("move") == null) throw new JsonReadingException("No value for move ID!");
+    @Override
+    public void read(JsonObject value) throws JsonReadingException {
+        if (value.get("pokemon") == null)
+            throw new JsonReadingException("No value for Pokemon ID!");
+        if (value.get("move") == null)
+            throw new JsonReadingException("No value for move ID!");
 
-		if (!value.get("pokemon").isNumber()) throw new JsonReadingException("Wrong value for Pokemon ID: " + value.get("pokemon"));
-		if (!value.get("move").isNumber()) throw new JsonReadingException("Wrong value for move ID: " + value.get("move"));
+        if (!value.get("pokemon").isNumber())
+            throw new JsonReadingException("Wrong value for Pokemon ID: " + value.get("pokemon"));
+        if (!value.get("move").isNumber())
+            throw new JsonReadingException("Wrong value for move ID: " + value.get("move"));
 
-		Pokemon pokemon = this.floor.dungeon.communication.pokemonIDs.get(value.getLong("pokemon", 0));
-		LearnedMove move = this.floor.dungeon.communication.moveIDs.get(value.getLong("move", 0));
-		Direction d = null;
-		if (pokemon == null) throw new JsonReadingException("No pokemon with ID " + value.getLong("pokemon", 0));
-		if (move == null) throw new JsonReadingException("No move with ID " + value.getLong("move", 0));
-		try
-		{
-			d = Direction.valueOf(value.getString("direction", Direction.NORTH.name()));
-		} catch (IllegalArgumentException e)
-		{
-			throw new JsonReadingException("No direction with name " + value.getString("direction", "null"));
-		}
-		this.actor = pokemon.getDungeonPokemon();
-		this.usedMove = new MoveUse(this.floor, move, pokemon.getDungeonPokemon(), d);
+        Pokemon pokemon = this.floor.dungeon.communication.pokemonIDs.get(value.getLong("pokemon", 0));
+        LearnedMove move = this.floor.dungeon.communication.moveIDs.get(value.getLong("move", 0));
+        Direction d = null;
+        if (pokemon == null)
+            throw new JsonReadingException("No pokemon with ID " + value.getLong("pokemon", 0));
+        if (move == null)
+            throw new JsonReadingException("No move with ID " + value.getLong("move", 0));
+        try {
+            d = Direction.valueOf(value.getString("direction", Direction.NORTH.name()));
+        } catch (IllegalArgumentException e) {
+            throw new JsonReadingException("No direction with name " + value.getString("direction", "null"));
+        }
+        this.actor = pokemon.getDungeonPokemon();
+        this.usedMove = new MoveUse(this.floor, move, pokemon.getDungeonPokemon(), d);
 
-		if (this.usedMove.move.move() != MoveRegistry.ATTACK) this.messages.add(new Message("move.used")
-				.addReplacement("<pokemon>", this.usedMove.user.getNickname()).addReplacement("<move>", this.usedMove.move.move().name()));
+        if (this.usedMove.move.move() != MoveRegistry.ATTACK)
+            this.messages.add(new Message("move.used").addReplacement("<pokemon>", this.usedMove.user.getNickname())
+                    .addReplacement("<move>", this.usedMove.move.move().name()));
 
-	}
+    }
 
-	public void setConsumesNoPP()
-	{
-		this.consumesPP = false;
-	}
+    public void setConsumesNoPP() {
+        this.consumesPP = false;
+    }
 
-	@Override
-	public JsonObject toJson()
-	{
-		return Json.object().add("pokemon", this.usedMove.user.id()).add("move", this.usedMove.move.id()).add("direction", this.usedMove.direction.name());
-	}
+    @Override
+    public JsonObject toJson() {
+        return Json.object().add("pokemon", this.usedMove.user.id()).add("move", this.usedMove.move.id())
+                .add("direction", this.usedMove.direction.name());
+    }
 
-	public MoveUse usedMove()
-	{
-		return this.usedMove;
-	}
+    public MoveUse usedMove() {
+        return this.usedMove;
+    }
 
 }

@@ -61,9 +61,8 @@ public class DoubleRectangle {
         double rh = other.height;
 
         // sanity check
-        if (rw <= 0 || rh <= 0 || tw <= 0 || th <= 0) {
+        if (rw <= 0 || rh <= 0 || tw <= 0 || th <= 0)
             return false;
-        }
 
         double tx = this.x;
         double ty = this.y;
@@ -93,17 +92,14 @@ public class DoubleRectangle {
      * @return Array of top left, top right, bottom left, bottom right.
      */
     public Position[] getCorners() {
-        return new Position[]{new Position(x, y),
-                new Position(x + width, y),
-                new Position(x, y + height),
-                new Position(x + width, y + height)};
+        return new Position[] { new Position(x, y), new Position(x + width, y), new Position(x, y + height),
+                new Position(x + width, y + height) };
     }
 
     @Override
     public boolean equals(Object test) {
-        if (!(test instanceof DoubleRectangle)) {
+        if (!(test instanceof DoubleRectangle))
             return false;
-        }
         DoubleRectangle t = (DoubleRectangle) test;
         return x == t.x && y == t.y && width == t.width && height == t.height;
     }

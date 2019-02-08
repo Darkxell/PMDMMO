@@ -1,14 +1,14 @@
 package com.darkxell.client.state.dialog;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.state.dialog.DialogState.DialogEndListener;
 import com.darkxell.client.state.menu.OptionState;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.util.language.Message;
-
-import java.util.ArrayList;
-import java.util.Random;
 
 public class OptionDialogScreen extends PokemonDialogScreen {
     private int chosenIndex = -1;
@@ -20,10 +20,8 @@ public class OptionDialogScreen extends PokemonDialogScreen {
         this((Pokemon) null, message, DialogPortraitLocation.BOTTOM_LEFT, options);
     }
 
-    public OptionDialogScreen(Pokemon pokemon,
-                              Message message,
-                              DialogPortraitLocation dialogLocation,
-                              Message... options) {
+    public OptionDialogScreen(Pokemon pokemon, Message message, DialogPortraitLocation dialogLocation,
+            Message... options) {
         super(pokemon, message, dialogLocation);
 
         for (Message m : options) {
@@ -32,10 +30,8 @@ public class OptionDialogScreen extends PokemonDialogScreen {
         }
     }
 
-    public OptionDialogScreen(PokemonSpecies species,
-                              Message message,
-                              DialogPortraitLocation dialogLocation,
-                              Message... options) {
+    public OptionDialogScreen(PokemonSpecies species, Message message, DialogPortraitLocation dialogLocation,
+            Message... options) {
         this(species == null ? null : species.generate(new Random(), 1), message, dialogLocation, options);
     }
 
@@ -54,14 +50,13 @@ public class OptionDialogScreen extends PokemonDialogScreen {
     }
 
     public DialogEndListener chosenOptionResult() {
-        if (this.chosenIndex == -1) {
+        if (this.chosenIndex == -1)
             return null;
-        }
         return this.results.get(this.chosenIndex);
     }
 
     protected OptionState getOptionSelectionState() {
-        return new OptionState((DialogState) this.parentState, this, this.isOpaque);
+        return new OptionState(this.parentState, this, this.isOpaque);
     }
 
     public void onOptionSelected(int option) {
@@ -70,7 +65,7 @@ public class OptionDialogScreen extends PokemonDialogScreen {
     }
 
     public Message[] options() {
-        return this.options.toArray(new Message[this.options.size()]);
+        return this.options.toArray(new Message[0]);
     }
 
     @Override
@@ -79,8 +74,7 @@ public class OptionDialogScreen extends PokemonDialogScreen {
             this.showingOptions = true;
             Persistence.stateManager.setState(this.getOptionSelectionState());
             return false;
-        } else {
+        } else
             return super.requestNextMessage();
-        }
     }
 }

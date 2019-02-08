@@ -12,32 +12,29 @@ import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.client.ui.Frame;
 import com.darkxell.common.test.tests.DungeonReplayTest;
 
-public class ClientUnitTests
-{
+public class ClientUnitTests {
 
-	private static void executeTests()
-	{
-		CommonUnitTests.executeTests();
+    private static void executeTests() {
+        CommonUnitTests.executeTests();
 
-		Launcher.isRunning = true;
-		ClientSettings.load();
-		PokemonSpritesets.loadData();
-		Animations.loadData();
-		Persistence.soundmanager = new SoundManager();
-		Persistence.isUnitTesting = true;
+        Launcher.isRunning = true;
+        ClientSettings.load();
+        PokemonSpritesets.loadData();
+        Animations.loadData();
+        Persistence.soundmanager = new SoundManager();
+        Persistence.isUnitTesting = true;
 
-		Persistence.frame = new Frame();
-		Persistence.frame.canvas.requestFocus();
-		Persistence.stateManager = new PrincipalMainState();
+        Persistence.frame = new Frame();
+        Persistence.frame.canvas.requestFocus();
+        Persistence.stateManager = new PrincipalMainState();
 
-		Launcher.setProcessingProfile(PROFILE_SYNCHRONIZED);
+        Launcher.setProcessingProfile(PROFILE_SYNCHRONIZED);
 
-		new DungeonReplayTest().execute();
-	}
+        new DungeonReplayTest().execute();
+    }
 
-	public static void main(String[] args)
-	{
-		executeTests();
-	}
+    public static void main(String[] args) {
+        executeTests();
+    }
 
 }

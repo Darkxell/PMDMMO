@@ -2,23 +2,22 @@ package com.darkxell.common.status.conditions;
 
 import com.darkxell.common.status.StatusCondition;
 
-public class PreventOtherStatusCondition extends PreventStatusCondition
-{
+public class PreventOtherStatusCondition extends PreventStatusCondition {
 
-	private final StatusCondition[] prevented;
+    private final StatusCondition[] prevented;
 
-	public PreventOtherStatusCondition(int id, boolean isAilment, int durationMin, int durationMax, StatusCondition... prevented)
-	{
-		super(id, isAilment, durationMin, durationMax);
-		this.prevented = prevented;
-	}
+    public PreventOtherStatusCondition(int id, boolean isAilment, int durationMin, int durationMax,
+            StatusCondition... prevented) {
+        super(id, isAilment, durationMin, durationMax);
+        this.prevented = prevented;
+    }
 
-	@Override
-	public boolean prevents(StatusCondition condition)
-	{
-		for (StatusCondition s : this.prevented)
-			if (s == condition) return true;
-		return false;
-	}
+    @Override
+    public boolean prevents(StatusCondition condition) {
+        for (StatusCondition s : this.prevented)
+            if (s == condition)
+                return true;
+        return false;
+    }
 
 }

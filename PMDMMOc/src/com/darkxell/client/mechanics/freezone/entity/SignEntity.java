@@ -1,15 +1,16 @@
 package com.darkxell.client.mechanics.freezone.entity;
 
+import org.jdom2.Element;
+
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.state.dialog.DialogScreen;
 import com.darkxell.client.state.dialog.DialogState;
-import com.darkxell.common.util.xml.XMLUtils;
 import com.darkxell.common.util.language.Message;
-import org.jdom2.Element;
+import com.darkxell.common.util.xml.XMLUtils;
 
 /**
- * Describes a sign. Note that this entity doesn't have a graphical display and can be walked through. On interact,
- * it will open a simple dialog box.
+ * Describes a sign. Note that this entity doesn't have a graphical display and can be walked through. On interact, it
+ * will open a simple dialog box.
  */
 class SignEntity extends FreezoneEntity {
     private Message mess;

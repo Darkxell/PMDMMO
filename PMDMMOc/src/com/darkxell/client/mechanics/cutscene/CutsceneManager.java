@@ -1,19 +1,18 @@
 package com.darkxell.client.mechanics.cutscene;
 
+import java.io.InputStream;
+
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.resources.Res;
 import com.darkxell.client.state.TransitionState;
 import com.darkxell.client.state.freezone.CutsceneState;
 import com.darkxell.common.util.xml.XMLUtils;
 
-import java.io.InputStream;
-
 public class CutsceneManager {
     public static Cutscene loadCutscene(String id) {
         InputStream is = Res.get("/cutscenes/" + id + ".xml");
-        if (is == null) {
+        if (is == null)
             return null;
-        }
         return new Cutscene(id, XMLUtils.read(is));
     }
 
@@ -23,12 +22,11 @@ public class CutsceneManager {
 
     public static void playCutscene(String id, boolean fading) {
         Cutscene c = loadCutscene(id);
-        if (c == null) {
+        if (c == null)
             return;
-        }
         Persistence.cutsceneState = new CutsceneState(c);
 
-        if (fading) {
+        if (fading)
             Persistence.stateManager.setState(
                     new TransitionState(Persistence.stateManager.getCurrentState(), Persistence.cutsceneState) {
                         @Override
@@ -37,7 +35,7 @@ public class CutsceneManager {
                             c.creation.create();
                         }
                     });
-        } else {
+        else {
             c.creation.create();
             Persistence.stateManager.setState(Persistence.cutsceneState);
         }

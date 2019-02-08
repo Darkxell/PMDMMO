@@ -6,24 +6,20 @@ import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.action.TurnSkippedEvent;
 
 /** State in which the Pokemon skips turns. */
-public class AIStateTurnSkipper extends AIState
-{
+public class AIStateTurnSkipper extends AIState {
 
-	public AIStateTurnSkipper(AI ai)
-	{
-		super(ai);
-	}
+    public AIStateTurnSkipper(AI ai) {
+        super(ai);
+    }
 
-	@Override
-	public DungeonEvent takeAction()
-	{
-		return new TurnSkippedEvent(this.ai.floor, this.ai.pokemon);
-	}
-	
-	@Override
-	public String toString()
-	{
-		return "Skips turns";
-	}
+    @Override
+    public DungeonEvent takeAction() {
+        return new TurnSkippedEvent(this.ai.floor, this.ai.pokemon);
+    }
+
+    @Override
+    public String toString() {
+        return "Skips turns";
+    }
 
 }

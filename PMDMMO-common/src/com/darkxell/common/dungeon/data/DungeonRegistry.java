@@ -15,9 +15,8 @@ import com.darkxell.common.Registry;
 public final class DungeonRegistry extends Registry<Dungeon> {
     protected Element serializeDom(HashMap<Integer, Dungeon> dungeons) {
         Element xml = new Element("dungeons");
-        for (Dungeon dungeon : dungeons.values()) {
+        for (Dungeon dungeon : dungeons.values())
             xml.addContent(dungeon.toXML());
-        }
         return xml;
     }
 

@@ -1,5 +1,8 @@
 package com.darkxell.client.state.dialog;
 
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+
 import com.darkxell.client.resources.images.Sprite;
 import com.darkxell.client.resources.images.Sprites;
 import com.darkxell.client.resources.images.pokemon.PokemonPortrait;
@@ -8,8 +11,6 @@ import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.util.language.Message;
 import com.sun.javafx.geom.Point2D;
-
-import java.awt.*;
 
 public class PokemonDialogScreen extends DialogScreen {
     public enum DialogPortraitLocation {
@@ -21,9 +22,8 @@ public class PokemonDialogScreen extends DialogScreen {
         private static DialogPortraitLocation[] values = DialogPortraitLocation.values();
 
         public static DialogPortraitLocation getByIndex(int i) {
-            if (i < 0 || i > values.length) {
+            if (i < 0 || i > values.length)
                 return null;
-            }
 
             return values[i];
         }
@@ -36,18 +36,18 @@ public class PokemonDialogScreen extends DialogScreen {
 
         public Point2D locate(Rectangle dialogBox, Sprite portrait) {
             switch (this) {
-                case TOP_LEFT:
-                    return new Point2D(dialogBox.x + 5, 5);
+            case TOP_LEFT:
+                return new Point2D(dialogBox.x + 5, 5);
 
-                case TOP_RIGHT:
-                    return new Point2D((int) dialogBox.getMaxX() - portrait.image().getWidth() - 5, 5);
+            case TOP_RIGHT:
+                return new Point2D((int) dialogBox.getMaxX() - portrait.image().getWidth() - 5, 5);
 
-                case BOTTOM_LEFT:
-                    return new Point2D(dialogBox.x + 5, dialogBox.y - Sprites.Res_Hud.portrait.image().getHeight() - 5);
+            case BOTTOM_LEFT:
+                return new Point2D(dialogBox.x + 5, dialogBox.y - Sprites.Res_Hud.portrait.image().getHeight() - 5);
 
-                case BOTTOM_RIGHT:
-                    return new Point2D((int) dialogBox.getMaxX() - portrait.image().getWidth() - 5,
-                            dialogBox.y - Sprites.Res_Hud.portrait.image().getHeight() - 5);
+            case BOTTOM_RIGHT:
+                return new Point2D((int) dialogBox.getMaxX() - portrait.image().getWidth() - 5,
+                        dialogBox.y - Sprites.Res_Hud.portrait.image().getHeight() - 5);
             }
             return new Point2D(0, 0);
         }
@@ -90,20 +90,14 @@ public class PokemonDialogScreen extends DialogScreen {
         this(pokemon, message, PortraitEmotion.Normal, portraitLocation);
     }
 
-    public PokemonDialogScreen(Pokemon pokemon,
-                               Message message,
-                               PortraitEmotion emotion,
-                               DialogPortraitLocation portraitLocation) {
+    public PokemonDialogScreen(Pokemon pokemon, Message message, PortraitEmotion emotion,
+            DialogPortraitLocation portraitLocation) {
         this(pokemon == null ? null : pokemon.species(), message, emotion, pokemon != null && pokemon.isShiny(),
                 pokemon == null ? null : pokemon.getNickname(), portraitLocation);
     }
 
-    public PokemonDialogScreen(PokemonSpecies species,
-                               Message message,
-                               PortraitEmotion emotion,
-                               boolean shiny,
-                               Message speakerName,
-                               DialogPortraitLocation portraitLocation) {
+    public PokemonDialogScreen(PokemonSpecies species, Message message, PortraitEmotion emotion, boolean shiny,
+            Message speakerName, DialogPortraitLocation portraitLocation) {
         super(message);
 
         this.pokemon = species;
@@ -112,9 +106,8 @@ public class PokemonDialogScreen extends DialogScreen {
         this.shiny = shiny;
         this.portraitLocation = portraitLocation;
 
-        if (this.speakerName != null) {
+        if (this.speakerName != null)
             this.message.addPrefix(new Message(": ", false)).addPrefix(this.speakerName);
-        }
     }
 
     @Override
@@ -131,14 +124,12 @@ public class PokemonDialogScreen extends DialogScreen {
 
     @Override
     protected boolean switchAnimation() {
-        if (!super.switchAnimation()) {
+        if (!super.switchAnimation())
             return false;
-        }
         if (this.parentState.nextScreen() instanceof PokemonDialogScreen) {
             PokemonDialogScreen next = (PokemonDialogScreen) this.parentState.nextScreen();
-            if (this.pokemon == null) {
+            if (this.pokemon == null)
                 return next.pokemon == null;
-            }
             return this.pokemon.equals(next.pokemon) && this.emotion == next.emotion;
         }
         return true;

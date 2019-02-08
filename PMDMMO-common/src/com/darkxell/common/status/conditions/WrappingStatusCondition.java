@@ -12,25 +12,26 @@ import com.darkxell.common.status.StatusConditions;
 
 public class WrappingStatusCondition extends StatusCondition {
 
-	public WrappingStatusCondition(int id, boolean isAilment, int durationMin, int durationMax) {
-		super(id, isAilment, durationMin, durationMax);
-	}
+    public WrappingStatusCondition(int id, boolean isAilment, int durationMin, int durationMax) {
+        super(id, isAilment, durationMin, durationMax);
+    }
 
-	@Override
-	public void onEnd(Floor floor, AppliedStatusCondition instance, StatusConditionEndReason reason,
-			ArrayList<DungeonEvent> events) {
-		super.onEnd(floor, instance, reason, events);
+    @Override
+    public void onEnd(Floor floor, AppliedStatusCondition instance, StatusConditionEndReason reason,
+            ArrayList<DungeonEvent> events) {
+        super.onEnd(floor, instance, reason, events);
 
-		String wrappedid = null;
-		for (String flag : instance.listFlags())
-			if (flag.startsWith("wrapped:")) wrappedid = flag.substring("wrapped:".length());
+        String wrappedid = null;
+        for (String flag : instance.listFlags())
+            if (flag.startsWith("wrapped:"))
+                wrappedid = flag.substring("wrapped:".length());
 
-		if (wrappedid != null && wrappedid.matches("-?\\d+")) {
-			long id = Integer.parseInt(wrappedid);
-			DungeonPokemon wrapped = floor.findPokemon(id);
-			if (wrapped != null && wrapped.hasStatusCondition(StatusConditions.Wrapped))
-				wrapped.getStatusCondition(StatusConditions.Wrapped).finish(floor, reason, events);
-		}
-	}
+        if (wrappedid != null && wrappedid.matches("-?\\d+")) {
+            long id = Integer.parseInt(wrappedid);
+            DungeonPokemon wrapped = floor.findPokemon(id);
+            if (wrapped != null && wrapped.hasStatusCondition(StatusConditions.Wrapped))
+                wrapped.getStatusCondition(StatusConditions.Wrapped).finish(floor, reason, events);
+        }
+    }
 
 }

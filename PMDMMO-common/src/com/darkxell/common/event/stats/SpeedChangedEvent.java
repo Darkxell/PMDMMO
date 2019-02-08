@@ -8,28 +8,25 @@ import com.darkxell.common.pokemon.BaseStats.Stat;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Message;
 
-public class SpeedChangedEvent extends DungeonEvent
-{
+public class SpeedChangedEvent extends DungeonEvent {
 
-	public final DungeonPokemon pokemon;
+    public final DungeonPokemon pokemon;
 
-	public SpeedChangedEvent(Floor floor, DungeonPokemon pokemon)
-	{
-		super(floor);
-		this.pokemon = pokemon;
-	}
+    public SpeedChangedEvent(Floor floor, DungeonPokemon pokemon) {
+        super(floor);
+        this.pokemon = pokemon;
+    }
 
-	@Override
-	public String loggerMessage()
-	{
-		return this.messages.get(0).toString();
-	}
+    @Override
+    public String loggerMessage() {
+        return this.messages.get(0).toString();
+    }
 
-	@Override
-	public ArrayList<DungeonEvent> processServer()
-	{
-		this.messages.add(new Message("stat.speed." + pokemon.stats.getStage(Stat.Speed)).addReplacement("<pokemon>", this.pokemon.getNickname()));
-		return super.processServer();
-	}
+    @Override
+    public ArrayList<DungeonEvent> processServer() {
+        this.messages.add(new Message("stat.speed." + pokemon.stats.getStage(Stat.Speed)).addReplacement("<pokemon>",
+                this.pokemon.getNickname()));
+        return super.processServer();
+    }
 
 }

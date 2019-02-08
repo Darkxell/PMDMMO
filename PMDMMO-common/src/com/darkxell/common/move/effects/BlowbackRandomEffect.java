@@ -7,19 +7,16 @@ import com.darkxell.common.move.MoveEvents;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Direction;
 
-public class BlowbackRandomEffect extends BlowbackEffect
-{
+public class BlowbackRandomEffect extends BlowbackEffect {
 
-	public BlowbackRandomEffect(int id)
-	{
-		super(id);
-	}
+    public BlowbackRandomEffect(int id) {
+        super(id);
+    }
 
-	@Override
-	protected Direction direction(MoveUse usedMove, DungeonPokemon target, String[] flags, Floor floor, MoveEffectCalculator calculator, boolean missed,
-			MoveEvents effects)
-	{
-		return Direction.randomDirection(floor.random);
-	}
+    @Override
+    protected Direction direction(MoveUse usedMove, DungeonPokemon target, String[] flags, Floor floor,
+            MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
+        return Direction.randomDirection(floor.random);
+    }
 
 }

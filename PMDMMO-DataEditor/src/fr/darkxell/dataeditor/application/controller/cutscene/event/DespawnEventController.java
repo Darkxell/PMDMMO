@@ -12,37 +12,34 @@ import fr.darkxell.dataeditor.application.controller.cutscene.EditCutsceneContro
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 
-public class DespawnEventController extends EventController
-{
+public class DespawnEventController extends EventController {
 
-	@FXML
-	private ComboBox<CutsceneEntity> targetCombobox;
+    @FXML
+    private ComboBox<CutsceneEntity> targetCombobox;
 
-	@Override
-	public CutsceneEvent generateEvent()
-	{
-		return new DespawnCutsceneEvent(this.id(), this.targetCombobox.getSelectionModel().getSelectedItem());
-	}
+    @Override
+    public CutsceneEvent generateEvent() {
+        return new DespawnCutsceneEvent(this.id(), this.targetCombobox.getSelectionModel().getSelectedItem());
+    }
 
-	@Override
-	public void initialize(URL location, ResourceBundle resources)
-	{
-		super.initialize(location, resources);
-		this.targetCombobox.getItems().addAll(EditCutsceneController.instance.listAvailableEntities(EditCutsceneController.instance.listManager.editing));
-		this.targetCombobox.getItems().removeIf(e -> !(e instanceof CutscenePokemon));
-		if (!this.targetCombobox.getItems().isEmpty()) this.targetCombobox.getSelectionModel().select(0);
-	}
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        super.initialize(location, resources);
+        this.targetCombobox.getItems().addAll(EditCutsceneController.instance
+                .listAvailableEntities(EditCutsceneController.instance.listManager.editing));
+        this.targetCombobox.getItems().removeIf(e -> !(e instanceof CutscenePokemon));
+        if (!this.targetCombobox.getItems().isEmpty())
+            this.targetCombobox.getSelectionModel().select(0);
+    }
 
-	@Override
-	public void setup(CutsceneEvent event)
-	{
-		super.setup(event);
-		for (CutsceneEntity e : this.targetCombobox.getItems())
-			if (e.id == ((DespawnCutsceneEvent) event).target)
-			{
-				this.targetCombobox.getSelectionModel().select(e);
-				break;
-			}
-	}
+    @Override
+    public void setup(CutsceneEvent event) {
+        super.setup(event);
+        for (CutsceneEntity e : this.targetCombobox.getItems())
+            if (e.id == ((DespawnCutsceneEvent) event).target) {
+                this.targetCombobox.getSelectionModel().select(e);
+                break;
+            }
+    }
 
 }

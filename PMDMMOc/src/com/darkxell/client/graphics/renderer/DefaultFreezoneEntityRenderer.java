@@ -1,11 +1,12 @@
 package com.darkxell.client.graphics.renderer;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
+
+import com.darkxell.client.graphics.AbstractRenderer;
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.freezone.entity.FreezoneEntity;
-import com.darkxell.client.graphics.AbstractRenderer;
 import com.darkxell.common.util.DoubleRectangle;
-
-import java.awt.*;
 
 public class DefaultFreezoneEntityRenderer extends AbstractRenderer {
     public final FreezoneEntity entity;

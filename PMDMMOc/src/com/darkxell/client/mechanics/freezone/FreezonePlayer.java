@@ -1,7 +1,9 @@
 package com.darkxell.client.mechanics.freezone;
 
-import com.darkxell.client.launchable.Persistence;
+import java.util.ArrayList;
+
 import com.darkxell.client.graphics.renderer.AbstractPokemonRenderer;
+import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.freezone.entity.FreezoneEntity;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
@@ -11,8 +13,6 @@ import com.darkxell.common.player.Player;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.DoubleRectangle;
 import com.darkxell.common.util.Logger;
-
-import java.util.ArrayList;
 
 public class FreezonePlayer {
 
@@ -51,16 +51,12 @@ public class FreezonePlayer {
      * otherwise.
      */
     public boolean canBeAt(double x, double y) {
-        if (Persistence.currentmap == null) {
+        if (Persistence.currentmap == null)
             return true;
-        }
         ArrayList<FreezoneEntity> entities = Persistence.currentmap.entities();
-        for (int i = 0; i < entities.size(); i++) {
-            FreezoneEntity ety = entities.get(i);
-            if (ety.isSolid() && ety.getHitbox(ety.getX(), ety.getY()).intersects(this.getHitboxAt(x, y))) {
+        for (FreezoneEntity ety : entities)
+            if (ety.isSolid() && ety.getHitbox(ety.getX(), ety.getY()).intersects(this.getHitboxAt(x, y)))
                 return false;
-            }
-        }
 
         DoubleRectangle hbx = getHitboxAt(x, y);
         return !Persistence.currentmap.getTerrain().hasCollision(hbx);
@@ -70,14 +66,11 @@ public class FreezonePlayer {
      * Returns true if the player can interact with something in it's current position.
      */
     public boolean canInteract() {
-        if (Persistence.currentmap == null) {
+        if (Persistence.currentmap == null)
             return false;
-        }
-        for (FreezoneEntity et : Persistence.currentmap.entities()) {
-            if (et.isInteractive() && et.getHitbox(et.getX(), et.getY()).intersects(this.getInteractionBox())) {
+        for (FreezoneEntity et : Persistence.currentmap.entities())
+            if (et.isInteractive() && et.getHitbox(et.getX(), et.getY()).intersects(this.getInteractionBox()))
                 return true;
-            }
-        }
         return false;
     }
 
@@ -96,26 +89,23 @@ public class FreezonePlayer {
 
     private Direction getFacingFromMoveDirections() {
         if (ismovingUP) {
-            if (ismovingRIGHT) {
+            if (ismovingRIGHT)
                 return Direction.NORTHEAST;
-            } else if (ismovingLEFT) {
+            else if (ismovingLEFT)
                 return Direction.NORTHWEST;
-            } else {
+            else
                 return Direction.NORTH;
-            }
         } else if (ismovingDOWN) {
-            if (ismovingRIGHT) {
+            if (ismovingRIGHT)
                 return Direction.SOUTHEAST;
-            } else if (ismovingLEFT) {
+            else if (ismovingLEFT)
                 return Direction.SOUTHWEST;
-            } else {
+            else
                 return Direction.SOUTH;
-            }
-        } else if (ismovingLEFT) {
+        } else if (ismovingLEFT)
             return Direction.WEST;
-        } else if (ismovingRIGHT) {
+        else if (ismovingRIGHT)
             return Direction.EAST;
-        }
 
         // NOT MOVING, CAN'T DETERMINE!
         Logger.e("Could not determine facing direction from movements since the player is not moving. Returned north.");
@@ -133,20 +123,16 @@ public class FreezonePlayer {
         Direction facing = playersprite.getFacingDirection();
 
         double tpx = this.x;
-        if (facing.contains(Direction.EAST)) {
+        if (facing.contains(Direction.EAST))
             tpx += 2.5;
-        }
-        if (facing.contains(Direction.WEST)) {
+        if (facing.contains(Direction.WEST))
             tpx -= 2.5;
-        }
 
         double tpy = this.y;
-        if (facing.contains(Direction.SOUTH)) {
+        if (facing.contains(Direction.SOUTH))
             tpy += 2.5;
-        }
-        if (facing.contains(Direction.NORTH)) {
+        if (facing.contains(Direction.NORTH))
             tpy -= 2.5;
-        }
 
         return new DoubleRectangle(tpx, tpy, 1.3, 1.3, true);
     }
@@ -155,16 +141,12 @@ public class FreezonePlayer {
      * Returns the first entity found the player can interact with.
      */
     public FreezoneEntity getInteractionTarget() {
-        if (Persistence.currentmap == null) {
+        if (Persistence.currentmap == null)
             return null;
-        }
         ArrayList<FreezoneEntity> entities = Persistence.currentmap.entities();
-        for (int i = 0; i < entities.size(); i++) {
-            FreezoneEntity et = entities.get(i);
-            if (et.isInteractive() && et.getHitbox(et.getX(), et.getY()).intersects(this.getInteractionBox())) {
+        for (FreezoneEntity et : entities)
+            if (et.isInteractive() && et.getHitbox(et.getX(), et.getY()).intersects(this.getInteractionBox()))
                 return et;
-            }
-        }
         return null;
     }
 
@@ -174,84 +156,79 @@ public class FreezonePlayer {
 
     public void pressKey(Key key) {
         switch (key) {
-            case UP:
-                ismovingUP = true;
-                ismovingDOWN = false;
-                playersprite.setFacingDirection(getFacingFromMoveDirections());
-                playersprite.setState(PokemonSpriteState.MOVE, true);
-                break;
-            case RIGHT:
-                ismovingRIGHT = true;
-                ismovingLEFT = false;
-                playersprite.setFacingDirection(getFacingFromMoveDirections());
-                playersprite.setState(PokemonSpriteState.MOVE, true);
-                break;
-            case DOWN:
-                ismovingDOWN = true;
-                ismovingUP = false;
-                playersprite.setFacingDirection(getFacingFromMoveDirections());
-                playersprite.setState(PokemonSpriteState.MOVE, true);
-                break;
-            case LEFT:
-                ismovingLEFT = true;
-                ismovingRIGHT = false;
-                playersprite.setFacingDirection(getFacingFromMoveDirections());
-                playersprite.setState(PokemonSpriteState.MOVE, true);
-                break;
-            case ATTACK:
-                if (canInteract()) {
-                    getInteractionTarget().onInteract();
-                }
-                break;
-            case RUN:
-                this.isSprinting = true;
-                break;
+        case UP:
+            ismovingUP = true;
+            ismovingDOWN = false;
+            playersprite.setFacingDirection(getFacingFromMoveDirections());
+            playersprite.setState(PokemonSpriteState.MOVE, true);
+            break;
+        case RIGHT:
+            ismovingRIGHT = true;
+            ismovingLEFT = false;
+            playersprite.setFacingDirection(getFacingFromMoveDirections());
+            playersprite.setState(PokemonSpriteState.MOVE, true);
+            break;
+        case DOWN:
+            ismovingDOWN = true;
+            ismovingUP = false;
+            playersprite.setFacingDirection(getFacingFromMoveDirections());
+            playersprite.setState(PokemonSpriteState.MOVE, true);
+            break;
+        case LEFT:
+            ismovingLEFT = true;
+            ismovingRIGHT = false;
+            playersprite.setFacingDirection(getFacingFromMoveDirections());
+            playersprite.setState(PokemonSpriteState.MOVE, true);
+            break;
+        case ATTACK:
+            if (canInteract())
+                getInteractionTarget().onInteract();
+            break;
+        case RUN:
+            this.isSprinting = true;
+            break;
 
-            default:
-                break;
+        default:
+            break;
         }
     }
 
     public void releaseKey(Key key) {
         switch (key) {
-            case UP:
-                ismovingUP = false;
-                if (!ismoving()) {
-                    playersprite.setState(PokemonSpriteState.IDLE);
-                } else {
-                    playersprite.setFacingDirection(getFacingFromMoveDirections());
-                }
-                break;
-            case RIGHT:
-                ismovingRIGHT = false;
-                if (!ismoving()) {
-                    playersprite.setState(PokemonSpriteState.IDLE);
-                } else {
-                    playersprite.setFacingDirection(getFacingFromMoveDirections());
-                }
-                break;
-            case DOWN:
-                ismovingDOWN = false;
-                if (!ismoving()) {
-                    playersprite.setState(PokemonSpriteState.IDLE);
-                } else {
-                    playersprite.setFacingDirection(getFacingFromMoveDirections());
-                }
-                break;
-            case LEFT:
-                ismovingLEFT = false;
-                if (!ismoving()) {
-                    playersprite.setState(PokemonSpriteState.IDLE);
-                } else {
-                    playersprite.setFacingDirection(getFacingFromMoveDirections());
-                }
-                break;
-            case RUN:
-                this.isSprinting = false;
-                break;
+        case UP:
+            ismovingUP = false;
+            if (!ismoving())
+                playersprite.setState(PokemonSpriteState.IDLE);
+            else
+                playersprite.setFacingDirection(getFacingFromMoveDirections());
+            break;
+        case RIGHT:
+            ismovingRIGHT = false;
+            if (!ismoving())
+                playersprite.setState(PokemonSpriteState.IDLE);
+            else
+                playersprite.setFacingDirection(getFacingFromMoveDirections());
+            break;
+        case DOWN:
+            ismovingDOWN = false;
+            if (!ismoving())
+                playersprite.setState(PokemonSpriteState.IDLE);
+            else
+                playersprite.setFacingDirection(getFacingFromMoveDirections());
+            break;
+        case LEFT:
+            ismovingLEFT = false;
+            if (!ismoving())
+                playersprite.setState(PokemonSpriteState.IDLE);
+            else
+                playersprite.setFacingDirection(getFacingFromMoveDirections());
+            break;
+        case RUN:
+            this.isSprinting = false;
+            break;
 
-            default:
-                break;
+        default:
+            break;
         }
     }
 
@@ -261,9 +238,8 @@ public class FreezonePlayer {
 
     public void setPlayer(Player player) {
         Persistence.player = player;
-        if (player != null) {
+        if (player != null)
             this.updateSprite();
-        }
     }
 
     public void setState(PokemonSpriteState state) {
@@ -271,25 +247,20 @@ public class FreezonePlayer {
     }
 
     public void update() {
-        if (Persistence.player != null &&
-                Persistence.player.getTeamLeader().species().id != this.playersprite.pointer.data.id) {
+        if (Persistence.player != null
+                && Persistence.player.getTeamLeader().species().id != this.playersprite.pointer.data.id)
             this.updateSprite();
-        }
         this.renderer.update();
         this.renderer.setXY(this.x * 8, this.y * 8);
         double truemovespeed = isSprinting ? MOVESPEED * 2 : MOVESPEED;
-        if (ismovingUP && canBeAt(this.x, this.y - truemovespeed)) {
+        if (ismovingUP && canBeAt(this.x, this.y - truemovespeed))
             this.y -= truemovespeed;
-        }
-        if (ismovingRIGHT && canBeAt(this.x + truemovespeed, this.y)) {
+        if (ismovingRIGHT && canBeAt(this.x + truemovespeed, this.y))
             this.x += truemovespeed;
-        }
-        if (ismovingDOWN && canBeAt(this.x, this.y + truemovespeed)) {
+        if (ismovingDOWN && canBeAt(this.x, this.y + truemovespeed))
             this.y += truemovespeed;
-        }
-        if (ismovingLEFT && canBeAt(this.x - truemovespeed, this.y)) {
+        if (ismovingLEFT && canBeAt(this.x - truemovespeed, this.y))
             this.x -= truemovespeed;
-        }
     }
 
     private void updateSprite() {

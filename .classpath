@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="PMDMMO-common/src"/>
+	<classpathentry kind="src" path="PMDMMO-common/test"/>
+	<classpathentry kind="src" path="PMDMMO-DataEditor/src"/>
+	<classpathentry kind="src" path="PMDMMOc/src"/>
+	<classpathentry kind="src" path="PMDMMOc/test"/>
+	<classpathentry kind="src" path="PMDMMOServer/src/java"/>
+	<classpathentry kind="lib" path="PMDMMO-common/jar/jdom-2.0.6.jar"/>
+	<classpathentry kind="lib" path="PMDMMO-common/jar/minimal-json-0.9.4.jar"/>
+	<classpathentry kind="lib" path="PMDMMO-DataEditor/jars/controlsfx-8.40.14.jar"/>
+	<classpathentry kind="lib" path="PMDMMO-DataEditor/jars/controlsfx-samples-8.40.14.jar"/>
+	<classpathentry kind="lib" path="PMDMMO-DataEditor/jars/fxsampler-1.0.10.jar"/>
+	<classpathentry kind="lib" path="PMDMMOc/jar/discord-rpc_test.jar"/>
+	<classpathentry kind="lib" path="PMDMMOc/jar/discord-rpc.jar"/>
+	<classpathentry kind="lib" path="PMDMMOc/jar/javax.websocket-api-1.0-rc4.jar"/>
+	<classpathentry kind="lib" path="PMDMMOc/jar/jdom-2.0.6.jar"/>
+	<classpathentry kind="lib" path="PMDMMOc/jar/JZedited.jar"/>
+	<classpathentry kind="lib" path="PMDMMOc/jar/minimal-json-0.9.4.jar"/>
+	<classpathentry kind="lib" path="PMDMMOc/jar/tritonus_share.jar"/>
+	<classpathentry kind="lib" path="PMDMMOc/jar/tyrus-standalone-client-1.9.jar"/>
+	<classpathentry exported="true" kind="lib" path="/PMDMMOc/jar/minimal-json-0.9.4.jar"/>
+	<classpathentry kind="output" path="PMDMMO-DataEditor/bin"/>
+</classpath>

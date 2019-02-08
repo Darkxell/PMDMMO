@@ -1,14 +1,13 @@
 package com.darkxell.common.util;
 
-import static com.darkxell.common.util.Direction.*;
+import static com.darkxell.common.util.Direction.DIRECTIONS;
 
 public class DirectionSet {
     private short value = 0;
 
     public DirectionSet(Direction... directions) {
-        for (Direction d : directions) {
+        for (Direction d : directions)
             this.add(d);
-        }
     }
 
     /**
@@ -51,9 +50,8 @@ public class DirectionSet {
      */
     public void removeFreeCorners() {
         DIRECTIONS.stream().filter(d -> !d.cardinal).forEach(d -> {
-            if (!this.contains(d.rotateClockwise()) || !this.contains(d.rotateCounterClockwise())) {
+            if (!this.contains(d.rotateClockwise()) || !this.contains(d.rotateCounterClockwise()))
                 this.remove(d);
-            }
         });
     }
 

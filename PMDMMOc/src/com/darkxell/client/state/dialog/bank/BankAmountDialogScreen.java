@@ -1,18 +1,19 @@
 package com.darkxell.client.state.dialog.bank;
 
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+
+import com.darkxell.client.graphics.TextRenderer;
 import com.darkxell.client.launchable.GameSocketEndpoint;
 import com.darkxell.client.launchable.Persistence;
-import com.darkxell.client.graphics.TextRenderer;
 import com.darkxell.client.state.dialog.PokemonDialogScreen;
 import com.darkxell.client.state.menu.components.IntegerSelectionState;
 import com.darkxell.client.state.menu.components.IntegerSelectionState.IntegerSelectionListener;
-import com.darkxell.client.state.menu.components.OptionSelectionWindow;
+import com.darkxell.client.state.menu.components.MenuWindow;
 import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.util.language.Message;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonObject;
-
-import java.awt.*;
 
 public class BankAmountDialogScreen extends PokemonDialogScreen implements IntegerSelectionListener {
     public final long bag, bank;
@@ -34,9 +35,8 @@ public class BankAmountDialogScreen extends PokemonDialogScreen implements Integ
             return;
         }
 
-        if (!this.depositing) {
+        if (!this.depositing)
             selection *= -1;
-        }
         Persistence.isCommunicating = true;
 
         if (Persistence.socketendpoint.connectionStatus() != GameSocketEndpoint.CONNECTED) {
@@ -56,8 +56,9 @@ public class BankAmountDialogScreen extends PokemonDialogScreen implements Integ
         if (this.showingOptions) {
             if (this.summaryWindow == null) {
                 Rectangle dialog = this.parentState.dialogBox();
-                this.summaryWindow = new BankMenuWindow(new Rectangle(dialog.x, 20, dialog.width,
-                        TextRenderer.height() + OptionSelectionWindow.MARGIN_Y * 2), this.bag, this.bank);
+                this.summaryWindow = new BankMenuWindow(
+                        new Rectangle(dialog.x, 20, dialog.width, TextRenderer.height() + MenuWindow.MARGIN_Y * 2),
+                        this.bag, this.bank);
             }
             this.summaryWindow.render(g, null, width, height);
         }
@@ -68,11 +69,10 @@ public class BankAmountDialogScreen extends PokemonDialogScreen implements Integ
         if (!this.showingOptions) {
             this.showingOptions = true;
             long start = this.depositing ? this.bag : this.bank, min = 0;
-            Persistence.stateManager.setState(
-                    new IntegerSelectionState(this.parentState, this.parentState, this, min, start, start));
+            Persistence.stateManager
+                    .setState(new IntegerSelectionState(this.parentState, this.parentState, this, min, start, start));
             return false;
-        } else {
+        } else
             return super.requestNextMessage();
-        }
     }
 }
