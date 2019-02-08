@@ -14,6 +14,7 @@ import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.client.state.menu.components.MenuWindow;
 import com.darkxell.client.state.menu.item.ItemContainersMenuState;
+import com.darkxell.client.state.menu.menus.MovesMenuState;
 import com.darkxell.client.state.menu.menus.SettingsMenuState;
 import com.darkxell.client.state.menu.menus.TeamMenuState;
 import com.darkxell.common.dungeon.data.Dungeon.DungeonDirection;
@@ -91,7 +92,7 @@ public class DungeonMenuState extends OptionSelectionMenuState {
     protected void onOptionSelected(MenuOption option) {
         DungeonState s = Persistence.dungeonState;
         if (option == this.moves)
-            Persistence.stateManager.setState(new MovesMenuState(s, Persistence.player.getTeam()));
+            Persistence.stateManager.setState(new MovesMenuState(this, s, true, Persistence.player.getTeam()));
         else if (option == this.items)
             Persistence.stateManager.setState(this.createInventoryState());
         else if (option == this.team)

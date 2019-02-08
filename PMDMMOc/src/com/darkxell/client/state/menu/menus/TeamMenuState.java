@@ -10,6 +10,7 @@ import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.language.Message;
+import com.darkxell.common.zones.FreezoneInfo;
 import com.eclipsesource.json.JsonObject;
 
 public class TeamMenuState extends OptionSelectionMenuState implements ItemActionMessageHandler {
@@ -50,7 +51,7 @@ public class TeamMenuState extends OptionSelectionMenuState implements ItemActio
 
         Message info = new Message("summary.info.content");
         info.addReplacement("<species>", pokemon.species().formName());
-        info.addReplacement("<area>", new Message(pokemon.species().friendAreaID, false));
+        info.addReplacement("<area>", FreezoneInfo.find(pokemon.species().friendAreaID).getName());
         info.addReplacement("<joined>", new Message("Pokemon Square", false));
         info.addReplacement("<evolve>", pokemon.evolutionStatus());
 

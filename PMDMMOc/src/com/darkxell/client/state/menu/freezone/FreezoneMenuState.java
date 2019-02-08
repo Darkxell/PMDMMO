@@ -10,6 +10,7 @@ import com.darkxell.client.state.dialog.DialogState;
 import com.darkxell.client.state.dialog.DialogState.DialogEndListener;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.client.state.menu.item.ItemContainersMenuState;
+import com.darkxell.client.state.menu.menus.MovesMenuState;
 import com.darkxell.client.state.menu.menus.SettingsMenuState;
 import com.darkxell.client.state.menu.menus.TeamMenuState;
 import com.darkxell.common.player.ItemContainer;
@@ -17,7 +18,7 @@ import com.darkxell.common.util.language.Message;
 
 public class FreezoneMenuState extends OptionSelectionMenuState {
 
-    private MenuOption items, team, settings;
+    private MenuOption moves, items, team, settings;
 
     public FreezoneMenuState(AbstractState background) {
         super(background);
@@ -28,6 +29,7 @@ public class FreezoneMenuState extends OptionSelectionMenuState {
     @Override
     protected void createOptions() {
         MenuTab tab = new MenuTab();
+        tab.addOption((this.moves = new MenuOption("menu.moves")));
         tab.addOption((this.items = new MenuOption("menu.items")));
         tab.addOption((this.team = new MenuOption("menu.team")));
         tab.addOption((this.settings = new MenuOption("menu.settings")));
@@ -41,7 +43,10 @@ public class FreezoneMenuState extends OptionSelectionMenuState {
 
     @Override
     protected void onOptionSelected(MenuOption option) {
-        if (option == this.items) {
+        if (option == this.moves)
+            Persistence.stateManager
+                    .setState(new MovesMenuState(this, this.background, false, Persistence.player.getTeam()));
+        else if (option == this.items) {
             ArrayList<ItemContainer> containers = new ArrayList<>();
             containers.add(Persistence.player.inventory());
             containers.addAll(Arrays.asList(Persistence.player.getTeam()));

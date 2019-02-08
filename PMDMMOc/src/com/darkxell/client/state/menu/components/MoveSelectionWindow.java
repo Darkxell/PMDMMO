@@ -7,8 +7,8 @@ import java.awt.Rectangle;
 import com.darkxell.client.graphics.TextRenderer;
 import com.darkxell.client.resources.images.Sprites;
 import com.darkxell.client.state.menu.AbstractMenuState.MenuOption;
-import com.darkxell.client.state.menu.dungeon.MovesMenuState;
-import com.darkxell.client.state.menu.dungeon.MovesMenuState.MoveMenuOption;
+import com.darkxell.client.state.menu.menus.MovesMenuState;
+import com.darkxell.client.state.menu.menus.MovesMenuState.MoveMenuOption;
 import com.darkxell.common.util.language.Message;
 
 public class MoveSelectionWindow extends OptionSelectionWindow {
