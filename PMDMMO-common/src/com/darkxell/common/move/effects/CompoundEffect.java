@@ -46,9 +46,19 @@ public class CompoundEffect extends MoveEffect {
             return m;
         for (MoveEffect e : this.effects) {
             Message em = e.descriptionBase(move);
-            em.addReplacement("<move>", move.name());
-            m.addSuffix(" <br>");
-            m.addSuffix(em);
+            if (Localization.containsKey("move.info." + e.id))
+                em = new Message("move.info." + e.id);
+
+            if (!em.id.equals(DEFAULT_DESCRIPTION_ID)) { // If effect has default description, don't show it
+                em.addReplacement("<move>", move.name());
+
+                if (m.id.equals(DEFAULT_DESCRIPTION_ID)) // If compound has default description, don't show it
+                    m = em;
+                else { // Else add effect description to total description
+                    m.addSuffix(" <br>");
+                    m.addSuffix(em);
+                }
+            }
         }
         return m;
     }

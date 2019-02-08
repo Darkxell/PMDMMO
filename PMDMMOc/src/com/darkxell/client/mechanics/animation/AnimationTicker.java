@@ -20,8 +20,8 @@ public final class AnimationTicker {
     }
 
     public void update() {
-        for (AbstractAnimation animation : this.animations)
-            animation.update();
+        for (int i = 0; i < this.animations.size(); ++i)
+            this.animations.get(i).update();
     }
 
 }
