@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.state.StateManager;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
+import com.darkxell.client.state.menu.menus.MovesMenuState;
 import com.darkxell.client.state.menu.menus.TeamMenuState;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.zones.FreezoneInfo;
@@ -13,7 +14,7 @@ public class FriendSelectionOptionState extends OptionSelectionMenuState {
 
     public final FriendSelectionState parent;
     public final Pokemon pokemon;
-    private MenuOption visit, summary, exit;
+    private MenuOption visit, summary, moves, exit;
 
     public FriendSelectionOptionState(FriendSelectionState parent, Pokemon pokemon) {
         super(parent, false);
@@ -27,6 +28,7 @@ public class FriendSelectionOptionState extends OptionSelectionMenuState {
         MenuTab tab = new MenuTab();
         tab.addOption(this.visit = new MenuOption("friendareas.visit"));
         tab.addOption(this.summary = new MenuOption("friendareas.summary"));
+        tab.addOption(this.moves = new MenuOption("menu.moves"));
         tab.addOption(this.exit = new MenuOption("general.back"));
         this.tabs.add(tab);
     }
@@ -52,6 +54,8 @@ public class FriendSelectionOptionState extends OptionSelectionMenuState {
         else if (option == this.summary)
             Persistence.stateManager
                     .setState(TeamMenuState.createSummaryState(this.parent.background, this, this.pokemon));
+        else if (option == this.moves)
+            Persistence.stateManager.setState(new MovesMenuState(this, this.parent.background, false, this.pokemon));
         else if (option == this.exit)
             this.onExit();
     }

@@ -1,4 +1,4 @@
-package com.darkxell.client.state.menu.dungeon;
+package com.darkxell.client.state.menu.menus;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -6,14 +6,17 @@ import java.awt.event.KeyEvent;
 
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.renderers.TextRenderer;
+import com.darkxell.client.renderers.layers.AbstractGraphiclayer;
 import com.darkxell.client.resources.images.hud.MenuStateHudSpriteset;
 import com.darkxell.client.resources.music.SoundManager;
+import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.dungeon.DungeonState;
 import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.client.state.menu.components.MoveSelectionWindow;
 import com.darkxell.client.state.menu.components.OptionSelectionWindow;
 import com.darkxell.client.state.menu.components.TextWindow;
+import com.darkxell.client.state.menu.dungeon.MoveInfoState;
 import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.event.move.MoveEnabledEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent;
@@ -41,9 +44,14 @@ public class MovesMenuState extends OptionSelectionMenuState {
     private Pokemon[] pokemon;
     private MoveSelectionWindow window;
     private TextWindow windowInfo;
+    public final boolean inDungeon;
+    public final AbstractState parent;
 
-    public MovesMenuState(DungeonState parent, Pokemon... pokemon) {
-        super(parent);
+    public MovesMenuState(AbstractState parent, AbstractGraphiclayer background, boolean inDungeon,
+            Pokemon... pokemon) {
+        super(background);
+        this.parent = parent;
+        this.inDungeon = inDungeon;
         this.pokemon = pokemon;
         this.createOptions();
         this.createWindows();
@@ -81,10 +89,11 @@ public class MovesMenuState extends OptionSelectionMenuState {
     }
 
     protected Message infoText() {
-        return new Message(this.isMainSelected() ? "moves.info.main" : "moves.info.ally")
-                .addReplacement("<key-ok>", KeyEvent.getKeyText(Key.ATTACK.keyValue()))
-                .addReplacement("<key-info>", KeyEvent.getKeyText(Key.ROTATE.keyValue()))
-                .addReplacement("<key-shift>", KeyEvent.getKeyText(Key.DIAGONAL.keyValue()));
+        return new Message(
+                !this.inDungeon ? "moves.info.freezone" : this.isMainSelected() ? "moves.info.main" : "moves.info.ally")
+                        .addReplacement("<key-ok>", KeyEvent.getKeyText(Key.ATTACK.keyValue()))
+                        .addReplacement("<key-info>", KeyEvent.getKeyText(Key.ROTATE.keyValue()))
+                        .addReplacement("<key-shift>", KeyEvent.getKeyText(Key.DIAGONAL.keyValue()));
     }
 
     private boolean isMainSelected() {
@@ -99,7 +108,7 @@ public class MovesMenuState extends OptionSelectionMenuState {
 
     @Override
     protected void onExit() {
-        Persistence.stateManager.setState(new DungeonMenuState(this.background));
+        Persistence.stateManager.setState(this.parent);
     }
 
     @Override
@@ -161,7 +170,7 @@ public class MovesMenuState extends OptionSelectionMenuState {
                 Persistence.eventProcessor().processEvent(
                         new MoveSwitchedEvent(Persistence.floor, this.selectedPokemon(), from, to).setPAE());
 
-                MovesMenuState s = new MovesMenuState(Persistence.dungeonState, this.pokemon);
+                MovesMenuState s = new MovesMenuState(this.parent, this.background, this.inDungeon, this.pokemon);
                 s.selection = this.selection;
                 s.tab = this.tab;
                 Persistence.stateManager.setState(s);
@@ -177,12 +186,17 @@ public class MovesMenuState extends OptionSelectionMenuState {
     }
 
     private void onOptionInfo(MenuOption option) {
-        DungeonState s = Persistence.dungeonState;
-        Persistence.stateManager.setState(new MoveInfoState(((MoveMenuOption) option).move.move(), s, this));
+        Persistence.stateManager
+                .setState(new MoveInfoState(((MoveMenuOption) option).move.move(), this.background, this));
     }
 
     @Override
     protected void onOptionSelected(MenuOption option) {
+        if (!this.inDungeon) {
+            this.onOptionInfo(option);
+            return;
+        }
+
         DungeonState s = Persistence.dungeonState;
         LearnedMove move = ((MoveMenuOption) option).move;
 
@@ -201,7 +215,7 @@ public class MovesMenuState extends OptionSelectionMenuState {
         } else {
             Persistence.eventProcessor()
                     .processEvent(new MoveEnabledEvent(Persistence.floor, move, !move.isEnabled()).setPAE());
-            MovesMenuState state = new MovesMenuState(s, this.pokemon);
+            MovesMenuState state = new MovesMenuState(s, s, true, this.pokemon);
             state.tab = this.tab;
             state.selection = this.selection;
             Persistence.stateManager.setState(state);

@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
 import com.darkxell.client.renderers.TextRenderer;
+import com.darkxell.client.renderers.layers.AbstractGraphiclayer;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.menu.InfoState;
 import com.darkxell.client.state.menu.components.MenuWindow;
@@ -18,7 +19,7 @@ public class MoveInfoState extends InfoState {
     private final Message details1Message, details2Message;
     public final Move move;
 
-    public MoveInfoState(Move move, AbstractState background, AbstractState parent) {
+    public MoveInfoState(Move move, AbstractGraphiclayer background, AbstractState parent) {
         super(background, parent, new Message[] { move.name() }, new Message[] { move.description() });
         this.move = move;
 

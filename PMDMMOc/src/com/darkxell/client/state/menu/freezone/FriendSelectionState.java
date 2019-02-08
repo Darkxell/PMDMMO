@@ -220,9 +220,17 @@ public class FriendSelectionState extends AbstractMenuState {
             return;
         if (this.window != null) {
             int option = this.window.optionAt(x, y);
-            if (option != -1)
+            if (option != -1) {
                 this.selection = option;
+                this.onOptionChanged(this.currentOption());
+            }
         }
+    }
+
+    @Override
+    protected void onOptionChanged(MenuOption option) {
+        super.onOptionChanged(option);
+        this.updateNameWindow();
     }
 
     @Override

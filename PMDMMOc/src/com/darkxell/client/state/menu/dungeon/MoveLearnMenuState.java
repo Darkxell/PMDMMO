@@ -10,6 +10,7 @@ import com.darkxell.client.state.dialog.DialogState;
 import com.darkxell.client.state.dialog.DialogState.DialogEndListener;
 import com.darkxell.client.state.dungeon.DungeonState;
 import com.darkxell.client.state.menu.components.MoveSelectionWindow;
+import com.darkxell.client.state.menu.menus.MovesMenuState;
 import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.event.move.MoveLearnedEvent;
 import com.darkxell.common.move.Move;
@@ -23,7 +24,7 @@ public class MoveLearnMenuState extends MovesMenuState implements DialogEndListe
     public final Pokemon pokemon;
 
     public MoveLearnMenuState(DungeonState parent, Pokemon pokemon, Move move) {
-        super(parent, pokemon);
+        super(parent, parent, true, pokemon);
         this.pokemon = pokemon;
         this.move = new LearnedMove(move.id);
         this.canOrder = false;
