@@ -7,18 +7,15 @@ import com.darkxell.common.move.MoveEffectCalculator;
 import com.darkxell.common.move.calculators.HPDifferenceCalculator;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
-public class HPDifferenceDamageEffect extends MoveEffect
-{
+public class HPDifferenceDamageEffect extends MoveEffect {
 
-	public HPDifferenceDamageEffect(int id)
-	{
-		super(id);
-	}
-	
-	@Override
-	public MoveEffectCalculator buildCalculator(MoveUse usedMove, DungeonPokemon target, Floor floor, String[] flags)
-	{
-		return new HPDifferenceCalculator(usedMove, target, floor, flags);
-	}
+    public HPDifferenceDamageEffect(int id) {
+        super(id);
+    }
+
+    @Override
+    public MoveEffectCalculator buildCalculator(MoveUse usedMove, DungeonPokemon target, Floor floor, String[] flags) {
+        return new HPDifferenceCalculator(usedMove, target, floor, flags);
+    }
 
 }

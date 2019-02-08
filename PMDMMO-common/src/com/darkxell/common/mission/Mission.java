@@ -7,8 +7,7 @@ import com.darkxell.common.Registries;
 import com.darkxell.common.util.language.Message;
 
 /**
- * Structure that contains all the informations for a mission. A mission object
- * is immutable.
+ * Structure that contains all the informations for a mission. A mission object is immutable.
  */
 public class Mission {
 
@@ -20,10 +19,8 @@ public class Mission {
     public static final int TYPE_FINDITEM = 6;
 
     /**
-     * The difficulty of the mission. Note that the values of this string are
-     * not restricted, so this should not be used to determine other
-     * informations about a mission. Such info should be attributes of this
-     * object.<br/>
+     * The difficulty of the mission. Note that the values of this string are not restricted, so this should not be used
+     * to determine other informations about a mission. Such info should be attributes of this object.<br/>
      * TL:DR : for display purposes mainly.
      */
     private String difficulty = "";
@@ -36,8 +33,7 @@ public class Mission {
      */
     private int floor = 1;
     /**
-     * The id of the first Pokemon. Usually, this is the one asking for rescue,
-     * to escort...
+     * The id of the first Pokemon. Usually, this is the one asking for rescue, to escort...
      */
     private int pokemonid1 = 1;
     /**
@@ -45,8 +41,7 @@ public class Mission {
      */
     private int pokemonid2 = 4;
     /**
-     * An itemID used for the missions that are resolved by finding or bringing
-     * an item.
+     * An itemID used for the missions that are resolved by finding or bringing an item.
      */
     private int itemid = 2;
     /**
@@ -67,17 +62,15 @@ public class Mission {
      */
     public Mission(String difficulty, int dungeonid, int floor, int pokemonid1, int pokemonid2, int itemid,
             MissionReward rewards, int missiontype) {
-        if (difficulty != null) {
+        if (difficulty != null)
             this.difficulty = difficulty;
-        }
         this.dungeonid = dungeonid;
         this.floor = floor;
         this.pokemonid1 = pokemonid1;
         this.pokemonid2 = pokemonid2;
         this.itemid = itemid;
-        if (rewards != null) {
+        if (rewards != null)
             this.rewards = rewards;
-        }
         this.missiontype = missiontype;
     }
 
@@ -105,12 +98,11 @@ public class Mission {
 
     @Override
     public String toString() {
-        if (stringrep != null && !stringrep.isEmpty()) {
+        if (stringrep != null && !stringrep.isEmpty())
             return stringrep;
-        }
         // diff::did:floor:pkmn1:pkmn2:itemid:rewards:type
-        return stringrep = difficulty + ":" + dungeonid + ":" + floor + ":" + pokemonid1 + ":" + pokemonid2 + ":" + itemid + ":"
-                + rewards + ":" + missiontype;
+        return stringrep = difficulty + ":" + dungeonid + ":" + floor + ":" + pokemonid1 + ":" + pokemonid2 + ":"
+                + itemid + ":" + rewards + ":" + missiontype;
     }
 
     public String getDifficulty() {
@@ -146,20 +138,18 @@ public class Mission {
     }
 
     public MissionFlavourText getMissionFlavor() {
-        if (flavor == null) {
+        if (flavor == null)
             flavor = new MissionFlavourText(this);
-        }
         return flavor;
     }
 
     @Override
     public boolean equals(Object obj) {
         Mission x;
-        if (obj instanceof Mission) {
+        if (obj instanceof Mission)
             x = (Mission) obj;
-        } else {
+        else
             return false;
-        }
         return x.difficulty.equals(difficulty) && dungeonid == x.dungeonid && floor == x.floor
                 && pokemonid1 == x.pokemonid1 && pokemonid2 == x.pokemonid2 && itemid == x.itemid
                 && rewards.equals(x.rewards) && missiontype == x.missiontype;
@@ -177,49 +167,45 @@ public class Mission {
         ArrayList<Mission> list = new ArrayList<>(10);
         int dungeonammount = 0;
         Random r = new Random();
-        for (int dungeonid = 0; dungeonid < 100; dungeonid++) {
+        for (int dungeonid = 0; dungeonid < 100; dungeonid++)
             switch (dungeonid) {
-                case 1: // Tiny woods
-                    dungeonammount = r(r, 2, 3);
-                    for (int i = 0; i < dungeonammount; i++) {
-                        try {
-                            MissionReward rewards = new MissionReward(r(r, 20, 30), null, null, 5, null);
-                            Mission mission = new Mission("E", dungeonid, r(r, 2, 3), r(r, 1, 376), r(r, 1, 376), 1, rewards,
-                                    r(r, 1, 2));
-                            list.add(mission);
-                        } catch (InvalidParammetersException e) {
-                            e.printStackTrace();
-                        }
+            case 1: // Tiny woods
+                dungeonammount = r(r, 2, 3);
+                for (int i = 0; i < dungeonammount; i++)
+                    try {
+                        MissionReward rewards = new MissionReward(r(r, 20, 30), null, null, 5, null);
+                        Mission mission = new Mission("E", dungeonid, r(r, 2, 3), r(r, 1, 376), r(r, 1, 376), 1,
+                                rewards, r(r, 1, 2));
+                        list.add(mission);
+                    } catch (InvalidParammetersException e) {
+                        e.printStackTrace();
                     }
-                    break;
-                case 2: // Thunderwave cave
-                    dungeonammount = r(r, 2, 3);
-                    for (int i = 0; i < dungeonammount; i++) {
-                        try {
-                            MissionReward rewards = new MissionReward(r(r, 30, 120), null, null, 5, null);
-                            Mission mission = new Mission("E", dungeonid, r(r, 2, 4), r(r, 1, 376), r(r, 1, 376), 1, rewards,
-                                    r(r, 1, 2));
-                            list.add(mission);
-                        } catch (InvalidParammetersException e) {
-                            e.printStackTrace();
-                        }
+                break;
+            case 2: // Thunderwave cave
+                dungeonammount = r(r, 2, 3);
+                for (int i = 0; i < dungeonammount; i++)
+                    try {
+                        MissionReward rewards = new MissionReward(r(r, 30, 120), null, null, 5, null);
+                        Mission mission = new Mission("E", dungeonid, r(r, 2, 4), r(r, 1, 376), r(r, 1, 376), 1,
+                                rewards, r(r, 1, 2));
+                        list.add(mission);
+                    } catch (InvalidParammetersException e) {
+                        e.printStackTrace();
                     }
-                    break;
-                case 3: // Mt steel
-                    dungeonammount = r(r, 2, 3);
-                    for (int i = 0; i < dungeonammount; i++) {
-                        try {
-                            MissionReward rewards = new MissionReward(r(r, 150, 400), null, null, 10, null);
-                            Mission mission = new Mission("D", dungeonid, r(r, 4, 7), r(r, 1, 376), r(r, 1, 376), 1, rewards,
-                                    r(r, 1, 2));
-                            list.add(mission);
-                        } catch (InvalidParammetersException e) {
-                            e.printStackTrace();
-                        }
+                break;
+            case 3: // Mt steel
+                dungeonammount = r(r, 2, 3);
+                for (int i = 0; i < dungeonammount; i++)
+                    try {
+                        MissionReward rewards = new MissionReward(r(r, 150, 400), null, null, 10, null);
+                        Mission mission = new Mission("D", dungeonid, r(r, 4, 7), r(r, 1, 376), r(r, 1, 376), 1,
+                                rewards, r(r, 1, 2));
+                        list.add(mission);
+                    } catch (InvalidParammetersException e) {
+                        e.printStackTrace();
                     }
-                    break;
+                break;
             }
-        }
         return list;
     }
 
@@ -229,30 +215,31 @@ public class Mission {
     private static int r(Random r, int a, int b) {
         return r.nextInt(b - a) + a;
     }
-    
-    
+
     // Behavior getters
 
-	/** @return <code>true</code> if the 2 Pokemon IDs are used for this Mission. */
-	public boolean has2Pokemon() {
-		return this.getMissiontype() == TYPE_DEFEAT || this.getMissiontype() == TYPE_RESCUEHIM || this.getMissiontype() == TYPE_ESCORT;
-	}
-
-	/** @return The ID of the Client Pokemon. */
-    public int getClientPokemon() {
-    	return this.getPokemonid1();
+    /** @return <code>true</code> if the 2 Pokemon IDs are used for this Mission. */
+    public boolean has2Pokemon() {
+        return this.getMissiontype() == TYPE_DEFEAT || this.getMissiontype() == TYPE_RESCUEHIM
+                || this.getMissiontype() == TYPE_ESCORT;
     }
 
-	/** @return The ID of the Target Pokemon, i.e. the Pokemon that will be found in the Dungeon if it appears there. */
-	public int getTargetPokemon() {
-		if (this.has2Pokemon()) return this.getPokemonid2();
-		return this.getPokemonid1();
-	}
+    /** @return The ID of the Client Pokemon. */
+    public int getClientPokemon() {
+        return this.getPokemonid1();
+    }
 
-	public String summary() {
-		return "<mission> " + Registries.dungeons().find(this.getDungeonid()).name() + " " + new Message("mission.floor.short") +
-                "<blue>" + this.getFloor()
-				+ "</color>" + " - " + this.getMissionFlavor().getObjectiveText().toString() + " (" + this.getDifficulty() + ")";
-	}
+    /** @return The ID of the Target Pokemon, i.e. the Pokemon that will be found in the Dungeon if it appears there. */
+    public int getTargetPokemon() {
+        if (this.has2Pokemon())
+            return this.getPokemonid2();
+        return this.getPokemonid1();
+    }
+
+    public String summary() {
+        return "<mission> " + Registries.dungeons().find(this.getDungeonid()).name() + " "
+                + new Message("mission.floor.short") + "<blue>" + this.getFloor() + "</color>" + " - "
+                + this.getMissionFlavor().getObjectiveText().toString() + " (" + this.getDifficulty() + ")";
+    }
 
 }

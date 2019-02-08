@@ -110,9 +110,8 @@ public abstract class GameLoop implements Runnable {
                 long sleepMs = this.nextSleepDuration / NS_PER_MS;
                 // in extreme cases, we may end up never explicitly sleeping, although this is not a problem as threads
                 // that hog CPU time are preempted anyways.
-                if (sleepMs >= 0) {
+                if (sleepMs >= 0)
                     Thread.sleep(sleepMs);
-                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -130,7 +129,7 @@ public abstract class GameLoop implements Runnable {
      * @param multiple How much time to adjust, in terms of {@link #SLEEP_DIFF_INTERVAL_NS}.
      */
     private void adjustSleep(int multiple) {
-        this.nextSleepDuration += (long) multiple * SLEEP_DIFF_INTERVAL_NS;
+        this.nextSleepDuration += multiple * SLEEP_DIFF_INTERVAL_NS;
 
         // never sleep for negative time.
         this.nextSleepDuration = Math.max(this.nextSleepDuration, 0);
@@ -147,9 +146,8 @@ public abstract class GameLoop implements Runnable {
         int catchUpFrames = (int) this.framesMissing;
 
         // perform catchUpFrames ticks
-        for (int i = 0; i < catchUpFrames; i++) {
+        for (int i = 0; i < catchUpFrames; i++)
             this.tick();
-        }
 
         // if we performed 0 ticks this update, we were too quick, so we lengthen our sleep time.
         // otherwise, always try to stay as close to 1 tick per update as possible.

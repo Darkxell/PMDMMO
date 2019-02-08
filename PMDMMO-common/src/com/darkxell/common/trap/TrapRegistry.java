@@ -29,13 +29,12 @@ public final class TrapRegistry extends Registry<Trap> {
 
     protected HashMap<Integer, Trap> deserializeDom(Element e) {
         HashMap<Integer, Trap> traps = new HashMap<>();
-        for (int i = 1; i < 18; i++) {
+        for (int i = 1; i < 18; i++)
             traps.put(i, new Trap(i) {
                 @Override
                 public void onPokemonStep(Floor floor, DungeonPokemon pokemon, ArrayList<DungeonEvent> events) {
                 }
             });
-        }
         traps.put(WONDER_TILE.id, WONDER_TILE);
         return traps;
     }

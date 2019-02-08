@@ -8,18 +8,16 @@ import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
 import com.darkxell.common.move.MoveEffect;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
-public class DoubleDamageEffect extends MoveEffect
-{
+public class DoubleDamageEffect extends MoveEffect {
 
-	public DoubleDamageEffect(int id)
-	{
-		super(id);
-	}
+    public DoubleDamageEffect(int id) {
+        super(id);
+    }
 
-	@Override
-	public double damageMultiplier(MoveUse move, DungeonPokemon target, boolean isUser, Floor floor, String[] flags, ArrayList<DungeonEvent> events)
-	{
-		return 2;
-	}
+    @Override
+    public double damageMultiplier(MoveUse move, DungeonPokemon target, boolean isUser, Floor floor, String[] flags,
+            ArrayList<DungeonEvent> events) {
+        return 2;
+    }
 
 }

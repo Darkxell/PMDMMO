@@ -15,4 +15,5 @@ public enum RenderProfile {
     /**
      * Default value.
      */
-    PROFILE_UNDEFINED}
+    PROFILE_UNDEFINED
+}

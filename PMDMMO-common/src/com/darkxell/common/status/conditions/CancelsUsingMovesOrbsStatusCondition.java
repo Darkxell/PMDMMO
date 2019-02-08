@@ -12,20 +12,20 @@ import com.darkxell.common.status.StatusCondition;
 
 public class CancelsUsingMovesOrbsStatusCondition extends StatusCondition {
 
-	public CancelsUsingMovesOrbsStatusCondition(int id, boolean isAilment, int durationMin, int durationMax) {
-		super(id, isAilment, durationMin, durationMax);
-	}
+    public CancelsUsingMovesOrbsStatusCondition(int id, boolean isAilment, int durationMin, int durationMax) {
+        super(id, isAilment, durationMin, durationMax);
+    }
 
-	@Override
-	public void onPreEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned,
-			ArrayList<DungeonEvent> resultingEvents) {
-		super.onPreEvent(floor, event, concerned, resultingEvents);
+    @Override
+    public void onPreEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned,
+            ArrayList<DungeonEvent> resultingEvents) {
+        super.onPreEvent(floor, event, concerned, resultingEvents);
 
-		if (Ability.TRUANT.shouldTruant(floor, event, concerned, true)) {
-			event.consume();
-			resultingEvents.add(new TriggeredAbilityEvent(floor, concerned));
-			resultingEvents.add(new TurnSkippedEvent(floor, concerned));
-		}
-	}
+        if (Ability.TRUANT.shouldTruant(floor, event, concerned, true)) {
+            event.consume();
+            resultingEvents.add(new TriggeredAbilityEvent(floor, concerned));
+            resultingEvents.add(new TurnSkippedEvent(floor, concerned));
+        }
+    }
 
 }

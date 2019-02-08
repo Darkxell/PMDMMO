@@ -10,21 +10,22 @@ import com.darkxell.common.status.StatusCondition;
 
 public class PeriodicHealingStatusCondition extends StatusCondition {
 
-	/** The damage this Status Condition deals. */
-	public final int heal;
-	/** The number of turns between each health restored. */
-	public final int period;
+    /** The damage this Status Condition deals. */
+    public final int heal;
+    /** The number of turns between each health restored. */
+    public final int period;
 
-	public PeriodicHealingStatusCondition(int id, boolean isAilment, int durationMin, int durationMax, int heal,
-			int period) {
-		super(id, isAilment, durationMin, durationMax);
-		this.heal = heal;
-		this.period = period;
-	}
+    public PeriodicHealingStatusCondition(int id, boolean isAilment, int durationMin, int durationMax, int heal,
+            int period) {
+        super(id, isAilment, durationMin, durationMax);
+        this.heal = heal;
+        this.period = period;
+    }
 
-	@Override
-	public void tick(Floor floor, AppliedStatusCondition instance, ArrayList<DungeonEvent> events) {
-		if (instance.tick % this.period == 0) events.add(new HealthRestoredEvent(floor, instance.pokemon, this.heal));
-	}
+    @Override
+    public void tick(Floor floor, AppliedStatusCondition instance, ArrayList<DungeonEvent> events) {
+        if (instance.tick % this.period == 0)
+            events.add(new HealthRestoredEvent(floor, instance.pokemon, this.heal));
+    }
 
 }

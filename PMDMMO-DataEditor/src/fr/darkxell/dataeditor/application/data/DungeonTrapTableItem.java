@@ -8,38 +8,32 @@ import com.darkxell.common.dungeon.data.DungeonTrapGroup;
 import com.darkxell.common.dungeon.data.FloorSet;
 import com.darkxell.common.trap.Trap;
 
-public class DungeonTrapTableItem implements Comparable<DungeonTrapTableItem>
-{
+public class DungeonTrapTableItem implements Comparable<DungeonTrapTableItem> {
 
-	public DungeonTrapGroup trapGroup;
+    public DungeonTrapGroup trapGroup;
 
-	public DungeonTrapTableItem(DungeonTrapGroup trapGroup)
-	{
-		this.trapGroup = trapGroup;
-	}
+    public DungeonTrapTableItem(DungeonTrapGroup trapGroup) {
+        this.trapGroup = trapGroup;
+    }
 
-	@Override
-	public int compareTo(DungeonTrapTableItem o)
-	{
-		return this.getFloors().compareTo(o.getFloors());
-	}
+    @Override
+    public int compareTo(DungeonTrapTableItem o) {
+        return this.getFloors().compareTo(o.getFloors());
+    }
 
-	public FloorSet getFloors()
-	{
-		return this.trapGroup.floors;
-	}
+    public FloorSet getFloors() {
+        return this.trapGroup.floors;
+    }
 
-	public List<Trap> getTraps()
-	{
-		return Arrays.asList(this.trapGroup.traps());
-	}
+    public List<Trap> getTraps() {
+        return Arrays.asList(this.trapGroup.traps());
+    }
 
-	public List<Integer> getWeights()
-	{
-		ArrayList<Integer> weights = new ArrayList<>();
-		for (int w : this.trapGroup.chances)
-			weights.add(w);
-		return weights;
-	}
+    public List<Integer> getWeights() {
+        ArrayList<Integer> weights = new ArrayList<>();
+        for (int w : this.trapGroup.chances)
+            weights.add(w);
+        return weights;
+    }
 
 }

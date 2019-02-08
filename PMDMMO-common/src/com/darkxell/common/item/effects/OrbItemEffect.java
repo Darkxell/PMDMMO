@@ -13,40 +13,37 @@ import com.darkxell.common.pokemon.LearnedMove;
 import com.darkxell.common.util.language.Message;
 
 /** An Item that has different effects when used. */
-public class OrbItemEffect extends ItemEffect
-{
-	/** ID of the Move used when using this Orb. */
-	public final int moveID;
+public class OrbItemEffect extends ItemEffect {
+    /** ID of the Move used when using this Orb. */
+    public final int moveID;
 
-	public OrbItemEffect(int id, int moveID)
-	{
-		super(id);
-		this.moveID = moveID;
-	}
+    public OrbItemEffect(int id, int moveID) {
+        super(id);
+        this.moveID = moveID;
+    }
 
-	@Override
-	public boolean isUsable()
-	{
-		return true;
-	}
-	
-	@Override
-	public boolean isUsableOnCatch()
-	{
-		return false;
-	}
+    @Override
+    public boolean isUsable() {
+        return true;
+    }
 
-	@Override
-	public Message name(Item item)
-	{
-		return super.name(item).addPrefix("<orb>");
-	}
+    @Override
+    public boolean isUsableOnCatch() {
+        return false;
+    }
 
-	@Override
-	public final void use(Floor floor, Item item, DungeonPokemon pokemon, DungeonPokemon target, ArrayList<DungeonEvent> events)
-	{
-		if (floor.data.isBossFloor()) events.add(new MessageEvent(floor, new Message("item.orb.boss")));
-		else events.add(new MoveSelectionEvent(floor, new LearnedMove(this.moveID), pokemon, pokemon.facing(), false));
-	}
+    @Override
+    public Message name(Item item) {
+        return super.name(item).addPrefix("<orb>");
+    }
+
+    @Override
+    public final void use(Floor floor, Item item, DungeonPokemon pokemon, DungeonPokemon target,
+            ArrayList<DungeonEvent> events) {
+        if (floor.data.isBossFloor())
+            events.add(new MessageEvent(floor, new Message("item.orb.boss")));
+        else
+            events.add(new MoveSelectionEvent(floor, new LearnedMove(this.moveID), pokemon, pokemon.facing(), false));
+    }
 
 }

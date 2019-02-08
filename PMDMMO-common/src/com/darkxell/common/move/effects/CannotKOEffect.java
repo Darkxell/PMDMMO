@@ -8,19 +8,18 @@ import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
 import com.darkxell.common.move.MoveEffect;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
-public class CannotKOEffect extends MoveEffect
-{
+public class CannotKOEffect extends MoveEffect {
 
-	public CannotKOEffect(int id)
-	{
-		super(id);
-	}
+    public CannotKOEffect(int id) {
+        super(id);
+    }
 
-	@Override
-	public double applyDamageModifications(double damage, MoveUse move, DungeonPokemon target, boolean isUser, Floor floor, ArrayList<DungeonEvent> events)
-	{
-		if (damage >= target.getHp()) return target.getHp() - 1;
-		return super.applyDamageModifications(damage, move, target, isUser, floor, events);
-	}
+    @Override
+    public double applyDamageModifications(double damage, MoveUse move, DungeonPokemon target, boolean isUser,
+            Floor floor, ArrayList<DungeonEvent> events) {
+        if (damage >= target.getHp())
+            return target.getHp() - 1;
+        return super.applyDamageModifications(damage, move, target, isUser, floor, events);
+    }
 
 }

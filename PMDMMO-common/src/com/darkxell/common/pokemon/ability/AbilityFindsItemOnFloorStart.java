@@ -9,29 +9,26 @@ import com.darkxell.common.event.pokemon.TriggeredAbilityEvent;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
-public class AbilityFindsItemOnFloorStart extends Ability
-{
+public class AbilityFindsItemOnFloorStart extends Ability {
 
-	public final double probability;
+    public final double probability;
 
-	public AbilityFindsItemOnFloorStart(int id, double probability)
-	{
-		super(id);
-		this.probability = probability;
-	}
+    public AbilityFindsItemOnFloorStart(int id, double probability) {
+        super(id);
+        this.probability = probability;
+    }
 
-	@Override
-	public void onFloorStart(Floor floor, DungeonPokemon pokemon, ArrayList<DungeonEvent> events)
-	{
-		super.onFloorStart(floor, pokemon, events);
+    @Override
+    public void onFloorStart(Floor floor, DungeonPokemon pokemon, ArrayList<DungeonEvent> events) {
+        super.onFloorStart(floor, pokemon, events);
 
-		if (pokemon.getItem() == null && floor.random.nextDouble() * 100 < this.probability)
-		{
-			ItemStack item = floor.dungeon.dungeon().randomItem(floor.random, floor.id, false);
-			if (item == null) return;
-			events.add(new TriggeredAbilityEvent(floor, pokemon));
-			events.add(new ItemCreatedEvent(floor, item, pokemon));
-		}
-	}
+        if (pokemon.getItem() == null && floor.random.nextDouble() * 100 < this.probability) {
+            ItemStack item = floor.dungeon.dungeon().randomItem(floor.random, floor.id, false);
+            if (item == null)
+                return;
+            events.add(new TriggeredAbilityEvent(floor, pokemon));
+            events.add(new ItemCreatedEvent(floor, item, pokemon));
+        }
+    }
 
 }

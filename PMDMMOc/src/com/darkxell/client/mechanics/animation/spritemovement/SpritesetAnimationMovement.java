@@ -2,68 +2,60 @@ package com.darkxell.client.mechanics.animation.spritemovement;
 
 import com.darkxell.client.mechanics.animation.SpritesetAnimation;
 
-public abstract class SpritesetAnimationMovement
-{
+public abstract class SpritesetAnimationMovement {
 
-	public static SpritesetAnimationMovement create(String id, SpritesetAnimation parent)
-	{
-		if (id == null) return null;
-		switch (id)
-		{
-			case "1tilefacing":
-				return new FacingTileAnimationMovement(parent);
-				
-			case "diagonal":
-				return new DiagonalAnimationMovement(parent);
-				
-			case "upanddown":
-				return new UpAndDownAnimationMovement(parent);
+    public static SpritesetAnimationMovement create(String id, SpritesetAnimation parent) {
+        if (id == null)
+            return null;
+        switch (id) {
+        case "1tilefacing":
+            return new FacingTileAnimationMovement(parent);
 
-			default:
-				return null;
-		}
-	}
+        case "diagonal":
+            return new DiagonalAnimationMovement(parent);
 
-	public final SpritesetAnimation parentAnimation;
+        case "upanddown":
+            return new UpAndDownAnimationMovement(parent);
 
-	public SpritesetAnimationMovement(SpritesetAnimation animation)
-	{
-		this.parentAnimation = animation;
-	}
+        default:
+            return null;
+        }
+    }
 
-	public float completion()
-	{
-		return this.parentAnimation.completion();
-	}
+    public final SpritesetAnimation parentAnimation;
 
-	public int duration()
-	{
-		return this.parentAnimation.duration();
-	}
+    public SpritesetAnimationMovement(SpritesetAnimation animation) {
+        this.parentAnimation = animation;
+    }
 
-	public boolean isOver()
-	{
-		return this.parentAnimation.isOver();
-	}
+    public float completion() {
+        return this.parentAnimation.completion();
+    }
 
-	public void onFinish()
-	{}
+    public int duration() {
+        return this.parentAnimation.duration();
+    }
 
-	/** Changes Spriteset gravity to match the input coordinates (Spriteset will be centered around these coords.) */
-	protected void setSpriteLocation(int x, int y)
-	{
-		this.parentAnimation.data.gravityX = this.parentAnimation.spriteset.spriteWidth / 2 - x;
-		this.parentAnimation.data.gravityY = this.parentAnimation.spriteset.spriteHeight / 2 - y;
-	}
+    public boolean isOver() {
+        return this.parentAnimation.isOver();
+    }
 
-	public void start()
-	{}
+    public void onFinish() {
+    }
 
-	public int tick()
-	{
-		return this.parentAnimation.tick();
-	}
+    /** Changes Spriteset gravity to match the input coordinates (Spriteset will be centered around these coords.) */
+    protected void setSpriteLocation(int x, int y) {
+        this.parentAnimation.data.gravityX = this.parentAnimation.spriteset.spriteWidth / 2 - x;
+        this.parentAnimation.data.gravityY = this.parentAnimation.spriteset.spriteHeight / 2 - y;
+    }
 
-	public abstract void update();
+    public void start() {
+    }
+
+    public int tick() {
+        return this.parentAnimation.tick();
+    }
+
+    public abstract void update();
 
 }

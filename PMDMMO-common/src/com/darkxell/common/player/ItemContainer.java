@@ -7,45 +7,48 @@ import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.util.language.Message;
 
 /** Represents an object that can store Items. */
-public interface ItemContainer
-{
+public interface ItemContainer {
 
-	public static enum ItemContainerType
-	{
-		DUNGEON_POKEMON,
-		INVENTORY,
-		POKEMON,
-		TILE;
-	}
+    public enum ItemContainerType {
+        DUNGEON_POKEMON,
+        INVENTORY,
+        POKEMON,
+        TILE
+    }
 
-	/** Adds an Item to this Container. */
-	public void addItem(ItemStack item);
+    /** Adds an Item to this Container. */
+    public void addItem(ItemStack item);
 
-	/** @return -1 if this Container can't accept the input Item. If it can, returns the index at which it will accept it. */
-	public int canAccept(ItemStack item);
+    /**
+     * @return -1 if this Container can't accept the input Item. If it can, returns the index at which it will accept
+     *         it.
+     */
+    public int canAccept(ItemStack item);
 
-	/** @return The ID of this Container. Required for Event communication. */
-	public long containerID();
+    /** @return The ID of this Container. Required for Event communication. */
+    public long containerID();
 
-	public Message containerName();
+    public Message containerName();
 
-	/** @return The type of the Container. Required for Event communication. */
-	public ItemContainerType containerType();
+    /** @return The type of the Container. Required for Event communication. */
+    public ItemContainerType containerType();
 
-	/** Deletes the Item at the input index. */
-	public void deleteItem(int index);
+    /** Deletes the Item at the input index. */
+    public void deleteItem(int index);
 
-	/** @return The Item at the input index. */
-	public ItemStack getItem(int index);
+    /** @return The Item at the input index. */
+    public ItemStack getItem(int index);
 
-	/** @param inDungeon - True if actions for dungeons can be included.
-	 * @return The list of movement Item Actions legal for this Container. */
-	public ArrayList<ItemAction> legalItemActions(boolean inDungeon);
+    /**
+     * @param  inDungeon - True if actions for dungeons can be included.
+     * @return           The list of movement Item Actions legal for this Container.
+     */
+    public ArrayList<ItemAction> legalItemActions(boolean inDungeon);
 
-	/** Sets the Item at the input index. */
-	public void setItem(int index, ItemStack item);
+    /** Sets the Item at the input index. */
+    public void setItem(int index, ItemStack item);
 
-	/** @return The current number of Items in this Container. */
-	public int size();
+    /** @return The current number of Items in this Container. */
+    public int size();
 
 }

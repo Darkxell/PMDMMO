@@ -12,19 +12,20 @@ import com.darkxell.common.status.AppliedStatusCondition;
 
 public class CureAilmentsEffect extends MoveEffect {
 
-	public CureAilmentsEffect(int id) {
-		super(id);
-	}
+    public CureAilmentsEffect(int id) {
+        super(id);
+    }
 
-	@Override
-	public void additionalEffects(MoveUse usedMove, DungeonPokemon target, String[] flags, Floor floor,
-			MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
-		super.additionalEffects(usedMove, target, flags, floor, calculator, missed, effects);
+    @Override
+    public void additionalEffects(MoveUse usedMove, DungeonPokemon target, String[] flags, Floor floor,
+            MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
+        super.additionalEffects(usedMove, target, flags, floor, calculator, missed, effects);
 
-		if (!missed) for (AppliedStatusCondition s : target.activeStatusConditions())
-			if (s.condition.isAilment)
-				effects.createEffect(new StatusConditionEndedEvent(floor, s, StatusConditionEndReason.HEALED), usedMove,
-						target, floor, missed, false, target);
-	}
+        if (!missed)
+            for (AppliedStatusCondition s : target.activeStatusConditions())
+                if (s.condition.isAilment)
+                    effects.createEffect(new StatusConditionEndedEvent(floor, s, StatusConditionEndReason.HEALED),
+                            usedMove, target, floor, missed, false, target);
+    }
 
 }

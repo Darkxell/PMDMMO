@@ -2,23 +2,21 @@ package com.darkxell.common.zones;
 
 import com.darkxell.common.util.language.Message;
 
-public enum FreezoneInfo
-{
-
-	BASE(LocalMapLocation.BASE, "base"),
-	BASEINSIDE(LocalMapLocation.BASEINSIDE, "baseinside"),
-	DREAM(LocalMapLocation.BASEINSIDE, "dream"),
-	SQUARE(LocalMapLocation.SQUARE, "square"),
-	DOJO(LocalMapLocation.DOJO, "dojo"),
-	POND(LocalMapLocation.POND, "wpond"),
-	OFFICE(LocalMapLocation.OFFICE, "office"),
-	STARTFOREST(LocalMapLocation.STARTFOREST, "startforest"),
-	LUMINOUSCAVE(LocalMapLocation.LUMINOUSCAVE, "lumiouscave"),
-	OFFICEINSIDE(LocalMapLocation.OFFICE, "officeinside"),
-	MTSTEEL_ENTRANCE(LocalMapLocation.MT_STEEL, "mtsteel"),
-	THUNDERWAVE_ENTRANCE(LocalMapLocation.THUNDERWAVE, "thunderwave"),
-	THUNDERWAVE_CLEAR(LocalMapLocation.THUNDERWAVE, "thunderwave_clear"),
-	TINYWOODS_CLEAR(LocalMapLocation.TINYWOODS, "tinywoods"),
+public enum FreezoneInfo {
+    BASE(LocalMapLocation.BASE, "base"),
+    BASEINSIDE(LocalMapLocation.BASEINSIDE, "baseinside"),
+    DREAM(LocalMapLocation.BASEINSIDE, "dream"),
+    SQUARE(LocalMapLocation.SQUARE, "square"),
+    DOJO(LocalMapLocation.DOJO, "dojo"),
+    POND(LocalMapLocation.POND, "wpond"),
+    OFFICE(LocalMapLocation.OFFICE, "office"),
+    STARTFOREST(LocalMapLocation.STARTFOREST, "startforest"),
+    LUMINOUSCAVE(LocalMapLocation.LUMINOUSCAVE, "lumiouscave"),
+    OFFICEINSIDE(LocalMapLocation.OFFICE, "officeinside"),
+    MTSTEEL_ENTRANCE(LocalMapLocation.MT_STEEL, "mtsteel"),
+    THUNDERWAVE_ENTRANCE(LocalMapLocation.THUNDERWAVE, "thunderwave"),
+    THUNDERWAVE_CLEAR(LocalMapLocation.THUNDERWAVE, "thunderwave_clear"),
+    TINYWOODS_CLEAR(LocalMapLocation.TINYWOODS, "tinywoods"),
 
 	DUNGEON_MT_STEEL_TOP(LocalMapLocation.DUNGEON_MT_STEEL_TOP, "mt_steel_top"),
 

@@ -13,27 +13,25 @@ import com.darkxell.common.status.AppliedStatusCondition;
 import com.darkxell.common.status.StatusConditions;
 import com.darkxell.common.util.Logger;
 
-public class StoredDamageEffect extends MoveEffect
-{
+public class StoredDamageEffect extends MoveEffect {
 
-	public StoredDamageEffect(int id)
-	{
-		super(id);
-	}
+    public StoredDamageEffect(int id) {
+        super(id);
+    }
 
-	@Override
-	public MoveEffectCalculator buildCalculator(MoveUse usedMove, DungeonPokemon target, Floor floor, String[] flags)
-	{
-		return new StoredDamageCalculator(usedMove, target, floor, flags);
-	}
+    @Override
+    public MoveEffectCalculator buildCalculator(MoveUse usedMove, DungeonPokemon target, Floor floor, String[] flags) {
+        return new StoredDamageCalculator(usedMove, target, floor, flags);
+    }
 
-	@Override
-	public void prepareUse(MoveUse move, Floor floor, ArrayList<DungeonEvent> events)
-	{
-		super.prepareUse(move, floor, events);
-		AppliedStatusCondition storer = move.user.getStatusCondition(StatusConditions.Bide);
-		if (storer == null) Logger.e("Pokemon used " + move.move.move().name() + " but had no Bide status!");
-		else storer.addFlag("attacked");
-	}
+    @Override
+    public void prepareUse(MoveUse move, Floor floor, ArrayList<DungeonEvent> events) {
+        super.prepareUse(move, floor, events);
+        AppliedStatusCondition storer = move.user.getStatusCondition(StatusConditions.Bide);
+        if (storer == null)
+            Logger.e("Pokemon used " + move.move.move().name() + " but had no Bide status!");
+        else
+            storer.addFlag("attacked");
+    }
 
 }

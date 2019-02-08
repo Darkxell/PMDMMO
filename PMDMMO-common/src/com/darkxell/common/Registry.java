@@ -65,6 +65,7 @@ public abstract class Registry<T extends Registrable<T>> {
     }
 
     protected abstract Element serializeDom(HashMap<Integer, T> registryCache);
+
     protected abstract HashMap<Integer, T> deserializeDom(Element root);
 
     public void register(T entry) {
@@ -76,9 +77,8 @@ public abstract class Registry<T extends Registrable<T>> {
     }
 
     public T find(int id) {
-        if (cache.containsKey(id)) {
+        if (cache.containsKey(id))
             return cache.get(id);
-        }
         Logger.e("Invalid ID " + id + " for registry " + this.name);
         return this.defaultIndex;
     }
@@ -103,9 +103,8 @@ public abstract class Registry<T extends Registrable<T>> {
      */
     public void save() throws IOException {
         // TODO: remove null check when trap registry is complete because this.originalURL cannot be null otherwise
-        if (this.originalURL == null) {
+        if (this.originalURL == null)
             return;
-        }
         OutputStream urlStream = this.originalURL.openConnection().getOutputStream();
         XMLUtils.saveFile(urlStream, this.serializeDom(this.cache));
     }

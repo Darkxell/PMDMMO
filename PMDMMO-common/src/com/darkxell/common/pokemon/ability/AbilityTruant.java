@@ -14,35 +14,38 @@ import com.darkxell.common.status.StatusConditions;
 
 public class AbilityTruant extends Ability {
 
-	public AbilityTruant(int id) {
-		super(id);
-	}
+    public AbilityTruant(int id) {
+        super(id);
+    }
 
-	@Override
-	public void onPostEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned,
-			ArrayList<DungeonEvent> resultingEvents) {
-		super.onPostEvent(floor, event, concerned, resultingEvents);
+    @Override
+    public void onPostEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned,
+            ArrayList<DungeonEvent> resultingEvents) {
+        super.onPostEvent(floor, event, concerned, resultingEvents);
 
-		if (this.shouldTruant(floor, event, concerned, false)) resultingEvents.add(
-				new StatusConditionCreatedEvent(floor, StatusConditions.Paused.create(floor, concerned, this, floor.random)));
-	}
+        if (this.shouldTruant(floor, event, concerned, false))
+            resultingEvents.add(new StatusConditionCreatedEvent(floor,
+                    StatusConditions.Paused.create(floor, concerned, this, floor.random)));
+    }
 
-	/** @param prevent - If true, method will check as before the event triggers, else as after it does. */
-	public boolean shouldTruant(Floor floor, DungeonEvent event, DungeonPokemon concerned, boolean prevent) {
+    /** @param prevent - If true, method will check as before the event triggers, else as after it does. */
+    public boolean shouldTruant(Floor floor, DungeonEvent event, DungeonPokemon concerned, boolean prevent) {
 
-		if (event instanceof MoveSelectionEvent) {
-			MoveSelectionEvent e = (MoveSelectionEvent) event;
-			if (e.usedMove().user == concerned && e.isAction() && concerned.ability() == this) return true;
-		} else if (event instanceof ItemUseEvent && !prevent) {
-			ItemUseEvent e = (ItemUseEvent) event;
-			if (e.user == concerned && e.item.effect() instanceof OrbItemEffect && concerned.ability() == this)
-				return true;
-		} else if (event instanceof ItemSelectionEvent && prevent) {
-			ItemSelectionEvent e = (ItemSelectionEvent) event;
-			if (e.user() == concerned && e.item().effect() instanceof OrbItemEffect && e.isAction() && concerned.ability() == this)
-				return true;
-		}
-		return false;
-	}
+        if (event instanceof MoveSelectionEvent) {
+            MoveSelectionEvent e = (MoveSelectionEvent) event;
+            if (e.usedMove().user == concerned && e.isAction() && concerned.ability() == this)
+                return true;
+        } else if (event instanceof ItemUseEvent && !prevent) {
+            ItemUseEvent e = (ItemUseEvent) event;
+            if (e.user == concerned && e.item.effect() instanceof OrbItemEffect && concerned.ability() == this)
+                return true;
+        } else if (event instanceof ItemSelectionEvent && prevent) {
+            ItemSelectionEvent e = (ItemSelectionEvent) event;
+            if (e.user() == concerned && e.item().effect() instanceof OrbItemEffect && e.isAction()
+                    && concerned.ability() == this)
+                return true;
+        }
+        return false;
+    }
 
 }

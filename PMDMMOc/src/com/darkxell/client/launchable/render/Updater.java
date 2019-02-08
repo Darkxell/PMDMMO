@@ -13,6 +13,6 @@ public class Updater extends GameLoop {
     @Override
     protected void tick() {
         Persistence.stateManager.update();
-		Keys.update();
+        Keys.update();
     }
 }

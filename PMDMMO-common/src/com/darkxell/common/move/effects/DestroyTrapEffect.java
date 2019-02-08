@@ -10,31 +10,28 @@ import com.darkxell.common.move.MoveEffectCalculator;
 import com.darkxell.common.move.MoveEvents;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
-public class DestroyTrapEffect extends MoveEffect
-{
+public class DestroyTrapEffect extends MoveEffect {
 
-	public DestroyTrapEffect(int id)
-	{
-		super(id);
-	}
+    public DestroyTrapEffect(int id) {
+        super(id);
+    }
 
-	@Override
-	public void additionalEffects(MoveUse usedMove, DungeonPokemon target, String[] flags, Floor floor, MoveEffectCalculator calculator, boolean missed, MoveEvents effects)
-	{
-		super.additionalEffects(usedMove, target, flags, floor, calculator, missed, effects);
+    @Override
+    public void additionalEffects(MoveUse usedMove, DungeonPokemon target, String[] flags, Floor floor,
+            MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
+        super.additionalEffects(usedMove, target, flags, floor, calculator, missed, effects);
 
-		if (!missed)
-		{
-			Tile t = usedMove.user.tile().adjacentTile(usedMove.user.facing());
-			if (t != null && t.trap != null) effects.createEffect(new TrapDestroyedEvent(floor, t), usedMove, target, floor, missed, true, null);
-		}
-	}
+        if (!missed) {
+            Tile t = usedMove.user.tile().adjacentTile(usedMove.user.facing());
+            if (t != null && t.trap != null)
+                effects.createEffect(new TrapDestroyedEvent(floor, t), usedMove, target, floor, missed, true, null);
+        }
+    }
 
-	@Override
-	protected boolean allowsNoTarget(Move move, DungeonPokemon user)
-	{
-		Tile t = user.tile().adjacentTile(user.facing());
-		return t.trap != null;
-	}
+    @Override
+    protected boolean allowsNoTarget(Move move, DungeonPokemon user) {
+        Tile t = user.tile().adjacentTile(user.facing());
+        return t.trap != null;
+    }
 
 }

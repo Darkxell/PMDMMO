@@ -12,21 +12,21 @@ import com.darkxell.common.pokemon.LearnedMove;
 
 public class SetPPtoZeroEffect extends MoveEffect {
 
-	public SetPPtoZeroEffect(int id) {
-		super(id);
-	}
+    public SetPPtoZeroEffect(int id) {
+        super(id);
+    }
 
-	@Override
-	protected void mainEffects(MoveUse usedMove, DungeonPokemon target, String[] flags, Floor floor,
-			MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
-		super.mainEffects(usedMove, target, flags, floor, calculator, missed, effects);
+    @Override
+    protected void mainEffects(MoveUse usedMove, DungeonPokemon target, String[] flags, Floor floor,
+            MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
+        super.mainEffects(usedMove, target, flags, floor, calculator, missed, effects);
 
-		if (!missed) {
-			LearnedMove move = DungeonUtils.findLastMove(floor, target);
-			if (move != null && move.pp() > 0)
-				effects.createEffect(new PPChangedEvent(floor, target, -move.pp(), target.moveIndex(move)), usedMove,
-						target, floor, missed, false, target);
-		}
-	}
+        if (!missed) {
+            LearnedMove move = DungeonUtils.findLastMove(floor, target);
+            if (move != null && move.pp() > 0)
+                effects.createEffect(new PPChangedEvent(floor, target, -move.pp(), target.moveIndex(move)), usedMove,
+                        target, floor, missed, false, target);
+        }
+    }
 
 }

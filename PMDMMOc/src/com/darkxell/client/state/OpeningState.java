@@ -15,39 +15,43 @@ import com.darkxell.common.util.language.Message;
 
 public class OpeningState extends AbstractState {
 
-	private BackgroundSeaLayer background = new BackgroundSeaLayer(true);
-	private boolean ismusicset = false;
-	private int textblink = 0;
-	private Message presstocontinue = new Message("ui.presstocontinue").addReplacement("<key>",
-			KeyEvent.getKeyText(Integer.parseInt(ClientSettings.getSetting(ClientSettings.KEY_ATTACK))));
+    private BackgroundSeaLayer background = new BackgroundSeaLayer(true);
+    private boolean ismusicset = false;
+    private int textblink = 0;
+    private Message presstocontinue = new Message("ui.presstocontinue").addReplacement("<key>",
+            KeyEvent.getKeyText(Integer.parseInt(ClientSettings.getSetting(ClientSettings.KEY_ATTACK))));
 
-	@Override
-	public void onKeyPressed(Key key) {
-		if (key == Key.ATTACK) StoryPositionSetup.trigger(Persistence.player.getData().storyposition, true);
-	}
+    @Override
+    public void onKeyPressed(Key key) {
+        if (key == Key.ATTACK)
+            StoryPositionSetup.trigger(Persistence.player.getData().storyposition, true);
+    }
 
-	@Override
-	public void onKeyReleased(Key key) {}
+    @Override
+    public void onKeyReleased(Key key) {
+    }
 
-	@Override
-	public void render(Graphics2D g, int width, int height) {
-		background.render(g, width, height);
-		g.drawImage(Sprites.Res_Hud.gametitle.image(), width / 2 - Sprites.Res_Hud.gametitle.image().getWidth() / 2,
-				height / 2 - Sprites.Res_Hud.gametitle.image().getHeight() / 2, null);
-		if (textblink >= 50) TextRenderer.render(g, this.presstocontinue,
-				width / 2 - TextRenderer.width(this.presstocontinue.toString()) / 2, height / 4 * 3);
-	}
+    @Override
+    public void render(Graphics2D g, int width, int height) {
+        background.render(g, width, height);
+        g.drawImage(Sprites.Res_Hud.gametitle.image(), width / 2 - Sprites.Res_Hud.gametitle.image().getWidth() / 2,
+                height / 2 - Sprites.Res_Hud.gametitle.image().getHeight() / 2, null);
+        if (textblink >= 50)
+            TextRenderer.render(g, this.presstocontinue,
+                    width / 2 - TextRenderer.width(this.presstocontinue.toString()) / 2, height / 4 * 3);
+    }
 
-	@Override
-	public void update() {
-		if (!ismusicset) {
-			ismusicset = true;
-			Persistence.soundmanager.setBackgroundMusic(SoundsHolder.getSong("intro.mp3"));
-		}
+    @Override
+    public void update() {
+        if (!ismusicset) {
+            ismusicset = true;
+            Persistence.soundmanager.setBackgroundMusic(SoundsHolder.getSong("intro.mp3"));
+        }
 
-		background.update();
-		++textblink;
-		if (textblink >= 100) textblink = 0;
-	}
+        background.update();
+        ++textblink;
+        if (textblink >= 100)
+            textblink = 0;
+    }
 
 }

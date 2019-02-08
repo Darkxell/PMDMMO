@@ -8,18 +8,15 @@ import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
 import com.darkxell.common.move.MoveEffectCalculator;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
-public class UserLevelDamageCalculator extends MoveEffectCalculator
-{
+public class UserLevelDamageCalculator extends MoveEffectCalculator {
 
-	public UserLevelDamageCalculator(MoveUse move, DungeonPokemon target, Floor floor, String[] flags)
-	{
-		super(move, target, floor, flags);
-	}
+    public UserLevelDamageCalculator(MoveUse move, DungeonPokemon target, Floor floor, String[] flags) {
+        super(move, target, floor, flags);
+    }
 
-	@Override
-	public int compute(ArrayList<DungeonEvent> events)
-	{
-		return move.user.level();
-	}
+    @Override
+    public int compute(ArrayList<DungeonEvent> events) {
+        return move.user.level();
+    }
 
 }

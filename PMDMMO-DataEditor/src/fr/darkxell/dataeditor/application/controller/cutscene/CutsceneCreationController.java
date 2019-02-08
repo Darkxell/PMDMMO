@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 
 import com.darkxell.client.mechanics.cutscene.Cutscene;
@@ -28,122 +27,113 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.stage.Stage;
 
-public class CutsceneCreationController implements Initializable, ListCellParent<CutsceneEntity>
-{
+public class CutsceneCreationController implements Initializable, ListCellParent<CutsceneEntity> {
 
-	public static Stage editEntityPopup;
+    public static Stage editEntityPopup;
 
-	@FXML
-	private TextField cameraXTextfield;
-	@FXML
-	private TextField cameraYTextfield;
-	@FXML
-	private CheckBox drawMapCheckbox;
-	@FXML
-	public ListView<CutsceneEntity> entitiesList;
-	private int entityEditing;
-	@FXML
-	private ComboBox<String> fadingCombobox;
-	@FXML
-	private ComboBox<FreezoneInfo> freezoneCombobox;
+    @FXML
+    private TextField cameraXTextfield;
+    @FXML
+    private TextField cameraYTextfield;
+    @FXML
+    private CheckBox drawMapCheckbox;
+    @FXML
+    public ListView<CutsceneEntity> entitiesList;
+    private int entityEditing;
+    @FXML
+    private ComboBox<String> fadingCombobox;
+    @FXML
+    private ComboBox<FreezoneInfo> freezoneCombobox;
 
-	public CutsceneCreation getCreation()
-	{
-		return new CutsceneCreation(this.freezoneCombobox.getValue(), this.fadingCombobox.getSelectionModel().getSelectedIndex() == 0,
-				this.drawMapCheckbox.isSelected(), Double.parseDouble(this.cameraXTextfield.getText()), Double.parseDouble(this.cameraYTextfield.getText()),
-				new ArrayList<>(this.entitiesList.getItems()));
-	}
+    public CutsceneCreation getCreation() {
+        return new CutsceneCreation(this.freezoneCombobox.getValue(),
+                this.fadingCombobox.getSelectionModel().getSelectedIndex() == 0, this.drawMapCheckbox.isSelected(),
+                Double.parseDouble(this.cameraXTextfield.getText()),
+                Double.parseDouble(this.cameraYTextfield.getText()), new ArrayList<>(this.entitiesList.getItems()));
+    }
 
-	@Override
-	public Node graphicFor(CutsceneEntity item)
-	{
-		return null;
-	}
+    @Override
+    public Node graphicFor(CutsceneEntity item) {
+        return null;
+    }
 
-	@Override
-	public void initialize(URL location, ResourceBundle resources)
-	{
-		this.fadingCombobox.getItems().addAll("No fading", "Fading in");
-		this.fadingCombobox.getSelectionModel().select(0);
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        this.fadingCombobox.getItems().addAll("No fading", "Fading in");
+        this.fadingCombobox.getSelectionModel().select(0);
 
-		this.freezoneCombobox.getItems().addAll(FreezoneInfo.values());
-		this.freezoneCombobox.getSelectionModel().select(0);
+        this.freezoneCombobox.getItems().addAll(FreezoneInfo.values());
+        this.freezoneCombobox.getSelectionModel().select(0);
 
-		Pattern pattern = Pattern.compile("-?\\d*(\\.\\d*)?");
-		TextFormatter<String> formatter = new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
-			return pattern.matcher(change.getControlNewText()).matches() ? change : null;
-		});
-		this.cameraXTextfield.setTextFormatter(formatter);
-		formatter = new TextFormatter<>((UnaryOperator<TextFormatter.Change>) change -> {
-			return pattern.matcher(change.getControlNewText()).matches() ? change : null;
-		});
-		this.cameraYTextfield.setTextFormatter(formatter);
+        Pattern pattern = Pattern.compile("-?\\d*(\\.\\d*)?");
+        TextFormatter<String> formatter = new TextFormatter<>(change -> {
+            return pattern.matcher(change.getControlNewText()).matches() ? change : null;
+        });
+        this.cameraXTextfield.setTextFormatter(formatter);
+        formatter = new TextFormatter<>(change -> {
+            return pattern.matcher(change.getControlNewText()).matches() ? change : null;
+        });
+        this.cameraYTextfield.setTextFormatter(formatter);
 
-		CustomList.setup(this, this.entitiesList, "Cutscene Entity", true, true, true, true, false);
-		this.drawMapCheckbox.setSelected(true);
-	}
+        CustomList.setup(this, this.entitiesList, "Cutscene Entity", true, true, true, true, false);
+        this.drawMapCheckbox.setSelected(true);
+    }
 
-	@Override
-	public void onCreate(CutsceneEntity entity)
-	{
-		this.onEdit(null);
-	}
+    @Override
+    public void onCreate(CutsceneEntity entity) {
+        this.onEdit(null);
+    }
 
-	public void onCreateEntity()
-	{
-		this.onCreate(null);
-	}
+    public void onCreateEntity() {
+        this.onCreate(null);
+    }
 
-	@Override
-	public void onDelete(CutsceneEntity item)
-	{
-		this.entitiesList.getItems().remove(item);
-	}
+    @Override
+    public void onDelete(CutsceneEntity item) {
+        this.entitiesList.getItems().remove(item);
+    }
 
-	@Override
-	public void onEdit(CutsceneEntity entity)
-	{
-		try
-		{
-			FXMLLoader loader = new FXMLLoader(DataEditor.class.getResource("/layouts/cutscenes/edit_entity.fxml"));
-			Parent root = loader.load();
-			EditEntityController controller = loader.getController();
-			if (entity != null)
-			{
-				controller.setupFor(entity);
-				this.entityEditing = this.entitiesList.getItems().indexOf(entity);
-			} else this.entityEditing = -1;
-			editEntityPopup = FXUtils.showPopup(root, (entity == null ? "New" : "Edit") + " Cutscene Entity");
-		} catch (IOException e)
-		{
-			e.printStackTrace();
-		}
-	}
+    @Override
+    public void onEdit(CutsceneEntity entity) {
+        try {
+            FXMLLoader loader = new FXMLLoader(DataEditor.class.getResource("/layouts/cutscenes/edit_entity.fxml"));
+            Parent root = loader.load();
+            EditEntityController controller = loader.getController();
+            if (entity != null) {
+                controller.setupFor(entity);
+                this.entityEditing = this.entitiesList.getItems().indexOf(entity);
+            } else
+                this.entityEditing = -1;
+            editEntityPopup = FXUtils.showPopup(root, (entity == null ? "New" : "Edit") + " Cutscene Entity");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-	public void onEntityEdited(CutsceneEntity entity)
-	{
-		if (this.entityEditing == -1) this.entitiesList.getItems().add(entity);
-		else this.entitiesList.getItems().set(this.entityEditing, entity);
-	}
+    public void onEntityEdited(CutsceneEntity entity) {
+        if (this.entityEditing == -1)
+            this.entitiesList.getItems().add(entity);
+        else
+            this.entitiesList.getItems().set(this.entityEditing, entity);
+    }
 
-	@Override
-	public void onMove(CutsceneEntity item, int newIndex)
-	{}
+    @Override
+    public void onMove(CutsceneEntity item, int newIndex) {
+    }
 
-	@Override
-	public void onRename(CutsceneEntity item, String name)
-	{}
+    @Override
+    public void onRename(CutsceneEntity item, String name) {
+    }
 
-	public void setupFor(Cutscene cutscene)
-	{
-		CutsceneCreation creation = cutscene.creation;
-		this.freezoneCombobox.setValue(creation.freezone);
-		this.cameraXTextfield.setText(String.valueOf(creation.camerax));
-		this.cameraYTextfield.setText(String.valueOf(creation.cameray));
-		this.fadingCombobox.getSelectionModel().select(creation.fading ? 1 : 0);
-		this.drawMapCheckbox.setSelected(creation.drawMap);
-		this.entitiesList.getItems().clear();
-		this.entitiesList.getItems().addAll(creation.entities());
-	}
+    public void setupFor(Cutscene cutscene) {
+        CutsceneCreation creation = cutscene.creation;
+        this.freezoneCombobox.setValue(creation.freezone);
+        this.cameraXTextfield.setText(String.valueOf(creation.camerax));
+        this.cameraYTextfield.setText(String.valueOf(creation.cameray));
+        this.fadingCombobox.getSelectionModel().select(creation.fading ? 1 : 0);
+        this.drawMapCheckbox.setSelected(creation.drawMap);
+        this.entitiesList.getItems().clear();
+        this.entitiesList.getItems().addAll(creation.entities());
+    }
 
 }

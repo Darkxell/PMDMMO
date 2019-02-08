@@ -22,12 +22,10 @@ public final class PokemonRegistry extends Registry<PokemonSpecies> {
     protected Element serializeDom(HashMap<Integer, PokemonSpecies> speciesList) {
         Element xml = new Element("pokemon");
         // did you know the plural of species is species? incredible innit
-        for (PokemonSpecies species : speciesList.values()) {
+        for (PokemonSpecies species : speciesList.values())
             // only serialize main-form species
-            if (species.formID == 0) {
+            if (species.formID == 0)
                 xml.addContent(species.toXML());
-            }
-        }
         return xml;
     }
 
@@ -50,12 +48,12 @@ public final class PokemonRegistry extends Registry<PokemonSpecies> {
      * Generate forms from current main-form species.
      */
     private void registerForms() {
-        for (PokemonSpecies s : new ArrayList<>(this.cache.values())) {
+        // copy cache values to avoid concurrent access errors
+        for (PokemonSpecies s : new ArrayList<>(this.cache.values()))
             for (PokemonSpecies form : s.forms()) {
                 this.cache.put(form.id, form);
                 this.forms.put(form.id, s.id);
             }
-        }
     }
 
     /**
@@ -64,9 +62,8 @@ public final class PokemonRegistry extends Registry<PokemonSpecies> {
      * @return Main form of the species, if it is multi-form.
      */
     public PokemonSpecies parentSpecies(PokemonSpecies form) {
-        if (!forms.containsKey(form.id)) {
+        if (!forms.containsKey(form.id))
             return null;
-        }
         return find(forms.get(form.id));
     }
 }

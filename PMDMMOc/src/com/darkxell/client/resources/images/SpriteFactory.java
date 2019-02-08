@@ -31,11 +31,12 @@ public class SpriteFactory implements Runnable {
         }
     }
 
-    private static SpriteFactory instance;
-
     /**
      * @return The factory's instance.
      */
+    private static SpriteFactory instance;
+
+    /** @return The factory's instance. */
     public static SpriteFactory instance() {
         return instance;
     }
@@ -50,24 +51,20 @@ public class SpriteFactory implements Runnable {
         instance = new SpriteFactory();
 
         instance.defaultImg = Res.getBase("/missing.png");
-        if (instance.defaultImg == null) {
+        if (instance.defaultImg == null)
             throw new AssertionError("No default image found!");
-        }
 
         new Thread(instance).start();
     }
 
-    /**
-     * Wait for the loading queue to empty before proceeding.
-     */
+    /** Wait for the loading queue to empty before proceeding. */
     public static void waitQueueDone() {
-        while (!instance.requested.isEmpty()) {
+        while (!instance.requested.isEmpty())
             try {
                 Thread.sleep(5);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        }
     }
 
     public static Sprite getDefaultSprite(int width, int height) {
@@ -106,8 +103,8 @@ public class SpriteFactory implements Runnable {
     }
 
     /**
-     * @param image - A path to an image.
-     * @return The image if it's loaded, a default image else.
+     * @param  image - A path to an image.
+     * @return       The image if it's loaded, a default image else.
      */
     BufferedImage get(String image) {
         return this.loaded.get(image);
@@ -143,7 +140,7 @@ public class SpriteFactory implements Runnable {
      * @param requester   Listener to add.
      * @param path        Path to listen to.
      * @param listenerMap Listener queue to add in.
-     * @param <T>         Listener type.
+     * @param             <T> Listener type.
      */
     private <T> void addRequester(T requester, String path, Map<String, ArrayList<T>> listenerMap) {
         if (!listenerMap.containsKey(path)) {
@@ -178,11 +175,11 @@ public class SpriteFactory implements Runnable {
     /**
      * Queues an path to be loaded.
      *
-     * @param requester Sprite that needs this path. This sprite will be notified when the load finishes.
-     * @param path      The path to the path, relative to current working directory.
-     * @param width     Image width. May be -1 if dimensions are unknown.
-     * @param height    Image height. May be -1 if dimensions are unknown.
-     * @return Cached or default path, to be replaced upon callback.
+     * @param  requester Sprite that needs this path. This sprite will be notified when the load finishes.
+     * @param  path      The path to the path, relative to current working directory.
+     * @param  width     Image width. May be -1 if dimensions are unknown.
+     * @param  height    Image height. May be -1 if dimensions are unknown.
+     * @return           Cached or default path, to be replaced upon callback.
      */
     public BufferedImage load(Sprite requester, String path, int width, int height) {
         if (!this.isResourceLoaded(path) && !this.attemptLoad(requester, path)) {
@@ -196,16 +193,14 @@ public class SpriteFactory implements Runnable {
     /**
      * Notify listeners to a specific request queue.
      *
-     * @param path Path to notify
-     * @param img Retrieved image.
+     * @param path         Path to notify
+     * @param img          Retrieved image.
      * @param requesterMap Queue map, keyed on resource path.
-     * @param callback What to do with image.
-     * @param <T> Type of sprite (see {@link Sprite} and {@link SubSprite})
+     * @param callback     What to do with image.
+     * @param              <T> Type of sprite (see {@link Sprite} and {@link SubSprite})
      */
-    private <T> void notify(String path,
-                            BufferedImage img,
-                            Map<String, ArrayList<T>> requesterMap,
-                            BiConsumer<T, BufferedImage> callback) {
+    private <T> void notify(String path, BufferedImage img, Map<String, ArrayList<T>> requesterMap,
+            BiConsumer<T, BufferedImage> callback) {
         List<T> requesters = requesterMap.remove(path);
 
         if (requesters == null) {
@@ -264,12 +259,12 @@ public class SpriteFactory implements Runnable {
      * Creates a Sprite as a sub-image of the Image of another Sprite. The created Sprite will have a default image
      * until the target Sprite is loaded.
      *
-     * @param source The source Sprite.
-     * @param x      Tile x-coordinate.
-     * @param y      Tile y-coordinate.
-     * @param width  Tile width.
-     * @param height Tile height.
-     * @return A placeholder sub-sprite or cached sub-sprite.
+     * @param  source The source Sprite.
+     * @param  x      Tile x-coordinate.
+     * @param  y      Tile y-coordinate.
+     * @param  width  Tile width.
+     * @param  height Tile height.
+     * @return        A placeholder sub-sprite or cached sub-sprite.
      */
     public Sprite subSprite(Sprite source, int x, int y, int width, int height) {
         Sprite sub = new Sprite(source.path, width, height, false);

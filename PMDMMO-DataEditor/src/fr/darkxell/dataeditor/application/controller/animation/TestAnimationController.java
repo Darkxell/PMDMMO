@@ -32,132 +32,130 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 
-public class TestAnimationController implements Initializable
-{
-	private static Floor floor;
-	public static DungeonState state;
+public class TestAnimationController implements Initializable {
+    private static Floor floor;
+    public static DungeonState state;
 
-	private AnimationListItem animation;
-	private PokemonAnimation current;
-	@FXML
-	public ComboBox<Direction> directionCombobox;
-	@FXML
-	public ImageView imageView;
-	@FXML
-	public ComboBox<PokemonSpecies> pokemonCombobox;
-	@FXML
-	public ProgressBar progressBar;
-	@FXML
-	public CheckBox shinyCheckbox;
-	@FXML
-	public ComboBox<PokemonSpriteState> stateCombobox;
-	private DungeonPokemon tester;
-	public AnimationPreviewThread thread;
+    private AnimationListItem animation;
+    private PokemonAnimation current;
+    @FXML
+    public ComboBox<Direction> directionCombobox;
+    @FXML
+    public ImageView imageView;
+    @FXML
+    public ComboBox<PokemonSpecies> pokemonCombobox;
+    @FXML
+    public ProgressBar progressBar;
+    @FXML
+    public CheckBox shinyCheckbox;
+    @FXML
+    public ComboBox<PokemonSpriteState> stateCombobox;
+    private DungeonPokemon tester;
+    public AnimationPreviewThread thread;
 
-	public void exitTab()
-	{
-		this.thread.exit();
-	}
+    public void exitTab() {
+        this.thread.exit();
+    }
 
-	private DungeonPokemon generateTester()
-	{
-		PokemonSpecies s = this.pokemonCombobox.getValue();
-		if (s == null) s = Registries.species().find(1);
-		DungeonPokemon pokemon = new DungeonPokemon(s.generate(new Random(), 1, this.shinyCheckbox.isSelected() ? 1 : 0));
-		floor.summonPokemon(pokemon, floor.getWidth() / 2, floor.getHeight() / 2, new ArrayList<>());
-		pokemon.setFacing(this.directionCombobox.getValue());
-		state.pokemonRenderer.register(pokemon);
-		state.pokemonRenderer.getRenderer(pokemon).sprite().setDefaultState(this.stateCombobox.getValue(), true);
-		return pokemon;
-	}
+    private DungeonPokemon generateTester() {
+        PokemonSpecies s = this.pokemonCombobox.getValue();
+        if (s == null)
+            s = Registries.species().find(1);
+        DungeonPokemon pokemon = new DungeonPokemon(
+                s.generate(new Random(), 1, this.shinyCheckbox.isSelected() ? 1 : 0));
+        floor.summonPokemon(pokemon, floor.getWidth() / 2, floor.getHeight() / 2, new ArrayList<>());
+        pokemon.setFacing(this.directionCombobox.getValue());
+        state.pokemonRenderer.register(pokemon);
+        state.pokemonRenderer.getRenderer(pokemon).sprite().setDefaultState(this.stateCombobox.getValue(), true);
+        return pokemon;
+    }
 
-	@Override
-	public void initialize(URL location, ResourceBundle resources)
-	{
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
 
-		this.pokemonCombobox.getItems().addAll(Registries.species().toList());
-		this.stateCombobox.getItems().addAll(PokemonSpriteState.values());
-		this.directionCombobox.getItems().addAll(Direction.DIRECTIONS);
+        this.pokemonCombobox.getItems().addAll(Registries.species().toList());
+        this.stateCombobox.getItems().addAll(PokemonSpriteState.values());
+        this.directionCombobox.getItems().addAll(Direction.DIRECTIONS);
 
-		this.pokemonCombobox.getSelectionModel().select(1);
-		this.stateCombobox.setValue(PokemonSpriteState.IDLE);
-		this.directionCombobox.setValue(Direction.SOUTH);
-	}
+        this.pokemonCombobox.getSelectionModel().select(1);
+        this.stateCombobox.setValue(PokemonSpriteState.IDLE);
+        this.directionCombobox.setValue(Direction.SOUTH);
+    }
 
-	private PokemonAnimation loadAnimation()
-	{
-		try
-		{
-			return Animations.getAnimation(tester, this.animation.group + "/" + this.animation.id, thread);
-		} catch (Exception e)
-		{
-			JOptionPane.showMessageDialog(null, e.getMessage(), "Error while creating animation", JOptionPane.ERROR_MESSAGE);
-			e.printStackTrace();
-			return null;
-		}
-	}
+    private PokemonAnimation loadAnimation() {
+        try {
+            return Animations.getAnimation(tester, this.animation.group + "/" + this.animation.id, thread);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error while creating animation",
+                    JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+            return null;
+        }
+    }
 
-	public void onPropertiesChanged()
-	{
-		Persistence.dungeonState.pokemonRenderer.getRenderer(tester).removeAnimation(this.current);
-		state.pokemonRenderer.unregister(tester);
-		tester = this.generateTester();
-		if (this.current != null) this.playAnimation(true);
-	}
+    public void onPropertiesChanged() {
+        Persistence.dungeonState.pokemonRenderer.getRenderer(tester).removeAnimation(this.current);
+        state.pokemonRenderer.unregister(tester);
+        tester = this.generateTester();
+        if (this.current != null)
+            this.playAnimation(true);
+    }
 
-	public void onReload()
-	{
-		this.setAnimation(this.animation);
-	}
+    public void onReload() {
+        this.setAnimation(this.animation);
+    }
 
-	public void playAnimation(boolean onChange)
-	{
-		if (this.animation == null) return;
-		if (!onChange && (this.current != null && this.current.plays == -1)) return;
-		if (this.current != null)
-		{
-			this.current.stop();
-			if (Persistence.dungeonState.pokemonRenderer.getRenderer(tester) != null)
-				Persistence.dungeonState.pokemonRenderer.getRenderer(tester).removeAnimation(this.current);
-		}
-		AnimationState s = new AnimationState(Persistence.dungeonState);
-		s.animation = this.current = this.loadAnimation();
-		if (s.animation != null) state.setSubstate(s);
-	}
+    public void playAnimation(boolean onChange) {
+        if (this.animation == null)
+            return;
+        if (!onChange && (this.current != null && this.current.plays == -1))
+            return;
+        if (this.current != null) {
+            this.current.stop();
+            if (Persistence.dungeonState.pokemonRenderer.getRenderer(tester) != null)
+                Persistence.dungeonState.pokemonRenderer.getRenderer(tester).removeAnimation(this.current);
+        }
+        AnimationState s = new AnimationState(Persistence.dungeonState);
+        s.animation = this.current = this.loadAnimation();
+        if (s.animation != null)
+            state.setSubstate(s);
+    }
 
-	public void reload()
-	{
-		floor = Persistence.floor = new Floor(1, Layout.find(Layout.LAYOUT_SINGLEROOM),
-				Persistence.dungeon = Registries.dungeons().find(1).newInstance(new Random().nextLong()), new Random(), false);
-		floor.generate();
-		state = Persistence.dungeonState = new DungeonState();
+    public void reload() {
+        floor = Persistence.floor = new Floor(1, Layout.find(Layout.LAYOUT_SINGLEROOM),
+                Persistence.dungeon = Registries.dungeons().find(1).newInstance(new Random().nextLong()), new Random(),
+                false);
+        floor.generate();
+        state = Persistence.dungeonState = new DungeonState();
 
-		tester = this.generateTester();
+        tester = this.generateTester();
 
-		state.setCamera(tester);
-		Persistence.stateManager = new PrincipalMainState();
-		// Persistance.stateManager.setState(state);
+        state.setCamera(tester);
+        Persistence.stateManager = new PrincipalMainState();
+        // Persistance.stateManager.setState(state);
 
-		Launcher.isRunning = true;
-		Launcher.setProcessingProfile(RenderProfile.PROFILE_SYNCHRONIZED);
+        Launcher.isRunning = true;
+        Launcher.setProcessingProfile(RenderProfile.PROFILE_SYNCHRONIZED);
 
-		new Thread(this.thread = new AnimationPreviewThread(this)).start();
-	}
+        new Thread(this.thread = new AnimationPreviewThread(this)).start();
+    }
 
-	public void setAnimation(AnimationListItem animation)
-	{
-		this.animation = animation;
-		thread.cooldown = 0;
+    public void setAnimation(AnimationListItem animation) {
+        this.animation = animation;
+        thread.cooldown = 0;
 
-		this.playAnimation(true);
-	}
+        this.playAnimation(true);
+    }
 
-	public void updateProgressBar(boolean shouldBeFull)
-	{
-		if (this.current == null) this.progressBar.setProgress(0);
-		else if (shouldBeFull) this.progressBar.setProgress(1);
-		else if (this.current.duration() == -1) this.progressBar.setProgress(0);
-		else this.progressBar.setProgress(Math.min(1, this.current.tick() * 1. / this.current.duration()));
-	}
+    public void updateProgressBar(boolean shouldBeFull) {
+        if (this.current == null)
+            this.progressBar.setProgress(0);
+        else if (shouldBeFull)
+            this.progressBar.setProgress(1);
+        else if (this.current.duration() == -1)
+            this.progressBar.setProgress(0);
+        else
+            this.progressBar.setProgress(Math.min(1, this.current.tick() * 1. / this.current.duration()));
+    }
 
 }

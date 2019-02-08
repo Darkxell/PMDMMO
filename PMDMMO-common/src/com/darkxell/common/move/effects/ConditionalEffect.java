@@ -12,30 +12,31 @@ import com.darkxell.common.pokemon.LearnedMove;
 
 public class ConditionalEffect extends MoveEffect {
 
-	public static interface EffectCondition {
+    public static interface EffectCondition {
 
-		boolean isMet(MoveUse usedMove, DungeonPokemon target, String[] flags, Floor floor,
-				ArrayList<DungeonEvent> events);
+        boolean isMet(MoveUse usedMove, DungeonPokemon target, String[] flags, Floor floor,
+                ArrayList<DungeonEvent> events);
 
-	}
+    }
 
-	public final EffectCondition condition;
-	public final int moveIfTrue, moveIfFalse;
+    public final EffectCondition condition;
+    public final int moveIfTrue, moveIfFalse;
 
-	public ConditionalEffect(int id, int moveIfTrue, int moveIfFalse, EffectCondition condition) {
-		super(id);
-		this.moveIfTrue = moveIfTrue;
-		this.moveIfFalse = moveIfFalse;
-		this.condition = condition;
-	}
+    public ConditionalEffect(int id, int moveIfTrue, int moveIfFalse, EffectCondition condition) {
+        super(id);
+        this.moveIfTrue = moveIfTrue;
+        this.moveIfFalse = moveIfFalse;
+        this.condition = condition;
+    }
 
-	@Override
-	public boolean mainUse(MoveUse usedMove, DungeonPokemon target, String[] flags, Floor floor,
-			ArrayList<DungeonEvent> events) {
-		int moveToUse = this.moveIfFalse;
-		if (this.condition.isMet(usedMove, target, flags, floor, events)) moveToUse = this.moveIfTrue;
-		events.add(new MoveSelectionEvent(floor, new LearnedMove(moveToUse), usedMove.user, usedMove.direction, false));
-		return false;
-	}
+    @Override
+    public boolean mainUse(MoveUse usedMove, DungeonPokemon target, String[] flags, Floor floor,
+            ArrayList<DungeonEvent> events) {
+        int moveToUse = this.moveIfFalse;
+        if (this.condition.isMet(usedMove, target, flags, floor, events))
+            moveToUse = this.moveIfTrue;
+        events.add(new MoveSelectionEvent(floor, new LearnedMove(moveToUse), usedMove.user, usedMove.direction, false));
+        return false;
+    }
 
 }

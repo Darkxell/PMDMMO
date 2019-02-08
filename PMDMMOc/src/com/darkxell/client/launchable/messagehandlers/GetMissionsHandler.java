@@ -6,10 +6,10 @@ import com.eclipsesource.json.JsonObject;
 
 public class GetMissionsHandler extends MessageHandler {
 
-	@Override
-	public void handleMessage(JsonObject message) {
-		if (Persistence.stateManager.getCurrentState() instanceof MissionBoardState)
-			((MissionBoardState) Persistence.stateManager.getCurrentState()).recieveMissions(message);
-	}
+    @Override
+    public void handleMessage(JsonObject message) {
+        if (Persistence.stateManager.getCurrentState() instanceof MissionBoardState)
+            ((MissionBoardState) Persistence.stateManager.getCurrentState()).recieveMissions(message);
+    }
 
 }

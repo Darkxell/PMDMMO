@@ -21,90 +21,82 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 
-public class EditDungeonTrapsController implements Initializable
-{
+public class EditDungeonTrapsController implements Initializable {
 
-	public static EditDungeonTrapsController instance;
+    public static EditDungeonTrapsController instance;
 
-	@FXML
-	public HBox container;
-	@FXML
-	public MenuItem createMenu;
-	@FXML
-	public MenuItem deleteMenu;
-	@FXML
-	public MenuItem editMenu;
-	@FXML
-	public EditTrapController editTrapController;
-	@FXML
-	public TitledPane editTrapPane;
-	@FXML
-	public TableColumn<DungeonTrapTableItem, FloorSet> floorsColumn;
-	@FXML
-	public TableColumn<DungeonTrapTableItem, Trap[]> trapsColumn;
-	@FXML
-	public TableView<DungeonTrapTableItem> trapTable;
-	@FXML
-	public TableColumn<DungeonTrapTableItem, Integer[]> weightsColumn;
+    @FXML
+    public HBox container;
+    @FXML
+    public MenuItem createMenu;
+    @FXML
+    public MenuItem deleteMenu;
+    @FXML
+    public MenuItem editMenu;
+    @FXML
+    public EditTrapController editTrapController;
+    @FXML
+    public TitledPane editTrapPane;
+    @FXML
+    public TableColumn<DungeonTrapTableItem, FloorSet> floorsColumn;
+    @FXML
+    public TableColumn<DungeonTrapTableItem, Trap[]> trapsColumn;
+    @FXML
+    public TableView<DungeonTrapTableItem> trapTable;
+    @FXML
+    public TableColumn<DungeonTrapTableItem, Integer[]> weightsColumn;
 
-	public ArrayList<DungeonTrapGroup> generate()
-	{
-		ArrayList<DungeonTrapGroup> a = new ArrayList<>();
-		for (DungeonTrapTableItem i : this.trapTable.getItems())
-			a.add(i.trapGroup);
-		return a;
-	}
+    public ArrayList<DungeonTrapGroup> generate() {
+        ArrayList<DungeonTrapGroup> a = new ArrayList<>();
+        for (DungeonTrapTableItem i : this.trapTable.getItems())
+            a.add(i.trapGroup);
+        return a;
+    }
 
-	@Override
-	public void initialize(URL location, ResourceBundle resources)
-	{
-		instance = this;
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        instance = this;
 
-		this.editTrapPane.setVisible(false);
-		this.trapsColumn.setCellValueFactory(new PropertyValueFactory<>("traps"));
-		this.weightsColumn.setCellValueFactory(new PropertyValueFactory<>("weights"));
-		this.floorsColumn.setCellValueFactory(new PropertyValueFactory<>("floors"));
-	}
+        this.editTrapPane.setVisible(false);
+        this.trapsColumn.setCellValueFactory(new PropertyValueFactory<>("traps"));
+        this.weightsColumn.setCellValueFactory(new PropertyValueFactory<>("weights"));
+        this.floorsColumn.setCellValueFactory(new PropertyValueFactory<>("floors"));
+    }
 
-	public void onCreate()
-	{
-		DungeonTrapTableItem i = new DungeonTrapTableItem(new DungeonTrapGroup(new int[] { TrapRegistry.WONDER_TILE.id }, new int[] { 1 },
-				new FloorSet(1, EditDungeonDataController.instance.currentFloorCount())));
-		this.trapTable.getItems().add(i);
-		this.trapTable.getSelectionModel().select(i);
-		this.onEdit();
-	}
+    public void onCreate() {
+        DungeonTrapTableItem i = new DungeonTrapTableItem(
+                new DungeonTrapGroup(new int[] { TrapRegistry.WONDER_TILE.id }, new int[] { 1 },
+                        new FloorSet(1, EditDungeonDataController.instance.currentFloorCount())));
+        this.trapTable.getItems().add(i);
+        this.trapTable.getSelectionModel().select(i);
+        this.onEdit();
+    }
 
-	public void onDelete()
-	{
-		this.trapTable.getItems().remove(this.trapTable.getSelectionModel().getSelectedItem());
-	}
+    public void onDelete() {
+        this.trapTable.getItems().remove(this.trapTable.getSelectionModel().getSelectedItem());
+    }
 
-	public void onEdit()
-	{
-		this.trapTable.getItems().sort(Comparator.naturalOrder());
-		this.editTrapPane.setVisible(this.trapTable.getSelectionModel().getSelectedItem() != null);
-		this.editTrapController.setupFor(this.trapTable.getSelectionModel().getSelectedItem());
-	}
+    public void onEdit() {
+        this.trapTable.getItems().sort(Comparator.naturalOrder());
+        this.editTrapPane.setVisible(this.trapTable.getSelectionModel().getSelectedItem() != null);
+        this.editTrapController.setupFor(this.trapTable.getSelectionModel().getSelectedItem());
+    }
 
-	public void onMenuRequested()
-	{
-		this.editMenu.setDisable(this.trapTable.getSelectionModel().isEmpty());
-		this.deleteMenu.setDisable(this.trapTable.getSelectionModel().isEmpty());
-	}
+    public void onMenuRequested() {
+        this.editMenu.setDisable(this.trapTable.getSelectionModel().isEmpty());
+        this.deleteMenu.setDisable(this.trapTable.getSelectionModel().isEmpty());
+    }
 
-	public void onTrapEdited(DungeonTrapTableItem item)
-	{
-		this.trapTable.refresh();
-	}
+    public void onTrapEdited(DungeonTrapTableItem item) {
+        this.trapTable.refresh();
+    }
 
-	public void setupFor(Dungeon dungeon)
-	{
-		this.trapTable.getItems().clear();
-		ArrayList<DungeonTrapGroup> w = dungeon.trapsData();
-		for (DungeonTrapGroup e : w)
-			this.trapTable.getItems().add(new DungeonTrapTableItem(e));
-		this.onEdit();
-	}
+    public void setupFor(Dungeon dungeon) {
+        this.trapTable.getItems().clear();
+        ArrayList<DungeonTrapGroup> w = dungeon.trapsData();
+        for (DungeonTrapGroup e : w)
+            this.trapTable.getItems().add(new DungeonTrapTableItem(e));
+        this.onEdit();
+    }
 
 }

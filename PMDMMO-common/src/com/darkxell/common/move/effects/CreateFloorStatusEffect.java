@@ -11,31 +11,28 @@ import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.status.FloorStatus;
 import com.darkxell.common.util.language.Message;
 
-public class CreateFloorStatusEffect extends MoveEffect
-{
+public class CreateFloorStatusEffect extends MoveEffect {
 
-	public final FloorStatus status;
+    public final FloorStatus status;
 
-	public CreateFloorStatusEffect(int id, FloorStatus status)
-	{
-		super(id);
-		this.status = status;
-	}
+    public CreateFloorStatusEffect(int id, FloorStatus status) {
+        super(id);
+        this.status = status;
+    }
 
-	@Override
-	public void additionalEffects(MoveUse usedMove, DungeonPokemon target, String[] flags, Floor floor, MoveEffectCalculator calculator, boolean missed,
-			MoveEvents effects)
-	{
-		super.additionalEffects(usedMove, target, flags, floor, calculator, missed, effects);
+    @Override
+    public void additionalEffects(MoveUse usedMove, DungeonPokemon target, String[] flags, Floor floor,
+            MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
+        super.additionalEffects(usedMove, target, flags, floor, calculator, missed, effects);
 
-		if (!missed) effects.createEffect(new FloorStatusCreatedEvent(floor, this.status.create(usedMove.user, floor.random)), usedMove, target, floor, missed,
-				usedMove.move.move().dealsDamage, target);
-	}
+        if (!missed)
+            effects.createEffect(new FloorStatusCreatedEvent(floor, this.status.create(usedMove.user, floor.random)),
+                    usedMove, target, floor, missed, usedMove.move.move().dealsDamage, target);
+    }
 
-	@Override
-	public Message descriptionBase(Move move)
-	{
-		return new Message("move.info.floor_status").addReplacement("<status>", this.status.name());
-	}
+    @Override
+    public Message descriptionBase(Move move) {
+        return new Message("move.info.floor_status").addReplacement("<status>", this.status.name());
+    }
 
 }

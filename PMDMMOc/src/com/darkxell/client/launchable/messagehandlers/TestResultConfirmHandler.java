@@ -5,14 +5,13 @@ import com.darkxell.client.state.dialog.ComplexDialog;
 import com.darkxell.client.state.quiz.PersonalityQuizDialog;
 import com.eclipsesource.json.JsonObject;
 
-public class TestResultConfirmHandler extends MessageHandler
-{
+public class TestResultConfirmHandler extends MessageHandler {
 
-	@Override
-	public void handleMessage(JsonObject message)
-	{
-		ComplexDialog dialog = Persistence.currentDialog;
-		if (dialog != null && dialog instanceof PersonalityQuizDialog) ((PersonalityQuizDialog) dialog).onResultConfirmed();
-	}
+    @Override
+    public void handleMessage(JsonObject message) {
+        ComplexDialog dialog = Persistence.currentDialog;
+        if (dialog instanceof PersonalityQuizDialog)
+            ((PersonalityQuizDialog) dialog).onResultConfirmed();
+    }
 
 }

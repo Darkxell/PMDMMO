@@ -99,7 +99,7 @@ public class Logger {
 
     private Logger(String source) {
         this.source = source;
-        this.log = new ArrayList<String>();
+        this.log = new ArrayList<>();
         this.start = new Date();
         this.info("New instance: " + this.date());
     }
@@ -150,30 +150,26 @@ public class Logger {
     public String log(String message, LogLevel level) {
         message = "[" + this.date() + " | " + this.source + "] " + level.name() + ": " + message;
 
-        if (level.severity >= Math.min(STDOUT_SEVERITY, STDERR_SEVERITY)) {
+        if (level.severity >= Math.min(STDOUT_SEVERITY, STDERR_SEVERITY))
             this.log.add(message);
-        }
 
-        if (level.severity >= STDERR_SEVERITY) {
+        if (level.severity >= STDERR_SEVERITY)
             System.err.println(message);
-        } else if (level.severity >= STDOUT_SEVERITY) {
+        else if (level.severity >= STDOUT_SEVERITY)
             System.out.println(message);
-        }
 
         return message;
     }
 
     public void saveClient() {
-        if (!this.saveOnExit) {
+        if (!this.saveOnExit)
             return;
-        }
         new File("resources/logs").mkdirs();
         File f = new File("resources/logs/log-" + new SimpleDateFormat("yyyy-MM-dd_HH.mm").format(this.start) + ".txt");
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(f));
-            for (String line : this.log) {
+            for (String line : this.log)
                 writer.write(line + "\n");
-            }
             writer.close();
         } catch (IOException e) {
             this.error(e.getMessage());

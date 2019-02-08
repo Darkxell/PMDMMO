@@ -9,21 +9,20 @@ import com.darkxell.common.move.MoveEffectCalculator;
 import com.darkxell.common.move.MoveEvents;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
-public class DropItemEffect extends MoveEffect
-{
+public class DropItemEffect extends MoveEffect {
 
-	public DropItemEffect(int id)
-	{
-		super(id);
-	}
+    public DropItemEffect(int id) {
+        super(id);
+    }
 
-	@Override
-	public void additionalEffects(MoveUse usedMove, DungeonPokemon target, String[] flags, Floor floor, MoveEffectCalculator calculator, boolean missed, MoveEvents effects)
-	{
-		super.additionalEffects(usedMove, target, flags, floor, calculator, missed, effects);
+    @Override
+    public void additionalEffects(MoveUse usedMove, DungeonPokemon target, String[] flags, Floor floor,
+            MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
+        super.additionalEffects(usedMove, target, flags, floor, calculator, missed, effects);
 
-		if (!missed && target.getItem() != null)
-			effects.createEffect(new ItemMovedEvent(floor, ItemAction.AUTO, null, target, 0, target.tile(), 0), usedMove, target, floor, missed, true, target);
-	}
+        if (!missed && target.getItem() != null)
+            effects.createEffect(new ItemMovedEvent(floor, ItemAction.AUTO, null, target, 0, target.tile(), 0),
+                    usedMove, target, floor, missed, true, target);
+    }
 
 }

@@ -20,20 +20,18 @@ import com.darkxell.common.util.XMLUtils;
 public final class ItemRegistry extends Registry<Item> {
     protected Element serializeDom(HashMap<Integer, Item> items) {
         Element xml = new Element("items");
-        for (Item item : items.values()) {
+        for (Item item : items.values())
             if (!(item.effect() instanceof TeachedMoveItemEffect)) {
                 Element i = item.toXML();
                 if (item.effect() instanceof TeachesMoveRenewableItemEffect) {
                     int move = ((TeachesMoveRenewableItemEffect) item.effect()).moveID;
-                    if (item.effect() instanceof TeachesMoveItemEffect) {
+                    if (item.effect() instanceof TeachesMoveItemEffect)
                         i.setAttribute("extra", "tm:" + move);
-                    } else {
+                    else
                         i.setAttribute("extra", "hm:" + move);
-                    }
                 }
                 xml.addContent(i);
             }
-        }
         return xml;
     }
 
@@ -55,9 +53,8 @@ public final class ItemRegistry extends Registry<Item> {
 
                     Item used = new Item(-1 * item.id, ItemCategory.OTHERS, 0, 1, -effect, 95, false, false);
                     items.put(used.id, used);
-                } else if (data[0].equals("hm")) {
+                } else if (data[0].equals("hm"))
                     new TeachesMoveRenewableItemEffect(effect, Integer.parseInt(data[1]));
-                }
             }
         }
         return items;
