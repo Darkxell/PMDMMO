@@ -11,7 +11,6 @@ import com.darkxell.common.event.pokemon.StatusConditionEndedEvent.StatusConditi
 import com.darkxell.common.event.stats.ExperienceGeneratedEvent;
 import com.darkxell.common.pokemon.AffectsPokemon;
 import com.darkxell.common.pokemon.DungeonPokemon;
-import com.darkxell.common.status.conditions.PreventStatusCondition;
 import com.darkxell.common.util.Pair;
 import com.darkxell.common.util.RandomUtil;
 import com.darkxell.common.util.language.Message;
@@ -38,12 +37,6 @@ public class StatusCondition extends Status implements AffectsPokemon, DamageSou
         if (pokemon.hasStatusCondition(this))
             return new Pair<>(false, new Message("status.already").addReplacement("<pokemon>", pokemon.getNickname())
                     .addReplacement("<condition>", this.name()));
-        for (AppliedStatusCondition c : pokemon.activeStatusConditions())
-            if (c.condition instanceof PreventStatusCondition && ((PreventStatusCondition) c.condition).prevents(this))
-                return new Pair<>(false,
-                        new Message("status.prevented.condition").addReplacement("<pokemon>", pokemon.getNickname())
-                                .addReplacement("<prevented>", this.name())
-                                .addReplacement("<preventer>", c.condition.name()));
         return new Pair<>(true, null);
     }
 
