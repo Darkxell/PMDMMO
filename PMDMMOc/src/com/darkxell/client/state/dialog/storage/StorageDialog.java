@@ -221,7 +221,7 @@ public class StorageDialog extends ComplexDialog
             itemids.add(stack.id());
 
         JsonArray quantities = new JsonArray();
-        for (ItemStack element : selection)
+        for (int i = 0; i < selection.length; ++i)
             quantities.add(1);
         if (quantity != -1)
             quantities.set(0, quantity);

@@ -160,13 +160,11 @@ public class Dungeon implements Registrable<Dungeon> {
         this.mapy = mapy;
     }
 
-    /** @return The buried items found on the input floor. Keys are Item IDs, Values are Item weights. */
     public ArrayList<DungeonItemGroup> buriedItems(int floor) {
         ArrayList<DungeonItemGroup> items = new ArrayList<>();
-        for (DungeonItemGroup item : this.buriedItems)
-            if (item.floors.contains(floor))
-                for (int item2 : item.items)
-                    items.add(item);
+        for (DungeonItemGroup itemgroup : this.buriedItems)
+            if (itemgroup.floors.contains(floor))
+                items.add(itemgroup);
         return items;
     }
 
@@ -213,13 +211,11 @@ public class Dungeon implements Registrable<Dungeon> {
         return moneyTable[0];
     }
 
-    /** @return The items found on the input floor. Keys are Item IDs, Values are Item weights. */
     public ArrayList<DungeonItemGroup> items(int floor) {
         ArrayList<DungeonItemGroup> items = new ArrayList<>();
         for (DungeonItemGroup item : this.items)
             if (item.floors.contains(floor))
-                for (int item2 : item.items)
-                    items.add(item);
+                items.add(item);
         return items;
     }
 
@@ -252,7 +248,7 @@ public class Dungeon implements Registrable<Dungeon> {
 
     /**
      * @return A random Item for the input floor. May return <code>null</code> if there are no items on the floor, or if
-     *         they don't meet requirements.
+     * they don't meet requirements.
      */
     public ItemStack randomItem(Random random, int floor, boolean allowMoney) {
         ArrayList<DungeonItemGroup> candidates = new ArrayList<>(this.items);
@@ -364,9 +360,9 @@ public class Dungeon implements Registrable<Dungeon> {
     }
 
     /**
-     * @param  floor  - A Floor ID.
-     * @param  random - A Random Number Generator.
-     * @return        The prevailing Weather for the input Floor.
+     * @param floor - A Floor ID.
+     * @param random - A Random Number Generator.
+     * @return The prevailing Weather for the input Floor.
      */
     public Weather weather(int floor, Random random) {
         Weather w = Weather.CLEAR;

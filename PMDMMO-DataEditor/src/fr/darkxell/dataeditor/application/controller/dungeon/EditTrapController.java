@@ -11,7 +11,6 @@ import com.darkxell.common.trap.TrapRegistry;
 
 import fr.darkxell.dataeditor.application.data.DungeonTrapTableItem;
 import fr.darkxell.dataeditor.application.data.SingleTrapTableItem;
-import fr.darkxell.dataeditor.application.util.DungeonCreationException;
 import fr.darkxell.dataeditor.application.util.FXUtils;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -76,12 +75,8 @@ public class EditTrapController implements Initializable {
     }
 
     public void onSave() {
-        try {
-            this.editing.trapGroup = this.generate();
-            EditDungeonTrapsController.instance.onTrapEdited(this.editing);
-        } catch (DungeonCreationException e) {
-            FXUtils.showAlert("There was an error while saving the Dungeon: " + e.getMessage() + ".");
-        }
+        this.editing.trapGroup = this.generate();
+        EditDungeonTrapsController.instance.onTrapEdited(this.editing);
     }
 
     public void onTrapEdited(CellEditEvent<SingleTrapTableItem, Trap> cell) {
