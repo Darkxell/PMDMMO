@@ -3,7 +3,6 @@ package com.darkxell.common.ai;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Stack;
 
 import com.darkxell.common.dungeon.floor.Floor;
@@ -63,8 +62,8 @@ public final class AIUtils {
     }
 
     /**
-     * @param  angle - An angle in degrees.
-     * @return       The direction closest to the input angle (0 = North).
+     * @param angle - An angle in degrees.
+     * @return The direction closest to the input angle (0 = North).
      */
     public static Direction closestDirection(double angle) {
         angle = 360 - angle; // Trigonometric to clockwise
@@ -84,7 +83,7 @@ public final class AIUtils {
 
     /**
      * @return The direction to go to for the input Pokemon to reach the destination. May return null if there is no
-     *         path.
+     * path.
      */
     public static Direction direction(DungeonPokemon pokemon, Tile destination) {
         Direction direction = generalDirection(pokemon.tile(), destination);
@@ -135,23 +134,18 @@ public final class AIUtils {
 
     /**
      * @return The farthest Tiles that can be seen and walked on by the input Pokemon, sorted by closeness from the
-     *         Pokemon's facing direction. This method considers the Pokemon is not in a Room.
+     * Pokemon's facing direction. This method considers the Pokemon is not in a Room.
      */
     public static ArrayList<Tile> furthestWalkableTiles(Floor floor, DungeonPokemon pokemon) {
-        int shadow = 3 - floor.data.shadows();
         double maxDistance = 0, distance;
-        ArrayList<Tile> tiles = new ArrayList<>();
-        for (int x = pokemon.tile().x - shadow; x <= pokemon.tile().x + shadow; ++x)
-            for (int y = pokemon.tile().y - shadow; y <= pokemon.tile().y + shadow; ++y) {
-                Tile t = floor.tileAt(x, y);
-                if (t == null)
-                    continue;
-                distance = t.distance(pokemon.tile());
-                if (distance >= maxDistance && t.canWalkOn(pokemon, false) && isReachable(floor, pokemon, t)) {
-                    maxDistance = distance;
-                    tiles.add(t);
-                }
-            }
+        ArrayList<Tile> tiles = new ArrayList<>(floor.aiManager.getAI(pokemon).visibility.currentlyVisibleTiles());
+        tiles.removeIf(tile -> !tile.canWalkOn(pokemon, false) || !isReachable(floor, pokemon, tile));
+
+        for (Tile t : tiles) {
+            distance = t.distance(pokemon.tile());
+            if (distance >= maxDistance)
+                maxDistance = distance;
+        }
 
         final double maxD = maxDistance;
         tiles.removeIf((Tile t) -> {
@@ -207,16 +201,16 @@ public final class AIUtils {
 
     /**
      * @return True if the input Pokemon is just one tile away from the target. If they're diagonally disposed, also
-     *         checks if there is a wall blocking their interaction.
+     * checks if there is a wall blocking their interaction.
      */
     public static boolean isAdjacentTo(DungeonPokemon pokemon, DungeonPokemon target) {
         return isAdjacentTo(pokemon, target, true);
     }
 
     /**
-     * @param  checkBlockingWalls - If true and the Pokemon are diagonally disposed, also checks if there is a wall
-     *                            blocking their interaction.
-     * @return                    <code>true</code> if the input Pokemon is one tile away from the target.
+     * @param checkBlockingWalls - If true and the Pokemon are diagonally disposed, also checks if there is a wall
+     * blocking their interaction.
+     * @return <code>true</code> if the input Pokemon is one tile away from the target.
      */
     public static boolean isAdjacentTo(DungeonPokemon pokemon, DungeonPokemon target, boolean checkBlockingWalls) {
         Direction direction = generalDirection(pokemon, target);
@@ -228,15 +222,15 @@ public final class AIUtils {
     }
 
     /**
-     * @param  pokemon - The moving Pokemon.
-     * @param  tile    - The tile to reach.
-     * @return         <code>true</code> if the input Pokemon is able to reach the input Tile.
+     * @param pokemon - The moving Pokemon.
+     * @param tile - The tile to reach.
+     * @return <code>true</code> if the input Pokemon is able to reach the input Tile.
      */
     public static boolean isReachable(Floor floor, DungeonPokemon pokemon, Tile tile) {
         if (pokemon.tile() == tile)
             return true;
 
-        ArrayList<Tile> visible = new ArrayList<>(visibleTiles(floor, pokemon));
+        ArrayList<Tile> visible = new ArrayList<>(floor.aiManager.getAI(pokemon).visibility.currentlyVisibleTiles());
         Stack<Tile> accessible = new Stack<>();
         HashSet<Tile> treated = new HashSet<>();
         accessible.add(pokemon.tile());
@@ -298,34 +292,6 @@ public final class AIUtils {
         }
 
         return destination > origin;
-    }
-
-    /** @return The list of enemy Pokemon the input Pokemon can see, sorted by distance to the Pokemon. */
-    public static ArrayList<DungeonPokemon> visibleEnemies(Floor floor, DungeonPokemon pokemon) {
-        ArrayList<DungeonPokemon> visible = new ArrayList<>();
-        ArrayList<Tile> tiles = visibleTiles(floor, pokemon);
-        for (Tile t : tiles)
-            if (t.getPokemon() != null && !pokemon.isAlliedWith(t.getPokemon()))
-                visible.add(t.getPokemon());
-        return visible;
-    }
-
-    /** @return The list of Tiles the input Pokemon can see, sorted by distance to the Pokemon. */
-    public static ArrayList<Tile> visibleTiles(Floor floor, DungeonPokemon pokemon) {
-        ArrayList<Tile> visible = new ArrayList<>();
-        if (pokemon.tile().isInRoom()) {
-            visible.addAll(floor.roomAt(pokemon.tile()).listTiles());
-            visible.addAll(floor.roomAt(pokemon.tile()).outline());
-        }
-
-        int visibility = 3 - floor.data.shadows();
-        for (int x = pokemon.tile().x - visibility; x <= pokemon.tile().x + visibility; ++x)
-            for (int y = pokemon.tile().y - visibility; y <= pokemon.tile().y + visibility; ++y)
-                visible.add(floor.tileAt(x, y));
-
-        visible.removeIf(Objects::isNull);
-        visible.sort(Comparator.comparingDouble((Tile t) -> pokemon.tile().distance(t)));
-        return visible;
     }
 
     private AIUtils() {

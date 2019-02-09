@@ -1,9 +1,11 @@
 package com.darkxell.common.ai.visibility;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 
 import com.darkxell.common.ai.AI;
 import com.darkxell.common.dungeon.data.FloorData;
+import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.room.Room;
 import com.darkxell.common.item.ItemEffects;
@@ -96,6 +98,16 @@ public class Visibility {
             for (Tile tile : r.outline())
                 this.visit(tile);
         }
+    }
+
+    /** @return The list of enemy Pokemon the input Pokemon can see, sorted by distance to the Pokemon. */
+    public ArrayList<DungeonPokemon> visibleEnemies(Floor floor, DungeonPokemon pokemon) {
+        ArrayList<DungeonPokemon> visible = new ArrayList<>();
+        HashSet<Tile> tiles = this.currentlyVisibleTiles();
+        for (Tile t : tiles)
+            if (t.getPokemon() != null && !pokemon.isAlliedWith(t.getPokemon()))
+                visible.add(t.getPokemon());
+        return visible;
     }
 
     private void visit(Tile tile) {
