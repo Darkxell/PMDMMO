@@ -43,7 +43,7 @@ public class CameraVisibility {
         return this.camera().isVisible(pokemon);
     }
 
-    public boolean isVisible(Tile tile) {
+    public boolean hasSeenTile(Tile tile) {
         return this.camera().hasSeenTile(tile);
     }
 

@@ -190,6 +190,15 @@ public class Floor {
         return pokemon;
     }
 
+    public ArrayList<Tile> listTiles() {
+        ArrayList<Tile> tiles = new ArrayList<>();
+        if (this.tiles != null)
+            for (Tile[] row : this.tiles)
+                for (Tile t : row)
+                    tiles.add(t);
+        return tiles;
+    }
+
     /** Called when a this Floor starts. */
     public void onFloorStart(ArrayList<DungeonEvent> events) {
         this.dungeon.eventProcessor.onFloorStart(this);

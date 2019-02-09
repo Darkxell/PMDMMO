@@ -68,7 +68,7 @@ public class DungeonFloorMap extends AbstractDisplayMap {
                         Logger.e("null tile at " + x + ", " + y);
                     else {
                         int tx = tile.x * TILE_SIZE, ty = tile.y * TILE_SIZE;
-                        if (Persistence.dungeonState.floorVisibility.isVisible(tile)) {
+                        if (Persistence.dungeonState.floorVisibility.hasSeenTile(tile)) {
                             boolean isMain = tile.getPokemon() == Persistence.player.getDungeonLeader();
                             if ((this.tick >= PLAYER_TICK || !isMain) && tile.getPokemon() != null)
                                 g.drawImage(this.tileset.ground(), tx, ty, null);

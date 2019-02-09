@@ -7,19 +7,27 @@ import com.darkxell.common.ai.AI;
 import com.darkxell.common.dungeon.data.FloorData;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
+import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.dungeon.floor.room.Room;
-import com.darkxell.common.item.ItemEffects;
 import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.status.AppliedStatusCondition;
 import com.darkxell.common.util.Direction;
 
 public class Visibility {
+
+    public enum VisibleObjectType {
+        ITEM,
+        POKEMON,
+        STAIRS,
+        TILE;
+    }
 
     /** Reference to parent AI. */
     public final AI ai;
     /** The Tiles that this Pokemon can currently see. */
     private HashSet<Tile> currentlyVisible = new HashSet<>();
     /** The Tiles that were seen with an Item on it. */
-    private HashSet<Tile> itemTiles = new HashSet<>(); // TODO has to update when Items are moved
+    private HashSet<Tile> itemTiles = new HashSet<>();
     /** The Tiles that were already seen. */
     private HashSet<Tile> seenTiles = new HashSet<>();
 
@@ -29,6 +37,8 @@ public class Visibility {
 
     /** @return The Tiles this Pokemon can currently see from the Tile it's at. */
     public HashSet<Tile> currentlyVisibleTiles() {
+        if (this.hasSuperVision(VisibleObjectType.TILE))
+            return new HashSet<>(this.ai.floor.listTiles());
         return new HashSet<>(this.currentlyVisible);
     }
 
@@ -37,12 +47,25 @@ public class Visibility {
         return this.seenTiles.contains(tile);
     }
 
+    /** @return <code>true</code> if this Pokemon can see all objects of the input type. */
+    public boolean hasSuperVision(VisibleObjectType object) {
+        if (this.ai.pokemon.ability().hasSuperVision(this.ai.floor, this.ai.pokemon, object))
+            return true;
+        if (this.ai.pokemon.getItem() != null
+                && this.ai.pokemon.getItem().item().effect().hasSuperVision(this.ai.floor, this.ai.pokemon, object))
+            return true;
+        for (AppliedStatusCondition condition : this.ai.pokemon.activeStatusConditions())
+            if (condition.condition.hasSuperVision(this.ai.floor, this.ai.pokemon, object))
+                return true;
+        return false;
+    }
+
     /**
      * @return <code>true</code> if the Item on the input Tile is visible by this Pokemon (doesn't check if there
      * actually is an Item).
      */
     public boolean isItemVisible(Tile tile) {
-        if (this.isXrayOn())
+        if (this.hasSuperVision(VisibleObjectType.ITEM))
             return true;
         return this.itemTiles.contains(tile);
     }
@@ -52,7 +75,7 @@ public class Visibility {
         if (target.isFainted())
             return false;
 
-        if (this.isXrayOn())
+        if (this.hasSuperVision(VisibleObjectType.POKEMON))
             return true;
 
         if (this.ai.pokemon.tile().isInRoom()) {
@@ -66,12 +89,11 @@ public class Visibility {
 
     /** @return <code>true</code> if the input Tile is currently visible by this Pokemon. */
     public boolean isVisible(Tile tile) {
+        if (this.hasSuperVision(VisibleObjectType.TILE))
+            return true;
+        if (this.hasSuperVision(VisibleObjectType.STAIRS) && tile.type() == TileType.STAIR)
+            return true;
         return this.currentlyVisible.contains(tile);
-    }
-
-    @Deprecated
-    private boolean isXrayOn() { // TODO replace with better method
-        return this.ai.pokemon.getItem() != null && this.ai.pokemon.getItem().item().effect() == ItemEffects.XRaySpecs;
     }
 
     /** Called when the Pokemon moves. Updates the Tiles it can see. */
