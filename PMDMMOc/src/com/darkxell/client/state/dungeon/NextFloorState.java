@@ -26,7 +26,6 @@ public class NextFloorState extends TransitionState {
 
     public static void resumeExploration() {
         Persistence.displaymap = new DungeonFloorMap();
-        Persistence.dungeonState.floorVisibility.onCameraMoved();
         String ost = "dungeon-" + Persistence.floor.data.soundtrack() + ".mp3";
         if (Persistence.floor.data.isBossFloor())
             ost = "boss.mp3";

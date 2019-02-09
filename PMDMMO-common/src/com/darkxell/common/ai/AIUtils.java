@@ -266,26 +266,6 @@ public final class AIUtils {
         return false;
     }
 
-    /**
-     * @param  pokemon - The moving Pokemon.
-     * @param  target  - The target to reach.
-     * @return         <code>true</code> if the input Pokemon is able to see the input target.
-     */
-    public static boolean isVisible(Floor floor, DungeonPokemon pokemon, DungeonPokemon target) {
-        if (target.isFainted())
-            return false;
-        if (pokemon.tile().isInRoom()) {
-            if (target.tile().isInRoom())
-                return floor.roomAt(pokemon.tile()) == floor.roomAt(target.tile());
-            for (Tile t : floor.roomAt(pokemon.tile()).outline())
-                if (t == target.tile())
-                    return true;
-        }
-
-        // Change this to use floor shadows when exploring AI is done
-        return pokemon.tile().distance(target.tile()) <= 3;
-    }
-
     /** @return <code>true</code> if the input Pokemon should stop running. */
     public static boolean shouldStopRunning(DungeonPokemon pokemon) {
         Tile tile = pokemon.tile();

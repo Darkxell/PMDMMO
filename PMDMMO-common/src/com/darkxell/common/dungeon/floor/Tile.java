@@ -98,8 +98,8 @@ public class Tile implements ItemContainer, Comparable<Tile> {
     }
 
     /**
-     * @param  direction - The direction of the movement.
-     * @return           True if the input Pokemon can walk on this Tile.
+     * @param direction - The direction of the movement.
+     * @return True if the input Pokemon can walk on this Tile.
      */
     public boolean canMoveTo(DungeonPokemon pokemon, Direction direction, boolean allowSwitching) {
         if (!this.canWalkOn(pokemon, allowSwitching))
@@ -108,8 +108,8 @@ public class Tile implements ItemContainer, Comparable<Tile> {
     }
 
     /**
-     * @param  allowSwitching - True if switching leader and ally is allowed.
-     * @return                True if the input Pokemon can walk on this Tile.
+     * @param allowSwitching - True if switching leader and ally is allowed.
+     * @return True if the input Pokemon can walk on this Tile.
      */
     public boolean canWalkOn(DungeonPokemon pokemon, boolean allowSwitching) {
         if (this.getPokemon() != null)
@@ -316,6 +316,8 @@ public class Tile implements ItemContainer, Comparable<Tile> {
                 pokemon.tile().removePokemon(pokemon);
             this.pokemon = pokemon;
             this.pokemon.setTile(this);
+            if (this.floor.aiManager.getAI(this.pokemon) != null)
+                this.floor.aiManager.getAI(this.pokemon).visibility.onPokemonMoved();
         }
     }
 

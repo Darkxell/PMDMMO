@@ -1,5 +1,6 @@
 package com.darkxell.common.ai;
 
+import com.darkxell.common.ai.visibility.Visibility;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.action.TurnSkippedEvent;
@@ -42,11 +43,14 @@ public abstract class AI {
     protected AIState state;
     /** A State that may be forced above the current state by other factors (status conditions, abilities...) */
     private AIState superstate = null;
+    /** Describes what the Pokemon represented by this AI can see. */
+    public final Visibility visibility;
 
     public AI(Floor floor, DungeonPokemon pokemon) {
         this.floor = floor;
         this.pokemon = pokemon;
         this.state = this.defaultState();
+        this.visibility = new Visibility(this);
     }
 
     public AIState currentState() {

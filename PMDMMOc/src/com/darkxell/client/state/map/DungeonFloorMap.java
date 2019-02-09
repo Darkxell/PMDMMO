@@ -73,7 +73,7 @@ public class DungeonFloorMap extends AbstractDisplayMap {
                             if ((this.tick >= PLAYER_TICK || !isMain) && tile.getPokemon() != null)
                                 g.drawImage(this.tileset.ground(), tx, ty, null);
                             else if (tile.getItem() != null
-                                    && Persistence.dungeonState.floorVisibility.hasVisibleItem(tile))
+                                    && Persistence.dungeonState.floorVisibility.isItemVisible(tile))
                                 g.drawImage(this.tileset.item(), tx, ty, null);
                             else if (tile.trap == TrapRegistry.WONDER_TILE)
                                 g.drawImage(this.tileset.wonder(), tx, ty, null);
@@ -105,7 +105,7 @@ public class DungeonFloorMap extends AbstractDisplayMap {
                                     g.drawLine(tx, ty, tx, ty);
                             }
                         } else if (tile.getItem() != null
-                                && Persistence.dungeonState.floorVisibility.hasVisibleItem(tile))
+                                && Persistence.dungeonState.floorVisibility.isItemVisible(tile))
                             g.drawImage(this.tileset.item(), tx, ty, null);
                     }
                 }

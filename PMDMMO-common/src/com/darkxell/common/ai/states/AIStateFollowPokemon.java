@@ -40,7 +40,7 @@ public class AIStateFollowPokemon extends AIState {
     @Override
     public DungeonEvent takeAction() {
         // If can see the target, update the last seen position.
-        if (AIUtils.isVisible(this.ai.floor, this.ai.pokemon, this.target))
+        if (this.ai.visibility.isVisible(this.target))
             this.lastSeen = this.target.tile();
 
         Direction direction = AIUtils.generalDirection(this.ai.pokemon, this.target);
