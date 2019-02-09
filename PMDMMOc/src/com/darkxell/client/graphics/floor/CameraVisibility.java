@@ -1,15 +1,11 @@
 package com.darkxell.client.graphics.floor;
 
-import java.util.HashSet;
-
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.state.dungeon.DungeonState;
 import com.darkxell.common.ai.visibility.Visibility;
 import com.darkxell.common.dungeon.data.FloorData;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
-import com.darkxell.common.item.ItemEffects;
-import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
 public class CameraVisibility {
@@ -27,33 +23,30 @@ public class CameraVisibility {
         return c == null ? null : Persistence.floor.aiManager.getAI(c).visibility;
     }
 
+    public boolean hasSeenTile(Tile tile) {
+        if (this.camera() == null)
+            return false;
+        return this.camera().hasSeenTile(tile);
+    }
+
     public boolean isItemVisible(Tile tile) {
-        if (this.isXrayOn())
-            return true;
+        if (this.camera() == null)
+            return false;
         return this.camera().isItemVisible(tile);
     }
 
     public boolean isMapVisible(DungeonPokemon pokemon) {
+        if (this.camera() == null)
+            return false;
         return pokemon.player() == Persistence.player || this.camera().isVisible(pokemon);
     }
 
     public boolean isVisible(DungeonPokemon pokemon) {
         if (Persistence.floor.data.shadows() == FloorData.NO_SHADOW)
             return true;
+        if (this.camera() == null)
+            return false;
         return this.camera().isVisible(pokemon);
-    }
-
-    public boolean hasSeenTile(Tile tile) {
-        return this.camera().hasSeenTile(tile);
-    }
-
-    public boolean isXrayOn() {
-        ItemStack item = Persistence.player.getDungeonLeader().getItem();
-        return item != null && item.item().effect() == ItemEffects.XRaySpecs;
-    }
-
-    public HashSet<Tile> visibleTiles() {
-        return this.camera().currentlyVisibleTiles();
     }
 
 }
