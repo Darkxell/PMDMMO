@@ -68,12 +68,11 @@ public class DungeonFloorMap extends AbstractDisplayMap {
                         Logger.e("null tile at " + x + ", " + y);
                     else {
                         int tx = tile.x * TILE_SIZE, ty = tile.y * TILE_SIZE;
-                        if (Persistence.dungeonState.floorVisibility.isVisible(tile)) {
+                        if (Persistence.dungeonState.floorVisibility.hasSeenTile(tile)) {
                             boolean isMain = tile.getPokemon() == Persistence.player.getDungeonLeader();
                             if ((this.tick >= PLAYER_TICK || !isMain) && tile.getPokemon() != null)
                                 g.drawImage(this.tileset.ground(), tx, ty, null);
-                            else if (tile.getItem() != null
-                                    && Persistence.dungeonState.floorVisibility.hasVisibleItem(tile))
+                            else if (tile.hasItem() && Persistence.dungeonState.floorVisibility.isItemTileVisible(tile))
                                 g.drawImage(this.tileset.item(), tx, ty, null);
                             else if (tile.trap == TrapRegistry.WONDER_TILE)
                                 g.drawImage(this.tileset.wonder(), tx, ty, null);
@@ -104,8 +103,7 @@ public class DungeonFloorMap extends AbstractDisplayMap {
                                 if (tile.isAdjacentWalkable(Direction.NORTHWEST))
                                     g.drawLine(tx, ty, tx, ty);
                             }
-                        } else if (tile.getItem() != null
-                                && Persistence.dungeonState.floorVisibility.hasVisibleItem(tile))
+                        } else if (tile.hasItem() && Persistence.dungeonState.floorVisibility.isItemTileVisible(tile))
                             g.drawImage(this.tileset.item(), tx, ty, null);
                     }
                 }

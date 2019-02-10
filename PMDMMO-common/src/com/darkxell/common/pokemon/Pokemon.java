@@ -98,8 +98,7 @@ public class Pokemon implements ItemContainer, HasID {
 
     @Override
     public int canAccept(ItemStack item) {
-        return (this.getItem() == null || (item.item().isStackable && this.getItem().item().id == item.item().id)) ? 0
-                : -1;
+        return (!this.hasItem() || (item.item().isStackable && this.getItem().item().id == item.item().id)) ? 0 : -1;
     }
 
     @Override
@@ -153,8 +152,8 @@ public class Pokemon implements ItemContainer, HasID {
     }
 
     /**
-     * @param  amount - The amount of experience gained.
-     * @return        The number of levels this experience granted.
+     * @param amount - The amount of experience gained.
+     * @return The number of levels this experience granted.
      */
     public void gainExperience(ExperienceGainedEvent event, ArrayList<DungeonEvent> events) {
         int amount = event.experience;
@@ -214,6 +213,10 @@ public class Pokemon implements ItemContainer, HasID {
 
     public String getRawNickname() {
         return this.nickname();
+    }
+
+    public boolean hasItem() {
+        return this.getItem() != null;
     }
 
     @Override
@@ -357,7 +360,7 @@ public class Pokemon implements ItemContainer, HasID {
 
     @Override
     public int size() {
-        return this.getItem() == null ? 0 : 1;
+        return this.hasItem() ? 1 : 0;
     }
 
     public PokemonSpecies species() {

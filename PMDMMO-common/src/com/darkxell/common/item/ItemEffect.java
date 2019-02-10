@@ -7,11 +7,12 @@ import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.item.ItemSelectionEvent;
 import com.darkxell.common.player.ItemContainer;
+import com.darkxell.common.pokemon.AffectsPokemon;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.language.Message;
 
-public class ItemEffect {
+public class ItemEffect implements AffectsPokemon {
     public final int id;
 
     public ItemEffect(int id) {

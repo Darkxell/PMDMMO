@@ -7,9 +7,9 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 
 import com.darkxell.client.graphics.MasterDungeonRenderer;
+import com.darkxell.client.graphics.floor.CameraVisibility;
 import com.darkxell.client.graphics.floor.DungeonItemsRenderer;
 import com.darkxell.client.graphics.floor.FloorRenderer;
-import com.darkxell.client.graphics.floor.FloorVisibility;
 import com.darkxell.client.graphics.floor.GridRenderer;
 import com.darkxell.client.graphics.floor.ShadowRenderer;
 import com.darkxell.client.graphics.floor.StaticAnimationsRenderer;
@@ -79,7 +79,7 @@ public class DungeonState extends AbstractState {
     public final DungeonSubState defaultSubstate = new DefaultDungeonSubState(this);
     boolean diagonal = false, rotating = false;
     public final FloorRenderer floorRenderer;
-    public final FloorVisibility floorVisibility;
+    public final CameraVisibility floorVisibility;
     public final GridRenderer gridRenderer;
     public final DungeonItemsRenderer itemRenderer;
     private Tile lastKnownCameraTile;
@@ -111,7 +111,7 @@ public class DungeonState extends AbstractState {
         this.logger = new DungeonLogger(this);
         this.currentSubstate = this.actionSelectionState = new ActionSelectionState(this);
         this.currentSubstate.onStart();
-        this.floorVisibility = new FloorVisibility();
+        this.floorVisibility = new CameraVisibility(this);
     }
 
     public Point camera() {
@@ -167,12 +167,6 @@ public class DungeonState extends AbstractState {
     public void onMouseRightClick(int x, int y) {
         super.onMouseRightClick(x, y);
         this.currentSubstate.onMouseRightClick(x, y);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        this.floorVisibility.onCameraMoved();
     }
 
     @Override
@@ -234,7 +228,6 @@ public class DungeonState extends AbstractState {
 
     public void setCamera(DungeonPokemon pokemon) {
         this.cameraPokemon = pokemon;
-        this.floorVisibility.onCameraMoved();
     }
 
     public void setDefaultState() {

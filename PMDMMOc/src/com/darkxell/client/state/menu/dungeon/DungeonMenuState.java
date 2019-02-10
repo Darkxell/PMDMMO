@@ -103,7 +103,7 @@ public class DungeonMenuState extends OptionSelectionMenuState {
             this.onExit();
             if (Persistence.player.getDungeonLeader().tile().type() == TileType.STAIR)
                 Persistence.stateManager.setState(new StairMenuState());
-            else if (Persistence.player.getDungeonLeader().tile().getItem() == null)
+            else if (!Persistence.player.getDungeonLeader().tile().hasItem())
                 s.logger.showMessage(new Message("ground.empty"));
             else
                 Persistence.stateManager.setState(
