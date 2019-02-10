@@ -20,7 +20,7 @@ public class StealItemEffect extends MoveEffect {
             MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
         super.additionalEffects(usedMove, target, flags, floor, calculator, missed, effects);
 
-        if (!missed && target.getItem() != null && usedMove.user.getItem() == null)
+        if (!missed && target.hasItem() && !usedMove.user.hasItem())
             effects.createEffect(
                     new ItemMovedEvent(floor, ItemAction.STEAL, usedMove.user, target, 0, usedMove.user, 0, false),
                     usedMove, target, floor, missed, true, target);

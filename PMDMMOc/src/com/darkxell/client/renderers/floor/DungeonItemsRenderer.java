@@ -36,7 +36,7 @@ public class DungeonItemsRenderer extends AbstractRenderer {
             for (int y = yStart; y <= yStart + height / TILE_SIZE + 1; ++y) {
                 Tile tile = this.floor.tileAt(x, y);
                 if (tile != null)
-                    if (tile.getItem() != null && !this.hidden.contains(tile.getItem()) && tile.type() != TileType.WALL)
+                    if (tile.hasItem() && !this.hidden.contains(tile.getItem()) && tile.type() != TileType.WALL)
                         g.drawImage(Res_Dungeon.items.sprite(tile.getItem()), tile.x * TILE_SIZE + ITEM_POS,
                                 tile.y * TILE_SIZE + ITEM_POS, null);
             }

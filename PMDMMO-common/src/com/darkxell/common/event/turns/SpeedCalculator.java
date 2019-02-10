@@ -19,7 +19,7 @@ public class SpeedCalculator {
         this.floor = floor;
         this.pokemon = pokemon;
         this.modificator.add(this.pokemon.ability());
-        if (this.pokemon.getItem() != null)
+        if (this.pokemon.hasItem())
             this.modificator.add(this.pokemon.getItem().item());
         for (AppliedStatusCondition condition : this.pokemon.activeStatusConditions())
             this.modificator.add(condition.condition);

@@ -55,7 +55,6 @@ import com.darkxell.common.event.dungeon.weather.WeatherChangedEvent;
 import com.darkxell.common.event.item.ItemLandedEvent;
 import com.darkxell.common.event.item.ItemMovedEvent;
 import com.darkxell.common.event.item.ItemSelectionEvent;
-import com.darkxell.common.event.item.ItemSwappedEvent;
 import com.darkxell.common.event.item.ItemThrownEvent;
 import com.darkxell.common.event.item.MoneyCollectedEvent;
 import com.darkxell.common.event.item.ProjectileThrownEvent;
@@ -192,8 +191,6 @@ public final class ClientEventProcessor extends CommonEventProcessor {
             this.processItemEvent((ItemSelectionEvent) event);
         if (event instanceof ItemMovedEvent)
             this.processItemMovedEvent((ItemMovedEvent) event);
-        if (event instanceof ItemSwappedEvent)
-            this.processItemSwappedEvent((ItemSwappedEvent) event);
         if (event instanceof MoneyCollectedEvent && Persistence.player.isAlly(((MoneyCollectedEvent) event).pokemon))
             SoundManager.playSound("dungeon-money");
         if (event instanceof ItemThrownEvent)
@@ -404,15 +401,7 @@ public final class ClientEventProcessor extends CommonEventProcessor {
             else if (event.destination() instanceof Inventory)
                 ally = Persistence.player.inventory() == event.destination();
             SoundManager.playSound(ally ? "dungeon-item" : "dungeon-enemygrab");
-            Persistence.dungeonState.floorVisibility.onItemremoved((Tile) event.source());
         }
-    }
-
-    private void processItemSwappedEvent(ItemSwappedEvent event) {
-        if (event.source() instanceof Tile)
-            Persistence.dungeonState.floorVisibility.onItemremoved((Tile) event.source());
-        else if (event.destination() instanceof Tile)
-            Persistence.dungeonState.floorVisibility.onItemremoved((Tile) event.destination());
     }
 
     private void processItemThrownEvent(ItemThrownEvent event) {
@@ -823,8 +812,6 @@ public final class ClientEventProcessor extends CommonEventProcessor {
         for (PokemonTravelEvent e : event.travels()) {
             if (e.pokemon() == Persistence.player.getDungeonLeader() && e.destination().type() == TileType.STAIR)
                 this.landedOnStairs = true;
-            if (e.pokemon() == Persistence.dungeonState.getCameraPokemon())
-                Persistence.dungeonState.floorVisibility.onCameraMoved();
         }
     }
 

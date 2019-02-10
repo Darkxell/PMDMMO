@@ -2,7 +2,6 @@ package com.darkxell.common.move;
 
 import java.util.ArrayList;
 
-import com.darkxell.common.ai.AIUtils;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
@@ -26,7 +25,7 @@ import com.darkxell.common.util.language.Localization;
 import com.darkxell.common.util.language.Message;
 
 public class MoveEffect implements AffectsPokemon {
-    
+
     public static final String DEFAULT_DESCRIPTION_ID = "move.info.default";
 
     public final int id;
@@ -41,13 +40,13 @@ public class MoveEffect implements AffectsPokemon {
      * This method creates the additional effects (if any) of this Move. Effects should be added to the input MoveEvents
      * list.
      *
-     * @param usedMove   - The Move Use context.
-     * @param target     - The Pokemon targeted by the Move.
-     * @param flags      - The flags of the Event that triggered this use.
-     * @param floor      - The Floor context.
+     * @param usedMove - The Move Use context.
+     * @param target - The Pokemon targeted by the Move.
+     * @param flags - The flags of the Event that triggered this use.
+     * @param floor - The Floor context.
      * @param calculator - Object that helps with Damage computation.
-     * @param missed     - <code>true</code> if the Move missed.
-     * @param effects    - The events list.
+     * @param missed - <code>true</code> if the Move missed.
+     * @param effects - The events list.
      */
     public void additionalEffects(MoveUse usedMove, DungeonPokemon target, String[] flags, Floor floor,
             MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
@@ -62,11 +61,11 @@ public class MoveEffect implements AffectsPokemon {
      * Creates a custom MoveEffectCalculator object. If the effect doesn't need a custom one, should return null by
      * default.
      *
-     * @param  usedMove - The Move that was used.
-     * @param  target   - The target of the Move.
-     * @param  floor    - The Floor context.
-     * @param  flags    - The flags of the Move Event.
-     * @return          The built MoveEffectCalculator, or null.
+     * @param usedMove - The Move that was used.
+     * @param target - The target of the Move.
+     * @param floor - The Floor context.
+     * @param flags - The flags of the Move Event.
+     * @return The built MoveEffectCalculator, or null.
      */
     public MoveEffectCalculator buildCalculator(MoveUse usedMove, DungeonPokemon target, Floor floor, String[] flags) {
         return null;
@@ -97,10 +96,10 @@ public class MoveEffect implements AffectsPokemon {
     }
 
     /**
-     * @param  move
-     * @param  user  - The Pokemon using this Move.
-     * @param  floor - The Floor context.
-     * @return       The Pokemon affected by this Move.
+     * @param move
+     * @param user - The Pokemon using this Move.
+     * @param floor - The Floor context.
+     * @return The Pokemon affected by this Move.
      */
     public DungeonPokemon[] getTargets(Move move, DungeonPokemon user, Floor floor) {
         ArrayList<DungeonPokemon> targets = new ArrayList<>();
@@ -153,7 +152,7 @@ public class MoveEffect implements AffectsPokemon {
         case Room:
             Room r = floor.roomAt(user.tile().x, user.tile().y);
             if (r == null) {
-                for (Tile tile : AIUtils.visibleTiles(floor, user))
+                for (Tile tile : floor.aiManager.getAI(user).visibility.currentlyVisibleTiles())
                     if (tile.getPokemon() != null)
                         targets.add(tile.getPokemon());
             } else
@@ -216,13 +215,13 @@ public class MoveEffect implements AffectsPokemon {
      * This method creates the main effects of this Move. This method shouldn't be overridden unless you want to change
      * the basics of how Moves work. Effects should be added to the input MoveEvents list.
      *
-     * @param usedMove   - The Move Use context.
-     * @param target     - The Pokemon targeted by the Move.
-     * @param flags      - The flags of the Event that triggered this use.
-     * @param floor      - The Floor context.
+     * @param usedMove - The Move Use context.
+     * @param target - The Pokemon targeted by the Move.
+     * @param flags - The flags of the Event that triggered this use.
+     * @param floor - The Floor context.
      * @param calculator - Object that helps with Damage computation.
-     * @param missed     - <code>true</code> if the Move missed.
-     * @param effects    - Resulting Events list.
+     * @param missed - <code>true</code> if the Move missed.
+     * @param effects - Resulting Events list.
      */
     protected void mainEffects(MoveUse usedMove, DungeonPokemon target, String[] flags, Floor floor,
             MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
@@ -281,9 +280,9 @@ public class MoveEffect implements AffectsPokemon {
     /**
      * Creates the MoveUseEvent and adds it to the events list.
      *
-     * @param move   - The Move use context.
+     * @param move - The Move use context.
      * @param target - The target Pokemon.
-     * @param floor  - The Floor context.
+     * @param floor - The Floor context.
      * @param events - The event list to add the MoveUseEvent to.
      */
     protected void useOn(MoveUse move, DungeonPokemon target, Floor floor, ArrayList<DungeonEvent> events) {

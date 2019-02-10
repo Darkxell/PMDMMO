@@ -180,7 +180,7 @@ public class DungeonPokemon implements ItemContainer, DungeonEventListener {
 
     /**
      * @return The multiplier to apply to base energy values for the team leader's actions. Used to determine how much
-     *         belly is lost for that action.
+     * belly is lost for that action.
      */
     public double energyMultiplier() {
         return 1;
@@ -254,9 +254,13 @@ public class DungeonPokemon implements ItemContainer, DungeonEventListener {
         return null;
     }
 
+    public boolean hasItem() {
+        return this.usedPokemon.hasItem();
+    }
+
     /**
      * @return True if this Pokemon is affected by the input Status Condition. If input condition is null, checks if it
-     *         has any Status Condition.
+     * has any Status Condition.
      */
     public boolean hasStatusCondition(StatusCondition condition) {
         if (condition == null)
@@ -305,7 +309,7 @@ public class DungeonPokemon implements ItemContainer, DungeonEventListener {
 
     /**
      * @return True if this Pokemon is the original Pokemon that visits this Dungeon. Only false for Dungeons that
-     *         modify the visiting Pokemon, such as Dungeons resetting the level to 1.
+     * modify the visiting Pokemon, such as Dungeons resetting the level to 1.
      */
     public boolean isCopy() {
         return this.usedPokemon != this.originalPokemon;
@@ -374,7 +378,7 @@ public class DungeonPokemon implements ItemContainer, DungeonEventListener {
             ArrayList<DungeonEvent> resultingEvents) {
         DungeonEventListener.super.onPostEvent(floor, event, concerned, resultingEvents);
 
-        if (this.getItem() != null)
+        if (this.hasItem())
             this.getItem().item().effect().onPostEvent(floor, event, concerned, resultingEvents, this.getItem(), this,
                     0);
     }
@@ -384,7 +388,7 @@ public class DungeonPokemon implements ItemContainer, DungeonEventListener {
             ArrayList<DungeonEvent> resultingEvents) {
         DungeonEventListener.super.onPreEvent(floor, event, concerned, resultingEvents);
 
-        if (this.getItem() != null)
+        if (this.hasItem())
             this.getItem().item().effect().onPreEvent(floor, event, concerned, resultingEvents, this.getItem(), this,
                     0);
     }

@@ -32,7 +32,7 @@ public class TeamMenuState extends OptionSelectionMenuState implements ItemActio
         stats.addReplacement("<def>", TextRenderer.alignNumber(pokemon.getBaseStats().getDefense(), 7));
         stats.addReplacement("<spa>", TextRenderer.alignNumber(pokemon.getBaseStats().getSpecialAttack(), 7));
         stats.addReplacement("<spd>", TextRenderer.alignNumber(pokemon.getBaseStats().getSpecialDefense(), 7));
-        stats.addReplacement("<item>", pokemon.getItem() == null ? new Message("item.none") : pokemon.getItem().name());
+        stats.addReplacement("<item>", pokemon.hasItem() ? pokemon.getItem().name() : new Message("item.none"));
 
         String iq = "";
         int iqLevel = pokemon.getIQLevel();

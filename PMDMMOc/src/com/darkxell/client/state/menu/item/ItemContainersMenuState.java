@@ -474,8 +474,8 @@ public class ItemContainersMenuState extends AbstractMenuState
             ArrayList<ItemAction> actions = container.legalItemActions(this.inDungeon);
             actions.addAll(i.item().getLegalActions(this.inDungeon));
             if (this.inDungeon)
-                actions.remove(Persistence.player.getDungeonLeader().tile().getItem() == null ? ItemAction.SWITCH
-                        : ItemAction.PLACE);
+                actions.remove(
+                        Persistence.player.getDungeonLeader().tile().hasItem() ? ItemAction.PLACE : ItemAction.SWITCH);
             if (Persistence.player.inventory().isFull()) {
                 actions.remove(ItemAction.GET);
                 actions.remove(ItemAction.TAKE);
@@ -676,7 +676,7 @@ public class ItemContainersMenuState extends AbstractMenuState
         switch (this.currentAction) {
         case GIVE:
             if (this.inDungeon) {
-                if (pokemon.getItem() != null)
+                if (pokemon.hasItem())
                     Persistence.eventProcessor()
                             .processEvent(new ItemSwappedEvent(Persistence.floor, ItemAction.GIVE,
                                     Persistence.player.getDungeonLeader(), Persistence.player.inventory(),

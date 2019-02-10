@@ -23,7 +23,7 @@ public class AllyAI extends AI {
 
     @Override
     protected void update() {
-        if (AIUtils.isVisible(this.floor, this.pokemon, this.leader)) {
+        if (this.visibility.isVisible(this.leader)) {
             if (!(this.state instanceof AIStateFollowPokemon))
                 this.state = new AIStateFollowPokemon(this, this.leader);
         } else if (this.state instanceof AIStateFollowPokemon)
