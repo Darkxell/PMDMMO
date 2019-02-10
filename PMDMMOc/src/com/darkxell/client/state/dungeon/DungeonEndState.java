@@ -101,7 +101,7 @@ public class DungeonEndState extends AbstractState {
 
             array = new JsonArray();
             for (Pokemon pokemon : Persistence.player.getTeam())
-                if (pokemon.getItem() != null)
+                if (pokemon.hasItem())
                     array.add(pokemon.getItem().getData().toJson());
             for (ItemStack item : Persistence.player.inventory().items())
                 array.add(item.getData().toJson());

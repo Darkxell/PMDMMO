@@ -174,7 +174,7 @@ public class Floor {
         ArrayList<ItemStack> items = new ArrayList<>();
         for (Tile[] row : this.tiles)
             for (Tile t : row)
-                if (t.getItem() != null)
+                if (t.hasItem())
                     items.add(t.getItem());
         return items;
     }

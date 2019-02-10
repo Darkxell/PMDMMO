@@ -271,7 +271,7 @@ public final class AIUtils {
             return true; // Entered room
         if (tile.isInRoom() && !tile.adjacentTile(pokemon.facing()).isInRoom())
             return true; // In front of room
-        if (tile.type() == TileType.STAIR || tile.trapRevealed || tile.getItem() != null)
+        if (tile.type() == TileType.STAIR || tile.trapRevealed || tile.hasItem())
             return true; // Is on special tile
         int origin = 0, destination = 0;
         Direction facing = pokemon.facing();

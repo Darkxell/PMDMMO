@@ -58,7 +58,7 @@ public abstract class TempIDRegistry<T extends HasID> {
     public static class PokemonTempIDRegistry extends TempIDRegistry<Pokemon> {
         public long register(Pokemon pokemon, ItemsTempIDRegistry items, TempIDRegistry<LearnedMove> moves) {
             long id = this.register(pokemon);
-            if (pokemon.getItem() != null)
+            if (pokemon.hasItem())
                 items.register(pokemon.getItem(), pokemon);
             for (int i = 0; i < pokemon.moveCount(); ++i)
                 moves.register(pokemon.move(i));
@@ -69,7 +69,7 @@ public abstract class TempIDRegistry<T extends HasID> {
         /** Unregisters the input Pokemon and the Item and Moves it may have. */
         public void unregister(Pokemon pokemon, ItemsTempIDRegistry items, TempIDRegistry<LearnedMove> moves) {
             this.unregister(pokemon.getData().id);
-            if (pokemon.getItem() != null)
+            if (pokemon.hasItem())
                 items.unregister(pokemon.getItem().getData().id);
             for (int i = 0; i < pokemon.moveCount(); ++i)
                 moves.unregister(pokemon.move(i).getData().id);

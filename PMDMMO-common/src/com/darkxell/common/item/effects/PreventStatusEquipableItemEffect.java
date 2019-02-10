@@ -29,7 +29,7 @@ public class PreventStatusEquipableItemEffect extends ItemEffect {
 
         if (event instanceof StatusConditionCreatedEvent) {
             StatusConditionCreatedEvent e = (StatusConditionCreatedEvent) event;
-            boolean shouldPrevent = e.condition.pokemon == concerned && concerned.getItem() != null
+            boolean shouldPrevent = e.condition.pokemon == concerned && concerned.hasItem()
                     && concerned.getItem().item().effect() == this;
             for (StatusCondition c : this.conditions)
                 if (e.condition.condition == c)

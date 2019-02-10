@@ -36,7 +36,7 @@ public class FaintedPokemonEvent extends DungeonEvent {
     public ArrayList<DungeonEvent> processServer() {
         this.messages.add(new Message("pokemon.fainted").addReplacement("<pokemon>", pokemon.getNickname()));
 
-        if (this.pokemon.getItem() != null)
+        if (this.pokemon.hasItem())
             this.pokemon.tile().setItem(this.pokemon.getItem());
         if (this.damage.getExperienceEvent() != null)
             this.damage.getExperienceEvent().experience += this.pokemon.experienceGained();

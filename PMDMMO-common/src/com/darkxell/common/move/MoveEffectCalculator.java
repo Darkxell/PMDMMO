@@ -41,9 +41,9 @@ public class MoveEffectCalculator {
         this.modificator.addUser(this.user().ability());
         if (target != null)
             this.modificator.add(target.ability());
-        if (this.user().getItem() != null)
+        if (this.user().hasItem())
             this.modificator.addUser(this.user().getItem().item());
-        if (target != null && target.getItem() != null)
+        if (target != null && target.hasItem())
             this.modificator.add(target.getItem().item());
         this.modificator.add(floor.currentWeather().weather);
         for (AppliedStatusCondition s : this.move.user.activeStatusConditions())
@@ -187,10 +187,10 @@ public class MoveEffectCalculator {
     }
 
     /**
-     * @param  usedMove - The Move used.
-     * @param  target   - The Pokemon receiving the Move.
-     * @param  floor    - The Floor context.
-     * @return          True if this Move misses.
+     * @param usedMove - The Move used.
+     * @param target - The Pokemon receiving the Move.
+     * @param floor - The Floor context.
+     * @return True if this Move misses.
      */
     public boolean misses(ArrayList<DungeonEvent> events) {
         if (this.target == null)

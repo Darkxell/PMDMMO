@@ -22,7 +22,7 @@ public class AbilityFindsItemOnFloorStart extends Ability {
     public void onFloorStart(Floor floor, DungeonPokemon pokemon, ArrayList<DungeonEvent> events) {
         super.onFloorStart(floor, pokemon, events);
 
-        if (pokemon.getItem() == null && floor.random.nextDouble() * 100 < this.probability) {
+        if (!pokemon.hasItem() && floor.random.nextDouble() * 100 < this.probability) {
             ItemStack item = floor.dungeon.dungeon().randomItem(floor.random, floor.id, false);
             if (item == null)
                 return;

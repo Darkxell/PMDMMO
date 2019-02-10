@@ -1,10 +1,6 @@
 package com.darkxell.common.dungeon.floor;
 
-import static com.darkxell.common.dungeon.floor.TileType.AIR;
-import static com.darkxell.common.dungeon.floor.TileType.LAVA;
-import static com.darkxell.common.dungeon.floor.TileType.STAIR;
-import static com.darkxell.common.dungeon.floor.TileType.WARP_ZONE;
-import static com.darkxell.common.dungeon.floor.TileType.WATER;
+import static com.darkxell.common.dungeon.floor.TileType.*;
 
 import java.awt.Point;
 import java.awt.geom.Point2D;
@@ -85,8 +81,7 @@ public class Tile implements ItemContainer, Comparable<Tile> {
 
     @Override
     public int canAccept(ItemStack item) {
-        return (this.getItem() == null || (item.item().isStackable && this.getItem().item().id == item.item().id)) ? 0
-                : -1;
+        return (!this.hasItem() || (item.item().isStackable && this.getItem().item().id == item.item().id)) ? 0 : -1;
     }
 
     /** @return True if the input Pokemon can walk diagonally with this Tile as a corner. */
@@ -198,6 +193,10 @@ public class Tile implements ItemContainer, Comparable<Tile> {
         return s;
     }
 
+    public boolean hasItem() {
+        return this.getItem() != null;
+    }
+
     public boolean hasTrap() {
         return this.trap != null;
     }
@@ -258,7 +257,7 @@ public class Tile implements ItemContainer, Comparable<Tile> {
      * @param running - True if the Pokemon is running.
      */
     public void onPokemonStep(Floor floor, DungeonPokemon pokemon, boolean running, ArrayList<DungeonEvent> events) {
-        if (this.getItem() != null) {
+        if (this.hasItem()) {
             ItemStack i = this.getItem();
             int index = pokemon.player() == null ? -1 : pokemon.player().inventory().canAccept(i);
             if (!running && i.item().effect() == ItemEffects.Pokedollars && pokemon.player() != null)
@@ -266,7 +265,7 @@ public class Tile implements ItemContainer, Comparable<Tile> {
             else if (!running && pokemon.player() != null && index != -1)
                 events.add(
                         new ItemMovedEvent(floor, ItemAction.GET, pokemon, this, 0, pokemon.player().inventory(), -1));
-            else if (!running && pokemon.getItem() == null)
+            else if (!running && !pokemon.hasItem())
                 events.add(new ItemMovedEvent(floor, ItemAction.GET, pokemon, this, 0, pokemon, -1));
             else
                 events.add(new MessageEvent(floor,
@@ -340,7 +339,7 @@ public class Tile implements ItemContainer, Comparable<Tile> {
 
     @Override
     public int size() {
-        return this.getItem() == null ? 0 : 1;
+        return this.hasItem() ? 1 : 0;
     }
 
     @Override

@@ -1,11 +1,11 @@
 package com.darkxell.common.ai.visibility;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashSet;
 
 import com.darkxell.common.ai.AI;
 import com.darkxell.common.dungeon.data.FloorData;
-import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.dungeon.floor.room.Room;
@@ -42,16 +42,16 @@ public class Visibility {
         return new HashSet<>(this.currentlyVisible);
     }
 
-    /** @return <code>true</code> if the input Tile has been seen in this Floor. */
+    /** Has the input Tile been seen in this Floor? */
     public boolean hasSeenTile(Tile tile) {
         return this.seenTiles.contains(tile);
     }
 
-    /** @return <code>true</code> if this Pokemon can see all objects of the input type. */
+    /** Can this Pokemon see all objects of the input type? */
     public boolean hasSuperVision(VisibleObjectType object) {
         if (this.ai.pokemon.ability().hasSuperVision(this.ai.floor, this.ai.pokemon, object))
             return true;
-        if (this.ai.pokemon.getItem() != null
+        if (this.ai.pokemon.hasItem()
                 && this.ai.pokemon.getItem().item().effect().hasSuperVision(this.ai.floor, this.ai.pokemon, object))
             return true;
         for (AppliedStatusCondition condition : this.ai.pokemon.activeStatusConditions())
@@ -60,17 +60,14 @@ public class Visibility {
         return false;
     }
 
-    /**
-     * @return <code>true</code> if the Item on the input Tile is visible by this Pokemon (doesn't check if there
-     * actually is an Item).
-     */
-    public boolean isItemVisible(Tile tile) {
+    /** Is the Item on the input Tile is visible by this Pokemon? (doesn't check if there actually is an Item). */
+    public boolean isItemTileVisible(Tile tile) {
         if (this.hasSuperVision(VisibleObjectType.ITEM))
             return true;
         return this.itemTiles.contains(tile);
     }
 
-    /** @return <code>true</code> if the Pokemon is able to see the input target. */
+    /** Is the Pokemon able to see the input target? */
     public boolean isVisible(DungeonPokemon target) {
         if (target.isFainted())
             return false;
@@ -87,7 +84,7 @@ public class Visibility {
         return this.ai.pokemon.tile().distance(target.tile()) <= this.ai.floor.data.visionDistance();
     }
 
-    /** @return <code>true</code> if the input Tile is currently visible by this Pokemon. */
+    /** Is the input Tile currently visible by this Pokemon? */
     public boolean isVisible(Tile tile) {
         if (this.hasSuperVision(VisibleObjectType.TILE))
             return true;
@@ -122,13 +119,21 @@ public class Visibility {
         }
     }
 
-    /** @return The list of enemy Pokemon the input Pokemon can see, sorted by distance to the Pokemon. */
-    public ArrayList<DungeonPokemon> visibleEnemies(Floor floor, DungeonPokemon pokemon) {
+    /** @return The list of enemy Pokemon this Pokemon can see, sorted by distance to the Pokemon. */
+    public ArrayList<DungeonPokemon> visibleEnemies() {
         ArrayList<DungeonPokemon> visible = new ArrayList<>();
-        HashSet<Tile> tiles = this.currentlyVisibleTiles();
+        ArrayList<Tile> tiles = new ArrayList<>(this.currentlyVisibleTiles());
+        tiles.sort(new Comparator<Tile>() {
+            @Override
+            public int compare(Tile t1, Tile t2) {
+                return Double.compare(ai.pokemon.tile().distance(t1), ai.pokemon.tile().distance(t2));
+            }
+        });
+
         for (Tile t : tiles)
-            if (t.getPokemon() != null && !pokemon.isAlliedWith(t.getPokemon()))
+            if (t.getPokemon() != null && !this.ai.pokemon.isAlliedWith(t.getPokemon()))
                 visible.add(t.getPokemon());
+
         return visible;
     }
 
@@ -136,7 +141,7 @@ public class Visibility {
         if (tile != null) {
             this.currentlyVisible.add(tile);
             this.seenTiles.add(tile);
-            if (tile.getItem() != null)
+            if (tile.hasItem())
                 this.itemTiles.add(tile);
             else
                 this.itemTiles.remove(tile);

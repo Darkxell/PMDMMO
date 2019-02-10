@@ -8,6 +8,10 @@ import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
+/**
+ * Wrapper class around the current camera's Visibility function. This is to easily handle null cases but may also have
+ * different behaviors, because the camera may show things the Pokemon may not be able to see.
+ */
 public class CameraVisibility {
 
     public final Floor floor;
@@ -29,10 +33,10 @@ public class CameraVisibility {
         return this.camera().hasSeenTile(tile);
     }
 
-    public boolean isItemVisible(Tile tile) {
+    public boolean isItemTileVisible(Tile tile) {
         if (this.camera() == null)
             return false;
-        return this.camera().isItemVisible(tile);
+        return this.camera().isItemTileVisible(tile);
     }
 
     public boolean isMapVisible(DungeonPokemon pokemon) {
@@ -44,9 +48,7 @@ public class CameraVisibility {
     public boolean isVisible(DungeonPokemon pokemon) {
         if (Persistence.floor.data.shadows() == FloorData.NO_SHADOW)
             return true;
-        if (this.camera() == null)
-            return false;
-        return this.camera().isVisible(pokemon);
+        return this.camera() != null && this.camera().isVisible(pokemon);
     }
 
 }
