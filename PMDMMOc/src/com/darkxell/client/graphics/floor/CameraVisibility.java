@@ -3,7 +3,6 @@ package com.darkxell.client.graphics.floor;
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.common.ai.visibility.Visibility;
 import com.darkxell.common.dungeon.data.FloorData;
-import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
 import java.util.function.*;
@@ -28,6 +27,6 @@ public class CameraVisibility {
     }
 
     public static boolean isVisible(Visibility v, DungeonPokemon pokemon) {
-        return (Persistence.floor.data.shadows() == FloorData.NO_SHADOW) || v.isVisible(pokemon);
+        return Persistence.floor.data.shadows() == FloorData.NO_SHADOW || v.isVisible(pokemon);
     }
 }

@@ -62,9 +62,8 @@ public class DungeonPokemonRenderer extends AbstractPokemonRenderer {
 
     @Override
     public boolean shouldRender(int width, int height) {
-        if (!CameraVisibility.check(CameraVisibility::isVisible).test(this.pokemon))
-            return false;
-        return super.shouldRender(width, height);
+        return CameraVisibility.check(CameraVisibility::isVisible).test(this.pokemon)
+                && super.shouldRender(width, height);
     }
 
     @Override

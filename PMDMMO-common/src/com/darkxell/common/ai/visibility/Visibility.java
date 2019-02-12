@@ -123,12 +123,7 @@ public class Visibility {
     public ArrayList<DungeonPokemon> visibleEnemies() {
         ArrayList<DungeonPokemon> visible = new ArrayList<>();
         ArrayList<Tile> tiles = new ArrayList<>(this.currentlyVisibleTiles());
-        tiles.sort(new Comparator<Tile>() {
-            @Override
-            public int compare(Tile t1, Tile t2) {
-                return Double.compare(ai.pokemon.tile().distance(t1), ai.pokemon.tile().distance(t2));
-            }
-        });
+        tiles.sort(Comparator.comparingDouble(t -> ai.pokemon.tile().distance(t)));
 
         for (Tile t : tiles)
             if (t.getPokemon() != null && !this.ai.pokemon.isAlliedWith(t.getPokemon()))
