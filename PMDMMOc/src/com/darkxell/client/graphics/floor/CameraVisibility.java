@@ -8,8 +8,9 @@ import com.darkxell.common.pokemon.DungeonPokemon;
 import java.util.function.*;
 
 /**
- * Wrapper class around the current camera's Visibility function. This is to easily handle null cases but may also have
- * different behaviors, because the camera may show things the Pokemon may not be able to see.
+ * Acts on the current camera visibility (i.e. that of the player), and provides extended behavior for certain checks.
+ *
+ * @see Visibility
  */
 public class CameraVisibility {
     private static Visibility camera() {
@@ -17,6 +18,18 @@ public class CameraVisibility {
         return c == null ? null : Persistence.floor.aiManager.getAI(c).visibility;
     }
 
+    /**
+     * Test a predicate on the current camera visibility.
+     * <p>
+     * For example, to test if the current camera has super vision:
+     * </p>
+     * 
+     * <pre>
+     * CameraVisibility::check(Visibility::hasSuperVision).test(obj);
+     * </pre>
+     * 
+     * @return Is there a camera active, and if so, is the predicate true on it?
+     */
     public static <T> Predicate<T> check(BiPredicate<Visibility, T> callback) {
         Visibility v = camera();
         return t -> v != null && callback.test(v, t);
