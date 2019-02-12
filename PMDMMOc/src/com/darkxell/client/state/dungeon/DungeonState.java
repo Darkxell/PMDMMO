@@ -79,7 +79,6 @@ public class DungeonState extends AbstractState {
     public final DungeonSubState defaultSubstate = new DefaultDungeonSubState(this);
     boolean diagonal = false, rotating = false;
     public final FloorRenderer floorRenderer;
-    public final CameraVisibility floorVisibility;
     public final GridRenderer gridRenderer;
     public final DungeonItemsRenderer itemRenderer;
     private Tile lastKnownCameraTile;
@@ -111,7 +110,6 @@ public class DungeonState extends AbstractState {
         this.logger = new DungeonLogger(this);
         this.currentSubstate = this.actionSelectionState = new ActionSelectionState(this);
         this.currentSubstate.onStart();
-        this.floorVisibility = new CameraVisibility(this);
     }
 
     public Point camera() {

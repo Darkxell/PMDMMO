@@ -3,12 +3,14 @@ package com.darkxell.client.state.map;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
+import com.darkxell.client.graphics.floor.CameraVisibility;
 import com.darkxell.client.graphics.renderer.DungeonPokemonRenderer;
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.resources.images.Sprites.Res_Dungeon;
 import com.darkxell.client.resources.images.tilesets.AbstractDungeonTileset;
 import com.darkxell.client.resources.images.tilesets.DungeonMapTileset;
 import com.darkxell.client.ui.Keys.Key;
+import com.darkxell.common.ai.visibility.Visibility;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
@@ -68,11 +70,11 @@ public class DungeonFloorMap extends AbstractDisplayMap {
                         Logger.e("null tile at " + x + ", " + y);
                     else {
                         int tx = tile.x * TILE_SIZE, ty = tile.y * TILE_SIZE;
-                        if (Persistence.dungeonState.floorVisibility.hasSeenTile(tile)) {
+                        if (CameraVisibility.check(Visibility::hasSeenTile).test(tile)) {
                             boolean isMain = tile.getPokemon() == Persistence.player.getDungeonLeader();
                             if ((this.tick >= PLAYER_TICK || !isMain) && tile.getPokemon() != null)
                                 g.drawImage(this.tileset.ground(), tx, ty, null);
-                            else if (tile.hasItem() && Persistence.dungeonState.floorVisibility.isItemTileVisible(tile))
+                            else if (tile.hasItem() && CameraVisibility.check(Visibility::isItemTileVisible).test(tile))
                                 g.drawImage(this.tileset.item(), tx, ty, null);
                             else if (tile.trap == TrapRegistry.WONDER_TILE)
                                 g.drawImage(this.tileset.wonder(), tx, ty, null);
@@ -103,20 +105,20 @@ public class DungeonFloorMap extends AbstractDisplayMap {
                                 if (tile.isAdjacentWalkable(Direction.NORTHWEST))
                                     g.drawLine(tx, ty, tx, ty);
                             }
-                        } else if (tile.hasItem() && Persistence.dungeonState.floorVisibility.isItemTileVisible(tile))
+                        } else if (tile.hasItem() && CameraVisibility.check(Visibility::isItemTileVisible).test(tile))
                             g.drawImage(this.tileset.item(), tx, ty, null);
                     }
                 }
 
             for (DungeonPokemon pokemon : Persistence.floor.listPokemon())
-                if (Persistence.dungeonState.floorVisibility.isVisible(pokemon)) {
+                if (CameraVisibility.check(CameraVisibility::isVisible).test(pokemon)) {
                     boolean isMain = pokemon == Persistence.player.getDungeonLeader();
                     DungeonPokemonRenderer renderer = Persistence.dungeonState.pokemonRenderer.getRenderer(pokemon);
                     int x = (int) (renderer.x() * TILE_SIZE / AbstractDungeonTileset.TILE_SIZE),
                             y = (int) (renderer.y() * TILE_SIZE / AbstractDungeonTileset.TILE_SIZE);
                     if (isMain && this.tick >= PLAYER_TICK)
                         g.drawImage(this.tileset.player(), x, y, null);
-                    else if (!isMain && Persistence.dungeonState.floorVisibility.isMapVisible(pokemon))
+                    else if (!isMain && CameraVisibility.check(CameraVisibility::isMapVisible).test(pokemon))
                         if (Persistence.player.isAlly(pokemon) || pokemon.type == DungeonPokemonType.RESCUEABLE)
                             g.drawImage(this.tileset.ally(), x, y, null);
                         else

@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
+import com.darkxell.client.graphics.floor.CameraVisibility;
 import com.darkxell.client.launchable.ClientSettings;
 import com.darkxell.client.launchable.ClientSettings.Setting;
 import com.darkxell.client.launchable.Persistence;
@@ -61,7 +62,7 @@ public class DungeonPokemonRenderer extends AbstractPokemonRenderer {
 
     @Override
     public boolean shouldRender(int width, int height) {
-        if (!Persistence.dungeonState.floorVisibility.isVisible(this.pokemon))
+        if (!CameraVisibility.check(CameraVisibility::isVisible).test(this.pokemon))
             return false;
         return super.shouldRender(width, height);
     }
