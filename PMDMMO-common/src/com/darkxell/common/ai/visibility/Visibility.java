@@ -60,11 +60,9 @@ public class Visibility {
         return false;
     }
 
-    /** Is the Item on the input Tile is visible by this Pokemon? (doesn't check if there actually is an Item). */
-    public boolean isItemTileVisible(Tile tile) {
-        if (this.hasSuperVision(VisibleObjectType.ITEM))
-            return true;
-        return this.itemTiles.contains(tile);
+    /** Does the AI see an item on this tile? */
+    public boolean isItemVisible(Tile tile) {
+        return tile.hasItem() && (this.hasSuperVision(VisibleObjectType.ITEM) || this.itemTiles.contains(tile));
     }
 
     /** Is the Pokemon able to see the input target? */
