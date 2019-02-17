@@ -7,7 +7,6 @@ import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.language.Localization;
 
 public class CommonUnitTests {
-
     public static void executeTests() {
         Logger.load("SERVER");
         Localization.load(false);
@@ -22,5 +21,4 @@ public class CommonUnitTests {
     public static void main(String[] args) {
         executeTests();
     }
-
 }

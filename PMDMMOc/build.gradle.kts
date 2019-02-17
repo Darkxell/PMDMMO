@@ -10,6 +10,7 @@ sourceSets {
     }
     test {
         java.srcDir("test")
+        resources.srcDir("test-resources")
     }
 }
 
@@ -22,6 +23,14 @@ dependencies {
     implementation("com.googlecode.soundlibs:tritonus-share:0.3.7.4")
     implementation("com.eclipsesource.minimal-json:minimal-json:0.9.4")
     implementation("org.jdom:jdom2:2.0.6")
+
+    testImplementation("org.junit.jupiter:junit-jupiter:5.4.0")
+}
+
+tasks {
+    "test"(Test::class) {
+        useJUnitPlatform()
+    }
 }
 
 application {

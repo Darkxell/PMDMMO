@@ -12,7 +12,6 @@ import com.eclipsesource.json.JsonObject;
  * Used to check an exploration for client cheats.
  */
 public class AutoDungeonExploration extends DungeonExploration {
-
     public LinkedList<JsonObject> pendingEvents = new LinkedList<>();
 
     public AutoDungeonExploration(int id, long seed) {
