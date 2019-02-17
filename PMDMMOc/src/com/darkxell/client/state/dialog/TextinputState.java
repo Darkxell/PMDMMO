@@ -21,8 +21,13 @@ public class TextinputState extends AbstractState {
     /** Lists of chars allowed in the textfield. */
     private static final char[] ALLOWEDCHARS = new char[] { 'a', 'z', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'q', 's',
             'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'w', 'x', 'c', 'v', 'b', 'n', 'A', 'Z', 'E', 'R', 'T', 'Y', 'U',
-            'I', 'O', 'P', 'Q', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'W', 'X', 'C', 'V', 'B', 'N', '�', '�',
-            '�', '�', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' };
+            'I', 'O', 'P', 'Q', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'W', 'X', 'C', 'V', 'B', 'N',
+            // silly french characters
+            '\u00E9', // e acute
+            '\u00E8', // e grave
+            '\u00E7', // c cedilla
+            '\u00F9', // u grave
+            '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' };
     private String messageid = "ui.textinput.prompt";
     private String content = "";
 
