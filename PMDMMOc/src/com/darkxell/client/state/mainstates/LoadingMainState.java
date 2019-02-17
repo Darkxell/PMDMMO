@@ -52,7 +52,6 @@ public class LoadingMainState extends StateManager {
 
     @Override
     public void render(Graphics2D g, int width, int height) {
-
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, width, height);
 
