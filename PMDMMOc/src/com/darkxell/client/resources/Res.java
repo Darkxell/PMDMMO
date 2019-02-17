@@ -100,7 +100,6 @@ public class Res {
 
     /** @param path - Shouldn't start or end with / */
     public static String[] getResourceFiles(String path) {
-
         ArrayList<String> files = new ArrayList<>();
 
         if (!RUNNING_IN_IDE) { // Run with JAR file
