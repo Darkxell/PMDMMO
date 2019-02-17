@@ -54,18 +54,7 @@ public final class Sprites {
         public static final String[] EXCLUDE_FILES = new String[] { "icon.png" };
 
         static {
-            /*
-             * String resourceDirectory; try { resourceDirectory = Res.class.getResource('/' +
-             * BACKGROUNDS_DIRECTORY).toURI().getPath(); } catch (URISyntaxException e) {
-             * Logger.e("Background resource " + BACKGROUNDS_DIRECTORY + " is not a valid resource."); resourceDirectory
-             * = null; } if (resourceDirectory == null) { BACKGROUNDS = new Sprite[] {
-             * SpriteFactory.getDefaultSprite(500, 500) }; } else {
-             */
             String[] backgroundPaths = Res.getResourceFiles(BACKGROUNDS_DIRECTORY);
-            /*
-             * new File(resourceDirectory).listFiles(filepath -> { for (String excludeFilepath : EXCLUDE_FILES) { if
-             * (filepath.getName().equals(excludeFilepath)) { return false; } } return true; });
-             */
 
             if (backgroundPaths.length > 0) {
                 BACKGROUNDS = new Sprite[backgroundPaths.length];
@@ -73,10 +62,6 @@ public final class Sprites {
                     BACKGROUNDS[i] = new Sprite(backgroundPaths[i]);
             } else
                 BACKGROUNDS = new Sprite[] { SpriteFactory.getDefaultSprite(20, 20) };
-            /*
-             * BACKGROUNDS = Arrays.stream(backgroundPaths).sorted() .map(f -> new Sprite(BACKGROUNDS_DIRECTORY + '/' +
-             * f.getName())).toArray(Sprite[]::new);
-             */
 
             Sprite source = new Sprite("/hud/boxcorners.png");
 
