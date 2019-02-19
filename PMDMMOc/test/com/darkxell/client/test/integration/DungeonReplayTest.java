@@ -6,7 +6,6 @@ import static junit.framework.Assert.assertTrue;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import com.darkxell.client.test.ClientSetup;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -14,6 +13,7 @@ import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.event.ClientEventProcessor;
 import com.darkxell.client.resources.Res;
 import com.darkxell.client.state.dungeon.NextFloorState;
+import com.darkxell.client.test.ClientSetup;
 import com.darkxell.common.dungeon.AutoDungeonExploration;
 import com.darkxell.common.dungeon.DungeonCommunication;
 import com.darkxell.common.event.CommonEventProcessor.State;
