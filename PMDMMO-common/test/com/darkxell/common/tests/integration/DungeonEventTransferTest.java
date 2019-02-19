@@ -1,13 +1,17 @@
-package com.darkxell.common.test.tests;
+package com.darkxell.common.tests.integration;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import com.darkxell.common.Registries;
-import com.darkxell.common.dbobject.DBInventory;
-import com.darkxell.common.dbobject.DBItemstack;
-import com.darkxell.common.dbobject.DBLearnedmove;
-import com.darkxell.common.dbobject.DBPlayer;
-import com.darkxell.common.dbobject.DBPokemon;
+import com.darkxell.common.dbobject.*;
 import com.darkxell.common.dungeon.DungeonExploration;
 import com.darkxell.common.dungeon.data.Dungeon;
 import com.darkxell.common.dungeon.floor.Floor;
@@ -30,10 +34,11 @@ import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.LearnedMove;
 import com.darkxell.common.pokemon.Pokemon;
-import com.darkxell.common.test.UTest;
+import com.darkxell.common.tests.CommonSetup;
 import com.darkxell.common.util.Direction;
+import com.darkxell.common.util.Logger;
 
-public class DungeonEventTransferTest extends UTest {
+public class DungeonEventTransferTest {
     private Player _player = new Player(new DBPlayer(69, "DaWae", "no U", 45, 99, 0, new ArrayList<>(),
             new ArrayList<>(), null, null, null, null, 0, false, false));
     private Dungeon d = Registries.dungeons().find(4);
@@ -47,7 +52,13 @@ public class DungeonEventTransferTest extends UTest {
     private DungeonPokemon pokemon = new DungeonPokemon(new Pokemon(new DBPokemon(42, 6, 0, 1, Pokemon.GENDERLESS,
             "My poke", 5, 126894, 111, false, 1, 2, 3, 4, 5, null, new ArrayList<>())));
 
-    {
+    @BeforeAll
+    public static void setUp() {
+        CommonSetup.setUp();
+    }
+
+    @BeforeEach
+    public void instanceSetup() {
         this._player.setInventory(this.inventory);
         this._player.setLeaderPokemon(this.pokemon.originalPokemon);
         this.pokemon.setItem(this.item1);
@@ -64,60 +75,36 @@ public class DungeonEventTransferTest extends UTest {
         this.floor.dungeon.communication.itemIDs.register(this.item3, null);
     }
 
-    public DungeonEventTransferTest() {
-        super(ACTION_WARN);
+    private DungeonEvent[] generateEvents() {
+        return new DungeonEvent[] { new PokemonRotateEvent(floor, pokemon, Direction.SOUTHWEST),
+                new PokemonTravelEvent(floor, pokemon, Direction.SOUTHWEST), new TurnSkippedEvent(floor, pokemon),
+                new ItemMovedEvent(floor, ItemAction.GET, this.pokemon, this.floor.tileAt(10, 12), 0,
+                        this.pokemon.player().inventory(), 1),
+                new ItemSwappedEvent(floor, ItemAction.SWAP, this.pokemon, this.floor.tileAt(10, 12), 0,
+                        this.pokemon.player().inventory(), 1),
+                new ItemSelectionEvent(floor, this.item1.item(), pokemon, pokemon, pokemon, 0, Direction.EAST, true),
+                new MoveEnabledEvent(floor, move1, false), new MoveSwitchedEvent(floor, pokemon.originalPokemon, 0, 1),
+                new MoveSelectionEvent(floor, move1, pokemon, Direction.SOUTH) };
     }
 
-    private ArrayList<DungeonEvent> generateEvents() {
-        ArrayList<DungeonEvent> events = new ArrayList<>();
+    @Test
+    protected void test() {
+        DungeonEvent[] events = this.generateEvents();
+        ArrayList<DungeonEvent[]> mismatches = new ArrayList<>();
 
-        events.add(new PokemonRotateEvent(floor, pokemon, Direction.SOUTHWEST));
-        events.add(new PokemonTravelEvent(floor, pokemon, Direction.SOUTHWEST));
-        events.add(new TurnSkippedEvent(floor, pokemon));
+        Logger.d("Events:" + Arrays.stream(events).map(e -> "\n\t" + e.loggerMessage()).collect(Collectors.joining())
+                + "\n");
 
-        events.add(new ItemMovedEvent(floor, ItemAction.GET, this.pokemon, this.floor.tileAt(10, 12), 0,
-                this.pokemon.player().inventory(), 1));
-        events.add(new ItemSwappedEvent(floor, ItemAction.SWAP, this.pokemon, this.floor.tileAt(10, 12), 0,
-                this.pokemon.player().inventory(), 1));
-        events.add(
-                new ItemSelectionEvent(floor, this.item1.item(), pokemon, pokemon, pokemon, 0, Direction.EAST, true));
-
-        events.add(new MoveEnabledEvent(floor, move1, false));
-        events.add(new MoveSwitchedEvent(floor, pokemon.originalPokemon, 0, 1));
-        events.add(new MoveSelectionEvent(floor, move1, pokemon, Direction.SOUTH));
-
-        return events;
-    }
-
-    @Override
-    protected int test() {
-        ArrayList<DungeonEvent> toTest = new ArrayList<>(this.generateEvents()), returned = new ArrayList<>();
-        boolean[] success = new boolean[toTest.size()];
-        int failureCount = 0;
-
-        for (int i = 0; i < success.length; ++i) {
-            returned.add(EventCommunication.read(EventCommunication.prepareToSend(toTest.get(i)), floor));
-            success[i] = toTest.get(i).equals(returned.get(i));
-            if (!success[i])
-                ++failureCount;
+        for (DungeonEvent event : events) {
+            DungeonEvent returned = EventCommunication.read(EventCommunication.prepareToSend(event), floor);
+            if (!event.equals(returned))
+                mismatches.add(new DungeonEvent[] { event, returned });
         }
 
-        if (failureCount != 0) {
-            String message = failureCount + " events haven't been transferred successfully:\n";
-            boolean first = true;
-            for (int i = 0; i < success.length; ++i)
-                if (!success[i]) {
-                    if (first)
-                        first = false;
-                    else
-                        message += ", ";
-                    message += toTest.get(i).getClass().getSimpleName();
-                }
-            this.log(message);
-            return 1;
-        }
-
-        return TEST_SUCCESSFUL;
+        assertTrue(mismatches.size() == 0, () -> {
+            return "Events have not been transferred successfully:\n"
+                    + mismatches.stream().map(pair -> "\t(event: " + pair[0].loggerMessage() + ",\n\t\treturned: "
+                            + pair[1].loggerMessage() + "),\n").collect(Collectors.joining());
+        });
     }
-
 }
