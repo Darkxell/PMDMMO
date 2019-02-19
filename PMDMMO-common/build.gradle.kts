@@ -13,10 +13,10 @@ sourceSets {
 }
 
 dependencies {
-    implementation("com.eclipsesource.minimal-json:minimal-json:0.9.4")
-    implementation("org.jdom:jdom2:2.0.6")
+    implementation("com.eclipsesource.minimal-json:minimal-json:0.9.+")
+    implementation("org.jdom:jdom2:2.0.+")
 
-    testImplementation("org.junit.jupiter:junit-jupiter:5.4.0")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.4.+")
 }
 
 tasks {
