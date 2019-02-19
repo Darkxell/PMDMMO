@@ -121,12 +121,6 @@ public class DungeonExploration {
      * @return The Events created for the start of the new turn.
      */
     public ArrayList<DungeonEvent> endSubTurn() {
-        // Logger.i("Subturn end!");
-        /*
-         * for (Actor a : this.actors) { if (!a.hasSubTurnTriggered()) Logger.e("Subturn ended but " + a +
-         * " wasn't called!"); a.subTurnEnded(); }
-         */
-
         this.currentActor = -1;
         ++this.currentSubTurn;
         for (Actor a : this.actors)
@@ -152,7 +146,6 @@ public class DungeonExploration {
                 events.add(new PokemonRotateEvent(this.currentFloor, a.pokemon, d));
         }
 
-        // Logger.i("Turn end --------------------------");
         for (Actor a : this.actors)
             a.pokemon.onTurnStart(this.currentFloor, events);
         this.currentFloor.onTurnStart(events);

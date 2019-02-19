@@ -46,11 +46,6 @@ public class NextFloorState extends TransitionState {
     public void onTransitionHalf() {
         super.onTransitionHalf();
         Persistence.floor = Persistence.dungeon.currentFloor();
-        /*
-         * if (Persistence.dungeonState != null) { for (DungeonPokemon p : Persistence.player.getDungeonTeam()) {
-         * DungeonPokemonRenderer r = Persistence.dungeonState.pokemonRenderer.getRenderer(p); if (r != null)
-         * r.sprite().setFacingDirection(Persistence.floor.teamSpawnDirection); } }
-         */
         if (Persistence.floor.data.isBossFloor()
                 && Persistence.floor.data.bossFloor() != Persistence.player.storyPosition()) {
 
