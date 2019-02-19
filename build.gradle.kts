@@ -1,3 +1,7 @@
+plugins {
+    id("nebula.dependency-lock") version "7.3.0"
+}
+
 allprojects {
     repositories {
         jcenter()

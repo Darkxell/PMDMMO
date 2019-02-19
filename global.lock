@@ -1,0 +1,71 @@
+{
+    "_global_": {
+        "PMDMMO:PMDMMO-DataEditor": {
+            "project": true
+        },
+        "PMDMMO:PMDMMO-common": {
+            "firstLevelTransitive": [
+                "PMDMMO:PMDMMO-DataEditor",
+                "PMDMMO:PMDMMOc"
+            ],
+            "project": true
+        },
+        "PMDMMO:PMDMMOc": {
+            "firstLevelTransitive": [
+                "PMDMMO:PMDMMO-DataEditor"
+            ],
+            "project": true
+        },
+        "com.eclipsesource.minimal-json:minimal-json": {
+            "firstLevelTransitive": [
+                "PMDMMO:PMDMMO-common",
+                "PMDMMO:PMDMMOc"
+            ],
+            "locked": "0.9.5"
+        },
+        "com.github.Vatuu:discord-rpc": {
+            "firstLevelTransitive": [
+                "PMDMMO:PMDMMOc"
+            ],
+            "locked": "1.5.1"
+        },
+        "com.googlecode.soundlibs:mp3spi": {
+            "firstLevelTransitive": [
+                "PMDMMO:PMDMMOc"
+            ],
+            "locked": "1.9.5.4"
+        },
+        "com.googlecode.soundlibs:tritonus-share": {
+            "firstLevelTransitive": [
+                "PMDMMO:PMDMMOc"
+            ],
+            "locked": "0.3.7.4"
+        },
+        "javax.websocket:javax.websocket-api": {
+            "firstLevelTransitive": [
+                "PMDMMO:PMDMMOc"
+            ],
+            "locked": "1.0"
+        },
+        "org.controlsfx:controlsfx": {
+            "firstLevelTransitive": [
+                "PMDMMO:PMDMMO-DataEditor"
+            ],
+            "locked": "8.40.14"
+        },
+        "org.controlsfx:fxsampler": {
+            "firstLevelTransitive": [
+                "PMDMMO:PMDMMO-DataEditor"
+            ],
+            "locked": "1.0.10"
+        },
+        "org.jdom:jdom2": {
+            "firstLevelTransitive": [
+                "PMDMMO:PMDMMO-DataEditor",
+                "PMDMMO:PMDMMO-common",
+                "PMDMMO:PMDMMOc"
+            ],
+            "locked": "2.0.6"
+        }
+    }
+}
