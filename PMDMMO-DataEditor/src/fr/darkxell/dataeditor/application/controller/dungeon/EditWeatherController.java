@@ -2,13 +2,12 @@ package fr.darkxell.dataeditor.application.controller.dungeon;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import com.darkxell.common.weather.Weather;
-
-import fr.darkxell.dataeditor.application.data.WeatherTableItem;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
+
+import com.darkxell.common.weather.Weather;
+import fr.darkxell.dataeditor.application.data.WeatherTableItem;
 
 public class EditWeatherController implements Initializable {
 

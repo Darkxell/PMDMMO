@@ -3,6 +3,10 @@ package fr.darkxell.dataeditor.application.controller.cutscene.event;
 import java.net.URL;
 import java.util.Comparator;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 
 import com.darkxell.client.mechanics.animation.Animations;
 import com.darkxell.client.mechanics.animation.Animations.AnimationGroup;
@@ -14,10 +18,6 @@ import com.darkxell.client.mechanics.cutscene.event.AnimateCutsceneEvent.Animate
 
 import fr.darkxell.dataeditor.application.controller.cutscene.EditCutsceneController;
 import fr.darkxell.dataeditor.application.util.AnimationListItem;
-import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ToggleGroup;
 
 public class AnimateEventController extends EventController {
 

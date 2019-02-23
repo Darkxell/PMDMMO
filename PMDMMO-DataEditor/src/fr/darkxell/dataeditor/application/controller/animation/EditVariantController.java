@@ -3,14 +3,13 @@ package fr.darkxell.dataeditor.application.controller.animation;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.ResourceBundle;
-
-import com.darkxell.client.mechanics.animation.AnimationData;
-import com.darkxell.common.util.Direction;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
+
+import com.darkxell.client.mechanics.animation.AnimationData;
+import com.darkxell.common.util.Direction;
 
 public class EditVariantController extends EditAnimationController {
 

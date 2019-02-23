@@ -7,14 +7,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
-import com.darkxell.common.Registries;
-import com.darkxell.common.dungeon.data.Dungeon;
-import com.darkxell.common.dungeon.data.Dungeon.DungeonDirection;
-import com.darkxell.common.dungeon.data.DungeonRegistry;
-
-import fr.darkxell.dataeditor.application.controls.CustomList;
-import fr.darkxell.dataeditor.application.controls.CustomListCell.ListCellParent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -24,6 +16,14 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.TitledPane;
+
+import com.darkxell.common.Registries;
+import com.darkxell.common.dungeon.data.Dungeon;
+import com.darkxell.common.dungeon.data.Dungeon.DungeonDirection;
+import com.darkxell.common.dungeon.data.DungeonRegistry;
+
+import fr.darkxell.dataeditor.application.controls.CustomList;
+import fr.darkxell.dataeditor.application.controls.CustomListCell.ListCellParent;
 
 public class DungeonsTabController implements Initializable, ListCellParent<Dungeon> {
 

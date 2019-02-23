@@ -7,16 +7,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
-
-import com.darkxell.client.resources.images.RegularSpriteSet;
-import com.darkxell.client.resources.images.pokemon.PokemonSpriteFrame;
-import com.darkxell.client.resources.images.pokemon.PokemonSpriteSequence;
-import com.darkxell.client.resources.images.pokemon.PokemonSpritesetData;
-
-import fr.darkxell.dataeditor.application.DataEditor;
-import fr.darkxell.dataeditor.application.controls.CustomList;
-import fr.darkxell.dataeditor.application.controls.CustomListCell.ListCellParent;
-import fr.darkxell.dataeditor.application.util.FXUtils;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -30,6 +20,16 @@ import javafx.scene.control.TextFormatter;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+
+import com.darkxell.client.resources.images.RegularSpriteSet;
+import com.darkxell.client.resources.images.pokemon.PokemonSpriteFrame;
+import com.darkxell.client.resources.images.pokemon.PokemonSpriteSequence;
+import com.darkxell.client.resources.images.pokemon.PokemonSpritesetData;
+
+import fr.darkxell.dataeditor.application.DataEditor;
+import fr.darkxell.dataeditor.application.controls.CustomList;
+import fr.darkxell.dataeditor.application.controls.CustomListCell.ListCellParent;
+import fr.darkxell.dataeditor.application.util.FXUtils;
 
 public class EditSequencesController implements Initializable, ListCellParent<PokemonSpriteFrame> {
 

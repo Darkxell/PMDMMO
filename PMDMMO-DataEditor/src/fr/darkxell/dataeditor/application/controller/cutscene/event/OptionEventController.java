@@ -2,13 +2,6 @@ package fr.darkxell.dataeditor.application.controller.cutscene.event;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
-import com.darkxell.client.mechanics.cutscene.event.OptionDialogCutsceneEvent;
-import com.darkxell.common.util.language.Message;
-
-import fr.darkxell.dataeditor.application.data.DialogOptionTableItem;
-import fr.darkxell.dataeditor.application.util.FXUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
@@ -17,6 +10,13 @@ import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+
+import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
+import com.darkxell.client.mechanics.cutscene.event.OptionDialogCutsceneEvent;
+import com.darkxell.common.util.language.Message;
+
+import fr.darkxell.dataeditor.application.data.DialogOptionTableItem;
+import fr.darkxell.dataeditor.application.util.FXUtils;
 
 public class OptionEventController extends EventController {
 

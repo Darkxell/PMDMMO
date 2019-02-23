@@ -2,12 +2,6 @@ package fr.darkxell.dataeditor.application.controller.item;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import com.darkxell.client.resources.images.Sprites;
-import com.darkxell.common.item.Item;
-import com.darkxell.common.item.Item.ItemCategory;
-
-import fr.darkxell.dataeditor.application.util.FXUtils;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -18,6 +12,11 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
+
+import com.darkxell.client.resources.images.Sprites;
+import com.darkxell.common.item.Item;
+import com.darkxell.common.item.Item.ItemCategory;
+import fr.darkxell.dataeditor.application.util.FXUtils;
 
 public class EditItemController implements Initializable {
 

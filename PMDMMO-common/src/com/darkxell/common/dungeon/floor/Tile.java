@@ -5,6 +5,7 @@ import static com.darkxell.common.dungeon.floor.TileType.*;
 import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import javafx.util.Pair;
 
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.DungeonEvent.MessageEvent;
@@ -21,8 +22,6 @@ import com.darkxell.common.trap.Trap;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.DirectionSet;
 import com.darkxell.common.util.language.Message;
-
-import javafx.util.Pair;
 
 /** Represents a single tile in a Floor. */
 public class Tile implements ItemContainer, Comparable<Tile> {

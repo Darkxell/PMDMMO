@@ -4,6 +4,12 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.image.ImageView;
 
 import javax.swing.JOptionPane;
 
@@ -25,12 +31,6 @@ import com.darkxell.common.util.Direction;
 
 import fr.darkxell.dataeditor.application.util.AnimationListItem;
 import fr.darkxell.dataeditor.application.util.AnimationPreviewThread;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.image.ImageView;
 
 public class TestAnimationController implements Initializable {
     private static Floor floor;

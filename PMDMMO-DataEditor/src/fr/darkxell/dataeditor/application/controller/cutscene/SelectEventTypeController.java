@@ -2,11 +2,6 @@ package fr.darkxell.dataeditor.application.controller.cutscene;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import com.darkxell.client.mechanics.cutscene.CutsceneEvent.CutsceneEventType;
-
-import fr.darkxell.dataeditor.application.controller.cutscene.event.EventController.EventEditionListener;
-import fr.darkxell.dataeditor.application.util.FXUtils;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -14,6 +9,11 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+
+import com.darkxell.client.mechanics.cutscene.CutsceneEvent.CutsceneEventType;
+
+import fr.darkxell.dataeditor.application.controller.cutscene.event.EventController.EventEditionListener;
+import fr.darkxell.dataeditor.application.util.FXUtils;
 
 public class SelectEventTypeController implements Initializable {
 

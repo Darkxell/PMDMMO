@@ -1,15 +1,15 @@
 package com.darkxell.client.discord;
 
+import net.arikia.dev.drpc.DiscordEventHandlers;
+import net.arikia.dev.drpc.DiscordRPC;
+import net.arikia.dev.drpc.DiscordRichPresence;
+
 import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.state.dungeon.DungeonState;
 import com.darkxell.client.state.freezone.AbstractFreezoneState;
 import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.common.util.Logger;
-
-import net.arikia.dev.drpc.DiscordEventHandlers;
-import net.arikia.dev.drpc.DiscordRPC;
-import net.arikia.dev.drpc.DiscordRichPresence;
 
 /**
  * Discord handler made especially for PMDMMO. THis class specifies all the handlers and behaviours that can be

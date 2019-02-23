@@ -2,13 +2,12 @@ package com.darkxell.client.resources.music;
 
 import java.io.File;
 import java.util.Map;
+import javazoom.spi.mpeg.sampled.file.MpegAudioFileReader;
 
 import javax.sound.sampled.AudioFileFormat;
 
 import com.darkxell.client.resources.Res;
 import com.darkxell.common.util.Logger;
-
-import javazoom.spi.mpeg.sampled.file.MpegAudioFileReader;
 
 public class Song {
 

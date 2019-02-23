@@ -2,6 +2,11 @@ package fr.darkxell.dataeditor.application.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Tab;
 
 import com.darkxell.common.util.language.Localization;
 
@@ -11,11 +16,6 @@ import fr.darkxell.dataeditor.application.controller.dungeon.DungeonsTabControll
 import fr.darkxell.dataeditor.application.controller.item.ItemsTabController;
 import fr.darkxell.dataeditor.application.controller.move.MovesTabController;
 import fr.darkxell.dataeditor.application.controller.sprites.SpritesTabController;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Tab;
 
 public class MainController implements Initializable, ChangeListener<Boolean> {
 

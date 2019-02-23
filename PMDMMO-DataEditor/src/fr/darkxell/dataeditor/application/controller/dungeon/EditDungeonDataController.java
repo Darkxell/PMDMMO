@@ -4,6 +4,11 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 
 import com.darkxell.common.Registries;
 import com.darkxell.common.dungeon.data.Dungeon;
@@ -14,13 +19,7 @@ import com.darkxell.common.dungeon.data.DungeonRegistry;
 import com.darkxell.common.dungeon.data.DungeonTrapGroup;
 import com.darkxell.common.dungeon.data.FloorData;
 import com.darkxell.common.dungeon.data.FloorSet;
-
 import fr.darkxell.dataeditor.application.util.DungeonCreationException;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
 
 public class EditDungeonDataController implements Initializable {
 

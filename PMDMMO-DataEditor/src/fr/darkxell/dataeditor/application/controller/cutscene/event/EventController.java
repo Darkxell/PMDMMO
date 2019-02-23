@@ -4,14 +4,13 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
-
-import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
-import com.darkxell.client.mechanics.cutscene.CutsceneEvent.CutsceneEventType;
-
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
+
+import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
+import com.darkxell.client.mechanics.cutscene.CutsceneEvent.CutsceneEventType;
 
 public abstract class EventController implements Initializable {
 

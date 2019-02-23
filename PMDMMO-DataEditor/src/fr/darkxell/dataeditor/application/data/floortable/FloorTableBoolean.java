@@ -1,10 +1,11 @@
 package fr.darkxell.dataeditor.application.data.floortable;
 
-import fr.darkxell.dataeditor.application.util.FXUtils;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.Callback;
+
+import fr.darkxell.dataeditor.application.util.FXUtils;
 
 public class FloorTableBoolean extends FloorTableItem<Boolean, String> {
 

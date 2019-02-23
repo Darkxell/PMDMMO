@@ -44,6 +44,7 @@ subprojects {
 
     spotless {
         java {
+            importOrderFile(rootProject.file("config/pmdo.importorder"))
             removeUnusedImports()
             eclipse().configFile(rootProject.file("config/eclipse-format.xml"))
         }

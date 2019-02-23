@@ -5,16 +5,6 @@ import java.net.URL;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
-import com.darkxell.common.Registries;
-import com.darkxell.common.item.Item;
-import com.darkxell.common.item.Item.ItemCategory;
-import com.darkxell.common.item.ItemRegistry;
-
-import fr.darkxell.dataeditor.application.controls.CustomListCell.ListCellParent;
-import fr.darkxell.dataeditor.application.data.ItemListItem;
-import fr.darkxell.dataeditor.application.util.CustomTreeItem;
-import fr.darkxell.dataeditor.application.util.TreeCategory;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -25,6 +15,16 @@ import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+
+import com.darkxell.common.Registries;
+import com.darkxell.common.item.Item;
+import com.darkxell.common.item.Item.ItemCategory;
+import com.darkxell.common.item.ItemRegistry;
+
+import fr.darkxell.dataeditor.application.controls.CustomListCell.ListCellParent;
+import fr.darkxell.dataeditor.application.data.ItemListItem;
+import fr.darkxell.dataeditor.application.util.CustomTreeItem;
+import fr.darkxell.dataeditor.application.util.TreeCategory;
 
 public class ItemsTabController implements Initializable, ListCellParent<ItemListItem> {
 

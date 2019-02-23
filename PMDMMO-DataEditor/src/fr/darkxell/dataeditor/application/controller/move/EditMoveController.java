@@ -2,20 +2,19 @@ package fr.darkxell.dataeditor.application.controller.move;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import com.darkxell.common.move.Move;
-import com.darkxell.common.move.Move.MoveCategory;
-import com.darkxell.common.move.Move.MoveRange;
-import com.darkxell.common.move.Move.MoveTarget;
-import com.darkxell.common.pokemon.PokemonType;
-
-import fr.darkxell.dataeditor.application.util.FXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+
+import com.darkxell.common.move.Move;
+import com.darkxell.common.move.Move.MoveCategory;
+import com.darkxell.common.move.Move.MoveRange;
+import com.darkxell.common.move.Move.MoveTarget;
+import com.darkxell.common.pokemon.PokemonType;
+import fr.darkxell.dataeditor.application.util.FXUtils;
 
 public class EditMoveController implements Initializable {
 

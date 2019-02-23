@@ -3,13 +3,6 @@ package fr.darkxell.dataeditor.application.controller.dungeon;
 import java.net.URL;
 import java.util.Comparator;
 import java.util.ResourceBundle;
-
-import com.darkxell.common.Registries;
-import com.darkxell.common.dungeon.data.DungeonEncounter;
-import com.darkxell.common.pokemon.PokemonSpecies;
-
-import fr.darkxell.dataeditor.application.data.DungeonEncounterTableItem;
-import fr.darkxell.dataeditor.application.util.DungeonCreationException;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -17,6 +10,13 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+
+import com.darkxell.common.Registries;
+import com.darkxell.common.dungeon.data.DungeonEncounter;
+import com.darkxell.common.pokemon.PokemonSpecies;
+
+import fr.darkxell.dataeditor.application.data.DungeonEncounterTableItem;
+import fr.darkxell.dataeditor.application.util.DungeonCreationException;
 
 public class EditEncounterController implements Initializable {
 

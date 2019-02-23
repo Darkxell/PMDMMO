@@ -2,13 +2,12 @@ package fr.darkxell.dataeditor.application.controller.cutscene.event;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
 
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.event.MusicCutsceneEvent;
 import com.darkxell.client.resources.music.SoundsHolder;
-
-import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
 
 public class MusicEventController extends EventController {
 

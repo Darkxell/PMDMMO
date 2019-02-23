@@ -3,15 +3,6 @@ package fr.darkxell.dataeditor.application.controller.dungeon;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-
-import com.darkxell.common.Registries;
-import com.darkxell.common.dungeon.data.DungeonItemGroup;
-import com.darkxell.common.item.Item;
-
-import fr.darkxell.dataeditor.application.data.DungeonItemTableItem;
-import fr.darkxell.dataeditor.application.data.SingleItemTableItem;
-import fr.darkxell.dataeditor.application.util.DungeonCreationException;
-import fr.darkxell.dataeditor.application.util.FXUtils;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -23,6 +14,15 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+
+import com.darkxell.common.Registries;
+import com.darkxell.common.dungeon.data.DungeonItemGroup;
+import com.darkxell.common.item.Item;
+
+import fr.darkxell.dataeditor.application.data.DungeonItemTableItem;
+import fr.darkxell.dataeditor.application.data.SingleItemTableItem;
+import fr.darkxell.dataeditor.application.util.DungeonCreationException;
+import fr.darkxell.dataeditor.application.util.FXUtils;
 
 public class EditItemController implements Initializable {
 

@@ -1,11 +1,11 @@
 package fr.darkxell.dataeditor.application.data.floortable;
 
-import com.darkxell.common.pokemon.PokemonType;
-
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.util.Callback;
+
+import com.darkxell.common.pokemon.PokemonType;
 
 public class FloorTablePokemonType extends FloorTableItem<PokemonType, PokemonType> {
 

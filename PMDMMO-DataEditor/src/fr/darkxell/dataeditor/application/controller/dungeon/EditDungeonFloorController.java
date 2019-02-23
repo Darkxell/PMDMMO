@@ -3,6 +3,9 @@ package fr.darkxell.dataeditor.application.controller.dungeon;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.TableView;
 
 import com.darkxell.common.dungeon.data.Dungeon;
 import com.darkxell.common.dungeon.data.FloorData;
@@ -17,9 +20,6 @@ import fr.darkxell.dataeditor.application.data.floortable.FloorTableItem;
 import fr.darkxell.dataeditor.application.data.floortable.FloorTableMove;
 import fr.darkxell.dataeditor.application.data.floortable.FloorTablePokemonType;
 import fr.darkxell.dataeditor.application.data.floortable.FloorTableString;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.TableView;
 
 public class EditDungeonFloorController implements Initializable {
 

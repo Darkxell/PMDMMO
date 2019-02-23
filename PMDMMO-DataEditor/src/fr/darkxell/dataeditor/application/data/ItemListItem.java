@@ -1,7 +1,6 @@
 package fr.darkxell.dataeditor.application.data;
 
 import com.darkxell.common.item.Item;
-
 import fr.darkxell.dataeditor.application.util.CustomTreeItem;
 
 public class ItemListItem extends CustomTreeItem {
