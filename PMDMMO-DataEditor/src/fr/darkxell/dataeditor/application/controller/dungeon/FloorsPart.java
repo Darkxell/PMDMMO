@@ -1,16 +1,16 @@
 package fr.darkxell.dataeditor.application.controller.dungeon;
 
-import org.controlsfx.control.PopOver;
-import org.controlsfx.control.PopOver.ArrowLocation;
-import org.controlsfx.control.RangeSlider;
-
-import com.darkxell.common.util.Pair;
-
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+
+import org.controlsfx.control.PopOver;
+import org.controlsfx.control.PopOver.ArrowLocation;
+import org.controlsfx.control.RangeSlider;
+
+import com.darkxell.common.util.Pair;
 
 public class FloorsPart extends HBox {
 

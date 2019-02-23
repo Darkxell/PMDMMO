@@ -2,12 +2,11 @@ package fr.darkxell.dataeditor.application.controller.cutscene.event;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
 
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.event.SpawnCutsceneEvent;
-
 import fr.darkxell.dataeditor.application.controller.cutscene.EditEntityController;
-import javafx.fxml.FXML;
 
 public class SpawnEventController extends EventController {
 

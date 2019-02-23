@@ -1,10 +1,10 @@
 package fr.darkxell.dataeditor.application.controller.cutscene.event;
 
-import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
-import com.darkxell.client.mechanics.cutscene.event.FunctionCutsceneEvent;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+
+import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
+import com.darkxell.client.mechanics.cutscene.event.FunctionCutsceneEvent;
 
 public class FunctionEventController extends EventController {
 

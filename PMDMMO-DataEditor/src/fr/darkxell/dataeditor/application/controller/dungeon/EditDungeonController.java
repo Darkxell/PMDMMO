@@ -2,13 +2,13 @@ package fr.darkxell.dataeditor.application.controller.dungeon;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 
 import com.darkxell.common.dungeon.data.Dungeon;
 
 import fr.darkxell.dataeditor.application.util.DungeonCreationException;
 import fr.darkxell.dataeditor.application.util.FXUtils;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 
 public class EditDungeonController implements Initializable {
 

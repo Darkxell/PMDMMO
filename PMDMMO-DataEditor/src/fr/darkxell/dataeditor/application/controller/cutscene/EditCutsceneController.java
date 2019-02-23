@@ -4,6 +4,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.ListView;
 
 import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.launchable.Persistence;
@@ -21,10 +25,6 @@ import com.darkxell.client.ui.Frame;
 import fr.darkxell.dataeditor.application.controller.cutscene.event.EventController.EventEditionListener;
 import fr.darkxell.dataeditor.application.controller.cutscene.event.EventList;
 import fr.darkxell.dataeditor.application.data.Cutscenes;
-import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.ListView;
 
 public class EditCutsceneController implements Initializable, EventEditionListener {
 

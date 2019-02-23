@@ -6,15 +6,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
-import com.darkxell.client.mechanics.animation.AnimationData;
-import com.darkxell.client.mechanics.animation.Animations;
-import com.darkxell.client.mechanics.animation.Animations.AnimationGroup;
-import com.darkxell.common.util.Pair;
-
-import fr.darkxell.dataeditor.application.util.AnimationListItem;
-import fr.darkxell.dataeditor.application.util.CustomTreeItem;
-import fr.darkxell.dataeditor.application.util.TreeCategory;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -24,6 +15,15 @@ import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+
+import com.darkxell.client.mechanics.animation.AnimationData;
+import com.darkxell.client.mechanics.animation.Animations;
+import com.darkxell.client.mechanics.animation.Animations.AnimationGroup;
+import com.darkxell.common.util.Pair;
+
+import fr.darkxell.dataeditor.application.util.AnimationListItem;
+import fr.darkxell.dataeditor.application.util.CustomTreeItem;
+import fr.darkxell.dataeditor.application.util.TreeCategory;
 
 public class AnimationsTabController implements Initializable {
 

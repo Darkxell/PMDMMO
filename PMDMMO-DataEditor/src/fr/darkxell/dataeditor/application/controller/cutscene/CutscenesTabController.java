@@ -4,12 +4,6 @@ import java.net.URL;
 import java.util.Comparator;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
-import com.darkxell.client.mechanics.cutscene.Cutscene;
-
-import fr.darkxell.dataeditor.application.controls.CustomList;
-import fr.darkxell.dataeditor.application.controls.CustomListCell.ListCellParent;
-import fr.darkxell.dataeditor.application.data.Cutscenes;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -19,6 +13,12 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.TitledPane;
+
+import com.darkxell.client.mechanics.cutscene.Cutscene;
+
+import fr.darkxell.dataeditor.application.controls.CustomList;
+import fr.darkxell.dataeditor.application.controls.CustomListCell.ListCellParent;
+import fr.darkxell.dataeditor.application.data.Cutscenes;
 
 public class CutscenesTabController implements Initializable, ListCellParent<Cutscene> {
 

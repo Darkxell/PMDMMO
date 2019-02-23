@@ -2,6 +2,15 @@ package fr.darkxell.dataeditor.application.controller.cutscene.event;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import javafx.collections.ObservableList;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent.CutsceneEventType;
@@ -13,15 +22,6 @@ import fr.darkxell.dataeditor.application.controller.cutscene.event.EventControl
 import fr.darkxell.dataeditor.application.controls.CustomList;
 import fr.darkxell.dataeditor.application.controls.CustomListCell.ListCellParent;
 import fr.darkxell.dataeditor.application.util.FXUtils;
-import javafx.collections.ObservableList;
-import javafx.embed.swing.SwingFXUtils;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.control.ListView;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.stage.Stage;
 
 public class EventList implements ListCellParent<CutsceneEvent> {
     public Stage editEventPopup;

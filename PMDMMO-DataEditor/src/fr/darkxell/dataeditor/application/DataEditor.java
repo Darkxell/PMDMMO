@@ -1,5 +1,12 @@
 package fr.darkxell.dataeditor.application;
 
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
+
 import com.darkxell.client.launchable.ClientSettings;
 import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.launchable.Persistence;
@@ -15,14 +22,7 @@ import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.Util;
 import com.darkxell.common.util.language.Localization;
 import com.darkxell.common.weather.Weather;
-
 import fr.darkxell.dataeditor.application.data.Cutscenes;
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.stage.Stage;
 
 public class DataEditor extends Application {
 

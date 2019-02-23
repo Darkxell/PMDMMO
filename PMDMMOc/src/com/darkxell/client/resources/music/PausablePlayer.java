@@ -1,7 +1,6 @@
 package com.darkxell.client.resources.music;
 
 import java.io.InputStream;
-
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.AudioDevice;
 import javazoom.jl.player.Player;

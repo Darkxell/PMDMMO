@@ -5,6 +5,16 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextInputDialog;
+import javafx.scene.layout.VBox;
+import javafx.util.Pair;
 
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
 import com.darkxell.client.resources.images.pokemon.PokemonSpriteSequence;
@@ -20,16 +30,6 @@ import fr.darkxell.dataeditor.application.controls.CustomList;
 import fr.darkxell.dataeditor.application.controls.CustomListCell.ListCellParent;
 import fr.darkxell.dataeditor.application.data.PokemonSpritesetManager;
 import fr.darkxell.dataeditor.application.util.FileManager;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextInputDialog;
-import javafx.scene.layout.VBox;
-import javafx.util.Pair;
 
 public class SpritesTabController implements Initializable, ListCellParent<PokemonSpritesetData> {
     public PokemonSpritesetData currentSprite;

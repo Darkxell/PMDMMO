@@ -4,12 +4,6 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
-
-import javax.imageio.ImageIO;
-
-import com.darkxell.client.resources.Res;
-
-import fr.darkxell.dataeditor.application.DataEditor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -17,6 +11,11 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import javax.imageio.ImageIO;
+
+import com.darkxell.client.resources.Res;
+import fr.darkxell.dataeditor.application.DataEditor;
 
 public class FXUtils {
 

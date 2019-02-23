@@ -5,16 +5,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
-
-import com.darkxell.client.mechanics.cutscene.Cutscene;
-import com.darkxell.client.mechanics.cutscene.CutsceneCreation;
-import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
-import com.darkxell.common.zones.FreezoneInfo;
-
-import fr.darkxell.dataeditor.application.DataEditor;
-import fr.darkxell.dataeditor.application.controls.CustomList;
-import fr.darkxell.dataeditor.application.controls.CustomListCell.ListCellParent;
-import fr.darkxell.dataeditor.application.util.FXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -26,6 +16,16 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.stage.Stage;
+
+import com.darkxell.client.mechanics.cutscene.Cutscene;
+import com.darkxell.client.mechanics.cutscene.CutsceneCreation;
+import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
+import com.darkxell.common.zones.FreezoneInfo;
+
+import fr.darkxell.dataeditor.application.DataEditor;
+import fr.darkxell.dataeditor.application.controls.CustomList;
+import fr.darkxell.dataeditor.application.controls.CustomListCell.ListCellParent;
+import fr.darkxell.dataeditor.application.util.FXUtils;
 
 public class CutsceneCreationController implements Initializable, ListCellParent<CutsceneEntity> {
 

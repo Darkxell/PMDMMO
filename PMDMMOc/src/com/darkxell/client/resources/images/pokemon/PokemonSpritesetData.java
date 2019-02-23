@@ -2,6 +2,7 @@ package com.darkxell.client.resources.images.pokemon;
 
 import java.util.Collection;
 import java.util.HashMap;
+import javafx.util.Pair;
 
 import org.jdom2.Element;
 
@@ -10,8 +11,6 @@ import com.darkxell.common.Registries;
 import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.xml.XMLUtils;
-
-import javafx.util.Pair;
 
 public class PokemonSpritesetData {
 

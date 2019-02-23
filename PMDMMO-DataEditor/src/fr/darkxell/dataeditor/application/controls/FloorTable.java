@@ -1,9 +1,6 @@
 package fr.darkxell.dataeditor.application.controls;
 
 import java.util.Comparator;
-
-import fr.darkxell.dataeditor.application.data.floortable.FloorTableItem;
-import fr.darkxell.dataeditor.application.util.FXUtils;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
@@ -12,6 +9,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.converter.DefaultStringConverter;
+
+import fr.darkxell.dataeditor.application.data.floortable.FloorTableItem;
+import fr.darkxell.dataeditor.application.util.FXUtils;
 
 public class FloorTable {
 
