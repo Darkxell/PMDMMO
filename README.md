@@ -16,9 +16,11 @@ Discord: https://discord.gg/KegXRG8
 To give build and run:
 
 ```sh
-gradle :PMDMMOc:run # client
-gradle :PMDMMO-DataEditor:run # data editor
+./gradlew :PMDMMOc:run # client
+./gradlew :PMDMMO-DataEditor:run # data editor
 ```
+
+(gradle, gradle wrapper, you know the business)
 
 Tested using Gradle 5.2.1. Most default commands (eg test, jar, etc) should
 work. Older versions supporting Kotlin DSL may still work but nothing is
