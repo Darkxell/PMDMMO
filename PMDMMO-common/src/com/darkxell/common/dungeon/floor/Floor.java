@@ -97,7 +97,7 @@ public class Floor {
 
     /**
      * @return True if the input Tile connects to a path outside a Room (considering that Tile is in a Room, which is
-     * not tested in this method).
+     *         not tested in this method).
      */
     public boolean connectsToPath(Tile tile) {
         for (Direction direction : Direction.CARDINAL)
@@ -290,21 +290,23 @@ public class Floor {
     }
 
     /**
-     * @param inRoom - True if the Tile should be in a Room (will also avoid tiles adjacent to corridors in rooms).
-     * @param awayFromPlayers - True if the Tile should be far away from players (to avoid spawning a Pokemon close to a
-     * player for example).
-     * @return A Random Tile in this floor.
+     * @param  inRoom          - True if the Tile should be in a Room (will also avoid tiles adjacent to corridors in
+     *                         rooms).
+     * @param  awayFromPlayers - True if the Tile should be far away from players (to avoid spawning a Pokemon close to
+     *                         a player for example).
+     * @return                 A Random Tile in this floor.
      */
     public Tile randomEmptyTile(boolean inRoom, boolean awayFromPlayers, Random random) {
         return this.randomEmptyTile(inRoom, awayFromPlayers, null, random);
     }
 
     /**
-     * @param inRoom - True if the Tile should be in a Room (will also avoid tiles adjacent to corridors in rooms).
-     * @param awayFromPlayers - True if the Tile should be far away from players (to avoid spawning a Pokemon close to a
-     * player for example).
-     * @param type - A Type that the Tile has to match. null for any type.
-     * @return A Random Tile in this floor.
+     * @param  inRoom          - True if the Tile should be in a Room (will also avoid tiles adjacent to corridors in
+     *                         rooms).
+     * @param  awayFromPlayers - True if the Tile should be far away from players (to avoid spawning a Pokemon close to
+     *                         a player for example).
+     * @param  type            - A Type that the Tile has to match. null for any type.
+     * @return                 A Random Tile in this floor.
      */
     public Tile randomEmptyTile(boolean inRoom, boolean awayFromPlayers, TileType type, Random random) {
         ArrayList<Tile> candidates = new ArrayList<>();
@@ -371,8 +373,8 @@ public class Floor {
     }
 
     /**
-     * @param weather - The weather to clean.
-     * @return The Weather Changed Event if the Weather changes.
+     * @param  weather - The weather to clean.
+     * @return         The Weather Changed Event if the Weather changes.
      */
     public void removeWeather(ActiveWeather weather, ArrayList<DungeonEvent> events) {
         ActiveWeather previous = this.currentWeather();
@@ -409,8 +411,8 @@ public class Floor {
     }
 
     /**
-     * @param weather - The weather to add.
-     * @return The Weather Changed Event if the Weather changes.
+     * @param  weather - The weather to add.
+     * @return         The Weather Changed Event if the Weather changes.
      */
     public void setWeather(ActiveWeather weather, ArrayList<DungeonEvent> events) {
         ActiveWeather previous = this.currentWeather();

@@ -152,8 +152,8 @@ public class Pokemon implements ItemContainer, HasID {
     }
 
     /**
-     * @param amount - The amount of experience gained.
-     * @return The number of levels this experience granted.
+     * @param  amount - The amount of experience gained.
+     * @return        The number of levels this experience granted.
      */
     public void gainExperience(ExperienceGainedEvent event, ArrayList<DungeonEvent> events) {
         int amount = event.experience;
