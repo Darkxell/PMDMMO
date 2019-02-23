@@ -242,7 +242,7 @@ public class PokemonSpecies implements Registrable<PokemonSpecies> {
     /**
      * Generates a Pokemon of this species.
      *
-     * @param level - The level of the Pokemon to generate.
+     * @param level       - The level of the Pokemon to generate.
      * @param shinyChance - The chance for the generated Pokemon to be a shiny (0 to 1).
      */
     public Pokemon generate(Random random, int level, double shinyChance) {
@@ -271,9 +271,9 @@ public class PokemonSpecies implements Registrable<PokemonSpecies> {
     }
 
     /**
-     * @param level - The level of the Pokemon.
-     * @param learnedMoves - Moves to exclude because they're already learned.
-     * @return The latest learned move's ID.
+     * @param  level        - The level of the Pokemon.
+     * @param  learnedMoves - Moves to exclude because they're already learned.
+     * @return              The latest learned move's ID.
      */
     public int latestMove(int level, ArrayList<Integer> learnedMoves) {
         while (level > 0) {

@@ -137,10 +137,10 @@ public interface AffectsPokemon {
     /**
      * Modifies the visibility of an object of the input type.
      * 
-     * @param floor - The Floor context.
-     * @param pokemon - The subject Pokemon.
-     * @param object - The type of object to check.
-     * @return <code>true</code> if the Pokemon is able to see the input object type from afar.
+     * @param  floor   - The Floor context.
+     * @param  pokemon - The subject Pokemon.
+     * @param  object  - The type of object to check.
+     * @return         <code>true</code> if the Pokemon is able to see the input object type from afar.
      */
     public default boolean hasSuperVision(Floor floor, DungeonPokemon pokemon, VisibleObjectType object) {
         return false;
