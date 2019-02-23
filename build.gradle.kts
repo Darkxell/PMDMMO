@@ -7,6 +7,7 @@ plugins {
     // REVISIT: spotbugs classpath bs in 1.6.10
     // https://github.com/spotbugs/spotbugs-gradle-plugin/issues/119
     id("com.github.spotbugs") version "1.6.9"
+    id("com.diffplug.gradle.spotless") version "3.18.0"
 }
 
 allprojects {
@@ -22,6 +23,7 @@ subprojects {
 
     apply(plugin = "pmd")
     apply(plugin = "com.github.spotbugs")
+    apply(plugin = "com.diffplug.gradle.spotless")
 
     tasks.withType<Pmd>().configureEach {
         ignoreFailures = true
@@ -37,6 +39,13 @@ subprojects {
         reports {
             xml.isEnabled = false
             html.isEnabled = true
+        }
+    }
+
+    spotless {
+        java {
+            removeUnusedImports()
+            eclipse().configFile(rootProject.file("config/eclipse-format.xml"))
         }
     }
 }
