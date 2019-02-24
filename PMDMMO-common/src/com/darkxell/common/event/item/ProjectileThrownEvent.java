@@ -33,7 +33,7 @@ public class ProjectileThrownEvent extends DungeonEvent implements DamageSource 
         this.thrower = thrower;
         this.destination = destination;
         this.experienceEvent = this.thrower.type == DungeonPokemonType.TEAM_MEMBER
-                ? new ExperienceGeneratedEvent(this.floor, this.thrower.player())
+                ? new ExperienceGeneratedEvent(this.floor, eventSource, this.thrower.player())
                 : null;
         this.direction = AIUtils.generalDirection(this.thrower.tile(), this.destination);
     }

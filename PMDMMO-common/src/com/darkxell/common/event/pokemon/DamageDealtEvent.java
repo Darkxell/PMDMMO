@@ -30,7 +30,7 @@ public class DamageDealtEvent extends DungeonEvent {
         public final ExperienceGeneratedEvent experienceEvent;
 
         public DefaultDamageSource(Floor floor, Player player) {
-            this.experienceEvent = player == null ? null : new ExperienceGeneratedEvent(floor, player);
+            this.experienceEvent = player == null ? null : new ExperienceGeneratedEvent(floor, eventSource, player);
         }
 
         @Override

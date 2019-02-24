@@ -31,7 +31,7 @@ public class RandomStatChangeEffect extends MoveEffect {
 
         if (!missed && floor.random.nextDouble() * 100 < this.probability) {
             DungeonPokemon changed = this.pokemonToChange(usedMove, target, flags, floor, calculator, missed, effects);
-            effects.createEffect(new StatChangedEvent(floor, changed, this.stat(floor), this.stage, usedMove), usedMove,
+            effects.createEffect(new StatChangedEvent(floor, eventSource, changed, this.stat(floor), this.stage, usedMove), usedMove,
                     target, floor, missed, usedMove.move.move().dealsDamage, changed);
         }
 

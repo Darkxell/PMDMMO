@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.language.Message;
 
@@ -15,7 +16,7 @@ public class ExperienceGainedEvent extends DungeonEvent {
     /** The Pokemon which will gain experience. */
     public final Pokemon pokemon;
 
-    public ExperienceGainedEvent(Floor floor, Pokemon pokemon, int experience) {
+    public ExperienceGainedEvent(Floor floor, DungeonEventSource eventSource, Pokemon pokemon, int experience) {
         super(floor, eventSource);
         this.pokemon = pokemon;
         this.experience = experience;

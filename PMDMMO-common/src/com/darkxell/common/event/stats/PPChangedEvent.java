@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Message;
 
@@ -16,7 +17,7 @@ public class PPChangedEvent extends DungeonEvent {
     public final DungeonPokemon pokemon;
     public final int pp;
 
-    public PPChangedEvent(Floor floor, DungeonPokemon pokemon, int pp, int moveIndex) {
+    public PPChangedEvent(Floor floor, DungeonEventSource eventSource, DungeonPokemon pokemon, int pp, int moveIndex) {
         super(floor, eventSource);
         this.pokemon = pokemon;
         this.pp = pp;
