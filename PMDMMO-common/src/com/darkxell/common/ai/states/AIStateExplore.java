@@ -8,6 +8,7 @@ import com.darkxell.common.ai.AI.AIState;
 import com.darkxell.common.ai.AIUtils;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.event.action.PokemonTravelEvent;
 import com.darkxell.common.event.action.TurnSkippedEvent;
 import com.darkxell.common.util.Direction;
@@ -35,8 +36,7 @@ public class AIStateExplore extends AIState {
         ArrayList<Tile> candidates; // Finding candidate Tiles
 
         // If in Room, candidates are exits
-        if (this.ai.pokemon.tile().isInRoom())
-            candidates = this.ai.floor.roomAt(this.ai.pokemon.tile()).exits();
+        if (this.ai.pokemon.tile().isInRoom()) candidates = this.ai.floor.roomAt(this.ai.pokemon.tile()).exits();
         else {
             // Else candidates are furthest visible Tiles
             candidates = AIUtils.adjacentReachableTiles(this.ai.floor, this.ai.pokemon);
@@ -48,12 +48,10 @@ public class AIStateExplore extends AIState {
                 this.currentDestination = candidates.get(0);
                 return;
             }
-            if (candidates.size() > 2)
-                candidates = AIUtils.furthestWalkableTiles(this.ai.floor, this.ai.pokemon);
+            if (candidates.size() > 2) candidates = AIUtils.furthestWalkableTiles(this.ai.floor, this.ai.pokemon);
         }
 
-        if (candidates.size() == 0)
-            Logger.e(this.ai.pokemon + " didn't find a way to go :(");
+        if (candidates.size() == 0) Logger.e(this.ai.pokemon + " didn't find a way to go :(");
 
         boolean continu = candidates.size() > 1;
         while (continu) // If more than one solution, we should remove the one it's coming from.
@@ -65,8 +63,7 @@ public class AIStateExplore extends AIState {
                     delete = t;
                     break;
                 }
-            if (delete == null)
-                continu = false;
+            if (delete == null) continu = false;
             else {
                 candidates.remove(delete);
                 continu = candidates.size() > 1;
@@ -79,8 +76,7 @@ public class AIStateExplore extends AIState {
 
     @Override
     public Direction mayRotate() {
-        if (this.ai.pokemon.tile() == this.currentDestination || this.currentDestination == null)
-            return null;
+        if (this.ai.pokemon.tile() == this.currentDestination || this.currentDestination == null) return null;
         return AIUtils.generalDirection(this.ai.pokemon.tile(), this.currentDestination);
     }
 
@@ -93,8 +89,8 @@ public class AIStateExplore extends AIState {
         // Try to move towards the destination.
         Direction dir = AIUtils.direction(this.ai.pokemon, this.currentDestination);
         if (dir == null || !this.ai.pokemon.canMove(this.ai.floor))
-            return new TurnSkippedEvent(this.ai.floor, eventSource, this.ai.pokemon);
-        return new PokemonTravelEvent(this.ai.floor, eventSource, this.ai.pokemon, dir);
+            return new TurnSkippedEvent(this.ai.floor, DungeonEventSource.PLAYER_ACTION, this.ai.pokemon);
+        return new PokemonTravelEvent(this.ai.floor, DungeonEventSource.PLAYER_ACTION, this.ai.pokemon, dir);
     }
 
     @Override

@@ -23,8 +23,9 @@ public class CancelsUsingMovesOrbsStatusCondition extends StatusCondition {
 
         if (Ability.TRUANT.shouldTruant(floor, event, concerned, true)) {
             event.consume();
-            resultingEvents.add(new TriggeredAbilityEvent(floor, eventSource, concerned));
-            resultingEvents.add(new TurnSkippedEvent(floor, eventSource, concerned));
+            TriggeredAbilityEvent abilityevent = new TriggeredAbilityEvent(floor, eventSource, concerned);
+            resultingEvents.add(abilityevent);
+            resultingEvents.add(new TurnSkippedEvent(floor, abilityevent, concerned));
         }
     }
 

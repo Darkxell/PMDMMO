@@ -22,7 +22,6 @@ public class PokemonRotateEvent extends DungeonEvent implements Communicable {
     }
 
     /**
-     * @param eventSource TODO
      * @param pokemon   - The Pokemon that rotates.
      * @param direction - The new direction the Pokemon should face.
      */
