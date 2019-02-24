@@ -14,8 +14,7 @@ public class CannotKOEffect extends MoveEffect {
 
     @Override
     public double applyDamageModifications(double damage, boolean isUser, MoveUseEvent moveEvent, ArrayList<DungeonEvent> events) {
-        if (damage >= target.getHp())
-            return target.getHp() - 1;
+        if (damage >= moveEvent.target.getHp()) return moveEvent.target.getHp() - 1;
         return super.applyDamageModifications(damage, isUser, moveEvent, events);
     }
 

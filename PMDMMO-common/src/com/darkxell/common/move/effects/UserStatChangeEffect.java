@@ -19,7 +19,7 @@ public class UserStatChangeEffect extends StatChangeEffect {
 
     @Override
     protected DungeonPokemon pokemonToChange(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
-        return usedMove.user;
+        return moveEvent.usedMove.user;
     }
 
 }

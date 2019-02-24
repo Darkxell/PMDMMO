@@ -13,7 +13,7 @@ public class HPDifferenceDamageEffect extends MoveEffect {
 
     @Override
     public MoveEffectCalculator buildCalculator(MoveUseEvent moveEvent) {
-        return new HPDifferenceCalculator(moveEvent, target, floor, flags);
+        return new HPDifferenceCalculator(moveEvent);
     }
 
 }

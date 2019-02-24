@@ -14,13 +14,10 @@ public class HPMultiplierEffect extends MoveEffect {
 
     @Override
     public double damageMultiplier(boolean isUser, MoveUseEvent moveEvent, ArrayList<DungeonEvent> events) {
-        double hp = move.user.getHpPercentage();
-        if (hp < 25)
-            return 8;
-        if (hp < 50)
-            return 4;
-        if (hp < 75)
-            return 2;
+        double hp = moveEvent.usedMove.user.getHpPercentage();
+        if (hp < 25) return 8;
+        if (hp < 50) return 4;
+        if (hp < 75) return 2;
         return super.damageMultiplier(isUser, moveEvent, events);
     }
 
