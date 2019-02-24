@@ -17,7 +17,7 @@ public class BellyChangedEvent extends DungeonEvent implements DamageSource {
     public final double quantity;
 
     public BellyChangedEvent(Floor floor, DungeonPokemon pokemon, double quantity) {
-        super(floor);
+        super(floor, eventSource);
         this.pokemon = pokemon;
         this.quantity = quantity;
         this.priority = PRIORITY_ACTION_END;

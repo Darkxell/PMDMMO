@@ -27,7 +27,7 @@ public class ProjectileThrownEvent extends DungeonEvent implements DamageSource 
     public final DungeonPokemon thrower;
 
     public ProjectileThrownEvent(Floor floor, Item item, DungeonPokemon thrower, Tile destination) {
-        super(floor);
+        super(floor, eventSource);
         this.item = item;
         this.thrower = thrower;
         this.destination = destination;

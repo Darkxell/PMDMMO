@@ -16,7 +16,7 @@ public class WeatherDamageEvent extends DungeonEvent {
     public final WeatherDamaging source;
 
     public WeatherDamageEvent(Floor floor, WeatherDamaging source, ArrayList<DungeonPokemon> pokemon, int damage) {
-        super(floor);
+        super(floor, eventSource);
         this.source = source;
         this.pokemon = pokemon;
         this.damage = damage;

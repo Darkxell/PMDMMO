@@ -16,11 +16,11 @@ public class TurnSkippedEvent extends DungeonEvent implements Communicable {
     private DungeonPokemon pokemon;
 
     public TurnSkippedEvent(Floor floor) {
-        super(floor);
+        super(floor, eventSource);
     }
 
     public TurnSkippedEvent(Floor floor, DungeonPokemon pokemon) {
-        super(floor, pokemon);
+        super(floor, eventSource, pokemon);
         this.pokemon = pokemon;
     }
 

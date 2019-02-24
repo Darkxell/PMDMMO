@@ -15,7 +15,7 @@ public class ExperienceGeneratedEvent extends DungeonEvent {
     public final Player player;
 
     public ExperienceGeneratedEvent(Floor floor, Player player) {
-        super(floor);
+        super(floor, eventSource);
         this.player = player;
         this.experience = 0;
         this.priority = PRIORITY_AFTER_MOVE;

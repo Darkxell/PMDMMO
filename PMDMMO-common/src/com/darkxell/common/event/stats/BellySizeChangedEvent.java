@@ -13,7 +13,7 @@ public class BellySizeChangedEvent extends DungeonEvent {
     public final int quantity;
 
     public BellySizeChangedEvent(Floor floor, DungeonPokemon pokemon, int quantity) {
-        super(floor);
+        super(floor, eventSource);
         this.pokemon = pokemon;
         this.quantity = quantity;
     }

@@ -19,7 +19,7 @@ public class TriggeredAbilityEvent extends DungeonEvent {
     }
 
     public TriggeredAbilityEvent(Floor floor, DungeonPokemon pokemon, int messageID) {
-        super(floor);
+        super(floor, eventSource);
         this.pokemon = pokemon;
         this.ability = this.pokemon.ability();
         this.messageID = messageID;

@@ -17,11 +17,11 @@ public class MoveEnabledEvent extends DungeonEvent implements Communicable {
     private LearnedMove move;
 
     public MoveEnabledEvent(Floor floor) {
-        super(floor);
+        super(floor, eventSource);
     }
 
     public MoveEnabledEvent(Floor floor, LearnedMove move, boolean enabled) {
-        super(floor);
+        super(floor, eventSource);
         this.move = move;
         this.enabled = enabled;
     }

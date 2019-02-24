@@ -12,7 +12,7 @@ public class PokemonSpawnedEvent extends DungeonEvent {
 	public final CreatedEncounter encounter;
 
 	public PokemonSpawnedEvent(Floor floor, CreatedEncounter encounter) {
-		super(floor);
+		super(floor, eventSource);
 		this.encounter = encounter;
 	}
 

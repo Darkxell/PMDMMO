@@ -13,7 +13,7 @@ public class IncreasedIQEvent extends DungeonEvent {
     public final DungeonPokemon pokemon;
 
     public IncreasedIQEvent(Floor floor, DungeonPokemon pokemon, int iq) {
-        super(floor);
+        super(floor, eventSource);
         this.iq = iq;
         this.pokemon = pokemon;
     }

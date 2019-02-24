@@ -11,7 +11,7 @@ public class MissionClearedEvent extends DungeonEvent {
     public final DungeonMission mission;
 
     public MissionClearedEvent(Floor floor, DungeonMission mission) {
-        super(floor);
+        super(floor, eventSource);
         this.mission = mission;
     }
 

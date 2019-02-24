@@ -17,11 +17,11 @@ public class MoveSwitchedEvent extends DungeonEvent implements Communicable {
     private Pokemon pokemon;
 
     public MoveSwitchedEvent(Floor floor) {
-        super(floor);
+        super(floor, eventSource);
     }
 
     public MoveSwitchedEvent(Floor floor, Pokemon pokemon, int from, int to) {
-        super(floor);
+        super(floor, eventSource);
         this.pokemon = pokemon;
         this.from = from;
         this.to = to;

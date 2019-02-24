@@ -22,7 +22,7 @@ public class PokemonRescuedEvent extends DungeonEvent implements Communicable {
     protected Player rescuer;
 
     public PokemonRescuedEvent(Floor floor, DungeonPokemon rescued, Player rescuer) {
-        super(floor);
+        super(floor, eventSource);
         this.rescued = rescued;
         this.rescuer = rescuer;
         this.mission = this.floor.dungeon.findRescueMission(this.floor, this.rescued);

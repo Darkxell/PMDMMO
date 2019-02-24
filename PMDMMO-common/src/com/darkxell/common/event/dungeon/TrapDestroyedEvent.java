@@ -12,7 +12,7 @@ public class TrapDestroyedEvent extends DungeonEvent {
     public final Tile tile;
 
     public TrapDestroyedEvent(Floor floor, Tile tile) {
-        super(floor);
+        super(floor, eventSource);
         this.tile = tile;
     }
 

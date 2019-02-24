@@ -17,7 +17,7 @@ public class PPChangedEvent extends DungeonEvent {
     public final int pp;
 
     public PPChangedEvent(Floor floor, DungeonPokemon pokemon, int pp, int moveIndex) {
-        super(floor);
+        super(floor, eventSource);
         this.pokemon = pokemon;
         this.pp = pp;
         this.moveIndex = moveIndex;

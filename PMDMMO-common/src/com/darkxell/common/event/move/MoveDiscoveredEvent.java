@@ -13,7 +13,7 @@ public class MoveDiscoveredEvent extends DungeonEvent {
     public final Pokemon pokemon;
 
     public MoveDiscoveredEvent(Floor floor, Pokemon pokemon, Move move) {
-        super(floor);
+        super(floor, eventSource);
         this.pokemon = pokemon;
         this.move = move;
     }

@@ -21,7 +21,7 @@ public class BlowbackPokemonEvent extends DungeonEvent {
     private boolean wasHurt;
 
     public BlowbackPokemonEvent(Floor floor, DungeonPokemon pokemon, Direction direction) {
-        super(floor);
+        super(floor, eventSource);
         this.pokemon = pokemon;
         this.direction = direction;
         this.origin = this.pokemon.tile();

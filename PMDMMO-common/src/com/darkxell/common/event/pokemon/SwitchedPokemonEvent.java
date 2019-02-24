@@ -12,7 +12,7 @@ public class SwitchedPokemonEvent extends DungeonEvent {
     public final DungeonPokemon switcher, target;
 
     public SwitchedPokemonEvent(Floor floor, DungeonPokemon switcher, DungeonPokemon target) {
-        super(floor);
+        super(floor, eventSource);
         this.switcher = switcher;
         this.target = target;
     }

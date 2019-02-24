@@ -25,7 +25,7 @@ public class StatusConditionEndedEvent extends DungeonEvent {
     public final StatusConditionEndReason reason;
 
     public StatusConditionEndedEvent(Floor floor, AppliedStatusCondition condition, StatusConditionEndReason reason) {
-        super(floor);
+        super(floor, eventSource);
         this.condition = condition;
         this.reason = reason;
     }

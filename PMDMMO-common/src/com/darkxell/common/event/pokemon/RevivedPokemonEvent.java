@@ -12,7 +12,7 @@ public class RevivedPokemonEvent extends DungeonEvent {
     public final DungeonPokemon pokemon;
 
     public RevivedPokemonEvent(Floor floor, DungeonPokemon pokemon) {
-        super(floor);
+        super(floor, eventSource);
         this.pokemon = pokemon;
     }
 

@@ -25,7 +25,7 @@ public class ItemMovedEvent extends DungeonEvent implements Communicable {
     protected int sourceIndex, destinationIndex;
 
     public ItemMovedEvent(Floor floor) {
-        super(floor);
+        super(floor, eventSource);
     }
 
     public ItemMovedEvent(Floor floor, ItemAction action, DungeonPokemon mover, ItemContainer source, int sourceIndex,
@@ -35,7 +35,7 @@ public class ItemMovedEvent extends DungeonEvent implements Communicable {
 
     public ItemMovedEvent(Floor floor, ItemAction action, DungeonPokemon mover, ItemContainer source, int sourceIndex,
             ItemContainer destination, int destinationIndex, boolean isTurnAction) {
-        super(floor, isTurnAction ? mover : null);
+        super(floor, eventSource, isTurnAction ? mover : null);
         this.mover = mover;
         this.action = action;
         this.source = source;

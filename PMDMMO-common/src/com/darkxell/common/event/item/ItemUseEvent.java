@@ -25,7 +25,7 @@ public class ItemUseEvent extends DungeonEvent {
     }
 
     public ItemUseEvent(Floor floor, Item item, DungeonPokemon user, DungeonPokemon target, boolean thrown) {
-        super(floor);
+        super(floor, eventSource);
         this.item = item;
         this.user = user;
         this.target = target;
