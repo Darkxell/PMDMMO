@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.move.Move;
@@ -25,9 +26,8 @@ public class MultipleAttacksEffect extends MoveEffect {
     }
 
     @Override
-    public void additionalEffects(MoveUse usedMove, DungeonPokemon target, String[] flags, Floor floor,
-            MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
-        super.additionalEffects(usedMove, target, flags, floor, calculator, missed, effects);
+    public void additionalEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
+        super.additionalEffects(moveEvent, calculator, missed, effects);
 
         int attacksleft = 0;
         for (String flag : flags)
@@ -35,11 +35,11 @@ public class MultipleAttacksEffect extends MoveEffect {
                 attacksleft = Integer.parseInt(flag.substring("attacksleft=".length()));
                 break;
             }
-        if (this.shouldContinue(attacksleft, usedMove, target, flags, floor, calculator, missed, effects)) {
+        if (this.shouldContinue(attacksleft, moveEvent, target, flags, floor, calculator, missed, effects)) {
             --attacksleft;
-            MoveUseEvent e = new MoveUseEvent(floor, eventSource, usedMove, target);
+            MoveUseEvent e = new MoveUseEvent(floor, eventSource, moveEvent, target);
             e.addFlag("attacksleft=" + attacksleft);
-            effects.createEffect(e, usedMove, target, floor, missed, false, null);
+            effects.createEffect(e, moveEvent, missed, false, null);
         }
     }
 
@@ -61,8 +61,8 @@ public class MultipleAttacksEffect extends MoveEffect {
     }
 
     @Override
-    protected void useOn(MoveUse move, DungeonPokemon target, Floor floor, ArrayList<DungeonEvent> events) {
-        super.useOn(move, target, floor, events);
+    protected void useOn(MoveSelectionEvent moveEvent, DungeonPokemon target, ArrayList<DungeonEvent> events) {
+        super.useOn(moveEvent, target, events);
         for (DungeonEvent e : events)
             if (e instanceof MoveUseEvent) {
                 MoveUseEvent event = (MoveUseEvent) e;

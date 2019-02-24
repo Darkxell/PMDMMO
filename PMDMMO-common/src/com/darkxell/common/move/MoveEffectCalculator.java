@@ -6,6 +6,7 @@ import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.DungeonEvent.MessageEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
+import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.move.Move.MoveCategory;
 import com.darkxell.common.move.effects.CompoundEffect;
 import com.darkxell.common.pokemon.BaseStats.Stat;
@@ -25,32 +26,29 @@ public class MoveEffectCalculator {
     public final Floor floor;
     public final PropertyModificator modificator = new PropertyModificator();
     public final MoveUse move;
+    public final MoveUseEvent moveEvent;
     public final DungeonPokemon target;
 
-    public MoveEffectCalculator(MoveUse move, DungeonPokemon target, Floor floor, String[] flags) {
-        this.move = move;
-        this.target = target;
-        this.floor = floor;
-        this.flags = flags;
+    public MoveEffectCalculator(MoveUseEvent moveEvent) {
+        this.moveEvent = moveEvent;
+        this.move = this.moveEvent.usedMove;
+        this.target = this.moveEvent.target;
+        this.floor = this.moveEvent.floor;
+        this.flags = this.moveEvent.flags(); // No security issue, is already a copy
 
         if (this.move().effect() instanceof CompoundEffect)
             for (MoveEffect e : ((CompoundEffect) this.move().effect()).effects)
-                this.modificator.add(e);
-        else
-            this.modificator.add(this.move().effect());
+            this.modificator.add(e);
+        else this.modificator.add(this.move().effect());
         this.modificator.addUser(this.user().ability());
-        if (target != null)
-            this.modificator.add(target.ability());
-        if (this.user().hasItem())
-            this.modificator.addUser(this.user().getItem().item());
-        if (target != null && target.hasItem())
-            this.modificator.add(target.getItem().item());
+        if (target != null) this.modificator.add(target.ability());
+        if (this.user().hasItem()) this.modificator.addUser(this.user().getItem().item());
+        if (target != null && target.hasItem()) this.modificator.add(target.getItem().item());
         this.modificator.add(floor.currentWeather().weather);
         for (AppliedStatusCondition s : this.move.user.activeStatusConditions())
             this.modificator.addUser(s.condition);
-        if (target != null)
-            for (AppliedStatusCondition s : this.target.activeStatusConditions())
-                this.modificator.add(s.condition);
+        if (target != null) for (AppliedStatusCondition s : this.target.activeStatusConditions())
+            this.modificator.add(s.condition);
         for (ActiveFloorStatus status : floor.activeStatuses())
             this.modificator.add(status.status);
     }
@@ -64,10 +62,8 @@ public class MoveEffectCalculator {
         stats.setStage(acc, accStage);
         double accuracy = stats.getStat(acc);
         accuracy = this.modificator.applyStatModifications(acc, accuracy, move, target, floor, events);
-        if (accuracy < 0)
-            accuracy = 0;
-        if (accuracy > 999)
-            accuracy = 999;
+        if (accuracy < 0) accuracy = 0;
+        if (accuracy > 999) accuracy = 999;
 
         return accuracy;
     }
@@ -81,10 +77,8 @@ public class MoveEffectCalculator {
         stats.setStage(atk, atkStage);
         double attack = stats.getStat(atk);
         attack = this.modificator.applyStatModifications(atk, attack, move, target, floor, events);
-        if (attack < 0)
-            attack = 0;
-        if (attack > 999)
-            attack = 999;
+        if (attack < 0) attack = 0;
+        if (attack > 999) attack = 999;
 
         return (int) attack;
     }
@@ -98,10 +92,8 @@ public class MoveEffectCalculator {
 
         double damage = ((attack + power) * 0.6 - defense / 2
                 + 50 * Math.log(((attack - defense) / 8 + level + 50) * 10) - 311) * wildNerfer;
-        if (damage < 1)
-            damage = 1;
-        if (damage > 999)
-            damage = 999;
+        if (damage < 1) damage = 1;
+        if (damage > 999) damage = 999;
 
         double multiplier = this.damageMultiplier(this.criticalLands(events), events);
         damage *= multiplier;
@@ -116,8 +108,7 @@ public class MoveEffectCalculator {
 
     protected double computeEffectiveness() {
         double effectiveness = PokemonType.NORMALLY_EFFECTIVE;
-        if (this.target != null)
-            effectiveness = move.move.move().type.effectivenessOn(target.species());
+        if (this.target != null) effectiveness = move.move.move().type.effectivenessOn(target.species());
         effectiveness = this.modificator.applyEffectivenessModifications(effectiveness, move, target, floor);
         return effectiveness;
     }
@@ -125,19 +116,17 @@ public class MoveEffectCalculator {
     protected boolean criticalLands(ArrayList<DungeonEvent> events) {
         int crit = move.move.move().critical;
         crit = this.modificator.applyCriticalRateModifications(crit, move, target, floor, events);
-        if (this.effectiveness() == PokemonType.SUPER_EFFECTIVE && crit > 40)
-            crit = 40;
+        if (this.effectiveness() == PokemonType.SUPER_EFFECTIVE && crit > 40) crit = 40;
         return floor.random.nextInt(100) < crit;
     }
 
     protected double damageMultiplier(boolean critical, ArrayList<DungeonEvent> events) {
         double multiplier = 1;
         multiplier *= this.effectiveness();
-        if (move.isStab())
-            multiplier *= 1.5;
+        if (move.isStab()) multiplier *= 1.5;
         if (critical) {
             multiplier *= 1.5;
-            events.add(new MessageEvent(this.floor, eventSource, new Message("move.critical")));
+            events.add(new MessageEvent(this.floor, this.moveEvent, new Message("move.critical")));
         }
 
         multiplier *= this.modificator.damageMultiplier(this.move, this.target, this.floor, this.flags, events);
@@ -153,17 +142,14 @@ public class MoveEffectCalculator {
         stats.setStage(def, defStage);
         double defense = stats.getStat(def);
         defense = this.modificator.applyStatModifications(def, defense, move, target, floor, events);
-        if (defense < 0)
-            defense = 0;
-        if (defense > 999)
-            defense = 999;
+        if (defense < 0) defense = 0;
+        if (defense > 999) defense = 999;
 
         return (int) defense;
     }
 
     public double effectiveness() {
-        if (this.effectiveness == -1)
-            this.effectiveness = this.computeEffectiveness();
+        if (this.effectiveness == -1) this.effectiveness = this.computeEffectiveness();
         return this.effectiveness;
     }
 
@@ -176,25 +162,20 @@ public class MoveEffectCalculator {
         stats.setStage(ev, evStage);
         double evasion = stats.getStat(ev);
         evasion = this.modificator.applyStatModifications(ev, evasion, move, target, floor, events);
-        if (evasion < 0)
-            evasion = 0;
-        if (evasion > 999)
-            evasion = 999;
+        if (evasion < 0) evasion = 0;
+        if (evasion > 999) evasion = 999;
 
         // Reminder : Great evasion value actually means the monster is LESS likely to evade.
 
         return evasion;
     }
 
-    /**
-     * @param  usedMove - The Move used.
-     * @param  target   - The Pokemon receiving the Move.
-     * @param  floor    - The Floor context.
-     * @return          True if this Move misses.
-     */
+    /** @param usedMove - The Move used.
+     * @param target - The Pokemon receiving the Move.
+     * @param floor - The Floor context.
+     * @return True if this Move misses. */
     public boolean misses(ArrayList<DungeonEvent> events) {
-        if (this.target == null)
-            return false;
+        if (this.target == null) return false;
 
         int accuracy = this.move().accuracy;
 

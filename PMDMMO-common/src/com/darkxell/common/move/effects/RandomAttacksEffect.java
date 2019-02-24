@@ -2,9 +2,8 @@ package com.darkxell.common.move.effects;
 
 import java.util.ArrayList;
 
-import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
-import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
+import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.move.MoveEffect;
@@ -22,10 +21,10 @@ public class RandomAttacksEffect extends MoveEffect {
     }
 
     @Override
-    public void createMoves(MoveUse move, Floor floor, ArrayList<DungeonEvent> events) {
+    public void createMoves(MoveSelectionEvent moveEvent, ArrayList<DungeonEvent> events) {
         for (int i = 0; i < this.attacks; ++i) {
             Direction d = RandomUtil.random(Direction.DIRECTIONS, floor.random);
-            MoveUseEvent e = new MoveUseEvent(floor, eventSource, move, move.user.tile().adjacentTile(d).getPokemon());
+            MoveUseEvent e = new MoveUseEvent(floor, eventSource, moveEvent, moveEvent.user.tile().adjacentTile(d).getPokemon());
             e.direction = d;
             events.add(e);
         }
