@@ -38,7 +38,7 @@ public class PreventStatusEquipableItemEffect extends ItemEffect {
             if (shouldPrevent) {
                 e.consume();
                 resultingEvents.add(new MessageEvent(floor,
-                        new Message("status.prevented.item").addReplacement("<pokemon>", concerned.getNickname())
+                        eventSource, new Message("status.prevented.item").addReplacement("<pokemon>", concerned.getNickname())
                                 .addReplacement("<item>", concerned.getItem().name())
                                 .addReplacement("<condition>", e.condition.condition.name())));
             }

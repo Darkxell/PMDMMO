@@ -53,18 +53,18 @@ public class AIStateFollowPokemon extends AIState {
 				return new MoveSelectionEvent(this.ai.floor, move, this.ai.pokemon, d);
 			}
 			if (direction != this.ai.pokemon.facing())
-				return new PokemonRotateEvent(this.ai.floor, this.ai.pokemon, direction);
-			return new TurnSkippedEvent(this.ai.floor, this.ai.pokemon);
+				return new PokemonRotateEvent(this.ai.floor, eventSource, this.ai.pokemon, direction);
+			return new TurnSkippedEvent(this.ai.floor, eventSource, this.ai.pokemon);
 		}
 
 		// Else try to reach the target
 		Direction go = AIUtils.direction(this.ai.pokemon, this.target);
 		if (go == null || !this.ai.pokemon.canMove(this.ai.floor) || !this.canMove) {
 			if (direction != this.ai.pokemon.facing())
-				return new PokemonRotateEvent(this.ai.floor, this.ai.pokemon, direction);
-			return new TurnSkippedEvent(this.ai.floor, this.ai.pokemon);
+				return new PokemonRotateEvent(this.ai.floor, eventSource, this.ai.pokemon, direction);
+			return new TurnSkippedEvent(this.ai.floor, eventSource, this.ai.pokemon);
 		}
-		return new PokemonTravelEvent(this.ai.floor, this.ai.pokemon, go);
+		return new PokemonTravelEvent(this.ai.floor, eventSource, this.ai.pokemon, go);
 	}
 
 	@Override

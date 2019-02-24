@@ -80,7 +80,7 @@ public abstract class AI {
 	/** Calls the AIState to determine the action to execute. */
 	public DungeonEvent takeAction() {
 		if (!this.hasSuperState()) this.update();
-		if (this.currentState() == null) return new TurnSkippedEvent(this.floor, this.pokemon);
+		if (this.currentState() == null) return new TurnSkippedEvent(this.floor, eventSource, this.pokemon);
 		return this.currentState().takeAction();
 	}
 

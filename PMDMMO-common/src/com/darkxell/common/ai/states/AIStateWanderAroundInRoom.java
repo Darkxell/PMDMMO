@@ -30,9 +30,9 @@ public class AIStateWanderAroundInRoom extends AIState {
             directions.remove(d);
             if (this.ai.pokemon.tile().adjacentTile(d).isInRoom()
                     && this.ai.pokemon.tile().adjacentTile(d).canMoveTo(this.ai.pokemon, d, false))
-                return new PokemonTravelEvent(this.ai.floor, this.ai.pokemon, d);
+                return new PokemonTravelEvent(this.ai.floor, eventSource, this.ai.pokemon, d);
         }
-        return new TurnSkippedEvent(this.ai.floor, this.ai.pokemon);
+        return new TurnSkippedEvent(this.ai.floor, eventSource, this.ai.pokemon);
     }
 
     @Override

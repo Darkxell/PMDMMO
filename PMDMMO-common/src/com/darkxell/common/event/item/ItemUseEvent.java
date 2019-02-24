@@ -44,7 +44,7 @@ public class ItemUseEvent extends DungeonEvent {
         else
             this.item.use(this.floor, this.user, this.target, this.resultingEvents);
         if (this.resultingEvents.size() == 0)
-            this.resultingEvents.add(new MessageEvent(this.floor, new Message("item.no_effect")));
+            this.resultingEvents.add(new MessageEvent(this.floor, eventSource, new Message("item.no_effect")));
         return super.processServer();
     }
 

@@ -76,8 +76,8 @@ public class DungeonEventTransferTest {
     }
 
     private DungeonEvent[] generateEvents() {
-        return new DungeonEvent[] { new PokemonRotateEvent(floor, pokemon, Direction.SOUTHWEST),
-                new PokemonTravelEvent(floor, pokemon, Direction.SOUTHWEST), new TurnSkippedEvent(floor, pokemon),
+        return new DungeonEvent[] { new PokemonRotateEvent(floor, eventSource, pokemon, Direction.SOUTHWEST),
+                new PokemonTravelEvent(floor, eventSource, pokemon, Direction.SOUTHWEST), new TurnSkippedEvent(floor, eventSource, pokemon),
                 new ItemMovedEvent(floor, ItemAction.GET, this.pokemon, this.floor.tileAt(10, 12), 0,
                         this.pokemon.player().inventory(), 1),
                 new ItemSwappedEvent(floor, ItemAction.SWAP, this.pokemon, this.floor.tileAt(10, 12), 0,
