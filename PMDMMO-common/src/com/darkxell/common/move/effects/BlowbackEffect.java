@@ -21,7 +21,7 @@ public class BlowbackEffect extends MoveEffect {
         effects.createEffect(
                 new BlowbackPokemonEvent(moveEvent.floor, moveEvent, moveEvent.target,
                         this.direction(moveEvent, calculator, missed, effects)),
-                moveEvent, missed, false, moveEvent.target);
+                moveEvent, missed, false);
     }
 
     protected Direction direction(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed,

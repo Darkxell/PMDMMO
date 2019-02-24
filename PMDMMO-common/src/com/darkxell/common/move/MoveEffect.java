@@ -194,12 +194,12 @@ public class MoveEffect implements AffectsPokemon {
                                         .addReplacement("<pokemon>",
                                                 moveEvent.target == null ? new Message("no one", false)
                                                         : moveEvent.target.getNickname())),
-                        moveEvent, missed, true, null);
+                        moveEvent, missed, true);
             else if (moveEvent.usedMove.move.move().dealsDamage) effects
                     .createEffect(
                             new DamageDealtEvent(moveEvent.floor, moveEvent, moveEvent.target, moveEvent.usedMove,
                                     DamageType.MOVE, calculator.compute(effects.events)),
-                            moveEvent, missed, false, null);
+                            moveEvent, missed, false);
 
         this.additionalEffects(moveEvent, calculator, missed, effects);
     }

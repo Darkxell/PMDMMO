@@ -38,7 +38,7 @@ public class MultipleAttacksEffect extends MoveEffect {
             --attacksleft;
             MoveUseEvent e = new MoveUseEvent(moveEvent.floor, moveEvent, moveEvent.usedMove, moveEvent.target);
             e.addFlag("attacksleft=" + attacksleft);
-            effects.createEffect(e, moveEvent, missed, false, null);
+            effects.createEffect(e, moveEvent, missed, false);
         }
     }
 

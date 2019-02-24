@@ -33,7 +33,7 @@ public class TeleportToOtherRoomEffect extends MoveEffect {
         if (rooms.size() >= 1) destination = RandomUtil.random(rooms, moveEvent.floor.random).randomTile(moveEvent.floor.random, TileType.GROUND, true);
         else destination = moveEvent.floor.randomEmptyTile(true, false, TileType.GROUND, moveEvent.floor.random);
 
-        effects.createEffect(new PokemonTeleportedEvent(moveEvent.floor, moveEvent, moveEvent.target, destination), moveEvent, missed, false, moveEvent.target);
+        effects.createEffect(new PokemonTeleportedEvent(moveEvent.floor, moveEvent, moveEvent.target, destination), moveEvent, missed, false);
     }
 
 }

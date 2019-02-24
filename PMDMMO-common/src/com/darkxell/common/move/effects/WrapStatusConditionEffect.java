@@ -28,8 +28,8 @@ public class WrapStatusConditionEffect extends MoveEffect {
                 AppliedStatusCondition wrapping = StatusConditions.Wrapping.create(moveEvent.floor, moveEvent.usedMove.user, moveEvent, moveEvent.floor.random);
                 wrapped.addFlag("wrapped:" + moveEvent.target.id());
 
-                effects.createEffect(new StatusConditionCreatedEvent(moveEvent.floor, moveEvent, wrapped), moveEvent, missed, false, moveEvent.target);
-                effects.createEffect(new StatusConditionCreatedEvent(moveEvent.floor, moveEvent, wrapping), moveEvent, missed, false, moveEvent.usedMove.user);
+                effects.createEffect(new StatusConditionCreatedEvent(moveEvent.floor, moveEvent, wrapped), moveEvent, missed, false);
+                effects.createEffect(new StatusConditionCreatedEvent(moveEvent.floor, moveEvent, wrapping), moveEvent, missed, false);
             }
         }
     }
