@@ -6,6 +6,7 @@ import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.item.ItemSelectionEvent;
+import com.darkxell.common.event.item.ItemUseEvent;
 import com.darkxell.common.player.ItemContainer;
 import com.darkxell.common.pokemon.AffectsPokemon;
 import com.darkxell.common.pokemon.DungeonPokemon;
@@ -31,8 +32,7 @@ public class ItemEffect implements AffectsPokemon {
 
         while (current.getPokemon() == null || (!targetsAllies && pokemon.isAlliedWith(current.getPokemon()))) {
             current = current.adjacentTile(direction);
-            if (current.isWall())
-                return current;
+            if (current.isWall()) return current;
         }
 
         return current;
@@ -43,10 +43,8 @@ public class ItemEffect implements AffectsPokemon {
         return "item.used";
     }
 
-    /**
-     * @param  event - The Pokemon using the Item.
-     * @return       The message to display when using this Item.
-     */
+    /** @param event - The Pokemon using the Item.
+     * @return The message to display when using this Item. */
     public Message getUseEffectMessage(ItemSelectionEvent event) {
         return new Message(this.getUseEffectID()).addReplacement("<user>", event.user().getNickname())
                 .addReplacement("<target>",
@@ -87,61 +85,40 @@ public class ItemEffect implements AffectsPokemon {
         return new Message("item." + item.id);
     }
 
-    /**
-     * Method called just after an Event is processed.
+    /** Method called just after an Event is processed.
      *
-     * @param floor           - The Floor context.
-     * @param event           - The processed Event.
-     * @param concerned       - A reference to a Pokemon for various uses. It is the owner this is an Item, a Status
-     *                        Condition or an Ability.
+     * @param floor - The Floor context.
+     * @param event - The processed Event.
+     * @param concerned - A reference to a Pokemon for various uses. It is the owner this is an Item, a Status Condition or an Ability.
      * @param resultingEvents - List to store any created Events. They will be added to the list of pending Events.
-     * @param item            - The Item with this effect.
-     * @param container       - The object containing the Item with this effect.
-     * @param containerIndex  - The index of the Item in the container.
-     */
+     * @param item - The Item with this effect.
+     * @param container - The object containing the Item with this effect.
+     * @param containerIndex - The index of the Item in the container. */
     public void onPostEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned,
-            ArrayList<DungeonEvent> resultingEvents, ItemStack item, ItemContainer container, int containerIndex) {
-    }
+            ArrayList<DungeonEvent> resultingEvents, ItemStack item, ItemContainer container, int containerIndex) {}
 
-    /**
-     * Method called just before an Event is processed.
+    /** Method called just before an Event is processed.
      *
-     * @param floor           - The Floor context.
-     * @param event           - The processed Event.
-     * @param concerned       - A reference to a Pokemon for various uses. It is the owner this is an Item, a Status
-     *                        Condition or an Ability.
+     * @param floor - The Floor context.
+     * @param event - The processed Event.
+     * @param concerned - A reference to a Pokemon for various uses. It is the owner this is an Item, a Status Condition or an Ability.
      * @param resultingEvents - List to store any created Events. They will be added to the list of pending Events.
-     * @param item            - The Item with this effect.
-     * @param container       - The object containing the Item with this effect.
-     * @param containerIndex  - The index of the Item in the container.
-     */
+     * @param item - The Item with this effect.
+     * @param container - The object containing the Item with this effect.
+     * @param containerIndex - The index of the Item in the container. */
     public void onPreEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned,
-            ArrayList<DungeonEvent> resultingEvents, ItemStack item, ItemContainer container, int containerIndex) {
-    }
+            ArrayList<DungeonEvent> resultingEvents, ItemStack item, ItemContainer container, int containerIndex) {}
 
-    /**
-     * Called when an Item with this Effect is used.
+    /** Called when an Item with this Effect is used.
      *
-     * @param floor   - The current Floor.
-     * @param item    - The used Item.
-     * @param pokemon - The Pokemon using the Item.
-     * @param target  - The Pokemon the Item is being used on. May be null if there is no target.
-     */
-    public void use(Floor floor, Item item, DungeonPokemon pokemon, DungeonPokemon target,
-            ArrayList<DungeonEvent> events) {
-    }
+     * @param itemEvent - The current Floor. */
+    public void use(ItemUseEvent itemEvent, ArrayList<DungeonEvent> events) {}
 
-    /**
-     * Called when an Item with this Effect is used when caught.
-     *
-     * @param floor   - The current Floor.
-     * @param item    - The used Item.
-     * @param pokemon - The Pokemon that threw the Item.
-     * @param target  - The Pokemon the Item is being used on (the one that Item was thrown on).
-     */
-    public void useThrown(Floor floor, Item item, DungeonPokemon pokemon, DungeonPokemon target,
-            ArrayList<DungeonEvent> events) {
-        this.use(floor, item, pokemon, target, events);
+    /** Called when an Item with this Effect is used when caught.
+     * 
+     * @param itemEvent TODO */
+    public void useThrown(ItemUseEvent itemEvent, ArrayList<DungeonEvent> events) {
+        this.use(itemEvent, events);
     }
 
 }

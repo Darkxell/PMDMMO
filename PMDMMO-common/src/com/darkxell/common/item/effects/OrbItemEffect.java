@@ -2,13 +2,12 @@ package com.darkxell.common.item.effects;
 
 import java.util.ArrayList;
 
-import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.DungeonEvent.MessageEvent;
+import com.darkxell.common.event.item.ItemUseEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.ItemEffect;
-import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.LearnedMove;
 import com.darkxell.common.util.language.Message;
 
@@ -38,12 +37,11 @@ public class OrbItemEffect extends ItemEffect {
     }
 
     @Override
-    public final void use(Floor floor, Item item, DungeonPokemon pokemon, DungeonPokemon target,
-            ArrayList<DungeonEvent> events) {
-        if (floor.data.isBossFloor())
-            events.add(new MessageEvent(floor, eventSource, new Message("item.orb.boss")));
+    public final void use(ItemUseEvent itemEvent, ArrayList<DungeonEvent> events) {
+        if (itemEvent.data.isBossFloor())
+            events.add(new MessageEvent(itemEvent, eventSource, new Message("item.orb.boss")));
         else
-            events.add(new MoveSelectionEvent(floor, eventSource, new LearnedMove(this.moveID), pokemon, pokemon.facing(), false));
+            events.add(new MoveSelectionEvent(itemEvent, eventSource, new LearnedMove(this.moveID), pokemon, pokemon.facing(), false));
     }
 
 }
