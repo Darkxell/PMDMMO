@@ -14,12 +14,13 @@ public class DropItemEffect extends MoveEffect {
     }
 
     @Override
-    public void additionalEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
+    public void additionalEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed,
+            MoveEvents effects) {
         super.additionalEffects(moveEvent, calculator, missed, effects);
 
-        if (!missed && target.hasItem())
-            effects.createEffect(new ItemMovedEvent(floor, eventSource, ItemAction.AUTO, null, target, 0, target.tile(), 0),
-                    moveEvent, missed, true, target);
+        if (!missed && moveEvent.target.hasItem())
+            effects.createEffect(new ItemMovedEvent(moveEvent.floor, moveEvent, ItemAction.AUTO, null, moveEvent.target,
+                    0, moveEvent.target.tile(), 0), moveEvent, missed, true, moveEvent.target);
     }
 
 }

@@ -23,7 +23,12 @@ public class ItemThrownEvent extends DungeonEvent implements Communicable {
     private int sourceIndex;
     private DungeonPokemon thrower;
 
-    public ItemThrownEvent(Floor floor, DungeonEventSource eventSource, DungeonPokemon thrower, ItemContainer source, int sourceIndex) {
+    public ItemThrownEvent(Floor floor, DungeonEventSource eventSource) {
+        super(floor, eventSource);
+    }
+
+    public ItemThrownEvent(Floor floor, DungeonEventSource eventSource, DungeonPokemon thrower, ItemContainer source,
+            int sourceIndex) {
         super(floor, eventSource, thrower);
         this.thrower = thrower;
         this.source = source;
@@ -44,11 +49,10 @@ public class ItemThrownEvent extends DungeonEvent implements Communicable {
 
             ItemStack stack = this.source.getItem(this.sourceIndex);
             stack.setQuantity(stack.quantity() - 1);
-            if (stack.quantity() <= 0)
-                this.source.deleteItem(this.sourceIndex);
+            if (stack.quantity() <= 0) this.source.deleteItem(this.sourceIndex);
 
-            this.resultingEvents.add(new ProjectileThrownEvent(this.floor, eventSource, this.item,
-                    this.thrower, this.item.effect().findDestinationStraight(this.floor, this.item, this.thrower, true)));
+            this.resultingEvents.add(new ProjectileThrownEvent(this.floor, this, this.item, this.thrower,
+                    this.item.effect().findDestinationStraight(this.floor, this.item, this.thrower, true)));
         }
         return super.processServer();
     }
@@ -57,8 +61,7 @@ public class ItemThrownEvent extends DungeonEvent implements Communicable {
     public void read(JsonObject value) throws JsonReadingException {
         try {
             Pokemon p = this.floor.dungeon.communication.pokemonIDs.get(value.getLong("thrower", 0));
-            if (p == null)
-                throw new JsonReadingException("No pokemon with ID " + value.getLong("thrower", 0));
+            if (p == null) throw new JsonReadingException("No pokemon with ID " + value.getLong("thrower", 0));
             this.thrower = this.actor = p.getDungeonPokemon();
         } catch (JsonReadingException e) {
             throw e;

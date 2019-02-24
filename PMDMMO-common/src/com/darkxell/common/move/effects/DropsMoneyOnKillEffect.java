@@ -15,16 +15,16 @@ public class DropsMoneyOnKillEffect extends MoveEffect {
     }
 
     @Override
-    public void additionalEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
+    public void additionalEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed,
+            MoveEvents effects) {
         super.additionalEffects(moveEvent, calculator, missed, effects);
 
-        if (!missed && target != null) {
-            ItemStack item = new ItemStack(Item.POKEDOLLARS, floor.getMoneyQuantity());
-            ItemCreatedEvent event = new ItemCreatedEvent(floor, eventSource, item, target.tile()) {
+        if (!missed && moveEvent.target != null) {
+            ItemStack item = new ItemStack(Item.POKEDOLLARS, moveEvent.floor.getMoneyQuantity());
+            ItemCreatedEvent event = new ItemCreatedEvent(moveEvent.floor, moveEvent, item, moveEvent.target.tile()) {
                 @Override
                 public boolean isValid() {
-                    if (!target.isFainted())
-                        return false;
+                    if (!moveEvent.target.isFainted()) return false;
                     return super.isValid();
                 }
             };
