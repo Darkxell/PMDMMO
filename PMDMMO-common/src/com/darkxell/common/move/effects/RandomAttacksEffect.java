@@ -23,8 +23,9 @@ public class RandomAttacksEffect extends MoveEffect {
     @Override
     public void createMoves(MoveSelectionEvent moveEvent, ArrayList<DungeonEvent> events) {
         for (int i = 0; i < this.attacks; ++i) {
-            Direction d = RandomUtil.random(Direction.DIRECTIONS, floor.random);
-            MoveUseEvent e = new MoveUseEvent(floor, eventSource, moveEvent, moveEvent.user.tile().adjacentTile(d).getPokemon());
+            Direction d = RandomUtil.random(Direction.DIRECTIONS, moveEvent.floor.random);
+            MoveUseEvent e = new MoveUseEvent(moveEvent.floor, moveEvent, moveEvent.usedMove(),
+                    moveEvent.usedMove().user.tile().adjacentTile(d).getPokemon());
             e.direction = d;
             events.add(e);
         }

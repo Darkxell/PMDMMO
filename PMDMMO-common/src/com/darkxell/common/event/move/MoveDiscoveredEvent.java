@@ -26,9 +26,8 @@ public class MoveDiscoveredEvent extends DungeonEvent {
 
     @Override
     public ArrayList<DungeonEvent> processServer() {
-        if (this.pokemon.moveCount() < 4)
-            this.resultingEvents
-                    .add(new MoveLearnedEvent(this.floor, eventSource, this.pokemon, this.move, this.pokemon.moveCount()));
+        if (this.pokemon.moveCount() < 4) this.resultingEvents
+                .add(new MoveLearnedEvent(this.floor, this, this.pokemon, this.move, this.pokemon.moveCount()));
         return super.processServer();
     }
 

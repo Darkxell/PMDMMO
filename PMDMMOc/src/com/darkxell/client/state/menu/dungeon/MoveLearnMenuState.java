@@ -12,8 +12,8 @@ import com.darkxell.client.state.dungeon.DungeonState;
 import com.darkxell.client.state.menu.components.MoveSelectionWindow;
 import com.darkxell.client.state.menu.menus.MovesMenuState;
 import com.darkxell.client.ui.Keys.Key;
+import com.darkxell.common.event.move.MoveDiscoveredEvent;
 import com.darkxell.common.event.move.MoveLearnedEvent;
-import com.darkxell.common.move.Move;
 import com.darkxell.common.pokemon.LearnedMove;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.language.Message;
@@ -22,11 +22,13 @@ public class MoveLearnMenuState extends MovesMenuState implements DialogEndListe
 
     public final LearnedMove move;
     public final Pokemon pokemon;
+    public final MoveDiscoveredEvent event;
 
-    public MoveLearnMenuState(DungeonState parent, Pokemon pokemon, Move move) {
-        super(parent, parent, true, pokemon);
-        this.pokemon = pokemon;
-        this.move = new LearnedMove(move.id);
+    public MoveLearnMenuState(DungeonState parent, MoveDiscoveredEvent event) {
+        super(parent, parent, true, event.pokemon);
+        this.event = event;
+        this.pokemon = this.event.pokemon;
+        this.move = new LearnedMove(this.event.move.id);
         this.canOrder = false;
 
         this.tabs.get(0).addOption(new MoveMenuOption(this.move, this.pokemon == Persistence.player.getTeamLeader()));
@@ -50,17 +52,14 @@ public class MoveLearnMenuState extends MovesMenuState implements DialogEndListe
         if (((ConfirmDialogScreen) dialog.getScreen(1)).hasConfirmed()) {
             Persistence.stateManager.setState(Persistence.dungeonState);
             if (this.optionIndex() < 4)
-                Persistence.eventProcessor().processEvent(
-                        new MoveLearnedEvent(Persistence.floor, eventSource, this.pokemon, this.move.move(), this.optionIndex()));
-            else
-                Persistence.eventProcessor().processPending();
-        } else
-            Persistence.stateManager.setState(this);
+                Persistence.eventProcessor().processEvent(new MoveLearnedEvent(Persistence.floor, this.event,
+                        this.pokemon, this.move.move(), this.optionIndex()));
+            else Persistence.eventProcessor().processPending();
+        } else Persistence.stateManager.setState(this);
     }
 
     @Override
-    protected void onExit() {
-    }
+    protected void onExit() {}
 
     @Override
     protected void onOptionSelected(MenuOption option) {

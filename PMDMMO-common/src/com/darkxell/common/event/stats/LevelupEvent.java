@@ -23,7 +23,7 @@ public class LevelupEvent extends DungeonEvent {
 
     @Override
     public ArrayList<DungeonEvent> processServer() {
-        this.pokemon.levelUp(this.floor, this.resultingEvents);
+        this.pokemon.levelUp(this, this.resultingEvents);
         return super.processServer();
     }
 
