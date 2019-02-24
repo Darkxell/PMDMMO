@@ -28,7 +28,7 @@ public class BoostStatOnHitStatusCondition extends StatusCondition {
             DamageDealtEvent e = (DamageDealtEvent) event;
             if (e.target.hasStatusCondition(this))
                 resultingEvents
-                        .add(new StatChangedEvent(floor, e.target, this.stat, 1, e.target.getStatusCondition(this)));
+                        .add(new StatChangedEvent(floor, eventSource, e.target, this.stat, 1, e.target.getStatusCondition(this)));
         }
     }
 

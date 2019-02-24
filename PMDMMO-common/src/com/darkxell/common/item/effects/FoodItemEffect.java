@@ -53,12 +53,12 @@ public class FoodItemEffect extends ItemEffect {
             ArrayList<DungeonEvent> events) {
         int increase = this.belly;
         if (target.getBelly() < target.getBellySize())
-            events.add(new BellyChangedEvent(floor, target, this.food));
+            events.add(new BellyChangedEvent(floor, eventSource, target, this.food));
         else
             increase += this.bellyIfFull;
 
         if (increase != 0)
-            events.add(new BellySizeChangedEvent(floor, target, increase));
+            events.add(new BellySizeChangedEvent(floor, eventSource, target, increase));
     }
 
 }

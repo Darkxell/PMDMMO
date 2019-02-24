@@ -163,7 +163,7 @@ public class Pokemon implements ItemContainer, HasID {
             if (next <= amount) {
                 amount -= next;
                 this.setExperience(0);
-                events.add(new LevelupEvent(event.floor, this));
+                events.add(new LevelupEvent(event.floor, eventSource, this));
             } else {
                 this.setExperience(this.experience() + amount);
                 amount = 0;

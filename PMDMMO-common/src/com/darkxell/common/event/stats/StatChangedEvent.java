@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.pokemon.BaseStats.Stat;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Message;
@@ -18,7 +19,7 @@ public class StatChangedEvent extends DungeonEvent {
     public final Stat stat;
     public final DungeonPokemon target;
 
-    public StatChangedEvent(Floor floor, DungeonPokemon target, Stat stat, int stage, Object source) {
+    public StatChangedEvent(Floor floor, DungeonEventSource eventSource, DungeonPokemon target, Stat stat, int stage, Object source) {
         super(floor, eventSource);
         this.target = target;
         this.stat = stat;
@@ -47,7 +48,7 @@ public class StatChangedEvent extends DungeonEvent {
         if (this.effectiveChange != 0) {
             this.target.stats.addStage(this.stat, this.effectiveChange);
             if (this.stat == Stat.Speed)
-                this.resultingEvents.add(new SpeedChangedEvent(this.floor, this.target));
+                this.resultingEvents.add(new SpeedChangedEvent(this.floor, eventSource, this.target));
         }
 
         String messageID = MESSAGES[this.effectiveChange + 3];
