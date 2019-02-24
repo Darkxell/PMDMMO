@@ -16,11 +16,11 @@ public class NextFloorEvent extends DungeonEvent implements Communicable {
     protected Player player;
 
     public NextFloorEvent(Floor floor) {
-        super(floor);
+        super(floor, eventSource);
     }
 
     public NextFloorEvent(Floor floor, Player player) {
-        super(floor);
+        super(floor, eventSource);
         this.player = player;
     }
 

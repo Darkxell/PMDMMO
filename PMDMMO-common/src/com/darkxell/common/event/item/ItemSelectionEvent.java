@@ -32,7 +32,7 @@ public class ItemSelectionEvent extends DungeonEvent implements Communicable {
     protected DungeonPokemon user;
 
     public ItemSelectionEvent(Floor floor) {
-        super(floor);
+        super(floor, eventSource);
     }
 
     public ItemSelectionEvent(Floor floor, Item item, DungeonPokemon user, DungeonPokemon target, ItemContainer source,
@@ -42,7 +42,7 @@ public class ItemSelectionEvent extends DungeonEvent implements Communicable {
 
     public ItemSelectionEvent(Floor floor, Item item, DungeonPokemon user, DungeonPokemon target, ItemContainer source,
             int sourceIndex, Direction direction, boolean consumesTurn) {
-        super(floor, consumesTurn ? user : null);
+        super(floor, eventSource, consumesTurn ? user : null);
         this.item = item;
         this.user = user;
         this.target = target;

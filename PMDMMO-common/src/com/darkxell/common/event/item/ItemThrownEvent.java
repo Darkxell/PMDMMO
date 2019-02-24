@@ -23,7 +23,7 @@ public class ItemThrownEvent extends DungeonEvent implements Communicable {
     private DungeonPokemon thrower;
 
     public ItemThrownEvent(Floor floor, DungeonPokemon thrower, ItemContainer source, int sourceIndex) {
-        super(floor, thrower);
+        super(floor, eventSource, thrower);
         this.thrower = thrower;
         this.source = source;
         this.sourceIndex = sourceIndex;

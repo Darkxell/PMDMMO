@@ -17,7 +17,7 @@ public class ItemLandedEvent extends DungeonEvent {
     public final Tile tile;
 
     public ItemLandedEvent(Floor floor, ItemStack item, Tile tile) {
-        super(floor);
+        super(floor, eventSource);
         this.item = item;
         this.tile = tile;
     }

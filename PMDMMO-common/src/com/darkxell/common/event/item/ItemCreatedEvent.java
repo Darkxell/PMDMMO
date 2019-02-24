@@ -17,7 +17,7 @@ public class ItemCreatedEvent extends DungeonEvent {
     public final ItemStack item;
 
     public ItemCreatedEvent(Floor floor, ItemStack item, ItemContainer container) {
-        super(floor);
+        super(floor, eventSource);
         this.item = item;
         this.container = container;
     }

@@ -19,7 +19,7 @@ public class StatChangedEvent extends DungeonEvent {
     public final DungeonPokemon target;
 
     public StatChangedEvent(Floor floor, DungeonPokemon target, Stat stat, int stage, Object source) {
-        super(floor);
+        super(floor, eventSource);
         this.target = target;
         this.stat = stat;
         this.stage = stage;

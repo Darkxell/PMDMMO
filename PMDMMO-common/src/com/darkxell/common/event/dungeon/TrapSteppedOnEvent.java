@@ -16,7 +16,7 @@ public class TrapSteppedOnEvent extends DungeonEvent {
     public final Trap trap;
 
     public TrapSteppedOnEvent(Floor floor, DungeonPokemon pokemon, Tile tile, Trap trap) {
-        super(floor);
+        super(floor, eventSource);
         this.pokemon = pokemon;
         this.tile = tile;
         this.trap = trap;

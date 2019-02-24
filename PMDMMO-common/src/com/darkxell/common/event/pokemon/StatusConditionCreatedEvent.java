@@ -13,7 +13,7 @@ public class StatusConditionCreatedEvent extends DungeonEvent {
     private boolean succeeded = false;
 
     public StatusConditionCreatedEvent(Floor floor, AppliedStatusCondition condition) {
-        super(floor);
+        super(floor, eventSource);
         this.condition = condition;
     }
 

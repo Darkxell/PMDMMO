@@ -45,7 +45,7 @@ public class DamageDealtEvent extends DungeonEvent {
     public final DungeonPokemon target;
 
     public DamageDealtEvent(Floor floor, DungeonPokemon target, DamageSource source, DamageType type, int damage) {
-        super(floor);
+        super(floor, eventSource);
         this.target = target;
         this.source = source;
         this.damageType = type;

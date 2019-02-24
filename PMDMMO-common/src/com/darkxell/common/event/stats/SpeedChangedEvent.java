@@ -13,7 +13,7 @@ public class SpeedChangedEvent extends DungeonEvent {
     public final DungeonPokemon pokemon;
 
     public SpeedChangedEvent(Floor floor, DungeonPokemon pokemon) {
-        super(floor);
+        super(floor, eventSource);
         this.pokemon = pokemon;
     }
 

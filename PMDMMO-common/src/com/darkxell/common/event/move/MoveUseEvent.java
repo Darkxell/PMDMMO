@@ -19,7 +19,7 @@ public class MoveUseEvent extends DungeonEvent {
     public final MoveUse usedMove;
 
     public MoveUseEvent(Floor floor, MoveUse move, DungeonPokemon target) {
-        super(floor);
+        super(floor, eventSource);
         this.usedMove = move;
         this.target = target;
         this.direction = null;

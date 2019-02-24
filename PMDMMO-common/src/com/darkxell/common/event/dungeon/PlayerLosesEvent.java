@@ -16,7 +16,7 @@ public class PlayerLosesEvent extends DungeonEvent {
     public final Player player;
 
     public PlayerLosesEvent(Floor floor, Player player, int moveID) {
-        super(floor);
+        super(floor, eventSource);
         this.player = player;
         this.moveID = moveID;
     }
