@@ -21,23 +21,22 @@ public class CopyStatChangesEffect extends MoveEffect {
         super.additionalEffects(moveEvent, calculator, missed, effects);
 
         if (!missed) {
-            DungeonStats ts = target.stats, us = moveEvent.user.stats;
+            DungeonStats ts = moveEvent.target.stats, us = moveEvent.usedMove.user.stats;
             boolean first = true;
             for (Stat stat : Stat.values()) {
                 int diff = ts.getStage(stat) - us.getStage(stat);
                 if (diff != 0) {
                     if (first) {
                         first = false;
-                        effects.events.add(new MessageEvent(floor,
-                                eventSource, new Message("stats.copied").addReplacement("<pokemon>", target.getNickname())));
+                        effects.events.add(new MessageEvent(moveEvent.floor, moveEvent,
+                                new Message("stats.copied").addReplacement("<pokemon>", moveEvent.target.getNickname())));
                     }
-                    effects.createEffect(new StatChangedEvent(floor, eventSource, moveEvent.user, stat, diff, moveEvent), moveEvent,
-                            missed, false, moveEvent.user);
+                    effects.createEffect(new StatChangedEvent(moveEvent.floor, moveEvent, moveEvent.usedMove.user, stat, diff, moveEvent), moveEvent,
+                            missed, false, moveEvent.usedMove.user);
                 }
             }
-            if (first)
-                effects.events.add(new MessageEvent(floor,
-                        eventSource, new Message("stats.copied.none").addReplacement("<pokemon>", target.getNickname())));
+            if (first) effects.events.add(new MessageEvent(moveEvent.floor, moveEvent,
+                    new Message("stats.copied.none").addReplacement("<pokemon>", moveEvent.target.getNickname())));
         }
     }
 

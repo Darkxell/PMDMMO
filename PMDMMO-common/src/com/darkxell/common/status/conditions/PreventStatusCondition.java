@@ -17,18 +17,16 @@ public abstract class PreventStatusCondition extends StatusCondition {
     }
 
     @Override
-    public void onPreEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned,
-            ArrayList<DungeonEvent> resultingEvents) {
+    public void onPreEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned, ArrayList<DungeonEvent> resultingEvents) {
         super.onPreEvent(floor, event, concerned, resultingEvents);
 
         if (event instanceof StatusConditionCreatedEvent) {
             StatusConditionCreatedEvent c = (StatusConditionCreatedEvent) event;
             if (c.condition.pokemon == concerned && this.prevents(c.condition.condition)) {
                 c.consume();
-                resultingEvents.add(new MessageEvent(floor,
-                        eventSource, new Message("status.prevented.condition").addReplacement("<pokemon>", concerned.getNickname())
-                                .addReplacement("<prevented>", this.name())
-                                .addReplacement("<preventer>", c.condition.condition.name())));
+                resultingEvents.add(
+                        new MessageEvent(floor, event, new Message("status.prevented.condition").addReplacement("<pokemon>", concerned.getNickname())
+                                .addReplacement("<prevented>", this.name()).addReplacement("<preventer>", c.condition.condition.name())));
             }
         }
     }

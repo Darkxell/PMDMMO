@@ -8,7 +8,6 @@ import com.darkxell.common.Registries;
 import com.darkxell.common.dbobject.DBPokemon;
 import com.darkxell.common.dbobject.DatabaseIdentifier;
 import com.darkxell.common.dungeon.TempIDRegistry.HasID;
-import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.move.MoveDiscoveredEvent;
 import com.darkxell.common.event.stats.ExperienceGainedEvent;
@@ -64,21 +63,19 @@ public class Pokemon implements ItemContainer, HasID {
         this.setData(data);
     }
 
-    public Pokemon(long id, PokemonSpecies species, String nickname, ItemStack item, BaseStats stats, int abilityid,
-            long experience, int level, LearnedMove move1, LearnedMove move2, LearnedMove move3, LearnedMove move4,
-            int gender, int iq, boolean shiny) {
-        this(new DBPokemon(id, species.id, species.formID, abilityid, gender, nickname, level, experience, iq, shiny,
-                stats.attack, stats.defense, stats.specialAttack, stats.specialDefense, stats.health,
-                item == null ? null : new DatabaseIdentifier(item.getData().id),
+    public Pokemon(long id, PokemonSpecies species, String nickname, ItemStack item, BaseStats stats, int abilityid, long experience, int level,
+            LearnedMove move1, LearnedMove move2, LearnedMove move3, LearnedMove move4, int gender, int iq, boolean shiny) {
+        this(new DBPokemon(id, species.id, species.formID, abilityid, gender, nickname, level, experience, iq, shiny, stats.attack, stats.defense,
+                stats.specialAttack, stats.specialDefense, stats.health, item == null ? null : new DatabaseIdentifier(item.getData().id),
                 createMovesList(move1, move2, move3, move4)));
         this.item = item;
         this.moves = new LearnedMove[] { move1, move2, move3, move4 };
     }
 
     public Pokemon(Pokemon pokemon) {
-        this(pokemon.getData().id, pokemon.species(), pokemon.nickname(), pokemon.item(), pokemon.stats(),
-                pokemon.abilityID(), pokemon.experience(), pokemon.level(), pokemon.move(0), pokemon.move(1),
-                pokemon.move(2), pokemon.move(3), pokemon.gender(), pokemon.iq(), pokemon.isShiny());
+        this(pokemon.getData().id, pokemon.species(), pokemon.nickname(), pokemon.item(), pokemon.stats(), pokemon.abilityID(), pokemon.experience(),
+                pokemon.level(), pokemon.move(0), pokemon.move(1), pokemon.move(2), pokemon.move(3), pokemon.gender(), pokemon.iq(),
+                pokemon.isShiny());
     }
 
     public Ability ability() {
@@ -127,8 +124,7 @@ public class Pokemon implements ItemContainer, HasID {
         Evolution[] evolutions = this.species().evolutions();
         if (evolutions.length == 0) return new Message("evolve.none");
         for (Evolution evolution : evolutions) {
-            if (evolution.method == Evolution.LEVEL && this.level() >= evolution.value)
-                return new Message("evolve.possible");
+            if (evolution.method == Evolution.LEVEL && this.level() >= evolution.value) return new Message("evolve.possible");
             if (evolution.method == Evolution.ITEM) return new Message("evolve.item");
         }
         return new Message("evolve.not_now");
@@ -157,7 +153,7 @@ public class Pokemon implements ItemContainer, HasID {
             if (next <= amount) {
                 amount -= next;
                 this.setExperience(0);
-                events.add(new LevelupEvent(event.floor, eventSource, this));
+                events.add(new LevelupEvent(event.floor, event, this));
             } else {
                 this.setExperience(this.experience() + amount);
                 amount = 0;
@@ -285,8 +281,7 @@ public class Pokemon implements ItemContainer, HasID {
         this.item = null;
         this.moves = new LearnedMove[4];
         this.species = Registries.species().find(this.data.specieid);
-        this.stats = new BaseStats(this, this.data.stat_atk, this.data.stat_def, this.data.stat_hp,
-                this.data.stat_speatk, this.data.stat_spedef, 1);
+        this.stats = new BaseStats(this, this.data.stat_atk, this.data.stat_def, this.data.stat_hp, this.data.stat_speatk, this.data.stat_spedef, 1);
     }
 
     private void setExperience(long experience) {
@@ -296,10 +291,8 @@ public class Pokemon implements ItemContainer, HasID {
     @Override
     public void setId(long id) {
         this.data.id = id;
-        if (this.player != null)
-            if (this.player.getTeamLeader() == this) this.player.getData().mainpokemon = new DatabaseIdentifier(id);
-            else this.player.getData().pokemonsinparty.set(this.player.allies.indexOf(this),
-                    new DatabaseIdentifier(id));
+        if (this.player != null) if (this.player.getTeamLeader() == this) this.player.getData().mainpokemon = new DatabaseIdentifier(id);
+        else this.player.getData().pokemonsinparty.set(this.player.allies.indexOf(this), new DatabaseIdentifier(id));
     }
 
     private void setIq(int iq) {

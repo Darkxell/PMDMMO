@@ -29,9 +29,8 @@ public class ExperienceGeneratedEvent extends DungeonEvent {
 
     @Override
     public ArrayList<DungeonEvent> processServer() {
-        if (this.experience > 0)
-            for (Pokemon member : this.player.getTeam())
-                this.resultingEvents.add(new ExperienceGainedEvent(this.floor, eventSource, member, this.experience));
+        if (this.experience > 0) for (Pokemon member : this.player.getTeam())
+            this.resultingEvents.add(new ExperienceGainedEvent(this.floor, this, member, this.experience));
         return super.processServer();
     }
 
