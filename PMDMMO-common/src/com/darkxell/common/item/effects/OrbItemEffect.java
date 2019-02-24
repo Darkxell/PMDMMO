@@ -43,7 +43,7 @@ public class OrbItemEffect extends ItemEffect {
         if (floor.data.isBossFloor())
             events.add(new MessageEvent(floor, eventSource, new Message("item.orb.boss")));
         else
-            events.add(new MoveSelectionEvent(floor, new LearnedMove(this.moveID), pokemon, pokemon.facing(), false));
+            events.add(new MoveSelectionEvent(floor, eventSource, new LearnedMove(this.moveID), pokemon, pokemon.facing(), false));
     }
 
 }

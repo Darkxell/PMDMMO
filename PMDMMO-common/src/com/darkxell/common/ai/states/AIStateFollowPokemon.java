@@ -50,7 +50,7 @@ public class AIStateFollowPokemon extends AIState {
 			Direction d = AIUtils.adjacentEnemyDirection(this.ai.floor, this.ai.pokemon);
 			if (d != null && this.ai.pokemon.canAttack(this.ai.floor)) {
 				LearnedMove move = AIUtils.chooseMove(this.ai);
-				return new MoveSelectionEvent(this.ai.floor, move, this.ai.pokemon, d);
+				return new MoveSelectionEvent(this.ai.floor, eventSource, move, this.ai.pokemon, d);
 			}
 			if (direction != this.ai.pokemon.facing())
 				return new PokemonRotateEvent(this.ai.floor, eventSource, this.ai.pokemon, direction);

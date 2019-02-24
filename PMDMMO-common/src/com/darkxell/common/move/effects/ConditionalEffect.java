@@ -35,7 +35,7 @@ public class ConditionalEffect extends MoveEffect {
         int moveToUse = this.moveIfFalse;
         if (this.condition.isMet(usedMove, target, flags, floor, events))
             moveToUse = this.moveIfTrue;
-        events.add(new MoveSelectionEvent(floor, new LearnedMove(moveToUse), usedMove.user, usedMove.direction, false));
+        events.add(new MoveSelectionEvent(floor, eventSource, new LearnedMove(moveToUse), usedMove.user, usedMove.direction, false));
         return false;
     }
 

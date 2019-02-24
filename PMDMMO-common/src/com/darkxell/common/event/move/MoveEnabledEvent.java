@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.pokemon.LearnedMove;
 import com.darkxell.common.util.Communicable;
 import com.eclipsesource.json.Json;
@@ -16,11 +17,11 @@ public class MoveEnabledEvent extends DungeonEvent implements Communicable {
     /** The modified move. */
     private LearnedMove move;
 
-    public MoveEnabledEvent(Floor floor) {
+    public MoveEnabledEvent(Floor floor, DungeonEventSource eventSource) {
         super(floor, eventSource);
     }
 
-    public MoveEnabledEvent(Floor floor, LearnedMove move, boolean enabled) {
+    public MoveEnabledEvent(Floor floor, DungeonEventSource eventSource, LearnedMove move, boolean enabled) {
         super(floor, eventSource);
         this.move = move;
         this.enabled = enabled;
