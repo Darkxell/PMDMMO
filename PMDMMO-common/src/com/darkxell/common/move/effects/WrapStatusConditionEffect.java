@@ -19,19 +19,17 @@ public class WrapStatusConditionEffect extends MoveEffect {
         super.mainEffects(moveEvent, calculator, missed, effects);
 
         if (!missed) {
-            boolean willSucceed = !moveEvent.user.hasStatusCondition(StatusConditions.Wrapping)
-                    && !target.hasStatusCondition(StatusConditions.Wrapped);
+            boolean willSucceed = !moveEvent.usedMove.user.hasStatusCondition(StatusConditions.Wrapping) && !moveEvent.target.hasStatusCondition(StatusConditions.Wrapped);
 
             if (willSucceed) {
-                AppliedStatusCondition wrapped = StatusConditions.Wrapped.create(floor, target, moveEvent, floor.random);
-                wrapped.addFlag("wrapper:" + moveEvent.user.id());
+                AppliedStatusCondition wrapped = StatusConditions.Wrapped.create(moveEvent.floor, moveEvent.target, moveEvent, moveEvent.floor.random);
+                wrapped.addFlag("wrapper:" + moveEvent.usedMove.user.id());
 
-                AppliedStatusCondition wrapping = StatusConditions.Wrapping.create(floor, moveEvent.user, moveEvent,
-                        floor.random);
-                wrapped.addFlag("wrapped:" + target.id());
+                AppliedStatusCondition wrapping = StatusConditions.Wrapping.create(moveEvent.floor, moveEvent.usedMove.user, moveEvent, moveEvent.floor.random);
+                wrapped.addFlag("wrapped:" + moveEvent.target.id());
 
-                effects.createEffect(new StatusConditionCreatedEvent(floor, eventSource, wrapped), moveEvent, missed, false, target);
-                effects.createEffect(new StatusConditionCreatedEvent(floor, eventSource, wrapping), moveEvent, missed, false, moveEvent.user);
+                effects.createEffect(new StatusConditionCreatedEvent(moveEvent.floor, moveEvent, wrapped), moveEvent, missed, false, moveEvent.target);
+                effects.createEffect(new StatusConditionCreatedEvent(moveEvent.floor, moveEvent, wrapping), moveEvent, missed, false, moveEvent.usedMove.user);
             }
         }
     }

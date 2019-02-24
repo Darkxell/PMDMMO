@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.DungeonEventListener;
+import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.event.pokemon.StatusConditionEndedEvent;
 import com.darkxell.common.event.pokemon.StatusConditionEndedEvent.StatusConditionEndReason;
 import com.darkxell.common.pokemon.DungeonPokemon;
@@ -13,12 +14,8 @@ import com.darkxell.common.util.language.Message;
 
 public class AppliedStatusCondition implements DungeonEventListener {
 
-    /**
-     * True if the Pokemon this Status condition affects has acted this turn while this Status condition was active.<br>
-     * This is necessary due to the ticking of Status conditions happening at the end of turn: because Pokemon in teams
-     * act first, they would not suffer from conditions that prevent action for a single turn if this attribute wasn't
-     * used.
-     */
+    /** True if the Pokemon this Status condition affects has acted this turn while this Status condition was active.<br>
+     * This is necessary due to the ticking of Status conditions happening at the end of turn: because Pokemon in teams act first, they would not suffer from conditions that prevent action for a single turn if this attribute wasn't used. */
     private boolean actedWhileApplied;
     /** This Status Condition's ID. */
     public final StatusCondition condition;
@@ -46,21 +43,19 @@ public class AppliedStatusCondition implements DungeonEventListener {
 
     public void addFlag(String flag) {
         if (!this.hasFlag(flag)) {
-            if (!this.flags.equals(""))
-                this.flags += "|";
+            if (!this.flags.equals("")) this.flags += "|";
             this.flags += flag;
         }
     }
 
     public Message endMessage() {
         String id = "status.end." + this.condition.id;
-        if (!Localization.containsKey(id))
-            return null;
+        if (!Localization.containsKey(id)) return null;
         return new Message(id).addReplacement("<pokemon>", this.pokemon.getNickname());
     }
 
-    public void finish(Floor floor, StatusConditionEndReason reason, ArrayList<DungeonEvent> events) {
-        events.add(new StatusConditionEndedEvent(floor, eventSource, this, reason));
+    public void finish(Floor floor, StatusConditionEndReason reason, DungeonEventSource finishSource, ArrayList<DungeonEvent> events) {
+        events.add(new StatusConditionEndedEvent(floor, finishSource, this, reason));
     }
 
     public int getTurns() {
@@ -72,19 +67,17 @@ public class AppliedStatusCondition implements DungeonEventListener {
     }
 
     public boolean isOver() {
-        if (this.duration == -1)
-            return false;
+        if (this.duration == -1) return false;
         return this.tick >= this.duration;
     }
 
     public String[] listFlags() {
-        if (this.flags.equals(""))
-            return new String[0];
+        if (this.flags.equals("")) return new String[0];
         return this.flags.split("\\|");
     }
 
-    public void onConditionEnd(Floor floor, StatusConditionEndReason reason, ArrayList<DungeonEvent> events) {
-        this.condition.onEnd(floor, this, reason, events);
+    public void onConditionEnd(StatusConditionEndedEvent event, ArrayList<DungeonEvent> events) {
+        this.condition.onEnd(event, events);
     }
 
     public void onConditionStart(Floor floor, ArrayList<DungeonEvent> events) {
@@ -92,14 +85,12 @@ public class AppliedStatusCondition implements DungeonEventListener {
     }
 
     @Override
-    public void onPostEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned,
-            ArrayList<DungeonEvent> resultingEvents) {
+    public void onPostEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned, ArrayList<DungeonEvent> resultingEvents) {
         this.condition.onPostEvent(floor, event, concerned, resultingEvents);
     }
 
     @Override
-    public void onPreEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned,
-            ArrayList<DungeonEvent> resultingEvents) {
+    public void onPreEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned, ArrayList<DungeonEvent> resultingEvents) {
         this.condition.onPreEvent(floor, event, concerned, resultingEvents);
     }
 
@@ -109,18 +100,15 @@ public class AppliedStatusCondition implements DungeonEventListener {
 
     public Message startMessage() {
         String id = "status.start." + this.condition.id;
-        if (!Localization.containsKey(id))
-            return null;
+        if (!Localization.containsKey(id)) return null;
         return new Message(id).addReplacement("<pokemon>", this.pokemon.getNickname());
     }
 
     public void tick(Floor floor, ArrayList<DungeonEvent> events) {
-        if (!this.isOver())
-            this.condition.tick(floor, this, events);
+        if (!this.isOver()) this.condition.tick(floor, this, events);
         ++this.tick;
         this.actedWhileApplied = false;
-        if (this.isOver())
-            this.finish(floor, StatusConditionEndReason.FINISHED, events);
+        if (this.isOver()) this.finish(floor, StatusConditionEndReason.FINISHED, DungeonEventSource.TRIGGER, events);
     }
 
 }

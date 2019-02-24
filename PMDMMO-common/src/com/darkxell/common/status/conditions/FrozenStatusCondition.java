@@ -19,22 +19,20 @@ public class FrozenStatusCondition extends PreventActionStatusCondition {
     }
 
     @Override
-    public double applyStatModifications(Stat stat, double value, MoveUse move, DungeonPokemon target, boolean isUser,
-            Floor floor, ArrayList<DungeonEvent> events) {
-        if (stat == Stat.Evasiveness && target.hasStatusCondition(this) && !isUser && !move.move.move().piercesFreeze)
-            return 0;
-        return super.applyStatModifications(stat, value, move, target, isUser, floor, events);
+    public double applyStatModifications(Stat stat, double value, MoveUse move, DungeonPokemon target, boolean isUser, Floor floor,
+            MoveUseEvent moveEvent, ArrayList<DungeonEvent> events) {
+        if (stat == Stat.Evasiveness && target.hasStatusCondition(this) && !isUser && !move.move.move().piercesFreeze) return 0;
+        return super.applyStatModifications(stat, value, move, target, isUser, floor, moveEvent, events);
     }
 
     @Override
-    public void onPostEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned,
-            ArrayList<DungeonEvent> resultingEvents) {
+    public void onPostEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned, ArrayList<DungeonEvent> resultingEvents) {
         super.onPostEvent(floor, event, concerned, resultingEvents);
         if (event instanceof MoveUseEvent) {
             MoveUseEvent e = (MoveUseEvent) event;
             if (!e.missed() && e.target.hasStatusCondition(this) && e.usedMove.move.move().type == PokemonType.Fire) {
                 AppliedStatusCondition s = e.target.getStatusCondition(this);
-                s.finish(floor, StatusConditionEndReason.BROKEN, resultingEvents);
+                s.finish(floor, StatusConditionEndReason.BROKEN, event, resultingEvents);
             }
         }
     }

@@ -22,17 +22,15 @@ public class AbilityAbsorbDamage extends AbilityPreventAdditionalEffectsOnSelf {
     }
 
     @Override
-    public DungeonEvent modify(DungeonEvent effect, MoveUseEvent moveEvent, boolean missed, boolean isAdditional,
-            boolean amIUser, DungeonPokemon directedAt) {
+    public DungeonEvent modify(DungeonEvent effect, MoveUseEvent moveEvent, boolean missed, boolean isAdditional, boolean amIUser,
+            DungeonPokemon directedAt) {
         DungeonEvent toreturn = super.modify(effect, moveEvent, missed, isAdditional, amIUser, directedAt);
-        if (toreturn == null && moveEvent.move.move().type == this.type)
-            return null;
+        if (toreturn == null && moveEvent.usedMove.move.move().type == this.type) return null;
         return effect;
     }
 
     @Override
-    public void onPreEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned,
-            ArrayList<DungeonEvent> resultingEvents) {
+    public void onPreEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned, ArrayList<DungeonEvent> resultingEvents) {
         super.onPreEvent(floor, event, concerned, resultingEvents);
 
         if (event instanceof DamageDealtEvent) {
@@ -40,9 +38,10 @@ public class AbilityAbsorbDamage extends AbilityPreventAdditionalEffectsOnSelf {
             if (e.target == concerned && concerned.ability() == this && e.source instanceof MoveUse) {
                 MoveUse move = (MoveUse) e.source;
                 if (move.move.move().type == this.type) {
-                    resultingEvents.add(new TriggeredAbilityEvent(floor, eventSource, concerned));
+                    TriggeredAbilityEvent abilityevent = new TriggeredAbilityEvent(floor, event, concerned);
+                    resultingEvents.add(abilityevent);
                     event.consume();
-                    resultingEvents.add(new HealthRestoredEvent(floor, eventSource, concerned, e.damage));
+                    resultingEvents.add(new HealthRestoredEvent(floor, abilityevent, concerned, e.damage));
                 }
             }
         }

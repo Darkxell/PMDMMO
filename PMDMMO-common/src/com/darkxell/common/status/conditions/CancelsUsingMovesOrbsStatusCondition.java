@@ -17,13 +17,12 @@ public class CancelsUsingMovesOrbsStatusCondition extends StatusCondition {
     }
 
     @Override
-    public void onPreEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned,
-            ArrayList<DungeonEvent> resultingEvents) {
+    public void onPreEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned, ArrayList<DungeonEvent> resultingEvents) {
         super.onPreEvent(floor, event, concerned, resultingEvents);
 
         if (Ability.TRUANT.shouldTruant(floor, event, concerned, true)) {
             event.consume();
-            TriggeredAbilityEvent abilityevent = new TriggeredAbilityEvent(floor, eventSource, concerned);
+            TriggeredAbilityEvent abilityevent = new TriggeredAbilityEvent(floor, event, concerned);
             resultingEvents.add(abilityevent);
             resultingEvents.add(new TurnSkippedEvent(floor, abilityevent, concerned));
         }

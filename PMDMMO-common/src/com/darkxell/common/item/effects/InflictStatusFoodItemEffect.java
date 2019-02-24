@@ -19,7 +19,8 @@ public class InflictStatusFoodItemEffect extends FoodItemEffect {
     @Override
     public void use(ItemUseEvent itemEvent, ArrayList<DungeonEvent> events) {
         super.use(itemEvent, events);
-        events.add(new StatusConditionCreatedEvent(itemEvent, eventSource, this.status.create(itemEvent, target, item, itemEvent.random)));
+        events.add(new StatusConditionCreatedEvent(itemEvent.floor, itemEvent,
+                this.status.create(itemEvent.floor, itemEvent.target, itemEvent.item, itemEvent.floor.random)));
     }
 
 }
