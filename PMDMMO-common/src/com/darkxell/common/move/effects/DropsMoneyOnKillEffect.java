@@ -23,7 +23,7 @@ public class DropsMoneyOnKillEffect extends MoveEffect {
 
         if (!missed && target != null) {
             ItemStack item = new ItemStack(Item.POKEDOLLARS, floor.getMoneyQuantity());
-            ItemCreatedEvent event = new ItemCreatedEvent(floor, item, target.tile()) {
+            ItemCreatedEvent event = new ItemCreatedEvent(floor, eventSource, item, target.tile()) {
                 @Override
                 public boolean isValid() {
                     if (!target.isFainted())

@@ -6,6 +6,7 @@ import com.darkxell.common.ai.AIUtils;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageSource;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageType;
@@ -26,7 +27,7 @@ public class ProjectileThrownEvent extends DungeonEvent implements DamageSource 
     public final Item item;
     public final DungeonPokemon thrower;
 
-    public ProjectileThrownEvent(Floor floor, Item item, DungeonPokemon thrower, Tile destination) {
+    public ProjectileThrownEvent(Floor floor, DungeonEventSource eventSource, Item item, DungeonPokemon thrower, Tile destination) {
         super(floor, eventSource);
         this.item = item;
         this.thrower = thrower;
@@ -60,7 +61,7 @@ public class ProjectileThrownEvent extends DungeonEvent implements DamageSource 
                 ItemStack i = new ItemStack(this.item.id);
                 DungeonPokemon catcher = land.getPokemon();
                 if (this.item.effect().isUsableOnCatch()) {
-                    this.resultingEvents.add(new ItemUseEvent(this.floor, this.item, thrower, catcher, true));
+                    this.resultingEvents.add(new ItemUseEvent(this.floor, eventSource, this.item, thrower, catcher, true));
                     caught = true;
                 } else if (catcher.canAccept(i) != -1) {
                     catcher.addItem(i);
@@ -72,7 +73,7 @@ public class ProjectileThrownEvent extends DungeonEvent implements DamageSource 
             if (!caught) {
                 while (land.isWall())
                     land = land.adjacentTile(this.direction.opposite());
-                this.resultingEvents.add(new ItemLandedEvent(this.floor, new ItemStack(this.item.id, 1), land));
+                this.resultingEvents.add(new ItemLandedEvent(this.floor, eventSource, new ItemStack(this.item.id, 1), land));
             }
         }
         return super.processServer();

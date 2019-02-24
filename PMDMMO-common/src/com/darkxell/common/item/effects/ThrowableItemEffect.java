@@ -117,7 +117,7 @@ public class ThrowableItemEffect extends ItemEffect {
         super.use(floor, item, pokemon, target, events);
 
         Tile destination = this.findDestination(floor, item, pokemon);
-        events.add(new ProjectileThrownEvent(floor, item, pokemon, destination));
+        events.add(new ProjectileThrownEvent(floor, eventSource, item, pokemon, destination));
     }
 
 }
