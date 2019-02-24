@@ -17,11 +17,11 @@ public abstract class DungeonEvent implements DungeonEventSource {
         /** If not null, will only be displayed for this Player. */
         public final Player target;
 
-        public MessageEvent(Floor floor, Message message) {
-            this(floor, message, null);
+        public MessageEvent(Floor floor, DungeonEventSource eventSource, Message message) {
+            this(floor, eventSource, message, null);
         }
 
-        public MessageEvent(Floor floor, Message message, Player target) {
+        public MessageEvent(Floor floor, DungeonEventSource eventSource, Message message, Player target) {
             super(floor, eventSource);
             this.target = target;
             this.messages.add(message);

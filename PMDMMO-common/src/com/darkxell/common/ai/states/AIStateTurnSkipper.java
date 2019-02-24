@@ -14,7 +14,7 @@ public class AIStateTurnSkipper extends AIState {
 
     @Override
     public DungeonEvent takeAction() {
-        return new TurnSkippedEvent(this.ai.floor, this.ai.pokemon);
+        return new TurnSkippedEvent(this.ai.floor, eventSource, this.ai.pokemon);
     }
 
     @Override

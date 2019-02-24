@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.event.stats.BellyChangedEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.Pokemon;
@@ -22,11 +23,11 @@ public class PokemonTravelEvent extends DungeonEvent implements Communicable {
     private DungeonPokemon pokemon;
     private boolean running;
 
-    public PokemonTravelEvent(Floor floor) {
+    public PokemonTravelEvent(Floor floor, DungeonEventSource eventSource) {
         super(floor, eventSource);
     }
 
-    public PokemonTravelEvent(Floor floor, DungeonPokemon pokemon, boolean running, Direction direction) {
+    public PokemonTravelEvent(Floor floor, DungeonEventSource eventSource, DungeonPokemon pokemon, boolean running, Direction direction) {
         super(floor, eventSource, pokemon);
         this.pokemon = pokemon;
         this.running = running;
@@ -39,8 +40,8 @@ public class PokemonTravelEvent extends DungeonEvent implements Communicable {
         }
     }
 
-    public PokemonTravelEvent(Floor floor, DungeonPokemon pokemon, Direction direction) {
-        this(floor, pokemon, false, direction);
+    public PokemonTravelEvent(Floor floor, DungeonEventSource eventSource, DungeonPokemon pokemon, Direction direction) {
+        this(floor, eventSource, pokemon, false, direction);
     }
 
     public Tile destination() {

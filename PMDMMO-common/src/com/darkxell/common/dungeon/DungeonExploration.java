@@ -149,7 +149,7 @@ public class DungeonExploration {
                 continue;
             d = ai.mayRotate();
             if (d != null && d != a.pokemon.facing())
-                events.add(new PokemonRotateEvent(this.currentFloor, a.pokemon, d));
+                events.add(new PokemonRotateEvent(this.currentFloor, eventSource, a.pokemon, d));
         }
 
         // Logger.i("Turn end --------------------------");

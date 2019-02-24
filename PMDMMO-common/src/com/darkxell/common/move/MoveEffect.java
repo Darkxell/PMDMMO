@@ -228,7 +228,7 @@ public class MoveEffect implements AffectsPokemon {
         if (target != null)
             if (missed)
                 effects.createEffect(new MessageEvent(floor,
-                        new Message(target == null ? "move.miss.no_target" : "move.miss").addReplacement("<pokemon>",
+                        eventSource, new Message(target == null ? "move.miss.no_target" : "move.miss").addReplacement("<pokemon>",
                                 target == null ? new Message("no one", false) : target.getNickname())),
                         usedMove, target, floor, missed, true, null);
             else if (usedMove.move.move().dealsDamage)
@@ -252,16 +252,16 @@ public class MoveEffect implements AffectsPokemon {
         boolean missed = calculator.misses(events);
         double effectiveness = calculator.effectiveness();
         if (effectiveness == PokemonType.NO_EFFECT && usedMove.move.move().category != MoveCategory.Status)
-            events.add(new MessageEvent(floor, move.unaffectedMessage(target)));
+            events.add(new MessageEvent(floor, eventSource, move.unaffectedMessage(target)));
         else {
             if (!missed && this != MoveEffects.Basic_attack && target != null)
                 target.receiveMove(usedMove.move.isLinked() ? DungeonPokemon.LINKED_MOVES : DungeonPokemon.MOVES);
             if (!missed && move.dealsDamage)
                 if (effectiveness >= PokemonType.SUPER_EFFECTIVE)
                     events.add(new MessageEvent(floor,
-                            new Message("move.effectiveness.super").addReplacement("<pokemon>", target.getNickname())));
+                            eventSource, new Message("move.effectiveness.super").addReplacement("<pokemon>", target.getNickname())));
                 else if (effectiveness <= PokemonType.NOT_VERY_EFFECTIVE)
-                    events.add(new MessageEvent(floor, new Message("move.effectiveness.not_very")
+                    events.add(new MessageEvent(floor, eventSource, new Message("move.effectiveness.not_very")
                             .addReplacement("<pokemon>", target.getNickname())));
 
             MoveEvents effects = new MoveEvents();
@@ -274,7 +274,7 @@ public class MoveEffect implements AffectsPokemon {
     public void prepareUse(MoveUse move, Floor floor, ArrayList<DungeonEvent> events) {
         this.createMoves(move, floor, events);
         if (events.size() == 0 && this != MoveEffects.Basic_attack)
-            events.add(new MessageEvent(floor, new Message("move.no_target")));
+            events.add(new MessageEvent(floor, eventSource, new Message("move.no_target")));
     }
 
     /**

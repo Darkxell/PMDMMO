@@ -73,7 +73,7 @@ public abstract class DungeonMission {
 
     /** Called when the target Floor of this Mission starts, if this Mission isn't cleared yet. */
     protected void onTargetFloorStart(Floor floor, ArrayList<DungeonEvent> events) {
-        events.add(new MessageEvent(floor, new Message("mission.target_floor")));
+        events.add(new MessageEvent(floor, eventSource, new Message("mission.target_floor")));
     }
 
     @Override

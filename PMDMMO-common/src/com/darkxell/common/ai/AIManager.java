@@ -66,7 +66,7 @@ public class AIManager {
         if (pokemon == null)
             return null;
         if (!pokemon.canAct(this.floor))
-            return new TurnSkippedEvent(this.floor, pokemon);
+            return new TurnSkippedEvent(this.floor, eventSource, pokemon);
         if (!this.ais.containsKey(pokemon)) {
             Logger.e("Tried to call " + pokemon + "'s AI even though it has none.");
             return null;

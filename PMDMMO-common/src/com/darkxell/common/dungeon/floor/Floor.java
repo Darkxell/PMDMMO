@@ -219,7 +219,7 @@ public class Floor {
 			if (s != null) {
 				CreatedEncounter encounter = s.generate(this);
 				if (encounter.tile != null) {
-					events.add(new PokemonSpawnedEvent(this, encounter));
+					events.add(new PokemonSpawnedEvent(this, eventSource, encounter));
 					this.nextSpawn = RandomUtil.nextIntInBounds(50, 100, this.random) / this.data.pokemonDensity();
 				}
 			}

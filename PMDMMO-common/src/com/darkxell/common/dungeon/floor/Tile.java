@@ -269,7 +269,7 @@ public class Tile implements ItemContainer, Comparable<Tile> {
                 events.add(new ItemMovedEvent(floor, ItemAction.GET, pokemon, this, 0, pokemon, -1));
             else
                 events.add(new MessageEvent(floor,
-                        new Message("ground.step").addReplacement("<pokemon>", pokemon.getNickname())
+                        eventSource, new Message("ground.step").addReplacement("<pokemon>", pokemon.getNickname())
                                 .addReplacement("<item>", this.getItem().name())));
         }
 
