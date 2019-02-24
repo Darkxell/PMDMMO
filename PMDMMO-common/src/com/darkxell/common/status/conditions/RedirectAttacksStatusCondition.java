@@ -44,7 +44,7 @@ public class RedirectAttacksStatusCondition extends StatusCondition {
                         new MoveUse(floor, e.usedMove.move, concerned, concerned.facing()), e.usedMove.user);
                 redirected.addFlag("redirected");
                 resultingEvents.add(new MessageEvent(floor,
-                        new Message("status.trigger.43").addReplacement("<pokemon>", concerned.toString())));
+                        eventSource, new Message("status.trigger.43").addReplacement("<pokemon>", concerned.toString())));
                 resultingEvents.add(redirected);
             }
         }

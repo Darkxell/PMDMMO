@@ -75,7 +75,7 @@ public class ActionSelectionState extends DungeonSubState {
             DungeonPokemon leader = Persistence.player.getDungeonLeader();
             if (direction != leader.facing())
                 Persistence.eventProcessor()
-                        .processEvent(new PokemonRotateEvent(Persistence.floor, leader, direction).setPAE());
+                        .processEvent(new PokemonRotateEvent(Persistence.floor, eventSource, leader, direction).setPAE());
             if (!this.parent.rotating && leader.tryMoveTo(direction, true))
                 return direction;
         }
@@ -126,7 +126,7 @@ public class ActionSelectionState extends DungeonSubState {
             } while (d != leader.facing());
             if (d != leader.facing())
                 Persistence.eventProcessor()
-                        .processEvent(new PokemonRotateEvent(Persistence.floor, leader, d).setPAE());
+                        .processEvent(new PokemonRotateEvent(Persistence.floor, eventSource, leader, d).setPAE());
         }
 
         if (Persistence.player.getDungeonLeader().canAttack(Persistence.floor) && key == Key.MOVE_1 || key == Key.MOVE_2
@@ -265,13 +265,13 @@ public class ActionSelectionState extends DungeonSubState {
                 ++this.delay;
             if (Key.ATTACK.isPressed() && Key.RUN.isPressed() && !Persistence.player.getDungeonLeader().isFamished())
                 Persistence.eventProcessor().processEvent(
-                        new TurnSkippedEvent(Persistence.floor, Persistence.player.getDungeonLeader()).setPAE());
+                        new TurnSkippedEvent(Persistence.floor, eventSource, Persistence.player.getDungeonLeader()).setPAE());
             else {
                 Direction direction = this.checkMovement();
                 if (direction != null && Persistence.player.getDungeonLeader().canMove(Persistence.floor)) {
                     DungeonPokemon leader = Persistence.player.getDungeonLeader();
-                    Persistence.eventProcessor().processEvent(new PokemonTravelEvent(Persistence.floor, leader,
-                            Key.RUN.isPressed() && !leader.isFamished(), direction).setPAE());
+                    Persistence.eventProcessor().processEvent(new PokemonTravelEvent(Persistence.floor, eventSource,
+                            leader, Key.RUN.isPressed() && !leader.isFamished(), direction).setPAE());
                 }
             }
         }

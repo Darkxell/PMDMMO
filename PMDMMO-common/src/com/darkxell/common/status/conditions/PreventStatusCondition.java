@@ -26,7 +26,7 @@ public abstract class PreventStatusCondition extends StatusCondition {
             if (c.condition.pokemon == concerned && this.prevents(c.condition.condition)) {
                 c.consume();
                 resultingEvents.add(new MessageEvent(floor,
-                        new Message("status.prevented.condition").addReplacement("<pokemon>", concerned.getNickname())
+                        eventSource, new Message("status.prevented.condition").addReplacement("<pokemon>", concerned.getNickname())
                                 .addReplacement("<prevented>", this.name())
                                 .addReplacement("<preventer>", c.condition.condition.name())));
             }

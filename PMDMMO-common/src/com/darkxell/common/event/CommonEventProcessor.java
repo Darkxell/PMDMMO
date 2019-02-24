@@ -156,8 +156,8 @@ public class CommonEventProcessor {
             // If leader is traveling onto ally's tile, automatically create ally movement event
             if (travel.destination().getPokemon() != null && travel.pokemon().isTeamLeader()
                     && travel.pokemon().isAlliedWith(travel.destination().getPokemon()))
-                this.addToPending(new PokemonTravelEvent(this.dungeon.currentFloor(), travel.destination().getPokemon(),
-                        travel.direction().opposite()));
+                this.addToPending(new PokemonTravelEvent(this.dungeon.currentFloor(), eventSource,
+                        travel.destination().getPokemon(), travel.direction().opposite()));
         }
 
         if (!event.isConsumed() && this.stopsTravel(event))
@@ -217,7 +217,7 @@ public class CommonEventProcessor {
                         this.setState(State.AWATING_INPUT);
                     } else
                         this.processEvent(
-                                new PokemonTravelEvent(this.dungeon.currentFloor(), actor, true, actor.facing()));
+                                new PokemonTravelEvent(this.dungeon.currentFloor(), eventSource, actor, true, actor.facing()));
                 } else
                     this.setState(State.AWATING_INPUT);
             } else

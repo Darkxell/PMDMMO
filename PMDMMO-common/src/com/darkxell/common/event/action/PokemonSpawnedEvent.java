@@ -5,13 +5,14 @@ import java.util.ArrayList;
 import com.darkxell.common.dungeon.data.DungeonEncounter.CreatedEncounter;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.DungeonEventSource;
 
 public class PokemonSpawnedEvent extends DungeonEvent {
 
 	/** The spawned Pokemon. */
 	public final CreatedEncounter encounter;
 
-	public PokemonSpawnedEvent(Floor floor, CreatedEncounter encounter) {
+	public PokemonSpawnedEvent(Floor floor, DungeonEventSource eventSource, CreatedEncounter encounter) {
 		super(floor, eventSource);
 		this.encounter = encounter;
 	}

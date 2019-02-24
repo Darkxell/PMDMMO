@@ -50,7 +50,7 @@ public class ConfusedStatusCondition extends StatusCondition {
             }
         }
         Direction direction = RandomUtil.random(candidates, floor.random);
-        PokemonTravelEvent e = new PokemonTravelEvent(floor, event.pokemon(), false, direction);
+        PokemonTravelEvent e = new PokemonTravelEvent(floor, eventSource, event.pokemon(), false, direction);
         e.cloneFlags(event);
         e.addFlag("confused");
         resultingEvents.add(e);

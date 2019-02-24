@@ -25,7 +25,7 @@ public class TauntedStatusCondition extends StatusCondition {
                 && !((MoveSelectionEvent) event).usedMove().move.move().dealsDamage) {
             event.consume();
             resultingEvents.add(new MessageEvent(floor,
-                    new Message("status.trigger.27").addReplacement("<pokemon>", concerned.getNickname())));
+                    eventSource, new Message("status.trigger.27").addReplacement("<pokemon>", concerned.getNickname())));
         }
         super.onPreEvent(floor, event, concerned, resultingEvents);
     }

@@ -27,8 +27,8 @@ public class WonderTileTrap extends Trap {
         if (pokemon.stats.getMoveSpeed() < 1)
             pokemon.stats.resetSpeed();
 
-        events.add(new MessageEvent(floor, new Message("stat.reset").addReplacement("<pokemon>", pokemon.getNickname()),
-                pokemon.player()));
+        events.add(new MessageEvent(floor, eventSource,
+                new Message("stat.reset").addReplacement("<pokemon>", pokemon.getNickname()), pokemon.player()));
     }
 
 }

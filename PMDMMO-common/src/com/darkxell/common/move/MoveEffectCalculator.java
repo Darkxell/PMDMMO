@@ -137,7 +137,7 @@ public class MoveEffectCalculator {
             multiplier *= 1.5;
         if (critical) {
             multiplier *= 1.5;
-            events.add(new MessageEvent(this.floor, new Message("move.critical")));
+            events.add(new MessageEvent(this.floor, eventSource, new Message("move.critical")));
         }
 
         multiplier *= this.modificator.damageMultiplier(this.move, this.target, this.floor, this.flags, events);
