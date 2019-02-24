@@ -36,13 +36,13 @@ public class ItemSelectionEvent extends DungeonEvent implements Communicable {
         super(floor, eventSource);
     }
 
-    public ItemSelectionEvent(Floor floor, DungeonEventSource eventSource, Item item, DungeonPokemon user, DungeonPokemon target,
-            ItemContainer source, int sourceIndex) {
+    public ItemSelectionEvent(Floor floor, DungeonEventSource eventSource, Item item, DungeonPokemon user,
+            DungeonPokemon target, ItemContainer source, int sourceIndex) {
         this(floor, eventSource, item, user, target, source, sourceIndex, user.facing(), true);
     }
 
-    public ItemSelectionEvent(Floor floor, DungeonEventSource eventSource, Item item, DungeonPokemon user, DungeonPokemon target,
-            ItemContainer source, int sourceIndex, Direction direction, boolean consumesTurn) {
+    public ItemSelectionEvent(Floor floor, DungeonEventSource eventSource, Item item, DungeonPokemon user,
+            DungeonPokemon target, ItemContainer source, int sourceIndex, Direction direction, boolean consumesTurn) {
         super(floor, eventSource, consumesTurn ? user : null);
         this.item = item;
         this.user = user;
@@ -54,21 +54,14 @@ public class ItemSelectionEvent extends DungeonEvent implements Communicable {
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof ItemSelectionEvent))
-            return false;
+        if (!(obj instanceof ItemSelectionEvent)) return false;
         ItemSelectionEvent o = (ItemSelectionEvent) obj;
-        if (this.item != o.item)
-            return false;
-        if (this.direction != o.direction)
-            return false;
-        if (this.source.containerID() != o.source.containerID())
-            return false;
-        if (this.user.id() != o.user.id())
-            return false;
-        if (this.sourceIndex != o.sourceIndex)
-            return false;
-        if (this.target.id() != o.target.id())
-            return false;
+        if (this.item != o.item) return false;
+        if (this.direction != o.direction) return false;
+        if (this.source.containerID() != o.source.containerID()) return false;
+        if (this.user.id() != o.user.id()) return false;
+        if (this.sourceIndex != o.sourceIndex) return false;
+        if (this.target.id() != o.target.id()) return false;
         return true;
     }
 
@@ -88,11 +81,10 @@ public class ItemSelectionEvent extends DungeonEvent implements Communicable {
             if (this.item.effect().isConsummable() && this.source != null) {
                 ItemStack stack = this.source.getItem(this.sourceIndex);
                 stack.setQuantity(stack.quantity() - 1);
-                if (stack.quantity() <= 0)
-                    this.source.deleteItem(this.sourceIndex);
+                if (stack.quantity() <= 0) this.source.deleteItem(this.sourceIndex);
             }
 
-            this.resultingEvents.add(new ItemUseEvent(this.floor, eventSource, this.item, this.user, this.target));
+            this.resultingEvents.add(new ItemUseEvent(this.floor, this, this.item, this.user, this.target));
         }
         return super.processServer();
     }
@@ -101,8 +93,7 @@ public class ItemSelectionEvent extends DungeonEvent implements Communicable {
     public void read(JsonObject value) throws JsonReadingException {
         try {
             Pokemon p = this.floor.dungeon.communication.pokemonIDs.get(value.getLong("user", 0));
-            if (p == null)
-                throw new JsonReadingException("No pokemon with ID " + value.getLong("user", 0));
+            if (p == null) throw new JsonReadingException("No pokemon with ID " + value.getLong("user", 0));
             this.user = this.actor = p.getDungeonPokemon();
         } catch (JsonReadingException e) {
             throw e;
@@ -136,12 +127,10 @@ public class ItemSelectionEvent extends DungeonEvent implements Communicable {
         }
 
         if (this.item.effect().isUsedOnTeamMember()) {
-            if (value.get("target") == null)
-                throw new JsonReadingException("No value for target ID!");
+            if (value.get("target") == null) throw new JsonReadingException("No value for target ID!");
             try {
                 Pokemon p = this.floor.dungeon.communication.pokemonIDs.get(value.getLong("target", 0));
-                if (p == null)
-                    throw new JsonReadingException("No pokemon with ID " + value.getLong("target", 0));
+                if (p == null) throw new JsonReadingException("No pokemon with ID " + value.getLong("target", 0));
                 this.target = p.getDungeonPokemon();
             } catch (JsonReadingException e) {
                 throw e;
@@ -160,8 +149,7 @@ public class ItemSelectionEvent extends DungeonEvent implements Communicable {
     public JsonObject toJson() {
         JsonObject root = Json.object();
         root.add("user", this.user.id());
-        if (this.target != null)
-            root.add("target", this.target.id());
+        if (this.target != null) root.add("target", this.target.id());
         root.add("sourcetype", this.source.containerType().name());
         root.add("sourceid", this.source.containerID());
         root.add("sourceindex", this.sourceIndex);
