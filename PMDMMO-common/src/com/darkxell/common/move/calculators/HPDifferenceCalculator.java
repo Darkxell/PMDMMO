@@ -11,7 +11,7 @@ import com.darkxell.common.pokemon.DungeonPokemon;
 public class HPDifferenceCalculator extends MoveEffectCalculator {
 
     public HPDifferenceCalculator(MoveUse move, DungeonPokemon target, Floor floor, String[] flags) {
-        super(move, target, floor, flags);
+        super(move);
     }
 
     @Override

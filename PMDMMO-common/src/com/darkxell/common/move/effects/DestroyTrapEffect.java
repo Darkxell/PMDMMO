@@ -1,9 +1,8 @@
 package com.darkxell.common.move.effects;
 
-import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.event.dungeon.TrapDestroyedEvent;
-import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
+import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.move.MoveEffect;
 import com.darkxell.common.move.MoveEffectCalculator;
@@ -17,14 +16,13 @@ public class DestroyTrapEffect extends MoveEffect {
     }
 
     @Override
-    public void additionalEffects(MoveUse usedMove, DungeonPokemon target, String[] flags, Floor floor,
-            MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
-        super.additionalEffects(usedMove, target, flags, floor, calculator, missed, effects);
+    public void additionalEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
+        super.additionalEffects(moveEvent, calculator, missed, effects);
 
         if (!missed) {
-            Tile t = usedMove.user.tile().adjacentTile(usedMove.user.facing());
+            Tile t = moveEvent.user.tile().adjacentTile(moveEvent.user.facing());
             if (t != null && t.trap != null)
-                effects.createEffect(new TrapDestroyedEvent(floor, eventSource, t), usedMove, target, floor, missed, true, null);
+                effects.createEffect(new TrapDestroyedEvent(floor, eventSource, t), moveEvent, missed, true, null);
         }
     }
 

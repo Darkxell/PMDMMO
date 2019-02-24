@@ -1,8 +1,7 @@
 package com.darkxell.common.pokemon.ability;
 
-import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
-import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
+import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
 public abstract class AbilityModifyMoveEffect extends Ability {
@@ -15,9 +14,7 @@ public abstract class AbilityModifyMoveEffect extends Ability {
      * Called when a Move produces an Effect. This method may modify the Event produced by the Effect and return it.
      *
      * @param  effect       - The Effect created by the Move.
-     * @param  usedMove     - The Move Use context.
-     * @param  target       - The Pokemon targeted by the Move.
-     * @param  floor        - The Floor context.
+     * @param  moveEvent     - The Move Use context.
      * @param  missed       - <code>true</code> if the Move missed.
      * @param  isAdditional - <code>true</code> if this Effect is an additional Effect (=not the main effect of the
      *                      Move).
@@ -27,7 +24,7 @@ public abstract class AbilityModifyMoveEffect extends Ability {
      * @return              The new Effect after modification. May return <code>null<code> to cancel the Effect
      *                      completely.
      */
-    public abstract DungeonEvent modify(DungeonEvent effect, MoveUse usedMove, DungeonPokemon target, Floor floor,
-            boolean missed, boolean isAdditional, boolean amIUser, DungeonPokemon directedAt);
+    public abstract DungeonEvent modify(DungeonEvent effect, MoveUseEvent moveEvent, boolean missed, boolean isAdditional,
+            boolean amIUser, DungeonPokemon directedAt);
 
 }

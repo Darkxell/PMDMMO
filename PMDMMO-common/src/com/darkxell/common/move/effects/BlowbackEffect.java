@@ -2,6 +2,7 @@ package com.darkxell.common.move.effects;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
+import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.event.pokemon.BlowbackPokemonEvent;
 import com.darkxell.common.move.MoveEffect;
 import com.darkxell.common.move.MoveEffectCalculator;
@@ -16,14 +17,13 @@ public class BlowbackEffect extends MoveEffect {
     }
 
     @Override
-    public void additionalEffects(MoveUse usedMove, DungeonPokemon target, String[] flags, Floor floor,
-            MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
-        super.additionalEffects(usedMove, target, flags, floor, calculator, missed, effects);
+    public void additionalEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
+        super.additionalEffects(moveEvent, calculator, missed, effects);
 
         effects.createEffect(
                 new BlowbackPokemonEvent(floor, eventSource,
-                        target, this.direction(usedMove, target, flags, floor, calculator, missed, effects)),
-                usedMove, target, floor, missed, false, target);
+                        target, this.direction(moveEvent, target, flags, floor, calculator, missed, effects)),
+                moveEvent, missed, false, target);
     }
 
     protected Direction direction(MoveUse usedMove, DungeonPokemon target, String[] flags, Floor floor,

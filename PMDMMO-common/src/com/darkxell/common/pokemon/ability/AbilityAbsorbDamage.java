@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
+import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.HealthRestoredEvent;
 import com.darkxell.common.event.pokemon.TriggeredAbilityEvent;
@@ -21,11 +22,10 @@ public class AbilityAbsorbDamage extends AbilityPreventAdditionalEffectsOnSelf {
     }
 
     @Override
-    public DungeonEvent modify(DungeonEvent effect, MoveUse usedMove, DungeonPokemon target, Floor floor,
-            boolean missed, boolean isAdditional, boolean amIUser, DungeonPokemon directedAt) {
-        DungeonEvent toreturn = super.modify(effect, usedMove, target, floor, missed, isAdditional, amIUser,
-                directedAt);
-        if (toreturn == null && usedMove.move.move().type == this.type)
+    public DungeonEvent modify(DungeonEvent effect, MoveUseEvent moveEvent, boolean missed, boolean isAdditional,
+            boolean amIUser, DungeonPokemon directedAt) {
+        DungeonEvent toreturn = super.modify(effect, moveEvent, missed, isAdditional, amIUser, directedAt);
+        if (toreturn == null && moveEvent.move.move().type == this.type)
             return null;
         return effect;
     }

@@ -29,19 +29,19 @@ public class MoveSelectionEvent extends DungeonEvent implements Communicable {
         public final LearnedMove move;
         public final DungeonPokemon user;
 
-        public MoveUse(Floor floor, LearnedMove move, DungeonPokemon user, Direction direction) {
+        public MoveUse(Floor floor, LearnedMove move, DungeonPokemon user, Direction direction,
+                MoveSelectionEvent moveSelectionEvent) {
             this.move = move;
             this.user = user;
             this.direction = direction;
             this.experienceEvent = this.user.type == DungeonPokemonType.TEAM_MEMBER
-                    ? new ExperienceGeneratedEvent(floor, eventSource, this.user.player())
+                    ? new ExperienceGeneratedEvent(floor, moveSelectionEvent, this.user.player())
                     : null;
         }
 
         @Override
         public boolean equals(Object obj) {
-            if (!(obj instanceof MoveUse))
-                return false;
+            if (!(obj instanceof MoveUse)) return false;
             MoveUse o = (MoveUse) obj;
             return this.direction == o.direction && this.move == o.move && this.user.id() == o.user.id();
         }
@@ -74,14 +74,15 @@ public class MoveSelectionEvent extends DungeonEvent implements Communicable {
         this(floor, eventSource, move, user, user.facing(), true);
     }
 
-    public MoveSelectionEvent(Floor floor, DungeonEventSource eventSource, LearnedMove move, DungeonPokemon user, Direction direction) {
+    public MoveSelectionEvent(Floor floor, DungeonEventSource eventSource, LearnedMove move, DungeonPokemon user,
+            Direction direction) {
         this(floor, eventSource, move, user, direction, true);
     }
 
     public MoveSelectionEvent(Floor floor, DungeonEventSource eventSource, LearnedMove move, DungeonPokemon user,
             Direction direction, boolean consumesTurn) {
         super(floor, eventSource, consumesTurn ? user : null);
-        this.usedMove = new MoveUse(floor, move, user, direction);
+        this.usedMove = new MoveUse(floor, move, user, direction, this);
 
         if (this.usedMove.move.move().hasUseMessage())
             this.messages.add(new Message("move.used").addReplacement("<pokemon>", user.getNickname())
@@ -90,11 +91,9 @@ public class MoveSelectionEvent extends DungeonEvent implements Communicable {
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof MoveSelectionEvent))
-            return false;
+        if (!(obj instanceof MoveSelectionEvent)) return false;
         MoveSelectionEvent o = (MoveSelectionEvent) obj;
-        if (!this.usedMove.equals(o.usedMove))
-            return false;
+        if (!this.usedMove.equals(o.usedMove)) return false;
         return true;
     }
 
@@ -110,32 +109,28 @@ public class MoveSelectionEvent extends DungeonEvent implements Communicable {
             this.usedMove.user.setFacing(this.usedMove.direction);
 
         // Use PP
-        if (this.consumesPP)
-            this.usedMove.move.setPP(this.usedMove.move.pp() - 1);
+        if (this.consumesPP) this.usedMove.move.setPP(this.usedMove.move.pp() - 1);
 
         // Use Move
-        this.usedMove.move.move().prepareUse(this.usedMove, this.floor, this.resultingEvents);
+        this.usedMove.move.move().prepareUse(this, this.resultingEvents);
 
         this.resultingEvents.add(this.usedMove.getExperienceEvent());
 
         // Use belly
         if (this.usedMove.user.isTeamLeader())
-            this.resultingEvents.add(new BellyChangedEvent(this.floor, eventSource,
-                    this.usedMove.user, -(this.usedMove.move.isLinked() ? .9 : .1) * this.usedMove.user.energyMultiplier()));
+            this.resultingEvents.add(new BellyChangedEvent(this.floor, eventSource, this.usedMove.user,
+                    -(this.usedMove.move.isLinked() ? .9 : .1) * this.usedMove.user.energyMultiplier()));
 
-        if (this.usedMove.move.isLinked())
-            this.resultingEvents.add(new MoveSelectionEvent(this.floor,
-                    eventSource, this.usedMove.user.move(this.usedMove.move.getData().slot + 1), this.usedMove.user));
+        if (this.usedMove.move.isLinked()) this.resultingEvents.add(new MoveSelectionEvent(this.floor, eventSource,
+                this.usedMove.user.move(this.usedMove.move.getData().slot + 1), this.usedMove.user));
 
         return super.processServer();
     }
 
     @Override
     public void read(JsonObject value) throws JsonReadingException {
-        if (value.get("pokemon") == null)
-            throw new JsonReadingException("No value for Pokemon ID!");
-        if (value.get("move") == null)
-            throw new JsonReadingException("No value for move ID!");
+        if (value.get("pokemon") == null) throw new JsonReadingException("No value for Pokemon ID!");
+        if (value.get("move") == null) throw new JsonReadingException("No value for move ID!");
 
         if (!value.get("pokemon").isNumber())
             throw new JsonReadingException("Wrong value for Pokemon ID: " + value.get("pokemon"));
@@ -145,17 +140,15 @@ public class MoveSelectionEvent extends DungeonEvent implements Communicable {
         Pokemon pokemon = this.floor.dungeon.communication.pokemonIDs.get(value.getLong("pokemon", 0));
         LearnedMove move = this.floor.dungeon.communication.moveIDs.get(value.getLong("move", 0));
         Direction d = null;
-        if (pokemon == null)
-            throw new JsonReadingException("No pokemon with ID " + value.getLong("pokemon", 0));
-        if (move == null)
-            throw new JsonReadingException("No move with ID " + value.getLong("move", 0));
+        if (pokemon == null) throw new JsonReadingException("No pokemon with ID " + value.getLong("pokemon", 0));
+        if (move == null) throw new JsonReadingException("No move with ID " + value.getLong("move", 0));
         try {
             d = Direction.valueOf(value.getString("direction", Direction.NORTH.name()));
         } catch (IllegalArgumentException e) {
             throw new JsonReadingException("No direction with name " + value.getString("direction", "null"));
         }
         this.actor = pokemon.getDungeonPokemon();
-        this.usedMove = new MoveUse(this.floor, move, pokemon.getDungeonPokemon(), d);
+        this.usedMove = new MoveUse(this.floor, move, pokemon.getDungeonPokemon(), d, this);
 
         if (this.usedMove.move.move() != MoveRegistry.ATTACK)
             this.messages.add(new Message("move.used").addReplacement("<pokemon>", this.usedMove.user.getNickname())

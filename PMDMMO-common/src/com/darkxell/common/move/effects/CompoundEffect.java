@@ -1,12 +1,10 @@
 package com.darkxell.common.move.effects;
 
-import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
+import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.move.MoveEffect;
 import com.darkxell.common.move.MoveEffectCalculator;
 import com.darkxell.common.move.MoveEvents;
-import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Localization;
 import com.darkxell.common.util.language.Message;
 
@@ -20,10 +18,10 @@ public class CompoundEffect extends MoveEffect {
     }
 
     @Override
-    public MoveEffectCalculator buildCalculator(MoveUse usedMove, DungeonPokemon target, Floor floor, String[] flags) {
-        MoveEffectCalculator calculator = super.buildCalculator(usedMove, target, floor, flags);
+    public MoveEffectCalculator buildCalculator(MoveUseEvent moveEvent) {
+        MoveEffectCalculator calculator = super.buildCalculator(moveEvent);
         for (MoveEffect effect : this.effects) {
-            MoveEffectCalculator c = effect.buildCalculator(usedMove, target, floor, flags);
+            MoveEffectCalculator c = effect.buildCalculator(moveEvent);
             if (c != null)
                 calculator = c;
         }
@@ -31,12 +29,11 @@ public class CompoundEffect extends MoveEffect {
     }
 
     @Override
-    public void additionalEffects(MoveUse usedMove, DungeonPokemon target, String[] flags, Floor floor,
-            MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
-        super.additionalEffects(usedMove, target, flags, floor, calculator, missed, effects);
+    public void additionalEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
+        super.additionalEffects(moveEvent, calculator, missed, effects);
 
         for (MoveEffect e : this.effects)
-            e.additionalEffects(usedMove, target, flags, floor, calculator, missed, effects);
+            e.additionalEffects(moveEvent, calculator, missed, effects);
     }
 
     @Override
