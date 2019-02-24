@@ -58,20 +58,16 @@ public class PokemonTravelEvent extends DungeonEvent implements Communicable {
         int xs = this.origin.x, ys = this.origin.y;
         for (int x = xs - 2; x <= xs + 2; ++x) {
             for (int y = ys - 2; y <= ys + 2; ++y)
-                if (floor.tileAt(x, y) == this.origin)
-                    System.out.print("O");
-                else if (floor.tileAt(x, y).getPokemon() != null)
-                    System.out.print("P");
-                else
-                    System.out.print(floor.tileAt(x, y).type().c);
+                if (floor.tileAt(x, y) == this.origin) System.out.print("O");
+                else if (floor.tileAt(x, y).getPokemon() != null) System.out.print("P");
+                else System.out.print(floor.tileAt(x, y).type().c);
             System.out.println();
         }
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof PokemonTravelEvent))
-            return false;
+        if (!(obj instanceof PokemonTravelEvent)) return false;
         PokemonTravelEvent o = (PokemonTravelEvent) obj;
         return this.direction == o.direction && this.pokemon.id() == o.pokemon.id() && this.running == o.running;
     }
@@ -96,8 +92,7 @@ public class PokemonTravelEvent extends DungeonEvent implements Communicable {
     @Override
     public ArrayList<DungeonEvent> processServer() {
         if (this.pokemon.isTeamLeader())
-            this.resultingEvents
-                    .add(new BellyChangedEvent(this.floor, eventSource, this.pokemon, -.1 * this.pokemon.energyMultiplier()));
+            this.resultingEvents.add(new BellyChangedEvent(this.floor, this, this.pokemon, -.1 * this.pokemon.energyMultiplier()));
         this.origin.removePokemon(this.pokemon);
         this.destination.setPokemon(this.pokemon);
         this.destination.onPokemonStep(this, this.resultingEvents);
@@ -108,8 +103,7 @@ public class PokemonTravelEvent extends DungeonEvent implements Communicable {
     public void read(JsonObject value) throws JsonReadingException {
         try {
             Pokemon p = this.floor.dungeon.communication.pokemonIDs.get(value.getLong("pokemon", 0));
-            if (p == null)
-                throw new JsonReadingException("No pokemon with ID " + value.getLong("pokemon", 0));
+            if (p == null) throw new JsonReadingException("No pokemon with ID " + value.getLong("pokemon", 0));
             this.pokemon = this.actor = p.getDungeonPokemon();
         } catch (JsonReadingException e) {
             throw e;

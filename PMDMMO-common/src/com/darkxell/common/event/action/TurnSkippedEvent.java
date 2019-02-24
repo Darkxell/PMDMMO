@@ -27,8 +27,7 @@ public class TurnSkippedEvent extends DungeonEvent implements Communicable {
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof TurnSkippedEvent))
-            return false;
+        if (!(obj instanceof TurnSkippedEvent)) return false;
         TurnSkippedEvent o = (TurnSkippedEvent) obj;
         return this.pokemon.id() == o.pokemon.id();
     }
@@ -41,8 +40,7 @@ public class TurnSkippedEvent extends DungeonEvent implements Communicable {
     @Override
     public ArrayList<DungeonEvent> processServer() {
         if (this.pokemon.isTeamLeader())
-            this.resultingEvents
-                    .add(new BellyChangedEvent(this.floor, eventSource, this.pokemon, -.1 * this.pokemon.energyMultiplier()));
+            this.resultingEvents.add(new BellyChangedEvent(this.floor, this, this.pokemon, -.1 * this.pokemon.energyMultiplier()));
         return super.processServer();
     }
 
@@ -50,8 +48,7 @@ public class TurnSkippedEvent extends DungeonEvent implements Communicable {
     public void read(JsonObject value) throws JsonReadingException {
         try {
             Pokemon p = this.floor.dungeon.communication.pokemonIDs.get(value.getLong("pokemon", 0));
-            if (p == null)
-                throw new JsonReadingException("No pokemon with ID " + value.getLong("pokemon", 0));
+            if (p == null) throw new JsonReadingException("No pokemon with ID " + value.getLong("pokemon", 0));
             this.pokemon = this.actor = p.getDungeonPokemon();
         } catch (JsonReadingException e) {
             throw e;

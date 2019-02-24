@@ -20,15 +20,14 @@ public class BoostStatOnHitStatusCondition extends StatusCondition {
     }
 
     @Override
-    public void onPostEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned,
-            ArrayList<DungeonEvent> resultingEvents) {
+    public void onPostEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned, ArrayList<DungeonEvent> resultingEvents) {
         super.onPostEvent(floor, event, concerned, resultingEvents);
 
         if (event instanceof DamageDealtEvent) {
             DamageDealtEvent e = (DamageDealtEvent) event;
-            if (e.target.hasStatusCondition(this))
-                resultingEvents
-                        .add(new StatChangedEvent(floor, eventSource, e.target, this.stat, 1, e.target.getStatusCondition(this)));
+            if (e.target.hasStatusCondition(this) && e.target == concerned) {
+                resultingEvents.add(new StatChangedEvent(floor, event, e.target, this.stat, 1, e.target.getStatusCondition(this)));
+            }
         }
     }
 

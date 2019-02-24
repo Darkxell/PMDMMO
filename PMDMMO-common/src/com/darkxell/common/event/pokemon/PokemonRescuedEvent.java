@@ -42,8 +42,8 @@ public class PokemonRescuedEvent extends DungeonEvent implements Communicable {
     public ArrayList<DungeonEvent> processServer() {
         if (this.rescued.type != DungeonPokemonType.RESCUEABLE) return super.processServer();
         this.floor.unsummonPokemon(this.rescued);
-        this.resultingEvents.add(new MessageEvent(this.floor, eventSource,
-                new Message("mission.rescued").addReplacement("<pokemon>", this.rescued.getNickname())));
+        this.resultingEvents
+                .add(new MessageEvent(this.floor, this, new Message("mission.rescued").addReplacement("<pokemon>", this.rescued.getNickname())));
         this.resultingEvents.add(new MissionClearedEvent(this.floor, this, this.mission));
         return super.processServer();
     }
@@ -52,11 +52,9 @@ public class PokemonRescuedEvent extends DungeonEvent implements Communicable {
     public void read(JsonObject value) throws JsonReadingException {
         if (value.get("player") == null) throw new JsonReadingException("No value for Player ID!");
         if (value.get("mission") == null) throw new JsonReadingException("No value for Mission ID!");
-        if (!value.get("mission").isString())
-            throw new JsonReadingException("Invalid value for mission: " + value.get("mission"));
+        if (!value.get("mission").isString()) throw new JsonReadingException("Invalid value for mission: " + value.get("mission"));
         if (value.get("pokemon") == null) throw new JsonReadingException("No value for rescued Pokemon ID!");
-        if (!value.get("pokemon").isNumber())
-            throw new JsonReadingException("Invalid value for rescued Pokemon ID: " + value.get("pokemon"));
+        if (!value.get("pokemon").isNumber()) throw new JsonReadingException("Invalid value for rescued Pokemon ID: " + value.get("pokemon"));
         try {
             int player = value.getInt("player", -1);
             for (Player p : this.floor.dungeon.exploringPlayers())
@@ -65,11 +63,9 @@ public class PokemonRescuedEvent extends DungeonEvent implements Communicable {
             throw new JsonReadingException("Wrong value for Player ID: " + value.get("player"));
         }
         this.mission = this.floor.dungeon.findMission(value.getString("mission", null));
-        if (this.mission == null) throw new JsonReadingException(
-                "Mission couldn't be find in active Dungeon Missions: " + value.get("mission"));
+        if (this.mission == null) throw new JsonReadingException("Mission couldn't be find in active Dungeon Missions: " + value.get("mission"));
         Pokemon p = this.floor.dungeon.communication.pokemonIDs.get(value.getLong("pokemon", 0));
-        if (p == null)
-            throw new JsonReadingException("Pokemon couldn't be find in current Dungeon: " + value.get("pokemon"));
+        if (p == null) throw new JsonReadingException("Pokemon couldn't be find in current Dungeon: " + value.get("pokemon"));
         this.rescued = p.getDungeonPokemon();
     }
 
@@ -79,8 +75,8 @@ public class PokemonRescuedEvent extends DungeonEvent implements Communicable {
 
     @Override
     public JsonObject toJson() {
-        return Json.object().add("player", this.rescuer.getData().id)
-                .add("mission", this.mission.missionData.toString()).add("pokemon", this.rescued.id());
+        return Json.object().add("player", this.rescuer.getData().id).add("mission", this.mission.missionData.toString()).add("pokemon",
+                this.rescued.id());
     }
 
 }

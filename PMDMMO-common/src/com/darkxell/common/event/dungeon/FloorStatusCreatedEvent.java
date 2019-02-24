@@ -25,12 +25,11 @@ public class FloorStatusCreatedEvent extends DungeonEvent {
     public ArrayList<DungeonEvent> processServer() {
         if (this.floor.hasStatus(this.status.status)) {
             Message m = new Message("status.floor.already").addReplacement("<status>", this.status.status.name());
-            this.resultingEvents.add(new MessageEvent(this.floor, eventSource, m));
+            this.resultingEvents.add(new MessageEvent(this.floor, this, m));
         } else {
             this.floor.addFloorStatus(this.status);
             Message m = this.status.startMessage();
-            if (m != null)
-                this.messages.add(m);
+            if (m != null) this.messages.add(m);
             this.status.onStatusStart(floor, this.resultingEvents);
         }
         return super.processServer();
