@@ -23,7 +23,7 @@ public class PersistantWeatherChangedEvent extends DungeonEvent {
 
     @Override
     public ArrayList<DungeonEvent> processServer() {
-        this.floor.setPersistantWeather(this.weather, this.resultingEvents);
+        this.floor.setPersistantWeather(this, this.resultingEvents);
         return super.processServer();
     }
 

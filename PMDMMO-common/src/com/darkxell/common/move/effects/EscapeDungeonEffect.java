@@ -13,10 +13,12 @@ public class EscapeDungeonEffect extends MoveEffect {
     }
 
     @Override
-    public void additionalEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
+    public void additionalEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed,
+            MoveEvents effects) {
         super.additionalEffects(moveEvent, calculator, missed, effects);
-        if (target.isTeamLeader())
-            effects.createEffect(new DungeonExitEvent(floor, eventSource, target.player()), moveEvent, missed, false, null);
+        if (moveEvent.target.isTeamLeader())
+            effects.createEffect(new DungeonExitEvent(moveEvent.floor, moveEvent, moveEvent.target.player()), moveEvent,
+                    missed, false, null);
     }
 
 }
