@@ -26,7 +26,7 @@ public class SolarBeamEffect extends MoveEffect {
             super.mainEffects(usedMove, target, flags, floor, calculator, missed, effects);
         else if (floor.currentWeather().weather == Weather.SUNNY) {
             LearnedMove move = new LearnedMove(RESULTING_MOVE);
-            MoveSelectionEvent e = new MoveSelectionEvent(floor, move, usedMove.user, usedMove.user.facing(), false);
+            MoveSelectionEvent e = new MoveSelectionEvent(floor, eventSource, move, usedMove.user, usedMove.user.facing(), false);
             e.displayMessages = false;
             effects.createEffect(e, usedMove, target, floor, missed, false, null);
         } else

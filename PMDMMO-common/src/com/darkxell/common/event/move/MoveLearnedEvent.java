@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.pokemon.LearnedMove;
 import com.darkxell.common.pokemon.Pokemon;
@@ -15,7 +16,7 @@ public class MoveLearnedEvent extends DungeonEvent {
     public final Move move;
     public final Pokemon pokemon;
 
-    public MoveLearnedEvent(Floor floor, Pokemon pokemon, Move move, int index) {
+    public MoveLearnedEvent(Floor floor, DungeonEventSource eventSource, Pokemon pokemon, Move move, int index) {
         super(floor, eventSource);
         this.pokemon = pokemon;
         this.move = move;

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Direction;
@@ -18,7 +19,7 @@ public class MoveUseEvent extends DungeonEvent {
     /** The move that was used. */
     public final MoveUse usedMove;
 
-    public MoveUseEvent(Floor floor, MoveUse move, DungeonPokemon target) {
+    public MoveUseEvent(Floor floor, DungeonEventSource eventSource, MoveUse move, DungeonPokemon target) {
         super(floor, eventSource);
         this.usedMove = move;
         this.target = target;

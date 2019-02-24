@@ -286,7 +286,7 @@ public class MoveEffect implements AffectsPokemon {
      * @param events - The event list to add the MoveUseEvent to.
      */
     protected void useOn(MoveUse move, DungeonPokemon target, Floor floor, ArrayList<DungeonEvent> events) {
-        events.add(new MoveUseEvent(floor, move, target));
+        events.add(new MoveUseEvent(floor, eventSource, move, target));
     }
 
 }

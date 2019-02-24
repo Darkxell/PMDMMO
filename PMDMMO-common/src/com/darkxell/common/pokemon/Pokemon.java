@@ -264,7 +264,7 @@ public class Pokemon implements ItemContainer, HasID {
 
         ArrayList<Move> moves = this.species().learnedMoves(this.level());
         for (Move move : moves)
-            events.add(new MoveDiscoveredEvent(floor, this, move));
+            events.add(new MoveDiscoveredEvent(floor, eventSource, this, move));
     }
 
     public LearnedMove move(int slot) {

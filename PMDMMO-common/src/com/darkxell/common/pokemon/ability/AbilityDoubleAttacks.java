@@ -35,8 +35,8 @@ public class AbilityDoubleAttacks extends Ability {
                 }
 
             if (active) {
-                MoveSelectionEvent n = new MoveSelectionEvent(e.floor, e.usedMove().move, e.usedMove().user,
-                        e.usedMove().direction);
+                MoveSelectionEvent n = new MoveSelectionEvent(e.floor, eventSource, e.usedMove().move,
+                        e.usedMove().user, e.usedMove().direction);
                 e.addFlag("isdoubled");
                 n.addFlag("isdoubled");
                 n.setConsumesNoPP();

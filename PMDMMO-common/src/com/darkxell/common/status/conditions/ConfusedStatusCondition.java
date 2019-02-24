@@ -33,7 +33,7 @@ public class ConfusedStatusCondition extends StatusCondition {
     private void randomize(Floor floor, MoveSelectionEvent event, ArrayList<DungeonEvent> resultingEvents) {
         event.consume();
         Direction direction = Direction.randomDirection(floor.random);
-        MoveSelectionEvent e = new MoveSelectionEvent(floor, event.usedMove().move, event.usedMove().user, direction);
+        MoveSelectionEvent e = new MoveSelectionEvent(floor, eventSource, event.usedMove().move, event.usedMove().user, direction);
         e.cloneFlags(event);
         e.addFlag("confused");
         resultingEvents.add(e);

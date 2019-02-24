@@ -20,8 +20,8 @@ public class AIStateAttackPokemon extends AIStateFollowPokemon {
 		if (AIUtils.isAdjacentTo(this.ai.pokemon, this.target, true) && this.ai.pokemon.canAttack(this.ai.floor)) {
 			// Choose a move at random.
 			LearnedMove move = AIUtils.chooseMove(this.ai);
-			return new MoveSelectionEvent(this.ai.floor, move, this.ai.pokemon,
-					AIUtils.generalDirection(this.ai.pokemon, this.target));
+			return new MoveSelectionEvent(this.ai.floor, eventSource, move,
+					this.ai.pokemon, AIUtils.generalDirection(this.ai.pokemon, this.target));
 		}
 		return super.takeAction();
 	}
