@@ -3,7 +3,7 @@ import com.github.spotbugs.SpotBugsTask
 plugins {
     id("nebula.dependency-lock") version "7.3.0"
 
-    pmd
+    id("pmd")
     // REVISIT: spotbugs classpath bs in 1.6.10
     // https://github.com/spotbugs/spotbugs-gradle-plugin/issues/119
     id("com.github.spotbugs") version "1.6.9"
@@ -14,31 +14,31 @@ allprojects {
     repositories {
         mavenCentral()
         jcenter()
-        maven("https://jitpack.io")
+        maven { url 'https://jitpack.io' }
     }
 }
 
 subprojects {
     version = "0.1.0-alpha"
 
-    apply(plugin = "pmd")
-    apply(plugin = "com.github.spotbugs")
-    apply(plugin = "com.diffplug.gradle.spotless")
+    apply plugin: "pmd"
+    apply plugin: "com.github.spotbugs"
+    apply plugin: "com.diffplug.gradle.spotless"
 
-    tasks.withType<Pmd>().configureEach {
+    tasks.withType(Pmd) {
         ignoreFailures = true
         ruleSetFiles = rootProject.files("config/pmd.xml")
         // ruleSets overrides ruleSetFiles if not empty. it's really stupid.
-        ruleSets = listOf()
+        ruleSets = []
     }
 
-    tasks.withType<SpotBugsTask>().configureEach {
+    tasks.withType(SpotBugsTask) {
         ignoreFailures = true
         // TODO: create spotbugs filter
 //        includeFilter = rootProject.file("config/spotbugs.xml")
         reports {
-            xml.isEnabled = false
-            html.isEnabled = true
+            xml { enabled = false }
+            html { enabled = true }
         }
     }
 
