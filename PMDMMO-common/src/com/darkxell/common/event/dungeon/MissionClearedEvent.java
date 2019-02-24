@@ -4,13 +4,14 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.mission.DungeonMission;
 
 public class MissionClearedEvent extends DungeonEvent {
 
     public final DungeonMission mission;
 
-    public MissionClearedEvent(Floor floor, DungeonMission mission) {
+    public MissionClearedEvent(Floor floor, DungeonEventSource eventSource, DungeonMission mission) {
         super(floor, eventSource);
         this.mission = mission;
     }

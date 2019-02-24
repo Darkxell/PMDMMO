@@ -179,7 +179,7 @@ public class DungeonExploration {
 
         for (DungeonMission mission : this.activeMissions)
             if (!mission.isCleared() && mission.clearsMission(event))
-                this.eventProcessor.addToPending(new MissionClearedEvent(this.currentFloor(), mission));
+                this.eventProcessor.addToPending(new MissionClearedEvent(this.currentFloor(), eventSource, mission));
     }
 
     @SuppressWarnings("unchecked")
