@@ -17,7 +17,8 @@ public class CopyStatChangesEffect extends MoveEffect {
     }
 
     @Override
-    public void additionalEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
+    public void additionalEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed,
+            MoveEvents effects) {
         super.additionalEffects(moveEvent, calculator, missed, effects);
 
         if (!missed) {
@@ -28,15 +29,17 @@ public class CopyStatChangesEffect extends MoveEffect {
                 if (diff != 0) {
                     if (first) {
                         first = false;
-                        effects.events.add(new MessageEvent(moveEvent.floor, moveEvent,
-                                new Message("stats.copied").addReplacement("<pokemon>", moveEvent.target.getNickname())));
+                        effects.events.add(new MessageEvent(moveEvent.floor, moveEvent, new Message("stats.copied")
+                                .addReplacement("<pokemon>", moveEvent.target.getNickname())));
                     }
-                    effects.createEffect(new StatChangedEvent(moveEvent.floor, moveEvent, moveEvent.usedMove.user, stat, diff), moveEvent,
-                            missed, false);
+                    effects.createEffect(
+                            new StatChangedEvent(moveEvent.floor, moveEvent, moveEvent.usedMove.user, stat, diff),
+                            moveEvent, missed, false);
                 }
             }
-            if (first) effects.events.add(new MessageEvent(moveEvent.floor, moveEvent,
-                    new Message("stats.copied.none").addReplacement("<pokemon>", moveEvent.target.getNickname())));
+            if (first)
+                effects.events.add(new MessageEvent(moveEvent.floor, moveEvent,
+                        new Message("stats.copied.none").addReplacement("<pokemon>", moveEvent.target.getNickname())));
         }
     }
 

@@ -65,8 +65,8 @@ public class EditDungeonPokemonController implements Initializable {
     }
 
     public void onCreate() {
-        DungeonEncounterTableItem i = new DungeonEncounterTableItem(
-                new DungeonEncounter(1, 1, 1, new FloorSet(1, EditDungeonDataController.instance.currentFloorCount()), null));
+        DungeonEncounterTableItem i = new DungeonEncounterTableItem(new DungeonEncounter(1, 1, 1,
+                new FloorSet(1, EditDungeonDataController.instance.currentFloorCount()), null));
         this.pokemonTable.getItems().add(i);
         this.pokemonTable.getSelectionModel().select(i);
         this.onEdit();

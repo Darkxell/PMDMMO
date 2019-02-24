@@ -20,7 +20,8 @@ public class AbilityDoubleAttacks extends Ability {
     }
 
     @Override
-    public void onPostEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned, ArrayList<DungeonEvent> resultingEvents) {
+    public void onPostEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned,
+            ArrayList<DungeonEvent> resultingEvents) {
         super.onPostEvent(floor, event, concerned, resultingEvents);
         if (event instanceof MoveSelectionEvent && !event.hasFlag("isdoubled")) {
             MoveSelectionEvent e = (MoveSelectionEvent) event;
@@ -34,9 +35,11 @@ public class AbilityDoubleAttacks extends Ability {
                 }
 
             if (active) {
-                DungeonEvent abilityevent = new TriggeredAbilityEvent(floor, event, e.usedMove().user).setPriority(DungeonEvent.PRIORITY_ACTION_END);
+                DungeonEvent abilityevent = new TriggeredAbilityEvent(floor, event, e.usedMove().user)
+                        .setPriority(DungeonEvent.PRIORITY_ACTION_END);
                 resultingEvents.add(abilityevent);
-                MoveSelectionEvent n = new MoveSelectionEvent(e.floor, abilityevent, e.usedMove().move, e.usedMove().user, e.usedMove().direction);
+                MoveSelectionEvent n = new MoveSelectionEvent(e.floor, abilityevent, e.usedMove().move,
+                        e.usedMove().user, e.usedMove().direction);
                 e.addFlag("isdoubled");
                 n.addFlag("isdoubled");
                 n.setConsumesNoPP();

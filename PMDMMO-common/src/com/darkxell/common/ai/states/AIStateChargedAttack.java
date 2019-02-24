@@ -25,7 +25,8 @@ public class AIStateChargedAttack extends AIState {
             if (e instanceof MoveSelectionEvent && ((MoveSelectionEvent) e).usedMove().user == this.ai.pokemon)
                 m = ((MoveSelectionEvent) e).usedMove().move;
         LearnedMove move = new LearnedMove(this.moveID);
-        if (m != null) move.setAddedLevel(m.getAddedLevel());
+        if (m != null)
+            move.setAddedLevel(m.getAddedLevel());
         return new MoveSelectionEvent(this.ai.floor, DungeonEventSource.PLAYER_ACTION, move, this.ai.pokemon);
     }
 

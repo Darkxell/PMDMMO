@@ -17,8 +17,8 @@ public class ItemSwappedEvent extends ItemMovedEvent {
         super(floor, eventSource);
     }
 
-    public ItemSwappedEvent(Floor floor, DungeonEventSource eventSource, ItemAction action, DungeonPokemon mover, ItemContainer source,
-            int sourceIndex, ItemContainer destination, int destinationIndex) {
+    public ItemSwappedEvent(Floor floor, DungeonEventSource eventSource, ItemAction action, DungeonPokemon mover,
+            ItemContainer source, int sourceIndex, ItemContainer destination, int destinationIndex) {
         super(floor, eventSource, action, mover, source, sourceIndex, destination, destinationIndex);
     }
 

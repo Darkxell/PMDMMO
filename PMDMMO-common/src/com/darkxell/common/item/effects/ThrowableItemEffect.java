@@ -78,12 +78,14 @@ public class ThrowableItemEffect extends ItemEffect {
         ArrayList<Tile> arcReachable = arcReachableTiles(itemEvent.floor, itemEvent.item, itemEvent.user);
         ArrayList<DungeonPokemon> candidates = new ArrayList<>();
         for (Tile t : arcReachable)
-            if (t.getPokemon() != null && !itemEvent.user.isAlliedWith(t.getPokemon())) candidates.add(t.getPokemon());
+            if (t.getPokemon() != null && !itemEvent.user.isAlliedWith(t.getPokemon()))
+                candidates.add(t.getPokemon());
         candidates.sort((o1, o2) -> {
             double d1 = itemEvent.user.tile().distance(o1.tile()), d2 = itemEvent.user.tile().distance(o2.tile());
             return Double.compare(d1, d2);
         });
-        return candidates.size() == 0 ? itemEvent.user.tile().adjacentTile(itemEvent.user.facing()) : candidates.get(0).tile();
+        return candidates.size() == 0 ? itemEvent.user.tile().adjacentTile(itemEvent.user.facing())
+                : candidates.get(0).tile();
     }
 
     @Override

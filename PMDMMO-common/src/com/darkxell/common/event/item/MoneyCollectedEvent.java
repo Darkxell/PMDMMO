@@ -16,7 +16,8 @@ public class MoneyCollectedEvent extends DungeonEvent {
     public final DungeonPokemon pokemon;
     public final Tile tile;
 
-    public MoneyCollectedEvent(Floor floor, DungeonEventSource eventSource, DungeonPokemon pokemon, Tile tile, ItemStack moneyItem) {
+    public MoneyCollectedEvent(Floor floor, DungeonEventSource eventSource, DungeonPokemon pokemon, Tile tile,
+            ItemStack moneyItem) {
         super(floor, eventSource);
         this.pokemon = pokemon;
         this.tile = tile;

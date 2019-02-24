@@ -33,7 +33,8 @@ public class PlayerLosesEvent extends DungeonEvent {
 
         ArrayList<DungeonPokemon> existing = this.floor.listPokemon();
         for (DungeonPokemon pokemon : this.player.getDungeonTeam())
-            if (existing.contains(pokemon)) this.floor.unsummonPokemon(pokemon);
+            if (existing.contains(pokemon))
+                this.floor.unsummonPokemon(pokemon);
         if (this.floor.dungeon.removePlayer(this.player)) {
             DungeonOutcome outcome = new DungeonOutcome(Outcome.KO, this.floor.dungeon.id, this.moveID);
             this.resultingEvents.add(new ExplorationStopEvent(this.floor, this, outcome));

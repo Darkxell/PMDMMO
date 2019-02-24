@@ -22,7 +22,8 @@ import com.darkxell.common.util.language.Message;
 import com.darkxell.common.util.xml.XMLUtils;
 
 public class Pokemon implements ItemContainer, HasID {
-    /** Pokemon gender.
+    /**
+     * Pokemon gender.
      * <ul>
      * <li>MALE = 0</li>
      * <li>FEMALE = 1</li>
@@ -35,7 +36,8 @@ public class Pokemon implements ItemContainer, HasID {
     private static ArrayList<DatabaseIdentifier> createMovesList(LearnedMove... moves) {
         ArrayList<DatabaseIdentifier> ids = new ArrayList<>();
         for (LearnedMove move : moves)
-            if (move != null) ids.add(new DatabaseIdentifier(move.getData().id));
+            if (move != null)
+                ids.add(new DatabaseIdentifier(move.getData().id));
         return ids;
     }
 
@@ -63,19 +65,21 @@ public class Pokemon implements ItemContainer, HasID {
         this.setData(data);
     }
 
-    public Pokemon(long id, PokemonSpecies species, String nickname, ItemStack item, BaseStats stats, int abilityid, long experience, int level,
-            LearnedMove move1, LearnedMove move2, LearnedMove move3, LearnedMove move4, int gender, int iq, boolean shiny) {
-        this(new DBPokemon(id, species.id, species.formID, abilityid, gender, nickname, level, experience, iq, shiny, stats.attack, stats.defense,
-                stats.specialAttack, stats.specialDefense, stats.health, item == null ? null : new DatabaseIdentifier(item.getData().id),
+    public Pokemon(long id, PokemonSpecies species, String nickname, ItemStack item, BaseStats stats, int abilityid,
+            long experience, int level, LearnedMove move1, LearnedMove move2, LearnedMove move3, LearnedMove move4,
+            int gender, int iq, boolean shiny) {
+        this(new DBPokemon(id, species.id, species.formID, abilityid, gender, nickname, level, experience, iq, shiny,
+                stats.attack, stats.defense, stats.specialAttack, stats.specialDefense, stats.health,
+                item == null ? null : new DatabaseIdentifier(item.getData().id),
                 createMovesList(move1, move2, move3, move4)));
         this.item = item;
         this.moves = new LearnedMove[] { move1, move2, move3, move4 };
     }
 
     public Pokemon(Pokemon pokemon) {
-        this(pokemon.getData().id, pokemon.species(), pokemon.nickname(), pokemon.item(), pokemon.stats(), pokemon.abilityID(), pokemon.experience(),
-                pokemon.level(), pokemon.move(0), pokemon.move(1), pokemon.move(2), pokemon.move(3), pokemon.gender(), pokemon.iq(),
-                pokemon.isShiny());
+        this(pokemon.getData().id, pokemon.species(), pokemon.nickname(), pokemon.item(), pokemon.stats(),
+                pokemon.abilityID(), pokemon.experience(), pokemon.level(), pokemon.move(0), pokemon.move(1),
+                pokemon.move(2), pokemon.move(3), pokemon.gender(), pokemon.iq(), pokemon.isShiny());
     }
 
     public Ability ability() {
@@ -122,10 +126,13 @@ public class Pokemon implements ItemContainer, HasID {
 
     public Message evolutionStatus() {
         Evolution[] evolutions = this.species().evolutions();
-        if (evolutions.length == 0) return new Message("evolve.none");
+        if (evolutions.length == 0)
+            return new Message("evolve.none");
         for (Evolution evolution : evolutions) {
-            if (evolution.method == Evolution.LEVEL && this.level() >= evolution.value) return new Message("evolve.possible");
-            if (evolution.method == Evolution.ITEM) return new Message("evolve.item");
+            if (evolution.method == Evolution.LEVEL && this.level() >= evolution.value)
+                return new Message("evolve.possible");
+            if (evolution.method == Evolution.ITEM)
+                return new Message("evolve.item");
         }
         return new Message("evolve.not_now");
     }
@@ -143,8 +150,10 @@ public class Pokemon implements ItemContainer, HasID {
         return this.species().experienceToNextLevel(this.level());
     }
 
-    /** @param amount - The amount of experience gained.
-     * @return The number of levels this experience granted. */
+    /**
+     * @param  amount - The amount of experience gained.
+     * @return        The number of levels this experience granted.
+     */
     public void gainExperience(ExperienceGainedEvent event, ArrayList<DungeonEvent> events) {
         int amount = event.experience;
         int levelsup = 0;
@@ -182,7 +191,8 @@ public class Pokemon implements ItemContainer, HasID {
     public int getIQLevel() {
         final int[] levels = { 10, 50, 100, 150, 200, 300, 400, 500, 600, 700, 990, Integer.MAX_VALUE };
         for (int i = 0; i < levels.length; ++i)
-            if (levels[i] > this.iq()) return i + 1;
+            if (levels[i] > this.iq())
+                return i + 1;
         return 1;
     }
 
@@ -248,7 +258,8 @@ public class Pokemon implements ItemContainer, HasID {
         this.setLevel(this.level() + 1);
         BaseStats stats = this.species().baseStatsIncrease(this.level() - 1);
         this.stats.add(stats);
-        if (this.dungeonPokemon != null) this.dungeonPokemon.stats.onStatChange();
+        if (this.dungeonPokemon != null)
+            this.dungeonPokemon.stats.onStatChange();
 
         ArrayList<Move> moves = this.species().learnedMoves(this.level());
         for (Move move : moves)
@@ -256,15 +267,20 @@ public class Pokemon implements ItemContainer, HasID {
     }
 
     public LearnedMove move(int slot) {
-        if (slot < 0 || slot >= this.moves.length) return null;
+        if (slot < 0 || slot >= this.moves.length)
+            return null;
         return this.moves[slot];
     }
 
     public int moveCount() {
-        if (this.moves[3] != null) return 4;
-        if (this.moves[2] != null) return 3;
-        if (this.moves[1] != null) return 2;
-        if (this.moves[0] != null) return 1;
+        if (this.moves[3] != null)
+            return 4;
+        if (this.moves[2] != null)
+            return 3;
+        if (this.moves[1] != null)
+            return 2;
+        if (this.moves[0] != null)
+            return 1;
         return 0;
     }
 
@@ -281,7 +297,8 @@ public class Pokemon implements ItemContainer, HasID {
         this.item = null;
         this.moves = new LearnedMove[4];
         this.species = Registries.species().find(this.data.specieid);
-        this.stats = new BaseStats(this, this.data.stat_atk, this.data.stat_def, this.data.stat_hp, this.data.stat_speatk, this.data.stat_spedef, 1);
+        this.stats = new BaseStats(this, this.data.stat_atk, this.data.stat_def, this.data.stat_hp,
+                this.data.stat_speatk, this.data.stat_spedef, 1);
     }
 
     private void setExperience(long experience) {
@@ -291,8 +308,11 @@ public class Pokemon implements ItemContainer, HasID {
     @Override
     public void setId(long id) {
         this.data.id = id;
-        if (this.player != null) if (this.player.getTeamLeader() == this) this.player.getData().mainpokemon = new DatabaseIdentifier(id);
-        else this.player.getData().pokemonsinparty.set(this.player.allies.indexOf(this), new DatabaseIdentifier(id));
+        if (this.player != null)
+            if (this.player.getTeamLeader() == this)
+                this.player.getData().mainpokemon = new DatabaseIdentifier(id);
+            else
+                this.player.getData().pokemonsinparty.set(this.player.allies.indexOf(this), new DatabaseIdentifier(id));
     }
 
     private void setIq(int iq) {
@@ -306,8 +326,10 @@ public class Pokemon implements ItemContainer, HasID {
 
     public void setItem(ItemStack item) {
         this.item = item;
-        if (item == null) this.data.holdeditem = null;
-        else this.data.holdeditem = new DatabaseIdentifier(item.getData().id);
+        if (item == null)
+            this.data.holdeditem = null;
+        else
+            this.data.holdeditem = new DatabaseIdentifier(item.getData().id);
     }
 
     private void setLevel(int level) {
@@ -320,8 +342,10 @@ public class Pokemon implements ItemContainer, HasID {
                 --slot;
             this.moves[slot] = move;
             this.moves[slot].setSlot(slot);
-            if (slot == this.data.learnedmoves.size()) this.data.learnedmoves.add(new DatabaseIdentifier(move.id()));
-            else this.data.learnedmoves.set(slot, new DatabaseIdentifier(move.id()));
+            if (slot == this.data.learnedmoves.size())
+                this.data.learnedmoves.add(new DatabaseIdentifier(move.id()));
+            else
+                this.data.learnedmoves.set(slot, new DatabaseIdentifier(move.id()));
         }
     }
 
@@ -347,7 +371,8 @@ public class Pokemon implements ItemContainer, HasID {
     }
 
     public void switchMoves(int slot1, int slot2) {
-        if (slot1 < 0 || slot1 >= this.moves.length || slot2 < 0 || slot2 >= this.moves.length) return;
+        if (slot1 < 0 || slot1 >= this.moves.length || slot2 < 0 || slot2 >= this.moves.length)
+            return;
         LearnedMove temp = this.move(slot1);
         this.setMove(slot1, this.move(slot2));
         this.setMove(slot2, temp);
@@ -369,8 +394,10 @@ public class Pokemon implements ItemContainer, HasID {
         Element root = new Element(XML_ROOT);
         root.setAttribute("pk-id", Long.toString(this.id()));
         root.setAttribute("id", Integer.toString(this.species().id));
-        if (this.nickname() != null) root.setAttribute("nickname", this.nickname());
-        if (this.item != null) root.addContent(this.item.toXML());
+        if (this.nickname() != null)
+            root.setAttribute("nickname", this.nickname());
+        if (this.item != null)
+            root.addContent(this.item.toXML());
         root.setAttribute("level", Integer.toString(this.level()));
         root.addContent(this.stats.toXML());
         root.setAttribute("ability", Integer.toString(this.abilityID()));
@@ -380,7 +407,8 @@ public class Pokemon implements ItemContainer, HasID {
         XMLUtils.setAttribute(root, "shiny", this.isShiny(), false);
         this.moves = new LearnedMove[4];
         for (LearnedMove move : this.moves)
-            if (move != null) root.addContent(move.toXML());
+            if (move != null)
+                root.addContent(move.toXML());
 
         return root;
     }

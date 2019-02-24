@@ -56,7 +56,8 @@ public class Tile implements ItemContainer, Comparable<Tile> {
     public void addItem(ItemStack item) {
         if (this.item != null && this.item.itemid() == item.itemid() && this.item.item().isStackable)
             this.item.setQuantity(this.item.quantity() + item.quantity());
-        else this.setItem(item);
+        else
+            this.setItem(item);
     }
 
     /** @return The Tile adjacent to this Tile in the input direction. See {@link DirectionSet#NORTH}. */
@@ -71,7 +72,8 @@ public class Tile implements ItemContainer, Comparable<Tile> {
 
     /** @return True if there are walls blocking the path in the input direction. */
     public boolean blockingWalls(DungeonPokemon pokemon, Direction direction) {
-        if (!direction.isDiagonal()) return false;
+        if (!direction.isDiagonal())
+            return false;
         Pair<Direction, Direction> corners = direction.splitDiagonal();
         return !this.adjacentTile(corners.getKey()).canCross(pokemon)
                 || !this.adjacentTile(corners.getValue()).canCross(pokemon);
@@ -84,20 +86,26 @@ public class Tile implements ItemContainer, Comparable<Tile> {
 
     /** @return True if the input Pokemon can walk diagonally with this Tile as a corner. */
     public boolean canCross(DungeonPokemon pokemon) {
-        if (pokemon.species().isType(PokemonType.Ghost)) return true;
+        if (pokemon.species().isType(PokemonType.Ghost))
+            return true;
         return this.type == TileType.GROUND || this.type == WATER || this.type == LAVA || this.type == AIR
                 || this.type == STAIR || this.type == WARP_ZONE;
     }
 
-    /** @param direction - The direction of the movement.
-     * @return True if the input Pokemon can walk on this Tile. */
+    /**
+     * @param  direction - The direction of the movement.
+     * @return           True if the input Pokemon can walk on this Tile.
+     */
     public boolean canMoveTo(DungeonPokemon pokemon, Direction direction, boolean allowSwitching) {
-        if (!this.canWalkOn(pokemon, allowSwitching)) return false;
+        if (!this.canWalkOn(pokemon, allowSwitching))
+            return false;
         return !this.blockingWalls(pokemon, direction.opposite());
     }
 
-    /** @param allowSwitching - True if switching leader and ally is allowed.
-     * @return True if the input Pokemon can walk on this Tile. */
+    /**
+     * @param  allowSwitching - True if switching leader and ally is allowed.
+     * @return                True if the input Pokemon can walk on this Tile.
+     */
     public boolean canWalkOn(DungeonPokemon pokemon, boolean allowSwitching) {
         if (this.getPokemon() != null)
             // If team leader and Pokemon here is ally, can exchange position
@@ -108,7 +116,8 @@ public class Tile implements ItemContainer, Comparable<Tile> {
 
     @Override
     public int compareTo(Tile tile) {
-        if (this.y == tile.y) return Integer.compare(this.x, tile.x);
+        if (this.y == tile.y)
+            return Integer.compare(this.x, tile.x);
         return Integer.compare(this.y, tile.y);
     }
 
@@ -140,10 +149,14 @@ public class Tile implements ItemContainer, Comparable<Tile> {
     /** @return The sum of NORTH, EAST, SOUTH, WEST if the tile in that direction is the same type as this tile. */
     public DirectionSet getCardinalDifferences() {
         DirectionSet s = new DirectionSet();
-        if (this.adjacentTile(Direction.NORTH).type() != this.type()) s.add(Direction.NORTH);
-        if (this.adjacentTile(Direction.EAST).type() != this.type()) s.add(Direction.EAST);
-        if (this.adjacentTile(Direction.SOUTH).type() != this.type()) s.add(Direction.SOUTH);
-        if (this.adjacentTile(Direction.WEST).type() != this.type()) s.add(Direction.WEST);
+        if (this.adjacentTile(Direction.NORTH).type() != this.type())
+            s.add(Direction.NORTH);
+        if (this.adjacentTile(Direction.EAST).type() != this.type())
+            s.add(Direction.EAST);
+        if (this.adjacentTile(Direction.SOUTH).type() != this.type())
+            s.add(Direction.SOUTH);
+        if (this.adjacentTile(Direction.WEST).type() != this.type())
+            s.add(Direction.WEST);
         return s;
     }
 
@@ -169,10 +182,14 @@ public class Tile implements ItemContainer, Comparable<Tile> {
     /** @return The sum of each direction if the tile in that direction is the same type as this tile. */
     public DirectionSet getSurroundingDifferences() {
         DirectionSet s = this.getCardinalDifferences();
-        if (this.adjacentTile(Direction.NORTHEAST).type() != this.type()) s.add(Direction.NORTHEAST);
-        if (this.adjacentTile(Direction.NORTHWEST).type() != this.type()) s.add(Direction.NORTHWEST);
-        if (this.adjacentTile(Direction.SOUTHEAST).type() != this.type()) s.add(Direction.SOUTHEAST);
-        if (this.adjacentTile(Direction.SOUTHWEST).type() != this.type()) s.add(Direction.SOUTHWEST);
+        if (this.adjacentTile(Direction.NORTHEAST).type() != this.type())
+            s.add(Direction.NORTHEAST);
+        if (this.adjacentTile(Direction.NORTHWEST).type() != this.type())
+            s.add(Direction.NORTHWEST);
+        if (this.adjacentTile(Direction.SOUTHEAST).type() != this.type())
+            s.add(Direction.SOUTHEAST);
+        if (this.adjacentTile(Direction.SOUTHWEST).type() != this.type())
+            s.add(Direction.SOUTHWEST);
         return s;
     }
 
@@ -220,12 +237,16 @@ public class Tile implements ItemContainer, Comparable<Tile> {
         return Math.max(Math.abs(this.x - tile.x), Math.abs(this.y - tile.y));
     }
 
-    /** Called when an adjacent tile has its type changed.
+    /**
+     * Called when an adjacent tile has its type changed.
      *
-     * @param direction - The direction of the Tile. See {@link DirectionSet#NORTH}. */
+     * @param direction - The direction of the Tile. See {@link DirectionSet#NORTH}.
+     */
     private void onNeighborTypeChange(Direction direction) {
-        if (this.neighbors.contains(direction)) this.neighbors.remove(direction);
-        if (this.type.connectsTo(this.adjacentTile(direction).type)) this.neighbors.add(direction);
+        if (this.neighbors.contains(direction))
+            this.neighbors.remove(direction);
+        if (this.type.connectsTo(this.adjacentTile(direction).type))
+            this.neighbors.add(direction);
         this.neighbors.removeFreeCorners();
     }
 
@@ -239,11 +260,13 @@ public class Tile implements ItemContainer, Comparable<Tile> {
             else if (!travelEvent.running() && pokemon.player() != null && index != -1)
                 events.add(new ItemMovedEvent(travelEvent.floor, travelEvent, ItemAction.GET, pokemon, this, 0,
                         pokemon.player().inventory(), -1));
-            else if (!travelEvent.running() && !pokemon.hasItem()) events.add(
-                    new ItemMovedEvent(travelEvent.floor, travelEvent, ItemAction.GET, pokemon, this, 0, pokemon, -1));
-            else events.add(new MessageEvent(travelEvent.floor, travelEvent,
-                    new Message("ground.step").addReplacement("<pokemon>", pokemon.getNickname())
-                            .addReplacement("<item>", this.getItem().name())));
+            else if (!travelEvent.running() && !pokemon.hasItem())
+                events.add(new ItemMovedEvent(travelEvent.floor, travelEvent, ItemAction.GET, pokemon, this, 0, pokemon,
+                        -1));
+            else
+                events.add(new MessageEvent(travelEvent.floor, travelEvent,
+                        new Message("ground.step").addReplacement("<pokemon>", pokemon.getNickname())
+                                .addReplacement("<item>", this.getItem().name())));
         }
 
         if (this.hasTrap())
@@ -256,7 +279,8 @@ public class Tile implements ItemContainer, Comparable<Tile> {
             this.updateNeighbors();
             for (Direction direction : Direction.DIRECTIONS) {
                 Tile t = this.adjacentTile(direction);
-                if (t != null) t.onNeighborTypeChange(direction.opposite());
+                if (t != null)
+                    t.onNeighborTypeChange(direction.opposite());
             }
             this.neighbors.removeFreeCorners();
         }
@@ -264,7 +288,8 @@ public class Tile implements ItemContainer, Comparable<Tile> {
 
     /** Sets this Tile's Pokemon to null, only if it is the input Pokemon. */
     public void removePokemon(DungeonPokemon pokemon) {
-        if (this.getPokemon() == pokemon) this.setPokemon(null);
+        if (this.getPokemon() == pokemon)
+            this.setPokemon(null);
     }
 
     @Override
@@ -279,9 +304,11 @@ public class Tile implements ItemContainer, Comparable<Tile> {
     /** Sets the Pokemon on this tile. Also changes this Pokemon's previous tile's Pokemon to null. */
     public void setPokemon(DungeonPokemon pokemon) {
         // if (this.pokemon != null && this.pokemon.tile() == this) this.pokemon.setTile(null);
-        if (pokemon == null) this.pokemon = null;
+        if (pokemon == null)
+            this.pokemon = null;
         else {
-            if (pokemon.tile() != null) pokemon.tile().removePokemon(pokemon);
+            if (pokemon.tile() != null)
+                pokemon.tile().removePokemon(pokemon);
             this.pokemon = pokemon;
             this.pokemon.setTile(this);
             if (this.floor.aiManager.getAI(this.pokemon) != null)
@@ -294,11 +321,13 @@ public class Tile implements ItemContainer, Comparable<Tile> {
         this.type = type;
         if (this.isWall()) {
             this.alternate = (byte) (Math.random() * 10);
-            if (this.alternate > 2) this.alternate = 0;
+            if (this.alternate > 2)
+                this.alternate = 0;
         }
         if (this.type == TileType.GROUND) {
             this.alternate = (byte) (Math.random() * 10);
-            if (this.alternate > 1) this.alternate = 0;
+            if (this.alternate > 1)
+                this.alternate = 0;
         }
         this.onTypeChanged();
         return this;
@@ -324,7 +353,8 @@ public class Tile implements ItemContainer, Comparable<Tile> {
         this.neighbors.clear();
         for (Direction direction : Direction.DIRECTIONS) {
             Tile t = this.adjacentTile(direction);
-            if (t == null || t.type.connectsTo(this.type)) this.neighbors.add(direction);
+            if (t == null || t.type.connectsTo(this.type))
+                this.neighbors.add(direction);
         }
         this.neighbors.removeFreeCorners();
     }

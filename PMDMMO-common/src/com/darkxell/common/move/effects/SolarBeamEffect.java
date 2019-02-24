@@ -18,16 +18,22 @@ public class SolarBeamEffect extends MoveEffect {
     }
 
     @Override
-    protected void mainEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
-        if (missed) super.mainEffects(moveEvent, calculator, missed, effects);
+    protected void mainEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed,
+            MoveEvents effects) {
+        if (missed)
+            super.mainEffects(moveEvent, calculator, missed, effects);
         else if (moveEvent.floor.currentWeather().weather == Weather.SUNNY) {
             LearnedMove move = new LearnedMove(RESULTING_MOVE);
-            MoveSelectionEvent e = new MoveSelectionEvent(moveEvent.floor, moveEvent, move, moveEvent.usedMove.user, moveEvent.usedMove.user.facing(), false);
+            MoveSelectionEvent e = new MoveSelectionEvent(moveEvent.floor, moveEvent, move, moveEvent.usedMove.user,
+                    moveEvent.usedMove.user.facing(), false);
             e.displayMessages = false;
             effects.createEffect(e, moveEvent, missed, false);
-        } else effects.createEffect(
-                new StatusConditionCreatedEvent(moveEvent.floor, moveEvent, StatusConditions.Solar_beam.create(moveEvent.floor, moveEvent.target, moveEvent.usedMove.user, moveEvent.floor.random)),
-                moveEvent, missed, moveEvent.usedMove.move.move().dealsDamage);
+        } else
+            effects.createEffect(
+                    new StatusConditionCreatedEvent(moveEvent.floor, moveEvent,
+                            StatusConditions.Solar_beam.create(moveEvent.floor, moveEvent.target,
+                                    moveEvent.usedMove.user, moveEvent.floor.random)),
+                    moveEvent, missed, moveEvent.usedMove.move.move().dealsDamage);
     }
 
 }

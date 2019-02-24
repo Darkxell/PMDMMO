@@ -8,9 +8,11 @@ import com.darkxell.common.event.action.TurnSkippedEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Direction;
 
-/** Class that controls Pokemon not controlled by players in Dungeons.<br>
+/**
+ * Class that controls Pokemon not controlled by players in Dungeons.<br>
  * This abstract class should be extended for each type of Pokemon, i.e. wilds, allies, bosses...<br>
- * This class does not determine actions but sets {@link AIState}s that are then called to determine those actions. */
+ * This class does not determine actions but sets {@link AIState}s that are then called to determine those actions.
+ */
 public abstract class AI {
 
     /** Class representing a State in a Pokemon's AI. Determines which action to take. */
@@ -22,9 +24,11 @@ public abstract class AI {
             this.ai = ai;
         }
 
-        /** Called at the end of each turn so that a Pokemon may rotate.
+        /**
+         * Called at the end of each turn so that a Pokemon may rotate.
          *
-         * @return <code>null</code> if no rotation, else the new direction to face. */
+         * @return <code>null</code> if no rotation, else the new direction to face.
+         */
         public Direction mayRotate() {
             return null;
         }
@@ -56,7 +60,8 @@ public abstract class AI {
     }
 
     public AIState currentState() {
-        if (this.hasSuperState()) return this.superstate;
+        if (this.hasSuperState())
+            return this.superstate;
         return this.state;
     }
 
@@ -66,11 +71,14 @@ public abstract class AI {
         return this.superstate != null;
     }
 
-    /** Called at the end of each turn. Allows the Pokemon to rotate.
+    /**
+     * Called at the end of each turn. Allows the Pokemon to rotate.
      *
-     * @return The Direction to rotate to. */
+     * @return The Direction to rotate to.
+     */
     public Direction mayRotate() {
-        if (this.currentState() == null) return null;
+        if (this.currentState() == null)
+            return null;
         return this.currentState().mayRotate();
     }
 
@@ -80,7 +88,8 @@ public abstract class AI {
 
     /** Calls the AIState to determine the action to execute. */
     public DungeonEvent takeAction() {
-        if (!this.hasSuperState()) this.update();
+        if (!this.hasSuperState())
+            this.update();
         if (this.currentState() == null)
             return new TurnSkippedEvent(this.floor, DungeonEventSource.PLAYER_ACTION, this.pokemon);
         return this.currentState().takeAction();

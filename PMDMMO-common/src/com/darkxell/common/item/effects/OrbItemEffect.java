@@ -40,8 +40,9 @@ public class OrbItemEffect extends ItemEffect {
     public final void use(ItemUseEvent itemEvent, ArrayList<DungeonEvent> events) {
         if (itemEvent.floor.data.isBossFloor())
             events.add(new MessageEvent(itemEvent.floor, itemEvent, new Message("item.orb.boss")));
-        else events.add(new MoveSelectionEvent(itemEvent.floor, itemEvent, new LearnedMove(this.moveID), itemEvent.user,
-                itemEvent.user.facing(), false));
+        else
+            events.add(new MoveSelectionEvent(itemEvent.floor, itemEvent, new LearnedMove(this.moveID), itemEvent.user,
+                    itemEvent.user.facing(), false));
     }
 
 }

@@ -35,7 +35,10 @@ public class CommonEventProcessor {
         DELAYED,
         /** Processing pending events. */
         PROCESSING,
-        /** Stopped. This state is set when the Dungeon is done exploring. For safety it will also prevent any further added events from being processed. */
+        /**
+         * Stopped. This state is set when the Dungeon is done exploring. For safety it will also prevent any further
+         * added events from being processed.
+         */
         STOPPED
     }
 
@@ -89,12 +92,15 @@ public class CommonEventProcessor {
         ArrayList<DungeonEvent> resultingEvents = new ArrayList<>();
         for (DungeonPokemon p : this.dungeon.currentFloor().listPokemon()) {
             p.onPreEvent(this.dungeon.currentFloor(), event, p, resultingEvents);
-            if (event.isConsumed()) break;
+            if (event.isConsumed())
+                break;
             p.ability().onPreEvent(this.dungeon.currentFloor(), event, p, resultingEvents);
-            if (event.isConsumed()) break;
+            if (event.isConsumed())
+                break;
             for (AppliedStatusCondition condition : p.activeStatusConditions()) {
                 condition.onPreEvent(this.dungeon.currentFloor(), event, p, resultingEvents);
-                if (event.isConsumed()) break;
+                if (event.isConsumed())
+                    break;
             }
         }
 
@@ -109,11 +115,14 @@ public class CommonEventProcessor {
         this.dungeon.eventOccured(event);
         this.addToPending(event.processServer());
         this.callPostListeners(event);
-        if (event instanceof ExplorationStopEvent) this.setState(State.STOPPED);
-        else if (event instanceof BossDefeatedEvent) this.processBossDefeatedEvent((BossDefeatedEvent) event);
+        if (event instanceof ExplorationStopEvent)
+            this.setState(State.STOPPED);
+        else if (event instanceof BossDefeatedEvent)
+            this.processBossDefeatedEvent((BossDefeatedEvent) event);
         else if (event instanceof MissionClearedEvent && this.dungeon instanceof AutoDungeonExploration) {
             DungeonEvent e = ((AutoDungeonExploration) this.dungeon).getNextEvent();
-            if (e instanceof DungeonExitEvent) this.addToPending(((AutoDungeonExploration) this.dungeon).nextEvent());
+            if (e instanceof DungeonExitEvent)
+                this.addToPending(((AutoDungeonExploration) this.dungeon).nextEvent());
         }
     }
 
@@ -121,24 +130,28 @@ public class CommonEventProcessor {
         return this.pending.size() != 0;
     }
 
-    public void onFloorStart(Floor floor) {}
+    public void onFloorStart(Floor floor) {
+    }
 
     public void onTurnEnd() {
         this.addToPending(this.dungeon.endSubTurn());
         this.processPending();
     }
 
-    /** Called just before processing an event.
+    /**
+     * Called just before processing an event.
      *
-     * @return false if the event should not be processed. */
+     * @return false if the event should not be processed.
+     */
     protected boolean preProcess(DungeonEvent event) {
         this.callPreListeners(event);
 
         if (!event.isConsumed() && event instanceof PokemonTravelEvent) {
             PokemonTravelEvent travel = (PokemonTravelEvent) event;
-            if (travel.pokemon().isTeamLeader() && travel.running()) if (travel.destination().getPokemon() == null
-                    || !travel.destination().getPokemon().isAlliedWith(travel.pokemon()))
-                this.runners.add(travel.pokemon());
+            if (travel.pokemon().isTeamLeader() && travel.running())
+                if (travel.destination().getPokemon() == null
+                        || !travel.destination().getPokemon().isAlliedWith(travel.pokemon()))
+                    this.runners.add(travel.pokemon());
 
             // If leader is traveling onto ally's tile, automatically create ally movement event
             if (travel.destination().getPokemon() != null && travel.pokemon().isTeamLeader()
@@ -147,12 +160,16 @@ public class CommonEventProcessor {
                         travel.destination().getPokemon(), travel.direction().opposite()));
         }
 
-        if (!event.isConsumed() && this.stopsTravel(event)) this.runners.clear();
+        if (!event.isConsumed() && this.stopsTravel(event))
+            this.runners.clear();
 
         return !event.isConsumed() && event.isValid();
     }
 
-    /** Method that handles a Boss defeat. This event has very different results depending on the Dungeon, so having a separate method for it seems necessary. */
+    /**
+     * Method that handles a Boss defeat. This event has very different results depending on the Dungeon, so having a
+     * separate method for it seems necessary.
+     */
     protected void processBossDefeatedEvent(BossDefeatedEvent event) {
         this.addToPending(new ExplorationStopEvent(this.dungeon.currentFloor(), event,
                 new DungeonOutcome(Outcome.DUNGEON_CLEARED, this.dungeon.id)));
@@ -160,13 +177,19 @@ public class CommonEventProcessor {
 
     /** Processes the input event and adds the resulting events to the pending stack. */
     public void processEvent(DungeonEvent event) {
-        if (this.state() == State.STOPPED) return;
+        if (this.state() == State.STOPPED)
+            return;
         this.setState(State.PROCESSING);
-        if (!event.isConsumed() && this.preProcess(event)) this.doProcess(event);
-        if (this.state() == State.PROCESSING) this.processPending();
+        if (!event.isConsumed() && this.preProcess(event))
+            this.doProcess(event);
+        if (this.state() == State.PROCESSING)
+            this.processPending();
     }
 
-    /** Adds all the input events to the pending stack and starts processing them. May not process all events in order if some produce new Events. */
+    /**
+     * Adds all the input events to the pending stack and starts processing them. May not process all events in order if
+     * some produce new Events.
+     */
     public void processEvents(ArrayList<DungeonEvent> events) {
         this.addToPending(events);
         this.processPending();
@@ -174,8 +197,10 @@ public class CommonEventProcessor {
 
     /** Processes the next pending event. */
     public void processPending() {
-        if (this.state() == State.STOPPED) return;
-        if (this.hasPendingEvents()) this.processEvent(this.pending.pop());
+        if (this.state() == State.STOPPED)
+            return;
+        if (this.hasPendingEvents())
+            this.processEvent(this.pending.pop());
         else {
             DungeonPokemon actor = this.dungeon.nextActor();
             if (actor == null) {
@@ -190,10 +215,13 @@ public class CommonEventProcessor {
                     if (AIUtils.shouldStopRunning(actor)) {
                         this.runners.clear();
                         this.setState(State.AWATING_INPUT);
-                    } else this.processEvent(new PokemonTravelEvent(this.dungeon.currentFloor(),
-                            DungeonEventSource.PLAYER_ACTION, actor, true, actor.facing()));
-                } else this.setState(State.AWATING_INPUT);
-            } else this.processEvent(this.dungeon.currentFloor().aiManager.takeAction(actor));
+                    } else
+                        this.processEvent(new PokemonTravelEvent(this.dungeon.currentFloor(),
+                                DungeonEventSource.PLAYER_ACTION, actor, true, actor.facing()));
+                } else
+                    this.setState(State.AWATING_INPUT);
+            } else
+                this.processEvent(this.dungeon.currentFloor().aiManager.takeAction(actor));
         }
 
         if (this.state() == State.AWATING_INPUT && this.dungeon instanceof AutoDungeonExploration) {
@@ -213,7 +241,10 @@ public class CommonEventProcessor {
     }
 
     public boolean stopsTravel(DungeonEvent event) {
-        /* if (event instanceof ItemMovedEvent) { ItemMovedEvent e = (ItemMovedEvent) event; return !(e.source instanceof Tile && (e.destination instanceof Inventory || e.destination instanceof Pokemon)); } */
+        /*
+         * if (event instanceof ItemMovedEvent) { ItemMovedEvent e = (ItemMovedEvent) event; return !(e.source
+         * instanceof Tile && (e.destination instanceof Inventory || e.destination instanceof Pokemon)); }
+         */
         return !(event instanceof BellyChangedEvent || event instanceof TurnSkippedEvent
                 || event instanceof PokemonRotateEvent || event instanceof PokemonTravelEvent
                 || event instanceof PokemonSpawnedEvent/* || event instanceof MoneyCollectedEvent */);

@@ -12,7 +12,8 @@ public class InflictConditionOnFinishStatusCondition extends StatusCondition {
 
     public final StatusCondition inflictedOnFinish;
 
-    public InflictConditionOnFinishStatusCondition(int id, boolean isAilment, int durationMin, int durationMax, StatusCondition inflictedOnFinish) {
+    public InflictConditionOnFinishStatusCondition(int id, boolean isAilment, int durationMin, int durationMax,
+            StatusCondition inflictedOnFinish) {
         super(id, isAilment, durationMin, durationMax);
         this.inflictedOnFinish = inflictedOnFinish;
     }
@@ -21,8 +22,9 @@ public class InflictConditionOnFinishStatusCondition extends StatusCondition {
     public void onEnd(StatusConditionEndedEvent event, ArrayList<DungeonEvent> events) {
         super.onEnd(event, events);
 
-        if (event.reason == StatusConditionEndReason.FINISHED) events.add(new StatusConditionCreatedEvent(event.floor, event,
-                this.inflictedOnFinish.create(event.floor, event.condition.pokemon, this, event.floor.random)));
+        if (event.reason == StatusConditionEndReason.FINISHED)
+            events.add(new StatusConditionCreatedEvent(event.floor, event,
+                    this.inflictedOnFinish.create(event.floor, event.condition.pokemon, this, event.floor.random)));
     }
 
 }

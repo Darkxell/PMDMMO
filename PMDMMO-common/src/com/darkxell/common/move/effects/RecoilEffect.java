@@ -28,7 +28,8 @@ public class RecoilEffect extends MoveEffect {
             for (DungeonEvent e : effects.events)
                 if (e instanceof DamageDealtEvent) {
                     DamageDealtEvent d = (DamageDealtEvent) e;
-                    if (d.target == moveEvent.target && d.source == moveEvent) damage = d.damage;
+                    if (d.target == moveEvent.target && d.source == moveEvent)
+                        damage = d.damage;
                 }
             damage *= this.percentage / 100;
             effects.createEffect(new DamageDealtEvent(moveEvent.floor, moveEvent, moveEvent.usedMove.user,

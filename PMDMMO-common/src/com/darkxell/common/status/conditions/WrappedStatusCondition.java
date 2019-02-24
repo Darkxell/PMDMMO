@@ -19,7 +19,8 @@ public class WrappedStatusCondition extends PeriodicDamageStatusCondition {
 
         String wrapperid = null;
         for (String flag : event.condition.listFlags())
-            if (flag.startsWith("wrapper:")) wrapperid = flag.substring("wrapper:".length());
+            if (flag.startsWith("wrapper:"))
+                wrapperid = flag.substring("wrapper:".length());
 
         if (wrapperid != null && wrapperid.matches("-?\\d+")) {
             long id = Integer.parseInt(wrapperid);

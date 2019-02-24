@@ -26,7 +26,8 @@ public class ActiveFloorStatus implements DungeonEventSource {
 
     public Message endMessage() {
         String id = "status.floor.end." + this.status.id;
-        if (!Localization.containsKey(id)) return null;
+        if (!Localization.containsKey(id))
+            return null;
         return new Message(id);
     }
 
@@ -39,7 +40,8 @@ public class ActiveFloorStatus implements DungeonEventSource {
     }
 
     public boolean isOver() {
-        if (this.duration == -1) return false;
+        if (this.duration == -1)
+            return false;
         return this.tick >= this.duration;
     }
 
@@ -53,14 +55,17 @@ public class ActiveFloorStatus implements DungeonEventSource {
 
     public Message startMessage() {
         String id = "status.floor.start." + this.status.id;
-        if (!Localization.containsKey(id)) return null;
+        if (!Localization.containsKey(id))
+            return null;
         return new Message(id);
     }
 
     public void tick(Floor floor, ArrayList<DungeonEvent> events) {
-        if (!this.isOver()) this.status.tick(floor, this, events);
+        if (!this.isOver())
+            this.status.tick(floor, this, events);
         ++this.tick;
-        if (this.isOver()) this.finish(floor, events);
+        if (this.isOver())
+            this.finish(floor, events);
     }
 
 }

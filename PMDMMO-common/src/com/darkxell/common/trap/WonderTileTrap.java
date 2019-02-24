@@ -19,13 +19,16 @@ public class WonderTileTrap extends Trap {
         for (Stat s : Stat.values())
             if (s != Stat.Speed) {
                 int stage = trapEvent.pokemon.stats.getStage(s);
-                if (stage < Stat.DEFAULT_STAGE) trapEvent.pokemon.stats.setStage(s, Stat.DEFAULT_STAGE);
+                if (stage < Stat.DEFAULT_STAGE)
+                    trapEvent.pokemon.stats.setStage(s, Stat.DEFAULT_STAGE);
             }
 
-        if (trapEvent.pokemon.stats.getMoveSpeed() < 1) trapEvent.pokemon.stats.resetSpeed();
+        if (trapEvent.pokemon.stats.getMoveSpeed() < 1)
+            trapEvent.pokemon.stats.resetSpeed();
 
         events.add(new MessageEvent(trapEvent.floor, trapEvent,
-                new Message("stat.reset").addReplacement("<pokemon>", trapEvent.pokemon.getNickname()), trapEvent.pokemon.player()));
+                new Message("stat.reset").addReplacement("<pokemon>", trapEvent.pokemon.getNickname()),
+                trapEvent.pokemon.player()));
     }
 
 }

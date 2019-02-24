@@ -54,12 +54,15 @@ public class MoveLearnMenuState extends MovesMenuState implements DialogEndListe
             if (this.optionIndex() < 4)
                 Persistence.eventProcessor().processEvent(new MoveLearnedEvent(Persistence.floor, this.event,
                         this.pokemon, this.move.move(), this.optionIndex()));
-            else Persistence.eventProcessor().processPending();
-        } else Persistence.stateManager.setState(this);
+            else
+                Persistence.eventProcessor().processPending();
+        } else
+            Persistence.stateManager.setState(this);
     }
 
     @Override
-    protected void onExit() {}
+    protected void onExit() {
+    }
 
     @Override
     protected void onOptionSelected(MenuOption option) {

@@ -23,21 +23,24 @@ public class PreventStatusEquipableItemEffect extends ItemEffect {
     }
 
     @Override
-    public void onPreEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned, ArrayList<DungeonEvent> resultingEvents, ItemStack item,
-            ItemContainer container, int containerIndex) {
+    public void onPreEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned,
+            ArrayList<DungeonEvent> resultingEvents, ItemStack item, ItemContainer container, int containerIndex) {
         super.onPreEvent(floor, event, concerned, resultingEvents, item, container, containerIndex);
 
         if (event instanceof StatusConditionCreatedEvent) {
             StatusConditionCreatedEvent e = (StatusConditionCreatedEvent) event;
-            boolean shouldPrevent = e.condition.pokemon == concerned && concerned.hasItem() && concerned.getItem().item().effect() == this;
+            boolean shouldPrevent = e.condition.pokemon == concerned && concerned.hasItem()
+                    && concerned.getItem().item().effect() == this;
             for (StatusCondition c : this.conditions)
-                if (e.condition.condition == c) break;
+                if (e.condition.condition == c)
+                    break;
 
             if (shouldPrevent) {
                 e.consume();
-                resultingEvents
-                        .add(new MessageEvent(floor, event, new Message("status.prevented.item").addReplacement("<pokemon>", concerned.getNickname())
-                                .addReplacement("<item>", concerned.getItem().name()).addReplacement("<condition>", e.condition.condition.name())));
+                resultingEvents.add(new MessageEvent(floor, event,
+                        new Message("status.prevented.item").addReplacement("<pokemon>", concerned.getNickname())
+                                .addReplacement("<item>", concerned.getItem().name())
+                                .addReplacement("<condition>", e.condition.condition.name())));
             }
         }
     }

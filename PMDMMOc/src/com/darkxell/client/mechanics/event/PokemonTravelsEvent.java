@@ -20,7 +20,8 @@ public class PokemonTravelsEvent extends DungeonEvent {
         String s = "";
         boolean first = true;
         for (PokemonTravelEvent e : this.events) {
-            if (first) s += ", ";
+            if (first)
+                s += ", ";
             s += e.pokemon();
         }
         return s + " travel.";

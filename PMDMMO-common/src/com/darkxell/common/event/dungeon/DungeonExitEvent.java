@@ -39,11 +39,13 @@ public class DungeonExitEvent extends DungeonEvent implements Communicable {
 
     @Override
     public void read(JsonObject value) throws JsonReadingException {
-        if (value.get("player") == null) throw new JsonReadingException("No value for Player ID!");
+        if (value.get("player") == null)
+            throw new JsonReadingException("No value for Player ID!");
         try {
             int player = value.getInt("player", -1);
             for (Player p : this.floor.dungeon.exploringPlayers())
-                if (p.getData().id == player) this.player = p;
+                if (p.getData().id == player)
+                    this.player = p;
         } catch (Exception e) {
             throw new JsonReadingException("Wrong value for Player ID: " + value.get("player"));
         }

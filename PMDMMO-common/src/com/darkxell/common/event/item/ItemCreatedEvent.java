@@ -33,11 +33,14 @@ public class ItemCreatedEvent extends DungeonEvent {
         this.floor.dungeon.communication.itemIDs.register(this.item, this.container instanceof Pokemon
                 ? ((Pokemon) this.container)
                 : this.container instanceof DungeonPokemon ? ((DungeonPokemon) this.container).usedPokemon : null);
-        if (this.container.canAccept(this.item) != -1) this.container.addItem(this.item);
+        if (this.container.canAccept(this.item) != -1)
+            this.container.addItem(this.item);
         else {
             Tile landing = null;
-            if (this.container instanceof Tile) landing = (Tile) this.container;
-            else if (this.container instanceof DungeonPokemon) landing = ((DungeonPokemon) this.container).tile();
+            if (this.container instanceof Tile)
+                landing = (Tile) this.container;
+            else if (this.container instanceof DungeonPokemon)
+                landing = ((DungeonPokemon) this.container).tile();
             else if (this.container instanceof Inventory)
                 landing = ((Inventory) this.container).owner.getDungeonLeader().tile();
             this.resultingEvents.add(new ItemLandedEvent(this.floor, this, this.item, landing));

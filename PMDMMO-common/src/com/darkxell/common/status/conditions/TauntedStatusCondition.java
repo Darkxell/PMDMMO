@@ -18,19 +18,22 @@ public class TauntedStatusCondition extends StatusCondition {
     }
 
     @Override
-    public void onPreEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned, ArrayList<DungeonEvent> resultingEvents) {
-        if (event instanceof MoveSelectionEvent && concerned.hasStatusCondition(this) && ((MoveSelectionEvent) event).usedMove().user == concerned
+    public void onPreEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned,
+            ArrayList<DungeonEvent> resultingEvents) {
+        if (event instanceof MoveSelectionEvent && concerned.hasStatusCondition(this)
+                && ((MoveSelectionEvent) event).usedMove().user == concerned
                 && !((MoveSelectionEvent) event).usedMove().move.move().dealsDamage) {
             event.consume();
-            resultingEvents
-                    .add(new MessageEvent(floor, event, new Message("status.trigger.27").addReplacement("<pokemon>", concerned.getNickname())));
+            resultingEvents.add(new MessageEvent(floor, event,
+                    new Message("status.trigger.27").addReplacement("<pokemon>", concerned.getNickname())));
         }
         super.onPreEvent(floor, event, concerned, resultingEvents);
     }
 
     @Override
     public boolean preventsUsingMove(LearnedMove move, DungeonPokemon pokemon, Floor floor) {
-        if (pokemon.hasStatusCondition(this) && move != null && !move.move().dealsDamage) return true;
+        if (pokemon.hasStatusCondition(this) && move != null && !move.move().dealsDamage)
+            return true;
         return super.preventsUsingMove(move, pokemon, floor);
     }
 

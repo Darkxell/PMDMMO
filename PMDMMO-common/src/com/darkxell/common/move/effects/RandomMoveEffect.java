@@ -25,7 +25,8 @@ public class RandomMoveEffect extends MoveEffect {
         for (DungeonPokemon p : moveEvent.floor.listPokemon())
             for (int m = 0; m < p.moveCount(); ++m) {
                 LearnedMove move = p.move(m);
-                if (move.moveId() != moveEvent.usedMove.move.moveId()) moves.add(move.move());
+                if (move.moveId() != moveEvent.usedMove.move.moveId())
+                    moves.add(move.move());
             }
 
         Move chosen = RandomUtil.random(moves, moveEvent.floor.random);
