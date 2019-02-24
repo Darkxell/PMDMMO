@@ -21,7 +21,7 @@ public class TerrifiedStatusCondition extends StatusCondition {
     @Override
     public void onEnd(StatusConditionEndedEvent event, ArrayList<DungeonEvent> events) {
         super.onEnd(event, events);
-        floor.aiManager.getAI(instance.pokemon).setSuperState(null);
+        event.floor.aiManager.getAI(event.condition.pokemon).setSuperState(null);
     }
 
     @Override
@@ -32,16 +32,14 @@ public class TerrifiedStatusCondition extends StatusCondition {
     }
 
     private boolean souldStatusContinue(DungeonPokemon pokemon) {
-        if (pokemon.ability() == Ability.RUNAWAY && pokemon.getHpPercentage() < 50)
-            return true;
+        if (pokemon.ability() == Ability.RUNAWAY && pokemon.getHpPercentage() < 50) return true;
         return false;
     }
 
     @Override
     public void tick(Floor floor, AppliedStatusCondition instance, ArrayList<DungeonEvent> events) {
         super.tick(floor, instance, events);
-        if (instance.tick == instance.duration - 1 && this.souldStatusContinue(instance.pokemon))
-            --instance.tick;
+        if (instance.tick == instance.duration - 1 && this.souldStatusContinue(instance.pokemon)) --instance.tick;
     }
 
 }

@@ -22,17 +22,15 @@ public class ChargedMoveStatusCondition extends ChangeAIStatusCondition {
     @Override
     public void onEnd(StatusConditionEndedEvent event, ArrayList<DungeonEvent> events) {
         super.onEnd(event, events);
-        floor.aiManager.getAI(instance.pokemon).setSuperState(null);
+        event.floor.aiManager.getAI(event.condition.pokemon).setSuperState(null);
     }
 
     @Override
     public void onStart(Floor floor, AppliedStatusCondition instance, ArrayList<DungeonEvent> events) {
         super.onStart(floor, instance, events);
         AI ai = floor.aiManager.getAI(instance.pokemon);
-        if (instance.duration == 1)
-            ai.setSuperState(new AIStateChargedAttack(ai, this.moveID));
-        else
-            ai.setSuperState(new AIStateTurnSkipper(ai));
+        if (instance.duration == 1) ai.setSuperState(new AIStateChargedAttack(ai, this.moveID));
+        else ai.setSuperState(new AIStateTurnSkipper(ai));
     }
 
     @Override

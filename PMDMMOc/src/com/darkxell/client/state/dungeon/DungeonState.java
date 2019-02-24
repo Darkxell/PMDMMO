@@ -7,7 +7,6 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 
 import com.darkxell.client.graphics.MasterDungeonRenderer;
-import com.darkxell.client.graphics.floor.CameraVisibility;
 import com.darkxell.client.graphics.floor.DungeonItemsRenderer;
 import com.darkxell.client.graphics.floor.FloorRenderer;
 import com.darkxell.client.graphics.floor.GridRenderer;

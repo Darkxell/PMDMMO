@@ -68,23 +68,22 @@ public class ThrowableItemEffect extends ItemEffect {
         return ItemCategory.THROWABLE;
     }
 
-    public Tile findDestination(Floor floor, Item item, DungeonPokemon pokemon) {
+    public Tile findDestination(ItemUseEvent itemEvent) {
         if (this.trajectory == ThrowableTrajectory.Straight)
-            return this.findDestinationStraight(floor, item, pokemon, false);
-        return this.findDestinationArc(floor, item, pokemon);
+            return this.findDestinationStraight(itemEvent.floor, itemEvent.user, itemEvent.item, false);
+        return this.findDestinationArc(itemEvent);
     }
 
-    private Tile findDestinationArc(Floor floor, Item item, DungeonPokemon pokemon) {
-        ArrayList<Tile> arcReachable = arcReachableTiles(floor, item, pokemon);
+    private Tile findDestinationArc(ItemUseEvent itemEvent) {
+        ArrayList<Tile> arcReachable = arcReachableTiles(itemEvent.floor, itemEvent.item, itemEvent.user);
         ArrayList<DungeonPokemon> candidates = new ArrayList<>();
         for (Tile t : arcReachable)
-            if (t.getPokemon() != null && !pokemon.isAlliedWith(t.getPokemon()))
-                candidates.add(t.getPokemon());
+            if (t.getPokemon() != null && !itemEvent.user.isAlliedWith(t.getPokemon())) candidates.add(t.getPokemon());
         candidates.sort((o1, o2) -> {
-            double d1 = pokemon.tile().distance(o1.tile()), d2 = pokemon.tile().distance(o2.tile());
+            double d1 = itemEvent.user.tile().distance(o1.tile()), d2 = itemEvent.user.tile().distance(o2.tile());
             return Double.compare(d1, d2);
         });
-        return candidates.size() == 0 ? pokemon.tile().adjacentTile(pokemon.facing()) : candidates.get(0).tile();
+        return candidates.size() == 0 ? itemEvent.user.tile().adjacentTile(itemEvent.user.facing()) : candidates.get(0).tile();
     }
 
     @Override
@@ -116,8 +115,8 @@ public class ThrowableItemEffect extends ItemEffect {
     public void use(ItemUseEvent itemEvent, ArrayList<DungeonEvent> events) {
         super.use(itemEvent, events);
 
-        Tile destination = this.findDestination(itemEvent, item, pokemon);
-        events.add(new ProjectileThrownEvent(itemEvent, itemEvent, item, pokemon, destination));
+        Tile destination = this.findDestination(itemEvent);
+        events.add(new ProjectileThrownEvent(itemEvent.floor, itemEvent, itemEvent.item, itemEvent.user, destination));
     }
 
 }

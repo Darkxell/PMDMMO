@@ -13,7 +13,7 @@ public class BlowbackRandomEffect extends BlowbackEffect {
 
     @Override
     protected Direction direction(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
-        return Direction.randomDirection(floor.random);
+        return Direction.randomDirection(moveEvent.floor.random);
     }
 
 }

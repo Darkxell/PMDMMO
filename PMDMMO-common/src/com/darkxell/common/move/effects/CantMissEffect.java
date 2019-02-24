@@ -13,7 +13,7 @@ public class CantMissEffect extends MoveEffect {
 
     @Override
     public MoveEffectCalculator buildCalculator(MoveUseEvent moveEvent) {
-        return new CantMissCalculator(moveEvent, target, floor, flags);
+        return new CantMissCalculator(moveEvent);
     }
 
 }
