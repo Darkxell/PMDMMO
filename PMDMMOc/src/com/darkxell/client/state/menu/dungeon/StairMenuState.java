@@ -3,6 +3,7 @@ package com.darkxell.client.state.menu.dungeon;
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
+import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.event.dungeon.DungeonExitEvent;
 import com.darkxell.common.event.dungeon.NextFloorEvent;
 
@@ -28,13 +29,12 @@ public class StairMenuState extends OptionSelectionMenuState {
     @Override
     protected void onOptionSelected(MenuOption option) {
         this.onExit();
-        if (option == this.proceed)
-            if (Persistence.floor.id == Persistence.dungeon.dungeon().floorCount)
-                Persistence.eventProcessor()
-                        .processEvent(new DungeonExitEvent(Persistence.floor, eventSource, Persistence.player).setPAE());
-            else
-                Persistence.eventProcessor()
-                        .processEvent(new NextFloorEvent(Persistence.floor, eventSource, Persistence.player).setPAE());
+        if (option == this.proceed) if (Persistence.floor.id == Persistence.dungeon.dungeon().floorCount)
+            Persistence.eventProcessor().processEvent(
+                    new DungeonExitEvent(Persistence.floor, DungeonEventSource.PLAYER_ACTION, Persistence.player)
+                            .setPAE());
+        else Persistence.eventProcessor().processEvent(
+                new NextFloorEvent(Persistence.floor, DungeonEventSource.PLAYER_ACTION, Persistence.player).setPAE());
     }
 
 }

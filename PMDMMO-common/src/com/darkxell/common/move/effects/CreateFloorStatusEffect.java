@@ -19,12 +19,14 @@ public class CreateFloorStatusEffect extends MoveEffect {
     }
 
     @Override
-    public void additionalEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
+    public void additionalEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed,
+            MoveEvents effects) {
         super.additionalEffects(moveEvent, calculator, missed, effects);
 
-        if (!missed)
-            effects.createEffect(new FloorStatusCreatedEvent(floor, eventSource, this.status.create(moveEvent.user, floor.random)),
-                    moveEvent, missed, moveEvent.move.move().dealsDamage, target);
+        if (!missed) effects.createEffect(
+                new FloorStatusCreatedEvent(moveEvent.floor, moveEvent,
+                        this.status.create(moveEvent.usedMove.user, moveEvent.floor.random)),
+                moveEvent, missed, moveEvent.usedMove.move.move().dealsDamage, moveEvent.target);
     }
 
     @Override

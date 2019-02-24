@@ -22,7 +22,7 @@ public class WeatherCreatedEvent extends DungeonEvent {
 
     @Override
     public ArrayList<DungeonEvent> processServer() {
-        this.floor.setWeather(this.weather, this.resultingEvents);
+        this.floor.setWeather(this, this.resultingEvents);
         return super.processServer();
     }
 
