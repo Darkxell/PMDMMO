@@ -112,7 +112,8 @@ public class DungeonLogger {
         g.setClip(this.messagesWindow.inside());
 
         int y = this.messagesWindow.dimensions.y + MenuWindow.MARGIN_Y + this.messageOffset;
-        for (Message s : this.messages)
+        Message[] m = this.messages.toArray(new Message[0]);
+        for (Message s : m)
             if (s == null) {
                 g.setColor(new Color(255, 255, 255, 128));
                 g.drawLine(0, y - 4, width, y - 4);
