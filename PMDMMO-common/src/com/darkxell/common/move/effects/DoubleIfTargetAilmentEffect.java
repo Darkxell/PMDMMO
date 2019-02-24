@@ -15,9 +15,8 @@ public class DoubleIfTargetAilmentEffect extends MoveEffect {
 
     @Override
     public double damageMultiplier(boolean isUser, MoveUseEvent moveEvent, ArrayList<DungeonEvent> events) {
-        for (AppliedStatusCondition s : target.activeStatusConditions())
-            if (s.condition.isAilment)
-                return 2;
+        for (AppliedStatusCondition s : moveEvent.target.activeStatusConditions())
+            if (s.condition.isAilment) return 2;
         return super.damageMultiplier(isUser, moveEvent, events);
     }
 

@@ -13,7 +13,7 @@ public class UserLevelDamageEffect extends MoveEffect {
 
     @Override
     public MoveEffectCalculator buildCalculator(MoveUseEvent moveEvent) {
-        return new UserLevelDamageCalculator(moveEvent, target, floor, flags);
+        return new UserLevelDamageCalculator(moveEvent);
     }
 
 }

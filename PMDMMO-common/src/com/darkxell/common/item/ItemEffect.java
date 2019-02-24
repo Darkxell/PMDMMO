@@ -26,7 +26,7 @@ public class ItemEffect implements AffectsPokemon {
     }
 
     /** @return The Tile an Item will land at if it's thrown by the input Pokemon. */
-    public Tile findDestinationStraight(Floor floor, Item item, DungeonPokemon pokemon, boolean targetsAllies) {
+    public Tile findDestinationStraight(Floor floor, DungeonPokemon pokemon, Item item, boolean targetsAllies) {
         Direction direction = pokemon.facing();
         Tile current = pokemon.tile().adjacentTile(direction);
 
@@ -47,8 +47,7 @@ public class ItemEffect implements AffectsPokemon {
      * @return The message to display when using this Item. */
     public Message getUseEffectMessage(ItemSelectionEvent event) {
         return new Message(this.getUseEffectID()).addReplacement("<user>", event.user().getNickname())
-                .addReplacement("<target>",
-                        event.target() == null ? new Message("?", false) : event.target().getNickname())
+                .addReplacement("<target>", event.target() == null ? new Message("?", false) : event.target().getNickname())
                 .addReplacement("<item>", event.item().name());
     }
 
@@ -94,8 +93,8 @@ public class ItemEffect implements AffectsPokemon {
      * @param item - The Item with this effect.
      * @param container - The object containing the Item with this effect.
      * @param containerIndex - The index of the Item in the container. */
-    public void onPostEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned,
-            ArrayList<DungeonEvent> resultingEvents, ItemStack item, ItemContainer container, int containerIndex) {}
+    public void onPostEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned, ArrayList<DungeonEvent> resultingEvents, ItemStack item,
+            ItemContainer container, int containerIndex) {}
 
     /** Method called just before an Event is processed.
      *
@@ -106,8 +105,8 @@ public class ItemEffect implements AffectsPokemon {
      * @param item - The Item with this effect.
      * @param container - The object containing the Item with this effect.
      * @param containerIndex - The index of the Item in the container. */
-    public void onPreEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned,
-            ArrayList<DungeonEvent> resultingEvents, ItemStack item, ItemContainer container, int containerIndex) {}
+    public void onPreEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned, ArrayList<DungeonEvent> resultingEvents, ItemStack item,
+            ItemContainer container, int containerIndex) {}
 
     /** Called when an Item with this Effect is used.
      *

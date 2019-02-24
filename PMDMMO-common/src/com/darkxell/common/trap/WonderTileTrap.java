@@ -2,11 +2,10 @@ package com.darkxell.common.trap;
 
 import java.util.ArrayList;
 
-import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.DungeonEvent.MessageEvent;
+import com.darkxell.common.event.dungeon.TrapSteppedOnEvent;
 import com.darkxell.common.pokemon.BaseStats.Stat;
-import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Message;
 
 public class WonderTileTrap extends Trap {
@@ -16,19 +15,17 @@ public class WonderTileTrap extends Trap {
     }
 
     @Override
-    public void onPokemonStep(Floor floor, DungeonPokemon pokemon, ArrayList<DungeonEvent> events) {
+    public void onPokemonStep(TrapSteppedOnEvent trapEvent, ArrayList<DungeonEvent> events) {
         for (Stat s : Stat.values())
             if (s != Stat.Speed) {
-                int stage = pokemon.stats.getStage(s);
-                if (stage < Stat.DEFAULT_STAGE)
-                    pokemon.stats.setStage(s, Stat.DEFAULT_STAGE);
+                int stage = trapEvent.pokemon.stats.getStage(s);
+                if (stage < Stat.DEFAULT_STAGE) trapEvent.pokemon.stats.setStage(s, Stat.DEFAULT_STAGE);
             }
 
-        if (pokemon.stats.getMoveSpeed() < 1)
-            pokemon.stats.resetSpeed();
+        if (trapEvent.pokemon.stats.getMoveSpeed() < 1) trapEvent.pokemon.stats.resetSpeed();
 
-        events.add(new MessageEvent(floor, eventSource,
-                new Message("stat.reset").addReplacement("<pokemon>", pokemon.getNickname()), pokemon.player()));
+        events.add(new MessageEvent(trapEvent.floor, trapEvent,
+                new Message("stat.reset").addReplacement("<pokemon>", trapEvent.pokemon.getNickname()), trapEvent.pokemon.player()));
     }
 
 }

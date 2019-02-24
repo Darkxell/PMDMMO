@@ -27,8 +27,7 @@ public class ItemThrownEvent extends DungeonEvent implements Communicable {
         super(floor, eventSource);
     }
 
-    public ItemThrownEvent(Floor floor, DungeonEventSource eventSource, DungeonPokemon thrower, ItemContainer source,
-            int sourceIndex) {
+    public ItemThrownEvent(Floor floor, DungeonEventSource eventSource, DungeonPokemon thrower, ItemContainer source, int sourceIndex) {
         super(floor, eventSource, thrower);
         this.thrower = thrower;
         this.source = source;
@@ -44,15 +43,15 @@ public class ItemThrownEvent extends DungeonEvent implements Communicable {
     @Override
     public ArrayList<DungeonEvent> processServer() {
         if (this.item.effect().isThrowable()) {
-            this.messages.add(new Message("item.thrown").addReplacement("<pokemon>", this.thrower.getNickname())
-                    .addReplacement("<item>", this.item.name()));
+            this.messages.add(
+                    new Message("item.thrown").addReplacement("<pokemon>", this.thrower.getNickname()).addReplacement("<item>", this.item.name()));
 
             ItemStack stack = this.source.getItem(this.sourceIndex);
             stack.setQuantity(stack.quantity() - 1);
             if (stack.quantity() <= 0) this.source.deleteItem(this.sourceIndex);
 
             this.resultingEvents.add(new ProjectileThrownEvent(this.floor, this, this.item, this.thrower,
-                    this.item.effect().findDestinationStraight(this.floor, this.item, this.thrower, true)));
+                    this.item.effect().findDestinationStraight(floor, this.thrower, item, true)));
         }
         return super.processServer();
     }
@@ -76,8 +75,7 @@ public class ItemThrownEvent extends DungeonEvent implements Communicable {
         } catch (JsonReadingException e) {
             throw e;
         } catch (Exception e) {
-            throw new JsonReadingException("Wrong values for source container: type=" + value.get("sourcetype")
-                    + ", id=" + value.get("sourceid"));
+            throw new JsonReadingException("Wrong values for source container: type=" + value.get("sourcetype") + ", id=" + value.get("sourceid"));
         }
 
         this.item = this.source.getItem(this.sourceIndex).item();

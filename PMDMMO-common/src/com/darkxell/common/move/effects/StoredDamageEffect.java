@@ -20,17 +20,15 @@ public class StoredDamageEffect extends MoveEffect {
 
     @Override
     public MoveEffectCalculator buildCalculator(MoveUseEvent moveEvent) {
-        return new StoredDamageCalculator(moveEvent, target, floor, flags);
+        return new StoredDamageCalculator(moveEvent);
     }
 
     @Override
     public void prepareUse(MoveSelectionEvent moveEvent, ArrayList<DungeonEvent> events) {
         super.prepareUse(moveEvent, events);
-        AppliedStatusCondition storer = moveEvent.user.getStatusCondition(StatusConditions.Bide);
-        if (storer == null)
-            Logger.e("Pokemon used " + moveEvent.move.move().name() + " but had no Bide status!");
-        else
-            storer.addFlag("attacked");
+        AppliedStatusCondition storer = moveEvent.usedMove().user.getStatusCondition(StatusConditions.Bide);
+        if (storer == null) Logger.e("Pokemon used " + moveEvent.usedMove().move.move().name() + " but had no Bide status!");
+        else storer.addFlag("attacked");
     }
 
 }
