@@ -369,6 +369,7 @@ public class DungeonPokemon implements ItemContainer, DungeonEventListener {
         this.stats.onFloorStart(floor, events);
         this.ability().onFloorStart(floor, this, events);
         this.regenCounter = 0;
+        floor.aiManager.getAI(this).visibility.onPokemonMoved();
         // events.add(new StatusConditionCreatedEvent(floor, StatusConditions.Paralyzed.create(this, floor,
         // floor.random)));
     }

@@ -256,7 +256,7 @@
           <part start="1" end="4" />
         </floors>
       </pokemon>
-      <pokemon id="185" level="7" weight="2666">
+      <pokemon id="185" level="7" weight="2666" ai="STATIONARY">
         <floors>
           <part start="1" end="4" />
         </floors>
@@ -271,12 +271,12 @@
           <part start="3" end="6" />
         </floors>
       </pokemon>
-      <pokemon id="266" level="8" weight="17">
+      <pokemon id="266" level="8" weight="17" ai="STATIONARY">
         <floors>
           <part start="4" end="6" />
         </floors>
       </pokemon>
-      <pokemon id="268" level="8" weight="1667">
+      <pokemon id="268" level="8" weight="1667" ai="STATIONARY">
         <floors>
           <part start="4" end="6" />
         </floors>
