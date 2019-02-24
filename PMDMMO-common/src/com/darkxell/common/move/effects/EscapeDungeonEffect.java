@@ -18,7 +18,7 @@ public class EscapeDungeonEffect extends MoveEffect {
         super.additionalEffects(moveEvent, calculator, missed, effects);
         if (moveEvent.target.isTeamLeader())
             effects.createEffect(new DungeonExitEvent(moveEvent.floor, moveEvent, moveEvent.target.player()), moveEvent,
-                    missed, false, null);
+                    missed, false);
     }
 
 }

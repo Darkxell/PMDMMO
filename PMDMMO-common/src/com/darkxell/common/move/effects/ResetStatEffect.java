@@ -24,7 +24,7 @@ public class ResetStatEffect extends MoveEffect {
         if (!missed) {
             int stage = moveEvent.target.stats.getStage(this.stat);
             if (stage > 10) effects.createEffect(new StatChangedEvent(moveEvent.floor, moveEvent, moveEvent.target, this.stat, 10 - stage, moveEvent),
-                    moveEvent, missed, moveEvent.usedMove.move.move().dealsDamage, moveEvent.target);
+                    moveEvent, missed, moveEvent.usedMove.move.move().dealsDamage);
         }
     }
 

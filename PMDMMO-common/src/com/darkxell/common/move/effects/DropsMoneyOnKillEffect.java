@@ -28,7 +28,7 @@ public class DropsMoneyOnKillEffect extends MoveEffect {
                     return super.isValid();
                 }
             };
-            effects.createEffect(event, moveEvent, missed, true, null);
+            effects.createEffect(event, moveEvent, missed, true);
         }
     }
 
