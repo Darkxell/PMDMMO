@@ -16,13 +16,14 @@ public class DestroyTrapEffect extends MoveEffect {
     }
 
     @Override
-    public void additionalEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
+    public void additionalEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed,
+            MoveEvents effects) {
         super.additionalEffects(moveEvent, calculator, missed, effects);
 
         if (!missed) {
-            Tile t = moveEvent.user.tile().adjacentTile(moveEvent.user.facing());
-            if (t != null && t.trap != null)
-                effects.createEffect(new TrapDestroyedEvent(floor, eventSource, t), moveEvent, missed, true, null);
+            Tile t = moveEvent.usedMove.user.tile().adjacentTile(moveEvent.usedMove.user.facing());
+            if (t != null && t.trap != null) effects.createEffect(new TrapDestroyedEvent(moveEvent.floor, moveEvent, t),
+                    moveEvent, missed, true, null);
         }
     }
 

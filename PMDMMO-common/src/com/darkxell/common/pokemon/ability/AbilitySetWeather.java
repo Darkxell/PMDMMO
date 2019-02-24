@@ -29,21 +29,23 @@ public class AbilitySetWeather extends Ability implements WeatherSource {
     @Override
     public void onFloorStart(Floor floor, DungeonPokemon pokemon, ArrayList<DungeonEvent> events) {
         super.onFloorStart(floor, pokemon, events);
-        events.add(new TriggeredAbilityEvent(floor, eventSource, pokemon) {
+        TriggeredAbilityEvent abilityevent = new TriggeredAbilityEvent(floor, eventSource, pokemon) {
             @Override
             public boolean isValid() {
                 return floor.currentWeather().weather != weather;
             }
-        });
-        events.add(new WeatherCreatedEvent(this.weather.create(floor, this, -1), eventSource));
+        };
+        events.add(abilityevent);
+        events.add(new WeatherCreatedEvent(this.weather.create(floor, this, -1), abilityevent));
     }
 
     @Override
     public void onTurnStart(Floor floor, DungeonPokemon pokemon, ArrayList<DungeonEvent> events) {
         super.onTurnStart(floor, pokemon, events);
         if (floor.turnCount() % this.cycle == 0 && floor.currentWeather().weather != this.weather) {
-            events.add(new TriggeredAbilityEvent(floor, eventSource, pokemon));
-            events.add(new WeatherCreatedEvent(this.weather.create(floor, this, -1), eventSource));
+            TriggeredAbilityEvent abilityevent = new TriggeredAbilityEvent(floor, eventSource, pokemon);
+            events.add(abilityevent);
+            events.add(new WeatherCreatedEvent(this.weather.create(floor, this, -1), abilityevent));
         }
     }
 

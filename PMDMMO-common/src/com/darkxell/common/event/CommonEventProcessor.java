@@ -154,7 +154,7 @@ public class CommonEventProcessor {
 
     /** Method that handles a Boss defeat. This event has very different results depending on the Dungeon, so having a separate method for it seems necessary. */
     protected void processBossDefeatedEvent(BossDefeatedEvent event) {
-        this.addToPending(new ExplorationStopEvent(this.dungeon.currentFloor(), eventSource,
+        this.addToPending(new ExplorationStopEvent(this.dungeon.currentFloor(), event,
                 new DungeonOutcome(Outcome.DUNGEON_CLEARED, this.dungeon.id)));
     }
 
@@ -198,7 +198,8 @@ public class CommonEventProcessor {
 
         if (this.state() == State.AWATING_INPUT && this.dungeon instanceof AutoDungeonExploration) {
             DungeonEvent event = ((AutoDungeonExploration) this.dungeon).nextEvent();
-            if (event == null) event = new ExplorationStopEvent(this.dungeon.currentFloor(), eventSource, null);
+            if (event == null)
+                event = new ExplorationStopEvent(this.dungeon.currentFloor(), DungeonEventSource.PLAYER_ACTION, null);
             this.processEvent(event);
         }
     }

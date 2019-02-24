@@ -10,6 +10,7 @@ import com.darkxell.client.state.TransitionState;
 import com.darkxell.client.state.freezone.CutsceneState;
 import com.darkxell.client.state.map.DungeonFloorMap;
 import com.darkxell.common.dungeon.data.Dungeon.DungeonDirection;
+import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.event.dungeon.DungeonExitEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Message;
@@ -27,8 +28,7 @@ public class NextFloorState extends TransitionState {
     public static void resumeExploration() {
         Persistence.displaymap = new DungeonFloorMap();
         String ost = "dungeon-" + Persistence.floor.data.soundtrack() + ".mp3";
-        if (Persistence.floor.data.isBossFloor())
-            ost = "boss.mp3";
+        if (Persistence.floor.data.isBossFloor()) ost = "boss.mp3";
         Persistence.soundmanager.setBackgroundMusic(SoundsHolder.getSong(ost));
     }
 
@@ -50,11 +50,10 @@ public class NextFloorState extends TransitionState {
                 && Persistence.floor.data.bossFloor() != Persistence.player.storyPosition()) {
 
             for (DungeonPokemon p : Persistence.floor.listPokemon())
-                if (!Persistence.player.isAlly(p.originalPokemon))
-                    Persistence.floor.unsummonPokemon(p);
+                if (!Persistence.player.isAlly(p.originalPokemon)) Persistence.floor.unsummonPokemon(p);
 
-            Persistence.dungeon.eventProcessor
-                    .addToPending(new DungeonExitEvent(Persistence.floor, eventSource, Persistence.player));
+            Persistence.dungeon.eventProcessor.addToPending(
+                    new DungeonExitEvent(Persistence.floor, DungeonEventSource.TRIGGER, Persistence.player));
         }
 
         this.next = Persistence.dungeonState = new DungeonState();
@@ -69,8 +68,7 @@ public class NextFloorState extends TransitionState {
             c.creation.freezone = Freezones.getFreezoneForBossFloor(Persistence.dungeon.dungeon(), Persistence.floor);
             this.next = Persistence.cutsceneState = new CutsceneState(c);
             c.creation.create();
-        } else
-            resumeExploration();
+        } else resumeExploration();
     }
 
 }
