@@ -60,7 +60,7 @@ public class AppliedStatusCondition implements DungeonEventListener {
     }
 
     public void finish(Floor floor, StatusConditionEndReason reason, ArrayList<DungeonEvent> events) {
-        events.add(new StatusConditionEndedEvent(floor, this, reason));
+        events.add(new StatusConditionEndedEvent(floor, eventSource, this, reason));
     }
 
     public int getTurns() {

@@ -40,7 +40,7 @@ public class AbilityPreventMoveUseType extends Ability {
 
                 if (shouldPrevent) {
                     e.consume();
-                    resultingEvents.add(new TriggeredAbilityEvent(floor, self));
+                    resultingEvents.add(new TriggeredAbilityEvent(floor, eventSource, self));
                 }
             }
         }

@@ -40,9 +40,9 @@ public class AbilityAbsorbDamage extends AbilityPreventAdditionalEffectsOnSelf {
             if (e.target == concerned && concerned.ability() == this && e.source instanceof MoveUse) {
                 MoveUse move = (MoveUse) e.source;
                 if (move.move.move().type == this.type) {
-                    resultingEvents.add(new TriggeredAbilityEvent(floor, concerned));
+                    resultingEvents.add(new TriggeredAbilityEvent(floor, eventSource, concerned));
                     event.consume();
-                    resultingEvents.add(new HealthRestoredEvent(floor, concerned, e.damage));
+                    resultingEvents.add(new HealthRestoredEvent(floor, eventSource, concerned, e.damage));
                 }
             }
         }

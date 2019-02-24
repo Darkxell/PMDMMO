@@ -18,7 +18,7 @@ public class AbilityPreventOneShot extends Ability {
     public double applyDamageModifications(double damage, MoveUse move, DungeonPokemon target, boolean isUser,
             Floor floor, ArrayList<DungeonEvent> events) {
         if (target.ability() == this && target.getHp() >= target.getMaxHP() && damage >= target.getHp()) {
-            events.add(new TriggeredAbilityEvent(floor, target));
+            events.add(new TriggeredAbilityEvent(floor, eventSource, target));
             return target.getHp() - 1;
         }
         return super.applyDamageModifications(damage, move, target, isUser, floor, events);

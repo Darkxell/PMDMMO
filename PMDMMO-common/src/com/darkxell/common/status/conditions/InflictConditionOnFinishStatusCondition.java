@@ -26,7 +26,7 @@ public class InflictConditionOnFinishStatusCondition extends StatusCondition {
 
         if (reason == StatusConditionEndReason.FINISHED)
             events.add(new StatusConditionCreatedEvent(floor,
-                    this.inflictedOnFinish.create(floor, instance.pokemon, this, floor.random)));
+                    eventSource, this.inflictedOnFinish.create(floor, instance.pokemon, this, floor.random)));
     }
 
 }

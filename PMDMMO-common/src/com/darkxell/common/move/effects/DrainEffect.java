@@ -33,7 +33,7 @@ public class DrainEffect extends MoveEffect {
                     break;
                 }
             if (damage != null)
-                effects.createEffect(new HealthRestoredEvent(floor, usedMove.user, damage.damage * this.percent / 100),
+                effects.createEffect(new HealthRestoredEvent(floor, eventSource, usedMove.user, damage.damage * this.percent / 100),
                         usedMove, target, floor, missed, true, usedMove.user);
         }
     }

@@ -6,6 +6,7 @@ import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageType;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DefaultDamageSource;
 import com.darkxell.common.pokemon.DungeonPokemon;
@@ -20,7 +21,7 @@ public class BlowbackPokemonEvent extends DungeonEvent {
     public final DungeonPokemon pokemon;
     private boolean wasHurt;
 
-    public BlowbackPokemonEvent(Floor floor, DungeonPokemon pokemon, Direction direction) {
+    public BlowbackPokemonEvent(Floor floor, DungeonEventSource eventSource, DungeonPokemon pokemon, Direction direction) {
         super(floor, eventSource);
         this.pokemon = pokemon;
         this.direction = direction;
@@ -56,11 +57,11 @@ public class BlowbackPokemonEvent extends DungeonEvent {
         this.destination = count < max ? temp : current;
         current.setPokemon(this.pokemon);
         if (count < max && (temp.isWall() || temp.getPokemon() != null)) {
-            this.resultingEvents.add(new DamageDealtEvent(this.floor, this.pokemon,
-                    new DefaultDamageSource(this.floor, null), DamageType.COLLISION, 5));
+            this.resultingEvents.add(new DamageDealtEvent(this.floor, eventSource,
+                    this.pokemon, new DefaultDamageSource(this.floor, null), DamageType.COLLISION, 5));
             if (temp.getPokemon() != null)
-                this.resultingEvents.add(new DamageDealtEvent(this.floor, temp.getPokemon(),
-                        new DefaultDamageSource(this.floor, null), DamageType.COLLISION, 5));
+                this.resultingEvents.add(new DamageDealtEvent(this.floor, eventSource,
+                        temp.getPokemon(), new DefaultDamageSource(this.floor, null), DamageType.COLLISION, 5));
         }
 
         return super.processServer();

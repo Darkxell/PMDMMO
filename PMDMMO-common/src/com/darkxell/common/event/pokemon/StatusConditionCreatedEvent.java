@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.status.AppliedStatusCondition;
 import com.darkxell.common.util.Pair;
 import com.darkxell.common.util.language.Message;
@@ -12,7 +13,7 @@ public class StatusConditionCreatedEvent extends DungeonEvent {
     public final AppliedStatusCondition condition;
     private boolean succeeded = false;
 
-    public StatusConditionCreatedEvent(Floor floor, AppliedStatusCondition condition) {
+    public StatusConditionCreatedEvent(Floor floor, DungeonEventSource eventSource, AppliedStatusCondition condition) {
         super(floor, eventSource);
         this.condition = condition;
     }

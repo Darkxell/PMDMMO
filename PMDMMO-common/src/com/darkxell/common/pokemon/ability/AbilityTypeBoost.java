@@ -24,7 +24,7 @@ public class AbilityTypeBoost extends Ability {
     public double damageMultiplier(MoveUse move, DungeonPokemon target, boolean isUser, Floor floor, String[] flags,
             ArrayList<DungeonEvent> events) {
         if (isUser && move.user.getHpPercentage() < 25 && move.move.move().type == this.type) {
-            events.add(new TriggeredAbilityEvent(floor, move.user));
+            events.add(new TriggeredAbilityEvent(floor, eventSource, move.user));
             return 2;
         }
         return 1;
