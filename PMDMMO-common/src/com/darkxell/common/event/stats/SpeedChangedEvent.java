@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.pokemon.BaseStats.Stat;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Message;
@@ -12,7 +13,7 @@ public class SpeedChangedEvent extends DungeonEvent {
 
     public final DungeonPokemon pokemon;
 
-    public SpeedChangedEvent(Floor floor, DungeonPokemon pokemon) {
+    public SpeedChangedEvent(Floor floor, DungeonEventSource eventSource, DungeonPokemon pokemon) {
         super(floor, eventSource);
         this.pokemon = pokemon;
     }

@@ -27,7 +27,7 @@ public class ElixirItemEffect extends DrinkItemEffect {
     public void use(Floor floor, Item item, DungeonPokemon pokemon, DungeonPokemon target,
             ArrayList<DungeonEvent> events) {
         super.use(floor, item, pokemon, target, events);
-        events.add(new PPChangedEvent(floor, target, this.pp, PPChangedEvent.CHANGE_ALL_MOVES));
+        events.add(new PPChangedEvent(floor, eventSource, target, this.pp, PPChangedEvent.CHANGE_ALL_MOVES));
     }
 
 }

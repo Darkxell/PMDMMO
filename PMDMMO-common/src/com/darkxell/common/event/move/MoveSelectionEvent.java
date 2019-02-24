@@ -34,7 +34,7 @@ public class MoveSelectionEvent extends DungeonEvent implements Communicable {
             this.user = user;
             this.direction = direction;
             this.experienceEvent = this.user.type == DungeonPokemonType.TEAM_MEMBER
-                    ? new ExperienceGeneratedEvent(floor, this.user.player())
+                    ? new ExperienceGeneratedEvent(floor, eventSource, this.user.player())
                     : null;
         }
 
@@ -120,8 +120,8 @@ public class MoveSelectionEvent extends DungeonEvent implements Communicable {
 
         // Use belly
         if (this.usedMove.user.isTeamLeader())
-            this.resultingEvents.add(new BellyChangedEvent(this.floor, this.usedMove.user,
-                    -(this.usedMove.move.isLinked() ? .9 : .1) * this.usedMove.user.energyMultiplier()));
+            this.resultingEvents.add(new BellyChangedEvent(this.floor, eventSource,
+                    this.usedMove.user, -(this.usedMove.move.isLinked() ? .9 : .1) * this.usedMove.user.energyMultiplier()));
 
         if (this.usedMove.move.isLinked())
             this.resultingEvents.add(new MoveSelectionEvent(this.floor,

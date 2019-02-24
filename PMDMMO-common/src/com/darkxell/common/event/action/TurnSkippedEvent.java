@@ -42,7 +42,7 @@ public class TurnSkippedEvent extends DungeonEvent implements Communicable {
     public ArrayList<DungeonEvent> processServer() {
         if (this.pokemon.isTeamLeader())
             this.resultingEvents
-                    .add(new BellyChangedEvent(this.floor, this.pokemon, -.1 * this.pokemon.energyMultiplier()));
+                    .add(new BellyChangedEvent(this.floor, eventSource, this.pokemon, -.1 * this.pokemon.energyMultiplier()));
         return super.processServer();
     }
 
