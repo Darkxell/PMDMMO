@@ -7,6 +7,7 @@ import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.item.ItemSelectionEvent;
+import com.darkxell.common.event.item.ItemUseEvent;
 import com.darkxell.common.event.item.ProjectileThrownEvent;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.Item.ItemCategory;
@@ -112,12 +113,11 @@ public class ThrowableItemEffect extends ItemEffect {
     }
 
     @Override
-    public void use(Floor floor, Item item, DungeonPokemon pokemon, DungeonPokemon target,
-            ArrayList<DungeonEvent> events) {
-        super.use(floor, item, pokemon, target, events);
+    public void use(ItemUseEvent itemEvent, ArrayList<DungeonEvent> events) {
+        super.use(itemEvent, events);
 
-        Tile destination = this.findDestination(floor, item, pokemon);
-        events.add(new ProjectileThrownEvent(floor, itemEvent, item, pokemon, destination));
+        Tile destination = this.findDestination(itemEvent, item, pokemon);
+        events.add(new ProjectileThrownEvent(itemEvent, itemEvent, item, pokemon, destination));
     }
 
 }

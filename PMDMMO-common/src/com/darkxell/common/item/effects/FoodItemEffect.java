@@ -2,13 +2,11 @@ package com.darkxell.common.item.effects;
 
 import java.util.ArrayList;
 
-import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.item.ItemUseEvent;
 import com.darkxell.common.event.stats.BellyChangedEvent;
 import com.darkxell.common.event.stats.BellySizeChangedEvent;
-import com.darkxell.common.item.Item;
 import com.darkxell.common.item.ItemEffect;
-import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Message;
 
 /** An Item that restores belly when eaten. */
@@ -49,16 +47,15 @@ public class FoodItemEffect extends ItemEffect {
     }
 
     @Override
-    public void use(Floor floor, Item item, DungeonPokemon pokemon, DungeonPokemon target,
-            ArrayList<DungeonEvent> events) {
+    public void use(ItemUseEvent itemEvent, ArrayList<DungeonEvent> events) {
         int increase = this.belly;
         if (target.getBelly() < target.getBellySize())
-            events.add(new BellyChangedEvent(floor, eventSource, target, this.food));
+            events.add(new BellyChangedEvent(itemEvent, eventSource, target, this.food));
         else
             increase += this.bellyIfFull;
 
         if (increase != 0)
-            events.add(new BellySizeChangedEvent(floor, eventSource, target, increase));
+            events.add(new BellySizeChangedEvent(itemEvent, eventSource, target, increase));
     }
 
 }
