@@ -1,5 +1,5 @@
 plugins {
-    `java-library`
+    id("java-library")
 }
 
 sourceSets {
@@ -19,8 +19,6 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:5.4.+")
 }
 
-tasks {
-    "test"(Test::class) {
-        useJUnitPlatform()
-    }
+test {
+    useJUnitPlatform()
 }
