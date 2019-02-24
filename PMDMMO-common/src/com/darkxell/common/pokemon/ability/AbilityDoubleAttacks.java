@@ -35,14 +35,15 @@ public class AbilityDoubleAttacks extends Ability {
                 }
 
             if (active) {
-                MoveSelectionEvent n = new MoveSelectionEvent(e.floor, eventSource, e.usedMove().move,
+                DungeonEvent abilityevent = new TriggeredAbilityEvent(floor, eventSource, e.usedMove().user)
+                        .setPriority(DungeonEvent.PRIORITY_ACTION_END);
+                resultingEvents.add(abilityevent);
+                MoveSelectionEvent n = new MoveSelectionEvent(e.floor, abilityevent, e.usedMove().move,
                         e.usedMove().user, e.usedMove().direction);
                 e.addFlag("isdoubled");
                 n.addFlag("isdoubled");
                 n.setConsumesNoPP();
                 n.setPriority(DungeonEvent.PRIORITY_ACTION_END);
-                resultingEvents.add(new TriggeredAbilityEvent(floor, eventSource, e.usedMove().user)
-                        .setPriority(DungeonEvent.PRIORITY_ACTION_END));
                 resultingEvents.add(n);
             }
         }

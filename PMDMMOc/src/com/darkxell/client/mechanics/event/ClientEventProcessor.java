@@ -428,7 +428,7 @@ public final class ClientEventProcessor extends CommonEventProcessor {
             this.setState(State.ANIMATING);
 
             DialogEndListener listener = dialog -> Persistence.stateManager
-                    .setState(new MoveLearnMenuState(Persistence.dungeonState, event.pokemon, event.move));
+                    .setState(new MoveLearnMenuState(Persistence.dungeonState, event));
 
             Persistence.stateManager
                     .setState(new DialogState(Persistence.dungeonState, listener,

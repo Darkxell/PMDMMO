@@ -24,10 +24,8 @@ public class RedirectAttacksStatusCondition extends StatusCondition {
     @Override
     public double damageMultiplier(MoveUse move, DungeonPokemon target, boolean isUser, Floor floor, String[] flags,
             ArrayList<DungeonEvent> events) {
-        if (isUser)
-            for (String flag : flags)
-                if (flag.equals("redirected"))
-                    return this.redirectedMultiplier;
+        if (isUser) for (String flag : flags)
+            if (flag.equals("redirected")) return this.redirectedMultiplier;
         return super.damageMultiplier(move, target, isUser, floor, flags, events);
     }
 
@@ -40,11 +38,12 @@ public class RedirectAttacksStatusCondition extends StatusCondition {
             MoveUseEvent e = (MoveUseEvent) event;
             if (e.target == concerned && !e.hasFlag("redirected")) {
                 event.consume();
-                MoveUseEvent redirected = new MoveUseEvent(floor,
-                        eventSource, new MoveUse(floor, e.usedMove.move, concerned, concerned.facing()), e.usedMove.user);
+                MoveUseEvent redirected = new MoveUseEvent(floor, e.eventSource,
+                        new MoveUse(floor, e.usedMove.move, concerned, concerned.facing(), e.eventSource),
+                        e.usedMove.user);
                 redirected.addFlag("redirected");
-                resultingEvents.add(new MessageEvent(floor,
-                        eventSource, new Message("status.trigger.43").addReplacement("<pokemon>", concerned.toString())));
+                resultingEvents.add(new MessageEvent(floor, event,
+                        new Message("status.trigger.43").addReplacement("<pokemon>", concerned.toString())));
                 resultingEvents.add(redirected);
             }
         }

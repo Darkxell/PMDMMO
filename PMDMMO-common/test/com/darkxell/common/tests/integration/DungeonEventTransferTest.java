@@ -87,9 +87,9 @@ public class DungeonEventTransferTest {
                         this.floor.tileAt(10, 12), 0, this.pokemon.player().inventory(), 1),
                 new ItemSelectionEvent(floor, DungeonEventSource.PLAYER_ACTION, this.item1.item(), pokemon, pokemon,
                         pokemon, 0, Direction.EAST, true),
-                new MoveEnabledEvent(floor, eventSource, move1, false),
-                new MoveSwitchedEvent(floor, eventSource, pokemon.originalPokemon, 0, 1),
-                new MoveSelectionEvent(floor, eventSource, move1, pokemon, Direction.SOUTH) };
+                new MoveEnabledEvent(floor, DungeonEventSource.PLAYER_ACTION, move1, false),
+                new MoveSwitchedEvent(floor, DungeonEventSource.PLAYER_ACTION, pokemon.originalPokemon, 0, 1),
+                new MoveSelectionEvent(floor, DungeonEventSource.PLAYER_ACTION, move1, pokemon, Direction.SOUTH) };
     }
 
     @Test
