@@ -32,7 +32,7 @@ public class AbilityPreventStatus extends Ability {
                 if (e.condition.condition == this.conditions[i]) {
                     e.consume();
                     resultingEvents
-                            .add(new TriggeredAbilityEvent(floor, concerned, this.conditions.length > 1 ? i + 1 : 0));
+                            .add(new TriggeredAbilityEvent(floor, eventSource, concerned, this.conditions.length > 1 ? i + 1 : 0));
                 }
         }
     }
@@ -43,7 +43,7 @@ public class AbilityPreventStatus extends Ability {
 
         for (int i = 0; i < this.conditions.length; ++i)
             if (pokemon.hasStatusCondition(this.conditions[i])) {
-                events.add(new TriggeredAbilityEvent(floor, pokemon, i + this.conditions.length + 1));
+                events.add(new TriggeredAbilityEvent(floor, eventSource, pokemon, i + this.conditions.length + 1));
                 pokemon.getStatusCondition(this.conditions[i]).finish(floor, StatusConditionEndReason.PREVENTED,
                         events);
             }

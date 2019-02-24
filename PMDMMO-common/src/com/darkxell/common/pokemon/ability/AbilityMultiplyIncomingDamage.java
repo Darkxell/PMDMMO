@@ -24,7 +24,7 @@ public class AbilityMultiplyIncomingDamage extends Ability {
     public double damageMultiplier(MoveUse move, DungeonPokemon target, boolean isUser, Floor floor, String[] flags,
             ArrayList<DungeonEvent> events) {
         if (target.ability() == this && move.move.move().category == this.category) {
-            events.add(new TriggeredAbilityEvent(floor, target));
+            events.add(new TriggeredAbilityEvent(floor, eventSource, target));
             return this.multiplier;
         }
         return super.damageMultiplier(move, target, isUser, floor, flags, events);

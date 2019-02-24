@@ -24,7 +24,7 @@ public class CureAilmentsEffect extends MoveEffect {
         if (!missed)
             for (AppliedStatusCondition s : target.activeStatusConditions())
                 if (s.condition.isAilment)
-                    effects.createEffect(new StatusConditionEndedEvent(floor, s, StatusConditionEndReason.HEALED),
+                    effects.createEffect(new StatusConditionEndedEvent(floor, eventSource, s, StatusConditionEndReason.HEALED),
                             usedMove, target, floor, missed, false, target);
     }
 

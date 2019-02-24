@@ -53,7 +53,7 @@ public class BellyChangedEvent extends DungeonEvent implements DamageSource {
         else if (previous >= 7 && now < 7)
             this.messages.add(new Message("belly.hungry.very"));
         else if (previous == 0 && now == 0 && this.quantity < 0)
-            this.resultingEvents.add(new DamageDealtEvent(this.floor, this.pokemon, this, DamageType.HUNGER, 1));
+            this.resultingEvents.add(new DamageDealtEvent(this.floor, eventSource, this.pokemon, this, DamageType.HUNGER, 1));
 
         return super.processServer();
     }

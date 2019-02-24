@@ -25,7 +25,7 @@ public class AbilityClearStatusAilmentOnTurnEnd extends Ability {
         if (pokemon.hasStatusCondition(null)) {
             boolean triggers = floor.random.nextDouble() * 100 < this.chance;
             if (triggers) {
-                events.add(new TriggeredAbilityEvent(floor, pokemon));
+                events.add(new TriggeredAbilityEvent(floor, eventSource, pokemon));
                 for (AppliedStatusCondition condition : pokemon.activeStatusConditions())
                     condition.finish(floor, StatusConditionEndReason.HEALED, events);
             }

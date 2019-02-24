@@ -5,13 +5,14 @@ import java.util.ArrayList;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
 public class SwitchedPokemonEvent extends DungeonEvent {
 
     public final DungeonPokemon switcher, target;
 
-    public SwitchedPokemonEvent(Floor floor, DungeonPokemon switcher, DungeonPokemon target) {
+    public SwitchedPokemonEvent(Floor floor, DungeonEventSource eventSource, DungeonPokemon switcher, DungeonPokemon target) {
         super(floor, eventSource);
         this.switcher = switcher;
         this.target = target;

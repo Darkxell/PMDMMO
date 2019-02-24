@@ -27,7 +27,7 @@ public class HPRecoilEffect extends MoveEffect {
         if (!missed) {
             int damage = usedMove.user.getMaxHP();
             damage *= this.percent / 100;
-            effects.createEffect(new DamageDealtEvent(floor, usedMove.user, usedMove, DamageType.RECOIL, damage),
+            effects.createEffect(new DamageDealtEvent(floor, eventSource, usedMove.user, usedMove, DamageType.RECOIL, damage),
                     usedMove, target, floor, missed, true, usedMove.user);
         }
     }

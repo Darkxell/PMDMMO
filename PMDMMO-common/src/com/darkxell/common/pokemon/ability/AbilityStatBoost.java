@@ -24,7 +24,7 @@ public class AbilityStatBoost extends Ability {
     public double applyStatModifications(Stat stat, double value, MoveUse move, DungeonPokemon target, boolean isUser,
             Floor floor, ArrayList<DungeonEvent> events) {
         if (this.shouldBoost(stat, value, move, target, isUser, floor, events)) {
-            events.add(new TriggeredAbilityEvent(floor, move.user));
+            events.add(new TriggeredAbilityEvent(floor, eventSource, move.user));
             return value * this.multiplier;
         }
         return super.applyStatModifications(stat, value, move, target, isUser, floor, events);

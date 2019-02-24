@@ -28,7 +28,7 @@ public class DealDamageFoodItemEffect extends FoodItemEffect {
         DungeonPokemon damageTarget = target.tile().adjacentTile(target.facing()).getPokemon();
         if (damageTarget != null) {
             DefaultDamageSource s = new DefaultDamageSource(floor, target.player());
-            events.add(new DamageDealtEvent(floor, damageTarget, s, DamageType.ITEM, this.damage));
+            events.add(new DamageDealtEvent(floor, eventSource, damageTarget, s, DamageType.ITEM, this.damage));
             if (s.experienceEvent != null)
                 events.add(s.experienceEvent);
         }
@@ -40,7 +40,7 @@ public class DealDamageFoodItemEffect extends FoodItemEffect {
         DungeonPokemon damageTarget = target;
         if (damageTarget != null) {
             DefaultDamageSource s = new DefaultDamageSource(floor, pokemon.player());
-            events.add(new DamageDealtEvent(floor, damageTarget, s, DamageType.ITEM, this.thrownDamage));
+            events.add(new DamageDealtEvent(floor, eventSource, damageTarget, s, DamageType.ITEM, this.thrownDamage));
             if (s.experienceEvent != null)
                 events.add(s.experienceEvent);
         }

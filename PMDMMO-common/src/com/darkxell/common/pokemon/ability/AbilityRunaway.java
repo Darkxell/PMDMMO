@@ -26,7 +26,7 @@ public class AbilityRunaway extends Ability {
             if (p.ability() == this && p.getHpPercentage() < 50 && !p.hasStatusCondition(StatusConditions.Terrified)
                     && !p.isTeamLeader())
                 resultingEvents.add(new StatusConditionCreatedEvent(floor,
-                        StatusConditions.Terrified.create(floor, p, this, floor.random)));
+                        eventSource, StatusConditions.Terrified.create(floor, p, this, floor.random)));
         }
     }
 

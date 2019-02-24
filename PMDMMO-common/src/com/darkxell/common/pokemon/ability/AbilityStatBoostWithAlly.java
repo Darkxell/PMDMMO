@@ -28,7 +28,7 @@ public class AbilityStatBoostWithAlly extends AbilityStatBoost {
                     break;
                 }
             if (found) {
-                events.add(new TriggeredAbilityEvent(floor, move.user));
+                events.add(new TriggeredAbilityEvent(floor, eventSource, move.user));
                 return value * this.multiplier;
             }
         }

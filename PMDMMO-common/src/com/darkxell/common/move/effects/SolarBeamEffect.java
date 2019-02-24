@@ -32,7 +32,7 @@ public class SolarBeamEffect extends MoveEffect {
         } else
             effects.createEffect(
                     new StatusConditionCreatedEvent(floor,
-                            StatusConditions.Solar_beam.create(floor, target, usedMove.user, floor.random)),
+                            eventSource, StatusConditions.Solar_beam.create(floor, target, usedMove.user, floor.random)),
                     usedMove, target, floor, missed, usedMove.move.move().dealsDamage, target);
     }
 

@@ -26,7 +26,7 @@ public class AbilityFindsItemOnFloorStart extends Ability {
             ItemStack item = floor.dungeon.dungeon().randomItem(floor.random, floor.id, false);
             if (item == null)
                 return;
-            events.add(new TriggeredAbilityEvent(floor, pokemon));
+            events.add(new TriggeredAbilityEvent(floor, eventSource, pokemon));
             events.add(new ItemCreatedEvent(floor, eventSource, item, pokemon));
         }
     }

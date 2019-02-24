@@ -32,7 +32,7 @@ public class WeatherDamageEvent extends DungeonEvent {
     public ArrayList<DungeonEvent> processServer() {
         for (DungeonPokemon pokemon : this.pokemon)
             this.resultingEvents
-                    .add(new DamageDealtEvent(this.floor, pokemon, this.source, DamageType.WEATHER, this.damage));
+                    .add(new DamageDealtEvent(this.floor, eventSource, pokemon, this.source, DamageType.WEATHER, this.damage));
         return super.processServer();
     }
 
