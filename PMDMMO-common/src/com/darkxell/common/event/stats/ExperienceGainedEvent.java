@@ -16,7 +16,7 @@ public class ExperienceGainedEvent extends DungeonEvent {
     public final Pokemon pokemon;
 
     public ExperienceGainedEvent(Floor floor, Pokemon pokemon, int experience) {
-        super(floor);
+        super(floor, eventSource);
         this.pokemon = pokemon;
         this.experience = experience;
     }

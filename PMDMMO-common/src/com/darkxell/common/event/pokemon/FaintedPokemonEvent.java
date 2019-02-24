@@ -22,7 +22,7 @@ public class FaintedPokemonEvent extends DungeonEvent {
     public final DungeonPokemon pokemon;
 
     public FaintedPokemonEvent(Floor floor, DungeonPokemon pokemon, DamageSource damage) {
-        super(floor);
+        super(floor, eventSource);
         this.pokemon = pokemon;
         this.damage = damage;
     }

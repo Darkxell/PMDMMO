@@ -23,11 +23,11 @@ public class PokemonTravelEvent extends DungeonEvent implements Communicable {
     private boolean running;
 
     public PokemonTravelEvent(Floor floor) {
-        super(floor);
+        super(floor, eventSource);
     }
 
     public PokemonTravelEvent(Floor floor, DungeonPokemon pokemon, boolean running, Direction direction) {
-        super(floor, pokemon);
+        super(floor, eventSource, pokemon);
         this.pokemon = pokemon;
         this.running = running;
         this.direction = direction;

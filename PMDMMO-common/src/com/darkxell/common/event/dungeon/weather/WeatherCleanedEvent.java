@@ -10,7 +10,7 @@ public class WeatherCleanedEvent extends DungeonEvent {
     public final ActiveWeather weather;
 
     public WeatherCleanedEvent(ActiveWeather weather) {
-        super(weather.floor);
+        super(weather.floor, eventSource);
         this.weather = weather;
     }
 

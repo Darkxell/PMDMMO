@@ -13,7 +13,7 @@ public class WeatherChangedEvent extends DungeonEvent {
     public final ActiveWeather previous;
 
     public WeatherChangedEvent(Floor floor, ActiveWeather previous, ActiveWeather next) {
-        super(floor);
+        super(floor, eventSource);
         this.previous = previous;
         this.next = next;
     }

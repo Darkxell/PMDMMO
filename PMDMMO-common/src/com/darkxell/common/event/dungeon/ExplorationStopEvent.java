@@ -9,7 +9,7 @@ public class ExplorationStopEvent extends DungeonEvent {
     public final DungeonOutcome outcome;
 
     public ExplorationStopEvent(Floor floor, DungeonOutcome outcome) {
-        super(floor);
+        super(floor, eventSource);
         this.outcome = outcome;
     }
 

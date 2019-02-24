@@ -16,7 +16,7 @@ public class DungeonExitEvent extends DungeonEvent implements Communicable {
     protected Player player;
 
     public DungeonExitEvent(Floor floor, Player player) {
-        super(floor);
+        super(floor, eventSource);
         this.player = player;
     }
 

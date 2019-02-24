@@ -16,7 +16,7 @@ public class MoveLearnedEvent extends DungeonEvent {
     public final Pokemon pokemon;
 
     public MoveLearnedEvent(Floor floor, Pokemon pokemon, Move move, int index) {
-        super(floor);
+        super(floor, eventSource);
         this.pokemon = pokemon;
         this.move = move;
         this.index = index;

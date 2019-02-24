@@ -22,7 +22,7 @@ public abstract class DungeonEvent implements DungeonEventSource {
         }
 
         public MessageEvent(Floor floor, Message message, Player target) {
-            super(floor);
+            super(floor, eventSource);
             this.target = target;
             this.messages.add(message);
         }
@@ -57,12 +57,13 @@ public abstract class DungeonEvent implements DungeonEventSource {
     /** The events that resulted from this Event. */
     protected ArrayList<DungeonEvent> resultingEvents;
 
-    public DungeonEvent(Floor floor) {
-        this(floor, null);
+    public DungeonEvent(Floor floor, DungeonEventSource eventSource) {
+        this(floor, eventSource, null);
     }
 
-    public DungeonEvent(Floor floor, DungeonPokemon actor) {
+    public DungeonEvent(Floor floor, DungeonEventSource eventSource, DungeonPokemon actor) {
         this.floor = floor;
+        this.eventSource = eventSource;
         this.setActor(actor);
         this.priority = PRIORITY_DEFAULT;
         this.messages = new ArrayList<>();

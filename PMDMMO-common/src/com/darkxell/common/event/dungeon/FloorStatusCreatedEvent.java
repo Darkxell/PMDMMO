@@ -11,7 +11,7 @@ public class FloorStatusCreatedEvent extends DungeonEvent {
     public final ActiveFloorStatus status;
 
     public FloorStatusCreatedEvent(Floor floor, ActiveFloorStatus status) {
-        super(floor);
+        super(floor, eventSource);
         this.status = status;
     }
 

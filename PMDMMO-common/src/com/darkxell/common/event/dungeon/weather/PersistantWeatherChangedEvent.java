@@ -11,7 +11,7 @@ public class PersistantWeatherChangedEvent extends DungeonEvent {
     public final ActiveWeather weather;
 
     public PersistantWeatherChangedEvent(Floor floor, ActiveWeather weather) {
-        super(floor);
+        super(floor, eventSource);
         this.weather = weather;
     }
 

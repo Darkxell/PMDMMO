@@ -11,7 +11,7 @@ public class LevelupEvent extends DungeonEvent {
     public final Pokemon pokemon;
 
     public LevelupEvent(Floor floor, Pokemon pokemon) {
-        super(floor);
+        super(floor, eventSource);
         this.pokemon = pokemon;
     }
 

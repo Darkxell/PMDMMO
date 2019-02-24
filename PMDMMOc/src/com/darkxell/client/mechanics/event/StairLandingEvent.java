@@ -6,7 +6,7 @@ import com.darkxell.common.event.DungeonEvent;
 public class StairLandingEvent extends DungeonEvent {
 
     public StairLandingEvent() {
-        super(Persistence.floor);
+        super(Persistence.floor, eventSource);
     }
 
     @Override

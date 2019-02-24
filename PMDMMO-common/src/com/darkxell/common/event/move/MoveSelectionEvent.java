@@ -66,7 +66,7 @@ public class MoveSelectionEvent extends DungeonEvent implements Communicable {
     private MoveUse usedMove;
 
     public MoveSelectionEvent(Floor floor) {
-        super(floor);
+        super(floor, eventSource);
     }
 
     public MoveSelectionEvent(Floor floor, LearnedMove move, DungeonPokemon user) {
@@ -79,7 +79,7 @@ public class MoveSelectionEvent extends DungeonEvent implements Communicable {
 
     public MoveSelectionEvent(Floor floor, LearnedMove move, DungeonPokemon user, Direction direction,
             boolean consumesTurn) {
-        super(floor, consumesTurn ? user : null);
+        super(floor, eventSource, consumesTurn ? user : null);
         this.usedMove = new MoveUse(floor, move, user, direction);
 
         if (this.usedMove.move.move().hasUseMessage())

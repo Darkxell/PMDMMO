@@ -14,7 +14,7 @@ public class HealthRestoredEvent extends DungeonEvent {
     public final DungeonPokemon target;
 
     public HealthRestoredEvent(Floor floor, DungeonPokemon target, int health) {
-        super(floor);
+        super(floor, eventSource);
         this.target = target;
         this.health = health;
     }
