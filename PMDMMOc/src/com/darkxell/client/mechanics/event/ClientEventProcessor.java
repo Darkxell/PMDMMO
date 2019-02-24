@@ -680,7 +680,7 @@ public final class ClientEventProcessor extends CommonEventProcessor {
     }
 
     private void processSpawnEvent(PokemonSpawnedEvent event) {
-        Persistence.dungeonState.pokemonRenderer.register(event.spawned);
+        Persistence.dungeonState.pokemonRenderer.register(event.encounter.pokemon);
     }
 
     private void processSpeedEvent(SpeedChangedEvent event) {
