@@ -26,7 +26,7 @@ public class ApplyStatusConditionEffect extends MoveEffect {
 
         if (this.shouldApply(moveEvent, calculator, missed, effects))
             effects.createEffect(new StatusConditionCreatedEvent(moveEvent.floor, moveEvent, this.status.create(moveEvent.floor, moveEvent.target, moveEvent.usedMove.user, moveEvent.floor.random)),
-                    moveEvent, missed, moveEvent.usedMove.move.move().dealsDamage, moveEvent.target);
+                    moveEvent, missed, moveEvent.usedMove.move.move().dealsDamage);
     }
 
     @Override

@@ -23,7 +23,7 @@ public class DestroyTrapEffect extends MoveEffect {
         if (!missed) {
             Tile t = moveEvent.usedMove.user.tile().adjacentTile(moveEvent.usedMove.user.facing());
             if (t != null && t.trap != null) effects.createEffect(new TrapDestroyedEvent(moveEvent.floor, moveEvent, t),
-                    moveEvent, missed, true, null);
+                    moveEvent, missed, true);
         }
     }
 

@@ -20,7 +20,7 @@ public class DropItemEffect extends MoveEffect {
 
         if (!missed && moveEvent.target.hasItem())
             effects.createEffect(new ItemMovedEvent(moveEvent.floor, moveEvent, ItemAction.AUTO, null, moveEvent.target,
-                    0, moveEvent.target.tile(), 0), moveEvent, missed, true, moveEvent.target);
+                    0, moveEvent.target.tile(), 0), moveEvent, missed, true);
     }
 
 }

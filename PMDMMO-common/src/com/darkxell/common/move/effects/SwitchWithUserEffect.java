@@ -17,7 +17,7 @@ public class SwitchWithUserEffect extends MoveEffect {
         super.additionalEffects(moveEvent, calculator, missed, effects);
 
         if (!missed) effects.createEffect(new SwitchedPokemonEvent(moveEvent.floor, moveEvent, moveEvent.usedMove.user, moveEvent.target), moveEvent,
-                missed, false, moveEvent.target);
+                missed, false);
     }
 
 }
