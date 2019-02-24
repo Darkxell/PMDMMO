@@ -2,12 +2,11 @@ package com.darkxell.common.item.effects;
 
 import java.util.ArrayList;
 
-import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.item.ItemUseEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageType;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DefaultDamageSource;
-import com.darkxell.common.item.Item;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
 public class DealDamageFoodItemEffect extends FoodItemEffect {
@@ -21,22 +20,20 @@ public class DealDamageFoodItemEffect extends FoodItemEffect {
     }
 
     @Override
-    public void use(Floor floor, Item item, DungeonPokemon pokemon, DungeonPokemon target,
-            ArrayList<DungeonEvent> events) {
-        super.use(floor, item, pokemon, target, events);
+    public void use(ItemUseEvent itemEvent, ArrayList<DungeonEvent> events) {
+        super.use(itemEvent, events);
 
         DungeonPokemon damageTarget = target.tile().adjacentTile(target.facing()).getPokemon();
         if (damageTarget != null) {
-            DefaultDamageSource s = new DefaultDamageSource(floor, target.player());
-            events.add(new DamageDealtEvent(floor, eventSource, damageTarget, s, DamageType.ITEM, this.damage));
+            DefaultDamageSource s = new DefaultDamageSource(itemEvent, target.player());
+            events.add(new DamageDealtEvent(itemEvent, eventSource, damageTarget, s, DamageType.ITEM, this.damage));
             if (s.experienceEvent != null)
                 events.add(s.experienceEvent);
         }
     }
 
     @Override
-    public void useThrown(Floor floor, Item item, DungeonPokemon pokemon, DungeonPokemon target,
-            ArrayList<DungeonEvent> events) {
+    public void useThrown(ItemUseEvent itemEvent, ArrayList<DungeonEvent> events) {
         DungeonPokemon damageTarget = target;
         if (damageTarget != null) {
             DefaultDamageSource s = new DefaultDamageSource(floor, pokemon.player());
