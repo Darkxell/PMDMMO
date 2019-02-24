@@ -5,13 +5,14 @@ import java.util.ArrayList;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.util.language.Message;
 
 public class TrapDestroyedEvent extends DungeonEvent {
 
     public final Tile tile;
 
-    public TrapDestroyedEvent(Floor floor, Tile tile) {
+    public TrapDestroyedEvent(Floor floor, DungeonEventSource eventSource, Tile tile) {
         super(floor, eventSource);
         this.tile = tile;
     }

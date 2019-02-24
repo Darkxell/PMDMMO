@@ -172,7 +172,7 @@ public class CommonEventProcessor {
      */
     protected void processBossDefeatedEvent(BossDefeatedEvent event) {
         this.addToPending(new ExplorationStopEvent(this.dungeon.currentFloor(),
-                new DungeonOutcome(Outcome.DUNGEON_CLEARED, this.dungeon.id)));
+                eventSource, new DungeonOutcome(Outcome.DUNGEON_CLEARED, this.dungeon.id)));
     }
 
     /** Processes the input event and adds the resulting events to the pending stack. */
@@ -227,7 +227,7 @@ public class CommonEventProcessor {
         if (this.state() == State.AWATING_INPUT && this.dungeon instanceof AutoDungeonExploration) {
             DungeonEvent event = ((AutoDungeonExploration) this.dungeon).nextEvent();
             if (event == null)
-                event = new ExplorationStopEvent(this.dungeon.currentFloor(), null);
+                event = new ExplorationStopEvent(this.dungeon.currentFloor(), eventSource, null);
             this.processEvent(event);
         }
     }

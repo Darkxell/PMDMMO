@@ -190,7 +190,7 @@ public class Floor {
 	public void onFloorStart(ArrayList<DungeonEvent> events) {
 		this.dungeon.eventProcessor.onFloorStart(this);
 		Weather w = this.dungeon.dungeon().weather(this.id, this.random);
-		events.add(new PersistantWeatherChangedEvent(this, new ActiveWeather(w, null, this, -1)));
+		events.add(new PersistantWeatherChangedEvent(this, eventSource, new ActiveWeather(w, null, this, -1)));
 		for (DungeonPokemon pokemon : this.listPokemon()) {
 			this.aiManager.getAI(pokemon).visibility.onPokemonMoved();
 			pokemon.onFloorStart(this, events);
@@ -346,7 +346,7 @@ public class Floor {
 		ActiveWeather previous = this.currentWeather();
 		if (this.currentWeather == weather) this.currentWeather = null;
 		ActiveWeather next = this.currentWeather();
-		if (previous != next) events.add(new WeatherChangedEvent(this, previous, next));
+		if (previous != next) events.add(new WeatherChangedEvent(this, eventSource, previous, next));
 	}
 
 	/** @return The room at the input X, Y coordinates. null if not in a Room. */
@@ -364,7 +364,7 @@ public class Floor {
 		ActiveWeather previous = this.currentWeather();
 		this.persistantWeather = weather;
 		ActiveWeather next = this.currentWeather();
-		if (previous.weather != next.weather) events.add(new WeatherChangedEvent(this, previous, next));
+		if (previous.weather != next.weather) events.add(new WeatherChangedEvent(this, eventSource, previous, next));
 	}
 
 	/** Overrides all of the floor's tiles. */
@@ -378,7 +378,7 @@ public class Floor {
 		ActiveWeather previous = this.currentWeather();
 		this.currentWeather = weather;
 		ActiveWeather next = this.currentWeather();
-		if (previous.weather != next.weather) events.add(new WeatherChangedEvent(this, previous, next));
+		if (previous.weather != next.weather) events.add(new WeatherChangedEvent(this, eventSource, previous, next));
 	}
 
 	public void summonPokemon(DungeonPokemon pokemon, int x, int y, ArrayList<DungeonEvent> events) {

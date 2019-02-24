@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageType;
 import com.darkxell.common.pokemon.DungeonPokemon;
@@ -15,7 +16,7 @@ public class WeatherDamageEvent extends DungeonEvent {
     private final ArrayList<DungeonPokemon> pokemon;
     public final WeatherDamaging source;
 
-    public WeatherDamageEvent(Floor floor, WeatherDamaging source, ArrayList<DungeonPokemon> pokemon, int damage) {
+    public WeatherDamageEvent(Floor floor, DungeonEventSource eventSource, WeatherDamaging source, ArrayList<DungeonPokemon> pokemon, int damage) {
         super(floor, eventSource);
         this.source = source;
         this.pokemon = pokemon;

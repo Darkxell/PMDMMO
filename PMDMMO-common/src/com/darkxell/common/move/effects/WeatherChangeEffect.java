@@ -27,7 +27,7 @@ public class WeatherChangeEffect extends MoveEffect {
         super.additionalEffects(usedMove, target, flags, floor, calculator, missed, effects);
 
         if (!missed)
-            effects.createEffect(new WeatherCreatedEvent(new ActiveWeather(this.weather, usedMove, floor, 5)), usedMove,
+            effects.createEffect(new WeatherCreatedEvent(new ActiveWeather(this.weather, usedMove, floor, 5), eventSource), usedMove,
                     target, floor, missed, false, null);
     }
 

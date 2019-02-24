@@ -4,13 +4,14 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.weather.ActiveWeather;
 
 public class PersistantWeatherChangedEvent extends DungeonEvent {
 
     public final ActiveWeather weather;
 
-    public PersistantWeatherChangedEvent(Floor floor, ActiveWeather weather) {
+    public PersistantWeatherChangedEvent(Floor floor, DungeonEventSource eventSource, ActiveWeather weather) {
         super(floor, eventSource);
         this.weather = weather;
     }

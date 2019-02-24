@@ -2,10 +2,11 @@ package com.darkxell.common.event.dungeon;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.DungeonEventSource;
 
 public class BossDefeatedEvent extends DungeonEvent {
 
-    public BossDefeatedEvent(Floor floor) {
+    public BossDefeatedEvent(Floor floor, DungeonEventSource eventSource) {
         super(floor, eventSource);
         this.priority = PRIORITY_TURN_END;
     }

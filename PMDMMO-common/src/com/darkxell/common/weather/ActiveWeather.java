@@ -39,7 +39,7 @@ public class ActiveWeather {
 
         if (this.isOver()) {
             isOver = true;
-            events.add(new WeatherCleanedEvent(this));
+            events.add(new WeatherCleanedEvent(this, eventSource));
         }
 
         if (!isOver)

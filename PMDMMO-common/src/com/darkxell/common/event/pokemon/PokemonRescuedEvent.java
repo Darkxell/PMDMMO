@@ -40,7 +40,7 @@ public class PokemonRescuedEvent extends DungeonEvent implements Communicable {
         this.floor.unsummonPokemon(this.rescued);
         this.resultingEvents.add(new MessageEvent(this.floor,
                 eventSource, new Message("mission.rescued").addReplacement("<pokemon>", this.rescued.getNickname())));
-        this.resultingEvents.add(new MissionClearedEvent(this.floor, this.mission));
+        this.resultingEvents.add(new MissionClearedEvent(this.floor, eventSource, this.mission));
         return super.processServer();
     }
 

@@ -31,7 +31,7 @@ public class ActiveFloorStatus {
     }
 
     public void finish(Floor floor, ArrayList<DungeonEvent> events) {
-        events.add(new FloorStatusEndedEvent(floor, this));
+        events.add(new FloorStatusEndedEvent(floor, eventSource, this));
     }
 
     public int getTurns() {

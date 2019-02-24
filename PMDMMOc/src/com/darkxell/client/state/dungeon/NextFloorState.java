@@ -54,7 +54,7 @@ public class NextFloorState extends TransitionState {
                     Persistence.floor.unsummonPokemon(p);
 
             Persistence.dungeon.eventProcessor
-                    .addToPending(new DungeonExitEvent(Persistence.floor, Persistence.player));
+                    .addToPending(new DungeonExitEvent(Persistence.floor, eventSource, Persistence.player));
         }
 
         this.next = Persistence.dungeonState = new DungeonState();

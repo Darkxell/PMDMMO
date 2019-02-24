@@ -44,7 +44,7 @@ public class WeatherDamaging extends Weather implements DamageSource {
                         return true;
                 return false;
             });
-            e.add(new WeatherDamageEvent(floor, this, pokemon, this.damage));
+            e.add(new WeatherDamageEvent(floor, eventSource, this, pokemon, this.damage));
         }
         return e;
     }
