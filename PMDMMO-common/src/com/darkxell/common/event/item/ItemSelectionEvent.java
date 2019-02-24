@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.player.ItemContainer;
@@ -31,17 +32,17 @@ public class ItemSelectionEvent extends DungeonEvent implements Communicable {
     /** The Pokemon that used the Item. */
     protected DungeonPokemon user;
 
-    public ItemSelectionEvent(Floor floor) {
+    public ItemSelectionEvent(Floor floor, DungeonEventSource eventSource) {
         super(floor, eventSource);
     }
 
-    public ItemSelectionEvent(Floor floor, Item item, DungeonPokemon user, DungeonPokemon target, ItemContainer source,
-            int sourceIndex) {
-        this(floor, item, user, target, source, sourceIndex, user.facing(), true);
+    public ItemSelectionEvent(Floor floor, DungeonEventSource eventSource, Item item, DungeonPokemon user, DungeonPokemon target,
+            ItemContainer source, int sourceIndex) {
+        this(floor, eventSource, item, user, target, source, sourceIndex, user.facing(), true);
     }
 
-    public ItemSelectionEvent(Floor floor, Item item, DungeonPokemon user, DungeonPokemon target, ItemContainer source,
-            int sourceIndex, Direction direction, boolean consumesTurn) {
+    public ItemSelectionEvent(Floor floor, DungeonEventSource eventSource, Item item, DungeonPokemon user, DungeonPokemon target,
+            ItemContainer source, int sourceIndex, Direction direction, boolean consumesTurn) {
         super(floor, eventSource, consumesTurn ? user : null);
         this.item = item;
         this.user = user;
@@ -91,7 +92,7 @@ public class ItemSelectionEvent extends DungeonEvent implements Communicable {
                     this.source.deleteItem(this.sourceIndex);
             }
 
-            this.resultingEvents.add(new ItemUseEvent(this.floor, this.item, this.user, this.target));
+            this.resultingEvents.add(new ItemUseEvent(this.floor, eventSource, this.item, this.user, this.target));
         }
         return super.processServer();
     }
