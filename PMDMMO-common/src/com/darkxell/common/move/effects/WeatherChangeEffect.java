@@ -24,10 +24,11 @@ public class WeatherChangeEffect extends MoveEffect {
             MoveEvents effects) {
         super.additionalEffects(moveEvent, calculator, missed, effects);
 
-        if (!missed) effects.createEffect(
-                new WeatherCreatedEvent(new ActiveWeather(this.weather, moveEvent.usedMove, moveEvent.floor, 5),
-                        moveEvent),
-                moveEvent, missed, false);
+        if (!missed)
+            effects.createEffect(
+                    new WeatherCreatedEvent(new ActiveWeather(this.weather, moveEvent.usedMove, moveEvent.floor, 5),
+                            moveEvent),
+                    moveEvent, missed, false);
     }
 
     @Override

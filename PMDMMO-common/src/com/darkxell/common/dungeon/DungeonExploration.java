@@ -32,7 +32,10 @@ import com.darkxell.common.status.AppliedStatusCondition;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.Logger;
 
-/** Represents the behavior at the Dungeon-level while in an exploration (Floor management, Players, AI, seeds, turns & events memory...). */
+/**
+ * Represents the behavior at the Dungeon-level while in an exploration (Floor management, Players, AI, seeds, turns &
+ * events memory...).
+ */
 public class DungeonExploration {
 
     /** Accepted missions that are active in this Dungeon. */
@@ -113,9 +116,11 @@ public class DungeonExploration {
         return this.currentFloor;
     }
 
-    /** Ends the current Turn.
+    /**
+     * Ends the current Turn.
      *
-     * @return The Events created for the start of the new turn. */
+     * @return The Events created for the start of the new turn.
+     */
     public ArrayList<DungeonEvent> endSubTurn() {
         this.currentActor = -1;
         ++this.currentSubTurn;
@@ -125,7 +130,8 @@ public class DungeonExploration {
         ArrayList<DungeonEvent> events = new ArrayList<>();
         boolean turnEnd = this.currentSubTurn == GameTurn.SUB_TURNS;
 
-        if (turnEnd) this.endTurn(events);
+        if (turnEnd)
+            this.endTurn(events);
 
         return events;
     }
@@ -134,7 +140,8 @@ public class DungeonExploration {
         Direction d;
         for (Actor a : this.actors) {
             AI ai = this.currentFloor.aiManager.getAI(a.pokemon);
-            if (ai == null) continue;
+            if (ai == null)
+                continue;
             d = ai.mayRotate();
             if (d != null && d != a.pokemon.facing())
                 events.add(new PokemonRotateEvent(this.currentFloor, DungeonEventSource.PLAYER_ACTION, a.pokemon, d));
@@ -143,7 +150,8 @@ public class DungeonExploration {
         for (Actor a : this.actors)
             a.pokemon.onTurnStart(this.currentFloor, events);
         this.currentFloor.onTurnStart(events);
-        if (this.currentTurn != null) this.pastTurns.add(this.currentTurn);
+        if (this.currentTurn != null)
+            this.pastTurns.add(this.currentTurn);
         this.currentTurn = new GameTurn(this.currentTurn == null ? 0 : this.currentTurn.id + 1, this.currentFloor);
         this.currentSubTurn = 0;
     }
@@ -152,14 +160,15 @@ public class DungeonExploration {
     public void eventOccured(DungeonEvent event) {
         this.currentTurn.addEvent(event);
         if (event.actor() != null && this.actorMap.containsKey(event.actor()))
-            if (event instanceof TurnSkippedEvent) this.actorMap.get(event.actor()).skip();
+            if (event instanceof TurnSkippedEvent)
+                this.actorMap.get(event.actor()).skip();
             else {
-            this.actorMap.get(event.actor()).act();
-            for (Actor a : this.actors)
-            if (a.actionThisSubturn() == Action.SKIPPED && !a.pokemon.isTeamLeader()
-                    && a.pokemon.isAlliedWith(event.actor()))
-                a.unskip();
-            this.currentActor = 0;
+                this.actorMap.get(event.actor()).act();
+                for (Actor a : this.actors)
+                    if (a.actionThisSubturn() == Action.SKIPPED && !a.pokemon.isTeamLeader()
+                            && a.pokemon.isAlliedWith(event.actor()))
+                        a.unskip();
+                this.currentActor = 0;
             }
 
         for (DungeonMission mission : this.activeMissions)
@@ -174,7 +183,8 @@ public class DungeonExploration {
 
     public DungeonMission findMission(String id) {
         for (DungeonMission m : this.activeMissions)
-            if (m.missionData.toString().equals(id)) return m;
+            if (m.missionData.toString().equals(id))
+                return m;
         return null;
     }
 
@@ -182,10 +192,12 @@ public class DungeonExploration {
     public DungeonMission findRescueMission(Floor floor, DungeonPokemon rescued) {
         for (DungeonMission m : this.activeMissions) {
             Mission mission = m.missionData;
-            if (mission.getFloor() != floor.id) continue;
+            if (mission.getFloor() != floor.id)
+                continue;
             if (mission.getMissiontype() != Mission.TYPE_RESCUEHIM && mission.getMissiontype() != Mission.TYPE_RESCUEME)
                 continue;
-            if (mission.getTargetPokemon() != rescued.species().id) continue;
+            if (mission.getTargetPokemon() != rescued.species().id)
+                continue;
             return m;
         }
         return null;
@@ -194,7 +206,8 @@ public class DungeonExploration {
     /** Creates the next Floor to explore, places Players in it, registers Actors, AIs, and IDs. */
     private void generateNextFloor() {
         this.isGeneratingFloor = true;
-        if (this.currentFloor != null) this.currentFloor.dispose();
+        if (this.currentFloor != null)
+            this.currentFloor.dispose();
         this.currentFloor = this.createFloor(this.currentFloor == null ? 1 : this.currentFloor.id + 1);// Change
                                                                                                        // 'floorCount'
                                                                                                        // back to '1'
@@ -207,15 +220,18 @@ public class DungeonExploration {
         for (Player player : this.exploringPlayers)
             for (DungeonPokemon pokemon : player.getDungeonTeam())
                 if (!pokemon.isFainted()) {
-                    if (pokemon.id() == 0) this.communication.pokemonIDs.register(pokemon.originalPokemon,
-                            this.communication.itemIDs, this.communication.moveIDs);
+                    if (pokemon.id() == 0)
+                        this.communication.pokemonIDs.register(pokemon.originalPokemon, this.communication.itemIDs,
+                                this.communication.moveIDs);
                     this.registerActor(pokemon);
                 }
         // Then Wild pokemon
         for (DungeonPokemon pokemon : this.currentFloor.listPokemon()) {
-            if (pokemon.id() == 0) this.communication.pokemonIDs.register(pokemon.originalPokemon,
-                    this.communication.itemIDs, this.communication.moveIDs);
-            if (pokemon.type != DungeonPokemonType.TEAM_MEMBER) this.registerActor(pokemon);
+            if (pokemon.id() == 0)
+                this.communication.pokemonIDs.register(pokemon.originalPokemon, this.communication.itemIDs,
+                        this.communication.moveIDs);
+            if (pokemon.type != DungeonPokemonType.TEAM_MEMBER)
+                this.registerActor(pokemon);
         }
 
         for (ItemStack item : this.currentFloor.listItemsOnFloor())
@@ -226,27 +242,35 @@ public class DungeonExploration {
 
     /** @return The Pokemon taking its turn. null if there is no actor left, thus the turn is over. */
     public DungeonPokemon getActor() {
-        if (this.currentActor >= this.actors.size() || this.currentActor < 0) return null;
+        if (this.currentActor >= this.actors.size() || this.currentActor < 0)
+            return null;
         return this.actors.get(this.currentActor).pokemon;
     }
 
     /** @return The last past turn. null if this is the first turn. */
     public GameTurn getLastTurn() {
-        if (this.pastTurns.isEmpty()) return null;
+        if (this.pastTurns.isEmpty())
+            return null;
         return this.pastTurns.get(this.pastTurns.size() - 1);
     }
 
-    /* public void insertActor(DungeonPokemon pokemon, int index) { if (this.actorMap.containsKey(pokemon)) return; this.actorMap.put(pokemon, new Actor(pokemon)); this.actors.add(index, this.actorMap.get(pokemon)); } */
+    /*
+     * public void insertActor(DungeonPokemon pokemon, int index) { if (this.actorMap.containsKey(pokemon)) return;
+     * this.actorMap.put(pokemon, new Actor(pokemon)); this.actors.add(index, this.actorMap.get(pokemon)); }
+     */
 
     private int indexOf(DungeonPokemon pokemon) {
-        if (this.actorMap.containsKey(pokemon)) return this.actors.indexOf(this.actorMap.get(pokemon));
+        if (this.actorMap.containsKey(pokemon))
+            return this.actors.indexOf(this.actorMap.get(pokemon));
         return -1;
     }
 
-    /** Starts the current exploration. Creates the first floor and starts the Event Processor.<br>
+    /**
+     * Starts the current exploration. Creates the first floor and starts the Event Processor.<br>
      * /!\ Make sure the Event Processor has been initialized if you want a custom one. /!\
      *
-     * @return The generated Floor. */
+     * @return The generated Floor.
+     */
     public Floor initiateExploration() {
         if (this.currentFloor != null) {
             Logger.e("Tried to start the Dungeon again!");
@@ -262,7 +286,8 @@ public class DungeonExploration {
                     Mission mission = new Mission(m);
                     if (mission.getDungeonid() == this.dungeon().id) {
                         DungeonMission dm = DungeonMission.create(player, mission);
-                        if (dm != null) this.activeMissions.add(dm);
+                        if (dm != null)
+                            this.activeMissions.add(dm);
                     }
                 } catch (InvalidParammetersException e) {
                     Logger.e("Invalid mission: " + m);
@@ -306,7 +331,8 @@ public class DungeonExploration {
     }
 
     private void nextActorIndex() {
-        if (this.currentActor == this.actors.size()) return;
+        if (this.currentActor == this.actors.size())
+            return;
 
         if (this.currentActor != -1) {
             Actor a = this.actors.get(this.currentActor);
@@ -315,11 +341,13 @@ public class DungeonExploration {
             if (speed >= 1) {
                 a.resetSlowCounter();
                 acts &= this.currentSubTurn >= GameTurn.SUB_TURNS - speed;
-            } else acts &= a.slowActs(speed);
+            } else
+                acts &= a.slowActs(speed);
             if (a.actionThisSubturn() != Action.ACTED)
                 for (AppliedStatusCondition condition : a.pokemon.activeStatusConditions())
-                condition.setActedWhileApplied();
-            if (acts) return;
+                    condition.setActedWhileApplied();
+            if (acts)
+                return;
         }
         ++this.currentActor;
         this.nextActorIndex();
@@ -334,9 +362,12 @@ public class DungeonExploration {
         this.actors.add(this.actorMap.get(pokemon));
     }
 
-    /** Removes the input Player from this Dungeon. Called when that Player exits the Dungeon by winning, escaping or losing.
+    /**
+     * Removes the input Player from this Dungeon. Called when that Player exits the Dungeon by winning, escaping or
+     * losing.
      *
-     * @return true if there are no exploring players left. */
+     * @return true if there are no exploring players left.
+     */
     public boolean removePlayer(Player player) {
         this.exploringPlayers.remove(player);
         return this.exploringPlayers.isEmpty();
@@ -347,7 +378,8 @@ public class DungeonExploration {
             Logger.e("Actor " + pokemon + " isn't registered: can't unregister!");
             return;
         }
-        if (this.actors.indexOf(this.actorMap.get(pokemon)) <= this.currentActor) --this.currentActor;
+        if (this.actors.indexOf(this.actorMap.get(pokemon)) <= this.currentActor)
+            --this.currentActor;
         this.actors.remove(this.actorMap.get(pokemon));
         this.actorMap.remove(pokemon);
     }

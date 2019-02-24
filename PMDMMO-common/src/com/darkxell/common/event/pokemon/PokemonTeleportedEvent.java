@@ -14,7 +14,8 @@ public class PokemonTeleportedEvent extends DungeonEvent {
     public final Tile destination;
     public final DungeonPokemon pokemon;
 
-    public PokemonTeleportedEvent(Floor floor, DungeonEventSource eventSource, DungeonPokemon pokemon, Tile destination) {
+    public PokemonTeleportedEvent(Floor floor, DungeonEventSource eventSource, DungeonPokemon pokemon,
+            Tile destination) {
         super(floor, eventSource);
         this.pokemon = pokemon;
         this.destination = destination;

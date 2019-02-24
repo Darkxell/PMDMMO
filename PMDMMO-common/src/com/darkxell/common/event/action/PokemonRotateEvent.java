@@ -25,7 +25,8 @@ public class PokemonRotateEvent extends DungeonEvent implements Communicable {
      * @param pokemon   - The Pokemon that rotates.
      * @param direction - The new direction the Pokemon should face.
      */
-    public PokemonRotateEvent(Floor floor, DungeonEventSource eventSource, DungeonPokemon pokemon, Direction direction) {
+    public PokemonRotateEvent(Floor floor, DungeonEventSource eventSource, DungeonPokemon pokemon,
+            Direction direction) {
         super(floor, eventSource);
         this.pokemon = pokemon;
         this.direction = direction;

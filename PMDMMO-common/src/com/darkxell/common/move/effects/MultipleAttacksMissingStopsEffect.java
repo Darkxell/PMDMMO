@@ -16,10 +16,9 @@ public class MultipleAttacksMissingStopsEffect extends MultipleAttacksEffect {
     }
 
     @Override
-    protected boolean shouldContinue(int attacksleft, MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed,
-            MoveEvents effects) {
-        return super.shouldContinue(attacksleft, moveEvent, calculator, missed, effects)
-                && !missed;
+    protected boolean shouldContinue(int attacksleft, MoveUseEvent moveEvent, MoveEffectCalculator calculator,
+            boolean missed, MoveEvents effects) {
+        return super.shouldContinue(attacksleft, moveEvent, calculator, missed, effects) && !missed;
     }
 
 }

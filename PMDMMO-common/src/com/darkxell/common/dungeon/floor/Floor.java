@@ -73,7 +73,10 @@ public class Floor {
     public Point teamSpawn;
     /** The direction which the team will spawn facing. */
     public Direction teamSpawnDirection = Direction.SOUTH;
-    /** This Floor's tiles. null before generating. Note that this array must NOT be modified. It is only public because the generation algorithm uses this array to generate the floor. */
+    /**
+     * This Floor's tiles. null before generating. Note that this array must NOT be modified. It is only public because
+     * the generation algorithm uses this array to generate the floor.
+     */
     public Tile[][] tiles;
 
     public Floor(int id, Layout layout, DungeonExploration dungeon, Random random, boolean isStatic) {
@@ -96,7 +99,10 @@ public class Floor {
         this.activeFloorStatuses.add(status);
     }
 
-    /** @return True if the input Tile connects to a path outside a Room (considering that Tile is in a Room, which is not tested in this method). */
+    /**
+     * @return True if the input Tile connects to a path outside a Room (considering that Tile is in a Room, which is
+     *         not tested in this method).
+     */
     public boolean connectsToPath(Tile tile) {
         for (Direction direction : Direction.CARDINAL)
             if (!tile.adjacentTile(direction).isInRoom() && tile.adjacentTile(direction).type() == TileType.GROUND)
@@ -107,12 +113,14 @@ public class Floor {
     private int countWildPokemon() {
         int count = 0;
         for (DungeonPokemon p : this.listPokemon())
-            if (p.isEnemy()) ++count;
+            if (p.isEnemy())
+                ++count;
         return count;
     }
 
     public ActiveWeather currentWeather() {
-        if (this.currentWeather != null) return this.currentWeather;
+        if (this.currentWeather != null)
+            return this.currentWeather;
         return this.persistantWeather;
     }
 
@@ -126,7 +134,8 @@ public class Floor {
 
     public DungeonPokemon findPokemon(long id) {
         for (DungeonPokemon p : this.listPokemon())
-            if (p.id() == id) return p;
+            if (p.id() == id)
+                return p;
         return null;
     }
 
@@ -154,7 +163,8 @@ public class Floor {
 
     public boolean hasStatus(FloorStatus status) {
         for (ActiveFloorStatus s : this.activeFloorStatuses)
-            if (s.status == status) return true;
+            if (s.status == status)
+                return true;
         return false;
     }
 
@@ -168,24 +178,28 @@ public class Floor {
         ArrayList<ItemStack> items = new ArrayList<>();
         for (Tile[] row : this.tiles)
             for (Tile t : row)
-                if (t.hasItem()) items.add(t.getItem());
+                if (t.hasItem())
+                    items.add(t.getItem());
         return items;
     }
 
     /** @return A list of all Pokemon on this Floor. */
     public ArrayList<DungeonPokemon> listPokemon() {
         ArrayList<DungeonPokemon> pokemon = new ArrayList<>();
-        if (this.tiles != null) for (Tile[] row : this.tiles)
-            for (Tile t : row)
-                if (t.getPokemon() != null && !pokemon.contains(t.getPokemon())) pokemon.add(t.getPokemon());
+        if (this.tiles != null)
+            for (Tile[] row : this.tiles)
+                for (Tile t : row)
+                    if (t.getPokemon() != null && !pokemon.contains(t.getPokemon()))
+                        pokemon.add(t.getPokemon());
         return pokemon;
     }
 
     public ArrayList<Tile> listTiles() {
         ArrayList<Tile> tiles = new ArrayList<>();
-        if (this.tiles != null) for (Tile[] row : this.tiles)
-            for (Tile t : row)
-                tiles.add(t);
+        if (this.tiles != null)
+            for (Tile[] row : this.tiles)
+                for (Tile t : row)
+                    tiles.add(t);
         return tiles;
     }
 
@@ -200,7 +214,8 @@ public class Floor {
             pokemon.onFloorStart(this, events);
         }
         for (DungeonMission mission : this.dungeon.activeMissions)
-            if (!mission.isCleared()) mission.onFloorStart(this, events);
+            if (!mission.isCleared())
+                mission.onFloorStart(this, events);
     }
 
     /** Called when a new turn starts. */
@@ -210,7 +225,8 @@ public class Floor {
         // For each existing Pokemon: has been moved to DungeonInstance
 
         // Weather
-        if (this.currentWeather != null) this.currentWeather.update(events);
+        if (this.currentWeather != null)
+            this.currentWeather.update(events);
         this.persistantWeather.update(events);
 
         // Statuses
@@ -218,16 +234,18 @@ public class Floor {
             activeFloorStatus.tick(this, events);
 
         // Pokemon spawning
-        if (!this.isStatic && this.data.pokemonDensity() > this.countWildPokemon()) if (this.nextSpawn <= 0) {
-            DungeonEncounter s = this.dungeon.dungeon().randomEncounter(this.random, this.id);
-            if (s != null) {
-                CreatedEncounter encounter = s.generate(this);
-                if (encounter.tile != null) {
-                    events.add(new PokemonSpawnedEvent(this, DungeonEventSource.TRIGGER, encounter));
-                    this.nextSpawn = RandomUtil.nextIntInBounds(50, 100, this.random) / this.data.pokemonDensity();
+        if (!this.isStatic && this.data.pokemonDensity() > this.countWildPokemon())
+            if (this.nextSpawn <= 0) {
+                DungeonEncounter s = this.dungeon.dungeon().randomEncounter(this.random, this.id);
+                if (s != null) {
+                    CreatedEncounter encounter = s.generate(this);
+                    if (encounter.tile != null) {
+                        events.add(new PokemonSpawnedEvent(this, DungeonEventSource.TRIGGER, encounter));
+                        this.nextSpawn = RandomUtil.nextIntInBounds(50, 100, this.random) / this.data.pokemonDensity();
+                    }
                 }
-            }
-        } else--this.nextSpawn;
+            } else
+                --this.nextSpawn;
     }
 
     private void placePlayer(Player player) {
@@ -252,7 +270,8 @@ public class Floor {
         DungeonPokemon[] team = player.getDungeonTeam();
 
         for (int i = team.length - 1; i > 0; --i) {
-            if (team[i].isFainted()) continue;
+            if (team[i].isFainted())
+                continue;
             if (candidates.size() == 0) {
                 Logger.e("Could not find a spawn location for ally " + team[i].getNickname() + "!");
                 continue;
@@ -274,29 +293,41 @@ public class Floor {
         return randomItem(items, random);
     }
 
-    /** @param inRoom - True if the Tile should be in a Room (will also avoid tiles adjacent to corridors in rooms).
-     * @param awayFromPlayers - True if the Tile should be far away from players (to avoid spawning a Pokemon close to a player for example).
-     * @return A Random Tile in this floor. */
+    /**
+     * @param  inRoom          - True if the Tile should be in a Room (will also avoid tiles adjacent to corridors in
+     *                         rooms).
+     * @param  awayFromPlayers - True if the Tile should be far away from players (to avoid spawning a Pokemon close to
+     *                         a player for example).
+     * @return                 A Random Tile in this floor.
+     */
     public Tile randomEmptyTile(boolean inRoom, boolean awayFromPlayers, Random random) {
         return this.randomEmptyTile(inRoom, awayFromPlayers, null, random);
     }
 
-    /** @param inRoom - True if the Tile should be in a Room (will also avoid tiles adjacent to corridors in rooms).
-     * @param awayFromPlayers - True if the Tile should be far away from players (to avoid spawning a Pokemon close to a player for example).
-     * @param type - A Type that the Tile has to match. null for any type.
-     * @return A Random Tile in this floor. */
+    /**
+     * @param  inRoom          - True if the Tile should be in a Room (will also avoid tiles adjacent to corridors in
+     *                         rooms).
+     * @param  awayFromPlayers - True if the Tile should be far away from players (to avoid spawning a Pokemon close to
+     *                         a player for example).
+     * @param  type            - A Type that the Tile has to match. null for any type.
+     * @return                 A Random Tile in this floor.
+     */
     public Tile randomEmptyTile(boolean inRoom, boolean awayFromPlayers, TileType type, Random random) {
         ArrayList<Tile> candidates = new ArrayList<>();
-        if (inRoom) for (Room room : this.rooms)
-            candidates.addAll(room.listTiles());
-        else for (Tile[] row : this.tiles)
-            candidates.addAll(Arrays.asList(row));
+        if (inRoom)
+            for (Room room : this.rooms)
+                candidates.addAll(room.listTiles());
+        else
+            for (Tile[] row : this.tiles)
+                candidates.addAll(Arrays.asList(row));
 
-        if (type != null) candidates.removeIf(t -> t.type() != type);
+        if (type != null)
+            candidates.removeIf(t -> t.type() != type);
 
         candidates.removeIf(t -> !t.isEmpty());
 
-        if (inRoom) candidates.removeIf(this::connectsToPath);
+        if (inRoom)
+            candidates.removeIf(this::connectsToPath);
 
         if (awayFromPlayers) {
             ArrayList<DungeonPokemon> players = new ArrayList<>(this.listPokemon());
@@ -305,7 +336,8 @@ public class Floor {
             });
             candidates.removeIf((Tile t) -> {
                 for (DungeonPokemon player : players)
-                    if (Math.abs(t.x - player.tile().x) < 12 && Math.abs(t.y - player.tile().y) < 10) return true;
+                    if (Math.abs(t.x - player.tile().x) < 12 && Math.abs(t.y - player.tile().y) < 10)
+                        return true;
                 return false;
             });
         }
@@ -344,19 +376,24 @@ public class Floor {
         this.activeFloorStatuses.remove(status);
     }
 
-    /** @param weatherEvent - The weather to clean.
-     * @return The Weather Changed Event if the Weather changes. */
+    /**
+     * @param  weatherEvent - The weather to clean.
+     * @return              The Weather Changed Event if the Weather changes.
+     */
     public void removeWeather(WeatherCleanedEvent weatherEvent, ArrayList<DungeonEvent> events) {
         ActiveWeather previous = this.currentWeather();
-        if (this.currentWeather == weatherEvent.weather) this.currentWeather = null;
+        if (this.currentWeather == weatherEvent.weather)
+            this.currentWeather = null;
         ActiveWeather next = this.currentWeather();
-        if (previous != next) events.add(new WeatherChangedEvent(this, weatherEvent, previous, next));
+        if (previous != next)
+            events.add(new WeatherChangedEvent(this, weatherEvent, previous, next));
     }
 
     /** @return The room at the input X, Y coordinates. null if not in a Room. */
     public Room roomAt(int x, int y) {
         for (Room room : this.rooms)
-            if (room.contains(x, y)) return room;
+            if (room.contains(x, y))
+                return room;
         return null;
     }
 
@@ -368,7 +405,8 @@ public class Floor {
         ActiveWeather previous = this.currentWeather();
         this.persistantWeather = weatherEvent.weather;
         ActiveWeather next = this.currentWeather();
-        if (previous.weather != next.weather) events.add(new WeatherChangedEvent(this, weatherEvent, previous, next));
+        if (previous.weather != next.weather)
+            events.add(new WeatherChangedEvent(this, weatherEvent, previous, next));
     }
 
     /** Overrides all of the floor's tiles. */
@@ -376,13 +414,16 @@ public class Floor {
         this.tiles = tiles;
     }
 
-    /** @param weatherEvent - The weather to add.
-     * @return The Weather Changed Event if the Weather changes. */
+    /**
+     * @param  weatherEvent - The weather to add.
+     * @return              The Weather Changed Event if the Weather changes.
+     */
     public void setWeather(WeatherCreatedEvent weatherEvent, ArrayList<DungeonEvent> events) {
         ActiveWeather previous = this.currentWeather();
         this.currentWeather = weatherEvent.weather;
         ActiveWeather next = this.currentWeather();
-        if (previous.weather != next.weather) events.add(new WeatherChangedEvent(this, weatherEvent, previous, next));
+        if (previous.weather != next.weather)
+            events.add(new WeatherChangedEvent(this, weatherEvent, previous, next));
     }
 
     public void summonPokemon(DungeonPokemon pokemon, int x, int y, ArrayList<DungeonEvent> events) {
@@ -397,14 +438,16 @@ public class Floor {
             this.dungeon.communication.pokemonIDs.register(pokemon.originalPokemon, this.dungeon.communication.itemIDs,
                     this.dungeon.communication.moveIDs);
         }
-        if (!pokemon.isTeamLeader()) this.aiManager.register(pokemon, ai);
+        if (!pokemon.isTeamLeader())
+            this.aiManager.register(pokemon, ai);
 
         pokemon.onFloorStart(this, events);
     }
 
     /** @return The tile at the input X, Y coordinates. */
     public Tile tileAt(int x, int y) {
-        if (this.tiles == null || x < 0 || x >= this.tiles.length || y < 0 || y >= this.tiles[x].length) return null;
+        if (this.tiles == null || x < 0 || x >= this.tiles.length || y < 0 || y >= this.tiles[x].length)
+            return null;
         return this.tiles[x][y];
     }
 
@@ -422,13 +465,15 @@ public class Floor {
     }
 
     public int turnCount() {
-        if (this.dungeon.currentTurn() == null) return 0;
+        if (this.dungeon.currentTurn() == null)
+            return 0;
         return this.dungeon.currentTurn().id;
     }
 
     public void unsummonPokemon(DungeonPokemon pokemon) {
         this.dungeon.unregisterActor(pokemon);
-        if (!pokemon.isTeamLeader()) this.aiManager.unregister(pokemon);
+        if (!pokemon.isTeamLeader())
+            this.aiManager.unregister(pokemon);
         pokemon.tile().removePokemon(pokemon);
     }
 

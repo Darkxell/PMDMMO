@@ -28,7 +28,8 @@ public class MoveUseEvent extends DungeonEvent {
 
     @Override
     public boolean isValid() {
-        if (this.target != null) return !this.target.isFainted();
+        if (this.target != null)
+            return !this.target.isFainted();
         return super.isValid();
     }
 
@@ -43,9 +44,11 @@ public class MoveUseEvent extends DungeonEvent {
 
     @Override
     public ArrayList<DungeonEvent> processServer() {
-        if (this.direction != null) this.usedMove.user.setFacing(this.direction);
+        if (this.direction != null)
+            this.usedMove.user.setFacing(this.direction);
         this.missed = this.usedMove.move.move().useOn(this, this.resultingEvents);
-        if (this.resultingEvents.size() == 0) this.resultingEvents.add(new MessageEvent(this.floor, this, new Message("move.no_effect")));
+        if (this.resultingEvents.size() == 0)
+            this.resultingEvents.add(new MessageEvent(this.floor, this, new Message("move.no_effect")));
         return super.processServer();
     }
 }

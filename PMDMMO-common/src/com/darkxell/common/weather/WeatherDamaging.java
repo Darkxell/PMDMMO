@@ -41,7 +41,8 @@ public class WeatherDamaging extends Weather implements DamageSource {
             ArrayList<DungeonPokemon> pokemon = floor.listPokemon();
             pokemon.removeIf(pokemon1 -> {
                 for (PokemonType type : immunes)
-                    if (pokemon1.species().isType(type)) return true;
+                    if (pokemon1.species().isType(type))
+                        return true;
                 return false;
             });
             e.add(new WeatherDamageEvent(floor, DungeonEventSource.TRIGGER, this, pokemon, this.damage));

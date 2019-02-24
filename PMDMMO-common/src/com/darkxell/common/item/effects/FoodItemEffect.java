@@ -51,9 +51,11 @@ public class FoodItemEffect extends ItemEffect {
         int increase = this.belly;
         if (itemEvent.target.getBelly() < itemEvent.target.getBellySize())
             events.add(new BellyChangedEvent(itemEvent.floor, itemEvent, itemEvent.target, this.food));
-        else increase += this.bellyIfFull;
+        else
+            increase += this.bellyIfFull;
 
-        if (increase != 0) events.add(new BellySizeChangedEvent(itemEvent.floor, itemEvent, itemEvent.target, increase));
+        if (increase != 0)
+            events.add(new BellySizeChangedEvent(itemEvent.floor, itemEvent, itemEvent.target, increase));
     }
 
 }

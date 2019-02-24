@@ -25,7 +25,8 @@ public class StatusConditionEndedEvent extends DungeonEvent {
     public final AppliedStatusCondition condition;
     public final StatusConditionEndReason reason;
 
-    public StatusConditionEndedEvent(Floor floor, DungeonEventSource eventSource, AppliedStatusCondition condition, StatusConditionEndReason reason) {
+    public StatusConditionEndedEvent(Floor floor, DungeonEventSource eventSource, AppliedStatusCondition condition,
+            StatusConditionEndReason reason) {
         super(floor, eventSource);
         this.condition = condition;
         this.reason = reason;
@@ -41,7 +42,8 @@ public class StatusConditionEndedEvent extends DungeonEvent {
         if (this.condition.pokemon.removeStatusCondition(this.condition)) {
             this.condition.onConditionEnd(this, this.resultingEvents);
             Message m = this.condition.endMessage();
-            if (m != null) this.messages.add(m);
+            if (m != null)
+                this.messages.add(m);
         }
         return super.processServer();
     }

@@ -24,15 +24,19 @@ public class ReviverFoodItemEffect extends FoodItemEffect {
     }
 
     @Override
-    public void onPreEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned, ArrayList<DungeonEvent> resultingEvents, ItemStack item, ItemContainer container, int containerIndex) {
+    public void onPreEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned,
+            ArrayList<DungeonEvent> resultingEvents, ItemStack item, ItemContainer container, int containerIndex) {
         super.onPreEvent(floor, event, concerned, resultingEvents, item, container, containerIndex);
 
         boolean shouldRevive = event instanceof FaintedPokemonEvent;
         if (shouldRevive) {
             DungeonPokemon fainted = ((FaintedPokemonEvent) event).pokemon;
-            if (container instanceof DungeonPokemon) shouldRevive &= fainted == container;
-            else if (container instanceof Inventory) shouldRevive &= ((Inventory) container).owner.isAlly(fainted);
-            else shouldRevive = false;
+            if (container instanceof DungeonPokemon)
+                shouldRevive &= fainted == container;
+            else if (container instanceof Inventory)
+                shouldRevive &= ((Inventory) container).owner.isAlly(fainted);
+            else
+                shouldRevive = false;
             if (shouldRevive) {
                 event.consume();
                 container.deleteItem(containerIndex);

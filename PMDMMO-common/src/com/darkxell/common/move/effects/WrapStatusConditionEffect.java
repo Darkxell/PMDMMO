@@ -15,21 +15,27 @@ public class WrapStatusConditionEffect extends MoveEffect {
     }
 
     @Override
-    protected void mainEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
+    protected void mainEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed,
+            MoveEvents effects) {
         super.mainEffects(moveEvent, calculator, missed, effects);
 
         if (!missed) {
-            boolean willSucceed = !moveEvent.usedMove.user.hasStatusCondition(StatusConditions.Wrapping) && !moveEvent.target.hasStatusCondition(StatusConditions.Wrapped);
+            boolean willSucceed = !moveEvent.usedMove.user.hasStatusCondition(StatusConditions.Wrapping)
+                    && !moveEvent.target.hasStatusCondition(StatusConditions.Wrapped);
 
             if (willSucceed) {
-                AppliedStatusCondition wrapped = StatusConditions.Wrapped.create(moveEvent.floor, moveEvent.target, moveEvent, moveEvent.floor.random);
+                AppliedStatusCondition wrapped = StatusConditions.Wrapped.create(moveEvent.floor, moveEvent.target,
+                        moveEvent, moveEvent.floor.random);
                 wrapped.addFlag("wrapper:" + moveEvent.usedMove.user.id());
 
-                AppliedStatusCondition wrapping = StatusConditions.Wrapping.create(moveEvent.floor, moveEvent.usedMove.user, moveEvent, moveEvent.floor.random);
+                AppliedStatusCondition wrapping = StatusConditions.Wrapping.create(moveEvent.floor,
+                        moveEvent.usedMove.user, moveEvent, moveEvent.floor.random);
                 wrapped.addFlag("wrapped:" + moveEvent.target.id());
 
-                effects.createEffect(new StatusConditionCreatedEvent(moveEvent.floor, moveEvent, wrapped), moveEvent, missed, false);
-                effects.createEffect(new StatusConditionCreatedEvent(moveEvent.floor, moveEvent, wrapping), moveEvent, missed, false);
+                effects.createEffect(new StatusConditionCreatedEvent(moveEvent.floor, moveEvent, wrapped), moveEvent,
+                        missed, false);
+                effects.createEffect(new StatusConditionCreatedEvent(moveEvent.floor, moveEvent, wrapping), moveEvent,
+                        missed, false);
             }
         }
     }

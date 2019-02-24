@@ -1,11 +1,11 @@
 package com.darkxell.client.graphics.floor;
 
+import java.util.function.*;
+
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.common.ai.visibility.Visibility;
 import com.darkxell.common.dungeon.data.FloorData;
 import com.darkxell.common.pokemon.DungeonPokemon;
-
-import java.util.function.*;
 
 /**
  * Acts on the current camera visibility (i.e. that of the player), and provides extended behavior for certain checks.

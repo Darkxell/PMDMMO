@@ -28,7 +28,8 @@ public class NextFloorState extends TransitionState {
     public static void resumeExploration() {
         Persistence.displaymap = new DungeonFloorMap();
         String ost = "dungeon-" + Persistence.floor.data.soundtrack() + ".mp3";
-        if (Persistence.floor.data.isBossFloor()) ost = "boss.mp3";
+        if (Persistence.floor.data.isBossFloor())
+            ost = "boss.mp3";
         Persistence.soundmanager.setBackgroundMusic(SoundsHolder.getSong(ost));
     }
 
@@ -50,7 +51,8 @@ public class NextFloorState extends TransitionState {
                 && Persistence.floor.data.bossFloor() != Persistence.player.storyPosition()) {
 
             for (DungeonPokemon p : Persistence.floor.listPokemon())
-                if (!Persistence.player.isAlly(p.originalPokemon)) Persistence.floor.unsummonPokemon(p);
+                if (!Persistence.player.isAlly(p.originalPokemon))
+                    Persistence.floor.unsummonPokemon(p);
 
             Persistence.dungeon.eventProcessor.addToPending(
                     new DungeonExitEvent(Persistence.floor, DungeonEventSource.TRIGGER, Persistence.player));
@@ -68,7 +70,8 @@ public class NextFloorState extends TransitionState {
             c.creation.freezone = Freezones.getFreezoneForBossFloor(Persistence.dungeon.dungeon(), Persistence.floor);
             this.next = Persistence.cutsceneState = new CutsceneState(c);
             c.creation.create();
-        } else resumeExploration();
+        } else
+            resumeExploration();
     }
 
 }

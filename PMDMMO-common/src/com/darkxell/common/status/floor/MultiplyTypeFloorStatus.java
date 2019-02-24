@@ -20,7 +20,8 @@ public class MultiplyTypeFloorStatus extends FloorStatus {
 
     @Override
     public double damageMultiplier(boolean isUser, MoveUseEvent moveEvent, ArrayList<DungeonEvent> events) {
-        if (moveEvent.usedMove.move.move().type == this.type) return this.multiplier;
+        if (moveEvent.usedMove.move.move().type == this.type)
+            return this.multiplier;
         return super.damageMultiplier(isUser, moveEvent, events);
     }
 

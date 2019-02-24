@@ -27,7 +27,8 @@ public class ProjectileThrownEvent extends DungeonEvent implements DamageSource 
     public final Item item;
     public final DungeonPokemon thrower;
 
-    public ProjectileThrownEvent(Floor floor, DungeonEventSource eventSource, Item item, DungeonPokemon thrower, Tile destination) {
+    public ProjectileThrownEvent(Floor floor, DungeonEventSource eventSource, Item item, DungeonPokemon thrower,
+            Tile destination) {
         super(floor, eventSource);
         this.item = item;
         this.thrower = thrower;
@@ -51,8 +52,8 @@ public class ProjectileThrownEvent extends DungeonEvent implements DamageSource 
     @Override
     public ArrayList<DungeonEvent> processServer() {
         if (this.item.effect() instanceof ThrowableItemEffect && this.destination.getPokemon() != null) {
-            this.resultingEvents.add(new DamageDealtEvent(this.floor, this, this.destination.getPokemon(), this, DamageType.ITEM,
-                    ((ThrowableItemEffect) this.item.effect()).damage));
+            this.resultingEvents.add(new DamageDealtEvent(this.floor, this, this.destination.getPokemon(), this,
+                    DamageType.ITEM, ((ThrowableItemEffect) this.item.effect()).damage));
             this.resultingEvents.add(this.experienceEvent);
         } else {
             Tile land = this.destination;
@@ -65,8 +66,8 @@ public class ProjectileThrownEvent extends DungeonEvent implements DamageSource 
                     caught = true;
                 } else if (catcher.canAccept(i) != -1) {
                     catcher.addItem(i);
-                    this.messages.add(
-                            new Message("item.caught").addReplacement("<pokemon>", catcher.getNickname()).addReplacement("<item>", this.item.name()));
+                    this.messages.add(new Message("item.caught").addReplacement("<pokemon>", catcher.getNickname())
+                            .addReplacement("<item>", this.item.name()));
                     caught = true;
                 }
             }

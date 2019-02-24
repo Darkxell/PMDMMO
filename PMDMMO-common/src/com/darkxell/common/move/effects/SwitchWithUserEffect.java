@@ -13,11 +13,14 @@ public class SwitchWithUserEffect extends MoveEffect {
     }
 
     @Override
-    public void additionalEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
+    public void additionalEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed,
+            MoveEvents effects) {
         super.additionalEffects(moveEvent, calculator, missed, effects);
 
-        if (!missed) effects.createEffect(new SwitchedPokemonEvent(moveEvent.floor, moveEvent, moveEvent.usedMove.user, moveEvent.target), moveEvent,
-                missed, false);
+        if (!missed)
+            effects.createEffect(
+                    new SwitchedPokemonEvent(moveEvent.floor, moveEvent, moveEvent.usedMove.user, moveEvent.target),
+                    moveEvent, missed, false);
     }
 
 }

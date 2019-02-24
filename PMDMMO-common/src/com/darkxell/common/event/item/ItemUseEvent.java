@@ -21,11 +21,13 @@ public class ItemUseEvent extends DungeonEvent {
     /** The Pokemon that used the Item. */
     public final DungeonPokemon user;
 
-    public ItemUseEvent(Floor floor, DungeonEventSource eventSource, Item item, DungeonPokemon user, DungeonPokemon target) {
+    public ItemUseEvent(Floor floor, DungeonEventSource eventSource, Item item, DungeonPokemon user,
+            DungeonPokemon target) {
         this(floor, eventSource, item, user, target, false);
     }
 
-    public ItemUseEvent(Floor floor, DungeonEventSource eventSource, Item item, DungeonPokemon user, DungeonPokemon target, boolean thrown) {
+    public ItemUseEvent(Floor floor, DungeonEventSource eventSource, Item item, DungeonPokemon user,
+            DungeonPokemon target, boolean thrown) {
         super(floor, eventSource);
         this.item = item;
         this.user = user;
@@ -40,9 +42,12 @@ public class ItemUseEvent extends DungeonEvent {
 
     @Override
     public ArrayList<DungeonEvent> processServer() {
-        if (this.thrown) this.item.useThrown(this, this.resultingEvents);
-        else this.item.use(this, this.resultingEvents);
-        if (this.resultingEvents.size() == 0) this.resultingEvents.add(new MessageEvent(this.floor, this, new Message("item.no_effect")));
+        if (this.thrown)
+            this.item.useThrown(this, this.resultingEvents);
+        else
+            this.item.use(this, this.resultingEvents);
+        if (this.resultingEvents.size() == 0)
+            this.resultingEvents.add(new MessageEvent(this.floor, this, new Message("item.no_effect")));
         return super.processServer();
     }
 

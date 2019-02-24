@@ -29,7 +29,8 @@ public class ConditionalEffect extends MoveEffect {
     @Override
     public boolean mainUse(MoveUseEvent moveEvent, ArrayList<DungeonEvent> events) {
         int moveToUse = this.moveIfFalse;
-        if (this.condition.isMet(moveEvent, events)) moveToUse = this.moveIfTrue;
+        if (this.condition.isMet(moveEvent, events))
+            moveToUse = this.moveIfTrue;
         events.add(new MoveSelectionEvent(moveEvent.floor, moveEvent, new LearnedMove(moveToUse),
                 moveEvent.usedMove.user, moveEvent.direction, false));
         return false;

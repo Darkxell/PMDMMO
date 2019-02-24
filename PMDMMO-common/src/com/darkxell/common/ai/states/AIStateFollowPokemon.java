@@ -35,14 +35,16 @@ public class AIStateFollowPokemon extends AIState {
 
     @Override
     public Direction mayRotate() {
-        if (this.target.isFainted() || !this.ai.pokemon.canMove(this.ai.floor)) return null;
+        if (this.target.isFainted() || !this.ai.pokemon.canMove(this.ai.floor))
+            return null;
         return AIUtils.generalDirection(this.ai.pokemon, this.target);
     }
 
     @Override
     public DungeonEvent takeAction() {
         // If can see the target, update the last seen position.
-        if (this.ai.visibility.isVisible(this.target)) this.lastSeen = this.target.tile();
+        if (this.ai.visibility.isVisible(this.target))
+            this.lastSeen = this.target.tile();
 
         Direction direction = AIUtils.generalDirection(this.ai.pokemon, this.target);
 
@@ -54,16 +56,18 @@ public class AIStateFollowPokemon extends AIState {
                 return new MoveSelectionEvent(this.ai.floor, DungeonEventSource.PLAYER_ACTION, move, this.ai.pokemon,
                         d);
             }
-            if (direction != this.ai.pokemon.facing()) return new PokemonRotateEvent(this.ai.floor,
-                    DungeonEventSource.PLAYER_ACTION, this.ai.pokemon, direction);
+            if (direction != this.ai.pokemon.facing())
+                return new PokemonRotateEvent(this.ai.floor, DungeonEventSource.PLAYER_ACTION, this.ai.pokemon,
+                        direction);
             return new TurnSkippedEvent(this.ai.floor, DungeonEventSource.PLAYER_ACTION, this.ai.pokemon);
         }
 
         // Else try to reach the target
         Direction go = AIUtils.direction(this.ai.pokemon, this.target);
         if (go == null || !this.ai.pokemon.canMove(this.ai.floor) || !this.canMove) {
-            if (direction != this.ai.pokemon.facing()) return new PokemonRotateEvent(this.ai.floor,
-                    DungeonEventSource.PLAYER_ACTION, this.ai.pokemon, direction);
+            if (direction != this.ai.pokemon.facing())
+                return new PokemonRotateEvent(this.ai.floor, DungeonEventSource.PLAYER_ACTION, this.ai.pokemon,
+                        direction);
             return new TurnSkippedEvent(this.ai.floor, DungeonEventSource.PLAYER_ACTION, this.ai.pokemon);
         }
         return new PokemonTravelEvent(this.ai.floor, DungeonEventSource.PLAYER_ACTION, this.ai.pokemon, go);

@@ -27,8 +27,10 @@ public class StoredDamageEffect extends MoveEffect {
     public void prepareUse(MoveSelectionEvent moveEvent, ArrayList<DungeonEvent> events) {
         super.prepareUse(moveEvent, events);
         AppliedStatusCondition storer = moveEvent.usedMove().user.getStatusCondition(StatusConditions.Bide);
-        if (storer == null) Logger.e("Pokemon used " + moveEvent.usedMove().move.move().name() + " but had no Bide status!");
-        else storer.addFlag("attacked");
+        if (storer == null)
+            Logger.e("Pokemon used " + moveEvent.usedMove().move.move().name() + " but had no Bide status!");
+        else
+            storer.addFlag("attacked");
     }
 
 }

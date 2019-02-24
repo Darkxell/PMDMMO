@@ -8,21 +8,23 @@ import com.darkxell.common.pokemon.DungeonPokemon;
 
 public class StationaryWildAI extends WildAI {
 
-	public StationaryWildAI(Floor floor, DungeonPokemon pokemon) {
-		super(floor, pokemon);
-	}
+    public StationaryWildAI(Floor floor, DungeonPokemon pokemon) {
+        super(floor, pokemon);
+    }
 
-	@Override
-	public AIState defaultState() {
-		return new AIStateTurnSkipper(this);
-	}
+    @Override
+    public AIState defaultState() {
+        return new AIStateTurnSkipper(this);
+    }
 
-	@Override
-	protected void update() {
-		super.update();
+    @Override
+    protected void update() {
+        super.update();
 
-		if (this.state instanceof AIStateExplore) this.state = new AIStateTurnSkipper(this);
-		else if (this.state instanceof AIStateFollowPokemon) ((AIStateFollowPokemon) this.state).canMove = false;
-	}
+        if (this.state instanceof AIStateExplore)
+            this.state = new AIStateTurnSkipper(this);
+        else if (this.state instanceof AIStateFollowPokemon)
+            ((AIStateFollowPokemon) this.state).canMove = false;
+    }
 
 }

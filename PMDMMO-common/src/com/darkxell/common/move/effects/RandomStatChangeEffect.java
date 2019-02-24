@@ -25,12 +25,14 @@ public class RandomStatChangeEffect extends MoveEffect {
     }
 
     @Override
-    public void additionalEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
+    public void additionalEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed,
+            MoveEvents effects) {
         super.additionalEffects(moveEvent, calculator, missed, effects);
 
         if (!missed && moveEvent.floor.random.nextDouble() * 100 < this.probability) {
             DungeonPokemon changed = this.pokemonToChange(moveEvent, calculator, missed, effects);
-            effects.createEffect(new StatChangedEvent(moveEvent.floor, moveEvent, changed, this.stat(moveEvent.floor), this.stage),
+            effects.createEffect(
+                    new StatChangedEvent(moveEvent.floor, moveEvent, changed, this.stat(moveEvent.floor), this.stage),
                     moveEvent, missed, moveEvent.usedMove.move.move().dealsDamage);
         }
 
@@ -38,27 +40,31 @@ public class RandomStatChangeEffect extends MoveEffect {
 
     @Override
     public Message descriptionBase(Move move) {
-        return new Message(this.descriptionID()).addReplacement("<stage>", String.valueOf(Math.abs(this.stage))).addReplacement("<percent>",
-                String.valueOf(this.probability));
+        return new Message(this.descriptionID()).addReplacement("<stage>", String.valueOf(Math.abs(this.stage)))
+                .addReplacement("<percent>", String.valueOf(this.probability));
     }
 
     protected String descriptionID() {
         if (this.probability < 100) {
-            if (this.stage < 0) return "move.info.stat_down_random_maybe";
+            if (this.stage < 0)
+                return "move.info.stat_down_random_maybe";
             return "move.info.stat_up_random_maybe";
         }
-        if (this.stage < 0) return "move.info.stat_down_random";
+        if (this.stage < 0)
+            return "move.info.stat_down_random";
         return "move.info.stat_up_random";
     }
 
-    protected DungeonPokemon pokemonToChange(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
+    protected DungeonPokemon pokemonToChange(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed,
+            MoveEvents effects) {
         return moveEvent.target;
     }
 
     protected Stat stat(Floor floor) {
         ArrayList<Stat> stats = new ArrayList<>();
         for (Stat s : Stat.values())
-            if (s != Stat.Health) stats.add(s);
+            if (s != Stat.Health)
+                stats.add(s);
         return RandomUtil.random(stats, floor.random);
     }
 

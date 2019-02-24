@@ -9,7 +9,9 @@ import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.pokemon.BaseStats.Stat;
 
-/** Utility object that stores various objects implementing AffectsPokemon, and applies all those modificators at once. */
+/**
+ * Utility object that stores various objects implementing AffectsPokemon, and applies all those modificators at once.
+ */
 public class PropertyModificator {
 
     private ArrayList<AffectsPokemon> affecters = new ArrayList<>();
@@ -25,15 +27,19 @@ public class PropertyModificator {
     }
 
     /** Calls {@link AffectsPokemon#applyCriticalRateModifications} on each affecter. */
-    public int applyCriticalRateModifications(int critical, MoveUse move, DungeonPokemon target, Floor floor, ArrayList<DungeonEvent> events) {
+    public int applyCriticalRateModifications(int critical, MoveUse move, DungeonPokemon target, Floor floor,
+            ArrayList<DungeonEvent> events) {
         for (AffectsPokemon affecter : this.affecters)
-            critical = affecter.applyCriticalRateModifications(critical, move, target, this.users.contains(affecter), floor, events);
+            critical = affecter.applyCriticalRateModifications(critical, move, target, this.users.contains(affecter),
+                    floor, events);
         return critical;
     }
 
-    /** Calls {@link AffectsPokemon#applyDamageModifications} on each affecter.
+    /**
+     * Calls {@link AffectsPokemon#applyDamageModifications} on each affecter.
      * 
-     * @param moveEvent TODO */
+     * @param moveEvent TODO
+     */
     public double applyDamageModifications(double damage, MoveUseEvent moveEvent, ArrayList<DungeonEvent> events) {
         for (AffectsPokemon affecter : this.affecters)
             damage = affecter.applyDamageModifications(damage, this.users.contains(affecter), moveEvent, events);
@@ -41,24 +47,29 @@ public class PropertyModificator {
     }
 
     /** Calls {@link AffectsPokemon#applyCriticalRateModifications} on each affecter. */
-    public double applyEffectivenessModifications(double effectiveness, MoveUse move, DungeonPokemon target, Floor floor) {
+    public double applyEffectivenessModifications(double effectiveness, MoveUse move, DungeonPokemon target,
+            Floor floor) {
         for (AffectsPokemon affecter : this.affecters)
-            effectiveness = affecter.applyEffectivenessModifications(effectiveness, move, target, this.users.contains(affecter), floor);
+            effectiveness = affecter.applyEffectivenessModifications(effectiveness, move, target,
+                    this.users.contains(affecter), floor);
         return effectiveness;
     }
 
     /** Calls {@link AffectsPokemon#applyStatModifications} on each affecter. */
-    public double applyStatModifications(Stat stat, double value, MoveUse move, DungeonPokemon target, Floor floor, MoveUseEvent moveEvent,
-            ArrayList<DungeonEvent> events) {
+    public double applyStatModifications(Stat stat, double value, MoveUse move, DungeonPokemon target, Floor floor,
+            MoveUseEvent moveEvent, ArrayList<DungeonEvent> events) {
         for (AffectsPokemon affecter : this.affecters)
-            value = affecter.applyStatModifications(stat, value, move, target, this.users.contains(affecter), floor, moveEvent, events);
+            value = affecter.applyStatModifications(stat, value, move, target, this.users.contains(affecter), floor,
+                    moveEvent, events);
         return value;
     }
 
     /** Calls {@link AffectsPokemon#applyStatStageModifications} on each affecter. */
-    public int applyStatStageModifications(Stat stat, int stage, MoveUse move, DungeonPokemon target, Floor floor, ArrayList<DungeonEvent> events) {
+    public int applyStatStageModifications(Stat stat, int stage, MoveUse move, DungeonPokemon target, Floor floor,
+            ArrayList<DungeonEvent> events) {
         for (AffectsPokemon affecter : this.affecters)
-            stage = affecter.applyStatStageModifications(stat, stage, move, target, this.users.contains(affecter), floor, events);
+            stage = affecter.applyStatStageModifications(stat, stage, move, target, this.users.contains(affecter),
+                    floor, events);
         return stage;
     }
 

@@ -24,7 +24,8 @@ public class ElixirItemEffect extends DrinkItemEffect {
     @Override
     public void use(ItemUseEvent itemEvent, ArrayList<DungeonEvent> events) {
         super.use(itemEvent, events);
-        events.add(new PPChangedEvent(itemEvent.floor, itemEvent, itemEvent.target, this.pp, PPChangedEvent.CHANGE_ALL_MOVES));
+        events.add(new PPChangedEvent(itemEvent.floor, itemEvent, itemEvent.target, this.pp,
+                PPChangedEvent.CHANGE_ALL_MOVES));
     }
 
 }

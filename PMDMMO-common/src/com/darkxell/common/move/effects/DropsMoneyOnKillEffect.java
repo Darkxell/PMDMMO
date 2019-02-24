@@ -24,7 +24,8 @@ public class DropsMoneyOnKillEffect extends MoveEffect {
             ItemCreatedEvent event = new ItemCreatedEvent(moveEvent.floor, moveEvent, item, moveEvent.target.tile()) {
                 @Override
                 public boolean isValid() {
-                    if (!moveEvent.target.isFainted()) return false;
+                    if (!moveEvent.target.isFainted())
+                        return false;
                     return super.isValid();
                 }
             };

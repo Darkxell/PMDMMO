@@ -102,7 +102,8 @@ public class DungeonEventTransferTest {
 
         for (DungeonEvent event : events) {
             DungeonEvent returned = EventCommunication.read(EventCommunication.prepareToSend(event), floor);
-            if (!event.equals(returned)) mismatches.add(new DungeonEvent[] { event, returned });
+            if (!event.equals(returned))
+                mismatches.add(new DungeonEvent[] { event, returned });
         }
 
         assertTrue(mismatches.size() == 0, () -> {

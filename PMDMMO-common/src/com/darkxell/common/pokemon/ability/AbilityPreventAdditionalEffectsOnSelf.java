@@ -16,7 +16,8 @@ public class AbilityPreventAdditionalEffectsOnSelf extends Ability {
     }
 
     @Override
-    public void onPreEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned, ArrayList<DungeonEvent> resultingEvents) {
+    public void onPreEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned,
+            ArrayList<DungeonEvent> resultingEvents) {
         super.onPreEvent(floor, event, concerned, resultingEvents);
 
         if (this.shouldPrevent(floor, event, concerned)) {

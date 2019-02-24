@@ -27,7 +27,8 @@ public class DealDamageFoodItemEffect extends FoodItemEffect {
         if (damageTarget != null) {
             DefaultDamageSource s = new DefaultDamageSource(itemEvent.floor, itemEvent.target.player(), itemEvent);
             events.add(new DamageDealtEvent(itemEvent.floor, itemEvent, damageTarget, s, DamageType.ITEM, this.damage));
-            if (s.experienceEvent != null) events.add(s.experienceEvent);
+            if (s.experienceEvent != null)
+                events.add(s.experienceEvent);
         }
     }
 
@@ -38,7 +39,8 @@ public class DealDamageFoodItemEffect extends FoodItemEffect {
             DefaultDamageSource s = new DefaultDamageSource(itemEvent.floor, itemEvent.user.player(), itemEvent);
             events.add(new DamageDealtEvent(itemEvent.floor, itemEvent, damageTarget, s, DamageType.ITEM,
                     this.thrownDamage));
-            if (s.experienceEvent != null) events.add(s.experienceEvent);
+            if (s.experienceEvent != null)
+                events.add(s.experienceEvent);
         }
     }
 

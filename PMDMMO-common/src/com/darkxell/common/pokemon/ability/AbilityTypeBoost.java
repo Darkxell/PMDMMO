@@ -20,7 +20,8 @@ public class AbilityTypeBoost extends Ability {
 
     @Override
     public double damageMultiplier(boolean isUser, MoveUseEvent moveEvent, ArrayList<DungeonEvent> events) {
-        if (isUser && moveEvent.usedMove.user.getHpPercentage() < 25 && moveEvent.usedMove.move.move().type == this.type) {
+        if (isUser && moveEvent.usedMove.user.getHpPercentage() < 25
+                && moveEvent.usedMove.move.move().type == this.type) {
             events.add(new TriggeredAbilityEvent(moveEvent.floor, moveEvent, moveEvent.usedMove.user));
             return 2;
         }

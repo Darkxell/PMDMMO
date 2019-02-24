@@ -12,15 +12,18 @@ public class MoveEvents {
 
     public final ArrayList<DungeonEvent> events = new ArrayList<>();
 
-    /** Creates a Move Effect.
+    /**
+     * Creates a Move Effect.
      *
-     * @param effect - The created Effect.
-     * @param moveEvent - The Move Use context.
-     * @param missed - <code>true</code> if the Move missed.
-     * @param isAdditional - <code>true</code> if this Effect is an Additional Effect.*/
+     * @param effect       - The created Effect.
+     * @param moveEvent    - The Move Use context.
+     * @param missed       - <code>true</code> if the Move missed.
+     * @param isAdditional - <code>true</code> if this Effect is an Additional Effect.
+     */
     public void createEffect(DungeonEvent effect, MoveUseEvent moveEvent, boolean missed, boolean isAdditional) {
         effect.addFlag(isAdditional ? ADDITIONAL : MAIN);
-        if (effect != null) this.events.add(effect);
+        if (effect != null)
+            this.events.add(effect);
     }
 
 }

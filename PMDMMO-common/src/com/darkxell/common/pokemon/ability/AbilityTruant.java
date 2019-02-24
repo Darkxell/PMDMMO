@@ -20,13 +20,14 @@ public class AbilityTruant extends Ability {
     }
 
     @Override
-    public void onPostEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned, ArrayList<DungeonEvent> resultingEvents) {
+    public void onPostEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned,
+            ArrayList<DungeonEvent> resultingEvents) {
         super.onPostEvent(floor, event, concerned, resultingEvents);
 
         if (this.shouldTruant(floor, event, concerned, false)) {
             TriggeredAbilityEvent abilityevent = new TriggeredAbilityEvent(floor, event, concerned);
-            resultingEvents
-                    .add(new StatusConditionCreatedEvent(floor, abilityevent, StatusConditions.Paused.create(floor, concerned, this, floor.random)));
+            resultingEvents.add(new StatusConditionCreatedEvent(floor, abilityevent,
+                    StatusConditions.Paused.create(floor, concerned, this, floor.random)));
         }
     }
 
@@ -35,13 +36,17 @@ public class AbilityTruant extends Ability {
 
         if (event instanceof MoveSelectionEvent) {
             MoveSelectionEvent e = (MoveSelectionEvent) event;
-            if (e.usedMove().user == concerned && e.isAction() && concerned.ability() == this) return true;
+            if (e.usedMove().user == concerned && e.isAction() && concerned.ability() == this)
+                return true;
         } else if (event instanceof ItemUseEvent && !prevent) {
             ItemUseEvent e = (ItemUseEvent) event;
-            if (e.user == concerned && e.item.effect() instanceof OrbItemEffect && concerned.ability() == this) return true;
+            if (e.user == concerned && e.item.effect() instanceof OrbItemEffect && concerned.ability() == this)
+                return true;
         } else if (event instanceof ItemSelectionEvent && prevent) {
             ItemSelectionEvent e = (ItemSelectionEvent) event;
-            if (e.user() == concerned && e.item().effect() instanceof OrbItemEffect && e.isAction() && concerned.ability() == this) return true;
+            if (e.user() == concerned && e.item().effect() instanceof OrbItemEffect && e.isAction()
+                    && concerned.ability() == this)
+                return true;
         }
         return false;
     }

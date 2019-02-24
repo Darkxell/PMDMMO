@@ -29,7 +29,8 @@ public class FloorStatusCreatedEvent extends DungeonEvent {
         } else {
             this.floor.addFloorStatus(this.status);
             Message m = this.status.startMessage();
-            if (m != null) this.messages.add(m);
+            if (m != null)
+                this.messages.add(m);
             this.status.onStatusStart(floor, this.resultingEvents);
         }
         return super.processServer();

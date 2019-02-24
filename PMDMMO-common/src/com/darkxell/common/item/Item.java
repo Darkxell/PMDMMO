@@ -185,7 +185,7 @@ public class Item implements AffectsPokemon, Registrable<Item> {
     /**
      * Called when this Item is used.
      *
-     * @param itemEvent   - The current Floor.
+     * @param itemEvent - The current Floor.
      */
     public void use(ItemUseEvent itemEvent, ArrayList<DungeonEvent> events) {
         this.effect().use(itemEvent, events);

@@ -28,7 +28,9 @@ public class TeachesMoveItemEffect extends TeachesMoveRenewableItemEffect {
     @Override
     public void use(ItemUseEvent itemEvent, ArrayList<DungeonEvent> events) {
         if (itemEvent.user.player() != null)
-            if (itemEvent.user.player().inventory().isFull()) itemEvent.user.tile().setItem(new ItemStack(-1 * itemEvent.item.id));
-            else itemEvent.user.player().inventory().addItem(new ItemStack(-1 * itemEvent.item.id));
+            if (itemEvent.user.player().inventory().isFull())
+                itemEvent.user.tile().setItem(new ItemStack(-1 * itemEvent.item.id));
+            else
+                itemEvent.user.player().inventory().addItem(new ItemStack(-1 * itemEvent.item.id));
     }
 }

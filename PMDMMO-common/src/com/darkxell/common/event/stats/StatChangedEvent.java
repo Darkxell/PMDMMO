@@ -10,8 +10,8 @@ import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Message;
 
 public class StatChangedEvent extends DungeonEvent {
-    public static final String[] MESSAGES = new String[] { "stat.decrease.3", "stat.decrease.2", "stat.decrease.1", null, "stat.increase.1",
-            "stat.increase.2", "stat.increase.3", };
+    public static final String[] MESSAGES = new String[] { "stat.decrease.3", "stat.decrease.2", "stat.decrease.1",
+            null, "stat.increase.1", "stat.increase.2", "stat.increase.3", };
 
     private int effectiveChange = 0;
     public final int stage;
@@ -45,14 +45,19 @@ public class StatChangedEvent extends DungeonEvent {
 
         if (this.effectiveChange != 0) {
             this.target.stats.addStage(this.stat, this.effectiveChange);
-            if (this.stat == Stat.Speed) this.resultingEvents.add(new SpeedChangedEvent(this.floor, this, this.target));
+            if (this.stat == Stat.Speed)
+                this.resultingEvents.add(new SpeedChangedEvent(this.floor, this, this.target));
         }
 
         String messageID = MESSAGES[this.effectiveChange + 3];
-        if (this.effectiveChange == 0) if (this.stage > 0) messageID = "stat.increase.fail";
-        else messageID = "stat.decrease.fail";
-        if (this.stat != Stat.Speed || this.effectiveChange == 0) this.messages.add(new Message(messageID)
-                .addReplacement("<pokemon>", this.target.getNickname()).addReplacement("<stat>", new Message("stat." + this.stat)));
+        if (this.effectiveChange == 0)
+            if (this.stage > 0)
+                messageID = "stat.increase.fail";
+            else
+                messageID = "stat.decrease.fail";
+        if (this.stat != Stat.Speed || this.effectiveChange == 0)
+            this.messages.add(new Message(messageID).addReplacement("<pokemon>", this.target.getNickname())
+                    .addReplacement("<stat>", new Message("stat." + this.stat)));
 
         return super.processServer();
     }

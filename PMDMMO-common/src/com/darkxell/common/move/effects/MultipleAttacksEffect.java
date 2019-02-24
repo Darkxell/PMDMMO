@@ -49,7 +49,8 @@ public class MultipleAttacksEffect extends MoveEffect {
     }
 
     protected String descriptionID() {
-        if (this.attacksMin == this.attacksMax) return "move.info.multiple_attacks";
+        if (this.attacksMin == this.attacksMax)
+            return "move.info.multiple_attacks";
         return "move.info.multiple_attacks_random";
     }
 
