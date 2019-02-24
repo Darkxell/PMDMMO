@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Communicable;
@@ -15,11 +16,11 @@ public class NextFloorEvent extends DungeonEvent implements Communicable {
 
     protected Player player;
 
-    public NextFloorEvent(Floor floor) {
+    public NextFloorEvent(Floor floor, DungeonEventSource eventSource) {
         super(floor, eventSource);
     }
 
-    public NextFloorEvent(Floor floor, Player player) {
+    public NextFloorEvent(Floor floor, DungeonEventSource eventSource, Player player) {
         super(floor, eventSource);
         this.player = player;
     }

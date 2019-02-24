@@ -2,6 +2,7 @@ package com.darkxell.common.event.dungeon.weather;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.util.language.Message;
 import com.darkxell.common.weather.ActiveWeather;
 
@@ -12,7 +13,7 @@ public class WeatherChangedEvent extends DungeonEvent {
     /** The previous Weather. may be null if this describes the application of the Floor's prevailing Weather. */
     public final ActiveWeather previous;
 
-    public WeatherChangedEvent(Floor floor, ActiveWeather previous, ActiveWeather next) {
+    public WeatherChangedEvent(Floor floor, DungeonEventSource eventSource, ActiveWeather previous, ActiveWeather next) {
         super(floor, eventSource);
         this.previous = previous;
         this.next = next;

@@ -45,7 +45,7 @@ public class FaintedPokemonEvent extends DungeonEvent {
             int moveID = -1;
             if (this.damage != null && this.damage instanceof MoveUse)
                 moveID = ((MoveUse) this.damage).move.moveId();
-            this.resultingEvents.add(new PlayerLosesEvent(this.floor, this.pokemon.originalPokemon.player(), moveID));
+            this.resultingEvents.add(new PlayerLosesEvent(this.floor, eventSource, this.pokemon.originalPokemon.player(), moveID));
         }
 
         if (this.pokemon.type == DungeonPokemonType.BOSS) {
@@ -57,7 +57,7 @@ public class FaintedPokemonEvent extends DungeonEvent {
                 }
 
             if (wasLastBoss)
-                this.resultingEvents.add(new BossDefeatedEvent(this.floor));
+                this.resultingEvents.add(new BossDefeatedEvent(this.floor, eventSource));
         }
 
         return super.processServer();

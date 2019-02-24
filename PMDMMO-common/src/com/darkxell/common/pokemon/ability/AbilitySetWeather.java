@@ -35,7 +35,7 @@ public class AbilitySetWeather extends Ability implements WeatherSource {
                 return floor.currentWeather().weather != weather;
             }
         });
-        events.add(new WeatherCreatedEvent(this.weather.create(floor, this, -1)));
+        events.add(new WeatherCreatedEvent(this.weather.create(floor, this, -1), eventSource));
     }
 
     @Override
@@ -43,7 +43,7 @@ public class AbilitySetWeather extends Ability implements WeatherSource {
         super.onTurnStart(floor, pokemon, events);
         if (floor.turnCount() % this.cycle == 0 && floor.currentWeather().weather != this.weather) {
             events.add(new TriggeredAbilityEvent(floor, pokemon));
-            events.add(new WeatherCreatedEvent(this.weather.create(floor, this, -1)));
+            events.add(new WeatherCreatedEvent(this.weather.create(floor, this, -1), eventSource));
         }
     }
 

@@ -464,7 +464,7 @@ public final class ClientEventProcessor extends CommonEventProcessor {
             DialogEndListener listener = dialog -> {
                 Persistence.stateManager.setState(Persistence.dungeonState);
                 if (((ConfirmDialogScreen) dialog.getScreen(1)).hasConfirmed())
-                    processEvent(new DungeonExitEvent(Persistence.floor, Persistence.player));
+                    processEvent(new DungeonExitEvent(Persistence.floor, eventSource, Persistence.player));
                 else
                     processPending();
             };

@@ -6,6 +6,7 @@ import com.darkxell.common.dungeon.DungeonOutcome;
 import com.darkxell.common.dungeon.DungeonOutcome.Outcome;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.player.Player;
 import com.darkxell.common.util.Communicable;
 import com.eclipsesource.json.Json;
@@ -15,7 +16,7 @@ public class DungeonExitEvent extends DungeonEvent implements Communicable {
 
     protected Player player;
 
-    public DungeonExitEvent(Floor floor, Player player) {
+    public DungeonExitEvent(Floor floor, DungeonEventSource eventSource, Player player) {
         super(floor, eventSource);
         this.player = player;
     }
@@ -32,7 +33,7 @@ public class DungeonExitEvent extends DungeonEvent implements Communicable {
     @Override
     public ArrayList<DungeonEvent> processServer() {
         DungeonOutcome outcome = new DungeonOutcome(Outcome.DUNGEON_CLEARED, this.floor.dungeon.id);
-        this.resultingEvents.add(new ExplorationStopEvent(this.floor, outcome));
+        this.resultingEvents.add(new ExplorationStopEvent(this.floor, eventSource, outcome));
         return this.resultingEvents;
     }
 

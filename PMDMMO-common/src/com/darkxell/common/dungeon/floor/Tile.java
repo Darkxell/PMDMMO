@@ -273,7 +273,7 @@ public class Tile implements ItemContainer, Comparable<Tile> {
         }
 
         if (this.hasTrap())
-            events.add(new TrapSteppedOnEvent(floor, pokemon, this, this.trap));
+            events.add(new TrapSteppedOnEvent(floor, eventSource, pokemon, this, this.trap));
     }
 
     /** Called when this Tile's type is changed. Reloads the connections of itself and its neighbors. */

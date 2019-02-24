@@ -4,13 +4,14 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.status.ActiveFloorStatus;
 import com.darkxell.common.util.language.Message;
 
 public class FloorStatusEndedEvent extends DungeonEvent {
     public final ActiveFloorStatus status;
 
-    public FloorStatusEndedEvent(Floor floor, ActiveFloorStatus status) {
+    public FloorStatusEndedEvent(Floor floor, DungeonEventSource eventSource, ActiveFloorStatus status) {
         super(floor, eventSource);
         this.status = status;
     }

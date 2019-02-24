@@ -31,10 +31,10 @@ public class StairMenuState extends OptionSelectionMenuState {
         if (option == this.proceed)
             if (Persistence.floor.id == Persistence.dungeon.dungeon().floorCount)
                 Persistence.eventProcessor()
-                        .processEvent(new DungeonExitEvent(Persistence.floor, Persistence.player).setPAE());
+                        .processEvent(new DungeonExitEvent(Persistence.floor, eventSource, Persistence.player).setPAE());
             else
                 Persistence.eventProcessor()
-                        .processEvent(new NextFloorEvent(Persistence.floor, Persistence.player).setPAE());
+                        .processEvent(new NextFloorEvent(Persistence.floor, eventSource, Persistence.player).setPAE());
     }
 
 }
