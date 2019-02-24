@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import org.jdom2.Element;
 
 import com.darkxell.common.Registrable;
-import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
-import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
+import com.darkxell.common.event.move.MoveSelectionEvent;
+import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.util.XMLUtils;
@@ -225,12 +225,11 @@ public class Move implements Registrable<Move> {
     }
 
     /**
-     * @param  move  - The used move.
-     * @param  floor - The Floor context.
+     * @param  moveEvent  - The used move.
      * @return       The Events created by this selection. Creates MoveUseEvents, distributing this Move on targets.
      */
-    public final void prepareUse(MoveUse move, Floor floor, ArrayList<DungeonEvent> events) {
-        this.effect().prepareUse(move, floor, events);
+    public final void prepareUse(MoveSelectionEvent moveEvent, ArrayList<DungeonEvent> events) {
+        this.effect().prepareUse(moveEvent, events);
     }
 
     @Override
@@ -266,15 +265,11 @@ public class Move implements Registrable<Move> {
     /**
      * Applies this Move's effects to a Pokemon.
      *
-     * @param  usedMove - The Move instance that was selected.
-     * @param  target   - The Pokemon the Move is being used on.
-     * @param  flags    - The flags of the Event that triggered this use.
-     * @param  floor    - The Floor context.
+     * @param  moveEvent - The Move instance that was selected.
      * @param  events   - The events resulting from this Move. They typically include damage, healing, stat changes...
      * @return          <code>true</code> if the Move missed.
      */
-    public boolean useOn(MoveUse usedMove, DungeonPokemon target, String[] flags, Floor floor,
-            ArrayList<DungeonEvent> events) {
-        return this.effect().mainUse(usedMove, target, flags, floor, events);
+    public boolean useOn(MoveUseEvent moveEvent, ArrayList<DungeonEvent> events) {
+        return this.effect().mainUse(moveEvent, events);
     }
 }

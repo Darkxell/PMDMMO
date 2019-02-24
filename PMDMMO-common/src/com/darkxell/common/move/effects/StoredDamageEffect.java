@@ -2,13 +2,12 @@ package com.darkxell.common.move.effects;
 
 import java.util.ArrayList;
 
-import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
-import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
+import com.darkxell.common.event.move.MoveSelectionEvent;
+import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.move.MoveEffect;
 import com.darkxell.common.move.MoveEffectCalculator;
 import com.darkxell.common.move.calculators.StoredDamageCalculator;
-import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.status.AppliedStatusCondition;
 import com.darkxell.common.status.StatusConditions;
 import com.darkxell.common.util.Logger;
@@ -20,16 +19,16 @@ public class StoredDamageEffect extends MoveEffect {
     }
 
     @Override
-    public MoveEffectCalculator buildCalculator(MoveUse usedMove, DungeonPokemon target, Floor floor, String[] flags) {
-        return new StoredDamageCalculator(usedMove, target, floor, flags);
+    public MoveEffectCalculator buildCalculator(MoveUseEvent moveEvent) {
+        return new StoredDamageCalculator(moveEvent, target, floor, flags);
     }
 
     @Override
-    public void prepareUse(MoveUse move, Floor floor, ArrayList<DungeonEvent> events) {
-        super.prepareUse(move, floor, events);
-        AppliedStatusCondition storer = move.user.getStatusCondition(StatusConditions.Bide);
+    public void prepareUse(MoveSelectionEvent moveEvent, ArrayList<DungeonEvent> events) {
+        super.prepareUse(moveEvent, events);
+        AppliedStatusCondition storer = moveEvent.user.getStatusCondition(StatusConditions.Bide);
         if (storer == null)
-            Logger.e("Pokemon used " + move.move.move().name() + " but had no Bide status!");
+            Logger.e("Pokemon used " + moveEvent.move.move().name() + " but had no Bide status!");
         else
             storer.addFlag("attacked");
     }

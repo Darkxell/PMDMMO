@@ -1,15 +1,13 @@
 package com.darkxell.common.move.effects;
 
-import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
-import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
+import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageType;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.move.MoveEffect;
 import com.darkxell.common.move.MoveEffectCalculator;
 import com.darkxell.common.move.MoveEvents;
-import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Message;
 
 public class RecoilEffect extends MoveEffect {
@@ -22,20 +20,19 @@ public class RecoilEffect extends MoveEffect {
     }
 
     @Override
-    public void additionalEffects(MoveUse usedMove, DungeonPokemon target, String[] flags, Floor floor,
-            MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
-        super.additionalEffects(usedMove, target, flags, floor, calculator, missed, effects);
+    public void additionalEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
+        super.additionalEffects(moveEvent, calculator, missed, effects);
         if (!missed) {
             int damage = -1;
             for (DungeonEvent e : effects.events)
                 if (e instanceof DamageDealtEvent) {
                     DamageDealtEvent d = (DamageDealtEvent) e;
-                    if (d.target == target && d.source == usedMove)
+                    if (d.target == target && d.source == moveEvent)
                         damage = d.damage;
                 }
             damage *= this.percentage / 100;
-            effects.createEffect(new DamageDealtEvent(floor, eventSource, usedMove.user, usedMove, DamageType.RECOIL, damage),
-                    usedMove, target, floor, missed, true, usedMove.user);
+            effects.createEffect(new DamageDealtEvent(floor, eventSource, moveEvent.user, moveEvent, DamageType.RECOIL, damage),
+                    moveEvent, missed, true, moveEvent.user);
         }
     }
 

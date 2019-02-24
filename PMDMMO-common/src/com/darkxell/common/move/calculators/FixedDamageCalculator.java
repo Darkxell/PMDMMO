@@ -13,7 +13,7 @@ public class FixedDamageCalculator extends MoveEffectCalculator {
     public final int damage;
 
     public FixedDamageCalculator(MoveUse usedMove, DungeonPokemon target, Floor floor, String[] flags, int damage) {
-        super(usedMove, target, floor, flags);
+        super(usedMove);
         this.damage = damage;
     }
 

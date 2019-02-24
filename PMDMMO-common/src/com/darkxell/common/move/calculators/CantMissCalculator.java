@@ -11,7 +11,7 @@ import com.darkxell.common.pokemon.DungeonPokemon;
 public class CantMissCalculator extends MoveEffectCalculator {
 
     public CantMissCalculator(MoveUse move, DungeonPokemon target, Floor floor, String[] flags) {
-        super(move, target, floor, flags);
+        super(move);
     }
 
     @Override
