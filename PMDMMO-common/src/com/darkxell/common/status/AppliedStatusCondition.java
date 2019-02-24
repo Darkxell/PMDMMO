@@ -12,7 +12,7 @@ import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Localization;
 import com.darkxell.common.util.language.Message;
 
-public class AppliedStatusCondition implements DungeonEventListener {
+public class AppliedStatusCondition implements DungeonEventListener, DungeonEventSource {
 
     /** True if the Pokemon this Status condition affects has acted this turn while this Status condition was active.<br>
      * This is necessary due to the ticking of Status conditions happening at the end of turn: because Pokemon in teams act first, they would not suffer from conditions that prevent action for a single turn if this attribute wasn't used. */
@@ -108,7 +108,7 @@ public class AppliedStatusCondition implements DungeonEventListener {
         if (!this.isOver()) this.condition.tick(floor, this, events);
         ++this.tick;
         this.actedWhileApplied = false;
-        if (this.isOver()) this.finish(floor, StatusConditionEndReason.FINISHED, DungeonEventSource.TRIGGER, events);
+        if (this.isOver()) this.finish(floor, StatusConditionEndReason.FINISHED, this, events);
     }
 
 }
