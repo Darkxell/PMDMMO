@@ -21,8 +21,7 @@ public class AbilityEffectSpore extends AbilityOnHit {
 
     public AbilityEffectSpore(int id) {
         super(id, 12);
-        this.conditions = new StatusCondition[] { StatusConditions.Paralyzed, StatusConditions.Asleep,
-                StatusConditions.Poisoned };
+        this.conditions = new StatusCondition[] { StatusConditions.Paralyzed, StatusConditions.Asleep, StatusConditions.Poisoned };
     }
 
     private boolean isImmune(Floor floor, DungeonPokemon user) {
@@ -41,8 +40,8 @@ public class AbilityEffectSpore extends AbilityOnHit {
                     break;
                 }
 
-            resultingEvents.add(new StatusConditionCreatedEvent(floor,
-                    eventSource, condition.create(floor, source.user, abilityEvent.pokemon, floor.random)));
+            resultingEvents
+                    .add(new StatusConditionCreatedEvent(floor, event, condition.create(floor, source.user, abilityEvent.pokemon, floor.random)));
         }
     }
 }

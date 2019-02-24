@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageType;
 import com.darkxell.common.event.pokemon.HealthRestoredEvent;
@@ -32,10 +33,8 @@ public class StealsHpStatusCondition extends StatusCondition {
     @Override
     public Pair<Boolean, Message> affects(Floor floor, AppliedStatusCondition condition, DungeonPokemon pokemon) {
         Pair<Boolean, Message> sup = super.affects(floor, condition, pokemon);
-        if (!sup.first)
-            return sup;
-        if (this == StatusConditions.Leech_seed && pokemon.species().isType(PokemonType.Grass))
-            return new Pair<>(false, this.immune(pokemon));
+        if (!sup.first) return sup;
+        if (this == StatusConditions.Leech_seed && pokemon.species().isType(PokemonType.Grass)) return new Pair<>(false, this.immune(pokemon));
         return new Pair<>(true, null);
     }
 
@@ -43,10 +42,10 @@ public class StealsHpStatusCondition extends StatusCondition {
     public void tick(Floor floor, AppliedStatusCondition instance, ArrayList<DungeonEvent> events) {
         super.tick(floor, instance, events);
         if (!(instance.source instanceof DungeonPokemon) || ((DungeonPokemon) instance.source).isFainted())
-            instance.finish(floor, StatusConditionEndReason.CANT_CONTINUE, events);
+            instance.finish(floor, StatusConditionEndReason.CANT_CONTINUE, DungeonEventSource.TRIGGER, events);
         else if (instance.tick % this.turnCycle == 0) {
-            events.add(new DamageDealtEvent(floor, eventSource, instance.pokemon, this, DamageType.CONDITION, this.hp));
-            events.add(new HealthRestoredEvent(floor, eventSource, (DungeonPokemon) instance.source, this.hp));
+            events.add(new DamageDealtEvent(floor, DungeonEventSource.TRIGGER, instance.pokemon, this, DamageType.CONDITION, this.hp));
+            events.add(new HealthRestoredEvent(floor, DungeonEventSource.TRIGGER, (DungeonPokemon) instance.source, this.hp));
         }
     }
 

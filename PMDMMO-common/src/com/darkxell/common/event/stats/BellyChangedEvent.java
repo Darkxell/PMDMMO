@@ -39,22 +39,18 @@ public class BellyChangedEvent extends DungeonEvent implements DamageSource {
         double previous = this.pokemon.getBelly();
         this.pokemon.increaseBelly(this.quantity);
         if (this.quantity > 10) {
-            if (this.pokemon.isBellyFull())
-                this.messages
-                        .add(new Message("belly.filled.full").addReplacement("<pokemon>", this.pokemon.getNickname()));
-            else
-                this.messages.add(new Message("belly.filled").addReplacement("<pokemon>", this.pokemon.getNickname()));
+            if (this.pokemon.isBellyFull()) this.messages
+                    .add(new Message("belly.filled.full").addReplacement("<pokemon>", this.pokemon.getNickname()));
+            else this.messages.add(new Message("belly.filled").addReplacement("<pokemon>", this.pokemon.getNickname()));
         } else if (this.pokemon.getBelly() == 0 && previous != 0)
             this.messages.add(new Message("belly.empty").addReplacement("<pokemon>", this.pokemon.getNickname()));
 
         double now = this.pokemon.getBelly();
 
-        if (previous >= 15 && now < 15)
-            this.messages.add(new Message("belly.hungry"));
-        else if (previous >= 7 && now < 7)
-            this.messages.add(new Message("belly.hungry.very"));
+        if (previous >= 15 && now < 15) this.messages.add(new Message("belly.hungry"));
+        else if (previous >= 7 && now < 7) this.messages.add(new Message("belly.hungry.very"));
         else if (previous == 0 && now == 0 && this.quantity < 0)
-            this.resultingEvents.add(new DamageDealtEvent(this.floor, eventSource, this.pokemon, this, DamageType.HUNGER, 1));
+            this.resultingEvents.add(new DamageDealtEvent(this.floor, this, this.pokemon, this, DamageType.HUNGER, 1));
 
         return super.processServer();
     }

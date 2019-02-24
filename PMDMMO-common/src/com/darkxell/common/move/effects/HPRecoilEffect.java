@@ -19,13 +19,14 @@ public class HPRecoilEffect extends MoveEffect {
     }
 
     @Override
-    public void additionalEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
+    public void additionalEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed,
+            MoveEvents effects) {
         super.additionalEffects(moveEvent, calculator, missed, effects);
         if (!missed) {
-            int damage = moveEvent.user.getMaxHP();
+            int damage = moveEvent.usedMove.user.getMaxHP();
             damage *= this.percent / 100;
-            effects.createEffect(new DamageDealtEvent(floor, eventSource, moveEvent.user, moveEvent, DamageType.RECOIL, damage),
-                    moveEvent, missed, true, moveEvent.user);
+            effects.createEffect(new DamageDealtEvent(moveEvent.floor, moveEvent, moveEvent.usedMove.user,
+                    moveEvent.usedMove, DamageType.RECOIL, damage), moveEvent, missed, true, moveEvent.usedMove.user);
         }
     }
 

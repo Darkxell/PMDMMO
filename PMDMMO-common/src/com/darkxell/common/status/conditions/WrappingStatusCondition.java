@@ -2,11 +2,9 @@ package com.darkxell.common.status.conditions;
 
 import java.util.ArrayList;
 
-import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
-import com.darkxell.common.event.pokemon.StatusConditionEndedEvent.StatusConditionEndReason;
+import com.darkxell.common.event.pokemon.StatusConditionEndedEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
-import com.darkxell.common.status.AppliedStatusCondition;
 import com.darkxell.common.status.StatusCondition;
 import com.darkxell.common.status.StatusConditions;
 
@@ -17,9 +15,8 @@ public class WrappingStatusCondition extends StatusCondition {
     }
 
     @Override
-    public void onEnd(Floor floor, AppliedStatusCondition instance, StatusConditionEndReason reason,
-            ArrayList<DungeonEvent> events) {
-        super.onEnd(floor, instance, reason, events);
+    public void onEnd(StatusConditionEndedEvent event, ArrayList<DungeonEvent> events) {
+        super.onEnd(event, events);
 
         String wrappedid = null;
         for (String flag : instance.listFlags())
@@ -30,7 +27,7 @@ public class WrappingStatusCondition extends StatusCondition {
             long id = Integer.parseInt(wrappedid);
             DungeonPokemon wrapped = floor.findPokemon(id);
             if (wrapped != null && wrapped.hasStatusCondition(StatusConditions.Wrapped))
-                wrapped.getStatusCondition(StatusConditions.Wrapped).finish(floor, reason, events);
+                wrapped.getStatusCondition(StatusConditions.Wrapped).finish(floor, reason, finishSource, events);
         }
     }
 

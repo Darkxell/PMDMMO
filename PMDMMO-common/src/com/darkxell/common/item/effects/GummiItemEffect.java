@@ -24,17 +24,12 @@ public class GummiItemEffect extends FoodItemEffect {
     }
 
     private int iqIncrease(PokemonType type) {
-        if (type == null)
-            return 0;
-        if (type == this.type)
-            return 7;
+        if (type == null) return 0;
+        if (type == this.type) return 7;
         double effectiveness = this.type.effectivenessOn(type);
-        if (effectiveness == PokemonType.NO_EFFECT)
-            return 1;
-        if (effectiveness == PokemonType.NOT_VERY_EFFECTIVE)
-            return 2;
-        if (effectiveness == PokemonType.SUPER_EFFECTIVE)
-            return 4;
+        if (effectiveness == PokemonType.NO_EFFECT) return 1;
+        if (effectiveness == PokemonType.NOT_VERY_EFFECTIVE) return 2;
+        if (effectiveness == PokemonType.SUPER_EFFECTIVE) return 4;
         return 3;
     }
 
@@ -45,7 +40,8 @@ public class GummiItemEffect extends FoodItemEffect {
 
     @Override
     public void use(ItemUseEvent itemEvent, ArrayList<DungeonEvent> events) {
-        events.add(new IncreasedIQEvent(itemEvent, eventSource, pokemon, this.iqIncrease(target)));
+        events.add(
+                new IncreasedIQEvent(itemEvent.floor, itemEvent, itemEvent.target, this.iqIncrease(itemEvent.target)));
     }
 
 }

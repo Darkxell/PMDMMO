@@ -146,9 +146,8 @@ public class ActionSelectionState extends DungeonSubState {
                     if (facing != null && facing.type == DungeonPokemonType.RESCUEABLE) {
                         DungeonMission m = Persistence.dungeon.findRescueMission(Persistence.floor, facing);
                         if (m != null && m.owner == Persistence.player) {
-                            Persistence.eventProcessor().processEvent(
-                                    new PokemonRescuedEvent(Persistence.floor, eventSource, facing, Persistence.player)
-                                            .setPAE());
+                            Persistence.eventProcessor().processEvent(new PokemonRescuedEvent(Persistence.floor,
+                                    DungeonEventSource.PLAYER_ACTION, facing, Persistence.player).setPAE());
                             return;
                         }
                     }

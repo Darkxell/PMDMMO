@@ -20,19 +20,16 @@ public class AbilityPreventStatus extends Ability {
     }
 
     @Override
-    public void onPreEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned,
-            ArrayList<DungeonEvent> resultingEvents) {
+    public void onPreEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned, ArrayList<DungeonEvent> resultingEvents) {
         super.onPreEvent(floor, event, concerned, resultingEvents);
 
         if (event instanceof StatusConditionCreatedEvent) {
             StatusConditionCreatedEvent e = (StatusConditionCreatedEvent) event;
-            if (e.condition.pokemon != concerned)
-                return;
+            if (e.condition.pokemon != concerned) return;
             for (int i = 0; i < this.conditions.length; ++i)
                 if (e.condition.condition == this.conditions[i]) {
                     e.consume();
-                    resultingEvents
-                            .add(new TriggeredAbilityEvent(floor, eventSource, concerned, this.conditions.length > 1 ? i + 1 : 0));
+                    resultingEvents.add(new TriggeredAbilityEvent(floor, eventSource, concerned, this.conditions.length > 1 ? i + 1 : 0));
                 }
         }
     }
@@ -43,9 +40,9 @@ public class AbilityPreventStatus extends Ability {
 
         for (int i = 0; i < this.conditions.length; ++i)
             if (pokemon.hasStatusCondition(this.conditions[i])) {
-                events.add(new TriggeredAbilityEvent(floor, eventSource, pokemon, i + this.conditions.length + 1));
-                pokemon.getStatusCondition(this.conditions[i]).finish(floor, StatusConditionEndReason.PREVENTED,
-                        events);
+                TriggeredAbilityEvent abilityevent = new TriggeredAbilityEvent(floor, eventSource, pokemon, i + this.conditions.length + 1);
+                events.add(abilityevent);
+                pokemon.getStatusCondition(this.conditions[i]).finish(floor, StatusConditionEndReason.PREVENTED, abilityevent, events);
             }
     }
 

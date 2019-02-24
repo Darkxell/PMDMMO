@@ -20,19 +20,19 @@ public class RecoilEffect extends MoveEffect {
     }
 
     @Override
-    public void additionalEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
+    public void additionalEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed,
+            MoveEvents effects) {
         super.additionalEffects(moveEvent, calculator, missed, effects);
         if (!missed) {
             int damage = -1;
             for (DungeonEvent e : effects.events)
                 if (e instanceof DamageDealtEvent) {
                     DamageDealtEvent d = (DamageDealtEvent) e;
-                    if (d.target == target && d.source == moveEvent)
-                        damage = d.damage;
+                    if (d.target == moveEvent.target && d.source == moveEvent) damage = d.damage;
                 }
             damage *= this.percentage / 100;
-            effects.createEffect(new DamageDealtEvent(floor, eventSource, moveEvent.user, moveEvent, DamageType.RECOIL, damage),
-                    moveEvent, missed, true, moveEvent.user);
+            effects.createEffect(new DamageDealtEvent(moveEvent.floor, moveEvent, moveEvent.usedMove.user,
+                    moveEvent.usedMove, DamageType.RECOIL, damage), moveEvent, missed, true, moveEvent.usedMove.user);
         }
     }
 

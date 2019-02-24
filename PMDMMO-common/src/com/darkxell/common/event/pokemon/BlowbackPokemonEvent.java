@@ -21,7 +21,8 @@ public class BlowbackPokemonEvent extends DungeonEvent {
     public final DungeonPokemon pokemon;
     private boolean wasHurt;
 
-    public BlowbackPokemonEvent(Floor floor, DungeonEventSource eventSource, DungeonPokemon pokemon, Direction direction) {
+    public BlowbackPokemonEvent(Floor floor, DungeonEventSource eventSource, DungeonPokemon pokemon,
+            Direction direction) {
         super(floor, eventSource);
         this.pokemon = pokemon;
         this.direction = direction;
@@ -57,11 +58,11 @@ public class BlowbackPokemonEvent extends DungeonEvent {
         this.destination = count < max ? temp : current;
         current.setPokemon(this.pokemon);
         if (count < max && (temp.isWall() || temp.getPokemon() != null)) {
-            this.resultingEvents.add(new DamageDealtEvent(this.floor, eventSource,
-                    this.pokemon, new DefaultDamageSource(this.floor, null), DamageType.COLLISION, 5));
+            this.resultingEvents.add(new DamageDealtEvent(this.floor, this, this.pokemon,
+                    new DefaultDamageSource(this.floor, null, this), DamageType.COLLISION, 5));
             if (temp.getPokemon() != null)
-                this.resultingEvents.add(new DamageDealtEvent(this.floor, eventSource,
-                        temp.getPokemon(), new DefaultDamageSource(this.floor, null), DamageType.COLLISION, 5));
+                this.resultingEvents.add(new DamageDealtEvent(this.floor, this, temp.getPokemon(),
+                        new DefaultDamageSource(this.floor, null, eventSource), DamageType.COLLISION, 5));
         }
 
         return super.processServer();
