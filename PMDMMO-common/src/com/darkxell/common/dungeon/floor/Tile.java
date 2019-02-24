@@ -261,12 +261,12 @@ public class Tile implements ItemContainer, Comparable<Tile> {
             ItemStack i = this.getItem();
             int index = pokemon.player() == null ? -1 : pokemon.player().inventory().canAccept(i);
             if (!running && i.item().effect() == ItemEffects.Pokedollars && pokemon.player() != null)
-                events.add(new MoneyCollectedEvent(floor, pokemon, this, i));
+                events.add(new MoneyCollectedEvent(floor, eventSource, pokemon, this, i));
             else if (!running && pokemon.player() != null && index != -1)
                 events.add(
-                        new ItemMovedEvent(floor, ItemAction.GET, pokemon, this, 0, pokemon.player().inventory(), -1));
+                        new ItemMovedEvent(floor, eventSource, ItemAction.GET, pokemon, this, 0, pokemon.player().inventory(), -1));
             else if (!running && !pokemon.hasItem())
-                events.add(new ItemMovedEvent(floor, ItemAction.GET, pokemon, this, 0, pokemon, -1));
+                events.add(new ItemMovedEvent(floor, eventSource, ItemAction.GET, pokemon, this, 0, pokemon, -1));
             else
                 events.add(new MessageEvent(floor,
                         eventSource, new Message("ground.step").addReplacement("<pokemon>", pokemon.getNickname())

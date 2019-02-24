@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.item.Item.ItemAction;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.player.Inventory;
@@ -24,17 +25,17 @@ public class ItemMovedEvent extends DungeonEvent implements Communicable {
     protected ItemContainer source, destination;
     protected int sourceIndex, destinationIndex;
 
-    public ItemMovedEvent(Floor floor) {
+    public ItemMovedEvent(Floor floor, DungeonEventSource eventSource) {
         super(floor, eventSource);
     }
 
-    public ItemMovedEvent(Floor floor, ItemAction action, DungeonPokemon mover, ItemContainer source, int sourceIndex,
-            ItemContainer destination, int destinationIndex) {
-        this(floor, action, mover, source, sourceIndex, destination, destinationIndex, true);
+    public ItemMovedEvent(Floor floor, DungeonEventSource eventSource, ItemAction action, DungeonPokemon mover, ItemContainer source,
+            int sourceIndex, ItemContainer destination, int destinationIndex) {
+        this(floor, eventSource, action, mover, source, sourceIndex, destination, destinationIndex, true);
     }
 
-    public ItemMovedEvent(Floor floor, ItemAction action, DungeonPokemon mover, ItemContainer source, int sourceIndex,
-            ItemContainer destination, int destinationIndex, boolean isTurnAction) {
+    public ItemMovedEvent(Floor floor, DungeonEventSource eventSource, ItemAction action, DungeonPokemon mover, ItemContainer source,
+            int sourceIndex, ItemContainer destination, int destinationIndex, boolean isTurnAction) {
         super(floor, eventSource, isTurnAction ? mover : null);
         this.mover = mover;
         this.action = action;
