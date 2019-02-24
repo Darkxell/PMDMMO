@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Message;
 
@@ -13,7 +14,7 @@ public class PokemonTeleportedEvent extends DungeonEvent {
     public final Tile destination;
     public final DungeonPokemon pokemon;
 
-    public PokemonTeleportedEvent(Floor floor, DungeonPokemon pokemon, Tile destination) {
+    public PokemonTeleportedEvent(Floor floor, DungeonEventSource eventSource, DungeonPokemon pokemon, Tile destination) {
         super(floor, eventSource);
         this.pokemon = pokemon;
         this.destination = destination;

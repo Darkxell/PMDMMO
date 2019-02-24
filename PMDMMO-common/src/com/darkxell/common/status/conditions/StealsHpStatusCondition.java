@@ -45,8 +45,8 @@ public class StealsHpStatusCondition extends StatusCondition {
         if (!(instance.source instanceof DungeonPokemon) || ((DungeonPokemon) instance.source).isFainted())
             instance.finish(floor, StatusConditionEndReason.CANT_CONTINUE, events);
         else if (instance.tick % this.turnCycle == 0) {
-            events.add(new DamageDealtEvent(floor, instance.pokemon, this, DamageType.CONDITION, this.hp));
-            events.add(new HealthRestoredEvent(floor, (DungeonPokemon) instance.source, this.hp));
+            events.add(new DamageDealtEvent(floor, eventSource, instance.pokemon, this, DamageType.CONDITION, this.hp));
+            events.add(new HealthRestoredEvent(floor, eventSource, (DungeonPokemon) instance.source, this.hp));
         }
     }
 

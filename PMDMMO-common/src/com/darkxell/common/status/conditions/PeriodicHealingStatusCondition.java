@@ -25,7 +25,7 @@ public class PeriodicHealingStatusCondition extends StatusCondition {
     @Override
     public void tick(Floor floor, AppliedStatusCondition instance, ArrayList<DungeonEvent> events) {
         if (instance.tick % this.period == 0)
-            events.add(new HealthRestoredEvent(floor, instance.pokemon, this.heal));
+            events.add(new HealthRestoredEvent(floor, eventSource, instance.pokemon, this.heal));
     }
 
 }

@@ -40,7 +40,7 @@ public class ReviverFoodItemEffect extends FoodItemEffect {
             if (shouldRevive) {
                 event.consume();
                 container.deleteItem(containerIndex);
-                resultingEvents.add(new RevivedPokemonEvent(floor, ((FaintedPokemonEvent) event).pokemon));
+                resultingEvents.add(new RevivedPokemonEvent(floor, eventSource, ((FaintedPokemonEvent) event).pokemon));
             }
         }
     }

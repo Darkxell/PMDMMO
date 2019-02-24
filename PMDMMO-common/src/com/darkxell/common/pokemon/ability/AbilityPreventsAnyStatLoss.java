@@ -41,7 +41,7 @@ public class AbilityPreventsAnyStatLoss extends Ability {
             StatChangedEvent e = (StatChangedEvent) event;
             if (this.isPrevented(floor, e, concerned, resultingEvents)) {
                 event.consume();
-                resultingEvents.add(new TriggeredAbilityEvent(floor, concerned));
+                resultingEvents.add(new TriggeredAbilityEvent(floor, eventSource, concerned));
             }
         }
     }

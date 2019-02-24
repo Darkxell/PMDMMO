@@ -32,7 +32,7 @@ public class WeatherHealEffect extends MoveEffect {
                 health = 10;
             if (w == Weather.SNOW)
                 health = 1;
-            effects.createEffect(new HealthRestoredEvent(floor, target, health), usedMove, target, floor, missed, false,
+            effects.createEffect(new HealthRestoredEvent(floor, eventSource, target, health), usedMove, target, floor, missed, false,
                     target);
         }
     }

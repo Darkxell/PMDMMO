@@ -168,7 +168,7 @@ public class ActionSelectionState extends DungeonSubState {
                         DungeonMission m = Persistence.dungeon.findRescueMission(Persistence.floor, facing);
                         if (m != null && m.owner == Persistence.player) {
                             Persistence.eventProcessor().processEvent(
-                                    new PokemonRescuedEvent(Persistence.floor, facing, Persistence.player).setPAE());
+                                    new PokemonRescuedEvent(Persistence.floor, eventSource, facing, Persistence.player).setPAE());
                             return;
                         }
                     }

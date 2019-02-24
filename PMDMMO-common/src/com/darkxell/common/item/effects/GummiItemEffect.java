@@ -47,7 +47,7 @@ public class GummiItemEffect extends FoodItemEffect {
     @Override
     public void use(Floor floor, Item item, DungeonPokemon pokemon, DungeonPokemon target,
             ArrayList<DungeonEvent> events) {
-        events.add(new IncreasedIQEvent(floor, pokemon, this.iqIncrease(target)));
+        events.add(new IncreasedIQEvent(floor, eventSource, pokemon, this.iqIncrease(target)));
     }
 
 }

@@ -39,7 +39,7 @@ public abstract class AbilityOnHit extends Ability {
             if (d.target.ability() == this && d.target == concerned && d.source instanceof MoveUse
                     && ((MoveUse) d.source).move.move().category == MoveCategory.Physical
                     && floor.random.nextDouble() * 100 < this.probability) {
-                TriggeredAbilityEvent e = new TriggeredAbilityEvent(floor, d.target);
+                TriggeredAbilityEvent e = new TriggeredAbilityEvent(floor, eventSource, d.target);
                 resultingEvents.add(e);
                 this.onHit(floor, d, (MoveUse) d.source, e, resultingEvents);
             }

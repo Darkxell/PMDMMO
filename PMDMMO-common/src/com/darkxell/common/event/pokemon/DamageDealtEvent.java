@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.event.stats.ExperienceGeneratedEvent;
 import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.DungeonPokemon;
@@ -44,7 +45,7 @@ public class DamageDealtEvent extends DungeonEvent {
     public final DamageSource source;
     public final DungeonPokemon target;
 
-    public DamageDealtEvent(Floor floor, DungeonPokemon target, DamageSource source, DamageType type, int damage) {
+    public DamageDealtEvent(Floor floor, DungeonEventSource eventSource, DungeonPokemon target, DamageSource source, DamageType type, int damage) {
         super(floor, eventSource);
         this.target = target;
         this.source = source;
@@ -73,7 +74,7 @@ public class DamageDealtEvent extends DungeonEvent {
 
         this.target.setHP(this.target.getHp() - this.damage);
         if (this.target.getHp() == 0)
-            this.resultingEvents.add(new FaintedPokemonEvent(this.floor, this.target, this.source));
+            this.resultingEvents.add(new FaintedPokemonEvent(this.floor, eventSource, this.target, this.source));
         return super.processServer();
     }
 

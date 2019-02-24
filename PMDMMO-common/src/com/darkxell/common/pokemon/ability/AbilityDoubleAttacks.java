@@ -41,7 +41,7 @@ public class AbilityDoubleAttacks extends Ability {
                 n.addFlag("isdoubled");
                 n.setConsumesNoPP();
                 n.setPriority(DungeonEvent.PRIORITY_ACTION_END);
-                resultingEvents.add(new TriggeredAbilityEvent(floor, e.usedMove().user)
+                resultingEvents.add(new TriggeredAbilityEvent(floor, eventSource, e.usedMove().user)
                         .setPriority(DungeonEvent.PRIORITY_ACTION_END));
                 resultingEvents.add(n);
             }
