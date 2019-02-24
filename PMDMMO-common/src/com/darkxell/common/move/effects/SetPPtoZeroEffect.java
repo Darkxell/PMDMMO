@@ -19,10 +19,10 @@ public class SetPPtoZeroEffect extends MoveEffect {
         super.mainEffects(moveEvent, calculator, missed, effects);
 
         if (!missed) {
-            LearnedMove move = DungeonUtils.findLastMove(floor, target);
+            LearnedMove move = DungeonUtils.findLastMove(moveEvent.floor, moveEvent.target);
             if (move != null && move.pp() > 0)
-                effects.createEffect(new PPChangedEvent(floor, eventSource, target, -move.pp(), target.moveIndex(move)), moveEvent,
-                        missed, false, target);
+                effects.createEffect(new PPChangedEvent(moveEvent.floor, moveEvent, moveEvent.target, -move.pp(), moveEvent.target.moveIndex(move)),
+                        moveEvent, missed, false, moveEvent.target);
         }
     }
 

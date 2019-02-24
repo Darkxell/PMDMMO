@@ -22,10 +22,9 @@ public class ResetStatEffect extends MoveEffect {
     public void additionalEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
         super.additionalEffects(moveEvent, calculator, missed, effects);
         if (!missed) {
-            int stage = target.stats.getStage(this.stat);
-            if (stage > 10)
-                effects.createEffect(new StatChangedEvent(floor, eventSource, target, this.stat, 10 - stage, moveEvent), moveEvent,
-                        missed, moveEvent.move.move().dealsDamage, target);
+            int stage = moveEvent.target.stats.getStage(this.stat);
+            if (stage > 10) effects.createEffect(new StatChangedEvent(moveEvent.floor, moveEvent, moveEvent.target, this.stat, 10 - stage, moveEvent),
+                    moveEvent, missed, moveEvent.usedMove.move.move().dealsDamage, moveEvent.target);
         }
     }
 
