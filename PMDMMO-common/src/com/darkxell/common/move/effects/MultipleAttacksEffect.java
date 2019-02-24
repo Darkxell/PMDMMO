@@ -2,10 +2,8 @@ package com.darkxell.common.move.effects;
 
 import java.util.ArrayList;
 
-import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent;
-import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.move.MoveEffect;
@@ -26,18 +24,19 @@ public class MultipleAttacksEffect extends MoveEffect {
     }
 
     @Override
-    public void additionalEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
+    public void additionalEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed,
+            MoveEvents effects) {
         super.additionalEffects(moveEvent, calculator, missed, effects);
 
         int attacksleft = 0;
-        for (String flag : flags)
+        for (String flag : moveEvent.flags())
             if (flag.startsWith("attacksleft=")) {
                 attacksleft = Integer.parseInt(flag.substring("attacksleft=".length()));
                 break;
             }
-        if (this.shouldContinue(attacksleft, moveEvent, target, flags, floor, calculator, missed, effects)) {
+        if (this.shouldContinue(attacksleft, moveEvent, calculator, missed, effects)) {
             --attacksleft;
-            MoveUseEvent e = new MoveUseEvent(floor, eventSource, moveEvent, target);
+            MoveUseEvent e = new MoveUseEvent(moveEvent.floor, moveEvent, moveEvent.usedMove, moveEvent.target);
             e.addFlag("attacksleft=" + attacksleft);
             effects.createEffect(e, moveEvent, missed, false, null);
         }
@@ -50,13 +49,12 @@ public class MultipleAttacksEffect extends MoveEffect {
     }
 
     protected String descriptionID() {
-        if (this.attacksMin == this.attacksMax)
-            return "move.info.multiple_attacks";
+        if (this.attacksMin == this.attacksMax) return "move.info.multiple_attacks";
         return "move.info.multiple_attacks_random";
     }
 
-    protected boolean shouldContinue(int attacksleft, MoveUse usedMove, DungeonPokemon target, String[] flags,
-            Floor floor, MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
+    protected boolean shouldContinue(int attacksleft, MoveUseEvent moveEvent, MoveEffectCalculator calculator,
+            boolean missed, MoveEvents effects) {
         return attacksleft > 0;
     }
 
@@ -67,7 +65,7 @@ public class MultipleAttacksEffect extends MoveEffect {
             if (e instanceof MoveUseEvent) {
                 MoveUseEvent event = (MoveUseEvent) e;
                 if (event.usedMove.move.move().effect() == this) {
-                    int attacks = RandomUtil.nextIntInBounds(this.attacksMin, this.attacksMax, floor.random);
+                    int attacks = RandomUtil.nextIntInBounds(this.attacksMin, this.attacksMax, moveEvent.floor.random);
                     event.addFlag("attacksleft=" + attacks);
                 }
             }

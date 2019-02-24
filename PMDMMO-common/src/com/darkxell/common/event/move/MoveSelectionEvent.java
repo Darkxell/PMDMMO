@@ -30,12 +30,12 @@ public class MoveSelectionEvent extends DungeonEvent implements Communicable {
         public final DungeonPokemon user;
 
         public MoveUse(Floor floor, LearnedMove move, DungeonPokemon user, Direction direction,
-                MoveSelectionEvent moveSelectionEvent) {
+                DungeonEventSource eventSource) {
             this.move = move;
             this.user = user;
             this.direction = direction;
             this.experienceEvent = this.user.type == DungeonPokemonType.TEAM_MEMBER
-                    ? new ExperienceGeneratedEvent(floor, moveSelectionEvent, this.user.player())
+                    ? new ExperienceGeneratedEvent(floor, eventSource, this.user.player())
                     : null;
         }
 
@@ -121,7 +121,7 @@ public class MoveSelectionEvent extends DungeonEvent implements Communicable {
             this.resultingEvents.add(new BellyChangedEvent(this.floor, eventSource, this.usedMove.user,
                     -(this.usedMove.move.isLinked() ? .9 : .1) * this.usedMove.user.energyMultiplier()));
 
-        if (this.usedMove.move.isLinked()) this.resultingEvents.add(new MoveSelectionEvent(this.floor, eventSource,
+        if (this.usedMove.move.isLinked()) this.resultingEvents.add(new MoveSelectionEvent(this.floor, this,
                 this.usedMove.user.move(this.usedMove.move.getData().slot + 1), this.usedMove.user));
 
         return super.processServer();
