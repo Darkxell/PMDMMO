@@ -14,17 +14,15 @@ public class StatChangedEvent extends DungeonEvent {
             "stat.increase.2", "stat.increase.3", };
 
     private int effectiveChange = 0;
-    public final Object source;
     public final int stage;
     public final Stat stat;
     public final DungeonPokemon target;
 
-    public StatChangedEvent(Floor floor, DungeonEventSource eventSource, DungeonPokemon target, Stat stat, int stage, Object source) {
+    public StatChangedEvent(Floor floor, DungeonEventSource eventSource, DungeonPokemon target, Stat stat, int stage) {
         super(floor, eventSource);
         this.target = target;
         this.stat = stat;
         this.stage = stage;
-        this.source = source;
     }
 
     public int effectiveChange() {

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
 import com.darkxell.common.event.pokemon.TriggeredAbilityEvent;
 import com.darkxell.common.event.stats.StatChangedEvent;
@@ -18,12 +19,12 @@ public class AbilityPreventsAnyStatLoss extends Ability {
 
     protected boolean isPrevented(Floor floor, StatChangedEvent event, DungeonPokemon concerned, ArrayList<DungeonEvent> resultingEvents) {
         if (event.stage >= 0) return false;
-        if (event.source instanceof MoveUse) {
-            MoveUse u = (MoveUse) event.source;
+        if (event.eventSource instanceof MoveUseEvent) {
+            MoveUse u = (MoveUse) ((MoveUseEvent) event.eventSource).usedMove;
             if (u.user != concerned) return true;
         }
-        if (event.source instanceof AppliedStatusCondition) {
-            AppliedStatusCondition c = (AppliedStatusCondition) event.source;
+        if (event.eventSource instanceof AppliedStatusCondition) {
+            AppliedStatusCondition c = (AppliedStatusCondition) event.eventSource;
             if (c.pokemon != concerned) return true;
         }
         return false;

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
-import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.event.pokemon.HealthRestoredEvent;
 import com.darkxell.common.status.AppliedStatusCondition;
 import com.darkxell.common.status.StatusCondition;
@@ -16,8 +15,7 @@ public class PeriodicHealingStatusCondition extends StatusCondition {
     /** The number of turns between each health restored. */
     public final int period;
 
-    public PeriodicHealingStatusCondition(int id, boolean isAilment, int durationMin, int durationMax, int heal,
-            int period) {
+    public PeriodicHealingStatusCondition(int id, boolean isAilment, int durationMin, int durationMax, int heal, int period) {
         super(id, isAilment, durationMin, durationMax);
         this.heal = heal;
         this.period = period;
@@ -25,8 +23,7 @@ public class PeriodicHealingStatusCondition extends StatusCondition {
 
     @Override
     public void tick(Floor floor, AppliedStatusCondition instance, ArrayList<DungeonEvent> events) {
-        if (instance.tick % this.period == 0)
-            events.add(new HealthRestoredEvent(floor, DungeonEventSource.TRIGGER, instance.pokemon, this.heal));
+        if (instance.tick % this.period == 0) events.add(new HealthRestoredEvent(floor, instance, instance.pokemon, this.heal));
     }
 
 }

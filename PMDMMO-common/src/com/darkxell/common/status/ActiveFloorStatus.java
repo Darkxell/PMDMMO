@@ -9,7 +9,7 @@ import com.darkxell.common.event.dungeon.FloorStatusEndedEvent;
 import com.darkxell.common.util.language.Localization;
 import com.darkxell.common.util.language.Message;
 
-public class ActiveFloorStatus {
+public class ActiveFloorStatus implements DungeonEventSource {
 
     public final int duration;
     public final Object source;
@@ -31,7 +31,7 @@ public class ActiveFloorStatus {
     }
 
     public void finish(Floor floor, ArrayList<DungeonEvent> events) {
-        events.add(new FloorStatusEndedEvent(floor, DungeonEventSource.TRIGGER, this));
+        events.add(new FloorStatusEndedEvent(floor, this, this));
     }
 
     public int getTurns() {
