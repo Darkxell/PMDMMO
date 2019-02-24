@@ -22,11 +22,10 @@ public class RedirectAttacksStatusCondition extends StatusCondition {
     }
 
     @Override
-    public double damageMultiplier(MoveUse move, DungeonPokemon target, boolean isUser, Floor floor, String[] flags,
-            ArrayList<DungeonEvent> events) {
+    public double damageMultiplier(boolean isUser, MoveUseEvent moveEvent, ArrayList<DungeonEvent> events) {
         if (isUser) for (String flag : flags)
             if (flag.equals("redirected")) return this.redirectedMultiplier;
-        return super.damageMultiplier(move, target, isUser, floor, flags, events);
+        return super.damageMultiplier(isUser, moveEvent, events);
     }
 
     @Override

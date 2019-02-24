@@ -1,14 +1,11 @@
 package com.darkxell.common.move.effects;
 
-import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.event.pokemon.StatusConditionCreatedEvent;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.move.MoveEffect;
 import com.darkxell.common.move.MoveEffectCalculator;
 import com.darkxell.common.move.MoveEvents;
-import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.status.StatusCondition;
 import com.darkxell.common.util.language.Message;
 
@@ -27,25 +24,20 @@ public class ApplyStatusConditionEffect extends MoveEffect {
     public void additionalEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
         super.additionalEffects(moveEvent, calculator, missed, effects);
 
-        if (this.shouldApply(moveEvent, target, flags, floor, calculator, missed, effects))
-            effects.createEffect(
-                    new StatusConditionCreatedEvent(floor,
-                            eventSource, this.status.create(floor, target, moveEvent.user, floor.random)),
-                    moveEvent, missed, moveEvent.move.move().dealsDamage, target);
+        if (this.shouldApply(moveEvent, calculator, missed, effects))
+            effects.createEffect(new StatusConditionCreatedEvent(moveEvent.floor, moveEvent, this.status.create(moveEvent.floor, moveEvent.target, moveEvent.usedMove.user, moveEvent.floor.random)),
+                    moveEvent, missed, moveEvent.usedMove.move.move().dealsDamage, moveEvent.target);
     }
 
     @Override
     public Message descriptionBase(Move move) {
         String id = "move.info.inflict_status_cond";
-        if (this.probability < 100)
-            id = "move.info.inflict_status_cond_maybe";
-        return new Message(id).addReplacement("<status>", this.status.name()).addReplacement("<percent>",
-                String.valueOf(this.probability));
+        if (this.probability < 100) id = "move.info.inflict_status_cond_maybe";
+        return new Message(id).addReplacement("<status>", this.status.name()).addReplacement("<percent>", String.valueOf(this.probability));
     }
 
-    protected boolean shouldApply(MoveUse usedMove, DungeonPokemon target, String[] flags, Floor floor,
-            MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
-        return !missed && floor.random.nextDouble() * 100 < this.probability;
+    protected boolean shouldApply(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
+        return !missed && moveEvent.floor.random.nextDouble() * 100 < this.probability;
     }
 
 }

@@ -39,10 +39,9 @@ public class StatusConditionEndedEvent extends DungeonEvent {
     @Override
     public ArrayList<DungeonEvent> processServer() {
         if (this.condition.pokemon.removeStatusCondition(this.condition)) {
-            this.condition.onConditionEnd(this.floor, this.reason, this.resultingEvents);
+            this.condition.onConditionEnd(this, this.resultingEvents);
             Message m = this.condition.endMessage();
-            if (m != null)
-                this.messages.add(m);
+            if (m != null) this.messages.add(m);
         }
         return super.processServer();
     }

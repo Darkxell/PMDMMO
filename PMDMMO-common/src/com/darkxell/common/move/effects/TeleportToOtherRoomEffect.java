@@ -23,20 +23,17 @@ public class TeleportToOtherRoomEffect extends MoveEffect {
     public void additionalEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
         super.additionalEffects(moveEvent, calculator, missed, effects);
 
-        Room current = floor.roomAt(moveEvent.user.tile());
+        Room current = moveEvent.floor.roomAt(moveEvent.usedMove.user.tile());
         ArrayList<Room> rooms = new ArrayList<>();
-        Collections.addAll(rooms, floor.rooms);
-        if (current != null && rooms.size() >= 1)
-            rooms.remove(current);
+        Collections.addAll(rooms, moveEvent.floor.rooms);
+        if (current != null && rooms.size() >= 1) rooms.remove(current);
 
         Tile destination = null;
 
-        if (rooms.size() >= 1)
-            destination = RandomUtil.random(rooms, floor.random).randomTile(floor.random, TileType.GROUND, true);
-        else
-            destination = floor.randomEmptyTile(true, false, TileType.GROUND, floor.random);
+        if (rooms.size() >= 1) destination = RandomUtil.random(rooms, moveEvent.floor.random).randomTile(moveEvent.floor.random, TileType.GROUND, true);
+        else destination = moveEvent.floor.randomEmptyTile(true, false, TileType.GROUND, moveEvent.floor.random);
 
-        effects.createEffect(new PokemonTeleportedEvent(floor, eventSource, target, destination), moveEvent, missed, false, target);
+        effects.createEffect(new PokemonTeleportedEvent(moveEvent.floor, moveEvent, moveEvent.target, destination), moveEvent, missed, false, moveEvent.target);
     }
 
 }

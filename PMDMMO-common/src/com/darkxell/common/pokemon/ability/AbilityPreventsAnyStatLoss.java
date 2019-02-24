@@ -16,32 +16,27 @@ public class AbilityPreventsAnyStatLoss extends Ability {
         super(id);
     }
 
-    protected boolean isPrevented(Floor floor, StatChangedEvent event, DungeonPokemon concerned,
-            ArrayList<DungeonEvent> resultingEvents) {
-        if (event.stage >= 0)
-            return false;
+    protected boolean isPrevented(Floor floor, StatChangedEvent event, DungeonPokemon concerned, ArrayList<DungeonEvent> resultingEvents) {
+        if (event.stage >= 0) return false;
         if (event.source instanceof MoveUse) {
             MoveUse u = (MoveUse) event.source;
-            if (u.user != concerned)
-                return true;
+            if (u.user != concerned) return true;
         }
         if (event.source instanceof AppliedStatusCondition) {
             AppliedStatusCondition c = (AppliedStatusCondition) event.source;
-            if (c.pokemon != concerned)
-                return true;
+            if (c.pokemon != concerned) return true;
         }
         return false;
     }
 
     @Override
-    public void onPreEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned,
-            ArrayList<DungeonEvent> resultingEvents) {
+    public void onPreEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned, ArrayList<DungeonEvent> resultingEvents) {
         super.onPreEvent(floor, event, concerned, resultingEvents);
         if (event instanceof StatChangedEvent) {
             StatChangedEvent e = (StatChangedEvent) event;
             if (this.isPrevented(floor, e, concerned, resultingEvents)) {
                 event.consume();
-                resultingEvents.add(new TriggeredAbilityEvent(floor, eventSource, concerned));
+                resultingEvents.add(new TriggeredAbilityEvent(floor, event, concerned));
             }
         }
     }

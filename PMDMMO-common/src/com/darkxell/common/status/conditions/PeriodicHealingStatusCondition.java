@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.event.pokemon.HealthRestoredEvent;
 import com.darkxell.common.status.AppliedStatusCondition;
 import com.darkxell.common.status.StatusCondition;
@@ -25,7 +26,7 @@ public class PeriodicHealingStatusCondition extends StatusCondition {
     @Override
     public void tick(Floor floor, AppliedStatusCondition instance, ArrayList<DungeonEvent> events) {
         if (instance.tick % this.period == 0)
-            events.add(new HealthRestoredEvent(floor, eventSource, instance.pokemon, this.heal));
+            events.add(new HealthRestoredEvent(floor, DungeonEventSource.TRIGGER, instance.pokemon, this.heal));
     }
 
 }

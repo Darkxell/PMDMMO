@@ -19,13 +19,14 @@ public class UserPercentDamageEffect extends MoveEffect {
     }
 
     @Override
-    protected void mainEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
+    protected void mainEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed,
+            MoveEvents effects) {
         super.mainEffects(moveEvent, calculator, missed, effects);
 
         effects.createEffect(
-                new DamageDealtEvent(floor, eventSource, moveEvent.user, moveEvent,
-                        DamageType.MOVE, (int) (moveEvent.user.getMaxHP() * this.percent)),
-                moveEvent, missed, false, moveEvent.user);
+                new DamageDealtEvent(moveEvent.floor, moveEvent, moveEvent.usedMove.user, moveEvent.usedMove,
+                        DamageType.MOVE, (int) (moveEvent.usedMove.user.getMaxHP() * this.percent)),
+                moveEvent, missed, false, moveEvent.usedMove.user);
     }
 
     @Override

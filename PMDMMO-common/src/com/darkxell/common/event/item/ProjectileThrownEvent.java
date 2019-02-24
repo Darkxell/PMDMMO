@@ -52,7 +52,7 @@ public class ProjectileThrownEvent extends DungeonEvent implements DamageSource 
     @Override
     public ArrayList<DungeonEvent> processServer() {
         if (this.item.effect() instanceof ThrowableItemEffect && this.destination.getPokemon() != null) {
-            this.resultingEvents.add(new DamageDealtEvent(this.floor, eventSource, this.destination.getPokemon(), this,
+            this.resultingEvents.add(new DamageDealtEvent(this.floor, this, this.destination.getPokemon(), this,
                     DamageType.ITEM, ((ThrowableItemEffect) this.item.effect()).damage));
             this.resultingEvents.add(this.experienceEvent);
         } else {

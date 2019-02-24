@@ -61,7 +61,7 @@ public class MoveEffectCalculator {
         DungeonStats stats = move.user.stats.clone();
         stats.setStage(acc, accStage);
         double accuracy = stats.getStat(acc);
-        accuracy = this.modificator.applyStatModifications(acc, accuracy, move, target, floor, events);
+        accuracy = this.modificator.applyStatModifications(acc, accuracy, move, target, floor, moveEvent, events);
         if (accuracy < 0) accuracy = 0;
         if (accuracy > 999) accuracy = 999;
 
@@ -76,7 +76,7 @@ public class MoveEffectCalculator {
         DungeonStats stats = move.user.stats.clone();
         stats.setStage(atk, atkStage);
         double attack = stats.getStat(atk);
-        attack = this.modificator.applyStatModifications(atk, attack, move, target, floor, events);
+        attack = this.modificator.applyStatModifications(atk, attack, move, target, floor, moveEvent, events);
         if (attack < 0) attack = 0;
         if (attack > 999) attack = 999;
 
@@ -101,7 +101,7 @@ public class MoveEffectCalculator {
         // Damage randomness
         damage *= (9 - floor.random.nextDouble() * 2) / 8;
 
-        damage = this.modificator.applyDamageModifications(damage, this.move, this.target, this.floor, events);
+        damage = this.modificator.applyDamageModifications(damage, moveEvent, events);
 
         return (int) Math.round(damage);
     }
@@ -129,7 +129,7 @@ public class MoveEffectCalculator {
             events.add(new MessageEvent(this.floor, this.moveEvent, new Message("move.critical")));
         }
 
-        multiplier *= this.modificator.damageMultiplier(this.move, this.target, this.floor, this.flags, events);
+        multiplier *= this.modificator.damageMultiplier(this.moveEvent, events);
         return multiplier;
     }
 
@@ -141,7 +141,7 @@ public class MoveEffectCalculator {
         DungeonStats stats = target.stats.clone();
         stats.setStage(def, defStage);
         double defense = stats.getStat(def);
-        defense = this.modificator.applyStatModifications(def, defense, move, target, floor, events);
+        defense = this.modificator.applyStatModifications(def, defense, move, target, floor, moveEvent, events);
         if (defense < 0) defense = 0;
         if (defense > 999) defense = 999;
 
@@ -161,7 +161,7 @@ public class MoveEffectCalculator {
         DungeonStats stats = target.stats.clone();
         stats.setStage(ev, evStage);
         double evasion = stats.getStat(ev);
-        evasion = this.modificator.applyStatModifications(ev, evasion, move, target, floor, events);
+        evasion = this.modificator.applyStatModifications(ev, evasion, move, target, floor, moveEvent, events);
         if (evasion < 0) evasion = 0;
         if (evasion > 999) evasion = 999;
 

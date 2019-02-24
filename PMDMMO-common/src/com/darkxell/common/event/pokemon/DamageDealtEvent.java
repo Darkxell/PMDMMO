@@ -29,7 +29,7 @@ public class DamageDealtEvent extends DungeonEvent {
     public static class DefaultDamageSource implements DamageSource {
         public final ExperienceGeneratedEvent experienceEvent;
 
-        public DefaultDamageSource(Floor floor, Player player) {
+        public DefaultDamageSource(Floor floor, Player player, DungeonEventSource eventSource) {
             this.experienceEvent = player == null ? null : new ExperienceGeneratedEvent(floor, eventSource, player);
         }
 
@@ -45,7 +45,8 @@ public class DamageDealtEvent extends DungeonEvent {
     public final DamageSource source;
     public final DungeonPokemon target;
 
-    public DamageDealtEvent(Floor floor, DungeonEventSource eventSource, DungeonPokemon target, DamageSource source, DamageType type, int damage) {
+    public DamageDealtEvent(Floor floor, DungeonEventSource eventSource, DungeonPokemon target, DamageSource source,
+            DamageType type, int damage) {
         super(floor, eventSource);
         this.target = target;
         this.source = source;
@@ -61,20 +62,16 @@ public class DamageDealtEvent extends DungeonEvent {
     @Override
     public ArrayList<DungeonEvent> processServer() {
         String damageID = "move.damage_dealt";
-        if (this.damageType == DamageType.WEATHER)
-            damageID = "weather.damage_dealt";
-        else if (this.damageType == DamageType.RECOIL)
-            damageID = "move.recoil";
-        else if (this.damageType == DamageType.HUNGER)
-            damageID = null;
+        if (this.damageType == DamageType.WEATHER) damageID = "weather.damage_dealt";
+        else if (this.damageType == DamageType.RECOIL) damageID = "move.recoil";
+        else if (this.damageType == DamageType.HUNGER) damageID = null;
 
-        if (damageID != null)
-            this.messages.add(new Message(damageID).addReplacement("<pokemon>", target.getNickname())
-                    .addReplacement("<amount>", Integer.toString(damage)));
+        if (damageID != null) this.messages.add(new Message(damageID).addReplacement("<pokemon>", target.getNickname())
+                .addReplacement("<amount>", Integer.toString(damage)));
 
         this.target.setHP(this.target.getHp() - this.damage);
         if (this.target.getHp() == 0)
-            this.resultingEvents.add(new FaintedPokemonEvent(this.floor, eventSource, this.target, this.source));
+            this.resultingEvents.add(new FaintedPokemonEvent(this.floor, this, this.target, this.source));
         return super.processServer();
     }
 

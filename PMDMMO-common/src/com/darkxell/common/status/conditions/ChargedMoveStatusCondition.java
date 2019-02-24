@@ -7,7 +7,7 @@ import com.darkxell.common.ai.states.AIStateChargedAttack;
 import com.darkxell.common.ai.states.AIStateTurnSkipper;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.DungeonEvent;
-import com.darkxell.common.event.pokemon.StatusConditionEndedEvent.StatusConditionEndReason;
+import com.darkxell.common.event.pokemon.StatusConditionEndedEvent;
 import com.darkxell.common.status.AppliedStatusCondition;
 
 public class ChargedMoveStatusCondition extends ChangeAIStatusCondition {
@@ -20,9 +20,8 @@ public class ChargedMoveStatusCondition extends ChangeAIStatusCondition {
     }
 
     @Override
-    public void onEnd(Floor floor, AppliedStatusCondition instance, StatusConditionEndReason reason,
-            ArrayList<DungeonEvent> events) {
-        super.onEnd(floor, instance, reason, events);
+    public void onEnd(StatusConditionEndedEvent event, ArrayList<DungeonEvent> events) {
+        super.onEnd(event, events);
         floor.aiManager.getAI(instance.pokemon).setSuperState(null);
     }
 

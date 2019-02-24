@@ -28,7 +28,7 @@ public class HealFoodItemEffect extends FoodItemEffect {
     @Override
     public void use(ItemUseEvent itemEvent, ArrayList<DungeonEvent> events) {
         super.use(itemEvent, events);
-        events.add(new HealthRestoredEvent(itemEvent, eventSource, target, this.hp));
+        events.add(new HealthRestoredEvent(itemEvent.floor, itemEvent, itemEvent.target, this.hp));
     }
 
 }

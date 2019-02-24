@@ -20,7 +20,8 @@ public class DrainEffect extends MoveEffect {
     }
 
     @Override
-    public void additionalEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
+    public void additionalEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed,
+            MoveEvents effects) {
         super.additionalEffects(moveEvent, calculator, missed, effects);
         if (!missed) {
             DamageDealtEvent damage = null;
@@ -30,8 +31,8 @@ public class DrainEffect extends MoveEffect {
                     break;
                 }
             if (damage != null)
-                effects.createEffect(new HealthRestoredEvent(floor, eventSource, moveEvent.user, damage.damage * this.percent / 100),
-                        moveEvent, missed, true, moveEvent.user);
+                effects.createEffect(new HealthRestoredEvent(moveEvent.floor, moveEvent, moveEvent.usedMove.user,
+                        damage.damage * this.percent / 100), moveEvent, missed, true, moveEvent.usedMove.user);
         }
     }
 
