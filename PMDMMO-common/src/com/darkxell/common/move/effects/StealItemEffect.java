@@ -14,13 +14,14 @@ public class StealItemEffect extends MoveEffect {
     }
 
     @Override
-    public void additionalEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
+    public void additionalEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed,
+            MoveEvents effects) {
         super.additionalEffects(moveEvent, calculator, missed, effects);
 
-        if (!missed && target.hasItem() && !moveEvent.user.hasItem())
-            effects.createEffect(
-                    new ItemMovedEvent(floor, eventSource, ItemAction.STEAL, moveEvent.user, target, 0, moveEvent.user, 0, false),
-                    moveEvent, missed, true, target);
+        if (!missed && moveEvent.target.hasItem() && !moveEvent.usedMove.user.hasItem()) effects.createEffect(
+                new ItemMovedEvent(moveEvent.floor, moveEvent, ItemAction.STEAL, moveEvent.usedMove.user,
+                        moveEvent.target, 0, moveEvent.usedMove.user, 0, false),
+                moveEvent, missed, true, moveEvent.target);
     }
 
 }
