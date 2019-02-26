@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.event.Event;
-import com.darkxell.common.event.DungeonEventListener;
+import com.darkxell.common.event.EventListener;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.Item.ItemAction;
 import com.darkxell.common.item.ItemStack;
@@ -19,7 +19,7 @@ import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.language.Message;
 
 /** Represents a Pokemon in a Dungeon. */
-public class DungeonPokemon implements ItemContainer, DungeonEventListener {
+public class DungeonPokemon implements ItemContainer, EventListener {
     public enum DungeonPokemonType {
         BOSS,
         MINIBOSS,
@@ -377,7 +377,7 @@ public class DungeonPokemon implements ItemContainer, DungeonEventListener {
     @Override
     public void onPostEvent(Floor floor, Event event, DungeonPokemon concerned,
             ArrayList<Event> resultingEvents) {
-        DungeonEventListener.super.onPostEvent(floor, event, concerned, resultingEvents);
+        EventListener.super.onPostEvent(floor, event, concerned, resultingEvents);
 
         if (this.hasItem())
             this.getItem().item().effect().onPostEvent(floor, event, concerned, resultingEvents, this.getItem(), this,
@@ -387,7 +387,7 @@ public class DungeonPokemon implements ItemContainer, DungeonEventListener {
     @Override
     public void onPreEvent(Floor floor, Event event, DungeonPokemon concerned,
             ArrayList<Event> resultingEvents) {
-        DungeonEventListener.super.onPreEvent(floor, event, concerned, resultingEvents);
+        EventListener.super.onPreEvent(floor, event, concerned, resultingEvents);
 
         if (this.hasItem())
             this.getItem().item().effect().onPreEvent(floor, event, concerned, resultingEvents, this.getItem(), this,

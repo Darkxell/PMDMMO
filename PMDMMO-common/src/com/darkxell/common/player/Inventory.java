@@ -7,14 +7,14 @@ import com.darkxell.common.dbobject.DBInventory;
 import com.darkxell.common.dbobject.DatabaseIdentifier;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.Event;
-import com.darkxell.common.event.DungeonEventListener;
+import com.darkxell.common.event.EventListener;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.Item.ItemAction;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Message;
 
-public class Inventory implements ItemContainer, DungeonEventListener {
+public class Inventory implements ItemContainer, EventListener {
 
     public static final int MAX_SIZE = 20;
 
@@ -153,7 +153,7 @@ public class Inventory implements ItemContainer, DungeonEventListener {
     @Override
     public void onPostEvent(Floor floor, Event event, DungeonPokemon concerned,
             ArrayList<Event> resultingEvents) {
-        DungeonEventListener.super.onPostEvent(floor, event, concerned, resultingEvents);
+        EventListener.super.onPostEvent(floor, event, concerned, resultingEvents);
 
         for (int i = 0; i < this.size(); ++i)
             if (!event.isConsumed())
@@ -164,7 +164,7 @@ public class Inventory implements ItemContainer, DungeonEventListener {
     @Override
     public void onPreEvent(Floor floor, Event event, DungeonPokemon concerned,
             ArrayList<Event> resultingEvents) {
-        DungeonEventListener.super.onPreEvent(floor, event, concerned, resultingEvents);
+        EventListener.super.onPreEvent(floor, event, concerned, resultingEvents);
 
         for (int i = 0; i < this.size(); ++i)
             if (!event.isConsumed())

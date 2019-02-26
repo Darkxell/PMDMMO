@@ -5,7 +5,7 @@ import java.util.Random;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.Event;
-import com.darkxell.common.event.DungeonEventListener;
+import com.darkxell.common.event.EventListener;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageSource;
 import com.darkxell.common.event.pokemon.StatusConditionEndedEvent;
 import com.darkxell.common.event.stats.ExperienceGeneratedEvent;
@@ -15,7 +15,7 @@ import com.darkxell.common.util.Pair;
 import com.darkxell.common.util.RandomUtil;
 import com.darkxell.common.util.language.Message;
 
-public class StatusCondition extends Status implements AffectsPokemon, DamageSource, DungeonEventListener {
+public class StatusCondition extends Status implements AffectsPokemon, DamageSource, EventListener {
 
     /**
      * <code>true</code> if this is an ailment, i.e. if this is an adverse effect on the Pokemon on which it's applied.
