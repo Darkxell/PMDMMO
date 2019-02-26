@@ -6,7 +6,7 @@ import com.darkxell.common.dungeon.DungeonOutcome;
 import com.darkxell.common.dungeon.DungeonOutcome.Outcome;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.Event;
-import com.darkxell.common.event.DungeonEventSource;
+import com.darkxell.common.event.EventSource;
 import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Message;
@@ -16,7 +16,7 @@ public class PlayerLosesEvent extends Event {
     public final int moveID;
     public final Player player;
 
-    public PlayerLosesEvent(Floor floor, DungeonEventSource eventSource, Player player, int moveID) {
+    public PlayerLosesEvent(Floor floor, EventSource eventSource, Player player, int moveID) {
         super(floor, eventSource);
         this.player = player;
         this.moveID = moveID;

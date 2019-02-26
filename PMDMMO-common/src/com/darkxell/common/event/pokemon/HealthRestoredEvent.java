@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.Event;
-import com.darkxell.common.event.DungeonEventSource;
+import com.darkxell.common.event.EventSource;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Message;
 
@@ -14,7 +14,7 @@ public class HealthRestoredEvent extends Event {
     public final int health;
     public final DungeonPokemon target;
 
-    public HealthRestoredEvent(Floor floor, DungeonEventSource eventSource, DungeonPokemon target, int health) {
+    public HealthRestoredEvent(Floor floor, EventSource eventSource, DungeonPokemon target, int health) {
         super(floor, eventSource);
         this.target = target;
         this.health = health;

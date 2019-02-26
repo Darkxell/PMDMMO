@@ -6,7 +6,7 @@ import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.event.Event;
-import com.darkxell.common.event.DungeonEventSource;
+import com.darkxell.common.event.EventSource;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageType;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DefaultDamageSource;
 import com.darkxell.common.pokemon.DungeonPokemon;
@@ -21,7 +21,7 @@ public class BlowbackPokemonEvent extends Event {
     public final DungeonPokemon pokemon;
     private boolean wasHurt;
 
-    public BlowbackPokemonEvent(Floor floor, DungeonEventSource eventSource, DungeonPokemon pokemon,
+    public BlowbackPokemonEvent(Floor floor, EventSource eventSource, DungeonPokemon pokemon,
             Direction direction) {
         super(floor, eventSource);
         this.pokemon = pokemon;

@@ -3,7 +3,7 @@ package com.darkxell.common.ai.states;
 import com.darkxell.common.ai.AI;
 import com.darkxell.common.ai.AI.AIState;
 import com.darkxell.common.event.Event;
-import com.darkxell.common.event.DungeonEventSource;
+import com.darkxell.common.event.EventSource.BaseEventSource;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.turns.GameTurn;
 import com.darkxell.common.pokemon.LearnedMove;
@@ -27,7 +27,7 @@ public class AIStateChargedAttack extends AIState {
         LearnedMove move = new LearnedMove(this.moveID);
         if (m != null)
             move.setAddedLevel(m.getAddedLevel());
-        return new MoveSelectionEvent(this.ai.floor, DungeonEventSource.PLAYER_ACTION, move, this.ai.pokemon);
+        return new MoveSelectionEvent(this.ai.floor, BaseEventSource.PLAYER_ACTION, move, this.ai.pokemon);
     }
 
 }

@@ -11,14 +11,18 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.darkxell.common.Registries;
-import com.darkxell.common.dbobject.*;
+import com.darkxell.common.dbobject.DBInventory;
+import com.darkxell.common.dbobject.DBItemstack;
+import com.darkxell.common.dbobject.DBLearnedmove;
+import com.darkxell.common.dbobject.DBPlayer;
+import com.darkxell.common.dbobject.DBPokemon;
 import com.darkxell.common.dungeon.DungeonExploration;
 import com.darkxell.common.dungeon.data.Dungeon;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.CommonEventProcessor;
 import com.darkxell.common.event.Event;
-import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.event.EventCommunication;
+import com.darkxell.common.event.EventSource.BaseEventSource;
 import com.darkxell.common.event.action.PokemonRotateEvent;
 import com.darkxell.common.event.action.PokemonTravelEvent;
 import com.darkxell.common.event.action.TurnSkippedEvent;
@@ -78,18 +82,18 @@ public class DungeonEventTransferTest {
 
     private Event[] generateEvents() {
         return new Event[] {
-                new PokemonRotateEvent(floor, DungeonEventSource.PLAYER_ACTION, pokemon, Direction.SOUTHWEST),
-                new PokemonTravelEvent(floor, DungeonEventSource.PLAYER_ACTION, pokemon, Direction.SOUTHWEST),
-                new TurnSkippedEvent(floor, DungeonEventSource.PLAYER_ACTION, pokemon),
-                new ItemMovedEvent(floor, DungeonEventSource.PLAYER_ACTION, ItemAction.GET, this.pokemon,
+                new PokemonRotateEvent(floor, BaseEventSource.PLAYER_ACTION, pokemon, Direction.SOUTHWEST),
+                new PokemonTravelEvent(floor, BaseEventSource.PLAYER_ACTION, pokemon, Direction.SOUTHWEST),
+                new TurnSkippedEvent(floor, BaseEventSource.PLAYER_ACTION, pokemon),
+                new ItemMovedEvent(floor, BaseEventSource.PLAYER_ACTION, ItemAction.GET, this.pokemon,
                         this.floor.tileAt(10, 12), 0, this.pokemon.player().inventory(), 1),
-                new ItemSwappedEvent(floor, DungeonEventSource.PLAYER_ACTION, ItemAction.SWAP, this.pokemon,
+                new ItemSwappedEvent(floor, BaseEventSource.PLAYER_ACTION, ItemAction.SWAP, this.pokemon,
                         this.floor.tileAt(10, 12), 0, this.pokemon.player().inventory(), 1),
-                new ItemSelectionEvent(floor, DungeonEventSource.PLAYER_ACTION, this.item1.item(), pokemon, pokemon,
+                new ItemSelectionEvent(floor, BaseEventSource.PLAYER_ACTION, this.item1.item(), pokemon, pokemon,
                         pokemon, 0, Direction.EAST, true),
-                new MoveEnabledEvent(floor, DungeonEventSource.PLAYER_ACTION, move1, false),
-                new MoveSwitchedEvent(floor, DungeonEventSource.PLAYER_ACTION, pokemon.originalPokemon, 0, 1),
-                new MoveSelectionEvent(floor, DungeonEventSource.PLAYER_ACTION, move1, pokemon, Direction.SOUTH) };
+                new MoveEnabledEvent(floor, BaseEventSource.PLAYER_ACTION, move1, false),
+                new MoveSwitchedEvent(floor, BaseEventSource.PLAYER_ACTION, pokemon.originalPokemon, 0, 1),
+                new MoveSelectionEvent(floor, BaseEventSource.PLAYER_ACTION, move1, pokemon, Direction.SOUTH) };
     }
 
     @Test

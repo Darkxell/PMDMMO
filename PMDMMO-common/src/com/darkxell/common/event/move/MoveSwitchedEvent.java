@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.Event;
-import com.darkxell.common.event.DungeonEventSource;
+import com.darkxell.common.event.EventSource;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.Communicable;
 import com.eclipsesource.json.Json;
@@ -17,11 +17,11 @@ public class MoveSwitchedEvent extends Event implements Communicable {
     /** The Pokemon whose moves are switched. */
     private Pokemon pokemon;
 
-    public MoveSwitchedEvent(Floor floor, DungeonEventSource eventSource) {
+    public MoveSwitchedEvent(Floor floor, EventSource eventSource) {
         super(floor, eventSource);
     }
 
-    public MoveSwitchedEvent(Floor floor, DungeonEventSource eventSource, Pokemon pokemon, int from, int to) {
+    public MoveSwitchedEvent(Floor floor, EventSource eventSource, Pokemon pokemon, int from, int to) {
         super(floor, eventSource);
         this.pokemon = pokemon;
         this.from = from;

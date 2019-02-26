@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.Event;
-import com.darkxell.common.event.DungeonEventSource;
+import com.darkxell.common.event.EventSource.BaseEventSource;
 import com.darkxell.common.event.item.ItemCreatedEvent;
 import com.darkxell.common.event.pokemon.TriggeredAbilityEvent;
 import com.darkxell.common.item.ItemStack;
@@ -27,7 +27,7 @@ public class AbilityFindsItemOnFloorStart extends Ability {
             ItemStack item = floor.dungeon.dungeon().randomItem(floor.random, floor.id, false);
             if (item == null)
                 return;
-            TriggeredAbilityEvent abilityevent = new TriggeredAbilityEvent(floor, DungeonEventSource.TRIGGER, pokemon);
+            TriggeredAbilityEvent abilityevent = new TriggeredAbilityEvent(floor, BaseEventSource.TRIGGER, pokemon);
             events.add(abilityevent);
             events.add(new ItemCreatedEvent(floor, abilityevent, item, pokemon));
         }

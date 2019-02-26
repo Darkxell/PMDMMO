@@ -3,7 +3,7 @@ package com.darkxell.common.ai;
 import com.darkxell.common.ai.visibility.Visibility;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.Event;
-import com.darkxell.common.event.DungeonEventSource;
+import com.darkxell.common.event.EventSource.BaseEventSource;
 import com.darkxell.common.event.action.TurnSkippedEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Direction;
@@ -91,7 +91,7 @@ public abstract class AI {
         if (!this.hasSuperState())
             this.update();
         if (this.currentState() == null)
-            return new TurnSkippedEvent(this.floor, DungeonEventSource.PLAYER_ACTION, this.pokemon);
+            return new TurnSkippedEvent(this.floor, BaseEventSource.PLAYER_ACTION, this.pokemon);
         return this.currentState().takeAction();
     }
 

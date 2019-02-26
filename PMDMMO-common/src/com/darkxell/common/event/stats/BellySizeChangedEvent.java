@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.Event;
-import com.darkxell.common.event.DungeonEventSource;
+import com.darkxell.common.event.EventSource;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Message;
 
@@ -13,7 +13,7 @@ public class BellySizeChangedEvent extends Event {
     /** How much the Pokemon's belly size was changed. */
     public final int quantity;
 
-    public BellySizeChangedEvent(Floor floor, DungeonEventSource eventSource, DungeonPokemon pokemon, int quantity) {
+    public BellySizeChangedEvent(Floor floor, EventSource eventSource, DungeonPokemon pokemon, int quantity) {
         super(floor, eventSource);
         this.pokemon = pokemon;
         this.quantity = quantity;

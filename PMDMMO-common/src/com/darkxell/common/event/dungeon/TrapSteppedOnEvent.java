@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.event.Event;
-import com.darkxell.common.event.DungeonEventSource;
+import com.darkxell.common.event.EventSource;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.trap.Trap;
 import com.darkxell.common.util.language.Message;
@@ -16,7 +16,7 @@ public class TrapSteppedOnEvent extends Event {
     public final Tile tile;
     public final Trap trap;
 
-    public TrapSteppedOnEvent(Floor floor, DungeonEventSource eventSource, DungeonPokemon pokemon, Tile tile,
+    public TrapSteppedOnEvent(Floor floor, EventSource eventSource, DungeonPokemon pokemon, Tile tile,
             Trap trap) {
         super(floor, eventSource);
         this.pokemon = pokemon;

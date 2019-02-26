@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.Event;
-import com.darkxell.common.event.DungeonEventSource;
+import com.darkxell.common.event.EventSource;
 import com.darkxell.common.event.stats.ExperienceGeneratedEvent;
 import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.DungeonPokemon;
@@ -29,7 +29,7 @@ public class DamageDealtEvent extends Event {
     public static class DefaultDamageSource implements DamageSource {
         public final ExperienceGeneratedEvent experienceEvent;
 
-        public DefaultDamageSource(Floor floor, Player player, DungeonEventSource eventSource) {
+        public DefaultDamageSource(Floor floor, Player player, EventSource eventSource) {
             this.experienceEvent = player == null ? null : new ExperienceGeneratedEvent(floor, eventSource, player);
         }
 
@@ -45,7 +45,7 @@ public class DamageDealtEvent extends Event {
     public final DamageSource source;
     public final DungeonPokemon target;
 
-    public DamageDealtEvent(Floor floor, DungeonEventSource eventSource, DungeonPokemon target, DamageSource source,
+    public DamageDealtEvent(Floor floor, EventSource eventSource, DungeonPokemon target, DamageSource source,
             DamageType type, int damage) {
         super(floor, eventSource);
         this.target = target;

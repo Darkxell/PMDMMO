@@ -4,14 +4,14 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.Event;
-import com.darkxell.common.event.DungeonEventSource;
+import com.darkxell.common.event.EventSource;
 import com.darkxell.common.pokemon.Pokemon;
 
 public class LevelupEvent extends Event {
 
     public final Pokemon pokemon;
 
-    public LevelupEvent(Floor floor, DungeonEventSource eventSource, Pokemon pokemon) {
+    public LevelupEvent(Floor floor, EventSource eventSource, Pokemon pokemon) {
         super(floor, eventSource);
         this.pokemon = pokemon;
     }
