@@ -11,6 +11,7 @@ import com.darkxell.common.dungeon.DungeonExploration;
 import com.darkxell.common.dungeon.DungeonOutcome;
 import com.darkxell.common.dungeon.DungeonOutcome.Outcome;
 import com.darkxell.common.dungeon.floor.Floor;
+import com.darkxell.common.event.EventSource.BaseEventSource;
 import com.darkxell.common.event.action.PokemonRotateEvent;
 import com.darkxell.common.event.action.PokemonSpawnedEvent;
 import com.darkxell.common.event.action.PokemonTravelEvent;
@@ -145,7 +146,7 @@ public class CommonEventProcessor {
             // If leader is traveling onto ally's tile, automatically create ally movement event
             if (travel.destination().getPokemon() != null && travel.pokemon().isTeamLeader()
                     && travel.pokemon().isAlliedWith(travel.destination().getPokemon()))
-                this.addToPending(new PokemonTravelEvent(this.dungeon.currentFloor(), DungeonEventSource.PLAYER_ACTION,
+                this.addToPending(new PokemonTravelEvent(this.dungeon.currentFloor(), BaseEventSource.PLAYER_ACTION,
                         travel.destination().getPokemon(), travel.direction().opposite()));
         }
 
@@ -196,16 +197,19 @@ public class CommonEventProcessor {
                     if (AIUtils.shouldStopRunning(actor)) {
                         this.runners.clear();
                         this.setState(State.AWATING_INPUT);
-                    } else this.processEvent(new PokemonTravelEvent(this.dungeon.currentFloor(),
-                            DungeonEventSource.PLAYER_ACTION, actor, true, actor.facing()));
-                } else this.setState(State.AWATING_INPUT);
-            } else this.processEvent(this.dungeon.currentFloor().aiManager.takeAction(actor));
+                    } else
+                        this.processEvent(new PokemonTravelEvent(this.dungeon.currentFloor(),
+                                BaseEventSource.PLAYER_ACTION, actor, true, actor.facing()));
+                } else
+                    this.setState(State.AWATING_INPUT);
+            } else
+                this.processEvent(this.dungeon.currentFloor().aiManager.takeAction(actor));
         }
 
         if (this.state() == State.AWATING_INPUT && this.dungeon instanceof AutoDungeonExploration) {
             Event event = ((AutoDungeonExploration) this.dungeon).nextEvent();
             if (event == null)
-                event = new ExplorationStopEvent(this.dungeon.currentFloor(), DungeonEventSource.PLAYER_ACTION, null);
+                event = new ExplorationStopEvent(this.dungeon.currentFloor(), BaseEventSource.PLAYER_ACTION, null);
             this.processEvent(event);
         }
     }

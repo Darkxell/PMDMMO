@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.Event;
-import com.darkxell.common.event.DungeonEventSource;
+import com.darkxell.common.event.EventSource;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.player.ItemContainer;
@@ -32,16 +32,16 @@ public class ItemSelectionEvent extends Event implements Communicable {
     /** The Pokemon that used the Item. */
     protected DungeonPokemon user;
 
-    public ItemSelectionEvent(Floor floor, DungeonEventSource eventSource) {
+    public ItemSelectionEvent(Floor floor, EventSource eventSource) {
         super(floor, eventSource);
     }
 
-    public ItemSelectionEvent(Floor floor, DungeonEventSource eventSource, Item item, DungeonPokemon user,
+    public ItemSelectionEvent(Floor floor, EventSource eventSource, Item item, DungeonPokemon user,
             DungeonPokemon target, ItemContainer source, int sourceIndex) {
         this(floor, eventSource, item, user, target, source, sourceIndex, user.facing(), true);
     }
 
-    public ItemSelectionEvent(Floor floor, DungeonEventSource eventSource, Item item, DungeonPokemon user,
+    public ItemSelectionEvent(Floor floor, EventSource eventSource, Item item, DungeonPokemon user,
             DungeonPokemon target, ItemContainer source, int sourceIndex, Direction direction, boolean consumesTurn) {
         super(floor, eventSource, consumesTurn ? user : null);
         this.item = item;

@@ -12,7 +12,7 @@ import com.darkxell.common.dungeon.floor.layout.Layout;
 import com.darkxell.common.dungeon.floor.layout.StaticLayout;
 import com.darkxell.common.event.CommonEventProcessor;
 import com.darkxell.common.event.Event;
-import com.darkxell.common.event.DungeonEventSource;
+import com.darkxell.common.event.EventSource.BaseEventSource;
 import com.darkxell.common.event.action.PokemonRotateEvent;
 import com.darkxell.common.event.action.TurnSkippedEvent;
 import com.darkxell.common.event.dungeon.MissionClearedEvent;
@@ -143,7 +143,7 @@ public class DungeonExploration {
             if (ai == null) continue;
             d = ai.mayRotate();
             if (d != null && d != a.pokemon.facing())
-                events.add(new PokemonRotateEvent(this.currentFloor, DungeonEventSource.PLAYER_ACTION, a.pokemon, d));
+                events.add(new PokemonRotateEvent(this.currentFloor, BaseEventSource.PLAYER_ACTION, a.pokemon, d));
         }
 
         // Logger.i("Turn end --------------------------");

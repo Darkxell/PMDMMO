@@ -6,7 +6,7 @@ import com.darkxell.common.ai.AIUtils;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.event.Event;
-import com.darkxell.common.event.DungeonEventSource;
+import com.darkxell.common.event.EventSource;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageSource;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageType;
@@ -27,7 +27,8 @@ public class ProjectileThrownEvent extends Event implements DamageSource {
     public final Item item;
     public final DungeonPokemon thrower;
 
-    public ProjectileThrownEvent(Floor floor, DungeonEventSource eventSource, Item item, DungeonPokemon thrower, Tile destination) {
+    public ProjectileThrownEvent(Floor floor, EventSource eventSource, Item item, DungeonPokemon thrower,
+            Tile destination) {
         super(floor, eventSource);
         this.item = item;
         this.thrower = thrower;

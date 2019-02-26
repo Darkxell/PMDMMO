@@ -4,12 +4,12 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.Event;
-import com.darkxell.common.event.DungeonEventSource;
+import com.darkxell.common.event.EventSource;
 import com.darkxell.common.event.dungeon.FloorStatusEndedEvent;
 import com.darkxell.common.util.language.Localization;
 import com.darkxell.common.util.language.Message;
 
-public class ActiveFloorStatus implements DungeonEventSource {
+public class ActiveFloorStatus implements EventSource {
 
     public final int duration;
     public final Object source;

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.Event;
-import com.darkxell.common.event.DungeonEventSource;
+import com.darkxell.common.event.EventSource;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.player.ItemContainer;
@@ -23,11 +23,12 @@ public class ItemThrownEvent extends Event implements Communicable {
     private int sourceIndex;
     private DungeonPokemon thrower;
 
-    public ItemThrownEvent(Floor floor, DungeonEventSource eventSource) {
+    public ItemThrownEvent(Floor floor, EventSource eventSource) {
         super(floor, eventSource);
     }
 
-    public ItemThrownEvent(Floor floor, DungeonEventSource eventSource, DungeonPokemon thrower, ItemContainer source, int sourceIndex) {
+    public ItemThrownEvent(Floor floor, EventSource eventSource, DungeonPokemon thrower, ItemContainer source,
+            int sourceIndex) {
         super(floor, eventSource, thrower);
         this.thrower = thrower;
         this.source = source;

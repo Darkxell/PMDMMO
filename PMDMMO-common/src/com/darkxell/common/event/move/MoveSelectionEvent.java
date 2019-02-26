@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.Event;
-import com.darkxell.common.event.DungeonEventSource;
+import com.darkxell.common.event.EventSource;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageSource;
 import com.darkxell.common.event.stats.BellyChangedEvent;
 import com.darkxell.common.event.stats.ExperienceGeneratedEvent;
@@ -29,7 +29,8 @@ public class MoveSelectionEvent extends Event implements Communicable {
         public final LearnedMove move;
         public final DungeonPokemon user;
 
-        public MoveUse(Floor floor, LearnedMove move, DungeonPokemon user, Direction direction, DungeonEventSource eventSource) {
+        public MoveUse(Floor floor, LearnedMove move, DungeonPokemon user, Direction direction,
+                EventSource eventSource) {
             this.move = move;
             this.user = user;
             this.direction = direction;
@@ -64,20 +65,21 @@ public class MoveSelectionEvent extends Event implements Communicable {
     private boolean consumesPP = true;
     private MoveUse usedMove;
 
-    public MoveSelectionEvent(Floor floor, DungeonEventSource eventSource) {
+    public MoveSelectionEvent(Floor floor, EventSource eventSource) {
         super(floor, eventSource);
     }
 
-    public MoveSelectionEvent(Floor floor, DungeonEventSource eventSource, LearnedMove move, DungeonPokemon user) {
+    public MoveSelectionEvent(Floor floor, EventSource eventSource, LearnedMove move, DungeonPokemon user) {
         this(floor, eventSource, move, user, user.facing(), true);
     }
 
-    public MoveSelectionEvent(Floor floor, DungeonEventSource eventSource, LearnedMove move, DungeonPokemon user, Direction direction) {
+    public MoveSelectionEvent(Floor floor, EventSource eventSource, LearnedMove move, DungeonPokemon user,
+            Direction direction) {
         this(floor, eventSource, move, user, direction, true);
     }
 
-    public MoveSelectionEvent(Floor floor, DungeonEventSource eventSource, LearnedMove move, DungeonPokemon user, Direction direction,
-            boolean consumesTurn) {
+    public MoveSelectionEvent(Floor floor, EventSource eventSource, LearnedMove move, DungeonPokemon user,
+            Direction direction, boolean consumesTurn) {
         super(floor, eventSource, consumesTurn ? user : null);
         this.usedMove = new MoveUse(floor, move, user, direction, this);
 

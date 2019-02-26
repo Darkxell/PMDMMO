@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.Event;
-import com.darkxell.common.event.DungeonEventSource;
+import com.darkxell.common.event.EventSource;
 import com.darkxell.common.status.AppliedStatusCondition;
 import com.darkxell.common.util.language.Message;
 
@@ -25,7 +25,8 @@ public class StatusConditionEndedEvent extends Event {
     public final AppliedStatusCondition condition;
     public final StatusConditionEndReason reason;
 
-    public StatusConditionEndedEvent(Floor floor, DungeonEventSource eventSource, AppliedStatusCondition condition, StatusConditionEndReason reason) {
+    public StatusConditionEndedEvent(Floor floor, EventSource eventSource, AppliedStatusCondition condition,
+            StatusConditionEndReason reason) {
         super(floor, eventSource);
         this.condition = condition;
         this.reason = reason;

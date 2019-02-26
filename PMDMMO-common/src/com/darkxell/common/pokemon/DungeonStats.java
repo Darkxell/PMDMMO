@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.Event;
-import com.darkxell.common.event.DungeonEventSource;
+import com.darkxell.common.event.EventSource.BaseEventSource;
 import com.darkxell.common.event.stats.SpeedChangedEvent;
 import com.darkxell.common.event.turns.GameTurn;
 import com.darkxell.common.pokemon.BaseStats.Stat;
@@ -182,7 +182,7 @@ public class DungeonStats {
         int newSpeed = this.getStage(Stat.Speed);
 
         if (speed != newSpeed) {
-            SpeedChangedEvent e = new SpeedChangedEvent(floor, DungeonEventSource.TRIGGER, this.pokemon);
+            SpeedChangedEvent e = new SpeedChangedEvent(floor, BaseEventSource.TRIGGER, this.pokemon);
             e.displayMessages = false;
             events.add(e);
         }
@@ -213,7 +213,8 @@ public class DungeonStats {
 
         int newSpeed = this.getStage(Stat.Speed);
 
-        if (speed != newSpeed) events.add(new SpeedChangedEvent(floor, DungeonEventSource.TRIGGER, this.pokemon));
+        if (speed != newSpeed)
+            events.add(new SpeedChangedEvent(floor, BaseEventSource.TRIGGER, this.pokemon));
     }
 
     public void resetSpeed() {

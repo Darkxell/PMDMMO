@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.Event;
-import com.darkxell.common.event.DungeonEventSource;
+import com.darkxell.common.event.EventSource.BaseEventSource;
 import com.darkxell.common.event.dungeon.weather.WeatherDamageEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageSource;
 import com.darkxell.common.event.stats.ExperienceGeneratedEvent;
@@ -44,7 +44,7 @@ public class WeatherDamaging extends Weather implements DamageSource {
                     if (pokemon1.species().isType(type)) return true;
                 return false;
             });
-            e.add(new WeatherDamageEvent(floor, DungeonEventSource.TRIGGER, this, pokemon, this.damage));
+            e.add(new WeatherDamageEvent(floor, BaseEventSource.TRIGGER, this, pokemon, this.damage));
         }
         return e;
     }

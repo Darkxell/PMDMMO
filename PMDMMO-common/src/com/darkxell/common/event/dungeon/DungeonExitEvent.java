@@ -6,7 +6,7 @@ import com.darkxell.common.dungeon.DungeonOutcome;
 import com.darkxell.common.dungeon.DungeonOutcome.Outcome;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.Event;
-import com.darkxell.common.event.DungeonEventSource;
+import com.darkxell.common.event.EventSource;
 import com.darkxell.common.player.Player;
 import com.darkxell.common.util.Communicable;
 import com.eclipsesource.json.Json;
@@ -16,7 +16,7 @@ public class DungeonExitEvent extends Event implements Communicable {
 
     protected Player player;
 
-    public DungeonExitEvent(Floor floor, DungeonEventSource eventSource, Player player) {
+    public DungeonExitEvent(Floor floor, EventSource eventSource, Player player) {
         super(floor, eventSource);
         this.player = player;
     }

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.Event;
-import com.darkxell.common.event.DungeonEventSource;
+import com.darkxell.common.event.EventSource;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Message;
@@ -21,11 +21,13 @@ public class ItemUseEvent extends Event {
     /** The Pokemon that used the Item. */
     public final DungeonPokemon user;
 
-    public ItemUseEvent(Floor floor, DungeonEventSource eventSource, Item item, DungeonPokemon user, DungeonPokemon target) {
+    public ItemUseEvent(Floor floor, EventSource eventSource, Item item, DungeonPokemon user,
+            DungeonPokemon target) {
         this(floor, eventSource, item, user, target, false);
     }
 
-    public ItemUseEvent(Floor floor, DungeonEventSource eventSource, Item item, DungeonPokemon user, DungeonPokemon target, boolean thrown) {
+    public ItemUseEvent(Floor floor, EventSource eventSource, Item item, DungeonPokemon user,
+            DungeonPokemon target, boolean thrown) {
         super(floor, eventSource);
         this.item = item;
         this.user = user;

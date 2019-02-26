@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.Event;
-import com.darkxell.common.event.DungeonEventSource;
+import com.darkxell.common.event.EventSource.BaseEventSource;
 import com.darkxell.common.event.pokemon.StatusConditionCreatedEvent;
 import com.darkxell.common.event.pokemon.StatusConditionEndedEvent.StatusConditionEndReason;
 import com.darkxell.common.event.pokemon.TriggeredAbilityEvent;
@@ -42,8 +42,8 @@ public class AbilityPreventStatus extends Ability {
 
         for (int i = 0; i < this.conditions.length; ++i)
             if (pokemon.hasStatusCondition(this.conditions[i])) {
-                TriggeredAbilityEvent abilityevent = new TriggeredAbilityEvent(floor, DungeonEventSource.TRIGGER, pokemon,
-                        i + this.conditions.length + 1);
+                TriggeredAbilityEvent abilityevent = new TriggeredAbilityEvent(floor, BaseEventSource.TRIGGER,
+                        pokemon, i + this.conditions.length + 1);
                 events.add(abilityevent);
                 pokemon.getStatusCondition(this.conditions[i]).finish(floor, StatusConditionEndReason.PREVENTED, abilityevent, events);
             }

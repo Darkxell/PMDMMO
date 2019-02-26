@@ -4,14 +4,13 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.Event;
-import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.event.action.PokemonTravelEvent;
 
 public class PokemonTravelsEvent extends Event {
     private PokemonTravelEvent[] events;
 
     public PokemonTravelsEvent(Floor floor, ArrayList<PokemonTravelEvent> travels) {
-        super(floor, DungeonEventSource.CLIENT_PURPUSES);
+        super(floor, BaseEventSource.CLIENT_PURPUSES);
         this.events = travels.toArray(new PokemonTravelEvent[0]);
     }
 

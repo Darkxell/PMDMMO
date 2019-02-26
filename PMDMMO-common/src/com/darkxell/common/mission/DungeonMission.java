@@ -6,7 +6,7 @@ import com.darkxell.common.dungeon.DungeonExploration;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.Event;
 import com.darkxell.common.event.Event.MessageEvent;
-import com.darkxell.common.event.DungeonEventSource;
+import com.darkxell.common.event.EventSource.BaseEventSource;
 import com.darkxell.common.mission.dungeon.RescueDungeonMission;
 import com.darkxell.common.player.Player;
 import com.darkxell.common.util.language.Message;
@@ -72,7 +72,7 @@ public abstract class DungeonMission {
 
     /** Called when the target Floor of this Mission starts, if this Mission isn't cleared yet. */
     protected void onTargetFloorStart(Floor floor, ArrayList<Event> events) {
-        events.add(new MessageEvent(floor, DungeonEventSource.TRIGGER, new Message("mission.target_floor")));
+        events.add(new MessageEvent(floor, BaseEventSource.TRIGGER, new Message("mission.target_floor")));
     }
 
     @Override

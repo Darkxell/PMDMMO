@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.Event;
-import com.darkxell.common.event.DungeonEventSource;
+import com.darkxell.common.event.EventSource;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.Communicable;
@@ -17,7 +17,7 @@ public class PokemonRotateEvent extends Event implements Communicable {
     private Direction direction;
     private DungeonPokemon pokemon;
 
-    public PokemonRotateEvent(Floor floor, DungeonEventSource eventSource) {
+    public PokemonRotateEvent(Floor floor, EventSource eventSource) {
         super(floor, eventSource);
     }
 
@@ -25,7 +25,8 @@ public class PokemonRotateEvent extends Event implements Communicable {
      * @param pokemon   - The Pokemon that rotates.
      * @param direction - The new direction the Pokemon should face.
      */
-    public PokemonRotateEvent(Floor floor, DungeonEventSource eventSource, DungeonPokemon pokemon, Direction direction) {
+    public PokemonRotateEvent(Floor floor, EventSource eventSource, DungeonPokemon pokemon,
+            Direction direction) {
         super(floor, eventSource);
         this.pokemon = pokemon;
         this.direction = direction;
