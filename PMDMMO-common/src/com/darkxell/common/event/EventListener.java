@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
-public interface DungeonEventListener {
+public interface EventListener {
 
     /**
      * Method called just after an Event is processed.

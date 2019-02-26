@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.Event;
-import com.darkxell.common.event.DungeonEventListener;
+import com.darkxell.common.event.EventListener;
 import com.darkxell.common.event.EventSource;
 import com.darkxell.common.event.pokemon.StatusConditionEndedEvent;
 import com.darkxell.common.event.pokemon.StatusConditionEndedEvent.StatusConditionEndReason;
@@ -12,7 +12,7 @@ import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Localization;
 import com.darkxell.common.util.language.Message;
 
-public class AppliedStatusCondition implements DungeonEventListener, EventSource {
+public class AppliedStatusCondition implements EventListener, EventSource {
 
     /** True if the Pokemon this Status condition affects has acted this turn while this Status condition was active.<br>
      * This is necessary due to the ticking of Status conditions happening at the end of turn: because Pokemon in teams act first, they would not suffer from conditions that prevent action for a single turn if this attribute wasn't used. */
