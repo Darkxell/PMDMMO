@@ -10,7 +10,7 @@ import com.darkxell.client.state.TransitionState;
 import com.darkxell.client.state.freezone.CutsceneState;
 import com.darkxell.client.state.map.DungeonFloorMap;
 import com.darkxell.common.dungeon.data.Dungeon.DungeonDirection;
-import com.darkxell.common.event.DungeonEventSource;
+import com.darkxell.common.event.EventSource.BaseEventSource;
 import com.darkxell.common.event.dungeon.DungeonExitEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Message;
@@ -55,7 +55,7 @@ public class NextFloorState extends TransitionState {
                     Persistence.floor.unsummonPokemon(p);
 
             Persistence.dungeon.eventProcessor.addToPending(
-                    new DungeonExitEvent(Persistence.floor, DungeonEventSource.TRIGGER, Persistence.player));
+                    new DungeonExitEvent(Persistence.floor, BaseEventSource.TRIGGER, Persistence.player));
         }
 
         this.next = Persistence.dungeonState = new DungeonState();

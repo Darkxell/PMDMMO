@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.Event;
-import com.darkxell.common.event.DungeonEventSource;
+import com.darkxell.common.event.EventSource;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.ability.Ability;
 
@@ -15,11 +15,11 @@ public class TriggeredAbilityEvent extends Event {
     public int messageID;
     public final DungeonPokemon pokemon;
 
-    public TriggeredAbilityEvent(Floor floor, DungeonEventSource eventSource, DungeonPokemon pokemon) {
+    public TriggeredAbilityEvent(Floor floor, EventSource eventSource, DungeonPokemon pokemon) {
         this(floor, eventSource, pokemon, 0);
     }
 
-    public TriggeredAbilityEvent(Floor floor, DungeonEventSource eventSource, DungeonPokemon pokemon, int messageID) {
+    public TriggeredAbilityEvent(Floor floor, EventSource eventSource, DungeonPokemon pokemon, int messageID) {
         super(floor, eventSource);
         this.pokemon = pokemon;
         this.ability = this.pokemon.ability();

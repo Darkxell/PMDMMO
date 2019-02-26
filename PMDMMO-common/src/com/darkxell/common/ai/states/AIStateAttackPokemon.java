@@ -3,7 +3,7 @@ package com.darkxell.common.ai.states;
 import com.darkxell.common.ai.AI;
 import com.darkxell.common.ai.AIUtils;
 import com.darkxell.common.event.Event;
-import com.darkxell.common.event.DungeonEventSource;
+import com.darkxell.common.event.EventSource.BaseEventSource;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.LearnedMove;
@@ -21,7 +21,7 @@ public class AIStateAttackPokemon extends AIStateFollowPokemon {
         if (AIUtils.isAdjacentTo(this.ai.pokemon, this.target, true) && this.ai.pokemon.canAttack(this.ai.floor)) {
             // Choose a move at random.
             LearnedMove move = AIUtils.chooseMove(this.ai);
-            return new MoveSelectionEvent(this.ai.floor, DungeonEventSource.PLAYER_ACTION, move, this.ai.pokemon,
+            return new MoveSelectionEvent(this.ai.floor, BaseEventSource.PLAYER_ACTION, move, this.ai.pokemon,
                     AIUtils.generalDirection(this.ai.pokemon, this.target));
         }
         return super.takeAction();

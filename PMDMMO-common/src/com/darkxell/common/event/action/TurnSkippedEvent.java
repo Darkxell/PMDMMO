@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.Event;
-import com.darkxell.common.event.DungeonEventSource;
+import com.darkxell.common.event.EventSource;
 import com.darkxell.common.event.stats.BellyChangedEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.Pokemon;
@@ -16,11 +16,11 @@ public class TurnSkippedEvent extends Event implements Communicable {
 
     private DungeonPokemon pokemon;
 
-    public TurnSkippedEvent(Floor floor, DungeonEventSource eventSource) {
+    public TurnSkippedEvent(Floor floor, EventSource eventSource) {
         super(floor, eventSource);
     }
 
-    public TurnSkippedEvent(Floor floor, DungeonEventSource eventSource, DungeonPokemon pokemon) {
+    public TurnSkippedEvent(Floor floor, EventSource eventSource, DungeonPokemon pokemon) {
         super(floor, eventSource, pokemon);
         this.pokemon = pokemon;
     }

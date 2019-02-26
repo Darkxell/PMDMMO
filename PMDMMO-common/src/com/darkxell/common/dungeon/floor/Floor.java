@@ -16,7 +16,7 @@ import com.darkxell.common.dungeon.data.FloorData;
 import com.darkxell.common.dungeon.floor.layout.Layout;
 import com.darkxell.common.dungeon.floor.room.Room;
 import com.darkxell.common.event.Event;
-import com.darkxell.common.event.DungeonEventSource;
+import com.darkxell.common.event.EventSource.BaseEventSource;
 import com.darkxell.common.event.action.PokemonSpawnedEvent;
 import com.darkxell.common.event.dungeon.weather.PersistantWeatherChangedEvent;
 import com.darkxell.common.event.dungeon.weather.WeatherChangedEvent;
@@ -207,7 +207,7 @@ public class Floor {
     public void onFloorStart(ArrayList<Event> events) {
         this.dungeon.eventProcessor.onFloorStart(this);
         Weather w = this.dungeon.dungeon().weather(this.id, this.random);
-        events.add(new PersistantWeatherChangedEvent(this, DungeonEventSource.TRIGGER,
+        events.add(new PersistantWeatherChangedEvent(this, BaseEventSource.TRIGGER,
                 new ActiveWeather(w, null, this, -1)));
         for (DungeonPokemon pokemon : this.listPokemon()) {
             this.aiManager.getAI(pokemon).visibility.onPokemonMoved();
@@ -240,7 +240,7 @@ public class Floor {
                 if (s != null) {
                     CreatedEncounter encounter = s.generate(this);
                     if (encounter.tile != null) {
-                        events.add(new PokemonSpawnedEvent(this, DungeonEventSource.TRIGGER, encounter));
+                        events.add(new PokemonSpawnedEvent(this, BaseEventSource.TRIGGER, encounter));
                         this.nextSpawn = RandomUtil.nextIntInBounds(50, 100, this.random) / this.data.pokemonDensity();
                     }
                 }

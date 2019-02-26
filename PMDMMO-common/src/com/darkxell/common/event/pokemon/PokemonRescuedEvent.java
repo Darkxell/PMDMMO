@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.Event;
-import com.darkxell.common.event.DungeonEventSource;
+import com.darkxell.common.event.EventSource;
 import com.darkxell.common.event.dungeon.MissionClearedEvent;
 import com.darkxell.common.mission.DungeonMission;
 import com.darkxell.common.player.Player;
@@ -22,11 +22,11 @@ public class PokemonRescuedEvent extends Event implements Communicable {
     protected DungeonPokemon rescued;
     protected Player rescuer;
 
-    public PokemonRescuedEvent(Floor floor, DungeonEventSource eventSource) {
+    public PokemonRescuedEvent(Floor floor, EventSource eventSource) {
         super(floor, eventSource);
     }
 
-    public PokemonRescuedEvent(Floor floor, DungeonEventSource eventSource, DungeonPokemon rescued, Player rescuer) {
+    public PokemonRescuedEvent(Floor floor, EventSource eventSource, DungeonPokemon rescued, Player rescuer) {
         super(floor, eventSource);
         this.rescued = rescued;
         this.rescuer = rescuer;

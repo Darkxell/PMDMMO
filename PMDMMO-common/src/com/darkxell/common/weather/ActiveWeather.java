@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.Event;
-import com.darkxell.common.event.DungeonEventSource;
+import com.darkxell.common.event.EventSource.BaseEventSource;
 import com.darkxell.common.event.dungeon.weather.WeatherCleanedEvent;
 
 public class ActiveWeather {
@@ -40,7 +40,7 @@ public class ActiveWeather {
 
         if (this.isOver()) {
             isOver = true;
-            events.add(new WeatherCleanedEvent(this, DungeonEventSource.TRIGGER));
+            events.add(new WeatherCleanedEvent(this, BaseEventSource.TRIGGER));
         }
 
         if (!isOver)

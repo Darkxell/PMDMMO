@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.event.Event;
-import com.darkxell.common.event.DungeonEventSource;
+import com.darkxell.common.event.EventSource;
 import com.darkxell.common.item.ItemStack;
 
 public class ItemLandedEvent extends Event {
@@ -17,7 +17,7 @@ public class ItemLandedEvent extends Event {
             { 1, -2 }, { 2, -1 }, { 2, 1 }, { 1, 2 } };
     public final Tile tile;
 
-    public ItemLandedEvent(Floor floor, DungeonEventSource eventSource, ItemStack item, Tile tile) {
+    public ItemLandedEvent(Floor floor, EventSource eventSource, ItemStack item, Tile tile) {
         super(floor, eventSource);
         this.item = item;
         this.tile = tile;

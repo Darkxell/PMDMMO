@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.Event;
-import com.darkxell.common.event.DungeonEventSource;
+import com.darkxell.common.event.EventSource;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageSource;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageType;
@@ -17,7 +17,7 @@ public class BellyChangedEvent extends Event implements DamageSource {
     /** How much the Pokemon's belly was filled. */
     public final double quantity;
 
-    public BellyChangedEvent(Floor floor, DungeonEventSource eventSource, DungeonPokemon pokemon, double quantity) {
+    public BellyChangedEvent(Floor floor, EventSource eventSource, DungeonPokemon pokemon, double quantity) {
         super(floor, eventSource);
         this.pokemon = pokemon;
         this.quantity = quantity;

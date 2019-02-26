@@ -5,14 +5,14 @@ import java.util.ArrayList;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.Event;
 import com.darkxell.common.event.DungeonEventListener;
-import com.darkxell.common.event.DungeonEventSource;
+import com.darkxell.common.event.EventSource;
 import com.darkxell.common.event.pokemon.StatusConditionEndedEvent;
 import com.darkxell.common.event.pokemon.StatusConditionEndedEvent.StatusConditionEndReason;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Localization;
 import com.darkxell.common.util.language.Message;
 
-public class AppliedStatusCondition implements DungeonEventListener, DungeonEventSource {
+public class AppliedStatusCondition implements DungeonEventListener, EventSource {
 
     /**
      * True if the Pokemon this Status condition affects has acted this turn while this Status condition was active.<br>
@@ -60,7 +60,7 @@ public class AppliedStatusCondition implements DungeonEventListener, DungeonEven
         return new Message(id).addReplacement("<pokemon>", this.pokemon.getNickname());
     }
 
-    public void finish(Floor floor, StatusConditionEndReason reason, DungeonEventSource finishSource,
+    public void finish(Floor floor, StatusConditionEndReason reason, EventSource finishSource,
             ArrayList<Event> events) {
         events.add(new StatusConditionEndedEvent(floor, finishSource, this, reason));
     }

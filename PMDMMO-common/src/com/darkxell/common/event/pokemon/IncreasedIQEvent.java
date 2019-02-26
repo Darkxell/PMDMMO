@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.Event;
-import com.darkxell.common.event.DungeonEventSource;
+import com.darkxell.common.event.EventSource;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Message;
 
@@ -13,7 +13,7 @@ public class IncreasedIQEvent extends Event {
     public final int iq;
     public final DungeonPokemon pokemon;
 
-    public IncreasedIQEvent(Floor floor, DungeonEventSource eventSource, DungeonPokemon pokemon, int iq) {
+    public IncreasedIQEvent(Floor floor, EventSource eventSource, DungeonPokemon pokemon, int iq) {
         super(floor, eventSource);
         this.iq = iq;
         this.pokemon = pokemon;

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.event.Event;
-import com.darkxell.common.event.DungeonEventSource;
+import com.darkxell.common.event.EventSource;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.player.Inventory;
 import com.darkxell.common.player.ItemContainer;
@@ -17,7 +17,7 @@ public class ItemCreatedEvent extends Event {
     public final ItemContainer container;
     public final ItemStack item;
 
-    public ItemCreatedEvent(Floor floor, DungeonEventSource eventSource, ItemStack item, ItemContainer container) {
+    public ItemCreatedEvent(Floor floor, EventSource eventSource, ItemStack item, ItemContainer container) {
         super(floor, eventSource);
         this.item = item;
         this.container = container;

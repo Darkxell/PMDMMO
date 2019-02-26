@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.Event;
-import com.darkxell.common.event.DungeonEventSource;
+import com.darkxell.common.event.EventSource;
 import com.darkxell.common.event.dungeon.BossDefeatedEvent;
 import com.darkxell.common.event.dungeon.PlayerLosesEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
@@ -22,7 +22,7 @@ public class FaintedPokemonEvent extends Event {
     public final DamageSource damage;
     public final DungeonPokemon pokemon;
 
-    public FaintedPokemonEvent(Floor floor, DungeonEventSource eventSource, DungeonPokemon pokemon,
+    public FaintedPokemonEvent(Floor floor, EventSource eventSource, DungeonPokemon pokemon,
             DamageSource damage) {
         super(floor, eventSource);
         this.pokemon = pokemon;
