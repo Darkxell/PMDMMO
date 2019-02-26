@@ -10,7 +10,7 @@ public final class EventCommunication {
 
     private static final String classBase;
     static {
-        String base = DungeonEvent.class.getName();
+        String base = Event.class.getName();
         classBase = base.substring(0, base.indexOf("DungeonEvent"));
     }
 
@@ -19,7 +19,7 @@ public final class EventCommunication {
      * @return       The Json value of the input DungeonEvent, with the event Class name. Class name is required to be
      *               communicated to load the correct Class when reading.
      */
-    public static JsonObject prepareToSend(DungeonEvent event) {
+    public static JsonObject prepareToSend(Event event) {
         if (!(event instanceof Communicable))
             return null;
         JsonObject object = ((Communicable) event).toJson();
@@ -34,7 +34,7 @@ public final class EventCommunication {
      * @return       A DungeonEvent loaded from the input Json data. May return null if the Json data is incomplete or
      *               flawed.
      */
-    public static DungeonEvent read(JsonObject json, Floor floor) {
+    public static Event read(JsonObject json, Floor floor) {
         if (json.get("event") == null) {
             Logger.e("Event type is missing.");
             return null;
@@ -53,9 +53,9 @@ public final class EventCommunication {
             return null;
         }
 
-        DungeonEvent e = null;
+        Event e = null;
         try {
-            e = (DungeonEvent) c.getConstructor(Floor.class).newInstance(floor);
+            e = (Event) c.getConstructor(Floor.class).newInstance(floor);
 
         } catch (Exception ex) {
             Logger.e("Error while instanciating event class: " + ex.getMessage());

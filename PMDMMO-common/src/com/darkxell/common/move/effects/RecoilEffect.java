@@ -1,6 +1,6 @@
 package com.darkxell.common.move.effects;
 
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageType;
@@ -25,7 +25,7 @@ public class RecoilEffect extends MoveEffect {
         super.additionalEffects(moveEvent, calculator, missed, effects);
         if (!missed) {
             int damage = -1;
-            for (DungeonEvent e : effects.events)
+            for (Event e : effects.events)
                 if (e instanceof DamageDealtEvent) {
                     DamageDealtEvent d = (DamageDealtEvent) e;
                     if (d.target == moveEvent.target && d.source == moveEvent)

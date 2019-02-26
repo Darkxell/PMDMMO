@@ -3,12 +3,12 @@ package com.darkxell.common.event.pokemon;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Message;
 
-public class RevivedPokemonEvent extends DungeonEvent {
+public class RevivedPokemonEvent extends Event {
 
     public final DungeonPokemon pokemon;
 
@@ -23,7 +23,7 @@ public class RevivedPokemonEvent extends DungeonEvent {
     }
 
     @Override
-    public ArrayList<DungeonEvent> processServer() {
+    public ArrayList<Event> processServer() {
         this.messages.add(new Message("pokemon.revived").addReplacement("<pokemon>", this.pokemon.getNickname()));
         this.pokemon.revive();
         return super.processServer();

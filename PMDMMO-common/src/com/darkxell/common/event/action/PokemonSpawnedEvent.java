@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.data.DungeonEncounter.CreatedEncounter;
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.DungeonEventSource;
 
-public class PokemonSpawnedEvent extends DungeonEvent {
+public class PokemonSpawnedEvent extends Event {
 
     /** The spawned Pokemon. */
     public final CreatedEncounter encounter;
@@ -23,7 +23,7 @@ public class PokemonSpawnedEvent extends DungeonEvent {
     }
 
     @Override
-    public ArrayList<DungeonEvent> processServer() {
+    public ArrayList<Event> processServer() {
         this.floor.summonPokemon(this.encounter.pokemon, this.encounter.tile.x, this.encounter.tile.y,
                 this.resultingEvents, this.encounter.ai);
         return super.processServer();

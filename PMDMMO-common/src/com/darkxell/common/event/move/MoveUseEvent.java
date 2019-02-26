@@ -3,14 +3,14 @@ package com.darkxell.common.event.move;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.language.Message;
 
-public class MoveUseEvent extends DungeonEvent {
+public class MoveUseEvent extends Event {
 
     public Direction direction;
     private boolean missed = false;
@@ -43,7 +43,7 @@ public class MoveUseEvent extends DungeonEvent {
     }
 
     @Override
-    public ArrayList<DungeonEvent> processServer() {
+    public ArrayList<Event> processServer() {
         if (this.direction != null)
             this.usedMove.user.setFacing(this.direction);
         this.missed = this.usedMove.move.move().useOn(this, this.resultingEvents);

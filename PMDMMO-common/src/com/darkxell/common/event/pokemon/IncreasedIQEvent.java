@@ -3,12 +3,12 @@ package com.darkxell.common.event.pokemon;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Message;
 
-public class IncreasedIQEvent extends DungeonEvent {
+public class IncreasedIQEvent extends Event {
 
     public final int iq;
     public final DungeonPokemon pokemon;
@@ -25,7 +25,7 @@ public class IncreasedIQEvent extends DungeonEvent {
     }
 
     @Override
-    public ArrayList<DungeonEvent> processServer() {
+    public ArrayList<Event> processServer() {
         int satisfaction;
         if (this.iq >= 9)
             satisfaction = 3;

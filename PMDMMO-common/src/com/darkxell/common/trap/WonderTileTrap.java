@@ -2,8 +2,8 @@ package com.darkxell.common.trap;
 
 import java.util.ArrayList;
 
-import com.darkxell.common.event.DungeonEvent;
-import com.darkxell.common.event.DungeonEvent.MessageEvent;
+import com.darkxell.common.event.Event;
+import com.darkxell.common.event.Event.MessageEvent;
 import com.darkxell.common.event.dungeon.TrapSteppedOnEvent;
 import com.darkxell.common.pokemon.BaseStats.Stat;
 import com.darkxell.common.util.language.Message;
@@ -15,7 +15,7 @@ public class WonderTileTrap extends Trap {
     }
 
     @Override
-    public void onPokemonStep(TrapSteppedOnEvent trapEvent, ArrayList<DungeonEvent> events) {
+    public void onPokemonStep(TrapSteppedOnEvent trapEvent, ArrayList<Event> events) {
         for (Stat s : Stat.values())
             if (s != Stat.Speed) {
                 int stage = trapEvent.pokemon.stats.getStage(s);

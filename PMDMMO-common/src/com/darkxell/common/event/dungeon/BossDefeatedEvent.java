@@ -1,10 +1,10 @@
 package com.darkxell.common.event.dungeon;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.DungeonEventSource;
 
-public class BossDefeatedEvent extends DungeonEvent {
+public class BossDefeatedEvent extends Event {
 
     public BossDefeatedEvent(Floor floor, DungeonEventSource eventSource) {
         super(floor, eventSource);

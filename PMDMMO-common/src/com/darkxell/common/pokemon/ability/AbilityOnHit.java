@@ -3,7 +3,7 @@ package com.darkxell.common.pokemon.ability;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.TriggeredAbilityEvent;
@@ -29,11 +29,11 @@ public abstract class AbilityOnHit extends Ability {
      * @param resultingEvents - List of Event to add resulting events to.
      */
     protected abstract void onHit(Floor floor, DamageDealtEvent event, MoveUse source,
-            TriggeredAbilityEvent abilityEvent, ArrayList<DungeonEvent> resultingEvents);
+            TriggeredAbilityEvent abilityEvent, ArrayList<Event> resultingEvents);
 
     @Override
-    public void onPostEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned,
-            ArrayList<DungeonEvent> resultingEvents) {
+    public void onPostEvent(Floor floor, Event event, DungeonPokemon concerned,
+            ArrayList<Event> resultingEvents) {
         if (event instanceof DamageDealtEvent) {
             DamageDealtEvent d = (DamageDealtEvent) event;
             if (d.target.ability() == this && d.target == concerned && d.source instanceof MoveUse

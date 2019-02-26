@@ -6,7 +6,7 @@ import java.util.Comparator;
 import org.jdom2.Element;
 
 import com.darkxell.common.Registrable;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.item.ItemUseEvent;
 import com.darkxell.common.pokemon.AffectsPokemon;
 import com.darkxell.common.util.language.Message;
@@ -187,14 +187,14 @@ public class Item implements AffectsPokemon, Registrable<Item> {
      *
      * @param itemEvent - The current Floor.
      */
-    public void use(ItemUseEvent itemEvent, ArrayList<DungeonEvent> events) {
+    public void use(ItemUseEvent itemEvent, ArrayList<Event> events) {
         this.effect().use(itemEvent, events);
     }
 
     /**
      * Called when this Item is used when caught.
      */
-    public void useThrown(ItemUseEvent itemEvent, ArrayList<DungeonEvent> events) {
+    public void useThrown(ItemUseEvent itemEvent, ArrayList<Event> events) {
         this.effect().useThrown(itemEvent, events);
     }
 

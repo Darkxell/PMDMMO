@@ -3,7 +3,7 @@ package com.darkxell.common.status.conditions;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageType;
 import com.darkxell.common.event.pokemon.HealthRestoredEvent;
@@ -40,7 +40,7 @@ public class StealsHpStatusCondition extends StatusCondition {
     }
 
     @Override
-    public void tick(Floor floor, AppliedStatusCondition instance, ArrayList<DungeonEvent> events) {
+    public void tick(Floor floor, AppliedStatusCondition instance, ArrayList<Event> events) {
         super.tick(floor, instance, events);
         if (!(instance.source instanceof DungeonPokemon) || ((DungeonPokemon) instance.source).isFainted())
             instance.finish(floor, StatusConditionEndReason.CANT_CONTINUE, instance, events);

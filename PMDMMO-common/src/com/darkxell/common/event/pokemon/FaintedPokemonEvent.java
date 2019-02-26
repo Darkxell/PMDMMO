@@ -3,7 +3,7 @@ package com.darkxell.common.event.pokemon;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.event.dungeon.BossDefeatedEvent;
 import com.darkxell.common.event.dungeon.PlayerLosesEvent;
@@ -13,7 +13,7 @@ import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.DungeonPokemon.DungeonPokemonType;
 import com.darkxell.common.util.language.Message;
 
-public class FaintedPokemonEvent extends DungeonEvent {
+public class FaintedPokemonEvent extends Event {
 
     /**
      * The source that damaged the fainted Pokemon. Can be null if the fainting damage didn't result from a Pokemon's
@@ -35,7 +35,7 @@ public class FaintedPokemonEvent extends DungeonEvent {
     }
 
     @Override
-    public ArrayList<DungeonEvent> processServer() {
+    public ArrayList<Event> processServer() {
         this.messages.add(new Message("pokemon.fainted").addReplacement("<pokemon>", pokemon.getNickname()));
 
         if (this.pokemon.hasItem())

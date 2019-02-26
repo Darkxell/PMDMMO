@@ -4,7 +4,7 @@ import com.darkxell.common.ai.AI;
 import com.darkxell.common.ai.AI.AIState;
 import com.darkxell.common.ai.AIUtils;
 import com.darkxell.common.dungeon.floor.Tile;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.event.action.PokemonRotateEvent;
 import com.darkxell.common.event.action.PokemonTravelEvent;
@@ -41,7 +41,7 @@ public class AIStateFollowPokemon extends AIState {
     }
 
     @Override
-    public DungeonEvent takeAction() {
+    public Event takeAction() {
         // If can see the target, update the last seen position.
         if (this.ai.visibility.isVisible(this.target))
             this.lastSeen = this.target.tile();

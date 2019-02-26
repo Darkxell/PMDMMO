@@ -1,12 +1,12 @@
 package com.darkxell.common.event.dungeon.weather;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.util.language.Message;
 import com.darkxell.common.weather.ActiveWeather;
 
-public class WeatherChangedEvent extends DungeonEvent {
+public class WeatherChangedEvent extends Event {
 
     /** The new current Weather. */
     public final ActiveWeather next;

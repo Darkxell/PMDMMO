@@ -3,14 +3,14 @@ package com.darkxell.common.event.move;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.pokemon.LearnedMove;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.language.Message;
 
-public class MoveLearnedEvent extends DungeonEvent {
+public class MoveLearnedEvent extends Event {
 
     public final int index;
     public final Move move;
@@ -29,7 +29,7 @@ public class MoveLearnedEvent extends DungeonEvent {
     }
 
     @Override
-    public ArrayList<DungeonEvent> processServer() {
+    public ArrayList<Event> processServer() {
         this.messages.add(new Message("moves.learned").addReplacement("<pokemon>", this.pokemon.getNickname())
                 .addReplacement("<move>", this.move.name()));
 

@@ -3,11 +3,11 @@ package com.darkxell.client.mechanics.event;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.event.action.PokemonTravelEvent;
 
-public class PokemonTravelsEvent extends DungeonEvent {
+public class PokemonTravelsEvent extends Event {
     private PokemonTravelEvent[] events;
 
     public PokemonTravelsEvent(Floor floor, ArrayList<PokemonTravelEvent> travels) {
@@ -28,7 +28,7 @@ public class PokemonTravelsEvent extends DungeonEvent {
     }
 
     @Override
-    public ArrayList<DungeonEvent> processServer() {
+    public ArrayList<Event> processServer() {
         for (PokemonTravelEvent e : this.events)
             this.resultingEvents.addAll(e.processServer());
         return super.processServer();

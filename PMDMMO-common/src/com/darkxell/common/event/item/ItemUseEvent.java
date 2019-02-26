@@ -3,14 +3,14 @@ package com.darkxell.common.event.item;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Message;
 
 /** Describes the events occurring while using an Item. */
-public class ItemUseEvent extends DungeonEvent {
+public class ItemUseEvent extends Event {
 
     /** The Item that was used. */
     public final Item item;
@@ -41,7 +41,7 @@ public class ItemUseEvent extends DungeonEvent {
     }
 
     @Override
-    public ArrayList<DungeonEvent> processServer() {
+    public ArrayList<Event> processServer() {
         if (this.thrown)
             this.item.useThrown(this, this.resultingEvents);
         else

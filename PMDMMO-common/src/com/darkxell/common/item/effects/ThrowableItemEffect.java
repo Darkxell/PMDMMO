@@ -5,7 +5,7 @@ import java.util.Stack;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.item.ItemSelectionEvent;
 import com.darkxell.common.event.item.ItemUseEvent;
 import com.darkxell.common.event.item.ProjectileThrownEvent;
@@ -114,7 +114,7 @@ public class ThrowableItemEffect extends ItemEffect {
     }
 
     @Override
-    public void use(ItemUseEvent itemEvent, ArrayList<DungeonEvent> events) {
+    public void use(ItemUseEvent itemEvent, ArrayList<Event> events) {
         super.use(itemEvent, events);
 
         Tile destination = this.findDestination(itemEvent);

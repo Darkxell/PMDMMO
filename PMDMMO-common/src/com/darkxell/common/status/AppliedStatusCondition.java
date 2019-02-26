@@ -3,7 +3,7 @@ package com.darkxell.common.status;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.DungeonEventListener;
 import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.event.pokemon.StatusConditionEndedEvent;
@@ -61,7 +61,7 @@ public class AppliedStatusCondition implements DungeonEventListener, DungeonEven
     }
 
     public void finish(Floor floor, StatusConditionEndReason reason, DungeonEventSource finishSource,
-            ArrayList<DungeonEvent> events) {
+            ArrayList<Event> events) {
         events.add(new StatusConditionEndedEvent(floor, finishSource, this, reason));
     }
 
@@ -85,23 +85,23 @@ public class AppliedStatusCondition implements DungeonEventListener, DungeonEven
         return this.flags.split("\\|");
     }
 
-    public void onConditionEnd(StatusConditionEndedEvent event, ArrayList<DungeonEvent> events) {
+    public void onConditionEnd(StatusConditionEndedEvent event, ArrayList<Event> events) {
         this.condition.onEnd(event, events);
     }
 
-    public void onConditionStart(Floor floor, ArrayList<DungeonEvent> events) {
+    public void onConditionStart(Floor floor, ArrayList<Event> events) {
         this.condition.onStart(floor, this, events);
     }
 
     @Override
-    public void onPostEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned,
-            ArrayList<DungeonEvent> resultingEvents) {
+    public void onPostEvent(Floor floor, Event event, DungeonPokemon concerned,
+            ArrayList<Event> resultingEvents) {
         this.condition.onPostEvent(floor, event, concerned, resultingEvents);
     }
 
     @Override
-    public void onPreEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned,
-            ArrayList<DungeonEvent> resultingEvents) {
+    public void onPreEvent(Floor floor, Event event, DungeonPokemon concerned,
+            ArrayList<Event> resultingEvents) {
         this.condition.onPreEvent(floor, event, concerned, resultingEvents);
     }
 
@@ -116,7 +116,7 @@ public class AppliedStatusCondition implements DungeonEventListener, DungeonEven
         return new Message(id).addReplacement("<pokemon>", this.pokemon.getNickname());
     }
 
-    public void tick(Floor floor, ArrayList<DungeonEvent> events) {
+    public void tick(Floor floor, ArrayList<Event> events) {
         if (!this.isOver())
             this.condition.tick(floor, this, events);
         ++this.tick;

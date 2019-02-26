@@ -5,13 +5,13 @@ import java.util.ArrayList;
 import com.darkxell.common.dungeon.DungeonOutcome;
 import com.darkxell.common.dungeon.DungeonOutcome.Outcome;
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Message;
 
-public class PlayerLosesEvent extends DungeonEvent {
+public class PlayerLosesEvent extends Event {
 
     public final int moveID;
     public final Player player;
@@ -28,7 +28,7 @@ public class PlayerLosesEvent extends DungeonEvent {
     }
 
     @Override
-    public ArrayList<DungeonEvent> processServer() {
+    public ArrayList<Event> processServer() {
         this.messages.add(new Message("player.loses").addReplacement("<player>", this.player.name()));
 
         ArrayList<DungeonPokemon> existing = this.floor.listPokemon();

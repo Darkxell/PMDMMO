@@ -3,7 +3,7 @@ package com.darkxell.common.pokemon.ability;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.event.pokemon.StatusConditionCreatedEvent;
 import com.darkxell.common.event.pokemon.StatusConditionEndedEvent.StatusConditionEndReason;
@@ -21,8 +21,8 @@ public class AbilityPreventStatus extends Ability {
     }
 
     @Override
-    public void onPreEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned,
-            ArrayList<DungeonEvent> resultingEvents) {
+    public void onPreEvent(Floor floor, Event event, DungeonPokemon concerned,
+            ArrayList<Event> resultingEvents) {
         super.onPreEvent(floor, event, concerned, resultingEvents);
 
         if (event instanceof StatusConditionCreatedEvent) {
@@ -39,7 +39,7 @@ public class AbilityPreventStatus extends Ability {
     }
 
     @Override
-    public void onTurnStart(Floor floor, DungeonPokemon pokemon, ArrayList<DungeonEvent> events) {
+    public void onTurnStart(Floor floor, DungeonPokemon pokemon, ArrayList<Event> events) {
         super.onTurnStart(floor, pokemon, events);
 
         for (int i = 0; i < this.conditions.length; ++i)

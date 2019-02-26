@@ -2,7 +2,7 @@ package com.darkxell.common.status.conditions;
 
 import java.util.ArrayList;
 
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.status.StatusCondition;
@@ -17,7 +17,7 @@ public class BoostMoveTypeStatusCondition extends StatusCondition {
     }
 
     @Override
-    public double damageMultiplier(boolean isUser, MoveUseEvent moveEvent, ArrayList<DungeonEvent> events) {
+    public double damageMultiplier(boolean isUser, MoveUseEvent moveEvent, ArrayList<Event> events) {
         if (isUser && moveEvent.usedMove.move.move().type == this.type)
             return 2;
         return super.damageMultiplier(isUser, moveEvent, events);

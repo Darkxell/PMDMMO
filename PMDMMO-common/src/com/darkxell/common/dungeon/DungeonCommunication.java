@@ -4,7 +4,7 @@ import com.darkxell.common.dungeon.TempIDRegistry.ItemsTempIDRegistry;
 import com.darkxell.common.dungeon.TempIDRegistry.MovesTempIDRegistry;
 import com.darkxell.common.dungeon.TempIDRegistry.PokemonTempIDRegistry;
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.EventCommunication;
 import com.darkxell.common.event.turns.GameTurn;
 import com.darkxell.common.player.ItemContainer;
@@ -62,7 +62,7 @@ public class DungeonCommunication {
         JsonArray array = (JsonArray) Json.array();
 
         for (GameTurn turn : this.dungeon.listTurns())
-            for (DungeonEvent e : turn.events())
+            for (Event e : turn.events())
                 if (!onlyPAE || e.isPAE())
                     array.add(EventCommunication.prepareToSend(e));
 

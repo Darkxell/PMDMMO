@@ -3,7 +3,7 @@ package com.darkxell.common.event.item;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.ItemStack;
@@ -16,7 +16,7 @@ import com.darkxell.common.util.language.Message;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonObject;
 
-public class ItemThrownEvent extends DungeonEvent implements Communicable {
+public class ItemThrownEvent extends Event implements Communicable {
 
     private Item item;
     private ItemContainer source;
@@ -42,7 +42,7 @@ public class ItemThrownEvent extends DungeonEvent implements Communicable {
     }
 
     @Override
-    public ArrayList<DungeonEvent> processServer() {
+    public ArrayList<Event> processServer() {
         if (this.item.effect().isThrowable()) {
             this.messages.add(new Message("item.thrown").addReplacement("<pokemon>", this.thrower.getNickname())
                     .addReplacement("<item>", this.item.name()));
