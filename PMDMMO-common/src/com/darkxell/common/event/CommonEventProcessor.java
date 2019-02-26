@@ -44,7 +44,7 @@ public class CommonEventProcessor {
 
     public final DungeonExploration dungeon;
     /** Pending events to process. */
-    protected final Stack<DungeonEvent> pending = new Stack<>();
+    protected final Stack<Event> pending = new Stack<>();
     /** Lists the Players currently running. */
     private ArrayList<DungeonPokemon> runners = new ArrayList<>();
     /** While processing an event, setting this to false will stop processing the pending events. */
@@ -55,13 +55,13 @@ public class CommonEventProcessor {
     }
 
     /** Adds the input events to the pending stack, without processing them. */
-    public void addToPending(ArrayList<DungeonEvent> arrayList) {
+    public void addToPending(ArrayList<Event> arrayList) {
         for (int i = arrayList.size() - 1; i >= 0; --i)
             this.addToPending(arrayList.get(i));
     }
 
     /** Adds the input event to the pending stack, without processing it. */
-    public void addToPending(DungeonEvent event) {
+    public void addToPending(Event event) {
         if (event != null) {
             for (int i = this.pending.size() - 1; i >= 0; --i)
                 if (this.pending.get(i).priority >= event.priority) {
@@ -73,8 +73,8 @@ public class CommonEventProcessor {
     }
 
     /** Calls listeners to the input Event. */
-    private void callPostListeners(DungeonEvent event) {
-        ArrayList<DungeonEvent> resultingEvents = new ArrayList<>();
+    private void callPostListeners(Event event) {
+        ArrayList<Event> resultingEvents = new ArrayList<>();
         for (DungeonPokemon p : this.dungeon.currentFloor().listPokemon()) {
             p.onPostEvent(this.dungeon.currentFloor(), event, p, resultingEvents);
             p.ability().onPostEvent(this.dungeon.currentFloor(), event, p, resultingEvents);
@@ -88,8 +88,8 @@ public class CommonEventProcessor {
     }
 
     /** Calls listeners to the input Event. */
-    private void callPreListeners(DungeonEvent event) {
-        ArrayList<DungeonEvent> resultingEvents = new ArrayList<>();
+    private void callPreListeners(Event event) {
+        ArrayList<Event> resultingEvents = new ArrayList<>();
         for (DungeonPokemon p : this.dungeon.currentFloor().listPokemon()) {
             p.onPreEvent(this.dungeon.currentFloor(), event, p, resultingEvents);
             if (event.isConsumed())
@@ -111,7 +111,7 @@ public class CommonEventProcessor {
     }
 
     /** This Event is checked and ready to be processed. */
-    protected void doProcess(DungeonEvent event) {
+    protected void doProcess(Event event) {
         this.dungeon.eventOccured(event);
         this.addToPending(event.processServer());
         this.callPostListeners(event);
@@ -120,7 +120,7 @@ public class CommonEventProcessor {
         else if (event instanceof BossDefeatedEvent)
             this.processBossDefeatedEvent((BossDefeatedEvent) event);
         else if (event instanceof MissionClearedEvent && this.dungeon instanceof AutoDungeonExploration) {
-            DungeonEvent e = ((AutoDungeonExploration) this.dungeon).getNextEvent();
+            Event e = ((AutoDungeonExploration) this.dungeon).getNextEvent();
             if (e instanceof DungeonExitEvent)
                 this.addToPending(((AutoDungeonExploration) this.dungeon).nextEvent());
         }
@@ -143,7 +143,7 @@ public class CommonEventProcessor {
      *
      * @return false if the event should not be processed.
      */
-    protected boolean preProcess(DungeonEvent event) {
+    protected boolean preProcess(Event event) {
         this.callPreListeners(event);
 
         if (!event.isConsumed() && event instanceof PokemonTravelEvent) {
@@ -176,7 +176,7 @@ public class CommonEventProcessor {
     }
 
     /** Processes the input event and adds the resulting events to the pending stack. */
-    public void processEvent(DungeonEvent event) {
+    public void processEvent(Event event) {
         if (this.state() == State.STOPPED)
             return;
         this.setState(State.PROCESSING);
@@ -190,7 +190,7 @@ public class CommonEventProcessor {
      * Adds all the input events to the pending stack and starts processing them. May not process all events in order if
      * some produce new Events.
      */
-    public void processEvents(ArrayList<DungeonEvent> events) {
+    public void processEvents(ArrayList<Event> events) {
         this.addToPending(events);
         this.processPending();
     }
@@ -225,7 +225,7 @@ public class CommonEventProcessor {
         }
 
         if (this.state() == State.AWATING_INPUT && this.dungeon instanceof AutoDungeonExploration) {
-            DungeonEvent event = ((AutoDungeonExploration) this.dungeon).nextEvent();
+            Event event = ((AutoDungeonExploration) this.dungeon).nextEvent();
             if (event == null)
                 event = new ExplorationStopEvent(this.dungeon.currentFloor(), DungeonEventSource.PLAYER_ACTION, null);
             this.processEvent(event);
@@ -240,7 +240,7 @@ public class CommonEventProcessor {
         return this.state;
     }
 
-    public boolean stopsTravel(DungeonEvent event) {
+    public boolean stopsTravel(Event event) {
         /*
          * if (event instanceof ItemMovedEvent) { ItemMovedEvent e = (ItemMovedEvent) event; return !(e.source
          * instanceof Tile && (e.destination instanceof Inventory || e.destination instanceof Pokemon)); }

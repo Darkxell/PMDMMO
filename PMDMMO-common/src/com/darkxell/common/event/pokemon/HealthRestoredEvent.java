@@ -3,12 +3,12 @@ package com.darkxell.common.event.pokemon;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Message;
 
-public class HealthRestoredEvent extends DungeonEvent {
+public class HealthRestoredEvent extends Event {
 
     private int effectiveHeal = -1;
     public final int health;
@@ -30,7 +30,7 @@ public class HealthRestoredEvent extends DungeonEvent {
     }
 
     @Override
-    public ArrayList<DungeonEvent> processServer() {
+    public ArrayList<Event> processServer() {
         this.effectiveHeal = Math.min(this.target.getMaxHP() - this.target.getHp(), this.health);
         if (this.effectiveHeal == 0)
             this.messages.add(new Message("move.heal.zero").addReplacement("<pokemon>", this.target.getNickname()));

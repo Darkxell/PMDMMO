@@ -1,6 +1,6 @@
 package com.darkxell.common.move.effects;
 
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.HealthRestoredEvent;
@@ -25,7 +25,7 @@ public class DrainEffect extends MoveEffect {
         super.additionalEffects(moveEvent, calculator, missed, effects);
         if (!missed) {
             DamageDealtEvent damage = null;
-            for (DungeonEvent e : effects.events)
+            for (Event e : effects.events)
                 if (e instanceof DamageDealtEvent) {
                     damage = (DamageDealtEvent) e;
                     break;

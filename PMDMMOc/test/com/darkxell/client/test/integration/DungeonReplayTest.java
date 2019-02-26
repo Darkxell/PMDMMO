@@ -17,7 +17,7 @@ import com.darkxell.client.test.ClientSetup;
 import com.darkxell.common.dungeon.AutoDungeonExploration;
 import com.darkxell.common.dungeon.DungeonCommunication;
 import com.darkxell.common.event.CommonEventProcessor.State;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.turns.GameTurn;
 import com.darkxell.common.util.Communicable.JsonReadingException;
 import com.darkxell.common.util.Logger;
@@ -35,7 +35,7 @@ public class DungeonReplayTest {
 
     private void logAllEvents(AutoDungeonExploration dungeon) {
         for (GameTurn turn : dungeon.listTurns())
-            for (DungeonEvent event : turn.events())
+            for (Event event : turn.events())
                 System.out.println(event.getClass().getSimpleName());
     }
 

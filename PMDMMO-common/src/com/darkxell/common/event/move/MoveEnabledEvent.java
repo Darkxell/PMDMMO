@@ -3,14 +3,14 @@ package com.darkxell.common.event.move;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.pokemon.LearnedMove;
 import com.darkxell.common.util.Communicable;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonObject;
 
-public class MoveEnabledEvent extends DungeonEvent implements Communicable {
+public class MoveEnabledEvent extends Event implements Communicable {
 
     /** The value of its "enabled" property when changed. */
     private boolean enabled;
@@ -45,7 +45,7 @@ public class MoveEnabledEvent extends DungeonEvent implements Communicable {
     }
 
     @Override
-    public ArrayList<DungeonEvent> processServer() {
+    public ArrayList<Event> processServer() {
         this.move.setEnabled(this.enabled);
         return super.processServer();
     }

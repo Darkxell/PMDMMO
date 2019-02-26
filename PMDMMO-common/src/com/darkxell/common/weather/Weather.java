@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Random;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.pokemon.AffectsPokemon;
 import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.util.RandomUtil;
@@ -74,7 +74,7 @@ public class Weather implements AffectsPokemon, Comparable<Weather> {
     }
 
     /** Called whenever this Weather ticks. */
-    public ArrayList<DungeonEvent> weatherTick(Floor floor, int tick) {
+    public ArrayList<Event> weatherTick(Floor floor, int tick) {
         return new ArrayList<>();
     }
 

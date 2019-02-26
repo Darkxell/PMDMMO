@@ -16,8 +16,8 @@ public interface DungeonEventListener {
      *                        Condition or an Ability.
      * @param resultingEvents - List to store any created Events. They will be added to the list of pending Events.
      */
-    public default void onPostEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned,
-            ArrayList<DungeonEvent> resultingEvents) {
+    public default void onPostEvent(Floor floor, Event event, DungeonPokemon concerned,
+            ArrayList<Event> resultingEvents) {
     }
 
     /**
@@ -29,8 +29,8 @@ public interface DungeonEventListener {
      *                        Condition or an Ability.
      * @param resultingEvents - List to store any created Events. They will be added to the list of pending Events.
      */
-    public default void onPreEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned,
-            ArrayList<DungeonEvent> resultingEvents) {
+    public default void onPreEvent(Floor floor, Event event, DungeonPokemon concerned,
+            ArrayList<Event> resultingEvents) {
     }
 
 }

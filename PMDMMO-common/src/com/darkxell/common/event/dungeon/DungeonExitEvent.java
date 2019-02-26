@@ -5,14 +5,14 @@ import java.util.ArrayList;
 import com.darkxell.common.dungeon.DungeonOutcome;
 import com.darkxell.common.dungeon.DungeonOutcome.Outcome;
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.player.Player;
 import com.darkxell.common.util.Communicable;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonObject;
 
-public class DungeonExitEvent extends DungeonEvent implements Communicable {
+public class DungeonExitEvent extends Event implements Communicable {
 
     protected Player player;
 
@@ -31,7 +31,7 @@ public class DungeonExitEvent extends DungeonEvent implements Communicable {
     }
 
     @Override
-    public ArrayList<DungeonEvent> processServer() {
+    public ArrayList<Event> processServer() {
         DungeonOutcome outcome = new DungeonOutcome(Outcome.DUNGEON_CLEARED, this.floor.dungeon.id);
         this.resultingEvents.add(new ExplorationStopEvent(this.floor, this, outcome));
         return this.resultingEvents;

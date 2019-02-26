@@ -3,12 +3,12 @@ package com.darkxell.common.event.pokemon;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.ability.Ability;
 
-public class TriggeredAbilityEvent extends DungeonEvent {
+public class TriggeredAbilityEvent extends Event {
 
     public final Ability ability;
     /** An ID referencing a message for the triggered ability different than the default one. */
@@ -32,7 +32,7 @@ public class TriggeredAbilityEvent extends DungeonEvent {
     }
 
     @Override
-    public ArrayList<DungeonEvent> processServer() {
+    public ArrayList<Event> processServer() {
         if (this.ability.hasTriggeredMessage())
             this.messages.add(this.ability.triggeredMessage(this.pokemon, this.messageID));
         return super.processServer();

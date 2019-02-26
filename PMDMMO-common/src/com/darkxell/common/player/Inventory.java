@@ -6,7 +6,7 @@ import java.util.Comparator;
 import com.darkxell.common.dbobject.DBInventory;
 import com.darkxell.common.dbobject.DatabaseIdentifier;
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.DungeonEventListener;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.Item.ItemAction;
@@ -151,8 +151,8 @@ public class Inventory implements ItemContainer, DungeonEventListener {
     }
 
     @Override
-    public void onPostEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned,
-            ArrayList<DungeonEvent> resultingEvents) {
+    public void onPostEvent(Floor floor, Event event, DungeonPokemon concerned,
+            ArrayList<Event> resultingEvents) {
         DungeonEventListener.super.onPostEvent(floor, event, concerned, resultingEvents);
 
         for (int i = 0; i < this.size(); ++i)
@@ -162,8 +162,8 @@ public class Inventory implements ItemContainer, DungeonEventListener {
     }
 
     @Override
-    public void onPreEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned,
-            ArrayList<DungeonEvent> resultingEvents) {
+    public void onPreEvent(Floor floor, Event event, DungeonPokemon concerned,
+            ArrayList<Event> resultingEvents) {
         DungeonEventListener.super.onPreEvent(floor, event, concerned, resultingEvents);
 
         for (int i = 0; i < this.size(); ++i)

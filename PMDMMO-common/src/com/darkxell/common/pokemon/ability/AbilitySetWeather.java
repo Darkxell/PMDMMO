@@ -3,7 +3,7 @@ package com.darkxell.common.pokemon.ability;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.event.dungeon.weather.WeatherCreatedEvent;
 import com.darkxell.common.event.pokemon.TriggeredAbilityEvent;
@@ -28,7 +28,7 @@ public class AbilitySetWeather extends Ability implements WeatherSource {
     }
 
     @Override
-    public void onFloorStart(Floor floor, DungeonPokemon pokemon, ArrayList<DungeonEvent> events) {
+    public void onFloorStart(Floor floor, DungeonPokemon pokemon, ArrayList<Event> events) {
         super.onFloorStart(floor, pokemon, events);
         TriggeredAbilityEvent abilityevent = new TriggeredAbilityEvent(floor, DungeonEventSource.TRIGGER, pokemon) {
             @Override
@@ -41,7 +41,7 @@ public class AbilitySetWeather extends Ability implements WeatherSource {
     }
 
     @Override
-    public void onTurnStart(Floor floor, DungeonPokemon pokemon, ArrayList<DungeonEvent> events) {
+    public void onTurnStart(Floor floor, DungeonPokemon pokemon, ArrayList<Event> events) {
         super.onTurnStart(floor, pokemon, events);
         if (floor.turnCount() % this.cycle == 0 && floor.currentWeather().weather != this.weather) {
             TriggeredAbilityEvent abilityevent = new TriggeredAbilityEvent(floor, DungeonEventSource.TRIGGER, pokemon);

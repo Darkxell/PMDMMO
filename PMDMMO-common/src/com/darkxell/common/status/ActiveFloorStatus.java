@@ -3,7 +3,7 @@ package com.darkxell.common.status;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.event.dungeon.FloorStatusEndedEvent;
 import com.darkxell.common.util.language.Localization;
@@ -31,7 +31,7 @@ public class ActiveFloorStatus implements DungeonEventSource {
         return new Message(id);
     }
 
-    public void finish(Floor floor, ArrayList<DungeonEvent> events) {
+    public void finish(Floor floor, ArrayList<Event> events) {
         events.add(new FloorStatusEndedEvent(floor, this, this));
     }
 
@@ -45,11 +45,11 @@ public class ActiveFloorStatus implements DungeonEventSource {
         return this.tick >= this.duration;
     }
 
-    public void onStatusEnd(Floor floor, ArrayList<DungeonEvent> events) {
+    public void onStatusEnd(Floor floor, ArrayList<Event> events) {
         this.status.onEnd(floor, this, events);
     }
 
-    public void onStatusStart(Floor floor, ArrayList<DungeonEvent> events) {
+    public void onStatusStart(Floor floor, ArrayList<Event> events) {
         this.status.onStart(floor, this, events);
     }
 
@@ -60,7 +60,7 @@ public class ActiveFloorStatus implements DungeonEventSource {
         return new Message(id);
     }
 
-    public void tick(Floor floor, ArrayList<DungeonEvent> events) {
+    public void tick(Floor floor, ArrayList<Event> events) {
         if (!this.isOver())
             this.status.tick(floor, this, events);
         ++this.tick;

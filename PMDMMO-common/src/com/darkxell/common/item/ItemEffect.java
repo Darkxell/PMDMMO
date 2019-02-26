@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.item.ItemSelectionEvent;
 import com.darkxell.common.event.item.ItemUseEvent;
 import com.darkxell.common.player.ItemContainer;
@@ -100,8 +100,8 @@ public class ItemEffect implements AffectsPokemon {
      * @param container       - The object containing the Item with this effect.
      * @param containerIndex  - The index of the Item in the container.
      */
-    public void onPostEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned,
-            ArrayList<DungeonEvent> resultingEvents, ItemStack item, ItemContainer container, int containerIndex) {
+    public void onPostEvent(Floor floor, Event event, DungeonPokemon concerned,
+            ArrayList<Event> resultingEvents, ItemStack item, ItemContainer container, int containerIndex) {
     }
 
     /**
@@ -116,8 +116,8 @@ public class ItemEffect implements AffectsPokemon {
      * @param container       - The object containing the Item with this effect.
      * @param containerIndex  - The index of the Item in the container.
      */
-    public void onPreEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned,
-            ArrayList<DungeonEvent> resultingEvents, ItemStack item, ItemContainer container, int containerIndex) {
+    public void onPreEvent(Floor floor, Event event, DungeonPokemon concerned,
+            ArrayList<Event> resultingEvents, ItemStack item, ItemContainer container, int containerIndex) {
     }
 
     /**
@@ -125,7 +125,7 @@ public class ItemEffect implements AffectsPokemon {
      *
      * @param itemEvent - The current Floor.
      */
-    public void use(ItemUseEvent itemEvent, ArrayList<DungeonEvent> events) {
+    public void use(ItemUseEvent itemEvent, ArrayList<Event> events) {
     }
 
     /**
@@ -133,7 +133,7 @@ public class ItemEffect implements AffectsPokemon {
      * 
      * @param itemEvent TODO
      */
-    public void useThrown(ItemUseEvent itemEvent, ArrayList<DungeonEvent> events) {
+    public void useThrown(ItemUseEvent itemEvent, ArrayList<Event> events) {
         this.use(itemEvent, events);
     }
 

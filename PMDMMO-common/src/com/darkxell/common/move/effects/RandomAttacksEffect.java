@@ -2,7 +2,7 @@ package com.darkxell.common.move.effects;
 
 import java.util.ArrayList;
 
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.move.Move;
@@ -21,7 +21,7 @@ public class RandomAttacksEffect extends MoveEffect {
     }
 
     @Override
-    public void createMoves(MoveSelectionEvent moveEvent, ArrayList<DungeonEvent> events) {
+    public void createMoves(MoveSelectionEvent moveEvent, ArrayList<Event> events) {
         for (int i = 0; i < this.attacks; ++i) {
             Direction d = RandomUtil.random(Direction.DIRECTIONS, moveEvent.floor.random);
             MoveUseEvent e = new MoveUseEvent(moveEvent.floor, moveEvent, moveEvent.usedMove(),

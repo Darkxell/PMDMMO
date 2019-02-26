@@ -3,12 +3,12 @@ package com.darkxell.common.event.dungeon;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.status.ActiveFloorStatus;
 import com.darkxell.common.util.language.Message;
 
-public class FloorStatusEndedEvent extends DungeonEvent {
+public class FloorStatusEndedEvent extends Event {
     public final ActiveFloorStatus status;
 
     public FloorStatusEndedEvent(Floor floor, DungeonEventSource eventSource, ActiveFloorStatus status) {
@@ -22,7 +22,7 @@ public class FloorStatusEndedEvent extends DungeonEvent {
     }
 
     @Override
-    public ArrayList<DungeonEvent> processServer() {
+    public ArrayList<Event> processServer() {
         if (this.floor.hasStatus(this.status.status)) {
             this.floor.removeFloorStatus(this.status);
             this.status.onStatusEnd(this.floor, this.resultingEvents);

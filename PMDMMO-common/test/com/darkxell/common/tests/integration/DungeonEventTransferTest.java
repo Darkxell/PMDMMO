@@ -16,7 +16,7 @@ import com.darkxell.common.dungeon.DungeonExploration;
 import com.darkxell.common.dungeon.data.Dungeon;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.CommonEventProcessor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.event.EventCommunication;
 import com.darkxell.common.event.action.PokemonRotateEvent;
@@ -76,8 +76,8 @@ public class DungeonEventTransferTest {
         this.floor.dungeon.communication.itemIDs.register(this.item3, null);
     }
 
-    private DungeonEvent[] generateEvents() {
-        return new DungeonEvent[] {
+    private Event[] generateEvents() {
+        return new Event[] {
                 new PokemonRotateEvent(floor, DungeonEventSource.PLAYER_ACTION, pokemon, Direction.SOUTHWEST),
                 new PokemonTravelEvent(floor, DungeonEventSource.PLAYER_ACTION, pokemon, Direction.SOUTHWEST),
                 new TurnSkippedEvent(floor, DungeonEventSource.PLAYER_ACTION, pokemon),
@@ -94,16 +94,16 @@ public class DungeonEventTransferTest {
 
     @Test
     protected void test() {
-        DungeonEvent[] events = this.generateEvents();
-        ArrayList<DungeonEvent[]> mismatches = new ArrayList<>();
+        Event[] events = this.generateEvents();
+        ArrayList<Event[]> mismatches = new ArrayList<>();
 
         Logger.d("Events:" + Arrays.stream(events).map(e -> "\n\t" + e.loggerMessage()).collect(Collectors.joining())
                 + "\n");
 
-        for (DungeonEvent event : events) {
-            DungeonEvent returned = EventCommunication.read(EventCommunication.prepareToSend(event), floor);
+        for (Event event : events) {
+            Event returned = EventCommunication.read(EventCommunication.prepareToSend(event), floor);
             if (!event.equals(returned))
-                mismatches.add(new DungeonEvent[] { event, returned });
+                mismatches.add(new Event[] { event, returned });
         }
 
         assertTrue(mismatches.size() == 0, () -> {

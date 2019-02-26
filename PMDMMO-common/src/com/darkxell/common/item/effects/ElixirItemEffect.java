@@ -2,7 +2,7 @@ package com.darkxell.common.item.effects;
 
 import java.util.ArrayList;
 
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.item.ItemUseEvent;
 import com.darkxell.common.event.stats.PPChangedEvent;
 
@@ -22,7 +22,7 @@ public class ElixirItemEffect extends DrinkItemEffect {
     }
 
     @Override
-    public void use(ItemUseEvent itemEvent, ArrayList<DungeonEvent> events) {
+    public void use(ItemUseEvent itemEvent, ArrayList<Event> events) {
         super.use(itemEvent, events);
         events.add(new PPChangedEvent(itemEvent.floor, itemEvent, itemEvent.target, this.pp,
                 PPChangedEvent.CHANGE_ALL_MOVES));

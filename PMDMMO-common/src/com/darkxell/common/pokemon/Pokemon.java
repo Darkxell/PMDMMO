@@ -8,7 +8,7 @@ import com.darkxell.common.Registries;
 import com.darkxell.common.dbobject.DBPokemon;
 import com.darkxell.common.dbobject.DatabaseIdentifier;
 import com.darkxell.common.dungeon.TempIDRegistry.HasID;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.move.MoveDiscoveredEvent;
 import com.darkxell.common.event.stats.ExperienceGainedEvent;
 import com.darkxell.common.event.stats.LevelupEvent;
@@ -154,7 +154,7 @@ public class Pokemon implements ItemContainer, HasID {
      * @param  amount - The amount of experience gained.
      * @return        The number of levels this experience granted.
      */
-    public void gainExperience(ExperienceGainedEvent event, ArrayList<DungeonEvent> events) {
+    public void gainExperience(ExperienceGainedEvent event, ArrayList<Event> events) {
         int amount = event.experience;
         int levelsup = 0;
         long next = this.experienceLeftNextLevel();
@@ -254,7 +254,7 @@ public class Pokemon implements ItemContainer, HasID {
         return this.data.level;
     }
 
-    public void levelUp(LevelupEvent levelupEvent, ArrayList<DungeonEvent> events) {
+    public void levelUp(LevelupEvent levelupEvent, ArrayList<Event> events) {
         this.setLevel(this.level() + 1);
         BaseStats stats = this.species().baseStatsIncrease(this.level() - 1);
         this.stats.add(stats);

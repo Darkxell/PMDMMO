@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.item.ItemStack;
 
-public class ItemLandedEvent extends DungeonEvent {
+public class ItemLandedEvent extends Event {
 
     private Tile destination;
     public final ItemStack item;
@@ -33,7 +33,7 @@ public class ItemLandedEvent extends DungeonEvent {
     }
 
     @Override
-    public ArrayList<DungeonEvent> processServer() {
+    public ArrayList<Event> processServer() {
         this.destination = this.tile;
         int spot = -1;
         while (this.destination.canAccept(this.item) == -1 || this.destination.isWall()) {

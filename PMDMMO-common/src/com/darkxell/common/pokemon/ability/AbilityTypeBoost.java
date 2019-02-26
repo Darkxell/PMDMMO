@@ -2,7 +2,7 @@ package com.darkxell.common.pokemon.ability;
 
 import java.util.ArrayList;
 
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.event.pokemon.TriggeredAbilityEvent;
 import com.darkxell.common.pokemon.PokemonType;
@@ -19,7 +19,7 @@ public class AbilityTypeBoost extends Ability {
     }
 
     @Override
-    public double damageMultiplier(boolean isUser, MoveUseEvent moveEvent, ArrayList<DungeonEvent> events) {
+    public double damageMultiplier(boolean isUser, MoveUseEvent moveEvent, ArrayList<Event> events) {
         if (isUser && moveEvent.usedMove.user.getHpPercentage() < 25
                 && moveEvent.usedMove.move.move().type == this.type) {
             events.add(new TriggeredAbilityEvent(moveEvent.floor, moveEvent, moveEvent.usedMove.user));

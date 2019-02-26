@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.DungeonExploration;
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
-import com.darkxell.common.event.DungeonEvent.MessageEvent;
+import com.darkxell.common.event.Event;
+import com.darkxell.common.event.Event.MessageEvent;
 import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.mission.dungeon.RescueDungeonMission;
 import com.darkxell.common.player.Player;
@@ -44,7 +44,7 @@ public abstract class DungeonMission {
      * @param  event - An occuring DungeonEvent.
      * @return       <code>true</code> If the input Event clears this Mission.
      */
-    public boolean clearsMission(DungeonEvent event) {
+    public boolean clearsMission(Event event) {
         if (event.floor.id == this.missionData.getFloor())
             return this.clearsMissionTF(event);
         return false;
@@ -56,7 +56,7 @@ public abstract class DungeonMission {
      * @param  event - An occuring DungeonEvent.
      * @return       <code>true</code> If the input Event clears this Mission.
      */
-    protected abstract boolean clearsMissionTF(DungeonEvent event);
+    protected abstract boolean clearsMissionTF(Event event);
 
     public boolean isCleared() {
         return this.cleared;
@@ -67,13 +67,13 @@ public abstract class DungeonMission {
     }
 
     /** Called on each new Floor, if this Mission isn't cleared yet. */
-    public void onFloorStart(Floor floor, ArrayList<DungeonEvent> events) {
+    public void onFloorStart(Floor floor, ArrayList<Event> events) {
         if (floor.id == this.missionData.getFloor())
             this.onTargetFloorStart(floor, events);
     }
 
     /** Called when the target Floor of this Mission starts, if this Mission isn't cleared yet. */
-    protected void onTargetFloorStart(Floor floor, ArrayList<DungeonEvent> events) {
+    protected void onTargetFloorStart(Floor floor, ArrayList<Event> events) {
         events.add(new MessageEvent(floor, DungeonEventSource.TRIGGER, new Message("mission.target_floor")));
     }
 

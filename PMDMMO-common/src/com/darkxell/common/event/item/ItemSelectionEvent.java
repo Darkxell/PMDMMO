@@ -3,7 +3,7 @@ package com.darkxell.common.event.item;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.ItemStack;
@@ -17,7 +17,7 @@ import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonObject;
 
 /** Describes the events occurring before using an Item. */
-public class ItemSelectionEvent extends DungeonEvent implements Communicable {
+public class ItemSelectionEvent extends Event implements Communicable {
 
     /** Direction to face when using the Item. */
     protected Direction direction;
@@ -82,7 +82,7 @@ public class ItemSelectionEvent extends DungeonEvent implements Communicable {
     }
 
     @Override
-    public ArrayList<DungeonEvent> processServer() {
+    public ArrayList<Event> processServer() {
         if (this.item.effect().isUsable()) {
             this.messages.add(this.item.effect().getUseEffectMessage(this));
             if (this.item.effect().isConsummable() && this.source != null) {

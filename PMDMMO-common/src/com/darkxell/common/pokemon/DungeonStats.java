@@ -3,7 +3,7 @@ package com.darkxell.common.pokemon;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.event.stats.SpeedChangedEvent;
 import com.darkxell.common.event.turns.GameTurn;
@@ -181,7 +181,7 @@ public class DungeonStats {
         return false;
     }
 
-    public void onFloorStart(Floor floor, ArrayList<DungeonEvent> events) {
+    public void onFloorStart(Floor floor, ArrayList<Event> events) {
         int speed = this.getStage(Stat.Speed);
 
         for (int i = 0; i < this.speedBuffs.length; ++i)
@@ -214,7 +214,7 @@ public class DungeonStats {
         this.pokemon.setHP(this.pokemon.getHp() + hpchange);
     }
 
-    public void onTurnStart(Floor floor, ArrayList<DungeonEvent> events) {
+    public void onTurnStart(Floor floor, ArrayList<Event> events) {
         int speed = this.getStage(Stat.Speed);
 
         for (int i = 0; i < this.speedBuffs.length; ++i)

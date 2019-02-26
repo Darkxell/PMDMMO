@@ -15,7 +15,7 @@ import com.darkxell.common.dungeon.data.DungeonItemGroup;
 import com.darkxell.common.dungeon.data.FloorData;
 import com.darkxell.common.dungeon.floor.layout.Layout;
 import com.darkxell.common.dungeon.floor.room.Room;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.event.action.PokemonSpawnedEvent;
 import com.darkxell.common.event.dungeon.weather.PersistantWeatherChangedEvent;
@@ -204,7 +204,7 @@ public class Floor {
     }
 
     /** Called when a this Floor starts. */
-    public void onFloorStart(ArrayList<DungeonEvent> events) {
+    public void onFloorStart(ArrayList<Event> events) {
         this.dungeon.eventProcessor.onFloorStart(this);
         Weather w = this.dungeon.dungeon().weather(this.id, this.random);
         events.add(new PersistantWeatherChangedEvent(this, DungeonEventSource.TRIGGER,
@@ -219,7 +219,7 @@ public class Floor {
     }
 
     /** Called when a new turn starts. */
-    public void onTurnStart(ArrayList<DungeonEvent> events) {
+    public void onTurnStart(ArrayList<Event> events) {
         // events.add(new MessageEvent(this, new Message("New turn!", false)));
 
         // For each existing Pokemon: has been moved to DungeonInstance
@@ -380,7 +380,7 @@ public class Floor {
      * @param  weatherEvent - The weather to clean.
      * @return              The Weather Changed Event if the Weather changes.
      */
-    public void removeWeather(WeatherCleanedEvent weatherEvent, ArrayList<DungeonEvent> events) {
+    public void removeWeather(WeatherCleanedEvent weatherEvent, ArrayList<Event> events) {
         ActiveWeather previous = this.currentWeather();
         if (this.currentWeather == weatherEvent.weather)
             this.currentWeather = null;
@@ -401,7 +401,7 @@ public class Floor {
         return this.roomAt(tile.x, tile.y);
     }
 
-    public void setPersistantWeather(PersistantWeatherChangedEvent weatherEvent, ArrayList<DungeonEvent> events) {
+    public void setPersistantWeather(PersistantWeatherChangedEvent weatherEvent, ArrayList<Event> events) {
         ActiveWeather previous = this.currentWeather();
         this.persistantWeather = weatherEvent.weather;
         ActiveWeather next = this.currentWeather();
@@ -418,7 +418,7 @@ public class Floor {
      * @param  weatherEvent - The weather to add.
      * @return              The Weather Changed Event if the Weather changes.
      */
-    public void setWeather(WeatherCreatedEvent weatherEvent, ArrayList<DungeonEvent> events) {
+    public void setWeather(WeatherCreatedEvent weatherEvent, ArrayList<Event> events) {
         ActiveWeather previous = this.currentWeather();
         this.currentWeather = weatherEvent.weather;
         ActiveWeather next = this.currentWeather();
@@ -426,11 +426,11 @@ public class Floor {
             events.add(new WeatherChangedEvent(this, weatherEvent, previous, next));
     }
 
-    public void summonPokemon(DungeonPokemon pokemon, int x, int y, ArrayList<DungeonEvent> events) {
+    public void summonPokemon(DungeonPokemon pokemon, int x, int y, ArrayList<Event> events) {
         this.summonPokemon(pokemon, x, y, events, null);
     }
 
-    public void summonPokemon(DungeonPokemon pokemon, int x, int y, ArrayList<DungeonEvent> events, AI ai) {
+    public void summonPokemon(DungeonPokemon pokemon, int x, int y, ArrayList<Event> events, AI ai) {
         if (!(this.tiles == null || x < 0 || x >= this.tiles.length || y < 0 || y >= this.tiles[x].length))
             this.tileAt(x, y).setPokemon(pokemon);
         if (!this.dungeon.isGeneratingFloor()) {

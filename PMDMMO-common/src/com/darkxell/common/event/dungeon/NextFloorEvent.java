@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.TileType;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.DungeonPokemon;
@@ -12,7 +12,7 @@ import com.darkxell.common.util.Communicable;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonObject;
 
-public class NextFloorEvent extends DungeonEvent implements Communicable {
+public class NextFloorEvent extends Event implements Communicable {
 
     protected Player player;
 
@@ -43,7 +43,7 @@ public class NextFloorEvent extends DungeonEvent implements Communicable {
     }
 
     @Override
-    public ArrayList<DungeonEvent> processServer() {
+    public ArrayList<Event> processServer() {
         this.floor.dungeon.endFloor();
         this.floor.dungeon.currentFloor().onFloorStart(this.resultingEvents);
         return super.processServer();

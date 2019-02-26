@@ -3,8 +3,8 @@ package com.darkxell.common.move;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
-import com.darkxell.common.event.DungeonEvent.MessageEvent;
+import com.darkxell.common.event.Event;
+import com.darkxell.common.event.Event.MessageEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.move.Move.MoveCategory;
@@ -58,7 +58,7 @@ public class MoveEffectCalculator {
             this.modificator.add(status.status);
     }
 
-    protected double accuracyStat(ArrayList<DungeonEvent> events) {
+    protected double accuracyStat(ArrayList<Event> events) {
         Stat acc = Stat.Accuracy;
         int accStage = move.user.stats.getStage(acc);
         accStage = this.modificator.applyStatStageModifications(acc, accStage, move, target, floor, events);
@@ -75,7 +75,7 @@ public class MoveEffectCalculator {
         return accuracy;
     }
 
-    protected int attackStat(ArrayList<DungeonEvent> events) {
+    protected int attackStat(ArrayList<Event> events) {
         Stat atk = move.move.move().category == MoveCategory.Special ? Stat.SpecialAttack : Stat.Attack;
         int atkStage = move.user.stats.getStage(atk);
         atkStage = this.modificator.applyStatStageModifications(atk, atkStage, move, target, floor, events);
@@ -92,7 +92,7 @@ public class MoveEffectCalculator {
         return (int) attack;
     }
 
-    public int compute(ArrayList<DungeonEvent> events) {
+    public int compute(ArrayList<Event> events) {
         int attack = this.attackStat(events);
         int defense = this.defenseStat(events);
         int level = this.user().level();
@@ -125,7 +125,7 @@ public class MoveEffectCalculator {
         return effectiveness;
     }
 
-    protected boolean criticalLands(ArrayList<DungeonEvent> events) {
+    protected boolean criticalLands(ArrayList<Event> events) {
         int crit = move.move.move().critical;
         crit = this.modificator.applyCriticalRateModifications(crit, move, target, floor, events);
         if (this.effectiveness() == PokemonType.SUPER_EFFECTIVE && crit > 40)
@@ -133,7 +133,7 @@ public class MoveEffectCalculator {
         return floor.random.nextInt(100) < crit;
     }
 
-    protected double damageMultiplier(boolean critical, ArrayList<DungeonEvent> events) {
+    protected double damageMultiplier(boolean critical, ArrayList<Event> events) {
         double multiplier = 1;
         multiplier *= this.effectiveness();
         if (move.isStab())
@@ -147,7 +147,7 @@ public class MoveEffectCalculator {
         return multiplier;
     }
 
-    protected int defenseStat(ArrayList<DungeonEvent> events) {
+    protected int defenseStat(ArrayList<Event> events) {
         Stat def = move.move.move().category == MoveCategory.Special ? Stat.SpecialDefense : Stat.Defense;
         int defStage = target.stats.getStage(def);
         defStage = this.modificator.applyStatStageModifications(def, defStage, move, target, floor, events);
@@ -170,7 +170,7 @@ public class MoveEffectCalculator {
         return this.effectiveness;
     }
 
-    protected double evasionStat(ArrayList<DungeonEvent> events) {
+    protected double evasionStat(ArrayList<Event> events) {
         Stat ev = Stat.Evasiveness;
         int evStage = target.stats.getStage(ev);
         evStage = this.modificator.applyStatStageModifications(ev, evStage, move, target, floor, events);
@@ -195,7 +195,7 @@ public class MoveEffectCalculator {
      * @param  floor    - The Floor context.
      * @return          True if this Move misses.
      */
-    public boolean misses(ArrayList<DungeonEvent> events) {
+    public boolean misses(ArrayList<Event> events) {
         if (this.target == null)
             return false;
 

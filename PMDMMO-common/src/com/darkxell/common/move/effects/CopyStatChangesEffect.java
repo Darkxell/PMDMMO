@@ -1,6 +1,6 @@
 package com.darkxell.common.move.effects;
 
-import com.darkxell.common.event.DungeonEvent.MessageEvent;
+import com.darkxell.common.event.Event.MessageEvent;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.event.stats.StatChangedEvent;
 import com.darkxell.common.move.MoveEffect;

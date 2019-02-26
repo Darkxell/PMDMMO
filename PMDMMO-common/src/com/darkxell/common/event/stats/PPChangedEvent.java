@@ -3,12 +3,12 @@ package com.darkxell.common.event.stats;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Message;
 
-public class PPChangedEvent extends DungeonEvent {
+public class PPChangedEvent extends Event {
 
     public static final int CHANGE_ALL_MOVES = 10;
 
@@ -30,7 +30,7 @@ public class PPChangedEvent extends DungeonEvent {
     }
 
     @Override
-    public ArrayList<DungeonEvent> processServer() {
+    public ArrayList<Event> processServer() {
         String mid = this.pp >= 0 ? "moves.pp_restored" : "moves.pp_lost";
         if (this.moveIndex != CHANGE_ALL_MOVES)
             mid = this.pp >= 0 ? "moves.pp_restored_one" : "moves.pp_lost_one";

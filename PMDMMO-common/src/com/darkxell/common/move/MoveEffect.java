@@ -6,8 +6,8 @@ import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.dungeon.floor.room.Room;
-import com.darkxell.common.event.DungeonEvent;
-import com.darkxell.common.event.DungeonEvent.MessageEvent;
+import com.darkxell.common.event.Event;
+import com.darkxell.common.event.Event.MessageEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
@@ -65,7 +65,7 @@ public class MoveEffect implements AffectsPokemon {
         return null;
     }
 
-    protected void createMoves(MoveSelectionEvent moveEvent, ArrayList<DungeonEvent> events) {
+    protected void createMoves(MoveSelectionEvent moveEvent, ArrayList<Event> events) {
         Move m = moveEvent.usedMove().move.move();
 
         DungeonPokemon[] pokemon = this.getTargets(m, moveEvent.usedMove().user, moveEvent.floor);
@@ -236,7 +236,7 @@ public class MoveEffect implements AffectsPokemon {
      *
      * @return <code>true</code> if the Move missed.
      */
-    public boolean mainUse(MoveUseEvent moveEvent, ArrayList<DungeonEvent> events) {
+    public boolean mainUse(MoveUseEvent moveEvent, ArrayList<Event> events) {
         Move move = moveEvent.usedMove.move.move();
         MoveEffectCalculator calculator = this.buildCalculator(moveEvent);
         if (calculator == null)
@@ -264,7 +264,7 @@ public class MoveEffect implements AffectsPokemon {
         return missed;
     }
 
-    public void prepareUse(MoveSelectionEvent moveEvent, ArrayList<DungeonEvent> events) {
+    public void prepareUse(MoveSelectionEvent moveEvent, ArrayList<Event> events) {
         this.createMoves(moveEvent, events);
         if (events.size() == 0 && this != MoveEffects.Basic_attack)
             events.add(new MessageEvent(moveEvent.floor, moveEvent, new Message("move.no_target")));
@@ -277,7 +277,7 @@ public class MoveEffect implements AffectsPokemon {
      * @param target    - The target Pokemon.
      * @param events    - The event list to add the MoveUseEvent to.
      */
-    protected void useOn(MoveSelectionEvent moveEvent, DungeonPokemon target, ArrayList<DungeonEvent> events) {
+    protected void useOn(MoveSelectionEvent moveEvent, DungeonPokemon target, ArrayList<Event> events) {
         events.add(new MoveUseEvent(moveEvent.floor, moveEvent, moveEvent.usedMove(), target));
     }
 

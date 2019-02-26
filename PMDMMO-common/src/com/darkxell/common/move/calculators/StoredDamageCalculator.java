@@ -2,7 +2,7 @@ package com.darkxell.common.move.calculators;
 
 import java.util.ArrayList;
 
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.move.MoveEffectCalculator;
 import com.darkxell.common.status.AppliedStatusCondition;
@@ -16,7 +16,7 @@ public class StoredDamageCalculator extends MoveEffectCalculator {
     }
 
     @Override
-    public int compute(ArrayList<DungeonEvent> events) {
+    public int compute(ArrayList<Event> events) {
         AppliedStatusCondition storer = this.move.user.getStatusCondition(StatusConditions.Bide);
         if (storer == null) {
             Logger.e("Pokemon used " + this.move().name() + " but had no Bide status!");

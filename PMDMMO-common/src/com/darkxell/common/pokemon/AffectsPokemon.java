@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.ai.visibility.Visibility.VisibleObjectType;
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.item.Item;
@@ -42,7 +42,7 @@ public interface AffectsPokemon {
      * @return          The new critical hit rate with modifications applied by this object.
      */
     public default int applyCriticalRateModifications(int critical, MoveUse move, DungeonPokemon target, boolean isUser,
-            Floor floor, ArrayList<DungeonEvent> events) {
+            Floor floor, ArrayList<Event> events) {
         return critical;
     }
 
@@ -57,7 +57,7 @@ public interface AffectsPokemon {
      * @return           The new damage with modifications applied by this object.
      */
     public default double applyDamageModifications(double damage, boolean isUser, MoveUseEvent moveEvent,
-            ArrayList<DungeonEvent> events) {
+            ArrayList<Event> events) {
         return damage;
     }
 
@@ -94,7 +94,7 @@ public interface AffectsPokemon {
      * @return           The new value of the Stat with modifications applied by this object.
      */
     public default double applyStatModifications(Stat stat, double value, MoveUse move, DungeonPokemon target,
-            boolean isUser, Floor floor, MoveUseEvent moveEvent, ArrayList<DungeonEvent> events) {
+            boolean isUser, Floor floor, MoveUseEvent moveEvent, ArrayList<Event> events) {
         return value;
     }
 
@@ -113,7 +113,7 @@ public interface AffectsPokemon {
      * @return        The new stage of the Stat with modifications applied by this object.
      */
     public default int applyStatStageModifications(Stat stat, int stage, MoveUse move, DungeonPokemon target,
-            boolean isUser, Floor floor, ArrayList<DungeonEvent> events) {
+            boolean isUser, Floor floor, ArrayList<Event> events) {
         return stage;
     }
 
@@ -126,7 +126,7 @@ public interface AffectsPokemon {
      * @param  events    - The current Events being generated.
      * @return           The multiplier to add to the final damage value (damage *= returned_multiplier).
      */
-    public default double damageMultiplier(boolean isUser, MoveUseEvent moveEvent, ArrayList<DungeonEvent> events) {
+    public default double damageMultiplier(boolean isUser, MoveUseEvent moveEvent, ArrayList<Event> events) {
         return 1;
     }
 

@@ -2,7 +2,7 @@ package com.darkxell.common.item.effects;
 
 import java.util.ArrayList;
 
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.item.ItemUseEvent;
 import com.darkxell.common.event.pokemon.IncreasedIQEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
@@ -44,7 +44,7 @@ public class GummiItemEffect extends FoodItemEffect {
     }
 
     @Override
-    public void use(ItemUseEvent itemEvent, ArrayList<DungeonEvent> events) {
+    public void use(ItemUseEvent itemEvent, ArrayList<Event> events) {
         events.add(
                 new IncreasedIQEvent(itemEvent.floor, itemEvent, itemEvent.target, this.iqIncrease(itemEvent.target)));
     }
