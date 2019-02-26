@@ -2,7 +2,7 @@ package com.darkxell.common.ai.states;
 
 import com.darkxell.common.ai.AI;
 import com.darkxell.common.ai.AI.AIState;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.event.action.TurnSkippedEvent;
 
@@ -13,7 +13,7 @@ public class AIStatePlayerControl extends AIState {
     }
 
     @Override
-    public DungeonEvent takeAction() {
+    public Event takeAction() {
         return new TurnSkippedEvent(this.ai.floor, DungeonEventSource.PLAYER_ACTION, this.ai.pokemon);
     }
 

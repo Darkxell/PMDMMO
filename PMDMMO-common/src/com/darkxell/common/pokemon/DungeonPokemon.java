@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.DungeonEventListener;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.Item.ItemAction;
@@ -364,7 +364,7 @@ public class DungeonPokemon implements ItemContainer, DungeonEventListener {
     }
 
     /** Called when this Pokemon enters a new Floor or when it spawns. */
-    public void onFloorStart(Floor floor, ArrayList<DungeonEvent> events) {
+    public void onFloorStart(Floor floor, ArrayList<Event> events) {
         this.statusConditions.clear();
         this.stats.onFloorStart(floor, events);
         this.ability().onFloorStart(floor, this, events);
@@ -375,8 +375,8 @@ public class DungeonPokemon implements ItemContainer, DungeonEventListener {
     }
 
     @Override
-    public void onPostEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned,
-            ArrayList<DungeonEvent> resultingEvents) {
+    public void onPostEvent(Floor floor, Event event, DungeonPokemon concerned,
+            ArrayList<Event> resultingEvents) {
         DungeonEventListener.super.onPostEvent(floor, event, concerned, resultingEvents);
 
         if (this.hasItem())
@@ -385,8 +385,8 @@ public class DungeonPokemon implements ItemContainer, DungeonEventListener {
     }
 
     @Override
-    public void onPreEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned,
-            ArrayList<DungeonEvent> resultingEvents) {
+    public void onPreEvent(Floor floor, Event event, DungeonPokemon concerned,
+            ArrayList<Event> resultingEvents) {
         DungeonEventListener.super.onPreEvent(floor, event, concerned, resultingEvents);
 
         if (this.hasItem())
@@ -395,7 +395,7 @@ public class DungeonPokemon implements ItemContainer, DungeonEventListener {
     }
 
     /** Called at the beginning of each turn. */
-    public void onTurnStart(Floor floor, ArrayList<DungeonEvent> events) {
+    public void onTurnStart(Floor floor, ArrayList<Event> events) {
         if (this.canRegen()) {
             int recoveryRate = 200;
             int healthGain = 0;

@@ -3,12 +3,12 @@ package com.darkxell.common.event.pokemon;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.status.AppliedStatusCondition;
 import com.darkxell.common.util.language.Message;
 
-public class StatusConditionEndedEvent extends DungeonEvent {
+public class StatusConditionEndedEvent extends Event {
     public enum StatusConditionEndReason {
         /** If it was stopped by another effect. */
         BROKEN,
@@ -37,7 +37,7 @@ public class StatusConditionEndedEvent extends DungeonEvent {
     }
 
     @Override
-    public ArrayList<DungeonEvent> processServer() {
+    public ArrayList<Event> processServer() {
         if (this.condition.pokemon.removeStatusCondition(this.condition)) {
             this.condition.onConditionEnd(this, this.resultingEvents);
             Message m = this.condition.endMessage();

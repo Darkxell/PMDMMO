@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.StatusConditionCreatedEvent;
@@ -30,7 +30,7 @@ public class AbilityEffectSpore extends AbilityOnHit {
 
     @Override
     protected void onHit(Floor floor, DamageDealtEvent event, MoveUse source, TriggeredAbilityEvent abilityEvent,
-            ArrayList<DungeonEvent> resultingEvents) {
+            ArrayList<Event> resultingEvents) {
         if (!this.isImmune(floor, source.user)) {
             StatusCondition condition = RandomUtil.random(Arrays.asList(this.conditions), floor.random);
 

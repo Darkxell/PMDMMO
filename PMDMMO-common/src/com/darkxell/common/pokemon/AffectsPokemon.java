@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.ai.visibility.Visibility.VisibleObjectType;
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.item.Item;
@@ -34,20 +34,24 @@ public interface AffectsPokemon {
      * @param isUser - <code>true</code> if this Object belongs to the Move's user (if it's its ability or an item it holds).
      * @param events - The current Events being generated.
      *
-     * @return The new critical hit rate with modifications applied by this object. */
-    public default int applyCriticalRateModifications(int critical, MoveUse move, DungeonPokemon target, boolean isUser, Floor floor,
-            ArrayList<DungeonEvent> events) {
+     * @return          The new critical hit rate with modifications applied by this object.
+     */
+    public default int applyCriticalRateModifications(int critical, MoveUse move, DungeonPokemon target, boolean isUser,
+            Floor floor, ArrayList<Event> events) {
         return critical;
     }
 
     /** Called when a Pokemon uses a damaging move. Modifies the damage output.
      *
-     * @param damage - The damage to be dealt.
-     * @param isUser - <code>true</code> if this Object belongs to the Move's user (if it's its ability or an item it holds).
-     * @param moveEvent TODO
-     * @param events - The current Events being generated.
-     * @return The new damage with modifications applied by this object. */
-    public default double applyDamageModifications(double damage, boolean isUser, MoveUseEvent moveEvent, ArrayList<DungeonEvent> events) {
+     * @param  damage    - The damage to be dealt.
+     * @param  isUser    - <code>true</code> if this Object belongs to the Move's user (if it's its ability or an item
+     *                   it holds).
+     * @param  moveEvent TODO
+     * @param  events    - The current Events being generated.
+     * @return           The new damage with modifications applied by this object.
+     */
+    public default double applyDamageModifications(double damage, boolean isUser, MoveUseEvent moveEvent,
+            ArrayList<Event> events) {
         return damage;
     }
 
@@ -66,16 +70,19 @@ public interface AffectsPokemon {
 
     /** Called when a Pokemon uses a damaging move. Modifies the value of the input Stat. (If attack or accuracy, it's for the user; if defense or evasion, it's for the target.) Can also be called to compute a Pokemon's speed.
      *
-     * @param stat - The Stat to modify.
-     * @param value - The value of the Stat before this object applies its modifications.
-     * @param move - The Move use context. May be <code>null</code> if this calculation is not part of a move use.
-     * @param target - The Pokemon the move was used on.
-     * @param isUser - <code>true</code> if this Object belongs to the Move's user (if it's its ability or an item it holds).
-     * @param moveEvent - The move that was used and requires that stat modification. May be {@code null} if this method computes Speed.
-     * @param events - The current Events being generated.
-     * @return The new value of the Stat with modifications applied by this object. */
-    public default double applyStatModifications(Stat stat, double value, MoveUse move, DungeonPokemon target, boolean isUser, Floor floor,
-            MoveUseEvent moveEvent, ArrayList<DungeonEvent> events) {
+     * @param  stat      - The Stat to modify.
+     * @param  value     - The value of the Stat before this object applies its modifications.
+     * @param  move      - The Move use context. May be <code>null</code> if this calculation is not part of a move use.
+     * @param  target    - The Pokemon the move was used on.
+     * @param  isUser    - <code>true</code> if this Object belongs to the Move's user (if it's its ability or an item
+     *                   it holds).
+     * @param  moveEvent - The move that was used and requires that stat modification. May be {@code null} if this
+     *                   method computes Speed.
+     * @param  events    - The current Events being generated.
+     * @return           The new value of the Stat with modifications applied by this object.
+     */
+    public default double applyStatModifications(Stat stat, double value, MoveUse move, DungeonPokemon target,
+            boolean isUser, Floor floor, MoveUseEvent moveEvent, ArrayList<Event> events) {
         return value;
     }
 
@@ -88,19 +95,22 @@ public interface AffectsPokemon {
      * @param isUser - <code>true</code> if this Object belongs to the Move's user (if it's its ability or an item it holds).
      * @param events - The current Events being generated.
      *
-     * @return The new stage of the Stat with modifications applied by this object. */
-    public default int applyStatStageModifications(Stat stat, int stage, MoveUse move, DungeonPokemon target, boolean isUser, Floor floor,
-            ArrayList<DungeonEvent> events) {
+     * @return        The new stage of the Stat with modifications applied by this object.
+     */
+    public default int applyStatStageModifications(Stat stat, int stage, MoveUse move, DungeonPokemon target,
+            boolean isUser, Floor floor, ArrayList<Event> events) {
         return stage;
     }
 
     /** Called when a Pokemon uses a damaging move. Returns a damage multiplier to add to the final damage value.
      *
-     * @param isUser - <code>true</code> if this Object belongs to the Move's user (if it's its ability or an item it holds).
-     * @param moveEvent TODO
-     * @param events - The current Events being generated.
-     * @return The multiplier to add to the final damage value (damage *= returned_multiplier). */
-    public default double damageMultiplier(boolean isUser, MoveUseEvent moveEvent, ArrayList<DungeonEvent> events) {
+     * @param  isUser    - <code>true</code> if this Object belongs to the Move's user (if it's its ability or an item
+     *                   it holds).
+     * @param  moveEvent TODO
+     * @param  events    - The current Events being generated.
+     * @return           The multiplier to add to the final damage value (damage *= returned_multiplier).
+     */
+    public default double damageMultiplier(boolean isUser, MoveUseEvent moveEvent, ArrayList<Event> events) {
         return 1;
     }
 

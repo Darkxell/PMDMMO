@@ -16,9 +16,9 @@ public class DungeonUtils {
         turns.removeIf(turn -> turn.floor.id != floor.id);
         for (int i = turns.size() - 1; i >= 0; --i) {
             GameTurn turn = turns.get(i);
-            DungeonEvent[] events = turn.events();
+            Event[] events = turn.events();
             for (int e = events.length - 1; e >= 0; --e) {
-                DungeonEvent event = events[e];
+                Event event = events[e];
                 if (event instanceof MoveSelectionEvent) {
                     MoveSelectionEvent moveEvent = (MoveSelectionEvent) event;
                     if (moveEvent.usedMove().user == pokemon) {

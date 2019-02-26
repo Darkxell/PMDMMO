@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.darkxell.common.ai.AIUtils;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageSource;
@@ -19,7 +19,7 @@ import com.darkxell.common.pokemon.DungeonPokemon.DungeonPokemonType;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.language.Message;
 
-public class ProjectileThrownEvent extends DungeonEvent implements DamageSource {
+public class ProjectileThrownEvent extends Event implements DamageSource {
 
     public final Tile destination;
     public final Direction direction;
@@ -49,7 +49,7 @@ public class ProjectileThrownEvent extends DungeonEvent implements DamageSource 
     }
 
     @Override
-    public ArrayList<DungeonEvent> processServer() {
+    public ArrayList<Event> processServer() {
         if (this.item.effect() instanceof ThrowableItemEffect && this.destination.getPokemon() != null) {
             this.resultingEvents.add(new DamageDealtEvent(this.floor, this, this.destination.getPokemon(), this, DamageType.ITEM,
                     ((ThrowableItemEffect) this.item.effect()).damage));

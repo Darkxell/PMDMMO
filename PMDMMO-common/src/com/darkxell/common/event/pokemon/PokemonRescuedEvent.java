@@ -3,7 +3,7 @@ package com.darkxell.common.event.pokemon;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.event.dungeon.MissionClearedEvent;
 import com.darkxell.common.mission.DungeonMission;
@@ -16,7 +16,7 @@ import com.darkxell.common.util.language.Message;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonObject;
 
-public class PokemonRescuedEvent extends DungeonEvent implements Communicable {
+public class PokemonRescuedEvent extends Event implements Communicable {
 
     protected DungeonMission mission;
     protected DungeonPokemon rescued;
@@ -39,8 +39,9 @@ public class PokemonRescuedEvent extends DungeonEvent implements Communicable {
     }
 
     @Override
-    public ArrayList<DungeonEvent> processServer() {
-        if (this.rescued.type != DungeonPokemonType.RESCUEABLE) return super.processServer();
+    public ArrayList<Event> processServer() {
+        if (this.rescued.type != DungeonPokemonType.RESCUEABLE)
+            return super.processServer();
         this.floor.unsummonPokemon(this.rescued);
         this.resultingEvents
                 .add(new MessageEvent(this.floor, this, new Message("mission.rescued").addReplacement("<pokemon>", this.rescued.getNickname())));

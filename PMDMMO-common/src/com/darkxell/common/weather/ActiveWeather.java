@@ -3,7 +3,7 @@ package com.darkxell.common.weather;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.event.dungeon.weather.WeatherCleanedEvent;
 
@@ -33,7 +33,7 @@ public class ActiveWeather {
         return this.tick >= this.duration;
     }
 
-    public void update(ArrayList<DungeonEvent> events) {
+    public void update(ArrayList<Event> events) {
         boolean isOver = false;
 
         ++this.tick;

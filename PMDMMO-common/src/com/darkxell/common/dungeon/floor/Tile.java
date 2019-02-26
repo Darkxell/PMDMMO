@@ -6,8 +6,8 @@ import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
-import com.darkxell.common.event.DungeonEvent;
-import com.darkxell.common.event.DungeonEvent.MessageEvent;
+import com.darkxell.common.event.Event;
+import com.darkxell.common.event.Event.MessageEvent;
 import com.darkxell.common.event.action.PokemonTravelEvent;
 import com.darkxell.common.event.dungeon.TrapSteppedOnEvent;
 import com.darkxell.common.event.item.ItemMovedEvent;
@@ -231,7 +231,7 @@ public class Tile implements ItemContainer, Comparable<Tile> {
     }
 
     /** Called when a Pokemon steps on this Tile. */
-    public void onPokemonStep(PokemonTravelEvent travelEvent, ArrayList<DungeonEvent> events) {
+    public void onPokemonStep(PokemonTravelEvent travelEvent, ArrayList<Event> events) {
         if (this.hasItem()) {
             ItemStack i = this.getItem();
             int index = pokemon.player() == null ? -1 : pokemon.player().inventory().canAccept(i);

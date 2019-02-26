@@ -2,7 +2,7 @@ package com.darkxell.common.move.effects;
 
 import java.util.ArrayList;
 
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.move.MoveEffect;
@@ -24,7 +24,7 @@ public class StoredDamageEffect extends MoveEffect {
     }
 
     @Override
-    public void prepareUse(MoveSelectionEvent moveEvent, ArrayList<DungeonEvent> events) {
+    public void prepareUse(MoveSelectionEvent moveEvent, ArrayList<Event> events) {
         super.prepareUse(moveEvent, events);
         AppliedStatusCondition storer = moveEvent.usedMove().user.getStatusCondition(StatusConditions.Bide);
         if (storer == null) Logger.e("Pokemon used " + moveEvent.usedMove().move.move().name() + " but had no Bide status!");

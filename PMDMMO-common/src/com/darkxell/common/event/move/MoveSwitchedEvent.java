@@ -3,14 +3,14 @@ package com.darkxell.common.event.move;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.Communicable;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonObject;
 
-public class MoveSwitchedEvent extends DungeonEvent implements Communicable {
+public class MoveSwitchedEvent extends Event implements Communicable {
 
     /** The indices of the switched moves. */
     private int from, to;
@@ -42,7 +42,7 @@ public class MoveSwitchedEvent extends DungeonEvent implements Communicable {
     }
 
     @Override
-    public ArrayList<DungeonEvent> processServer() {
+    public ArrayList<Event> processServer() {
         this.pokemon.switchMoves(this.from, this.to);
         return super.processServer();
     }

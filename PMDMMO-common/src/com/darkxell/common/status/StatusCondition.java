@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.DungeonEventListener;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageSource;
 import com.darkxell.common.event.pokemon.StatusConditionEndedEvent;
@@ -59,13 +59,13 @@ public class StatusCondition extends Status implements AffectsPokemon, DamageSou
         return new Message("status." + this.id);
     }
 
-    public void onEnd(StatusConditionEndedEvent event, ArrayList<DungeonEvent> events) {
+    public void onEnd(StatusConditionEndedEvent event, ArrayList<Event> events) {
     }
 
-    public void onStart(Floor floor, AppliedStatusCondition instance, ArrayList<DungeonEvent> events) {
+    public void onStart(Floor floor, AppliedStatusCondition instance, ArrayList<Event> events) {
     }
 
-    public void tick(Floor floor, AppliedStatusCondition instance, ArrayList<DungeonEvent> events) {
+    public void tick(Floor floor, AppliedStatusCondition instance, ArrayList<Event> events) {
     }
 
 }

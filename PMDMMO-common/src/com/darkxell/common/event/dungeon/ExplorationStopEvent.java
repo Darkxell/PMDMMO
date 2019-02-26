@@ -2,10 +2,10 @@ package com.darkxell.common.event.dungeon;
 
 import com.darkxell.common.dungeon.DungeonOutcome;
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.DungeonEventSource;
 
-public class ExplorationStopEvent extends DungeonEvent {
+public class ExplorationStopEvent extends Event {
 
     public final DungeonOutcome outcome;
 

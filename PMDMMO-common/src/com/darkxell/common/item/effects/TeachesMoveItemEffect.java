@@ -2,7 +2,7 @@ package com.darkxell.common.item.effects;
 
 import java.util.ArrayList;
 
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.item.ItemUseEvent;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.ItemStack;
@@ -26,7 +26,7 @@ public class TeachesMoveItemEffect extends TeachesMoveRenewableItemEffect {
     }
 
     @Override
-    public void use(ItemUseEvent itemEvent, ArrayList<DungeonEvent> events) {
+    public void use(ItemUseEvent itemEvent, ArrayList<Event> events) {
         if (itemEvent.user.player() != null)
             if (itemEvent.user.player().inventory().isFull()) itemEvent.user.tile().setItem(new ItemStack(-1 * itemEvent.item.id));
             else itemEvent.user.player().inventory().addItem(new ItemStack(-1 * itemEvent.item.id));

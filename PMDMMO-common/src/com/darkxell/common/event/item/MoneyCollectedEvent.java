@@ -4,13 +4,13 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Message;
 
-public class MoneyCollectedEvent extends DungeonEvent {
+public class MoneyCollectedEvent extends Event {
 
     public final ItemStack moneyItem;
     public final DungeonPokemon pokemon;
@@ -29,7 +29,7 @@ public class MoneyCollectedEvent extends DungeonEvent {
     }
 
     @Override
-    public ArrayList<DungeonEvent> processServer() {
+    public ArrayList<Event> processServer() {
         this.messages.add(new Message("ground.pickup").addReplacement("<pokemon>", this.pokemon.getNickname())
                 .addReplacement("<item>", this.moneyItem.name()));
         this.tile.setItem(null);

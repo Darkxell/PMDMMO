@@ -9,10 +9,10 @@ import com.darkxell.common.util.Communicable;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.language.Message;
 
-public abstract class DungeonEvent implements DungeonEventSource {
+public abstract class Event implements DungeonEventSource {
 
     /** Event that only displays a message. */
-    public static class MessageEvent extends DungeonEvent {
+    public static class MessageEvent extends Event {
 
         /** If not null, will only be displayed for this Player. */
         public final Player target;
@@ -55,13 +55,13 @@ public abstract class DungeonEvent implements DungeonEventSource {
     /** The priority of this DungeonEvent. */
     protected byte priority;
     /** The events that resulted from this Event. */
-    protected ArrayList<DungeonEvent> resultingEvents;
+    protected ArrayList<Event> resultingEvents;
 
-    public DungeonEvent(Floor floor, DungeonEventSource eventSource) {
+    public Event(Floor floor, DungeonEventSource eventSource) {
         this(floor, eventSource, null);
     }
 
-    public DungeonEvent(Floor floor, DungeonEventSource eventSource, DungeonPokemon actor) {
+    public Event(Floor floor, DungeonEventSource eventSource, DungeonPokemon actor) {
         this.floor = floor;
         this.eventSource = eventSource;
         this.setActor(actor);
@@ -78,12 +78,12 @@ public abstract class DungeonEvent implements DungeonEventSource {
         if (!this.hasFlag(flag)) this.flags += (this.flags.equals("") ? "" : "|") + flag;
     }
 
-    public void cloneFlags(DungeonEvent event) {
+    public void cloneFlags(Event event) {
         for (String flag : event.flags.split(""))
             this.addFlag(flag);
     }
 
-    /** Sets {@link DungeonEvent#isConsumed} to true. */
+    /** Sets {@link Event#isConsumed} to true. */
     public void consume() {
         this.isConsumed = true;
     }
@@ -99,8 +99,8 @@ public abstract class DungeonEvent implements DungeonEventSource {
     }
 
     /** @return The events that resulted from this Event. */
-    public DungeonEvent[] getResultingEvents() {
-        return this.resultingEvents.toArray(new DungeonEvent[0]);
+    public Event[] getResultingEvents() {
+        return this.resultingEvents.toArray(new Event[0]);
     }
 
     public boolean hasFlag(String flag) {
@@ -112,7 +112,7 @@ public abstract class DungeonEvent implements DungeonEventSource {
         return this.actor != null;
     }
 
-    /** @return {@link DungeonEvent#isConsumed}. */
+    /** @return {@link Event#isConsumed}. */
     public boolean isConsumed() {
         return this.isConsumed;
     }
@@ -135,8 +135,9 @@ public abstract class DungeonEvent implements DungeonEventSource {
 
     /** Processes this Event server-side.
      *
-     * @return The list of resulting Events. */
-    public ArrayList<DungeonEvent> processServer() {
+     * @return The list of resulting Events.
+     */
+    public ArrayList<Event> processServer() {
         return this.resultingEvents;
     }
 
@@ -145,12 +146,12 @@ public abstract class DungeonEvent implements DungeonEventSource {
     }
 
     /** Defines this Event as a PAE. Make sure this Event implements Communicable and has a (Floor) Constructor. */
-    public DungeonEvent setPAE() {
+    public Event setPAE() {
         this.isPAE = true;
         return this;
     }
 
-    public DungeonEvent setPriority(byte priority) {
+    public Event setPriority(byte priority) {
         this.priority = priority;
         return this;
     }

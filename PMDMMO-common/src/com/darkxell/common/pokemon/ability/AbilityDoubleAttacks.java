@@ -3,7 +3,7 @@ package com.darkxell.common.pokemon.ability;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.pokemon.TriggeredAbilityEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
@@ -20,7 +20,8 @@ public class AbilityDoubleAttacks extends Ability {
     }
 
     @Override
-    public void onPostEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned, ArrayList<DungeonEvent> resultingEvents) {
+    public void onPostEvent(Floor floor, Event event, DungeonPokemon concerned,
+            ArrayList<Event> resultingEvents) {
         super.onPostEvent(floor, event, concerned, resultingEvents);
         if (event instanceof MoveSelectionEvent && !event.hasFlag("isdoubled")) {
             MoveSelectionEvent e = (MoveSelectionEvent) event;
@@ -34,13 +35,14 @@ public class AbilityDoubleAttacks extends Ability {
                 }
 
             if (active) {
-                DungeonEvent abilityevent = new TriggeredAbilityEvent(floor, event, e.usedMove().user).setPriority(DungeonEvent.PRIORITY_ACTION_END);
+                Event abilityevent = new TriggeredAbilityEvent(floor, event, e.usedMove().user)
+                        .setPriority(Event.PRIORITY_ACTION_END);
                 resultingEvents.add(abilityevent);
                 MoveSelectionEvent n = new MoveSelectionEvent(e.floor, abilityevent, e.usedMove().move, e.usedMove().user, e.usedMove().direction);
                 e.addFlag("isdoubled");
                 n.addFlag("isdoubled");
                 n.setConsumesNoPP();
-                n.setPriority(DungeonEvent.PRIORITY_ACTION_END);
+                n.setPriority(Event.PRIORITY_ACTION_END);
                 resultingEvents.add(n);
             }
         }

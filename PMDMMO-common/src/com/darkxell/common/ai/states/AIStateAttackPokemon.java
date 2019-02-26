@@ -2,7 +2,7 @@ package com.darkxell.common.ai.states;
 
 import com.darkxell.common.ai.AI;
 import com.darkxell.common.ai.AIUtils;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
@@ -16,7 +16,7 @@ public class AIStateAttackPokemon extends AIStateFollowPokemon {
     }
 
     @Override
-    public DungeonEvent takeAction() {
+    public Event takeAction() {
         // Only attack if adjacent. TODO Change Attack AI to take Move ranges into account.
         if (AIUtils.isAdjacentTo(this.ai.pokemon, this.target, true) && this.ai.pokemon.canAttack(this.ai.floor)) {
             // Choose a move at random.

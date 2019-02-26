@@ -2,7 +2,7 @@ package com.darkxell.common.move.effects;
 
 import java.util.ArrayList;
 
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.move.Move;
@@ -59,9 +59,9 @@ public class MultipleAttacksEffect extends MoveEffect {
     }
 
     @Override
-    protected void useOn(MoveSelectionEvent moveEvent, DungeonPokemon target, ArrayList<DungeonEvent> events) {
+    protected void useOn(MoveSelectionEvent moveEvent, DungeonPokemon target, ArrayList<Event> events) {
         super.useOn(moveEvent, target, events);
-        for (DungeonEvent e : events)
+        for (Event e : events)
             if (e instanceof MoveUseEvent) {
                 MoveUseEvent event = (MoveUseEvent) e;
                 if (event.usedMove.move.move().effect() == this) {

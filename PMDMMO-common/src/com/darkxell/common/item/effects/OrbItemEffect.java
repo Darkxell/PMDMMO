@@ -2,8 +2,8 @@ package com.darkxell.common.item.effects;
 
 import java.util.ArrayList;
 
-import com.darkxell.common.event.DungeonEvent;
-import com.darkxell.common.event.DungeonEvent.MessageEvent;
+import com.darkxell.common.event.Event;
+import com.darkxell.common.event.Event.MessageEvent;
 import com.darkxell.common.event.item.ItemUseEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.item.Item;
@@ -37,7 +37,7 @@ public class OrbItemEffect extends ItemEffect {
     }
 
     @Override
-    public final void use(ItemUseEvent itemEvent, ArrayList<DungeonEvent> events) {
+    public final void use(ItemUseEvent itemEvent, ArrayList<Event> events) {
         if (itemEvent.floor.data.isBossFloor())
             events.add(new MessageEvent(itemEvent.floor, itemEvent, new Message("item.orb.boss")));
         else events.add(new MoveSelectionEvent(itemEvent.floor, itemEvent, new LearnedMove(this.moveID), itemEvent.user,

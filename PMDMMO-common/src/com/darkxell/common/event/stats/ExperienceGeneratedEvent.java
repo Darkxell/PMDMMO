@@ -3,12 +3,12 @@ package com.darkxell.common.event.stats;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.Pokemon;
 
-public class ExperienceGeneratedEvent extends DungeonEvent {
+public class ExperienceGeneratedEvent extends Event {
 
     /** The experience gained. */
     public int experience;
@@ -28,9 +28,10 @@ public class ExperienceGeneratedEvent extends DungeonEvent {
     }
 
     @Override
-    public ArrayList<DungeonEvent> processServer() {
-        if (this.experience > 0) for (Pokemon member : this.player.getTeam())
-            this.resultingEvents.add(new ExperienceGainedEvent(this.floor, this, member, this.experience));
+    public ArrayList<Event> processServer() {
+        if (this.experience > 0)
+            for (Pokemon member : this.player.getTeam())
+                this.resultingEvents.add(new ExperienceGainedEvent(this.floor, this, member, this.experience));
         return super.processServer();
     }
 

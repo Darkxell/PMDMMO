@@ -3,15 +3,15 @@ package com.darkxell.common.event.stats;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.pokemon.BaseStats.Stat;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Message;
 
-public class StatChangedEvent extends DungeonEvent {
-    public static final String[] MESSAGES = new String[] { "stat.decrease.3", "stat.decrease.2", "stat.decrease.1", null, "stat.increase.1",
-            "stat.increase.2", "stat.increase.3", };
+public class StatChangedEvent extends Event {
+    public static final String[] MESSAGES = new String[] { "stat.decrease.3", "stat.decrease.2", "stat.decrease.1",
+            null, "stat.increase.1", "stat.increase.2", "stat.increase.3", };
 
     private int effectiveChange = 0;
     public final int stage;
@@ -40,7 +40,7 @@ public class StatChangedEvent extends DungeonEvent {
     }
 
     @Override
-    public ArrayList<DungeonEvent> processServer() {
+    public ArrayList<Event> processServer() {
         this.effectiveChange = this.target.stats.effectiveChange(this.stat, this.stage);
 
         if (this.effectiveChange != 0) {

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.jdom2.Element;
 
 import com.darkxell.common.Registrable;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
@@ -228,7 +228,7 @@ public class Move implements Registrable<Move> {
      * @param  moveEvent  - The used move.
      * @return       The Events created by this selection. Creates MoveUseEvents, distributing this Move on targets.
      */
-    public final void prepareUse(MoveSelectionEvent moveEvent, ArrayList<DungeonEvent> events) {
+    public final void prepareUse(MoveSelectionEvent moveEvent, ArrayList<Event> events) {
         this.effect().prepareUse(moveEvent, events);
     }
 
@@ -269,7 +269,7 @@ public class Move implements Registrable<Move> {
      * @param  events   - The events resulting from this Move. They typically include damage, healing, stat changes...
      * @return          <code>true</code> if the Move missed.
      */
-    public boolean useOn(MoveUseEvent moveEvent, ArrayList<DungeonEvent> events) {
+    public boolean useOn(MoveUseEvent moveEvent, ArrayList<Event> events) {
         return this.effect().mainUse(moveEvent, events);
     }
 }

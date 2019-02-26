@@ -3,7 +3,7 @@ package com.darkxell.common.event.action;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.event.stats.BellyChangedEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
@@ -12,7 +12,7 @@ import com.darkxell.common.util.Communicable;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonObject;
 
-public class TurnSkippedEvent extends DungeonEvent implements Communicable {
+public class TurnSkippedEvent extends Event implements Communicable {
 
     private DungeonPokemon pokemon;
 
@@ -38,7 +38,7 @@ public class TurnSkippedEvent extends DungeonEvent implements Communicable {
     }
 
     @Override
-    public ArrayList<DungeonEvent> processServer() {
+    public ArrayList<Event> processServer() {
         if (this.pokemon.isTeamLeader())
             this.resultingEvents.add(new BellyChangedEvent(this.floor, this, this.pokemon, -.1 * this.pokemon.energyMultiplier()));
         return super.processServer();

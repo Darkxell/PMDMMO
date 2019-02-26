@@ -3,7 +3,7 @@ package com.darkxell.common.status.conditions;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.status.AppliedStatusCondition;
 
 public class PeriodicPercentDamageStatusCondition extends PeriodicDamageStatusCondition {
@@ -14,7 +14,7 @@ public class PeriodicPercentDamageStatusCondition extends PeriodicDamageStatusCo
     }
 
     @Override
-    protected int damageDealt(Floor floor, AppliedStatusCondition instance, ArrayList<DungeonEvent> events) {
+    protected int damageDealt(Floor floor, AppliedStatusCondition instance, ArrayList<Event> events) {
         return (int) (instance.pokemon.getMaxHP() * this.damage);
     }
 

@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.event.dungeon.weather.WeatherDamageEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageSource;
@@ -35,8 +35,8 @@ public class WeatherDamaging extends Weather implements DamageSource {
     }
 
     @Override
-    public ArrayList<DungeonEvent> weatherTick(Floor floor, int tick) {
-        ArrayList<DungeonEvent> e = super.weatherTick(floor, tick);
+    public ArrayList<Event> weatherTick(Floor floor, int tick) {
+        ArrayList<Event> e = super.weatherTick(floor, tick);
         if (tick % this.period == 0) {
             ArrayList<DungeonPokemon> pokemon = floor.listPokemon();
             pokemon.removeIf(pokemon1 -> {

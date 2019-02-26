@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.player.Inventory;
@@ -12,7 +12,7 @@ import com.darkxell.common.player.ItemContainer;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.Pokemon;
 
-public class ItemCreatedEvent extends DungeonEvent {
+public class ItemCreatedEvent extends Event {
 
     public final ItemContainer container;
     public final ItemStack item;
@@ -29,7 +29,7 @@ public class ItemCreatedEvent extends DungeonEvent {
     }
 
     @Override
-    public ArrayList<DungeonEvent> processServer() {
+    public ArrayList<Event> processServer() {
         this.floor.dungeon.communication.itemIDs.register(this.item, this.container instanceof Pokemon
                 ? ((Pokemon) this.container)
                 : this.container instanceof DungeonPokemon ? ((DungeonPokemon) this.container).usedPokemon : null);

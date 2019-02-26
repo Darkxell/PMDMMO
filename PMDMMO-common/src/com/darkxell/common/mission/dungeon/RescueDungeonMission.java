@@ -6,7 +6,7 @@ import com.darkxell.common.Registries;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.mission.DungeonMission;
 import com.darkxell.common.mission.Mission;
 import com.darkxell.common.player.Player;
@@ -28,12 +28,12 @@ public class RescueDungeonMission extends DungeonMission {
     }
 
     @Override
-    protected boolean clearsMissionTF(DungeonEvent event) {
+    protected boolean clearsMissionTF(Event event) {
         return false;
     }
 
     @Override
-    protected void onTargetFloorStart(Floor floor, ArrayList<DungeonEvent> events) {
+    protected void onTargetFloorStart(Floor floor, ArrayList<Event> events) {
         super.onTargetFloorStart(floor, events);
 
         this.rescueme = new DungeonPokemon(

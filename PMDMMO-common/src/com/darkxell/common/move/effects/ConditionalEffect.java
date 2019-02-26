@@ -2,7 +2,7 @@ package com.darkxell.common.move.effects;
 
 import java.util.ArrayList;
 
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.move.MoveEffect;
@@ -12,7 +12,7 @@ public class ConditionalEffect extends MoveEffect {
 
     public static interface EffectCondition {
 
-        boolean isMet(MoveUseEvent moveEvent, ArrayList<DungeonEvent> events);
+        boolean isMet(MoveUseEvent moveEvent, ArrayList<Event> events);
 
     }
 
@@ -27,7 +27,7 @@ public class ConditionalEffect extends MoveEffect {
     }
 
     @Override
-    public boolean mainUse(MoveUseEvent moveEvent, ArrayList<DungeonEvent> events) {
+    public boolean mainUse(MoveUseEvent moveEvent, ArrayList<Event> events) {
         int moveToUse = this.moveIfFalse;
         if (this.condition.isMet(moveEvent, events)) moveToUse = this.moveIfTrue;
         events.add(new MoveSelectionEvent(moveEvent.floor, moveEvent, new LearnedMove(moveToUse),

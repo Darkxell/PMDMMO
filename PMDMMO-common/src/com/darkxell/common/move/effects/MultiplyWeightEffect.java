@@ -2,7 +2,7 @@ package com.darkxell.common.move.effects;
 
 import java.util.ArrayList;
 
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.move.MoveEffect;
 
@@ -15,7 +15,7 @@ public class MultiplyWeightEffect extends MoveEffect {
     }
 
     @Override
-    public double damageMultiplier(boolean isUser, MoveUseEvent moveEvent, ArrayList<DungeonEvent> events) {
+    public double damageMultiplier(boolean isUser, MoveUseEvent moveEvent, ArrayList<Event> events) {
         float weight = moveEvent.target.species().weight;
         for (int i = this.multiplierTable.length - 1; i >= 0; --i)
             if (weight >= this.multiplierTable[i][0]) return this.multiplierTable[i][1] * 1. / 100;

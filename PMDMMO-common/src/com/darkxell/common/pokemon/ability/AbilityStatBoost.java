@@ -3,7 +3,7 @@ package com.darkxell.common.pokemon.ability;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.event.pokemon.TriggeredAbilityEvent;
@@ -22,8 +22,8 @@ public class AbilityStatBoost extends Ability {
     }
 
     @Override
-    public double applyStatModifications(Stat stat, double value, MoveUse move, DungeonPokemon target, boolean isUser, Floor floor,
-            MoveUseEvent moveEvent, ArrayList<DungeonEvent> events) {
+    public double applyStatModifications(Stat stat, double value, MoveUse move, DungeonPokemon target, boolean isUser,
+            Floor floor, MoveUseEvent moveEvent, ArrayList<Event> events) {
         if (this.shouldBoost(stat, value, move, target, isUser, floor, events)) {
             events.add(new TriggeredAbilityEvent(floor, moveEvent, move.user));
             return value * this.multiplier;
@@ -31,8 +31,8 @@ public class AbilityStatBoost extends Ability {
         return super.applyStatModifications(stat, value, move, target, isUser, floor, moveEvent, events);
     }
 
-    protected boolean shouldBoost(Stat stat, double value, MoveUse move, DungeonPokemon target, boolean isUser, Floor floor,
-            ArrayList<DungeonEvent> events) {
+    protected boolean shouldBoost(Stat stat, double value, MoveUse move, DungeonPokemon target, boolean isUser,
+            Floor floor, ArrayList<Event> events) {
         return stat == this.stat && isUser;
     }
 

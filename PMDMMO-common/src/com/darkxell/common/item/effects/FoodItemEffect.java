@@ -2,7 +2,7 @@ package com.darkxell.common.item.effects;
 
 import java.util.ArrayList;
 
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.item.ItemUseEvent;
 import com.darkxell.common.event.stats.BellyChangedEvent;
 import com.darkxell.common.event.stats.BellySizeChangedEvent;
@@ -47,7 +47,7 @@ public class FoodItemEffect extends ItemEffect {
     }
 
     @Override
-    public void use(ItemUseEvent itemEvent, ArrayList<DungeonEvent> events) {
+    public void use(ItemUseEvent itemEvent, ArrayList<Event> events) {
         int increase = this.belly;
         if (itemEvent.target.getBelly() < itemEvent.target.getBellySize())
             events.add(new BellyChangedEvent(itemEvent.floor, itemEvent, itemEvent.target, this.food));

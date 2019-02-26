@@ -3,7 +3,7 @@ package com.darkxell.common.event.move;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageSource;
 import com.darkxell.common.event.stats.BellyChangedEvent;
@@ -20,7 +20,7 @@ import com.darkxell.common.weather.WeatherSource;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonObject;
 
-public class MoveSelectionEvent extends DungeonEvent implements Communicable {
+public class MoveSelectionEvent extends Event implements Communicable {
 
     public static class MoveUse implements DamageSource, WeatherSource {
         public final Direction direction;
@@ -99,7 +99,7 @@ public class MoveSelectionEvent extends DungeonEvent implements Communicable {
     }
 
     @Override
-    public ArrayList<DungeonEvent> processServer() {
+    public ArrayList<Event> processServer() {
         // Rotate
         if (this.usedMove.direction != this.usedMove.user.facing()) this.usedMove.user.setFacing(this.usedMove.direction);
 

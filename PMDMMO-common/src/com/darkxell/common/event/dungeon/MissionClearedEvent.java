@@ -3,11 +3,11 @@ package com.darkxell.common.event.dungeon;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.mission.DungeonMission;
 
-public class MissionClearedEvent extends DungeonEvent {
+public class MissionClearedEvent extends Event {
 
     public final DungeonMission mission;
 
@@ -23,7 +23,7 @@ public class MissionClearedEvent extends DungeonEvent {
     }
 
     @Override
-    public ArrayList<DungeonEvent> processServer() {
+    public ArrayList<Event> processServer() {
         this.mission.clear();
         return super.processServer();
     }

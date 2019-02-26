@@ -2,7 +2,7 @@ package com.darkxell.common.status.floor;
 
 import java.util.ArrayList;
 
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.status.FloorStatus;
@@ -19,8 +19,9 @@ public class MultiplyTypeFloorStatus extends FloorStatus {
     }
 
     @Override
-    public double damageMultiplier(boolean isUser, MoveUseEvent moveEvent, ArrayList<DungeonEvent> events) {
-        if (moveEvent.usedMove.move.move().type == this.type) return this.multiplier;
+    public double damageMultiplier(boolean isUser, MoveUseEvent moveEvent, ArrayList<Event> events) {
+        if (moveEvent.usedMove.move.move().type == this.type)
+            return this.multiplier;
         return super.damageMultiplier(isUser, moveEvent, events);
     }
 

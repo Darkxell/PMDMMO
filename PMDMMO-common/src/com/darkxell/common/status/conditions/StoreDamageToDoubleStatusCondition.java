@@ -3,7 +3,7 @@ package com.darkxell.common.status.conditions;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.status.AppliedStatusCondition;
@@ -15,8 +15,8 @@ public class StoreDamageToDoubleStatusCondition extends ChargedMoveStatusConditi
     }
 
     @Override
-    public void onPostEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned,
-            ArrayList<DungeonEvent> resultingEvents) {
+    public void onPostEvent(Floor floor, Event event, DungeonPokemon concerned,
+            ArrayList<Event> resultingEvents) {
         super.onPostEvent(floor, event, concerned, resultingEvents);
         if (event instanceof DamageDealtEvent) {
             DamageDealtEvent e = (DamageDealtEvent) event;
@@ -27,7 +27,7 @@ public class StoreDamageToDoubleStatusCondition extends ChargedMoveStatusConditi
     }
 
     @Override
-    public void tick(Floor floor, AppliedStatusCondition instance, ArrayList<DungeonEvent> events) {
+    public void tick(Floor floor, AppliedStatusCondition instance, ArrayList<Event> events) {
         super.tick(floor, instance, events);
         if (instance.tick == instance.duration - 1 && !instance.hasFlag("attacked"))
             --instance.tick;

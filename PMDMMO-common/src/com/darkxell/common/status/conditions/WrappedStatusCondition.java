@@ -2,7 +2,7 @@ package com.darkxell.common.status.conditions;
 
 import java.util.ArrayList;
 
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.pokemon.StatusConditionEndedEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.status.StatusConditions;
@@ -14,7 +14,7 @@ public class WrappedStatusCondition extends PeriodicDamageStatusCondition {
     }
 
     @Override
-    public void onEnd(StatusConditionEndedEvent event, ArrayList<DungeonEvent> events) {
+    public void onEnd(StatusConditionEndedEvent event, ArrayList<Event> events) {
         super.onEnd(event, events);
 
         String wrapperid = null;

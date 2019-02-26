@@ -3,7 +3,7 @@ package com.darkxell.common.dungeon;
 import java.util.LinkedList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.EventCommunication;
 import com.eclipsesource.json.JsonObject;
 
@@ -18,7 +18,7 @@ public class AutoDungeonExploration extends DungeonExploration {
         super(id, seed);
     }
 
-    public DungeonEvent getNextEvent() {
+    public Event getNextEvent() {
         return this.nextEvent(false);
     }
 
@@ -29,12 +29,12 @@ public class AutoDungeonExploration extends DungeonExploration {
         return floor;
     }
 
-    public DungeonEvent nextEvent() {
+    public Event nextEvent() {
         return this.nextEvent(true);
     }
 
-    private DungeonEvent nextEvent(boolean checkOnly) {
-        DungeonEvent e = null;
+    private Event nextEvent(boolean checkOnly) {
+        Event e = null;
         do {
             if (this.pendingEvents.isEmpty())
                 return null;

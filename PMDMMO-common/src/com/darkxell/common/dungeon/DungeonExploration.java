@@ -11,7 +11,7 @@ import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.layout.Layout;
 import com.darkxell.common.dungeon.floor.layout.StaticLayout;
 import com.darkxell.common.event.CommonEventProcessor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.event.action.PokemonRotateEvent;
 import com.darkxell.common.event.action.TurnSkippedEvent;
@@ -116,7 +116,7 @@ public class DungeonExploration {
     /** Ends the current Turn.
      *
      * @return The Events created for the start of the new turn. */
-    public ArrayList<DungeonEvent> endSubTurn() {
+    public ArrayList<Event> endSubTurn() {
         // Logger.i("Subturn end!");
         /*
          * for (Actor a : this.actors) { if (!a.hasSubTurnTriggered()) Logger.e("Subturn ended but " + a +
@@ -128,7 +128,7 @@ public class DungeonExploration {
         for (Actor a : this.actors)
             a.subTurnEnd();
 
-        ArrayList<DungeonEvent> events = new ArrayList<>();
+        ArrayList<Event> events = new ArrayList<>();
         boolean turnEnd = this.currentSubTurn == GameTurn.SUB_TURNS;
 
         if (turnEnd) this.endTurn(events);
@@ -136,7 +136,7 @@ public class DungeonExploration {
         return events;
     }
 
-    private void endTurn(ArrayList<DungeonEvent> events) {
+    private void endTurn(ArrayList<Event> events) {
         Direction d;
         for (Actor a : this.actors) {
             AI ai = this.currentFloor.aiManager.getAI(a.pokemon);
@@ -156,7 +156,7 @@ public class DungeonExploration {
     }
 
     /** Called when the input event is processed. */
-    public void eventOccured(DungeonEvent event) {
+    public void eventOccured(Event event) {
         this.currentTurn.addEvent(event);
         if (event.actor() != null && this.actorMap.containsKey(event.actor()))
             if (event instanceof TurnSkippedEvent) this.actorMap.get(event.actor()).skip();
@@ -283,7 +283,7 @@ public class DungeonExploration {
         this.generateNextFloor();
         this.currentSubTurn = GameTurn.SUB_TURNS - 1;
 
-        ArrayList<DungeonEvent> events = new ArrayList<>();
+        ArrayList<Event> events = new ArrayList<>();
         this.endTurn(events);
         this.currentFloor.onFloorStart(events);
 

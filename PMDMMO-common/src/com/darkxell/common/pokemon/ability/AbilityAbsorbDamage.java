@@ -3,7 +3,7 @@ package com.darkxell.common.pokemon.ability;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
@@ -22,7 +22,8 @@ public class AbilityAbsorbDamage extends AbilityPreventAdditionalEffectsOnSelf {
     }
 
     @Override
-    public void onPreEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned, ArrayList<DungeonEvent> resultingEvents) {
+    public void onPreEvent(Floor floor, Event event, DungeonPokemon concerned,
+            ArrayList<Event> resultingEvents) {
         super.onPreEvent(floor, event, concerned, resultingEvents);
 
         if (event instanceof DamageDealtEvent) {
@@ -41,8 +42,9 @@ public class AbilityAbsorbDamage extends AbilityPreventAdditionalEffectsOnSelf {
     }
 
     @Override
-    protected boolean shouldPrevent(Floor floor, DungeonEvent event, DungeonPokemon concerned) {
-        return super.shouldPrevent(floor, event, concerned) && ((MoveUseEvent) event.eventSource).usedMove.move.move().type == this.type;
+    protected boolean shouldPrevent(Floor floor, Event event, DungeonPokemon concerned) {
+        return super.shouldPrevent(floor, event, concerned)
+                && ((MoveUseEvent) event.eventSource).usedMove.move.move().type == this.type;
     }
 
 }

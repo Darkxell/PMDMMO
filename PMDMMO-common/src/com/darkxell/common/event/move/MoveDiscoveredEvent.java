@@ -3,12 +3,12 @@ package com.darkxell.common.event.move;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.pokemon.Pokemon;
 
-public class MoveDiscoveredEvent extends DungeonEvent {
+public class MoveDiscoveredEvent extends Event {
 
     public final Move move;
     public final Pokemon pokemon;
@@ -25,9 +25,10 @@ public class MoveDiscoveredEvent extends DungeonEvent {
     }
 
     @Override
-    public ArrayList<DungeonEvent> processServer() {
-        if (this.pokemon.moveCount() < 4) this.resultingEvents
-                .add(new MoveLearnedEvent(this.floor, this, this.pokemon, this.move, this.pokemon.moveCount()));
+    public ArrayList<Event> processServer() {
+        if (this.pokemon.moveCount() < 4)
+            this.resultingEvents
+                    .add(new MoveLearnedEvent(this.floor, this, this.pokemon, this.move, this.pokemon.moveCount()));
         return super.processServer();
     }
 

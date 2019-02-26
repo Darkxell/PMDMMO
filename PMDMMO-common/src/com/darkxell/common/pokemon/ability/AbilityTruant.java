@@ -3,7 +3,7 @@ package com.darkxell.common.pokemon.ability;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.item.ItemSelectionEvent;
 import com.darkxell.common.event.item.ItemUseEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent;
@@ -20,7 +20,8 @@ public class AbilityTruant extends Ability {
     }
 
     @Override
-    public void onPostEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned, ArrayList<DungeonEvent> resultingEvents) {
+    public void onPostEvent(Floor floor, Event event, DungeonPokemon concerned,
+            ArrayList<Event> resultingEvents) {
         super.onPostEvent(floor, event, concerned, resultingEvents);
 
         if (this.shouldTruant(floor, event, concerned, false)) {
@@ -31,7 +32,7 @@ public class AbilityTruant extends Ability {
     }
 
     /** @param prevent - If true, method will check as before the event triggers, else as after it does. */
-    public boolean shouldTruant(Floor floor, DungeonEvent event, DungeonPokemon concerned, boolean prevent) {
+    public boolean shouldTruant(Floor floor, Event event, DungeonPokemon concerned, boolean prevent) {
 
         if (event instanceof MoveSelectionEvent) {
             MoveSelectionEvent e = (MoveSelectionEvent) event;

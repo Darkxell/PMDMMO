@@ -7,7 +7,7 @@ import com.darkxell.common.ai.AI;
 import com.darkxell.common.ai.AI.AIState;
 import com.darkxell.common.ai.AIUtils;
 import com.darkxell.common.dungeon.floor.Tile;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.DungeonEventSource;
 import com.darkxell.common.event.action.PokemonTravelEvent;
 import com.darkxell.common.event.action.TurnSkippedEvent;
@@ -28,7 +28,7 @@ public class AIStateRunaway extends AIState {
     }
 
     @Override
-    public DungeonEvent takeAction() {
+    public Event takeAction() {
         Comparator<Tile> sorter = Comparator.comparingInt(AIStateRunaway::score);
         ArrayList<Tile> candidates = AIUtils.adjacentReachableTiles(this.ai.floor, this.ai.pokemon);
         if (candidates.size() == 0)

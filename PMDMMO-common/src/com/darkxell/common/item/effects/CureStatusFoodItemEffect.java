@@ -2,7 +2,7 @@ package com.darkxell.common.item.effects;
 
 import java.util.ArrayList;
 
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.item.ItemUseEvent;
 import com.darkxell.common.event.pokemon.StatusConditionEndedEvent.StatusConditionEndReason;
 import com.darkxell.common.status.StatusCondition;
@@ -17,7 +17,7 @@ public class CureStatusFoodItemEffect extends FoodItemEffect {
     }
 
     @Override
-    public void use(ItemUseEvent itemEvent, ArrayList<DungeonEvent> events) {
+    public void use(ItemUseEvent itemEvent, ArrayList<Event> events) {
         super.use(itemEvent, events);
         for (StatusCondition c : this.conditions)
             if (itemEvent.target.hasStatusCondition(c))
