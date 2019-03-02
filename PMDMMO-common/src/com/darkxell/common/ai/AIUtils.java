@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Stack;
-import javafx.util.Pair;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
@@ -13,6 +12,7 @@ import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.LearnedMove;
 import com.darkxell.common.util.Direction;
+import com.darkxell.common.util.Pair;
 import com.darkxell.common.util.RandomUtil;
 
 /** Contains various static methods used in AI computations. */
@@ -98,10 +98,10 @@ public final class AIUtils {
 
             Pair<Direction, Direction> split = direction.splitDiagonal();
             Direction other;
-            if (cardinal == split.getKey())
-                other = split.getValue();
+            if (cardinal == split.first)
+                other = split.first;
             else
-                other = split.getKey();
+                other = split.second;
             if (pokemon.tile().adjacentTile(other).canMoveTo(pokemon, other, false))
                 return other;
         } else { // Else try to minimize distance by choosing increasingly further distances.
@@ -242,8 +242,8 @@ public final class AIUtils {
                     boolean ok = true;
                     if (direction.isDiagonal()) {
                         Pair<Direction, Direction> others = direction.splitDiagonal();
-                        if (!t.adjacentTile(others.getKey()).canCross(pokemon)
-                                || !t.adjacentTile(others.getValue()).canCross(pokemon))
+                        if (!t.adjacentTile(others.first).canCross(pokemon)
+                                || !t.adjacentTile(others.second).canCross(pokemon))
                             ok = false;
                     }
                     if (ok) {

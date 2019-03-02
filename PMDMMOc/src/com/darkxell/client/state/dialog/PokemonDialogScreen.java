@@ -9,8 +9,8 @@ import com.darkxell.client.resources.images.pokemon.PokemonPortrait;
 import com.darkxell.client.resources.images.pokemon.PokemonPortrait.PortraitEmotion;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.PokemonSpecies;
+import com.darkxell.common.util.Position;
 import com.darkxell.common.util.language.Message;
-import com.sun.javafx.geom.Point2D;
 
 public class PokemonDialogScreen extends DialogScreen {
     public enum DialogPortraitLocation {
@@ -34,22 +34,22 @@ public class PokemonDialogScreen extends DialogScreen {
             this.flip = flip;
         }
 
-        public Point2D locate(Rectangle dialogBox, Sprite portrait) {
+        public Position locate(Rectangle dialogBox, Sprite portrait) {
             switch (this) {
             case TOP_LEFT:
-                return new Point2D(dialogBox.x + 5, 5);
+                return new Position(dialogBox.x + 5, 5);
 
             case TOP_RIGHT:
-                return new Point2D((int) dialogBox.getMaxX() - portrait.image().getWidth() - 5, 5);
+                return new Position((int) dialogBox.getMaxX() - portrait.image().getWidth() - 5, 5);
 
             case BOTTOM_LEFT:
-                return new Point2D(dialogBox.x + 5, dialogBox.y - Sprites.Res_Hud.portrait.image().getHeight() - 5);
+                return new Position(dialogBox.x + 5, dialogBox.y - Sprites.Res_Hud.portrait.image().getHeight() - 5);
 
             case BOTTOM_RIGHT:
-                return new Point2D((int) dialogBox.getMaxX() - portrait.image().getWidth() - 5,
+                return new Position((int) dialogBox.getMaxX() - portrait.image().getWidth() - 5,
                         dialogBox.y - Sprites.Res_Hud.portrait.image().getHeight() - 5);
             }
-            return new Point2D(0, 0);
+            return new Position(0, 0);
         }
     }
 
@@ -116,7 +116,7 @@ public class PokemonDialogScreen extends DialogScreen {
 
         if (this.pokemon != null) {
             Rectangle dialogBox = this.parentState.dialogBox();
-            Point2D portraitL = this.portraitLocation.locate(dialogBox, Sprites.Res_Hud.portrait);
+            Position portraitL = this.portraitLocation.locate(dialogBox, Sprites.Res_Hud.portrait);
             PokemonPortrait.drawPortrait(g, this.pokemon, this.emotion, this.shiny, (int) portraitL.x,
                     (int) portraitL.y, this.portraitLocation.flip);
         }
