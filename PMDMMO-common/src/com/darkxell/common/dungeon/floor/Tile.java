@@ -21,9 +21,8 @@ import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.trap.Trap;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.DirectionSet;
+import com.darkxell.common.util.Pair;
 import com.darkxell.common.util.language.Message;
-
-import javafx.util.Pair;
 
 /** Represents a single tile in a Floor. */
 public class Tile implements ItemContainer, Comparable<Tile> {
@@ -74,8 +73,8 @@ public class Tile implements ItemContainer, Comparable<Tile> {
     public boolean blockingWalls(DungeonPokemon pokemon, Direction direction) {
         if (!direction.isDiagonal()) return false;
         Pair<Direction, Direction> corners = direction.splitDiagonal();
-        return !this.adjacentTile(corners.getKey()).canCross(pokemon)
-                || !this.adjacentTile(corners.getValue()).canCross(pokemon);
+        return !this.adjacentTile(corners.first).canCross(pokemon)
+                || !this.adjacentTile(corners.first).canCross(pokemon);
     }
 
     @Override

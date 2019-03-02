@@ -3,8 +3,7 @@ package com.darkxell.client.resources.images.pokemon;
 import com.darkxell.client.resources.images.RegularSpriteSet;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
 import com.darkxell.common.util.Direction;
-
-import javafx.util.Pair;
+import com.darkxell.common.util.Pair;
 
 public class PokemonSpriteset extends RegularSpriteSet {
 
@@ -19,6 +18,7 @@ public class PokemonSpriteset extends RegularSpriteSet {
         return this.getSequence(state, direction).getFrame(tick);
     }
 
+    @SuppressWarnings("unlikely-arg-type")
     public PokemonSpriteSequence getSequence(PokemonSpriteState state, Direction direction) {
         Integer index = this.data.states.get(new Pair<>(state, direction));
         if (index == null)

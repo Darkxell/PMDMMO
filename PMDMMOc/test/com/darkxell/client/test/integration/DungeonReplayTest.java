@@ -33,6 +33,7 @@ public class DungeonReplayTest {
 
     private static final String REPLAYS_DIR = "replays";
 
+    @SuppressWarnings("unused")
     private void logAllEvents(AutoDungeonExploration dungeon) {
         for (GameTurn turn : dungeon.listTurns())
             for (Event event : turn.events())
