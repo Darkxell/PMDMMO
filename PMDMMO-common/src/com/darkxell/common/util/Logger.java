@@ -148,7 +148,9 @@ public class Logger {
     }
 
     public String log(String message, LogLevel level) {
-        message = "[" + this.date() + " | " + this.source + "] " + level.name() + ": " + message;
+        message = "[" + this.date() + " | " + this.source 
+                + (level.severity >= STDERR_SEVERITY ? "(" + getCallerInfo() + ")" : "") + "] " + level.name() + ": " 
+                + message;
 
         if (level.severity >= Math.min(STDOUT_SEVERITY, STDERR_SEVERITY))
             this.log.add(message);
@@ -159,6 +161,24 @@ public class Logger {
             System.out.println(message);
 
         return message;
+    }
+
+    /**
+     * Gets information on the caller of a method according to the stacktrace. This
+     * returns the current classname of the highest class in the stack that isn't
+     * called Logger and the call line number for this class.
+     */
+    private String getCallerInfo() {
+        String callerClassName = "Logger";
+        Exception e = new Exception();
+        for (int i = 0; i < e.getStackTrace().length; i++) {
+            String[] hierarchy = e.getStackTrace()[i].getClassName().split("\\.");
+            if (hierarchy.length >= 1 && !callerClassName.equals(hierarchy[hierarchy.length - 1])) {
+                callerClassName = hierarchy[hierarchy.length - 1] + ":" + e.getStackTrace()[i].getLineNumber();
+                break;
+            }
+        }
+        return callerClassName;
     }
 
     public void saveClient() {
