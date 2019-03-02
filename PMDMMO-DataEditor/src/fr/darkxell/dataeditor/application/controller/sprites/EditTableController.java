@@ -4,6 +4,13 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.ResourceBundle;
+
+import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
+import com.darkxell.client.resources.images.pokemon.PokemonSpritesetData;
+import com.darkxell.common.util.Direction;
+import com.darkxell.common.util.Pair;
+
+import fr.darkxell.dataeditor.application.data.SpriteTableItem;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
@@ -11,12 +18,6 @@ import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.util.Pair;
-
-import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
-import com.darkxell.client.resources.images.pokemon.PokemonSpritesetData;
-import com.darkxell.common.util.Direction;
-import fr.darkxell.dataeditor.application.data.SpriteTableItem;
 
 public class EditTableController implements Initializable {
 

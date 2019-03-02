@@ -5,7 +5,6 @@ import static com.darkxell.common.dungeon.floor.TileType.*;
 import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
-import javafx.util.Pair;
 
 import com.darkxell.common.event.Event;
 import com.darkxell.common.event.Event.MessageEvent;
@@ -22,6 +21,7 @@ import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.trap.Trap;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.DirectionSet;
+import com.darkxell.common.util.Pair;
 import com.darkxell.common.util.language.Message;
 
 /** Represents a single tile in a Floor. */
@@ -75,8 +75,8 @@ public class Tile implements ItemContainer, Comparable<Tile> {
         if (!direction.isDiagonal())
             return false;
         Pair<Direction, Direction> corners = direction.splitDiagonal();
-        return !this.adjacentTile(corners.getKey()).canCross(pokemon)
-                || !this.adjacentTile(corners.getValue()).canCross(pokemon);
+        return !this.adjacentTile(corners.first).canCross(pokemon)
+                || !this.adjacentTile(corners.first).canCross(pokemon);
     }
 
     @Override
