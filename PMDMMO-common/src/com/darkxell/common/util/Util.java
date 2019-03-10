@@ -11,6 +11,7 @@ import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.LearnedMove;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.PokemonRegistry;
+import com.darkxell.common.pokemon.PokemonSpecies;
 
 public class Util {
 
@@ -47,16 +48,16 @@ public class Util {
         player.inventory().addItem(new ItemStack(152));
         player.inventory().addItem(new ItemStack(223));
 
-        for (int id = 201; id <= 386; id += 3) {
-            Pokemon p = species.find(id).generate(new Random(), 1);
-            p.getData().id = id;
+        for (PokemonSpecies s : Registries.species().toList()) {
+            if (s.id == 0) continue;
+            
+            Pokemon p = s.generate(new Random(), 1, 0);
+            p.getData().id = s.id;
             player.addPokemonInZone(p);
-        }
 
-        for (int id = 10001; id <= 10033; id += 2) {
-            Pokemon p = species.find(id).generate(new Random(), 1);
-            p.getData().id = id;
-            player.addPokemonInZone(p);
+            Pokemon p2 = s.generate(new Random(), 1, 1);
+            p2.getData().id = s.id + 100000;
+            player.addPokemonInZone(p2);
         }
 
         try {

@@ -78,6 +78,9 @@ public enum FriendArea {
         for (PokemonSpecies species : registry.toList())
             if (species.friendArea() != null) species.friendArea().maxFriends += 2;
             else Logger.e(species + " has an unknown friend area: " + species.friendAreaID);
+
+        ENCLOSED_ISLAND.maxFriends -= 6; // Deoxys Attack, Defense and Speed can't be obtained as friends
+        THUNDER_MEADOW.maxFriends -=6; // Castform Rain, Hail and Sun can't be obtained as friends
     }
 
     public static FriendArea find(String id) {
