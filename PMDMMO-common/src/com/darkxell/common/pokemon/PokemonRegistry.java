@@ -43,7 +43,7 @@ public final class PokemonRegistry extends Registry<PokemonSpecies> {
     public PokemonRegistry(URL registryURL) throws IOException {
         super(registryURL, "Species", 0);
         this.registerForms();
-        FriendArea.computeMaxFriends();
+        FriendArea.computeMaxFriends(this);
     }
 
     /**

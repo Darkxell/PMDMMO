@@ -1,5 +1,6 @@
 package com.darkxell.client.mechanics.freezone;
 
+import com.darkxell.client.mechanics.freezone.customzones.FriendAreaFreezone;
 import com.darkxell.client.mechanics.freezone.cutscene.MtSteelTopFreezone;
 import com.darkxell.client.mechanics.freezone.cutscene.MtsteelEntranceFreezone;
 import com.darkxell.client.mechanics.freezone.cutscene.ThunderwaveClearFreezone;
@@ -92,7 +93,7 @@ public class Freezones {
         case FRIEND_VOLCANICPIT:
         case FRIEND_WATERFALLLAKE:
         case FRIEND_WILDPLAINS:
-            return new FreezoneMap("/freezones/friend/" + freezone.id + ".xml", freezone);
+            return new FriendAreaFreezone("/freezones/friend/" + freezone.id + ".xml", freezone);
         case BASEINSIDE:
             return new FreezoneMap("/freezones/base_normal.xml", freezone);
         default:

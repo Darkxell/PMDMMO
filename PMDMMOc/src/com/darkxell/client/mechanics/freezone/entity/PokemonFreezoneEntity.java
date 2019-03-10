@@ -10,7 +10,7 @@ import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.xml.XMLUtils;
 
 class PokemonFreezoneEntity extends DialogEntity {
-    private PokemonSprite sprite;
+    protected PokemonSprite sprite;
 
     {
         this.solid = true;

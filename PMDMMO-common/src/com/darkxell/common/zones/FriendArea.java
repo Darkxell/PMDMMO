@@ -2,8 +2,9 @@ package com.darkxell.common.zones;
 
 import java.util.HashMap;
 
-import com.darkxell.common.Registries;
+import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.pokemon.PokemonSpecies;
+import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.language.Message;
 
 public enum FriendArea {
@@ -19,6 +20,7 @@ public enum FriendArea {
     DARKNESS_RIDGE(FreezoneInfo.FRIEND_DARKNESSRIDGE),
     DECREPIT_LAB(FreezoneInfo.FRIEND_DECREPITLAB),
     DEEP_SEA_CURRENT(FreezoneInfo.FRIEND_DEEPSEACURRENT),
+    DEEP_SEA_FLOOR(FreezoneInfo.FRIEND_DEEPSEAFLOOR),
     DRAGON_CAVE(FreezoneInfo.FRIEND_DRAGONCAVE),
     ECHO_CAVE(FreezoneInfo.FRIEND_ECHOCAVE),
     ENCLOSED_ISLAND(FreezoneInfo.FRIEND_ENCLOSEDISLAND),
@@ -35,6 +37,7 @@ public enum FriendArea {
     MIST_RISE_FOREST(FreezoneInfo.FRIEND_MISTRISEFOREST),
     MT_CLEFT(FreezoneInfo.FRIEND_MTCLEFT),
     MT_DEEPGREEN(FreezoneInfo.FRIEND_MTDEEPGREEN),
+    MT_DISCIPLINE(FreezoneInfo.FRIEND_MTDISCIPLINE),
     MT_MOONVIEW(FreezoneInfo.FRIEND_MTMOONVIEW),
     MUSHROOM_FOREST(FreezoneInfo.FRIEND_MUSHROOMFOREST),
     MYSTIC_LAKE(FreezoneInfo.FRIEND_MYSTICLAKE),
@@ -71,9 +74,10 @@ public enum FriendArea {
             lookup.put(a.freezone.id, a);
     }
 
-    public static void computeMaxFriends() {
-        for (PokemonSpecies species : Registries.species().toList())
-            species.friendArea().maxFriends += 2;
+    public static void computeMaxFriends(PokemonRegistry registry) {
+        for (PokemonSpecies species : registry.toList())
+            if (species.friendArea() != null) species.friendArea().maxFriends += 2;
+            else Logger.e(species + " has an unknown friend area: " + species.friendAreaID);
     }
 
     public static FriendArea find(String id) {
