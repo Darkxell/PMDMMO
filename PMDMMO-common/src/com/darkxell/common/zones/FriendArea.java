@@ -71,6 +71,11 @@ public enum FriendArea {
             lookup.put(a.freezone.id, a);
     }
 
+    public static void computeMaxFriends() {
+        for (PokemonSpecies species : Registries.species().toList())
+            species.friendArea().maxFriends += 2;
+    }
+
     public static FriendArea find(String id) {
         return lookup.get(id);
     }
@@ -90,6 +95,10 @@ public enum FriendArea {
 
     public LocalMapLocation mapLoaction() {
         return this.freezone.maplocation;
+    }
+
+    public int maxFriends() {
+        return this.maxFriends;
     }
 
 }
