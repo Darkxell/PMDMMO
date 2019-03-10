@@ -25,12 +25,22 @@ public class FreezoneEntity extends XMLImmutableObject {
     /**
      * The X position of the entity.
      */
-    double posX;
+    public double posX;
 
     /**
-     * the Y position of the entity.
+     * The Y position of the entity.
      */
-    double posY;
+    public double posY;
+    
+    /**
+     * The starting X position of the entity.
+     */
+    double startingX;
+
+    /**
+     * The starting Y position of the entity.
+     */
+    double startingY;
 
     /**
      * The width of the entity's hitbox.
@@ -53,8 +63,8 @@ public class FreezoneEntity extends XMLImmutableObject {
     boolean interactive;
 
     {
-        this.posX = -1;
-        this.posY = -1;
+        this.posX = this.startingX = -1;
+        this.posY = this.startingY = -1;
         this.width = 1.8;
         this.height = 1.7;
         this.solid = false;
@@ -76,8 +86,8 @@ public class FreezoneEntity extends XMLImmutableObject {
      * </p>
      */
     protected void deserialize(Element el) {
-        this.posX = XMLUtils.getAttribute(el, "x", this.posX);
-        this.posY = XMLUtils.getAttribute(el, "y", this.posY);
+        this.posX = this.startingX = XMLUtils.getAttribute(el, "x", this.posX);
+        this.posY = this.startingY = XMLUtils.getAttribute(el, "y", this.posY);
 
         this.solid = XMLUtils.getAttribute(el, "solid", this.solid);
         this.interactive = XMLUtils.getAttribute(el, "interactive", this.interactive);
