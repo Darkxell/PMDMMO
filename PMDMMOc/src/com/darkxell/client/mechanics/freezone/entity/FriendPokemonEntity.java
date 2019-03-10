@@ -1,6 +1,7 @@
 package com.darkxell.client.mechanics.freezone.entity;
 
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
+import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
 import com.darkxell.common.ai.AIUtils;
 import com.darkxell.common.pokemon.Pokemon;
@@ -20,7 +21,7 @@ public class FriendPokemonEntity extends PokemonFreezoneEntity {
 
     public FriendPokemonEntity(Pokemon pokemon) {
         this.pokemon = pokemon;
-        this.sprite = new PokemonSprite(PokemonSpritesets.getSpriteset(this.pokemon.species().id));
+        this.sprite = new PokemonSprite(PokemonSpritesets.getSpriteset(this.pokemon));
     }
 
     @Override
@@ -32,6 +33,7 @@ public class FriendPokemonEntity extends PokemonFreezoneEntity {
             this.destinationX = Math.random() * MAX_DISTANCE * 2 - MAX_DISTANCE + this.startX;
             this.destinationY = Math.random() * MAX_DISTANCE * 2 - MAX_DISTANCE + this.startY;
             this.sprite.setFacingDirection(AIUtils.closestDirection(MathUtil.angle(this.posX, this.posY, this.destinationX, this.destinationY)));
+            this.sprite.setState(PokemonSpriteState.MOVE);
         } else { // Move
             this.posX += Math.signum(this.destinationX - this.posX) * Math.min(SPEED, Math.abs(this.destinationX - this.posX));
             this.posY += Math.signum(this.destinationY - this.posY) * Math.min(SPEED, Math.abs(this.destinationY - this.posY));
@@ -39,6 +41,7 @@ public class FriendPokemonEntity extends PokemonFreezoneEntity {
             if (this.destinationX == this.posX && this.destinationY == this.posY) { // Destination reached
                 this.idleTime = (int) (IDLE_TIME_MIN + Math.random() * (IDLE_TIME_MAX - IDLE_TIME_MIN));
                 this.destinationX = this.destinationY = -1;
+                this.sprite.setState(PokemonSpriteState.IDLE);
             }
         }
     }

@@ -8,4 +8,12 @@
         <trigger type="friendmap" x="0" y="39" width="57" height="1"/>
         <trigger type="friendmap" x="57" y="0" width="1" height="39"/>
     </triggers>
+    <friendlocations>
+    	<friend species="371" x="18" y="30"/>
+    	<friend species="372" x="39" y="32"/>
+    	<friend species="373" x="28" y="25"/>
+    	<friend species="371" x="12" y="28" shiny="true"/>
+    	<friend species="372" x="45" y="29" shiny="true"/>
+    	<friend species="373" x="28" y="18" shiny="true"/>
+    </friendlocations>
 </zone>
