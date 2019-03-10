@@ -8,7 +8,6 @@ import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.client.state.menu.menus.MovesMenuState;
 import com.darkxell.client.state.menu.menus.TeamMenuState;
 import com.darkxell.common.pokemon.Pokemon;
-import com.darkxell.common.zones.FreezoneInfo;
 
 public class FriendSelectionOptionState extends OptionSelectionMenuState {
 
@@ -49,15 +48,11 @@ public class FriendSelectionOptionState extends OptionSelectionMenuState {
 
     @Override
     protected void onOptionSelected(MenuOption option) {
-        if (option == this.visit)
-            StateManager.setExploreState(FreezoneInfo.find(this.pokemon.species().friendAreaID), null, -1, -1, true);
+        if (option == this.visit) StateManager.setExploreState(this.pokemon.species().friendArea().freezone, null, -1, -1, true);
         else if (option == this.summary)
-            Persistence.stateManager
-                    .setState(TeamMenuState.createSummaryState(this.parent.background, this, this.pokemon));
-        else if (option == this.moves)
-            Persistence.stateManager.setState(new MovesMenuState(this, this.parent.background, false, this.pokemon));
-        else if (option == this.exit)
-            this.onExit();
+            Persistence.stateManager.setState(TeamMenuState.createSummaryState(this.parent.background, this, this.pokemon));
+        else if (option == this.moves) Persistence.stateManager.setState(new MovesMenuState(this, this.parent.background, false, this.pokemon));
+        else if (option == this.exit) this.onExit();
     }
 
 }

@@ -14,6 +14,7 @@ import com.darkxell.common.pokemon.BaseStats.Stat;
 import com.darkxell.common.pokemon.ability.Ability;
 import com.darkxell.common.util.language.Message;
 import com.darkxell.common.util.xml.XMLUtils;
+import com.darkxell.common.zones.FriendArea;
 
 public class PokemonSpecies implements Registrable<PokemonSpecies> {
     public static final double SHINY_CHANCE = 1d / 100;
@@ -112,10 +113,6 @@ public class PokemonSpecies implements Registrable<PokemonSpecies> {
         this.evolutions = evolutions;
         this.forms = forms;
         this.friendAreaID = friendAreaID;
-    }
-
-    public int getID() {
-        return this.id;
     }
 
     public BaseStats baseStatsIncrease(int level) {
@@ -226,6 +223,14 @@ public class PokemonSpecies implements Registrable<PokemonSpecies> {
         return (ArrayList<PokemonSpecies>) this.forms.clone();
     }
 
+    public final FriendArea friendArea() {
+        return FriendArea.find(this.friendAreaID);
+    }
+
+    public Pokemon generate(int level) {
+        return this.generate(new Random(), level);
+    }
+
     /**
      * Generates a Pokemon of this species.
      *
@@ -233,10 +238,6 @@ public class PokemonSpecies implements Registrable<PokemonSpecies> {
      */
     public Pokemon generate(Random random, int level) {
         return this.generate(random, level, SHINY_CHANCE);
-    }
-
-    public Pokemon generate(int level) {
-        return this.generate(new Random(), level);
     }
 
     /**
@@ -265,11 +266,15 @@ public class PokemonSpecies implements Registrable<PokemonSpecies> {
                 move2, move3, move4, this.randomGender(random), 0, random.nextDouble() <= shinyChance);
     }
 
+    public int getID() {
+        return this.id;
+    }
+
     /** @return True if one of this Pokemon's type equals the input type. */
     public boolean isType(PokemonType type) {
         return this.type1 == type || this.type2 == type;
     }
-
+    
     /**
      * @param  level        - The level of the Pokemon.
      * @param  learnedMoves - Moves to exclude because they're already learned.

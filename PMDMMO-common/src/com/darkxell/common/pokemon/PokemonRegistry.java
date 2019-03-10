@@ -9,6 +9,7 @@ import java.util.List;
 import org.jdom2.Element;
 
 import com.darkxell.common.Registry;
+import com.darkxell.common.zones.FriendArea;
 
 /**
  * Holds all Pokemon species.
@@ -42,6 +43,7 @@ public final class PokemonRegistry extends Registry<PokemonSpecies> {
     public PokemonRegistry(URL registryURL) throws IOException {
         super(registryURL, "Species", 0);
         this.registerForms();
+        FriendArea.computeMaxFriends();
     }
 
     /**
