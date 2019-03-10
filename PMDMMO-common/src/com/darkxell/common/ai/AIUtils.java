@@ -12,6 +12,7 @@ import com.darkxell.common.move.MoveRegistry;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.LearnedMove;
 import com.darkxell.common.util.Direction;
+import com.darkxell.common.util.MathUtil;
 import com.darkxell.common.util.Pair;
 import com.darkxell.common.util.RandomUtil;
 
@@ -189,13 +190,7 @@ public final class AIUtils {
          * if (pokemon == null) System.out.println("pokemon"); if (target == null) System.out.println("target"); if
          * (pokemon.tile() == null) System.out.println(pokemon); if (target.tile == null) System.out.println(target);
          */
-        double angle = Math.toDegrees(Math.atan2(destination.x - origin.x, destination.y - origin.y));
-        // Make sure angle is in bounds [0;360[
-        while (angle < 0)
-            angle += 360;
-        while (angle >= 360)
-            angle -= 360;
-        return closestDirection(angle);
+        return closestDirection(MathUtil.angle(origin.x, origin.y, destination.x, destination.y));
     }
 
     /**
