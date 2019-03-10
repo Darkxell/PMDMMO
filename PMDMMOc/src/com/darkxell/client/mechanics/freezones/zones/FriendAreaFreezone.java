@@ -31,7 +31,10 @@ public class FriendAreaFreezone extends FreezoneMap {
         Player player = Persistence.player;
         for (Pokemon pokemon : player.pokemonInZones.values())
             if (pokemon.species().friendArea() == this.friendArea) {
-                this.addEntity(new FriendPokemonEntity(pokemon));
+                FriendPokemonEntity p = new FriendPokemonEntity(pokemon);
+                this.addEntity(p);
+                p.startX = p.posX = Math.random() * this.mapWidth;
+                p.startY = p.posY = Math.random() * this.mapHeight;
             }
     }
 }
