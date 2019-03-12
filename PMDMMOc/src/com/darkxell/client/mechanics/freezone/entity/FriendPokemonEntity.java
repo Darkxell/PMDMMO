@@ -22,6 +22,7 @@ public class FriendPokemonEntity extends PokemonFreezoneEntity {
     public FriendPokemonEntity(Pokemon pokemon) {
         this.pokemon = pokemon;
         this.sprite = new PokemonSprite(PokemonSpritesets.getSpriteset(this.pokemon));
+        this.solid = false;
     }
 
     @Override

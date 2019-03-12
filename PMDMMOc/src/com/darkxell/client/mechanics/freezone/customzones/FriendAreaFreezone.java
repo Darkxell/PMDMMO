@@ -1,5 +1,6 @@
 package com.darkxell.client.mechanics.freezone.customzones;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.jdom2.Element;
@@ -32,19 +33,42 @@ public class FriendAreaFreezone extends FreezoneMap {
 
     private void createFriendEntities() {
         Player player = Persistence.player;
+
+        ArrayList<Position> availableLocations = new ArrayList<>(this.friendLocations.values()); // List of locations that are not taken yet.
+        ArrayList<Pokemon> noLocation = new ArrayList<>(); // List of Pokemon who couldn't be placed with their default locations.
+
         for (Pokemon pokemon : player.pokemonInZones.values())
             if (pokemon.species().friendArea() == this.friendArea) {
-                FriendPokemonEntity p = new FriendPokemonEntity(pokemon);
-                this.addEntity(p);
 
                 Position position = this.friendLocations.get(new Pair<>(pokemon.species(), pokemon.isShiny()));
-                if (position == null) {
+
+                if (position == null) { // If it has no default location, add it to nolocation list
                     Logger.w("Friend " + pokemon + " has no friend area location!");
-                    position = new Position(Math.random() * this.terrain.getWidth(), Math.random() * this.terrain.getHeight());
+                    noLocation.add(pokemon);
+                } else if (!availableLocations.contains(position)) // If location is already taken, add it to nolocation list
+                    noLocation.add(pokemon);
+                else { // Else, place it and remove position from available list
+                    FriendPokemonEntity p = new FriendPokemonEntity(pokemon);
+                    this.addEntity(p);
+                    p.startX = p.posX = position.x;
+                    p.startY = p.posY = position.y;
+                    availableLocations.remove(position);
                 }
-                p.startX = p.posX = position.x;
-                p.startY = p.posY = position.y;
             }
+
+        // Place Pokemon that couldn't be placed previously
+        for (Pokemon pokemon : noLocation) {
+            if (availableLocations.isEmpty()) {
+                Logger.e("Friend area " + this.friendArea + " has too many friends!");
+                break;
+            }
+
+            Position position = availableLocations.remove(0);
+            FriendPokemonEntity p = new FriendPokemonEntity(pokemon);
+            this.addEntity(p);
+            p.startX = p.posX = position.x;
+            p.startY = p.posY = position.y;
+        }
     }
 
     @Override
