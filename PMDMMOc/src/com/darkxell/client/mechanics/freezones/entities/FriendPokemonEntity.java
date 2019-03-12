@@ -22,21 +22,27 @@ public class FriendPokemonEntity extends PokemonFreezoneEntity {
     public FriendPokemonEntity(Pokemon pokemon) {
         super(0, 0, new PokemonSprite(PokemonSpritesets.getSpriteset(pokemon.species().id)));
         this.pokemon = pokemon;
+        this.pkmnsprite = new PokemonSprite(PokemonSpritesets.getSpriteset(this.pokemon));
+        this.isSolid = false;
     }
 
     @Override
     public void update() {
         super.update();
 
-        if (this.idleTime > 0) --this.idleTime; // Pause
+        if (this.idleTime > 0)
+            --this.idleTime; // Pause
         else if (this.destinationX == -1 || this.destinationY == -1) { // Find new destination
             this.destinationX = Math.random() * MAX_DISTANCE * 2 - MAX_DISTANCE + this.startX;
             this.destinationY = Math.random() * MAX_DISTANCE * 2 - MAX_DISTANCE + this.startY;
-            this.pkmnsprite.setFacingDirection(AIUtils.closestDirection(MathUtil.angle(this.posX, this.posY, this.destinationX, this.destinationY)));
+            this.pkmnsprite.setFacingDirection(AIUtils
+                    .closestDirection(MathUtil.angle(this.posX, this.posY, this.destinationX, this.destinationY)));
             this.pkmnsprite.setState(PokemonSpriteState.MOVE);
         } else { // Move
-            this.posX += Math.signum(this.destinationX - this.posX) * Math.min(SPEED, Math.abs(this.destinationX - this.posX));
-            this.posY += Math.signum(this.destinationY - this.posY) * Math.min(SPEED, Math.abs(this.destinationY - this.posY));
+            this.posX += Math.signum(this.destinationX - this.posX)
+                    * Math.min(SPEED, Math.abs(this.destinationX - this.posX));
+            this.posY += Math.signum(this.destinationY - this.posY)
+                    * Math.min(SPEED, Math.abs(this.destinationY - this.posY));
 
             if (this.destinationX == this.posX && this.destinationY == this.posY) { // Destination reached
                 this.idleTime = (int) (IDLE_TIME_MIN + Math.random() * (IDLE_TIME_MAX - IDLE_TIME_MIN));
