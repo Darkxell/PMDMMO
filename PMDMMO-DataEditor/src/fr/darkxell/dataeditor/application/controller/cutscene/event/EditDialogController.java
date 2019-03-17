@@ -3,13 +3,6 @@ package fr.darkxell.dataeditor.application.controller.cutscene.event;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-
-import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
-import com.darkxell.client.mechanics.cutscene.event.DialogCutsceneEvent.CutsceneDialogScreen;
-import com.darkxell.client.resources.images.pokemon.PokemonPortrait.PortraitEmotion;
-import com.darkxell.client.state.dialog.PokemonDialogScreen.DialogPortraitLocation;
-
-import fr.darkxell.dataeditor.application.controller.cutscene.EditCutsceneController;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -20,6 +13,12 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+
+import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
+import com.darkxell.client.mechanics.cutscene.event.DialogCutsceneEvent.CutsceneDialogScreen;
+import com.darkxell.client.resources.images.pokemon.PokemonPortrait.PortraitEmotion;
+import com.darkxell.client.state.dialog.PokemonDialogScreen.DialogPortraitLocation;
+import fr.darkxell.dataeditor.application.controller.cutscene.EditCutsceneController;
 
 public class EditDialogController implements Initializable {
 

@@ -3,13 +3,14 @@ package com.darkxell.common.event.move;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
+import com.darkxell.common.event.EventSource;
 import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.language.Message;
 
-public class MoveUseEvent extends DungeonEvent {
+public class MoveUseEvent extends Event {
 
     public Direction direction;
     private boolean missed = false;
@@ -18,8 +19,8 @@ public class MoveUseEvent extends DungeonEvent {
     /** The move that was used. */
     public final MoveUse usedMove;
 
-    public MoveUseEvent(Floor floor, MoveUse move, DungeonPokemon target) {
-        super(floor);
+    public MoveUseEvent(Floor floor, EventSource eventSource, MoveUse move, DungeonPokemon target) {
+        super(floor, eventSource);
         this.usedMove = move;
         this.target = target;
         this.direction = null;
@@ -42,13 +43,12 @@ public class MoveUseEvent extends DungeonEvent {
     }
 
     @Override
-    public ArrayList<DungeonEvent> processServer() {
+    public ArrayList<Event> processServer() {
         if (this.direction != null)
             this.usedMove.user.setFacing(this.direction);
-        this.missed = this.usedMove.move.move().useOn(this.usedMove, this.target, this.flags(), this.floor,
-                this.resultingEvents);
+        this.missed = this.usedMove.move.move().useOn(this, this.resultingEvents);
         if (this.resultingEvents.size() == 0)
-            this.resultingEvents.add(new MessageEvent(this.floor, new Message("move.no_effect")));
+            this.resultingEvents.add(new MessageEvent(this.floor, this, new Message("move.no_effect")));
         return super.processServer();
     }
 }

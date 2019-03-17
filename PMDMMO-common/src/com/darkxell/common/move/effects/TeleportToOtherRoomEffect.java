@@ -3,16 +3,14 @@ package com.darkxell.common.move.effects;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.dungeon.floor.room.Room;
-import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
+import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.event.pokemon.PokemonTeleportedEvent;
 import com.darkxell.common.move.MoveEffect;
 import com.darkxell.common.move.MoveEffectCalculator;
 import com.darkxell.common.move.MoveEvents;
-import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.RandomUtil;
 
 public class TeleportToOtherRoomEffect extends MoveEffect {
@@ -22,25 +20,26 @@ public class TeleportToOtherRoomEffect extends MoveEffect {
     }
 
     @Override
-    public void additionalEffects(MoveUse usedMove, DungeonPokemon target, String[] flags, Floor floor,
-            MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
-        super.additionalEffects(usedMove, target, flags, floor, calculator, missed, effects);
+    public void additionalEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed,
+            MoveEvents effects) {
+        super.additionalEffects(moveEvent, calculator, missed, effects);
 
-        Room current = floor.roomAt(usedMove.user.tile());
+        Room current = moveEvent.floor.roomAt(moveEvent.usedMove.user.tile());
         ArrayList<Room> rooms = new ArrayList<>();
-        Collections.addAll(rooms, floor.rooms);
+        Collections.addAll(rooms, moveEvent.floor.rooms);
         if (current != null && rooms.size() >= 1)
             rooms.remove(current);
 
         Tile destination = null;
 
         if (rooms.size() >= 1)
-            destination = RandomUtil.random(rooms, floor.random).randomTile(floor.random, TileType.GROUND, true);
+            destination = RandomUtil.random(rooms, moveEvent.floor.random).randomTile(moveEvent.floor.random,
+                    TileType.GROUND, true);
         else
-            destination = floor.randomEmptyTile(true, false, TileType.GROUND, floor.random);
+            destination = moveEvent.floor.randomEmptyTile(true, false, TileType.GROUND, moveEvent.floor.random);
 
-        effects.createEffect(new PokemonTeleportedEvent(floor, target, destination), usedMove, target, floor, missed,
-                false, target);
+        effects.createEffect(new PokemonTeleportedEvent(moveEvent.floor, moveEvent, moveEvent.target, destination),
+                moveEvent, missed, false);
     }
 
 }

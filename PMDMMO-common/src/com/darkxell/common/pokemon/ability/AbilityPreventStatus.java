@@ -3,7 +3,8 @@ package com.darkxell.common.pokemon.ability;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
+import com.darkxell.common.event.EventSource.BaseEventSource;
 import com.darkxell.common.event.pokemon.StatusConditionCreatedEvent;
 import com.darkxell.common.event.pokemon.StatusConditionEndedEvent.StatusConditionEndReason;
 import com.darkxell.common.event.pokemon.TriggeredAbilityEvent;
@@ -20,8 +21,8 @@ public class AbilityPreventStatus extends Ability {
     }
 
     @Override
-    public void onPreEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned,
-            ArrayList<DungeonEvent> resultingEvents) {
+    public void onPreEvent(Floor floor, Event event, DungeonPokemon concerned,
+            ArrayList<Event> resultingEvents) {
         super.onPreEvent(floor, event, concerned, resultingEvents);
 
         if (event instanceof StatusConditionCreatedEvent) {
@@ -31,21 +32,23 @@ public class AbilityPreventStatus extends Ability {
             for (int i = 0; i < this.conditions.length; ++i)
                 if (e.condition.condition == this.conditions[i]) {
                     e.consume();
-                    resultingEvents
-                            .add(new TriggeredAbilityEvent(floor, concerned, this.conditions.length > 1 ? i + 1 : 0));
+                    resultingEvents.add(
+                            new TriggeredAbilityEvent(floor, event, concerned, this.conditions.length > 1 ? i + 1 : 0));
                 }
         }
     }
 
     @Override
-    public void onTurnStart(Floor floor, DungeonPokemon pokemon, ArrayList<DungeonEvent> events) {
+    public void onTurnStart(Floor floor, DungeonPokemon pokemon, ArrayList<Event> events) {
         super.onTurnStart(floor, pokemon, events);
 
         for (int i = 0; i < this.conditions.length; ++i)
             if (pokemon.hasStatusCondition(this.conditions[i])) {
-                events.add(new TriggeredAbilityEvent(floor, pokemon, i + this.conditions.length + 1));
+                TriggeredAbilityEvent abilityevent = new TriggeredAbilityEvent(floor, BaseEventSource.TRIGGER,
+                        pokemon, i + this.conditions.length + 1);
+                events.add(abilityevent);
                 pokemon.getStatusCondition(this.conditions[i]).finish(floor, StatusConditionEndReason.PREVENTED,
-                        events);
+                        abilityevent, events);
             }
     }
 

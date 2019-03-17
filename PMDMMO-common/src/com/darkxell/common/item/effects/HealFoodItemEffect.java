@@ -2,11 +2,9 @@ package com.darkxell.common.item.effects;
 
 import java.util.ArrayList;
 
-import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
+import com.darkxell.common.event.item.ItemUseEvent;
 import com.darkxell.common.event.pokemon.HealthRestoredEvent;
-import com.darkxell.common.item.Item;
-import com.darkxell.common.pokemon.DungeonPokemon;
 
 /** An Item that restores belly when eaten, and inflicts negative status effects. */
 public class HealFoodItemEffect extends FoodItemEffect {
@@ -28,10 +26,9 @@ public class HealFoodItemEffect extends FoodItemEffect {
     }
 
     @Override
-    public void use(Floor floor, Item item, DungeonPokemon pokemon, DungeonPokemon target,
-            ArrayList<DungeonEvent> events) {
-        super.use(floor, item, pokemon, target, events);
-        events.add(new HealthRestoredEvent(floor, target, this.hp));
+    public void use(ItemUseEvent itemEvent, ArrayList<Event> events) {
+        super.use(itemEvent, events);
+        events.add(new HealthRestoredEvent(itemEvent.floor, itemEvent, itemEvent.target, this.hp));
     }
 
 }

@@ -3,11 +3,12 @@ package com.darkxell.common.pokemon.ability;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.item.ItemSelectionEvent;
 import com.darkxell.common.event.item.ItemUseEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.pokemon.StatusConditionCreatedEvent;
+import com.darkxell.common.event.pokemon.TriggeredAbilityEvent;
 import com.darkxell.common.item.effects.OrbItemEffect;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.status.StatusConditions;
@@ -19,17 +20,19 @@ public class AbilityTruant extends Ability {
     }
 
     @Override
-    public void onPostEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned,
-            ArrayList<DungeonEvent> resultingEvents) {
+    public void onPostEvent(Floor floor, Event event, DungeonPokemon concerned,
+            ArrayList<Event> resultingEvents) {
         super.onPostEvent(floor, event, concerned, resultingEvents);
 
-        if (this.shouldTruant(floor, event, concerned, false))
-            resultingEvents.add(new StatusConditionCreatedEvent(floor,
+        if (this.shouldTruant(floor, event, concerned, false)) {
+            TriggeredAbilityEvent abilityevent = new TriggeredAbilityEvent(floor, event, concerned);
+            resultingEvents.add(new StatusConditionCreatedEvent(floor, abilityevent,
                     StatusConditions.Paused.create(floor, concerned, this, floor.random)));
+        }
     }
 
     /** @param prevent - If true, method will check as before the event triggers, else as after it does. */
-    public boolean shouldTruant(Floor floor, DungeonEvent event, DungeonPokemon concerned, boolean prevent) {
+    public boolean shouldTruant(Floor floor, Event event, DungeonPokemon concerned, boolean prevent) {
 
         if (event instanceof MoveSelectionEvent) {
             MoveSelectionEvent e = (MoveSelectionEvent) event;

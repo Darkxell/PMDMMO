@@ -3,7 +3,8 @@ package com.darkxell.common.pokemon.ability;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
+import com.darkxell.common.event.EventSource.BaseEventSource;
 import com.darkxell.common.event.item.ItemCreatedEvent;
 import com.darkxell.common.event.pokemon.TriggeredAbilityEvent;
 import com.darkxell.common.item.ItemStack;
@@ -19,15 +20,16 @@ public class AbilityFindsItemOnFloorStart extends Ability {
     }
 
     @Override
-    public void onFloorStart(Floor floor, DungeonPokemon pokemon, ArrayList<DungeonEvent> events) {
+    public void onFloorStart(Floor floor, DungeonPokemon pokemon, ArrayList<Event> events) {
         super.onFloorStart(floor, pokemon, events);
 
         if (!pokemon.hasItem() && floor.random.nextDouble() * 100 < this.probability) {
             ItemStack item = floor.dungeon.dungeon().randomItem(floor.random, floor.id, false);
             if (item == null)
                 return;
-            events.add(new TriggeredAbilityEvent(floor, pokemon));
-            events.add(new ItemCreatedEvent(floor, item, pokemon));
+            TriggeredAbilityEvent abilityevent = new TriggeredAbilityEvent(floor, BaseEventSource.TRIGGER, pokemon);
+            events.add(abilityevent);
+            events.add(new ItemCreatedEvent(floor, abilityevent, item, pokemon));
         }
     }
 

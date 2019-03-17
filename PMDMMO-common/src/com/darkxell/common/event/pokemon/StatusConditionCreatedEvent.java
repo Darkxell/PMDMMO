@@ -3,17 +3,18 @@ package com.darkxell.common.event.pokemon;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
+import com.darkxell.common.event.EventSource;
 import com.darkxell.common.status.AppliedStatusCondition;
 import com.darkxell.common.util.Pair;
 import com.darkxell.common.util.language.Message;
 
-public class StatusConditionCreatedEvent extends DungeonEvent {
+public class StatusConditionCreatedEvent extends Event {
     public final AppliedStatusCondition condition;
     private boolean succeeded = false;
 
-    public StatusConditionCreatedEvent(Floor floor, AppliedStatusCondition condition) {
-        super(floor);
+    public StatusConditionCreatedEvent(Floor floor, EventSource eventSource, AppliedStatusCondition condition) {
+        super(floor, eventSource);
         this.condition = condition;
     }
 
@@ -28,7 +29,7 @@ public class StatusConditionCreatedEvent extends DungeonEvent {
     }
 
     @Override
-    public ArrayList<DungeonEvent> processServer() {
+    public ArrayList<Event> processServer() {
         Pair<Boolean, Message> affects = this.condition.condition.affects(this.floor, this.condition,
                 this.condition.pokemon);
         this.succeeded = affects.first;

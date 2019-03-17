@@ -4,13 +4,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.ResourceBundle;
-
-import com.darkxell.common.dungeon.data.Dungeon;
-import com.darkxell.common.dungeon.data.DungeonEncounter;
-import com.darkxell.common.dungeon.data.FloorSet;
-import com.darkxell.common.weather.Weather;
-
-import fr.darkxell.dataeditor.application.data.DungeonEncounterTableItem;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.MenuItem;
@@ -19,6 +12,12 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
+
+import com.darkxell.common.dungeon.data.Dungeon;
+import com.darkxell.common.dungeon.data.DungeonEncounter;
+import com.darkxell.common.dungeon.data.FloorSet;
+import com.darkxell.common.weather.Weather;
+import fr.darkxell.dataeditor.application.data.DungeonEncounterTableItem;
 
 public class EditDungeonPokemonController implements Initializable {
 
@@ -66,8 +65,8 @@ public class EditDungeonPokemonController implements Initializable {
     }
 
     public void onCreate() {
-        DungeonEncounterTableItem i = new DungeonEncounterTableItem(
-                new DungeonEncounter(1, 1, 1, new FloorSet(1, EditDungeonDataController.instance.currentFloorCount())));
+        DungeonEncounterTableItem i = new DungeonEncounterTableItem(new DungeonEncounter(1, 1, 1,
+                new FloorSet(1, EditDungeonDataController.instance.currentFloorCount()), null));
         this.pokemonTable.getItems().add(i);
         this.pokemonTable.getSelectionModel().select(i);
         this.onEdit();

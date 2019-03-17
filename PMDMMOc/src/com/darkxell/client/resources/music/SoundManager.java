@@ -2,6 +2,7 @@ package com.darkxell.client.resources.music;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
+import javazoom.jl.player.Player;
 
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.FloatControl;
@@ -13,8 +14,6 @@ import javax.sound.sampled.Mixer.Info;
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.resources.Res;
 import com.darkxell.common.util.Logger;
-
-import javazoom.jl.player.Player;
 
 /** An object that manages all the sounds. Able to play a sound, and to manipulate a background music. */
 public class SoundManager implements Runnable {

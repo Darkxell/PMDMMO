@@ -3,7 +3,8 @@ package com.darkxell.common.event.item;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
+import com.darkxell.common.event.EventSource;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.player.ItemContainer;
@@ -16,7 +17,7 @@ import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonObject;
 
 /** Describes the events occurring before using an Item. */
-public class ItemSelectionEvent extends DungeonEvent implements Communicable {
+public class ItemSelectionEvent extends Event implements Communicable {
 
     /** Direction to face when using the Item. */
     protected Direction direction;
@@ -31,18 +32,18 @@ public class ItemSelectionEvent extends DungeonEvent implements Communicable {
     /** The Pokemon that used the Item. */
     protected DungeonPokemon user;
 
-    public ItemSelectionEvent(Floor floor) {
-        super(floor);
+    public ItemSelectionEvent(Floor floor, EventSource eventSource) {
+        super(floor, eventSource);
     }
 
-    public ItemSelectionEvent(Floor floor, Item item, DungeonPokemon user, DungeonPokemon target, ItemContainer source,
-            int sourceIndex) {
-        this(floor, item, user, target, source, sourceIndex, user.facing(), true);
+    public ItemSelectionEvent(Floor floor, EventSource eventSource, Item item, DungeonPokemon user,
+            DungeonPokemon target, ItemContainer source, int sourceIndex) {
+        this(floor, eventSource, item, user, target, source, sourceIndex, user.facing(), true);
     }
 
-    public ItemSelectionEvent(Floor floor, Item item, DungeonPokemon user, DungeonPokemon target, ItemContainer source,
-            int sourceIndex, Direction direction, boolean consumesTurn) {
-        super(floor, consumesTurn ? user : null);
+    public ItemSelectionEvent(Floor floor, EventSource eventSource, Item item, DungeonPokemon user,
+            DungeonPokemon target, ItemContainer source, int sourceIndex, Direction direction, boolean consumesTurn) {
+        super(floor, eventSource, consumesTurn ? user : null);
         this.item = item;
         this.user = user;
         this.target = target;
@@ -81,7 +82,7 @@ public class ItemSelectionEvent extends DungeonEvent implements Communicable {
     }
 
     @Override
-    public ArrayList<DungeonEvent> processServer() {
+    public ArrayList<Event> processServer() {
         if (this.item.effect().isUsable()) {
             this.messages.add(this.item.effect().getUseEffectMessage(this));
             if (this.item.effect().isConsummable() && this.source != null) {
@@ -91,7 +92,7 @@ public class ItemSelectionEvent extends DungeonEvent implements Communicable {
                     this.source.deleteItem(this.sourceIndex);
             }
 
-            this.resultingEvents.add(new ItemUseEvent(this.floor, this.item, this.user, this.target));
+            this.resultingEvents.add(new ItemUseEvent(this.floor, this, this.item, this.user, this.target));
         }
         return super.processServer();
     }

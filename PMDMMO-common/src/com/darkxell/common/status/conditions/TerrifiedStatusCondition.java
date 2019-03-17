@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import com.darkxell.common.ai.AI;
 import com.darkxell.common.ai.states.AIStateRunaway;
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
-import com.darkxell.common.event.pokemon.StatusConditionEndedEvent.StatusConditionEndReason;
+import com.darkxell.common.event.Event;
+import com.darkxell.common.event.pokemon.StatusConditionEndedEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.ability.Ability;
 import com.darkxell.common.status.AppliedStatusCondition;
@@ -19,14 +19,13 @@ public class TerrifiedStatusCondition extends StatusCondition {
     }
 
     @Override
-    public void onEnd(Floor floor, AppliedStatusCondition instance, StatusConditionEndReason reason,
-            ArrayList<DungeonEvent> events) {
-        super.onEnd(floor, instance, reason, events);
-        floor.aiManager.getAI(instance.pokemon).setSuperState(null);
+    public void onEnd(StatusConditionEndedEvent event, ArrayList<Event> events) {
+        super.onEnd(event, events);
+        event.floor.aiManager.getAI(event.condition.pokemon).setSuperState(null);
     }
 
     @Override
-    public void onStart(Floor floor, AppliedStatusCondition instance, ArrayList<DungeonEvent> events) {
+    public void onStart(Floor floor, AppliedStatusCondition instance, ArrayList<Event> events) {
         super.onStart(floor, instance, events);
         AI ai = floor.aiManager.getAI(instance.pokemon);
         ai.setSuperState(new AIStateRunaway(ai));
@@ -39,7 +38,7 @@ public class TerrifiedStatusCondition extends StatusCondition {
     }
 
     @Override
-    public void tick(Floor floor, AppliedStatusCondition instance, ArrayList<DungeonEvent> events) {
+    public void tick(Floor floor, AppliedStatusCondition instance, ArrayList<Event> events) {
         super.tick(floor, instance, events);
         if (instance.tick == instance.duration - 1 && this.souldStatusContinue(instance.pokemon))
             --instance.tick;

@@ -3,7 +3,8 @@ package com.darkxell.common.event.item;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
+import com.darkxell.common.event.EventSource;
 import com.darkxell.common.item.Item.ItemAction;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.player.Inventory;
@@ -17,25 +18,26 @@ import com.darkxell.common.util.language.Message;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonObject;
 
-public class ItemMovedEvent extends DungeonEvent implements Communicable {
+public class ItemMovedEvent extends Event implements Communicable {
 
     protected ItemAction action;
     protected DungeonPokemon mover;
     protected ItemContainer source, destination;
     protected int sourceIndex, destinationIndex;
 
-    public ItemMovedEvent(Floor floor) {
-        super(floor);
+    public ItemMovedEvent(Floor floor, EventSource eventSource) {
+        super(floor, eventSource);
     }
 
-    public ItemMovedEvent(Floor floor, ItemAction action, DungeonPokemon mover, ItemContainer source, int sourceIndex,
-            ItemContainer destination, int destinationIndex) {
-        this(floor, action, mover, source, sourceIndex, destination, destinationIndex, true);
+    public ItemMovedEvent(Floor floor, EventSource eventSource, ItemAction action, DungeonPokemon mover,
+            ItemContainer source, int sourceIndex, ItemContainer destination, int destinationIndex) {
+        this(floor, eventSource, action, mover, source, sourceIndex, destination, destinationIndex, true);
     }
 
-    public ItemMovedEvent(Floor floor, ItemAction action, DungeonPokemon mover, ItemContainer source, int sourceIndex,
-            ItemContainer destination, int destinationIndex, boolean isTurnAction) {
-        super(floor, isTurnAction ? mover : null);
+    public ItemMovedEvent(Floor floor, EventSource eventSource, ItemAction action, DungeonPokemon mover,
+            ItemContainer source, int sourceIndex, ItemContainer destination, int destinationIndex,
+            boolean isTurnAction) {
+        super(floor, eventSource, isTurnAction ? mover : null);
         this.mover = mover;
         this.action = action;
         this.source = source;
@@ -85,7 +87,7 @@ public class ItemMovedEvent extends DungeonEvent implements Communicable {
     }
 
     @Override
-    public ArrayList<DungeonEvent> processServer() {
+    public ArrayList<Event> processServer() {
         String message = null;
         if (this.action == ItemAction.GIVE)
             message = "inventory.give";

@@ -2,11 +2,10 @@ package com.darkxell.common.status.conditions;
 
 import java.util.ArrayList;
 
-import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.pokemon.StatusConditionCreatedEvent;
+import com.darkxell.common.event.pokemon.StatusConditionEndedEvent;
 import com.darkxell.common.event.pokemon.StatusConditionEndedEvent.StatusConditionEndReason;
-import com.darkxell.common.status.AppliedStatusCondition;
 import com.darkxell.common.status.StatusCondition;
 
 public class InflictConditionOnFinishStatusCondition extends StatusCondition {
@@ -20,13 +19,12 @@ public class InflictConditionOnFinishStatusCondition extends StatusCondition {
     }
 
     @Override
-    public void onEnd(Floor floor, AppliedStatusCondition instance, StatusConditionEndReason reason,
-            ArrayList<DungeonEvent> events) {
-        super.onEnd(floor, instance, reason, events);
+    public void onEnd(StatusConditionEndedEvent event, ArrayList<Event> events) {
+        super.onEnd(event, events);
 
-        if (reason == StatusConditionEndReason.FINISHED)
-            events.add(new StatusConditionCreatedEvent(floor,
-                    this.inflictedOnFinish.create(floor, instance.pokemon, this, floor.random)));
+        if (event.reason == StatusConditionEndReason.FINISHED)
+            events.add(new StatusConditionCreatedEvent(event.floor, event,
+                    this.inflictedOnFinish.create(event.floor, event.condition.pokemon, this, event.floor.random)));
     }
 
 }

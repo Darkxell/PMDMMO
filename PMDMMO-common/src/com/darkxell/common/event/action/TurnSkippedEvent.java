@@ -3,7 +3,8 @@ package com.darkxell.common.event.action;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
+import com.darkxell.common.event.EventSource;
 import com.darkxell.common.event.stats.BellyChangedEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.Pokemon;
@@ -11,16 +12,16 @@ import com.darkxell.common.util.Communicable;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonObject;
 
-public class TurnSkippedEvent extends DungeonEvent implements Communicable {
+public class TurnSkippedEvent extends Event implements Communicable {
 
     private DungeonPokemon pokemon;
 
-    public TurnSkippedEvent(Floor floor) {
-        super(floor);
+    public TurnSkippedEvent(Floor floor, EventSource eventSource) {
+        super(floor, eventSource);
     }
 
-    public TurnSkippedEvent(Floor floor, DungeonPokemon pokemon) {
-        super(floor, pokemon);
+    public TurnSkippedEvent(Floor floor, EventSource eventSource, DungeonPokemon pokemon) {
+        super(floor, eventSource, pokemon);
         this.pokemon = pokemon;
     }
 
@@ -38,10 +39,10 @@ public class TurnSkippedEvent extends DungeonEvent implements Communicable {
     }
 
     @Override
-    public ArrayList<DungeonEvent> processServer() {
+    public ArrayList<Event> processServer() {
         if (this.pokemon.isTeamLeader())
             this.resultingEvents
-                    .add(new BellyChangedEvent(this.floor, this.pokemon, -.1 * this.pokemon.energyMultiplier()));
+                    .add(new BellyChangedEvent(this.floor, this, this.pokemon, -.1 * this.pokemon.energyMultiplier()));
         return super.processServer();
     }
 

@@ -3,7 +3,8 @@ package com.darkxell.common.event.move;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
+import com.darkxell.common.event.EventSource;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageSource;
 import com.darkxell.common.event.stats.BellyChangedEvent;
 import com.darkxell.common.event.stats.ExperienceGeneratedEvent;
@@ -19,7 +20,7 @@ import com.darkxell.common.weather.WeatherSource;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonObject;
 
-public class MoveSelectionEvent extends DungeonEvent implements Communicable {
+public class MoveSelectionEvent extends Event implements Communicable {
 
     public static class MoveUse implements DamageSource, WeatherSource {
         public final Direction direction;
@@ -28,12 +29,13 @@ public class MoveSelectionEvent extends DungeonEvent implements Communicable {
         public final LearnedMove move;
         public final DungeonPokemon user;
 
-        public MoveUse(Floor floor, LearnedMove move, DungeonPokemon user, Direction direction) {
+        public MoveUse(Floor floor, LearnedMove move, DungeonPokemon user, Direction direction,
+                EventSource eventSource) {
             this.move = move;
             this.user = user;
             this.direction = direction;
             this.experienceEvent = this.user.type == DungeonPokemonType.TEAM_MEMBER
-                    ? new ExperienceGeneratedEvent(floor, this.user.player())
+                    ? new ExperienceGeneratedEvent(floor, eventSource, this.user.player())
                     : null;
         }
 
@@ -65,22 +67,23 @@ public class MoveSelectionEvent extends DungeonEvent implements Communicable {
     private boolean consumesPP = true;
     private MoveUse usedMove;
 
-    public MoveSelectionEvent(Floor floor) {
-        super(floor);
+    public MoveSelectionEvent(Floor floor, EventSource eventSource) {
+        super(floor, eventSource);
     }
 
-    public MoveSelectionEvent(Floor floor, LearnedMove move, DungeonPokemon user) {
-        this(floor, move, user, user.facing(), true);
+    public MoveSelectionEvent(Floor floor, EventSource eventSource, LearnedMove move, DungeonPokemon user) {
+        this(floor, eventSource, move, user, user.facing(), true);
     }
 
-    public MoveSelectionEvent(Floor floor, LearnedMove move, DungeonPokemon user, Direction direction) {
-        this(floor, move, user, direction, true);
+    public MoveSelectionEvent(Floor floor, EventSource eventSource, LearnedMove move, DungeonPokemon user,
+            Direction direction) {
+        this(floor, eventSource, move, user, direction, true);
     }
 
-    public MoveSelectionEvent(Floor floor, LearnedMove move, DungeonPokemon user, Direction direction,
-            boolean consumesTurn) {
-        super(floor, consumesTurn ? user : null);
-        this.usedMove = new MoveUse(floor, move, user, direction);
+    public MoveSelectionEvent(Floor floor, EventSource eventSource, LearnedMove move, DungeonPokemon user,
+            Direction direction, boolean consumesTurn) {
+        super(floor, eventSource, consumesTurn ? user : null);
+        this.usedMove = new MoveUse(floor, move, user, direction, this);
 
         if (this.usedMove.move.move().hasUseMessage())
             this.messages.add(new Message("move.used").addReplacement("<pokemon>", user.getNickname())
@@ -103,7 +106,7 @@ public class MoveSelectionEvent extends DungeonEvent implements Communicable {
     }
 
     @Override
-    public ArrayList<DungeonEvent> processServer() {
+    public ArrayList<Event> processServer() {
         // Rotate
         if (this.usedMove.direction != this.usedMove.user.facing())
             this.usedMove.user.setFacing(this.usedMove.direction);
@@ -113,17 +116,17 @@ public class MoveSelectionEvent extends DungeonEvent implements Communicable {
             this.usedMove.move.setPP(this.usedMove.move.pp() - 1);
 
         // Use Move
-        this.usedMove.move.move().prepareUse(this.usedMove, this.floor, this.resultingEvents);
+        this.usedMove.move.move().prepareUse(this, this.resultingEvents);
 
         this.resultingEvents.add(this.usedMove.getExperienceEvent());
 
         // Use belly
         if (this.usedMove.user.isTeamLeader())
-            this.resultingEvents.add(new BellyChangedEvent(this.floor, this.usedMove.user,
+            this.resultingEvents.add(new BellyChangedEvent(this.floor, this, this.usedMove.user,
                     -(this.usedMove.move.isLinked() ? .9 : .1) * this.usedMove.user.energyMultiplier()));
 
         if (this.usedMove.move.isLinked())
-            this.resultingEvents.add(new MoveSelectionEvent(this.floor,
+            this.resultingEvents.add(new MoveSelectionEvent(this.floor, this,
                     this.usedMove.user.move(this.usedMove.move.getData().slot + 1), this.usedMove.user));
 
         return super.processServer();
@@ -154,7 +157,7 @@ public class MoveSelectionEvent extends DungeonEvent implements Communicable {
             throw new JsonReadingException("No direction with name " + value.getString("direction", "null"));
         }
         this.actor = pokemon.getDungeonPokemon();
-        this.usedMove = new MoveUse(this.floor, move, pokemon.getDungeonPokemon(), d);
+        this.usedMove = new MoveUse(this.floor, move, pokemon.getDungeonPokemon(), d, this);
 
         if (this.usedMove.move.move() != MoveRegistry.ATTACK)
             this.messages.add(new Message("move.used").addReplacement("<pokemon>", this.usedMove.user.getNickname())

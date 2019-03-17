@@ -5,14 +5,15 @@ import java.util.ArrayList;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
+import com.darkxell.common.event.EventSource;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageType;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DefaultDamageSource;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.language.Message;
 
-public class BlowbackPokemonEvent extends DungeonEvent {
+public class BlowbackPokemonEvent extends Event {
 
     private Tile destination;
     public final Direction direction;
@@ -20,8 +21,9 @@ public class BlowbackPokemonEvent extends DungeonEvent {
     public final DungeonPokemon pokemon;
     private boolean wasHurt;
 
-    public BlowbackPokemonEvent(Floor floor, DungeonPokemon pokemon, Direction direction) {
-        super(floor);
+    public BlowbackPokemonEvent(Floor floor, EventSource eventSource, DungeonPokemon pokemon,
+            Direction direction) {
+        super(floor, eventSource);
         this.pokemon = pokemon;
         this.direction = direction;
         this.origin = this.pokemon.tile();
@@ -37,7 +39,7 @@ public class BlowbackPokemonEvent extends DungeonEvent {
     }
 
     @Override
-    public ArrayList<DungeonEvent> processServer() {
+    public ArrayList<Event> processServer() {
         this.messages.add(new Message("pokemon.blowback").addReplacement("<pokemon>", this.pokemon.getNickname()));
 
         final int max = 10;
@@ -56,11 +58,11 @@ public class BlowbackPokemonEvent extends DungeonEvent {
         this.destination = count < max ? temp : current;
         current.setPokemon(this.pokemon);
         if (count < max && (temp.isWall() || temp.getPokemon() != null)) {
-            this.resultingEvents.add(new DamageDealtEvent(this.floor, this.pokemon,
-                    new DefaultDamageSource(this.floor, null), DamageType.COLLISION, 5));
+            this.resultingEvents.add(new DamageDealtEvent(this.floor, this, this.pokemon,
+                    new DefaultDamageSource(this.floor, null, this), DamageType.COLLISION, 5));
             if (temp.getPokemon() != null)
-                this.resultingEvents.add(new DamageDealtEvent(this.floor, temp.getPokemon(),
-                        new DefaultDamageSource(this.floor, null), DamageType.COLLISION, 5));
+                this.resultingEvents.add(new DamageDealtEvent(this.floor, this, temp.getPokemon(),
+                        new DefaultDamageSource(this.floor, null, eventSource), DamageType.COLLISION, 5));
         }
 
         return super.processServer();

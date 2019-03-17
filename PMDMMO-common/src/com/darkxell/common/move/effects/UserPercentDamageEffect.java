@@ -1,14 +1,12 @@
 package com.darkxell.common.move.effects;
 
-import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
+import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageType;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.move.MoveEffect;
 import com.darkxell.common.move.MoveEffectCalculator;
 import com.darkxell.common.move.MoveEvents;
-import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Message;
 
 public class UserPercentDamageEffect extends MoveEffect {
@@ -21,14 +19,14 @@ public class UserPercentDamageEffect extends MoveEffect {
     }
 
     @Override
-    protected void mainEffects(MoveUse usedMove, DungeonPokemon target, String[] flags, Floor floor,
-            MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
-        super.mainEffects(usedMove, target, flags, floor, calculator, missed, effects);
+    protected void mainEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed,
+            MoveEvents effects) {
+        super.mainEffects(moveEvent, calculator, missed, effects);
 
         effects.createEffect(
-                new DamageDealtEvent(floor, usedMove.user, usedMove, DamageType.MOVE,
-                        (int) (usedMove.user.getMaxHP() * this.percent)),
-                usedMove, target, floor, missed, false, usedMove.user);
+                new DamageDealtEvent(moveEvent.floor, moveEvent, moveEvent.usedMove.user, moveEvent.usedMove,
+                        DamageType.MOVE, (int) (moveEvent.usedMove.user.getMaxHP() * this.percent)),
+                moveEvent, missed, false);
     }
 
     @Override

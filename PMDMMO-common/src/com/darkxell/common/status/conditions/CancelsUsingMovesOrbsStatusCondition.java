@@ -3,7 +3,7 @@ package com.darkxell.common.status.conditions;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.action.TurnSkippedEvent;
 import com.darkxell.common.event.pokemon.TriggeredAbilityEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
@@ -17,14 +17,15 @@ public class CancelsUsingMovesOrbsStatusCondition extends StatusCondition {
     }
 
     @Override
-    public void onPreEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned,
-            ArrayList<DungeonEvent> resultingEvents) {
+    public void onPreEvent(Floor floor, Event event, DungeonPokemon concerned,
+            ArrayList<Event> resultingEvents) {
         super.onPreEvent(floor, event, concerned, resultingEvents);
 
         if (Ability.TRUANT.shouldTruant(floor, event, concerned, true)) {
             event.consume();
-            resultingEvents.add(new TriggeredAbilityEvent(floor, concerned));
-            resultingEvents.add(new TurnSkippedEvent(floor, concerned));
+            TriggeredAbilityEvent abilityevent = new TriggeredAbilityEvent(floor, event, concerned);
+            resultingEvents.add(abilityevent);
+            resultingEvents.add(new TurnSkippedEvent(floor, abilityevent, concerned));
         }
     }
 

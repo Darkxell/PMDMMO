@@ -4,7 +4,8 @@ import java.util.ArrayList;
 
 import com.darkxell.common.ai.AI;
 import com.darkxell.common.ai.AI.AIState;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
+import com.darkxell.common.event.EventSource.BaseEventSource;
 import com.darkxell.common.event.action.PokemonTravelEvent;
 import com.darkxell.common.event.action.TurnSkippedEvent;
 import com.darkxell.common.util.Direction;
@@ -23,16 +24,16 @@ public class AIStateWanderAroundInRoom extends AIState {
     }
 
     @Override
-    public DungeonEvent takeAction() {
+    public Event takeAction() {
         ArrayList<Direction> directions = new ArrayList<>(Direction.DIRECTIONS);
         while (!directions.isEmpty()) {
             Direction d = RandomUtil.random(directions, this.ai.floor.random);
             directions.remove(d);
             if (this.ai.pokemon.tile().adjacentTile(d).isInRoom()
                     && this.ai.pokemon.tile().adjacentTile(d).canMoveTo(this.ai.pokemon, d, false))
-                return new PokemonTravelEvent(this.ai.floor, this.ai.pokemon, d);
+                return new PokemonTravelEvent(this.ai.floor, BaseEventSource.PLAYER_ACTION, this.ai.pokemon, d);
         }
-        return new TurnSkippedEvent(this.ai.floor, this.ai.pokemon);
+        return new TurnSkippedEvent(this.ai.floor, BaseEventSource.PLAYER_ACTION, this.ai.pokemon);
     }
 
     @Override

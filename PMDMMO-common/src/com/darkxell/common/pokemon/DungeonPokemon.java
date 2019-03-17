@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
-import com.darkxell.common.event.DungeonEvent;
-import com.darkxell.common.event.DungeonEventListener;
+import com.darkxell.common.event.Event;
+import com.darkxell.common.event.EventListener;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.Item.ItemAction;
 import com.darkxell.common.item.ItemStack;
@@ -19,7 +19,7 @@ import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.language.Message;
 
 /** Represents a Pokemon in a Dungeon. */
-public class DungeonPokemon implements ItemContainer, DungeonEventListener {
+public class DungeonPokemon implements ItemContainer, EventListener {
     public enum DungeonPokemonType {
         BOSS,
         MINIBOSS,
@@ -180,7 +180,7 @@ public class DungeonPokemon implements ItemContainer, DungeonEventListener {
 
     /**
      * @return The multiplier to apply to base energy values for the team leader's actions. Used to determine how much
-     * belly is lost for that action.
+     *         belly is lost for that action.
      */
     public double energyMultiplier() {
         return 1;
@@ -260,7 +260,7 @@ public class DungeonPokemon implements ItemContainer, DungeonEventListener {
 
     /**
      * @return True if this Pokemon is affected by the input Status Condition. If input condition is null, checks if it
-     * has any Status Condition.
+     *         has any Status Condition.
      */
     public boolean hasStatusCondition(StatusCondition condition) {
         if (condition == null)
@@ -309,7 +309,7 @@ public class DungeonPokemon implements ItemContainer, DungeonEventListener {
 
     /**
      * @return True if this Pokemon is the original Pokemon that visits this Dungeon. Only false for Dungeons that
-     * modify the visiting Pokemon, such as Dungeons resetting the level to 1.
+     *         modify the visiting Pokemon, such as Dungeons resetting the level to 1.
      */
     public boolean isCopy() {
         return this.usedPokemon != this.originalPokemon;
@@ -364,19 +364,20 @@ public class DungeonPokemon implements ItemContainer, DungeonEventListener {
     }
 
     /** Called when this Pokemon enters a new Floor or when it spawns. */
-    public void onFloorStart(Floor floor, ArrayList<DungeonEvent> events) {
+    public void onFloorStart(Floor floor, ArrayList<Event> events) {
         this.statusConditions.clear();
         this.stats.onFloorStart(floor, events);
         this.ability().onFloorStart(floor, this, events);
         this.regenCounter = 0;
+        floor.aiManager.getAI(this).visibility.onPokemonMoved();
         // events.add(new StatusConditionCreatedEvent(floor, StatusConditions.Paralyzed.create(this, floor,
         // floor.random)));
     }
 
     @Override
-    public void onPostEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned,
-            ArrayList<DungeonEvent> resultingEvents) {
-        DungeonEventListener.super.onPostEvent(floor, event, concerned, resultingEvents);
+    public void onPostEvent(Floor floor, Event event, DungeonPokemon concerned,
+            ArrayList<Event> resultingEvents) {
+        EventListener.super.onPostEvent(floor, event, concerned, resultingEvents);
 
         if (this.hasItem())
             this.getItem().item().effect().onPostEvent(floor, event, concerned, resultingEvents, this.getItem(), this,
@@ -384,9 +385,9 @@ public class DungeonPokemon implements ItemContainer, DungeonEventListener {
     }
 
     @Override
-    public void onPreEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned,
-            ArrayList<DungeonEvent> resultingEvents) {
-        DungeonEventListener.super.onPreEvent(floor, event, concerned, resultingEvents);
+    public void onPreEvent(Floor floor, Event event, DungeonPokemon concerned,
+            ArrayList<Event> resultingEvents) {
+        EventListener.super.onPreEvent(floor, event, concerned, resultingEvents);
 
         if (this.hasItem())
             this.getItem().item().effect().onPreEvent(floor, event, concerned, resultingEvents, this.getItem(), this,
@@ -394,7 +395,7 @@ public class DungeonPokemon implements ItemContainer, DungeonEventListener {
     }
 
     /** Called at the beginning of each turn. */
-    public void onTurnStart(Floor floor, ArrayList<DungeonEvent> events) {
+    public void onTurnStart(Floor floor, ArrayList<Event> events) {
         if (this.canRegen()) {
             int recoveryRate = 200;
             int healthGain = 0;

@@ -13,6 +13,7 @@ import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
 import com.darkxell.common.Registries;
 import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.util.Direction;
+import com.darkxell.common.util.Pair;
 import com.darkxell.common.util.xml.XMLUtils;
 
 import fr.darkxell.dataeditor.application.controller.animation.TestAnimationController;
@@ -29,7 +30,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.VBox;
-import javafx.util.Pair;
 
 public class SpritesTabController implements Initializable, ListCellParent<PokemonSpritesetData> {
     public PokemonSpritesetData currentSprite;

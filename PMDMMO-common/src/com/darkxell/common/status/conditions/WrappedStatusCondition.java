@@ -2,11 +2,9 @@ package com.darkxell.common.status.conditions;
 
 import java.util.ArrayList;
 
-import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
-import com.darkxell.common.event.pokemon.StatusConditionEndedEvent.StatusConditionEndReason;
+import com.darkxell.common.event.Event;
+import com.darkxell.common.event.pokemon.StatusConditionEndedEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
-import com.darkxell.common.status.AppliedStatusCondition;
 import com.darkxell.common.status.StatusConditions;
 
 public class WrappedStatusCondition extends PeriodicDamageStatusCondition {
@@ -16,20 +14,19 @@ public class WrappedStatusCondition extends PeriodicDamageStatusCondition {
     }
 
     @Override
-    public void onEnd(Floor floor, AppliedStatusCondition instance, StatusConditionEndReason reason,
-            ArrayList<DungeonEvent> events) {
-        super.onEnd(floor, instance, reason, events);
+    public void onEnd(StatusConditionEndedEvent event, ArrayList<Event> events) {
+        super.onEnd(event, events);
 
         String wrapperid = null;
-        for (String flag : instance.listFlags())
+        for (String flag : event.condition.listFlags())
             if (flag.startsWith("wrapper:"))
                 wrapperid = flag.substring("wrapper:".length());
 
         if (wrapperid != null && wrapperid.matches("-?\\d+")) {
             long id = Integer.parseInt(wrapperid);
-            DungeonPokemon wrapper = floor.findPokemon(id);
+            DungeonPokemon wrapper = event.floor.findPokemon(id);
             if (wrapper != null && wrapper.hasStatusCondition(StatusConditions.Wrapping))
-                wrapper.getStatusCondition(StatusConditions.Wrapping).finish(floor, reason, events);
+                wrapper.getStatusCondition(StatusConditions.Wrapping).finish(event.floor, event.reason, event, events);
         }
     }
 

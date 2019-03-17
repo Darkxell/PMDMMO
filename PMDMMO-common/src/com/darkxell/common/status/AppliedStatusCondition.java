@@ -3,15 +3,16 @@ package com.darkxell.common.status;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
-import com.darkxell.common.event.DungeonEventListener;
+import com.darkxell.common.event.Event;
+import com.darkxell.common.event.EventListener;
+import com.darkxell.common.event.EventSource;
 import com.darkxell.common.event.pokemon.StatusConditionEndedEvent;
 import com.darkxell.common.event.pokemon.StatusConditionEndedEvent.StatusConditionEndReason;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Localization;
 import com.darkxell.common.util.language.Message;
 
-public class AppliedStatusCondition implements DungeonEventListener {
+public class AppliedStatusCondition implements EventListener, EventSource {
 
     /**
      * True if the Pokemon this Status condition affects has acted this turn while this Status condition was active.<br>
@@ -59,8 +60,9 @@ public class AppliedStatusCondition implements DungeonEventListener {
         return new Message(id).addReplacement("<pokemon>", this.pokemon.getNickname());
     }
 
-    public void finish(Floor floor, StatusConditionEndReason reason, ArrayList<DungeonEvent> events) {
-        events.add(new StatusConditionEndedEvent(floor, this, reason));
+    public void finish(Floor floor, StatusConditionEndReason reason, EventSource finishSource,
+            ArrayList<Event> events) {
+        events.add(new StatusConditionEndedEvent(floor, finishSource, this, reason));
     }
 
     public int getTurns() {
@@ -83,23 +85,23 @@ public class AppliedStatusCondition implements DungeonEventListener {
         return this.flags.split("\\|");
     }
 
-    public void onConditionEnd(Floor floor, StatusConditionEndReason reason, ArrayList<DungeonEvent> events) {
-        this.condition.onEnd(floor, this, reason, events);
+    public void onConditionEnd(StatusConditionEndedEvent event, ArrayList<Event> events) {
+        this.condition.onEnd(event, events);
     }
 
-    public void onConditionStart(Floor floor, ArrayList<DungeonEvent> events) {
+    public void onConditionStart(Floor floor, ArrayList<Event> events) {
         this.condition.onStart(floor, this, events);
     }
 
     @Override
-    public void onPostEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned,
-            ArrayList<DungeonEvent> resultingEvents) {
+    public void onPostEvent(Floor floor, Event event, DungeonPokemon concerned,
+            ArrayList<Event> resultingEvents) {
         this.condition.onPostEvent(floor, event, concerned, resultingEvents);
     }
 
     @Override
-    public void onPreEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned,
-            ArrayList<DungeonEvent> resultingEvents) {
+    public void onPreEvent(Floor floor, Event event, DungeonPokemon concerned,
+            ArrayList<Event> resultingEvents) {
         this.condition.onPreEvent(floor, event, concerned, resultingEvents);
     }
 
@@ -114,13 +116,13 @@ public class AppliedStatusCondition implements DungeonEventListener {
         return new Message(id).addReplacement("<pokemon>", this.pokemon.getNickname());
     }
 
-    public void tick(Floor floor, ArrayList<DungeonEvent> events) {
+    public void tick(Floor floor, ArrayList<Event> events) {
         if (!this.isOver())
             this.condition.tick(floor, this, events);
         ++this.tick;
         this.actedWhileApplied = false;
         if (this.isOver())
-            this.finish(floor, StatusConditionEndReason.FINISHED, events);
+            this.finish(floor, StatusConditionEndReason.FINISHED, this, events);
     }
 
 }

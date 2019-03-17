@@ -3,7 +3,7 @@ package com.darkxell.common.status.conditions;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageType;
 import com.darkxell.common.pokemon.DungeonPokemon;
@@ -40,14 +40,14 @@ public class PeriodicDamageStatusCondition extends StatusCondition {
         return new Pair<>(true, null);
     }
 
-    protected int damageDealt(Floor floor, AppliedStatusCondition instance, ArrayList<DungeonEvent> events) {
+    protected int damageDealt(Floor floor, AppliedStatusCondition instance, ArrayList<Event> events) {
         return (int) this.damage;
     }
 
     @Override
-    public void tick(Floor floor, AppliedStatusCondition instance, ArrayList<DungeonEvent> events) {
+    public void tick(Floor floor, AppliedStatusCondition instance, ArrayList<Event> events) {
         if (instance.tick % this.period == 0)
-            events.add(new DamageDealtEvent(floor, instance.pokemon, this, DamageType.CONDITION,
+            events.add(new DamageDealtEvent(floor, instance, instance.pokemon, this, DamageType.CONDITION,
                     this.damageDealt(floor, instance, events)));
     }
 

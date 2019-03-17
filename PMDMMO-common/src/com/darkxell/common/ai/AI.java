@@ -2,7 +2,8 @@ package com.darkxell.common.ai;
 
 import com.darkxell.common.ai.visibility.Visibility;
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
+import com.darkxell.common.event.EventSource.BaseEventSource;
 import com.darkxell.common.event.action.TurnSkippedEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Direction;
@@ -32,7 +33,12 @@ public abstract class AI {
             return null;
         }
 
-        public abstract DungeonEvent takeAction();
+        public abstract Event takeAction();
+    }
+
+    public enum CustomAI {
+        NONE,
+        STATIONARY;
     }
 
     /** The Floor context. */
@@ -81,11 +87,11 @@ public abstract class AI {
     }
 
     /** Calls the AIState to determine the action to execute. */
-    public DungeonEvent takeAction() {
+    public Event takeAction() {
         if (!this.hasSuperState())
             this.update();
         if (this.currentState() == null)
-            return new TurnSkippedEvent(this.floor, this.pokemon);
+            return new TurnSkippedEvent(this.floor, BaseEventSource.PLAYER_ACTION, this.pokemon);
         return this.currentState().takeAction();
     }
 

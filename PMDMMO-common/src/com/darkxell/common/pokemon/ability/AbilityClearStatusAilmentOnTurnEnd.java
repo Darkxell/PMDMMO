@@ -3,7 +3,8 @@ package com.darkxell.common.pokemon.ability;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
+import com.darkxell.common.event.EventSource.BaseEventSource;
 import com.darkxell.common.event.pokemon.StatusConditionEndedEvent.StatusConditionEndReason;
 import com.darkxell.common.event.pokemon.TriggeredAbilityEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
@@ -19,15 +20,17 @@ public class AbilityClearStatusAilmentOnTurnEnd extends Ability {
     }
 
     @Override
-    public void onTurnStart(Floor floor, DungeonPokemon pokemon, ArrayList<DungeonEvent> events) {
+    public void onTurnStart(Floor floor, DungeonPokemon pokemon, ArrayList<Event> events) {
         super.onTurnStart(floor, pokemon, events);
 
         if (pokemon.hasStatusCondition(null)) {
             boolean triggers = floor.random.nextDouble() * 100 < this.chance;
             if (triggers) {
-                events.add(new TriggeredAbilityEvent(floor, pokemon));
+                TriggeredAbilityEvent abilityevent = new TriggeredAbilityEvent(floor, BaseEventSource.TRIGGER,
+                        pokemon);
+                events.add(abilityevent);
                 for (AppliedStatusCondition condition : pokemon.activeStatusConditions())
-                    condition.finish(floor, StatusConditionEndReason.HEALED, events);
+                    condition.finish(floor, StatusConditionEndReason.HEALED, abilityevent, events);
             }
         }
 

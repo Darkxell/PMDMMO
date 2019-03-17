@@ -2,15 +2,16 @@ package com.darkxell.common.event.dungeon.weather;
 
 import java.util.ArrayList;
 
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
+import com.darkxell.common.event.EventSource;
 import com.darkxell.common.weather.ActiveWeather;
 
-public class WeatherCleanedEvent extends DungeonEvent {
+public class WeatherCleanedEvent extends Event {
 
     public final ActiveWeather weather;
 
-    public WeatherCleanedEvent(ActiveWeather weather) {
-        super(weather.floor);
+    public WeatherCleanedEvent(ActiveWeather weather, EventSource eventSource) {
+        super(weather.floor, eventSource);
         this.weather = weather;
     }
 
@@ -20,8 +21,8 @@ public class WeatherCleanedEvent extends DungeonEvent {
     }
 
     @Override
-    public ArrayList<DungeonEvent> processServer() {
-        this.floor.removeWeather(this.weather, this.resultingEvents);
+    public ArrayList<Event> processServer() {
+        this.floor.removeWeather(this, this.resultingEvents);
         return super.processServer();
     }
 

@@ -2,14 +2,13 @@ package fr.darkxell.dataeditor.application.util;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import javafx.embed.swing.SwingFXUtils;
 
 import com.darkxell.client.launchable.render.UpdaterAndRenderer;
 import com.darkxell.client.mechanics.animation.AbstractAnimation;
 import com.darkxell.client.mechanics.animation.AnimationEndListener;
 import com.darkxell.client.state.mainstates.PrincipalMainState;
-
 import fr.darkxell.dataeditor.application.controller.animation.TestAnimationController;
-import javafx.embed.swing.SwingFXUtils;
 
 public class AnimationPreviewThread extends UpdaterAndRenderer implements AnimationEndListener {
     public TestAnimationController controller;

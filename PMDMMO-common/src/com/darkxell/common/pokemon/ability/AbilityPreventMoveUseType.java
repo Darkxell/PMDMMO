@@ -3,7 +3,7 @@ package com.darkxell.common.pokemon.ability;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.event.pokemon.TriggeredAbilityEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
@@ -19,8 +19,8 @@ public class AbilityPreventMoveUseType extends Ability {
     }
 
     @Override
-    public void onPreEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned,
-            ArrayList<DungeonEvent> resultingEvents) {
+    public void onPreEvent(Floor floor, Event event, DungeonPokemon concerned,
+            ArrayList<Event> resultingEvents) {
         super.onPreEvent(floor, event, concerned, resultingEvents);
         if (event instanceof MoveUseEvent) {
             MoveUseEvent e = (MoveUseEvent) event;
@@ -40,7 +40,7 @@ public class AbilityPreventMoveUseType extends Ability {
 
                 if (shouldPrevent) {
                     e.consume();
-                    resultingEvents.add(new TriggeredAbilityEvent(floor, self));
+                    resultingEvents.add(new TriggeredAbilityEvent(floor, event, self));
                 }
             }
         }

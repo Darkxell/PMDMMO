@@ -3,7 +3,7 @@ package com.darkxell.common.item.effects;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.pokemon.FaintedPokemonEvent;
 import com.darkxell.common.event.pokemon.RevivedPokemonEvent;
 import com.darkxell.common.item.ItemStack;
@@ -24,8 +24,8 @@ public class ReviverFoodItemEffect extends FoodItemEffect {
     }
 
     @Override
-    public void onPreEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned,
-            ArrayList<DungeonEvent> resultingEvents, ItemStack item, ItemContainer container, int containerIndex) {
+    public void onPreEvent(Floor floor, Event event, DungeonPokemon concerned,
+            ArrayList<Event> resultingEvents, ItemStack item, ItemContainer container, int containerIndex) {
         super.onPreEvent(floor, event, concerned, resultingEvents, item, container, containerIndex);
 
         boolean shouldRevive = event instanceof FaintedPokemonEvent;
@@ -40,7 +40,7 @@ public class ReviverFoodItemEffect extends FoodItemEffect {
             if (shouldRevive) {
                 event.consume();
                 container.deleteItem(containerIndex);
-                resultingEvents.add(new RevivedPokemonEvent(floor, ((FaintedPokemonEvent) event).pokemon));
+                resultingEvents.add(new RevivedPokemonEvent(floor, event, ((FaintedPokemonEvent) event).pokemon));
             }
         }
     }

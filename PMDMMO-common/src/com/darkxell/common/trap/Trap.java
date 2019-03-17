@@ -3,9 +3,8 @@ package com.darkxell.common.trap;
 import java.util.ArrayList;
 
 import com.darkxell.common.Registrable;
-import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
-import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.event.Event;
+import com.darkxell.common.event.dungeon.TrapSteppedOnEvent;
 import com.darkxell.common.util.language.Message;
 
 public abstract class Trap implements Registrable<Trap> {
@@ -28,7 +27,7 @@ public abstract class Trap implements Registrable<Trap> {
         return new Message("trap." + this.id);
     }
 
-    public abstract void onPokemonStep(Floor floor, DungeonPokemon pokemon, ArrayList<DungeonEvent> events);
+    public abstract void onPokemonStep(TrapSteppedOnEvent trapEvent, ArrayList<Event> events);
 
     @Override
     public String toString() {

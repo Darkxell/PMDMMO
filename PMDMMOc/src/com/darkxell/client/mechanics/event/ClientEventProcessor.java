@@ -40,8 +40,8 @@ import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.event.CommonEventProcessor;
-import com.darkxell.common.event.DungeonEvent;
-import com.darkxell.common.event.DungeonEvent.MessageEvent;
+import com.darkxell.common.event.Event;
+import com.darkxell.common.event.Event.MessageEvent;
 import com.darkxell.common.event.action.PokemonSpawnedEvent;
 import com.darkxell.common.event.action.PokemonTravelEvent;
 import com.darkxell.common.event.action.TurnSkippedEvent;
@@ -101,10 +101,10 @@ public final class ClientEventProcessor extends CommonEventProcessor {
 
     private AnimationEndListener currentAnimEnd = processEventsOnAnimationEnd;
     /** Stores events that animate at the same time as the travel events. */
-    private Stack<DungeonEvent> delayedWithTravels = new Stack<>();
+    private Stack<Event> delayedWithTravels = new Stack<>();
     private boolean landedOnStairs = false;
     /** Used to calculate delay time between Pokemon turns. */
-    private DungeonEvent lastAction = null;
+    private Event lastAction = null;
     private BaseStats levelupStats = null;
     /** Stores consecutive travel events to animate them at the same time. */
     private ArrayList<PokemonTravelEvent> travels = new ArrayList<>();
@@ -129,7 +129,7 @@ public final class ClientEventProcessor extends CommonEventProcessor {
         }
     }
 
-    private void doClientProcess(DungeonEvent event) {
+    private void doClientProcess(Event event) {
         if (this.delayedWithTravels.contains(event))
             return;
 
@@ -220,7 +220,7 @@ public final class ClientEventProcessor extends CommonEventProcessor {
     }
 
     @Override
-    public void doProcess(DungeonEvent event) {
+    public void doProcess(Event event) {
         super.doProcess(event);
         if (this.shouldDelay(event))
             this.lastAction = event;
@@ -249,7 +249,7 @@ public final class ClientEventProcessor extends CommonEventProcessor {
     }
 
     @Override
-    protected boolean preProcess(DungeonEvent event) {
+    protected boolean preProcess(Event event) {
 
         if (this.lastAction != null && this.shouldDelay(event)) {
             this.addToPending(event);
@@ -430,7 +430,7 @@ public final class ClientEventProcessor extends CommonEventProcessor {
 
             {
                 boolean hasMoreLevels = false;
-                for (DungeonEvent e : this.pending)
+                for (Event e : this.pending)
                     if (e instanceof LevelupEvent && ((LevelupEvent) e).pokemon == pokemon) {
                         hasMoreLevels = true;
                         break;
@@ -464,7 +464,7 @@ public final class ClientEventProcessor extends CommonEventProcessor {
             DialogEndListener listener = dialog -> {
                 Persistence.stateManager.setState(Persistence.dungeonState);
                 if (((ConfirmDialogScreen) dialog.getScreen(1)).hasConfirmed())
-                    processEvent(new DungeonExitEvent(Persistence.floor, Persistence.player));
+                    processEvent(new DungeonExitEvent(Persistence.floor, event, Persistence.player));
                 else
                     processPending();
             };
@@ -483,7 +483,7 @@ public final class ClientEventProcessor extends CommonEventProcessor {
             this.setState(State.ANIMATING);
 
             DialogEndListener listener = dialog -> Persistence.stateManager
-                    .setState(new MoveLearnMenuState(Persistence.dungeonState, event.pokemon, event.move));
+                    .setState(new MoveLearnMenuState(Persistence.dungeonState, event));
 
             Persistence.stateManager
                     .setState(new DialogState(Persistence.dungeonState, listener,
@@ -500,7 +500,7 @@ public final class ClientEventProcessor extends CommonEventProcessor {
 
         boolean playAnimationLater = Animations.movePlaysForEachTarget(event.usedMove().move.move());
         boolean hasTarget = false;
-        for (DungeonEvent e : event.getResultingEvents())
+        for (Event e : event.getResultingEvents())
             if (e instanceof MoveUseEvent) {
                 hasTarget = true;
                 break;
@@ -680,7 +680,7 @@ public final class ClientEventProcessor extends CommonEventProcessor {
     }
 
     private void processSpawnEvent(PokemonSpawnedEvent event) {
-        Persistence.dungeonState.pokemonRenderer.register(event.spawned);
+        Persistence.dungeonState.pokemonRenderer.register(event.encounter.pokemon);
     }
 
     private void processSpeedEvent(SpeedChangedEvent event) {
@@ -846,7 +846,7 @@ public final class ClientEventProcessor extends CommonEventProcessor {
      * @return <code>true</code> If having the input event and another <i>shouldDelay</i> event should delay the game
      *         for a few ticks, to give the Player a break.
      */
-    protected boolean shouldDelay(DungeonEvent event) {
+    protected boolean shouldDelay(Event event) {
         if (event.actor() == null)
             return false;
         return (event instanceof MoveSelectionEvent) || (event instanceof ItemSelectionEvent)
@@ -854,7 +854,7 @@ public final class ClientEventProcessor extends CommonEventProcessor {
     }
 
     @Override
-    public boolean stopsTravel(DungeonEvent event) {
+    public boolean stopsTravel(Event event) {
         return !(event instanceof PokemonTravelsEvent) && super.stopsTravel(event);
     }
 

@@ -3,7 +3,8 @@ package com.darkxell.common.event.item;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
+import com.darkxell.common.event.EventSource;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.player.ItemContainer;
@@ -15,15 +16,20 @@ import com.darkxell.common.util.language.Message;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonObject;
 
-public class ItemThrownEvent extends DungeonEvent implements Communicable {
+public class ItemThrownEvent extends Event implements Communicable {
 
     private Item item;
     private ItemContainer source;
     private int sourceIndex;
     private DungeonPokemon thrower;
 
-    public ItemThrownEvent(Floor floor, DungeonPokemon thrower, ItemContainer source, int sourceIndex) {
-        super(floor, thrower);
+    public ItemThrownEvent(Floor floor, EventSource eventSource) {
+        super(floor, eventSource);
+    }
+
+    public ItemThrownEvent(Floor floor, EventSource eventSource, DungeonPokemon thrower, ItemContainer source,
+            int sourceIndex) {
+        super(floor, eventSource, thrower);
         this.thrower = thrower;
         this.source = source;
         this.sourceIndex = sourceIndex;
@@ -36,7 +42,7 @@ public class ItemThrownEvent extends DungeonEvent implements Communicable {
     }
 
     @Override
-    public ArrayList<DungeonEvent> processServer() {
+    public ArrayList<Event> processServer() {
         if (this.item.effect().isThrowable()) {
             this.messages.add(new Message("item.thrown").addReplacement("<pokemon>", this.thrower.getNickname())
                     .addReplacement("<item>", this.item.name()));
@@ -46,8 +52,8 @@ public class ItemThrownEvent extends DungeonEvent implements Communicable {
             if (stack.quantity() <= 0)
                 this.source.deleteItem(this.sourceIndex);
 
-            this.resultingEvents.add(new ProjectileThrownEvent(this.floor, this.item, this.thrower,
-                    this.item.effect().findDestinationStraight(this.floor, this.item, this.thrower, true)));
+            this.resultingEvents.add(new ProjectileThrownEvent(this.floor, this, this.item, this.thrower,
+                    this.item.effect().findDestinationStraight(floor, this.thrower, item, true)));
         }
         return super.processServer();
     }

@@ -6,12 +6,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
-import com.darkxell.common.dungeon.data.FloorSet;
-import com.darkxell.common.util.Pair;
-
-import fr.darkxell.dataeditor.application.controls.CustomList;
-import fr.darkxell.dataeditor.application.controls.CustomListCell.ListCellParent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -21,6 +15,12 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.VBox;
+
+import com.darkxell.common.dungeon.data.FloorSet;
+import com.darkxell.common.util.Pair;
+
+import fr.darkxell.dataeditor.application.controls.CustomList;
+import fr.darkxell.dataeditor.application.controls.CustomListCell.ListCellParent;
 
 public class EditFloorsetController implements Initializable, ListCellParent<Integer> {
 

@@ -3,12 +3,13 @@ package com.darkxell.common.status;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
+import com.darkxell.common.event.EventSource;
 import com.darkxell.common.event.dungeon.FloorStatusEndedEvent;
 import com.darkxell.common.util.language.Localization;
 import com.darkxell.common.util.language.Message;
 
-public class ActiveFloorStatus {
+public class ActiveFloorStatus implements EventSource {
 
     public final int duration;
     public final Object source;
@@ -30,8 +31,8 @@ public class ActiveFloorStatus {
         return new Message(id);
     }
 
-    public void finish(Floor floor, ArrayList<DungeonEvent> events) {
-        events.add(new FloorStatusEndedEvent(floor, this));
+    public void finish(Floor floor, ArrayList<Event> events) {
+        events.add(new FloorStatusEndedEvent(floor, this, this));
     }
 
     public int getTurns() {
@@ -44,11 +45,11 @@ public class ActiveFloorStatus {
         return this.tick >= this.duration;
     }
 
-    public void onStatusEnd(Floor floor, ArrayList<DungeonEvent> events) {
+    public void onStatusEnd(Floor floor, ArrayList<Event> events) {
         this.status.onEnd(floor, this, events);
     }
 
-    public void onStatusStart(Floor floor, ArrayList<DungeonEvent> events) {
+    public void onStatusStart(Floor floor, ArrayList<Event> events) {
         this.status.onStart(floor, this, events);
     }
 
@@ -59,7 +60,7 @@ public class ActiveFloorStatus {
         return new Message(id);
     }
 
-    public void tick(Floor floor, ArrayList<DungeonEvent> events) {
+    public void tick(Floor floor, ArrayList<Event> events) {
         if (!this.isOver())
             this.status.tick(floor, this, events);
         ++this.tick;

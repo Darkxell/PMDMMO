@@ -1,10 +1,10 @@
 package fr.darkxell.dataeditor.application.controller.cutscene.event;
 
-import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
-import com.darkxell.client.mechanics.cutscene.event.DrawMapCutsceneEvent;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
+
+import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
+import com.darkxell.client.mechanics.cutscene.event.DrawMapCutsceneEvent;
 
 public class DrawMapEventController extends EventController {
 

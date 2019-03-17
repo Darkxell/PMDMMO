@@ -74,7 +74,13 @@ public class Launcher {
         deh.start();
 
         Persistence.setDefaultValues();
-        ((LoadingMainState) Persistence.stateManager).onLoadingFinished();
+
+        if (Persistence.stateManager instanceof LoadingMainState) {
+            LoadingMainState stateManager = (LoadingMainState) Persistence.stateManager;
+            stateManager.onLoadingFinished();
+        } else {
+            Logger.w("The state did not have a load callback.");
+        }
     }
 
     private static int getTicksPerSecond(GameLoop l) {

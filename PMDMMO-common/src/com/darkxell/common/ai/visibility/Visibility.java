@@ -60,11 +60,9 @@ public class Visibility {
         return false;
     }
 
-    /** Is the Item on the input Tile is visible by this Pokemon? (doesn't check if there actually is an Item). */
-    public boolean isItemTileVisible(Tile tile) {
-        if (this.hasSuperVision(VisibleObjectType.ITEM))
-            return true;
-        return this.itemTiles.contains(tile);
+    /** Does the AI see an item on this tile? */
+    public boolean isItemVisible(Tile tile) {
+        return tile.hasItem() && (this.hasSuperVision(VisibleObjectType.ITEM) || this.itemTiles.contains(tile));
     }
 
     /** Is the Pokemon able to see the input target? */
@@ -123,12 +121,7 @@ public class Visibility {
     public ArrayList<DungeonPokemon> visibleEnemies() {
         ArrayList<DungeonPokemon> visible = new ArrayList<>();
         ArrayList<Tile> tiles = new ArrayList<>(this.currentlyVisibleTiles());
-        tiles.sort(new Comparator<Tile>() {
-            @Override
-            public int compare(Tile t1, Tile t2) {
-                return Double.compare(ai.pokemon.tile().distance(t1), ai.pokemon.tile().distance(t2));
-            }
-        });
+        tiles.sort(Comparator.comparingDouble(t -> ai.pokemon.tile().distance(t)));
 
         for (Tile t : tiles)
             if (t.getPokemon() != null && !this.ai.pokemon.isAlliedWith(t.getPokemon()))

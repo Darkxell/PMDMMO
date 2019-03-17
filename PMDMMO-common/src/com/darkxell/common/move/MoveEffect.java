@@ -6,9 +6,9 @@ import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.dungeon.floor.room.Room;
-import com.darkxell.common.event.DungeonEvent;
-import com.darkxell.common.event.DungeonEvent.MessageEvent;
-import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
+import com.darkxell.common.event.Event;
+import com.darkxell.common.event.Event.MessageEvent;
+import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageType;
@@ -40,16 +40,13 @@ public class MoveEffect implements AffectsPokemon {
      * This method creates the additional effects (if any) of this Move. Effects should be added to the input MoveEvents
      * list.
      *
-     * @param usedMove - The Move Use context.
-     * @param target - The Pokemon targeted by the Move.
-     * @param flags - The flags of the Event that triggered this use.
-     * @param floor - The Floor context.
+     * @param moveEvent  - The Move Use context.
      * @param calculator - Object that helps with Damage computation.
-     * @param missed - <code>true</code> if the Move missed.
-     * @param effects - The events list.
+     * @param missed     - <code>true</code> if the Move missed.
+     * @param effects    - The events list.
      */
-    public void additionalEffects(MoveUse usedMove, DungeonPokemon target, String[] flags, Floor floor,
-            MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
+    public void additionalEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed,
+            MoveEvents effects) {
     }
 
     /** @return <code>true</code> if a Move with this Effect has an effect when it has no targets. */
@@ -61,22 +58,19 @@ public class MoveEffect implements AffectsPokemon {
      * Creates a custom MoveEffectCalculator object. If the effect doesn't need a custom one, should return null by
      * default.
      *
-     * @param usedMove - The Move that was used.
-     * @param target - The target of the Move.
-     * @param floor - The Floor context.
-     * @param flags - The flags of the Move Event.
-     * @return The built MoveEffectCalculator, or null.
+     * @param  moveEvent - The Move that was used.
+     * @return           The built MoveEffectCalculator, or null.
      */
-    public MoveEffectCalculator buildCalculator(MoveUse usedMove, DungeonPokemon target, Floor floor, String[] flags) {
+    public MoveEffectCalculator buildCalculator(MoveUseEvent moveEvent) {
         return null;
     }
 
-    protected void createMoves(MoveUse move, Floor floor, ArrayList<DungeonEvent> events) {
-        Move m = move.move.move();
+    protected void createMoves(MoveSelectionEvent moveEvent, ArrayList<Event> events) {
+        Move m = moveEvent.usedMove().move.move();
 
-        DungeonPokemon[] pokemon = this.getTargets(m, move.user, floor);
+        DungeonPokemon[] pokemon = this.getTargets(m, moveEvent.usedMove().user, moveEvent.floor);
         for (DungeonPokemon element : pokemon)
-            this.useOn(move, element, floor, events);
+            this.useOn(moveEvent, element, events);
     }
 
     public Message description(Move move) {
@@ -96,10 +90,10 @@ public class MoveEffect implements AffectsPokemon {
     }
 
     /**
-     * @param move
-     * @param user - The Pokemon using this Move.
-     * @param floor - The Floor context.
-     * @return The Pokemon affected by this Move.
+     * @param  move
+     * @param  user  - The Pokemon using this Move.
+     * @param  floor - The Floor context.
+     * @return       The Pokemon affected by this Move.
      */
     public DungeonPokemon[] getTargets(Move move, DungeonPokemon user, Floor floor) {
         ArrayList<DungeonPokemon> targets = new ArrayList<>();
@@ -215,27 +209,26 @@ public class MoveEffect implements AffectsPokemon {
      * This method creates the main effects of this Move. This method shouldn't be overridden unless you want to change
      * the basics of how Moves work. Effects should be added to the input MoveEvents list.
      *
-     * @param usedMove - The Move Use context.
-     * @param target - The Pokemon targeted by the Move.
-     * @param flags - The flags of the Event that triggered this use.
-     * @param floor - The Floor context.
+     * @param moveEvent  - The Move Use context.
      * @param calculator - Object that helps with Damage computation.
-     * @param missed - <code>true</code> if the Move missed.
-     * @param effects - Resulting Events list.
+     * @param missed     - <code>true</code> if the Move missed.
+     * @param effects    - Resulting Events list.
      */
-    protected void mainEffects(MoveUse usedMove, DungeonPokemon target, String[] flags, Floor floor,
-            MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
-        if (target != null)
+    protected void mainEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed,
+            MoveEvents effects) {
+        if (moveEvent.target != null)
             if (missed)
-                effects.createEffect(new MessageEvent(floor,
-                        new Message(target == null ? "move.miss.no_target" : "move.miss").addReplacement("<pokemon>",
-                                target == null ? new Message("no one", false) : target.getNickname())),
-                        usedMove, target, floor, missed, true, null);
-            else if (usedMove.move.move().dealsDamage)
-                effects.createEffect(new DamageDealtEvent(floor, target, usedMove, DamageType.MOVE,
-                        calculator.compute(effects.events)), usedMove, target, floor, missed, false, null);
+                effects.createEffect(new MessageEvent(moveEvent.floor, moveEvent,
+                        new Message(moveEvent.target == null ? "move.miss.no_target" : "move.miss")
+                                .addReplacement("<pokemon>", moveEvent.target == null ? new Message("no one", false)
+                                        : moveEvent.target.getNickname())),
+                        moveEvent, missed, true);
+            else if (moveEvent.usedMove.move.move().dealsDamage)
+                effects.createEffect(new DamageDealtEvent(moveEvent.floor, moveEvent, moveEvent.target,
+                        moveEvent.usedMove, DamageType.MOVE, calculator.compute(effects.events)), moveEvent, missed,
+                        false);
 
-        this.additionalEffects(usedMove, target, flags, floor, calculator, missed, effects);
+        this.additionalEffects(moveEvent, calculator, missed, effects);
     }
 
     /**
@@ -243,50 +236,49 @@ public class MoveEffect implements AffectsPokemon {
      *
      * @return <code>true</code> if the Move missed.
      */
-    public boolean mainUse(MoveUse usedMove, DungeonPokemon target, String[] flags, Floor floor,
-            ArrayList<DungeonEvent> events) {
-        Move move = usedMove.move.move();
-        MoveEffectCalculator calculator = this.buildCalculator(usedMove, target, floor, flags);
+    public boolean mainUse(MoveUseEvent moveEvent, ArrayList<Event> events) {
+        Move move = moveEvent.usedMove.move.move();
+        MoveEffectCalculator calculator = this.buildCalculator(moveEvent);
         if (calculator == null)
-            calculator = new MoveEffectCalculator(usedMove, target, floor, flags);
+            calculator = new MoveEffectCalculator(moveEvent);
         boolean missed = calculator.misses(events);
         double effectiveness = calculator.effectiveness();
-        if (effectiveness == PokemonType.NO_EFFECT && usedMove.move.move().category != MoveCategory.Status)
-            events.add(new MessageEvent(floor, move.unaffectedMessage(target)));
+        if (effectiveness == PokemonType.NO_EFFECT && moveEvent.usedMove.move.move().category != MoveCategory.Status)
+            events.add(new MessageEvent(moveEvent.floor, moveEvent, move.unaffectedMessage(moveEvent.target)));
         else {
-            if (!missed && this != MoveEffects.Basic_attack && target != null)
-                target.receiveMove(usedMove.move.isLinked() ? DungeonPokemon.LINKED_MOVES : DungeonPokemon.MOVES);
+            if (!missed && this != MoveEffects.Basic_attack && moveEvent.target != null)
+                moveEvent.target.receiveMove(
+                        moveEvent.usedMove.move.isLinked() ? DungeonPokemon.LINKED_MOVES : DungeonPokemon.MOVES);
             if (!missed && move.dealsDamage)
                 if (effectiveness >= PokemonType.SUPER_EFFECTIVE)
-                    events.add(new MessageEvent(floor,
-                            new Message("move.effectiveness.super").addReplacement("<pokemon>", target.getNickname())));
+                    events.add(new MessageEvent(moveEvent.floor, moveEvent, new Message("move.effectiveness.super")
+                            .addReplacement("<pokemon>", moveEvent.target.getNickname())));
                 else if (effectiveness <= PokemonType.NOT_VERY_EFFECTIVE)
-                    events.add(new MessageEvent(floor, new Message("move.effectiveness.not_very")
-                            .addReplacement("<pokemon>", target.getNickname())));
+                    events.add(new MessageEvent(moveEvent.floor, moveEvent, new Message("move.effectiveness.not_very")
+                            .addReplacement("<pokemon>", moveEvent.target.getNickname())));
 
             MoveEvents effects = new MoveEvents();
-            this.mainEffects(usedMove, target, flags, floor, calculator, missed, effects);
+            this.mainEffects(moveEvent, calculator, missed, effects);
             events.addAll(effects.events);
         }
         return missed;
     }
 
-    public void prepareUse(MoveUse move, Floor floor, ArrayList<DungeonEvent> events) {
-        this.createMoves(move, floor, events);
+    public void prepareUse(MoveSelectionEvent moveEvent, ArrayList<Event> events) {
+        this.createMoves(moveEvent, events);
         if (events.size() == 0 && this != MoveEffects.Basic_attack)
-            events.add(new MessageEvent(floor, new Message("move.no_target")));
+            events.add(new MessageEvent(moveEvent.floor, moveEvent, new Message("move.no_target")));
     }
 
     /**
      * Creates the MoveUseEvent and adds it to the events list.
      *
-     * @param move - The Move use context.
-     * @param target - The target Pokemon.
-     * @param floor - The Floor context.
-     * @param events - The event list to add the MoveUseEvent to.
+     * @param moveEvent - The Move use context.
+     * @param target    - The target Pokemon.
+     * @param events    - The event list to add the MoveUseEvent to.
      */
-    protected void useOn(MoveUse move, DungeonPokemon target, Floor floor, ArrayList<DungeonEvent> events) {
-        events.add(new MoveUseEvent(floor, move, target));
+    protected void useOn(MoveSelectionEvent moveEvent, DungeonPokemon target, ArrayList<Event> events) {
+        events.add(new MoveUseEvent(moveEvent.floor, moveEvent, moveEvent.usedMove(), target));
     }
 
 }

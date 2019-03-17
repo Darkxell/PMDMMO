@@ -2,7 +2,6 @@ package fr.darkxell.dataeditor.application.data;
 
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesetData;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
-
 import fr.darkxell.dataeditor.application.util.FileManager;
 
 public class PokemonSpritesetManager {

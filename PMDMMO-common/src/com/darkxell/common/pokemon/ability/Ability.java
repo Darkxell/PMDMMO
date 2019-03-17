@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
-import com.darkxell.common.event.DungeonEventListener;
+import com.darkxell.common.event.Event;
+import com.darkxell.common.event.EventListener;
 import com.darkxell.common.move.Move.MoveCategory;
 import com.darkxell.common.pokemon.AffectsPokemon;
 import com.darkxell.common.pokemon.BaseStats.Stat;
@@ -16,7 +16,7 @@ import com.darkxell.common.util.language.Localization;
 import com.darkxell.common.util.language.Message;
 import com.darkxell.common.weather.Weather;
 
-public abstract class Ability implements AffectsPokemon, DungeonEventListener {
+public abstract class Ability implements AffectsPokemon, EventListener {
     private static final HashMap<Integer, Ability> abilities = new HashMap<>();
 
     public static final Ability BLAZE = new AbilityTypeBoost(0, PokemonType.Fire);
@@ -99,10 +99,10 @@ public abstract class Ability implements AffectsPokemon, DungeonEventListener {
         return new Message("ability." + this.id);
     }
 
-    public void onFloorStart(Floor floor, DungeonPokemon pokemon, ArrayList<DungeonEvent> events) {
+    public void onFloorStart(Floor floor, DungeonPokemon pokemon, ArrayList<Event> events) {
     }
 
-    public void onTurnStart(Floor floor, DungeonPokemon pokemon, ArrayList<DungeonEvent> events) {
+    public void onTurnStart(Floor floor, DungeonPokemon pokemon, ArrayList<Event> events) {
     }
 
     public Message triggeredMessage(DungeonPokemon pokemon, int messageID) {

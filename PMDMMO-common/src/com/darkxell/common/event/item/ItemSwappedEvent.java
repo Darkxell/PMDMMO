@@ -4,7 +4,8 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
+import com.darkxell.common.event.EventSource;
 import com.darkxell.common.item.Item.ItemAction;
 import com.darkxell.common.item.ItemStack;
 import com.darkxell.common.player.ItemContainer;
@@ -12,13 +13,13 @@ import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Message;
 
 public class ItemSwappedEvent extends ItemMovedEvent {
-    public ItemSwappedEvent(Floor floor) {
-        super(floor);
+    public ItemSwappedEvent(Floor floor, EventSource eventSource) {
+        super(floor, eventSource);
     }
 
-    public ItemSwappedEvent(Floor floor, ItemAction action, DungeonPokemon mover, ItemContainer source, int sourceIndex,
-            ItemContainer destination, int destinationIndex) {
-        super(floor, action, mover, source, sourceIndex, destination, destinationIndex);
+    public ItemSwappedEvent(Floor floor, EventSource eventSource, ItemAction action, DungeonPokemon mover,
+            ItemContainer source, int sourceIndex, ItemContainer destination, int destinationIndex) {
+        super(floor, eventSource, action, mover, source, sourceIndex, destination, destinationIndex);
     }
 
     public ItemContainer destination() {
@@ -31,7 +32,7 @@ public class ItemSwappedEvent extends ItemMovedEvent {
     }
 
     @Override
-    public ArrayList<DungeonEvent> processServer() {
+    public ArrayList<Event> processServer() {
         this.messages.clear();
         String message = "inventory.swap";
         if (this.source instanceof Tile || this.destination instanceof Tile)

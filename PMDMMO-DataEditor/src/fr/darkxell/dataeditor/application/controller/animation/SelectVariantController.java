@@ -2,12 +2,11 @@ package fr.darkxell.dataeditor.application.controller.animation;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import com.darkxell.common.util.Direction;
-
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
+
+import com.darkxell.common.util.Direction;
 
 public class SelectVariantController implements Initializable {
 

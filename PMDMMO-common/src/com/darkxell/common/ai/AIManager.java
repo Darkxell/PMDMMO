@@ -3,7 +3,8 @@ package com.darkxell.common.ai;
 import java.util.HashMap;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
+import com.darkxell.common.event.EventSource.BaseEventSource;
 import com.darkxell.common.event.action.TurnSkippedEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Logger;
@@ -62,11 +63,11 @@ public class AIManager {
      * @param  pokemon - The acting Pokemon.
      * @return         A DungeonEvent describing that Pokemon's action.
      */
-    public DungeonEvent takeAction(DungeonPokemon pokemon) {
+    public Event takeAction(DungeonPokemon pokemon) {
         if (pokemon == null)
             return null;
         if (!pokemon.canAct(this.floor))
-            return new TurnSkippedEvent(this.floor, pokemon);
+            return new TurnSkippedEvent(this.floor, BaseEventSource.PLAYER_ACTION, pokemon);
         if (!this.ais.containsKey(pokemon)) {
             Logger.e("Tried to call " + pokemon + "'s AI even though it has none.");
             return null;

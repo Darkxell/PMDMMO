@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.pokemon.AffectsPokemon;
 import com.darkxell.common.util.RandomUtil;
 import com.darkxell.common.util.language.Message;
@@ -25,13 +25,13 @@ public class FloorStatus extends Status implements AffectsPokemon {
         return new Message("status.floor." + this.id);
     }
 
-    public void onEnd(Floor floor, ActiveFloorStatus instance, ArrayList<DungeonEvent> events) {
+    public void onEnd(Floor floor, ActiveFloorStatus instance, ArrayList<Event> events) {
     }
 
-    public void onStart(Floor floor, ActiveFloorStatus instance, ArrayList<DungeonEvent> events) {
+    public void onStart(Floor floor, ActiveFloorStatus instance, ArrayList<Event> events) {
     }
 
-    public void tick(Floor floor, ActiveFloorStatus instance, ArrayList<DungeonEvent> events) {
+    public void tick(Floor floor, ActiveFloorStatus instance, ArrayList<Event> events) {
     }
 
 }

@@ -4,7 +4,7 @@ import com.darkxell.common.dungeon.TempIDRegistry.ItemsTempIDRegistry;
 import com.darkxell.common.dungeon.TempIDRegistry.MovesTempIDRegistry;
 import com.darkxell.common.dungeon.TempIDRegistry.PokemonTempIDRegistry;
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.EventCommunication;
 import com.darkxell.common.event.turns.GameTurn;
 import com.darkxell.common.player.ItemContainer;
@@ -18,31 +18,19 @@ import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
 
 public class DungeonCommunication {
+    private static long readLong(JsonObject json, String key) throws JsonReadingException {
+        JsonValue valObj = json.get(key);
+        if (valObj == null)
+            throw new JsonReadingException("No value for " + key + ".");
+        return valObj.asLong();
+    }
+
     public static AutoDungeonExploration readExploration(JsonObject json) throws JsonReadingException {
-        if (json.get("dungeon") == null)
-            throw new JsonReadingException("No value for Dungeon ID!");
-        if (json.get("seed") == null)
-            throw new JsonReadingException("No value for exploration seed!");
+        int dungeonID = (int) readLong(json, "dungeon");
+        long seed = readLong(json, "seed");
 
-        int dungeonID = -1;
-        long seed = -1;
-
-        try {
-            dungeonID = json.getInt("dungeon", -1);
-        } catch (Exception e) {
-            throw new JsonReadingException("Wrong value for Dungeon ID: " + json.get("dungeon"));
-        }
         if (dungeonID <= 0)
-            throw new JsonReadingException("Wrong value for Dungeon ID: " + dungeonID);
-
-        try {
-            seed = json.getLong("seed", -1);
-            if (seed == -1)
-                throw new JsonReadingException("");
-        } catch (Exception e) {
-            throw new JsonReadingException("Wrong value for exploration seed: " + json.get("seed"));
-        }
-
+            throw new JsonReadingException("Dungeon ID must be positive.");
         AutoDungeonExploration dungeon = new AutoDungeonExploration(dungeonID, seed);
 
         if (json.get("events") != null && json.get("events").isArray())
@@ -74,7 +62,7 @@ public class DungeonCommunication {
         JsonArray array = (JsonArray) Json.array();
 
         for (GameTurn turn : this.dungeon.listTurns())
-            for (DungeonEvent e : turn.events())
+            for (Event e : turn.events())
                 if (!onlyPAE || e.isPAE())
                     array.add(EventCommunication.prepareToSend(e));
 

@@ -35,7 +35,7 @@ public class SpeedCalculator {
         if (stage >= DungeonStats.speedTable.length)
             stage = DungeonStats.speedTable.length - 1;
         double speed = DungeonStats.speedTable[stage];
-        speed = this.modificator.applyStatModifications(Stat.Speed, speed, null, this.pokemon, this.floor,
+        speed = this.modificator.applyStatModifications(Stat.Speed, speed, null, this.pokemon, this.floor, null,
                 new ArrayList<>());
         if (speed < 0)
             speed = .5;

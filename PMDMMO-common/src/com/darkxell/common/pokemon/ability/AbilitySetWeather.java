@@ -3,7 +3,8 @@ package com.darkxell.common.pokemon.ability;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
+import com.darkxell.common.event.EventSource.BaseEventSource;
 import com.darkxell.common.event.dungeon.weather.WeatherCreatedEvent;
 import com.darkxell.common.event.pokemon.TriggeredAbilityEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
@@ -27,23 +28,25 @@ public class AbilitySetWeather extends Ability implements WeatherSource {
     }
 
     @Override
-    public void onFloorStart(Floor floor, DungeonPokemon pokemon, ArrayList<DungeonEvent> events) {
+    public void onFloorStart(Floor floor, DungeonPokemon pokemon, ArrayList<Event> events) {
         super.onFloorStart(floor, pokemon, events);
-        events.add(new TriggeredAbilityEvent(floor, pokemon) {
+        TriggeredAbilityEvent abilityevent = new TriggeredAbilityEvent(floor, BaseEventSource.TRIGGER, pokemon) {
             @Override
             public boolean isValid() {
                 return floor.currentWeather().weather != weather;
             }
-        });
-        events.add(new WeatherCreatedEvent(this.weather.create(floor, this, -1)));
+        };
+        events.add(abilityevent);
+        events.add(new WeatherCreatedEvent(this.weather.create(floor, this, -1), abilityevent));
     }
 
     @Override
-    public void onTurnStart(Floor floor, DungeonPokemon pokemon, ArrayList<DungeonEvent> events) {
+    public void onTurnStart(Floor floor, DungeonPokemon pokemon, ArrayList<Event> events) {
         super.onTurnStart(floor, pokemon, events);
         if (floor.turnCount() % this.cycle == 0 && floor.currentWeather().weather != this.weather) {
-            events.add(new TriggeredAbilityEvent(floor, pokemon));
-            events.add(new WeatherCreatedEvent(this.weather.create(floor, this, -1)));
+            TriggeredAbilityEvent abilityevent = new TriggeredAbilityEvent(floor, BaseEventSource.TRIGGER, pokemon);
+            events.add(abilityevent);
+            events.add(new WeatherCreatedEvent(this.weather.create(floor, this, -1), abilityevent));
         }
     }
 

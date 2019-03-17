@@ -11,7 +11,8 @@ import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.layout.Layout;
 import com.darkxell.common.dungeon.floor.layout.StaticLayout;
 import com.darkxell.common.event.CommonEventProcessor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
+import com.darkxell.common.event.EventSource.BaseEventSource;
 import com.darkxell.common.event.action.PokemonRotateEvent;
 import com.darkxell.common.event.action.TurnSkippedEvent;
 import com.darkxell.common.event.dungeon.MissionClearedEvent;
@@ -120,19 +121,13 @@ public class DungeonExploration {
      *
      * @return The Events created for the start of the new turn.
      */
-    public ArrayList<DungeonEvent> endSubTurn() {
-        // Logger.i("Subturn end!");
-        /*
-         * for (Actor a : this.actors) { if (!a.hasSubTurnTriggered()) Logger.e("Subturn ended but " + a +
-         * " wasn't called!"); a.subTurnEnded(); }
-         */
-
+    public ArrayList<Event> endSubTurn() {
         this.currentActor = -1;
         ++this.currentSubTurn;
         for (Actor a : this.actors)
             a.subTurnEnd();
 
-        ArrayList<DungeonEvent> events = new ArrayList<>();
+        ArrayList<Event> events = new ArrayList<>();
         boolean turnEnd = this.currentSubTurn == GameTurn.SUB_TURNS;
 
         if (turnEnd)
@@ -141,7 +136,7 @@ public class DungeonExploration {
         return events;
     }
 
-    private void endTurn(ArrayList<DungeonEvent> events) {
+    private void endTurn(ArrayList<Event> events) {
         Direction d;
         for (Actor a : this.actors) {
             AI ai = this.currentFloor.aiManager.getAI(a.pokemon);
@@ -149,10 +144,9 @@ public class DungeonExploration {
                 continue;
             d = ai.mayRotate();
             if (d != null && d != a.pokemon.facing())
-                events.add(new PokemonRotateEvent(this.currentFloor, a.pokemon, d));
+                events.add(new PokemonRotateEvent(this.currentFloor, BaseEventSource.PLAYER_ACTION, a.pokemon, d));
         }
 
-        // Logger.i("Turn end --------------------------");
         for (Actor a : this.actors)
             a.pokemon.onTurnStart(this.currentFloor, events);
         this.currentFloor.onTurnStart(events);
@@ -163,7 +157,7 @@ public class DungeonExploration {
     }
 
     /** Called when the input event is processed. */
-    public void eventOccured(DungeonEvent event) {
+    public void eventOccured(Event event) {
         this.currentTurn.addEvent(event);
         if (event.actor() != null && this.actorMap.containsKey(event.actor()))
             if (event instanceof TurnSkippedEvent)
@@ -179,7 +173,7 @@ public class DungeonExploration {
 
         for (DungeonMission mission : this.activeMissions)
             if (!mission.isCleared() && mission.clearsMission(event))
-                this.eventProcessor.addToPending(new MissionClearedEvent(this.currentFloor(), mission));
+                this.eventProcessor.addToPending(new MissionClearedEvent(this.currentFloor(), event, mission));
     }
 
     @SuppressWarnings("unchecked")
@@ -307,7 +301,7 @@ public class DungeonExploration {
         this.generateNextFloor();
         this.currentSubTurn = GameTurn.SUB_TURNS - 1;
 
-        ArrayList<DungeonEvent> events = new ArrayList<>();
+        ArrayList<Event> events = new ArrayList<>();
         this.endTurn(events);
         this.currentFloor.onFloorStart(events);
 

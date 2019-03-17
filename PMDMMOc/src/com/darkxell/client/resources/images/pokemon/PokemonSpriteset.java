@@ -3,8 +3,7 @@ package com.darkxell.client.resources.images.pokemon;
 import com.darkxell.client.resources.images.RegularSpriteSet;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
 import com.darkxell.common.util.Direction;
-
-import javafx.util.Pair;
+import com.darkxell.common.util.Pair;
 
 public class PokemonSpriteset extends RegularSpriteSet {
 

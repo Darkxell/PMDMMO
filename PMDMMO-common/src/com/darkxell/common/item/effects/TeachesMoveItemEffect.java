@@ -2,11 +2,10 @@ package com.darkxell.common.item.effects;
 
 import java.util.ArrayList;
 
-import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
+import com.darkxell.common.event.item.ItemUseEvent;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.ItemStack;
-import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Message;
 
 /** An Item that teaches a move to a Pokemon when used, then turns into a Used TM. */
@@ -27,12 +26,11 @@ public class TeachesMoveItemEffect extends TeachesMoveRenewableItemEffect {
     }
 
     @Override
-    public void use(Floor floor, Item item, DungeonPokemon pokemon, DungeonPokemon target,
-            ArrayList<DungeonEvent> events) {
-        if (pokemon.player() != null)
-            if (pokemon.player().inventory().isFull())
-                pokemon.tile().setItem(new ItemStack(-1 * item.id));
+    public void use(ItemUseEvent itemEvent, ArrayList<Event> events) {
+        if (itemEvent.user.player() != null)
+            if (itemEvent.user.player().inventory().isFull())
+                itemEvent.user.tile().setItem(new ItemStack(-1 * itemEvent.item.id));
             else
-                pokemon.player().inventory().addItem(new ItemStack(-1 * item.id));
+                itemEvent.user.player().inventory().addItem(new ItemStack(-1 * itemEvent.item.id));
     }
 }

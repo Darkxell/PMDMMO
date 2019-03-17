@@ -22,6 +22,7 @@ public class WildAI extends AI {
 
     @Override
     protected void update() {
+        // If changes are made here, check StationaryWildAI
         ArrayList<DungeonPokemon> enemies = this.floor.aiManager.getAI(this.pokemon).visibility.visibleEnemies();
         if (!enemies.isEmpty())
             this.state = new AIStateAttackPokemon(this, enemies.get(0));

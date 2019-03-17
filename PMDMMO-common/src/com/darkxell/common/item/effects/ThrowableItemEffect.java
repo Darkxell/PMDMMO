@@ -5,8 +5,9 @@ import java.util.Stack;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.item.ItemSelectionEvent;
+import com.darkxell.common.event.item.ItemUseEvent;
 import com.darkxell.common.event.item.ProjectileThrownEvent;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.Item.ItemCategory;
@@ -67,23 +68,24 @@ public class ThrowableItemEffect extends ItemEffect {
         return ItemCategory.THROWABLE;
     }
 
-    public Tile findDestination(Floor floor, Item item, DungeonPokemon pokemon) {
+    public Tile findDestination(ItemUseEvent itemEvent) {
         if (this.trajectory == ThrowableTrajectory.Straight)
-            return this.findDestinationStraight(floor, item, pokemon, false);
-        return this.findDestinationArc(floor, item, pokemon);
+            return this.findDestinationStraight(itemEvent.floor, itemEvent.user, itemEvent.item, false);
+        return this.findDestinationArc(itemEvent);
     }
 
-    private Tile findDestinationArc(Floor floor, Item item, DungeonPokemon pokemon) {
-        ArrayList<Tile> arcReachable = arcReachableTiles(floor, item, pokemon);
+    private Tile findDestinationArc(ItemUseEvent itemEvent) {
+        ArrayList<Tile> arcReachable = arcReachableTiles(itemEvent.floor, itemEvent.item, itemEvent.user);
         ArrayList<DungeonPokemon> candidates = new ArrayList<>();
         for (Tile t : arcReachable)
-            if (t.getPokemon() != null && !pokemon.isAlliedWith(t.getPokemon()))
+            if (t.getPokemon() != null && !itemEvent.user.isAlliedWith(t.getPokemon()))
                 candidates.add(t.getPokemon());
         candidates.sort((o1, o2) -> {
-            double d1 = pokemon.tile().distance(o1.tile()), d2 = pokemon.tile().distance(o2.tile());
+            double d1 = itemEvent.user.tile().distance(o1.tile()), d2 = itemEvent.user.tile().distance(o2.tile());
             return Double.compare(d1, d2);
         });
-        return candidates.size() == 0 ? pokemon.tile().adjacentTile(pokemon.facing()) : candidates.get(0).tile();
+        return candidates.size() == 0 ? itemEvent.user.tile().adjacentTile(itemEvent.user.facing())
+                : candidates.get(0).tile();
     }
 
     @Override
@@ -112,12 +114,11 @@ public class ThrowableItemEffect extends ItemEffect {
     }
 
     @Override
-    public void use(Floor floor, Item item, DungeonPokemon pokemon, DungeonPokemon target,
-            ArrayList<DungeonEvent> events) {
-        super.use(floor, item, pokemon, target, events);
+    public void use(ItemUseEvent itemEvent, ArrayList<Event> events) {
+        super.use(itemEvent, events);
 
-        Tile destination = this.findDestination(floor, item, pokemon);
-        events.add(new ProjectileThrownEvent(floor, item, pokemon, destination));
+        Tile destination = this.findDestination(itemEvent);
+        events.add(new ProjectileThrownEvent(itemEvent.floor, itemEvent, itemEvent.item, itemEvent.user, destination));
     }
 
 }

@@ -1,12 +1,12 @@
 package com.darkxell.client.mechanics.event;
 
 import com.darkxell.client.launchable.Persistence;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 
-public class StairLandingEvent extends DungeonEvent {
+public class StairLandingEvent extends Event {
 
     public StairLandingEvent() {
-        super(Persistence.floor);
+        super(Persistence.floor, BaseEventSource.CLIENT_PURPUSES);
     }
 
     @Override

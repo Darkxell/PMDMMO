@@ -2,16 +2,15 @@ package fr.darkxell.dataeditor.application.controller.cutscene.event;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
 
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
 import com.darkxell.client.mechanics.cutscene.entity.CutscenePokemon;
 import com.darkxell.client.mechanics.cutscene.event.SetStateCutsceneEvent;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
-
 import fr.darkxell.dataeditor.application.controller.cutscene.EditCutsceneController;
-import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
 
 public class SetStateEventController extends EventController {
 

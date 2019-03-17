@@ -2,9 +2,8 @@ package com.darkxell.common.move.effects;
 
 import java.util.ArrayList;
 
-import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.event.move.MoveSelectionEvent;
-import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
+import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.move.Move;
 import com.darkxell.common.move.MoveEffect;
 import com.darkxell.common.move.MoveEffectCalculator;
@@ -20,19 +19,20 @@ public class RandomMoveEffect extends MoveEffect {
     }
 
     @Override
-    protected void mainEffects(MoveUse usedMove, DungeonPokemon target, String[] flags, Floor floor,
-            MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
+    protected void mainEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed,
+            MoveEvents effects) {
         ArrayList<Move> moves = new ArrayList<>();
-        for (DungeonPokemon p : floor.listPokemon())
+        for (DungeonPokemon p : moveEvent.floor.listPokemon())
             for (int m = 0; m < p.moveCount(); ++m) {
                 LearnedMove move = p.move(m);
-                if (move.moveId() != usedMove.move.moveId())
+                if (move.moveId() != moveEvent.usedMove.move.moveId())
                     moves.add(move.move());
             }
 
-        Move chosen = RandomUtil.random(moves, floor.random);
-        effects.createEffect(new MoveSelectionEvent(floor, new LearnedMove(chosen.id), usedMove.user), usedMove, target,
-                floor, missed, false, null);
+        Move chosen = RandomUtil.random(moves, moveEvent.floor.random);
+        effects.createEffect(
+                new MoveSelectionEvent(moveEvent.floor, moveEvent, new LearnedMove(chosen.id), moveEvent.usedMove.user),
+                moveEvent, missed, false);
     }
 
 }

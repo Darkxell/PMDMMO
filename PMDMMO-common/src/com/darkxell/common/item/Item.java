@@ -6,10 +6,9 @@ import java.util.Comparator;
 import org.jdom2.Element;
 
 import com.darkxell.common.Registrable;
-import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
+import com.darkxell.common.event.item.ItemUseEvent;
 import com.darkxell.common.pokemon.AffectsPokemon;
-import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Message;
 import com.darkxell.common.util.xml.XMLUtils;
 
@@ -186,23 +185,17 @@ public class Item implements AffectsPokemon, Registrable<Item> {
     /**
      * Called when this Item is used.
      *
-     * @param floor   - The current Floor.
-     * @param pokemon - The Pokemon using the Item.
-     * @param target  - The Pokemon the Item is being used on. May be null if there is no target.
+     * @param itemEvent - The current Floor.
      */
-    public void use(Floor floor, DungeonPokemon pokemon, DungeonPokemon target, ArrayList<DungeonEvent> events) {
-        this.effect().use(floor, this, pokemon, target, events);
+    public void use(ItemUseEvent itemEvent, ArrayList<Event> events) {
+        this.effect().use(itemEvent, events);
     }
 
     /**
      * Called when this Item is used when caught.
-     *
-     * @param floor   - The current Floor.
-     * @param pokemon - The Pokemon using the Item.
-     * @param target  - The Pokemon the Item is being used on. May be null if there is no target.
      */
-    public void useThrown(Floor floor, DungeonPokemon pokemon, DungeonPokemon target, ArrayList<DungeonEvent> events) {
-        this.effect().useThrown(floor, this, pokemon, target, events);
+    public void useThrown(ItemUseEvent itemEvent, ArrayList<Event> events) {
+        this.effect().useThrown(itemEvent, events);
     }
 
 }

@@ -3,21 +3,22 @@ package com.darkxell.common.event.stats;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
+import com.darkxell.common.event.EventSource;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageSource;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageType;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Message;
 
-public class BellyChangedEvent extends DungeonEvent implements DamageSource {
+public class BellyChangedEvent extends Event implements DamageSource {
 
     public final DungeonPokemon pokemon;
     /** How much the Pokemon's belly was filled. */
     public final double quantity;
 
-    public BellyChangedEvent(Floor floor, DungeonPokemon pokemon, double quantity) {
-        super(floor);
+    public BellyChangedEvent(Floor floor, EventSource eventSource, DungeonPokemon pokemon, double quantity) {
+        super(floor, eventSource);
         this.pokemon = pokemon;
         this.quantity = quantity;
         this.priority = PRIORITY_ACTION_END;
@@ -34,7 +35,7 @@ public class BellyChangedEvent extends DungeonEvent implements DamageSource {
     }
 
     @Override
-    public ArrayList<DungeonEvent> processServer() {
+    public ArrayList<Event> processServer() {
         double previous = this.pokemon.getBelly();
         this.pokemon.increaseBelly(this.quantity);
         if (this.quantity > 10) {
@@ -53,7 +54,7 @@ public class BellyChangedEvent extends DungeonEvent implements DamageSource {
         else if (previous >= 7 && now < 7)
             this.messages.add(new Message("belly.hungry.very"));
         else if (previous == 0 && now == 0 && this.quantity < 0)
-            this.resultingEvents.add(new DamageDealtEvent(this.floor, this.pokemon, this, DamageType.HUNGER, 1));
+            this.resultingEvents.add(new DamageDealtEvent(this.floor, this, this.pokemon, this, DamageType.HUNGER, 1));
 
         return super.processServer();
     }

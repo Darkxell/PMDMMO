@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import com.darkxell.common.ai.AIUtils;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
+import com.darkxell.common.event.EventSource;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageSource;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageType;
@@ -18,7 +19,7 @@ import com.darkxell.common.pokemon.DungeonPokemon.DungeonPokemonType;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.language.Message;
 
-public class ProjectileThrownEvent extends DungeonEvent implements DamageSource {
+public class ProjectileThrownEvent extends Event implements DamageSource {
 
     public final Tile destination;
     public final Direction direction;
@@ -26,13 +27,14 @@ public class ProjectileThrownEvent extends DungeonEvent implements DamageSource 
     public final Item item;
     public final DungeonPokemon thrower;
 
-    public ProjectileThrownEvent(Floor floor, Item item, DungeonPokemon thrower, Tile destination) {
-        super(floor);
+    public ProjectileThrownEvent(Floor floor, EventSource eventSource, Item item, DungeonPokemon thrower,
+            Tile destination) {
+        super(floor, eventSource);
         this.item = item;
         this.thrower = thrower;
         this.destination = destination;
         this.experienceEvent = this.thrower.type == DungeonPokemonType.TEAM_MEMBER
-                ? new ExperienceGeneratedEvent(this.floor, this.thrower.player())
+                ? new ExperienceGeneratedEvent(this.floor, this, this.thrower.player())
                 : null;
         this.direction = AIUtils.generalDirection(this.thrower.tile(), this.destination);
     }
@@ -48,9 +50,9 @@ public class ProjectileThrownEvent extends DungeonEvent implements DamageSource 
     }
 
     @Override
-    public ArrayList<DungeonEvent> processServer() {
+    public ArrayList<Event> processServer() {
         if (this.item.effect() instanceof ThrowableItemEffect && this.destination.getPokemon() != null) {
-            this.resultingEvents.add(new DamageDealtEvent(this.floor, this.destination.getPokemon(), this,
+            this.resultingEvents.add(new DamageDealtEvent(this.floor, this, this.destination.getPokemon(), this,
                     DamageType.ITEM, ((ThrowableItemEffect) this.item.effect()).damage));
             this.resultingEvents.add(this.experienceEvent);
         } else {
@@ -60,7 +62,7 @@ public class ProjectileThrownEvent extends DungeonEvent implements DamageSource 
                 ItemStack i = new ItemStack(this.item.id);
                 DungeonPokemon catcher = land.getPokemon();
                 if (this.item.effect().isUsableOnCatch()) {
-                    this.resultingEvents.add(new ItemUseEvent(this.floor, this.item, thrower, catcher, true));
+                    this.resultingEvents.add(new ItemUseEvent(this.floor, this, this.item, thrower, catcher, true));
                     caught = true;
                 } else if (catcher.canAccept(i) != -1) {
                     catcher.addItem(i);
@@ -72,7 +74,7 @@ public class ProjectileThrownEvent extends DungeonEvent implements DamageSource 
             if (!caught) {
                 while (land.isWall())
                     land = land.adjacentTile(this.direction.opposite());
-                this.resultingEvents.add(new ItemLandedEvent(this.floor, new ItemStack(this.item.id, 1), land));
+                this.resultingEvents.add(new ItemLandedEvent(this.floor, this, new ItemStack(this.item.id, 1), land));
             }
         }
         return super.processServer();

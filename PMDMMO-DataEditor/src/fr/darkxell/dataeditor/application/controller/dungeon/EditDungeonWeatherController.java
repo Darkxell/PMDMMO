@@ -3,12 +3,6 @@ package fr.darkxell.dataeditor.application.controller.dungeon;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
-
-import com.darkxell.common.dungeon.data.Dungeon;
-import com.darkxell.common.dungeon.data.FloorSet;
-import com.darkxell.common.weather.Weather;
-
-import fr.darkxell.dataeditor.application.data.WeatherTableItem;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.MenuItem;
@@ -17,6 +11,11 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
+
+import com.darkxell.common.dungeon.data.Dungeon;
+import com.darkxell.common.dungeon.data.FloorSet;
+import com.darkxell.common.weather.Weather;
+import fr.darkxell.dataeditor.application.data.WeatherTableItem;
 
 public class EditDungeonWeatherController implements Initializable {
 

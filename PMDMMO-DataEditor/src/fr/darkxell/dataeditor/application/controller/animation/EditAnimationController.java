@@ -5,16 +5,6 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
-
-import com.darkxell.client.mechanics.animation.AnimationData;
-import com.darkxell.client.mechanics.animation.Animations;
-import com.darkxell.client.mechanics.animation.SpritesetAnimation.BackSpriteUsage;
-import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
-import com.darkxell.common.util.Direction;
-
-import fr.darkxell.dataeditor.application.DataEditor;
-import fr.darkxell.dataeditor.application.util.AnimationListItem;
-import fr.darkxell.dataeditor.application.util.FXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -26,6 +16,16 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
+
+import com.darkxell.client.mechanics.animation.AnimationData;
+import com.darkxell.client.mechanics.animation.Animations;
+import com.darkxell.client.mechanics.animation.SpritesetAnimation.BackSpriteUsage;
+import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
+import com.darkxell.common.util.Direction;
+
+import fr.darkxell.dataeditor.application.DataEditor;
+import fr.darkxell.dataeditor.application.util.AnimationListItem;
+import fr.darkxell.dataeditor.application.util.FXUtils;
 
 public class EditAnimationController implements Initializable {
 

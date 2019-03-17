@@ -2,20 +2,17 @@ package com.darkxell.common.move.effects;
 
 import java.util.ArrayList;
 
-import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.move.MoveSelectionEvent;
-import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
+import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.move.MoveEffect;
-import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.LearnedMove;
 
 public class ConditionalEffect extends MoveEffect {
 
     public static interface EffectCondition {
 
-        boolean isMet(MoveUse usedMove, DungeonPokemon target, String[] flags, Floor floor,
-                ArrayList<DungeonEvent> events);
+        boolean isMet(MoveUseEvent moveEvent, ArrayList<Event> events);
 
     }
 
@@ -30,12 +27,12 @@ public class ConditionalEffect extends MoveEffect {
     }
 
     @Override
-    public boolean mainUse(MoveUse usedMove, DungeonPokemon target, String[] flags, Floor floor,
-            ArrayList<DungeonEvent> events) {
+    public boolean mainUse(MoveUseEvent moveEvent, ArrayList<Event> events) {
         int moveToUse = this.moveIfFalse;
-        if (this.condition.isMet(usedMove, target, flags, floor, events))
+        if (this.condition.isMet(moveEvent, events))
             moveToUse = this.moveIfTrue;
-        events.add(new MoveSelectionEvent(floor, new LearnedMove(moveToUse), usedMove.user, usedMove.direction, false));
+        events.add(new MoveSelectionEvent(moveEvent.floor, moveEvent, new LearnedMove(moveToUse),
+                moveEvent.usedMove.user, moveEvent.direction, false));
         return false;
     }
 

@@ -6,8 +6,9 @@ import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
-import com.darkxell.common.event.DungeonEvent;
-import com.darkxell.common.event.DungeonEvent.MessageEvent;
+import com.darkxell.common.event.Event;
+import com.darkxell.common.event.Event.MessageEvent;
+import com.darkxell.common.event.action.PokemonTravelEvent;
 import com.darkxell.common.event.dungeon.TrapSteppedOnEvent;
 import com.darkxell.common.event.item.ItemMovedEvent;
 import com.darkxell.common.event.item.MoneyCollectedEvent;
@@ -20,9 +21,8 @@ import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.trap.Trap;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.DirectionSet;
+import com.darkxell.common.util.Pair;
 import com.darkxell.common.util.language.Message;
-
-import javafx.util.Pair;
 
 /** Represents a single tile in a Floor. */
 public class Tile implements ItemContainer, Comparable<Tile> {
@@ -75,8 +75,8 @@ public class Tile implements ItemContainer, Comparable<Tile> {
         if (!direction.isDiagonal())
             return false;
         Pair<Direction, Direction> corners = direction.splitDiagonal();
-        return !this.adjacentTile(corners.getKey()).canCross(pokemon)
-                || !this.adjacentTile(corners.getValue()).canCross(pokemon);
+        return !this.adjacentTile(corners.first).canCross(pokemon)
+                || !this.adjacentTile(corners.first).canCross(pokemon);
     }
 
     @Override
@@ -93,8 +93,8 @@ public class Tile implements ItemContainer, Comparable<Tile> {
     }
 
     /**
-     * @param direction - The direction of the movement.
-     * @return True if the input Pokemon can walk on this Tile.
+     * @param  direction - The direction of the movement.
+     * @return           True if the input Pokemon can walk on this Tile.
      */
     public boolean canMoveTo(DungeonPokemon pokemon, Direction direction, boolean allowSwitching) {
         if (!this.canWalkOn(pokemon, allowSwitching))
@@ -103,8 +103,8 @@ public class Tile implements ItemContainer, Comparable<Tile> {
     }
 
     /**
-     * @param allowSwitching - True if switching leader and ally is allowed.
-     * @return True if the input Pokemon can walk on this Tile.
+     * @param  allowSwitching - True if switching leader and ally is allowed.
+     * @return                True if the input Pokemon can walk on this Tile.
      */
     public boolean canWalkOn(DungeonPokemon pokemon, boolean allowSwitching) {
         if (this.getPokemon() != null)
@@ -250,31 +250,27 @@ public class Tile implements ItemContainer, Comparable<Tile> {
         this.neighbors.removeFreeCorners();
     }
 
-    /**
-     * Called when a Pokemon steps on this Tile.
-     *
-     * @param pokemon - The Pokemon stepping.
-     * @param running - True if the Pokemon is running.
-     */
-    public void onPokemonStep(Floor floor, DungeonPokemon pokemon, boolean running, ArrayList<DungeonEvent> events) {
+    /** Called when a Pokemon steps on this Tile. */
+    public void onPokemonStep(PokemonTravelEvent travelEvent, ArrayList<Event> events) {
         if (this.hasItem()) {
             ItemStack i = this.getItem();
             int index = pokemon.player() == null ? -1 : pokemon.player().inventory().canAccept(i);
-            if (!running && i.item().effect() == ItemEffects.Pokedollars && pokemon.player() != null)
-                events.add(new MoneyCollectedEvent(floor, pokemon, this, i));
-            else if (!running && pokemon.player() != null && index != -1)
-                events.add(
-                        new ItemMovedEvent(floor, ItemAction.GET, pokemon, this, 0, pokemon.player().inventory(), -1));
-            else if (!running && !pokemon.hasItem())
-                events.add(new ItemMovedEvent(floor, ItemAction.GET, pokemon, this, 0, pokemon, -1));
+            if (!travelEvent.running() && i.item().effect() == ItemEffects.Pokedollars && pokemon.player() != null)
+                events.add(new MoneyCollectedEvent(travelEvent.floor, travelEvent, pokemon, this, i));
+            else if (!travelEvent.running() && pokemon.player() != null && index != -1)
+                events.add(new ItemMovedEvent(travelEvent.floor, travelEvent, ItemAction.GET, pokemon, this, 0,
+                        pokemon.player().inventory(), -1));
+            else if (!travelEvent.running() && !pokemon.hasItem())
+                events.add(new ItemMovedEvent(travelEvent.floor, travelEvent, ItemAction.GET, pokemon, this, 0, pokemon,
+                        -1));
             else
-                events.add(new MessageEvent(floor,
+                events.add(new MessageEvent(travelEvent.floor, travelEvent,
                         new Message("ground.step").addReplacement("<pokemon>", pokemon.getNickname())
                                 .addReplacement("<item>", this.getItem().name())));
         }
 
         if (this.hasTrap())
-            events.add(new TrapSteppedOnEvent(floor, pokemon, this, this.trap));
+            events.add(new TrapSteppedOnEvent(travelEvent.floor, travelEvent, pokemon, this, this.trap));
     }
 
     /** Called when this Tile's type is changed. Reloads the connections of itself and its neighbors. */

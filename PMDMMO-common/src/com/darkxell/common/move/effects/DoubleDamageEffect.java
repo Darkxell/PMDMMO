@@ -2,11 +2,9 @@ package com.darkxell.common.move.effects;
 
 import java.util.ArrayList;
 
-import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
-import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
+import com.darkxell.common.event.Event;
+import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.move.MoveEffect;
-import com.darkxell.common.pokemon.DungeonPokemon;
 
 public class DoubleDamageEffect extends MoveEffect {
 
@@ -15,8 +13,7 @@ public class DoubleDamageEffect extends MoveEffect {
     }
 
     @Override
-    public double damageMultiplier(MoveUse move, DungeonPokemon target, boolean isUser, Floor floor, String[] flags,
-            ArrayList<DungeonEvent> events) {
+    public double damageMultiplier(boolean isUser, MoveUseEvent moveEvent, ArrayList<Event> events) {
         return 2;
     }
 

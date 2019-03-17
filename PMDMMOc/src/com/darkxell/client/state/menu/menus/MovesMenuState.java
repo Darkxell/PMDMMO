@@ -18,6 +18,7 @@ import com.darkxell.client.state.menu.components.OptionSelectionWindow;
 import com.darkxell.client.state.menu.components.TextWindow;
 import com.darkxell.client.state.menu.dungeon.MoveInfoState;
 import com.darkxell.client.ui.Keys.Key;
+import com.darkxell.common.event.EventSource.BaseEventSource;
 import com.darkxell.common.event.move.MoveEnabledEvent;
 import com.darkxell.common.event.move.MoveSelectionEvent;
 import com.darkxell.common.event.move.MoveSwitchedEvent;
@@ -167,8 +168,8 @@ public class MovesMenuState extends OptionSelectionMenuState {
             }
 
             if (success) {
-                Persistence.eventProcessor().processEvent(
-                        new MoveSwitchedEvent(Persistence.floor, this.selectedPokemon(), from, to).setPAE());
+                Persistence.eventProcessor().processEvent(new MoveSwitchedEvent(Persistence.floor,
+                        BaseEventSource.PLAYER_ACTION, this.selectedPokemon(), from, to).setPAE());
 
                 MovesMenuState s = new MovesMenuState(this.parent, this.background, this.inDungeon, this.pokemon);
                 s.selection = this.selection;
@@ -208,13 +209,13 @@ public class MovesMenuState extends OptionSelectionMenuState {
                 else if (!Persistence.player.getDungeonLeader().canUse(move, Persistence.floor))
                     s.logger.showMessage(new Message("moves.cant_use").addReplacement("<move>", move.move().name()));
                 else
-                    Persistence.eventProcessor().processEvent(
-                            new MoveSelectionEvent(Persistence.floor, move, Persistence.player.getDungeonLeader())
-                                    .setPAE());
+                    Persistence.eventProcessor().processEvent(new MoveSelectionEvent(Persistence.floor,
+                            BaseEventSource.PLAYER_ACTION, move, Persistence.player.getDungeonLeader()).setPAE());
             }
         } else {
-            Persistence.eventProcessor()
-                    .processEvent(new MoveEnabledEvent(Persistence.floor, move, !move.isEnabled()).setPAE());
+            Persistence.eventProcessor().processEvent(
+                    new MoveEnabledEvent(Persistence.floor, BaseEventSource.PLAYER_ACTION, move, !move.isEnabled())
+                            .setPAE());
             MovesMenuState state = new MovesMenuState(s, s, true, this.pokemon);
             state.tab = this.tab;
             state.selection = this.selection;

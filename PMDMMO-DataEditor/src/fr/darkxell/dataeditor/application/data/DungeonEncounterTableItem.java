@@ -1,6 +1,7 @@
 package fr.darkxell.dataeditor.application.data;
 
 import com.darkxell.common.Registries;
+import com.darkxell.common.ai.AI.CustomAI;
 import com.darkxell.common.dungeon.data.DungeonEncounter;
 import com.darkxell.common.dungeon.data.FloorSet;
 import com.darkxell.common.pokemon.PokemonSpecies;
@@ -25,6 +26,10 @@ public class DungeonEncounterTableItem implements Comparable<DungeonEncounterTab
         if (levels != 0)
             return levels;
         return Integer.compare(this.getWeight(), o.getWeight());
+    }
+
+    public CustomAI getAiType() {
+        return this.encounter.aiType;
     }
 
     public FloorSet getFloors() {

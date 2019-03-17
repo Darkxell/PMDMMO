@@ -7,7 +7,6 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 
 import com.darkxell.client.graphics.MasterDungeonRenderer;
-import com.darkxell.client.graphics.floor.CameraVisibility;
 import com.darkxell.client.graphics.floor.DungeonItemsRenderer;
 import com.darkxell.client.graphics.floor.FloorRenderer;
 import com.darkxell.client.graphics.floor.GridRenderer;
@@ -79,7 +78,6 @@ public class DungeonState extends AbstractState {
     public final DungeonSubState defaultSubstate = new DefaultDungeonSubState(this);
     boolean diagonal = false, rotating = false;
     public final FloorRenderer floorRenderer;
-    public final CameraVisibility floorVisibility;
     public final GridRenderer gridRenderer;
     public final DungeonItemsRenderer itemRenderer;
     private Tile lastKnownCameraTile;
@@ -111,7 +109,6 @@ public class DungeonState extends AbstractState {
         this.logger = new DungeonLogger(this);
         this.currentSubstate = this.actionSelectionState = new ActionSelectionState(this);
         this.currentSubstate.onStart();
-        this.floorVisibility = new CameraVisibility(this);
     }
 
     public Point camera() {

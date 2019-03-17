@@ -4,19 +4,21 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
+import com.darkxell.common.event.EventSource;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.trap.Trap;
 import com.darkxell.common.util.language.Message;
 
-public class TrapSteppedOnEvent extends DungeonEvent {
+public class TrapSteppedOnEvent extends Event {
 
     public final DungeonPokemon pokemon;
     public final Tile tile;
     public final Trap trap;
 
-    public TrapSteppedOnEvent(Floor floor, DungeonPokemon pokemon, Tile tile, Trap trap) {
-        super(floor);
+    public TrapSteppedOnEvent(Floor floor, EventSource eventSource, DungeonPokemon pokemon, Tile tile,
+            Trap trap) {
+        super(floor, eventSource);
         this.pokemon = pokemon;
         this.tile = tile;
         this.trap = trap;
@@ -28,11 +30,11 @@ public class TrapSteppedOnEvent extends DungeonEvent {
     }
 
     @Override
-    public ArrayList<DungeonEvent> processServer() {
+    public ArrayList<Event> processServer() {
         this.tile.trapRevealed = true;
         this.messages.add(new Message("trap.stepped").addReplacement("<pokemon>", pokemon.getNickname())
                 .addReplacement("<trap>", this.trap.name()));
-        this.trap.onPokemonStep(this.floor, this.pokemon, this.resultingEvents);
+        this.trap.onPokemonStep(this, this.resultingEvents);
         return super.processServer();
     }
 

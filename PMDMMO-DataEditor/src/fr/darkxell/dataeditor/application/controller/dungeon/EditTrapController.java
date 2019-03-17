@@ -3,15 +3,6 @@ package fr.darkxell.dataeditor.application.controller.dungeon;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-
-import com.darkxell.common.Registries;
-import com.darkxell.common.dungeon.data.DungeonTrapGroup;
-import com.darkxell.common.trap.Trap;
-import com.darkxell.common.trap.TrapRegistry;
-
-import fr.darkxell.dataeditor.application.data.DungeonTrapTableItem;
-import fr.darkxell.dataeditor.application.data.SingleTrapTableItem;
-import fr.darkxell.dataeditor.application.util.FXUtils;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -22,6 +13,15 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+
+import com.darkxell.common.Registries;
+import com.darkxell.common.dungeon.data.DungeonTrapGroup;
+import com.darkxell.common.trap.Trap;
+import com.darkxell.common.trap.TrapRegistry;
+
+import fr.darkxell.dataeditor.application.data.DungeonTrapTableItem;
+import fr.darkxell.dataeditor.application.data.SingleTrapTableItem;
+import fr.darkxell.dataeditor.application.util.FXUtils;
 
 public class EditTrapController implements Initializable {
 

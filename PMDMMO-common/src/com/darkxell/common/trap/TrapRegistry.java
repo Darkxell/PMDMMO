@@ -6,9 +6,8 @@ import java.util.HashMap;
 import org.jdom2.Element;
 
 import com.darkxell.common.Registry;
-import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
-import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.event.Event;
+import com.darkxell.common.event.dungeon.TrapSteppedOnEvent;
 
 /**
  * Holds all Traps.
@@ -32,7 +31,7 @@ public final class TrapRegistry extends Registry<Trap> {
         for (int i = 1; i < 18; i++)
             traps.put(i, new Trap(i) {
                 @Override
-                public void onPokemonStep(Floor floor, DungeonPokemon pokemon, ArrayList<DungeonEvent> events) {
+                public void onPokemonStep(TrapSteppedOnEvent trapEvent, ArrayList<Event> events) {
                 }
             });
         traps.put(WONDER_TILE.id, WONDER_TILE);

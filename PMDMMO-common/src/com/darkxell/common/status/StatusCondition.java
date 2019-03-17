@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
-import com.darkxell.common.event.DungeonEventListener;
+import com.darkxell.common.event.Event;
+import com.darkxell.common.event.EventListener;
 import com.darkxell.common.event.pokemon.DamageDealtEvent.DamageSource;
-import com.darkxell.common.event.pokemon.StatusConditionEndedEvent.StatusConditionEndReason;
+import com.darkxell.common.event.pokemon.StatusConditionEndedEvent;
 import com.darkxell.common.event.stats.ExperienceGeneratedEvent;
 import com.darkxell.common.pokemon.AffectsPokemon;
 import com.darkxell.common.pokemon.DungeonPokemon;
@@ -15,7 +15,7 @@ import com.darkxell.common.util.Pair;
 import com.darkxell.common.util.RandomUtil;
 import com.darkxell.common.util.language.Message;
 
-public class StatusCondition extends Status implements AffectsPokemon, DamageSource, DungeonEventListener {
+public class StatusCondition extends Status implements AffectsPokemon, DamageSource, EventListener {
 
     /**
      * <code>true</code> if this is an ailment, i.e. if this is an adverse effect on the Pokemon on which it's applied.
@@ -59,14 +59,13 @@ public class StatusCondition extends Status implements AffectsPokemon, DamageSou
         return new Message("status." + this.id);
     }
 
-    public void onEnd(Floor floor, AppliedStatusCondition instance, StatusConditionEndReason reason,
-            ArrayList<DungeonEvent> events) {
+    public void onEnd(StatusConditionEndedEvent event, ArrayList<Event> events) {
     }
 
-    public void onStart(Floor floor, AppliedStatusCondition instance, ArrayList<DungeonEvent> events) {
+    public void onStart(Floor floor, AppliedStatusCondition instance, ArrayList<Event> events) {
     }
 
-    public void tick(Floor floor, AppliedStatusCondition instance, ArrayList<DungeonEvent> events) {
+    public void tick(Floor floor, AppliedStatusCondition instance, ArrayList<Event> events) {
     }
 
 }

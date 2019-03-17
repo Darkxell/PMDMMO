@@ -3,8 +3,9 @@ package com.darkxell.common.pokemon.ability;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
+import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.event.pokemon.DamageDealtEvent;
 import com.darkxell.common.event.pokemon.HealthRestoredEvent;
 import com.darkxell.common.event.pokemon.TriggeredAbilityEvent;
@@ -21,18 +22,8 @@ public class AbilityAbsorbDamage extends AbilityPreventAdditionalEffectsOnSelf {
     }
 
     @Override
-    public DungeonEvent modify(DungeonEvent effect, MoveUse usedMove, DungeonPokemon target, Floor floor,
-            boolean missed, boolean isAdditional, boolean amIUser, DungeonPokemon directedAt) {
-        DungeonEvent toreturn = super.modify(effect, usedMove, target, floor, missed, isAdditional, amIUser,
-                directedAt);
-        if (toreturn == null && usedMove.move.move().type == this.type)
-            return null;
-        return effect;
-    }
-
-    @Override
-    public void onPreEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned,
-            ArrayList<DungeonEvent> resultingEvents) {
+    public void onPreEvent(Floor floor, Event event, DungeonPokemon concerned,
+            ArrayList<Event> resultingEvents) {
         super.onPreEvent(floor, event, concerned, resultingEvents);
 
         if (event instanceof DamageDealtEvent) {
@@ -40,13 +31,20 @@ public class AbilityAbsorbDamage extends AbilityPreventAdditionalEffectsOnSelf {
             if (e.target == concerned && concerned.ability() == this && e.source instanceof MoveUse) {
                 MoveUse move = (MoveUse) e.source;
                 if (move.move.move().type == this.type) {
-                    resultingEvents.add(new TriggeredAbilityEvent(floor, concerned));
+                    TriggeredAbilityEvent abilityevent = new TriggeredAbilityEvent(floor, event, concerned);
+                    resultingEvents.add(abilityevent);
                     event.consume();
-                    resultingEvents.add(new HealthRestoredEvent(floor, concerned, e.damage));
+                    resultingEvents.add(new HealthRestoredEvent(floor, abilityevent, concerned, e.damage));
                 }
             }
         }
 
+    }
+
+    @Override
+    protected boolean shouldPrevent(Floor floor, Event event, DungeonPokemon concerned) {
+        return super.shouldPrevent(floor, event, concerned)
+                && ((MoveUseEvent) event.eventSource).usedMove.move.move().type == this.type;
     }
 
 }

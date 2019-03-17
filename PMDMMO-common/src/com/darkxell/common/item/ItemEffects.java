@@ -99,7 +99,8 @@ public final class ItemEffects {
     public static final ItemEffect Prevent_Poison_Equip = new PreventStatusEquipableItemEffect(177,
             StatusConditions.Poisoned, StatusConditions.Badly_poisoned);
 
-    public static final ItemEffect XRaySpecs = new SuperVisionItemEffect(208, VisibleObjectType.ITEM, VisibleObjectType.POKEMON);
+    public static final ItemEffect XRaySpecs = new SuperVisionItemEffect(208, VisibleObjectType.ITEM,
+            VisibleObjectType.POKEMON);
 
     /** @return The Effect with the input ID. */
     public static ItemEffect find(int id) {

@@ -3,10 +3,6 @@ package fr.darkxell.dataeditor.application.controller.sprites;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
-
-import com.darkxell.client.resources.images.RegularSpriteSet;
-import com.darkxell.client.resources.images.pokemon.PokemonSpriteFrame;
-
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,6 +12,9 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.image.ImageView;
+
+import com.darkxell.client.resources.images.RegularSpriteSet;
+import com.darkxell.client.resources.images.pokemon.PokemonSpriteFrame;
 
 public class EditFrameController implements Initializable {
 

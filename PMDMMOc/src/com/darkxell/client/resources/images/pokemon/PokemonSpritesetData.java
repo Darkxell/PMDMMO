@@ -9,9 +9,8 @@ import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteS
 import com.darkxell.common.Registries;
 import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.util.Direction;
+import com.darkxell.common.util.Pair;
 import com.darkxell.common.util.xml.XMLUtils;
-
-import javafx.util.Pair;
 
 public class PokemonSpritesetData {
 

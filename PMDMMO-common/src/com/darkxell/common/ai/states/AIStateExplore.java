@@ -7,7 +7,8 @@ import com.darkxell.common.ai.AI;
 import com.darkxell.common.ai.AI.AIState;
 import com.darkxell.common.ai.AIUtils;
 import com.darkxell.common.dungeon.floor.Tile;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
+import com.darkxell.common.event.EventSource.BaseEventSource;
 import com.darkxell.common.event.action.PokemonTravelEvent;
 import com.darkxell.common.event.action.TurnSkippedEvent;
 import com.darkxell.common.util.Direction;
@@ -85,7 +86,7 @@ public class AIStateExplore extends AIState {
     }
 
     @Override
-    public DungeonEvent takeAction() {
+    public Event takeAction() {
         // If destination reached or not set, find a new one.
         if (this.ai.pokemon.tile() == this.currentDestination || this.currentDestination == null)
             this.findNewDestination();
@@ -93,8 +94,8 @@ public class AIStateExplore extends AIState {
         // Try to move towards the destination.
         Direction dir = AIUtils.direction(this.ai.pokemon, this.currentDestination);
         if (dir == null || !this.ai.pokemon.canMove(this.ai.floor))
-            return new TurnSkippedEvent(this.ai.floor, this.ai.pokemon);
-        return new PokemonTravelEvent(this.ai.floor, this.ai.pokemon, dir);
+            return new TurnSkippedEvent(this.ai.floor, BaseEventSource.PLAYER_ACTION, this.ai.pokemon);
+        return new PokemonTravelEvent(this.ai.floor, BaseEventSource.PLAYER_ACTION, this.ai.pokemon, dir);
     }
 
     @Override

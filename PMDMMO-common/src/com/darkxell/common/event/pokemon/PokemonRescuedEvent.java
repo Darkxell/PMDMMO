@@ -3,7 +3,8 @@ package com.darkxell.common.event.pokemon;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
+import com.darkxell.common.event.EventSource;
 import com.darkxell.common.event.dungeon.MissionClearedEvent;
 import com.darkxell.common.mission.DungeonMission;
 import com.darkxell.common.player.Player;
@@ -15,14 +16,18 @@ import com.darkxell.common.util.language.Message;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonObject;
 
-public class PokemonRescuedEvent extends DungeonEvent implements Communicable {
+public class PokemonRescuedEvent extends Event implements Communicable {
 
     protected DungeonMission mission;
     protected DungeonPokemon rescued;
     protected Player rescuer;
 
-    public PokemonRescuedEvent(Floor floor, DungeonPokemon rescued, Player rescuer) {
-        super(floor);
+    public PokemonRescuedEvent(Floor floor, EventSource eventSource) {
+        super(floor, eventSource);
+    }
+
+    public PokemonRescuedEvent(Floor floor, EventSource eventSource, DungeonPokemon rescued, Player rescuer) {
+        super(floor, eventSource);
         this.rescued = rescued;
         this.rescuer = rescuer;
         this.mission = this.floor.dungeon.findRescueMission(this.floor, this.rescued);
@@ -34,13 +39,13 @@ public class PokemonRescuedEvent extends DungeonEvent implements Communicable {
     }
 
     @Override
-    public ArrayList<DungeonEvent> processServer() {
+    public ArrayList<Event> processServer() {
         if (this.rescued.type != DungeonPokemonType.RESCUEABLE)
             return super.processServer();
         this.floor.unsummonPokemon(this.rescued);
-        this.resultingEvents.add(new MessageEvent(this.floor,
+        this.resultingEvents.add(new MessageEvent(this.floor, this,
                 new Message("mission.rescued").addReplacement("<pokemon>", this.rescued.getNickname())));
-        this.resultingEvents.add(new MissionClearedEvent(this.floor, this.mission));
+        this.resultingEvents.add(new MissionClearedEvent(this.floor, this, this.mission));
         return super.processServer();
     }
 

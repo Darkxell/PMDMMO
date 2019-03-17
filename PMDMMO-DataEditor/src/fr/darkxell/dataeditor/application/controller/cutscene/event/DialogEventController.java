@@ -4,6 +4,13 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ListView;
+import javafx.stage.Stage;
 
 import com.darkxell.client.mechanics.cutscene.CutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.event.DialogCutsceneEvent;
@@ -13,13 +20,6 @@ import fr.darkxell.dataeditor.application.DataEditor;
 import fr.darkxell.dataeditor.application.controls.CustomList;
 import fr.darkxell.dataeditor.application.controls.CustomListCell.ListCellParent;
 import fr.darkxell.dataeditor.application.util.FXUtils;
-import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ListView;
-import javafx.stage.Stage;
 
 public class DialogEventController extends EventController implements ListCellParent<CutsceneDialogScreen> {
 

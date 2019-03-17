@@ -3,16 +3,15 @@ package fr.darkxell.dataeditor.application.controller.sprites;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
-
-import com.darkxell.client.resources.images.RegularSpriteSet;
-import com.darkxell.client.resources.images.pokemon.PokemonSpritesetData;
-import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
-
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
+
+import com.darkxell.client.resources.images.RegularSpriteSet;
+import com.darkxell.client.resources.images.pokemon.PokemonSpritesetData;
+import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
 
 public class EditGeneralController implements Initializable {
 

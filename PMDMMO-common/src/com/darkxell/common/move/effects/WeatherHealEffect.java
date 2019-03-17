@@ -1,12 +1,10 @@
 package com.darkxell.common.move.effects;
 
-import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
+import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.event.pokemon.HealthRestoredEvent;
 import com.darkxell.common.move.MoveEffect;
 import com.darkxell.common.move.MoveEffectCalculator;
 import com.darkxell.common.move.MoveEvents;
-import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.weather.Weather;
 
 public class WeatherHealEffect extends MoveEffect {
@@ -16,12 +14,12 @@ public class WeatherHealEffect extends MoveEffect {
     }
 
     @Override
-    public void additionalEffects(MoveUse usedMove, DungeonPokemon target, String[] flags, Floor floor,
-            MoveEffectCalculator calculator, boolean missed, MoveEvents effects) {
-        super.additionalEffects(usedMove, target, flags, floor, calculator, missed, effects);
+    public void additionalEffects(MoveUseEvent moveEvent, MoveEffectCalculator calculator, boolean missed,
+            MoveEvents effects) {
+        super.additionalEffects(moveEvent, calculator, missed, effects);
         if (!missed) {
             int health = 50;
-            Weather w = floor.currentWeather().weather;
+            Weather w = moveEvent.floor.currentWeather().weather;
             if (w == Weather.SUNNY)
                 health = 80;
             if (w == Weather.SANDSTORM)
@@ -32,8 +30,8 @@ public class WeatherHealEffect extends MoveEffect {
                 health = 10;
             if (w == Weather.SNOW)
                 health = 1;
-            effects.createEffect(new HealthRestoredEvent(floor, target, health), usedMove, target, floor, missed, false,
-                    target);
+            effects.createEffect(new HealthRestoredEvent(moveEvent.floor, moveEvent, moveEvent.target, health),
+                    moveEvent, missed, false);
         }
     }
 

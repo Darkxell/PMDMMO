@@ -3,13 +3,14 @@ package com.darkxell.common.event.item;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
+import com.darkxell.common.event.EventSource;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Message;
 
 /** Describes the events occurring while using an Item. */
-public class ItemUseEvent extends DungeonEvent {
+public class ItemUseEvent extends Event {
 
     /** The Item that was used. */
     public final Item item;
@@ -20,12 +21,14 @@ public class ItemUseEvent extends DungeonEvent {
     /** The Pokemon that used the Item. */
     public final DungeonPokemon user;
 
-    public ItemUseEvent(Floor floor, Item item, DungeonPokemon user, DungeonPokemon target) {
-        this(floor, item, user, target, false);
+    public ItemUseEvent(Floor floor, EventSource eventSource, Item item, DungeonPokemon user,
+            DungeonPokemon target) {
+        this(floor, eventSource, item, user, target, false);
     }
 
-    public ItemUseEvent(Floor floor, Item item, DungeonPokemon user, DungeonPokemon target, boolean thrown) {
-        super(floor);
+    public ItemUseEvent(Floor floor, EventSource eventSource, Item item, DungeonPokemon user,
+            DungeonPokemon target, boolean thrown) {
+        super(floor, eventSource);
         this.item = item;
         this.user = user;
         this.target = target;
@@ -38,13 +41,13 @@ public class ItemUseEvent extends DungeonEvent {
     }
 
     @Override
-    public ArrayList<DungeonEvent> processServer() {
+    public ArrayList<Event> processServer() {
         if (this.thrown)
-            this.item.useThrown(this.floor, this.user, this.target, this.resultingEvents);
+            this.item.useThrown(this, this.resultingEvents);
         else
-            this.item.use(this.floor, this.user, this.target, this.resultingEvents);
+            this.item.use(this, this.resultingEvents);
         if (this.resultingEvents.size() == 0)
-            this.resultingEvents.add(new MessageEvent(this.floor, new Message("item.no_effect")));
+            this.resultingEvents.add(new MessageEvent(this.floor, this, new Message("item.no_effect")));
         return super.processServer();
     }
 

@@ -18,6 +18,7 @@ import com.darkxell.client.state.menu.item.ItemContainersMenuState;
 import com.darkxell.client.ui.Keys;
 import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.dungeon.floor.Tile;
+import com.darkxell.common.event.EventSource.BaseEventSource;
 import com.darkxell.common.event.action.PokemonRotateEvent;
 import com.darkxell.common.event.action.PokemonTravelEvent;
 import com.darkxell.common.event.action.TurnSkippedEvent;
@@ -74,8 +75,9 @@ public class ActionSelectionState extends DungeonSubState {
         if (direction != null) {
             DungeonPokemon leader = Persistence.player.getDungeonLeader();
             if (direction != leader.facing())
-                Persistence.eventProcessor()
-                        .processEvent(new PokemonRotateEvent(Persistence.floor, leader, direction).setPAE());
+                Persistence.eventProcessor().processEvent(
+                        new PokemonRotateEvent(Persistence.floor, BaseEventSource.PLAYER_ACTION, leader, direction)
+                                .setPAE());
             if (!this.parent.rotating && leader.tryMoveTo(direction, true))
                 return direction;
         }
@@ -125,17 +127,17 @@ public class ActionSelectionState extends DungeonSubState {
                     break;
             } while (d != leader.facing());
             if (d != leader.facing())
-                Persistence.eventProcessor()
-                        .processEvent(new PokemonRotateEvent(Persistence.floor, leader, d).setPAE());
+                Persistence.eventProcessor().processEvent(
+                        new PokemonRotateEvent(Persistence.floor, BaseEventSource.PLAYER_ACTION, leader, d)
+                                .setPAE());
         }
 
         if (Persistence.player.getDungeonLeader().canAttack(Persistence.floor) && key == Key.MOVE_1 || key == Key.MOVE_2
                 || key == Key.MOVE_3 || key == Key.MOVE_4 || key == Key.ATTACK) {
             boolean done = false;
             if (key != Key.ATTACK && Persistence.player.getDungeonLeader().isStruggling()) {
-                Persistence.eventProcessor().processEvent(
-                        new MoveSelectionEvent(Persistence.floor, new LearnedMove(MoveRegistry.STRUGGLE.id), leader)
-                                .setPAE());
+                Persistence.eventProcessor().processEvent(new MoveSelectionEvent(Persistence.floor,
+                        BaseEventSource.PLAYER_ACTION, new LearnedMove(MoveRegistry.STRUGGLE.id), leader).setPAE());
                 done = true;
             }
 
@@ -158,8 +160,8 @@ public class ActionSelectionState extends DungeonSubState {
                         this.parent.logger.showMessage(
                                 new Message("moves.cant_use").addReplacement("<move>", move.move().name()));
                     else
-                        Persistence.eventProcessor()
-                                .processEvent(new MoveSelectionEvent(Persistence.floor, move, leader).setPAE());
+                        Persistence.eventProcessor().processEvent(new MoveSelectionEvent(Persistence.floor,
+                                BaseEventSource.PLAYER_ACTION, move, leader).setPAE());
 
                 if (key == Key.ATTACK && (!Key.RUN.isPressed() || Persistence.player.getDungeonLeader().isFamished())) {
                     DungeonPokemon facing = Persistence.player.getDungeonLeader().tile()
@@ -167,16 +169,16 @@ public class ActionSelectionState extends DungeonSubState {
                     if (facing != null && facing.type == DungeonPokemonType.RESCUEABLE) {
                         DungeonMission m = Persistence.dungeon.findRescueMission(Persistence.floor, facing);
                         if (m != null && m.owner == Persistence.player) {
-                            Persistence.eventProcessor().processEvent(
-                                    new PokemonRescuedEvent(Persistence.floor, facing, Persistence.player).setPAE());
+                            Persistence.eventProcessor().processEvent(new PokemonRescuedEvent(Persistence.floor,
+                                    BaseEventSource.PLAYER_ACTION, facing, Persistence.player).setPAE());
                             return;
                         }
                     }
                     if (Persistence.player.getDungeonLeader().canAttack(Persistence.floor))
                         Persistence.eventProcessor()
                                 .processEvent(new MoveSelectionEvent(Persistence.floor,
-                                        new LearnedMove(MoveRegistry.ATTACK.id), Persistence.player.getDungeonLeader())
-                                                .setPAE());
+                                        BaseEventSource.PLAYER_ACTION, new LearnedMove(MoveRegistry.ATTACK.id),
+                                        Persistence.player.getDungeonLeader()).setPAE());
                 }
             }
         }
@@ -193,7 +195,7 @@ public class ActionSelectionState extends DungeonSubState {
             for (byte i = 0; i < this.moveLocations.length; ++i)
                 if (this.moveLocations[i] != null && this.moveLocations[i].contains(x, y)) {
                     Persistence.eventProcessor()
-                            .processEvent(new MoveSelectionEvent(Persistence.floor,
+                            .processEvent(new MoveSelectionEvent(Persistence.floor, BaseEventSource.PLAYER_ACTION,
                                     Persistence.player.getTeamLeader().move(i), Persistence.player.getDungeonLeader())
                                             .setPAE());
                     break;
@@ -264,14 +266,15 @@ public class ActionSelectionState extends DungeonSubState {
             if (this.delay < 3)
                 ++this.delay;
             if (Key.ATTACK.isPressed() && Key.RUN.isPressed() && !Persistence.player.getDungeonLeader().isFamished())
-                Persistence.eventProcessor().processEvent(
-                        new TurnSkippedEvent(Persistence.floor, Persistence.player.getDungeonLeader()).setPAE());
+                Persistence.eventProcessor().processEvent(new TurnSkippedEvent(Persistence.floor,
+                        BaseEventSource.PLAYER_ACTION, Persistence.player.getDungeonLeader()).setPAE());
             else {
                 Direction direction = this.checkMovement();
                 if (direction != null && Persistence.player.getDungeonLeader().canMove(Persistence.floor)) {
                     DungeonPokemon leader = Persistence.player.getDungeonLeader();
-                    Persistence.eventProcessor().processEvent(new PokemonTravelEvent(Persistence.floor, leader,
-                            Key.RUN.isPressed() && !leader.isFamished(), direction).setPAE());
+                    Persistence.eventProcessor()
+                            .processEvent(new PokemonTravelEvent(Persistence.floor, BaseEventSource.PLAYER_ACTION,
+                                    leader, Key.RUN.isPressed() && !leader.isFamished(), direction).setPAE());
                 }
             }
         }

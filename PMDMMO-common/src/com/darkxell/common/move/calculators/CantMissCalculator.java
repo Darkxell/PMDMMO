@@ -2,20 +2,18 @@ package com.darkxell.common.move.calculators;
 
 import java.util.ArrayList;
 
-import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
-import com.darkxell.common.event.move.MoveSelectionEvent.MoveUse;
+import com.darkxell.common.event.Event;
+import com.darkxell.common.event.move.MoveUseEvent;
 import com.darkxell.common.move.MoveEffectCalculator;
-import com.darkxell.common.pokemon.DungeonPokemon;
 
 public class CantMissCalculator extends MoveEffectCalculator {
 
-    public CantMissCalculator(MoveUse move, DungeonPokemon target, Floor floor, String[] flags) {
-        super(move, target, floor, flags);
+    public CantMissCalculator(MoveUseEvent moveEvent) {
+        super(moveEvent);
     }
 
     @Override
-    public boolean misses(ArrayList<DungeonEvent> events) {
+    public boolean misses(ArrayList<Event> events) {
         return false;
     }
 

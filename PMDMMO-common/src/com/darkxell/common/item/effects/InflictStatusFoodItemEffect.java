@@ -2,11 +2,9 @@ package com.darkxell.common.item.effects;
 
 import java.util.ArrayList;
 
-import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
+import com.darkxell.common.event.item.ItemUseEvent;
 import com.darkxell.common.event.pokemon.StatusConditionCreatedEvent;
-import com.darkxell.common.item.Item;
-import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.status.StatusCondition;
 
 public class InflictStatusFoodItemEffect extends FoodItemEffect {
@@ -19,10 +17,10 @@ public class InflictStatusFoodItemEffect extends FoodItemEffect {
     }
 
     @Override
-    public void use(Floor floor, Item item, DungeonPokemon pokemon, DungeonPokemon target,
-            ArrayList<DungeonEvent> events) {
-        super.use(floor, item, pokemon, target, events);
-        events.add(new StatusConditionCreatedEvent(floor, this.status.create(floor, target, item, floor.random)));
+    public void use(ItemUseEvent itemEvent, ArrayList<Event> events) {
+        super.use(itemEvent, events);
+        events.add(new StatusConditionCreatedEvent(itemEvent.floor, itemEvent,
+                this.status.create(itemEvent.floor, itemEvent.target, itemEvent.item, itemEvent.floor.random)));
     }
 
 }

@@ -1,15 +1,14 @@
 package fr.darkxell.dataeditor.application.data.floortable;
 
 import java.util.ArrayList;
-
-import com.darkxell.common.Registries;
-import com.darkxell.common.move.Move;
-
 import javafx.collections.FXCollections;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.util.Callback;
+
+import com.darkxell.common.Registries;
+import com.darkxell.common.move.Move;
 
 public class FloorTableMove extends FloorTableItem<Move, Move> {
 

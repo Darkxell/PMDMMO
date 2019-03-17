@@ -4,15 +4,16 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
+import com.darkxell.common.event.EventSource;
 import com.darkxell.common.util.language.Message;
 
-public class TrapDestroyedEvent extends DungeonEvent {
+public class TrapDestroyedEvent extends Event {
 
     public final Tile tile;
 
-    public TrapDestroyedEvent(Floor floor, Tile tile) {
-        super(floor);
+    public TrapDestroyedEvent(Floor floor, EventSource eventSource, Tile tile) {
+        super(floor, eventSource);
         this.tile = tile;
     }
 
@@ -27,7 +28,7 @@ public class TrapDestroyedEvent extends DungeonEvent {
     }
 
     @Override
-    public ArrayList<DungeonEvent> processServer() {
+    public ArrayList<Event> processServer() {
         this.messages.add(new Message("trap.destroyed").addReplacement("<trap>", this.tile.trap.name()));
         this.tile.trap = null;
         this.tile.trapRevealed = false;

@@ -4,7 +4,8 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
+import com.darkxell.common.event.EventSource;
 import com.darkxell.common.event.stats.BellyChangedEvent;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.Pokemon;
@@ -15,19 +16,20 @@ import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonObject;
 
 /** The travel of Pokemon. */
-public class PokemonTravelEvent extends DungeonEvent implements Communicable {
+public class PokemonTravelEvent extends Event implements Communicable {
 
     private Direction direction;
     private Tile origin, destination;
     private DungeonPokemon pokemon;
     private boolean running;
 
-    public PokemonTravelEvent(Floor floor) {
-        super(floor);
+    public PokemonTravelEvent(Floor floor, EventSource eventSource) {
+        super(floor, eventSource);
     }
 
-    public PokemonTravelEvent(Floor floor, DungeonPokemon pokemon, boolean running, Direction direction) {
-        super(floor, pokemon);
+    public PokemonTravelEvent(Floor floor, EventSource eventSource, DungeonPokemon pokemon, boolean running,
+            Direction direction) {
+        super(floor, eventSource, pokemon);
         this.pokemon = pokemon;
         this.running = running;
         this.direction = direction;
@@ -39,8 +41,9 @@ public class PokemonTravelEvent extends DungeonEvent implements Communicable {
         }
     }
 
-    public PokemonTravelEvent(Floor floor, DungeonPokemon pokemon, Direction direction) {
-        this(floor, pokemon, false, direction);
+    public PokemonTravelEvent(Floor floor, EventSource eventSource, DungeonPokemon pokemon,
+            Direction direction) {
+        this(floor, eventSource, pokemon, false, direction);
     }
 
     public Tile destination() {
@@ -93,13 +96,13 @@ public class PokemonTravelEvent extends DungeonEvent implements Communicable {
     }
 
     @Override
-    public ArrayList<DungeonEvent> processServer() {
+    public ArrayList<Event> processServer() {
         if (this.pokemon.isTeamLeader())
             this.resultingEvents
-                    .add(new BellyChangedEvent(this.floor, this.pokemon, -.1 * this.pokemon.energyMultiplier()));
+                    .add(new BellyChangedEvent(this.floor, this, this.pokemon, -.1 * this.pokemon.energyMultiplier()));
         this.origin.removePokemon(this.pokemon);
         this.destination.setPokemon(this.pokemon);
-        this.destination.onPokemonStep(this.floor, this.pokemon, this.running, this.resultingEvents);
+        this.destination.onPokemonStep(this, this.resultingEvents);
         return super.processServer();
     }
 

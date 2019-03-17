@@ -3,13 +3,14 @@ package com.darkxell.common.event.pokemon;
 import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
+import com.darkxell.common.event.EventSource;
 import com.darkxell.common.event.stats.ExperienceGeneratedEvent;
 import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Message;
 
-public class DamageDealtEvent extends DungeonEvent {
+public class DamageDealtEvent extends Event {
     public static interface DamageSource {
         /** @return The ExperienceGainedEvent to add experience to. */
         public ExperienceGeneratedEvent getExperienceEvent();
@@ -28,8 +29,8 @@ public class DamageDealtEvent extends DungeonEvent {
     public static class DefaultDamageSource implements DamageSource {
         public final ExperienceGeneratedEvent experienceEvent;
 
-        public DefaultDamageSource(Floor floor, Player player) {
-            this.experienceEvent = player == null ? null : new ExperienceGeneratedEvent(floor, player);
+        public DefaultDamageSource(Floor floor, Player player, EventSource eventSource) {
+            this.experienceEvent = player == null ? null : new ExperienceGeneratedEvent(floor, eventSource, player);
         }
 
         @Override
@@ -44,8 +45,9 @@ public class DamageDealtEvent extends DungeonEvent {
     public final DamageSource source;
     public final DungeonPokemon target;
 
-    public DamageDealtEvent(Floor floor, DungeonPokemon target, DamageSource source, DamageType type, int damage) {
-        super(floor);
+    public DamageDealtEvent(Floor floor, EventSource eventSource, DungeonPokemon target, DamageSource source,
+            DamageType type, int damage) {
+        super(floor, eventSource);
         this.target = target;
         this.source = source;
         this.damageType = type;
@@ -58,7 +60,7 @@ public class DamageDealtEvent extends DungeonEvent {
     }
 
     @Override
-    public ArrayList<DungeonEvent> processServer() {
+    public ArrayList<Event> processServer() {
         String damageID = "move.damage_dealt";
         if (this.damageType == DamageType.WEATHER)
             damageID = "weather.damage_dealt";
@@ -73,7 +75,7 @@ public class DamageDealtEvent extends DungeonEvent {
 
         this.target.setHP(this.target.getHp() - this.damage);
         if (this.target.getHp() == 0)
-            this.resultingEvents.add(new FaintedPokemonEvent(this.floor, this.target, this.source));
+            this.resultingEvents.add(new FaintedPokemonEvent(this.floor, this, this.target, this.source));
         return super.processServer();
     }
 

@@ -4,8 +4,9 @@ import java.util.ArrayList;
 
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
-import com.darkxell.common.event.DungeonEvent;
+import com.darkxell.common.event.Event;
 import com.darkxell.common.event.item.ItemSelectionEvent;
+import com.darkxell.common.event.item.ItemUseEvent;
 import com.darkxell.common.player.ItemContainer;
 import com.darkxell.common.pokemon.AffectsPokemon;
 import com.darkxell.common.pokemon.DungeonPokemon;
@@ -25,7 +26,7 @@ public class ItemEffect implements AffectsPokemon {
     }
 
     /** @return The Tile an Item will land at if it's thrown by the input Pokemon. */
-    public Tile findDestinationStraight(Floor floor, Item item, DungeonPokemon pokemon, boolean targetsAllies) {
+    public Tile findDestinationStraight(Floor floor, DungeonPokemon pokemon, Item item, boolean targetsAllies) {
         Direction direction = pokemon.facing();
         Tile current = pokemon.tile().adjacentTile(direction);
 
@@ -99,8 +100,8 @@ public class ItemEffect implements AffectsPokemon {
      * @param container       - The object containing the Item with this effect.
      * @param containerIndex  - The index of the Item in the container.
      */
-    public void onPostEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned,
-            ArrayList<DungeonEvent> resultingEvents, ItemStack item, ItemContainer container, int containerIndex) {
+    public void onPostEvent(Floor floor, Event event, DungeonPokemon concerned,
+            ArrayList<Event> resultingEvents, ItemStack item, ItemContainer container, int containerIndex) {
     }
 
     /**
@@ -115,33 +116,25 @@ public class ItemEffect implements AffectsPokemon {
      * @param container       - The object containing the Item with this effect.
      * @param containerIndex  - The index of the Item in the container.
      */
-    public void onPreEvent(Floor floor, DungeonEvent event, DungeonPokemon concerned,
-            ArrayList<DungeonEvent> resultingEvents, ItemStack item, ItemContainer container, int containerIndex) {
+    public void onPreEvent(Floor floor, Event event, DungeonPokemon concerned,
+            ArrayList<Event> resultingEvents, ItemStack item, ItemContainer container, int containerIndex) {
     }
 
     /**
      * Called when an Item with this Effect is used.
      *
-     * @param floor   - The current Floor.
-     * @param item    - The used Item.
-     * @param pokemon - The Pokemon using the Item.
-     * @param target  - The Pokemon the Item is being used on. May be null if there is no target.
+     * @param itemEvent - The current Floor.
      */
-    public void use(Floor floor, Item item, DungeonPokemon pokemon, DungeonPokemon target,
-            ArrayList<DungeonEvent> events) {
+    public void use(ItemUseEvent itemEvent, ArrayList<Event> events) {
     }
 
     /**
      * Called when an Item with this Effect is used when caught.
-     *
-     * @param floor   - The current Floor.
-     * @param item    - The used Item.
-     * @param pokemon - The Pokemon that threw the Item.
-     * @param target  - The Pokemon the Item is being used on (the one that Item was thrown on).
+     * 
+     * @param itemEvent TODO
      */
-    public void useThrown(Floor floor, Item item, DungeonPokemon pokemon, DungeonPokemon target,
-            ArrayList<DungeonEvent> events) {
-        this.use(floor, item, pokemon, target, events);
+    public void useThrown(ItemUseEvent itemEvent, ArrayList<Event> events) {
+        this.use(itemEvent, events);
     }
 
 }
