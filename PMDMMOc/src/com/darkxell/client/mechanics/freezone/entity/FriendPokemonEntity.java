@@ -1,10 +1,15 @@
 package com.darkxell.client.mechanics.freezone.entity;
 
+import java.util.Random;
+
+import com.darkxell.client.graphics.AbstractRenderer;
+import com.darkxell.client.graphics.renderer.AbstractPokemonRenderer;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
 import com.darkxell.common.ai.AIUtils;
 import com.darkxell.common.pokemon.Pokemon;
+import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.MathUtil;
 
 public class FriendPokemonEntity extends PokemonFreezoneEntity {
@@ -17,7 +22,6 @@ public class FriendPokemonEntity extends PokemonFreezoneEntity {
     private double destinationX = -1, destinationY = -1;
     private int idleTime = IDLE_TIME_MAX;
     public final Pokemon pokemon;
-    public double startX, startY;
 
     public FriendPokemonEntity(Pokemon pokemon) {
         this.pokemon = pokemon;
@@ -26,13 +30,28 @@ public class FriendPokemonEntity extends PokemonFreezoneEntity {
     }
 
     @Override
+    public AbstractRenderer createRenderer() {
+        AbstractPokemonRenderer r = (AbstractPokemonRenderer) super.createRenderer();
+        r.sprite().setFacingDirection(Direction.randomDirection(new Random()));
+        return r;
+    }
+
+    public void spawnAt(double x, double y) {
+        this.startingX = x;
+        this.startingY = y;
+
+        this.posX = this.startingX + Math.random() * (MAX_DISTANCE * 2) - MAX_DISTANCE;
+        this.posY = this.startingY + Math.random() * (MAX_DISTANCE * 2) - MAX_DISTANCE;
+    }
+
+    @Override
     public void update() {
         super.update();
 
         if (this.idleTime > 0) --this.idleTime; // Pause
         else if (this.destinationX == -1 || this.destinationY == -1) { // Find new destination
-            this.destinationX = Math.random() * MAX_DISTANCE * 2 - MAX_DISTANCE + this.startX;
-            this.destinationY = Math.random() * MAX_DISTANCE * 2 - MAX_DISTANCE + this.startY;
+            this.destinationX = Math.random() * MAX_DISTANCE * 2 - MAX_DISTANCE + this.startingX;
+            this.destinationY = Math.random() * MAX_DISTANCE * 2 - MAX_DISTANCE + this.startingY;
             this.sprite.setFacingDirection(AIUtils.closestDirection(MathUtil.angle(this.posX, this.posY, this.destinationX, this.destinationY)));
             this.sprite.setState(PokemonSpriteState.MOVE);
         } else { // Move

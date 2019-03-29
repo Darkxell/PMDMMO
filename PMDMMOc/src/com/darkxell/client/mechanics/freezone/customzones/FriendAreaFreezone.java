@@ -50,8 +50,7 @@ public class FriendAreaFreezone extends FreezoneMap {
                 else { // Else, place it and remove position from available list
                     FriendPokemonEntity p = new FriendPokemonEntity(pokemon);
                     this.addEntity(p);
-                    p.startX = p.posX = position.x;
-                    p.startY = p.posY = position.y;
+                    p.spawnAt(position.x, position.y);
                     availableLocations.remove(position);
                 }
             }
@@ -66,8 +65,7 @@ public class FriendAreaFreezone extends FreezoneMap {
             Position position = availableLocations.remove(0);
             FriendPokemonEntity p = new FriendPokemonEntity(pokemon);
             this.addEntity(p);
-            p.startX = p.posX = position.x;
-            p.startY = p.posY = position.y;
+            p.spawnAt(position.x, position.y);
         }
     }
 
