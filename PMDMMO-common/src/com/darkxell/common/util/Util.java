@@ -14,6 +14,9 @@ import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.pokemon.PokemonSpecies;
 
 public class Util {
+    
+    public static final int POST_WIGGLYTUFF_STORYPOS = 14;
+    public static final int POST_GAME_STORYPOS = 100;
 
     public static Player createDefaultPlayer() {
         PokemonRegistry species = Registries.species();
