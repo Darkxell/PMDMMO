@@ -38,6 +38,7 @@ import com.darkxell.gameserver.messagehandlers.MonsterRequestHandler;
 import com.darkxell.gameserver.messagehandlers.NicknameHandler;
 import com.darkxell.gameserver.messagehandlers.ObjectrequestHandler;
 import com.darkxell.gameserver.messagehandlers.PublicKeyRequestHandler;
+import com.darkxell.gameserver.messagehandlers.RemoveFromTeamHandler;
 import com.darkxell.gameserver.messagehandlers.SaltResetHandler;
 import com.darkxell.gameserver.messagehandlers.SetEncryptionKeyHandler;
 import com.darkxell.gameserver.messagehandlers.TestResultHandler;
@@ -401,6 +402,14 @@ public class GameServer {
                             return;
                         }
                         AddToTeamHandler hand = new AddToTeamHandler(this);
+                        hand.handleMessage(jsonMessage, session, sessionHandler);
+                        break;
+                    }
+                    case "removefromteam": {
+                        if (!infos.isconnected) {
+                            return;
+                        }
+                        RemoveFromTeamHandler hand = new RemoveFromTeamHandler(this);
                         hand.handleMessage(jsonMessage, session, sessionHandler);
                         break;
                     }
