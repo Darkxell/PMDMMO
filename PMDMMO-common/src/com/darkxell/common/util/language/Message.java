@@ -3,20 +3,14 @@ package com.darkxell.common.util.language;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-/**
- * Represents a message to be translated. Contains an ID of message, and may contain replacements to make after
- * translating.
- */
+/** Represents a message to be translated. Contains an ID of message, and may contain replacements to make after translating. */
 public class Message {
 
     /** ID of the message. */
     public final String id;
     /** Keyword values contained in this Message. */
     private ArrayList<String> keywords = new ArrayList<>();
-    /**
-     * ID of the last language this message was translated with. Used to update the translation when the user changes
-     * the Language.
-     */
+    /** ID of the last language this message was translated with. Used to update the translation when the user changes the Language. */
     private String lastLang = null;
     private ArrayList<Message> prefixes = new ArrayList<>(), suffixes = new ArrayList<>();
     private HashMap<String, Message> replacements = new HashMap<>();
@@ -46,23 +40,19 @@ public class Message {
         return this;
     }
 
-    /**
-     * Adds a replacement to this Message.
+    /** Adds a replacement to this Message.
      *
      * @param pattern - The pattern to replace.
-     * @param message - The message to replace with.
-     */
+     * @param message - The message to replace with. */
     public Message addReplacement(String pattern, Message message) {
         this.replacements.put(pattern, message);
         return this;
     }
 
-    /**
-     * Adds a replacement to this Message.
+    /** Adds a replacement to this Message.
      *
      * @param pattern - The pattern to replace.
-     * @param message - The message to replace with.
-     */
+     * @param message - The message to replace with. */
     public Message addReplacement(String pattern, String message) {
         return this.addReplacement(pattern, new Message(message, false));
     }
@@ -82,9 +72,28 @@ public class Message {
     private void colorKeywords() {
         for (String keyword : this.keywords) {
             int index = this.value.toLowerCase().indexOf(keyword.toLowerCase());
-            this.value = this.value.substring(0, index) + "<green>"
-                    + this.value.substring(index, index + keyword.length()) + "</color>"
+            this.value = this.value.substring(0, index) + "<green>" + this.value.substring(index, index + keyword.length()) + "</color>"
                     + this.value.substring(index + keyword.length());
+        }
+    }
+
+    private void executeSubtranslations() {
+        while (this.value.contains("<translate>")) {
+            int pos = this.value.indexOf("<translate>");
+            this.value = StringUtil.remove(this.value, pos, "<translate>".length());
+
+            if (this.value.contains("</translate>")) {
+                int endpos = this.value.indexOf("</translate>");
+                this.value = StringUtil.remove(this.value, endpos, "</translate>".length());
+
+                if (pos != endpos) {
+                    String idToTranslate = this.value.subSequence(pos, endpos).toString();
+                    this.value = StringUtil.remove(this.value, pos, idToTranslate.length());
+
+                    String translated = Localization.translate(idToTranslate);
+                    if (!translated.equals(idToTranslate)) this.value = StringUtil.insert(this.value, translated, pos);
+                }
+            }
         }
     }
 
@@ -103,13 +112,14 @@ public class Message {
     /** @return The translated value of this Message. */
     @Override
     public String toString() {
-        if (!Localization.getLanguage().id.equals(this.lastLang))
-            this.update();
+        if (!Localization.getLanguage().id.equals(this.lastLang)) this.update();
         return this.value;
     }
 
     private void update() {
         this.value = this.shouldTranslate ? Localization.translate(this.id) : this.id;
+
+        this.executeSubtranslations();
 
         for (String pattern : this.replacements.keySet())
             this.value = this.value.replaceAll(pattern, this.replacements.get(pattern).toString());
