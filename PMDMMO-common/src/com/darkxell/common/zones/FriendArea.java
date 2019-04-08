@@ -125,6 +125,10 @@ public enum FriendArea {
         return this.freezone.getName();
     }
 
+    public String id() {
+        return this.freezone.id;
+    }
+
     public LocalMapLocation mapLoaction() {
         return this.freezone.maplocation;
     }
