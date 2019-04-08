@@ -117,6 +117,10 @@ public class TablesCreator {
             + "(\n"
             + "	PLAYERID BIGINT not null,\n"
             + "	INVENTORYID BIGINT not null\n"
+            + ")", "create table FRIENDAREAS_\n"
+            + "(\n"
+            + "	PLAYERID BIGINT not null,\n"
+            + "	AREAID VARCHAR(64) not null\n"
             + ")"};
         for (int i = 0; i < tablescripts.length; i++) {
             try {
