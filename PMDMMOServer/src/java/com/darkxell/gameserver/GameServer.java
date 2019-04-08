@@ -42,6 +42,7 @@ import com.darkxell.gameserver.messagehandlers.TestResultHandler;
 import com.darkxell.gameserver.messagehandlers.StorageactionHandler;
 import com.darkxell.gameserver.messagehandlers.StorypositionAdvanceHandler;
 import com.darkxell.model.ejb.DeployKeyDAO;
+import com.darkxell.model.ejb.FriendAreas_DAO;
 import com.darkxell.model.ejb.Holdeditem_DAO;
 import com.darkxell.model.ejb.InventoryDAO;
 import com.darkxell.model.ejb.Inventorycontains_DAO;
@@ -105,6 +106,8 @@ public class GameServer {
     private Missions_DAO missions_DAO;
     @EJB
     private DeployKeyDAO deployKeyDAO;
+    @EJB
+    private FriendAreas_DAO friendAreas_DAO;
 
     /**
      * Called when a client opens a websocket connection with the server.
@@ -129,7 +132,7 @@ public class GameServer {
         }
         GameSessionInfo si = SessionsInfoHolder.getInfo(session.getId());
 
-        System.out.println((si == null ? "null_si (this is a bug)" : si.name) + " just disconnected.");
+        System.out.println((si == null ? "null_si" : si.name) + " just disconnected.");
         //Removes the session info and the game session info
         sessionHandler.removeSession(session);
         if (SessionsInfoHolder.infoExists(session.getId())) {
@@ -194,6 +197,9 @@ public class GameServer {
             }
             if (this.tablesCreator == null) {
                 this.tablesCreator = new TablesCreator();
+            }
+            if (this.friendAreas_DAO == null) {
+                this.friendAreas_DAO = new FriendAreas_DAO();
             }
             Logger.load("SERVER");
             Registries.load();
@@ -396,6 +402,10 @@ public class GameServer {
 
     public PlayerDAO getPlayerDAO() {
         return this.playerDAO;
+    }
+    
+    public FriendAreas_DAO getFriendAreas_DAO() {
+        return this.friendAreas_DAO;
     }
 
     public Holdeditem_DAO getHoldeditem_DAO() {
