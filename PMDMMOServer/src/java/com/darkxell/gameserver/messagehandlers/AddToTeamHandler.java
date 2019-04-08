@@ -5,6 +5,7 @@
  */
 package com.darkxell.gameserver.messagehandlers;
 
+import com.darkxell.common.dbobject.DBPokemon;
 import com.darkxell.gameserver.GameServer;
 import com.darkxell.gameserver.GameSessionHandler;
 import com.darkxell.gameserver.GameSessionInfo;
@@ -20,20 +21,36 @@ import javax.websocket.Session;
  *
  * @author Darkxell
  */
-public class GetFriendAreasHandler extends MessageHandler {
+public class AddToTeamHandler extends MessageHandler {
 
-    public GetFriendAreasHandler(GameServer endpoint) {
+    public AddToTeamHandler(GameServer endpoint) {
         super(endpoint);
     }
 
     @Override
     public void handleMessage(JsonObject json, Session from, GameSessionHandler sessionshandler) {
         GameSessionInfo si = SessionsInfoHolder.getInfo(from.getId());
-        ArrayList<String> zones = endpoint.getFriendAreas_DAO().findAreas(si.serverid);
+        long pokemon = json.getJsonNumber("pokemonid").longValueExact();
+        ArrayList<Long> team = endpoint.getTeammember_DAO().findPokemonID(pokemon);
+
+        long pkmnowner = endpoint.getTeammember_DAO().findPlayerID(pokemon);
+
         com.eclipsesource.json.JsonObject value = Json.object();
-        value.add("action", "getfriendareas");
-        JsonArray arr = new JsonArray(zones.toArray(new String[0]));
-        value.add("getfriendareas",arr);
+        value.add("action", "addtoteam");
+        value.add("pokemonid", pokemon);
+        if (pkmnowner != si.serverid) {
+            value.add("result", "error");
+        } else if (team.size() >= 4) {
+            value.add("result", "team_full");
+        } else {
+            try {
+                endpoint.getTeammember_DAO().update(pkmnowner, pokemon, (short) (team.size() + 1));
+                value.add("result", "success");
+            } catch (Exception e) {
+                value.add("result", "error");
+                e.printStackTrace();
+            }
+        }
         sessionshandler.sendToSession(from, value);
     }
 

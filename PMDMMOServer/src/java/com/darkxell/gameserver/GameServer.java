@@ -8,6 +8,7 @@ package com.darkxell.gameserver;
 import com.darkxell.common.Registries;
 import com.darkxell.common.util.Logger;
 import com.darkxell.gameserver.messagehandlers.AcceptMissionHandler;
+import com.darkxell.gameserver.messagehandlers.AddToTeamHandler;
 import com.darkxell.gameserver.messagehandlers.BankactionHandler;
 import com.darkxell.gameserver.messagehandlers.ChatMessageHandler;
 import com.darkxell.gameserver.messagehandlers.CreateAccountHandler;
@@ -28,6 +29,7 @@ import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
 import com.darkxell.gameserver.messagehandlers.FreezonePositionHandler;
+import com.darkxell.gameserver.messagehandlers.GetFriendAreasHandler;
 import com.darkxell.gameserver.messagehandlers.GetMissionsHandler;
 import com.darkxell.gameserver.messagehandlers.InventoryRequestHandler;
 import com.darkxell.gameserver.messagehandlers.ItemActionHandler;
@@ -383,6 +385,22 @@ public class GameServer {
                             return;
                         }
                         StorypositionAdvanceHandler hand = new StorypositionAdvanceHandler(this);
+                        hand.handleMessage(jsonMessage, session, sessionHandler);
+                        break;
+                    }
+                    case "getfriendareas": {
+                        if (!infos.isconnected) {
+                            return;
+                        }
+                        GetFriendAreasHandler hand = new GetFriendAreasHandler(this);
+                        hand.handleMessage(jsonMessage, session, sessionHandler);
+                        break;
+                    }
+                    case "addtoteam": {
+                        if (!infos.isconnected) {
+                            return;
+                        }
+                        AddToTeamHandler hand = new AddToTeamHandler(this);
                         hand.handleMessage(jsonMessage, session, sessionHandler);
                         break;
                     }
