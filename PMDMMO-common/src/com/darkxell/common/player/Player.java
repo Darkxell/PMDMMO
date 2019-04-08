@@ -7,23 +7,23 @@ import com.darkxell.common.dbobject.DBPlayer;
 import com.darkxell.common.dbobject.DatabaseIdentifier;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.Pokemon;
+import com.darkxell.common.zones.FriendArea;
 
 public class Player {
     public ArrayList<Pokemon> allies;
     private DBPlayer data;
 
-    /**
-     * This Player's Inventory.
-     */
+    /** Lists IDs of unlocked Friend Areas. */
+    public ArrayList<FriendArea> friendAreas;
+
+    /** This Player's Inventory. */
     private Inventory inventory;
 
     public Pokemon leaderPokemon;
 
     public HashMap<Long, Pokemon> pokemonInZones;
 
-    /**
-     * This Player's storage.
-     */
+    /** This Player's storage. */
     private Inventory storage;
 
     public Player(DBPlayer data) {
@@ -31,8 +31,8 @@ public class Player {
     }
 
     public Player(String name, Pokemon pokemon) {
-        this(new DBPlayer(0, name, null, 0, 0, 0, new ArrayList<>(), new ArrayList<>(),
-                pokemon == null ? null : new DatabaseIdentifier(pokemon.id()), null, null, null, 0, false, false));
+        this(new DBPlayer(0, name, null, 0, 0, 0, new ArrayList<>(), new ArrayList<>(), pokemon == null ? null : new DatabaseIdentifier(pokemon.id()),
+                null, null, null, 0, false, false));
         this.setLeaderPokemon(pokemon);
     }
 
@@ -50,8 +50,7 @@ public class Player {
                 already = true;
                 break;
             }
-        if (!already)
-            this.data.pokemonsinzones.add(new DatabaseIdentifier(pokemon.id()));
+        if (!already) this.data.pokemonsinzones.add(new DatabaseIdentifier(pokemon.id()));
         pokemon.setPlayer(this);
     }
 
@@ -67,18 +66,13 @@ public class Player {
         return this.data;
     }
 
-    public ArrayList<String> getMissions() {
-        return this.data.missionsids;
-    }
-
     public DungeonPokemon getDungeonLeader() {
         return this.leaderPokemon.getDungeonPokemon();
     }
 
     public DungeonPokemon getDungeonMember(int index) {
         Pokemon p = this.getMember(index);
-        if (p == null)
-            return null;
+        if (p == null) return null;
         return p.getDungeonPokemon();
     }
 
@@ -90,16 +84,16 @@ public class Player {
     }
 
     public Pokemon getMember(int index) {
-        if (index == 0)
-            return this.getTeamLeader();
-        else if (index < this.allies.size() + 1)
-            return this.allies.get(index - 1);
+        if (index == 0) return this.getTeamLeader();
+        else if (index < this.allies.size() + 1) return this.allies.get(index - 1);
         return null;
     }
 
-    /**
-     * Returns the full player's team. The team leader is at position 0 in the array.
-     */
+    public ArrayList<String> getMissions() {
+        return this.data.missionsids;
+    }
+
+    /** Returns the full player's team. The team leader is at position 0 in the array. */
     public Pokemon[] getTeam() {
         Pokemon[] team = new Pokemon[this.allies.size() + 1];
         team[0] = this.getTeamLeader();
@@ -141,17 +135,14 @@ public class Player {
     }
 
     public int positionInTeam(Pokemon pokemon) {
-        if (pokemon == this.getTeamLeader())
-            return 0;
+        if (pokemon == this.getTeamLeader()) return 0;
         for (int i = 0; i < this.allies.size(); ++i)
-            if (this.allies.get(i) == pokemon)
-                return i + 1;
+            if (this.allies.get(i) == pokemon) return i + 1;
         return -1;
     }
 
     public void removeAlly(Pokemon pokemon) {
-        if (!this.allies.contains(pokemon))
-            return;
+        if (!this.allies.contains(pokemon)) return;
         this.data.pokemonsinparty.remove(this.allies.indexOf(pokemon));
         this.allies.remove(pokemon);
         pokemon.setPlayer(null);
@@ -164,11 +155,9 @@ public class Player {
     }
 
     public void resetDungeonTeam() {
-        if (this.leaderPokemon != null && this.leaderPokemon.getDungeonPokemon() != null)
-            this.leaderPokemon.getDungeonPokemon().dispose();
+        if (this.leaderPokemon != null && this.leaderPokemon.getDungeonPokemon() != null) this.leaderPokemon.getDungeonPokemon().dispose();
         for (Pokemon ally : this.allies)
-            if (ally.getDungeonPokemon() != null)
-                ally.getDungeonPokemon().dispose();
+            if (ally.getDungeonPokemon() != null) ally.getDungeonPokemon().dispose();
     }
 
     public void setData(DBPlayer data) {
@@ -185,15 +174,13 @@ public class Player {
     }
 
     public void setLeaderPokemon(Pokemon pokemon) {
-        if (this.leaderPokemon != null)
-            this.leaderPokemon.setPlayer(null);
+        if (this.leaderPokemon != null) this.leaderPokemon.setPlayer(null);
         this.leaderPokemon = pokemon;
         if (this.leaderPokemon != null) {
             this.leaderPokemon.createDungeonPokemon();
             this.leaderPokemon.setPlayer(this);
             this.data.mainpokemon = new DatabaseIdentifier(this.leaderPokemon.id());
-        } else
-            this.data.mainpokemon = null;
+        } else this.data.mainpokemon = null;
     }
 
     public void setMoneyInBag(long moneyInBag) {
