@@ -14,7 +14,6 @@ import com.darkxell.gameserver.SessionsInfoHolder;
 import com.eclipsesource.json.Json;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 import javax.json.JsonObject;
 import javax.websocket.Session;
