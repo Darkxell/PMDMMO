@@ -13,7 +13,9 @@ import com.darkxell.common.dbobject.DBPlayer;
 import com.darkxell.common.dbobject.DatabaseIdentifier;
 import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.Pokemon;
+import com.darkxell.common.zones.FriendArea;
 import com.eclipsesource.json.JsonObject;
+import com.eclipsesource.json.JsonValue;
 
 public class PlayerLoadingState extends AbstractState {
     public static interface PlayerLoadingEndListener {
@@ -24,7 +26,7 @@ public class PlayerLoadingState extends AbstractState {
 
     public static final int TIMEOUT = 600;
 
-    private boolean base = false, inventory = false, leader = false;
+    private boolean base = false, inventory = false, leader = false, friendareas = false;
     private boolean hasSent = false;
     public final PlayerLoadingEndListener listener;
     public final long playerID;
@@ -43,20 +45,17 @@ public class PlayerLoadingState extends AbstractState {
     }
 
     private void checkFinished() {
-        if (this.base && this.inventory && this.leader) {
+        if (this.base && this.inventory && this.leader && this.friendareas) {
             for (boolean b : this.team)
-                if (!b)
-                    return;
+                if (!b) return;
             this.finish();
         }
     }
 
     private void exit() {
         Persistence.isCommunicating = false;
-        if (this.listener == null)
-            Persistence.stateManager.setState(new OpeningState());
-        else
-            this.listener.onPlayerLoadingEnd(this);
+        if (this.listener == null) Persistence.stateManager.setState(new OpeningState());
+        else this.listener.onPlayerLoadingEnd(this);
     }
 
     private void finish() {
@@ -66,6 +65,18 @@ public class PlayerLoadingState extends AbstractState {
         this.exit();
     }
 
+    public void onFriendAreasReceived(JsonObject message) {
+        ArrayList<FriendArea> friendAreas = new ArrayList<>();
+
+        for (JsonValue o : message.get("areas").asArray())
+            friendAreas.add(FriendArea.find(o.asString()));
+        friendAreas.removeIf(area -> area == null);
+
+        this.friendareas = true;
+        Persistence.player.friendAreas = friendAreas;
+        this.checkFinished();
+    }
+
     public void onInventoryReceived(JsonObject message) {
         Persistence.player.setInventory(InventoryRequestHandler.readInventory(message, Persistence.player));
         this.inventory = true;
@@ -73,12 +84,10 @@ public class PlayerLoadingState extends AbstractState {
     }
 
     @Override
-    public void onKeyPressed(Key key) {
-    }
+    public void onKeyPressed(Key key) {}
 
     @Override
-    public void onKeyReleased(Key key) {
-    }
+    public void onKeyReleased(Key key) {}
 
     public void onMonsterReceived(JsonObject message) {
         Pokemon p = MonsterRequestHandler.readMonster(message);
@@ -105,10 +114,8 @@ public class PlayerLoadingState extends AbstractState {
 
         this.team = new boolean[Persistence.player.getData().pokemonsinparty.size()];
         this.teamtmp = new Pokemon[Persistence.player.getData().pokemonsinparty.size()];
-        if (Persistence.player.getData().toolboxinventory == null)
-            this.inventory = true;
-        if (Persistence.player.getData().mainpokemon == null)
-            this.leader = true;
+        if (Persistence.player.getData().toolboxinventory == null) this.inventory = true;
+        if (Persistence.player.getData().mainpokemon == null) this.leader = true;
 
         this.askForMore();
     }
@@ -116,40 +123,30 @@ public class PlayerLoadingState extends AbstractState {
     @Override
     public void onStart() {
         super.onStart();
-        if (Persistence.socketendpoint.connectionStatus() != GameSocketEndpoint.CONNECTED)
-            this.exit();
-        else
-            Persistence.isCommunicating = true;
+        if (Persistence.socketendpoint.connectionStatus() != GameSocketEndpoint.CONNECTED) this.exit();
+        else Persistence.isCommunicating = true;
     }
 
     @Override
     public void render(Graphics2D g, int width, int height) {
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, width, height);
-        /*
-         * Message m = new Message("general.loading"); TextRenderer.render(g, m, width / 2 - TextRenderer.width(m),
-         * height / 2 - TextRenderer.height());
-         */
+        /* Message m = new Message("general.loading"); TextRenderer.render(g, m, width / 2 - TextRenderer.width(m), height / 2 - TextRenderer.height()); */
     }
 
     @Override
     public void update() {
         if (this.hasSent) {
             ++this.tick;
-            if (this.tick >= TIMEOUT)
-                this.askForMore();
+            if (this.tick >= TIMEOUT) this.askForMore();
         } else {
-            if (!this.base)
-                Persistence.socketendpoint.requestObject("DBPlayer", this.playerID);
+            if (!this.base) Persistence.socketendpoint.requestObject("DBPlayer", this.playerID);
             else {
-                if (!this.inventory)
-                    Persistence.socketendpoint.requestInventory(Persistence.player.getData().toolboxinventory.id);
-                if (!this.leader)
-                    Persistence.socketendpoint.requestMonster(Persistence.player.getData().mainpokemon.id);
+                if (!this.inventory) Persistence.socketendpoint.requestInventory(Persistence.player.getData().toolboxinventory.id);
+                if (!this.leader) Persistence.socketendpoint.requestMonster(Persistence.player.getData().mainpokemon.id);
+                if (!this.friendareas) Persistence.socketendpoint.sendActionMessage("getfriendareas");
                 for (int i = 0; i < this.team.length; ++i)
-                    if (!this.team[i])
-                        Persistence.socketendpoint
-                                .requestMonster(Persistence.player.getData().pokemonsinparty.get(i).id);
+                    if (!this.team[i]) Persistence.socketendpoint.requestMonster(Persistence.player.getData().pokemonsinparty.get(i).id);
             }
             this.hasSent = true;
         }
