@@ -71,7 +71,7 @@ public class FriendAreas_DAO {
                     );
 
             while (result.next()) {
-                toreturn.add(result.getString("missionid"));
+                toreturn.add(result.getString("areaid"));
             }
             cn.close();
         } catch (SQLException e) {
