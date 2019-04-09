@@ -115,7 +115,7 @@ public class CutsceneEndController implements Initializable, ChangeListener<Cuts
             return pattern.matcher(change.getControlNewText()).matches() ? change : null;
         });
         this.freezoneYTextfield.setTextFormatter(formatter);
-        Pattern pattern2 = Pattern.compile("\\w*");
+        Pattern pattern2 = Pattern.compile("(\\w\\/?)*");
         TextFormatter<String> formatter2 = new TextFormatter<>(change -> {
             return pattern2.matcher(change.getControlNewText()).matches() ? change : null;
         });
