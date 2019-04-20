@@ -5,14 +5,12 @@
  */
 package com.darkxell.gameserver.messagehandlers;
 
-import com.darkxell.common.dbobject.DBPokemon;
 import com.darkxell.gameserver.GameServer;
 import com.darkxell.gameserver.GameSessionHandler;
 import com.darkxell.gameserver.GameSessionInfo;
 import com.darkxell.gameserver.MessageHandler;
 import com.darkxell.gameserver.SessionsInfoHolder;
 import com.eclipsesource.json.Json;
-import com.eclipsesource.json.JsonArray;
 import java.util.ArrayList;
 import javax.json.JsonObject;
 import javax.websocket.Session;
