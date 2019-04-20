@@ -33,7 +33,7 @@ public class RemoveFromTeamHandler extends MessageHandler {
         value.add("action", "removefromteam");
         value.add("pokemonid", pokemon);
 
-        ArrayList<Long> team = endpoint.getTeammember_DAO().findPokemonID(si.serverid);
+        ArrayList<Long> team = endpoint.getTeammember_DAO().findPokemonsIDinTeam(si.serverid);
         //Finds the pokemon position in the player's team. -1 if not found.
         byte positioninteam = -1;
         for (byte i = 0; i < 6; ++i) {
