@@ -19,9 +19,9 @@ import javax.websocket.Session;
  *
  * @author Darkxell
  */
-public class AddToTeamHandler extends MessageHandler {
+public class DeleteFriendHandler extends MessageHandler {
 
-    public AddToTeamHandler(GameServer endpoint) {
+    public DeleteFriendHandler(GameServer endpoint) {
         super(endpoint);
     }
 
@@ -29,26 +29,32 @@ public class AddToTeamHandler extends MessageHandler {
     public void handleMessage(JsonObject json, Session from, GameSessionHandler sessionshandler) {
         GameSessionInfo si = SessionsInfoHolder.getInfo(from.getId());
         long pokemon = json.getJsonNumber("pokemonid").longValueExact();
-        ArrayList<Long> team = endpoint.getTeammember_DAO().findPokemonsIDinTeam(pokemon);
-
-        long pkmnowner = endpoint.getTeammember_DAO().findPlayerID(pokemon);
-
         com.eclipsesource.json.JsonObject value = Json.object();
-        value.add("action", "addtoteam");
+        value.add("action", "deletefriend");
         value.add("pokemonid", pokemon);
-        if (pkmnowner != si.serverid) {
-            value.add("result", "error");
-        } else if (team.size() >= 4) {
-            value.add("result", "team_full");
-        } else {
-            try {
-                endpoint.getTeammember_DAO().update(pkmnowner, pokemon, (short) (team.size() + 1));
-                value.add("result", "success");
-            } catch (Exception e) {
-                value.add("result", "error");
-                e.printStackTrace();
+
+        // Checks that the pokemon is not in the player's team.
+        ArrayList<Long> team = endpoint.getTeammember_DAO().findPokemonsIDinTeam(si.serverid);
+        for (Long long1 : team) {
+            if (long1 == pokemon) {
+                value.add("result", "in_team");
+                sessionshandler.sendToSession(from, value);
+                return;
             }
         }
+
+        // Checks that the player owns this pokemon.
+        long realplayerid = endpoint.getTeammember_DAO().findPlayerID(pokemon);
+        if (realplayerid == 0 || realplayerid != si.serverid) {
+            value.add("result", "error");
+            sessionshandler.sendToSession(from, value);
+            return;
+        }
+
+        // Removes the pokemon if still needed.
+        endpoint.getTeammember_DAO().delete(si.serverid, pokemon);
+        // Note that this only deletes the link, for archiving purposes. The actual pokemon still exists.
+        value.add("result", "success");
         sessionshandler.sendToSession(from, value);
     }
 

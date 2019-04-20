@@ -96,8 +96,8 @@ public class Teammember_DAO {
         return toreturn;
     }
 
-    public ArrayList<Long> findPokemonID(long playerid) {
-        ArrayList<Long> toreturn = new ArrayList<Long>(4);
+    public ArrayList<Long> findPokemonsID(long playerid) {
+        ArrayList<Long> toreturn = new ArrayList<Long>(10);
         try {
             Connection cn = ds.getConnection();
             ResultSet result = cn
@@ -106,6 +106,29 @@ public class Teammember_DAO {
                             ResultSet.CONCUR_UPDATABLE
                     ).executeQuery(
                             "SELECT * FROM teammember_ WHERE playerid = " + playerid
+                    );
+            if (result.first()) {
+                while (result.next()) {
+                    toreturn.add(result.getLong("pokemonid"));
+                }
+            }
+            cn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return toreturn;
+    }
+    
+    public ArrayList<Long> findPokemonsIDinTeam(long playerid) {
+        ArrayList<Long> toreturn = new ArrayList<Long>(4);
+        try {
+            Connection cn = ds.getConnection();
+            ResultSet result = cn
+                    .createStatement(
+                            ResultSet.TYPE_SCROLL_INSENSITIVE,
+                            ResultSet.CONCUR_UPDATABLE
+                    ).executeQuery(
+                            "SELECT * FROM teammember_ WHERE playerid = " + playerid + " AND location > 0 ORDER BY location"
                     );
             if (result.first()) {
                 while (result.next()) {
@@ -128,7 +151,7 @@ public class Teammember_DAO {
                             ResultSet.TYPE_SCROLL_INSENSITIVE,
                             ResultSet.CONCUR_UPDATABLE
                     ).executeQuery(
-                            "SELECT * FROM teammember_ WHERE playerid = " + playerid + "AND location = " + location
+                            "SELECT * FROM teammember_ WHERE playerid = " + playerid + " AND location = " + location
                     );
             if (result.first()) {
                 toreturn = result.getLong("pokemonid");
