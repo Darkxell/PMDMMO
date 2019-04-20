@@ -19,7 +19,7 @@ import javax.websocket.Session;
  *
  * @author Darkxell
  */
-public class RemoveFromTeamHandler extends MessageHandler{
+public class RemoveFromTeamHandler extends MessageHandler {
 
     public RemoveFromTeamHandler(GameServer endpoint) {
         super(endpoint);
@@ -29,17 +29,39 @@ public class RemoveFromTeamHandler extends MessageHandler{
     public void handleMessage(JsonObject json, Session from, GameSessionHandler sessionshandler) {
         GameSessionInfo si = SessionsInfoHolder.getInfo(from.getId());
         long pokemon = json.getJsonNumber("pokemonid").longValueExact();
-        long pkmnowner = endpoint.getTeammember_DAO().findPlayerID(pokemon);
-
         com.eclipsesource.json.JsonObject value = Json.object();
         value.add("action", "removefromteam");
         value.add("pokemonid", pokemon);
-        if (pkmnowner != si.serverid) {
+
+        ArrayList<Long> team = endpoint.getTeammember_DAO().findPokemonID(si.serverid);
+        //Finds the pokemon position in the player's team. -1 if not found.
+        byte positioninteam = -1;
+        for (byte i = 0; i < 6; ++i) {
+            if (endpoint.getTeammember_DAO().findPokemonID(si.serverid, i) == pokemon) {
+                positioninteam = (byte) (i + 1);
+            }
+        }
+
+        if (positioninteam < 0 || pokemon == 0) {
             value.add("result", "error");
         } else {
             try {
-                endpoint.getTeammember_DAO().update(pkmnowner, pokemon, (short)0);
-                value.add("result", "success");
+                switch (positioninteam) {
+                    case 1:
+                        //You can't remove the team leader. Change it first.
+                        value.add("result", "error");
+                        break;
+                    //Otherwise, shift from the removed pokemon.
+                    case 2:
+                        endpoint.getTeammember_DAO().update(si.serverid, team.get(2), (byte) 2);
+                    case 3:
+                        endpoint.getTeammember_DAO().update(si.serverid, team.get(3), (byte) 3);
+                    case 4:
+                        endpoint.getTeammember_DAO().update(si.serverid, pokemon, (short) 0);
+                        value.add("result", "success");
+                        break;
+
+                }
             } catch (Exception e) {
                 value.add("result", "error");
                 e.printStackTrace();
@@ -47,5 +69,5 @@ public class RemoveFromTeamHandler extends MessageHandler{
         }
         sessionshandler.sendToSession(from, value);
     }
-    
+
 }
