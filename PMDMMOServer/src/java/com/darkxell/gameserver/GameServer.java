@@ -10,8 +10,10 @@ import com.darkxell.common.util.Logger;
 import com.darkxell.gameserver.messagehandlers.AcceptMissionHandler;
 import com.darkxell.gameserver.messagehandlers.AddToTeamHandler;
 import com.darkxell.gameserver.messagehandlers.BankactionHandler;
+import com.darkxell.gameserver.messagehandlers.BuyFriendAreaHandler;
 import com.darkxell.gameserver.messagehandlers.ChatMessageHandler;
 import com.darkxell.gameserver.messagehandlers.CreateAccountHandler;
+import com.darkxell.gameserver.messagehandlers.DeleteFriendHandler;
 import com.darkxell.gameserver.messagehandlers.DeleteMissionHandler;
 import com.darkxell.gameserver.messagehandlers.DungeonendHandler;
 import com.darkxell.gameserver.messagehandlers.DungeonstartHandler;
@@ -410,6 +412,22 @@ public class GameServer {
                             return;
                         }
                         RemoveFromTeamHandler hand = new RemoveFromTeamHandler(this);
+                        hand.handleMessage(jsonMessage, session, sessionHandler);
+                        break;
+                    }
+                    case "deletefriend": {
+                        if (!infos.isconnected) {
+                            return;
+                        }
+                        DeleteFriendHandler hand = new DeleteFriendHandler(this);
+                        hand.handleMessage(jsonMessage, session, sessionHandler);
+                        break;
+                    }
+                    case "buyfriendarea": {
+                        if (!infos.isconnected) {
+                            return;
+                        }
+                        BuyFriendAreaHandler hand = new BuyFriendAreaHandler(this);
                         hand.handleMessage(jsonMessage, session, sessionHandler);
                         break;
                     }
