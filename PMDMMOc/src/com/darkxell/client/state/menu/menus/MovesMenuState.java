@@ -180,7 +180,7 @@ public class MovesMenuState extends OptionSelectionMenuState {
 
     private void onOptionInfo(MenuOption option) {
         Persistence.stateManager
-                .setState(new MoveInfoState(((MoveMenuOption) option).move.move(), this.background, this));
+                .setState(new MoveInfoState(((MoveMenuOption) option).move.move(), this.background, this).setOpaque(this.isOpaque));
     }
 
     @Override
@@ -230,5 +230,4 @@ public class MovesMenuState extends OptionSelectionMenuState {
     private Pokemon selectedPokemon() {
         return this.pokemon[this.tabIndex()];
     }
-
 }

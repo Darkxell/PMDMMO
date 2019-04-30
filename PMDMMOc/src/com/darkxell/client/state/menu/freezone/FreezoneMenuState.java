@@ -13,10 +13,12 @@ import com.darkxell.client.state.menu.item.ItemContainersMenuState;
 import com.darkxell.client.state.menu.menus.MovesMenuState;
 import com.darkxell.client.state.menu.menus.SettingsMenuState;
 import com.darkxell.client.state.menu.menus.TeamMenuState;
+import com.darkxell.client.state.menu.menus.TeamMenuState.TeamMemberSelectionListener;
 import com.darkxell.common.player.ItemContainer;
+import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.language.Message;
 
-public class FreezoneMenuState extends OptionSelectionMenuState {
+public class FreezoneMenuState extends OptionSelectionMenuState implements TeamMemberSelectionListener {
 
 	private MenuOption moves, items, team, settings;
 
@@ -72,8 +74,14 @@ public class FreezoneMenuState extends OptionSelectionMenuState {
 				Persistence.stateManager.setState(s);
 			}
 		} else if (option == this.team)
-			Persistence.stateManager.setState(new TeamMenuState(this, this.background).setOpaque(this.isOpaque));
+			Persistence.stateManager.setState(new TeamMenuState(this, this.background, this).setOpaque(this.isOpaque));
 		else if (option == this.settings)
 			Persistence.stateManager.setState(new SettingsMenuState(this, this.background).setOpaque(this.isOpaque));
+	}
+
+	@Override
+	public void teamMemberSelected(Pokemon pokemon, TeamMenuState teamState) {
+		Persistence.stateManager
+				.setState(new TeamMemberActionSelectionState(this, teamState, pokemon).setOpaque(this.isOpaque));
 	}
 }

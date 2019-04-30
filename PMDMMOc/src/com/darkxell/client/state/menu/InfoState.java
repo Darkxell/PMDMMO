@@ -38,7 +38,7 @@ public class InfoState extends AbstractMenuState {
     }
 
     public final Message[] infos, titles;
-    private boolean isOpaque = false;
+    protected boolean isOpaque = false;
     public final AbstractState parent;
     private int tab;
     protected TextWindow window;

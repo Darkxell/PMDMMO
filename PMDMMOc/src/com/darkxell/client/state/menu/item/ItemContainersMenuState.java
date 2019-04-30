@@ -625,7 +625,7 @@ public class ItemContainersMenuState extends AbstractMenuState
     }
 
     @Override
-    public void teamMemberSelected(Pokemon pokemon) {
+    public void teamMemberSelected(Pokemon pokemon, TeamMenuState teamState) {
         AbstractState nextState = this;
         if (this.inDungeon) nextState = Persistence.dungeonState;
         ItemContainer container = this.container();
@@ -687,5 +687,4 @@ public class ItemContainersMenuState extends AbstractMenuState
                 TextRenderer.height() + MenuWindow.MARGIN_Y + MenuStateHudSpriteset.cornerSize.height * 3 / 2));
         this.nameWindow.isOpaque = this.isOpaque;
     }
-
 }

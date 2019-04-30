@@ -15,7 +15,7 @@ import com.eclipsesource.json.JsonObject;
 public class TeamMenuState extends OptionSelectionMenuState implements ItemActionMessageHandler {
 
     public static interface TeamMemberSelectionListener {
-        public void teamMemberSelected(Pokemon pokemon);
+        public void teamMemberSelected(Pokemon pokemon, TeamMenuState teamState);
     }
 
     public static InfoState createSummaryState(AbstractGraphiclayer background, AbstractState parent,
@@ -54,13 +54,14 @@ public class TeamMenuState extends OptionSelectionMenuState implements ItemActio
         info.addReplacement("<joined>", new Message("Pokemon Square", false));
         info.addReplacement("<evolve>", pokemon.evolutionStatus());
 
-        return new InfoState(background, parent, new Message[] { new Message("summary.stats"),
-                new Message("summary.features"), new Message("summary.info") },
+        return new InfoState(background, parent,
+                new Message[] { new Message("summary.stats").addPrefix(pokemon.getNickname().addSuffix(": ")),
+                        new Message("summary.features").addPrefix(pokemon.getNickname().addSuffix(": ")),
+                        new Message("summary.info").addPrefix(pokemon.getNickname().addSuffix(": ")) },
                 new Message[] { stats, features, info });
     }
 
-    public static InfoState createSummaryState(AbstractGraphiclayer background, AbstractState parent,
-            Pokemon pokemon) {
+    public static InfoState createSummaryState(AbstractGraphiclayer background, AbstractState parent, Pokemon pokemon) {
         return createSummaryState(background, parent, null, pokemon);
     }
 
@@ -105,8 +106,9 @@ public class TeamMenuState extends OptionSelectionMenuState implements ItemActio
         Pokemon p = this.pokemon[this.optionIndex()];
         DungeonPokemon dp = p.getDungeonPokemon();
         if (this.listener == null)
-            Persistence.stateManager.setState(createSummaryState(this.background, this, dp, p).setOpaque(this.isOpaque));
+            Persistence.stateManager
+                    .setState(createSummaryState(this.background, this, dp, p).setOpaque(this.isOpaque));
         else
-            this.listener.teamMemberSelected(p);
+            this.listener.teamMemberSelected(p, this);
     }
 }
