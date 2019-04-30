@@ -81,6 +81,7 @@ public class MovesMenuState extends OptionSelectionMenuState {
                 PrincipalMainState.displayWidth - 40, MenuStateHudSpriteset.cornerSize.height * 2
                         + TextRenderer.height() * 4 + TextRenderer.lineSpacing() * 2);
         this.windowInfo = new TextWindow(r, this.infoText(), false);
+        this.window.isOpaque = this.windowInfo.isOpaque = this.isOpaque;
     }
 
     @Override

@@ -105,9 +105,8 @@ public class TeamMenuState extends OptionSelectionMenuState implements ItemActio
         Pokemon p = this.pokemon[this.optionIndex()];
         DungeonPokemon dp = p.getDungeonPokemon();
         if (this.listener == null)
-            Persistence.stateManager.setState(createSummaryState(this.background, this, dp, p));
+            Persistence.stateManager.setState(createSummaryState(this.background, this, dp, p).setOpaque(this.isOpaque));
         else
             this.listener.teamMemberSelected(p);
     }
-
 }

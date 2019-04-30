@@ -18,7 +18,6 @@ public class PokemonSpriteset extends RegularSpriteSet {
         return this.getSequence(state, direction).getFrame(tick);
     }
 
-    @SuppressWarnings("unlikely-arg-type")
     public PokemonSpriteSequence getSequence(PokemonSpriteState state, Direction direction) {
         Integer index = this.data.states.get(new Pair<>(state, direction));
         if (index == null)
