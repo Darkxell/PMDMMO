@@ -66,19 +66,20 @@ public class Item implements AffectsPokemon, Registrable<Item> {
     }
 
     public enum ItemCategory {
-        BERRIES(3),
-        DRINKS(4),
-        EQUIPABLE(0),
-        EVOLUTIONARY(11),
-        FOOD(2),
-        GUMMIS(5),
-        HMS(10),
-        ORBS(8),
-        OTHER_USABLES(7),
-        OTHERS(12),
-        SEEDS(6),
-        THROWABLE(1),
-        TMS(9);
+        BERRIES(4),
+        DRINKS(5),
+        EQUIPABLE(1),
+        EVOLUTIONARY(12),
+        FOOD(3),
+        GUMMIS(6),
+        HMS(11),
+        KEY_ITEM(0),
+        ORBS(9),
+        OTHER_USABLES(8),
+        OTHERS(13),
+        SEEDS(7),
+        THROWABLE(2),
+        TMS(10);
 
         public final int order;
 

@@ -50,6 +50,7 @@ public class Util {
         player.inventory().addItem(new ItemStack(133, 3));
         player.inventory().addItem(new ItemStack(152));
         player.inventory().addItem(new ItemStack(223));
+        player.inventory().addItem(new ItemStack(387));
 
         for (PokemonSpecies s : Registries.species().toList()) {
             if (s.id == 0) continue;
