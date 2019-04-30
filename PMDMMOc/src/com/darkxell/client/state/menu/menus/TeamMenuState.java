@@ -15,7 +15,7 @@ import com.eclipsesource.json.JsonObject;
 public class TeamMenuState extends OptionSelectionMenuState implements ItemActionMessageHandler {
 
 	public static interface TeamMemberSelectionListener {
-		public void teamMemberSelected(Pokemon pokemon);
+		public void teamMemberSelected(Pokemon pokemon, TeamMenuState teamState);
 	}
 
 	public static InfoState createSummaryState(AbstractGraphicsLayer background, AbstractState parent,
@@ -110,7 +110,7 @@ public class TeamMenuState extends OptionSelectionMenuState implements ItemActio
 			Persistence.stateManager
 					.setState(createSummaryState(this.background, this, dp, p).setOpaque(this.isOpaque));
 		else
-			this.listener.teamMemberSelected(p);
+			this.listener.teamMemberSelected(p, this);
 	}
 
 }

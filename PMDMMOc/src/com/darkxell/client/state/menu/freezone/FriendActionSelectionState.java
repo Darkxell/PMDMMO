@@ -16,7 +16,7 @@ import com.darkxell.common.util.language.Message;
 public class FriendActionSelectionState extends OptionSelectionMenuState {
 
 	public FriendPokemonEntity friendPokemonEntity;
-	private MenuOption join, leave, farewell, summary, moves, back;
+	private MenuOption join, farewell, summary, moves, back;
 	public final AbstractState parent;
 	private MenuWindow summaryWindow;
 
@@ -30,10 +30,7 @@ public class FriendActionSelectionState extends OptionSelectionMenuState {
 	@Override
 	protected void createOptions() {
 		MenuTab tab = new MenuTab();
-		if (Persistence.player.pokemonInZones.containsKey(this.friendPokemonEntity.pokemon.id()))
-			tab.addOption(this.join = new MenuOption("ui.friend.join"));
-		else
-			tab.addOption(this.leave = new MenuOption("ui.friend.leave"));
+		tab.addOption(this.join = new MenuOption("ui.friend.join"));
 		tab.addOption(this.farewell = new MenuOption("ui.friend.farewell"));
 		tab.addOption(this.summary = new MenuOption("friendareas.summary"));
 		tab.addOption(this.moves = new MenuOption("menu.moves"));
