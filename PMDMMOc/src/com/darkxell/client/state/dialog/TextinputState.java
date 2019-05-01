@@ -27,7 +27,7 @@ public class TextinputState extends AbstractState {
             '\u00E7', // c cedilla
             '\u00F9', // u grave
             '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' };
-    private String messageid = "ui.textinput.prompt";
+    private Message message = new Message("ui.textinput.prompt");
     private String content = "";
 
     private boolean isinvalidationmode = false;
@@ -40,13 +40,13 @@ public class TextinputState extends AbstractState {
         this.parent = parent;
     }
 
-    public TextinputState(AbstractState parent, String messageid) {
+    public TextinputState(AbstractState parent, Message message) {
         this(parent);
-        this.messageid = messageid;
+        this.message = message;
     }
 
-    public TextinputState(AbstractState parent, String messageid, Callbackable additionnalcallback) {
-        this(parent, messageid);
+    public TextinputState(AbstractState parent, Message message, Callbackable additionnalcallback) {
+        this(parent, message);
         this.addedcallback = additionnalcallback;
     }
 
@@ -95,13 +95,13 @@ public class TextinputState extends AbstractState {
         Rectangle box = new Rectangle(20, height / 2 - temp_height / 2, temp_width, temp_height);
         g.drawImage(Sprites.Res_Hud.textwindow.image(), box.x, box.y, box.width, box.height, null);
 
-        TextRenderer.render(g, new Message(messageid), 40, height / 2 - 20);
+        TextRenderer.render(g, this.message, 40, height / 2 - 20);
         g.setColor(new Color(56, 130, 184));
         g.fillRect(40, height / 2, width - 80, 20);
 
         TextRenderer.render(g, content, 45, height / 2 + 3);
         int xtemp = 48 + TextRenderer.width(content);
-        if (currentflicker > 0) {
+        if (currentflicker > 0 && !isinvalidationmode) {
             g.setColor(Color.WHITE);
             g.drawLine(xtemp, height / 2 + 3, xtemp, height / 2 + 14);
         }
@@ -112,11 +112,12 @@ public class TextinputState extends AbstractState {
             g.setColor(new Color(32, 72, 104));
             g.fillRect(width - 150, height / 2 + temp_height - 15, 110, 50);
             TextRenderer.render(g, new Message("ui.textinput.validate"), width - 140, height / 2 + temp_height - 10);
-            TextRenderer.render(g, new Message("ui.no"), width - 130, height / 2 + temp_height + 3);
-            TextRenderer.render(g, new Message("ui.yes"), width - 130, height / 2 + temp_height + 16);
-            g.drawImage(Sprites.Res_Hud.menuHud.tabRight(), width - 140,
-                    height / 2 + temp_height + 4 + (validationstate ? 13 : 0), null);
-        }
+			TextRenderer.render(g, new Message("ui.no"), width - 130, height / 2 + temp_height + 3);
+			TextRenderer.render(g, new Message("ui.yes"), width - 130, height / 2 + temp_height + 16);
+			if (currentflicker > 0)
+				g.drawImage(Sprites.Res_Hud.menuHud.selectionArrow(), width - 142,
+						height / 2 + temp_height + 4 + (validationstate ? 13 : 0) - 3, null);
+		}
 
     }
 
