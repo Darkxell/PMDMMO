@@ -1,5 +1,6 @@
 package com.darkxell.common.util;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import com.darkxell.common.Registries;
@@ -12,6 +13,7 @@ import com.darkxell.common.pokemon.LearnedMove;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.PokemonRegistry;
 import com.darkxell.common.pokemon.PokemonSpecies;
+import com.darkxell.common.zones.FriendArea;
 
 public class Util {
 
@@ -51,6 +53,9 @@ public class Util {
 		player.inventory().addItem(new ItemStack(152));
 		player.inventory().addItem(new ItemStack(223));
 		player.inventory().addItem(new ItemStack(387));
+
+		player.friendAreas = new ArrayList<>();
+		player.friendAreas.add(FriendArea.BEAU_PLAINS);
 
 		for (PokemonSpecies s : Registries.species().toList()) {
 			if (s.id == 0)
