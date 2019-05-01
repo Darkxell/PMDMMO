@@ -57,6 +57,7 @@ public class ItemsTabController implements Initializable, ListCellParent<ItemLis
         root.setExpanded(true);
         this.itemsTreeView.setRoot(root);
         List<TreeItem<CustomTreeItem>> categories = this.itemsTreeView.getRoot().getChildren();
+        categories.add(new TreeItem<>(new TreeCategory("Key Items")));
         categories.add(new TreeItem<>(new TreeCategory("Equipable")));
         categories.add(new TreeItem<>(new TreeCategory("Throwable")));
         categories.add(new TreeItem<>(new TreeCategory("Food")));

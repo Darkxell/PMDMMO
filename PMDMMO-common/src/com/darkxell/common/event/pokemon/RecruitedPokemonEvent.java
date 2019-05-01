@@ -27,11 +27,18 @@ public class RecruitedPokemonEvent extends Event {
 
 	@Override
 	public ArrayList<Event> processServer() {
+		boolean fainted = this.recruit.isFainted();
+
 		this.recruit.revive();
 		this.recruiter.player().addAlly(this.recruit.originalPokemon);
 		this.recruit.type = DungeonPokemonType.TEAM_MEMBER;
-		this.floor.aiManager.unregister(this.recruit);
-		this.floor.aiManager.register(this.recruit); // Reset AI to partner
+
+		if (fainted)
+			this.recruit.tile().setPokemon(this.recruit);
+		else
+			this.floor.aiManager.unregister(this.recruit); // Reset AI to partner
+		this.floor.aiManager.register(this.recruit);
+
 		this.messages.add(new Message("recruit.success").addReplacement("<pokemon>", this.recruit.getNickname())
 				.addReplacement("<player>", this.recruit.player().name()));
 		return super.processServer();

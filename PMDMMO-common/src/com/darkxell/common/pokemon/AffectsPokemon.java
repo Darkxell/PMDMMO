@@ -52,7 +52,7 @@ public interface AffectsPokemon {
      * @param  damage    - The damage to be dealt.
      * @param  isUser    - <code>true</code> if this Object belongs to the Move's user (if it's its ability or an item
      *                   it holds).
-     * @param  moveEvent TODO
+     * @param  moveEvent - The concerned Move use event
      * @param  events    - The current Events being generated.
      * @return           The new damage with modifications applied by this object.
      */
@@ -122,7 +122,7 @@ public interface AffectsPokemon {
      *
      * @param  isUser    - <code>true</code> if this Object belongs to the Move's user (if it's its ability or an item
      *                   it holds).
-     * @param  moveEvent TODO
+     * @param  moveEvent - The concerned Move use event
      * @param  events    - The current Events being generated.
      * @return           The multiplier to add to the final damage value (damage *= returned_multiplier).
      */
