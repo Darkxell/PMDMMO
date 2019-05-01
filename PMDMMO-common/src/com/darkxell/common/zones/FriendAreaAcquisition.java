@@ -1,6 +1,6 @@
 package com.darkxell.common.zones;
 
-interface FriendAreaAcquisition {
+public interface FriendAreaAcquisition {
 
     /** This Friend Area is unlocked automatically when player reaches a story position. */
     public class AutoStoryFriendArea implements FriendAreaAcquisition {
