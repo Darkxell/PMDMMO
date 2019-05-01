@@ -81,7 +81,7 @@ public class MovesMenuState extends OptionSelectionMenuState {
                 PrincipalMainState.displayWidth - 40, MenuStateHudSpriteset.cornerSize.height * 2
                         + TextRenderer.height() * 4 + TextRenderer.lineSpacing() * 2);
         this.windowInfo = new TextWindow(r, this.infoText(), false);
-        this.window.isOpaque = this.windowInfo.isOpaque = this.isOpaque;
+        this.window.isOpaque = this.windowInfo.isOpaque = this.isOpaque();
     }
 
     @Override
@@ -180,7 +180,7 @@ public class MovesMenuState extends OptionSelectionMenuState {
 
     private void onOptionInfo(MenuOption option) {
         Persistence.stateManager
-                .setState(new MoveInfoState(((MoveMenuOption) option).move.move(), this.background, this).setOpaque(this.isOpaque));
+                .setState(new MoveInfoState(((MoveMenuOption) option).move.move(), this.background, this).setOpaque(this.isOpaque()));
     }
 
     @Override

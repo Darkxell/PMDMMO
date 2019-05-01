@@ -66,7 +66,7 @@ public class ControlsMenuState extends OptionSelectionMenuState implements Dialo
     @Override
     protected OptionSelectionWindow createWindow() {
         ControlsWindow window = new ControlsWindow(this, this.mainWindowDimensions());
-        window.isOpaque = this.isOpaque;
+        window.isOpaque = this.isOpaque();
         return window;
     }
 
@@ -98,7 +98,7 @@ public class ControlsMenuState extends OptionSelectionMenuState implements Dialo
                 new Message("ui.no"), new Message("ui.cancel"));
         confirm.id = 1;
         DialogState dialog = new DialogState(this.background, this, confirm);
-        dialog.setOpaque(this.isOpaque);
+        dialog.setOpaque(this.isOpaque());
         Persistence.stateManager.setState(dialog);
     }
 
@@ -110,7 +110,7 @@ public class ControlsMenuState extends OptionSelectionMenuState implements Dialo
     @Override
     protected void onOptionSelected(MenuOption option) {
         Persistence.stateManager.setState(
-                new EditControlState(this.background, this, (ControlMenuOption) option).setOpaque(this.isOpaque));
+                new EditControlState(this.background, this, (ControlMenuOption) option).setOpaque(this.isOpaque()));
     }
 
 }

@@ -8,7 +8,7 @@ import com.darkxell.client.state.menu.components.OptionSelectionWindow;
 public abstract class OptionSelectionMenuState extends AbstractMenuState {
 
     private MenuOption hovered;
-    protected boolean isOpaque;
+    private boolean isOpaque;
     /** The main window to display the options in. */
     private OptionSelectionWindow mainWindow;
 
@@ -33,6 +33,10 @@ public abstract class OptionSelectionMenuState extends AbstractMenuState {
 
     public OptionSelectionWindow getMainWindow() {
         return this.mainWindow;
+    }
+    
+    public boolean isOpaque() {
+        return this.isOpaque;
     }
 
     @Override

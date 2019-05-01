@@ -57,8 +57,8 @@ public class DungeonMenuState extends OptionSelectionMenuState {
             return null;
         } else {
             ItemContainersMenuState i = new ItemContainersMenuState(this, s, true,
-                    containers.toArray(new ItemContainer[containers.size()]));
-            i.isOpaque = this.isOpaque;
+                    containers.toArray(new ItemContainer[0]));
+            i.isOpaque = this.isOpaque();
             return i;
         }
     }
