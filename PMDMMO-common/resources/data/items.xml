@@ -229,4 +229,5 @@
   <item id="383" price="0" sell="1" sprite="130" />
   <item id="384" price="0" sell="1" sprite="131" />
   <item id="386" price="0" sell="1" sprite="133" />
+  <item id="387" category="KEY_ITEM" price="0" sell="0" effect="387" sprite="134" rare="true" />
 </items>
