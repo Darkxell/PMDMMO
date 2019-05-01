@@ -9,7 +9,6 @@ import com.darkxell.common.event.stats.StatChangedEvent;
 import com.darkxell.common.pokemon.BaseStats.Stat;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.language.Message;
-import com.darkxell.common.zones.FriendAreaAcquisition.BaseFriendAreaAcquisition;
 
 public class RecruitAttemptEvent extends Event {
 
