@@ -65,7 +65,7 @@ public class FriendActionSelectionState extends OptionSelectionMenuState {
 				Rectangle r = this.mainWindowDimensions();
 				this.summaryWindow = new MenuWindow(
 						new Rectangle((int) (r.getMaxX() + 10), r.y, (int) (width - r.getMaxX() - 20), r.height));
-				this.summaryWindow.isOpaque = this.isOpaque;
+				this.summaryWindow.isOpaque = this.isOpaque();
 			}
 			this.summaryWindow.render(g, null, width, height);
 

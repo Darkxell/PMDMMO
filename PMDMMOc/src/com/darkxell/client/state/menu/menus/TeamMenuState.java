@@ -67,7 +67,7 @@ public class TeamMenuState extends OptionSelectionMenuState implements ItemActio
 	}
 
 	public final TeamMemberSelectionListener listener;
-	private final AbstractState parent;
+	public final AbstractState parent;
 	private Pokemon[] pokemon;
 
 	public TeamMenuState(AbstractState parent, AbstractGraphicsLayer background) {
@@ -108,9 +108,14 @@ public class TeamMenuState extends OptionSelectionMenuState implements ItemActio
 		DungeonPokemon dp = p.getDungeonPokemon();
 		if (this.listener == null)
 			Persistence.stateManager
-					.setState(createSummaryState(this.background, this, dp, p).setOpaque(this.isOpaque));
+					.setState(createSummaryState(this.background, this, dp, p).setOpaque(this.isOpaque()));
 		else
 			this.listener.teamMemberSelected(p, this);
+	}
+
+	public TeamMenuState recreate() {
+		return (TeamMenuState) new TeamMenuState(this.parent, this.background, this.listener)
+				.setOpaque(this.isOpaque());
 	}
 
 }

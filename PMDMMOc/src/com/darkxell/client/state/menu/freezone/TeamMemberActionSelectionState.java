@@ -2,11 +2,14 @@ package com.darkxell.client.state.menu.freezone;
 
 import java.awt.Rectangle;
 
+import com.darkxell.client.launchable.GameSocketEndpoint;
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.client.state.menu.menus.MovesMenuState;
 import com.darkxell.client.state.menu.menus.TeamMenuState;
 import com.darkxell.common.pokemon.Pokemon;
+import com.darkxell.common.util.Logger;
+import com.eclipsesource.json.JsonObject;
 
 public class TeamMemberActionSelectionState extends OptionSelectionMenuState {
 
@@ -28,9 +31,17 @@ public class TeamMemberActionSelectionState extends OptionSelectionMenuState {
 		MenuTab tab = new MenuTab();
 		tab.addOption(this.summary = new MenuOption("friendareas.summary"));
 		tab.addOption(this.moves = new MenuOption("menu.moves"));
-		tab.addOption(this.leave = new MenuOption("ui.friend.leave"));
+		if (Persistence.player.allies.indexOf(this.pokemon) > 1)
+			tab.addOption(this.leave = new MenuOption("ui.friend.leave"));
 		tab.addOption(this.back = new MenuOption("general.back"));
 		this.tabs.add(tab);
+	}
+
+	public void handleMessage(JsonObject message) {
+		if (message.getString("result", "error").equals("success"))
+			this.onLeaveSuccess();
+		else
+			Logger.e("Client/Server desync. Please reboot game.");
 	}
 
 	@Override
@@ -45,6 +56,12 @@ public class TeamMemberActionSelectionState extends OptionSelectionMenuState {
 		Persistence.stateManager.setState(this.parent);
 	}
 
+	private void onLeaveSuccess() {
+		Persistence.player.removeAlly(this.pokemon);
+		Persistence.player.addPokemonInZone(this.pokemon);
+		Persistence.stateManager.setState(this.parent.recreate());
+	}
+
 	@Override
 	protected void onOptionSelected(MenuOption option) {
 		if (option == this.summary)
@@ -53,7 +70,15 @@ public class TeamMemberActionSelectionState extends OptionSelectionMenuState {
 		else if (option == this.moves)
 			Persistence.stateManager
 					.setState(new MovesMenuState(this, this.background, false, this.pokemon).setOpaque(true));
-		else if (option == this.back)
+		else if (option == this.leave) {
+			if (Persistence.socketendpoint.connectionStatus() == GameSocketEndpoint.CONNECTED) {
+				Persistence.isCommunicating = true;
+				JsonObject message = new JsonObject().add("action", "removefromteam").add("pokemonid",
+						this.pokemon.id());
+				Persistence.socketendpoint.sendMessage(message.toString());
+			} else
+				this.onLeaveSuccess();
+		} else if (option == this.back)
 			this.onExit();
 	}
 

@@ -24,7 +24,7 @@ public class FreezoneMenuState extends OptionSelectionMenuState implements TeamM
 
 	public FreezoneMenuState(AbstractState background) {
 		super(background);
-		this.isOpaque = true;
+		this.setOpaque(true);
 		this.createOptions();
 	}
 
@@ -66,22 +66,23 @@ public class FreezoneMenuState extends OptionSelectionMenuState implements TeamM
 				DialogEndListener listener = dialog -> Persistence.stateManager.setState(thismenu);
 				Persistence.stateManager.setState(
 						new DialogState(this.background, listener, new DialogScreen(new Message("inventory.empty")))
-								.setOpaque(this.isOpaque));
+								.setOpaque(this.isOpaque()));
 			} else {
 				ItemContainersMenuState s = new ItemContainersMenuState(this, this.background, false,
 						containers.toArray(new ItemContainer[0]));
-				s.isOpaque = this.isOpaque;
+				s.isOpaque = this.isOpaque();
 				Persistence.stateManager.setState(s);
 			}
 		} else if (option == this.team)
-			Persistence.stateManager.setState(new TeamMenuState(this, this.background, this).setOpaque(this.isOpaque));
+			Persistence.stateManager
+					.setState(new TeamMenuState(this, this.background, this).setOpaque(this.isOpaque()));
 		else if (option == this.settings)
-			Persistence.stateManager.setState(new SettingsMenuState(this, this.background).setOpaque(this.isOpaque));
+			Persistence.stateManager.setState(new SettingsMenuState(this, this.background).setOpaque(this.isOpaque()));
 	}
 
 	@Override
 	public void teamMemberSelected(Pokemon pokemon, TeamMenuState teamState) {
 		Persistence.stateManager
-				.setState(new TeamMemberActionSelectionState(this, teamState, pokemon).setOpaque(this.isOpaque));
+				.setState(new TeamMemberActionSelectionState(this, teamState, pokemon).setOpaque(this.isOpaque()));
 	}
 }
