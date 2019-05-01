@@ -34,7 +34,10 @@ public class RecruitedPokemonEvent extends Event {
 		this.recruit.type = DungeonPokemonType.TEAM_MEMBER;
 
 		if (fainted)
+		{
 			this.recruit.tile().setPokemon(this.recruit);
+			this.floor.dungeon.registerActor(this.recruit);
+		}
 		else
 			this.floor.aiManager.unregister(this.recruit); // Reset AI to partner
 		this.floor.aiManager.register(this.recruit);
