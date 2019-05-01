@@ -32,26 +32,35 @@ public class BuyFriendAreaHandler extends MessageHandler {
         com.eclipsesource.json.JsonObject value = Json.object();
         value.add("action", "buyfriendarea");
         value.add("area", area);
-        // Checks if the area is specified
-        if (!area.equals("")) {
+
+        if (addArea(area, si.serverid, endpoint).equals("success")) {
+            value.add("result", "success");
+        } else {
+            value.add("result", "error");
+        }
+
+        sessionshandler.sendToSession(from, value);
+    }
+
+    public static String addArea(String areaid, long playerid, GameServer endpoint) {
+        if (!areaid.equals("")) {
             boolean possess = false;
             // Checks if the player already has the area
-            ArrayList<String> areas = endpoint.getFriendAreas_DAO().findAreas(si.serverid);
+            ArrayList<String> areas = endpoint.getFriendAreas_DAO().findAreas(playerid);
             for (int i = 0; i < areas.size(); i++) {
-                if (areas.get(i).equals(area)) {
+                if (areas.get(i).equals(areaid)) {
                     possess = true;
                 }
             }
             if (possess) {
-                value.add("result", "error");
+                return "alreadyhas";
             } else {
-                value.add("result", "success");
-                endpoint.getFriendAreas_DAO().create(si.serverid, area);
+                endpoint.getFriendAreas_DAO().create(playerid, areaid);
+                return "success";
             }
         } else {
-            value.add("result", "error");
+            return "void area";
         }
-        sessionshandler.sendToSession(from, value);
     }
 
 }
