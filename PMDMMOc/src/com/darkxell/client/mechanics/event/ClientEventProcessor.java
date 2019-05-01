@@ -25,7 +25,7 @@ import com.darkxell.client.state.dialog.ConfirmDialogScreen;
 import com.darkxell.client.state.dialog.DialogScreen;
 import com.darkxell.client.state.dialog.DialogState;
 import com.darkxell.client.state.dialog.DialogState.DialogEndListener;
-import com.darkxell.client.state.dialog.RecruitedPokemonDialog;
+import com.darkxell.client.state.dialog.TextinputState;
 import com.darkxell.client.state.dungeon.AnimationState;
 import com.darkxell.client.state.dungeon.BlowbackAnimationState;
 import com.darkxell.client.state.dungeon.DelayState;
@@ -653,11 +653,21 @@ public final class ClientEventProcessor extends CommonEventProcessor {
     }
 
     private void processRecruitedEvent(RecruitedPokemonEvent event) {
-        boolean askForConfirm = event.eventSource instanceof FaintedPokemonEvent;
+        DialogEndListener listener = dialog -> {
+            if (((ConfirmDialogScreen) dialog.currentScreen()).hasConfirmed())
+                Persistence.stateManager.setState(new TextinputState(Persistence.dungeonState,
+                        new Message("recruit.nickname").addReplacement("<pokemon>", event.recruit.getNickname()),
+                        newNickname -> {
+                            event.recruit.setNickname(newNickname);
+                            processEventsOnDialogEnd.onDialogEnd(null);
+                        }));
+            else
+                processEventsOnDialogEnd.onDialogEnd(dialog);
+        };
 
         Persistence.dungeonState.pokemonRenderer.register(event.recruit);
-        new RecruitedPokemonDialog(Persistence.dungeonState, event.recruit, askForConfirm, processEventsOnDialogEnd)
-                .start();
+        Persistence.stateManager.setState(new DialogState(Persistence.dungeonState, listener, new ConfirmDialogScreen(
+                new Message("recruit.recruited").addReplacement("<pokemon>", event.recruit.getNickname()))));
         this.setState(State.ANIMATING);
     }
 
