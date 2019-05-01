@@ -7,19 +7,7 @@ import java.util.Collection;
 import java.util.HashMap;
 
 import com.darkxell.common.ai.visibility.Visibility.VisibleObjectType;
-import com.darkxell.common.item.effects.CureStatusFoodItemEffect;
-import com.darkxell.common.item.effects.DealDamageFoodItemEffect;
-import com.darkxell.common.item.effects.DrinkItemEffect;
-import com.darkxell.common.item.effects.ElixirItemEffect;
-import com.darkxell.common.item.effects.FoodItemEffect;
-import com.darkxell.common.item.effects.GummiItemEffect;
-import com.darkxell.common.item.effects.HealFoodItemEffect;
-import com.darkxell.common.item.effects.InflictStatusFoodItemEffect;
-import com.darkxell.common.item.effects.OrbItemEffect;
-import com.darkxell.common.item.effects.PreventStatusEquipableItemEffect;
-import com.darkxell.common.item.effects.ReviverFoodItemEffect;
-import com.darkxell.common.item.effects.StatBoostDrinkItemEffect;
-import com.darkxell.common.item.effects.ThrowableItemEffect;
+import com.darkxell.common.item.effects.*;
 import com.darkxell.common.pokemon.BaseStats.Stat;
 import com.darkxell.common.pokemon.PokemonType;
 import com.darkxell.common.status.StatusConditions;
@@ -102,7 +90,7 @@ public final class ItemEffects {
     public static final ItemEffect XRaySpecs = new SuperVisionItemEffect(208, VisibleObjectType.ITEM,
             VisibleObjectType.POKEMON);
     
-    public static final ItemEffect Badge = new ItemEffect(387);
+    public static final ItemEffect Badge = new BadgeItemEffect(387);
 
     /** @return The Effect with the input ID. */
     public static ItemEffect find(int id) {
