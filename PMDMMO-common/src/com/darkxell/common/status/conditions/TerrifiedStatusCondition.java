@@ -32,7 +32,7 @@ public class TerrifiedStatusCondition extends StatusCondition {
     }
 
     private boolean souldStatusContinue(DungeonPokemon pokemon) {
-        if (pokemon.ability() == Ability.RUNAWAY && pokemon.getHpPercentage() < 50)
+        if (pokemon.ability() == Ability.RUNAWAY && pokemon.getHpPercentage() < .5)
             return true;
         return false;
     }

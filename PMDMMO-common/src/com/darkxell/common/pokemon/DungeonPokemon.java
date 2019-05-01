@@ -222,9 +222,9 @@ public class DungeonPokemon implements ItemContainer, EventListener {
         return this.hp;
     }
 
-    /** @return The percentage of HP left for this Pokemon. */
+    /** @return The percentage of HP left for this Pokemon (0-1). */
     public double getHpPercentage() {
-        return this.getHp() * 100d / this.getMaxHP();
+        return this.getHp() * 1d / this.getMaxHP();
     }
 
     public ItemStack getItem() {

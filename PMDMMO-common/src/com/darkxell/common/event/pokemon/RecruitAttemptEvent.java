@@ -14,10 +14,9 @@ import com.darkxell.common.zones.FriendAreaAcquisition.BaseFriendAreaAcquisition
 public class RecruitAttemptEvent extends Event {
 
 	public static boolean checkFriendArea(DungeonPokemon recruiter, DungeonPokemon recruit) {
-		return true;
-		/*return recruit.species().friendArea().acquisition != BaseFriendAreaAcquisition.ON_RECRUIT
+		return recruit.species().friendArea().acquisition != BaseFriendAreaAcquisition.ON_RECRUIT
 				&& (recruiter.player().friendAreas == null
-						|| !recruiter.player().friendAreas.contains(recruit.species().friendArea()));*/
+						|| !recruiter.player().friendAreas.contains(recruit.species().friendArea()));
 	}
 
 	public final DungeonPokemon recruiter, target;
@@ -63,7 +62,19 @@ public class RecruitAttemptEvent extends Event {
 	}
 
 	private double recruitChance() {
-		return 1; // TODO RECRUIT: compute recruit chance
+		double chance = this.target.species().recruitChance / 100;
+		chance *= 1 - this.target.getHpPercentage();
+
+		int level = this.recruiter.level();
+		if (level >= 30) {
+			chance += .05; // 5% from lvl 30
+			level -= 30;
+			chance += .025 * (int) (level / 10); // 2.5% for each 10 levels
+			if (level >= 60)
+				chance += .04; // 4 additional % from lvl 90
+		}
+
+		return chance;
 	}
 
 }
