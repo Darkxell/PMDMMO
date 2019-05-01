@@ -34,7 +34,7 @@ public class PropertyModificator {
 
     /** Calls {@link AffectsPokemon#applyDamageModifications} on each affecter.
      * 
-     * @param moveEvent TODO
+     * @param moveEvent - The concerned Move use event
      */
     public double applyDamageModifications(double damage, MoveUseEvent moveEvent, ArrayList<Event> events) {
         for (AffectsPokemon affecter : this.affecters)

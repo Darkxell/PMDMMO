@@ -112,6 +112,8 @@ public class DungeonFloorMap extends AbstractDisplayMap {
                 if (Persistence.dungeonState.floorVisibility.isVisible(pokemon)) {
                     boolean isMain = pokemon == Persistence.player.getDungeonLeader();
                     DungeonPokemonRenderer renderer = Persistence.dungeonState.pokemonRenderer.getRenderer(pokemon);
+                    if (renderer == null)
+                        continue;
                     int x = (int) (renderer.x() * TILE_SIZE / AbstractDungeonTileset.TILE_SIZE),
                             y = (int) (renderer.y() * TILE_SIZE / AbstractDungeonTileset.TILE_SIZE);
                     if (isMain && this.tick >= PLAYER_TICK)
@@ -155,5 +157,4 @@ public class DungeonFloorMap extends AbstractDisplayMap {
         if (this.tick >= PLAYER_TICK * 2)
             this.tick = 0;
     }
-
 }

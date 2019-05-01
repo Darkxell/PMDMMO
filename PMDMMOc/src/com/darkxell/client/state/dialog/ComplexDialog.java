@@ -123,8 +123,10 @@ public abstract class ComplexDialog implements DialogEndListener {
             break;
         case TERMINATE:
             Persistence.currentDialog = null;
-            Persistence.stateManager.setState(this.onFinish(dialog));
-            break;
+			AbstractState state = this.onFinish(dialog);
+			if (state != null)
+				Persistence.stateManager.setState(state);
+			break;
         case PAUSE:
             this.isPaused = true;
             break;
@@ -140,8 +142,8 @@ public abstract class ComplexDialog implements DialogEndListener {
 
     /**
      * Called when the last state has been displayed.
-     * 
-     * @return The next state to set at the end of this Dialog.
+     *
+     * @return The next state to set at the end of this Dialog. May return null to handle state transition in another way.
      */
     public abstract AbstractState onFinish(DialogState lastState);
 
