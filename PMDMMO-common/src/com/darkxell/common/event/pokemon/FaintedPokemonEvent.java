@@ -15,54 +15,62 @@ import com.darkxell.common.util.language.Message;
 
 public class FaintedPokemonEvent extends Event {
 
-    /**
-     * The source that damaged the fainted Pokemon. Can be null if the fainting damage didn't result from a Pokemon's
-     * move.
-     */
-    public final DamageSource damage;
-    public final DungeonPokemon pokemon;
+	/**
+	 * The source that damaged the fainted Pokemon. Can be null if the fainting
+	 * damage didn't result from a Pokemon's move.
+	 */
+	public final DamageSource damage;
+	public final DungeonPokemon pokemon;
 
-    public FaintedPokemonEvent(Floor floor, EventSource eventSource, DungeonPokemon pokemon,
-            DamageSource damage) {
-        super(floor, eventSource);
-        this.pokemon = pokemon;
-        this.damage = damage;
-    }
+	public FaintedPokemonEvent(Floor floor, EventSource eventSource, DungeonPokemon pokemon, DamageSource damage) {
+		super(floor, eventSource);
+		this.pokemon = pokemon;
+		this.damage = damage;
+	}
 
-    @Override
-    public String loggerMessage() {
-        return this.messages.get(0).toString();
-    }
+	@Override
+	public String loggerMessage() {
+		return this.messages.get(0).toString();
+	}
 
-    @Override
-    public ArrayList<Event> processServer() {
-        this.messages.add(new Message("pokemon.fainted").addReplacement("<pokemon>", pokemon.getNickname()));
+	@Override
+	public ArrayList<Event> processServer() {
+		this.messages.add(new Message("pokemon.fainted").addReplacement("<pokemon>", pokemon.getNickname()));
 
-        if (this.pokemon.hasItem())
-            this.pokemon.tile().setItem(this.pokemon.getItem());
-        if (this.damage.getExperienceEvent() != null)
-            this.damage.getExperienceEvent().experience += this.pokemon.experienceGained();
-        this.floor.unsummonPokemon(this.pokemon);
-        if (this.pokemon.type == DungeonPokemonType.TEAM_MEMBER) {
-            int moveID = -1;
-            if (this.damage != null && this.damage instanceof MoveUse)
-                moveID = ((MoveUse) this.damage).move.moveId();
-            this.resultingEvents
-                    .add(new PlayerLosesEvent(this.floor, this, this.pokemon.originalPokemon.player(), moveID));
-        }
+		if (this.damage instanceof MoveUse) {
+			DungeonPokemon user = ((MoveUse) this.damage).user;
+			boolean canRecruit = user.isTeamLeader()
+					&& user.tile().adjacentTile(user.facing()).getPokemon() == this.pokemon;
+			if (canRecruit)
+				this.resultingEvents
+						.add(new RecruitAttemptEvent(this.floor, this, ((MoveUse) this.damage).user, this.pokemon));
+		}
 
-        if (this.pokemon.type == DungeonPokemonType.BOSS) {
-            boolean wasLastBoss = true;
-            for (DungeonPokemon p : this.floor.listPokemon())
-                if (p.type == DungeonPokemonType.BOSS) {
-                    wasLastBoss = false;
-                    break;
-                }
+		if (this.pokemon.hasItem())
+			this.pokemon.tile().setItem(this.pokemon.getItem());
+		if (this.damage.getExperienceEvent() != null)
+			this.damage.getExperienceEvent().experience += this.pokemon.experienceGained();
+		this.floor.unsummonPokemon(this.pokemon);
+		if (this.pokemon.type == DungeonPokemonType.TEAM_MEMBER) {
+			int moveID = -1;
+			if (this.damage != null && this.damage instanceof MoveUse)
+				moveID = ((MoveUse) this.damage).move.moveId();
+			this.resultingEvents
+					.add(new PlayerLosesEvent(this.floor, this, this.pokemon.originalPokemon.player(), moveID));
+		}
 
-            if (wasLastBoss)
-                this.resultingEvents.add(new BossDefeatedEvent(this.floor, this));
-        }
+		if (this.pokemon.type == DungeonPokemonType.BOSS) {
+			boolean wasLastBoss = true;
+			for (DungeonPokemon p : this.floor.listPokemon())
+				if (p.type == DungeonPokemonType.BOSS) {
+					wasLastBoss = false;
+					break;
+				}
 
-        return super.processServer();
-    }
+			if (wasLastBoss)
+				this.resultingEvents.add(new BossDefeatedEvent(this.floor, this));
+		}
+
+		return super.processServer();
+	}
 }

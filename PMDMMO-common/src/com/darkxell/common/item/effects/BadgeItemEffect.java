@@ -8,7 +8,9 @@ import com.darkxell.common.event.item.ItemUseEvent;
 import com.darkxell.common.event.pokemon.RecruitAttemptEvent;
 import com.darkxell.common.item.ItemEffect;
 import com.darkxell.common.pokemon.DungeonPokemon;
+import com.darkxell.common.pokemon.DungeonPokemon.DungeonPokemonType;
 import com.darkxell.common.util.language.Message;
+import com.darkxell.common.zones.FriendAreaAcquisition.BaseFriendAreaAcquisition;
 
 public class BadgeItemEffect extends ItemEffect {
 
@@ -48,8 +50,13 @@ public class BadgeItemEffect extends ItemEffect {
 		DungeonPokemon target = itemEvent.user.tile().adjacentTile(itemEvent.user.facing()).getPokemon();
 		if (!itemEvent.user.isTeamLeader())
 			events.add(new MessageEvent(itemEvent.floor, itemEvent, new Message("recruit.not_leader")));
-		else if (target == null)
+		else if (target == null || target.type != DungeonPokemonType.WILD && target.type != DungeonPokemonType.MINIBOSS
+				&& target.type != DungeonPokemonType.BOSS)
 			events.add(new MessageEvent(itemEvent.floor, itemEvent, new Message("move.no_target")));
+		else if (target.species().friendArea().acquisition != BaseFriendAreaAcquisition.ON_RECRUIT
+				&& (itemEvent.user.player().friendAreas == null
+						|| !itemEvent.user.player().friendAreas.contains(target.species().friendArea())))
+			events.add(new MessageEvent(itemEvent.floor, itemEvent, new Message("recruit.no_area")));
 		else
 			events.add(new RecruitAttemptEvent(itemEvent.floor, itemEvent, itemEvent.user, target));
 	}
