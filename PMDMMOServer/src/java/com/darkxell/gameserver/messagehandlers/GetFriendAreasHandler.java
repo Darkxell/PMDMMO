@@ -32,8 +32,11 @@ public class GetFriendAreasHandler extends MessageHandler {
         ArrayList<String> zones = endpoint.getFriendAreas_DAO().findAreas(si.serverid);
         com.eclipsesource.json.JsonObject value = Json.object();
         value.add("action", "getfriendareas");
-        JsonArray arr = new JsonArray(zones.toArray(new String[0]));
-        value.add("getfriendareas",arr);
+        JsonArray arr = new JsonArray();
+        for (int i = 0; i < zones.size(); ++i) {
+            arr.add(zones.get(i));
+        }
+        value.add("areas",arr);
         sessionshandler.sendToSession(from, value);
     }
 

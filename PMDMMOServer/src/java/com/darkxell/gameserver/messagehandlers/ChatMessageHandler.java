@@ -122,6 +122,21 @@ public class ChatMessageHandler extends MessageHandler {
                         }
                         sendfeedback = true;
                         break;
+                    case "/unlockfriendarea ":// Manages the UNLOCKFRIENDAREA command
+                        try {
+                            int playerid = Integer.parseInt(content[1]);
+                            String areaid = content[2];
+                            String feedback = BuyFriendAreaHandler.addArea(areaid, playerid, endpoint);
+                            if (feedback.equals("success")) {
+                                feedbackMessage = "Unlocked " + areaid + " for player " + playerid + ".";
+                            } else {
+                                feedbackMessage = "Could not unlock " + areaid + " with error : " + feedback;
+                            }
+                        } catch (Exception e) {
+                            feedbackMessage = "Could not unlock that freezone. Usage is: /unlockfriendarea <playerid> <areaid>";
+                        }
+                        sendfeedback = true;
+                        break;
                     case "/setstoryposition":// Manages the SETSTORYPOSITION command
                         try {
                             int playerid = Integer.parseInt(content[1]);
@@ -153,7 +168,7 @@ public class ChatMessageHandler extends MessageHandler {
                         sendfeedback = true;
                         break;
                     case "/help":// Help utility
-                        feedbackMessage = "Help message needs to be coded. Available commands are: /info /give /setstoryposition /ban /deploykey /help";
+                        feedbackMessage = "Help message needs to be coded. Available commands are: /info /give /setstoryposition /ban /deploykey /help /unlockfriendarea";
                         sendfeedback = true;
                         break;
                     default:
@@ -161,8 +176,8 @@ public class ChatMessageHandler extends MessageHandler {
                         break;
                 }
                 if (sendfeedback) {
-                errorobject.add("message", feedbackMessage);
-                sessionshandler.sendToSession(from, errorobject);
+                    errorobject.add("message", feedbackMessage);
+                    sessionshandler.sendToSession(from, errorobject);
                 }
             } else {
                 //Error message if the user is not op
