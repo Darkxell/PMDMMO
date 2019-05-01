@@ -40,10 +40,10 @@ public class DungeonPokemonRenderer extends AbstractPokemonRenderer {
     public void render(Graphics2D g, PokemonSprite sprite, int x, int y) {
         double percent = this.pokemon.getHpPercentage();
         if (ClientSettings.getBooleanSetting(ClientSettings.HP_BARS)) {
-            int colorPercent = (int) Math.round(percent * 2.55);
+            int colorPercent = (int) Math.round(percent * 255);
             Rectangle outline = new Rectangle(x - TILE_SIZE / 2, y + TILE_SIZE / 3, TILE_SIZE, 5);
-            Rectangle insideFilled = new Rectangle(outline.x + 1, outline.y + 1,
-                    (int) ((outline.width - 1) * percent / 100), outline.height - 1);
+            Rectangle insideFilled = new Rectangle(outline.x + 1, outline.y + 1, (int) ((outline.width - 1) * percent),
+                    outline.height - 1);
             int emptyWidth = outline.width - 1 - insideFilled.width;
             Rectangle insideEmpty = new Rectangle(outline.x + 1 + insideFilled.width, outline.y + 1, emptyWidth,
                     outline.height - 1);
@@ -60,9 +60,7 @@ public class DungeonPokemonRenderer extends AbstractPokemonRenderer {
 
     @Override
     public boolean shouldRender(int width, int height) {
-        if (!Persistence.dungeonState.floorVisibility.isVisible(this.pokemon))
-            return false;
-        return super.shouldRender(width, height);
+        return !Persistence.dungeonState.floorVisibility.isVisible(this.pokemon) && super.shouldRender(width, height);
     }
 
     @Override

@@ -32,14 +32,16 @@ public class TerrifiedStatusCondition extends StatusCondition {
     }
 
     private boolean souldStatusContinue(DungeonPokemon pokemon) {
-        if (pokemon.ability() == Ability.RUNAWAY && pokemon.getHpPercentage() < 50) return true;
+        if (pokemon.ability() == Ability.RUNAWAY && pokemon.getHpPercentage() < .5)
+            return true;
         return false;
     }
 
     @Override
     public void tick(Floor floor, AppliedStatusCondition instance, ArrayList<Event> events) {
         super.tick(floor, instance, events);
-        if (instance.tick == instance.duration - 1 && this.souldStatusContinue(instance.pokemon)) --instance.tick;
+        if (instance.tick == instance.duration - 1 && this.souldStatusContinue(instance.pokemon))
+            --instance.tick;
     }
 
 }

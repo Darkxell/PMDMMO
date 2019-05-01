@@ -17,17 +17,18 @@ public class AbilityRunaway extends Ability {
     }
 
     @Override
-    public void onPostEvent(Floor floor, Event event, DungeonPokemon concerned,
-            ArrayList<Event> resultingEvents) {
+    public void onPostEvent(Floor floor, Event event, DungeonPokemon concerned, ArrayList<Event> resultingEvents) {
         super.onPostEvent(floor, event, concerned, resultingEvents);
         if (event instanceof DamageDealtEvent) {
             DungeonPokemon p = ((DamageDealtEvent) event).target;
-            if (p != concerned) return;
-            if (p.ability() == this && p.getHpPercentage() < 50 && !p.hasStatusCondition(StatusConditions.Terrified) && !p.isTeamLeader()) {
+            if (p != concerned)
+                return;
+            if (p.ability() == this && p.getHpPercentage() < .5 && !p.hasStatusCondition(StatusConditions.Terrified)
+                    && !p.isTeamLeader()) {
                 TriggeredAbilityEvent abilityevent = new TriggeredAbilityEvent(floor, event, p);
                 resultingEvents.add(abilityevent);
-                resultingEvents
-                        .add(new StatusConditionCreatedEvent(floor, abilityevent, StatusConditions.Terrified.create(floor, p, this, floor.random)));
+                resultingEvents.add(new StatusConditionCreatedEvent(floor, abilityevent,
+                        StatusConditions.Terrified.create(floor, p, this, floor.random)));
             }
         }
     }
