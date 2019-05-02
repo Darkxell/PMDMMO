@@ -52,7 +52,7 @@ public class BadgeItemEffect extends ItemEffect {
 		else if (target == null || target.type != DungeonPokemonType.WILD && target.type != DungeonPokemonType.MINIBOSS
 				&& target.type != DungeonPokemonType.BOSS)
 			events.add(new MessageEvent(itemEvent.floor, itemEvent, new Message("move.no_target")));
-		else if (!RecruitAttemptEvent.checkFriendArea(itemEvent.user, itemEvent.target))
+		else if (!RecruitAttemptEvent.checkFriendArea(itemEvent.user, target))
 			events.add(new MessageEvent(itemEvent.floor, itemEvent, new Message("recruit.no_area")));
 		else
 			events.add(new RecruitAttemptEvent(itemEvent.floor, itemEvent, itemEvent.user, target));
