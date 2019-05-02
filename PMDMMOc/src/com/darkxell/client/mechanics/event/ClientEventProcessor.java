@@ -680,8 +680,9 @@ public final class ClientEventProcessor extends CommonEventProcessor {
             processEventsOnDialogEnd.onDialogEnd(dialog);
         };
 
-        Persistence.stateManager.setState(new DialogState(Persistence.dungeonState, listener, new ConfirmDialogScreen(
-                new Message("recruit.request").addReplacement("<pokemon>", event.recruit.getNickname()))));
+        Persistence.stateManager.setState(new DialogState(Persistence.dungeonState, listener,
+                new ConfirmDialogScreen(event.recruit.originalPokemon,
+                        new Message("recruit.request").addReplacement("<pokemon>", event.recruit.getNickname()))));
     }
 
     private void processRescuedEvent(PokemonRescuedEvent event) {
