@@ -8,6 +8,7 @@ import java.util.Stack;
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.renderers.layers.AbstractGraphiclayer;
 import com.darkxell.client.state.AbstractState;
+import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.client.state.menu.components.TextWindow;
 import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.util.Logger;
@@ -65,6 +66,8 @@ public class InfoState extends AbstractMenuState {
 
         this.titles = t.toArray(new Message[t.size()]);
         this.infos = i.toArray(new Message[i.size()]);
+
+        this.reloadWindow();
     }
 
     @Override
@@ -84,13 +87,13 @@ public class InfoState extends AbstractMenuState {
             if (this.tab == 0)
                 this.tab = this.infos.length;
             --this.tab;
-            this.window = null;
+            this.reloadWindow();
         }
         if (key == Key.RIGHT) {
             ++this.tab;
             if (this.tab == this.infos.length)
                 this.tab = 0;
-            this.window = null;
+            this.reloadWindow();
         }
     }
 
@@ -101,7 +104,7 @@ public class InfoState extends AbstractMenuState {
             ++this.tab;
             if (this.tab == this.infos.length)
                 this.tab = 0;
-            this.window = null;
+            this.reloadWindow();
         } else
             this.onExit();
     }
@@ -110,21 +113,22 @@ public class InfoState extends AbstractMenuState {
     protected void onOptionSelected(MenuOption option) {
     }
 
+    private void reloadWindow() {
+        this.window = new TextWindow(new Rectangle(16, 32, PrincipalMainState.displayWidth - 16 * 2,
+                PrincipalMainState.displayHeight - 32 * 4), this.infos[this.tab], true);
+        this.window.leftTab = this.tab > 0;
+        this.window.rightTab = this.tab < this.infos.length - 1;
+        this.window.isOpaque = this.isOpaque;
+    }
+
     @Override
     public void render(Graphics2D g, int width, int height) {
         super.render(g, width, height);
-        if (this.window == null) {
-            this.window = new TextWindow(new Rectangle(16, 32, width - 16 * 2, height - 32 * 4), this.infos[this.tab],
-                    true);
-            this.window.leftTab = this.tab > 0;
-            this.window.rightTab = this.tab < this.infos.length - 1;
-            this.window.isOpaque = this.isOpaque;
-        }
         this.window.render(g, this.titles[this.tab], width, height);
     }
 
     public InfoState setOpaque(boolean isOpaque) {
-        this.isOpaque = isOpaque;
+        this.window.isOpaque = this.isOpaque = isOpaque;
         return this;
     }
 }
