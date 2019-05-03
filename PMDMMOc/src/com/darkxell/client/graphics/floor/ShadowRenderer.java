@@ -81,7 +81,7 @@ public class ShadowRenderer extends AbstractRenderer {
         int shadows = Persistence.dungeon.dungeon().getData(Persistence.floor.id).shadows();
         if (shadows != FloorData.NO_SHADOW) {
             Tile t = Persistence.dungeonState.getCameraPokemon().tile();
-            Room r = t == null ? null : this.floor.roomAt(t.x, t.y);
+            Room r = t == null ? null : t.room();
 
             this.gs.clearRect(screen.x, screen.y, screen.width, screen.height);
             if (r != null) {
