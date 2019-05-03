@@ -30,6 +30,7 @@ public class AIStateFollowPokemon extends AIState {
 	public AIStateFollowPokemon(AI ai, DungeonPokemon target) {
 		super(ai);
 		this.target = target;
+		this.lastSeen = this.target.tile();
 	}
 
 	public Tile lastSeen() {
