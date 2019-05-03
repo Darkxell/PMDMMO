@@ -19,8 +19,7 @@ public class AbilityPreventMoveUseType extends Ability {
     }
 
     @Override
-    public void onPreEvent(Floor floor, Event event, DungeonPokemon concerned,
-            ArrayList<Event> resultingEvents) {
+    public void onPreEvent(Floor floor, Event event, DungeonPokemon concerned, ArrayList<Event> resultingEvents) {
         super.onPreEvent(floor, event, concerned, resultingEvents);
         if (event instanceof MoveUseEvent) {
             MoveUseEvent e = (MoveUseEvent) event;
@@ -28,8 +27,10 @@ public class AbilityPreventMoveUseType extends Ability {
                 boolean shouldPrevent = false;
                 DungeonPokemon target = e.target;
                 DungeonPokemon self = concerned;
-                if (target == null) target = e.usedMove.user;
-                if (self.tile().isInRoom()) shouldPrevent = floor.roomAt(self.tile()).contains(target.tile());
+                if (target == null)
+                    target = e.usedMove.user;
+                if (self.tile().isInRoom())
+                    shouldPrevent = self.tile().room().contains(target.tile());
                 else {
                     shouldPrevent = Math.abs(target.tile().x - self.tile().x) <= floor.data.visionDistance();
                     shouldPrevent &= Math.abs(target.tile().y - self.tile().y) <= floor.data.visionDistance();

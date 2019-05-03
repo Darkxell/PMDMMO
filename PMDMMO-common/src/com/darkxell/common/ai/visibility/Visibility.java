@@ -77,8 +77,8 @@ public class Visibility {
 
         if (this.ai.pokemon.tile().isInRoom()) {
             if (target.tile().isInRoom())
-                return this.ai.floor.roomAt(this.ai.pokemon.tile()) == this.ai.floor.roomAt(target.tile());
-            return this.ai.floor.roomAt(this.ai.pokemon.tile()).outline().contains(target.tile());
+                return this.ai.pokemon.tile().room() == target.tile().room();
+            return this.ai.pokemon.tile().distance(target.tile()) <= this.ai.floor.data.visionDistance();
         }
 
         return this.ai.pokemon.tile().distance(target.tile()) <= this.ai.floor.data.visionDistance();
@@ -98,7 +98,7 @@ public class Visibility {
         this.currentlyVisible.clear();
 
         Tile t = this.ai.pokemon.tile();
-        Room r = this.ai.floor.roomAt(t.x, t.y);
+        Room r = t.room();
         if (r == null) {
             this.visit(t);
             for (Direction direction : Direction.DIRECTIONS)
@@ -142,5 +142,4 @@ public class Visibility {
                 this.itemTiles.remove(tile);
         }
     }
-
 }

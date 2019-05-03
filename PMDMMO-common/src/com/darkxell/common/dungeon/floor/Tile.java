@@ -6,6 +6,7 @@ import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
+import com.darkxell.common.dungeon.floor.room.Room;
 import com.darkxell.common.event.Event;
 import com.darkxell.common.event.Event.MessageEvent;
 import com.darkxell.common.event.action.PokemonTravelEvent;
@@ -302,6 +303,11 @@ public class Tile implements ItemContainer, Comparable<Tile> {
             this.setPokemon(null);
     }
 
+    /** @return The Room this Tile is in. May return null. */
+    public Room room() {
+        return this.floor.roomAt(this);
+    }
+
     @Override
     public void setItem(int index, ItemStack item) {
         this.setItem(item);
@@ -371,5 +377,4 @@ public class Tile implements ItemContainer, Comparable<Tile> {
         }
         this.neighbors.removeFreeCorners();
     }
-
 }

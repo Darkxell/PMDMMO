@@ -128,7 +128,7 @@ public class MoveEffect implements AffectsPokemon {
                 break;
 
             case Room:
-                Room r = floor.roomAt(user.tile().x, user.tile().y);
+                Room r = user.tile().room();
                 if (r == null) {
                     for (Tile tile : floor.aiManager.getAI(user).visibility.currentlyVisibleTiles())
                         if (tile.getPokemon() != null) targets.add(tile.getPokemon());
@@ -248,5 +248,4 @@ public class MoveEffect implements AffectsPokemon {
     protected void useOn(MoveSelectionEvent moveEvent, DungeonPokemon target, ArrayList<Event> events) {
         events.add(new MoveUseEvent(moveEvent.floor, moveEvent, moveEvent.usedMove(), target));
     }
-
 }
