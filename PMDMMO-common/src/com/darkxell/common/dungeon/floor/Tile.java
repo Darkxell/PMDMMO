@@ -6,6 +6,7 @@ import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
+import com.darkxell.common.dungeon.floor.room.Room;
 import com.darkxell.common.event.Event;
 import com.darkxell.common.event.Event.MessageEvent;
 import com.darkxell.common.event.action.PokemonTravelEvent;
@@ -305,6 +306,11 @@ public class Tile implements ItemContainer, Comparable<Tile> {
 	public void removePokemon(DungeonPokemon pokemon) {
 		if (this.getPokemon() == pokemon)
 			this.setPokemon(null);
+	}
+
+	/** @return The Room this Tile is in. May return null. */
+	public Room room() {
+		return this.floor.roomAt(this);
 	}
 
 	@Override

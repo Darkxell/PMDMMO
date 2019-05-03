@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import com.darkxell.client.launchable.Persistence;
+import com.darkxell.client.mechanics.freezone.customzones.FriendAreaFreezone;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.dialog.DialogScreen;
 import com.darkxell.client.state.dialog.DialogState;
@@ -17,10 +18,11 @@ import com.darkxell.client.state.menu.menus.TeamMenuState.TeamMemberSelectionLis
 import com.darkxell.common.player.ItemContainer;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.language.Message;
+import com.darkxell.common.zones.FriendArea;
 
 public class FreezoneMenuState extends OptionSelectionMenuState implements TeamMemberSelectionListener {
 
-	private MenuOption moves, items, team, settings;
+	private MenuOption moves, items, team, settings, friendarea;
 
 	public FreezoneMenuState(AbstractState background) {
 		super(background);
@@ -35,6 +37,9 @@ public class FreezoneMenuState extends OptionSelectionMenuState implements TeamM
 		tab.addOption((this.items = new MenuOption("menu.items")));
 		tab.addOption((this.team = new MenuOption("menu.team")));
 		tab.addOption((this.settings = new MenuOption("menu.settings")));
+		if (Persistence.currentmap != null && Persistence.currentmap instanceof FriendAreaFreezone) {
+			tab.addOption((this.friendarea = new MenuOption(Persistence.currentmap.info.getName())));
+		}
 		this.tabs.add(tab);
 	}
 
@@ -78,6 +83,10 @@ public class FreezoneMenuState extends OptionSelectionMenuState implements TeamM
 					.setState(new TeamMenuState(this, this.background, this).setOpaque(this.isOpaque()));
 		else if (option == this.settings)
 			Persistence.stateManager.setState(new SettingsMenuState(this, this.background).setOpaque(this.isOpaque()));
+		else if (option == this.friendarea)
+			Persistence.stateManager.setState(
+					new FriendAreaInfoState(this, this.background, FriendArea.find(Persistence.currentmap.info.id))
+							.setOpaque(this.isOpaque()));
 	}
 
 	@Override
