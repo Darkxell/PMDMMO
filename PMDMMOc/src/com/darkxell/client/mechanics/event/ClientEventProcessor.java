@@ -677,6 +677,8 @@ public final class ClientEventProcessor extends CommonEventProcessor {
 		DialogEndListener listener = dialog -> {
 			if (((ConfirmDialogScreen) dialog.currentScreen()).hasConfirmed())
 				this.addToPending(new RecruitedPokemonEvent(event.floor, event, event.recruiter, event.recruit));
+			else
+				Persistence.dungeonState.pokemonRenderer.unregister(event.recruit);
 			processEventsOnDialogEnd.onDialogEnd(dialog);
 		};
 
