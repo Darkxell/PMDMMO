@@ -19,7 +19,9 @@ import com.darkxell.common.util.RandomUtil;
 /** Contains various static methods used in AI computations. */
 public final class AIUtils {
 
-    /** @return The direction to face to look at an adjacent enemy. May be null if there are no adjacent enemies. */
+    /**
+     * @return The direction to face to look at an adjacent enemy. May be null if there are no adjacent enemies.
+     */
     public static Direction adjacentEnemyDirection(Floor floor, DungeonPokemon pokemon) {
         ArrayList<Tile> tiles = adjacentTiles(floor, pokemon);
         tiles.removeIf((Tile t) -> t.getPokemon() == null || pokemon.isAlliedWith(t.getPokemon()));
@@ -62,8 +64,8 @@ public final class AIUtils {
     }
 
     /**
-     * @param angle - An angle in degrees.
-     * @return The direction closest to the input angle (0 = North).
+     * @param  angle - An angle in degrees.
+     * @return       The direction closest to the input angle (0 = North).
      */
     public static Direction closestDirection(double angle) {
         angle = 360 - angle; // Trigonometric to clockwise
@@ -83,7 +85,7 @@ public final class AIUtils {
 
     /**
      * @return The direction to go to for the input Pokemon to reach the destination. May return null if there is no
-     * path.
+     *         path.
      */
     public static Direction direction(DungeonPokemon pokemon, Tile destination) {
         Direction direction = generalDirection(pokemon.tile(), destination);
@@ -91,8 +93,8 @@ public final class AIUtils {
         if (pokemon.tile().adjacentTile(direction).canMoveTo(pokemon, direction, false))
             return direction;
 
-        // Else, if diagonal, try closest cardinal directions.
-        if (direction.isDiagonal()) {
+        // Else, if diagonal and walls are blocking, try closest cardinal directions.
+        if (direction.isDiagonal() && pokemon.tile().blockingWalls(pokemon, direction)) {
             Direction cardinal = generalCardinalDirection(pokemon, destination);
             if (pokemon.tile().adjacentTile(cardinal).canMoveTo(pokemon, cardinal, false))
                 return cardinal;
@@ -100,12 +102,14 @@ public final class AIUtils {
             Pair<Direction, Direction> split = direction.splitDiagonal();
             Direction other;
             if (cardinal == split.first)
-                other = split.first;
-            else
                 other = split.second;
+            else
+                other = split.first;
+            if (pokemon.species().id == 258)
+                System.out.println(other);
             if (pokemon.tile().adjacentTile(other).canMoveTo(pokemon, other, false))
                 return other;
-        } else { // Else try to minimize distance by choosing increasingly further distances.
+        } else { // Else try to minimize distance by choosing increasingly further rotations.
             int distance = pokemon.tile().maxHorizontalDistance(destination);
             Direction testing = direction.rotateClockwise();
             if (pokemon.tile().adjacentTile(testing).maxHorizontalDistance(destination) < distance
@@ -134,7 +138,7 @@ public final class AIUtils {
 
     /**
      * @return The farthest Tiles that can be seen and walked on by the input Pokemon, sorted by closeness from the
-     * Pokemon's facing direction. This method considers the Pokemon is not in a Room.
+     *         Pokemon's facing direction. This method considers the Pokemon is not in a Room.
      */
     public static ArrayList<Tile> furthestWalkableTiles(Floor floor, DungeonPokemon pokemon) {
         double maxDistance = 0, distance;
@@ -157,12 +161,16 @@ public final class AIUtils {
         return tiles;
     }
 
-    /** @return The general cardinal direction the input Pokemon has to face to look at the target. */
+    /**
+     * @return The general cardinal direction the input Pokemon has to face to look at the target.
+     */
     public static Direction generalCardinalDirection(DungeonPokemon pokemon, DungeonPokemon target) {
         return generalCardinalDirection(pokemon, target.tile());
     }
 
-    /** @return The general cardinal direction the input Pokemon has to face to look at the destination. */
+    /**
+     * @return The general cardinal direction the input Pokemon has to face to look at the destination.
+     */
     public static Direction generalCardinalDirection(DungeonPokemon pokemon, Tile destination) {
         double angle = Math.toDegrees(Math.atan2(destination.x - pokemon.tile().x, destination.y - pokemon.tile().y));
         // Make sure angle is in bounds [0;360[
@@ -179,12 +187,16 @@ public final class AIUtils {
         return Direction.WEST;
     }
 
-    /** @return The general direction the input Pokemon has to face to look at the target. */
+    /**
+     * @return The general direction the input Pokemon has to face to look at the target.
+     */
     public static Direction generalDirection(DungeonPokemon pokemon, DungeonPokemon target) {
         return generalDirection(pokemon.tile(), target.tile());
     }
 
-    /** @return The general direction the input Pokemon has to face to look at the destination. */
+    /**
+     * @return The general direction the input Pokemon has to face to look at the destination.
+     */
     public static Direction generalDirection(Tile origin, Tile destination) {
         /*
          * if (pokemon == null) System.out.println("pokemon"); if (target == null) System.out.println("target"); if
@@ -195,16 +207,16 @@ public final class AIUtils {
 
     /**
      * @return True if the input Pokemon is just one tile away from the target. If they're diagonally disposed, also
-     * checks if there is a wall blocking their interaction.
+     *         checks if there is a wall blocking their interaction.
      */
     public static boolean isAdjacentTo(DungeonPokemon pokemon, DungeonPokemon target) {
         return isAdjacentTo(pokemon, target, true);
     }
 
     /**
-     * @param checkBlockingWalls - If true and the Pokemon are diagonally disposed, also checks if there is a wall
-     * blocking their interaction.
-     * @return <code>true</code> if the input Pokemon is one tile away from the target.
+     * @param  checkBlockingWalls - If true and the Pokemon are diagonally disposed, also checks if there is a wall
+     *                            blocking their interaction.
+     * @return                    <code>true</code> if the input Pokemon is one tile away from the target.
      */
     public static boolean isAdjacentTo(DungeonPokemon pokemon, DungeonPokemon target, boolean checkBlockingWalls) {
         Direction direction = generalDirection(pokemon, target);
@@ -216,9 +228,9 @@ public final class AIUtils {
     }
 
     /**
-     * @param pokemon - The moving Pokemon.
-     * @param tile - The tile to reach.
-     * @return <code>true</code> if the input Pokemon is able to reach the input Tile.
+     * @param  pokemon - The moving Pokemon.
+     * @param  tile    - The tile to reach.
+     * @return         <code>true</code> if the input Pokemon is able to reach the input Tile.
      */
     public static boolean isReachable(Floor floor, DungeonPokemon pokemon, Tile tile) {
         if (pokemon.tile() == tile)
