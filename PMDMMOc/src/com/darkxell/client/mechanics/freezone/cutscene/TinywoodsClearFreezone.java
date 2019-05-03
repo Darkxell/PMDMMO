@@ -5,6 +5,6 @@ import com.darkxell.common.zones.FreezoneInfo;
 
 public class TinywoodsClearFreezone extends CutsceneFreezoneMap {
     public TinywoodsClearFreezone() {
-        super("cutscenes/tinywoods-clear", FreezoneInfo.TINYWOODS_CLEAR);
+        super("cutscenes/tinywoods-clear", FreezoneInfo.TINYWOODS_CLEAR, 52, 40);
     }
 }

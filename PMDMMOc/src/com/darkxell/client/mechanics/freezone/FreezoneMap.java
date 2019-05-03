@@ -158,7 +158,7 @@ public class FreezoneMap {
      * @param xmlPath Resource path to XML file.
      * @param isRoot  Is this call the root terrain file?
      */
-    private void load(String xmlPath, boolean isRoot) throws IOException, JDOMException {
+    protected void load(String xmlPath, boolean isRoot) throws IOException, JDOMException {
         SAXBuilder builder = new SAXBuilder();
         Element root = builder.build(Res.get(xmlPath)).getRootElement();
 
