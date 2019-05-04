@@ -6,8 +6,23 @@ import com.darkxell.client.state.StateManager;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.Logger;
 
+/**
+ * Class that sets the player in a default position depending on his storyposition.
+ */
 public class StoryPositionSetup {
 
+    private StoryPositionSetup() {
+    }
+
+    /**
+     * Sets the game in a predefined default state depending on the parsed storyposition.
+     * 
+     * @param storyposition    the player's storyposition, usually. This position will be used to place the player or
+     *                         play a cutscene accordingly.
+     * @param fromOpeningState true if this method is called from an openingState. This is usually mostly used on game
+     *                         startup, and will be false when this method is triggered at the end a a dungeon for
+     *                         example.
+     */
     public static void trigger(int storyposition, boolean fromOpeningState) {
         Logger.i("Triggered the Storyposition setup method with position : " + storyposition);
         boolean isAbnormal = false;
@@ -91,7 +106,6 @@ public class StoryPositionSetup {
             // TODO:Finished the first part of skytower. Is at the sky tower
             // checkpoint.
             break;
-
         }
 
         if (isAbnormal) {
