@@ -38,7 +38,8 @@ public class FaintedPokemonEvent extends Event {
 			DungeonPokemon user = ((MoveUse) this.damage).user;
 			boolean canRecruit = user.isTeamLeader()
 					&& user.tile().adjacentTile(user.facing()).getPokemon() == this.pokemon;
-			canRecruit &= RecruitAttemptEvent.checkFriendArea(user, this.pokemon);
+			if (user.isTeamLeader())
+				canRecruit &= RecruitAttemptEvent.checkFriendArea(user, this.pokemon);
 			if (canRecruit)
 				this.resultingEvents
 						.add(new RecruitAttemptEvent(this.floor, this, ((MoveUse) this.damage).user, this.pokemon));
