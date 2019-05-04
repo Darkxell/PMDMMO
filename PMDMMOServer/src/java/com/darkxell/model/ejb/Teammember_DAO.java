@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.annotation.Resource;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -56,6 +57,23 @@ public class Teammember_DAO {
             e.printStackTrace();
         }
     }
+    
+    public void update(long playerid, long pokemonid,short location) {
+        try {
+            Connection cn = ds.getConnection();
+            PreparedStatement prepare
+                    = cn.prepareStatement(
+                            "UPDATE player SET location = ? WHERE playerid = ? AND pokemonid = ?"
+                    );
+            prepare.setShort(1, location);
+            prepare.setLong(2, playerid);
+            prepare.setLong(3, pokemonid);
+            prepare.executeUpdate();
+            cn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     public long findPlayerID(long pokemonid) {
         long toreturn = 0;
@@ -78,8 +96,8 @@ public class Teammember_DAO {
         return toreturn;
     }
 
-    public long findPokemonID(long playerid) {
-        long toreturn = 0;
+    public ArrayList<Long> findPokemonsID(long playerid) {
+        ArrayList<Long> toreturn = new ArrayList<Long>(10);
         try {
             Connection cn = ds.getConnection();
             ResultSet result = cn
@@ -90,7 +108,32 @@ public class Teammember_DAO {
                             "SELECT * FROM teammember_ WHERE playerid = " + playerid
                     );
             if (result.first()) {
-                toreturn = result.getLong("pokemonid");
+                while (result.next()) {
+                    toreturn.add(result.getLong("pokemonid"));
+                }
+            }
+            cn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return toreturn;
+    }
+    
+    public ArrayList<Long> findPokemonsIDinTeam(long playerid) {
+        ArrayList<Long> toreturn = new ArrayList<Long>(4);
+        try {
+            Connection cn = ds.getConnection();
+            ResultSet result = cn
+                    .createStatement(
+                            ResultSet.TYPE_SCROLL_INSENSITIVE,
+                            ResultSet.CONCUR_UPDATABLE
+                    ).executeQuery(
+                            "SELECT * FROM teammember_ WHERE playerid = " + playerid + " AND location > 0 ORDER BY location"
+                    );
+            if (result.first()) {
+                while (result.next()) {
+                    toreturn.add(result.getLong("pokemonid"));
+                }
             }
             cn.close();
         } catch (SQLException e) {
@@ -108,7 +151,7 @@ public class Teammember_DAO {
                             ResultSet.TYPE_SCROLL_INSENSITIVE,
                             ResultSet.CONCUR_UPDATABLE
                     ).executeQuery(
-                            "SELECT * FROM teammember_ WHERE playerid = " + playerid + "AND location = " + location
+                            "SELECT * FROM teammember_ WHERE playerid = " + playerid + " AND location = " + location
                     );
             if (result.first()) {
                 toreturn = result.getLong("pokemonid");

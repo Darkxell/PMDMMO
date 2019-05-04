@@ -8,4 +8,26 @@
         <trigger type="friendmap" x="0" y="42" width="60" height="1"/>
         <trigger type="friendmap" x="60" y="0" width="1" height="42"/>
     </triggers>
+    <friendlocations>
+    	<friend species="116" x="39" y="38"/>
+    	<friend species="117" x="48" y="31"/>
+    	<friend species="223" x="36" y="26"/>
+    	<friend species="224" x="44" y="22"/>
+    	<friend species="230" x="37" y="33"/>
+    	<friend species="318" x="27" y="31"/>
+    	<friend species="319" x="14" y="33"/>
+    	<friend species="347" x="47" y="17"/>
+    	<friend species="348" x="52" y="27"/>
+    	<friend species="370" x="22" y="20"/>
+    	<friend species="116" x="33" y="35" shiny="true"/>
+    	<friend species="117" x="44" y="35" shiny="true"/>
+    	<friend species="223" x="31" y="28" shiny="true"/>
+    	<friend species="224" x="39" y="22" shiny="true"/>
+    	<friend species="230" x="41" y="30" shiny="true"/>
+    	<friend species="318" x="24" y="36" shiny="true"/>
+    	<friend species="319" x="20" y="31" shiny="true"/>
+    	<friend species="347" x="50" y="22" shiny="true"/>
+    	<friend species="348" x="46" y="26" shiny="true"/>
+    	<friend species="370" x="19" y="17" shiny="true"/>
+    </friendlocations>
 </zone>

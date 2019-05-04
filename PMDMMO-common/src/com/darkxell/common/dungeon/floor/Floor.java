@@ -397,7 +397,7 @@ public class Floor {
         return null;
     }
 
-    public Room roomAt(Tile tile) {
+    Room roomAt(Tile tile) {
         return this.roomAt(tile.x, tile.y);
     }
 

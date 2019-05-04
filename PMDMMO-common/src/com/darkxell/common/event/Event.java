@@ -101,7 +101,7 @@ public abstract class Event implements EventSource {
     public String[] flags() {
         if (this.flags.equals(""))
             return new String[0];
-        return this.flags.split(",");
+        return this.flags.split("|");
     }
 
     /** @return The messages that were generated. */

@@ -5,6 +5,6 @@ import com.darkxell.common.zones.FreezoneInfo;
 
 public class ThunderwaveClearFreezone extends CutsceneFreezoneMap {
     public ThunderwaveClearFreezone() {
-        super("cutscenes/thunderwave-clear", FreezoneInfo.THUNDERWAVE_CLEAR);
+        super("cutscenes/thunderwave-clear", FreezoneInfo.THUNDERWAVE_CLEAR, 52, 40);
     }
 }

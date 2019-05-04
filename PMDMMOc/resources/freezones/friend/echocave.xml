@@ -8,4 +8,28 @@
         <trigger type="friendmap" x="0" y="45" width="63" height="1"/>
         <trigger type="friendmap" x="63" y="0" width="1" height="45"/>
     </triggers>
+    <friendlocations>
+    	<friend species="41" x="16" y="31"/>
+    	<friend species="42" x="47" y="31"/>
+    	<friend species="169" x="29" y="31"/>
+    	<friend species="202" x="20" y="39"/>
+    	<friend species="206" x="42" y="41"/>
+    	<friend species="293" x="38" y="24"/>
+    	<friend species="294" x="26" y="24"/>
+    	<friend species="295" x="31" y="14"/>
+    	<friend species="299" x="10" y="25"/>
+    	<friend species="303" x="52" y="25"/>
+    	<friend species="360" x="32" y="38"/>
+    	<friend species="41" x="11" y="31" shiny="true"/>
+    	<friend species="42" x="52" y="30" shiny="true"/>
+    	<friend species="169" x="34" y="32" shiny="true"/>
+    	<friend species="202" x="24" y="36" shiny="true"/>
+    	<friend species="206" x="40" y="38" shiny="true"/>
+    	<friend species="293" x="34" y="24" shiny="true"/>
+    	<friend species="294" x="21" y="23" shiny="true"/>
+    	<friend species="295" x="31" y="21" shiny="true"/>
+    	<friend species="299" x="11" y="20" shiny="true"/>
+    	<friend species="303" x="52" y="20" shiny="true"/>
+    	<friend species="360" x="29" y="40" shiny="true"/>
+    </friendlocations>
 </zone>

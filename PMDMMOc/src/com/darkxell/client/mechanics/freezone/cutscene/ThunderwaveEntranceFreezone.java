@@ -5,6 +5,6 @@ import com.darkxell.common.zones.FreezoneInfo;
 
 public class ThunderwaveEntranceFreezone extends CutsceneFreezoneMap {
     public ThunderwaveEntranceFreezone() {
-        super("cutscenes/thunderwave-entrance", FreezoneInfo.THUNDERWAVE_ENTRANCE);
+        super("cutscenes/thunderwave-entrance", FreezoneInfo.THUNDERWAVE_ENTRANCE, 52, 40);
     }
 }

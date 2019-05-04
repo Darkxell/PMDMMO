@@ -8,9 +8,12 @@ package com.darkxell.gameserver;
 import com.darkxell.common.Registries;
 import com.darkxell.common.util.Logger;
 import com.darkxell.gameserver.messagehandlers.AcceptMissionHandler;
+import com.darkxell.gameserver.messagehandlers.AddToTeamHandler;
 import com.darkxell.gameserver.messagehandlers.BankactionHandler;
+import com.darkxell.gameserver.messagehandlers.BuyFriendAreaHandler;
 import com.darkxell.gameserver.messagehandlers.ChatMessageHandler;
 import com.darkxell.gameserver.messagehandlers.CreateAccountHandler;
+import com.darkxell.gameserver.messagehandlers.DeleteFriendHandler;
 import com.darkxell.gameserver.messagehandlers.DeleteMissionHandler;
 import com.darkxell.gameserver.messagehandlers.DungeonendHandler;
 import com.darkxell.gameserver.messagehandlers.DungeonstartHandler;
@@ -28,6 +31,7 @@ import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
 import com.darkxell.gameserver.messagehandlers.FreezonePositionHandler;
+import com.darkxell.gameserver.messagehandlers.GetFriendAreasHandler;
 import com.darkxell.gameserver.messagehandlers.GetMissionsHandler;
 import com.darkxell.gameserver.messagehandlers.InventoryRequestHandler;
 import com.darkxell.gameserver.messagehandlers.ItemActionHandler;
@@ -36,12 +40,14 @@ import com.darkxell.gameserver.messagehandlers.MonsterRequestHandler;
 import com.darkxell.gameserver.messagehandlers.NicknameHandler;
 import com.darkxell.gameserver.messagehandlers.ObjectrequestHandler;
 import com.darkxell.gameserver.messagehandlers.PublicKeyRequestHandler;
+import com.darkxell.gameserver.messagehandlers.RemoveFromTeamHandler;
 import com.darkxell.gameserver.messagehandlers.SaltResetHandler;
 import com.darkxell.gameserver.messagehandlers.SetEncryptionKeyHandler;
 import com.darkxell.gameserver.messagehandlers.TestResultHandler;
 import com.darkxell.gameserver.messagehandlers.StorageactionHandler;
 import com.darkxell.gameserver.messagehandlers.StorypositionAdvanceHandler;
 import com.darkxell.model.ejb.DeployKeyDAO;
+import com.darkxell.model.ejb.FriendAreas_DAO;
 import com.darkxell.model.ejb.Holdeditem_DAO;
 import com.darkxell.model.ejb.InventoryDAO;
 import com.darkxell.model.ejb.Inventorycontains_DAO;
@@ -105,6 +111,8 @@ public class GameServer {
     private Missions_DAO missions_DAO;
     @EJB
     private DeployKeyDAO deployKeyDAO;
+    @EJB
+    private FriendAreas_DAO friendAreas_DAO;
 
     /**
      * Called when a client opens a websocket connection with the server.
@@ -129,7 +137,7 @@ public class GameServer {
         }
         GameSessionInfo si = SessionsInfoHolder.getInfo(session.getId());
 
-        System.out.println((si == null ? "null_si (this is a bug)" : si.name) + " just disconnected.");
+        System.out.println((si == null ? "null_si" : si.name) + " just disconnected.");
         //Removes the session info and the game session info
         sessionHandler.removeSession(session);
         if (SessionsInfoHolder.infoExists(session.getId())) {
@@ -194,6 +202,9 @@ public class GameServer {
             }
             if (this.tablesCreator == null) {
                 this.tablesCreator = new TablesCreator();
+            }
+            if (this.friendAreas_DAO == null) {
+                this.friendAreas_DAO = new FriendAreas_DAO();
             }
             Logger.load("SERVER");
             Registries.load();
@@ -380,6 +391,46 @@ public class GameServer {
                         hand.handleMessage(jsonMessage, session, sessionHandler);
                         break;
                     }
+                    case "getfriendareas": {
+                        if (!infos.isconnected) {
+                            return;
+                        }
+                        GetFriendAreasHandler hand = new GetFriendAreasHandler(this);
+                        hand.handleMessage(jsonMessage, session, sessionHandler);
+                        break;
+                    }
+                    case "addtoteam": {
+                        if (!infos.isconnected) {
+                            return;
+                        }
+                        AddToTeamHandler hand = new AddToTeamHandler(this);
+                        hand.handleMessage(jsonMessage, session, sessionHandler);
+                        break;
+                    }
+                    case "removefromteam": {
+                        if (!infos.isconnected) {
+                            return;
+                        }
+                        RemoveFromTeamHandler hand = new RemoveFromTeamHandler(this);
+                        hand.handleMessage(jsonMessage, session, sessionHandler);
+                        break;
+                    }
+                    case "deletefriend": {
+                        if (!infos.isconnected) {
+                            return;
+                        }
+                        DeleteFriendHandler hand = new DeleteFriendHandler(this);
+                        hand.handleMessage(jsonMessage, session, sessionHandler);
+                        break;
+                    }
+                    case "buyfriendarea": {
+                        if (!infos.isconnected) {
+                            return;
+                        }
+                        BuyFriendAreaHandler hand = new BuyFriendAreaHandler(this);
+                        hand.handleMessage(jsonMessage, session, sessionHandler);
+                        break;
+                    }
                     default:
                         break;
                     // ADD other "action" json message types if needed.
@@ -396,6 +447,10 @@ public class GameServer {
 
     public PlayerDAO getPlayerDAO() {
         return this.playerDAO;
+    }
+    
+    public FriendAreas_DAO getFriendAreas_DAO() {
+        return this.friendAreas_DAO;
     }
 
     public Holdeditem_DAO getHoldeditem_DAO() {

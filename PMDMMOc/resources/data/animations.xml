@@ -190,13 +190,16 @@
     <item id="102" clone="items/82" />
     <item id="125" clone="items/82" />
     <item id="133" clone="items/82" />
+    <item id="387">
+      <default width="32" height="32" y="20" state="HIGHJUMP" alsoplay="2">-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,1,2,3,4,4,4,4,4,5,6,7</default>
+    </item>
   </items>
   <moves>
     <move id="-707">
       <default width="64" height="32" spriteduration="4" backsprites="only" state="EMIT">0,1,2,3,3,3,3,2,1,0</default>
     </move>
     <move id="-505">
-      <default sprites="none" x="-1" y="-1" state="RUMBLE" alsoplay="2" />
+      <default sprites="none" state="RUMBLE" alsoplay="2" />
     </move>
     <move id="-504">
       <default width="32" height="8" state="SPECIAL">0,1,2,3,4,5,6,7,8,9,10,11,12,13</default>

@@ -131,7 +131,7 @@ public class ItemEffect implements AffectsPokemon {
     /**
      * Called when an Item with this Effect is used when caught.
      * 
-     * @param itemEvent TODO
+     * @param itemEvent - The concerned Move use event
      */
     public void useThrown(ItemUseEvent itemEvent, ArrayList<Event> events) {
         this.use(itemEvent, events);

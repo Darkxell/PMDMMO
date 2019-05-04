@@ -24,7 +24,7 @@ public class AbilityRunaway extends Ability {
             DungeonPokemon p = ((DamageDealtEvent) event).target;
             if (p != concerned)
                 return;
-            if (p.ability() == this && p.getHpPercentage() < 50 && !p.hasStatusCondition(StatusConditions.Terrified)
+            if (p.ability() == this && p.getHpPercentage() < .5 && !p.hasStatusCondition(StatusConditions.Terrified)
                     && !p.isTeamLeader()) {
                 TriggeredAbilityEvent abilityevent = new TriggeredAbilityEvent(floor, event, p);
                 resultingEvents.add(abilityevent);

@@ -43,6 +43,8 @@ public class DataEditor extends Application {
         Persistence.soundmanager = new SoundManager();
         Persistence.player = Util.createDefaultPlayer();
 
+        Persistence.setDefaultValues();
+
         new Weather(-1, null);
 
         // new DiscordEventHandlerForPMDMMO("Developing game",

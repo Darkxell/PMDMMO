@@ -95,6 +95,9 @@ public class FreezoneMap {
         }
     }
 
+    /** Loads additional properties after everything else (can be extended by subclasses.) */
+    protected void loadAdditional(Element root) {}
+
     private String loadExtensionPath(Element root) {
         Element extendEl = root.getChild("extends");
 
@@ -104,7 +107,7 @@ public class FreezoneMap {
         return root.getAttributeValue("source");
     }
 
-    private void loadProperties(Element root) {
+    public void loadProperties(Element root) {
         // flag attributes (similar to html5 boolean attributes)
         // these attributes are always overwritten in child freezones, for clarity.
         this.playerOnly = root.getAttribute("playeronly") != null;
@@ -155,7 +158,7 @@ public class FreezoneMap {
      * @param xmlPath Resource path to XML file.
      * @param isRoot  Is this call the root terrain file?
      */
-    private void load(String xmlPath, boolean isRoot) throws IOException, JDOMException {
+    protected void load(String xmlPath, boolean isRoot) throws IOException, JDOMException {
         SAXBuilder builder = new SAXBuilder();
         Element root = builder.build(Res.get(xmlPath)).getRootElement();
 
@@ -166,6 +169,7 @@ public class FreezoneMap {
         this.loadProperties(root);
         if (isRoot)
             this.loadTerrain(root);
+        this.loadAdditional(root);
     }
 
     public void addEntity(FreezoneEntity entity) {

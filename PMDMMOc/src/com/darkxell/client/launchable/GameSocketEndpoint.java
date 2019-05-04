@@ -15,24 +15,7 @@ import javax.websocket.WebSocketContainer;
 import com.darkxell.client.launchable.ClientSettings.Setting;
 import com.darkxell.client.launchable.crypto.Encryption;
 import com.darkxell.client.launchable.crypto.Safe;
-import com.darkxell.client.launchable.messagehandlers.AcceptMissionHandler;
-import com.darkxell.client.launchable.messagehandlers.BankActionConfirmHandler;
-import com.darkxell.client.launchable.messagehandlers.ChatMessageHandler;
-import com.darkxell.client.launchable.messagehandlers.DungeonEndConfirmHandler;
-import com.darkxell.client.launchable.messagehandlers.DungeonStartConfirmHandler;
-import com.darkxell.client.launchable.messagehandlers.FreezonePositionHandler;
-import com.darkxell.client.launchable.messagehandlers.GetMissionsHandler;
-import com.darkxell.client.launchable.messagehandlers.InventoryRequestHandler;
-import com.darkxell.client.launchable.messagehandlers.ItemActionHandler;
-import com.darkxell.client.launchable.messagehandlers.LoginPlayerHandler;
-import com.darkxell.client.launchable.messagehandlers.LogininfoHandler;
-import com.darkxell.client.launchable.messagehandlers.MonsterRequestHandler;
-import com.darkxell.client.launchable.messagehandlers.ObjectRequestHandler;
-import com.darkxell.client.launchable.messagehandlers.PublicKeyRequestHandler;
-import com.darkxell.client.launchable.messagehandlers.SaltResetHandler;
-import com.darkxell.client.launchable.messagehandlers.SetEncryptionKeyHandler;
-import com.darkxell.client.launchable.messagehandlers.StorageConfirmHandler;
-import com.darkxell.client.launchable.messagehandlers.TestResultConfirmHandler;
+import com.darkxell.client.launchable.messagehandlers.*;
 import com.darkxell.common.util.Communicable;
 import com.darkxell.common.util.Logger;
 import com.eclipsesource.json.Json;
@@ -144,6 +127,9 @@ public class GameSocketEndpoint {
             case "requestmonster":
                 new MonsterRequestHandler().handleMessage(obj.asObject());
                 break;
+            case "getfriendareas":
+                new GetFriendAreasHandler().handleMessage(obj.asObject());
+                break;
             case "testresultrecieved":
                 new TestResultConfirmHandler().handleMessage(obj.asObject());
                 break;
@@ -168,6 +154,9 @@ public class GameSocketEndpoint {
             case "chatmessage":
                 new ChatMessageHandler().handleMessage(obj.asObject());
                 break;
+            case "removefromteam":
+            	new RemoveFromTeamHandler().handleMessage(obj.asObject());
+            	break;
 
             // DUNGEON COMMUNICATION
 
@@ -188,6 +177,13 @@ public class GameSocketEndpoint {
     }
 
     /**
+     * Shortcut to send a message to the server with only an action.
+     */
+    public void sendActionMessage(String action) {
+        this.sendMessage(action, null, (JsonObject) null);
+    }
+
+    /**
      * Shortcut to send a message to the server with only an action value and a communicable.
      */
     public void sendMessage(String action, String name, Communicable value) {
@@ -200,7 +196,7 @@ public class GameSocketEndpoint {
     public void sendMessage(String action, String name, JsonObject value) {
         JsonObject message = Json.object();
         message.add("action", action);
-        message.add(name, value);
+        if (name != null && value != null) message.add(name, value);
         this.sendMessage(message.toString());
     }
 
