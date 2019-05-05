@@ -6,7 +6,6 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 
 import com.darkxell.client.launchable.ClientSettings;
-import com.darkxell.client.launchable.ClientSettings.Setting;
 import com.darkxell.client.launchable.GameSocketEndpoint;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.launchable.crypto.Encryption;
@@ -232,7 +231,7 @@ public class LoginMainState extends StateManager {
 			this.password.setSelection(false);
 			this.sendSaltReset();
 			if (this.login.getContent().equals(""))
-				this.login.insertString(ClientSettings.getSetting(Setting.LOGIN));
+				this.login.insertString(ClientSettings.getSetting(ClientSettings.LOGIN));
 		}
 	}
 
@@ -267,7 +266,7 @@ public class LoginMainState extends StateManager {
 
 	/** Called when the player clicks the login button. */
 	private void launchOnlineSend() {
-		ClientSettings.setSetting(Setting.LOGIN, this.login.getContent());
+		ClientSettings.setSetting(ClientSettings.LOGIN, this.login.getContent());
 		this.sendLogin();
 		Logger.i("Sent login infos to the server, awaiting response...");
 	}

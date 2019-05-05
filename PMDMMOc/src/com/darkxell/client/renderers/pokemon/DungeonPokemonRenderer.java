@@ -7,7 +7,6 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
 import com.darkxell.client.launchable.ClientSettings;
-import com.darkxell.client.launchable.ClientSettings.Setting;
 import com.darkxell.client.launchable.Persistance;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
@@ -45,7 +44,7 @@ public class DungeonPokemonRenderer extends AbstractPokemonRenderer
 	public void render(Graphics2D g, PokemonSprite sprite, int x, int y)
 	{
 		double percent = this.pokemon.getHpPercentage();
-		if (ClientSettings.getBooleanSetting(Setting.HP_BARS))
+		if (ClientSettings.getBooleanSetting(ClientSettings.HP_BARS))
 		{
 			int colorPercent = (int) Math.round(percent * 2.55);
 			Rectangle outline = new Rectangle(x - TILE_SIZE / 2, y + TILE_SIZE / 3, TILE_SIZE, 5);
