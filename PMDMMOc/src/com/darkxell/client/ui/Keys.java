@@ -115,11 +115,10 @@ public class Keys implements KeyListener {
 		for (Key key : Key.values())
 			if (key != Key.UNKNOWN) {
 				Setting s = Setting.getByKey("key." + key.nameID);
-				String rawKey = ClientSettings.getSetting(s);
 				try {
-					key.value = Integer.parseInt(rawKey);
-				} catch (NumberFormatException e) {
-					Logger.e("Invalid key ID: " + rawKey);
+					key.value = Integer.parseInt(ClientSettings.getSetting(s));
+				} catch (Exception e) {
+					Logger.e("Invalid key ID: " + ClientSettings.getSetting(s));
 					ClientSettings.resetSetting(s);
 					key.value = Integer.parseInt(ClientSettings.getSetting(s));
 				}
