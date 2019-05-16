@@ -13,8 +13,8 @@ public class FreezoneCamera {
 
 	private static final int SHAKE_TICK_FRAMES = 5;
 	private static final int TILESIZE = 8;
-	public int renderheight = Integer.MAX_VALUE;
-	public int renderwidth = Integer.MAX_VALUE;
+	public int renderHeight = Integer.MAX_VALUE;
+	public int renderWidth  = Integer.MAX_VALUE;
 	private int shakeTimer = 0;
 	private int shakeX = 0, shakeY = 0;
 	private int shaking = 0;
@@ -41,13 +41,13 @@ public class FreezoneCamera {
 	}
 
 	private boolean isXposOOB(double x) {
-		return (x < (renderwidth / 2) / TILESIZE + 0.3)
-				|| (x > Persistence.currentmap.mapWidth - ((renderwidth / 2) / TILESIZE) - 0.3);
+		return (x < (renderWidth  / 2) / TILESIZE + 0.3)
+				|| (x > Persistence.currentmap.mapWidth - ((renderWidth  / 2) / TILESIZE) - 0.3);
 	}
 
 	private boolean isYposOOB(double y) {
-		return (y < (renderheight / 2) / TILESIZE + 0.3)
-				|| (y > Persistence.currentmap.mapHeight - ((renderheight / 2) / TILESIZE) - 0.3);
+		return (y < (renderHeight / 2) / TILESIZE + 0.3)
+				|| (y > Persistence.currentmap.mapHeight - ((renderHeight / 2) / TILESIZE) - 0.3);
 	}
 
 	private void onShakeTick() {
@@ -87,27 +87,27 @@ public class FreezoneCamera {
 		boolean isYFarFromPlayer = y > target.y + 4 || y < target.y - 4;
 		double cameraspeed = isXFarFromPlayer ? 0.4d : 0.2d;
 		// X POSITIONING
-		if (Persistence.currentmap.mapWidth * TILESIZE <= renderwidth) {
+		if (Persistence.currentmap.mapWidth * TILESIZE <= renderWidth ) {
 			this.x = ((double) Persistence.currentmap.mapWidth) / 2;
 		} else {
 			double newx = (x > target.x + 1) ? x - cameraspeed : (x < target.x - 1) ? x + cameraspeed : x;
 			if (isXposOOB(newx)) {
 				if (isXposOOB(x)) {
-					if (x <= (renderwidth / 2) / TILESIZE + 0.3) x = (renderwidth / 2) / TILESIZE + 0.3;
-					else x = Persistence.currentmap.mapWidth - ((renderwidth / 2) / TILESIZE) - 0.3;
+					if (x <= (renderWidth  / 2) / TILESIZE + 0.3) x = (renderWidth  / 2) / TILESIZE + 0.3;
+					else x = Persistence.currentmap.mapWidth - ((renderWidth  / 2) / TILESIZE) - 0.3;
 				}
 			} else x = newx;
 		}
 		cameraspeed = isYFarFromPlayer ? 0.4d : 0.2d;
 		// Y POSITIONING
-		if (Persistence.currentmap.mapHeight * TILESIZE <= renderheight) {
+		if (Persistence.currentmap.mapHeight * TILESIZE <= renderHeight) {
 			this.y = ((double) Persistence.currentmap.mapHeight) / 2;
 		} else {
 			double newy = (y > target.y + 1) ? y - cameraspeed : (y < target.y - 1) ? y + cameraspeed : y;
 			if (isYposOOB(newy)) {
 				if (isYposOOB(y)) {
-					if (y <= (renderheight / 2) / TILESIZE + 0.3) y = (renderheight / 2) / TILESIZE + 0.3;
-					else y = Persistence.currentmap.mapHeight - ((renderheight / 2) / TILESIZE) - 0.3;
+					if (y <= (renderHeight / 2) / TILESIZE + 0.3) y = (renderHeight / 2) / TILESIZE + 0.3;
+					else y = Persistence.currentmap.mapHeight - ((renderHeight / 2) / TILESIZE) - 0.3;
 				}
 			} else y = newy;
 		}
