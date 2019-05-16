@@ -11,7 +11,7 @@ import com.darkxell.client.mechanics.freezones.FreezonePlayer;
  */
 public class FreezoneCamera {
 
-	private static final int SHAKETIME = 5;
+	private static final int SHAKE_TICK_FRAMES = 5;
 	private static final int TILESIZE = 8;
 	public int renderheight = Integer.MAX_VALUE;
 	public int renderwidth = Integer.MAX_VALUE;
@@ -76,7 +76,7 @@ public class FreezoneCamera {
 		// Shake
 		if (this.shaking != 0) {
 			++this.shakeTimer;
-			if (this.shakeTimer >= SHAKETIME) {
+			if (this.shakeTimer >= SHAKE_TICK_FRAMES) {
 				this.shakeTimer = 0;
 				this.onShakeTick();
 			}
