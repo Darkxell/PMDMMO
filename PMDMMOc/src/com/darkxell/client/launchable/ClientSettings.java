@@ -86,12 +86,18 @@ public class ClientSettings
 
 	public static boolean getBooleanSetting(String setting)
 	{
+		if (settings == null) {
+            load();
+        }
 		String value = getSetting(setting);
 		return value != null && value.equals("true");
 	}
 
 	public static String getSetting(String setting)
 	{
+		if (settings == null) {
+            load();
+        }
 		if (!settings.containsKey(setting))
 			resetSetting(setting); //could be setting.key here. Check commit 94c8003e7931e5072a5f411a21b5cb51047d93f3
 		return settings.getProperty(setting);
@@ -135,6 +141,9 @@ public class ClientSettings
 
 	public static void setSetting(String setting, String value)
 	{
+		if (settings == null) {
+            load();
+        }
 		settings.put(setting, value);
 	}
 
