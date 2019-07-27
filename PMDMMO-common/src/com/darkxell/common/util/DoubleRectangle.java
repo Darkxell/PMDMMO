@@ -36,7 +36,6 @@ public class DoubleRectangle {
 			this.width = width;
 			this.height = height;
 		}
-
 	}
 
 	/** Predicate that returns true if the two rectangles have at least one intersection point. */
