@@ -1,18 +1,18 @@
-package com.darkxell.client.resources.images.hud;
+package com.darkxell.client.resources.image.hud;
 
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 
-import com.darkxell.client.resources.images.SpriteSet;
+import com.darkxell.client.resources.image.spritefactory.PMDSpriteset;
 import com.darkxell.common.util.Direction;
 
-public class MenuStateHudSpriteset extends SpriteSet {
+public class MenuStateHudSpriteset extends PMDSpriteset {
 
     public static final Dimension cornerNameSize = new Dimension(14, 10);
     public static final Dimension cornerSize = new Dimension(16, 10);
 
     public MenuStateHudSpriteset() {
-        super("/hud/menu_hud.png", 32, 64);
+        super("/hud/menu_hud.png");
 
         this.createSprite("arrow_select", 0, 0, 10, 16);
         this.createSprite("arrow_selected", 12, 0, 10, 16);
@@ -32,56 +32,56 @@ public class MenuStateHudSpriteset extends SpriteSet {
     }
 
     public BufferedImage nextWindowArrow() {
-        return this.getImg("next_window");
+        return this.getSprite("next_window");
     }
 
     public BufferedImage pageLeft() {
-        return this.getImg("page_left");
+        return this.getSprite("page_left");
     }
 
     public BufferedImage pageRight() {
-        return this.getImg("page_right");
+        return this.getSprite("page_right");
     }
 
     public BufferedImage selectedArrow() {
-        return this.getImg("arrow_selected");
+        return this.getSprite("arrow_selected");
     }
 
     public BufferedImage selectionArrow() {
-        return this.getImg("arrow_select");
+        return this.getSprite("arrow_select");
     }
 
     public BufferedImage tabLeft() {
-        return this.getImg("tab_left");
+        return this.getSprite("tab_left");
     }
 
     public BufferedImage tabRight() {
-        return this.getImg("tab_right");
+        return this.getSprite("tab_right");
     }
 
     public BufferedImage windowCorner(Direction direction) {
         switch (direction) {
         case NORTHEAST:
-            return this.getImg("corner_ne");
+            return this.getSprite("corner_ne");
         case SOUTHEAST:
-            return this.getImg("corner_se");
+            return this.getSprite("corner_se");
         case SOUTHWEST:
-            return this.getImg("corner_sw");
+            return this.getSprite("corner_sw");
         default:
-            return this.getImg("corner_nw");
+            return this.getSprite("corner_nw");
         }
     }
 
     public BufferedImage windowNameCorner(Direction direction) {
         switch (direction) {
         case NORTHEAST:
-            return this.getImg("name_corner_ne");
+            return this.getSprite("name_corner_ne");
         case SOUTHEAST:
-            return this.getImg("name_corner_se");
+            return this.getSprite("name_corner_se");
         case SOUTHWEST:
-            return this.getImg("name_corner_sw");
+            return this.getSprite("name_corner_sw");
         default:
-            return this.getImg("name_corner_nw");
+            return this.getSprite("name_corner_nw");
         }
     }
 

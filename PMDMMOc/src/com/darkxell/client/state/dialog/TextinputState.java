@@ -7,7 +7,7 @@ import java.awt.event.KeyEvent;
 
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.renderers.TextRenderer;
-import com.darkxell.client.resources.images.Sprites;
+import com.darkxell.client.resources.image.Sprites.HudSprites;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.client.ui.Keys.Key;
@@ -95,10 +95,10 @@ public class TextinputState extends AbstractState {
 
         // Draws the text box.
         int temp_width = width - 40;
-        int temp_height = temp_width * Sprites.Res_Hud.textwindow.image().getHeight()
-                / Sprites.Res_Hud.textwindow.image().getWidth();
+        int temp_height = temp_width * HudSprites.textwindow.image().getHeight()
+                / HudSprites.textwindow.image().getWidth();
         Rectangle box = new Rectangle(20, height / 2 - temp_height / 2, temp_width, temp_height);
-        g.drawImage(Sprites.Res_Hud.textwindow.image(), box.x, box.y, box.width, box.height, null);
+        g.drawImage(HudSprites.textwindow.image(), box.x, box.y, box.width, box.height, null);
 
         TextRenderer.render(g, this.message, 40, height / 2 - 20);
         g.setColor(new Color(56, 130, 184));
@@ -117,12 +117,12 @@ public class TextinputState extends AbstractState {
             g.setColor(new Color(32, 72, 104));
             g.fillRect(width - 150, height / 2 + temp_height - 15, 110, 50);
             TextRenderer.render(g, new Message("ui.textinput.validate"), width - 140, height / 2 + temp_height - 10);
-			TextRenderer.render(g, new Message("ui.no"), width - 130, height / 2 + temp_height + 3);
-			TextRenderer.render(g, new Message("ui.yes"), width - 130, height / 2 + temp_height + 16);
-			if (currentflicker > 0)
-				g.drawImage(Sprites.Res_Hud.menuHud.selectionArrow(), width - 142,
-						height / 2 + temp_height + 4 + (validationstate ? 13 : 0) - 3, null);
-		}
+            TextRenderer.render(g, new Message("ui.no"), width - 130, height / 2 + temp_height + 3);
+            TextRenderer.render(g, new Message("ui.yes"), width - 130, height / 2 + temp_height + 16);
+            if (currentflicker > 0)
+                g.drawImage(HudSprites.menuHud.selectionArrow(), width - 142,
+                        height / 2 + temp_height + 4 + (validationstate ? 13 : 0) - 3, null);
+        }
 
     }
 

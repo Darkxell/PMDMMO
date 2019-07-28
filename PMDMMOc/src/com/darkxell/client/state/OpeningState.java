@@ -8,7 +8,7 @@ import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.launchable.StoryPositionSetup;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.renderers.layers.BackgroundSeaLayer;
-import com.darkxell.client.resources.images.Sprites;
+import com.darkxell.client.resources.image.Sprites.HudSprites;
 import com.darkxell.client.resources.music.SoundsHolder;
 import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.util.language.Message;
@@ -34,8 +34,8 @@ public class OpeningState extends AbstractState {
     @Override
     public void render(Graphics2D g, int width, int height) {
         background.render(g, width, height);
-        g.drawImage(Sprites.Res_Hud.gametitle.image(), width / 2 - Sprites.Res_Hud.gametitle.image().getWidth() / 2,
-                height / 2 - Sprites.Res_Hud.gametitle.image().getHeight() / 2, null);
+        g.drawImage(HudSprites.gametitle.image(), width / 2 - HudSprites.gametitle.image().getWidth() / 2,
+                height / 2 - HudSprites.gametitle.image().getHeight() / 2, null);
         if (textblink >= 50)
             TextRenderer.render(g, this.presstocontinue,
                     width / 2 - TextRenderer.width(this.presstocontinue.toString()) / 2, height / 4 * 3);

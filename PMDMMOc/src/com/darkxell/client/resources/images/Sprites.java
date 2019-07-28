@@ -4,8 +4,6 @@ import java.awt.image.BufferedImage;
 
 import com.darkxell.client.resources.Res;
 import com.darkxell.client.resources.images.entities.WaterSparklesSpriteSet;
-import com.darkxell.client.resources.images.hud.FontSpriteSet;
-import com.darkxell.client.resources.images.hud.MenuStateHudSpriteset;
 import com.darkxell.client.ui.Frame.FrameIconSprite;
 
 /** Class that holds Sprites & SpriteSets used in the whole project. */
@@ -86,23 +84,6 @@ public final class Sprites {
             cristal_yellow = SpriteFactory.instance().subSprite(cristal, 58, 54, 56, 81);
             cristal_lightray = SpriteFactory.instance().subSprite(cristal, 115, 1, 48, 134);
         }
-
-        static void load() {
-        }
-    }
-
-    public static class Res_Hud {
-        public static final Sprite button = new Sprite("/hud/button.png");
-        public static final Sprite createaccountframe = new Sprite("/hud/create.png");
-
-        public static final FontSpriteSet font = new FontSpriteSet();
-        public static final Sprite gametitle = new Sprite("/hud/title.png");
-        public static final Sprite loginframe = new Sprite("/hud/login.png");
-        public static final MenuStateHudSpriteset menuHud = new MenuStateHudSpriteset();
-        public static final Sprite portrait = new Sprite("/hud/portrait.png");
-        public static final Sprite proceedaccountframe = new Sprite("/hud/create2.png");
-        public static final Sprite textwindow = new Sprite("/hud/textwindow.png");
-        public static final Sprite textwindow_transparent = new Sprite("/hud/textwindow_transparent.png");
 
         static void load() {
         }

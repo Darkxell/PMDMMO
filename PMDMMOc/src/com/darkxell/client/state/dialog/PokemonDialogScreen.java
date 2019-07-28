@@ -3,8 +3,8 @@ package com.darkxell.client.state.dialog;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
+import com.darkxell.client.resources.image.Sprites.HudSprites;
 import com.darkxell.client.resources.images.Sprite;
-import com.darkxell.client.resources.images.Sprites;
 import com.darkxell.client.resources.images.pokemon.PokemonPortrait;
 import com.darkxell.client.resources.images.pokemon.PokemonPortrait.PortraitEmotion;
 import com.darkxell.common.pokemon.Pokemon;
@@ -34,11 +34,11 @@ public class PokemonDialogScreen extends DialogScreen {
                 return new Position((int) dialogBox.getMaxX() - portrait.image().getWidth() - 5, 5);
 
             case BOTTOM_LEFT:
-                return new Position(dialogBox.x + 5, dialogBox.y - Sprites.Res_Hud.portrait.image().getHeight() - 5);
+                return new Position(dialogBox.x + 5, dialogBox.y - HudSprites.portrait.image().getHeight() - 5);
 
             case BOTTOM_RIGHT:
                 return new Position((int) dialogBox.getMaxX() - portrait.image().getWidth() - 5,
-                        dialogBox.y - Sprites.Res_Hud.portrait.image().getHeight() - 5);
+                        dialogBox.y - HudSprites.portrait.image().getHeight() - 5);
             }
             return new Position(0, 0);
         }
@@ -107,7 +107,7 @@ public class PokemonDialogScreen extends DialogScreen {
 
         if (this.pokemon != null) {
             Rectangle dialogBox = this.parentState.dialogBox();
-            Position portraitL = this.portraitLocation.locate(dialogBox, Sprites.Res_Hud.portrait);
+            Position portraitL = this.portraitLocation.locate(dialogBox, HudSprites.portrait);
             PokemonPortrait.drawPortrait(g, this.pokemon, this.emotion, this.shiny, (int) portraitL.x,
                     (int) portraitL.y, this.portraitLocation.flip);
         }

@@ -8,6 +8,8 @@ import com.darkxell.client.resources.image.dungeon.ShadowSpriteSet;
 import com.darkxell.client.resources.image.graphicallayer.LSDSpriteSet;
 import com.darkxell.client.resources.image.graphicallayer.SeaSpriteSet;
 import com.darkxell.client.resources.image.graphicallayer.WetDreamSpriteSet;
+import com.darkxell.client.resources.image.hud.FontSpriteSet;
+import com.darkxell.client.resources.image.hud.MenuStateHudSpriteset;
 import com.darkxell.client.resources.image.map.PinsSpriteset;
 import com.darkxell.client.resources.images.Sprite;
 import com.darkxell.common.util.Logger;
@@ -29,6 +31,20 @@ public final class Sprites {
         public static final WetDreamSpriteSet Dream = new WetDreamSpriteSet();
         public static final LSDSpriteSet LSD = new LSDSpriteSet();
         public static final SeaSpriteSet Sea = new SeaSpriteSet();
+    }
+
+    public static class HudSprites {
+        public static final Sprite button = new Sprite("/hud/button.png");
+        public static final Sprite createaccountframe = new Sprite("/hud/create.png");
+
+        public static final FontSpriteSet font = new FontSpriteSet();
+        public static final Sprite gametitle = new Sprite("/hud/title.png");
+        public static final Sprite loginframe = new Sprite("/hud/login.png");
+        public static final MenuStateHudSpriteset menuHud = new MenuStateHudSpriteset();
+        public static final Sprite portrait = new Sprite("/hud/portrait.png");
+        public static final Sprite proceedaccountframe = new Sprite("/hud/create2.png");
+        public static final Sprite textwindow = new Sprite("/hud/textwindow.png");
+        public static final Sprite textwindow_transparent = new Sprite("/hud/textwindow_transparent.png");
     }
 
     public static class MapSprites {

@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.Palette;
 import com.darkxell.client.resources.image.Sprites.DungeonSprites;
-import com.darkxell.client.resources.images.Sprites;
+import com.darkxell.client.resources.image.Sprites.HudSprites;
 import com.darkxell.client.state.menu.AbstractMenuState.MenuTab;
 import com.darkxell.client.state.menu.item.ItemContainersMenuState;
 import com.darkxell.client.state.menu.item.ItemContainersMenuState.MenuItemOption;
@@ -85,14 +85,14 @@ public class InventoryWindow extends MenuWindow {
             boolean left = tabs[0] != this.state.currentTab();
             boolean right = tabs[tabs.length - 1] != this.state.currentTab();
             if (right)
-                g.drawImage(Sprites.Res_Hud.menuHud.pageRight(),
-                        (int) this.inside.getMaxX() - Sprites.Res_Hud.menuHud.pageRight().getWidth(),
-                        this.dimensions.y - Sprites.Res_Hud.menuHud.pageRight().getHeight() / 3, null);
+                g.drawImage(HudSprites.menuHud.pageRight(),
+                        (int) this.inside.getMaxX() - HudSprites.menuHud.pageRight().getWidth(),
+                        this.dimensions.y - HudSprites.menuHud.pageRight().getHeight() / 3, null);
             if (left)
-                g.drawImage(Sprites.Res_Hud.menuHud.pageLeft(),
-                        (int) this.inside.getMaxX() - Sprites.Res_Hud.menuHud.pageLeft().getWidth()
-                                - Sprites.Res_Hud.menuHud.pageRight().getWidth() - 5,
-                        this.dimensions.y - Sprites.Res_Hud.menuHud.pageLeft().getHeight() / 3, null);
+                g.drawImage(HudSprites.menuHud.pageLeft(),
+                        (int) this.inside.getMaxX() - HudSprites.menuHud.pageLeft().getWidth()
+                                - HudSprites.menuHud.pageRight().getWidth() - 5,
+                        this.dimensions.y - HudSprites.menuHud.pageLeft().getHeight() / 3, null);
         }
     }
 }

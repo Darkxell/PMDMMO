@@ -9,7 +9,7 @@ import java.util.List;
 
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.renderers.TextRenderer.PMDChar;
-import com.darkxell.client.resources.images.Sprites;
+import com.darkxell.client.resources.image.Sprites.HudSprites;
 import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.util.language.Message;
 
@@ -21,7 +21,7 @@ public class DialogScreen {
         SWITCHING;
     }
 
-    public static final BufferedImage arrow = Sprites.Res_Hud.menuHud.nextWindowArrow();
+    public static final BufferedImage arrow = HudSprites.menuHud.nextWindowArrow();
     public static final int ARROW_TICK_LENGTH = 20;
 
     int arrowtick;
@@ -115,7 +115,7 @@ public class DialogScreen {
 
         if (this.dialogBoxVisible()) {
             g.drawImage(
-                    this.isOpaque ? Sprites.Res_Hud.textwindow.image() : Sprites.Res_Hud.textwindow_transparent.image(),
+                    this.isOpaque ? HudSprites.textwindow.image() : HudSprites.textwindow_transparent.image(),
                     dialogBox.x, dialogBox.y, dialogBox.width, dialogBox.height, null);
             Shape c = g.getClip();
             g.setClip(inside);

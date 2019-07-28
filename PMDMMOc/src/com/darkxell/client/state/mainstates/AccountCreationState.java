@@ -10,7 +10,7 @@ import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.launchable.crypto.Encryption;
 import com.darkxell.client.mechanics.chat.CustomTextfield;
 import com.darkxell.client.resources.Res;
-import com.darkxell.client.resources.images.Sprites;
+import com.darkxell.client.resources.image.Sprites.HudSprites;
 import com.darkxell.client.state.StateManager;
 import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.client.ui.MainUiUtility;
@@ -149,7 +149,7 @@ public class AccountCreationState extends StateManager {
         g.translate(offsetx, offsety);
         gcopy.translate(offsetx, offsety);
         // DRAWS THE ACCOUNT CREATION FACILITIES
-        g.drawImage(Sprites.Res_Hud.createaccountframe.image(), 0, 0, null);
+        g.drawImage(HudSprites.createaccountframe.image(), 0, 0, null);
 
         gcopy.setColor(Color.BLACK);
         gcopy.setFont(Res.getFont().deriveFont(26f).deriveFont(Font.BOLD));

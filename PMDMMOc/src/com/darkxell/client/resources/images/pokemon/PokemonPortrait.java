@@ -5,8 +5,8 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import com.darkxell.client.resources.Res;
+import com.darkxell.client.resources.image.Sprites.HudSprites;
 import com.darkxell.client.resources.images.RegularSpriteSet;
-import com.darkxell.client.resources.images.Sprites;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.util.Logger;
@@ -67,7 +67,7 @@ public class PokemonPortrait extends RegularSpriteSet {
             g.drawImage(portrait, x + 4 + portrait.getWidth(), y + 4, -portrait.getWidth(), portrait.getHeight(), null);
         else
             g.drawImage(portrait, x + 4, y + 4, null);
-        g.drawImage(Sprites.Res_Hud.portrait.image(), x, y, null);
+        g.drawImage(HudSprites.portrait.image(), x, y, null);
     }
 
     private static RegularSpriteSet getEmotionSheet(RegularSpriteSet sheet, PortraitEmotion emotion) {
