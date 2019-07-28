@@ -1,6 +1,6 @@
 package com.darkxell.client.state.dungeon;
 
-import static com.darkxell.client.resources.images.tilesets.AbstractDungeonTileset.TILE_SIZE;
+import static com.darkxell.client.resources.image.dungeon.AbstractDungeonTileset.TILE_SIZE;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;

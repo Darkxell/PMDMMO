@@ -1,5 +1,6 @@
 package com.darkxell.client.resources.image;
 
+import com.darkxell.client.resources.image.dungeon.CommonDungeonTileset;
 import com.darkxell.client.resources.image.dungeon.DungeonHudSpriteset;
 import com.darkxell.client.resources.image.dungeon.DungeonMapTileset;
 import com.darkxell.client.resources.image.dungeon.ItemsSpriteset;
@@ -12,6 +13,7 @@ import com.darkxell.common.util.Logger;
 public final class Sprites {
 
     public static class DungeonSprites {
+        public static final CommonDungeonTileset dungeonCommon = new CommonDungeonTileset();
         public static final DungeonHudSpriteset dungeonHud = new DungeonHudSpriteset();
         public static final DungeonMapTileset dungeonMap = new DungeonMapTileset();
         public static final ItemsSpriteset items = new ItemsSpriteset();

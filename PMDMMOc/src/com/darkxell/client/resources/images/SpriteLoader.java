@@ -2,7 +2,6 @@ package com.darkxell.client.resources.images;
 
 import java.util.ArrayList;
 
-import com.darkxell.client.resources.images.Sprites.Res_Dungeon;
 import com.darkxell.client.resources.images.Sprites.Res_Frame;
 import com.darkxell.client.resources.images.Sprites.Res_FreezoneEntities;
 import com.darkxell.client.resources.images.Sprites.Res_GraphicalLayers;
@@ -26,7 +25,6 @@ public final class SpriteLoader {
 
     /** Loads SpriteSets used in the whole project. */
     public static void loadCommon() {
-        Res_Dungeon.load();
         Res_Frame.load();
         Res_FreezoneEntities.load();
         Res_GraphicalLayers.load();

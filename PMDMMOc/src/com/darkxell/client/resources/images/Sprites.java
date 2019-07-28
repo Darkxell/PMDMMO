@@ -3,6 +3,7 @@ package com.darkxell.client.resources.images;
 import java.awt.image.BufferedImage;
 
 import com.darkxell.client.resources.Res;
+import com.darkxell.client.resources.image.dungeon.CommonDungeonTileset;
 import com.darkxell.client.resources.image.dungeon.DungeonHudSpriteset;
 import com.darkxell.client.resources.image.dungeon.ShadowSpriteSet;
 import com.darkxell.client.resources.images.entities.WaterSparklesSpriteSet;
@@ -11,18 +12,10 @@ import com.darkxell.client.resources.images.hud.MenuStateHudSpriteset;
 import com.darkxell.client.resources.images.layers.LSDSpriteSet;
 import com.darkxell.client.resources.images.layers.SeaSpriteSet;
 import com.darkxell.client.resources.images.layers.WetDreamSpriteSet;
-import com.darkxell.client.resources.images.tilesets.CommonDungeonTileset;
 import com.darkxell.client.ui.Frame.FrameIconSprite;
 
 /** Class that holds Sprites & SpriteSets used in the whole project. */
 public final class Sprites {
-
-    public static class Res_Dungeon {
-        public static final CommonDungeonTileset dungeonCommon = new CommonDungeonTileset();
-
-        static void load() {
-        }
-    }
 
     public static class Res_Frame {
         public static final Sprite BG1 = new Sprite("/hud/framebackgrounds/1.jpg");

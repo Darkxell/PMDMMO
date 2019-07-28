@@ -3,6 +3,7 @@ package com.darkxell.client.resources.images.tilesets;
 import java.awt.image.BufferedImage;
 
 import com.darkxell.client.resources.Res;
+import com.darkxell.client.resources.image.dungeon.AbstractDungeonTileset;
 import com.darkxell.common.dungeon.data.Dungeon;
 import com.darkxell.common.dungeon.data.FloorData;
 import com.darkxell.common.dungeon.floor.Floor;
