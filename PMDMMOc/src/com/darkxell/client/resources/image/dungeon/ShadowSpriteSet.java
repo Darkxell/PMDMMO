@@ -1,13 +1,13 @@
-package com.darkxell.client.resources.images.pokemon;
+package com.darkxell.client.resources.image.dungeon;
 
 import java.awt.image.BufferedImage;
 
-import com.darkxell.client.resources.images.SpriteSet;
+import com.darkxell.client.resources.image.spritefactory.PMDSpriteset;
 
-public class ShadowSpriteSet extends SpriteSet {
+public class ShadowSpriteSet extends PMDSpriteset {
 
     public ShadowSpriteSet() {
-        super("/pokemons/shadows.png", 20, 64);
+        super("/pokemons/shadows.png");
         this.createSprite("small0", 0, 0, 14, 6);
         this.createSprite("small1", 0, 6, 14, 6);
         this.createSprite("small2", 0, 12, 14, 6);
@@ -19,11 +19,11 @@ public class ShadowSpriteSet extends SpriteSet {
     }
 
     public BufferedImage getBig(byte shadowColor) {
-        return this.getImg("big" + shadowColor);
+        return this.getSprite("big" + shadowColor);
     }
 
     public BufferedImage getSmall(byte shadowColor) {
-        return this.getImg("small" + shadowColor);
+        return this.getSprite("small" + shadowColor);
     }
 
 }

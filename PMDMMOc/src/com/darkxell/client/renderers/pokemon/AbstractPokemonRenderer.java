@@ -13,7 +13,7 @@ import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.animation.PokemonAnimation;
 import com.darkxell.client.renderers.AbstractRenderer;
 import com.darkxell.client.renderers.MasterDungeonRenderer;
-import com.darkxell.client.resources.images.Sprites.Res_Dungeon;
+import com.darkxell.client.resources.image.Sprites.DungeonSprites;
 import com.darkxell.client.resources.images.pokemon.PokemonSprite;
 import com.darkxell.client.resources.images.pokemon.PokemonSpriteFrame;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
@@ -78,8 +78,8 @@ public class AbstractPokemonRenderer extends AbstractRenderer {
             int xPos = (int) this.drawX(), yPos = (int) this.drawY();
 
             BufferedImage shadow = this.sprite.pointer.data.hasBigShadow
-                    ? Res_Dungeon.shadows.getBig(this.sprite.getShadowColor())
-                    : Res_Dungeon.shadows.getSmall(this.sprite.getShadowColor());
+                    ? DungeonSprites.shadows.getBig(this.sprite.getShadowColor())
+                    : DungeonSprites.shadows.getSmall(this.sprite.getShadowColor());
             g.drawImage(shadow, xPos - shadow.getWidth() / 2 + frame.shadowX,
                     yPos + TILE_SIZE * 2 / 5 - shadow.getHeight() + frame.shadowY, null);
 
