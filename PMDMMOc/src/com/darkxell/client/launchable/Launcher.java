@@ -15,8 +15,8 @@ import com.darkxell.client.launchable.render.Updater;
 import com.darkxell.client.launchable.render.UpdaterAndRenderer;
 import com.darkxell.client.mechanics.animation.Animations;
 import com.darkxell.client.resources.Res;
-import com.darkxell.client.resources.images.SpriteFactory;
-import com.darkxell.client.resources.images.SpriteLoader;
+import com.darkxell.client.resources.image.Sprites;
+import com.darkxell.client.resources.image.spritefactory.PMDSpriteFactory;
 import com.darkxell.client.resources.images.pokemon.PokemonPortrait;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
 import com.darkxell.client.resources.music.SoundsHolder;
@@ -51,7 +51,7 @@ public class Launcher {
         Localization.load(false);
         ClientSettings.load();
         try {
-            SpriteFactory.load();
+            PMDSpriteFactory.initialize();
         } catch (AssertionError e) {
             isRunning = false;
             JOptionPane.showMessageDialog(null, new Message("error.loading.sprite_factory"),
@@ -62,7 +62,7 @@ public class Launcher {
         setProcessingProfile(PROFILE_SYNCHRONIZED);
 
         Registries.load();
-        SpriteLoader.loadCommon();
+        Sprites.load();
         PokemonSpritesets.loadData();
         PokemonPortrait.load();
         Animations.loadData();

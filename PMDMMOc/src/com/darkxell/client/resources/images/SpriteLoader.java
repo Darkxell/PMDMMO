@@ -2,7 +2,6 @@ package com.darkxell.client.resources.images;
 
 import java.util.ArrayList;
 
-import com.darkxell.client.resources.images.Sprites.Res_Frame;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
 import com.darkxell.client.resources.images.tilesets.FloorDungeonTileset;
 import com.darkxell.common.Registries;
@@ -18,11 +17,6 @@ public final class SpriteLoader {
      * more likely to be used first than others.
      */
     private static final ArrayList<String> toLoad = new ArrayList<>();
-
-    /** Loads SpriteSets used in the whole project. */
-    public static void loadCommon() {
-        Res_Frame.load();
-    }
 
     /**
      * Called when the user is about to enter a Dungeon.<br>

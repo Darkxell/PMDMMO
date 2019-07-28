@@ -5,6 +5,7 @@ import com.darkxell.client.resources.image.dungeon.DungeonHudSpriteset;
 import com.darkxell.client.resources.image.dungeon.DungeonMapTileset;
 import com.darkxell.client.resources.image.dungeon.ItemsSpriteset;
 import com.darkxell.client.resources.image.dungeon.ShadowSpriteSet;
+import com.darkxell.client.resources.image.frame.BoxSpriteset;
 import com.darkxell.client.resources.image.freezoneentity.CristalSpriteset;
 import com.darkxell.client.resources.image.freezoneentity.WaterSparklesSpriteSet;
 import com.darkxell.client.resources.image.graphicallayer.LSDSpriteSet;
@@ -15,6 +16,7 @@ import com.darkxell.client.resources.image.hud.MenuStateHudSpriteset;
 import com.darkxell.client.resources.image.map.PinsSpriteset;
 import com.darkxell.client.resources.image.spritefactory.PMDRegularSpriteset;
 import com.darkxell.client.resources.images.Sprite;
+import com.darkxell.client.ui.Frame.FrameIconSprite;
 
 /**
  * This class holds all Sprites that are used regularly throughout the game.
@@ -27,6 +29,19 @@ public final class Sprites {
         public static final DungeonMapTileset dungeonMap = new DungeonMapTileset();
         public static final ItemsSpriteset items = new ItemsSpriteset();
         public static final ShadowSpriteSet shadows = new ShadowSpriteSet();
+    }
+
+    public static class FrameSprites {
+        public static final Sprite BG1 = new Sprite("/hud/framebackgrounds/1.jpg");
+        public static final Sprite BG2 = new Sprite("/hud/framebackgrounds/2.jpg");
+        public static final Sprite BG3 = new Sprite("/hud/framebackgrounds/3.png");
+        public static final Sprite BG4 = new Sprite("/hud/framebackgrounds/4.png");
+        public static final Sprite BG5 = new Sprite("/hud/framebackgrounds/5.jpg");
+        public static final Sprite BG6 = new Sprite("/hud/framebackgrounds/6.png");
+        public static final Sprite BG7 = new Sprite("/hud/framebackgrounds/7.jpg");
+        public static final Sprite ICON = new FrameIconSprite("/hud/framebackgrounds/icon.png");
+        
+        public static final BoxSpriteset box = new BoxSpriteset();
     }
 
     public static class FreezoneEntitySprites {
