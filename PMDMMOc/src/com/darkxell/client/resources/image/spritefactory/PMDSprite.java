@@ -17,6 +17,10 @@ public class PMDSprite {
         PMDSpriteFactory.instance().load(this);
     }
 
+    public int height() {
+        return this.image().getHeight();
+    }
+
     /**
      * 
      * @return The image this Sprite points to.
@@ -31,6 +35,10 @@ public class PMDSprite {
      */
     public boolean isLoaded() {
         return PMDSpriteFactory.instance().isLoaded(this.path);
+    }
+
+    public int width() {
+        return this.image().getWidth();
     }
 
 }

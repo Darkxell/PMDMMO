@@ -22,17 +22,19 @@ public abstract class PMDSpriteset extends PMDSprite {
     public PMDSpriteset(String path) {
         super(path);
         this.wasLoaded = this.isLoaded();
-
-        this.createSprites();
     }
 
     private void checkLoaded() {
         if (this.wasLoaded)
             return;
         if (this.isLoaded()) {
-            this.wasLoaded = true;
+            this.onLoad();
             this.reloadParts();
         }
+    }
+
+    protected void createSprite(String id, int x, int y, int width, int height) {
+        this.createSprite(id, new Rectangle(x, y, width, height));
     }
 
     protected void createSprite(String id, Rectangle location) {
@@ -40,14 +42,16 @@ public abstract class PMDSpriteset extends PMDSprite {
         this.images.put(id, Res.createimage(this.image(), location.x, location.y, location.width, location.height));
     }
 
-    protected abstract void createSprites();
-
     public BufferedImage getSprite(String id) {
         this.checkLoaded();
         if (this.images.containsKey(id))
             return this.images.get(id);
         Logger.w("Attempted to get a sprite with unknown ID from a spriteset.");
         return PMDSpriteFactory.instance().getDefault();
+    }
+
+    protected void onLoad() {
+        this.wasLoaded = true;
     }
 
     private void reloadParts() {
