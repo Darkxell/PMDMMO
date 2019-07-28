@@ -8,8 +8,8 @@ import java.awt.image.BufferedImage;
 
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.Palette;
+import com.darkxell.client.resources.image.Sprites.DungeonSprites;
 import com.darkxell.client.resources.images.Sprites;
-import com.darkxell.client.resources.images.Sprites.Res_Dungeon;
 import com.darkxell.client.state.menu.AbstractMenuState.MenuTab;
 import com.darkxell.client.state.menu.item.ItemContainersMenuState;
 import com.darkxell.client.state.menu.item.ItemContainersMenuState.MenuItemOption;
@@ -67,7 +67,7 @@ public class InventoryWindow extends MenuWindow {
                     }
                     g.drawRect(X, Y, ITEM_SLOT, ITEM_SLOT);
 
-                    BufferedImage sprite = Res_Dungeon.items.sprite(item);
+                    BufferedImage sprite = DungeonSprites.items.sprite(item);
                     g.drawImage(sprite, X + ITEM_OFFSET, Y + ITEM_OFFSET, null);
 
                     if (item.item().isStackable || item.quantity() != 1) {

@@ -1,6 +1,6 @@
 package com.darkxell.client.resources.image;
 
-import com.darkxell.client.resources.images.hud.ItemsSpriteset;
+import com.darkxell.client.resources.image.dungeon.ItemsSpriteset;
 import com.darkxell.common.util.Logger;
 
 /**

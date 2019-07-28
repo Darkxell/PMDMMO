@@ -6,7 +6,6 @@ import com.darkxell.client.resources.Res;
 import com.darkxell.client.resources.images.entities.WaterSparklesSpriteSet;
 import com.darkxell.client.resources.images.hud.DungeonHudSpriteset;
 import com.darkxell.client.resources.images.hud.FontSpriteSet;
-import com.darkxell.client.resources.images.hud.ItemsSpriteset;
 import com.darkxell.client.resources.images.hud.MenuStateHudSpriteset;
 import com.darkxell.client.resources.images.layers.LSDSpriteSet;
 import com.darkxell.client.resources.images.layers.SeaSpriteSet;
@@ -23,7 +22,6 @@ public final class Sprites {
         public static final CommonDungeonTileset dungeonCommon = new CommonDungeonTileset();
         public static final DungeonHudSpriteset dungeonHud = new DungeonHudSpriteset();
         public static final DungeonMapTileset dungeonMap = new DungeonMapTileset();
-        public static final ItemsSpriteset items = new ItemsSpriteset();
         public static final ShadowSpriteSet shadows = new ShadowSpriteSet();
 
         static void load() {

@@ -8,8 +8,8 @@ import java.util.HashSet;
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.renderers.AbstractRenderer;
 import com.darkxell.client.renderers.MasterDungeonRenderer;
-import com.darkxell.client.resources.images.Sprites.Res_Dungeon;
-import com.darkxell.client.resources.images.hud.ItemsSpriteset;
+import com.darkxell.client.resources.image.Sprites.DungeonSprites;
+import com.darkxell.client.resources.image.dungeon.ItemsSpriteset;
 import com.darkxell.client.resources.images.tilesets.AbstractDungeonTileset;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
@@ -17,7 +17,7 @@ import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.item.ItemStack;
 
 public class DungeonItemsRenderer extends AbstractRenderer {
-    private static final int ITEM_POS = (AbstractDungeonTileset.TILE_SIZE - ItemsSpriteset.ITEM_SIZE) / 2;
+    private static final int ITEM_POS = (AbstractDungeonTileset.TILE_SIZE - ItemsSpriteset.ITEM_SPRITE_SIZE) / 2;
 
     public final Floor floor;
     /** Can be used to temporarily hide items (e.g. for animations.) */
@@ -37,7 +37,7 @@ public class DungeonItemsRenderer extends AbstractRenderer {
                 Tile tile = this.floor.tileAt(x, y);
                 if (tile != null)
                     if (tile.hasItem() && !this.hidden.contains(tile.getItem()) && tile.type() != TileType.WALL)
-                        g.drawImage(Res_Dungeon.items.sprite(tile.getItem()), tile.x * TILE_SIZE + ITEM_POS,
+                        g.drawImage(DungeonSprites.items.sprite(tile.getItem()), tile.x * TILE_SIZE + ITEM_POS,
                                 tile.y * TILE_SIZE + ITEM_POS, null);
             }
     }

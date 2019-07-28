@@ -28,6 +28,7 @@ public abstract class PMDSpriteset extends PMDSprite {
         if (this.wasLoaded)
             return;
         if (this.isLoaded()) {
+            this.wasLoaded = true;
             this.onLoad();
             this.reloadParts();
         }
@@ -46,12 +47,11 @@ public abstract class PMDSpriteset extends PMDSprite {
         this.checkLoaded();
         if (this.images.containsKey(id))
             return this.images.get(id);
-        Logger.w("Attempted to get a sprite with unknown ID from a spriteset.");
+        Logger.w("Attempted to get a sprite with unknown ID from a spriteset: " + id);
         return PMDSpriteFactory.instance().getDefault();
     }
 
     protected void onLoad() {
-        this.wasLoaded = true;
     }
 
     private void reloadParts() {

@@ -27,7 +27,7 @@ public class PMDRegularSpriteset extends PMDSpriteset {
         this.rows = expectedRows;
         this.createSprite(this.spriteId(0, 0), 0, 0, this.spriteWidth, this.spriteHeight);
 
-        if (this.isLoaded())
+        if (this.isLoaded() || (this.columns != -1 && this.rows != -1))
             this.onLoad();
     }
 
@@ -55,7 +55,7 @@ public class PMDRegularSpriteset extends PMDSpriteset {
      * @return The sprite at the input x,y position.
      */
     public BufferedImage getSprite(int x, int y) {
-        if (x < 0 || y > 0 || x >= this.columns || y >= this.rows)
+        if (x < 0 || y < 0 || x >= this.columns || y >= this.rows)
             return this.getDefault();
         return this.getSprite(this.spriteId(x, y));
     }
