@@ -108,23 +108,6 @@ public final class Sprites {
         }
     }
 
-    public static class Res_Map {
-        public static final Sprite GLOBALMAP = new Sprite("/hud/map/globalmap.png");
-        public static final Sprite LOCALMAP = new Sprite("/hud/map/localmap.png");
-        public static final Sprite PIN_RED, PIN_YELLOW, PIN_BLUE, PIN_GREEN;
-
-        static {
-            SpriteSet pinsBase = new SpriteSet("/hud/map/pins.png", 48, 12);
-            PIN_RED = pinsBase.createSprite("red", 0, 0, 12, 12);
-            PIN_YELLOW = pinsBase.createSprite("yellow", 12, 0, 12, 12);
-            PIN_BLUE = pinsBase.createSprite("blue", 24, 0, 12, 12);
-            PIN_GREEN = pinsBase.createSprite("green", 36, 0, 12, 12);
-        }
-
-        static void load() {
-        }
-    }
-
     private Sprites() {
     }
 

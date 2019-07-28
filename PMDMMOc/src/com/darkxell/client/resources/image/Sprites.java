@@ -8,6 +8,8 @@ import com.darkxell.client.resources.image.dungeon.ShadowSpriteSet;
 import com.darkxell.client.resources.image.graphicallayer.LSDSpriteSet;
 import com.darkxell.client.resources.image.graphicallayer.SeaSpriteSet;
 import com.darkxell.client.resources.image.graphicallayer.WetDreamSpriteSet;
+import com.darkxell.client.resources.image.map.PinsSpriteset;
+import com.darkxell.client.resources.images.Sprite;
 import com.darkxell.common.util.Logger;
 
 /**
@@ -22,11 +24,17 @@ public final class Sprites {
         public static final ItemsSpriteset items = new ItemsSpriteset();
         public static final ShadowSpriteSet shadows = new ShadowSpriteSet();
     }
-    
+
     public static class GraphicalLayerSprites {
+        public static final WetDreamSpriteSet Dream = new WetDreamSpriteSet();
         public static final LSDSpriteSet LSD = new LSDSpriteSet();
         public static final SeaSpriteSet Sea = new SeaSpriteSet();
-        public static final WetDreamSpriteSet Dream = new WetDreamSpriteSet();
+    }
+
+    public static class MapSprites {
+        public static final Sprite globalMap = new Sprite("/hud/map/globalmap.png");
+        public static final Sprite localMap = new Sprite("/hud/map/localmap.png");
+        public static final PinsSpriteset pins = new PinsSpriteset();
     }
 
     public static void load() {

@@ -10,8 +10,8 @@ import com.darkxell.client.launchable.GameSocketEndpoint;
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.cutscene.CutsceneManager;
 import com.darkxell.client.renderers.TextRenderer;
+import com.darkxell.client.resources.image.Sprites.MapSprites;
 import com.darkxell.client.resources.images.Sprites;
-import com.darkxell.client.resources.images.Sprites.Res_Map;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.StateManager;
 import com.darkxell.client.state.freezone.FreezoneExploreState;
@@ -169,9 +169,9 @@ public class DungeonSelectionMapState extends AbstractState {
 
         g.translate(translateX, translateY);
         // DRAWS THE MAP
-        g.drawImage(Res_Map.GLOBALMAP.image(), 0, 0, null);
+        g.drawImage(MapSprites.globalMap.image(), 0, 0, null);
         for (int i = 0; i < dungeonslist.size(); ++i)
-            g.drawImage(i == cursor ? Res_Map.PIN_BLUE.image() : Res_Map.PIN_YELLOW.image(), dungeonslist.get(i).mapx,
+            g.drawImage(i == cursor ? MapSprites.pins.blue() : MapSprites.pins.yellow(), dungeonslist.get(i).mapx,
                     dungeonslist.get(i).mapy, null);
         // TRANSLATES THE GRAPHICS BACK
         g.translate(-translateX, -translateY);
