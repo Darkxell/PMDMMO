@@ -3,7 +3,6 @@ package com.darkxell.client.resources.images;
 import java.awt.image.BufferedImage;
 
 import com.darkxell.client.resources.Res;
-import com.darkxell.client.resources.images.entities.WaterSparklesSpriteSet;
 import com.darkxell.client.ui.Frame.FrameIconSprite;
 
 /** Class that holds Sprites & SpriteSets used in the whole project. */
@@ -61,28 +60,6 @@ public final class Sprites {
                 return BACKGROUNDS[id].image();
             }
             return BACKGROUNDS[DEFAULT_BACKGROUND_INDEX].image();
-        }
-
-        static void load() {
-        }
-    }
-
-    public static class Res_FreezoneEntities {
-        public static final Sprite cristal_red, cristal_yellow, cristal_lightray;
-        public static final RegularSpriteSet flag = new RegularSpriteSet("/freezones/entities/flag.png", 32, 8, 192, 8);
-        public static final RegularSpriteSet RedFlower = new RegularSpriteSet("/freezones/entities/redflower.png", 32,
-                32, 192, 32);
-
-        public static final WaterSparklesSpriteSet waterSparkles = new WaterSparklesSpriteSet();
-
-        public static final RegularSpriteSet YellowFlower = new RegularSpriteSet("/freezones/entities/yellowflower.png",
-                32, 32, 192, 32);
-
-        static {
-            Sprite cristal = new Sprite("/freezones/entities/cristal.png");
-            cristal_red = SpriteFactory.instance().subSprite(cristal, 1, 54, 56, 81);
-            cristal_yellow = SpriteFactory.instance().subSprite(cristal, 58, 54, 56, 81);
-            cristal_lightray = SpriteFactory.instance().subSprite(cristal, 115, 1, 48, 134);
         }
 
         static void load() {

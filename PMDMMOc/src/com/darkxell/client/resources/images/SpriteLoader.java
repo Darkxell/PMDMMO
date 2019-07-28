@@ -3,7 +3,6 @@ package com.darkxell.client.resources.images;
 import java.util.ArrayList;
 
 import com.darkxell.client.resources.images.Sprites.Res_Frame;
-import com.darkxell.client.resources.images.Sprites.Res_FreezoneEntities;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
 import com.darkxell.client.resources.images.tilesets.FloorDungeonTileset;
 import com.darkxell.common.Registries;
@@ -23,7 +22,6 @@ public final class SpriteLoader {
     /** Loads SpriteSets used in the whole project. */
     public static void loadCommon() {
         Res_Frame.load();
-        Res_FreezoneEntities.load();
     }
 
     /**

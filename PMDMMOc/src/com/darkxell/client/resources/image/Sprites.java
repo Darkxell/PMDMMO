@@ -5,14 +5,16 @@ import com.darkxell.client.resources.image.dungeon.DungeonHudSpriteset;
 import com.darkxell.client.resources.image.dungeon.DungeonMapTileset;
 import com.darkxell.client.resources.image.dungeon.ItemsSpriteset;
 import com.darkxell.client.resources.image.dungeon.ShadowSpriteSet;
+import com.darkxell.client.resources.image.freezoneentity.CristalSpriteset;
+import com.darkxell.client.resources.image.freezoneentity.WaterSparklesSpriteSet;
 import com.darkxell.client.resources.image.graphicallayer.LSDSpriteSet;
 import com.darkxell.client.resources.image.graphicallayer.SeaSpriteSet;
 import com.darkxell.client.resources.image.graphicallayer.WetDreamSpriteSet;
 import com.darkxell.client.resources.image.hud.FontSpriteSet;
 import com.darkxell.client.resources.image.hud.MenuStateHudSpriteset;
 import com.darkxell.client.resources.image.map.PinsSpriteset;
+import com.darkxell.client.resources.image.spritefactory.PMDRegularSpriteset;
 import com.darkxell.client.resources.images.Sprite;
-import com.darkxell.common.util.Logger;
 
 /**
  * This class holds all Sprites that are used regularly throughout the game.
@@ -25,6 +27,17 @@ public final class Sprites {
         public static final DungeonMapTileset dungeonMap = new DungeonMapTileset();
         public static final ItemsSpriteset items = new ItemsSpriteset();
         public static final ShadowSpriteSet shadows = new ShadowSpriteSet();
+    }
+
+    public static class FreezoneEntitySprites {
+        public static final CristalSpriteset cristals = new CristalSpriteset();
+        public static final PMDRegularSpriteset flag = new PMDRegularSpriteset("/freezones/entities/flag.png", 32, 8,
+                192, 8);
+        public static final PMDRegularSpriteset RedFlower = new PMDRegularSpriteset("/freezones/entities/redflower.png",
+                32, 32, 192, 32);
+        public static final WaterSparklesSpriteSet waterSparkles = new WaterSparklesSpriteSet();
+        public static final PMDRegularSpriteset YellowFlower = new PMDRegularSpriteset(
+                "/freezones/entities/yellowflower.png", 32, 32, 192, 32);
     }
 
     public static class GraphicalLayerSprites {
@@ -54,7 +67,6 @@ public final class Sprites {
     }
 
     public static void load() {
-        Logger.i("Loading common sprites...");
     }
 
     private Sprites() {
