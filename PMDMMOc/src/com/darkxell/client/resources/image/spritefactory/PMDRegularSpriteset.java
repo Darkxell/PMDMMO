@@ -16,9 +16,15 @@ public class PMDRegularSpriteset extends PMDSpriteset {
     }
 
     public PMDRegularSpriteset(String path, int width, int height) {
+        this(path, width, height, -1, -1);
+    }
+
+    public PMDRegularSpriteset(String path, int width, int height, int expectedColumns, int expectedRows) {
         super(path);
         this.spriteWidth = width;
         this.spriteHeight = height;
+        this.columns = expectedColumns;
+        this.rows = expectedRows;
         this.createSprite(this.spriteId(0, 0), 0, 0, this.spriteWidth, this.spriteHeight);
 
         if (this.isLoaded())
@@ -58,12 +64,16 @@ public class PMDRegularSpriteset extends PMDSpriteset {
     protected void onLoad() {
         super.onLoad();
 
-        this.columns = this.image().getWidth() / this.spriteWidth;
-        this.rows = this.image().getHeight() / this.spriteHeight;
+        if (this.columns != -1)
+            this.columns = this.image().getWidth() / this.spriteWidth;
+        if (this.rows != -1)
+            this.rows = this.image().getHeight() / this.spriteHeight;
+
         if (this.columns == 0)
             this.columns = 1;
         if (this.rows == 0)
             this.rows = 1;
+
         for (int x = 0; x < this.columns; ++x)
             for (int y = 0; y < this.rows; ++y)
                 this.createSprite(this.spriteId(x, y), this.spriteWidth * x, this.spriteHeight * y, this.spriteWidth,
