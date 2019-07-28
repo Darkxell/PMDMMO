@@ -43,6 +43,21 @@ public abstract class PMDSpriteset extends PMDSprite {
         this.images.put(id, Res.createimage(this.image(), location.x, location.y, location.width, location.height));
     }
 
+    /**
+     * Creates several sprites in a row.
+     * 
+     * @param baseID      - The baseID of the sprite. The index of the sprite in the row will be added to it as a
+     *                    suffix.
+     * @param startX      startY - The starting topleft position of the row.
+     * @param spriteWidth spriteHeight - The size of each sprite.
+     * @param count       - The number of sprites to create.
+     */
+    protected void createSpriteRow(String baseID, int startX, int startY, int spriteWidth, int spriteHeight,
+            int count) {
+        for (int i = 0; i < count; ++i)
+            this.createSprite(baseID + i, startX + i * spriteWidth, startY, spriteWidth, spriteHeight);
+    }
+
     public BufferedImage getSprite(String id) {
         this.checkLoaded();
         if (this.images.containsKey(id))

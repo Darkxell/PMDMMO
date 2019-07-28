@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import com.darkxell.client.resources.images.Sprites.Res_Frame;
 import com.darkxell.client.resources.images.Sprites.Res_FreezoneEntities;
-import com.darkxell.client.resources.images.Sprites.Res_GraphicalLayers;
 import com.darkxell.client.resources.images.Sprites.Res_Hud;
 import com.darkxell.client.resources.images.Sprites.Res_Map;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
@@ -27,7 +26,6 @@ public final class SpriteLoader {
     public static void loadCommon() {
         Res_Frame.load();
         Res_FreezoneEntities.load();
-        Res_GraphicalLayers.load();
         Res_Hud.load();
         Res_Map.load();
     }
