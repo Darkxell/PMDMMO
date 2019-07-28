@@ -11,6 +11,8 @@ import com.darkxell.client.resources.image.freezoneentity.WaterSparklesSpriteSet
 import com.darkxell.client.resources.image.graphicallayer.LSDSpriteSet;
 import com.darkxell.client.resources.image.graphicallayer.SeaSpriteSet;
 import com.darkxell.client.resources.image.graphicallayer.WetDreamSpriteSet;
+import com.darkxell.client.resources.image.hud.ChatFooterSpriteset;
+import com.darkxell.client.resources.image.hud.ChatIconsSpriteset;
 import com.darkxell.client.resources.image.hud.FontSpriteSet;
 import com.darkxell.client.resources.image.hud.MenuStateHudSpriteset;
 import com.darkxell.client.resources.image.map.PinsSpriteset;
@@ -39,9 +41,8 @@ public final class Sprites {
         public static final Sprite BG5 = new Sprite("/hud/framebackgrounds/5.jpg");
         public static final Sprite BG6 = new Sprite("/hud/framebackgrounds/6.png");
         public static final Sprite BG7 = new Sprite("/hud/framebackgrounds/7.jpg");
-        public static final Sprite ICON = new FrameIconSprite("/hud/framebackgrounds/icon.png");
-        
         public static final BoxSpriteset box = new BoxSpriteset();
+        public static final Sprite ICON = new FrameIconSprite("/hud/framebackgrounds/icon.png");
     }
 
     public static class FreezoneEntitySprites {
@@ -63,8 +64,9 @@ public final class Sprites {
 
     public static class HudSprites {
         public static final Sprite button = new Sprite("/hud/button.png");
+        public static final ChatFooterSpriteset chatFooter = new ChatFooterSpriteset();
+        public static final ChatIconsSpriteset chatIcons = new ChatIconsSpriteset();
         public static final Sprite createaccountframe = new Sprite("/hud/create.png");
-
         public static final FontSpriteSet font = new FontSpriteSet();
         public static final Sprite gametitle = new Sprite("/hud/title.png");
         public static final Sprite loginframe = new Sprite("/hud/login.png");

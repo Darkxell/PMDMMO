@@ -4,8 +4,8 @@ import com.darkxell.client.launchable.ClientSettings;
 import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.animation.Animations;
+import com.darkxell.client.resources.image.Sprites;
 import com.darkxell.client.resources.images.SpriteFactory;
-import com.darkxell.client.resources.images.SpriteLoader;
 import com.darkxell.client.resources.images.pokemon.PokemonPortrait;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
 import com.darkxell.client.resources.music.SoundManager;
@@ -35,7 +35,7 @@ public class DataEditor extends Application {
         Localization.load(false);
         SpriteFactory.load();
         Registries.load();
-        SpriteLoader.loadCommon();
+        Sprites.load();
         PokemonSpritesets.loadData("../PMDMMOc/resources/pokemons/data");
         PokemonPortrait.load();
         Animations.loadData();

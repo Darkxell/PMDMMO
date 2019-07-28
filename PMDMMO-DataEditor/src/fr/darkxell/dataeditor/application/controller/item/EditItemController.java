@@ -3,7 +3,7 @@ package fr.darkxell.dataeditor.application.controller.item;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import com.darkxell.client.resources.images.Sprites;
+import com.darkxell.client.resources.image.Sprites.DungeonSprites;
 import com.darkxell.common.item.Item;
 import com.darkxell.common.item.Item.ItemCategory;
 
@@ -121,7 +121,7 @@ public class EditItemController implements Initializable {
     }
 
     private void updateImage() {
-        this.imageView.setImage(SwingFXUtils.toFXImage(Sprites.Res_Dungeon.items.getImg(this.spriteSpinner.getValue()),
+        this.imageView.setImage(SwingFXUtils.toFXImage(DungeonSprites.items.getSprite(this.spriteSpinner.getValue()),
                 new WritableImage(16, 16)));
     }
 

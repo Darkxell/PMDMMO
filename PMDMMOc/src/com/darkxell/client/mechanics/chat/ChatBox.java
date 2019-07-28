@@ -9,7 +9,7 @@ import com.darkxell.client.launchable.GameSocketEndpoint;
 import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.resources.Palette;
-import com.darkxell.client.resources.images.hud.ChatResources;
+import com.darkxell.client.resources.image.Sprites.HudSprites;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.util.language.Message;
 import com.eclipsesource.json.JsonObject;
@@ -61,9 +61,9 @@ public class ChatBox {
         g.drawImage(ChatResources.HEADER, 0, 0, width, headerheight, null);
         // Draw the footer
         g.drawImage(ChatResources.getFooter(
-                selectedcategory == CHAT_GENERAL ? ChatResources.ICON_CHANNEL_GLOBAL.image()
-                        : selectedcategory == CHAT_GUILD ? ChatResources.ICON_CHANNEL_GUILD.image()
-                                : selectedcategory == CHAT_WHISPER ? ChatResources.ICON_CHANNEL_PRIVATE.image() : null,
+                selectedcategory == CHAT_GENERAL ? HudSprites.chatIcons.global()
+                        : selectedcategory == CHAT_GUILD ? HudSprites.chatIcons.guild()
+                                : selectedcategory == CHAT_WHISPER ? HudSprites.chatIcons.privateIcon() : null,
                 footerheight, width), 0, height - footerheight, width, footerheight, null);
         // Draws the footer shadow and content
         g.setColor(Color.WHITE);

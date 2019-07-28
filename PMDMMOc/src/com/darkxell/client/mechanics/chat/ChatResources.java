@@ -1,32 +1,14 @@
-package com.darkxell.client.resources.images.hud;
+package com.darkxell.client.mechanics.chat;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import com.darkxell.client.mechanics.chat.ChatBox;
-import com.darkxell.client.resources.images.Sprite;
-import com.darkxell.client.resources.images.SpriteFactory;
+import com.darkxell.client.resources.image.Sprites.HudSprites;
 
 public class ChatResources {
 
     public static final BufferedImage HEADER = createHeader(true, true, true);
-    public static final Sprite FOOTER = new Sprite("/hud/chat/chatfooter.png", 210, 35);
-    public static final Sprite FOOTER_LEFT;
-    public static final Sprite FOOTER_RIGHT;
-    public static final Sprite FOOTER_CENTER;
-    public static final Sprite ICON_CHANNEL_GLOBAL, ICON_CHANNEL_GUILD, ICON_CHANNEL_PRIVATE, ICON_SEND;
-
-    static {
-        Sprite ICONSBASE = new Sprite("/hud/chat/icons.png");
-        ICON_CHANNEL_GLOBAL = SpriteFactory.instance().subSprite(ICONSBASE, 0, 0, 32, 32);
-        ICON_CHANNEL_GUILD = SpriteFactory.instance().subSprite(ICONSBASE, 32, 0, 32, 32);
-        ICON_CHANNEL_PRIVATE = SpriteFactory.instance().subSprite(ICONSBASE, 64, 0, 32, 32);
-        ICON_SEND = SpriteFactory.instance().subSprite(ICONSBASE, 96, 0, 32, 32);
-        FOOTER_LEFT = SpriteFactory.instance().subSprite(FOOTER, 0, 0, 43, 35);
-        FOOTER_RIGHT = SpriteFactory.instance().subSprite(FOOTER, 171, 0, 39, 35);
-        FOOTER_CENTER = SpriteFactory.instance().subSprite(FOOTER, 43, 0, 125, 35);
-    }
 
     private static BufferedImage createHeader(boolean general, boolean guild, boolean whisper) {
         BufferedImage header = new BufferedImage(210, 35, BufferedImage.TYPE_INT_RGB);
@@ -57,12 +39,12 @@ public class ChatResources {
             buffergraphics = buffer.createGraphics();
         }
         buffergraphics.clearRect(0, 0, buffer.getWidth(), buffer.getHeight());
-        buffergraphics.drawImage(FOOTER_LEFT.image(), 0, 0, null);
-        for (int i = FOOTER_LEFT.image().getWidth(); i < width; i += FOOTER_CENTER.image().getWidth())
-            buffergraphics.drawImage(FOOTER_CENTER.image(), i, 0, null);
-        buffergraphics.drawImage(FOOTER_RIGHT.image(), width - FOOTER_RIGHT.image().getWidth(), 0, null);
+        buffergraphics.drawImage(HudSprites.chatFooter.left(), 0, 0, null);
+        for (int i = HudSprites.chatFooter.left().getWidth(); i < width; i += HudSprites.chatFooter.center().getWidth())
+            buffergraphics.drawImage(HudSprites.chatFooter.center(), i, 0, null);
+        buffergraphics.drawImage(HudSprites.chatFooter.right(), width - HudSprites.chatFooter.right().getWidth(), 0, null);
         buffergraphics.drawImage(dest, 0, 3, null);
-        buffergraphics.drawImage(ICON_SEND.image(), width - ICON_SEND.image().getWidth() - 3, 3, null);
+        buffergraphics.drawImage(HudSprites.chatIcons.send(), width - HudSprites.chatIcons.send().getWidth() - 3, 3, null);
         return buffer;
     }
 
