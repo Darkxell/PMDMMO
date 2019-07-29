@@ -9,12 +9,23 @@ public class FreezoneTile {
     public static final byte TYPE_SOLID = 0;
     public static final byte TYPE_WALKABLE = 1;
 
+    private String tileset;
+    private int tilesetX, tilesetY;
     public byte type;
-    public BufferedImage sprite;
 
-    public FreezoneTile(byte type, BufferedImage sprite) {
+    public FreezoneTile(byte type) {
         this.type = type;
-        this.sprite = sprite;
+    }
+
+    public BufferedImage getSprite(FreezoneMap map) {
+        return map.getTileset(this.tileset).getSprite(this.tilesetX, this.tilesetY);
+    }
+
+    public FreezoneTile setTileSprite(String tileset, int tilesetX, int tilesetY) {
+        this.tileset = tileset;
+        this.tilesetX = tilesetX;
+        this.tilesetY = tilesetY;
+        return this;
     }
 
 }

@@ -50,7 +50,7 @@ public class AbstractFreezoneState extends AbstractState {
                 for (int j = 0; j < map.mapWidth; j++) {
                     int tileid = (i * map.mapWidth) + j;
                     // if (!map.tiles[tileid].sprite.isLoaded()) System.out.println("wat");
-                    g.drawImage(map.tiles[tileid].sprite, 8 * j, 8 * i, null);
+                    g.drawImage(map.tiles[tileid].getSprite(map), 8 * j, 8 * i, null);
                     if (Persistence.debugdisplaymode)
                         if (map.tiles[tileid].type == FreezoneTile.TYPE_SOLID) {
                             g.setColor(new Color(150, 20, 20, 100));

@@ -88,7 +88,7 @@ public abstract class FreezoneMap {
         return this.tiles[id];
     }
 
-    private AbstractFreezoneTileset getTileset(String key) {
+    AbstractFreezoneTileset getTileset(String key) {
         if (this.tilesets.containsKey(key)) {
             return this.tilesets.get(key);
         }
@@ -105,7 +105,7 @@ public abstract class FreezoneMap {
 
         this.tiles = new FreezoneTile[mapWidth * mapHeight];
         for (int i = 0; i < this.tiles.length; i++) {
-            this.tiles[i] = new FreezoneTile(FreezoneTile.TYPE_WALKABLE, null);
+            this.tiles[i] = new FreezoneTile(FreezoneTile.TYPE_WALKABLE);
         }
 
         AbstractFreezoneTileset defaultTileset = null;
@@ -124,13 +124,7 @@ public abstract class FreezoneMap {
 
                 int xo = this.tagIntAttr(el, "xo") / TILE_SIZE;
                 int yo = this.tagIntAttr(el, "yo") / TILE_SIZE;
-                refTile.sprite = refTileset.getSprite(xo, yo);
-            }
-        }
-
-        for (FreezoneTile t : this.tiles) {
-            if (t.sprite == null) {
-                t.sprite = defaultTileset.getDefault();
+                refTile.setTileSprite(bgName, xo, yo);
             }
         }
     }
