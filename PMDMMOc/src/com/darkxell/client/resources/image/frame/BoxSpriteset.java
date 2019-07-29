@@ -8,7 +8,7 @@ import com.darkxell.common.util.Direction;
 public class BoxSpriteset extends PMDSpriteset {
 
     public BoxSpriteset() {
-        super("/hud/boxcorners");
+        super("/hud/boxcorners.png");
         this.createSprite(Direction.EAST.name(), 8, 3, 7, 1);
         this.createSprite(Direction.NORTH.name(), 7, 0, 1, 3);
         this.createSprite(Direction.NORTHEAST.name(), 8, 0, 7, 3);

@@ -12,15 +12,15 @@ import com.darkxell.common.util.Logger;
 
 public final class Portraits {
 
-    private static final PortraitSpriteset alternates = new PortraitSpriteset("/pokemons/portraits/forms.png", 1000,
+    private static final PortraitSpriteset alternates = new PortraitSpriteset("/pokemons/portraits/forms.png", 10001,
             20);
     private static final PortraitSpriteset alternateShinies = new PortraitSpriteset(
-            "/pokemons/portraits/portraits/forms-shiny.png", 1000, 20);
+            "/pokemons/portraits/forms-shiny.png", 10001, 20);
     static final ArrayList<Integer> emotionPokemons = new ArrayList<>();
     private static final EmotionPortraitsSpriteset emotions = new EmotionPortraitsSpriteset(
             "/pokemons/portraits/normal-emotions.png");
-    private static final PortraitSpriteset normal = new PortraitSpriteset("/pokemons/portraits/normal.png", 0, 100);
-    private static final PortraitSpriteset shinies = new PortraitSpriteset("/pokemons/portraits/shiny.png", 0, 100);
+    private static final PortraitSpriteset normal = new PortraitSpriteset("/pokemons/portraits/normal.png", 1, 100);
+    private static final PortraitSpriteset shinies = new PortraitSpriteset("/pokemons/portraits/shiny.png", 1, 100);
     private static final EmotionPortraitsSpriteset shinyEmotions = new EmotionPortraitsSpriteset(
             "/pokemons/portraits/shiny-emotions.png");
 
