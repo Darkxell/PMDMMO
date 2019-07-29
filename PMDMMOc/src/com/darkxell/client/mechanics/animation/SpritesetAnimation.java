@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 
 import com.darkxell.client.mechanics.animation.spritemovement.SpritesetAnimationMovement;
 import com.darkxell.client.renderers.pokemon.AbstractPokemonRenderer;
-import com.darkxell.client.resources.images.RegularSpriteSet;
+import com.darkxell.client.resources.image.spritefactory.PMDRegularSpriteset;
 
 public class SpritesetAnimation extends PokemonAnimation {
 
@@ -18,11 +18,11 @@ public class SpritesetAnimation extends PokemonAnimation {
     }
 
     public final int[] sprites;
-    public final RegularSpriteSet spriteset;
+    public final PMDRegularSpriteset spriteset;
     /** Describes how the Sprites may move. May be null for no Movement. */
     SpritesetAnimationMovement spritesetMovement;
 
-    public SpritesetAnimation(AnimationData data, AbstractPokemonRenderer renderer, RegularSpriteSet spriteset,
+    public SpritesetAnimation(AnimationData data, AbstractPokemonRenderer renderer, PMDRegularSpriteset spriteset,
             int[] sprites, AnimationEndListener listener) {
         super(data, renderer, sprites.length * data.spriteDuration, listener);
         this.spriteset = spriteset;
@@ -36,7 +36,7 @@ public class SpritesetAnimation extends PokemonAnimation {
 
         if (index != -1 && ((back && this.data.backSpriteUsage != BackSpriteUsage.no)
                 || (!back && this.data.backSpriteUsage != BackSpriteUsage.only)))
-            g.drawImage(this.spriteset.getImg(index), (int) this.x - this.data.gravityX,
+            g.drawImage(this.spriteset.getSprite(index), (int) this.x - this.data.gravityX,
                     (int) (this.y - this.data.gravityY), null);
     }
 

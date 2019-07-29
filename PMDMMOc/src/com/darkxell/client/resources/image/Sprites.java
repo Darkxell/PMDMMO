@@ -17,8 +17,7 @@ import com.darkxell.client.resources.image.hud.FontSpriteSet;
 import com.darkxell.client.resources.image.hud.MenuStateHudSpriteset;
 import com.darkxell.client.resources.image.map.PinsSpriteset;
 import com.darkxell.client.resources.image.spritefactory.PMDRegularSpriteset;
-import com.darkxell.client.resources.images.Sprite;
-import com.darkxell.client.ui.Frame.FrameIconSprite;
+import com.darkxell.client.resources.image.spritefactory.PMDSprite;
 
 /**
  * This class holds all Sprites that are used regularly throughout the game.
@@ -34,15 +33,15 @@ public final class Sprites {
     }
 
     public static class FrameSprites {
-        public static final Sprite BG1 = new Sprite("/hud/framebackgrounds/1.jpg");
-        public static final Sprite BG2 = new Sprite("/hud/framebackgrounds/2.jpg");
-        public static final Sprite BG3 = new Sprite("/hud/framebackgrounds/3.png");
-        public static final Sprite BG4 = new Sprite("/hud/framebackgrounds/4.png");
-        public static final Sprite BG5 = new Sprite("/hud/framebackgrounds/5.jpg");
-        public static final Sprite BG6 = new Sprite("/hud/framebackgrounds/6.png");
-        public static final Sprite BG7 = new Sprite("/hud/framebackgrounds/7.jpg");
+        public static final PMDSprite BG1 = new PMDSprite("/hud/framebackgrounds/1.jpg");
+        public static final PMDSprite BG2 = new PMDSprite("/hud/framebackgrounds/2.jpg");
+        public static final PMDSprite BG3 = new PMDSprite("/hud/framebackgrounds/3.png");
+        public static final PMDSprite BG4 = new PMDSprite("/hud/framebackgrounds/4.png");
+        public static final PMDSprite BG5 = new PMDSprite("/hud/framebackgrounds/5.jpg");
+        public static final PMDSprite BG6 = new PMDSprite("/hud/framebackgrounds/6.png");
+        public static final PMDSprite BG7 = new PMDSprite("/hud/framebackgrounds/7.jpg");
         public static final BoxSpriteset box = new BoxSpriteset();
-        public static final Sprite ICON = new FrameIconSprite("/hud/framebackgrounds/icon.png");
+        public static final PMDSprite ICON = new PMDSprite("/hud/framebackgrounds/icon.png");
     }
 
     public static class FreezoneEntitySprites {
@@ -63,23 +62,25 @@ public final class Sprites {
     }
 
     public static class HudSprites {
-        public static final Sprite button = new Sprite("/hud/button.png");
+        public static final PMDSprite billboard = new PMDSprite("/hud/billboard_list.png");
+        public static final PMDSprite billboardDetails = new PMDSprite("/hud/billboard_details.png");
+        public static final PMDSprite button = new PMDSprite("/hud/button.png");
         public static final ChatFooterSpriteset chatFooter = new ChatFooterSpriteset();
         public static final ChatIconsSpriteset chatIcons = new ChatIconsSpriteset();
-        public static final Sprite createaccountframe = new Sprite("/hud/create.png");
+        public static final PMDSprite createaccountframe = new PMDSprite("/hud/create.png");
         public static final FontSpriteSet font = new FontSpriteSet();
-        public static final Sprite gametitle = new Sprite("/hud/title.png");
-        public static final Sprite loginframe = new Sprite("/hud/login.png");
+        public static final PMDSprite gametitle = new PMDSprite("/hud/title.png");
+        public static final PMDSprite loginframe = new PMDSprite("/hud/login.png");
         public static final MenuStateHudSpriteset menuHud = new MenuStateHudSpriteset();
-        public static final Sprite portrait = new Sprite("/hud/portrait.png");
-        public static final Sprite proceedaccountframe = new Sprite("/hud/create2.png");
-        public static final Sprite textwindow = new Sprite("/hud/textwindow.png");
-        public static final Sprite textwindow_transparent = new Sprite("/hud/textwindow_transparent.png");
+        public static final PMDSprite portrait = new PMDSprite("/hud/portrait.png");
+        public static final PMDSprite proceedaccountframe = new PMDSprite("/hud/create2.png");
+        public static final PMDSprite textwindow = new PMDSprite("/hud/textwindow.png");
+        public static final PMDSprite textwindow_transparent = new PMDSprite("/hud/textwindow_transparent.png");
     }
 
     public static class MapSprites {
-        public static final Sprite globalMap = new Sprite("/hud/map/globalmap.png");
-        public static final Sprite localMap = new Sprite("/hud/map/localmap.png");
+        public static final PMDSprite globalMap = new PMDSprite("/hud/map/globalmap.png");
+        public static final PMDSprite localMap = new PMDSprite("/hud/map/localmap.png");
         public static final PinsSpriteset pins = new PinsSpriteset();
     }
 

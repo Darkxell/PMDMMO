@@ -76,4 +76,8 @@ public abstract class PMDSpriteset extends PMDSprite {
         }
     }
 
+    public int spriteCount() {
+        return this.parts.size();
+    }
+
 }

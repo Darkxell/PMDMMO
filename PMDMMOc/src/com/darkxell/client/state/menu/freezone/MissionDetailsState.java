@@ -5,10 +5,10 @@ import java.awt.Graphics2D;
 
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.renderers.TextRenderer;
+import com.darkxell.client.resources.image.Sprites.HudSprites;
 import com.darkxell.client.resources.image.pokemon.portrait.AbstractPortraitSpriteset;
 import com.darkxell.client.resources.image.pokemon.portrait.PortraitEmotion;
 import com.darkxell.client.resources.image.pokemon.portrait.Portraits;
-import com.darkxell.client.resources.images.Sprite;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.Registries;
@@ -23,7 +23,6 @@ public class MissionDetailsState extends AbstractState {
     private AbstractState previousstate;
     private AbstractState exploresource;
     private Mission mission;
-    Sprite billboard = new Sprite("/hud/billboard_details.png");
     private byte acceptstatus = STATUS_CANACCEPT;
     private static final byte STATUS_CANACCEPT = 0;
     private static final byte STATUS_WAITING = 1;
@@ -72,7 +71,7 @@ public class MissionDetailsState extends AbstractState {
         ItemRegistry items = Registries.items();
 
         this.exploresource.render(g, width, height);
-        g.drawImage(billboard.image(), 0, 0, null);
+        g.drawImage(HudSprites.billboardDetails.image(), 0, 0, null);
 
         int offsetx = 55, offsety = 50;
         int basewidth = width - (2 * offsetx);

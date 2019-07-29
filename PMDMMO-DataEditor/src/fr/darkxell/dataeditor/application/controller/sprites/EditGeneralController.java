@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 
 import com.darkxell.client.resources.image.pokemon.body.PokemonSpritesetData;
 import com.darkxell.client.resources.image.pokemon.body.PokemonSpritesets;
-import com.darkxell.client.resources.images.RegularSpriteSet;
+import com.darkxell.client.resources.image.spritefactory.PMDRegularSpriteset;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -21,7 +21,7 @@ public class EditGeneralController implements Initializable {
     @FXML
     public TextField heightTextfield;
     public SpritesTabController parent;
-    public RegularSpriteSet spriteset;
+    public PMDRegularSpriteset spriteset;
     private int spritesetid;
     @FXML
     public TextField widthTextfield;

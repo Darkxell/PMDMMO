@@ -6,7 +6,7 @@ import java.awt.Rectangle;
 import com.darkxell.client.resources.image.Sprites.HudSprites;
 import com.darkxell.client.resources.image.pokemon.portrait.PortraitEmotion;
 import com.darkxell.client.resources.image.pokemon.portrait.Portraits;
-import com.darkxell.client.resources.images.Sprite;
+import com.darkxell.client.resources.image.spritefactory.PMDSprite;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.util.Position;
@@ -25,7 +25,7 @@ public class PokemonDialogScreen extends DialogScreen {
             this.flip = flip;
         }
 
-        public Position locate(Rectangle dialogBox, Sprite portrait) {
+        public Position locate(Rectangle dialogBox, PMDSprite portrait) {
             switch (this) {
             case TOP_LEFT:
                 return new Position(dialogBox.x + 5, 5);

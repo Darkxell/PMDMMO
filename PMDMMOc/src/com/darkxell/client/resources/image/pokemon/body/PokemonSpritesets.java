@@ -9,7 +9,7 @@ import java.util.HashMap;
 import org.jdom2.Element;
 
 import com.darkxell.client.resources.Res;
-import com.darkxell.client.resources.images.RegularSpriteSet;
+import com.darkxell.client.resources.image.spritefactory.PMDRegularSpriteset;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.util.Logger;
@@ -134,8 +134,8 @@ public final class PokemonSpritesets {
         setSpritesetData(id, new PokemonSpritesetData(dataID, xml));
     }
 
-    public static RegularSpriteSet loadTestSpriteset(int id, int spriteWidth, int spriteHeight) {
-        return new RegularSpriteSet("/pokemons/" + id + ".png", spriteWidth, spriteHeight, -1, -1);
+    public static PMDRegularSpriteset loadTestSpriteset(int id, int spriteWidth, int spriteHeight) {
+        return new PMDRegularSpriteset("/pokemons/" + id + ".png", spriteWidth, spriteHeight, -1, -1);
     }
 
     public static void remove(PokemonSpritesetData item) {

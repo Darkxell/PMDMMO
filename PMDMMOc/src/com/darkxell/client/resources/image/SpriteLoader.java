@@ -1,4 +1,4 @@
-package com.darkxell.client.resources.images;
+package com.darkxell.client.resources.image;
 
 import java.util.ArrayList;
 

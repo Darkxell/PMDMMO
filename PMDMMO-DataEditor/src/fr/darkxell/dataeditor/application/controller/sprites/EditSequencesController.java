@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 import com.darkxell.client.resources.image.pokemon.body.PSDFrame;
 import com.darkxell.client.resources.image.pokemon.body.PSDSequence;
 import com.darkxell.client.resources.image.pokemon.body.PokemonSpritesetData;
-import com.darkxell.client.resources.images.RegularSpriteSet;
+import com.darkxell.client.resources.image.spritefactory.PMDRegularSpriteset;
 
 import fr.darkxell.dataeditor.application.DataEditor;
 import fr.darkxell.dataeditor.application.controls.CustomList;
@@ -67,12 +67,12 @@ public class EditSequencesController implements Initializable, ListCellParent<PS
     public Node graphicFor(PSDFrame item) {
         if (this.parent == null || item == null)
             return null;
-        RegularSpriteSet spriteset = this.parent.generalDataController.spriteset;
+        PMDRegularSpriteset spriteset = this.parent.generalDataController.spriteset;
         if (spriteset == null)
             return null;
-        if (spriteset.get(item.frameID) == null)
+        if (spriteset.getSprite(item.frameID) == null)
             return null;
-        return new ImageView(SwingFXUtils.toFXImage(spriteset.get(item.frameID).image(), null));
+        return new ImageView(SwingFXUtils.toFXImage(spriteset.getSprite(item.frameID), null));
     }
 
     @Override
@@ -168,12 +168,12 @@ public class EditSequencesController implements Initializable, ListCellParent<PS
     public double prefWidth(PSDFrame item) {
         if (this.parent == null || item == null)
             return 30;
-        RegularSpriteSet spriteset = this.parent.generalDataController.spriteset;
+        PMDRegularSpriteset spriteset = this.parent.generalDataController.spriteset;
         if (spriteset == null)
             return 30;
-        if (spriteset.get(item.frameID) == null)
+        if (spriteset.getSprite(item.frameID) == null)
             return 30;
-        return Math.max(30, spriteset.get(item.frameID).image().getHeight());
+        return Math.max(30, spriteset.getSprite(item.frameID).getHeight());
     }
 
     public void saveSequence(Integer oldValue) {

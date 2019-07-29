@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.image.Sprites.HudSprites;
-import com.darkxell.client.resources.images.Sprite;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.Registries;
@@ -23,7 +22,6 @@ public class MissionBoardState extends AbstractState {
 
     private AbstractState exploresource;
     private ArrayList<Mission> missions = new ArrayList<>();
-    Sprite billboard = new Sprite("/hud/billboard_list.png");
     private int currentpage = 1;
 
     private int selectedmissionpos = 0;
@@ -76,7 +74,7 @@ public class MissionBoardState extends AbstractState {
     @Override
     public void render(Graphics2D g, int width, int height) {
         this.exploresource.render(g, width, height);
-        g.drawImage(billboard.image(), 0, 0, null);
+        g.drawImage(HudSprites.billboard.image(), 0, 0, null);
 
         if (currentpage != 1)
             g.drawImage(HudSprites.menuHud.tabLeft(), 240, 40, null);

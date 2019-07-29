@@ -5,7 +5,7 @@ import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
 import com.darkxell.client.resources.image.pokemon.body.PSDFrame;
-import com.darkxell.client.resources.images.RegularSpriteSet;
+import com.darkxell.client.resources.image.spritefactory.PMDRegularSpriteset;
 
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
@@ -27,7 +27,7 @@ public class EditFrameController implements Initializable {
     private ImageView frameImage;
     @FXML
     private Spinner<Integer> frameSpinner;
-    public RegularSpriteSet spriteset;
+    public PMDRegularSpriteset spriteset;
     @FXML
     private TextField sxTextfield;
     @FXML
@@ -101,7 +101,7 @@ public class EditFrameController implements Initializable {
         this.onCancel();
     }
 
-    public void setSpriteset(RegularSpriteSet spriteset) {
+    public void setSpriteset(PMDRegularSpriteset spriteset) {
         this.spriteset = spriteset;
         this.frameSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0,
                 this.spriteset.rows() * this.spriteset.columns() - 1, 0) {
@@ -132,8 +132,7 @@ public class EditFrameController implements Initializable {
     }
 
     private void updateImage() {
-        this.frameImage
-                .setImage(SwingFXUtils.toFXImage(this.spriteset.get(this.frameSpinner.getValue()).image(), null));
+        this.frameImage.setImage(SwingFXUtils.toFXImage(this.spriteset.getSprite(this.frameSpinner.getValue()), null));
     }
 
 }
