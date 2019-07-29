@@ -8,11 +8,11 @@ import java.util.ResourceBundle;
 import javax.swing.JOptionPane;
 
 import com.darkxell.client.launchable.Launcher;
-import com.darkxell.client.launchable.render.RenderProfile;
 import com.darkxell.client.launchable.Persistence;
+import com.darkxell.client.launchable.render.RenderProfile;
 import com.darkxell.client.mechanics.animation.Animations;
 import com.darkxell.client.mechanics.animation.PokemonAnimation;
-import com.darkxell.client.resources.image.pokemon.body.PokemonSprite.PokemonSpriteState;
+import com.darkxell.client.resources.image.pokemon.body.PokemonSpriteState;
 import com.darkxell.client.state.dungeon.AnimationState;
 import com.darkxell.client.state.dungeon.DungeonState;
 import com.darkxell.client.state.mainstates.PrincipalMainState;

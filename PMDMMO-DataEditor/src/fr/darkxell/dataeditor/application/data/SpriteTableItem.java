@@ -2,7 +2,7 @@ package fr.darkxell.dataeditor.application.data;
 
 import java.util.HashSet;
 
-import com.darkxell.client.resources.image.pokemon.body.PokemonSprite.PokemonSpriteState;
+import com.darkxell.client.resources.image.pokemon.body.PokemonSpriteState;
 
 public class SpriteTableItem {
 

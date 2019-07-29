@@ -5,7 +5,7 @@ import com.darkxell.client.mechanics.freezones.FreezonePlayer;
 import com.darkxell.client.renderers.AbstractRenderer;
 import com.darkxell.client.renderers.pokemon.FreezonePokemonRenderer;
 import com.darkxell.client.resources.image.pokemon.body.PokemonSprite;
-import com.darkxell.client.resources.image.pokemon.body.PokemonSprite.PokemonSpriteState;
+import com.darkxell.client.resources.image.pokemon.body.PokemonSpriteState;
 import com.darkxell.common.util.Direction;
 
 /** A Pokemon entity that follows a point. */

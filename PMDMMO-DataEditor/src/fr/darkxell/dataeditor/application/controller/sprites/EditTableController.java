@@ -5,8 +5,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.ResourceBundle;
 
+import com.darkxell.client.resources.image.pokemon.body.PokemonSpriteState;
 import com.darkxell.client.resources.image.pokemon.body.PokemonSpritesetData;
-import com.darkxell.client.resources.image.pokemon.body.PokemonSprite.PokemonSpriteState;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.Pair;
 

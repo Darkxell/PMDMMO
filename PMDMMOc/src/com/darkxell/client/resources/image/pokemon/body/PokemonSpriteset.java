@@ -1,6 +1,5 @@
 package com.darkxell.client.resources.image.pokemon.body;
 
-import com.darkxell.client.resources.image.pokemon.body.PokemonSprite.PokemonSpriteState;
 import com.darkxell.client.resources.image.spritefactory.PMDRegularSpriteset;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.Pair;

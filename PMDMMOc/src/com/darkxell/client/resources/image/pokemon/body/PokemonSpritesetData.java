@@ -5,7 +5,6 @@ import java.util.HashMap;
 
 import org.jdom2.Element;
 
-import com.darkxell.client.resources.image.pokemon.body.PokemonSprite.PokemonSpriteState;
 import com.darkxell.common.Registries;
 import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.util.Direction;

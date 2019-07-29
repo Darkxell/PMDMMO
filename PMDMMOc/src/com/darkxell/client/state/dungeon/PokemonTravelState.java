@@ -6,7 +6,7 @@ import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.animation.travel.TravelAnimation;
 import com.darkxell.client.renderers.pokemon.DungeonPokemonRenderer;
 import com.darkxell.client.resources.image.pokemon.body.PokemonSprite;
-import com.darkxell.client.resources.image.pokemon.body.PokemonSprite.PokemonSpriteState;
+import com.darkxell.client.resources.image.pokemon.body.PokemonSpriteState;
 import com.darkxell.client.state.dungeon.DungeonState.DungeonSubState;
 import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.dungeon.floor.Tile;

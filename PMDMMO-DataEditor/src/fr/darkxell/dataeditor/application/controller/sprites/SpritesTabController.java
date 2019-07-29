@@ -7,7 +7,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import com.darkxell.client.resources.image.pokemon.body.PSDSequence;
-import com.darkxell.client.resources.image.pokemon.body.PokemonSprite.PokemonSpriteState;
+import com.darkxell.client.resources.image.pokemon.body.PokemonSpriteState;
 import com.darkxell.client.resources.image.pokemon.body.PokemonSpritesetData;
 import com.darkxell.client.resources.image.pokemon.body.PokemonSpritesets;
 import com.darkxell.common.Registries;

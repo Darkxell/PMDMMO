@@ -13,7 +13,7 @@ import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
 import com.darkxell.client.mechanics.cutscene.entity.CutscenePokemon;
 import com.darkxell.client.mechanics.cutscene.event.DialogCutsceneEvent;
 import com.darkxell.client.mechanics.cutscene.event.DialogCutsceneEvent.CutsceneDialogScreen;
-import com.darkxell.client.resources.image.pokemon.body.PokemonSprite.PokemonSpriteState;
+import com.darkxell.client.resources.image.pokemon.body.PokemonSpriteState;
 import com.darkxell.client.resources.image.pokemon.portrait.PortraitEmotion;
 import com.darkxell.client.state.dialog.PokemonDialogScreen.DialogPortraitLocation;
 import com.darkxell.client.state.dungeon.DungeonEndState;
