@@ -16,8 +16,8 @@ import com.darkxell.client.launchable.render.UpdaterAndRenderer;
 import com.darkxell.client.mechanics.animation.Animations;
 import com.darkxell.client.resources.Res;
 import com.darkxell.client.resources.image.Sprites;
+import com.darkxell.client.resources.image.pokemon.portrait.Portraits;
 import com.darkxell.client.resources.image.spritefactory.PMDSpriteFactory;
-import com.darkxell.client.resources.images.pokemon.PokemonPortrait;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
 import com.darkxell.client.resources.music.SoundsHolder;
 import com.darkxell.client.state.mainstates.LoadingMainState;
@@ -64,7 +64,7 @@ public class Launcher {
         Registries.load();
         Sprites.load();
         PokemonSpritesets.loadData();
-        PokemonPortrait.load();
+        Portraits.load();
         Animations.loadData();
         SoundsHolder.load("");
         Logger.instance().info("Lang & Data loaded.");

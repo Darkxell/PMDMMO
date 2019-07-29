@@ -5,8 +5,8 @@ import com.darkxell.client.launchable.Launcher;
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.animation.Animations;
 import com.darkxell.client.resources.image.Sprites;
+import com.darkxell.client.resources.image.pokemon.portrait.Portraits;
 import com.darkxell.client.resources.images.SpriteFactory;
-import com.darkxell.client.resources.images.pokemon.PokemonPortrait;
 import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
 import com.darkxell.client.resources.music.SoundManager;
 import com.darkxell.client.resources.music.SoundsHolder;
@@ -37,7 +37,7 @@ public class DataEditor extends Application {
         Registries.load();
         Sprites.load();
         PokemonSpritesets.loadData("../PMDMMOc/resources/pokemons/data");
-        PokemonPortrait.load();
+        Portraits.load();
         Animations.loadData();
         SoundsHolder.load("../PMDMMOc/resources");
         Persistence.soundmanager = new SoundManager();

@@ -1,6 +1,6 @@
 package com.darkxell.client.renderers;
 
-import static com.darkxell.client.resources.images.pokemon.PokemonPortrait.PORTRAIT_SIZE;
+import static com.darkxell.client.resources.image.pokemon.portrait.AbstractPortraitSpriteset.PORTRAIT_SIZE;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -8,10 +8,10 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import com.darkxell.client.renderers.TextRenderer.PMDChar;
 import com.darkxell.client.launchable.Persistence;
+import com.darkxell.client.renderers.TextRenderer.PMDChar;
 import com.darkxell.client.resources.Palette;
-import com.darkxell.client.resources.images.pokemon.PokemonPortrait;
+import com.darkxell.client.resources.image.pokemon.portrait.Portraits;
 import com.darkxell.common.player.Player;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.Pair;
@@ -204,7 +204,7 @@ public final class TeamInfoRenderer {
     }
 
     private static int drawPortrait(Graphics2D g, Pokemon pokemon, int x, int y, int width, int height) {
-        BufferedImage portrait = PokemonPortrait.portrait(pokemon);
+        BufferedImage portrait = Portraits.portrait(pokemon);
         int size = height - TextRenderer.lineSpacing() * 2;
         if (size > PORTRAIT_SIZE)
             size = PORTRAIT_SIZE;

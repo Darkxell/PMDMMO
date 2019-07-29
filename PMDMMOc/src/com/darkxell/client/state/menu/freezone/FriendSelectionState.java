@@ -1,6 +1,6 @@
 package com.darkxell.client.state.menu.freezone;
 
-import static com.darkxell.client.resources.images.pokemon.PokemonPortrait.PORTRAIT_SIZE;
+import static com.darkxell.client.resources.image.pokemon.portrait.AbstractPortraitSpriteset.PORTRAIT_SIZE;
 
 import java.awt.Graphics2D;
 import java.awt.Point;

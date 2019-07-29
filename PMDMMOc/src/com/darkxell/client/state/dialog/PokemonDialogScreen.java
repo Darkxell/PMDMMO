@@ -4,9 +4,9 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
 import com.darkxell.client.resources.image.Sprites.HudSprites;
+import com.darkxell.client.resources.image.pokemon.portrait.PortraitEmotion;
+import com.darkxell.client.resources.image.pokemon.portrait.Portraits;
 import com.darkxell.client.resources.images.Sprite;
-import com.darkxell.client.resources.images.pokemon.PokemonPortrait;
-import com.darkxell.client.resources.images.pokemon.PokemonPortrait.PortraitEmotion;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.util.Position;
@@ -108,7 +108,7 @@ public class PokemonDialogScreen extends DialogScreen {
         if (this.pokemon != null) {
             Rectangle dialogBox = this.parentState.dialogBox();
             Position portraitL = this.portraitLocation.locate(dialogBox, HudSprites.portrait);
-            PokemonPortrait.drawPortrait(g, this.pokemon, this.emotion, this.shiny, (int) portraitL.x,
+            Portraits.drawPortrait(g, this.pokemon, this.emotion, this.shiny, (int) portraitL.x,
                     (int) portraitL.y, this.portraitLocation.flip);
         }
     }

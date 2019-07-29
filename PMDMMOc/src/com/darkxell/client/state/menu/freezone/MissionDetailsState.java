@@ -5,9 +5,10 @@ import java.awt.Graphics2D;
 
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.renderers.TextRenderer;
+import com.darkxell.client.resources.image.pokemon.portrait.AbstractPortraitSpriteset;
+import com.darkxell.client.resources.image.pokemon.portrait.PortraitEmotion;
+import com.darkxell.client.resources.image.pokemon.portrait.Portraits;
 import com.darkxell.client.resources.images.Sprite;
-import com.darkxell.client.resources.images.pokemon.PokemonPortrait;
-import com.darkxell.client.resources.images.pokemon.PokemonPortrait.PortraitEmotion;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.Registries;
@@ -86,8 +87,8 @@ public class MissionDetailsState extends AbstractState {
         m.addReplacement("<item>", items.find(mission.getItemid()).name());
         TextRenderer.render(g, m, 5, 20);
 
-        g.drawImage(PokemonPortrait.portrait(species.find(mission.getClientPokemon()), PortraitEmotion.Normal, false),
-                basewidth - PokemonPortrait.PORTRAIT_SIZE - 20, 35, null);
+        g.drawImage(Portraits.portrait(species.find(mission.getClientPokemon()), PortraitEmotion.Normal, false),
+                basewidth - AbstractPortraitSpriteset.PORTRAIT_SIZE - 20, 35, null);
         switch (acceptstatus) {
         case STATUS_CANACCEPT:
             TextRenderer.render(g, new Message("mission.info.acceptinfo"), basewidth - 90, 80);
