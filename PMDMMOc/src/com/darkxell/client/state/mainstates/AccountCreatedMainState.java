@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.renderers.TextRenderer;
-import com.darkxell.client.resources.images.Sprites;
+import com.darkxell.client.resources.image.Sprites.HudSprites;
 import com.darkxell.client.state.StateManager;
 import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.client.ui.MainUiUtility;
@@ -80,7 +80,7 @@ public class AccountCreatedMainState extends StateManager {
         int relativemousex = mouseX - offsetx, relativemousey = mouseY - offsety;
         g.translate(offsetx, offsety);
         // DRAWS THE ACCOUNT CREATION FACILITIES
-        g.drawImage(Sprites.Res_Hud.proceedaccountframe.image(), 0, 0, null);
+        g.drawImage(HudSprites.proceedaccountframe.image(), 0, 0, null);
 
         g.setColor(Color.BLACK);
         TextRenderer.render(g, this.welcomeM.toString(), 30, 150);

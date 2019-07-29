@@ -3,7 +3,7 @@ package com.darkxell.client.renderers.layers;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import com.darkxell.client.resources.images.Sprites.Res_GraphicalLayers;
+import com.darkxell.client.resources.image.Sprites.GraphicalLayerSprites;
 
 public class BackgroundSeaLayer extends AbstractGraphiclayer {
     private static final int initialUpcamera = 2000;
@@ -25,21 +25,21 @@ public class BackgroundSeaLayer extends AbstractGraphiclayer {
     public void render(Graphics2D g, int width, int height) {
         g.setColor(new Color(32, 184, 248));
         g.fillRect(0, 0, width, height);
-        int cumulatedheight = -(Res_GraphicalLayers.Sea.clouds().getHeight()
-                + Res_GraphicalLayers.Sea.horizon(horizonstate).getHeight()
-                + Res_GraphicalLayers.Sea.waves(wavesstate).getHeight()) + height + upcamera;
+        int cumulatedheight = -(GraphicalLayerSprites.Sea.clouds().getHeight()
+                + GraphicalLayerSprites.Sea.horizon(horizonstate).getHeight()
+                + GraphicalLayerSprites.Sea.waves(wavesstate).getHeight()) + height + upcamera;
         if (cumulatedheight > 0)
             cumulatedheight = 0;
-        g.drawImage(Res_GraphicalLayers.Sea.clouds(), -cloudsposition, cumulatedheight, null);
-        if (Res_GraphicalLayers.Sea.clouds().getWidth() - cloudsposition < width)
-            g.drawImage(Res_GraphicalLayers.Sea.clouds(), -cloudsposition + Res_GraphicalLayers.Sea.clouds().getWidth(),
-                    cumulatedheight, null);
-        cumulatedheight += Res_GraphicalLayers.Sea.clouds().getHeight();
+        g.drawImage(GraphicalLayerSprites.Sea.clouds(), -cloudsposition, cumulatedheight, null);
+        if (GraphicalLayerSprites.Sea.clouds().getWidth() - cloudsposition < width)
+            g.drawImage(GraphicalLayerSprites.Sea.clouds(),
+                    -cloudsposition + GraphicalLayerSprites.Sea.clouds().getWidth(), cumulatedheight, null);
+        cumulatedheight += GraphicalLayerSprites.Sea.clouds().getHeight();
         for (int i = 0; i < width; i += 48)
-            g.drawImage(Res_GraphicalLayers.Sea.horizon(horizonstate), i, cumulatedheight, null);
-        cumulatedheight += Res_GraphicalLayers.Sea.horizon(horizonstate).getHeight();
+            g.drawImage(GraphicalLayerSprites.Sea.horizon(horizonstate), i, cumulatedheight, null);
+        cumulatedheight += GraphicalLayerSprites.Sea.horizon(horizonstate).getHeight();
         for (int i = 0; i < width; i += 48)
-            g.drawImage(Res_GraphicalLayers.Sea.waves(wavesstate), i, cumulatedheight, null);
+            g.drawImage(GraphicalLayerSprites.Sea.waves(wavesstate), i, cumulatedheight, null);
     }
 
     @Override
@@ -50,12 +50,12 @@ public class BackgroundSeaLayer extends AbstractGraphiclayer {
             counter_clouds = 0;
             ++cloudsposition;
         }
-        if (cloudsposition >= Res_GraphicalLayers.Sea.clouds().getWidth())
+        if (cloudsposition >= GraphicalLayerSprites.Sea.clouds().getWidth())
             cloudsposition = 0;
         // HORIZON
         ++counter_horizon;
         if (counter_horizon >= 12) {
-            if (horizonstate >= Res_GraphicalLayers.Sea.horizonCount() - 1)
+            if (horizonstate >= GraphicalLayerSprites.Sea.horizonCount() - 1)
                 horizonstate = 0;
             else
                 ++horizonstate;
@@ -64,7 +64,7 @@ public class BackgroundSeaLayer extends AbstractGraphiclayer {
         // WATER
         ++counter_waves;
         if (counter_waves >= 19) {
-            if (wavesstate >= Res_GraphicalLayers.Sea.wavesCount() - 1)
+            if (wavesstate >= GraphicalLayerSprites.Sea.wavesCount() - 1)
                 wavesstate = 0;
             else
                 ++wavesstate;

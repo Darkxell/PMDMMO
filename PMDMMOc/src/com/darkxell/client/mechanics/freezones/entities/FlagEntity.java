@@ -3,7 +3,7 @@ package com.darkxell.client.mechanics.freezones.entities;
 import java.awt.Graphics2D;
 
 import com.darkxell.client.mechanics.freezones.FreezoneEntity;
-import com.darkxell.client.resources.images.Sprites.Res_FreezoneEntities;
+import com.darkxell.client.resources.image.Sprites.FreezoneEntitySprites;
 
 public class FlagEntity extends FreezoneEntity
 {
@@ -23,7 +23,7 @@ public class FlagEntity extends FreezoneEntity
 	@Override
 	public void print(Graphics2D g)
 	{
-		g.drawImage(Res_FreezoneEntities.flag.getImg(this.state), (int) (super.posX * 8), (int) (super.posY * 8), null);
+		g.drawImage(FreezoneEntitySprites.flag.getSprite(this.state), (int) (super.posX * 8), (int) (super.posY * 8), null);
 	}
 
 	@Override

@@ -1,6 +1,6 @@
 package fr.darkxell.dataeditor.application.controller.sprites;
 
-import com.darkxell.client.resources.images.pokemon.PokemonSpritesetData;
+import com.darkxell.client.resources.image.pokemon.body.PokemonSpritesetData;
 
 public class SpritePreviewController {
 

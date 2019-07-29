@@ -1,6 +1,6 @@
 package com.darkxell.client.renderers.pokemon;
 
-import static com.darkxell.client.resources.images.tilesets.AbstractDungeonTileset.TILE_SIZE;
+import static com.darkxell.client.resources.image.tileset.dungeon.AbstractDungeonTileset.TILE_SIZE;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -8,8 +8,8 @@ import java.awt.Rectangle;
 
 import com.darkxell.client.launchable.ClientSettings;
 import com.darkxell.client.launchable.Persistence;
-import com.darkxell.client.resources.images.pokemon.PokemonSprite;
-import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
+import com.darkxell.client.resources.image.pokemon.body.PokemonSprite;
+import com.darkxell.client.resources.image.pokemon.body.PokemonSpritesets;
 import com.darkxell.client.state.dungeon.NextFloorState;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
@@ -60,7 +60,7 @@ public class DungeonPokemonRenderer extends AbstractPokemonRenderer {
 
     @Override
     public boolean shouldRender(int width, int height) {
-        return !Persistence.dungeonState.floorVisibility.isVisible(this.pokemon) && super.shouldRender(width, height);
+        return Persistence.dungeonState.floorVisibility.isVisible(this.pokemon) && super.shouldRender(width, height);
     }
 
     @Override

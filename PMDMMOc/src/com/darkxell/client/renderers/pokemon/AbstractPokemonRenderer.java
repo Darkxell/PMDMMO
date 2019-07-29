@@ -1,6 +1,6 @@
 package com.darkxell.client.renderers.pokemon;
 
-import static com.darkxell.client.resources.images.tilesets.AbstractDungeonTileset.TILE_SIZE;
+import static com.darkxell.client.resources.image.tileset.dungeon.AbstractDungeonTileset.TILE_SIZE;
 
 import java.awt.AlphaComposite;
 import java.awt.Composite;
@@ -13,11 +13,11 @@ import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.animation.PokemonAnimation;
 import com.darkxell.client.renderers.AbstractRenderer;
 import com.darkxell.client.renderers.MasterDungeonRenderer;
-import com.darkxell.client.resources.images.Sprites.Res_Dungeon;
-import com.darkxell.client.resources.images.pokemon.PokemonSprite;
-import com.darkxell.client.resources.images.pokemon.PokemonSpriteFrame;
-import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
-import com.darkxell.client.resources.images.tilesets.AbstractDungeonTileset;
+import com.darkxell.client.resources.image.Sprites.DungeonSprites;
+import com.darkxell.client.resources.image.pokemon.body.PSDFrame;
+import com.darkxell.client.resources.image.pokemon.body.PokemonSprite;
+import com.darkxell.client.resources.image.pokemon.body.PokemonSpritesets;
+import com.darkxell.client.resources.image.tileset.dungeon.AbstractDungeonTileset;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.Logger;
 
@@ -73,13 +73,13 @@ public class AbstractPokemonRenderer extends AbstractRenderer {
             if (this.alpha != 1)
                 g.setComposite(ac);
 
-            PokemonSpriteFrame frame = this.sprite.getCurrentFrame();
+            PSDFrame frame = this.sprite.getCurrentFrame();
 
             int xPos = (int) this.drawX(), yPos = (int) this.drawY();
 
             BufferedImage shadow = this.sprite.pointer.data.hasBigShadow
-                    ? Res_Dungeon.shadows.getBig(this.sprite.getShadowColor())
-                    : Res_Dungeon.shadows.getSmall(this.sprite.getShadowColor());
+                    ? DungeonSprites.shadows.getBig(this.sprite.getShadowColor())
+                    : DungeonSprites.shadows.getSmall(this.sprite.getShadowColor());
             g.drawImage(shadow, xPos - shadow.getWidth() / 2 + frame.shadowX,
                     yPos + TILE_SIZE * 2 / 5 - shadow.getHeight() + frame.shadowY, null);
 
@@ -102,7 +102,7 @@ public class AbstractPokemonRenderer extends AbstractRenderer {
      */
     public void render(Graphics2D g, PokemonSprite sprite, int x, int y) {
         // If you change those temp variables, check DungeonPokemonRenderer override
-        PokemonSpriteFrame frame = sprite.getCurrentFrame();
+        PSDFrame frame = sprite.getCurrentFrame();
         BufferedImage s = sprite.getCurrentSprite();
 
         int xPos = x - s.getWidth() / 2 + frame.spriteX + this.sprite.xOffset(),

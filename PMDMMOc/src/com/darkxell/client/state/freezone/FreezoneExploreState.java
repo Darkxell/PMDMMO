@@ -11,7 +11,7 @@ import com.darkxell.client.mechanics.freezones.entities.AllyEntity;
 import com.darkxell.client.mechanics.freezones.entities.FreezoneCamera;
 import com.darkxell.client.mechanics.freezones.zones.BaseFreezone;
 import com.darkxell.client.renderers.TextRenderer;
-import com.darkxell.client.resources.images.Sprites;
+import com.darkxell.client.resources.image.Sprites.HudSprites;
 import com.darkxell.client.state.map.LocalMap;
 import com.darkxell.client.state.menu.freezone.FreezoneMenuState;
 import com.darkxell.client.ui.Keys.Key;
@@ -86,7 +86,7 @@ public class FreezoneExploreState extends AbstractFreezoneState {
         FreezoneMap map = Persistence.currentmap;
         if (map != null) {
             if (this.isMain() && Persistence.currentplayer.canInteract()) {
-                g.drawImage(Sprites.Res_Hud.button.image(), width - 70, 5, null);
+                g.drawImage(HudSprites.button.image(), width - 70, 5, null);
                 TextRenderer.render(g, new Message("ui.interact"), width - 50, 10);
             }
 

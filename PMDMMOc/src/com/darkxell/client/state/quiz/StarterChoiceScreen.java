@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.Random;
 
-import com.darkxell.client.resources.images.pokemon.PokemonPortrait;
+import com.darkxell.client.resources.image.pokemon.portrait.Portraits;
 import com.darkxell.client.state.dialog.DialogState;
 import com.darkxell.client.state.dialog.OptionDialogScreen;
 import com.darkxell.client.state.menu.OptionState;
@@ -55,7 +55,7 @@ public class StarterChoiceScreen extends OptionDialogScreen {
     public void render(Graphics2D g, int width, int height) {
         super.render(g, width, height);
         if (this.currentOptionState != null)
-            PokemonPortrait.drawPortrait(g, this.partners[this.currentOptionState.optionIndex()], width / 2,
+            Portraits.drawPortrait(g, this.partners[this.currentOptionState.optionIndex()], width / 2,
                     (int) (height / 2 - this.parentState().dialogBox().getHeight() / 2));
     }
 

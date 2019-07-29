@@ -6,8 +6,7 @@ import java.util.ArrayList;
 
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.renderers.TextRenderer;
-import com.darkxell.client.resources.images.Sprite;
-import com.darkxell.client.resources.images.Sprites.Res_Hud;
+import com.darkxell.client.resources.image.Sprites.HudSprites;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.Registries;
@@ -23,7 +22,6 @@ public class MissionBoardState extends AbstractState {
 
     private AbstractState exploresource;
     private ArrayList<Mission> missions = new ArrayList<>();
-    Sprite billboard = new Sprite("/hud/billboard_list.png");
     private int currentpage = 1;
 
     private int selectedmissionpos = 0;
@@ -76,13 +74,13 @@ public class MissionBoardState extends AbstractState {
     @Override
     public void render(Graphics2D g, int width, int height) {
         this.exploresource.render(g, width, height);
-        g.drawImage(billboard.image(), 0, 0, null);
+        g.drawImage(HudSprites.billboard.image(), 0, 0, null);
 
         if (currentpage != 1)
-            g.drawImage(Res_Hud.menuHud.tabLeft(), 240, 40, null);
+            g.drawImage(HudSprites.menuHud.tabLeft(), 240, 40, null);
         TextRenderer.render(g, currentpage + "/" + pages(), 250, 40);
         if (currentpage != pages())
-            g.drawImage(Res_Hud.menuHud.tabRight(), 270, 40, null);
+            g.drawImage(HudSprites.menuHud.tabRight(), 270, 40, null);
 
         int offsetx = 55, offsety = -6;
         int baseheight = 30, basewidth = width - (2 * offsetx);

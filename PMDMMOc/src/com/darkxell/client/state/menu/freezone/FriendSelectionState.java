@@ -1,6 +1,6 @@
 package com.darkxell.client.state.menu.freezone;
 
-import static com.darkxell.client.resources.images.pokemon.PokemonPortrait.PORTRAIT_SIZE;
+import static com.darkxell.client.resources.image.pokemon.portrait.AbstractPortraitSpriteset.PORTRAIT_SIZE;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.launchable.messagehandlers.MonsterRequestHandler;
 import com.darkxell.client.renderers.TextRenderer;
-import com.darkxell.client.resources.images.hud.MenuStateHudSpriteset;
+import com.darkxell.client.resources.image.hud.MenuStateHudSpriteset;
 import com.darkxell.client.resources.music.SoundManager;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.freezone.FreezoneExploreState;

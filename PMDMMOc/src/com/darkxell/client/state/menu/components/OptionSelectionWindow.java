@@ -5,7 +5,7 @@ import java.awt.Rectangle;
 
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.Palette;
-import com.darkxell.client.resources.images.Sprites;
+import com.darkxell.client.resources.image.Sprites.HudSprites;
 import com.darkxell.client.state.menu.AbstractMenuState.MenuOption;
 import com.darkxell.client.state.menu.AbstractMenuState.MenuTab;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
@@ -25,10 +25,10 @@ public class OptionSelectionWindow extends MenuWindow {
         TextRenderer.render(g, option.name, x, y);
         if ((this.cursor > 9 || !this.menu.isMain()) && this.menu.currentOption() == option)
             g.drawImage(
-                    this.menu.isMain() ? Sprites.Res_Hud.menuHud.selectionArrow()
-                            : Sprites.Res_Hud.menuHud.selectedArrow(),
-                    x - Sprites.Res_Hud.menuHud.selectionArrow().getWidth() - 4,
-                    y + TextRenderer.height() / 2 - Sprites.Res_Hud.menuHud.selectedArrow().getHeight() / 2, null);
+                    this.menu.isMain() ? HudSprites.menuHud.selectionArrow()
+                            : HudSprites.menuHud.selectedArrow(),
+                    x - HudSprites.menuHud.selectionArrow().getWidth() - 4,
+                    y + TextRenderer.height() / 2 - HudSprites.menuHud.selectedArrow().getHeight() / 2, null);
     }
 
     public MenuOption optionAt(int x, int y) {
@@ -54,14 +54,14 @@ public class OptionSelectionWindow extends MenuWindow {
             boolean left = tabs[0] != this.menu.currentTab();
             boolean right = tabs[tabs.length - 1] != this.menu.currentTab();
             if (right)
-                g.drawImage(Sprites.Res_Hud.menuHud.tabRight(),
-                        (int) this.inside.getMaxX() - Sprites.Res_Hud.menuHud.tabRight().getWidth(),
-                        this.dimensions.y - Sprites.Res_Hud.menuHud.tabRight().getHeight() / 3, null);
+                g.drawImage(HudSprites.menuHud.tabRight(),
+                        (int) this.inside.getMaxX() - HudSprites.menuHud.tabRight().getWidth(),
+                        this.dimensions.y - HudSprites.menuHud.tabRight().getHeight() / 3, null);
             if (left)
-                g.drawImage(Sprites.Res_Hud.menuHud.tabLeft(),
-                        (int) this.inside.getMaxX() - Sprites.Res_Hud.menuHud.tabLeft().getWidth()
-                                - Sprites.Res_Hud.menuHud.tabRight().getWidth() - 5,
-                        this.dimensions.y - Sprites.Res_Hud.menuHud.tabLeft().getHeight() / 3, null);
+                g.drawImage(HudSprites.menuHud.tabLeft(),
+                        (int) this.inside.getMaxX() - HudSprites.menuHud.tabLeft().getWidth()
+                                - HudSprites.menuHud.tabRight().getWidth() - 5,
+                        this.dimensions.y - HudSprites.menuHud.tabLeft().getHeight() / 3, null);
 
             // Text
             int x = MARGIN_X + this.dimensions.x;

@@ -7,8 +7,8 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import com.darkxell.client.renderers.TextRenderer;
-import com.darkxell.client.resources.images.Sprites;
-import com.darkxell.client.resources.images.hud.MenuStateHudSpriteset;
+import com.darkxell.client.resources.image.Sprites.HudSprites;
+import com.darkxell.client.resources.image.hud.MenuStateHudSpriteset;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.language.Message;
 
@@ -34,7 +34,7 @@ public class MenuWindow {
     }
 
     private void initColors() {
-        BufferedImage corner = Sprites.Res_Hud.menuHud.windowCorner(Direction.NORTHWEST);
+        BufferedImage corner = HudSprites.menuHud.windowCorner(Direction.NORTHWEST);
         out = new Color(corner.getRGB(corner.getWidth() - 1, 0), true);
         middle = new Color(corner.getRGB(corner.getWidth() - 1, 2), true);
         in = new Color(corner.getRGB(corner.getWidth() - 1, corner.getHeight() - 1), true);
@@ -59,13 +59,13 @@ public class MenuWindow {
         g.fillRect(inside.x - 2, inside.y - 2, inside.width + 4, inside.height + 4);
 
         // Corners
-        g.drawImage(Sprites.Res_Hud.menuHud.windowCorner(Direction.NORTHEAST), (int) inside.getMaxX(),
+        g.drawImage(HudSprites.menuHud.windowCorner(Direction.NORTHEAST), (int) inside.getMaxX(),
                 this.dimensions.y, null);
-        g.drawImage(Sprites.Res_Hud.menuHud.windowCorner(Direction.SOUTHEAST), (int) inside.getMaxX(),
+        g.drawImage(HudSprites.menuHud.windowCorner(Direction.SOUTHEAST), (int) inside.getMaxX(),
                 (int) inside.getMaxY(), null);
-        g.drawImage(Sprites.Res_Hud.menuHud.windowCorner(Direction.SOUTHWEST), this.dimensions.x,
+        g.drawImage(HudSprites.menuHud.windowCorner(Direction.SOUTHWEST), this.dimensions.x,
                 (int) inside.getMaxY(), null);
-        g.drawImage(Sprites.Res_Hud.menuHud.windowCorner(Direction.NORTHWEST), this.dimensions.x, this.dimensions.y,
+        g.drawImage(HudSprites.menuHud.windowCorner(Direction.NORTHWEST), this.dimensions.x, this.dimensions.y,
                 null);
 
         // Sides
@@ -98,13 +98,13 @@ public class MenuWindow {
             g.fillRect(nameInside.x, (int) nameInside.getMaxY() + 2, nameInside.width, 4);
 
             // Corners
-            g.drawImage(Sprites.Res_Hud.menuHud.windowNameCorner(Direction.NORTHEAST), (int) nameInside.getMaxX(),
+            g.drawImage(HudSprites.menuHud.windowNameCorner(Direction.NORTHEAST), (int) nameInside.getMaxX(),
                     nameInside.y - cornerName.height, null);
-            g.drawImage(Sprites.Res_Hud.menuHud.windowNameCorner(Direction.SOUTHEAST), (int) nameInside.getMaxX(),
+            g.drawImage(HudSprites.menuHud.windowNameCorner(Direction.SOUTHEAST), (int) nameInside.getMaxX(),
                     this.dimensions.y, null);
-            g.drawImage(Sprites.Res_Hud.menuHud.windowNameCorner(Direction.SOUTHWEST), inside.x, this.dimensions.y,
+            g.drawImage(HudSprites.menuHud.windowNameCorner(Direction.SOUTHWEST), inside.x, this.dimensions.y,
                     null);
-            g.drawImage(Sprites.Res_Hud.menuHud.windowNameCorner(Direction.NORTHWEST), inside.x,
+            g.drawImage(HudSprites.menuHud.windowNameCorner(Direction.NORTHWEST), inside.x,
                     nameInside.y - cornerName.height, null);
 
             // Sides

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.renderers.layers.AbstractGraphiclayer;
-import com.darkxell.client.resources.images.Sprites;
+import com.darkxell.client.resources.image.Sprites.HudSprites;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.mainstates.PrincipalMainState;
 import com.darkxell.client.ui.Keys.Key;
@@ -44,8 +44,8 @@ public class DialogState extends AbstractState {
 
         if (this.dialogBox == null) {
             int temp_width = PrincipalMainState.displayWidth - 40;
-            int temp_height = temp_width * Sprites.Res_Hud.textwindow.image().getHeight()
-                    / Sprites.Res_Hud.textwindow.image().getWidth();
+            int temp_height = temp_width * HudSprites.textwindow.image().getHeight()
+                    / HudSprites.textwindow.image().getWidth();
             this.dialogBox = new Rectangle(20, PrincipalMainState.displayHeight - temp_height - 5, temp_width,
                     temp_height);
         }

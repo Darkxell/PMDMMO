@@ -11,7 +11,7 @@ import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.launchable.crypto.Encryption;
 import com.darkxell.client.mechanics.chat.CustomTextfield;
 import com.darkxell.client.resources.Res;
-import com.darkxell.client.resources.images.Sprites;
+import com.darkxell.client.resources.image.Sprites.HudSprites;
 import com.darkxell.client.state.OpeningState;
 import com.darkxell.client.state.PlayerLoadingState;
 import com.darkxell.client.state.PlayerLoadingState.PlayerLoadingEndListener;
@@ -161,7 +161,7 @@ public class LoginMainState extends StateManager {
         g.translate(offsetx, offsety);
         gcopy.translate(offsetx, offsety);
         // DRAWS THE LOGIN FACILITIES
-        g.drawImage(Sprites.Res_Hud.loginframe.image(), 0, 0, null);
+        g.drawImage(HudSprites.loginframe.image(), 0, 0, null);
 
         gcopy.setColor(Color.BLACK);
         gcopy.setFont(Res.getFont().deriveFont(26f).deriveFont(Font.BOLD));

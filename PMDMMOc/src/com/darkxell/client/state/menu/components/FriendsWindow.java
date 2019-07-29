@@ -1,13 +1,6 @@
 package com.darkxell.client.state.menu.components;
 
-import static com.darkxell.client.state.menu.freezone.FriendSelectionState.FRIEND_OFFSET;
-import static com.darkxell.client.state.menu.freezone.FriendSelectionState.FRIEND_SIZE;
-import static com.darkxell.client.state.menu.freezone.FriendSelectionState.FRIEND_SLOT_HEIGHT;
-import static com.darkxell.client.state.menu.freezone.FriendSelectionState.FRIEND_SLOT_WIDTH;
-import static com.darkxell.client.state.menu.freezone.FriendSelectionState.GOTOMAP_HEIGHT;
-import static com.darkxell.client.state.menu.freezone.FriendSelectionState.LIST_FRIEND_HEIGHT;
-import static com.darkxell.client.state.menu.freezone.FriendSelectionState.LIST_FRIEND_WIDTH;
-import static com.darkxell.client.state.menu.freezone.FriendSelectionState.LIST_OFFSET;
+import static com.darkxell.client.state.menu.freezone.FriendSelectionState.*;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -15,7 +8,7 @@ import java.awt.image.BufferedImage;
 
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.Palette;
-import com.darkxell.client.resources.images.pokemon.PokemonPortrait;
+import com.darkxell.client.resources.image.pokemon.portrait.Portraits;
 import com.darkxell.client.state.menu.freezone.FriendSelectionState;
 import com.darkxell.client.state.menu.freezone.FriendSelectionState.FriendMenuOption;
 import com.darkxell.common.pokemon.Pokemon;
@@ -66,7 +59,7 @@ public class FriendsWindow extends MenuWindow {
                 Y = startY + realY * (FRIEND_SLOT_HEIGHT + LIST_OFFSET) + GOTOMAP_HEIGHT;
 
         if (pokemon != null) {
-            BufferedImage sprite = PokemonPortrait.portrait(pokemon);
+            BufferedImage sprite = Portraits.portrait(pokemon);
             g.drawImage(sprite, X + FRIEND_OFFSET, Y + FRIEND_OFFSET, FRIEND_SIZE, FRIEND_SIZE, null);
         }
 

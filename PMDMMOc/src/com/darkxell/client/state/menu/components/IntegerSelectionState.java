@@ -5,7 +5,7 @@ import java.awt.Rectangle;
 
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.renderers.layers.AbstractGraphiclayer;
-import com.darkxell.client.resources.images.Sprites;
+import com.darkxell.client.resources.image.Sprites.HudSprites;
 import com.darkxell.client.state.AbstractState;
 import com.darkxell.client.state.dialog.DialogState;
 import com.darkxell.client.ui.Keys.Key;
@@ -106,7 +106,7 @@ public class IntegerSelectionState extends AbstractState {
 
             Rectangle dialog = this.parent.dialogBox();
             int w = TextRenderer.width(longest) + OptionSelectionWindow.MARGIN_X * 2, h = TextRenderer.height()
-                    + OptionSelectionWindow.MARGIN_Y * 3 + Sprites.Res_Hud.menuHud.nextWindowArrow().getHeight();
+                    + OptionSelectionWindow.MARGIN_Y * 3 + HudSprites.menuHud.nextWindowArrow().getHeight();
             this.window = new MenuWindow(new Rectangle((int) (dialog.getMaxX() - w), dialog.y - h - 5, w, h));
             this.window.isOpaque = this.parent.currentScreen().isOpaque;
             this.updateLogLocation();
@@ -121,13 +121,13 @@ public class IntegerSelectionState extends AbstractState {
         int texty = (int) (inside.y + inside.getHeight() / 2 - TextRenderer.height() / 2);
         TextRenderer.render(g, this.currentM, this.textx, texty);
 
-        int arrowx = this.textx + this.currentLogLocation - Sprites.Res_Hud.menuHud.nextWindowArrow().getWidth();
+        int arrowx = this.textx + this.currentLogLocation - HudSprites.menuHud.nextWindowArrow().getWidth();
         int uparrowy = texty - OptionSelectionWindow.MARGIN_Y / 3;
         int downarrowy = texty + TextRenderer.height() + OptionSelectionWindow.MARGIN_Y / 3;
-        g.drawImage(Sprites.Res_Hud.menuHud.nextWindowArrow(), arrowx, uparrowy,
-                Sprites.Res_Hud.menuHud.nextWindowArrow().getWidth(),
-                -Sprites.Res_Hud.menuHud.nextWindowArrow().getHeight(), null);
-        g.drawImage(Sprites.Res_Hud.menuHud.nextWindowArrow(), arrowx, downarrowy, null);
+        g.drawImage(HudSprites.menuHud.nextWindowArrow(), arrowx, uparrowy,
+                HudSprites.menuHud.nextWindowArrow().getWidth(),
+                -HudSprites.menuHud.nextWindowArrow().getHeight(), null);
+        g.drawImage(HudSprites.menuHud.nextWindowArrow(), arrowx, downarrowy, null);
     }
 
     @Override

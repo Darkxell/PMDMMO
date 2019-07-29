@@ -12,8 +12,8 @@ import java.util.List;
 import java.util.Objects;
 
 import com.darkxell.client.resources.Palette;
-import com.darkxell.client.resources.images.Sprites;
-import com.darkxell.client.resources.images.hud.FontSpriteSet;
+import com.darkxell.client.resources.image.Sprites.HudSprites;
+import com.darkxell.client.resources.image.hud.FontSpriteSet;
 import com.darkxell.common.util.language.Message;
 
 public class TextRenderer {
@@ -458,7 +458,7 @@ public class TextRenderer {
                 if (c == PMDChar.colorYellow)
                     setColor(Palette.FONT_YELLOW);
             } else {
-                Image sprite = color == null ? Sprites.Res_Hud.font.getImg(c) : coloredSprites.get(c);
+                Image sprite = color == null ? HudSprites.font.getSprite(c) : coloredSprites.get(c);
                 g.drawImage(sprite, x + w, y, (int) (sprite.getWidth(null) * fontSize),
                         (int) (sprite.getHeight(null) * fontSize), null);
                 if (c == PMDChar.tabulation)
@@ -501,7 +501,7 @@ public class TextRenderer {
             for (PMDChar c : PMDChar.values())
                 if (c.isChar())
                     coloredSprites.put(c, Toolkit.getDefaultToolkit()
-                            .createImage(new FilteredImageSource(Sprites.Res_Hud.font.getImg(c).getSource(), filter)));
+                            .createImage(new FilteredImageSource(HudSprites.font.getSprite(c).getSource(), filter)));
         }
     }
 

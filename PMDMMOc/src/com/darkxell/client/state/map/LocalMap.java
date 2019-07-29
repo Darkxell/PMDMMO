@@ -6,7 +6,7 @@ import java.awt.Graphics2D;
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.resources.Palette;
-import com.darkxell.client.resources.images.Sprites.Res_Map;
+import com.darkxell.client.resources.image.Sprites.MapSprites;
 import com.darkxell.common.zones.LocalMapLocation;
 
 public class LocalMap extends AbstractDisplayMap {
@@ -24,10 +24,10 @@ public class LocalMap extends AbstractDisplayMap {
             // displays the map if the location is possible
             int offsetx = this.canvas.getWidth() / 2 - currentlocation.x,
                     offsety = this.canvas.getHeight() / 2 - currentlocation.y;
-            g2.drawImage(Res_Map.LOCALMAP.image(), offsetx, offsety, null);
+            g2.drawImage(MapSprites.localMap.image(), offsetx, offsety, null);
             for (LocalMapLocation loc : LocalMapLocation.values())
-                g2.drawImage(currentlocation == loc ? Res_Map.PIN_RED.image() : Res_Map.PIN_YELLOW.image(),
-                        offsetx + loc.x, offsety + loc.y, null);
+                g2.drawImage(currentlocation == loc ? MapSprites.pins.red() : MapSprites.pins.yellow(), offsetx + loc.x,
+                        offsety + loc.y, null);
         }
         // Displays the text position at the bottom
         g2.setColor(Palette.TRANSPARENT_GRAY);

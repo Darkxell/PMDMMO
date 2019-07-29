@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import com.darkxell.client.mechanics.freezones.FreezoneEntity;
-import com.darkxell.client.resources.images.Sprites.Res_FreezoneEntities;
+import com.darkxell.client.resources.image.Sprites.FreezoneEntitySprites;
 
 public class WatersparklesEntity extends FreezoneEntity
 {
@@ -51,13 +51,13 @@ public class WatersparklesEntity extends FreezoneEntity
 		switch (type)
 		{
 			case TYPE_SIDE:
-				return Res_FreezoneEntities.waterSparkles.side(this.state);
+				return FreezoneEntitySprites.waterSparkles.side(this.state);
 			case TYPE_BOT:
-				return Res_FreezoneEntities.waterSparkles.bot(this.state);
+				return FreezoneEntitySprites.waterSparkles.bot(this.state);
 			case TYPE_TOP:
-				return Res_FreezoneEntities.waterSparkles.top(this.state);
+				return FreezoneEntitySprites.waterSparkles.top(this.state);
 			case TYPE_LONG:
-				return Res_FreezoneEntities.waterSparkles.lon(this.state);
+				return FreezoneEntitySprites.waterSparkles.lon(this.state);
 			default:
 				return null;
 		}

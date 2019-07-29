@@ -5,7 +5,7 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 
 import com.darkxell.client.renderers.TextRenderer;
-import com.darkxell.client.resources.images.Sprites;
+import com.darkxell.client.resources.image.Sprites.HudSprites;
 import com.darkxell.common.util.language.Message;
 
 public class TextWindow extends MenuWindow {
@@ -30,20 +30,20 @@ public class TextWindow extends MenuWindow {
         this.renderText(g, width, height);
 
         if (this.rightTab)
-            g.drawImage(Sprites.Res_Hud.menuHud.tabRight(),
-                    (int) this.inside.getMaxX() - Sprites.Res_Hud.menuHud.tabRight().getWidth(),
-                    this.dimensions.y - Sprites.Res_Hud.menuHud.tabRight().getHeight() / 3, null);
+            g.drawImage(HudSprites.menuHud.tabRight(),
+                    (int) this.inside.getMaxX() - HudSprites.menuHud.tabRight().getWidth(),
+                    this.dimensions.y - HudSprites.menuHud.tabRight().getHeight() / 3, null);
         if (this.leftTab)
-            g.drawImage(Sprites.Res_Hud.menuHud.tabLeft(),
-                    (int) this.inside.getMaxX() - Sprites.Res_Hud.menuHud.tabLeft().getWidth()
-                            - Sprites.Res_Hud.menuHud.tabRight().getWidth() - 5,
-                    this.dimensions.y - Sprites.Res_Hud.menuHud.tabLeft().getHeight() / 3, null);
+            g.drawImage(HudSprites.menuHud.tabLeft(),
+                    (int) this.inside.getMaxX() - HudSprites.menuHud.tabLeft().getWidth()
+                            - HudSprites.menuHud.tabRight().getWidth() - 5,
+                    this.dimensions.y - HudSprites.menuHud.tabLeft().getHeight() / 3, null);
 
         if (this.hasNext) {
             int x = this.dimensions.x - this.dimensions.width / 2
-                    - Sprites.Res_Hud.menuHud.nextWindowArrow().getWidth() / 2;
-            int y = (int) (this.dimensions.getMaxY() - Sprites.Res_Hud.menuHud.nextWindowArrow().getHeight() / 2);
-            g.drawImage(Sprites.Res_Hud.menuHud.nextWindowArrow(), x, y, null);
+                    - HudSprites.menuHud.nextWindowArrow().getWidth() / 2;
+            int y = (int) (this.dimensions.getMaxY() - HudSprites.menuHud.nextWindowArrow().getHeight() / 2);
+            g.drawImage(HudSprites.menuHud.nextWindowArrow(), x, y, null);
         }
     }
 

@@ -12,7 +12,7 @@ import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.animation.SpritesetAnimation.BackSpriteUsage;
 import com.darkxell.client.mechanics.cutscene.entity.CutscenePokemon;
 import com.darkxell.client.renderers.pokemon.AbstractPokemonRenderer;
-import com.darkxell.client.resources.images.Sprites;
+import com.darkxell.client.resources.image.Sprites.DungeonSprites;
 import com.darkxell.client.state.dungeon.ProjectileAnimationState.ProjectileMovement;
 import com.darkxell.common.Registries;
 import com.darkxell.common.event.stats.StatChangedEvent;
@@ -190,15 +190,14 @@ public final class Animations {
 
     public static AbstractAnimation getProjectileAnimationFromItem(DungeonPokemon pokemon, Item item,
             AnimationEndListener listener) {
-        BufferedImage sprite = Sprites.Res_Dungeon.items.sprite(item);
+        BufferedImage sprite = DungeonSprites.items.getSprite(item);
         AnimationData data = new AnimationData(-1);
         data.backSpriteUsage = BackSpriteUsage.no;
         data.spriteOrder = new int[] { item.spriteID };
         data.gravityX = sprite.getWidth() / 2;
         data.gravityY = sprite.getHeight() / 2;
         data.spriteDuration = 10;
-        SpritesetAnimation a = new SpritesetAnimation(data, null, Sprites.Res_Dungeon.items, data.spriteOrder,
-                listener);
+        SpritesetAnimation a = new SpritesetAnimation(data, null, DungeonSprites.items, data.spriteOrder, listener);
         a.plays = -1;
         return a;
     }

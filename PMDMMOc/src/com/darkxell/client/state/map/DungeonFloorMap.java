@@ -5,9 +5,9 @@ import java.awt.Graphics2D;
 
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.renderers.pokemon.DungeonPokemonRenderer;
-import com.darkxell.client.resources.images.Sprites.Res_Dungeon;
-import com.darkxell.client.resources.images.tilesets.AbstractDungeonTileset;
-import com.darkxell.client.resources.images.tilesets.DungeonMapTileset;
+import com.darkxell.client.resources.image.Sprites.DungeonSprites;
+import com.darkxell.client.resources.image.dungeon.DungeonMapTileset;
+import com.darkxell.client.resources.image.tileset.dungeon.AbstractDungeonTileset;
 import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.dungeon.floor.Floor;
 import com.darkxell.common.dungeon.floor.Tile;
@@ -30,7 +30,7 @@ public class DungeonFloorMap extends AbstractDisplayMap {
     /** True if the map should follow the leader. Set to false whenever the player moves the map themselves. */
     private boolean followLeader = true;
     private int tick = 0;
-    public final DungeonMapTileset tileset = Res_Dungeon.dungeonMap;
+    public final DungeonMapTileset tileset = DungeonSprites.dungeonMap;
     /** Map offsets. */
     private int x = 0, y = 0;
 
