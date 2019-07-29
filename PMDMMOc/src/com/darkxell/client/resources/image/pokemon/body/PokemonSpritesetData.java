@@ -1,11 +1,11 @@
-package com.darkxell.client.resources.images.pokemon;
+package com.darkxell.client.resources.image.pokemon.body;
 
 import java.util.Collection;
 import java.util.HashMap;
 
 import org.jdom2.Element;
 
-import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
+import com.darkxell.client.resources.image.pokemon.body.PokemonSprite.PokemonSpriteState;
 import com.darkxell.common.Registries;
 import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.util.Direction;
@@ -16,13 +16,12 @@ public class PokemonSpritesetData {
 
     public final boolean hasBigShadow;
     public final int id;
-    final HashMap<Integer, PokemonSpriteSequence> sequences;
+    final HashMap<Integer, PSDSequence> sequences;
     public final int spriteWidth, spriteHeight;
     final HashMap<Pair<PokemonSpriteState, Direction>, Integer> states;
 
     public PokemonSpritesetData(int id, boolean hasBigShadow, int spriteWidth, int spriteHeight,
-            HashMap<Pair<PokemonSpriteState, Direction>, Integer> states,
-            HashMap<Integer, PokemonSpriteSequence> sequences) {
+            HashMap<Pair<PokemonSpriteState, Direction>, Integer> states, HashMap<Integer, PSDSequence> sequences) {
         this.id = id;
         this.hasBigShadow = hasBigShadow;
         this.spriteWidth = spriteWidth;
@@ -50,7 +49,7 @@ public class PokemonSpritesetData {
         }
 
         for (Element e : xml.getChild("AnimSequenceTable").getChildren())
-            this.sequences.put(Integer.parseInt(e.getAttributeValue("id")), new PokemonSpriteSequence(this, e));
+            this.sequences.put(Integer.parseInt(e.getAttributeValue("id")), new PSDSequence(this, e));
     }
 
     public PokemonSpritesetData(Integer id) {
@@ -66,7 +65,7 @@ public class PokemonSpritesetData {
         return (HashMap<Pair<PokemonSpriteState, Direction>, Integer>) this.states.clone();
     }
 
-    public Collection<PokemonSpriteSequence> sequences() {
+    public Collection<PSDSequence> sequences() {
         return this.sequences.values();
     }
 
@@ -101,7 +100,7 @@ public class PokemonSpritesetData {
         root.addContent(grouptable);
 
         Element sequencetable = new Element("AnimSequenceTable");
-        for (PokemonSpriteSequence s : this.sequences.values())
+        for (PSDSequence s : this.sequences.values())
             sequencetable.addContent(s.toXML());
         root.addContent(sequencetable);
 

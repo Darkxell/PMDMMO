@@ -4,9 +4,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
+import com.darkxell.client.resources.image.pokemon.body.PokemonSpritesetData;
+import com.darkxell.client.resources.image.pokemon.body.PokemonSpritesets;
 import com.darkxell.client.resources.images.RegularSpriteSet;
-import com.darkxell.client.resources.images.pokemon.PokemonSpritesetData;
-import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

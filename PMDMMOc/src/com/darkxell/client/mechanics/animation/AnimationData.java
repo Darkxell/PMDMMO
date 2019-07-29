@@ -11,8 +11,8 @@ import com.darkxell.client.mechanics.animation.movement.PokemonAnimationMovement
 import com.darkxell.client.mechanics.animation.spritemovement.SpritesetAnimationMovement;
 import com.darkxell.client.mechanics.cutscene.entity.CutscenePokemon;
 import com.darkxell.client.renderers.pokemon.AbstractPokemonRenderer;
+import com.darkxell.client.resources.image.pokemon.body.PokemonSprite.PokemonSpriteState;
 import com.darkxell.client.resources.images.RegularSpriteSet;
-import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.XMLUtils;

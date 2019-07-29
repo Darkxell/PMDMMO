@@ -6,7 +6,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 
 import com.darkxell.client.renderers.pokemon.AbstractPokemonRenderer;
-import com.darkxell.client.resources.images.pokemon.PokemonSprite;
+import com.darkxell.client.resources.image.pokemon.body.PokemonSprite;
 
 /**
  * Maps objects to their renderers for complex states to render.

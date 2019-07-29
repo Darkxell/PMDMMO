@@ -1,10 +1,13 @@
-package com.darkxell.client.resources.images.pokemon;
+package com.darkxell.client.resources.image.pokemon.body;
 
 import org.jdom2.Element;
 
 import com.darkxell.common.util.XMLUtils;
 
-public class PokemonSpriteFrame {
+/**
+ * Pokemon Spriteset Data Frame
+ */
+public class PSDFrame {
 
     /** Duration of this Frame. */
     public final int duration;
@@ -18,13 +21,13 @@ public class PokemonSpriteFrame {
     /** Offset to apply to the sprite. */
     public final int spriteX, spriteY;
 
-    public PokemonSpriteFrame() {
+    public PSDFrame() {
         this.spriteset = null;
         this.frameID = this.duration = this.spriteX = this.spriteY = this.shadowX = this.shadowY = 0;
         this.isFlipped = false;
     }
 
-    public PokemonSpriteFrame(PokemonSpritesetData pokemonSpriteset, Element xml) {
+    public PSDFrame(PokemonSpritesetData pokemonSpriteset, Element xml) {
         this.spriteset = pokemonSpriteset;
         this.frameID = XMLUtils.getAttribute(xml, "sprite", 0);
         this.duration = XMLUtils.getAttribute(xml, "duration", 0);
@@ -35,8 +38,8 @@ public class PokemonSpriteFrame {
         this.isFlipped = XMLUtils.getAttribute(xml, "flip", false);
     }
 
-    public PokemonSpriteFrame(PokemonSpritesetData spriteset, int frameID, int duration, int spriteX, int spriteY,
-            int shadowX, int shadowY, boolean isFlipped) {
+    public PSDFrame(PokemonSpritesetData spriteset, int frameID, int duration, int spriteX, int spriteY, int shadowX,
+            int shadowY, boolean isFlipped) {
         this.spriteset = spriteset;
         this.frameID = frameID;
         this.duration = duration;

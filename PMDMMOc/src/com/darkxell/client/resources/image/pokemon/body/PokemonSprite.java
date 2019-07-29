@@ -1,4 +1,4 @@
-package com.darkxell.client.resources.images.pokemon;
+package com.darkxell.client.resources.image.pokemon.body;
 
 import java.awt.image.BufferedImage;
 
@@ -100,12 +100,12 @@ public class PokemonSprite {
             new Exception().printStackTrace();
     }
 
-    public PokemonSpriteFrame getCurrentFrame() {
+    public PSDFrame getCurrentFrame() {
         return this.pointer.getFrame(this.state, this.facing, (int) this.counter);
     }
 
     public BufferedImage getCurrentSprite() {
-        return this.pointer.getImg(this.getCurrentFrame().frameID);
+        return this.pointer.getSprite(this.getCurrentFrame().frameID);
     }
 
     public Direction getFacingDirection() {
@@ -169,7 +169,7 @@ public class PokemonSprite {
     public void update() {
         if (this.isAnimated())
             this.counter += this.tickSpeed;
-        PokemonSpriteSequence state = this.pointer.getSequence(this.state, this.facing);
+        PSDSequence state = this.pointer.getSequence(this.state, this.facing);
         if (this.counter >= state.duration) {
             this.counter = 0;
             if (this.resetToDefaultOnFinish && this.state != PokemonSpriteState.IDLE)

@@ -2,7 +2,7 @@ package com.darkxell.client.resources.images;
 
 import java.util.ArrayList;
 
-import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
+import com.darkxell.client.resources.image.pokemon.body.PokemonSpritesets;
 import com.darkxell.client.resources.images.tilesets.FloorDungeonTileset;
 import com.darkxell.common.Registries;
 import com.darkxell.common.dungeon.DungeonExploration;

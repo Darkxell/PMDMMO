@@ -1,4 +1,4 @@
-package com.darkxell.client.resources.images.pokemon;
+package com.darkxell.client.resources.image.pokemon.body;
 
 import java.io.File;
 import java.io.FileInputStream;

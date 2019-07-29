@@ -8,10 +8,10 @@ import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
+import com.darkxell.client.resources.image.pokemon.body.PSDFrame;
+import com.darkxell.client.resources.image.pokemon.body.PSDSequence;
+import com.darkxell.client.resources.image.pokemon.body.PokemonSpritesetData;
 import com.darkxell.client.resources.images.RegularSpriteSet;
-import com.darkxell.client.resources.images.pokemon.PokemonSpriteFrame;
-import com.darkxell.client.resources.images.pokemon.PokemonSpriteSequence;
-import com.darkxell.client.resources.images.pokemon.PokemonSpritesetData;
 
 import fr.darkxell.dataeditor.application.DataEditor;
 import fr.darkxell.dataeditor.application.controls.CustomList;
@@ -31,14 +31,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-public class EditSequencesController implements Initializable, ListCellParent<PokemonSpriteFrame> {
+public class EditSequencesController implements Initializable, ListCellParent<PSDFrame> {
 
     public static EditSequencesController instance;
     public static Stage popup;
 
     private int editing;
     @FXML
-    public ListView<PokemonSpriteFrame> framesList;
+    public ListView<PSDFrame> framesList;
     @FXML
     public TextField hitTextfield;
     public SpritesTabController parent;
@@ -51,20 +51,20 @@ public class EditSequencesController implements Initializable, ListCellParent<Po
     @FXML
     public GridPane sequenceProperties;
 
-    private HashMap<Integer, PokemonSpriteSequence> sequences = new HashMap<>();
+    private HashMap<Integer, PSDSequence> sequences = new HashMap<>();
 
-    public HashMap<Integer, PokemonSpriteSequence> generateSequences(HashSet<Integer> existing) {
-        HashMap<Integer, PokemonSpriteSequence> sequences = new HashMap<>(this.sequences);
+    public HashMap<Integer, PSDSequence> generateSequences(HashSet<Integer> existing) {
+        HashMap<Integer, PSDSequence> sequences = new HashMap<>(this.sequences);
         sequences.entrySet().removeIf(entry -> !existing.contains(entry.getKey()));
         return sequences;
     }
 
-    private PokemonSpriteSequence getSequence(int id) {
+    private PSDSequence getSequence(int id) {
         return this.sequences.get(id);
     }
 
     @Override
-    public Node graphicFor(PokemonSpriteFrame item) {
+    public Node graphicFor(PSDFrame item) {
         if (this.parent == null || item == null)
             return null;
         RegularSpriteSet spriteset = this.parent.generalDataController.spriteset;
@@ -99,14 +99,14 @@ public class EditSequencesController implements Initializable, ListCellParent<Po
     }
 
     @Override
-    public void onCreate(PokemonSpriteFrame nullItem) {
-        PokemonSpriteFrame frame = new PokemonSpriteFrame();
+    public void onCreate(PSDFrame nullItem) {
+        PSDFrame frame = new PSDFrame();
         this.framesList.getItems().add(frame);
         this.onEdit(frame);
     }
 
     @Override
-    public void onDelete(PokemonSpriteFrame item) {
+    public void onDelete(PSDFrame item) {
         this.framesList.getItems().remove(item);
     }
 
@@ -115,7 +115,7 @@ public class EditSequencesController implements Initializable, ListCellParent<Po
     }
 
     @Override
-    public void onEdit(PokemonSpriteFrame item) {
+    public void onEdit(PSDFrame item) {
         this.editing = this.framesList.getItems().indexOf(item);
         try {
             FXMLLoader loader = new FXMLLoader(DataEditor.class.getResource("/layouts/sprites/edit_frame.fxml"));
@@ -132,23 +132,23 @@ public class EditSequencesController implements Initializable, ListCellParent<Po
     public void onExistingSequencesChanged(HashSet<Integer> existing) {
         for (Integer id : existing)
             if (id != -1 && !this.sequences.containsKey(id)) {
-                this.sequences.put(id, new PokemonSpriteSequence(id));
+                this.sequences.put(id, new PSDSequence(id));
                 this.sequenceCombobox.getItems().add(id);
                 this.sequenceCombobox.getItems().sort(Comparator.naturalOrder());
             }
     }
 
-    public void onFrameEdited(PokemonSpriteFrame frame) {
+    public void onFrameEdited(PSDFrame frame) {
         if (this.editing != -1)
             this.framesList.getItems().set(this.editing, frame);
     }
 
     @Override
-    public void onMove(PokemonSpriteFrame item, int newIndex) {
+    public void onMove(PSDFrame item, int newIndex) {
     }
 
     @Override
-    public void onRename(PokemonSpriteFrame item, String name) {
+    public void onRename(PSDFrame item, String name) {
     }
 
     private void onSequenceChanged(Integer oldValue, Integer newValue) {
@@ -156,7 +156,7 @@ public class EditSequencesController implements Initializable, ListCellParent<Po
             this.saveSequence(oldValue);
         this.framesList.getItems().clear();
         if (newValue != null) {
-            PokemonSpriteSequence s = this.getSequence(newValue);
+            PSDSequence s = this.getSequence(newValue);
             this.rushTextfield.setText(String.valueOf(s.rushPoint));
             this.hitTextfield.setText(String.valueOf(s.hitPoint));
             this.returnTextfield.setText(String.valueOf(s.returnPoint));
@@ -165,7 +165,7 @@ public class EditSequencesController implements Initializable, ListCellParent<Po
     }
 
     @Override
-    public double prefWidth(PokemonSpriteFrame item) {
+    public double prefWidth(PSDFrame item) {
         if (this.parent == null || item == null)
             return 30;
         RegularSpriteSet spriteset = this.parent.generalDataController.spriteset;
@@ -192,7 +192,7 @@ public class EditSequencesController implements Initializable, ListCellParent<Po
         else
             ret = Integer.parseInt(this.returnTextfield.getText());
 
-        PokemonSpriteSequence s = new PokemonSpriteSequence(oldValue, rush, hit, ret, this.framesList.getItems());
+        PSDSequence s = new PSDSequence(oldValue, rush, hit, ret, this.framesList.getItems());
         this.sequences.put(oldValue, s);
     }
 
@@ -200,7 +200,7 @@ public class EditSequencesController implements Initializable, ListCellParent<Po
         this.sequenceProperties.setDisable(item == null);
 
         this.sequenceCombobox.getItems().clear();
-        for (PokemonSpriteSequence s : item.sequences()) {
+        for (PSDSequence s : item.sequences()) {
             this.sequences.put(s.id, s);
             this.sequenceCombobox.getItems().addAll(s.id);
         }

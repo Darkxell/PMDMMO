@@ -3,7 +3,7 @@ package com.darkxell.client.renderers.pokemon;
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.renderers.AbstractRenderer;
 import com.darkxell.client.renderers.EntityRendererHolder;
-import com.darkxell.client.resources.images.pokemon.PokemonSprite;
+import com.darkxell.client.resources.image.pokemon.body.PokemonSprite;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.pokemon.DungeonPokemon.DungeonPokemonType;
 

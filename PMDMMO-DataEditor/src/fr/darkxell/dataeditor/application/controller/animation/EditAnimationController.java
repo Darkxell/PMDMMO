@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 import com.darkxell.client.mechanics.animation.AnimationData;
 import com.darkxell.client.mechanics.animation.Animations;
 import com.darkxell.client.mechanics.animation.SpritesetAnimation.BackSpriteUsage;
-import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
+import com.darkxell.client.resources.image.pokemon.body.PokemonSprite.PokemonSpriteState;
 import com.darkxell.common.util.Direction;
 
 import fr.darkxell.dataeditor.application.DataEditor;

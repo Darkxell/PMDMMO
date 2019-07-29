@@ -1,4 +1,4 @@
-package com.darkxell.client.resources.images.pokemon;
+package com.darkxell.client.resources.image.pokemon.body;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -7,46 +7,49 @@ import org.jdom2.Element;
 
 import com.darkxell.common.util.XMLUtils;
 
-public class PokemonSpriteSequence implements Comparable<PokemonSpriteSequence> {
+/**
+ * Pokemon Spriteset Data Sequence
+ */
+public class PSDSequence implements Comparable<PSDSequence> {
 
     public final int duration;
-    final PokemonSpriteFrame[] frames;
+    final PSDFrame[] frames;
     public final int id;
     public final int rushPoint, hitPoint, returnPoint;
 
-    public PokemonSpriteSequence(Integer id) {
+    public PSDSequence(Integer id) {
         this.id = id;
         this.duration = 0;
-        this.frames = new PokemonSpriteFrame[0];
+        this.frames = new PSDFrame[0];
         this.rushPoint = this.hitPoint = this.returnPoint = 0;
     }
 
-    public PokemonSpriteSequence(Integer id, int rush, int hit, int ret, Collection<PokemonSpriteFrame> frames) {
+    public PSDSequence(Integer id, int rush, int hit, int ret, Collection<PSDFrame> frames) {
         this.id = id;
         this.rushPoint = rush;
         this.hitPoint = hit;
         this.returnPoint = ret;
-        this.frames = frames.toArray(new PokemonSpriteFrame[0]);
+        this.frames = frames.toArray(new PSDFrame[0]);
         this.duration = this.totalDuration();
     }
 
-    public PokemonSpriteSequence(PokemonSpritesetData pokemonSpritesetData, Element xml) {
+    public PSDSequence(PokemonSpritesetData pokemonSpritesetData, Element xml) {
         this.id = XMLUtils.getAttribute(xml, "id", -1);
         this.rushPoint = XMLUtils.getAttribute(xml, "rush", 0);
         this.hitPoint = XMLUtils.getAttribute(xml, "hit", 0);
         this.returnPoint = XMLUtils.getAttribute(xml, "return", 0);
 
-        this.frames = new PokemonSpriteFrame[xml.getChildren().size()];
+        this.frames = new PSDFrame[xml.getChildren().size()];
         int i = 0;
         for (Element e : xml.getChildren()) {
-            this.frames[i] = new PokemonSpriteFrame(pokemonSpritesetData, e);
+            this.frames[i] = new PSDFrame(pokemonSpritesetData, e);
             ++i;
         }
         this.duration = this.totalDuration();
     }
 
     @Override
-    public int compareTo(PokemonSpriteSequence o) {
+    public int compareTo(PSDSequence o) {
         return Integer.compare(this.id, o.id);
     }
 
@@ -60,11 +63,11 @@ public class PokemonSpriteSequence implements Comparable<PokemonSpriteSequence> 
         return 1 - ((tick - this.hitPoint) * 1. / (this.returnPoint - this.hitPoint));
     }
 
-    public Collection<PokemonSpriteFrame> frames() {
+    public Collection<PSDFrame> frames() {
         return Arrays.asList(this.frames);
     }
 
-    public PokemonSpriteFrame getFrame(int tick) {
+    public PSDFrame getFrame(int tick) {
         return this.frames[this.getFrameIndex(tick)];
     }
 
@@ -84,7 +87,7 @@ public class PokemonSpriteSequence implements Comparable<PokemonSpriteSequence> 
 
     private int totalDuration() {
         int d = 0;
-        for (PokemonSpriteFrame f : this.frames)
+        for (PSDFrame f : this.frames)
             d += f.duration;
         return d;
     }
@@ -96,7 +99,7 @@ public class PokemonSpriteSequence implements Comparable<PokemonSpriteSequence> 
         XMLUtils.setAttribute(root, "hit", this.hitPoint, 0);
         XMLUtils.setAttribute(root, "return", this.returnPoint, 0);
 
-        for (PokemonSpriteFrame frame : this.frames)
+        for (PSDFrame frame : this.frames)
             root.addContent(frame.toXML());
 
         return root;

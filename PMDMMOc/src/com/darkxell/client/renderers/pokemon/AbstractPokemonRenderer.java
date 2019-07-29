@@ -15,9 +15,9 @@ import com.darkxell.client.renderers.AbstractRenderer;
 import com.darkxell.client.renderers.MasterDungeonRenderer;
 import com.darkxell.client.resources.image.Sprites.DungeonSprites;
 import com.darkxell.client.resources.image.dungeon.AbstractDungeonTileset;
-import com.darkxell.client.resources.images.pokemon.PokemonSprite;
-import com.darkxell.client.resources.images.pokemon.PokemonSpriteFrame;
-import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
+import com.darkxell.client.resources.image.pokemon.body.PSDFrame;
+import com.darkxell.client.resources.image.pokemon.body.PokemonSprite;
+import com.darkxell.client.resources.image.pokemon.body.PokemonSpritesets;
 import com.darkxell.common.pokemon.Pokemon;
 import com.darkxell.common.util.Logger;
 
@@ -73,7 +73,7 @@ public class AbstractPokemonRenderer extends AbstractRenderer {
             if (this.alpha != 1)
                 g.setComposite(ac);
 
-            PokemonSpriteFrame frame = this.sprite.getCurrentFrame();
+            PSDFrame frame = this.sprite.getCurrentFrame();
 
             int xPos = (int) this.drawX(), yPos = (int) this.drawY();
 
@@ -102,7 +102,7 @@ public class AbstractPokemonRenderer extends AbstractRenderer {
      */
     public void render(Graphics2D g, PokemonSprite sprite, int x, int y) {
         // If you change those temp variables, check DungeonPokemonRenderer override
-        PokemonSpriteFrame frame = sprite.getCurrentFrame();
+        PSDFrame frame = sprite.getCurrentFrame();
         BufferedImage s = sprite.getCurrentSprite();
 
         int xPos = x - s.getWidth() / 2 + frame.spriteX + this.sprite.xOffset(),

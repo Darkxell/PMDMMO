@@ -4,8 +4,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
+import com.darkxell.client.resources.image.pokemon.body.PSDFrame;
 import com.darkxell.client.resources.images.RegularSpriteSet;
-import com.darkxell.client.resources.images.pokemon.PokemonSpriteFrame;
 
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
@@ -37,7 +37,7 @@ public class EditFrameController implements Initializable {
     @FXML
     private TextField yTextfield;
 
-    private PokemonSpriteFrame generateFrame() {
+    private PSDFrame generateFrame() {
         int duration, x, y, sx, sy;
 
         if (this.durationTextfield.getText().matches("-?"))
@@ -65,7 +65,7 @@ public class EditFrameController implements Initializable {
         else
             sy = Integer.parseInt(this.syTextfield.getText());
 
-        return new PokemonSpriteFrame(null, this.frameSpinner.getValue(), duration, x, y, sx, sy,
+        return new PSDFrame(null, this.frameSpinner.getValue(), duration, x, y, sx, sy,
                 this.flippedCheckbox.isSelected());
     }
 
@@ -96,7 +96,7 @@ public class EditFrameController implements Initializable {
     }
 
     public void onSave() {
-        PokemonSpriteFrame f = this.generateFrame();
+        PSDFrame f = this.generateFrame();
         EditSequencesController.instance.onFrameEdited(f);
         this.onCancel();
     }
@@ -120,7 +120,7 @@ public class EditFrameController implements Initializable {
         this.frameSpinner.getValueFactory().setWrapAround(true);
     }
 
-    public void setup(PokemonSpriteFrame item) {
+    public void setup(PSDFrame item) {
         this.frameSpinner.getValueFactory().setValue(item.frameID);
         this.durationTextfield.setText(String.valueOf(item.duration));
         this.xTextfield.setText(String.valueOf(item.spriteX));

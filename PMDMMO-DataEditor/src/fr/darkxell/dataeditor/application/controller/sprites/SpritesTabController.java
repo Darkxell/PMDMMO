@@ -6,10 +6,10 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
-import com.darkxell.client.resources.images.pokemon.PokemonSpriteSequence;
-import com.darkxell.client.resources.images.pokemon.PokemonSpritesetData;
-import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
+import com.darkxell.client.resources.image.pokemon.body.PSDSequence;
+import com.darkxell.client.resources.image.pokemon.body.PokemonSprite.PokemonSpriteState;
+import com.darkxell.client.resources.image.pokemon.body.PokemonSpritesetData;
+import com.darkxell.client.resources.image.pokemon.body.PokemonSpritesets;
 import com.darkxell.common.Registries;
 import com.darkxell.common.pokemon.PokemonSpecies;
 import com.darkxell.common.util.Direction;
@@ -52,7 +52,7 @@ public class SpritesTabController implements Initializable, ListCellParent<Pokem
     private PokemonSpritesetData generateData() {
         HashMap<Pair<PokemonSpriteState, Direction>, Integer> states = this.sequenceTableController.generateTable();
         HashSet<Integer> existing = new HashSet<>(states.values());
-        HashMap<Integer, PokemonSpriteSequence> sequences = this.sequencesController.generateSequences(existing);
+        HashMap<Integer, PSDSequence> sequences = this.sequencesController.generateSequences(existing);
 
         return new PokemonSpritesetData(this.currentSprite.id,
                 this.generalDataController.bigShadowCheckbox.isSelected(),

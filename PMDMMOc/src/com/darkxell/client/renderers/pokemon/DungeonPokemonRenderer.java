@@ -8,8 +8,8 @@ import java.awt.Rectangle;
 
 import com.darkxell.client.launchable.ClientSettings;
 import com.darkxell.client.launchable.Persistence;
-import com.darkxell.client.resources.images.pokemon.PokemonSprite;
-import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
+import com.darkxell.client.resources.image.pokemon.body.PokemonSprite;
+import com.darkxell.client.resources.image.pokemon.body.PokemonSpritesets;
 import com.darkxell.client.state.dungeon.NextFloorState;
 import com.darkxell.common.pokemon.DungeonPokemon;
 
