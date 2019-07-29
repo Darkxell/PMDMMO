@@ -12,7 +12,7 @@ public class EmotionPortraitsSpriteset extends AbstractPortraitSpriteset {
 
     @Override
     BufferedImage getPortrait(PokemonSpecies pokemon, PortraitEmotion emotion) {
-        return this.getSprite(Portraits.emotionPokemons.indexOf(pokemon.id), emotion.index);
+        return this.getSprite(emotion.index, Portraits.emotionPokemons.indexOf(pokemon.id));
     }
 
 }
