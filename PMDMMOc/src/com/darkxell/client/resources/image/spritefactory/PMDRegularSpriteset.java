@@ -64,9 +64,9 @@ public class PMDRegularSpriteset extends PMDSpriteset {
     protected void onLoad() {
         super.onLoad();
 
-        if (this.columns != -1)
+        if (this.columns == -1)
             this.columns = this.image().getWidth() / this.spriteWidth;
-        if (this.rows != -1)
+        if (this.rows == -1)
             this.rows = this.image().getHeight() / this.spriteHeight;
 
         if (this.columns == 0)
