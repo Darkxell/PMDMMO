@@ -6,9 +6,9 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 
-import com.darkxell.client.graphics.floor.CameraVisibility;
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.renderers.MasterDungeonRenderer;
+import com.darkxell.client.renderers.floor.CameraVisibility;
 import com.darkxell.client.renderers.floor.DungeonItemsRenderer;
 import com.darkxell.client.renderers.floor.FloorRenderer;
 import com.darkxell.client.renderers.floor.GridRenderer;

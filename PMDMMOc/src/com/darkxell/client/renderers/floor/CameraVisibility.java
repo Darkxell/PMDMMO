@@ -1,4 +1,4 @@
-package com.darkxell.client.graphics.floor;
+package com.darkxell.client.renderers.floor;
 
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.state.dungeon.DungeonState;
