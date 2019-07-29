@@ -16,7 +16,7 @@ public class RecruitAttemptEvent extends Event {
 	public static boolean checkFriendArea(DungeonPokemon recruiter, DungeonPokemon recruit) {
 		return recruit.species().friendArea().acquisition != BaseFriendAreaAcquisition.ON_RECRUIT
 				&& (recruiter.player().friendAreas == null
-						|| !recruiter.player().friendAreas.contains(recruit.species().friendArea()));
+						|| recruiter.player().friendAreas.contains(recruit.species().friendArea()));
 	}
 
 	public final DungeonPokemon recruiter, target;
