@@ -8,7 +8,7 @@ import com.darkxell.client.mechanics.animation.PokemonAnimation;
 import com.darkxell.client.mechanics.animation.SpritesetAnimation;
 import com.darkxell.client.mechanics.animation.travel.TravelAnimation;
 import com.darkxell.client.renderers.pokemon.DungeonPokemonRenderer;
-import com.darkxell.client.resources.image.dungeon.AbstractDungeonTileset;
+import com.darkxell.client.resources.image.tileset.dungeon.AbstractDungeonTileset;
 import com.darkxell.common.dungeon.floor.Tile;
 import com.darkxell.common.pokemon.DungeonPokemon;
 

@@ -1,16 +1,12 @@
-package com.darkxell.client.resources.images.tilesets;
+package com.darkxell.client.resources.image.tileset.freezone;
 
-import com.darkxell.client.resources.images.RegularSpriteSet;
+import com.darkxell.client.resources.image.spritefactory.PMDRegularSpriteset;
 
 /** Represents a tileset. A tileset contains all of the images used in a certain dungeon. */
-public class AbstractFreezoneTileset extends RegularSpriteSet {
+public class AbstractFreezoneTileset extends PMDRegularSpriteset {
+
     /** The size of a Tile in Freezones. */
     public static final int TILE_SIZE = 8;
-
-    /** Returns a tileset made from the parsed tileset image file path. */
-    private static AbstractFreezoneTileset getTileset(String path, int width, int height) {
-        return new AbstractFreezoneTileset(path, width, height);
-    }
 
     /**
      * Retrieves a tileset from the {@code /tilesets/*.png} folder.
@@ -18,10 +14,10 @@ public class AbstractFreezoneTileset extends RegularSpriteSet {
      * The name should usually correspond to the terrain file, though this is not guaranteed.
      */
     public static AbstractFreezoneTileset getTileSet(String code, int width, int height) {
-        return getTileset("/tilesets/" + code + ".png", width, height);
+        return new AbstractFreezoneTileset("/tilesets/" + code + ".png", width, height);
     }
 
     public AbstractFreezoneTileset(String path, int width, int height) {
-        super(path, TILE_SIZE, width, height);
+        super(path, TILE_SIZE, TILE_SIZE, width, height);
     }
 }

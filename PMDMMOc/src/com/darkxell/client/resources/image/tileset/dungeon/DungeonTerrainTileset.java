@@ -1,4 +1,4 @@
-package com.darkxell.client.resources.images.tilesets;
+package com.darkxell.client.resources.image.tileset.dungeon;
 
 import static com.darkxell.common.util.Direction.EAST;
 import static com.darkxell.common.util.Direction.NORTH;
@@ -18,18 +18,18 @@ import com.darkxell.common.dungeon.floor.TileType;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.DirectionSet;
 
-public class RegularFloorDungeonTileset extends FloorDungeonTileset {
+public class DungeonTerrainTileset extends AbstractFloorDungeonTileset {
 
     private static final HashMap<DirectionSet, Point> tileLocations = new HashMap<>();
 
     static {
-        // Single
+        // Single Wall
         register(new Point(1, 8), NORTH);
         register(new Point(2, 7), EAST);
         register(new Point(1, 6), SOUTH);
         register(new Point(0, 7), WEST);
 
-        // Two
+        // Two Walls
         register(new Point(0, 4), NORTH, SOUTH);
         register(new Point(0, 5), NORTH, EAST);
         register(new Point(2, 5), NORTH, WEST);
@@ -94,7 +94,7 @@ public class RegularFloorDungeonTileset extends FloorDungeonTileset {
         tileLocations.put(new DirectionSet(directions), p);
     }
 
-    public RegularFloorDungeonTileset(int id, String path) {
+    public DungeonTerrainTileset(int id, String path) {
         super(id, path);
     }
 

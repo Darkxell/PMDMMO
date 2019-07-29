@@ -3,7 +3,7 @@ package com.darkxell.client.resources.images;
 import java.util.ArrayList;
 
 import com.darkxell.client.resources.image.pokemon.body.PokemonSpritesets;
-import com.darkxell.client.resources.images.tilesets.FloorDungeonTileset;
+import com.darkxell.client.resources.image.tileset.dungeon.AbstractFloorDungeonTileset;
 import com.darkxell.common.Registries;
 import com.darkxell.common.dungeon.DungeonExploration;
 import com.darkxell.common.dungeon.data.Dungeon;
@@ -30,7 +30,7 @@ public final class SpriteLoader {
     }
 
     private static void loadFloor(Dungeon dungeon, int floor) {
-        add(FloorDungeonTileset.getTilesetPath(dungeon, floor));
+        add(AbstractFloorDungeonTileset.getTilesetPath(dungeon, floor));
         PokemonRegistry species = Registries.species();
         for (DungeonEncounter e : dungeon.pokemon(floor)) {
             PokemonSpritesets.loadSpriteset(species.find(e.id), false);

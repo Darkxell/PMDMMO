@@ -1,4 +1,4 @@
-package com.darkxell.client.resources.image.dungeon;
+package com.darkxell.client.resources.image.tileset.dungeon;
 
 import java.awt.image.BufferedImage;
 

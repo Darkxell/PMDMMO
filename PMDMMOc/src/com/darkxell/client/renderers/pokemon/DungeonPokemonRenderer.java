@@ -1,6 +1,6 @@
 package com.darkxell.client.renderers.pokemon;
 
-import static com.darkxell.client.resources.image.dungeon.AbstractDungeonTileset.TILE_SIZE;
+import static com.darkxell.client.resources.image.tileset.dungeon.AbstractDungeonTileset.TILE_SIZE;
 
 import java.awt.Color;
 import java.awt.Graphics2D;

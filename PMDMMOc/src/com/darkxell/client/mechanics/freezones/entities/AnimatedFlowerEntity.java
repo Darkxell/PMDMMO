@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 
 import com.darkxell.client.mechanics.freezones.FreezoneEntity;
 import com.darkxell.client.resources.image.Sprites.FreezoneEntitySprites;
-import com.darkxell.client.resources.images.tilesets.AbstractFreezoneTileset;
+import com.darkxell.client.resources.image.tileset.freezone.AbstractFreezoneTileset;
 
 public class AnimatedFlowerEntity extends FreezoneEntity {
 
