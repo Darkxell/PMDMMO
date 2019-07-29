@@ -60,7 +60,7 @@ public class DungeonPokemonRenderer extends AbstractPokemonRenderer {
 
     @Override
     public boolean shouldRender(int width, int height) {
-        return !Persistence.dungeonState.floorVisibility.isVisible(this.pokemon) && super.shouldRender(width, height);
+        return Persistence.dungeonState.floorVisibility.isVisible(this.pokemon) && super.shouldRender(width, height);
     }
 
     @Override
