@@ -2,7 +2,7 @@ package com.darkxell.client.renderers.pokemon;
 
 import com.darkxell.client.mechanics.animation.PokemonAnimation;
 import com.darkxell.client.mechanics.cutscene.entity.CutscenePokemon;
-import com.darkxell.client.resources.images.pokemon.PokemonSprite;
+import com.darkxell.client.resources.image.pokemon.body.PokemonSprite;
 
 /** Renders a Pokemon. This Renderer's Coordinates' units are Tiles. */
 public class CutscenePokemonRenderer extends AbstractPokemonRenderer {

@@ -2,8 +2,8 @@ package com.darkxell.client.mechanics.freezones.entities;
 
 import com.darkxell.client.mechanics.freezones.entities.renderers.OtherPlayerPokemonRenderer;
 import com.darkxell.client.renderers.AbstractRenderer;
-import com.darkxell.client.resources.images.pokemon.PokemonSprite;
-import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
+import com.darkxell.client.resources.image.pokemon.body.PokemonSprite;
+import com.darkxell.client.resources.image.pokemon.body.PokemonSpritesets;
 
 public class OtherPlayerEntity extends FollowsPointEntity {
 

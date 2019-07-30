@@ -1,9 +1,10 @@
+
 package com.darkxell.client.launchable.render;
 
 import static com.darkxell.client.launchable.render.RenderProfile.PROFILE_UNDEFINED;
 
 import com.darkxell.client.launchable.Launcher;
-import com.darkxell.client.resources.images.SpriteFactory;
+import com.darkxell.client.resources.image.spritefactory.PMDSpriteFactory;
 
 public abstract class GameLoop implements Runnable {
     /**
@@ -101,7 +102,7 @@ public abstract class GameLoop implements Runnable {
         this.nextUPSUpdates = 0;
         this.currentUPS = 0;
 
-        SpriteFactory.waitQueueDone();
+        PMDSpriteFactory.waitQueueDone();
 
         while (this.keepRunning()) {
             this.update();

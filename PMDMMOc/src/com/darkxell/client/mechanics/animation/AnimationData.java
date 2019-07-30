@@ -11,8 +11,8 @@ import com.darkxell.client.mechanics.animation.movement.PokemonAnimationMovement
 import com.darkxell.client.mechanics.animation.spritemovement.SpritesetAnimationMovement;
 import com.darkxell.client.mechanics.cutscene.entity.CutscenePokemon;
 import com.darkxell.client.renderers.pokemon.AbstractPokemonRenderer;
-import com.darkxell.client.resources.images.RegularSpriteSet;
-import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
+import com.darkxell.client.resources.image.pokemon.body.PokemonSpriteState;
+import com.darkxell.client.resources.image.spritefactory.PMDRegularSpriteset;
 import com.darkxell.common.pokemon.DungeonPokemon;
 import com.darkxell.common.util.Direction;
 import com.darkxell.common.util.XMLUtils;
@@ -147,7 +147,7 @@ public class AnimationData implements Comparable<AnimationData> {
                 actualSprites = "/" + this.spritesPrefix + this.sprites;
             actualSprites = "/animations" + actualSprites;
 
-            RegularSpriteSet spriteset = new RegularSpriteSet(actualSprites + ".png", this.width, this.height, -1, -1);
+            PMDRegularSpriteset spriteset = new PMDRegularSpriteset(actualSprites + ".png", this.width, this.height, -1, -1);
             int[] order = this.spriteOrder.clone();
             if (order.length == 0 && spriteset.isLoaded()) {
                 order = new int[this.backSpriteUsage == BackSpriteUsage.yes ? spriteset.spriteCount() / 2

@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.renderers.pokemon.AbstractPokemonRenderer;
-import com.darkxell.client.resources.images.pokemon.PokemonSprite;
-import com.darkxell.client.resources.images.pokemon.PokemonSprite.PokemonSpriteState;
-import com.darkxell.client.resources.images.pokemon.PokemonSpritesets;
+import com.darkxell.client.resources.image.pokemon.body.PokemonSprite;
+import com.darkxell.client.resources.image.pokemon.body.PokemonSpriteState;
+import com.darkxell.client.resources.image.pokemon.body.PokemonSpritesets;
 import com.darkxell.client.ui.Keys.Key;
 import com.darkxell.common.player.Player;
 import com.darkxell.common.util.Direction;

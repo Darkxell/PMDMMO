@@ -6,7 +6,7 @@ import java.util.ResourceBundle;
 
 import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
 import com.darkxell.client.mechanics.cutscene.event.DialogCutsceneEvent.CutsceneDialogScreen;
-import com.darkxell.client.resources.images.pokemon.PokemonPortrait.PortraitEmotion;
+import com.darkxell.client.resources.image.pokemon.portrait.PortraitEmotion;
 import com.darkxell.client.state.dialog.PokemonDialogScreen.DialogPortraitLocation;
 
 import fr.darkxell.dataeditor.application.controller.cutscene.EditCutsceneController;

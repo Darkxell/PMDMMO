@@ -5,7 +5,7 @@ import com.darkxell.client.mechanics.cutscene.entity.CutsceneEntity;
 import com.darkxell.client.mechanics.freezones.entities.OtherPlayerEntity;
 import com.darkxell.client.renderers.EntityRendererHolder;
 import com.darkxell.client.resources.Res;
-import com.darkxell.client.resources.images.tilesets.AbstractFreezoneTileset;
+import com.darkxell.client.resources.image.tileset.freezone.AbstractFreezoneTileset;
 import com.darkxell.common.util.Logger;
 import com.darkxell.common.zones.FreezoneInfo;
 import com.eclipsesource.json.JsonValue;
@@ -13,12 +13,12 @@ import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 
+import static com.darkxell.client.resources.image.tileset.freezone.AbstractFreezoneTileset.TILE_SIZE;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import static com.darkxell.client.resources.images.tilesets.AbstractFreezoneTileset.TILE_SIZE;
 
 /**
  * A tiled map of a freezone. Freezones are the areas where you can move freely and don't have to fight.
@@ -88,7 +88,7 @@ public abstract class FreezoneMap {
         return this.tiles[id];
     }
 
-    private AbstractFreezoneTileset getTileset(String key) {
+    AbstractFreezoneTileset getTileset(String key) {
         if (this.tilesets.containsKey(key)) {
             return this.tilesets.get(key);
         }
@@ -105,7 +105,7 @@ public abstract class FreezoneMap {
 
         this.tiles = new FreezoneTile[mapWidth * mapHeight];
         for (int i = 0; i < this.tiles.length; i++) {
-            this.tiles[i] = new FreezoneTile(FreezoneTile.TYPE_WALKABLE, null);
+            this.tiles[i] = new FreezoneTile(FreezoneTile.TYPE_WALKABLE);
         }
 
         AbstractFreezoneTileset defaultTileset = null;
@@ -124,13 +124,7 @@ public abstract class FreezoneMap {
 
                 int xo = this.tagIntAttr(el, "xo") / TILE_SIZE;
                 int yo = this.tagIntAttr(el, "yo") / TILE_SIZE;
-                refTile.sprite = refTileset.get(xo, yo);
-            }
-        }
-
-        for (FreezoneTile t : this.tiles) {
-            if (t.sprite == null) {
-                t.sprite = defaultTileset.getDefault();
+                refTile.setTileSprite(bgName, xo, yo);
             }
         }
     }

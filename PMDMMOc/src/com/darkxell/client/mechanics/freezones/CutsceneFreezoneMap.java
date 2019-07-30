@@ -1,6 +1,6 @@
 package com.darkxell.client.mechanics.freezones;
 
-import com.darkxell.client.resources.images.tilesets.AbstractFreezoneTileset;
+import com.darkxell.client.resources.image.tileset.freezone.AbstractFreezoneTileset;
 import com.darkxell.common.zones.FreezoneInfo;
 
 public class CutsceneFreezoneMap extends FreezoneMap
@@ -25,7 +25,7 @@ public class CutsceneFreezoneMap extends FreezoneMap
 		this.tiles = new FreezoneTile[this.mapWidth * this.mapHeight];
 		for (int x = 0; x < this.mapWidth; ++x)
 			for (int y = 0; y < this.mapHeight; ++y)
-				this.tiles[x + y * this.mapWidth] = new FreezoneTile(FreezoneTile.TYPE_WALKABLE, t.get(x, y));
+				this.tiles[x + y * this.mapWidth] = new FreezoneTile(FreezoneTile.TYPE_WALKABLE).setTileSprite(t.path, x, y);
 	}
 
 }

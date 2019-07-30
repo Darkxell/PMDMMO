@@ -4,7 +4,7 @@ import java.awt.geom.Point2D;
 
 import com.darkxell.client.mechanics.animation.PokemonAnimation;
 import com.darkxell.client.mechanics.animation.travel.TravelAnimation;
-import com.darkxell.client.resources.images.tilesets.AbstractDungeonTileset;
+import com.darkxell.client.resources.image.tileset.dungeon.AbstractDungeonTileset;
 
 public class SmallJumpAnimationMovement extends PokemonAnimationMovement {
     public static final int TOTAL = 10, PAUSE = 2, MOVEMENT = 4;

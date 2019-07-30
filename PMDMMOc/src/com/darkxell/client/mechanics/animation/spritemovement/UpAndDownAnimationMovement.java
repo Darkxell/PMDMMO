@@ -4,7 +4,7 @@ import java.awt.geom.Point2D;
 
 import com.darkxell.client.mechanics.animation.SpritesetAnimation;
 import com.darkxell.client.mechanics.animation.travel.TravelAnimation;
-import com.darkxell.client.resources.images.tilesets.AbstractDungeonTileset;
+import com.darkxell.client.resources.image.tileset.dungeon.AbstractDungeonTileset;
 
 public class UpAndDownAnimationMovement extends SpritesetAnimationMovement {
 
