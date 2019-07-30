@@ -122,7 +122,7 @@ public class ChatMessageHandler extends MessageHandler {
                         }
                         sendfeedback = true;
                         break;
-                    case "/unlockfriendarea ":// Manages the UNLOCKFRIENDAREA command
+                    case "/unlockfriendarea":// Manages the UNLOCKFRIENDAREA command
                         try {
                             int playerid = Integer.parseInt(content[1]);
                             String areaid = content[2];
