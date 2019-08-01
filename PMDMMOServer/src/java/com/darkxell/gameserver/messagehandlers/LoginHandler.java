@@ -5,7 +5,6 @@
  */
 package com.darkxell.gameserver.messagehandlers;
 
-import com.darkxell.common.player.Player;
 import com.darkxell.gameserver.GameServer;
 import com.darkxell.gameserver.GameSessionHandler;
 import com.darkxell.gameserver.GameSessionInfo;

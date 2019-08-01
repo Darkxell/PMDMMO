@@ -148,7 +148,7 @@ public class PlayerDAO {
         try {
             //Select pokemon in team
             Connection cn = ds.getConnection();
-            String selectSQL = "SELECT * FROM teammember_ WHERE playerid = ? AND location = 2";
+            String selectSQL = "SELECT * FROM teammember_ WHERE playerid = ? AND location >= 2";
             PreparedStatement preparedStatement = cn.prepareStatement(selectSQL);
             preparedStatement.setLong(1, toreturn.id);
             ResultSet result = preparedStatement.executeQuery();
