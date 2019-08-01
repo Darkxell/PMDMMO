@@ -55,7 +55,8 @@ public class Util {
 		player.inventory().addItem(new ItemStack(387));
 
 		player.friendAreas = new ArrayList<>();
-		player.friendAreas.add(FriendArea.BEAU_PLAINS);
+        player.friendAreas.add(FriendArea.BEAU_PLAINS);
+        player.friendAreas.add(FriendArea.WILD_PLAINS);
 
 		for (PokemonSpecies s : Registries.species().toList()) {
 			if (s.id == 0)

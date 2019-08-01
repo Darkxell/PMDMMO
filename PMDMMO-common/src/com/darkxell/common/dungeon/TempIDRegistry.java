@@ -56,12 +56,12 @@ public abstract class TempIDRegistry<T extends HasID> {
     }
 
     public static class PokemonTempIDRegistry extends TempIDRegistry<Pokemon> {
-        public long register(Pokemon pokemon, ItemsTempIDRegistry items, TempIDRegistry<LearnedMove> moves) {
+        public long register(Pokemon pokemon, ItemsTempIDRegistry items, MovesTempIDRegistry moves) {
             long id = this.register(pokemon);
             if (pokemon.hasItem())
                 items.register(pokemon.getItem(), pokemon);
             for (int i = 0; i < pokemon.moveCount(); ++i)
-                moves.register(pokemon.move(i));
+                moves.register(pokemon.move(i), pokemon);
 
             return id;
         }
@@ -88,7 +88,7 @@ public abstract class TempIDRegistry<T extends HasID> {
 
     private long newID() {
         long next = -2;
-        while (registry.containsKey(next))
+        while (this.registry.containsKey(next))
             --next;
         return next;
     }
