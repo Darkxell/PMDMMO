@@ -19,13 +19,12 @@ public class CutsceneFreezoneMap extends FreezoneMap
 	/** Method that loads the map NOT in the super constructor because there is no way to get width and height then. */
 	private void loadLater(String tilesetPath, int width, int height)
 	{
-		AbstractFreezoneTileset t = AbstractFreezoneTileset.getTileSet(tilesetPath, width, height);
 		this.mapWidth = width / AbstractFreezoneTileset.TILE_SIZE;
 		this.mapHeight = height / AbstractFreezoneTileset.TILE_SIZE;
 		this.tiles = new FreezoneTile[this.mapWidth * this.mapHeight];
 		for (int x = 0; x < this.mapWidth; ++x)
 			for (int y = 0; y < this.mapHeight; ++y)
-				this.tiles[x + y * this.mapWidth] = new FreezoneTile(FreezoneTile.TYPE_WALKABLE).setTileSprite(t.path, x, y);
+				this.tiles[x + y * this.mapWidth] = new FreezoneTile(FreezoneTile.TYPE_WALKABLE).setTileSprite(tilesetPath, x, y);
 	}
 
 }
