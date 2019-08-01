@@ -73,11 +73,11 @@ public class TeamMemberActionSelectionState extends OptionSelectionMenuState {
     @Override
     protected void onOptionSelected(MenuOption option) {
         if (option == this.summary)
-            Persistence.stateManager.setState(
-                    TeamMenuState.createSummaryState(this.background, this, null, this.pokemon).setOpaque(true));
+            Persistence.stateManager.setState(TeamMenuState
+                    .createSummaryState(this.parent.background, this, null, this.pokemon).setOpaque(this.isOpaque()));
         else if (option == this.moves)
-            Persistence.stateManager
-                    .setState(new MovesMenuState(this, this.background, false, this.pokemon).setOpaque(true));
+            Persistence.stateManager.setState(
+                    new MovesMenuState(this, this.parent.background, false, this.pokemon).setOpaque(this.isOpaque()));
         else if (option == this.leave) {
             if (Persistence.socketendpoint.connectionStatus() == GameSocketEndpoint.CONNECTED) {
                 Persistence.isCommunicating = true;

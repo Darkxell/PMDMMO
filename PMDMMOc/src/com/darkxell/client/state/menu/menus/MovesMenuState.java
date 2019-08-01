@@ -42,11 +42,11 @@ public class MovesMenuState extends OptionSelectionMenuState {
 
     /** True if moves can be ordered in this State. */
     protected boolean canOrder = true;
+    public final boolean inDungeon;
+    public final AbstractState parent;
     private Pokemon[] pokemon;
     private MoveSelectionWindow window;
     private TextWindow windowInfo;
-    public final boolean inDungeon;
-    public final AbstractState parent;
 
     public MovesMenuState(AbstractState parent, AbstractGraphiclayer background, boolean inDungeon,
             Pokemon... pokemon) {
@@ -65,7 +65,8 @@ public class MovesMenuState extends OptionSelectionMenuState {
             boolean isStruggling = true;
             for (int i = 0; i < 4; ++i)
                 if (pokemon.move(i) != null) {
-                    if (pokemon.move(i).pp() > 0) isStruggling = false;
+                    if (pokemon.move(i).pp() > 0)
+                        isStruggling = false;
                     moves.addOption(new MoveMenuOption(pokemon.move(i), pokemon == Persistence.player.getTeamLeader()));
                 }
             if (pokemon.player().getTeamLeader() == pokemon && isStruggling)
@@ -116,11 +117,16 @@ public class MovesMenuState extends OptionSelectionMenuState {
     public void onKeyPressed(Key key) {
         if (!this.canOrder || !Key.DIAGONAL.isPressed()) {
             if (this.tabs.size() != 0) {
-                if (key == Key.LEFT && this.tab > 0) --this.tab;
-                else if (key == Key.RIGHT && this.tab < this.tabs.size() - 1) ++this.tab;
-                else if (key == Key.UP) --this.selection;
-                else if (key == Key.DOWN) ++this.selection;
-                else if (key == Key.ATTACK) this.onOptionSelected(this.currentOption());
+                if (key == Key.LEFT && this.tab > 0)
+                    --this.tab;
+                else if (key == Key.RIGHT && this.tab < this.tabs.size() - 1)
+                    ++this.tab;
+                else if (key == Key.UP)
+                    --this.selection;
+                else if (key == Key.DOWN)
+                    ++this.selection;
+                else if (key == Key.ATTACK)
+                    this.onOptionSelected(this.currentOption());
                 else if (key == Key.ROTATE) {
                     this.onOptionInfo(this.currentOption());
                     SoundManager.playSound("ui-select");
@@ -132,8 +138,10 @@ public class MovesMenuState extends OptionSelectionMenuState {
                     this.onTabChanged(this.currentTab());
                     SoundManager.playSound("ui-move");
                 } else if (key == Key.UP || key == Key.DOWN) {
-                    if (this.selection == -1) this.selection = this.currentTab().options().length - 1;
-                    else if (this.selection == this.currentTab().options().length) this.selection = 0;
+                    if (this.selection == -1)
+                        this.selection = this.currentTab().options().length - 1;
+                    else if (this.selection == this.currentTab().options().length)
+                        this.selection = 0;
                     this.onOptionChanged(this.currentOption());
                     SoundManager.playSound("ui-move");
                 }
@@ -142,7 +150,7 @@ public class MovesMenuState extends OptionSelectionMenuState {
                 this.onExit();
                 SoundManager.playSound("ui-back");
             }
-        } else {
+        } else if (this.inDungeon) {
             int from = -1, to = -1;
 
             boolean success = false;
@@ -175,12 +183,14 @@ public class MovesMenuState extends OptionSelectionMenuState {
     @Override
     public void onMouseRightClick(int x, int y) {
         super.onMouseRightClick(x, y);
-        if (this.getHoveredOption() != null) this.onOptionInfo(this.getHoveredOption());
+        if (this.getHoveredOption() != null)
+            this.onOptionInfo(this.getHoveredOption());
     }
 
     private void onOptionInfo(MenuOption option) {
         Persistence.stateManager
-                .setState(new MoveInfoState(((MoveMenuOption) option).move.move(), this.background, this).setOpaque(this.isOpaque()));
+                .setState(new MoveInfoState(((MoveMenuOption) option).move.move(), this.background, this)
+                        .setOpaque(this.isOpaque()));
     }
 
     @Override
@@ -229,5 +239,11 @@ public class MovesMenuState extends OptionSelectionMenuState {
 
     private Pokemon selectedPokemon() {
         return this.pokemon[this.tabIndex()];
+    }
+
+    @Override
+    public OptionSelectionMenuState setOpaque(boolean isOpaque) {
+        this.window.isOpaque = this.windowInfo.isOpaque = isOpaque;
+        return super.setOpaque(isOpaque);
     }
 }
