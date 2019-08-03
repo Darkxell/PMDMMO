@@ -159,6 +159,9 @@ public class GameSocketEndpoint {
             case "removefromteam":
                 new RemoveFromTeamHandler().handleMessage(obj.asObject());
                 break;
+            case "deletefriend":
+                new DeleteFriendHandler().handleMessage(obj.asObject());
+                break;
 
             // DUNGEON COMMUNICATION
 

@@ -8,8 +8,10 @@ import com.darkxell.client.launchable.Persistence;
 import com.darkxell.client.mechanics.freezones.entities.FriendPokemonEntity;
 import com.darkxell.client.renderers.TextRenderer;
 import com.darkxell.client.state.AbstractState;
+import com.darkxell.client.state.dialog.ConfirmDialogScreen;
 import com.darkxell.client.state.dialog.DialogScreen;
 import com.darkxell.client.state.dialog.DialogState;
+import com.darkxell.client.state.dialog.DialogState.DialogEndListener;
 import com.darkxell.client.state.menu.OptionSelectionMenuState;
 import com.darkxell.client.state.menu.components.MenuWindow;
 import com.darkxell.client.state.menu.menus.MovesMenuState;
@@ -47,17 +49,28 @@ public class FriendActionSelectionState extends OptionSelectionMenuState {
 
     public void handleMessage(JsonObject message) {
         Persistence.isCommunicating = false;
-        if (message.getString("result", "error").equals("success"))
-            this.onJoinSuccess();
-        else if (message.getString("result", "error").equals("team_full"))
-            Persistence.stateManager
-                    .setState(new DialogState(this.background, finish -> Persistence.stateManager.setState(this),
-                            new DialogScreen(new Message("ui.friend.join.full"))).setOpaque(this.isOpaque()));
-        else {
-            Logger.e("Client/Server desync. Please reboot game.");
-            Persistence.stateManager
-                    .setState(new DialogState(this.background, finish -> Persistence.stateManager.setState(this),
-                            new DialogScreen(new Message("ui.desync"))).setOpaque(this.isOpaque()));
+        if (message.getString("action", "nothing").equals("addtoteam")) {
+            if (message.getString("result", "error").equals("success"))
+                this.onJoinSuccess();
+            else if (message.getString("result", "error").equals("team_full"))
+                Persistence.stateManager
+                        .setState(new DialogState(this.background, finish -> Persistence.stateManager.setState(this),
+                                new DialogScreen(new Message("ui.friend.join.full"))).setOpaque(this.isOpaque()));
+            else {
+                Logger.e("Client/Server desync. Please reboot game.");
+                Persistence.stateManager
+                        .setState(new DialogState(this.background, finish -> Persistence.stateManager.setState(this),
+                                new DialogScreen(new Message("ui.desync"))).setOpaque(this.isOpaque()));
+            }
+        } else if (message.getString("action", "nothing").equals("deletefriend")) {
+            if (message.getString("result", "error").equals("success"))
+                this.onFarewellSuccess();
+            else {
+                Logger.e("Client/Server desync. Please reboot game.");
+                Persistence.stateManager
+                        .setState(new DialogState(this.background, finish -> Persistence.stateManager.setState(this),
+                                new DialogScreen(new Message("ui.desync"))).setOpaque(this.isOpaque()));
+            }
         }
     }
 
@@ -65,6 +78,20 @@ public class FriendActionSelectionState extends OptionSelectionMenuState {
     protected void onExit() {
         Persistence.stateManager.setState(this.parent);
         this.friendPokemonEntity.release();
+    }
+
+    private void onFarewellSuccess() {
+        Persistence.player.removePokemonInZone(this.friendPokemonEntity.pokemon);
+
+        DialogEndListener finish = f -> {
+            this.onExit();
+            Persistence.currentmap.removeEntity(this.friendPokemonEntity);
+        };
+
+        Persistence.stateManager.setState(
+                new DialogState(this.background, finish, new DialogScreen(new Message("ui.friend.farewell.success")
+                        .addReplacement("<pokemon>", this.friendPokemonEntity.pokemon.getNickname())))
+                                .setOpaque(this.isOpaque()));
     }
 
     private void onJoinSuccess() {
@@ -87,7 +114,41 @@ public class FriendActionSelectionState extends OptionSelectionMenuState {
                 JsonObject message = new JsonObject().add("action", "addtoteam").add("pokemonid",
                         this.friendPokemonEntity.pokemon.id());
                 Persistence.socketendpoint.sendMessage(message.toString());
-            }
+            } else
+                this.onJoinSuccess();
+        } else if (option == this.join) {
+            if (Persistence.socketendpoint.connectionStatus() == GameSocketEndpoint.CONNECTED) {
+                Persistence.isCommunicating = true;
+                JsonObject message = new JsonObject().add("action", "addtoteam").add("pokemonid",
+                        this.friendPokemonEntity.pokemon.id());
+                Persistence.socketendpoint.sendMessage(message.toString());
+            } else
+                this.onFarewellSuccess();
+        } else if (option == this.farewell) {
+
+            DialogEndListener finish = f -> {
+
+                if (!((ConfirmDialogScreen) f.getScreen(0)).hasConfirmed()) {
+                    Persistence.stateManager.setState(this);
+                    return;
+                }
+                
+                Persistence.stateManager.setState(this);
+
+                if (Persistence.socketendpoint.connectionStatus() == GameSocketEndpoint.CONNECTED) {
+                    Persistence.isCommunicating = true;
+                    JsonObject message = new JsonObject().add("action", "deletefriend").add("pokemonid",
+                            this.friendPokemonEntity.pokemon.id());
+                    Persistence.socketendpoint.sendMessage(message.toString());
+                } else
+                    this.onFarewellSuccess();
+            };
+
+            Persistence.stateManager
+                    .setState(new DialogState(this.background, finish,
+                            new ConfirmDialogScreen(new Message("ui.friend.farewell.confirm")
+                                    .addReplacement("<pokemon>", this.friendPokemonEntity.pokemon.getNickname())))
+                                            .setOpaque(this.isOpaque()));
         } else if (option == this.back)
             this.onExit();
     }
