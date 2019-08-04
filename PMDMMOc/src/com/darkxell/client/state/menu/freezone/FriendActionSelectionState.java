@@ -23,7 +23,7 @@ import com.eclipsesource.json.JsonObject;
 public class FriendActionSelectionState extends OptionSelectionMenuState {
 
     public FriendPokemonEntity friendPokemonEntity;
-    private MenuOption join, farewell, summary, moves, back;
+    private MenuOption join, leave, farewell, summary, moves, back;
     public final AbstractState parent;
     private MenuWindow summaryWindow;
 
@@ -40,7 +40,8 @@ public class FriendActionSelectionState extends OptionSelectionMenuState {
         if (Persistence.player.positionInTeam(this.friendPokemonEntity.pokemon) == -1) {
             tab.addOption(this.join = new MenuOption("ui.friend.join"));
             tab.addOption(this.farewell = new MenuOption("ui.friend.farewell"));
-        }
+        } else
+            tab.addOption(this.leave = new MenuOption("ui.friend.leave"));
         tab.addOption(this.summary = new MenuOption("friendareas.summary"));
         tab.addOption(this.moves = new MenuOption("menu.moves"));
         tab.addOption(this.back = new MenuOption("general.back"));
@@ -56,6 +57,15 @@ public class FriendActionSelectionState extends OptionSelectionMenuState {
                 Persistence.stateManager
                         .setState(new DialogState(this.background, finish -> Persistence.stateManager.setState(this),
                                 new DialogScreen(new Message("ui.friend.join.full"))).setOpaque(this.isOpaque()));
+            else {
+                Logger.e("Client/Server desync. Please reboot game.");
+                Persistence.stateManager
+                        .setState(new DialogState(this.background, finish -> Persistence.stateManager.setState(this),
+                                new DialogScreen(new Message("ui.desync"))).setOpaque(this.isOpaque()));
+            }
+        } else if (message.getString("action", "nothing").equals("removefromteam")) {
+            if (message.getString("result", "error").equals("success"))
+                this.onLeaveSuccess();
             else {
                 Logger.e("Client/Server desync. Please reboot game.");
                 Persistence.stateManager
@@ -100,6 +110,12 @@ public class FriendActionSelectionState extends OptionSelectionMenuState {
         this.onExit();
     }
 
+    private void onLeaveSuccess() {
+        Persistence.player.removeAlly(this.friendPokemonEntity.pokemon);
+        Persistence.player.addPokemonInZone(this.friendPokemonEntity.pokemon);
+        this.onExit();
+    }
+
     @Override
     protected void onOptionSelected(MenuOption option) {
         if (option == this.summary)
@@ -116,14 +132,14 @@ public class FriendActionSelectionState extends OptionSelectionMenuState {
                 Persistence.socketendpoint.sendMessage(message.toString());
             } else
                 this.onJoinSuccess();
-        } else if (option == this.join) {
+        } else if (option == this.leave) {
             if (Persistence.socketendpoint.connectionStatus() == GameSocketEndpoint.CONNECTED) {
                 Persistence.isCommunicating = true;
-                JsonObject message = new JsonObject().add("action", "addtoteam").add("pokemonid",
+                JsonObject message = new JsonObject().add("action", "removefromteam").add("pokemonid",
                         this.friendPokemonEntity.pokemon.id());
                 Persistence.socketendpoint.sendMessage(message.toString());
             } else
-                this.onFarewellSuccess();
+                this.onLeaveSuccess();
         } else if (option == this.farewell) {
 
             DialogEndListener finish = f -> {
@@ -132,7 +148,7 @@ public class FriendActionSelectionState extends OptionSelectionMenuState {
                     Persistence.stateManager.setState(this);
                     return;
                 }
-                
+
                 Persistence.stateManager.setState(this);
 
                 if (Persistence.socketendpoint.connectionStatus() == GameSocketEndpoint.CONNECTED) {

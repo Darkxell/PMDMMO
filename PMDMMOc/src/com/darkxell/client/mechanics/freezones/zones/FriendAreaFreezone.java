@@ -46,24 +46,31 @@ public class FriendAreaFreezone extends FreezoneMap {
         ArrayList<Position> availableLocations = new ArrayList<>(this.friendLocations.values());
         // List of Pokemon who couldn't be placed with their default locations.
         ArrayList<Pokemon> noLocation = new ArrayList<>();
+        // List of Pokemon to place in this freezone.
+        ArrayList<Pokemon> friends = new ArrayList<>();
 
+        for (Pokemon pokemon : player.allies)
+            if (pokemon.species().friendArea() == this.friendArea)
+                friends.add(pokemon);
         for (Pokemon pokemon : player.pokemonInZones.values())
-            if (pokemon.species().friendArea() == this.friendArea) {
+            if (pokemon.species().friendArea() == this.friendArea)
+                friends.add(pokemon);
 
-                Position position = this.friendLocations.get(new Pair<>(pokemon.species(), pokemon.isShiny()));
-                if (position == null) { // If it has no default location, add it to nolocation list
-                    Logger.w("Friend " + pokemon + " has no friend area location!");
-                    noLocation.add(pokemon);
-                } else if (!availableLocations.contains(position)) // If location is already taken, add it to nolocation
-                                                                   // list
-                    noLocation.add(pokemon);
-                else { // Else, place it and remove position from available list
-                    FriendPokemonEntity p = new FriendPokemonEntity(pokemon);
-                    this.addEntity(p);
-                    p.spawnAt(position.x, position.y);
-                    availableLocations.remove(position);
-                }
+        for (Pokemon pokemon : friends) {
+            Position position = this.friendLocations.get(new Pair<>(pokemon.species(), pokemon.isShiny()));
+            if (position == null) { // If it has no default location, add it to nolocation list
+                Logger.w("Friend " + pokemon + " has no friend area location!");
+                noLocation.add(pokemon);
+            } else if (!availableLocations.contains(position)) // If location is already taken, add it to nolocation
+                                                               // list
+                noLocation.add(pokemon);
+            else { // Else, place it and remove position from available list
+                FriendPokemonEntity p = new FriendPokemonEntity(pokemon);
+                this.addEntity(p);
+                p.spawnAt(position.x, position.y);
+                availableLocations.remove(position);
             }
+        }
 
         // Place Pokemon that couldn't be placed previously
         for (Pokemon pokemon : noLocation) {
